@@ -52,7 +52,12 @@ export function simplifyFormula(
 
     const simplifiedTerms = roll.terms.map((t: any) =>
       t.isIntermediate
-        ? new NumericTerm({ number: t.evaluate().total, options: t.options })
+        ? new NumericTerm({
+            number: FoundryAdapter.isFoundryV12OrHigher()
+              ? t.evaluateSync().total
+              : t.evaluate({ async: false }).total,
+            options: t.options,
+          })
         : t
     );
 
@@ -73,7 +78,8 @@ export function getMaxPreparedSpellsSampleFormulas(): MaxPreparedSpellFormula[] 
     },
     {
       label: 'TIDY5E.Class.Bard',
-      value: 'max(@classes.bard.levels + 3 - floor(@classes.bard.levels/20), (min(floor(@classes.bard.levels/10),1) * (14 + min(floor(@classes.bard.levels/11),1) + min(floor(@classes.bard.levels/13),1) + (min(floor(@classes.bard.levels/14),1) * 2) + min(floor(@classes.bard.levels/15),1) + min(floor(@classes.bard.levels/17),1) + (min(floor(@classes.bard.levels/18),1) * 2))))',
+      value:
+        'max(@classes.bard.levels + 3 - floor(@classes.bard.levels/20), (min(floor(@classes.bard.levels/10),1) * (14 + min(floor(@classes.bard.levels/11),1) + min(floor(@classes.bard.levels/13),1) + (min(floor(@classes.bard.levels/14),1) * 2) + min(floor(@classes.bard.levels/15),1) + min(floor(@classes.bard.levels/17),1) + (min(floor(@classes.bard.levels/18),1) * 2))))',
     },
     {
       label: 'TIDY5E.Class.Cleric',
@@ -224,7 +230,9 @@ function calculateDeterministicBonus(rawBonus: string): number {
 
   let bonusTotal = 0;
   if (Roll.validate(bonusRoll.formula)) {
-    bonusTotal = bonusRoll.evaluate({ async: false }).total;
+    bonusTotal = FoundryAdapter.isFoundryV12OrHigher()
+      ? bonusRoll.evaluateSync().total
+      : bonusRoll.evaluate({ async: false }).total;
   }
   return bonusTotal;
 }
@@ -256,7 +264,9 @@ export function getDcTooltip(actor: Actor5e) {
   const rawBonus = actor.system.bonuses.spell.dc?.toString()?.trim();
   if (!isNil(rawBonus, '') && Roll.validate(rawBonus)) {
     const bonusRoll = new Roll(rawBonus);
-    bonusRoll.evaluate({ async: false });
+    FoundryAdapter.isFoundryV12OrHigher()
+      ? bonusRoll.evaluateSync()
+      : bonusRoll.evaluate({ async: false });
     const bonusTotal = bonusRoll.total;
 
     if (bonusTotal !== 0) {

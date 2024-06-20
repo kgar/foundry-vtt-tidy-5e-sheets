@@ -6,19 +6,19 @@
     NpcSheetContext,
   } from 'src/types/types';
   import type { Item5e } from 'src/types/item.types';
-  import ItemTable from '../../../components/item-list/v1/ItemTable.svelte';
-  import ItemTableHeaderRow from '../../../components/item-list/v1/ItemTableHeaderRow.svelte';
-  import ItemTableColumn from '../../../components/item-list/v1/ItemTableColumn.svelte';
+  import ItemTable from '../../components/item-list/v1/ItemTable.svelte';
+  import ItemTableHeaderRow from '../../components/item-list/v1/ItemTableHeaderRow.svelte';
+  import ItemTableColumn from '../../components/item-list/v1/ItemTableColumn.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
-  import GridPaneFavoriteIcon from '../../../components/item-grid/GridPaneFavoriteIcon.svelte';
+  import GridPaneFavoriteIcon from '../../components/item-grid/GridPaneFavoriteIcon.svelte';
   import { getContext } from 'svelte';
   import type { Readable, Writable } from 'svelte/store';
-  import TextInput from '../../../components/inputs/TextInput.svelte';
+  import TextInput from '../../components/inputs/TextInput.svelte';
   import { settingStore } from 'src/settings/settings';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import { declareLocation } from 'src/types/location-awareness.types';
-  import { TidyFlags } from 'src/foundry/TidyFlags';
+  import { TidyHooks } from 'src/foundry/TidyHooks';
 
   export let section: InventorySection;
   export let items: Item5e[];
@@ -53,7 +53,7 @@
   }
 
   async function onMouseEnter(event: Event, item: Item5e) {
-    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_ON, event, item);
+    TidyHooks.tidy5eSheetsItemHoverOn(event, item);
 
     card.update((card) => {
       card.item = item;
@@ -62,7 +62,7 @@
   }
 
   async function onMouseLeave(event: Event, item: Item5e) {
-    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_OFF, event, item);
+    TidyHooks.tidy5eSheetsItemHoverOff(event, item);
 
     card.update((card) => {
       card.item = null;
@@ -146,7 +146,7 @@
           </div>
         </div>
 
-        {#if 'attunement' in ctx && !FoundryAdapter.concealDetails(item)}
+        {#if ctx.attunement && !FoundryAdapter.concealDetails(item)}
           <i
             class="fas fa-sun icon-attuned {ctx.attunement?.cls ??
               ''} no-pointer-events"
@@ -155,7 +155,7 @@
         {/if}
 
         <!-- TODO: Put this in itemContext -->
-        {#if TidyFlags.tryGetFlag(item, 'favorite')}
+        {#if 'favoriteId' in ctx && !!ctx.favoriteId}
           <GridPaneFavoriteIcon />
         {/if}
 

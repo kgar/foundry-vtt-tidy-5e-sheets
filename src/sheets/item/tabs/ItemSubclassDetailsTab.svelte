@@ -25,8 +25,9 @@
       value={$context.system.identifier}
       placeholder={$context.item.identifier}
       disabled={!$context.editable}
-      />
+    />
   </div>
+  <p class="hint">{localize('DND5E.IdentifierError')}</p>
 </ItemFormGroup>
 
 <ItemFormGroup
@@ -41,7 +42,7 @@
       field="system.classIdentifier"
       value={$context.system.classIdentifier}
       disabled={!$context.editable}
-      />
+    />
   </div>
   <p class="hint">
     {localize('DND5E.SubclassIdentifierHint')}

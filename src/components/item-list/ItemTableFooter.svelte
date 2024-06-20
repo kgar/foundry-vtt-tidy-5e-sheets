@@ -1,4 +1,5 @@
 <script lang="ts" generics="TSection extends TidySectionBase">
+  import { TidyHooks } from 'src/foundry/TidyHooks';
   import type {
     Actor5e,
     CustomSectionOptions,
@@ -23,8 +24,6 @@
     : [];
 
   function createForCustom(custom: CustomSectionOptions) {
-    // TODO: Support fast-forwarding item creation when there's only one type available.
-    // This will require a breaking model change to `dataset`.
     if (!custom.creationItemTypes.length) {
       return;
     }
@@ -35,14 +34,19 @@
         actor,
       );
     } else {
-      Item.implementation.createDialog(
-        { ...section.dataset },
-        {
-          parent: actor,
-          pack: actor.pack,
-          types: custom.creationItemTypes,
-        },
-      );
+      const createData = { ...section.dataset };
+
+      if (
+        !TidyHooks.tidy5eSheetsPreCreateItem(actor, createData, game.user.id)
+      ) {
+        return;
+      }
+
+      Item.implementation.createDialog(createData, {
+        parent: actor,
+        pack: actor.pack,
+        types: custom.creationItemTypes,
+      });
     }
   }
 

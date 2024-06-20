@@ -589,6 +589,15 @@
   "TIDY5E.Settings.ColorPickerAtWillAccent": {
     "name": "At Will Accent"
   },
+  "TIDY5E.Settings.ColorPickerRitualOnly": {
+    "name": "Ritual Only"
+  },
+  "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
+    "name": "Ritual Only Outline"
+  },
+  "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
+    "name": "Ritual Only Accent"
+  },
   "TIDY5E.Settings.ColorPickerInnate": {
     "name": "Innate"
   },
@@ -672,6 +681,10 @@
     "OptionDeleteFlags.Text": "Delete Affected Tidy Flags",
     "OptionDeleteFlags.Tooltip": "When migrating from custom Tidy flag data to official system data, the flags remain in place by default. Check this option to remove those flags.",
     "ButtonMigration.Text": "Migrate",
+    "MigrateCompendia.CompendiumLabel": "Compendium",
+    "MigrateCompendia.Title": "Migrate Compendia",
+    "MigrateCompendia.SelectionDialogTitle": "Select Compendia to Migrate",
+    "MigrateCompendia.TotalEntriesLabel": "Total Entries",
     "CharacterBiography": {
       "sectionTitle": "Character Biography",
       "selectionDialogTitle": "Migration: Character Biography"
@@ -696,6 +709,10 @@
       "TotalSelectedLabel": "Total Selected: {total}",
       "ToMigrate": "To Migrate",
       "SelectAllNoneTooltip": "Select all or none"
+    },
+    "FavoritesToSystem": {
+      "sectionTitle": "Character Favorites",
+      "selectionDialogTitle": "Migration: Character Favorites to System"
     },
     "Parent": "Parent"
   },
@@ -810,5 +827,6 @@
     "title": "Confirm: Use Default",
     "text": "Are you sure you wish to use default?"
   },
+  "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+Click to skip the roll and instantly recharge) ",
   "TIDY5E.LocalizationTestKey": "Localization Test Key"
 }

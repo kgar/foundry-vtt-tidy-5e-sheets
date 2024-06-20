@@ -11,6 +11,7 @@
   import { settingStore } from 'src/settings/settings';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { coalesce } from 'src/utils/formatting';
+  import { TidyHooks } from 'src/foundry/TidyHooks';
 
   export let containerPanelItems: ContainerPanelItemContext[] = [];
   export let searchCriteria: string = '';
@@ -24,7 +25,7 @@
     getContext<Writable<ItemCardStore>>('card');
 
   async function onMouseEnter(event: Event, item: Item5e) {
-    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_ON, event, item);
+    TidyHooks.tidy5eSheetsItemHoverOn(event, item);
 
     if (!item?.getChatData || !$settingStore.itemCardsForAllItems) {
       return;
@@ -37,7 +38,7 @@
   }
 
   async function onMouseLeave(event: Event, item: Item5e) {
-    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_OFF, event, item);
+    TidyHooks.tidy5eSheetsItemHoverOff(event, item);
 
     card?.update((card) => {
       card.item = null;

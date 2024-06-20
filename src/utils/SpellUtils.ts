@@ -17,7 +17,7 @@ export class SpellUtils {
         SpellUtils.isAlwaysPrepared(item) ||
         SpellUtils.isUnlimitedAtWill(item) ||
         SpellUtils.isUnlimitedInnate(item) ||
-        ItemUtils.hasAvailableUses(item))
+        ItemUtils.hasSufficientLimitedUses(item))
     );
   }
 
@@ -37,7 +37,7 @@ export class SpellUtils {
         SpellUtils.isAlwaysPrepared(item) ||
         SpellUtils.isUnlimitedAtWill(item) ||
         SpellUtils.isUnlimitedInnate(item) ||
-        ItemUtils.hasAvailableUses(item) ||
+        ItemUtils.hasSufficientLimitedUses(item) ||
         SpellUtils.isPactMagic(item))
     );
   }

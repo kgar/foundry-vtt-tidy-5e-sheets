@@ -7,41 +7,12 @@ import type {
   FavoriteSection,
   GenericFavoriteSection,
   InventorySection,
+  TypedEffectFavoriteSection,
 } from 'src/types/types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import { Inventory } from './Inventory';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export class CharacterSheetSections {
-  static applyInventoryItemToSection(
-    inventory: Record<string, InventorySection>,
-    item: Item5e,
-    customSectionOptions: Partial<InventorySection>
-  ) {
-    const customSectionName = TidyFlags.section.get(item);
-
-    if (!customSectionName) {
-      inventory[item.type].items.push(item);
-      return;
-    }
-
-    const customSection: InventorySection = (inventory[customSectionName] ??= {
-      dataset: { [TidyFlags.section.prop]: customSectionName },
-      items: [],
-      label: customSectionName,
-      canCreate: true,
-      key: customSectionName,
-      custom: {
-        section: customSectionName,
-        creationItemTypes: Inventory.inventoryItemTypes,
-      },
-      show: true,
-      ...customSectionOptions,
-    });
-
-    customSection.items.push(item);
-  }
-
   static buildFeaturesSections(
     races: any[],
     backgrounds: any[],
@@ -186,10 +157,19 @@ export class CharacterSheetSections {
     }
   }
 
+  // TODO: Figure out how to handle effects with section names that collide with items
   static mergeDuplicateFavoriteSections(sections: FavoriteSection[]) {
-    let sectionsMap: Record<string, FavoriteSection> = {};
+    let sectionsMap: Record<
+      string,
+      Exclude<FavoriteSection, TypedEffectFavoriteSection>
+    > = {};
     for (let section of sections) {
+      if (section.type === CONSTANTS.TAB_CHARACTER_EFFECTS) {
+        continue;
+      }
+
       const mappedSection = sectionsMap[section.key];
+
       if (!mappedSection) {
         sectionsMap[section.key] = section;
         continue;
@@ -217,7 +197,9 @@ export class CharacterSheetSections {
     return Object.values(sectionsMap);
   }
 
-  static getItemsFromFavoriteSection(section: FavoriteSection) {
+  static getItemsFromFavoriteSection(
+    section: Exclude<FavoriteSection, TypedEffectFavoriteSection>
+  ) {
     return section.type === CONSTANTS.TAB_CHARACTER_SPELLBOOK
       ? section.spells
       : section.items;

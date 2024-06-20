@@ -28,9 +28,12 @@ import {
   type CharacterFeatureSection,
   type CharacterItemContext,
   type SpellbookSection,
+  type FavoriteSection,
+  type EffectFavoriteSection,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
+  applyThemeDataAttributeToWindow,
   applyTitleToWindow,
   blurUntabbableButtonsOnClick,
   maintainCustomContentInputFocus,
@@ -59,11 +62,16 @@ import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPrefe
 import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSections';
 import { SheetSections } from 'src/features/sections/SheetSections';
-import { TidyFlags } from 'src/api';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import { ActorSheetCustomSectionMixin } from './mixins/Tidy5eBaseActorSheetMixins';
 import { ItemUtils } from 'src/utils/ItemUtils';
 import { Inventory } from 'src/features/sections/Inventory';
+import type {
+  CharacterFavorite,
+  UnsortedCharacterFavorite,
+} from 'src/foundry/dnd5e.types';
+import { TidyHooks } from 'src/foundry/TidyHooks';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 
 export class Tidy5eCharacterSheet
   extends ActorSheetCustomSectionMixin(
@@ -140,8 +148,9 @@ export class Tidy5eCharacterSheet
         if (first) return;
         this.render();
       }),
-      settingStore.subscribe(() => {
+      settingStore.subscribe((s) => {
         if (first) return;
+        applyThemeDataAttributeToWindow(s.colorScheme, this.element.get(0));
         this.render();
       }),
       this.messageBus.subscribe((m) => {
@@ -249,11 +258,7 @@ export class Tidy5eCharacterSheet
       })
     );
 
-    Hooks.callAll(
-      CONSTANTS.HOOK_TIDY5E_SHEETS_PREPARE_RESOURCES,
-      tidyResources,
-      this.actor
-    );
+    TidyHooks.tidy5eSheetsPrepareResources(tidyResources, this.actor);
 
     let maxPreparedSpellsTotal = 0;
     try {
@@ -264,7 +269,7 @@ export class Tidy5eCharacterSheet
         const roll = await Roll.create(
           formula,
           this.actor.getRollData()
-        ).evaluate({ async: true });
+        ).evaluate();
         maxPreparedSpellsTotal = roll.total;
       }
     } catch (e) {
@@ -718,7 +723,7 @@ export class Tidy5eCharacterSheet
           if (conditionIds.has(effect.id) && !effect.duration.remaining)
             return arr;
           const { id, name, img, disabled, duration } = effect;
-          let source = await effect.getSource();
+          let source = (await effect.getSource()) ?? this.actor;
           // If the source is an ActiveEffect from another Actor, note the source as that Actor instead.
           if (
             source instanceof dnd5e.documents.ActiveEffect5e &&
@@ -741,28 +746,6 @@ export class Tidy5eCharacterSheet
           return arr;
         },
         []
-      );
-    }
-
-    let containerPanelItems: ContainerPanelItemContext[] = [];
-    try {
-      let containers = defaultDocumentContext.items
-        .filter((i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER)
-        .toSorted((a: Item5e, b: Item5e) => a.sort - b.sort);
-
-      for (let container of containers) {
-        const capacity =
-          (await container.system.computeCapacity()) as ContainerCapacityContext;
-        containerPanelItems.push({
-          container,
-          ...capacity,
-        });
-      }
-    } catch (e) {
-      error(
-        'An error occurred while preparing containers for the container panel',
-        false,
-        e
       );
     }
 
@@ -810,7 +793,9 @@ export class Tidy5eCharacterSheet
         }
       ),
       conditions: conditions,
-      containerPanelItems: containerPanelItems,
+      containerPanelItems: await Inventory.getContainerPanelItems(
+        defaultDocumentContext.items
+      ),
       customActorTraits: CustomActorTraitsRuntime.getEnabledTraits(
         defaultDocumentContext
       ),
@@ -972,6 +957,203 @@ export class Tidy5eCharacterSheet
 
     context.tabs = tabs;
 
+    TidyHooks.tidy5eSheetsPreConfigureSections(
+      this,
+      this.element.get(0),
+      context
+    );
+
+    // Apply Section Configs
+    // ------------------------------------------------------------
+
+    const sectionConfigs = TidyFlags.sectionConfig.get(this.actor);
+
+    let effectsSection: EffectFavoriteSection = {
+      canCreate: false,
+      dataset: {},
+      effects: [],
+      key: 'tidy.effects',
+      label: 'DND5E.Effects',
+      show: true,
+    };
+    const favoriteEffects = (
+      this.actor.system.favorites as CharacterFavorite[]
+    ).filter((f) => f.type === 'effect');
+
+    // TODO: Do I need to remove active effects from favorites when they are no longer available on the sheet?
+    // Or does the system do this?
+    for (const favoriteEffect of favoriteEffects) {
+      const effect = fromUuidSync(favoriteEffect.id, { relative: this.actor });
+
+      if (!effect) {
+        continue;
+      }
+
+      const data = await effect.getFavoriteData();
+
+      if (data.suppressed) {
+        data.subtitle = game.i18n.localize('DND5E.Suppressed');
+      }
+
+      effectsSection.effects.push({
+        effectId: effect.id,
+        effect: effect,
+        id: favoriteEffect.id,
+        img: data.img,
+        sort: favoriteEffect.sort,
+        subtitle: data.subtitle,
+        suppressed: data.suppressed,
+        title: data.title,
+        toggle: { applicable: true, value: data.toggle },
+      });
+    }
+
+    const favoritesIdMap: Map<string, CharacterFavorite> =
+      this._getFavoritesIdMap();
+
+    // Favorites
+    context.favorites = CharacterSheetSections.mergeDuplicateFavoriteSections(
+      context.favorites
+    );
+
+    if (effectsSection.effects.length) {
+      (context.favorites as FavoriteSection[]).push({
+        ...effectsSection,
+        type: CONSTANTS.TAB_CHARACTER_EFFECTS,
+      });
+    }
+
+    // Apply Section Configs: Inventory
+
+    context.inventory = SheetSections.sortKeyedSections(
+      context.inventory,
+      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]
+    );
+
+    context.inventory.forEach((section) => {
+      // Sort Inventory
+      ItemUtils.sortItems(section.items, inventorySortMode);
+
+      // TODO: Collocate Inventory Sub Items
+      // Filter Inventory
+      section.items = this.itemFilterService.filter(
+        section.items,
+        CONSTANTS.TAB_CHARACTER_INVENTORY
+      );
+
+      // Apply visibility from configuration
+      section.show =
+        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.[section.key]
+          ?.show !== false;
+    });
+
+    // Apply Section Configs: Spellbook
+
+    context.spellbook = SheetSections.sortKeyedSections(
+      context.spellbook,
+      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]
+    );
+
+    context.spellbook.forEach((section) => {
+      // Sort Spellbook
+      ItemUtils.sortItems(section.spells, spellbookSortMode);
+
+      // TODO: Collocate Spellbook Sub Items
+      // Filter Spellbook
+      section.spells = this.itemFilterService.filter(
+        section.spells,
+        CONSTANTS.TAB_CHARACTER_SPELLBOOK
+      );
+
+      // Apply visibility from configuration
+      section.show =
+        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.[section.key]
+          ?.show !== false;
+    });
+
+    // Apply Section Configs: Features
+
+    context.features = SheetSections.sortKeyedSections(
+      context.features,
+      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_FEATURES]
+    );
+
+    context.features.forEach((section) => {
+      // Sort Features
+      ItemUtils.sortItems(section.items, featureSortMode);
+
+      // Collocate Feature Sub Items
+      section.items = SheetSections.collocateSubItems(context, section.items);
+
+      // Filter Features
+      section.items = this.itemFilterService.filter(
+        section.items,
+        CONSTANTS.TAB_CHARACTER_FEATURES
+      );
+
+      // Apply visibility from configuration
+      section.show =
+        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_FEATURES]?.[section.key]
+          ?.show !== false;
+    });
+
+    // Apply Section Configs: Favorites
+
+    context.favorites = SheetSections.sortKeyedSections(
+      context.favorites,
+      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]
+    );
+
+    (context.favorites as FavoriteSection[]).forEach((section) => {
+      if ('effects' in section) {
+        let effectContexts = section.effects;
+
+        // Sort Favorite Effects
+        if (attributesSortMode === 'm') {
+          const getSort = (effects: Item5e) =>
+            favoritesIdMap.get(effects.getRelativeUUID(this.actor))?.sort ??
+            Number.MAX_SAFE_INTEGER;
+
+          effectContexts.sort((a, b) => getSort(a.effect) - getSort(b.effect));
+        } else {
+          effectContexts.sort((a, b) =>
+            a.effect.name.localeCompare(b.effect.name)
+          );
+        }
+
+        // TODO: Filter Favorite Effects ?
+      } else {
+        let items = 'spells' in section ? section.spells : section.items;
+        // Sort Favorites Items
+        if (attributesSortMode === 'm') {
+          const getSort = (item: Item5e) =>
+            favoritesIdMap.get(item.getRelativeUUID(this.actor))?.sort ??
+            Number.MAX_SAFE_INTEGER;
+
+          items.sort((a, b) => getSort(a) - getSort(b));
+        } else {
+          ItemUtils.sortItems(items, attributesSortMode);
+        }
+
+        // TODO: Collocate Favorite Sub Items
+        // Filter Favorite Items
+        items = this.itemFilterService.filter(
+          items,
+          CONSTANTS.TAB_CHARACTER_ATTRIBUTES
+        );
+        if ('spells' in section) {
+          section.spells = items;
+        } else {
+          section.items = items;
+        }
+      }
+
+      // Apply visibility from configuration
+      section.show =
+        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]?.[section.key]
+          ?.show !== false;
+    });
+
     debug('Character Sheet context data', context);
 
     return context;
@@ -979,26 +1161,15 @@ export class Tidy5eCharacterSheet
 
   protected _prepareItems(context: CharacterSheetContext) {
     // Categorize items as inventory, spellbook, features, and classes
-    const inventory: ActorInventoryTypes = {};
-    const favoriteInventory: ActorInventoryTypes = {};
-    for (const type of Inventory.inventoryItemTypes) {
-      inventory[type] = {
-        label: Inventory.getInventoryTypeLabel(type),
-        items: [],
-        dataset: { type },
-        canCreate: true,
-        key: type,
-        show: true,
-      };
-      favoriteInventory[type] = {
-        label: Inventory.getInventoryTypeLabel(type),
-        items: [],
-        dataset: { type },
+    const inventory: ActorInventoryTypes =
+      Inventory.getDefaultInventorySections();
+    const favoriteInventory: ActorInventoryTypes =
+      Inventory.getDefaultInventorySections({
         canCreate: false,
-        key: type,
-        show: true,
-      };
-    }
+      });
+
+    const favoritesIdMap: Map<string, CharacterFavorite> =
+      this._getFavoritesIdMap();
 
     // Partition items by category
     let {
@@ -1064,7 +1235,11 @@ export class Tidy5eCharacterSheet
           CharacterSheetSections.partitionItem(item, obj, inventory);
         }
 
-        if (FoundryAdapter.isDocumentFavorited(item)) {
+        const favoritedItem = favoritesIdMap.get(
+          item.getRelativeUUID(this.actor)
+        );
+        if (favoritedItem?.type === 'item') {
+          ctx.favoriteId = favoritedItem.id;
           CharacterSheetSections.partitionItem(
             item,
             obj.favorites,
@@ -1094,27 +1269,29 @@ export class Tidy5eCharacterSheet
       }
     );
 
-    const characterPreferences = SheetPreferencesService.getByType(
-      this.actor.type
-    );
-
+    const inventoryTypes = Inventory.getDefaultInventoryTypes();
     // Organize items
     // Section the items by type
-    for (let i of items) {
-      const ctx = (context.itemContext[i.id] ??= {});
-      ctx.totalWeight = i.system.totalWeight?.toNearest(0.1);
-      CharacterSheetSections.applyInventoryItemToSection(inventory, i, {
+    for (let item of items) {
+      const ctx = (context.itemContext[item.id] ??= {});
+      ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
+      Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
         canCreate: true,
       });
     }
 
     // Section favorite items by type
-    for (let i of favorites.items) {
-      const ctx = (context.itemContext[i.id] ??= {});
-      ctx.totalWeight = i.system.totalWeight?.toNearest(0.1);
-      CharacterSheetSections.applyInventoryItemToSection(favoriteInventory, i, {
-        canCreate: false,
-      });
+    for (let item of favorites.items) {
+      const ctx = (context.itemContext[item.id] ??= {});
+      ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
+      Inventory.applyInventoryItemToSection(
+        favoriteInventory,
+        item,
+        inventoryTypes,
+        {
+          canCreate: false,
+        }
+      );
     }
 
     // Organize Spellbook and count the number of prepared spells (excluding always, at will, cantrips, etc...)
@@ -1201,90 +1378,15 @@ export class Tidy5eCharacterSheet
         { canCreate: false }
       );
 
-    // Assign, sort sections, sort items, and return
-    const sectionConfigs = TidyFlags.sectionConfig.get(this.actor);
+    // Apply sections to their section lists
 
-    context.inventory = SheetSections.sortKeyedSections(
-      Object.values(inventory),
-      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]
-    );
+    context.inventory = Object.values(inventory);
 
-    const inventorySortMode =
-      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.sort ??
-      'm';
+    context.spellbook = spellbook;
 
-    context.inventory.forEach((section) => {
-      // Sort Inventory
-      ItemUtils.sortItems(section.items, inventorySortMode);
+    context.features = Object.values(features);
 
-      // TODO: Collocate Inventory Sub Items
-      // Filter Inventory
-      section.items = this.itemFilterService.filter(
-        section.items,
-        CONSTANTS.TAB_CHARACTER_INVENTORY
-      );
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.[section.key]
-          ?.show !== false;
-    });
-
-    context.spellbook = SheetSections.sortKeyedSections(
-      spellbook,
-      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]
-    );
-
-    const spellbookSortMode =
-      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.sort ??
-      'm';
-
-    context.spellbook.forEach((section) => {
-      // Sort Spellbook
-      ItemUtils.sortItems(section.spells, spellbookSortMode);
-
-      // TODO: Collocate Spellbook Sub Items
-      // Filter Spellbook
-      section.spells = this.itemFilterService.filter(
-        section.spells,
-        CONSTANTS.TAB_CHARACTER_SPELLBOOK
-      );
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.[section.key]
-          ?.show !== false;
-    });
-
-    context.features = SheetSections.sortKeyedSections(
-      Object.values(features),
-      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_FEATURES]
-    );
-
-    const featureSortMode =
-      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_FEATURES]?.sort ??
-      'm';
-
-    context.features.forEach((section) => {
-      // Sort Features
-      ItemUtils.sortItems(section.items, featureSortMode);
-
-      // Collocate Feature Sub Items
-      section.items = SheetSections.collocateSubItems(context, section.items);
-
-      // Filter Features
-      section.items = this.itemFilterService.filter(
-        section.items,
-        CONSTANTS.TAB_CHARACTER_FEATURES
-      );
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_FEATURES]?.[section.key]
-          ?.show !== false;
-    });
-
-    const favoriteSections = [
+    context.favorites = [
       ...Object.values(favoriteInventory)
         .filter((i) => i.items.length)
         .map((i) => ({
@@ -1305,42 +1407,17 @@ export class Tidy5eCharacterSheet
         })),
     ];
 
-    // TODO: Revise so that there's less churn.
-    context.favorites = CharacterSheetSections.mergeDuplicateFavoriteSections(
-      SheetSections.sortKeyedSections(
-        favoriteSections,
-        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]
-      )
-    );
-
-    const attributesSortMode =
-      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]?.sort ??
-      'm';
-
-    context.favorites.forEach((section) => {
-      let items = 'spells' in section ? section.spells : section.items;
-      // Sort Favorites
-      ItemUtils.sortItems(items, attributesSortMode);
-
-      // TODO: Collocate Favorite Sub Items
-      // Filter Favorites
-      items = this.itemFilterService.filter(
-        items,
-        CONSTANTS.TAB_CHARACTER_ATTRIBUTES
-      );
-      if ('spells' in section) {
-        section.spells = items;
-      } else {
-        section.items = items;
-      }
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]?.[section.key]
-          ?.show !== false;
-    });
-
     context.preparedSpells = nPrepared;
+  }
+
+  private _getFavoritesIdMap(): Map<string, CharacterFavorite> {
+    return this.actor.system.favorites.reduce(
+      (map: Map<string, CharacterFavorite>, f: CharacterFavorite) => {
+        map.set(f.id, f);
+        return map;
+      },
+      new Map<string, CharacterFavorite>()
+    );
   }
 
   /**
@@ -1445,6 +1522,9 @@ export class Tidy5eCharacterSheet
 
   private _renderMutex = new AsyncMutex();
   async _render(force?: boolean, options = {}) {
+    if (typeof options !== 'object') {
+      options = {};
+    }
     await this._renderMutex.lock(async () => {
       await this._renderSheet(force, options);
     });
@@ -1478,8 +1558,7 @@ export class Tidy5eCharacterSheet
         this.element.get(0)
       );
       await this.renderCustomContent({ data, isFullRender: true });
-      Hooks.callAll(
-        'tidy5e-sheet.renderActorSheet',
+      TidyHooks.tidy5eSheetsRenderActorSheet(
         this,
         this.element.get(0),
         data,
@@ -1497,8 +1576,7 @@ export class Tidy5eCharacterSheet
     await maintainCustomContentInputFocus(this, async () => {
       applyTitleToWindow(this.title, this.element.get(0));
       await this.renderCustomContent({ data, isFullRender: false });
-      Hooks.callAll(
-        'tidy5e-sheet.renderActorSheet',
+      TidyHooks.tidy5eSheetsRenderActorSheet(
         this,
         this.element.get(0),
         data,
@@ -1564,6 +1642,89 @@ export class Tidy5eCharacterSheet
       'height',
       height
     );
+  }
+
+  async _onDrop(event: DragEvent & { target: HTMLElement }) {
+    if (!event.target.closest('[data-tidy-favorites]'))
+      return super._onDrop(event);
+    const dragData = event.dataTransfer?.getData('text/plain');
+    if (!dragData) return super._onDrop(event);
+    let data;
+    try {
+      data = JSON.parse(dragData);
+    } catch (e) {
+      console.error(e);
+      return;
+    }
+
+    let type = 'item' as const;
+    let id = (await fromUuid(data.uuid)).getRelativeUUID(this.actor);
+
+    return this._onDropFavorite(event, { type, id });
+  }
+
+  /* -------------------------------------------- */
+  /* Favorites
+  /* -------------------------------------------- */
+
+  /**
+   * Handle an owned item or effect being dropped in the favorites area.
+   * @param {PointerEvent} event         The triggering event.
+   * @param {ActorFavorites5e} favorite  The favorite that was dropped.
+   * @returns {Promise<Actor5e>|void}
+   * @protected
+   */
+  async _onDropFavorite(
+    event: DragEvent & { target: HTMLElement },
+    favorite: UnsortedCharacterFavorite
+  ) {
+    if (this.actor.system.hasFavorite(favorite.id))
+      return await this._onSortFavorites(event, favorite.id);
+    // If we don't own the item, handle onDrop and then turn around and add it as a favorite?
+    return await this.actor.system.addFavorite(favorite);
+  }
+
+  /**
+   * Handle re-ordering the favorites list.
+   * @param {DragEvent} event  The drop event.
+   * @param {string} srcId     The identifier of the dropped favorite.
+   * @returns {Promise<Actor5e>|void}
+   * @protected
+   */
+  async _onSortFavorites(
+    event: DragEvent & { target: HTMLElement },
+    srcId: string
+  ) {
+    const targetId = event.target
+      ?.closest('[data-favorite-id]')
+      ?.getAttribute('data-favorite-id');
+    if (!targetId) return;
+    let source;
+    let target;
+    if (srcId === targetId) return;
+    const siblings = this.actor.system.favorites.filter(
+      (f: CharacterFavorite) => {
+        if (f.id === targetId) target = f;
+        else if (f.id === srcId) source = f;
+        return f.id !== srcId;
+      }
+    );
+    const updates = SortingHelpers.performIntegerSort(source, {
+      target,
+      siblings,
+    });
+    const favorites = this.actor.system.favorites.reduce(
+      (map: Map<string, CharacterFavorite>, f: CharacterFavorite) =>
+        map.set(f.id, { ...f }),
+      new Map<string, CharacterFavorite>()
+    );
+    for (const { target, update } of updates) {
+      const favorite = favorites.get(target.id);
+      foundry.utils.mergeObject(favorite, update);
+    }
+    return await this.actor.update({
+      'system.favorites': Array.from(favorites.values()),
+    });
   }
 
   /* -------------------------------------------- */

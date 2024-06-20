@@ -1,4 +1,6 @@
+import { CONSTANTS } from 'src/constants';
 import type { ContextMenuPositionInfo } from './context-menu.types';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 
 /**
  * A specialized subclass of ContextMenu that places the menu in a fixed position.
@@ -18,10 +20,7 @@ export default class FloatingContextMenu extends ContextMenu {
     };
 
     if (
-      !Hooks.call(
-        'tidy5e-sheet.prepareFloatingContextMenuPosition',
-        positionInfo
-      )
+      !TidyHooks.tidy5eSheetsPrepareFloatingContextMenuPosition(positionInfo)
     ) {
       return;
     }

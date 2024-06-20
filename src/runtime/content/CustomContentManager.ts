@@ -1,10 +1,9 @@
 import type { CustomContent, HtmlRuntimeContent } from 'src/types/types';
-import type { RegisteredContent } from '../types';
-import { isNil } from 'src/utils/data';
+import type { RegisteredContent, SheetLayout } from '../types';
 import { HandlebarsTemplateRenderer } from 'src/runtime/HandlebarsTemplateRenderer';
 import { error } from 'src/utils/logging';
-import type { SheetLayout, SupportedContent } from 'src/api';
 import { HandlebarsContent } from 'src/api/content/HandlebarsContent';
+import type { SupportedContent } from 'src/api/api.types';
 
 export class CustomContentManager {
   static async prepareContentForRender(

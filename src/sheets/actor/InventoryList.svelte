@@ -1,31 +1,32 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Item5e } from 'src/types/item.types';
-  import ItemTable from '../../../components/item-list/v1/ItemTable.svelte';
-  import ItemTableHeaderRow from '../../../components/item-list/v1/ItemTableHeaderRow.svelte';
-  import ItemTableRow from '../../../components/item-list/v1/ItemTableRow.svelte';
-  import ItemTableFooter from '../../../components/item-list/ItemTableFooter.svelte';
-  import ItemTableColumn from '../../../components/item-list/v1/ItemTableColumn.svelte';
-  import ItemTableCell from '../../../components/item-list/v1/ItemTableCell.svelte';
-  import ItemUseButton from '../../../components/item-list/ItemUseButton.svelte';
-  import ItemName from '../../../components/item-list/ItemName.svelte';
+  import ItemTable from '../../components/item-list/v1/ItemTable.svelte';
+  import ItemTableHeaderRow from '../../components/item-list/v1/ItemTableHeaderRow.svelte';
+  import ItemTableRow from '../../components/item-list/v1/ItemTableRow.svelte';
+  import ItemTableFooter from '../../components/item-list/ItemTableFooter.svelte';
+  import ItemTableColumn from '../../components/item-list/v1/ItemTableColumn.svelte';
+  import ItemTableCell from '../../components/item-list/v1/ItemTableCell.svelte';
+  import ItemUseButton from '../../components/item-list/ItemUseButton.svelte';
+  import ItemName from '../../components/item-list/ItemName.svelte';
   import { CONSTANTS } from 'src/constants';
-  import ItemUses from '../../../components/item-list/ItemUses.svelte';
-  import ItemAddUses from '../../../components/item-list/ItemAddUses.svelte';
-  import ItemDeleteControl from '../../../components/item-list/controls/ItemDeleteControl.svelte';
-  import ItemEditControl from '../../../components/item-list/controls/ItemEditControl.svelte';
-  import EquipControl from '../../../components/item-list/controls/EquipControl.svelte';
-  import AttuneControl from '../../../components/item-list/controls/AttuneControl.svelte';
-  import InlineFavoriteIcon from '../../../components/item-list/InlineFavoriteIcon.svelte';
-  import ItemFavoriteControl from '../../../components/item-list/controls/ItemFavoriteControl.svelte';
+  import ItemUses from '../../components/item-list/ItemUses.svelte';
+  import ItemAddUses from '../../components/item-list/ItemAddUses.svelte';
+  import ItemDeleteControl from '../../components/item-list/controls/ItemDeleteControl.svelte';
+  import ItemEditControl from '../../components/item-list/controls/ItemEditControl.svelte';
+  import EquipControl from '../../components/item-list/controls/EquipControl.svelte';
+  import AttuneControl from '../../components/item-list/controls/AttuneControl.svelte';
+  import InlineFavoriteIcon from '../../components/item-list/InlineFavoriteIcon.svelte';
+  import ItemFavoriteControl from '../../components/item-list/controls/ItemFavoriteControl.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type {
     CharacterSheetContext,
     InventorySection,
+    NpcSheetContext,
     RenderableClassicControl,
   } from 'src/types/types';
-  import AmmoSelector from '../../actor/AmmoSelector.svelte';
+  import AmmoSelector from './AmmoSelector.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { coalesce } from 'src/utils/formatting';
@@ -46,7 +47,8 @@
    */
   export let visibleItemIdSubset: Set<string> | null = null;
 
-  let context = getContext<Readable<CharacterSheetContext>>('context');
+  let context =
+    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
   const weightUnit = FoundryAdapter.getWeightUnit();
@@ -177,8 +179,9 @@
           cssClass={getInventoryRowClasses(item)}
           hidden={visibleItemIdSubset !== null &&
             !visibleItemIdSubset.has(item.id)}
+          favoriteId={'favoriteId' in ctx ? ctx.favoriteId : null}
         >
-          <ItemTableCell primary={true} title={itemName}>
+          <ItemTableCell primary={true}>
             <ItemUseButton disabled={!$context.editable} {item} />
             <ItemName
               on:toggle={() => toggleSummary($context.actor)}
@@ -210,12 +213,12 @@
                 </div>
               {/if}
             </ItemTableCell>
-            {#if TidyFlags.tryGetFlag(item, 'favorite') && allowFavoriteIconNextToName}
+            {#if 'favoriteId' in ctx && !!ctx.favoriteId && allowFavoriteIconNextToName}
               <InlineFavoriteIcon />
             {/if}
           {/if}
           {#if includeWeightColumn}
-            {@const weight = ctx?.totalWeight ?? item.system.weight}
+            {@const weight = ctx?.totalWeight ?? item.system.weight.value}
             <ItemTableCell
               baseWidth="4rem"
               title={localize('TIDY5E.Inventory.Weight.Tooltip', {

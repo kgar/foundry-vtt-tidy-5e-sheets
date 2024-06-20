@@ -25,26 +25,23 @@ declare global {
   var dnd5e: any;
   var DocumentSheet: any;
   var DocumentSheetConfig: any;
-  var expandObject: any;
   var FilePicker: any;
   var FormApplication: any;
   var foundry: any;
   var fromUuid: any;
   var fromUuidSync: any;
   var game: any;
-  var getProperty: any;
   var HandlebarsHelpers: any;
   var Hooks: any;
   var ImagePopout: any;
-  var isEmpty: any;
   var Item: any;
   var Items: any;
-  var mergeObject: any;
   var ModuleManagement: any;
   var NumericTerm: any;
   var renderTemplate: any;
   var Roll: any;
   var RollTerm: any;
+  var SortingHelpers: any;
   var TextEditor: any;
   var ui: any;
 
@@ -57,7 +54,7 @@ declare global {
   }
 
   interface Math {
-    clamped: (num: number, min: number, max: number) => number;
+    clamp: (num: number, min: number, max: number) => number;
   }
 
   interface NumberConstructor {

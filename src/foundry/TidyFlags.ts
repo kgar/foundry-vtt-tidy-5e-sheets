@@ -1,6 +1,7 @@
 import type { Item5e } from 'src/types/item.types';
 import type { SheetTabSectionConfigs } from 'src/features/sections/sections.types';
 import { CONSTANTS } from 'src/constants';
+import { isNil } from 'src/utils/data';
 
 /** Manages Tidy flags. */
 export class TidyFlags {
@@ -97,12 +98,43 @@ export class TidyFlags {
     prop: TidyFlags.getFlagPropertyPath('sheet-section-config'),
     /** Gets the document sheet's section configuration. `undefined` means to use the default settings. */
     get(document: any): SheetTabSectionConfigs | undefined {
-      return (
-        TidyFlags.tryGetFlag<SheetTabSectionConfigs>(
-          document,
-          TidyFlags.sectionConfig.key
-        ) ?? undefined
+      const sectionConfigs = TidyFlags.tryGetFlag<SheetTabSectionConfigs>(
+        document,
+        TidyFlags.sectionConfig.key
       );
+
+      if (!sectionConfigs) {
+        return undefined;
+      }
+
+      for (let section of Object.values(sectionConfigs)) {
+        // Account for how localized keys are stored. For each top-level property, flatten until SheetTabSectionConfigs shape achieved.
+        for (let [key, value] of Object.entries(section)) {
+          if (Object.getOwnPropertyNames(value).length > 1) {
+            continue;
+          }
+
+          let newKey = key;
+          let newValue: any = value;
+
+          while (true) {
+            const propNames = Object.getOwnPropertyNames(newValue);
+
+            let currentPropAtDepth = propNames[0];
+            if (isNil(currentPropAtDepth) || propNames.length > 1) {
+              break;
+            }
+
+            newKey += '.' + currentPropAtDepth;
+            newValue = newValue[currentPropAtDepth];
+          }
+
+          delete section[key];
+          section[newKey] = newValue;
+        }
+      }
+
+      return sectionConfigs;
     },
     /** Sets the document sheet's configuration. */
     set(document: any, value: SheetTabSectionConfigs) {
@@ -114,19 +146,6 @@ export class TidyFlags {
      * */
     unset(document: any) {
       return TidyFlags.unsetFlag(document, TidyFlags.sectionConfig.key);
-    },
-  };
-
-  static favorite = {
-    key: 'favorite' as const,
-    prop: TidyFlags.getFlagPropertyPath('favorite'),
-    get(item: Item5e): boolean | undefined {
-      return (
-        TidyFlags.tryGetFlag<boolean>(item, TidyFlags.favorite.key) ?? undefined
-      );
-    },
-    unset(item: Item5e) {
-      return TidyFlags.unsetFlag(item, TidyFlags.favorite.key);
     },
   };
 

@@ -672,7 +672,15 @@
             "overwriteTooltip": "Habilite la opción de sobrescribir el indicador de sección Tidy existente. Si no está marcado, solo los indicadores Tidy vacíos recibirán datos CCSS migrados.",
             "deleteFlagsTooltip": "Al migrar de CCSS a secciones personalizadas de Tidy, las banderas CCSS permanecen en su lugar de forma predeterminada. Marque esta opción para eliminar esas banderas."
         },
-        "Parent": "Padre"
+        "Parent": "Padre",
+        "MigrateCompendia.CompendiumLabel": "Compendio",
+        "MigrateCompendia.Title": "Migrar compendios",
+        "MigrateCompendia.TotalEntriesLabel": "Total de entradas",
+        "MigrateCompendia.SelectionDialogTitle": "Seleccionar compendios para migrar",
+        "FavoritesToSystem": {
+            "sectionTitle": "Personajes favoritos",
+            "selectionDialogTitle": "Migración: personajes favoritos al sistema"
+        }
     },
     "TIDY5E.Settings.ColorPickerScrollbarTrack": {
         "name": "Trayectoria de la barra de desplazamiento"
@@ -773,5 +781,15 @@
         "tabLabel": "Íconos"
     },
     "TIDY5E.Utilities.ConfigureSections": "Configurar secciones",
-    "TIDY5E.LocalizationTestKey": "Botón de ubicación de prueba"
+    "TIDY5E.LocalizationTestKey": "Botón de ubicación de prueba",
+    "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Mayús+Clic para saltar la tirada y recargar al instante) ",
+    "TIDY5E.Settings.ColorPickerRitualOnly": {
+        "name": "Solo rituales"
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
+        "name": "Trazado de Solo Rituales"
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
+        "name": "Acento de Solo Rituales"
+    }
 }

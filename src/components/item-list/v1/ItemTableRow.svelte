@@ -18,9 +18,11 @@
   } from 'src/types/item.types';
   import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
+  import { TidyHooks } from 'src/foundry/TidyHooks';
 
   export let item: Item5e | null = null;
   export let effect: ActiveEffect5e | ActiveEffectContext | null = null;
+  export let favoriteId: string | null = null;
   export let contextMenu: { type: string; uuid: string } | null = null;
   export let cssClass: string = '';
   export let itemCardContentTemplate: ItemCardContentComponent | null = null;
@@ -56,7 +58,7 @@
   }
 
   async function onMouseEnter(event: Event) {
-    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_ON, event, item);
+    TidyHooks.tidy5eSheetsItemHoverOn(event, item);
 
     if (!item?.getChatData || !$settingStore.itemCardsForAllItems) {
       return;
@@ -70,7 +72,7 @@
   }
 
   async function onMouseLeave(event: Event) {
-    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_OFF, event, item);
+    TidyHooks.tidy5eSheetsItemHoverOff(event, item);
 
     card?.update((card) => {
       card.item = null;
@@ -162,6 +164,7 @@
   data-tidy-table-row
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_TABLE_ROW}
   data-tidy-item-type={item?.type ?? 'unknown'}
+  data-favorite-id={favoriteId ?? null}
 >
   <div class="item-table-row {cssClass ?? ''}">
     <slot {toggleSummary} />
@@ -204,6 +207,10 @@
 
       &.at-will {
         --t5e-item-table-row-background: var(--t5e-atwill-background);
+      }
+      
+      &.ritual-only {
+        --t5e-item-table-row-background: var(--t5e-ritual-only-background);
       }
 
       &.innate {

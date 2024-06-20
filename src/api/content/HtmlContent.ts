@@ -19,7 +19,7 @@ export class HtmlContent extends CustomContentBase {
   constructor(props?: Partial<HtmlContent>) {
     super();
 
-    const merged = mergeObject(this, props);
+    const merged = foundry.utils.mergeObject(this, props);
     Object.assign(this, merged);
   }
 

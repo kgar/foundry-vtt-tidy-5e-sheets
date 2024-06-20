@@ -8,7 +8,7 @@ import {
   verifyItemExistsInSection,
 } from './sections-shared';
 import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
-import { Inventory } from 'src/features/sections/Inventory';
+import { InventoryHelpers } from 'tests/helpers/inventory';
 
 sectionsTest.describe('character', () => {
   // TODO: the localization aspect should be happening in getData() prep, because label and key are separate from each other, so label can be localized ahead of time
@@ -20,7 +20,6 @@ sectionsTest.describe('character', () => {
         flags: {
           ['tidy5e-sheet']: {
             [TidyFlags.section.key]: 'TIDY5E.LocalizationTestKey',
-            [TidyFlags.favorite.key]: true,
           },
         },
       },
@@ -35,7 +34,6 @@ sectionsTest.describe('character', () => {
         flags: {
           ['tidy5e-sheet']: {
             [TidyFlags.section.key]: 'TIDY5E.LocalizationTestKey',
-            [TidyFlags.favorite.key]: true,
           },
         },
       },
@@ -50,7 +48,6 @@ sectionsTest.describe('character', () => {
         flags: {
           ['tidy5e-sheet']: {
             [TidyFlags.section.key]: 'TIDY5E.LocalizationTestKey',
-            [TidyFlags.favorite.key]: true,
           },
         },
       },
@@ -185,7 +182,7 @@ sectionsTest.describe('NPC', () => {
 
 sectionsTest.describe('vehicle', () => {
   const itemsToTest: DefaultSectionTestParams[] = [
-    ...Inventory.inventoryItemTypes.map((t) => ({
+    ...InventoryHelpers.getSupportedInventoryTypesForTest().map((t) => ({
       itemCreationArgs: {
         name: `Custom Action Section Test ${t}`,
         type: t,
@@ -275,10 +272,15 @@ function runAllCharacterTests(itemToTest: DefaultSectionTestParams) {
   sectionsTest(
     `${itemToTest.itemCreationArgs.name} can be localized`,
     async ({ data, sectionPage }) => {
+      const sheetHelper = new SheetHelper(
+        sectionPage,
+        data.sectionTestCharacter
+      );
       await testCustomSection(
         itemToTest,
-        new SheetHelper(sectionPage, data.sectionTestCharacter),
-        'section'
+        sheetHelper,
+        'section',
+        async (item, helper) => await helper.addFavoriteItem(item.uuid)
       );
     }
   );
@@ -293,7 +295,8 @@ function runAllCharacterTests(itemToTest: DefaultSectionTestParams) {
       await testCustomSection(
         favoriteWithCustomSection,
         new SheetHelper(sectionPage, data.sectionTestCharacter),
-        'section'
+        'section',
+        async (item, helper) => await helper.addFavoriteItem(item.uuid)
       );
     }
   );
@@ -320,7 +323,8 @@ function runAllNpcTests(itemToTest: DefaultSectionTestParams) {
       await testCustomSection(
         itemToTest,
         new SheetHelper(sectionPage, data.sectionTestNpc),
-        'section'
+        'section',
+        async (item, helper) => await helper.addFavoriteItem(item.uuid)
       );
     }
   );

@@ -6,7 +6,7 @@ type TidyFlagToSystemMigrationMapping = {
   tidyDelete: string;
 };
 
-type BiographicalFlagsToV2MigrationParams = {
+type BiographicalFlagsToSystemMigrationParams = {
   document: any;
   overwrite: boolean;
   clearBiographicalFlagData: boolean;
@@ -50,14 +50,14 @@ const mappings: TidyFlagToSystemMigrationMapping[] = [
   },
 ];
 
-export async function migrateBiographicalFlagsToV2Data(
-  params: BiographicalFlagsToV2MigrationParams
+export async function migrateBiographicalFlagsToSystemData(
+  params: BiographicalFlagsToSystemMigrationParams
 ) {
   const { document, overwrite, clearBiographicalFlagData } = params;
   let diff: Record<string, any> = {};
   for (let { system, tidy, tidyDelete } of mappings) {
-    const systemValue = getProperty(document, system) ?? '';
-    const tidyValue = getProperty(document, tidy) ?? '';
+    const systemValue = foundry.utils.getProperty(document, system) ?? '';
+    const tidyValue = foundry.utils.getProperty(document, tidy) ?? '';
     if (isNil(systemValue, '') || overwrite) {
       diff[system] = tidyValue;
     }

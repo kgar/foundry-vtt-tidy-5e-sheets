@@ -97,16 +97,16 @@
   ],
   "compatibility": {
     "minimum": "11.315",
-    "verified": "11.315"
+    "verified": "12"
   },
   "relationships": {
     "systems": [
       {
         "id": "dnd5e",
         "compatibility": {
-          "minimum": "3.0.0",
-          "verified": "3.1.0",
-          "maximum": "3.1.9"
+          "minimum": "3.2.0",
+          "verified": "3.2.0",
+          "maximum": "3.2.9"
         }
       }
     ],
@@ -119,7 +119,6 @@
   "readme": "https://github.com/kgar/foundry-vtt-tidy-5e-sheets/blob/main/README.md",
   "bugs": "https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues",
   "changelog": "https://github.com/kgar/foundry-vtt-tidy-5e-sheets/releases",
-  "manifestPlusVersion": "1.2.0",
   "flags": {
     "allowBugReporter": true
   }

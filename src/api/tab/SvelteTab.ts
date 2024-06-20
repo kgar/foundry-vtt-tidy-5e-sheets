@@ -49,7 +49,7 @@ export class SvelteTab extends CustomTabBase {
   constructor(props?: Partial<SvelteTab>) {
     super();
 
-    const merged = mergeObject(this, props);
+    const merged = foundry.utils.mergeObject(this, props);
     Object.assign(this, merged);
   }
 

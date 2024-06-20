@@ -20,6 +20,7 @@
   import SpellSlotManagement from './SpellSlotManagement.svelte';
   import ConcentrationOverlayIcon from './ConcentrationOverlayIcon.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
+  import { TidyHooks } from 'src/foundry/TidyHooks';
 
   export let section: SpellbookSection;
   export let spells: Item5e[];
@@ -42,7 +43,7 @@
   const localize = FoundryAdapter.localize;
 
   async function onMouseEnter(event: Event, item: Item5e) {
-    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_ON, event, item);
+    TidyHooks.tidy5eSheetsItemHoverOn(event, item);
 
     card.update((card) => {
       card.item = item;
@@ -51,7 +52,7 @@
   }
 
   async function onMouseLeave(event: Event, item: Item5e) {
-    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_OFF, event, item);
+    TidyHooks.tidy5eSheetsItemHoverOff(event, item);
 
     card.update((card) => {
       card.item = null;
@@ -123,7 +124,7 @@
           tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           data-tidy-grid-item
         >
-          {#if TidyFlags.tryGetFlag(spell, 'favorite')}
+          {#if 'favoriteId' in ctx && !!ctx.favoriteId}
             <GridPaneFavoriteIcon />
           {/if}
           <div class="spell-name">
@@ -242,6 +243,17 @@
           .spell-image {
             box-shadow: 0 0 0.0625rem 0.0625rem inset
               var(--t5e-atwill-accent-color);
+            border-radius: 0.3125rem;
+          }
+        }
+
+        &.ritual-only {
+          box-shadow: 0 0 0 0.125rem var(--t5e-ritual-only-outline-color);
+          background-color: var(--t5e-ritual-only-background);
+
+          .spell-image {
+            box-shadow: 0 0 0.0625rem 0.0625rem inset
+              var(--t5e-ritual-only-accent-color);
             border-radius: 0.3125rem;
           }
         }

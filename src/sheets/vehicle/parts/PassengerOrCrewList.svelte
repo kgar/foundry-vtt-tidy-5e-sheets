@@ -120,7 +120,7 @@
     {#each section.items as item, index (item.id ?? index)}
       {@const ctx = $context.itemContext[item.id]}
       <ItemTableRow>
-        <ItemTableCell primary={true} title={item.name}>
+        <ItemTableCell primary={true}>
           <TextInput
             document={item}
             field="name"

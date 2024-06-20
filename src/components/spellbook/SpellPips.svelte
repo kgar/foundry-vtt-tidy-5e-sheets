@@ -22,7 +22,7 @@
     let value = isEmpty ? markerIndex + 1 : markerIndex;
 
     $context.actor.update({
-      [`data.spells.${section.prop}.value`]: value,
+      [`system.spells.${section.prop}.value`]: value,
     });
   }
 

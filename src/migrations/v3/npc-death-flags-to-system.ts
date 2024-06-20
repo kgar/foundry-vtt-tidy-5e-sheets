@@ -6,17 +6,17 @@ type TidyDeath = {
   failure: boolean;
 };
 
-type NpcDeathFlagToV2MigrationParams = {
+type NpcDeathFlagToSystemMigrationParams = {
   npc: Actor5e;
   overwrite: boolean;
   clearDeathFlagData: boolean;
 };
 
-export async function migrateNpcDeathFlagsToV2({
+export async function migrateNpcDeathFlagsToSystem({
   npc,
   overwrite,
   clearDeathFlagData,
-}: NpcDeathFlagToV2MigrationParams) {
+}: NpcDeathFlagToSystemMigrationParams) {
   const tidyDeath = TidyFlags.tryGetFlag<TidyDeath | undefined>(npc, 'death');
 
   if (!tidyDeath) {

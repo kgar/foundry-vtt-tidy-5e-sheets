@@ -25,6 +25,7 @@ import VehicleSheet from './vehicle/VehicleSheet.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import {
   applySheetAttributesToWindow,
+  applyThemeDataAttributeToWindow,
   applyTitleToWindow,
   blurUntabbableButtonsOnClick,
   maintainCustomContentInputFocus,
@@ -54,6 +55,7 @@ import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { TidyFlags } from 'src/foundry/TidyFlags';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -114,8 +116,9 @@ export class Tidy5eVehicleSheet
         if (first) return;
         this.render();
       }),
-      settingStore.subscribe(() => {
+      settingStore.subscribe((s) => {
         if (first) return;
+        applyThemeDataAttributeToWindow(s.colorScheme, this.element.get(0));
         this.render();
       }),
       this.messageBus.subscribe((m) => {
@@ -473,7 +476,7 @@ export class Tidy5eVehicleSheet
           {
             label: game.i18n.localize('DND5E.Weight'),
             css: 'item-weight',
-            property: 'system.weight',
+            property: 'system.weight.value',
             editable: 'Number',
           },
         ],
@@ -481,6 +484,13 @@ export class Tidy5eVehicleSheet
         show: true,
       },
     };
+
+    const baseUnits =
+      CONFIG.DND5E.encumbrance.baseUnits[this.actor.type] ??
+      CONFIG.DND5E.encumbrance.baseUnits.default;
+    const units = game.settings.get('dnd5e', 'metricWeightUnits')
+      ? baseUnits.metric
+      : baseUnits.imperial;
 
     // Classify items owned by the vehicle and compute total cargo weight
     let totalWeight = 0;
@@ -491,7 +501,7 @@ export class Tidy5eVehicleSheet
       // Handle cargo explicitly
       const isCargo = item.flags.dnd5e?.vehicleCargo === true;
       if (isCargo) {
-        totalWeight += item.system.totalWeight ?? 0;
+        totalWeight += item.system.totalWeightin?.(units) ?? 0;
         cargo.cargo.items.push(item);
         continue;
       }
@@ -512,7 +522,7 @@ export class Tidy5eVehicleSheet
           else features.actions.items.push(item);
           break;
         default:
-          totalWeight += item.system.totalWeight ?? 0;
+          totalWeight += item.system.totalWeightIn?.(units) ?? 0;
           cargo.cargo.items.push(item);
       }
     }
@@ -575,14 +585,9 @@ export class Tidy5eVehicleSheet
       : CONFIG.DND5E.encumbrance.currencyPerWeight.imperial;
     totalWeight += totalCoins / currencyPerWeight;
 
-    // Vehicle weights are an order of magnitude greater.
-    totalWeight /= game.settings.get('dnd5e', 'metricWeightUnits')
-      ? CONFIG.DND5E.encumbrance.vehicleWeightMultiplier.metric
-      : CONFIG.DND5E.encumbrance.vehicleWeightMultiplier.imperial;
-
     // Compute overall encumbrance
     const max = actorData.system.attributes.capacity.cargo;
-    const pct = Math.clamped((totalWeight * 100) / max, 0, 100);
+    const pct = Math.clamp((totalWeight * 100) / max, 0, 100);
     return { value: totalWeight.toNearest(0.1), max, pct };
   }
 
@@ -601,6 +606,9 @@ export class Tidy5eVehicleSheet
 
   private _renderMutex = new AsyncMutex();
   async _render(force?: boolean, options = {}) {
+    if (typeof options !== 'object') {
+      options = {};
+    }
     await this._renderMutex.lock(async () => {
       await this._renderSheet(force, options);
     });
@@ -631,8 +639,7 @@ export class Tidy5eVehicleSheet
         this.element.get(0)
       );
       await this.renderCustomContent({ data, isFullRender: true });
-      Hooks.callAll(
-        'tidy5e-sheet.renderActorSheet',
+      TidyHooks.tidy5eSheetsRenderActorSheet(
         this,
         this.element.get(0),
         data,
@@ -650,8 +657,7 @@ export class Tidy5eVehicleSheet
     await maintainCustomContentInputFocus(this, async () => {
       applyTitleToWindow(this.title, this.element.get(0));
       await this.renderCustomContent({ data, isFullRender: false });
-      Hooks.callAll(
-        'tidy5e-sheet.renderActorSheet',
+      TidyHooks.tidy5eSheetsRenderActorSheet(
         this,
         this.element.get(0),
         data,

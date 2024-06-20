@@ -4,10 +4,12 @@ import { CONSTANTS } from 'src/constants';
 import { SheetHelper } from 'tests/helpers/SheetHelper';
 import type { DocumentRef } from 'tests/tests.types';
 import type { DefaultSectionTestParams } from './sections.spec.types';
+import type { Item5e } from 'src/types/item.types';
 
 export async function testDefaultSection(
   itemToTest: DefaultSectionTestParams,
-  sheetHelper: SheetHelper
+  sheetHelper: SheetHelper,
+  onItemCreated?: (item: Item5e, helper: SheetHelper) => Promise<void>
 ) {
   // arrange
 
@@ -15,6 +17,7 @@ export async function testDefaultSection(
   const item = await sheetHelper.createEmbeddedItem(
     itemToTest.itemCreationArgs
   );
+  await onItemCreated?.(item, sheetHelper);
 
   // assert
   await sheetHelper.showSheet();
@@ -31,12 +34,14 @@ export async function testDefaultSection(
 export async function testCustomSection(
   itemToTest: DefaultSectionTestParams,
   sheetHelper: SheetHelper,
-  sectionType: 'section' | 'actionSection'
+  sectionType: 'section' | 'actionSection',
+  onItemCreated?: (item: DocumentRef, sheetHelper: SheetHelper) => Promise<void>
 ) {
   // arrange
   const item = await sheetHelper.createEmbeddedItem(
     itemToTest.itemCreationArgs
   );
+  await onItemCreated?.(item, sheetHelper);
   const itemSheetHelper = new SheetHelper(sheetHelper.page, item);
 
   // act

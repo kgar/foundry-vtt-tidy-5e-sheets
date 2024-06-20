@@ -19,23 +19,34 @@ export class ActorPortraitRuntime {
           uuid: params.actor.uuid,
         });
       },
-      iconClass: 'fa-solid fa-image fa-fw'
+      iconClass: 'fa-solid fa-image fa-fw',
     },
     {
       label: 'TIDY5E.ShowTokenArt',
-      execute: (params: RegisteredPortraitMenuCommandExecuteParams) => {
-        FoundryAdapter.renderImagePopout(
-          params.actor.prototypeToken.texture.src,
-          {
-            title: FoundryAdapter.localize('TIDY5E.PortraitTitle', {
-              subject: params.actor.name,
-            }),
-            shareable: true,
-            uuid: params.actor.uuid,
-          }
-        );
+      execute: async (params: RegisteredPortraitMenuCommandExecuteParams) => {
+        // Typically, if this token is on the canvas, then this is the image we want to see.
+        let imageSrc = params.actor.token?.texture?.src;
+
+        if (!imageSrc) {
+          // Account for the possibility of wildcard tokens.
+          let images = (await params.actor.getTokenImages()) as string[];
+
+          imageSrc =
+            images.length > 1
+              ? // Grab a random wildcard token upon request... for chaos.
+                images[Math.floor(Math.random() * images.length)]
+              : images[0];
+        }
+
+        FoundryAdapter.renderImagePopout(imageSrc, {
+          title: FoundryAdapter.localize('TIDY5E.PortraitTitle', {
+            subject: params.actor.name,
+          }),
+          shareable: true,
+          uuid: params.actor.uuid,
+        });
       },
-      iconClass: 'fa-regular fa-circle-user fa-fw'
+      iconClass: 'fa-regular fa-circle-user fa-fw',
     },
   ];
 

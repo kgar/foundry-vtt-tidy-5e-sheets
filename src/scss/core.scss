@@ -276,6 +276,91 @@
   .prosemirror.editing-source .editor-container {
     display: none;
   }
+
+  // Lists
+  .separated-list {
+    padding: 0;
+    list-style: none;
+    gap: 0.75rem;
+
+    > li:not(.empty) {
+      + li {
+        margin-top: 0.25rem;
+      }
+      position: relative;
+      padding: 0.5rem;
+      background: var(--t5e-header-background);
+      border: 0.125rem solid var(--t5e-separator-color);
+      border-radius: 0.25rem;
+      box-shadow: 0 0 0.25rem var(--dnd5e-shadow-45);
+
+      .details {
+        gap: 0.25rem;
+        input {
+          height: unset;
+        }
+        input::placeholder {
+          opacity: 0.5;
+        }
+      }
+
+      .list-controls {
+        flex: 0;
+        flex-wrap: nowrap;
+        justify-content: flex-end;
+        gap: inherit;
+
+        button {
+          --size: 1.625rem;
+          flex: 0 0 var(--size);
+          block-size: var(--size);
+          inline-size: var(--size);
+        }
+      }
+    }
+  }
+
+  .favorite-effects {
+    .tidy-switch {
+      --tidy-switch-scale: 0.75;
+    }
+    .suppressed .item-table-cell {
+      color: var(--t5e-tertiary-color);
+    }
+  }
+
+  /* Secret Sections */
+  section.secret {
+    padding: 0 0.3125rem;
+    border-top: 0.0625rem solid var(--t5e-separator-color);
+    border-bottom: 0.0625rem solid var(--t5e-separator-color);
+  }
+
+  &:where([data-tidy-theme-type='light']) section.secret {
+    background: rgba(53, 0, 121, 0.05);
+  }
+
+  &:where([data-tidy-theme-type='light']) section.secret.revealed {
+    background: rgba(0, 53, 0, 0.05);
+  }
+
+  &:where([data-tidy-theme-type='dark']) section.secret {
+    background: rgba(73, 29, 37, 0.35);
+  }
+
+  &:where([data-tidy-theme-type='dark']) section.secret.revealed {
+    background: hsla(120, 100%, 10%, 0.15);
+  }
+
+  section.secret button.reveal {
+    width: unset;
+    line-height: unset;
+    padding: 0 1rem;
+    margin-top: 8px;
+    font-size: var(--font-size-13);
+    border-style: solid;
+    border-width: 1px;
+  }
 }
 
 @import './partials/floating-context-menu';

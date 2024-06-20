@@ -16,6 +16,16 @@
 
   const migrations = [
     {
+      label: localize(
+        'TIDY5E.Settings.Migrations.FavoritesToSystem.sectionTitle',
+      ),
+      migrationTallyVersion: 4,
+      onClick: () =>
+        new BulkMigrationsApplication(
+          CONSTANTS.TAB_MIGRATIONS_FAVORITES_TO_SYSTEM,
+        ).render(true),
+    },
+    {
       label: localize('TIDY5E.Settings.Migrations.CcssToTidy.sectionTitle'),
       migrationTallyVersion: 3,
       onClick: () =>

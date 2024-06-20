@@ -1,12 +1,13 @@
 <script lang="ts">
   import type { CharacterSheetContext } from 'src/types/types';
-  import InventoryList from './InventoryList.svelte';
+  import InventoryList from '../../actor/InventoryList.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import FavoriteFeaturesList from './FavoriteFeaturesList.svelte';
   import FavoriteSpellsList from 'src/sheets/character/parts/FavoriteSpellsList.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import { CONSTANTS } from 'src/constants';
+  import FavoriteEffectsList from './FavoriteEffectsList.svelte';
 
   export let searchCriteria: string = '';
 
@@ -15,7 +16,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="flex-column small-gap">
+<div class="flex-column small-gap" data-tidy-favorites>
   <!--  TODO: Sort favorites based on setting during data item preparation -->
   {#each $context.favorites as section}
     {#if section.show}
@@ -56,6 +57,13 @@
           spells={section.spells}
           {visibleItemIdSubset}
         />
+      {/if}
+      {#if section.type === CONSTANTS.TAB_CHARACTER_EFFECTS}
+        {@const visibleEffectIdSubset = FoundryAdapter.searchEffects(
+          searchCriteria,
+          section.effects.map((e) => e.effect),
+        )}
+        <FavoriteEffectsList {section} {visibleEffectIdSubset} />
       {/if}
     {/if}
   {/each}

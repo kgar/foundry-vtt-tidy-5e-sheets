@@ -1,5 +1,4 @@
 import { CONSTANTS } from 'src/constants';
-import { Inventory } from 'src/features/sections/Inventory';
 import { SheetHelper } from 'tests/helpers/SheetHelper';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
@@ -10,18 +9,21 @@ import {
   testCustomSection,
   verifyItemExistsInSection,
 } from './sections-shared';
+import { InventoryHelpers } from 'tests/helpers/inventory';
 
 sectionsTest.describe('sections core functionality', () => {
   sectionsTest.describe('character', () => {
     const itemsToTest: DefaultSectionTestParams[] = [
-      ...Inventory.inventoryItemTypes.map((itemType) => ({
-        itemCreationArgs: {
-          name: `Test ${itemType}`,
-          type: itemType,
-        },
-        tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
-        sectionKey: itemType,
-      })),
+      ...InventoryHelpers.getSupportedInventoryTypesForTest().map(
+        (itemType) => ({
+          itemCreationArgs: {
+            name: `Test ${itemType}`,
+            type: itemType,
+          },
+          tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+          sectionKey: itemType,
+        })
+      ),
       {
         itemCreationArgs: {
           name: 'Test lvl 1 spell',
@@ -75,18 +77,14 @@ sectionsTest.describe('sections core functionality', () => {
           favoriteItemToTest.itemCreationArgs = {
             ...itemToTest.itemCreationArgs,
             name: `Favorite ${itemToTest.itemCreationArgs.name}`,
-            flags: {
-              ['tidy5e-sheet']: {
-                [TidyFlags.favorite.key]: true,
-              },
-            },
           };
           sectionsTest(
             `${favoriteItemToTest.itemCreationArgs.name} defaults to section key "${favoriteItemToTest.sectionKey}"`,
             async ({ data, sectionPage }) => {
               await testDefaultSection(
                 favoriteItemToTest,
-                new SheetHelper(sectionPage, data.sectionTestCharacter)
+                new SheetHelper(sectionPage, data.sectionTestCharacter),
+                async (item, helper) => await helper.addFavoriteItem(item.uuid)
               );
             }
           );
@@ -111,19 +109,20 @@ sectionsTest.describe('sections core functionality', () => {
           favoriteWithCustomSection.tabId = CONSTANTS.TAB_CHARACTER_ATTRIBUTES;
           favoriteWithCustomSection.itemCreationArgs = {
             ...itemToTest.itemCreationArgs,
-            flags: {
-              ['tidy5e-sheet']: {
-                [TidyFlags.favorite.key]: true,
-              },
-            },
           };
           sectionsTest(
             `${favoriteWithCustomSection.itemCreationArgs.name} can be assigned to custom section "${favoriteWithCustomSection.sectionKey}"`,
             async ({ data, sectionPage }) => {
+              const sheetHelper = new SheetHelper(
+                sectionPage,
+                data.sectionTestCharacter
+              );
+
               await testCustomSection(
                 favoriteWithCustomSection,
-                new SheetHelper(sectionPage, data.sectionTestCharacter),
-                'section'
+                sheetHelper,
+                'section',
+                async (item, helper) => await helper.addFavoriteItem(item.uuid)
               );
             }
           );
@@ -149,7 +148,7 @@ sectionsTest.describe('sections core functionality', () => {
 
   sectionsTest.describe('container', () => {
     const itemsToTest: DefaultSectionTestParams[] = [
-      ...Inventory.inventoryItemTypes.map<DefaultSectionTestParams>(
+      ...InventoryHelpers.getSupportedInventoryTypesForTest().map<DefaultSectionTestParams>(
         (itemType) => ({
           itemCreationArgs: {
             name: `Test ${itemType}`,
@@ -343,7 +342,7 @@ sectionsTest.describe('sections core functionality', () => {
 
   sectionsTest.describe('vehicle', () => {
     const itemsToTest: DefaultSectionTestParams[] = [
-      ...Inventory.inventoryItemTypes.map((t) => ({
+      ...InventoryHelpers.getSupportedInventoryTypesForTest().map((t) => ({
         itemCreationArgs: {
           name: `Custom Action Section Test ${t}`,
           type: t,

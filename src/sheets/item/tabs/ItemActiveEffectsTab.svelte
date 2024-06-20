@@ -5,7 +5,6 @@
   import { settingStore } from 'src/settings/settings';
   import type { ItemSheetContext } from 'src/types/item.types';
   import type { CharacterSheetContext } from 'src/types/types';
-  import { warn } from 'src/utils/logging';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
@@ -17,15 +16,7 @@
   const localize = FoundryAdapter.localize;
 
   function onAddClicked(section: any) {
-    const unsupported = FoundryAdapter.isFoundryV10() && $context.item.isOwned;
-    if (unsupported)
-      return warn(
-        'Managing Active Effects within an Owned Item is not currently supported and will be added in a subsequent update.',
-        true,
-      );
-
     const owner = $context.item;
-
     return FoundryAdapter.addEffect(section.type, owner);
   }
 
@@ -106,24 +97,26 @@
               </div>
               <div class="item-controls active-effect-controls flexrow">
                 {#if $context.editable}
-                  <button
-                    type="button"
-                    class="active-effect-control inline-transparent-button"
-                    title={effect.disabled
-                      ? 'DND5E.EffectEnable'
-                      : 'DND5E.EffectDisable'}
-                    on:click={() =>
-                      effect.update({ disabled: !effect.disabled })}
-                    tabindex={$settingStore.useAccessibleKeyboardSupport
-                      ? 0
-                      : -1}
-                  >
-                    <i
-                      class="fas"
-                      class:fa-check={effect.disabled}
-                      class:fa-times={!effect.disabled}
-                    />
-                  </button>
+                  {#if section.type !== 'enchantment'}
+                    <button
+                      type="button"
+                      class="active-effect-control inline-transparent-button"
+                      title={effect.disabled
+                        ? 'DND5E.EffectEnable'
+                        : 'DND5E.EffectDisable'}
+                      on:click={() =>
+                        effect.update({ disabled: !effect.disabled })}
+                      tabindex={$settingStore.useAccessibleKeyboardSupport
+                        ? 0
+                        : -1}
+                    >
+                      <i
+                        class="fas"
+                        class:fa-check={effect.disabled}
+                        class:fa-times={!effect.disabled}
+                      />
+                    </button>
+                  {/if}
                   <button
                     type="button"
                     class="active-effect-control inline-transparent-button"

@@ -34,6 +34,7 @@
     {@html localize('DND5E.ClassIdentifierHint', {
       identifier: $context.item.identifier,
     })}
+    {localize('DND5E.IdentifierError')}
   </p>
 </ItemFormGroup>
 

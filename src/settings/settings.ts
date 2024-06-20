@@ -18,9 +18,10 @@ import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
-import { BulkMigrationsApplication } from 'src/applications/migrations/BulkMigrationsApplication';
+import { BulkMigrationsApplication } from 'src/migrations/BulkMigrationsApplication';
 import { AboutApplication } from 'src/applications/settings/about/AboutApplication';
 import { ApplyTidySheetPreferencesApplication } from 'src/applications/sheet-preferences/ApplyTidySheetPreferencesApplication';
+import { defaultDarkTheme } from 'src/theme/default-dark-theme';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -85,7 +86,7 @@ export type Tidy5eSetting = {
     /**
      * The default value
      */
-    default: any;
+    default?: any;
     /**
      * Executes when the value of this Setting changes
      * @param data the new value
@@ -105,6 +106,9 @@ export type Tidy5eSetting = {
 export let settingStore: Writable<CurrentSettings>;
 
 export function createSettings() {
+  // TODO: Remove this when Foundry V12 or later is the minimum version.
+  const isV12OrNewer = FoundryAdapter.isFoundryV12OrHigher();
+
   return {
     menus: {
       worldSettings: {
@@ -199,9 +203,17 @@ export function createSettings() {
           hint: 'TIDY5E.Settings.DefaultTheme.hint',
           scope: 'world',
           config: true,
-          type: String,
-          choices: () => getCoreThemes(false),
-          default: CONSTANTS.THEME_ID_DEFAULT_LIGHT,
+          type: isV12OrNewer
+            ? new foundry.data.fields.StringField({
+                required: true,
+                blank: false,
+                initial: CONSTANTS.THEME_ID_DEFAULT_LIGHT,
+                choices: () => getCoreThemes(false),
+              })
+            : String,
+          choices: isV12OrNewer ? undefined : () => getCoreThemes(false),
+          default: isV12OrNewer ? undefined : CONSTANTS.THEME_ID_DEFAULT_LIGHT,
+
           onChange: (data: string) => {
             const theme = getThemeOrDefault(data);
 
@@ -223,9 +235,16 @@ export function createSettings() {
           hint: 'TIDY5E.Settings.SheetTheme.hint',
           scope: 'client',
           config: true,
-          type: String,
-          choices: () => getCoreThemes(true),
-          default: CONSTANTS.THEME_ID_DEFAULT,
+          type: isV12OrNewer
+            ? new foundry.data.fields.StringField({
+                required: true,
+                blank: false,
+                initial: CONSTANTS.THEME_ID_DEFAULT,
+                choices: () => getCoreThemes(true),
+              })
+            : String,
+          choices: isV12OrNewer ? undefined : () => getCoreThemes(true),
+          default: isV12OrNewer ? undefined : CONSTANTS.THEME_ID_DEFAULT,
           onChange: (
             data: string,
             colorPickerEnabledOverride: boolean | null = null
@@ -1699,6 +1718,50 @@ export function createSettings() {
           );
         },
         representsCssVariable: '--t5e-atwill-accent-color',
+      },
+
+      colorPickerRitualOnly: {
+        options: {
+          name: 'TIDY5E.Settings.ColorPickerRitualOnly.name',
+          scope: 'client',
+          type: String,
+          default: defaultLightTheme.variables['--t5e-ritual-only-background'],
+          config: false,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<string>('colorPickerRitualOnly');
+        },
+        representsCssVariable: '--t5e-ritual-only-background',
+      },
+      colorPickerRitualOnlyOutline: {
+        options: {
+          name: 'TIDY5E.Settings.ColorPickerRitualOnlyOutline.name',
+          scope: 'client',
+          type: String,
+          default: defaultLightTheme.variables['--t5e-ritual-only-outline-color'],
+          config: false,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<string>(
+            'colorPickerRitualOnlyOutline'
+          );
+        },
+        representsCssVariable: '--t5e-ritual-only-outline-color',
+      },
+      colorPickerRitualOnlyAccent: {
+        options: {
+          name: 'TIDY5E.Settings.ColorPickerRitualOnlyAccent.name',
+          scope: 'client',
+          type: String,
+          default: defaultLightTheme.variables['--t5e-ritual-only-accent-color'],
+          config: false,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<string>(
+            'colorPickerRitualOnlyAccent'
+          );
+        },
+        representsCssVariable: '--t5e-ritual-only-accent-color',
       },
 
       colorPickerInnate: {

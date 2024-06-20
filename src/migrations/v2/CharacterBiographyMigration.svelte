@@ -2,7 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Actor5e } from 'src/types/types';
   import { debug, error } from 'src/utils/logging';
-  import { migrateBiographicalFlagsToV2Data } from './biographical-flags-to-v2';
+  import { migrateBiographicalFlagsToSystemData } from './biographical-flags-to-system';
   import { CONSTANTS } from 'src/constants';
 
   import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication';
@@ -76,7 +76,7 @@
   async function migrateActor(actor: Actor5e) {
     try {
       debug(`Migrating actor ${actor?.name}...`);
-      migrateBiographicalFlagsToV2Data({
+      migrateBiographicalFlagsToSystemData({
         document: actor,
         clearBiographicalFlagData: deleteFlags,
         overwrite: overwrite,

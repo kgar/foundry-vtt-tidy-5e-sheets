@@ -400,7 +400,7 @@
         "name": "Bordo a Volontà"
     },
     "TIDY5E.Settings.ColorPickerAtWillAccent": {
-        "name": "Colore a Volontà"
+        "name": "Colore A Volontà"
     },
     "TIDY5E.Settings.ColorPickerInnate": {
         "name": "Innato"
@@ -607,7 +607,15 @@
             "overwriteTooltip": "Abilita per sovrascrivere il flag di sezione Tidy esistente. Se deselezionati, solo i flag Tidy vuoti riceveranno i dati CCSS migrati.",
             "deleteFlagsTooltip": "Durante la migrazione da CCSS alle sezioni personalizzate Tidy, i flag CCSS rimangono attivi per impostazione predefinita. Seleziona questa opzione per rimuovere questi flag."
         },
-        "Parent": "Genitore"
+        "Parent": "Genitore",
+        "MigrateCompendia.CompendiumLabel": "Compendio",
+        "MigrateCompendia.SelectionDialogTitle": "Seleziona Compendio da Migrare",
+        "MigrateCompendia.TotalEntriesLabel": "Totale Elementi",
+        "MigrateCompendia.Title": "Migrare Compendio",
+        "FavoritesToSystem": {
+            "sectionTitle": "Preferiti dei Personaggi",
+            "selectionDialogTitle": "Migrazione: Preferiti dei Personaggi a Sistema"
+        }
     },
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtri",
     "TIDY5E.Settings.ColorPickerMagicAccent": {
@@ -792,5 +800,22 @@
     "TIDY5E.UseDefaultDialog": {
         "title": "Conferma: usa predefinito",
         "text": "Sei sicuro di voler utilizzare l'impostazione predefinita?"
+    },
+    "TIDY5E.WorldSettings.TabIcons": {
+        "tabLabel": "Icone"
+    },
+    "TIDY5E.Settings.UseTidySpellSchoolIcons": {
+        "name": "Usa Icone Scuola Magia di Tidy",
+        "hint": "Usa le icone selezionate da Tidy per le scuole di magia. Per personalizzare le icone della scuola di magia tramite CONFIG.DND5E o tramite altri moduli, disabilita questa opzione. Per estendere le icone personalizzate della scuola di magia di Tidy, fai riferimento alla documentazione dell'API Tidy."
+    },
+    "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+Click per saltare il tiro e ricaricare subito) ",
+    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
+        "name": "Bordo Solo Rituale"
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnly": {
+        "name": "Solo Rituale"
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
+        "name": "Colore Solo Rituale"
     }
 }

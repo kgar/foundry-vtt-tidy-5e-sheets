@@ -99,7 +99,7 @@
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_CONTAINER}
           data-key={skillRef.key}
         >
-          {#if $context.editable && !$context.lockSensitiveFields}
+          {#if $context.editable && $context.unlocked}
             {@const activeEffectApplied =
               ActiveEffectsHelper.isActiveEffectAppliedToField(
                 $context.actor,

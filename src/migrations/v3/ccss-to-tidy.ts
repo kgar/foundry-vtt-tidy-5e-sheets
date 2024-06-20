@@ -1,4 +1,4 @@
-import { TidyFlags } from 'src/api';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { Item5e } from 'src/types/item.types';
 import { isNil } from 'src/utils/data';
 import { debug, error } from 'src/utils/logging';
@@ -33,7 +33,9 @@ export async function migrateCcssToTidyForItem({
     }
 
     if (clearCcssFlagData) {
-      item.unsetFlag('custom-character-sheet-sections', 'sectionName');
+      item.update({
+        'flags.custom-character-sheet-sections.-=sectionName': null,
+      });
     }
   } catch (e) {
     error('An error occurred while migrating CCSS data from item.', false, e);

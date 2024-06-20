@@ -122,6 +122,11 @@ export type GenericFavoriteSection = {
   canCreate: false;
 } & TidySectionBase;
 
+export type EffectFavoriteSection = {
+  effects: FavoriteEffectContext[];
+  canCreate: false;
+} & TidySectionBase;
+
 export type CharacterItemPartitions = {
   items: Item5e[];
   spells: Item5e[];
@@ -191,6 +196,7 @@ export type CharacterItemContext = {
   availableLevels?: AvailableLevel[];
   canToggle?: boolean;
   concealDetails?: boolean;
+  favoriteId?: string;
   group?: string;
   hasTarget?: boolean;
   hasUses?: boolean;
@@ -204,12 +210,33 @@ export type CharacterItemContext = {
   parent?: Item5e;
 };
 
+export type TypedEffectFavoriteSection = EffectFavoriteSection & {
+  type: typeof CONSTANTS.TAB_CHARACTER_EFFECTS;
+};
+
+// TODO: Trim to minimum necessary
+export type FavoriteEffectContext = {
+  effect: ActiveEffect5e;
+  effectId: string;
+  id: string;
+  img: string;
+  sort: number;
+  subtitle: string;
+  suppressed: boolean;
+  title: string;
+  toggle: {
+    applicable: boolean;
+    value: boolean;
+  };
+};
+
 export type FavoriteSection =
   | (InventorySection & { type: typeof CONSTANTS.TAB_CHARACTER_INVENTORY })
   | (SpellbookSection & { type: typeof CONSTANTS.TAB_CHARACTER_SPELLBOOK })
   | (CharacterFeatureSection & {
       type: typeof CONSTANTS.TAB_CHARACTER_FEATURES;
     })
+  | TypedEffectFavoriteSection
   | (GenericFavoriteSection & {
       type: typeof CONSTANTS.CHARACTER_FAVORITE_SECTION_GENERIC;
     });
@@ -251,27 +278,31 @@ export type NpcAbilitySection = {
 } & FeatureSection;
 
 export type NpcItemContext = {
+  attunement?: AttunementContext;
+  availableLevels?: AvailableLevel[];
   canToggle?: boolean;
+  concentration?: boolean;
   hasTarget?: boolean;
   hasUses?: boolean;
   isDepleted?: boolean;
   isOnCooldown?: boolean;
   isStack?: boolean;
-  toggleTitle?: string;
-  availableLevels?: AvailableLevel[];
-  concentration?: boolean;
   parent?: Item5e;
+  toggleTitle?: string;
+  totalWeight?: number;
 };
 
 export type NpcSheetContext = {
   appearanceEnrichedHtml: string;
   biographyEnrichedHtml: string;
   bondEnrichedHtml: string;
+  containerPanelItems: ContainerPanelItemContext[];
   encumbrance: any;
   features: NpcAbilitySection[];
   flawEnrichedHtml: string;
   hideEmptySpellbook: boolean;
   idealEnrichedHtml: string;
+  inventory: InventorySection[];
   itemContext: Record<string, NpcItemContext>;
   maxPreparedSpellsTotal: number;
   notes1EnrichedHtml: string;
@@ -281,6 +312,7 @@ export type NpcSheetContext = {
   notesEnrichedHtml: string;
   preparedSpells: number;
   shortRest: (event: Event) => Promise<void>;
+  showContainerPanel: boolean;
   showLegendaryToolbar: boolean;
   showSpellbookTab: boolean;
   spellbook: SpellbookSection[];
@@ -559,4 +591,14 @@ export type DamageModificationContextEntry = {
 export type ActiveEffect5e = any;
 
 // TODO: Get the real typings for this
-export type ActiveEffectContext = any;
+export type ActiveEffectContext = {
+  id: string;
+  name: string;
+  img: string;
+  disabled: boolean;
+  duration: number;
+  source: any;
+  parentId: string;
+  durationParts: string | string[];
+  hasTooltip: boolean;
+};

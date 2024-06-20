@@ -1,7 +1,18 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import type {
+    ContainerSheetContext,
+    ItemSheetContext,
+  } from 'src/types/item.types';
+  import type {
+    CharacterSheetContext,
+    NpcSheetContext,
+    VehicleSheetContext,
+  } from 'src/types/types';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { buildDataset } from 'src/utils/data';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
   export let value: number | null = null;
   export let step: string = 'any';
@@ -47,10 +58,28 @@
     }
   }
 
+  const context =
+    getContext<
+      Readable<
+        | CharacterSheetContext
+        | NpcSheetContext
+        | VehicleSheetContext
+        | ContainerSheetContext
+        | ItemSheetContext
+      >
+    >('context');
+
   $: activeEffectApplied = ActiveEffectsHelper.isActiveEffectAppliedToField(
     document,
     field,
   );
+
+  $: isEnchanted =
+    $context.itemOverrides instanceof Set && $context.itemOverrides.has(field);
+
+  $: overrideTooltip = isEnchanted
+    ? localize('DND5E.Enchantment.Warning.Override')
+    : localize('DND5E.ActiveEffectOverrideWarning');
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -65,9 +94,7 @@
   {max}
   {placeholder}
   on:change={saveChange}
-  data-tooltip={activeEffectApplied
-    ? localize('DND5E.ActiveEffectOverrideWarning')
-    : tooltip}
+  data-tooltip={activeEffectApplied ? overrideTooltip : tooltip}
   disabled={disabled || activeEffectApplied}
   {readonly}
   class={cssClass}
