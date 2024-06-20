@@ -146,7 +146,7 @@
           </div>
         </div>
 
-        {#if 'attunement' in ctx && !FoundryAdapter.concealDetails(item)}
+        {#if ctx.attunement && !FoundryAdapter.concealDetails(item)}
           <i
             class="fas fa-sun icon-attuned {ctx.attunement?.cls ??
               ''} no-pointer-events"
