@@ -14,7 +14,6 @@ import type {
   Utilities,
   ActiveEffect5e,
   NpcAbilitySection,
-  ActorInventoryTypes,
 } from 'src/types/types';
 import { writable } from 'svelte/store';
 import NpcSheet from './npc/NpcSheet.svelte';
@@ -56,7 +55,6 @@ import { TidyFlags } from 'src/api';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import { ActorSheetCustomSectionMixin } from './mixins/Tidy5eBaseActorSheetMixins';
 import { ItemUtils } from 'src/utils/ItemUtils';
-import { Inventory } from 'src/features/sections/Inventory';
 
 export class Tidy5eNpcSheet
   extends ActorSheetCustomSectionMixin(dnd5e.applications.actor.ActorSheet5eNPC)
@@ -202,9 +200,6 @@ export class Tidy5eNpcSheet
 
     const actionListSortMode =
       npcPreferences.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS]?.sort ?? 'm';
-
-    const inventorySortMode =
-      npcPreferences.tabs?.[CONSTANTS.TAB_NPC_INVENTORY]?.sort ?? 'm';
 
     const unlocked =
       FoundryAdapter.isActorSheetUnlocked(this.actor) &&
@@ -546,108 +541,6 @@ export class Tidy5eNpcSheet
           },
         ],
       },
-      [CONSTANTS.TAB_NPC_INVENTORY]: {
-        utilityToolbarCommands: [
-          {
-            title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
-            iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
-            execute: async () => {
-              await SheetPreferencesService.setDocumentTypeTabPreference(
-                this.actor.type,
-                CONSTANTS.TAB_NPC_INVENTORY,
-                'sort',
-                'm'
-              );
-            },
-            visible: inventorySortMode === 'a',
-          },
-          {
-            title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
-            iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
-            execute: async () => {
-              await SheetPreferencesService.setDocumentTypeTabPreference(
-                this.actor.type,
-                CONSTANTS.TAB_NPC_INVENTORY,
-                'sort',
-                'a'
-              );
-            },
-            visible: inventorySortMode === 'm',
-          },
-          {
-            title: FoundryAdapter.localize(
-              'TIDY5E.Commands.HideContainerPanel'
-            ),
-            iconClass: `fas fa-boxes-stacked fa-fw`,
-            execute: () => {
-              TidyFlags.unsetFlag(this.actor, 'showContainerPanel');
-            },
-            visible: !!TidyFlags.tryGetFlag(this.actor, 'showContainerPanel'),
-          },
-          {
-            title: FoundryAdapter.localize(
-              'TIDY5E.Commands.ShowContainerPanel'
-            ),
-            iconClass: `fas fa-box fa-fw`,
-            execute: () => {
-              TidyFlags.setFlag(this.actor, 'showContainerPanel', true);
-            },
-            visible: !TidyFlags.tryGetFlag(this.actor, 'showContainerPanel'),
-          },
-          {
-            title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
-            iconClass: 'fas fa-angles-down',
-            execute: () =>
-              // TODO: Use app.messageBus
-              this.messageBus.set({
-                tabId: CONSTANTS.TAB_NPC_INVENTORY,
-                message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
-              }),
-          },
-          {
-            title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
-            iconClass: 'fas fa-angles-up',
-            execute: () =>
-              // TODO: Use app.messageBus
-              this.messageBus.set({
-                tabId: CONSTANTS.TAB_NPC_INVENTORY,
-                message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
-              }),
-          },
-          {
-            title: FoundryAdapter.localize('TIDY5E.ListLayout'),
-            iconClass: 'fas fa-th-list fa-fw toggle-list',
-            visible: !TidyFlags.inventoryGrid.get(this.actor),
-            execute: () => {
-              TidyFlags.inventoryGrid.set(this.actor);
-            },
-          },
-          {
-            title: FoundryAdapter.localize('TIDY5E.GridLayout'),
-            iconClass: 'fas fa-th-large fa-fw toggle-grid',
-            visible: !!TidyFlags.inventoryGrid.get(this.actor),
-            execute: () => {
-              TidyFlags.inventoryGrid.unset(this.actor);
-            },
-          },
-          {
-            title: FoundryAdapter.localize(
-              'TIDY5E.Utilities.ConfigureSections'
-            ),
-            iconClass: 'fas fa-cog',
-            execute: ({ context }) => {
-              new DocumentTabSectionConfigApplication({
-                document: context.actor,
-                sections: context.inventory,
-                tabId: CONSTANTS.TAB_NPC_INVENTORY,
-                tabTitle: NpcSheetRuntime.getTabTitle(
-                  CONSTANTS.TAB_NPC_INVENTORY
-                ),
-              }).render(true);
-            },
-          },
-        ],
-      },
     };
 
     const context: NpcSheetContext = {
@@ -695,9 +588,6 @@ export class Tidy5eNpcSheet
           relativeTo: this.actor,
         }
       ),
-      containerPanelItems: await Inventory.getContainerPanelItems(
-        defaultDocumentContext.items
-      ),
       customActorTraits: CustomActorTraitsRuntime.getEnabledTraits(
         defaultDocumentContext
       ),
@@ -739,11 +629,6 @@ export class Tidy5eNpcSheet
           relativeTo: this.actor,
         }
       ),
-      showContainerPanel:
-        TidyFlags.tryGetFlag(this.actor, 'showContainerPanel') === true &&
-        Array.from(defaultDocumentContext.items).some(
-          (i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER
-        ),
       showLegendaryToolbar: showLegendaryToolbar,
       lockSensitiveFields: lockSensitiveFields,
       longRest: this._onLongRest.bind(this),
@@ -941,16 +826,13 @@ export class Tidy5eNpcSheet
       (features, item) => {
         const { quantity, uses, recharge, target } = item.system;
         const ctx = (context.itemContext[item.id] ??= {});
-        ctx.attunement = FoundryAdapter.getAttunementContext(item);
         ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
         ctx.hasUses = uses && uses.max > 0;
         ctx.isOnCooldown =
           recharge && !!recharge.value && recharge.charged === false;
         ctx.isDepleted = item.isOnCooldown && uses.per && uses.value > 0;
         ctx.hasTarget = !!target && !['none', ''].includes(target.type);
-        ctx.canToggle = 'equipped' in item.system;
-
-        ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
+        ctx.canToggle = false;
         if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {
           if (this._concentration.items.has(item)) {
             ctx.concentration = true;
@@ -989,16 +871,8 @@ export class Tidy5eNpcSheet
 
     features.classes.items = classes;
 
-    const inventoryTypes = new Set(Inventory.inventoryItemTypes);
-    const inventory: ActorInventoryTypes =
-      Inventory.createDefaultActorInventoryTypes();
-
     // Organize Features
     for (let item of other) {
-      if (inventoryTypes.has(item.type)) {
-        Inventory.applyInventoryItemToSection(inventory, item, {});
-      }
-
       // Handle custom section, if present
       if (TidyFlags.section.get(item)) {
         NpcSheetSections.applyAbilityToSection(features, item, {
@@ -1095,31 +969,6 @@ export class Tidy5eNpcSheet
       // Apply visibility from configuration
       section.show =
         sectionConfigs?.[spellbookTabId]?.[section.key]?.show !== false;
-    });
-
-    context.inventory = SheetSections.sortKeyedSections(
-      Object.values(inventory),
-      sectionConfigs?.[CONSTANTS.TAB_NPC_INVENTORY]
-    );
-
-    const inventorySortMode =
-      npcPreferences.tabs?.[CONSTANTS.TAB_NPC_INVENTORY]?.sort ?? 'm';
-
-    context.inventory.forEach((section) => {
-      // Sort Inventory
-      ItemUtils.sortItems(section.items, inventorySortMode);
-
-      // TODO: Collocate Inventory Sub Items
-      // Filter Inventory
-      section.items = this.itemFilterService.filter(
-        section.items,
-        CONSTANTS.TAB_NPC_INVENTORY
-      );
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_NPC_INVENTORY]?.[section.key]?.show !==
-        false;
     });
   }
 

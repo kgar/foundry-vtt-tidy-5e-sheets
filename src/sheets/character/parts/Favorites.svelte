@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { CharacterSheetContext } from 'src/types/types';
-  import InventoryList from '../../actor/InventoryList.svelte';
+  import InventoryList from './InventoryList.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import FavoriteFeaturesList from './FavoriteFeaturesList.svelte';
   import FavoriteSpellsList from 'src/sheets/character/parts/FavoriteSpellsList.svelte';

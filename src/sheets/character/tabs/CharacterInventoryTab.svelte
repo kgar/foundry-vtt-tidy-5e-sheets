@@ -1,13 +1,9 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type CharacterSheetContext } from 'src/types/types';
-  import type {
-    InventorySection,
-    ItemLayoutMode,
-    NpcSheetContext,
-  } from 'src/types/types';
-  import InventoryList from '../../actor/InventoryList.svelte';
-  import InventoryGrid from '../InventoryGrid.svelte';
+  import type { InventorySection, ItemLayoutMode } from 'src/types/types';
+  import InventoryList from '../parts/InventoryList.svelte';
+  import InventoryGrid from '../parts/InventoryGrid.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import Currency from 'src/sheets/actor/Currency.svelte';
@@ -27,16 +23,16 @@
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
   import { TidyFlags } from 'src/foundry/TidyFlags';
 
-  export let tabId: string;
-  let context =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 
   let searchCriteria: string = '';
 
   let layoutMode: ItemLayoutMode;
-  $: layoutMode = TidyFlags.inventoryGrid.get($context.actor) ? 'grid' : 'list';
+  $: layoutMode = TidyFlags.inventoryGrid.get($context.actor)
+    ? 'grid'
+    : 'list';
 
   $: noItems =
     $context.inventory.some(
@@ -44,20 +40,21 @@
     ) === false;
 
   $: utilityBarCommands =
-    $context.utilities[tabId]?.utilityToolbarCommands ?? [];
+    $context.utilities[CONSTANTS.TAB_CHARACTER_INVENTORY]
+      ?.utilityToolbarCommands ?? [];
 </script>
 
 <UtilityToolbar>
   <Search bind:value={searchCriteria} />
   <PinnedFilterToggles
-    filterGroupName={tabId}
+    filterGroupName={CONSTANTS.TAB_CHARACTER_INVENTORY}
     filters={ItemFilterRuntime.getPinnedFiltersForTab(
       $context.filterPins,
       $context.filterData,
-      tabId,
+      CONSTANTS.TAB_CHARACTER_INVENTORY,
     )}
   />
-  <FilterMenu {tabId} />
+  <FilterMenu tabId={CONSTANTS.TAB_CHARACTER_INVENTORY} />
   {#each utilityBarCommands as command (command.title)}
     <UtilityToolbarCommand
       title={command.title}

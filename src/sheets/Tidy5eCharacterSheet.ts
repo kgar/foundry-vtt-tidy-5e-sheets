@@ -744,6 +744,28 @@ export class Tidy5eCharacterSheet
       );
     }
 
+    let containerPanelItems: ContainerPanelItemContext[] = [];
+    try {
+      let containers = defaultDocumentContext.items
+        .filter((i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER)
+        .toSorted((a: Item5e, b: Item5e) => a.sort - b.sort);
+
+      for (let container of containers) {
+        const capacity =
+          (await container.system.computeCapacity()) as ContainerCapacityContext;
+        containerPanelItems.push({
+          container,
+          ...capacity,
+        });
+      }
+    } catch (e) {
+      error(
+        'An error occurred while preparing containers for the container panel',
+        false,
+        e
+      );
+    }
+
     const context: CharacterSheetContext = {
       ...defaultDocumentContext,
       activateEditors: (node, options) =>
@@ -788,9 +810,7 @@ export class Tidy5eCharacterSheet
         }
       ),
       conditions: conditions,
-      containerPanelItems: await Inventory.getContainerPanelItems(
-        defaultDocumentContext.items
-      ),
+      containerPanelItems: containerPanelItems,
       customActorTraits: CustomActorTraitsRuntime.getEnabledTraits(
         defaultDocumentContext
       ),
@@ -959,10 +979,26 @@ export class Tidy5eCharacterSheet
 
   protected _prepareItems(context: CharacterSheetContext) {
     // Categorize items as inventory, spellbook, features, and classes
-    const inventory: ActorInventoryTypes =
-      Inventory.createDefaultActorInventoryTypes();
-    const favoriteInventory: ActorInventoryTypes =
-      Inventory.createDefaultActorInventoryTypes({ canCreate: false });
+    const inventory: ActorInventoryTypes = {};
+    const favoriteInventory: ActorInventoryTypes = {};
+    for (const type of Inventory.inventoryItemTypes) {
+      inventory[type] = {
+        label: Inventory.getInventoryTypeLabel(type),
+        items: [],
+        dataset: { type },
+        canCreate: true,
+        key: type,
+        show: true,
+      };
+      favoriteInventory[type] = {
+        label: Inventory.getInventoryTypeLabel(type),
+        items: [],
+        dataset: { type },
+        canCreate: false,
+        key: type,
+        show: true,
+      };
+    }
 
     // Partition items by category
     let {
@@ -1067,7 +1103,7 @@ export class Tidy5eCharacterSheet
     for (let i of items) {
       const ctx = (context.itemContext[i.id] ??= {});
       ctx.totalWeight = i.system.totalWeight?.toNearest(0.1);
-      Inventory.applyInventoryItemToSection(inventory, i, {
+      CharacterSheetSections.applyInventoryItemToSection(inventory, i, {
         canCreate: true,
       });
     }
@@ -1076,7 +1112,7 @@ export class Tidy5eCharacterSheet
     for (let i of favorites.items) {
       const ctx = (context.itemContext[i.id] ??= {});
       ctx.totalWeight = i.system.totalWeight?.toNearest(0.1);
-      Inventory.applyInventoryItemToSection(favoriteInventory, i, {
+      CharacterSheetSections.applyInventoryItemToSection(favoriteInventory, i, {
         canCreate: false,
       });
     }

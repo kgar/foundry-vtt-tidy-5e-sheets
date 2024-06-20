@@ -17,7 +17,6 @@ import { TabManager } from './tab/TabManager';
 import type { ActorTabRegistrationOptions } from 'src/api/api.types';
 import { CustomContentManager } from './content/CustomContentManager';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import ActorInventoryTab from 'src/sheets/actor/tabs/ActorInventoryTab.svelte';
 
 export class NpcSheetRuntime {
   private static _content: RegisteredContent<NpcSheetContext>[] = [];
@@ -75,21 +74,6 @@ export class NpcSheetRuntime {
       content: {
         component: ActorJournalTab,
         type: 'svelte',
-      },
-      enabled: (context) => context.owner,
-      layout: 'classic',
-    },
-    {
-      id: 'inventory',
-      title: 'DND5E.Inventory',
-      content: {
-        component: ActorInventoryTab,
-        type: 'svelte',
-        getProps() {
-          return {
-            tabId: CONSTANTS.TAB_NPC_INVENTORY,
-          };
-        },
       },
       enabled: (context) => context.owner,
       layout: 'classic',
