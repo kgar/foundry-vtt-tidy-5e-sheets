@@ -135,6 +135,7 @@ export const CONSTANTS = {
   SHEET_TYPE_NPC: 'npc',
   SHEET_TYPE_VEHICLE: 'vehicle',
   SHEET_TYPE_CONTAINER: 'container',
+  SHEET_TYPE_GROUP: 'group',
   SHEET_LAYOUT_ALL: 'all',
   SHEET_LAYOUT_CLASSIC: 'classic',
   CIRCULAR_PORTRAIT_OPTION_ALL: 'all',
