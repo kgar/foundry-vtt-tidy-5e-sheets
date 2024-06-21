@@ -1178,8 +1178,27 @@ export class Tidy5eNpcSheet
     return null;
   }
 
-  async _onDropSingleItem(...args: any[]) {
-    return super._onDropSingleItem(...args);
+  async _onDropSingleItem(itemData: any) {
+    // Create a Consumable spell scroll on the Inventory tab
+    if (
+      itemData.type === CONSTANTS.ITEM_TYPE_SPELL &&
+      this.currentTabId === CONSTANTS.TAB_NPC_INVENTORY
+    ) {
+      const options: Record<string, unknown> = {};
+
+      if (SettingsProvider.settings.includeFlagsInSpellScrollCreation.get()) {
+        options.flags = itemData.flags;
+      }
+
+      const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(
+        itemData,
+        options
+      );
+
+      return scroll.toObject();
+    }
+
+    return super._onDropSingleItem(itemData);
   }
 
   private _renderMutex = new AsyncMutex();
