@@ -278,27 +278,31 @@ export type NpcAbilitySection = {
 } & FeatureSection;
 
 export type NpcItemContext = {
+  attunement?: AttunementContext;
+  availableLevels?: AvailableLevel[];
   canToggle?: boolean;
+  concentration?: boolean;
   hasTarget?: boolean;
   hasUses?: boolean;
   isDepleted?: boolean;
   isOnCooldown?: boolean;
   isStack?: boolean;
-  toggleTitle?: string;
-  availableLevels?: AvailableLevel[];
-  concentration?: boolean;
   parent?: Item5e;
+  toggleTitle?: string;
+  totalWeight?: number;
 };
 
 export type NpcSheetContext = {
   appearanceEnrichedHtml: string;
   biographyEnrichedHtml: string;
   bondEnrichedHtml: string;
+  containerPanelItems: ContainerPanelItemContext[];
   encumbrance: any;
   features: NpcAbilitySection[];
   flawEnrichedHtml: string;
   hideEmptySpellbook: boolean;
   idealEnrichedHtml: string;
+  inventory: InventorySection[];
   itemContext: Record<string, NpcItemContext>;
   maxPreparedSpellsTotal: number;
   notes1EnrichedHtml: string;
@@ -308,6 +312,7 @@ export type NpcSheetContext = {
   notesEnrichedHtml: string;
   preparedSpells: number;
   shortRest: (event: Event) => Promise<void>;
+  showContainerPanel: boolean;
   showLegendaryToolbar: boolean;
   showSpellbookTab: boolean;
   spellbook: SpellbookSection[];

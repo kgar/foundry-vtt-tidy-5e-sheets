@@ -749,28 +749,6 @@ export class Tidy5eCharacterSheet
       );
     }
 
-    let containerPanelItems: ContainerPanelItemContext[] = [];
-    try {
-      let containers = defaultDocumentContext.items
-        .filter((i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER)
-        .toSorted((a: Item5e, b: Item5e) => a.sort - b.sort);
-
-      for (let container of containers) {
-        const capacity =
-          (await container.system.computeCapacity()) as ContainerCapacityContext;
-        containerPanelItems.push({
-          container,
-          ...capacity,
-        });
-      }
-    } catch (e) {
-      error(
-        'An error occurred while preparing containers for the container panel',
-        false,
-        e
-      );
-    }
-
     const context: CharacterSheetContext = {
       ...defaultDocumentContext,
       activateEditors: (node, options) =>
@@ -815,7 +793,9 @@ export class Tidy5eCharacterSheet
         }
       ),
       conditions: conditions,
-      containerPanelItems: containerPanelItems,
+      containerPanelItems: await Inventory.getContainerPanelItems(
+        defaultDocumentContext.items
+      ),
       customActorTraits: CustomActorTraitsRuntime.getEnabledTraits(
         defaultDocumentContext
       ),
@@ -1295,21 +1275,16 @@ export class Tidy5eCharacterSheet
     for (let item of items) {
       const ctx = (context.itemContext[item.id] ??= {});
       ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
-      CharacterSheetSections.applyInventoryItemToSection(
-        inventory,
-        item,
-        inventoryTypes,
-        {
-          canCreate: true,
-        }
-      );
+      Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
+        canCreate: true,
+      });
     }
 
     // Section favorite items by type
     for (let item of favorites.items) {
       const ctx = (context.itemContext[item.id] ??= {});
       ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
-      CharacterSheetSections.applyInventoryItemToSection(
+      Inventory.applyInventoryItemToSection(
         favoriteInventory,
         item,
         inventoryTypes,
