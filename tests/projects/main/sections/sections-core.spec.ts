@@ -340,6 +340,67 @@ sectionsTest.describe('sections core functionality', () => {
     }
   });
 
+  sectionsTest.describe('NPC - inventory', () => {
+    const itemsToTest: DefaultSectionTestParams[] = [
+      ...InventoryHelpers.getSupportedInventoryTypesForTest().map(
+        (itemType) => ({
+          itemCreationArgs: {
+            name: `Test ${itemType}`,
+            type: itemType,
+          },
+          tabId: CONSTANTS.TAB_NPC_INVENTORY,
+          sectionKey: itemType,
+        })
+      ),
+    ];
+
+    for (const itemToTest of itemsToTest) {
+      sectionsTest.describe(
+        `item: "${itemToTest.itemCreationArgs.name}" | type "${itemToTest.itemCreationArgs.type}"`,
+        () => {
+          sectionsTest(
+            `${itemToTest.itemCreationArgs.name} defaults to section key "${itemToTest.sectionKey}"`,
+            async ({ data, sectionPage }) => {
+              await testDefaultSection(
+                itemToTest,
+                new SheetHelper(sectionPage, data.sectionTestNpc)
+              );
+            }
+          );
+
+          const itemWithCustomSection = structuredClone(itemToTest);
+          itemWithCustomSection.itemCreationArgs.name = `Custom Section ${itemToTest.itemCreationArgs.name}`;
+          itemWithCustomSection.sectionKey = `Custom Section ${itemToTest.sectionKey}`;
+          sectionsTest(
+            `${itemWithCustomSection.itemCreationArgs.name} can be assigned custom section "${itemWithCustomSection.sectionKey}"`,
+            async ({ data, sectionPage }) => {
+              await testCustomSection(
+                itemWithCustomSection,
+                new SheetHelper(sectionPage, data.sectionTestNpc),
+                'section'
+              );
+            }
+          );
+
+          const itemWithCustomActionSection = structuredClone(itemToTest);
+          itemWithCustomActionSection.itemCreationArgs.name = `Custom Action Section ${itemToTest.itemCreationArgs.name}`;
+          itemWithCustomActionSection.sectionKey = `Custom Action Section ${itemToTest.sectionKey}`;
+          itemWithCustomActionSection.tabId = CONSTANTS.TAB_ACTOR_ACTIONS;
+          sectionsTest(
+            `${itemWithCustomActionSection.itemCreationArgs.name} can be assigned custom section "${itemWithCustomActionSection.sectionKey}"`,
+            async ({ data, sectionPage }) => {
+              await testCustomSection(
+                itemWithCustomActionSection,
+                new SheetHelper(sectionPage, data.sectionTestNpc),
+                'actionSection'
+              );
+            }
+          );
+        }
+      );
+    }
+  });
+
   sectionsTest.describe('vehicle', () => {
     const itemsToTest: DefaultSectionTestParams[] = [
       ...InventoryHelpers.getSupportedInventoryTypesForTest().map((t) => ({

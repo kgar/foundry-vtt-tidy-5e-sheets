@@ -64,6 +64,32 @@ sectionsTest.describe(
       });
     });
 
+    sectionsTest('NPC inventory', async ({ data, sectionPage }) => {
+      const sheetHelper = new SheetHelper(sectionPage, data.sectionTestNpc);
+      await runDragDropOrderTest({
+        firstItemRef: await sheetHelper.createEmbeddedItem({
+          name: 'PC Inv Drag Drop First Test Item',
+          type: CONSTANTS.ITEM_TYPE_LOOT,
+          flags: {
+            [CONSTANTS.MODULE_ID]: {
+              [TidyFlags.section.key]: 'PC Drag Drop Sort Test',
+            },
+          },
+        }),
+        secondItemRef: await sheetHelper.createEmbeddedItem({
+          name: 'PC Inv Drag Drop Second Test Item',
+          type: CONSTANTS.ITEM_TYPE_LOOT,
+          flags: {
+            [CONSTANTS.MODULE_ID]: {
+              [TidyFlags.section.key]: 'PC Drag Drop Sort Test',
+            },
+          },
+        }),
+        sheetHelper: sheetHelper,
+        tabId: CONSTANTS.TAB_NPC_INVENTORY,
+      });
+    });
+
     sectionsTest('container contents', async ({ data, sectionPage }) => {
       const characterSheetHelper = new SheetHelper(
         sectionPage,
@@ -148,6 +174,27 @@ sectionsTest.describe(
         sectionKey: sectionKey,
         sheetHelper: new SheetHelper(sectionPage, data.sectionTestNpc),
         tabId: CONSTANTS.TAB_NPC_ABILITIES,
+      });
+    });
+
+    sectionsTest('NPC inventory', async ({ data, sectionPage }) => {
+      const sectionKey = 'Test Drop Sidebar to NPC Abilities Custom Section';
+      const worldHelper = new WorldHelper(sectionPage);
+      const itemRef = await worldHelper.createItem({
+        name: 'Test NPC Inventory Drop From Sidebar',
+        type: CONSTANTS.ITEM_TYPE_LOOT,
+        flags: {
+          [CONSTANTS.MODULE_ID]: {
+            [TidyFlags.section.key]: sectionKey,
+          },
+        },
+      });
+
+      await runSidebarDropToSheetTest({
+        itemRef: itemRef,
+        sectionKey: sectionKey,
+        sheetHelper: new SheetHelper(sectionPage, data.sectionTestNpc),
+        tabId: CONSTANTS.TAB_NPC_INVENTORY,
       });
     });
 
