@@ -76,19 +76,23 @@
         }),
         visible: ({ ctx }) => ctx?.canToggle === true,
       },
-      {
+    );
+
+    if ('favorites' in $context.actor.system) {
+      controls.push({
         component: ItemFavoriteControl,
         props: ({ item }) => ({
           item,
         }),
-      },
-      {
-        component: ItemEditControl,
-        props: ({ item }) => ({
-          item,
-        }),
-      },
-    );
+      });
+    }
+
+    controls.push({
+      component: ItemEditControl,
+      props: ({ item }) => ({
+        item,
+      }),
+    });
 
     if ($context.unlocked) {
       controls.push({
