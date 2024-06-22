@@ -1,7 +1,7 @@
-export function SvelteApplicationMixin(BaseApplication: any) {
+export function SvelteApplicationMixin<TContext>(BaseApplication: any) {
     
     class SvelteApplication extends BaseApplication {
-        async _renderHTML(context, options) {
+        async _renderHTML(context: TContext, options) {
             console.log(context, options);
         }
 

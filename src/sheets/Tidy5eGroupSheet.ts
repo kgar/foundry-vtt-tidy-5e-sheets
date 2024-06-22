@@ -17,4 +17,8 @@ export class Tidy5eGroupSheet extends SvelteApplicationMixin(
       height: 700,
     },
   };
+
+  // TODO: First render, derive options that come from user preference
+
+  
 }
