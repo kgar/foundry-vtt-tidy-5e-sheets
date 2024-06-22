@@ -14,7 +14,7 @@ export class Tidy5eGroupSheet extends SvelteApplicationMixin(
     },
     position: {
       width: 480,
-      height: 'auto',
+      height: 700,
     },
   };
 }
