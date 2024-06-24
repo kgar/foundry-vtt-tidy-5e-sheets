@@ -191,6 +191,12 @@ export type AvailableLevel = {
 
 export type AttunementContext = { icon: string; cls: string; title: string };
 
+export type ContainerInventory = {
+  currency: SomeCurrencyTypeHere; // item.system.currency
+  capacity: {}; // item.system.computeCapacity()
+  inventory: InventorySection[];
+};
+
 export type CharacterItemContext = {
   attunement?: AttunementContext;
   availableLevels?: AvailableLevel[];
@@ -200,6 +206,7 @@ export type CharacterItemContext = {
   group?: string;
   hasTarget?: boolean;
   hasUses?: boolean;
+  inventory: InventorySection[];
   isDepleted?: boolean;
   isOnCooldown?: boolean;
   isStack?: boolean;

@@ -8,7 +8,6 @@ import type {
 import type {
   ExpandedItemData,
   ExpandedItemIdToLocationsMap,
-  InventorySection,
   ItemCardStore,
   LocationToSearchTextMap,
   MessageBus,
