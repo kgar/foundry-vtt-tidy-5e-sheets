@@ -698,7 +698,7 @@ export class Tidy5eCharacterSheet
     const conditions = Object.entries<any>(CONFIG.DND5E.conditionTypes).reduce<
       Dnd5eActorCondition[]
     >((arr, [k, c]) => {
-      if (k === 'diseased') return arr; // Filter out diseased as it's not a real condition.
+      if (c.pseudo) return arr; // Filter out pseudo-conditions.
       const { label: name, icon, reference } = c;
       const id = dnd5e.utils.staticID(`dnd5e${k}`);
       conditionIds.add(id);
@@ -709,7 +709,7 @@ export class Tidy5eCharacterSheet
         reference,
         id: k,
         icon: img ?? icon,
-        disabled: existing ? disabled : !this.actor.statuses.has(k),
+        disabled: existing ? disabled : true,
       });
       return arr;
     }, []);
