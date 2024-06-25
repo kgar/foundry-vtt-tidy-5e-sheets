@@ -934,6 +934,67 @@ export class Tidy5eCharacterSheet
         ) ?? [],
     };
 
+    // Handle inline container contents
+    for (let item of this.actor.items) {
+      // if container, add `contents` prop to ctx
+      if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
+        const ctx = (context.itemContext[item.id] ??= {});
+
+        var contents = item.system.contents.values(); // TODO: apply basic item context values and then partition into inventory
+
+        const inventory = Inventory.getDefaultInventorySections();
+
+        const inventoryTypes = Inventory.getDefaultInventoryTypes();
+
+        // Organize items
+        // Section the items by type
+        for (let item of contents) {
+          const ctx = (context.itemContext[item.id] ??= {});
+          ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
+          Inventory.applyInventoryItemToSection(
+            inventory,
+            item,
+            inventoryTypes,
+            {
+              canCreate: false,
+            }
+          );
+        }
+
+        const sectionConfigs = TidyFlags.sectionConfig.get(this.actor);
+
+        const inventoryArray = SheetSections.sortKeyedSections(
+          Object.values(inventory),
+          sectionConfigs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]
+        );
+
+        inventoryArray.forEach((section) => {
+          // Sort Inventory
+          ItemUtils.sortItems(section.items, inventorySortMode);
+
+          // Filter Inventory
+          section.items = this.itemFilterService.filter(
+            section.items,
+            CONSTANTS.TAB_CHARACTER_INVENTORY
+          );
+
+          // Apply visibility from configuration
+          section.show =
+            sectionConfigs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.[section.key]
+              ?.show !== false;
+        });
+
+        // TODO: Later, refactor so that inventory partitioning and section config can be shared
+
+        ctx.contents = {
+          capacity: await item.system.computeCapacity(),
+          currency: item.system.currency,
+          inventory: inventoryArray,
+        };
+      }
+    }
+
+    // Handle tab selection
     let tabs = await CharacterSheetRuntime.getTabs(context);
 
     const selectedTabs = TidyFlags.tryGetFlag<string[]>(
