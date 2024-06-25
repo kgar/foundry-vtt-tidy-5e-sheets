@@ -1,5 +1,6 @@
 import type { ComponentProps, ComponentType, SvelteComponent } from 'svelte';
 import type {
+  ContainerItemContext,
   Item5e,
   ItemCardContentComponent,
   ItemChatData,
@@ -206,7 +207,7 @@ export type CharacterItemContext = {
   group?: string;
   hasTarget?: boolean;
   hasUses?: boolean;
-  contents?: ItemContextContainerContents;
+  containerContents?: ItemContextContainerContents;
   isDepleted?: boolean;
   isOnCooldown?: boolean;
   isStack?: boolean;
@@ -255,6 +256,7 @@ export type CharacterSheetContext = {
   biographyEnrichedHtml: string;
   bondEnrichedHtml: string;
   containerPanelItems: ContainerPanelItemContext[];
+  containerItemContext?: Record<string, ContainerItemContext>;
   favorites: FavoriteSection[];
   features: CharacterFeatureSection[];
   flawEnrichedHtml: string;

@@ -938,7 +938,7 @@ export class Tidy5eCharacterSheet
     for (let item of this.actor.items) {
       // if container, add `contents` prop to ctx
       if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
-        const ctx = (context.itemContext[item.id] ??= {});
+        const characterItemContext = (context.itemContext[item.id] ??= {});
 
         var contents = item.system.contents.values(); // TODO: apply basic item context values and then partition into inventory
 
@@ -948,9 +948,17 @@ export class Tidy5eCharacterSheet
 
         // Organize items
         // Section the items by type
+        context.containerItemContext ??= {};
+
         for (let item of contents) {
-          const ctx = (context.itemContext[item.id] ??= {});
-          ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
+          const ctx = (context.containerItemContext[item.id] ??= {});
+          ctx.totalWeight = (await item.system.totalWeight).toNearest(0.1);
+          characterItemContext.totalWeight = ctx.totalWeight;
+          ctx.isStack = item.system.quantity > 1;
+          const relativeUuid = item.getRelativeUUID(item.actor);
+          ctx.favoriteId = item.actor.system.favorites.find(
+            (f: CharacterFavorite) => f.id === relativeUuid
+          )?.id;
           Inventory.applyInventoryItemToSection(
             inventory,
             item,
@@ -964,7 +972,7 @@ export class Tidy5eCharacterSheet
         const sectionConfigs = TidyFlags.sectionConfig.get(this.actor);
 
         const inventoryArray = SheetSections.sortKeyedSections(
-          Object.values(inventory),
+          Object.values(inventory).filter((i) => i.items.length),
           sectionConfigs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]
         );
 
@@ -986,7 +994,7 @@ export class Tidy5eCharacterSheet
 
         // TODO: Later, refactor so that inventory partitioning and section config can be shared
 
-        ctx.contents = {
+        characterItemContext.containerContents = {
           capacity: await item.system.computeCapacity(),
           currency: item.system.currency,
           inventory: inventoryArray,

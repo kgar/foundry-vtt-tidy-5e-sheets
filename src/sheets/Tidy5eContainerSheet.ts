@@ -1,7 +1,9 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type {
+  ContainerItemContext,
   ContainerSection,
   ContainerSheetContext,
+  Item5e,
   ItemChatData,
   ItemDescription,
 } from 'src/types/item.types';

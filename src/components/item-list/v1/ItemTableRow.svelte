@@ -172,6 +172,7 @@
   {#if showSummary && chatData}
     <ItemSummary {chatData} {useTransition} {item} />
   {/if}
+  <slot name="after-summary" />
 </div>
 
 <style lang="scss">
@@ -208,7 +209,7 @@
       &.at-will {
         --t5e-item-table-row-background: var(--t5e-atwill-background);
       }
-      
+
       &.ritual-only {
         --t5e-item-table-row-background: var(--t5e-ritual-only-background);
       }

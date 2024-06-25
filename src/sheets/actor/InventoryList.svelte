@@ -33,6 +33,9 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
+  import ContainerContentsList from '../item/parts/ContainerContentsList.svelte';
+  import CapacityBar from 'src/sheets/container/CapacityBar.svelte';
+  import Currency from 'src/sheets/actor/Currency.svelte';
 
   export let primaryColumnName: string;
   export let items: Item5e[];
@@ -267,6 +270,28 @@
               <ClassicControls {controls} params={{ item: item, ctx: ctx }} />
             </ItemTableCell>
           {/if}
+          <svelte:fragment slot="after-summary">
+            {#if 'containerContents' in ctx && !!ctx.containerContents}
+              <CapacityBar
+                container={item}
+                capacity={ctx.containerContents.capacity}
+              />
+              <div
+                style="flex: 1; padding: 0.5rem 1rem 0.25rem 1rem;"
+                class="flex-column extra-small-gap"
+              >
+                <Currency document={item} />
+                <ContainerContentsList
+                  inventory={ctx.containerContents?.inventory ?? []}
+                  {item}
+                  editable={$context.editable}
+                  {visibleItemIdSubset}
+                  itemContext={$context.containerItemContext}
+                  lockItemQuantity={$context.lockItemQuantity}
+                />
+              </div>
+            {/if}
+          </svelte:fragment>
         </ItemTableRow>
       {/each}
       {#if $context.unlocked && section.canCreate}
