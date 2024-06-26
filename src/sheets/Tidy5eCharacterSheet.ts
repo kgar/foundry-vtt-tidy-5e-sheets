@@ -89,6 +89,7 @@ export class Tidy5eCharacterSheet
   card = writable<ItemCardStore>();
   currentTabId: string;
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
+  expandedContainersStore = writable(new Set<string>());
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   itemTableTogglesCache: ItemTableToggleCacheService;
@@ -201,6 +202,21 @@ export class Tidy5eCharacterSheet
           ),
         ],
         ['location', ''],
+        ['expandedContainersStore', this.expandedContainersStore],
+        [
+          'onContainerToggled',
+          (itemId: string) => {
+            this.expandedContainersStore.update((set) => {
+              if (set.has(itemId)) {
+                set.delete(itemId);
+              } else {
+                set.add(itemId);
+              }
+
+              return set;
+            });
+          },
+        ],
         ['expandedItems', new Map(this.expandedItems)],
         ['expandedItemData', new Map(this.expandedItemData)],
       ]),

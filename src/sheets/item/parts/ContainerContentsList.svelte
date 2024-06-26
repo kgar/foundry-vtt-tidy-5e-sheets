@@ -4,8 +4,8 @@
   import TidyTableHeaderRow from 'src/components/table/TidyTableHeaderRow.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ContainerItemContext, Item5e } from 'src/types/item.types';
-  import type { InventorySection } from 'src/types/types';
+  import type { Item5e } from 'src/types/item.types';
+  import type { CharacterItemContext, InventorySection } from 'src/types/types';
   import ItemDeleteControl from 'src/components/item-list/controls/ItemDeleteControl.svelte';
   import ItemEditControl from 'src/components/item-list/controls/ItemEditControl.svelte';
   import ItemTableRowV2 from 'src/components/item-list/v2/ItemTableRowV2.svelte';
@@ -14,13 +14,20 @@
   import ItemName from 'src/components/item-list/ItemName.svelte';
   import InlineFavoriteIcon from 'src/components/item-list/InlineFavoriteIcon.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
+  import CapacityBar from 'src/sheets/container/CapacityBar.svelte';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
+  import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
 
   export let inventory: InventorySection[];
   export let item: Item5e;
   export let editable: boolean;
   // TODO: Use context API to generate visible item ID subset based on search criteria and the items this component knows about
-  export let visibleItemIdSubset: Set<string> | null = null;
-  export let itemContext: Record<string, ContainerItemContext>;
+  export let itemContext: Record<string, CharacterItemContext>;
+  let onContainerToggled = getContext<any>('onContainerToggled');
+  let expandedContainersStore = getContext<Readable<Set<string>>>(
+    'expandedContainersStore',
+  );
   export let lockItemQuantity: boolean;
 
   const classicControls = [
@@ -101,6 +108,19 @@
                   disabled={!FoundryAdapter.canUseItem(item)}
                   {item}
                 />
+                {#if 'containerContents' in ctx && !!ctx.containerContents}
+                  <button
+                    type="button"
+                    class="inline-transparent-button"
+                    on:click={() => onContainerToggled(item.id)}
+                  >
+                    {#if $expandedContainersStore.has(item.id)}
+                      <i class="fa-solid fa-box-open fa-fw" />
+                    {:else}
+                      <i class="fa-solid fa-box fa-fw" />
+                    {/if}
+                  </button>
+                {/if}
                 <!-- This is generally what we want in Tidy Tables / Item Table V2; consider breaking of ItemNameV2 to propagate and replace the old ItemName gradually. -->
                 <ItemName
                   on:toggle={() => toggleSummary()}
@@ -163,6 +183,29 @@
                 </TidyTableCell>
               {/if}
             </ItemTableRowV2>
+            {#if 'containerContents' in ctx && !!ctx.containerContents}
+              <ExpandableContainer
+                expanded={$expandedContainersStore.has(item.id)}
+              >
+                <div
+                  style="flex: 1; padding: 0.25rem 0 0.5rem 1rem; margin-left: 1rem; border-left: 0.0625rem dotted var(--t5e-separator-color);"
+                  class="flex-column extra-small-gap"
+                >
+                  <CapacityBar
+                    container={item}
+                    capacity={ctx.containerContents.capacity}
+                  />
+                  <!-- <Currency document={item} /> -->
+                  <svelte:self
+                    inventory={ctx.containerContents?.inventory ?? []}
+                    {item}
+                    {editable}
+                    {itemContext}
+                    {lockItemQuantity}
+                  />
+                </div>
+              </ExpandableContainer>
+            {/if}
           {/each}
         </svelte:fragment>
       </TidyTable>

@@ -36,6 +36,7 @@
   import ContainerContentsList from '../item/parts/ContainerContentsList.svelte';
   import CapacityBar from 'src/sheets/container/CapacityBar.svelte';
   import Currency from 'src/sheets/actor/Currency.svelte';
+  import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
 
   export let primaryColumnName: string;
   export let items: Item5e[];
@@ -52,6 +53,10 @@
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
+  let onContainerToggled = getContext<any>('onContainerToggled');
+  let expandedContainersStore = getContext<Readable<Set<string>>>(
+    'expandedContainersStore',
+  );
 
   const localize = FoundryAdapter.localize;
   const weightUnit = FoundryAdapter.getWeightUnit();
@@ -190,6 +195,19 @@
         >
           <ItemTableCell primary={true}>
             <ItemUseButton disabled={!$context.editable} {item} />
+            {#if 'containerContents' in ctx && !!ctx.containerContents}
+              <button
+                type="button"
+                class="inline-transparent-button"
+                on:click={() => onContainerToggled(item.id)}
+              >
+                {#if $expandedContainersStore.has(item.id)}
+                  <i class="fa-solid fa-box-open fa-fw" />
+                {:else}
+                  <i class="fa-solid fa-box fa-fw" />
+                {/if}
+              </button>
+            {/if}
             <ItemName
               on:toggle={() => toggleSummary($context.actor)}
               cssClass="extra-small-gap"
@@ -273,24 +291,25 @@
           <svelte:fragment slot="after-summary"></svelte:fragment>
         </ItemTableRow>
         {#if 'containerContents' in ctx && !!ctx.containerContents}
-          <div
-            style="flex: 1; padding: 0.25rem 0 0.5rem 1rem; margin-left: 1rem; border-left: 0.0625rem dotted var(--t5e-separator-color);"
-            class="flex-column extra-small-gap"
-          >
-            <CapacityBar
-              container={item}
-              capacity={ctx.containerContents.capacity}
-            />
-            <!-- <Currency document={item} /> -->
-            <ContainerContentsList
-              inventory={ctx.containerContents?.inventory ?? []}
-              {item}
-              editable={$context.editable}
-              {visibleItemIdSubset}
-              itemContext={$context.containerItemContext}
-              lockItemQuantity={$context.lockItemQuantity}
-            />
-          </div>
+          <ExpandableContainer expanded={$expandedContainersStore.has(item.id)}>
+            <div
+              style="flex: 1; padding: 0.25rem 0 0.5rem 1rem; margin-left: 1rem; border-left: 0.0625rem dotted var(--t5e-separator-color);"
+              class="flex-column extra-small-gap"
+            >
+              <CapacityBar
+                container={item}
+                capacity={ctx.containerContents.capacity}
+              />
+              <!-- <Currency document={item} /> -->
+              <ContainerContentsList
+                inventory={ctx.containerContents?.inventory ?? []}
+                {item}
+                editable={$context.editable}
+                itemContext={$context.itemContext}
+                lockItemQuantity={$context.lockItemQuantity}
+              />
+            </div>
+          </ExpandableContainer>
         {/if}
       {/each}
       {#if $context.unlocked && section.canCreate}
