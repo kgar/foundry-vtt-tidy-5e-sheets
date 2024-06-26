@@ -38,8 +38,6 @@
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_TABLE}
   data-tidy-section-key={key}
 >
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
   <slot name="header" />
   <ExpandableContainer expanded={$expandedState.expanded}>
     <div class="item-table-body">

@@ -270,29 +270,28 @@
               <ClassicControls {controls} params={{ item: item, ctx: ctx }} />
             </ItemTableCell>
           {/if}
-          <svelte:fragment slot="after-summary">
-            {#if 'containerContents' in ctx && !!ctx.containerContents}
-              <CapacityBar
-                container={item}
-                capacity={ctx.containerContents.capacity}
-              />
-              <div
-                style="flex: 1; padding: 0.5rem 1rem 0.25rem 1rem;"
-                class="flex-column extra-small-gap"
-              >
-                <Currency document={item} />
-                <ContainerContentsList
-                  inventory={ctx.containerContents?.inventory ?? []}
-                  {item}
-                  editable={$context.editable}
-                  {visibleItemIdSubset}
-                  itemContext={$context.containerItemContext}
-                  lockItemQuantity={$context.lockItemQuantity}
-                />
-              </div>
-            {/if}
-          </svelte:fragment>
+          <svelte:fragment slot="after-summary"></svelte:fragment>
         </ItemTableRow>
+        {#if 'containerContents' in ctx && !!ctx.containerContents}
+          <div
+            style="flex: 1; padding: 0.25rem 0 0.5rem 1rem; margin-left: 1rem; border-left: 0.0625rem dotted var(--t5e-separator-color);"
+            class="flex-column extra-small-gap"
+          >
+            <CapacityBar
+              container={item}
+              capacity={ctx.containerContents.capacity}
+            />
+            <!-- <Currency document={item} /> -->
+            <ContainerContentsList
+              inventory={ctx.containerContents?.inventory ?? []}
+              {item}
+              editable={$context.editable}
+              {visibleItemIdSubset}
+              itemContext={$context.containerItemContext}
+              lockItemQuantity={$context.lockItemQuantity}
+            />
+          </div>
+        {/if}
       {/each}
       {#if $context.unlocked && section.canCreate}
         <ItemTableFooter actor={$context.actor} {section} isItem={true} />
