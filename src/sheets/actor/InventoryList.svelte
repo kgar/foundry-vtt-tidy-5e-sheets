@@ -32,11 +32,10 @@
   import { coalesce } from 'src/utils/formatting';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
-  import { TidyFlags } from 'src/foundry/TidyFlags';
   import ContainerContentsList from '../item/parts/ContainerContentsList.svelte';
   import CapacityBar from 'src/sheets/container/CapacityBar.svelte';
-  import Currency from 'src/sheets/actor/Currency.svelte';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
+  import type { InlineContainerService } from 'src/features/inline-container/InlineContainerService';
 
   export let primaryColumnName: string;
   export let items: Item5e[];
@@ -53,9 +52,8 @@
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
-  let onContainerToggled = getContext<any>('onContainerToggled');
-  let expandedContainersStore = getContext<Readable<Set<string>>>(
-    'expandedContainersStore',
+  let inlineContainerService = getContext<InlineContainerService>(
+    'inlineContainerService',
   );
 
   const localize = FoundryAdapter.localize;
@@ -199,9 +197,9 @@
               <button
                 type="button"
                 class="inline-transparent-button"
-                on:click={() => onContainerToggled(item.id)}
+                on:click={() => inlineContainerService.toggle(item.id)}
               >
-                {#if $expandedContainersStore.has(item.id)}
+                {#if inlineContainerService.$store.has(item.id)}
                   <i class="fa-solid fa-box-open fa-fw" />
                 {:else}
                   <i class="fa-solid fa-box fa-fw" />
@@ -291,7 +289,9 @@
           <svelte:fragment slot="after-summary"></svelte:fragment>
         </ItemTableRow>
         {#if 'containerContents' in ctx && !!ctx.containerContents}
-          <ExpandableContainer expanded={$expandedContainersStore.has(item.id)}>
+          <ExpandableContainer
+            expanded={inlineContainerService.$store.has(item.id)}
+          >
             <div
               style="flex: 1; padding: 0.25rem 0 0.5rem 1rem; margin-left: 1rem; border-left: 0.0625rem dotted var(--t5e-separator-color);"
               class="flex-column extra-small-gap"
@@ -307,6 +307,7 @@
                 editable={$context.editable}
                 itemContext={$context.itemContext}
                 lockItemQuantity={$context.lockItemQuantity}
+                {inlineContainerService}
               />
             </div>
           </ExpandableContainer>

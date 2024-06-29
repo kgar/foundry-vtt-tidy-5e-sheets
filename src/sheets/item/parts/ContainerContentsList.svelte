@@ -18,16 +18,14 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
+    import { InlineContainerService } from 'src/features/inline-container/InlineContainerService';
 
   export let inventory: InventorySection[];
   export let item: Item5e;
   export let editable: boolean;
   // TODO: Use context API to generate visible item ID subset based on search criteria and the items this component knows about
   export let itemContext: Record<string, CharacterItemContext>;
-  let onContainerToggled = getContext<any>('onContainerToggled');
-  let expandedContainersStore = getContext<Readable<Set<string>>>(
-    'expandedContainersStore',
-  );
+  export let inlineContainerService: InlineContainerService;
   export let lockItemQuantity: boolean;
 
   const classicControls = [
@@ -112,9 +110,9 @@
                   <button
                     type="button"
                     class="inline-transparent-button"
-                    on:click={() => onContainerToggled(item.id)}
+                    on:click={() => inlineContainerService.toggle(item.id)}
                   >
-                    {#if $expandedContainersStore.has(item.id)}
+                    {#if inlineContainerService.$store.has(item.id)}
                       <i class="fa-solid fa-box-open fa-fw" />
                     {:else}
                       <i class="fa-solid fa-box fa-fw" />
@@ -185,7 +183,7 @@
             </ItemTableRowV2>
             {#if 'containerContents' in ctx && !!ctx.containerContents}
               <ExpandableContainer
-                expanded={$expandedContainersStore.has(item.id)}
+                expanded={inlineContainerService.$store.has(item.id)}
               >
                 <div
                   style="flex: 1; padding: 0.25rem 0 0.5rem 1rem; margin-left: 1rem; border-left: 0.0625rem dotted var(--t5e-separator-color);"

@@ -72,6 +72,7 @@ import type {
 } from 'src/foundry/dnd5e.types';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { TidyFlags } from 'src/foundry/TidyFlags';
+import { InlineContainerService } from 'src/features/inline-container/InlineContainerService';
 
 export class Tidy5eCharacterSheet
   extends ActorSheetCustomSectionMixin(
@@ -89,7 +90,7 @@ export class Tidy5eCharacterSheet
   card = writable<ItemCardStore>();
   currentTabId: string;
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
-  expandedContainersStore = writable(new Set<string>());
+  inlineContainerService = new InlineContainerService();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   itemTableTogglesCache: ItemTableToggleCacheService;
@@ -202,21 +203,7 @@ export class Tidy5eCharacterSheet
           ),
         ],
         ['location', ''],
-        ['expandedContainersStore', this.expandedContainersStore],
-        [
-          'onContainerToggled',
-          (itemId: string) => {
-            this.expandedContainersStore.update((set) => {
-              if (set.has(itemId)) {
-                set.delete(itemId);
-              } else {
-                set.add(itemId);
-              }
-
-              return set;
-            });
-          },
-        ],
+        ['inlineContainerService', this.inlineContainerService],
         ['expandedItems', new Map(this.expandedItems)],
         ['expandedItemData', new Map(this.expandedItemData)],
       ]),
