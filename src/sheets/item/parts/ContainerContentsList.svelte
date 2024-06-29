@@ -200,6 +200,7 @@
                     {editable}
                     {itemContext}
                     {lockItemQuantity}
+                    {inlineContainerService}
                   />
                 </div>
               </ExpandableContainer>
