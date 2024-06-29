@@ -56,6 +56,8 @@
     'inlineContainerService',
   );
 
+  $: inlineContainerServiceStore = inlineContainerService.store;
+
   const localize = FoundryAdapter.localize;
   const weightUnit = FoundryAdapter.getWeightUnit();
 
@@ -199,7 +201,7 @@
                 class="inline-transparent-button"
                 on:click={() => inlineContainerService.toggle(item.id)}
               >
-                {#if inlineContainerService.$store.has(item.id)}
+                {#if $inlineContainerServiceStore.has(item.id)}
                   <i class="fa-solid fa-box-open fa-fw" />
                 {:else}
                   <i class="fa-solid fa-box fa-fw" />
@@ -290,7 +292,7 @@
         </ItemTableRow>
         {#if 'containerContents' in ctx && !!ctx.containerContents}
           <ExpandableContainer
-            expanded={inlineContainerService.$store.has(item.id)}
+            expanded={$inlineContainerServiceStore.has(item.id)}
           >
             <div
               style="flex: 1; padding: 0.25rem 0 0.5rem 1rem; margin-left: 1rem; border-left: 0.0625rem dotted var(--t5e-separator-color);"

@@ -15,10 +15,8 @@
   import InlineFavoriteIcon from 'src/components/item-list/InlineFavoriteIcon.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import CapacityBar from 'src/sheets/container/CapacityBar.svelte';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
-    import { InlineContainerService } from 'src/features/inline-container/InlineContainerService';
+  import { InlineContainerService } from 'src/features/inline-container/InlineContainerService';
 
   export let inventory: InventorySection[];
   export let item: Item5e;
@@ -27,6 +25,8 @@
   export let itemContext: Record<string, CharacterItemContext>;
   export let inlineContainerService: InlineContainerService;
   export let lockItemQuantity: boolean;
+
+  $: inlineContainerServiceStore = inlineContainerService.store;
 
   const classicControls = [
     {
@@ -112,7 +112,7 @@
                     class="inline-transparent-button"
                     on:click={() => inlineContainerService.toggle(item.id)}
                   >
-                    {#if inlineContainerService.$store.has(item.id)}
+                    {#if $inlineContainerServiceStore.has(item.id)}
                       <i class="fa-solid fa-box-open fa-fw" />
                     {:else}
                       <i class="fa-solid fa-box fa-fw" />
@@ -183,7 +183,7 @@
             </ItemTableRowV2>
             {#if 'containerContents' in ctx && !!ctx.containerContents}
               <ExpandableContainer
-                expanded={inlineContainerService.$store.has(item.id)}
+                expanded={$inlineContainerServiceStore.has(item.id)}
               >
                 <div
                   style="flex: 1; padding: 0.25rem 0 0.5rem 1rem; margin-left: 1rem; border-left: 0.0625rem dotted var(--t5e-separator-color);"
