@@ -172,7 +172,6 @@
   {#if showSummary && chatData}
     <ItemSummary {chatData} {useTransition} {item} />
   {/if}
-  <slot name="after-summary" />
 </div>
 
 <style lang="scss">

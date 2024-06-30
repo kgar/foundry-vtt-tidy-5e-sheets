@@ -288,7 +288,6 @@
               <ClassicControls {controls} params={{ item: item, ctx: ctx }} />
             </ItemTableCell>
           {/if}
-          <svelte:fragment slot="after-summary"></svelte:fragment>
         </ItemTableRow>
         {#if 'containerContents' in ctx && !!ctx.containerContents}
           <ExpandableContainer
