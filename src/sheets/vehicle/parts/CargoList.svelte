@@ -102,7 +102,7 @@
           uuid: item.uuid,
         }}
         {item}
-        cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
+        cssClass={FoundryAdapter.getInventoryRowClasses(item)}
       >
         <ItemTableCell primary={true}>
           <ItemUseButton disabled={!$context.editable} {item} />

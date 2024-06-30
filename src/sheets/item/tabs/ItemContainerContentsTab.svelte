@@ -169,7 +169,7 @@
                   hidden={!visibleItemIdSubset.has(item.id)}
                   rowClass={FoundryAdapter.getInventoryRowClasses(
                     item,
-                    $context.itemContext[item.id],
+                    $context.itemContext[item.id]?.attunement,
                   )}
                   let:toggleSummary
                   contextMenu={{

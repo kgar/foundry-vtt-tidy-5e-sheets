@@ -1,5 +1,12 @@
 import type { ComponentType, SvelteComponent } from 'svelte';
-import type { CustomContent, Tab, TidySectionBase, Utilities } from './types';
+import type {
+  AttunementContext,
+  CustomContent,
+  ItemContextContainerContents,
+  Tab,
+  TidySectionBase,
+  Utilities,
+} from './types';
 import type { DocumentPreparationWarning } from './types';
 import type {
   DocumentFilters,
@@ -56,6 +63,8 @@ export type ContainerItemContext = {
   totalWeight?: number;
   isStack?: boolean;
   favoriteId?: string;
+  attunement?: AttunementContext;
+  containerContents?: ItemContextContainerContents;
 };
 
 export type ContainerSheetContext = {

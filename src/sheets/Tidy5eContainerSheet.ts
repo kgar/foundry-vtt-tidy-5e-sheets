@@ -158,6 +158,8 @@ export class Tidy5eKgarContainerSheet
       }
     });
 
+    // TODO: Populate `containerContents?: ItemContextContainerContents;` for item context.
+
     // Backfill required section data
     Object.assign(defaultDocumentContext.inventory.contents, {
       show: true,

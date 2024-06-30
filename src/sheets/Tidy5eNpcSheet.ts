@@ -60,6 +60,7 @@ import type { RestConfiguration } from 'src/foundry/dnd5e.types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { Inventory } from 'src/features/sections/Inventory';
+import { InlineContainerService } from 'src/features/inline-container/InlineContainerService';
 
 export class Tidy5eNpcSheet
   extends ActorSheetCustomSectionMixin(dnd5e.applications.actor.ActorSheet5eNPC)
@@ -75,6 +76,7 @@ export class Tidy5eNpcSheet
   card = writable<ItemCardStore>();
   currentTabId: string;
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
+  inlineContainerService = new InlineContainerService();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   itemTableTogglesCache: ItemTableToggleCacheService;
@@ -171,6 +173,7 @@ export class Tidy5eNpcSheet
         ],
         ['onSearch', this.onSearch.bind(this)],
         ['location', ''],
+        ['inlineContainerService', this.inlineContainerService],
         ['expandedItems', new Map(this.expandedItems)],
         ['expandedItemData', new Map(this.expandedItemData)],
         [

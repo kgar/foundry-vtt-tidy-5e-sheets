@@ -198,7 +198,7 @@
                     uuid: item.uuid,
                   }}
                   {item}
-                  cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
+                  cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx?.attunement)}
                   hidden={visibleItemIdSubset !== null &&
                     !visibleItemIdSubset.has(item.id)}
                 >

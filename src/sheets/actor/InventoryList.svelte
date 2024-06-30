@@ -134,7 +134,7 @@
 
     return FoundryAdapter.getInventoryRowClasses(
       item,
-      $context.itemContext[item.id],
+      $context.itemContext[item.id]?.attunement,
       extras,
     );
   }

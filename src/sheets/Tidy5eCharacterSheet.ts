@@ -20,8 +20,6 @@ import {
   type MessageBusMessage,
   type MessageBus,
   type Utilities,
-  type ContainerPanelItemContext,
-  type ContainerCapacityContext,
   type ActiveEffect5e,
   type ActorInventoryTypes,
   type CharacterItemPartitions,
@@ -940,69 +938,66 @@ export class Tidy5eCharacterSheet
     // Handle inline container contents
     for (let item of this.actor.items) {
       // if container, add `contents` prop to ctx
-      if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
-        const characterItemContext = (context.itemContext[item.id] ??= {});
+      if (item.type !== CONSTANTS.ITEM_TYPE_CONTAINER) {
+        continue;
+      }
 
-        var contents = item.system.contents.values(); // TODO: apply basic item context values and then partition into inventory
+      const characterItemContext = (context.itemContext[item.id] ??= {});
 
-        const inventory = Inventory.getDefaultInventorySections();
+      var contents = item.system.contents.values(); // TODO: apply basic item context values and then partition into inventory
 
-        const inventoryTypes = Inventory.getDefaultInventoryTypes();
+      const inventory = Inventory.getDefaultInventorySections();
 
-        // Organize items
-        // Section the items by type
-        context.containerItemContext ??= {};
+      const inventoryTypes = Inventory.getDefaultInventoryTypes();
 
-        for (let item of contents) {
-          const ctx = (context.containerItemContext[item.id] ??= {});
-          ctx.totalWeight = (await item.system.totalWeight).toNearest(0.1);
-          characterItemContext.totalWeight = ctx.totalWeight;
-          ctx.isStack = item.system.quantity > 1;
-          const relativeUuid = item.getRelativeUUID(item.actor);
-          ctx.favoriteId = item.actor.system.favorites.find(
-            (f: CharacterFavorite) => f.id === relativeUuid
-          )?.id;
-          Inventory.applyInventoryItemToSection(
-            inventory,
-            item,
-            inventoryTypes,
-            {
-              canCreate: false,
-            }
-          );
-        }
+      // Organize items
+      // Section the items by type
+      context.containerItemContext ??= {};
 
-        const sectionConfigs = TidyFlags.sectionConfig.get(this.actor);
+      for (let item of contents) {
+        const ctx = (context.containerItemContext[item.id] ??= {});
+        ctx.totalWeight = (await item.system.totalWeight).toNearest(0.1);
+        characterItemContext.totalWeight = ctx.totalWeight;
+        ctx.isStack = item.system.quantity > 1;
+        const relativeUuid = item.getRelativeUUID(item.actor);
+        ctx.favoriteId = item.actor.system.favorites.find(
+          (f: CharacterFavorite) => f.id === relativeUuid
+        )?.id;
+        Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
+          canCreate: false,
+        });
+      }
 
-        const inventoryArray = SheetSections.sortKeyedSections(
-          Object.values(inventory).filter((i) => i.items.length),
-          sectionConfigs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]
+      const sectionConfigs = TidyFlags.sectionConfig.get(this.actor);
+
+      const inventoryArray = SheetSections.sortKeyedSections(
+        Object.values(inventory).filter((i) => i.items.length),
+        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]
+      );
+
+      inventoryArray.forEach((section) => {
+        // Sort Inventory
+        ItemUtils.sortItems(section.items, inventorySortMode);
+
+        // Filter Inventory
+        section.items = this.itemFilterService.filter(
+          section.items,
+          CONSTANTS.TAB_CHARACTER_INVENTORY
         );
 
-        inventoryArray.forEach((section) => {
-          // Sort Inventory
-          ItemUtils.sortItems(section.items, inventorySortMode);
+        // Apply visibility from configuration
+        section.show =
+          sectionConfigs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.[section.key]
+            ?.show !== false;
+      });
 
-          // Filter Inventory
-          section.items = this.itemFilterService.filter(
-            section.items,
-            CONSTANTS.TAB_CHARACTER_INVENTORY
-          );
+      // TODO: Later, refactor so that inventory partitioning and section config can be shared
 
-          // Apply visibility from configuration
-          section.show =
-            sectionConfigs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.[section.key]
-              ?.show !== false;
-        });
-
-        // TODO: Later, refactor so that inventory partitioning and section config can be shared
-
-        characterItemContext.containerContents = {
-          capacity: await item.system.computeCapacity(),
-          currency: item.system.currency,
-          inventory: inventoryArray,
-        };
-      }
+      characterItemContext.containerContents = {
+        capacity: await item.system.computeCapacity(),
+        currency: item.system.currency,
+        inventory: inventoryArray,
+      };
     }
 
     // Handle tab selection

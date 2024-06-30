@@ -310,15 +310,15 @@ export const FoundryAdapter = {
   getProperty<T = unknown>(obj: any, path: string): T | undefined {
     return foundry.utils.getProperty(obj, path);
   },
-  getInventoryRowClasses(item: Item5e, ctx?: any, extras?: string[]): string {
+  getInventoryRowClasses(item: Item5e, attunementContext?: AttunementContext, extras?: string[]): string {
     const itemClasses: string[] = [];
 
     if (item?.system?.properties?.has('mgc')) {
       itemClasses.push('magic-item');
     }
 
-    if (ctx?.attunement?.cls && !FoundryAdapter.concealDetails(item)) {
-      itemClasses.push(ctx.attunement.cls);
+    if (attunementContext?.cls && !FoundryAdapter.concealDetails(item)) {
+      itemClasses.push(attunementContext.cls);
     }
 
     if (item?.system?.equipped) {

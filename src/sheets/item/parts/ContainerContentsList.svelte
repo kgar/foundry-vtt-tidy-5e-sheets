@@ -5,7 +5,11 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Item5e } from 'src/types/item.types';
-  import type { CharacterItemContext, InventorySection } from 'src/types/types';
+  import type {
+    AttunementContext,
+    InventorySection,
+    ItemContextContainerContents,
+  } from 'src/types/types';
   import ItemDeleteControl from 'src/components/item-list/controls/ItemDeleteControl.svelte';
   import ItemEditControl from 'src/components/item-list/controls/ItemEditControl.svelte';
   import ItemTableRowV2 from 'src/components/item-list/v2/ItemTableRowV2.svelte';
@@ -21,10 +25,18 @@
   export let inventory: InventorySection[];
   export let item: Item5e;
   export let editable: boolean;
-  // TODO: Use context API to generate visible item ID subset based on search criteria and the items this component knows about
-  export let itemContext: Record<string, CharacterItemContext>;
+  export let itemContext: Record<
+    string,
+    {
+      attunement?: AttunementContext;
+      favoriteId?: string;
+      totalWeight?: number;
+      containerContents?: ItemContextContainerContents;
+    }
+  >;
   export let inlineContainerService: InlineContainerService;
   export let lockItemQuantity: boolean;
+  // TODO: Use context API to generate visible item ID subset based on search criteria and the items this component knows about
 
   $: inlineContainerServiceStore = inlineContainerService.store;
 
@@ -93,7 +105,7 @@
               {hidden}
               rowClass={FoundryAdapter.getInventoryRowClasses(
                 item,
-                itemContext[item.id],
+                itemContext[item.id]?.attunement,
               )}
               let:toggleSummary
               contextMenu={{
