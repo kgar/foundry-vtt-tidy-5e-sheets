@@ -7,6 +7,7 @@ import type {
   InventorySection,
 } from 'src/types/types';
 import { error } from 'src/utils/logging';
+import type { SheetTabSectionConfigs } from './sections.types';
 
 export class Inventory {
   static getDefaultInventoryTypes(): string[] {
@@ -96,5 +97,14 @@ export class Inventory {
       );
     }
     return containerPanelItems;
+  }
+
+  static getInventory(items: Item5e, sectionConfigs: SheetTabSectionConfigs): InventorySection[] {
+    throw new Error("TODO: Implement; does not apply section configs")
+  }
+  
+  // TODO: Can this be completely generalized for all section types?
+  static applyInventorySectionConfigs(): InventorySection[] {
+    throw new Error("TODO: Implement; steal the inventory section config application code from PC and container. Ensure no differences, else account for differences")
   }
 }
