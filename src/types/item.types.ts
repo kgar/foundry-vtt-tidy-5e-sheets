@@ -66,6 +66,8 @@ export type ContainerSheetContext = {
     options?: { bindSecrets?: boolean }
   ) => void;
   appId: string;
+  // TODO: Determine if this is clear enough to differentiate from the original container sheet.
+  containerContents: ContainerContents,
   filterData: DocumentFilters;
   itemContext: Record<string, ContainerItemContext>;
   itemDescriptions: ItemDescription[];
