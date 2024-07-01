@@ -1,5 +1,5 @@
 import type { ComponentType, SvelteComponent } from 'svelte';
-import type { CustomContent, Tab, TidySectionBase, Utilities } from './types';
+import type { AttunementContext, CustomContent, InventorySection, Tab, TidySectionBase, Utilities } from './types';
 import type { DocumentPreparationWarning } from './types';
 import type {
   DocumentFilters,
@@ -56,6 +56,8 @@ export type ContainerItemContext = {
   totalWeight?: number;
   isStack?: boolean;
   favoriteId?: string;
+  attunement?: AttunementContext;
+  containerContents?: ContainerContents;
 };
 
 export type ContainerSheetContext = {
@@ -78,3 +80,10 @@ export type ContainerSheetContext = {
 } & Record<string, any>;
 
 export type ContainerSection = { items: Item5e[] } & TidySectionBase;
+
+export type ContainerContents = {
+  capacity: { max: number; value: number; units: string; pct: number }; // item.system.computeCapacity()
+  contents: InventorySection[];
+  currency: Record<string, number>; // item.system.currency
+  itemContext: Record<string, ContainerItemContext>;
+}
