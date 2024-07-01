@@ -1,6 +1,5 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type {
-  ContainerSection,
   ContainerSheetContext,
   ItemChatData,
   ItemDescription,
@@ -8,7 +7,6 @@ import type {
 import type {
   ExpandedItemData,
   ExpandedItemIdToLocationsMap,
-  InventorySection,
   ItemCardStore,
   LocationToSearchTextMap,
   MessageBus,
@@ -20,7 +18,7 @@ import type {
   Tab,
   Utilities,
 } from 'src/types/types';
-import { debug, error } from 'src/utils/logging';
+import { debug } from 'src/utils/logging';
 import { get, writable } from 'svelte/store';
 import { CustomContentRenderer } from './CustomContentRenderer';
 import {
@@ -43,12 +41,10 @@ import { CONSTANTS } from 'src/constants';
 import { AsyncMutex } from 'src/utils/mutex';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
-import { ContainerSheetSections } from 'src/features/sections/ContainerSheetSections';
-import { SheetSections } from 'src/features/sections/SheetSections';
-import { TidyFlags } from 'src/foundry/TidyFlags';
-import { Inventory } from 'src/features/sections/Inventory';
 import type { CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { TidyHooks } from 'src/foundry/TidyHooks';
+import { InlineContainerService } from 'src/features/inline-container/InlineContainerService';
+import { Container } from 'src/features/inline-container/Container';
 
 export class Tidy5eKgarContainerSheet
   extends dnd5e.applications.item.ContainerSheet
@@ -65,6 +61,7 @@ export class Tidy5eKgarContainerSheet
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
+  inlineContainerService = new InlineContainerService();
   card = writable<ItemCardStore>();
   itemFilterService: ItemFilterService;
   subscriptionsService: StoreSubscriptionsService;
@@ -122,6 +119,7 @@ export class Tidy5eKgarContainerSheet
       ['expandedItems', new Map(this.expandedItems)],
       ['expandedItemData', new Map(this.expandedItemData)],
       ['messageBus', this.messageBus],
+      ['inlineContainerService', this.inlineContainerService],
       [
         'onFilter',
         this.itemFilterService.onFilter.bind(this.itemFilterService),
@@ -157,58 +155,14 @@ export class Tidy5eKgarContainerSheet
       }
     });
 
-    // Backfill required section data
-    Object.assign(defaultDocumentContext.inventory.contents, {
-      show: true,
-      key: CONSTANTS.TAB_CONTAINER_SECTION_CONTENTS,
-    });
-
-    const containerPreferences = SheetPreferencesService.getByType(
-      this.item.type
-    );
-
-    const contentsSortMode =
-      containerPreferences.tabs?.[CONSTANTS.TAB_CONTAINER_CONTENTS]?.sort ??
-      'm';
-
-    try {
-      // TODO: When I fully take over section preparation, move this filter() step higher up so that it is not looping in individual sections
-      let contents = this.itemFilterService.filter(
-        defaultDocumentContext.inventory.contents.items,
-        CONSTANTS.TAB_CONTAINER_CONTENTS
-      );
-      if (contentsSortMode === 'a') {
-        contents = contents.toSorted((a, b) => a.name.localeCompare(b.name));
-      }
-      defaultDocumentContext.inventory.contents.items = contents;
-    } catch (e) {
-      error(
-        'An error occurred while sorting and filtering section data',
-        false,
-        e
-      );
-      debug('Sorting/Filtering error troubleshooting info', {
-        defaultDocumentContext,
-      });
-    }
-
-    // Partition into sections
-    const items = defaultDocumentContext.inventory.contents.items;
-
-    let sections = Inventory.getDefaultInventorySections();
-
-    for (let item of items) {
-      ContainerSheetSections.applyContentsItemToSection(sections, item);
-    }
-
-    defaultDocumentContext.inventory.sections = Object.values(sections);
-
     const itemDescriptions: ItemDescription[] = [];
+
     itemDescriptions.push({
       content: defaultDocumentContext.enriched.description,
       field: 'system.description.value',
       label: FoundryAdapter.localize('DND5E.Description'),
     });
+
     if (defaultDocumentContext.isIdentifiable && FoundryAdapter.userIsGm()) {
       itemDescriptions.push({
         content: defaultDocumentContext.enriched.unidentified,
@@ -216,6 +170,7 @@ export class Tidy5eKgarContainerSheet
         label: FoundryAdapter.localize('DND5E.DescriptionUnidentified'),
       });
     }
+
     itemDescriptions.push({
       content: defaultDocumentContext.enriched.chat,
       field: 'system.description.chat',
@@ -234,6 +189,14 @@ export class Tidy5eKgarContainerSheet
     const tabs = ItemSheetRuntime.sheets[this.item.type]?.defaultTabs() ?? [];
 
     tabs.push(...customTabs);
+
+    const containerPreferences = SheetPreferencesService.getByType(
+      this.item.type
+    );
+
+    const contentsSortMode =
+      containerPreferences.tabs?.[CONSTANTS.TAB_CONTAINER_CONTENTS]?.sort ??
+      'm';
 
     // Utilities
     let utilities: Utilities<ContainerSheetContext> = {
@@ -294,6 +257,7 @@ export class Tidy5eKgarContainerSheet
       appId: this.appId,
       activateEditors: (node, options) =>
         FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
+      containerContents: Container.getContainerContents(this.item),
       customContent: await ItemSheetRuntime.getContent(defaultDocumentContext),
       filterData: this.itemFilterService.getDocumentItemFilterData(),
       filterPins: ItemFilterRuntime.defaultFilterPins[this.item.type],
@@ -316,28 +280,13 @@ export class Tidy5eKgarContainerSheet
       context
     );
 
-    // Apply Section Configs
-    // ------------------------------------------------------------
-
-    const sectionConfigs = TidyFlags.sectionConfig.get(this.item);
-
-    // Sort Sections
-    context.inventory.sections = SheetSections.sortKeyedSections(
-      context.inventory.sections,
-      sectionConfigs?.[CONSTANTS.TAB_CONTAINER_CONTENTS]
+    Container.applySectionConfigsRecursively(
+      this.item,
+      context.containerContents,
+      contentsSortMode,
+      this.itemFilterService,
+      CONSTANTS.TAB_CONTAINER_CONTENTS
     );
-
-    // Trim Empty Sections
-    context.inventory.sections = context.inventory.sections.filter(
-      (section: ContainerSection) => section.items.length
-    );
-
-    // Apply Show/Hide
-    for (let section of context.inventory.sections) {
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_CONTAINER_CONTENTS]?.[section.key]
-          ?.show !== false && section.items.length;
-    }
 
     debug(`Container Sheet context data`, context);
 
