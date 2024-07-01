@@ -19,7 +19,7 @@ export class Container {
     return {
       capacity: await item.system.computeCapacity(),
       currency: item.system.currency,
-      contents: Inventory.getInventory(containerItems, sectionConfigs),
+      contents: Inventory.getInventory(containerItems),
       itemContext: await Container.getContainerItemContext(
         item,
         sectionConfigs

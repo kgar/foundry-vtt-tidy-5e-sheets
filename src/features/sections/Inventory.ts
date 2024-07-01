@@ -5,9 +5,13 @@ import type {
   ContainerCapacityContext,
   ContainerPanelItemContext,
   InventorySection,
+  SortMode,
 } from 'src/types/types';
 import { error } from 'src/utils/logging';
-import type { SheetTabSectionConfigs } from './sections.types';
+import type { SectionConfig, SheetTabSectionConfigs } from './sections.types';
+import { SheetSections } from './SheetSections';
+import { ItemUtils } from 'src/utils/ItemUtils';
+import type { ItemFilterService } from '../filtering/ItemFilterService';
 
 export class Inventory {
   static getDefaultInventoryTypes(): string[] {
@@ -99,12 +103,52 @@ export class Inventory {
     return containerPanelItems;
   }
 
-  static getInventory(items: Item5e, sectionConfigs: SheetTabSectionConfigs): InventorySection[] {
-    throw new Error("TODO: Implement; does not apply section configs")
+  static getInventory(
+    items: Item5e[],
+    options: Partial<InventorySection> = {
+      canCreate: false,
+    }
+  ): InventorySection[] {
+    const inventory = Inventory.getDefaultInventorySections();
+
+    const inventoryTypes = Inventory.getDefaultInventoryTypes();
+
+    for (let item of items) {
+      Inventory.applyInventoryItemToSection(
+        inventory,
+        item,
+        inventoryTypes,
+        options
+      );
+    }
+
+    return Object.values(inventory);
   }
-  
+
   // TODO: Can this be completely generalized for all section types?
-  static applyInventorySectionConfigs(): InventorySection[] {
-    throw new Error("TODO: Implement; steal the inventory section config application code from PC and container. Ensure no differences, else account for differences")
+  static applyInventorySectionConfigs(
+    inventory: InventorySection[],
+    sectionConfig: Record<string, SectionConfig>,
+    sortMode: SortMode,
+    itemFilterService: ItemFilterService,
+    tabId: string
+  ): InventorySection[] {
+    const inventoryArray = SheetSections.sortKeyedSections(
+      inventory.filter((i) => i.items.length),
+      sectionConfig
+    );
+
+    inventoryArray.forEach((section) => {
+      // Sort Inventory
+      ItemUtils.sortItems(section.items, sortMode);
+
+      // Filter Inventory
+      section.items = itemFilterService.filter(section.items, tabId);
+
+      // Apply visibility from configuration
+      section.show = sectionConfig?.[section.key]?.show !== false;
+    });
+
+    return inventoryArray;
   }
 }

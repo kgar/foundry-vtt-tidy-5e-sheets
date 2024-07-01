@@ -20,8 +20,6 @@ import {
   type MessageBusMessage,
   type MessageBus,
   type Utilities,
-  type ContainerPanelItemContext,
-  type ContainerCapacityContext,
   type ActiveEffect5e,
   type ActorInventoryTypes,
   type CharacterItemPartitions,
