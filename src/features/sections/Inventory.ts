@@ -128,7 +128,7 @@ export class Inventory {
   // TODO: Can this be completely generalized for all section types?
   static applyInventorySectionConfigs(
     inventory: InventorySection[],
-    sectionConfig: Record<string, SectionConfig>,
+    sectionConfig: Record<string, SectionConfig> | undefined,
     sortMode: SortMode,
     itemFilterService: ItemFilterService,
     tabId: string
