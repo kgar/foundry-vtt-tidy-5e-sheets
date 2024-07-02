@@ -4,8 +4,8 @@
   import TidyTableHeaderRow from 'src/components/table/TidyTableHeaderRow.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ContainerContents, Item5e } from 'src/types/item.types';
-  import type { AttunementContext, InventorySection } from 'src/types/types';
+  import type { ContainerItemContext, Item5e } from 'src/types/item.types';
+  import type { InventorySection } from 'src/types/types';
   import ItemDeleteControl from 'src/components/item-list/controls/ItemDeleteControl.svelte';
   import ItemEditControl from 'src/components/item-list/controls/ItemEditControl.svelte';
   import ItemTableRowV2 from 'src/components/item-list/v2/ItemTableRowV2.svelte';
@@ -17,19 +17,12 @@
   import CapacityBar from 'src/sheets/container/CapacityBar.svelte';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { InlineContainerService } from 'src/features/inline-container/InlineContainerService';
+  import InlineContainerToggle from 'src/sheets/container/InlineContainerToggle.svelte';
 
-  export let inventory: InventorySection[];
-  export let item: Item5e;
+  export let contents: InventorySection[];
+  export let container: Item5e;
   export let editable: boolean;
-  export let itemContext: Record<
-    string,
-    {
-      attunement?: AttunementContext;
-      favoriteId?: string;
-      totalWeight?: number;
-      containerContents?: ContainerContents;
-    }
-  >;
+  export let itemContext: Record<string, ContainerItemContext>;
   export let inlineContainerService: InlineContainerService;
   export let lockItemQuantity: boolean;
   // TODO: Use context API to generate visible item ID subset based on search criteria and the items this component knows about
@@ -54,7 +47,7 @@
 
   const classicControlWidthRems = 1.5;
 
-  $: useClassicControls = FoundryAdapter.useClassicControls(item);
+  $: useClassicControls = FoundryAdapter.useClassicControls(container);
 
   $: classicControlsWidth = useClassicControls
     ? `/* Controls */ ${classicControlWidthRems * classicControls.length}rem`
@@ -65,7 +58,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-{#each inventory as section (section.key)}
+{#each contents as section (section.key)}
   {#if section.show}
     <section
       class="container-contents-list-section"
@@ -115,17 +108,7 @@
                   {item}
                 />
                 {#if 'containerContents' in ctx && !!ctx.containerContents}
-                  <button
-                    type="button"
-                    class="inline-transparent-button"
-                    on:click={() => inlineContainerService.toggle(item.id)}
-                  >
-                    {#if $inlineContainerServiceStore.has(item.id)}
-                      <i class="fa-solid fa-box-open fa-fw" />
-                    {:else}
-                      <i class="fa-solid fa-box fa-fw" />
-                    {/if}
-                  </button>
+                  <InlineContainerToggle {item} {inlineContainerService} />
                 {/if}
                 <!-- This is generally what we want in Tidy Tables / Item Table V2; consider breaking of ItemNameV2 to propagate and replace the old ItemName gradually. -->
                 <ItemName
@@ -194,7 +177,7 @@
                 expanded={$inlineContainerServiceStore.has(item.id)}
               >
                 <div
-                  style="flex: 1; padding: 0.25rem 0 0.5rem 1rem; margin-left: 1rem; border-left: 0.0625rem dotted var(--t5e-separator-color);"
+                  style="flex: 1; padding: 0.25rem 0 0 1rem; margin-left: 1rem; border-left: 0.0625rem dotted var(--t5e-separator-color);"
                   class="flex-column extra-small-gap"
                 >
                   <CapacityBar
@@ -203,10 +186,10 @@
                   />
                   <!-- <Currency document={item} /> -->
                   <svelte:self
-                    inventory={ctx.containerContents.contents ?? []}
-                    {item}
+                    contents={ctx.containerContents.contents}
+                    {container}
                     {editable}
-                    {itemContext}
+                    itemContext={ctx.containerContents.itemContext}
                     {lockItemQuantity}
                     {inlineContainerService}
                   />

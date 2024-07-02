@@ -70,6 +70,8 @@ import type {
 } from 'src/foundry/dnd5e.types';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { TidyFlags } from 'src/foundry/TidyFlags';
+import { Container } from 'src/features/inline-container/Container';
+import { InlineContainerService } from 'src/features/inline-container/InlineContainerService';
 
 export class Tidy5eCharacterSheet
   extends ActorSheetCustomSectionMixin(
@@ -89,6 +91,7 @@ export class Tidy5eCharacterSheet
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
+  inlineContainerService = new InlineContainerService();
   itemTableTogglesCache: ItemTableToggleCacheService;
   itemFilterService: ItemFilterService;
   subscriptionsService: StoreSubscriptionsService;
@@ -178,6 +181,7 @@ export class Tidy5eCharacterSheet
         ['currentTabId', this.currentTabId],
         ['onTabSelected', this.onTabSelected.bind(this)],
         ['searchFilters', new Map(this.searchFilters)],
+        ['inlineContainerService', this.inlineContainerService],
         [
           'onFilter',
           this.itemFilterService.onFilter.bind(this.itemFilterService),
@@ -932,6 +936,13 @@ export class Tidy5eCharacterSheet
         ) ?? [],
     };
 
+    for (const panelItem of context.containerPanelItems) {
+      const ctx = context.itemContext[panelItem.container.id];
+      ctx.containerContents = await Container.getContainerContents(
+        panelItem.container
+      );
+    }
+
     let tabs = await CharacterSheetRuntime.getTabs(context);
 
     const selectedTabs = TidyFlags.tryGetFlag<string[]>(
@@ -1151,6 +1162,23 @@ export class Tidy5eCharacterSheet
         sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]?.[section.key]
           ?.show !== false;
     });
+
+    for (const panelItem of context.containerPanelItems) {
+      const container = panelItem.container;
+      const ctx = context.itemContext[container.id];
+
+      if (!ctx?.containerContents) {
+        continue;
+      }
+
+      Container.applySectionConfigsRecursively(
+        container,
+        ctx.containerContents,
+        inventorySortMode,
+        this.itemFilterService,
+        CONSTANTS.TAB_CHARACTER_INVENTORY
+      );
+    }
 
     debug('Character Sheet context data', context);
 

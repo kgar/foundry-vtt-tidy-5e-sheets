@@ -257,7 +257,7 @@ export class Tidy5eKgarContainerSheet
       appId: this.appId,
       activateEditors: (node, options) =>
         FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
-      containerContents: Container.getContainerContents(this.item),
+      containerContents: await Container.getContainerContents(this.item),
       customContent: await ItemSheetRuntime.getContent(defaultDocumentContext),
       filterData: this.itemFilterService.getDocumentItemFilterData(),
       filterPins: ItemFilterRuntime.defaultFilterPins[this.item.type],
@@ -280,7 +280,7 @@ export class Tidy5eKgarContainerSheet
       context
     );
 
-    Container.applySectionConfigsRecursively(
+    await Container.applySectionConfigsRecursively(
       this.item,
       context.containerContents,
       contentsSortMode,

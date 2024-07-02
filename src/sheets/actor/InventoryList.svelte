@@ -32,7 +32,11 @@
   import { coalesce } from 'src/utils/formatting';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
-  import { TidyFlags } from 'src/foundry/TidyFlags';
+  import InlineContainerToggle from '../container/InlineContainerToggle.svelte';
+  import { InlineContainerService } from 'src/features/inline-container/InlineContainerService';
+  import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
+  import CapacityBar from '../container/CapacityBar.svelte';
+  import ContainerContentsSections from '../container/ContainerContentsSections.svelte';
 
   export let primaryColumnName: string;
   export let items: Item5e[];
@@ -46,6 +50,12 @@
    * Useful for showing only search results, for example.
    */
   export let visibleItemIdSubset: Set<string> | null = null;
+
+  let inlineContainerService = getContext<InlineContainerService>(
+    'inlineContainerService',
+  );
+
+  $: inlineContainerServiceStore = inlineContainerService.store;
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -187,6 +197,9 @@
         >
           <ItemTableCell primary={true}>
             <ItemUseButton disabled={!$context.editable} {item} />
+            {#if 'containerContents' in ctx && !!ctx.containerContents}
+              <InlineContainerToggle {item} {inlineContainerService} />
+            {/if}
             <ItemName
               on:toggle={() => toggleSummary($context.actor)}
               cssClass="extra-small-gap"
@@ -268,6 +281,31 @@
             </ItemTableCell>
           {/if}
         </ItemTableRow>
+        {#if 'containerContents' in ctx && !!ctx.containerContents}
+          <ExpandableContainer
+            expanded={$inlineContainerServiceStore.has(item.id)}
+          >
+            <!-- TODO: Make sure this container contents shell gets reused -->
+            <div
+              style="flex: 1; padding: 0.25rem 0 0 1rem; margin-left: 1rem; border-left: 0.0625rem dotted var(--t5e-separator-color);"
+              class="flex-column extra-small-gap"
+            >
+              <CapacityBar
+                container={item}
+                capacity={ctx.containerContents.capacity}
+              />
+              <!-- <Currency document={item} /> -->
+              <ContainerContentsSections
+                contents={ctx.containerContents.contents}
+                container={item}
+                editable={$context.editable}
+                itemContext={ctx.containerContents.itemContext}
+                lockItemQuantity={$context.lockItemQuantity}
+                {inlineContainerService}
+              />
+            </div>
+          </ExpandableContainer>
+        {/if}
       {/each}
       {#if $context.unlocked && section.canCreate}
         <ItemTableFooter actor={$context.actor} {section} isItem={true} />
