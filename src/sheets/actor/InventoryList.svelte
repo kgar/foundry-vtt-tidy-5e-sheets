@@ -286,9 +286,11 @@
             expanded={$inlineContainerServiceStore.has(item.id)}
           >
             <!-- TODO: Make sure this container contents shell gets reused -->
+            <!-- TODO: For drag and drop, use the data-tidy-container-id to determine if an item drop also represents a container change -->
             <div
               style="flex: 1; padding: 0.25rem 0 0 1rem; margin-left: 1rem; border-left: 0.0625rem dotted var(--t5e-separator-color);"
               class="flex-column extra-small-gap"
+              data-tidy-container-id={item.id}
             >
               <CapacityBar
                 container={item}
