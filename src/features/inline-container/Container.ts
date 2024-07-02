@@ -75,7 +75,7 @@ export class Container {
       for (const item of section.items) {
         const ctx = containerContents.itemContext[item.id];
         if ('containerContents' in ctx && !!ctx.containerContents?.contents) {
-          Container.applySectionConfigsRecursively(
+          await Container.applySectionConfigsRecursively(
             item,
             ctx.containerContents,
             sortMode,
