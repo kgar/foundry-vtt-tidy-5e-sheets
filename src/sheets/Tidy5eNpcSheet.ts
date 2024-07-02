@@ -60,6 +60,8 @@ import type { RestConfiguration } from 'src/foundry/dnd5e.types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { Inventory } from 'src/features/sections/Inventory';
+import { Container } from 'src/features/inline-container/Container';
+import { InlineContainerService } from 'src/features/inline-container/InlineContainerService';
 
 export class Tidy5eNpcSheet
   extends ActorSheetCustomSectionMixin(dnd5e.applications.actor.ActorSheet5eNPC)
@@ -77,6 +79,7 @@ export class Tidy5eNpcSheet
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
+  inlineContainerService = new InlineContainerService();
   itemTableTogglesCache: ItemTableToggleCacheService;
   itemFilterService: ItemFilterService;
   subscriptionsService: StoreSubscriptionsService;
@@ -158,6 +161,7 @@ export class Tidy5eNpcSheet
         ['stats', this.stats],
         ['card', this.card],
         ['currentTabId', this.currentTabId],
+        ['inlineContainerService', this.inlineContainerService],
         ['onTabSelected', this.onTabSelected.bind(this)],
         ['onItemToggled', this.onItemToggled.bind(this)],
         ['searchFilters', new Map(this.searchFilters)],
@@ -854,6 +858,13 @@ export class Tidy5eNpcSheet
         ) ?? [],
     };
 
+    for (const panelItem of context.containerPanelItems) {
+      const ctx = context.itemContext[panelItem.container.id];
+      ctx.containerContents = await Container.getContainerContents(
+        panelItem.container
+      );
+    }
+
     let tabs = await NpcSheetRuntime.getTabs(context);
 
     const selectedTabs = TidyFlags.tryGetFlag<string[]>(
@@ -961,6 +972,23 @@ export class Tidy5eNpcSheet
         false;
     });
 
+    for (const panelItem of context.containerPanelItems) {
+      const container = panelItem.container;
+      const ctx = context.itemContext[container.id];
+
+      if (!ctx?.containerContents) {
+        continue;
+      }
+
+      Container.applySectionConfigsRecursively(
+        container,
+        ctx.containerContents,
+        inventorySortMode,
+        this.itemFilterService,
+        CONSTANTS.TAB_NPC_INVENTORY
+      );
+    }
+
     debug('NPC Sheet context data', context);
 
     return context;
@@ -1056,8 +1084,6 @@ export class Tidy5eNpcSheet
       },
       { spells: [], subclasses: [], classes: [], other: [] }
     );
-
-    const npcPreferences = SheetPreferencesService.getByType(this.actor.type);
 
     classes = SheetSections.prepareClassItems(
       context,
