@@ -37,47 +37,41 @@ const activationTypeSortValues: Record<string, number> = {
   special: 8,
 };
 
-export function getActorActionSections(
-  actor: Actor5e,
-  itemFilterService: ItemFilterService
-): ActionSection[] {
+export function getActorActionSections(actor: Actor5e): ActionSection[] {
   try {
-    const sheetPreferences = SheetPreferencesService.getByType(actor.type);
-
-    const actionSortMode =
-      sheetPreferences.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS]?.sort ?? 'm';
-
-    let filteredItems = actor.items.filter(isItemInActionList);
-
-    // Filter actions
-    filteredItems = itemFilterService.filter(
-      filteredItems,
-      CONSTANTS.TAB_ACTOR_ACTIONS
-    );
-
-    // Sort actions
-    filteredItems = filteredItems
-      .sort((a: Item5e, b: Item5e) => {
-        if (actionSortMode === 'a') {
-          return a.name.localeCompare(b.name);
-        }
-
-        // Sort by Arbitrary Action List Rules
-        if (a.type !== b.type) {
-          return itemTypeSortValues[a.type] - itemTypeSortValues[b.type];
-        }
-        if (a.type === 'spell' && b.type === 'spell') {
-          return a.system.level - b.system.level;
-        }
-        return (a.sort || 0) - (b.sort || 0);
-      })
+    let eligibleItems = actor.items
+      .filter(isItemInActionList)
       .map((item: Item5e) => mapActionItem(item));
 
-    return buildActionSections(actor, filteredItems);
+    return buildActionSections(actor, eligibleItems);
   } catch (e) {
     error('An error occurred while getting actions', false, e);
     return [];
   }
+}
+
+export function sortActions(actor: Actor5e, actionSections: ActionSection[]) {
+  const sheetPreferences = SheetPreferencesService.getByType(actor.type);
+
+  const actionSortMode =
+    sheetPreferences.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS]?.sort ?? 'm';
+
+  actionSections.forEach((section) => {
+    section.actions.sort((a: Item5e, b: Item5e) => {
+      if (actionSortMode === 'a') {
+        return a.name.localeCompare(b.name);
+      }
+
+      // Sort by Arbitrary Action List Rules
+      if (a.type !== b.type) {
+        return itemTypeSortValues[a.type] - itemTypeSortValues[b.type];
+      }
+      if (a.type === 'spell' && b.type === 'spell') {
+        return a.system.level - b.system.level;
+      }
+      return (a.sort || 0) - (b.sort || 0);
+    });
+  });
 }
 
 function buildActionSections(
@@ -131,25 +125,25 @@ function buildActionSections(
     }
   }
 
-  const sectionConfigs = TidyFlags.sectionConfig.get(actor);
-  const actorActionsSectionConfig =
-    sectionConfigs?.[CONSTANTS.TAB_ACTOR_ACTIONS];
+  // const sectionConfigs = TidyFlags.sectionConfig.get(actor);
+  // const actorActionsSectionConfig =
+  //   sectionConfigs?.[CONSTANTS.TAB_ACTOR_ACTIONS];
 
-  // Sort sections
-  let sections = SheetSections.sortKeyedSections(
-    Object.values(actionSections),
-    actorActionsSectionConfig
-  );
+  // // Sort sections
+  // let sections = SheetSections.sortKeyedSections(
+  //   Object.values(actionSections),
+  //   actorActionsSectionConfig
+  // );
 
-  // Remove empty sections
-  sections = sections.filter((section) => section.actions.length);
+  // // Remove empty sections
+  // sections = sections.filter((section) => section.actions.length);
 
-  // Apply visibility from configuration
-  sections.forEach((section) => {
-    section.show = actorActionsSectionConfig?.[section.key]?.show !== false;
-  });
+  // // Apply visibility from configuration
+  // sections.forEach((section) => {
+  //   section.show = actorActionsSectionConfig?.[section.key]?.show !== false;
+  // });
 
-  return sections;
+  return Object.values(actionSections);
 }
 
 export function isItemInActionList(item: Item5e): boolean {
