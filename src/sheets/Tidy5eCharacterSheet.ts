@@ -182,6 +182,7 @@ export class Tidy5eCharacterSheet
         ['onTabSelected', this.onTabSelected.bind(this)],
         ['searchFilters', new Map(this.searchFilters)],
         ['inlineContainerService', this.inlineContainerService],
+        ['itemFilterService', this.itemFilterService],
         [
           'onFilter',
           this.itemFilterService.onFilter.bind(this.itemFilterService),

@@ -7,12 +7,17 @@ import type {
   Actor5e,
   CharacterSheetContext,
   CustomSectionOptions,
+  InventorySection,
   NpcSheetContext,
   SpellbookSection,
   TidySectionBase,
 } from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import type { SectionConfig } from './sections.types';
+import { ItemUtils } from 'src/utils/ItemUtils';
+import { SheetPreferencesService } from '../user-preferences/SheetPreferencesService';
+import type { ItemFilterService } from '../filtering/ItemFilterService';
+import { getContext } from 'svelte';
 
 export class SheetSections {
   static generateCustomSpellbookSections(
@@ -112,10 +117,14 @@ export class SheetSections {
 
     const spellbook: SpellbookSection[] = app
       ._prepareSpellbook(context, spells)
-      .map((s: SpellbookSection) => ({
-        ...s,
-        key: s.key ?? s.prop,
-      }));
+      .map(
+        (s: SpellbookSection) =>
+          ({
+            ...s,
+            key: s.key ?? s.prop,
+            show: true,
+          } satisfies SpellbookSection)
+      );
 
     const spellbookMap = spellbook.reduce<Record<string, SpellbookSection>>(
       (prev, curr) => {
@@ -239,5 +248,86 @@ export class SheetSections {
     }
 
     return section.key;
+  }
+
+  static configureInventory(
+    document: any,
+    tabId: string,
+    sections: InventorySection[]
+  ) {
+    let itemFilterService = getContext<ItemFilterService | undefined>(
+      'itemFilterService'
+    );
+
+    const sectionConfigs = TidyFlags.sectionConfig.get(document);
+
+    sections = SheetSections.sortKeyedSections(
+      sections,
+      sectionConfigs?.[tabId]
+    );
+
+    const characterPreferences = SheetPreferencesService.getByType(
+      document.type
+    );
+
+    const sortMode = characterPreferences.tabs?.[tabId]?.sort ?? 'm';
+
+    sections.forEach((section) => {
+      ItemUtils.sortItems(section.items, sortMode);
+
+      if (itemFilterService) {
+        section.items = itemFilterService.filter(section.items, tabId);
+      }
+
+      // Apply visibility from configuration
+      section.show = sectionConfigs?.[tabId]?.[section.key]?.show !== false;
+    });
+
+    return sections;
+  }
+
+  // TODO: Figure out how to consolidate these functions, as they are exactly the same, except for the item|spell prop
+  static configureSpellbook(
+    document: any,
+    tabId: string,
+    sections: SpellbookSection[]
+  ) {
+    let itemFilterService = getContext<ItemFilterService | undefined>(
+      'itemFilterService'
+    );
+
+    const sectionConfigs = TidyFlags.sectionConfig.get(document);
+
+    sections = SheetSections.sortKeyedSections(
+      sections,
+      sectionConfigs?.[tabId]
+    );
+
+    const characterPreferences = SheetPreferencesService.getByType(
+      document.type
+    );
+
+    const sortMode = characterPreferences.tabs?.[tabId]?.sort ?? 'm';
+
+    sections.forEach((section) => {
+      // Sort Spellbook
+      ItemUtils.sortItems(section.spells, sortMode);
+
+      // TODO: Collocate Spellbook Sub Items
+      // Filter Spellbook
+      if (itemFilterService) {
+        section.spells = itemFilterService.filter(
+          section.spells,
+          CONSTANTS.TAB_CHARACTER_SPELLBOOK
+        );
+      }
+
+      // Apply visibility from configuration
+      section.show =
+        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.[section.key]
+          ?.show !== false;
+    });
+
+    return sections;
   }
 }

@@ -21,19 +21,23 @@
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
-  import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
+  import { SheetSections } from 'src/features/sections/SheetSections';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
+
+  $: spellbook = SheetSections.configureSpellbook(
+    $context.actor,
+    CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+    $context.spellbook,
+  );
 
   const localize = FoundryAdapter.localize;
 
   let searchCriteria: string = '';
 
   let layoutMode: ItemLayoutMode;
-  $: layoutMode = TidyFlags.spellbookGrid.get($context.actor)
-    ? 'grid'
-    : 'list';
+  $: layoutMode = TidyFlags.spellbookGrid.get($context.actor) ? 'grid' : 'list';
 
   $: selectedClassFilter =
     TidyFlags.tryGetFlag($context.actor, 'classFilter') ?? '';
@@ -52,10 +56,10 @@
     );
   }
 
-  $: noSpellLevels = !$context.spellbook.length;
+  $: noSpellLevels = !spellbook.length;
 
   $: noSpells =
-    $context.spellbook.reduce(
+    spellbook.reduce(
       (count: number, section: SpellbookSection) =>
         count + section.spells.length,
       0,
@@ -99,7 +103,7 @@
   {#if noSpellLevels}
     <NoSpells editable={$context.unlocked} />
   {:else}
-    {#each $context.spellbook as section (section.key)}
+    {#each spellbook as section (section.key)}
       {#if section.show}
         {@const classSpells = tryFilterByClass(section.spells)}
         {@const visibleItemIdSubset = FoundryAdapter.searchItems(

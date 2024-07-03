@@ -26,11 +26,19 @@
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
   import { TidyFlags } from 'src/foundry/TidyFlags';
+  import type { ItemFilterService } from 'src/features/filtering/ItemFilterService';
+  import { SheetSections } from 'src/features/sections/SheetSections';
 
   export let tabId: string;
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
+
+  $: inventory = SheetSections.configureInventory(
+    $context.actor,
+    tabId,
+    $context.inventory,
+  );
 
   const localize = FoundryAdapter.localize;
 
@@ -40,13 +48,11 @@
   $: layoutMode = TidyFlags.inventoryGrid.get($context.actor) ? 'grid' : 'list';
 
   $: noItems =
-    $context.inventory.some(
-      (section: InventorySection) => section.items.length > 0,
-    ) === false;
+    inventory.some((section: InventorySection) => section.items.length > 0) ===
+    false;
 
   $: utilityBarCommands =
-    $context.utilities[tabId]
-      ?.utilityToolbarCommands ?? [];
+    $context.utilities[tabId]?.utilityToolbarCommands ?? [];
 </script>
 
 <UtilityToolbar>
@@ -59,7 +65,7 @@
       tabId,
     )}
   />
-  <FilterMenu tabId={tabId} />
+  <FilterMenu {tabId} />
   {#each utilityBarCommands as command (command.title)}
     <UtilityToolbarCommand
       title={command.title}
@@ -91,7 +97,7 @@
         {searchCriteria}
       />
     </ExpandableContainer>
-    {#each $context.inventory as section (section.key)}
+    {#each inventory as section (section.key)}
       {#if section.show}
         {@const visibleItemIdSubset = FoundryAdapter.searchItems(
           searchCriteria,
