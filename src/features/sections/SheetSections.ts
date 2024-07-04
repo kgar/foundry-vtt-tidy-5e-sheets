@@ -13,11 +13,12 @@ import type {
   TidySectionBase,
 } from 'src/types/types';
 import { isNil } from 'src/utils/data';
-import type { SectionConfig } from './sections.types';
+import type { SectionConfig, SheetTabSectionConfigs } from './sections.types';
 import { ItemUtils } from 'src/utils/ItemUtils';
 import { SheetPreferencesService } from '../user-preferences/SheetPreferencesService';
 import type { ItemFilterService } from '../filtering/ItemFilterService';
 import { getContext } from 'svelte';
+import type { SheetPreference } from '../user-preferences/user-preferences.types';
 
 export class SheetSections {
   static generateCustomSpellbookSections(
@@ -251,26 +252,18 @@ export class SheetSections {
   }
 
   static configureInventory(
-    document: any,
+    sections: InventorySection[],
     tabId: string,
-    sections: InventorySection[]
+    sheetPreferences: SheetPreference,
+    sectionConfig?: Record<string, SectionConfig>
   ) {
     let itemFilterService = getContext<ItemFilterService | undefined>(
       'itemFilterService'
     );
 
-    const sectionConfigs = TidyFlags.sectionConfig.get(document);
+    sections = SheetSections.sortKeyedSections(sections, sectionConfig);
 
-    sections = SheetSections.sortKeyedSections(
-      sections,
-      sectionConfigs?.[tabId]
-    );
-
-    const characterPreferences = SheetPreferencesService.getByType(
-      document.type
-    );
-
-    const sortMode = characterPreferences.tabs?.[tabId]?.sort ?? 'm';
+    const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
 
     sections.forEach((section) => {
       ItemUtils.sortItems(section.items, sortMode);
@@ -280,7 +273,7 @@ export class SheetSections {
       }
 
       // Apply visibility from configuration
-      section.show = sectionConfigs?.[tabId]?.[section.key]?.show !== false;
+      section.show = sectionConfig?.[section.key]?.show !== false;
     });
 
     return sections;

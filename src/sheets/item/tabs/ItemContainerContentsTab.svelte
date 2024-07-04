@@ -110,6 +110,7 @@
       itemContext={$context.containerContents.itemContext}
       {inlineContainerService}
       lockItemQuantity={$context.lockItemQuantity}
+      sheetDocument={$context.item}
     />
   </div>
   <footer class="container-contents-footer">

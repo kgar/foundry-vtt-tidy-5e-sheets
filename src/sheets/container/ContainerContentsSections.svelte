@@ -5,7 +5,7 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ContainerItemContext, Item5e } from 'src/types/item.types';
-  import type { InventorySection } from 'src/types/types';
+  import type { Actor5e, InventorySection } from 'src/types/types';
   import ItemDeleteControl from 'src/components/item-list/controls/ItemDeleteControl.svelte';
   import ItemEditControl from 'src/components/item-list/controls/ItemEditControl.svelte';
   import ItemTableRowV2 from 'src/components/item-list/v2/ItemTableRowV2.svelte';
@@ -18,6 +18,10 @@
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { InlineContainerService } from 'src/features/inline-container/InlineContainerService';
   import InlineContainerToggle from 'src/sheets/container/InlineContainerToggle.svelte';
+  import { SheetSections } from 'src/features/sections/SheetSections';
+  import { getContext } from 'svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
+  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 
   export let contents: InventorySection[];
   export let container: Item5e;
@@ -25,7 +29,18 @@
   export let itemContext: Record<string, ContainerItemContext>;
   export let inlineContainerService: InlineContainerService;
   export let lockItemQuantity: boolean;
+  /** The sheet which is rendering this recursive set of container contents. */
+  export let sheetDocument: Actor5e | Item5e;
   // TODO: Use context API to generate visible item ID subset based on search criteria and the items this component knows about
+
+  const tabId = getContext<string>('tabId');
+
+  $: configuredContents = SheetSections.configureInventory(
+    contents.filter((i) => i.items.length),
+    tabId,
+    SheetPreferencesService.getByType(sheetDocument.type),
+    TidyFlags.sectionConfig.get(container)?.[CONSTANTS.TAB_CONTAINER_CONTENTS],
+  );
 
   $: inlineContainerServiceStore = inlineContainerService.store;
 
@@ -58,7 +73,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-{#each contents as section (section.key)}
+{#each configuredContents as section (section.key)}
   {#if section.show}
     <section
       class="container-contents-list-section"
@@ -192,6 +207,7 @@
                     itemContext={ctx.containerContents.itemContext}
                     {lockItemQuantity}
                     {inlineContainerService}
+                    {sheetDocument}
                   />
                 </div>
               </ExpandableContainer>

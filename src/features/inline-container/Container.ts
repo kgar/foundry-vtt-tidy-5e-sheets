@@ -54,36 +54,5 @@ export class Container {
     return itemContext;
   }
 
-  static async applySectionConfigsRecursively(
-    container: Item5e,
-    containerContents: ContainerContents,
-    sortMode: SortMode,
-    itemFilterService: ItemFilterService,
-    tabId: string
-  ) {
-    // TODO: Also solve: sort and filter pertain to the tab in which this content is being displayed.
-    const sectionConfigs = TidyFlags.sectionConfig.get(container)?.[tabId];
-    containerContents.contents = Inventory.applyInventorySectionConfigs(
-      containerContents.contents,
-      sectionConfigs,
-      sortMode,
-      itemFilterService,
-      tabId
-    );
-
-    for (const section of containerContents.contents) {
-      for (const item of section.items) {
-        const ctx = containerContents.itemContext[item.id];
-        if ('containerContents' in ctx && !!ctx.containerContents?.contents) {
-          await Container.applySectionConfigsRecursively(
-            item,
-            ctx.containerContents,
-            sortMode,
-            itemFilterService,
-            tabId
-          );
-        }
-      }
-    }
-  }
+  
 }

@@ -304,6 +304,7 @@
                 itemContext={ctx.containerContents.itemContext}
                 lockItemQuantity={$context.lockItemQuantity}
                 {inlineContainerService}
+                sheetDocument={$context.actor}
               />
             </div>
           </ExpandableContainer>

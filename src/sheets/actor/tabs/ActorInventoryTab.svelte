@@ -26,8 +26,8 @@
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
   import { TidyFlags } from 'src/foundry/TidyFlags';
-  import type { ItemFilterService } from 'src/features/filtering/ItemFilterService';
   import { SheetSections } from 'src/features/sections/SheetSections';
+  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 
   export let tabId: string;
 
@@ -35,9 +35,10 @@
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
 
   $: inventory = SheetSections.configureInventory(
-    $context.actor,
-    tabId,
     $context.inventory,
+    tabId,
+    SheetPreferencesService.getByType($context.actor.type),
+    TidyFlags.sectionConfig.get($context.actor)?.[tabId],
   );
 
   const localize = FoundryAdapter.localize;

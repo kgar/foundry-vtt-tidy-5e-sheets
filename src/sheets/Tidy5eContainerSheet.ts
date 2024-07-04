@@ -280,13 +280,13 @@ export class Tidy5eKgarContainerSheet
       context
     );
 
-    await Container.applySectionConfigsRecursively(
-      this.item,
-      context.containerContents,
-      contentsSortMode,
-      this.itemFilterService,
-      CONSTANTS.TAB_CONTAINER_CONTENTS
-    );
+    // await Container.applySectionConfigsRecursively(
+    //   this.item,
+    //   context.containerContents,
+    //   contentsSortMode,
+    //   this.itemFilterService,
+    //   CONSTANTS.TAB_CONTAINER_CONTENTS
+    // );
 
     debug(`Container Sheet context data`, context);
 

@@ -660,7 +660,7 @@ export class Tidy5eNpcSheet
 
     const context: NpcSheetContext = {
       ...defaultDocumentContext,
-      actions: getActorActionSections(this.actor, this.itemFilterService),
+      actions: getActorActionSections(this.actor),
       activateEditors: (node, options) =>
         FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
       actorPortraitCommands:
@@ -980,13 +980,13 @@ export class Tidy5eNpcSheet
         continue;
       }
 
-      Container.applySectionConfigsRecursively(
-        container,
-        ctx.containerContents,
-        inventorySortMode,
-        this.itemFilterService,
-        CONSTANTS.TAB_NPC_INVENTORY
-      );
+      // Container.applySectionConfigsRecursively(
+      //   container,
+      //   ctx.containerContents,
+      //   inventorySortMode,
+      //   this.itemFilterService,
+      //   CONSTANTS.TAB_NPC_INVENTORY
+      // );
     }
 
     debug('NPC Sheet context data', context);

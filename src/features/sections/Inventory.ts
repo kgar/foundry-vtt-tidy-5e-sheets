@@ -124,31 +124,4 @@ export class Inventory {
 
     return Object.values(inventory);
   }
-
-  // TODO: Can this be completely generalized for all section types?
-  static applyInventorySectionConfigs(
-    inventory: InventorySection[],
-    sectionConfig: Record<string, SectionConfig> | undefined,
-    sortMode: SortMode,
-    itemFilterService: ItemFilterService,
-    tabId: string
-  ): InventorySection[] {
-    const inventoryArray = SheetSections.sortKeyedSections(
-      inventory.filter((i) => i.items.length),
-      sectionConfig
-    );
-
-    inventoryArray.forEach((section) => {
-      // Sort Inventory
-      ItemUtils.sortItems(section.items, sortMode);
-
-      // Filter Inventory
-      section.items = itemFilterService.filter(section.items, tabId);
-
-      // Apply visibility from configuration
-      section.show = sectionConfig?.[section.key]?.show !== false;
-    });
-
-    return inventoryArray;
-  }
 }
