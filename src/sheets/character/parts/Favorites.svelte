@@ -8,17 +8,30 @@
   import type { Readable } from 'svelte/store';
   import { CONSTANTS } from 'src/constants';
   import FavoriteEffectsList from './FavoriteEffectsList.svelte';
+  import { SheetSections } from 'src/features/sections/SheetSections';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
+  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 
   export let searchCriteria: string = '';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
+
+  $: favorites = SheetSections.configureFavorites(
+    $context.favorites,
+    $context.actor,
+    CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+    SheetPreferencesService.getByType($context.actor.type),
+    TidyFlags.sectionConfig.get($context.actor)?.[
+      CONSTANTS.TAB_CHARACTER_ATTRIBUTES
+    ],
+  );
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <div class="flex-column small-gap" data-tidy-favorites>
   <!--  TODO: Sort favorites based on setting during data item preparation -->
-  {#each $context.favorites as section}
+  {#each favorites as section}
     {#if section.show}
       {#if section.type === CONSTANTS.TAB_CHARACTER_INVENTORY}
         {@const visibleItemIdSubset = FoundryAdapter.searchItems(

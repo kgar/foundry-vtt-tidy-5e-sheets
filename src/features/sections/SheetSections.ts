@@ -5,8 +5,11 @@ import type { Tidy5eNpcSheet } from 'src/sheets/Tidy5eNpcSheet';
 import type { Item5e } from 'src/types/item.types';
 import type {
   Actor5e,
+  CharacterFeatureSection,
   CharacterSheetContext,
   CustomSectionOptions,
+  FavoriteSection,
+  FeatureSection,
   InventorySection,
   NpcSheetContext,
   SpellbookSection,
@@ -19,6 +22,8 @@ import { SheetPreferencesService } from '../user-preferences/SheetPreferencesSer
 import type { ItemFilterService } from '../filtering/ItemFilterService';
 import { getContext } from 'svelte';
 import type { SheetPreference } from '../user-preferences/user-preferences.types';
+import type { CharacterFavorite } from 'src/foundry/dnd5e.types';
+import { error } from 'src/utils/logging';
 
 export class SheetSections {
   static generateCustomSpellbookSections(
@@ -257,24 +262,28 @@ export class SheetSections {
     sheetPreferences: SheetPreference,
     sectionConfig?: Record<string, SectionConfig>
   ) {
-    let itemFilterService = getContext<ItemFilterService | undefined>(
-      'itemFilterService'
-    );
+    try {
+      let itemFilterService = getContext<ItemFilterService | undefined>(
+        'itemFilterService'
+      );
 
-    sections = SheetSections.sortKeyedSections(sections, sectionConfig);
+      sections = SheetSections.sortKeyedSections(sections, sectionConfig);
 
-    const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
+      const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
 
-    sections.forEach((section) => {
-      ItemUtils.sortItems(section.items, sortMode);
+      sections.forEach((section) => {
+        ItemUtils.sortItems(section.items, sortMode);
 
-      if (itemFilterService) {
-        section.items = itemFilterService.filter(section.items, tabId);
-      }
+        if (itemFilterService) {
+          section.items = itemFilterService.filter(section.items, tabId);
+        }
 
-      // Apply visibility from configuration
-      section.show = sectionConfig?.[section.key]?.show !== false;
-    });
+        // Apply visibility from configuration
+        section.show = sectionConfig?.[section.key]?.show !== false;
+      });
+    } catch (e) {
+      error('An error occurred while configuring inventory', false, e);
+    }
 
     return sections;
   }
@@ -285,42 +294,175 @@ export class SheetSections {
     tabId: string,
     sections: SpellbookSection[]
   ) {
-    let itemFilterService = getContext<ItemFilterService | undefined>(
-      'itemFilterService'
-    );
+    try {
+      let itemFilterService = getContext<ItemFilterService | undefined>(
+        'itemFilterService'
+      );
 
-    const sectionConfigs = TidyFlags.sectionConfig.get(document);
+      const sectionConfigs = TidyFlags.sectionConfig.get(document);
 
-    sections = SheetSections.sortKeyedSections(
-      sections,
-      sectionConfigs?.[tabId]
-    );
+      sections = SheetSections.sortKeyedSections(
+        sections,
+        sectionConfigs?.[tabId]
+      );
 
-    const characterPreferences = SheetPreferencesService.getByType(
-      document.type
-    );
+      const characterPreferences = SheetPreferencesService.getByType(
+        document.type
+      );
 
-    const sortMode = characterPreferences.tabs?.[tabId]?.sort ?? 'm';
+      const sortMode = characterPreferences.tabs?.[tabId]?.sort ?? 'm';
 
-    sections.forEach((section) => {
-      // Sort Spellbook
-      ItemUtils.sortItems(section.spells, sortMode);
+      sections.forEach((section) => {
+        // Sort Spellbook
+        ItemUtils.sortItems(section.spells, sortMode);
 
-      // TODO: Collocate Spellbook Sub Items
-      // Filter Spellbook
-      if (itemFilterService) {
-        section.spells = itemFilterService.filter(
-          section.spells,
-          CONSTANTS.TAB_CHARACTER_SPELLBOOK
-        );
-      }
+        // TODO: Collocate Spellbook Sub Items
+        // Filter Spellbook
+        if (itemFilterService) {
+          section.spells = itemFilterService.filter(
+            section.spells,
+            CONSTANTS.TAB_CHARACTER_SPELLBOOK
+          );
+        }
 
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.[section.key]
-          ?.show !== false;
-    });
+        // Apply visibility from configuration
+        section.show =
+          sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.[section.key]
+            ?.show !== false;
+      });
+    } catch (e) {
+      error('An error occurred while configuring spells', false, e);
+    }
 
     return sections;
+  }
+
+  static configureFavorites(
+    favoriteSections: FavoriteSection[],
+    actor: Actor5e,
+    tabId: string,
+    sheetPreferences: SheetPreference,
+    sectionConfig?: Record<string, SectionConfig>
+  ) {
+    try {
+      let itemFilterService = getContext<ItemFilterService | undefined>(
+        'itemFilterService'
+      );
+
+      favoriteSections = SheetSections.sortKeyedSections(
+        favoriteSections,
+        sectionConfig
+      );
+
+      const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
+
+      const favoritesIdMap = actor.system.favorites.reduce(
+        (map: Map<string, CharacterFavorite>, f: CharacterFavorite) => {
+          map.set(f.id, f);
+          return map;
+        },
+        new Map<string, CharacterFavorite>()
+      );
+
+      (favoriteSections as FavoriteSection[]).forEach((section) => {
+        if ('effects' in section) {
+          let effectContexts = section.effects;
+
+          // Sort Favorite Effects
+          if (sortMode === 'm') {
+            const getSort = (effects: Item5e) =>
+              favoritesIdMap.get(effects.getRelativeUUID(actor))?.sort ??
+              Number.MAX_SAFE_INTEGER;
+
+            effectContexts.sort(
+              (a, b) => getSort(a.effect) - getSort(b.effect)
+            );
+          } else {
+            effectContexts.sort((a, b) =>
+              a.effect.name.localeCompare(b.effect.name)
+            );
+          }
+
+          // TODO: Filter Favorite Effects ?
+        } else {
+          let items = 'spells' in section ? section.spells : section.items;
+          // Sort Favorites Items
+          if (sortMode === 'm') {
+            const getSort = (item: Item5e) =>
+              favoritesIdMap.get(item.getRelativeUUID(actor))?.sort ??
+              Number.MAX_SAFE_INTEGER;
+
+            items.sort((a, b) => getSort(a) - getSort(b));
+          } else {
+            ItemUtils.sortItems(items, sortMode);
+          }
+
+          // TODO: Collocate Favorite Sub Items
+          // Filter Favorite Items
+          if (itemFilterService) {
+            items = itemFilterService.filter(
+              items,
+              CONSTANTS.TAB_CHARACTER_ATTRIBUTES
+            );
+          }
+
+          if ('spells' in section) {
+            section.spells = items;
+          } else {
+            section.items = items;
+          }
+        }
+
+        // Apply visibility from configuration
+        section.show = sectionConfig?.[section.key]?.show !== false;
+      });
+    } catch (e) {
+      error('An error occurred while configuring favorites', false, e);
+    }
+
+    return favoriteSections;
+  }
+
+  static configureFeatures<
+    TSection extends CharacterFeatureSection | FeatureSection
+  >(
+    features: TSection[],
+    context: CharacterSheetContext | NpcSheetContext,
+    tabId: string,
+    sheetPreferences: SheetPreference,
+    sectionConfig?: Record<string, SectionConfig>
+  ): TSection[] {
+    try {
+      let itemFilterService = getContext<ItemFilterService | undefined>(
+        'itemFilterService'
+      );
+
+      features = SheetSections.sortKeyedSections(features, sectionConfig);
+
+      const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
+
+      features.forEach((section) => {
+        // Sort Features
+        ItemUtils.sortItems(section.items, sortMode);
+
+        // Collocate Feature Sub Items
+        section.items = SheetSections.collocateSubItems(context, section.items);
+
+        // Filter Features
+        if (itemFilterService) {
+          section.items = itemFilterService.filter(
+            section.items,
+            CONSTANTS.TAB_CHARACTER_FEATURES
+          );
+        }
+
+        // Apply visibility from configuration
+        section.show = sectionConfig?.[section.key]?.show !== false;
+      });
+    } catch (e) {
+      error('An error occurred while configuring features', false, e);
+    }
+
+    return features;
   }
 }

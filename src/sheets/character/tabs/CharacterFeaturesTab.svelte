@@ -37,13 +37,25 @@
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
   import LevelUpDropdown from 'src/sheets/actor/LevelUpDropdown.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
+  import { SheetSections } from 'src/features/sections/SheetSections';
+  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
+
+  $: features = SheetSections.configureFeatures(
+    $context.features,
+    $context,
+    CONSTANTS.TAB_CHARACTER_FEATURES,
+    SheetPreferencesService.getByType($context.actor.type),
+    TidyFlags.sectionConfig.get($context.actor)?.[
+      CONSTANTS.TAB_CHARACTER_FEATURES
+    ],
+  );
 
   const localize = FoundryAdapter.localize;
 
   $: noFeatures =
-    $context.features.some(
+    features.some(
       (section: CharacterFeatureSection) => section.items.length > 0,
     ) === false;
 
@@ -120,7 +132,7 @@
   {#if noFeatures && !$context.unlocked}
     <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {:else}
-    {#each $context.features as section (section.key)}
+    {#each features as section (section.key)}
       {#if section.show}
         {@const visibleItemIdSubset = FoundryAdapter.searchItems(
           searchCriteria,

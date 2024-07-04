@@ -284,6 +284,10 @@
         {#if 'containerContents' in ctx && !!ctx.containerContents}
           <ExpandableContainer
             expanded={$inlineContainerServiceStore.has(item.id)}
+            class={visibleItemIdSubset !== null &&
+            !visibleItemIdSubset.has(item.id)
+              ? 'hidden'
+              : ''}
           >
             <!-- TODO: Make sure this container contents shell gets reused -->
             <!-- TODO: For drag and drop, use the data-tidy-container-id to determine if an item drop also represents a container change -->
