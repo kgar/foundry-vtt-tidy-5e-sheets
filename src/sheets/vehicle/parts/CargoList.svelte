@@ -22,10 +22,21 @@
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import type { Item5e } from 'src/types/item.types';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
+  import type { InlineContainerService } from 'src/features/inline-container/InlineContainerService';
+  import InlineContainerToggle from 'src/sheets/container/InlineContainerToggle.svelte';
+  import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
+  import CapacityBar from 'src/sheets/container/CapacityBar.svelte';
+  import ContainerContentsSections from 'src/sheets/container/ContainerContentsSections.svelte';
 
   export let section: VehicleCargoSection;
 
   let context = getContext<Readable<VehicleSheetContext>>('context');
+
+  let inlineContainerService = getContext<InlineContainerService>(
+    'inlineContainerService',
+  );
+
+  $: inlineContainerServiceStore = inlineContainerService.store;
 
   let baseWidths: Record<string, string> = {
     quantity: '5rem',
@@ -106,6 +117,9 @@
       >
         <ItemTableCell primary={true}>
           <ItemUseButton disabled={!$context.editable} {item} />
+          {#if 'containerContents' in ctx && !!ctx.containerContents}
+            <InlineContainerToggle {item} {inlineContainerService} />
+          {/if}
           <ItemName
             on:toggle={() => toggleSummary($context.actor)}
             cssClass="extra-small-gap"
@@ -155,6 +169,34 @@
           </ItemTableCell>
         {/if}
       </ItemTableRow>
+      {#if 'containerContents' in ctx && !!ctx.containerContents}
+        <ExpandableContainer
+          expanded={$inlineContainerServiceStore.has(item.id)}
+        >
+          <!-- TODO: Make sure this container contents shell gets reused -->
+          <!-- TODO: For drag and drop, use the data-tidy-container-id to determine if an item drop also represents a container change -->
+          <div
+            style="flex: 1; padding: 0.25rem 0 0 1rem; margin-left: 1rem; border-left: 0.0625rem dotted var(--t5e-separator-color);"
+            class="flex-column extra-small-gap"
+            data-tidy-container-id={item.id}
+          >
+            <CapacityBar
+              container={item}
+              capacity={ctx.containerContents.capacity}
+            />
+            <!-- <Currency document={item} /> -->
+            <ContainerContentsSections
+              contents={ctx.containerContents.contents}
+              container={item}
+              editable={$context.editable}
+              itemContext={ctx.containerContents.itemContext}
+              lockItemQuantity={$context.lockItemQuantity}
+              {inlineContainerService}
+              sheetDocument={$context.actor}
+            />
+          </div>
+        </ExpandableContainer>
+      {/if}
     {/each}
     {#if $context.unlocked && section.dataset}
       <ItemTableFooter

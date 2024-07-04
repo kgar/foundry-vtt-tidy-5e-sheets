@@ -56,6 +56,8 @@ import { DocumentTabSectionConfigApplication } from 'src/applications/section-co
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
+import { InlineContainerService } from 'src/features/inline-container/InlineContainerService';
+import { Container } from 'src/features/inline-container/Container';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -72,6 +74,7 @@ export class Tidy5eVehicleSheet
   currentTabId: string;
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
+  inlineContainerService = new InlineContainerService();
   itemTableTogglesCache: ItemTableToggleCacheService;
   subscriptionsService: StoreSubscriptionsService;
   itemFilterService: ItemFilterService;
@@ -145,6 +148,7 @@ export class Tidy5eVehicleSheet
         ['messageBus', this.messageBus],
         ['stats', this.stats],
         ['card', this.card],
+        ['inlineContainerService', this.inlineContainerService],
         [
           'onFilter',
           this.itemFilterService.onFilter.bind(this.itemFilterService),
@@ -307,6 +311,13 @@ export class Tidy5eVehicleSheet
           (w: any) => !isNil(w.message?.trim(), '')
         ) ?? [],
     };
+
+    for (const item of context.items) {
+      const ctx = context.itemContext[item.id];
+      if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
+        ctx.containerContents = await Container.getContainerContents(item);
+      }
+    }
 
     let tabs = await VehicleSheetRuntime.getTabs(context);
 
