@@ -151,7 +151,13 @@ export class Tidy5eKgarContainerSheet
 
     this.item.actor?.system?.favorites?.forEach((f: CharacterFavorite) => {
       const item = fromUuidSync(f.id, { relative: this.item.actor });
+      
+      if (!item) {
+        return;
+      }
+      
       const ctx = defaultDocumentContext.itemContext[item.id];
+      
       if (ctx) {
         ctx.favoriteId = f.id;
       }
