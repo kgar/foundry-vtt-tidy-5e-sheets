@@ -162,6 +162,7 @@ export class Tidy5eNpcSheet
         ['card', this.card],
         ['currentTabId', this.currentTabId],
         ['inlineContainerService', this.inlineContainerService],
+        ['itemFilterService', this.itemFilterService],
         ['onTabSelected', this.onTabSelected.bind(this)],
         ['onItemToggled', this.onItemToggled.bind(this)],
         ['searchFilters', new Map(this.searchFilters)],
@@ -892,102 +893,6 @@ export class Tidy5eNpcSheet
       this.element.get(0),
       context
     );
-
-    // Apply Section Configs
-    // ------------------------------------------------------------
-
-    const sectionConfigs = TidyFlags.sectionConfig.get(this.actor);
-
-    context.features = SheetSections.sortKeyedSections(
-      context.features,
-      sectionConfigs?.[CONSTANTS.TAB_NPC_ABILITIES]
-    );
-
-    context.features.forEach((section) => {
-      // Sort Features
-      ItemUtils.sortItems(section.items, abilitiesSortMode);
-
-      // Collocate Feature Sub Items
-      section.items = SheetSections.collocateSubItems(context, section.items);
-
-      // Filter Features
-      section.items = this.itemFilterService.filter(
-        section.items,
-        CONSTANTS.TAB_NPC_ABILITIES
-      );
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_NPC_ABILITIES]?.[section.key]?.show !==
-        false;
-    });
-
-    context.spellbook = SheetSections.sortKeyedSections(
-      context.spellbook,
-      sectionConfigs?.[CONSTANTS.TAB_NPC_SPELLBOOK]
-    );
-
-    const showSpellbookTab =
-      SettingsProvider.settings.showSpellbookTabNpc.get();
-
-    const spellbookTabId = showSpellbookTab
-      ? CONSTANTS.TAB_NPC_SPELLBOOK
-      : CONSTANTS.TAB_NPC_ABILITIES;
-
-    context.spellbook.forEach((section) => {
-      // Sort Spellbook
-      ItemUtils.sortItems(section.spells, spellbookSortMode);
-
-      // TODO: Collocate Spellbook Sub Items
-      // Filter Spellbook
-      section.spells = this.itemFilterService.filter(
-        section.spells,
-        spellbookTabId
-      );
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[spellbookTabId]?.[section.key]?.show !== false;
-    });
-
-    context.inventory = SheetSections.sortKeyedSections(
-      Object.values(context.inventory),
-      sectionConfigs?.[CONSTANTS.TAB_NPC_INVENTORY]
-    );
-
-    context.inventory.forEach((section) => {
-      // Sort Inventory
-      ItemUtils.sortItems(section.items, inventorySortMode);
-
-      // TODO: Collocate Inventory Sub Items
-      // Filter Inventory
-      section.items = this.itemFilterService.filter(
-        section.items,
-        CONSTANTS.TAB_NPC_INVENTORY
-      );
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_NPC_INVENTORY]?.[section.key]?.show !==
-        false;
-    });
-
-    for (const panelItem of context.containerPanelItems) {
-      const container = panelItem.container;
-      const ctx = context.itemContext[container.id];
-
-      if (!ctx?.containerContents) {
-        continue;
-      }
-
-      // Container.applySectionConfigsRecursively(
-      //   container,
-      //   ctx.containerContents,
-      //   inventorySortMode,
-      //   this.itemFilterService,
-      //   CONSTANTS.TAB_NPC_INVENTORY
-      // );
-    }
 
     debug('NPC Sheet context data', context);
 

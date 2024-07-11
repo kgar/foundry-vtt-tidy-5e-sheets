@@ -41,11 +41,6 @@
   export let spells: any[];
   export let allowFavorites: boolean = true;
   export let cssClass: string | null = null;
-  /**
-   * An optional subset of item IDs which will hide all other items not included in this set.
-   * Useful for showing only search results, for example.
-   */
-  export let visibleItemIdSubset: Set<string> | null = null;
 
   // TODO: replace this with column specification array default and then allow the caller to customize the table.
   export let includeSchool: boolean = true;
@@ -53,6 +48,9 @@
   export let spellComponentsBaseWidth: string = '3.75rem';
   export let targetBaseWidth: string = '7.5rem';
   export let usageBaseWidth: string = '7.5rem';
+
+  let itemIdsToShow =
+    getContext<Readable<Set<string> | undefined>>('itemIdsToShow');
 
   var spellSchoolBaseWidth = '2rem';
 
@@ -173,8 +171,7 @@
           }}
           let:toggleSummary
           cssClass={FoundryAdapter.getSpellRowClasses(spell)}
-          hidden={visibleItemIdSubset !== null &&
-            !visibleItemIdSubset.has(spell.id)}
+          hidden={!!$itemIdsToShow && !$itemIdsToShow.has(spell.id)}
         >
           <ItemTableCell primary={true}>
             <ItemUseButton

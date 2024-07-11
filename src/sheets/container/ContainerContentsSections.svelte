@@ -22,6 +22,7 @@
   import { getContext } from 'svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import type { Readable } from 'svelte/store';
 
   export let contents: InventorySection[];
   export let container: Item5e;
@@ -31,7 +32,6 @@
   export let lockItemQuantity: boolean;
   /** The sheet which is rendering this recursive set of container contents. */
   export let sheetDocument: Actor5e | Item5e;
-  // TODO: Use context API to generate visible item ID subset based on search criteria and the items this component knows about
 
   const tabId = getContext<string>('tabId');
 
@@ -43,6 +43,9 @@
   );
 
   $: inlineContainerServiceStore = inlineContainerService.store;
+
+  let itemIdsToShow =
+    getContext<Readable<Set<string> | undefined>>('itemIdsToShow');
 
   const classicControls = [
     {
@@ -100,13 +103,10 @@
           {#each section.items as item (item.id)}
             {@const ctx = itemContext[item.id]}
             {@const weight = ctx?.totalWeight ?? item.system.weight.value}
-            <!-- TODO: Figure out how to include container contents (recursively) into search -->
-            {@const hidden = false}
-            <!-- visibleItemIdSubset !== null &&
-                  !visibleItemIdSubset.has(item.id)} -->
+
             <ItemTableRowV2
               {item}
-              {hidden}
+              hidden={!!$itemIdsToShow && !$itemIdsToShow.has(item.id)}
               rowClass={FoundryAdapter.getInventoryRowClasses(
                 item,
                 itemContext[item.id]?.attunement,

@@ -6,8 +6,8 @@
   import ItemTableCell from 'src/components/item-list/v1/ItemTableCell.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ActorSheetContext } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { getContext, setContext } from 'svelte';
+  import { writable, type Readable } from 'svelte/store';
   import ItemName from 'src/components/item-list/ItemName.svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
@@ -23,10 +23,33 @@
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
+  import { SheetSections } from 'src/features/sections/SheetSections';
+  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 
+  $: actions = SheetSections.configureActions(
+    $context.actions,
+    CONSTANTS.TAB_ACTOR_ACTIONS,
+    SheetPreferencesService.getByType($context.actor.type),
+    TidyFlags.sectionConfig.get($context.actor)?.[CONSTANTS.TAB_ACTOR_ACTIONS],
+  );
+
   let searchCriteria: string = '';
+
+  const itemIdsToShow = writable<Set<string> | undefined>(undefined);
+  setContext('itemIdsToShow', itemIdsToShow);
+
+  $: {
+    $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
+      criteria: searchCriteria,
+      itemContext: $context.itemContext,
+      sections: actions,
+      tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
+    });
+  }
+
   $: utilityBarCommands =
     $context.utilities[CONSTANTS.TAB_ACTOR_ACTIONS]?.utilityToolbarCommands ??
     [];
@@ -62,7 +85,11 @@
 
 <div class="actions-tab-container scroll-container flex-column small-gap">
   {#each $context.actions as section (section.key)}
-    {#if section.actions.length && section.show}
+    {@const visibleItemCount = ItemVisibility.countVisibleItems(
+      section.actions.map((a) => a.item),
+      $itemIdsToShow,
+    )}
+    {#if visibleItemCount > 0 && section.show}
       <ItemTable key={section.key}>
         <svelte:fragment slot="header">
           <ItemTableHeaderRow>
@@ -84,11 +111,7 @@
           </ItemTableHeaderRow>
         </svelte:fragment>
         <svelte:fragment slot="body">
-          {@const filteredActionItems = FoundryAdapter.getFilteredActionItems(
-            searchCriteria,
-            section.actions,
-          )}
-          {#each filteredActionItems as actionItem (actionItem.item.id)}
+          {#each section.actions as actionItem (actionItem.item.id)}
             <ItemTableRow
               item={actionItem.item}
               on:mousedown={(event) =>
@@ -97,6 +120,8 @@
                 type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
                 uuid: actionItem.item.uuid,
               }}
+              hidden={!!$itemIdsToShow &&
+                !$itemIdsToShow.has(actionItem.item.id)}
               let:toggleSummary
             >
               <ItemTableCell primary={true}>

@@ -8,8 +8,8 @@
   } from 'src/types/types';
   import InventoryList from '../InventoryList.svelte';
   import InventoryGrid from '../InventoryGrid.svelte';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { getContext, setContext } from 'svelte';
+  import { writable, type Readable } from 'svelte/store';
   import Currency from 'src/sheets/actor/Currency.svelte';
   import Notice from '../../../components/notice/Notice.svelte';
   import NumberInput from '../../../components/inputs/NumberInput.svelte';
@@ -28,6 +28,7 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   export let tabId: string;
 
@@ -41,9 +42,21 @@
     TidyFlags.sectionConfig.get($context.actor)?.[tabId],
   );
 
-  const localize = FoundryAdapter.localize;
-
   let searchCriteria: string = '';
+
+  const itemIdsToShow = writable<Set<string> | undefined>(undefined);
+  setContext('itemIdsToShow', itemIdsToShow);
+
+  $: {
+    $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
+      criteria: searchCriteria,
+      itemContext: $context.itemContext,
+      sections: inventory,
+      tabId: tabId,
+    });
+  }
+
+  const localize = FoundryAdapter.localize;
 
   let layoutMode: ItemLayoutMode;
   $: layoutMode = TidyFlags.inventoryGrid.get($context.actor) ? 'grid' : 'list';
@@ -99,27 +112,20 @@
       />
     </ExpandableContainer>
     {#each inventory as section (section.key)}
+      {@const visibleItemCount = ItemVisibility.countVisibleItems(
+        section.items,
+        $itemIdsToShow,
+      )}
       {#if section.show}
-        {@const visibleItemIdSubset = FoundryAdapter.searchItems(
-          searchCriteria,
-          section.items,
-        )}
-        {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemIdSubset.size > 0}
+        {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemCount > 0}
           {#if layoutMode === 'list'}
             <InventoryList
-              primaryColumnName="{localize(
-                section.label,
-              )} ({visibleItemIdSubset.size})"
+              primaryColumnName="{localize(section.label)} ({visibleItemCount})"
               {section}
               items={section.items}
-              {visibleItemIdSubset}
             />
           {:else}
-            <InventoryGrid
-              items={section.items}
-              {section}
-              {visibleItemIdSubset}
-            />
+            <InventoryGrid items={section.items} {section} />
           {/if}
         {/if}
       {/if}

@@ -4,6 +4,7 @@ import type { Tidy5eCharacterSheet } from 'src/sheets/Tidy5eCharacterSheet';
 import type { Tidy5eNpcSheet } from 'src/sheets/Tidy5eNpcSheet';
 import type { Item5e } from 'src/types/item.types';
 import type {
+  ActionSection,
   Actor5e,
   CharacterFeatureSection,
   CharacterSheetContext,
@@ -11,19 +12,19 @@ import type {
   FavoriteSection,
   FeatureSection,
   InventorySection,
+  NpcAbilitySection,
   NpcSheetContext,
   SpellbookSection,
   TidySectionBase,
 } from 'src/types/types';
 import { isNil } from 'src/utils/data';
-import type { SectionConfig, SheetTabSectionConfigs } from './sections.types';
+import type { SectionConfig } from './sections.types';
 import { ItemUtils } from 'src/utils/ItemUtils';
 import { SheetPreferencesService } from '../user-preferences/SheetPreferencesService';
-import type { ItemFilterService } from '../filtering/ItemFilterService';
-import { getContext } from 'svelte';
 import type { SheetPreference } from '../user-preferences/user-preferences.types';
 import type { CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { error } from 'src/utils/logging';
+import { sortActions } from '../actions/actions';
 
 export class SheetSections {
   static generateCustomSpellbookSections(
@@ -263,20 +264,12 @@ export class SheetSections {
     sectionConfig?: Record<string, SectionConfig>
   ) {
     try {
-      let itemFilterService = getContext<ItemFilterService | undefined>(
-        'itemFilterService'
-      );
-
       sections = SheetSections.sortKeyedSections(sections, sectionConfig);
 
       const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
 
       sections.forEach((section) => {
         ItemUtils.sortItems(section.items, sortMode);
-
-        if (itemFilterService) {
-          section.items = itemFilterService.filter(section.items, tabId);
-        }
 
         // Apply visibility from configuration
         section.show = sectionConfig?.[section.key]?.show !== false;
@@ -295,10 +288,6 @@ export class SheetSections {
     sections: SpellbookSection[]
   ) {
     try {
-      let itemFilterService = getContext<ItemFilterService | undefined>(
-        'itemFilterService'
-      );
-
       const sectionConfigs = TidyFlags.sectionConfig.get(document);
 
       sections = SheetSections.sortKeyedSections(
@@ -317,13 +306,6 @@ export class SheetSections {
         ItemUtils.sortItems(section.spells, sortMode);
 
         // TODO: Collocate Spellbook Sub Items
-        // Filter Spellbook
-        if (itemFilterService) {
-          section.spells = itemFilterService.filter(
-            section.spells,
-            CONSTANTS.TAB_CHARACTER_SPELLBOOK
-          );
-        }
 
         // Apply visibility from configuration
         section.show =
@@ -345,10 +327,6 @@ export class SheetSections {
     sectionConfig?: Record<string, SectionConfig>
   ) {
     try {
-      let itemFilterService = getContext<ItemFilterService | undefined>(
-        'itemFilterService'
-      );
-
       favoriteSections = SheetSections.sortKeyedSections(
         favoriteSections,
         sectionConfig
@@ -398,13 +376,6 @@ export class SheetSections {
           }
 
           // TODO: Collocate Favorite Sub Items
-          // Filter Favorite Items
-          if (itemFilterService) {
-            items = itemFilterService.filter(
-              items,
-              CONSTANTS.TAB_CHARACTER_ATTRIBUTES
-            );
-          }
 
           if ('spells' in section) {
             section.spells = items;
@@ -424,7 +395,10 @@ export class SheetSections {
   }
 
   static configureFeatures<
-    TSection extends CharacterFeatureSection | FeatureSection
+    TSection extends
+      | CharacterFeatureSection
+      | FeatureSection
+      | NpcAbilitySection
   >(
     features: TSection[],
     context: CharacterSheetContext | NpcSheetContext,
@@ -433,10 +407,6 @@ export class SheetSections {
     sectionConfig?: Record<string, SectionConfig>
   ): TSection[] {
     try {
-      let itemFilterService = getContext<ItemFilterService | undefined>(
-        'itemFilterService'
-      );
-
       features = SheetSections.sortKeyedSections(features, sectionConfig);
 
       const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
@@ -448,14 +418,6 @@ export class SheetSections {
         // Collocate Feature Sub Items
         section.items = SheetSections.collocateSubItems(context, section.items);
 
-        // Filter Features
-        if (itemFilterService) {
-          section.items = itemFilterService.filter(
-            section.items,
-            CONSTANTS.TAB_CHARACTER_FEATURES
-          );
-        }
-
         // Apply visibility from configuration
         section.show = sectionConfig?.[section.key]?.show !== false;
       });
@@ -464,5 +426,35 @@ export class SheetSections {
     }
 
     return features;
+  }
+
+  static configureActions(
+    actionSections: ActionSection[],
+    tabId: string,
+    sheetPreferences: SheetPreference,
+    sectionConfigs: Record<string, SectionConfig> | undefined
+  ) {
+    try {
+      actionSections = SheetSections.sortKeyedSections(
+        Object.values(actionSections),
+        sectionConfigs
+      );
+
+      const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
+
+      actionSections = actionSections.filter(
+        (section) => section.actions.length
+      );
+
+      actionSections.forEach((section) => {
+        sortActions(section, sortMode);
+
+        section.show = sectionConfigs?.[section.key]?.show !== false;
+      });
+    } catch (e) {
+      error('An error occurred while configuring actions', false, e);
+    }
+
+    return actionSections;
   }
 }

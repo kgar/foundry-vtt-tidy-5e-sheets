@@ -9,8 +9,8 @@
   import SpellbookFooter from '../../../components/spellbook/SpellbookFooter.svelte';
   import SpellbookGrid from '../../../components/spellbook/SpellbookGrid.svelte';
   import SpellbookClassFilter from '../../../components/spellbook/SpellbookClassFilter.svelte';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { getContext, setContext } from 'svelte';
+  import { writable, type Readable } from 'svelte/store';
   import NoSpells from 'src/sheets/actor/NoSpells.svelte';
   import Notice from '../../../components/notice/Notice.svelte';
   import { settingStore } from 'src/settings/settings';
@@ -23,6 +23,7 @@
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetSections } from 'src/features/sections/SheetSections';
+  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -31,6 +32,18 @@
     CONSTANTS.TAB_CHARACTER_SPELLBOOK,
     $context.spellbook,
   );
+
+  const itemIdsToShow = writable<Set<string> | undefined>(undefined);
+  setContext('itemIdsToShow', itemIdsToShow);
+
+  $: {
+    $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
+      criteria: searchCriteria,
+      itemContext: $context.itemContext,
+      sections: spellbook,
+      tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+    });
+  }
 
   const localize = FoundryAdapter.localize;
 
@@ -56,7 +69,7 @@
     );
   }
 
-  $: noSpellLevels = !spellbook.length;
+  $: noSpellLevels = !$context.spellbook.length;
 
   $: noSpells =
     spellbook.reduce(
@@ -106,22 +119,22 @@
     {#each spellbook as section (section.key)}
       {#if section.show}
         {@const classSpells = tryFilterByClass(section.spells)}
-        {@const visibleItemIdSubset = FoundryAdapter.searchItems(
-          searchCriteria,
-          classSpells,
+        
+        {@const visibleItemCount = ItemVisibility.countVisibleItems(
+          section.spells,
+          $itemIdsToShow,
         )}
-        {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemIdSubset.size > 0 || !!section.slots}
+
+        {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemCount > 0 || !!section.slots}
           {#if layoutMode === 'list'}
             <SpellbookList
               spells={classSpells}
               {section}
-              {visibleItemIdSubset}
             />
           {:else}
             <SpellbookGrid
               spells={classSpells}
               {section}
-              {visibleItemIdSubset}
             />
           {/if}
         {/if}

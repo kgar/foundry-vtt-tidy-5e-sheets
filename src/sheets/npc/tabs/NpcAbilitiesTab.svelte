@@ -1,8 +1,8 @@
 <script lang="ts">
   import SkillsList from 'src/sheets/actor/SkillsList.svelte';
   import Traits from '../../actor/traits/Traits.svelte';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { getContext, setContext } from 'svelte';
+  import { writable, type Readable } from 'svelte/store';
   import type {
     ItemLayoutMode,
     NpcSheetContext,
@@ -55,6 +55,9 @@
   import type { InlineContainerService } from 'src/features/inline-container/InlineContainerService';
   import CapacityBar from 'src/sheets/container/CapacityBar.svelte';
   import ContainerContentsSections from 'src/sheets/container/ContainerContentsSections.svelte';
+  import { SheetSections } from 'src/features/sections/SheetSections';
+  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
@@ -69,7 +72,36 @@
   $: utilityBarCommands =
     $context.utilities[CONSTANTS.TAB_NPC_ABILITIES]?.utilityToolbarCommands ??
     [];
+
+  $: features = SheetSections.configureFeatures(
+    $context.features,
+    $context,
+    CONSTANTS.TAB_NPC_ABILITIES,
+    SheetPreferencesService.getByType($context.actor.type),
+    TidyFlags.sectionConfig.get($context.actor)?.[CONSTANTS.TAB_NPC_ABILITIES],
+  );
+
   let searchCriteria: string = '';
+
+  const itemIdsToShow = writable<Set<string> | undefined>(undefined);
+  setContext('itemIdsToShow', itemIdsToShow);
+
+  $: spellbook = !$settingStore.showSpellbookTabNpc
+    ? SheetSections.configureSpellbook(
+        $context.actor,
+        CONSTANTS.TAB_NPC_ABILITIES,
+        $context.spellbook,
+      )
+    : [];
+
+  $: {
+    $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
+      criteria: searchCriteria,
+      itemContext: $context.itemContext,
+      sections: [...features, ...spellbook],
+      tabId: CONSTANTS.TAB_NPC_ABILITIES,
+    });
+  }
 
   function toggleLayout() {
     if (layoutMode === 'grid') {
@@ -165,13 +197,13 @@
     {#if $settingStore.moveTraitsBelowNpcResources}
       <Traits toggleable={!$settingStore.alwaysShowNpcTraits} />
     {/if}
-    {#each $context.features as section (section.key)}
+    {#each features as section (section.key)}
       {#if section.show}
-        {#if $context.unlocked || section.items.length}
-          {@const visibleItemIdSubset = FoundryAdapter.searchItems(
-            searchCriteria,
-            section.items,
-          )}
+        {@const visibleItemCount = ItemVisibility.countVisibleItems(
+          section.items,
+          $itemIdsToShow,
+        )}
+        {#if $context.unlocked || visibleItemCount > 0}
           <ItemTable key={section.key}>
             <svelte:fragment slot="header">
               <ItemTableHeaderRow>
@@ -209,8 +241,7 @@
                   }}
                   {item}
                   cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
-                  hidden={visibleItemIdSubset !== null &&
-                    !visibleItemIdSubset.has(item.id)}
+                  hidden={!!$itemIdsToShow && !$itemIdsToShow.has(item.id)}
                 >
                   <ItemTableCell primary={true}>
                     <ItemUseButton disabled={!$context.editable} {item} />
@@ -292,8 +323,7 @@
                 {#if 'containerContents' in ctx && !!ctx.containerContents}
                   <ExpandableContainer
                     expanded={$inlineContainerServiceStore.has(item.id)}
-                    class={visibleItemIdSubset !== null &&
-                    !visibleItemIdSubset.has(item.id)
+                    class={!!$itemIdsToShow && !$itemIdsToShow.has(item.id)
                       ? 'hidden'
                       : ''}
                   >
@@ -385,12 +415,8 @@
           <NoSpells cssClass="flex-1" editable={$context.unlocked} />
         {:else}
           <div class="flex-1 small-padding-bottom flex-column small-gap">
-            {#each $context.spellbook as section (section.key)}
+            {#each spellbook as section (section.key)}
               {#if section.show}
-                {@const visibleItemIdSubset = FoundryAdapter.searchItems(
-                  searchCriteria,
-                  section.spells,
-                )}
                 {#if layoutMode === 'list'}
                   <SpellbookList
                     spells={section.spells}
@@ -401,14 +427,9 @@
                     spellComponentsBaseWidth="3.125rem"
                     targetBaseWidth="5.625rem"
                     usageBaseWidth="5.625rem"
-                    {visibleItemIdSubset}
                   />
                 {:else}
-                  <SpellbookGrid
-                    spells={section.spells}
-                    {section}
-                    {visibleItemIdSubset}
-                  />
+                  <SpellbookGrid spells={section.spells} {section} />
                 {/if}
               {/if}
             {/each}

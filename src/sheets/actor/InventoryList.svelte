@@ -45,11 +45,6 @@
   export let lockControls: boolean = false;
   export let allowFavoriteIconNextToName: boolean = true;
   export let includeWeightColumn: boolean = true;
-  /**
-   * An optional subset of item IDs which will hide all other items not included in this set.
-   * Useful for showing only search results, for example.
-   */
-  export let visibleItemIdSubset: Set<string> | null = null;
 
   let inlineContainerService = getContext<InlineContainerService>(
     'inlineContainerService',
@@ -59,6 +54,9 @@
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
+
+  let itemIdsToShow =
+    getContext<Readable<Set<string> | undefined>>('itemIdsToShow');
 
   const localize = FoundryAdapter.localize;
   const weightUnit = FoundryAdapter.getWeightUnit();
@@ -191,8 +189,7 @@
           }}
           let:toggleSummary
           cssClass={getInventoryRowClasses(item)}
-          hidden={visibleItemIdSubset !== null &&
-            !visibleItemIdSubset.has(item.id)}
+          hidden={!!$itemIdsToShow && !$itemIdsToShow.has(item.id)}
           favoriteId={'favoriteId' in ctx ? ctx.favoriteId : null}
         >
           <ItemTableCell primary={true}>
@@ -284,8 +281,7 @@
         {#if 'containerContents' in ctx && !!ctx.containerContents}
           <ExpandableContainer
             expanded={$inlineContainerServiceStore.has(item.id)}
-            class={visibleItemIdSubset !== null &&
-            !visibleItemIdSubset.has(item.id)
+            class={!!$itemIdsToShow && !$itemIdsToShow.has(item.id)
               ? 'hidden'
               : ''}
           >

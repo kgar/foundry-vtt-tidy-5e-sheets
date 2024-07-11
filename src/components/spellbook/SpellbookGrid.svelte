@@ -25,15 +25,13 @@
   export let section: SpellbookSection;
   export let spells: Item5e[];
   export let cssClass: string | null = null;
-  /**
-   * An optional subset of item IDs which will hide all other items not included in this set.
-   * Useful for showing only search results, for example.
-   */
-  export let visibleItemIdSubset: Set<string> | null = null;
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
   let card = getContext<Writable<ItemCardStore>>('card');
+
+  let itemIdsToShow =
+    getContext<Readable<Set<string> | undefined>>('itemIdsToShow');
 
   $: customCommands = ActorItemRuntime.getActorItemSectionCommands({
     actor: $context.actor,
@@ -97,8 +95,7 @@
       {#each spells as spell}
         {@const ctx = $context.itemContext[spell.id]}
         {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($context, spell)}
-        {@const hidden =
-          visibleItemIdSubset !== null && !visibleItemIdSubset.has(spell.id)}
+        {@const hidden = !!$itemIdsToShow && !$itemIdsToShow.has(spell.id)}
         <button
           type="button"
           class="spell {FoundryAdapter.getSpellRowClasses(

@@ -3,14 +3,16 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ActionListRuntime } from 'src/runtime/action-list/ActionListRuntime';
 import { SettingsProvider } from 'src/settings/settings';
 import type { Item5e } from 'src/types/item.types';
-import type { ActionItem, ActionSection, Actor5e } from 'src/types/types';
+import type {
+  ActionItem,
+  ActionSection,
+  Actor5e,
+  SortMode,
+} from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import { scaleCantripDamageFormula, simplifyFormula } from 'src/utils/formula';
 import { debug, error } from 'src/utils/logging';
-import { SheetPreferencesService } from '../user-preferences/SheetPreferencesService';
-import type { ItemFilterService } from '../filtering/ItemFilterService';
 import { SpellUtils } from 'src/utils/SpellUtils';
-import { SheetSections } from '../sections/SheetSections';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 
 export type ActionSets = Record<string, Set<ActionItem>>;
@@ -50,27 +52,20 @@ export function getActorActionSections(actor: Actor5e): ActionSection[] {
   }
 }
 
-export function sortActions(actor: Actor5e, actionSections: ActionSection[]) {
-  const sheetPreferences = SheetPreferencesService.getByType(actor.type);
+export function sortActions(section: ActionSection, sortMode: SortMode) {
+  section.actions.sort(({ item: a }, { item: b }) => {
+    if (sortMode === 'a') {
+      return a.name.localeCompare(b.name);
+    }
 
-  const actionSortMode =
-    sheetPreferences.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS]?.sort ?? 'm';
-
-  actionSections.forEach((section) => {
-    section.actions.sort((a: Item5e, b: Item5e) => {
-      if (actionSortMode === 'a') {
-        return a.name.localeCompare(b.name);
-      }
-
-      // Sort by Arbitrary Action List Rules
-      if (a.type !== b.type) {
-        return itemTypeSortValues[a.type] - itemTypeSortValues[b.type];
-      }
-      if (a.type === 'spell' && b.type === 'spell') {
-        return a.system.level - b.system.level;
-      }
-      return (a.sort || 0) - (b.sort || 0);
-    });
+    // Sort by Arbitrary Action List Rules
+    if (a.type !== b.type) {
+      return itemTypeSortValues[a.type] - itemTypeSortValues[b.type];
+    }
+    if (a.type === 'spell' && b.type === 'spell') {
+      return a.system.level - b.system.level;
+    }
+    return (a.sort || 0) - (b.sort || 0);
   });
 }
 

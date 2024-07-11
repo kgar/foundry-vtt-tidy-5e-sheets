@@ -4,13 +4,14 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import FavoriteFeaturesList from './FavoriteFeaturesList.svelte';
   import FavoriteSpellsList from 'src/sheets/character/parts/FavoriteSpellsList.svelte';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { getContext, setContext } from 'svelte';
+  import { writable, type Readable } from 'svelte/store';
   import { CONSTANTS } from 'src/constants';
   import FavoriteEffectsList from './FavoriteEffectsList.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   export let searchCriteria: string = '';
 
@@ -26,6 +27,22 @@
     ],
   );
 
+  const itemIdsToShow = writable<Set<string> | undefined>(undefined);
+  setContext('itemIdsToShow', itemIdsToShow);
+
+  $: {
+    const sections = favorites.filter(
+      (x) => x.type !== CONSTANTS.TAB_CHARACTER_EFFECTS,
+    );
+
+    $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
+      criteria: searchCriteria,
+      itemContext: $context.itemContext,
+      sections: sections,
+      tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+    });
+  }
+
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -34,10 +51,6 @@
   {#each favorites as section}
     {#if section.show}
       {#if section.type === CONSTANTS.TAB_CHARACTER_INVENTORY}
-        {@const visibleItemIdSubset = FoundryAdapter.searchItems(
-          searchCriteria,
-          section.items,
-        )}
         <InventoryList
           {section}
           items={section.items}
@@ -45,31 +58,14 @@
           lockControls={true}
           allowFavoriteIconNextToName={false}
           includeWeightColumn={false}
-          {visibleItemIdSubset}
         />
       {/if}
       <!-- TODO: Cut a copy of the Favorite Features component and custom tailor it for the generic section -->
       {#if section.type === CONSTANTS.TAB_CHARACTER_FEATURES || section.type === CONSTANTS.CHARACTER_FAVORITE_SECTION_GENERIC}
-        {@const visibleItemIdSubset = FoundryAdapter.searchItems(
-          searchCriteria,
-          section.items,
-        )}
-        <FavoriteFeaturesList
-          {section}
-          items={section.items}
-          {visibleItemIdSubset}
-        />
+        <FavoriteFeaturesList {section} items={section.items} />
       {/if}
       {#if section.type === CONSTANTS.TAB_CHARACTER_SPELLBOOK}
-        {@const visibleItemIdSubset = FoundryAdapter.searchItems(
-          searchCriteria,
-          section.spells,
-        )}
-        <FavoriteSpellsList
-          {section}
-          spells={section.spells}
-          {visibleItemIdSubset}
-        />
+        <FavoriteSpellsList {section} spells={section.spells} />
       {/if}
       {#if section.type === CONSTANTS.TAB_CHARACTER_EFFECTS}
         {@const visibleEffectIdSubset = FoundryAdapter.searchEffects(

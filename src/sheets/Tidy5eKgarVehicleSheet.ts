@@ -149,6 +149,7 @@ export class Tidy5eVehicleSheet
         ['stats', this.stats],
         ['card', this.card],
         ['inlineContainerService', this.inlineContainerService],
+        ['itemFilterService', this.itemFilterService],
         [
           'onFilter',
           this.itemFilterService.onFilter.bind(this.itemFilterService),

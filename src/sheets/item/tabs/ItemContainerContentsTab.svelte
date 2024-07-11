@@ -2,8 +2,8 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ContainerSheetContext, Item5e } from 'src/types/item.types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { getContext, setContext } from 'svelte';
+  import { writable, type Readable } from 'svelte/store';
   import CapacityBar from 'src/sheets/container/CapacityBar.svelte';
   import Currency from 'src/sheets/actor/Currency.svelte';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
@@ -16,6 +16,7 @@
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
   import ContainerContentsSections from 'src/sheets/container/ContainerContentsSections.svelte';
   import { InlineContainerService } from 'src/features/inline-container/InlineContainerService';
+  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   let context = getContext<Readable<ContainerSheetContext>>('context');
 
@@ -26,6 +27,18 @@
   let searchCriteria = '';
 
   $: allItems = $context.containerContents.contents.flatMap((x) => x.items);
+
+  const itemIdsToShow = writable<Set<string> | undefined>(undefined);
+  setContext('itemIdsToShow', itemIdsToShow);
+
+  $: {
+    $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
+      criteria: searchCriteria,
+      itemContext: $context.itemContext,
+      sections: $context.containerContents.contents,
+      tabId: CONSTANTS.TAB_CONTAINER_CONTENTS,
+    });
+  }
 
   const localize = FoundryAdapter.localize;
 
