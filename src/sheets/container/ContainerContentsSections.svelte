@@ -74,13 +74,25 @@
   $: gridTemplateColumns = `/* Name */ 1fr /* Weight */ 3rem /* Quantity */ 3rem ${classicControlsWidth}`;
 
   const localize = FoundryAdapter.localize;
+
+  async function onDrop(
+    event: DragEvent & { currentTarget: EventTarget & HTMLElement },
+  ) {
+    container.sheet._onDrop(event);
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }
 </script>
 
 {#each configuredContents as section (section.key)}
   {#if section.show}
+    <!-- TODO: Apply proper a11y trappings for this -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <section
       class="container-contents-list-section"
       style="--grid-template-columns: {gridTemplateColumns};"
+      on:drop={onDrop}
     >
       <TidyTable key={section.key}>
         <svelte:fragment slot="header">
@@ -202,7 +214,7 @@
                   <!-- <Currency document={item} /> -->
                   <svelte:self
                     contents={ctx.containerContents.contents}
-                    {container}
+                    container={item}
                     {editable}
                     itemContext={ctx.containerContents.itemContext}
                     {lockItemQuantity}

@@ -7,10 +7,6 @@ import { Inventory } from '../sections/Inventory';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { CONSTANTS } from 'src/constants';
 import type { CharacterFavorite } from 'src/foundry/dnd5e.types';
-import type { SectionConfig } from '../sections/sections.types';
-import type { SortMode } from 'src/types/types';
-import type { ItemFilterService } from '../filtering/ItemFilterService';
-import { TidyFlags } from 'src/api';
 
 export class Container {
   static async getContainerContents(item: Item5e): Promise<ContainerContents> {

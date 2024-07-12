@@ -149,13 +149,13 @@ export class Tidy5eKgarContainerSheet
 
     this.item.actor?.system?.favorites?.forEach((f: CharacterFavorite) => {
       const item = fromUuidSync(f.id, { relative: this.item.actor });
-      
+
       if (!item) {
         return;
       }
-      
+
       const ctx = defaultDocumentContext.itemContext[item.id];
-      
+
       if (ctx) {
         ctx.favoriteId = f.id;
       }
@@ -280,19 +280,19 @@ export class Tidy5eKgarContainerSheet
         ) ?? [],
     };
 
+    const contents = await this.item.system.contents;
+    for (const item of contents) {
+      if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
+        const ctx = context.itemContext[item.id];
+        ctx.containerContents = await Container.getContainerContents(item);
+      }
+    }
+
     TidyHooks.tidy5eSheetsPreConfigureSections(
       this,
       this.element.get(0),
       context
     );
-
-    // await Container.applySectionConfigsRecursively(
-    //   this.item,
-    //   context.containerContents,
-    //   contentsSortMode,
-    //   this.itemFilterService,
-    //   CONSTANTS.TAB_CONTAINER_CONTENTS
-    // );
 
     debug(`Container Sheet context data`, context);
 
