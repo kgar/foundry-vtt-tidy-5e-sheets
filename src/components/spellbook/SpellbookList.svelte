@@ -33,7 +33,6 @@
   import type { Item5e } from 'src/types/item.types';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
   import ConcentrationOverlayIcon from './ConcentrationOverlayIcon.svelte';
-  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');

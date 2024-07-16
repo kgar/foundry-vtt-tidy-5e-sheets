@@ -42,15 +42,14 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
+  let tabId = getContext<string>('tabId');
 
   $: features = SheetSections.configureFeatures(
     $context.features,
     $context,
-    CONSTANTS.TAB_CHARACTER_FEATURES,
+    tabId,
     SheetPreferencesService.getByType($context.actor.type),
-    TidyFlags.sectionConfig.get($context.actor)?.[
-      CONSTANTS.TAB_CHARACTER_FEATURES
-    ],
+    TidyFlags.sectionConfig.get($context.actor)?.[tabId],
   );
 
   const localize = FoundryAdapter.localize;
@@ -68,7 +67,7 @@
       criteria: searchCriteria,
       itemContext: $context.itemContext,
       sections: features,
-      tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
+      tabId: tabId,
     });
   }
 
@@ -77,8 +76,7 @@
   declareLocation('features');
 
   $: utilityBarCommands =
-    $context.utilities[CONSTANTS.TAB_CHARACTER_FEATURES]
-      ?.utilityToolbarCommands ?? [];
+    $context.utilities[tabId]?.utilityToolbarCommands ?? [];
 
   let controls: RenderableClassicControl<{ item: Item5e }>[] = [];
   $: {
@@ -116,14 +114,14 @@
 <UtilityToolbar>
   <Search bind:value={searchCriteria} />
   <PinnedFilterToggles
-    filterGroupName={CONSTANTS.TAB_CHARACTER_FEATURES}
+    filterGroupName={tabId}
     filters={ItemFilterRuntime.getPinnedFiltersForTab(
       $context.filterPins,
       $context.filterData,
-      CONSTANTS.TAB_CHARACTER_FEATURES,
+      tabId,
     )}
   />
-  <FilterMenu tabId={CONSTANTS.TAB_CHARACTER_FEATURES} />
+  <FilterMenu {tabId} />
   {#each utilityBarCommands as command (command.title)}
     <UtilityToolbarCommand
       title={command.title}

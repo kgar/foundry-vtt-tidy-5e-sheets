@@ -19,6 +19,7 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   let context = getContext<Readable<ContainerSheetContext>>('context');
+  let tabId = getContext<string>('tabId');
 
   let inlineContainerService = getContext<InlineContainerService>(
     'inlineContainerService',
@@ -36,15 +37,14 @@
       criteria: searchCriteria,
       itemContext: $context.itemContext,
       sections: $context.containerContents.contents,
-      tabId: CONSTANTS.TAB_CONTAINER_CONTENTS,
+      tabId: tabId,
     });
   }
 
   const localize = FoundryAdapter.localize;
 
   $: utilityBarCommands =
-    $context.utilities[CONSTANTS.TAB_CONTAINER_CONTENTS]
-      ?.utilityToolbarCommands ?? [];
+    $context.utilities[tabId]?.utilityToolbarCommands ?? [];
 
   $: menuOpen = false;
 </script>
@@ -57,14 +57,14 @@
   <UtilityToolbar>
     <Search bind:value={searchCriteria}></Search>
     <PinnedFilterToggles
-      filterGroupName={CONSTANTS.TAB_CONTAINER_CONTENTS}
+      filterGroupName={tabId}
       filters={ItemFilterRuntime.getPinnedFiltersForTab(
         $context.filterPins,
         $context.filterData,
-        CONSTANTS.TAB_CONTAINER_CONTENTS,
+        tabId,
       )}
     />
-    <FilterMenu tabId={CONSTANTS.TAB_CONTAINER_CONTENTS} />
+    <FilterMenu {tabId} />
     {#each utilityBarCommands as command (command.title)}
       <UtilityToolbarCommand
         title={command.title}

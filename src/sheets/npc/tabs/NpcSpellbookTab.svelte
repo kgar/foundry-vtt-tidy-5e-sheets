@@ -9,7 +9,6 @@
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
-  import { CONSTANTS } from 'src/constants';
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
@@ -18,12 +17,13 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
+  let tabId = getContext<string>('tabId');
 
   let searchCriteria: string = '';
 
   $: spellbook = SheetSections.configureSpellbook(
     $context.actor,
-    CONSTANTS.TAB_NPC_SPELLBOOK,
+    tabId,
     $context.spellbook,
   );
 
@@ -35,7 +35,7 @@
       criteria: searchCriteria,
       itemContext: $context.itemContext,
       sections: spellbook,
-      tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
+      tabId: tabId,
     });
   }
 
@@ -45,21 +45,20 @@
   $: noSpellLevels = !$context.spellbook.length;
 
   $: utilityBarCommands =
-    $context.utilities[CONSTANTS.TAB_NPC_SPELLBOOK]?.utilityToolbarCommands ??
-    [];
+    $context.utilities[tabId]?.utilityToolbarCommands ?? [];
 </script>
 
 <UtilityToolbar>
   <Search bind:value={searchCriteria} />
   <PinnedFilterToggles
-    filterGroupName={CONSTANTS.TAB_NPC_SPELLBOOK}
+    filterGroupName={tabId}
     filters={ItemFilterRuntime.getPinnedFiltersForTab(
       $context.filterPins,
       $context.filterData,
-      CONSTANTS.TAB_NPC_SPELLBOOK,
+      tabId,
     )}
   />
-  <FilterMenu tabId={CONSTANTS.TAB_NPC_SPELLBOOK} />
+  <FilterMenu {tabId} />
   {#each utilityBarCommands as command (command.title)}
     <UtilityToolbarCommand
       title={command.title}

@@ -18,6 +18,7 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
+  let tabId = getContext<string>('tabId');
 
   $: showResources =
     $context.unlocked ||
@@ -28,21 +29,20 @@
   let searchCriteria: string = '';
 
   $: utilityBarCommands =
-    $context.utilities[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]
-      ?.utilityToolbarCommands ?? [];
+    $context.utilities[tabId]?.utilityToolbarCommands ?? [];
 </script>
 
 <UtilityToolbar>
   <Search bind:value={searchCriteria} />
   <PinnedFilterToggles
-    filterGroupName={CONSTANTS.TAB_CHARACTER_ATTRIBUTES}
+    filterGroupName={tabId}
     filters={ItemFilterRuntime.getPinnedFiltersForTab(
       $context.filterPins,
       $context.filterData,
-      CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+      tabId,
     )}
   />
-  <FilterMenu tabId={CONSTANTS.TAB_CHARACTER_ATTRIBUTES} />
+  <FilterMenu {tabId} />
   {#each utilityBarCommands as command (command.title)}
     <UtilityToolbarCommand
       title={command.title}

@@ -26,10 +26,11 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
+  let tabId = getContext<string>('tabId');
 
   $: spellbook = SheetSections.configureSpellbook(
     $context.actor,
-    CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+    tabId,
     $context.spellbook,
   );
 
@@ -41,7 +42,7 @@
       criteria: searchCriteria,
       itemContext: $context.itemContext,
       sections: spellbook,
-      tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+      tabId: tabId,
     });
   }
 
@@ -79,8 +80,7 @@
     ) === 0;
 
   $: utilityBarCommands =
-    $context.utilities[CONSTANTS.TAB_CHARACTER_SPELLBOOK]
-      ?.utilityToolbarCommands ?? [];
+    $context.utilities[tabId]?.utilityToolbarCommands ?? [];
 </script>
 
 <UtilityToolbar>
@@ -91,14 +91,14 @@
     </div>
   {/if}
   <PinnedFilterToggles
-    filterGroupName={CONSTANTS.TAB_NPC_SPELLBOOK}
+    filterGroupName={tabId}
     filters={ItemFilterRuntime.getPinnedFiltersForTab(
       $context.filterPins,
       $context.filterData,
-      CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+      tabId,
     )}
   />
-  <FilterMenu tabId={CONSTANTS.TAB_CHARACTER_SPELLBOOK} />
+  <FilterMenu {tabId} />
   {#each utilityBarCommands as command (command.title)}
     <UtilityToolbarCommand
       title={command.title}
@@ -119,7 +119,7 @@
     {#each spellbook as section (section.key)}
       {#if section.show}
         {@const classSpells = tryFilterByClass(section.spells)}
-        
+
         {@const visibleItemCount = ItemVisibility.countVisibleItems(
           section.spells,
           $itemIdsToShow,
@@ -127,15 +127,9 @@
 
         {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemCount > 0 || !!section.slots}
           {#if layoutMode === 'list'}
-            <SpellbookList
-              spells={classSpells}
-              {section}
-            />
+            <SpellbookList spells={classSpells} {section} />
           {:else}
-            <SpellbookGrid
-              spells={classSpells}
-              {section}
-            />
+            <SpellbookGrid spells={classSpells} {section} />
           {/if}
         {/if}
       {/if}

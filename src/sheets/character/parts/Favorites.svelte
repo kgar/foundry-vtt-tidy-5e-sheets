@@ -16,14 +16,15 @@
   export let searchCriteria: string = '';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
+  let tabId = getContext<string>('tabId');
 
   $: favorites = SheetSections.configureFavorites(
     $context.favorites,
     $context.actor,
-    CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+    tabId,
     SheetPreferencesService.getByType($context.actor.type),
     TidyFlags.sectionConfig.get($context.actor)?.[
-      CONSTANTS.TAB_CHARACTER_ATTRIBUTES
+      tabId
     ],
   );
 
@@ -39,7 +40,7 @@
       criteria: searchCriteria,
       itemContext: $context.itemContext,
       sections: sections,
-      tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+      tabId: tabId,
     });
   }
 

@@ -59,25 +59,23 @@
   import InlineContainerView from 'src/sheets/container/InlineContainerView.svelte';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
+  let tabId = getContext<string>('tabId');
 
   let inlineContainerService = getContext<InlineContainerService>(
     'inlineContainerService',
   );
 
-  $: inlineContainerServiceStore = inlineContainerService.store;
-
   $: noSpellLevels = !$context.spellbook.length;
 
   $: utilityBarCommands =
-    $context.utilities[CONSTANTS.TAB_NPC_ABILITIES]?.utilityToolbarCommands ??
-    [];
+    $context.utilities[tabId]?.utilityToolbarCommands ?? [];
 
   $: features = SheetSections.configureFeatures(
     $context.features,
     $context,
-    CONSTANTS.TAB_NPC_ABILITIES,
+    tabId,
     SheetPreferencesService.getByType($context.actor.type),
-    TidyFlags.sectionConfig.get($context.actor)?.[CONSTANTS.TAB_NPC_ABILITIES],
+    TidyFlags.sectionConfig.get($context.actor)?.[tabId],
   );
 
   let searchCriteria: string = '';
@@ -88,7 +86,7 @@
   $: spellbook = !$settingStore.showSpellbookTabNpc
     ? SheetSections.configureSpellbook(
         $context.actor,
-        CONSTANTS.TAB_NPC_ABILITIES,
+        tabId,
         $context.spellbook,
       )
     : [];
@@ -98,7 +96,7 @@
       criteria: searchCriteria,
       itemContext: $context.itemContext,
       sections: [...features, ...spellbook],
-      tabId: CONSTANTS.TAB_NPC_ABILITIES,
+      tabId: tabId,
     });
   }
 
@@ -150,14 +148,14 @@
 <UtilityToolbar class="abilities-toolbar">
   <Search bind:value={searchCriteria} />
   <PinnedFilterToggles
-    filterGroupName={CONSTANTS.TAB_NPC_ABILITIES}
+    filterGroupName={tabId}
     filters={ItemFilterRuntime.getPinnedFiltersForTab(
       $context.filterPins,
       $context.filterData,
-      CONSTANTS.TAB_NPC_ABILITIES,
+      tabId,
     )}
   />
-  <FilterMenu tabId={CONSTANTS.TAB_NPC_ABILITIES} />
+  <FilterMenu {tabId} />
   {#each utilityBarCommands as command (command.title)}
     <UtilityToolbarCommand
       title={command.title}

@@ -28,12 +28,13 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
+  let tabId = getContext<string>('tabId');
 
   $: actions = SheetSections.configureActions(
     $context.actions,
-    CONSTANTS.TAB_ACTOR_ACTIONS,
+    tabId,
     SheetPreferencesService.getByType($context.actor.type),
-    TidyFlags.sectionConfig.get($context.actor)?.[CONSTANTS.TAB_ACTOR_ACTIONS],
+    TidyFlags.sectionConfig.get($context.actor)?.[tabId],
   );
 
   let searchCriteria: string = '';
@@ -46,13 +47,12 @@
       criteria: searchCriteria,
       itemContext: $context.itemContext,
       sections: actions,
-      tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
+      tabId: tabId,
     });
   }
 
   $: utilityBarCommands =
-    $context.utilities[CONSTANTS.TAB_ACTOR_ACTIONS]?.utilityToolbarCommands ??
-    [];
+    $context.utilities[tabId]?.utilityToolbarCommands ?? [];
 
   const localize = FoundryAdapter.localize;
 
@@ -64,14 +64,14 @@
 <UtilityToolbar class="abilities-toolbar">
   <Search bind:value={searchCriteria} />
   <PinnedFilterToggles
-    filterGroupName={CONSTANTS.TAB_ACTOR_ACTIONS}
+    filterGroupName={tabId}
     filters={ItemFilterRuntime.getPinnedFiltersForTab(
       $context.filterPins,
       $context.filterData,
-      CONSTANTS.TAB_ACTOR_ACTIONS,
+      tabId,
     )}
   />
-  <FilterMenu tabId={CONSTANTS.TAB_ACTOR_ACTIONS} />
+  <FilterMenu {tabId} />
   {#each utilityBarCommands as command (command.title)}
     <UtilityToolbarCommand
       title={command.title}
