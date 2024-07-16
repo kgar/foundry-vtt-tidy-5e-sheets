@@ -53,11 +53,10 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import InlineContainerToggle from 'src/sheets/container/InlineContainerToggle.svelte';
   import type { InlineContainerService } from 'src/features/inline-container/InlineContainerService';
-  import CapacityBar from 'src/sheets/container/CapacityBar.svelte';
-  import ContainerContentsSections from 'src/sheets/container/ContainerContentsSections.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import InlineContainerView from 'src/sheets/container/InlineContainerView.svelte';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
@@ -321,35 +320,14 @@
                   {/if}
                 </ItemTableRow>
                 {#if 'containerContents' in ctx && !!ctx.containerContents}
-                  <ExpandableContainer
-                    expanded={$inlineContainerServiceStore.has(item.id)}
-                    class={!!$itemIdsToShow && !$itemIdsToShow.has(item.id)
-                      ? 'hidden'
-                      : ''}
-                  >
-                    <!-- TODO: Make sure this container contents shell gets reused -->
-                    <!-- TODO: For drag and drop, use the data-tidy-container-id to determine if an item drop also represents a container change -->
-                    <div
-                      style="flex: 1; padding: 0.25rem 0 0 1rem; margin-left: 1rem; border-left: 0.0625rem dotted var(--t5e-separator-color);"
-                      class="flex-column extra-small-gap"
-                      data-tidy-container-id={item.id}
-                    >
-                      <CapacityBar
-                        container={item}
-                        capacity={ctx.containerContents.capacity}
-                      />
-                      <!-- <Currency document={item} /> -->
-                      <ContainerContentsSections
-                        contents={ctx.containerContents.contents}
-                        container={item}
-                        editable={$context.editable}
-                        itemContext={ctx.containerContents.itemContext}
-                        lockItemQuantity={$context.lockItemQuantity}
-                        {inlineContainerService}
-                        sheetDocument={$context.actor}
-                      />
-                    </div>
-                  </ExpandableContainer>
+                  <InlineContainerView
+                    container={item}
+                    containerContents={ctx.containerContents}
+                    editable={$context.editable}
+                    {inlineContainerService}
+                    lockItemQuantity={$context.lockItemQuantity}
+                    sheetDocument={$context.actor}
+                  />
                 {/if}
               {/each}
               {#if $context.unlocked && section.dataset}

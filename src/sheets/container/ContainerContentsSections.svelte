@@ -14,8 +14,6 @@
   import ItemName from 'src/components/item-list/ItemName.svelte';
   import InlineFavoriteIcon from 'src/components/item-list/InlineFavoriteIcon.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import CapacityBar from 'src/sheets/container/CapacityBar.svelte';
-  import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { InlineContainerService } from 'src/features/inline-container/InlineContainerService';
   import InlineContainerToggle from 'src/sheets/container/InlineContainerToggle.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
@@ -23,6 +21,7 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import type { Readable } from 'svelte/store';
+  import InlineContainerView from './InlineContainerView.svelte';
 
   export let contents: InventorySection[];
   export let container: Item5e;
@@ -200,29 +199,14 @@
               {/if}
             </ItemTableRowV2>
             {#if 'containerContents' in ctx && !!ctx.containerContents}
-              <ExpandableContainer
-                expanded={$inlineContainerServiceStore.has(item.id)}
-              >
-                <div
-                  style="flex: 1; padding: 0.25rem 0 0 1rem; margin-left: 1rem; border-left: 0.0625rem dotted var(--t5e-separator-color);"
-                  class="flex-column extra-small-gap"
-                >
-                  <CapacityBar
-                    container={item}
-                    capacity={ctx.containerContents.capacity}
-                  />
-                  <!-- <Currency document={item} /> -->
-                  <svelte:self
-                    contents={ctx.containerContents.contents}
-                    container={item}
-                    {editable}
-                    itemContext={ctx.containerContents.itemContext}
-                    {lockItemQuantity}
-                    {inlineContainerService}
-                    {sheetDocument}
-                  />
-                </div>
-              </ExpandableContainer>
+              <InlineContainerView
+                container={item}
+                containerContents={ctx.containerContents}
+                {editable}
+                {inlineContainerService}
+                {lockItemQuantity}
+                {sheetDocument}
+              />
             {/if}
           {/each}
         </svelte:fragment>

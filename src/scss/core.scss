@@ -361,6 +361,13 @@
     border-style: solid;
     border-width: 1px;
   }
+
+  /* Containers */
+  .inline-container-view {
+    padding: 0.25rem 0 0 1rem;
+    margin-left: 1rem;
+    border-left: 0.0625rem dotted var(--t5e-separator-color);
+  }
 }
 
 @import './partials/floating-context-menu';
