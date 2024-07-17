@@ -29,7 +29,6 @@
     data-tidy-container-id={container.id}
   >
     <CapacityBar {container} capacity={containerContents.capacity} />
-    <!-- <Currency document={item} /> -->
     <ContainerContentsSections
       contents={containerContents.contents}
       {container}
