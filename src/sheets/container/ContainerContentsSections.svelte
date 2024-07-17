@@ -136,7 +136,7 @@
                 {#if 'containerContents' in ctx && !!ctx.containerContents}
                   <InlineContainerToggle {item} {inlineContainerToggleService} />
                 {/if}
-                <!-- This is generally what we want in Tidy Tables / Item Table V2; consider breaking of ItemNameV2 to propagate and replace the old ItemName gradually. -->
+                <!-- This is generally what we want in Tidy Tables / Item Table V2; consider breaking off ItemNameV2 to propagate and replace the old ItemName gradually. -->
                 <ItemName
                   on:toggle={() => toggleSummary()}
                   cssClass="align-self-stretch flex-row align-items-center"
