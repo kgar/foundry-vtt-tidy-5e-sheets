@@ -90,8 +90,8 @@ export type ContainerSheetContext = {
 export type ContainerSection = { items: Item5e[] } & TidySectionBase;
 
 export type ContainerContents = {
-  capacity: { max: number; value: number; units: string; pct: number }; // item.system.computeCapacity()
+  capacity: { max: number; value: number; units: string; pct: number };
   contents: InventorySection[];
-  currency: Record<string, number>; // item.system.currency
+  currency: Record<string, number>;
   itemContext: Record<string, ContainerItemContext>;
 };
