@@ -61,7 +61,7 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { Inventory } from 'src/features/sections/Inventory';
 import { Container } from 'src/features/containers/Container';
-import { InlineContainerService } from 'src/features/containers/InlineContainerService';
+import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
 
 export class Tidy5eNpcSheet
   extends ActorSheetCustomSectionMixin(dnd5e.applications.actor.ActorSheet5eNPC)
@@ -79,7 +79,7 @@ export class Tidy5eNpcSheet
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
-  inlineContainerService = new InlineContainerService();
+  inlineContainerToggleService = new InlineContainerToggleService();
   itemTableTogglesCache: ItemTableToggleCacheService;
   itemFilterService: ItemFilterService;
   subscriptionsService: StoreSubscriptionsService;
@@ -161,7 +161,7 @@ export class Tidy5eNpcSheet
         ['stats', this.stats],
         ['card', this.card],
         ['currentTabId', this.currentTabId],
-        ['inlineContainerService', this.inlineContainerService],
+        ['inlineContainerToggleService', this.inlineContainerToggleService],
         ['itemFilterService', this.itemFilterService],
         ['onTabSelected', this.onTabSelected.bind(this)],
         ['onItemToggled', this.onItemToggled.bind(this)],

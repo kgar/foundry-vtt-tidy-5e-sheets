@@ -2,7 +2,7 @@
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import CapacityBar from './CapacityBar.svelte';
   import ContainerContentsSections from './ContainerContentsSections.svelte';
-  import type { InlineContainerService } from 'src/features/inline-container/InlineContainerService';
+  import type { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ContainerContents, Item5e } from 'src/types/item.types';
@@ -10,18 +10,18 @@
   export let container: Item5e;
   export let containerContents: ContainerContents;
   export let editable: boolean;
-  export let inlineContainerService: InlineContainerService;
+  export let inlineContainerToggleService: InlineContainerToggleService;
   export let lockItemQuantity: boolean;
   export let sheetDocument: any;
 
-  $: inlineContainerServiceStore = inlineContainerService.store;
+  $: inlineContainerToggleServiceStore = inlineContainerToggleService.store;
 
   let itemIdsToShow =
     getContext<Readable<Set<string> | undefined>>('itemIdsToShow');
 </script>
 
 <ExpandableContainer
-  expanded={$inlineContainerServiceStore.has(container.id)}
+  expanded={$inlineContainerToggleServiceStore.has(container.id)}
   class={!!$itemIdsToShow && !$itemIdsToShow.has(container.id) ? 'hidden' : ''}
 >
   <div
@@ -36,7 +36,7 @@
       {editable}
       itemContext={containerContents.itemContext}
       {lockItemQuantity}
-      {inlineContainerService}
+      {inlineContainerToggleService}
       {sheetDocument}
     />
   </div>

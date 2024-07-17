@@ -52,7 +52,7 @@
   import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import InlineContainerToggle from 'src/sheets/container/InlineContainerToggle.svelte';
-  import type { InlineContainerService } from 'src/features/inline-container/InlineContainerService';
+  import type { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
@@ -61,8 +61,8 @@
   let context = getContext<Readable<NpcSheetContext>>('context');
   let tabId = getContext<string>('tabId');
 
-  let inlineContainerService = getContext<InlineContainerService>(
-    'inlineContainerService',
+  let inlineContainerToggleService = getContext<InlineContainerToggleService>(
+    'inlineContainerToggleService',
   );
 
   $: noSpellLevels = !$context.spellbook.length;
@@ -243,7 +243,7 @@
                   <ItemTableCell primary={true}>
                     <ItemUseButton disabled={!$context.editable} {item} />
                     {#if 'containerContents' in ctx && !!ctx.containerContents}
-                      <InlineContainerToggle {item} {inlineContainerService} />
+                      <InlineContainerToggle {item} {inlineContainerToggleService} />
                     {/if}
                     <ItemName
                       on:toggle={() => toggleSummary($context.actor)}
@@ -322,7 +322,7 @@
                     container={item}
                     containerContents={ctx.containerContents}
                     editable={$context.editable}
-                    {inlineContainerService}
+                    {inlineContainerToggleService}
                     lockItemQuantity={$context.lockItemQuantity}
                     sheetDocument={$context.actor}
                   />

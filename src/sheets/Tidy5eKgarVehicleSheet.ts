@@ -56,7 +56,7 @@ import { DocumentTabSectionConfigApplication } from 'src/applications/section-co
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import { InlineContainerService } from 'src/features/containers/InlineContainerService';
+import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
 import { Container } from 'src/features/containers/Container';
 
 export class Tidy5eVehicleSheet
@@ -74,7 +74,7 @@ export class Tidy5eVehicleSheet
   currentTabId: string;
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
-  inlineContainerService = new InlineContainerService();
+  inlineContainerToggleService = new InlineContainerToggleService();
   itemTableTogglesCache: ItemTableToggleCacheService;
   subscriptionsService: StoreSubscriptionsService;
   itemFilterService: ItemFilterService;
@@ -148,7 +148,7 @@ export class Tidy5eVehicleSheet
         ['messageBus', this.messageBus],
         ['stats', this.stats],
         ['card', this.card],
-        ['inlineContainerService', this.inlineContainerService],
+        ['inlineContainerToggleService', this.inlineContainerToggleService],
         ['itemFilterService', this.itemFilterService],
         [
           'onFilter',

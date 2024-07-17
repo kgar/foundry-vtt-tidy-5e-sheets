@@ -14,7 +14,7 @@
   import ItemName from 'src/components/item-list/ItemName.svelte';
   import InlineFavoriteIcon from 'src/components/item-list/InlineFavoriteIcon.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import { InlineContainerService } from 'src/features/inline-container/InlineContainerService';
+  import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
   import InlineContainerToggle from 'src/sheets/container/InlineContainerToggle.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { getContext } from 'svelte';
@@ -27,7 +27,7 @@
   export let container: Item5e;
   export let editable: boolean;
   export let itemContext: Record<string, ContainerItemContext>;
-  export let inlineContainerService: InlineContainerService;
+  export let inlineContainerToggleService: InlineContainerToggleService;
   export let lockItemQuantity: boolean;
   /** The sheet which is rendering this recursive set of container contents. */
   export let sheetDocument: Actor5e | Item5e;
@@ -41,7 +41,7 @@
     TidyFlags.sectionConfig.get(container)?.[CONSTANTS.TAB_CONTAINER_CONTENTS],
   );
 
-  $: inlineContainerServiceStore = inlineContainerService.store;
+  $: inlineContainerToggleServiceStore = inlineContainerToggleService.store;
 
   let itemIdsToShow =
     getContext<Readable<Set<string> | undefined>>('itemIdsToShow');
@@ -134,7 +134,7 @@
                   {item}
                 />
                 {#if 'containerContents' in ctx && !!ctx.containerContents}
-                  <InlineContainerToggle {item} {inlineContainerService} />
+                  <InlineContainerToggle {item} {inlineContainerToggleService} />
                 {/if}
                 <!-- This is generally what we want in Tidy Tables / Item Table V2; consider breaking of ItemNameV2 to propagate and replace the old ItemName gradually. -->
                 <ItemName
@@ -203,7 +203,7 @@
                 container={item}
                 containerContents={ctx.containerContents}
                 {editable}
-                {inlineContainerService}
+                {inlineContainerToggleService}
                 {lockItemQuantity}
                 {sheetDocument}
               />

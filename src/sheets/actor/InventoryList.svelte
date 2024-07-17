@@ -33,7 +33,7 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
   import InlineContainerToggle from '../container/InlineContainerToggle.svelte';
-  import { InlineContainerService } from 'src/features/inline-container/InlineContainerService';
+  import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
   import InlineContainerView from '../container/InlineContainerView.svelte';
 
   export let primaryColumnName: string;
@@ -44,8 +44,8 @@
   export let allowFavoriteIconNextToName: boolean = true;
   export let includeWeightColumn: boolean = true;
 
-  let inlineContainerService = getContext<InlineContainerService>(
-    'inlineContainerService',
+  let inlineContainerToggleService = getContext<InlineContainerToggleService>(
+    'inlineContainerToggleService',
   );
 
   let context =
@@ -191,7 +191,7 @@
           <ItemTableCell primary={true}>
             <ItemUseButton disabled={!$context.editable} {item} />
             {#if 'containerContents' in ctx && !!ctx.containerContents}
-              <InlineContainerToggle {item} {inlineContainerService} />
+              <InlineContainerToggle {item} {inlineContainerToggleService} />
             {/if}
             <ItemName
               on:toggle={() => toggleSummary($context.actor)}
@@ -279,7 +279,7 @@
             container={item}
             containerContents={ctx.containerContents}
             editable={$context.editable}
-            {inlineContainerService}
+            {inlineContainerToggleService}
             lockItemQuantity={$context.lockItemQuantity}
             sheetDocument={$context.actor}
           />

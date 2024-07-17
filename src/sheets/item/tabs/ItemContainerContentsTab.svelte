@@ -15,14 +15,14 @@
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
   import ContainerContentsSections from 'src/sheets/container/ContainerContentsSections.svelte';
-  import { InlineContainerService } from 'src/features/inline-container/InlineContainerService';
+  import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   let context = getContext<Readable<ContainerSheetContext>>('context');
   let tabId = getContext<string>('tabId');
 
-  let inlineContainerService = getContext<InlineContainerService>(
-    'inlineContainerService',
+  let inlineContainerToggleService = getContext<InlineContainerToggleService>(
+    'inlineContainerToggleService',
   );
 
   let searchCriteria = '';
@@ -121,7 +121,7 @@
       container={$context.item}
       editable={$context.editable}
       itemContext={$context.containerContents.itemContext}
-      {inlineContainerService}
+      {inlineContainerToggleService}
       lockItemQuantity={$context.lockItemQuantity}
       sheetDocument={$context.item}
     />

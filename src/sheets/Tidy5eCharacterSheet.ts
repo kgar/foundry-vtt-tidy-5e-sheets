@@ -70,7 +70,7 @@ import type {
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { Container } from 'src/features/containers/Container';
-import { InlineContainerService } from 'src/features/containers/InlineContainerService';
+import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
 
 export class Tidy5eCharacterSheet
   extends ActorSheetCustomSectionMixin(
@@ -90,7 +90,7 @@ export class Tidy5eCharacterSheet
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
-  inlineContainerService = new InlineContainerService();
+  inlineContainerToggleService = new InlineContainerToggleService();
   itemTableTogglesCache: ItemTableToggleCacheService;
   itemFilterService: ItemFilterService;
   subscriptionsService: StoreSubscriptionsService;
@@ -180,7 +180,7 @@ export class Tidy5eCharacterSheet
         ['currentTabId', this.currentTabId],
         ['onTabSelected', this.onTabSelected.bind(this)],
         ['searchFilters', new Map(this.searchFilters)],
-        ['inlineContainerService', this.inlineContainerService],
+        ['inlineContainerToggleService', this.inlineContainerToggleService],
         ['itemFilterService', this.itemFilterService],
         [
           'onFilter',

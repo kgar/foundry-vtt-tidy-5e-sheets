@@ -43,7 +43,7 @@ import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import type { CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import { InlineContainerService } from 'src/features/containers/InlineContainerService';
+import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
 import { Container } from 'src/features/containers/Container';
 
 export class Tidy5eKgarContainerSheet
@@ -61,7 +61,7 @@ export class Tidy5eKgarContainerSheet
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
-  inlineContainerService = new InlineContainerService();
+  inlineContainerToggleService = new InlineContainerToggleService();
   card = writable<ItemCardStore>();
   itemFilterService: ItemFilterService;
   subscriptionsService: StoreSubscriptionsService;
@@ -119,7 +119,7 @@ export class Tidy5eKgarContainerSheet
       ['expandedItems', new Map(this.expandedItems)],
       ['expandedItemData', new Map(this.expandedItemData)],
       ['messageBus', this.messageBus],
-      ['inlineContainerService', this.inlineContainerService],
+      ['inlineContainerToggleService', this.inlineContainerToggleService],
       [
         'onFilter',
         this.itemFilterService.onFilter.bind(this.itemFilterService),
