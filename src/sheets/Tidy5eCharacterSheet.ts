@@ -1015,9 +1015,6 @@ export class Tidy5eCharacterSheet
       });
     }
 
-    // const favoritesIdMap: Map<string, CharacterFavorite> =
-    //   this._getFavoritesIdMap();
-
     // Favorites
     context.favorites = CharacterSheetSections.mergeDuplicateFavoriteSections(
       context.favorites
