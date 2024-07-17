@@ -281,7 +281,6 @@ export class SheetSections {
     return sections;
   }
 
-  // TODO: Figure out how to consolidate these functions, as they are exactly the same, except for the item|spell prop
   static configureSpellbook(
     document: any,
     tabId: string,
