@@ -43,8 +43,8 @@ import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import type { CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import { InlineContainerService } from 'src/features/inline-container/InlineContainerService';
-import { Container } from 'src/features/inline-container/Container';
+import { InlineContainerService } from 'src/features/containers/InlineContainerService';
+import { Container } from 'src/features/containers/Container';
 
 export class Tidy5eKgarContainerSheet
   extends dnd5e.applications.item.ContainerSheet

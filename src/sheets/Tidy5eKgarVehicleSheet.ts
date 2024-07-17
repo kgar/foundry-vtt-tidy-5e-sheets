@@ -56,8 +56,8 @@ import { DocumentTabSectionConfigApplication } from 'src/applications/section-co
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import { InlineContainerService } from 'src/features/inline-container/InlineContainerService';
-import { Container } from 'src/features/inline-container/Container';
+import { InlineContainerService } from 'src/features/containers/InlineContainerService';
+import { Container } from 'src/features/containers/Container';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle

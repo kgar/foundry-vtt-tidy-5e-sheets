@@ -69,8 +69,8 @@ import type {
 } from 'src/foundry/dnd5e.types';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import { Container } from 'src/features/inline-container/Container';
-import { InlineContainerService } from 'src/features/inline-container/InlineContainerService';
+import { Container } from 'src/features/containers/Container';
+import { InlineContainerService } from 'src/features/containers/InlineContainerService';
 
 export class Tidy5eCharacterSheet
   extends ActorSheetCustomSectionMixin(

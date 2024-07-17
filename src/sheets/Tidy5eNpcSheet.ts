@@ -60,8 +60,8 @@ import type { RestConfiguration } from 'src/foundry/dnd5e.types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { Inventory } from 'src/features/sections/Inventory';
-import { Container } from 'src/features/inline-container/Container';
-import { InlineContainerService } from 'src/features/inline-container/InlineContainerService';
+import { Container } from 'src/features/containers/Container';
+import { InlineContainerService } from 'src/features/containers/InlineContainerService';
 
 export class Tidy5eNpcSheet
   extends ActorSheetCustomSectionMixin(dnd5e.applications.actor.ActorSheet5eNPC)
