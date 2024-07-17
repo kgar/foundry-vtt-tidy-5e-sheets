@@ -92,6 +92,7 @@
   "TIDY5E.ContextMenuActionEdit": "Edit",
   "TIDY5E.ContextMenuActionDelete": "Delete",
 
+  "TIDY5E.EmptyContainer": "This container is empty.",
   "TIDY5E.EmptySection": "This section is empty. Unlock the sheet to edit.",
   "TIDY5E.GMOnlyEdit": "Only your GM can edit this section.",
 
