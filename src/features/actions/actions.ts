@@ -120,24 +120,6 @@ function buildActionSections(
     }
   }
 
-  // const sectionConfigs = TidyFlags.sectionConfig.get(actor);
-  // const actorActionsSectionConfig =
-  //   sectionConfigs?.[CONSTANTS.TAB_ACTOR_ACTIONS];
-
-  // // Sort sections
-  // let sections = SheetSections.sortKeyedSections(
-  //   Object.values(actionSections),
-  //   actorActionsSectionConfig
-  // );
-
-  // // Remove empty sections
-  // sections = sections.filter((section) => section.actions.length);
-
-  // // Apply visibility from configuration
-  // sections.forEach((section) => {
-  //   section.show = actorActionsSectionConfig?.[section.key]?.show !== false;
-  // });
-
   return Object.values(actionSections);
 }
 
