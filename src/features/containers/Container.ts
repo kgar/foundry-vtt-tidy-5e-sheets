@@ -49,6 +49,4 @@ export class Container {
 
     return itemContext;
   }
-
-  
 }
