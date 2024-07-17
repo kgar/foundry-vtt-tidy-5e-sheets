@@ -755,7 +755,7 @@ export class Tidy5eCharacterSheet
       ...defaultDocumentContext,
       activateEditors: (node, options) =>
         FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
-      actions: getActorActionSections(this.actor),
+      actions: await getActorActionSections(this.actor),
       actorClassesToImages: getActorClassesToImages(this.actor),
       actorPortraitCommands:
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),

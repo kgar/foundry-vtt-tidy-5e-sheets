@@ -362,6 +362,7 @@ export type ActionItem = {
   calculatedDerivedDamage: DerivedDamage[];
   rangeTitle: string | null;
   rangeSubtitle: string | null;
+  containerContents?: ContainerContents;
 };
 
 export type ActionSection = {

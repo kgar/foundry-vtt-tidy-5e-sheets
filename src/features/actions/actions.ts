@@ -2,7 +2,7 @@ import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ActionListRuntime } from 'src/runtime/action-list/ActionListRuntime';
 import { SettingsProvider } from 'src/settings/settings';
-import type { Item5e } from 'src/types/item.types';
+import type { ContainerContents, Item5e } from 'src/types/item.types';
 import type {
   ActionItem,
   ActionSection,
@@ -14,6 +14,7 @@ import { scaleCantripDamageFormula, simplifyFormula } from 'src/utils/formula';
 import { debug, error } from 'src/utils/logging';
 import { SpellUtils } from 'src/utils/SpellUtils';
 import { TidyFlags } from 'src/foundry/TidyFlags';
+import { Container } from '../containers/Container';
 
 export type ActionSets = Record<string, Set<ActionItem>>;
 
@@ -39,11 +40,19 @@ const activationTypeSortValues: Record<string, number> = {
   special: 8,
 };
 
-export function getActorActionSections(actor: Actor5e): ActionSection[] {
+export async function getActorActionSections(
+  actor: Actor5e
+): Promise<ActionSection[]> {
   try {
-    let eligibleItems = actor.items
-      .filter(isItemInActionList)
-      .map((item: Item5e) => mapActionItem(item));
+    let eligibleItems: ActionItem[] = [];
+
+    for (let item of actor.items) {
+      if (!isItemInActionList(item)) {
+        continue;
+      }
+
+      eligibleItems.push(await mapActionItem(item));
+    }
 
     return buildActionSections(actor, eligibleItems);
   } catch (e) {
@@ -192,7 +201,7 @@ export function isItemInActionList(item: Item5e): boolean {
   }
 }
 
-function mapActionItem(item: Item5e): ActionItem {
+async function mapActionItem(item: Item5e): Promise<ActionItem> {
   try {
     let calculatedDerivedDamage = Array.isArray(item.labels.derivedDamage)
       ? [...item.labels.derivedDamage].map(
@@ -229,10 +238,16 @@ function mapActionItem(item: Item5e): ActionItem {
         )
       : [];
 
+    let containerContents: ContainerContents | undefined = undefined;
+    if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
+      containerContents = await Container.getContainerContents(item);
+    }
+
     return {
       item,
       typeLabel: FoundryAdapter.localize(`ITEM.Type${item.type.titleCase()}`),
       calculatedDerivedDamage,
+      containerContents,
       ...getRangeTitles(item),
     };
   } catch (e) {

@@ -661,7 +661,7 @@ export class Tidy5eNpcSheet
 
     const context: NpcSheetContext = {
       ...defaultDocumentContext,
-      actions: getActorActionSections(this.actor),
+      actions: await getActorActionSections(this.actor),
       activateEditors: (node, options) =>
         FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
       actorPortraitCommands:

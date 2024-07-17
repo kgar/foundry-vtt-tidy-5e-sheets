@@ -26,9 +26,15 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import InlineContainerToggle from 'src/sheets/container/InlineContainerToggle.svelte';
+  import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+  import InlineContainerView from 'src/sheets/container/InlineContainerView.svelte';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
   let tabId = getContext<string>('tabId');
+  let inlineContainerToggleService = getContext<InlineContainerToggleService>(
+    'inlineContainerToggleService',
+  );
 
   $: actions = SheetSections.configureActions(
     $context.actions,
@@ -129,6 +135,13 @@
                   disabled={!$context.editable}
                   item={actionItem.item}
                 />
+                {#if 'containerContents' in actionItem && !!actionItem.containerContents}
+                  <InlineContainerToggle
+                    iconClass="fa-lg"
+                    item={actionItem.item}
+                    {inlineContainerToggleService}
+                  />
+                {/if}
                 <ItemName
                   item={actionItem.item}
                   on:toggle={() => toggleSummary($context.actor)}
@@ -266,6 +279,17 @@
                 </ItemTableCell>
               {/if}
             </ItemTableRow>
+            {#if 'containerContents' in actionItem && !!actionItem.containerContents}
+              <InlineContainerView
+                container={actionItem.item}
+                containerContents={actionItem.containerContents}
+                editable={$context.editable}
+                {inlineContainerToggleService}
+                lockItemQuantity={$context.lockItemQuantity}
+                sheetDocument={$context.actor}
+                --t5e-image-size-override="1.5rem"
+              />
+            {/if}
           {/each}
         </svelte:fragment>
       </ItemTable>

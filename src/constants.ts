@@ -224,6 +224,9 @@ export const CONSTANTS = {
     /** An interactable element which toggles a view */
     EXPANSION_TOGGLE: 'table-expansion-toggle',
 
+    /** An interactable element which toggles an inline container's contents view */
+    INLINE_CONTAINER_TOGGLE: 'inline-container-toggle',
+
     /** An interactable control which the user can execute to create an item (e.g., consumable, feature, loot, spell, weapon, etc.). */
     ITEM_CREATE_COMMAND: 'item-create-command',
 
