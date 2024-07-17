@@ -20,6 +20,8 @@
   let itemIdsToShow =
     getContext<Readable<Set<string> | undefined>>('itemIdsToShow');
 
+  let tabId = getContext<string>('tabId');
+
   async function onDrop(
     event: DragEvent & { currentTarget: EventTarget & HTMLElement },
   ) {
@@ -31,7 +33,7 @@
 </script>
 
 <ExpandableContainer
-  expanded={$inlineContainerToggleServiceStore.has(container.id)}
+  expanded={$inlineContainerToggleServiceStore.get(tabId)?.has(container.id) === true}
   class={!!$itemIdsToShow && !$itemIdsToShow.has(container.id) ? 'hidden' : ''}
 >
   <!-- TODO: Apply proper a11y trappings for this -->

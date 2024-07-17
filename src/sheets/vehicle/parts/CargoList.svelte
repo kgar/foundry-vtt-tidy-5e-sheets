@@ -34,8 +34,6 @@
     'inlineContainerToggleService',
   );
 
-  $: inlineContainerToggleServiceStore = inlineContainerToggleService.store;
-
   let baseWidths: Record<string, string> = {
     quantity: '5rem',
     price: '4.375rem',
