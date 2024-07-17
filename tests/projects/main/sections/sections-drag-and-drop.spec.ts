@@ -328,9 +328,9 @@ async function runSidebarDropToSheetTest({
   const newItem = await sheetHelper.$sheet.evaluate(
     async (sheet, { itemName, itemOwnerUuid }) => {
       const itemOwner = await fromUuid(itemOwnerUuid);
-      const item = (itemOwner?.items ?? itemOwner?.system?.contents)?.find(
-        (i: any) => i.name === itemName
-      );
+      const item = (
+        itemOwner?.items ?? (await itemOwner?.system?.contents)
+      )?.find((i: any) => i.name === itemName);
 
       const tableEntry = sheet.querySelector(
         `[data-item-id="${item.id}"]:is([data-tidy-table-row], [data-tidy-grid-item])`

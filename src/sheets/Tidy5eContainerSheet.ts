@@ -281,6 +281,7 @@ export class Tidy5eKgarContainerSheet
     };
 
     const contents = await this.item.system.contents;
+
     for (const item of contents) {
       if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
         const ctx = context.itemContext[item.id];

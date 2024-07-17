@@ -10,7 +10,7 @@ import type { CharacterFavorite } from 'src/foundry/dnd5e.types';
 
 export class Container {
   static async getContainerContents(item: Item5e): Promise<ContainerContents> {
-    const containerItems = item.system.contents.values();
+    const containerItems = (await item.system.contents).values();
 
     return {
       capacity: await item.system.computeCapacity(),
@@ -28,7 +28,9 @@ export class Container {
     const favorites: CharacterFavorite[] | undefined =
       container.actor?.system.favorites;
 
-    for (const item of container.system.contents.values()) {
+    const containerValues = (await container.system.contents).values();
+    
+    for (const item of containerValues) {
       const ctx = (itemContext[item.id] ??= {});
       ctx.totalWeight = (await item.system.totalWeight).toNearest(0.1);
       ctx.isStack = item.system.quantity > 1;
