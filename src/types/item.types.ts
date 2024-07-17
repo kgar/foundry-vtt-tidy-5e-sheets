@@ -1,5 +1,12 @@
 import type { ComponentType, SvelteComponent } from 'svelte';
-import type { AttunementContext, CustomContent, InventorySection, Tab, TidySectionBase, Utilities } from './types';
+import type {
+  AttunementContext,
+  CustomContent,
+  InventorySection,
+  Tab,
+  TidySectionBase,
+  Utilities,
+} from './types';
 import type { DocumentPreparationWarning } from './types';
 import type {
   DocumentFilters,
@@ -66,8 +73,7 @@ export type ContainerSheetContext = {
     options?: { bindSecrets?: boolean }
   ) => void;
   appId: string;
-  // TODO: Determine if this is clear enough to differentiate from the original container sheet.
-  containerContents: ContainerContents,
+  containerContents: ContainerContents;
   filterData: DocumentFilters;
   itemContext: Record<string, ContainerItemContext>;
   itemDescriptions: ItemDescription[];
@@ -88,4 +94,4 @@ export type ContainerContents = {
   contents: InventorySection[];
   currency: Record<string, number>; // item.system.currency
   itemContext: Record<string, ContainerItemContext>;
-}
+};
