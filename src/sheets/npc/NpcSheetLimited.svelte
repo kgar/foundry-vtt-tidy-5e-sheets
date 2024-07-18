@@ -26,8 +26,8 @@
             {localize('DND5E.Appearance')}
           </div>
           <SheetEditor
-            content={TidyFlags.tryGetFlag($context.actor, 'appearance') ?? ''}
-            target="flags.{CONSTANTS.MODULE_ID}.appearance"
+            content={TidyFlags.appearance.get($context.actor) ?? ''}
+            target={TidyFlags.appearance.prop}
             editable={$context.editable}
           />
         </article>

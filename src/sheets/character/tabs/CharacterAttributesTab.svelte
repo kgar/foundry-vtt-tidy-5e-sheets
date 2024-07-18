@@ -60,8 +60,8 @@
       <SkillsList
         actor={$context.actor}
         toggleable={$settingStore.toggleEmptyCharacterSkills}
-        expanded={!!TidyFlags.tryGetFlag($context.actor, 'skillsExpanded')}
-        toggleField="flags.{CONSTANTS.MODULE_ID}.skillsExpanded"
+        expanded={!!TidyFlags.skillsExpanded.get($context.actor)}
+        toggleField={TidyFlags.skillsExpanded.prop}
       />
       {#if !$settingStore.moveTraitsBelowCharacterResources}
         <Traits toggleable={$settingStore.toggleEmptyCharacterTraits} />

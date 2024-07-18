@@ -24,18 +24,17 @@
 
   const localize = FoundryAdapter.localize;
 
-  $: selectedClassFilter =
-    TidyFlags.tryGetFlag($context.actor, 'classFilter') ?? '';
+  $: selectedClassFilter = TidyFlags.classFilter.get($context.actor) ?? '';
 </script>
 
 <select
   class="class-filter"
   on:change|stopPropagation|preventDefault={(event) =>
     $context.actor.update({
-      [`flags.${CONSTANTS.MODULE_ID}.classFilter`]: event.currentTarget.value,
+      [TidyFlags.classFilter.prop]: event.currentTarget.value,
     })}
   disabled={!$context.editable}
-  data-tidy-field={`flags.${CONSTANTS.MODULE_ID}.classFilter`}
+  data-tidy-field={TidyFlags.classFilter.prop}
 >
   {#each allClasses as option}
     <option

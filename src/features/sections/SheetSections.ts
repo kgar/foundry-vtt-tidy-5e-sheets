@@ -428,24 +428,17 @@ export class SheetSections {
   }
 
   static configureActions(
-    actionSections: ActionSection[],
+    sections: ActionSection[],
     tabId: string,
     sheetPreferences: SheetPreference,
     sectionConfigs: Record<string, SectionConfig> | undefined
   ) {
     try {
-      actionSections = SheetSections.sortKeyedSections(
-        Object.values(actionSections),
-        sectionConfigs
-      );
+      sections = SheetSections.sortKeyedSections(sections, sectionConfigs);
 
       const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
 
-      actionSections = actionSections.filter(
-        (section) => section.actions.length
-      );
-
-      actionSections.forEach((section) => {
+      sections.forEach((section) => {
         sortActions(section, sortMode);
 
         section.show = sectionConfigs?.[section.key]?.show !== false;
@@ -454,6 +447,6 @@ export class SheetSections {
       error('An error occurred while configuring actions', false, e);
     }
 
-    return actionSections;
+    return sections;
   }
 }

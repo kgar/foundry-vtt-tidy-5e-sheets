@@ -322,10 +322,7 @@ export class Tidy5eVehicleSheet
 
     let tabs = await VehicleSheetRuntime.getTabs(context);
 
-    const selectedTabs = TidyFlags.tryGetFlag<string[]>(
-      context.actor,
-      'selected-tabs'
-    );
+    const selectedTabs = TidyFlags.selectedTabs.get(context.actor);
 
     if (selectedTabs?.length) {
       tabs = tabs

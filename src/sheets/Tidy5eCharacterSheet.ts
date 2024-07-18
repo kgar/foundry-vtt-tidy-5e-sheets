@@ -264,8 +264,7 @@ export class Tidy5eCharacterSheet
 
     let maxPreparedSpellsTotal = 0;
     try {
-      const formula =
-        TidyFlags.tryGetFlag(this.actor, 'maxPreparedSpells')?.toString() ?? '';
+      const formula = TidyFlags.maxPreparedSpells.get(this.actor) ?? '';
 
       if (formula?.trim() !== '') {
         const roll = await Roll.create(
@@ -382,9 +381,9 @@ export class Tidy5eCharacterSheet
             ),
             iconClass: `fas fa-boxes-stacked fa-fw`,
             execute: () => {
-              TidyFlags.unsetFlag(this.actor, 'showContainerPanel');
+              TidyFlags.showContainerPanel.unset(this.actor);
             },
-            visible: !!TidyFlags.tryGetFlag(this.actor, 'showContainerPanel'),
+            visible: !!TidyFlags.showContainerPanel.get(this.actor),
           },
           {
             title: FoundryAdapter.localize(
@@ -392,9 +391,9 @@ export class Tidy5eCharacterSheet
             ),
             iconClass: `fas fa-box fa-fw`,
             execute: () => {
-              TidyFlags.setFlag(this.actor, 'showContainerPanel', true);
+              TidyFlags.showContainerPanel.set(this.actor, true);
             },
-            visible: !TidyFlags.tryGetFlag(this.actor, 'showContainerPanel'),
+            visible: !TidyFlags.showContainerPanel.get(this.actor),
           },
           {
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
@@ -901,7 +900,7 @@ export class Tidy5eCharacterSheet
       originalContext: defaultDocumentContext,
       owner: this.actor.isOwner,
       showContainerPanel:
-        TidyFlags.tryGetFlag(this.actor, 'showContainerPanel') === true &&
+        TidyFlags.showContainerPanel.get(this.actor) === true &&
         Array.from(defaultDocumentContext.items).some(
           (i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER
         ),
@@ -945,10 +944,7 @@ export class Tidy5eCharacterSheet
 
     let tabs = await CharacterSheetRuntime.getTabs(context);
 
-    const selectedTabs = TidyFlags.tryGetFlag<string[]>(
-      context.actor,
-      'selected-tabs'
-    );
+    const selectedTabs = TidyFlags.selectedTabs.get(context.actor);
 
     if (selectedTabs?.length) {
       tabs = tabs

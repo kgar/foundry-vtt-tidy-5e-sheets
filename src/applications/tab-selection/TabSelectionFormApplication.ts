@@ -102,7 +102,7 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
 
   getData() {
     const selectedTabIds =
-      TidyFlags.tryGetFlag<string[]>(this.actor, 'selected-tabs') ??
+      TidyFlags.selectedTabs.get(this.actor) ??
       this.getDefaultTabIds(this.actor);
 
     let availableTabs: TabSelectionItem[] = this.registeredTabs
@@ -129,7 +129,7 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
   }
 
   async useDefault() {
-    await TidyFlags.unsetFlag(this.actor, 'selected-tabs');
+    await TidyFlags.selectedTabs.unset(this.actor);
     this.close();
   }
 
@@ -151,9 +151,8 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
   async save() {
     const context = get(this.context);
 
-    await TidyFlags.setFlag(
+    await TidyFlags.selectedTabs.set(
       this.actor,
-      'selected-tabs',
       context.selected.map((t) => t.id)
     );
   }

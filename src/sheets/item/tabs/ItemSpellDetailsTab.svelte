@@ -30,14 +30,14 @@
 {#if $settingStore.useMulticlassSpellbookFilter}
   <ItemFormGroup
     labelText={localize('TIDY5E.SpellClass')}
-    field="flags.{CONSTANTS.MODULE_ID}.parentClass"
+    field={TidyFlags.parentClass.prop}
     let:inputId
   >
     <Select
       id={inputId}
       document={$context.item}
-      field="flags.{CONSTANTS.MODULE_ID}.parentClass"
-      value={TidyFlags.tryGetFlag($context.item, 'parentClass') ?? ''}
+      field={TidyFlags.parentClass.prop}
+      value={TidyFlags.parentClass.get($context.item) ?? ''}
       disabled={!$context.editable}
     >
       <option value="">&mdash;</option>

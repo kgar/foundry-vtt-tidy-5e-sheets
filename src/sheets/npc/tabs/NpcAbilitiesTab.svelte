@@ -172,8 +172,8 @@
     <SkillsList
       actor={$context.actor}
       toggleable={!$settingStore.alwaysShowNpcSkills}
-      expanded={!!TidyFlags.tryGetFlag($context.actor, 'skillsExpanded')}
-      toggleField="flags.{CONSTANTS.MODULE_ID}.skillsExpanded"
+      expanded={!!TidyFlags.skillsExpanded.get($context.actor)}
+      toggleField={TidyFlags.skillsExpanded.prop}
     />
     {#if !$settingStore.moveTraitsBelowNpcResources}
       <Traits toggleable={!$settingStore.alwaysShowNpcTraits} />
@@ -243,7 +243,10 @@
                   <ItemTableCell primary={true}>
                     <ItemUseButton disabled={!$context.editable} {item} />
                     {#if 'containerContents' in ctx && !!ctx.containerContents}
-                      <InlineContainerToggle {item} {inlineContainerToggleService} />
+                      <InlineContainerToggle
+                        {item}
+                        {inlineContainerToggleService}
+                      />
                     {/if}
                     <ItemName
                       on:toggle={() => toggleSummary($context.actor)}

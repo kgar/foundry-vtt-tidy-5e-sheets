@@ -397,10 +397,7 @@ export class Actions {
 }
 
 export function actorUsesActionFeature(actor: Actor5e) {
-  const selectedTabIds = TidyFlags.tryGetFlag<string[] | undefined>(
-    actor,
-    'selected-tabs'
-  );
+  const selectedTabIds = TidyFlags.selectedTabs.get(actor);
 
   if (selectedTabIds) {
     return selectedTabIds.includes(CONSTANTS.TAB_ACTOR_ACTIONS);

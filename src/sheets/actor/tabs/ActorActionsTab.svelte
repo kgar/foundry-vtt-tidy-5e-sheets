@@ -90,7 +90,7 @@
 </UtilityToolbar>
 
 <div class="actions-tab-container scroll-container flex-column small-gap">
-  {#each $context.actions as section (section.key)}
+  {#each actions as section (section.key)}
     {@const visibleItemCount = ItemVisibility.countVisibleItems(
       section.actions.map((a) => a.item),
       $itemIdsToShow,
@@ -148,7 +148,7 @@
                   useActiveEffectsMarker={false}
                 >
                   {@const spellClass = FoundryAdapter.getClassLabel(
-                    TidyFlags.tryGetFlag(actionItem.item, 'parentClass') ?? '',
+                    TidyFlags.parentClass.get(actionItem.item) ?? '',
                   )}
                   <div class="flex-1 min-width-0">
                     <div

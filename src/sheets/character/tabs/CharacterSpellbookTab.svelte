@@ -53,8 +53,7 @@
   let layoutMode: ItemLayoutMode;
   $: layoutMode = TidyFlags.spellbookGrid.get($context.actor) ? 'grid' : 'list';
 
-  $: selectedClassFilter =
-    TidyFlags.tryGetFlag($context.actor, 'classFilter') ?? '';
+  $: selectedClassFilter = TidyFlags.classFilter.get($context.actor) ?? '';
 
   function tryFilterByClass(spells: any[]) {
     if (
@@ -65,8 +64,7 @@
     }
 
     return spells.filter(
-      (spell) =>
-        TidyFlags.tryGetFlag(spell, 'parentClass') === selectedClassFilter,
+      (spell) => TidyFlags.parentClass.get(spell) === selectedClassFilter,
     );
   }
 

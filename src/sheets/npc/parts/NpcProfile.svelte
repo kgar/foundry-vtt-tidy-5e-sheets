@@ -40,7 +40,7 @@
   {/if}
   {#if $settingStore.useExhaustion && $settingStore.exhaustionConfig.type === 'specific'}
     <ExhaustionTracker
-      level={TidyFlags.tryGetFlag($context.actor, 'exhaustion') ?? 0}
+      level={TidyFlags.exhaustion.get($context.actor) ?? 0}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
       exhaustionConfig={$settingStore.exhaustionConfig}
@@ -51,7 +51,7 @@
     />
   {:else if $settingStore.useExhaustion && $settingStore.exhaustionConfig.type === 'open'}
     <ExhaustionInput
-      level={TidyFlags.tryGetFlag($context.actor, 'exhaustion') ?? 0}
+      level={TidyFlags.exhaustion.get($context.actor) ?? 0}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(

@@ -436,7 +436,7 @@ export const FoundryAdapter = {
       return spell.img;
     }
 
-    const parentClass = TidyFlags.tryGetFlag<string>(spell, 'parentClass');
+    const parentClass = TidyFlags.parentClass.get(spell);
 
     const classImage =
       parentClass && 'actorClassesToImages' in context

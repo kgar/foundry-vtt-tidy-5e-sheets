@@ -1,6 +1,6 @@
 <script lang="ts">
+  import { TidyFlags } from 'src/api';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
-  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     PortraitCharmRadiusClass,
@@ -22,13 +22,15 @@
 <div
   class="motion {cssClass}"
   class:is-in-motion={motion}
-  title={localize(motion ? 'TIDY5E.VehicleInMotion' : 'TIDY5E.VehicleMotionless')}
+  title={localize(
+    motion ? 'TIDY5E.VehicleInMotion' : 'TIDY5E.VehicleMotionless',
+  )}
 >
   <Checkbox
     checkboxCssClass="motion-toggle"
     labelCssClass="{motion ? 'motion' : ''} {radiusClass}"
     document={$context.actor}
-    field="flags.{CONSTANTS.MODULE_ID}.motion"
+    field={TidyFlags.motion.prop}
     checked={motion}
     disabled={!$context.editable}
   >

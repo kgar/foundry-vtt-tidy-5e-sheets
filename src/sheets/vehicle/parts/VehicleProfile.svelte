@@ -22,29 +22,29 @@
 <ActorProfile useHpOverlay={$settingStore.useHpOverlayVehicle}>
   {#if $settingStore.useExhaustion && $settingStore.vehicleExhaustionConfig.type === 'specific'}
     <ExhaustionTracker
-      level={TidyFlags.tryGetFlag($context.actor, 'exhaustion') ?? 0}
+      level={TidyFlags.exhaustion.get($context.actor) ?? 0}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
       exhaustionConfig={$settingStore.vehicleExhaustionConfig}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
         $context.actor,
-        'flags.tidy5e-sheet.exhaustion',
+        TidyFlags.exhaustion.prop,
       )}
     />
   {:else if $settingStore.useExhaustion && $settingStore.vehicleExhaustionConfig.type === 'open'}
     <ExhaustionInput
-      level={TidyFlags.tryGetFlag($context.actor, 'exhaustion') ?? 0}
+      level={TidyFlags.exhaustion.get($context.actor) ?? 0}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
         $context.actor,
-        'flags.tidy5e-sheet.exhaustion',
+        TidyFlags.exhaustion.prop,
       )}
     />
   {/if}
   {#if $settingStore.useVehicleMotion}
     <VehicleMovement
-      motion={TidyFlags.tryGetFlag($context.actor, 'motion') === true}
+      motion={TidyFlags.motion.get($context.actor) === true}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-right'}
       animate={true}
     />
