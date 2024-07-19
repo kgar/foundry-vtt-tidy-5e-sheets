@@ -3,12 +3,13 @@
   import { getContext, onMount } from 'svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import type { ExhaustionConfig } from 'src/features/exhaustion/exhaustion.types';
+  import { CONSTANTS } from 'src/constants';
 
   export let name: string;
   export let hint: string;
   export let config: ExhaustionConfig;
 
-  let appId = getContext('appId');
+  let appId = getContext(CONSTANTS.SVELTE_CONTEXT.APP_ID);
 
   $: levelsIterator =
     config.type === 'specific' ? Array(config.levels + 1).fill(0) : [];
@@ -49,7 +50,9 @@
           )}</label
         >
         <p class="tidy5e-notes">
-          {localize('TIDY5E.WorldSettings.Exhaustion.options.specific.levels.hint')}
+          {localize(
+            'TIDY5E.WorldSettings.Exhaustion.options.specific.levels.hint',
+          )}
         </p>
       </div>
       <div class="settings-group">

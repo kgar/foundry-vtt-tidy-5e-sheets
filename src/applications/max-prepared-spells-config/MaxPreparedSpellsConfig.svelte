@@ -3,10 +3,12 @@
   import type { MaxPreparedSpellsConfigContext } from './MaxPreparedSpellsConfigFormApplication';
   import type { Writable } from 'svelte/store';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { CONSTANTS } from 'src/constants';
 
-  const appId = getContext<string>('appId');
-  const context =
-    getContext<Writable<MaxPreparedSpellsConfigContext>>('context');
+  const appId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.APP_ID);
+  const context = getContext<Writable<MaxPreparedSpellsConfigContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>

@@ -14,9 +14,9 @@
     UserSettingsStore,
   } from './UserSettings.types';
 
-  let selectedTabId = getContext<string>('initialTabId');
-  let context = getContext<UserSettingsStore>('context');
-  let functions = getContext<UserSettingsFunctions>('functions');
+  let selectedTabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.INITIAL_TAB_ID);
+  let context = getContext<UserSettingsStore>(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
+  let functions = getContext<UserSettingsFunctions>(CONSTANTS.SVELTE_CONTEXT.FUNCTIONS);
 
   let tabs: Tab[] = [];
 

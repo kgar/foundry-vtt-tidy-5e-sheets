@@ -9,8 +9,11 @@
     getStandardExhaustionConfig,
     getStandardVehicleExhaustionConfig,
   } from 'src/features/exhaustion/exhaustion';
+  import { CONSTANTS } from 'src/constants';
 
-  const context = getContext<WorldSettingsContextStore>('context');
+  const context = getContext<WorldSettingsContextStore>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>
