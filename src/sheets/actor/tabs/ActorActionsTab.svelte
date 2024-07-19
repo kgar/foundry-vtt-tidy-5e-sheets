@@ -300,14 +300,13 @@
 <style lang="scss">
   .actions-tab-container {
     --t5e-image-size-override: 2rem;
+    --icon-fill: var(--t5e-secondary-color);
+    --icon-width: 1rem;
+    --icon-height: 1rem;
 
     :global(.item-table-row) {
       min-height: 2rem;
     }
-
-    --icon-fill: var(--t5e-secondary-color);
-    --icon-width: 1rem;
-    --icon-height: 1rem;
   }
 
   .flex-column-truncate {

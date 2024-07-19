@@ -33,12 +33,11 @@
   .expandable {
     display: grid;
     grid-template-rows: 0fr;
+    transition: grid-template-rows 0.2s ease;
 
     &.expanded {
       grid-template-rows: 1fr;
     }
-
-    transition: grid-template-rows 0.2s ease;
   }
 
   .overflow-y-hidden :global(> *) {
