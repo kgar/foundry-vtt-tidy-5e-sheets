@@ -1,8 +1,8 @@
 <script lang="ts">
   import SkillsList from 'src/sheets/actor/SkillsList.svelte';
   import Traits from '../../actor/traits/Traits.svelte';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { getContext, setContext } from 'svelte';
+  import { writable, type Readable } from 'svelte/store';
   import type {
     ItemLayoutMode,
     NpcSheetContext,
@@ -51,15 +51,54 @@
   import ItemControl from 'src/components/item-list/controls/ItemControl.svelte';
   import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
   import { TidyFlags } from 'src/foundry/TidyFlags';
+  import InlineContainerToggle from 'src/sheets/container/InlineContainerToggle.svelte';
+  import type { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+  import { SheetSections } from 'src/features/sections/SheetSections';
+  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import InlineContainerView from 'src/sheets/container/InlineContainerView.svelte';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
+  let tabId = getContext<string>('tabId');
+
+  let inlineContainerToggleService = getContext<InlineContainerToggleService>(
+    'inlineContainerToggleService',
+  );
 
   $: noSpellLevels = !$context.spellbook.length;
 
   $: utilityBarCommands =
-    $context.utilities[CONSTANTS.TAB_NPC_ABILITIES]?.utilityToolbarCommands ??
-    [];
+    $context.utilities[tabId]?.utilityToolbarCommands ?? [];
+
+  $: features = SheetSections.configureFeatures(
+    $context.features,
+    $context,
+    tabId,
+    SheetPreferencesService.getByType($context.actor.type),
+    TidyFlags.sectionConfig.get($context.actor)?.[tabId],
+  );
+
   let searchCriteria: string = '';
+
+  const itemIdsToShow = writable<Set<string> | undefined>(undefined);
+  setContext('itemIdsToShow', itemIdsToShow);
+
+  $: spellbook = !$settingStore.showSpellbookTabNpc
+    ? SheetSections.configureSpellbook(
+        $context.actor,
+        tabId,
+        $context.spellbook,
+      )
+    : [];
+
+  $: {
+    $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
+      criteria: searchCriteria,
+      itemContext: $context.itemContext,
+      sections: [...features, ...spellbook],
+      tabId: tabId,
+    });
+  }
 
   function toggleLayout() {
     if (layoutMode === 'grid') {
@@ -109,14 +148,14 @@
 <UtilityToolbar class="abilities-toolbar">
   <Search bind:value={searchCriteria} />
   <PinnedFilterToggles
-    filterGroupName={CONSTANTS.TAB_NPC_ABILITIES}
+    filterGroupName={tabId}
     filters={ItemFilterRuntime.getPinnedFiltersForTab(
       $context.filterPins,
       $context.filterData,
-      CONSTANTS.TAB_NPC_ABILITIES,
+      tabId,
     )}
   />
-  <FilterMenu tabId={CONSTANTS.TAB_NPC_ABILITIES} />
+  <FilterMenu {tabId} />
   {#each utilityBarCommands as command (command.title)}
     <UtilityToolbarCommand
       title={command.title}
@@ -133,8 +172,8 @@
     <SkillsList
       actor={$context.actor}
       toggleable={!$settingStore.alwaysShowNpcSkills}
-      expanded={!!TidyFlags.tryGetFlag($context.actor, 'skillsExpanded')}
-      toggleField="flags.{CONSTANTS.MODULE_ID}.skillsExpanded"
+      expanded={!!TidyFlags.skillsExpanded.get($context.actor)}
+      toggleField={TidyFlags.skillsExpanded.prop}
     />
     {#if !$settingStore.moveTraitsBelowNpcResources}
       <Traits toggleable={!$settingStore.alwaysShowNpcTraits} />
@@ -155,13 +194,13 @@
     {#if $settingStore.moveTraitsBelowNpcResources}
       <Traits toggleable={!$settingStore.alwaysShowNpcTraits} />
     {/if}
-    {#each $context.features as section (section.key)}
+    {#each features as section (section.key)}
       {#if section.show}
-        {#if $context.unlocked || section.items.length}
-          {@const visibleItemIdSubset = FoundryAdapter.searchItems(
-            searchCriteria,
-            section.items,
-          )}
+        {@const visibleItemCount = ItemVisibility.countVisibleItems(
+          section.items,
+          $itemIdsToShow,
+        )}
+        {#if $context.unlocked || visibleItemCount > 0}
           <ItemTable key={section.key}>
             <svelte:fragment slot="header">
               <ItemTableHeaderRow>
@@ -199,11 +238,16 @@
                   }}
                   {item}
                   cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
-                  hidden={visibleItemIdSubset !== null &&
-                    !visibleItemIdSubset.has(item.id)}
+                  hidden={!!$itemIdsToShow && !$itemIdsToShow.has(item.id)}
                 >
                   <ItemTableCell primary={true}>
                     <ItemUseButton disabled={!$context.editable} {item} />
+                    {#if 'containerContents' in ctx && !!ctx.containerContents}
+                      <InlineContainerToggle
+                        {item}
+                        {inlineContainerToggleService}
+                      />
+                    {/if}
                     <ItemName
                       on:toggle={() => toggleSummary($context.actor)}
                       cssClass="extra-small-gap"
@@ -276,6 +320,16 @@
                     </ItemTableCell>
                   {/if}
                 </ItemTableRow>
+                {#if 'containerContents' in ctx && !!ctx.containerContents}
+                  <InlineContainerView
+                    container={item}
+                    containerContents={ctx.containerContents}
+                    editable={$context.editable}
+                    {inlineContainerToggleService}
+                    lockItemQuantity={$context.lockItemQuantity}
+                    sheetDocument={$context.actor}
+                  />
+                {/if}
               {/each}
               {#if $context.unlocked && section.dataset}
                 <ItemTableFooter
@@ -340,12 +394,8 @@
           <NoSpells cssClass="flex-1" editable={$context.unlocked} />
         {:else}
           <div class="flex-1 small-padding-bottom flex-column small-gap">
-            {#each $context.spellbook as section (section.key)}
+            {#each spellbook as section (section.key)}
               {#if section.show}
-                {@const visibleItemIdSubset = FoundryAdapter.searchItems(
-                  searchCriteria,
-                  section.spells,
-                )}
                 {#if layoutMode === 'list'}
                   <SpellbookList
                     spells={section.spells}
@@ -356,14 +406,9 @@
                     spellComponentsBaseWidth="3.125rem"
                     targetBaseWidth="5.625rem"
                     usageBaseWidth="5.625rem"
-                    {visibleItemIdSubset}
                   />
                 {:else}
-                  <SpellbookGrid
-                    spells={section.spells}
-                    {section}
-                    {visibleItemIdSubset}
-                  />
+                  <SpellbookGrid spells={section.spells} {section} />
                 {/if}
               {/if}
             {/each}

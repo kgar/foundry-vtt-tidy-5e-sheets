@@ -197,7 +197,6 @@ export class Tidy5eSheetsApi {
    * @param {object} [options] sheet registration options
    * @param {string} [options.layout] an optional sheet layout or layouts (default: 'all')
    * @param {string} [options.overrideExisting] if a tab with this ID already exists, override it
-   * @param layout an optional sheet layout or layouts (default: 'all')
    * @returns void
    */
   registerActorTab(tab: SupportedTab, options?: ActorTabRegistrationOptions) {
@@ -212,7 +211,6 @@ export class Tidy5eSheetsApi {
    * @param {object} [options] sheet registration options
    * @param {string} [options.layout] an optional sheet layout or layouts (default: 'all')
    * @param {string} [options.overrideExisting] if a tab with this ID already exists, override it
-   * @param layout an optional sheet layout or layouts (default: 'all')
    * @returns void
    *
    * @example Registering a handlebars-based character sheet tab
@@ -263,7 +261,6 @@ export class Tidy5eSheetsApi {
    *   );
    * });
    * ```
-   *
    *
    * @remarks
    * A tab ID is always required (see {@link TabId}).

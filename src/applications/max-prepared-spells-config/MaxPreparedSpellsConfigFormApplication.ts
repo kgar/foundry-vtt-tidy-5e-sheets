@@ -43,8 +43,7 @@ export class MaxPreparedSpellsConfigFormApplication extends SvelteFormApplicatio
 
   getData(): MaxPreparedSpellsConfigContext {
     return {
-      maxPreparedSpells:
-        TidyFlags.tryGetFlag(this.actor, 'maxPreparedSpells')?.toString() ?? '',
+      maxPreparedSpells: TidyFlags.maxPreparedSpells.get(this.actor) ?? '',
       formulas: getMaxPreparedSpellsSampleFormulas(),
       actor: this.actor,
     };
@@ -68,8 +67,7 @@ export class MaxPreparedSpellsConfigFormApplication extends SvelteFormApplicatio
   async _updateObject(): Promise<void> {
     const data = get(this.context);
     await this.actor.update({
-      [`flags.${CONSTANTS.MODULE_ID}.maxPreparedSpells`]:
-        data?.maxPreparedSpells ?? '',
+      [TidyFlags.maxPreparedSpells.prop]: data?.maxPreparedSpells ?? '',
     });
   }
 }

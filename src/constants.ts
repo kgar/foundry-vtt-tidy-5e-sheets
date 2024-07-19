@@ -4,27 +4,6 @@ export const CONSTANTS = {
   MODULE_ID: moduleId,
   DND5E_SYSTEM_ID: 'dnd5e',
   DOCUMENT_NAME_ACTOR: 'Actor',
-  HOOK_TIDY5E_SHEETS_PRE_SELECT_TAB: `tidy5e-sheet.preSelectTab`,
-  HOOK_TIDY5E_SHEETS_PRE_OPEN_ACTOR_PORTRAIT_FILE_PICKER: `tidy5e-sheet.preOpenActorPortraitFilePicker`,
-  HOOK_TIDY5E_SHEETS_SELECT_TAB: `tidy5e-sheet.selectTab`,
-  HOOK_TIDY5E_SHEETS_ITEM_HOVER_OFF: `tidy5e-sheet.itemHoverOff`,
-  HOOK_TIDY5E_SHEETS_ACTOR_PRE_USE_ITEM: `tidy5e-sheet.actorPreUseItem`,
-  HOOK_TIDY5E_SHEETS_ACTOR_ITEM_USE_CONTEXT_MENU: `tidy5e-sheet.actorItemUseContextMenu`,
-  HOOK_TIDY5E_SHEETS_ITEM_HOVER_ON: `tidy5e-sheet.itemHoverOn`,
-  HOOK_TIDY5E_SHEETS_PRE_CONFIGURE_SECTIONS: `tidy5e-sheet.preConfigureSections`,
-  HOOK_TIDY5E_SHEETS_PREPARE_RESOURCES: `tidy5e-sheet.prepareResources`,
-  HOOK_TIDY5E_SHEETS_READY: `tidy5e-sheet.ready`,
-  HOOK_TIDY5E_SHEETS_RENDER_ACTOR_SHEET: `tidy5e-sheet.renderActorSheet`,
-  HOOK_TIDY5E_SHEETS_RENDER_ITEM_SHEET: `tidy5e-sheet.renderItemSheet`,
-  HOOK_TIDY5E_SHEETS_PREPARE_FLOATING_CONTEXT_MENU_POSITION: `tidy5e-sheet.prepareFloatingContextMenuPosition`,
-  HOOK_TIDY5E_SHEETS_PRE_CREATE_ITEM: `tidy5e-sheet.preCreateItem`,
-  HOOK_TIDY5E_SHEETS_PRE_CREATE_ACTIVE_EFFECT: `tidy5e-sheet.preCreateActiveEffect`,
-  HOOK_DND5E_GET_ACTIVE_EFFECT_CONTEXT_OPTIONS: `dnd5e.getActiveEffectContextOptions`,
-  HOOK_DND5E_GET_ITEM_CONTEXT_OPTIONS: `dnd5e.getItemContextOptions`,
-  HOOK_DND5E_PRE_ROLL_HIT_DIE: `dnd5e.preRollHitDie`,
-  HOOK_DND5E_ROLL_HIT_DIE: `dnd5e.rollHitDie`,
-  HOOK_DND5E_GET_ITEM_ADVANCEMENT_CONTEXT: `dnd5e.getItemAdvancementContext`,
-  HOOK_DND5E_PRE_SHORT_REST: `dnd5e.preShortRest`,
   ATTUNEMENT_OPTIONAL: 'optional',
   ATTUNEMENT_REQUIRED: 'required',
   ITEM_CAPACITY_TYPE_ITEMS: 'items',
@@ -223,6 +202,9 @@ export const CONSTANTS = {
 
     /** An interactable element which toggles a view */
     EXPANSION_TOGGLE: 'table-expansion-toggle',
+
+    /** An interactable element which toggles an inline container's contents view */
+    INLINE_CONTAINER_TOGGLE: 'inline-container-toggle',
 
     /** An interactable control which the user can execute to create an item (e.g., consumable, feature, loot, spell, weapon, etc.). */
     ITEM_CREATE_COMMAND: 'item-create-command',

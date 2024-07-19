@@ -5,8 +5,13 @@ import type {
   ContainerCapacityContext,
   ContainerPanelItemContext,
   InventorySection,
+  SortMode,
 } from 'src/types/types';
 import { error } from 'src/utils/logging';
+import type { SectionConfig, SheetTabSectionConfigs } from './sections.types';
+import { SheetSections } from './SheetSections';
+import { ItemUtils } from 'src/utils/ItemUtils';
+import type { ItemFilterService } from '../filtering/ItemFilterService';
 
 export class Inventory {
   static getDefaultInventoryTypes(): string[] {
@@ -96,5 +101,27 @@ export class Inventory {
       );
     }
     return containerPanelItems;
+  }
+
+  static getInventory(
+    items: Item5e[],
+    options: Partial<InventorySection> = {
+      canCreate: false,
+    }
+  ): InventorySection[] {
+    const inventory = Inventory.getDefaultInventorySections();
+
+    const inventoryTypes = Inventory.getDefaultInventoryTypes();
+
+    for (let item of items) {
+      Inventory.applyInventoryItemToSection(
+        inventory,
+        item,
+        inventoryTypes,
+        options
+      );
+    }
+
+    return Object.values(inventory);
   }
 }

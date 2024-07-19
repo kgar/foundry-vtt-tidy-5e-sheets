@@ -1,5 +1,6 @@
-import type { ComponentProps, ComponentType, SvelteComponent } from 'svelte';
+import type { ComponentType, SvelteComponent } from 'svelte';
 import type {
+  ContainerContents,
   Item5e,
   ItemCardContentComponent,
   ItemChatData,
@@ -196,6 +197,7 @@ export type CharacterItemContext = {
   availableLevels?: AvailableLevel[];
   canToggle?: boolean;
   concealDetails?: boolean;
+  containerContents?: ContainerContents;
   favoriteId?: string;
   group?: string;
   hasTarget?: boolean;
@@ -282,6 +284,7 @@ export type NpcItemContext = {
   availableLevels?: AvailableLevel[];
   canToggle?: boolean;
   concentration?: boolean;
+  containerContents?: ContainerContents;
   hasTarget?: boolean;
   hasUses?: boolean;
   isDepleted?: boolean;
@@ -326,6 +329,7 @@ export type NpcSheetContext = {
 
 export type VehicleItemContext = {
   canToggle?: boolean;
+  containerContents?: ContainerContents;
   cover?: string;
   hasUses?: boolean;
   isDepleted?: boolean;
@@ -358,6 +362,7 @@ export type ActionItem = {
   calculatedDerivedDamage: DerivedDamage[];
   rangeTitle: string | null;
   rangeSubtitle: string | null;
+  containerContents?: ContainerContents;
 };
 
 export type ActionSection = {

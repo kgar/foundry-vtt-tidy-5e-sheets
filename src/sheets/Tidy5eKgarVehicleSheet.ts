@@ -56,6 +56,8 @@ import { DocumentTabSectionConfigApplication } from 'src/applications/section-co
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
+import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+import { Container } from 'src/features/containers/Container';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -72,6 +74,7 @@ export class Tidy5eVehicleSheet
   currentTabId: string;
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
+  inlineContainerToggleService = new InlineContainerToggleService();
   itemTableTogglesCache: ItemTableToggleCacheService;
   subscriptionsService: StoreSubscriptionsService;
   itemFilterService: ItemFilterService;
@@ -145,6 +148,8 @@ export class Tidy5eVehicleSheet
         ['messageBus', this.messageBus],
         ['stats', this.stats],
         ['card', this.card],
+        ['inlineContainerToggleService', this.inlineContainerToggleService],
+        ['itemFilterService', this.itemFilterService],
         [
           'onFilter',
           this.itemFilterService.onFilter.bind(this.itemFilterService),
@@ -262,7 +267,7 @@ export class Tidy5eVehicleSheet
 
     const context: VehicleSheetContext = {
       ...defaultDocumentContext,
-      actions: getActorActionSections(this.actor, this.itemFilterService),
+      actions: await getActorActionSections(this.actor),
       activateEditors: (node, options) =>
         FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
       actorPortraitCommands:
@@ -308,12 +313,16 @@ export class Tidy5eVehicleSheet
         ) ?? [],
     };
 
+    for (const item of context.items) {
+      const ctx = context.itemContext[item.id];
+      if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
+        ctx.containerContents = await Container.getContainerContents(item);
+      }
+    }
+
     let tabs = await VehicleSheetRuntime.getTabs(context);
 
-    const selectedTabs = TidyFlags.tryGetFlag<string[]>(
-      context.actor,
-      'selected-tabs'
-    );
+    const selectedTabs = TidyFlags.selectedTabs.get(context.actor);
 
     if (selectedTabs?.length) {
       tabs = tabs

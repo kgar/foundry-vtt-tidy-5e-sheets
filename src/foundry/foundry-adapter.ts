@@ -436,7 +436,7 @@ export const FoundryAdapter = {
       return spell.img;
     }
 
-    const parentClass = TidyFlags.tryGetFlag<string>(spell, 'parentClass');
+    const parentClass = TidyFlags.parentClass.get(spell);
 
     const classImage =
       parentClass && 'actorClassesToImages' in context
@@ -448,17 +448,19 @@ export const FoundryAdapter = {
   searchItems(searchCriteria: string, items: Item5e[]): Set<string> {
     return new Set(
       items
-        .filter(
-          (item: any) =>
-            searchCriteria.trim() === '' ||
-            (item.system.identified === false &&
-              item.system.unidentified?.name
-                ?.toLowerCase()
-                .includes(searchCriteria.toLowerCase())) ||
-            (item.system.identified !== false &&
-              item.name.toLowerCase().includes(searchCriteria.toLowerCase()))
-        )
+        .filter((item) => FoundryAdapter.searchItem(item, searchCriteria))
         .map((item) => item.id)
+    );
+  },
+  searchItem(item: any, searchCriteria: string): boolean {
+    return (
+      searchCriteria.trim() === '' ||
+      (item.system.identified === false &&
+        item.system.unidentified?.name
+          ?.toLowerCase()
+          .includes(searchCriteria.toLowerCase())) ||
+      (item.system.identified !== false &&
+        item.name.toLowerCase().includes(searchCriteria.toLowerCase()))
     );
   },
   searchEffects(

@@ -20,8 +20,6 @@ import {
   type MessageBusMessage,
   type MessageBus,
   type Utilities,
-  type ContainerPanelItemContext,
-  type ContainerCapacityContext,
   type ActiveEffect5e,
   type ActorInventoryTypes,
   type CharacterItemPartitions,
@@ -64,7 +62,6 @@ import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSect
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import { ActorSheetCustomSectionMixin } from './mixins/Tidy5eBaseActorSheetMixins';
-import { ItemUtils } from 'src/utils/ItemUtils';
 import { Inventory } from 'src/features/sections/Inventory';
 import type {
   CharacterFavorite,
@@ -72,6 +69,8 @@ import type {
 } from 'src/foundry/dnd5e.types';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { TidyFlags } from 'src/foundry/TidyFlags';
+import { Container } from 'src/features/containers/Container';
+import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
 
 export class Tidy5eCharacterSheet
   extends ActorSheetCustomSectionMixin(
@@ -91,6 +90,7 @@ export class Tidy5eCharacterSheet
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
+  inlineContainerToggleService = new InlineContainerToggleService();
   itemTableTogglesCache: ItemTableToggleCacheService;
   itemFilterService: ItemFilterService;
   subscriptionsService: StoreSubscriptionsService;
@@ -180,6 +180,8 @@ export class Tidy5eCharacterSheet
         ['currentTabId', this.currentTabId],
         ['onTabSelected', this.onTabSelected.bind(this)],
         ['searchFilters', new Map(this.searchFilters)],
+        ['inlineContainerToggleService', this.inlineContainerToggleService],
+        ['itemFilterService', this.itemFilterService],
         [
           'onFilter',
           this.itemFilterService.onFilter.bind(this.itemFilterService),
@@ -262,8 +264,7 @@ export class Tidy5eCharacterSheet
 
     let maxPreparedSpellsTotal = 0;
     try {
-      const formula =
-        TidyFlags.tryGetFlag(this.actor, 'maxPreparedSpells')?.toString() ?? '';
+      const formula = TidyFlags.maxPreparedSpells.get(this.actor) ?? '';
 
       if (formula?.trim() !== '') {
         const roll = await Roll.create(
@@ -380,9 +381,9 @@ export class Tidy5eCharacterSheet
             ),
             iconClass: `fas fa-boxes-stacked fa-fw`,
             execute: () => {
-              TidyFlags.unsetFlag(this.actor, 'showContainerPanel');
+              TidyFlags.showContainerPanel.unset(this.actor);
             },
-            visible: !!TidyFlags.tryGetFlag(this.actor, 'showContainerPanel'),
+            visible: !!TidyFlags.showContainerPanel.get(this.actor),
           },
           {
             title: FoundryAdapter.localize(
@@ -390,9 +391,9 @@ export class Tidy5eCharacterSheet
             ),
             iconClass: `fas fa-box fa-fw`,
             execute: () => {
-              TidyFlags.setFlag(this.actor, 'showContainerPanel', true);
+              TidyFlags.showContainerPanel.set(this.actor, true);
             },
-            visible: !TidyFlags.tryGetFlag(this.actor, 'showContainerPanel'),
+            visible: !TidyFlags.showContainerPanel.get(this.actor),
           },
           {
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
@@ -753,7 +754,7 @@ export class Tidy5eCharacterSheet
       ...defaultDocumentContext,
       activateEditors: (node, options) =>
         FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
-      actions: getActorActionSections(this.actor, this.itemFilterService),
+      actions: await getActorActionSections(this.actor),
       actorClassesToImages: getActorClassesToImages(this.actor),
       actorPortraitCommands:
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
@@ -899,7 +900,7 @@ export class Tidy5eCharacterSheet
       originalContext: defaultDocumentContext,
       owner: this.actor.isOwner,
       showContainerPanel:
-        TidyFlags.tryGetFlag(this.actor, 'showContainerPanel') === true &&
+        TidyFlags.showContainerPanel.get(this.actor) === true &&
         Array.from(defaultDocumentContext.items).some(
           (i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER
         ),
@@ -934,12 +935,16 @@ export class Tidy5eCharacterSheet
         ) ?? [],
     };
 
+    for (const panelItem of context.containerPanelItems) {
+      const ctx = context.itemContext[panelItem.container.id];
+      ctx.containerContents = await Container.getContainerContents(
+        panelItem.container
+      );
+    }
+
     let tabs = await CharacterSheetRuntime.getTabs(context);
 
-    const selectedTabs = TidyFlags.tryGetFlag<string[]>(
-      context.actor,
-      'selected-tabs'
-    );
+    const selectedTabs = TidyFlags.selectedTabs.get(context.actor);
 
     if (selectedTabs?.length) {
       tabs = tabs
@@ -965,8 +970,6 @@ export class Tidy5eCharacterSheet
 
     // Apply Section Configs
     // ------------------------------------------------------------
-
-    const sectionConfigs = TidyFlags.sectionConfig.get(this.actor);
 
     let effectsSection: EffectFavoriteSection = {
       canCreate: false,
@@ -1008,9 +1011,6 @@ export class Tidy5eCharacterSheet
       });
     }
 
-    const favoritesIdMap: Map<string, CharacterFavorite> =
-      this._getFavoritesIdMap();
-
     // Favorites
     context.favorites = CharacterSheetSections.mergeDuplicateFavoriteSections(
       context.favorites
@@ -1022,137 +1022,6 @@ export class Tidy5eCharacterSheet
         type: CONSTANTS.TAB_CHARACTER_EFFECTS,
       });
     }
-
-    // Apply Section Configs: Inventory
-
-    context.inventory = SheetSections.sortKeyedSections(
-      context.inventory,
-      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]
-    );
-
-    context.inventory.forEach((section) => {
-      // Sort Inventory
-      ItemUtils.sortItems(section.items, inventorySortMode);
-
-      // TODO: Collocate Inventory Sub Items
-      // Filter Inventory
-      section.items = this.itemFilterService.filter(
-        section.items,
-        CONSTANTS.TAB_CHARACTER_INVENTORY
-      );
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.[section.key]
-          ?.show !== false;
-    });
-
-    // Apply Section Configs: Spellbook
-
-    context.spellbook = SheetSections.sortKeyedSections(
-      context.spellbook,
-      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]
-    );
-
-    context.spellbook.forEach((section) => {
-      // Sort Spellbook
-      ItemUtils.sortItems(section.spells, spellbookSortMode);
-
-      // TODO: Collocate Spellbook Sub Items
-      // Filter Spellbook
-      section.spells = this.itemFilterService.filter(
-        section.spells,
-        CONSTANTS.TAB_CHARACTER_SPELLBOOK
-      );
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.[section.key]
-          ?.show !== false;
-    });
-
-    // Apply Section Configs: Features
-
-    context.features = SheetSections.sortKeyedSections(
-      context.features,
-      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_FEATURES]
-    );
-
-    context.features.forEach((section) => {
-      // Sort Features
-      ItemUtils.sortItems(section.items, featureSortMode);
-
-      // Collocate Feature Sub Items
-      section.items = SheetSections.collocateSubItems(context, section.items);
-
-      // Filter Features
-      section.items = this.itemFilterService.filter(
-        section.items,
-        CONSTANTS.TAB_CHARACTER_FEATURES
-      );
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_FEATURES]?.[section.key]
-          ?.show !== false;
-    });
-
-    // Apply Section Configs: Favorites
-
-    context.favorites = SheetSections.sortKeyedSections(
-      context.favorites,
-      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]
-    );
-
-    (context.favorites as FavoriteSection[]).forEach((section) => {
-      if ('effects' in section) {
-        let effectContexts = section.effects;
-
-        // Sort Favorite Effects
-        if (attributesSortMode === 'm') {
-          const getSort = (effects: Item5e) =>
-            favoritesIdMap.get(effects.getRelativeUUID(this.actor))?.sort ??
-            Number.MAX_SAFE_INTEGER;
-
-          effectContexts.sort((a, b) => getSort(a.effect) - getSort(b.effect));
-        } else {
-          effectContexts.sort((a, b) =>
-            a.effect.name.localeCompare(b.effect.name)
-          );
-        }
-
-        // TODO: Filter Favorite Effects ?
-      } else {
-        let items = 'spells' in section ? section.spells : section.items;
-        // Sort Favorites Items
-        if (attributesSortMode === 'm') {
-          const getSort = (item: Item5e) =>
-            favoritesIdMap.get(item.getRelativeUUID(this.actor))?.sort ??
-            Number.MAX_SAFE_INTEGER;
-
-          items.sort((a, b) => getSort(a) - getSort(b));
-        } else {
-          ItemUtils.sortItems(items, attributesSortMode);
-        }
-
-        // TODO: Collocate Favorite Sub Items
-        // Filter Favorite Items
-        items = this.itemFilterService.filter(
-          items,
-          CONSTANTS.TAB_CHARACTER_ATTRIBUTES
-        );
-        if ('spells' in section) {
-          section.spells = items;
-        } else {
-          section.items = items;
-        }
-      }
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]?.[section.key]
-          ?.show !== false;
-    });
 
     debug('Character Sheet context data', context);
 

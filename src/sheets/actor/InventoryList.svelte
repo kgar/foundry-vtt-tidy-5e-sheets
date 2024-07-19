@@ -32,7 +32,9 @@
   import { coalesce } from 'src/utils/formatting';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
-  import { TidyFlags } from 'src/foundry/TidyFlags';
+  import InlineContainerToggle from '../container/InlineContainerToggle.svelte';
+  import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+  import InlineContainerView from '../container/InlineContainerView.svelte';
 
   export let primaryColumnName: string;
   export let items: Item5e[];
@@ -41,14 +43,16 @@
   export let lockControls: boolean = false;
   export let allowFavoriteIconNextToName: boolean = true;
   export let includeWeightColumn: boolean = true;
-  /**
-   * An optional subset of item IDs which will hide all other items not included in this set.
-   * Useful for showing only search results, for example.
-   */
-  export let visibleItemIdSubset: Set<string> | null = null;
+
+  let inlineContainerToggleService = getContext<InlineContainerToggleService>(
+    'inlineContainerToggleService',
+  );
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
+
+  let itemIdsToShow =
+    getContext<Readable<Set<string> | undefined>>('itemIdsToShow');
 
   const localize = FoundryAdapter.localize;
   const weightUnit = FoundryAdapter.getWeightUnit();
@@ -181,12 +185,14 @@
           }}
           let:toggleSummary
           cssClass={getInventoryRowClasses(item)}
-          hidden={visibleItemIdSubset !== null &&
-            !visibleItemIdSubset.has(item.id)}
+          hidden={!!$itemIdsToShow && !$itemIdsToShow.has(item.id)}
           favoriteId={'favoriteId' in ctx ? ctx.favoriteId : null}
         >
           <ItemTableCell primary={true}>
             <ItemUseButton disabled={!$context.editable} {item} />
+            {#if 'containerContents' in ctx && !!ctx.containerContents}
+              <InlineContainerToggle {item} {inlineContainerToggleService} />
+            {/if}
             <ItemName
               on:toggle={() => toggleSummary($context.actor)}
               cssClass="extra-small-gap"
@@ -268,6 +274,16 @@
             </ItemTableCell>
           {/if}
         </ItemTableRow>
+        {#if 'containerContents' in ctx && !!ctx.containerContents}
+          <InlineContainerView
+            container={item}
+            containerContents={ctx.containerContents}
+            editable={$context.editable}
+            {inlineContainerToggleService}
+            lockItemQuantity={$context.lockItemQuantity}
+            sheetDocument={$context.actor}
+          />
+        {/if}
       {/each}
       {#if $context.unlocked && section.canCreate}
         <ItemTableFooter actor={$context.actor} {section} isItem={true} />

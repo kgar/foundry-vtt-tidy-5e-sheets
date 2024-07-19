@@ -17,14 +17,13 @@
   export let enableSpecialTraitsConfiguration: boolean = true;
 
   $: traitsExpanded =
-    !toggleable ||
-    TidyFlags.tryGetFlag<boolean>($context.actor, 'traitsExpanded') === true;
+    !toggleable || TidyFlags.traitsExpanded.get($context.actor) === true;
 
   function toggleTraitsExpanded() {
     if (traitsExpanded) {
-      TidyFlags.unsetFlag($context.actor, 'traitsExpanded');
+      TidyFlags.traitsExpanded.unset($context.actor);
     } else {
-      TidyFlags.setFlag($context.actor, 'traitsExpanded', true);
+      TidyFlags.traitsExpanded.set($context.actor, true);
     }
   }
 
@@ -38,7 +37,7 @@
 
 <div
   class="traits"
-  class:expanded={TidyFlags.tryGetFlag($context.actor, 'traitsExpanded')}
+  class:expanded={TidyFlags.traitsExpanded.get($context.actor)}
 >
   {#if useSenses && $context.senses}
     {@const senses = getTags($context.senses)}

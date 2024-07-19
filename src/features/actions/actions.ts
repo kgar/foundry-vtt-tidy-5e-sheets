@@ -2,16 +2,19 @@ import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ActionListRuntime } from 'src/runtime/action-list/ActionListRuntime';
 import { SettingsProvider } from 'src/settings/settings';
-import type { Item5e } from 'src/types/item.types';
-import type { ActionItem, ActionSection, Actor5e } from 'src/types/types';
+import type { ContainerContents, Item5e } from 'src/types/item.types';
+import type {
+  ActionItem,
+  ActionSection,
+  Actor5e,
+  SortMode,
+} from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import { scaleCantripDamageFormula, simplifyFormula } from 'src/utils/formula';
 import { debug, error } from 'src/utils/logging';
-import { SheetPreferencesService } from '../user-preferences/SheetPreferencesService';
-import type { ItemFilterService } from '../filtering/ItemFilterService';
 import { SpellUtils } from 'src/utils/SpellUtils';
-import { SheetSections } from '../sections/SheetSections';
 import { TidyFlags } from 'src/foundry/TidyFlags';
+import { Container } from '../containers/Container';
 
 export type ActionSets = Record<string, Set<ActionItem>>;
 
@@ -37,47 +40,42 @@ const activationTypeSortValues: Record<string, number> = {
   special: 8,
 };
 
-export function getActorActionSections(
-  actor: Actor5e,
-  itemFilterService: ItemFilterService
-): ActionSection[] {
+export async function getActorActionSections(
+  actor: Actor5e
+): Promise<ActionSection[]> {
   try {
-    const sheetPreferences = SheetPreferencesService.getByType(actor.type);
+    let eligibleItems: ActionItem[] = [];
 
-    const actionSortMode =
-      sheetPreferences.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS]?.sort ?? 'm';
+    for (let item of actor.items) {
+      if (!isItemInActionList(item)) {
+        continue;
+      }
 
-    let filteredItems = actor.items.filter(isItemInActionList);
+      eligibleItems.push(await mapActionItem(item));
+    }
 
-    // Filter actions
-    filteredItems = itemFilterService.filter(
-      filteredItems,
-      CONSTANTS.TAB_ACTOR_ACTIONS
-    );
-
-    // Sort actions
-    filteredItems = filteredItems
-      .sort((a: Item5e, b: Item5e) => {
-        if (actionSortMode === 'a') {
-          return a.name.localeCompare(b.name);
-        }
-
-        // Sort by Arbitrary Action List Rules
-        if (a.type !== b.type) {
-          return itemTypeSortValues[a.type] - itemTypeSortValues[b.type];
-        }
-        if (a.type === 'spell' && b.type === 'spell') {
-          return a.system.level - b.system.level;
-        }
-        return (a.sort || 0) - (b.sort || 0);
-      })
-      .map((item: Item5e) => mapActionItem(item));
-
-    return buildActionSections(actor, filteredItems);
+    return buildActionSections(actor, eligibleItems);
   } catch (e) {
     error('An error occurred while getting actions', false, e);
     return [];
   }
+}
+
+export function sortActions(section: ActionSection, sortMode: SortMode) {
+  section.actions.sort(({ item: a }, { item: b }) => {
+    if (sortMode === 'a') {
+      return a.name.localeCompare(b.name);
+    }
+
+    // Sort by Arbitrary Action List Rules
+    if (a.type !== b.type) {
+      return itemTypeSortValues[a.type] - itemTypeSortValues[b.type];
+    }
+    if (a.type === 'spell' && b.type === 'spell') {
+      return a.system.level - b.system.level;
+    }
+    return (a.sort || 0) - (b.sort || 0);
+  });
 }
 
 function buildActionSections(
@@ -131,25 +129,7 @@ function buildActionSections(
     }
   }
 
-  const sectionConfigs = TidyFlags.sectionConfig.get(actor);
-  const actorActionsSectionConfig =
-    sectionConfigs?.[CONSTANTS.TAB_ACTOR_ACTIONS];
-
-  // Sort sections
-  let sections = SheetSections.sortKeyedSections(
-    Object.values(actionSections),
-    actorActionsSectionConfig
-  );
-
-  // Remove empty sections
-  sections = sections.filter((section) => section.actions.length);
-
-  // Apply visibility from configuration
-  sections.forEach((section) => {
-    section.show = actorActionsSectionConfig?.[section.key]?.show !== false;
-  });
-
-  return sections;
+  return Object.values(actionSections);
 }
 
 export function isItemInActionList(item: Item5e): boolean {
@@ -221,7 +201,7 @@ export function isItemInActionList(item: Item5e): boolean {
   }
 }
 
-function mapActionItem(item: Item5e): ActionItem {
+async function mapActionItem(item: Item5e): Promise<ActionItem> {
   try {
     let calculatedDerivedDamage = Array.isArray(item.labels.derivedDamage)
       ? [...item.labels.derivedDamage].map(
@@ -258,10 +238,16 @@ function mapActionItem(item: Item5e): ActionItem {
         )
       : [];
 
+    let containerContents: ContainerContents | undefined = undefined;
+    if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
+      containerContents = await Container.getContainerContents(item);
+    }
+
     return {
       item,
       typeLabel: FoundryAdapter.localize(`ITEM.Type${item.type.titleCase()}`),
       calculatedDerivedDamage,
+      containerContents,
       ...getRangeTitles(item),
     };
   } catch (e) {
@@ -411,10 +397,7 @@ export class Actions {
 }
 
 export function actorUsesActionFeature(actor: Actor5e) {
-  const selectedTabIds = TidyFlags.tryGetFlag<string[] | undefined>(
-    actor,
-    'selected-tabs'
-  );
+  const selectedTabIds = TidyFlags.selectedTabs.get(actor);
 
   if (selectedTabIds) {
     return selectedTabIds.includes(CONSTANTS.TAB_ACTOR_ACTIONS);

@@ -20,8 +20,8 @@
   import ItemAddUses from '../../../components/item-list/ItemAddUses.svelte';
   import InlineFavoriteIcon from '../../../components/item-list/InlineFavoriteIcon.svelte';
   import ItemFavoriteControl from '../../../components/item-list/controls/ItemFavoriteControl.svelte';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { getContext, setContext } from 'svelte';
+  import { writable, type Readable } from 'svelte/store';
   import Notice from '../../../components/notice/Notice.svelte';
   import { settingStore } from 'src/settings/settings';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
@@ -37,18 +37,38 @@
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
   import LevelUpDropdown from 'src/sheets/actor/LevelUpDropdown.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
+  import { SheetSections } from 'src/features/sections/SheetSections';
+  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
+  let tabId = getContext<string>('tabId');
+
+  $: features = SheetSections.configureFeatures(
+    $context.features,
+    $context,
+    tabId,
+    SheetPreferencesService.getByType($context.actor.type),
+    TidyFlags.sectionConfig.get($context.actor)?.[tabId],
+  );
 
   const localize = FoundryAdapter.localize;
 
   $: noFeatures =
-    $context.features.some(
+    features.some(
       (section: CharacterFeatureSection) => section.items.length > 0,
     ) === false;
 
-  function getAvailableLevels(id: string) {
-    return $context.itemContext[id]?.availableLevels ?? [];
+  const itemIdsToShow = writable<Set<string> | undefined>(undefined);
+  setContext('itemIdsToShow', itemIdsToShow);
+
+  $: {
+    $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
+      criteria: searchCriteria,
+      itemContext: $context.itemContext,
+      sections: features,
+      tabId: tabId,
+    });
   }
 
   let searchCriteria: string = '';
@@ -56,8 +76,7 @@
   declareLocation('features');
 
   $: utilityBarCommands =
-    $context.utilities[CONSTANTS.TAB_CHARACTER_FEATURES]
-      ?.utilityToolbarCommands ?? [];
+    $context.utilities[tabId]?.utilityToolbarCommands ?? [];
 
   let controls: RenderableClassicControl<{ item: Item5e }>[] = [];
   $: {
@@ -95,14 +114,14 @@
 <UtilityToolbar>
   <Search bind:value={searchCriteria} />
   <PinnedFilterToggles
-    filterGroupName={CONSTANTS.TAB_CHARACTER_FEATURES}
+    filterGroupName={tabId}
     filters={ItemFilterRuntime.getPinnedFiltersForTab(
       $context.filterPins,
       $context.filterData,
-      CONSTANTS.TAB_CHARACTER_FEATURES,
+      tabId,
     )}
   />
-  <FilterMenu tabId={CONSTANTS.TAB_CHARACTER_FEATURES} />
+  <FilterMenu {tabId} />
   {#each utilityBarCommands as command (command.title)}
     <UtilityToolbarCommand
       title={command.title}
@@ -120,13 +139,14 @@
   {#if noFeatures && !$context.unlocked}
     <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {:else}
-    {#each $context.features as section (section.key)}
+    {#each features as section (section.key)}
       {#if section.show}
-        {@const visibleItemIdSubset = FoundryAdapter.searchItems(
-          searchCriteria,
+        {@const visibleItemCount = ItemVisibility.countVisibleItems(
           section.items,
+          $itemIdsToShow,
         )}
-        {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemIdSubset.size > 0}
+
+        {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemCount > 0}
           <ItemTable key={section.key}>
             <svelte:fragment slot="header">
               <ItemTableHeaderRow>
@@ -170,7 +190,7 @@
                     type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
                     uuid: item.uuid,
                   }}
-                  hidden={!visibleItemIdSubset.has(item.id)}
+                  hidden={!!$itemIdsToShow && !$itemIdsToShow.has(item.id)}
                 >
                   <ItemTableCell primary={true}>
                     <ItemUseButton disabled={!$context.editable} {item} />

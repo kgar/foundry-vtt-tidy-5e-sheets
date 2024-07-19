@@ -361,6 +361,23 @@
     border-style: solid;
     border-width: 1px;
   }
+
+  /* Containers */
+  .inline-container-view {
+    padding: 0.25rem 0 0 1rem;
+    margin-left: 1rem;
+    border-left: 0.0625rem dotted var(--t5e-separator-color);
+
+    .empty-container {
+      border: 0.125rem dashed var(--t5e-separator-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      font-style: italic;
+      margin: 0.25rem 0;
+    }
+  }
 }
 
 @import './partials/floating-context-menu';

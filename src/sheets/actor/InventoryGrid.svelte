@@ -19,14 +19,11 @@
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import { declareLocation } from 'src/types/location-awareness.types';
   import { TidyHooks } from 'src/foundry/TidyHooks';
+  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   export let section: InventorySection;
   export let items: Item5e[];
-  /**
-   * An optional subset of item IDs which will hide all other items not included in this set.
-   * Useful for showing only search results, for example.
-   */
-  export let visibleItemIdSubset: Set<string> | null = null;
+
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
   let card = getContext<Writable<ItemCardStore>>('card');
@@ -35,6 +32,9 @@
     actor: $context.actor,
     section,
   });
+
+  let itemIdsToShow =
+    getContext<Readable<Set<string> | undefined>>('itemIdsToShow');
 
   const localize = FoundryAdapter.localize;
 
@@ -94,8 +94,10 @@
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>
         <span class="inventory-primary-column-label">
-          {localize(section.label)} ({visibleItemIdSubset?.size ??
-            items.length})
+          {localize(section.label)} ({ItemVisibility.countVisibleItems(
+            items,
+            $itemIdsToShow,
+          )})
         </span>
       </ItemTableColumn>
     </ItemTableHeaderRow>
@@ -103,8 +105,7 @@
   <div class="items" slot="body">
     {#each items as item (item.id)}
       {@const ctx = $context.itemContext[item.id]}
-      {@const hidden =
-        visibleItemIdSubset !== null && !visibleItemIdSubset.has(item.id)}
+      {@const hidden = !!$itemIdsToShow && !$itemIdsToShow.has(item.id)}
       <button
         type="button"
         class="item {getInventoryRowClasses(item)} transparent-button"
@@ -154,7 +155,6 @@
           />
         {/if}
 
-        <!-- TODO: Put this in itemContext -->
         {#if 'favoriteId' in ctx && !!ctx.favoriteId}
           <GridPaneFavoriteIcon />
         {/if}

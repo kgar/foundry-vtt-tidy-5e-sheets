@@ -117,6 +117,7 @@
       flex: 1 1 auto;
       border-top-left-radius: 0.1875rem;
       border-top-right-radius: 0.1875rem;
+      text-shadow: none;
 
       &:hover {
         background: var(--t5e-tab-background);
@@ -133,8 +134,6 @@
           color: inherit;
         }
       }
-
-      text-shadow: none;
     }
 
     &:not(.vertical) {

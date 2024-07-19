@@ -208,7 +208,7 @@
       &.at-will {
         --t5e-item-table-row-background: var(--t5e-atwill-background);
       }
-      
+
       &.ritual-only {
         --t5e-item-table-row-background: var(--t5e-ritual-only-background);
       }
@@ -225,11 +225,13 @@
         box-shadow: 0 0 0 0.0625rem var(--t5e-magic-accent-color) inset;
       }
 
-      background: linear-gradient(
-        to right,
-        var(--t5e-item-table-row-background),
-        transparent 120%
-      );
+      & {
+        background: linear-gradient(
+          to right,
+          var(--t5e-item-table-row-background),
+          transparent 120%
+        );
+      }
     }
   }
 </style>
