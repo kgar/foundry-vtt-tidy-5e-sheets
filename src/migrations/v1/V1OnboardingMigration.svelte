@@ -6,10 +6,13 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
   import type { ConfirmMigrationFunction } from '../BulkMigrationsApplication';
+  import { CONSTANTS } from 'src/constants';
 
   const localize = FoundryAdapter.localize;
 
-  const confirm = getContext<ConfirmMigrationFunction>('confirm');
+  const confirm = getContext<ConfirmMigrationFunction>(
+    CONSTANTS.SVELTE_CONTEXT.CONFIRM,
+  );
 </script>
 
 <h2>{localize('TIDY5E.Settings.Migrations.v1.sectionTitle')}</h2>

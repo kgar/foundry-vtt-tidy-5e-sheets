@@ -9,7 +9,9 @@
   import { debug, error } from 'src/utils/logging';
   import { CONSTANTS } from 'src/constants';
 
-  const context = getContext<Readable<ActorSheetContext>>('context');
+  const context = getContext<Readable<ActorSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   export let condition: Dnd5eActorCondition;
 

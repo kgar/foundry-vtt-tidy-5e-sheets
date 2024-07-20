@@ -7,8 +7,9 @@
   import { CONSTANTS } from 'src/constants';
   import { settingStore } from 'src/settings/settings';
 
-  let context =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   export let successes: number;
   export let failures: number;

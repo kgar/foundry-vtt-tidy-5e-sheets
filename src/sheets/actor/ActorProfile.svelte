@@ -3,10 +3,13 @@
   import ActorPortrait from './ActorPortrait.svelte';
   import type { Readable } from 'svelte/store';
   import type { ActorSheetContext } from 'src/types/types';
+  import { CONSTANTS } from 'src/constants';
 
   export let useHpOverlay: boolean;
 
-  let context = getContext<Readable<ActorSheetContext>>('context');
+  let context = getContext<Readable<ActorSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 </script>
 
 <div class="profile-wrap">

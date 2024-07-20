@@ -13,14 +13,18 @@
   export let actor: Actor5e;
   export let useHpOverlay: boolean;
 
-  let context = getContext<Readable<ActorSheetContext>>('context');
+  let context = getContext<Readable<ActorSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 
   function openPortraitPicker(
     event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
   ) {
-    if (!TidyHooks.tidy5eSheetsPreOpenActorPortraitFilePicker($context, event)) {
+    if (
+      !TidyHooks.tidy5eSheetsPreOpenActorPortraitFilePicker($context, event)
+    ) {
       return;
     }
     const rect = event.currentTarget.getBoundingClientRect();

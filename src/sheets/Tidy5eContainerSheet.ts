@@ -113,13 +113,20 @@ export class Tidy5eKgarContainerSheet
     this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
 
     const context = new Map<any, any>([
+      [CONSTANTS.SVELTE_CONTEXT.APP_ID, this.appId],
       [CONSTANTS.SVELTE_CONTEXT.CARD, this.card],
       [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this.context],
       [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
       [CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEMS, new Map(this.expandedItems)],
-      [CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA, new Map(this.expandedItemData)],
+      [
+        CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA,
+        new Map(this.expandedItemData),
+      ],
       [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
-      [CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE, this.inlineContainerToggleService],
+      [
+        CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
+        this.inlineContainerToggleService,
+      ],
       [
         CONSTANTS.SVELTE_CONTEXT.ON_FILTER,
         this.itemFilterService.onFilter.bind(this.itemFilterService),

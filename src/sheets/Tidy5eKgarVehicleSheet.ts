@@ -144,6 +144,7 @@ export class Tidy5eVehicleSheet
     this.component = new VehicleSheet({
       target: node,
       context: new Map<any, any>([
+        [CONSTANTS.SVELTE_CONTEXT.APP_ID, this.appId],
         [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this.context],
         [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
         [CONSTANTS.SVELTE_CONTEXT.STATS, this.stats],

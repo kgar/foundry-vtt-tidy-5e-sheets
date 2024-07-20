@@ -45,14 +45,16 @@
   export let includeWeightColumn: boolean = true;
 
   let inlineContainerToggleService = getContext<InlineContainerToggleService>(
-    'inlineContainerToggleService',
+    CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
   );
 
-  let context =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
-  let itemIdsToShow =
-    getContext<Readable<Set<string> | undefined>>('itemIdsToShow');
+  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
+    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
+  );
 
   const localize = FoundryAdapter.localize;
   const weightUnit = FoundryAdapter.getWeightUnit();

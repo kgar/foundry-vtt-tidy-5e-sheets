@@ -1,5 +1,6 @@
 <script lang="ts">
   import Notice from 'src/components/notice/Notice.svelte';
+  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
@@ -9,8 +10,9 @@
   export let editable: boolean;
   export let cssClass: string | null = null;
 
-  let context =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>

@@ -356,6 +356,7 @@ export const CONSTANTS = {
     APPLY: 'apply',
     BUTTON_MENU_CONTEXT: 'buttonMenuContext',
     CARD: 'card',
+    CONFIRM: 'confirm',
     CONTEXT: 'context',
     CTX: 'ctx',
     CURRENT_TAB_ID: 'currentTabId',

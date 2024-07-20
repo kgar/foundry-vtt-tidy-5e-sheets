@@ -69,6 +69,7 @@ export class Tidy5eKgarItemSheet
     const node = html.get(0);
 
     const context = new Map<any, any>([
+      [CONSTANTS.SVELTE_CONTEXT.APP_ID, this.appId],
       [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this.context],
       [CONSTANTS.SVELTE_CONTEXT.STATS, this.stats],
       [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],

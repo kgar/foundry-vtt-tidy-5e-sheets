@@ -5,6 +5,7 @@
   import type { ActorSheetContext } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
+  import { CONSTANTS } from 'src/constants';
 
   /**
    * The Armor Class value.
@@ -16,7 +17,9 @@
    */
   export let cssClass: string = '';
 
-  let context = getContext<Readable<ActorSheetContext>>('context');
+  let context = getContext<Readable<ActorSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   let acShieldButton: HTMLElement;
 
