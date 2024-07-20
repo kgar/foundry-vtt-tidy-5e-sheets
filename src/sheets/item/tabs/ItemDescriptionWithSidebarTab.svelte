@@ -20,8 +20,9 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
 
-  let context =
-    getContext<Readable<ItemSheetContext | ContainerSheetContext>>('context');
+  let context = getContext<Readable<ItemSheetContext | ContainerSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   function onEditorActivation(node: HTMLElement) {
     if (editorIsActive) {

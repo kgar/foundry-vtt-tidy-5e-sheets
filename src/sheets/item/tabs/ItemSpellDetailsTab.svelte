@@ -16,7 +16,9 @@
   import ItemProperties from '../parts/ItemProperties.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context = getContext<Readable<ItemSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const allClasses = FoundryAdapter.getAllClassesDropdownOptions(
     $settingStore.spellClassFilterAdditionalClasses,
