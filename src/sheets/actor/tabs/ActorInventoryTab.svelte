@@ -32,8 +32,9 @@
 
   export let tabId: string;
 
-  let context =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   $: inventory = SheetSections.configureInventory(
     $context.inventory,
@@ -45,7 +46,7 @@
   let searchCriteria: string = '';
 
   const itemIdsToShow = writable<Set<string> | undefined>(undefined);
-  setContext('itemIdsToShow', itemIdsToShow);
+  setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
 
   $: {
     $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({

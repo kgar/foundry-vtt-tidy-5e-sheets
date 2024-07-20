@@ -30,10 +30,12 @@
   import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
   import InlineContainerView from 'src/sheets/container/InlineContainerView.svelte';
 
-  let context = getContext<Readable<ActorSheetContext>>('context');
-  let tabId = getContext<string>('tabId');
+  let context = getContext<Readable<ActorSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+  let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
   let inlineContainerToggleService = getContext<InlineContainerToggleService>(
-    'inlineContainerToggleService',
+    CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
   );
 
   $: actions = SheetSections.configureActions(
@@ -46,7 +48,7 @@
   let searchCriteria: string = '';
 
   const itemIdsToShow = writable<Set<string> | undefined>(undefined);
-  setContext('itemIdsToShow', itemIdsToShow);
+  setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
 
   $: {
     $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
