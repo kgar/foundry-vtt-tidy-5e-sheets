@@ -226,7 +226,32 @@ function calculateDeterministicBonus(rawBonus: string): number {
     (t: any) => t.isDeterministic
   );
 
-  const bonusRoll = Roll.fromTerms(deterministicRawBonus);
+  // `Roll.fromTerms` doesn't allow an empty array since it expects a sequence
+  // of tokens that it can parse into a syntax tree. Therefore, we need to be
+  // careful about what we pass into it.
+  //
+  // TODO: To correctly prune non-deterministic terms from the formula, we need
+  // to invoke the RollParser and prune elements from the syntax tree.
+  //
+  // This `if` statement handles the most common failure case, wherein the whole
+  // formula is non-deterministic, but it's just a temporary band-aid; the real
+  // fix will be considerably more complicated to implement.
+  //
+  // Currently, an expression like `1 + 1d4 * 2` would prune the `1d4` and
+  // attempt to roll `1 + * 2`, causing an error. The try/catch block below
+  // anticipates that possibility and logs it as a warning since it's a known
+  // issue, but it should ideally be replaced with a more rigorous fix.
+  if (deterministicRawBonus.length == 0) {
+    return 0;
+  }
+
+  let bonusRoll = 0;
+  try {
+    bonusRoll = Roll.fromTerms(deterministicRawBonus);
+  } catch (e) {
+    warn(e);
+    return 0;
+  }
 
   let bonusTotal = 0;
   if (Roll.validate(bonusRoll.formula)) {
