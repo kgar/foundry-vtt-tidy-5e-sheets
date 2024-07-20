@@ -8,12 +8,14 @@
   import type { ItemFilterService } from 'src/features/filtering/ItemFilterService';
   import ButtonMenuDivider from 'src/components/button-menu/ButtonMenuDivider.svelte';
   import type { ContainerSheetContext } from 'src/types/item.types';
+  import { CONSTANTS } from 'src/constants';
 
   export let tabId: string;
 
   const localize = FoundryAdapter.localize;
-  const context =
-    getContext<Readable<ActorSheetContext | ContainerSheetContext>>('context');
+  const context = getContext<
+    Readable<ActorSheetContext | ContainerSheetContext>
+  >(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
   const onFilterClearAll =
     getContext<ItemFilterService['onFilterClearAll']>('onFilterClearAll');
   $: categories = $context.filterData[tabId] ?? {};

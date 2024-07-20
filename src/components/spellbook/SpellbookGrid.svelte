@@ -19,19 +19,20 @@
   import { declareLocation } from 'src/types/location-awareness.types';
   import SpellSlotManagement from './SpellSlotManagement.svelte';
   import ConcentrationOverlayIcon from './ConcentrationOverlayIcon.svelte';
-  import { TidyFlags } from 'src/foundry/TidyFlags';
   import { TidyHooks } from 'src/foundry/TidyHooks';
 
   export let section: SpellbookSection;
   export let spells: Item5e[];
   export let cssClass: string | null = null;
 
-  let context =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
-  let card = getContext<Writable<ItemCardStore>>('card');
+  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+  let card = getContext<Writable<ItemCardStore>>(CONSTANTS.SVELTE_CONTEXT.CARD);
 
-  let itemIdsToShow =
-    getContext<Readable<Set<string> | undefined>>('itemIdsToShow');
+  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
+    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
+  );
 
   $: customCommands = ActorItemRuntime.getActorItemSectionCommands({
     actor: $context.actor,

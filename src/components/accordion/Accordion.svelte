@@ -1,4 +1,5 @@
 <script context="module" lang="ts">
+  import { CONSTANTS } from 'src/constants';
   import { setContext } from 'svelte';
   import { writable, type Writable } from 'svelte/store';
 
@@ -10,7 +11,7 @@
 <script lang="ts">
   export let multiple: boolean = false;
 
-  $: setContext<AccordionCtxType>('ctx', {
+  $: setContext<AccordionCtxType>(CONSTANTS.SVELTE_CONTEXT.CTX, {
     selected: multiple ? undefined : writable(),
   });
 </script>
