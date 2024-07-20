@@ -251,7 +251,7 @@ export class Tidy5eKgarContainerSheet
               new DocumentTabSectionConfigApplication({
                 document: context.item,
                 // Provide a way to build the necessary config, perhaps within the application constructor. We've got all the info we need in order to perform the operation.
-                sections: context.inventory.sections,
+                sections: context.containerContents.contents,
                 tabId: CONSTANTS.TAB_CONTAINER_CONTENTS,
                 tabTitle: ItemSheetRuntime.getTabTitle(
                   CONSTANTS.TAB_CONTAINER_CONTENTS
