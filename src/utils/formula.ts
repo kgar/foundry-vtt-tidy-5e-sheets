@@ -1,5 +1,5 @@
 import type { Item5e } from 'src/types/item.types';
-import { debug, error } from './logging';
+import { debug, error, warn } from './logging';
 import type {
   Actor5e,
   MaxPreparedSpellFormula,
@@ -245,21 +245,21 @@ function calculateDeterministicBonus(rawBonus: string): number {
     return 0;
   }
 
-  let bonusRoll = 0;
+  let bonusRoll = Roll.fromTerms([new NumericTerm(0)]);
   try {
     bonusRoll = Roll.fromTerms(deterministicRawBonus);
-  } catch (e) {
-    warn(e);
+
+    let bonusTotal = 0;
+    if (Roll.validate(bonusRoll.formula)) {
+      bonusTotal = FoundryAdapter.isFoundryV12OrHigher()
+        ? bonusRoll.evaluateSync().total
+        : bonusRoll.evaluate({ async: false }).total;
+    }
+    return bonusTotal;
+  } catch (e: any) {
+    warn(e.toString());
     return 0;
   }
-
-  let bonusTotal = 0;
-  if (Roll.validate(bonusRoll.formula)) {
-    bonusTotal = FoundryAdapter.isFoundryV12OrHigher()
-      ? bonusRoll.evaluateSync().total
-      : bonusRoll.evaluate({ async: false }).total;
-  }
-  return bonusTotal;
 }
 
 export function getDcTooltip(actor: Actor5e) {
