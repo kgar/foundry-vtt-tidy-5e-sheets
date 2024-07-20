@@ -18,11 +18,13 @@
   import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
-  let context = getContext<Readable<ContainerSheetContext>>('context');
-  let tabId = getContext<string>('tabId');
+  let context = getContext<Readable<ContainerSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+  let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
   let inlineContainerToggleService = getContext<InlineContainerToggleService>(
-    'inlineContainerToggleService',
+    CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
   );
 
   let searchCriteria = '';
@@ -30,7 +32,7 @@
   $: allItems = $context.containerContents.contents.flatMap((x) => x.items);
 
   const itemIdsToShow = writable<Set<string> | undefined>(undefined);
-  setContext('itemIdsToShow', itemIdsToShow);
+  setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
 
   $: {
     $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({

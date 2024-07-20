@@ -9,8 +9,11 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context = getContext<Readable<ItemSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>

@@ -8,8 +8,9 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let context =
-    getContext<Readable<ItemSheetContext | CharacterSheetContext>>('context');
+  let context = getContext<Readable<ItemSheetContext | CharacterSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   $: effects = Object.entries($context.effects) as Iterable<[string, any]>;
 

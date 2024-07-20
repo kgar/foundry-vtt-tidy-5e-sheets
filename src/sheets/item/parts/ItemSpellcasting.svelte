@@ -6,8 +6,11 @@
   import type { Readable } from 'svelte/store';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import Select from 'src/components/inputs/Select.svelte';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context = getContext<Readable<ItemSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -24,7 +27,7 @@
       field="system.spellcasting.progression"
       value={$context.system.spellcasting.progression}
       disabled={!$context.editable}
-      >
+    >
       <SelectOptions data={$context.config.spellProgression} />
     </Select>
   </div>
@@ -42,7 +45,7 @@
       field="system.spellcasting.ability"
       value={$context.system.spellcasting.ability}
       disabled={!$context.editable}
-      >
+    >
       <SelectOptions
         data={$context.config.abilities}
         labelProp="label"
