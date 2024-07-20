@@ -1,6 +1,7 @@
 <script lang="ts">
   import { TidyFlags } from 'src/api';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
+  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     PortraitCharmRadiusClass,
@@ -9,7 +10,9 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let context = getContext<Readable<VehicleSheetContext>>('context');
+  let context = getContext<Readable<VehicleSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   export let motion: boolean;
   export let cssClass: string = '';

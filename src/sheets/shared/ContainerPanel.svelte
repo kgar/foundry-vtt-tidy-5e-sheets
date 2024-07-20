@@ -21,8 +21,9 @@
     containerPanelItems.map((c) => c.container),
   );
 
-  let card: Writable<ItemCardStore> | undefined =
-    getContext<Writable<ItemCardStore>>('card');
+  let card: Writable<ItemCardStore> | undefined = getContext<
+    Writable<ItemCardStore>
+  >(CONSTANTS.SVELTE_CONTEXT.CARD);
 
   async function onMouseEnter(event: Event, item: Item5e) {
     TidyHooks.tidy5eSheetsItemHoverOn(event, item);

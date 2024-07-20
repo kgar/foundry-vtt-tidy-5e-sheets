@@ -58,11 +58,13 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import InlineContainerView from 'src/sheets/container/InlineContainerView.svelte';
 
-  let context = getContext<Readable<NpcSheetContext>>('context');
-  let tabId = getContext<string>('tabId');
+  let context = getContext<Readable<NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+  let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
   let inlineContainerToggleService = getContext<InlineContainerToggleService>(
-    'inlineContainerToggleService',
+    CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
   );
 
   $: noSpellLevels = !$context.spellbook.length;
@@ -81,7 +83,7 @@
   let searchCriteria: string = '';
 
   const itemIdsToShow = writable<Set<string> | undefined>(undefined);
-  setContext('itemIdsToShow', itemIdsToShow);
+  setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
 
   $: spellbook = !$settingStore.showSpellbookTabNpc
     ? SheetSections.configureSpellbook(

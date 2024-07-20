@@ -17,6 +17,7 @@
   import type { Readable } from 'svelte/store';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
+  import { CONSTANTS } from 'src/constants';
 
   export let section: VehicleCargoSection;
 
@@ -26,7 +27,9 @@
     weight: '3.75rem',
   };
 
-  let context = getContext<Readable<VehicleSheetContext>>('context');
+  let context = getContext<Readable<VehicleSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const classicControlsEditableRowBaseWidth = '1.5rem';
 
