@@ -113,27 +113,33 @@ export class Tidy5eKgarContainerSheet
     this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
 
     const context = new Map<any, any>([
-      ['card', this.card],
-      ['context', this.context],
-      ['currentTabId', this.currentTabId],
-      ['expandedItems', new Map(this.expandedItems)],
-      ['expandedItemData', new Map(this.expandedItemData)],
-      ['messageBus', this.messageBus],
-      ['inlineContainerToggleService', this.inlineContainerToggleService],
+      [CONSTANTS.SVELTE_CONTEXT.APP_ID, this.appId],
+      [CONSTANTS.SVELTE_CONTEXT.CARD, this.card],
+      [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this.context],
+      [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
+      [CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEMS, new Map(this.expandedItems)],
       [
-        'onFilter',
+        CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA,
+        new Map(this.expandedItemData),
+      ],
+      [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
+      [
+        CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
+        this.inlineContainerToggleService,
+      ],
+      [
+        CONSTANTS.SVELTE_CONTEXT.ON_FILTER,
         this.itemFilterService.onFilter.bind(this.itemFilterService),
       ],
       [
-        'onFilterClearAll',
+        CONSTANTS.SVELTE_CONTEXT.ON_FILTER_CLEAR_ALL,
         this.itemFilterService.onFilterClearAll.bind(this.itemFilterService),
       ],
-      ['onItemToggled', this.onItemToggled.bind(this)],
-      ['onSearch', this.onSearch.bind(this)],
-      ['onTabSelected', this.onTabSelected.bind(this)],
-      ['searchFilters', new Map(this.searchFilters)],
-
-      ['stats', this.stats],
+      [CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TOGGLED, this.onItemToggled.bind(this)],
+      [CONSTANTS.SVELTE_CONTEXT.ON_SEARCH, this.onSearch.bind(this)],
+      [CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED, this.onTabSelected.bind(this)],
+      [CONSTANTS.SVELTE_CONTEXT.SEARCH_FILTERS, new Map(this.searchFilters)],
+      [CONSTANTS.SVELTE_CONTEXT.STATS, this.stats],
     ]);
 
     this.component = new ContainerSheet({
@@ -245,7 +251,7 @@ export class Tidy5eKgarContainerSheet
               new DocumentTabSectionConfigApplication({
                 document: context.item,
                 // Provide a way to build the necessary config, perhaps within the application constructor. We've got all the info we need in order to perform the operation.
-                sections: context.inventory.sections,
+                sections: context.containerContents.contents,
                 tabId: CONSTANTS.TAB_CONTAINER_CONTENTS,
                 tabTitle: ItemSheetRuntime.getTabTitle(
                   CONSTANTS.TAB_CONTAINER_CONTENTS

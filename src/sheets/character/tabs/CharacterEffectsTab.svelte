@@ -24,7 +24,9 @@
   import InlineFavoriteIcon from 'src/components/item-list/InlineFavoriteIcon.svelte';
   import { settingStore } from 'src/settings/settings';
 
-  let context = getContext<Readable<ActorSheetContext>>('context');
+  let context = getContext<Readable<ActorSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 

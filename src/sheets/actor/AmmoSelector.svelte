@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
   import type { ContainerSheetContext, Item5e } from 'src/types/item.types';
@@ -8,8 +9,9 @@
 
   export let item: Item5e;
 
-  let context =
-    getContext<Readable<ActorSheetContext | ContainerSheetContext>>('context');
+  let context = getContext<Readable<ActorSheetContext | ContainerSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   $: actor = $context.actor ?? $context.item.actor;
 

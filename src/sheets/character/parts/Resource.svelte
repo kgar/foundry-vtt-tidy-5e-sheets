@@ -8,7 +8,9 @@
   import { settingStore } from 'src/settings/settings';
 
   export let resource: TidyResource;
-  let context = getContext<Readable<CharacterSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 
@@ -253,7 +255,7 @@
       height: 1.375rem;
       line-height: 1.5625rem;
       font-family: var(--t5e-title-font-family);
-      
+
       &:not(.hidden) {
         display: flex;
       }

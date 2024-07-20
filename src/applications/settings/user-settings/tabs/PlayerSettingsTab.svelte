@@ -4,11 +4,13 @@
   import { getContext } from 'svelte';
   import type { Writable } from 'svelte/store';
   import CheckboxSetting from 'src/applications/settings/parts/CheckboxSetting.svelte';
-  import NumberInputSetting from 'src/applications/settings/parts/NumberInputSetting.svelte';
   import TextInputSetting from 'src/applications/settings/parts/TextInputSetting.svelte';
   import type { UserSettingsContext } from '../UserSettings.types';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Writable<UserSettingsContext>>('context');
+  let context = getContext<Writable<UserSettingsContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>

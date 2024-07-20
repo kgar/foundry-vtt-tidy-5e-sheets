@@ -7,7 +7,9 @@
   import FloatingContextMenu from 'src/components/context-menu/FloatingContextMenu.svelte';
   import type { ContextMenuOption } from 'src/types/types';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context = getContext<Readable<ItemSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 

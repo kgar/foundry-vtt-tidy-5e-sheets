@@ -9,7 +9,9 @@
   import LimitedHeader from '../actor/LimitedHeader.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
 
-  let context = getContext<Readable<NpcSheetContext>>('context');
+  let context = getContext<Readable<NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>

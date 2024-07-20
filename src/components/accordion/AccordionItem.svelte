@@ -8,7 +8,7 @@
 
   export let open: boolean = false;
 
-  const ctx = getContext<AccordionCtxType>('ctx') ?? {};
+  const ctx = getContext<AccordionCtxType>(CONSTANTS.SVELTE_CONTEXT.ACCORDION_CONTEXT) ?? {};
 
   const self = {};
   const selected = ctx.selected ?? writable();

@@ -26,9 +26,12 @@
 
 .inline-transparent-button {
   @include transparent-button-base();
-  font-size: inherit;
-  width: auto;
-  line-height: 1;
+
+  & {
+    font-size: inherit;
+    width: auto;
+    line-height: 1;
+  }
 }
 
 @mixin icon-button-base {
@@ -55,15 +58,20 @@
 
 .inline-icon-button {
   @include icon-button-base();
-  font-size: inherit;
-  width: auto;
-  line-height: 1;
+
+  & {
+    font-size: inherit;
+    width: auto;
+    line-height: 1;
+  }
 }
 
 .icon-button {
   @include transparent-button-base();
 
-  color: var(--t5e-icon-font-color);
+  & {
+    color: var(--t5e-icon-font-color);
+  }
 
   &:hover,
   &:focus-visible {
@@ -73,8 +81,11 @@
 
 .item-list-button {
   @include transparent-button-base();
-  font-size: 0.75rem;
-  color: var(--t5e-secondary-color);
+
+  & {
+    font-size: 0.75rem;
+    color: var(--t5e-secondary-color);
+  }
 
   &.inactive {
     color: var(--t5e-light-color);

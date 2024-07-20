@@ -29,7 +29,9 @@
 
   let selectedTabId: string;
 
-  let context = getContext<Readable<VehicleSheetContext>>('context');
+  let context = getContext<Readable<VehicleSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   $: sizes = <DropdownListOption[]>Object.entries(
     $context.config.actorSizes,

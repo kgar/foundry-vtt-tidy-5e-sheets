@@ -32,7 +32,7 @@
   /** The sheet which is rendering this recursive set of container contents. */
   export let sheetDocument: Actor5e | Item5e;
 
-  const tabId = getContext<string>('tabId');
+  const tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
   $: configuredContents = SheetSections.configureInventory(
     contents.filter((i) => i.items.length),
@@ -41,8 +41,9 @@
     TidyFlags.sectionConfig.get(container)?.[CONSTANTS.TAB_CONTAINER_CONTENTS],
   );
 
-  let itemIdsToShow =
-    getContext<Readable<Set<string> | undefined>>('itemIdsToShow');
+  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
+    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
+  );
 
   const classicControls = [
     {

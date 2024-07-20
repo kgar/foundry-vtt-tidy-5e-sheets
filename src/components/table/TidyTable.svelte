@@ -9,8 +9,10 @@
   export let key: string;
   export let toggleable: boolean = true;
 
-  const messageBus = getContext<MessageBus>('messageBus');
-  const tabId = getContext<string | undefined>('tabId');
+  const messageBus = getContext<MessageBus>(
+    CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS,
+  );
+  const tabId = getContext<string | undefined>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
   declareLocation('item-table', key);
 
   const expandCollapseService = ExpandCollapseService.initService(toggleable);

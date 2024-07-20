@@ -10,9 +10,13 @@
   import Source from '../shared/Source.svelte';
   import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context = getContext<Readable<ItemSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
-  $: selectedTabId = getContext<string>('currentTabId');
+  $: selectedTabId = getContext<string>(
+    CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>

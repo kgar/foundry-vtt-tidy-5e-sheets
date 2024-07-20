@@ -12,7 +12,7 @@
   import { rollRawSpellAttack } from 'src/utils/formula';
 
   let context =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
+    getContext<Readable<CharacterSheetContext | NpcSheetContext>>(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
   export let cssClass: string | null = null;
   export let includeAttackMod: boolean = true;
   export let includePreparedSpells: boolean = true;

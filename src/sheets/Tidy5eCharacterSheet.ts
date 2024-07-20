@@ -173,38 +173,39 @@ export class Tidy5eCharacterSheet
     this.component = new CharacterSheet({
       target: node,
       context: new Map<any, any>([
-        ['context', this.context],
-        ['messageBus', this.messageBus],
-        ['stats', this.stats],
-        ['card', this.card],
-        ['currentTabId', this.currentTabId],
-        ['onTabSelected', this.onTabSelected.bind(this)],
-        ['searchFilters', new Map(this.searchFilters)],
-        ['inlineContainerToggleService', this.inlineContainerToggleService],
-        ['itemFilterService', this.itemFilterService],
+        [CONSTANTS.SVELTE_CONTEXT.APP_ID, this.appId],
+        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this.context],
+        [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
+        [CONSTANTS.SVELTE_CONTEXT.STATS, this.stats],
+        [CONSTANTS.SVELTE_CONTEXT.CARD, this.card],
+        [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
+        [CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED, this.onTabSelected.bind(this)],
+        [CONSTANTS.SVELTE_CONTEXT.SEARCH_FILTERS, new Map(this.searchFilters)],
+        [CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE, this.inlineContainerToggleService],
+        [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.itemFilterService],
         [
-          'onFilter',
+          CONSTANTS.SVELTE_CONTEXT.ON_FILTER,
           this.itemFilterService.onFilter.bind(this.itemFilterService),
         ],
         [
-          'onFilterClearAll',
+          CONSTANTS.SVELTE_CONTEXT.ON_FILTER_CLEAR_ALL,
           this.itemFilterService.onFilterClearAll.bind(this.itemFilterService),
         ],
-        ['onSearch', this.onSearch.bind(this)],
-        ['onItemToggled', this.onItemToggled.bind(this)],
+        [CONSTANTS.SVELTE_CONTEXT.ON_SEARCH, this.onSearch.bind(this)],
+        [CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TOGGLED, this.onItemToggled.bind(this)],
         [
-          'itemTableToggles',
+          CONSTANTS.SVELTE_CONTEXT.ITEM_TABLE_TOGGLES,
           new Map(this.itemTableTogglesCache.itemTableToggles),
         ],
         [
-          'onItemTableToggle',
+          CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TABLE_TOGGLE,
           this.itemTableTogglesCache.onItemTableToggle.bind(
             this.itemTableTogglesCache
           ),
         ],
-        ['location', ''],
-        ['expandedItems', new Map(this.expandedItems)],
-        ['expandedItemData', new Map(this.expandedItemData)],
+        [CONSTANTS.SVELTE_CONTEXT.LOCATION, ''],
+        [CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEMS, new Map(this.expandedItems)],
+        [CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA, new Map(this.expandedItemData)],
       ]),
     });
 

@@ -29,7 +29,9 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let selectedTabId: string;
-  let context = getContext<Readable<CharacterSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 

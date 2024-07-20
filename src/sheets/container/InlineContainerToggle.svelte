@@ -9,7 +9,7 @@
   export let item: Item5e;
   export let iconClass: string = '';
 
-  let tabId = getContext<string>('tabId');
+  let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
   $: inlineContainerToggleServiceStore = inlineContainerToggleService.store;
 </script>

@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { CONSTANTS } from 'src/constants';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
@@ -8,7 +9,9 @@
 
   export let hint: string | null = null;
 
-  let context = getContext<Readable<ActorSheetContext>>('context');
+  let context = getContext<Readable<ActorSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   async function toggleLock() {
     await TidyFlags.allowEdit.set($context.actor, !allowEdit);

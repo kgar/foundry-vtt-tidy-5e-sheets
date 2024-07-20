@@ -1,11 +1,14 @@
 <script lang="ts">
+  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ItemSheetContext } from 'src/types/item.types';
   import { coalesce } from 'src/utils/formatting';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context = getContext<Readable<ItemSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>

@@ -5,7 +5,9 @@
   import { createEventDispatcher, getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let context = getContext<Readable<ActorSheetContext>>('context');
+  let context = getContext<Readable<ActorSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
   export let title: string;
   export let configureButtonTitle: string;
   export let iconCssClass: string | undefined = undefined;

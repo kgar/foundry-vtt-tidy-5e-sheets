@@ -10,11 +10,11 @@
   export let active: boolean;
   export let cssClass: string = '';
 
-  const context = getContext<Readable<any>>('context');
+  const context = getContext<Readable<any>>(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
   const allContexts = getAllContexts();
 
   declareLocation('tab', tab.id);
-  setContext('tabId', tab.id);
+  setContext(CONSTANTS.SVELTE_CONTEXT.TAB_ID, tab.id);
 
   $: useCoreListenersClass = tab.activateDefaultSheetListeners
     ? CONSTANTS.CLASS_TIDY_USE_CORE_LISTENERS

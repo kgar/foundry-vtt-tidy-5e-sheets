@@ -14,7 +14,9 @@
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context = getContext<Readable<ItemSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>

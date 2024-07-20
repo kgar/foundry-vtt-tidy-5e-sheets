@@ -17,8 +17,9 @@
 
   $: showAllSkills = !toggleable || expanded;
 
-  let context =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   type SkillRef = {
     key: string;

@@ -28,10 +28,12 @@
 
   export let section: VehicleCargoSection;
 
-  let context = getContext<Readable<VehicleSheetContext>>('context');
+  let context = getContext<Readable<VehicleSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   let inlineContainerToggleService = getContext<InlineContainerToggleService>(
-    'inlineContainerToggleService',
+    CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
   );
 
   let baseWidths: Record<string, string> = {

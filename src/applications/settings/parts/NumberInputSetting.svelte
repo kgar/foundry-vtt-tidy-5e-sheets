@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
 
@@ -10,7 +11,7 @@
   export let max: number | null = null;
   export let step: number | null = null;
 
-  const appId = getContext<string>('appId');
+  const appId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.APP_ID);
 
   const localize = FoundryAdapter.localize;
 </script>

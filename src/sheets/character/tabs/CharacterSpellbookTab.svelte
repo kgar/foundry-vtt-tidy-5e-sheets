@@ -25,8 +25,10 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
-  let context = getContext<Readable<CharacterSheetContext>>('context');
-  let tabId = getContext<string>('tabId');
+  let context = getContext<Readable<CharacterSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+  let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
   $: spellbook = SheetSections.configureSpellbook(
     $context.actor,
@@ -35,7 +37,7 @@
   );
 
   const itemIdsToShow = writable<Set<string> | undefined>(undefined);
-  setContext('itemIdsToShow', itemIdsToShow);
+  setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
 
   $: {
     $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({

@@ -7,11 +7,14 @@
   import type { CharacterSheetContext } from 'src/types/types';
   import AmmoSelector from '../../sheets/actor/AmmoSelector.svelte';
   import { coalesce } from 'src/utils/formatting';
+  import { CONSTANTS } from 'src/constants';
 
   export let item: Item5e;
   export let chatData: ItemChatData;
 
-  let context = getContext<Readable<CharacterSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   $: ctx = $context.itemContext?.[item.id];
   $: concealDetails = FoundryAdapter.concealDetails(item);

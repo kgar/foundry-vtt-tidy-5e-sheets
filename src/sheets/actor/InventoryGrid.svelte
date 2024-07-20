@@ -24,17 +24,19 @@
   export let section: InventorySection;
   export let items: Item5e[];
 
-  let context =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
-  let card = getContext<Writable<ItemCardStore>>('card');
+  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+  let card = getContext<Writable<ItemCardStore>>(CONSTANTS.SVELTE_CONTEXT.CARD);
 
   $: customCommands = ActorItemRuntime.getActorItemSectionCommands({
     actor: $context.actor,
     section,
   });
 
-  let itemIdsToShow =
-    getContext<Readable<Set<string> | undefined>>('itemIdsToShow');
+  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
+    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
+  );
 
   const localize = FoundryAdapter.localize;
 

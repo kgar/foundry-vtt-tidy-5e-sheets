@@ -7,12 +7,11 @@
   } from 'src/types/item.types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import ItemFormGroup from '../form/ItemFormGroup.svelte';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
   import { CONSTANTS } from 'src/constants';
 
-  let context =
-    getContext<Readable<ItemSheetContext | ContainerSheetContext>>('context');
+  let context = getContext<Readable<ItemSheetContext | ContainerSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 

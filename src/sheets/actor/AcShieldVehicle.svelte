@@ -6,8 +6,11 @@
   import type { Readable } from 'svelte/store';
   import type { VehicleSheetContext } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<VehicleSheetContext>>('context');
+  let context = getContext<Readable<VehicleSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   /**
    * Optional CSS class list string to apply to the AC Shield container element.

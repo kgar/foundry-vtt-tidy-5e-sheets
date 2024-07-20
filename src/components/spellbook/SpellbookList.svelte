@@ -34,8 +34,9 @@
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
   import ConcentrationOverlayIcon from './ConcentrationOverlayIcon.svelte';
 
-  let context =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
   export let section: SpellbookSection;
   export let spells: any[];
   export let allowFavorites: boolean = true;
@@ -48,8 +49,9 @@
   export let targetBaseWidth: string = '7.5rem';
   export let usageBaseWidth: string = '7.5rem';
 
-  let itemIdsToShow =
-    getContext<Readable<Set<string> | undefined>>('itemIdsToShow');
+  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
+    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
+  );
 
   var spellSchoolBaseWidth = '2rem';
 

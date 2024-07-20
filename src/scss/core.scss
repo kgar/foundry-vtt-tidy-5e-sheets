@@ -284,15 +284,16 @@
     gap: 0.75rem;
 
     > li:not(.empty) {
-      + li {
-        margin-top: 0.25rem;
-      }
       position: relative;
       padding: 0.5rem;
       background: var(--t5e-header-background);
       border: 0.125rem solid var(--t5e-separator-color);
       border-radius: 0.25rem;
       box-shadow: 0 0 0.25rem var(--dnd5e-shadow-45);
+      
+      + li {
+        margin-top: 0.25rem;
+      }
 
       .details {
         gap: 0.25rem;

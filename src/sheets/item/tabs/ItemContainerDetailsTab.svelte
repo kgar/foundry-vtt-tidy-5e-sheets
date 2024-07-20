@@ -10,8 +10,11 @@
   import ItemProperties from '../parts/ItemProperties.svelte';
   import ContentConcealer from 'src/components/content-concealment/ContentConcealer.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<ContainerSheetContext>>('context');
+  let context = getContext<Readable<ContainerSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>

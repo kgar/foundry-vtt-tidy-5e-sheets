@@ -6,8 +6,11 @@
   import type { Readable } from 'svelte/store';
   import SheetEditor from '../../components/editor/SheetEditor.svelte';
   import LimitedHeader from '../actor/LimitedHeader.svelte';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<NpcSheetContext>>('context');
+  let context = getContext<Readable<NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>

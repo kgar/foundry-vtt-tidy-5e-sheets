@@ -18,7 +18,9 @@
 
   $: abbreviation = CONFIG.DND5E.abilities[id]?.abbreviation ?? id;
 
-  let context = getContext<Readable<ActorSheetContext>>('context');
+  let context = getContext<Readable<ActorSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 

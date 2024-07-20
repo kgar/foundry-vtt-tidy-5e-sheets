@@ -10,8 +10,11 @@
   import TraitSectionTags from './TraitSectionTags.svelte';
   import TraitSectionModifications from './TraitSectionModifications.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<ActorSheetContext>>('context');
+  let context = getContext<Readable<ActorSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
   export let toggleable: boolean;
   export let useSenses: boolean = true;
   export let enableSpecialTraitsConfiguration: boolean = true;

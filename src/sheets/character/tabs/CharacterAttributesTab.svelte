@@ -17,8 +17,10 @@
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
 
-  let context = getContext<Readable<CharacterSheetContext>>('context');
-  let tabId = getContext<string>('tabId');
+  let context = getContext<Readable<CharacterSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+  let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
   $: showResources =
     $context.unlocked ||

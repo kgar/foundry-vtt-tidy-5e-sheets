@@ -1,5 +1,6 @@
 <script lang="ts">
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
+  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
 
@@ -9,7 +10,7 @@
   export let id: string;
   export let options: Record<string, unknown>;
 
-  const appId = getContext<string>('appId');
+  const appId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.APP_ID);
 
   const localize = FoundryAdapter.localize;
 </script>

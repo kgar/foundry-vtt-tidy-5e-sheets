@@ -1,13 +1,16 @@
 <script lang="ts">
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
+  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ItemSheetContext } from 'src/types/item.types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
-  let appId = getContext<Readable<string>>('appId');
+  let context = getContext<Readable<ItemSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+  let appId = getContext<Readable<string>>(CONSTANTS.SVELTE_CONTEXT.APP_ID);
 
   const localize = FoundryAdapter.localize;
 </script>

@@ -5,7 +5,9 @@
   import Resource from './Resource.svelte';
   import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<CharacterSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 </script>
 
 <ul
