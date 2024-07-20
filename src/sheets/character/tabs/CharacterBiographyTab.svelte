@@ -6,8 +6,11 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import RerenderAfterFormSubmission from '../../../components/utility/RerenderAfterFormSubmission.svelte';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<CharacterSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 

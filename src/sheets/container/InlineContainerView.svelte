@@ -7,6 +7,7 @@
   import type { Readable } from 'svelte/store';
   import type { ContainerContents, Item5e } from 'src/types/item.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { CONSTANTS } from 'src/constants';
 
   export let container: Item5e;
   export let containerContents: ContainerContents;
@@ -17,10 +18,11 @@
 
   $: inlineContainerToggleServiceStore = inlineContainerToggleService.store;
 
-  let itemIdsToShow =
-    getContext<Readable<Set<string> | undefined>>('itemIdsToShow');
+  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
+    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
+  );
 
-  let tabId = getContext<string>('tabId');
+  let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
   async function onDrop(
     event: DragEvent & { currentTarget: EventTarget & HTMLElement },
@@ -33,7 +35,8 @@
 </script>
 
 <ExpandableContainer
-  expanded={$inlineContainerToggleServiceStore.get(tabId)?.has(container.id) === true}
+  expanded={$inlineContainerToggleServiceStore.get(tabId)?.has(container.id) ===
+    true}
   class={!!$itemIdsToShow && !$itemIdsToShow.has(container.id) ? 'hidden' : ''}
 >
   <!-- TODO: Apply proper a11y trappings for this -->

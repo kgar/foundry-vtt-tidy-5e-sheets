@@ -13,7 +13,9 @@
   import ItemIdentifiableName from './parts/ItemIdentifiableName.svelte';
   import ItemHeaderToggles from './parts/ItemHeaderToggles.svelte';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context = getContext<Readable<ItemSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   let selectedTabId: string;
   const localize = FoundryAdapter.localize;
