@@ -11,7 +11,7 @@
 <script lang="ts">
   export let multiple: boolean = false;
 
-  $: setContext<AccordionCtxType>(CONSTANTS.SVELTE_CONTEXT.CTX, {
+  $: setContext<AccordionCtxType>(CONSTANTS.SVELTE_CONTEXT.ACCORDION_CONTEXT, {
     selected: multiple ? undefined : writable(),
   });
 </script>
