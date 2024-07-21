@@ -440,10 +440,6 @@
     "name": "Use Exhaustion Tracker",
     "hint": "Shows an exhaustion tracker for characters, NPCs, and vehicles."
   },
-  "TIDY5E.Settings.UseNPCRest": {
-    "name": "Use NPC Rest",
-    "hint": "Allows NPCs to take short and long rests."
-  },
   "TIDY5E.Settings.ShowNPCRestInChat": {
     "name": "Show NPC Rest in Chat",
     "hint": "Shows a chat card when an NPC rests."

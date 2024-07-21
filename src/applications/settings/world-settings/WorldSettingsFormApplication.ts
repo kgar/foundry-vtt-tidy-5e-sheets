@@ -77,7 +77,6 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
         lockLevelSelector: currentSettings.lockLevelSelector,
         lockItemQuantity: currentSettings.lockItemQuantity,
         initialNpcSheetTab: currentSettings.initialNpcSheetTab,
-        useNpcRest: currentSettings.useNpcRest,
         showNpcRestInChat: currentSettings.showNpcRestInChat,
         showNpcActorLinkMarker: currentSettings.showNpcActorLinkMarker,
         initialCharacterSheetTab: currentSettings.initialCharacterSheetTab,

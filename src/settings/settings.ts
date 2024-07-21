@@ -1083,20 +1083,6 @@ export function createSettings() {
         },
       },
 
-      useNpcRest: {
-        options: {
-          name: 'TIDY5E.Settings.UseNPCRest.name',
-          hint: 'TIDY5E.Settings.UseNPCRest.hint',
-          scope: 'world',
-          config: false,
-          default: false,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>('useNpcRest');
-        },
-      },
-
       showNpcRestInChat: {
         options: {
           name: 'TIDY5E.Settings.ShowNPCRestInChat.name',

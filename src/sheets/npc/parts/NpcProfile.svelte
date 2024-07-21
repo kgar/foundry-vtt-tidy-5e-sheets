@@ -65,9 +65,7 @@
   {/if}
 
   <NpcHitPoints />
-  {#if $settingStore.useNpcRest}
-    <NpcRest />
-  {/if}
+  <NpcRest />
   {#if !$context.system.details.level}
     <NpcHealthFormulaRoller />
   {/if}
