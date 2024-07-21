@@ -55,10 +55,6 @@ const settingsMap: SettingMap[] = [
     convert: (setting: any) => !setting,
   },
   {
-    v1Key: 'useNpcRest',
-    ogKey: 'restingForNpcsEnabled',
-  },
-  {
     v1Key: 'showNpcRestInChat',
     ogKey: 'restingForNpcsChatDisabled',
     convert: (setting: any) => !setting,

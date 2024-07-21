@@ -49,13 +49,6 @@
   </ListboxSetting>
 
   <CheckboxSetting
-    bind:value={$context.settings.useNpcRest}
-    name={'TIDY5E.Settings.UseNPCRest.name'}
-    hint={'TIDY5E.Settings.UseNPCRest.hint'}
-    id="useNpcRest"
-  />
-
-  <CheckboxSetting
     bind:value={$context.settings.showNpcRestInChat}
     name={'TIDY5E.Settings.ShowNPCRestInChat.name'}
     hint={'TIDY5E.Settings.ShowNPCRestInChat.hint'}

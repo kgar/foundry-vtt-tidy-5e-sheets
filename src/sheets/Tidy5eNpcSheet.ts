@@ -1230,14 +1230,16 @@ export class Tidy5eNpcSheet
   }
 
   /**
-   * Take a short rest, calling the relevant function on the Actor instance
-   * @param {Event} event   The triggering click event
-   * @private
+   * Take a short rest, calling the relevant function on the Actor instance.
+   * @param {Event} event             The triggering click event.
+   * @returns {Promise<RestResult>}  Result of the rest action.
    */
   async _onShortRest(event: Event) {
     event.preventDefault();
     await this._onSubmit(event);
-    return this.shortRest();
+    return this.actor.shortRest({
+      chat: SettingsProvider.settings.showNpcRestInChat.get(),
+    });
   }
 
   /**
@@ -1259,76 +1261,6 @@ export class Tidy5eNpcSheet
       stats.lastSubmissionTime = new Date();
       return stats;
     });
-  }
-
-  /**
-   * Take a short rest, possibly spending hit dice and recovering resources, item uses, and pact slots.
-   * @param config configurations which determine various aspects of the rest
-   * @returns
-   */
-  async shortRest(
-    config: Partial<RestConfiguration> = {}
-  ): Promise<unknown | undefined> {
-    const restConfig: RestConfiguration = FoundryAdapter.mergeObject(
-      {
-        dialog: true,
-        chat: SettingsProvider.settings.showNpcRestInChat.get(),
-        newDay: false,
-        autoHD: false,
-        autoHDThreshold: 3,
-      },
-      config
-    );
-
-    if (TidyHooks.dnd5ePreShortRest(this.actor, restConfig) === false) {
-      return;
-    }
-
-    // Take note of the initial hit points and number of hit dice the Actor has
-    const hd0 = isLessThanOneIsOne(this.actor.system.details.cr); // this.actor.system.attributes.hd;
-    const hp0 = this.actor.system.attributes.hp.value;
-
-    // Display a Dialog for rolling hit dice
-    if (config.dialog) {
-      try {
-        const result = await NpcShortRestDialog.shortRestDialog({
-          actor: this.actor,
-          canRoll: hd0 > 0,
-        });
-
-        if (result.confirmed) {
-          config.newDay = result.newDay === true;
-          // Return the rest result
-          const dhd = hd0; // this.system.attributes.hd - hd0;
-          const dhp = this.actor.system.attributes.hp.value - hp0;
-
-          const rollData = this.actor.getRollData();
-          const roll_value = await FoundryAdapter.roll(
-            isLessThanOneIsOne(dhd).toString() + 'd6',
-            rollData
-          );
-          const value = roll_value.total;
-          let newHpValue =
-            this.actor.system.attributes.hp.value + Number(value ?? 0);
-          if (newHpValue > this.actor.system.attributes.hp.max) {
-            newHpValue = this.actor.system.attributes.hp.max;
-          }
-          await this.actor.update({ 'system.attributes.hp.value': newHpValue });
-
-          return this.actor._rest(config.chat, config.newDay, false, dhd, dhp);
-        }
-      } catch (err) {
-        error(
-          'An error occurred while attempting a short rest for the NPC. See devtool console for more information.',
-          true,
-          err
-        );
-        return;
-      }
-    } else if (config.autoHD) {
-      // Automatically spend hit dice
-      await this.autoSpendHitDice({ threshold: config.autoHDThreshold });
-    }
   }
 
   close(options: unknown = {}) {
