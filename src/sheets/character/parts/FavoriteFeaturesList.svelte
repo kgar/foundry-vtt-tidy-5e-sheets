@@ -76,7 +76,7 @@
           </ItemName>
         </ItemTableCell>
         <ItemTableCell baseWidth="3.125rem">
-          {#if ctx?.isOnCooldown}
+          {#if item.isOnCooldown}
             <RechargeControl {item} />
           {:else if item.system.recharge?.value}
             <i class="fas fa-bolt" title={localize('DND5E.Charged')} />

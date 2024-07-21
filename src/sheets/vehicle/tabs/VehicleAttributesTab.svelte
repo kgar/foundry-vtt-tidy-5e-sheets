@@ -184,7 +184,7 @@
                   </ItemTableCell>
                   {#if section.hasActions}
                     <ItemTableCell baseWidth="3.125rem">
-                      {#if ctx?.isOnCooldown}
+                      {#if item.isOnCooldown}
                         <RechargeControl {item} />
                       {:else if item.system.recharge?.value}
                         <i
