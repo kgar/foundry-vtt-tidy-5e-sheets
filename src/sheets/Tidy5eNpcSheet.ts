@@ -162,10 +162,19 @@ export class Tidy5eNpcSheet
         [CONSTANTS.SVELTE_CONTEXT.STATS, this.stats],
         [CONSTANTS.SVELTE_CONTEXT.CARD, this.card],
         [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
-        [CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE, this.inlineContainerToggleService],
+        [
+          CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
+          this.inlineContainerToggleService,
+        ],
         [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.itemFilterService],
-        [CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED, this.onTabSelected.bind(this)],
-        [CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TOGGLED, this.onItemToggled.bind(this)],
+        [
+          CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED,
+          this.onTabSelected.bind(this),
+        ],
+        [
+          CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TOGGLED,
+          this.onItemToggled.bind(this),
+        ],
         [CONSTANTS.SVELTE_CONTEXT.SEARCH_FILTERS, new Map(this.searchFilters)],
         [
           CONSTANTS.SVELTE_CONTEXT.ON_FILTER,
@@ -178,7 +187,10 @@ export class Tidy5eNpcSheet
         [CONSTANTS.SVELTE_CONTEXT.ON_SEARCH, this.onSearch.bind(this)],
         [CONSTANTS.SVELTE_CONTEXT.LOCATION, ''],
         [CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEMS, new Map(this.expandedItems)],
-        [CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA, new Map(this.expandedItemData)],
+        [
+          CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA,
+          new Map(this.expandedItemData),
+        ],
         [
           CONSTANTS.SVELTE_CONTEXT.ITEM_TABLE_TOGGLES,
           new Map(this.itemTableTogglesCache.itemTableToggles),
@@ -946,14 +958,11 @@ export class Tidy5eNpcSheet
       other: Item5e[];
     }>(
       (features, item) => {
-        const { quantity, uses, recharge, target } = item.system;
+        const { quantity, uses, target } = item.system;
         const ctx = (context.itemContext[item.id] ??= {});
         ctx.attunement = FoundryAdapter.getAttunementContext(item);
         ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
         ctx.hasUses = uses && uses.max > 0;
-        ctx.isOnCooldown =
-          recharge && !!recharge.value && recharge.charged === false;
-        ctx.isDepleted = item.isOnCooldown && uses.per && uses.value > 0;
         ctx.hasTarget = !!target && !['none', ''].includes(target.type);
         ctx.canToggle = 'equipped' in item.system;
 

@@ -202,8 +202,6 @@ export type CharacterItemContext = {
   group?: string;
   hasTarget?: boolean;
   hasUses?: boolean;
-  isDepleted?: boolean;
-  isOnCooldown?: boolean;
   isStack?: boolean;
   toggleClass?: string;
   toggleTitle?: string;
@@ -287,8 +285,6 @@ export type NpcItemContext = {
   containerContents?: ContainerContents;
   hasTarget?: boolean;
   hasUses?: boolean;
-  isDepleted?: boolean;
-  isOnCooldown?: boolean;
   isStack?: boolean;
   parent?: Item5e;
   toggleTitle?: string;
@@ -332,8 +328,6 @@ export type VehicleItemContext = {
   containerContents?: ContainerContents;
   cover?: string;
   hasUses?: boolean;
-  isDepleted?: boolean;
-  isOnCooldown?: boolean;
   threshold?: number | string;
   toggleClass?: string;
   toggleTitle?: string;

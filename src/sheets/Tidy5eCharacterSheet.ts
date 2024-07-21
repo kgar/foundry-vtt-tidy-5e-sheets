@@ -179,9 +179,15 @@ export class Tidy5eCharacterSheet
         [CONSTANTS.SVELTE_CONTEXT.STATS, this.stats],
         [CONSTANTS.SVELTE_CONTEXT.CARD, this.card],
         [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
-        [CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED, this.onTabSelected.bind(this)],
+        [
+          CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED,
+          this.onTabSelected.bind(this),
+        ],
         [CONSTANTS.SVELTE_CONTEXT.SEARCH_FILTERS, new Map(this.searchFilters)],
-        [CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE, this.inlineContainerToggleService],
+        [
+          CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
+          this.inlineContainerToggleService,
+        ],
         [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.itemFilterService],
         [
           CONSTANTS.SVELTE_CONTEXT.ON_FILTER,
@@ -192,7 +198,10 @@ export class Tidy5eCharacterSheet
           this.itemFilterService.onFilterClearAll.bind(this.itemFilterService),
         ],
         [CONSTANTS.SVELTE_CONTEXT.ON_SEARCH, this.onSearch.bind(this)],
-        [CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TOGGLED, this.onItemToggled.bind(this)],
+        [
+          CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TOGGLED,
+          this.onItemToggled.bind(this),
+        ],
         [
           CONSTANTS.SVELTE_CONTEXT.ITEM_TABLE_TOGGLES,
           new Map(this.itemTableTogglesCache.itemTableToggles),
@@ -205,7 +214,10 @@ export class Tidy5eCharacterSheet
         ],
         [CONSTANTS.SVELTE_CONTEXT.LOCATION, ''],
         [CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEMS, new Map(this.expandedItems)],
-        [CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA, new Map(this.expandedItemData)],
+        [
+          CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA,
+          new Map(this.expandedItemData),
+        ],
       ]),
     });
 
@@ -1056,7 +1068,7 @@ export class Tidy5eCharacterSheet
         obj: CharacterItemPartitions & { favorites: CharacterItemPartitions },
         item: Item5e
       ) => {
-        const { quantity, uses, recharge } = item.system;
+        const { quantity } = item.system;
 
         // Item details
         const ctx = (context.itemContext[item.id] ??= {});
@@ -1065,9 +1077,6 @@ export class Tidy5eCharacterSheet
 
         // Item usage
         ctx.hasUses = item.hasLimitedUses;
-        ctx.isOnCooldown =
-          recharge && !!recharge.value && recharge.charged === false;
-        ctx.isDepleted = ctx.isOnCooldown && ctx.hasUses && uses.value > 0;
         ctx.hasTarget = item.hasAreaTarget || item.hasIndividualTarget;
 
         // Unidentified items
