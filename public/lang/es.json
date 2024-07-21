@@ -791,5 +791,6 @@
     },
     "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
         "name": "Acento de Solo Rituales"
-    }
+    },
+    "TIDY5E.EmptyContainer": "Este contenedor está vacío."
 }
