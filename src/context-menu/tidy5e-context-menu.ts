@@ -224,6 +224,22 @@ function getItemContextOptions(item: Item5e) {
     });
   }
 
+  // Toggle Charged State
+  if (item.system.recharge?.value) {
+    options.push({
+      name: item.system.recharge.charged
+        ? 'DND5E.ContextMenuActionExpendCharge'
+        : 'DND5E.ContextMenuActionCharge',
+      icon: '<i class="fa-solid fa-bolt"></i>',
+      callback: () =>
+        item.update({
+          'system.recharge.charged': !item.system.recharge?.charged,
+        }),
+      condition: () => item.isOwner,
+      group: 'state',
+    });
+  }
+
   // Toggle Equipped State
   if ('equipped' in item.system) {
     const isEquipped = item.system.equipped;
