@@ -92,6 +92,7 @@
   "TIDY5E.ContextMenuActionEdit": "Editar",
   "TIDY5E.ContextMenuActionDelete": "Apagar",
 
+  "TIDY5E.EmptyContainer": "Este recipiente está vazio.",
   "TIDY5E.EmptySection": "Essa sessão está vazia. Desbloqueie a ficha para editar.",
   "TIDY5E.GMOnlyEdit": "Somente o MJ consegue editar esta sessão.",
 
@@ -438,10 +439,6 @@
   "TIDY5E.Settings.UseExhaustion": {
     "name": "Use Rastreador de Exaustão",
     "hint": "Mostra um rastreador de exaustão para personagens, PnJs e veículos."
-  },
-  "TIDY5E.Settings.UseNPCRest": {
-    "name": "Usar Descanso para PnJ",
-    "hint": "Permite que PnJs façam descanços curtos e longos."
   },
   "TIDY5E.Settings.ShowNPCRestInChat": {
     "name": "Mostrar Descanso do PnJ no Chat",
