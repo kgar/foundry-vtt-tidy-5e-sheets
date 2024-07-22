@@ -146,7 +146,8 @@
 
   "TIDY5E.ItemDetailsHeadline": "Mecânicas/Texto Opcional",
 
-  "TIDY5E.SpellClass": "Classe de Magia",
+  "TIDY5E.SpellSourceIdentifierSelectText": "Identificador de Classe: {identifier}",
+  "TIDY5E.SpellSourceIdentifierLabelHint": "O ator que possui esta magia não possui a classe de origem especificada aqui.",
 
   "TIDY5E.Class.Artificer": "Artífice",
   "TIDY5E.Class.Barbarian": "Bárbaro",
@@ -487,10 +488,6 @@
     "name": "Usar Ícone de Classe de Magia para Magias",
     "hint": "Mostra a imagem da classe da magia nas magias, ao vez da imagem da própria magia. A magia deve ser associado a uma classe usando o seletor Classe na ficha da magia. Ao fazer multiclasse, esse recurso distingue quais magias pertencem a qual classe em um piscar de olhos."
   },
-  "TIDY5E.Settings.SpellClassFilterAdditionalClasses": {
-    "name": "Classes Adicionais para Filtro de Grimório Multiclasse",
-    "hint": "Coloca classes adicionais no filtro de grimório multiclasse. Adicione classes ao menu suspenso com esta sintaxe: \"id1|nome1,id2|nome2\". Por exemplo: \"ocultista|Ocultista,alquimista|Alquimista\"."
-  },
   "TIDY5E.Settings.AllowCantripsToBePrepared": {
     "name": "Permitir Preparação de Truques",
     "hint": "A regra opcional \"Fórmulas de Truques\" do O Caldeirão de Todas as Coisas de Tasha, permite que magos preparem truques após um descanso longo da mesma forma que fazem com magias de nível. Truques preparados não contam para o máximo de magias preparadas."
@@ -710,6 +707,14 @@
       "FavoritesToSystem": {
         "sectionTitle": "Favoritos dos Personagens",
         "selectionDialogTitle": "Migração: Favoritos dos Personagens para o Sistema"
+      },
+      "BondsIdealsFlawsToSystem": {
+        "sectionTitle": "Vínculos, Ideais e Falhas de PdM",
+        "selectionDialogTitle": "Migração: Vínculos, Ideais e Falhas de PdMs para Sistema"
+      },
+      "SpellClassToSourceClass": {
+        "sectionTitle": "Classe da Magia para Origem da Magia",
+        "selectionDialogTitle": "Migração: Classe da Magia para Origem da Magia"
       },
       "Parent": "Pai"
   },
