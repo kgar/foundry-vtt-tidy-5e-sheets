@@ -689,18 +689,6 @@ export class Tidy5eNpcSheet
           relativeTo: this.actor,
         }
       ),
-      bondEnrichedHtmlOld: await FoundryAdapter.enrichHtml(
-        FoundryAdapter.getProperty<string>(
-          this.actor,
-          `flags.${CONSTANTS.MODULE_ID}.bond`
-        ) ?? '',
-        {
-          secrets: this.actor.isOwner,
-          rollData: defaultDocumentContext.rollData,
-          async: true,
-          relativeTo: this.actor,
-        }
-      ),
       bondEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.bond,
         {
@@ -723,18 +711,6 @@ export class Tidy5eNpcSheet
       editable: defaultDocumentContext.editable,
       filterData: this.itemFilterService.getDocumentItemFilterData(),
       filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
-      flawEnrichedHtmlOld: await FoundryAdapter.enrichHtml(
-        FoundryAdapter.getProperty<string>(
-          this.actor,
-          `flags.${CONSTANTS.MODULE_ID}.flaw`
-        ) ?? '',
-        {
-          secrets: this.actor.isOwner,
-          rollData: defaultDocumentContext.rollData,
-          async: true,
-          relativeTo: this.actor,
-        }
-      ),
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.flaw,
         {
@@ -751,18 +727,6 @@ export class Tidy5eNpcSheet
         this.actor?.system?.attributes?.hp?.max
       ),
       showSpellbookTab: SettingsProvider.settings.showSpellbookTabNpc.get(),
-      idealEnrichedHtmlOld: await FoundryAdapter.enrichHtml(
-        FoundryAdapter.getProperty<string>(
-          this.actor,
-          `flags.${CONSTANTS.MODULE_ID}.ideal`
-        ) ?? '',
-        {
-          secrets: this.actor.isOwner,
-          rollData: defaultDocumentContext.rollData,
-          async: true,
-          relativeTo: this.actor,
-        }
-      ),
       idealEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.ideal,
         {
