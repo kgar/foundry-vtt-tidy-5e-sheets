@@ -711,6 +711,10 @@
       "sectionTitle": "Character Favorites",
       "selectionDialogTitle": "Migration: Character Favorites to System"
     },
+    "BondsIdealsFlawsToSystem": {
+      "sectionTitle": "NPC Bonds, Ideals, and Flaws",
+      "selectionDialogTitle": "Migration: NPC Bonds, Ideals, and Flaws to System"
+    },
     "Parent": "Parent"
   },
   "TIDY5E.Settings.SheetPreferences": {

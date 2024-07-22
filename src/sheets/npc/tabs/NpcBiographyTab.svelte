@@ -145,7 +145,7 @@
                   {localize('DND5E.Ideals')}
                 </div>
                 <SheetEditor
-                  content={$context.idealEnrichedHtml}
+                  content={$context.idealEnrichedHtmlOld}
                   target={TidyFlags.ideal.prop}
                   editable={$context.editable}
                 />
@@ -159,7 +159,7 @@
                   {localize('DND5E.Bonds')}
                 </div>
                 <SheetEditor
-                  content={$context.bondEnrichedHtml}
+                  content={$context.bondEnrichedHtmlOld}
                   target={TidyFlags.bond.prop}
                   editable={$context.editable}
                 />
@@ -173,8 +173,50 @@
                   {localize('DND5E.Flaws')}
                 </div>
                 <SheetEditor
-                  content={$context.flawEnrichedHtml}
+                  content={$context.flawEnrichedHtmlOld}
                   target={TidyFlags.flaw.prop}
+                  editable={$context.editable}
+                />
+              </article>
+            </RerenderAfterFormSubmission>
+            <RerenderAfterFormSubmission
+              andOnValueChange={$context.system.details.ideal}
+            >
+              <article use:$context.activateEditors>
+                <div class="section-titles biopage">
+                  {localize('DND5E.Ideals')}
+                </div>
+                <SheetEditor
+                  content={$context.idealEnrichedHtml}
+                  target="system.details.ideal"
+                  editable={$context.editable}
+                />
+              </article>
+            </RerenderAfterFormSubmission>
+            <RerenderAfterFormSubmission
+              andOnValueChange={$context.system.details.bond}
+            >
+              <article use:$context.activateEditors>
+                <div class="section-titles biopage">
+                  {localize('DND5E.Bonds')}
+                </div>
+                <SheetEditor
+                  content={$context.bondEnrichedHtml}
+                  target="system.details.bond"
+                  editable={$context.editable}
+                />
+              </article>
+            </RerenderAfterFormSubmission>
+            <RerenderAfterFormSubmission
+              andOnValueChange={$context.system.details.flaw}
+            >
+              <article use:$context.activateEditors>
+                <div class="section-titles biopage">
+                  {localize('DND5E.Flaws')}
+                </div>
+                <SheetEditor
+                  content={$context.flawEnrichedHtml}
+                  target="system.details.flaw"
                   editable={$context.editable}
                 />
               </article>

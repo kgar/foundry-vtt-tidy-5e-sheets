@@ -70,7 +70,7 @@
     <label
       class="green-checkbox"
       data-tooltip={localize(
-        'TIDY5E.Settings.Migrations.CcssToTidy.deleteFlagsTooltip',
+        'TIDY5E.Settings.Migrations.OptionDeleteFlags.Tooltip',
       )}
     >
       <input type="checkbox" bind:checked={deleteFlags} disabled={migrating} />

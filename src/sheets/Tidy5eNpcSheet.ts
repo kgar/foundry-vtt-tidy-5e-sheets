@@ -29,8 +29,7 @@ import {
 import { debug, error } from 'src/utils/logging';
 import { SettingsProvider, settingStore } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
-import { getPercentage, isLessThanOneIsOne } from 'src/utils/numbers';
-import NpcShortRestDialog from 'src/dialogs/NpcShortRestDialog';
+import { getPercentage } from 'src/utils/numbers';
 import type { SvelteComponent } from 'svelte';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
 import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
@@ -55,8 +54,6 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import { ActorSheetCustomSectionMixin } from './mixins/Tidy5eBaseActorSheetMixins';
-import { ItemUtils } from 'src/utils/ItemUtils';
-import type { RestConfiguration } from 'src/foundry/dnd5e.types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { Inventory } from 'src/features/sections/Inventory';
@@ -692,11 +689,20 @@ export class Tidy5eNpcSheet
           relativeTo: this.actor,
         }
       ),
-      bondEnrichedHtml: await FoundryAdapter.enrichHtml(
+      bondEnrichedHtmlOld: await FoundryAdapter.enrichHtml(
         FoundryAdapter.getProperty<string>(
           this.actor,
           `flags.${CONSTANTS.MODULE_ID}.bond`
         ) ?? '',
+        {
+          secrets: this.actor.isOwner,
+          rollData: defaultDocumentContext.rollData,
+          async: true,
+          relativeTo: this.actor,
+        }
+      ),
+      bondEnrichedHtml: await FoundryAdapter.enrichHtml(
+        this.actor.system.details.bond,
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
@@ -717,11 +723,20 @@ export class Tidy5eNpcSheet
       editable: defaultDocumentContext.editable,
       filterData: this.itemFilterService.getDocumentItemFilterData(),
       filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
-      flawEnrichedHtml: await FoundryAdapter.enrichHtml(
+      flawEnrichedHtmlOld: await FoundryAdapter.enrichHtml(
         FoundryAdapter.getProperty<string>(
           this.actor,
           `flags.${CONSTANTS.MODULE_ID}.flaw`
         ) ?? '',
+        {
+          secrets: this.actor.isOwner,
+          rollData: defaultDocumentContext.rollData,
+          async: true,
+          relativeTo: this.actor,
+        }
+      ),
+      flawEnrichedHtml: await FoundryAdapter.enrichHtml(
+        this.actor.system.details.flaw,
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
@@ -736,11 +751,20 @@ export class Tidy5eNpcSheet
         this.actor?.system?.attributes?.hp?.max
       ),
       showSpellbookTab: SettingsProvider.settings.showSpellbookTabNpc.get(),
-      idealEnrichedHtml: await FoundryAdapter.enrichHtml(
+      idealEnrichedHtmlOld: await FoundryAdapter.enrichHtml(
         FoundryAdapter.getProperty<string>(
           this.actor,
           `flags.${CONSTANTS.MODULE_ID}.ideal`
         ) ?? '',
+        {
+          secrets: this.actor.isOwner,
+          rollData: defaultDocumentContext.rollData,
+          async: true,
+          relativeTo: this.actor,
+        }
+      ),
+      idealEnrichedHtml: await FoundryAdapter.enrichHtml(
+        this.actor.system.details.ideal,
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
