@@ -25,21 +25,21 @@ export async function migrateBondsIdealsFlawsToSystem({
   try {
     let updates: Record<string, string> = {};
 
-    let systemBond = (npc.system.detail.bond ?? '').trim();
+    let systemBond = (npc.system.details.bond ?? '').trim();
     if (systemBond === '' || overwrite) {
-      updates['system.detail.bond'] =
+      updates['system.details.bond'] =
         TidyFlags.tryGetFlag(npc, tidyFlagBond) ?? '';
     }
 
-    let systemIdeal = (npc.system.detail.ideal ?? '').trim();
+    let systemIdeal = (npc.system.details.ideal ?? '').trim();
     if (systemIdeal === '' || overwrite) {
-      updates['system.detail.ideal'] =
+      updates['system.details.ideal'] =
         TidyFlags.tryGetFlag(npc, tidyFlagIdeal) ?? '';
     }
 
-    let systemFlaw = (npc.system.detail.flaw ?? '').trim();
+    let systemFlaw = (npc.system.details.flaw ?? '').trim();
     if (systemFlaw === '' || overwrite) {
-      updates['system.detail.flaw'] =
+      updates['system.details.flaw'] =
         TidyFlags.tryGetFlag(npc, tidyFlagFlaw) ?? '';
     }
 
