@@ -10,13 +10,22 @@
   import Notice from 'src/components/notice/Notice.svelte';
   import CcssToTidyMigration from './v3/CcssToTidyMigration.svelte';
   import FavoritesToSystemMigration from './v4/FavoritesToSystemMigration.svelte';
+  import BondsIdealsFlawsToSystemMigration from './v5/BondsIdealsFlawsToSystemMigration.svelte';
 
   export let selectedTabId: string =
-    CONSTANTS.TAB_MIGRATIONS_FAVORITES_TO_SYSTEM;
+    CONSTANTS.TAB_MIGRATIONS_BONDS_IDEALS_FLAWS_TO_SYSTEM;
 
   const localize = FoundryAdapter.localize;
 
   const tabs: Tab[] = [
+    {
+      id: CONSTANTS.TAB_MIGRATIONS_BONDS_IDEALS_FLAWS_TO_SYSTEM,
+      title: 'TIDY5E.Settings.Migrations.BondsIdealsFlawsToSystem.sectionTitle',
+      content: {
+        component: BondsIdealsFlawsToSystemMigration,
+        type: 'svelte',
+      },
+    },
     {
       id: CONSTANTS.TAB_MIGRATIONS_FAVORITES_TO_SYSTEM,
       title: 'TIDY5E.Settings.Migrations.FavoritesToSystem.sectionTitle',

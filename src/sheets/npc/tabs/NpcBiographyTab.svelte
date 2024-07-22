@@ -138,7 +138,7 @@
               </article>
             </RerenderAfterFormSubmission>
             <RerenderAfterFormSubmission
-              andOnValueChange={TidyFlags.ideal.get($context.actor) ?? ''}
+              andOnValueChange={$context.system.details.ideal}
             >
               <article use:$context.activateEditors>
                 <div class="section-titles biopage">
@@ -146,13 +146,13 @@
                 </div>
                 <SheetEditor
                   content={$context.idealEnrichedHtml}
-                  target={TidyFlags.ideal.prop}
+                  target="system.details.ideal"
                   editable={$context.editable}
                 />
               </article>
             </RerenderAfterFormSubmission>
             <RerenderAfterFormSubmission
-              andOnValueChange={TidyFlags.bond.get($context.actor) ?? ''}
+              andOnValueChange={$context.system.details.bond}
             >
               <article use:$context.activateEditors>
                 <div class="section-titles biopage">
@@ -160,13 +160,13 @@
                 </div>
                 <SheetEditor
                   content={$context.bondEnrichedHtml}
-                  target={TidyFlags.bond.prop}
+                  target="system.details.bond"
                   editable={$context.editable}
                 />
               </article>
             </RerenderAfterFormSubmission>
             <RerenderAfterFormSubmission
-              andOnValueChange={TidyFlags.flaw.get($context.actor) ?? ''}
+              andOnValueChange={$context.system.details.flaw}
             >
               <article use:$context.activateEditors>
                 <div class="section-titles biopage">
@@ -174,7 +174,7 @@
                 </div>
                 <SheetEditor
                   content={$context.flawEnrichedHtml}
-                  target={TidyFlags.flaw.prop}
+                  target="system.details.flaw"
                   editable={$context.editable}
                 />
               </article>

@@ -143,29 +143,6 @@ export class TidyFlags {
   };
 
   /**
-   * The bonds of an actor.
-   * For this module, it is only an informational biographical field.
-   */
-  static bond = {
-    key: 'bond' as const,
-    prop: TidyFlags.getFlagPropertyPath('bond'),
-    /** Gets the actor's bond. */
-    get(actor: Actor5e): string | undefined {
-      return (
-        TidyFlags.tryGetFlag<string>(actor, TidyFlags.bond.key) ?? undefined
-      );
-    },
-    /** Sets the actor's bond. */
-    set(actor: Actor5e, value: string): Promise<void> {
-      return TidyFlags.setFlag(actor, TidyFlags.bond.key, value);
-    },
-    /** Clears the actor's bond. */
-    unset(actor: Actor5e) {
-      return TidyFlags.unsetFlag(actor, TidyFlags.bond.key);
-    },
-  };
-
-  /**
    * A field used to filter spells based on an indicated class,
    * showing only spells whose `parentClass` flag matches
    * this `classFilter` selection.
@@ -262,29 +239,6 @@ export class TidyFlags {
   };
 
   /**
-   * The flaw of an actor.
-   * For this module, it is only an informational biographical field.
-   */
-  static flaw = {
-    key: 'flaw' as const,
-    prop: TidyFlags.getFlagPropertyPath('flaw'),
-    /** Gets the actor's flaw. */
-    get(actor: Actor5e): string | undefined {
-      return (
-        TidyFlags.tryGetFlag<string>(actor, TidyFlags.flaw.key) ?? undefined
-      );
-    },
-    /** Sets the actor's flaw. */
-    set(actor: Actor5e, value: string): Promise<void> {
-      return TidyFlags.setFlag(actor, TidyFlags.flaw.key, value);
-    },
-    /** Clears the actor's flaw. */
-    unset(actor: Actor5e) {
-      return TidyFlags.unsetFlag(actor, TidyFlags.flaw.key);
-    },
-  };
-
-  /**
    * The gender of an actor.
    * For this module, it is only an informational biographical field.
    */
@@ -350,29 +304,6 @@ export class TidyFlags {
     /** Clears the actor's height. */
     unset(actor: Actor5e) {
       return TidyFlags.unsetFlag(actor, TidyFlags.height.key);
-    },
-  };
-
-  /**
-   * The ideal of an actor.
-   * For this module, it is only an informational biographical field.
-   */
-  static ideal = {
-    key: 'ideal' as const,
-    prop: TidyFlags.getFlagPropertyPath('ideal'),
-    /** Gets the actor's ideal. */
-    get(actor: Actor5e): string | undefined {
-      return (
-        TidyFlags.tryGetFlag<string>(actor, TidyFlags.ideal.key) ?? undefined
-      );
-    },
-    /** Sets the actor's ideal. */
-    set(actor: Actor5e, value: string): Promise<void> {
-      return TidyFlags.setFlag(actor, TidyFlags.ideal.key, value);
-    },
-    /** Clears the actor's ideal. */
-    unset(actor: Actor5e) {
-      return TidyFlags.unsetFlag(actor, TidyFlags.ideal.key);
     },
   };
 
