@@ -29,26 +29,24 @@
 
 <h3 class="form-header">{localize('DND5E.SpellDetails')}</h3>
 
-{#if $settingStore.useMulticlassSpellbookFilter}
-  <ItemFormGroup
-    labelText={localize('TIDY5E.SpellClass')}
+<ItemFormGroup
+  labelText="Spell Class"
+  field={TidyFlags.parentClass.prop}
+  let:inputId
+>
+  <Select
+    id={inputId}
+    document={$context.item}
     field={TidyFlags.parentClass.prop}
-    let:inputId
+    value={TidyFlags.parentClass.get($context.item) ?? ''}
+    disabled={!$context.editable}
   >
-    <Select
-      id={inputId}
-      document={$context.item}
-      field={TidyFlags.parentClass.prop}
-      value={TidyFlags.parentClass.get($context.item) ?? ''}
-      disabled={!$context.editable}
-    >
-      <option value="">&mdash;</option>
-      {#each allClasses as { text, value }}
-        <option {value}>{localize(text)}</option>
-      {/each}
-    </Select>
-  </ItemFormGroup>
-{/if}
+    <option value="">&mdash;</option>
+    {#each allClasses as { text, value }}
+      <option {value}>{localize(text)}</option>
+    {/each}
+  </Select>
+</ItemFormGroup>
 
 <ItemFormGroup
   labelText={localize('DND5E.SpellLevel')}
@@ -178,6 +176,58 @@
     </Select>
   </div>
 </ItemFormGroup>
+
+{#if $context.isEmbedded && !!Object.keys($context.document.parent?.spellcastingClasses ?? {})?.length}
+  <ItemFormGroup
+    labelText={localize('DND5E.SpellSourceClass')}
+    field="system.sourceClass"
+    let:inputId
+  >
+    <Select
+      id={inputId}
+      document={$context.item}
+      field="system.sourceClass"
+      value={$context.system.sourceClass}
+      disabled={!$context.editable}
+      blankValue=""
+    >
+      <SelectOptions
+        data={$context.document.parent.spellcastingClasses}
+        labelProp="name"
+        blank=""
+      />
+      {#if !$context.document.parent?.spellcastingClasses?.[$context.system.sourceClass]}
+        <option value={$context.system.sourceClass}>
+          {localize('TIDY5E.SpellSourceIdentifierSelectText', {
+            identifier: $context.system.sourceClass,
+          })}
+        </option>
+      {/if}
+    </Select>
+    {#if !$context.document.parent?.spellcastingClasses?.[$context.system.sourceClass]}
+      <i
+        class="fas fa-fw fa-info-circle source-class-unowned-class-hint-icon flex-0"
+        title={localize('TIDY5E.SpellSourceIdentifierLabelHint', {
+          identifier: $context.system.sourceClass,
+        })}
+      ></i>
+    {/if}
+  </ItemFormGroup>
+{:else}
+  <ItemFormGroup
+    labelText={localize('DND5E.SpellSourceClass')}
+    field="system.sourceClass"
+    let:inputId
+  >
+    <TextInput
+      id={inputId}
+      document={$context.item}
+      field="system.sourceClass"
+      value={$context.system.sourceClass}
+      disabled={!$context.editable}
+    />
+  </ItemFormGroup>
+{/if}
 
 <h3 class="form-header">{localize('DND5E.SpellCastingHeader')}</h3>
 

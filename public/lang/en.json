@@ -146,7 +146,8 @@
 
   "TIDY5E.ItemDetailsHeadline": "Mechanics/Flavor Text",
 
-  "TIDY5E.SpellClass": "Spell Class",
+  "TIDY5E.SpellSourceIdentifierSelectText": "Class Identifier: {identifier}",
+  "TIDY5E.SpellSourceIdentifierLabelHint": "The actor who has this spell does not have the source class that is specified here.",
 
   "TIDY5E.Class.Artificer": "Artificer",
   "TIDY5E.Class.Barbarian": "Barbarian",
