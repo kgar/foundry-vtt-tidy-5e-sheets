@@ -17,6 +17,16 @@
   const migrations = [
     {
       label: localize(
+        'TIDY5E.Settings.Migrations.SpellClassToSourceClass.sectionTitle',
+      ),
+      migrationTallyVersion: 5,
+      onClick: () =>
+        new BulkMigrationsApplication(
+          CONSTANTS.TAB_SPELL_CLASS_TO_SOURCE_CLASS,
+        ).render(true),
+    },
+    {
+      label: localize(
         'TIDY5E.Settings.Migrations.BondsIdealsFlawsToSystem.sectionTitle',
       ),
       migrationTallyVersion: 5,

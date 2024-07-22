@@ -5,17 +5,17 @@ import { error } from 'src/utils/logging';
 
 const tidyFlagParentClass = 'parentClass';
 
-type ParentClassToSourceClassMigrationParams = {
+type SpellClassToSourceClassMigrationParams = {
   item: Item5e;
   overwrite: boolean;
   clearFlagData: boolean;
 };
 
-export async function migrateParentClassToSourceClass({
+export async function migrateSpellClassToSourceClass({
   item,
   clearFlagData,
   overwrite,
-}: ParentClassToSourceClassMigrationParams) {
+}: SpellClassToSourceClassMigrationParams) {
   if (!item) {
     return;
   }

@@ -85,6 +85,7 @@ export const CONSTANTS = {
   TAB_MIGRATIONS_CCSS_TO_TIDY: 'ccss-to-tidy',
   TAB_MIGRATIONS_FAVORITES_TO_SYSTEM: 'favorites-to-system',
   TAB_MIGRATIONS_BONDS_IDEALS_FLAWS_TO_SYSTEM: 'bonds-ideals-flaws-to-system',
+  TAB_SPELL_CLASS_TO_SOURCE_CLASS: 'spell-class-to-source-class',
   TAB_NPC_ABILITIES: 'attributes',
   TAB_NPC_INVENTORY: 'inventory',
   TAB_NPC_SPELLBOOK: 'spellbook',

@@ -716,6 +716,10 @@
       "sectionTitle": "NPC Bonds, Ideals, and Flaws",
       "selectionDialogTitle": "Migration: NPC Bonds, Ideals, and Flaws to System"
     },
+    "SpellClassToSourceClass": {
+      "sectionTitle": "Spell Class to Source Class",
+      "selectionDialogTitle": "Migration: Spell Class to Source Class"
+    },
     "Parent": "Parent"
   },
   "TIDY5E.Settings.SheetPreferences": {
