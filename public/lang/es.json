@@ -680,6 +680,14 @@
         "FavoritesToSystem": {
             "sectionTitle": "Personajes favoritos",
             "selectionDialogTitle": "Migración: personajes favoritos al sistema"
+        },
+        "BondsIdealsFlawsToSystem": {
+            "sectionTitle": "Vínculos, ideales y defectos de los NPC",
+            "selectionDialogTitle": "Migración: vínculos, ideales y defectos de los NPC con el sistema"
+        },
+        "SpellClassToSourceClass": {
+            "sectionTitle": "Clase de hechizo a clase de origen",
+            "selectionDialogTitle": "Migración: Clase de hechizo a clase de origen"
         }
     },
     "TIDY5E.Settings.ColorPickerScrollbarTrack": {
@@ -792,5 +800,7 @@
     "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
         "name": "Acento de Solo Rituales"
     },
-    "TIDY5E.EmptyContainer": "Este contenedor está vacío."
+    "TIDY5E.EmptyContainer": "Este contenedor está vacío.",
+    "TIDY5E.SpellSourceIdentifierSelectText": "Tipo de identificador: {identifier}",
+    "TIDY5E.SpellSourceIdentifierLabelHint": "El actor que tiene este hechizo no tiene la clase de fuente que se especifica aquí."
 }
