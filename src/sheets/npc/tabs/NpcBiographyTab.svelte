@@ -138,48 +138,6 @@
               </article>
             </RerenderAfterFormSubmission>
             <RerenderAfterFormSubmission
-              andOnValueChange={TidyFlags.ideal.get($context.actor) ?? ''}
-            >
-              <article use:$context.activateEditors>
-                <div class="section-titles biopage">
-                  {localize('DND5E.Ideals')}
-                </div>
-                <SheetEditor
-                  content={$context.idealEnrichedHtmlOld}
-                  target={TidyFlags.ideal.prop}
-                  editable={$context.editable}
-                />
-              </article>
-            </RerenderAfterFormSubmission>
-            <RerenderAfterFormSubmission
-              andOnValueChange={TidyFlags.bond.get($context.actor) ?? ''}
-            >
-              <article use:$context.activateEditors>
-                <div class="section-titles biopage">
-                  {localize('DND5E.Bonds')}
-                </div>
-                <SheetEditor
-                  content={$context.bondEnrichedHtmlOld}
-                  target={TidyFlags.bond.prop}
-                  editable={$context.editable}
-                />
-              </article>
-            </RerenderAfterFormSubmission>
-            <RerenderAfterFormSubmission
-              andOnValueChange={TidyFlags.flaw.get($context.actor) ?? ''}
-            >
-              <article use:$context.activateEditors>
-                <div class="section-titles biopage">
-                  {localize('DND5E.Flaws')}
-                </div>
-                <SheetEditor
-                  content={$context.flawEnrichedHtmlOld}
-                  target={TidyFlags.flaw.prop}
-                  editable={$context.editable}
-                />
-              </article>
-            </RerenderAfterFormSubmission>
-            <RerenderAfterFormSubmission
               andOnValueChange={$context.system.details.ideal}
             >
               <article use:$context.activateEditors>
