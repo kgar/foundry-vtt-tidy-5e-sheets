@@ -43,7 +43,7 @@
 
       const worldItemsToMigrate = Array.from<any>(game.items).map((item) => ({
         item,
-        unlinked: false,
+        unlinked: true,
       }));
 
       const itemsToMigrate = [

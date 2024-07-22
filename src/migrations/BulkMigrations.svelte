@@ -11,13 +11,21 @@
   import CcssToTidyMigration from './v3/CcssToTidyMigration.svelte';
   import FavoritesToSystemMigration from './v4/FavoritesToSystemMigration.svelte';
   import BondsIdealsFlawsToSystemMigration from './v5/BondsIdealsFlawsToSystemMigration.svelte';
+  import SpellClassToSourceClassMigration from './v5/SpellClassToSourceClassMigration.svelte';
 
-  export let selectedTabId: string =
-    CONSTANTS.TAB_MIGRATIONS_BONDS_IDEALS_FLAWS_TO_SYSTEM;
+  export let selectedTabId: string = CONSTANTS.TAB_SPELL_CLASS_TO_SOURCE_CLASS;
 
   const localize = FoundryAdapter.localize;
 
   const tabs: Tab[] = [
+    {
+      id: CONSTANTS.TAB_SPELL_CLASS_TO_SOURCE_CLASS,
+      title: 'TIDY5E.Settings.Migrations.SpellClassToSourceClass.sectionTitle',
+      content: {
+        component: SpellClassToSourceClassMigration,
+        type: 'svelte',
+      },
+    },
     {
       id: CONSTANTS.TAB_MIGRATIONS_BONDS_IDEALS_FLAWS_TO_SYSTEM,
       title: 'TIDY5E.Settings.Migrations.BondsIdealsFlawsToSystem.sectionTitle',

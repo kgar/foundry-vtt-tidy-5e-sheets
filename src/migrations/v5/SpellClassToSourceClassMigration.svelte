@@ -1,11 +1,11 @@
 <script lang="ts">
-  import type { Actor5e } from 'src/types/types';
   import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication';
   import { CONSTANTS } from 'src/constants';
-  import { migrateBondsIdealsFlawsToSystem } from './bonds-ideals-flaws-to-system';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { CompendiumToMigrate } from '../migration.types';
   import { debug, error } from 'src/utils/logging';
+  import { migrateSpellClassToSourceClass } from './spell-class-to-source-class';
+  import type { Item5e } from 'src/types/item.types';
 
   let migrating = false;
   let deleteFlags = false;
@@ -14,11 +14,26 @@
   const localize = FoundryAdapter.localize;
 
   async function migrate() {
-    const actorsToMigrate = Array.from<Actor5e>(game.actors).filter(
-      (a) => a.isOwner && a.type === CONSTANTS.SHEET_TYPE_NPC,
-    );
+    const actorItemsToMigrate = Array.from<any>(game.actors)
+      .filter((a) => a.isOwner)
+      .map((a) => ({ actor: a, unlinked: false }))
+      .flatMap((value) =>
+        Array.from<Item5e>(value.actor.items)
+          .filter((item) => item.type === CONSTANTS.ITEM_TYPE_SPELL)
+          .map((item) => ({
+            item,
+            unlinked: value.unlinked,
+          })),
+      );
 
-    new MigrationSelectionApplication<{ item: Actor5e }>({
+    const worldItemsToMigrate = Array.from<any>(game.items).map((item) => ({
+      item,
+      unlinked: true,
+    }));
+
+    const itemsToMigrate = [...actorItemsToMigrate, ...worldItemsToMigrate];
+
+    new MigrationSelectionApplication<{ item: Item5e; unlinked: boolean }>({
       onConfirm: async (selected) => {
         migrating = true;
 
@@ -27,8 +42,8 @@
         );
 
         for (let choice of selected) {
-          await migrateBondsIdealsFlawsToSystem({
-            npc: choice,
+          await migrateSpellClassToSourceClass({
+            item: choice.item,
             clearFlagData: deleteFlags,
             overwrite: overwrite,
           });
@@ -47,22 +62,42 @@
           cellWidth: 'primary',
           field: {
             type: 'simple',
-            propPath: 'name',
-            onClick: (target: Actor5e) => target.sheet.render(true),
+            propPath: 'item.name',
+            onClick: (target) => target.item.sheet.render(true),
           },
           name: localize('TIDY5E.Settings.Migrations.Selection.ToMigrate'),
         },
+        {
+          cellWidth: '10rem',
+          field: {
+            type: 'simple',
+            propPath: `item.parent.name`,
+            onClick: (target) => target.item.parent?.sheet?.render(true),
+          },
+          name: localize('TIDY5E.Settings.Migrations.Parent'),
+        },
+        {
+          cellWidth: '10rem',
+          name: '',
+          field: {
+            type: 'contextual',
+            getText: ({ unlinked }) =>
+              unlinked
+                ? FoundryAdapter.localize('TIDY5E.TokenUnlinked')
+                : FoundryAdapter.localize('DOCUMENT.Actor'),
+          },
+        },
       ],
-      documents: actorsToMigrate,
+      documents: itemsToMigrate,
       title: FoundryAdapter.localize(
-        'TIDY5E.Settings.Migrations.BondsIdealsFlawsToSystem.selectionDialogTitle',
+        'TIDY5E.Settings.Migrations.SpellClassToSourceClass.selectionDialogTitle',
       ),
     }).render(true);
   }
 
   async function migrateCompendia() {
     const compendiaForMigrating = Array.from(game.packs.values())
-      .filter((c: any) => !c.locked && c.documentName === 'Actor')
+      .filter((c: any) => !c.locked && c.documentName === 'Item')
       .map((c: any) => ({
         label: c.metadata.label,
         type: c.metadata.type,
@@ -78,14 +113,14 @@
         for (const compendium of selected) {
           debug(`Migrating compendium "${compendium.label}"...`);
           try {
-            const actors = await game.packs.get(compendium.id).getDocuments();
-            for (const actor of actors) {
-              if (actor.type !== CONSTANTS.SHEET_TYPE_NPC) {
+            const items = await game.packs.get(compendium.id).getDocuments();
+            for (const item of items) {
+              if (item.type !== CONSTANTS.ITEM_TYPE_SPELL) {
                 continue;
               }
 
-              await migrateBondsIdealsFlawsToSystem({
-                npc: actor,
+              await migrateSpellClassToSourceClass({
+                item: item,
                 overwrite: overwrite,
                 clearFlagData: deleteFlags,
               });
@@ -154,7 +189,7 @@
 <section>
   <h2>
     {localize(
-      'TIDY5E.Settings.Migrations.BondsIdealsFlawsToSystem.sectionTitle',
+      'TIDY5E.Settings.Migrations.SpellClassToSourceClass.sectionTitle',
     )}
   </h2>
   <h3>{localize('TIDY5E.Settings.Migrations.OptionsHeader')}</h3>

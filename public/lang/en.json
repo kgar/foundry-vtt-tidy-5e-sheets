@@ -146,7 +146,8 @@
 
   "TIDY5E.ItemDetailsHeadline": "Mechanics/Flavor Text",
 
-  "TIDY5E.SpellClass": "Spell Class",
+  "TIDY5E.SpellSourceIdentifierSelectText": "Class Identifier: {identifier}",
+  "TIDY5E.SpellSourceIdentifierLabelHint": "The actor who has this spell does not have the source class that is specified here.",
 
   "TIDY5E.Class.Artificer": "Artificer",
   "TIDY5E.Class.Barbarian": "Barbarian",
@@ -487,10 +488,6 @@
     "name": "Use Spell Class Icon for Spells",
     "hint": "Shows spell class's image on spells instead of the spell's own image. The spell must be associated with a class using the Class selector on the spell edit sheet. When multiclassing, this feature distinguishes which spells belong to which class at a glance."
   },
-  "TIDY5E.Settings.SpellClassFilterAdditionalClasses": {
-    "name": "Additional Classes for Multiclass Spellbook Filtering",
-    "hint": "Puts additional classes in the multiclass spellbook filter. Add classes to the dropdown with this syntax \"id1|name1,id2|name2\" e.g. \"occultist|Occultist,alchemist|Alchemist\""
-  },
   "TIDY5E.Settings.AllowCantripsToBePrepared": {
     "name": "Allow Cantrips to be Prepared",
     "hint": "The \"cantrip formulas\" optional rule from Tasha's Cauldron of Everything allows wizards to prepare cantrips after a long rest in the same way that they do with leveled spells. Prepared cantrips do not count toward total prepared spells."
@@ -714,6 +711,10 @@
     "BondsIdealsFlawsToSystem": {
       "sectionTitle": "NPC Bonds, Ideals, and Flaws",
       "selectionDialogTitle": "Migration: NPC Bonds, Ideals, and Flaws to System"
+    },
+    "SpellClassToSourceClass": {
+      "sectionTitle": "Spell Class to Source Class",
+      "selectionDialogTitle": "Migration: Spell Class to Source Class"
     },
     "Parent": "Parent"
   },

@@ -12,43 +12,16 @@
   import ItemAction from '../parts/ItemAction.svelte';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { settingStore } from 'src/settings/settings';
   import ItemProperties from '../parts/ItemProperties.svelte';
-  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
-
-  const allClasses = FoundryAdapter.getAllClassesDropdownOptions(
-    $settingStore.spellClassFilterAdditionalClasses,
   );
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <h3 class="form-header">{localize('DND5E.SpellDetails')}</h3>
-
-{#if $settingStore.useMulticlassSpellbookFilter}
-  <ItemFormGroup
-    labelText={localize('TIDY5E.SpellClass')}
-    field={TidyFlags.parentClass.prop}
-    let:inputId
-  >
-    <Select
-      id={inputId}
-      document={$context.item}
-      field={TidyFlags.parentClass.prop}
-      value={TidyFlags.parentClass.get($context.item) ?? ''}
-      disabled={!$context.editable}
-    >
-      <option value="">&mdash;</option>
-      {#each allClasses as { text, value }}
-        <option {value}>{localize(text)}</option>
-      {/each}
-    </Select>
-  </ItemFormGroup>
-{/if}
 
 <ItemFormGroup
   labelText={localize('DND5E.SpellLevel')}
@@ -178,6 +151,63 @@
     </Select>
   </div>
 </ItemFormGroup>
+
+{#if $context.isEmbedded && !!Object.keys($context.document.parent?.spellcastingClasses ?? {})?.length}
+  {@const classIsInvalidForActor =
+    ($context.system.sourceClass ?? '').trim() !== '' &&
+    !$context.document.parent?.spellcastingClasses?.[
+      $context.system.sourceClass
+    ]}
+  <ItemFormGroup
+    labelText={localize('DND5E.SpellSourceClass')}
+    field="system.sourceClass"
+    let:inputId
+  >
+    <Select
+      id={inputId}
+      document={$context.item}
+      field="system.sourceClass"
+      value={$context.system.sourceClass}
+      disabled={!$context.editable}
+      blankValue=""
+    >
+      <SelectOptions
+        data={$context.document.parent.spellcastingClasses}
+        labelProp="name"
+        blank=""
+      />
+      {#if classIsInvalidForActor}
+        <option value={$context.system.sourceClass}>
+          {localize('TIDY5E.SpellSourceIdentifierSelectText', {
+            identifier: $context.system.sourceClass,
+          })}
+        </option>
+      {/if}
+    </Select>
+    {#if classIsInvalidForActor}
+      <i
+        class="fas fa-fw fa-info-circle source-class-unowned-class-hint-icon flex-0"
+        title={localize('TIDY5E.SpellSourceIdentifierLabelHint', {
+          identifier: $context.system.sourceClass,
+        })}
+      ></i>
+    {/if}
+  </ItemFormGroup>
+{:else}
+  <ItemFormGroup
+    labelText={localize('DND5E.SpellSourceClass')}
+    field="system.sourceClass"
+    let:inputId
+  >
+    <TextInput
+      id={inputId}
+      document={$context.item}
+      field="system.sourceClass"
+      value={$context.system.sourceClass}
+      disabled={!$context.editable}
+    />
+  </ItemFormGroup>
+{/if}
 
 <h3 class="form-header">{localize('DND5E.SpellCastingHeader')}</h3>
 

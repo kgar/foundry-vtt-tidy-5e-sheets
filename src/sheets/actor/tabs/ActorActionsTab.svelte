@@ -149,9 +149,10 @@
                   on:toggle={() => toggleSummary($context.actor)}
                   useActiveEffectsMarker={false}
                 >
-                  {@const spellClass = FoundryAdapter.getClassLabel(
-                    TidyFlags.parentClass.get(actionItem.item) ?? '',
-                  )}
+                  {@const sourceClassText =
+                    $context.actor.spellcastingClasses?.[
+                      actionItem.item.system.sourceClass
+                    ]?.name ?? ''}
                   <div class="flex-1 min-width-0">
                     <div
                       data-tidy-item-name={actionItem.item.name}
@@ -164,17 +165,17 @@
                     <small>
                       {#if actionItem.item.type !== CONSTANTS.ITEM_TYPE_SPELL}
                         {actionItem.typeLabel}
-                      {:else if actionItem.item.type === 'spell' && actionItem.item.system.level !== 0}
+                      {:else if actionItem.item.system.level !== 0}
                         {actionItem.item.labels?.level ?? ''}
                         {actionItem.item.labels?.school ?? ''}
-                        {#if spellClass}
-                          • {localize(spellClass)}
+                        {#if sourceClassText}
+                          • {localize(sourceClassText)}
                         {/if}
                       {:else}
                         {actionItem.item.labels?.school ?? ''}
                         {actionItem.item.labels?.level ?? ''}
-                        {#if spellClass}
-                          • {localize(spellClass)}
+                        {#if sourceClassText}
+                          • {localize(sourceClassText)}
                         {/if}
                       {/if}
                     </small>

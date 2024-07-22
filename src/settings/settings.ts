@@ -1298,22 +1298,6 @@ export function createSettings() {
         },
       },
 
-      spellClassFilterAdditionalClasses: {
-        options: {
-          name: 'TIDY5E.Settings.SpellClassFilterAdditionalClasses.name',
-          hint: 'TIDY5E.Settings.SpellClassFilterAdditionalClasses.hint',
-          scope: 'client',
-          config: false,
-          default: '',
-          type: String,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<string>(
-            'spellClassFilterAdditionalClasses'
-          );
-        },
-      },
-
       allowHpMaxOverride: {
         options: {
           name: 'TIDY5E.Settings.AllowHpMaxOverride.name',
@@ -1724,7 +1708,8 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerRitualOnlyOutline.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5e-ritual-only-outline-color'],
+          default:
+            defaultLightTheme.variables['--t5e-ritual-only-outline-color'],
           config: false,
         },
         get() {
@@ -1739,7 +1724,8 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerRitualOnlyAccent.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5e-ritual-only-accent-color'],
+          default:
+            defaultLightTheme.variables['--t5e-ritual-only-accent-color'],
           config: false,
         },
         get() {

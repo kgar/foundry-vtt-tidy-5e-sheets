@@ -66,7 +66,8 @@
     }
 
     return spells.filter(
-      (spell) => TidyFlags.parentClass.get(spell) === selectedClassFilter,
+      (spell) =>
+        spell.system.sourceClass?.trim() === selectedClassFilter?.trim(),
     );
   }
 

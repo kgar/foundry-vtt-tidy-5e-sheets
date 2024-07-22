@@ -20,7 +20,6 @@ export type UserSettingsContext = {
     showIconsNextToTheItemName: CurrentSettings['showIconsNextToTheItemName'];
     showInspirationOnHover: CurrentSettings['showInspirationOnHover'];
     showSpellbookTabNpc: CurrentSettings['showSpellbookTabNpc'];
-    spellClassFilterAdditionalClasses: CurrentSettings['spellClassFilterAdditionalClasses'];
     toggleEmptyCharacterSkills: CurrentSettings['toggleEmptyCharacterSkills'];
     toggleEmptyCharacterTraits: CurrentSettings['toggleEmptyCharacterTraits'];
     useClassicControlsForCharacter: CurrentSettings['useClassicControlsForCharacter'];
