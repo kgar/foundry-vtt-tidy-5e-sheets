@@ -144,7 +144,7 @@ export class TidyFlags {
 
   /**
    * A field used to filter spells based on an indicated class,
-   * showing only spells whose `parentClass` flag matches
+   * showing only spells whose `system.sourceClass` property matches
    * this `classFilter` selection.
    */
   static classFilter = {
@@ -745,31 +745,6 @@ export class TidyFlags {
           return TidyFlags.unsetFlag(actor, TidyFlags.notes4.members.value.key);
         },
       },
-    },
-  };
-
-  /**
-   * A class identifier which associates an item (usually a spell)
-   * with a particular Class. This is used in conjunction with `classFilter`
-   * to allow for filtering spells by class.
-   */
-  static parentClass = {
-    key: 'parentClass' as const,
-    prop: TidyFlags.getFlagPropertyPath('parentClass'),
-    /** Gets the parent class of an item. */
-    get(item: Item5e): string | undefined {
-      return (
-        TidyFlags.tryGetFlag<string>(item, TidyFlags.parentClass.key) ??
-        undefined
-      );
-    },
-    /** Sets the parent class of an item. */
-    set(item: Item5e, value: string): Promise<void> {
-      return TidyFlags.setFlag(item, TidyFlags.parentClass.key, value);
-    },
-    /** Clears the parent class of an item. */
-    unset(item: Item5e) {
-      return TidyFlags.unsetFlag(item, TidyFlags.parentClass.key);
     },
   };
 

@@ -132,13 +132,3 @@
   hint={SettingsProvider.settings.useSpellClassFilterIcons.options.hint}
   id="useSpellClassFilterIcons"
 />
-
-<!-- TODO: Make a little crud-based admin interface for adding / removing these additional classes -->
-<TextInputSetting
-  bind:value={$context.settings.spellClassFilterAdditionalClasses}
-  name={SettingsProvider.settings.spellClassFilterAdditionalClasses.options
-    .name}
-  hint={SettingsProvider.settings.spellClassFilterAdditionalClasses.options
-    .hint}
-  id="spellClassFilterAdditionalClasses"
-/>

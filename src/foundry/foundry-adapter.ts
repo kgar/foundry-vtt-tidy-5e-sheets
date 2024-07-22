@@ -429,18 +429,15 @@ export const FoundryAdapter = {
     context: CharacterSheetContext | NpcSheetContext,
     spell: any
   ): string | undefined {
-    if (
-      !SettingsProvider.settings.useSpellClassFilterIcons.get() ||
-      context.isNPC
-    ) {
+    if (!SettingsProvider.settings.useSpellClassFilterIcons.get()) {
       return spell.img;
     }
 
-    const parentClass = TidyFlags.parentClass.get(spell);
+    const sourceClass = spell.system.sourceClass;
 
     const classImage =
-      parentClass && 'actorClassesToImages' in context
-        ? context.actorClassesToImages[parentClass]
+      sourceClass && 'actorClassesToImages' in context
+        ? context.actorClassesToImages[sourceClass]
         : undefined;
 
     return classImage ?? spell.img;
@@ -515,19 +512,6 @@ export const FoundryAdapter = {
     allClasses.sort((a, b) => a.text.localeCompare(b.text));
 
     return allClasses;
-  },
-  getClassLabel(id: string) {
-    return (
-      (CONSTANTS.DND5E_CLASSES as Record<string, string>)[id] ??
-      FoundryAdapter.getAdditionalClassLabel(id)
-    );
-  },
-  getAdditionalClassLabel(id: string) {
-    const additionalClasses =
-      SettingsProvider.settings.spellClassFilterAdditionalClasses.get();
-    return FoundryAdapter.parseAdditionalClassesDropDownItems(
-      additionalClasses
-    ).find((c) => c.value === id)?.text;
   },
   parseAdditionalClassesDropDownItems(
     spellClassFilterAdditionalClassesText: string

@@ -12,41 +12,16 @@
   import ItemAction from '../parts/ItemAction.svelte';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { settingStore } from 'src/settings/settings';
   import ItemProperties from '../parts/ItemProperties.svelte';
-  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
-
-  const allClasses = FoundryAdapter.getAllClassesDropdownOptions(
-    $settingStore.spellClassFilterAdditionalClasses,
   );
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <h3 class="form-header">{localize('DND5E.SpellDetails')}</h3>
-
-<ItemFormGroup
-  labelText="Spell Class"
-  field={TidyFlags.parentClass.prop}
-  let:inputId
->
-  <Select
-    id={inputId}
-    document={$context.item}
-    field={TidyFlags.parentClass.prop}
-    value={TidyFlags.parentClass.get($context.item) ?? ''}
-    disabled={!$context.editable}
-  >
-    <option value="">&mdash;</option>
-    {#each allClasses as { text, value }}
-      <option {value}>{localize(text)}</option>
-    {/each}
-  </Select>
-</ItemFormGroup>
 
 <ItemFormGroup
   labelText={localize('DND5E.SpellLevel')}
@@ -178,6 +153,11 @@
 </ItemFormGroup>
 
 {#if $context.isEmbedded && !!Object.keys($context.document.parent?.spellcastingClasses ?? {})?.length}
+  {@const classIsInvalidForActor =
+    ($context.system.sourceClass ?? '').trim() !== '' &&
+    !$context.document.parent?.spellcastingClasses?.[
+      $context.system.sourceClass
+    ]}
   <ItemFormGroup
     labelText={localize('DND5E.SpellSourceClass')}
     field="system.sourceClass"
@@ -196,7 +176,7 @@
         labelProp="name"
         blank=""
       />
-      {#if !$context.document.parent?.spellcastingClasses?.[$context.system.sourceClass]}
+      {#if classIsInvalidForActor}
         <option value={$context.system.sourceClass}>
           {localize('TIDY5E.SpellSourceIdentifierSelectText', {
             identifier: $context.system.sourceClass,
@@ -204,7 +184,7 @@
         </option>
       {/if}
     </Select>
-    {#if !$context.document.parent?.spellcastingClasses?.[$context.system.sourceClass]}
+    {#if classIsInvalidForActor}
       <i
         class="fas fa-fw fa-info-circle source-class-unowned-class-hint-icon flex-0"
         title={localize('TIDY5E.SpellSourceIdentifierLabelHint', {
