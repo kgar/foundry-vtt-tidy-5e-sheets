@@ -53,7 +53,7 @@ export async function migrateBondsIdealsFlawsToSystem({
       await TidyFlags.unsetFlag(npc, tidyFlagFlaw);
     }
   } catch (e) {
-    error("An error occurred while migrating an actor's favorites", false, {
+    error("An error occurred while migrating an NPC's bonds, ideals, and flaws", false, {
       error: e,
       actor: npc,
       clearFlagData,
