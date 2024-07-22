@@ -851,10 +851,7 @@ export class Tidy5eCharacterSheet
         !defaultDocumentContext.editable,
       maxPreparedSpellsTotal,
       notes1EnrichedHtml: await FoundryAdapter.enrichHtml(
-        FoundryAdapter.getProperty<string>(
-          this.actor,
-          `flags.${CONSTANTS.MODULE_ID}.notes1.value`
-        ) ?? '',
+        TidyFlags.notes1.members.value.get(this.actor) ?? '',
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
@@ -863,10 +860,7 @@ export class Tidy5eCharacterSheet
         }
       ),
       notes2EnrichedHtml: await FoundryAdapter.enrichHtml(
-        FoundryAdapter.getProperty<string>(
-          this.actor,
-          `flags.${CONSTANTS.MODULE_ID}.notes2.value`
-        ) ?? '',
+        TidyFlags.notes2.members.value.get(this.actor) ?? '',
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
@@ -875,10 +869,7 @@ export class Tidy5eCharacterSheet
         }
       ),
       notes3EnrichedHtml: await FoundryAdapter.enrichHtml(
-        FoundryAdapter.getProperty<string>(
-          this.actor,
-          `flags.${CONSTANTS.MODULE_ID}.notes3.value`
-        ) ?? '',
+        TidyFlags.notes3.members.value.get(this.actor) ?? '',
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
@@ -887,10 +878,7 @@ export class Tidy5eCharacterSheet
         }
       ),
       notes4EnrichedHtml: await FoundryAdapter.enrichHtml(
-        FoundryAdapter.getProperty<string>(
-          this.actor,
-          `flags.${CONSTANTS.MODULE_ID}.notes4.value`
-        ) ?? '',
+        TidyFlags.notes4.members.value.get(this.actor) ?? '',
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
@@ -899,10 +887,7 @@ export class Tidy5eCharacterSheet
         }
       ),
       notesEnrichedHtml: await FoundryAdapter.enrichHtml(
-        FoundryAdapter.getProperty<string>(
-          this.actor,
-          `flags.${CONSTANTS.MODULE_ID}.notes.value`
-        ) ?? '',
+        TidyFlags.notes.members.value.get(this.actor) ?? '',
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
