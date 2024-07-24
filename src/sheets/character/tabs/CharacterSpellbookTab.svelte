@@ -24,6 +24,9 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import ButtonMenu from 'src/components/button-menu/ButtonMenu.svelte';
+  import ButtonMenuCommand from 'src/components/button-menu/ButtonMenuCommand.svelte';
+  import SpellSourceClassAssignmentsFormApplication from 'src/applications/spell-source-class-assignments/SpellSourceClassAssignmentsFormApplication';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -100,6 +103,26 @@
     )}
   />
   <FilterMenu {tabId} />
+  <ButtonMenu
+    iconClass="ra ra-fairy-wand"
+    buttonClass="inline-icon-button"
+    position="bottom"
+    anchor="right"
+    title={localize('TIDY5E.Utilities.Tools')}
+    menuElement="div"
+  >
+    <ButtonMenuCommand
+      on:click={() => {
+        new SpellSourceClassAssignmentsFormApplication($context.actor).render(
+          true,
+        );
+      }}
+      iconClass="fas fa-list-check"
+      disabled={!$context.editable}
+    >
+      {localize('TIDY5E.Utilities.AssignSpellsToClasses')}
+    </ButtonMenuCommand>
+  </ButtonMenu>
   {#each utilityBarCommands as command (command.title)}
     <UtilityToolbarCommand
       title={command.title}
