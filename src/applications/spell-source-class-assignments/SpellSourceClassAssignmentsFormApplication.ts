@@ -61,7 +61,6 @@ export default class SpellSourceClassAssignmentsFormApplication extends SvelteFo
   }
 
   activateListeners(html: any): void {
-    // TODO: TidyHooks, plz
     Hooks.off('updateItem', this.updateHook);
     this.trackActorChanges();
     super.activateListeners(html);
