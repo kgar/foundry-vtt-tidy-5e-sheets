@@ -884,6 +884,9 @@ export const FoundryAdapter = {
       true
     );
   },
+  async renderSheetFromUuid(uuid: string) {
+    (await fromUuid(uuid))?.sheet?.render(true);
+  },
   renderImagePopout(...args: any[]) {
     return new ImagePopout(...args).render(true);
   },

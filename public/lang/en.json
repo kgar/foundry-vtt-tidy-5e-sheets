@@ -808,8 +808,10 @@
   "TIDY5E.ItemFilters.Filter.Other": "Other",
   "TIDY5E.GMOnly.Message": "GM Only: {message}",
   "TIDY5E.ReminderToBackUp": "Always remember to back up your world.",
+  "TIDY5E.Utilities.Tools": "Tools",
   "TIDY5E.Utilities.GMTools": "GM Tools",
   "TIDY5E.Utilities.IdentifyAll": "Identify All Items",
+  "TIDY5E.Utilities.AssignSpellsToClasses": "Assign Spells to Classes",
   "TIDY5E.GenericErrorNotification": "An error occurred while performing this action. See the devtools console for more details.",
   "TIDY5E.Utilities.MarkAllAsUnidentified": "Mark All Items as Unidentified",
   "TIDY5E.Utilities.ConfigureSections": "Configure Sections",
@@ -830,5 +832,8 @@
     "text": "Are you sure you wish to use default?"
   },
   "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+Click to skip the roll and instantly recharge) ",
+  "TIDY5E.SpellSourceClassAssignments.Identifier": "Source Class Identifier",
+  "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "The spell's source class identifier appears here. To assign an identifier which the character doesn't own, enter the class identifier in this text field.",
+  "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Show Unassigned Only",
   "TIDY5E.LocalizationTestKey": "Localization Test Key"
 }
