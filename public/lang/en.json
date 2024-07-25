@@ -716,6 +716,10 @@
       "sectionTitle": "Spell Class to Source Class",
       "selectionDialogTitle": "Migration: Spell Class to Source Class"
     },
+    "NpcExhaustion": {
+      "sectionTitle": "NPC Exhaustion",
+      "selectionDialogTitle": "Migration: NPC Exhaustion to System"
+    },
     "Parent": "Parent"
   },
   "TIDY5E.Settings.SheetPreferences": {
