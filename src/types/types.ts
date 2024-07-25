@@ -18,6 +18,7 @@ import type { DocumentFilters } from 'src/runtime/item/item.types';
 import type { Writable } from 'svelte/store';
 import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
 import type { CONSTANTS } from 'src/constants';
+import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 
 export type Actor5e = any;
 
@@ -247,6 +248,7 @@ export type CharacterSheetContext = {
   appearanceEnrichedHtml: string;
   biographyEnrichedHtml: string;
   bondEnrichedHtml: string;
+  conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
   favorites: FavoriteSection[];
   features: CharacterFeatureSection[];
@@ -295,6 +297,7 @@ export type NpcSheetContext = {
   appearanceEnrichedHtml: string;
   biographyEnrichedHtml: string;
   bondEnrichedHtml: string;
+  conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
   encumbrance: any;
   features: NpcAbilitySection[];

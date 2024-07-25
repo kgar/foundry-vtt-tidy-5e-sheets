@@ -59,6 +59,7 @@ import { TidyHooks } from 'src/foundry/TidyHooks';
 import { Inventory } from 'src/features/sections/Inventory';
 import { Container } from 'src/features/containers/Container';
 import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 
 export class Tidy5eNpcSheet
   extends ActorSheetCustomSectionMixin(dnd5e.applications.actor.ActorSheet5eNPC)
@@ -659,6 +660,63 @@ export class Tidy5eNpcSheet
       },
     };
 
+    // Effects & Conditions
+    // TODO: *before merging to main*, extract this from NPCs and PCs to a shared location
+    const conditionIds = new Set();
+    const conditions = Object.entries<any>(CONFIG.DND5E.conditionTypes).reduce<
+      Dnd5eActorCondition[]
+    >((arr, [k, c]) => {
+      if (c.pseudo) return arr; // Filter out pseudo-conditions.
+      const { label: name, icon, reference } = c;
+      const id = dnd5e.utils.staticID(`dnd5e${k}`);
+      conditionIds.add(id);
+      const existing = this.actor.effects.get(id);
+      const { disabled, img } = existing ?? {};
+      arr.push({
+        name,
+        reference,
+        id: k,
+        icon: img ?? icon,
+        disabled: existing ? disabled : true,
+      });
+      return arr;
+    }, []);
+
+    for (const category of Object.values(
+      defaultDocumentContext.effects as any[]
+    )) {
+      category.effects = await category.effects.reduce(
+        async (arr: any[], effect: any) => {
+          effect.updateDuration();
+          if (conditionIds.has(effect.id) && !effect.duration.remaining)
+            return arr;
+          const { id, name, img, disabled, duration } = effect;
+          let source = (await effect.getSource()) ?? this.actor;
+          // If the source is an ActiveEffect from another Actor, note the source as that Actor instead.
+          if (
+            source instanceof dnd5e.documents.ActiveEffect5e &&
+            source.target !== this.object
+          ) {
+            source = source.target;
+          }
+          arr = await arr;
+          arr.push({
+            id,
+            name,
+            img,
+            disabled,
+            duration,
+            source,
+            parentId: effect.target === effect.parent ? null : effect.parent.id,
+            durationParts: duration.remaining ? duration.label.split(', ') : [],
+            hasTooltip: source instanceof dnd5e.documents.Item5e,
+          });
+          return arr;
+        },
+        []
+      );
+    }
+
     const context: NpcSheetContext = {
       ...defaultDocumentContext,
       actions: await getActorActionSections(this.actor),
@@ -698,6 +756,7 @@ export class Tidy5eNpcSheet
           relativeTo: this.actor,
         }
       ),
+      conditions: conditions,
       containerPanelItems: await Inventory.getContainerPanelItems(
         defaultDocumentContext.items
       ),
