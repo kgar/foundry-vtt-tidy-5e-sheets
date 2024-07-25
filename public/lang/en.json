@@ -641,7 +641,7 @@
     "name": "Migrations",
     "buttonLabel": "Migrate Tidy Data",
     "dialogTitle": "Migrate Tidy Data",
-    "hint": "If you were a user of the original Tidy5e Sheet module or the Alpha sheets, optionally use this Migrations menu to migrate your GM settings and Tidy sheet data.",
+    "hint": "If you were a user of the original Tidy5e Sheet module, optionally use this Migrations menu to migrate your GM settings and Tidy sheet data.",
     "migrationBeginningMessage": "Migrating data. Please do not refresh the page until done.",
     "migrationErrorMessage": "An error occurred. More details are in the dev console.",
     "migrationCompleteMessage": "Migration complete.",
@@ -657,10 +657,7 @@
       "mainExplanation1": "Migrating data to the new Tidy 5e Sheets module is not required in order to use it. Worst-case, if you are an original Tidy5e Sheet user and skip migrations, you will need to re-apply your settings to your liking.",
       "mainExplanation2": "{boldStart}Note{boldEnd}: Client Settings are not a part of this migration. Enough has changed about how client settings work in Tidy, so it is recommended to take a fresh look at client settings.",
       "originalHeader": "Original Tidy5e Sheet",
-      "originalExplanation": "Migrate GM settings and Tidy sheet data flags from the original Tidy5e Sheet. Most of the differences in data are from GM settings. If you migrate your settings and find a setting to be not to your liking, simply change the settings from the config settings menu.",
-      "alphaHeader": "Alpha Tidy 5e Sheets",
-      "alphaExplanation1": "Migrate GM settings and Tidy sheet data flags from the Alpha Tidy 5e Sheets. Most of the differences in data are from the sheet data flags. The Alpha flags migration targets top-level actors, top-level actors' items, and top-level items. This will bring in biographical data, favorites, and other sheet-specific Alpha data flags.",
-      "alphaExplanation2": "{boldStart}Note{boldEnd}: this migration does not affect compendium content."
+      "originalExplanation": "Migrate GM settings and Tidy sheet data flags from the original Tidy5e Sheet. Most of the differences in data are from GM settings. If you migrate your settings and find a setting to be not to your liking, simply change the settings from the config settings menu."
     },
     "Notification": {
       "Title": "Tidy 5e Sheets: Migrations Available",
