@@ -59,6 +59,7 @@ import { TidyHooks } from 'src/foundry/TidyHooks';
 import { Inventory } from 'src/features/sections/Inventory';
 import { Container } from 'src/features/containers/Container';
 import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 
 export class Tidy5eNpcSheet
   extends ActorSheetCustomSectionMixin(dnd5e.applications.actor.ActorSheet5eNPC)
@@ -659,6 +660,14 @@ export class Tidy5eNpcSheet
       },
     };
 
+    // Effects & Conditions
+    let { conditions, effects: enhancedEffectSections } =
+      await ConditionsAndEffects.getConditionsAndEffects(
+        this.actor,
+        this.object,
+        defaultDocumentContext.effects
+      );
+
     const context: NpcSheetContext = {
       ...defaultDocumentContext,
       actions: await getActorActionSections(this.actor),
@@ -698,6 +707,7 @@ export class Tidy5eNpcSheet
           relativeTo: this.actor,
         }
       ),
+      conditions: conditions,
       containerPanelItems: await Inventory.getContainerPanelItems(
         defaultDocumentContext.items
       ),
@@ -707,8 +717,9 @@ export class Tidy5eNpcSheet
       customContent: await NpcSheetRuntime.getContent(defaultDocumentContext),
       useClassicControls:
         SettingsProvider.settings.useClassicControlsForNpc.get(),
-      encumbrance: this.actor.system.attributes.encumbrance,
+      effects: enhancedEffectSections,
       editable: defaultDocumentContext.editable,
+      encumbrance: this.actor.system.attributes.encumbrance,
       filterData: this.itemFilterService.getDocumentItemFilterData(),
       filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(

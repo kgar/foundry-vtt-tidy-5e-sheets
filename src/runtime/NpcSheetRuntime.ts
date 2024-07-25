@@ -8,7 +8,7 @@ import { CONSTANTS } from 'src/constants';
 import NpcAbilitiesTab from 'src/sheets/npc/tabs/NpcAbilitiesTab.svelte';
 import NpcSpellbookTab from 'src/sheets/npc/tabs/NpcSpellbookTab.svelte';
 import NpcBiographyTab from 'src/sheets/npc/tabs/NpcBiographyTab.svelte';
-import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
+import NpcEffectsTab from 'src/sheets/npc/tabs/NpcEffectsTab.svelte';
 import ActorJournalTab from 'src/sheets/actor/tabs/ActorJournalTab.svelte';
 import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
 import type { RegisteredContent, RegisteredTab } from './types';
@@ -55,7 +55,7 @@ export class NpcSheetRuntime {
       id: 'effects',
       title: 'DND5E.Effects',
       content: {
-        component: ActorEffectsTab,
+        component: NpcEffectsTab,
         type: 'svelte',
       },
       layout: 'classic',
