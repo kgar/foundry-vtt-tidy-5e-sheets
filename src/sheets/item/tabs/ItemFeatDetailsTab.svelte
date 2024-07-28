@@ -104,7 +104,7 @@
       id={inputId}
       document={$context.item}
       field="system.enchantment.items.max"
-      value={$context.source.enchantment.items.max}
+      value={$context.source.enchantment?.items.max}
       disabled={!$context.editable}
     />
     <p class="hint">
@@ -123,7 +123,7 @@
       id={inputId}
       document={$context.item}
       field="system.enchantment.items.period"
-      value={$context.system.enchantment.items.period}
+      value={$context.system.enchantment?.items.period}
       blankValue=""
     >
       <SelectOptions
