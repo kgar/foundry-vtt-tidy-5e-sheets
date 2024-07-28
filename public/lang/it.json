@@ -615,6 +615,14 @@
         "FavoritesToSystem": {
             "sectionTitle": "Preferiti dei Personaggi",
             "selectionDialogTitle": "Migrazione: Preferiti dei Personaggi a Sistema"
+        },
+        "BondsIdealsFlawsToSystem": {
+            "selectionDialogTitle": "Migrazione: Legami, Ideali e Difetti PNG a System",
+            "sectionTitle": "Legami, Ideali e Difetti PNG"
+        },
+        "SpellClassToSourceClass": {
+            "sectionTitle": "Classe Incantesimo a Classe Sorgente",
+            "selectionDialogTitle": "Migrazione: Classe Incantesimo a Classe Sorgente"
         }
     },
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtri",
@@ -817,5 +825,13 @@
     },
     "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
         "name": "Colore Solo Rituale"
-    }
+    },
+    "TIDY5E.EmptyContainer": "Questo contenitore è vuoto.",
+    "TIDY5E.SpellSourceIdentifierLabelHint": "Il personaggio che possiede questo incantesimo non ha la classe sorgente specificata qui.",
+    "TIDY5E.Utilities.Tools": "Attrezzi",
+    "TIDY5E.Utilities.AssignSpellsToClasses": "Assegna Incantesimi a Classi",
+    "TIDY5E.SpellSourceClassAssignments.Identifier": "Identificatore Classe Sorgente",
+    "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "L'identificatore della classe sorgente dell'incantesimo appare qui. Per assegnare un identificatore che il personaggio non possiede, inserisci l'identificatore della classe in questo campo di testo.",
+    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Mostra Solo Non Assegnato",
+    "TIDY5E.SpellSourceIdentifierSelectText": "Identificatore Classe: {identifier}"
 }
