@@ -628,7 +628,7 @@
             "originalExplanation": "Migra la configuración de DM y los indicadores de datos de la hoja Tidy de la hoja T5E original. La mayoría de las diferencias en los datos provienen de configuraciones de DM. Si migras tu configuración y adviertes que una configuración no es de tu agrado, simplemente cámbiala desde el menú de configuración.",
             "sectionTitle": "Inicio de las migraciones de Tidy V1"
         },
-        "hint": "Si eras usuario del módulo T5E original o de las hojas Alpha, opcionalmente utiliza este menú de Migraciones para migrar la configuración de DM y los datos de la hoja T5E.",
+        "hint": "Si era usuario del módulo original de Tidy5e Sheet, utiliza opcionalmente este menú Migraciones para migrar tu configuración de GM y los datos de Tidy Sheet.",
         "migrateConfirmTitle": "Confirmar migración",
         "migrationCompleteMessage": "Migración completada.",
         "migrateConfirmButtonNo": "Cancelar",
@@ -688,6 +688,10 @@
         "SpellClassToSourceClass": {
             "sectionTitle": "Clase de hechizo a clase de origen",
             "selectionDialogTitle": "Migración: Clase de hechizo a clase de origen"
+        },
+        "NpcExhaustion": {
+            "selectionDialogTitle": "Migración: NPC Exhaustion a Sistema",
+            "sectionTitle": "NPC Exhaustion"
         }
     },
     "TIDY5E.Settings.ColorPickerScrollbarTrack": {
@@ -802,5 +806,10 @@
     },
     "TIDY5E.EmptyContainer": "Este contenedor está vacío.",
     "TIDY5E.SpellSourceIdentifierSelectText": "Tipo de identificador: {identifier}",
-    "TIDY5E.SpellSourceIdentifierLabelHint": "El actor que tiene este hechizo no tiene la clase de fuente que se especifica aquí."
+    "TIDY5E.SpellSourceIdentifierLabelHint": "El actor que tiene este hechizo no tiene la clase de fuente que se especifica aquí.",
+    "TIDY5E.Utilities.Tools": "Herramientas",
+    "TIDY5E.Utilities.AssignSpellsToClasses": "Asignar hechizos a las clases",
+    "TIDY5E.SpellSourceClassAssignments.Identifier": "Identificador de clase de origen",
+    "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "Aquí aparece el identificador de clase de origen del hechizo. Para asignar un identificador que no posea el personaje, introduce el identificador de clase en este campo de texto.",
+    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Mostrar solo los sin asignar"
 }
