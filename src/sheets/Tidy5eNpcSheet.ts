@@ -53,7 +53,7 @@ import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
-import { ActorSheetCustomSectionMixin } from './mixins/Tidy5eBaseActorSheetMixins';
+import { BaseSheetCustomSectionMixin } from './mixins/BaseSheetCustomSectionMixin';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { Inventory } from 'src/features/sections/Inventory';
@@ -62,7 +62,10 @@ import { InlineContainerToggleService } from 'src/features/containers/InlineCont
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 
 export class Tidy5eNpcSheet
-  extends ActorSheetCustomSectionMixin(dnd5e.applications.actor.ActorSheet5eNPC)
+  extends BaseSheetCustomSectionMixin(
+    (object) => object.items,
+    dnd5e.applications.actor.ActorSheet5eNPC
+  )
   implements
     SheetTabCacheable,
     SheetExpandedItemsCacheable,

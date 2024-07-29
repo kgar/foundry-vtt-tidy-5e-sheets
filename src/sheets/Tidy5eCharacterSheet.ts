@@ -60,7 +60,7 @@ import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSections';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
-import { ActorSheetCustomSectionMixin } from './mixins/Tidy5eBaseActorSheetMixins';
+import { BaseSheetCustomSectionMixin } from './mixins/BaseSheetCustomSectionMixin';
 import { Inventory } from 'src/features/sections/Inventory';
 import type {
   CharacterFavorite,
@@ -73,7 +73,8 @@ import { InlineContainerToggleService } from 'src/features/containers/InlineCont
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 
 export class Tidy5eCharacterSheet
-  extends ActorSheetCustomSectionMixin(
+  extends BaseSheetCustomSectionMixin(
+    (object) => object.items,
     dnd5e.applications.actor.ActorSheet5eCharacter
   )
   implements

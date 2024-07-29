@@ -80,7 +80,10 @@
       class="container-contents-list-section"
       style="--grid-template-columns: {gridTemplateColumns};"
     >
-      <TidyTable key={section.key}>
+      <TidyTable
+        key={section.key}
+        data-custom-section={section.custom ? true : null}
+      >
         <svelte:fragment slot="header">
           <TidyTableHeaderRow>
             <TidyTableHeaderCell primary={true}>
