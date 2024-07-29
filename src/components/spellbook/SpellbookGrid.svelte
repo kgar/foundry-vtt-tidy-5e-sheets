@@ -79,7 +79,10 @@
 </script>
 
 <section class="spellbook-grid {cssClass}">
-  <ItemTable key={section.key}>
+  <ItemTable
+    key={section.key}
+    data-custom-section={section.custom ? true : null}
+  >
     <svelte:fragment slot="header">
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>
