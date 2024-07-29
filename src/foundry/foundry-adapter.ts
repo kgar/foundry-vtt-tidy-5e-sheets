@@ -15,7 +15,6 @@ import { SettingsProvider } from 'src/settings/settings';
 import { debug, error, warn } from 'src/utils/logging';
 import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
 import { TidyFlags } from './TidyFlags';
-import EnchantmentConfig from './shims/EnchantmentConfig';
 import { TidyHooks } from './TidyHooks';
 
 export const FoundryAdapter = {
@@ -1270,9 +1269,7 @@ export const FoundryAdapter = {
     }
   },
   async openEnchantmentConfig(item: Item5e) {
-    // TODO: Replace with dnd5e.application.item.EnchantmentConfig when this issue is resolved: https://github.com/foundryvtt/dnd5e/issues/3624
-    // @ts-ignore
-    return new EnchantmentConfig(item).render(true);
+    return new dnd5e.applications.item.EnchantmentConfig(item).render(true);
   },
   async renderFromUuid(uuid: string, force: boolean = true) {
     const doc = await fromUuid(uuid);
