@@ -20,8 +20,6 @@ export function BaseSheetCustomSectionMixin<
       event: DragEvent,
       itemData: Record<string, unknown>
     ): Promise<any> | void;
-    _event: Event;
-    _onDropItemCreate(itemData: Record<string, unknown>): Promise<unknown>;
     object: any;
   }
 >(itemsFn: OwnedItemsFunction, Base: T) {
