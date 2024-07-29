@@ -45,9 +45,13 @@ import type { CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
 import { Container } from 'src/features/containers/Container';
+import { BaseSheetCustomSectionMixin } from './mixins/BaseSheetCustomSectionMixin';
 
 export class Tidy5eKgarContainerSheet
-  extends dnd5e.applications.item.ContainerSheet
+  extends BaseSheetCustomSectionMixin(
+    (object) => object.system.contents,
+    dnd5e.applications.item.ContainerSheet
+  )
   implements
     SheetTabCacheable,
     SheetExpandedItemsCacheable,

@@ -9,6 +9,8 @@
   export let key: string;
   export let toggleable: boolean = true;
 
+  let { class: cssClass, ...attributes } = $$restProps;
+
   const messageBus = getContext<MessageBus>(
     CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS,
   );
@@ -36,9 +38,10 @@
 </script>
 
 <section
-  class="tidy-table"
+  class="tidy-table {cssClass ?? ''}"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_TABLE}
   data-tidy-section-key={key}
+  {...attributes}
 >
   <slot name="header" />
   <ExpandableContainer expanded={$expandedState.expanded}>
