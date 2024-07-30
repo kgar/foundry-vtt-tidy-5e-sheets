@@ -15,7 +15,8 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<section class="flex-column">
+<section class="flex-column small-gap">
+  <button class="inline-button" style="align-self: flex-end; width: auto;"><i class="fas fa-plus"></i> {localize('TIDY5E.Section.ConfigDialog.AddSectionButtonText')}</button>
   <SortingListbox
     bind:items={sections}
     labelProp="label"
@@ -23,7 +24,7 @@
     listboxCssClass="scroll-container"
     class="flex-1"
   >
-    <svelte:fragment let:item>
+    <svelte:fragment slot="itemTemplate" let:item>
       <span
         data-section-key={item['key']}
         data-testid="section-config-item-label"
