@@ -110,6 +110,7 @@ function buildActionSections(
         custom: {
           creationItemTypes: [],
           section: customSectionName,
+          persisted: false,
         },
       });
       customSection.actions.push(actionItem);

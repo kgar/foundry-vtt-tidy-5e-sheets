@@ -63,6 +63,7 @@ export class SheetSections {
       custom: {
         section: customSectionName,
         creationItemTypes: [CONSTANTS.ITEM_TYPE_SPELL],
+        persisted: false,
       },
       show: true,
       ...options,
@@ -273,6 +274,11 @@ export class SheetSections {
 
         // Apply visibility from configuration
         section.show = sectionConfig?.[section.key]?.show !== false;
+
+        if (section.custom) {
+          section.custom.persisted =
+            sectionConfig?.[section.key]?.persisted === true;
+        }
       });
     } catch (e) {
       error('An error occurred while configuring inventory', false, e);
@@ -310,6 +316,12 @@ export class SheetSections {
         section.show =
           sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.[section.key]
             ?.show !== false;
+
+        if (section.custom) {
+          section.custom.persisted =
+            sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.[section.key]
+              ?.persisted === true;
+        }
       });
     } catch (e) {
       error('An error occurred while configuring spells', false, e);
@@ -385,6 +397,11 @@ export class SheetSections {
 
         // Apply visibility from configuration
         section.show = sectionConfig?.[section.key]?.show !== false;
+
+        if (section.custom) {
+          section.custom.persisted =
+            sectionConfig?.[section.key]?.persisted === true;
+        }
       });
     } catch (e) {
       error('An error occurred while configuring favorites', false, e);
@@ -419,6 +436,11 @@ export class SheetSections {
 
         // Apply visibility from configuration
         section.show = sectionConfig?.[section.key]?.show !== false;
+
+        if (section.custom) {
+          section.custom.persisted =
+            sectionConfig?.[section.key]?.persisted === true;
+        }
       });
     } catch (e) {
       error('An error occurred while configuring features', false, e);
@@ -442,6 +464,11 @@ export class SheetSections {
         sortActions(section, sortMode);
 
         section.show = sectionConfigs?.[section.key]?.show !== false;
+
+        if (section.custom) {
+          section.custom.persisted =
+            sectionConfigs?.[section.key]?.persisted === true;
+        }
       });
     } catch (e) {
       error('An error occurred while configuring actions', false, e);

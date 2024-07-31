@@ -70,6 +70,7 @@ export class Inventory {
       custom: {
         section: customSectionName,
         creationItemTypes: [...defaultInventoryTypes],
+        persisted: false,
       },
       show: true,
       ...customSectionOptions,

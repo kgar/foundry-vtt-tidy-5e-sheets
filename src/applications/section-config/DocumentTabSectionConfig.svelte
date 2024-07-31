@@ -12,11 +12,35 @@
   ) => void | Promise<void>;
   export let useDefault: () => void | Promise<void>;
 
+  function addPersistedSection() {
+    sections.push({
+      key: 'My Custom Persisted Section Example',
+      label: 'My Custom Persisted Section Example',
+      persisted: true,
+      show: true,
+    });
+
+    sections = sections;
+  }
+
   const localize = FoundryAdapter.localize;
+
+  function removePersistedCustomSection(
+    item: DocumentTabSectionConfigItem,
+  ): any {
+    sections = sections.filter((s) => s !== item);
+  }
 </script>
 
 <section class="flex-column small-gap">
-  <button class="inline-button" style="align-self: flex-end; width: auto;"><i class="fas fa-plus"></i> {localize('TIDY5E.Section.ConfigDialog.AddSectionButtonText')}</button>
+  <button
+    type="button"
+    class="inline-button"
+    style="align-self: flex-end; width: auto;"
+    on:click={addPersistedSection}
+    ><i class="fas fa-plus"></i>
+    {localize('TIDY5E.Section.ConfigDialog.AddSectionButtonText')}</button
+  >
   <SortingListbox
     bind:items={sections}
     labelProp="label"
@@ -56,6 +80,18 @@
           }}
         >
           <i class="far fa-eye-slash fa-fw"></i>
+        </button>
+      {/if}
+      {#if item.persisted}
+        <button
+          type="button"
+          class="inline-icon-button"
+          title={localize(
+            'TIDY5E.Section.ConfigDialog.DeletePersistedSectionTooltip',
+          )}
+          on:click={() => removePersistedCustomSection(item)}
+        >
+          <i class="fas fa-trash"></i>
         </button>
       {/if}
     </svelte:fragment>

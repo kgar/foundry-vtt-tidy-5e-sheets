@@ -33,6 +33,7 @@ export class DocumentTabSectionConfigApplication extends SvelteFormApplicationBa
       key: section.key,
       label: section.label,
       show: section.show !== false,
+      persisted: section.custom?.persisted === true
     }));
     this.tabId = tabId;
     this.tabTitle = tabTitle;
@@ -62,6 +63,7 @@ export class DocumentTabSectionConfigApplication extends SvelteFormApplicationBa
             key: curr.key,
             label: FoundryAdapter.localize(curr.label),
             show: curr.show,
+            persisted: curr.persisted
           };
         }, {}),
         onSaveChanges: this._onSaveChanges.bind(this),

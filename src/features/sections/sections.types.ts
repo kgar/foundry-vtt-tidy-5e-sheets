@@ -2,6 +2,7 @@ export type SectionConfig = {
   key: string;
   order: number;
   show?: boolean;
+  persisted?: boolean;
 };
 
 /** Section configuration for a given actor, arranged by tab IDs. */
