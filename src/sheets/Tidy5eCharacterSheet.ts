@@ -1134,6 +1134,31 @@ export class Tidy5eCharacterSheet
       this
     );
 
+    const spellbookSectionConfig =
+      TidyFlags.sectionConfig.get(this.actor)?.[
+        CONSTANTS.TAB_CHARACTER_SPELLBOOK
+      ] ?? {};
+
+    for (const sectionConfig of Object.values(spellbookSectionConfig)) {
+      if (!sectionConfig.persisted) {
+        continue;
+      }
+
+      if (spellbook.find((f) => f.key === sectionConfig.key)) {
+        continue;
+      }
+
+      const persistedSpellbookSection =
+        SheetSections.createCustomSpellbookSection(sectionConfig.key, {
+          custom: {
+            creationItemTypes: [CONSTANTS.ITEM_TYPE_SPELL],
+            persisted: true,
+            section: sectionConfig.key,
+          },
+        });
+      spellbook.push(persistedSpellbookSection);
+    }
+
     // Section Favorite Spells
     const favoriteSpellbook = SheetSections.prepareTidySpellbook(
       context,

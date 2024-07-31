@@ -33,7 +33,8 @@ export class DocumentTabSectionConfigApplication extends SvelteFormApplicationBa
       key: section.key,
       label: section.label,
       show: section.show !== false,
-      persisted: section.custom?.persisted === true
+      persisted: section.custom?.persisted === true,
+      custom: !!section.custom,
     }));
     this.tabId = tabId;
     this.tabTitle = tabTitle;
@@ -63,7 +64,8 @@ export class DocumentTabSectionConfigApplication extends SvelteFormApplicationBa
             key: curr.key,
             label: FoundryAdapter.localize(curr.label),
             show: curr.show,
-            persisted: curr.persisted
+            persisted: curr.persisted,
+            custom: curr.custom,
           };
         }, {}),
         onSaveChanges: this._onSaveChanges.bind(this),
@@ -80,17 +82,40 @@ export class DocumentTabSectionConfigApplication extends SvelteFormApplicationBa
 
   private async _onApply(sections: DocumentTabSectionConfigItem[]) {
     const sectionConfig = TidyFlags.sectionConfig.get(this.document) ?? {};
-    sectionConfig[this.tabId] = sections.reduce<Record<string, SectionConfig>>(
+
+    const newSections = sections.reduce<Record<string, SectionConfig>>(
       (result, curr, i) => {
         result[curr.key] = {
           key: curr.key,
           order: i,
           show: curr.show !== false,
+          persisted: curr.persisted === true,
         };
         return result;
       },
       {}
     );
+
+    const oldSections = sectionConfig[this.tabId] ?? {};
+
+
+    // TODO: Fill this up with items whose section has been deleted
+    let itemsWithDeletedSections: Record<string, any> = {};
+
+    // TODO: Add a transaction prop such as `action: 'save' | 'delete' | 'rename'` which will track how to handle the particular section, rather than having to compare like this
+    // TODO: When `action === 'rename'`, there should also be a `oldKey` which has the original key before the rename(s)
+    for (const oldSection of Object.values(oldSections)) {
+      if (newSections[oldSection.key]) {
+        continue;
+      }
+
+      // TODO: build an items update for the target owner based on items which are having their section flag removed.
+      // @ts-ignore
+      newSections[`-=${oldSection.key}`] = null;
+    }
+
+    sectionConfig[this.tabId] = newSections;
+
     await TidyFlags.sectionConfig.set(this.document, sectionConfig);
   }
 

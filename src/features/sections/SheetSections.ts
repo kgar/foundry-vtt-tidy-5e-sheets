@@ -27,17 +27,6 @@ import { error } from 'src/utils/logging';
 import { sortActions } from '../actions/actions';
 
 export class SheetSections {
-  static generateCustomSpellbookSections(
-    spells: Item5e[],
-    options: Partial<SpellbookSection>
-  ) {
-    const customSpellbook: Record<string, SpellbookSection> = {};
-    spells.forEach((s) =>
-      SheetSections.applySpellToSection(customSpellbook, s, options)
-    );
-    return Object.values(customSpellbook);
-  }
-
   static applySpellToSection(
     spellbook: Record<string, SpellbookSection>,
     spell: Item5e,
@@ -50,7 +39,17 @@ export class SheetSections {
       return;
     }
 
-    const section: SpellbookSection = (spellbook[customSectionName] ??= {
+    const section: SpellbookSection = (spellbook[customSectionName] ??=
+      SheetSections.createCustomSpellbookSection(customSectionName, options));
+
+    section.spells.push(spell);
+  }
+
+  static createCustomSpellbookSection(
+    customSectionName: string,
+    options?: Partial<SpellbookSection>
+  ): SpellbookSection {
+    return {
       dataset: {
         [TidyFlags.section.prop]: customSectionName,
       },
@@ -63,13 +62,11 @@ export class SheetSections {
       custom: {
         section: customSectionName,
         creationItemTypes: [CONSTANTS.ITEM_TYPE_SPELL],
-        persisted: false,
+        persisted: options?.custom?.persisted === true,
       },
       show: true,
       ...options,
-    });
-
-    section.spells.push(spell);
+    };
   }
 
   static sortKeyedSections<

@@ -13,11 +13,13 @@
   export let useDefault: () => void | Promise<void>;
 
   function addPersistedSection() {
+    // TODO: Prompt for a name, such as adding a special listbox item which has an input and a ✅❌ interface. ✅ would be verified unique, else an error notification. ❌ would remove the selection. When in this mode, Save / Apply are disabled, or they simply ignore the pending one.
     sections.push({
       key: 'My Custom Persisted Section Example',
       label: 'My Custom Persisted Section Example',
       persisted: true,
       show: true,
+      custom: true,
     });
 
     sections = sections;
@@ -25,9 +27,7 @@
 
   const localize = FoundryAdapter.localize;
 
-  function removePersistedCustomSection(
-    item: DocumentTabSectionConfigItem,
-  ): any {
+  function removeCustomSection(item: DocumentTabSectionConfigItem): any {
     sections = sections.filter((s) => s !== item);
   }
 </script>
@@ -82,14 +82,14 @@
           <i class="far fa-eye-slash fa-fw"></i>
         </button>
       {/if}
-      {#if item.persisted}
+      {#if item.custom}
         <button
           type="button"
           class="inline-icon-button"
           title={localize(
-            'TIDY5E.Section.ConfigDialog.DeletePersistedSectionTooltip',
+            'TIDY5E.Section.ConfigDialog.RemovePersistedSectionTooltip',
           )}
-          on:click={() => removePersistedCustomSection(item)}
+          on:click={() => removeCustomSection(item)}
         >
           <i class="fas fa-trash"></i>
         </button>
