@@ -195,23 +195,3 @@
     </svelte:fragment>
   </Listbox>
 </div>
-
-<style lang="scss">
-  .sorting-listbox {
-    :global([role='option']) {
-      transition: padding-top 0.125s ease;
-    }
-
-    :global([role='option'].dragged-over) {
-      padding-top: 1rem;
-    }
-  }
-
-  .controls {
-    align-self: center;
-
-    button + button {
-      margin-top: 0.25rem;
-    }
-  }
-</style>
