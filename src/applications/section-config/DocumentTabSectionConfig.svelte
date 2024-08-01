@@ -16,7 +16,6 @@
 </script>
 
 <section class="flex-column small-gap">
-  <button class="inline-button" style="align-self: flex-end; width: auto;"><i class="fas fa-plus"></i> {localize('TIDY5E.Section.ConfigDialog.AddSectionButtonText')}</button>
   <SortingListbox
     bind:items={sections}
     labelProp="label"
