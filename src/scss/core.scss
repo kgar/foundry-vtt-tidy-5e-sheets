@@ -205,6 +205,9 @@
     border: none;
   }
 
+  // Applications
+  @import '../applications/section-config/DocumentTabSectionConfig';
+
   // Components
   @import '../components/button-menu/button-menu.scss';
   @import '../components/toggle/toggles.scss';
@@ -378,13 +381,6 @@
       font-style: italic;
       margin: 0.25rem 0;
     }
-  }
-
-  /* Spacing utilities */
-
-  // TODO: "draw more inspiration" from https://getbootstrap.com/docs/5.3/utilities/spacing/
-  .p-1 {
-    padding: 0.25rem;
   }
 
   /* Text utilities */
