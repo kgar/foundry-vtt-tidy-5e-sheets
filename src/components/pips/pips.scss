@@ -9,14 +9,14 @@
 }
 
 .pips .pip {
-  --size: 1rem;
+  --pip-size: 1rem;
   --pip-bg-inactive: red;
   --pip-bg-active: green;
   --pip-bg-to-activate: ;
   --pip-bg-to-deactivate: ;
 
-  width: var(--size);
-  height: var(--size);
+  width: var(--pip-size);
+  height: var(--pip-size);
   background: var(--pip-bg-inactive);
 
   &:where(.active) {
