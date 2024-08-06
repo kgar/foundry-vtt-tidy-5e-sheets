@@ -134,6 +134,7 @@ export class Tidy5eCharacterSheet
         'sheet',
         'actor',
         CONSTANTS.SHEET_TYPE_CHARACTER,
+        CONSTANTS.SHEET_LAYOUT_CLASSIC,
       ],
       width: 740,
       height: 810,
