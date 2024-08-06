@@ -1,0 +1,38 @@
+:where(.pips) {
+  display: flex;
+  flex-direction: row;
+
+  :where(.pip) {
+    border-radius: 50%;
+    transition: background 0.125s;
+  }
+}
+
+.pips .pip {
+  --size: 1rem;
+  --pip-bg-inactive: red;
+  --pip-bg-active: green;
+  --pip-bg-to-activate: ;
+  --pip-bg-to-deactivate: ;
+
+  width: var(--size);
+  height: var(--size);
+  background: var(--pip-bg-inactive);
+
+  &:where(.active) {
+    background: var(--pip-bg-active);
+  }
+}
+
+.pips .pip.inactive:has(~ .pip.inactive:hover),
+.pips .pip:not(.active):hover {
+  background: var(--pip-bg-to-activate, --pip-bg-inactive);
+}
+
+.pips .pip.active:hover ~ .pip.active:has(~ .pip-end) {
+  background: var(--pip-bg-to-deactivate, --pip-bg-active);
+}
+
+.pips .pip:not([disabled]) {
+  cursor: pointer;
+}
