@@ -339,9 +339,12 @@ export class TidyFlags {
     prop: TidyFlags.getFlagPropertyPath('maxPreparedSpells'),
     /** Gets the actor's maximum number of prepared spells. */
     get(actor: Actor5e): string | undefined {
+      // Legacy values of this flag can be of type `number`, so it is put to string, just in case.
       return (
-        TidyFlags.tryGetFlag<string>(actor, TidyFlags.maxPreparedSpells.key) ??
-        undefined
+        TidyFlags.tryGetFlag<string>(
+          actor,
+          TidyFlags.maxPreparedSpells.key
+        )?.toString() ?? undefined
       );
     },
     /** Sets the actor's maximum number of prepared spells. */
@@ -1119,7 +1122,7 @@ export class TidyFlags {
    * @param flagged A document which supports flags.
    * @param flagName The name of the flag to get.
    * @returns The flag's value, or `undefined` if the flag is not set.
-   * 
+   *
    * @remarks
    * This function is generic, but it is not performing parsing of the flag's value.
    * It is simply doing an optimistic cast to the target type.
