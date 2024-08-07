@@ -3,10 +3,12 @@ import { PopoutModuleIntegration } from './modules/PopoutModuleIntegration';
 import type { ModuleIntegrationBase } from './ModuleIntegrationBase';
 import { error } from 'src/utils/logging';
 import { CustomCharacterSheetsModuleIntegration } from './modules/CustomCharacterSheetsModuleIntegration';
+import { DrakkenheimCoreModuleIntegration } from './modules/Drakkenheim/DrakkenheimCore';
 
 const moduleIntegrations: ModuleIntegrationBase[] = [
   new PopoutModuleIntegration(),
   new CustomCharacterSheetsModuleIntegration(),
+  new DrakkenheimCoreModuleIntegration(),
   // Add other module integrations here
 ];
 
