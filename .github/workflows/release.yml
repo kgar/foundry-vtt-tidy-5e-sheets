@@ -47,4 +47,13 @@ jobs:
           tag: ${{ github.event.release.tag_name }}
           body: ${{ github.event.release.body }}
           prerelease: ${{ github.event.release.prerelease }}
-          makeLatest: ${{ !github.event.release.prerelease }}
+          makeLatest: false
+
+      - name: Publish Module to FoundryVTT Website
+        if: ${{ !github.event.release.prerelease }}
+        id: publish-to-foundry-website
+        uses: cs96and/FoundryVTT-release-package@v1
+        with:
+          package-token: ${{ secrets.PACKAGE_TOKEN }}
+          manifest-url: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/module.json
+          notes-url: https://github.com/${{github.repository}}/releases/tag/${{github.event.release.tag_name}}

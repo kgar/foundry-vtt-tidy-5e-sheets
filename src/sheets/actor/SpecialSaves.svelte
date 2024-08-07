@@ -4,8 +4,11 @@
   import type { Readable } from 'svelte/store';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import type { ActorSheetContext } from 'src/types/types';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<ActorSheetContext>>('context');
+  let context = getContext<Readable<ActorSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 </script>
 
 {#if $context.saves.concentration}
@@ -17,8 +20,8 @@
       on:click={(ev) => $context.actor.rollConcentration({ event: ev })}
     >
       <Dnd5eIcon src="systems/dnd5e/icons/svg/statuses/concentrating.svg" />
-      {save.label}
-      <span>{save.sign}{save.mod}</span>
+      {save.label}:
+      <span class="special-save-mod">{save.sign}{save.mod}</span>
     </button>
     {#if $context.unlocked}
       <button
@@ -39,5 +42,11 @@
     gap: 0.25rem;
     align-items: center;
     font-size: 0.75rem;
+
+    --icon-fill: var(--t5e-icon-hover-color);
+
+    button {
+      font-weight: 700;
+    }
   }
 </style>

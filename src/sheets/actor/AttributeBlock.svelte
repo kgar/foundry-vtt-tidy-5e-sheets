@@ -18,7 +18,9 @@
 
   $: abbreviation = CONFIG.DND5E.abilities[id]?.abbreviation ?? id;
 
-  let context = getContext<Readable<ActorSheetContext>>('context');
+  let context = getContext<Readable<ActorSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 
@@ -89,7 +91,7 @@
       {formatAsModifier(ability.save)}
     </button>
     {#if useSavingThrowProficiency}
-      {#if !$context.lockSensitiveFields}
+      {#if $context.unlocked}
         <button
           type="button"
           title={ability.hover}
@@ -122,7 +124,7 @@
         >
       {/if}
     {/if}
-    {#if useConfigurationOption && $context.editable && !$context.lockSensitiveFields}
+    {#if useConfigurationOption && $context.editable && $context.unlocked}
       <button
         type="button"
         class="config-button inline-icon-button"

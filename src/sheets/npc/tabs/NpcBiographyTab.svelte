@@ -1,7 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SheetEditor from 'src/components/editor/SheetEditor.svelte';
-
   import type { NpcSheetContext } from 'src/types/types';
   import { CONSTANTS } from 'src/constants';
   import { getContext } from 'svelte';
@@ -9,21 +8,19 @@
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
   import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
   import { settingStore } from 'src/settings/settings';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
-  let context = getContext<Readable<NpcSheetContext>>('context');
+  let context = getContext<Readable<NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 
-  function activateProseMirrorListeners(node: HTMLElement) {
-    $context.activateFoundryJQueryListeners(node);
-  }
-
   $: showNpcPersonalityInfo =
-    FoundryAdapter.tryGetFlag($context.actor, 'showNpcPersonalityInfo') ??
-    false;
+    TidyFlags.showNpcPersonalityInfo.get($context.actor) ?? false;
 
   function togglePersonalityInfo() {
-    FoundryAdapter.setFlag(
+    TidyFlags.setFlag(
       $context.actor,
       'showNpcPersonalityInfo',
       !showNpcPersonalityInfo,
@@ -31,7 +28,7 @@
   }
 
   type FlagBioField = {
-    flag: string;
+    prop: string;
     value: string | undefined | null;
     text: string;
   };
@@ -39,43 +36,43 @@
   let bioFields: FlagBioField[] = [];
   $: bioFields = [
     {
-      flag: 'gender',
-      value: FoundryAdapter.tryGetFlag($context.actor, 'gender'),
+      prop: TidyFlags.gender.prop,
+      value: TidyFlags.gender.get($context.actor),
       text: 'DND5E.Gender',
     },
     {
-      flag: 'age',
-      value: FoundryAdapter.tryGetFlag($context.actor, 'age'),
+      prop: TidyFlags.age.prop,
+      value: TidyFlags.age.get($context.actor),
       text: 'DND5E.Age',
     },
     {
-      flag: 'height',
-      value: FoundryAdapter.tryGetFlag($context.actor, 'height'),
+      prop: TidyFlags.height.prop,
+      value: TidyFlags.height.get($context.actor),
       text: 'DND5E.Height',
     },
     {
-      flag: 'weight',
-      value: FoundryAdapter.tryGetFlag($context.actor, 'weight'),
+      prop: TidyFlags.weight.prop,
+      value: TidyFlags.weight.get($context.actor),
       text: 'DND5E.Weight',
     },
     {
-      flag: 'eyes',
-      value: FoundryAdapter.tryGetFlag($context.actor, 'eyes'),
+      prop: TidyFlags.eyes.prop,
+      value: TidyFlags.eyes.get($context.actor),
       text: 'DND5E.Eyes',
     },
     {
-      flag: 'skin',
-      value: FoundryAdapter.tryGetFlag($context.actor, 'skin'),
+      prop: TidyFlags.skin.prop,
+      value: TidyFlags.skin.get($context.actor),
       text: 'DND5E.Skin',
     },
     {
-      flag: 'hair',
-      value: FoundryAdapter.tryGetFlag($context.actor, 'hair'),
+      prop: TidyFlags.hair.prop,
+      value: TidyFlags.hair.get($context.actor),
       text: 'DND5E.Hair',
     },
     {
-      flag: 'faith',
-      value: FoundryAdapter.tryGetFlag($context.actor, 'faith'),
+      prop: TidyFlags.faith.prop,
+      value: TidyFlags.faith.get($context.actor),
       text: 'DND5E.Faith',
     },
   ];
@@ -89,7 +86,7 @@
     >
       <article>
         <ul class="character-details">
-          {#each bioFields as bioField (bioField.flag)}
+          {#each bioFields as bioField (bioField.prop)}
             <li>
               <span>{localize(bioField.text)}:</span>
               <ContentEditableFormField
@@ -97,7 +94,7 @@
                 element="span"
                 editable={$context.editable && !$context.lockSensitiveFields}
                 document={$context.actor}
-                field="flags.{CONSTANTS.MODULE_ID}.{bioField.flag}"
+                field={bioField.prop}
                 value={bioField.value ?? ''}
                 cssClass="detail-input"
               />
@@ -127,69 +124,57 @@
             class:limited={$context.showLimitedSheet}
           >
             <RerenderAfterFormSubmission
-              andOnValueChange={FoundryAdapter.tryGetFlag(
-                $context.actor,
-                'trait',
-              ) ?? ''}
+              andOnValueChange={TidyFlags.trait.get($context.actor) ?? ''}
             >
-              <article use:activateProseMirrorListeners>
+              <article use:$context.activateEditors>
                 <div class="section-titles biopage">
                   {localize('DND5E.PersonalityTraits')}
                 </div>
                 <SheetEditor
                   content={$context.traitEnrichedHtml}
-                  target="flags.{CONSTANTS.MODULE_ID}.trait"
+                  target={TidyFlags.trait.prop}
                   editable={$context.editable}
                 />
               </article>
             </RerenderAfterFormSubmission>
             <RerenderAfterFormSubmission
-              andOnValueChange={FoundryAdapter.tryGetFlag(
-                $context.actor,
-                'ideal',
-              ) ?? ''}
+              andOnValueChange={$context.system.details.ideal}
             >
-              <article use:activateProseMirrorListeners>
+              <article use:$context.activateEditors>
                 <div class="section-titles biopage">
                   {localize('DND5E.Ideals')}
                 </div>
                 <SheetEditor
                   content={$context.idealEnrichedHtml}
-                  target="flags.{CONSTANTS.MODULE_ID}.ideal"
+                  target="system.details.ideal"
                   editable={$context.editable}
                 />
               </article>
             </RerenderAfterFormSubmission>
             <RerenderAfterFormSubmission
-              andOnValueChange={FoundryAdapter.tryGetFlag(
-                $context.actor,
-                'bond',
-              ) ?? ''}
+              andOnValueChange={$context.system.details.bond}
             >
-              <article use:activateProseMirrorListeners>
+              <article use:$context.activateEditors>
                 <div class="section-titles biopage">
                   {localize('DND5E.Bonds')}
                 </div>
                 <SheetEditor
                   content={$context.bondEnrichedHtml}
-                  target="flags.{CONSTANTS.MODULE_ID}.bond"
+                  target="system.details.bond"
                   editable={$context.editable}
                 />
               </article>
             </RerenderAfterFormSubmission>
             <RerenderAfterFormSubmission
-              andOnValueChange={FoundryAdapter.tryGetFlag(
-                $context.actor,
-                'flaw',
-              ) ?? ''}
+              andOnValueChange={$context.system.details.flaw}
             >
-              <article use:activateProseMirrorListeners>
+              <article use:$context.activateEditors>
                 <div class="section-titles biopage">
                   {localize('DND5E.Flaws')}
                 </div>
                 <SheetEditor
                   content={$context.flawEnrichedHtml}
-                  target="flags.{CONSTANTS.MODULE_ID}.flaw"
+                  target="system.details.flaw"
                   editable={$context.editable}
                 />
               </article>
@@ -200,19 +185,17 @@
           class="right-notes note-entries"
           class:limited={$context.showLimitedSheet}
         >
+          <!-- TODO: Offload this kind of thing to itemContext -->
           <RerenderAfterFormSubmission
-            andOnValueChange={FoundryAdapter.tryGetFlag(
-              $context.actor,
-              'appearance',
-            ) ?? ''}
+            andOnValueChange={TidyFlags.appearance.get($context.actor) ?? ''}
           >
-            <article class="appearance-notes" use:activateProseMirrorListeners>
+            <article class="appearance-notes" use:$context.activateEditors>
               <div class="section-titles biopage">
                 {localize('DND5E.Appearance')}
               </div>
               <SheetEditor
                 content={$context.appearanceEnrichedHtml}
-                target="flags.{CONSTANTS.MODULE_ID}.appearance"
+                target={TidyFlags.appearance.prop}
                 editable={$context.editable}
               />
             </article>
@@ -220,7 +203,7 @@
           <RerenderAfterFormSubmission
             andOnValueChange={$context.system.details.biography.value}
           >
-            <article class="biography-notes" use:activateProseMirrorListeners>
+            <article class="biography-notes" use:$context.activateEditors>
               <div class="section-titles">
                 {localize('DND5E.Background')}/{localize('DND5E.Biography')}
               </div>

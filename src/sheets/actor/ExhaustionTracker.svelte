@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { CONSTANTS } from 'src/constants';
   import { getExhaustionIconsWithSeverity } from 'src/features/exhaustion/exhaustion';
   import type {
     SpecificExhaustionConfig,
@@ -41,7 +42,9 @@
 
   const localize = FoundryAdapter.localize;
 
-  let context = getContext<Readable<ActorSheetContext>>('context');
+  let context = getContext<Readable<ActorSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const dispatch = createEventDispatcher<{
     levelSelected: { level: number };

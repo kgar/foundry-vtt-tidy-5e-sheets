@@ -1,6 +1,9 @@
 <script lang="ts">
   import type { Item5e } from 'src/types/item.types';
-  import type { CharacterSheetContext } from 'src/types/types';
+  import type {
+    CharacterFeatureSection,
+    CharacterSheetContext,
+  } from 'src/types/types';
   import ItemTable from '../../../components/item-list/v1/ItemTable.svelte';
   import ItemTableHeaderRow from '../../../components/item-list/v1/ItemTableHeaderRow.svelte';
   import ItemTableColumn from '../../../components/item-list/v1/ItemTableColumn.svelte';
@@ -16,17 +19,24 @@
   import type { Readable } from 'svelte/store';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
 
-  let context = getContext<Readable<CharacterSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
   export let items: Item5e[] = [];
+  export let section: CharacterFeatureSection;
+
+  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
+    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>
 
-<ItemTable location="features">
+<ItemTable key={section.key} data-custom-section={section.custom ? true : null}>
   <svelte:fragment slot="header">
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>
-        {localize('DND5E.Features')}
+        {localize(section.label ?? 'DND5E.Features')}
       </ItemTableColumn>
       <ItemTableColumn baseWidth="3.125rem">
         {localize('DND5E.Uses')}
@@ -48,8 +58,10 @@
           type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
           uuid: item.uuid,
         }}
+        hidden={!!$itemIdsToShow && !$itemIdsToShow.has(item.id)}
+        favoriteId={ctx.favoriteId}
       >
-        <ItemTableCell primary={true} title={item.name}>
+        <ItemTableCell primary={true}>
           <ItemUseButton disabled={!$context.editable} {item} />
           <ItemName
             on:toggle={() => toggleSummary($context.actor)}
@@ -64,7 +76,7 @@
           </ItemName>
         </ItemTableCell>
         <ItemTableCell baseWidth="3.125rem">
-          {#if ctx?.isOnCooldown}
+          {#if item.isOnCooldown}
             <RechargeControl {item} />
           {:else if item.system.recharge?.value}
             <i class="fas fa-bolt" title={localize('DND5E.Charged')} />

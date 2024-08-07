@@ -9,16 +9,17 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     CargoOrCrewItem,
-    CargoOrCrewItem as CrewOrPassengerEntry,
     RenderableClassicControl,
+    VehicleCargoSection,
     VehicleSheetContext,
   } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
+  import { CONSTANTS } from 'src/constants';
 
-  export let section: any;
+  export let section: VehicleCargoSection;
 
   let baseWidths: Record<string, string> = {
     quantity: '5rem',
@@ -26,18 +27,17 @@
     weight: '3.75rem',
   };
 
-  let context = getContext<Readable<VehicleSheetContext>>('context');
+  let context = getContext<Readable<VehicleSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const classicControlsEditableRowBaseWidth = '1.5rem';
 
   function saveNonItemSectionData(
     ev: Event & { currentTarget: HTMLInputElement },
     index: number,
-    field: keyof CrewOrPassengerEntry,
-    section: {
-      dataset: { type: 'crew' | 'passenger' };
-      items: CrewOrPassengerEntry[];
-    },
+    field: string,
+    section: VehicleCargoSection,
   ) {
     const cargo = foundry.utils.deepClone(
       $context.actor.system.cargo[section.dataset.type],
@@ -58,7 +58,7 @@
     return false;
   }
 
-  function deleteCrewOrPassenger(section: any, index: number) {
+  function deleteCrewOrPassenger(section: VehicleCargoSection, index: number) {
     const cargo = foundry.utils
       .deepClone($context.actor.system.cargo[section.dataset.type])
       .filter((_: unknown, i: number) => i !== index);
@@ -80,7 +80,7 @@
   let controls: RenderableClassicControl<{
     item: CargoOrCrewItem;
     index: number;
-    section: any;
+    section: VehicleCargoSection;
   }>[] = [];
 
   $: {
@@ -100,7 +100,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<ItemTable location={section.label}>
+<ItemTable key={section.key}>
   <svelte:fragment slot="header">
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>
@@ -123,7 +123,7 @@
     {#each section.items as item, index (item.id ?? index)}
       {@const ctx = $context.itemContext[item.id]}
       <ItemTableRow>
-        <ItemTableCell primary={true} title={item.name}>
+        <ItemTableCell primary={true}>
           <TextInput
             document={item}
             field="name"

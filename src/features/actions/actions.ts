@@ -2,14 +2,19 @@ import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ActionListRuntime } from 'src/runtime/action-list/ActionListRuntime';
 import { SettingsProvider } from 'src/settings/settings';
-import type { Item5e } from 'src/types/item.types';
-import type { ActionItem, Actor5e, ActorActions } from 'src/types/types';
+import type { ContainerContents, Item5e } from 'src/types/item.types';
+import type {
+  ActionItem,
+  ActionSection,
+  Actor5e,
+  SortMode,
+} from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import { scaleCantripDamageFormula, simplifyFormula } from 'src/utils/formula';
 import { debug, error } from 'src/utils/logging';
-import { SheetPreferencesService } from '../user-preferences/SheetPreferencesService';
-import type { ItemFilterService } from '../filtering/ItemFilterService';
 import { SpellUtils } from 'src/utils/SpellUtils';
+import { TidyFlags } from 'src/foundry/TidyFlags';
+import { Container } from '../containers/Container';
 
 export type ActionSets = Record<string, Set<ActionItem>>;
 
@@ -35,53 +40,101 @@ const activationTypeSortValues: Record<string, number> = {
   special: 8,
 };
 
-export function getActorActions(
-  actor: Actor5e,
-  itemFilterService: ItemFilterService
-): ActorActions {
+export async function getActorActionSections(
+  actor: Actor5e
+): Promise<ActionSection[]> {
   try {
-    const sheetPreferences = SheetPreferencesService.getByType(actor.type);
+    let eligibleItems: ActionItem[] = [];
 
-    const actionSortMode =
-      sheetPreferences.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS]?.sort ?? 'm';
+    for (let item of actor.items) {
+      if (!isItemInActionList(item)) {
+        continue;
+      }
 
-    let filteredItems = actor.items.filter(isItemInActionList);
+      eligibleItems.push(await mapActionItem(item));
+    }
 
-    filteredItems = itemFilterService.filter(
-      filteredItems,
-      CONSTANTS.TAB_ACTOR_ACTIONS
-    );
-
-    filteredItems = filteredItems
-      .sort((a: Item5e, b: Item5e) => {
-        if (actionSortMode === 'a') {
-          return a.name.localeCompare(b.name);
-        }
-
-        // Sort by Arbitrary Action List Rules
-        if (a.type !== b.type) {
-          return itemTypeSortValues[a.type] - itemTypeSortValues[b.type];
-        }
-        if (a.type === 'spell' && b.type === 'spell') {
-          return a.system.level - b.system.level;
-        }
-        return (a.sort || 0) - (b.sort || 0);
-      })
-      .map((item: Item5e) => mapActionItem(item));
-
-    return buildActionSets(filteredItems);
+    return buildActionSections(actor, eligibleItems);
   } catch (e) {
     error('An error occurred while getting actions', false, e);
-    return {};
+    return [];
   }
+}
+
+export function sortActions(section: ActionSection, sortMode: SortMode) {
+  section.actions.sort(({ item: a }, { item: b }) => {
+    if (sortMode === 'a') {
+      return a.name.localeCompare(b.name);
+    }
+
+    // Sort by Arbitrary Action List Rules
+    if (a.type !== b.type) {
+      return itemTypeSortValues[a.type] - itemTypeSortValues[b.type];
+    }
+    if (a.type === 'spell' && b.type === 'spell') {
+      return a.system.level - b.system.level;
+    }
+    return (a.sort || 0) - (b.sort || 0);
+  });
+}
+
+function buildActionSections(
+  actor: Actor5e,
+  actionItems: ActionItem[]
+): ActionSection[] {
+  const customMappings = ActionListRuntime.getActivationTypeMappings();
+
+  let actionSections: Record<string, ActionSection> = {};
+
+  // Initialize the default sections in their default order.
+  Object.keys(activationTypeSortValues).forEach((activationType) => {
+    actionSections[activationType] = {
+      actions: [],
+      dataset: {},
+      label: FoundryAdapter.getActivationTypeLabel(activationType),
+      key: activationType,
+      show: true,
+    };
+  });
+
+  // partition items into sections
+  for (let actionItem of actionItems) {
+    const customSectionName = TidyFlags.actionSection.get(actionItem.item);
+    if (customSectionName) {
+      const customSection = (actionSections[customSectionName] ??= {
+        actions: [],
+        dataset: {},
+        key: customSectionName,
+        label: FoundryAdapter.localize(customSectionName),
+        show: true,
+        custom: {
+          creationItemTypes: [],
+          section: customSectionName,
+        },
+      });
+      customSection.actions.push(actionItem);
+    } else {
+      const activationType = getActivationType(
+        actionItem.item.system.activation?.type,
+        customMappings
+      );
+      const section = (actionSections[activationType] ??= {
+        actions: [],
+        dataset: {},
+        key: activationType,
+        label: FoundryAdapter.getActivationTypeLabel(activationType),
+        show: true,
+      });
+      section.actions.push(actionItem);
+    }
+  }
+
+  return Object.values(actionSections);
 }
 
 export function isItemInActionList(item: Item5e): boolean {
   // check our override
-  const override = FoundryAdapter.tryGetFlag<boolean>(
-    item,
-    'action-filter-override'
-  );
+  const override = TidyFlags.actionFilterOverride.get(item);
 
   if (override !== undefined && override !== null) {
     return override;
@@ -89,19 +142,19 @@ export function isItemInActionList(item: Item5e): boolean {
 
   // perform normal filtering logic
   switch (item.type) {
-    case 'weapon': {
+    case CONSTANTS.ITEM_TYPE_WEAPON: {
       return item.system.equipped;
     }
-    case 'equipment': {
+    case CONSTANTS.ITEM_TYPE_EQUIPMENT: {
       return item.system.equipped && isActiveItem(item.system.activation?.type);
     }
-    case 'consumable': {
+    case CONSTANTS.ITEM_TYPE_CONSUMABLE: {
       return (
         SettingsProvider.settings.actionListIncludeConsumables.get() &&
         isActiveItem(item.system.activation?.type)
       );
     }
-    case 'spell': {
+    case CONSTANTS.ITEM_TYPE_SPELL: {
       const limitToCantrips =
         SettingsProvider.settings.actionListLimitActionsToCantrips.get();
 
@@ -112,8 +165,10 @@ export function isItemInActionList(item: Item5e): boolean {
       ) {
         return false;
       }
-      const isReaction = item.system.activation?.type === 'reaction';
-      const isBonusAction = item.system.activation?.type === 'bonus';
+      const isReaction =
+        item.system.activation?.type === CONSTANTS.ACTIVATION_COST_REACTION;
+      const isBonusAction =
+        item.system.activation?.type === CONSTANTS.ACTIVATION_COST_BONUS;
 
       //ASSUMPTION: If the spell causes damage, it will have damageParts
       const isDamageDealer = item.system.damage?.parts?.length > 0;
@@ -137,7 +192,7 @@ export function isItemInActionList(item: Item5e): boolean {
       }
       return shouldInclude;
     }
-    case 'feat': {
+    case CONSTANTS.ITEM_TYPE_FEAT: {
       return !!item.system.activation?.type;
     }
     default: {
@@ -146,7 +201,7 @@ export function isItemInActionList(item: Item5e): boolean {
   }
 }
 
-function mapActionItem(item: Item5e): ActionItem {
+async function mapActionItem(item: Item5e): Promise<ActionItem> {
   try {
     let calculatedDerivedDamage = Array.isArray(item.labels.derivedDamage)
       ? [...item.labels.derivedDamage].map(
@@ -183,10 +238,16 @@ function mapActionItem(item: Item5e): ActionItem {
         )
       : [];
 
+    let containerContents: ContainerContents | undefined = undefined;
+    if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
+      containerContents = await Container.getContainerContents(item);
+    }
+
     return {
       item,
       typeLabel: FoundryAdapter.localize(`ITEM.Type${item.type.titleCase()}`),
       calculatedDerivedDamage,
+      containerContents,
       ...getRangeTitles(item),
     };
   } catch (e) {
@@ -242,10 +303,22 @@ function buildActionSets(filteredItems: any): ActionSets {
   let actionSets = filteredItems.reduce(
     (acc: ActionSets, actionItem: ActionItem) => {
       try {
-        const activationType = getActivationType(
-          actionItem.item.system.activation?.type,
-          customMappings
+        /* 
+          Priority 1: Custom Action Sections
+          Priority 2: Custom Mappings via the Tidy API
+          Priority 3: Item Activation Type
+        */
+        const customActionSection = TidyFlags.actionSection.get(
+          actionItem.item
         );
+
+        const activationType = customActionSection
+          ? customActionSection
+          : getActivationType(
+              actionItem.item.system.activation?.type,
+              customMappings
+            );
+
         if (!acc[activationType]) {
           acc[activationType] = new Set<ActionItem>();
         }
@@ -324,10 +397,7 @@ export class Actions {
 }
 
 export function actorUsesActionFeature(actor: Actor5e) {
-  const selectedTabIds = FoundryAdapter.tryGetFlag<string[] | undefined>(
-    actor,
-    'selected-tabs'
-  );
+  const selectedTabIds = TidyFlags.selectedTabs.get(actor);
 
   if (selectedTabIds) {
     return selectedTabIds.includes(CONSTANTS.TAB_ACTOR_ACTIONS);
@@ -343,12 +413,4 @@ export function actorUsesActionFeature(actor: Actor5e) {
       : [];
 
   return defaultTabIds.includes(CONSTANTS.TAB_ACTOR_ACTIONS);
-}
-
-export function toggleActionFilterOverride(item: Item5e) {
-  FoundryAdapter.setFlag(
-    item,
-    'action-filter-override',
-    !isItemInActionList(item)
-  );
 }

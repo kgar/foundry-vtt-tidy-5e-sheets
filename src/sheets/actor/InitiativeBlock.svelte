@@ -8,10 +8,13 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import { settingStore } from 'src/settings/settings';
+  import { CONSTANTS } from 'src/constants';
 
   export let initiative: { total: number; bonus: number };
 
-  let context = getContext<Readable<ActorSheetContext>>('context');
+  let context = getContext<Readable<ActorSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -36,12 +39,12 @@
       selectOnFocus={true}
       allowDeltaChanges={true}
       value={initiative.bonus}
-      disabled={!$context.editable || $context.lockSensitiveFields}
+      disabled={!$context.editable || !$context.unlocked}
       id="{$context.appId}-initiative-mod"
     />
   </label>
 
-  {#if $context.editable && !$context.lockSensitiveFields}
+  {#if $context.editable && $context.unlocked}
     <button
       type="button"
       class="config-button icon-button"

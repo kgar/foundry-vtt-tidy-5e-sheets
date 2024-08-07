@@ -10,8 +10,13 @@
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import ItemProperties from '../parts/ItemProperties.svelte';
   import ContentConcealer from 'src/components/content-concealment/ContentConcealer.svelte';
+  import { CONSTANTS } from 'src/constants';
+  import NumberInput from 'src/components/inputs/NumberInput.svelte';
+  import Checkbox from 'src/components/inputs/Checkbox.svelte';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context = getContext<Readable<ItemSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -62,6 +67,14 @@
     field="system.attunement"
     let:inputId
   >
+    <Checkbox
+      id={`${$context.appId}-system-attuned`}
+      document={$context.item}
+      field="system.attuned"
+      checked={$context.system.attuned}
+      disabled={!$context.editable || !$context.system.attunement}
+      title={localize('DND5E.AttunementAttuned')}
+    ></Checkbox>
     <Select
       id={inputId}
       document={$context.item}
@@ -69,7 +82,10 @@
       value={$context.system.attunement}
       disabled={!$context.editable}
     >
-      <SelectOptions data={$context.config.attunements} />
+      <SelectOptions
+        data={$context.config.attunementTypes}
+        blank={localize('DND5E.AttunementNone')}
+      />
     </Select>
   </ItemFormGroup>
 
@@ -81,6 +97,27 @@
   >
     <ItemProperties />
   </ItemFormGroup>
+
+  {#if $context.properties.mgc.selected && $context.system.type.value === CONSTANTS.ITEM_SYSTEM_TYPE_AMMO}
+    <ItemFormGroup
+      labelText={localize('DND5E.MagicalBonus')}
+      field="system.magicalBonus"
+      let:inputId
+    >
+      <div class="form-fields">
+        <NumberInput
+          id={inputId}
+          value={$context.system.magicalBonus}
+          field="system.magicalBonus"
+          document={$context.item}
+          disabled={!$context.editable}
+          min="0"
+          step="1"
+          placeholder="0"
+        />
+      </div>
+    </ItemFormGroup>
+  {/if}
 
   <h3 class="form-header">{localize('DND5E.ItemConsumableUsage')}</h3>
 

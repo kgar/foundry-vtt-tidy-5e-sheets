@@ -36,7 +36,7 @@
   </div>
   <div class="scroll-container">
     <TidyTable
-      location="default-sheet-preferences"
+      key="default-sheet-preferences"
       toggleable={false}
       --grid-template-columns={gridTemplateColumns}
     >

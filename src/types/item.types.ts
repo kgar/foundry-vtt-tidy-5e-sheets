@@ -1,9 +1,23 @@
 import type { ComponentType, SvelteComponent } from 'svelte';
-import type { CustomContent, Tab, Utilities } from './types';
+import type {
+  AttunementContext,
+  CustomContent,
+  InventorySection,
+  Tab,
+  TidySectionBase,
+  Utilities,
+} from './types';
 import type { DocumentPreparationWarning } from './types';
-import type { DocumentFilters, RegisteredEquipmentTypeGroup } from 'src/runtime/item/item.types';
+import type {
+  DocumentFilters,
+  RegisteredEquipmentTypeGroup,
+} from 'src/runtime/item/item.types';
 
 export type ItemSheetContext = {
+  activateEditors: (
+    node: HTMLElement,
+    options?: { bindSecrets?: boolean }
+  ) => void;
   customContent: CustomContent[];
   customEquipmentTypeGroups: RegisteredEquipmentTypeGroup[];
   /**
@@ -15,6 +29,7 @@ export type ItemSheetContext = {
   lockItemQuantity: boolean;
   originalContext: unknown;
   owner: boolean;
+  itemOverrides: Set<string>;
   tabs: Tab[];
   viewableWarnings: DocumentPreparationWarning[];
 } & Record<string, any>;
@@ -44,16 +59,39 @@ export type ItemCardContentComponent = ComponentType<
   >
 >;
 
+export type ContainerItemContext = {
+  totalWeight?: number;
+  isStack?: boolean;
+  favoriteId?: string;
+  attunement?: AttunementContext;
+  containerContents?: ContainerContents;
+};
+
 export type ContainerSheetContext = {
+  activateEditors: (
+    node: HTMLElement,
+    options?: { bindSecrets?: boolean }
+  ) => void;
   appId: string;
-  activateFoundryJQueryListeners: (node: HTMLElement) => void;
+  containerContents: ContainerContents;
   filterData: DocumentFilters;
+  itemContext: Record<string, ContainerItemContext>;
   itemDescriptions: ItemDescription[];
+  itemOverrides: Set<string>;
   lockItemQuantity: boolean;
   customContent: CustomContent[];
   originalContext: unknown;
   owner: boolean;
   tabs: Tab[];
-  utilities: Utilities;
+  utilities: Utilities<ContainerSheetContext>;
   viewableWarnings: DocumentPreparationWarning[];
 } & Record<string, any>;
+
+export type ContainerSection = { items: Item5e[] } & TidySectionBase;
+
+export type ContainerContents = {
+  capacity: { max: number; value: number; units: string; pct: number };
+  contents: InventorySection[];
+  currency: Record<string, number>;
+  itemContext: Record<string, ContainerItemContext>;
+};

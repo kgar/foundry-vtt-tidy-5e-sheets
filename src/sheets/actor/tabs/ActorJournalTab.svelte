@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type CharacterSheetContext } from 'src/types/types';
   import SheetEditor from 'src/components/editor/SheetEditor.svelte';
@@ -7,14 +6,14 @@
   import type { Readable } from 'svelte/store';
   import RerenderAfterFormSubmission from '../../../components/utility/RerenderAfterFormSubmission.svelte';
   import TextInput from '../../../components/inputs/TextInput.svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<CharacterSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
-
-  function activateProseMirrorListeners(node: HTMLElement) {
-    $context.activateFoundryJQueryListeners(node);
-  }
 </script>
 
 <div class="scroll-container journal-container">
@@ -23,18 +22,15 @@
     class:limited={$context.showLimitedSheet}
   >
     <RerenderAfterFormSubmission
-      andOnValueChange={FoundryAdapter.tryGetFlag(
-        $context.actor,
-        'notes1.value',
-      ) ?? ''}
+      andOnValueChange={TidyFlags.notes1.members.value.get($context.actor) ??
+        ''}
     >
-      <article use:activateProseMirrorListeners>
+      <article use:$context.activateEditors>
         <div class="section-titles">
           <TextInput
             document={$context.actor}
-            field="flags.{CONSTANTS.MODULE_ID}.notes1.name"
-            value={FoundryAdapter.tryGetFlag($context.actor, 'notes1.name') ??
-              ''}
+            field={TidyFlags.notes1.members.name.prop}
+            value={TidyFlags.notes1.members.name.get($context.actor) ?? ''}
             placeholder={localize('TIDY5E.JournalPersonsOfInterest')}
             selectOnFocus={true}
             stopChangePropagation={true}
@@ -43,24 +39,21 @@
         </div>
         <SheetEditor
           content={$context.notes1EnrichedHtml}
-          target="flags.{CONSTANTS.MODULE_ID}.notes1.value"
+          target={TidyFlags.notes1.members.value.prop}
           editable={$context.editable}
         />
       </article>
     </RerenderAfterFormSubmission>
     <RerenderAfterFormSubmission
-      andOnValueChange={FoundryAdapter.tryGetFlag(
-        $context.actor,
-        'notes2.value',
-      ) ?? ''}
+      andOnValueChange={TidyFlags.notes2.members.value.get($context.actor) ??
+        ''}
     >
-      <article use:activateProseMirrorListeners>
+      <article use:$context.activateEditors>
         <div class="section-titles">
           <TextInput
             document={$context.actor}
-            field="flags.{CONSTANTS.MODULE_ID}.notes2.name"
-            value={FoundryAdapter.tryGetFlag($context.actor, 'notes2.name') ??
-              ''}
+            field={TidyFlags.notes2.members.name.prop}
+            value={TidyFlags.notes2.members.name.get($context.actor) ?? ''}
             placeholder={localize('TIDY5E.JournalLocationsOfInterest')}
             selectOnFocus={true}
             stopChangePropagation={true}
@@ -69,24 +62,21 @@
         </div>
         <SheetEditor
           content={$context.notes2EnrichedHtml}
-          target="flags.{CONSTANTS.MODULE_ID}.notes2.value"
+          target={TidyFlags.notes2.members.value.prop}
           editable={$context.editable}
         />
       </article>
     </RerenderAfterFormSubmission>
     <RerenderAfterFormSubmission
-      andOnValueChange={FoundryAdapter.tryGetFlag(
-        $context.actor,
-        'notes3.value',
-      ) ?? ''}
+      andOnValueChange={TidyFlags.notes3.members.value.get($context.actor) ??
+        ''}
     >
-      <article use:activateProseMirrorListeners>
+      <article use:$context.activateEditors>
         <div class="section-titles">
           <TextInput
             document={$context.actor}
-            field="flags.{CONSTANTS.MODULE_ID}.notes3.name"
-            value={FoundryAdapter.tryGetFlag($context.actor, 'notes3.name') ??
-              ''}
+            field={TidyFlags.notes3.members.name.prop}
+            value={TidyFlags.notes3.members.name.get($context.actor) ?? ''}
             placeholder={localize('TIDY5E.JournalQuests')}
             selectOnFocus={true}
             stopChangePropagation={true}
@@ -95,24 +85,21 @@
         </div>
         <SheetEditor
           content={$context.notes3EnrichedHtml}
-          target="flags.{CONSTANTS.MODULE_ID}.notes3.value"
+          target={TidyFlags.notes3.members.value.prop}
           editable={$context.editable}
         />
       </article>
     </RerenderAfterFormSubmission>
     <RerenderAfterFormSubmission
-      andOnValueChange={FoundryAdapter.tryGetFlag(
-        $context.actor,
-        'notes4.value',
-      ) ?? ''}
+      andOnValueChange={TidyFlags.notes4.members.value.get($context.actor) ??
+        ''}
     >
-      <article use:activateProseMirrorListeners>
+      <article use:$context.activateEditors>
         <div class="section-titles">
           <TextInput
             document={$context.actor}
-            field="flags.{CONSTANTS.MODULE_ID}.notes4.name"
-            value={FoundryAdapter.tryGetFlag($context.actor, 'notes4.name') ??
-              ''}
+            field={TidyFlags.notes4.members.name.prop}
+            value={TidyFlags.notes4.members.name.get($context.actor) ?? ''}
             placeholder={localize('TIDY5E.JournalMisc')}
             selectOnFocus={true}
             stopChangePropagation={true}
@@ -121,7 +108,7 @@
         </div>
         <SheetEditor
           content={$context.notes4EnrichedHtml}
-          target="flags.{CONSTANTS.MODULE_ID}.notes4.value"
+          target={TidyFlags.notes4.members.value.prop}
           editable={$context.editable}
         />
       </article>
@@ -132,16 +119,13 @@
     class:limited={$context.showLimitedSheet}
   >
     <RerenderAfterFormSubmission
-      andOnValueChange={FoundryAdapter.tryGetFlag(
-        $context.actor,
-        'notes.value',
-      ) ?? ''}
+      andOnValueChange={TidyFlags.notes.members.value.get($context.actor) ?? ''}
     >
-      <article class="journal-notes" use:activateProseMirrorListeners>
+      <article class="journal-notes" use:$context.activateEditors>
         <div class="section-titles">{localize('TIDY5E.JournalEntries')}</div>
         <SheetEditor
           content={$context.notesEnrichedHtml}
-          target="flags.{CONSTANTS.MODULE_ID}.notes.value"
+          target={TidyFlags.notes.members.value.prop}
           editable={$context.editable}
         />
       </article>

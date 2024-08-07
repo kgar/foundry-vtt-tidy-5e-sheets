@@ -4,17 +4,19 @@
   import ItemIdentifiableName from './parts/ItemIdentifiableName.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import type { ItemSheetContext } from 'src/types/item.types';
+  import type { ContainerSheetContext } from 'src/types/item.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-  import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import Source from '../shared/Source.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
+  import ItemHeaderToggles from './parts/ItemHeaderToggles.svelte';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context = getContext<Readable<ContainerSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   let selectedTabId: string;
 
@@ -65,33 +67,7 @@
         />
       </li>
     </ul>
-    <div class="flex-row no-gap">
-      <Checkbox
-        labelCssClass="green-checkbox"
-        document={$context.item}
-        field="system.equipped"
-        checked={$context.system.equipped}
-        disabled={!$context.editable}
-      >
-        {$context.system.equipped
-          ? localize('DND5E.Equipped')
-          : localize('DND5E.Unequipped')}
-      </Checkbox>
-
-      {#if FoundryAdapter.canIdentify($context.item)}
-        <Checkbox
-          labelCssClass="green-checkbox"
-          document={$context.item}
-          field="system.identified"
-          checked={$context.system.identified}
-          disabled={!$context.editable}
-        >
-          {$context.system.identified
-            ? localize('DND5E.Identified')
-            : localize('DND5E.Unidentified.Title')}
-        </Checkbox>
-      {/if}
-    </div>
+    <ItemHeaderToggles />
   </div>
 </header>
 

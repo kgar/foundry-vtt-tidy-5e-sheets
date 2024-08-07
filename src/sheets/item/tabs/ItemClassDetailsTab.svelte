@@ -8,8 +8,12 @@
   import type { ItemSheetContext } from 'src/types/item.types';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
+  import ItemStartingEquipment from '../parts/ItemStartingEquipment.svelte';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context = getContext<Readable<ItemSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -33,6 +37,7 @@
     {@html localize('DND5E.ClassIdentifierHint', {
       identifier: $context.item.identifier,
     })}
+    {localize('DND5E.IdentifierError')}
   </p>
 </ItemFormGroup>
 
@@ -75,3 +80,22 @@
 
 <h3 class="form-header">{localize('DND5E.Spellcasting')}</h3>
 <ItemSpellcasting />
+
+<ItemStartingEquipment />
+
+<ItemFormGroup
+  labelText={localize('DND5E.StartingEquipment.Wealth.Label')}
+  field="system.wealth"
+  let:inputId
+>
+  <div class="form-fields">
+    <TextInput
+      id={inputId}
+      value={$context.system.wealth}
+      field="system.wealth"
+      document={$context.item}
+      disabled={!$context.editable}
+    />
+  </div>
+  <p class="hint">{localize('DND5E.StartingEquipment.Wealth.Hint')}</p>
+</ItemFormGroup>

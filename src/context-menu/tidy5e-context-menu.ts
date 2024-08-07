@@ -1,13 +1,14 @@
 import {
   actorUsesActionFeature,
   isItemInActionList,
-  toggleActionFilterOverride,
 } from 'src/features/actions/actions';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SettingsProvider } from 'src/settings/settings';
 import type { Item5e } from 'src/types/item.types';
 import { warn } from 'src/utils/logging';
+import { TidyFlags } from 'src/foundry/TidyFlags';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 
 export function initTidy5eContextMenu(
   sheet: any,
@@ -48,11 +49,7 @@ function onItemContext(element: HTMLElement) {
 
     // TODO: Leverage the API to aggregate any registered context menu options; pass in the context of the current item for reference.
     ui.context.menuItems = getActiveEffectContextOptions(effect, app);
-    Hooks.call(
-      'dnd5e.getActiveEffectContextOptions',
-      effect,
-      ui.context.menuItems
-    );
+    TidyHooks.dnd5eGetActiveEffectContextOptions(effect, ui.context.menuItems);
   }
   // Items
   else if (contextMenuType === CONSTANTS.CONTEXT_MENU_TYPE_ITEMS) {
@@ -62,7 +59,7 @@ function onItemContext(element: HTMLElement) {
 
     // TODO: Leverage the API to aggregate any registered context menu options; pass in the context of the current item for reference.
     ui.context.menuItems = getItemContextOptions(item);
-    Hooks.call('dnd5e.getItemContextOptions', item, ui.context.menuItems);
+    TidyHooks.dnd5eGetItemContextOptions(item, ui.context.menuItems);
   } else {
     warn(
       `Unable to show context menu. The menu type ${contextMenuType} is not supported. Put a [data-context-menu] attribute on the target entity and implement the handler where this warning appears.`
@@ -71,8 +68,15 @@ function onItemContext(element: HTMLElement) {
 }
 
 function getActiveEffectContextOptions(effect: any, app: any) {
-  const actor = effect.actor ? effect.actor : effect.parent;
-  if (!actor?.isOwner || !SettingsProvider.settings.useContextMenu.get()) {
+  const effectParent = effect.parent;
+
+  // Assumption: Either the effect belongs to the character or is transferred from an item.
+  const actor = effectParent.actor ?? effectParent;
+
+  if (
+    !effectParent?.isOwner ||
+    !SettingsProvider.settings.useContextMenu.get()
+  ) {
     return [];
   }
 
@@ -87,6 +91,9 @@ function getActiveEffectContextOptions(effect: any, app: any) {
     effect,
     app
   );
+
+  const isFav = FoundryAdapter.isEffectFavorited(effect, actor);
+  const favoriteIcon = 'fa-bookmark';
 
   let tidy5eKgarContextOptions = [
     {
@@ -130,6 +137,21 @@ function getActiveEffectContextOptions(effect: any, app: any) {
       icon: '<dnd5e-icon src="systems/dnd5e/icons/svg/break-concentration.svg"></dnd5e-icon>',
       condition: () => isConcentrationEffect,
       callback: () => app.document.endConcentration(effect),
+      group: 'state',
+    },
+    {
+      name: isFav ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
+      icon: isFav
+        ? `<i class='fas ${favoriteIcon} fa-fw' style='color: var(--t5e-warning-accent-color)'></i>`
+        : `<i class='fas ${favoriteIcon} fa-fw inactive'></i>`,
+      condition: () => 'favorites' in actor.system,
+      callback: () => {
+        if (!effect) {
+          warn(`tidy5e-context-menu | Effect Not Found.`);
+          return;
+        }
+        FoundryAdapter.toggleFavoriteEffect(effect);
+      },
       group: 'state',
     },
   ];
@@ -187,25 +209,34 @@ function getItemContextOptions(item: Item5e) {
   }
 
   // Toggle Attunement State
-  if (
-    'attunement' in item.system &&
-    item.system.attunement !== CONFIG.DND5E.attunementTypes.NONE &&
-    !FoundryAdapter.concealDetails(item)
-  ) {
-    const isAttuned =
-      item.system.attunement === CONFIG.DND5E.attunementTypes.ATTUNED;
+  if (!!item.system.attunement && !FoundryAdapter.concealDetails(item)) {
     options.push({
-      name: isAttuned
+      name: item.system.attuned
         ? 'TIDY5E.ContextMenuActionUnattune'
         : 'TIDY5E.ContextMenuActionAttune',
-      icon: isAttuned
+      icon: item.system.attuned
         ? "<i class='fas fa-sun fa-fw' style='color: var(--t5e-warning-accent-color);'></i>"
         : "<i class='fas fa-sun fa-fw'></i>",
       callback: () =>
         item.update({
-          'system.attunement':
-            CONFIG.DND5E.attunementTypes[isAttuned ? 'REQUIRED' : 'ATTUNED'],
+          'system.attuned': !item.system.attuned,
         }),
+    });
+  }
+
+  // Toggle Charged State
+  if (item.system.recharge?.value) {
+    options.push({
+      name: item.system.recharge.charged
+        ? 'DND5E.ContextMenuActionExpendCharge'
+        : 'DND5E.ContextMenuActionCharge',
+      icon: '<i class="fa-solid fa-bolt"></i>',
+      callback: () =>
+        item.update({
+          'system.recharge.charged': !item.system.recharge?.charged,
+        }),
+      condition: () => item.isOwner,
+      group: 'state',
     });
   }
 
@@ -252,9 +283,9 @@ function getItemContextOptions(item: Item5e) {
     itemParentIsActor && itemParent.type === CONSTANTS.SHEET_TYPE_CHARACTER;
   if (isCharacter) {
     // Add favorites to context menu
-    let isFav = FoundryAdapter.isDocumentFavorited(item);
+    let isFav = FoundryAdapter.isItemFavorited(item);
 
-    let favoriteIcon = 'fa-bookmark';
+    const favoriteIcon = 'fa-bookmark';
 
     options.push({
       name: isFav ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
@@ -262,15 +293,11 @@ function getItemContextOptions(item: Item5e) {
         ? `<i class='fas ${favoriteIcon} fa-fw' style='color: var(--t5e-warning-accent-color)'></i>`
         : `<i class='fas ${favoriteIcon} fa-fw inactive'></i>`,
       callback: () => {
-        // const item_id = ev[0].dataset.itemId; //ev.currentTarget.closest('[data-item-id]').dataset.itemId;
-        // const item = actor.items.get(item_id);
         if (!item) {
-          warn(
-            `tidy5e-context-menu | _getItemContextOptions | Item no founded!`
-          );
+          warn(`tidy5e-context-menu | Item Not Found`);
           return;
         }
-        FoundryAdapter.toggleFavorite(item);
+        FoundryAdapter.toggleFavoriteItem(item);
       },
     });
   }
@@ -329,7 +356,11 @@ function getItemContextOptions(item: Item5e) {
       options.push({
         name: 'DND5E.ContextMenuActionDelete',
         icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5e-warning-accent-color);'></i>",
-        callback: () => FoundryAdapter.onActorItemDelete(itemParent, item),
+        callback: () => {
+          return itemParent
+            ? FoundryAdapter.onActorItemDelete(itemParent, item)
+            : item.deleteDialog();
+        },
       });
     }
   }
@@ -344,18 +375,17 @@ function getItemContextOptions(item: Item5e) {
         ? '<i class="fas fa-fist-raised" style="color: var(--t5e-warning-accent-color)"></i>'
         : '<i class="fas fa-fist-raised"></i>',
       callback: () => {
-        toggleActionFilterOverride(item);
+        TidyFlags.actionFilterOverride.set(item, !isItemInActionList(item));
       },
     });
 
-    const overridden =
-      FoundryAdapter.tryGetFlag(item, 'action-filter-override') !== undefined;
+    const overridden = TidyFlags.actionFilterOverride.get(item) !== undefined;
     if (overridden) {
       options.push({
         name: 'TIDY5E.Actions.ResetActionDefault',
         icon: '<i class="fas fa-fist-raised" style="color: var(--t5e-warning-accent-color)"></i>',
         callback: () => {
-          FoundryAdapter.unsetFlag(item, 'action-filter-override');
+          TidyFlags.actionFilterOverride.unset(item);
         },
       });
     }

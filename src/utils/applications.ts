@@ -1,5 +1,7 @@
 import { getThemes } from 'src/theme/theme-reference';
 import { debug } from './logging';
+import { CONSTANTS } from 'src/constants';
+import { SettingsProvider } from 'src/settings/settings';
 
 export function applyTitleToWindow(title: string, element: HTMLElement) {
   if (!element) {
@@ -29,6 +31,12 @@ export function applyThemeDataAttributeToWindow(
   if (!element) {
     return;
   }
+
+  themeId =
+    themeId === CONSTANTS.THEME_ID_DEFAULT
+      ? SettingsProvider.settings.defaultTheme.get()
+      : themeId;
+
   const themes = getThemes();
   const theme = themes[themeId];
   if (theme) {

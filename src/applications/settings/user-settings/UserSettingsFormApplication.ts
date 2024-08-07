@@ -74,8 +74,6 @@ export class UserSettingsFormApplication extends SvelteFormApplicationBase {
         showIconsNextToTheItemName: currentSettings.showIconsNextToTheItemName,
         showInspirationOnHover: currentSettings.showInspirationOnHover,
         showSpellbookTabNpc: currentSettings.showSpellbookTabNpc,
-        spellClassFilterAdditionalClasses:
-          currentSettings.spellClassFilterAdditionalClasses,
         toggleEmptyCharacterSkills: currentSettings.toggleEmptyCharacterSkills,
         toggleEmptyCharacterTraits: currentSettings.toggleEmptyCharacterTraits,
         useClassicControlsForCharacter:

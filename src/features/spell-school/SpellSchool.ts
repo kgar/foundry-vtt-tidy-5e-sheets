@@ -1,4 +1,5 @@
 import type { SupportedSpellSchoolIcon } from 'src/api/config/spell-school/spell-school.types';
+import { SettingsProvider } from 'src/settings/settings';
 
 export class SpellSchool {
   protected static _iconsMap: Record<string, SupportedSpellSchoolIcon> = {
@@ -15,7 +16,19 @@ export class SpellSchool {
   static fallbackIcon = 'fas fa-hat-wizard';
 
   static getIcon(schoolKey: string): SupportedSpellSchoolIcon {
-    return SpellSchool._iconsMap[schoolKey] ?? SpellSchool.fallbackIcon;
+    if (SettingsProvider.settings.useTidySpellSchoolIcons.get()) {
+      return SpellSchool._iconsMap[schoolKey] ?? SpellSchool.fallbackIcon;
+    }
+
+    const dnd5eConfigIcon = CONFIG.DND5E.spellSchools[schoolKey]?.icon;
+
+    if (dnd5eConfigIcon) {
+      return {
+        iconSrc: dnd5eConfigIcon,
+      };
+    }
+
+    return SpellSchool.fallbackIcon;
   }
 
   static setIcon(schoolKey: string, iconClass: SupportedSpellSchoolIcon) {

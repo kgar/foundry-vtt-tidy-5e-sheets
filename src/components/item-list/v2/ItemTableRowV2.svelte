@@ -19,6 +19,7 @@
   import ItemSummary from '../ItemSummary.svelte';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { TidyHooks } from 'src/foundry/TidyHooks';
 
   export let item: Item5e | null = null;
   export let contextMenu: { type: string; uuid: string } | null = null;
@@ -34,16 +35,23 @@
     unidentified: { description: '' },
   };
 
-  const expandedItemData = getContext<ExpandedItemData>('expandedItemData');
-  const context = getContext<Writable<unknown>>('context');
-  const expandedItems =
-    getContext<ExpandedItemIdToLocationsMap>('expandedItems');
-  const onItemToggled = getContext<OnItemToggledFn>('onItemToggled');
-  const dispatcher = createEventDispatcher<{ mousedown: MouseEvent }>();
-  const location = getContext<string>('location');
+  const expandedItemData = getContext<ExpandedItemData>(
+    CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA,
+  );
+  const context = getContext<Writable<unknown>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+  const expandedItems = getContext<ExpandedItemIdToLocationsMap>(
+    CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEMS,
+  );
+  const onItemToggled = getContext<OnItemToggledFn>(
+    CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TOGGLED,
+  );
+  const location = getContext<string>(CONSTANTS.SVELTE_CONTEXT.LOCATION);
 
-  let card: Writable<ItemCardStore> | undefined =
-    getContext<Writable<ItemCardStore>>('card');
+  let card: Writable<ItemCardStore> | undefined = getContext<
+    Writable<ItemCardStore>
+  >(CONSTANTS.SVELTE_CONTEXT.CARD);
   let showSummary = false;
   let chatData: ItemChatData | undefined;
   let useTransition: boolean = false;
@@ -61,7 +69,7 @@
   }
 
   async function onMouseEnter(event: Event) {
-    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_ON, event, item);
+    TidyHooks.tidy5eSheetsItemHoverOn(event, item);
 
     if (!item?.getChatData || !$settingStore.itemCardsForAllItems) {
       return;
@@ -75,7 +83,7 @@
   }
 
   async function onMouseLeave(event: Event) {
-    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_OFF, event, item);
+    TidyHooks.tidy5eSheetsItemHoverOff(event, item);
 
     card?.update((card) => {
       card.item = null;
@@ -198,6 +206,10 @@
 
     :global(.tidy-table-row.at-will) {
       --t5e-tidy-table-row-background: var(--t5e-atwill-background);
+    }
+
+    :global(.tidy-table-row.ritual-only) {
+      --t5e-tidy-table-row-background: var(--t5e-ritual-only-background);
     }
 
     :global(.tidy-table-row.innate) {

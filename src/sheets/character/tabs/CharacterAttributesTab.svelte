@@ -8,17 +8,53 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import { settingStore } from 'src/settings/settings';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
+  import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
+  import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
+  import Search from 'src/components/utility-bar/Search.svelte';
+  import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
+  import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+  import FilterMenu from 'src/components/filter/FilterMenu.svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
-  let context = getContext<Readable<CharacterSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+  let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
   $: showResources =
     $context.unlocked ||
     $context.resources.some(
       (x: any) => !isNil(x.value) || !isNil(x.value, '') || !isNil(x.max),
     );
+
+  let searchCriteria: string = '';
+
+  $: utilityBarCommands =
+    $context.utilities[tabId]?.utilityToolbarCommands ?? [];
 </script>
+
+<UtilityToolbar>
+  <Search bind:value={searchCriteria} />
+  <PinnedFilterToggles
+    filterGroupName={tabId}
+    filters={ItemFilterRuntime.getPinnedFiltersForTab(
+      $context.filterPins,
+      $context.filterData,
+      tabId,
+    )}
+  />
+  <FilterMenu {tabId} />
+  {#each utilityBarCommands as command (command.title)}
+    <UtilityToolbarCommand
+      title={command.title}
+      iconClass={command.iconClass}
+      text={command.text}
+      visible={command.visible ?? true}
+      on:execute={(ev) => command.execute?.(ev.detail)}
+    />
+  {/each}
+</UtilityToolbar>
 
 <div class="scroll-container">
   <div class="attributes-tab-contents">
@@ -26,8 +62,8 @@
       <SkillsList
         actor={$context.actor}
         toggleable={$settingStore.toggleEmptyCharacterSkills}
-        expanded={!!FoundryAdapter.tryGetFlag($context.actor, 'skillsExpanded')}
-        toggleField="flags.{CONSTANTS.MODULE_ID}.skillsExpanded"
+        expanded={!!TidyFlags.skillsExpanded.get($context.actor)}
+        toggleField={TidyFlags.skillsExpanded.prop}
       />
       {#if !$settingStore.moveTraitsBelowCharacterResources}
         <Traits toggleable={$settingStore.toggleEmptyCharacterTraits} />
@@ -40,7 +76,7 @@
       {#if $settingStore.moveTraitsBelowCharacterResources}
         <Traits toggleable={$settingStore.toggleEmptyCharacterTraits} />
       {/if}
-      <Favorites />
+      <Favorites {searchCriteria} />
     </section>
   </div>
 </div>

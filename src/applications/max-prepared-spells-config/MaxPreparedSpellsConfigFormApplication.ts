@@ -6,6 +6,7 @@ import { get, writable, type Writable } from 'svelte/store';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { CONSTANTS } from 'src/constants';
 import { getMaxPreparedSpellsSampleFormulas } from 'src/utils/formula';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 
 export type MaxPreparedSpellsConfigContext = {
   maxPreparedSpells: string;
@@ -42,11 +43,7 @@ export class MaxPreparedSpellsConfigFormApplication extends SvelteFormApplicatio
 
   getData(): MaxPreparedSpellsConfigContext {
     return {
-      maxPreparedSpells:
-        FoundryAdapter.tryGetFlag(
-          this.actor,
-          'maxPreparedSpells'
-        )?.toString() ?? '',
+      maxPreparedSpells: TidyFlags.maxPreparedSpells.get(this.actor) ?? '',
       formulas: getMaxPreparedSpellsSampleFormulas(),
       actor: this.actor,
     };
@@ -70,8 +67,7 @@ export class MaxPreparedSpellsConfigFormApplication extends SvelteFormApplicatio
   async _updateObject(): Promise<void> {
     const data = get(this.context);
     await this.actor.update({
-      [`flags.${CONSTANTS.MODULE_ID}.maxPreparedSpells`]:
-        data?.maxPreparedSpells ?? '',
+      [TidyFlags.maxPreparedSpells.prop]: data?.maxPreparedSpells ?? '',
     });
   }
 }

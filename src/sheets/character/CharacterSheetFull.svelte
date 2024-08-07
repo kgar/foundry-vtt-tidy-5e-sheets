@@ -26,15 +26,16 @@
   import InlineCreatureType from '../shared/InlineCreatureType.svelte';
   import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
   import ActorName from '../actor/ActorName.svelte';
-  import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let selectedTabId: string;
-  let context = getContext<Readable<CharacterSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 
-  $: playerName =
-    FoundryAdapter.tryGetFlag<string>($context.actor, 'playerName') ?? '';
+  $: playerName = TidyFlags.playerName.get($context.actor) ?? '';
 
   $: classAndSubclassSummaries = Array.from(
     FoundryAdapter.getClassAndSubclassSummaries($context.actor).values(),
@@ -137,7 +138,7 @@
         <ContentEditableFormField
           element="span"
           document={$context.actor}
-          field="flags.{CONSTANTS.MODULE_ID}.playerName"
+          field={TidyFlags.playerName.prop}
           value={playerName}
           cssClass="player-name"
           placeholder={localize('TIDY5E.PlayerName')}

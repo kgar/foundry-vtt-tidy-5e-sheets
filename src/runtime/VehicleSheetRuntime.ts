@@ -6,10 +6,11 @@ import VehicleCargoAndCrewTab from 'src/sheets/vehicle/tabs/VehicleCargoAndCrewT
 import VehicleDescriptionTab from 'src/sheets/vehicle/tabs/VehicleDescriptionTab.svelte';
 import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
 import type { RegisteredContent, RegisteredTab } from './types';
-import { warn } from 'src/utils/logging';
+import { debug, error, warn } from 'src/utils/logging';
 import { TabManager } from './tab/TabManager';
 import type { ActorTabRegistrationOptions } from 'src/api/api.types';
 import { CustomContentManager } from './content/CustomContentManager';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export class VehicleSheetRuntime {
   private static _content: RegisteredContent<VehicleSheetContext>[] = [];
@@ -103,5 +104,18 @@ export class VehicleSheetRuntime {
     }
 
     VehicleSheetRuntime._tabs.push(tab);
+  }
+
+  static getTabTitle(tabId: string) {
+    try {
+      let tabTitle = this._tabs.find((t) => t.id === tabId)?.title;
+      if (typeof tabTitle === 'function') {
+        tabTitle = tabTitle();
+      }
+      return tabTitle ? FoundryAdapter.localize(tabTitle) : tabId;
+    } catch (e) {
+      error('An error occurred while searching for a tab title.', false, e);
+      debug('Tab title error troubleshooting information', { tabId });
+    }
   }
 }

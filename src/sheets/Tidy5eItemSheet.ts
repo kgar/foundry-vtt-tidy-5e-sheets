@@ -1,10 +1,15 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { Item5e, ItemDescription, ItemSheetContext } from 'src/types/item.types';
+import type {
+  Item5e,
+  ItemDescription,
+  ItemSheetContext,
+} from 'src/types/item.types';
 import { get, writable } from 'svelte/store';
 import TypeNotFoundSheet from './item/TypeNotFoundSheet.svelte';
 import type { SheetStats, SheetTabCacheable, Tab } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
+  applyThemeDataAttributeToWindow,
   applyTitleToWindow,
   maintainCustomContentInputFocus,
 } from 'src/utils/applications';
@@ -15,9 +20,12 @@ import { isNil } from 'src/utils/data';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { CustomContentRenderer } from './CustomContentRenderer';
-import { SettingsProvider } from 'src/settings/settings';
+import { SettingsProvider, settingStore } from 'src/settings/settings';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { AsyncMutex } from 'src/utils/mutex';
+import { TidyHooks } from 'src/foundry/TidyHooks';
+import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
+import { CONSTANTS } from 'src/constants';
 
 export class Tidy5eKgarItemSheet
   extends dnd5e.applications.item.ItemSheet5e
@@ -28,9 +36,12 @@ export class Tidy5eKgarItemSheet
     lastSubmissionTime: null,
   });
   currentTabId: string | undefined = undefined;
+  subscriptionsService: StoreSubscriptionsService;
 
   constructor(item: Item5e, ...args: any[]) {
     super(item, ...args);
+
+    this.subscriptionsService = new StoreSubscriptionsService();
   }
 
   get template() {
@@ -39,19 +50,35 @@ export class Tidy5eKgarItemSheet
 
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
-      classes: ['tidy5e-sheet', 'sheet', 'item'],
+      classes: [
+        'tidy5e-sheet',
+        'sheet',
+        'item',
+        CONSTANTS.SHEET_LAYOUT_CLASSIC,
+      ],
     });
   }
 
   component: SvelteComponent | undefined;
   activateListeners(html: any) {
+    let first = true;
+    this.subscriptionsService.registerSubscriptions(
+      settingStore.subscribe((s) => {
+        if (first) return;
+        applyThemeDataAttributeToWindow(s.colorScheme, this.element.get(0));
+        this.render();
+      })
+    );
+    first = false;
+
     const node = html.get(0);
 
     const context = new Map<any, any>([
-      ['context', this.context],
-      ['stats', this.stats],
-      ['currentTabId', this.currentTabId],
-      ['onTabSelected', this.onTabSelected.bind(this)],
+      [CONSTANTS.SVELTE_CONTEXT.APP_ID, this.appId],
+      [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this.context],
+      [CONSTANTS.SVELTE_CONTEXT.STATS, this.stats],
+      [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
+      [CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED, this.onTabSelected.bind(this)],
     ]);
 
     // TODO: Try find sheet from runtime
@@ -69,14 +96,9 @@ export class Tidy5eKgarItemSheet
 
     // Advancement context menu
     const contextOptions = this._getAdvancementContextMenuOptions();
-    /**
-     * A hook event that fires when the context menu for the advancements list is constructed.
-     * @function dnd5e.getItemAdvancementContext
-     * @memberof hookEvents
-     * @param {jQuery} html                      The HTML element to which the context options are attached.
-     * @param {ContextMenuEntry[]} entryOptions  The context menu entries.
-     */
-    Hooks.call('dnd5e.getItemAdvancementContext', html, contextOptions);
+
+    TidyHooks.dnd5eGetItemAdvancementContext(html, contextOptions);
+
     if (contextOptions)
       FoundryAdapter.createContextMenu(
         html,
@@ -123,13 +145,12 @@ export class Tidy5eKgarItemSheet
     const context: ItemSheetContext = {
       ...defaultDocumentContext,
       appId: this.appId,
-      activateFoundryJQueryListeners: (node: HTMLElement) => {
-        this._activateCoreListeners($(node));
-        super.activateListeners($(node));
-      },
+      activateEditors: (node, options) =>
+        FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
       customContent: await ItemSheetRuntime.getContent(defaultDocumentContext),
       customEquipmentTypeGroups:
         ItemSheetRuntime.getCustomEquipmentTypeGroups(),
+      itemOverrides: new Set<string>(this._getItemOverrides()),
       healthPercentage: getPercentage(
         this.item?.system?.hp?.value,
         this.item?.system?.hp?.max
@@ -155,6 +176,9 @@ export class Tidy5eKgarItemSheet
 
   private _renderMutex = new AsyncMutex();
   async _render(force?: boolean, options = {}) {
+    if (typeof options !== 'object') {
+      options = {};
+    }
     await this._renderMutex.lock(async () => {
       await this._renderSheet(force, options);
     });
@@ -181,8 +205,7 @@ export class Tidy5eKgarItemSheet
         this.element.get(0)
       );
       await this.renderCustomContent({ data, isFullRender: true });
-      Hooks.callAll(
-        'tidy5e-sheet.renderItemSheet',
+      TidyHooks.tidy5eSheetsRenderItemSheet(
         this,
         this.element.get(0),
         data,
@@ -199,8 +222,7 @@ export class Tidy5eKgarItemSheet
     await maintainCustomContentInputFocus(this, async () => {
       applyTitleToWindow(this.title, this.element.get(0));
       await this.renderCustomContent({ data, isFullRender: false });
-      Hooks.callAll(
-        'tidy5e-sheet.renderItemSheet',
+      TidyHooks.tidy5eSheetsRenderItemSheet(
         this,
         this.element.get(0),
         data,
@@ -252,6 +274,7 @@ export class Tidy5eKgarItemSheet
       );
     } finally {
       this.component?.$destroy();
+      this.subscriptionsService.unsubscribeAll();
       return super.close(...args);
     }
   }

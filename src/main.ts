@@ -9,10 +9,11 @@ import { CONSTANTS } from './constants';
 import { Tidy5eSheetsApi } from './api/Tidy5eSheetsApi';
 import '../public/rpg-awesome/style/rpg-awesome.min.css';
 import { initRuntime } from './runtime/runtime-init';
-import MigrationNotificationFormApplication from './applications/migrations/notification/MigrationNotificationFormApplication';
-import { MigrationTally } from './applications/migrations/MigrationTally';
+import MigrationNotificationFormApplication from 'src/migrations/notification/MigrationNotificationFormApplication';
+import { MigrationTally } from 'src/migrations/MigrationTally';
 import { Tidy5eKgarContainerSheet } from './sheets/Tidy5eContainerSheet';
 import { setupModuleIntegrations } from './integration/integration';
+import { TidyHooks } from './foundry/TidyHooks';
 
 Hooks.once('init', () => {
   DocumentSheetConfig.registerSheet(
@@ -86,13 +87,7 @@ Hooks.once('ready', async () => {
   const api = Tidy5eSheetsApi._getApi();
   tidy5eModule.api = api;
 
-  // TODO: Remove after taking over the live module ID
-  const prodTidy5eModule = FoundryAdapter.getModule('tidy5e-sheet');
-  if (prodTidy5eModule) {
-    prodTidy5eModule.api = tidy5eModule.api;
-  }
-
-  Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_READY, api);
+  TidyHooks.tidy5eSheetsReady(api);
 
   setupModuleIntegrations(api);
 

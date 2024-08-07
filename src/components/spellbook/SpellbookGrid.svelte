@@ -5,6 +5,7 @@
     type CharacterSheetContext,
     type ItemCardStore,
     type NpcSheetContext,
+    type SpellbookSection,
   } from 'src/types/types';
   import ItemTable from '../item-list/v1/ItemTable.svelte';
   import ItemTableColumn from '../item-list/v1/ItemTableColumn.svelte';
@@ -17,19 +18,21 @@
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import { declareLocation } from 'src/types/location-awareness.types';
   import SpellSlotManagement from './SpellSlotManagement.svelte';
+  import ConcentrationOverlayIcon from './ConcentrationOverlayIcon.svelte';
+  import { TidyHooks } from 'src/foundry/TidyHooks';
 
-  export let section: any;
+  export let section: SpellbookSection;
   export let spells: Item5e[];
   export let cssClass: string | null = null;
-  /**
-   * An optional subset of item IDs which will hide all other items not included in this set.
-   * Useful for showing only search results, for example.
-   */
-  export let visibleItemIdSubset: Set<string> | null = null;
 
-  let context =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
-  let card = getContext<Writable<ItemCardStore>>('card');
+  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+  let card = getContext<Writable<ItemCardStore>>(CONSTANTS.SVELTE_CONTEXT.CARD);
+
+  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
+    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
+  );
 
   $: customCommands = ActorItemRuntime.getActorItemSectionCommands({
     actor: $context.actor,
@@ -39,7 +42,7 @@
   const localize = FoundryAdapter.localize;
 
   async function onMouseEnter(event: Event, item: Item5e) {
-    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_ON, event, item);
+    TidyHooks.tidy5eSheetsItemHoverOn(event, item);
 
     card.update((card) => {
       card.item = item;
@@ -48,7 +51,7 @@
   }
 
   async function onMouseLeave(event: Event, item: Item5e) {
-    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_OFF, event, item);
+    TidyHooks.tidy5eSheetsItemHoverOff(event, item);
 
     card.update((card) => {
       card.item = null;
@@ -76,12 +79,15 @@
 </script>
 
 <section class="spellbook-grid {cssClass}">
-  <ItemTable location={section.label}>
+  <ItemTable
+    key={section.key}
+    data-custom-section={section.custom ? true : null}
+  >
     <svelte:fragment slot="header">
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>
           <span class="spell-primary-column-label">
-            {section.label}
+            {localize(section.label)}
           </span>
           {#if section.usesSlots}
             <SpellSlotManagement {section} />
@@ -91,9 +97,9 @@
     </svelte:fragment>
     <div class="spells" slot="body">
       {#each spells as spell}
+        {@const ctx = $context.itemContext[spell.id]}
         {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($context, spell)}
-        {@const hidden =
-          visibleItemIdSubset !== null && !visibleItemIdSubset.has(spell.id)}
+        {@const hidden = !!$itemIdsToShow && !$itemIdsToShow.has(spell.id)}
         <button
           type="button"
           class="spell {FoundryAdapter.getSpellRowClasses(
@@ -117,8 +123,9 @@
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
           data-item-id={spell.id}
           tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+          data-tidy-grid-item
         >
-          {#if FoundryAdapter.tryGetFlag(spell, 'favorite')}
+          {#if 'favoriteId' in ctx && !!ctx.favoriteId}
             <GridPaneFavoriteIcon />
           {/if}
           <div class="spell-name">
@@ -126,7 +133,10 @@
               class="spell-image"
               style="background-image: url('{spellImgUrl}');"
             >
-              <i class="fa fa-dice-d20" />
+              {#if !ctx.concentration}
+                <i class="fa fa-dice-d20" />
+              {/if}
+              <ConcentrationOverlayIcon --tidy-icon-font-size="1.25rem" {ctx} />
             </div>
           </div>
         </button>
@@ -234,6 +244,17 @@
           .spell-image {
             box-shadow: 0 0 0.0625rem 0.0625rem inset
               var(--t5e-atwill-accent-color);
+            border-radius: 0.3125rem;
+          }
+        }
+
+        &.ritual-only {
+          box-shadow: 0 0 0 0.125rem var(--t5e-ritual-only-outline-color);
+          background-color: var(--t5e-ritual-only-background);
+
+          .spell-image {
+            box-shadow: 0 0 0.0625rem 0.0625rem inset
+              var(--t5e-ritual-only-accent-color);
             border-radius: 0.3125rem;
           }
         }

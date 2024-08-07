@@ -9,8 +9,11 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context = getContext<Readable<ItemSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -309,7 +312,7 @@
     field="system.consume.type"
     let:inputId
   >
-    <div class="form-fields">
+    <div class="form-fields flex-wrap">
       {#if $context.system.consume.type}
         <NumberInput
           id="{$context.appId}-system-consume-amount"
@@ -318,18 +321,29 @@
           field="system.consume.amount"
           document={$context.item}
           disabled={!$context.editable}
+          placeholder={localize('DND5E.QuantityAbbr')}
+          cssClass="qty-flex-basis"
         />
-        <Select
-          id="{$context.appId}-system-consume-target"
-          value={$context.system.consume.target}
-          title={localize('DND5E.ConsumeTarget')}
-          document={$context.item}
-          field="system.consume.target"
-          disabled={!$context.editable}
-        >
-          <option value="" />
-          <SelectOptions data={$context.abilityConsumptionTargets} />
-        </Select>
+        {#if $context.abilityConsumptionHint}
+          <TextInput
+            document={$context.item}
+            field="system.consume.target"
+            value={$context.system.consume.target}
+            placeholder={localize($context.abilityConsumptionHint)}
+          />
+        {:else}
+          <Select
+            id="{$context.appId}-system-consume-target"
+            value={$context.system.consume.target}
+            title={localize('DND5E.ConsumeTarget')}
+            document={$context.item}
+            field="system.consume.target"
+            disabled={!$context.editable}
+          >
+            <option value="" />
+            <SelectOptions data={$context.abilityConsumptionTargets} />
+          </Select>
+        {/if}
       {/if}
       <Select
         id={inputId}
@@ -338,6 +352,7 @@
         document={$context.item}
         field="system.consume.type"
         disabled={!$context.editable}
+        class="flex-basis-full"
       >
         <option value="">{localize('DND5E.None')}</option>
         <SelectOptions data={$context.config.abilityConsumptionTypes} />

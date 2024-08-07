@@ -86,7 +86,7 @@ export class ApplyTidySheetPreferencesApplication extends SvelteFormApplicationB
         );
 
         const isDefault =
-          tidySheetClass === getProperty(setting, `${documentName}.${subType}`);
+          tidySheetClass === foundry.utils.getProperty(setting, `${documentName}.${subType}`);
 
         sheetClassOptions.push({
           label: typeLabel,
@@ -115,7 +115,7 @@ export class ApplyTidySheetPreferencesApplication extends SvelteFormApplicationB
           debug(
             `Tidy Sheet ${o.sheetClassIdentifier} selected; ensuring it is set in settings.`
           );
-          sheetSettings = mergeObject(sheetSettings, {
+          sheetSettings = foundry.utils.mergeObject(sheetSettings, {
             [compositeSettingKey]: o.sheetClassIdentifier,
           });
           return;

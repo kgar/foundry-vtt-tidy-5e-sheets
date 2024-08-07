@@ -27,7 +27,9 @@
 
   let selectedTabId: string;
 
-  let context = getContext<Readable<NpcSheetContext>>('context');
+  let context = getContext<Readable<NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   $: sizes = <DropdownListOption[]>Object.entries(
     $context.config.actorSizes,

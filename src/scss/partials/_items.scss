@@ -158,12 +158,12 @@ input[type='checkbox'] {
     display: flex;
     font-size: 0.8125rem;
     font-family: var(--t5e-body-font-family);
-    height: 1.375rem;
     flex: 0 0 100%;
     list-style: none;
     margin: 0;
     padding: 0;
     width: 100%;
+    align-items: center;
 
     li {
       border-left: 0.0625rem solid var(--t5e-faint-color);
@@ -203,6 +203,7 @@ input[type='checkbox'] {
 .tidy-sheet-body {
   padding: 1rem;
   padding-right: 0.25rem;
+  margin-right: 0;
   overflow: hidden;
 
   .item-properties {
@@ -226,15 +227,41 @@ input[type='checkbox'] {
         margin: 0;
       }
 
-      input,
-      select {
-        flex: 0 0 2.5rem;
-        text-align: right;
-        background: none;
+      input {
+        flex: 0 0 3rem;
 
         &.large-value {
           flex: 1;
-          padding: 0 3px;
+          padding: 0 0.1875rem;
+        }
+      }
+
+      select {
+        flex: 0 0 2.5rem;
+      }
+
+      input,
+      select {
+        text-align: right;
+        background: none;
+      }
+
+      &.section {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 0;
+        margin-bottom: 0;
+
+        label {
+          font-weight: 500;
+        }
+
+        input,
+        select {
+          text-align: left;
+          padding: 0.325rem 0.25rem;
+          flex-basis: auto;
         }
       }
     }
@@ -354,6 +381,10 @@ input[type='checkbox'] {
     }
   }
 
+  .editing-source .editor-container {
+    display: none;
+  }
+
   .editor .editor-content,
   .item-editor-descriptions-html-container {
     p,
@@ -373,8 +404,12 @@ input[type='checkbox'] {
   height: 100%;
   align-content: flex-start;
 
-  &.detail-tab-contents, 
-  /* Compatibility selector */ & > .tab {
+  &.effects {
+    padding-right: 0.5rem;
+  }
+
+  /* Compatibility selector */
+  & > .tab {
     padding-right: 0.75rem;
   }
   .form-header {
@@ -395,19 +430,34 @@ input[type='checkbox'] {
   .form-group {
     margin: 0;
 
-    & + .form-group {
-      margin-top: 0.125rem;
-    }
     padding: 0.1875rem;
     background: var(--t5e-faintest-color);
     border-radius: 0.3125rem;
 
+    & + .form-group {
+      margin-top: 0.125rem;
+    }
+
     .form-fields {
       justify-content: flex-start;
-      gap: 0.0625rem;
+      gap: 0.25rem;
 
       &.spell-preparation-mode {
         gap: 0.25rem;
+      }
+
+      &.flex-wrap {
+        flex-wrap: wrap;
+      }
+
+      > * {
+        &.flex-basis-full {
+          flex-basis: 100%;
+        }
+
+        &.qty-flex-basis {
+          flex: 0 0 2rem;
+        }
       }
     }
 
@@ -421,9 +471,13 @@ input[type='checkbox'] {
         grid-template-columns: repeat(auto-fit, minmax(10.625rem, 1fr));
         gap: 0.125rem;
 
-        > label:not(.checkbox) {
+        > :not(.checkbox) {
           grid-column: 1 / -1;
         }
+      }
+
+      &:not(:has(> *)) {
+        display: none;
       }
     }
 
@@ -483,11 +537,12 @@ input[type='checkbox'] {
     }
 
     input:disabled {
-      background: transparent;
+      background: rgba(255, 255, 255, 0.035);
       color: var(--t5e-secondary-color);
 
       &:hover {
         border: none !important;
+        box-shadow: none !important;
       }
     }
 
@@ -720,6 +775,8 @@ input[type='checkbox']:checked {
 
 .checkbox input[type='checkbox']:checked {
   background-image: var(--t5e-check-checked-background-image);
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 label input[type='checkbox']:checked {
@@ -842,4 +899,39 @@ label input[type='checkbox']:checked {
   float: right;
   margin: 0;
   padding: 0 0.325rem;
+}
+
+ol.info {
+  margin: 0;
+  padding: 0;
+  outline: none;
+
+  li.notification {
+    box-shadow: none;
+    list-style: none;
+  }
+}
+
+:is(.enchantment, .summoning).form-group .separated-list {
+  flex: 1 0 100%;
+  .list-icon {
+    flex: 0 0 2rem;
+    width: 2rem;
+    height: 2rem;
+  }
+  .name {
+    flex: 1 0 10.9375rem;
+    text-align: start;
+  }
+  .details {
+    align-items: center;
+  }
+  .list-controls button {
+    --size: 2rem;
+  }
+}
+
+// TODO: In the design overhaul and in CSS revamping for classic sheets, find ways to generalize this. Consider even using bootstrap-style utility classes.
+.source-class-unowned-class-hint-icon {
+  margin: 0 0.25rem;
 }

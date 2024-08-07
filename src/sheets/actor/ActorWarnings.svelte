@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { CONSTANTS } from 'src/constants';
   import { settingStore } from 'src/settings/settings';
   import type { ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -6,7 +7,9 @@
 
   export let warnings: any;
 
-  let context = getContext<Readable<ActorSheetContext>>('context');
+  let context = getContext<Readable<ActorSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 </script>
 
 <ol class="warnings">

@@ -5,9 +5,11 @@
   import type { Readable } from 'svelte/store';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { settingStore } from 'src/settings/settings';
+  import { CONSTANTS } from 'src/constants';
 
-  let context =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -35,7 +37,7 @@
     title={localize('DND5E.HitPointsTempMax')}
     disabled={!$context.editable}
   />
-  {#if $context.editable && !$context.lockSensitiveFields}
+  {#if $context.editable && $context.unlocked}
     <button
       type="button"
       class="inline-icon-button"

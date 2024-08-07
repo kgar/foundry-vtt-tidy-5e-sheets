@@ -24,6 +24,7 @@
 
 <label
   class="tidy-switch {$$props.class ?? ''}"
+  class:disabled={disabled}
   id={switchLabelId}
   title={$$props.title ?? null}
 >

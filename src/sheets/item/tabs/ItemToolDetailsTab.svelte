@@ -8,9 +8,14 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import ItemProperties from '../parts/ItemProperties.svelte';
-    import ContentConcealer from 'src/components/content-concealment/ContentConcealer.svelte';
+  import ContentConcealer from 'src/components/content-concealment/ContentConcealer.svelte';
+  import Checkbox from 'src/components/inputs/Checkbox.svelte';
+  import ItemActivation from '../parts/ItemActivation.svelte';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context = getContext<Readable<ItemSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -60,6 +65,14 @@
     field="system.attunement"
     let:inputId
   >
+    <Checkbox
+      id={`${$context.appId}-system-attuned`}
+      document={$context.item}
+      field="system.attuned"
+      checked={$context.system.attuned}
+      disabled={!$context.editable || !$context.system.attunement}
+      title={localize('DND5E.AttunementAttuned')}
+    ></Checkbox>
     <Select
       id={inputId}
       document={$context.item}
@@ -67,7 +80,10 @@
       value={$context.system.attunement}
       disabled={!$context.editable}
     >
-      <SelectOptions data={$context.config.attunements} />
+      <SelectOptions
+        data={$context.config.attunementTypes}
+        blank={localize('DND5E.AttunementNone')}
+      />
     </Select>
   </ItemFormGroup>
 
@@ -124,6 +140,9 @@
       disabled={!$context.editable}
     />
   </ItemFormGroup>
+
+  <h3 class="form-header">{localize('DND5E.ItemToolUsage')}</h3>
+  <ItemActivation />
 
   <ItemFormGroup
     cssClass="stacked"

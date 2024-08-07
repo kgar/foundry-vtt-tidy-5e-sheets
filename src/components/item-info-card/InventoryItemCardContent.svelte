@@ -7,11 +7,14 @@
   import type { CharacterSheetContext } from 'src/types/types';
   import AmmoSelector from '../../sheets/actor/AmmoSelector.svelte';
   import { coalesce } from 'src/utils/formatting';
+  import { CONSTANTS } from 'src/constants';
 
   export let item: Item5e;
   export let chatData: ItemChatData;
 
-  let context = getContext<Readable<CharacterSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   $: ctx = $context.itemContext?.[item.id];
   $: concealDetails = FoundryAdapter.concealDetails(item);
@@ -21,7 +24,7 @@
 </script>
 
 <div
-  class="info-card {item.attunement?.cls ?? ''}"
+  class="info-card inventory {item.attunement?.cls ?? ''}"
   class:magic-item={item.system.properties?.has('mgc')}
   class:equipped={item.system.equipped}
   data-item-id={item._id}
@@ -64,7 +67,7 @@
   <div class="info-card-amount">
     <span class="info-weight"
       ><b>{localize('DND5E.Weight')}:</b>
-      {item.system.weight}
+      {item.system.weight.value}
       {weightUnit}</span
     >
     <span class="info-quantity"

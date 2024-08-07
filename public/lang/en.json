@@ -92,6 +92,7 @@
   "TIDY5E.ContextMenuActionEdit": "Edit",
   "TIDY5E.ContextMenuActionDelete": "Delete",
 
+  "TIDY5E.EmptyContainer": "This container is empty.",
   "TIDY5E.EmptySection": "This section is empty. Unlock the sheet to edit.",
   "TIDY5E.GMOnlyEdit": "Only your GM can edit this section.",
 
@@ -145,7 +146,8 @@
 
   "TIDY5E.ItemDetailsHeadline": "Mechanics/Flavor Text",
 
-  "TIDY5E.SpellClass": "Spell Class",
+  "TIDY5E.SpellSourceIdentifierSelectText": "Class Identifier: {identifier}",
+  "TIDY5E.SpellSourceIdentifierLabelHint": "The actor who has this spell does not have the source class that is specified here.",
 
   "TIDY5E.Class.Artificer": "Artificer",
   "TIDY5E.Class.Barbarian": "Barbarian",
@@ -249,6 +251,9 @@
   },
   "TIDY5E.WorldSettings.TabMisc": {
     "tabLabel": "GM Options"
+  },
+  "TIDY5E.WorldSettings.TabIcons": {
+    "tabLabel": "Icons"
   },
 
   "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Multiclass Spellbook Filter",
@@ -436,10 +441,6 @@
     "name": "Use Exhaustion Tracker",
     "hint": "Shows an exhaustion tracker for characters, NPCs, and vehicles."
   },
-  "TIDY5E.Settings.UseNPCRest": {
-    "name": "Use NPC Rest",
-    "hint": "Allows NPCs to take short and long rests."
-  },
   "TIDY5E.Settings.ShowNPCRestInChat": {
     "name": "Show NPC Rest in Chat",
     "hint": "Shows a chat card when an NPC rests."
@@ -486,10 +487,6 @@
   "TIDY5E.Settings.UseSpellClassIcons": {
     "name": "Use Spell Class Icon for Spells",
     "hint": "Shows spell class's image on spells instead of the spell's own image. The spell must be associated with a class using the Class selector on the spell edit sheet. When multiclassing, this feature distinguishes which spells belong to which class at a glance."
-  },
-  "TIDY5E.Settings.SpellClassFilterAdditionalClasses": {
-    "name": "Additional Classes for Multiclass Spellbook Filtering",
-    "hint": "Puts additional classes in the multiclass spellbook filter. Add classes to the dropdown with this syntax \"id1|name1,id2|name2\" e.g. \"occultist|Occultist,alchemist|Alchemist\""
   },
   "TIDY5E.Settings.AllowCantripsToBePrepared": {
     "name": "Allow Cantrips to be Prepared",
@@ -586,6 +583,15 @@
   "TIDY5E.Settings.ColorPickerAtWillAccent": {
     "name": "At Will Accent"
   },
+  "TIDY5E.Settings.ColorPickerRitualOnly": {
+    "name": "Ritual Only"
+  },
+  "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
+    "name": "Ritual Only Outline"
+  },
+  "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
+    "name": "Ritual Only Accent"
+  },
   "TIDY5E.Settings.ColorPickerInnate": {
     "name": "Innate"
   },
@@ -617,6 +623,10 @@
     "name": "Allow HP Max Override on Character",
     "hint": "Allows the GM to manually change max HP on the character sheet."
   },
+  "TIDY5E.Settings.UseTidySpellSchoolIcons": {
+    "name": "Use Tidy Spell School Icons",
+    "hint": "Use Tidy's handpicked icons for spell schools. To customize spell school icons through CONFIG.DND5E or through other modules, disable this option. To extend Tidy's custom spell school icons, refer to the Tidy API documentation."
+  },
   "TIDY5E.Settings.Reset": {
     "name": "Reset Settings to Default",
     "hint": "This will reset all of the settings of back to the active game system's default. This affects \"world\"-scoped settings only, such as GM options.",
@@ -631,7 +641,7 @@
     "name": "Migrations",
     "buttonLabel": "Migrate Tidy Data",
     "dialogTitle": "Migrate Tidy Data",
-    "hint": "If you were a user of the original Tidy5e Sheet module or the Alpha sheets, optionally use this Migrations menu to migrate your GM settings and Tidy sheet data.",
+    "hint": "If you were a user of the original Tidy5e Sheet module, optionally use this Migrations menu to migrate your GM settings and Tidy sheet data.",
     "migrationBeginningMessage": "Migrating data. Please do not refresh the page until done.",
     "migrationErrorMessage": "An error occurred. More details are in the dev console.",
     "migrationCompleteMessage": "Migration complete.",
@@ -647,15 +657,12 @@
       "mainExplanation1": "Migrating data to the new Tidy 5e Sheets module is not required in order to use it. Worst-case, if you are an original Tidy5e Sheet user and skip migrations, you will need to re-apply your settings to your liking.",
       "mainExplanation2": "{boldStart}Note{boldEnd}: Client Settings are not a part of this migration. Enough has changed about how client settings work in Tidy, so it is recommended to take a fresh look at client settings.",
       "originalHeader": "Original Tidy5e Sheet",
-      "originalExplanation": "Migrate GM settings and Tidy sheet data flags from the original Tidy5e Sheet. Most of the differences in data are from GM settings. If you migrate your settings and find a setting to be not to your liking, simply change the settings from the config settings menu.",
-      "alphaHeader": "Alpha Tidy 5e Sheets",
-      "alphaExplanation1": "Migrate GM settings and Tidy sheet data flags from the Alpha Tidy 5e Sheets. Most of the differences in data are from the sheet data flags. The Alpha flags migration targets top-level actors, top-level actors' items, and top-level items. This will bring in biographical data, favorites, and other sheet-specific Alpha data flags.",
-      "alphaExplanation2": "{boldStart}Note{boldEnd}: this migration does not affect compendium content."
+      "originalExplanation": "Migrate GM settings and Tidy sheet data flags from the original Tidy5e Sheet. Most of the differences in data are from GM settings. If you migrate your settings and find a setting to be not to your liking, simply change the settings from the config settings menu."
     },
     "Notification": {
       "Title": "Tidy 5e Sheets: Migrations Available",
       "Explanation": "New Tidy 5e Sheets data migrations are available. Check the {boldStart}config settings Migrations menu{boldEnd} to learn more.",
-      "Explanation2": "Note: Migrations move data that was originally stored by Tidy 5e Sheets into the system's officially supported data fields. If you are not missing data on your sheets after updating Tidy 5e Sheets, then no migration is required.",
+      "Explanation2": "Note: Migrations move data from one place to another. Sometimes, data that was originally stored by Tidy 5e Sheets needs to move into the system's officially supported data fields. In other cases, Tidy may adopt functionality from another module, and as a result, a convenient migration may be provided to ease the transition. If you are not missing data on your sheets after updating Tidy 5e Sheets, then no migration is required.",
       "Button.DoNotShowAgain": "Do Not Show Again",
       "DoNotShowAgain.ConfirmMessage": "Confirmed. This message will not show again until there is another available migration."
     },
@@ -665,6 +672,10 @@
     "OptionDeleteFlags.Text": "Delete Affected Tidy Flags",
     "OptionDeleteFlags.Tooltip": "When migrating from custom Tidy flag data to official system data, the flags remain in place by default. Check this option to remove those flags.",
     "ButtonMigration.Text": "Migrate",
+    "MigrateCompendia.CompendiumLabel": "Compendium",
+    "MigrateCompendia.Title": "Migrate Compendia",
+    "MigrateCompendia.SelectionDialogTitle": "Select Compendia to Migrate",
+    "MigrateCompendia.TotalEntriesLabel": "Total Entries",
     "CharacterBiography": {
       "sectionTitle": "Character Biography",
       "selectionDialogTitle": "Migration: Character Biography"
@@ -673,12 +684,40 @@
       "sectionTitle": "NPC Death Saves",
       "selectionDialogTitle": "Migration: NPC Death Saves"
     },
+    "CcssToTidy": {
+      "sectionTitle": "CCSS to Tidy 5e",
+      "selectionDialogTitle": "Migration: CCSS to Tidy 5e",
+      "ccss": "CCSS",
+      "section": "Section",
+      "explanation1": "Tidy 5e now natively supports custom sections and provides additional features around custom sections. This migration will copy Custom Character Sheet Sections (CCSS) section names into Tidy's section setup.",
+      "overwrite": "Overwrite",
+      "overwriteTooltip": "Enable to overwrite existing Tidy section flag. If unchecked, only empty Tidy flags will receive migrated CCSS data.",
+      "deleteFlags": "Delete Affected CCSS Flags",
+      "deleteFlagsTooltip": "When migrating from CCSS to Tidy custom sections, the CCSS flags remain in place by default. Check this option to remove those flags."
+    },
     "UnlinkedExplanation": "This migration gives the option to migrate unlinked token documents in the current scene. You can run the migration on additional scenes as needed.",
     "Selection": {
       "TotalSelectedLabel": "Total Selected: {total}",
       "ToMigrate": "To Migrate",
       "SelectAllNoneTooltip": "Select all or none"
-    }
+    },
+    "FavoritesToSystem": {
+      "sectionTitle": "Character Favorites",
+      "selectionDialogTitle": "Migration: Character Favorites to System"
+    },
+    "BondsIdealsFlawsToSystem": {
+      "sectionTitle": "NPC Bonds, Ideals, and Flaws",
+      "selectionDialogTitle": "Migration: NPC Bonds, Ideals, and Flaws to System"
+    },
+    "SpellClassToSourceClass": {
+      "sectionTitle": "Spell Class to Source Class",
+      "selectionDialogTitle": "Migration: Spell Class to Source Class"
+    },
+    "NpcExhaustion": {
+      "sectionTitle": "NPC Exhaustion",
+      "selectionDialogTitle": "Migration: NPC Exhaustion to System"
+    },
+    "Parent": "Parent"
   },
   "TIDY5E.Settings.SheetPreferences": {
     "name": "Set Tidy as Default Sheet",
@@ -705,10 +744,6 @@
   "TIDY5E.Settings.Debug": {
     "name": "Enable Debugging",
     "hint": "Prints debug messages to the console."
-  },
-  "TIDY5E.Settings.SortFavoriteItemsAlphabetically": {
-    "name": "Sort Favorites Alphabetically",
-    "hint": "Sorts favorites alphabetically."
   },
   "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
     "name": "Character Sheet: Always Unlocked for GM",
@@ -774,8 +809,32 @@
   "TIDY5E.ItemFilters.Filter.Other": "Other",
   "TIDY5E.GMOnly.Message": "GM Only: {message}",
   "TIDY5E.ReminderToBackUp": "Always remember to back up your world.",
+  "TIDY5E.Utilities.Tools": "Tools",
   "TIDY5E.Utilities.GMTools": "GM Tools",
   "TIDY5E.Utilities.IdentifyAll": "Identify All Items",
+  "TIDY5E.Utilities.AssignSpellsToClasses": "Assign Spells to Classes",
+  "TIDY5E.GenericErrorNotification": "An error occurred while performing this action. See the devtools console for more details.",
   "TIDY5E.Utilities.MarkAllAsUnidentified": "Mark All Items as Unidentified",
-  "TIDY5E.GenericErrorNotification": "An error occurred while performing this action. See the devtools console for more details."
+  "TIDY5E.Utilities.ConfigureSections": "Configure Sections",
+  "TIDY5E.Section": {
+    "Default": "Default Section",
+    "Label": "Section",
+    "Tooltip": "Specify a custom section for this item when placed in an actor sheet, or leave it blank for default behavior.",
+    "ActionLabel": "Action Section",
+    "ActionTooltip": "Specify a custom section for this item when placed in the Actions tab, or leave it blank for default behavior.",
+    "ConfigDialog": {
+      "title": "Configure Section: {tabTitle}",
+      "showTooltip": "Show this section",
+      "hideTooltip": "Hide this section"
+    }
+  },
+  "TIDY5E.UseDefaultDialog": {
+    "title": "Confirm: Use Default",
+    "text": "Are you sure you wish to use default?"
+  },
+  "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+Click to skip the roll and instantly recharge) ",
+  "TIDY5E.SpellSourceClassAssignments.Identifier": "Source Class Identifier",
+  "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "The spell's source class identifier appears here. To assign an identifier which the character doesn't own, enter the class identifier in this text field.",
+  "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Show Unassigned Only",
+  "TIDY5E.LocalizationTestKey": "Localization Test Key"
 }

@@ -5,18 +5,19 @@
   import type { ItemSheetContext } from 'src/types/item.types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context = getContext<Readable<ItemSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
-
-  function activateProseMirrorListeners(node: HTMLElement) {
-    $context.activateFoundryJQueryListeners(node);
-  }
 </script>
 
-<RerenderAfterFormSubmission andOnValueChange={$context.item.system.description.value}>
-  <article class="editor-container" use:activateProseMirrorListeners>
+<RerenderAfterFormSubmission
+  andOnValueChange={$context.item.system.description.value}
+>
+  <article class="editor-container" use:$context.activateEditors>
     <h2 class="details-headline">{localize('TIDY5E.ItemDetailsHeadline')}</h2>
     <SheetEditor
       content={$context.enriched.description}

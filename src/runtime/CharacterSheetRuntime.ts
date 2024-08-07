@@ -4,7 +4,7 @@ import type {
   Tab,
 } from 'src/types/types';
 import CharacterAttributesTab from 'src/sheets/character/tabs/CharacterAttributesTab.svelte';
-import CharacterInventoryTab from 'src/sheets/character/tabs/CharacterInventoryTab.svelte';
+import ActorInventoryTab from 'src/sheets/actor/tabs/ActorInventoryTab.svelte';
 import CharacterSpellbookTab from 'src/sheets/character/tabs/CharacterSpellbookTab.svelte';
 import CharacterFeaturesTab from 'src/sheets/character/tabs/CharacterFeaturesTab.svelte';
 import CharacterEffectsTab from 'src/sheets/character/tabs/CharacterEffectsTab.svelte';
@@ -13,10 +13,11 @@ import ActorJournalTab from 'src/sheets/actor/tabs/ActorJournalTab.svelte';
 import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
 import type { RegisteredContent, RegisteredTab } from './types';
 import { CONSTANTS } from 'src/constants';
-import { warn } from 'src/utils/logging';
+import { debug, error, warn } from 'src/utils/logging';
 import { TabManager } from './tab/TabManager';
 import type { ActorTabRegistrationOptions } from 'src/api/api.types';
 import { CustomContentManager } from './content/CustomContentManager';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export class CharacterSheetRuntime {
   private static _content: RegisteredContent<CharacterSheetContext>[] = [];
@@ -43,8 +44,13 @@ export class CharacterSheetRuntime {
       id: CONSTANTS.TAB_CHARACTER_INVENTORY,
       title: 'DND5E.Inventory',
       content: {
-        component: CharacterInventoryTab,
+        component: ActorInventoryTab,
         type: 'svelte',
+        getProps() {
+          return {
+            tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+          };
+        },
       },
       layout: 'classic',
     },
@@ -143,5 +149,18 @@ export class CharacterSheetRuntime {
     }
 
     CharacterSheetRuntime._tabs.push(tab);
+  }
+
+  static getTabTitle(tabId: string) {
+    try {
+      let tabTitle = this._tabs.find((t) => t.id === tabId)?.title;
+      if (typeof tabTitle === 'function') {
+        tabTitle = tabTitle();
+      }
+      return tabTitle ? FoundryAdapter.localize(tabTitle) : tabId;
+    } catch (e) {
+      error('An error occurred while searching for a tab title.', false, e);
+      debug('Tab title error troubleshooting information', { tabId });
+    }
   }
 }

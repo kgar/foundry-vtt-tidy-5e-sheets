@@ -1,16 +1,21 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
+  import type {
+    CharacterSheetContext,
+    NpcSheetContext,
+    SpellbookSection,
+  } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import SpellPips from './SpellPips.svelte';
   import SpellSlotConfigButton from './SpellSlotConfigButton.svelte';
   import SpellSlotUses from './SpellSlotUses.svelte';
 
-  export let section: any;
+  export let section: SpellbookSection;
 
-  let context =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 </script>
 
 <div class="flex-row extra-small-gap">

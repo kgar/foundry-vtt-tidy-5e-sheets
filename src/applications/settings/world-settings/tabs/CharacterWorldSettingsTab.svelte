@@ -11,8 +11,8 @@
   import ListboxSetting from '../../parts/ListboxSetting.svelte';
   import { CONSTANTS } from 'src/constants';
 
-  const context = getContext<WorldSettingsContextStore>('context');
-  let functions = getContext<WorldSettingsFunctions>('functions');
+  const context = getContext<WorldSettingsContextStore>(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
+  let functions = getContext<WorldSettingsFunctions>(CONSTANTS.SVELTE_CONTEXT.FUNCTIONS);
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -60,13 +60,6 @@
     name={'TIDY5E.Settings.ShowPlayerName.name'}
     hint={'TIDY5E.Settings.ShowPlayerName.hint'}
     id="showPlayerName"
-  />
-
-  <CheckboxSetting
-    bind:value={$context.settings.sortFavoriteItemsAlphabetically}
-    name={'TIDY5E.Settings.SortFavoriteItemsAlphabetically.name'}
-    hint={'TIDY5E.Settings.SortFavoriteItemsAlphabetically.hint'}
-    id="sortFavoriteItemsAlphabetically"
   />
 
   <CheckboxSetting

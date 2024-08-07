@@ -12,9 +12,19 @@
   import { settingStore } from 'src/settings/settings';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context = getContext<Readable<ItemSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
+
+  $: damageIsEnchanted = !!FoundryAdapter.getProperty(
+    $context.item.overrides,
+    'system.damage.parts',
+  );
+  $: enchantedTooltip = damageIsEnchanted
+    ? localize('DND5E.Enchantment.Warning.Override')
+    : null;
 
   function addDamageFormula() {
     const damage = $context.item.system.damage;
@@ -81,18 +91,30 @@
   {#if $context.system.hasAttack}
     <ItemFormGroup
       labelText={localize('DND5E.ItemAttackBonus')}
-      field="system.attackBonus"
+      field="system.attack.bonus"
       let:inputId
     >
       <div class="form-fields">
         <TextInput
           id={inputId}
           document={$context.item}
-          field="system.attackBonus"
-          value={$context.system.attackBonus}
+          field="system.attack.bonus"
+          value={$context.system.attack.bonus}
           dataset={{ formulaEditor: true }}
           disabled={!$context.editable}
         />
+        <Checkbox
+          id="{$context.appId}-system-attack-flat"
+          document={$context.item}
+          field="system.attack.flat"
+          checked={$context.system.attack.flat}
+          labelCssClass="checkbox"
+          greenCheckboxWidthOverride="{localize('DND5E.ItemAttackFlat').length +
+            4}ch"
+          title={localize('DND5E.ItemAttackFlatHint')}
+        >
+          {localize('DND5E.ItemAttackFlat')}
+        </Checkbox>
       </div>
     </ItemFormGroup>
 
@@ -144,66 +166,72 @@
       type="button"
       class="damage-formula-control add-damage"
       on:click={() => addDamageFormula()}
-      disabled={!$context.editable}
+      disabled={!$context.editable || damageIsEnchanted}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+      data-tooltip={enchantedTooltip}
     >
       <i class="fas fa-plus" />
     </button>
   </h4>
-  <ol class="damage-parts form-group">
-    {#each damageParts as [formula, damageType], i}
-      <li
-        class="damage-part flexrow"
-        data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DAMAGE_PART_CONTAINER}
-        data-tidy-damage-part-index={i}
-      >
-        <input
-          id="{$context.appId}-system-damage-part-{i}-0"
-          type="text"
-          bind:value={formula}
-          data-formula-editor
-          on:change={() => saveDamageFormulae()}
-          disabled={!$context.editable}
-          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DAMAGE_PART_FORMULA}
-          data-tidy-field={`system.damage.part-${i}-0`}
-        />
-        <select
-          id="{$context.appId}-system-damage-part-{i}-1"
-          bind:value={damageType}
-          data-formula-editor
-          on:change={() => saveDamageFormulae()}
-          disabled={!$context.editable}
-          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DAMAGE_PART_TYPE}
-          data-tidy-field={`system.damage.part-${i}-1`}
+  {#if damageParts?.length}
+    <ol class="damage-parts form-group">
+      {#each damageParts as [formula, damageType], i}
+        <li
+          class="damage-part flexrow"
+          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DAMAGE_PART_CONTAINER}
+          data-tidy-damage-part-index={i}
         >
-          <option value="">{localize('DND5E.None')}</option>
-          <optgroup label={localize('DND5E.Damage')}>
-            <SelectOptions
-              data={$context.config.damageTypes}
-              labelProp="label"
-            />
-          </optgroup>
-          <optgroup label={localize('DND5E.Healing')}>
-            <SelectOptions
-              data={$context.config.healingTypes}
-              labelProp="label"
-            />
-          </optgroup>
-        </select>
-        <button
-          type="button"
-          class="damage-formula-control delete-damage"
-          on:click={() => deleteDamageFormula(i)}
-          disabled={!$context.editable}
-          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
-            .DAMAGE_PART_DELETE_COMMAND}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-        >
-          <i class="fas fa-minus" />
-        </button>
-      </li>
-    {/each}
-  </ol>
+          <input
+            id="{$context.appId}-system-damage-part-{i}-0"
+            type="text"
+            bind:value={formula}
+            data-formula-editor
+            on:change={() => saveDamageFormulae()}
+            disabled={!$context.editable || damageIsEnchanted}
+            data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DAMAGE_PART_FORMULA}
+            data-tidy-field={`system.damage.part-${i}-0`}
+            data-tooltip={enchantedTooltip}
+          />
+          <select
+            id="{$context.appId}-system-damage-part-{i}-1"
+            bind:value={damageType}
+            data-formula-editor
+            on:change={() => saveDamageFormulae()}
+            disabled={!$context.editable || damageIsEnchanted}
+            data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DAMAGE_PART_TYPE}
+            data-tidy-field={`system.damage.part-${i}-1`}
+            data-tooltip={enchantedTooltip}
+          >
+            <option value="">{localize('DND5E.None')}</option>
+            <optgroup label={localize('DND5E.Damage')}>
+              <SelectOptions
+                data={$context.config.damageTypes}
+                labelProp="label"
+              />
+            </optgroup>
+            <optgroup label={localize('DND5E.Healing')}>
+              <SelectOptions
+                data={$context.config.healingTypes}
+                labelProp="label"
+              />
+            </optgroup>
+          </select>
+          <button
+            type="button"
+            class="damage-formula-control delete-damage"
+            on:click={() => deleteDamageFormula(i)}
+            disabled={!$context.editable || damageIsEnchanted}
+            data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
+              .DAMAGE_PART_DELETE_COMMAND}
+            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            data-tooltip={enchantedTooltip}
+          >
+            <i class="fas fa-minus" />
+          </button>
+        </li>
+      {/each}
+    </ol>
+  {/if}
 
   {#if $context.system.damage.parts.length}
     <ItemFormGroup
@@ -291,6 +319,73 @@
     </div>
   </ItemFormGroup>
 
+  {#if $context.system.isEnchantment}
+    <ItemFormGroup
+      labelText={localize('DND5E.Enchantment.Label')}
+      cssClass="enchantment"
+    >
+      <div class="form-fields">
+        <button
+          type="button"
+          class="inline-transparent-button no-wrap highlight-on-hover"
+          on:click={() => FoundryAdapter.openEnchantmentConfig($context.item)}
+        >
+          <i class="fa-solid fa-gear" aria-hidden="true"></i>
+          {localize('DND5E.Enchantment.Action.Configure')}
+        </button>
+      </div>
+      {#if $context.appliedEnchantments?.length}
+        <ul class="separated-list">
+          {#each $context.appliedEnchantments as ae}
+            <li class="item" data-enchantment-uuid={ae.enchantment.uuid}>
+              <div class="details flexrow">
+                <img class="list-icon" src={ae.item.img} alt={ae.name} />
+                <span class="name">
+                  {#if ae.actor}
+                    {@html localize('DND5E.Enchantment.Items.Entry', {
+                      item: ae.name,
+                      actor: ae.actor.name,
+                    })}
+                  {:else}
+                    {@html ae.name}
+                  {/if}
+                </span>
+                <div class="list-controls flexrow">
+                  {#if ae.item.isOwner}
+                    <button
+                      type="button"
+                      class="transparent-button"
+                      data-uuid={ae.item.uuid}
+                      data-tooltip="DND5E.ItemView"
+                      aria-label={localize('DND5E.ItemView')}
+                      on:click={() =>
+                        FoundryAdapter.renderFromUuid(ae.item.uuid)}
+                    >
+                      <i class="fa-solid fa-eye" aria-hidden="true"></i>
+                    </button>
+                    <button
+                      type="button"
+                      class="transparent-button"
+                      data-tooltip="DND5E.Enchantment.Action.Remove"
+                      aria-label={localize('DND5E.Enchantment.Action.Remove')}
+                      on:click={() =>
+                        FoundryAdapter.removeEnchantment(
+                          ae.enchantment.uuid,
+                          $context.item.sheet,
+                        )}
+                    >
+                      <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
+                    </button>
+                  {/if}
+                </div>
+              </div>
+            </li>
+          {/each}
+        </ul>
+      {/if}
+    </ItemFormGroup>
+  {/if}
+
   {#if $context.system.actionType === 'summ'}
     <ItemFormGroup
       labelText={localize('DND5E.Summoning.Label')}
@@ -307,7 +402,6 @@
             id={inputId}
             type="button"
             class="inline-transparent-button no-wrap highlight-on-hover"
-            data-action="summoning"
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             on:click={() => FoundryAdapter.openSummonConfig($context.item)}
           >

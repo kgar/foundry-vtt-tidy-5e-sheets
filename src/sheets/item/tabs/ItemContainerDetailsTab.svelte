@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import type { ItemSheetContext } from 'src/types/item.types';
+  import type { ContainerSheetContext } from 'src/types/item.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import Select from 'src/components/inputs/Select.svelte';
@@ -9,8 +9,12 @@
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import ItemProperties from '../parts/ItemProperties.svelte';
   import ContentConcealer from 'src/components/content-concealment/ContentConcealer.svelte';
+  import Checkbox from 'src/components/inputs/Checkbox.svelte';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context = getContext<Readable<ContainerSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -58,6 +62,14 @@
     field="system.attunement"
     let:inputId
   >
+    <Checkbox
+      id={`${$context.appId}-system-attuned`}
+      document={$context.item}
+      field="system.attuned"
+      checked={$context.system.attuned}
+      disabled={!$context.editable || !$context.system.attunement}
+      title={localize('DND5E.AttunementAttuned')}
+    ></Checkbox>
     <Select
       id={inputId}
       document={$context.item}
@@ -65,7 +77,10 @@
       value={$context.system.attunement}
       disabled={!$context.editable}
     >
-      <SelectOptions data={$context.config.attunements} />
+      <SelectOptions
+        data={$context.config.attunementTypes}
+        blank={localize('DND5E.AttunementNone')}
+      />
     </Select>
   </ItemFormGroup>
 </ContentConcealer>

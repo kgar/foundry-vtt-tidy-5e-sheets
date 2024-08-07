@@ -3,7 +3,10 @@
   import type { CurrentSettings } from 'src/settings/settings';
   import { getContext, onDestroy } from 'svelte';
   import type { Writable } from 'svelte/store';
-  import type { ThemeColorSetting, Tidy5eThemeDataV1 } from 'src/types/theme.types';
+  import type {
+    ThemeColorSetting,
+    Tidy5eThemeDataV1,
+  } from 'src/types/theme.types';
   import { applyCurrentTheme } from 'src/theme/theme';
   import { error } from 'src/utils/logging';
   import ThemeSettingSheetMenu from './ThemeSettingSheetMenu.svelte';
@@ -15,7 +18,7 @@
     validateImportFile,
   } from 'src/theme/theme';
   import { getSingleFileFromDropEvent, readFileAsText } from 'src/utils/file';
-  import type { ThemeSettingsSheetFunctions } from './ThemeSettingsFormApplication';
+  import { CONSTANTS } from 'src/constants';
 
   export let themeableColors: ThemeColorSetting[];
   $: {
@@ -33,9 +36,11 @@
     }
   }
 
-  let context = getContext<Writable<CurrentSettings>>('context');
-  let appId = getContext<string>('appId');
-  let functions = getContext<ThemeSettingsSheetFunctions>('functions');
+  let context = getContext<Writable<CurrentSettings>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+  let appId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.APP_ID);
+
   const localize = FoundryAdapter.localize;
 
   async function processImportFile(file: File) {

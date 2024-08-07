@@ -32,11 +32,11 @@
 
     button[disabled] {
       color: var(--t5e-button-disabled-color);
+      cursor: default;
 
       &:hover {
         background: var(--t5e-button-background);
       }
-      cursor: default;
     }
 
     input[type='checkbox'],

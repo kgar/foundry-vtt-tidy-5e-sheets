@@ -5,27 +5,19 @@
   import { settingStore } from 'src/settings/settings';
   import type { ItemSheetContext } from 'src/types/item.types';
   import type { CharacterSheetContext } from 'src/types/types';
-  import { warn } from 'src/utils/logging';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let context =
-    getContext<Readable<ItemSheetContext | CharacterSheetContext>>('context');
+  let context = getContext<Readable<ItemSheetContext | CharacterSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   $: effects = Object.entries($context.effects) as Iterable<[string, any]>;
 
   const localize = FoundryAdapter.localize;
 
   function onAddClicked(section: any) {
-    const unsupported = FoundryAdapter.isFoundryV10() && $context.item.isOwned;
-    if (unsupported)
-      return warn(
-        'Managing Active Effects within an Owned Item is not currently supported and will be added in a subsequent update.',
-        true,
-      );
-
     const owner = $context.item;
-
     return FoundryAdapter.addEffect(section.type, owner);
   }
 
@@ -76,7 +68,7 @@
 
         {#if section.info}
           <ol class="info">
-            {#each $context.section.info as info}
+            {#each section.info as info}
               <li class="notification info">{info ?? ''}</li>
             {/each}
           </ol>
@@ -95,7 +87,7 @@
               <div class="item-name effect-name flexrow">
                 <img
                   class="item-image"
-                  src={effect.icon}
+                  src={effect.img ?? effect.icon}
                   alt={effect.name ?? ''}
                 />
                 <h4>{effect.name ?? ''}</h4>
@@ -106,24 +98,26 @@
               </div>
               <div class="item-controls active-effect-controls flexrow">
                 {#if $context.editable}
-                  <button
-                    type="button"
-                    class="active-effect-control inline-transparent-button"
-                    title={effect.disabled
-                      ? 'DND5E.EffectEnable'
-                      : 'DND5E.EffectDisable'}
-                    on:click={() =>
-                      effect.update({ disabled: !effect.disabled })}
-                    tabindex={$settingStore.useAccessibleKeyboardSupport
-                      ? 0
-                      : -1}
-                  >
-                    <i
-                      class="fas"
-                      class:fa-check={effect.disabled}
-                      class:fa-times={!effect.disabled}
-                    />
-                  </button>
+                  {#if section.type !== 'enchantment'}
+                    <button
+                      type="button"
+                      class="active-effect-control inline-transparent-button"
+                      title={effect.disabled
+                        ? 'DND5E.EffectEnable'
+                        : 'DND5E.EffectDisable'}
+                      on:click={() =>
+                        effect.update({ disabled: !effect.disabled })}
+                      tabindex={$settingStore.useAccessibleKeyboardSupport
+                        ? 0
+                        : -1}
+                    >
+                      <i
+                        class="fas"
+                        class:fa-check={effect.disabled}
+                        class:fa-times={!effect.disabled}
+                      />
+                    </button>
+                  {/if}
                   <button
                     type="button"
                     class="active-effect-control inline-transparent-button"

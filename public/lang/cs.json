@@ -65,7 +65,7 @@
     "TIDY5E.ContextMenuActionDelete": null,
     "TIDY5E.EmptySection": "Tato sekce je prázdná. Pro úpravy odemkněte deník.",
     "TIDY5E.GMOnlyEdit": "Pouze váš PJ může upravovat tuto sekci.",
-    "TIDY5E.AttunementWarning": "Varování: Nemůžete se sladit s více než {number} předměty!",
+    "TIDY5E.AttunementWarning": "Varování: Nemůžete se sladit s více než {number} předměty.",
     "TIDY5E.AttunementItems": "Sladěné předměty",
     "TIDY5E.AttunementMax": "Maximální sladění",
     "TIDY5E.GridLayout": "Mřížkové rozvržení",
@@ -435,10 +435,6 @@
         }
     },
     "TIDY5E.Settings.Debug": {
-        "name": null,
-        "hint": null
-    },
-    "TIDY5E.Settings.SortFavoriteItemsAlphabetically": {
         "name": null,
         "hint": null
     },

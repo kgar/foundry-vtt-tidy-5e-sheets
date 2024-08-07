@@ -438,10 +438,6 @@
         "name": "Activer le débogage",
         "hint": "Affiche les messages de débogage sur la console."
     },
-    "TIDY5E.Settings.SortFavoriteItemsAlphabetically": {
-        "name": "Trier les favoris par ordre alphabétique",
-        "hint": "Classe les favoris par ordre alphabétique."
-    },
     "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
         "name": "Feuille de personnage : Toujours déverrouillée pour le MJ",
         "hint": "Traitez la feuille de personnage comme si elle était toujours déverrouillée, quel que soit le paramètre de verrouillage. Le MJ peut toujours modifier le personnage, mais il peut également activer le verrouillage/déverrouillage pour un joueur qui possède également le personnage.",
@@ -634,7 +630,7 @@
             "Explanation": "De nouvelles migrations de données Tidy 5e Sheets sont disponibles. Consultez le menu {boldStart}paramètres de configuration des Migrations{boldEnd} pour en savoir plus.",
             "Button.DoNotShowAgain": "Ne pas montrer à nouveau",
             "DoNotShowAgain.ConfirmMessage": "Confirmé. Ce message ne s'affichera plus jusqu'à ce qu'une autre migration soit disponible.",
-            "Explanation2": "Note : Les migrations déplacent les données qui étaient à l'origine stockées par Tidy 5e Sheets dans les champs de données officiellement pris en charge par le système. S'il ne manque pas de données sur vos feuilles après la mise à jour de Tidy 5e Sheets, aucune migration n'est nécessaire."
+            "Explanation2": "Note: Les migrations déplacent les données qui étaient à l'origine stockées par Tidy 5e Sheets dans les champs de données officiellement pris en charge par le système. S'il ne manque pas de données sur vos feuilles après la mise à jour de Tidy 5e Sheets, aucune migration n'est nécessaire."
         },
         "OptionsHeader": "Options de migrations",
         "OptionOverwrite.Text": "Écraser",
@@ -655,7 +651,23 @@
             "selectionDialogTitle": "Migration : Sauvegarde contre la mort des PNJ",
             "sectionTitle": "Sauvegarde contre la mort des PNJ"
         },
-        "UnlinkedExplanation": "Cette migration offre la possibilité de migrer les documents non liés aux acteurs dans la scène actuelle. Vous pouvez exécuter la migration sur d'autres scènes si nécessaire."
+        "UnlinkedExplanation": "Cette migration offre la possibilité de migrer les documents non liés aux acteurs dans la scène actuelle. Vous pouvez exécuter la migration sur d'autres scènes si nécessaire.",
+        "CcssToTidy": {
+            "sectionTitle": "CCSS pour Tidy 5e",
+            "selectionDialogTitle": "Migration : CCSS pour Tidy 5e",
+            "section": "Section",
+            "ccss": "CCSS",
+            "explanation1": "Tidy 5e supporte désormais nativement les sections personnalisées et fournit des fonctionnalités supplémentaires autour des sections personnalisées. Cette migration copiera les noms des sections des feuilles de caractères personnalisées (CCSS) dans la configuration des sections de Tidy5e.",
+            "explanation2": "{boldStart}Note{boldEnd}: Le CCSS a la priorité sur les sections personnalisées. Pour désactiver le CCSS pour un élément, assurez-vous d'utiliser l'option de suppression des indicateurs concernés ou d'effacer manuellement la valeur de la section personnalisée CCSS.",
+            "overwrite": "Écraser",
+            "overwriteTooltip": "Permet d'écraser l'indicateur de section Tidy existant. Si la case n'est pas cochée, seuls les indicateurs Tidy vides recevront les données CCSS migrées.",
+            "deleteFlags": "Supprimer les indicateurs CCSS concernés",
+            "deleteFlagsTooltip": "Lors de la migration des sections CCSS vers les sections personnalisées Tidy, les indicateurs CCSS restent en place par défaut. Cochez cette option pour supprimer ces indicateurs."
+        },
+        "Parent": "Parent",
+        "MigrateCompendia.CompendiumLabel": "Compendium",
+        "MigrateCompendia.Title": "Migrer les compendiums",
+        "MigrateCompendia.SelectionDialogTitle": "Sélection des compendiums pour migration"
     },
     "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
         "name": "Inclure des sorts d'une durée d'une minute dans les actions",
@@ -751,12 +763,54 @@
     "TIDY5E.Utilities.GMTools": "Outils du MJ",
     "TIDY5E.Utilities.IdentifyAll": "Identifier tous les éléments",
     "TIDY5E.Utilities.MarkAllAsUnidentified": "Marquer tous les éléments comme non identifiés",
-    "TIDY5E.ItemImageTitle": "Objet: {subject}",
+    "TIDY5E.ItemImageTitle": "Objet : {subject}",
     "TIDY5E.ItemFilters.CanCast": "Peu incanter",
     "TIDY5E.ItemFilters.CanUse": "Peu utiliser",
-    "TIDY5E.PortraitTitle": "Portrait: {subject}",
+    "TIDY5E.PortraitTitle": "Portrait : {subject}",
     "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
         "name": "Inclure les indicateurs dans la création des parchemins de sorts",
         "hint": "Les sorts peuvent parfois contenir des données spéciales provenant d'autres modules, qu'il peut être utile de transférer dans un parchemin de sort. Activer pour copier toutes les données basées sur les indicateurs dans le parchemin de sort lors de sa création."
+    },
+    "TIDY5E.Settings.SheetPreferences": {
+        "hint": "Si vous souhaitez définir les feuilles Tidy 5e par défaut pour un ou plusieurs types de documents, mais que le menu de configuration des feuilles par défaut ne fonctionne pas comme prévu, utilisez ce menu pour sélectionner vos préférences.",
+        "buttonLabel": "Définir Tidy 5e comme feuille par défaut",
+        "explanation": "Sélectionnez tous les types de documents pour lesquels vous préférez que les feuilles Tidy 5e soient utilisées par défaut.",
+        "name": "Définir Tidy5e comme feuille par défaut"
+    },
+    "TIDY5E.GenericErrorNotification": "Une erreur s'est produite lors de l'exécution de cette action. Voir la console F12 devtools pour plus de détails.",
+    "TIDY5E.Section": {
+        "Label": "Section",
+        "Default": "Section par défaut",
+        "ActionLabel": "Section Action",
+        "ConfigDialog": {
+            "hideTooltip": "Masquer cette section",
+            "title": "Configurer la section : {tabTitle}",
+            "showTooltip": "Afficher cette section"
+        },
+        "ActionTooltip": "Spécifiez une section personnalisée pour cet élément lorsqu'il est placé dans l'onglet Actions, ou laissez-la vide pour un comportement par défaut.",
+        "Tooltip": "Spécifiez une section personnalisée pour cet élément lorsqu'il est placé dans une fiche d'acteur, ou laissez-la vide pour un comportement par défaut."
+    },
+    "TIDY5E.Utilities.ConfigureSections": "Configurer les sections",
+    "TIDY5E.WorldSettings.TabIcons": {
+        "tabLabel": "Icones"
+    },
+    "TIDY5E.UseDefaultDialog": {
+        "title": "Confirmer : Utiliser par défaut",
+        "text": "Êtes-vous sûr de vouloir utiliser la valeur par défaut ?"
+    },
+    "TIDY5E.LocalizationTestKey": "Clé de test de localisation",
+    "TIDY5E.Settings.UseTidySpellSchoolIcons": {
+        "hint": "Utilisez les icônes sélectionnées par Tidy pour les écoles de magie. Pour personnaliser les icônes des écoles de magie via CONFIG.DND5E ou d'autres modules, désactivez cette option. Pour étendre les icônes personnalisées des écoles de sorts de Tidy, reportez-vous à la documentation de l'API de Tidy.",
+        "name": "Utiliser les icônes d'écoles de Tidy"
+    },
+    "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+Click pour sauter le rouleau et recharger instantanément) ",
+    "TIDY5E.Settings.ColorPickerRitualOnly": {
+        "name": "Rituel Seulement"
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
+        "name": "Surbrillance Rituel seulement"
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
+        "name": "Contour Rituel seulement"
     }
 }

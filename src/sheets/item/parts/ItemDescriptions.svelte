@@ -5,6 +5,7 @@
   import Accordion from 'src/components/accordion/Accordion.svelte';
   import AccordionItem from 'src/components/accordion/AccordionItem.svelte';
   import { settingStore } from 'src/settings/settings';
+  import { CONSTANTS } from 'src/constants';
 
   /**
    * When true, descriptions are rendered to the DOM; else, they are excluded.
@@ -21,7 +22,9 @@
 
   let editorsContainers: HTMLElement[] = [];
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context = getContext<Readable<ItemSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const dispatcher = createEventDispatcher<{
     edit: {
@@ -33,10 +36,6 @@
   let accordionItemOpenStates = $context.itemDescriptions.map(
     (_, i) => i === 0,
   );
-
-  function activateCoreJqueryListeners(node: HTMLElement): any {
-    $context.activateFoundryJQueryListeners(node);
-  }
 </script>
 
 {#if renderDescriptions}
@@ -44,7 +43,7 @@
     <Accordion multiple>
       {#each $context.itemDescriptions as itemDescription, i (itemDescription.field)}
         {#key itemDescription.content}
-          <div bind:this={editorsContainers[i]} use:activateCoreJqueryListeners>
+          <div bind:this={editorsContainers[i]} use:$context.activateEditors>
             <AccordionItem
               bind:open={accordionItemOpenStates[i]}
               class="editor"

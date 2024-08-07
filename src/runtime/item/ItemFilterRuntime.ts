@@ -32,6 +32,13 @@ export class ItemFilterRuntime {
 
   static defaultFilterPins: Record<string, Record<string, Set<string>>> = {
     [CONSTANTS.SHEET_TYPE_CHARACTER]: {
+      [CONSTANTS.TAB_CHARACTER_ATTRIBUTES]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+        defaultItemFilters.canUse.name,
+        defaultItemFilters.canCastSpell.name,
+      ]),
       [CONSTANTS.TAB_CHARACTER_INVENTORY]: new Set<string>([
         defaultItemFilters.activationCostAction.name,
         defaultItemFilters.activationCostBonus.name,
@@ -77,6 +84,12 @@ export class ItemFilterRuntime {
         defaultItemFilters.activationCostBonus.name,
         defaultItemFilters.activationCostReaction.name,
       ]),
+      [CONSTANTS.TAB_NPC_INVENTORY]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+        defaultItemFilters.equipped.name,
+      ]),
     },
     [CONSTANTS.SHEET_TYPE_VEHICLE]: {
       [CONSTANTS.TAB_ACTOR_ACTIONS]: new Set<string>([
@@ -97,6 +110,29 @@ export class ItemFilterRuntime {
 
   static _documentTabFilters: DocumentTypesToFilterTabs = {
     [CONSTANTS.SHEET_TYPE_CHARACTER]: {
+      [CONSTANTS.TAB_CHARACTER_ATTRIBUTES]: {
+        'DND5E.ItemActivationCost': [
+          defaultItemFilters.activationCostAction,
+          defaultItemFilters.activationCostBonus,
+          defaultItemFilters.activationCostReaction,
+          defaultItemFilters.activationCostOther,
+        ],
+        'DND5E.SpellComponents': [
+          defaultItemFilters.verbal,
+          defaultItemFilters.somatic,
+          defaultItemFilters.material,
+          defaultItemFilters.concentration,
+          defaultItemFilters.ritual,
+        ],
+        'DND5E.SpellPreparationMode': [
+          defaultItemFilters.prepared,
+          defaultItemFilters.canCastSpell,
+        ],
+        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+          defaultItemFilters.equipped,
+          defaultItemFilters.canUse,
+        ],
+      },
       [CONSTANTS.TAB_CHARACTER_INVENTORY]: {
         'DND5E.ItemActivationCost': [
           defaultItemFilters.activationCostAction,
@@ -152,6 +188,18 @@ export class ItemFilterRuntime {
           defaultItemFilters.activationCostOther,
         ],
         ...getStandardSpellSchoolFilterCategories(),
+      },
+      [CONSTANTS.TAB_NPC_INVENTORY]: {
+        'DND5E.ItemActivationCost': [
+          defaultItemFilters.activationCostAction,
+          defaultItemFilters.activationCostBonus,
+          defaultItemFilters.activationCostReaction,
+        ],
+        'DND5E.Rarity': () => getItemRarityFilters(),
+        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+          defaultItemFilters.equipped,
+          ...getAttunementFilters(),
+        ],
       },
       [CONSTANTS.TAB_ACTOR_ACTIONS]: { ...getActionListFilterCategories() },
     },

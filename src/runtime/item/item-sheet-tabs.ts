@@ -1,11 +1,13 @@
 import { CONSTANTS } from 'src/constants';
 import ItemActiveEffectsTab from '../../sheets/item/tabs/ItemActiveEffectsTab.svelte';
 import ItemAdvancementTab from '../../sheets/item/tabs/ItemAdvancementTab.svelte';
+import ItemBackgroundDetailsTab from '../../sheets/item/tabs/ItemBackgroundDetailsTab.svelte';
 import ItemClassDetailsTab from '../../sheets/item/tabs/ItemClassDetailsTab.svelte';
 import ItemConsumableDetailsTab from '../../sheets/item/tabs/ItemConsumableDetailsTab.svelte';
 import ItemContainerContentsTab from '../../sheets/item/tabs/ItemContainerContentsTab.svelte';
 import ItemContainerDetailsTab from '../../sheets/item/tabs/ItemContainerDetailsTab.svelte';
 import ItemDescriptionTab from '../../sheets/item/tabs/ItemDescriptionTab.svelte';
+import ItemRaceDetailsTab from '../../sheets/item/tabs/ItemRaceDetailsTab.svelte';
 import ItemDescriptionWithSidebarTab from '../../sheets/item/tabs/ItemDescriptionWithSidebarTab.svelte';
 import ItemEquipmentDetailsTab from '../../sheets/item/tabs/ItemEquipmentDetailsTab.svelte';
 import ItemFeatDetailsTab from '../../sheets/item/tabs/ItemFeatDetailsTab.svelte';
@@ -29,6 +31,19 @@ const itemSheetTabs: Record<string, Tab> = {
       cssClass: 'detail-tab-contents items-list-container',
       type: 'svelte',
     },
+  },
+  /**
+   * Details form for background items.
+   */
+  backgroundDetails: {
+    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    title: 'DND5E.Details',
+    content: {
+      component: ItemBackgroundDetailsTab,
+      cssClass: 'detail-tab-contents',
+      type: 'svelte',
+    },
+    autoHeight: true,
   },
   /**
    * Details form for class items.
@@ -159,6 +174,18 @@ const itemSheetTabs: Record<string, Tab> = {
     content: {
       component: ItemRaceDescriptionTab,
       cssClass: 'flexrow',
+      type: 'svelte',
+    },
+  },
+  /**
+   * A sidebar with race properties and configuration buttons, and a description editor.
+   */
+  raceDetails: {
+    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    title: 'DND5E.Details',
+    content: {
+      component: ItemRaceDetailsTab,
+      cssClass: 'detail-tab-contents',
       type: 'svelte',
     },
   },

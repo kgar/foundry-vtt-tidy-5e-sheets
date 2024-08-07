@@ -141,7 +141,7 @@
   }
 
   // Content
-  const card = getContext<Writable<ItemCardStore>>('card');
+  const card = getContext<Writable<ItemCardStore>>(CONSTANTS.SVELTE_CONTEXT.CARD);
   const cardWidthRem: number = 17.5;
   const cardHeightRem: number = 28.75;
   const mouseCursorCardGapRem = 1.5;

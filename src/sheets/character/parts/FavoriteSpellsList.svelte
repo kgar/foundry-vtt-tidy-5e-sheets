@@ -1,7 +1,10 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type CharacterSheetContext } from 'src/types/types';
+  import {
+    type CharacterSheetContext,
+    type SpellbookSection,
+  } from 'src/types/types';
   import ItemName from '../../../components/item-list/ItemName.svelte';
   import ItemTable from '../../../components/item-list/v1/ItemTable.svelte';
   import ItemTableCell from '../../../components/item-list/v1/ItemTableCell.svelte';
@@ -14,16 +17,26 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import SpellSlotManagement from 'src/components/spellbook/SpellSlotManagement.svelte';
+  import ConcentrationOverlayIcon from 'src/components/spellbook/ConcentrationOverlayIcon.svelte';
 
-  let context = getContext<Readable<CharacterSheetContext>>('context');
-  export let section: any;
+  let context = getContext<Readable<CharacterSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+  export let section: SpellbookSection;
   export let spells: any[];
+
+  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
+    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <section class="spellbook-list-section">
-  <ItemTable location={section.label}>
+  <ItemTable
+    key={section.key}
+    data-custom-section={section.custom ? true : null}
+  >
     <svelte:fragment slot="header">
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>
@@ -33,7 +46,7 @@
             })}
           {:else}
             <span class="spell-primary-column-label">
-              {section.label}
+              {localize(section.label)}
             </span>
           {/if}
           {#if section.usesSlots}
@@ -56,6 +69,7 @@
     </svelte:fragment>
     <svelte:fragment slot="body">
       {#each spells as spell}
+        {@const ctx = $context.itemContext[spell.id]}
         {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($context, spell)}
         <ItemTableRow
           item={spell}
@@ -67,13 +81,19 @@
           }}
           let:toggleSummary
           cssClass={FoundryAdapter.getSpellRowClasses(spell)}
+          hidden={!!$itemIdsToShow && !$itemIdsToShow.has(spell.id)}
+          favoriteId={ctx.favoriteId}
         >
-          <ItemTableCell primary={true} title={spell.name}>
+          <ItemTableCell primary={true}>
             <ItemUseButton
               disabled={!$context.editable}
               item={spell}
               imgUrlOverride={spellImgUrl}
-            />
+            >
+              <svelte:fragment slot="after-roll-button">
+                <ConcentrationOverlayIcon {ctx} />
+              </svelte:fragment>
+            </ItemUseButton>
             <ItemName
               on:toggle={() => toggleSummary($context.actor)}
               item={spell}

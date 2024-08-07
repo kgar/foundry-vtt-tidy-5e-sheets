@@ -1,8 +1,9 @@
 <script lang="ts">
   import TextInput from 'src/components/inputs/TextInput.svelte';
+  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
-  import type { Item5e, ItemSheetContext } from 'src/types/item.types';
+  import type { ContainerSheetContext, Item5e } from 'src/types/item.types';
   import type { Actor5e } from 'src/types/types';
   import type { ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -10,8 +11,9 @@
 
   export let document: Actor5e | Item5e;
 
-  let context =
-    getContext<Readable<ActorSheetContext | ItemSheetContext>>('context');
+  let context = getContext<Readable<ActorSheetContext | ContainerSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   $: currencies = Object.entries(document.system.currency).map((e) => ({
     key: e[0],

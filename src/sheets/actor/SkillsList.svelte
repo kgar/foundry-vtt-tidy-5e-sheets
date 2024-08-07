@@ -7,6 +7,7 @@
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { formatAsModifier } from 'src/utils/formatting';
+  import { warn } from 'src/utils/logging';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
@@ -17,8 +18,9 @@
 
   $: showAllSkills = !toggleable || expanded;
 
-  let context =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   type SkillRef = {
     key: string;
@@ -28,17 +30,31 @@
   };
 
   let skillRefs: SkillRef[];
-  $: skillRefs = Array.from(Object.entries($context.config.skills)).map(
-    ([key, { label }]: [string, any]) => {
+  $: {
+    skillRefs = Array.from(Object.entries($context.config.skills)).reduce<
+      SkillRef[]
+    >((prev, [key, configSkill]: [string, any]) => {
       const skill = getSkill(key);
-      return {
+
+      if (!skill) {
+        warn(
+          'Unable to find skill. Ensure custom skills are added at "init" time.',
+          false,
+          { key, configSkill },
+        );
+        return prev;
+      }
+
+      prev.push({
         key: key,
-        label: label,
+        label: configSkill.label,
         ability: skill.ability,
         skill: skill,
-      };
-    },
-  );
+      });
+
+      return prev;
+    }, []);
+  }
 
   $: abilities = FoundryAdapter.getAbilitiesAsDropdownOptions(
     $context.abilities,
@@ -99,7 +115,7 @@
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_CONTAINER}
           data-key={skillRef.key}
         >
-          {#if $context.editable && !$context.lockSensitiveFields}
+          {#if $context.editable && $context.unlocked}
             {@const activeEffectApplied =
               ActiveEffectsHelper.isActiveEffectAppliedToField(
                 $context.actor,

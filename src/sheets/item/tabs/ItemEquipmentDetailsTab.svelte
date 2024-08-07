@@ -13,8 +13,12 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ItemProperties from '../parts/ItemProperties.svelte';
   import ContentConcealer from 'src/components/content-concealment/ContentConcealer.svelte';
+  import Checkbox from 'src/components/inputs/Checkbox.svelte';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context = getContext<Readable<ItemSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -41,9 +45,9 @@
         <SelectOptions data={$context.config.armorTypes} />
       </optgroup>
       {#each $context.customEquipmentTypeGroups as group}
-      <optgroup label={localize(group.label)}>
-        <SelectOptions data={group.types} />
-      </optgroup>
+        <optgroup label={localize(group.label)}>
+          <SelectOptions data={group.types} />
+        </optgroup>
       {/each}
       <SelectOptions data={$context.config.miscEquipmentTypes} />
     </Select>
@@ -67,18 +71,29 @@
 
   {#if !$context.system.isMountable}
     <ItemFormGroup
-      field="system.attunement"
       labelText={localize('DND5E.Attunement')}
+      field="system.attunement"
       let:inputId
     >
+      <Checkbox
+        id={`${$context.appId}-system-attuned`}
+        document={$context.item}
+        field="system.attuned"
+        checked={$context.system.attuned}
+        disabled={!$context.editable || !$context.system.attunement}
+        title={localize('DND5E.AttunementAttuned')}
+      ></Checkbox>
       <Select
         id={inputId}
-        value={$context.system.attunement?.toString() ?? ''}
-        field="system.attunement"
         document={$context.item}
+        field="system.attunement"
+        value={$context.system.attunement}
         disabled={!$context.editable}
       >
-        <SelectOptions data={$context.config.attunements} />
+        <SelectOptions
+          data={$context.config.attunementTypes}
+          blank={localize('DND5E.AttunementNone')}
+        />
       </Select>
     </ItemFormGroup>
 
@@ -112,13 +127,34 @@
     >
       <NumberInput
         id={inputId}
-        value={$context.system.armor.value}
+        value={$context.source.armor.value}
         step="1"
         field="system.armor.value"
         document={$context.item}
         disabled={!$context.editable}
       />
     </ItemFormGroup>
+
+    {#if $context.properties.mgc.selected}
+      <ItemFormGroup
+        labelText={localize('DND5E.MagicalBonus')}
+        field="system.armor.magicalBonus"
+        let:inputId
+      >
+        <div class="form-fields">
+          <NumberInput
+            id={inputId}
+            value={$context.system.armor.magicalBonus}
+            field="system.armor.magicalBonus"
+            document={$context.item}
+            disabled={!$context.editable}
+            min="0"
+            step="1"
+            placeholder="0"
+          />
+        </div>
+      </ItemFormGroup>
+    {/if}
   {/if}
 
   {#if $context.hasDexModifier}

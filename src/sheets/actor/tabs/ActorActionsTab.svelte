@@ -6,8 +6,8 @@
   import ItemTableCell from 'src/components/item-list/v1/ItemTableCell.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ActorSheetContext } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { getContext, setContext } from 'svelte';
+  import { writable, type Readable } from 'svelte/store';
   import ItemName from 'src/components/item-list/ItemName.svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
@@ -22,13 +22,45 @@
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
+  import { SheetSections } from 'src/features/sections/SheetSections';
+  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import InlineContainerToggle from 'src/sheets/container/InlineContainerToggle.svelte';
+  import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+  import InlineContainerView from 'src/sheets/container/InlineContainerView.svelte';
 
-  let context = getContext<Readable<ActorSheetContext>>('context');
+  let context = getContext<Readable<ActorSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+  let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
+  let inlineContainerToggleService = getContext<InlineContainerToggleService>(
+    CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
+  );
+
+  $: actions = SheetSections.configureActions(
+    $context.actions,
+    tabId,
+    SheetPreferencesService.getByType($context.actor.type),
+    TidyFlags.sectionConfig.get($context.actor)?.[tabId],
+  );
 
   let searchCriteria: string = '';
+
+  const itemIdsToShow = writable<Set<string> | undefined>(undefined);
+  setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
+
+  $: {
+    $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
+      criteria: searchCriteria,
+      itemContext: $context.itemContext,
+      sections: actions,
+      tabId: tabId,
+    });
+  }
+
   $: utilityBarCommands =
-    $context.utilities[CONSTANTS.TAB_ACTOR_ACTIONS]?.utilityToolbarCommands ??
-    [];
+    $context.utilities[tabId]?.utilityToolbarCommands ?? [];
 
   const localize = FoundryAdapter.localize;
 
@@ -40,14 +72,14 @@
 <UtilityToolbar class="abilities-toolbar">
   <Search bind:value={searchCriteria} />
   <PinnedFilterToggles
-    filterGroupName={CONSTANTS.TAB_ACTOR_ACTIONS}
+    filterGroupName={tabId}
     filters={ItemFilterRuntime.getPinnedFiltersForTab(
       $context.filterPins,
       $context.filterData,
-      CONSTANTS.TAB_ACTOR_ACTIONS,
+      tabId,
     )}
   />
-  <FilterMenu tabId={CONSTANTS.TAB_ACTOR_ACTIONS} />
+  <FilterMenu {tabId} />
   {#each utilityBarCommands as command (command.title)}
     <UtilityToolbarCommand
       title={command.title}
@@ -60,13 +92,17 @@
 </UtilityToolbar>
 
 <div class="actions-tab-container scroll-container flex-column small-gap">
-  {#each Object.entries($context.actions) as [actionType, itemSet] (actionType)}
-    {#if itemSet.size}
-      <ItemTable location={actionType}>
+  {#each actions as section (section.key)}
+    {@const visibleItemCount = ItemVisibility.countVisibleItems(
+      section.actions.map((a) => a.item),
+      $itemIdsToShow,
+    )}
+    {#if visibleItemCount > 0 && section.show}
+      <ItemTable key={section.key}>
         <svelte:fragment slot="header">
           <ItemTableHeaderRow>
             <ItemTableColumn primary={true}>
-              {FoundryAdapter.getActivationTypeLabel(actionType)}
+              {section.label}
             </ItemTableColumn>
             <ItemTableColumn baseWidth="6.25rem"
               >{localize('DND5E.Range')}</ItemTableColumn
@@ -83,11 +119,7 @@
           </ItemTableHeaderRow>
         </svelte:fragment>
         <svelte:fragment slot="body">
-          {@const filteredActionItems = FoundryAdapter.getFilteredActionItems(
-            searchCriteria,
-            itemSet,
-          )}
-          {#each filteredActionItems as actionItem (actionItem.item.id)}
+          {#each section.actions as actionItem (actionItem.item.id)}
             <ItemTableRow
               item={actionItem.item}
               on:mousedown={(event) =>
@@ -96,6 +128,8 @@
                 type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
                 uuid: actionItem.item.uuid,
               }}
+              hidden={!!$itemIdsToShow &&
+                !$itemIdsToShow.has(actionItem.item.id)}
               let:toggleSummary
             >
               <ItemTableCell primary={true}>
@@ -103,15 +137,22 @@
                   disabled={!$context.editable}
                   item={actionItem.item}
                 />
+                {#if 'containerContents' in actionItem && !!actionItem.containerContents}
+                  <InlineContainerToggle
+                    iconClass="fa-lg"
+                    item={actionItem.item}
+                    {inlineContainerToggleService}
+                  />
+                {/if}
                 <ItemName
                   item={actionItem.item}
                   on:toggle={() => toggleSummary($context.actor)}
                   useActiveEffectsMarker={false}
                 >
-                  {@const spellClass = FoundryAdapter.getClassLabel(
-                    FoundryAdapter.tryGetFlag(actionItem.item, 'parentClass') ??
-                      '',
-                  )}
+                  {@const sourceClassText =
+                    $context.actor.spellcastingClasses?.[
+                      actionItem.item.system.sourceClass
+                    ]?.name ?? ''}
                   <div class="flex-1 min-width-0">
                     <div
                       data-tidy-item-name={actionItem.item.name}
@@ -124,17 +165,17 @@
                     <small>
                       {#if actionItem.item.type !== CONSTANTS.ITEM_TYPE_SPELL}
                         {actionItem.typeLabel}
-                      {:else if actionItem.item.type === 'spell' && actionItem.item.system.level !== 0}
+                      {:else if actionItem.item.system.level !== 0}
                         {actionItem.item.labels?.level ?? ''}
                         {actionItem.item.labels?.school ?? ''}
-                        {#if spellClass}
-                          • {localize(spellClass)}
+                        {#if sourceClassText}
+                          • {localize(sourceClassText)}
                         {/if}
                       {:else}
                         {actionItem.item.labels?.school ?? ''}
                         {actionItem.item.labels?.level ?? ''}
-                        {#if spellClass}
-                          • {localize(spellClass)}
+                        {#if sourceClassText}
+                          • {localize(sourceClassText)}
                         {/if}
                       {/if}
                     </small>
@@ -241,6 +282,17 @@
                 </ItemTableCell>
               {/if}
             </ItemTableRow>
+            {#if 'containerContents' in actionItem && !!actionItem.containerContents}
+              <InlineContainerView
+                container={actionItem.item}
+                containerContents={actionItem.containerContents}
+                editable={$context.editable}
+                {inlineContainerToggleService}
+                lockItemQuantity={$context.lockItemQuantity}
+                sheetDocument={$context.actor}
+                --t5e-image-size-override="1.5rem"
+              />
+            {/if}
           {/each}
         </svelte:fragment>
       </ItemTable>
@@ -251,14 +303,13 @@
 <style lang="scss">
   .actions-tab-container {
     --t5e-image-size-override: 2rem;
+    --icon-fill: var(--t5e-secondary-color);
+    --icon-width: 1rem;
+    --icon-height: 1rem;
 
     :global(.item-table-row) {
       min-height: 2rem;
     }
-
-    --icon-fill: var(--t5e-secondary-color);
-    --icon-width: 1rem;
-    --icon-height: 1rem;
   }
 
   .flex-column-truncate {

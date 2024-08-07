@@ -10,8 +10,8 @@
   import ButtonMenuDivider from 'src/components/button-menu/ButtonMenuDivider.svelte';
   import type { ThemeSettingsSheetFunctions } from './ThemeSettingsFormApplication';
 
-  let functions = getContext<ThemeSettingsSheetFunctions>('functions');
-  let context = getContext<Writable<CurrentSettings>>('context');
+  let functions = getContext<ThemeSettingsSheetFunctions>(CONSTANTS.SVELTE_CONTEXT.FUNCTIONS);
+  let context = getContext<Writable<CurrentSettings>>(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
   const dispatch = createEventDispatcher<{
     selectFile: File;
   }>();

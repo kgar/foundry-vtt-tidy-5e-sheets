@@ -16,9 +16,11 @@
     rememberSearch();
   }
 
-  const searchFilters = getContext<LocationToSearchTextMap>('searchFilters');
-  const onSearch = getContext<OnSearchFn>('onSearch');
-  const location = getContext<string>('location');
+  const searchFilters = getContext<LocationToSearchTextMap>(
+    CONSTANTS.SVELTE_CONTEXT.SEARCH_FILTERS,
+  );
+  const onSearch = getContext<OnSearchFn>(CONSTANTS.SVELTE_CONTEXT.ON_SEARCH);
+  const location = getContext<string>(CONSTANTS.SVELTE_CONTEXT.LOCATION);
 
   const localize = FoundryAdapter.localize;
 

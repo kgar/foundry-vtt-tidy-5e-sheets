@@ -1,11 +1,16 @@
-<script lang="ts">
-  import type { Actor5e } from 'src/types/types';
+<script lang="ts" generics="TSection extends TidySectionBase">
+  import { TidyHooks } from 'src/foundry/TidyHooks';
+  import type {
+    Actor5e,
+    CustomSectionOptions,
+    TidySectionBase,
+  } from 'src/types/types';
   import ItemCreateButton from '../item-list/ItemCreateButton.svelte';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
 
-  export let section: any;
+  export let section: TSection;
   export let actor: Actor5e;
   export let canCreate = true;
   /**
@@ -18,12 +23,49 @@
     ? ActorItemRuntime.getActorItemSectionCommands({ actor, section })
     : [];
 
+  function createForCustom(custom: CustomSectionOptions) {
+    if (!custom.creationItemTypes.length) {
+      return;
+    }
+
+    if (custom.creationItemTypes.length === 1) {
+      FoundryAdapter.createItem(
+        { type: custom.creationItemTypes[0], ...section.dataset },
+        actor,
+      );
+    } else {
+      const createData = { ...section.dataset };
+
+      if (
+        !TidyHooks.tidy5eSheetsPreCreateItem(actor, createData, game.user.id)
+      ) {
+        return;
+      }
+
+      Item.implementation.createDialog(createData, {
+        parent: actor,
+        pack: actor.pack,
+        types: custom.creationItemTypes,
+      });
+    }
+  }
+
   const localize = FoundryAdapter.localize;
 </script>
 
 <footer class="item-table-footer-row">
+  <!-- TODO: Handle custom section item creation -->
   {#if canCreate}
-    <ItemCreateButton dataset={section.dataset} {actor} {create} />
+    {@const custom = section.custom}
+    {#if custom}
+      <ItemCreateButton
+        dataset={section.dataset}
+        {actor}
+        create={() => createForCustom(custom)}
+      />
+    {:else}
+      <ItemCreateButton dataset={section.dataset} {actor} {create} />
+    {/if}
   {/if}
   {#each customCommands as command}
     <button

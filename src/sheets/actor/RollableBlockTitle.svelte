@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { CONSTANTS } from 'src/constants';
   import type { ActorSheetContext } from 'src/types/types';
   import { createEventDispatcher, getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -10,7 +11,9 @@
 
   const dispatcher = createEventDispatcher<{ roll: MouseEvent }>();
 
-  let context = getContext<Readable<ActorSheetContext>>('context');
+  let context = getContext<Readable<ActorSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 </script>
 
 <button

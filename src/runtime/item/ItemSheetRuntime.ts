@@ -18,6 +18,8 @@ import type { RegisteredContent, RegisteredTab } from '../types';
 import type { ItemSheetContext } from 'src/types/item.types';
 import { CustomContentManager } from '../content/CustomContentManager';
 import type { RegisteredEquipmentTypeGroup } from './item.types';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { debug, error } from 'src/utils/logging';
 
 export class ItemSheetRuntime {
   private static _content: RegisteredContent<ItemSheetContext>[] = [];
@@ -59,7 +61,11 @@ export class ItemSheetRuntime {
     },
     [CONSTANTS.ITEM_TYPE_BACKGROUND]: {
       Sheet: BackgroundSheet,
-      defaultTabs: () => [itemSheetTabs.description, itemSheetTabs.advancement],
+      defaultTabs: () => [
+        itemSheetTabs.description,
+        itemSheetTabs.backgroundDetails,
+        itemSheetTabs.advancement,
+      ],
     },
     [CONSTANTS.ITEM_TYPE_CLASS]: {
       Sheet: ClassSheet,
@@ -136,6 +142,7 @@ export class ItemSheetRuntime {
       Sheet: RaceSheet,
       defaultTabs: () => [
         itemSheetTabs.raceDescription,
+        itemSheetTabs.raceDetails,
         itemSheetTabs.advancement,
       ],
     },
@@ -147,6 +154,20 @@ export class ItemSheetRuntime {
 
   static getCustomEquipmentTypeGroups() {
     return [...this._customItemEquipmentTypeGroups];
+  }
+
+  static getTabTitle(tabId: string) {
+    try {
+      let tabs = [...this._customTabs, ...Object.values(itemSheetTabs)];
+      let tabTitle = tabs.find((t) => t.id === tabId)?.title;
+      if (typeof tabTitle === 'function') {
+        tabTitle = tabTitle();
+      }
+      return tabTitle ? FoundryAdapter.localize(tabTitle) : tabId;
+    } catch (e) {
+      error('An error occurred while searching for a tab title.', false, e);
+      debug('Tab title error troubleshooting information', { tabId });
+    }
   }
 }
 

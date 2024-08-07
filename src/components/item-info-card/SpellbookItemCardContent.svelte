@@ -4,17 +4,15 @@
   import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
   import type { Readable } from 'svelte/store';
   import { getContext } from 'svelte';
-  import type {
-    CharacterSheetContext,
-    NpcSheetContext,
-    VehicleSheetContext,
-  } from 'src/types/types';
+  import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
+  import { CONSTANTS } from 'src/constants';
 
   export let item: Item5e;
   export let chatData: ItemChatData;
 
-  let context =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 
@@ -23,7 +21,7 @@
   $: canPrepare = FoundryAdapter.canPrepareSpell(item);
 </script>
 
-<div class="info-card {spellRowClasses}" data-item-id={item._id}>
+<div class="info-card spellbook {spellRowClasses}" data-item-id={item._id}>
   <p class="info-card-name">{item.name}</p>
   {#if item.labels?.school || ($context.owner && canPrepare)}
     <div class="info-card-states">

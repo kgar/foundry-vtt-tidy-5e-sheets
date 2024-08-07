@@ -1,7 +1,8 @@
 import type {
   ActionItem,
   ActiveEffect5e,
-  ActorSheetContext,
+  ActiveEffectContext,
+  AttunementContext,
   CharacterSheetContext,
   ClassSummary,
   DropdownListOption,
@@ -12,12 +13,13 @@ import type { Actor5e } from 'src/types/types';
 import type { Item5e } from 'src/types/item.types';
 import { SettingsProvider } from 'src/settings/settings';
 import { debug, error, warn } from 'src/utils/logging';
-import { clamp } from 'src/utils/numbers';
 import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
+import { TidyFlags } from './TidyFlags';
+import { TidyHooks } from './TidyHooks';
 
 export const FoundryAdapter = {
-  isFoundryV10() {
-    return game.dnd5e.isV10;
+  isFoundryV12OrHigher() {
+    return foundry.utils.isNewerVersion(game.version, 12);
   },
   deepClone(obj: any) {
     return foundry.utils.deepClone(obj);
@@ -68,15 +70,26 @@ export const FoundryAdapter = {
   // TODO: Extract a dedicated ActiveEffectManager or the like
   addEffect(effectType: string, owner: any) {
     const isActor = owner instanceof Actor;
-    return owner.createEmbeddedDocuments('ActiveEffect', [
-      {
-        label: isActor ? game.i18n.localize('DND5E.EffectNew') : owner.name,
-        icon: isActor ? 'icons/svg/aura.svg' : owner.img,
-        origin: owner.uuid,
-        'duration.rounds': effectType === 'temporary' ? 1 : undefined,
-        disabled: effectType === 'inactive',
-      },
-    ]);
+
+    const effectData = {
+      label: isActor ? game.i18n.localize('DND5E.EffectNew') : owner.name,
+      icon: isActor ? 'icons/svg/aura.svg' : owner.img,
+      origin: owner.uuid,
+      'duration.rounds': effectType === 'temporary' ? 1 : undefined,
+      disabled: effectType === 'inactive',
+    };
+
+    if (
+      !TidyHooks.tidy5eSheetsPreCreateActiveEffect(
+        owner,
+        effectData,
+        game.user.id
+      )
+    ) {
+      return;
+    }
+
+    return owner.createEmbeddedDocuments('ActiveEffect', [effectData]);
   },
   canPrepareSpell(item: Item5e) {
     return (
@@ -130,34 +143,26 @@ export const FoundryAdapter = {
     });
   },
   mergeObject<T>(original: T, ...args: any[]) {
-    return mergeObject(original, ...args) as T;
+    return foundry.utils.mergeObject(original, ...args) as T;
   },
   expandObject(data: any) {
-    return expandObject(data);
+    return foundry.utils.expandObject(data);
   },
   isEmpty(obj: any) {
-    return isEmpty(obj);
+    return foundry.utils.isEmpty(obj);
   },
-  tryGetFlag<T>(flagged: any, flagName: string) {
-    return flagged.getFlag(CONSTANTS.MODULE_ID, flagName) as
-      | T
-      | null
-      | undefined;
-  },
-  setFlag(flagged: any, flagName: string, value: unknown): Promise<void> {
-    return flagged.setFlag(CONSTANTS.MODULE_ID, flagName, value);
-  },
-  unsetFlag(flagged: any, flagName: string): Promise<void> {
-    return flagged.unsetFlag(CONSTANTS.MODULE_ID, flagName);
+  getClassIdentifier(item: Item5e): string {
+    return item.system.identifier || item.name.slugify({ strict: true });
   },
   getClassAndSubclassSummaries(actor: Actor5e): Map<string, ClassSummary> {
     return actor.items.reduce(
       (map: Map<string, ClassSummary>, item: Item5e) => {
         if (item.type === 'class') {
-          const data: ClassSummary = map.get(item.system.identifier) ?? {};
+          const identifier = FoundryAdapter.getClassIdentifier(item);
+          const data: ClassSummary = map.get(identifier) ?? {};
           data.class = item.name;
           data.level = item.system.levels?.toString();
-          map.set(item.system.identifier, data);
+          map.set(identifier, data);
         }
 
         if (
@@ -218,7 +223,7 @@ export const FoundryAdapter = {
 
     entityWithSheet.sheet.render(true);
   },
-  createItem({ type, ...dataset }: Record<string, any>, actor: Actor5e) {
+  createItem({ type, ...data }: Record<string, any>, actor: Actor5e) {
     // Check to make sure the newly created class doesn't take player over level cap
     if (
       type === 'class' &&
@@ -231,14 +236,20 @@ export const FoundryAdapter = {
       return null;
     }
 
-    const itemData = {
-      name: FoundryAdapter.localize('DND5E.ItemNew', {
-        type: FoundryAdapter.localize(CONFIG.Item.typeLabels[type]),
-      }),
-      type,
-      system: foundry.utils.expandObject({ ...dataset }),
-    };
-    delete itemData.system.type;
+    const itemData = foundry.utils.mergeObject(
+      {
+        name: FoundryAdapter.localize('DND5E.ItemNew', {
+          type: FoundryAdapter.localize(CONFIG.Item.typeLabels[type]),
+        }),
+        type,
+      },
+      foundry.utils.expandObject({ ...data })
+    );
+
+    if (!TidyHooks.tidy5eSheetsPreCreateItem(actor, itemData, game.user.id)) {
+      return;
+    }
+
     return actor.createEmbeddedDocuments('Item', [itemData]);
   },
   async onLevelChange(
@@ -354,6 +365,12 @@ export const FoundryAdapter = {
     }
 
     if (
+      spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_RITUAL
+    ) {
+      classes.push('ritual-only');
+    }
+
+    if (
       spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_INNATE
     ) {
       classes.push('innate');
@@ -361,7 +378,9 @@ export const FoundryAdapter = {
 
     return classes.join(' ');
   },
-  getSpellAttackModAndTooltip(context: ActorSheetContext) {
+  getSpellAttackModAndTooltip(
+    context: CharacterSheetContext | NpcSheetContext
+  ) {
     let actor = context.actor;
     let formula = Roll.replaceFormulaData(
       actor.system.bonuses.rsak.attack,
@@ -409,39 +428,53 @@ export const FoundryAdapter = {
     context: CharacterSheetContext | NpcSheetContext,
     spell: any
   ): string | undefined {
-    if (
-      !SettingsProvider.settings.useSpellClassFilterIcons.get() ||
-      context.isNPC
-    ) {
+    if (!SettingsProvider.settings.useSpellClassFilterIcons.get()) {
       return spell.img;
     }
 
-    const parentClass = FoundryAdapter.tryGetFlag<string>(spell, 'parentClass');
+    const sourceClass = spell.system.sourceClass;
 
-    const classImage = parentClass
-      ? context.actorClassesToImages[parentClass]
-      : undefined;
+    const classImage =
+      sourceClass && 'actorClassesToImages' in context
+        ? context.actorClassesToImages[sourceClass]
+        : undefined;
 
     return classImage ?? spell.img;
   },
   searchItems(searchCriteria: string, items: Item5e[]): Set<string> {
     return new Set(
       items
-        .filter(
-          (item: any) =>
-            searchCriteria.trim() === '' ||
-            (item.system.identified === false &&
-              item.system.unidentified?.name
-                ?.toLowerCase()
-                .includes(searchCriteria.toLowerCase())) ||
-            (item.system.identified !== false &&
-              item.name.toLowerCase().includes(searchCriteria.toLowerCase()))
-        )
+        .filter((item) => FoundryAdapter.searchItem(item, searchCriteria))
         .map((item) => item.id)
     );
   },
-  getFilteredActionItems(searchCriteria: string, items: Set<ActionItem>) {
-    return Array.from(items).filter(
+  searchItem(item: any, searchCriteria: string): boolean {
+    return (
+      searchCriteria.trim() === '' ||
+      (item.system.identified === false &&
+        item.system.unidentified?.name
+          ?.toLowerCase()
+          .includes(searchCriteria.toLowerCase())) ||
+      (item.system.identified !== false &&
+        item.name.toLowerCase().includes(searchCriteria.toLowerCase()))
+    );
+  },
+  searchEffects(
+    searchCriteria: string,
+    effects: ActiveEffect5e[]
+  ): Set<string> {
+    return new Set(
+      effects
+        .filter(
+          (effect: any) =>
+            searchCriteria.trim() === '' ||
+            effect.name.toLowerCase().includes(searchCriteria.toLowerCase())
+        )
+        .map((effect) => effect.id)
+    );
+  },
+  getFilteredActionItems(searchCriteria: string, items: ActionItem[]) {
+    return items.filter(
       (x: ActionItem) =>
         searchCriteria.trim() === '' ||
         x.item?.name?.toLowerCase().includes(searchCriteria.toLowerCase())
@@ -478,19 +511,6 @@ export const FoundryAdapter = {
     allClasses.sort((a, b) => a.text.localeCompare(b.text));
 
     return allClasses;
-  },
-  getClassLabel(id: string) {
-    return (
-      (CONSTANTS.DND5E_CLASSES as Record<string, string>)[id] ??
-      FoundryAdapter.getAdditionalClassLabel(id)
-    );
-  },
-  getAdditionalClassLabel(id: string) {
-    const additionalClasses =
-      SettingsProvider.settings.spellClassFilterAdditionalClasses.get();
-    return FoundryAdapter.parseAdditionalClassesDropDownItems(
-      additionalClasses
-    ).find((c) => c.value === id)?.text;
   },
   parseAdditionalClassesDropDownItems(
     spellClassFilterAdditionalClassesText: string
@@ -531,26 +551,83 @@ export const FoundryAdapter = {
       }`
     );
   },
-  isDocumentFavorited(document: any) {
-    if (!document) {
+  isActiveEffectContextFavorited(context: ActiveEffectContext, actor: Actor5e) {
+    if (!actor) {
       return false;
     }
 
+    const effect = FoundryAdapter.getEffect({
+      document: actor,
+      effectId: context.id,
+      parentId: context.parentId,
+    });
+
+    return FoundryAdapter.isEffectFavorited(effect, actor);
+  },
+  getEffectActor(effect: ActiveEffect5e) {
     return (
-      FoundryAdapter.tryGetFlag<boolean | null>(document, 'favorite') ?? false
+      // Item-Owned
+      effect.parent?.actor ??
+      // Actor-Owned
+      effect.parent
     );
   },
-  toggleFavorite(document: any) {
-    const favorited = FoundryAdapter.isDocumentFavorited(document);
+  isEffectFavorited(effect: ActiveEffect5e, actor: Actor5e) {
+    if (
+      actor?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR &&
+      'favorites' in actor.system
+    ) {
+      const relativeUuid = effect.getRelativeUUID(actor);
+      return actor.system.favorites.some((f: any) => f.id === relativeUuid);
+    }
+  },
+  async toggleFavoriteEffect(effect: ActiveEffect5e) {
+    const actor = FoundryAdapter.getEffectActor(effect);
+
+    if (!actor || !actor.system?.addFavorite) {
+      return;
+    }
+
+    const favorited = FoundryAdapter.isEffectFavorited(effect, actor);
     if (favorited) {
-      FoundryAdapter.unsetFlag(document, 'favorite');
+      await actor.system.removeFavorite(effect.getRelativeUUID(actor));
     } else {
-      FoundryAdapter.setFlag(document, 'favorite', true);
+      await actor.system.addFavorite({
+        type: 'effect',
+        id: effect.getRelativeUUID(actor),
+      });
+    }
+  },
+  isItemFavorited(document: any) {
+    const actor = document.actor;
+
+    if (actor && 'favorites' in actor.system) {
+      const relativeUuid = document.getRelativeUUID(actor);
+      return actor.system.hasFavorite(relativeUuid);
+    }
+
+    return false;
+  },
+  async toggleFavoriteItem(document: any) {
+    const actor = document.actor;
+
+    if (!actor || !actor.system?.addFavorite) {
+      return;
+    }
+
+    const favorited = FoundryAdapter.isItemFavorited(document);
+    if (favorited) {
+      await actor.system.removeFavorite(document.getRelativeUUID(actor));
+    } else {
+      await actor.system.addFavorite({
+        type: 'item',
+        id: document.getRelativeUUID(actor),
+      });
     }
   },
   isActorSheetUnlocked(actor: any): boolean {
     return (
-      (actor.isOwner && FoundryAdapter.isSheetUnlocked(actor)) ||
+      (actor.isOwner && TidyFlags.allowEdit.get(actor)) ||
       (FoundryAdapter.userIsGm() &&
         SettingsProvider.settings.permanentlyUnlockCharacterSheetForGm.get() &&
         actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) ||
@@ -561,14 +638,6 @@ export const FoundryAdapter = {
         SettingsProvider.settings.permanentlyUnlockVehicleSheetForGm.get() &&
         actor.type === CONSTANTS.SHEET_TYPE_VEHICLE)
     );
-  },
-  /**
-   * Determines whether an actor's sheet should be editable per the sheet lock feature (default `true`).
-   * @param actor the actor
-   * @returns whether the sheet should be editable per the sheet lock feature
-   */
-  isSheetUnlocked(actor: any) {
-    return FoundryAdapter.tryGetFlag(actor, 'allow-edit') ?? true;
   },
   allowCharacterEffectsManagement(actor: any) {
     return (
@@ -637,7 +706,7 @@ export const FoundryAdapter = {
     return game.modules.get(moduleId);
   },
   debounce(callback: Function, delay: number): Function {
-    return debounce(callback, delay);
+    return foundry.utils.debounce(callback, delay);
   },
   roll(
     formula: string,
@@ -645,80 +714,6 @@ export const FoundryAdapter = {
     rollFnOptions: any = {}
   ): Promise<any> {
     return new Roll(formula, rollData).roll(rollFnOptions);
-  },
-  async d20Roll({
-    parts = [],
-    data = {},
-    event,
-    advantage,
-    disadvantage,
-    critical = 20,
-    fumble = 1,
-    targetValue,
-    elvenAccuracy,
-    halflingLucky,
-    reliableTalent,
-    fastForward,
-    chooseModifier = false,
-    template,
-    title,
-    dialogOptions,
-    chatMessage = true,
-    messageData = {},
-    rollMode,
-    flavor,
-  }: any = {}) {
-    // Handle input arguments
-    const formula = ['1d20'].concat(parts).join(' + ');
-    const { advantageMode, isFF } = CONFIG.Dice.D20Roll.determineAdvantageMode({
-      advantage,
-      disadvantage,
-      fastForward,
-      event,
-    });
-    const defaultRollMode = rollMode || game.settings.get('core', 'rollMode');
-    if (chooseModifier && !isFF) {
-      data.mod = '@mod';
-      if ('abilityCheckBonus' in data)
-        data.abilityCheckBonus = '@abilityCheckBonus';
-    }
-
-    // Construct the D20Roll instance
-    const roll = new CONFIG.Dice.D20Roll(formula, data, {
-      flavor: flavor || title,
-      advantageMode,
-      defaultRollMode,
-      rollMode,
-      critical,
-      fumble,
-      targetValue,
-      elvenAccuracy,
-      halflingLucky,
-      reliableTalent,
-    });
-
-    // Prompt a Dialog to further configure the D20Roll
-    if (!isFF) {
-      const configured = await roll.configureDialog(
-        {
-          title,
-          chooseModifier,
-          defaultRollMode,
-          defaultAction: advantageMode,
-          defaultAbility: data?.item?.ability || data?.defaultAbility,
-          template,
-        },
-        dialogOptions
-      );
-      if (configured === null) return null;
-    } else roll.options.rollMode ??= defaultRollMode;
-
-    // Evaluate the configured roll
-    await roll.evaluate({ async: true });
-
-    // Create a Chat Message
-    if (roll && chatMessage) await roll.toMessage(messageData);
-    return roll;
   },
   async rollNpcHitDie(
     actor: Actor5e,
@@ -756,10 +751,10 @@ export const FoundryAdapter = {
      * @returns {boolean}                   Explicitly return `false` to prevent hit die from being rolled.
      */
     if (
-      Hooks.call('dnd5e.preRollHitDie', actor, rollConfig, denomination) ===
-      false
-    )
+      TidyHooks.dnd5ePreRollHitDie(actor, rollConfig, denomination) === false
+    ) {
       return;
+    }
 
     const roll = await FoundryAdapter.roll(
       rollConfig.formula,
@@ -777,19 +772,7 @@ export const FoundryAdapter = {
       //   class: {"system.hitDiceUsed": cls.system.hitDiceUsed + 1}
     };
 
-    /**
-     * A hook event that fires after a hit die has been rolled for an Actor, but before updates have been performed.
-     * @function dnd5e.rollHitDie
-     * @memberof hookEvents
-     * @param {Actor5e} actor         Actor for which the hit die has been rolled.
-     * @param {Roll} roll             The resulting roll.
-     * @param {object} updates
-     * @param {object} updates.actor  Updates that will be applied to the actor.
-     * @param {object} updates.class  Updates that will be applied to the class.
-     * @returns {boolean}             Explicitly return `false` to prevent updates from being performed.
-     */
-    if (Hooks.call('dnd5e.rollHitDie', actor, roll, updates) === false)
-      return roll;
+    if (TidyHooks.dnd5eRollHitDie(actor, roll, updates) === false) return roll;
 
     // Re-evaluate dhp in the event that it was changed in the previous hook
     const updateOptions = {
@@ -899,6 +882,9 @@ export const FoundryAdapter = {
     return new advancement.constructor.metadata.apps.config(advancement).render(
       true
     );
+  },
+  async renderSheetFromUuid(uuid: string) {
+    (await fromUuid(uuid))?.sheet?.render(true);
   },
   renderImagePopout(...args: any[]) {
     return new ImagePopout(...args).render(true);
@@ -1023,8 +1009,7 @@ export const FoundryAdapter = {
   },
   actorTryUseItem(item: Item5e, config: any = {}, options: any = {}) {
     const suppressItemUse =
-      Hooks.call('tidy5e-sheet.actorPreUseItem', item, config, options) ===
-      false;
+      TidyHooks.tidy5eSheetsActorPreUseItem(item, config, options) === false;
 
     if (suppressItemUse) {
       return;
@@ -1034,7 +1019,7 @@ export const FoundryAdapter = {
   },
   onActorItemButtonContextMenu(item: Item5e, options: { event: Event }) {
     // Allow another module to react to a context menu action on the item use button.
-    Hooks.callAll('tidy5e-sheet.actorItemUseContextMenu', item, options);
+    TidyHooks.tidy5eSheetsActorItemUseContextMenu(item, options);
   },
   /**
    * Fires appropriate hooks related to tab selection and reports whether tab selection was cancelled.
@@ -1043,8 +1028,7 @@ export const FoundryAdapter = {
    * @returns `true` to indicate proceeding with tab change; `false` to halt tab change
    */
   onTabSelecting(app: any & { currentTabId: string }, newTabId: string) {
-    const canProceed = Hooks.call(
-      'tidy5e-sheet.preSelectTab',
+    const canProceed = TidyHooks.tidy5eSheetsPreSelectTab(
       app,
       app.element.get(0),
       {
@@ -1058,12 +1042,7 @@ export const FoundryAdapter = {
     }
 
     setTimeout(() => {
-      Hooks.callAll(
-        'tidy5e-sheet.selectTab',
-        app,
-        app.element.get(0),
-        newTabId
-      );
+      TidyHooks.tidy5eSheetsSelectTab(app, app.element.get(0), newTabId);
     });
 
     return true;
@@ -1174,22 +1153,23 @@ export const FoundryAdapter = {
       SettingsProvider.settings.useClassicControlsForCharacter.get()
     );
   },
-  attunementContextRequired: {
+  attunementContextApplicable: {
     icon: 'fa-sun',
     cls: 'not-attuned',
-    title: 'DND5E.AttunementRequired',
+    title: 'ERROR: This should be replaced with valid attunement type text',
   },
   attunementContextAttune: {
     icon: 'fa-sun',
     cls: 'attuned',
     title: 'DND5E.AttunementAttuned',
   },
-  getAttunementContext(
-    item: Item5e
-  ): { icon: string; cls: string; title: string } | undefined {
-    return item.system.attunement === CONFIG.DND5E.attunementTypes.REQUIRED
-      ? FoundryAdapter.attunementContextRequired
-      : item.system.attunement === CONFIG.DND5E.attunementTypes.ATTUNED
+  getAttunementContext(item: Item5e): AttunementContext | undefined {
+    return !!item.system.attunement && !item.system.attuned
+      ? {
+          ...FoundryAdapter.attunementContextApplicable,
+          title: CONFIG.DND5E.attunementTypes[item.system.attunement],
+        }
+      : !!item.system.attunement && item.system.attuned
       ? FoundryAdapter.attunementContextAttune
       : undefined;
   },
@@ -1256,10 +1236,49 @@ export const FoundryAdapter = {
   openActorConcentrationConfig(actor: Actor5e) {
     new dnd5e.applications.actor.ActorConcentrationConfig(actor).render(true);
   },
+  openStartingEquipmentConfig(item: Item5e) {
+    new dnd5e.applications.item.StartingEquipmentConfig(item).render(true);
+  },
   isConcentrationEffect(effect: ActiveEffect5e, app: any) {
     return (
       app.document instanceof dnd5e.documents.Actor5e &&
       app._concentration?.effects.has(effect)
     );
+  },
+  activateEditors(node: HTMLElement, sheet: any, bindSecrets: boolean = true) {
+    try {
+      const nodes = node.matches(
+        CONSTANTS.TEXT_EDITOR_ACTIVATION_ELEMENT_SELECTOR
+      )
+        ? [node]
+        : Array.from(
+            node.querySelectorAll<HTMLElement>(
+              CONSTANTS.TEXT_EDITOR_ACTIVATION_ELEMENT_SELECTOR
+            )
+          );
+
+      for (let editorDiv of nodes) {
+        sheet._activateEditor(editorDiv);
+      }
+      if (bindSecrets) {
+        sheet._secrets.forEach((s: any) => s.bind(node));
+      }
+    } catch (e) {
+      error('An error occurred while activating text editors', false, e);
+      debug('Text editor error trobuleshooting info', { node, sheet });
+    }
+  },
+  async openEnchantmentConfig(item: Item5e) {
+    return new dnd5e.applications.item.EnchantmentConfig(item).render(true);
+  },
+  async renderFromUuid(uuid: string, force: boolean = true) {
+    const doc = await fromUuid(uuid);
+    return doc?.sheet?.render(force);
+  },
+  async removeEnchantment(enchantmentUuid: string, app: any) {
+    const enchantment = fromUuidSync(enchantmentUuid);
+    if (!enchantment) return;
+    await enchantment.delete();
+    await app.render();
   },
 };

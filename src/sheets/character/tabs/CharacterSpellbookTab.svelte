@@ -1,12 +1,16 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { CharacterSheetContext, ItemLayoutMode } from 'src/types/types';
+  import type {
+    CharacterSheetContext,
+    ItemLayoutMode,
+    SpellbookSection,
+  } from 'src/types/types';
   import SpellbookList from '../../../components/spellbook/SpellbookList.svelte';
   import SpellbookFooter from '../../../components/spellbook/SpellbookFooter.svelte';
   import SpellbookGrid from '../../../components/spellbook/SpellbookGrid.svelte';
   import SpellbookClassFilter from '../../../components/spellbook/SpellbookClassFilter.svelte';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { getContext, setContext } from 'svelte';
+  import { writable, type Readable } from 'svelte/store';
   import NoSpells from 'src/sheets/actor/NoSpells.svelte';
   import Notice from '../../../components/notice/Notice.svelte';
   import { settingStore } from 'src/settings/settings';
@@ -17,20 +21,44 @@
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
+  import { SheetSections } from 'src/features/sections/SheetSections';
+  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import ButtonMenu from 'src/components/button-menu/ButtonMenu.svelte';
+  import ButtonMenuCommand from 'src/components/button-menu/ButtonMenuCommand.svelte';
+  import SpellSourceClassAssignmentsFormApplication from 'src/applications/spell-source-class-assignments/SpellSourceClassAssignmentsFormApplication';
 
-  let context = getContext<Readable<CharacterSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+  let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
+
+  $: spellbook = SheetSections.configureSpellbook(
+    $context.actor,
+    tabId,
+    $context.spellbook,
+  );
+
+  const itemIdsToShow = writable<Set<string> | undefined>(undefined);
+  setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
+
+  $: {
+    $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
+      criteria: searchCriteria,
+      itemContext: $context.itemContext,
+      sections: spellbook,
+      tabId: tabId,
+    });
+  }
 
   const localize = FoundryAdapter.localize;
 
   let searchCriteria: string = '';
 
   let layoutMode: ItemLayoutMode;
-  $: layoutMode = FoundryAdapter.tryGetFlag($context.actor, 'spellbook-grid')
-    ? 'grid'
-    : 'list';
+  $: layoutMode = TidyFlags.spellbookGrid.get($context.actor) ? 'grid' : 'list';
 
-  $: selectedClassFilter =
-    FoundryAdapter.tryGetFlag($context.actor, 'classFilter') ?? '';
+  $: selectedClassFilter = TidyFlags.classFilter.get($context.actor) ?? '';
 
   function tryFilterByClass(spells: any[]) {
     if (
@@ -42,21 +70,21 @@
 
     return spells.filter(
       (spell) =>
-        FoundryAdapter.tryGetFlag(spell, 'parentClass') === selectedClassFilter,
+        spell.system.sourceClass?.trim() === selectedClassFilter?.trim(),
     );
   }
 
   $: noSpellLevels = !$context.spellbook.length;
 
   $: noSpells =
-    $context.spellbook.reduce(
-      (count: number, section: any) => count + section.spells.length,
+    spellbook.reduce(
+      (count: number, section: SpellbookSection) =>
+        count + section.spells.length,
       0,
     ) === 0;
 
   $: utilityBarCommands =
-    $context.utilities[CONSTANTS.TAB_CHARACTER_SPELLBOOK]
-      ?.utilityToolbarCommands ?? [];
+    $context.utilities[tabId]?.utilityToolbarCommands ?? [];
 </script>
 
 <UtilityToolbar>
@@ -67,14 +95,34 @@
     </div>
   {/if}
   <PinnedFilterToggles
-    filterGroupName={CONSTANTS.TAB_NPC_SPELLBOOK}
+    filterGroupName={tabId}
     filters={ItemFilterRuntime.getPinnedFiltersForTab(
       $context.filterPins,
       $context.filterData,
-      CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+      tabId,
     )}
   />
-  <FilterMenu tabId={CONSTANTS.TAB_CHARACTER_SPELLBOOK} />
+  <FilterMenu {tabId} />
+  <ButtonMenu
+    iconClass="ra ra-fairy-wand"
+    buttonClass="inline-icon-button"
+    position="bottom"
+    anchor="right"
+    title={localize('TIDY5E.Utilities.Tools')}
+    menuElement="div"
+  >
+    <ButtonMenuCommand
+      on:click={() => {
+        new SpellSourceClassAssignmentsFormApplication($context.actor).render(
+          true,
+        );
+      }}
+      iconClass="fas fa-list-check"
+      disabled={!$context.editable}
+    >
+      {localize('TIDY5E.Utilities.AssignSpellsToClasses')}
+    </ButtonMenuCommand>
+  </ButtonMenu>
   {#each utilityBarCommands as command (command.title)}
     <UtilityToolbarCommand
       title={command.title}
@@ -92,17 +140,21 @@
   {#if noSpellLevels}
     <NoSpells editable={$context.unlocked} />
   {:else}
-    {#each $context.spellbook as section (section.label)}
-      {@const classSpells = tryFilterByClass(section.spells)}
-      {@const visibleItemIdSubset = FoundryAdapter.searchItems(
-        searchCriteria,
-        classSpells,
-      )}
-      {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemIdSubset.size > 0}
-        {#if layoutMode === 'list'}
-          <SpellbookList spells={classSpells} {section} {visibleItemIdSubset} />
-        {:else}
-          <SpellbookGrid spells={classSpells} {section} {visibleItemIdSubset} />
+    {#each spellbook as section (section.key)}
+      {#if section.show}
+        {@const classSpells = tryFilterByClass(section.spells)}
+
+        {@const visibleItemCount = ItemVisibility.countVisibleItems(
+          section.spells,
+          $itemIdsToShow,
+        )}
+
+        {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemCount > 0 || !!section.slots}
+          {#if layoutMode === 'list'}
+            <SpellbookList spells={classSpells} {section} />
+          {:else}
+            <SpellbookGrid spells={classSpells} {section} />
+          {/if}
         {/if}
       {/if}
     {/each}

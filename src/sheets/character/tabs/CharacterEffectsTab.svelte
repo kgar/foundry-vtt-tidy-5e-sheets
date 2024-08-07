@@ -17,11 +17,16 @@
   import type { Readable } from 'svelte/store';
   import Notice from 'src/components/notice/Notice.svelte';
   import { declareLocation } from 'src/types/location-awareness.types';
-  import CharacterConditions from '../parts/CharacterConditions.svelte';
+  import ActorConditions from '../../actor/ActorConditions.svelte';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
   import ActorEffectToggleControl from 'src/components/item-list/controls/ActorEffectToggleControl.svelte';
+  import EffectFavoriteControl from 'src/components/item-list/controls/EffectFavoriteControl.svelte';
+  import InlineFavoriteIcon from 'src/components/item-list/InlineFavoriteIcon.svelte';
+  import { settingStore } from 'src/settings/settings';
 
-  let context = getContext<Readable<ActorSheetContext>>('context');
+  let context = getContext<Readable<ActorSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 
@@ -41,6 +46,13 @@
         component: ActorEffectToggleControl,
         props: ({ effect }) => ({
           effect: effect,
+        }),
+      },
+      {
+        component: EffectFavoriteControl,
+        props: ({ effect }) => ({
+          effect: effect,
+          actor: $context.actor,
         }),
       },
       {
@@ -89,89 +101,98 @@
     <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {:else}
     {#each effectSections as section}
-      {#if ($context.unlocked && $context.allowEffectsManagement) || section.effects.length > 0}
-        <ItemTable location={section.label}>
-          <svelte:fragment slot="header">
-            <ItemTableHeaderRow>
-              <ItemTableColumn primary={true}>
-                {localize(section.label)}
-              </ItemTableColumn>
-              <ItemTableColumn baseWidth="12.5rem">
-                {localize('DND5E.Source')}
-              </ItemTableColumn>
-              <ItemTableColumn baseWidth="7.5rem">
-                {localize('DND5E.Duration')}
-              </ItemTableColumn>
-              {#if $context.editable && $context.useClassicControls && $context.allowEffectsManagement}
-                <ItemTableColumn baseWidth={classicControlsColumnWidth} />
-              {/if}
-            </ItemTableHeaderRow>
-          </svelte:fragment>
-          <svelte:fragment slot="body">
-            {#each section.effects as effect}
-              <ItemTableRow
-                on:mousedown={(event) =>
-                  FoundryAdapter.editOnMiddleClick(
-                    event.detail,
+      {#if !section.hidden}
+        {#if ($context.unlocked && $context.allowEffectsManagement) || section.effects.length > 0}
+          <ItemTable key={section.label}>
+            <svelte:fragment slot="header">
+              <ItemTableHeaderRow>
+                <ItemTableColumn primary={true}>
+                  {localize(section.label)}
+                </ItemTableColumn>
+                <ItemTableColumn baseWidth="12.5rem">
+                  {localize('DND5E.Source')}
+                </ItemTableColumn>
+                <ItemTableColumn baseWidth="7.5rem">
+                  {localize('DND5E.Duration')}
+                </ItemTableColumn>
+                {#if $context.editable && $context.useClassicControls && $context.allowEffectsManagement}
+                  <ItemTableColumn baseWidth={classicControlsColumnWidth} />
+                {/if}
+              </ItemTableHeaderRow>
+            </svelte:fragment>
+            <svelte:fragment slot="body">
+              {#each section.effects as effectContext}
+                <ItemTableRow
+                  on:mousedown={(event) =>
+                    FoundryAdapter.editOnMiddleClick(
+                      event.detail,
+                      FoundryAdapter.getEffect({
+                        document: $context.actor,
+                        effectId: effectContext.id,
+                        parentId: effectContext.parentId,
+                      }),
+                    )}
+                  contextMenu={{
+                    type: CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS,
+                    uuid: effectContext.uuid,
+                  }}
+                  getDragData={() =>
                     FoundryAdapter.getEffect({
                       document: $context.actor,
-                      effectId: effect.id,
-                      parentId: effect.parentId,
-                    }),
-                  )}
-                contextMenu={{
-                  type: CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS,
-                  uuid: effect.uuid,
-                }}
-                getDragData={() =>
-                  FoundryAdapter.getEffect({
-                    document: $context.actor,
-                    effectId: effect.id,
-                    parentId: effect.parentId,
-                  })?.toDragData()}
-                {effect}
-              >
-                <ItemTableCell
-                  primary={true}
-                  attributes={{
-                    'data-tidy-effect-name-container': true,
-                    'data-effect-id': effect.id,
-                  }}
+                      effectId: effectContext.id,
+                      parentId: effectContext.parentId,
+                    })?.toDragData()}
+                  effect={effectContext}
                 >
-                  <ItemImage src={effect.img} />
-                  <span
-                    class="align-self-center truncate"
-                    data-tidy-effect-name={effect.name}>{effect.name}</span
+                  <ItemTableCell
+                    primary={true}
+                    attributes={{
+                      'data-tidy-effect-name-container': true,
+                      'data-effect-id': effectContext.id,
+                    }}
                   >
-                </ItemTableCell>
-                <ItemTableCell baseWidth="12.5rem"
-                  >{effect.source?.name ?? ''}</ItemTableCell
-                >
-                <ItemTableCell baseWidth="7.5rem"
-                  >{effect.duration?.label ?? ''}</ItemTableCell
-                >
-                {#if $context.editable && $context.useClassicControls && $context.allowEffectsManagement}
-                  <ItemTableCell baseWidth={classicControlsColumnWidth}>
-                    <ClassicControls {controls} params={{ effect: effect }} />
+                    <ItemImage src={effectContext.img} />
+                    <span
+                      class="align-self-center truncate"
+                      data-tidy-effect-name={effectContext.name}
+                      >{effectContext.name}</span
+                    >
                   </ItemTableCell>
-                {/if}
-              </ItemTableRow>
-            {/each}
-            {#if $context.unlocked && $context.allowEffectsManagement}
-              <ItemTableFooter
-                actor={$context.actor}
-                {section}
-                create={() =>
-                  FoundryAdapter.addEffect(section.type, $context.actor)}
-                isItem={false}
-              />
-            {/if}
-          </svelte:fragment>
-        </ItemTable>
+                  {#if FoundryAdapter.isActiveEffectContextFavorited(effectContext, $context.actor) && $settingStore.showIconsNextToTheItemName}
+                    <InlineFavoriteIcon />
+                  {/if}
+                  <ItemTableCell baseWidth="12.5rem"
+                    >{effectContext.source?.name ?? ''}</ItemTableCell
+                  >
+                  <ItemTableCell baseWidth="7.5rem"
+                    >{effectContext.duration?.label ?? ''}</ItemTableCell
+                  >
+                  {#if $context.editable && $context.useClassicControls && $context.allowEffectsManagement}
+                    <ItemTableCell baseWidth={classicControlsColumnWidth}>
+                      <ClassicControls
+                        {controls}
+                        params={{ effect: effectContext }}
+                      />
+                    </ItemTableCell>
+                  {/if}
+                </ItemTableRow>
+              {/each}
+              {#if $context.unlocked && $context.allowEffectsManagement}
+                <ItemTableFooter
+                  actor={$context.actor}
+                  {section}
+                  create={() =>
+                    FoundryAdapter.addEffect(section.type, $context.actor)}
+                  isItem={false}
+                />
+              {/if}
+            </svelte:fragment>
+          </ItemTable>
+        {/if}
       {/if}
     {/each}
   {/if}
   {#if $context.conditions}
-    <CharacterConditions />
+    <ActorConditions />
   {/if}
 </div>

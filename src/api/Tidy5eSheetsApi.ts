@@ -26,6 +26,7 @@ import { HandlebarsContent } from './content/HandlebarsContent';
 import { CONSTANTS } from 'src/constants';
 import { CustomContentManager } from 'src/runtime/content/CustomContentManager';
 import { ConfigApi } from './config/ConfigApi';
+import { Tidy5eKgarContainerSheet } from 'src/sheets/Tidy5eContainerSheet';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -122,6 +123,15 @@ export class Tidy5eSheetsApi {
   }
 
   /**
+   * Determines whether the provided sheet is a Tidy 5e Container sheet.
+   * @param app a container sheet
+   * @returns boolean indicating if the sheet is a Tidy 5e Container sheet
+   */
+  isTidy5eContainerSheet(app: any) {
+    return Tidy5eKgarContainerSheet.name === app?.constructor?.name;
+  }
+
+  /**
    * Determines whether the provided sheet is a Tidy 5e Item sheet.
    * @param app an item sheet
    * @returns boolean indicating if the sheet is a Tidy 5e Item sheet
@@ -150,6 +160,7 @@ export class Tidy5eSheetsApi {
       Tidy5eNpcSheet.name,
       Tidy5eVehicleSheet.name,
       Tidy5eKgarItemSheet.name,
+      Tidy5eKgarContainerSheet.name,
     ].includes(app?.constructor?.name);
   }
 
@@ -186,7 +197,6 @@ export class Tidy5eSheetsApi {
    * @param {object} [options] sheet registration options
    * @param {string} [options.layout] an optional sheet layout or layouts (default: 'all')
    * @param {string} [options.overrideExisting] if a tab with this ID already exists, override it
-   * @param layout an optional sheet layout or layouts (default: 'all')
    * @returns void
    */
   registerActorTab(tab: SupportedTab, options?: ActorTabRegistrationOptions) {
@@ -201,7 +211,6 @@ export class Tidy5eSheetsApi {
    * @param {object} [options] sheet registration options
    * @param {string} [options.layout] an optional sheet layout or layouts (default: 'all')
    * @param {string} [options.overrideExisting] if a tab with this ID already exists, override it
-   * @param layout an optional sheet layout or layouts (default: 'all')
    * @returns void
    *
    * @example Registering a handlebars-based character sheet tab
@@ -252,7 +261,6 @@ export class Tidy5eSheetsApi {
    *   );
    * });
    * ```
-   *
    *
    * @remarks
    * A tab ID is always required (see {@link TabId}).

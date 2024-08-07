@@ -8,6 +8,7 @@
   export let item: any;
   export let imgUrlOverride: string | undefined = undefined;
   export let disabled: boolean = false;
+  export let showDiceIconOnHover: boolean = true;
 
   const showRoll = getContext<Readable<boolean>>(
     CONSTANTS.CONTEXT_GRID_CELL_HOVER,
@@ -44,13 +45,15 @@
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
-      <i class="fa fa-dice-d20" />
+      <i class="fa fa-dice-d20" class:invisible={!showDiceIconOnHover} />
     </button>
   {/if}
+  <slot name="after-roll-button" />
 </div>
 
 <style lang="scss">
   .item-image {
+    position: relative;
     align-self: center;
     flex: 0 0 var(--t5e-image-size-override, 1.5rem);
     height: var(--t5e-image-size-override, 1.5rem);
@@ -69,6 +72,10 @@
       i {
         color: var(--t5e-tertiary-color);
         font-size: 1.125rem;
+
+        &.invisible {
+          visibility: hidden;
+        }
       }
 
       &:is(:hover, :focus-visible) i {

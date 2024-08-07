@@ -1,10 +1,10 @@
 import type {
   CustomContentInjectParams,
-  CustomTabTitle,
   OnContentReadyParams,
   OnRenderParams,
   RenderScheme,
-} from 'src/api';
+} from 'src/api/api.types';
+import type { CustomTabTitle } from 'src/api/tab/CustomTabBase';
 import type { HandlebarsTemplateRenderer } from 'src/runtime/HandlebarsTemplateRenderer';
 import type { Item5e } from 'src/types/item.types';
 import type {
@@ -118,4 +118,3 @@ export type RegisteredTraitOpenConfigurationParams = {
   data: any;
   event: Event;
 };
-

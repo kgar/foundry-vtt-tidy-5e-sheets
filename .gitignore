@@ -23,8 +23,11 @@ foundry-data-path-config.json
 *.njsproj
 *.sln
 *.sw?
+
+# Playwright
 /test-results/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
 tests/.env
+tests/state.json

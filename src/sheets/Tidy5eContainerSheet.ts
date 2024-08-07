@@ -18,11 +18,12 @@ import type {
   Tab,
   Utilities,
 } from 'src/types/types';
-import { debug, error } from 'src/utils/logging';
+import { debug } from 'src/utils/logging';
 import { get, writable } from 'svelte/store';
 import { CustomContentRenderer } from './CustomContentRenderer';
 import {
   applySheetAttributesToWindow,
+  applyThemeDataAttributeToWindow,
   applyTitleToWindow,
   maintainCustomContentInputFocus,
 } from 'src/utils/applications';
@@ -39,9 +40,18 @@ import { SheetPreferencesService } from 'src/features/user-preferences/SheetPref
 import { CONSTANTS } from 'src/constants';
 import { AsyncMutex } from 'src/utils/mutex';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
+import type { CharacterFavorite } from 'src/foundry/dnd5e.types';
+import { TidyHooks } from 'src/foundry/TidyHooks';
+import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+import { Container } from 'src/features/containers/Container';
+import { BaseSheetCustomSectionMixin } from './mixins/BaseSheetCustomSectionMixin';
 
 export class Tidy5eKgarContainerSheet
-  extends dnd5e.applications.item.ContainerSheet
+  extends BaseSheetCustomSectionMixin(
+    (object) => object.system.contents,
+    dnd5e.applications.item.ContainerSheet
+  )
   implements
     SheetTabCacheable,
     SheetExpandedItemsCacheable,
@@ -55,6 +65,7 @@ export class Tidy5eKgarContainerSheet
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
+  inlineContainerToggleService = new InlineContainerToggleService();
   card = writable<ItemCardStore>();
   itemFilterService: ItemFilterService;
   subscriptionsService: StoreSubscriptionsService;
@@ -74,7 +85,13 @@ export class Tidy5eKgarContainerSheet
 
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
-      classes: ['tidy5e-sheet', 'sheet', 'item', 'container'],
+      classes: [
+        'tidy5e-sheet',
+        'sheet',
+        'item',
+        'container',
+        CONSTANTS.SHEET_LAYOUT_CLASSIC,
+      ],
     });
   }
 
@@ -86,8 +103,9 @@ export class Tidy5eKgarContainerSheet
         if (first) return;
         this.render();
       }),
-      settingStore.subscribe(() => {
+      settingStore.subscribe((s) => {
         if (first) return;
+        applyThemeDataAttributeToWindow(s.colorScheme, this.element.get(0));
         this.render();
       }),
       this.messageBus.subscribe((m) => {
@@ -105,26 +123,33 @@ export class Tidy5eKgarContainerSheet
     this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
 
     const context = new Map<any, any>([
-      ['card', this.card],
-      ['context', this.context],
-      ['currentTabId', this.currentTabId],
-      ['expandedItems', new Map(this.expandedItems)],
-      ['expandedItemData', new Map(this.expandedItemData)],
-      ['messageBus', this.messageBus],
+      [CONSTANTS.SVELTE_CONTEXT.APP_ID, this.appId],
+      [CONSTANTS.SVELTE_CONTEXT.CARD, this.card],
+      [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this.context],
+      [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
+      [CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEMS, new Map(this.expandedItems)],
       [
-        'onFilter',
+        CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA,
+        new Map(this.expandedItemData),
+      ],
+      [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
+      [
+        CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
+        this.inlineContainerToggleService,
+      ],
+      [
+        CONSTANTS.SVELTE_CONTEXT.ON_FILTER,
         this.itemFilterService.onFilter.bind(this.itemFilterService),
       ],
       [
-        'onFilterClearAll',
+        CONSTANTS.SVELTE_CONTEXT.ON_FILTER_CLEAR_ALL,
         this.itemFilterService.onFilterClearAll.bind(this.itemFilterService),
       ],
-      ['onItemToggled', this.onItemToggled.bind(this)],
-      ['onSearch', this.onSearch.bind(this)],
-      ['onTabSelected', this.onTabSelected.bind(this)],
-      ['searchFilters', new Map(this.searchFilters)],
-
-      ['stats', this.stats],
+      [CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TOGGLED, this.onItemToggled.bind(this)],
+      [CONSTANTS.SVELTE_CONTEXT.ON_SEARCH, this.onSearch.bind(this)],
+      [CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED, this.onTabSelected.bind(this)],
+      [CONSTANTS.SVELTE_CONTEXT.SEARCH_FILTERS, new Map(this.searchFilters)],
+      [CONSTANTS.SVELTE_CONTEXT.STATS, this.stats],
     ]);
 
     this.component = new ContainerSheet({
@@ -138,41 +163,28 @@ export class Tidy5eKgarContainerSheet
   async getData(options = {}) {
     const defaultDocumentContext = await super.getData(this.options);
 
-    const containerPreferences = SheetPreferencesService.getByType(
-      this.item.type
-    );
+    this.item.actor?.system?.favorites?.forEach((f: CharacterFavorite) => {
+      const item = fromUuidSync(f.id, { relative: this.item.actor });
 
-    const contentsSortMode =
-      containerPreferences.tabs?.[CONSTANTS.TAB_CONTAINER_CONTENTS]?.sort ??
-      'm';
-
-    try {
-      // TODO: When I fully take over section preparation, move this filter() step higher up so that it is not looping in individual sections
-      let contents = this.itemFilterService.filter(
-        defaultDocumentContext.inventory.contents.items,
-        CONSTANTS.TAB_CONTAINER_CONTENTS
-      );
-      if (contentsSortMode === 'a') {
-        contents = contents.toSorted((a, b) => a.name.localeCompare(b.name));
+      if (!item) {
+        return;
       }
-      defaultDocumentContext.inventory.contents.items = contents;
-    } catch (e) {
-      error(
-        'An error occurred while sorting and filtering section data',
-        false,
-        e
-      );
-      debug('Sorting/Filtering error troubleshooting info', {
-        defaultDocumentContext,
-      });
-    }
+
+      const ctx = defaultDocumentContext.itemContext[item.id];
+
+      if (ctx) {
+        ctx.favoriteId = f.id;
+      }
+    });
 
     const itemDescriptions: ItemDescription[] = [];
+
     itemDescriptions.push({
       content: defaultDocumentContext.enriched.description,
       field: 'system.description.value',
       label: FoundryAdapter.localize('DND5E.Description'),
     });
+
     if (defaultDocumentContext.isIdentifiable && FoundryAdapter.userIsGm()) {
       itemDescriptions.push({
         content: defaultDocumentContext.enriched.unidentified,
@@ -180,6 +192,7 @@ export class Tidy5eKgarContainerSheet
         label: FoundryAdapter.localize('DND5E.DescriptionUnidentified'),
       });
     }
+
     itemDescriptions.push({
       content: defaultDocumentContext.enriched.chat,
       field: 'system.description.chat',
@@ -199,8 +212,16 @@ export class Tidy5eKgarContainerSheet
 
     tabs.push(...customTabs);
 
+    const containerPreferences = SheetPreferencesService.getByType(
+      this.item.type
+    );
+
+    const contentsSortMode =
+      containerPreferences.tabs?.[CONSTANTS.TAB_CONTAINER_CONTENTS]?.sort ??
+      'm';
+
     // Utilities
-    let utilities: Utilities = {
+    let utilities: Utilities<ContainerSheetContext> = {
       [CONSTANTS.TAB_CONTAINER_CONTENTS]: {
         utilityToolbarCommands: [
           {
@@ -231,6 +252,23 @@ export class Tidy5eKgarContainerSheet
             },
             visible: contentsSortMode === 'm',
           },
+          {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Utilities.ConfigureSections'
+            ),
+            iconClass: 'fas fa-cog',
+            execute: ({ context }) => {
+              new DocumentTabSectionConfigApplication({
+                document: context.item,
+                // Provide a way to build the necessary config, perhaps within the application constructor. We've got all the info we need in order to perform the operation.
+                sections: context.containerContents.contents,
+                tabId: CONSTANTS.TAB_CONTAINER_CONTENTS,
+                tabTitle: ItemSheetRuntime.getTabTitle(
+                  CONSTANTS.TAB_CONTAINER_CONTENTS
+                ),
+              }).render(true);
+            },
+          },
         ],
       },
     };
@@ -239,15 +277,15 @@ export class Tidy5eKgarContainerSheet
     const context: ContainerSheetContext = {
       ...defaultDocumentContext,
       appId: this.appId,
-      activateFoundryJQueryListeners: (node: HTMLElement) => {
-        this._activateCoreListeners($(node));
-        super.activateListeners($(node));
-      },
+      activateEditors: (node, options) =>
+        FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
+      containerContents: await Container.getContainerContents(this.item),
       customContent: await ItemSheetRuntime.getContent(defaultDocumentContext),
       filterData: this.itemFilterService.getDocumentItemFilterData(),
       filterPins: ItemFilterRuntime.defaultFilterPins[this.item.type],
       identifiedName: FoundryAdapter.getIdentifiedName(this.item),
       itemDescriptions,
+      itemOverrides: new Set<string>(this._getItemOverrides()),
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       originalContext: defaultDocumentContext,
       tabs: tabs,
@@ -258,9 +296,22 @@ export class Tidy5eKgarContainerSheet
         ) ?? [],
     };
 
-    debug(`Container Sheet context data`, context);
+    const contents = await this.item.system.contents;
 
-    // TODO: Add hook for preparing Tidy-specific context data
+    for (const item of contents) {
+      if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
+        const ctx = context.itemContext[item.id];
+        ctx.containerContents = await Container.getContainerContents(item);
+      }
+    }
+
+    TidyHooks.tidy5eSheetsPreConfigureSections(
+      this,
+      this.element.get(0),
+      context
+    );
+
+    debug(`Container Sheet context data`, context);
 
     return context;
   }
@@ -282,6 +333,9 @@ export class Tidy5eKgarContainerSheet
 
   private _renderMutex = new AsyncMutex();
   async _render(force?: boolean, options = {}) {
+    if (typeof options !== 'object') {
+      options = {};
+    }
     await this._renderMutex.lock(async () => {
       await this._renderSheet(force, options);
     });
@@ -302,8 +356,7 @@ export class Tidy5eKgarContainerSheet
         this.element.get(0)
       );
       await this.renderCustomContent({ data, isFullRender: true });
-      Hooks.callAll(
-        'tidy5e-sheet.renderItemSheet',
+      TidyHooks.tidy5eSheetsRenderItemSheet(
         this,
         this.element.get(0),
         data,
@@ -320,8 +373,7 @@ export class Tidy5eKgarContainerSheet
     maintainCustomContentInputFocus(this, async () => {
       applyTitleToWindow(this.title, this.element.get(0));
       await this.renderCustomContent({ data, isFullRender: false });
-      Hooks.callAll(
-        'tidy5e-sheet.renderItemSheet',
+      TidyHooks.tidy5eSheetsRenderItemSheet(
         this,
         this.element.get(0),
         data,
@@ -373,6 +425,7 @@ export class Tidy5eKgarContainerSheet
       );
     } finally {
       this.component?.$destroy();
+      this.subscriptionsService.unsubscribeAll();
       return super.close(...args);
     }
   }

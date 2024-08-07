@@ -1,3 +1,4 @@
+import { CONSTANTS } from 'src/constants';
 import { getContext, setContext } from 'svelte';
 
 /**
@@ -10,6 +11,9 @@ export function declareLocation(...segments: string[]) {
   if (segments.length === 0) {
     return;
   }
-  const location = getContext<string>('location') ?? '';
-  setContext('location', [location, ...segments].join('/'));
+  const location = getContext<string>(CONSTANTS.SVELTE_CONTEXT.LOCATION) ?? '';
+  setContext(
+    CONSTANTS.SVELTE_CONTEXT.LOCATION,
+    [location, ...segments].join('/')
+  );
 }

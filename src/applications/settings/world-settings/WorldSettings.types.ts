@@ -9,7 +9,6 @@ export type WorldSettingsContext = {
     useNpcEncumbranceBar: CurrentSettings['useNpcEncumbranceBar'];
     useVehicleEncumbranceBar: CurrentSettings['useVehicleEncumbranceBar'];
     showPlayerName: CurrentSettings['showPlayerName'];
-    sortFavoriteItemsAlphabetically: CurrentSettings['sortFavoriteItemsAlphabetically'];
     showExpandedLimitedView: CurrentSettings['showExpandedLimitedView'];
     itemCardsFixKey: CurrentSettings['itemCardsFixKey'];
     useCircularPortraitStyle: CurrentSettings['useCircularPortraitStyle'];
@@ -32,13 +31,13 @@ export type WorldSettingsContext = {
     lockLevelSelector: CurrentSettings['lockLevelSelector'];
     lockItemQuantity: CurrentSettings['lockItemQuantity'];
     initialNpcSheetTab: CurrentSettings['initialNpcSheetTab'];
-    useNpcRest: CurrentSettings['useNpcRest'];
     showNpcRestInChat: CurrentSettings['showNpcRestInChat'];
     showNpcActorLinkMarker: CurrentSettings['showNpcActorLinkMarker'];
     initialCharacterSheetTab: CurrentSettings['initialCharacterSheetTab'];
     initialVehicleSheetTab: CurrentSettings['initialVehicleSheetTab'];
     itemIdentificationPermission: CurrentSettings['itemIdentificationPermission'];
     includeFlagsInSpellScrollCreation: CurrentSettings['includeFlagsInSpellScrollCreation'];
+    useTidySpellSchoolIcons: CurrentSettings['useTidySpellSchoolIcons'];
   };
   defaultNpcTabs: DefaultTabSelectionFields;
   defaultCharacterTabs: DefaultTabSelectionFields;

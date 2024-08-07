@@ -52,8 +52,6 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
         useNpcEncumbranceBar: currentSettings.useNpcEncumbranceBar,
         useVehicleEncumbranceBar: currentSettings.useVehicleEncumbranceBar,
         showPlayerName: currentSettings.showPlayerName,
-        sortFavoriteItemsAlphabetically:
-          currentSettings.sortFavoriteItemsAlphabetically,
         showExpandedLimitedView: currentSettings.showExpandedLimitedView,
         itemCardsFixKey: currentSettings.itemCardsFixKey,
         useCircularPortraitStyle: currentSettings.useCircularPortraitStyle,
@@ -79,7 +77,6 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
         lockLevelSelector: currentSettings.lockLevelSelector,
         lockItemQuantity: currentSettings.lockItemQuantity,
         initialNpcSheetTab: currentSettings.initialNpcSheetTab,
-        useNpcRest: currentSettings.useNpcRest,
         showNpcRestInChat: currentSettings.showNpcRestInChat,
         showNpcActorLinkMarker: currentSettings.showNpcActorLinkMarker,
         initialCharacterSheetTab: currentSettings.initialCharacterSheetTab,
@@ -88,6 +85,7 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
           currentSettings.itemIdentificationPermission,
         includeFlagsInSpellScrollCreation:
           currentSettings.includeFlagsInSpellScrollCreation,
+        useTidySpellSchoolIcons: currentSettings.useTidySpellSchoolIcons,
       },
       defaultCharacterTabs: this.mapTabSelectionFields(
         CharacterSheetRuntime.getAllRegisteredTabs(),

@@ -5,6 +5,7 @@
   import type { Readable } from 'svelte/store';
   import type {
     RenderableClassicControl,
+    VehicleFeatureSection,
     VehicleSheetContext,
   } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -32,7 +33,9 @@
   import type { Item5e } from 'src/types/item.types';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
 
-  let context = getContext<Readable<VehicleSheetContext>>('context');
+  let context = getContext<Readable<VehicleSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 
@@ -51,7 +54,7 @@
   };
 
   $: noFeatures = !$context.features.some(
-    (section: any) => section.items.length,
+    (section: VehicleFeatureSection) => section.items.length,
   );
 
   declareLocation('attributes');
@@ -115,9 +118,9 @@
         {localize('TIDY5E.EmptySection')}
       </Notice>
     {:else}
-      {#each $context.features as section}
+      {#each $context.features as section (section.key)}
         {#if $context.unlocked || section.items.length}
-          <ItemTable location={section.label}>
+          <ItemTable key={section.key}>
             <svelte:fragment slot="header">
               <ItemTableHeaderRow>
                 <ItemTableColumn primary={true}>
@@ -164,7 +167,7 @@
                   {item}
                   cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
                 >
-                  <ItemTableCell primary={true} title={item.name}>
+                  <ItemTableCell primary={true}>
                     <ItemUseButton disabled={!$context.editable} {item} />
                     <ItemName
                       on:toggle={() => toggleSummary($context.actor)}
@@ -181,7 +184,7 @@
                   </ItemTableCell>
                   {#if section.hasActions}
                     <ItemTableCell baseWidth="3.125rem">
-                      {#if ctx?.isOnCooldown}
+                      {#if item.isOnCooldown}
                         <RechargeControl {item} />
                       {:else if item.system.recharge?.value}
                         <i
@@ -191,11 +194,12 @@
                       {:else if ctx?.hasUses}
                         <ItemUses {item} />
                       {:else}
+                        <!-- TODO: Figure out how to make this work in a custom section. -->
                         <ItemAddUses {item} />
                       {/if}
                     </ItemTableCell>
                     <ItemTableCell baseWidth="7.5rem">
-                      {#if item.system.activation.type}
+                      {#if item.system.activation?.type}
                         <span>{item.labels?.activation ?? ''}</span>
                       {/if}
                     </ItemTableCell>

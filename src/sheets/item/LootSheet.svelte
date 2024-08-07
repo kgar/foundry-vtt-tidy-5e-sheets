@@ -6,16 +6,23 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-  import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Source from '../shared/Source.svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemIdentifiableName from './parts/ItemIdentifiableName.svelte';
+  import PropertyToggle from 'src/components/toggle/PropertyToggle.svelte';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context = getContext<Readable<ItemSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   let selectedTabId: string;
+
+  $: identifiedLabelWidthCh = Math.max(
+    localize('DND5E.Identified').length,
+    localize('DND5E.Unidentified.Title').length,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -64,17 +71,22 @@
     </ul>
     <div class="flex-row no-gap">
       {#if FoundryAdapter.canIdentify($context.item)}
-        <Checkbox
-          labelCssClass="green-checkbox"
+        <PropertyToggle
           document={$context.item}
           field="system.identified"
           checked={$context.system.identified}
           disabled={!$context.editable}
-        >
-          {$context.system.identified
+          title={$context.system.identified
             ? localize('DND5E.Identified')
             : localize('DND5E.Unidentified.Title')}
-        </Checkbox>
+          iconClass="fas fa-magnifying-glass fa-fw"
+        >
+          <div style="width: {identifiedLabelWidthCh}ch">
+            {$context.system.identified
+              ? localize('DND5E.Identified')
+              : localize('DND5E.Unidentified.Title')}
+          </div>
+        </PropertyToggle>
       {/if}
     </div>
   </div>

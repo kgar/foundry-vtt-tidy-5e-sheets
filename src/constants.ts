@@ -4,11 +4,8 @@ export const CONSTANTS = {
   MODULE_ID: moduleId,
   DND5E_SYSTEM_ID: 'dnd5e',
   DOCUMENT_NAME_ACTOR: 'Actor',
-  // TODO: inject moduleId variable when this module overtakes the original
-  HOOK_TIDY5E_SHEETS_READY: `tidy5e-sheet.ready`,
-  HOOK_TIDY5E_SHEETS_PREPARE_RESOURCES: `tidy5e-sheet.prepareResources`,
-  HOOK_TIDY5E_SHEETS_ITEM_HOVER_ON: `tidy5e-sheet.itemHoverOn`,
-  HOOK_TIDY5E_SHEETS_ITEM_HOVER_OFF: `tidy5e-sheet.itemHoverOff`,
+  ATTUNEMENT_OPTIONAL: 'optional',
+  ATTUNEMENT_REQUIRED: 'required',
   ITEM_CAPACITY_TYPE_ITEMS: 'items',
   ITEM_CAPACITY_TYPE_WEIGHT: 'weight',
   ITEM_TYPE_BACKGROUND: 'background',
@@ -23,6 +20,7 @@ export const CONSTANTS = {
   ITEM_TYPE_SUBCLASS: 'subclass',
   ITEM_TYPE_TOOL: 'tool',
   ITEM_TYPE_WEAPON: 'weapon',
+  ITEM_SYSTEM_TYPE_AMMO: 'ammo',
   MESSAGE_BUS_COLLAPSE_ALL: 'collapse-all',
   MESSAGE_BUS_EXPAND_ALL: 'expand-all',
   /**
@@ -56,8 +54,20 @@ export const CONSTANTS = {
     wizard: 'TIDY5E.Class.Wizard',
     custom: 'TIDY5E.Class.Custom',
   },
+  CHARACTER_FAVORITE_SECTION_GENERIC: 'generic',
+  CHARACTER_FEAT_SECTION_BACKGROUND: 'background',
+  CHARACTER_FEAT_SECTION_CLASSES: 'classes',
+  CHARACTER_FEAT_SECTION_ACTIVE: 'active',
+  CHARACTER_FEAT_SECTION_PASSIVE: 'passive',
+  CHARACTER_FEAT_SECTION_RACE: 'race',
+  NPC_ABILITY_SECTION_WEAPONS: 'weapons',
+  NPC_ABILITY_SECTION_ACTIONS: 'actions',
+  NPC_ABILITY_SECTION_PASSIVE: 'passive',
+  NPC_ABILITY_SECTION_EQUIPMENT: 'equipment',
+  NPC_ABILITY_SECTION_CLASSES: 'classes',
   TAB_OPTION_CLASS: 'tab-option',
   TAB_CONTAINER_CONTENTS: 'contents',
+  TAB_CONTAINER_SECTION_CONTENTS: 'contents',
   TAB_ITEM_DESCRIPTION_ID: 'description',
   TAB_ITEM_DETAILS_ID: 'details',
   TAB_ITEM_ADVANCEMENT_ID: 'advancement',
@@ -72,7 +82,13 @@ export const CONSTANTS = {
   TAB_MIGRATIONS_V1_ONBOARDING: 'v1-onboarding',
   TAB_MIGRATIONS_CHARACTER_BIOGRAPHY: 'character-bio',
   TAB_MIGRATIONS_NPC_DEATH: 'npc-death',
+  TAB_MIGRATIONS_CCSS_TO_TIDY: 'ccss-to-tidy',
+  TAB_MIGRATIONS_FAVORITES_TO_SYSTEM: 'favorites-to-system',
+  TAB_MIGRATIONS_BONDS_IDEALS_FLAWS_TO_SYSTEM: 'bonds-ideals-flaws-to-system',
+  TAB_MIGRATIONS_SPELL_CLASS_TO_SOURCE_CLASS: 'spell-class-to-source-class',
+  TAB_MIGRATIONS_NPC_EXHAUSTION: 'npc-exhaustion',
   TAB_NPC_ABILITIES: 'attributes',
+  TAB_NPC_INVENTORY: 'inventory',
   TAB_NPC_SPELLBOOK: 'spellbook',
   TAB_NPC_EFFECTS: 'effects',
   TAB_NPC_BIOGRAPHY: 'biography',
@@ -85,6 +101,7 @@ export const CONSTANTS = {
   TAB_WORLD_SETTINGS_CHARACTER: 'world-settings-character',
   TAB_WORLD_SETTINGS_NPC: 'world-settings-npc',
   TAB_WORLD_SETTINGS_VEHICLE: 'world-settings-vehicle',
+  TAB_WORLD_SETTINGS_ICONS: 'world-settings-icons',
   TAB_WORLD_SETTINGS_ITEM: 'world-settings-item',
   TAB_WORLD_SETTINGS_EXHAUSTION: 'world-settings-exhaustion',
   TAB_WORLD_SETTINGS_SHEETLOCK: 'world-settings-sheet-lock',
@@ -112,6 +129,7 @@ export const CONSTANTS = {
   SPELL_PREPARATION_MODE_ALWAYS: 'always',
   SPELL_PREPARATION_MODE_PACT: 'pact',
   SPELL_PREPARATION_MODE_ATWILL: 'atwill',
+  SPELL_PREPARATION_MODE_RITUAL: 'ritual',
   SPELL_SLOT_TRACKER_MODE_PREFERENCE: 'spellSlotTrackerMode',
   SPELL_SLOT_TRACKER_MODE_PIPS: 'pips',
   SPELL_SLOT_TRACKER_MODE_VALUE_MAX: 'value-max',
@@ -188,6 +206,9 @@ export const CONSTANTS = {
     /** An interactable element which toggles a view */
     EXPANSION_TOGGLE: 'table-expansion-toggle',
 
+    /** An interactable element which toggles an inline container's contents view */
+    INLINE_CONTAINER_TOGGLE: 'inline-container-toggle',
+
     /** An interactable control which the user can execute to create an item (e.g., consumable, feature, loot, spell, weapon, etc.). */
     ITEM_CREATE_COMMAND: 'item-create-command',
 
@@ -202,6 +223,9 @@ export const CONSTANTS = {
 
     /** A list-based tabular representation of items (e.g., equipment, loot, spells, etc.). */
     ITEM_TABLE: 'item-table',
+
+    /** The header row of an item table. */
+    ITEM_TABLE_HEADER_ROW: 'item-table-header-row',
 
     /** A row in an item table. */
     ITEM_TABLE_ROW: 'item-table-row',
@@ -307,14 +331,18 @@ export const CONSTANTS = {
 
     /** A toolbar that usually sits at the top of a section of content, providing features like search, filtering, etc. */
     UTILITY_TOOLBAR: 'utility-toolbar',
+
+    /** A toolbar command, usually a button */
+    UTILITY_TOOLBAR_COMMAND: 'utility-toolbar-command',
   },
   ACTIVATION_COST_ACTION: 'action',
   ACTIVATION_COST_BONUS: 'bonus',
-  ACTIVATION_COST_REACTION: 'reaction',
+  ACTIVATION_COST_CREW: 'crew',
+  ACTIVATION_COST_LAIR: 'lair',
   ACTIVATION_COST_LEGENDARY: 'legendary',
   ACTIVATION_COST_MYTHIC: 'mythic',
-  ACTIVATION_COST_LAIR: 'lair',
-  ACTIVATION_COST_CREW: 'crew',
+  ACTIVATION_COST_NONE: 'none',
+  ACTIVATION_COST_REACTION: 'reaction',
   ACTIVATION_COST_SPECIAL: 'special',
   LIMITED_USES_PER_CHARGES: 'charges',
   LIMITED_USES_PER_DAWN: 'dawn',
@@ -325,4 +353,36 @@ export const CONSTANTS = {
   SHEET_SETTINGS_OPTION_NONE: 'none',
   SHEET_SETTINGS_OPTION_GM_ONLY: 'gm-only',
   SHEET_SETTINGS_OPTION_GM_AND_OWNERS: 'gm-and-owners',
+  TEXT_EDITOR_ACTIVATION_ELEMENT_SELECTOR: '.editor-content[data-edit]',
+  SVELTE_CONTEXT: {
+    ACCORDION_CONTEXT: 'accordionContext',
+    APP_ID: 'appId',
+    APPLY: 'apply',
+    BUTTON_MENU_CONTEXT: 'buttonMenuContext',
+    CARD: 'card',
+    CONFIRM: 'confirm',
+    CONTEXT: 'context',
+    CURRENT_TAB_ID: 'currentTabId',
+    EXPANDED_ITEM_DATA: 'expandedItemData',
+    EXPANDED_ITEMS: 'expandedItems',
+    FUNCTIONS: 'functions',
+    INITIAL_TAB_ID: 'initialTabId',
+    INLINE_CONTAINER_TOGGLE_SERVICE: 'inlineContainerToggleService',
+    ITEM_FILTER_SERVICE: 'itemFilterService',
+    ITEM_IDS_TO_SHOW: 'itemIdsToShow',
+    ITEM_TABLE_TOGGLES: 'itemTableToggles',
+    LOCATION: 'location',
+    MESSAGE_BUS: 'messageBus',
+    ON_FILTER_CLEAR_ALL: 'onFilterClearAll',
+    ON_FILTER: 'onFilter',
+    ON_ITEM_TABLE_TOGGLE: 'onItemTableToggle',
+    ON_ITEM_TOGGLED: 'onItemToggled',
+    ON_SEARCH: 'onSearch',
+    ON_TAB_SELECTED: 'onTabSelected',
+    SEARCH_FILTERS: 'searchFilters',
+    STATS: 'stats',
+    TAB_ID: 'tabId',
+    USE_DEFAULT: 'useDefault',
+    VALIDATE: 'validate',
+  },
 } as const;

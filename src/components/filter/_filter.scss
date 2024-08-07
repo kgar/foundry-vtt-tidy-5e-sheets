@@ -45,7 +45,7 @@
 .filter-menu {
   display: contents;
 
-  .filter-menu-button.has-active-filters {
+  .filter-menu-button.has-active-filters i {
     color: var(--t5e-icon-hover-color);
   }
 
@@ -55,7 +55,6 @@
     justify-content: center;
     border: 1px solid var(--t5e-faint-color);
   }
-
 
   .filter-group-header {
     margin-block-end: 0.5rem;

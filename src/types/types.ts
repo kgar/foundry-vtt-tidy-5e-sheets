@@ -1,5 +1,6 @@
-import type { ComponentProps, ComponentType, SvelteComponent } from 'svelte';
+import type { ComponentType, SvelteComponent } from 'svelte';
 import type {
+  ContainerContents,
   Item5e,
   ItemCardContentComponent,
   ItemChatData,
@@ -17,6 +18,7 @@ import type { DocumentFilters } from 'src/runtime/item/item.types';
 import type { Writable } from 'svelte/store';
 import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
 import type { CONSTANTS } from 'src/constants';
+import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 
 export type Actor5e = any;
 
@@ -85,16 +87,14 @@ export type ItemCardStore = {
 };
 
 export type CharacterFeatureSection = {
-  label: string;
-  columns: any;
-  items: any;
-  dataset: any;
-  showUsesColumn: boolean;
-  showUsagesColumn: boolean;
-  showLevelColumn: boolean;
-  showSourceColumn: boolean;
-  showRequirementsColumn: boolean;
-};
+  isClass?: boolean;
+  showUsesColumn?: boolean;
+  showUsagesColumn?: boolean;
+  showLevelColumn?: boolean;
+  showRequirementsColumn?: boolean;
+  canCreate: boolean;
+  custom?: CustomSectionOptions;
+} & FeatureSection;
 
 export type SpellCalculations = {
   dc: string;
@@ -107,16 +107,155 @@ export type SpellCalculations = {
   meleeHasBonus: boolean;
 };
 
+export type ActorInventoryTypes = Record<string, InventorySection>;
+
+export type CustomSectionOptions = {
+  section: string;
+  creationItemTypes: string[];
+};
+
+export type InventorySection = {
+  items: Item5e[];
+  canCreate: boolean;
+} & TidySectionBase;
+
+export type GenericFavoriteSection = {
+  items: Item5e[];
+  canCreate: false;
+} & TidySectionBase;
+
+export type EffectFavoriteSection = {
+  effects: FavoriteEffectContext[];
+  canCreate: false;
+} & TidySectionBase;
+
+export type CharacterItemPartitions = {
+  items: Item5e[];
+  spells: Item5e[];
+  feats: Item5e[];
+  races: Item5e[];
+  backgrounds: Item5e[];
+  classes: Item5e[];
+  subclasses: Item5e[];
+};
+
+export type TidySectionBase = {
+  label: string;
+  dataset: Record<string, any>;
+  custom?: CustomSectionOptions;
+  key: string;
+  show: boolean; // default: true
+  isExternal?: boolean;
+};
+
+export type FeatureSection = {
+  items: Item5e[];
+  hasActions?: boolean;
+} & TidySectionBase;
+
+export type VehicleCargoSection = {
+  items: Item5e[];
+  css?: string;
+  editableName?: boolean;
+  columns: SimpleEditableColumn[];
+} & TidySectionBase;
+
+export type VehicleFeatureSection = {
+  crewable?: boolean;
+  columns?: SimpleEditableColumn[];
+} & FeatureSection;
+
+export type SimpleEditableColumn = {
+  label: string;
+  css?: string;
+  property: string;
+  maxProperty?: string;
+  editable?: string;
+};
+
+export type SpellbookSection = {
+  order?: number;
+  usesSlots: boolean;
+  canCreate: boolean;
+  canPrepare: boolean;
+  spells: Item5e[];
+  uses?: number;
+  slots?: number;
+  override?: number;
+  prop?: string;
+} & TidySectionBase;
+
+export type AvailableLevel = {
+  level: number;
+  delta: number;
+  disabled: boolean;
+};
+
+export type AttunementContext = { icon: string; cls: string; title: string };
+
+export type CharacterItemContext = {
+  attunement?: AttunementContext;
+  availableLevels?: AvailableLevel[];
+  canToggle?: boolean;
+  concealDetails?: boolean;
+  containerContents?: ContainerContents;
+  favoriteId?: string;
+  group?: string;
+  hasTarget?: boolean;
+  hasUses?: boolean;
+  isStack?: boolean;
+  toggleClass?: string;
+  toggleTitle?: string;
+  totalWeight?: number;
+  concentration?: boolean;
+  parent?: Item5e;
+};
+
+export type TypedEffectFavoriteSection = EffectFavoriteSection & {
+  type: typeof CONSTANTS.TAB_CHARACTER_EFFECTS;
+};
+
+// TODO: Trim to minimum necessary
+export type FavoriteEffectContext = {
+  effect: ActiveEffect5e;
+  effectId: string;
+  id: string;
+  img: string;
+  sort: number;
+  subtitle: string;
+  suppressed: boolean;
+  title: string;
+  toggle: {
+    applicable: boolean;
+    value: boolean;
+  };
+};
+
+export type FavoriteSection =
+  | (InventorySection & { type: typeof CONSTANTS.TAB_CHARACTER_INVENTORY })
+  | (SpellbookSection & { type: typeof CONSTANTS.TAB_CHARACTER_SPELLBOOK })
+  | (CharacterFeatureSection & {
+      type: typeof CONSTANTS.TAB_CHARACTER_FEATURES;
+    })
+  | TypedEffectFavoriteSection
+  | (GenericFavoriteSection & {
+      type: typeof CONSTANTS.CHARACTER_FAVORITE_SECTION_GENERIC;
+    });
+
 export type CharacterSheetContext = {
   actorClassesToImages: Record<string, string>;
   allowMaxHpOverride: boolean;
   appearanceEnrichedHtml: string;
   biographyEnrichedHtml: string;
   bondEnrichedHtml: string;
+  conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
+  favorites: FavoriteSection[];
   features: CharacterFeatureSection[];
   flawEnrichedHtml: string;
   idealEnrichedHtml: string;
+  inventory: InventorySection[];
+  itemContext: Record<string, CharacterItemContext>;
   maxPreparedSpellsTotal: number;
   notes1EnrichedHtml: string;
   notes2EnrichedHtml: string;
@@ -124,23 +263,49 @@ export type CharacterSheetContext = {
   notes4EnrichedHtml: string;
   notesEnrichedHtml: string;
   showContainerPanel: boolean;
+  preparedSpells: number;
+  spellbook: SpellbookSection[];
   spellCalculations: SpellCalculations;
   spellSlotTrackerMode:
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
   traitEnrichedHtml: string;
-  utilities: Utilities;
-} & ActorSheetContext &
-  Record<string, any>;
+  utilities: Utilities<CharacterSheetContext>;
+} & ActorSheetContext;
+
+export type NpcAbilitySection = {
+  canCreate: boolean;
+  custom?: CustomSectionOptions;
+  isClass?: boolean;
+} & FeatureSection;
+
+export type NpcItemContext = {
+  attunement?: AttunementContext;
+  availableLevels?: AvailableLevel[];
+  canToggle?: boolean;
+  concentration?: boolean;
+  containerContents?: ContainerContents;
+  hasTarget?: boolean;
+  hasUses?: boolean;
+  isStack?: boolean;
+  parent?: Item5e;
+  toggleTitle?: string;
+  totalWeight?: number;
+};
 
 export type NpcSheetContext = {
   appearanceEnrichedHtml: string;
   biographyEnrichedHtml: string;
   bondEnrichedHtml: string;
+  conditions: Dnd5eActorCondition[];
+  containerPanelItems: ContainerPanelItemContext[];
   encumbrance: any;
+  features: NpcAbilitySection[];
   flawEnrichedHtml: string;
   hideEmptySpellbook: boolean;
   idealEnrichedHtml: string;
+  inventory: InventorySection[];
+  itemContext: Record<string, NpcItemContext>;
   maxPreparedSpellsTotal: number;
   notes1EnrichedHtml: string;
   notes2EnrichedHtml: string;
@@ -149,21 +314,37 @@ export type NpcSheetContext = {
   notesEnrichedHtml: string;
   preparedSpells: number;
   shortRest: (event: Event) => Promise<void>;
+  showContainerPanel: boolean;
   showLegendaryToolbar: boolean;
   showSpellbookTab: boolean;
+  spellbook: SpellbookSection[];
   spellCalculations: SpellCalculations;
   spellSlotTrackerMode:
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
   traitEnrichedHtml: string;
-  utilities: Utilities;
-} & ActorSheetContext &
-  Record<string, any>;
+  utilities: Utilities<NpcSheetContext>;
+} & ActorSheetContext;
+
+export type VehicleItemContext = {
+  canToggle?: boolean;
+  containerContents?: ContainerContents;
+  cover?: string;
+  hasUses?: boolean;
+  threshold?: number | string;
+  toggleClass?: string;
+  toggleTitle?: string;
+};
+
+export type VehicleEncumbrance = { max: number; value: number; pct: number };
 
 export type VehicleSheetContext = {
-  utilities: Utilities;
-} & ActorSheetContext &
-  Record<string, any>;
+  cargo: VehicleCargoSection[];
+  encumbrance: VehicleEncumbrance;
+  features: VehicleFeatureSection[];
+  itemContext: Record<string, VehicleItemContext>;
+  utilities: Utilities<VehicleSheetContext>;
+} & ActorSheetContext;
 
 export type DerivedDamage = {
   label: string;
@@ -178,11 +359,12 @@ export type ActionItem = {
   calculatedDerivedDamage: DerivedDamage[];
   rangeTitle: string | null;
   rangeSubtitle: string | null;
+  containerContents?: ContainerContents;
 };
 
-type ActionSectionTitle = string;
-
-export type ActorActions = Record<ActionSectionTitle, Set<ActionItem>>;
+export type ActionSection = {
+  actions: ActionItem[];
+} & TidySectionBase;
 
 export type TidyResource = {
   name: string;
@@ -214,10 +396,10 @@ export type MessageBusMessage =
   | { tabId: string; message: typeof CONSTANTS.MESSAGE_BUS_EXPAND_ALL }
   | { tabId: string; message: typeof CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL };
 
-export type Utilities = Record<
+export type Utilities<TContext> = Record<
   string,
   {
-    utilityToolbarCommands?: UtilityToolbarCommandParams[];
+    utilityToolbarCommands?: UtilityToolbarCommandParams<TContext>[];
   }
 >;
 
@@ -234,7 +416,11 @@ type ActorSaves = {
 };
 
 export type ActorSheetContext = {
-  actions: ActorActions;
+  actions: ActionSection[];
+  activateEditors: (
+    node: HTMLElement,
+    options?: { bindSecrets?: boolean }
+  ) => void;
   actor: Actor5e;
   actorPortraitCommands: RegisteredPortraitMenuCommand[];
   allowEffectsManagement: boolean;
@@ -256,7 +442,11 @@ export type ActorSheetContext = {
    * Note: This calculation ignores temp HP / temp HP Max, because the stock 5e sheets count 0 hp (ignoring all temp values) as incapacitated. Tidy 5e sheets carries this principle forward with health percentage calculation.
    */
   healthPercentage: number;
-  itemContext: any;
+  isCharacter: boolean;
+  isNPC: boolean;
+  isVehicle: boolean;
+  /** All items without a container. */
+  items: Item5e[];
   lockExpChanges: boolean;
   lockHpMaxChanges: boolean;
   /**
@@ -283,18 +473,14 @@ export type ActorSheetContext = {
   useClassicControls: boolean;
   useRoundedPortraitStyle: boolean;
   viewableWarnings: DocumentPreparationWarning[];
-} & JQueryHooksSheetIntegration &
-  Record<string, any>;
+  warnings: DocumentPreparationWarning[];
+} & Record<string, any>;
 
 export type DocumentPreparationWarning = Partial<{
   message: string;
   link: string;
   type: string;
 }>;
-
-export type JQueryHooksSheetIntegration = {
-  activateFoundryJQueryListeners: (html: HTMLElement) => Promise<void>;
-};
 
 export type DropdownListOption = { value: any; text: string };
 
@@ -407,4 +593,14 @@ export type DamageModificationContextEntry = {
 export type ActiveEffect5e = any;
 
 // TODO: Get the real typings for this
-export type ActiveEffectContext = any;
+export type ActiveEffectContext = {
+  id: string;
+  name: string;
+  img: string;
+  disabled: boolean;
+  duration: number;
+  source: any;
+  parentId: string;
+  durationParts: string | string[];
+  hasTooltip: boolean;
+};

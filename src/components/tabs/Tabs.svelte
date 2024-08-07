@@ -11,8 +11,12 @@
   export let cssClass: string = '';
   export let orientation: 'horizontal' | 'vertical' = 'horizontal';
 
-  const context = getContext<Readable<any> | undefined>('context');
-  const onTabSelected = getContext<OnTabSelectedFn>('onTabSelected');
+  const context = getContext<Readable<any> | undefined>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+  const onTabSelected = getContext<OnTabSelectedFn>(
+    CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED,
+  );
 
   const dispatcher = createEventDispatcher<{ tabSelected: Tab }>();
 
@@ -56,7 +60,9 @@
   }
 
   const localize = FoundryAdapter.localize;
-  const currentTabId = getContext<string>('currentTabId');
+  const currentTabId = getContext<string>(
+    CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID,
+  );
 
   let mounted = false;
   onMount(() => {
@@ -117,6 +123,7 @@
       flex: 1 1 auto;
       border-top-left-radius: 0.1875rem;
       border-top-right-radius: 0.1875rem;
+      text-shadow: none;
 
       &:hover {
         background: var(--t5e-tab-background);
@@ -133,8 +140,6 @@
           color: inherit;
         }
       }
-
-      text-shadow: none;
     }
 
     &:not(.vertical) {

@@ -1,16 +1,23 @@
-import type { CharacterSheetContext, CustomContent, NpcSheetContext, Tab } from 'src/types/types';
+import type {
+  CharacterSheetContext,
+  CustomContent,
+  NpcSheetContext,
+  Tab,
+} from 'src/types/types';
 import { CONSTANTS } from 'src/constants';
 import NpcAbilitiesTab from 'src/sheets/npc/tabs/NpcAbilitiesTab.svelte';
 import NpcSpellbookTab from 'src/sheets/npc/tabs/NpcSpellbookTab.svelte';
 import NpcBiographyTab from 'src/sheets/npc/tabs/NpcBiographyTab.svelte';
-import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
+import NpcEffectsTab from 'src/sheets/npc/tabs/NpcEffectsTab.svelte';
 import ActorJournalTab from 'src/sheets/actor/tabs/ActorJournalTab.svelte';
 import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
 import type { RegisteredContent, RegisteredTab } from './types';
-import { warn } from 'src/utils/logging';
+import { debug, error, warn } from 'src/utils/logging';
 import { TabManager } from './tab/TabManager';
 import type { ActorTabRegistrationOptions } from 'src/api/api.types';
 import { CustomContentManager } from './content/CustomContentManager';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import ActorInventoryTab from 'src/sheets/actor/tabs/ActorInventoryTab.svelte';
 
 export class NpcSheetRuntime {
   private static _content: RegisteredContent<NpcSheetContext>[] = [];
@@ -48,7 +55,7 @@ export class NpcSheetRuntime {
       id: 'effects',
       title: 'DND5E.Effects',
       content: {
-        component: ActorEffectsTab,
+        component: NpcEffectsTab,
         type: 'svelte',
       },
       layout: 'classic',
@@ -68,6 +75,21 @@ export class NpcSheetRuntime {
       content: {
         component: ActorJournalTab,
         type: 'svelte',
+      },
+      enabled: (context) => context.owner,
+      layout: 'classic',
+    },
+    {
+      id: 'inventory',
+      title: 'DND5E.Inventory',
+      content: {
+        component: ActorInventoryTab,
+        type: 'svelte',
+        getProps() {
+          return {
+            tabId: CONSTANTS.TAB_NPC_INVENTORY,
+          };
+        },
       },
       enabled: (context) => context.owner,
       layout: 'classic',
@@ -116,5 +138,18 @@ export class NpcSheetRuntime {
     }
 
     NpcSheetRuntime._tabs.push(tab);
+  }
+
+  static getTabTitle(tabId: string) {
+    try {
+      let tabTitle = this._tabs.find((t) => t.id === tabId)?.title;
+      if (typeof tabTitle === 'function') {
+        tabTitle = tabTitle();
+      }
+      return tabTitle ? FoundryAdapter.localize(tabTitle) : tabId;
+    } catch (e) {
+      error('An error occurred while searching for a tab title.', false, e);
+      debug('Tab title error troubleshooting information', { tabId });
+    }
   }
 }

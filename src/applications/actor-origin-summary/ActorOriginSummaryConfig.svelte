@@ -3,9 +3,12 @@
   import type { ActorOriginSummaryContext } from './ActorOriginSummaryConfigFormApplication';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Readable } from 'svelte/store';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<ActorOriginSummaryContext>>('context');
-  let appId = getContext<string>('appId');
+  let context = getContext<Readable<ActorOriginSummaryContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+  let appId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.APP_ID);
 
   const localize = FoundryAdapter.localize;
 </script>

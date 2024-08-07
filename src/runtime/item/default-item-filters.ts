@@ -65,28 +65,28 @@ export const defaultItemFilters = {
   },
   ritual: {
     name: 'ritual',
-    predicate: (item) => item.system.properties.has('ritual'),
+    predicate: (item) => item.system.properties?.has('ritual') === true,
     text: 'DND5E.Ritual',
   },
   concentration: {
     name: 'concentration',
-    predicate: (item) => item.system.properties.has('concentration'),
+    predicate: (item) => item.system.properties?.has('concentration') === true,
     text: 'DND5E.Concentration',
     abbreviation: 'DND5E.AbbreviationConc',
   },
   verbal: {
     name: 'verbal',
-    predicate: (item) => item.system.properties.has('vocal'),
+    predicate: (item) => item.system.properties?.has('vocal') === true,
     text: 'DND5E.ComponentVerbal',
   },
   somatic: {
     name: 'somatic',
-    predicate: (item) => item.system.properties.has('somatic'),
+    predicate: (item) => item.system.properties?.has('somatic') === true,
     text: 'DND5E.ComponentSomatic',
   },
   material: {
     name: 'material',
-    predicate: (item) => item.system.properties.has('material'),
+    predicate: (item) => item.system.properties?.has('material') === true,
     text: 'DND5E.ComponentMaterial',
   },
   prepared: {
@@ -116,7 +116,7 @@ export const defaultItemFilters = {
   },
   canUse: {
     name: 'canUse',
-    predicate: (item) => ItemUtils.hasAvailableUses(item),
+    predicate: (item) => ItemUtils.canUse(item),
     text: 'TIDY5E.ItemFilters.CanUse',
   },
   equipped: {
@@ -176,16 +176,26 @@ export function getSpellSchoolFiltersAsObject(): Record<string, ItemFilter> {
 export function getAttunementFilters(): ItemFilter[] {
   return [
     {
+      name: 'attunement-optional',
+      predicate: (item) =>
+        !FoundryAdapter.concealDetails(item) &&
+        item.system.attunement === CONSTANTS.ATTUNEMENT_OPTIONAL,
+      text: CONFIG.DND5E.attunementTypes[CONSTANTS.ATTUNEMENT_OPTIONAL],
+    },
+    {
       name: 'attunement-required',
       predicate: (item) =>
-        !FoundryAdapter.concealDetails(item) && item.system.attunement === 1,
-      text: CONFIG.DND5E.attunements[1],
+        !FoundryAdapter.concealDetails(item) &&
+        item.system.attunement === CONSTANTS.ATTUNEMENT_REQUIRED,
+      text: CONFIG.DND5E.attunementTypes[CONSTANTS.ATTUNEMENT_REQUIRED],
     },
     {
       name: 'attuned',
       predicate: (item) =>
-        !FoundryAdapter.concealDetails(item) && item.system.attunement === 2,
-      text: CONFIG.DND5E.attunements[2],
+        !FoundryAdapter.concealDetails(item) &&
+        !!item.system.attunement &&
+        item.system.attuned,
+      text: 'DND5E.AttunementAttuned',
     },
   ];
 }

@@ -3,6 +3,7 @@
   import ButtonMenuItem from './ButtonMenuItem.svelte';
   import type { ButtonMenuContext } from './button-menu-types';
   import { settingStore } from 'src/settings/settings';
+  import { CONSTANTS } from 'src/constants';
 
   export let iconClass: string = '';
   export let useIconColumn: boolean = true;
@@ -10,7 +11,9 @@
   export let size: 'standard' | 'compact' = 'standard';
   export let disabled = false;
 
-  const buttonMenuContext = getContext<ButtonMenuContext>('buttonMenuContext');
+  const buttonMenuContext = getContext<ButtonMenuContext>(
+    CONSTANTS.SVELTE_CONTEXT.BUTTON_MENU_CONTEXT,
+  );
   const dispatch = createEventDispatcher<{
     click: {
       event: MouseEvent & { currentTarget: HTMLButtonElement };

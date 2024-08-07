@@ -5,6 +5,7 @@
     type CharacterSheetContext,
     type NpcSheetContext,
     type RenderableClassicControl,
+    type SpellbookSection,
   } from 'src/types/types';
   import ItemDeleteControl from '../item-list/controls/ItemDeleteControl.svelte';
   import ItemEditControl from '../item-list/controls/ItemEditControl.svelte';
@@ -31,18 +32,15 @@
   import SpellSlotManagement from './SpellSlotManagement.svelte';
   import type { Item5e } from 'src/types/item.types';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
+  import ConcentrationOverlayIcon from './ConcentrationOverlayIcon.svelte';
 
-  let context =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
-  export let section: any;
+  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+  export let section: SpellbookSection;
   export let spells: any[];
   export let allowFavorites: boolean = true;
   export let cssClass: string | null = null;
-  /**
-   * An optional subset of item IDs which will hide all other items not included in this set.
-   * Useful for showing only search results, for example.
-   */
-  export let visibleItemIdSubset: Set<string> | null = null;
 
   // TODO: replace this with column specification array default and then allow the caller to customize the table.
   export let includeSchool: boolean = true;
@@ -50,6 +48,10 @@
   export let spellComponentsBaseWidth: string = '3.75rem';
   export let targetBaseWidth: string = '7.5rem';
   export let usageBaseWidth: string = '7.5rem';
+
+  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
+    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
+  );
 
   var spellSchoolBaseWidth = '2rem';
 
@@ -109,12 +111,15 @@
 </script>
 
 <section class="spellbook-list-section {cssClass}">
-  <ItemTable location={section.label}>
+  <ItemTable
+    key={section.key}
+    data-custom-section={section.custom ? true : null}
+  >
     <svelte:fragment slot="header">
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>
           <span class="spell-primary-column-label">
-            {section.label}
+            {localize(section.label)}
           </span>
           {#if section.usesSlots}
             <SpellSlotManagement {section} />
@@ -170,15 +175,19 @@
           }}
           let:toggleSummary
           cssClass={FoundryAdapter.getSpellRowClasses(spell)}
-          hidden={visibleItemIdSubset !== null &&
-            !visibleItemIdSubset.has(spell.id)}
+          hidden={!!$itemIdsToShow && !$itemIdsToShow.has(spell.id)}
         >
-          <ItemTableCell primary={true} title={spell.name}>
+          <ItemTableCell primary={true}>
             <ItemUseButton
               disabled={!$context.editable}
               item={spell}
               imgUrlOverride={spellImgUrl}
-            />
+              showDiceIconOnHover={!ctx.concentration}
+            >
+              <svelte:fragment slot="after-roll-button">
+                <ConcentrationOverlayIcon {ctx} />
+              </svelte:fragment>
+            </ItemUseButton>
             <ItemName
               on:toggle={() => toggleSummary($context.actor)}
               item={spell}
@@ -196,7 +205,7 @@
               <ItemUses item={spell} />
             </ItemTableCell>
           {/if}
-          {#if allowFavorites && $settingStore.showIconsNextToTheItemName && FoundryAdapter.tryGetFlag(spell, 'favorite')}
+          {#if allowFavorites && $settingStore.showIconsNextToTheItemName && 'favoriteId' in ctx && !!ctx.favoriteId}
             <InlineFavoriteIcon />
           {/if}
           <ItemTableCell baseWidth={spellComponentsBaseWidth} cssClass="no-gap">

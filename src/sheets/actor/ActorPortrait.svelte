@@ -8,11 +8,14 @@
   import type { Readable } from 'svelte/store';
   import FloatingContextMenu from 'src/components/context-menu/FloatingContextMenu.svelte';
   import { debug, error } from 'src/utils/logging';
+  import { TidyHooks } from 'src/foundry/TidyHooks';
 
   export let actor: Actor5e;
   export let useHpOverlay: boolean;
 
-  let context = getContext<Readable<ActorSheetContext>>('context');
+  let context = getContext<Readable<ActorSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 
@@ -20,7 +23,7 @@
     event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
   ) {
     if (
-      !Hooks.call('tidy5e-sheet.preOpenActorPortraitFilePicker', context, event)
+      !TidyHooks.tidy5eSheetsPreOpenActorPortraitFilePicker($context, event)
     ) {
       return;
     }

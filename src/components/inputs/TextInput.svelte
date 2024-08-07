@@ -3,6 +3,17 @@
   import { buildDataset } from 'src/utils/data';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
+  import type {
+    ContainerSheetContext,
+    ItemSheetContext,
+  } from 'src/types/item.types';
+  import type {
+    CharacterSheetContext,
+    NpcSheetContext,
+    VehicleSheetContext,
+  } from 'src/types/types';
 
   type OnSaveChangeFn = (
     event: Event & {
@@ -74,10 +85,28 @@
     });
   }
 
+  const context =
+    getContext<
+      Readable<
+        | CharacterSheetContext
+        | NpcSheetContext
+        | VehicleSheetContext
+        | ContainerSheetContext
+        | ItemSheetContext
+      >
+    >('context');
+
   $: activeEffectApplied = ActiveEffectsHelper.isActiveEffectAppliedToField(
     document,
     field,
   );
+
+  $: isEnchanted =
+    $context.itemOverrides instanceof Set && $context.itemOverrides.has(field);
+
+  $: overrideTooltip = isEnchanted
+    ? localize('DND5E.Enchantment.Warning.Override')
+    : localize('DND5E.ActiveEffectOverrideWarning');
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -88,9 +117,7 @@
   {id}
   bind:value={draftValue}
   {placeholder}
-  data-tooltip={activeEffectApplied
-    ? localize('DND5E.ActiveEffectOverrideWarning')
-    : tooltip}
+  data-tooltip={activeEffectApplied ? overrideTooltip : tooltip}
   {...actualDataset}
   class={cssClass}
   {maxlength}

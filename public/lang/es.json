@@ -450,10 +450,6 @@
         "name": "Habilitar la depuración",
         "hint": "Imprime mensajes de depuración en la consola."
     },
-    "TIDY5E.Settings.SortFavoriteItemsAlphabetically": {
-        "name": "Ordenar favoritos alfabéticamente",
-        "hint": "Ordena los favoritos alfabéticamente."
-    },
     "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
         "name": "Hoja de personaje: Siempre desbloqueado para el DM",
         "hint": "Trate la hoja de personaje como si siempre estuviera desbloqueada, independientemente de la configuración de bloqueo. El DM siempre puede editar el personaje, pero también puede alternar entre bloqueo y desbloqueo para un jugador que también posee el personaje.",
@@ -594,10 +590,10 @@
         "AtLeastOneLevelRequiredErrorMessage": "Se requiere al menos un nivel de agotamiento del vehículo.",
         "Header": "Agotamiento del vehículo"
     },
-    "TIDY5E.Tidy5eSheet": "Hoja de personaje T5E",
+    "TIDY5E.Tidy5eSheet": "Hoja del personaje de Tidy 5e",
     "TIDY5E.Tidy5eNPC": "Hoja de PNJ T5E",
-    "TIDY5E.Tidy5eItemSheet": "Hoja de objeto T5E",
-    "TIDY5E.Tidy5eVehicle": "Hoja de vehículo T5E",
+    "TIDY5E.Tidy5eItemSheet": "Hoja de artículos Tidy 5e",
+    "TIDY5E.Tidy5eVehicle": "Hoja del vehículo Tidy 5e",
     "TIDY5E.HitDC": "Impacto / CD",
     "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
     "TIDY5E.EnvironmentTooltip": "Ambiente: {environment}",
@@ -632,7 +628,7 @@
             "originalExplanation": "Migra la configuración de DM y los indicadores de datos de la hoja Tidy de la hoja T5E original. La mayoría de las diferencias en los datos provienen de configuraciones de DM. Si migras tu configuración y adviertes que una configuración no es de tu agrado, simplemente cámbiala desde el menú de configuración.",
             "sectionTitle": "Inicio de las migraciones de Tidy V1"
         },
-        "hint": "Si eras usuario del módulo T5E original o de las hojas Alpha, opcionalmente utiliza este menú de Migraciones para migrar la configuración de DM y los datos de la hoja T5E.",
+        "hint": "Si era usuario del módulo original de Tidy5e Sheet, utiliza opcionalmente este menú Migraciones para migrar tu configuración de GM y los datos de Tidy Sheet.",
         "migrateConfirmTitle": "Confirmar migración",
         "migrationCompleteMessage": "Migración completada.",
         "migrateConfirmButtonNo": "Cancelar",
@@ -641,7 +637,7 @@
         "Notification": {
             "Title": "Tarjetas Tidy 5e: Migraciones disponibles",
             "Explanation": "Ya están disponibles las nuevas migraciones de datos de Tidy 5e Sheets. Consulte el menú Migraciones de {boldStart}configuración{boldEnd} para obtener más información.",
-            "Explanation2": "Nota: Las migraciones mueven los datos almacenados originalmente por las Hojas Tidy 5e a los campos de datos oficialmente soportados por el sistema. Si no le faltan datos en sus hojas después de actualizar Hojas Tidy 5e, entonces no es necesaria ninguna migración.",
+            "Explanation2": "Nota: Las migraciones mueven datos de un lugar a otro. A veces, los datos almacenados originalmente por Tidy 5e Sheets deben trasladarse a los campos de datos oficialmente soportados por el sistema. En otros casos, Tidy puede adoptar funcionalidades de otro módulo, y como resultado, se puede proporcionar una migración conveniente para facilitar la transición. Si no le faltan datos en sus hojas después de actualizar las Hojas Tidy 5e, entonces no es necesaria ninguna migración.",
             "Button.DoNotShowAgain": "No volver a mostrar",
             "DoNotShowAgain.ConfirmMessage": "Confirmado. Este mensaje no volverá a aparecer hasta que haya otra migración disponible."
         },
@@ -659,6 +655,43 @@
             "TotalSelectedLabel": "Total seleccionado: {total}",
             "ToMigrate": "Para migrar",
             "SelectAllNoneTooltip": "Seleccionar todos o ninguno"
+        },
+        "NpcDeathSaves": {
+            "sectionTitle": "Salvaciones por muerte de PNJ",
+            "selectionDialogTitle": "Migración: Salvaciones por muerte de PNJ"
+        },
+        "UnlinkedExplanation": "Esta migración ofrece la opción de migrar documentos token no vinculados en la escena actual. Puede ejecutar la migración en escenas adicionales según sea necesario.",
+        "CcssToTidy": {
+            "overwrite": "Sobrescribir",
+            "selectionDialogTitle": "Migración: CCSS a Tidy 5e",
+            "ccss": "CCSS",
+            "section": "Sección",
+            "deleteFlags": "Eliminar indicadores CCSS afectados",
+            "sectionTitle": "CCSS para Tidy 5e",
+            "explanation1": "Tidy 5e ahora soporta de forma nativa secciones personalizadas y proporciona características adicionales en torno a las secciones personalizadas. Esta migración copiará los nombres de sección de las Secciones Personalizadas de la Hoja de Personajes (CCSS) en la configuración de secciones de Tidy.",
+            "overwriteTooltip": "Habilite la opción de sobrescribir el indicador de sección Tidy existente. Si no está marcado, solo los indicadores Tidy vacíos recibirán datos CCSS migrados.",
+            "deleteFlagsTooltip": "Al migrar de CCSS a secciones personalizadas de Tidy, las banderas CCSS permanecen en su lugar de forma predeterminada. Marque esta opción para eliminar esas banderas."
+        },
+        "Parent": "Padre",
+        "MigrateCompendia.CompendiumLabel": "Compendio",
+        "MigrateCompendia.Title": "Migrar compendios",
+        "MigrateCompendia.TotalEntriesLabel": "Total de entradas",
+        "MigrateCompendia.SelectionDialogTitle": "Seleccionar compendios para migrar",
+        "FavoritesToSystem": {
+            "sectionTitle": "Personajes favoritos",
+            "selectionDialogTitle": "Migración: personajes favoritos al sistema"
+        },
+        "BondsIdealsFlawsToSystem": {
+            "sectionTitle": "Vínculos, ideales y defectos de los NPC",
+            "selectionDialogTitle": "Migración: vínculos, ideales y defectos de los NPC con el sistema"
+        },
+        "SpellClassToSourceClass": {
+            "sectionTitle": "Clase de hechizo a clase de origen",
+            "selectionDialogTitle": "Migración: Clase de hechizo a clase de origen"
+        },
+        "NpcExhaustion": {
+            "selectionDialogTitle": "Migración: NPC Exhaustion a Sistema",
+            "sectionTitle": "NPC Exhaustion"
         }
     },
     "TIDY5E.Settings.ColorPickerScrollbarTrack": {
@@ -724,5 +757,59 @@
     "TIDY5E.ItemFilters.CanUse": "Se puede utilizar",
     "TIDY5E.ItemFilters.CanCast": "Se puede ejecutar",
     "TIDY5E.PortraitTitle": "Retrato: {subject}",
-    "TIDY5E.ItemImageTitle": "Artículo: {subject}"
+    "TIDY5E.ItemImageTitle": "Artículo: {subject}",
+    "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
+        "hint": "Los hechizos a veces pueden contener datos especiales de otros módulos que pueden ser útiles para llevar a un pergamino de hechizo. Habilitar para copiar todos los datos basados en banderas al pergamino de hechizos en el momento de la creación.",
+        "name": "Incluir las banderas en la creación de pergaminos de hechizos"
+    },
+    "TIDY5E.Settings.SheetPreferences": {
+        "name": "Establecer Tidy como hoja por defecto",
+        "buttonLabel": "Establecer Tidy como hoja por defecto",
+        "explanation": "Seleccione todos los tipos de documentos en los que prefiere que la hojas de Tidy 5e sean las predeterminadas.",
+        "hint": "Si desea establecer las Hojas de Tidy 5e como predeterminadas para uno o más tipos de documentos, pero el menú de configuración de las hojas predeterminadas del núcleo no funciona como se espera, utilice este menú para seleccionar sus preferencias."
+    },
+    "TIDY5E.GenericErrorNotification": "Se ha producido un error al realizar esta acción. Consulte la consola devtools para obtener más detalles.",
+    "TIDY5E.Section": {
+        "ActionLabel": "Sección de acción",
+        "ConfigDialog": {
+            "hideTooltip": "Ocultar esta sección",
+            "title": "Configurar sección: {tabTitle}",
+            "showTooltip": "Mostrar esta sección"
+        },
+        "Default": "Sección predeterminada",
+        "Label": "Sección",
+        "Tooltip": "Especifique una sección personalizada para este elemento cuando lo coloque en una hoja de actor o déjela en blanco para un comportamiento predeterminado.",
+        "ActionTooltip": "Especifique una sección personalizada para este elemento cuando lo coloque en la pestaña Acciones o déjela en blanco para un comportamiento predeterminado."
+    },
+    "TIDY5E.Settings.UseTidySpellSchoolIcons": {
+        "name": "Utilice iconos de Tidy Spell School",
+        "hint": "Utiliza los iconos seleccionados por Tidy para las escuelas de hechizos. Para personalizar los iconos de las escuelas de hechizos a través de CONFIG.DND5E o a través de otros módulos, desactiva esta opción. Para ampliar los iconos personalizados de las escuelas de hechizos de Tidy, consulta la documentación de la API de Tidy."
+    },
+    "TIDY5E.UseDefaultDialog": {
+        "title": "Confirmar: Usar predeterminado",
+        "text": "¿Está seguro de que desea utilizar el valor predeterminado?"
+    },
+    "TIDY5E.WorldSettings.TabIcons": {
+        "tabLabel": "Íconos"
+    },
+    "TIDY5E.Utilities.ConfigureSections": "Configurar secciones",
+    "TIDY5E.LocalizationTestKey": "Botón de ubicación de prueba",
+    "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Mayús+Clic para saltar la tirada y recargar al instante) ",
+    "TIDY5E.Settings.ColorPickerRitualOnly": {
+        "name": "Solo rituales"
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
+        "name": "Trazado de Solo Rituales"
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
+        "name": "Acento de Solo Rituales"
+    },
+    "TIDY5E.EmptyContainer": "Este contenedor está vacío.",
+    "TIDY5E.SpellSourceIdentifierSelectText": "Tipo de identificador: {identifier}",
+    "TIDY5E.SpellSourceIdentifierLabelHint": "El actor que tiene este hechizo no tiene la clase de fuente que se especifica aquí.",
+    "TIDY5E.Utilities.Tools": "Herramientas",
+    "TIDY5E.Utilities.AssignSpellsToClasses": "Asignar hechizos a las clases",
+    "TIDY5E.SpellSourceClassAssignments.Identifier": "Identificador de clase de origen",
+    "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "Aquí aparece el identificador de clase de origen del hechizo. Para asignar un identificador que no posea el personaje, introduce el identificador de clase en este campo de texto.",
+    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Mostrar solo los sin asignar"
 }

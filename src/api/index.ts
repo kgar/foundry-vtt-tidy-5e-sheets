@@ -21,3 +21,8 @@ export * from './tab/SvelteTab';
 export * from './Tidy5eSheetsApi';
 export type { OnRenderTabParams } from '../types/types.ts';
 export type { SheetLayout } from '../runtime/types.ts';
+export * from 'src/foundry/TidyFlags';
+export * from 'src/foundry/TidyFlags.types';
+export * from 'src/foundry/TidyHooks';
+export * from 'src/features/sections/sections.types';
+export type { ContextMenuPositionInfo } from 'src/context-menu/context-menu.types.ts';

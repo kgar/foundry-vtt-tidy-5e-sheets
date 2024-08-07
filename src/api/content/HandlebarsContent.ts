@@ -21,7 +21,7 @@ export class HandlebarsContent extends CustomContentBase {
   constructor(props?: Partial<HandlebarsContent>) {
     super();
 
-    const merged = mergeObject(this, props);
+    const merged = foundry.utils.mergeObject(this, props);
     Object.assign(this, merged);
   }
 

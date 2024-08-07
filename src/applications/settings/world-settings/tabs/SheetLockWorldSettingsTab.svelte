@@ -3,8 +3,11 @@
   import CheckboxSetting from 'src/applications/settings/parts/CheckboxSetting.svelte';
   import { getContext } from 'svelte';
   import type { WorldSettingsContextStore } from '../WorldSettings.types';
+  import { CONSTANTS } from 'src/constants';
 
-  const context = getContext<WorldSettingsContextStore>('context');
+  const context = getContext<WorldSettingsContextStore>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>
