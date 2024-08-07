@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Pips from 'src/components/pips/Pips.svelte';
+    import Pips from './Pips.svelte';
     import { FoundryAdapter } from 'src/foundry/foundry-adapter';
     import type { ActorSheetContext } from 'src/types/types';
     import { getContext } from 'svelte';

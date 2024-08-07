@@ -8,7 +8,8 @@ export class DrakkenheimCoreModuleIntegration implements ModuleIntegrationBase {
     return 'drakkenheim-core';
   }
   init(api: Tidy5eSheetsApi): void {
-    import('./DrakkenheimContaminationTabClassic.scss');
+    import('./pips.scss');
+    import('./DrakkenheimContaminationTab.scss');
 
     const contaminationTab = new api.models.SvelteTab({
       title: () => FoundryAdapter.localize('DRAKKENHEIM.Contamination'),
