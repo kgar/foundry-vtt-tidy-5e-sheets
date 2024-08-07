@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { CONSTANTS } from 'src/constants';
+  import { CONSTANTS } from 'src/constants';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import TidySwitch from 'src/components/toggle/TidySwitch.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -48,14 +48,7 @@
     title={allowEdit ? unlockTitle : lockTitle}
     bind:value={allowEdit}
     thumbIconClass="{allowEdit ? 'fas fa-unlock' : 'fas fa-lock'} fa-fw"
-    on:change={(e) =>
-      setTimeout(() =>
-        FoundryAdapter.setFlag(
-          $context.actor,
-          'allow-edit',
-          !e.detail.originalValue,
-        ),
-      )}
+    on:change={(e) => setTimeout(() => toggleLock())}
   ></TidySwitch>
 </div>
 
