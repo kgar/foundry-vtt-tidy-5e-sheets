@@ -562,7 +562,7 @@
             "alphaExplanation2": "{boldStart}NB{boldEnd}: questa migrazione non influisce sul contenuto del compendio.",
             "sectionTitle": "Migrazioni Schede Tidy V1"
         },
-        "hint": "Se eri un utente del modulo Tidy5e Sheet originale o dei fogli Alpha, facoltativamente utilizza questo menu Migrazioni per migrare le impostazioni DM e i dati del foglio Tidy.",
+        "hint": "Se eri un utente del modulo Tidy5e Sheet originale, facoltativamente utilizza questo menu Migrazioni per migrare le impostazioni DM e i dati del foglio Tidy.",
         "migrationErrorMessage": "Si è verificato un errore. Maggiori dettagli sono nella console di sviluppo.",
         "migrationCompleteMessage": "Migrazione completa.",
         "migrateDocumentFlagsButtonLabel": "Migrazione dei flag del documento",
@@ -623,6 +623,10 @@
         "SpellClassToSourceClass": {
             "sectionTitle": "Classe Incantesimo a Classe Sorgente",
             "selectionDialogTitle": "Migrazione: Classe Incantesimo a Classe Sorgente"
+        },
+        "NpcExhaustion": {
+            "sectionTitle": "Indebolimento PNG",
+            "selectionDialogTitle": "Migrazione: Indebolimento PNG a System"
         }
     },
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtri",
