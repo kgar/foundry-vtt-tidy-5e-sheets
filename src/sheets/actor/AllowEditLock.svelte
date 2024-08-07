@@ -41,14 +41,14 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="toggle-allow-edit">
+<div class="toggle-allow-edit {$$restProps.class ?? ''}">
   <TidySwitch
     --tidy-switch-scale=".875"
     --tidy-switch-thumb-transform-duration="0.15s"
     title={allowEdit ? unlockTitle : lockTitle}
-    bind:value={allowEdit}
+    value={allowEdit}
     thumbIconClass="{allowEdit ? 'fas fa-unlock' : 'fas fa-lock'} fa-fw"
-    on:change={(e) => setTimeout(() => toggleLock())}
+    on:change={() => toggleLock()}
   ></TidySwitch>
 </div>
 
