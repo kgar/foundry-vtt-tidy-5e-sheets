@@ -1,12 +1,18 @@
-<script lang="ts" generics="TItem extends Record<string, unknown>">
+<script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Listbox from './Listbox.svelte';
 
+  type TItem = $$Generic;
+
   export let items: TItem[];
   export let selectedItemIndex: number | null = null;
-  export let labelProp: string;
-  export let valueProp: string;
+  export let labelProp: keyof TItem;
+  export let valueProp: keyof TItem;
   export let listboxCssClass: string | null = null;
+
+  interface $$Slots {
+    itemTemplate: { item: TItem };
+  }
 
   function handleListboxKeydown(
     e: CustomEvent<KeyboardEvent & { currentTarget: HTMLElement }>,
@@ -182,8 +188,8 @@
     on:drop={(ev) => onDrop(ev)}
     on:listboxDrop={(ev) => onListboxDrop(ev)}
   >
-    <svelte:fragment let:item>
-      <slot {item}>
+    <svelte:fragment slot="itemTemplate" let:item>
+      <slot name="itemTemplate" {item}>
         {item[labelProp]}
       </slot>
     </svelte:fragment>

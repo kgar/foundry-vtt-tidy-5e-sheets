@@ -825,7 +825,9 @@
     "ConfigDialog": {
       "title": "Configure Section: {tabTitle}",
       "showTooltip": "Show this section",
-      "hideTooltip": "Hide this section"
+      "hideTooltip": "Hide this section",
+      "AddSectionButtonText": "Add Section",
+      "RemovePersistedSectionTooltip": "Remove Section. This will return all items in this section to their default sections."
     }
   },
   "TIDY5E.UseDefaultDialog": {

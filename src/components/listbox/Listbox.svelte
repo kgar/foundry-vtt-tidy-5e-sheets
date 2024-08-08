@@ -1,15 +1,20 @@
-<script lang="ts" generics="TItem extends Record<string, unknown>">
+<script lang="ts">
   import { flip } from 'svelte/animate';
   import { crossfade } from 'svelte/transition';
   import { createEventDispatcher } from 'svelte';
 
   const [send, receive] = crossfade({});
 
+  type TItem = $$Generic;
   export let items: TItem[];
-  export let labelProp: string;
-  export let valueProp: string;
+  export let labelProp: keyof TItem;
+  export let valueProp: keyof TItem;
   export let selectedItemIndex: number | null = null;
   export let draggable = false;
+
+  interface $$Slots {
+    itemTemplate: { item: TItem };
+  }
 
   let idRandomizer = Math.random().toString().substring(2);
 
@@ -99,7 +104,7 @@
       {#if draggable}
         <i class="drag-grip fa-solid fa-grip-lines fa-fw"></i>
       {/if}
-      <slot {item}>
+      <slot name="itemTemplate" {item}>
         {item[labelProp]}
       </slot>
     </li>

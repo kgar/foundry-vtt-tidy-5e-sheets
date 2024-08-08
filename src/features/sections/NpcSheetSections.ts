@@ -38,6 +38,7 @@ export class NpcSheetSections {
       custom: {
         section: customSectionName,
         creationItemTypes: NpcSheetSections.abilitiesItemTypes,
+        persisted: false,
       },
       show: true,
       ...customSectionOptions,

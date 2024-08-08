@@ -112,6 +112,7 @@ export type ActorInventoryTypes = Record<string, InventorySection>;
 export type CustomSectionOptions = {
   section: string;
   creationItemTypes: string[];
+  persisted: boolean;
 };
 
 export type InventorySection = {

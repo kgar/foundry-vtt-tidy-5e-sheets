@@ -27,17 +27,6 @@ import { error } from 'src/utils/logging';
 import { sortActions } from '../actions/actions';
 
 export class SheetSections {
-  static generateCustomSpellbookSections(
-    spells: Item5e[],
-    options: Partial<SpellbookSection>
-  ) {
-    const customSpellbook: Record<string, SpellbookSection> = {};
-    spells.forEach((s) =>
-      SheetSections.applySpellToSection(customSpellbook, s, options)
-    );
-    return Object.values(customSpellbook);
-  }
-
   static applySpellToSection(
     spellbook: Record<string, SpellbookSection>,
     spell: Item5e,
@@ -50,7 +39,17 @@ export class SheetSections {
       return;
     }
 
-    const section: SpellbookSection = (spellbook[customSectionName] ??= {
+    const section: SpellbookSection = (spellbook[customSectionName] ??=
+      SheetSections.createCustomSpellbookSection(customSectionName, options));
+
+    section.spells.push(spell);
+  }
+
+  static createCustomSpellbookSection(
+    customSectionName: string,
+    options?: Partial<SpellbookSection>
+  ): SpellbookSection {
+    return {
       dataset: {
         [TidyFlags.section.prop]: customSectionName,
       },
@@ -63,12 +62,11 @@ export class SheetSections {
       custom: {
         section: customSectionName,
         creationItemTypes: [CONSTANTS.ITEM_TYPE_SPELL],
+        persisted: options?.custom?.persisted === true,
       },
       show: true,
       ...options,
-    });
-
-    section.spells.push(spell);
+    };
   }
 
   static sortKeyedSections<
@@ -273,6 +271,11 @@ export class SheetSections {
 
         // Apply visibility from configuration
         section.show = sectionConfig?.[section.key]?.show !== false;
+
+        if (section.custom) {
+          section.custom.persisted =
+            sectionConfig?.[section.key]?.persisted === true;
+        }
       });
     } catch (e) {
       error('An error occurred while configuring inventory', false, e);
@@ -310,6 +313,12 @@ export class SheetSections {
         section.show =
           sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.[section.key]
             ?.show !== false;
+
+        if (section.custom) {
+          section.custom.persisted =
+            sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.[section.key]
+              ?.persisted === true;
+        }
       });
     } catch (e) {
       error('An error occurred while configuring spells', false, e);
@@ -385,6 +394,11 @@ export class SheetSections {
 
         // Apply visibility from configuration
         section.show = sectionConfig?.[section.key]?.show !== false;
+
+        if (section.custom) {
+          section.custom.persisted =
+            sectionConfig?.[section.key]?.persisted === true;
+        }
       });
     } catch (e) {
       error('An error occurred while configuring favorites', false, e);
@@ -419,6 +433,11 @@ export class SheetSections {
 
         // Apply visibility from configuration
         section.show = sectionConfig?.[section.key]?.show !== false;
+
+        if (section.custom) {
+          section.custom.persisted =
+            sectionConfig?.[section.key]?.persisted === true;
+        }
       });
     } catch (e) {
       error('An error occurred while configuring features', false, e);
@@ -442,6 +461,11 @@ export class SheetSections {
         sortActions(section, sortMode);
 
         section.show = sectionConfigs?.[section.key]?.show !== false;
+
+        if (section.custom) {
+          section.custom.persisted =
+            sectionConfigs?.[section.key]?.persisted === true;
+        }
       });
     } catch (e) {
       error('An error occurred while configuring actions', false, e);
