@@ -85,7 +85,13 @@ export class Tidy5eKgarContainerSheet
 
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
-      classes: ['tidy5e-sheet', 'sheet', 'item', 'container'],
+      classes: [
+        'tidy5e-sheet',
+        'sheet',
+        'item',
+        'container',
+        CONSTANTS.SHEET_LAYOUT_CLASSIC,
+      ],
     });
   }
 
