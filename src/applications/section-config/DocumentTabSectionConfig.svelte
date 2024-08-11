@@ -15,15 +15,15 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<section class="flex-column">
+<section class="document-tab-section-config flex-column small-gap full-height">
   <SortingListbox
     bind:items={sections}
     labelProp="label"
     valueProp="key"
     listboxCssClass="scroll-container"
-    class="flex-1"
+    class="flex-1 overflow-y-hidden"
   >
-    <svelte:fragment let:item>
+    <svelte:fragment slot="itemTemplate" let:item>
       <span
         data-section-key={item['key']}
         data-testid="section-config-item-label"
@@ -90,20 +90,3 @@
     </button>
   </div>
 </section>
-
-<style lang="scss">
-  section {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-
-    :global(> :not(button)) {
-      overflow: hidden;
-    }
-  }
-
-  .marked-as-hidden {
-    font-style: italic;
-    color: var(--t5e-tertiary-color);
-  }
-</style>

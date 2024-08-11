@@ -1,15 +1,20 @@
-<script lang="ts" generics="TItem extends Record<string, unknown>">
+<script lang="ts">
   import { flip } from 'svelte/animate';
   import { crossfade } from 'svelte/transition';
   import { createEventDispatcher } from 'svelte';
 
   const [send, receive] = crossfade({});
 
+  type TItem = $$Generic;
   export let items: TItem[];
-  export let labelProp: string;
-  export let valueProp: string;
+  export let labelProp: keyof TItem;
+  export let valueProp: keyof TItem;
   export let selectedItemIndex: number | null = null;
   export let draggable = false;
+
+  interface $$Slots {
+    itemTemplate: { item: TItem };
+  }
 
   let idRandomizer = Math.random().toString().substring(2);
 
@@ -99,48 +104,9 @@
       {#if draggable}
         <i class="drag-grip fa-solid fa-grip-lines fa-fw"></i>
       {/if}
-      <slot {item}>
+      <slot name="itemTemplate" {item}>
         {item[labelProp]}
       </slot>
     </li>
   {/each}
 </ul>
-
-<style lang="scss">
-  ul.listbox {
-    margin: 0;
-    padding: 0;
-    border: 0.0625rem solid var(--t5e-light-color);
-    overflow-y: auto;
-    max-height: inherit;
-    height: 100%;
-
-    &:focus-visible {
-      outline: 0.0625rem solid var(--t5e-primary-accent-color);
-    }
-  }
-  .listbox li {
-    list-style-type: none;
-    padding: 0.5rem;
-
-    &:has(.drag-grip) {
-      cursor: pointer;
-    }
-
-    .drag-grip {
-      font-size: 0.625rem;
-      color: var(--t5e-tertiary-color);
-    }
-  }
-  .listbox [role='option'].focused {
-    background-color: var(--t5e-faint-color);
-  }
-
-  .listbox [role='option']:hover {
-    background: var(--t5e-faintest-color);
-  }
-
-  .listbox [role='option'].focused:hover {
-    background-color: var(--t5e-faint-color);
-  }
-</style>
