@@ -17,8 +17,10 @@
   class:encumbered={$context.encumbrance.encumbered}
   title={localize('TIDY5E.Encumbrance')}
   style="
-    --encumbrance-low: {$context.encumbrance.stops.encumbered}%; 
-    --encumbrance-high: {$context.encumbrance.stops.heavilyEncumbered}%
+    --encumbrance-low: {$context.encumbrance.stops?.encumbered ??
+    (1 / 3) * 100}%; 
+    --encumbrance-high: {$context.encumbrance.stops?.heavilyEncumbered ??
+    (2 / 3) * 100}%
   "
 >
   <span class="encumbrance-bar" style="width:{$context.encumbrance.pct}%" />
