@@ -678,7 +678,11 @@
             "sectionTitle": "Classe da Magia para Origem da Magia",
             "selectionDialogTitle": "Migração: Classe da Magia para Origem da Magia"
         },
-        "Parent": "Pai"
+        "Parent": "Pai",
+        "NpcExhaustion": {
+            "sectionTitle": "",
+            "selectionDialogTitle": ""
+        }
     },
     "TIDY5E.Settings.SheetPreferences": {
         "name": "Definir Tidy como Ficha Padrão",
@@ -792,5 +796,10 @@
         "text": "Tem certeza que quer usar o padrão?"
     },
     "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+Clique para pular a rolagem e recarregar instantaneamente) ",
-    "TIDY5E.LocalizationTestKey": "Teste de Localização de Chave"
+    "TIDY5E.LocalizationTestKey": "Teste de Localização de Chave",
+    "TIDY5E.Utilities.AssignSpellsToClasses": "",
+    "TIDY5E.Utilities.Tools": "",
+    "TIDY5E.SpellSourceClassAssignments.Identifier": "",
+    "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "",
+    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": ""
 }
