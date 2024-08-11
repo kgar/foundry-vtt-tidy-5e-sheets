@@ -17,25 +17,25 @@
     "TIDY5E.StandardExhaustion4": "최대 HP 절반",
     "TIDY5E.StandardExhaustion5": "이동 속도 0",
     "TIDY5E.StandardExhaustion6": "사망",
-    "TIDY5E.OneDnDExhaustion0": null,
-    "TIDY5E.OneDnDExhaustion1": null,
-    "TIDY5E.OneDnDExhaustion2": null,
-    "TIDY5E.OneDnDExhaustion3": null,
-    "TIDY5E.OneDnDExhaustion4": null,
-    "TIDY5E.OneDnDExhaustion5": null,
-    "TIDY5E.OneDnDExhaustion6": null,
-    "TIDY5E.OneDnDExhaustion7": null,
-    "TIDY5E.OneDnDExhaustion8": null,
-    "TIDY5E.OneDnDExhaustion9": null,
-    "TIDY5E.OneDnDExhaustion10": null,
-    "TIDY5E.OneDnDExhaustion11": null,
-    "TIDY5E.StandardVehicleExhaustion0": null,
-    "TIDY5E.StandardVehicleExhaustion1": null,
-    "TIDY5E.StandardVehicleExhaustion2": null,
-    "TIDY5E.StandardVehicleExhaustion3": null,
-    "TIDY5E.StandardVehicleExhaustion4": null,
-    "TIDY5E.StandardVehicleExhaustion5": null,
-    "TIDY5E.StandardVehicleExhaustion6": null,
+    "TIDY5E.OneDnDExhaustion0": "",
+    "TIDY5E.OneDnDExhaustion1": "",
+    "TIDY5E.OneDnDExhaustion2": "",
+    "TIDY5E.OneDnDExhaustion3": "",
+    "TIDY5E.OneDnDExhaustion4": "",
+    "TIDY5E.OneDnDExhaustion5": "",
+    "TIDY5E.OneDnDExhaustion6": "",
+    "TIDY5E.OneDnDExhaustion7": "",
+    "TIDY5E.OneDnDExhaustion8": "",
+    "TIDY5E.OneDnDExhaustion9": "",
+    "TIDY5E.OneDnDExhaustion10": "",
+    "TIDY5E.OneDnDExhaustion11": "",
+    "TIDY5E.StandardVehicleExhaustion0": "",
+    "TIDY5E.StandardVehicleExhaustion1": "",
+    "TIDY5E.StandardVehicleExhaustion2": "",
+    "TIDY5E.StandardVehicleExhaustion3": "",
+    "TIDY5E.StandardVehicleExhaustion4": "",
+    "TIDY5E.StandardVehicleExhaustion5": "",
+    "TIDY5E.StandardVehicleExhaustion6": "",
     "TIDY5E.AbbrInitiative": "Ini",
     "TIDY5E.RestHint": "휴식 취하기",
     "TIDY5E.ShortRest": "짧은 휴식",
@@ -49,20 +49,20 @@
     "TIDY5E.JournalMisc": "기타사항",
     "TIDY5E.JournalEntries": "저널 항목",
     "TIDY5E.TogglePersonalityInfo": "개인적 정보 전환",
-    "TIDY5E.SheetEdit.Enable.Hint": null,
-    "TIDY5E.SheetEdit.Disable.Hint": null,
+    "TIDY5E.SheetEdit.Enable.Hint": "",
+    "TIDY5E.SheetEdit.Disable.Hint": "",
     "TIDY5E.SheetEdit.Description": "추가/삭제 버튼과 빈 섹션의 표시 여부를 전환한다.",
-    "TIDY5E.SheetLock.Unlock.Hint": null,
-    "TIDY5E.SheetLock.Lock.Hint": null,
-    "TIDY5E.SheetLock.Description": null,
+    "TIDY5E.SheetLock.Unlock.Hint": "",
+    "TIDY5E.SheetLock.Lock.Hint": "",
+    "TIDY5E.SheetLock.Description": "",
     "TIDY5E.ContextMenuActionEquip": "아이템 착용",
     "TIDY5E.ContextMenuActionUnequip": "아이템 해제",
     "TIDY5E.ContextMenuActionAttune": "아이템 조율",
     "TIDY5E.ContextMenuActionUnattune": "조율 파기",
     "TIDY5E.ContextMenuActionPrepare": "주문 준비",
     "TIDY5E.ContextMenuActionUnprepare": "준비 취소",
-    "TIDY5E.ContextMenuActionEdit": null,
-    "TIDY5E.ContextMenuActionDelete": null,
+    "TIDY5E.ContextMenuActionEdit": "",
+    "TIDY5E.ContextMenuActionDelete": "",
     "TIDY5E.EmptySection": "이 섹션은 비어 있습니다. 편집할 시트의 잠금을 해제합니다.",
     "TIDY5E.GMOnlyEdit": "GM만이 이 섹션을 편집할 수 있습니다.",
     "TIDY5E.AttunementWarning": "조율 경고: {number}개 넘는 아이템에 조율할 수 없습니다!",
@@ -70,19 +70,19 @@
     "TIDY5E.AttunementMax": "최대 조율",
     "TIDY5E.GridLayout": "격자 레이아웃",
     "TIDY5E.ListLayout": "목록 레이아웃",
-    "TIDY5E.LayoutNotSupported": null,
+    "TIDY5E.LayoutNotSupported": "",
     "TIDY5E.Encumbrance": "적재량",
     "TIDY5E.AddFavorite": "즐겨찾기에 추가",
     "TIDY5E.Favorite": "즐겨찾기",
     "TIDY5E.RemoveFavorite": "줄겨찾기에서 삭제",
-    "TIDY5E.ShowNotProficientSkills": null,
-    "TIDY5E.HideNotProficientSkills": null,
-    "TIDY5E.ShowEmptyTraits": null,
-    "TIDY5E.HideEmptyTraits": null,
+    "TIDY5E.ShowNotProficientSkills": "",
+    "TIDY5E.HideNotProficientSkills": "",
+    "TIDY5E.ShowEmptyTraits": "",
+    "TIDY5E.HideEmptyTraits": "",
     "TIDY5E.Abilities": "능력치",
     "TIDY5E.Environment": "환경",
-    "TIDY5E.Search": null,
-    "TIDY5E.SearchClear": null,
+    "TIDY5E.Search": "",
+    "TIDY5E.SearchClear": "",
     "TIDY5E.SearchHint": "찾고자 하는 것을 입력합니다.",
     "TIDY5E.ItemCardsKeyHint": "키를 눌러 카드와 상호작용",
     "TIDY5E.ItemCardsMouseHint": "마우스 휠 클릭을 통해 아이템 보기/편집",
@@ -94,25 +94,25 @@
     "TIDY5E.TokenUnlinked": "액터에 연결되지 않은 토큰",
     "TIDY5E.ItemDetailsHeadline": "메커닉/플레이버 텍스트",
     "TIDY5E.SpellClass": null,
-    "TIDY5E.Class.Artificer": null,
-    "TIDY5E.Class.Barbarian": null,
-    "TIDY5E.Class.Bard": null,
-    "TIDY5E.Class.Cleric": null,
-    "TIDY5E.Class.Custom": null,
-    "TIDY5E.Class.Druid": null,
-    "TIDY5E.Class.Fighter": null,
-    "TIDY5E.Class.Monk": null,
-    "TIDY5E.Class.Paladin": null,
-    "TIDY5E.Class.Ranger": null,
-    "TIDY5E.Class.Rogue": null,
-    "TIDY5E.Class.Sorcerer": null,
-    "TIDY5E.Class.Warlock": null,
-    "TIDY5E.Class.Wizard": null,
-    "TIDY5E.OriginSummaryConfig": null,
-    "TIDY5E.Settings.MulticlassSpellbookFilterLabel": null,
+    "TIDY5E.Class.Artificer": "",
+    "TIDY5E.Class.Barbarian": "",
+    "TIDY5E.Class.Bard": "",
+    "TIDY5E.Class.Cleric": "",
+    "TIDY5E.Class.Custom": "",
+    "TIDY5E.Class.Druid": "",
+    "TIDY5E.Class.Fighter": "",
+    "TIDY5E.Class.Monk": "",
+    "TIDY5E.Class.Paladin": "",
+    "TIDY5E.Class.Ranger": "",
+    "TIDY5E.Class.Rogue": "",
+    "TIDY5E.Class.Sorcerer": "",
+    "TIDY5E.Class.Warlock": "",
+    "TIDY5E.Class.Wizard": "",
+    "TIDY5E.OriginSummaryConfig": "",
+    "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "",
     "TIDY5E.UserSettings.Menu": {
-        "name": null,
-        "hint": null,
+        "name": "",
+        "hint": "",
         "label": "시트 설정",
         "title": "Tidy5e 시트 설정"
     },
@@ -121,24 +121,24 @@
         "header": "플레이어 캐릭터 시트"
     },
     "TIDY5E.UserSettings.TabNPCs": {
-        "tabLabel": null,
-        "header": null
+        "tabLabel": "",
+        "header": ""
     },
     "TIDY5E.UserSettings.TabVehicles": {
-        "tabLabel": null,
-        "header": null
+        "tabLabel": "",
+        "header": ""
     },
     "TIDY5E.WorldSettings.TabMisc": {
         "tabLabel": "GM 옵션"
     },
     "TIDY5E.WorldSettings.TabSheetLock": {
-        "tabLabel": null,
-        "header": null,
-        "hint": null,
-        "hint2": null,
-        "labelGeneralLocks": null,
-        "labelInventoryLocks": null,
-        "labelFeaturesLocks": null
+        "tabLabel": "",
+        "header": "",
+        "hint": "",
+        "hint2": "",
+        "labelGeneralLocks": "",
+        "labelInventoryLocks": "",
+        "labelFeaturesLocks": ""
     },
     "TIDY5E.Settings.ItemCardsForAllItems": {
         "name": "모든 레이아웃에 아이템 정보 카드 표시",
@@ -161,23 +161,23 @@
         "hint": "키(e.g.: x)를 눌러 아이템 카드와 상호작용한다. 기능 키(Ctrl, alt, etc..)를 제외한 모든 키가 될 수 있다."
     },
     "TIDY5E.Settings.DefaultTheme": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.SheetTheme": {
         "name": "Tidy5e 색상 테마.",
         "hint": "Tidy5e의 기본 밝은/어두운 색상 테마를 사용한다.",
-        "default": null,
-        "light": null,
-        "dark": null
+        "default": "",
+        "light": "",
+        "dark": ""
     },
     "TIDY5E.Settings.UseClassicControls": {
         "name": "목록 보기에서 고전적 아이템 제어 사용",
         "hint": "항상 아이템 컨트롤을 표시하고 오른쪽 클릭 메뉴를 비활성화한다. 목록 레이아웃의 PC 아이템/주문 인벤토리에만 적용된다."
     },
     "TIDY5E.Settings.ShowIconsNextToTheItemName": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.ShowTraitLabels": {
         "name": "특성 레이블 표시",
@@ -188,8 +188,8 @@
         "hint": "캐릭터 이름 아래에 플레이어 이름을 표시한다."
     },
     "TIDY5E.Settings.ShowClassList": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.InspirationAnimation": {
         "name": "고양감 표시 애니메이션 없음.",
@@ -208,12 +208,12 @@
         "hint": "활성화 시 포트레이트 위에 마우스 호버시에만 탈진 추적기를 볼 수 있다."
     },
     "TIDY5E.Settings.UseHpBar": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.UseHpOverlay": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.ToggleEmptyCharacterTraits": {
         "name": "캐릭터 특성 전환 버튼 보이기.",
@@ -236,16 +236,16 @@
         "hint": "기본적으로 비숙련 기술은 전환 버튼에 의해 숨겨진다. 숨기지 않으려면 선택한다."
     },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.ShowActiveEffectsMarker": {
         "name": "아이템에 활성화 효과 마커 보이기.",
         "hint": "아이템에 활성화 효과가 있는지 확인하려면 활성화 한다. (목록 보기 한정)"
     },
     "TIDY5E.Settings.UseContextMenu": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.ShowExpandedLimitedView": {
         "name": "제한된 시트에 대한 확장된 보기",
@@ -269,24 +269,24 @@
         "hint": "플레이어의 시트 활성화 효과 편집을 거부한다. 적용된 활성화 효과는 볼 수 있다."
     },
     "TIDY5E.Settings.UseInspiration": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.UseVehicleMotion": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.UseExhaustion": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.UseNPCRest": {
         "name": "NPC 휴식",
         "hint": "NPC 시트에 휴식 아이콘/버튼을 표시한다."
     },
     "TIDY5E.Settings.ShowNPCRestInChat": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.ShowNPCActorLinkMarker": {
         "name": "연결/비연결 NPC 표시",
@@ -297,192 +297,516 @@
         "both": "연결/비연결 토큰 강조 표시"
     },
     "TIDY5E.Settings.InitialSheetTab": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.HideDeathSavesFromPlayers": {
         "name": "죽음 내성 굴림을 플레이어로부터 숨김",
         "hint": "활성화시 GM에게만 죽음 내성 굴림과 그 결과가 표시된다."
     },
     "TIDY5E.Settings.UseCharacterEncumbranceBar": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.UseNPCEncumbranceBar": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.UseVehicleEncumbranceBar": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.UseSpellClassIcons": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.SpellClassFilterAdditionalClasses": {
         "name": null,
         "hint": null
     },
     "TIDY5E.Settings.AllowCantripsToBePrepared": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.LockMoneyChanges": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.LockExpChanges": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.LockHpMaxChanges": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.LockLevelSelector": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.LockConfigureSheet": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.LockItemQuantity": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.ColorPickerEnabled": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.ColorPickerPrimaryAccent": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerEquipped": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerHpBar": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerEquippedOutline": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerEquippedAccent": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerPrepared": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerPreparedOutline": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerPreparedAccent": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerPact": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerPactOutline": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerPactAccent": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerAtWill": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerAtWillOutline": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerAtWillAccent": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerInnate": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerInnateOutline": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerInnateAccent": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.AllowHpMaxOverride": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.Reset": {
-        "name": null,
-        "hint": null,
+        "name": "",
+        "hint": "",
         "dialogs": {
-            "title": null,
-            "content": null,
-            "confirm": null,
-            "cancel": null
+            "title": "",
+            "content": "",
+            "confirm": "",
+            "cancel": ""
         }
     },
     "TIDY5E.Settings.Debug": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
-        "name": null,
-        "hint": null,
-        "title": null
+        "name": "",
+        "hint": "",
+        "title": ""
     },
     "TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM": {
-        "name": null,
-        "hint": null,
-        "title": null
+        "name": "",
+        "hint": "",
+        "title": ""
     },
     "TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM": {
-        "name": null,
-        "hint": null,
-        "title": null
+        "name": "",
+        "hint": "",
+        "title": ""
     },
     "TIDY5E.ThemeSettings": {
         "SheetMenu": {
-            "name": null,
-            "buttonLabel": null,
-            "hint": null
+            "name": "",
+            "buttonLabel": "",
+            "hint": ""
         },
         "Sheet": {
-            "title": null,
-            "header": null,
-            "useDefaultLightColors": null,
-            "useDefaultDarkColors": null,
-            "export": null,
-            "import": null,
-            "importDropHint": null,
-            "importError": null,
-            "importSuccess": null,
-            "menuLabel": null,
-            "explanation": null
+            "title": "",
+            "header": "",
+            "useDefaultLightColors": "",
+            "useDefaultDarkColors": "",
+            "export": "",
+            "import": "",
+            "importDropHint": "",
+            "importError": "",
+            "importSuccess": "",
+            "menuLabel": "",
+            "explanation": ""
         }
     },
-    "TIDY5E.FavoriteSpellLevelLabel": null,
-    "TIDY5E.ApplyChanges": null,
-    "TIDY5E.SaveChanges": null,
-    "TIDY5E.VehicleInMotion": null,
-    "TIDY5E.VehicleMotionless": null,
-    "TIDY5E.TotalCrewCount": null,
-    "TIDY5E.ActionsPerTurn": null,
+    "TIDY5E.FavoriteSpellLevelLabel": "",
+    "TIDY5E.ApplyChanges": "",
+    "TIDY5E.SaveChanges": "",
+    "TIDY5E.VehicleInMotion": "",
+    "TIDY5E.VehicleMotionless": "",
+    "TIDY5E.TotalCrewCount": "",
+    "TIDY5E.ActionsPerTurn": "",
     "TIDY5E.SheetMenu": {
-        "label": null,
-        "themeLabel": null
+        "label": "",
+        "themeLabel": ""
     },
-    "TIDY5E.ActiveEffectsMarkerTitle": null
+    "TIDY5E.ActiveEffectsMarkerTitle": "",
+    "TIDY5E.WorldSettings.Exhaustion": {
+        "options.specific.levels.tooltip.hint": "",
+        "hint": "",
+        "AtLeastOneLevelRequiredErrorMessage": "",
+        "options.open.explanation": "",
+        "useStandardExhaustion": "",
+        "options.specific.levels.name": "",
+        "options.specific.levels.hint": "",
+        "options.specific.levels.tooltip.name": "",
+        "name": "",
+        "options.specific.text": "",
+        "useOneDnDExhaustion": "",
+        "Header": "",
+        "options.open.text": ""
+    },
+    "TIDY5E.RangedSpellAttackMod": "",
+    "TIDY5E.WorldSettings.ItemIdentificationPermission": {
+        "name": "",
+        "hint": "",
+        "options.GmOnly": "",
+        "options.GmAndOwners": ""
+    },
+    "TIDY5E.WorldSettings.TabCharacter": {
+        "tabLabel": ""
+    },
+    "TIDY5E.WorldSettings.VehicleExhaustion": {
+        "name": "",
+        "AtLeastOneLevelRequiredErrorMessage": "",
+        "Header": "",
+        "hint": ""
+    },
+    "TIDY5E.ActorRangedSpellAttackTitle": "",
+    "TIDY5E.MeleeSpellAttackMod": "",
+    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
+        "name": ""
+    },
+    "TIDY5E.WorldSettings.TabItem": {
+        "tabLabel": ""
+    },
+    "TIDY5E.Settings.Migrations": {
+        "NpcExhaustion": {
+            "sectionTitle": "",
+            "selectionDialogTitle": ""
+        },
+        "CcssToTidy": {
+            "explanation1": "",
+            "ccss": "",
+            "deleteFlags": "",
+            "overwriteTooltip": "",
+            "section": "",
+            "deleteFlagsTooltip": "",
+            "overwrite": "",
+            "sectionTitle": "",
+            "selectionDialogTitle": ""
+        },
+        "migrateConfirmMessage2": "",
+        "Notification": {
+            "Title": "",
+            "Explanation": "",
+            "DoNotShowAgain.ConfirmMessage": "",
+            "Explanation2": "",
+            "Button.DoNotShowAgain": ""
+        },
+        "Selection": {
+            "TotalSelectedLabel": "",
+            "ToMigrate": "",
+            "SelectAllNoneTooltip": ""
+        },
+        "dialogTitle": "",
+        "buttonLabel": "",
+        "migrationBeginningMessage": "",
+        "migrationErrorMessage": "",
+        "migrationCompleteMessage": "",
+        "migrateConfirmButtonNo": "",
+        "migrateConfirmMessage1": "",
+        "migrateConfirmButtonYes": "",
+        "v1": {
+            "originalHeader": "",
+            "mainExplanation1": "",
+            "originalExplanation": "",
+            "mainExplanation2": "",
+            "sectionTitle": ""
+        },
+        "name": "",
+        "OptionsHeader": "",
+        "OptionDeleteFlags.Tooltip": "",
+        "CharacterBiography": {
+            "selectionDialogTitle": "",
+            "sectionTitle": ""
+        },
+        "OptionOverwrite.Text": "",
+        "migrateConfirmTitle": "",
+        "NpcDeathSaves": {
+            "selectionDialogTitle": "",
+            "sectionTitle": ""
+        },
+        "UnlinkedExplanation": "",
+        "FavoritesToSystem": {
+            "sectionTitle": "",
+            "selectionDialogTitle": ""
+        },
+        "Parent": "",
+        "ButtonMigration.Text": "",
+        "OptionDeleteFlags.Text": "",
+        "MigrateCompendia.SelectionDialogTitle": "",
+        "MigrateCompendia.TotalEntriesLabel": "",
+        "BondsIdealsFlawsToSystem": {
+            "sectionTitle": "",
+            "selectionDialogTitle": ""
+        },
+        "SpellClassToSourceClass": {
+            "selectionDialogTitle": "",
+            "sectionTitle": ""
+        },
+        "OptionOverwrite.Tooltip": "",
+        "migrateDocumentFlagsButtonLabel": "",
+        "migrateGmSettingsButtonLabel": "",
+        "hint": "",
+        "MigrateCompendia.CompendiumLabel": "",
+        "MigrateCompendia.Title": ""
+    },
+    "TIDY5E.WorldSettings.TabExhaustion": {
+        "tabLabel": ""
+    },
+    "TIDY5E.Settings.UseTidySpellSchoolIcons": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.WorldSettings.TabVehicle": {
+        "tabLabel": ""
+    },
+    "TIDY5E.ActorRangedSpellAttackFlavorText": "",
+    "TIDY5E.AttackMod": "",
+    "TIDY5E.EmptyContainer": "",
+    "TIDY5E.WorldSettings.Menu": {
+        "hint": "",
+        "label": "",
+        "name": "",
+        "title": ""
+    },
+    "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.DefaultSheetTabs": {
+        "AtLeastOneTabRequiredErrorMessage": "",
+        "hint": "",
+        "AvailableHeader": "",
+        "name": "",
+        "SelectedHeader": ""
+    },
+    "TIDY5E.TabSelection": {
+        "UnsupportedDocumentErrorMessage": "",
+        "Title": "",
+        "MenuOptionText": "",
+        "AtLeastOneRequiredErrorMessage": "",
+        "SelectedHeader": "",
+        "AvailableHeader": "",
+        "Explanation": ""
+    },
+    "TIDY5E.LocalizationTestKey": "",
+    "TIDY5E.Settings.SheetPreferences": {
+        "hint": "",
+        "explanation": "",
+        "buttonLabel": "",
+        "name": ""
+    },
+    "TIDY5E.ReminderToBackUp": "",
+    "TIDY5E.WorldSettings.TabNpc": {
+        "tabLabel": ""
+    },
+    "TIDY5E.ActorMeleeSpellAttackFlavorText": "",
+    "TIDY5E.Actions": {
+        "SetOverrideFalse": "",
+        "OverriddenSetOverrideFalse": "",
+        "TabName": "",
+        "SetOverrideTrue": "",
+        "OverriddenSetOverrideTrue": "",
+        "ResetActionDefault": ""
+    },
+    "TIDY5E.Inventory.Weight.Tooltip": "",
+    "TIDY5E.Inventory.Weight.Text": "",
+    "TIDY5E.EnvironmentTooltip": "",
+    "TIDY5E.MaxPreparedSpellsConfig": {
+        "ExamplesHeader": "",
+        "ButtonTooltip": "",
+        "Title": "",
+        "MoreFormulas": ""
+    },
+    "TIDY5E.Listbox": {
+        "MoveAllRight": "",
+        "MoveUp": "",
+        "MoveDown": "",
+        "MoveLeft": "",
+        "MoveAllLeft": "",
+        "MoveRight": ""
+    },
+    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Utilities.ConfigureSections": "",
+    "TIDY5E.UseDefaultDialog": {
+        "text": "",
+        "title": ""
+    },
+    "TIDY5E.SpellSourceIdentifierSelectText": "",
+    "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.SpellSourceIdentifierLabelHint": "",
+    "TIDY5E.Section": {
+        "Default": "",
+        "ActionLabel": "",
+        "ActionTooltip": "",
+        "ConfigDialog": {
+            "title": "",
+            "showTooltip": "",
+            "hideTooltip": ""
+        },
+        "Label": "",
+        "Tooltip": ""
+    },
+    "TIDY5E.Utilities.Tools": "",
+    "TIDY5E.Utilities.AssignSpellsToClasses": "",
+    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "",
+    "TIDY5E.SpellSourceClassAssignments.Identifier": "",
+    "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "",
+    "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.ActionListScaleCantripDamage": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ColorPickerMagicAccent": {
+        "name": ""
+    },
+    "TIDY5E.Settings.About": {
+        "name": "",
+        "buttonLabel": "",
+        "hint": "",
+        "dialogTitle": "",
+        "LocalizationParagraph": "",
+        "BuyMeACoffeeLink": "",
+        "logoAltText": "",
+        "MaintainerParagraph": "",
+        "GithubParagraph": "",
+        "PatreonLink": "",
+        "FinancialSupportHeader": "",
+        "DiscordParagraph": "",
+        "FinancialSupportParagraph": "",
+        "KoFiLink": ""
+    },
+    "TIDY5E.Settings.ColorPickerScrollbarThumb": {
+        "name": ""
+    },
+    "TIDY5E.ItemFilters.CanUse": "",
+    "TIDY5E.ItemFilters.ClearAll": "",
+    "TIDY5E.Commands.CollapseAll": "",
+    "TIDY5E.ItemFilters.MenuTooltip.Filters": "",
+    "TIDY5E.ItemFilters.Filter.Other": "",
+    "TIDY5E.GenericErrorNotification": "",
+    "TIDY5E.RollRecharge.Hint": "",
+    "TIDY5E.Settings.ColorPickerRitualOnly": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
+        "name": ""
+    },
+    "TIDY5E.UseDefault": "",
+    "TIDY5E.ItemFilters.Category.Miscellaneous": "",
+    "TIDY5E.Commands.ShowContainerPanel": "",
+    "TIDY5E.Commands.HideContainerPanel": "",
+    "TIDY5E.Settings.ActionListIncludeConsumables": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Commands.ShowLegendaryToolbar": "",
+    "TIDY5E.Utilities.IdentifyAll": "",
+    "TIDY5E.WorldSettings.TabIcons": {
+        "tabLabel": ""
+    },
+    "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.UserSettings.TabActionsList": {
+        "tabLabel": ""
+    },
+    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.ItemFilters.CanCast": "",
+    "TIDY5E.Utilities.MarkAllAsUnidentified": "",
+    "TIDY5E.Commands.HideLegendaryToolbar": "",
+    "TIDY5E.Reset": "",
+    "TIDY5E.ActorMeleeSpellAttackTitle": "",
+    "TIDY5E.ActorSpellAttackTitle": "",
+    "TIDY5E.ActorSpellAttackFlavorText": "",
+    "TIDY5E.Commands.ExpandAll": "",
+    "TIDY5E.PortraitTitle": "",
+    "TIDY5E.ItemImageTitle": "",
+    "TIDY5E.ButtonConfirm.Text": "",
+    "TIDY5E.Settings.ColorPickerScrollbarTrack": {
+        "name": ""
+    },
+    "TIDY5E.SortMode.ActionListDefault": "",
+    "TIDY5E.Utilities.GMTools": "",
+    "TIDY5E.GMOnly.Message": "",
+    "TIDY5E.Tidy5eContainerSheet": "",
+    "TIDY5E.HitDC": "",
+    "TIDY5E.Settings.ActionList.Header": ""
 }
