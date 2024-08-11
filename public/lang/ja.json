@@ -84,7 +84,7 @@
     "TIDY5E.AttunementMax": "同調上限",
     "TIDY5E.GridLayout": "グリッド",
     "TIDY5E.ListLayout": "リスト",
-    "TIDY5E.LayoutNotSupported": null,
+    "TIDY5E.LayoutNotSupported": "",
     "TIDY5E.Encumbrance": "荷重",
     "TIDY5E.AddFavorite": "お気に入り追加",
     "TIDY5E.Favorite": "お気に入り",
@@ -229,12 +229,12 @@
         "header": "プレイヤーキャラクターシート"
     },
     "TIDY5E.UserSettings.TabNPCs": {
-        "tabLabel": null,
-        "header": null
+        "tabLabel": "",
+        "header": ""
     },
     "TIDY5E.UserSettings.TabVehicles": {
-        "tabLabel": null,
-        "header": null
+        "tabLabel": "",
+        "header": ""
     },
     "TIDY5E.UserSettings.TabActionsList": {
         "tabLabel": "アクションリスト"
@@ -319,8 +319,8 @@
         "hint": "画像の上にマウスカーソルを置いたときだけ、消耗を表示します。"
     },
     "TIDY5E.Settings.UseHpBar": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.UseHpOverlay": {
         "name": "Use Health Overlay",
@@ -351,16 +351,16 @@
         "hint": "デフォルトでは、技能が無効な場合はトグルボタンで表示されます。"
     },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.ShowActiveEffectsMarker": {
         "name": "アイテムに有効な効果を示すマーカーを表示",
         "hint": "有効な効果を持っているアイテムにマーカーを付けて、判別できるようにする場合は有効にします（リスト表示の場合のみ）。"
     },
     "TIDY5E.Settings.UseContextMenu": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.ShowExpandedLimitedView": {
         "name": "リミテッド･シートの拡大表示",
@@ -387,24 +387,24 @@
         "hint": "アイテム数量を常に表示にします。"
     },
     "TIDY5E.Settings.UseInspiration": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.UseVehicleMotion": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.UseExhaustion": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.UseNPCRest": {
         "name": "NPCの休憩",
         "hint": "NPCシートのアイコン/ボタンに残り回数を表示します。"
     },
     "TIDY5E.Settings.ShowNPCRestInChat": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.ShowNPCActorLinkMarker": {
         "name": "関連付けされたNPCをﾏｰｷﾝｸﾞ",
@@ -635,7 +635,44 @@
             "TotalSelectedLabel": "Total Selected: {total}",
             "ToMigrate": "To Migrate",
             "SelectAllNoneTooltip": "Select all or none"
-        }
+        },
+        "Parent": "",
+        "CcssToTidy": {
+            "overwrite": "",
+            "section": "",
+            "explanation1": "",
+            "ccss": "",
+            "selectionDialogTitle": "",
+            "deleteFlags": "",
+            "sectionTitle": "",
+            "overwriteTooltip": "",
+            "deleteFlagsTooltip": ""
+        },
+        "NpcDeathSaves": {
+            "sectionTitle": "",
+            "selectionDialogTitle": ""
+        },
+        "FavoritesToSystem": {
+            "sectionTitle": "",
+            "selectionDialogTitle": ""
+        },
+        "UnlinkedExplanation": "",
+        "BondsIdealsFlawsToSystem": {
+            "sectionTitle": "",
+            "selectionDialogTitle": ""
+        },
+        "SpellClassToSourceClass": {
+            "selectionDialogTitle": "",
+            "sectionTitle": ""
+        },
+        "NpcExhaustion": {
+            "sectionTitle": "",
+            "selectionDialogTitle": ""
+        },
+        "MigrateCompendia.TotalEntriesLabel": "",
+        "MigrateCompendia.SelectionDialogTitle": "",
+        "MigrateCompendia.CompendiumLabel": "",
+        "MigrateCompendia.Title": ""
     },
     "TIDY5E.Settings.About": {
         "name": "About",
@@ -727,5 +764,59 @@
     "TIDY5E.ReminderToBackUp": "ワールドのバックアップを忘れないでください！",
     "TIDY5E.Utilities.GMTools": "GMツール",
     "TIDY5E.Utilities.IdentifyAll": "すべてのアイテムを識別",
-    "TIDY5E.Utilities.MarkAllAsUnidentified": "識別されていないアイテムをマーク"
+    "TIDY5E.Utilities.MarkAllAsUnidentified": "識別されていないアイテムをマーク",
+    "TIDY5E.SpellSourceIdentifierLabelHint": "",
+    "TIDY5E.SpellSourceIdentifierSelectText": "",
+    "TIDY5E.EmptyContainer": "",
+    "TIDY5E.Settings.UseTidySpellSchoolIcons": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Section": {
+        "ConfigDialog": {
+            "showTooltip": "",
+            "hideTooltip": "",
+            "title": ""
+        },
+        "Tooltip": "",
+        "ActionTooltip": "",
+        "Label": "",
+        "ActionLabel": "",
+        "Default": ""
+    },
+    "TIDY5E.SpellSourceClassAssignments.Identifier": "",
+    "TIDY5E.Utilities.Tools": "",
+    "TIDY5E.Utilities.AssignSpellsToClasses": "",
+    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "",
+    "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "",
+    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnly": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
+        "name": ""
+    },
+    "TIDY5E.Settings.SheetPreferences": {
+        "name": "",
+        "hint": "",
+        "buttonLabel": "",
+        "explanation": ""
+    },
+    "TIDY5E.UseDefaultDialog": {
+        "title": "",
+        "text": ""
+    },
+    "TIDY5E.RollRecharge.Hint": "",
+    "TIDY5E.LocalizationTestKey": "",
+    "TIDY5E.WorldSettings.TabIcons": {
+        "tabLabel": ""
+    },
+    "TIDY5E.Utilities.ConfigureSections": "",
+    "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.GenericErrorNotification": ""
 }
