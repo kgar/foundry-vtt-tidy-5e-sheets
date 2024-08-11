@@ -331,15 +331,33 @@ export class Tidy5eKgarContainerSheet
     }
   }
 
+  /**
+   * A boolean which gates double-rendering and prevents a second
+   * colliding render from triggering an infamous
+   * "One of original or other are not Objects!" error.
+   */
+  private tidyRendering = false;
+
+  render(...args: unknown[]) {
+    debug('Sheet render begin');
+    this.tidyRendering = true;
+    super.render(...args);
+  }
+
   private _renderMutex = new AsyncMutex();
   async _render(force?: boolean, options = {}) {
     await this._renderMutex.lock(async () => {
-      if (this.options.token) {
+      const doubleRenderDetected =
+        this.options.token && this.tidyRendering === false;
+
+      if (doubleRenderDetected) {
         return;
       }
 
       await this._renderSheet(force, options);
     });
+    this.tidyRendering = false;
+    debug('Sheet render end');
   }
 
   private async _renderSheet(force?: boolean, options = {}) {
