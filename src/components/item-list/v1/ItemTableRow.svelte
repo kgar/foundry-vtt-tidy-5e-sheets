@@ -137,11 +137,7 @@
       }
 
       if (item && showSummary) {
-        item
-          .getChatData({ secrets: item.actor.isOwner })
-          .then((data: ItemChatData) => {
-            chatData = data;
-          });
+        chatData = await item.getChatData({ secrets: item.actor.isOwner });
       } else if (item && !showSummary && chatData) {
         // Reset chat data for non-expanded, hydrated chatData
         // so it rehydrates on next open
