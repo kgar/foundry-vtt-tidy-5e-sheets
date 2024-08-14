@@ -717,7 +717,7 @@
             "sectionTitle": "Exaustão de PnJ",
             "selectionDialogTitle": "Migração: Exaustão de PnJ para o sistema"
         },
-        "Parent": "Pai",
+        "Parent": "Pai"
     },
     "TIDY5E.Settings.SheetPreferences": {
         "name": "Definir Tidy como Ficha Padrão",
