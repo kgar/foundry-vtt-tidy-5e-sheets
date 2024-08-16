@@ -53,9 +53,7 @@ export function simplifyFormula(
     const simplifiedTerms = roll.terms.map((t: any) =>
       t.isIntermediate
         ? new NumericTerm({
-            number: FoundryAdapter.isFoundryV12OrHigher()
-              ? t.evaluateSync().total
-              : t.evaluate({ async: false }).total,
+            number: t.evaluate().total,
             options: t.options,
           })
         : t
