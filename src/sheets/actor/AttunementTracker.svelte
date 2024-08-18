@@ -2,6 +2,7 @@
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import AttunementSummary from 'src/tooltips/AttunementSummary.svelte';
   import type { Item5e } from 'src/types/item.types';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -16,20 +17,7 @@
     .filter((i) => i.system.attuned)
     .sort((a, b) => a.name.localeCompare(b.name));
 
-  function getAttunementRow(item: Item5e) {
-    return `<li>${item.name}</li>`;
-  }
-
-  function getAttunementSummary() {
-    const rows = attunedItems.map(getAttunementRow).join('');
-    return `
-        <div class="attunement-summary-tooltip">
-            <h3>Attuned Items</h3>
-            <hr />
-            <ul>${rows}</ul>
-        </div>
-    `;
-  }
+  let attunementSummaryTooltip: AttunementSummary;
 
   function showAttunementSummary(
     event: MouseEvent & { currentTarget: EventTarget & HTMLDivElement },
@@ -39,11 +27,15 @@
     }
 
     game.tooltip.activate(event?.currentTarget, {
-      text: getAttunementSummary(),
+      text: attunementSummaryTooltip.getMarkup(),
       cssClass: 'tidy5e-sheet',
     });
   }
 </script>
+
+<div class="hidden">
+  <AttunementSummary bind:this={attunementSummaryTooltip} {attunedItems} />
+</div>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
