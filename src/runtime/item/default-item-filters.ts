@@ -193,7 +193,7 @@ export function getAttunementFilters(): ItemFilter[] {
       name: 'attuned',
       predicate: (item) =>
         !FoundryAdapter.concealDetails(item) &&
-        !!item.system.attunement &&
+        !!CONFIG.DND5E.attunementTypes[item.system.attunement] &&
         item.system.attuned,
       text: 'DND5E.AttunementAttuned',
     },

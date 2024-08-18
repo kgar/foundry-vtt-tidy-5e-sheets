@@ -13,6 +13,7 @@
     "TIDY5E.ShowTokenArt": "Mostrar Token",
     "TIDY5E.ShowItemImage": "Clique Dir.: Mostrar Arte do Item",
     "TIDY5E.ShowItemArt": "Mostrar Imagem",
+
     "TIDY5E.StandardExhaustion0": "Nenhum efeito negativo",
     "TIDY5E.StandardExhaustion1": "Desvantagem em Testes de Atributo",
     "TIDY5E.StandardExhaustion2": "Deslocamento reduzido pela metade",
@@ -20,6 +21,7 @@
     "TIDY5E.StandardExhaustion4": "Pontos de vida máximos reduzidos pela metade",
     "TIDY5E.StandardExhaustion5": "Deslocamento reduzido a 0",
     "TIDY5E.StandardExhaustion6": "Morte",
+
     "TIDY5E.OneDnDExhaustion0": "Sem efeitos negativos",
     "TIDY5E.OneDnDExhaustion1": "-1 em todos os testes de D20 e CD de Salvaguarda de Magias",
     "TIDY5E.OneDnDExhaustion2": "-2 em todos os testes de D20 e CD de Salvaguarda de Magias",
@@ -32,6 +34,7 @@
     "TIDY5E.OneDnDExhaustion9": "-9 em todos os testes de D20 e CD de Salvaguarda de Magias",
     "TIDY5E.OneDnDExhaustion10": "-10 em todos os testes de D20 e CD de Salvaguarda de Magias",
     "TIDY5E.OneDnDExhaustion11": "Morte",
+
     "TIDY5E.StandardVehicleExhaustion0": "Sem efeitos negativos",
     "TIDY5E.StandardVehicleExhaustion1": "Desvantagem em Testes de Atributo",
     "TIDY5E.StandardVehicleExhaustion2": "Deslocamento reduzido pela metade",
@@ -39,12 +42,16 @@
     "TIDY5E.StandardVehicleExhaustion4": "Pontos de vida máximos reduzidos pela metade",
     "TIDY5E.StandardVehicleExhaustion5": "Deslocamento reduzido a 0",
     "TIDY5E.StandardVehicleExhaustion6": "Pontos de vida caem para 0 e o veículo quebra",
+
     "TIDY5E.AbbrInitiative": "Ini",
+
     "TIDY5E.RestHint": "Descansar",
     "TIDY5E.ShortRest": "Descanso Curto",
     "TIDY5E.LongRest": "Descanso Longo",
     "TIDY5E.HitDiceRollAverage": "Clique Direito: Aplicar Média",
+
     "TIDY5E.JournalTabName": "Diário",
+
     "TIDY5E.Actions": {
         "TabName": "Ações",
         "OverriddenSetOverrideFalse": "Remover da Lista de Ações (Shift+Clique para limpar a substituição)",
@@ -53,22 +60,29 @@
         "SetOverrideTrue": "Adicionar à Lista de Ações",
         "ResetActionDefault": "Redefinir Ação Padrão"
     },
+
     "TIDY5E.HitDC": "Acerto/CD",
+
     "TIDY5E.RestoreOnRest": "Restaurar em Descanso",
+
     "TIDY5E.JournalPersonsOfInterest": "Pessoas de Interesse",
     "TIDY5E.JournalLocationsOfInterest": "Locais de Interesse",
     "TIDY5E.JournalQuests": "Missões",
     "TIDY5E.JournalMisc": "Diversos",
     "TIDY5E.JournalEntries": "Entradas de Diário",
     "TIDY5E.TogglePersonalityInfo": "Alternar Informações de Personalidade",
+
     "TIDY5E.SheetEdit.Enable.Hint": "Ativar Edição - {description}",
     "TIDY5E.SheetEdit.Disable.Hint": "Desativar Edição - {description}",
     "TIDY5E.SheetEdit.Description": "Alternar visibilidade dos botões adicionar/apagar e seções vazias",
+
     "TIDY5E.SheetLock.Unlock.Hint": "Destrancar - {description}",
     "TIDY5E.SheetLock.Lock.Hint": "Trancar - {description}",
     "TIDY5E.SheetLock.Description": "Alternar bloqueio para campos sensíveis que não devem ser alterados frequentemente",
+
     "TIDY5E.Inventory.Weight.Tooltip": "Peso: {weight} {weightUnit}",
     "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
+
     "TIDY5E.ContextMenuActionEquip": "Equipar",
     "TIDY5E.ContextMenuActionUnequip": "Desequipar",
     "TIDY5E.ContextMenuActionAttune": "Sintonizar",
@@ -77,31 +91,42 @@
     "TIDY5E.ContextMenuActionUnprepare": "Despreparar",
     "TIDY5E.ContextMenuActionEdit": "Editar",
     "TIDY5E.ContextMenuActionDelete": "Apagar",
+
     "TIDY5E.EmptyContainer": "Este recipiente está vazio.",
     "TIDY5E.EmptySection": "Essa sessão está vazia. Desbloqueie a ficha para editar.",
     "TIDY5E.GMOnlyEdit": "Somente o MJ consegue editar esta sessão.",
+
     "TIDY5E.AttunementWarning": "Sintonização: Não é possível se sintonizar com mais de {number} itens.",
     "TIDY5E.AttunementItems": "Itens Sintonizados",
     "TIDY5E.AttunementMax": "Máximo de Sintonização",
+
     "TIDY5E.GridLayout": "Exibir em Grade",
     "TIDY5E.ListLayout": "Exibir em Lista",
     "TIDY5E.LayoutNotSupported": "Modo de exibição não suportado",
+
     "TIDY5E.Encumbrance": "Capacidade de Carga",
+
     "TIDY5E.AddFavorite": "Adicionar aos Favoritos",
     "TIDY5E.Favorite": "Favorito",
     "TIDY5E.RemoveFavorite": "Remover dos Favoritos",
+
     "TIDY5E.ShowNotProficientSkills": "Mostrar Não Proficiente",
     "TIDY5E.HideNotProficientSkills": "Ocultar Não Proficiente",
     "TIDY5E.ShowEmptyTraits": "Mostrar/Editar Traços Vazios",
     "TIDY5E.HideEmptyTraits": "Ocultar Traços Vazios",
+
     "TIDY5E.Abilities": "Atributos",
+
     "TIDY5E.Environment": "Ambiente",
     "TIDY5E.EnvironmentTooltip": "Ambiente: {environment}",
+
     "TIDY5E.Search": "Pesquisa",
     "TIDY5E.SearchClear": "Limpar Pesquisa",
     "TIDY5E.SearchHint": "Digite para exibir os resultados da busca",
+
     "TIDY5E.ItemCardsKeyHint": "Pressione e segure a tecla para interagir com o cartão",
     "TIDY5E.ItemCardsMouseHint": "Clique com o botão do meio do mouse para visualizar/editar o item",
+
     "TIDY5E.AbbrMod": "Mod",
     "TIDY5E.AbbrSavingThrow": "Salvaguarda",
     "TIDY5E.AttackMod": "Mod. de Ataque",
@@ -115,11 +140,15 @@
     "TIDY5E.MeleeSpellAttackMod": "Mod. de Ataque Mágico Corpo a Corpo",
     "TIDY5E.RangedSpellAttackMod": "Mod. de Ataque Mágico à Distância",
     "TIDY5E.PreparedSpells": "Magias Preparadas",
+
     "TIDY5E.TokenLinked": "Token vinculado a ator",
     "TIDY5E.TokenUnlinked": "Token não vinculado a ator",
+
     "TIDY5E.ItemDetailsHeadline": "Mecânicas/Texto Opcional",
+
     "TIDY5E.SpellSourceIdentifierSelectText": "Identificador de Classe: {identifier}",
     "TIDY5E.SpellSourceIdentifierLabelHint": "O ator que possui esta magia não possui a classe de origem especificada aqui.",
+
     "TIDY5E.Class.Artificer": "Artífice",
     "TIDY5E.Class.Barbarian": "Bárbaro",
     "TIDY5E.Class.Bard": "Bardo",
@@ -134,13 +163,16 @@
     "TIDY5E.Class.Sorcerer": "Feiticeiro",
     "TIDY5E.Class.Warlock": "Bruxo",
     "TIDY5E.Class.Wizard": "Mago",
+
     "TIDY5E.OriginSummaryConfig": "Configuração Resumida de Origem: {actorName}",
+
     "TIDY5E.MaxPreparedSpellsConfig": {
         "Title": "Configuração do Máximo de Magias Preparadas: {actorName}",
         "ExamplesHeader": "Exemplo de Fórmulas",
         "ButtonTooltip": "Configurar Máximo de Magias Preparadas",
         "MoreFormulas": "Mais Fórmulas"
     },
+
     "TIDY5E.TabSelection": {
         "Title": "Seleção de Aba: {documentName}",
         "MenuOptionText": "Seleção de Aba",
@@ -150,7 +182,9 @@
         "AtLeastOneRequiredErrorMessage": "É necessário ter pelo menos uma aba.",
         "Explanation": "Qualquer aba que o usuário ou ficha estiver configurado para não exibir (exemplo: desativar o Diário nas configurações), não aparecerá na planilha, mesmo que selecionada."
     },
+
     "TIDY5E.ButtonConfirm.Text": "Confirmar",
+
     "TIDY5E.Listbox": {
         "MoveUp": "Mover para cima (Alt + tecla de seta para cima)",
         "MoveDown": "Mover para baixo (Alt + tecla de seta para baixo)",
@@ -159,6 +193,7 @@
         "MoveAllLeft": "Mover tudo para esquerda",
         "MoveAllRight": "Mover tudo para direita"
     },
+
     "TIDY5E.WorldSettings.TabCharacter": {
         "tabLabel": "Personagem"
     },
@@ -220,13 +255,16 @@
     "TIDY5E.WorldSettings.TabIcons": {
         "tabLabel": "Ícones"
     },
+
     "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Filtro de Grimório Multiclasse",
+
     "TIDY5E.WorldSettings.Menu": {
         "name": "Configurações do Mundo",
         "hint": "Ajuste as configurações de mundo para personalizar a experiência do Tidy 5e Sheets. Essas configurações são salvas nesse mundo do Foundry e se aplicam a todo o conteúdo relevante ao Tidy 5e Sheets.",
         "label": "Configurações do Mundo",
         "title": "Configurações do Mundo (Apenas MJ)"
     },
+
     "TIDY5E.UserSettings.Menu": {
         "name": "Configurações de Usuário",
         "hint": "Personalize sua própria versão do Tidy 5e Sheets. Essas configurações são salvas em seu navegador e se aplicam às suas fichas.",
@@ -619,10 +657,7 @@
             "mainExplanation1": "Não é necessário migrar os dados para o novo módulo Tidy 5e Sheets para usá-lo. Na pior das hipóteses, se você for um usuário original do Tidy5e Sheet e pular as migrações, precisará re-aplicar as configurações de acordo com o seu gosto.",
             "mainExplanation2": "{boldStart}Nota{boldEnd}: Configurações do cliente não fazem parte dessa migração. Não houve mudanças suficientes na forma como as configurações do cliente funcionam no Tidy, portanto, é recomendável dar uma nova olhada nas configurações do cliente.",
             "originalHeader": "Ficha Tidy5e Original",
-            "originalExplanation": "Migrar as configurações do MJ e as flags de dados da ficha Tidy da ficha Tidy5e original. A maioria das diferenças nos dados vem das configurações do MJ. Se você migrar suas configurações e achar que uma configuração não é do seu agrado, basta alterar as configurações no menu de configurações.",
-            "alphaHeader": "Fichas Tidy 5e Alphas",
-            "alphaExplanation1": "Migrar configurações de MJ e as flags de dados da ficha Tidy5e das fichas Tidy 5e Alpha. A maioria das diferenças nos dados vem dos sinalizadores de dados da ficha. A migração dos sinalizadores do Alfa tem como alvo os atores de nível superior, os itens dos atores de nível superior e os itens de nível superior. Isso trará dados biográficos, favoritos e outros sinalizadores de dados Alfa específicos da planilha.",
-            "alphaExplanation2": "{boldStart}Observação{boldEnd}: essa migração não afeta o conteúdo do compêndio."
+            "originalExplanation": "Migrar as configurações do MJ e as flags de dados da ficha Tidy da ficha Tidy5e original. A maioria das diferenças nos dados vem das configurações do MJ. Se você migrar suas configurações e achar que uma configuração não é do seu agrado, basta alterar as configurações no menu de configurações."
         },
         "Notification": {
             "Title": "Tidy 5e Sheets: Migrações Disponíveis",
@@ -678,11 +713,11 @@
             "sectionTitle": "Classe da Magia para Origem da Magia",
             "selectionDialogTitle": "Migração: Classe da Magia para Origem da Magia"
         },
-        "Parent": "Pai",
         "NpcExhaustion": {
-            "sectionTitle": "",
-            "selectionDialogTitle": ""
-        }
+            "sectionTitle": "Exaustão de PnJ",
+            "selectionDialogTitle": "Migração: Exaustão de PnJ para o sistema"
+        },
+        "Parent": "Pai"
     },
     "TIDY5E.Settings.SheetPreferences": {
         "name": "Definir Tidy como Ficha Padrão",
@@ -774,8 +809,10 @@
     "TIDY5E.ItemFilters.Filter.Other": "Outro",
     "TIDY5E.GMOnly.Message": "Apenas MJ: {message}",
     "TIDY5E.ReminderToBackUp": "Lembre-se sempre de fazer backup do seu mundo.",
+    "TIDY5E.Utilities.Tools": "Ferramentas",
     "TIDY5E.Utilities.GMTools": "Ferramentas de MJ",
     "TIDY5E.Utilities.IdentifyAll": "Identifique Todos os Itens",
+    "TIDY5E.Utilities.AssignSpellsToClasses": "Atribuir Magias às Classes",
     "TIDY5E.Utilities.MarkAllAsUnidentified": "Marcar Todos os Itens como Não Identificados",
     "TIDY5E.GenericErrorNotification": "Ocorreu um erro ao executar esta ação. Veja o console do devtools para mais detalhes.",
     "TIDY5E.Utilities.ConfigureSections": "Configurar Sessões",
@@ -796,10 +833,8 @@
         "text": "Tem certeza que quer usar o padrão?"
     },
     "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+Clique para pular a rolagem e recarregar instantaneamente) ",
-    "TIDY5E.LocalizationTestKey": "Teste de Localização de Chave",
-    "TIDY5E.Utilities.AssignSpellsToClasses": "",
-    "TIDY5E.Utilities.Tools": "",
-    "TIDY5E.SpellSourceClassAssignments.Identifier": "",
-    "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "",
-    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": ""
+    "TIDY5E.SpellSourceClassAssignments.Identifier": "Identificador de Classe de Origem",
+    "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "O identificador da classe de origem da magia aparece aqui. Para atribuir um identificador que o personagem não possui, insira o identificador de classe neste campo de texto.",
+    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Exibir Apenas Não-Atribuídos",
+    "TIDY5E.LocalizationTestKey": "Teste de Localização de Chave"
 }
