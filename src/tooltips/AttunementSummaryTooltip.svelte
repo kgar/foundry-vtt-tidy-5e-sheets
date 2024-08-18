@@ -19,10 +19,7 @@
   <ul>
     {#each attunedItems as item}
       <li class="flex-row extra-small-gap align-items-center">
-        <div class="image" style="background-image: url('{item.img}')">
-          <!-- For max-content widths, some kind of content is required within this background-image div. Otherwise, the layout breaks. -->
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        </div>
+        <div class="image" style="background-image: url('{item.img}')"></div>
         <span>{item.name}</span>
       </li>
     {/each}
