@@ -209,7 +209,10 @@ function getItemContextOptions(item: Item5e) {
   }
 
   // Toggle Attunement State
-  if (!!item.system.attunement && !FoundryAdapter.concealDetails(item)) {
+  if (
+    !!CONFIG.DND5E.attunementTypes[item.system.attunement] &&
+    !FoundryAdapter.concealDetails(item)
+  ) {
     options.push({
       name: item.system.attuned
         ? 'TIDY5E.ContextMenuActionUnattune'

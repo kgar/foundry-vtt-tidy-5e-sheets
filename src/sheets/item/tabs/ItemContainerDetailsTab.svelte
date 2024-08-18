@@ -67,7 +67,8 @@
       document={$context.item}
       field="system.attuned"
       checked={$context.system.attuned}
-      disabled={!$context.editable || !$context.system.attunement}
+      disabled={!$context.editable ||
+        !$context.config.attunementTypes[$context.system.attunement]}
       title={localize('DND5E.AttunementAttuned')}
     ></Checkbox>
     <Select
