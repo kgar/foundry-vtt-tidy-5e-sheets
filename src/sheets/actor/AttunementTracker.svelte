@@ -2,8 +2,7 @@
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import AttunementSummary from 'src/tooltips/AttunementSummary.svelte';
-  import type { Item5e } from 'src/types/item.types';
+  import AttunementSummaryTooltip from 'src/tooltips/AttunementSummaryTooltip.svelte';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -17,9 +16,9 @@
     .filter((i) => i.system.attuned)
     .sort((a, b) => a.name.localeCompare(b.name));
 
-  let attunementSummaryTooltip: AttunementSummary;
+  let attunementSummaryTooltip: AttunementSummaryTooltip;
 
-  function showAttunementSummary(
+  function showAttunementSummaryTooltip(
     event: MouseEvent & { currentTarget: EventTarget & HTMLDivElement },
   ): any {
     if (!attunedItems.length) {
@@ -34,7 +33,10 @@
 </script>
 
 <div class="hidden">
-  <AttunementSummary bind:this={attunementSummaryTooltip} {attunedItems} />
+  <AttunementSummaryTooltip
+    bind:this={attunementSummaryTooltip}
+    {attunedItems}
+  />
 </div>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -44,7 +46,7 @@
   class:overattuned={$context.actor.system.attributes.attunement.value >
     $context.actor.system.attributes.attunement.max}
   data-tooltip-direction="UP"
-  on:mouseover={(ev) => showAttunementSummary(ev)}
+  on:mouseover={(ev) => showAttunementSummaryTooltip(ev)}
 >
   <i class="attunement-icon fas fa-sun" />
   <span class="attuned-items-current" title={localize('TIDY5E.AttunementItems')}

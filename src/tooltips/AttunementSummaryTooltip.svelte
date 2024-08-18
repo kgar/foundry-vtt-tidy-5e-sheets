@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Item5e } from 'src/types/item.types';
 
   export let attunedItems: Item5e[] = [];
@@ -8,10 +9,12 @@
   export function getMarkup() {
     return tooltip.outerHTML;
   }
+
+  const localize = FoundryAdapter.localize;
 </script>
 
 <div bind:this={tooltip} class="attunement-summary-tooltip">
-  <h3>Attuned Items</h3>
+  <h3>{localize('TIDY5E.AttunementItems')}</h3>
   <hr />
   <ul>
     {#each attunedItems as item}
