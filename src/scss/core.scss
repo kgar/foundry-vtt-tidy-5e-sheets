@@ -216,6 +216,10 @@
   @import '../components/pips/pips.scss';
   @import '../components/listbox/listbox.scss';
 
+  // Components - Actor-specific
+  @import '../sheets/actor/AttunementTracker.scss';
+  @import '../sheets/actor/Currency.scss';
+
   // Tooltips
   @import '../tooltips/tooltips.scss';
 

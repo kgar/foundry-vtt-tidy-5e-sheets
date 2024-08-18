@@ -136,7 +136,7 @@
 
 <TabFooter mode="vertical">
   <div class="attunement-and-currency">
-    <AttunementTracker />
+    <AttunementTracker class="align-self-center" />
     <Currency document={$context.actor} />
   </div>
 
