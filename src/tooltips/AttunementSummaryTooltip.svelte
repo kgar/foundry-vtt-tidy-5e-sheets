@@ -19,8 +19,8 @@
   <ul>
     {#each attunedItems as item}
       <li class="flex-row extra-small-gap align-items-center">
-        <div class="image" style="background-image: url('{item.img}')"></div>
-        <span>{item.name}</span>
+        <div class="item-image" style="background-image: url('{item.img}')"></div>
+        <div class="item-name truncate">{item.name}</div>
       </li>
     {/each}
   </ul>
