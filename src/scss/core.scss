@@ -216,6 +216,9 @@
   @import '../components/pips/pips.scss';
   @import '../components/listbox/listbox.scss';
 
+  // Tooltips
+  @import '../tooltips/tooltips.scss';
+
   &.sheet form,
   &.application-shell {
     @import './partials/buttons';
@@ -392,27 +395,6 @@
 
   .semibold {
     font-weight: 500;
-  }
-
-  /* Tooltips */
-  // TODO: Colocate this with the tooltips folder, as one SCSS file for now, and import into core.
-  .attunement-summary-tooltip {
-    ul {
-      margin: 0;
-      padding: 0;
-
-      li + li {
-        margin-top: 0.5rem;
-      }
-    }
-
-    .image {
-      align-self: center;
-      flex: 0 0 var(--t5e-image-size-override, 1.5rem);
-      height: var(--t5e-image-size-override, 1.5rem);
-      background-size: cover;
-      background-position: 50% 0;
-    }
   }
 }
 
