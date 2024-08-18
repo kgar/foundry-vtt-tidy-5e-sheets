@@ -10,17 +10,12 @@
 
   export let chatData: ItemChatData;
   export let item: Item5e;
-  export let useTransition: boolean;
 
   $: itemSummaryCommands = ItemSummaryRuntime.getItemSummaryCommands(item);
   $: concealDetails = FoundryAdapter.concealDetails(item);
 </script>
 
 <div
-  transition:slide={{
-    duration: useTransition ? 200 : 0,
-    easing: quadInOut,
-  }}
   class="item-summary"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_SUMMARY}
 >
