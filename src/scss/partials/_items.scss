@@ -427,16 +427,21 @@ input[type='checkbox'] {
     }
   }
 
+  // Account for injected handlebars content when applying margin-top via combinators
+  .form-group + .form-group,
+  .form-group + [style*='display: contents'] > .form-group,
+  [style*='display: contents']:has(> .form-group) + .form-group,
+  .form-group + [data-tidy-render-scheme='handlebars'] > .form-group,
+  [data-tidy-render-scheme='handlebars']:has(> .form-group) + .form-group {
+    margin-top: 0.125rem;
+  }
+
   .form-group {
     margin: 0;
 
     padding: 0.1875rem;
     background: var(--t5e-faintest-color);
     border-radius: 0.3125rem;
-
-    & + .form-group {
-      margin-top: 0.125rem;
-    }
 
     .form-fields {
       justify-content: flex-start;
