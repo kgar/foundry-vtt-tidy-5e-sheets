@@ -216,18 +216,23 @@
   @import '../components/pips/pips.scss';
   @import '../components/listbox/listbox.scss';
 
-  // Components - Actor-specific
-  @import '../sheets/actor/AttunementTracker.scss';
-  @import '../sheets/actor/Currency.scss';
-  @import '../sheets/actor/SheetEditModeToggle.scss';
-
   // Tooltips
   @import '../tooltips/tooltips.scss';
 
+  // TODO: Remove these layers of specificity and get everything working in concert better. These should come before all component styles and have the lowest acceptable specificity.
   &.sheet form,
   &.application-shell {
     @import './partials/buttons';
     @import './partials/checkboxes';
+  }
+  
+  // TODO: Remove these layers of specificity and get everything working in concert better. These should come after partial utility styles and general component styles. They can have a high level of specificity as needed.
+  &.sheet form {
+    // Components - Actor-specific
+    @import '../sheets/actor/AttributeBlock.scss';
+    @import '../sheets/actor/AttunementTracker.scss';
+    @import '../sheets/actor/Currency.scss';
+    @import '../sheets/actor/SheetEditModeToggle.scss';
   }
 
   // TODO: Make a whole suite of classes in a dedicated partial that can set colors, backgrounds, background-colors, etc., for the theme colors.
