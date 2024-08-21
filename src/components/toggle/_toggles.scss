@@ -67,7 +67,7 @@
     position: relative;
     background-color: var(--t5e-faint-color);
     border: none;
-    transition: background-color 0.25s ease;
+    transition: background-color 0.5s ease;
     border-radius: calc(1.375rem * var(--tidy-switch-scale-internal));
 
     &::before {
@@ -85,7 +85,12 @@
     .thumb-icon {
       font-size: calc(0.75rem * var(--tidy-switch-scale-internal));
       position: absolute;
-      color: var(--t5e-primary-accent-color);
+      color: rgba(
+        0,
+        0,
+        0,
+        0.75
+      ); // TODO: Theme color? Or at least top-level variable that can be customized?
       display: flex;
       justify-content: center;
       align-items: center;
