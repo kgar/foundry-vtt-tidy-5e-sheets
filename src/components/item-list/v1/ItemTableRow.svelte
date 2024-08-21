@@ -19,6 +19,7 @@
   import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
   import { TidyHooks } from 'src/foundry/TidyHooks';
+  import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
 
   export let item: Item5e | null = null;
   export let effect: ActiveEffect5e | ActiveEffectContext | null = null;
@@ -30,6 +31,12 @@
   export let getDragData: (() => any) | null = null;
 
   $: draggable = item ?? effect;
+
+  const emptyChatData: ItemChatData = {
+    description: { value: '' },
+    properties: [],
+    unidentified: { description: '' },
+  };
 
   const expandedItemData = getContext<ExpandedItemData>(
     CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA,
@@ -51,7 +58,6 @@
   >(CONSTANTS.SVELTE_CONTEXT.CARD);
   let showSummary = false;
   let chatData: ItemChatData | undefined;
-  let useTransition: boolean = false;
 
   async function toggleSummary(actor: Actor5e) {
     if (!item) {
@@ -109,11 +115,8 @@
 
   function restoreItemSummaryIfExpanded() {
     if (!item) {
-      useTransition = true;
       return;
     }
-
-    useTransition = false;
 
     const isExpandedAtThisLocation = expandedItems?.get(item.id)?.has(location);
 
@@ -121,10 +124,6 @@
       chatData = expandedItemData.get(item.id);
       showSummary = true;
     }
-
-    setTimeout(() => {
-      useTransition = true;
-    });
   }
 
   onMount(() => {
@@ -138,11 +137,7 @@
       }
 
       if (item && showSummary) {
-        item
-          .getChatData({ secrets: item.actor.isOwner })
-          .then((data: ItemChatData) => {
-            chatData = data;
-          });
+        chatData = await item.getChatData({ secrets: item.actor.isOwner });
       } else if (item && !showSummary && chatData) {
         // Reset chat data for non-expanded, hydrated chatData
         // so it rehydrates on next open
@@ -177,9 +172,9 @@
   <div class="item-table-row {cssClass ?? ''}">
     <slot {toggleSummary} />
   </div>
-  {#if showSummary && chatData}
-    <ItemSummary {chatData} {useTransition} {item} />
-  {/if}
+  <ExpandableContainer expanded={showSummary}>
+    <ItemSummary chatData={chatData ?? emptyChatData} {item} />
+  </ExpandableContainer>
 </div>
 
 <style lang="scss">

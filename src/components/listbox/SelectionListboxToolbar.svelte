@@ -71,16 +71,3 @@
     <i class="fas fa-angles-right"></i>
   </button>
 </div>
-
-<style>
-  .selection-listbox-toolbar {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 0.5rem;
-  }
-
-  .selection-listbox-toolbar button {
-    padding: 0.25rem 0.5rem;
-  }
-</style>

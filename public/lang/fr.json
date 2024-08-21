@@ -667,7 +667,24 @@
         "Parent": "Parent",
         "MigrateCompendia.CompendiumLabel": "Compendium",
         "MigrateCompendia.Title": "Migrer les compendiums",
-        "MigrateCompendia.SelectionDialogTitle": "Sélection des compendiums pour migration"
+        "MigrateCompendia.SelectionDialogTitle": "Sélection des compendiums pour migration",
+        "NpcExhaustion": {
+            "selectionDialogTitle": "",
+            "sectionTitle": ""
+        },
+        "BondsIdealsFlawsToSystem": {
+            "selectionDialogTitle": "",
+            "sectionTitle": ""
+        },
+        "SpellClassToSourceClass": {
+            "sectionTitle": "",
+            "selectionDialogTitle": ""
+        },
+        "MigrateCompendia.TotalEntriesLabel": "",
+        "FavoritesToSystem": {
+            "selectionDialogTitle": "",
+            "sectionTitle": ""
+        }
     },
     "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
         "name": "Inclure des sorts d'une durée d'une minute dans les actions",
@@ -812,5 +829,13 @@
     },
     "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
         "name": "Contour Rituel seulement"
-    }
+    },
+    "TIDY5E.EmptyContainer": "",
+    "TIDY5E.SpellSourceIdentifierSelectText": "",
+    "TIDY5E.SpellSourceIdentifierLabelHint": "",
+    "TIDY5E.Utilities.AssignSpellsToClasses": "",
+    "TIDY5E.SpellSourceClassAssignments.Identifier": "",
+    "TIDY5E.Utilities.Tools": "",
+    "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "",
+    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": ""
 }

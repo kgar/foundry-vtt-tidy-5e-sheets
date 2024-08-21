@@ -16,15 +16,21 @@
   class="encumbrance"
   class:encumbered={$context.encumbrance.encumbered}
   title={localize('TIDY5E.Encumbrance')}
+  style="
+    --encumbrance-low: {$context.encumbrance.stops?.encumbered ??
+    (1 / 3) * 100}%; 
+    --encumbrance-high: {$context.encumbrance.stops?.heavilyEncumbered ??
+    (2 / 3) * 100}%
+  "
 >
   <span class="encumbrance-bar" style="width:{$context.encumbrance.pct}%" />
   <span class="encumbrance-label"
     >{$context.encumbrance.value} / {$context.encumbrance.max}</span
   >
-  <i class="encumbrance-breakpoint encumbrance-33 arrow-up" />
-  <i class="encumbrance-breakpoint encumbrance-33 arrow-down" />
-  <i class="encumbrance-breakpoint encumbrance-66 arrow-up" />
-  <i class="encumbrance-breakpoint encumbrance-66 arrow-down" />
+  <i class="encumbrance-breakpoint encumbrance-low arrow-up" />
+  <i class="encumbrance-breakpoint encumbrance-low arrow-down" />
+  <i class="encumbrance-breakpoint encumbrance-high arrow-up" />
+  <i class="encumbrance-breakpoint encumbrance-high arrow-down" />
 </div>
 
 <style lang="scss">
@@ -64,12 +70,12 @@
       border: 0.25rem solid transparent;
     }
 
-    .encumbrance-33 {
-      left: calc(100% / 3);
+    .encumbrance-low {
+      inset-inline-start: var(--encumbrance-low, 33%);
     }
 
-    .encumbrance-66 {
-      left: calc((100% / 3) * 2);
+    .encumbrance-high {
+      inset-inline-start: var(--encumbrance-high, 66%);
     }
 
     .arrow-up {

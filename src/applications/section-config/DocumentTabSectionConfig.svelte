@@ -32,7 +32,7 @@
   }
 </script>
 
-<section class="flex-column small-gap">
+<section class="document-tab-section-config flex-column small-gap">
   <button
     type="button"
     class="inline-button"
@@ -46,7 +46,7 @@
     labelProp="label"
     valueProp="key"
     listboxCssClass="scroll-container"
-    class="flex-1"
+    class="flex-1 overflow-y-hidden"
   >
     <svelte:fragment slot="itemTemplate" let:item>
       <span
@@ -127,20 +127,3 @@
     </button>
   </div>
 </section>
-
-<style lang="scss">
-  section {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-
-    :global(> :not(button)) {
-      overflow: hidden;
-    }
-  }
-
-  .marked-as-hidden {
-    font-style: italic;
-    color: var(--t5e-tertiary-color);
-  }
-</style>
