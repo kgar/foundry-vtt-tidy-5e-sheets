@@ -11,7 +11,7 @@
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import SpecialSaves from '../actor/SpecialSaves.svelte';
   import { CONSTANTS } from 'src/constants';
-  import AllowEditLock from 'src/sheets/actor/AllowEditLock.svelte';
+  import SheetEditModeToggle from 'src/sheets/actor/SheetEditModeToggle.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import type { Readable } from 'svelte/store';
@@ -236,7 +236,7 @@
 <Tabs tabs={$context.tabs} bind:selectedTabId>
   <svelte:fragment slot="tab-end">
     {#if $context.editable}
-      <AllowEditLock
+      <SheetEditModeToggle
         hint={$settingStore.permanentlyUnlockCharacterSheetForGm &&
         FoundryAdapter.userIsGm()
           ? localize(

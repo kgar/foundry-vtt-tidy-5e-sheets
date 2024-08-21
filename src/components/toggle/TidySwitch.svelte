@@ -4,8 +4,9 @@
 
   export let value: boolean = false;
   export let disabled: boolean = false;
+  export let thumbIconClass: string | undefined = undefined;
 
-  const switchLabelId = `switch-${Math.random()}-label`;
+  const switchLabelId = `switch-${crypto.randomUUID()}-label`;
   const dispatcher = createEventDispatcher<{
     change: { originalValue: boolean };
   }>();
@@ -36,5 +37,9 @@
     aria-labelledby={switchLabelId}
     tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     {disabled}
-  ></button>
+  >
+    {#if thumbIconClass}
+      <i class="thumb-icon {thumbIconClass}"></i>
+    {/if}
+  </button>
 </label>
