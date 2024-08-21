@@ -46,7 +46,17 @@
   ) {
     switch (event.button) {
       case CONSTANTS.MOUSE_BUTTON_MAIN:
-        openPortraitPicker(event);
+        if ($context.unlocked && $context.editable) {
+          openPortraitPicker(event);
+        } else {
+          FoundryAdapter.renderImagePopout($context.actor.img, {
+            title: FoundryAdapter.localize('TIDY5E.PortraitTitle', {
+              subject: $context.actor.name,
+            }),
+            shareable: true,
+            uuid: $context.actor.uuid,
+          });
+        }
         break;
     }
   }
