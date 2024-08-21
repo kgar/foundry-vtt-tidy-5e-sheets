@@ -41,7 +41,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="toggle-allow-edit {$$restProps.class ?? ''}">
+<div class="sheet-edit-mode-toggle {$$restProps.class ?? ''}">
   <TidySwitch
     --tidy-switch-scale=".875"
     --tidy-switch-thumb-transform-duration="0.15s"
@@ -51,20 +51,3 @@
     on:change={() => toggleLock()}
   ></TidySwitch>
 </div>
-
-<style lang="scss">
-  .toggle-allow-edit {
-    display: flex;
-    flex: 0;
-    flex-basis: 3rem;
-    align-items: center;
-    justify-content: center;
-    white-space: nowrap;
-    background: var(--t5e-tab-background);
-    border: 0.0625rem solid transparent;
-    border-bottom: 0.0625rem solid var(--t5e-tab-strip-border-color);
-    font-size: 0.8125rem;
-    text-align: left;
-    height: 1.625rem;
-  }
-</style>
