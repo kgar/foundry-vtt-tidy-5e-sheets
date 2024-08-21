@@ -156,6 +156,24 @@
     width: 3.125rem;
     margin: 0 auto;
 
+    &:hover .mod-label {
+      display: block;
+    }
+
+    &:hover :is(.ability-mod, .ability-save, .ability-modifiers) {
+      border-radius: 0;
+    }
+
+    &:hover :is(.ability-mod, .ability-save) {
+      opacity: 1;
+      text-shadow: none;
+    }
+
+    &:hover .ability-modifiers {
+      box-shadow: 0 0 0 0.0625rem
+        var(--t5e-ability-modifiers-hover-label-background);
+    }
+
     .ability-modifiers {
       position: relative;
       display: flex;
@@ -170,21 +188,6 @@
       font-size: 0.625rem;
       box-shadow: 0 0 0 0.0625rem var(--t5e-tertiary-color);
       border-radius: 0.3125rem;
-
-      &:hover {
-        border-radius: 0;
-        box-shadow: 0 0 0 0.0625rem
-          var(--t5e-ability-modifiers-hover-label-background);
-      }
-
-      &:hover ~ .mod-label {
-        display: block;
-      }
-
-      &:hover .ability-mod,
-      &:hover .ability-save {
-        border-radius: 0;
-      }
     }
 
     .ability-mod {
@@ -210,12 +213,6 @@
     .ability-save:hover {
       background: var(--t5e-primary-accent-color);
       color: var(--t5e-ability-mod-save-text-hover-color);
-    }
-
-    &:hover .ability-mod,
-    &:hover .ability-save {
-      opacity: 1;
-      text-shadow: none;
     }
 
     .mod-label {
