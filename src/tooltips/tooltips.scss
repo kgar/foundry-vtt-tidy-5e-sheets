@@ -1,0 +1,27 @@
+.attunement-summary-tooltip {
+  ul {
+    margin: 0;
+    padding: 0;
+
+    li + li {
+      margin-top: 0.5rem;
+      text-align: left;
+    }
+  }
+
+  .item-image {
+    align-self: center;
+    justify-self: center;
+    flex: 0 0 var(--t5e-image-size-override, 1.5rem);
+    height: var(--t5e-image-size-override, 1.5rem);
+    width: var(--t5e-image-size-override, 1.5rem);
+    background-size: cover;
+    background-position: 50% 0;
+  }
+}
+
+// For faster tooltip style development. Not meant for production use.
+&#tooltip.debug-show {
+  visibility: visible !important;
+  opacity: 1 !important;
+}

@@ -205,12 +205,23 @@
     border: none;
   }
 
+  // Applications
+  @import '../applications/section-config/DocumentTabSectionConfig';
+
   // Components
   @import '../components/button-menu/button-menu.scss';
   @import '../components/toggle/toggles.scss';
   @import '../components/table/tidy-table.scss';
   @import '../components/filter/filter.scss';
   @import '../components/pips/pips.scss';
+  @import '../components/listbox/listbox.scss';
+
+  // Components - Actor-specific
+  @import '../sheets/actor/AttunementTracker.scss';
+  @import '../sheets/actor/Currency.scss';
+
+  // Tooltips
+  @import '../tooltips/tooltips.scss';
 
   &.sheet form,
   &.application-shell {
@@ -379,13 +390,6 @@
       font-style: italic;
       margin: 0.25rem 0;
     }
-  }
-
-  /* Spacing utilities */
-
-  // TODO: "draw more inspiration" from https://getbootstrap.com/docs/5.3/utilities/spacing/
-  .p-1 {
-    padding: 0.25rem;
   }
 
   /* Text utilities */

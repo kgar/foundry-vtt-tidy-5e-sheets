@@ -1164,7 +1164,8 @@ export const FoundryAdapter = {
     title: 'DND5E.AttunementAttuned',
   },
   getAttunementContext(item: Item5e): AttunementContext | undefined {
-    return !!item.system.attunement && !item.system.attuned
+    return !!CONFIG.DND5E.attunementTypes[item.system.attunement] &&
+      !item.system.attuned
       ? {
           ...FoundryAdapter.attunementContextApplicable,
           title: CONFIG.DND5E.attunementTypes[item.system.attunement],

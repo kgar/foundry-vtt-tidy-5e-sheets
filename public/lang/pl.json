@@ -48,7 +48,12 @@
     },
     "TIDY5E.WorldSettings.TabSheetLock": {
         "tabLabel": "Blokady",
-        "header": "Ustawienia blokad"
+        "header": "Ustawienia blokad",
+        "hint2": "",
+        "labelFeaturesLocks": "",
+        "hint": "",
+        "labelGeneralLocks": "",
+        "labelInventoryLocks": ""
     },
     "TIDY5E.AttunementItems": "Zestrojone przedmioty",
     "TIDY5E.AttunementMax": "Maksymalna liczba zestrojeń",
@@ -194,7 +199,10 @@
         "options.specific.levels.hint": "Ustawia maksymalną wartość poziomów Wyczerpania.",
         "options.specific.levels.tooltip.name": "Opis Poziomu {level} Wyczerpania",
         "options.specific.levels.tooltip.hint": "Opis dla tego poziomu Wyczerpania. Klawisze skrótów również działają.",
-        "useStandardExhaustion": "Użyj standardowego Wyczerpania"
+        "useStandardExhaustion": "Użyj standardowego Wyczerpania",
+        "options.open.text": "",
+        "AtLeastOneLevelRequiredErrorMessage": "",
+        "useOneDnDExhaustion": ""
     },
     "TIDY5E.ActionsPerTurn": "Akcje na Turę",
     "TIDY5E.SheetMenu": {
@@ -297,7 +305,39 @@
         "UnlinkedExplanation": "Ta migracja umożliwia migrację niepowiązanych tokenów w bieżącej scenie. W razie potrzeby migrację można uruchomić na dodatkowych scenach.",
         "ButtonMigration.Text": "Migruj",
         "OptionDeleteFlags.Tooltip": "Podczas migracji z niestandardowych flag Tidy do oficjalnych danych systemowych, flagi pozostają domyślnie na swoim miejscu. Zaznacz tę opcję, aby usunąć te flagi.",
-        "OptionDeleteFlags.Text": "Usuń flagi Tidy, które zostały zmienione"
+        "OptionDeleteFlags.Text": "Usuń flagi Tidy, które zostały zmienione",
+        "SpellClassToSourceClass": {
+            "sectionTitle": "",
+            "selectionDialogTitle": ""
+        },
+        "NpcExhaustion": {
+            "selectionDialogTitle": "",
+            "sectionTitle": ""
+        },
+        "CcssToTidy": {
+            "deleteFlagsTooltip": "",
+            "sectionTitle": "",
+            "ccss": "",
+            "selectionDialogTitle": "",
+            "explanation1": "",
+            "deleteFlags": "",
+            "overwriteTooltip": "",
+            "section": "",
+            "overwrite": ""
+        },
+        "BondsIdealsFlawsToSystem": {
+            "sectionTitle": "",
+            "selectionDialogTitle": ""
+        },
+        "Parent": "",
+        "FavoritesToSystem": {
+            "selectionDialogTitle": "",
+            "sectionTitle": ""
+        },
+        "MigrateCompendia.TotalEntriesLabel": "",
+        "MigrateCompendia.SelectionDialogTitle": "",
+        "MigrateCompendia.CompendiumLabel": "",
+        "MigrateCompendia.Title": ""
     },
     "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
         "name": "Karta postaci: Zawsze odblokowane dla MG",
@@ -406,5 +446,365 @@
     "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
         "name": "Zawsze przygotowane - akcent"
     },
-    "TIDY5E.Tidy5eContainerSheet": "Karta Pojemnika Tidy 5e"
+    "TIDY5E.Tidy5eContainerSheet": "Karta Pojemnika Tidy 5e",
+    "TIDY5E.Settings.UseHpOverlay": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.ItemCardsForAllItems": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.UseVehicleMotion": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.WorldSettings.TabIcons": {
+        "tabLabel": ""
+    },
+    "TIDY5E.Settings.ShowNPCActorLinkMarker": {
+        "name": "",
+        "default": "",
+        "both": "",
+        "hint": "",
+        "unlinked": "",
+        "linked": ""
+    },
+    "TIDY5E.SpellSourceIdentifierSelectText": "",
+    "TIDY5E.Settings.ShowIconsNextToTheItemName": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.UseCircularPortraitStyle": {
+        "all": "",
+        "pc": "",
+        "name": "",
+        "none": "",
+        "npc": "",
+        "hint": ""
+    },
+    "TIDY5E.LocalizationTestKey": "",
+    "TIDY5E.Settings.InitialSheetTab": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.UseHpBar": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.SheetTheme": {
+        "default": "",
+        "light": "",
+        "dark": "",
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.ShowNPCRestInChat": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.UseTotalSheetLock": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.UseInspiration": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.UserSettings.TabActionsList": {
+        "tabLabel": ""
+    },
+    "TIDY5E.WorldSettings.ItemIdentificationPermission": {
+        "hint": "",
+        "options.GmOnly": "",
+        "options.GmAndOwners": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.ShowExhaustionOnHover": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.WorldSettings.TabItem": {
+        "tabLabel": ""
+    },
+    "TIDY5E.Settings.UseClassicControls": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ItemCardsFixKey": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ShowInspirationOnHover": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.EmptyContainer": "",
+    "TIDY5E.Settings.UseContextMenu": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.UseNPCEncumbranceBar": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.AllowCantripsToBePrepared": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.LockHpMaxChanges": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.ItemCardsForNPCs": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ItemCardsAreFloating": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.MoveTraitsBelowResources": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.AlwaysShowTraits": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.ShowNPCSpellbookTab": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.LimitEffectsManagementToGM": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.DefaultSheetTabs": {
+        "AvailableHeader": "",
+        "SelectedHeader": "",
+        "hint": "",
+        "AtLeastOneTabRequiredErrorMessage": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.UseCharacterEncumbranceBar": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.UseSpellClassIcons": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.LockExpChanges": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.LockLevelSelector": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.ActionList.Header": "",
+    "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.ActionListScaleCantripDamage": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ActionListIncludeConsumables": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ColorPickerPrimaryAccent": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ColorPickerEnabled": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ColorPickerEquippedOutline": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ColorPickerEquippedAccent": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ColorPickerHpBar": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ColorPickerPactAccent": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ColorPickerPactOutline": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ColorPickerPreparedAccent": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ColorPickerAtWillAccent": {
+        "name": ""
+    },
+    "TIDY5E.Utilities.ConfigureSections": "",
+    "TIDY5E.SpellSourceIdentifierLabelHint": "",
+    "TIDY5E.Settings.UseVehicleEncumbranceBar": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ColorPickerAtWill": {
+        "name": ""
+    },
+    "TIDY5E.SpellSourceClassAssignments.Identifier": "",
+    "TIDY5E.Utilities.Tools": "",
+    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "",
+    "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "",
+    "TIDY5E.Utilities.AssignSpellsToClasses": "",
+    "TIDY5E.WorldSettings.VehicleExhaustion": {
+        "Header": "",
+        "AtLeastOneLevelRequiredErrorMessage": "",
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ItemCardsDelay": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.DefaultTheme": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.InspirationAnimation": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.HideIfZero": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ShowExpandedLimitedView": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.HideDeathSavesFromPlayers": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.LockItemQuantity": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnly": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
+        "name": ""
+    },
+    "TIDY5E.Settings.UseTidySpellSchoolIcons": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Section": {
+        "Default": "",
+        "Label": "",
+        "ActionTooltip": "",
+        "ConfigDialog": {
+            "title": "",
+            "hideTooltip": "",
+            "showTooltip": ""
+        },
+        "ActionLabel": "",
+        "Tooltip": ""
+    },
+    "TIDY5E.RollRecharge.Hint": "",
+    "TIDY5E.UseDefaultDialog": {
+        "title": "",
+        "text": ""
+    },
+    "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.UseExhaustion": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ColorPickerAtWillOutline": {
+        "name": ""
+    },
+    "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.WorldSettings.Menu": {
+        "title": "",
+        "name": "",
+        "hint": "",
+        "label": ""
+    },
+    "TIDY5E.Settings.ShowClassList": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ToggleEmptyCharacterTraits": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ShowTraitLabels": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ShowEquippedAmmoOnly": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.LockMoneyChanges": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.LockConfigureSheet": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.ButtonConfirm.Text": "",
+    "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ShowActiveEffectsMarker": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ColorPickerPreparedOutline": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ShowPlayerName": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.AlwaysShowSkills": {
+        "name": "",
+        "hint": ""
+    }
 }

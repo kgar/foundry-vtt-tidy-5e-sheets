@@ -23,10 +23,10 @@
     listboxCssClass="scroll-container"
     class="flex-1"
   >
-    <h2 class="minimal" slot="left-header">
+    <h2 class="minimal" slot="leftHeader">
       {localize('TIDY5E.TabSelection.AvailableHeader')}
     </h2>
-    <h2 class="minimal" slot="right-header">
+    <h2 class="minimal" slot="rightHeader">
       {localize('TIDY5E.TabSelection.SelectedHeader')}
     </h2>
   </SelectionListbox>

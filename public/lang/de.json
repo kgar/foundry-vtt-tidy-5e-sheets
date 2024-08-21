@@ -330,38 +330,38 @@
     },
     "TIDY5E.Settings.AllowCantripsToBePrepared": {
         "name": "Vorbereiten von Zaubertricks erlauben",
-        "hint": null
+        "hint": ""
     },
     "TIDY5E.Settings.LockMoneyChanges": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.LockExpChanges": {
         "name": "Erfahrungspunkte sperren",
-        "hint": null
+        "hint": ""
     },
     "TIDY5E.Settings.LockHpMaxChanges": {
         "name": "Änderung maximaler TP sperren",
-        "hint": null
+        "hint": ""
     },
     "TIDY5E.Settings.LockLevelSelector": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.LockConfigureSheet": {
         "name": "Charakterbogen Auswahl sperren",
-        "hint": null
+        "hint": ""
     },
     "TIDY5E.Settings.LockItemQuantity": {
         "name": "Gegenstandsmengen sperren",
-        "hint": null
+        "hint": ""
     },
     "TIDY5E.Settings.ColorPickerEnabled": {
-        "name": null,
-        "hint": null
+        "name": "",
+        "hint": ""
     },
     "TIDY5E.Settings.ColorPickerPrimaryAccent": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerEquipped": {
         "name": "Ausgerüstet"
@@ -370,55 +370,55 @@
         "name": "TP Balken"
     },
     "TIDY5E.Settings.ColorPickerEquippedOutline": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerEquippedAccent": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerPrepared": {
         "name": "Vorbereitet"
     },
     "TIDY5E.Settings.ColorPickerPreparedOutline": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerPreparedAccent": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerPact": {
         "name": "Pakt"
     },
     "TIDY5E.Settings.ColorPickerPactOutline": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerPactAccent": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerAtWill": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerAtWillOutline": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerAtWillAccent": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerInnate": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerInnateOutline": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerInnateAccent": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
         "name": "Immer vorbereitet"
     },
     "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
-        "name": null
+        "name": ""
     },
     "TIDY5E.Settings.AllowHpMaxOverride": {
         "name": "Überschreiben der maximalen TP erlauben",
@@ -426,10 +426,10 @@
     },
     "TIDY5E.Settings.Reset": {
         "name": "Einstellungen zurücksetzen",
-        "hint": null,
+        "hint": "",
         "dialogs": {
             "title": "Modul Einstellungen zurücksetzen",
-            "content": null,
+            "content": "",
             "confirm": "Modul Einstellungen zurücksetzen",
             "cancel": "Abbrechen"
         }
@@ -439,52 +439,52 @@
         "hint": "Zeigt Debugging Nachrichten in der Konsole an."
     },
     "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
-        "name": null,
-        "hint": null,
-        "title": null
+        "name": "",
+        "hint": "",
+        "title": ""
     },
     "TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM": {
-        "name": null,
-        "hint": null,
-        "title": null
+        "name": "",
+        "hint": "",
+        "title": ""
     },
     "TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM": {
-        "name": null,
-        "hint": null,
-        "title": null
+        "name": "",
+        "hint": "",
+        "title": ""
     },
     "TIDY5E.ThemeSettings": {
         "SheetMenu": {
-            "name": null,
-            "buttonLabel": null,
-            "hint": null
+            "name": "",
+            "buttonLabel": "",
+            "hint": ""
         },
         "Sheet": {
-            "title": null,
-            "header": null,
+            "title": "",
+            "header": "",
             "useDefaultLightColors": "Standard Hell",
             "useDefaultDarkColors": "Standard Dunkel",
             "export": "Exportieren",
             "import": "Importieren",
-            "importDropHint": null,
-            "importError": null,
-            "importSuccess": null,
+            "importDropHint": "",
+            "importError": "",
+            "importSuccess": "",
             "menuLabel": "Menü",
-            "explanation": null
+            "explanation": ""
         }
     },
-    "TIDY5E.FavoriteSpellLevelLabel": null,
-    "TIDY5E.ApplyChanges": null,
-    "TIDY5E.SaveChanges": null,
-    "TIDY5E.VehicleInMotion": null,
-    "TIDY5E.VehicleMotionless": null,
-    "TIDY5E.TotalCrewCount": null,
+    "TIDY5E.FavoriteSpellLevelLabel": "",
+    "TIDY5E.ApplyChanges": "",
+    "TIDY5E.SaveChanges": "",
+    "TIDY5E.VehicleInMotion": "",
+    "TIDY5E.VehicleMotionless": "",
+    "TIDY5E.TotalCrewCount": "",
     "TIDY5E.ActionsPerTurn": "Aktionen pro Zug",
     "TIDY5E.SheetMenu": {
         "label": "Menü",
-        "themeLabel": null
+        "themeLabel": ""
     },
-    "TIDY5E.ActiveEffectsMarkerTitle": null,
+    "TIDY5E.ActiveEffectsMarkerTitle": "",
     "TIDY5E.Actions": {
         "TabName": "Aktionen",
         "OverriddenSetOverrideTrue": "Zu Aktionsliste hinzufügen (Umschalt+Klick um Überschreibung zu löschen)",
@@ -597,7 +597,8 @@
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filter",
     "TIDY5E.ItemFilters.Category.Miscellaneous": "Sonstiges",
     "TIDY5E.Settings.ActionListScaleCantripDamage": {
-        "name": "Zaubertricks mit skalierendem Schaden anzeigen (experimentell)"
+        "name": "Zaubertricks mit skalierendem Schaden anzeigen (experimentell)",
+        "hint": ""
     },
     "TIDY5E.Settings.Migrations": {
         "name": "Migrationen",
@@ -614,12 +615,73 @@
         "migrationBeginningMessage": "Datenmigration. Bitte aktualisiere nicht die Seite bis die Migration abgeschlossen ist.",
         "v1": {
             "mainExplanation1": "Das Migrieren von Daten zu den neuen Tidy 5e Sheets ist zur Nutzung nicht erforderlich. Im schlimmsten Falle, solltest du ein Nutzer des originalen Tidy5e Sheets sein, und diesen Schritt überspringen, wirst du deine Einstellungen erneut abschließen müssen.",
-            "alphaHeader": "Alpha Tidy 5e Sheets"
+            "alphaHeader": "Alpha Tidy 5e Sheets",
+            "sectionTitle": "",
+            "originalExplanation": "",
+            "mainExplanation2": "",
+            "originalHeader": ""
         },
         "Notification": {
-            "Button.DoNotShowAgain": "Nicht erneut anzeigen"
+            "Button.DoNotShowAgain": "Nicht erneut anzeigen",
+            "Explanation": "",
+            "Title": "",
+            "Explanation2": "",
+            "DoNotShowAgain.ConfirmMessage": ""
         },
-        "OptionOverwrite.Text": "Überschreiben"
+        "OptionOverwrite.Text": "Überschreiben",
+        "MigrateCompendia.TotalEntriesLabel": "",
+        "BondsIdealsFlawsToSystem": {
+            "sectionTitle": "",
+            "selectionDialogTitle": ""
+        },
+        "NpcExhaustion": {
+            "selectionDialogTitle": "",
+            "sectionTitle": ""
+        },
+        "MigrateCompendia.CompendiumLabel": "",
+        "UnlinkedExplanation": "",
+        "SpellClassToSourceClass": {
+            "selectionDialogTitle": "",
+            "sectionTitle": ""
+        },
+        "MigrateCompendia.Title": "",
+        "CcssToTidy": {
+            "overwriteTooltip": "",
+            "section": "",
+            "overwrite": "",
+            "deleteFlags": "",
+            "ccss": "",
+            "sectionTitle": "",
+            "selectionDialogTitle": "",
+            "explanation1": "",
+            "deleteFlagsTooltip": ""
+        },
+        "MigrateCompendia.SelectionDialogTitle": "",
+        "NpcDeathSaves": {
+            "sectionTitle": "",
+            "selectionDialogTitle": ""
+        },
+        "Selection": {
+            "ToMigrate": "",
+            "TotalSelectedLabel": "",
+            "SelectAllNoneTooltip": ""
+        },
+        "Parent": "",
+        "CharacterBiography": {
+            "selectionDialogTitle": "",
+            "sectionTitle": ""
+        },
+        "migrateConfirmMessage2": "",
+        "OptionDeleteFlags.Tooltip": "",
+        "FavoritesToSystem": {
+            "sectionTitle": "",
+            "selectionDialogTitle": ""
+        },
+        "migrateDocumentFlagsButtonLabel": "",
+        "OptionsHeader": "",
+        "ButtonMigration.Text": "",
+        "OptionOverwrite.Tooltip": "",
+        "OptionDeleteFlags.Text": ""
     },
     "TIDY5E.Settings.About": {
         "FinancialSupportHeader": "Tidy 5e Sheets unterstützen",
@@ -629,14 +691,123 @@
         "LocalizationParagraph": "{urlStart}Weblate{urlEnd}: Übersetzt du Internetinhalte? Tidy 5e Sheets könnte deine Hilfe gebrauchen! Auf der Weblate Website kannst du unseren Übersetzungsstatus in verschiedene Sprachen sehen. Dieses Modul akzeptiert Übersetzungen in neue Sprachen sowie Modifikationen zu bereits existierenden Übersetzungen.",
         "FinancialSupportParagraph": "Falls du Tidy 5e Sheets magst und das Projekt finanziell unterstützen möchtest, findest du hier ein paar Möglichkeiten dafür:",
         "KoFiLink": "{urlStart}Ko-Fi{urlEnd}",
-        "PatreonLink": "{urlStart}Patreon{urlEnd}"
+        "PatreonLink": "{urlStart}Patreon{urlEnd}",
+        "name": "",
+        "buttonLabel": "",
+        "dialogTitle": "",
+        "logoAltText": "",
+        "MaintainerParagraph": "",
+        "BuyMeACoffeeLink": ""
     },
     "TIDY5E.ItemFilters.Filter.Other": "Anderes",
     "TIDY5E.ButtonConfirm.Text": "Bestätigen",
     "TIDY5E.Settings.ActionList.Header": "Aktionsliste",
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
-        "name": "Aktionen auf Zaubertricks begrenzen"
+        "name": "Aktionen auf Zaubertricks begrenzen",
+        "hint": ""
     },
     "TIDY5E.Commands.ExpandAll": "Alle ausklappen",
-    "TIDY5E.Commands.CollapseAll": "Alle einklappen"
+    "TIDY5E.Commands.CollapseAll": "Alle einklappen",
+    "TIDY5E.WorldSettings.ItemIdentificationPermission": {
+        "name": "",
+        "hint": "",
+        "options.GmOnly": "",
+        "options.GmAndOwners": ""
+    },
+    "TIDY5E.RollRecharge.Hint": "",
+    "TIDY5E.GenericErrorNotification": "",
+    "TIDY5E.EmptyContainer": "",
+    "TIDY5E.WorldSettings.TabItem": {
+        "tabLabel": ""
+    },
+    "TIDY5E.Tidy5eContainerSheet": "",
+    "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.SpellSourceIdentifierSelectText": "",
+    "TIDY5E.SpellSourceIdentifierLabelHint": "",
+    "TIDY5E.Utilities.Tools": "",
+    "TIDY5E.Utilities.MarkAllAsUnidentified": "",
+    "TIDY5E.SpellSourceClassAssignments.Identifier": "",
+    "TIDY5E.Utilities.AssignSpellsToClasses": "",
+    "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "",
+    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "",
+    "TIDY5E.ReminderToBackUp": "",
+    "TIDY5E.Commands.HideLegendaryToolbar": "",
+    "TIDY5E.UseDefaultDialog": {
+        "text": "",
+        "title": ""
+    },
+    "TIDY5E.Settings.ColorPickerScrollbarTrack": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnly": {
+        "name": ""
+    },
+    "TIDY5E.Settings.UseTidySpellSchoolIcons": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.UseDefault": "",
+    "TIDY5E.Commands.ShowLegendaryToolbar": "",
+    "TIDY5E.Section": {
+        "ConfigDialog": {
+            "showTooltip": "",
+            "hideTooltip": "",
+            "title": ""
+        },
+        "ActionLabel": "",
+        "Label": "",
+        "Default": "",
+        "Tooltip": "",
+        "ActionTooltip": ""
+    },
+    "TIDY5E.GMOnly.Message": "",
+    "TIDY5E.WorldSettings.TabIcons": {
+        "tabLabel": ""
+    },
+    "TIDY5E.Settings.ActionListIncludeConsumables": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Reset": "",
+    "TIDY5E.Utilities.ConfigureSections": "",
+    "TIDY5E.Settings.SheetPreferences": {
+        "buttonLabel": "",
+        "name": "",
+        "hint": "",
+        "explanation": ""
+    },
+    "TIDY5E.Commands.HideContainerPanel": "",
+    "TIDY5E.Commands.ShowContainerPanel": "",
+    "TIDY5E.ItemFilters.ClearAll": "",
+    "TIDY5E.ItemFilters.CanCast": "",
+    "TIDY5E.LocalizationTestKey": "",
+    "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ColorPickerScrollbarThumb": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ColorPickerMagicAccent": {
+        "name": ""
+    },
+    "TIDY5E.ItemFilters.CanUse": "",
+    "TIDY5E.Utilities.GMTools": "",
+    "TIDY5E.Utilities.IdentifyAll": "",
+    "TIDY5E.PortraitTitle": "",
+    "TIDY5E.ItemImageTitle": "",
+    "TIDY5E.SortMode.ActionListDefault": ""
 }
