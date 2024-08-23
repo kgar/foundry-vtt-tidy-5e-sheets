@@ -85,7 +85,7 @@ Hooks.once('init', () => {
     Tidy5eGroupSheet,
     {
       types: [CONSTANTS.SHEET_TYPE_GROUP],
-      label: 'TIDY5E.Tidy5eGroupSheet',
+      label: 'TIDY5E.Tidy5eGroupSheetClassic',
     }
   );
 
