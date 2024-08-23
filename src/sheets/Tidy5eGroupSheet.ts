@@ -1,7 +1,17 @@
 import { CONSTANTS } from 'src/constants';
-import { SvelteApplicationMixin } from './SvelteApplicationMixin';
+import {
+  SvelteApplicationMixin,
+  type ApplicationRenderOptions,
+} from './SvelteApplicationMixin';
+import type { SvelteComponent } from 'svelte';
+import GroupSheet from './group/GroupSheet.svelte';
 
-export class Tidy5eGroupSheet extends SvelteApplicationMixin(
+export type GroupSheetClassicContext = {
+  greetings: string;
+  showThumbsUp: boolean;
+};
+
+export class Tidy5eGroupSheet extends SvelteApplicationMixin<GroupSheetClassicContext>(
   foundry.applications.sheets.ActorSheetV2
 ) {
   static DEFAULT_OPTIONS = {
@@ -20,5 +30,21 @@ export class Tidy5eGroupSheet extends SvelteApplicationMixin(
 
   // TODO: First render, derive options that come from user preference
 
-  
+  _createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
+    return new GroupSheet({
+      target: node,
+      context: new Map<any, any>([
+        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this.store],
+      ]),
+    });
+  }
+
+  async _prepareContext(
+    options: ApplicationRenderOptions
+  ): Promise<GroupSheetClassicContext> {
+    return {
+      greetings: 'Hello, world!',
+      showThumbsUp: true,
+    };
+  }
 }
