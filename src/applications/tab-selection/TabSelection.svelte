@@ -4,12 +4,13 @@
   import type { Writable } from 'svelte/store';
   import type { TabSelectionContext } from './TabSelectionFormApplication';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+    import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Writable<TabSelectionContext>>('context');
+  let context = getContext<Writable<TabSelectionContext>>(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
 
-  const apply = getContext<() => Promise<void>>('apply');
-  const validate = getContext<() => boolean>('validate');
-  const useDefault = getContext<() => Promise<void>>('useDefault');
+  const apply = getContext<() => Promise<void>>(CONSTANTS.SVELTE_CONTEXT.APPLY);
+  const validate = getContext<() => boolean>(CONSTANTS.SVELTE_CONTEXT.VALIDATE);
+  const useDefault = getContext<() => Promise<void>>(CONSTANTS.SVELTE_CONTEXT.USE_DEFAULT);
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -22,10 +23,10 @@
     listboxCssClass="scroll-container"
     class="flex-1"
   >
-    <h2 class="minimal" slot="left-header">
+    <h2 class="minimal" slot="leftHeader">
       {localize('TIDY5E.TabSelection.AvailableHeader')}
     </h2>
-    <h2 class="minimal" slot="right-header">
+    <h2 class="minimal" slot="rightHeader">
       {localize('TIDY5E.TabSelection.SelectedHeader')}
     </h2>
   </SelectionListbox>

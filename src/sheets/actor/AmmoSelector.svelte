@@ -1,14 +1,19 @@
 <script lang="ts">
+  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
-  import type { Item5e } from 'src/types/item.types';
+  import type { ContainerSheetContext, Item5e } from 'src/types/item.types';
   import type { ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
   export let item: Item5e;
 
-  let context = getContext<Readable<ActorSheetContext>>('context');
+  let context = getContext<Readable<ActorSheetContext | ContainerSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+
+  $: actor = $context.actor ?? $context.item.actor;
 
   let ammos: { text: string; value: string | null; ammo: Item5e | null }[];
   $: ammos = [
@@ -17,7 +22,7 @@
       value: null,
       ammo: null,
     },
-    ...$context.actor.items
+    ...(actor?.items ?? [])
       .filter(
         (item: any) =>
           item.system.type?.value === 'ammo' &&

@@ -13,8 +13,11 @@
   import { settingStore } from 'src/settings/settings';
   import CargoList from '../parts/CargoList.svelte';
   import PassengerOrCrewList from '../parts/PassengerOrCrewList.svelte';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<VehicleSheetContext>>('context');
+  let context = getContext<Readable<VehicleSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   $: noCargoOrCrew =
     $context.cargo.some(

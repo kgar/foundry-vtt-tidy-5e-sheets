@@ -9,30 +9,33 @@
   import { quadInOut } from 'svelte/easing';
   import type { Readable } from 'svelte/store';
   import { slide } from 'svelte/transition';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<VehicleSheetContext>>('context');
+  let context = getContext<Readable<VehicleSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   $: totalCrew = $context.system.cargo.crew.reduce(
     (count: number, c: { quantity: number }) => count + c.quantity,
-    0
+    0,
   );
   $: totalActions = $context.system.attributes.actions.value ?? 0;
   $: actionsPerTurn =
     totalCrew >= $context.system.attributes.actions.thresholds[2]
       ? totalActions
       : totalCrew >= $context.system.attributes.actions.thresholds[1]
-      ? Math.max(totalActions - 1, 0)
-      : totalCrew >= $context.system.attributes.actions.thresholds[0]
-      ? Math.max(totalActions - 2, 0)
-      : 0;
+        ? Math.max(totalActions - 1, 0)
+        : totalCrew >= $context.system.attributes.actions.thresholds[0]
+          ? Math.max(totalActions - 2, 0)
+          : 0;
   $: crewTallyDescription =
     actionsPerTurn === totalActions
       ? localize('DND5E.VehicleActionThresholdsFull')
       : actionsPerTurn === totalActions - 1
-      ? localize('DND5E.VehicleActionThresholdsMid')
-      : actionsPerTurn === totalActions - 2
-      ? localize('DND5E.VehicleActionThresholdsMin')
-      : null;
+        ? localize('DND5E.VehicleActionThresholdsMid')
+        : actionsPerTurn === totalActions - 2
+          ? localize('DND5E.VehicleActionThresholdsMin')
+          : null;
 
   const localize = FoundryAdapter.localize;
 </script>

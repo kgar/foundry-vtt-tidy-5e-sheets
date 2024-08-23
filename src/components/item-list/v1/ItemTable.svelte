@@ -15,8 +15,12 @@
    */
   export let toggleable: boolean = true;
 
-  const messageBus = getContext<MessageBus>('messageBus');
-  const tabId = getContext<string | undefined>('tabId');
+  let { class: cssClass, ...attributes } = $$restProps;
+
+  const messageBus = getContext<MessageBus>(
+    CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS,
+  );
+  const tabId = getContext<string | undefined>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
   declareLocation('item-table', key);
 
   const expandCollapseService = ExpandCollapseService.initService(toggleable);
@@ -40,9 +44,10 @@
 </script>
 
 <section
-  class="item-table {$$restProps.class ?? ''}"
+  class="item-table {cssClass ?? ''}"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_TABLE}
   data-tidy-section-key={key}
+  {...attributes}
 >
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <!-- svelte-ignore a11y-click-events-have-key-events -->

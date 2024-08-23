@@ -1,5 +1,5 @@
 <script lang="ts">
-  import AllowEditLock from 'src/sheets/actor/AllowEditLock.svelte';
+  import SheetEditModeToggle from 'src/sheets/actor/SheetEditModeToggle.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import { CONSTANTS } from 'src/constants';
@@ -27,7 +27,9 @@
 
   let selectedTabId: string;
 
-  let context = getContext<Readable<NpcSheetContext>>('context');
+  let context = getContext<Readable<NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   $: sizes = <DropdownListOption[]>Object.entries(
     $context.config.actorSizes,
@@ -187,7 +189,7 @@
   <Tabs tabs={$context.tabs} bind:selectedTabId>
     <svelte:fragment slot="tab-end">
       {#if $context.editable}
-        <AllowEditLock
+        <SheetEditModeToggle
           hint={$settingStore.permanentlyUnlockNpcSheetForGm &&
           FoundryAdapter.userIsGm()
             ? localize('TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM.title')

@@ -7,7 +7,7 @@
   import { CONSTANTS } from 'src/constants';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import AllowEditLock from 'src/sheets/actor/AllowEditLock.svelte';
+  import SheetEditModeToggle from 'src/sheets/actor/SheetEditModeToggle.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import VehicleProfile from './parts/VehicleProfile.svelte';
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
@@ -29,7 +29,9 @@
 
   let selectedTabId: string;
 
-  let context = getContext<Readable<VehicleSheetContext>>('context');
+  let context = getContext<Readable<VehicleSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   $: sizes = <DropdownListOption[]>Object.entries(
     $context.config.actorSizes,
@@ -180,7 +182,7 @@
 <Tabs tabs={$context.tabs} bind:selectedTabId>
   <svelte:fragment slot="tab-end">
     {#if $context.editable}
-      <AllowEditLock
+      <SheetEditModeToggle
         hint={$settingStore.permanentlyUnlockVehicleSheetForGm &&
         FoundryAdapter.userIsGm()
           ? localize('TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM.title')

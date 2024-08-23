@@ -8,6 +8,7 @@
   } from './button-menu-types';
   import { getPositionStyles } from './button-menu-position';
   import { settingStore } from 'src/settings/settings';
+  import { CONSTANTS } from 'src/constants';
 
   type StatefulIconClass = {
     opened: string | null;
@@ -31,7 +32,9 @@
   let openerEl: HTMLElement;
   let menuStyles: string = '';
 
-  setContext<ButtonMenuContext>('buttonMenuContext', { close: close });
+  setContext<ButtonMenuContext>(CONSTANTS.SVELTE_CONTEXT.BUTTON_MENU_CONTEXT, {
+    close: close,
+  });
 
   function close() {
     open = false;

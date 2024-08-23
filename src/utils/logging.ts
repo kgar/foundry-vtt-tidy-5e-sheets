@@ -1,7 +1,6 @@
 // ================================
 // Logger utility
 // ================================
-// export let debugEnabled = 0;
 
 import { CONSTANTS } from 'src/constants';
 import { SettingsProvider } from 'src/settings/settings';
@@ -10,6 +9,7 @@ import { SettingsProvider } from 'src/settings/settings';
 export function debug(msg: string, args?: any) {
   if (SettingsProvider.settings.debug.get()) {
     let formattedMsg = `DEBUG | ${CONSTANTS.MODULE_ID} | ${msg}`;
+
     if (args !== undefined) {
       console.log(formattedMsg, args);
     } else {
@@ -17,27 +17,67 @@ export function debug(msg: string, args?: any) {
     }
   }
 }
+
 export function log(message: string, args?: any) {
   message = `${CONSTANTS.MODULE_ID} | ${message}`;
-  console.log(message.replace('<br>', '\n'), args);
+
+  const formattedLog = message.replace('<br>', '\n');
+
+  if (args !== undefined) {
+    console.log(formattedLog, args);
+  } else {
+    console.log(formattedLog);
+  }
 }
+
 export function notify(message: string) {
   message = `${CONSTANTS.MODULE_ID} | ${message}`;
   ui.notifications?.notify(message);
   console.log(message.replace('<br>', '\n'));
 }
-export function info(info: string, notify = false) {
+
+export function info(info: string, notify = false, args?: any) {
   info = `${CONSTANTS.MODULE_ID} | ${info}`;
-  if (notify) ui.notifications?.info(info);
-  console.log(info.replace('<br>', '\n'));
+
+  if (notify) {
+    ui.notifications?.info(info);
+  }
+
+  const formattedInfo = info.replace('<br>', '\n');
+
+  if (args !== undefined) {
+    console.log(formattedInfo, args);
+  } else {
+    console.log(formattedInfo);
+  }
 }
-export function warn(warning: string, notify = false) {
+
+export function warn(warning: string, notify = false, args?: any) {
   warning = `${CONSTANTS.MODULE_ID} | ${warning}`;
-  if (notify) ui.notifications?.warn(warning);
-  console.warn(warning.replace('<br>', '\n'));
+
+  if (notify) {
+    ui.notifications?.warn(warning);
+  }
+
+  const formattedWarning = warning.replace('<br>', '\n');
+
+  if (args !== undefined) {
+    console.warn(formattedWarning, args);
+  } else {
+    console.warn(formattedWarning);
+  }
 }
+
 export function error(message: string, notify = true, args?: any) {
   message = `${CONSTANTS.MODULE_ID} | ${message}`;
-  if (notify) ui.notifications?.error(message);
-  console.error(message, args);
+
+  if (notify) {
+    ui.notifications?.error(message);
+  }
+
+  if (args !== undefined) {
+    console.error(message, args);
+  } else {
+    console.error(message);
+  }
 }

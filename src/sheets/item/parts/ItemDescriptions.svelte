@@ -5,6 +5,7 @@
   import Accordion from 'src/components/accordion/Accordion.svelte';
   import AccordionItem from 'src/components/accordion/AccordionItem.svelte';
   import { settingStore } from 'src/settings/settings';
+  import { CONSTANTS } from 'src/constants';
 
   /**
    * When true, descriptions are rendered to the DOM; else, they are excluded.
@@ -21,7 +22,9 @@
 
   let editorsContainers: HTMLElement[] = [];
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context = getContext<Readable<ItemSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const dispatcher = createEventDispatcher<{
     edit: {

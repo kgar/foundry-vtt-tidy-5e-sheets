@@ -16,6 +16,34 @@
 
   const migrations = [
     {
+      label: localize('TIDY5E.Settings.Migrations.NpcExhaustion.sectionTitle'),
+      migrationTallyVersion: 6,
+      onClick: () =>
+        new BulkMigrationsApplication(
+          CONSTANTS.TAB_MIGRATIONS_NPC_EXHAUSTION,
+        ).render(true),
+    },
+    {
+      label: localize(
+        'TIDY5E.Settings.Migrations.SpellClassToSourceClass.sectionTitle',
+      ),
+      migrationTallyVersion: 5,
+      onClick: () =>
+        new BulkMigrationsApplication(
+          CONSTANTS.TAB_MIGRATIONS_SPELL_CLASS_TO_SOURCE_CLASS,
+        ).render(true),
+    },
+    {
+      label: localize(
+        'TIDY5E.Settings.Migrations.BondsIdealsFlawsToSystem.sectionTitle',
+      ),
+      migrationTallyVersion: 5,
+      onClick: () =>
+        new BulkMigrationsApplication(
+          CONSTANTS.TAB_MIGRATIONS_BONDS_IDEALS_FLAWS_TO_SYSTEM,
+        ).render(true),
+    },
+    {
       label: localize(
         'TIDY5E.Settings.Migrations.FavoritesToSystem.sectionTitle',
       ),

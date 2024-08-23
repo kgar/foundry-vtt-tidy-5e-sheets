@@ -66,8 +66,8 @@
     "TIDY5E.EmptySection": "Questa sezione è vuota. Sblocca il foglio per modificare.",
     "TIDY5E.GMOnlyEdit": "Solo il tuo GM può modificare questa sezione.",
     "TIDY5E.AttunementWarning": "Sintonizzazione: non puoi sintonizzarti su più di {number} oggetti.",
-    "TIDY5E.AttunementItems": "Oggetti Sincronizzati",
-    "TIDY5E.AttunementMax": "Massimi Sincronizzati",
+    "TIDY5E.AttunementItems": "Oggetti Sintonizzati",
+    "TIDY5E.AttunementMax": "Massimi Sintonizzati",
     "TIDY5E.GridLayout": "Layout a Griglia",
     "TIDY5E.ListLayout": "Layout ad Elenco",
     "TIDY5E.LayoutNotSupported": "Modalità Layout non supportata",
@@ -86,7 +86,7 @@
     "TIDY5E.SearchHint": "Inizia a digitare ciò che stai cercando",
     "TIDY5E.ItemCardsKeyHint": "Mantieni premuto il tato per interagire con la scheda",
     "TIDY5E.ItemCardsMouseHint": "Tasti centrale del mouse per vedere/modificare oggetti",
-    "TIDY5E.AbbrMod": "Modif",
+    "TIDY5E.AbbrMod": "Mod",
     "TIDY5E.AbbrSavingThrow": "Salva",
     "TIDY5E.SpellAttackMod": "Mod Attacco con Incantesimo",
     "TIDY5E.PreparedSpells": "Incantesimi Preparati",
@@ -497,7 +497,7 @@
     "TIDY5E.Inventory.Weight.Tooltip": "Peso: {weight} {weightUnit}",
     "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
     "TIDY5E.EnvironmentTooltip": "Ambiente: {environment}",
-    "TIDY5E.AttackMod": "Modif Attacco",
+    "TIDY5E.AttackMod": "Mod Attacco",
     "TIDY5E.MaxPreparedSpellsConfig": {
         "ExamplesHeader": "Formule di Esempio",
         "Title": "Configurazione Massimi Incantesimi Preparati: {actorName}",
@@ -562,7 +562,7 @@
             "alphaExplanation2": "{boldStart}NB{boldEnd}: questa migrazione non influisce sul contenuto del compendio.",
             "sectionTitle": "Migrazioni Schede Tidy V1"
         },
-        "hint": "Se eri un utente del modulo Tidy5e Sheet originale o dei fogli Alpha, facoltativamente utilizza questo menu Migrazioni per migrare le impostazioni DM e i dati del foglio Tidy.",
+        "hint": "Se eri un utente del modulo Tidy5e Sheet originale, facoltativamente utilizza questo menu Migrazioni per migrare le impostazioni DM e i dati del foglio Tidy.",
         "migrationErrorMessage": "Si è verificato un errore. Maggiori dettagli sono nella console di sviluppo.",
         "migrationCompleteMessage": "Migrazione completa.",
         "migrateDocumentFlagsButtonLabel": "Migrazione dei flag del documento",
@@ -615,6 +615,18 @@
         "FavoritesToSystem": {
             "sectionTitle": "Preferiti dei Personaggi",
             "selectionDialogTitle": "Migrazione: Preferiti dei Personaggi a Sistema"
+        },
+        "BondsIdealsFlawsToSystem": {
+            "selectionDialogTitle": "Migrazione: Legami, Ideali e Difetti PNG a System",
+            "sectionTitle": "Legami, Ideali e Difetti PNG"
+        },
+        "SpellClassToSourceClass": {
+            "sectionTitle": "Classe Incantesimo a Classe Sorgente",
+            "selectionDialogTitle": "Migrazione: Classe Incantesimo a Classe Sorgente"
+        },
+        "NpcExhaustion": {
+            "sectionTitle": "Indebolimento PNG",
+            "selectionDialogTitle": "Migrazione: Indebolimento PNG a System"
         }
     },
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtri",
@@ -817,5 +829,13 @@
     },
     "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
         "name": "Colore Solo Rituale"
-    }
+    },
+    "TIDY5E.EmptyContainer": "Questo contenitore è vuoto.",
+    "TIDY5E.SpellSourceIdentifierLabelHint": "Il personaggio che possiede questo incantesimo non ha la classe sorgente specificata qui.",
+    "TIDY5E.Utilities.Tools": "Attrezzi",
+    "TIDY5E.Utilities.AssignSpellsToClasses": "Assegna Incantesimi a Classi",
+    "TIDY5E.SpellSourceClassAssignments.Identifier": "Identificatore Classe Sorgente",
+    "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "L'identificatore della classe sorgente dell'incantesimo appare qui. Per assegnare un identificatore che il personaggio non possiede, inserisci l'identificatore della classe in questo campo di testo.",
+    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Mostra Solo Non Assegnato",
+    "TIDY5E.SpellSourceIdentifierSelectText": "Identificatore Classe: {identifier}"
 }

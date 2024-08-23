@@ -5,8 +5,11 @@
   import TextInputSetting from 'src/applications/settings/parts/TextInputSetting.svelte';
   import SelectSetting from 'src/applications/settings/parts/SelectSetting.svelte';
   import type { WorldSettingsContextStore } from '../WorldSettings.types';
+  import { CONSTANTS } from 'src/constants';
 
-  const context = getContext<WorldSettingsContextStore>('context');
+  const context = getContext<WorldSettingsContextStore>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 </script>
 
 <CheckboxSetting

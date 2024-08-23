@@ -6,35 +6,37 @@
     NpcSheetContext,
   } from 'src/types/types';
   import type { Item5e } from 'src/types/item.types';
-  import ItemTable from '../../../components/item-list/v1/ItemTable.svelte';
-  import ItemTableHeaderRow from '../../../components/item-list/v1/ItemTableHeaderRow.svelte';
-  import ItemTableColumn from '../../../components/item-list/v1/ItemTableColumn.svelte';
+  import ItemTable from '../../components/item-list/v1/ItemTable.svelte';
+  import ItemTableHeaderRow from '../../components/item-list/v1/ItemTableHeaderRow.svelte';
+  import ItemTableColumn from '../../components/item-list/v1/ItemTableColumn.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
-  import GridPaneFavoriteIcon from '../../../components/item-grid/GridPaneFavoriteIcon.svelte';
+  import GridPaneFavoriteIcon from '../../components/item-grid/GridPaneFavoriteIcon.svelte';
   import { getContext } from 'svelte';
   import type { Readable, Writable } from 'svelte/store';
-  import TextInput from '../../../components/inputs/TextInput.svelte';
+  import TextInput from '../../components/inputs/TextInput.svelte';
   import { settingStore } from 'src/settings/settings';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import { declareLocation } from 'src/types/location-awareness.types';
   import { TidyHooks } from 'src/foundry/TidyHooks';
+  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   export let section: InventorySection;
   export let items: Item5e[];
-  /**
-   * An optional subset of item IDs which will hide all other items not included in this set.
-   * Useful for showing only search results, for example.
-   */
-  export let visibleItemIdSubset: Set<string> | null = null;
-  let context =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
-  let card = getContext<Writable<ItemCardStore>>('card');
+
+  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+  let card = getContext<Writable<ItemCardStore>>(CONSTANTS.SVELTE_CONTEXT.CARD);
 
   $: customCommands = ActorItemRuntime.getActorItemSectionCommands({
     actor: $context.actor,
     section,
   });
+
+  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
+    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
+  );
 
   const localize = FoundryAdapter.localize;
 
@@ -89,13 +91,15 @@
   declareLocation('inventory-grid');
 </script>
 
-<ItemTable key={section.key}>
+<ItemTable key={section.key} data-custom-section={section.custom ? true : null}>
   <svelte:fragment slot="header">
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>
         <span class="inventory-primary-column-label">
-          {localize(section.label)} ({visibleItemIdSubset?.size ??
-            items.length})
+          {localize(section.label)} ({ItemVisibility.countVisibleItems(
+            items,
+            $itemIdsToShow,
+          )})
         </span>
       </ItemTableColumn>
     </ItemTableHeaderRow>
@@ -103,8 +107,7 @@
   <div class="items" slot="body">
     {#each items as item (item.id)}
       {@const ctx = $context.itemContext[item.id]}
-      {@const hidden =
-        visibleItemIdSubset !== null && !visibleItemIdSubset.has(item.id)}
+      {@const hidden = !!$itemIdsToShow && !$itemIdsToShow.has(item.id)}
       <button
         type="button"
         class="item {getInventoryRowClasses(item)} transparent-button"
@@ -146,7 +149,7 @@
           </div>
         </div>
 
-        {#if 'attunement' in ctx && !FoundryAdapter.concealDetails(item)}
+        {#if ctx.attunement && !FoundryAdapter.concealDetails(item)}
           <i
             class="fas fa-sun icon-attuned {ctx.attunement?.cls ??
               ''} no-pointer-events"
@@ -154,7 +157,6 @@
           />
         {/if}
 
-        <!-- TODO: Put this in itemContext -->
         {#if 'favoriteId' in ctx && !!ctx.favoriteId}
           <GridPaneFavoriteIcon />
         {/if}

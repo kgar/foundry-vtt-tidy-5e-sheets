@@ -14,8 +14,11 @@
   import { settingStore } from 'src/settings/settings';
   import ExhaustionInput from 'src/sheets/actor/ExhaustionInput.svelte';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<CharacterSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   $: incapacitated =
     ($context.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&

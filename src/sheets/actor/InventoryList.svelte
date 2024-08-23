@@ -1,37 +1,40 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Item5e } from 'src/types/item.types';
-  import ItemTable from '../../../components/item-list/v1/ItemTable.svelte';
-  import ItemTableHeaderRow from '../../../components/item-list/v1/ItemTableHeaderRow.svelte';
-  import ItemTableRow from '../../../components/item-list/v1/ItemTableRow.svelte';
-  import ItemTableFooter from '../../../components/item-list/ItemTableFooter.svelte';
-  import ItemTableColumn from '../../../components/item-list/v1/ItemTableColumn.svelte';
-  import ItemTableCell from '../../../components/item-list/v1/ItemTableCell.svelte';
-  import ItemUseButton from '../../../components/item-list/ItemUseButton.svelte';
-  import ItemName from '../../../components/item-list/ItemName.svelte';
+  import ItemTable from '../../components/item-list/v1/ItemTable.svelte';
+  import ItemTableHeaderRow from '../../components/item-list/v1/ItemTableHeaderRow.svelte';
+  import ItemTableRow from '../../components/item-list/v1/ItemTableRow.svelte';
+  import ItemTableFooter from '../../components/item-list/ItemTableFooter.svelte';
+  import ItemTableColumn from '../../components/item-list/v1/ItemTableColumn.svelte';
+  import ItemTableCell from '../../components/item-list/v1/ItemTableCell.svelte';
+  import ItemUseButton from '../../components/item-list/ItemUseButton.svelte';
+  import ItemName from '../../components/item-list/ItemName.svelte';
   import { CONSTANTS } from 'src/constants';
-  import ItemUses from '../../../components/item-list/ItemUses.svelte';
-  import ItemAddUses from '../../../components/item-list/ItemAddUses.svelte';
-  import ItemDeleteControl from '../../../components/item-list/controls/ItemDeleteControl.svelte';
-  import ItemEditControl from '../../../components/item-list/controls/ItemEditControl.svelte';
-  import EquipControl from '../../../components/item-list/controls/EquipControl.svelte';
-  import AttuneControl from '../../../components/item-list/controls/AttuneControl.svelte';
-  import InlineFavoriteIcon from '../../../components/item-list/InlineFavoriteIcon.svelte';
-  import ItemFavoriteControl from '../../../components/item-list/controls/ItemFavoriteControl.svelte';
+  import ItemUses from '../../components/item-list/ItemUses.svelte';
+  import ItemAddUses from '../../components/item-list/ItemAddUses.svelte';
+  import ItemDeleteControl from '../../components/item-list/controls/ItemDeleteControl.svelte';
+  import ItemEditControl from '../../components/item-list/controls/ItemEditControl.svelte';
+  import EquipControl from '../../components/item-list/controls/EquipControl.svelte';
+  import AttuneControl from '../../components/item-list/controls/AttuneControl.svelte';
+  import InlineFavoriteIcon from '../../components/item-list/InlineFavoriteIcon.svelte';
+  import ItemFavoriteControl from '../../components/item-list/controls/ItemFavoriteControl.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type {
     CharacterSheetContext,
     InventorySection,
+    NpcSheetContext,
     RenderableClassicControl,
   } from 'src/types/types';
-  import AmmoSelector from '../../actor/AmmoSelector.svelte';
+  import AmmoSelector from './AmmoSelector.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { coalesce } from 'src/utils/formatting';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
-  import { TidyFlags } from 'src/foundry/TidyFlags';
+  import InlineContainerToggle from '../container/InlineContainerToggle.svelte';
+  import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+  import InlineContainerView from '../container/InlineContainerView.svelte';
 
   export let primaryColumnName: string;
   export let items: Item5e[];
@@ -40,13 +43,18 @@
   export let lockControls: boolean = false;
   export let allowFavoriteIconNextToName: boolean = true;
   export let includeWeightColumn: boolean = true;
-  /**
-   * An optional subset of item IDs which will hide all other items not included in this set.
-   * Useful for showing only search results, for example.
-   */
-  export let visibleItemIdSubset: Set<string> | null = null;
 
-  let context = getContext<Readable<CharacterSheetContext>>('context');
+  let inlineContainerToggleService = getContext<InlineContainerToggleService>(
+    CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
+  );
+
+  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+
+  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
+    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
+  );
 
   const localize = FoundryAdapter.localize;
   const weightUnit = FoundryAdapter.getWeightUnit();
@@ -74,19 +82,23 @@
         }),
         visible: ({ ctx }) => ctx?.canToggle === true,
       },
-      {
+    );
+
+    if ('favorites' in $context.actor.system) {
+      controls.push({
         component: ItemFavoriteControl,
         props: ({ item }) => ({
           item,
         }),
-      },
-      {
-        component: ItemEditControl,
-        props: ({ item }) => ({
-          item,
-        }),
-      },
-    );
+      });
+    }
+
+    controls.push({
+      component: ItemEditControl,
+      props: ({ item }) => ({
+        item,
+      }),
+    });
 
     if ($context.unlocked) {
       controls.push({
@@ -127,7 +139,10 @@
 </script>
 
 <section class="inventory-list-section">
-  <ItemTable key={section.key}>
+  <ItemTable
+    key={section.key}
+    data-custom-section={section.custom ? true : null}
+  >
     <svelte:fragment slot="header">
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>
@@ -175,12 +190,14 @@
           }}
           let:toggleSummary
           cssClass={getInventoryRowClasses(item)}
-          hidden={visibleItemIdSubset !== null &&
-            !visibleItemIdSubset.has(item.id)}
-          favoriteId={ctx.favoriteId}
+          hidden={!!$itemIdsToShow && !$itemIdsToShow.has(item.id)}
+          favoriteId={'favoriteId' in ctx ? ctx.favoriteId : null}
         >
           <ItemTableCell primary={true}>
             <ItemUseButton disabled={!$context.editable} {item} />
+            {#if 'containerContents' in ctx && !!ctx.containerContents}
+              <InlineContainerToggle {item} {inlineContainerToggleService} />
+            {/if}
             <ItemName
               on:toggle={() => toggleSummary($context.actor)}
               cssClass="extra-small-gap"
@@ -262,6 +279,16 @@
             </ItemTableCell>
           {/if}
         </ItemTableRow>
+        {#if 'containerContents' in ctx && !!ctx.containerContents}
+          <InlineContainerView
+            container={item}
+            containerContents={ctx.containerContents}
+            editable={$context.editable}
+            {inlineContainerToggleService}
+            lockItemQuantity={$context.lockItemQuantity}
+            sheetDocument={$context.actor}
+          />
+        {/if}
       {/each}
       {#if $context.unlocked && section.canCreate}
         <ItemTableFooter actor={$context.actor} {section} isItem={true} />

@@ -1083,20 +1083,6 @@ export function createSettings() {
         },
       },
 
-      useNpcRest: {
-        options: {
-          name: 'TIDY5E.Settings.UseNPCRest.name',
-          hint: 'TIDY5E.Settings.UseNPCRest.hint',
-          scope: 'world',
-          config: false,
-          default: false,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>('useNpcRest');
-        },
-      },
-
       showNpcRestInChat: {
         options: {
           name: 'TIDY5E.Settings.ShowNPCRestInChat.name',
@@ -1308,22 +1294,6 @@ export function createSettings() {
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
             'useSpellClassFilterIcons'
-          );
-        },
-      },
-
-      spellClassFilterAdditionalClasses: {
-        options: {
-          name: 'TIDY5E.Settings.SpellClassFilterAdditionalClasses.name',
-          hint: 'TIDY5E.Settings.SpellClassFilterAdditionalClasses.hint',
-          scope: 'client',
-          config: false,
-          default: '',
-          type: String,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<string>(
-            'spellClassFilterAdditionalClasses'
           );
         },
       },
@@ -1738,7 +1708,8 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerRitualOnlyOutline.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5e-ritual-only-outline-color'],
+          default:
+            defaultLightTheme.variables['--t5e-ritual-only-outline-color'],
           config: false,
         },
         get() {
@@ -1753,7 +1724,8 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerRitualOnlyAccent.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5e-ritual-only-accent-color'],
+          default:
+            defaultLightTheme.variables['--t5e-ritual-only-accent-color'],
           config: false,
         },
         get() {

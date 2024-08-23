@@ -10,11 +10,14 @@
     trySetRootCssVariable,
     colorToHexaString,
   } from 'src/theme/theme';
+  import { CONSTANTS } from 'src/constants';
 
   export let colorToConfigure: ThemeColorSetting;
 
-  let appId = getContext('appId');
-  let context = getContext<Writable<CurrentSettings>>('context');
+  let appId = getContext(CONSTANTS.SVELTE_CONTEXT.APP_ID);
+  let context = getContext<Writable<CurrentSettings>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
   let colorPickerIsOpen: boolean = false;
 
   const eyeDropperEnabled = 'EyeDropper' in window;
@@ -37,7 +40,7 @@
     trySetRootCssVariable(
       colorToConfigure.cssVariable,
       value,
-      $context.colorPickerEnabled
+      $context.colorPickerEnabled,
     );
     $context = {
       ...$context,
@@ -70,7 +73,7 @@
       isDialog={true}
       label=""
       hex={settingValueToHexaString(
-        $context[colorToConfigure.key]?.toString() ?? ''
+        $context[colorToConfigure.key]?.toString() ?? '',
       ).hexa}
       on:input={(ev) =>
         colorPickerIsOpen &&

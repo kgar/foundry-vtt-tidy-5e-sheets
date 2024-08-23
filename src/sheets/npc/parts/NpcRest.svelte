@@ -4,8 +4,11 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import { settingStore } from 'src/settings/settings';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<NpcSheetContext>>('context');
+  let context = getContext<Readable<NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>

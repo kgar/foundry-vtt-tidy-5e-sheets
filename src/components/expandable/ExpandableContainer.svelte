@@ -7,13 +7,37 @@
   let expandableContainer: HTMLElement;
 
   onMount(() => {
-    expandableContainer.addEventListener('transitionstart', () => {
-      overflowYHidden = true;
-    });
+    const controller = new AbortController();
+    const signal = controller.signal;
 
-    expandableContainer.addEventListener('transitionend', () => {
-      overflowYHidden = !expanded;
-    });
+    expandableContainer.addEventListener(
+      'transitionstart',
+      (ev) => {
+        if (ev.target === expandableContainer) {
+          overflowYHidden = true;
+        }
+      },
+      {
+        signal: signal,
+      },
+    );
+
+    expandableContainer.addEventListener(
+      'transitionend',
+      (ev) => {
+        if (ev.target === expandableContainer) {
+          overflowYHidden = !expanded;
+        }
+      },
+
+      {
+        signal: signal,
+      },
+    );
+
+    return () => {
+      controller.abort();
+    };
   });
 </script>
 
@@ -33,12 +57,11 @@
   .expandable {
     display: grid;
     grid-template-rows: 0fr;
+    transition: grid-template-rows 0.2s ease;
 
     &.expanded {
       grid-template-rows: 1fr;
     }
-
-    transition: grid-template-rows 0.2s ease;
   }
 
   .overflow-y-hidden :global(> *) {

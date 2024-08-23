@@ -17,14 +17,16 @@
   import type { Readable } from 'svelte/store';
   import Notice from 'src/components/notice/Notice.svelte';
   import { declareLocation } from 'src/types/location-awareness.types';
-  import CharacterConditions from '../parts/CharacterConditions.svelte';
+  import ActorConditions from '../../actor/ActorConditions.svelte';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
   import ActorEffectToggleControl from 'src/components/item-list/controls/ActorEffectToggleControl.svelte';
   import EffectFavoriteControl from 'src/components/item-list/controls/EffectFavoriteControl.svelte';
   import InlineFavoriteIcon from 'src/components/item-list/InlineFavoriteIcon.svelte';
   import { settingStore } from 'src/settings/settings';
 
-  let context = getContext<Readable<ActorSheetContext>>('context');
+  let context = getContext<Readable<ActorSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 
@@ -191,6 +193,6 @@
     {/each}
   {/if}
   {#if $context.conditions}
-    <CharacterConditions />
+    <ActorConditions />
   {/if}
 </div>

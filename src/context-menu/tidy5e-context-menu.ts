@@ -209,7 +209,10 @@ function getItemContextOptions(item: Item5e) {
   }
 
   // Toggle Attunement State
-  if (!!item.system.attunement && !FoundryAdapter.concealDetails(item)) {
+  if (
+    !!CONFIG.DND5E.attunementTypes[item.system.attunement] &&
+    !FoundryAdapter.concealDetails(item)
+  ) {
     options.push({
       name: item.system.attuned
         ? 'TIDY5E.ContextMenuActionUnattune'
@@ -221,6 +224,22 @@ function getItemContextOptions(item: Item5e) {
         item.update({
           'system.attuned': !item.system.attuned,
         }),
+    });
+  }
+
+  // Toggle Charged State
+  if (item.system.recharge?.value) {
+    options.push({
+      name: item.system.recharge.charged
+        ? 'DND5E.ContextMenuActionExpendCharge'
+        : 'DND5E.ContextMenuActionCharge',
+      icon: '<i class="fa-solid fa-bolt"></i>',
+      callback: () =>
+        item.update({
+          'system.recharge.charged': !item.system.recharge?.charged,
+        }),
+      condition: () => item.isOwner,
+      group: 'state',
     });
   }
 

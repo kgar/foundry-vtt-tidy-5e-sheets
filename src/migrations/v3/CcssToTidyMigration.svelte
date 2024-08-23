@@ -10,6 +10,7 @@
   } from './ccss-to-tidy';
   import { isNil } from 'src/utils/data';
   import { TidyFlags } from 'src/foundry/TidyFlags';
+  import type { CompendiumToMigrate } from '../migration.types';
 
   let migrating = false;
   let overwrite = false;
@@ -42,7 +43,7 @@
 
       const worldItemsToMigrate = Array.from<any>(game.items).map((item) => ({
         item,
-        unlinked: false,
+        unlinked: true,
       }));
 
       const itemsToMigrate = [
@@ -136,14 +137,6 @@
       error('An error occurred while preparing a bulk migration', false, e);
     }
   }
-
-  // TODO: Extract compendium migration to share for future (and past) migrations.
-  type CompendiumToMigrate = {
-    label: string;
-    type: string;
-    id: string;
-    size: number;
-  };
 
   async function migrateCompendia() {
     const compendiaForMigrating = Array.from(game.packs.values())

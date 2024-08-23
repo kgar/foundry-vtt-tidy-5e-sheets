@@ -9,7 +9,9 @@
   import LimitedHeader from '../actor/LimitedHeader.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
 
-  let context = getContext<Readable<NpcSheetContext>>('context');
+  let context = getContext<Readable<NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -26,8 +28,8 @@
             {localize('DND5E.Appearance')}
           </div>
           <SheetEditor
-            content={TidyFlags.tryGetFlag($context.actor, 'appearance') ?? ''}
-            target="flags.{CONSTANTS.MODULE_ID}.appearance"
+            content={TidyFlags.appearance.get($context.actor) ?? ''}
+            target={TidyFlags.appearance.prop}
             editable={$context.editable}
           />
         </article>

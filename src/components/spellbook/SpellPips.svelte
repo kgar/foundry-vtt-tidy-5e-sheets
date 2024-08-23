@@ -7,11 +7,13 @@
   import { getContext, type ComponentProps } from 'svelte';
   import type { Readable } from 'svelte/store';
   import SpellPip from './SpellPip.svelte';
+  import { CONSTANTS } from 'src/constants';
 
   type SpellPipProps = ComponentProps<SpellPip> & { index: number };
 
-  let context =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
   export let section: SpellbookSection;
 
   let targetedDotIndex: number | null = null;

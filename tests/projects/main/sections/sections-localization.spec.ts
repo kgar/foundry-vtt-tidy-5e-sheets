@@ -95,6 +95,20 @@ sectionsTest.describe('NPC', () => {
   // TODO: test localization key section for
   // - Abilities -
   const itemsToTest: DefaultSectionTestParams[] = [
+    {
+      itemCreationArgs: {
+        name: `Localization weapon test`,
+        type: CONSTANTS.ITEM_TYPE_WEAPON,
+        flags: {
+          ['tidy5e-sheet']: {
+            [TidyFlags.section.key]: 'TIDY5E.LocalizationTestKey',
+          },
+        },
+      },
+      sectionKey: 'TIDY5E.LocalizationTestKey',
+      sectionLabel: 'Localization Test Key',
+      tabId: CONSTANTS.TAB_NPC_INVENTORY,
+    },
     ...NpcSheetSections.abilitiesItemTypes.map((itemType) => ({
       itemCreationArgs: {
         name: `Test ${itemType}`,

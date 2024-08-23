@@ -1,13 +1,16 @@
 <script lang="ts">
   import HpBar from 'src/components/bar/HpBar.svelte';
   import ResourceWithBar from 'src/components/bar/ResourceWithBar.svelte';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
+  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
   import type { VehicleSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  let context = getContext<Readable<VehicleSheetContext>>('context');
+
+  let context = getContext<Readable<VehicleSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>

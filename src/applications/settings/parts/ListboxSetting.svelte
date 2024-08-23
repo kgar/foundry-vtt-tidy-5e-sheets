@@ -22,8 +22,8 @@
     </p>
     <div class="flex-column small-gap">
       <SelectionListbox bind:leftItems bind:rightItems {labelProp} {valueProp}>
-        <b slot="left-header">{localize(leftHeader)}</b>
-        <b slot="right-header">{localize(rightHeader)}</b>
+        <b slot="leftHeader">{localize(leftHeader)}</b>
+        <b slot="rightHeader">{localize(rightHeader)}</b>
       </SelectionListbox>
       <slot name="below-listbox" />
     </div>

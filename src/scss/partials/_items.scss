@@ -427,19 +427,25 @@ input[type='checkbox'] {
     }
   }
 
+  // Account for injected handlebars content when applying margin-top via combinators
+  .form-group + .form-group,
+  .form-group + [style*='display: contents'] > .form-group,
+  [style*='display: contents']:has(> .form-group) + .form-group,
+  .form-group + [data-tidy-render-scheme='handlebars'] > .form-group,
+  [data-tidy-render-scheme='handlebars']:has(> .form-group) + .form-group {
+    margin-top: 0.125rem;
+  }
+
   .form-group {
     margin: 0;
 
-    & + .form-group {
-      margin-top: 0.125rem;
-    }
     padding: 0.1875rem;
     background: var(--t5e-faintest-color);
     border-radius: 0.3125rem;
 
     .form-fields {
       justify-content: flex-start;
-      gap: 0.0625rem;
+      gap: 0.25rem;
 
       &.spell-preparation-mode {
         gap: 0.25rem;
@@ -448,8 +454,6 @@ input[type='checkbox'] {
       &.flex-wrap {
         flex-wrap: wrap;
       }
-
-      gap: 0.25rem;
 
       > * {
         &.flex-basis-full {
@@ -538,7 +542,7 @@ input[type='checkbox'] {
     }
 
     input:disabled {
-      background: rgba(255, 255, 255, 0.035);      
+      background: rgba(255, 255, 255, 0.035);
       color: var(--t5e-secondary-color);
 
       &:hover {
@@ -930,4 +934,9 @@ ol.info {
   .list-controls button {
     --size: 2rem;
   }
+}
+
+// TODO: In the design overhaul and in CSS revamping for classic sheets, find ways to generalize this. Consider even using bootstrap-style utility classes.
+.source-class-unowned-class-hint-icon {
+  margin: 0 0.25rem;
 }

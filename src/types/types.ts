@@ -1,5 +1,6 @@
-import type { ComponentProps, ComponentType, SvelteComponent } from 'svelte';
+import type { ComponentType, SvelteComponent } from 'svelte';
 import type {
+  ContainerContents,
   Item5e,
   ItemCardContentComponent,
   ItemChatData,
@@ -17,6 +18,7 @@ import type { DocumentFilters } from 'src/runtime/item/item.types';
 import type { Writable } from 'svelte/store';
 import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
 import type { CONSTANTS } from 'src/constants';
+import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 
 export type Actor5e = any;
 
@@ -196,12 +198,11 @@ export type CharacterItemContext = {
   availableLevels?: AvailableLevel[];
   canToggle?: boolean;
   concealDetails?: boolean;
+  containerContents?: ContainerContents;
   favoriteId?: string;
   group?: string;
   hasTarget?: boolean;
   hasUses?: boolean;
-  isDepleted?: boolean;
-  isOnCooldown?: boolean;
   isStack?: boolean;
   toggleClass?: string;
   toggleTitle?: string;
@@ -247,6 +248,7 @@ export type CharacterSheetContext = {
   appearanceEnrichedHtml: string;
   biographyEnrichedHtml: string;
   bondEnrichedHtml: string;
+  conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
   favorites: FavoriteSection[];
   features: CharacterFeatureSection[];
@@ -278,27 +280,31 @@ export type NpcAbilitySection = {
 } & FeatureSection;
 
 export type NpcItemContext = {
+  attunement?: AttunementContext;
+  availableLevels?: AvailableLevel[];
   canToggle?: boolean;
+  concentration?: boolean;
+  containerContents?: ContainerContents;
   hasTarget?: boolean;
   hasUses?: boolean;
-  isDepleted?: boolean;
-  isOnCooldown?: boolean;
   isStack?: boolean;
-  toggleTitle?: string;
-  availableLevels?: AvailableLevel[];
-  concentration?: boolean;
   parent?: Item5e;
+  toggleTitle?: string;
+  totalWeight?: number;
 };
 
 export type NpcSheetContext = {
   appearanceEnrichedHtml: string;
   biographyEnrichedHtml: string;
   bondEnrichedHtml: string;
+  conditions: Dnd5eActorCondition[];
+  containerPanelItems: ContainerPanelItemContext[];
   encumbrance: any;
   features: NpcAbilitySection[];
   flawEnrichedHtml: string;
   hideEmptySpellbook: boolean;
   idealEnrichedHtml: string;
+  inventory: InventorySection[];
   itemContext: Record<string, NpcItemContext>;
   maxPreparedSpellsTotal: number;
   notes1EnrichedHtml: string;
@@ -308,6 +314,7 @@ export type NpcSheetContext = {
   notesEnrichedHtml: string;
   preparedSpells: number;
   shortRest: (event: Event) => Promise<void>;
+  showContainerPanel: boolean;
   showLegendaryToolbar: boolean;
   showSpellbookTab: boolean;
   spellbook: SpellbookSection[];
@@ -321,10 +328,9 @@ export type NpcSheetContext = {
 
 export type VehicleItemContext = {
   canToggle?: boolean;
+  containerContents?: ContainerContents;
   cover?: string;
   hasUses?: boolean;
-  isDepleted?: boolean;
-  isOnCooldown?: boolean;
   threshold?: number | string;
   toggleClass?: string;
   toggleTitle?: string;
@@ -353,6 +359,7 @@ export type ActionItem = {
   calculatedDerivedDamage: DerivedDamage[];
   rangeTitle: string | null;
   rangeSubtitle: string | null;
+  containerContents?: ContainerContents;
 };
 
 export type ActionSection = {

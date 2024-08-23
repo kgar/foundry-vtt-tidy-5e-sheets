@@ -1,5 +1,6 @@
 <script lang="ts">
   import TextInput from 'src/components/inputs/TextInput.svelte';
+  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
   import type { ContainerSheetContext, Item5e } from 'src/types/item.types';
@@ -10,8 +11,9 @@
 
   export let document: Actor5e | Item5e;
 
-  let context =
-    getContext<Readable<ActorSheetContext | ContainerSheetContext>>('context');
+  let context = getContext<Readable<ActorSheetContext | ContainerSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   $: currencies = Object.entries(document.system.currency).map((e) => ({
     key: e[0],
@@ -66,62 +68,3 @@
     </li>
   </ol>
 </div>
-
-<style lang="scss">
-  .inventory-currency {
-    --currency-line-height: 1.875rem;
-
-    .currency {
-      display: flex;
-      align-items: center;
-      list-style: none;
-      gap: 0.5rem;
-      margin: 0.25rem 0;
-      padding: 0;
-
-      .currency-item {
-        display: flex;
-        align-items: center;
-        background: var(--t5e-faint-color);
-        border-radius: 0.3125rem;
-        line-height: var(--currency-line-height);
-        padding-right: 0.5rem;
-
-        :global(input) {
-          text-align: right;
-          flex: 1;
-          padding-left: 0.5rem;
-        }
-
-        label {
-          margin-left: 0.25rem;
-          flex: 0 0 auto;
-        }
-
-        &.convert {
-          padding: 0;
-          flex: 0 0 0.0625rem;
-          text-align: center;
-          white-space: nowrap;
-        }
-
-        .currency-convert {
-          line-height: var(--currency-line-height);
-          border: none;
-          background: var(--t5e-faintest-color);
-          color: var(--t5e-secondary-color);
-          border-radius: 0.3125rem;
-          padding: 0 0.375rem;
-
-          &:hover {
-            background: var(--t5e-light-color);
-          }
-        }
-
-        .denomination {
-          text-transform: uppercase;
-        }
-      }
-    }
-  }
-</style>

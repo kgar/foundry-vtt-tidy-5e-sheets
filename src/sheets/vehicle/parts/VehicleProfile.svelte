@@ -11,8 +11,11 @@
   import ExhaustionInput from 'src/sheets/actor/ExhaustionInput.svelte';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { TidyFlags } from 'src/foundry/TidyFlags';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<VehicleSheetContext>>('context');
+  let context = getContext<Readable<VehicleSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   function onLevelSelected(event: CustomEvent<{ level: number }>) {
     TidyFlags.setFlag($context.actor, 'exhaustion', event.detail.level);
@@ -22,29 +25,29 @@
 <ActorProfile useHpOverlay={$settingStore.useHpOverlayVehicle}>
   {#if $settingStore.useExhaustion && $settingStore.vehicleExhaustionConfig.type === 'specific'}
     <ExhaustionTracker
-      level={TidyFlags.tryGetFlag($context.actor, 'exhaustion') ?? 0}
+      level={TidyFlags.exhaustion.get($context.actor) ?? 0}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
       exhaustionConfig={$settingStore.vehicleExhaustionConfig}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
         $context.actor,
-        'flags.tidy5e-sheet.exhaustion',
+        TidyFlags.exhaustion.prop,
       )}
     />
   {:else if $settingStore.useExhaustion && $settingStore.vehicleExhaustionConfig.type === 'open'}
     <ExhaustionInput
-      level={TidyFlags.tryGetFlag($context.actor, 'exhaustion') ?? 0}
+      level={TidyFlags.exhaustion.get($context.actor) ?? 0}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
         $context.actor,
-        'flags.tidy5e-sheet.exhaustion',
+        TidyFlags.exhaustion.prop,
       )}
     />
   {/if}
   {#if $settingStore.useVehicleMotion}
     <VehicleMovement
-      motion={TidyFlags.tryGetFlag($context.actor, 'motion') === true}
+      motion={TidyFlags.motion.get($context.actor) === true}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-right'}
       animate={true}
     />

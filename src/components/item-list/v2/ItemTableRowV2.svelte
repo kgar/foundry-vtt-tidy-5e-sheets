@@ -35,19 +35,25 @@
     unidentified: { description: '' },
   };
 
-  const expandedItemData = getContext<ExpandedItemData>('expandedItemData');
-  const context = getContext<Writable<unknown>>('context');
-  const expandedItems =
-    getContext<ExpandedItemIdToLocationsMap>('expandedItems');
-  const onItemToggled = getContext<OnItemToggledFn>('onItemToggled');
-  const dispatcher = createEventDispatcher<{ mousedown: MouseEvent }>();
-  const location = getContext<string>('location');
+  const expandedItemData = getContext<ExpandedItemData>(
+    CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA,
+  );
+  const context = getContext<Writable<unknown>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+  const expandedItems = getContext<ExpandedItemIdToLocationsMap>(
+    CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEMS,
+  );
+  const onItemToggled = getContext<OnItemToggledFn>(
+    CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TOGGLED,
+  );
+  const location = getContext<string>(CONSTANTS.SVELTE_CONTEXT.LOCATION);
 
-  let card: Writable<ItemCardStore> | undefined =
-    getContext<Writable<ItemCardStore>>('card');
+  let card: Writable<ItemCardStore> | undefined = getContext<
+    Writable<ItemCardStore>
+  >(CONSTANTS.SVELTE_CONTEXT.CARD);
   let showSummary = false;
   let chatData: ItemChatData | undefined;
-  let useTransition: boolean = false;
 
   async function toggleSummary() {
     if (!item) {
@@ -103,11 +109,8 @@
 
   function restoreItemSummaryIfExpanded() {
     if (!item) {
-      useTransition = true;
       return;
     }
-
-    useTransition = false;
 
     const isExpandedAtThisLocation = expandedItems?.get(item.id)?.has(location);
 
@@ -115,10 +118,6 @@
       chatData = expandedItemData.get(item.id);
       showSummary = true;
     }
-
-    setTimeout(() => {
-      useTransition = true;
-    });
   }
 
   onMount(() => {
@@ -132,11 +131,7 @@
       }
 
       if (item && showSummary) {
-        item
-          .getChatData({ secrets: item.actor.isOwner })
-          .then((data: ItemChatData) => {
-            chatData = data;
-          });
+        chatData = await item.getChatData({ secrets: item.actor.isOwner });
       } else if (item && !showSummary && chatData) {
         // Reset chat data for non-expanded, hydrated chatData
         // so it rehydrates on next open
@@ -173,11 +168,7 @@
 
     <svelte:fragment slot="after-row">
       <ExpandableContainer expanded={showSummary}>
-        <ItemSummary
-          chatData={chatData ?? emptyChatData}
-          {useTransition}
-          {item}
-        />
+        <ItemSummary chatData={chatData ?? emptyChatData} {item} />
       </ExpandableContainer>
     </svelte:fragment>
   </TidyTableRow>

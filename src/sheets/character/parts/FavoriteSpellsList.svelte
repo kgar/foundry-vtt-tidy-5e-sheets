@@ -19,20 +19,24 @@
   import SpellSlotManagement from 'src/components/spellbook/SpellSlotManagement.svelte';
   import ConcentrationOverlayIcon from 'src/components/spellbook/ConcentrationOverlayIcon.svelte';
 
-  let context = getContext<Readable<CharacterSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
   export let section: SpellbookSection;
   export let spells: any[];
-  /**
-   * An optional subset of item IDs which will hide all other items not included in this set.
-   * Useful for showing only search results, for example.
-   */
-  export let visibleItemIdSubset: Set<string> | null = null;
+
+  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
+    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <section class="spellbook-list-section">
-  <ItemTable key={section.key}>
+  <ItemTable
+    key={section.key}
+    data-custom-section={section.custom ? true : null}
+  >
     <svelte:fragment slot="header">
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>
@@ -77,8 +81,7 @@
           }}
           let:toggleSummary
           cssClass={FoundryAdapter.getSpellRowClasses(spell)}
-          hidden={visibleItemIdSubset !== null &&
-            !visibleItemIdSubset.has(spell.id)}
+          hidden={!!$itemIdsToShow && !$itemIdsToShow.has(spell.id)}
           favoriteId={ctx.favoriteId}
         >
           <ItemTableCell primary={true}>

@@ -20,8 +20,6 @@ import {
   type MessageBusMessage,
   type MessageBus,
   type Utilities,
-  type ContainerPanelItemContext,
-  type ContainerCapacityContext,
   type ActiveEffect5e,
   type ActorInventoryTypes,
   type CharacterItemPartitions,
@@ -56,15 +54,13 @@ import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
 import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { AsyncMutex } from 'src/utils/mutex';
-import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPreferencesRuntime';
 import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSections';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
-import { ActorSheetCustomSectionMixin } from './mixins/Tidy5eBaseActorSheetMixins';
-import { ItemUtils } from 'src/utils/ItemUtils';
+import { BaseSheetCustomSectionMixin } from './mixins/BaseSheetCustomSectionMixin';
 import { Inventory } from 'src/features/sections/Inventory';
 import type {
   CharacterFavorite,
@@ -72,9 +68,13 @@ import type {
 } from 'src/foundry/dnd5e.types';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { TidyFlags } from 'src/foundry/TidyFlags';
+import { Container } from 'src/features/containers/Container';
+import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 
 export class Tidy5eCharacterSheet
-  extends ActorSheetCustomSectionMixin(
+  extends BaseSheetCustomSectionMixin(
+    (object) => object.items,
     dnd5e.applications.actor.ActorSheet5eCharacter
   )
   implements
@@ -91,6 +91,7 @@ export class Tidy5eCharacterSheet
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
+  inlineContainerToggleService = new InlineContainerToggleService();
   itemTableTogglesCache: ItemTableToggleCacheService;
   itemFilterService: ItemFilterService;
   subscriptionsService: StoreSubscriptionsService;
@@ -133,6 +134,7 @@ export class Tidy5eCharacterSheet
         'sheet',
         'actor',
         CONSTANTS.SHEET_TYPE_CHARACTER,
+        CONSTANTS.SHEET_LAYOUT_CLASSIC,
       ],
       width: 740,
       height: 810,
@@ -173,36 +175,51 @@ export class Tidy5eCharacterSheet
     this.component = new CharacterSheet({
       target: node,
       context: new Map<any, any>([
-        ['context', this.context],
-        ['messageBus', this.messageBus],
-        ['stats', this.stats],
-        ['card', this.card],
-        ['currentTabId', this.currentTabId],
-        ['onTabSelected', this.onTabSelected.bind(this)],
-        ['searchFilters', new Map(this.searchFilters)],
+        [CONSTANTS.SVELTE_CONTEXT.APP_ID, this.appId],
+        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this.context],
+        [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
+        [CONSTANTS.SVELTE_CONTEXT.STATS, this.stats],
+        [CONSTANTS.SVELTE_CONTEXT.CARD, this.card],
+        [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
         [
-          'onFilter',
+          CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED,
+          this.onTabSelected.bind(this),
+        ],
+        [CONSTANTS.SVELTE_CONTEXT.SEARCH_FILTERS, new Map(this.searchFilters)],
+        [
+          CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
+          this.inlineContainerToggleService,
+        ],
+        [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.itemFilterService],
+        [
+          CONSTANTS.SVELTE_CONTEXT.ON_FILTER,
           this.itemFilterService.onFilter.bind(this.itemFilterService),
         ],
         [
-          'onFilterClearAll',
+          CONSTANTS.SVELTE_CONTEXT.ON_FILTER_CLEAR_ALL,
           this.itemFilterService.onFilterClearAll.bind(this.itemFilterService),
         ],
-        ['onSearch', this.onSearch.bind(this)],
-        ['onItemToggled', this.onItemToggled.bind(this)],
+        [CONSTANTS.SVELTE_CONTEXT.ON_SEARCH, this.onSearch.bind(this)],
         [
-          'itemTableToggles',
+          CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TOGGLED,
+          this.onItemToggled.bind(this),
+        ],
+        [
+          CONSTANTS.SVELTE_CONTEXT.ITEM_TABLE_TOGGLES,
           new Map(this.itemTableTogglesCache.itemTableToggles),
         ],
         [
-          'onItemTableToggle',
+          CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TABLE_TOGGLE,
           this.itemTableTogglesCache.onItemTableToggle.bind(
             this.itemTableTogglesCache
           ),
         ],
-        ['location', ''],
-        ['expandedItems', new Map(this.expandedItems)],
-        ['expandedItemData', new Map(this.expandedItemData)],
+        [CONSTANTS.SVELTE_CONTEXT.LOCATION, ''],
+        [CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEMS, new Map(this.expandedItems)],
+        [
+          CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA,
+          new Map(this.expandedItemData),
+        ],
       ]),
     });
 
@@ -262,8 +279,7 @@ export class Tidy5eCharacterSheet
 
     let maxPreparedSpellsTotal = 0;
     try {
-      const formula =
-        TidyFlags.tryGetFlag(this.actor, 'maxPreparedSpells')?.toString() ?? '';
+      const formula = TidyFlags.maxPreparedSpells.get(this.actor) ?? '';
 
       if (formula?.trim() !== '') {
         const roll = await Roll.create(
@@ -380,9 +396,9 @@ export class Tidy5eCharacterSheet
             ),
             iconClass: `fas fa-boxes-stacked fa-fw`,
             execute: () => {
-              TidyFlags.unsetFlag(this.actor, 'showContainerPanel');
+              TidyFlags.showContainerPanel.unset(this.actor);
             },
-            visible: !!TidyFlags.tryGetFlag(this.actor, 'showContainerPanel'),
+            visible: !!TidyFlags.showContainerPanel.get(this.actor),
           },
           {
             title: FoundryAdapter.localize(
@@ -390,9 +406,9 @@ export class Tidy5eCharacterSheet
             ),
             iconClass: `fas fa-box fa-fw`,
             execute: () => {
-              TidyFlags.setFlag(this.actor, 'showContainerPanel', true);
+              TidyFlags.showContainerPanel.set(this.actor, true);
             },
-            visible: !TidyFlags.tryGetFlag(this.actor, 'showContainerPanel'),
+            visible: !TidyFlags.showContainerPanel.get(this.actor),
           },
           {
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
@@ -694,88 +710,18 @@ export class Tidy5eCharacterSheet
     };
 
     // Effects & Conditions
-    const conditionIds = new Set();
-    const conditions = Object.entries<any>(CONFIG.DND5E.conditionTypes).reduce<
-      Dnd5eActorCondition[]
-    >((arr, [k, c]) => {
-      if (k === 'diseased') return arr; // Filter out diseased as it's not a real condition.
-      const { label: name, icon, reference } = c;
-      const id = dnd5e.utils.staticID(`dnd5e${k}`);
-      conditionIds.add(id);
-      const existing = this.actor.effects.get(id);
-      const { disabled, img } = existing ?? {};
-      arr.push({
-        name,
-        reference,
-        id: k,
-        icon: img ?? icon,
-        disabled: existing ? disabled : !this.actor.statuses.has(k),
-      });
-      return arr;
-    }, []);
-
-    for (const category of Object.values(
-      defaultDocumentContext.effects as any[]
-    )) {
-      category.effects = await category.effects.reduce(
-        async (arr: any[], effect: any) => {
-          effect.updateDuration();
-          if (conditionIds.has(effect.id) && !effect.duration.remaining)
-            return arr;
-          const { id, name, img, disabled, duration } = effect;
-          let source = (await effect.getSource()) ?? this.actor;
-          // If the source is an ActiveEffect from another Actor, note the source as that Actor instead.
-          if (
-            source instanceof dnd5e.documents.ActiveEffect5e &&
-            source.target !== this.object
-          ) {
-            source = source.target;
-          }
-          arr = await arr;
-          arr.push({
-            id,
-            name,
-            img,
-            disabled,
-            duration,
-            source,
-            parentId: effect.target === effect.parent ? null : effect.parent.id,
-            durationParts: duration.remaining ? duration.label.split(', ') : [],
-            hasTooltip: source instanceof dnd5e.documents.Item5e,
-          });
-          return arr;
-        },
-        []
+    let { conditions, effects: enhancedEffectSections } =
+      await ConditionsAndEffects.getConditionsAndEffects(
+        this.actor,
+        this.object,
+        defaultDocumentContext.effects
       );
-    }
-
-    let containerPanelItems: ContainerPanelItemContext[] = [];
-    try {
-      let containers = defaultDocumentContext.items
-        .filter((i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER)
-        .toSorted((a: Item5e, b: Item5e) => a.sort - b.sort);
-
-      for (let container of containers) {
-        const capacity =
-          (await container.system.computeCapacity()) as ContainerCapacityContext;
-        containerPanelItems.push({
-          container,
-          ...capacity,
-        });
-      }
-    } catch (e) {
-      error(
-        'An error occurred while preparing containers for the container panel',
-        false,
-        e
-      );
-    }
 
     const context: CharacterSheetContext = {
       ...defaultDocumentContext,
       activateEditors: (node, options) =>
         FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
-      actions: getActorActionSections(this.actor, this.itemFilterService),
+      actions: await getActorActionSections(this.actor),
       actorClassesToImages: getActorClassesToImages(this.actor),
       actorPortraitCommands:
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
@@ -815,7 +761,9 @@ export class Tidy5eCharacterSheet
         }
       ),
       conditions: conditions,
-      containerPanelItems: containerPanelItems,
+      containerPanelItems: await Inventory.getContainerPanelItems(
+        defaultDocumentContext.items
+      ),
       customActorTraits: CustomActorTraitsRuntime.getEnabledTraits(
         defaultDocumentContext
       ),
@@ -823,6 +771,7 @@ export class Tidy5eCharacterSheet
         defaultDocumentContext
       ),
       editable: defaultDocumentContext.editable,
+      effects: enhancedEffectSections,
       filterData: this.itemFilterService.getDocumentItemFilterData(),
       filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
@@ -857,10 +806,7 @@ export class Tidy5eCharacterSheet
         !defaultDocumentContext.editable,
       maxPreparedSpellsTotal,
       notes1EnrichedHtml: await FoundryAdapter.enrichHtml(
-        FoundryAdapter.getProperty<string>(
-          this.actor,
-          `flags.${CONSTANTS.MODULE_ID}.notes1.value`
-        ) ?? '',
+        TidyFlags.notes1.members.value.get(this.actor) ?? '',
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
@@ -869,10 +815,7 @@ export class Tidy5eCharacterSheet
         }
       ),
       notes2EnrichedHtml: await FoundryAdapter.enrichHtml(
-        FoundryAdapter.getProperty<string>(
-          this.actor,
-          `flags.${CONSTANTS.MODULE_ID}.notes2.value`
-        ) ?? '',
+        TidyFlags.notes2.members.value.get(this.actor) ?? '',
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
@@ -881,10 +824,7 @@ export class Tidy5eCharacterSheet
         }
       ),
       notes3EnrichedHtml: await FoundryAdapter.enrichHtml(
-        FoundryAdapter.getProperty<string>(
-          this.actor,
-          `flags.${CONSTANTS.MODULE_ID}.notes3.value`
-        ) ?? '',
+        TidyFlags.notes3.members.value.get(this.actor) ?? '',
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
@@ -893,10 +833,7 @@ export class Tidy5eCharacterSheet
         }
       ),
       notes4EnrichedHtml: await FoundryAdapter.enrichHtml(
-        FoundryAdapter.getProperty<string>(
-          this.actor,
-          `flags.${CONSTANTS.MODULE_ID}.notes4.value`
-        ) ?? '',
+        TidyFlags.notes4.members.value.get(this.actor) ?? '',
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
@@ -905,10 +842,7 @@ export class Tidy5eCharacterSheet
         }
       ),
       notesEnrichedHtml: await FoundryAdapter.enrichHtml(
-        FoundryAdapter.getProperty<string>(
-          this.actor,
-          `flags.${CONSTANTS.MODULE_ID}.notes.value`
-        ) ?? '',
+        TidyFlags.notes.members.value.get(this.actor) ?? '',
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
@@ -919,7 +853,7 @@ export class Tidy5eCharacterSheet
       originalContext: defaultDocumentContext,
       owner: this.actor.isOwner,
       showContainerPanel:
-        TidyFlags.tryGetFlag(this.actor, 'showContainerPanel') === true &&
+        TidyFlags.showContainerPanel.get(this.actor) === true &&
         Array.from(defaultDocumentContext.items).some(
           (i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER
         ),
@@ -954,12 +888,16 @@ export class Tidy5eCharacterSheet
         ) ?? [],
     };
 
+    for (const panelItem of context.containerPanelItems) {
+      const ctx = context.itemContext[panelItem.container.id];
+      ctx.containerContents = await Container.getContainerContents(
+        panelItem.container
+      );
+    }
+
     let tabs = await CharacterSheetRuntime.getTabs(context);
 
-    const selectedTabs = TidyFlags.tryGetFlag<string[]>(
-      context.actor,
-      'selected-tabs'
-    );
+    const selectedTabs = TidyFlags.selectedTabs.get(context.actor);
 
     if (selectedTabs?.length) {
       tabs = tabs
@@ -985,8 +923,6 @@ export class Tidy5eCharacterSheet
 
     // Apply Section Configs
     // ------------------------------------------------------------
-
-    const sectionConfigs = TidyFlags.sectionConfig.get(this.actor);
 
     let effectsSection: EffectFavoriteSection = {
       canCreate: false,
@@ -1028,9 +964,6 @@ export class Tidy5eCharacterSheet
       });
     }
 
-    const favoritesIdMap: Map<string, CharacterFavorite> =
-      this._getFavoritesIdMap();
-
     // Favorites
     context.favorites = CharacterSheetSections.mergeDuplicateFavoriteSections(
       context.favorites
@@ -1042,137 +975,6 @@ export class Tidy5eCharacterSheet
         type: CONSTANTS.TAB_CHARACTER_EFFECTS,
       });
     }
-
-    // Apply Section Configs: Inventory
-
-    context.inventory = SheetSections.sortKeyedSections(
-      context.inventory,
-      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]
-    );
-
-    context.inventory.forEach((section) => {
-      // Sort Inventory
-      ItemUtils.sortItems(section.items, inventorySortMode);
-
-      // TODO: Collocate Inventory Sub Items
-      // Filter Inventory
-      section.items = this.itemFilterService.filter(
-        section.items,
-        CONSTANTS.TAB_CHARACTER_INVENTORY
-      );
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.[section.key]
-          ?.show !== false;
-    });
-
-    // Apply Section Configs: Spellbook
-
-    context.spellbook = SheetSections.sortKeyedSections(
-      context.spellbook,
-      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]
-    );
-
-    context.spellbook.forEach((section) => {
-      // Sort Spellbook
-      ItemUtils.sortItems(section.spells, spellbookSortMode);
-
-      // TODO: Collocate Spellbook Sub Items
-      // Filter Spellbook
-      section.spells = this.itemFilterService.filter(
-        section.spells,
-        CONSTANTS.TAB_CHARACTER_SPELLBOOK
-      );
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.[section.key]
-          ?.show !== false;
-    });
-
-    // Apply Section Configs: Features
-
-    context.features = SheetSections.sortKeyedSections(
-      context.features,
-      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_FEATURES]
-    );
-
-    context.features.forEach((section) => {
-      // Sort Features
-      ItemUtils.sortItems(section.items, featureSortMode);
-
-      // Collocate Feature Sub Items
-      section.items = SheetSections.collocateSubItems(context, section.items);
-
-      // Filter Features
-      section.items = this.itemFilterService.filter(
-        section.items,
-        CONSTANTS.TAB_CHARACTER_FEATURES
-      );
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_FEATURES]?.[section.key]
-          ?.show !== false;
-    });
-
-    // Apply Section Configs: Favorites
-
-    context.favorites = SheetSections.sortKeyedSections(
-      context.favorites,
-      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]
-    );
-
-    (context.favorites as FavoriteSection[]).forEach((section) => {
-      if ('effects' in section) {
-        let effectContexts = section.effects;
-
-        // Sort Favorite Effects
-        if (attributesSortMode === 'm') {
-          const getSort = (effects: Item5e) =>
-            favoritesIdMap.get(effects.getRelativeUUID(this.actor))?.sort ??
-            Number.MAX_SAFE_INTEGER;
-
-          effectContexts.sort((a, b) => getSort(a.effect) - getSort(b.effect));
-        } else {
-          effectContexts.sort((a, b) =>
-            a.effect.name.localeCompare(b.effect.name)
-          );
-        }
-
-        // TODO: Filter Favorite Effects ?
-      } else {
-        let items = 'spells' in section ? section.spells : section.items;
-        // Sort Favorites Items
-        if (attributesSortMode === 'm') {
-          const getSort = (item: Item5e) =>
-            favoritesIdMap.get(item.getRelativeUUID(this.actor))?.sort ??
-            Number.MAX_SAFE_INTEGER;
-
-          items.sort((a, b) => getSort(a) - getSort(b));
-        } else {
-          ItemUtils.sortItems(items, attributesSortMode);
-        }
-
-        // TODO: Collocate Favorite Sub Items
-        // Filter Favorite Items
-        items = this.itemFilterService.filter(
-          items,
-          CONSTANTS.TAB_CHARACTER_ATTRIBUTES
-        );
-        if ('spells' in section) {
-          section.spells = items;
-        } else {
-          section.items = items;
-        }
-      }
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]?.[section.key]
-          ?.show !== false;
-    });
 
     debug('Character Sheet context data', context);
 
@@ -1206,7 +1008,7 @@ export class Tidy5eCharacterSheet
         obj: CharacterItemPartitions & { favorites: CharacterItemPartitions },
         item: Item5e
       ) => {
-        const { quantity, uses, recharge } = item.system;
+        const { quantity } = item.system;
 
         // Item details
         const ctx = (context.itemContext[item.id] ??= {});
@@ -1215,9 +1017,6 @@ export class Tidy5eCharacterSheet
 
         // Item usage
         ctx.hasUses = item.hasLimitedUses;
-        ctx.isOnCooldown =
-          recharge && !!recharge.value && recharge.charged === false;
-        ctx.isDepleted = ctx.isOnCooldown && ctx.hasUses && uses.value > 0;
         ctx.hasTarget = item.hasAreaTarget || item.hasIndividualTarget;
 
         // Unidentified items
@@ -1295,21 +1094,16 @@ export class Tidy5eCharacterSheet
     for (let item of items) {
       const ctx = (context.itemContext[item.id] ??= {});
       ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
-      CharacterSheetSections.applyInventoryItemToSection(
-        inventory,
-        item,
-        inventoryTypes,
-        {
-          canCreate: true,
-        }
-      );
+      Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
+        canCreate: true,
+      });
     }
 
     // Section favorite items by type
     for (let item of favorites.items) {
       const ctx = (context.itemContext[item.id] ??= {});
       ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
-      CharacterSheetSections.applyInventoryItemToSection(
+      Inventory.applyInventoryItemToSection(
         favoriteInventory,
         item,
         inventoryTypes,
@@ -1545,14 +1339,33 @@ export class Tidy5eCharacterSheet
     });
   }
 
+  /**
+   * A boolean which gates double-rendering and prevents a second
+   * colliding render from triggering an infamous
+   * "One of original or other are not Objects!" error.
+   */
+  private tidyRendering = false;
+
+  render(...args: unknown[]) {
+    debug('Sheet render begin');
+    this.tidyRendering = true;
+    super.render(...args);
+  }
+
   private _renderMutex = new AsyncMutex();
   async _render(force?: boolean, options = {}) {
-    if (typeof options !== 'object') {
-      options = {};
-    }
     await this._renderMutex.lock(async () => {
+      const doubleRenderDetected =
+        this.options.token && this.tidyRendering === false;
+
+      if (doubleRenderDetected) {
+        return;
+      }
+
       await this._renderSheet(force, options);
     });
+    this.tidyRendering = false;
+    debug('Sheet render end');
   }
 
   private async _renderSheet(force?: boolean, options = {}) {

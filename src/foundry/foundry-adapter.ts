@@ -15,7 +15,6 @@ import { SettingsProvider } from 'src/settings/settings';
 import { debug, error, warn } from 'src/utils/logging';
 import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
 import { TidyFlags } from './TidyFlags';
-import EnchantmentConfig from './shims/EnchantmentConfig';
 import { TidyHooks } from './TidyHooks';
 
 export const FoundryAdapter = {
@@ -429,18 +428,15 @@ export const FoundryAdapter = {
     context: CharacterSheetContext | NpcSheetContext,
     spell: any
   ): string | undefined {
-    if (
-      !SettingsProvider.settings.useSpellClassFilterIcons.get() ||
-      context.isNPC
-    ) {
+    if (!SettingsProvider.settings.useSpellClassFilterIcons.get()) {
       return spell.img;
     }
 
-    const parentClass = TidyFlags.tryGetFlag<string>(spell, 'parentClass');
+    const sourceClass = spell.system.sourceClass;
 
     const classImage =
-      parentClass && 'actorClassesToImages' in context
-        ? context.actorClassesToImages[parentClass]
+      sourceClass && 'actorClassesToImages' in context
+        ? context.actorClassesToImages[sourceClass]
         : undefined;
 
     return classImage ?? spell.img;
@@ -448,17 +444,19 @@ export const FoundryAdapter = {
   searchItems(searchCriteria: string, items: Item5e[]): Set<string> {
     return new Set(
       items
-        .filter(
-          (item: any) =>
-            searchCriteria.trim() === '' ||
-            (item.system.identified === false &&
-              item.system.unidentified?.name
-                ?.toLowerCase()
-                .includes(searchCriteria.toLowerCase())) ||
-            (item.system.identified !== false &&
-              item.name.toLowerCase().includes(searchCriteria.toLowerCase()))
-        )
+        .filter((item) => FoundryAdapter.searchItem(item, searchCriteria))
         .map((item) => item.id)
+    );
+  },
+  searchItem(item: any, searchCriteria: string): boolean {
+    return (
+      searchCriteria.trim() === '' ||
+      (item.system.identified === false &&
+        item.system.unidentified?.name
+          ?.toLowerCase()
+          .includes(searchCriteria.toLowerCase())) ||
+      (item.system.identified !== false &&
+        item.name.toLowerCase().includes(searchCriteria.toLowerCase()))
     );
   },
   searchEffects(
@@ -513,19 +511,6 @@ export const FoundryAdapter = {
     allClasses.sort((a, b) => a.text.localeCompare(b.text));
 
     return allClasses;
-  },
-  getClassLabel(id: string) {
-    return (
-      (CONSTANTS.DND5E_CLASSES as Record<string, string>)[id] ??
-      FoundryAdapter.getAdditionalClassLabel(id)
-    );
-  },
-  getAdditionalClassLabel(id: string) {
-    const additionalClasses =
-      SettingsProvider.settings.spellClassFilterAdditionalClasses.get();
-    return FoundryAdapter.parseAdditionalClassesDropDownItems(
-      additionalClasses
-    ).find((c) => c.value === id)?.text;
   },
   parseAdditionalClassesDropDownItems(
     spellClassFilterAdditionalClassesText: string
@@ -898,6 +883,9 @@ export const FoundryAdapter = {
       true
     );
   },
+  async renderSheetFromUuid(uuid: string) {
+    (await fromUuid(uuid))?.sheet?.render(true);
+  },
   renderImagePopout(...args: any[]) {
     return new ImagePopout(...args).render(true);
   },
@@ -1176,7 +1164,8 @@ export const FoundryAdapter = {
     title: 'DND5E.AttunementAttuned',
   },
   getAttunementContext(item: Item5e): AttunementContext | undefined {
-    return !!item.system.attunement && !item.system.attuned
+    return !!CONFIG.DND5E.attunementTypes[item.system.attunement] &&
+      !item.system.attuned
       ? {
           ...FoundryAdapter.attunementContextApplicable,
           title: CONFIG.DND5E.attunementTypes[item.system.attunement],
@@ -1281,9 +1270,7 @@ export const FoundryAdapter = {
     }
   },
   async openEnchantmentConfig(item: Item5e) {
-    // TODO: Replace with dnd5e.application.item.EnchantmentConfig when this issue is resolved: https://github.com/foundryvtt/dnd5e/issues/3624
-    // @ts-ignore
-    return new EnchantmentConfig(item).render(true);
+    return new dnd5e.applications.item.EnchantmentConfig(item).render(true);
   },
   async renderFromUuid(uuid: string, force: boolean = true) {
     const doc = await fromUuid(uuid);

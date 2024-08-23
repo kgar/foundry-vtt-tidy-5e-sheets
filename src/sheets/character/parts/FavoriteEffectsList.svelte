@@ -16,7 +16,9 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let context = getContext<Readable<CharacterSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
   export let section: EffectFavoriteSection;
 
   /**

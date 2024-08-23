@@ -11,7 +11,7 @@
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import SpecialSaves from '../actor/SpecialSaves.svelte';
   import { CONSTANTS } from 'src/constants';
-  import AllowEditLock from 'src/sheets/actor/AllowEditLock.svelte';
+  import SheetEditModeToggle from 'src/sheets/actor/SheetEditModeToggle.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import type { Readable } from 'svelte/store';
@@ -29,12 +29,13 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let selectedTabId: string;
-  let context = getContext<Readable<CharacterSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 
-  $: playerName =
-    TidyFlags.tryGetFlag<string>($context.actor, 'playerName') ?? '';
+  $: playerName = TidyFlags.playerName.get($context.actor) ?? '';
 
   $: classAndSubclassSummaries = Array.from(
     FoundryAdapter.getClassAndSubclassSummaries($context.actor).values(),
@@ -137,7 +138,7 @@
         <ContentEditableFormField
           element="span"
           document={$context.actor}
-          field="flags.{CONSTANTS.MODULE_ID}.playerName"
+          field={TidyFlags.playerName.prop}
           value={playerName}
           cssClass="player-name"
           placeholder={localize('TIDY5E.PlayerName')}
@@ -235,7 +236,7 @@
 <Tabs tabs={$context.tabs} bind:selectedTabId>
   <svelte:fragment slot="tab-end">
     {#if $context.editable}
-      <AllowEditLock
+      <SheetEditModeToggle
         hint={$settingStore.permanentlyUnlockCharacterSheetForGm &&
         FoundryAdapter.userIsGm()
           ? localize(

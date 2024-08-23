@@ -664,7 +664,27 @@
             "deleteFlags": "Supprimer les indicateurs CCSS concernés",
             "deleteFlagsTooltip": "Lors de la migration des sections CCSS vers les sections personnalisées Tidy, les indicateurs CCSS restent en place par défaut. Cochez cette option pour supprimer ces indicateurs."
         },
-        "Parent": "Parent"
+        "Parent": "Parent",
+        "MigrateCompendia.CompendiumLabel": "Compendium",
+        "MigrateCompendia.Title": "Migrer les compendiums",
+        "MigrateCompendia.SelectionDialogTitle": "Sélection des compendiums pour migration",
+        "NpcExhaustion": {
+            "selectionDialogTitle": "",
+            "sectionTitle": ""
+        },
+        "BondsIdealsFlawsToSystem": {
+            "selectionDialogTitle": "",
+            "sectionTitle": ""
+        },
+        "SpellClassToSourceClass": {
+            "sectionTitle": "",
+            "selectionDialogTitle": ""
+        },
+        "MigrateCompendia.TotalEntriesLabel": "",
+        "FavoritesToSystem": {
+            "selectionDialogTitle": "",
+            "sectionTitle": ""
+        }
     },
     "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
         "name": "Inclure des sorts d'une durée d'une minute dans les actions",
@@ -800,5 +820,22 @@
         "hint": "Utilisez les icônes sélectionnées par Tidy pour les écoles de magie. Pour personnaliser les icônes des écoles de magie via CONFIG.DND5E ou d'autres modules, désactivez cette option. Pour étendre les icônes personnalisées des écoles de sorts de Tidy, reportez-vous à la documentation de l'API de Tidy.",
         "name": "Utiliser les icônes d'écoles de Tidy"
     },
-    "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+Click pour sauter le rouleau et recharger instantanément) "
+    "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+Click pour sauter le rouleau et recharger instantanément) ",
+    "TIDY5E.Settings.ColorPickerRitualOnly": {
+        "name": "Rituel Seulement"
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
+        "name": "Surbrillance Rituel seulement"
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
+        "name": "Contour Rituel seulement"
+    },
+    "TIDY5E.EmptyContainer": "",
+    "TIDY5E.SpellSourceIdentifierSelectText": "",
+    "TIDY5E.SpellSourceIdentifierLabelHint": "",
+    "TIDY5E.Utilities.AssignSpellsToClasses": "",
+    "TIDY5E.SpellSourceClassAssignments.Identifier": "",
+    "TIDY5E.Utilities.Tools": "",
+    "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "",
+    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": ""
 }

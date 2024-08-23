@@ -92,6 +92,7 @@
   "TIDY5E.ContextMenuActionEdit": "Edit",
   "TIDY5E.ContextMenuActionDelete": "Delete",
 
+  "TIDY5E.EmptyContainer": "This container is empty.",
   "TIDY5E.EmptySection": "This section is empty. Unlock the sheet to edit.",
   "TIDY5E.GMOnlyEdit": "Only your GM can edit this section.",
 
@@ -145,7 +146,8 @@
 
   "TIDY5E.ItemDetailsHeadline": "Mechanics/Flavor Text",
 
-  "TIDY5E.SpellClass": "Spell Class",
+  "TIDY5E.SpellSourceIdentifierSelectText": "Class Identifier: {identifier}",
+  "TIDY5E.SpellSourceIdentifierLabelHint": "The actor who has this spell does not have the source class that is specified here.",
 
   "TIDY5E.Class.Artificer": "Artificer",
   "TIDY5E.Class.Barbarian": "Barbarian",
@@ -439,10 +441,6 @@
     "name": "Use Exhaustion Tracker",
     "hint": "Shows an exhaustion tracker for characters, NPCs, and vehicles."
   },
-  "TIDY5E.Settings.UseNPCRest": {
-    "name": "Use NPC Rest",
-    "hint": "Allows NPCs to take short and long rests."
-  },
   "TIDY5E.Settings.ShowNPCRestInChat": {
     "name": "Show NPC Rest in Chat",
     "hint": "Shows a chat card when an NPC rests."
@@ -489,10 +487,6 @@
   "TIDY5E.Settings.UseSpellClassIcons": {
     "name": "Use Spell Class Icon for Spells",
     "hint": "Shows spell class's image on spells instead of the spell's own image. The spell must be associated with a class using the Class selector on the spell edit sheet. When multiclassing, this feature distinguishes which spells belong to which class at a glance."
-  },
-  "TIDY5E.Settings.SpellClassFilterAdditionalClasses": {
-    "name": "Additional Classes for Multiclass Spellbook Filtering",
-    "hint": "Puts additional classes in the multiclass spellbook filter. Add classes to the dropdown with this syntax \"id1|name1,id2|name2\" e.g. \"occultist|Occultist,alchemist|Alchemist\""
   },
   "TIDY5E.Settings.AllowCantripsToBePrepared": {
     "name": "Allow Cantrips to be Prepared",
@@ -647,7 +641,7 @@
     "name": "Migrations",
     "buttonLabel": "Migrate Tidy Data",
     "dialogTitle": "Migrate Tidy Data",
-    "hint": "If you were a user of the original Tidy5e Sheet module or the Alpha sheets, optionally use this Migrations menu to migrate your GM settings and Tidy sheet data.",
+    "hint": "If you were a user of the original Tidy5e Sheet module, optionally use this Migrations menu to migrate your GM settings and Tidy sheet data.",
     "migrationBeginningMessage": "Migrating data. Please do not refresh the page until done.",
     "migrationErrorMessage": "An error occurred. More details are in the dev console.",
     "migrationCompleteMessage": "Migration complete.",
@@ -663,10 +657,7 @@
       "mainExplanation1": "Migrating data to the new Tidy 5e Sheets module is not required in order to use it. Worst-case, if you are an original Tidy5e Sheet user and skip migrations, you will need to re-apply your settings to your liking.",
       "mainExplanation2": "{boldStart}Note{boldEnd}: Client Settings are not a part of this migration. Enough has changed about how client settings work in Tidy, so it is recommended to take a fresh look at client settings.",
       "originalHeader": "Original Tidy5e Sheet",
-      "originalExplanation": "Migrate GM settings and Tidy sheet data flags from the original Tidy5e Sheet. Most of the differences in data are from GM settings. If you migrate your settings and find a setting to be not to your liking, simply change the settings from the config settings menu.",
-      "alphaHeader": "Alpha Tidy 5e Sheets",
-      "alphaExplanation1": "Migrate GM settings and Tidy sheet data flags from the Alpha Tidy 5e Sheets. Most of the differences in data are from the sheet data flags. The Alpha flags migration targets top-level actors, top-level actors' items, and top-level items. This will bring in biographical data, favorites, and other sheet-specific Alpha data flags.",
-      "alphaExplanation2": "{boldStart}Note{boldEnd}: this migration does not affect compendium content."
+      "originalExplanation": "Migrate GM settings and Tidy sheet data flags from the original Tidy5e Sheet. Most of the differences in data are from GM settings. If you migrate your settings and find a setting to be not to your liking, simply change the settings from the config settings menu."
     },
     "Notification": {
       "Title": "Tidy 5e Sheets: Migrations Available",
@@ -713,6 +704,18 @@
     "FavoritesToSystem": {
       "sectionTitle": "Character Favorites",
       "selectionDialogTitle": "Migration: Character Favorites to System"
+    },
+    "BondsIdealsFlawsToSystem": {
+      "sectionTitle": "NPC Bonds, Ideals, and Flaws",
+      "selectionDialogTitle": "Migration: NPC Bonds, Ideals, and Flaws to System"
+    },
+    "SpellClassToSourceClass": {
+      "sectionTitle": "Spell Class to Source Class",
+      "selectionDialogTitle": "Migration: Spell Class to Source Class"
+    },
+    "NpcExhaustion": {
+      "sectionTitle": "NPC Exhaustion",
+      "selectionDialogTitle": "Migration: NPC Exhaustion to System"
     },
     "Parent": "Parent"
   },
@@ -806,8 +809,10 @@
   "TIDY5E.ItemFilters.Filter.Other": "Other",
   "TIDY5E.GMOnly.Message": "GM Only: {message}",
   "TIDY5E.ReminderToBackUp": "Always remember to back up your world.",
+  "TIDY5E.Utilities.Tools": "Tools",
   "TIDY5E.Utilities.GMTools": "GM Tools",
   "TIDY5E.Utilities.IdentifyAll": "Identify All Items",
+  "TIDY5E.Utilities.AssignSpellsToClasses": "Assign Spells to Classes",
   "TIDY5E.GenericErrorNotification": "An error occurred while performing this action. See the devtools console for more details.",
   "TIDY5E.Utilities.MarkAllAsUnidentified": "Mark All Items as Unidentified",
   "TIDY5E.Utilities.ConfigureSections": "Configure Sections",
@@ -828,5 +833,8 @@
     "text": "Are you sure you wish to use default?"
   },
   "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+Click to skip the roll and instantly recharge) ",
+  "TIDY5E.SpellSourceClassAssignments.Identifier": "Source Class Identifier",
+  "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "The spell's source class identifier appears here. To assign an identifier which the character doesn't own, enter the class identifier in this text field.",
+  "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Show Unassigned Only",
   "TIDY5E.LocalizationTestKey": "Localization Test Key"
 }

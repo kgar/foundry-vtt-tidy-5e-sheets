@@ -8,7 +8,9 @@
   import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context = getContext<Readable<ItemSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   $: movementLabels = Object.values(
     $context.item.system.movementLabels,

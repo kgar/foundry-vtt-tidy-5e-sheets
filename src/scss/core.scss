@@ -205,11 +205,24 @@
     border: none;
   }
 
+  // Applications
+  @import '../applications/section-config/DocumentTabSectionConfig';
+
   // Components
   @import '../components/button-menu/button-menu.scss';
   @import '../components/toggle/toggles.scss';
   @import '../components/table/tidy-table.scss';
   @import '../components/filter/filter.scss';
+  @import '../components/pips/pips.scss';
+  @import '../components/listbox/listbox.scss';
+
+  // Components - Actor-specific
+  @import '../sheets/actor/AttunementTracker.scss';
+  @import '../sheets/actor/Currency.scss';
+  @import '../sheets/actor/SheetEditModeToggle.scss';
+
+  // Tooltips
+  @import '../tooltips/tooltips.scss';
 
   &.sheet form,
   &.application-shell {
@@ -284,15 +297,16 @@
     gap: 0.75rem;
 
     > li:not(.empty) {
-      + li {
-        margin-top: 0.25rem;
-      }
       position: relative;
       padding: 0.5rem;
       background: var(--t5e-header-background);
       border: 0.125rem solid var(--t5e-separator-color);
       border-radius: 0.25rem;
       box-shadow: 0 0 0.25rem var(--dnd5e-shadow-45);
+
+      + li {
+        margin-top: 0.25rem;
+      }
 
       .details {
         gap: 0.25rem;
@@ -360,6 +374,32 @@
     font-size: var(--font-size-13);
     border-style: solid;
     border-width: 1px;
+  }
+
+  /* Containers */
+  .inline-container-view {
+    padding: 0.25rem 0 0 1rem;
+    margin-left: 1rem;
+    border-left: 0.0625rem dotted var(--t5e-separator-color);
+
+    .empty-container {
+      border: 0.125rem dashed var(--t5e-separator-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      font-style: italic;
+      margin: 0.25rem 0;
+    }
+  }
+
+  /* Text utilities */
+  .capitalize {
+    text-transform: capitalize;
+  }
+
+  .semibold {
+    font-weight: 500;
   }
 }
 

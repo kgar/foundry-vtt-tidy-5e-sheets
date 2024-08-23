@@ -424,6 +424,46 @@ sectionsTest.describe('NPC', () => {
   );
 
   sectionsTest(
+    'inventory - core functionality',
+    async ({ sectionPage, data }) => {
+      // Add specific items - have at least one custom section
+      const sheetHelper = new SheetHelper(
+        sectionPage,
+        data.sectionConfigTestNpc
+      );
+      const testItem1 = await sheetHelper.createEmbeddedItem({
+        name: 'Test Item 1',
+        type: CONSTANTS.ITEM_TYPE_WEAPON,
+      });
+      const testItem2 = await sheetHelper.createEmbeddedItem({
+        name: 'Test Item 2',
+        type: CONSTANTS.ITEM_TYPE_EQUIPMENT,
+      });
+      const testItem3 = await sheetHelper.createEmbeddedItem({
+        name: 'Test Item 3',
+        type: CONSTANTS.ITEM_TYPE_WEAPON,
+        flags: {
+          [CONSTANTS.MODULE_ID]: {
+            [TidyFlags.section.key]: customItemSection,
+          },
+        },
+      });
+
+      await runStandardSectionConfigTests({
+        section1: CONSTANTS.ITEM_TYPE_WEAPON,
+        section2: CONSTANTS.ITEM_TYPE_EQUIPMENT,
+        section3: customItemSection,
+        sheetHelper: sheetHelper,
+        tabId: CONSTANTS.TAB_NPC_INVENTORY,
+      });
+
+      await sheetHelper.deleteEmbeddedItem(testItem1);
+      await sheetHelper.deleteEmbeddedItem(testItem2);
+      await sheetHelper.deleteEmbeddedItem(testItem3);
+    }
+  );
+
+  sectionsTest(
     'actions - core functionality',
     async ({ sectionPage, data }) => {
       // Add specific action items - have at least one custom section

@@ -10,7 +10,9 @@
   import Source from '../shared/Source.svelte';
   import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context = getContext<Readable<ItemSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   let selectedTabId: string;
 

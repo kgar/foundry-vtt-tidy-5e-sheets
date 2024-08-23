@@ -56,6 +56,8 @@ import { DocumentTabSectionConfigApplication } from 'src/applications/section-co
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
+import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+import { Container } from 'src/features/containers/Container';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -72,6 +74,7 @@ export class Tidy5eVehicleSheet
   currentTabId: string;
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
+  inlineContainerToggleService = new InlineContainerToggleService();
   itemTableTogglesCache: ItemTableToggleCacheService;
   subscriptionsService: StoreSubscriptionsService;
   itemFilterService: ItemFilterService;
@@ -101,7 +104,13 @@ export class Tidy5eVehicleSheet
       SheetPreferencesService.getByType(CONSTANTS.SHEET_TYPE_VEHICLE) ?? {};
 
     return FoundryAdapter.mergeObject(super.defaultOptions, {
-      classes: ['tidy5e-sheet', 'sheet', 'actor', CONSTANTS.SHEET_TYPE_VEHICLE],
+      classes: [
+        'tidy5e-sheet',
+        'sheet',
+        'actor',
+        CONSTANTS.SHEET_TYPE_VEHICLE,
+        CONSTANTS.SHEET_LAYOUT_CLASSIC,
+      ],
       width: width ?? 740,
       height: height ?? 810,
       scrollY: ['[data-tidy-track-scroll-y]', '.scroll-container'],
@@ -141,30 +150,45 @@ export class Tidy5eVehicleSheet
     this.component = new VehicleSheet({
       target: node,
       context: new Map<any, any>([
-        ['context', this.context],
-        ['messageBus', this.messageBus],
-        ['stats', this.stats],
-        ['card', this.card],
+        [CONSTANTS.SVELTE_CONTEXT.APP_ID, this.appId],
+        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this.context],
+        [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
+        [CONSTANTS.SVELTE_CONTEXT.STATS, this.stats],
+        [CONSTANTS.SVELTE_CONTEXT.CARD, this.card],
         [
-          'onFilter',
+          CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
+          this.inlineContainerToggleService,
+        ],
+        [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.itemFilterService],
+        [
+          CONSTANTS.SVELTE_CONTEXT.ON_FILTER,
           this.itemFilterService.onFilter.bind(this.itemFilterService),
         ],
         [
-          'onFilterClearAll',
+          CONSTANTS.SVELTE_CONTEXT.ON_FILTER_CLEAR_ALL,
           this.itemFilterService.onFilterClearAll.bind(this.itemFilterService),
         ],
-        ['currentTabId', this.currentTabId],
-        ['onTabSelected', this.onTabSelected.bind(this)],
-        ['onItemToggled', this.onItemToggled.bind(this)],
-        ['location', ''],
-        ['expandedItems', new Map(this.expandedItems)],
-        ['expandedItemData', new Map(this.expandedItemData)],
+        [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
         [
-          'itemTableToggles',
+          CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED,
+          this.onTabSelected.bind(this),
+        ],
+        [
+          CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TOGGLED,
+          this.onItemToggled.bind(this),
+        ],
+        [CONSTANTS.SVELTE_CONTEXT.LOCATION, ''],
+        [CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEMS, new Map(this.expandedItems)],
+        [
+          CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA,
+          new Map(this.expandedItemData),
+        ],
+        [
+          CONSTANTS.SVELTE_CONTEXT.ITEM_TABLE_TOGGLES,
           new Map(this.itemTableTogglesCache.itemTableToggles),
         ],
         [
-          'onItemTableToggle',
+          CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TABLE_TOGGLE,
           this.itemTableTogglesCache.onItemTableToggle.bind(
             this.itemTableTogglesCache
           ),
@@ -262,7 +286,7 @@ export class Tidy5eVehicleSheet
 
     const context: VehicleSheetContext = {
       ...defaultDocumentContext,
-      actions: getActorActionSections(this.actor, this.itemFilterService),
+      actions: await getActorActionSections(this.actor),
       activateEditors: (node, options) =>
         FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
       actorPortraitCommands:
@@ -308,12 +332,16 @@ export class Tidy5eVehicleSheet
         ) ?? [],
     };
 
+    for (const item of context.items) {
+      const ctx = context.itemContext[item.id];
+      if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
+        ctx.containerContents = await Container.getContainerContents(item);
+      }
+    }
+
     let tabs = await VehicleSheetRuntime.getTabs(context);
 
-    const selectedTabs = TidyFlags.tryGetFlag<string[]>(
-      context.actor,
-      'selected-tabs'
-    );
+    const selectedTabs = TidyFlags.selectedTabs.get(context.actor);
 
     if (selectedTabs?.length) {
       tabs = tabs
@@ -426,13 +454,10 @@ export class Tidy5eVehicleSheet
     };
 
     context.items.forEach((item) => {
-      const { uses, recharge } = item.system;
+      const { uses } = item.system;
       const ctx = (context.itemContext[item.id] ??= {});
       ctx.canToggle = false;
       ctx.hasUses = uses && uses.max > 0;
-      ctx.isOnCooldown =
-        recharge && !!recharge.value && recharge.charged === false;
-      ctx.isDepleted = item.isOnCooldown && uses.per && uses.value > 0;
     });
 
     const cargo: Record<string, VehicleCargoSection> = {
@@ -604,14 +629,33 @@ export class Tidy5eVehicleSheet
     }
   }
 
+  /**
+   * A boolean which gates double-rendering and prevents a second
+   * colliding render from triggering an infamous
+   * "One of original or other are not Objects!" error.
+   */
+  private tidyRendering = false;
+
+  render(...args: unknown[]) {
+    debug('Sheet render begin');
+    this.tidyRendering = true;
+    super.render(...args);
+  }
+
   private _renderMutex = new AsyncMutex();
   async _render(force?: boolean, options = {}) {
-    if (typeof options !== 'object') {
-      options = {};
-    }
     await this._renderMutex.lock(async () => {
+      const doubleRenderDetected =
+        this.options.token && this.tidyRendering === false;
+
+      if (doubleRenderDetected) {
+        return;
+      }
+
       await this._renderSheet(force, options);
     });
+    this.tidyRendering = false;
+    debug('Sheet render end');
   }
 
   private async _renderSheet(force?: boolean, options = {}) {

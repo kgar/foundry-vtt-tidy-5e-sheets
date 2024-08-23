@@ -14,7 +14,9 @@
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import ItemHeaderToggles from './parts/ItemHeaderToggles.svelte';
 
-  let context = getContext<Readable<ContainerSheetContext>>('context');
+  let context = getContext<Readable<ContainerSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   let selectedTabId: string;
 

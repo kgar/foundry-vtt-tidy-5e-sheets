@@ -1,6 +1,7 @@
 import { getContext, setContext } from 'svelte';
 import { writable, type Readable, type Writable } from 'svelte/store';
 import type { OnItemTableToggleFn } from '../caching/ItemTableToggleCacheService';
+import { CONSTANTS } from 'src/constants';
 
 export type ExpandCollapseServiceState = {
   expanded: boolean;
@@ -23,9 +24,10 @@ export class ExpandCollapseService {
   ) {
     this._state = writable({ ...initialState });
     this.state = this._state;
-    this._onItemTableToggle =
-      getContext<OnItemTableToggleFn>('onItemTableToggle');
-    this._location = getContext<string>('location');
+    this._onItemTableToggle = getContext<OnItemTableToggleFn>(
+      CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TABLE_TOGGLE
+    );
+    this._location = getContext<string>(CONSTANTS.SVELTE_CONTEXT.LOCATION);
   }
 
   toggle() {
@@ -56,9 +58,11 @@ export class ExpandCollapseService {
   }
 
   static initService(toggleable: boolean) {
-    const itemTableToggles =
-      getContext<Map<string, boolean>>('itemTableToggles');
-    const location = getContext<string>('location') ?? '';
+    const itemTableToggles = getContext<Map<string, boolean>>(
+      CONSTANTS.SVELTE_CONTEXT.ITEM_TABLE_TOGGLES
+    );
+    const location =
+      getContext<string>(CONSTANTS.SVELTE_CONTEXT.LOCATION) ?? '';
 
     const service = new ExpandCollapseService({
       expanded: itemTableToggles?.get(location) ?? true,

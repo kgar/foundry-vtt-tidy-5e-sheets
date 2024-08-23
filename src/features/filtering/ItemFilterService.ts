@@ -47,41 +47,39 @@ export class ItemFilterService {
     this._document = document;
   }
 
-  filter(items: Item5e[], filterGroup: ItemFilterGroupName): Item5e[] {
+  // TODO: Better yet, have composed store ready to use, and have it update whenever the filters update
+  compose(filterGroup: ItemFilterGroupName) {
     const group = this._getGroup(filterGroup) ?? {};
 
-    const filterConfigs = Object.entries(group)
+    const composition = Object.entries(group)
       .map(([filterName, value]) => {
         return {
           filter: ItemFilterRuntime.getFilter(filterName),
           value,
         };
       })
-      .filter((f) => typeof f.filter?.predicate === 'function');
+      .filter((f) => typeof f.filter?.predicate === 'function')
+      .reduce(
+        (prev, curr) => {
+          return (item: Item5e) =>
+            prev(item) && curr.filter?.predicate?.(item) == curr.value;
+        },
+        (item: Item5e) => true
+      );
 
-    if (!filterConfigs.length) {
-      return items;
-    }
-
-    return items.filter((item) => {
+    return (item: Item5e) => {
       try {
-        // TODO: Expand this for allowing for different modes (AND, OR, NOR, XOR, etc.) for advanced users.
-        let include = true;
-        for (let filterConfig of filterConfigs) {
-          include &&=
-            filterConfig.filter?.predicate(item) === filterConfig.value;
-        }
-        return include;
+        return composition(item);
       } catch (e) {
         error('An error occurred while filtering an item', false, e);
         debug('Item filtering error troubleshooting info', {
           item,
-          filters: filterConfigs,
+          filters: group,
         });
       }
 
       return true;
-    });
+    };
   }
 
   onFilter(

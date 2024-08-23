@@ -25,6 +25,7 @@ import { SheetPreferencesService } from 'src/features/user-preferences/SheetPref
 import { AsyncMutex } from 'src/utils/mutex';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
+import { CONSTANTS } from 'src/constants';
 
 export class Tidy5eKgarItemSheet
   extends dnd5e.applications.item.ItemSheet5e
@@ -39,7 +40,7 @@ export class Tidy5eKgarItemSheet
 
   constructor(item: Item5e, ...args: any[]) {
     super(item, ...args);
-    
+
     this.subscriptionsService = new StoreSubscriptionsService();
   }
 
@@ -49,7 +50,12 @@ export class Tidy5eKgarItemSheet
 
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
-      classes: ['tidy5e-sheet', 'sheet', 'item'],
+      classes: [
+        'tidy5e-sheet',
+        'sheet',
+        'item',
+        CONSTANTS.SHEET_LAYOUT_CLASSIC,
+      ],
     });
   }
 
@@ -68,10 +74,11 @@ export class Tidy5eKgarItemSheet
     const node = html.get(0);
 
     const context = new Map<any, any>([
-      ['context', this.context],
-      ['stats', this.stats],
-      ['currentTabId', this.currentTabId],
-      ['onTabSelected', this.onTabSelected.bind(this)],
+      [CONSTANTS.SVELTE_CONTEXT.APP_ID, this.appId],
+      [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this.context],
+      [CONSTANTS.SVELTE_CONTEXT.STATS, this.stats],
+      [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
+      [CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED, this.onTabSelected.bind(this)],
     ]);
 
     // TODO: Try find sheet from runtime
@@ -167,14 +174,33 @@ export class Tidy5eKgarItemSheet
     return context;
   }
 
+  /**
+   * A boolean which gates double-rendering and prevents a second
+   * colliding render from triggering an infamous
+   * "One of original or other are not Objects!" error.
+   */
+  private tidyRendering = false;
+
+  render(...args: unknown[]) {
+    debug('Sheet render begin');
+    this.tidyRendering = true;
+    super.render(...args);
+  }
+
   private _renderMutex = new AsyncMutex();
   async _render(force?: boolean, options = {}) {
-    if (typeof options !== 'object') {
-      options = {};
-    }
     await this._renderMutex.lock(async () => {
+      const doubleRenderDetected =
+        this.options.token && this.tidyRendering === false;
+
+      if (doubleRenderDetected) {
+        return;
+      }
+
       await this._renderSheet(force, options);
     });
+    this.tidyRendering = false;
+    debug('Sheet render end');
   }
 
   private async _renderSheet(force?: boolean, options = {}) {

@@ -11,7 +11,9 @@
   export let text: string | undefined = undefined;
   export let visible: boolean = true;
 
-  const context = getContext<Readable<unknown>>('context');
+  const context = getContext<Readable<unknown>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const dispatcher = createEventDispatcher<{
     execute: UtilityToolbarCommandExecuteEvent;

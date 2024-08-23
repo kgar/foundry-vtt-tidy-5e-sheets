@@ -4,8 +4,11 @@
   import type { Readable } from 'svelte/store';
   import type { VehicleSheetContext } from 'src/types/types';
   import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<VehicleSheetContext>>('context');
+  let context = getContext<Readable<VehicleSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 </script>
 
 <div class="note-entries" data-tidy-track-scroll-y>

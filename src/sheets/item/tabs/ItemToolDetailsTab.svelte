@@ -11,8 +11,11 @@
   import ContentConcealer from 'src/components/content-concealment/ContentConcealer.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import ItemActivation from '../parts/ItemActivation.svelte';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context = getContext<Readable<ItemSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -67,7 +70,8 @@
       document={$context.item}
       field="system.attuned"
       checked={$context.system.attuned}
-      disabled={!$context.editable || !$context.system.attunement}
+      disabled={!$context.editable ||
+        !$context.config.attunementTypes[$context.system.attunement]}
       title={localize('DND5E.AttunementAttuned')}
     ></Checkbox>
     <Select

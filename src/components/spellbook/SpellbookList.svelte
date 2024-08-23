@@ -33,19 +33,14 @@
   import type { Item5e } from 'src/types/item.types';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
   import ConcentrationOverlayIcon from './ConcentrationOverlayIcon.svelte';
-  import { TidyFlags } from 'src/foundry/TidyFlags';
 
-  let context =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
   export let section: SpellbookSection;
   export let spells: any[];
   export let allowFavorites: boolean = true;
   export let cssClass: string | null = null;
-  /**
-   * An optional subset of item IDs which will hide all other items not included in this set.
-   * Useful for showing only search results, for example.
-   */
-  export let visibleItemIdSubset: Set<string> | null = null;
 
   // TODO: replace this with column specification array default and then allow the caller to customize the table.
   export let includeSchool: boolean = true;
@@ -53,6 +48,10 @@
   export let spellComponentsBaseWidth: string = '3.75rem';
   export let targetBaseWidth: string = '7.5rem';
   export let usageBaseWidth: string = '7.5rem';
+
+  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
+    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
+  );
 
   var spellSchoolBaseWidth = '2rem';
 
@@ -112,7 +111,10 @@
 </script>
 
 <section class="spellbook-list-section {cssClass}">
-  <ItemTable key={section.key}>
+  <ItemTable
+    key={section.key}
+    data-custom-section={section.custom ? true : null}
+  >
     <svelte:fragment slot="header">
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>
@@ -173,8 +175,7 @@
           }}
           let:toggleSummary
           cssClass={FoundryAdapter.getSpellRowClasses(spell)}
-          hidden={visibleItemIdSubset !== null &&
-            !visibleItemIdSubset.has(spell.id)}
+          hidden={!!$itemIdsToShow && !$itemIdsToShow.has(spell.id)}
         >
           <ItemTableCell primary={true}>
             <ItemUseButton

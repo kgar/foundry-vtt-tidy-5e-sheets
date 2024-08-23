@@ -19,8 +19,8 @@
   import IconsWorldSettingsTab from './tabs/IconsWorldSettingsTab.svelte';
 
   let selectedTabId: string;
-  let functions = getContext<WorldSettingsFunctions>('functions');
-  let context = getContext<WorldSettingsContextStore>('context');
+  let functions = getContext<WorldSettingsFunctions>(CONSTANTS.SVELTE_CONTEXT.FUNCTIONS);
+  let context = getContext<WorldSettingsContextStore>(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
 
   let tabs: Tab[] = [
     {

@@ -7,11 +7,13 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import TextInput from '../inputs/TextInput.svelte';
+  import { CONSTANTS } from 'src/constants';
 
   export let section: SpellbookSection;
 
-  let context =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 </script>
 
 <div class="spell-slots-detail">

@@ -4,15 +4,27 @@ import type { Tidy5eCharacterSheet } from 'src/sheets/Tidy5eCharacterSheet';
 import type { Tidy5eNpcSheet } from 'src/sheets/Tidy5eNpcSheet';
 import type { Item5e } from 'src/types/item.types';
 import type {
+  ActionSection,
   Actor5e,
+  CharacterFeatureSection,
   CharacterSheetContext,
   CustomSectionOptions,
+  FavoriteSection,
+  FeatureSection,
+  InventorySection,
+  NpcAbilitySection,
   NpcSheetContext,
   SpellbookSection,
   TidySectionBase,
 } from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import type { SectionConfig } from './sections.types';
+import { ItemUtils } from 'src/utils/ItemUtils';
+import { SheetPreferencesService } from '../user-preferences/SheetPreferencesService';
+import type { SheetPreference } from '../user-preferences/user-preferences.types';
+import type { CharacterFavorite } from 'src/foundry/dnd5e.types';
+import { error } from 'src/utils/logging';
+import { sortActions } from '../actions/actions';
 
 export class SheetSections {
   static generateCustomSpellbookSections(
@@ -112,10 +124,14 @@ export class SheetSections {
 
     const spellbook: SpellbookSection[] = app
       ._prepareSpellbook(context, spells)
-      .map((s: SpellbookSection) => ({
-        ...s,
-        key: s.key ?? s.prop,
-      }));
+      .map(
+        (s: SpellbookSection) =>
+          ({
+            ...s,
+            key: s.key ?? s.prop,
+            show: true,
+          } satisfies SpellbookSection)
+      );
 
     const spellbookMap = spellbook.reduce<Record<string, SpellbookSection>>(
       (prev, curr) => {
@@ -239,5 +255,198 @@ export class SheetSections {
     }
 
     return section.key;
+  }
+
+  static configureInventory(
+    sections: InventorySection[],
+    tabId: string,
+    sheetPreferences: SheetPreference,
+    sectionConfig?: Record<string, SectionConfig>
+  ) {
+    try {
+      sections = SheetSections.sortKeyedSections(sections, sectionConfig);
+
+      const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
+
+      sections.forEach((section) => {
+        ItemUtils.sortItems(section.items, sortMode);
+
+        // Apply visibility from configuration
+        section.show = sectionConfig?.[section.key]?.show !== false;
+      });
+    } catch (e) {
+      error('An error occurred while configuring inventory', false, e);
+    }
+
+    return sections;
+  }
+
+  static configureSpellbook(
+    document: any,
+    tabId: string,
+    sections: SpellbookSection[]
+  ) {
+    try {
+      const sectionConfigs = TidyFlags.sectionConfig.get(document);
+
+      sections = SheetSections.sortKeyedSections(
+        sections,
+        sectionConfigs?.[tabId]
+      );
+
+      const characterPreferences = SheetPreferencesService.getByType(
+        document.type
+      );
+
+      const sortMode = characterPreferences.tabs?.[tabId]?.sort ?? 'm';
+
+      sections.forEach((section) => {
+        // Sort Spellbook
+        ItemUtils.sortItems(section.spells, sortMode);
+
+        // TODO: Collocate Spellbook Sub Items
+
+        // Apply visibility from configuration
+        section.show =
+          sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.[section.key]
+            ?.show !== false;
+      });
+    } catch (e) {
+      error('An error occurred while configuring spells', false, e);
+    }
+
+    return sections;
+  }
+
+  static configureFavorites(
+    favoriteSections: FavoriteSection[],
+    actor: Actor5e,
+    tabId: string,
+    sheetPreferences: SheetPreference,
+    sectionConfig?: Record<string, SectionConfig>
+  ) {
+    try {
+      favoriteSections = SheetSections.sortKeyedSections(
+        favoriteSections,
+        sectionConfig
+      );
+
+      const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
+
+      const favoritesIdMap = actor.system.favorites.reduce(
+        (map: Map<string, CharacterFavorite>, f: CharacterFavorite) => {
+          map.set(f.id, f);
+          return map;
+        },
+        new Map<string, CharacterFavorite>()
+      );
+
+      (favoriteSections as FavoriteSection[]).forEach((section) => {
+        if ('effects' in section) {
+          let effectContexts = section.effects;
+
+          // Sort Favorite Effects
+          if (sortMode === 'm') {
+            const getSort = (effects: Item5e) =>
+              favoritesIdMap.get(effects.getRelativeUUID(actor))?.sort ??
+              Number.MAX_SAFE_INTEGER;
+
+            effectContexts.sort(
+              (a, b) => getSort(a.effect) - getSort(b.effect)
+            );
+          } else {
+            effectContexts.sort((a, b) =>
+              a.effect.name.localeCompare(b.effect.name)
+            );
+          }
+
+          // TODO: Filter Favorite Effects ?
+        } else {
+          let items = 'spells' in section ? section.spells : section.items;
+          // Sort Favorites Items
+          if (sortMode === 'm') {
+            const getSort = (item: Item5e) =>
+              favoritesIdMap.get(item.getRelativeUUID(actor))?.sort ??
+              Number.MAX_SAFE_INTEGER;
+
+            items.sort((a, b) => getSort(a) - getSort(b));
+          } else {
+            ItemUtils.sortItems(items, sortMode);
+          }
+
+          // TODO: Collocate Favorite Sub Items
+
+          if ('spells' in section) {
+            section.spells = items;
+          } else {
+            section.items = items;
+          }
+        }
+
+        // Apply visibility from configuration
+        section.show = sectionConfig?.[section.key]?.show !== false;
+      });
+    } catch (e) {
+      error('An error occurred while configuring favorites', false, e);
+    }
+
+    return favoriteSections;
+  }
+
+  static configureFeatures<
+    TSection extends
+      | CharacterFeatureSection
+      | FeatureSection
+      | NpcAbilitySection
+  >(
+    features: TSection[],
+    context: CharacterSheetContext | NpcSheetContext,
+    tabId: string,
+    sheetPreferences: SheetPreference,
+    sectionConfig?: Record<string, SectionConfig>
+  ): TSection[] {
+    try {
+      features = SheetSections.sortKeyedSections(features, sectionConfig);
+
+      const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
+
+      features.forEach((section) => {
+        // Sort Features
+        ItemUtils.sortItems(section.items, sortMode);
+
+        // Collocate Feature Sub Items
+        section.items = SheetSections.collocateSubItems(context, section.items);
+
+        // Apply visibility from configuration
+        section.show = sectionConfig?.[section.key]?.show !== false;
+      });
+    } catch (e) {
+      error('An error occurred while configuring features', false, e);
+    }
+
+    return features;
+  }
+
+  static configureActions(
+    sections: ActionSection[],
+    tabId: string,
+    sheetPreferences: SheetPreference,
+    sectionConfigs: Record<string, SectionConfig> | undefined
+  ) {
+    try {
+      sections = SheetSections.sortKeyedSections(sections, sectionConfigs);
+
+      const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
+
+      sections.forEach((section) => {
+        sortActions(section, sortMode);
+
+        section.show = sectionConfigs?.[section.key]?.show !== false;
+      });
+    } catch (e) {
+      error('An error occurred while configuring actions', false, e);
+    }
+
+    return sections;
   }
 }

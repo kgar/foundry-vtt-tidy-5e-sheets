@@ -31,7 +31,6 @@ export type WorldSettingsContext = {
     lockLevelSelector: CurrentSettings['lockLevelSelector'];
     lockItemQuantity: CurrentSettings['lockItemQuantity'];
     initialNpcSheetTab: CurrentSettings['initialNpcSheetTab'];
-    useNpcRest: CurrentSettings['useNpcRest'];
     showNpcRestInChat: CurrentSettings['showNpcRestInChat'];
     showNpcActorLinkMarker: CurrentSettings['showNpcActorLinkMarker'];
     initialCharacterSheetTab: CurrentSettings['initialCharacterSheetTab'];

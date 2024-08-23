@@ -3,7 +3,6 @@
    * Optional CSS class list string to apply to the AC Shield container element.
    */
   export let cssClass: string = '';
-
 </script>
 
 <div class="ac-display {cssClass}">
@@ -35,12 +34,12 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      margin: 0 auto;
       svg {
         path {
           fill: var(--t5e-light-color);
         }
       }
-      margin: 0 auto;
     }
   }
 </style>

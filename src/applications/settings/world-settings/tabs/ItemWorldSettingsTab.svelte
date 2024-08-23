@@ -4,8 +4,11 @@
   import SelectSetting from 'src/applications/settings/parts/SelectSetting.svelte';
   import type { WorldSettingsContextStore } from '../WorldSettings.types';
   import CheckboxSetting from '../../parts/CheckboxSetting.svelte';
+  import { CONSTANTS } from 'src/constants';
 
-  const context = getContext<WorldSettingsContextStore>('context');
+  const context = getContext<WorldSettingsContextStore>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 </script>
 
 <div class="settings-form">

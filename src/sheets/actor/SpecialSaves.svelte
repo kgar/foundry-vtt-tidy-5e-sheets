@@ -4,8 +4,11 @@
   import type { Readable } from 'svelte/store';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import type { ActorSheetContext } from 'src/types/types';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<ActorSheetContext>>('context');
+  let context = getContext<Readable<ActorSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 </script>
 
 {#if $context.saves.concentration}

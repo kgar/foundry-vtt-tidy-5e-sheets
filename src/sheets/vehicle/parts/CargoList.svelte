@@ -22,10 +22,19 @@
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import type { Item5e } from 'src/types/item.types';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
+  import type { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+  import InlineContainerToggle from 'src/sheets/container/InlineContainerToggle.svelte';
+  import InlineContainerView from 'src/sheets/container/InlineContainerView.svelte';
 
   export let section: VehicleCargoSection;
 
-  let context = getContext<Readable<VehicleSheetContext>>('context');
+  let context = getContext<Readable<VehicleSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+
+  let inlineContainerToggleService = getContext<InlineContainerToggleService>(
+    CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
+  );
 
   let baseWidths: Record<string, string> = {
     quantity: '5rem',
@@ -106,6 +115,9 @@
       >
         <ItemTableCell primary={true}>
           <ItemUseButton disabled={!$context.editable} {item} />
+          {#if 'containerContents' in ctx && !!ctx.containerContents}
+            <InlineContainerToggle {item} {inlineContainerToggleService} />
+          {/if}
           <ItemName
             on:toggle={() => toggleSummary($context.actor)}
             cssClass="extra-small-gap"
@@ -155,6 +167,16 @@
           </ItemTableCell>
         {/if}
       </ItemTableRow>
+      {#if 'containerContents' in ctx && !!ctx.containerContents}
+        <InlineContainerView
+          container={item}
+          containerContents={ctx.containerContents}
+          editable={$context.editable}
+          {inlineContainerToggleService}
+          lockItemQuantity={$context.lockItemQuantity}
+          sheetDocument={$context.actor}
+        />
+      {/if}
     {/each}
     {#if $context.unlocked && section.dataset}
       <ItemTableFooter

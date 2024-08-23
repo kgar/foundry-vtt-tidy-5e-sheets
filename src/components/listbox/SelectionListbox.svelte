@@ -2,13 +2,22 @@
   import Listbox from './Listbox.svelte';
   import SelectionListboxToolbar from './SelectionListboxToolbar.svelte';
 
-  export let leftItems: any[];
+  type TItem = $$Generic;
+
+  export let leftItems: TItem[];
   export let selectedLeftItemIndex: number | null = null;
-  export let rightItems: any[];
+  export let rightItems: TItem[];
   export let selectedRightItemIndex: number | null = null;
-  export let labelProp: string;
-  export let valueProp: string;
+  export let labelProp: keyof TItem;
+  export let valueProp: keyof TItem;
   export let listboxCssClass: string = '';
+
+  interface $$Slots {
+    leftHeader: any;
+    rightHeader: any;
+    leftItemTemplate: { item: TItem };
+    rightItemTemplate: { item: TItem };
+  }
 
   $: selectedItemIndex = selectedLeftItemIndex ?? selectedRightItemIndex;
   $: selectedArray =
@@ -157,12 +166,12 @@
 </script>
 
 <div class="selection-listbox {$$props.class ?? ''}">
-  {#if $$slots['left-header'] || $$slots['right-header']}
+  {#if $$slots['leftHeader'] || $$slots['rightHeader']}
     <div class="column-1">
-      <slot name="left-header" />
+      <slot name="leftHeader" />
     </div>
     <div class="column-3">
-      <slot name="right-header" />
+      <slot name="rightHeader" />
     </div>
   {/if}
   <Listbox
@@ -175,7 +184,13 @@
     }}
     on:keydown={handleLeftListboxKeydown}
     class="column-1 {listboxCssClass}"
-  />
+  >
+    <svelte:fragment slot="itemTemplate" let:item>
+      <slot name="leftItemTemplate" {item}>
+        {item[labelProp]}
+      </slot>
+    </svelte:fragment>
+  </Listbox>
   <SelectionListboxToolbar
     moveUpDisabled={selectedItemIndex === null || selectedItemIndex === 0}
     on:moveUp={moveUp}
@@ -205,27 +220,11 @@
     }}
     on:keydown={handleRightListboxKeydown}
     class="column-3 {listboxCssClass}"
-  />
+  >
+    <svelte:fragment slot="itemTemplate" let:item>
+      <slot name="rightItemTemplate" {item}>
+        {item[labelProp]}
+      </slot>
+    </svelte:fragment>
+  </Listbox>
 </div>
-
-<style>
-  .selection-listbox {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    grid-template-rows: auto 1fr;
-    min-height: 0;
-    max-height: inherit;
-    height: 100%;
-    gap: 0.5rem;
-  }
-
-  .selection-listbox :global(.column-1) {
-    grid-column: 1;
-  }
-  .selection-listbox :global(.column-2) {
-    grid-column: 2;
-  }
-  .selection-listbox :global(.column-3) {
-    grid-column: 3;
-  }
-</style>

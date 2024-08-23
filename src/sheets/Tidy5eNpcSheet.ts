@@ -14,6 +14,7 @@ import type {
   Utilities,
   ActiveEffect5e,
   NpcAbilitySection,
+  ActorInventoryTypes,
 } from 'src/types/types';
 import { writable } from 'svelte/store';
 import NpcSheet from './npc/NpcSheet.svelte';
@@ -28,8 +29,7 @@ import {
 import { debug, error } from 'src/utils/logging';
 import { SettingsProvider, settingStore } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
-import { getPercentage, isLessThanOneIsOne } from 'src/utils/numbers';
-import NpcShortRestDialog from 'src/dialogs/NpcShortRestDialog';
+import { getPercentage } from 'src/utils/numbers';
 import type { SvelteComponent } from 'svelte';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
 import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
@@ -53,14 +53,19 @@ import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
-import { ActorSheetCustomSectionMixin } from './mixins/Tidy5eBaseActorSheetMixins';
-import { ItemUtils } from 'src/utils/ItemUtils';
-import type { RestConfiguration } from 'src/foundry/dnd5e.types';
+import { BaseSheetCustomSectionMixin } from './mixins/BaseSheetCustomSectionMixin';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
+import { Inventory } from 'src/features/sections/Inventory';
+import { Container } from 'src/features/containers/Container';
+import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 
 export class Tidy5eNpcSheet
-  extends ActorSheetCustomSectionMixin(dnd5e.applications.actor.ActorSheet5eNPC)
+  extends BaseSheetCustomSectionMixin(
+    (object) => object.items,
+    dnd5e.applications.actor.ActorSheet5eNPC
+  )
   implements
     SheetTabCacheable,
     SheetExpandedItemsCacheable,
@@ -75,6 +80,7 @@ export class Tidy5eNpcSheet
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
+  inlineContainerToggleService = new InlineContainerToggleService();
   itemTableTogglesCache: ItemTableToggleCacheService;
   itemFilterService: ItemFilterService;
   subscriptionsService: StoreSubscriptionsService;
@@ -111,7 +117,13 @@ export class Tidy5eNpcSheet
 
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
-      classes: ['tidy5e-sheet', 'sheet', 'actor', CONSTANTS.SHEET_TYPE_NPC],
+      classes: [
+        'tidy5e-sheet',
+        'sheet',
+        'actor',
+        CONSTANTS.SHEET_TYPE_NPC,
+        CONSTANTS.SHEET_LAYOUT_CLASSIC,
+      ],
       width: 740,
       height: 810,
       scrollY: ['[data-tidy-track-scroll-y]', '.scroll-container'],
@@ -151,32 +163,47 @@ export class Tidy5eNpcSheet
     this.component = new NpcSheet({
       target: node,
       context: new Map<any, any>([
-        ['context', this.context],
-        ['messageBus', this.messageBus],
-        ['stats', this.stats],
-        ['card', this.card],
-        ['currentTabId', this.currentTabId],
-        ['onTabSelected', this.onTabSelected.bind(this)],
-        ['onItemToggled', this.onItemToggled.bind(this)],
-        ['searchFilters', new Map(this.searchFilters)],
+        [CONSTANTS.SVELTE_CONTEXT.APP_ID, this.appId],
+        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this.context],
+        [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
+        [CONSTANTS.SVELTE_CONTEXT.STATS, this.stats],
+        [CONSTANTS.SVELTE_CONTEXT.CARD, this.card],
+        [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
         [
-          'onFilter',
+          CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
+          this.inlineContainerToggleService,
+        ],
+        [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.itemFilterService],
+        [
+          CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED,
+          this.onTabSelected.bind(this),
+        ],
+        [
+          CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TOGGLED,
+          this.onItemToggled.bind(this),
+        ],
+        [CONSTANTS.SVELTE_CONTEXT.SEARCH_FILTERS, new Map(this.searchFilters)],
+        [
+          CONSTANTS.SVELTE_CONTEXT.ON_FILTER,
           this.itemFilterService.onFilter.bind(this.itemFilterService),
         ],
         [
-          'onFilterClearAll',
+          CONSTANTS.SVELTE_CONTEXT.ON_FILTER_CLEAR_ALL,
           this.itemFilterService.onFilterClearAll.bind(this.itemFilterService),
         ],
-        ['onSearch', this.onSearch.bind(this)],
-        ['location', ''],
-        ['expandedItems', new Map(this.expandedItems)],
-        ['expandedItemData', new Map(this.expandedItemData)],
+        [CONSTANTS.SVELTE_CONTEXT.ON_SEARCH, this.onSearch.bind(this)],
+        [CONSTANTS.SVELTE_CONTEXT.LOCATION, ''],
+        [CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEMS, new Map(this.expandedItems)],
         [
-          'itemTableToggles',
+          CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA,
+          new Map(this.expandedItemData),
+        ],
+        [
+          CONSTANTS.SVELTE_CONTEXT.ITEM_TABLE_TOGGLES,
           new Map(this.itemTableTogglesCache.itemTableToggles),
         ],
         [
-          'onItemTableToggle',
+          CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TABLE_TOGGLE,
           this.itemTableTogglesCache.onItemTableToggle.bind(
             this.itemTableTogglesCache
           ),
@@ -205,6 +232,9 @@ export class Tidy5eNpcSheet
     const actionListSortMode =
       npcPreferences.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS]?.sort ?? 'm';
 
+    const inventorySortMode =
+      npcPreferences.tabs?.[CONSTANTS.TAB_NPC_INVENTORY]?.sort ?? 'm';
+
     const unlocked =
       FoundryAdapter.isActorSheetUnlocked(this.actor) &&
       defaultDocumentContext.editable;
@@ -215,8 +245,7 @@ export class Tidy5eNpcSheet
 
     let maxPreparedSpellsTotal = 0;
     try {
-      const formula =
-        TidyFlags.tryGetFlag(this.actor, 'maxPreparedSpells')?.toString() ?? '';
+      const formula = TidyFlags.maxPreparedSpells.get(this.actor) ?? '';
 
       if (formula?.trim() !== '') {
         const roll = await Roll.create(
@@ -229,9 +258,8 @@ export class Tidy5eNpcSheet
       error('Unable to calculate max prepared spells', false, e);
     }
 
-    const showLegendaryToolbarFlagValue = TidyFlags.tryGetFlag(
-      this.actor,
-      'show-legendary-toolbar'
+    const showLegendaryToolbarFlagValue = TidyFlags.showLegendaryToolbar.get(
+      this.actor
     );
     const res = this.actor.system.resources;
     const showLegendaryToolbar =
@@ -251,11 +279,7 @@ export class Tidy5eNpcSheet
             ),
             iconClass: 'ra ra-player',
             execute: async () => {
-              await TidyFlags.setFlag(
-                this.actor,
-                'show-legendary-toolbar',
-                true
-              );
+              await TidyFlags.showLegendaryToolbar.set(this.actor, true);
             },
             visible: !showLegendaryToolbar,
           },
@@ -265,11 +289,7 @@ export class Tidy5eNpcSheet
             ),
             iconClass: 'ra ra-monster-skull',
             execute: async () => {
-              await TidyFlags.setFlag(
-                this.actor,
-                'show-legendary-toolbar',
-                false
-              );
+              await TidyFlags.showLegendaryToolbar.set(this.actor, false);
             },
             visible: showLegendaryToolbar,
           },
@@ -545,21 +565,128 @@ export class Tidy5eNpcSheet
           },
         ],
       },
+      [CONSTANTS.TAB_NPC_INVENTORY]: {
+        utilityToolbarCommands: [
+          {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
+            iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
+            execute: async () => {
+              await SheetPreferencesService.setDocumentTypeTabPreference(
+                this.actor.type,
+                CONSTANTS.TAB_NPC_INVENTORY,
+                'sort',
+                'm'
+              );
+            },
+            visible: inventorySortMode === 'a',
+          },
+          {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
+            iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
+            execute: async () => {
+              await SheetPreferencesService.setDocumentTypeTabPreference(
+                this.actor.type,
+                CONSTANTS.TAB_NPC_INVENTORY,
+                'sort',
+                'a'
+              );
+            },
+            visible: inventorySortMode === 'm',
+          },
+          {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Commands.HideContainerPanel'
+            ),
+            iconClass: `fas fa-boxes-stacked fa-fw`,
+            execute: () => {
+              TidyFlags.showContainerPanel.unset(this.actor);
+            },
+            visible: !!TidyFlags.showContainerPanel.get(this.actor),
+          },
+          {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Commands.ShowContainerPanel'
+            ),
+            iconClass: `fas fa-box fa-fw`,
+            execute: () => {
+              TidyFlags.showContainerPanel.set(this.actor, true);
+            },
+            visible: !TidyFlags.showContainerPanel.get(this.actor),
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
+            iconClass: 'fas fa-angles-down',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_NPC_INVENTORY,
+                message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
+              }),
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
+            iconClass: 'fas fa-angles-up',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_NPC_INVENTORY,
+                message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
+              }),
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.ListLayout'),
+            iconClass: 'fas fa-th-list fa-fw toggle-list',
+            visible: !TidyFlags.inventoryGrid.get(this.actor),
+            execute: () => {
+              TidyFlags.inventoryGrid.set(this.actor);
+            },
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.GridLayout'),
+            iconClass: 'fas fa-th-large fa-fw toggle-grid',
+            visible: !!TidyFlags.inventoryGrid.get(this.actor),
+            execute: () => {
+              TidyFlags.inventoryGrid.unset(this.actor);
+            },
+          },
+          {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Utilities.ConfigureSections'
+            ),
+            iconClass: 'fas fa-cog',
+            execute: ({ context }) => {
+              new DocumentTabSectionConfigApplication({
+                document: context.actor,
+                sections: context.inventory,
+                tabId: CONSTANTS.TAB_NPC_INVENTORY,
+                tabTitle: NpcSheetRuntime.getTabTitle(
+                  CONSTANTS.TAB_NPC_INVENTORY
+                ),
+              }).render(true);
+            },
+          },
+        ],
+      },
     };
+
+    // Effects & Conditions
+    let { conditions, effects: enhancedEffectSections } =
+      await ConditionsAndEffects.getConditionsAndEffects(
+        this.actor,
+        this.object,
+        defaultDocumentContext.effects
+      );
 
     const context: NpcSheetContext = {
       ...defaultDocumentContext,
-      actions: getActorActionSections(this.actor, this.itemFilterService),
+      actions: await getActorActionSections(this.actor),
       activateEditors: (node, options) =>
         FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
       actorPortraitCommands:
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
       allowEffectsManagement: true,
       appearanceEnrichedHtml: await FoundryAdapter.enrichHtml(
-        FoundryAdapter.getProperty<string>(
-          this.actor,
-          `flags.${CONSTANTS.MODULE_ID}.appearance`
-        ) ?? '',
+        TidyFlags.appearance.get(this.actor) ?? '',
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
@@ -581,10 +708,7 @@ export class Tidy5eNpcSheet
         }
       ),
       bondEnrichedHtml: await FoundryAdapter.enrichHtml(
-        FoundryAdapter.getProperty<string>(
-          this.actor,
-          `flags.${CONSTANTS.MODULE_ID}.bond`
-        ) ?? '',
+        this.actor.system.details.bond,
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
@@ -592,21 +716,23 @@ export class Tidy5eNpcSheet
           relativeTo: this.actor,
         }
       ),
+      conditions: conditions,
+      containerPanelItems: await Inventory.getContainerPanelItems(
+        defaultDocumentContext.items
+      ),
       customActorTraits: CustomActorTraitsRuntime.getEnabledTraits(
         defaultDocumentContext
       ),
       customContent: await NpcSheetRuntime.getContent(defaultDocumentContext),
       useClassicControls:
         SettingsProvider.settings.useClassicControlsForNpc.get(),
-      encumbrance: this.actor.system.attributes.encumbrance,
+      effects: enhancedEffectSections,
       editable: defaultDocumentContext.editable,
+      encumbrance: this.actor.system.attributes.encumbrance,
       filterData: this.itemFilterService.getDocumentItemFilterData(),
       filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
-        FoundryAdapter.getProperty<string>(
-          this.actor,
-          `flags.${CONSTANTS.MODULE_ID}.flaw`
-        ) ?? '',
+        this.actor.system.details.flaw,
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
@@ -622,10 +748,7 @@ export class Tidy5eNpcSheet
       ),
       showSpellbookTab: SettingsProvider.settings.showSpellbookTabNpc.get(),
       idealEnrichedHtml: await FoundryAdapter.enrichHtml(
-        FoundryAdapter.getProperty<string>(
-          this.actor,
-          `flags.${CONSTANTS.MODULE_ID}.ideal`
-        ) ?? '',
+        this.actor.system.details.ideal,
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
@@ -633,6 +756,11 @@ export class Tidy5eNpcSheet
           relativeTo: this.actor,
         }
       ),
+      showContainerPanel:
+        TidyFlags.showContainerPanel.get(this.actor) === true &&
+        Array.from(defaultDocumentContext.items).some(
+          (i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER
+        ),
       showLegendaryToolbar: showLegendaryToolbar,
       lockSensitiveFields: lockSensitiveFields,
       longRest: this._onLongRest.bind(this),
@@ -643,10 +771,7 @@ export class Tidy5eNpcSheet
       lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
       maxPreparedSpellsTotal,
       notes1EnrichedHtml: await FoundryAdapter.enrichHtml(
-        FoundryAdapter.getProperty<string>(
-          this.actor,
-          `flags.${CONSTANTS.MODULE_ID}.notes1.value`
-        ) ?? '',
+        TidyFlags.notes1.members.value.get(this.actor) ?? '',
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
@@ -655,10 +780,7 @@ export class Tidy5eNpcSheet
         }
       ),
       notes2EnrichedHtml: await FoundryAdapter.enrichHtml(
-        FoundryAdapter.getProperty<string>(
-          this.actor,
-          `flags.${CONSTANTS.MODULE_ID}.notes2.value`
-        ) ?? '',
+        TidyFlags.notes2.members.value.get(this.actor) ?? '',
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
@@ -667,10 +789,7 @@ export class Tidy5eNpcSheet
         }
       ),
       notes3EnrichedHtml: await FoundryAdapter.enrichHtml(
-        FoundryAdapter.getProperty<string>(
-          this.actor,
-          `flags.${CONSTANTS.MODULE_ID}.notes3.value`
-        ) ?? '',
+        TidyFlags.notes3.members.value.get(this.actor) ?? '',
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
@@ -679,10 +798,7 @@ export class Tidy5eNpcSheet
         }
       ),
       notes4EnrichedHtml: await FoundryAdapter.enrichHtml(
-        FoundryAdapter.getProperty<string>(
-          this.actor,
-          `flags.${CONSTANTS.MODULE_ID}.notes4.value`
-        ) ?? '',
+        TidyFlags.notes4.members.value.get(this.actor) ?? '',
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
@@ -691,10 +807,7 @@ export class Tidy5eNpcSheet
         }
       ),
       notesEnrichedHtml: await FoundryAdapter.enrichHtml(
-        FoundryAdapter.getProperty<string>(
-          this.actor,
-          `flags.${CONSTANTS.MODULE_ID}.notes.value`
-        ) ?? '',
+        TidyFlags.notes.members.value.get(this.actor) ?? '',
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
@@ -715,10 +828,7 @@ export class Tidy5eNpcSheet
       tabs: [],
       tokenState: this.#getTokenState(),
       traitEnrichedHtml: await FoundryAdapter.enrichHtml(
-        FoundryAdapter.getProperty<string>(
-          this.actor,
-          `flags.${CONSTANTS.MODULE_ID}.trait`
-        ) ?? '',
+        TidyFlags.trait.get(this.actor) ?? '',
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
@@ -739,12 +849,16 @@ export class Tidy5eNpcSheet
         ) ?? [],
     };
 
+    for (const panelItem of context.containerPanelItems) {
+      const ctx = context.itemContext[panelItem.container.id];
+      ctx.containerContents = await Container.getContainerContents(
+        panelItem.container
+      );
+    }
+
     let tabs = await NpcSheetRuntime.getTabs(context);
 
-    const selectedTabs = TidyFlags.tryGetFlag<string[]>(
-      context.actor,
-      'selected-tabs'
-    );
+    const selectedTabs = TidyFlags.selectedTabs.get(context.actor);
 
     if (selectedTabs?.length) {
       tabs = tabs
@@ -766,63 +880,6 @@ export class Tidy5eNpcSheet
       this.element.get(0),
       context
     );
-
-    // Apply Section Configs
-    // ------------------------------------------------------------
-
-    const sectionConfigs = TidyFlags.sectionConfig.get(this.actor);
-
-    context.features = SheetSections.sortKeyedSections(
-      context.features,
-      sectionConfigs?.[CONSTANTS.TAB_NPC_ABILITIES]
-    );
-
-    context.features.forEach((section) => {
-      // Sort Features
-      ItemUtils.sortItems(section.items, abilitiesSortMode);
-
-      // Collocate Feature Sub Items
-      section.items = SheetSections.collocateSubItems(context, section.items);
-
-      // Filter Features
-      section.items = this.itemFilterService.filter(
-        section.items,
-        CONSTANTS.TAB_NPC_ABILITIES
-      );
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_NPC_ABILITIES]?.[section.key]?.show !==
-        false;
-    });
-
-    context.spellbook = SheetSections.sortKeyedSections(
-      context.spellbook,
-      sectionConfigs?.[CONSTANTS.TAB_NPC_SPELLBOOK]
-    );
-
-    const showSpellbookTab =
-      SettingsProvider.settings.showSpellbookTabNpc.get();
-
-    const spellbookTabId = showSpellbookTab
-      ? CONSTANTS.TAB_NPC_SPELLBOOK
-      : CONSTANTS.TAB_NPC_ABILITIES;
-
-    context.spellbook.forEach((section) => {
-      // Sort Spellbook
-      ItemUtils.sortItems(section.spells, spellbookSortMode);
-
-      // TODO: Collocate Spellbook Sub Items
-      // Filter Spellbook
-      section.spells = this.itemFilterService.filter(
-        section.spells,
-        spellbookTabId
-      );
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[spellbookTabId]?.[section.key]?.show !== false;
-    });
 
     debug('NPC Sheet context data', context);
 
@@ -891,15 +948,15 @@ export class Tidy5eNpcSheet
       other: Item5e[];
     }>(
       (features, item) => {
-        const { quantity, uses, recharge, target } = item.system;
+        const { quantity, uses, target } = item.system;
         const ctx = (context.itemContext[item.id] ??= {});
+        ctx.attunement = FoundryAdapter.getAttunementContext(item);
         ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
         ctx.hasUses = uses && uses.max > 0;
-        ctx.isOnCooldown =
-          recharge && !!recharge.value && recharge.charged === false;
-        ctx.isDepleted = item.isOnCooldown && uses.per && uses.value > 0;
         ctx.hasTarget = !!target && !['none', ''].includes(target.type);
-        ctx.canToggle = false;
+        ctx.canToggle = 'equipped' in item.system;
+
+        ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
         if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {
           if (this._concentration.items.has(item)) {
             ctx.concentration = true;
@@ -916,8 +973,6 @@ export class Tidy5eNpcSheet
       },
       { spells: [], subclasses: [], classes: [], other: [] }
     );
-
-    const npcPreferences = SheetPreferencesService.getByType(this.actor.type);
 
     classes = SheetSections.prepareClassItems(
       context,
@@ -938,8 +993,23 @@ export class Tidy5eNpcSheet
 
     features.classes.items = classes;
 
+    const inventoryTypesArray = Inventory.getDefaultInventoryTypes();
+    const inventoryTypes = new Set(inventoryTypesArray);
+    const inventory: ActorInventoryTypes =
+      Inventory.getDefaultInventorySections();
+
     // Organize Features
     for (let item of other) {
+      if (inventoryTypes.has(item.type)) {
+        Inventory.applyInventoryItemToSection(
+          inventory,
+          item,
+          inventoryTypesArray,
+          {
+            canCreate: true,
+          }
+        );
+      }
       // Handle custom section, if present
       if (TidyFlags.section.get(item)) {
         NpcSheetSections.applyAbilityToSection(features, item, {
@@ -979,6 +1049,7 @@ export class Tidy5eNpcSheet
 
     context.features = Object.values(features);
     context.spellbook = spellbook;
+    context.inventory = Object.values(inventory);
   }
 
   private async setExpandedItemData() {
@@ -1022,18 +1093,56 @@ export class Tidy5eNpcSheet
     return null;
   }
 
-  async _onDropSingleItem(...args: any[]) {
-    return super._onDropSingleItem(...args);
+  async _onDropSingleItem(itemData: any) {
+    // Create a Consumable spell scroll on the Inventory tab
+    if (
+      itemData.type === CONSTANTS.ITEM_TYPE_SPELL &&
+      this.currentTabId === CONSTANTS.TAB_NPC_INVENTORY
+    ) {
+      const options: Record<string, unknown> = {};
+
+      if (SettingsProvider.settings.includeFlagsInSpellScrollCreation.get()) {
+        options.flags = itemData.flags;
+      }
+
+      const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(
+        itemData,
+        options
+      );
+
+      return scroll.toObject();
+    }
+
+    return super._onDropSingleItem(itemData);
+  }
+
+  /**
+   * A boolean which gates double-rendering and prevents a second
+   * colliding render from triggering an infamous
+   * "One of original or other are not Objects!" error.
+   */
+  private tidyRendering = false;
+
+  render(...args: unknown[]) {
+    debug('Sheet render begin');
+    this.tidyRendering = true;
+    super.render(...args);
   }
 
   private _renderMutex = new AsyncMutex();
   async _render(force?: boolean, options = {}) {
-    if (typeof options !== 'object') {
-      options = {};
-    }
     await this._renderMutex.lock(async () => {
+      const doubleRenderDetected =
+        this.options.token && this.tidyRendering === false;
+
+      if (doubleRenderDetected) {
+        return;
+      }
+
       await this._renderSheet(force, options);
     });
+    this.tidyRendering = false;
+    debug('Sheet render end');
   }
 
   private async _renderSheet(force?: boolean, options = {}) {
@@ -1130,14 +1239,16 @@ export class Tidy5eNpcSheet
   }
 
   /**
-   * Take a short rest, calling the relevant function on the Actor instance
-   * @param {Event} event   The triggering click event
-   * @private
+   * Take a short rest, calling the relevant function on the Actor instance.
+   * @param {Event} event             The triggering click event.
+   * @returns {Promise<RestResult>}  Result of the rest action.
    */
   async _onShortRest(event: Event) {
     event.preventDefault();
     await this._onSubmit(event);
-    return this.shortRest();
+    return this.actor.shortRest({
+      chat: SettingsProvider.settings.showNpcRestInChat.get(),
+    });
   }
 
   /**
@@ -1159,76 +1270,6 @@ export class Tidy5eNpcSheet
       stats.lastSubmissionTime = new Date();
       return stats;
     });
-  }
-
-  /**
-   * Take a short rest, possibly spending hit dice and recovering resources, item uses, and pact slots.
-   * @param config configurations which determine various aspects of the rest
-   * @returns
-   */
-  async shortRest(
-    config: Partial<RestConfiguration> = {}
-  ): Promise<unknown | undefined> {
-    const restConfig: RestConfiguration = FoundryAdapter.mergeObject(
-      {
-        dialog: true,
-        chat: SettingsProvider.settings.showNpcRestInChat.get(),
-        newDay: false,
-        autoHD: false,
-        autoHDThreshold: 3,
-      },
-      config
-    );
-
-    if (TidyHooks.dnd5ePreShortRest(this.actor, restConfig) === false) {
-      return;
-    }
-
-    // Take note of the initial hit points and number of hit dice the Actor has
-    const hd0 = isLessThanOneIsOne(this.actor.system.details.cr); // this.actor.system.attributes.hd;
-    const hp0 = this.actor.system.attributes.hp.value;
-
-    // Display a Dialog for rolling hit dice
-    if (config.dialog) {
-      try {
-        const result = await NpcShortRestDialog.shortRestDialog({
-          actor: this.actor,
-          canRoll: hd0 > 0,
-        });
-
-        if (result.confirmed) {
-          config.newDay = result.newDay === true;
-          // Return the rest result
-          const dhd = hd0; // this.system.attributes.hd - hd0;
-          const dhp = this.actor.system.attributes.hp.value - hp0;
-
-          const rollData = this.actor.getRollData();
-          const roll_value = await FoundryAdapter.roll(
-            isLessThanOneIsOne(dhd).toString() + 'd6',
-            rollData
-          );
-          const value = roll_value.total;
-          let newHpValue =
-            this.actor.system.attributes.hp.value + Number(value ?? 0);
-          if (newHpValue > this.actor.system.attributes.hp.max) {
-            newHpValue = this.actor.system.attributes.hp.max;
-          }
-          await this.actor.update({ 'system.attributes.hp.value': newHpValue });
-
-          return this.actor._rest(config.chat, config.newDay, false, dhd, dhp);
-        }
-      } catch (err) {
-        error(
-          'An error occurred while attempting a short rest for the NPC. See devtool console for more information.',
-          true,
-          err
-        );
-        return;
-      }
-    } else if (config.autoHD) {
-      // Automatically spend hit dice
-      await this.autoSpendHitDice({ threshold: config.autoHDThreshold });
-    }
   }
 
   close(options: unknown = {}) {

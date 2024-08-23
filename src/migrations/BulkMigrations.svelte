@@ -10,13 +10,40 @@
   import Notice from 'src/components/notice/Notice.svelte';
   import CcssToTidyMigration from './v3/CcssToTidyMigration.svelte';
   import FavoritesToSystemMigration from './v4/FavoritesToSystemMigration.svelte';
+  import BondsIdealsFlawsToSystemMigration from './v5/BondsIdealsFlawsToSystemMigration.svelte';
+  import SpellClassToSourceClassMigration from './v5/SpellClassToSourceClassMigration.svelte';
+  import NpcExhaustionToSystemMigration from './v5/NpcExhaustionToSystemMigration.svelte';
 
   export let selectedTabId: string =
-    CONSTANTS.TAB_MIGRATIONS_FAVORITES_TO_SYSTEM;
+    CONSTANTS.TAB_MIGRATIONS_SPELL_CLASS_TO_SOURCE_CLASS;
 
   const localize = FoundryAdapter.localize;
 
   const tabs: Tab[] = [
+    {
+      id: CONSTANTS.TAB_MIGRATIONS_NPC_EXHAUSTION,
+      title: 'TIDY5E.Settings.Migrations.NpcExhaustion.sectionTitle',
+      content: {
+        component: NpcExhaustionToSystemMigration,
+        type: 'svelte',
+      },
+    },
+    {
+      id: CONSTANTS.TAB_MIGRATIONS_SPELL_CLASS_TO_SOURCE_CLASS,
+      title: 'TIDY5E.Settings.Migrations.SpellClassToSourceClass.sectionTitle',
+      content: {
+        component: SpellClassToSourceClassMigration,
+        type: 'svelte',
+      },
+    },
+    {
+      id: CONSTANTS.TAB_MIGRATIONS_BONDS_IDEALS_FLAWS_TO_SYSTEM,
+      title: 'TIDY5E.Settings.Migrations.BondsIdealsFlawsToSystem.sectionTitle',
+      content: {
+        component: BondsIdealsFlawsToSystemMigration,
+        type: 'svelte',
+      },
+    },
     {
       id: CONSTANTS.TAB_MIGRATIONS_FAVORITES_TO_SYSTEM,
       title: 'TIDY5E.Settings.Migrations.FavoritesToSystem.sectionTitle',

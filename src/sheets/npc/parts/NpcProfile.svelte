@@ -13,16 +13,20 @@
   import { settingStore } from 'src/settings/settings';
   import ExhaustionInput from 'src/sheets/actor/ExhaustionInput.svelte';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
-  import { TidyFlags } from 'src/foundry/TidyFlags';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<NpcSheetContext>>('context');
+  let context = getContext<Readable<NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   $: incapacitated =
     ($context.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
     $context.actor?.system?.attributes?.hp?.max !== 0;
 
-  function onLevelSelected(event: CustomEvent<{ level: number }>) {
-    TidyFlags.setFlag($context.actor, 'exhaustion', event.detail.level);
+  async function onLevelSelected(event: CustomEvent<{ level: number }>) {
+    await $context.actor.update({
+      'system.attributes.exhaustion': event.detail.level,
+    });
   }
 </script>
 
@@ -40,31 +44,29 @@
   {/if}
   {#if $settingStore.useExhaustion && $settingStore.exhaustionConfig.type === 'specific'}
     <ExhaustionTracker
-      level={TidyFlags.tryGetFlag($context.actor, 'exhaustion') ?? 0}
+      level={$context.system.attributes.exhaustion}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
       exhaustionConfig={$settingStore.exhaustionConfig}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
         $context.actor,
-        'flags.tidy5e-sheet.exhaustion',
+        'system.attributes.exhaustion',
       )}
     />
   {:else if $settingStore.useExhaustion && $settingStore.exhaustionConfig.type === 'open'}
     <ExhaustionInput
-      level={TidyFlags.tryGetFlag($context.actor, 'exhaustion') ?? 0}
+      level={$context.system.attributes.exhaustion}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
         $context.actor,
-        'flags.tidy5e-sheet.exhaustion',
+        'system.attributes.exhaustion',
       )}
     />
   {/if}
 
   <NpcHitPoints />
-  {#if $settingStore.useNpcRest}
-    <NpcRest />
-  {/if}
+  <NpcRest />
   {#if !$context.system.details.level}
     <NpcHealthFormulaRoller />
   {/if}

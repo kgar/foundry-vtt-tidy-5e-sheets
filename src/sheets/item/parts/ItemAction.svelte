@@ -12,13 +12,11 @@
   import { settingStore } from 'src/settings/settings';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context = getContext<Readable<ItemSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
-
-  $: damagePartsAreEnchanted = $context.itemOverrides.has(
-    'system.damage.parts',
-  );
 
   $: damageIsEnchanted = !!FoundryAdapter.getProperty(
     $context.item.overrides,

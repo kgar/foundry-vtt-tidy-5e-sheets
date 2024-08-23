@@ -12,9 +12,9 @@ D&D 5e sheet layouts for Foundry VTT, focused on a clean UI, user ergonomics, an
 Completely rewritten from the ground up, based on the [Tidy5e Sheet](https://github.com/sdenec/tidy5e-sheet) module by [sdenec](https://github.com/sdenec) and [4535992](https://github.com/p4535992).
 
 > [!IMPORTANT]
-> **Tidy 5e Sheets version 4 (dnd5e 3.2.x) is here!**
+> **Tidy 5e Sheets version 5 (dnd5e 3.3.x) is here!**
 >
-> The Tidy 5e Sheets rewrite is now compatible with dnd5e 3.2.x. All development efforts will continue in step with the current version of the default sheets.
+> The Tidy 5e Sheets rewrite is now compatible with dnd5e 3.3.x. All development efforts will continue in step with the current version of the default sheets.
 
 ---
 
@@ -98,7 +98,7 @@ If you are experiencing a bug or have an idea for a new feature, submit a [githu
 
 ## Module Compatibility
 
-If a module not compatible with Tidy 5e Sheets, submit a [github issue](https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues), and the author will work with other module authors to establish compatibility.
+If a module is not compatible with Tidy 5e Sheets, submit a [github issue](https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues), and the author will work with other module authors to establish compatibility.
 
 
 ## Tidy 5e Sheets Manifesto

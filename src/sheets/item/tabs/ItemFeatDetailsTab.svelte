@@ -12,8 +12,11 @@
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import ItemProperties from '../parts/ItemProperties.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context = getContext<Readable<ItemSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -101,7 +104,7 @@
       id={inputId}
       document={$context.item}
       field="system.enchantment.items.max"
-      value={$context.source.enchantment.items.max}
+      value={$context.source.enchantment?.items.max}
       disabled={!$context.editable}
     />
     <p class="hint">
@@ -120,7 +123,7 @@
       id={inputId}
       document={$context.item}
       field="system.enchantment.items.period"
-      value={$context.system.enchantment.items.period}
+      value={$context.system.enchantment?.items.period}
       blankValue=""
     >
       <SelectOptions
