@@ -34,7 +34,7 @@ export class Tidy5eGroupSheet extends SvelteApplicationMixin<GroupSheetClassicCo
     return new GroupSheet({
       target: node,
       context: new Map<any, any>([
-        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this.store],
+        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._store],
       ]),
     });
   }

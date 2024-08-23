@@ -3,8 +3,8 @@ import { writable, type Writable } from 'svelte/store';
 
 export function SvelteApplicationMixin<TContext>(BaseApplication: any) {
   class SvelteApplication extends BaseApplication {
-    store: Writable<TContext> = writable<TContext>();
-    component: SvelteComponent | undefined;
+    _store: Writable<TContext> = writable<TContext>();
+    #component: SvelteComponent | undefined;
 
     async _prepareContext(
       options: ApplicationRenderOptions
@@ -28,7 +28,7 @@ export function SvelteApplicationMixin<TContext>(BaseApplication: any) {
         return;
       }
 
-      this.store.set(context);
+      this._store.set(context);
     }
 
     _replaceHTML(
@@ -42,51 +42,26 @@ export function SvelteApplicationMixin<TContext>(BaseApplication: any) {
 
     async _renderFrame(options: ApplicationRenderOptions) {
       const frame = await super._renderFrame(options);
-  
+
       const target = this.hasFrame
         ? frame.querySelector('.window-content')
         : frame;
 
       target.innerContent = '';
       const context = await this._prepareContext(options);
-      this.store.set(context);
-      this.component = this._createComponent(target);
+      this._store.set(context);
+      this.#component = this._createComponent(target);
 
       return frame;
     }
 
     async close(options: ApplicationClosingOptions = {}) {
-      this.component?.$destroy();
-      super.close(options);
+      this.#component?.$destroy();
+      await super.close(options);
     }
   }
 
   return SvelteApplication;
-}
-
-export function TidyHandlebarsIntegrationApplicationMixin<TContext>(
-  BaseApplication: any
-) {
-  class TidyHandlebarsIntegrationApplication extends BaseApplication {
-    async _renderHTML(context: TContext, options: ApplicationRenderOptions) {
-      const result = await super._renderHTML(context, options);
-      console.log('_renderHTML', context, options);
-      // Prepare API-driven custom content here
-
-      return result;
-    }
-
-    _replaceHTML(
-      result: any,
-      content: HTMLElement,
-      options: ApplicationRenderOptions
-    ) {
-      super._replaceHTML(result, content, options);
-      console.log('_replaceHTML', result, content, options);
-      // Remove `data-tidy-render-scheme="handlebars"` content here?
-      // Add replacement stuff; TODO: add TS types for this
-    }
-  }
 }
 
 export interface ApplicationConfiguration {
