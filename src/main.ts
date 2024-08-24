@@ -78,16 +78,18 @@ Hooks.once('init', () => {
       label: 'TIDY5E.Tidy5eContainerSheet',
     }
   );
-  
-  DocumentSheetConfig.registerSheet(
-    Actor,
-    CONSTANTS.DND5E_SYSTEM_ID,
-    Tidy5eGroupSheet,
-    {
-      types: [CONSTANTS.SHEET_TYPE_GROUP],
-      label: 'TIDY5E.Tidy5eGroupSheetClassic',
-    }
-  );
+
+  if (FoundryAdapter.isFoundryV12OrHigher()) {
+    DocumentSheetConfig.registerSheet(
+      Actor,
+      CONSTANTS.DND5E_SYSTEM_ID,
+      Tidy5eGroupSheet,
+      {
+        types: [CONSTANTS.SHEET_TYPE_GROUP],
+        label: 'TIDY5E.Tidy5eGroupSheetClassic',
+      }
+    );
+  }
 
   initSettings();
   initRuntime();

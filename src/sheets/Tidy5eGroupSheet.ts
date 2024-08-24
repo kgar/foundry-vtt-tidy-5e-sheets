@@ -2,7 +2,7 @@ import { CONSTANTS } from 'src/constants';
 import {
   SvelteApplicationMixin,
   type ApplicationRenderOptions,
-} from './SvelteApplicationMixin';
+} from '../mixins/SvelteApplicationMixin';
 import type { SvelteComponent } from 'svelte';
 import GroupSheet from './group/GroupSheet.svelte';
 
