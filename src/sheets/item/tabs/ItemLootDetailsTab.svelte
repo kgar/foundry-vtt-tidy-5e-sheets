@@ -40,7 +40,7 @@
     </Select>
   </ItemFormGroup>
 
-  {#if $context.lootSubtypes}
+  {#if $context.itemSubtypes}
     {@const subTypeLabel = localize('DND5E.ItemLootSubtype', {
       category:
         $context.config.lootTypes[$context.system.type.value]?.label ?? '',
@@ -57,7 +57,7 @@
         value={$context.system.type.subtype}
         disabled={!$context.editable}
       >
-        <SelectOptions data={$context.lootSubtypes} blank="" />
+        <SelectOptions data={$context.itemSubtypes} blank="" />
       </Select>
     </ItemFormGroup>
   {/if}
