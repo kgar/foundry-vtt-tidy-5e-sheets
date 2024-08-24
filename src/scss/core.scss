@@ -206,10 +206,7 @@
   }
 
   // TODO: Either put the remainder of the partial style imports here, or move the nonstandard style files to another location.
-  // FIXME: Moving partials and actor-specific components out of sheet/form/shell breaks various things like buttons.
   // Partials - Styles that can be pulled into anything
-  @import './partials/buttons';
-  @import './partials/checkboxes';
   @import './partials/colors';
 
   // Applications
@@ -226,11 +223,21 @@
   // Tooltips
   @import '../tooltips/tooltips.scss';
 
-  // Components - Actor-specific
-  @import '../sheets/actor/AttributeBlock.scss';
-  @import '../sheets/actor/AttunementTracker.scss';
-  @import '../sheets/actor/Currency.scss';
-  @import '../sheets/actor/SheetEditModeToggle.scss';
+  // TODO: Remove these layers of specificity and get everything working in concert better. These should come before all component styles and have the lowest acceptable specificity.
+  &.sheet form,
+  &.application-shell {
+    @import './partials/buttons';
+    @import './partials/checkboxes';
+  }
+
+  // TODO: Remove these layers of specificity and get everything working in concert better. These should come after partial utility styles and general component styles. They can have a high level of specificity as needed.
+  &.sheet form {
+    // Components - Actor-specific
+    @import '../sheets/actor/AttributeBlock.scss';
+    @import '../sheets/actor/AttunementTracker.scss';
+    @import '../sheets/actor/Currency.scss';
+    @import '../sheets/actor/SheetEditModeToggle.scss';
+  }
 
   /* Unidentified Item Concealment */
   [inert] {
