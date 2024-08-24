@@ -67,8 +67,8 @@
     class:conceal={$context.item.system.identified === false}
     src={$context.item.img}
     alt={$context.item.name}
-    title="{localize('TIDY5E.EditActorImage')} / {localize(
-      'TIDY5E.ShowItemImage',
+    title="{localize('TIDY5E.EditSheetImageHint')} / {localize(
+      'TIDY5E.SheetImageOptionsHint',
     )}"
     on:click={(event) =>
       openItemImagePicker(event.currentTarget, $context.item)}
