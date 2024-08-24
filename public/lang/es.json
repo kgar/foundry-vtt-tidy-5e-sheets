@@ -1,7 +1,7 @@
 {
     "TIDY5E.PlayerName": "Nombre del jugador",
-    "TIDY5E.EditActorImage": "Click izquierdo: Editar imagen",
-    "TIDY5E.ShowActorImage": "Clic derecho: mostrar ilustración del personaje",
+    "TIDY5E.EditSheetImageHint": "Click izquierdo: Editar imagen",
+    "TIDY5E.SheetImageOptionsHint": "Clic derecho: mostrar ilustración del personaje",
     "TIDY5E.ShowPortraitArt": "Mostrar Retrato",
     "TIDY5E.ShowTokenArt": "Mostrar Token",
     "TIDY5E.ShowItemImage": "Click Derecho: Mostrar imagen del objeto",

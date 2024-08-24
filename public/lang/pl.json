@@ -1,8 +1,8 @@
 {
     "TIDY5E.Tidy5eVehicle": "Karta Pojazdu Tidy 5e",
-    "TIDY5E.EditActorImage": "Lewy przycisk myszy: edytuj obraz",
+    "TIDY5E.EditSheetImageHint": "Lewy przycisk myszy: edytuj obraz",
     "TIDY5E.ShowTokenArt": "pokaż token",
-    "TIDY5E.ShowActorImage": "Prawy przycisk myszy: pokaż portret postaci",
+    "TIDY5E.SheetImageOptionsHint": "Prawy przycisk myszy: pokaż portret postaci",
     "TIDY5E.ShowItemImage": "prawy przycisk myszy: pokaż grafikę przedmiotu",
     "TIDY5E.ShowItemArt": "pokaż obraz",
     "TIDY5E.StandardExhaustion1": "Niekorzyść w Rzutach Umiejętności",
