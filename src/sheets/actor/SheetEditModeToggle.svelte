@@ -43,7 +43,7 @@
 
 <div class="sheet-edit-mode-toggle {$$restProps.class ?? ''}">
   <TidySwitch
-    --tidy-switch-scale=".875"
+    --tidy-switch-scale="1"
     --tidy-switch-thumb-transform-duration="0.15s"
     title={allowEdit ? unlockTitle : lockTitle}
     value={allowEdit}
