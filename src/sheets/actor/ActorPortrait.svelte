@@ -19,6 +19,10 @@
 
   const localize = FoundryAdapter.localize;
 
+  $: actorImageTitle = $context.unlocked
+    ? `${localize('TIDY5E.EditSheetImageHint')} / ${localize('TIDY5E.SheetImageOptionsHint')}`
+    : `${localize('TIDY5E.PreviewSheetImageHint')} / ${localize('TIDY5E.SheetImageOptionsHint')}`;
+
   function openPortraitPicker(
     event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
   ) {
@@ -105,9 +109,7 @@
       class="actor-image"
       src={actor.img}
       alt={actor.name}
-      title={localize('TIDY5E.EditActorImage') +
-        ' / ' +
-        localize('TIDY5E.ShowActorImage')}
+      title={actorImageTitle}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTOR_PORTRAIT_IMAGE}
     />
   </div>
