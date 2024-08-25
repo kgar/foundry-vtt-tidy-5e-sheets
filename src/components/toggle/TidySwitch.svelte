@@ -6,7 +6,7 @@
   export let disabled: boolean = false;
   export let thumbIconClass: string | undefined = undefined;
 
-  const switchLabelId = `switch-${crypto.randomUUID()}-label`;
+  const switchLabelId = `switch-${foundry.utils.randomID()}-label`;
   const dispatcher = createEventDispatcher<{
     change: { originalValue: boolean };
   }>();
