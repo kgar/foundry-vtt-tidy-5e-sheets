@@ -837,5 +837,6 @@
     "TIDY5E.SpellSourceClassAssignments.Identifier": "Identificatore Classe Sorgente",
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "L'identificatore della classe sorgente dell'incantesimo appare qui. Per assegnare un identificatore che il personaggio non possiede, inserisci l'identificatore della classe in questo campo di testo.",
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Mostra Solo Non Assegnato",
-    "TIDY5E.SpellSourceIdentifierSelectText": "Identificatore Classe: {identifier}"
+    "TIDY5E.SpellSourceIdentifierSelectText": "Identificatore Classe: {identifier}",
+    "TIDY5E.PreviewSheetImageHint": "Clic Sinistro: Anteprima Immagine"
 }
