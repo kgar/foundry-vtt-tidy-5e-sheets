@@ -12,12 +12,12 @@
   font-style: normal;
 }
 
-:where(.tidy5e-sheet) {
+:where(.tidy5e-sheet.app-v1.classic) {
   @import './partials/reset';
   @import './partials/variables';
 }
 
-.tidy5e-sheet {
+.tidy5e-sheet:where(.app-v1.classic) {
   .window-content {
     background: url(../../modules/tidy5e-sheet/images/parchment-texture-top.webp)
         no-repeat top center / 150% auto,
@@ -403,3 +403,7 @@
 }
 
 @import './partials/floating-context-menu';
+
+// Until all sheets move to App V2, it will be sideloaded with core.scss.
+// When done, it will *be* core-classic.scss
+@import './core-classic-appv2.scss';

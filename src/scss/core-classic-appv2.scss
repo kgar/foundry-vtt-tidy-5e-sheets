@@ -1,0 +1,9 @@
+:where(.tidy5e-sheet.app-v2.classic) {
+  @import './partials/reset';
+  @import './partials/variables';
+}
+
+.tidy5e-sheet:where(.app-v2.classic) {
+  // TODO: Restore styles to app v2 for the classic layout
+  // While doing so, see if you can tackle the issue with over-specificity.
+}
