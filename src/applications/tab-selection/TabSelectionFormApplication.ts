@@ -89,7 +89,12 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
       ...super.defaultOptions,
       height: 550,
       width: 750,
-      classes: [...super.defaultOptions.classes, 'tab-selection'],
+      classes: [
+        ...super.defaultOptions.classes,
+        'tab-selection',
+        'app-v1',
+        CONSTANTS.SHEET_LAYOUT_CLASSIC,
+      ],
       resizable: false,
     };
   }

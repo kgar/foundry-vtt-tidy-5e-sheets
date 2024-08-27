@@ -105,11 +105,12 @@ export class Tidy5eVehicleSheet
 
     return FoundryAdapter.mergeObject(super.defaultOptions, {
       classes: [
-        'tidy5e-sheet',
+        CONSTANTS.MODULE_ID,
         'sheet',
         'actor',
         CONSTANTS.SHEET_TYPE_VEHICLE,
         CONSTANTS.SHEET_LAYOUT_CLASSIC,
+        'app-v1',
       ],
       width: width ?? 740,
       height: height ?? 810,
