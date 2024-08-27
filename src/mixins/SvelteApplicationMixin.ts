@@ -1,62 +1,131 @@
+import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
+import { SettingsProvider, settingStore } from 'src/settings/settings';
+import {
+  applySheetAttributesToWindow,
+  applyThemeDataAttributeToWindow,
+} from 'src/utils/applications';
+import { error } from 'src/utils/logging';
 import type { SvelteComponent } from 'svelte';
 import { writable, type Writable } from 'svelte/store';
 
+/**
+ * A context-oriented Svelte mixin to provide Application V2 windows with Svelte integration.
+ *
+ * @param BaseApplication the application which should adopt this mixin functionality.
+ * @returns the resulting application with this mixin functionality applied.
+ */
 export function SvelteApplicationMixin<TContext>(BaseApplication: any) {
   class SvelteApplication extends BaseApplication {
-    _store: Writable<TContext> = writable<TContext>();
-    #component: SvelteComponent | undefined;
+    /** The component which represents the UI. */
+    #component: SvelteComponent | null = null;
 
+    /** The entire application frame. Starts as a stub form until a render occurs. */
+    #element: HTMLElement = document.createElement('form');
+
+    /**
+     * Any subscriptions which should be managed during the lifetime of the application window.
+     * They are retrieved once, during _renderFrame, and then unsubscribed during close.
+     */
+    #subscriptionsService: StoreSubscriptionsService;
+
+    /**
+     * The context store which underpins the application Svelte component.
+     * This store is made available as Svelte context to the component
+     * and can be retrieved from any child component within.
+     */
+    _store: Writable<TContext> = writable<TContext>();
+
+    constructor(...args: any[]) {
+      super(...args);
+
+      this.#subscriptionsService = new StoreSubscriptionsService();
+    }
+
+    /* Required Overrides */
+
+    /** Prepares context data which matches the request data type. */
     async _prepareContext(
       options: ApplicationRenderOptions
     ): Promise<TContext> {
-      throw new Error(
-        'To implement a Tidy sheet, override _prepareContext and provide context data matching the specified sheet context type.'
-      );
+      const errorMessage =
+        'Unable to render Svelte application. To implement a Svelte application, override _prepareContext and provide context data matching the specified sheet context type.';
+      error(errorMessage, false, { options });
+      throw new Error(errorMessage);
     }
 
+    /** Creates the component which represents the window content area. */
     _createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
-      throw new Error(
-        'To implement a Tidy sheet, override _createComponent and provide svelte component that has been successfully created and mounted to the DOM.'
-      );
+      const errorMessage =
+        'Unable to render Svelte application. To implement a Svelte application, override _createComponent and provide context data matching the specified sheet context type.';
+      throw new Error(errorMessage);
     }
 
-    async _renderHTML(context: TContext, options: ApplicationRenderOptions) {
-      console.log('_renderHTML', context, options);
+    /**
+     * Retrieves and manages any application-specific subscriptions related to the
+     * lifetime of the application, from first render to close.
+     */
+    _getSubscriptions(): (() => void)[] {
+      return [];
+    }
 
-      if (options.isFirstRender) {
-        // we've already set store context
-        return;
-      }
-
+    /**
+     * Triggers possible reactive rendering by updating the application store
+     * with the latest context data.
+     */
+    async _renderHTML(context: TContext, _options: ApplicationRenderOptions) {
       this._store.set(context);
     }
 
+    /**
+     * Creates and mounts the Svelte component on first render.
+     * @param result not in use by this mixin.
+     * @param content the window content area
+     * @param options render options
+     */
     _replaceHTML(
-      result: any,
+      _result: any,
       content: HTMLElement,
       options: ApplicationRenderOptions
     ) {
-      super._replaceHTML(result, content, options);
-      console.log('_replaceHTML', result, content, options);
+      if (options.isFirstRender) {
+        this.#component = this._createComponent(content);
+      }
     }
 
     async _renderFrame(options: ApplicationRenderOptions) {
-      const frame = await super._renderFrame(options);
+      this.#element = await super._renderFrame(options);
 
-      const target = this.hasFrame
-        ? frame.querySelector('.window-content')
-        : frame;
+      if (!this.#element) {
+        throw new Error(
+          'Application frame was not correctly rendered. The `_renderFrame` function must return an HTMLElement.'
+        );
+      }
 
-      target.innerContent = '';
-      const context = await this._prepareContext(options);
-      this._store.set(context);
-      this.#component = this._createComponent(target);
+      applySheetAttributesToWindow(
+        this.actor.documentName,
+        this.actor.type,
+        SettingsProvider.settings.colorScheme.get(),
+        this.#element
+      );
 
-      return frame;
+      // Manage application subscriptions
+      this.#subscriptionsService.unsubscribeAll();
+      const subscriptions = this._getSubscriptions();
+      this.#subscriptionsService.registerSubscriptions(
+        ...subscriptions,
+        settingStore.subscribe((settings) => {
+          applyThemeDataAttributeToWindow(settings.colorScheme, this.#element);
+        })
+      );
+
+      return this.#element;
     }
 
     async close(options: ApplicationClosingOptions = {}) {
+      this.#subscriptionsService.unsubscribeAll();
       this.#component?.$destroy();
+      this.#component = null;
+      this.#element = document.createElement('form');
       await super.close(options);
     }
   }
