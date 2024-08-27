@@ -604,3 +604,7 @@ export type ActiveEffectContext = {
   durationParts: string | string[];
   hasTooltip: boolean;
 };
+
+export type GroupSheetClassicContext = {
+  tabs: Tab[];
+};

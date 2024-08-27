@@ -1,13 +1,21 @@
 <script lang="ts">
+  import TabContents from 'src/components/tabs/TabContents.svelte';
+  import Tabs from 'src/components/tabs/Tabs.svelte';
+  import type { GroupSheetClassicContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import type { GroupSheetClassicContext } from '../Tidy5eGroupSheet';
 
   const context = getContext<Readable<GroupSheetClassicContext>>('context');
+
+  let selectedTabId = $context.tabs[0].id;
 </script>
 
-<h1>{$context.greetings}</h1>
+<header>
+  <h1>WOW, GROUP TAB IS READY TO SHIP</h1>
+</header>
 
-{#if $context.showThumbsUp}
-  <blockquote style="font-size: 2.5rem;">👍</blockquote>
-{/if}
+<Tabs tabs={$context.tabs} bind:selectedTabId />
+
+<section class="tidy-sheet-body">
+  <TabContents tabs={$context.tabs} {selectedTabId} />
+</section>
