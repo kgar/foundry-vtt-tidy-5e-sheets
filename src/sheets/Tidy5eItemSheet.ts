@@ -63,6 +63,7 @@ export class Tidy5eKgarItemSheet
   component: SvelteComponent | undefined;
   activateListeners(html: any) {
     let first = true;
+    this.subscriptionsService.unsubscribeAll();
     this.subscriptionsService.registerSubscriptions(
       settingStore.subscribe((s) => {
         if (first) return;

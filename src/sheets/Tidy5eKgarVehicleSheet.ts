@@ -121,7 +121,8 @@ export class Tidy5eVehicleSheet
   component: SvelteComponent | undefined;
   activateListeners(html: { get: (index: 0) => HTMLElement }) {
     let first = true;
-    this.subscriptionsService.registerSubscriptions(
+      this.subscriptionsService.unsubscribeAll();
+      this.subscriptionsService.registerSubscriptions(
       this.itemFilterService.filterData$.subscribe(() => {
         if (first) return;
         this.render();
