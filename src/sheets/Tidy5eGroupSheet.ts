@@ -10,7 +10,10 @@ import GroupMembersTab from './group/tabs/GroupMembersTab.svelte';
 import GroupInventoryTab from './group/tabs/GroupInventoryTab.svelte';
 import GroupDescriptionTab from './group/tabs/GroupDescriptionTab.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { GroupSheetClassicContext } from 'src/types/group.types';
+import type {
+  Group5eXp,
+  GroupSheetClassicContext,
+} from 'src/types/group.types';
 
 export class Tidy5eGroupSheet extends SvelteApplicationMixin<GroupSheetClassicContext>(
   foundry.applications.sheets.ActorSheetV2
@@ -77,9 +80,31 @@ export class Tidy5eGroupSheet extends SvelteApplicationMixin<GroupSheetClassicCo
       },
     ];
 
+    let xp: Group5eXp | undefined = undefined;
+    if (!game.settings.get('dnd5e', 'disableExperienceTracking')) {
+      xp = this.actor.system.details.xp;
+    }
+
+    const descriptionFullEnrichedHtml = await TextEditor.enrichHTML(
+      this.actor.system.description.full,
+      {
+        secrets: this.actor.isOwner,
+        rollData: , //context.rollData,
+        async: true,
+        relativeTo: this.actor,
+      }
+    );
+
     return {
       tabs: tabs,
       actor: this.actor,
+      system: this.actor.system,
+      items: Array.from(this.actor.items),
+      config: CONFIG.DND5E,
+      isGM: game.user.isGM,
+      xp: xp,
+      descriptionFullEnrichedHtml: descriptionFullEnrichedHtml,
+      
     };
   }
 }

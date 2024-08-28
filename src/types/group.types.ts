@@ -1,26 +1,64 @@
 import type { Item5e } from './item.types';
-import type { Tab } from './types';
+import type {
+  Actor5e,
+  InventorySection,
+  Tab,
+  TidySectionBase,
+  Utilities,
+} from './types';
 
 export type GroupSheetClassicContext = {
-  tabs: Tab[];
   actor: Group5e;
+  config: any; // TODO: If possible, convert the full CONFIG (no modules on) to a typescript type.
+  currentHP: number;
+  data: unknown;
+  descriptionFullEnrichedHtml: string;
+  document: Group5e;
+  editable: boolean;
+  inventory: InventorySection[];
+  isGM: boolean;
+  // itemContext: unknown;
+  limited: boolean;
+  maxHP: number;
+  memberSections: GroupMemberSection[];
+  // movement: { primary: string, secondary: string };
+  // nMembers: number;
+  // nVehicles: number;
+  // options: App V1 Options
+  owner: boolean;
+  // title: string;
+  items: Item5e[];
+  effects: unknown[];
+  summary: string;
+  system: Group5eSystem;
+  tabs: Tab[];
+  unlocked: boolean;
+  utilities: Utilities<GroupSheetClassicContext>;
+  xp: Group5eXp | undefined;
 };
 
 export interface Group5e {
-  name: string;
-  type: string;
   _id: string;
-  img: string;
-  system: Group5eSystem;
-  prototypeToken: any;
-  items: Item5e[];
-  effects: any[];
-  folder: any;
-  sort: number;
-  ownership: any;
-  flags: any;
   _stats: any;
+  effects: any[];
+  flags: any;
+  folder: any;
+  img: string;
+  items: Item5e[];
+  name: string;
+  ownership: any;
+  prototypeToken: any;
+  sort: number;
+  system: Group5eSystem;
+  type: string;
 }
+
+export type GroupMemberSection = TidySectionBase & {
+  members: {
+    actor: Actor5e;
+    // Whatever else is needed for this list of Members
+  }[]; // Figure out what all is actually needed here
+};
 
 export interface Group5eSystem {
   currency: Group5eCurrency;
@@ -49,7 +87,7 @@ export interface Group5eDescription {
 }
 
 export interface Group5eMember {
-  actor: string;
+  actor: Actor5e;
   quantity: Group5eMemberQuantity;
 }
 
@@ -73,5 +111,70 @@ export interface Group5eDetails {
 }
 
 export interface Group5eXp {
-  value: any;
+  value: number | null;
 }
+
+
+/*
+// Sample member from character section
+{
+    "index": 0,
+    "quantity": {
+        "value": 1,
+        "formula": ""
+    },
+    "actor": {},
+    "id": "bTQX6oH3LKDBpHpT",
+    "name": "Akra 2",
+    "img": "systems/dnd5e/tokens/heroes/ClericDragonborn.webp",
+    "hp": {
+        "current": 9,
+        "max": 9,
+        "pct": "100.00",
+        "color": "#7fff00"
+    },
+    "displayHPValues": true
+},
+
+// Sample member from NPC section
+{
+    "index": 2,
+    "quantity": {
+        "value": 1,
+        "formula": ""
+    },
+    "actor": {},
+    "id": "xXmZOkqp5NZMqTv6",
+    "name": "Hobgoblin",
+    "img": "systems/dnd5e/tokens/humanoid/Hobgoblin.webp",
+    "hp": {
+        "current": 17,
+        "max": 17,
+        "pct": "100.00",
+        "color": "#7fff00"
+    },
+    "displayHPValues": true,
+    "cr": "½",
+    "xp": "100"
+}
+
+// Sample member from vehicle section
+{
+    "index": 5,
+    "quantity": {
+        "value": 1,
+        "formula": ""
+    },
+    "actor": {},
+    "id": "B0LbtKQAaXsnx7EB",
+    "name": "A Vehicle",
+    "img": "icons/svg/mystery-man.svg",
+    "hp": {
+        "current": 0,
+        "max": 0,
+        "pct": "NaN",
+        "color": "#000000"
+    },
+    "displayHPValues": true
+}
+*/
