@@ -251,7 +251,9 @@
             trait.openConfiguration?.({
               app: $context.actor.sheet,
               data: $context,
-              element: $context.actor.sheet.element.get(0),
+              element: FoundryAdapter.getElementFromAppV1OrV2(
+                $context.actor.sheet.element,
+              ),
               event: ev.detail,
             });
           } catch (e) {

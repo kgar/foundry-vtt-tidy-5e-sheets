@@ -78,6 +78,7 @@ export class Tidy5eGroupSheet extends SvelteApplicationMixin<GroupSheetClassicCo
 
     return {
       tabs: tabs,
+      actor: this.actor,
     };
   }
 }

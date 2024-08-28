@@ -1,4 +1,4 @@
-& {
+&:not(.minimizing):not(.minimized):not(.maximizing) {
   min-width: 42.5rem;
   min-height: 13.125rem;
 }
@@ -9,7 +9,8 @@
   color: var(--t5e-primary-font-color);
   font-family: var(--t5e-body-font-family);
 
-  form {
+  // TODO: Remove the form style here when it's all App V2
+  &:not(&:has(form)), form {
     height: 100%;
     overflow: hidden;
   }

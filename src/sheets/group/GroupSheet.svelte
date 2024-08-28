@@ -11,7 +11,7 @@
 </script>
 
 <header>
-  <h1>WOW, GROUP TAB IS READY TO SHIP</h1>
+  <h1>Header Content Here</h1>
 </header>
 
 <Tabs tabs={$context.tabs} bind:selectedTabId />

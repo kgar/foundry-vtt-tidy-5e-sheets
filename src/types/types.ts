@@ -607,4 +607,9 @@ export type ActiveEffectContext = {
 
 export type GroupSheetClassicContext = {
   tabs: Tab[];
+  actor: Actor5e;
 };
+
+export type HTMLElementOrGettable =
+  | HTMLElement
+  | { get(index: number): HTMLElement };

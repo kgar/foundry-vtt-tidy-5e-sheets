@@ -6,6 +6,7 @@ import type {
   CharacterSheetContext,
   ClassSummary,
   DropdownListOption,
+  HTMLElementOrGettable,
   NpcSheetContext,
 } from 'src/types/types';
 import { CONSTANTS } from '../constants';
@@ -1027,10 +1028,13 @@ export const FoundryAdapter = {
    * @param newTabId the new tab ID to select
    * @returns `true` to indicate proceeding with tab change; `false` to halt tab change
    */
-  onTabSelecting(app: any & { currentTabId: string }, newTabId: string) {
+  onTabSelecting(
+    app: { currentTabId: string; element: HTMLElementOrGettable },
+    newTabId: string
+  ) {
     const canProceed = TidyHooks.tidy5eSheetsPreSelectTab(
       app,
-      app.element.get(0),
+      FoundryAdapter.getElementFromAppV1OrV2(app.element),
       {
         currentTab: app.currentTabId,
         newTab: newTabId,
@@ -1042,10 +1046,17 @@ export const FoundryAdapter = {
     }
 
     setTimeout(() => {
-      TidyHooks.tidy5eSheetsSelectTab(app, app.element.get(0), newTabId);
+      TidyHooks.tidy5eSheetsSelectTab(
+        app,
+        FoundryAdapter.getElementFromAppV1OrV2(app.element),
+        newTabId
+      );
     });
 
     return true;
+  },
+  getElementFromAppV1OrV2(element: HTMLElementOrGettable) {
+    return 'get' in element ? element.get(0) : element;
   },
   getAbilitiesAsDropdownOptions(abilities: any): DropdownListOption[] {
     try {
