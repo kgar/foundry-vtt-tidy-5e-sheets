@@ -5,11 +5,12 @@ import {
 } from '../mixins/SvelteApplicationMixin';
 import type { SvelteComponent } from 'svelte';
 import GroupSheet from './group/GroupSheet.svelte';
-import type { GroupSheetClassicContext, Tab } from 'src/types/types';
+import type { Tab } from 'src/types/types';
 import GroupMembersTab from './group/tabs/GroupMembersTab.svelte';
 import GroupInventoryTab from './group/tabs/GroupInventoryTab.svelte';
 import GroupDescriptionTab from './group/tabs/GroupDescriptionTab.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import type { GroupSheetClassicContext } from 'src/types/group.types';
 
 export class Tidy5eGroupSheet extends SvelteApplicationMixin<GroupSheetClassicContext>(
   foundry.applications.sheets.ActorSheetV2

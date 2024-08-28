@@ -605,11 +605,6 @@ export type ActiveEffectContext = {
   hasTooltip: boolean;
 };
 
-export type GroupSheetClassicContext = {
-  tabs: Tab[];
-  actor: Actor5e;
-};
-
 export type HTMLElementOrGettable =
   | HTMLElement
   | { get(index: number): HTMLElement };

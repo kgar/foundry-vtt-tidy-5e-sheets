@@ -1,1 +1,1 @@
-Group Description Here
+<p>Group Description Here</p>

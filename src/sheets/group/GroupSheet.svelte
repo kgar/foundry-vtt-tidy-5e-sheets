@@ -1,7 +1,7 @@
 <script lang="ts">
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
-  import type { GroupSheetClassicContext } from 'src/types/types';
+  import type { GroupSheetClassicContext } from 'src/types/group.types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
