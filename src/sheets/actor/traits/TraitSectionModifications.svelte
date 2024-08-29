@@ -2,7 +2,7 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
-    ActorSheetContext,
+    ActorSheetContextV1,
     DamageModificationContextEntry,
   } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -10,7 +10,7 @@
 
   export let modifications: DamageModificationContextEntry[];
 
-  let context = getContext<Readable<ActorSheetContext>>(
+  let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 

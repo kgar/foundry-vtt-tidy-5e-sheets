@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
   import { getContext } from 'svelte';
-  import type { ActorSheetContext } from 'src/types/types';
+  import type { ActorSheetContextV1 } from 'src/types/types';
   import type { Readable } from 'svelte/store';
   import TidySwitch from './TidySwitch.svelte';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
@@ -9,7 +9,7 @@
   import { debug, error } from 'src/utils/logging';
   import { CONSTANTS } from 'src/constants';
 
-  const context = getContext<Readable<ActorSheetContext>>(
+  const context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 

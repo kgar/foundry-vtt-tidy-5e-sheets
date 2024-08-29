@@ -2,7 +2,7 @@
   import ButtonMenu from '../button-menu/ButtonMenu.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
-  import type { ActorSheetContext } from 'src/types/types';
+  import type { ActorSheetContextV1 } from 'src/types/types';
   import type { Readable } from 'svelte/store';
   import FilterToggleButton from './FilterToggleButton.svelte';
   import type { ItemFilterService } from 'src/features/filtering/ItemFilterService';
@@ -14,7 +14,7 @@
 
   const localize = FoundryAdapter.localize;
   const context = getContext<
-    Readable<ActorSheetContext | ContainerSheetContext>
+    Readable<ActorSheetContextV1 | ContainerSheetContext>
   >(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
   const onFilterClearAll =
     getContext<ItemFilterService['onFilterClearAll']>('onFilterClearAll');

@@ -16,6 +16,9 @@ import type {
   GroupSheetClassicContext,
 } from 'src/types/group.types';
 import { Inventory } from 'src/features/sections/Inventory';
+import { SettingsProvider } from 'src/settings/settings';
+import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
+import { getPercentage } from 'src/utils/numbers';
 
 type MemberStats = {
   currentHP: number;
@@ -111,7 +114,14 @@ export class Tidy5eGroupSheet extends SvelteApplicationMixin<GroupSheetClassicCo
 
     const source = this.actor.toObject();
 
+    const unlocked =
+      FoundryAdapter.isActorSheetUnlocked(this.actor) && this.isEditable;
+      
+    const editable = this.isEditable;
+
     return {
+      actorPortraitCommands:
+        ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
       tabs: tabs,
       actor: this.actor,
       system: this.actor.system,
@@ -119,21 +129,27 @@ export class Tidy5eGroupSheet extends SvelteApplicationMixin<GroupSheetClassicCo
       config: CONFIG.DND5E,
       isGM: game.user.isGM,
       xp: xp,
+      healthPercentage: getPercentage(stats.currentHP, stats.maxHP),
       descriptionFullEnrichedHtml: descriptionFullEnrichedHtml,
       memberSections: memberSections,
       currentHP: stats.currentHP,
       document: this.actor.document,
-      editable: this.isEditable,
+      editable: editable,
       effects: dnd5e.applications.components.EffectsElement.prepareCategories(
         this.actor.allApplicableEffects()
       ),
       inventory: inventory,
       limited: this.actor.limited,
+      lockSensitiveFields:
+        (!unlocked && SettingsProvider.settings.useTotalSheetLock.get()) ||
+        !editable,
       maxHP: stats.maxHP,
       owner: this.actor.isOwner,
       summary: 'TODO: Implement',
-      unlocked:
-        FoundryAdapter.isActorSheetUnlocked(this.actor) && this.isEditable,
+      unlocked: unlocked,
+      useRoundedPortraitStyle: [
+        CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
+      ].includes(SettingsProvider.settings.useCircularPortraitStyle.get()),
       utilities: {},
       source: source,
     };
@@ -182,7 +198,7 @@ export class Tidy5eGroupSheet extends SvelteApplicationMixin<GroupSheetClassicCo
 
     const type = this.actor.system.type.value;
 
-    for (const [index, memberData] of this.object.system.members.entries()) {
+    for (const [index, memberData] of this.actor.system.members.entries()) {
       const member = memberData.actor;
       const hp = member.system.attributes.hp;
       const multiplier =

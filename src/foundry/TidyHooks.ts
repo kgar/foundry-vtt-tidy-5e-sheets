@@ -3,7 +3,8 @@ import type { ContextMenuPositionInfo } from 'src/context-menu/context-menu.type
 import type {
   ActiveEffect5e,
   Actor5e,
-  ActorSheetContext,
+  ActorSheetContextV1,
+  ActorSheetContextV2,
   CharacterSheetContext,
   NpcSheetContext,
   TidyResource,
@@ -287,7 +288,7 @@ export class TidyHooks {
 
   /**
    * The portrait picker is about to open.
-   * @param {ActorSheetContext} context The actor sheet data from `getData()`.
+   * @param {ActorSheetContextV1 | ActorSheetContextV2} context The actor sheet data from `getData()`.
    * @param {MouseEvent & { currentTarget: EventTarget & HTMLElement }} event The triggering event.
    * @returns {boolean} `true` to allow the picker to open, `false` to prevent it.
    *
@@ -299,7 +300,7 @@ export class TidyHooks {
    * ```
    */
   static tidy5eSheetsPreOpenActorPortraitFilePicker(
-    context: ActorSheetContext,
+    context: ActorSheetContextV1 | ActorSheetContextV2,
     event: MouseEvent & { currentTarget: EventTarget & HTMLElement }
   ): boolean {
     return Hooks.call(

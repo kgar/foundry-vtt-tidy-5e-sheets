@@ -3,7 +3,21 @@
   @import './partials/variables';
 }
 
-.tidy5e-sheet:where(.app-v2.classic) {
+// TODO: to App V2 Reset SCSS
+.tidy5e-sheet.application:where(.app-v2.classic) {
+  input[type='text']:focus,
+  input[type='number']:focus,
+  input[type='password']:focus,
+  input[type='date']:focus,
+  input[type='time']:focus,
+  input[type='search']:focus,
+  input[type='file']:focus,
+  select:focus {
+    outline: none;
+  }
+}
+
+.tidy5e-sheet.application:where(.app-v2.classic) {
   --t5e-parchment-background: url(../../modules/tidy5e-sheet/images/parchment-texture-top.webp)
       no-repeat top center / 150% auto,
     #f1ebe8 url(../../modules/tidy5e-sheet/images/parchment-texture-bottom.webp)

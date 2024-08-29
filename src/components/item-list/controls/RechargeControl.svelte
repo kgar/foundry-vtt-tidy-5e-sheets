@@ -3,7 +3,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
   import type { Item5e } from 'src/types/item.types';
-  import type { ActorSheetContext } from 'src/types/types';
+  import type { ActorSheetContextV1 } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
@@ -18,7 +18,7 @@
         })
       : item.labels?.recharge ?? '';
 
-  let context = getContext<Readable<ActorSheetContext>>(
+  let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 </script>

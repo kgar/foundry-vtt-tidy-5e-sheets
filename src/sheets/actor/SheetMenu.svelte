@@ -7,14 +7,14 @@
   import TabSelectionFormApplication from 'src/applications/tab-selection/TabSelectionFormApplication';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import type { ActorSheetContext } from 'src/types/types';
+  import type { ActorSheetContextV1 } from 'src/types/types';
   import { ApplicationsManager } from 'src/applications/ApplicationsManager';
   import { CONSTANTS } from 'src/constants';
   export let defaultSettingsTab: string | undefined = undefined;
 
   const localize = FoundryAdapter.localize;
 
-  let context = getContext<Readable<ActorSheetContext>>(
+  let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 </script>

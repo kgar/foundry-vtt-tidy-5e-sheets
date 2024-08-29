@@ -5,7 +5,7 @@ A special item control which swaps between an Enable/Disable control and a speci
 Because the controls are mutually exclusive, it is more ergonomic to distinguish them in this component than to try to smartly toggle them inline while spinning up item controls for a give Effects component.
  -->
 <script lang="ts">
-  import type { ActiveEffect5e, ActorSheetContext } from 'src/types/types';
+  import type { ActiveEffect5e, ActorSheetContextV1 } from 'src/types/types';
   import ItemControl from './ItemControl.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -31,7 +31,7 @@ Because the controls are mutually exclusive, it is more ergonomic to distinguish
           })
         : undefined;
 
-  let context = getContext<Readable<ActorSheetContext>>(
+  let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 

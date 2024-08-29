@@ -1,6 +1,7 @@
 import type { Item5e } from './item.types';
 import type {
   Actor5e,
+  ActorSheetContextV2,
   InventorySection,
   Tab,
   TidySectionBase,
@@ -8,13 +9,11 @@ import type {
 } from './types';
 
 export type GroupSheetClassicContext = {
-  actor: Group5e;
   config: any; // TODO: If possible, convert the full CONFIG (no modules on) to a typescript type.
   currentHP: number;
   // data: unknown;
   descriptionFullEnrichedHtml: string;
   document: Group5e;
-  editable: boolean;
   inventory: InventorySection[];
   isGM: boolean;
   // itemContext: unknown;
@@ -33,10 +32,9 @@ export type GroupSheetClassicContext = {
   summary: string;
   system: Group5eSystem;
   tabs: Tab[];
-  unlocked: boolean;
   utilities: Utilities<GroupSheetClassicContext>;
   xp: Group5eXp | undefined;
-};
+} & ActorSheetContextV2<Group5e>;
 
 export interface Group5e {
   _id: string;

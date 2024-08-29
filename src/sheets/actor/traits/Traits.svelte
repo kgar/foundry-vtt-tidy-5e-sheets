@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ActorSheetContext } from 'src/types/types';
+  import type { ActorSheetContextV1 } from 'src/types/types';
   import TraitSection from './TraitSection.svelte';
   import TraitSectionTools from './TraitSectionTools.svelte';
   import { getContext } from 'svelte';
@@ -12,7 +12,7 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<ActorSheetContext>>(
+  let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
   export let toggleable: boolean;

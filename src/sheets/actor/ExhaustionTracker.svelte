@@ -8,7 +8,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
   import type {
-    ActorSheetContext,
+    ActorSheetContextV1,
     PortraitCharmRadiusClass,
   } from 'src/types/types';
   import { createEventDispatcher, getContext } from 'svelte';
@@ -42,7 +42,7 @@
 
   const localize = FoundryAdapter.localize;
 
-  let context = getContext<Readable<ActorSheetContext>>(
+  let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 

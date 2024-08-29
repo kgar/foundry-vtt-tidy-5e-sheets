@@ -5,7 +5,7 @@
   import ItemTableRow from 'src/components/item-list/v1/ItemTableRow.svelte';
   import ItemTableCell from 'src/components/item-list/v1/ItemTableCell.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ActorSheetContext } from 'src/types/types';
+  import type { ActorSheetContextV1 } from 'src/types/types';
   import { getContext, setContext } from 'svelte';
   import { writable, type Readable } from 'svelte/store';
   import ItemName from 'src/components/item-list/ItemName.svelte';
@@ -30,7 +30,7 @@
   import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
   import InlineContainerView from 'src/sheets/container/InlineContainerView.svelte';
 
-  let context = getContext<Readable<ActorSheetContext>>(
+  let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
