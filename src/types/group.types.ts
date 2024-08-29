@@ -11,7 +11,7 @@ export type GroupSheetClassicContext = {
   actor: Group5e;
   config: any; // TODO: If possible, convert the full CONFIG (no modules on) to a typescript type.
   currentHP: number;
-  data: unknown;
+  // data: unknown;
   descriptionFullEnrichedHtml: string;
   document: Group5e;
   editable: boolean;
@@ -29,6 +29,7 @@ export type GroupSheetClassicContext = {
   // title: string;
   items: Item5e[];
   effects: unknown[];
+  source: unknown;
   summary: string;
   system: Group5eSystem;
   tabs: Tab[];
@@ -113,7 +114,6 @@ export interface Group5eDetails {
 export interface Group5eXp {
   value: number | null;
 }
-
 
 /*
 // Sample member from character section
