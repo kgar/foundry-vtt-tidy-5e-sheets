@@ -8,10 +8,10 @@
     GroupSheetClassicContext,
   } from 'src/types/group.types';
   import type { Readable } from 'svelte/store';
-  import ItemTable from 'src/components/item-list/v1/ItemTable.svelte';
-  import ItemTableHeaderRow from 'src/components/item-list/v1/ItemTableHeaderRow.svelte';
-  import ItemTableColumn from 'src/components/item-list/v1/ItemTableColumn.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import TidyTable from 'src/components/table/TidyTable.svelte';
+  import TidyTableHeaderRow from 'src/components/table/TidyTableHeaderRow.svelte';
+  import TidyTableHeaderCell from 'src/components/table/TidyTableHeaderCell.svelte';
 
   export let section: GroupMemberSection;
 
@@ -22,13 +22,13 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<ItemTable key={section.key}>
+<TidyTable key={section.key} data-custom-section={section.custom ? true : null}>
   <svelte:fragment slot="header">
-    <ItemTableHeaderRow>
-      <ItemTableColumn primary={true}>
+    <TidyTableHeaderRow>
+      <TidyTableHeaderCell primary={true}>
         {localize(section.label)}
-      </ItemTableColumn>
-    </ItemTableHeaderRow>
+      </TidyTableHeaderCell>
+    </TidyTableHeaderRow>
   </svelte:fragment>
   <svelte:fragment slot="body">
     {#each section.members as member (member.actor.uuid)}
@@ -39,4 +39,4 @@
       {/if}
     {/each}
   </svelte:fragment>
-</ItemTable>
+</TidyTable>
