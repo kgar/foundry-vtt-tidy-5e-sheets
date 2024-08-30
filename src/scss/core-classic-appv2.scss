@@ -25,6 +25,22 @@
 
   background: var(--t5e-sheet-background, var(--t5e-parchment-background));
 
+  &:not(.minimized) {
+    .window-header {
+      background: var(--t5e-header-background);
+      border-bottom: none;
+      &,
+      h1 {
+        color: var(--t5e-primary-font-color);
+      }
+    }
+  }
+
+  .tidy5e-sheet-header {
+    padding: 0.625rem 1rem 1rem 1rem;
+    background: var(--t5e-header-background);
+  }
+
   .window-content {
     color: var(--t5e-primary-font-color);
   }
@@ -227,20 +243,16 @@
   @import '../tooltips/tooltips.scss';
 
   // TODO: Remove these layers of specificity and get everything working in concert better. These should come before all component styles and have the lowest acceptable specificity.
-  &.sheet,
-  &.application-shell {
-    @import './partials/buttons';
-    @import './partials/checkboxes';
-  }
+
+  @import './partials/buttons';
+  @import './partials/checkboxes';
 
   // TODO: Remove these layers of specificity and get everything working in concert better. These should come after partial utility styles and general component styles. They can have a high level of specificity as needed.
-  &.sheet {
-    // Components - Actor-specific
-    @import '../sheets/actor/AttributeBlock.scss';
-    @import '../sheets/actor/AttunementTracker.scss';
-    @import '../sheets/actor/Currency.scss';
-    @import '../sheets/actor/SheetEditModeToggle.scss';
-  }
+  // Components - Actor-specific
+  @import '../sheets/actor/AttributeBlock.scss';
+  @import '../sheets/actor/AttunementTracker.scss';
+  @import '../sheets/actor/Currency.scss';
+  @import '../sheets/actor/SheetEditModeToggle.scss';
 
   /* Unidentified Item Concealment */
   [inert] {
