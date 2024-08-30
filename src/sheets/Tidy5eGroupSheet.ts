@@ -1,6 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import {
   SvelteApplicationMixin,
+  type ApplicationClosingOptions,
   type ApplicationRenderOptions,
 } from '../mixins/SvelteApplicationMixin';
 import type { SvelteComponent } from 'svelte';
@@ -30,6 +31,12 @@ type MemberStats = {
 export class Tidy5eGroupSheet extends SvelteApplicationMixin<GroupSheetClassicContext>(
   foundry.applications.sheets.ActorSheetV2
 ) {
+  constructor(...args: any[]) {
+    super(...args);
+
+    this.supportedItemTypes = new Set(Inventory.getDefaultInventoryTypes());
+  }
+
   static DEFAULT_OPTIONS = {
     classes: [
       CONSTANTS.MODULE_ID,
@@ -116,7 +123,7 @@ export class Tidy5eGroupSheet extends SvelteApplicationMixin<GroupSheetClassicCo
 
     const unlocked =
       FoundryAdapter.isActorSheetUnlocked(this.actor) && this.isEditable;
-      
+
     const editable = this.isEditable;
 
     return {
@@ -229,5 +236,29 @@ export class Tidy5eGroupSheet extends SvelteApplicationMixin<GroupSheetClassicCo
       sections: Object.values(sections),
       stats: stats,
     };
+  }
+
+  /**
+   * A set of item types that should be allow to be dropped on this type of actor sheet.
+   * @type {Set<string>}
+   */
+  supportedItemTypes: Set<string>;
+
+  // TODO: Confirm whether this is being called. Is the mixin overriding this or augmenting it?
+  async _renderHTML(
+    context: GroupSheetClassicContext,
+    options: ApplicationRenderOptions
+  ) {
+    for (const member of this.actor.system.members) {
+      member.actor.apps[this.id] = this;
+    }
+    return await super._renderHTML(context, options);
+  }
+
+  async close(options: ApplicationClosingOptions = {}) {
+    for (const member of this.actor.system.members) {
+      delete member.actor.apps[this.id];
+    }
+    return await super.close(options);
   }
 }
