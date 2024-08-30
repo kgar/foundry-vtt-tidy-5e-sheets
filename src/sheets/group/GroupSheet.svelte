@@ -7,8 +7,13 @@
   import GroupProfile from './parts/GroupProfile.svelte';
   import { CONSTANTS } from 'src/constants';
   import ActorName from '../actor/ActorName.svelte';
+  import Select from 'src/components/inputs/Select.svelte';
+  import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   const context = getContext<Readable<GroupSheetClassicContext>>('context');
+
+  const localize = FoundryAdapter.localize;
 
   let selectedTabId = $context.tabs[0].id;
 </script>
@@ -31,6 +36,20 @@
 
       <!-- Any other content adjacent to Actor Name -->
     </div>
+    <div class="flex-row">
+      <Select
+        document={$context.actor}
+        value={$context.system.type.value}
+        field="system.type.value"
+        blankValue=""
+      >
+        <SelectOptions
+          data={$context.config.groupTypes}
+          blank={localize('DND5E.Group.TypeGeneric')}
+        />
+      </Select>
+    </div>
+    
   </div>
 </header>
 

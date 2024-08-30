@@ -4,7 +4,7 @@ import {
   applySheetAttributesToWindow,
   applyThemeDataAttributeToWindow,
 } from 'src/utils/applications';
-import { error } from 'src/utils/logging';
+import { debug, error } from 'src/utils/logging';
 import type { SvelteComponent } from 'svelte';
 import { writable, type Writable } from 'svelte/store';
 
@@ -73,6 +73,7 @@ export function SvelteApplicationMixin<TContext>(BaseApplication: any) {
      * with the latest context data.
      */
     async _renderHTML(context: TContext, _options: ApplicationRenderOptions) {
+      debug('Group Sheet context data', context);
       this._store.set(context);
     }
 
