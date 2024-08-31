@@ -10,6 +10,7 @@
 declare global {
   var $: any;
   var canvas: any;
+  var AdvancementManager: any;
   var ActiveEffect: any;
   var Actor: any;
   var Actors: any;

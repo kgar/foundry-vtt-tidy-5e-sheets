@@ -26,7 +26,7 @@ export async function initSectionsData(
     flags: {
       ['tidy5e-sheet.selected-tabs']: [
         CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
-        CONSTANTS.TAB_CHARACTER_INVENTORY,
+        CONSTANTS.TAB_ACTOR_INVENTORY,
         CONSTANTS.TAB_CHARACTER_SPELLBOOK,
         CONSTANTS.TAB_CHARACTER_FEATURES,
         CONSTANTS.TAB_ACTOR_ACTIONS,
@@ -78,7 +78,7 @@ export async function initSectionsData(
         flags: {
           ['tidy5e-sheet.selected-tabs']: [
             constants.TAB_CHARACTER_ATTRIBUTES,
-            constants.TAB_CHARACTER_INVENTORY,
+            constants.TAB_ACTOR_INVENTORY,
             constants.TAB_CHARACTER_SPELLBOOK,
             constants.TAB_CHARACTER_FEATURES,
             constants.TAB_ACTOR_ACTIONS,
@@ -105,7 +105,7 @@ export async function initSectionsData(
             constants.TAB_NPC_ABILITIES,
             constants.TAB_NPC_SPELLBOOK,
             constants.TAB_ACTOR_ACTIONS,
-            constants.TAB_NPC_INVENTORY,
+            constants.TAB_ACTOR_INVENTORY,
           ],
         },
       });
@@ -152,7 +152,7 @@ export async function initSectionsData(
         ['tidy5e-sheet.selected-tabs']: [
           CONSTANTS.TAB_NPC_ABILITIES,
           CONSTANTS.TAB_NPC_SPELLBOOK,
-          CONSTANTS.TAB_NPC_INVENTORY,
+          CONSTANTS.TAB_ACTOR_INVENTORY,
           CONSTANTS.TAB_ACTOR_ACTIONS,
         ],
       },

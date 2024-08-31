@@ -87,7 +87,7 @@ export class NpcSheetRuntime {
         type: 'svelte',
         getProps() {
           return {
-            tabId: CONSTANTS.TAB_NPC_INVENTORY,
+            tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
           };
         },
       },

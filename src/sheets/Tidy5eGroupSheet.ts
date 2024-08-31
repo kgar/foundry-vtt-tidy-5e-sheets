@@ -22,6 +22,8 @@ import { SettingsProvider } from 'src/settings/settings';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { getPercentage } from 'src/utils/numbers';
 import type { Item5e } from 'src/types/item.types';
+import { Mixins } from 'src/mixins/Mixins';
+import { ActorBaseDragAndDropMixin } from 'src/mixins/ActorBaseDragAndDropMixin';
 
 type MemberStats = {
   currentHP: number;
@@ -30,16 +32,16 @@ type MemberStats = {
   vehicleCount: number;
 };
 
-export class Tidy5eGroupSheet extends SvelteApplicationMixin<GroupSheetClassicContext>(
-  foundry.applications.sheets.ActorSheetV2
+export class Tidy5eGroupSheet extends Mixins.combineMixins(
+  foundry.applications.sheets.ActorSheetV2,
+  SvelteApplicationMixin<GroupSheetClassicContext>,
+  ActorBaseDragAndDropMixin
 ) {
-  #dragDrop;
-
   constructor(...args: any[]) {
     super(...args);
 
-    this.supportedItemTypes = new Set(Inventory.getDefaultInventoryTypes());
-    this.#dragDrop = this.#createDragDropHandlers();
+    this._supportedItemTypes = new Set(Inventory.getDefaultInventoryTypes());
+    this._supportedItemTypes.add(CONSTANTS.ITEM_TYPE_SPELL);
   }
 
   static DEFAULT_OPTIONS: Partial<
@@ -94,7 +96,7 @@ export class Tidy5eGroupSheet extends SvelteApplicationMixin<GroupSheetClassicCo
           type: 'svelte',
           component: GroupInventoryTab,
         },
-        id: CONSTANTS.TAB_GROUP_INVENTORY,
+        id: CONSTANTS.TAB_ACTOR_INVENTORY,
         title: FoundryAdapter.localize('DND5E.Inventory'),
       },
       {
@@ -246,12 +248,6 @@ export class Tidy5eGroupSheet extends SvelteApplicationMixin<GroupSheetClassicCo
     };
   }
 
-  /**
-   * A set of item types that should be allow to be dropped on this type of actor sheet.
-   * @type {Set<string>}
-   */
-  supportedItemTypes: Set<string>;
-
   // TODO: Confirm whether this is being called. Is the mixin overriding this or augmenting it?
   async _renderHTML(
     context: GroupSheetClassicContext,
@@ -270,88 +266,13 @@ export class Tidy5eGroupSheet extends SvelteApplicationMixin<GroupSheetClassicCo
     return await super.close(options);
   }
 
-  /**
-   * Create drag-and-drop workflow handlers for this Application
-   * @returns {DragDrop[]}     An array of DragDrop handlers
-   * @private
-   */
-  #createDragDropHandlers(): DragDrop[] {
-    const options: (typeof Tidy5eGroupSheet)['DEFAULT_OPTIONS'] = this.options;
-    return Array.isArray(options.dragDrop)
-      ? options.dragDrop.map((d) => {
-          d.permissions = {
-            dragstart: this._canDragStart.bind(this),
-            drop: this._canDragDrop.bind(this),
-          };
-          d.callbacks = {
-            dragstart: this._onDragStart.bind(this),
-            dragover: this._onDragOver.bind(this),
-            drop: this._onDrop.bind(this),
-          };
-          return new DragDrop(d);
-        })
-      : [];
-  }
-
-  /** @inheritdoc */
-  _canDragStart(selector: string) {
-    return this.isEditable;
-  }
-
-  /* -------------------------------------------- */
-
-  /** @inheritdoc */
-  _canDragDrop(selector: string) {
-    return this.isEditable;
-  }
-
-  _onDragStart(event: DragEvent) {}
-
-  _onDragOver(event: DragEvent) {}
-
-  async _onDrop(event: DragEvent) {
-    const data = TextEditor.getDragEventData(event);
-    const actor = this.actor;
-    // TODO: Extract hook call
-    const allowed = Hooks.call('dropActorSheetData', actor, this, data);
-    if (allowed === false) return;
-
-    // Handle different data types
-    switch (data.type) {
-      case 'ActiveEffect':
-        return this._onDropActiveEffect(event, data);
-      case 'Actor':
-        return this._onDropActor(event, data);
-      case 'Item':
-        return this._onDropItem(event, data);
-      case 'Folder':
-        return this._onDropFolder(event, data);
-    }
-  }
-
-  /**
-   * Handle the dropping of ActiveEffect data onto an Actor Sheet
-   * @param {DragEvent} event                  The concluding DragEvent which contains drop data
-   * @param {object} data                      The data transfer extracted from the event
-   * @returns {Promise<ActiveEffect|boolean>}  The created ActiveEffect object or false if it couldn't be created.
-   * @protected
-   */
   async _onDropActiveEffect(
-    event: DragEvent,
-    data: Record<string, any>
+    ..._args: any[]
   ): Promise</*ActiveEffect*/ unknown | boolean> {
-    // TODO: Make Active Effect handling target only PCs, NPCs, and Vehicles.
-    // const effect = await ActiveEffect.implementation.fromDropData(data);
-    // if ( effect?.target === this.actor ) return false;
-    // const effect = await ActiveEffect.implementation.fromDropData(data);
-    // if ( !this.actor.isOwner || !effect ) return false;
-    // if ( effect.target === this.actor ) return false;
-    // return ActiveEffect.create(effect.toObject(), {parent: this.actor});
-
+    // Tidy Group Sheet doesn't support active effect drops.
     return false;
   }
 
-  // Keep on Group sheet and pull the base-sheet / Foundry-base impl for the Actor-specific dnd base class
   /**
    * Handle dropping of an Actor data onto another Actor sheet
    * @param {DragEvent} event            The concluding DragEvent which contains drop data
@@ -373,6 +294,7 @@ export class Tidy5eGroupSheet extends SvelteApplicationMixin<GroupSheetClassicCo
     if (!sourceActor) {
       return;
     }
+
     return this.actor.system.addMember(sourceActor);
   }
 
@@ -401,16 +323,21 @@ export class Tidy5eGroupSheet extends SvelteApplicationMixin<GroupSheetClassicCo
   // Keep on Group sheet and pull the base-sheet / Foundry-base impl for the Actor-specific dnd base class
   /** @override */
   async _onDropFolder(event: DragEvent, data: Record<string, any>) {
-    if (!this.actor.isOwner) return [];
+    if (!this.isEditable || !FoundryAdapter.isActorSheetUnlocked(this.actor)) {
+      return false;
+    }
+
     const folder = await Folder.implementation.fromDropData(data);
-    if (folder.type !== 'Item') return [];
-    const droppedItemData = await Promise.all(
-      folder.contents.map(async (item: Record<string, any>) => {
-        if (!(item instanceof Item)) item = await fromUuid(item.uuid);
-        return item;
-      })
-    );
-    return this._onDropItemCreate(droppedItemData);
+
+    if (folder.type === 'Actor') {
+      const results: any[] = [];
+      for (let actor of folder.contents) {
+        results.push(await this.actor.system.addMember(actor));
+      }
+      return results;
+    }
+
+    return await super._onDropFolder(event, data);
   }
 
   /* -------------------------------------------- */
@@ -429,10 +356,10 @@ export class Tidy5eGroupSheet extends SvelteApplicationMixin<GroupSheetClassicCo
     items = items.filter((i) => !containers.has(i.system.container));
 
     // Create the owned items & contents as normal
-    const toCreate = await Item5e.createWithContents(items, {
+    const toCreate = await dnd5e.documents.Item5e.createWithContents(items, {
       transformFirst: (item: Item5e) => this._onDropSingleItem(item.toObject()),
     });
-    return Item5e.createDocuments(toCreate, {
+    return dnd5e.documents.Item5e.createDocuments(toCreate, {
       pack: this.actor.pack,
       parent: this.actor,
       keepId: true,
@@ -453,8 +380,11 @@ export class Tidy5eGroupSheet extends SvelteApplicationMixin<GroupSheetClassicCo
     itemData: Record<string, any>
   ): Promise<object | boolean> {
     // Check to make sure items of this type are allowed on this actor
-    const isSupportedItem = this.supportedItemTypes.has(itemData.type);
-    if (!isSupportedItem) {
+    const isSupportedItemType =
+      this._supportedItemTypes.size === 0 ||
+      this._supportedItemTypes.has(itemData.type);
+
+    if (!isSupportedItemType) {
       ui.notifications.warn(
         game.i18n.format('DND5E.ActorWarningInvalidItem', {
           itemType: game.i18n.localize(CONFIG.Item.typeLabels[itemData.type]),
@@ -467,8 +397,10 @@ export class Tidy5eGroupSheet extends SvelteApplicationMixin<GroupSheetClassicCo
     }
 
     // Create a Consumable spell scroll on the Inventory tab
-    if (itemData.type === 'spell') {
-      const scroll = await Item5e.createScrollFromSpell(itemData);
+    if (itemData.type === CONSTANTS.ITEM_TYPE_SPELL) {
+      const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(
+        itemData
+      );
       return scroll?.toObject?.();
     }
 
@@ -480,21 +412,5 @@ export class Tidy5eGroupSheet extends SvelteApplicationMixin<GroupSheetClassicCo
     if (stacked) return false;
 
     return itemData;
-  }
-
-  /**
-   * Returns an array of DragDrop instances
-   * @type {DragDrop[]}
-   */
-  get dragDrop() {
-    return this.#dragDrop;
-  }
-
-  _onRender(
-    context: GroupSheetClassicContext,
-    options: Partial<ApplicationConfiguration>
-  ) {
-    this.#dragDrop.forEach((d) => d.bind(this.element));
-    super._onRender(context, options);
   }
 }

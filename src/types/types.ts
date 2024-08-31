@@ -233,7 +233,7 @@ export type FavoriteEffectContext = {
 };
 
 export type FavoriteSection =
-  | (InventorySection & { type: typeof CONSTANTS.TAB_CHARACTER_INVENTORY })
+  | (InventorySection & { type: typeof CONSTANTS.TAB_ACTOR_INVENTORY })
   | (SpellbookSection & { type: typeof CONSTANTS.TAB_CHARACTER_SPELLBOOK })
   | (CharacterFeatureSection & {
       type: typeof CONSTANTS.TAB_CHARACTER_FEATURES;

@@ -166,7 +166,7 @@ sectionsTest.describe('character', () => {
         section2: CONSTANTS.ITEM_TYPE_EQUIPMENT,
         section3: customItemSection,
         sheetHelper: sheetHelper,
-        tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+        tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
       });
 
       await sheetHelper.deleteEmbeddedItem(testItem1);
@@ -454,7 +454,7 @@ sectionsTest.describe('NPC', () => {
         section2: CONSTANTS.ITEM_TYPE_EQUIPMENT,
         section3: customItemSection,
         sheetHelper: sheetHelper,
-        tabId: CONSTANTS.TAB_NPC_INVENTORY,
+        tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
       });
 
       await sheetHelper.deleteEmbeddedItem(testItem1);

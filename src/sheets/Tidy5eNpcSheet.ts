@@ -235,7 +235,7 @@ export class Tidy5eNpcSheet
       npcPreferences.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS]?.sort ?? 'm';
 
     const inventorySortMode =
-      npcPreferences.tabs?.[CONSTANTS.TAB_NPC_INVENTORY]?.sort ?? 'm';
+      npcPreferences.tabs?.[CONSTANTS.TAB_ACTOR_INVENTORY]?.sort ?? 'm';
 
     const unlocked =
       FoundryAdapter.isActorSheetUnlocked(this.actor) &&
@@ -567,7 +567,7 @@ export class Tidy5eNpcSheet
           },
         ],
       },
-      [CONSTANTS.TAB_NPC_INVENTORY]: {
+      [CONSTANTS.TAB_ACTOR_INVENTORY]: {
         utilityToolbarCommands: [
           {
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
@@ -575,7 +575,7 @@ export class Tidy5eNpcSheet
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
-                CONSTANTS.TAB_NPC_INVENTORY,
+                CONSTANTS.TAB_ACTOR_INVENTORY,
                 'sort',
                 'm'
               );
@@ -588,7 +588,7 @@ export class Tidy5eNpcSheet
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
-                CONSTANTS.TAB_NPC_INVENTORY,
+                CONSTANTS.TAB_ACTOR_INVENTORY,
                 'sort',
                 'a'
               );
@@ -621,7 +621,7 @@ export class Tidy5eNpcSheet
             execute: () =>
               // TODO: Use app.messageBus
               this.messageBus.set({
-                tabId: CONSTANTS.TAB_NPC_INVENTORY,
+                tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
           },
@@ -631,7 +631,7 @@ export class Tidy5eNpcSheet
             execute: () =>
               // TODO: Use app.messageBus
               this.messageBus.set({
-                tabId: CONSTANTS.TAB_NPC_INVENTORY,
+                tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
           },
@@ -660,9 +660,9 @@ export class Tidy5eNpcSheet
               new DocumentTabSectionConfigApplication({
                 document: context.actor,
                 sections: context.inventory,
-                tabId: CONSTANTS.TAB_NPC_INVENTORY,
+                tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 tabTitle: NpcSheetRuntime.getTabTitle(
-                  CONSTANTS.TAB_NPC_INVENTORY
+                  CONSTANTS.TAB_ACTOR_INVENTORY
                 ),
               }).render(true);
             },
@@ -1099,7 +1099,7 @@ export class Tidy5eNpcSheet
     // Create a Consumable spell scroll on the Inventory tab
     if (
       itemData.type === CONSTANTS.ITEM_TYPE_SPELL &&
-      this.currentTabId === CONSTANTS.TAB_NPC_INVENTORY
+      this.currentTabId === CONSTANTS.TAB_ACTOR_INVENTORY
     ) {
       const options: Record<string, unknown> = {};
 

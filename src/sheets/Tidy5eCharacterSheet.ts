@@ -243,7 +243,7 @@ export class Tidy5eCharacterSheet
       characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]?.sort ??
       'm';
     const inventorySortMode =
-      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.sort ??
+      characterPreferences.tabs?.[CONSTANTS.TAB_ACTOR_INVENTORY]?.sort ??
       'm';
     const spellbookSortMode =
       characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.sort ??
@@ -364,7 +364,7 @@ export class Tidy5eCharacterSheet
           },
         ],
       },
-      [CONSTANTS.TAB_CHARACTER_INVENTORY]: {
+      [CONSTANTS.TAB_ACTOR_INVENTORY]: {
         utilityToolbarCommands: [
           {
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
@@ -372,7 +372,7 @@ export class Tidy5eCharacterSheet
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
-                CONSTANTS.TAB_CHARACTER_INVENTORY,
+                CONSTANTS.TAB_ACTOR_INVENTORY,
                 'sort',
                 'm'
               );
@@ -385,7 +385,7 @@ export class Tidy5eCharacterSheet
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
-                CONSTANTS.TAB_CHARACTER_INVENTORY,
+                CONSTANTS.TAB_ACTOR_INVENTORY,
                 'sort',
                 'a'
               );
@@ -418,7 +418,7 @@ export class Tidy5eCharacterSheet
             execute: () =>
               // TODO: Use app.messageBus
               this.messageBus.set({
-                tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+                tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
           },
@@ -428,7 +428,7 @@ export class Tidy5eCharacterSheet
             execute: () =>
               // TODO: Use app.messageBus
               this.messageBus.set({
-                tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+                tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
           },
@@ -457,9 +457,9 @@ export class Tidy5eCharacterSheet
               new DocumentTabSectionConfigApplication({
                 document: context.actor,
                 sections: context.inventory,
-                tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+                tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 tabTitle: CharacterSheetRuntime.getTabTitle(
-                  CONSTANTS.TAB_CHARACTER_INVENTORY
+                  CONSTANTS.TAB_ACTOR_INVENTORY
                 ),
               }).render(true);
             },
@@ -1212,7 +1212,7 @@ export class Tidy5eCharacterSheet
         .filter((i) => i.items.length)
         .map((i) => ({
           ...i,
-          type: CONSTANTS.TAB_CHARACTER_INVENTORY,
+          type: CONSTANTS.TAB_ACTOR_INVENTORY,
         })),
       ...Object.values(favoriteFeatures)
         .filter((i) => i.items.length)
@@ -1304,7 +1304,7 @@ export class Tidy5eCharacterSheet
     // Create a Consumable spell scroll on the Inventory tab
     if (
       itemData.type === CONSTANTS.ITEM_TYPE_SPELL &&
-      this.currentTabId === CONSTANTS.TAB_CHARACTER_INVENTORY
+      this.currentTabId === CONSTANTS.TAB_ACTOR_INVENTORY
     ) {
       const options: Record<string, unknown> = {};
 
