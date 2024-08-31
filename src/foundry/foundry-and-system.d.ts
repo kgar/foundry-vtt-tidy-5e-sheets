@@ -26,15 +26,18 @@ declare global {
   var DocumentSheet: any;
   var DocumentSheetConfig: any;
   var FilePicker: any;
+  var Folder: any;
   var FormApplication: any;
   var foundry: any;
   var fromUuid: any;
   var fromUuidSync: any;
   var game: any;
+  var getDocumentClass: (className: string) => any;
   var HandlebarsHelpers: any;
   var Hooks: any;
   var ImagePopout: any;
   var Item: any;
+  var Item5e: any;
   var Items: any;
   var ModuleManagement: any;
   var NumericTerm: any;

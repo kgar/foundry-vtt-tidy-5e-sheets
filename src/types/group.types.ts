@@ -52,11 +52,14 @@ export interface Group5e {
   type: string;
 }
 
+// TODO: Consider making the memberContext: GroupMemberContext which is like itemContext
+
+export type GroupMemberContext = {
+  actor: Actor5e;
+};
+
 export type GroupMemberSection = TidySectionBase & {
-  members: {
-    actor: Actor5e;
-    // Whatever else is needed for this list of Members
-  }[]; // Figure out what all is actually needed here
+  members: GroupMemberContext[]; // Figure out what all is actually needed here
 };
 
 export interface Group5eSystem {

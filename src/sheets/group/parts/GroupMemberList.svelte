@@ -33,9 +33,9 @@
   <svelte:fragment slot="body">
     {#each section.members as member (member.actor.uuid)}
       {#if $context.actor.system.type.value === CONSTANTS.GROUP_TYPE_ENCOUNTER}
-        <GroupEncounterMemberListItem />
+        <GroupEncounterMemberListItem {member} />
       {:else}
-        <GroupMemberListItem />
+        <GroupMemberListItem {member} />
       {/if}
     {/each}
   </svelte:fragment>

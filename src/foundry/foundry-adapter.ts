@@ -1293,4 +1293,71 @@ export const FoundryAdapter = {
     await enchantment.delete();
     await app.render();
   },
+  /**
+   * Stack identical consumables when a new one is dropped rather than creating a duplicate item.
+   */
+  onDropStackConsumablesForActor(
+    actor: Actor5e,
+    itemData: any
+  ): Promise<Item5e> | null {
+    const droppedSourceId =
+      itemData._stats?.compendiumSource ?? itemData.flags.core?.sourceId;
+    if (itemData.type !== 'consumable' || !droppedSourceId) return null;
+    const similarItem = actor.items.find((i: Item5e) => {
+      const sourceId = i.getFlag('core', 'sourceId');
+      return (
+        sourceId &&
+        sourceId === droppedSourceId &&
+        i.type === 'consumable' &&
+        i.name === itemData.name
+      );
+    });
+    if (!similarItem) return null;
+    return similarItem.update({
+      'system.quantity':
+        similarItem.system.quantity + Math.max(itemData.system.quantity, 1),
+    });
+  },
+  /**
+   * Handle a drop event for an existing embedded Item to sort that Item relative to its siblings
+   */
+  onSortItemForActor(actor: Actor5e, event: Event, itemData: any): any {
+    // Get the drag source and drop target
+    const items = actor.items;
+    const source = items.get(itemData._id);
+    const eventTarget = event.target;
+    if (!(eventTarget instanceof HTMLElement)) {
+      return;
+    }
+    const dropTarget = eventTarget.closest<HTMLElement>('[data-item-id]');
+    if (!dropTarget) return;
+    const target = items.get(dropTarget.dataset.itemId);
+
+    // Don't sort on yourself
+    if (source.id === target.id) return;
+
+    // Identify sibling items based on adjacent HTML elements
+    const siblings = [];
+    for (let el of Array.from(dropTarget.parentElement!.children)) {
+      if (el instanceof HTMLElement) {
+        const siblingId = el.dataset.itemId;
+        if (siblingId && siblingId !== source.id)
+          siblings.push(items.get(el.dataset.itemId));
+      }
+    }
+
+    // Perform the sort
+    const sortUpdates = SortingHelpers.performIntegerSort(source, {
+      target,
+      siblings,
+    });
+    const updateData = sortUpdates.map((u: any) => {
+      const update = u.update;
+      update._id = u.target._id;
+      return update;
+    });
+
+    // Perform the update
+    return actor.updateEmbeddedDocuments('Item', updateData);
+  },
 };
