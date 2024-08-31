@@ -2,6 +2,7 @@ import { CONSTANTS } from 'src/constants';
 import {
   SvelteApplicationMixin,
   type ApplicationClosingOptions,
+  type ApplicationConfiguration,
   type ApplicationRenderOptions,
 } from '../mixins/SvelteApplicationMixin';
 import type { SvelteComponent } from 'svelte';
@@ -31,13 +32,20 @@ type MemberStats = {
 export class Tidy5eGroupSheet extends SvelteApplicationMixin<GroupSheetClassicContext>(
   foundry.applications.sheets.ActorSheetV2
 ) {
+  #dragDrop;
+  options!: (typeof Tidy5eGroupSheet)['DEFAULT_OPTIONS'];
+
   constructor(...args: any[]) {
     super(...args);
 
     this.supportedItemTypes = new Set(Inventory.getDefaultInventoryTypes());
+    this.#dragDrop = this.#createDragDropHandlers();
   }
 
-  static DEFAULT_OPTIONS = {
+  static DEFAULT_OPTIONS: Partial<
+    ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
+  > = {
+    dragDrop: [{ dragSelector: '[data-drag]' }],
     classes: [
       CONSTANTS.MODULE_ID,
       'sheet',
@@ -260,5 +268,42 @@ export class Tidy5eGroupSheet extends SvelteApplicationMixin<GroupSheetClassicCo
       delete member.actor.apps[this.id];
     }
     return await super.close(options);
+  }
+
+  /**
+   * Create drag-and-drop workflow handlers for this Application
+   * @returns {DragDrop[]}     An array of DragDrop handlers
+   * @private
+   */
+  #createDragDropHandlers(): DragDrop[] {
+    return Array.isArray(this.options.dragDrop)
+      ? this.options.dragDrop.map((d) => {
+          d.permissions = {
+            dragstart: this._canDragStart.bind(this),
+            drop: this._canDragDrop.bind(this),
+          };
+          d.callbacks = {
+            dragstart: this._onDragStart.bind(this),
+            dragover: this._onDragOver.bind(this),
+            drop: this._onDrop.bind(this),
+          };
+          return new DragDrop(d);
+        })
+      : [];
+  }
+
+  /**
+   * Returns an array of DragDrop instances
+   * @type {DragDrop[]}
+   */
+  get dragDrop() {
+    return this.#dragDrop;
+  }
+
+  _onRender(
+    _context: GroupSheetClassicContext,
+    _options: Partial<ApplicationConfiguration>
+  ) {
+    this.#dragDrop.forEach((d) => d.bind(this.element));
   }
 }
