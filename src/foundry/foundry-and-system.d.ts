@@ -67,6 +67,42 @@ declare global {
       method: T = 'round'
     ) => number;
   }
+
+  interface DragDropConfiguration {
+    dragSelector?: string;
+    dropSelector?: string;
+    permissions?: Record<string, Function>;
+    callbacks?: Record<string, Function>;
+  }
+
+  interface DragDrop {
+    dragSelector: string;
+    dropSelector: string;
+    permissions: {
+      dragstart?: (selector: string) => boolean;
+      drop?: (selector: string) => boolean;
+    };
+    callbacks: {
+      dragstart?: (event: DragEvent) => void;
+      dragover?: (event: DragEvent) => void;
+      drop?: (event: DragEvent) => void;
+    };
+
+    bind(html: HTMLElement): this;
+    callback(event: DragEvent, action: string): void;
+    can(action: string, selector: string): boolean;
+  }
+
+  var DragDrop: typeof DragDrop;
+
+  declare const DragDrop: {
+    new (config: DragDropConfiguration): DragDrop;
+    createDragImage(
+      img: HTMLImageElement,
+      width: number,
+      height: number
+    ): HTMLElement;
+  };
 }
 
 export type Dnd5eActorCondition = {
