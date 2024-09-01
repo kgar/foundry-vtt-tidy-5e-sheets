@@ -60,10 +60,10 @@
           />
         </Select>
       {:else}
-        <strong class="text-body-secondary">
+        <span class="semibold">
           {$context.config.groupTypes[$context.system.type.value] ??
             localize('DND5E.Group.TypeGeneric')}
-        </strong>
+        </span>
       {/if}
     </div>
     <HorizontalLineSeparator class="header-line-margin-left" />
@@ -71,27 +71,29 @@
       class="flex-row header-line-margin justify-content-space-between align-items-center"
     >
       <ActorMovement movementLabelKey="DND5E.Movement" />
-      <div class="flex-row align-items-center extra-small-gap">
-        {#if $context.unlocked}
+      {#if $context.unlocked}
+        <div class="flex-row align-items-center no-gap">
           <TextInput
             document={$context.actor}
             field="system.details.xp.value"
             value={$context.system.details.xp.value}
             placeholder={$context.system.details.xp.derived?.toString()}
             class="group-xp-input fs-sm"
+            saveEmptyAsNull={true}
           />
-          <strong class="fs-sm">{localize('DND5E.ExperiencePointsAbbr')}</strong
+          <span class="fs-sm semibold"
+            >{localize('DND5E.ExperiencePointsAbbr')}</span
           >
-        {:else}
-          <strong class="fs-sm text-body-secondary">
-            {localize('DND5E.ExperiencePointsFormat', {
-              value:
-                $context.system.details.xp.value ??
-                $context.system.details.xp.derived,
-            })}
-          </strong>
-        {/if}
-      </div>
+        </div>
+      {:else}
+        <strong class="fs-sm semibold">
+          {localize('DND5E.ExperiencePointsFormat', {
+            value:
+              $context.system.details.xp.value ??
+              $context.system.details.xp.derived,
+          })}
+        </strong>
+      {/if}
     </div>
     <HorizontalLineSeparator class="header-line-margin-left" />
   </div>
