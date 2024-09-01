@@ -22,7 +22,6 @@ import { SettingsProvider } from 'src/settings/settings';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { getPercentage } from 'src/utils/numbers';
 import type { Item5e } from 'src/types/item.types';
-import { Mixins } from 'src/mixins/Mixins';
 import { ActorBaseDragAndDropMixin } from 'src/mixins/ActorBaseDragAndDropMixin';
 
 type MemberStats = {
@@ -32,10 +31,10 @@ type MemberStats = {
   vehicleCount: number;
 };
 
-export class Tidy5eGroupSheet extends Mixins.combineMixins(
-  foundry.applications.sheets.ActorSheetV2,
-  SvelteApplicationMixin<GroupSheetClassicContext>,
-  ActorBaseDragAndDropMixin
+export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
+  SvelteApplicationMixin<GroupSheetClassicContext>(
+    foundry.applications.sheets.ActorSheetV2
+  )
 ) {
   constructor(...args: any[]) {
     super(...args);
