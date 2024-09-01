@@ -37,19 +37,13 @@
   }
 
   .tidy5e-sheet-header {
-    padding: 0.625rem 1rem 1rem 1rem;
+    padding: 0 1rem 1rem 1rem;
     background: var(--t5e-header-background);
   }
 
   .window-content {
     color: var(--t5e-primary-font-color);
   }
-
-  // TODO: Determine if this is needed. If not, trash it.
-  // &.sheet .window-content {
-  //   color: var(--t5e-primary-font-color);
-  //   background: var(--t5e-sheet-background);
-  // }
 
   * {
     scrollbar-width: thin;
@@ -249,6 +243,7 @@
 
   // TODO: Remove these layers of specificity and get everything working in concert better. These should come after partial utility styles and general component styles. They can have a high level of specificity as needed.
   // Components - Actor-specific
+  @import '../sheets/actor/ActorProfile.scss';
   @import '../sheets/actor/AttributeBlock.scss';
   @import '../sheets/actor/AttunementTracker.scss';
   @import '../sheets/actor/Currency.scss';

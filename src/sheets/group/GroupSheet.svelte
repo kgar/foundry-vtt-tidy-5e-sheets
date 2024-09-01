@@ -4,12 +4,14 @@
   import type { GroupSheetClassicContext } from 'src/types/group.types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import GroupProfile from './parts/GroupProfile.svelte';
   import { CONSTANTS } from 'src/constants';
   import ActorName from '../actor/ActorName.svelte';
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import SheetEditModeToggle from '../actor/SheetEditModeToggle.svelte';
+  import { settingStore } from 'src/settings/settings';
+  import ActorProfile from '../actor/ActorProfile.svelte';
 
   const context = getContext<Readable<GroupSheetClassicContext>>('context');
 
@@ -20,7 +22,7 @@
 
 <header class="tidy5e-sheet-header flex-row">
   <div class="flex-0">
-    <GroupProfile />
+    <ActorProfile useHpOverlay={false} size="small" />
   </div>
   <div class="flex-grow-1">
     <div
@@ -36,12 +38,15 @@
 
       <!-- Any other content adjacent to Actor Name -->
     </div>
-    <div class="flex-row">
+    <div class="flex-row"></div>
+    <div class="flex-row align-items-center">
+      <span class="flex-1">{$context.summary}</span>
       <Select
         document={$context.actor}
         value={$context.system.type.value}
         field="system.type.value"
         blankValue=""
+        class="flex-1"
       >
         <SelectOptions
           data={$context.config.groupTypes}
@@ -49,11 +54,23 @@
         />
       </Select>
     </div>
-    
   </div>
 </header>
 
-<Tabs tabs={$context.tabs} bind:selectedTabId />
+<Tabs tabs={$context.tabs} bind:selectedTabId>
+  <svelte:fragment slot="tab-end">
+    {#if $context.editable}
+      <SheetEditModeToggle
+        hint={$settingStore.permanentlyUnlockCharacterSheetForGm &&
+        FoundryAdapter.userIsGm()
+          ? localize(
+              'TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM.title',
+            )
+          : null}
+      />
+    {/if}
+  </svelte:fragment>
+</Tabs>
 
 <section class="tidy-sheet-body">
   <TabContents tabs={$context.tabs} {selectedTabId} />

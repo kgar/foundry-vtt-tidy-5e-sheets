@@ -135,6 +135,8 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
 
     const editable = this.isEditable;
 
+    const summary = this.#getSummary(stats);
+
     return {
       actorPortraitCommands:
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
@@ -161,7 +163,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
         !editable,
       maxHP: stats.maxHP,
       owner: this.actor.isOwner,
-      summary: 'TODO: Implement',
+      summary: summary,
       unlocked: unlocked,
       useRoundedPortraitStyle: [
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
@@ -169,6 +171,33 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       utilities: {},
       source: source,
     };
+  }
+
+  #getSummary(stats: MemberStats) {
+    const formatter = game.i18n.getListFormatter({
+      style: 'long',
+      type: 'conjunction',
+    });
+    const rule = new Intl.PluralRules(game.i18n.lang);
+    const members = [];
+    if (stats.memberCount) {
+      members.push(
+        `${stats.memberCount} ${game.i18n.localize(
+          `DND5E.Group.Member.${rule.select(stats.memberCount)}`
+        )}`
+      );
+    }
+    if (stats.vehicleCount) {
+      members.push(
+        `${stats.vehicleCount} ${game.i18n.localize(
+          `DND5E.Group.Vehicle.${rule.select(stats.vehicleCount)}`
+        )}`
+      );
+    }
+    if (!members.length) return game.i18n.localize('DND5E.GroupSummaryEmpty');
+    return game.i18n.format('DND5E.GroupSummary', {
+      members: formatter.format(members),
+    });
   }
 
   #prepareMembers(): {
@@ -247,7 +276,6 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
     };
   }
 
-  // TODO: Confirm whether this is being called. Is the mixin overriding this or augmenting it?
   async _renderHTML(
     context: GroupSheetClassicContext,
     options: ApplicationRenderOptions
@@ -265,6 +293,10 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
     return await super.close(options);
   }
 
+  // ---------------------------------------------
+  // Drag and Drop
+  // ---------------------------------------------
+
   async _onDropActiveEffect(
     ..._args: any[]
   ): Promise</*ActiveEffect*/ unknown | boolean> {
@@ -272,14 +304,6 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
     return false;
   }
 
-  /**
-   * Handle dropping of an Actor data onto another Actor sheet
-   * @param {DragEvent} event            The concluding DragEvent which contains drop data
-   * @param {object} data                The data transfer extracted from the event
-   * @returns {Promise<object|boolean|undefined>}  A data object which describes the result of the drop, or false if the drop was
-   *                                     not permitted.
-   * @protected
-   */
   async _onDropActor(
     _event: DragEvent,
     data: any
@@ -297,8 +321,6 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
     return this.actor.system.addMember(sourceActor);
   }
 
-  // Keep on Group sheet and pull the base-sheet / Foundry-base impl for the Actor-specific dnd base class
-  /** @override */
   async _onDropItem(event: DragEvent, data: unknown) {
     if (!this.actor.isOwner) return false;
     const item = await Item.implementation.fromDropData(data);
@@ -317,10 +339,6 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
     return this._onDropItemCreate(item);
   }
 
-  /* -------------------------------------------- */
-
-  // Keep on Group sheet and pull the base-sheet / Foundry-base impl for the Actor-specific dnd base class
-  /** @override */
   async _onDropFolder(event: DragEvent, data: Record<string, any>) {
     if (!this.isEditable || !FoundryAdapter.isActorSheetUnlocked(this.actor)) {
       return false;
@@ -339,10 +357,6 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
     return await super._onDropFolder(event, data);
   }
 
-  /* -------------------------------------------- */
-
-  // Keep on Group sheet and pull the base-sheet / Foundry-base impl for the Actor-specific dnd base class
-  /** @override */
   async _onDropItemCreate(
     itemData: Record<string, any> | Record<string, any>[]
   ) {
@@ -365,16 +379,6 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
     });
   }
 
-  /* -------------------------------------------- */
-
-  // Keep on Group sheet and pull the base-sheet / Foundry-base impl for the Actor-specific dnd base class
-  /**
-   * Handles dropping of a single item onto this group sheet.
-   * @param {object} itemData            The item data to create.
-   * @returns {Promise<object|boolean>}  The item data to create after processing, or false if the item should not be
-   *                                     created or creation has been otherwise handled.
-   * @protected
-   */
   async _onDropSingleItem(
     itemData: Record<string, any>
   ): Promise<object | boolean> {

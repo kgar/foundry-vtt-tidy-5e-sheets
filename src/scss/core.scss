@@ -233,6 +233,7 @@
   // TODO: Remove these layers of specificity and get everything working in concert better. These should come after partial utility styles and general component styles. They can have a high level of specificity as needed.
   &.sheet form {
     // Components - Actor-specific
+    @import '../sheets/actor/ActorProfile.scss';
     @import '../sheets/actor/AttributeBlock.scss';
     @import '../sheets/actor/AttunementTracker.scss';
     @import '../sheets/actor/Currency.scss';
