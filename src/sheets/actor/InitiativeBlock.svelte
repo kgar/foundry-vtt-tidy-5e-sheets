@@ -34,7 +34,7 @@
     <TextInput
       document={$context.actor}
       field="system.attributes.init.bonus"
-      cssClass="ini-mod"
+      class="ini-mod"
       placeholder="0"
       selectOnFocus={true}
       allowDeltaChanges={true}

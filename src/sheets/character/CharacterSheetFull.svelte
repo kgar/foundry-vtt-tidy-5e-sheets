@@ -89,7 +89,7 @@
               <TextInput
                 document={$context.actor}
                 field="system.details.xp.value"
-                cssClass="current-xp"
+                class="current-xp"
                 value={$context.system.details.xp.value}
                 placeholder="0"
                 selectOnFocus={true}
@@ -102,7 +102,7 @@
                 <TextInput
                   document={$context.actor}
                   field="system.details.xp.max"
-                  cssClass="max-xp max"
+                  class="max-xp max"
                   value={$context.system.details.xp.max}
                   placeholder="0"
                   selectOnFocus={true}

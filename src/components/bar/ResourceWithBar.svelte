@@ -20,7 +20,7 @@
     <svelte:component this={Bar} {percentage} {value} {max} />
   {/if}
   <TextInput
-    cssClass="resource-value"
+    class="resource-value"
     {document}
     field={valueField}
     {value}
@@ -35,7 +35,7 @@
   <span class="resource-separator">/</span>
   {#if !maxDisabled}
     <TextInput
-      cssClass="resource-max"
+      class="resource-max"
       {document}
       field={maxField}
       value={max}

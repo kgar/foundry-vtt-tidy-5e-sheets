@@ -130,6 +130,7 @@ export interface Group5eDetails {
 
 export interface Group5eXp {
   value: number | null;
+  derived: number;
 }
 
 /*

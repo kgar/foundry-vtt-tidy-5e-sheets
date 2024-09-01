@@ -38,7 +38,7 @@
     class:hidden={viewingConfig || configActive}
   >
     <TextInput
-      cssClass="resource-value"
+      class="resource-value"
       document={$context.actor}
       field={resource.valueName}
       value={resource.value ?? null}
@@ -52,7 +52,7 @@
     <TextInput
       document={$context.actor}
       field={resource.maxName}
-      cssClass="resource-max"
+      class="resource-max"
       value={resource.max ?? null}
       placeholder="0"
       allowDeltaChanges={true}

@@ -315,7 +315,7 @@
                           $context.lockItemQuantity}
                         placeholder="0"
                         allowDeltaChanges={true}
-                        cssClass="text-align-center"
+                        class="text-align-center"
                       />
                     </ItemTableCell>
                   {/if}

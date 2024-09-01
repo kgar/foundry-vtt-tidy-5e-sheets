@@ -85,7 +85,11 @@
         </div>
         <div class="level-information">
           <div class="xp">
-            <span>{$context.system.details.xp.value} XP</span>
+            <span
+              >{localize('DND5E.ExperiencePointsFormat', {
+                value: $context.system.details.xp.value ?? 0,
+              })}</span
+            >
           </div>
           <div class="level">
             {localize('DND5E.AbbreviationCR')}

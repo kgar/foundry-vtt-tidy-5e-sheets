@@ -14,6 +14,7 @@
   import ActorProfile from '../actor/ActorProfile.svelte';
   import ActorMovement from '../actor/ActorMovement.svelte';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
 
   const context = getContext<Readable<GroupSheetClassicContext>>('context');
 
@@ -66,8 +67,31 @@
       {/if}
     </div>
     <HorizontalLineSeparator class="header-line-margin-left" />
-    <div class="flex-row header-line-margin">
+    <div
+      class="flex-row header-line-margin justify-content-space-between align-items-center"
+    >
       <ActorMovement movementLabelKey="DND5E.Movement" />
+      <div class="flex-row align-items-center extra-small-gap">
+        {#if $context.unlocked}
+          <TextInput
+            document={$context.actor}
+            field="system.details.xp.value"
+            value={$context.system.details.xp.value}
+            placeholder={$context.system.details.xp.derived?.toString()}
+            class="group-xp-input fs-sm"
+          />
+          <strong class="fs-sm">{localize('DND5E.ExperiencePointsAbbr')}</strong
+          >
+        {:else}
+          <strong class="fs-sm text-body-secondary">
+            {localize('DND5E.ExperiencePointsFormat', {
+              value:
+                $context.system.details.xp.value ??
+                $context.system.details.xp.derived,
+            })}
+          </strong>
+        {/if}
+      </div>
     </div>
     <HorizontalLineSeparator class="header-line-margin-left" />
   </div>

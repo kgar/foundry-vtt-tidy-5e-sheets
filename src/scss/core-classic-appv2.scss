@@ -119,6 +119,7 @@
     @import './partials/actor';
     @import '../sheets/actor/traits/traits';
   }
+
   @import './partials/item-card';
 
   &:is(.character, .npc, .vehicle, .group) {
@@ -250,6 +251,11 @@
   @import '../sheets/actor/AttunementTracker.scss';
   @import '../sheets/actor/Currency.scss';
   @import '../sheets/actor/SheetEditModeToggle.scss';
+
+  // Sheets
+  &.group {
+    @import '../sheets/group/GroupSheet.scss';
+  }
 
   /* Unidentified Item Concealment */
   [inert] {
