@@ -15,6 +15,7 @@
   import ActorMovement from '../actor/ActorMovement.svelte';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
+  import GroupHitPoints from './parts/GroupHitPoints.svelte';
 
   const context = getContext<Readable<GroupSheetClassicContext>>('context');
 
@@ -25,7 +26,13 @@
 
 <header class="tidy5e-sheet-header flex-row">
   <div class="flex-0">
-    <ActorProfile useHpOverlay={false} size="small" />
+    <ActorProfile useHpOverlay={false} size="small">
+      <GroupHitPoints
+        actor={$context.actor}
+        value={$context.currentHP}
+        max={$context.maxHP}
+      />
+    </ActorProfile>
   </div>
   <div class="flex-grow-1">
     <div
@@ -77,7 +84,7 @@
             document={$context.actor}
             field="system.details.xp.value"
             value={$context.system.details.xp.value}
-            placeholder={$context.system.details.xp.derived?.toString()}
+            placeholder={$context.system.details.xp.derived?.toString() ?? '0'}
             class="group-xp-input fs-sm"
             saveEmptyAsNull={true}
           />
@@ -90,7 +97,8 @@
           {localize('DND5E.ExperiencePointsFormat', {
             value:
               $context.system.details.xp.value ??
-              $context.system.details.xp.derived,
+              $context.system.details.xp.derived ??
+              '0',
           })}
         </strong>
       {/if}

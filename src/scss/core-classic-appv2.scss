@@ -122,6 +122,10 @@
 
   @import './partials/item-card';
 
+  &:is(.group) {
+    --t5e-tab-contents-padding-bottom: 0;
+  }
+
   &:is(.character, .npc, .vehicle, .group) {
     .tidy-sheet-body {
       padding: var(--t5e-tab-contents-padding-top)
@@ -255,6 +259,7 @@
   // Sheets
   &.group {
     @import '../sheets/group/GroupSheet.scss';
+    @import '../sheets/group/parts/GroupHitPoints.scss';
   }
 
   /* Unidentified Item Concealment */
