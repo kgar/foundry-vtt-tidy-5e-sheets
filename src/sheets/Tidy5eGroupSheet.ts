@@ -7,7 +7,7 @@ import {
 } from '../mixins/SvelteApplicationMixin';
 import type { SvelteComponent } from 'svelte';
 import GroupSheet from './group/GroupSheet.svelte';
-import type { Tab } from 'src/types/types';
+import type { Tab, Utilities } from 'src/types/types';
 import GroupMembersTab from './group/tabs/GroupMembersTab.svelte';
 import GroupInventoryTab from './group/tabs/GroupInventoryTab.svelte';
 import GroupDescriptionTab from './group/tabs/GroupDescriptionTab.svelte';
@@ -23,6 +23,7 @@ import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { getPercentage } from 'src/utils/numbers';
 import type { Item5e } from 'src/types/item.types';
 import { ActorBaseDragAndDropMixin } from 'src/mixins/ActorBaseDragAndDropMixin';
+import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 
 type MemberStats = {
   currentHP: number;
@@ -139,6 +140,44 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
 
     const movement = this.#prepareMovementSpeed();
 
+    const sheetPreferences = SheetPreferencesService.getByType(this.actor.type);
+
+    const membersSortMode =
+      sheetPreferences.tabs?.[CONSTANTS.TAB_GROUP_MEMBERS]?.sort ?? 'm';
+
+    const utilities: Utilities<GroupSheetClassicContext> = {
+      [CONSTANTS.TAB_GROUP_MEMBERS]: {
+        utilityToolbarCommands: [
+          {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
+            iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
+            execute: async () => {
+              await SheetPreferencesService.setDocumentTypeTabPreference(
+                this.actor.type,
+                CONSTANTS.TAB_GROUP_MEMBERS,
+                'sort',
+                'm'
+              );
+            },
+            visible: membersSortMode === 'a',
+          },
+          {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
+            iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
+            execute: async () => {
+              await SheetPreferencesService.setDocumentTypeTabPreference(
+                this.actor.type,
+                CONSTANTS.TAB_GROUP_MEMBERS,
+                'sort',
+                'a'
+              );
+            },
+            visible: membersSortMode === 'm',
+          },
+        ],
+      },
+    };
+
     return {
       actorPortraitCommands:
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
@@ -172,7 +211,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       useRoundedPortraitStyle: [
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
       ].includes(SettingsProvider.settings.useCircularPortraitStyle.get()),
-      utilities: {},
+      utilities: utilities,
       source: source,
     };
   }
@@ -308,6 +347,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
     context: GroupSheetClassicContext,
     options: ApplicationRenderOptions
   ) {
+    game.user.apps[this.id] = this;
     for (const member of this.actor.system.members) {
       member.actor.apps[this.id] = this;
     }
@@ -315,6 +355,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
   }
 
   async close(options: ApplicationClosingOptions = {}) {
+    delete game.user.apps[this.id];
     for (const member of this.actor.system.members) {
       delete member.actor.apps[this.id];
     }
