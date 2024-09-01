@@ -216,14 +216,14 @@
     </section>
     <div
       role="presentation"
-      class="flex-row extra-small-gap justify-content-space-between"
+      class="header-line-margin flex-row extra-small-gap justify-content-space-between"
     >
       <ActorMovement />
       {#if $context.hasSpecialSaves}
         <SpecialSaves />
       {/if}
     </div>
-    <HorizontalLineSeparator borderColor="light" />
+    <HorizontalLineSeparator class="header-line-margin-left" borderColor="light" />
     <!-- AC  -->
     <ActorHeaderStats
       {abilities}

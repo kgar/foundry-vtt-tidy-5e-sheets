@@ -1,4 +1,17 @@
 // TODO: Make a whole suite of classes in a dedicated partial that can set colors, backgrounds, background-colors, etc., for the theme colors.
-.primary-accent-color {
+.primary-accent-color,
+.text-primary {
   color: var(--t5e-primary-accent-color);
+}
+
+.text-body {
+  color: var(--t5e-primary-font-color);
+}
+
+.text-body-secondary {
+  color: var(--t5e-secondary-color);
+}
+
+.text-body-tertiary {
+  color: var(--t5e-tertiary-color);
 }

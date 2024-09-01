@@ -137,6 +137,8 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
 
     const summary = this.#getSummary(stats);
 
+    const movement = this.#prepareMovementSpeed();
+
     return {
       actorPortraitCommands:
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
@@ -157,11 +159,13 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
         this.actor.allApplicableEffects()
       ),
       inventory: inventory,
+      itemContext: {}, // TODO: Implement
       limited: this.actor.limited,
       lockSensitiveFields:
         (!unlocked && SettingsProvider.settings.useTotalSheetLock.get()) ||
         !editable,
       maxHP: stats.maxHP,
+      movement: movement,
       owner: this.actor.isOwner,
       summary: summary,
       unlocked: unlocked,
@@ -273,6 +277,30 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
     return {
       sections: Object.values(sections),
       stats: stats,
+    };
+  }
+
+  #prepareMovementSpeed() {
+    const movement = this.actor.system.attributes.movement;
+    let speeds = [
+      [
+        movement.land,
+        `${game.i18n.localize('DND5E.MovementLand')} ${movement.land}`,
+      ],
+      [
+        movement.water,
+        `${game.i18n.localize('DND5E.MovementWater')} ${movement.water}`,
+      ],
+      [
+        movement.air,
+        `${game.i18n.localize('DND5E.MovementAir')} ${movement.air}`,
+      ],
+    ];
+    speeds = speeds.filter((s) => s[0]).sort((a, b) => b[0] - a[0]);
+    const primary = speeds.shift();
+    return {
+      primary: `${primary ? primary[1] : '0'}`,
+      secondary: speeds.map((s) => s[1]).join(', '),
     };
   }
 

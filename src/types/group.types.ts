@@ -1,4 +1,4 @@
-import type { Item5e } from './item.types';
+import type { ContainerContents, Item5e } from './item.types';
 import type {
   Actor5e,
   ActorSheetContextV2,
@@ -16,11 +16,11 @@ export type GroupSheetClassicContext = {
   document: Group5e;
   inventory: InventorySection[];
   isGM: boolean;
-  // itemContext: unknown;
+  itemContext: Record<string, GroupItemContext>;
   limited: boolean;
   maxHP: number;
   memberSections: GroupMemberSection[];
-  // movement: { primary: string, secondary: string };
+  movement: GroupMovementContext;
   // nMembers: number;
   // nVehicles: number;
   // options: App V1 Options
@@ -35,6 +35,22 @@ export type GroupSheetClassicContext = {
   utilities: Utilities<GroupSheetClassicContext>;
   xp: Group5eXp | undefined;
 } & ActorSheetContextV2<Group5e>;
+
+export interface GroupItemContext {
+  canToggle?: false;
+  containerContents?: ContainerContents;
+  hasTarget?: boolean;
+  hasUses?: boolean;
+  isStack?: boolean;
+  parent?: Item5e;
+  toggleClass?: string;
+  totalWeight?: number;
+}
+
+export interface GroupMovementContext {
+  primary: string;
+  secondary: string;
+}
 
 export interface Group5e {
   _id: string;

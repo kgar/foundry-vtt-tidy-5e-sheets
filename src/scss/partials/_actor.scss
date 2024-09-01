@@ -10,10 +10,19 @@
   font-family: var(--t5e-body-font-family);
 
   // TODO: Remove the form style here when it's all App V2
-  &:not(&:has(form)), form {
+  &:not(&:has(form)),
+  form {
     height: 100%;
     overflow: hidden;
   }
+}
+
+.header-line-margin {
+  margin: 0.1875rem 0 0.125rem 0.25rem;
+}
+
+.header-line-margin-left {
+  margin-left: 0.25rem;
 }
 
 .note-entries article {
@@ -310,6 +319,7 @@ button,
 select {
   cursor: pointer;
   color: var(--t5e-primary-font-color);
+  outline:none;
 
   &:not(:focus-visible) {
     box-shadow: none;
@@ -318,6 +328,12 @@ select {
   &:focus-visible {
     box-shadow: var(--t5e-focus-visible-box-shadow);
   }
+}
+
+select {
+  border-color: var(--t5e-light-color);
+  background: var(--t5e-faint-color);
+  background: transparent;
 }
 
 [contenteditable],

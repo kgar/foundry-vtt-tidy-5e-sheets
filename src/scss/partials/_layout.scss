@@ -28,6 +28,26 @@
   flex: 0;
 }
 
+.flex-grow-0 {
+  flex-grow: 0;
+}
+
+.flex-grow-1 {
+  flex-grow: 1;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+.flex-shrink-1 {
+  flex-shrink: 1;
+}
+
+.flex-basis-max-content {
+  flex-basis: max-content;
+}
+
 .flex-wrap {
   flex-wrap: wrap;
 }

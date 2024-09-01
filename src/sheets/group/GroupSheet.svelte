@@ -12,6 +12,8 @@
   import SheetEditModeToggle from '../actor/SheetEditModeToggle.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActorProfile from '../actor/ActorProfile.svelte';
+  import ActorMovement from '../actor/ActorMovement.svelte';
+  import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
 
   const context = getContext<Readable<GroupSheetClassicContext>>('context');
 
@@ -38,22 +40,36 @@
 
       <!-- Any other content adjacent to Actor Name -->
     </div>
-    <div class="flex-row"></div>
-    <div class="flex-row align-items-center">
-      <span class="flex-1">{$context.summary}</span>
-      <Select
-        document={$context.actor}
-        value={$context.system.type.value}
-        field="system.type.value"
-        blankValue=""
-        class="flex-1"
-      >
-        <SelectOptions
-          data={$context.config.groupTypes}
-          blank={localize('DND5E.Group.TypeGeneric')}
-        />
-      </Select>
+    <div
+      class="flex-row align-items-center header-line-margin"
+      style="margin-top: 0;"
+    >
+      <span class="flex-1 fs-sm text-body-secondary">{$context.summary}</span>
+      {#if $context.unlocked}
+        <Select
+          document={$context.actor}
+          value={$context.system.type.value}
+          field="system.type.value"
+          blankValue=""
+          class="flex-grow-0 flex-shrink-0 flex-basis-max-content"
+        >
+          <SelectOptions
+            data={$context.config.groupTypes}
+            blank={localize('DND5E.Group.TypeGeneric')}
+          />
+        </Select>
+      {:else}
+        <strong class="text-body-secondary">
+          {$context.config.groupTypes[$context.system.type.value] ??
+            localize('DND5E.Group.TypeGeneric')}
+        </strong>
+      {/if}
     </div>
+    <HorizontalLineSeparator class="header-line-margin-left" />
+    <div class="flex-row header-line-margin">
+      <ActorMovement movementLabelKey="DND5E.Movement" />
+    </div>
+    <HorizontalLineSeparator class="header-line-margin-left" />
   </div>
 </header>
 

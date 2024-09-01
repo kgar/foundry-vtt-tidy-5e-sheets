@@ -1,6 +1,7 @@
 :where(.tidy5e-sheet.app-v2.classic) {
   @import './partials/reset';
   @import './partials/variables';
+  @import './partials/text';
 }
 
 // TODO: to App V2 Reset SCSS
@@ -23,9 +24,9 @@
     #f1ebe8 url(../../modules/tidy5e-sheet/images/parchment-texture-bottom.webp)
       no-repeat bottom center / 150% auto;
 
-  background: var(--t5e-sheet-background, var(--t5e-parchment-background));
-
   &:not(.minimized) {
+    background: var(--t5e-sheet-background, var(--t5e-parchment-background));
+
     .window-header {
       background: var(--t5e-header-background);
       border-bottom: none;
@@ -243,6 +244,7 @@
 
   // TODO: Remove these layers of specificity and get everything working in concert better. These should come after partial utility styles and general component styles. They can have a high level of specificity as needed.
   // Components - Actor-specific
+  @import '../sheets/actor/ActorMovement.scss';
   @import '../sheets/actor/ActorProfile.scss';
   @import '../sheets/actor/AttributeBlock.scss';
   @import '../sheets/actor/AttunementTracker.scss';
