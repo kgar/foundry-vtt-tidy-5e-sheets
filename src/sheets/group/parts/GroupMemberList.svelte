@@ -19,6 +19,10 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
+  const memberActorIdsToShow = getContext<Readable<Set<string> | undefined>>(
+    CONSTANTS.SVELTE_CONTEXT.MEMBER_IDS_TO_SHOW,
+  );
+
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -32,10 +36,12 @@
   </svelte:fragment>
   <svelte:fragment slot="body">
     {#each section.members as member (member.actor.uuid)}
-      {#if $context.actor.system.type.value === CONSTANTS.GROUP_TYPE_ENCOUNTER}
-        <GroupEncounterMemberListItem {member} />
-      {:else}
-        <GroupMemberListItem {member} />
+      {#if $memberActorIdsToShow === undefined || $memberActorIdsToShow.has(member.actor.id)}
+        {#if $context.actor.system.type.value === CONSTANTS.GROUP_TYPE_ENCOUNTER}
+          <GroupEncounterMemberListItem {member} />
+        {:else}
+          <GroupMemberListItem {member} />
+        {/if}
       {/if}
     {/each}
   </svelte:fragment>

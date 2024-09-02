@@ -377,6 +377,7 @@ export const CONSTANTS = {
     ITEM_IDS_TO_SHOW: 'itemIdsToShow',
     ITEM_TABLE_TOGGLES: 'itemTableToggles',
     LOCATION: 'location',
+    MEMBER_IDS_TO_SHOW: 'memberIdsToShow',
     MESSAGE_BUS: 'messageBus',
     ON_FILTER_CLEAR_ALL: 'onFilterClearAll',
     ON_FILTER: 'onFilter',

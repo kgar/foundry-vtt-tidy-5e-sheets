@@ -442,6 +442,19 @@ export const FoundryAdapter = {
 
     return classImage ?? spell.img;
   },
+  searchActors(searchCriteria: string, actors: Actor5e[]) {
+    return new Set(
+      actors
+        .filter((actor) => FoundryAdapter.searchActor(searchCriteria, actor))
+        .map((actor) => actor.id)
+    );
+  },
+  searchActor(searchCriteria: string, actor: Actor5e) {
+    return (
+      searchCriteria.trim() === '' ||
+      actor.name.toLowerCase().includes(searchCriteria.toLowerCase())
+    );
+  },
   searchItems(searchCriteria: string, items: Item5e[]): Set<string> {
     return new Set(
       items

@@ -1,8 +1,8 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import type { GroupSheetClassicContext } from 'src/types/group.types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { getContext, setContext } from 'svelte';
+  import { writable, type Readable } from 'svelte/store';
   import GroupMemberList from '../parts/GroupMemberList.svelte';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
@@ -21,6 +21,13 @@
 
   $: utilityBarCommands =
     $context.utilities[tabId]?.utilityToolbarCommands ?? [];
+
+  const memberActorIdsToShow = writable<Set<string> | undefined>(undefined);
+  setContext(CONSTANTS.SVELTE_CONTEXT.MEMBER_IDS_TO_SHOW, memberActorIdsToShow);
+  $: $memberActorIdsToShow = FoundryAdapter.searchActors(
+    searchCriteria,
+    $context.system.members.map((m) => m.actor),
+  );
 </script>
 
 <UtilityToolbar>
