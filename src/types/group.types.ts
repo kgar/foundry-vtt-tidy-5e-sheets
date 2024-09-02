@@ -78,12 +78,8 @@ export interface Group5e {
 
 // TODO: Consider making the memberContext: GroupMemberContext which is like itemContext
 
-export type GroupMemberContext = {
-  actor: Actor5e;
-};
-
 export type GroupMemberSection = TidySectionBase & {
-  members: GroupMemberContext[]; // Figure out what all is actually needed here
+  members: Actor5e[]; // Figure out what all is actually needed here
 };
 
 export interface Group5eSystem {

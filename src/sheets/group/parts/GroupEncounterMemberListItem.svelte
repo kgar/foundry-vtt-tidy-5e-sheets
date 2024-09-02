@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { GroupMemberContext } from 'src/types/group.types';
+  import type { Actor5e } from 'src/types/types';
 
-  export let member: GroupMemberContext;
+  export let member: Actor5e;
 </script>
 
-<p>Encounter member list item here for {member.actor.name}</p>
+<p>Encounter member list item here for {member.name}</p>

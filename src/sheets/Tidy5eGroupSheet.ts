@@ -306,9 +306,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
         stats.memberCount += multiplier;
       }
 
-      sections[member.type].members.push({
-        actor: member,
-      });
+      sections[member.type].members.push(member);
     }
 
     // Apply any section config stuff here?
@@ -377,7 +375,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
     _event: DragEvent,
     data: any
   ): Promise<object | boolean | undefined> {
-    if (!this.isEditable || !FoundryAdapter.isActorSheetUnlocked(this.actor)) {
+    if (!this.isEditable) {
       return false;
     }
 
@@ -409,7 +407,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
   }
 
   async _onDropFolder(event: DragEvent, data: Record<string, any>) {
-    if (!this.isEditable || !FoundryAdapter.isActorSheetUnlocked(this.actor)) {
+    if (!this.isEditable) {
       return false;
     }
 

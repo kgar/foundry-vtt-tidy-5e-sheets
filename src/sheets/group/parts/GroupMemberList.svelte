@@ -35,8 +35,8 @@
     </TidyTableHeaderRow>
   </svelte:fragment>
   <svelte:fragment slot="body">
-    {#each section.members as member (member.actor.uuid)}
-      {#if $memberActorIdsToShow === undefined || $memberActorIdsToShow.has(member.actor.id)}
+    {#each section.members as member (member.uuid)}
+      {#if $memberActorIdsToShow === undefined || $memberActorIdsToShow.has(member.id)}
         {#if $context.actor.system.type.value === CONSTANTS.GROUP_TYPE_ENCOUNTER}
           <GroupEncounterMemberListItem {member} />
         {:else}

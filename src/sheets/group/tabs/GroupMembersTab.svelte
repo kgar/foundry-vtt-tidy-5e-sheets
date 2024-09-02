@@ -8,6 +8,8 @@
   import Search from 'src/components/utility-bar/Search.svelte';
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { GroupSheetSections } from 'src/features/sections/GroupSheetSections';
+  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 
   const tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
@@ -27,6 +29,12 @@
   $: $memberActorIdsToShow = FoundryAdapter.searchActors(
     searchCriteria,
     $context.system.members.map((m) => m.actor),
+  );
+
+  $: memberSections = GroupSheetSections.configureMemberSections(
+    $context.memberSections,
+    tabId,
+    SheetPreferencesService.getByType($context.actor.type),
   );
 </script>
 
@@ -85,7 +93,7 @@
     </div>
   {/if}
 
-  {#each $context.memberSections as section (section.key)}
+  {#each memberSections as section (section.key)}
     <GroupMemberList {section} />
   {/each}
 </section>
