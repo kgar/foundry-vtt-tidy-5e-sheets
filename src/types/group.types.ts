@@ -89,6 +89,7 @@ export interface Group5eSystem {
   details: Group5eDetails;
   members: Group5eMember[];
   placeMembers(): Promise<void>;
+  removeMember(id: string): Promise<Actor5e>;
   type: Group5eType;
 }
 
