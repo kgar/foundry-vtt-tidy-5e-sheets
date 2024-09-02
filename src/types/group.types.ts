@@ -1,3 +1,4 @@
+import type { Tidy5eGroupSheet } from 'src/sheets/Tidy5eGroupSheet';
 import type { ContainerContents, Item5e } from './item.types';
 import type {
   Actor5e,
@@ -60,9 +61,16 @@ export interface Group5e {
   folder: any;
   img: string;
   items: Item5e[];
+  longRest(
+    options: Record<string, any> /* RestConfiguration */
+  ): Promise<unknown /*ResultResult*/>;
   name: string;
   ownership: any;
   prototypeToken: any;
+  sheet: Tidy5eGroupSheet;
+  shortRest(
+    options: Record<string, any> /* RestConfiguration */
+  ): Promise<unknown /*ResultResult*/>;
   sort: number;
   system: Group5eSystem;
   type: string;
@@ -79,12 +87,13 @@ export type GroupMemberSection = TidySectionBase & {
 };
 
 export interface Group5eSystem {
-  currency: Group5eCurrency;
-  type: Group5eType;
-  description: Group5eDescription;
-  members: Group5eMember[];
   attributes: Group5eAttributes;
+  currency: Group5eCurrency;
+  description: Group5eDescription;
   details: Group5eDetails;
+  members: Group5eMember[];
+  placeMembers(): Promise<void>;
+  type: Group5eType;
 }
 
 export interface Group5eCurrency {

@@ -485,4 +485,15 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
 
     return itemData;
   }
+
+  // ---------------------------------------------
+  // Actions
+  // ---------------------------------------------
+
+  award() {
+    const award = new dnd5e.applications.Award(this.actor, {
+      savedDestinations: this.actor.getFlag('dnd5e', 'awardDestinations'),
+    });
+    award.render(true);
+  }
 }
