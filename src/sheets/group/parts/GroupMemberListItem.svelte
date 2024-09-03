@@ -10,6 +10,8 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { isNil } from 'src/utils/data';
   import DelimitedTruncatedContent from 'src/components/layout/DelimitedTruncatedContent.svelte';
+  import { warn } from 'src/utils/logging';
+  import { formatAsModifier } from 'src/utils/formatting';
 
   const context = getContext<Readable<GroupSheetClassicContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -33,11 +35,104 @@
           $context.config.vehicleTypes[member.system.vehicleType],
         ].filter((info) => !isNil(info?.trim(), ''))
       : [];
+
+  const localize = FoundryAdapter.localize;
+
+  let memberSenses: string[];
+  $: {
+    // TODO: To Foundry Adapter or somewhere else shared, but make it use data instead of string array, so that it can be more elaborately rendered.
+    const senses = member.system.attributes.senses ?? {};
+    const tags: Record<string, string> = {};
+    for (let [k, label] of Object.entries(CONFIG.DND5E.senses)) {
+      const v = senses[k] ?? 0;
+      if (v === 0) continue;
+      tags[k] =
+        `${game.i18n.localize(label)} ${v} ${senses.units ?? Object.keys(CONFIG.DND5E.movementUnits)[0]}`;
+    }
+    if (senses.special)
+      senses.special
+        .split(';')
+        .forEach((c: string, i: number) => (tags[`custom${i + 1}`] = c.trim()));
+    memberSenses = Object.values(tags);
+  }
+
+  let memberConditionImmunities: string[];
+  $: {
+    const conditionImmunities: string[] = [];
+    // traits: { ci: { custom: string, value: Set<string> }}
+    // value maps to CONFIG.DND5E.conditionTypes
+    for (let entry of member.system.traits.ci.value) {
+      conditionImmunities.push(
+        $context.config.conditionTypes[entry]?.label ?? entry,
+      );
+    }
+
+    const customImmunity = member.system.traits.ci.custom?.trim();
+    if (!isNil(customImmunity, '')) {
+      conditionImmunities.push(customImmunity);
+    }
+
+    memberConditionImmunities = conditionImmunities;
+  }
+
+  type SkillInfo = {
+    key: string;
+    label: string;
+    total: number;
+    mod: string;
+    passive: number;
+  };
+
+  let skills: SkillInfo[];
+  $: {
+    skills = Array.from(Object.entries($context.config.skills)).reduce<
+      SkillInfo[]
+    >((prev, [key, configSkill]: [string, any]) => {
+      const skill = getSkill(key);
+
+      if (!skill) {
+        warn(
+          'Unable to find skill. Ensure custom skills are added at "init" time.',
+          false,
+          { key, configSkill },
+        );
+        return prev;
+      }
+
+      const label = $context.config.skills[key]?.label ?? key;
+
+      prev.push({
+        key: key,
+        label: label,
+        passive: skill.passive,
+        total: skill.total,
+        mod: formatAsModifier(skill.total),
+      });
+
+      return prev;
+    }, []);
+  }
+
+  // TODO: 'prc' to CONSTANT
+  $: top4Skills = skills
+    .filter((s) => s.key !== 'prc')
+    .sort((a, b) => b.total - a.total)
+    .slice(0, 4);
+
+  $: perception = skills.find((s) => s.key === 'prc');
+
+  function getSkill(key: string): any | null {
+    if (key in member.system.skills) {
+      return member.system.skills[key];
+    }
+
+    return null;
+  }
 </script>
 
-<div class="group-member-list-item flex-row small-gap">
+<div class="group-member-list-item flex-row small-gap align-items-flex-start">
   <GroupMemberListItemProfile {member} />
-  <div>
+  <div class="flex-column extra-small-gap flex-1">
     <div class="flex-row small-gap align-items-center">
       <button
         type="button"
@@ -50,16 +145,15 @@
     </div>
 
     {#if classAndSubclassSummaries.length}
-      <DelimitedTruncatedContent delimiter="<span>|</span>">
+      <div class="class-sub-header">
         {#each classAndSubclassSummaries as summary (summary.class)}
-          <span>
-            <span class="text-body-secondary">
-              {summary.subclass ?? ''}
+          <span class="class-summary-item">
+            <span>
               {summary.class}
             </span> <strong>{summary.level}</strong>
           </span>
         {/each}
-      </DelimitedTruncatedContent>
+      </div>
     {/if}
 
     {#if vehicleInfo.length}
@@ -70,10 +164,55 @@
       </DelimitedTruncatedContent>
     {/if}
 
-    <!-- TODO: Extract to own part component -->
-    <AcShieldBase cssClass="group-ac-shield">
-      <span class="ac-value">{member.system.attributes.ac.value}</span>
-    </AcShieldBase>
+    <div class="flex-row extra-small-gap">
+      <!-- TODO: Extract to own part component -->
+      <AcShieldBase cssClass="group-ac-shield">
+        <span class="ac-value">{member.system.attributes.ac.value}</span>
+      </AcShieldBase>
+      <fieldset class="tags flex-1">
+        <legend class="semibold">
+          {localize('DND5E.Senses')}
+        </legend>
+        {#if memberSenses.length}
+          {memberSenses.join(', ')}
+        {:else}
+          <i>{localize('TIDY5E.NoSpecialSenses')}</i>
+        {/if}
+      </fieldset>
+      <fieldset class="tags flex-1">
+        <legend class="semibold">
+          {localize('DND5E.ConImm')}
+        </legend>
+        {#if memberConditionImmunities.length}
+          {memberConditionImmunities.join(', ')}
+        {:else}
+          <i>{localize('TIDY5E.NoImmunities')}</i>
+        {/if}
+      </fieldset>
+    </div>
+
+    <div class="flex-row flex-wrap skills">
+      {#if perception}
+        <button
+          type="button"
+          class="skill"
+          on:click={(event) =>
+            member.rollSkill(perception.key, {
+              rollMode: CONST.DICE_ROLL_MODES.BLIND,
+              event: event,
+            })}
+        >
+          {localize(perception?.label ?? '')}
+          {perception?.mod} ({perception?.passive})
+        </button>
+      {/if}
+      {#each top4Skills as skill (skill.key)}
+        <span class="tag skill">
+          {localize(skill?.label ?? '')}
+          {skill?.mod} ({skill?.passive})
+        </span>
+      {/each}
+    </div>
   </div>
 </div>
 
@@ -83,6 +222,11 @@
     // Group Member Class Summary
 
     // Group AC Shield
+    :global(.ac-display) {
+      align-self: flex-start;
+      margin-top: 0.375rem;
+    }
+
     :global(.group-ac-shield .ac-shield) {
       width: 2.25rem;
     }
@@ -99,6 +243,28 @@
       justify-content: center;
       font-size: 1.5rem;
       font-weight: 700;
+    }
+
+    // Senses and Immunities
+    fieldset.tags {
+      border-radius: 0.25rem;
+      border-color: var(--t5e-separator-color);
+    }
+
+    // Skill Pills
+    .skills {
+      gap: 0.125rem;
+      align-items: flex-start;
+    }
+    .skills .skill {
+      flex: 0 0 max-content;
+      line-height: 1.5rem;
+    }
+
+    .class-sub-header {
+      .class-summary-item + .class-summary-item::before {
+        content: ' | ';
+      }
     }
   }
 </style>

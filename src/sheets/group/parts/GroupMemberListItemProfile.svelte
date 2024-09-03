@@ -56,7 +56,7 @@
   .member-list-item-image-wrapper {
     --t5e-member-list-portrait-size: 5rem;
 
-    border: 0.0625rem solid var(--t5e-separator-color);
+    // border: 0.0625rem solid var(--t5e-separator-color);
   }
 
   .member-list-item-image-wrapper .member-list-item-image {
