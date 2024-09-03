@@ -146,8 +146,8 @@ export class Tidy5eCharacterSheet
   component: SvelteComponent | undefined;
   activateListeners(html: { get: (index: 0) => HTMLElement }) {
     let first = true;
-      this.subscriptionsService.unsubscribeAll();
-      this.subscriptionsService.registerSubscriptions(
+    this.subscriptionsService.unsubscribeAll();
+    this.subscriptionsService.registerSubscriptions(
       this.itemFilterService.filterData$.subscribe(() => {
         if (first) return;
         this.render();
@@ -243,8 +243,7 @@ export class Tidy5eCharacterSheet
       characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]?.sort ??
       'm';
     const inventorySortMode =
-      characterPreferences.tabs?.[CONSTANTS.TAB_ACTOR_INVENTORY]?.sort ??
-      'm';
+      characterPreferences.tabs?.[CONSTANTS.TAB_ACTOR_INVENTORY]?.sort ?? 'm';
     const spellbookSortMode =
       characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.sort ??
       'm';

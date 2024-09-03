@@ -6,7 +6,7 @@ import {
 } from 'src/utils/applications';
 import { debug, error } from 'src/utils/logging';
 import type { SvelteComponent } from 'svelte';
-import { writable, type Writable } from 'svelte/store';
+import { writable, type Unsubscriber, type Writable } from 'svelte/store';
 
 /**
  * A context-oriented Svelte mixin to provide Application V2 windows with Svelte integration.
@@ -64,7 +64,7 @@ export function SvelteApplicationMixin<TContext>(BaseApplication: any) {
      * Retrieves and manages any application-specific subscriptions related to the
      * lifetime of the application, from first render to close.
      */
-    _getSubscriptions(): (() => void)[] {
+    _getSubscriptions(): Unsubscriber[] {
       return [];
     }
 

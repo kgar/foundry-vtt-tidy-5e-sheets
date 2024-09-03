@@ -7,23 +7,39 @@ import {
 } from '../mixins/SvelteApplicationMixin';
 import type { SvelteComponent } from 'svelte';
 import GroupSheet from './group/GroupSheet.svelte';
-import type { Tab, Utilities } from 'src/types/types';
+import type {
+  ActorInventoryTypes,
+  MessageBus,
+  MessageBusMessage,
+  Tab,
+  Utilities,
+} from 'src/types/types';
 import GroupMembersTab from './group/tabs/GroupMembersTab.svelte';
 import GroupInventoryTab from './group/tabs/GroupInventoryTab.svelte';
 import GroupDescriptionTab from './group/tabs/GroupDescriptionTab.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type {
   Group5eXp,
+  GroupItemContext,
   GroupMemberSection,
   GroupSheetClassicContext,
 } from 'src/types/group.types';
 import { Inventory } from 'src/features/sections/Inventory';
-import { SettingsProvider } from 'src/settings/settings';
+import { SettingsProvider, settingStore } from 'src/settings/settings';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { getPercentage } from 'src/utils/numbers';
 import type { Item5e } from 'src/types/item.types';
 import { ActorBaseDragAndDropMixin } from 'src/mixins/ActorBaseDragAndDropMixin';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+import { TidyFlags } from 'src/foundry/TidyFlags';
+import { Container } from 'src/features/containers/Container';
+import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
+import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPreferencesRuntime';
+import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
+import { GroupSheetRuntime } from 'src/runtime/GroupSheetRuntime';
+import { writable } from 'svelte/store';
+import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
 
 type MemberStats = {
   currentHP: number;
@@ -37,11 +53,16 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
     foundry.applications.sheets.ActorSheetV2
   )
 ) {
+  _itemFilterService: ItemFilterService;
+  _messageBus: MessageBus = writable<MessageBusMessage | undefined>();
+  _inlineContainerToggleService = new InlineContainerToggleService();
+
   constructor(...args: any[]) {
     super(...args);
 
     this._supportedItemTypes = new Set(Inventory.getDefaultInventoryTypes());
     this._supportedItemTypes.add(CONSTANTS.ITEM_TYPE_SPELL);
+    this._itemFilterService = new ItemFilterService({}, this.actor);
   }
 
   static DEFAULT_OPTIONS: Partial<
@@ -74,7 +95,26 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
     return new GroupSheet({
       target: node,
       context: new Map<any, any>([
+        [CONSTANTS.SVELTE_CONTEXT.APP_ID, this.appId],
+        [CONSTANTS.SVELTE_CONTEXT.CARD, this.card],
         [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._store],
+        [
+          CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
+          this._inlineContainerToggleService,
+        ],
+        [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this._itemFilterService],
+        [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
+        [
+          CONSTANTS.SVELTE_CONTEXT.ON_FILTER,
+          this._itemFilterService.onFilter.bind(this._itemFilterService),
+        ],
+        [
+          CONSTANTS.SVELTE_CONTEXT.ON_FILTER_CLEAR_ALL,
+          this._itemFilterService.onFilterClearAll.bind(
+            this._itemFilterService
+          ),
+        ],
+        [CONSTANTS.SVELTE_CONTEXT.STATS, this.stats],
       ]),
     });
   }
@@ -126,9 +166,6 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
 
     const { sections: memberSections, stats } = this.#prepareMembers();
 
-    const inventorySections = Inventory.getDefaultInventorySections();
-    const inventory = Object.values(inventorySections);
-
     const source = this.actor.toObject();
 
     const unlocked =
@@ -176,44 +213,182 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
           },
         ],
       },
+      [CONSTANTS.TAB_ACTOR_INVENTORY]: {
+        utilityToolbarCommands: [
+          {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
+            iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
+            execute: async () => {
+              await SheetPreferencesService.setDocumentTypeTabPreference(
+                this.actor.type,
+                CONSTANTS.TAB_ACTOR_INVENTORY,
+                'sort',
+                'm'
+              );
+            },
+            visible: membersSortMode === 'a',
+          },
+          {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
+            iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
+            execute: async () => {
+              await SheetPreferencesService.setDocumentTypeTabPreference(
+                this.actor.type,
+                CONSTANTS.TAB_ACTOR_INVENTORY,
+                'sort',
+                'a'
+              );
+            },
+            visible: membersSortMode === 'm',
+          },
+          {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Commands.HideContainerPanel'
+            ),
+            iconClass: `fas fa-boxes-stacked fa-fw`,
+            execute: () => {
+              TidyFlags.showContainerPanel.unset(this.actor);
+            },
+            visible: !!TidyFlags.showContainerPanel.get(this.actor),
+          },
+          {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Commands.ShowContainerPanel'
+            ),
+            iconClass: `fas fa-box fa-fw`,
+            execute: () => {
+              TidyFlags.showContainerPanel.set(this.actor, true);
+            },
+            visible: !TidyFlags.showContainerPanel.get(this.actor),
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
+            iconClass: 'fas fa-angles-down',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this._messageBus.set({
+                tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
+                message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
+              }),
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
+            iconClass: 'fas fa-angles-up',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this._messageBus.set({
+                tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
+                message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
+              }),
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.ListLayout'),
+            iconClass: 'fas fa-th-list fa-fw toggle-list',
+            visible: !TidyFlags.inventoryGrid.get(this.actor),
+            execute: () => {
+              TidyFlags.inventoryGrid.set(this.actor);
+            },
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.GridLayout'),
+            iconClass: 'fas fa-th-large fa-fw toggle-grid',
+            visible: !!TidyFlags.inventoryGrid.get(this.actor),
+            execute: () => {
+              TidyFlags.inventoryGrid.unset(this.actor);
+            },
+          },
+          {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Utilities.ConfigureSections'
+            ),
+            iconClass: 'fas fa-cog',
+            execute: ({ context }) => {
+              new DocumentTabSectionConfigApplication({
+                document: context.actor,
+                sections: context.inventory,
+                tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
+                tabTitle: GroupSheetRuntime.getTabTitle(
+                  CONSTANTS.TAB_ACTOR_INVENTORY
+                ),
+              }).render(true);
+            },
+          },
+        ],
+      },
     };
 
-    return {
+    const uncontainedItems: Item5e[] = Array.from(this.actor.items).filter(
+      (i: Item5e) => !this.actor.items.has(i.system.container)
+    );
+
+    const inventoryTypesArray = Inventory.getDefaultInventoryTypes();
+    const inventoryTypes = new Set(inventoryTypesArray);
+    const inventory: ActorInventoryTypes =
+      Inventory.getDefaultInventorySections();
+
+    for (let item of uncontainedItems) {
+      if (inventoryTypes.has(item.type)) {
+        Inventory.applyInventoryItemToSection(
+          inventory,
+          item,
+          inventoryTypesArray,
+          {
+            canCreate: true,
+          }
+        );
+      }
+    }
+
+    let context: GroupSheetClassicContext = {
+      actor: this.actor,
       actorPortraitCommands:
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
-      tabs: tabs,
-      actor: this.actor,
-      system: this.actor.system,
-      items: Array.from(this.actor.items),
       config: CONFIG.DND5E,
-      isGM: game.user.isGM,
-      xp: xp,
-      healthPercentage: getPercentage(stats.currentHP, stats.maxHP),
-      descriptionFullEnrichedHtml: descriptionFullEnrichedHtml,
-      memberSections: memberSections,
+      containerPanelItems: await Inventory.getContainerPanelItems(
+        uncontainedItems
+      ),
       currentHP: stats.currentHP,
+      descriptionFullEnrichedHtml: descriptionFullEnrichedHtml,
       document: this.actor.document,
       editable: editable,
       effects: dnd5e.applications.components.EffectsElement.prepareCategories(
         this.actor.allApplicableEffects()
       ),
-      inventory: inventory,
+      filterData: this._itemFilterService.getDocumentItemFilterData(),
+      filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
+      healthPercentage: getPercentage(stats.currentHP, stats.maxHP),
+      inventory: Object.values(inventory),
+      isGM: game.user.isGM,
       itemContext: {}, // TODO: Implement
+      items: Array.from(this.actor.items),
       limited: this.actor.limited,
       lockSensitiveFields:
         (!unlocked && SettingsProvider.settings.useTotalSheetLock.get()) ||
         !editable,
       maxHP: stats.maxHP,
+      memberSections: memberSections,
       movement: movement,
       owner: this.actor.isOwner,
+      showContainerPanel:
+        TidyFlags.showContainerPanel.get(this.actor) === true &&
+        Array.from(uncontainedItems).some(
+          (i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER
+        ),
+      source: source,
       summary: summary,
+      system: this.actor.system,
+      tabs: tabs,
       unlocked: unlocked,
       useRoundedPortraitStyle: [
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
       ].includes(SettingsProvider.settings.useCircularPortraitStyle.get()),
       utilities: utilities,
-      source: source,
+      xp: xp,
     };
+
+    await this.#prepareItems(context);
+
+    return context;
   }
 
   #getSummary(stats: MemberStats) {
@@ -339,6 +514,45 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       primary: `${primary ? primary[1] : '0'}`,
       secondary: speeds.map((s) => s[1]).join(', '),
     };
+  }
+
+  async #prepareItems(context: GroupSheetClassicContext) {
+    for (const item of context.items) {
+      context.itemContext[item.id] ??= {
+        canToggle: false,
+        containerContents: undefined,
+        hasUses: item.hasLimitedUses,
+        isStack: item.system.quantity > 1,
+        totalWeight: (await item.system.totalWeight).toNearest(0.1),
+      };
+    }
+
+    for (const panelItem of context.containerPanelItems) {
+      const ctx = context.itemContext[panelItem.container.id];
+      ctx.containerContents = await Container.getContainerContents(
+        panelItem.container
+      );
+    }
+  }
+
+  _getSubscriptions() {
+    let first = true;
+    const subscriptions = [
+      this._itemFilterService.filterData$.subscribe(() => {
+        if (first) return;
+        this.render();
+      }),
+      settingStore.subscribe((s) => {
+        if (first) return;
+        this.render();
+      }),
+      SheetPreferencesRuntime.getStore().subscribe(() => {
+        if (first) return;
+        this.render();
+      }),
+    ];
+    first = false;
+    return subscriptions;
   }
 
   async _renderHTML(

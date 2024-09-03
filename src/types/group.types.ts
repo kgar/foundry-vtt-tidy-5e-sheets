@@ -3,18 +3,23 @@ import type { ContainerContents, Item5e } from './item.types';
 import type {
   Actor5e,
   ActorSheetContextV2,
+  ContainerPanelItemContext,
   InventorySection,
   Tab,
   TidySectionBase,
   Utilities,
 } from './types';
+import type { DocumentFilters } from 'src/runtime/item/item.types';
 
 export type GroupSheetClassicContext = {
   config: any; // TODO: If possible, convert the full CONFIG (no modules on) to a typescript type.
   currentHP: number;
   // data: unknown;
+  containerPanelItems: ContainerPanelItemContext[];
   descriptionFullEnrichedHtml: string;
   document: Group5e;
+  filterData: DocumentFilters;
+  filterPins: Record<string, Set<string>>;
   inventory: InventorySection[];
   isGM: boolean;
   itemContext: Record<string, GroupItemContext>;
@@ -29,6 +34,7 @@ export type GroupSheetClassicContext = {
   // title: string;
   items: Item5e[];
   effects: unknown[];
+  showContainerPanel: boolean;
   source: unknown;
   summary: string;
   system: Group5eSystem;
@@ -40,11 +46,8 @@ export type GroupSheetClassicContext = {
 export interface GroupItemContext {
   canToggle?: false;
   containerContents?: ContainerContents;
-  hasTarget?: boolean;
   hasUses?: boolean;
   isStack?: boolean;
-  parent?: Item5e;
-  toggleClass?: string;
   totalWeight?: number;
 }
 

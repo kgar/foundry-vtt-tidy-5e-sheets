@@ -85,32 +85,35 @@
 
   let skills: SkillInfo[];
   $: {
-    skills = Array.from(Object.entries($context.config.skills)).reduce<
-      SkillInfo[]
-    >((prev, [key, configSkill]: [string, any]) => {
-      const skill = getSkill(key);
+    skills = member.system.skills
+      ? Array.from(Object.entries($context.config.skills)).reduce<SkillInfo[]>(
+          (prev, [key, configSkill]: [string, any]) => {
+            const skill = getSkill(key);
 
-      if (!skill) {
-        warn(
-          'Unable to find skill. Ensure custom skills are added at "init" time.',
-          false,
-          { key, configSkill },
-        );
-        return prev;
-      }
+            if (!skill) {
+              warn(
+                'Unable to find skill. Ensure custom skills are added at "init" time.',
+                false,
+                { key, configSkill },
+              );
+              return prev;
+            }
 
-      const label = $context.config.skills[key]?.label ?? key;
+            const label = $context.config.skills[key]?.label ?? key;
 
-      prev.push({
-        key: key,
-        label: label,
-        passive: skill.passive,
-        total: skill.total,
-        mod: formatAsModifier(skill.total),
-      });
+            prev.push({
+              key: key,
+              label: label,
+              passive: skill.passive,
+              total: skill.total,
+              mod: formatAsModifier(skill.total),
+            });
 
-      return prev;
-    }, []);
+            return prev;
+          },
+          [],
+        )
+      : [];
   }
 
   // TODO: 'prc' to CONSTANT

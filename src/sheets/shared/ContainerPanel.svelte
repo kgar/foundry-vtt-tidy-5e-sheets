@@ -65,7 +65,6 @@
   {#each containerPanelItems as { container, ...capacity } (container.id)}
     <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
     <li
-      style="position: relative"
       draggable="true"
       data-item-id={container.id}
       on:dragstart={(ev) => handleDragStart(ev, container)}
@@ -83,7 +82,7 @@
     >
       <button
         type="button"
-        class="transparent-button"
+        class="container-image-button transparent-button"
         on:click={() => container.sheet.render(true)}
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
         data-context-menu-document-uuid={container.uuid}
@@ -135,6 +134,10 @@
       &.hidden {
         display: none;
       }
+    }
+
+    .container-image-button {
+      display: block;
     }
 
     .container-image {
