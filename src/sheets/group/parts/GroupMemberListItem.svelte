@@ -25,6 +25,14 @@
         FoundryAdapter.getClassAndSubclassSummaries(member).values(),
       ).filter((s) => !isNil(s.class?.trim(), ''))
     : [];
+
+  $: vehicleInfo =
+    member.type === CONSTANTS.SHEET_TYPE_VEHICLE
+      ? [
+          $context.config.actorSizes[member.system.traits.size]?.label,
+          $context.config.vehicleTypes[member.system.vehicleType],
+        ].filter((info) => !isNil(info?.trim(), ''))
+      : [];
 </script>
 
 <div class="group-member-list-item flex-row small-gap">
@@ -52,7 +60,14 @@
           </span>
         {/each}
       </DelimitedTruncatedContent>
-      <div class="flex-row small-gap"></div>
+    {/if}
+
+    {#if vehicleInfo.length}
+      <DelimitedTruncatedContent delimiter="<span>|</span>">
+        {#each vehicleInfo as info}
+          <span class="text-body-secondary">{info}</span>
+        {/each}
+      </DelimitedTruncatedContent>
     {/if}
 
     <!-- TODO: Extract to own part component -->
