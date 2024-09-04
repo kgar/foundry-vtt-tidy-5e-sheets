@@ -172,7 +172,7 @@
       <AcShieldBase cssClass="group-ac-shield">
         <span class="ac-value">{member.system.attributes.ac.value}</span>
       </AcShieldBase>
-      <fieldset class="tags flex-1">
+      <fieldset class="flex-1">
         <legend class="semibold">
           {localize('DND5E.Senses')}
         </legend>
@@ -182,7 +182,7 @@
           <i>{localize('TIDY5E.NoSpecialSenses')}</i>
         {/if}
       </fieldset>
-      <fieldset class="tags flex-1">
+      <fieldset class="flex-1">
         <legend class="semibold">
           {localize('DND5E.ConImm')}
         </legend>
@@ -210,7 +210,7 @@
         </button>
       {/if}
       {#each top4Skills as skill (skill.key)}
-        <span class="tag skill">
+        <span class="skill">
           {localize(skill?.label ?? '')}
           {skill?.mod} ({skill?.passive})
         </span>
@@ -249,7 +249,7 @@
     }
 
     // Senses and Immunities
-    fieldset.tags {
+    fieldset {
       border-radius: 0.25rem;
       border-color: var(--t5e-separator-color);
     }
@@ -262,6 +262,9 @@
     .skills .skill {
       flex: 0 0 max-content;
       line-height: 1.5rem;
+      border: 0.0625rem solid var(--t5e-faint-color);
+      border-radius: 0.3125rem;
+      padding: 0.125rem 0.325rem;
     }
 
     .class-sub-header {
