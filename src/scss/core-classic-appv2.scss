@@ -5,25 +5,32 @@
   @import './partials/text';
 }
 
-// TODO: to App V2 Reset SCSS
-.tidy5e-sheet.application:where(.app-v2.classic) {
-  input[type='text']:focus,
-  input[type='number']:focus,
-  input[type='password']:focus,
-  input[type='date']:focus,
-  input[type='time']:focus,
-  input[type='search']:focus,
-  input[type='file']:focus,
-  select:focus {
-    outline: none;
-  }
-}
-
 .tidy5e-sheet.application:where(.app-v2.classic) {
   --t5e-parchment-background: url(../../modules/tidy5e-sheet/images/parchment-texture-top.webp)
       no-repeat top center / 150% auto,
     #f1ebe8 url(../../modules/tidy5e-sheet/images/parchment-texture-bottom.webp)
       no-repeat bottom center / 150% auto;
+
+  .window-header:has(+ .controls-dropdown.expanded)
+    [data-action='toggleControls'] {
+    background: var(--t5e-faint-color);
+  }
+
+  .controls-dropdown {
+    background: var(--t5e-button-menu-background);
+    border-radius: 0.3125rem;
+    transition: none;
+
+    &.expanded {
+      box-shadow: 0 0 0.3125rem var(--t5e-context-shadow-color);
+      outline: 0.0625rem solid var(--t5e-faint-color);
+    }
+
+    .header-control > button {
+      justify-content: flex-start;
+      gap: 0.5rem;
+    }
+  }
 
   &:not(.minimized) {
     background: var(--t5e-sheet-background, var(--t5e-parchment-background));
