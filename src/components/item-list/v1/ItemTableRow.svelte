@@ -181,7 +181,7 @@
   .item-table-row-container {
     position: relative;
     border-radius: 0.3125rem;
-    margin: 0.125rem 0 0.125rem 0.5rem;
+    margin: 0 0 0.125rem 0.5rem;
     background: var(--t5e-faintest-color);
 
     &:global(.context) {
