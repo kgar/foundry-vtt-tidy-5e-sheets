@@ -16,6 +16,7 @@
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import GroupHitPoints from './parts/GroupHitPoints.svelte';
+  import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
 
   const context = getContext<Readable<GroupSheetClassicContext>>('context');
 
@@ -23,6 +24,8 @@
 
   let selectedTabId = $context.tabs[0].id;
 </script>
+
+<ItemInfoCard />
 
 <header class="tidy5e-sheet-header flex-row">
   <div class="flex-0">

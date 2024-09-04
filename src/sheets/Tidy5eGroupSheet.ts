@@ -9,6 +9,7 @@ import type { SvelteComponent } from 'svelte';
 import GroupSheet from './group/GroupSheet.svelte';
 import type {
   ActorInventoryTypes,
+  ItemCardStore,
   MessageBus,
   MessageBusMessage,
   Tab,
@@ -40,6 +41,7 @@ import { DocumentTabSectionConfigApplication } from 'src/applications/section-co
 import { GroupSheetRuntime } from 'src/runtime/GroupSheetRuntime';
 import { writable } from 'svelte/store';
 import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 
 type MemberStats = {
   currentHP: number;
@@ -56,6 +58,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
   _itemFilterService: ItemFilterService;
   _messageBus: MessageBus = writable<MessageBusMessage | undefined>();
   _inlineContainerToggleService = new InlineContainerToggleService();
+  _card = writable<ItemCardStore>();
 
   constructor(...args: any[]) {
     super(...args);
@@ -92,11 +95,11 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
   // TODO: First render, derive options that come from user preference
 
   _createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
-    return new GroupSheet({
+    const component = new GroupSheet({
       target: node,
       context: new Map<any, any>([
         [CONSTANTS.SVELTE_CONTEXT.APP_ID, this.appId],
-        [CONSTANTS.SVELTE_CONTEXT.CARD, this.card],
+        [CONSTANTS.SVELTE_CONTEXT.CARD, this._card],
         [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._store],
         [
           CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
@@ -117,6 +120,10 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
         [CONSTANTS.SVELTE_CONTEXT.STATS, this.stats],
       ]),
     });
+
+    initTidy5eContextMenu(this, $(this.element));
+
+    return component;
   }
 
   async _prepareContext(
@@ -559,6 +566,14 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
     context: GroupSheetClassicContext,
     options: ApplicationRenderOptions
   ) {
+    if (options.isFirstRender) {
+      this._card.set({
+        sheet: this.element,
+        item: null,
+        itemCardContentTemplate: null,
+      });
+    }
+
     game.user.apps[this.id] = this;
     for (const member of this.actor.system.members) {
       member.actor.apps[this.id] = this;
