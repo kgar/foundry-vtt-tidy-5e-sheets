@@ -1,5 +1,6 @@
 :where(.tidy5e-sheet.app-v2.classic) {
-  @import './partials/reset';
+  // @import './partials/reset-v1';
+  @import './partials/reset-v2';
   @import './partials/variables';
   @import './partials/text';
 }

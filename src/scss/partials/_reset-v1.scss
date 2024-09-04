@@ -12,10 +12,4 @@ h3 {
   border-bottom: none;
 }
 
-&.application a.button.active,
-&.application button.active {
-  --button-focus-outline-color: transparent;
-  --button-focus-outline-color: transparent;
-}
-
 // to do: add more generic tidy reset styles here.
