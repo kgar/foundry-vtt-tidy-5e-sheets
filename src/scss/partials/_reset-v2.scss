@@ -17,4 +17,25 @@
   ol li {
     margin-bottom: unset;
   }
+
+  .window-header:has(+ .controls-dropdown.expanded)
+    [data-action='toggleControls'] {
+    background: var(--t5e-faint-color);
+  }
+
+  .controls-dropdown {
+    background: var(--t5e-button-menu-background);
+    border-radius: 0.3125rem;
+    transition: none;
+
+    &.expanded {
+      box-shadow: 0 0 0.3125rem var(--t5e-context-shadow-color);
+      outline: 0.0625rem solid var(--t5e-faint-color);
+    }
+
+    .header-control > button {
+      justify-content: flex-start;
+      gap: 0.5rem;
+    }
+  }
 }
