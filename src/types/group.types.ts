@@ -39,6 +39,7 @@ export type GroupSheetClassicContext = {
   summary: string;
   system: Group5eSystem;
   tabs: Tab[];
+  useClassicControls: boolean;
   utilities: Utilities<GroupSheetClassicContext>;
   xp: Group5eXp | undefined;
 } & ActorSheetContextV2<Group5e>;

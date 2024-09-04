@@ -386,6 +386,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       system: this.actor.system,
       tabs: tabs,
       unlocked: unlocked,
+      useClassicControls: true, // TODO: Establish setting for this; and group section in settings
       useRoundedPortraitStyle: [
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
       ].includes(SettingsProvider.settings.useCircularPortraitStyle.get()),
