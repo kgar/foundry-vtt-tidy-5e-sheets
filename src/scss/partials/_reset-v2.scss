@@ -1,9 +1,20 @@
 &.application {
   overflow: visible;
-}
+  --input-height: 1.625rem;
 
-a.button.active,
-button.active {
-  --button-focus-outline-color: transparent;
-  --button-focus-outline-color: transparent;
+  a.button.active,
+  button.active {
+    --button-focus-outline-color: transparent;
+    --button-focus-outline-color: transparent;
+  }
+
+  a.button,
+  button {
+    display: block;
+  }
+
+  ul li,
+  ol li {
+    margin-bottom: unset;
+  }
 }

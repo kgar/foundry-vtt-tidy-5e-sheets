@@ -21,7 +21,6 @@ import GroupDescriptionTab from './group/tabs/GroupDescriptionTab.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type {
   Group5eXp,
-  GroupItemContext,
   GroupMemberSection,
   GroupSheetClassicContext,
 } from 'src/types/group.types';
@@ -42,6 +41,7 @@ import { GroupSheetRuntime } from 'src/runtime/GroupSheetRuntime';
 import { writable } from 'svelte/store';
 import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
+import { debug } from 'src/utils/logging';
 
 type MemberStats = {
   currentHP: number;
@@ -106,7 +106,8 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
           this._inlineContainerToggleService,
         ],
         [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this._itemFilterService],
-        [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
+        [CONSTANTS.SVELTE_CONTEXT.LOCATION, ''],
+        [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this._messageBus],
         [
           CONSTANTS.SVELTE_CONTEXT.ON_FILTER,
           this._itemFilterService.onFilter.bind(this._itemFilterService),
@@ -117,7 +118,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
             this._itemFilterService
           ),
         ],
-        [CONSTANTS.SVELTE_CONTEXT.STATS, this.stats],
+        // [CONSTANTS.SVELTE_CONTEXT.STATS, this._stats],
       ]),
     });
 
@@ -189,6 +190,9 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
     const membersSortMode =
       sheetPreferences.tabs?.[CONSTANTS.TAB_GROUP_MEMBERS]?.sort ?? 'm';
 
+    const inventorySortMode =
+      sheetPreferences.tabs?.[CONSTANTS.TAB_ACTOR_INVENTORY]?.sort ?? 'm';
+
     const utilities: Utilities<GroupSheetClassicContext> = {
       [CONSTANTS.TAB_GROUP_MEMBERS]: {
         utilityToolbarCommands: [
@@ -233,7 +237,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
                 'm'
               );
             },
-            visible: membersSortMode === 'a',
+            visible: inventorySortMode === 'a',
           },
           {
             title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
@@ -246,7 +250,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
                 'a'
               );
             },
-            visible: membersSortMode === 'm',
+            visible: inventorySortMode === 'm',
           },
           {
             title: FoundryAdapter.localize(
@@ -557,6 +561,13 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       SheetPreferencesRuntime.getStore().subscribe(() => {
         if (first) return;
         this.render();
+      }),
+      this._messageBus.subscribe((m) => {
+        debug('Message bus message received', {
+          app: this,
+          actor: this.actor,
+          message: m,
+        });
       }),
     ];
     first = false;
