@@ -578,13 +578,12 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
     context: GroupSheetClassicContext,
     options: ApplicationRenderOptions
   ) {
-    if (options.isFirstRender) {
-      this._card.set({
-        sheet: this.element,
-        item: null,
-        itemCardContentTemplate: null,
-      });
-    }
+    // Clear the item card anytime a render occurs, in case that render was the deletion of the current item being visualized.
+    this._card.set({
+      sheet: this.element,
+      item: null,
+      itemCardContentTemplate: null,
+    });
 
     game.user.apps[this.id] = this;
     for (const member of this.actor.system.members) {

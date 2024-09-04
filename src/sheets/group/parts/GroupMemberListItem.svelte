@@ -136,7 +136,7 @@
 <div class="group-member-list-item flex-row small-gap align-items-flex-start">
   <GroupMemberListItemProfile {member} />
   <div class="flex-column extra-small-gap flex-1">
-    <div class="flex-row small-gap align-items-center">
+    <div class="flex-row small-gap align-items-center justify-content-space-between">
       <button
         type="button"
         class="inline-transparent-button highlight-on-hover ff-title fs-lg"

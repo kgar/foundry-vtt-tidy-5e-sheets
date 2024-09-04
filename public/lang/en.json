@@ -50,6 +50,8 @@
   "TIDY5E.NoSpecialSenses": "No Special Senses",
   "TIDY5E.NoImmunities": "No Immunities",
 
+  "TIDY5E.Group.RemoveMemberButtonTooltip": "Remove Member from Group",
+
   "TIDY5E.RestHint": "Rest",
   "TIDY5E.ShortRest": "Short Rest",
   "TIDY5E.LongRest": "Long Rest",
