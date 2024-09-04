@@ -784,6 +784,7 @@ export class TidyFlags {
   static section = {
     key: 'section' as const,
     prop: TidyFlags.getFlagPropertyPath('section'),
+    unsetProp: TidyFlags.getFlagPropertyPath('-=section'),
     /** Gets the custom section name for an item. */
     get(item: Item5e): string | undefined {
       return (

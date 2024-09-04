@@ -17,6 +17,7 @@ import { debug, error, warn } from 'src/utils/logging';
 import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
 import { TidyFlags } from './TidyFlags';
 import { TidyHooks } from './TidyHooks';
+import { isNil } from 'src/utils/data';
 
 export const FoundryAdapter = {
   isFoundryV12OrHigher() {
@@ -1335,6 +1336,22 @@ export const FoundryAdapter = {
    * Handle a drop event for an existing embedded Item to sort that Item relative to its siblings
    */
   onSortItemForActor(actor: Actor5e, event: Event, itemData: any): any {
+    // Handle Tidy Custom Section Transfer
+    const sourceSection = foundry.utils.getProperty(
+      itemData,
+      TidyFlags.section.prop
+    );
+
+    const targetSection = (event.target as HTMLElement | null)
+      ?.closest('[data-tidy-section-key][data-custom-section="true"]')
+      ?.getAttribute('data-tidy-section-key');
+
+    const isMovedToNewSection =
+      !isNil(targetSection?.trim(), '') && sourceSection !== targetSection;
+
+    const isMovedToDefaultSection =
+      !isNil(sourceSection?.trim(), '') && isNil(targetSection?.trim(), '');
+
     // Get the drag source and drop target
     const items = actor.items;
     const source = items.get(itemData._id);
@@ -1367,6 +1384,14 @@ export const FoundryAdapter = {
     const updateData = sortUpdates.map((u: any) => {
       const update = u.update;
       update._id = u.target._id;
+      if (update._id === source.id) {
+        // apply section change, if any
+        if (isMovedToNewSection) {
+          update[TidyFlags.section.prop] = targetSection;
+        } else if (isMovedToDefaultSection) {
+          update[TidyFlags.section.unsetProp] = null;
+        }
+      }
       return update;
     });
 
