@@ -29,7 +29,7 @@
 <div role="presentation" class="filter-menu">
   <ButtonMenu
     iconClass="fas fa-filter"
-    buttonClass="inline-icon-button filter-menu-button {hasActiveFilters
+    buttonClass="filter-menu-button {hasActiveFilters
       ? 'has-active-filters'
       : ''} {menuOpen ? 'menu-is-open' : ''}"
     position="bottom"
@@ -37,6 +37,7 @@
     title={localize('TIDY5E.ItemFilters.MenuTooltip.Filters')}
     bind:open={menuOpen}
     menuElement="div"
+    buttonStyle="transparent-inline-icon"
   >
     {#each Object.entries(categories) as [category, filters] (category)}
       <section class="filter-group">

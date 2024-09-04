@@ -28,6 +28,7 @@
   export let position: ButtonMenuPosition = 'bottom';
   export let anchor: ButtonMenuAnchor = 'center';
   export let menuElement: keyof HTMLElementTagNameMap = 'ul';
+  export let buttonStyle: 'solid' | 'transparent-inline' | 'transparent-inline-icon' = 'solid';
 
   let openerEl: HTMLElement;
   let menuStyles: string = '';
@@ -65,7 +66,7 @@
     aria-label={ariaLabel}
     bind:this={openerEl}
     {title}
-    class="button-menu-opener {buttonClass ?? ''}"
+    class="button-menu-opener {buttonClass ?? ''} {buttonStyle}"
     style:padding={openerPadding}
     tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
   >

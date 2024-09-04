@@ -80,12 +80,13 @@
     {#if FoundryAdapter.userIsGm()}
       <ButtonMenu
         iconClass="ra ra-fairy-wand"
-        buttonClass="inline-icon-button {menuOpen ? 'menu-is-open' : ''}"
+        buttonClass="{menuOpen ? 'menu-is-open' : ''}"
         position="bottom"
         anchor="right"
         title={localize('TIDY5E.Utilities.GMTools')}
         bind:open={menuOpen}
         menuElement="div"
+        buttonStyle="transparent-inline-icon"
       >
         <!-- TODO: identify all items recursively -->
         <ButtonMenuCommand

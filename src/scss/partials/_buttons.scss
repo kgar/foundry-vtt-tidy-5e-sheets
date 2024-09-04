@@ -43,10 +43,9 @@
     color: var(--t5e-icon-font-color);
   }
 
-  &,
-  i {
-    &:hover,
-    &:focus-visible {
+  &:is(:hover, :focus-visible) {
+    &,
+    i {
       color: var(--t5e-icon-hover-color);
     }
   }
