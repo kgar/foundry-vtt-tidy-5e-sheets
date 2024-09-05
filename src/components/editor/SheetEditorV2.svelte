@@ -5,10 +5,10 @@
 
   type EditorOptions =
     any /*foundry.applications.elements.HTMLProseMirrorElement.ProseMirrorInputConfig*/;
-  type EnrichOptions = any /*TextEditor.EnrichmentOptions*/;
 
   export let field: string;
   export let content: string;
+  export let enriched: string | null = null;
   export let editorOptions: EditorOptions = {};
 
   const context: any = getContext<Readable<any>>(
@@ -30,19 +30,22 @@
     editorOptions,
   ) as EditorOptions;
 
-  let proseMirrorElem: HTMLElement;
+  let proseMirrorContainerEl: HTMLElement;
 
-  // Create Editor element and assign it
+  // Create Editor element and put it in the contents element.
   onMount(() => {
     const element = foundry.applications.elements.HTMLProseMirrorElement.create(
-      foundry.utils.mergeObject(editorOptions, { enriched: content }),
+      foundry.utils.mergeObject(editorOptions, {
+        enriched: enriched ?? content,
+      }),
     );
 
-    proseMirrorElem.innerHTML = element.outerHTML;
+    proseMirrorContainerEl.innerHTML = element.outerHTML;
   });
 </script>
 
-<div class={$$restProps.class ?? ''} bind:this={proseMirrorElem}></div>
-
-<style lang="scss">
-</style>
+<div
+  style="display: contents;"
+  class={$$restProps.class ?? ''}
+  bind:this={proseMirrorContainerEl}
+></div>

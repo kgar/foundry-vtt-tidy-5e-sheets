@@ -10,14 +10,19 @@
   );
 </script>
 
-<div class="scroll-container">
-  {#key $context.actor.system.description.full}
-    <SheetEditorV2
-      content={$context.descriptionFullEnrichedHtml}
-      field="system.description.full"
-      editorOptions={{
-        editable: $context.editable,
-      }}
-    />
-  {/key}
+<div
+  class="flex-1 full-height scroll-container flex-column mt-3 mb-1 full-height-editor-container"
+>
+  <article class="full-height-editor-wrapper">
+    {#key $context.actor.system.description.full}
+      <SheetEditorV2
+        content={$context.system.description.full}
+        enriched={$context.descriptionFullEnrichedHtml}
+        field="system.description.full"
+        editorOptions={{
+          editable: $context.editable,
+        }}
+      />
+    {/key}
+  </article>
 </div>
