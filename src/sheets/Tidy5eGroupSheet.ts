@@ -118,7 +118,6 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
             this._itemFilterService
           ),
         ],
-        // [CONSTANTS.SVELTE_CONTEXT.STATS, this._stats],
       ]),
     });
 
@@ -360,7 +359,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       ),
       currentHP: stats.currentHP,
       descriptionFullEnrichedHtml: descriptionFullEnrichedHtml,
-      document: this.actor.document,
+      document: this.actor,
       editable: editable,
       effects: dnd5e.applications.components.EffectsElement.prepareCategories(
         this.actor.allApplicableEffects()
@@ -733,5 +732,19 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       savedDestinations: this.actor.getFlag('dnd5e', 'awardDestinations'),
     });
     award.render(true);
+  }
+
+  _onChangeForm(formConfig: any, event: any) {
+    super._onChangeForm(formConfig, event);
+
+    if (event.type !== 'change') return;
+
+    const { target } = event;
+    if (!target) return;
+
+    if (target.tagName !== 'PROSE-MIRROR') return;
+
+    const val = target._getValue();
+    this.document.update({ [target.name]: val });
   }
 }
