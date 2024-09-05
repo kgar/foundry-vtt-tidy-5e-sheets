@@ -42,7 +42,7 @@
   });
 </script>
 
-<div bind:this={proseMirrorElem}></div>
+<div class={$$restProps.class ?? ''} bind:this={proseMirrorElem}></div>
 
 <style lang="scss">
 </style>

@@ -10,10 +10,14 @@
   );
 </script>
 
-{#key $context.actor.system.description.full}
-  <SheetEditorV2
-    content={$context.descriptionFullEnrichedHtml}
-    field="system.description.full"
-    editorOptions={{ editable: $context.editable }}
-  />
-{/key}
+<div class="scroll-container">
+  {#key $context.actor.system.description.full}
+    <SheetEditorV2
+      content={$context.descriptionFullEnrichedHtml}
+      field="system.description.full"
+      editorOptions={{
+        editable: $context.editable,
+      }}
+    />
+  {/key}
+</div>

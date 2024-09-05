@@ -28,4 +28,8 @@
   select:focus {
     outline: none;
   }
+
+  .window-resize-handle {
+    inset: auto 0 0 auto;
+  }
 }
