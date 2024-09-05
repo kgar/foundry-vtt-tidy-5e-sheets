@@ -19,6 +19,8 @@ export function SvelteApplicationMixin<TContext>(BaseApplication: any) {
     /** The component which represents the UI. */
     #component: SvelteComponent | null = null;
 
+    #customHTMLTags: string[] = ['PROSE-MIRROR'];
+
     /** The entire application frame. Starts as a stub form until a render occurs. */
     #element: HTMLElement = document.createElement('form');
 
@@ -128,6 +130,21 @@ export function SvelteApplicationMixin<TContext>(BaseApplication: any) {
       this.#component = null;
       this.#element = document.createElement('form');
       await super.close(options);
+    }
+
+    _onChangeForm(formConfig: unknown, event: any) {
+      super._onChangeForm(formConfig, event);
+
+      if (event.type !== 'change') return;
+      if (!this.document) return;
+
+      const { target } = event;
+      if (!target) return;
+
+      if (!this.#customHTMLTags.includes(target.tagName)) return;
+
+      const value = target._getValue();
+      this.document.update({ [target.name]: value });
     }
   }
 

@@ -733,18 +733,4 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
     });
     award.render(true);
   }
-
-  _onChangeForm(formConfig: any, event: any) {
-    super._onChangeForm(formConfig, event);
-
-    if (event.type !== 'change') return;
-
-    const { target } = event;
-    if (!target) return;
-
-    if (target.tagName !== 'PROSE-MIRROR') return;
-
-    const val = target._getValue();
-    this.document.update({ [target.name]: val });
-  }
 }
