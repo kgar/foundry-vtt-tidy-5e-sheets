@@ -1,5 +1,4 @@
 :where(.tidy5e-sheet.app-v2.classic) {
-  // @import './partials/reset-v1';
   @import './partials/reset-v2';
   @import './partials/variables';
   @import './partials/text';
@@ -248,15 +247,26 @@
   @import '../components/listbox/listbox.scss';
   @import '../components/editor/SheetEditorV2.scss';
 
-  // Tooltips
-  @import '../tooltips/tooltips.scss';
+  // TODO: Buttons V2?
+  :where(.window-content) {
+    button {
+      background-color: var(--t5e-faint-color);
+      transition: background-color 0.3s ease;
+      border: 1px solid var(--t5e-light-color);
+      line-height: 1rem;
 
-  // TODO: Remove these layers of specificity and get everything working in concert better. These should come before all component styles and have the lowest acceptable specificity.
-
+      &:hover {
+        background-color: var(--t5e-light-color);
+      }
+    }
+  }
   @import './partials/buttons';
   @import './partials/checkboxes';
 
-  // TODO: Remove these layers of specificity and get everything working in concert better. These should come after partial utility styles and general component styles. They can have a high level of specificity as needed.
+  // Tooltips
+  @import '../tooltips/tooltips.scss';
+
+
   // Components - Actor-specific
   @import '../sheets/actor/ActorMovement.scss';
   @import '../sheets/actor/ActorProfile.scss';
