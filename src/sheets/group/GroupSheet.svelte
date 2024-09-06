@@ -81,29 +81,32 @@
       class="flex-row header-line-margin justify-content-space-between align-items-center"
     >
       <ActorMovement movementLabelKey="DND5E.Movement" />
-      {#if $context.unlocked}
-        <div class="flex-row align-items-center no-gap">
-          <TextInput
-            document={$context.actor}
-            field="system.details.xp.value"
-            value={$context.system.details.xp.value}
-            placeholder={$context.system.details.xp.derived?.toString() ?? '0'}
-            class="group-xp-input fs-sm"
-            saveEmptyAsNull={true}
-          />
-          <span class="fs-sm semibold"
-            >{localize('DND5E.ExperiencePointsAbbr')}</span
-          >
-        </div>
-      {:else}
-        <strong class="fs-sm semibold">
-          {localize('DND5E.ExperiencePointsFormat', {
-            value:
-              $context.system.details.xp.value ??
-              $context.system.details.xp.derived ??
-              '0',
-          })}
-        </strong>
+      {#if !$context.disableExperience}
+        {#if $context.unlocked}
+          <div class="flex-row align-items-center no-gap">
+            <TextInput
+              document={$context.actor}
+              field="system.details.xp.value"
+              value={$context.system.details.xp.value}
+              placeholder={$context.system.details.xp.derived?.toString() ??
+                '0'}
+              class="group-xp-input fs-sm"
+              saveEmptyAsNull={true}
+            />
+            <span class="fs-sm semibold"
+              >{localize('DND5E.ExperiencePointsAbbr')}</span
+            >
+          </div>
+        {:else}
+          <strong class="fs-sm semibold">
+            {localize('DND5E.ExperiencePointsFormat', {
+              value:
+                $context.system.details.xp.value ??
+                $context.system.details.xp.derived ??
+                '0',
+            })}
+          </strong>
+        {/if}
       {/if}
     </div>
     <HorizontalLineSeparator class="header-line-margin-left" />

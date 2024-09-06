@@ -44,6 +44,12 @@ export const FoundryAdapter = {
   getGameSetting<T = string>(namespace: string, settingName: string): T {
     return game.settings.get(namespace, settingName) as T;
   },
+  getSystemSetting<T = string>(settingName: string): T {
+    return FoundryAdapter.getGameSetting(
+      CONSTANTS.DND5E_SYSTEM_ID,
+      settingName
+    );
+  },
   async setGameSetting(
     namespace: string,
     key: string,
@@ -1397,5 +1403,11 @@ export const FoundryAdapter = {
 
     // Perform the update
     return actor.updateEmbeddedDocuments('Item', updateData);
+  },
+  formatCr(cr: unknown) {
+    return dnd5e.utils.formatCR(cr);
+  },
+  formatNumber(num: number) {
+    return dnd5e.utils.formatNumber(num);
   },
 };

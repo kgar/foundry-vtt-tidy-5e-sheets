@@ -366,6 +366,9 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       ),
       currentHP: stats.currentHP,
       descriptionFullEnrichedHtml: descriptionFullEnrichedHtml,
+      disableExperience: FoundryAdapter.getSystemSetting(
+        CONSTANTS.SYSTEM_SETTING_DISABLE_EXPERIENCE_TRACKING
+      ),
       document: this.actor,
       editable: editable,
       effects: dnd5e.applications.components.EffectsElement.prepareCategories(
@@ -458,6 +461,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
         show: true,
         custom: undefined,
         isExternal: false,
+        showCrColumn: false,
       },
       npc: {
         label: `${CONFIG.Actor.typeLabels.npc}Pl`,
@@ -467,6 +471,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
         show: true,
         custom: undefined,
         isExternal: false,
+        showCrColumn: true,
       },
       vehicle: {
         label: `${CONFIG.Actor.typeLabels.vehicle}Pl`,
@@ -476,6 +481,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
         show: true,
         custom: undefined,
         isExternal: false,
+        showCrColumn: false,
       },
     };
 
@@ -486,6 +492,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
     for (const [index, memberData] of this.actor.system.members.entries()) {
       memberContext[memberData.actor.id] = {
         index: index,
+        quantity: memberData.quantity,
       };
 
       const member = memberData.actor;
@@ -756,17 +763,19 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       currentTarget: EventTarget & HTMLInputElement;
     }
   ): Promise<Group5e | undefined> {
-    const amount = event.currentTarget.value;
     const membersCollection = this.actor.system.toObject().members;
+
     const index = membersCollection.findIndex(
       (m: any) => m.actor === memberActorId
     );
 
     const originalValue = membersCollection[index].quantity.value;
-    const newQuantity = processInputChangeDeltaFromValues(
-      amount,
-      originalValue
-    );
+
+    const amount = event.currentTarget.value;
+    const newQuantity =
+      amount?.trim() === ''
+        ? null
+        : processInputChangeDeltaFromValues(amount, originalValue);
 
     membersCollection[index].quantity.value = newQuantity;
 
@@ -776,6 +785,33 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
 
     if (!result) {
       event.currentTarget.value = originalValue.toString();
+    }
+
+    return result;
+  }
+
+  async updateMemberFormula(
+    memberActorId: string,
+    event: Event & {
+      currentTarget: EventTarget & HTMLInputElement;
+    }
+  ): Promise<Group5e | undefined> {
+    const membersCollection = this.actor.system.toObject().members;
+
+    const index = membersCollection.findIndex(
+      (m: any) => m.actor === memberActorId
+    );
+
+    const originalValue = membersCollection[index].quantity.formula;
+
+    membersCollection[index].quantity.formula = event.currentTarget.value;
+
+    const result = await this.actor.update({
+      ['system.members']: membersCollection,
+    });
+
+    if (!result) {
+      event.currentTarget.value = originalValue;
     }
 
     return result;

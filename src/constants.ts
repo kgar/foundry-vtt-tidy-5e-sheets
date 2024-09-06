@@ -3,6 +3,7 @@ export const CONSTANTS = {
   ALPHA_MODULE_ID: 'tidy5e-sheet-kgar',
   MODULE_ID: moduleId,
   DND5E_SYSTEM_ID: 'dnd5e',
+  SYSTEM_SETTING_DISABLE_EXPERIENCE_TRACKING: 'disableExperienceTracking',
   DOCUMENT_NAME_ACTOR: 'Actor',
   ATTUNEMENT_OPTIONAL: 'optional',
   ATTUNEMENT_REQUIRED: 'required',

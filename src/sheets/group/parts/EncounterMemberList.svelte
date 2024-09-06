@@ -46,22 +46,29 @@
     ? `/* Controls */ ${classicControlWidthRems * classicControls.length}rem`
     : '';
 
+  const crColumnDef = section.showCrColumn ? '/* CR */ 7rem' : '';
   $: gridTemplateColumns = `
     /* Image and name */ 1fr 
     /* Quantity */ 5rem 
     /* Formula */ 7rem 
-    /* CR */ 7rem 
+    ${crColumnDef} 
     ${classicControlsWidth}`;
 
-  function mapChangedMember(
+  function saveQuantityChange(
     $context: GroupSheetClassicContext,
     ev: Event & { currentTarget: HTMLInputElement },
     memberActorId: string,
   ) {
-    $context.actor.sheet.updateMemberQuantity(
-      memberActorId,
-      ev,
-    );
+    $context.actor.sheet.updateMemberQuantity(memberActorId, ev);
+    return false;
+  }
+
+  function saveFormulaChange(
+    $context: GroupSheetClassicContext,
+    ev: Event & { currentTarget: HTMLInputElement },
+    memberActorId: string,
+  ) {
+    $context.actor.sheet.updateMemberFormula(memberActorId, ev);
     return false;
   }
 </script>
@@ -85,12 +92,19 @@
             type="button"
             class="inline-icon-button"
             title={localize('DND5E.QuantityRoll')}
+            on:click={() => $context.actor.system.rollQuantities()}
           >
             <i class="fas fa-dice"></i>
           </button>
         </TidyTableHeaderCell>
-        <TidyTableHeaderCell>Formula</TidyTableHeaderCell>
-        <TidyTableHeaderCell>CR</TidyTableHeaderCell>
+        <TidyTableHeaderCell>
+          <!-- Formula -->
+        </TidyTableHeaderCell>
+        {#if section.showCrColumn}
+          <TidyTableHeaderCell>
+            {localize('DND5E.Group.Challenge')}
+          </TidyTableHeaderCell>
+        {/if}
         <TidyTableHeaderCell>
           <!-- Controls -->
         </TidyTableHeaderCell>
@@ -139,11 +153,37 @@
                   allowDeltaChanges={true}
                   selectOnFocus={true}
                   onSaveChange={(ev) =>
-                    mapChangedMember($context, ev, member.id)}
+                    saveQuantityChange($context, ev, member.id)}
+                  placeholder="1"
                 />
               </TidyTableCell>
-              <TidyTableCell></TidyTableCell>
-              <TidyTableCell></TidyTableCell>
+              <TidyTableCell>
+                <TextInput
+                  document={$context.actor}
+                  field="system.members.{ctx.index}.quantity.formula"
+                  value={$context.system.members[ctx.index].quantity.formula}
+                  allowDeltaChanges={true}
+                  selectOnFocus={true}
+                  onSaveChange={(ev) =>
+                    saveFormulaChange($context, ev, member.id)}
+                  placeholder={localize('DND5E.Formula')}
+                />
+              </TidyTableCell>
+              {#if section.showCrColumn}
+                <TidyTableCell>
+                  {#if member.type === CONSTANTS.SHEET_TYPE_NPC}
+                    <abbr>{localize('DND5E.AbbreviationCR')}</abbr>
+                    {FoundryAdapter.formatCr(member.system.details.cr)}
+                    {#if !$context.disableExperience}
+                      — {FoundryAdapter.formatNumber(
+                        member.system.details.xp.value *
+                          (ctx.quantity?.value ?? 1),
+                      )}
+                      {localize('DND5E.ExperiencePointsAbbr')}
+                    {/if}
+                  {/if}
+                </TidyTableCell>
+              {/if}
               <TidyTableCell>
                 {#if $context.unlocked}
                   <RemoveMemberControl {member} />

@@ -18,6 +18,7 @@ export type GroupSheetClassicContext = {
   // data: unknown;
   containerPanelItems: ContainerPanelItemContext[];
   descriptionFullEnrichedHtml: string;
+  disableExperience: boolean;
   document: Group5e;
   filterData: DocumentFilters;
   filterPins: Record<string, Set<string>>;
@@ -56,6 +57,7 @@ export interface GroupItemContext {
 
 export interface GroupMemberContext {
   index: number;
+  quantity: Group5eMemberQuantity;
 }
 
 export interface GroupMovementContext {
@@ -90,6 +92,7 @@ export interface Group5e extends ActorV2 {
 
 export type GroupMemberSection = TidySectionBase & {
   members: Actor5e[]; // Figure out what all is actually needed here
+  showCrColumn: boolean;
 };
 
 export interface Group5eSystem {
@@ -100,6 +103,7 @@ export interface Group5eSystem {
   members: Group5eMember[];
   placeMembers(): Promise<void>;
   removeMember(id: string): Promise<Actor5e>;
+  rollQuantities(): Promise<Actor5e>;
   type: Group5eType;
 }
 
