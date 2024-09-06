@@ -613,6 +613,7 @@ export type HTMLElementOrGettable =
 export type ActorV2 = {
   // TODO: Put universal ActorV2 members here.
   uuid: string;
+  update(toUpdate: Record<string, unknown>): Promise<ActorV2 | undefined>;
 };
 
 export type ActorSheetContextV2<TActor = ActorV2> = {

@@ -146,8 +146,10 @@
       <button
         type="button"
         class="inline-transparent-button highlight-on-hover ff-title fs-lg"
-        on:click={() => member.sheet.render(true)}>{member.name}</button
+        on:click={() => member.sheet.render(true)}
       >
+        {member.name}
+      </button>
       {#if $context.unlocked}
         <RemoveMemberControl {member} />
       {/if}
@@ -246,12 +248,6 @@
       border: 0.0625rem solid var(--t5e-faint-color);
       border-radius: 0.3125rem;
       padding: 0.125rem 0.325rem;
-    }
-
-    .class-sub-header {
-      .class-summary-item + .class-summary-item::before {
-        content: ' | ';
-      }
     }
   }
 </style>

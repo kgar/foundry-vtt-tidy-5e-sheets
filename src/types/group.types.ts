@@ -26,6 +26,7 @@ export type GroupSheetClassicContext = {
   itemContext: Record<string, GroupItemContext>;
   limited: boolean;
   maxHP: number;
+  memberContext: Record<string, GroupMemberContext>;
   memberSections: GroupMemberSection[];
   movement: GroupMovementContext;
   // nMembers: number;
@@ -51,6 +52,10 @@ export interface GroupItemContext {
   hasUses?: boolean;
   isStack?: boolean;
   totalWeight?: number;
+}
+
+export interface GroupMemberContext {
+  index: number;
 }
 
 export interface GroupMovementContext {

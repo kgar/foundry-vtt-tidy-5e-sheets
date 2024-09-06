@@ -20,6 +20,7 @@ import GroupInventoryTab from './group/tabs/GroupInventoryTab.svelte';
 import GroupDescriptionTab from './group/tabs/GroupDescriptionTab.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type {
+  Group5e,
   Group5eXp,
   GroupMemberSection,
   GroupSheetClassicContext,
@@ -42,6 +43,7 @@ import { writable } from 'svelte/store';
 import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { debug } from 'src/utils/logging';
+import { processInputChangeDeltaFromValues } from 'src/utils/form';
 
 type MemberStats = {
   currentHP: number;
@@ -129,6 +131,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
   async _prepareContext(
     options: ApplicationRenderOptions
   ): Promise<GroupSheetClassicContext> {
+    // TODO: To runtime
     const tabs: Tab[] = [
       {
         content: {
@@ -171,7 +174,11 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       }
     );
 
-    const { sections: memberSections, stats } = this.#prepareMembers();
+    const {
+      sections: memberSections,
+      stats,
+      memberContext,
+    } = this.#prepareMembers();
 
     const source = this.actor.toObject();
 
@@ -376,6 +383,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
         (!unlocked && SettingsProvider.settings.useTotalSheetLock.get()) ||
         !editable,
       maxHP: stats.maxHP,
+      memberContext: memberContext,
       memberSections: memberSections,
       movement: movement,
       owner: this.actor.isOwner,
@@ -432,6 +440,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
   #prepareMembers(): {
     sections: GroupMemberSection[];
     stats: MemberStats;
+    memberContext: GroupSheetClassicContext['memberContext'];
   } {
     const stats: MemberStats = {
       currentHP: 0,
@@ -472,7 +481,13 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
 
     const type = this.actor.system.type.value;
 
+    const memberContext: GroupSheetClassicContext['memberContext'] = {};
+
     for (const [index, memberData] of this.actor.system.members.entries()) {
+      memberContext[memberData.actor.id] = {
+        index: index,
+      };
+
       const member = memberData.actor;
       const hp = member.system.attributes.hp;
       const multiplier =
@@ -500,6 +515,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
     return {
       sections: Object.values(sections),
       stats: stats,
+      memberContext: memberContext,
     };
   }
 
@@ -732,5 +748,36 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       savedDestinations: this.actor.getFlag('dnd5e', 'awardDestinations'),
     });
     award.render(true);
+  }
+
+  async updateMemberQuantity(
+    memberActorId: string,
+    event: Event & {
+      currentTarget: EventTarget & HTMLInputElement;
+    }
+  ): Promise<Group5e | undefined> {
+    const amount = event.currentTarget.value;
+    const membersCollection = this.actor.system.toObject().members;
+    const index = membersCollection.findIndex(
+      (m: any) => m.actor === memberActorId
+    );
+
+    const originalValue = membersCollection[index].quantity.value;
+    const newQuantity = processInputChangeDeltaFromValues(
+      amount,
+      originalValue
+    );
+
+    membersCollection[index].quantity.value = newQuantity;
+
+    const result = await this.actor.update({
+      ['system.members']: membersCollection,
+    });
+
+    if (!result) {
+      event.currentTarget.value = originalValue.toString();
+    }
+
+    return result;
   }
 }

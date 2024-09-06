@@ -28,7 +28,7 @@
       class="member-list-item-image"
       src={member.img}
       alt={member.name}
-      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTOR_PORTRAIT_IMAGE}
+      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.GROUP_MEMBER_PORTRAIT}
     />
   </button>
   <div class="member-list-item-hp-bar">
@@ -54,8 +54,6 @@
 <style lang="scss">
   .member-list-item-image-wrapper {
     --t5e-member-list-portrait-size: 5rem;
-
-    // border: 0.0625rem solid var(--t5e-separator-color);
   }
 
   .member-list-item-image-wrapper .member-list-item-image {
