@@ -10,6 +10,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { GroupSheetSections } from 'src/features/sections/GroupSheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import EncounterMemberList from '../parts/EncounterMemberList.svelte';
 
   const tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
@@ -56,7 +57,14 @@
   class="scroll-container flex-column small-gap"
   data-tidy-track-scroll-y
 >
-  {#each memberSections as section (section.key)}
-    <GroupMemberList {section} />
-  {/each}
+  {#if $context.actor.system.type.value !== CONSTANTS.GROUP_TYPE_ENCOUNTER}
+    <!-- TODO: Svelte 5 - snippets -->
+    {#each memberSections as section (section.key)}
+      <GroupMemberList {section} />
+    {/each}
+  {:else}
+    {#each memberSections as section (section.key)}
+      <EncounterMemberList {section} />
+    {/each}
+  {/if}
 </section>

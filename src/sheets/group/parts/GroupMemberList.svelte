@@ -1,12 +1,8 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import GroupEncounterMemberListItem from './GroupEncounterMemberListItem.svelte';
   import GroupMemberListItem from './GroupMemberListItem.svelte';
   import { getContext } from 'svelte';
-  import type {
-    GroupMemberSection,
-    GroupSheetClassicContext,
-  } from 'src/types/group.types';
+  import type { GroupMemberSection } from 'src/types/group.types';
   import type { Readable } from 'svelte/store';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TidyTable from 'src/components/table/TidyTable.svelte';
@@ -15,10 +11,6 @@
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
 
   export let section: GroupMemberSection;
-
-  const context = getContext<Readable<GroupSheetClassicContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
 
   const memberActorIdsToShow = getContext<Readable<Set<string> | undefined>>(
     CONSTANTS.SVELTE_CONTEXT.MEMBER_IDS_TO_SHOW,
@@ -39,11 +31,7 @@
     <div class="flex-column mt-2">
       {#each section.members as member, index (member.uuid)}
         {#if $memberActorIdsToShow === undefined || $memberActorIdsToShow.has(member.id)}
-          {#if $context.actor.system.type.value === CONSTANTS.GROUP_TYPE_ENCOUNTER}
-            <GroupEncounterMemberListItem {member} />
-          {:else}
-            <GroupMemberListItem {member} />
-          {/if}
+          <GroupMemberListItem {member} />
 
           {#if section.members.length > 1 && index !== section.members.length - 1}
             <HorizontalLineSeparator class="mx-3" borderColor="separator" />

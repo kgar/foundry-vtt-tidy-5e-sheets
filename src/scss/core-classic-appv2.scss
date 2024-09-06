@@ -249,7 +249,7 @@
 
   // TODO: Buttons V2?
   :where(.window-content) {
-    button {
+    button:not(prose-mirror button) {
       background-color: var(--t5e-faint-color);
       transition: background-color 0.3s ease;
       border: 1px solid var(--t5e-light-color);
@@ -260,12 +260,12 @@
       }
     }
   }
+  
   @import './partials/buttons';
   @import './partials/checkboxes';
 
   // Tooltips
   @import '../tooltips/tooltips.scss';
-
 
   // Components - Actor-specific
   @import '../sheets/actor/ActorMovement.scss';
