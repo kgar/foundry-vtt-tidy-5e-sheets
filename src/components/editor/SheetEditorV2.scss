@@ -7,6 +7,10 @@ article.full-height-editor-wrapper {
   &:last-child {
     margin-bottom: 0;
   }
+
+  &:hover .prosemirror:not(.active) button.toggle {
+    display: block;
+  }
 }
 
 prose-mirror.prosemirror {

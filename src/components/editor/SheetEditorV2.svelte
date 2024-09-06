@@ -10,10 +10,7 @@
   export let content: string;
   export let enriched: string | null = null;
   export let editorOptions: EditorOptions = {};
-
-  const context: any = getContext<Readable<any>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  export let documentUuid: string;
 
   // Build Options
   editorOptions = foundry.utils.mergeObject(
@@ -21,7 +18,7 @@
       name: field,
       collaborate: false,
       compact: false,
-      documentUUID: $context.document.uuid,
+      documentUUID: documentUuid,
       editable: true,
       height: 200,
       toggled: true,

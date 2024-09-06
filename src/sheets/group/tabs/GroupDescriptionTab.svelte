@@ -22,6 +22,7 @@
         editorOptions={{
           editable: $context.editable,
         }}
+        documentUuid={$context.actor.uuid}
       />
     {/key}
   </article>

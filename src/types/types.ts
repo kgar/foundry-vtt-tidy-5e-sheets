@@ -612,6 +612,7 @@ export type HTMLElementOrGettable =
 
 export type ActorV2 = {
   // TODO: Put universal ActorV2 members here.
+  uuid: string;
 };
 
 export type ActorSheetContextV2<TActor = ActorV2> = {

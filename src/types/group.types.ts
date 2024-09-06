@@ -3,6 +3,7 @@ import type { ContainerContents, Item5e } from './item.types';
 import type {
   Actor5e,
   ActorSheetContextV2,
+  ActorV2,
   ContainerPanelItemContext,
   InventorySection,
   Tab,
@@ -57,7 +58,7 @@ export interface GroupMovementContext {
   secondary: string;
 }
 
-export interface Group5e {
+export interface Group5e extends ActorV2 {
   _id: string;
   _stats: any;
   effects: any[];
