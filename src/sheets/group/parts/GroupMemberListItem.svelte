@@ -19,15 +19,6 @@
 
   export let member: Actor5e;
 
-  $: classAndSubclassSummaries = [
-    CONSTANTS.SHEET_TYPE_CHARACTER,
-    CONSTANTS.SHEET_TYPE_NPC,
-  ].includes(member.type)
-    ? Array.from(
-        FoundryAdapter.getClassAndSubclassSummaries(member).values(),
-      ).filter((s) => !isNil(s.class?.trim(), ''))
-    : [];
-
   $: vehicleInfo =
     member.type === CONSTANTS.SHEET_TYPE_VEHICLE
       ? [
@@ -162,26 +153,6 @@
       {/if}
     </div>
 
-    {#if classAndSubclassSummaries.length}
-      <div class="class-sub-header">
-        {#each classAndSubclassSummaries as summary (summary.class)}
-          <span class="class-summary-item">
-            <span>
-              {summary.class}
-            </span> <strong>{summary.level}</strong>
-          </span>
-        {/each}
-      </div>
-    {/if}
-
-    {#if vehicleInfo.length}
-      <DelimitedTruncatedContent delimiter="<span>|</span>">
-        {#each vehicleInfo as info}
-          <span class="text-body-secondary">{info}</span>
-        {/each}
-      </DelimitedTruncatedContent>
-    {/if}
-
     <div class="flex-row extra-small-gap">
       <!-- TODO: Extract to own part component -->
       <AcShieldBase cssClass="group-ac-shield">
@@ -197,16 +168,14 @@
           <i>{localize('TIDY5E.NoSpecialSenses')}</i>
         {/if}
       </fieldset>
-      <fieldset class="flex-1">
-        <legend class="semibold">
-          {localize('DND5E.ConImm')}
-        </legend>
-        {#if memberConditionImmunities.length}
+      {#if memberConditionImmunities.length}
+        <fieldset class="flex-1">
+          <legend class="semibold">
+            {localize('DND5E.ConImm')}
+          </legend>
           {memberConditionImmunities.join(', ')}
-        {:else}
-          <i>{localize('TIDY5E.NoImmunities')}</i>
-        {/if}
-      </fieldset>
+        </fieldset>
+      {/if}
     </div>
 
     <div class="flex-row flex-wrap skills">
@@ -215,15 +184,16 @@
           type="button"
           class="skill"
           on:click={(event) => onPerceptionClicked(event)}
+          title={localize(perception?.label ?? '')}
         >
-          {localize(perception?.label ?? '')}
+          <i class="fas fa-eye"></i>
           {perception?.mod} ({perception?.passive})
         </button>
       {/if}
       {#each top4Skills as skill (skill.key)}
         <span class="skill">
           {localize(skill?.label ?? '')}
-          {skill?.mod} ({skill?.passive})
+          {skill?.mod}
         </span>
       {/each}
     </div>
@@ -272,7 +242,7 @@
     }
     .skills .skill {
       flex: 0 0 max-content;
-      line-height: 1.5rem;
+      line-height: 1.25rem;
       border: 0.0625rem solid var(--t5e-faint-color);
       border-radius: 0.3125rem;
       padding: 0.125rem 0.325rem;

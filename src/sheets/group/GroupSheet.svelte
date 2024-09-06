@@ -107,6 +107,42 @@
       {/if}
     </div>
     <HorizontalLineSeparator class="header-line-margin-left" />
+    {#if $context.isGM}
+      <div class="group-commands">
+        <button
+          type="button"
+          class="group-action-button flex-row small-gap flex-grow-0 flex-basis-max-content"
+          on:click={() => $context.actor.sheet.award()}
+        >
+          <i class="fa-solid fa-trophy"></i>
+          {localize('DND5E.Award.Action')}
+        </button>
+        <button
+          type="button"
+          class="group-action-button flex-row small-gap flex-grow-0 flex-basis-max-content"
+          on:click={() => $context.actor.system.placeMembers()}
+        >
+          <i class="fa-solid fa-location-dot"></i>
+          {localize('DND5E.Group.PlaceMembers')}
+        </button>
+        <button
+          type="button"
+          class="group-action-button flex-row small-gap rest-button flex-grow-0 flex-basis-max-content"
+          on:click={() => $context.actor.shortRest({ advanceTime: true })}
+        >
+          <i class="fa-solid fa-utensils"></i>
+          {localize('DND5E.ShortRest')}
+        </button>
+        <button
+          type="button"
+          class="group-action-button flex-row small-gap rest-button flex-grow-0 flex-basis-max-content"
+          on:click={() => $context.actor.longRest({ advanceTime: true })}
+        >
+          <i class="fa-solid fa-campground"></i>
+          {localize('DND5E.LongRest')}
+        </button>
+      </div>
+    {/if}
   </div>
 </header>
 
@@ -128,3 +164,20 @@
 <section class="tidy-sheet-body">
   <TabContents tabs={$context.tabs} {selectedTabId} />
 </section>
+
+<style lang="scss">
+  .group-commands {
+    padding-top: 0.25rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 0.25rem;
+    margin: 0;
+
+    button {
+      padding: 0.25rem;
+      line-height: 1;
+      border: 1px solid var(--t5e-faint-color);
+    }
+  }
+</style>

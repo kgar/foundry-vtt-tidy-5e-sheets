@@ -3,7 +3,6 @@
   import ResourceWithBar from 'src/components/bar/ResourceWithBar.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import ActorPortrait from 'src/sheets/actor/ActorPortrait.svelte';
   import type { Actor5e } from 'src/types/types';
   import { getPercentage } from 'src/utils/numbers';
 
@@ -69,6 +68,6 @@
   .member-list-item-image-wrapper .member-list-item-hp-bar {
     position: relative;
     width: var(--t5e-member-list-portrait-size);
-    height: 1rem;
+    height: 1.125rem;
   }
 </style>
