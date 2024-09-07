@@ -3,6 +3,7 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import AttunementSummaryTooltip from 'src/tooltips/AttunementSummaryTooltip.svelte';
+  import { Tooltip } from 'src/tooltips/Tooltip';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -25,10 +26,7 @@
       return;
     }
 
-    game.tooltip.activate(event?.currentTarget, {
-      text: attunementSummaryTooltip.getMarkup(),
-      cssClass: 'tidy5e-sheet',
-    });
+    Tooltip.show(event?.currentTarget, attunementSummaryTooltip.getMarkup());
   }
 </script>
 
