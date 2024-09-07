@@ -446,5 +446,17 @@
     font-weight: 500;
   }
 
+  /* Drag and Drop */
+  .drop-zone {
+    align-items: center;
+    border: 0.125rem dashed var(--t5e-separator-color);
+    color: var(--t5e-secondary-color);
+    display: flex;
+    font-style: italic;
+    justify-content: center;
+    margin: 0.25rem 0;
+    padding: 1rem;
+  }
+
   @import './partials/floating-context-menu';
 }

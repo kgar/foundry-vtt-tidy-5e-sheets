@@ -596,10 +596,8 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       // TODO: Skills
     }
 
-    // Apply any section config stuff here?
-
     return {
-      sections: Object.values(sections),
+      sections: Object.values(sections).filter((s) => s.members.length > 0),
       stats: stats,
       memberContext: memberContext,
       groupLanguages: Object.values(groupLanguages).sort((a, b) =>

@@ -68,33 +68,38 @@
   class="scroll-container flex-column small-gap"
   data-tidy-track-scroll-y
 >
-  <!-- TODO: Add tab panel component and use here -->
-  {#if $context.isGM}
-    <ExpandableContainer expanded={$context.showGroupMemberTabInfoPanel}>
-      <UnderlinedTabStrip
-        tabs={Object.values(aggregateTabs)}
-        bind:selected={selectedAggregateTab}
-      />
-      <div class="group-aggregates-content-panel">
-        <div class:hidden={selectedAggregateTab !== aggregateTabs.languages}>
-          <GroupLanguages />
+  {#if $context.memberSections.length > 0}
+    {#if $context.isGM}
+      <ExpandableContainer expanded={$context.showGroupMemberTabInfoPanel}>
+        <UnderlinedTabStrip
+          tabs={Object.values(aggregateTabs)}
+          bind:selected={selectedAggregateTab}
+        />
+        <div class="group-aggregates-content-panel">
+          <div class:hidden={selectedAggregateTab !== aggregateTabs.languages}>
+            <GroupLanguages />
+          </div>
+          <div class:hidden={selectedAggregateTab !== aggregateTabs.skills}>
+            <GroupSkills />
+          </div>
         </div>
-        <div class:hidden={selectedAggregateTab !== aggregateTabs.skills}>
-          <GroupSkills />
-        </div>
-      </div>
-    </ExpandableContainer>
-  {/if}
+      </ExpandableContainer>
+    {/if}
 
-  {#if $context.actor.system.type.value !== CONSTANTS.GROUP_TYPE_ENCOUNTER}
-    <!-- TODO: Svelte 5 - snippets -->
-    {#each memberSections as section (section.key)}
-      <GroupMemberList {section} />
-    {/each}
+    {#if $context.actor.system.type.value !== CONSTANTS.GROUP_TYPE_ENCOUNTER}
+      <!-- TODO: Svelte 5 - snippets -->
+      {#each memberSections as section (section.key)}
+        <GroupMemberList {section} />
+      {/each}
+    {:else}
+      {#each memberSections as section (section.key)}
+        <EncounterMemberList {section} />
+      {/each}
+    {/if}
   {:else}
-    {#each memberSections as section (section.key)}
-      <EncounterMemberList {section} />
-    {/each}
+    <div class="drop-zone full-height">
+      {localize('TIDY5E.Group.EmptyMembersTabHint')}
+    </div>
   {/if}
 </section>
 
