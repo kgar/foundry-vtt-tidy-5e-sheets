@@ -23,6 +23,8 @@ export type GroupSheetClassicContext = {
   document: Group5e;
   filterData: DocumentFilters;
   filterPins: Record<string, Set<string>>;
+  groupLanguages: GroupLanguage[];
+  groupSkills: GroupSkill[];
   inventory: InventorySection[];
   isGM: boolean;
   itemContext: Record<string, GroupItemContext>;
@@ -151,6 +153,18 @@ export interface Group5eDetails {
 export interface Group5eXp {
   value: number | null;
   derived: number;
+}
+
+export interface GroupLanguage {
+  label: string;
+  members: Actor5e[];
+}
+
+export interface GroupSkill {
+  label: string;
+  mod: string;
+  key: string;
+  members: Actor5e[];
 }
 
 /*

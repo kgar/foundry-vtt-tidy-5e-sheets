@@ -22,8 +22,10 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type {
   Group5e,
   Group5eXp,
+  GroupLanguage,
   GroupMemberSection,
   GroupSheetClassicContext,
+  GroupSkill,
 } from 'src/types/group.types';
 import { Inventory } from 'src/features/sections/Inventory';
 import { SettingsProvider, settingStore } from 'src/settings/settings';
@@ -44,6 +46,7 @@ import { InlineContainerToggleService } from 'src/features/containers/InlineCont
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { debug } from 'src/utils/logging';
 import { processInputChangeDeltaFromValues } from 'src/utils/form';
+import { isNil } from 'src/utils/data';
 
 type MemberStats = {
   currentHP: number;
@@ -178,6 +181,8 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       sections: memberSections,
       stats,
       memberContext,
+      groupLanguages,
+      groupSkills,
     } = this.#prepareMembers();
 
     const source = this.actor.toObject();
@@ -377,6 +382,8 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       ),
       filterData: this._itemFilterService.getDocumentItemFilterData(),
       filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
+      groupLanguages: groupLanguages,
+      groupSkills: groupSkills,
       healthPercentage: getPercentage(stats.currentHP, stats.maxHP),
       inventory: Object.values(inventory),
       isGM: game.user.isGM,
@@ -445,6 +452,8 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
     sections: GroupMemberSection[];
     stats: MemberStats;
     memberContext: GroupSheetClassicContext['memberContext'];
+    groupLanguages: GroupLanguage[];
+    groupSkills: GroupSkill[];
   } {
     const stats: MemberStats = {
       currentHP: 0,
@@ -490,6 +499,10 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
 
     const memberContext: GroupSheetClassicContext['memberContext'] = {};
 
+    const groupLanguages: Record<string, GroupLanguage> = {};
+    const groupSkills: Record<string, GroupSkill> = {};
+    const collectAggregates = FoundryAdapter.userIsGm();
+
     for (const [index, memberData] of this.actor.system.members.entries()) {
       memberContext[memberData.actor.id] = {
         index: index,
@@ -517,6 +530,33 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       }
 
       sections[member.type].members.push(member);
+
+      // system.traits.languages.value - Set<string>
+      // system.traits.languages.custom - string split on `;`
+      if (collectAggregates && member.system.traits?.languages?.value) {
+        const customLanguageString =
+          member.system.traits.languages.custom?.trim();
+        const customLanguages = isNil(customLanguageString, '')
+          ? []
+          : customLanguageString.split(';');
+        const languageKeys = [
+          ...member.system.traits.languages.value,
+          ...customLanguages,
+        ];
+
+        for (let key of languageKeys) {
+          const language = dnd5e.documents.Trait.keyLabel(key, {
+            trait: 'languages',
+          });
+
+          const groupLanguage = (groupLanguages[language] ??=
+            this.#createEmptyGroupLanguage(language));
+
+          groupLanguage.members.push(member);
+        }
+      }
+
+      // TODO: Skills
     }
 
     // Apply any section config stuff here?
@@ -525,6 +565,19 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       sections: Object.values(sections),
       stats: stats,
       memberContext: memberContext,
+      groupLanguages: Object.values(groupLanguages).sort((a, b) =>
+        a.label.localeCompare(b.label)
+      ),
+      groupSkills: Object.values(groupSkills).sort((a, b) =>
+        a.label.localeCompare(b.label)
+      ),
+    };
+  }
+
+  #createEmptyGroupLanguage(language: any): GroupLanguage {
+    return {
+      label: language,
+      members: [],
     };
   }
 

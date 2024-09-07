@@ -11,6 +11,8 @@
   import { GroupSheetSections } from 'src/features/sections/GroupSheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import EncounterMemberList from '../parts/EncounterMemberList.svelte';
+  import GroupLanguages from '../parts/GroupLanguages.svelte';
+  import GroupSkills from '../parts/GroupSkills.svelte';
 
   const tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
@@ -57,6 +59,12 @@
   class="scroll-container flex-column small-gap"
   data-tidy-track-scroll-y
 >
+  <!-- TODO: Add tab panel component and use here -->
+  {#if $context.isGM}
+    <GroupLanguages />
+    <GroupSkills />
+  {/if}
+  
   {#if $context.actor.system.type.value !== CONSTANTS.GROUP_TYPE_ENCOUNTER}
     <!-- TODO: Svelte 5 - snippets -->
     {#each memberSections as section (section.key)}
