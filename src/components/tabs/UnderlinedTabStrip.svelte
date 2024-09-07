@@ -29,6 +29,10 @@
       border-radius: 0;
       margin: 0;
 
+      &:hover {
+        border-bottom-color: var(--t5e-faint-color);
+      }
+
       &.active {
         border-bottom-color: var(--t5e-tertiary-color);
         color: var(--t5e-primary-font-color);
