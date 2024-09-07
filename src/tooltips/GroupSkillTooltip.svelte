@@ -33,7 +33,7 @@
           <i
             class="{FoundryAdapter.getProficiencyIconClass(
               member.system.skills[skill.key]?.proficient,
-            )} fa-fw fs-sm"
+            )} fa-fw"
           ></i>
         </div>
       </li>
