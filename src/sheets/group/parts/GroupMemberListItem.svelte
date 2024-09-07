@@ -9,7 +9,6 @@
   import GroupMemberListItemProfile from './GroupMemberListItemProfile.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { isNil } from 'src/utils/data';
-  import DelimitedTruncatedContent from 'src/components/layout/DelimitedTruncatedContent.svelte';
   import { warn } from 'src/utils/logging';
   import { formatAsModifier } from 'src/utils/formatting';
 
@@ -18,14 +17,6 @@
   );
 
   export let member: Actor5e;
-
-  $: vehicleInfo =
-    member.type === CONSTANTS.SHEET_TYPE_VEHICLE
-      ? [
-          $context.config.actorSizes[member.system.traits.size]?.label,
-          $context.config.vehicleTypes[member.system.vehicleType],
-        ].filter((info) => !isNil(info?.trim(), ''))
-      : [];
 
   const localize = FoundryAdapter.localize;
 
@@ -115,6 +106,8 @@
 
   $: perception = skills.find((s) => s.key === 'prc');
 
+  $: ctx = $context.memberContext[member.id];
+
   function getSkill(key: string): any | null {
     if (key in member.system.skills) {
       return member.system.skills[key];
@@ -138,8 +131,8 @@
 </script>
 
 <div class="group-member-list-item flex-row small-gap align-items-flex-start">
-  <GroupMemberListItemProfile {member} />
-  <div class="flex-column extra-small-gap flex-1">
+  <GroupMemberListItemProfile {member} showHp={ctx.canObserve} />
+  <div class="flex-column extra-small-gap flex-1 align-self-center">
     <div
       class="flex-row small-gap align-items-center justify-content-space-between"
     >
@@ -155,50 +148,52 @@
       {/if}
     </div>
 
-    <div class="flex-row extra-small-gap">
-      <!-- TODO: Extract to own part component -->
-      <AcShieldBase cssClass="group-ac-shield">
-        <span class="ac-value">{member.system.attributes.ac.value}</span>
-      </AcShieldBase>
-      <fieldset class="flex-1">
-        <legend class="semibold">
-          {localize('DND5E.Senses')}
-        </legend>
-        {#if memberSenses.length}
-          {memberSenses.join(', ')}
-        {:else}
-          <i>{localize('TIDY5E.NoSpecialSenses')}</i>
-        {/if}
-      </fieldset>
-      {#if memberConditionImmunities.length}
+    {#if ctx.canObserve}
+      <div class="flex-row extra-small-gap">
+        <!-- TODO: Extract to own part component -->
+        <AcShieldBase cssClass="group-ac-shield">
+          <span class="ac-value">{member.system.attributes.ac.value}</span>
+        </AcShieldBase>
         <fieldset class="flex-1">
           <legend class="semibold">
-            {localize('DND5E.ConImm')}
+            {localize('DND5E.Senses')}
           </legend>
-          {memberConditionImmunities.join(', ')}
+          {#if memberSenses.length}
+            {memberSenses.join(', ')}
+          {:else}
+            <i>{localize('TIDY5E.NoSpecialSenses')}</i>
+          {/if}
         </fieldset>
-      {/if}
-    </div>
+        {#if memberConditionImmunities.length}
+          <fieldset class="flex-1">
+            <legend class="semibold">
+              {localize('DND5E.ConImm')}
+            </legend>
+            {memberConditionImmunities.join(', ')}
+          </fieldset>
+        {/if}
+      </div>
 
-    <div class="flex-row flex-wrap skills">
-      {#if perception}
-        <button
-          type="button"
-          class="skill"
-          on:click={(event) => onPerceptionClicked(event)}
-          title={localize(perception?.label ?? '')}
-        >
-          <i class="fas fa-eye"></i>
-          {perception?.mod} ({perception?.passive})
-        </button>
-      {/if}
-      {#each top4Skills as skill (skill.key)}
-        <span class="skill">
-          {localize(skill?.label ?? '')}
-          {skill?.mod}
-        </span>
-      {/each}
-    </div>
+      <div class="flex-row flex-wrap skills">
+        {#if perception}
+          <button
+            type="button"
+            class="skill"
+            on:click={(event) => onPerceptionClicked(event)}
+            title={localize(perception?.label ?? '')}
+          >
+            <i class="fas fa-eye"></i>
+            {perception?.mod} ({perception?.passive})
+          </button>
+        {/if}
+        {#each top4Skills as skill (skill.key)}
+          <span class="skill">
+            {localize(skill?.label ?? '')}
+            {skill?.mod}
+          </span>
+        {/each}
+      </div>
+    {/if}
   </div>
 </div>
 

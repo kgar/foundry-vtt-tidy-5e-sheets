@@ -7,6 +7,7 @@
   import { getPercentage } from 'src/utils/numbers';
 
   export let member: Actor5e;
+  export let showHp: boolean;
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -31,24 +32,27 @@
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.GROUP_MEMBER_PORTRAIT}
     />
   </button>
-  <div class="member-list-item-hp-bar">
-    <ResourceWithBar
-      document={member}
-      value={member.system.attributes.hp.value}
-      valueField="system.attributes.hp.value"
-      valueTitle={localize('DND5E.HitPointsCurrent')}
-      valueDisabled={true}
-      max={member.system.attributes.hp.max}
-      maxField="system.attributes.hp.max"
-      maxTitle={localize('DND5E.HitPointsMax')}
-      maxDisabled={true}
-      percentage={getPercentage(
-        member.system.attributes.hp.value,
-        member.system.attributes.hp.max,
-      )}
-      Bar={HpBar}
-    />
-  </div>
+
+  {#if showHp}
+    <div class="member-list-item-hp-bar">
+      <ResourceWithBar
+        document={member}
+        value={member.system.attributes.hp.value}
+        valueField="system.attributes.hp.value"
+        valueTitle={localize('DND5E.HitPointsCurrent')}
+        valueDisabled={true}
+        max={member.system.attributes.hp.max}
+        maxField="system.attributes.hp.max"
+        maxTitle={localize('DND5E.HitPointsMax')}
+        maxDisabled={true}
+        percentage={getPercentage(
+          member.system.attributes.hp.value,
+          member.system.attributes.hp.max,
+        )}
+        Bar={HpBar}
+      />
+    </div>
+  {/if}
 </div>
 
 <style lang="scss">
@@ -59,8 +63,8 @@
   .member-list-item-image-wrapper .member-list-item-image {
     width: var(--t5e-member-list-portrait-size);
     height: var(--t5e-member-list-portrait-size);
-    object-fit: cover;
-    object-position: top;
+    object-fit: contain;
+    object-position: center;
   }
 
   .member-list-item-image-wrapper .member-list-item-hp-bar {

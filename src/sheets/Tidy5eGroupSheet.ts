@@ -360,6 +360,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       actor: this.actor,
       actorPortraitCommands:
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
+      canObserveAll: Object.values(memberContext).every((m) => m.canObserve),
       config: CONFIG.DND5E,
       containerPanelItems: await Inventory.getContainerPanelItems(
         uncontainedItems
@@ -493,6 +494,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       memberContext[memberData.actor.id] = {
         index: index,
         quantity: memberData.quantity,
+        canObserve: memberData.actor.testUserPermission(game.user, 'OBSERVER'),
       };
 
       const member = memberData.actor;

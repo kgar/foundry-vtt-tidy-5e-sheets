@@ -30,11 +30,13 @@
 <header class="tidy5e-sheet-header flex-row">
   <div class="flex-0">
     <ActorProfile useHpOverlay={false} size="small">
-      <GroupHitPoints
-        actor={$context.actor}
-        value={$context.currentHP}
-        max={$context.maxHP}
-      />
+      {#if $context.canObserveAll}
+        <GroupHitPoints
+          actor={$context.actor}
+          value={$context.currentHP}
+          max={$context.maxHP}
+        />
+      {/if}
     </ActorProfile>
   </div>
   <div class="flex-grow-1">

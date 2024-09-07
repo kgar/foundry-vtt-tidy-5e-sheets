@@ -16,6 +16,7 @@ export type GroupSheetClassicContext = {
   config: any; // TODO: If possible, convert the full CONFIG (no modules on) to a typescript type.
   currentHP: number;
   // data: unknown;
+  canObserveAll: boolean;
   containerPanelItems: ContainerPanelItemContext[];
   descriptionFullEnrichedHtml: string;
   disableExperience: boolean;
@@ -58,6 +59,7 @@ export interface GroupItemContext {
 export interface GroupMemberContext {
   index: number;
   quantity: Group5eMemberQuantity;
+  canObserve: boolean;
 }
 
 export interface GroupMovementContext {
@@ -87,8 +89,6 @@ export interface Group5e extends ActorV2 {
   system: Group5eSystem;
   type: string;
 }
-
-// TODO: Consider making the memberContext: GroupMemberContext which is like itemContext
 
 export type GroupMemberSection = TidySectionBase & {
   members: Actor5e[]; // Figure out what all is actually needed here
