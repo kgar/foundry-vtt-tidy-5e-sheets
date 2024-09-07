@@ -1,4 +1,5 @@
 import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SettingsProvider, settingStore } from 'src/settings/settings';
 import {
   applySheetAttributesToWindow,
@@ -122,6 +123,13 @@ export function SvelteApplicationMixin<TContext>(BaseApplication: any) {
       );
 
       return this.#element;
+    }
+
+    _updateFrame(options: ApplicationRenderOptions) {
+      options ??= {};
+      // For whatever reason, application v2 titles don't update themselves on _updateFrame without an implementing class specifiying window settings.
+      FoundryAdapter.mergeObject(options, { window: { title: this.title } });
+      super._updateFrame(options);
     }
 
     async close(options: ApplicationClosingOptions = {}) {
