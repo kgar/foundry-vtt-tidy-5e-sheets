@@ -233,6 +233,30 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
             },
             visible: membersSortMode === 'm',
           },
+          {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Group.ShowMemberTabInfoPanel'
+            ),
+            iconClass: 'fa-solid fa-people-group fa-fw',
+            execute: async () => {
+              await TidyFlags.showGroupMemberTabInfoPanel.set(this.actor, true);
+            },
+            visible:
+              FoundryAdapter.userIsGm() &&
+              !TidyFlags.showGroupMemberTabInfoPanel.get(this.actor),
+          },
+          {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Group.HideMemberTabInfoPanel'
+            ),
+            iconClass: 'fa-solid fa-people-group fa-fw active',
+            execute: async () => {
+              await TidyFlags.showGroupMemberTabInfoPanel.unset(this.actor);
+            },
+            visible:
+              FoundryAdapter.userIsGm() &&
+              TidyFlags.showGroupMemberTabInfoPanel.get(this.actor),
+          },
         ],
       },
       [CONSTANTS.TAB_ACTOR_INVENTORY]: {
@@ -403,6 +427,9 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
         Array.from(uncontainedItems).some(
           (i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER
         ),
+      showGroupMemberTabInfoPanel: TidyFlags.showGroupMemberTabInfoPanel.get(
+        this.actor
+      ),
       source: source,
       summary: summary,
       system: this.actor.system,

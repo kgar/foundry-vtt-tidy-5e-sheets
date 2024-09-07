@@ -70,7 +70,7 @@
 >
   <!-- TODO: Add tab panel component and use here -->
   {#if $context.isGM}
-    <ExpandableContainer expanded={true}>
+    <ExpandableContainer expanded={$context.showGroupMemberTabInfoPanel}>
       <UnderlinedTabStrip
         tabs={Object.values(aggregateTabs)}
         bind:selected={selectedAggregateTab}

@@ -140,6 +140,7 @@
         type="button"
         class="inline-transparent-button highlight-on-hover ff-title fs-lg"
         on:click={() => member.sheet.render(true)}
+        disabled={!ctx.canObserve}
       >
         {member.name}
       </button>
@@ -179,6 +180,7 @@
           <button
             type="button"
             class="skill"
+            disabled={!$context.isGM}
             on:click={(event) => onPerceptionClicked(event)}
             title={localize(perception?.label ?? '')}
           >

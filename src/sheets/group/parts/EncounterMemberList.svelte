@@ -6,16 +6,13 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import {
     type GroupSheetClassicContext,
-    type Group5e,
     type Group5eMember,
     type GroupMemberSection,
   } from 'src/types/group.types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import GroupEncounterMemberListItem from './GroupEncounterMemberListItem.svelte';
   import RemoveMemberControl from './RemoveMemberControl.svelte';
   import TidyTableCell from 'src/components/table/TidyTableCell.svelte';
-  import ActorPortrait from 'src/sheets/actor/ActorPortrait.svelte';
   import TidyTableRow from 'src/components/table/TidyTableRow.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
 
@@ -120,6 +117,7 @@
                 <button
                   type="button"
                   class="inline-transparent-button"
+                  disabled={!ctx.canObserve}
                   on:click={() =>
                     FoundryAdapter.renderImagePopout(member.img, {
                       title: FoundryAdapter.localize('TIDY5E.PortraitTitle', {
@@ -172,14 +170,21 @@
               {#if section.showCrColumn}
                 <TidyTableCell>
                   {#if member.type === CONSTANTS.SHEET_TYPE_NPC}
-                    <abbr>{localize('DND5E.AbbreviationCR')}</abbr>
-                    {FoundryAdapter.formatCr(member.system.details.cr)}
+                    <abbr class="text-body-secondary"
+                      >{localize('DND5E.AbbreviationCR')}</abbr
+                    >&nbsp;
+                    <span class="text-body semibold"
+                      >{FoundryAdapter.formatCr(member.system.details.cr)}</span
+                    >
                     {#if !$context.disableExperience}
-                      — {FoundryAdapter.formatNumber(
-                        member.system.details.xp.value *
-                          (ctx.quantity?.value ?? 1),
-                      )}
-                      {localize('DND5E.ExperiencePointsAbbr')}
+                      &nbsp;—&nbsp;
+                      <span class="text-body semibold">
+                        {FoundryAdapter.formatNumber(
+                          member.system.details.xp.value *
+                            (ctx.quantity?.value ?? 1),
+                        )}
+                      </span>&nbsp;
+                      <abbr>{localize('DND5E.ExperiencePointsAbbr')}</abbr>
                     {/if}
                   {/if}
                 </TidyTableCell>

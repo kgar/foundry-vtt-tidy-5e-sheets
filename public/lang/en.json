@@ -49,7 +49,10 @@
 
   "TIDY5E.NoSpecialSenses": "No Special Senses",
 
+  "TIDY5E.Group.NamePlaceholder": "Group Name",
   "TIDY5E.Group.RemoveMemberButtonTooltip": "Remove Member from Group",
+  "TIDY5E.Group.ShowMemberTabInfoPanel": "Show Info Panel",
+  "TIDY5E.Group.HideMemberTabInfoPanel": "Hide Info Panel",
 
   "TIDY5E.RestHint": "Rest",
   "TIDY5E.ShortRest": "Short Rest",

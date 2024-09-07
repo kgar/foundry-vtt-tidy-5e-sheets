@@ -41,6 +41,7 @@ export type GroupSheetClassicContext = {
   items: Item5e[];
   effects: unknown[];
   showContainerPanel: boolean;
+  showGroupMemberTabInfoPanel: boolean;
   source: unknown;
   summary: string;
   system: Group5eSystem;

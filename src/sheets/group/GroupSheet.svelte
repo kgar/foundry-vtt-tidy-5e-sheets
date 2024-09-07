@@ -48,7 +48,15 @@
         class="actor-name"
         data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_CONTAINER}
       >
-        <ActorName />
+        <TextInput
+          document={$context.actor}
+          editable={$context.unlocked}
+          disabled={!$context.unlocked}
+          spellcheck={false}
+          placeholder={localize('TIDY5E.Group.NamePlaceholder')}
+          value={$context.actor.name}
+          field="name"
+        />
       </div>
 
       <!-- Any other content adjacent to Actor Name -->
