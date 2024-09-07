@@ -201,21 +201,3 @@
     </svelte:fragment>
   </TidyTable>
 </section>
-
-<style lang="scss">
-  .encounter-member-list-section {
-    --t5e-member-list-portrait-size: 3.5rem;
-
-    .encounter-member-list-item-image {
-      width: var(--t5e-member-list-portrait-size);
-      height: var(--t5e-member-list-portrait-size);
-      flex-basis: var(--t5e-member-list-portrait-size);
-      object-fit: contain;
-      object-position: center;
-    }
-    .encounter-member-name {
-      justify-content: flex-start;
-      text-align: left;
-    }
-  }
-</style>

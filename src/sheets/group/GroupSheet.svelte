@@ -177,20 +177,3 @@
 <section class="tidy-sheet-body">
   <TabContents tabs={$context.tabs} {selectedTabId} />
 </section>
-
-<style lang="scss">
-  .group-commands {
-    padding-top: 0.25rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    gap: 0.25rem;
-    margin: 0;
-
-    button {
-      padding: 0.25rem;
-      line-height: 1;
-      border: 1px solid var(--t5e-faint-color);
-    }
-  }
-</style>

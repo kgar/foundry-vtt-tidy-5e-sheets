@@ -54,22 +54,3 @@
     </div>
   {/if}
 </div>
-
-<style lang="scss">
-  .member-list-item-image-wrapper {
-    --t5e-member-list-portrait-size: 5rem;
-  }
-
-  .member-list-item-image-wrapper .member-list-item-image {
-    width: var(--t5e-member-list-portrait-size);
-    height: var(--t5e-member-list-portrait-size);
-    object-fit: contain;
-    object-position: center;
-  }
-
-  .member-list-item-image-wrapper .member-list-item-hp-bar {
-    position: relative;
-    width: var(--t5e-member-list-portrait-size);
-    height: 1.125rem;
-  }
-</style>

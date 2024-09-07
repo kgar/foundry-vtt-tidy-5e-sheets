@@ -94,6 +94,9 @@
   {:else}
     {@const containerPanelExpanded =
       $context.showContainerPanel && !!$context.containerPanelItems.length}
+
+    <Currency document={$context.actor} />
+
     <ExpandableContainer
       expanded={containerPanelExpanded}
       class="container-panel-wrapper {containerPanelExpanded
@@ -129,14 +132,3 @@
     {/each}
   {/if}
 </div>
-
-<TabFooter mode="vertical" appV2={true}>
-  <Currency document={$context.actor} />
-</TabFooter>
-
-<style lang="scss">
-  .tidy-inventory-container
-    :global(.container-panel-wrapper:not(.container-panel-expanded)) {
-    margin-bottom: -0.5rem;
-  }
-</style>

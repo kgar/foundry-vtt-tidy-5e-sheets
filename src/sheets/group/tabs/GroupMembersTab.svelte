@@ -75,7 +75,7 @@
           tabs={Object.values(aggregateTabs)}
           bind:selected={selectedAggregateTab}
         />
-        <div class="group-aggregates-content-panel">
+        <div class="group-member-info-panel">
           <div class:hidden={selectedAggregateTab !== aggregateTabs.languages}>
             <GroupLanguages />
           </div>
@@ -102,10 +102,3 @@
     </div>
   {/if}
 </section>
-
-<style lang="scss">
-  .group-aggregates-content-panel {
-    border: 0.0625rem solid var(--t5e-separator-color);
-    padding: 0.5rem;
-  }
-</style>
