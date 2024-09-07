@@ -432,6 +432,15 @@ export const FoundryAdapter = {
       [`system.${systemFieldName}.${key}.value`]: levels[next % levels.length],
     });
   },
+  getProficiencyIconClass(level: number) {
+    const icons: Record<number, string> = {
+      0: 'far fa-circle',
+      0.5: 'fas fa-adjust',
+      1: 'fas fa-check',
+      2: 'fas fa-check-double',
+    };
+    return icons[level] || icons[0];
+  },
   getSpellImageUrl(
     context: CharacterSheetContext | NpcSheetContext,
     spell: any
