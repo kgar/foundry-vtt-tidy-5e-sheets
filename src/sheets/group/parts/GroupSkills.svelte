@@ -12,7 +12,10 @@
 
 <div class="flex-row extra-small-gap flex-wrap">
   {#each $context.groupSkills as groupSkill}
-    <span title="TODO: List members, scores, mods, passives, and proficiencies in fancy tooltip" class="tag tag-outline">
+    <span
+      title="TODO: List members, scores, mods, passives, and proficiencies in fancy tooltip"
+      class="tag"
+    >
       {groupSkill.label}
       {formatAsModifier(groupSkill.mod)}
     </span>

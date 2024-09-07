@@ -13,6 +13,8 @@
   import EncounterMemberList from '../parts/EncounterMemberList.svelte';
   import GroupLanguages from '../parts/GroupLanguages.svelte';
   import GroupSkills from '../parts/GroupSkills.svelte';
+  import UnderlinedTabStrip from 'src/components/tabs/UnderlinedTabStrip.svelte';
+  import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
 
   const tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
@@ -39,6 +41,13 @@
     tabId,
     SheetPreferencesService.getByType($context.actor.type),
   );
+
+  let aggregateTabs = {
+    languages: localize('DND5E.Languages'),
+    skills: localize('DND5E.Skills'),
+  } as const;
+
+  let selectedAggregateTab = aggregateTabs.languages;
 </script>
 
 <UtilityToolbar>
@@ -61,10 +70,22 @@
 >
   <!-- TODO: Add tab panel component and use here -->
   {#if $context.isGM}
-    <GroupLanguages />
-    <GroupSkills />
+    <ExpandableContainer expanded={true}>
+      <UnderlinedTabStrip
+        tabs={Object.values(aggregateTabs)}
+        bind:selected={selectedAggregateTab}
+      />
+      <div class="group-aggregates-content-panel">
+        <div class:hidden={selectedAggregateTab !== aggregateTabs.languages}>
+          <GroupLanguages />
+        </div>
+        <div class:hidden={selectedAggregateTab !== aggregateTabs.skills}>
+          <GroupSkills />
+        </div>
+      </div>
+    </ExpandableContainer>
   {/if}
-  
+
   {#if $context.actor.system.type.value !== CONSTANTS.GROUP_TYPE_ENCOUNTER}
     <!-- TODO: Svelte 5 - snippets -->
     {#each memberSections as section (section.key)}
@@ -76,3 +97,10 @@
     {/each}
   {/if}
 </section>
+
+<style lang="scss">
+  .group-aggregates-content-panel {
+    border: 0.0625rem solid var(--t5e-separator-color);
+    padding: 0.5rem;
+  }
+</style>

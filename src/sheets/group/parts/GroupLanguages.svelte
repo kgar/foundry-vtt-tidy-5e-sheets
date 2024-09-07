@@ -11,7 +11,7 @@
 
 <div class="flex-row extra-small-gap flex-wrap">
   {#each $context.groupLanguages as groupLanguage}
-    <span title="TODO: List members in fancy tooltip" class="tag tag-outline">
+    <span title="TODO: List members in fancy tooltip" class="tag">
       {groupLanguage.label}
       {#if groupLanguage.members.length > 1}
         ({groupLanguage.members.length})
