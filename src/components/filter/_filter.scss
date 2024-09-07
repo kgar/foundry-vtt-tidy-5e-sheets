@@ -45,6 +45,16 @@
 .filter-menu {
   display: contents;
 
+  h4 {
+    font-size: 0.875rem;
+    font-family: var(--t5e-body-font-family);
+    box-shadow: none;
+    outline: none;
+    font-weight: 500;
+    text-shadow: none;
+    color: var(--t5e-primary-font-color);
+  }
+
   .filter-menu-button.has-active-filters i {
     color: var(--t5e-icon-hover-color);
   }
@@ -79,6 +89,10 @@
       text-transform: capitalize;
 
       border: 1px solid var(--t5e-faint-color);
+
+      &:hover {
+        background: var(--t5e-filter-option-button-hover-background);
+      }
 
       &.include,
       &.include:hover {
