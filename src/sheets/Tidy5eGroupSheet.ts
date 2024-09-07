@@ -556,6 +556,16 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
         }
       }
 
+      if (collectAggregates && member.system.skills) {
+        for (let [key, skill] of Object.entries<any>(member.system.skills)) {
+          const groupSkill = (groupSkills[key] ??=
+            this.#createEmptyGroupSkill(key));
+
+          groupSkill.mod = Math.max(groupSkill.mod, skill.mod);
+          groupSkill.members.push(member);
+        }
+      }
+
       // TODO: Skills
     }
 
@@ -578,6 +588,15 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
     return {
       label: language,
       members: [],
+    };
+  }
+
+  #createEmptyGroupSkill(key: string): GroupSkill {
+    return {
+      key: key,
+      label: CONFIG.DND5E.skills[key]?.label ?? key,
+      members: [],
+      mod: Number.NEGATIVE_INFINITY,
     };
   }
 

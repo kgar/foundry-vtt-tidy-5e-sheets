@@ -162,7 +162,7 @@ export interface GroupLanguage {
 
 export interface GroupSkill {
   label: string;
-  mod: string;
+  mod: number;
   key: string;
   members: Actor5e[];
 }
