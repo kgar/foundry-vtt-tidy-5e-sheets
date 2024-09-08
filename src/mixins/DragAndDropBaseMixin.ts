@@ -48,14 +48,16 @@ export function DragAndDropMixin(BaseApplication: any) {
       return this.isEditable;
     }
 
-    _onDragStart(event: DragEvent) {}
+    _onDragStart(event: DragEvent & { currentTarget: HTMLElement }) {}
 
-    _onDragOver(event: DragEvent) {}
+    _onDragOver(event: DragEvent & { currentTarget: HTMLElement }) {}
 
-    _onDrop(event: DragEvent): Promise<any> | undefined {
-        return undefined;
+    _onDrop(
+      event: DragEvent & { currentTarget: HTMLElement }
+    ): Promise<any> | undefined {
+      return undefined;
     }
-    
+
     /**
      * Returns an array of DragDrop instances
      * @type {DragDrop[]}

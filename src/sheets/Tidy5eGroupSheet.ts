@@ -22,6 +22,7 @@ import GroupDescriptionTab from './group/tabs/GroupDescriptionTab.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type {
   Group5e,
+  Group5eMember,
   Group5eXp,
   GroupLanguage,
   GroupMemberContext,
@@ -79,7 +80,6 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
   static DEFAULT_OPTIONS: Partial<
     ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
   > = {
-    dragDrop: [{ dragSelector: '[data-drag]' }],
     classes: [
       CONSTANTS.MODULE_ID,
       'sheet',
@@ -98,6 +98,11 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       width: 600,
       height: 700,
     },
+    dragDrop: [
+      {
+        dragSelector: '[data-member-drag]',
+      },
+    ],
   };
 
   // TODO: First render, derive options that come from user preference
@@ -807,6 +812,29 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
   // Drag and Drop
   // ---------------------------------------------
 
+  _onDragStart(event: DragEvent & { currentTarget: HTMLElement }): void {
+    const memberId = event.currentTarget
+      .closest('[data-member-drag][data-member-id]')
+      ?.getAttribute('data-member-id');
+
+    if (!memberId) {
+      super._onDragStart(event);
+      return;
+    }
+
+    const member: Group5eMember = this.actor.system.members.find(
+      (m: Group5eMember) => m.actor.id === memberId
+    );
+
+    if (!member) {
+      return;
+    }
+
+    const dragData = member.actor.toDragData();
+    dragData['groupId'] = this.actor.id;
+    event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
+  }
+
   async _onDropActiveEffect(
     ..._args: any[]
   ): Promise</*ActiveEffect*/ unknown | boolean> {
@@ -815,7 +843,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
   }
 
   async _onDropActor(
-    _event: DragEvent,
+    event: DragEvent & { currentTarget: HTMLElement },
     data: any
   ): Promise<object | boolean | undefined> {
     if (!this.isEditable) {
@@ -828,7 +856,29 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       return;
     }
 
-    return this.actor.system.addMember(sourceActor);
+    const groupId = data['groupId'];
+
+    if (groupId !== this.actor.id) {
+      return this.actor.system.addMember(sourceActor);
+    }
+
+    const targetMemberId = event.currentTarget
+      .closest('[data-member-drag][data-member-id]')
+      ?.getAttribute('data-member-id');
+
+    const targetMember = this.actor.system.members.find(
+      (m: Group5eMember) => m.actor.id === targetMemberId
+    );
+
+    if (!targetMember || targetMemberId === sourceActor.id) {
+      return false;
+    }
+
+    this._onSortMember(sourceActor, targetMember);
+  }
+
+  _onSortMember(sourceActor: Actor5e, targetActor: Actor5e) {
+    // TODO: Implement;
   }
 
   async _onDropItem(event: DragEvent, data: unknown) {
@@ -849,7 +899,10 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
     return this._onDropItemCreate(item);
   }
 
-  async _onDropFolder(event: DragEvent, data: Record<string, any>) {
+  async _onDropFolder(
+    event: DragEvent & { currentTarget: HTMLElement },
+    data: Record<string, any>
+  ) {
     if (!this.isEditable) {
       return false;
     }

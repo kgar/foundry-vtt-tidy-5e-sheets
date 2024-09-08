@@ -7,9 +7,11 @@ import { CONSTANTS } from 'src/constants';
 export function ActorBaseDragAndDropMixin(BaseApplication: any) {
   class ActorBaseDragAndDrop extends DragAndDropMixin(BaseApplication) {
     _supportedItemTypes: Set<string> = new Set();
-    _currentDragEvent: DragEvent | undefined;
+    _currentDragEvent: (DragEvent & { currentTarget: HTMLElement }) | undefined;
 
-    async _onDrop(event: DragEvent): Promise<any> {
+    async _onDrop(
+      event: DragEvent & { currentTarget: HTMLElement }
+    ): Promise<any> {
       this._currentDragEvent = event;
       const data = TextEditor.getDragEventData(event);
       const actor = this.actor;
@@ -34,7 +36,7 @@ export function ActorBaseDragAndDropMixin(BaseApplication: any) {
      * Handle the dropping of ActiveEffect data onto an Actor Sheet
      */
     async _onDropActiveEffect(
-      _currentDragEvent: DragEvent,
+      _currentDragEvent: DragEvent & { currentTarget: HTMLElement },
       data: Record<string, any>
     ): Promise</*ActiveEffect*/ unknown | boolean> {
       const effect = await ActiveEffect.implementation.fromDropData(data);
@@ -51,7 +53,7 @@ export function ActorBaseDragAndDropMixin(BaseApplication: any) {
     }
 
     async _onDropActor(
-      _currentDragEvent: DragEvent,
+      _currentDragEvent: DragEvent & { currentTarget: HTMLElement },
       data: any
     ): Promise<object | boolean | undefined> {
       const canPolymorph =
@@ -147,7 +149,7 @@ export function ActorBaseDragAndDropMixin(BaseApplication: any) {
     }
 
     async _onDropItem(
-      event: DragEvent,
+      event: DragEvent & { currentTarget: HTMLElement },
       data: unknown
     ): Promise<object | boolean | undefined> {
       if (!this.actor.isOwner) return false;
@@ -237,7 +239,9 @@ export function ActorBaseDragAndDropMixin(BaseApplication: any) {
         itemData.type === 'spell' &&
         (isOnInventoryTab || this.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE)
       ) {
-        const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(itemData);
+        const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(
+          itemData
+        );
         return scroll?.toObject?.();
       }
 
@@ -393,7 +397,7 @@ export function ActorBaseDragAndDropMixin(BaseApplication: any) {
     }
 
     async _onDropFolder(
-      _event: DragEvent,
+      _event: DragEvent & { currentTarget: HTMLElement },
       data: Record<string, any>
     ): Promise<object | boolean | undefined> {
       if (!this.actor.isOwner) {

@@ -33,7 +33,11 @@
   }
 </script>
 
-<div class="group-member-list-item flex-row small-gap align-items-flex-start">
+<div
+  class="group-member-list-item flex-row small-gap align-items-flex-start"
+  data-member-drag
+  data-member-id={member.id}
+>
   <GroupMemberListItemProfile {member} showHp={ctx.canObserve} />
   <div class="flex-column extra-small-gap flex-1 align-self-center">
     <div
