@@ -812,7 +812,9 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
   // Drag and Drop
   // ---------------------------------------------
 
-  _onDragStart(event: DragEvent & { currentTarget: HTMLElement }): void {
+  _onDragStart(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
+  ): void {
     const memberId = event.currentTarget
       .closest('[data-member-drag][data-member-id]')
       ?.getAttribute('data-member-id');
@@ -822,15 +824,13 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       return;
     }
 
-    const member: Group5eMember = this.actor.system.members.find(
-      (m: Group5eMember) => m.actor.id === memberId
-    );
+    const actor = this.#findMemberActor(memberId);
 
-    if (!member) {
+    if (!actor) {
       return;
     }
 
-    const dragData = member.actor.toDragData();
+    const dragData = actor.toDragData();
     dragData['groupId'] = this.actor.id;
     event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
   }
@@ -843,7 +843,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
   }
 
   async _onDropActor(
-    event: DragEvent & { currentTarget: HTMLElement },
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
     data: any
   ): Promise<object | boolean | undefined> {
     if (!this.isEditable) {
@@ -862,23 +862,52 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       return this.actor.system.addMember(sourceActor);
     }
 
-    const targetMemberId = event.currentTarget
-      .closest('[data-member-drag][data-member-id]')
-      ?.getAttribute('data-member-id');
-
-    const targetMember = this.actor.system.members.find(
-      (m: Group5eMember) => m.actor.id === targetMemberId
+    const dropTarget = event.target?.closest<HTMLElement>(
+      '[data-member-drag][data-member-id]'
     );
+    const targetMemberId = dropTarget?.getAttribute('data-member-id');
 
-    if (!targetMember || targetMemberId === sourceActor.id) {
+    const targetMemberActor = this.#findMemberActor(targetMemberId);
+
+    if (
+      !dropTarget ||
+      !targetMemberActor ||
+      targetMemberId === sourceActor.id
+    ) {
       return false;
     }
 
-    this._onSortMember(sourceActor, targetMember);
+    return await this._onSortMember(sourceActor, targetMemberActor);
   }
 
-  _onSortMember(sourceActor: Actor5e, targetActor: Actor5e) {
-    // TODO: Implement;
+  #findMemberActor(actorId: string | null | undefined): Actor5e | undefined {
+    return this.actor.system.members.find(
+      (m: Group5eMember) => m.actor.id === actorId
+    )?.actor;
+  }
+
+  async _onSortMember(sourceActor: Actor5e, targetActor: Actor5e) {
+    const membersCollection: Group5eMember[] =
+      this.actor.system.toObject().members;
+    const sourceIndex = membersCollection.findIndex(
+      (m) => m.actor === sourceActor.id
+    );
+    const targetIndex = membersCollection.findIndex(
+      (m) => m.actor === targetActor.id
+    );
+
+    const sortBefore = sourceIndex > targetIndex;
+
+    if (sortBefore) {
+      const sourceMember = membersCollection.splice(sourceIndex, 1)[0];
+      membersCollection.splice(targetIndex, 0, sourceMember);
+    } else {
+      const sourceMember = membersCollection[sourceIndex];
+      membersCollection.splice(targetIndex + 1, 0, sourceMember);
+      membersCollection.splice(sourceIndex, 1);
+    }
+
+    return await this.actor.update({ 'system.members': membersCollection });
   }
 
   async _onDropItem(event: DragEvent, data: unknown) {
@@ -900,7 +929,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
   }
 
   async _onDropFolder(
-    event: DragEvent & { currentTarget: HTMLElement },
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
     data: Record<string, any>
   ) {
     if (!this.isEditable) {
