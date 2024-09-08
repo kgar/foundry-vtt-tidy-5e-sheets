@@ -13,12 +13,12 @@ export class GroupSheetSections {
     try {
       const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
 
-      sections.forEach((section) => {
-        ItemUtils.sortItems(
-          section.members,
-          sortMode
-        );
-      });
+      // Members are already in sorted order when sorting is set to manual.
+      if (sortMode === 'a') {
+        sections.forEach((section) => {
+          ItemUtils.sortItems(section.members, sortMode);
+        });
+      }
     } catch (e) {
       error('An error occurred while configuring group members', false, e);
     }
