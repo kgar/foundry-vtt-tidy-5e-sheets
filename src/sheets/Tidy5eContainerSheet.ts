@@ -139,6 +139,7 @@ export class Tidy5eKgarContainerSheet
         CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
         this.inlineContainerToggleService,
       ],
+      [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.itemFilterService],
       [
         CONSTANTS.SVELTE_CONTEXT.ON_FILTER,
         this.itemFilterService.onFilter.bind(this.itemFilterService),
