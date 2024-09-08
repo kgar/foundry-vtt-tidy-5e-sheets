@@ -333,6 +333,7 @@
                     {inlineContainerToggleService}
                     lockItemQuantity={$context.lockItemQuantity}
                     sheetDocument={$context.actor}
+                    unlocked={$context.unlocked}
                   />
                 {/if}
               {/each}

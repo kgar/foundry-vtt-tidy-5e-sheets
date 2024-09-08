@@ -291,6 +291,7 @@
                 lockItemQuantity={$context.lockItemQuantity}
                 sheetDocument={$context.actor}
                 --t5e-image-size-override="1.5rem"
+                unlocked={$context.unlocked}
               />
             {/if}
           {/each}
