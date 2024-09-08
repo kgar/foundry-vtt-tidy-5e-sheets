@@ -90,7 +90,6 @@ function blurUntabbableButton(event: MouseEvent) {
   const button = target.closest('button');
 
   if (button?.tabIndex === -1) {
-    console.warn('blurring yo content!');
     target.blur();
   }
 }

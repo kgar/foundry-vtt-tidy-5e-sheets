@@ -98,9 +98,6 @@ export function SvelteApplicationMixin<TContext>(BaseApplication: any) {
       const element = await super._renderFrame(options);
 
       try {
-        // Support Foundry's hotkeys feature by blurring tabindex -1 clicked elements
-        blurUntabbableButtonsOnClick(element);
-
         // Support Tidy's common window attributes
         applySheetAttributesToWindow(
           this.actor.documentName,
@@ -109,6 +106,23 @@ export function SvelteApplicationMixin<TContext>(BaseApplication: any) {
           SettingsProvider.settings.colorScheme.get(),
           element
         );
+      } catch (e) {
+        error(
+          'An error occurred while preparing the rendered frame of the application.',
+          false,
+          { error: e, sheet: this }
+        );
+      }
+
+      return element;
+    }
+
+    _attachFrameListeners() {
+      super._attachFrameListeners();
+
+      try {
+        // Support Foundry's hotkeys feature by blurring tabindex -1 clicked elements
+        blurUntabbableButtonsOnClick(this.element);
 
         // Manage application subscriptions
         this.#subscriptionsService.unsubscribeAll();
@@ -116,18 +130,16 @@ export function SvelteApplicationMixin<TContext>(BaseApplication: any) {
         this.#subscriptionsService.registerSubscriptions(
           ...subscriptions,
           settingStore.subscribe((settings) => {
-            applyThemeDataAttributeToWindow(settings.colorScheme, element);
+            applyThemeDataAttributeToWindow(settings.colorScheme, this.element);
           })
         );
       } catch (e) {
         error(
-          'An error occurred while preparing the rendered frame of the application.',
+          'An error occurred while attaching frame listeners for the application.',
           false,
-          e
+          { error: e, sheet: this }
         );
       }
-
-      return element;
     }
 
     _updateFrame(options: ApplicationRenderOptions) {
