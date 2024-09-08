@@ -4,6 +4,7 @@ import { SettingsProvider, settingStore } from 'src/settings/settings';
 import {
   applySheetAttributesToWindow,
   applyThemeDataAttributeToWindow,
+  blurUntabbableButtonsOnClick,
 } from 'src/utils/applications';
 import { debug, error } from 'src/utils/logging';
 import type { SvelteComponent } from 'svelte';
@@ -21,9 +22,6 @@ export function SvelteApplicationMixin<TContext>(BaseApplication: any) {
     #component: SvelteComponent | null = null;
 
     #customHTMLTags: string[] = ['PROSE-MIRROR'];
-
-    /** The entire application frame. Starts as a stub form until a render occurs. */
-    #element: HTMLElement = document.createElement('form');
 
     /**
      * Any subscriptions which should be managed during the lifetime of the application window.
@@ -97,33 +95,39 @@ export function SvelteApplicationMixin<TContext>(BaseApplication: any) {
     }
 
     async _renderFrame(options: ApplicationRenderOptions) {
-      this.#element = await super._renderFrame(options);
+      const element = await super._renderFrame(options);
 
-      if (!this.#element) {
-        throw new Error(
-          'Application frame was not correctly rendered. The `_renderFrame` function must return an HTMLElement.'
+      try {
+        // Support Foundry's hotkeys feature by blurring tabindex -1 clicked elements
+        blurUntabbableButtonsOnClick(element);
+
+        // Support Tidy's common window attributes
+        applySheetAttributesToWindow(
+          this.actor.documentName,
+          this.actor.uuid,
+          this.actor.type,
+          SettingsProvider.settings.colorScheme.get(),
+          element
+        );
+
+        // Manage application subscriptions
+        this.#subscriptionsService.unsubscribeAll();
+        const subscriptions = this._getSubscriptions();
+        this.#subscriptionsService.registerSubscriptions(
+          ...subscriptions,
+          settingStore.subscribe((settings) => {
+            applyThemeDataAttributeToWindow(settings.colorScheme, element);
+          })
+        );
+      } catch (e) {
+        error(
+          'An error occurred while preparing the rendered frame of the application.',
+          false,
+          e
         );
       }
 
-      applySheetAttributesToWindow(
-        this.actor.documentName,
-        this.actor.uuid,
-        this.actor.type,
-        SettingsProvider.settings.colorScheme.get(),
-        this.#element
-      );
-
-      // Manage application subscriptions
-      this.#subscriptionsService.unsubscribeAll();
-      const subscriptions = this._getSubscriptions();
-      this.#subscriptionsService.registerSubscriptions(
-        ...subscriptions,
-        settingStore.subscribe((settings) => {
-          applyThemeDataAttributeToWindow(settings.colorScheme, this.#element);
-        })
-      );
-
-      return this.#element;
+      return element;
     }
 
     _updateFrame(options: ApplicationRenderOptions) {
@@ -137,7 +141,6 @@ export function SvelteApplicationMixin<TContext>(BaseApplication: any) {
       this.#subscriptionsService.unsubscribeAll();
       this.#component?.$destroy();
       this.#component = null;
-      this.#element = document.createElement('form');
       await super.close(options);
     }
 

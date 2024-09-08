@@ -15,6 +15,7 @@
   import TidyTableCell from 'src/components/table/TidyTableCell.svelte';
   import TidyTableRow from 'src/components/table/TidyTableRow.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
+  import { settingStore } from 'src/settings/settings';
 
   export let section: GroupMemberSection;
 
@@ -90,6 +91,7 @@
             class="inline-icon-button"
             title={localize('DND5E.QuantityRoll')}
             on:click={() => $context.actor.system.rollQuantities()}
+            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-dice"></i>
           </button>
@@ -133,6 +135,7 @@
                       shareable: true,
                       uuid: member.uuid,
                     })}
+                  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
                 >
                   <img
                     class="encounter-member-list-item-image"
@@ -146,6 +149,7 @@
                   type="button"
                   class="encounter-member-name transparent-button highlight-on-hover"
                   on:click={() => member.sheet.render(true)}
+                  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
                 >
                   {member.name}
                 </button>

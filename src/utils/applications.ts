@@ -75,10 +75,22 @@ export async function maintainCustomContentInputFocus(
   }
 }
 
-export function blurUntabbableButtonsOnClick(element: any /* jQuery */) {
-  element
-    .off('click.tidy-keyboard-accessibility', '[tabindex="-1"]')
-    .on('click.tidy-keyboard-accessibility', '[tabindex="-1"]', (ev: any) => {
-      ev.currentTarget?.blur();
-    });
+export function blurUntabbableButtonsOnClick(element: HTMLElement) {
+  element.removeEventListener('click', blurUntabbableButton);
+  element.addEventListener('click', blurUntabbableButton);
+}
+
+function blurUntabbableButton(event: MouseEvent) {
+  const target = event.target;
+
+  if (!(target instanceof HTMLElement)) {
+    return;
+  }
+
+  const button = target.closest('button');
+
+  if (button?.tabIndex === -1) {
+    console.warn('blurring yo content!');
+    target.blur();
+  }
 }

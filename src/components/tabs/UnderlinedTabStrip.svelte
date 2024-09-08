@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { settingStore } from 'src/settings/settings';
+
   export let tabs: string[];
   export let selected: string;
 </script>
@@ -10,6 +12,7 @@
       class="underlined-tab"
       class:active={selected === tab}
       on:click={() => (selected = tab)}
+      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       {tab}
     </button>

@@ -696,7 +696,7 @@ export class Tidy5eVehicleSheet
         super.activateListeners,
         this
       );
-      blurUntabbableButtonsOnClick(this.element);
+      blurUntabbableButtonsOnClick(this.element.get(0));
       return;
     }
 

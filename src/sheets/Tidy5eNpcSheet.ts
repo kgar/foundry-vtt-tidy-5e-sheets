@@ -1183,7 +1183,7 @@ export class Tidy5eNpcSheet
         super.activateListeners,
         this
       );
-      blurUntabbableButtonsOnClick(this.element);
+      blurUntabbableButtonsOnClick(this.element.get(0));
       return;
     }
 

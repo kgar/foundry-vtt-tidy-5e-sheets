@@ -126,6 +126,7 @@
           type="button"
           class="group-action-button flex-row small-gap flex-grow-0 flex-basis-max-content"
           on:click={() => $context.actor.sheet.award()}
+          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fa-solid fa-trophy"></i>
           {localize('DND5E.Award.Action')}
@@ -134,6 +135,7 @@
           type="button"
           class="group-action-button flex-row small-gap flex-grow-0 flex-basis-max-content"
           on:click={() => $context.actor.system.placeMembers()}
+          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fa-solid fa-location-dot"></i>
           {localize('DND5E.Group.PlaceMembers')}
@@ -142,6 +144,7 @@
           type="button"
           class="group-action-button flex-row small-gap rest-button flex-grow-0 flex-basis-max-content"
           on:click={() => $context.actor.shortRest({ advanceTime: true })}
+          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fa-solid fa-utensils"></i>
           {localize('DND5E.ShortRest')}
@@ -150,6 +153,7 @@
           type="button"
           class="group-action-button flex-row small-gap rest-button flex-grow-0 flex-basis-max-content"
           on:click={() => $context.actor.longRest({ advanceTime: true })}
+          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fa-solid fa-campground"></i>
           {localize('DND5E.LongRest')}
