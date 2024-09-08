@@ -71,7 +71,7 @@
               </span>
               <div
                 data-edit={itemDescription.field}
-                class="item-editor-descriptions-html-container"
+                class="item-editor-descriptions-html-container user-select-text"
               >
                 {@html itemDescription.content}
               </div>
