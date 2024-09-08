@@ -107,6 +107,7 @@ export function SvelteApplicationMixin<TContext>(BaseApplication: any) {
 
       applySheetAttributesToWindow(
         this.actor.documentName,
+        this.actor.uuid,
         this.actor.type,
         SettingsProvider.settings.colorScheme.get(),
         this.#element

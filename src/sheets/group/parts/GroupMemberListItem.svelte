@@ -39,6 +39,7 @@
   class="group-member-list-item flex-row small-gap align-items-flex-start"
   data-member-drag
   data-member-id={member.id}
+  data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_GROUP_MEMBER}
 >
   <GroupMemberListItemProfile {member} showHp={ctx.canObserve} />
   <div class="flex-column extra-small-gap flex-1 align-self-center">

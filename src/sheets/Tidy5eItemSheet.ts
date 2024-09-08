@@ -221,6 +221,7 @@ export class Tidy5eKgarItemSheet
       await super._render(force, options);
       applySheetAttributesToWindow(
         this.item.documentName,
+        this.item.uuid,
         this.item.type,
         SettingsProvider.settings.colorScheme.get(),
         this.element.get(0)

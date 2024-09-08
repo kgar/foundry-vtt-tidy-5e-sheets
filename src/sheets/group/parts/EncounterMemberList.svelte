@@ -112,7 +112,13 @@
         {#each section.members as member, index (member.uuid)}
           {@const ctx = $context.memberContext[member.id]}
           {#if $memberActorIdsToShow === undefined || $memberActorIdsToShow.has(member.id)}
-            <TidyTableRow>
+            <TidyTableRow
+              rowContainerAttributes={{
+                ['data-member-drag']: '',
+                ['data-context-menu']: CONSTANTS.CONTEXT_MENU_TYPE_GROUP_MEMBER,
+                ['data-member-id']: member.id,
+              }}
+            >
               <TidyTableCell class="flex-row" primary={true}>
                 <button
                   type="button"

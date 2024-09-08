@@ -47,6 +47,7 @@ export function applyThemeDataAttributeToWindow(
 
 export function applySheetAttributesToWindow(
   documentName: string,
+  documentUuid: string,
   type: string,
   themeId: string,
   element?: HTMLElement
@@ -54,6 +55,7 @@ export function applySheetAttributesToWindow(
   element?.setAttribute('data-sheet-module', 'tidy5e-sheet');
   element?.setAttribute('data-document-name', documentName);
   element?.setAttribute('data-document-type', type);
+  element?.setAttribute('data-document-uuid', documentUuid);
   applyThemeDataAttributeToWindow(themeId, element);
 }
 

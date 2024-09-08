@@ -1166,6 +1166,7 @@ export class Tidy5eNpcSheet
       await super._render(force, options);
       applySheetAttributesToWindow(
         this.actor.documentName,
+        this.actor.uuid,
         this.actor.type,
         SettingsProvider.settings.colorScheme.get(),
         this.element.get(0)
