@@ -55,7 +55,6 @@ import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptions
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { AsyncMutex } from 'src/utils/mutex';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
-import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPreferencesRuntime';
 import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSections';
 import { SheetSections } from 'src/features/sections/SheetSections';
@@ -145,6 +144,10 @@ export class Tidy5eCharacterSheet
 
   component: SvelteComponent | undefined;
   activateListeners(html: { get: (index: 0) => HTMLElement }) {
+    // Document Apps Reactivity
+    game.user.apps[this.id] = this;
+
+    // Subscriptions
     let first = true;
     this.subscriptionsService.unsubscribeAll();
     this.subscriptionsService.registerSubscriptions(
@@ -163,10 +166,6 @@ export class Tidy5eCharacterSheet
           actor: this.actor,
           message: m,
         });
-      }),
-      SheetPreferencesRuntime.getStore().subscribe(() => {
-        if (first) return;
-        this.render();
       })
     );
     first = false;
@@ -1325,6 +1324,7 @@ export class Tidy5eCharacterSheet
   close(options: unknown = {}) {
     this._destroySvelteComponent();
     this.subscriptionsService.unsubscribeAll();
+    delete game.user.apps[this.id];
     return super.close(options);
   }
 

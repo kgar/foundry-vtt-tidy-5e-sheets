@@ -41,7 +41,6 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import { Container } from 'src/features/containers/Container';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
-import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPreferencesRuntime';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import { GroupSheetRuntime } from 'src/runtime/GroupSheetRuntime';
 import { writable } from 'svelte/store';
@@ -763,10 +762,6 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
         this.render();
       }),
       settingStore.subscribe((s) => {
-        if (first) return;
-        this.render();
-      }),
-      SheetPreferencesRuntime.getStore().subscribe(() => {
         if (first) return;
         this.render();
       }),
