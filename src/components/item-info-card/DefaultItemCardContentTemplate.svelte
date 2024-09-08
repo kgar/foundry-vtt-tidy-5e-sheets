@@ -58,7 +58,7 @@
     <HorizontalLineSeparator borderColor="faint" />
   {/if}
   <div class="description-wrap">
-    <div class="info-card-description">
+    <div class="info-card-description user-select-text">
       {#if concealDetails}
         {@html chatData.unidentified.description}
       {:else}
