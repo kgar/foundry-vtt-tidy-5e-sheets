@@ -17,6 +17,7 @@ import type {
   ItemSheetContext,
 } from 'src/types/item.types';
 import type { RollConfig, Roll, RestConfiguration } from './dnd5e.types';
+import type { Group5e } from 'src/types/group.types';
 
 /** Manages all Hook usage in Tidy 5e Sheets */
 export class TidyHooks {
@@ -178,6 +179,26 @@ export class TidyHooks {
     options: any
   ): boolean {
     return Hooks.call('tidy5e-sheet.actorPreUseItem', item, config, options);
+  }
+
+  /**
+   * The group member context menu has established its options and is about to show.
+   * @param group             The affected group document instance.
+   * @param member            The actor which is a member of the group.
+   * @param contextOptions    The menu items for this group member.
+   * @returns {boolean}       `true` to allow the menu to show, `false` to prevent the default menu from showing.
+   */
+  static tidy5eSheetsGetGroupMemberContextOptions(
+    group: Group5e,
+    member: Actor5e,
+    contextOptions: ContextMenuEntry[]
+  ): boolean {
+    return Hooks.call(
+      'tidy5e-sheet.getGroupMemberContextOptions',
+      group,
+      member,
+      contextOptions
+    );
   }
 
   /**

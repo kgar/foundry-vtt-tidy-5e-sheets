@@ -19,7 +19,7 @@
   type="button"
   class="inline-icon-button"
   on:click={() => $context.actor.system.removeMember(member.id)}
-  title={localize('TIDY5E.Group.RemoveMemberButtonTooltip')}
+  title={localize('TIDY5E.Group.RemoveMemberFromGroup')}
 >
   <i class="fas fa-xmark"></i>
 </button>

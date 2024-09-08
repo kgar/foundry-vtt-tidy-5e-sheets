@@ -117,6 +117,7 @@
                 ['data-member-drag']: '',
                 ['data-context-menu']: CONSTANTS.CONTEXT_MENU_TYPE_GROUP_MEMBER,
                 ['data-member-id']: member.id,
+                ['data-context-menu-document-uuid']: member.uuid,
               }}
             >
               <TidyTableCell class="flex-row" primary={true}>
