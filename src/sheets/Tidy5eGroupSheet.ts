@@ -8,6 +8,7 @@ import {
 import type { SvelteComponent } from 'svelte';
 import GroupSheet from './group/GroupSheet.svelte';
 import type {
+  Actor5e,
   ActorInventoryTypes,
   ItemCardStore,
   MessageBus,
@@ -23,7 +24,9 @@ import type {
   Group5e,
   Group5eXp,
   GroupLanguage,
+  GroupMemberContext,
   GroupMemberSection,
+  GroupMemberSkillInfo,
   GroupSheetClassicContext,
   GroupSkill,
 } from 'src/types/group.types';
@@ -44,9 +47,10 @@ import { GroupSheetRuntime } from 'src/runtime/GroupSheetRuntime';
 import { writable } from 'svelte/store';
 import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
-import { debug } from 'src/utils/logging';
+import { debug, warn } from 'src/utils/logging';
 import { processInputChangeDeltaFromValues } from 'src/utils/form';
 import { isNil } from 'src/utils/data';
+import { formatAsModifier } from 'src/utils/formatting';
 
 type MemberStats = {
   currentHP: number;
@@ -529,13 +533,17 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
     const groupLanguages: Record<string, GroupLanguage> = {};
     const groupSkills: Record<string, GroupSkill> = {};
     const collectAggregates = FoundryAdapter.userIsGm();
+    const configuredSkills = Object.entries(CONFIG.DND5E.skills);
 
     for (const [index, memberData] of this.actor.system.members.entries()) {
-      memberContext[memberData.actor.id] = {
+      const ctx: GroupMemberContext = (memberContext[memberData.actor.id] = {
         index: index,
         quantity: memberData.quantity,
         canObserve: memberData.actor.testUserPermission(game.user, 'OBSERVER'),
-      };
+        senses: [],
+        conditionImmunities: [],
+        topSkills: [],
+      });
 
       const member = memberData.actor;
       const hp = member.system.attributes.hp;
@@ -548,8 +556,6 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       stats.currentHP += memberCurrentHp * multiplier;
       stats.maxHP += memberMaxHp * multiplier;
 
-      // TODO: CR
-
       if (member.type === 'vehicle') {
         stats.vehicleCount += multiplier;
       } else {
@@ -558,8 +564,6 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
 
       sections[member.type].members.push(member);
 
-      // system.traits.languages.value - Set<string>
-      // system.traits.languages.custom - string split on `;`
       if (collectAggregates && member.system.traits?.languages?.value) {
         const customLanguageString =
           member.system.traits.languages.custom?.trim();
@@ -593,7 +597,82 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
         }
       }
 
-      // TODO: Skills
+      if (ctx.canObserve) {
+        // Member Senses
+        const senses = member.system.attributes.senses ?? {};
+        const tags: Record<string, string> = {};
+        for (let [k, label] of Object.entries(CONFIG.DND5E.senses)) {
+          const v = senses[k] ?? 0;
+          if (v === 0) continue;
+          tags[k] = `${game.i18n.localize(label)} ${v} ${
+            senses.units ?? Object.keys(CONFIG.DND5E.movementUnits)[0]
+          }`;
+        }
+        if (senses.special)
+          senses.special
+            .split(';')
+            .forEach(
+              (c: string, i: number) => (tags[`custom${i + 1}`] = c.trim())
+            );
+        ctx.senses = Object.values(tags);
+
+        // Member Condition Immunities
+        const conditionImmunities: string[] = [];
+        for (let entry of member.system.traits.ci.value) {
+          conditionImmunities.push(
+            CONFIG.DND5E.conditionTypes[entry]?.label ?? entry
+          );
+        }
+
+        const customImmunity = member.system.traits.ci.custom?.trim();
+        if (!isNil(customImmunity, '')) {
+          conditionImmunities.push(customImmunity);
+        }
+
+        ctx.conditionImmunities = conditionImmunities;
+
+        // Perception and Top Skills
+
+        let skills: GroupMemberSkillInfo[];
+        skills = member.system.skills
+          ? Array.from(configuredSkills).reduce<GroupMemberSkillInfo[]>(
+              (prev, [key, configSkill]: [string, any]) => {
+                const skill = this.#getSkill(member, key);
+
+                if (!skill) {
+                  warn(
+                    'Unable to find skill. Ensure custom skills are added at "init" time.',
+                    false,
+                    { key, configSkill }
+                  );
+                  return prev;
+                }
+
+                const label = CONFIG.DND5E.skills[key]?.label ?? key;
+
+                prev.push({
+                  key: key,
+                  label: label,
+                  passive: skill.passive,
+                  total: skill.total,
+                  mod: formatAsModifier(skill.total),
+                });
+
+                return prev;
+              },
+              []
+            )
+          : [];
+
+        ctx.topSkills = skills
+          .filter((s) => s.key !== CONSTANTS.SKILL_KEY_PERCEPTION)
+          .sort((a, b) => b.total - a.total)
+          .slice(0, 4);
+
+        ctx.perception = skills.find(
+          (s) => s.key === CONSTANTS.SKILL_KEY_PERCEPTION
+        );
+      }
     }
 
     return {
@@ -647,6 +726,14 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       primary: `${primary ? primary[1] : '0'}`,
       secondary: speeds.map((s) => s[1]).join(', '),
     };
+  }
+
+  #getSkill(member: Actor5e, key: string): any | null {
+    if (key in member.system.skills) {
+      return member.system.skills[key];
+    }
+
+    return null;
   }
 
   async #prepareItems(context: GroupSheetClassicContext) {

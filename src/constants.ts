@@ -363,6 +363,7 @@ export const CONSTANTS = {
   SHEET_SETTINGS_OPTION_GM_ONLY: 'gm-only',
   SHEET_SETTINGS_OPTION_GM_AND_OWNERS: 'gm-and-owners',
   TEXT_EDITOR_ACTIVATION_ELEMENT_SELECTOR: '.editor-content[data-edit]',
+  SKILL_KEY_PERCEPTION: 'prc',
   SVELTE_CONTEXT: {
     ACCORDION_CONTEXT: 'accordionContext',
     APP_ID: 'appId',

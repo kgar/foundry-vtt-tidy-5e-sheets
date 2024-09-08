@@ -63,7 +63,19 @@ export interface GroupMemberContext {
   index: number;
   quantity: Group5eMemberQuantity;
   canObserve: boolean;
+  senses: string[];
+  conditionImmunities: string[];
+  perception?: GroupMemberSkillInfo;
+  topSkills: GroupMemberSkillInfo[];
 }
+
+export type GroupMemberSkillInfo = {
+  key: string;
+  label: string;
+  total: number;
+  mod: string;
+  passive: number;
+};
 
 export interface GroupMovementContext {
   primary: string;
