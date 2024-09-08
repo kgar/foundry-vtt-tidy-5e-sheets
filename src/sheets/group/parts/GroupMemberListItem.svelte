@@ -4,7 +4,10 @@
   import AcShieldBase from 'src/sheets/actor/AcShieldBase.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import type { GroupSheetClassicContext } from 'src/types/group.types';
+  import type {
+    GroupMemberContext,
+    GroupSheetClassicContext,
+  } from 'src/types/group.types';
   import { CONSTANTS } from 'src/constants';
   import GroupMemberListItemProfile from './GroupMemberListItemProfile.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -14,10 +17,9 @@
   );
 
   export let member: Actor5e;
+  export let ctx: GroupMemberContext;
 
   const localize = FoundryAdapter.localize;
-
-  $: ctx = $context.memberContext[member.id];
 
   function onPerceptionClicked(
     event: MouseEvent & {

@@ -2,7 +2,10 @@
   import { CONSTANTS } from 'src/constants';
   import GroupMemberListItem from './GroupMemberListItem.svelte';
   import { getContext } from 'svelte';
-  import type { GroupMemberSection } from 'src/types/group.types';
+  import type {
+    GroupMemberSection,
+    GroupSheetClassicContext,
+  } from 'src/types/group.types';
   import type { Readable } from 'svelte/store';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TidyTable from 'src/components/table/TidyTable.svelte';
@@ -14,6 +17,10 @@
 
   const memberActorIdsToShow = getContext<Readable<Set<string> | undefined>>(
     CONSTANTS.SVELTE_CONTEXT.MEMBER_IDS_TO_SHOW,
+  );
+
+  const context = getContext<Readable<GroupSheetClassicContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
   const localize = FoundryAdapter.localize;
@@ -31,7 +38,10 @@
     <div class="flex-column mt-2">
       {#each section.members as member, index (member.uuid)}
         {#if $memberActorIdsToShow === undefined || $memberActorIdsToShow.has(member.id)}
-          <GroupMemberListItem {member} />
+          <GroupMemberListItem
+            {member}
+            ctx={$context.memberContext[member.id]}
+          />
 
           {#if section.members.length > 1 && index !== section.members.length - 1}
             <HorizontalLineSeparator class="mx-3" borderColor="separator" />
