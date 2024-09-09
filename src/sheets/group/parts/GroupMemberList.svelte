@@ -35,7 +35,7 @@
     </TidyTableHeaderRow>
   </svelte:fragment>
   <svelte:fragment slot="body">
-    <div class="flex-column mt-2">
+    <div class="flex-column small-gap mt-2">
       {#each section.members as member, index (member.uuid)}
         {#if $memberActorIdsToShow === undefined || $memberActorIdsToShow.has(member.id)}
           <GroupMemberListItem
@@ -44,7 +44,7 @@
           />
 
           {#if section.members.length > 1 && index !== section.members.length - 1}
-            <HorizontalLineSeparator class="mx-3" borderColor="separator" />
+            <HorizontalLineSeparator class="mx-1" borderColor="separator" />
           {/if}
         {/if}
       {/each}

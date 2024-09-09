@@ -110,7 +110,7 @@
       </TidyTableHeaderRow>
     </svelte:fragment>
     <svelte:fragment slot="body">
-      <div class="flex-column mt-1 no-gap">
+      <div class="flex-column no-gap">
         {#each section.members as member, index (member.uuid)}
           {@const ctx = $context.memberContext[member.id]}
           {#if $memberActorIdsToShow === undefined || $memberActorIdsToShow.has(member.id)}
@@ -122,7 +122,7 @@
                 ['data-context-menu-document-uuid']: member.uuid,
               }}
             >
-              <TidyTableCell class="flex-row" primary={true}>
+              <TidyTableCell class="flex-row small-gap" primary={true}>
                 <button
                   type="button"
                   class="inline-transparent-button"

@@ -64,28 +64,39 @@
 
     {#if ctx.canObserve}
       <div class="flex-row extra-small-gap">
-        <!-- TODO: Extract to own part component -->
         <AcShieldBase cssClass="group-ac-shield">
           <span class="ac-value">{member.system.attributes.ac.value}</span>
         </AcShieldBase>
-        <fieldset class="flex-1">
-          <legend class="semibold">
-            {localize('DND5E.Senses')}
-          </legend>
-          {#if ctx.senses.length}
-            {ctx.senses.join(', ')}
-          {:else}
-            <i>{localize('TIDY5E.NoSpecialSenses')}</i>
+        <div class="flex-1">
+          <div>
+            <span class="me-1">
+              <i
+                class="fas fa-eye fa-fw text-body-secondary"
+                title={localize('DND5E.Senses')}
+              ></i>
+            </span>
+            <span>
+              {#if ctx.senses.length}
+                {ctx.senses.join(', ')}
+              {:else}
+                <i>{localize('TIDY5E.NoSpecialSenses')}</i>
+              {/if}
+            </span>
+          </div>
+          {#if ctx.conditionImmunities.length}
+            <div>
+              <span class="me-1">
+                <i
+                  class="fas fa-shield-virus fa-fw text-body-secondary"
+                  title={localize('DND5E.ConImm')}
+                ></i>
+              </span>
+              <span>
+                {ctx.conditionImmunities.join(', ')}
+              </span>
+            </div>
           {/if}
-        </fieldset>
-        {#if ctx.conditionImmunities.length}
-          <fieldset class="flex-1">
-            <legend class="semibold">
-              {localize('DND5E.ConImm')}
-            </legend>
-            {ctx.conditionImmunities.join(', ')}
-          </fieldset>
-        {/if}
+        </div>
       </div>
 
       <div class="flex-row flex-wrap skills">
@@ -95,10 +106,9 @@
             class="skill"
             disabled={!$context.isGM}
             on:click={(event) => onPerceptionClicked(event)}
-            title={localize(ctx.perception?.label ?? '')}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
-            <i class="fas fa-eye"></i>
+            {localize(ctx.perception?.label ?? '')}
             {ctx.perception?.mod} ({ctx.perception?.passive})
           </button>
         {/if}
