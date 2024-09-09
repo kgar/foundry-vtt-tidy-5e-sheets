@@ -3,11 +3,82 @@ import { DragAndDropMixin } from './DragAndDropBaseMixin';
 import type { Item5e } from 'src/types/item.types';
 import { firstOfSet } from 'src/utils/set';
 import { CONSTANTS } from 'src/constants';
+import type {
+  ApplicationConfiguration,
+  ApplicationPosition,
+} from './SvelteApplicationMixin';
+import type { Actor5e } from 'src/types/types';
 
-export function ActorBaseDragAndDropMixin(BaseApplication: any) {
-  class ActorBaseDragAndDrop extends DragAndDropMixin(BaseApplication) {
+export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
+  class Tidy5eActorSheetBase extends DragAndDropMixin(BaseApplication) {
     _supportedItemTypes: Set<string> = new Set();
     _currentDragEvent: (DragEvent & { currentTarget: HTMLElement }) | undefined;
+
+    static #CONFIGURE_TOKEN_ACTION = 'configureToken';
+
+    // TODO: Make this less like DEFAULT_OPTIONS and more like an object graph. We should be able to pick and choose which control and action that supports that control.
+    /**
+     * NOTE: These settings do not merge. Even when named exactly right, controls do not merge; they are overwritten.
+     * Actions also do not carry over.
+     *
+     * To use these settings on a given sheet that uses this mixin, call `this.ACTOR_DEFAULT_OPTIONS`
+     */
+    static ACTOR_DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
+      window: {
+        controls: [
+          {
+            action: Tidy5eActorSheetBase.#CONFIGURE_TOKEN_ACTION,
+            icon: 'fa-solid fa-user-circle',
+            label:
+              'This Actions Title Changes Based on an Actor-specific piece of data',
+            ownership: 'OWNER',
+          },
+          {
+            action: 'showPortraitArtwork',
+            icon: 'fa-solid fa-image',
+            label: 'SIDEBAR.CharArt',
+            ownership: 'OWNER',
+          },
+          {
+            action: 'showTokenArtwork',
+            icon: 'fa-solid fa-image',
+            label: 'SIDEBAR.TokenArt',
+            ownership: 'OWNER',
+          },
+        ],
+      },
+      actions: {
+        [Tidy5eActorSheetBase.#CONFIGURE_TOKEN_ACTION]:
+          Tidy5eActorSheetBase.#onConfigureToken,
+        showPortraitArtwork: Tidy5eActorSheetBase.#onShowPortraitArtwork,
+        showTokenArtwork: Tidy5eActorSheetBase.#onShowTokenArtwork,
+      },
+    };
+
+    /* -------------------------------------------- */
+    /*  Application Lifecycle Functions             */
+    /* -------------------------------------------- */
+
+    /**
+     * Perform any dynamic behavior on
+     * @returns
+     */
+    _getHeaderControls() {
+      const controls = super._getHeaderControls();
+      const configureTokenControl = controls.find(
+        (c: any) => c.action === Tidy5eActorSheetBase.#CONFIGURE_TOKEN_ACTION
+      );
+      if (configureTokenControl) {
+        configureTokenControl.label = this.token
+          ? 'Token'
+          : 'TOKEN.TitlePrototype';
+      }
+      return controls;
+    }
+
+    /* -------------------------------------------- */
+    /*  Drag and Drop Handlers                      */
+    /* -------------------------------------------- */
 
     async _onDrop(
       event: DragEvent & { currentTarget: HTMLElement }
@@ -419,7 +490,68 @@ export function ActorBaseDragAndDropMixin(BaseApplication: any) {
 
       return this._onDropItemCreate(droppedItemData);
     }
+
+    /* -------------------------------------------- */
+    /*  Event Listeners and Handlers                */
+    /* -------------------------------------------- */
+
+    /**
+     * Handle header control button clicks to render the Prototype Token configuration sheet.
+     * @this {ActorSheetV2}
+     * @param {PointerEvent} event
+     */
+    static async #onConfigureToken(
+      this: { position: ApplicationPosition; token?: any; actor?: Actor5e },
+      event: PointerEvent
+    ) {
+      event.preventDefault();
+      const renderOptions = {
+        left: Math.max(this.position.left - 560 - 10, 10),
+        top: this.position.top,
+      };
+      if (this.token) {
+        return this.token.sheet.render(true, renderOptions);
+      } else {
+        new CONFIG.Token.prototypeSheetClass(
+          this.actor.prototypeToken,
+          renderOptions
+        ).render(true);
+      }
+    }
+
+    /* -------------------------------------------- */
+
+    /**
+     * Handle header control button clicks to display actor portrait artwork.
+     * @this {ActorSheetV2}
+     * @param {PointerEvent} event
+     */
+    static async #onShowPortraitArtwork(
+      this: { actor?: Actor5e },
+      event: PointerEvent
+    ) {
+      const { img, name, uuid } = this.actor;
+      new ImagePopout(img, { title: name, uuid: uuid }).render(true);
+    }
+
+    /* -------------------------------------------- */
+
+    /**
+     * Handle header control button clicks to display actor portrait artwork.
+     * @this {ActorSheetV2}
+     * @param {PointerEvent} event
+     */
+    static async #onShowTokenArtwork(
+      this: { actor?: Actor5e },
+      event: PointerEvent
+    ) {
+      const { prototypeToken, name, uuid } = this.actor;
+      new ImagePopout(prototypeToken.texture.src, {
+        title: name,
+        uuid: uuid,
+      }).render(true);
+    }
   }
 
-  return ActorBaseDragAndDrop;
+  return Tidy5eActorSheetBase;
 }

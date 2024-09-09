@@ -33,7 +33,7 @@ import { SettingsProvider, settingStore } from 'src/settings/settings';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { getPercentage } from 'src/utils/numbers';
 import type { Item5e } from 'src/types/item.types';
-import { ActorBaseDragAndDropMixin } from 'src/mixins/ActorBaseDragAndDropMixin';
+import { Tidy5eActorSheetBaseMixin } from 'src/mixins/Tidy5eActorSheetBaseMixin';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { Container } from 'src/features/containers/Container';
@@ -57,7 +57,7 @@ type MemberStats = {
   vehicleCount: number;
 };
 
-export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
+export class Tidy5eGroupSheet extends Tidy5eActorSheetBaseMixin(
   SvelteApplicationMixin<GroupSheetClassicContext>(
     foundry.applications.sheets.ActorSheetV2
   )
@@ -93,8 +93,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       positioned: true,
       resizable: true,
       controls: [
-        ...foundry.applications.sheets.ActorSheetV2.DEFAULT_OPTIONS.window
-          .controls,
+        ...(this.ACTOR_DEFAULT_OPTIONS?.window?.controls ?? []),
         {
           action: 'openTabSelection',
           icon: 'fas fa-file-invoice',
@@ -112,6 +111,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       },
     ],
     actions: {
+      ...this.ACTOR_DEFAULT_OPTIONS?.actions,
       openTabSelection: async function () {
         new TabSelectionFormApplication(this.actor).render(true);
       },
