@@ -9,7 +9,6 @@
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import SheetEditModeToggle from '../actor/SheetEditModeToggle.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActorProfile from '../actor/ActorProfile.svelte';
   import ActorMovement from '../actor/ActorMovement.svelte';
@@ -163,20 +162,7 @@
   </div>
 </header>
 
-<Tabs tabs={$context.tabs} bind:selectedTabId>
-  <svelte:fragment slot="tab-end">
-    {#if $context.editable}
-      <SheetEditModeToggle
-        hint={$settingStore.permanentlyUnlockCharacterSheetForGm &&
-        FoundryAdapter.userIsGm()
-          ? localize(
-              'TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM.title',
-            )
-          : null}
-      />
-    {/if}
-  </svelte:fragment>
-</Tabs>
+<Tabs tabs={$context.tabs} bind:selectedTabId />
 
 <section class="tidy-sheet-body">
   <TabContents tabs={$context.tabs} {selectedTabId} />

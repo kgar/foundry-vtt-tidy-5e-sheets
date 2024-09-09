@@ -71,6 +71,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
 
   constructor(...args: any[]) {
     super(...args);
+    this._useHeaderSheetLock = true;
 
     this._supportedItemTypes = new Set(Inventory.getDefaultInventoryTypes());
     this._supportedItemTypes.add(CONSTANTS.ITEM_TYPE_SPELL);

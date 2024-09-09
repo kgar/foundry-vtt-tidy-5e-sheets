@@ -9,6 +9,8 @@ import {
 import { debug, error } from 'src/utils/logging';
 import type { SvelteComponent } from 'svelte';
 import { writable, type Unsubscriber, type Writable } from 'svelte/store';
+import SheetHeaderEditModeToggle from 'src/sheets/shared/SheetHeaderEditModeToggle.svelte';
+import { CONSTANTS } from 'src/constants';
 
 /**
  * A context-oriented Svelte mixin to provide Application V2 windows with Svelte integration.
@@ -19,9 +21,12 @@ import { writable, type Unsubscriber, type Writable } from 'svelte/store';
 export function SvelteApplicationMixin<TContext>(BaseApplication: any) {
   class SvelteApplication extends BaseApplication {
     /** The component which represents the UI. */
-    #component: SvelteComponent | null = null;
+    #components: SvelteComponent[] = [];
 
     #customHTMLTags: string[] = ['PROSE-MIRROR'];
+
+    // TODO: Figure out best way to incorporate this into the options.
+    _useHeaderSheetLock: boolean = false;
 
     /**
      * Any subscriptions which should be managed during the lifetime of the application window.
@@ -90,7 +95,18 @@ export function SvelteApplicationMixin<TContext>(BaseApplication: any) {
       options: ApplicationRenderOptions
     ) {
       if (options.isFirstRender) {
-        this.#component = this._createComponent(content);
+        this.#components.push(this._createComponent(content));
+        if (this._useHeaderSheetLock) {
+          const windowHeader = this.element.querySelector('.window-header');
+          const sheetLock = new SheetHeaderEditModeToggle({
+            target: windowHeader,
+            anchor: windowHeader.querySelector('.window-title'),
+            context: new Map<string, any>([
+              [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._store],
+            ]),
+          });
+          this.#components.push(sheetLock);
+        }
       }
     }
 
@@ -151,8 +167,8 @@ export function SvelteApplicationMixin<TContext>(BaseApplication: any) {
 
     async close(options: ApplicationClosingOptions = {}) {
       this.#subscriptionsService.unsubscribeAll();
-      this.#component?.$destroy();
-      this.#component = null;
+      this.#components.forEach((c) => c.$destroy());
+      this.#components = [];
       await super.close(options);
     }
 

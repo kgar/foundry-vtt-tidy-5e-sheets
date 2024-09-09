@@ -10,6 +10,9 @@
     #f1ebe8 url(../../modules/tidy5e-sheet/images/parchment-texture-bottom.webp)
       no-repeat bottom center / 150% auto;
 
+  // Document V2 sheets need more width to be readable.
+  --minimized-width: 18.75rem;
+
   .window-header:has(+ .controls-dropdown.expanded)
     [data-action='toggleControls'] {
     background: var(--t5e-faint-color);
@@ -237,6 +240,9 @@
   // TODO: Either put the remainder of the partial style imports here, or move the nonstandard style files to another location.
   // Partials - Styles that can be pulled into anything
   @import './partials/colors';
+
+  // Shared
+  @import '../sheets/shared/SheetHeaderEditModeToggle';
 
   // Applications
   @import '../applications/section-config/DocumentTabSectionConfig';
