@@ -74,13 +74,13 @@
 
 // Encounters
 .encounter-member-list-section {
-  --t5e-member-list-portrait-size: 3.5rem;
+  --t5e-member-list-portrait-size: 1.5rem;
 
   .encounter-member-list-item-image {
     width: var(--t5e-member-list-portrait-size);
     height: var(--t5e-member-list-portrait-size);
     flex-basis: var(--t5e-member-list-portrait-size);
-    object-fit: contain;
+    object-fit: cover;
     object-position: center;
   }
   .encounter-member-name {
@@ -143,7 +143,7 @@
   .member-list-item-image {
     width: var(--t5e-member-list-portrait-size);
     height: var(--t5e-member-list-portrait-size);
-    object-fit: contain;
+    object-fit: cover;
     object-position: center;
   }
 
