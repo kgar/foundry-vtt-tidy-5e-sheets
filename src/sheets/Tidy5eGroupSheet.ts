@@ -51,6 +51,7 @@ import { debug, warn } from 'src/utils/logging';
 import { processInputChangeDeltaFromValues } from 'src/utils/form';
 import { isNil } from 'src/utils/data';
 import { formatAsModifier } from 'src/utils/formatting';
+import { ApplicationsManager } from 'src/applications/ApplicationsManager';
 
 type MemberStats = {
   currentHP: number;
@@ -94,6 +95,15 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       frame: true,
       positioned: true,
       resizable: true,
+      controls: [
+        ...foundry.applications.sheets.ActorSheetV2.DEFAULT_OPTIONS.window
+          .controls,
+        {
+          action: 'openThemeSettings',
+          icon: 'fas fa-palette',
+          label: 'TIDY5E.ThemeSettings.SheetMenu.buttonLabel',
+        },
+      ],
     },
     position: {
       width: 600,
@@ -104,6 +114,11 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
         dragSelector: '[data-member-drag]',
       },
     ],
+    actions: {
+      openThemeSettings: async () => {
+        ApplicationsManager.openThemeSettings();
+      },
+    },
   };
 
   // TODO: First render, derive options that come from user preference
