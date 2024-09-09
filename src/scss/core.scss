@@ -402,6 +402,13 @@
   .semibold {
     font-weight: 500;
   }
+
+  .user-select-text * {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
 }
 
 @import './partials/floating-context-menu';
