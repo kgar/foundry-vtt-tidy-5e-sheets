@@ -16,9 +16,6 @@ import type {
   Tab,
   Utilities,
 } from 'src/types/types';
-import GroupMembersTab from './group/tabs/GroupMembersTab.svelte';
-import GroupInventoryTab from './group/tabs/GroupInventoryTab.svelte';
-import GroupDescriptionTab from './group/tabs/GroupDescriptionTab.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type {
   Group5e,
@@ -51,7 +48,7 @@ import { debug, warn } from 'src/utils/logging';
 import { processInputChangeDeltaFromValues } from 'src/utils/form';
 import { isNil } from 'src/utils/data';
 import { formatAsModifier } from 'src/utils/formatting';
-import { ApplicationsManager } from 'src/applications/ApplicationsManager';
+import TabSelectionFormApplication from 'src/applications/tab-selection/TabSelectionFormApplication';
 
 type MemberStats = {
   currentHP: number;
@@ -99,9 +96,9 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
         ...foundry.applications.sheets.ActorSheetV2.DEFAULT_OPTIONS.window
           .controls,
         {
-          action: 'openThemeSettings',
-          icon: 'fas fa-palette',
-          label: 'TIDY5E.ThemeSettings.SheetMenu.buttonLabel',
+          action: 'openTabSelection',
+          icon: 'fas fa-file-invoice',
+          label: 'TIDY5E.TabSelection.MenuOptionText',
         },
       ],
     },
@@ -115,8 +112,8 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       },
     ],
     actions: {
-      openThemeSettings: async () => {
-        ApplicationsManager.openThemeSettings();
+      openTabSelection: async function () {
+        new TabSelectionFormApplication(this.actor).render(true);
       },
     },
   };
@@ -158,34 +155,6 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
   async _prepareContext(
     options: ApplicationRenderOptions
   ): Promise<GroupSheetClassicContext> {
-    // TODO: To runtime
-    const tabs: Tab[] = [
-      {
-        content: {
-          type: 'svelte',
-          component: GroupMembersTab,
-        },
-        id: CONSTANTS.TAB_GROUP_MEMBERS,
-        title: FoundryAdapter.localize('DND5E.Group.Member.other'),
-      },
-      {
-        content: {
-          type: 'svelte',
-          component: GroupInventoryTab,
-        },
-        id: CONSTANTS.TAB_ACTOR_INVENTORY,
-        title: FoundryAdapter.localize('DND5E.Inventory'),
-      },
-      {
-        content: {
-          type: 'svelte',
-          component: GroupDescriptionTab,
-        },
-        id: CONSTANTS.TAB_GROUP_DESCRIPTION,
-        title: FoundryAdapter.localize('DND5E.Description'),
-      },
-    ];
-
     let xp: Group5eXp | undefined = undefined;
     if (!game.settings.get('dnd5e', 'disableExperienceTracking')) {
       xp = this.actor.system.details.xp;
@@ -457,7 +426,7 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
       source: source,
       summary: summary,
       system: this.actor.system,
-      tabs: tabs,
+      tabs: [],
       unlocked: unlocked,
       useClassicControls: true, // TODO: Establish setting for this; and group section in settings
       useRoundedPortraitStyle: [
@@ -468,6 +437,25 @@ export class Tidy5eGroupSheet extends ActorBaseDragAndDropMixin(
     };
 
     await this.#prepareItems(context);
+
+    let tabs = await GroupSheetRuntime.getTabs(context);
+
+    const selectedTabs = TidyFlags.selectedTabs.get(context.actor);
+
+    if (selectedTabs?.length) {
+      tabs = tabs
+        .filter((t) => selectedTabs?.includes(t.id))
+        .sort(
+          (a, b) => selectedTabs.indexOf(a.id) - selectedTabs.indexOf(b.id)
+        );
+    } else {
+      const defaultTabs: string[] = GroupSheetRuntime.getDefaultTabs();
+      tabs = tabs
+        .filter((t) => defaultTabs?.includes(t.id))
+        .sort((a, b) => defaultTabs.indexOf(a.id) - defaultTabs.indexOf(b.id));
+    }
+
+    context.tabs = tabs;
 
     return context;
   }

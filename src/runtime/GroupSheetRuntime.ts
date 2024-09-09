@@ -1,16 +1,4 @@
-import type {
-  CharacterSheetContext,
-  CustomContent,
-  Tab,
-} from 'src/types/types';
-import CharacterAttributesTab from 'src/sheets/character/tabs/CharacterAttributesTab.svelte';
-import ActorInventoryTab from 'src/sheets/actor/tabs/ActorInventoryTab.svelte';
-import CharacterSpellbookTab from 'src/sheets/character/tabs/CharacterSpellbookTab.svelte';
-import CharacterFeaturesTab from 'src/sheets/character/tabs/CharacterFeaturesTab.svelte';
-import CharacterEffectsTab from 'src/sheets/character/tabs/CharacterEffectsTab.svelte';
-import CharacterBiographyTab from 'src/sheets/character/tabs/CharacterBiographyTab.svelte';
-import ActorJournalTab from 'src/sheets/actor/tabs/ActorJournalTab.svelte';
-import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
+import type { CustomContent, Tab } from 'src/types/types';
 import type { RegisteredContent, RegisteredTab } from './types';
 import { CONSTANTS } from 'src/constants';
 import { debug, error, warn } from 'src/utils/logging';
@@ -21,10 +9,11 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import GroupMembersTab from 'src/sheets/group/tabs/GroupMembersTab.svelte';
 import GroupInventoryTab from 'src/sheets/group/tabs/GroupInventoryTab.svelte';
 import GroupDescriptionTab from 'src/sheets/group/tabs/GroupDescriptionTab.svelte';
+import type { GroupSheetClassicContext } from 'src/types/group.types';
 
 export class GroupSheetRuntime {
-  private static _content: RegisteredContent<CharacterSheetContext>[] = [];
-  private static _tabs: RegisteredTab<CharacterSheetContext>[] = [
+  private static _content: RegisteredContent<GroupSheetClassicContext>[] = [];
+  private static _tabs: RegisteredTab<GroupSheetClassicContext>[] = [
     {
       id: CONSTANTS.TAB_GROUP_MEMBERS,
       title: 'DND5E.Group.Member.other',
@@ -55,7 +44,7 @@ export class GroupSheetRuntime {
   ];
 
   static async getContent(
-    context: CharacterSheetContext
+    context: GroupSheetClassicContext
   ): Promise<CustomContent[]> {
     return await CustomContentManager.prepareContentForRender(
       context,
@@ -63,25 +52,25 @@ export class GroupSheetRuntime {
     );
   }
 
-  static async getTabs(context: CharacterSheetContext): Promise<Tab[]> {
+  static async getTabs(context: GroupSheetClassicContext): Promise<Tab[]> {
     return await TabManager.prepareTabsForRender(
       context,
       GroupSheetRuntime._tabs
     );
   }
 
-  static getAllRegisteredTabs(): RegisteredTab<CharacterSheetContext>[] {
+  static getAllRegisteredTabs(): RegisteredTab<GroupSheetClassicContext>[] {
     return [...GroupSheetRuntime._tabs];
   }
 
   static registerContent(
-    registeredContent: RegisteredContent<CharacterSheetContext>
+    registeredContent: RegisteredContent<GroupSheetClassicContext>
   ) {
     this._content.push(registeredContent);
   }
 
   static registerTab(
-    tab: RegisteredTab<CharacterSheetContext>,
+    tab: RegisteredTab<GroupSheetClassicContext>,
     options?: ActorTabRegistrationOptions
   ) {
     const tabExists = GroupSheetRuntime._tabs.some((t) => t.id === tab.id);
@@ -112,5 +101,14 @@ export class GroupSheetRuntime {
       error('An error occurred while searching for a tab title.', false, e);
       debug('Tab title error troubleshooting information', { tabId });
     }
+  }
+
+  // TODO: Move this to a world setting
+  static getDefaultTabs(): string[] {
+    return [
+      CONSTANTS.TAB_GROUP_MEMBERS,
+      CONSTANTS.TAB_ACTOR_INVENTORY,
+      CONSTANTS.TAB_GROUP_DESCRIPTION,
+    ];
   }
 }
