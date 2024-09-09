@@ -68,8 +68,8 @@
           <span class="ac-value">{member.system.attributes.ac.value}</span>
         </AcShieldBase>
         <div class="flex-1">
-          <div>
-            <span class="me-1">
+          <div class="flex-row extra-small-gap">
+            <span>
               <i
                 class="fas fa-eye fa-fw text-body-secondary"
                 title={localize('DND5E.Senses')}
@@ -84,8 +84,8 @@
             </span>
           </div>
           {#if ctx.conditionImmunities.length}
-            <div>
-              <span class="me-1">
+            <div class="flex-row extra-small-gap">
+              <span>
                 <i
                   class="fas fa-shield-virus fa-fw text-body-secondary"
                   title={localize('DND5E.ConImm')}
