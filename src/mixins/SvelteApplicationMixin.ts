@@ -85,6 +85,7 @@ export function SvelteApplicationMixin<TContext>(BaseApplication: any) {
 
     /**
      * Creates and mounts the Svelte component on first render.
+     * Removes handlebars content so that it can be reinserted on the appropriate render hook.
      * @param result not in use by this mixin.
      * @param content the window content area
      * @param options render options
@@ -108,6 +109,15 @@ export function SvelteApplicationMixin<TContext>(BaseApplication: any) {
           this.#components.push(sheetLock);
         }
       }
+
+      
+      // TODO: Capture named input focus
+      // TODO: Handle scroll memoization?
+      
+      // Remove handlebars content so it can be re-added in the render hook
+      this.element
+        .querySelectorAll(CONSTANTS.HTML_DYNAMIC_RENDERING_ATTRIBUTE_SELECTOR)
+        .forEach((el: HTMLElement) => el.remove());
     }
 
     async _renderFrame(options: ApplicationRenderOptions) {
@@ -181,10 +191,17 @@ export function SvelteApplicationMixin<TContext>(BaseApplication: any) {
       const { target } = event;
       if (!target) return;
 
+      // TODO: Consider expanding this logic so that named input elements can also be saved according to their input name.
       if (!this.#customHTMLTags.includes(target.tagName)) return;
 
       const value = target._getValue();
       this.document.update({ [target.name]: value });
+    }
+
+    _onRender(...args: any[]) {
+      super._onRender(...args);
+
+      // TODO: Perform end-of-render tasks like restoring focus and sroll-top.
     }
   }
 

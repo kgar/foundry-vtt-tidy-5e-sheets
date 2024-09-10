@@ -8,6 +8,7 @@ import type {
   ApplicationPosition,
 } from './SvelteApplicationMixin';
 import type { Actor5e } from 'src/types/types';
+import { SettingsProvider } from 'src/settings/settings';
 
 export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
   class Tidy5eActorSheetBase extends DragAndDropMixin(BaseApplication) {
@@ -310,9 +311,17 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
         itemData.type === 'spell' &&
         (isOnInventoryTab || this.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE)
       ) {
+        const options: Record<string, unknown> = {};
+
+        if (SettingsProvider.settings.includeFlagsInSpellScrollCreation.get()) {
+          options.flags = itemData.flags;
+        }
+
         const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(
-          itemData
+          itemData,
+          options
         );
+
         return scroll?.toObject?.();
       }
 
