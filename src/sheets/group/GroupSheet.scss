@@ -74,6 +74,8 @@
 
 // Encounters
 .encounter-member-list-section {
+  --t5e-member-list-portrait-size: 1.5rem;
+
   .tidy-table-cell {
     &,
     button,
@@ -81,8 +83,6 @@
       font-size: 0.75rem;
     }
   }
-
-  --t5e-member-list-portrait-size: 1.5rem;
 
   .encounter-member-list-item-image {
     width: var(--t5e-member-list-portrait-size);

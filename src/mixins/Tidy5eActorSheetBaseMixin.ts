@@ -309,7 +309,9 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
       // Create a Consumable spell scroll on the Inventory tab
       if (
         itemData.type === 'spell' &&
-        (isOnInventoryTab || this.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE)
+        (isOnInventoryTab ||
+          this.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE ||
+          this.actor.type === CONSTANTS.SHEET_TYPE_GROUP)
       ) {
         const options: Record<string, unknown> = {};
 

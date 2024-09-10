@@ -13,7 +13,6 @@ import type {
   ItemCardStore,
   MessageBus,
   MessageBusMessage,
-  Tab,
   Utilities,
 } from 'src/types/types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -112,6 +111,7 @@ export class Tidy5eGroupSheet extends Tidy5eActorSheetBaseMixin(
     ],
     actions: {
       ...this.ACTOR_DEFAULT_OPTIONS?.actions,
+      // TODO: when actor default options are switched to a cafeteria plan of controls and related actions, move this action and its control to the resulting data structure
       openTabSelection: async function () {
         new TabSelectionFormApplication(this.actor).render(true);
       },
@@ -914,24 +914,6 @@ export class Tidy5eGroupSheet extends Tidy5eActorSheetBaseMixin(
     return await this.actor.update({ 'system.members': membersCollection });
   }
 
-  async _onDropItem(event: DragEvent, data: unknown) {
-    if (!this.actor.isOwner) return false;
-    const item = await Item.implementation.fromDropData(data);
-
-    // Handle moving out of container & item sorting
-    if (this.actor.uuid === item.parent?.uuid) {
-      if (item.system.container !== null)
-        await item.update({ 'system.container': null });
-      return FoundryAdapter.onSortItemForActor(
-        this.actor,
-        event,
-        item.toObject()
-      );
-    }
-
-    return this._onDropItemCreate(item);
-  }
-
   async _onDropFolder(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
     data: Record<string, any>
@@ -951,66 +933,6 @@ export class Tidy5eGroupSheet extends Tidy5eActorSheetBaseMixin(
     }
 
     return await super._onDropFolder(event, data);
-  }
-
-  async _onDropItemCreate(
-    itemData: Record<string, any> | Record<string, any>[]
-  ) {
-    let items = itemData instanceof Array ? itemData : [itemData];
-
-    // Filter out items already in containers to avoid creating duplicates
-    const containers = new Set(
-      items.filter((i) => i.type === 'container').map((i) => i._id)
-    );
-    items = items.filter((i) => !containers.has(i.system.container));
-
-    // Create the owned items & contents as normal
-    const toCreate = await dnd5e.documents.Item5e.createWithContents(items, {
-      transformFirst: (item: Item5e) => this._onDropSingleItem(item.toObject()),
-    });
-    return dnd5e.documents.Item5e.createDocuments(toCreate, {
-      pack: this.actor.pack,
-      parent: this.actor,
-      keepId: true,
-    });
-  }
-
-  async _onDropSingleItem(
-    itemData: Record<string, any>
-  ): Promise<object | boolean> {
-    // Check to make sure items of this type are allowed on this actor
-    const isSupportedItemType =
-      this._supportedItemTypes.size === 0 ||
-      this._supportedItemTypes.has(itemData.type);
-
-    if (!isSupportedItemType) {
-      ui.notifications.warn(
-        game.i18n.format('DND5E.ActorWarningInvalidItem', {
-          itemType: game.i18n.localize(CONFIG.Item.typeLabels[itemData.type]),
-          actorType: game.i18n.localize(
-            CONFIG.Actor.typeLabels[this.actor.type]
-          ),
-        })
-      );
-      return false;
-    }
-
-    // Create a Consumable spell scroll on the Inventory tab
-    if (itemData.type === CONSTANTS.ITEM_TYPE_SPELL) {
-      const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(
-        itemData
-      );
-      return scroll?.toObject?.();
-    }
-
-    // Stack identical consumables
-    const stacked = await FoundryAdapter.onDropStackConsumablesForActor(
-      this.actor,
-      itemData
-    );
-    if (stacked) return false;
-
-    return itemData;
   }
 
   // ---------------------------------------------
