@@ -11,6 +11,18 @@ import type { SvelteComponent } from 'svelte';
 import { writable, type Unsubscriber, type Writable } from 'svelte/store';
 import SheetHeaderEditModeToggle from 'src/sheets/shared/SheetHeaderEditModeToggle.svelte';
 import { CONSTANTS } from 'src/constants';
+import {
+  CustomContentRendererV2,
+  type RenderedSheetPart,
+} from 'src/sheets/CustomContentRendererV2';
+import type { CustomContent, Tab } from 'src/types/types';
+import { delay } from 'src/utils/asynchrony';
+import type { RegisteredContent } from 'src/runtime/types';
+
+type RenderResult<TContext> = {
+  customContents: RenderedSheetPart[];
+  context: TContext;
+};
 
 /**
  * A context-oriented Svelte mixin to provide Application V2 windows with Svelte integration.
@@ -18,12 +30,20 @@ import { CONSTANTS } from 'src/constants';
  * @param BaseApplication the application which should adopt this mixin functionality.
  * @returns the resulting application with this mixin functionality applied.
  */
-export function SvelteApplicationMixin<TContext>(BaseApplication: any) {
+export function SvelteApplicationMixin<
+  TContext extends Partial<{
+    tabs: Tab[];
+    customContent: RegisteredContent<TContext>[];
+  }>
+>(BaseApplication: any) {
   class SvelteApplication extends BaseApplication {
     /** The component which represents the UI. */
     #components: SvelteComponent[] = [];
 
     #customHTMLTags: string[] = ['PROSE-MIRROR'];
+
+    #customContentRenderer: CustomContentRendererV2 =
+      new CustomContentRendererV2();
 
     // TODO: Figure out best way to incorporate this into the options.
     _useHeaderSheetLock: boolean = false;
@@ -77,21 +97,62 @@ export function SvelteApplicationMixin<TContext>(BaseApplication: any) {
     /**
      * Triggers possible reactive rendering by updating the application store
      * with the latest context data.
+     *
+     * Renders non-Svelte sheet parts in preparation for injecting custom content during the HTML replacement phase.
+     *
+     * @returns any non-Svelte sheet parts that need to be rendered to the sheet.
      */
-    async _renderHTML(context: TContext, _options: ApplicationRenderOptions) {
+    async _renderHTML(
+      context: TContext,
+      options: ApplicationRenderOptions
+    ): Promise<RenderResult<TContext>> {
       debug('Group Sheet context data', context);
       this._store.set(context);
+
+      // Allow svelte to process its synchronous microtask changes before entertaining custom content.
+      await delay(0);
+
+      let result: RenderResult<TContext> = {
+        context: context,
+        customContents: [],
+      };
+
+      try {
+        const renderedTabParts = context.tabs
+          ? await this.#customContentRenderer.renderTabContents(
+              context.tabs,
+              context,
+              options
+            )
+          : [];
+        const renderedContentParts = context.customContent
+          ? await this.#customContentRenderer.renderCustomContent(
+              context.customContent,
+              context,
+              options
+            )
+          : [];
+        result.customContents = [...renderedTabParts, ...renderedContentParts];
+      } catch (e) {
+        error(
+          'An error occurred while rendering custom tabs and content.',
+          false,
+          e
+        );
+      }
+
+      return result;
     }
 
     /**
      * Creates and mounts the Svelte component on first render.
      * Removes handlebars content so that it can be reinserted on the appropriate render hook.
-     * @param result not in use by this mixin.
+     * @param result rendered sheets parts which are ready to be placed on the page
      * @param content the window content area
      * @param options render options
      */
     _replaceHTML(
-      _result: any,
+      result: RenderResult<TContext>,
       content: HTMLElement,
       options: ApplicationRenderOptions
     ) {
@@ -110,14 +171,22 @@ export function SvelteApplicationMixin<TContext>(BaseApplication: any) {
         }
       }
 
-      
       // TODO: Capture named input focus
       // TODO: Handle scroll memoization?
-      
-      // Remove handlebars content so it can be re-added in the render hook
-      this.element
-        .querySelectorAll(CONSTANTS.HTML_DYNAMIC_RENDERING_ATTRIBUTE_SELECTOR)
-        .forEach((el: HTMLElement) => el.remove());
+      try {
+        this.#customContentRenderer.replaceCustomContent(
+          result.customContents,
+          this,
+          result.context,
+          options
+        );
+      } catch (e) {
+        error(
+          'An error occured while replacing custom content on the sheet.',
+          false,
+          e
+        );
+      }
     }
 
     async _renderFrame(options: ApplicationRenderOptions) {
@@ -131,6 +200,18 @@ export function SvelteApplicationMixin<TContext>(BaseApplication: any) {
           this.actor.type,
           SettingsProvider.settings.colorScheme.get(),
           element
+        );
+
+        // Support injected named inputs
+        element.addEventListener(
+          'change',
+          (ev: InputEvent & { target: HTMLElement }) => {
+            if (
+              ev.target.matches('input[name], textarea[name], select[name]')
+            ) {
+              this.submit();
+            }
+          }
         );
       } catch (e) {
         error(

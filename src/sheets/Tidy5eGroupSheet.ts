@@ -388,6 +388,7 @@ export class Tidy5eGroupSheet extends Tidy5eActorSheetBaseMixin(
         uncontainedItems
       ),
       currentHP: stats.currentHP,
+      customContent: GroupSheetRuntime.content,
       descriptionFullEnrichedHtml: descriptionFullEnrichedHtml,
       disableExperience: FoundryAdapter.getSystemSetting(
         CONSTANTS.SYSTEM_SETTING_DISABLE_EXPERIENCE_TRACKING

@@ -236,9 +236,7 @@ export class Tidy5eSheetsApi {
    *       tabId: 'my-module-id-registered-character-tab',
    *       getData: async (data) => {
    *         data['my-message'] = 'Hello, world! 🌊🏄‍♂️';
-   *         return new Promise((resolve) => {
-   *           resolve(data);
-   *         });
+   *         return Promise.resolve(data);
    *       },
    *       onRender(params) {
    *         const myTab = $(params.tabContentsElement);
@@ -259,9 +257,7 @@ export class Tidy5eSheetsApi {
    *       tabId: api.constants.TAB_ID_CHARACTER_INVENTORY,
    *       getData: async (data) => {
    *         data['my-message'] = 'Hello, world! 🌊🏄‍♂️';
-   *         return new Promise((resolve) => {
-   *           resolve(data);
-   *         });
+   *         return Promise.resolve(data);
    *       },
    *       onRender(params) {
    *         const myTab = $(params.tabContentsElement);
@@ -317,9 +313,7 @@ export class Tidy5eSheetsApi {
    *       tabId: 'my-module-id-registered-group-tab',
    *       getData: async (data) => {
    *         data['my-message'] = 'Hello, world! 🌊🏄‍♂️';
-   *         return new Promise((resolve) => {
-   *           resolve(data);
-   *         });
+   *         return Promise.resolve(data);
    *       },
    *       onRender(params) {
    *         const myTab = $(params.tabContentsElement);
@@ -340,9 +334,7 @@ export class Tidy5eSheetsApi {
    *       tabId: api.constants.TAB_ID_GROUP_INVENTORY,
    *       getData: async (data) => {
    *         data['my-message'] = 'Hello, world! 🌊🏄‍♂️';
-   *         return new Promise((resolve) => {
-   *           resolve(data);
-   *         });
+   *         return Promise.resolve(data);
    *       },
    *       onRender(params) {
    *         const myTab = $(params.tabContentsElement);
@@ -480,6 +472,56 @@ export class Tidy5eSheetsApi {
     }
 
     CharacterSheetRuntime.registerContent(registeredContent);
+  }
+
+  /**
+   * Adds custom content to player group sheets at `position` relative to `selector`.
+   *
+   * @param content the information necessary to render custom content
+   * @param options custom content registration options
+   * @returns void
+   *
+   * @example registering an icon next to the group sheet name
+   * ```js
+   * Hooks.once("tidy5e-sheet.ready", (api) => {
+   *   api.registerGroupContent(
+   *     new api.models.HtmlContent({
+   *       html: `<a title="Example Button" class="my-custom-icon"><i class="fas fa-user"></i></a>`,
+   *       injectParams: {
+   *         selector: api.getSheetPartSelector(
+   *           api.constants.SHEET_PARTS.NAME_CONTAINER
+   *         ),
+   *         position: "beforebegin",
+   *       },
+   *       onContentReady: (params) => {
+   *         console.log("content ready to render", params);
+   *         console.log("my content", params.content);
+   *       },
+   *       onRender: (params) => {
+   *         params.element
+   *           .querySelector(".my-custom-icon")
+   *           .addEventListener("click", () => alert("Clicked custom PC icon"));
+   *       },
+   *     })
+   *   );
+   * });
+   * ```
+   */
+  registerGroupContent(
+    content: SupportedContent,
+    options?: ContentRegistrationOptions
+  ) {
+    const registeredContent = CustomContentManager.mapToRegisteredContent(
+      content,
+      options?.layout
+    );
+
+    if (!registeredContent) {
+      warn('Unable to register content. Content type not supported.');
+      return;
+    }
+
+    GroupSheetRuntime.registerContent(registeredContent);
   }
 
   /**
@@ -713,9 +755,7 @@ export class Tidy5eSheetsApi {
    *       tabId: 'my-module-id-registered-npc-tab',
    *       getData: async (data) => {
    *         data['my-message'] = 'Hello, world! 🌊🏄‍♂️';
-   *         return new Promise((resolve) => {
-   *           resolve(data);
-   *         });
+   *         return Promise.resolve(data);
    *       },
    *       onRender(params) {
    *         const myTab = $(params.tabContentsElement);
@@ -766,9 +806,7 @@ export class Tidy5eSheetsApi {
    *       tabId: 'my-module-id-registered-vehicle-tab',
    *       getData: async (data) => {
    *         data['my-message'] = 'Hello, world! 🌊🏄‍♂️';
-   *         return new Promise((resolve) => {
-   *           resolve(data);
-   *         });
+   *         return Promise.resolve(data);
    *       },
    *       onRender(params) {
    *         const myTab = $(params.tabContentsElement);

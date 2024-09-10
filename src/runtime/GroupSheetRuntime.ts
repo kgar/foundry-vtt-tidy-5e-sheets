@@ -43,13 +43,8 @@ export class GroupSheetRuntime {
     },
   ];
 
-  static async getContent(
-    context: GroupSheetClassicContext
-  ): Promise<CustomContent[]> {
-    return await CustomContentManager.prepareContentForRender(
-      context,
-      GroupSheetRuntime._content
-    );
+  static get content(): RegisteredContent<GroupSheetClassicContext>[] {
+    return this._content;
   }
 
   static async getTabs(context: GroupSheetClassicContext): Promise<Tab[]> {

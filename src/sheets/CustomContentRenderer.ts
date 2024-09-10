@@ -107,7 +107,7 @@ export class CustomContentRenderer {
           (isFullRender || tab.content.renderScheme === 'handlebars')
         ) {
           tabEl.innerHTML = tab.content.html;
-        }
+        } 
 
         if (tab.onRender) {
           tab.onRender({
