@@ -34,7 +34,7 @@ sectionsTest.describe(
           },
         }),
         sheetHelper: sheetHelper,
-        tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+        tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
       });
     });
 
@@ -86,7 +86,7 @@ sectionsTest.describe(
           },
         }),
         sheetHelper: sheetHelper,
-        tabId: CONSTANTS.TAB_NPC_INVENTORY,
+        tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
       });
     });
 
@@ -152,7 +152,7 @@ sectionsTest.describe(
         itemRef: itemRef,
         sectionKey: sectionKey,
         sheetHelper: new SheetHelper(sectionPage, data.sectionTestCharacter),
-        tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+        tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
       });
     });
 
@@ -194,7 +194,7 @@ sectionsTest.describe(
         itemRef: itemRef,
         sectionKey: sectionKey,
         sheetHelper: new SheetHelper(sectionPage, data.sectionTestNpc),
-        tabId: CONSTANTS.TAB_NPC_INVENTORY,
+        tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
       });
     });
 

@@ -2,7 +2,11 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type Actor5e } from 'src/types/types';
-  import type { ActorSheetContext, ContextMenuOption } from 'src/types/types';
+  import type {
+    ActorSheetContextV1,
+    ActorSheetContextV2,
+    ContextMenuOption,
+  } from 'src/types/types';
   import { isNil } from 'src/utils/data';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -13,11 +17,15 @@
   export let actor: Actor5e;
   export let useHpOverlay: boolean;
 
-  let context = getContext<Readable<ActorSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getContext<
+    Readable<ActorSheetContextV1 | ActorSheetContextV2<any>>
+  >(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
 
   const localize = FoundryAdapter.localize;
+
+  $: actorImageTitle = $context.unlocked
+    ? `${localize('TIDY5E.EditSheetImageHint')} / ${localize('TIDY5E.SheetImageOptionsHint')}`
+    : `${localize('TIDY5E.PreviewSheetImageHint')} / ${localize('TIDY5E.SheetImageOptionsHint')}`;
 
   function openPortraitPicker(
     event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
@@ -46,7 +54,17 @@
   ) {
     switch (event.button) {
       case CONSTANTS.MOUSE_BUTTON_MAIN:
-        openPortraitPicker(event);
+        if ($context.unlocked) {
+          openPortraitPicker(event);
+        } else {
+          FoundryAdapter.renderImagePopout($context.actor.img, {
+            title: FoundryAdapter.localize('TIDY5E.PortraitTitle', {
+              subject: $context.actor.name,
+            }),
+            shareable: true,
+            uuid: $context.actor.uuid,
+          });
+        }
         break;
     }
   }
@@ -95,9 +113,7 @@
       class="actor-image"
       src={actor.img}
       alt={actor.name}
-      title={localize('TIDY5E.EditActorImage') +
-        ' / ' +
-        localize('TIDY5E.ShowActorImage')}
+      title={actorImageTitle}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTOR_PORTRAIT_IMAGE}
     />
   </div>

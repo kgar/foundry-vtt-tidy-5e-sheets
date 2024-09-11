@@ -28,7 +28,6 @@
   export let tooltip: string | null = null;
   export let id: string | null = null;
   export let dataset: Record<string, unknown> | null = null;
-  export let cssClass: string | null = null;
   export let maxlength: number | null = null;
   export let ariaDescribedBy: string | null = null;
   export let selectOnFocus: boolean = false;
@@ -119,7 +118,7 @@
   {placeholder}
   data-tooltip={activeEffectApplied ? overrideTooltip : tooltip}
   {...actualDataset}
-  class={cssClass}
+  class={$$restProps.class ?? ''}
   {maxlength}
   aria-describedby={ariaDescribedBy}
   {title}

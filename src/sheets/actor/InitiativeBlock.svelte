@@ -4,7 +4,7 @@
   import BlockTitle from './RollableBlockTitle.svelte';
   import BlockScore from './BlockScore.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import type { ActorSheetContext } from 'src/types/types';
+  import type { ActorSheetContextV1 } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import { settingStore } from 'src/settings/settings';
@@ -12,7 +12,7 @@
 
   export let initiative: { total: number; bonus: number };
 
-  let context = getContext<Readable<ActorSheetContext>>(
+  let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
@@ -34,7 +34,7 @@
     <TextInput
       document={$context.actor}
       field="system.attributes.init.bonus"
-      cssClass="ini-mod"
+      class="ini-mod"
       placeholder="0"
       selectOnFocus={true}
       allowDeltaChanges={true}

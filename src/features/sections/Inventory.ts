@@ -5,13 +5,8 @@ import type {
   ContainerCapacityContext,
   ContainerPanelItemContext,
   InventorySection,
-  SortMode,
 } from 'src/types/types';
 import { error } from 'src/utils/logging';
-import type { SectionConfig, SheetTabSectionConfigs } from './sections.types';
-import { SheetSections } from './SheetSections';
-import { ItemUtils } from 'src/utils/ItemUtils';
-import type { ItemFilterService } from '../filtering/ItemFilterService';
 
 export class Inventory {
   static getDefaultInventoryTypes(): string[] {

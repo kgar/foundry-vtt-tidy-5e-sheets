@@ -41,14 +41,14 @@ export class CharacterSheetRuntime {
       layout: 'classic',
     },
     {
-      id: CONSTANTS.TAB_CHARACTER_INVENTORY,
+      id: CONSTANTS.TAB_ACTOR_INVENTORY,
       title: 'DND5E.Inventory',
       content: {
         component: ActorInventoryTab,
         type: 'svelte',
         getProps() {
           return {
-            tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+            tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
           };
         },
       },

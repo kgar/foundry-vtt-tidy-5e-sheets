@@ -1,12 +1,11 @@
 <script lang="ts">
-  export let borderColor: 'faint' | 'light' = 'faint';
-  export let cssClass: string | null = null;
+  export let borderColor: 'faint' | 'light' | 'separator' = 'faint';
 </script>
 
 <div
   aria-hidden="true"
   role="presentation"
-  class="horizontal-line-separator {borderColor} {cssClass}"
+  class="horizontal-line-separator {borderColor} {$$restProps.class ?? ''}"
 />
 
 <style lang="scss">
@@ -20,6 +19,10 @@
   }
 
   .light {
+    background: var(--t5e-separator-color);
+  }
+
+  .separator {
     background: var(--t5e-separator-color);
   }
 </style>

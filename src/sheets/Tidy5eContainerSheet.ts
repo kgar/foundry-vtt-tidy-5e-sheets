@@ -85,13 +85,21 @@ export class Tidy5eKgarContainerSheet
 
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
-      classes: ['tidy5e-sheet', 'sheet', 'item', 'container'],
+      classes: [
+        CONSTANTS.MODULE_ID,
+        'sheet',
+        'item',
+        'container',
+        'app-v1',
+        CONSTANTS.SHEET_LAYOUT_CLASSIC,
+      ],
     });
   }
 
   component: SvelteComponent | undefined;
   activateListeners(html: any) {
     let first = true;
+    this.subscriptionsService.unsubscribeAll();
     this.subscriptionsService.registerSubscriptions(
       this.itemFilterService.filterData$.subscribe(() => {
         if (first) return;
@@ -131,6 +139,7 @@ export class Tidy5eKgarContainerSheet
         CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
         this.inlineContainerToggleService,
       ],
+      [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.itemFilterService],
       [
         CONSTANTS.SVELTE_CONTEXT.ON_FILTER,
         this.itemFilterService.onFilter.bind(this.itemFilterService),
@@ -325,14 +334,33 @@ export class Tidy5eKgarContainerSheet
     }
   }
 
+  /**
+   * A boolean which gates double-rendering and prevents a second
+   * colliding render from triggering an infamous
+   * "One of original or other are not Objects!" error.
+   */
+  private tidyRendering = false;
+
+  render(...args: unknown[]) {
+    debug('Sheet render begin');
+    this.tidyRendering = true;
+    super.render(...args);
+  }
+
   private _renderMutex = new AsyncMutex();
   async _render(force?: boolean, options = {}) {
-    if (typeof options !== 'object') {
-      options = {};
-    }
     await this._renderMutex.lock(async () => {
+      const doubleRenderDetected =
+        this.options.token && this.tidyRendering === false;
+
+      if (doubleRenderDetected) {
+        return;
+      }
+
       await this._renderSheet(force, options);
     });
+    this.tidyRendering = false;
+    debug('Sheet render end');
   }
 
   private async _renderSheet(force?: boolean, options = {}) {
@@ -345,6 +373,7 @@ export class Tidy5eKgarContainerSheet
       await super._render(force, options);
       applySheetAttributesToWindow(
         this.item.documentName,
+        this.item.uuid,
         this.item.type,
         SettingsProvider.settings.colorScheme.get(),
         this.element.get(0)

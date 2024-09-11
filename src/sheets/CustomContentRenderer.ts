@@ -1,4 +1,5 @@
 import { CONSTANTS } from 'src/constants';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { CustomContent, Tab } from 'src/types/types';
 import { delay } from 'src/utils/asynchrony';
 import {
@@ -30,17 +31,19 @@ export class CustomContentRenderer {
       customContent,
     } = params;
 
-    if (!element?.get(0)) {
+    const htmlElement = FoundryAdapter.getElementFromAppV1OrV2(element);
+    if (!htmlElement) {
       debug('Element not available when it normally should be', params);
       return;
     }
 
-    element
-      .get(0)
-      .querySelectorAll(CONSTANTS.HTML_DYNAMIC_RENDERING_ATTRIBUTE_SELECTOR)
+    htmlElement
+      .querySelectorAll<HTMLElement>(
+        CONSTANTS.HTML_DYNAMIC_RENDERING_ATTRIBUTE_SELECTOR
+      )
       .forEach((el: HTMLElement) => el.remove());
 
-    const sheetEl = element.get(0);
+    const sheetEl = htmlElement;
     await CustomContentRenderer._renderTabs(
       tabs,
       sheetEl,
@@ -104,7 +107,7 @@ export class CustomContentRenderer {
           (isFullRender || tab.content.renderScheme === 'handlebars')
         ) {
           tabEl.innerHTML = tab.content.html;
-        }
+        } 
 
         if (tab.onRender) {
           tab.onRender({

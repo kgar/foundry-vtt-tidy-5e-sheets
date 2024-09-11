@@ -25,7 +25,7 @@ sectionsTest.describe('character', () => {
       },
       sectionKey: 'TIDY5E.LocalizationTestKey',
       sectionLabel: 'Localization Test Key',
-      tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+      tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
     },
     {
       itemCreationArgs: {
@@ -107,7 +107,7 @@ sectionsTest.describe('NPC', () => {
       },
       sectionKey: 'TIDY5E.LocalizationTestKey',
       sectionLabel: 'Localization Test Key',
-      tabId: CONSTANTS.TAB_NPC_INVENTORY,
+      tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
     },
     ...NpcSheetSections.abilitiesItemTypes.map((itemType) => ({
       itemCreationArgs: {

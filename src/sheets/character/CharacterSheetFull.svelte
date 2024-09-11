@@ -11,7 +11,7 @@
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import SpecialSaves from '../actor/SpecialSaves.svelte';
   import { CONSTANTS } from 'src/constants';
-  import AllowEditLock from 'src/sheets/actor/AllowEditLock.svelte';
+  import SheetEditModeToggle from 'src/sheets/actor/SheetEditModeToggle.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import type { Readable } from 'svelte/store';
@@ -89,7 +89,7 @@
               <TextInput
                 document={$context.actor}
                 field="system.details.xp.value"
-                cssClass="current-xp"
+                class="current-xp"
                 value={$context.system.details.xp.value}
                 placeholder="0"
                 selectOnFocus={true}
@@ -102,7 +102,7 @@
                 <TextInput
                   document={$context.actor}
                   field="system.details.xp.max"
-                  cssClass="max-xp max"
+                  class="max-xp max"
                   value={$context.system.details.xp.max}
                   placeholder="0"
                   selectOnFocus={true}
@@ -216,14 +216,14 @@
     </section>
     <div
       role="presentation"
-      class="flex-row extra-small-gap justify-content-space-between"
+      class="header-line-margin flex-row extra-small-gap justify-content-space-between"
     >
       <ActorMovement />
       {#if $context.hasSpecialSaves}
         <SpecialSaves />
       {/if}
     </div>
-    <HorizontalLineSeparator borderColor="light" />
+    <HorizontalLineSeparator class="header-line-margin-left" borderColor="light" />
     <!-- AC  -->
     <ActorHeaderStats
       {abilities}
@@ -236,7 +236,7 @@
 <Tabs tabs={$context.tabs} bind:selectedTabId>
   <svelte:fragment slot="tab-end">
     {#if $context.editable}
-      <AllowEditLock
+      <SheetEditModeToggle
         hint={$settingStore.permanentlyUnlockCharacterSheetForGm &&
         FoundryAdapter.userIsGm()
           ? localize(

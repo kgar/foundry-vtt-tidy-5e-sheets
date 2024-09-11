@@ -2,6 +2,7 @@ import type { ComponentType } from 'svelte';
 import type { OnRenderTabParams } from 'src/types/types';
 import type { RenderScheme } from '../api.types';
 import { CustomTabBase, type CustomTabTitle } from './CustomTabBase';
+import { warn } from 'src/utils/logging';
 
 /**
  * The information necessary for rendering a svelte-based tab.
@@ -44,7 +45,17 @@ export class SvelteTab extends CustomTabBase {
    */
   renderScheme?: RenderScheme = 'force';
   tabContentsClasses?: string[] = [];
-  activateDefaultSheetListeners?: boolean | undefined = false;
+
+  private _activateDefaultSheetListeners?: boolean | undefined = false;
+  public get activateDefaultSheetListeners(): boolean | undefined {
+    return this._activateDefaultSheetListeners;
+  }
+  public set activateDefaultSheetListeners(value: boolean | undefined) {
+    warn(
+      'Tidy is moving to Application V2, and there will no longer be any default sheet listeners. Be sure to provide your own event handling for the content that is injected.'
+    );
+    this._activateDefaultSheetListeners = value;
+  }
 
   constructor(props?: Partial<SvelteTab>) {
     super();
@@ -64,10 +75,10 @@ export class SvelteTab extends CustomTabBase {
   /**
    * An optional function that provides the relevant svelte context map and
    * expects the component's ideal context map in return.
-   * 
-   * @remarks 
-   * For most sheets, a guaranteed entry in the context map is a readable store 
-   * of the sheet's application context 
+   *
+   * @remarks
+   * For most sheets, a guaranteed entry in the context map is a readable store
+   * of the sheet's application context
    * (item sheet context, character sheet context, NPC sheet context, etc.).
    */
   getContext?: (context: Map<any, any>) => Map<any, any>;

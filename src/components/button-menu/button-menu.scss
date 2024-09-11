@@ -10,7 +10,7 @@
     color: var(--t5e-secondary-color);
     border: none;
     text-align: center;
-    background: var(--t5e-faint-color);
+    transition: background-color, 0.3s;
 
     &.primary {
       color: var(--t5e-primary-color);
@@ -26,6 +26,24 @@
 
     i {
       margin: 0;
+    }
+
+    &.solid {
+      background: var(--t5e-faint-color);
+    }
+
+    &:is(.transparent-inline, .transparent-inline-icon) {
+      padding: 0;
+      margin: 0;
+      background: none;
+    }
+
+    &.transparent-inline-icon {
+      color: var(--t5e-icon-font-color);
+
+      &:hover {
+        color: var(--t5e-icon-hover-color);
+      }
     }
   }
 

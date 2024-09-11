@@ -12,12 +12,13 @@
   font-style: normal;
 }
 
-:where(.tidy5e-sheet) {
-  @import './partials/reset';
+:where(.tidy5e-sheet.app-v1.classic) {
+  @import './partials/reset-v1';
   @import './partials/variables';
+  @import './partials/text';
 }
 
-.tidy5e-sheet {
+.tidy5e-sheet:where(.app-v1.classic) {
   .window-content {
     background: url(../../modules/tidy5e-sheet/images/parchment-texture-top.webp)
         no-repeat top center / 150% auto,
@@ -195,7 +196,6 @@
     padding: 0.125rem 0.25rem;
     background: var(--t5e-faint-color);
     border: 0.0625rem solid var(--t5e-separator-color);
-    white-space: pre-wrap;
     line-height: 1rem;
     border-radius: 0.3125rem;
     font-size: 0.75rem;
@@ -205,26 +205,40 @@
     border: none;
   }
 
+  // TODO: Either put the remainder of the partial style imports here, or move the nonstandard style files to another location.
+  // Partials - Styles that can be pulled into anything
+  @import './partials/colors';
+
+  // Applications
+  @import '../applications/section-config/DocumentTabSectionConfig';
+
   // Components
   @import '../components/button-menu/button-menu.scss';
   @import '../components/toggle/toggles.scss';
   @import '../components/table/tidy-table.scss';
   @import '../components/filter/filter.scss';
+  @import '../components/pips/pips.scss';
+  @import '../components/listbox/listbox.scss';
 
+  // Tooltips
+  @import '../tooltips/tooltips.scss';
+
+  // TODO: Remove these layers of specificity and get everything working in concert better. These should come before all component styles and have the lowest acceptable specificity.
   &.sheet form,
   &.application-shell {
     @import './partials/buttons';
     @import './partials/checkboxes';
   }
 
-  // TODO: Make a whole suite of classes in a dedicated partial that can set colors, backgrounds, background-colors, etc., for the theme colors.
-  .primary-accent-color {
-    color: var(--t5e-primary-accent-color);
-  }
-
-  // TODO: Make a whole suite of classes in a dedicated partial that can set colors, backgrounds, background-colors, etc., for the theme colors.
-  .primary-accent-color {
-    color: var(--t5e-primary-accent-color);
+  // TODO: Remove these layers of specificity and get everything working in concert better. These should come after partial utility styles and general component styles. They can have a high level of specificity as needed.
+  &.sheet form {
+    // Components - Actor-specific
+    @import '../sheets/actor/ActorMovement.scss';
+    @import '../sheets/actor/ActorProfile.scss';
+    @import '../sheets/actor/AttributeBlock.scss';
+    @import '../sheets/actor/AttunementTracker.scss';
+    @import '../sheets/actor/Currency.scss';
+    @import '../sheets/actor/SheetEditModeToggle.scss';
   }
 
   /* Unidentified Item Concealment */
@@ -380,13 +394,6 @@
     }
   }
 
-  /* Spacing utilities */
-
-  // TODO: "draw more inspiration" from https://getbootstrap.com/docs/5.3/utilities/spacing/
-  .p-1 {
-    padding: 0.25rem;
-  }
-
   /* Text utilities */
   .capitalize {
     text-transform: capitalize;
@@ -395,6 +402,17 @@
   .semibold {
     font-weight: 500;
   }
+
+  .user-select-text * {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
 }
 
 @import './partials/floating-context-menu';
+
+// Until all sheets move to App V2, it will be sideloaded with core.scss.
+// When done, it will *be* core-classic.scss
+@import './core-classic-appv2.scss';

@@ -40,7 +40,7 @@
       value={$context.system.attributes.ac.motionless}
       placeholder="&mdash;"
       title={localize('DND5E.ArmorClassMotionless')}
-      cssClass="armor-class-motionless"
+      class="armor-class-motionless"
       selectOnFocus={true}
       disabled={!$context.editable || $context.lockSensitiveFields}
     />

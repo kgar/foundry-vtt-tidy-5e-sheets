@@ -1,3 +1,4 @@
+import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { SvelteComponent } from 'svelte';
 
@@ -12,7 +13,12 @@ export default abstract class SvelteFormApplicationBase extends FormApplication 
   static get defaultOptions() {
     return {
       ...super.defaultOptions,
-      classes: ['tidy5e-sheet', 'application-shell'],
+      classes: [
+        CONSTANTS.MODULE_ID,
+        'application-shell',
+        'app-v1',
+        CONSTANTS.SHEET_LAYOUT_CLASSIC,
+      ],
       submitOnClose: false,
       minimizable: true,
       popOut: true,

@@ -54,7 +54,6 @@
   >(CONSTANTS.SVELTE_CONTEXT.CARD);
   let showSummary = false;
   let chatData: ItemChatData | undefined;
-  let useTransition: boolean = false;
 
   async function toggleSummary() {
     if (!item) {
@@ -110,11 +109,8 @@
 
   function restoreItemSummaryIfExpanded() {
     if (!item) {
-      useTransition = true;
       return;
     }
-
-    useTransition = false;
 
     const isExpandedAtThisLocation = expandedItems?.get(item.id)?.has(location);
 
@@ -122,10 +118,6 @@
       chatData = expandedItemData.get(item.id);
       showSummary = true;
     }
-
-    setTimeout(() => {
-      useTransition = true;
-    });
   }
 
   onMount(() => {
@@ -139,11 +131,7 @@
       }
 
       if (item && showSummary) {
-        item
-          .getChatData({ secrets: item.actor.isOwner })
-          .then((data: ItemChatData) => {
-            chatData = data;
-          });
+        chatData = await item.getChatData({ secrets: item.actor.isOwner });
       } else if (item && !showSummary && chatData) {
         // Reset chat data for non-expanded, hydrated chatData
         // so it rehydrates on next open
@@ -180,11 +168,7 @@
 
     <svelte:fragment slot="after-row">
       <ExpandableContainer expanded={showSummary}>
-        <ItemSummary
-          chatData={chatData ?? emptyChatData}
-          {useTransition}
-          {item}
-        />
+        <ItemSummary chatData={chatData ?? emptyChatData} {item} />
       </ExpandableContainer>
     </svelte:fragment>
   </TidyTableRow>

@@ -8,7 +8,7 @@ import type {
 
 /**
  * API functionality related to the Exhaustion feature.
- * 
+ *
  * @category Configuration
  */
 export class ExhaustionApi {
@@ -53,11 +53,17 @@ export class ExhaustionApi {
   async useSpecificLevelExhaustion(
     params?: UseSpecificLevelExhaustionParams
   ): Promise<void> {
+    const exhaustion = SettingsProvider.settings.exhaustionConfig.get();
+
+    const fallbackHints =
+      exhaustion.type === 'specific' ? exhaustion.hints : [];
+
     const config: SpecificExhaustionConfig = {
       type: 'specific',
-      hints: params?.hints ?? [],
+      hints: params?.hints ?? fallbackHints,
       levels: Math.max(params?.totalLevels ?? 1, 1),
     };
+
     await FoundryAdapter.setTidySetting('exhaustionConfig', config);
   }
 
@@ -97,9 +103,14 @@ export class ExhaustionApi {
   async useSpecificLevelVehicleExhaustion(
     params?: UseSpecificLevelExhaustionParams
   ): Promise<void> {
+    const exhaustion = SettingsProvider.settings.vehicleExhaustionConfig.get();
+
+    const fallbackHints =
+      exhaustion.type === 'specific' ? exhaustion.hints : [];
+
     const config: SpecificExhaustionConfig = {
       type: 'specific',
-      hints: params?.hints ?? [],
+      hints: params?.hints ?? fallbackHints,
       levels: Math.max(params?.totalLevels ?? 1, 1),
     };
     await FoundryAdapter.setTidySetting('vehicleExhaustionConfig', config);

@@ -50,7 +50,6 @@ import { SheetPreferencesService } from 'src/features/user-preferences/SheetPref
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
 import { AsyncMutex } from 'src/utils/mutex';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
-import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPreferencesRuntime';
 import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import { SheetSections } from 'src/features/sections/SheetSections';
@@ -104,7 +103,14 @@ export class Tidy5eVehicleSheet
       SheetPreferencesService.getByType(CONSTANTS.SHEET_TYPE_VEHICLE) ?? {};
 
     return FoundryAdapter.mergeObject(super.defaultOptions, {
-      classes: ['tidy5e-sheet', 'sheet', 'actor', CONSTANTS.SHEET_TYPE_VEHICLE],
+      classes: [
+        CONSTANTS.MODULE_ID,
+        'sheet',
+        'actor',
+        CONSTANTS.SHEET_TYPE_VEHICLE,
+        CONSTANTS.SHEET_LAYOUT_CLASSIC,
+        'app-v1',
+      ],
       width: width ?? 740,
       height: height ?? 810,
       scrollY: ['[data-tidy-track-scroll-y]', '.scroll-container'],
@@ -113,7 +119,12 @@ export class Tidy5eVehicleSheet
 
   component: SvelteComponent | undefined;
   activateListeners(html: { get: (index: 0) => HTMLElement }) {
+    // Document Apps Reactivity
+    game.user.apps[this.id] = this;
+
+    // Subscriptions
     let first = true;
+    this.subscriptionsService.unsubscribeAll();
     this.subscriptionsService.registerSubscriptions(
       this.itemFilterService.filterData$.subscribe(() => {
         if (first) return;
@@ -130,10 +141,6 @@ export class Tidy5eVehicleSheet
           actor: this.actor,
           message: m,
         });
-      }),
-      SheetPreferencesRuntime.getStore().subscribe(() => {
-        if (first) return;
-        this.render();
       })
     );
     first = false;
@@ -149,7 +156,10 @@ export class Tidy5eVehicleSheet
         [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
         [CONSTANTS.SVELTE_CONTEXT.STATS, this.stats],
         [CONSTANTS.SVELTE_CONTEXT.CARD, this.card],
-        [CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE, this.inlineContainerToggleService],
+        [
+          CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
+          this.inlineContainerToggleService,
+        ],
         [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.itemFilterService],
         [
           CONSTANTS.SVELTE_CONTEXT.ON_FILTER,
@@ -160,11 +170,20 @@ export class Tidy5eVehicleSheet
           this.itemFilterService.onFilterClearAll.bind(this.itemFilterService),
         ],
         [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
-        [CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED, this.onTabSelected.bind(this)],
-        [CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TOGGLED, this.onItemToggled.bind(this)],
+        [
+          CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED,
+          this.onTabSelected.bind(this),
+        ],
+        [
+          CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TOGGLED,
+          this.onItemToggled.bind(this),
+        ],
         [CONSTANTS.SVELTE_CONTEXT.LOCATION, ''],
         [CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEMS, new Map(this.expandedItems)],
-        [CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA, new Map(this.expandedItemData)],
+        [
+          CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA,
+          new Map(this.expandedItemData),
+        ],
         [
           CONSTANTS.SVELTE_CONTEXT.ITEM_TABLE_TOGGLES,
           new Map(this.itemTableTogglesCache.itemTableToggles),
@@ -611,14 +630,33 @@ export class Tidy5eVehicleSheet
     }
   }
 
+  /**
+   * A boolean which gates double-rendering and prevents a second
+   * colliding render from triggering an infamous
+   * "One of original or other are not Objects!" error.
+   */
+  private tidyRendering = false;
+
+  render(...args: unknown[]) {
+    debug('Sheet render begin');
+    this.tidyRendering = true;
+    super.render(...args);
+  }
+
   private _renderMutex = new AsyncMutex();
   async _render(force?: boolean, options = {}) {
-    if (typeof options !== 'object') {
-      options = {};
-    }
     await this._renderMutex.lock(async () => {
+      const doubleRenderDetected =
+        this.options.token && this.tidyRendering === false;
+
+      if (doubleRenderDetected) {
+        return;
+      }
+
       await this._renderSheet(force, options);
     });
+    this.tidyRendering = false;
+    debug('Sheet render end');
   }
 
   private async _renderSheet(force?: boolean, options = {}) {
@@ -641,6 +679,7 @@ export class Tidy5eVehicleSheet
       await super._render(force, options);
       applySheetAttributesToWindow(
         this.actor.documentName,
+        this.actor.uuid,
         this.actor.type,
         SettingsProvider.settings.colorScheme.get(),
         this.element.get(0)
@@ -657,7 +696,7 @@ export class Tidy5eVehicleSheet
         super.activateListeners,
         this
       );
-      blurUntabbableButtonsOnClick(this.element);
+      blurUntabbableButtonsOnClick(this.element.get(0));
       return;
     }
 
@@ -757,6 +796,7 @@ export class Tidy5eVehicleSheet
   close(options: unknown = {}) {
     this._destroySvelteComponent();
     this.subscriptionsService.unsubscribeAll();
+    delete game.user.apps[this.id];
     return super.close(options);
   }
 

@@ -1,7 +1,7 @@
 {
     "TIDY5E.PlayerName": "Nombre del jugador",
-    "TIDY5E.EditActorImage": "Click izquierdo: Editar imagen",
-    "TIDY5E.ShowActorImage": "Clic derecho: mostrar ilustración del personaje",
+    "TIDY5E.EditSheetImageHint": "Click izquierdo: Editar imagen",
+    "TIDY5E.SheetImageOptionsHint": "Clic derecho: mostrar ilustración del personaje",
     "TIDY5E.ShowPortraitArt": "Mostrar Retrato",
     "TIDY5E.ShowTokenArt": "Mostrar Token",
     "TIDY5E.ShowItemImage": "Click Derecho: Mostrar imagen del objeto",
@@ -590,10 +590,10 @@
         "AtLeastOneLevelRequiredErrorMessage": "Se requiere al menos un nivel de agotamiento del vehículo.",
         "Header": "Agotamiento del vehículo"
     },
-    "TIDY5E.Tidy5eSheet": "Hoja del personaje de Tidy 5e",
-    "TIDY5E.Tidy5eNPC": "Hoja de PNJ T5E",
-    "TIDY5E.Tidy5eItemSheet": "Hoja de artículos Tidy 5e",
-    "TIDY5E.Tidy5eVehicle": "Hoja del vehículo Tidy 5e",
+    "TIDY5E.Tidy5eCharacterSheetClassic": "Hoja del personaje de Tidy 5e",
+    "TIDY5E.Tidy5eNpcSheetClassic": "Hoja de PNJ T5E",
+    "TIDY5E.Tidy5eItemSheetClassic": "Hoja de artículos Tidy 5e",
+    "TIDY5E.Tidy5eVehicleSheetClassic": "Hoja del vehículo Tidy 5e",
     "TIDY5E.HitDC": "Impacto / CD",
     "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
     "TIDY5E.EnvironmentTooltip": "Ambiente: {environment}",
@@ -741,7 +741,7 @@
     "TIDY5E.ButtonConfirm.Text": "Confirmar",
     "TIDY5E.Commands.HideContainerPanel": "Ocultar el panel del contenedor",
     "TIDY5E.Utilities.MarkAllAsUnidentified": "Marcar todos los artículos como no identificados",
-    "TIDY5E.Tidy5eContainerSheet": "Hoja contenedora Tidy 5e",
+    "TIDY5E.Tidy5eContainerSheetClassic": "Hoja contenedora Tidy 5e",
     "TIDY5E.Commands.ShowContainerPanel": "Mostrar panel del contenedor",
     "TIDY5E.Utilities.GMTools": "Herramientas GM",
     "TIDY5E.Utilities.IdentifyAll": "Identificar todos los artículos",
@@ -811,5 +811,6 @@
     "TIDY5E.Utilities.AssignSpellsToClasses": "Asignar hechizos a las clases",
     "TIDY5E.SpellSourceClassAssignments.Identifier": "Identificador de clase de origen",
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "Aquí aparece el identificador de clase de origen del hechizo. Para asignar un identificador que no posea el personaje, introduce el identificador de clase en este campo de texto.",
-    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Mostrar solo los sin asignar"
+    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Mostrar solo los sin asignar",
+    "TIDY5E.PreviewSheetImageHint": "Clic izquierdo: vista previa de la imagen"
 }

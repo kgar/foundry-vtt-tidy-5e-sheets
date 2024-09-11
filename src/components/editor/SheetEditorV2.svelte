@@ -1,0 +1,48 @@
+<script lang="ts">
+  import { CONSTANTS } from 'src/constants';
+  import { getContext, onMount } from 'svelte';
+  import type { Readable } from 'svelte/store';
+
+  type EditorOptions =
+    any /*foundry.applications.elements.HTMLProseMirrorElement.ProseMirrorInputConfig*/;
+
+  export let field: string;
+  export let content: string;
+  export let enriched: string | null = null;
+  export let editorOptions: EditorOptions = {};
+  export let documentUuid: string;
+
+  // Build Options
+  editorOptions = foundry.utils.mergeObject(
+    {
+      name: field,
+      collaborate: false,
+      compact: false,
+      documentUUID: documentUuid,
+      editable: true,
+      height: 200,
+      toggled: true,
+      value: content,
+    },
+    editorOptions,
+  ) as EditorOptions;
+
+  let proseMirrorContainerEl: HTMLElement;
+
+  // Create Editor element and put it in the contents element.
+  onMount(() => {
+    const element = foundry.applications.elements.HTMLProseMirrorElement.create(
+      foundry.utils.mergeObject(editorOptions, {
+        enriched: enriched ?? content,
+      }),
+    );
+
+    proseMirrorContainerEl.innerHTML = element.outerHTML;
+  });
+</script>
+
+<div
+  style="display: contents;"
+  class={$$restProps.class ?? ''}
+  bind:this={proseMirrorContainerEl}
+></div>

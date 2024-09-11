@@ -50,13 +50,20 @@ export class Tidy5eKgarItemSheet
 
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
-      classes: ['tidy5e-sheet', 'sheet', 'item'],
+      classes: [
+        CONSTANTS.MODULE_ID,
+        'sheet',
+        'item',
+        CONSTANTS.SHEET_LAYOUT_CLASSIC,
+        'app-v1',
+      ],
     });
   }
 
   component: SvelteComponent | undefined;
   activateListeners(html: any) {
     let first = true;
+    this.subscriptionsService.unsubscribeAll();
     this.subscriptionsService.registerSubscriptions(
       settingStore.subscribe((s) => {
         if (first) return;
@@ -169,14 +176,33 @@ export class Tidy5eKgarItemSheet
     return context;
   }
 
+  /**
+   * A boolean which gates double-rendering and prevents a second
+   * colliding render from triggering an infamous
+   * "One of original or other are not Objects!" error.
+   */
+  private tidyRendering = false;
+
+  render(...args: unknown[]) {
+    debug('Sheet render begin');
+    this.tidyRendering = true;
+    super.render(...args);
+  }
+
   private _renderMutex = new AsyncMutex();
   async _render(force?: boolean, options = {}) {
-    if (typeof options !== 'object') {
-      options = {};
-    }
     await this._renderMutex.lock(async () => {
+      const doubleRenderDetected =
+        this.options.token && this.tidyRendering === false;
+
+      if (doubleRenderDetected) {
+        return;
+      }
+
       await this._renderSheet(force, options);
     });
+    this.tidyRendering = false;
+    debug('Sheet render end');
   }
 
   private async _renderSheet(force?: boolean, options = {}) {
@@ -195,6 +221,7 @@ export class Tidy5eKgarItemSheet
       await super._render(force, options);
       applySheetAttributesToWindow(
         this.item.documentName,
+        this.item.uuid,
         this.item.type,
         SettingsProvider.settings.colorScheme.get(),
         this.element.get(0)

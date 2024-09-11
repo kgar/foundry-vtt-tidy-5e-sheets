@@ -30,7 +30,7 @@
     <TextInput
       document={$context.actor}
       field={successesField}
-      cssClass="death-save-result"
+      class="death-save-result"
       selectOnFocus={true}
       allowDeltaChanges={true}
       placeholder="0"
@@ -52,7 +52,7 @@
     <TextInput
       document={$context.actor}
       field={failuresField}
-      cssClass="death-save-result"
+      class="death-save-result"
       selectOnFocus={true}
       allowDeltaChanges={true}
       placeholder="0"

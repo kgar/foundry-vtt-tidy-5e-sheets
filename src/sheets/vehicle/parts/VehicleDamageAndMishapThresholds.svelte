@@ -17,7 +17,7 @@
   <TextInput
     document={$context.actor}
     field="system.attributes.hp.dt"
-    cssClass="damage-threshold"
+    class="damage-threshold"
     placeholder={localize('DND5E.Threshold')}
     value={$context.system.attributes.hp.dt || null}
     allowDeltaChanges={true}
@@ -28,7 +28,7 @@
   <TextInput
     document={$context.actor}
     field="system.attributes.hp.mt"
-    cssClass="mishap-threshold"
+    class="mishap-threshold"
     placeholder={localize('DND5E.VehicleMishap')}
     value={$context.system.attributes.hp.mt || null}
     allowDeltaChanges={true}

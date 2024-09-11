@@ -14,6 +14,7 @@ import { MigrationTally } from 'src/migrations/MigrationTally';
 import { Tidy5eKgarContainerSheet } from './sheets/Tidy5eContainerSheet';
 import { setupModuleIntegrations } from './integration/integration';
 import { TidyHooks } from './foundry/TidyHooks';
+import { Tidy5eGroupSheetClassic } from './sheets/Tidy5eGroupSheetClassic';
 
 Hooks.once('init', () => {
   DocumentSheetConfig.registerSheet(
@@ -22,7 +23,7 @@ Hooks.once('init', () => {
     Tidy5eCharacterSheet,
     {
       types: [CONSTANTS.SHEET_TYPE_CHARACTER],
-      label: 'TIDY5E.Tidy5eSheet',
+      label: 'TIDY5E.Tidy5eCharacterSheetClassic',
     }
   );
 
@@ -32,7 +33,7 @@ Hooks.once('init', () => {
     Tidy5eNpcSheet,
     {
       types: [CONSTANTS.SHEET_TYPE_NPC],
-      label: 'TIDY5E.Tidy5eNPC',
+      label: 'TIDY5E.Tidy5eNpcSheetClassic',
     }
   );
 
@@ -42,7 +43,7 @@ Hooks.once('init', () => {
     Tidy5eVehicleSheet,
     {
       types: [CONSTANTS.SHEET_TYPE_VEHICLE],
-      label: 'TIDY5E.Tidy5eVehicle',
+      label: 'TIDY5E.Tidy5eVehicleSheetClassic',
     }
   );
 
@@ -64,7 +65,7 @@ Hooks.once('init', () => {
         CONSTANTS.ITEM_TYPE_TOOL,
         CONSTANTS.ITEM_TYPE_WEAPON,
       ],
-      label: 'TIDY5E.Tidy5eItemSheet',
+      label: 'TIDY5E.Tidy5eItemSheetClassic',
     }
   );
 
@@ -74,9 +75,21 @@ Hooks.once('init', () => {
     Tidy5eKgarContainerSheet,
     {
       types: [CONSTANTS.SHEET_TYPE_CONTAINER],
-      label: 'TIDY5E.Tidy5eContainerSheet',
+      label: 'TIDY5E.Tidy5eContainerSheetClassic',
     }
   );
+
+  if (FoundryAdapter.isFoundryV12OrHigher()) {
+    DocumentSheetConfig.registerSheet(
+      Actor,
+      CONSTANTS.DND5E_SYSTEM_ID,
+      Tidy5eGroupSheetClassic,
+      {
+        types: [CONSTANTS.SHEET_TYPE_GROUP],
+        label: 'TIDY5E.Tidy5eGroupSheetClassic',
+      }
+    );
+  }
 
   initSettings();
   initRuntime();

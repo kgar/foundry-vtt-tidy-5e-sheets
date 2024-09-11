@@ -315,7 +315,7 @@
                           $context.lockItemQuantity}
                         placeholder="0"
                         allowDeltaChanges={true}
-                        cssClass="text-align-center"
+                        class="text-align-center"
                       />
                     </ItemTableCell>
                   {/if}
@@ -333,6 +333,7 @@
                     {inlineContainerToggleService}
                     lockItemQuantity={$context.lockItemQuantity}
                     sheetDocument={$context.actor}
+                    unlocked={$context.unlocked}
                   />
                 {/if}
               {/each}

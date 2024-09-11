@@ -48,7 +48,6 @@ import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptions
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { AsyncMutex } from 'src/utils/mutex';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
-import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPreferencesRuntime';
 import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
@@ -117,7 +116,14 @@ export class Tidy5eNpcSheet
 
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
-      classes: ['tidy5e-sheet', 'sheet', 'actor', CONSTANTS.SHEET_TYPE_NPC],
+      classes: [
+        CONSTANTS.MODULE_ID,
+        'sheet',
+        'actor',
+        CONSTANTS.SHEET_TYPE_NPC,
+        CONSTANTS.SHEET_LAYOUT_CLASSIC,
+        'app-v1',
+      ],
       width: 740,
       height: 810,
       scrollY: ['[data-tidy-track-scroll-y]', '.scroll-container'],
@@ -126,7 +132,12 @@ export class Tidy5eNpcSheet
 
   component: SvelteComponent | undefined;
   activateListeners(html: { get: (index: 0) => HTMLElement }) {
+    // Document Apps Reactivity
+    game.user.apps[this.id] = this;
+
+    // Subscriptions
     let first = true;
+    this.subscriptionsService.unsubscribeAll();
     this.subscriptionsService.registerSubscriptions(
       this.itemFilterService.filterData$.subscribe(() => {
         if (first) return;
@@ -143,10 +154,6 @@ export class Tidy5eNpcSheet
           actor: this.actor,
           message: m,
         });
-      }),
-      SheetPreferencesRuntime.getStore().subscribe(() => {
-        if (first) return;
-        this.render();
       })
     );
     first = false;
@@ -227,7 +234,7 @@ export class Tidy5eNpcSheet
       npcPreferences.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS]?.sort ?? 'm';
 
     const inventorySortMode =
-      npcPreferences.tabs?.[CONSTANTS.TAB_NPC_INVENTORY]?.sort ?? 'm';
+      npcPreferences.tabs?.[CONSTANTS.TAB_ACTOR_INVENTORY]?.sort ?? 'm';
 
     const unlocked =
       FoundryAdapter.isActorSheetUnlocked(this.actor) &&
@@ -559,7 +566,7 @@ export class Tidy5eNpcSheet
           },
         ],
       },
-      [CONSTANTS.TAB_NPC_INVENTORY]: {
+      [CONSTANTS.TAB_ACTOR_INVENTORY]: {
         utilityToolbarCommands: [
           {
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
@@ -567,7 +574,7 @@ export class Tidy5eNpcSheet
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
-                CONSTANTS.TAB_NPC_INVENTORY,
+                CONSTANTS.TAB_ACTOR_INVENTORY,
                 'sort',
                 'm'
               );
@@ -580,7 +587,7 @@ export class Tidy5eNpcSheet
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
-                CONSTANTS.TAB_NPC_INVENTORY,
+                CONSTANTS.TAB_ACTOR_INVENTORY,
                 'sort',
                 'a'
               );
@@ -613,7 +620,7 @@ export class Tidy5eNpcSheet
             execute: () =>
               // TODO: Use app.messageBus
               this.messageBus.set({
-                tabId: CONSTANTS.TAB_NPC_INVENTORY,
+                tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
           },
@@ -623,7 +630,7 @@ export class Tidy5eNpcSheet
             execute: () =>
               // TODO: Use app.messageBus
               this.messageBus.set({
-                tabId: CONSTANTS.TAB_NPC_INVENTORY,
+                tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
           },
@@ -652,9 +659,9 @@ export class Tidy5eNpcSheet
               new DocumentTabSectionConfigApplication({
                 document: context.actor,
                 sections: context.inventory,
-                tabId: CONSTANTS.TAB_NPC_INVENTORY,
+                tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 tabTitle: NpcSheetRuntime.getTabTitle(
-                  CONSTANTS.TAB_NPC_INVENTORY
+                  CONSTANTS.TAB_ACTOR_INVENTORY
                 ),
               }).render(true);
             },
@@ -1091,7 +1098,7 @@ export class Tidy5eNpcSheet
     // Create a Consumable spell scroll on the Inventory tab
     if (
       itemData.type === CONSTANTS.ITEM_TYPE_SPELL &&
-      this.currentTabId === CONSTANTS.TAB_NPC_INVENTORY
+      this.currentTabId === CONSTANTS.TAB_ACTOR_INVENTORY
     ) {
       const options: Record<string, unknown> = {};
 
@@ -1110,14 +1117,33 @@ export class Tidy5eNpcSheet
     return super._onDropSingleItem(itemData);
   }
 
+  /**
+   * A boolean which gates double-rendering and prevents a second
+   * colliding render from triggering an infamous
+   * "One of original or other are not Objects!" error.
+   */
+  private tidyRendering = false;
+
+  render(...args: unknown[]) {
+    debug('Sheet render begin');
+    this.tidyRendering = true;
+    super.render(...args);
+  }
+
   private _renderMutex = new AsyncMutex();
   async _render(force?: boolean, options = {}) {
-    if (typeof options !== 'object') {
-      options = {};
-    }
     await this._renderMutex.lock(async () => {
+      const doubleRenderDetected =
+        this.options.token && this.tidyRendering === false;
+
+      if (doubleRenderDetected) {
+        return;
+      }
+
       await this._renderSheet(force, options);
     });
+    this.tidyRendering = false;
+    debug('Sheet render end');
   }
 
   private async _renderSheet(force?: boolean, options = {}) {
@@ -1140,6 +1166,7 @@ export class Tidy5eNpcSheet
       await super._render(force, options);
       applySheetAttributesToWindow(
         this.actor.documentName,
+        this.actor.uuid,
         this.actor.type,
         SettingsProvider.settings.colorScheme.get(),
         this.element.get(0)
@@ -1156,7 +1183,7 @@ export class Tidy5eNpcSheet
         super.activateListeners,
         this
       );
-      blurUntabbableButtonsOnClick(this.element);
+      blurUntabbableButtonsOnClick(this.element.get(0));
       return;
     }
 
@@ -1250,6 +1277,7 @@ export class Tidy5eNpcSheet
   close(options: unknown = {}) {
     this._destroySvelteComponent();
     this.subscriptionsService.unsubscribeAll();
+    delete game.user.apps[this.id];
     return super.close(options);
   }
 

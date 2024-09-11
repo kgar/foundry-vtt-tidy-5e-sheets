@@ -1,11 +1,11 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { settingStore } from 'src/settings/settings';
-  import type { ActorSheetContext } from 'src/types/types';
+  import type { ActorSheetContextV1 } from 'src/types/types';
   import { createEventDispatcher, getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let context = getContext<Readable<ActorSheetContext>>(
+  let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
   export let title: string;

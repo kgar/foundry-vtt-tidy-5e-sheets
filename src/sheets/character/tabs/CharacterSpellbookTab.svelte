@@ -105,7 +105,7 @@
   <FilterMenu {tabId} />
   <ButtonMenu
     iconClass="ra ra-fairy-wand"
-    buttonClass="inline-icon-button"
+    buttonStyle="transparent-inline-icon"
     position="bottom"
     anchor="right"
     title={localize('TIDY5E.Utilities.Tools')}

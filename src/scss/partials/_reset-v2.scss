@@ -1,0 +1,35 @@
+&.application {
+  overflow: visible;
+  --input-height: 1.625rem;
+
+  a.button.active,
+  button.active {
+    --button-focus-outline-color: transparent;
+    --button-focus-outline-color: transparent;
+  }
+
+  a.button,
+  button {
+    display: block;
+  }
+
+  ul li,
+  ol li {
+    margin-bottom: unset;
+  }
+
+  input[type='text']:focus,
+  input[type='number']:focus,
+  input[type='password']:focus,
+  input[type='date']:focus,
+  input[type='time']:focus,
+  input[type='search']:focus,
+  input[type='file']:focus,
+  select:focus {
+    outline: none;
+  }
+
+  .window-resize-handle {
+    inset: auto 0 0 auto;
+  }
+}

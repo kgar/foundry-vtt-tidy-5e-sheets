@@ -3,6 +3,7 @@ import SvelteFormApplicationBase from 'src/applications/SvelteFormApplicationBas
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import MigrationNotification from './MigrationNotification.svelte';
 import { MigrationTally } from 'src/migrations/MigrationTally';
+import { CONSTANTS } from 'src/constants';
 
 export default class MigrationNotificationFormApplication extends SvelteFormApplicationBase {
   static get defaultOptions() {
@@ -10,7 +11,12 @@ export default class MigrationNotificationFormApplication extends SvelteFormAppl
       ...super.defaultOptions,
       height: 'auto',
       width: 400,
-      classes: [...super.defaultOptions.classes, 'migration-notifications'],
+      classes: [
+        ...super.defaultOptions.classes,
+        'migration-notifications',
+        'app-v1',
+        CONSTANTS.SHEET_LAYOUT_CLASSIC,
+      ],
       resizable: true,
     };
   }

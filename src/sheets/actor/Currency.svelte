@@ -5,13 +5,13 @@
   import { settingStore } from 'src/settings/settings';
   import type { ContainerSheetContext, Item5e } from 'src/types/item.types';
   import type { Actor5e } from 'src/types/types';
-  import type { ActorSheetContext } from 'src/types/types';
+  import type { ActorSheetContextV1 } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
   export let document: Actor5e | Item5e;
 
-  let context = getContext<Readable<ActorSheetContext | ContainerSheetContext>>(
+  let context = getContext<Readable<ActorSheetContextV1 | ContainerSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
@@ -68,62 +68,3 @@
     </li>
   </ol>
 </div>
-
-<style lang="scss">
-  .inventory-currency {
-    --currency-line-height: 1.875rem;
-
-    .currency {
-      display: flex;
-      align-items: center;
-      list-style: none;
-      gap: 0.5rem;
-      margin: 0.25rem 0;
-      padding: 0;
-
-      .currency-item {
-        display: flex;
-        align-items: center;
-        background: var(--t5e-faint-color);
-        border-radius: 0.3125rem;
-        line-height: var(--currency-line-height);
-        padding-right: 0.5rem;
-
-        :global(input) {
-          text-align: right;
-          flex: 1;
-          padding-left: 0.5rem;
-        }
-
-        label {
-          margin-left: 0.25rem;
-          flex: 0 0 auto;
-        }
-
-        &.convert {
-          padding: 0;
-          flex: 0 0 0.0625rem;
-          text-align: center;
-          white-space: nowrap;
-        }
-
-        .currency-convert {
-          line-height: var(--currency-line-height);
-          border: none;
-          background: var(--t5e-faintest-color);
-          color: var(--t5e-secondary-color);
-          border-radius: 0.3125rem;
-          padding: 0 0.375rem;
-
-          &:hover {
-            background: var(--t5e-light-color);
-          }
-        }
-
-        .denomination {
-          text-transform: uppercase;
-        }
-      }
-    }
-  }
-</style>

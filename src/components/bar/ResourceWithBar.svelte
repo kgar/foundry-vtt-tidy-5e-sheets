@@ -19,23 +19,26 @@
   {#if Bar}
     <svelte:component this={Bar} {percentage} {value} {max} />
   {/if}
-  <TextInput
-    cssClass="resource-value"
-    {document}
-    field={valueField}
-    {value}
-    placeholder="0"
-    title={valueTitle}
-    selectOnFocus={true}
-    allowDeltaChanges={true}
-    maxlength={5}
-    ariaDescribedBy="tooltip"
-    disabled={valueDisabled}
-  />
+  {#if !valueDisabled}
+    <TextInput
+      class="resource-value"
+      {document}
+      field={valueField}
+      {value}
+      placeholder="0"
+      title={valueTitle}
+      selectOnFocus={true}
+      allowDeltaChanges={true}
+      maxlength={5}
+      ariaDescribedBy="tooltip"
+    />
+  {:else}
+    <span class="resource-value" title={valueTitle}>{value}</span>
+  {/if}
   <span class="resource-separator">/</span>
   {#if !maxDisabled}
     <TextInput
-      cssClass="resource-max"
+      class="resource-max"
       {document}
       field={maxField}
       value={max}

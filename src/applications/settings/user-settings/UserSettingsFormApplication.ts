@@ -29,7 +29,12 @@ export class UserSettingsFormApplication extends SvelteFormApplicationBase {
       ...super.defaultOptions,
       height: 750,
       width: 750,
-      classes: [...super.defaultOptions.classes, 'settings'],
+      classes: [
+        ...super.defaultOptions.classes,
+        'settings',
+        'app-v1',
+        CONSTANTS.SHEET_LAYOUT_CLASSIC,
+      ],
       id: 'tidy-5e-sheets-user-settings',
       popOut: true,
     };

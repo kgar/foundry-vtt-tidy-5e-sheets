@@ -9,6 +9,8 @@ import type { Item5e } from 'src/types/item.types';
 import { warn } from 'src/utils/logging';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
+import type { Actor5e } from 'src/types/types';
+import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 
 export function initTidy5eContextMenu(
   sheet: any,
@@ -28,7 +30,6 @@ export function initTidy5eContextMenu(
  */
 function onItemContext(element: HTMLElement) {
   const contextMenuType = element.getAttribute('data-context-menu');
-  // TODO: rewrite context menu so that it's better integrated with the rest of Tidy 5e Sheets.
   // @ts-ignore
   const app: any = this as any;
 
@@ -57,9 +58,31 @@ function onItemContext(element: HTMLElement) {
     const item = fromUuidSync(uuid);
     if (!item) return;
 
-    // TODO: Leverage the API to aggregate any registered context menu options; pass in the context of the current item for reference.
     ui.context.menuItems = getItemContextOptions(item);
     TidyHooks.dnd5eGetItemContextOptions(item, ui.context.menuItems);
+  }
+  // Group Members
+  else if (contextMenuType === CONSTANTS.CONTEXT_MENU_TYPE_GROUP_MEMBER) {
+    const actor = fromUuidSync(
+      element.getAttribute('data-context-menu-document-uuid')
+    );
+
+    const group = fromUuidSync(
+      element
+        .closest('[data-document-uuid]')
+        ?.getAttribute('data-document-uuid')
+    );
+
+    if (!actor || !group) return;
+
+    ui.context.menuItems = getGroupMemberContextOptions(group, actor);
+    TidyHooks.tidy5eSheetsGetGroupMemberContextOptions(
+      group,
+      actor,
+      ui.context.menuItems
+    );
+
+    return;
   } else {
     warn(
       `Unable to show context menu. The menu type ${contextMenuType} is not supported. Put a [data-context-menu] attribute on the target entity and implement the handler where this warning appears.`
@@ -168,7 +191,7 @@ function canEditEffect(effect: any) {
  * Prepare an array of context menu options which are available for owned Item documents.
  * @param {Item5e} item                   The Item for which the context menu is activated
  * @returns {ContextMenuEntry[]}          An array of context menu options offered for the Item
- * @protected
+ * @returns                               Context menu options.
  */
 function getItemContextOptions(item: Item5e) {
   if (!item?.isOwner || !SettingsProvider.settings.useContextMenu.get()) {
@@ -209,7 +232,10 @@ function getItemContextOptions(item: Item5e) {
   }
 
   // Toggle Attunement State
-  if (!!item.system.attunement && !FoundryAdapter.concealDetails(item)) {
+  if (
+    !!CONFIG.DND5E.attunementTypes[item.system.attunement] &&
+    !FoundryAdapter.concealDetails(item)
+  ) {
     options.push({
       name: item.system.attuned
         ? 'TIDY5E.ContextMenuActionUnattune'
@@ -390,5 +416,26 @@ function getItemContextOptions(item: Item5e) {
       });
     }
   }
+  return options;
+}
+
+/**
+ * Prepare an array of context menu options which are available for a member of a group.
+ * @param group    The group for which the context menu is activated.
+ * @param actor    The actor for whom the context menu is activate.
+ * @returns        Context menu options.
+ */
+function getGroupMemberContextOptions(group: Actor5e, actor: Actor5e) {
+  const unlocked = FoundryAdapter.isActorSheetUnlocked(group);
+
+  let options: ContextMenuEntry[] = [
+    {
+      name: 'TIDY5E.Group.RemoveMemberFromGroup',
+      icon: `<i class="fas fa-trash fa-fw t5e-warning-color"></i>`,
+      callback: () => group.removeMember(actor.id),
+      condition: () => unlocked,
+    },
+  ];
+
   return options;
 }

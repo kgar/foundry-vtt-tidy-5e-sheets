@@ -1,5 +1,5 @@
 <script lang="ts">
-  import AllowEditLock from 'src/sheets/actor/AllowEditLock.svelte';
+  import SheetEditModeToggle from 'src/sheets/actor/SheetEditModeToggle.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import { CONSTANTS } from 'src/constants';
@@ -85,7 +85,11 @@
         </div>
         <div class="level-information">
           <div class="xp">
-            <span>{$context.system.details.xp.value} XP</span>
+            <span
+              >{localize('DND5E.ExperiencePointsFormat', {
+                value: $context.system.details.xp.value ?? 0,
+              })}</span
+            >
           </div>
           <div class="level">
             {localize('DND5E.AbbreviationCR')}
@@ -104,7 +108,10 @@
           <SheetMenu defaultSettingsTab={CONSTANTS.TAB_USER_SETTINGS_NPCS} />
         </div>
       </div>
-      <HorizontalLineSeparator borderColor="light" />
+      <HorizontalLineSeparator
+        borderColor="light"
+        class="header-line-margin-left"
+      />
       <div class="origin-summary">
         <div class="flex-row extra-small-gap">
           {#if $context.editable}
@@ -171,14 +178,22 @@
           {/if}
         </div>
       </div>
-      <HorizontalLineSeparator borderColor="light" />
-      <div class="flex-row extra-small-gap justify-content-space-between">
+      <HorizontalLineSeparator
+        borderColor="light"
+        class="header-line-margin-left"
+      />
+      <div
+        class="flex-row extra-small-gap justify-content-space-between header-line-margin"
+      >
         <ActorMovement class="flex-1" />
         {#if $context.hasSpecialSaves}
           <SpecialSaves />
         {/if}
       </div>
-      <HorizontalLineSeparator borderColor="light" />
+      <HorizontalLineSeparator
+        borderColor="light"
+        class="header-line-margin-left"
+      />
       <ActorHeaderStats
         {abilities}
         ac={$context.system.attributes.ac}
@@ -189,7 +204,7 @@
   <Tabs tabs={$context.tabs} bind:selectedTabId>
     <svelte:fragment slot="tab-end">
       {#if $context.editable}
-        <AllowEditLock
+        <SheetEditModeToggle
           hint={$settingStore.permanentlyUnlockNpcSheetForGm &&
           FoundryAdapter.userIsGm()
             ? localize('TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM.title')

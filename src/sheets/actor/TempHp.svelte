@@ -18,7 +18,7 @@
   <TextInput
     document={$context.actor}
     field="system.attributes.hp.temp"
-    cssClass="temphp"
+    class="temphp"
     placeholder="+{localize('DND5E.Temp')}"
     value={$context.hp.temp || null}
     allowDeltaChanges={true}
@@ -29,7 +29,7 @@
   <TextInput
     document={$context.actor}
     field="system.attributes.hp.tempmax"
-    cssClass="max-temphp"
+    class="max-temphp"
     placeholder="+{localize('DND5E.Max')}"
     value={$context.hp.tempmax || null}
     allowDeltaChanges={true}

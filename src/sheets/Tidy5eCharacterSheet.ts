@@ -55,7 +55,6 @@ import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptions
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { AsyncMutex } from 'src/utils/mutex';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
-import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPreferencesRuntime';
 import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSections';
 import { SheetSections } from 'src/features/sections/SheetSections';
@@ -130,10 +129,12 @@ export class Tidy5eCharacterSheet
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
       classes: [
-        'tidy5e-sheet',
+        CONSTANTS.MODULE_ID,
         'sheet',
         'actor',
         CONSTANTS.SHEET_TYPE_CHARACTER,
+        CONSTANTS.SHEET_LAYOUT_CLASSIC,
+        'app-v1',
       ],
       width: 740,
       height: 810,
@@ -143,7 +144,12 @@ export class Tidy5eCharacterSheet
 
   component: SvelteComponent | undefined;
   activateListeners(html: { get: (index: 0) => HTMLElement }) {
+    // Document Apps Reactivity
+    game.user.apps[this.id] = this;
+
+    // Subscriptions
     let first = true;
+    this.subscriptionsService.unsubscribeAll();
     this.subscriptionsService.registerSubscriptions(
       this.itemFilterService.filterData$.subscribe(() => {
         if (first) return;
@@ -160,10 +166,6 @@ export class Tidy5eCharacterSheet
           actor: this.actor,
           message: m,
         });
-      }),
-      SheetPreferencesRuntime.getStore().subscribe(() => {
-        if (first) return;
-        this.render();
       })
     );
     first = false;
@@ -240,8 +242,7 @@ export class Tidy5eCharacterSheet
       characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]?.sort ??
       'm';
     const inventorySortMode =
-      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.sort ??
-      'm';
+      characterPreferences.tabs?.[CONSTANTS.TAB_ACTOR_INVENTORY]?.sort ?? 'm';
     const spellbookSortMode =
       characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.sort ??
       'm';
@@ -361,7 +362,7 @@ export class Tidy5eCharacterSheet
           },
         ],
       },
-      [CONSTANTS.TAB_CHARACTER_INVENTORY]: {
+      [CONSTANTS.TAB_ACTOR_INVENTORY]: {
         utilityToolbarCommands: [
           {
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
@@ -369,7 +370,7 @@ export class Tidy5eCharacterSheet
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
-                CONSTANTS.TAB_CHARACTER_INVENTORY,
+                CONSTANTS.TAB_ACTOR_INVENTORY,
                 'sort',
                 'm'
               );
@@ -382,7 +383,7 @@ export class Tidy5eCharacterSheet
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
-                CONSTANTS.TAB_CHARACTER_INVENTORY,
+                CONSTANTS.TAB_ACTOR_INVENTORY,
                 'sort',
                 'a'
               );
@@ -415,7 +416,7 @@ export class Tidy5eCharacterSheet
             execute: () =>
               // TODO: Use app.messageBus
               this.messageBus.set({
-                tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+                tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
           },
@@ -425,7 +426,7 @@ export class Tidy5eCharacterSheet
             execute: () =>
               // TODO: Use app.messageBus
               this.messageBus.set({
-                tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+                tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
           },
@@ -454,9 +455,9 @@ export class Tidy5eCharacterSheet
               new DocumentTabSectionConfigApplication({
                 document: context.actor,
                 sections: context.inventory,
-                tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+                tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 tabTitle: CharacterSheetRuntime.getTabTitle(
-                  CONSTANTS.TAB_CHARACTER_INVENTORY
+                  CONSTANTS.TAB_ACTOR_INVENTORY
                 ),
               }).render(true);
             },
@@ -1234,7 +1235,7 @@ export class Tidy5eCharacterSheet
         .filter((i) => i.items.length)
         .map((i) => ({
           ...i,
-          type: CONSTANTS.TAB_CHARACTER_INVENTORY,
+          type: CONSTANTS.TAB_ACTOR_INVENTORY,
         })),
       ...Object.values(favoriteFeatures)
         .filter((i) => i.items.length)
@@ -1326,7 +1327,7 @@ export class Tidy5eCharacterSheet
     // Create a Consumable spell scroll on the Inventory tab
     if (
       itemData.type === CONSTANTS.ITEM_TYPE_SPELL &&
-      this.currentTabId === CONSTANTS.TAB_CHARACTER_INVENTORY
+      this.currentTabId === CONSTANTS.TAB_ACTOR_INVENTORY
     ) {
       const options: Record<string, unknown> = {};
 
@@ -1348,6 +1349,7 @@ export class Tidy5eCharacterSheet
   close(options: unknown = {}) {
     this._destroySvelteComponent();
     this.subscriptionsService.unsubscribeAll();
+    delete game.user.apps[this.id];
     return super.close(options);
   }
 
@@ -1363,14 +1365,33 @@ export class Tidy5eCharacterSheet
     });
   }
 
+  /**
+   * A boolean which gates double-rendering and prevents a second
+   * colliding render from triggering an infamous
+   * "One of original or other are not Objects!" error.
+   */
+  private tidyRendering = false;
+
+  render(...args: unknown[]) {
+    debug('Sheet render begin');
+    this.tidyRendering = true;
+    super.render(...args);
+  }
+
   private _renderMutex = new AsyncMutex();
   async _render(force?: boolean, options = {}) {
-    if (typeof options !== 'object') {
-      options = {};
-    }
     await this._renderMutex.lock(async () => {
+      const doubleRenderDetected =
+        this.options.token && this.tidyRendering === false;
+
+      if (doubleRenderDetected) {
+        return;
+      }
+
       await this._renderSheet(force, options);
     });
+    this.tidyRendering = false;
+    debug('Sheet render end');
   }
 
   private async _renderSheet(force?: boolean, options = {}) {
@@ -1396,6 +1417,7 @@ export class Tidy5eCharacterSheet
       await super._render(force, options);
       applySheetAttributesToWindow(
         this.actor.documentName,
+        this.actor.uuid,
         this.actor.type,
         SettingsProvider.settings.colorScheme.get(),
         this.element.get(0)
@@ -1412,7 +1434,7 @@ export class Tidy5eCharacterSheet
         super.activateListeners,
         this
       );
-      blurUntabbableButtonsOnClick(this.element);
+      blurUntabbableButtonsOnClick(this.element.get(0));
       return;
     }
 

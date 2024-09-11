@@ -1,11 +1,11 @@
 {
-    "TIDY5E.Tidy5eSheet": "Tidy 5e Scheda Personaggio",
-    "TIDY5E.Tidy5eNPC": "Tidy 5e Scheda PNG",
-    "TIDY5E.Tidy5eItemSheet": "Tidy 5e Scheda Oggetti",
-    "TIDY5E.Tidy5eVehicle": "Tidy 5e Scheda Veicoli",
+    "TIDY5E.Tidy5eCharacterSheetClassic": "Tidy 5e Scheda Personaggio",
+    "TIDY5E.Tidy5eNpcSheetClassic": "Tidy 5e Scheda PNG",
+    "TIDY5E.Tidy5eItemSheetClassic": "Tidy 5e Scheda Oggetti",
+    "TIDY5E.Tidy5eVehicleSheetClassic": "Tidy 5e Scheda Veicoli",
     "TIDY5E.PlayerName": "Nome del Giocatore",
-    "TIDY5E.EditActorImage": "Tasto Sinistro: Modifica Immagine",
-    "TIDY5E.ShowActorImage": "Tasto Destro: Mostra Ritratto PG",
+    "TIDY5E.EditSheetImageHint": "Tasto Sinistro: Modifica Immagine",
+    "TIDY5E.SheetImageOptionsHint": "Tasto Destro: Mostra Ritratto PG",
     "TIDY5E.ShowPortraitArt": "Mostra Ritratto",
     "TIDY5E.ShowTokenArt": "Mostra Token",
     "TIDY5E.ShowItemImage": "Tasto Destro: Mostra Immagine Oggetto",
@@ -562,7 +562,7 @@
             "alphaExplanation2": "{boldStart}NB{boldEnd}: questa migrazione non influisce sul contenuto del compendio.",
             "sectionTitle": "Migrazioni Schede Tidy V1"
         },
-        "hint": "Se eri un utente del modulo Tidy5e Sheet originale o dei fogli Alpha, facoltativamente utilizza questo menu Migrazioni per migrare le impostazioni DM e i dati del foglio Tidy.",
+        "hint": "Se eri un utente del modulo Tidy5e Sheet originale, facoltativamente utilizza questo menu Migrazioni per migrare le impostazioni DM e i dati del foglio Tidy.",
         "migrationErrorMessage": "Si è verificato un errore. Maggiori dettagli sono nella console di sviluppo.",
         "migrationCompleteMessage": "Migrazione completa.",
         "migrateDocumentFlagsButtonLabel": "Migrazione dei flag del documento",
@@ -623,6 +623,10 @@
         "SpellClassToSourceClass": {
             "sectionTitle": "Classe Incantesimo a Classe Sorgente",
             "selectionDialogTitle": "Migrazione: Classe Incantesimo a Classe Sorgente"
+        },
+        "NpcExhaustion": {
+            "sectionTitle": "Indebolimento PNG",
+            "selectionDialogTitle": "Migrazione: Indebolimento PNG a System"
         }
     },
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtri",
@@ -767,7 +771,7 @@
         "options.GmOnly": "Solo DM",
         "options.GmAndOwners": "DM e Proprietari Oggetti"
     },
-    "TIDY5E.Tidy5eContainerSheet": "Scheda Contenitore Tidy 5e",
+    "TIDY5E.Tidy5eContainerSheetClassic": "Scheda Contenitore Tidy 5e",
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": "Oggetto"
     },
@@ -833,5 +837,6 @@
     "TIDY5E.SpellSourceClassAssignments.Identifier": "Identificatore Classe Sorgente",
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "L'identificatore della classe sorgente dell'incantesimo appare qui. Per assegnare un identificatore che il personaggio non possiede, inserisci l'identificatore della classe in questo campo di testo.",
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Mostra Solo Non Assegnato",
-    "TIDY5E.SpellSourceIdentifierSelectText": "Identificatore Classe: {identifier}"
+    "TIDY5E.SpellSourceIdentifierSelectText": "Identificatore Classe: {identifier}",
+    "TIDY5E.PreviewSheetImageHint": "Clic Sinistro: Anteprima Immagine"
 }

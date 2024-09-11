@@ -339,9 +339,12 @@ export class TidyFlags {
     prop: TidyFlags.getFlagPropertyPath('maxPreparedSpells'),
     /** Gets the actor's maximum number of prepared spells. */
     get(actor: Actor5e): string | undefined {
+      // Legacy values of this flag can be of type `number`, so it is put to string, just in case.
       return (
-        TidyFlags.tryGetFlag<string>(actor, TidyFlags.maxPreparedSpells.key) ??
-        undefined
+        TidyFlags.tryGetFlag<string>(
+          actor,
+          TidyFlags.maxPreparedSpells.key
+        )?.toString() ?? undefined
       );
     },
     /** Sets the actor's maximum number of prepared spells. */
@@ -781,6 +784,7 @@ export class TidyFlags {
   static section = {
     key: 'section' as const,
     prop: TidyFlags.getFlagPropertyPath('section'),
+    unsetProp: TidyFlags.getFlagPropertyPath('-=section'),
     /** Gets the custom section name for an item. */
     get(item: Item5e): string | undefined {
       return (
@@ -909,6 +913,38 @@ export class TidyFlags {
     /** Clears whether the container panel should be shown for an actor. */
     unset(actor: Actor5e) {
       return TidyFlags.unsetFlag(actor, TidyFlags.showContainerPanel.key);
+    },
+  };
+
+  /**
+   * Indicates whether the group member tab info panel should be shown for a given Group Sheet.
+   */
+  static showGroupMemberTabInfoPanel = {
+    key: 'showGroupMemberTabInfoPanel' as const,
+    prop: TidyFlags.getFlagPropertyPath('showGroupMemberTabInfoPanel'),
+    /** Gets whether the group member tab info panel should be shown for a group. */
+    get(actor: Actor5e): boolean {
+      return (
+        TidyFlags.tryGetFlag<boolean>(
+          actor,
+          TidyFlags.showGroupMemberTabInfoPanel.key
+        ) ?? false
+      );
+    },
+    /** Sets whether the group member tab info panel should be shown for a group. */
+    set(actor: Actor5e, value: boolean): Promise<void> {
+      return TidyFlags.setFlag(
+        actor,
+        TidyFlags.showGroupMemberTabInfoPanel.key,
+        value
+      );
+    },
+    /** Clears whether the group member tab info panel should be shown for a group. */
+    unset(actor: Actor5e) {
+      return TidyFlags.unsetFlag(
+        actor,
+        TidyFlags.showGroupMemberTabInfoPanel.key
+      );
     },
   };
 
@@ -1119,7 +1155,7 @@ export class TidyFlags {
    * @param flagged A document which supports flags.
    * @param flagName The name of the flag to get.
    * @returns The flag's value, or `undefined` if the flag is not set.
-   * 
+   *
    * @remarks
    * This function is generic, but it is not performing parsing of the flag's value.
    * It is simply doing an optimistic cast to the target type.

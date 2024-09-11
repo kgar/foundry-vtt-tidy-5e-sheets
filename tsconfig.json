@@ -15,5 +15,5 @@
     "esModuleInterop": true,
     "lib": ["DOM", "ESNext"]
   },
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts", "**/*.svelte"]
 }

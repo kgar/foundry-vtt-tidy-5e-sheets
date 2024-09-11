@@ -7,7 +7,7 @@
   import { CONSTANTS } from 'src/constants';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import AllowEditLock from 'src/sheets/actor/AllowEditLock.svelte';
+  import SheetEditModeToggle from 'src/sheets/actor/SheetEditModeToggle.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import VehicleProfile from './parts/VehicleProfile.svelte';
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
@@ -88,7 +88,10 @@
       </div>
       <SheetMenu defaultSettingsTab={CONSTANTS.TAB_USER_SETTINGS_VEHICLES} />
     </div>
-    <HorizontalLineSeparator borderColor="light" />
+    <HorizontalLineSeparator
+      borderColor="light"
+      class="header-line-margin-left"
+    />
     <div class="origin-summary">
       <div class="flex-row extra-small-gap">
         {#if $context.editable}
@@ -160,9 +163,15 @@
         {/if}
       </div>
     </div>
-    <HorizontalLineSeparator borderColor="light" />
-    <ActorMovement />
-    <HorizontalLineSeparator borderColor="light" />
+    <HorizontalLineSeparator
+      borderColor="light"
+      class="header-line-margin-left"
+    />
+    <ActorMovement class="header-line-margin" />
+    <HorizontalLineSeparator
+      borderColor="light"
+      class="header-line-margin-left"
+    />
     <section class="actor-stats">
       <AcShieldVehicle />
       {#each abilities as [id, ability]}
@@ -182,7 +191,7 @@
 <Tabs tabs={$context.tabs} bind:selectedTabId>
   <svelte:fragment slot="tab-end">
     {#if $context.editable}
-      <AllowEditLock
+      <SheetEditModeToggle
         hint={$settingStore.permanentlyUnlockVehicleSheetForGm &&
         FoundryAdapter.userIsGm()
           ? localize('TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM.title')

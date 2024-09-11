@@ -25,7 +25,8 @@
   ariaLabel={title}
   {title}
   buttonText={selected.text}
-  buttonClass="inline-transparent-button primary {buttonClass}"
+  buttonClass="primary {buttonClass}"
+  buttonStyle="transparent-inline"
 >
   {#each options as option}
     <ButtonMenuCommand
