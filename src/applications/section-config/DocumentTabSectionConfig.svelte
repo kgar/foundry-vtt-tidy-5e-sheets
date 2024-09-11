@@ -32,7 +32,7 @@
   }
 </script>
 
-<section class="flex-column small-gap">
+<section class="document-tab-section-config flex-column small-gap">
   <button
     type="button"
     class="inline-button"
