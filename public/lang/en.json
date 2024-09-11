@@ -846,5 +846,7 @@
   "TIDY5E.SpellSourceClassAssignments.Identifier": "Source Class Identifier",
   "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "The spell's source class identifier appears here. To assign an identifier which the character doesn't own, enter the class identifier in this text field.",
   "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Show Unassigned Only",
+  "TIDY5E.Keybindings.ToggleSheetLock.Name": "Toggle Sheet Lock",
+  "TIDY5E.Keybindings.ToggleSheetLock.Hint": "If a Tidy sheet is the current active window in the UI, this keybinding toggles the sheet lock.",
   "TIDY5E.LocalizationTestKey": "Localization Test Key"
 }

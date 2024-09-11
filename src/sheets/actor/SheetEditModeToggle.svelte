@@ -41,7 +41,10 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="sheet-edit-mode-toggle {$$restProps.class ?? ''}">
+<div
+  class="sheet-edit-mode-toggle {$$restProps.class ?? ''}"
+  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SHEET_LOCK_TOGGLE}
+>
   <TidySwitch
     --tidy-switch-scale="1"
     --tidy-switch-thumb-transform-duration="0.15s"

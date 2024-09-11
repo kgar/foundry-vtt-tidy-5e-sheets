@@ -41,6 +41,7 @@
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div
     class="header-sheet-edit-mode-toggle {$$restProps.class ?? ''}"
+    data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SHEET_LOCK_TOGGLE}
     on:dblclick|stopPropagation
   >
     <TidySwitch
