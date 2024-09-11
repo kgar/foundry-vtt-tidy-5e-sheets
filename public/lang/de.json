@@ -1,8 +1,8 @@
 {
-    "TIDY5E.Tidy5eSheet": "Tidy 5e Character Sheet",
-    "TIDY5E.Tidy5eNPC": "Tidy 5e NPC Sheet",
-    "TIDY5E.Tidy5eItemSheet": "Tidy 5e Item Sheet",
-    "TIDY5E.Tidy5eVehicle": "Tidy 5e Vechicle Sheet",
+    "TIDY5E.Tidy5eCharacterSheetClassic": "Tidy 5e Character Sheet",
+    "TIDY5E.Tidy5eNpcSheetClassic": "Tidy 5e NPC Sheet",
+    "TIDY5E.Tidy5eItemSheetClassic": "Tidy 5e Item Sheet",
+    "TIDY5E.Tidy5eVehicleSheetClassic": "Tidy 5e Vechicle Sheet",
     "TIDY5E.PlayerName": "Spieler Name",
     "TIDY5E.EditSheetImageHint": "Linksklick: Bild bearbeiten",
     "TIDY5E.SheetImageOptionsHint": "Rechtsklick: Charakter-Bilder zeigen",
@@ -720,7 +720,7 @@
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": ""
     },
-    "TIDY5E.Tidy5eContainerSheet": "",
+    "TIDY5E.Tidy5eContainerSheetClassic": "",
     "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
         "name": "",
         "hint": ""
