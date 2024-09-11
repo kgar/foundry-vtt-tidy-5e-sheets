@@ -9,50 +9,59 @@ import type {
 } from 'src/types/application.types';
 import type { Actor5e } from 'src/types/types';
 import { SettingsProvider } from 'src/settings/settings';
+import TabSelectionFormApplication from 'src/applications/tab-selection/TabSelectionFormApplication';
 
 export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
   class Tidy5eActorSheetBase extends DragAndDropMixin(BaseApplication) {
     _supportedItemTypes: Set<string> = new Set();
     _currentDragEvent: (DragEvent & { currentTarget: HTMLElement }) | undefined;
 
-    static #CONFIGURE_TOKEN_ACTION = 'configureToken';
-
-    // TODO: Make this less like DEFAULT_OPTIONS and more like an object graph. We should be able to pick and choose which control and action that supports that control.
-    /**
-     * NOTE: These settings do not merge. Even when named exactly right, controls do not merge; they are overwritten.
-     * Actions also do not carry over.
-     *
-     * To use these settings on a given sheet that uses this mixin, call `this.ACTOR_DEFAULT_OPTIONS`
-     */
-    static ACTOR_DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
-      window: {
-        controls: [
-          {
-            action: Tidy5eActorSheetBase.#CONFIGURE_TOKEN_ACTION,
-            icon: 'fa-solid fa-user-circle',
-            label:
-              'This Actions Title Changes Based on an Actor-specific piece of data',
-            ownership: 'OWNER',
-          },
-          {
-            action: 'showPortraitArtwork',
-            icon: 'fa-solid fa-image',
-            label: 'SIDEBAR.CharArt',
-            ownership: 'OWNER',
-          },
-          {
-            action: 'showTokenArtwork',
-            icon: 'fa-solid fa-image',
-            label: 'SIDEBAR.TokenArt',
-            ownership: 'OWNER',
-          },
-        ],
+    static readonly ACTOR_ACTIONS_AND_CONTROLS = {
+      configureToken: {
+        control: {
+          action: 'configureToken',
+          icon: 'fa-solid fa-user-circle',
+          label:
+            'This Actions Title Changes Based on an Actor-specific piece of data',
+          ownership: 'OWNER',
+        },
+        action: {
+          configureToken: Tidy5eActorSheetBase.#onConfigureToken,
+        },
       },
-      actions: {
-        [Tidy5eActorSheetBase.#CONFIGURE_TOKEN_ACTION]:
-          Tidy5eActorSheetBase.#onConfigureToken,
-        showPortraitArtwork: Tidy5eActorSheetBase.#onShowPortraitArtwork,
-        showTokenArtwork: Tidy5eActorSheetBase.#onShowTokenArtwork,
+      showPortraitArtwork: {
+        control: {
+          action: 'showPortraitArtwork',
+          icon: 'fa-solid fa-image',
+          label: 'SIDEBAR.CharArt',
+          ownership: 'OWNER',
+        },
+        action: {
+          showPortraitArtwork: Tidy5eActorSheetBase.#onShowPortraitArtwork,
+        },
+      },
+      showTokenArtwork: {
+        control: {
+          action: 'showTokenArtwork',
+          icon: 'fa-solid fa-image',
+          label: 'SIDEBAR.TokenArt',
+          ownership: 'OWNER',
+        },
+        action: {
+          showTokenArtwork: Tidy5eActorSheetBase.#onShowTokenArtwork,
+        },
+      },
+      openTabSelection: {
+        control: {
+          action: 'openTabSelection',
+          icon: 'fas fa-file-invoice',
+          label: 'TIDY5E.TabSelection.MenuOptionText',
+        },
+        action: {
+          openTabSelection: async function (this: { actor?: Actor5e }) {
+            new TabSelectionFormApplication(this.actor).render(true);
+          },
+        },
       },
     };
 
@@ -67,7 +76,10 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
     _getHeaderControls() {
       const controls = super._getHeaderControls();
       const configureTokenControl = controls.find(
-        (c: any) => c.action === Tidy5eActorSheetBase.#CONFIGURE_TOKEN_ACTION
+        (c: any) =>
+          c.action ===
+          Tidy5eActorSheetBase.ACTOR_ACTIONS_AND_CONTROLS.configureToken.control
+            .action
       );
       if (configureTokenControl) {
         configureTokenControl.label = this.token

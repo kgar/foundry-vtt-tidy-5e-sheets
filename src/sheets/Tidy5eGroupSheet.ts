@@ -86,12 +86,10 @@ export class Tidy5eGroupSheet extends Tidy5eActorSheetBaseMixin(
       positioned: true,
       resizable: true,
       controls: [
-        ...(this.ACTOR_DEFAULT_OPTIONS?.window?.controls ?? []),
-        {
-          action: 'openTabSelection',
-          icon: 'fas fa-file-invoice',
-          label: 'TIDY5E.TabSelection.MenuOptionText',
-        },
+        this.ACTOR_ACTIONS_AND_CONTROLS.configureToken.control,
+        this.ACTOR_ACTIONS_AND_CONTROLS.showPortraitArtwork.control,
+        this.ACTOR_ACTIONS_AND_CONTROLS.showTokenArtwork.control,
+        this.ACTOR_ACTIONS_AND_CONTROLS.openTabSelection.control,
       ],
     },
     position: {
@@ -104,11 +102,10 @@ export class Tidy5eGroupSheet extends Tidy5eActorSheetBaseMixin(
       },
     ],
     actions: {
-      ...this.ACTOR_DEFAULT_OPTIONS?.actions,
-      // TODO: when actor default options are switched to a cafeteria plan of controls and related actions, move this action and its control to the resulting data structure
-      openTabSelection: async function () {
-        new TabSelectionFormApplication(this.actor).render(true);
-      },
+      ...this.ACTOR_ACTIONS_AND_CONTROLS.configureToken.action,
+      ...this.ACTOR_ACTIONS_AND_CONTROLS.showPortraitArtwork.action,
+      ...this.ACTOR_ACTIONS_AND_CONTROLS.showTokenArtwork.action,
+      ...this.ACTOR_ACTIONS_AND_CONTROLS.openTabSelection.action,
     },
   };
 
