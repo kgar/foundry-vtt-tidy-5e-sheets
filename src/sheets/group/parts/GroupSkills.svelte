@@ -19,7 +19,7 @@
     key: '',
     label: '',
     members: [],
-    mod: Number.NEGATIVE_INFINITY,
+    total: Number.NEGATIVE_INFINITY,
   };
 
   function showGroupLanguageTooltip(
@@ -48,7 +48,7 @@
       on:mouseover={(ev) => showGroupLanguageTooltip(ev, groupSkill)}
     >
       {groupSkill.label}
-      {formatAsModifier(groupSkill.mod)}
+      {formatAsModifier(groupSkill.total)}
     </span>
   {/each}
 </div>

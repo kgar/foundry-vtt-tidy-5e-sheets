@@ -24,7 +24,7 @@
         ></div>
         <div class="item-name truncate">{member.name}</div>
         <div class="text-align-center">
-          {formatAsModifier(member.system.skills[skill.key]?.mod)}
+          {formatAsModifier(member.system.skills[skill.key]?.total)}
         </div>
         <div class="text-align-center">
           ({member.system.skills[skill.key]?.passive})

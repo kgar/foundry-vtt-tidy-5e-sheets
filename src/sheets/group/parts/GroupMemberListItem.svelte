@@ -109,13 +109,13 @@
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             {localize(ctx.perception?.label ?? '')}
-            {ctx.perception?.mod} ({ctx.perception?.passive})
+            {ctx.perception?.total} ({ctx.perception?.passive})
           </button>
         {/if}
         {#each ctx.topSkills as skill (skill.key)}
           <span class="skill">
             {localize(skill?.label ?? '')}
-            {skill?.mod}
+            {skill?.total}
           </span>
         {/each}
       </div>
