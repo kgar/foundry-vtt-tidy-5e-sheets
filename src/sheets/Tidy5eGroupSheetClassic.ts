@@ -662,7 +662,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
                   label: label,
                   passive: skill.passive,
                   total: skill.total,
-                  mod: formatAsModifier(skill.total),
+                  formattedTotal: formatAsModifier(skill.total),
                 });
 
                 return prev;

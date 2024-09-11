@@ -70,7 +70,7 @@ export type GroupMemberSkillInfo = {
   key: string;
   label: string;
   total: number;
-  mod: string;
+  formattedTotal: string;
   passive: number;
 };
 
