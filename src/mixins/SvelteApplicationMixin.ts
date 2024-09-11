@@ -338,6 +338,7 @@ export function SvelteApplicationMixin<
 
     /**
      * Persist the scroll positions of containers within the app before re-rendering the content
+     * @param element the application window element
      */
     #saveScrollPositions(element: HTMLElement) {
       const selectors = SvelteApplication.SCROLLABLE || [];
@@ -357,6 +358,7 @@ export function SvelteApplicationMixin<
 
     /**
      * Restore the scroll positions of containers within the app after re-rendering the content
+     * @param element the application window element
      */
     #restoreScrollPositions(element: HTMLElement) {
       const selectors = SvelteApplication.SCROLLABLE || [];
@@ -369,6 +371,10 @@ export function SvelteApplicationMixin<
       }
     }
 
+    /**
+     * Persist the currently focused element, if any.
+     * @param element the application window element
+     */
     #saveInputFocus(element: HTMLElement) {
       const focusedElement = element.querySelector<
         HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -381,6 +387,10 @@ export function SvelteApplicationMixin<
         : undefined;
     }
 
+    /**
+     * Restore focus to the prior focused element, if able.
+     * @param element the application window element
+     */
     #restoreInputFocus(element: HTMLElement) {
       if (this.#focusedInputSelector) {
         const newFocus = element.querySelector<
