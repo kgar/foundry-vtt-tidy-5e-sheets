@@ -56,7 +56,7 @@ type MemberStats = {
   vehicleCount: number;
 };
 
-export class Tidy5eGroupSheet extends Tidy5eActorSheetBaseMixin(
+export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
   SvelteApplicationMixin<GroupSheetClassicContext>(
     foundry.applications.sheets.ActorSheetV2
   )

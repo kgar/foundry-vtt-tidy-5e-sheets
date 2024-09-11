@@ -14,7 +14,7 @@ import { MigrationTally } from 'src/migrations/MigrationTally';
 import { Tidy5eKgarContainerSheet } from './sheets/Tidy5eContainerSheet';
 import { setupModuleIntegrations } from './integration/integration';
 import { TidyHooks } from './foundry/TidyHooks';
-import { Tidy5eGroupSheet } from './sheets/Tidy5eGroupSheet';
+import { Tidy5eGroupSheetClassic } from './sheets/Tidy5eGroupSheetClassic';
 
 Hooks.once('init', () => {
   DocumentSheetConfig.registerSheet(
@@ -83,7 +83,7 @@ Hooks.once('init', () => {
     DocumentSheetConfig.registerSheet(
       Actor,
       CONSTANTS.DND5E_SYSTEM_ID,
-      Tidy5eGroupSheet,
+      Tidy5eGroupSheetClassic,
       {
         types: [CONSTANTS.SHEET_TYPE_GROUP],
         label: 'TIDY5E.Tidy5eGroupSheetClassic',

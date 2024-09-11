@@ -13,7 +13,7 @@ import { Tidy5eNpcSheet } from 'src/sheets/Tidy5eNpcSheet';
 import { Tidy5eVehicleSheet } from 'src/sheets/Tidy5eKgarVehicleSheet';
 import { Tidy5eKgarContainerSheet } from 'src/sheets/Tidy5eContainerSheet';
 import { Tidy5eKgarItemSheet } from 'src/sheets/Tidy5eItemSheet';
-import { Tidy5eGroupSheet } from 'src/sheets/Tidy5eGroupSheet';
+import { Tidy5eGroupSheetClassic } from 'src/sheets/Tidy5eGroupSheetClassic';
 import { SvelteTab } from './tab/SvelteTab';
 import type {
   SupportedTab,
@@ -139,7 +139,7 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is a Tidy 5e Group sheet
    */
   isTidy5eGroupSheet(app: any) {
-    return Tidy5eGroupSheet.name === app?.constructor?.name;
+    return Tidy5eGroupSheetClassic.name === app?.constructor?.name;
   }
 
   /**
@@ -172,7 +172,7 @@ export class Tidy5eSheetsApi {
       Tidy5eVehicleSheet.name,
       Tidy5eKgarItemSheet.name,
       Tidy5eKgarContainerSheet.name,
-      Tidy5eGroupSheet.name,
+      Tidy5eGroupSheetClassic.name,
     ].includes(app?.constructor?.name);
   }
 

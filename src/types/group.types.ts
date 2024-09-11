@@ -1,4 +1,4 @@
-import type { Tidy5eGroupSheet } from 'src/sheets/Tidy5eGroupSheet';
+import type { Tidy5eGroupSheetClassic } from 'src/sheets/Tidy5eGroupSheet';
 import type { ContainerContents, Item5e } from './item.types';
 import type {
   Actor5e,
@@ -98,7 +98,7 @@ export interface Group5e extends ActorV2 {
   name: string;
   ownership: any;
   prototypeToken: any;
-  sheet: Tidy5eGroupSheet;
+  sheet: Tidy5eGroupSheetClassic;
   shortRest(
     options: Record<string, any> /* RestConfiguration */
   ): Promise<unknown /*ResultResult*/>;
