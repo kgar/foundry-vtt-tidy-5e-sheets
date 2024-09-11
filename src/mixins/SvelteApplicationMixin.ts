@@ -15,7 +15,7 @@ import {
   CustomContentRendererV2,
   type RenderedSheetPart,
 } from 'src/sheets/CustomContentRendererV2';
-import type { CustomContent, Tab } from 'src/types/types';
+import type { Tab } from 'src/types/types';
 import { delay } from 'src/utils/asynchrony';
 import type { RegisteredContent } from 'src/runtime/types';
 
@@ -37,6 +37,15 @@ export function SvelteApplicationMixin<
   }>
 >(BaseApplication: any) {
   class SvelteApplication extends BaseApplication {
+    /**
+     * An array of selectors within this sheet whose scroll positions should
+     * be persisted during a re-render operation.
+     */
+    static SCROLLABLE: string[] = [
+      '.scroll-container',
+      '[data-tidy-track-scroll-y]',
+    ];
+
     /** The component which represents the UI. */
     #components: SvelteComponent[] = [];
 
@@ -172,8 +181,9 @@ export function SvelteApplicationMixin<
       }
 
       // TODO: Capture named input focus
-      // TODO: Handle scroll memoization?
       try {
+        this.#saveScrollPositions(content);
+        this.#saveInputFocus(content);
         this.#customContentRenderer.replaceCustomContent(
           result.customContents,
           this,
@@ -282,11 +292,82 @@ export function SvelteApplicationMixin<
     _onRender(...args: any[]) {
       super._onRender(...args);
 
-      // TODO: Perform end-of-render tasks like restoring focus and sroll-top.
+      this.#restoreScrollPositions(this.element);
+      this.#restoreInputFocus(this.element);
+    }
+
+    /* -------------------------------------------- */
+    /*  Prior Element State                         */
+    /* -------------------------------------------- */
+
+    #scrollPositions: Record<string, PriorElementScrollPosition[]> = {};
+
+    /**
+     * Persist the scroll positions of containers within the app before re-rendering the content
+     */
+    #saveScrollPositions(element: HTMLElement) {
+      const selectors = SvelteApplication.SCROLLABLE || [];
+      this.#scrollPositions = selectors.reduce<
+        Record<string, PriorElementScrollPosition[]>
+      >((state, sel) => {
+        const scrollableElements = element.querySelectorAll<HTMLElement>(sel);
+        state[sel] = Array.from(
+          scrollableElements
+        ).map<PriorElementScrollPosition>((el) => ({
+          scrollTop: el.scrollTop,
+          scrollLeft: el.scrollLeft,
+        }));
+        return state;
+      }, {});
+    }
+
+    /**
+     * Restore the scroll positions of containers within the app after re-rendering the content
+     */
+    #restoreScrollPositions(element: HTMLElement) {
+      const selectors = SvelteApplication.SCROLLABLE || [];
+      const positions = this.#scrollPositions || {};
+      for (let sel of selectors) {
+        const scrollableElements = element.querySelectorAll(sel);
+        for (let [index, el] of Array.from(scrollableElements).entries()) {
+          Object.assign(el, positions[sel]?.[index]);
+        }
+      }
+    }
+
+    #focusedInputSelector: string | undefined = '';
+
+    #saveInputFocus(element: HTMLElement) {
+      const focusedElement = element.querySelector<
+        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      >(':focus');
+
+      this.#focusedInputSelector = focusedElement?.id
+        ? `#${focusedElement.id}`
+        : focusedElement?.name
+        ? `${focusedElement.tagName}[name="${focusedElement.name}"]`
+        : undefined;
+    }
+
+    #restoreInputFocus(element: HTMLElement) {
+      if (this.#focusedInputSelector) {
+        const newFocus = element.querySelector<
+          HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+        >(this.#focusedInputSelector);
+
+        if (newFocus) {
+          newFocus.focus?.();
+        }
+      }
     }
   }
 
   return SvelteApplication;
+}
+
+interface PriorElementScrollPosition {
+  scrollTop: number;
+  scrollLeft: number;
 }
 
 export interface ApplicationConfiguration {
