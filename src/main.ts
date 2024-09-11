@@ -15,6 +15,7 @@ import { Tidy5eKgarContainerSheet } from './sheets/Tidy5eContainerSheet';
 import { setupModuleIntegrations } from './integration/integration';
 import { TidyHooks } from './foundry/TidyHooks';
 import { Tidy5eGroupSheetClassic } from './sheets/Tidy5eGroupSheetClassic';
+import { initKeybindings } from './keybindings/keybind-init';
 
 Hooks.once('init', () => {
   DocumentSheetConfig.registerSheet(
@@ -93,6 +94,7 @@ Hooks.once('init', () => {
 
   initSettings();
   initRuntime();
+  initKeybindings();
 });
 
 Hooks.once('ready', async () => {

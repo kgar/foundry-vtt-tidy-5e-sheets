@@ -288,6 +288,9 @@ export const CONSTANTS = {
     /** A user input for performing searches. */
     SEARCH_INPUT: 'search-input',
 
+    /** A button for toggling whether the sheet is locked or unlocked. */
+    SHEET_LOCK_TOGGLE: 'sheet-lock-toggle',
+
     /** An interactable control that can open configuration settings for a target skill. */
     SKILL_CONFIGURATION_CONTROL: 'skill-configuration-control',
 
