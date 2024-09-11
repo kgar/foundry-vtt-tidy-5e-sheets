@@ -198,7 +198,6 @@ export function SvelteApplicationMixin<
         }
       }
 
-      // TODO: Capture named input focus
       try {
         this.#saveScrollPositions(content);
         this.#saveInputFocus(content);
@@ -313,14 +312,21 @@ export function SvelteApplicationMixin<
     _onChangeForm(formConfig: unknown, event: any) {
       super._onChangeForm(formConfig, event);
 
-      if (event.type !== 'change') return;
-      if (!this.document) return;
+      if (event.type !== 'change') {
+        return;
+      }
+      if (!this.document) {
+        return;
+      }
 
       const { target } = event;
-      if (!target) return;
+      if (!target) {
+        return;
+      }
 
-      // TODO: Consider expanding this logic so that named input elements can also be saved according to their input name.
-      if (!this.#customHTMLTags.includes(target.tagName)) return;
+      if (!this.#customHTMLTags.includes(target.tagName)) {
+        return;
+      }
 
       const value = target._getValue();
       this.document.update({ [target.name]: value });
