@@ -18,6 +18,10 @@ import {
 import type { Tab } from 'src/types/types';
 import { delay } from 'src/utils/asynchrony';
 import type { RegisteredContent } from 'src/runtime/types';
+import type {
+  ApplicationRenderOptions,
+  ApplicationClosingOptions,
+} from 'src/types/application.types';
 
 type RenderResult<TContext> = {
   customContents: RenderedSheetPart[];
@@ -37,6 +41,12 @@ export function SvelteApplicationMixin<
   }>
 >(BaseApplication: any) {
   class SvelteApplication extends BaseApplication {
+    constructor(...args: any[]) {
+      super(...args);
+
+      this.#subscriptionsService = new StoreSubscriptionsService();
+    }
+
     /**
      * An array of selectors within this sheet whose scroll positions should
      * be persisted during a re-render operation.
@@ -46,6 +56,12 @@ export function SvelteApplicationMixin<
       '[data-tidy-track-scroll-y]',
     ];
 
+    /**
+     * Determines whether to use a sheet lock svelte component in the header.
+     * This requires the application to mount another svelte component.
+     */
+    static USE_HEADER_SHEET_LOCK: boolean = false;
+
     /** The component which represents the UI. */
     #components: SvelteComponent[] = [];
 
@@ -54,14 +70,19 @@ export function SvelteApplicationMixin<
     #customContentRenderer: CustomContentRendererV2 =
       new CustomContentRendererV2();
 
-    // TODO: Figure out best way to incorporate this into the options.
-    _useHeaderSheetLock: boolean = false;
-
     /**
      * Any subscriptions which should be managed during the lifetime of the application window.
      * They are retrieved once, during _renderFrame, and then unsubscribed during close.
      */
     #subscriptionsService: StoreSubscriptionsService;
+
+    #scrollPositions: Record<string, PriorElementScrollPosition[]> = {};
+
+    #focusedInputSelector: string | undefined = '';
+
+    /* -------------------------------------------- */
+    /*  Svelte-specific                             */
+    /* -------------------------------------------- */
 
     /**
      * The context store which underpins the application Svelte component.
@@ -69,24 +90,6 @@ export function SvelteApplicationMixin<
      * and can be retrieved from any child component within.
      */
     _store: Writable<TContext> = writable<TContext>();
-
-    constructor(...args: any[]) {
-      super(...args);
-
-      this.#subscriptionsService = new StoreSubscriptionsService();
-    }
-
-    /* Required Overrides */
-
-    /** Prepares context data which matches the request data type. */
-    async _prepareContext(
-      options: ApplicationRenderOptions
-    ): Promise<TContext> {
-      const errorMessage =
-        'Unable to render Svelte application. To implement a Svelte application, override _prepareContext and provide context data matching the specified sheet context type.';
-      error(errorMessage, false, { options });
-      throw new Error(errorMessage);
-    }
 
     /** Creates the component which represents the window content area. */
     _createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
@@ -101,6 +104,20 @@ export function SvelteApplicationMixin<
      */
     _getSubscriptions(): Unsubscriber[] {
       return [];
+    }
+
+    /* -------------------------------------------- */
+    /*  Rendering                                   */
+    /* -------------------------------------------- */
+
+    /** Prepares context data which matches the request data type. */
+    async _prepareContext(
+      options: ApplicationRenderOptions
+    ): Promise<TContext> {
+      const errorMessage =
+        'Unable to render Svelte application. To implement a Svelte application, override _prepareContext and provide context data matching the specified sheet context type.';
+      error(errorMessage, false, { options });
+      throw new Error(errorMessage);
     }
 
     /**
@@ -167,7 +184,8 @@ export function SvelteApplicationMixin<
     ) {
       if (options.isFirstRender) {
         this.#components.push(this._createComponent(content));
-        if (this._useHeaderSheetLock) {
+        const thisConstructor = this.constructor as typeof SvelteApplication;
+        if (thisConstructor.USE_HEADER_SHEET_LOCK) {
           const windowHeader = this.element.querySelector('.window-header');
           const sheetLock = new SheetHeaderEditModeToggle({
             target: windowHeader,
@@ -234,6 +252,39 @@ export function SvelteApplicationMixin<
       return element;
     }
 
+    _updateFrame(options: ApplicationRenderOptions) {
+      options ??= {};
+      // For whatever reason, application v2 titles don't update themselves on _updateFrame without an implementing class specifiying window settings.
+      FoundryAdapter.mergeObject(options, { window: { title: this.title } });
+      super._updateFrame(options);
+    }
+
+    /* -------------------------------------------- */
+    /*  Closing                                     */
+    /* -------------------------------------------- */
+
+    async close(options: ApplicationClosingOptions = {}) {
+      this.#subscriptionsService.unsubscribeAll();
+      this.#components.forEach((c) => c.$destroy());
+      this.#components = [];
+      await super.close(options);
+    }
+
+    /* -------------------------------------------- */
+    /*  Rendering Life-Cycle Methods                */
+    /* -------------------------------------------- */
+
+    _onRender(...args: any[]) {
+      super._onRender(...args);
+
+      this.#restoreScrollPositions(this.element);
+      this.#restoreInputFocus(this.element);
+    }
+
+    /* -------------------------------------------- */
+    /*  Event Listeners and Handlers                */
+    /* -------------------------------------------- */
+
     _attachFrameListeners() {
       super._attachFrameListeners();
 
@@ -259,20 +310,6 @@ export function SvelteApplicationMixin<
       }
     }
 
-    _updateFrame(options: ApplicationRenderOptions) {
-      options ??= {};
-      // For whatever reason, application v2 titles don't update themselves on _updateFrame without an implementing class specifiying window settings.
-      FoundryAdapter.mergeObject(options, { window: { title: this.title } });
-      super._updateFrame(options);
-    }
-
-    async close(options: ApplicationClosingOptions = {}) {
-      this.#subscriptionsService.unsubscribeAll();
-      this.#components.forEach((c) => c.$destroy());
-      this.#components = [];
-      await super.close(options);
-    }
-
     _onChangeForm(formConfig: unknown, event: any) {
       super._onChangeForm(formConfig, event);
 
@@ -289,18 +326,9 @@ export function SvelteApplicationMixin<
       this.document.update({ [target.name]: value });
     }
 
-    _onRender(...args: any[]) {
-      super._onRender(...args);
-
-      this.#restoreScrollPositions(this.element);
-      this.#restoreInputFocus(this.element);
-    }
-
     /* -------------------------------------------- */
     /*  Prior Element State                         */
     /* -------------------------------------------- */
-
-    #scrollPositions: Record<string, PriorElementScrollPosition[]> = {};
 
     /**
      * Persist the scroll positions of containers within the app before re-rendering the content
@@ -335,8 +363,6 @@ export function SvelteApplicationMixin<
       }
     }
 
-    #focusedInputSelector: string | undefined = '';
-
     #saveInputFocus(element: HTMLElement) {
       const focusedElement = element.querySelector<
         HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -368,115 +394,4 @@ export function SvelteApplicationMixin<
 interface PriorElementScrollPosition {
   scrollTop: number;
   scrollLeft: number;
-}
-
-export interface ApplicationConfiguration {
-  id: string;
-  uniqueId: string;
-  classes: string[];
-  tag: string;
-  window: ApplicationWindowConfiguration;
-  actions: Record<
-    string,
-    | ApplicationClickAction
-    | { handler: ApplicationClickAction; buttons: number[] }
-  >;
-  form?: ApplicationFormConfiguration;
-  position: Partial<ApplicationPosition>;
-}
-
-export interface ApplicationPosition {
-  top: number;
-  left: number;
-  width: number | 'auto';
-  height: number | 'auto';
-  scale: number;
-  zIndex: number;
-}
-
-export interface ApplicationWindowConfiguration {
-  frame?: boolean;
-  positioned?: boolean;
-  title?: string;
-  icon?: string | false;
-  controls?: ApplicationHeaderControlsEntry[];
-  minimizable?: boolean;
-  resizable?: boolean;
-  contentTag?: string;
-  contentClasses?: string[];
-}
-
-export interface ApplicationFormConfiguration {
-  handler: ApplicationFormSubmission;
-  submitOnChange: boolean;
-  closeOnSubmit: boolean;
-}
-
-export interface ApplicationHeaderControlsEntry {
-  icon: string;
-  label: string;
-  action: string;
-  visible?: boolean;
-  ownership?: string | number;
-}
-
-export interface ApplicationConstructorParams {
-  position: ApplicationPosition;
-}
-
-export interface ApplicationRenderOptions {
-  force?: boolean;
-  position?: ApplicationPosition;
-  window?: ApplicationWindowRenderOptions;
-  parts?: string[];
-  isFirstRender?: boolean;
-}
-
-export interface ApplicationWindowRenderOptions {
-  title: string;
-  icon: string | false;
-  controls: boolean;
-}
-
-export interface ApplicationClosingOptions {
-  animate?: boolean;
-  closeKey?: boolean;
-}
-
-export type ApplicationClickAction = (
-  event: PointerEvent,
-  target: HTMLElement
-) => Promise<void>;
-
-export type ApplicationFormSubmission = (
-  event: SubmitEvent | Event,
-  form: HTMLFormElement,
-  formData: /*FormDataExtended*/ unknown
-) => Promise<void>;
-
-export interface ApplicationTab {
-  id: string;
-  group: string;
-  icon: string;
-  label: string;
-  active: boolean;
-  cssClass: string;
-}
-
-export interface FormNode {
-  fieldset: boolean;
-  legend?: string;
-  fields?: FormNode[];
-  field?: /*DataField*/ unknown;
-  value?: any;
-}
-
-export interface FormFooterButton {
-  type: string;
-  name?: string;
-  icon?: string;
-  label?: string;
-  action?: string;
-  cssClass?: string;
-  disabled?: boolean;
 }

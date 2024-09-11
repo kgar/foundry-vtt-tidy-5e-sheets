@@ -1,10 +1,9 @@
 import { CONSTANTS } from 'src/constants';
 import {
-  SvelteApplicationMixin,
   type ApplicationClosingOptions,
   type ApplicationConfiguration,
   type ApplicationRenderOptions,
-} from '../mixins/SvelteApplicationMixin';
+} from 'src/types/application.types';
 import type { SvelteComponent } from 'svelte';
 import GroupSheet from './group/GroupSheet.svelte';
 import type {
@@ -48,6 +47,7 @@ import { processInputChangeDeltaFromValues } from 'src/utils/form';
 import { isNil } from 'src/utils/data';
 import { formatAsModifier } from 'src/utils/formatting';
 import TabSelectionFormApplication from 'src/applications/tab-selection/TabSelectionFormApplication';
+import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin';
 
 type MemberStats = {
   currentHP: number;
@@ -61,18 +61,12 @@ export class Tidy5eGroupSheet extends Tidy5eActorSheetBaseMixin(
     foundry.applications.sheets.ActorSheetV2
   )
 ) {
-  _itemFilterService: ItemFilterService;
-  _messageBus: MessageBus = writable<MessageBusMessage | undefined>();
-  _inlineContainerToggleService = new InlineContainerToggleService();
-  _card = writable<ItemCardStore>();
-
   constructor(...args: any[]) {
     super(...args);
-    this._useHeaderSheetLock = true;
 
     this._supportedItemTypes = new Set(Inventory.getDefaultInventoryTypes());
     this._supportedItemTypes.add(CONSTANTS.ITEM_TYPE_SPELL);
-    this._itemFilterService = new ItemFilterService({}, this.actor);
+    this.#itemFilterService = new ItemFilterService({}, this.actor);
   }
 
   static DEFAULT_OPTIONS: Partial<
@@ -118,6 +112,13 @@ export class Tidy5eGroupSheet extends Tidy5eActorSheetBaseMixin(
     },
   };
 
+  static USE_HEADER_SHEET_LOCK = true;
+
+  #itemFilterService: ItemFilterService;
+  #messageBus: MessageBus = writable<MessageBusMessage | undefined>();
+  #inlineContainerToggleService = new InlineContainerToggleService();
+  #card = writable<ItemCardStore>();
+
   // TODO: First render, derive options that come from user preference
 
   _createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
@@ -125,23 +126,23 @@ export class Tidy5eGroupSheet extends Tidy5eActorSheetBaseMixin(
       target: node,
       context: new Map<any, any>([
         [CONSTANTS.SVELTE_CONTEXT.APP_ID, this.appId],
-        [CONSTANTS.SVELTE_CONTEXT.CARD, this._card],
+        [CONSTANTS.SVELTE_CONTEXT.CARD, this.#card],
         [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._store],
         [
           CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
-          this._inlineContainerToggleService,
+          this.#inlineContainerToggleService,
         ],
-        [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this._itemFilterService],
+        [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.#itemFilterService],
         [CONSTANTS.SVELTE_CONTEXT.LOCATION, ''],
-        [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this._messageBus],
+        [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.#messageBus],
         [
           CONSTANTS.SVELTE_CONTEXT.ON_FILTER,
-          this._itemFilterService.onFilter.bind(this._itemFilterService),
+          this.#itemFilterService.onFilter.bind(this.#itemFilterService),
         ],
         [
           CONSTANTS.SVELTE_CONTEXT.ON_FILTER_CLEAR_ALL,
-          this._itemFilterService.onFilterClearAll.bind(
-            this._itemFilterService
+          this.#itemFilterService.onFilterClearAll.bind(
+            this.#itemFilterService
           ),
         ],
       ]),
@@ -305,7 +306,7 @@ export class Tidy5eGroupSheet extends Tidy5eActorSheetBaseMixin(
             iconClass: 'fas fa-angles-down',
             execute: () =>
               // TODO: Use app.messageBus
-              this._messageBus.set({
+              this.#messageBus.set({
                 tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
@@ -315,7 +316,7 @@ export class Tidy5eGroupSheet extends Tidy5eActorSheetBaseMixin(
             iconClass: 'fas fa-angles-up',
             execute: () =>
               // TODO: Use app.messageBus
-              this._messageBus.set({
+              this.#messageBus.set({
                 tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
@@ -398,7 +399,7 @@ export class Tidy5eGroupSheet extends Tidy5eActorSheetBaseMixin(
       effects: dnd5e.applications.components.EffectsElement.prepareCategories(
         this.actor.allApplicableEffects()
       ),
-      filterData: this._itemFilterService.getDocumentItemFilterData(),
+      filterData: this.#itemFilterService.getDocumentItemFilterData(),
       filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
       groupLanguages: groupLanguages,
       groupSkills: groupSkills,
@@ -767,7 +768,7 @@ export class Tidy5eGroupSheet extends Tidy5eActorSheetBaseMixin(
   _getSubscriptions() {
     let first = true;
     const subscriptions = [
-      this._itemFilterService.filterData$.subscribe(() => {
+      this.#itemFilterService.filterData$.subscribe(() => {
         if (first) return;
         this.render();
       }),
@@ -775,7 +776,7 @@ export class Tidy5eGroupSheet extends Tidy5eActorSheetBaseMixin(
         if (first) return;
         this.render();
       }),
-      this._messageBus.subscribe((m) => {
+      this.#messageBus.subscribe((m) => {
         debug('Message bus message received', {
           app: this,
           actor: this.actor,
@@ -792,7 +793,7 @@ export class Tidy5eGroupSheet extends Tidy5eActorSheetBaseMixin(
     options: ApplicationRenderOptions
   ) {
     // Clear the item card anytime a render occurs, in case that render was the deletion of the current item being visualized.
-    this._card.set({
+    this.#card.set({
       sheet: this.element,
       item: null,
       itemCardContentTemplate: null,

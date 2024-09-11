@@ -6,7 +6,7 @@ import { CONSTANTS } from 'src/constants';
 import type {
   ApplicationConfiguration,
   ApplicationPosition,
-} from './SvelteApplicationMixin';
+} from 'src/types/application.types';
 import type { Actor5e } from 'src/types/types';
 import { SettingsProvider } from 'src/settings/settings';
 
