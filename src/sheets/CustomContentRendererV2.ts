@@ -1,20 +1,13 @@
 import type {
-  CustomContentInjectParams,
   OnContentReadyParams,
   OnRenderParams,
   RenderScheme,
 } from 'src/api';
 import { CONSTANTS } from 'src/constants';
-import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { ApplicationRenderOptions } from 'src/mixins/SvelteApplicationMixin';
+import type { ApplicationRenderOptions } from 'src/types/application.types';
 import { CustomContentManager } from 'src/runtime/content/CustomContentManager';
 import type { RegisteredContent } from 'src/runtime/types';
 import type { CustomContent, Tab } from 'src/types/types';
-import { delay } from 'src/utils/asynchrony';
-import {
-  getCustomContentGroupIdSelector,
-  wrapCustomHtmlForRendering,
-} from 'src/utils/content';
 import { isNil } from 'src/utils/data';
 import { debug, error, warn } from 'src/utils/logging';
 
