@@ -131,7 +131,7 @@
             onSaveChange={(ev) =>
               saveNonItemSectionData(ev, index, 'name', section)}
             value={item.name}
-            cssClass="editable-name"
+            class="editable-name"
             disabled={!$context.editable}
             attributes={{ 'data-tidy-item-name': item.name }}
           />

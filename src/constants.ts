@@ -3,6 +3,7 @@ export const CONSTANTS = {
   ALPHA_MODULE_ID: 'tidy5e-sheet-kgar',
   MODULE_ID: moduleId,
   DND5E_SYSTEM_ID: 'dnd5e',
+  SYSTEM_SETTING_DISABLE_EXPERIENCE_TRACKING: 'disableExperienceTracking',
   DOCUMENT_NAME_ACTOR: 'Actor',
   ATTUNEMENT_OPTIONAL: 'optional',
   ATTUNEMENT_REQUIRED: 'required',
@@ -36,6 +37,7 @@ export const CONSTANTS = {
    */
   MOUSE_BUTTON_SECONDARY: 2,
   CONTEXT_MENU_TYPE_EFFECTS: 'effects',
+  CONTEXT_MENU_TYPE_GROUP_MEMBER: 'group-member',
   CONTEXT_MENU_TYPE_ITEMS: 'items',
   CONTEXT_MENU_TYPE_ITEM_ADVANCEMENT: 'item-advancement',
   DND5E_CLASSES: {
@@ -60,12 +62,16 @@ export const CONSTANTS = {
   CHARACTER_FEAT_SECTION_ACTIVE: 'active',
   CHARACTER_FEAT_SECTION_PASSIVE: 'passive',
   CHARACTER_FEAT_SECTION_RACE: 'race',
+  GROUP_TYPE_GROUP: '',
+  GROUP_TYPE_ENCOUNTER: 'encounter',
+  GROUP_TYPE_PARTY: 'party',
   NPC_ABILITY_SECTION_WEAPONS: 'weapons',
   NPC_ABILITY_SECTION_ACTIONS: 'actions',
   NPC_ABILITY_SECTION_PASSIVE: 'passive',
   NPC_ABILITY_SECTION_EQUIPMENT: 'equipment',
   NPC_ABILITY_SECTION_CLASSES: 'classes',
   TAB_OPTION_CLASS: 'tab-option',
+  TAB_ACTOR_INVENTORY: 'inventory',
   TAB_CONTAINER_CONTENTS: 'contents',
   TAB_CONTAINER_SECTION_CONTENTS: 'contents',
   TAB_ITEM_DESCRIPTION_ID: 'description',
@@ -73,12 +79,13 @@ export const CONSTANTS = {
   TAB_ITEM_ADVANCEMENT_ID: 'advancement',
   TAB_ITEM_EFFECTS_ID: 'effects',
   TAB_CHARACTER_ATTRIBUTES: 'attributes',
-  TAB_CHARACTER_INVENTORY: 'inventory',
   TAB_CHARACTER_SPELLBOOK: 'spellbook',
   TAB_CHARACTER_FEATURES: 'features',
   TAB_CHARACTER_EFFECTS: 'effects',
   TAB_CHARACTER_BIOGRAPHY: 'biography',
   TAB_CHARACTER_JOURNAL: 'journal',
+  TAB_GROUP_MEMBERS: 'members',
+  TAB_GROUP_DESCRIPTION: 'description',
   TAB_MIGRATIONS_V1_ONBOARDING: 'v1-onboarding',
   TAB_MIGRATIONS_CHARACTER_BIOGRAPHY: 'character-bio',
   TAB_MIGRATIONS_NPC_DEATH: 'npc-death',
@@ -88,7 +95,6 @@ export const CONSTANTS = {
   TAB_MIGRATIONS_SPELL_CLASS_TO_SOURCE_CLASS: 'spell-class-to-source-class',
   TAB_MIGRATIONS_NPC_EXHAUSTION: 'npc-exhaustion',
   TAB_NPC_ABILITIES: 'attributes',
-  TAB_NPC_INVENTORY: 'inventory',
   TAB_NPC_SPELLBOOK: 'spellbook',
   TAB_NPC_EFFECTS: 'effects',
   TAB_NPC_BIOGRAPHY: 'biography',
@@ -118,6 +124,7 @@ export const CONSTANTS = {
   SHEET_TYPE_NPC: 'npc',
   SHEET_TYPE_VEHICLE: 'vehicle',
   SHEET_TYPE_CONTAINER: 'container',
+  SHEET_TYPE_GROUP: 'group',
   SHEET_LAYOUT_ALL: 'all',
   SHEET_LAYOUT_CLASSIC: 'classic',
   CIRCULAR_PORTRAIT_OPTION_ALL: 'all',
@@ -205,6 +212,9 @@ export const CONSTANTS = {
 
     /** An interactable element which toggles a view */
     EXPANSION_TOGGLE: 'table-expansion-toggle',
+
+    /** An image representing a member of a group sheet. */
+    GROUP_MEMBER_PORTRAIT: 'group-member-portrait',
 
     /** An interactable element which toggles an inline container's contents view */
     INLINE_CONTAINER_TOGGLE: 'inline-container-toggle',
@@ -354,6 +364,7 @@ export const CONSTANTS = {
   SHEET_SETTINGS_OPTION_GM_ONLY: 'gm-only',
   SHEET_SETTINGS_OPTION_GM_AND_OWNERS: 'gm-and-owners',
   TEXT_EDITOR_ACTIVATION_ELEMENT_SELECTOR: '.editor-content[data-edit]',
+  SKILL_KEY_PERCEPTION: 'prc',
   SVELTE_CONTEXT: {
     ACCORDION_CONTEXT: 'accordionContext',
     APP_ID: 'appId',
@@ -372,6 +383,7 @@ export const CONSTANTS = {
     ITEM_IDS_TO_SHOW: 'itemIdsToShow',
     ITEM_TABLE_TOGGLES: 'itemTableToggles',
     LOCATION: 'location',
+    MEMBER_IDS_TO_SHOW: 'memberIdsToShow',
     MESSAGE_BUS: 'messageBus',
     ON_FILTER_CLEAR_ALL: 'onFilterClearAll',
     ON_FILTER: 'onFilter',

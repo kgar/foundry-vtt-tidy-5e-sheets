@@ -2,7 +2,11 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type Actor5e } from 'src/types/types';
-  import type { ActorSheetContext, ContextMenuOption } from 'src/types/types';
+  import type {
+    ActorSheetContextV1,
+    ActorSheetContextV2,
+    ContextMenuOption,
+  } from 'src/types/types';
   import { isNil } from 'src/utils/data';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -13,9 +17,9 @@
   export let actor: Actor5e;
   export let useHpOverlay: boolean;
 
-  let context = getContext<Readable<ActorSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getContext<
+    Readable<ActorSheetContextV1 | ActorSheetContextV2<any>>
+  >(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
 
   const localize = FoundryAdapter.localize;
 
@@ -50,7 +54,7 @@
   ) {
     switch (event.button) {
       case CONSTANTS.MOUSE_BUTTON_MAIN:
-        if ($context.unlocked && $context.editable) {
+        if ($context.unlocked) {
           openPortraitPicker(event);
         } else {
           FoundryAdapter.renderImagePopout($context.actor.img, {

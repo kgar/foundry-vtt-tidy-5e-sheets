@@ -43,16 +43,7 @@ export abstract class CustomContentBase {
    * An optional override to whether the target content should use default sheet event listeners.
    * Defaults to `false`.
    *
-   * @remarks
-   * The default sheet listeners pertain to the default 5e sheets. Behaviors include but are not limited to
-   * - `data-action` click handling
-   * - drag-and-drop behaviors
-   * - rollable items click handling
-   * - item controls click handling
-   * - proficiency toggling
-   * - ... etc.
-   *
-   * Leaving this field `false` means you wish to take full control of the event handling of your content.
+   * @deprecated Tidy is moving to Application V2, and there will no longer be any default sheet listeners. Be sure to provide your own event handling for the content that is injected.
    */
   abstract activateDefaultSheetListeners?: boolean;
 }

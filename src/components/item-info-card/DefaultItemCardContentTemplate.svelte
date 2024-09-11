@@ -9,7 +9,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type {
-    ActorSheetContext,
+    ActorSheetContextV1,
     CharacterSheetContext,
     VehicleSheetContext,
   } from 'src/types/types';
@@ -22,7 +22,7 @@
     getContext<
       Readable<
         | CharacterSheetContext
-        | ActorSheetContext
+        | ActorSheetContextV1
         | VehicleSheetContext
         | ContainerSheetContext
       >

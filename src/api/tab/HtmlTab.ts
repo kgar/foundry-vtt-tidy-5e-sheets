@@ -5,6 +5,7 @@ import {
   type CustomTabTitle,
   type TabId,
 } from './CustomTabBase';
+import { warn } from 'src/utils/logging';
 
 /**
  * The information necessary for rendering an HTML-based tab.
@@ -34,7 +35,17 @@ export class HtmlTab extends CustomTabBase {
   html: string = '';
   renderScheme: RenderScheme = 'handlebars';
   tabContentsClasses: string[] = [];
-  activateDefaultSheetListeners?: boolean | undefined = false;
+
+  private _activateDefaultSheetListeners?: boolean | undefined = false;
+  public get activateDefaultSheetListeners(): boolean | undefined {
+    return this._activateDefaultSheetListeners;
+  }
+  public set activateDefaultSheetListeners(value: boolean | undefined) {
+    warn(
+      'Tidy is moving to Application V2, and there will no longer be any default sheet listeners. Be sure to provide your own event handling for the content that is injected.'
+    );
+    this._activateDefaultSheetListeners = value;
+  }
 
   constructor(props?: Partial<HtmlTab>) {
     super();

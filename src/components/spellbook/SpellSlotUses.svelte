@@ -20,7 +20,7 @@
   <TextInput
     document={$context.actor}
     field="system.spells.{section.prop}.value"
-    cssClass="spell-slot-uses"
+    class="spell-slot-uses"
     value={section.uses}
     placeholder="0"
     selectOnFocus={true}

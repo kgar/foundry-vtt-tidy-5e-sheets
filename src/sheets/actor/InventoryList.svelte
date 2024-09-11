@@ -43,6 +43,8 @@
   export let lockControls: boolean = false;
   export let allowFavoriteIconNextToName: boolean = true;
   export let includeWeightColumn: boolean = true;
+  export let allowAttuneControl: boolean = true;
+  export let allowEquipControl: boolean = true;
 
   let inlineContainerToggleService = getContext<InlineContainerToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
@@ -64,8 +66,9 @@
 
   $: {
     controls = [];
-    controls.push(
-      {
+
+    if (allowAttuneControl) {
+      controls.push({
         component: AttuneControl,
         props: ({ item, ctx }) => ({
           item,
@@ -73,16 +76,19 @@
         }),
         visible: ({ item, ctx }) =>
           ctx?.attunement && !FoundryAdapter.concealDetails(item),
-      },
-      {
+      });
+    }
+
+    if (allowEquipControl) {
+      controls.push({
         component: EquipControl,
         props: ({ item, ctx }) => ({
           item,
           ctx,
         }),
         visible: ({ ctx }) => ctx?.canToggle === true,
-      },
-    );
+      });
+    }
 
     if ('favorites' in $context.actor.system) {
       controls.push({
@@ -270,7 +276,7 @@
               disabled={!$context.editable || $context.lockItemQuantity}
               placeholder="0"
               allowDeltaChanges={true}
-              cssClass="text-align-center"
+              class="text-align-center"
             />
           </ItemTableCell>
           {#if $context.editable && $context.useClassicControls && !lockControls}
@@ -287,6 +293,7 @@
             {inlineContainerToggleService}
             lockItemQuantity={$context.lockItemQuantity}
             sheetDocument={$context.actor}
+            unlocked={$context.unlocked}
           />
         {/if}
       {/each}

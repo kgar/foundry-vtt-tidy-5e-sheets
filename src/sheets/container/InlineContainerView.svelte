@@ -15,6 +15,7 @@
   export let inlineContainerToggleService: InlineContainerToggleService;
   export let lockItemQuantity: boolean;
   export let sheetDocument: any;
+  export let unlocked: boolean = true;
 
   $: inlineContainerToggleServiceStore = inlineContainerToggleService.store;
 
@@ -55,6 +56,7 @@
       {lockItemQuantity}
       {inlineContainerToggleService}
       {sheetDocument}
+      {unlocked}
     />
     {#if !containerContents.contents.some((c) => c.items.length > 0)}
       <div class="empty-container">

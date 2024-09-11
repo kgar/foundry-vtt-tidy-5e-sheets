@@ -1,12 +1,16 @@
 <script lang="ts">
   import Pips from 'src/components/pips/Pips.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ActorSheetContext } from 'src/types/types';
+  import type {
+    ActorSheetContextV1,
+    ActorSheetContextV2,
+  } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import { DRAKKENHEIM_CORE_CONSTANTS } from './DrakkenheimCoreConstants';
 
-  const context = getContext<Readable<ActorSheetContext>>('context');
+  const context =
+    getContext<Readable<ActorSheetContextV1 | ActorSheetContextV2>>('context');
 
   $: contanimationLevel =
     FoundryAdapter.getProperty<number | undefined>(

@@ -13,7 +13,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div bind:this={tooltip} class="attunement-summary-tooltip">
+<div bind:this={tooltip} class="document-list-summary-tooltip">
   <h3>{localize('TIDY5E.AttunementItems')}</h3>
   <hr />
   <ul>

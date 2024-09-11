@@ -50,7 +50,6 @@ import { SheetPreferencesService } from 'src/features/user-preferences/SheetPref
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
 import { AsyncMutex } from 'src/utils/mutex';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
-import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPreferencesRuntime';
 import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import { SheetSections } from 'src/features/sections/SheetSections';
@@ -105,11 +104,12 @@ export class Tidy5eVehicleSheet
 
     return FoundryAdapter.mergeObject(super.defaultOptions, {
       classes: [
-        'tidy5e-sheet',
+        CONSTANTS.MODULE_ID,
         'sheet',
         'actor',
         CONSTANTS.SHEET_TYPE_VEHICLE,
         CONSTANTS.SHEET_LAYOUT_CLASSIC,
+        'app-v1',
       ],
       width: width ?? 740,
       height: height ?? 810,
@@ -119,7 +119,12 @@ export class Tidy5eVehicleSheet
 
   component: SvelteComponent | undefined;
   activateListeners(html: { get: (index: 0) => HTMLElement }) {
+    // Document Apps Reactivity
+    game.user.apps[this.id] = this;
+
+    // Subscriptions
     let first = true;
+    this.subscriptionsService.unsubscribeAll();
     this.subscriptionsService.registerSubscriptions(
       this.itemFilterService.filterData$.subscribe(() => {
         if (first) return;
@@ -136,10 +141,6 @@ export class Tidy5eVehicleSheet
           actor: this.actor,
           message: m,
         });
-      }),
-      SheetPreferencesRuntime.getStore().subscribe(() => {
-        if (first) return;
-        this.render();
       })
     );
     first = false;
@@ -678,6 +679,7 @@ export class Tidy5eVehicleSheet
       await super._render(force, options);
       applySheetAttributesToWindow(
         this.actor.documentName,
+        this.actor.uuid,
         this.actor.type,
         SettingsProvider.settings.colorScheme.get(),
         this.element.get(0)
@@ -694,7 +696,7 @@ export class Tidy5eVehicleSheet
         super.activateListeners,
         this
       );
-      blurUntabbableButtonsOnClick(this.element);
+      blurUntabbableButtonsOnClick(this.element.get(0));
       return;
     }
 
@@ -794,6 +796,7 @@ export class Tidy5eVehicleSheet
   close(options: unknown = {}) {
     this._destroySvelteComponent();
     this.subscriptionsService.unsubscribeAll();
+    delete game.user.apps[this.id];
     return super.close(options);
   }
 

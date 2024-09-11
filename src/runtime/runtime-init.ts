@@ -1,7 +1,5 @@
-import { ItemFilterRuntime } from "./item/ItemFilterRuntime";
-import { SheetPreferencesRuntime } from "./user-preferences/SheetPreferencesRuntime";
+import { ItemFilterRuntime } from './item/ItemFilterRuntime';
 
 export function initRuntime() {
-    ItemFilterRuntime.init();
-    SheetPreferencesRuntime.init();
+  ItemFilterRuntime.init();
 }

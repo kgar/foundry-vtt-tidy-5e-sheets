@@ -1,7 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type {
-  ActorSheetContext,
+  ActorSheetContextV1,
   DamageModificationContextEntry,
   DamageModificationData,
 } from 'src/types/types';
@@ -13,7 +13,7 @@ import { debug, error } from 'src/utils/logging';
  * after Tidy takes over all sheet logic.
  */
 export class Tidy5eBaseActorSheet {
-  static applyCommonContext(context: ActorSheetContext) {
+  static applyCommonContext(context: ActorSheetContextV1) {
     // Concentration
     if (
       [CONSTANTS.SHEET_TYPE_CHARACTER, CONSTANTS.SHEET_TYPE_NPC].includes(
@@ -43,7 +43,7 @@ export class Tidy5eBaseActorSheet {
     Tidy5eBaseActorSheet.applyDamageModifications(context);
   }
 
-  static applyDamageModifications(context: ActorSheetContext) {
+  static applyDamageModifications(context: ActorSheetContextV1) {
     try {
       // Damage modifications
       const dm: DamageModificationData | undefined =

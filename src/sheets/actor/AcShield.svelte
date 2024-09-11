@@ -2,7 +2,7 @@
   import AcShieldBase from './AcShieldBase.svelte';
   import { getContext, onMount } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import type { ActorSheetContext } from 'src/types/types';
+  import type { ActorSheetContextV1 } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
@@ -17,7 +17,7 @@
    */
   export let cssClass: string = '';
 
-  let context = getContext<Readable<ActorSheetContext>>(
+  let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 

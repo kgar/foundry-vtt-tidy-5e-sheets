@@ -784,6 +784,7 @@ export class TidyFlags {
   static section = {
     key: 'section' as const,
     prop: TidyFlags.getFlagPropertyPath('section'),
+    unsetProp: TidyFlags.getFlagPropertyPath('-=section'),
     /** Gets the custom section name for an item. */
     get(item: Item5e): string | undefined {
       return (
@@ -912,6 +913,38 @@ export class TidyFlags {
     /** Clears whether the container panel should be shown for an actor. */
     unset(actor: Actor5e) {
       return TidyFlags.unsetFlag(actor, TidyFlags.showContainerPanel.key);
+    },
+  };
+
+  /**
+   * Indicates whether the group member tab info panel should be shown for a given Group Sheet.
+   */
+  static showGroupMemberTabInfoPanel = {
+    key: 'showGroupMemberTabInfoPanel' as const,
+    prop: TidyFlags.getFlagPropertyPath('showGroupMemberTabInfoPanel'),
+    /** Gets whether the group member tab info panel should be shown for a group. */
+    get(actor: Actor5e): boolean {
+      return (
+        TidyFlags.tryGetFlag<boolean>(
+          actor,
+          TidyFlags.showGroupMemberTabInfoPanel.key
+        ) ?? false
+      );
+    },
+    /** Sets whether the group member tab info panel should be shown for a group. */
+    set(actor: Actor5e, value: boolean): Promise<void> {
+      return TidyFlags.setFlag(
+        actor,
+        TidyFlags.showGroupMemberTabInfoPanel.key,
+        value
+      );
+    },
+    /** Clears whether the group member tab info panel should be shown for a group. */
+    unset(actor: Actor5e) {
+      return TidyFlags.unsetFlag(
+        actor,
+        TidyFlags.showGroupMemberTabInfoPanel.key
+      );
     },
   };
 

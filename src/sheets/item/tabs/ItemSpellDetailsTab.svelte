@@ -74,7 +74,7 @@
 >
   <TextInput
     id={inputId}
-    cssClass="materials"
+    class="materials"
     document={$context.item}
     field="system.materials.value"
     value={$context.system.materials.value}

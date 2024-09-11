@@ -39,7 +39,7 @@ export class ItemFilterRuntime {
         defaultItemFilters.canUse.name,
         defaultItemFilters.canCastSpell.name,
       ]),
-      [CONSTANTS.TAB_CHARACTER_INVENTORY]: new Set<string>([
+      [CONSTANTS.TAB_ACTOR_INVENTORY]: new Set<string>([
         defaultItemFilters.activationCostAction.name,
         defaultItemFilters.activationCostBonus.name,
         defaultItemFilters.activationCostReaction.name,
@@ -84,7 +84,7 @@ export class ItemFilterRuntime {
         defaultItemFilters.activationCostBonus.name,
         defaultItemFilters.activationCostReaction.name,
       ]),
-      [CONSTANTS.TAB_NPC_INVENTORY]: new Set<string>([
+      [CONSTANTS.TAB_ACTOR_INVENTORY]: new Set<string>([
         defaultItemFilters.activationCostAction.name,
         defaultItemFilters.activationCostBonus.name,
         defaultItemFilters.activationCostReaction.name,
@@ -100,6 +100,14 @@ export class ItemFilterRuntime {
     },
     [CONSTANTS.SHEET_TYPE_CONTAINER]: {
       [CONSTANTS.TAB_CONTAINER_CONTENTS]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+        defaultItemFilters.equipped.name,
+      ]),
+    },
+    [CONSTANTS.SHEET_TYPE_GROUP]: {
+      [CONSTANTS.TAB_ACTOR_INVENTORY]: new Set<string>([
         defaultItemFilters.activationCostAction.name,
         defaultItemFilters.activationCostBonus.name,
         defaultItemFilters.activationCostReaction.name,
@@ -133,7 +141,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.canUse,
         ],
       },
-      [CONSTANTS.TAB_CHARACTER_INVENTORY]: {
+      [CONSTANTS.TAB_ACTOR_INVENTORY]: {
         'DND5E.ItemActivationCost': [
           defaultItemFilters.activationCostAction,
           defaultItemFilters.activationCostBonus,
@@ -189,7 +197,7 @@ export class ItemFilterRuntime {
         ],
         ...getStandardSpellSchoolFilterCategories(),
       },
-      [CONSTANTS.TAB_NPC_INVENTORY]: {
+      [CONSTANTS.TAB_ACTOR_INVENTORY]: {
         'DND5E.ItemActivationCost': [
           defaultItemFilters.activationCostAction,
           defaultItemFilters.activationCostBonus,
@@ -208,6 +216,20 @@ export class ItemFilterRuntime {
     },
     [CONSTANTS.SHEET_TYPE_CONTAINER]: {
       [CONSTANTS.TAB_CONTAINER_CONTENTS]: {
+        'DND5E.ItemActivationCost': [
+          defaultItemFilters.activationCostAction,
+          defaultItemFilters.activationCostBonus,
+          defaultItemFilters.activationCostReaction,
+        ],
+        'DND5E.Rarity': () => getItemRarityFilters(),
+        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+          defaultItemFilters.equipped,
+          ...getAttunementFilters(),
+        ],
+      },
+    },
+    [CONSTANTS.SHEET_TYPE_GROUP]: {
+      [CONSTANTS.TAB_ACTOR_INVENTORY]: {
         'DND5E.ItemActivationCost': [
           defaultItemFilters.activationCostAction,
           defaultItemFilters.activationCostBonus,

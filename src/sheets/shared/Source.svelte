@@ -21,7 +21,7 @@
       field={keyPathToCustom}
       value={source?.custom}
       placeholder={localize('DND5E.Source')}
-      cssClass="source-custom"
+      class="source-custom"
     />
   {:else}
     <span class="source-label truncate" title={source?.label ?? ''}

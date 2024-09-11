@@ -13,6 +13,7 @@ import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { TidyFlags } from 'src/foundry/TidyFlags';
+import { GroupSheetRuntime } from 'src/runtime/GroupSheetRuntime';
 
 export type TabSelectionItem = {
   id: string;
@@ -42,6 +43,8 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
       return NpcSheetRuntime.getAllRegisteredTabs();
     } else if (actor.type === CONSTANTS.SHEET_TYPE_VEHICLE) {
       return VehicleSheetRuntime.getAllRegisteredTabs();
+    } else if (actor.type === CONSTANTS.SHEET_TYPE_GROUP) {
+      return GroupSheetRuntime.getAllRegisteredTabs();
     }
 
     error(
@@ -60,6 +63,8 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
       return SettingsProvider.settings.defaultNpcSheetTabs.get();
     } else if (actor.type === CONSTANTS.SHEET_TYPE_VEHICLE) {
       return SettingsProvider.settings.defaultVehicleSheetTabs.get();
+    } else if (actor.type === CONSTANTS.SHEET_TYPE_GROUP) {
+      return GroupSheetRuntime.getDefaultTabs();
     }
 
     error(
@@ -89,7 +94,12 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
       ...super.defaultOptions,
       height: 550,
       width: 750,
-      classes: [...super.defaultOptions.classes, 'tab-selection'],
+      classes: [
+        ...super.defaultOptions.classes,
+        'tab-selection',
+        'app-v1',
+        CONSTANTS.SHEET_LAYOUT_CLASSIC,
+      ],
       resizable: false,
     };
   }

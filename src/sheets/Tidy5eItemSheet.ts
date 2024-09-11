@@ -51,10 +51,11 @@ export class Tidy5eKgarItemSheet
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
       classes: [
-        'tidy5e-sheet',
+        CONSTANTS.MODULE_ID,
         'sheet',
         'item',
         CONSTANTS.SHEET_LAYOUT_CLASSIC,
+        'app-v1',
       ],
     });
   }
@@ -62,6 +63,7 @@ export class Tidy5eKgarItemSheet
   component: SvelteComponent | undefined;
   activateListeners(html: any) {
     let first = true;
+    this.subscriptionsService.unsubscribeAll();
     this.subscriptionsService.registerSubscriptions(
       settingStore.subscribe((s) => {
         if (first) return;
@@ -219,6 +221,7 @@ export class Tidy5eKgarItemSheet
       await super._render(force, options);
       applySheetAttributesToWindow(
         this.item.documentName,
+        this.item.uuid,
         this.item.type,
         SettingsProvider.settings.colorScheme.get(),
         this.element.get(0)

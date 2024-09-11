@@ -10,6 +10,7 @@
 declare global {
   var $: any;
   var canvas: any;
+  var AdvancementManager: any;
   var ActiveEffect: any;
   var Actor: any;
   var Actors: any;
@@ -26,15 +27,18 @@ declare global {
   var DocumentSheet: any;
   var DocumentSheetConfig: any;
   var FilePicker: any;
+  var Folder: any;
   var FormApplication: any;
   var foundry: any;
   var fromUuid: any;
   var fromUuidSync: any;
   var game: any;
+  var getDocumentClass: (className: string) => any;
   var HandlebarsHelpers: any;
   var Hooks: any;
   var ImagePopout: any;
   var Item: any;
+  var Item5e: any;
   var Items: any;
   var ModuleManagement: any;
   var NumericTerm: any;
@@ -67,6 +71,42 @@ declare global {
       method: T = 'round'
     ) => number;
   }
+
+  interface DragDropConfiguration {
+    dragSelector?: string;
+    dropSelector?: string;
+    permissions?: Record<string, Function>;
+    callbacks?: Record<string, Function>;
+  }
+
+  interface DragDrop {
+    dragSelector: string;
+    dropSelector: string;
+    permissions: {
+      dragstart?: (selector: string) => boolean;
+      drop?: (selector: string) => boolean;
+    };
+    callbacks: {
+      dragstart?: (event: DragEvent) => void;
+      dragover?: (event: DragEvent) => void;
+      drop?: (event: DragEvent) => void;
+    };
+
+    bind(html: HTMLElement): this;
+    callback(event: DragEvent, action: string): void;
+    can(action: string, selector: string): boolean;
+  }
+
+  var DragDrop: typeof DragDrop;
+
+  declare const DragDrop: {
+    new (config: DragDropConfiguration): DragDrop;
+    createDragImage(
+      img: HTMLImageElement,
+      width: number,
+      height: number
+    ): HTMLElement;
+  };
 }
 
 export type Dnd5eActorCondition = {

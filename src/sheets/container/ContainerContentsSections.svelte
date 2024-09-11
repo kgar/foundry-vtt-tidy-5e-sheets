@@ -17,7 +17,7 @@
   import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
   import InlineContainerToggle from 'src/sheets/container/InlineContainerToggle.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import { getContext } from 'svelte';
+  import { getContext, type ComponentType } from 'svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import type { Readable } from 'svelte/store';
@@ -31,6 +31,7 @@
   export let lockItemQuantity: boolean;
   /** The sheet which is rendering this recursive set of container contents. */
   export let sheetDocument: Actor5e | Item5e;
+  export let unlocked: boolean = true;
 
   const tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
@@ -45,19 +46,29 @@
     CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
   );
 
-  const classicControls = [
-    {
+  let classicControls: {
+    component: ComponentType;
+    getProps: (item: Item5e) => any;
+  }[] = [];
+  
+  $: {
+    classicControls = [];
+
+    classicControls.push({
       component: ItemEditControl,
       getProps: (item: Item5e) => ({ item }),
-    },
-    {
-      component: ItemDeleteControl,
-      getProps: (item: Item5e) => ({
-        item,
-        deleteFn: () => item.deleteDialog(),
-      }),
-    },
-  ];
+    });
+
+    if (unlocked) {
+      classicControls.push({
+        component: ItemDeleteControl,
+        getProps: (item: Item5e) => ({
+          item,
+          deleteFn: () => item.deleteDialog(),
+        }),
+      });
+    }
+  }
 
   const weightUnit = FoundryAdapter.getWeightUnit();
 
@@ -199,6 +210,7 @@
                 {inlineContainerToggleService}
                 {lockItemQuantity}
                 {sheetDocument}
+                {unlocked}
               />
             {/if}
           {/each}

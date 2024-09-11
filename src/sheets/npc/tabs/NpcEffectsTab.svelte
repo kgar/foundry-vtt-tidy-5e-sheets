@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import {
-    type ActorSheetContext,
+    type ActorSheetContextV1,
     type RenderableClassicControl,
   } from 'src/types/types';
   import ItemTable from '../../../components/item-list/v1/ItemTable.svelte';
@@ -21,7 +21,7 @@
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
   import ActorEffectToggleControl from 'src/components/item-list/controls/ActorEffectToggleControl.svelte';
 
-  let context = getContext<Readable<ActorSheetContext>>(
+  let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 

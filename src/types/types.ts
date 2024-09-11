@@ -19,6 +19,7 @@ import type { Writable } from 'svelte/store';
 import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
 import type { CONSTANTS } from 'src/constants';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
+import type { Group5e } from './group.types';
 
 export type Actor5e = any;
 
@@ -232,7 +233,7 @@ export type FavoriteEffectContext = {
 };
 
 export type FavoriteSection =
-  | (InventorySection & { type: typeof CONSTANTS.TAB_CHARACTER_INVENTORY })
+  | (InventorySection & { type: typeof CONSTANTS.TAB_ACTOR_INVENTORY })
   | (SpellbookSection & { type: typeof CONSTANTS.TAB_CHARACTER_SPELLBOOK })
   | (CharacterFeatureSection & {
       type: typeof CONSTANTS.TAB_CHARACTER_FEATURES;
@@ -271,7 +272,7 @@ export type CharacterSheetContext = {
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
   traitEnrichedHtml: string;
   utilities: Utilities<CharacterSheetContext>;
-} & ActorSheetContext;
+} & ActorSheetContextV1;
 
 export type NpcAbilitySection = {
   canCreate: boolean;
@@ -324,7 +325,7 @@ export type NpcSheetContext = {
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
   traitEnrichedHtml: string;
   utilities: Utilities<NpcSheetContext>;
-} & ActorSheetContext;
+} & ActorSheetContextV1;
 
 export type VehicleItemContext = {
   canToggle?: boolean;
@@ -344,7 +345,7 @@ export type VehicleSheetContext = {
   features: VehicleFeatureSection[];
   itemContext: Record<string, VehicleItemContext>;
   utilities: Utilities<VehicleSheetContext>;
-} & ActorSheetContext;
+} & ActorSheetContextV1;
 
 export type DerivedDamage = {
   label: string;
@@ -415,7 +416,7 @@ type ActorSaves = {
   concentration?: ActorSave;
 };
 
-export type ActorSheetContext = {
+export type ActorSheetContextV1 = {
   actions: ActionSection[];
   activateEditors: (
     node: HTMLElement,
@@ -603,4 +604,24 @@ export type ActiveEffectContext = {
   parentId: string;
   durationParts: string | string[];
   hasTooltip: boolean;
+};
+
+export type HTMLElementOrGettable =
+  | HTMLElement
+  | { get(index: number): HTMLElement };
+
+export type ActorV2 = {
+  // TODO: Put universal ActorV2 members here.
+  uuid: string;
+  update(toUpdate: Record<string, unknown>): Promise<ActorV2 | undefined>;
+};
+
+export type ActorSheetContextV2<TActor = ActorV2> = {
+  actor: TActor;
+  actorPortraitCommands: RegisteredPortraitMenuCommand[];
+  editable: boolean;
+  healthPercentage: number;
+  lockSensitiveFields: boolean;
+  unlocked: boolean;
+  useRoundedPortraitStyle: boolean;
 };

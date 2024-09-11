@@ -203,7 +203,7 @@
             <TextInput
               document={item}
               field="system.quantity"
-              cssClass="item-count"
+              class="item-count"
               value={item.system.quantity}
               maxlength={2}
               disabled={!$context.editable || $context.lockItemQuantity}

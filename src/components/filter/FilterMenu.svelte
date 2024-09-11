@@ -2,7 +2,7 @@
   import ButtonMenu from '../button-menu/ButtonMenu.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
-  import type { ActorSheetContext } from 'src/types/types';
+  import type { ActorSheetContextV1 } from 'src/types/types';
   import type { Readable } from 'svelte/store';
   import FilterToggleButton from './FilterToggleButton.svelte';
   import type { ItemFilterService } from 'src/features/filtering/ItemFilterService';
@@ -14,7 +14,7 @@
 
   const localize = FoundryAdapter.localize;
   const context = getContext<
-    Readable<ActorSheetContext | ContainerSheetContext>
+    Readable<ActorSheetContextV1 | ContainerSheetContext>
   >(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
   const onFilterClearAll =
     getContext<ItemFilterService['onFilterClearAll']>('onFilterClearAll');
@@ -29,7 +29,7 @@
 <div role="presentation" class="filter-menu">
   <ButtonMenu
     iconClass="fas fa-filter"
-    buttonClass="inline-icon-button filter-menu-button {hasActiveFilters
+    buttonClass="filter-menu-button {hasActiveFilters
       ? 'has-active-filters'
       : ''} {menuOpen ? 'menu-is-open' : ''}"
     position="bottom"
@@ -37,6 +37,7 @@
     title={localize('TIDY5E.ItemFilters.MenuTooltip.Filters')}
     bind:open={menuOpen}
     menuElement="div"
+    buttonStyle="transparent-inline-icon"
   >
     {#each Object.entries(categories) as [category, filters] (category)}
       <section class="filter-group">

@@ -1,5 +1,5 @@
 {
-    "TIDY5E.Tidy5eVehicle": "Karta Pojazdu Tidy 5e",
+    "TIDY5E.Tidy5eVehicleSheetClassic": "Karta Pojazdu Tidy 5e",
     "TIDY5E.EditSheetImageHint": "Lewy przycisk myszy: edytuj obraz",
     "TIDY5E.ShowTokenArt": "pokaż token",
     "TIDY5E.SheetImageOptionsHint": "Prawy przycisk myszy: pokaż portret postaci",
@@ -20,9 +20,9 @@
     "TIDY5E.OneDnDExhaustion10": "-10 dla wszystkich rzutów k20 i ST rzutu przeciw czarom",
     "TIDY5E.OneDnDExhaustion11": "Śmierć",
     "TIDY5E.StandardVehicleExhaustion0": "Brak negatywnych efektów",
-    "TIDY5E.Tidy5eSheet": "Karta Postaci Tidy 5e",
-    "TIDY5E.Tidy5eNPC": "Karta NPC Tidy 5e",
-    "TIDY5E.Tidy5eItemSheet": "Karta Przedmiotu Tidy 5e",
+    "TIDY5E.Tidy5eCharacterSheetClassic": "Karta Postaci Tidy 5e",
+    "TIDY5E.Tidy5eNpcSheetClassic": "Karta NPC Tidy 5e",
+    "TIDY5E.Tidy5eItemSheetClassic": "Karta Przedmiotu Tidy 5e",
     "TIDY5E.PlayerName": "Nazwa gracza",
     "TIDY5E.ShowPortraitArt": "pokaż portret",
     "TIDY5E.StandardExhaustion4": "Maks. Punkty Życia zmniejszone o połowę",
@@ -446,7 +446,7 @@
     "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
         "name": "Zawsze przygotowane - akcent"
     },
-    "TIDY5E.Tidy5eContainerSheet": "Karta Pojemnika Tidy 5e",
+    "TIDY5E.Tidy5eContainerSheetClassic": "Karta Pojemnika Tidy 5e",
     "TIDY5E.Settings.UseHpOverlay": {
         "hint": "",
         "name": ""

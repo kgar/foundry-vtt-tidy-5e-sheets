@@ -51,7 +51,7 @@
   <!--  TODO: Sort favorites based on setting during data item preparation -->
   {#each favorites as section}
     {#if section.show}
-      {#if section.type === CONSTANTS.TAB_CHARACTER_INVENTORY}
+      {#if section.type === CONSTANTS.TAB_ACTOR_INVENTORY}
         <InventoryList
           {section}
           items={section.items}

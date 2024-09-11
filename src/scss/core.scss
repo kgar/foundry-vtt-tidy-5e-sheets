@@ -12,12 +12,13 @@
   font-style: normal;
 }
 
-:where(.tidy5e-sheet) {
-  @import './partials/reset';
+:where(.tidy5e-sheet.app-v1.classic) {
+  @import './partials/reset-v1';
   @import './partials/variables';
+  @import './partials/text';
 }
 
-.tidy5e-sheet {
+.tidy5e-sheet:where(.app-v1.classic) {
   .window-content {
     background: url(../../modules/tidy5e-sheet/images/parchment-texture-top.webp)
         no-repeat top center / 150% auto,
@@ -195,7 +196,6 @@
     padding: 0.125rem 0.25rem;
     background: var(--t5e-faint-color);
     border: 0.0625rem solid var(--t5e-separator-color);
-    white-space: pre-wrap;
     line-height: 1rem;
     border-radius: 0.3125rem;
     font-size: 0.75rem;
@@ -233,6 +233,8 @@
   // TODO: Remove these layers of specificity and get everything working in concert better. These should come after partial utility styles and general component styles. They can have a high level of specificity as needed.
   &.sheet form {
     // Components - Actor-specific
+    @import '../sheets/actor/ActorMovement.scss';
+    @import '../sheets/actor/ActorProfile.scss';
     @import '../sheets/actor/AttributeBlock.scss';
     @import '../sheets/actor/AttunementTracker.scss';
     @import '../sheets/actor/Currency.scss';
@@ -410,3 +412,7 @@
 }
 
 @import './partials/floating-context-menu';
+
+// Until all sheets move to App V2, it will be sideloaded with core.scss.
+// When done, it will *be* core-classic.scss
+@import './core-classic-appv2.scss';

@@ -6,6 +6,7 @@ import type {
   CharacterSheetContext,
   ClassSummary,
   DropdownListOption,
+  HTMLElementOrGettable,
   NpcSheetContext,
 } from 'src/types/types';
 import { CONSTANTS } from '../constants';
@@ -16,6 +17,7 @@ import { debug, error, warn } from 'src/utils/logging';
 import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
 import { TidyFlags } from './TidyFlags';
 import { TidyHooks } from './TidyHooks';
+import { isNil } from 'src/utils/data';
 
 export const FoundryAdapter = {
   isFoundryV12OrHigher() {
@@ -41,6 +43,12 @@ export const FoundryAdapter = {
   },
   getGameSetting<T = string>(namespace: string, settingName: string): T {
     return game.settings.get(namespace, settingName) as T;
+  },
+  getSystemSetting<T = string>(settingName: string): T {
+    return FoundryAdapter.getGameSetting(
+      CONSTANTS.DND5E_SYSTEM_ID,
+      settingName
+    );
   },
   async setGameSetting(
     namespace: string,
@@ -424,6 +432,15 @@ export const FoundryAdapter = {
       [`system.${systemFieldName}.${key}.value`]: levels[next % levels.length],
     });
   },
+  getProficiencyIconClass(level: number) {
+    const icons: Record<number, string> = {
+      0: 'far fa-circle',
+      0.5: 'fas fa-adjust',
+      1: 'fas fa-check',
+      2: 'fas fa-check-double',
+    };
+    return icons[level] || icons[0];
+  },
   getSpellImageUrl(
     context: CharacterSheetContext | NpcSheetContext,
     spell: any
@@ -440,6 +457,19 @@ export const FoundryAdapter = {
         : undefined;
 
     return classImage ?? spell.img;
+  },
+  searchActors(searchCriteria: string, actors: Actor5e[]) {
+    return new Set(
+      actors
+        .filter((actor) => FoundryAdapter.searchActor(searchCriteria, actor))
+        .map((actor) => actor.id)
+    );
+  },
+  searchActor(searchCriteria: string, actor: Actor5e) {
+    return (
+      searchCriteria.trim() === '' ||
+      actor.name.toLowerCase().includes(searchCriteria.toLowerCase())
+    );
   },
   searchItems(searchCriteria: string, items: Item5e[]): Set<string> {
     return new Set(
@@ -1027,10 +1057,13 @@ export const FoundryAdapter = {
    * @param newTabId the new tab ID to select
    * @returns `true` to indicate proceeding with tab change; `false` to halt tab change
    */
-  onTabSelecting(app: any & { currentTabId: string }, newTabId: string) {
+  onTabSelecting(
+    app: { currentTabId: string; element: HTMLElementOrGettable },
+    newTabId: string
+  ) {
     const canProceed = TidyHooks.tidy5eSheetsPreSelectTab(
       app,
-      app.element.get(0),
+      FoundryAdapter.getElementFromAppV1OrV2(app.element),
       {
         currentTab: app.currentTabId,
         newTab: newTabId,
@@ -1042,10 +1075,17 @@ export const FoundryAdapter = {
     }
 
     setTimeout(() => {
-      TidyHooks.tidy5eSheetsSelectTab(app, app.element.get(0), newTabId);
+      TidyHooks.tidy5eSheetsSelectTab(
+        app,
+        FoundryAdapter.getElementFromAppV1OrV2(app.element),
+        newTabId
+      );
     });
 
     return true;
+  },
+  getElementFromAppV1OrV2(element: HTMLElementOrGettable) {
+    return 'get' in element ? element.get(0) : element;
   },
   getAbilitiesAsDropdownOptions(abilities: any): DropdownListOption[] {
     try {
@@ -1281,5 +1321,102 @@ export const FoundryAdapter = {
     if (!enchantment) return;
     await enchantment.delete();
     await app.render();
+  },
+  /**
+   * Stack identical consumables when a new one is dropped rather than creating a duplicate item.
+   */
+  onDropStackConsumablesForActor(
+    actor: Actor5e,
+    itemData: any
+  ): Promise<Item5e> | null {
+    const droppedSourceId =
+      itemData._stats?.compendiumSource ?? itemData.flags.core?.sourceId;
+    if (itemData.type !== 'consumable' || !droppedSourceId) return null;
+    const similarItem = actor.items.find((i: Item5e) => {
+      const sourceId = i.getFlag('core', 'sourceId');
+      return (
+        sourceId &&
+        sourceId === droppedSourceId &&
+        i.type === 'consumable' &&
+        i.name === itemData.name
+      );
+    });
+    if (!similarItem) return null;
+    return similarItem.update({
+      'system.quantity':
+        similarItem.system.quantity + Math.max(itemData.system.quantity, 1),
+    });
+  },
+  /**
+   * Handle a drop event for an existing embedded Item to sort that Item relative to its siblings
+   */
+  onSortItemForActor(actor: Actor5e, event: Event, itemData: any): any {
+    // Handle Tidy Custom Section Transfer
+    const sourceSection = foundry.utils.getProperty(
+      itemData,
+      TidyFlags.section.prop
+    );
+
+    const targetSection = (event.target as HTMLElement | null)
+      ?.closest('[data-tidy-section-key][data-custom-section="true"]')
+      ?.getAttribute('data-tidy-section-key');
+
+    const isMovedToNewSection =
+      !isNil(targetSection?.trim(), '') && sourceSection !== targetSection;
+
+    const isMovedToDefaultSection =
+      !isNil(sourceSection?.trim(), '') && isNil(targetSection?.trim(), '');
+
+    // Get the drag source and drop target
+    const items = actor.items;
+    const source = items.get(itemData._id);
+    const eventTarget = event.target;
+    if (!(eventTarget instanceof HTMLElement)) {
+      return;
+    }
+    const dropTarget = eventTarget.closest<HTMLElement>('[data-item-id]');
+    if (!dropTarget) return;
+    const target = items.get(dropTarget.dataset.itemId);
+
+    // Don't sort on yourself
+    if (source.id === target.id) return;
+
+    // Identify sibling items based on adjacent HTML elements
+    const siblings = [];
+    for (let el of Array.from(dropTarget.parentElement!.children)) {
+      if (el instanceof HTMLElement) {
+        const siblingId = el.dataset.itemId;
+        if (siblingId && siblingId !== source.id)
+          siblings.push(items.get(el.dataset.itemId));
+      }
+    }
+
+    // Perform the sort
+    const sortUpdates = SortingHelpers.performIntegerSort(source, {
+      target,
+      siblings,
+    });
+    const updateData = sortUpdates.map((u: any) => {
+      const update = u.update;
+      update._id = u.target._id;
+      if (update._id === source.id) {
+        // apply section change, if any
+        if (isMovedToNewSection) {
+          update[TidyFlags.section.prop] = targetSection;
+        } else if (isMovedToDefaultSection) {
+          update[TidyFlags.section.unsetProp] = null;
+        }
+      }
+      return update;
+    });
+
+    // Perform the update
+    return actor.updateEmbeddedDocuments('Item', updateData);
+  },
+  formatCr(cr: unknown) {
+    return dnd5e.utils.formatCR(cr);
+  },
+  formatNumber(num: number) {
+    return dnd5e.utils.formatNumber(num);
   },
 };

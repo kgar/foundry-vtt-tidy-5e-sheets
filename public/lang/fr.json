@@ -1,8 +1,8 @@
 {
-    "TIDY5E.Tidy5eSheet": "Tidy 5e Feuille de personnage",
-    "TIDY5E.Tidy5eNPC": "Tidy 5e feuille de PNJ",
-    "TIDY5E.Tidy5eItemSheet": "Tidy 5e feuille d'objet",
-    "TIDY5E.Tidy5eVehicle": "Tidy 5e Vechicle Sheet",
+    "TIDY5E.Tidy5eCharacterSheetClassic": "Tidy 5e Feuille de personnage",
+    "TIDY5E.Tidy5eNpcSheetClassic": "Tidy 5e feuille de PNJ",
+    "TIDY5E.Tidy5eItemSheetClassic": "Tidy 5e feuille d'objet",
+    "TIDY5E.Tidy5eVehicleSheetClassic": "Tidy 5e Vechicle Sheet",
     "TIDY5E.PlayerName": "Nom du joueur",
     "TIDY5E.EditSheetImageHint": "Clic gauche : éditer l'image",
     "TIDY5E.SheetImageOptionsHint": "Clic droit : voir l'image du personnage",
@@ -775,7 +775,7 @@
         "options.GmAndOwners": "MJ et propriétaires des objets"
     },
     "TIDY5E.Commands.ShowContainerPanel": "Afficher le panneau conteneur",
-    "TIDY5E.Tidy5eContainerSheet": "Feuille de conteneur Tidy 5e",
+    "TIDY5E.Tidy5eContainerSheetClassic": "Feuille de conteneur Tidy 5e",
     "TIDY5E.Commands.HideContainerPanel": "Masquer le panneau conteneur",
     "TIDY5E.Utilities.GMTools": "Outils du MJ",
     "TIDY5E.Utilities.IdentifyAll": "Identifier tous les éléments",

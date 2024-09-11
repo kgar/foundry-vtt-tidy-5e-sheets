@@ -11,7 +11,9 @@ import type { TabId } from './tab/CustomTabBase';
 import { Tidy5eCharacterSheet } from 'src/sheets/Tidy5eCharacterSheet';
 import { Tidy5eNpcSheet } from 'src/sheets/Tidy5eNpcSheet';
 import { Tidy5eVehicleSheet } from 'src/sheets/Tidy5eKgarVehicleSheet';
+import { Tidy5eKgarContainerSheet } from 'src/sheets/Tidy5eContainerSheet';
 import { Tidy5eKgarItemSheet } from 'src/sheets/Tidy5eItemSheet';
+import { Tidy5eGroupSheetClassic } from 'src/sheets/Tidy5eGroupSheetClassic';
 import { SvelteTab } from './tab/SvelteTab';
 import type {
   SupportedTab,
@@ -26,7 +28,7 @@ import { HandlebarsContent } from './content/HandlebarsContent';
 import { CONSTANTS } from 'src/constants';
 import { CustomContentManager } from 'src/runtime/content/CustomContentManager';
 import { ConfigApi } from './config/ConfigApi';
-import { Tidy5eKgarContainerSheet } from 'src/sheets/Tidy5eContainerSheet';
+import { GroupSheetRuntime } from 'src/runtime/GroupSheetRuntime';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -132,6 +134,15 @@ export class Tidy5eSheetsApi {
   }
 
   /**
+   * Determines whether the provided sheet is a Tidy 5e Group sheet.
+   * @param app a group sheet
+   * @returns boolean indicating if the sheet is a Tidy 5e Group sheet
+   */
+  isTidy5eGroupSheet(app: any) {
+    return Tidy5eGroupSheetClassic.name === app?.constructor?.name;
+  }
+
+  /**
    * Determines whether the provided sheet is a Tidy 5e Item sheet.
    * @param app an item sheet
    * @returns boolean indicating if the sheet is a Tidy 5e Item sheet
@@ -161,6 +172,7 @@ export class Tidy5eSheetsApi {
       Tidy5eVehicleSheet.name,
       Tidy5eKgarItemSheet.name,
       Tidy5eKgarContainerSheet.name,
+      Tidy5eGroupSheetClassic.name,
     ].includes(app?.constructor?.name);
   }
 
@@ -201,6 +213,7 @@ export class Tidy5eSheetsApi {
    */
   registerActorTab(tab: SupportedTab, options?: ActorTabRegistrationOptions) {
     this.registerCharacterTab(tab, options);
+    this.registerGroupTab(tab, options);
     this.registerNpcTab(tab, options);
     this.registerVehicleTab(tab, options);
   }
@@ -223,9 +236,7 @@ export class Tidy5eSheetsApi {
    *       tabId: 'my-module-id-registered-character-tab',
    *       getData: async (data) => {
    *         data['my-message'] = 'Hello, world! 🌊🏄‍♂️';
-   *         return new Promise((resolve) => {
-   *           resolve(data);
-   *         });
+   *         return Promise.resolve(data);
    *       },
    *       onRender(params) {
    *         const myTab = $(params.tabContentsElement);
@@ -246,9 +257,7 @@ export class Tidy5eSheetsApi {
    *       tabId: api.constants.TAB_ID_CHARACTER_INVENTORY,
    *       getData: async (data) => {
    *         data['my-message'] = 'Hello, world! 🌊🏄‍♂️';
-   *         return new Promise((resolve) => {
-   *           resolve(data);
-   *         });
+   *         return Promise.resolve(data);
    *       },
    *       onRender(params) {
    *         const myTab = $(params.tabContentsElement);
@@ -287,6 +296,83 @@ export class Tidy5eSheetsApi {
   }
 
   /**
+   * Adds a tab to the available Group sheet tabs.
+   * @param {SupportedTab} tab the information necessary to render a tab
+   * @param {object} [options] sheet registration options
+   * @param {string} [options.layout] an optional sheet layout or layouts (default: 'all')
+   * @param {string} [options.overrideExisting] if a tab with this ID already exists, override it
+   * @returns void
+   *
+   * @example Registering a handlebars-based group sheet tab
+   * ```js
+   * Hooks.once('tidy5e-sheet.ready', (api) => {
+   *   api.registerGroupTab(
+   *     new api.models.HandlebarsTab({
+   *       title: 'My Tab',
+   *       path: '/modules/my-module-id/templates/my-handlebars-template.hbs',
+   *       tabId: 'my-module-id-registered-group-tab',
+   *       getData: async (data) => {
+   *         data['my-message'] = 'Hello, world! 🌊🏄‍♂️';
+   *         return Promise.resolve(data);
+   *       },
+   *       onRender(params) {
+   *         const myTab = $(params.tabContentsElement);
+   *         myTab.find('.my-control').click(_myHandler.bind(params.app));
+   *       },
+   *     })
+   *   );
+   * });
+   * ```
+   *
+   * @example Overriding an existing sheet tab
+   * ```js
+   * Hooks.once('tidy5e-sheet.ready', (api) => {
+   *   api.registerGroupTab(
+   *     new api.models.HandlebarsTab({
+   *       title: 'The New Inventory Tab',
+   *       path: '/modules/my-module-id/templates/my-handlebars-template.hbs',
+   *       tabId: api.constants.TAB_ID_GROUP_INVENTORY,
+   *       getData: async (data) => {
+   *         data['my-message'] = 'Hello, world! 🌊🏄‍♂️';
+   *         return Promise.resolve(data);
+   *       },
+   *       onRender(params) {
+   *         const myTab = $(params.tabContentsElement);
+   *         myTab.find('.my-control').click(_myHandler.bind(params.app));
+   *       },
+   *     }),
+   *     {
+   *       overrideExisting: true,
+   *     }
+   *   );
+   * });
+   * ```
+   *
+   * @remarks
+   * A tab ID is always required (see {@link TabId}).
+   */
+  registerGroupTab(
+    tab: SupportedTab,
+    options?: ActorTabRegistrationOptions
+  ): void {
+    if (!TabManager.validateTab(tab)) {
+      return;
+    }
+
+    const registeredTab = TabManager.mapCustomTabToRegisteredTab(
+      tab,
+      options?.layout
+    );
+
+    if (!registeredTab) {
+      warn('Unable to register tab. Tab type not supported');
+      return;
+    }
+
+    GroupSheetRuntime.registerTab(registeredTab, options);
+  }
+
+  /**
    * Adds custom content to all actor sheets at `position` relative to `selector`.
    *
    * @param content the information necessary to render custom content
@@ -300,9 +386,7 @@ export class Tidy5eSheetsApi {
    *     new api.models.HtmlContent({
    *       html: `<a title="Example Button" class="my-custom-icon"><i class="fas fa-user"></i></a>`,
    *       injectParams: {
-   *         selector: api.getSheetPartSelector(
-   *           api.constants.SHEET_PARTS.NAME_CONTAINER
-   *         ),
+   *         selector: `[data-tidy-sheet-part="${api.constants.SHEET_PARTS.NAME_CONTAINER}"]`
    *         position: "beforebegin",
    *       },
    *       onContentReady: (params) => {
@@ -352,9 +436,7 @@ export class Tidy5eSheetsApi {
    *     new api.models.HtmlContent({
    *       html: `<a title="Example Button" class="my-custom-icon"><i class="fas fa-user"></i></a>`,
    *       injectParams: {
-   *         selector: api.getSheetPartSelector(
-   *           api.constants.SHEET_PARTS.NAME_CONTAINER
-   *         ),
+   *         selector: `[data-tidy-sheet-part="${api.constants.SHEET_PARTS.NAME_CONTAINER}"]`
    *         position: "beforebegin",
    *       },
    *       onContentReady: (params) => {
@@ -389,6 +471,54 @@ export class Tidy5eSheetsApi {
   }
 
   /**
+   * Adds custom content to group sheets at `position` relative to `selector`.
+   *
+   * @param content the information necessary to render custom content
+   * @param options custom content registration options
+   * @returns void
+   *
+   * @example registering an icon next to the group sheet name
+   * ```js
+   * Hooks.once("tidy5e-sheet.ready", (api) => {
+   *   api.registerGroupContent(
+   *     new api.models.HtmlContent({
+   *       html: `<a title="Example Button" class="my-custom-icon"><i class="fas fa-user"></i></a>`,
+   *       injectParams: {
+   *         selector: `[data-tidy-sheet-part="${api.constants.SHEET_PARTS.NAME_CONTAINER}"]`
+   *         position: "beforebegin",
+   *       },
+   *       onContentReady: (params) => {
+   *         console.log("content ready to render", params);
+   *         console.log("my content", params.content);
+   *       },
+   *       onRender: (params) => {
+   *         params.element
+   *           .querySelector(".my-custom-icon")
+   *           .addEventListener("click", () => alert("Clicked custom PC icon"));
+   *       },
+   *     })
+   *   );
+   * });
+   * ```
+   */
+  registerGroupContent(
+    content: SupportedContent,
+    options?: ContentRegistrationOptions
+  ) {
+    const registeredContent = CustomContentManager.mapToRegisteredContent(
+      content,
+      options?.layout
+    );
+
+    if (!registeredContent) {
+      warn('Unable to register content. Content type not supported.');
+      return;
+    }
+
+    GroupSheetRuntime.registerContent(registeredContent);
+  }
+
+  /**
    * Adds custom content to item sheets at `position` relative to `selector`.
    *
    * @param content the information necessary to render custom content
@@ -402,9 +532,7 @@ export class Tidy5eSheetsApi {
    *     new api.models.HtmlContent({
    *       html: `<a title="Example Button" class="my-custom-icon"><i class="fas fa-flask"></i></a>`,
    *       injectParams: {
-   *         selector: api.getSheetPartSelector(
-   *           api.constants.SHEET_PARTS.NAME_CONTAINER
-   *         ),
+   *         selector: `[data-tidy-sheet-part="${api.constants.SHEET_PARTS.NAME_CONTAINER}"]`
    *         position: "beforebegin",
    *       },
    *       onContentReady: (params) => {
@@ -452,9 +580,7 @@ export class Tidy5eSheetsApi {
    *     new api.models.HtmlContent({
    *       html: `<a title="Example Button" class="my-custom-icon"><i class="fas fa-user"></i></a>`,
    *       injectParams: {
-   *         selector: api.getSheetPartSelector(
-   *           api.constants.SHEET_PARTS.NAME_CONTAINER
-   *         ),
+   *         selector: `[data-tidy-sheet-part="${api.constants.SHEET_PARTS.NAME_CONTAINER}"]`
    *         position: "beforebegin",
    *       },
    *       onContentReady: (params) => {
@@ -502,9 +628,7 @@ export class Tidy5eSheetsApi {
    *     new api.models.HtmlContent({
    *       html: `<a title="Example Button" class="my-custom-icon"><i class="fas fa-user"></i></a>`,
    *       injectParams: {
-   *         selector: api.getSheetPartSelector(
-   *           api.constants.SHEET_PARTS.NAME_CONTAINER
-   *         ),
+   *         selector: `[data-tidy-sheet-part="${api.constants.SHEET_PARTS.NAME_CONTAINER}"]`
    *         position: "beforebegin",
    *       },
    *       onContentReady: (params) => {
@@ -619,9 +743,7 @@ export class Tidy5eSheetsApi {
    *       tabId: 'my-module-id-registered-npc-tab',
    *       getData: async (data) => {
    *         data['my-message'] = 'Hello, world! 🌊🏄‍♂️';
-   *         return new Promise((resolve) => {
-   *           resolve(data);
-   *         });
+   *         return Promise.resolve(data);
    *       },
    *       onRender(params) {
    *         const myTab = $(params.tabContentsElement);
@@ -672,9 +794,7 @@ export class Tidy5eSheetsApi {
    *       tabId: 'my-module-id-registered-vehicle-tab',
    *       getData: async (data) => {
    *         data['my-message'] = 'Hello, world! 🌊🏄‍♂️';
-   *         return new Promise((resolve) => {
-   *           resolve(data);
-   *         });
+   *         return Promise.resolve(data);
    *       },
    *       onRender(params) {
    *         const myTab = $(params.tabContentsElement);

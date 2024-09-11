@@ -6,7 +6,7 @@
   import BlockScore from './BlockScore.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import type { ActorSheetContext } from 'src/types/types';
+  import type { ActorSheetContextV1 } from 'src/types/types';
   import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
@@ -18,7 +18,7 @@
 
   $: abbreviation = CONFIG.DND5E.abilities[id]?.abbreviation ?? id;
 
-  let context = getContext<Readable<ActorSheetContext>>(
+  let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 

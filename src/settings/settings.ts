@@ -304,7 +304,7 @@ export function createSettings() {
           type: Array,
           default: [
             CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
-            CONSTANTS.TAB_CHARACTER_INVENTORY,
+            CONSTANTS.TAB_ACTOR_INVENTORY,
             CONSTANTS.TAB_CHARACTER_SPELLBOOK,
             CONSTANTS.TAB_CHARACTER_FEATURES,
             CONSTANTS.TAB_CHARACTER_EFFECTS,

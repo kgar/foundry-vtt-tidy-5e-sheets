@@ -1,8 +1,8 @@
 {
-    "TIDY5E.Tidy5eSheet": "Tidy 5e Scheda Personaggio",
-    "TIDY5E.Tidy5eNPC": "Tidy 5e Scheda PNG",
-    "TIDY5E.Tidy5eItemSheet": "Tidy 5e Scheda Oggetti",
-    "TIDY5E.Tidy5eVehicle": "Tidy 5e Scheda Veicoli",
+    "TIDY5E.Tidy5eCharacterSheetClassic": "Tidy 5e Scheda Personaggio",
+    "TIDY5E.Tidy5eNpcSheetClassic": "Tidy 5e Scheda PNG",
+    "TIDY5E.Tidy5eItemSheetClassic": "Tidy 5e Scheda Oggetti",
+    "TIDY5E.Tidy5eVehicleSheetClassic": "Tidy 5e Scheda Veicoli",
     "TIDY5E.PlayerName": "Nome del Giocatore",
     "TIDY5E.EditSheetImageHint": "Tasto Sinistro: Modifica Immagine",
     "TIDY5E.SheetImageOptionsHint": "Tasto Destro: Mostra Ritratto PG",
@@ -771,7 +771,7 @@
         "options.GmOnly": "Solo DM",
         "options.GmAndOwners": "DM e Proprietari Oggetti"
     },
-    "TIDY5E.Tidy5eContainerSheet": "Scheda Contenitore Tidy 5e",
+    "TIDY5E.Tidy5eContainerSheetClassic": "Scheda Contenitore Tidy 5e",
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": "Oggetto"
     },

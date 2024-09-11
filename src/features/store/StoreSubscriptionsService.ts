@@ -2,8 +2,7 @@ export class StoreSubscriptionsService {
   _subscriptions: (() => void)[] = [];
 
   registerSubscriptions(...subscriptions: (() => void)[]) {
-    this.unsubscribeAll();
-    this._subscriptions = subscriptions;
+    this._subscriptions.push(...subscriptions);
   }
 
   unsubscribeAll() {

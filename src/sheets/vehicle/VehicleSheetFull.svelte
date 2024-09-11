@@ -88,7 +88,10 @@
       </div>
       <SheetMenu defaultSettingsTab={CONSTANTS.TAB_USER_SETTINGS_VEHICLES} />
     </div>
-    <HorizontalLineSeparator borderColor="light" />
+    <HorizontalLineSeparator
+      borderColor="light"
+      class="header-line-margin-left"
+    />
     <div class="origin-summary">
       <div class="flex-row extra-small-gap">
         {#if $context.editable}
@@ -160,9 +163,15 @@
         {/if}
       </div>
     </div>
-    <HorizontalLineSeparator borderColor="light" />
-    <ActorMovement />
-    <HorizontalLineSeparator borderColor="light" />
+    <HorizontalLineSeparator
+      borderColor="light"
+      class="header-line-margin-left"
+    />
+    <ActorMovement class="header-line-margin" />
+    <HorizontalLineSeparator
+      borderColor="light"
+      class="header-line-margin-left"
+    />
     <section class="actor-stats">
       <AcShieldVehicle />
       {#each abilities as [id, ability]}

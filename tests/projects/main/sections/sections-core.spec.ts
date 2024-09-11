@@ -20,7 +20,7 @@ sectionsTest.describe('sections core functionality', () => {
             name: `Test ${itemType}`,
             type: itemType,
           },
-          tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+          tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
           sectionKey: itemType,
         })
       ),
@@ -348,7 +348,7 @@ sectionsTest.describe('sections core functionality', () => {
             name: `Test ${itemType}`,
             type: itemType,
           },
-          tabId: CONSTANTS.TAB_NPC_INVENTORY,
+          tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
           sectionKey: itemType,
         })
       ),

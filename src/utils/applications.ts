@@ -47,6 +47,7 @@ export function applyThemeDataAttributeToWindow(
 
 export function applySheetAttributesToWindow(
   documentName: string,
+  documentUuid: string,
   type: string,
   themeId: string,
   element?: HTMLElement
@@ -54,6 +55,7 @@ export function applySheetAttributesToWindow(
   element?.setAttribute('data-sheet-module', 'tidy5e-sheet');
   element?.setAttribute('data-document-name', documentName);
   element?.setAttribute('data-document-type', type);
+  element?.setAttribute('data-document-uuid', documentUuid);
   applyThemeDataAttributeToWindow(themeId, element);
 }
 
@@ -61,7 +63,8 @@ export async function maintainCustomContentInputFocus(
   app: any,
   asyncRender: () => Promise<unknown>
 ) {
-  let focus = app.element.find(':focus');
+  // TODO: Eliminate jQuery
+  let focus = $(app.element).find(':focus');
   focus = focus.length ? focus[0] : null;
 
   await asyncRender();
@@ -72,10 +75,21 @@ export async function maintainCustomContentInputFocus(
   }
 }
 
-export function blurUntabbableButtonsOnClick(element: any /* jQuery */) {
-  element
-    .off('click.tidy-keyboard-accessibility', '[tabindex="-1"]')
-    .on('click.tidy-keyboard-accessibility', '[tabindex="-1"]', (ev: any) => {
-      ev.currentTarget?.blur();
-    });
+export function blurUntabbableButtonsOnClick(element: HTMLElement) {
+  element.removeEventListener('click', blurUntabbableButton);
+  element.addEventListener('click', blurUntabbableButton);
+}
+
+function blurUntabbableButton(event: MouseEvent) {
+  const target = event.target;
+
+  if (!(target instanceof HTMLElement)) {
+    return;
+  }
+
+  const button = target.closest('button');
+
+  if (button?.tabIndex === -1) {
+    target.blur();
+  }
 }
