@@ -214,7 +214,7 @@ export const CONSTANTS = {
     EXPANSION_TOGGLE: 'table-expansion-toggle',
 
     /** An image representing a member of a group sheet. */
-    GROUP_MEMBER_PORTRAIT: 'grou-member-portrait',
+    GROUP_MEMBER_PORTRAIT: 'group-member-portrait',
 
     /** An interactable element which toggles an inline container's contents view */
     INLINE_CONTAINER_TOGGLE: 'inline-container-toggle',
