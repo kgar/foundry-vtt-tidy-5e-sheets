@@ -811,5 +811,6 @@
     "TIDY5E.Utilities.AssignSpellsToClasses": "Asignar hechizos a las clases",
     "TIDY5E.SpellSourceClassAssignments.Identifier": "Identificador de clase de origen",
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "Aquí aparece el identificador de clase de origen del hechizo. Para asignar un identificador que no posea el personaje, introduce el identificador de clase en este campo de texto.",
-    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Mostrar solo los sin asignar"
+    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Mostrar solo los sin asignar",
+    "TIDY5E.PreviewSheetImageHint": "Clic izquierdo: vista previa de la imagen"
 }
