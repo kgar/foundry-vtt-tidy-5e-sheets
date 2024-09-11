@@ -1,4 +1,4 @@
-import type { Tidy5eGroupSheetClassic } from 'src/sheets/Tidy5eGroupSheet';
+import type { Tidy5eGroupSheetClassic } from 'src/sheets/Tidy5eGroupSheetClassic';
 import type { ContainerContents, Item5e } from './item.types';
 import type {
   Actor5e,
@@ -16,7 +16,6 @@ import type { RegisteredContent } from 'src/runtime/types';
 export type GroupSheetClassicContext = {
   config: any; // TODO: If possible, convert the full CONFIG (no modules on) to a typescript type.
   currentHP: number;
-  // data: unknown;
   canObserveAll: boolean;
   containerPanelItems: ContainerPanelItemContext[];
   customContent: RegisteredContent<GroupSheetClassicContext>[];
@@ -35,11 +34,7 @@ export type GroupSheetClassicContext = {
   memberContext: Record<string, GroupMemberContext>;
   memberSections: GroupMemberSection[];
   movement: GroupMovementContext;
-  // nMembers: number;
-  // nVehicles: number;
-  // options: App V1 Options
   owner: boolean;
-  // title: string;
   items: Item5e[];
   effects: unknown[];
   showContainerPanel: boolean;
@@ -108,7 +103,7 @@ export interface Group5e extends ActorV2 {
 }
 
 export type GroupMemberSection = TidySectionBase & {
-  members: Actor5e[]; // Figure out what all is actually needed here
+  members: Actor5e[];
   showCrColumn: boolean;
 };
 
@@ -181,67 +176,3 @@ export interface GroupSkill {
   key: string;
   members: Actor5e[];
 }
-
-/*
-// Sample member from character section
-{
-    "index": 0,
-    "quantity": {
-        "value": 1,
-        "formula": ""
-    },
-    "actor": {},
-    "id": "bTQX6oH3LKDBpHpT",
-    "name": "Akra 2",
-    "img": "systems/dnd5e/tokens/heroes/ClericDragonborn.webp",
-    "hp": {
-        "current": 9,
-        "max": 9,
-        "pct": "100.00",
-        "color": "#7fff00"
-    },
-    "displayHPValues": true
-},
-
-// Sample member from NPC section
-{
-    "index": 2,
-    "quantity": {
-        "value": 1,
-        "formula": ""
-    },
-    "actor": {},
-    "id": "xXmZOkqp5NZMqTv6",
-    "name": "Hobgoblin",
-    "img": "systems/dnd5e/tokens/humanoid/Hobgoblin.webp",
-    "hp": {
-        "current": 17,
-        "max": 17,
-        "pct": "100.00",
-        "color": "#7fff00"
-    },
-    "displayHPValues": true,
-    "cr": "½",
-    "xp": "100"
-}
-
-// Sample member from vehicle section
-{
-    "index": 5,
-    "quantity": {
-        "value": 1,
-        "formula": ""
-    },
-    "actor": {},
-    "id": "B0LbtKQAaXsnx7EB",
-    "name": "A Vehicle",
-    "img": "icons/svg/mystery-man.svg",
-    "hp": {
-        "current": 0,
-        "max": 0,
-        "pct": "NaN",
-        "color": "#000000"
-    },
-    "displayHPValues": true
-}
-*/

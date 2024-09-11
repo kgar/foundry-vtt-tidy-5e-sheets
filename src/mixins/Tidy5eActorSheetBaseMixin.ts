@@ -70,7 +70,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
     /* -------------------------------------------- */
 
     /**
-     * Perform any dynamic behavior on
+     * Perform any dynamic behavior on controls which depends on the current state of the sheet.
      * @returns
      */
     _getHeaderControls() {
