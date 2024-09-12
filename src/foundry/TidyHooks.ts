@@ -16,7 +16,6 @@ import type {
   Item5e,
   ItemSheetContext,
 } from 'src/types/item.types';
-import type { RollConfig, Roll, RestConfiguration } from './dnd5e.types';
 import type { Group5e } from 'src/types/group.types';
 
 /** Manages all Hook usage in Tidy 5e Sheets */
@@ -79,65 +78,6 @@ export class TidyHooks {
     menuItems: ContextMenuEntry[]
   ): boolean {
     return Hooks.call('dnd5e.getItemContextOptions', item, menuItems);
-  }
-
-  /**
-   * A hit die roll is about to occur.
-   * @param {Actor5e} actor The affected actor.
-   * @param {RollConfig} rollConfig The configuration for the roll.
-   * @param {string} denomination The roll denomination.
-   * @returns {boolean} `true` to allow the roll, `false` to prevent it.
-   *
-   * @example
-   * ```js
-   * Hooks.on('dnd5e.preRollHitDie', (actor, rollConfig, denomination) => {
-   *   return true;
-   * });
-   * ```
-   */
-  static dnd5ePreRollHitDie(
-    actor: Actor5e,
-    rollConfig: RollConfig,
-    denomination: string
-  ): boolean {
-    return Hooks.call('dnd5e.preRollHitDie', actor, rollConfig, denomination);
-  }
-
-  /**
-   * A short rest is about to start.
-   * @param {Actor5e} actor The actor that is being rested.
-   * @param {RestConfiguration} config Configuration options for the rest.
-   * @returns {boolean} Explicitly return `false` to prevent the rest from being started.
-   *
-   * @example
-   * ```js
-   * Hooks.on('dnd5e.preShortRest', (actor, config) => {
-   *   return true;
-   * });
-   * ```
-   */
-  static dnd5ePreShortRest(actor: Actor5e, config: RestConfiguration): boolean {
-    return Hooks.call('dnd5e.preShortRest', actor, config);
-  }
-
-  /**
-   * A hook event that fires after a hit die has been rolled for an Actor, but before updates have been performed.
-   * @param {Actor5e} actor Actor for which the hit die has been rolled.
-   * @param {Roll} roll The resulting roll.
-   * @param {object} updates
-   * @param {object} updates.actor Updates that will be applied to the actor.
-   * @param {object} updates.class Updates that will be applied to the class.
-   * @returns {boolean} `true` to allow the roll, `false` to prevent it.
-   *
-   * @example
-   * ```js
-   * Hooks.on('dnd5e.rollHitDie', (actor, roll, updates) => {
-   *   return true;
-   * });
-   * ```
-   */
-  static dnd5eRollHitDie(actor: Actor5e, roll: Roll, updates: object): boolean {
-    return Hooks.call('dnd5e.rollHitDie', actor, roll, updates);
   }
 
   /**

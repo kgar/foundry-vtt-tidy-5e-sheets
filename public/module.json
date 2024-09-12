@@ -96,7 +96,7 @@
     }
   ],
   "compatibility": {
-    "minimum": "11.315",
+    "minimum": "12",
     "verified": "12"
   },
   "relationships": {
