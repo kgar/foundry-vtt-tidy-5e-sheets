@@ -599,7 +599,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
           const groupSkill = (groupSkills[key] ??=
             this.#createEmptyGroupSkill(key));
 
-          groupSkill.mod = Math.max(groupSkill.mod, skill.mod);
+          groupSkill.total = Math.max(groupSkill.total, skill.total);
           groupSkill.members.push(member);
         }
       }
@@ -662,7 +662,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
                   label: label,
                   passive: skill.passive,
                   total: skill.total,
-                  mod: formatAsModifier(skill.total),
+                  formattedTotal: formatAsModifier(skill.total),
                 });
 
                 return prev;
@@ -707,7 +707,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       key: key,
       label: CONFIG.DND5E.skills[key]?.label ?? key,
       members: [],
-      mod: Number.NEGATIVE_INFINITY,
+      total: Number.NEGATIVE_INFINITY,
     };
   }
 

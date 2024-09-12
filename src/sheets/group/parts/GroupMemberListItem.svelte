@@ -12,6 +12,7 @@
   import GroupMemberListItemProfile from './GroupMemberListItemProfile.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
+  import { formatAsModifier } from 'src/utils/formatting';
 
   const context = getContext<Readable<GroupSheetClassicContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -109,13 +110,13 @@
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             {localize(ctx.perception?.label ?? '')}
-            {ctx.perception?.mod} ({ctx.perception?.passive})
+            {ctx.perception?.formattedTotal} ({ctx.perception?.passive})
           </button>
         {/if}
         {#each ctx.topSkills as skill (skill.key)}
           <span class="skill">
             {localize(skill?.label ?? '')}
-            {skill?.mod}
+            {skill?.formattedTotal}
           </span>
         {/each}
       </div>

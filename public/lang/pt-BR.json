@@ -1,9 +1,10 @@
 {
-    "TIDY5E.Tidy5eCharacterSheetClassic": "Ficha de Personagem Tidy 5e",
-    "TIDY5E.Tidy5eNpcSheetClassic": "Ficha de PnJ Tidy 5e",
-    "TIDY5E.Tidy5eItemSheetClassic": "Ficha de Item Tidy 5e",
-    "TIDY5E.Tidy5eContainerSheetClassic": "Ficha de Recipiente Tidy 5e",
-    "TIDY5E.Tidy5eVehicleSheetClassic": "Ficha de Veículo Tidy 5e",
+    "TIDY5E.Tidy5eCharacterSheetClassic": "Ficha de Personagem Clássica Tidy 5e",
+    "TIDY5E.Tidy5eNpcSheetClassic": "Ficha de PnJ Clássica Tidy 5e",
+    "TIDY5E.Tidy5eItemSheetClassic": "Ficha de Item Clássica Tidy 5e",
+    "TIDY5E.Tidy5eContainerSheetClassic": "Ficha de Recipiente Clássica Tidy 5e",
+    "TIDY5E.Tidy5eVehicleSheetClassic": "Ficha de Veículo Clássica Tidy 5e",
+    "TIDY5E.Tidy5eGroupSheetClassic": "Ficha de Grupo Clássica Tidy 5e",
     "TIDY5E.PlayerName": "Nome do Jogador",
     "TIDY5E.EditSheetImageHint": "Clique Esq.: Editar Imagem",
     "TIDY5E.PreviewSheetImageHint": "Clique Esq.: Visualizar Imagem",
@@ -45,6 +46,14 @@
     "TIDY5E.StandardVehicleExhaustion6": "Pontos de vida caem para 0 e o veículo quebra",
 
     "TIDY5E.AbbrInitiative": "Ini",
+
+    "TIDY5E.NoSpecialSenses": "Sem Sentidos Especiais",
+
+    "TIDY5E.Group.NamePlaceholder": "Nome do Grupo",
+    "TIDY5E.Group.RemoveMemberFromGroup": "Remover Membro do Grupo",
+    "TIDY5E.Group.ShowMemberTabInfoPanel": "Mostrar Painel de Info.",
+    "TIDY5E.Group.HideMemberTabInfoPanel": "Esconder Painel de Info.",
+    "TIDY5E.Group.EmptyMembersTabHint": "Este grupo está vazio. Solte um ator da barra lateral para adicionar um membro.",
 
     "TIDY5E.RestHint": "Descansar",
     "TIDY5E.ShortRest": "Descanso Curto",
@@ -837,5 +846,7 @@
     "TIDY5E.SpellSourceClassAssignments.Identifier": "Identificador de Classe de Origem",
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "O identificador da classe de origem da magia aparece aqui. Para atribuir um identificador que o personagem não possui, insira o identificador de classe neste campo de texto.",
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Exibir Apenas Não-Atribuídos",
+    "TIDY5E.Keybindings.ToggleSheetLock.Name": "Alternar Bloqueio da Ficha",
+    "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Se uma ficha do Tidy for, no momento, a janela ativa na UI, esse atalho alterna o bloqueio da ficha.",
     "TIDY5E.LocalizationTestKey": "Teste de Localização de Chave"
 }

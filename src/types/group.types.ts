@@ -70,7 +70,7 @@ export type GroupMemberSkillInfo = {
   key: string;
   label: string;
   total: number;
-  mod: string;
+  formattedTotal: string;
   passive: number;
 };
 
@@ -172,7 +172,7 @@ export interface GroupLanguage {
 
 export interface GroupSkill {
   label: string;
-  mod: number;
+  total: number;
   key: string;
   members: Actor5e[];
 }
