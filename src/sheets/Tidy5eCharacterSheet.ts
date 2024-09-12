@@ -737,7 +737,6 @@ export class Tidy5eCharacterSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -747,7 +746,6 @@ export class Tidy5eCharacterSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -756,7 +754,6 @@ export class Tidy5eCharacterSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -779,7 +776,6 @@ export class Tidy5eCharacterSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -792,7 +788,6 @@ export class Tidy5eCharacterSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -810,7 +805,6 @@ export class Tidy5eCharacterSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -819,7 +813,6 @@ export class Tidy5eCharacterSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -828,7 +821,6 @@ export class Tidy5eCharacterSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -837,7 +829,6 @@ export class Tidy5eCharacterSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -846,7 +837,6 @@ export class Tidy5eCharacterSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -869,7 +859,6 @@ export class Tidy5eCharacterSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),

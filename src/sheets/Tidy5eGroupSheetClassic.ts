@@ -163,7 +163,6 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       {
         secrets: this.actor.isOwner,
         rollData: this.actor.getRollData(),
-        async: true,
         relativeTo: this.actor,
       }
     );
