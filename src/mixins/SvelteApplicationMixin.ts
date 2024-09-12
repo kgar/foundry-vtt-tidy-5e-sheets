@@ -300,6 +300,18 @@ export function SvelteApplicationMixin<
             applyThemeDataAttributeToWindow(settings.colorScheme, this.element);
           })
         );
+
+        // If a controls dropdown button is clicked, close the controls dropdown.
+        this.element.addEventListener('click', (ev: MouseEvent) => {
+          const target = ev.target;
+          if (!(target instanceof HTMLElement)) {
+            return;
+          }
+
+          if (target.closest('.controls-dropdown button')) {
+            super.toggleControls(false);
+          }
+        });
       } catch (e) {
         error(
           'An error occurred while attaching frame listeners for the application.',
@@ -330,6 +342,42 @@ export function SvelteApplicationMixin<
 
       const value = target._getValue();
       this.document.update({ [target.name]: value });
+    }
+
+    /**
+     * Augments the base toggleControls with "Click Outside" handling to close the dropdown.
+     */
+    toggleControls(expanded: boolean | undefined) {
+      // If the controls dropdown is being opened,
+      // listen for clicks outside of the controls dropdown.
+      // If the user clicks anywhere outside the dropdown, close it.
+      if (this.element.querySelector('.controls-dropdown:not(.expanded)')) {
+        if (expanded === undefined || expanded === true) {
+          const controller = new AbortController();
+          window.addEventListener(
+            'click',
+            (ev: MouseEvent) => {
+              if (!(ev.target instanceof HTMLElement)) {
+                return;
+              }
+
+              const controls = this.element.querySelector(
+                '.controls-dropdown'
+              ) as HTMLElement;
+
+              if (!controls || !controls.contains(ev.target)) {
+                controller.abort();
+                super.toggleControls(false);
+              }
+            },
+            {
+              signal: controller.signal,
+            }
+          );
+        }
+      }
+
+      super.toggleControls(expanded);
     }
 
     /* -------------------------------------------- */
