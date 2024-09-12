@@ -7,6 +7,8 @@
  * globals.
  */
 
+import type { CONFIG } from "./config.types";
+
 declare global {
   var $: any;
   var canvas: any;
@@ -17,7 +19,7 @@ declare global {
   var Application: any;
   var AudioHelper: any;
   var ChatMessage: any;
-  var CONFIG: any;
+  var CONFIG: CONFIG;
   var CONST: any;
   var ContextMenu: any;
   var DefaultSheetsConfig: any;
