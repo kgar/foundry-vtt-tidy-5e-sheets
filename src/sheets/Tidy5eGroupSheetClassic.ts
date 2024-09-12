@@ -154,7 +154,11 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     options: ApplicationRenderOptions
   ): Promise<GroupSheetClassicContext> {
     let xp: Group5eXp | undefined = undefined;
-    if (!game.settings.get('dnd5e', 'disableExperienceTracking')) {
+    if (
+      FoundryAdapter.getSystemSetting(
+        CONSTANTS.SYSTEM_SETTING_LEVELING_MODE
+      ) !== CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP
+    ) {
       xp = this.actor.system.details.xp;
     }
 
@@ -387,9 +391,10 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       currentHP: stats.currentHP,
       customContent: GroupSheetRuntime.content,
       descriptionFullEnrichedHtml: descriptionFullEnrichedHtml,
-      disableExperience: FoundryAdapter.getSystemSetting(
-        CONSTANTS.SYSTEM_SETTING_DISABLE_EXPERIENCE_TRACKING
-      ),
+      disableExperience:
+        FoundryAdapter.getSystemSetting(
+          CONSTANTS.SYSTEM_SETTING_LEVELING_MODE
+        ) === CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
       document: this.actor,
       editable: editable,
       effects: dnd5e.applications.components.EffectsElement.prepareCategories(
