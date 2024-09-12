@@ -456,7 +456,7 @@ export type CONFIG = {
       feat: string;
       container: string;
       backpack: string;
-    };
+    } & Record<string, string>;
     typeIcons: {};
     sheetClasses: {
       base: {
@@ -2532,7 +2532,7 @@ export type CONFIG = {
           vehicle: number;
         };
       };
-    };
+    } & Record<string, { label: string }>;
     defaultAbilities: {
       meleeAttack: string;
       rangedAttack: string;
@@ -3523,16 +3523,16 @@ export type CONFIG = {
       weightlessContents: {
         label: string;
       };
-    };
+    } & Record<string, { label: string }>;
     validProperties: {
-      consumable: {};
-      container: {};
-      equipment: {};
-      feat: {};
-      loot: {};
-      weapon: {};
-      spell: {};
-      tool: {};
+      consumable: Set<string>;
+      container: Set<string>;
+      equipment: Set<string>;
+      feat: Set<string>;
+      loot: Set<string>;
+      weapon: Set<string>;
+      spell: Set<string>;
+      tool: Set<string>;
     };
     lootTypes: {
       art: {

@@ -305,14 +305,16 @@ export const FoundryAdapter = {
     });
   },
   getSpellAbbreviationMap() {
-    const map = new Map<string, string>();
-    Object.values(CONFIG.DND5E.spellComponents).forEach((x: any) =>
-      map.set(x.abbr, x.label)
+    return Array.from(CONFIG.DND5E.validProperties.spell).reduce(
+      (prev, curr) => {
+        const config = CONFIG.DND5E.itemProperties[curr];
+        if ('abbreviation' in config) {
+          prev.set(config.abbreviation, config.label);
+        }
+        return prev;
+      },
+      new Map()
     );
-    Object.values(CONFIG.DND5E.spellTags).forEach((x: any) =>
-      map.set(x.abbr, x.label)
-    );
-    return map;
   },
   getProperty<T = unknown>(obj: any, path: string): T | undefined {
     return foundry.utils.getProperty(obj, path);

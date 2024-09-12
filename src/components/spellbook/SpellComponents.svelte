@@ -3,6 +3,7 @@
 
   export let spell: any;
 
+  // TODO: Do this once per render, and require it from the component.
   const spellAbbreviationMap = FoundryAdapter.getSpellAbbreviationMap();
 </script>
 
