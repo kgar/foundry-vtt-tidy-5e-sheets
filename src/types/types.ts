@@ -202,9 +202,10 @@ export type CharacterItemContext = {
   containerContents?: ContainerContents;
   favoriteId?: string;
   group?: string;
-  hasTarget?: boolean;
+  hasRecharge?: boolean;
   hasUses?: boolean;
   isStack?: boolean;
+  needsSubclass?: boolean;
   toggleClass?: string;
   toggleTitle?: string;
   totalWeight?: number;
@@ -286,9 +287,10 @@ export type NpcItemContext = {
   canToggle?: boolean;
   concentration?: boolean;
   containerContents?: ContainerContents;
-  hasTarget?: boolean;
+  hasRecharge?: boolean;
   hasUses?: boolean;
   isStack?: boolean;
+  needsSubclass?: boolean;
   parent?: Item5e;
   toggleTitle?: string;
   totalWeight?: number;

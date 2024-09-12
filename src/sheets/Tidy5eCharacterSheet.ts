@@ -1006,7 +1006,7 @@ export class Tidy5eCharacterSheet
 
         // Item usage
         ctx.hasUses = item.hasLimitedUses;
-        ctx.hasTarget = item.hasAreaTarget || item.hasIndividualTarget;
+        ctx.hasRecharge = item.hasRecharge;
 
         // Unidentified items
         ctx.concealDetails =

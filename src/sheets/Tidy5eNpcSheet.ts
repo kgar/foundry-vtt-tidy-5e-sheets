@@ -943,7 +943,6 @@ export class Tidy5eNpcSheet
         ctx.attunement = FoundryAdapter.getAttunementContext(item);
         ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
         ctx.hasUses = uses && uses.max > 0;
-        ctx.hasTarget = !!target && !['none', ''].includes(target.type);
         ctx.canToggle = 'equipped' in item.system;
 
         ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
