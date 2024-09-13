@@ -59,6 +59,7 @@ import { Inventory } from 'src/features/sections/Inventory';
 import { Container } from 'src/features/containers/Container';
 import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
+import { ItemUtils } from 'src/utils/ItemUtils';
 
 export class Tidy5eNpcSheet
   extends BaseSheetCustomSectionMixin(
@@ -1015,7 +1016,7 @@ export class Tidy5eNpcSheet
           CONSTANTS.ITEM_TYPE_SUBCLASS,
         ].includes(item.type)
       ) {
-        if (item.system.activation?.type) {
+        if (ItemUtils.hasActivationType(item)) {
           features.actions.items.push(item);
         } else {
           // TODO: Partition classes/subclasses to their own area; this may have to happen in the original partition of the spells / other arrays.

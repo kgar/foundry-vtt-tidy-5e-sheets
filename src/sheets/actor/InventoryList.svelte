@@ -35,6 +35,7 @@
   import InlineContainerToggle from '../container/InlineContainerToggle.svelte';
   import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
   import InlineContainerView from '../container/InlineContainerView.svelte';
+    import { ItemUtils } from 'src/utils/ItemUtils';
 
   export let primaryColumnName: string;
   export let items: Item5e[];
@@ -263,7 +264,7 @@
             {/if}
           </ItemTableCell>
           <ItemTableCell baseWidth="7.5rem" title={localize('DND5E.Usage')}>
-            {#if item.system.activation?.type}
+            {#if ItemUtils.hasActivationType(item)}
               {item.labels?.activation ?? ''}
             {/if}
           </ItemTableCell>

@@ -18,6 +18,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
+  import { ItemUtils } from 'src/utils/ItemUtils';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -87,7 +88,7 @@
           {/if}
         </ItemTableCell>
         <ItemTableCell baseWidth="7.5rem">
-          {#if item.system.activation?.type}
+          {#if ItemUtils.hasActivationType(item)}
             {item.labels?.activation ?? ''}
           {/if}
         </ItemTableCell>

@@ -57,6 +57,7 @@
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import InlineContainerView from 'src/sheets/container/InlineContainerView.svelte';
+  import { ItemUtils } from 'src/utils/ItemUtils';
 
   let context = getContext<Readable<NpcSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -299,7 +300,7 @@
                       {/if}
                     </ItemTableCell>
                     <ItemTableCell baseWidth="7.5rem">
-                      {#if item.system.activation?.type}
+                      {#if ItemUtils.hasActivationType(item)}
                         {item.labels?.activation ?? ''}
                       {/if}
                     </ItemTableCell>

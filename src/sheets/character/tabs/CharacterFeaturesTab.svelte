@@ -40,6 +40,7 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import { ItemUtils } from 'src/utils/ItemUtils';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -241,7 +242,7 @@
                   {/if}
                   {#if section.showUsagesColumn}
                     <ItemTableCell baseWidth="7.5rem">
-                      {#if item.system.activities?.size}
+                      {#if ItemUtils.hasActivationType(item)}
                         {item.labels?.activation ?? ''}
                       {/if}
                     </ItemTableCell>

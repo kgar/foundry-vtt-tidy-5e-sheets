@@ -29,6 +29,7 @@
   import InlineContainerToggle from 'src/sheets/container/InlineContainerToggle.svelte';
   import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
   import InlineContainerView from 'src/sheets/container/InlineContainerView.svelte';
+  import { ItemUtils } from 'src/utils/ItemUtils';
 
   let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -181,7 +182,7 @@
                     </small>
                   </div>
                 </ItemName>
-                {#if actionItem.item.system.recharge?.value || actionItem.item.hasLimitedUses || actionItem.item.system.activation?.type === 'legendary'}
+                {#if actionItem.item.system.recharge?.value || actionItem.item.hasLimitedUses || ItemUtils.hasSpecificActivationType(actionItem.item, CONSTANTS.ACTIVATION_COST_LEGENDARY)}
                   <div class="item-uses" title={localize('DND5E.Uses')}>
                     {#if actionItem.item.system.recharge?.charged && actionItem.item.system.recharge?.value}
                       <i

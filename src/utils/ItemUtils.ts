@@ -18,7 +18,12 @@ export class ItemUtils {
     return (item.system.quantity ?? 1) >= 1;
   }
   static hasActivationType(item: any): boolean {
-    return !isNil(item.system.activation?.type, '');
+    return !!item.system.activities?.size;
+  }
+  static hasSpecificActivationType(item: Item5e, type: string) {
+    return !!item.system.activities?.some(
+      (a: any) => a.activation.type === type
+    );
   }
   static hasUnlimitedUses(item: any): boolean {
     return isNil(item.system.uses?.per, '');
