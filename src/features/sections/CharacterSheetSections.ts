@@ -64,7 +64,6 @@ export class CharacterSheetSections {
         hasActions: true,
         dataset: {
           type: CONSTANTS.ITEM_TYPE_FEAT,
-          'system.activation.type': CONSTANTS.ACTIVATION_COST_ACTION,
         },
         showRequirementsColumn: true,
         showUsagesColumn: true,
