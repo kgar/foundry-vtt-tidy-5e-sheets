@@ -10,10 +10,6 @@
     data['system.uses.max'] = '1';
     data['system.uses.per'] = CONSTANTS.LIMITED_USES_PER_CHARGES;
 
-    if (item.system.activation?.type === null) {
-      data['system.activation.type'] = CONSTANTS.ACTIVATION_COST_ACTION;
-    }
-
     item.update(data);
   }
 </script>

@@ -79,6 +79,7 @@ export class CharacterSheetSections {
         hasActions: false,
         dataset: { type: CONSTANTS.ITEM_TYPE_FEAT },
         showRequirementsColumn: true,
+        showUsesColumn: true,
         canCreate: true,
         key: CONSTANTS.CHARACTER_FEAT_SECTION_PASSIVE,
         show: true,

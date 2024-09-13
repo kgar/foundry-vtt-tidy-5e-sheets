@@ -241,7 +241,7 @@
                   {/if}
                   {#if section.showUsagesColumn}
                     <ItemTableCell baseWidth="7.5rem">
-                      {#if item.system.activation?.type}
+                      {#if item.system.activities?.size}
                         {item.labels?.activation ?? ''}
                       {/if}
                     </ItemTableCell>
