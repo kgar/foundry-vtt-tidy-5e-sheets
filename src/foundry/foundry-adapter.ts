@@ -930,9 +930,12 @@ export const FoundryAdapter = {
     }).render(true);
   },
   renderSourceConfig(document: any, keyPath: string) {
-    return new dnd5e.applications.SourceConfig(document, {
-      keyPath,
-    }).render(true);
+    return new dnd5e.applications.SourceConfig(
+      { document: document },
+      {
+        keyPath,
+      }
+    ).render(true);
   },
   async onActorItemDelete(actor: Actor5e, item: Item5e) {
     // If item has advancement, handle it separately
