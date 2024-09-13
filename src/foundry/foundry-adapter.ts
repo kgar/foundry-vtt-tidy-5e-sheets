@@ -903,6 +903,11 @@ export const FoundryAdapter = {
       true
     );
   },
+  renderWeaponsConfig(actor: any) {
+    return new dnd5e.applications.actor.WeaponsConfig({
+      document: actor,
+    }).render({ force: true });
+  },
   renderProficiencyConfig(actor: any, property: string, key: string) {
     return new dnd5e.applications.actor.ProficiencyConfig(actor, {
       property,

@@ -165,7 +165,7 @@
         trait: localize('DND5E.TraitWeaponProf'),
       })}
       on:onConfigureClicked={() =>
-        FoundryAdapter.renderTraitsSelector($context.actor, 'weapon')}
+        FoundryAdapter.renderWeaponsConfig($context.actor)}
       show={traitsExpanded || !!weaponProfs.length}
     >
       <svg
