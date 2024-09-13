@@ -247,7 +247,9 @@ export const FoundryAdapter = {
     const itemData = foundry.utils.mergeObject(
       {
         name: FoundryAdapter.localize('DND5E.ItemNew', {
-          type: FoundryAdapter.localize(CONFIG.Item.typeLabels[type]),
+          type: FoundryAdapter.localize(
+            CONFIG.Item.typeLabels[type as keyof typeof CONFIG.Item.typeLabels]
+          ),
         }),
         type,
       },
@@ -307,7 +309,10 @@ export const FoundryAdapter = {
   getSpellAbbreviationMap() {
     return Array.from(CONFIG.DND5E.validProperties.spell).reduce(
       (prev, curr) => {
-        const config = CONFIG.DND5E.itemProperties[curr];
+        const config =
+          CONFIG.DND5E.itemProperties[
+            curr as keyof typeof CONFIG.DND5E.itemProperties
+          ];
         if ('abbreviation' in config) {
           prev.set(config.abbreviation, config.label);
         }
@@ -1135,11 +1140,16 @@ export const FoundryAdapter = {
     title: 'DND5E.AttunementAttuned',
   },
   getAttunementContext(item: Item5e): AttunementContext | undefined {
-    return !!CONFIG.DND5E.attunementTypes[item.system.attunement] &&
-      !item.system.attuned
+    return !!CONFIG.DND5E.attunementTypes[
+      item.system.attunement as keyof typeof CONFIG.DND5E.attunementTypes
+    ] && !item.system.attuned
       ? {
           ...FoundryAdapter.attunementContextApplicable,
-          title: CONFIG.DND5E.attunementTypes[item.system.attunement],
+          title:
+            CONFIG.DND5E.attunementTypes[
+              item.system
+                .attunement as keyof typeof CONFIG.DND5E.attunementTypes
+            ],
         }
       : !!item.system.attunement && item.system.attuned
       ? FoundryAdapter.attunementContextAttune

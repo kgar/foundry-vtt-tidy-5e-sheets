@@ -28,9 +28,9 @@ export function initTidy5eContextMenu(
  * @param {HTMLElement} element       The HTML element for which the context menu is activated
  * @protected
  */
-function onItemContext(element: HTMLElement) {
+function onItemContext(this: any, element: HTMLElement) {
   const contextMenuType = element.getAttribute('data-context-menu');
-  // @ts-ignore
+
   const app: any = this as any;
 
   // Active Effects
@@ -233,7 +233,9 @@ function getItemContextOptions(item: Item5e) {
 
   // Toggle Attunement State
   if (
-    !!CONFIG.DND5E.attunementTypes[item.system.attunement] &&
+    !!CONFIG.DND5E.attunementTypes[
+      item.system.attunement as keyof typeof CONFIG.DND5E.attunementTypes
+    ] &&
     !FoundryAdapter.concealDetails(item)
   ) {
     options.push({

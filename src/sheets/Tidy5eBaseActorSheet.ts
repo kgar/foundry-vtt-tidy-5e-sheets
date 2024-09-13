@@ -54,14 +54,25 @@ export class Tidy5eBaseActorSheet {
           .map(([key, value]) => {
             const total = dnd5e.utils.simplifyBonus(value, rollData);
             if (!total) return null;
+
+            const damageType =
+              CONFIG.DND5E.damageTypes[
+                key as keyof typeof CONFIG.DND5E.damageTypes
+              ] ?? {};
+
             const mod: DamageModificationContextEntry = {
-              label: `${
-                CONFIG.DND5E.damageTypes[key]?.label ?? key
-              } ${dnd5e.utils.formatNumber(total, { signDisplay: 'always' })}`,
+              label: `${damageType?.label ?? key} ${dnd5e.utils.formatNumber(
+                total,
+                { signDisplay: 'always' }
+              )}`,
               consequence: total > 0 ? 'detriment' : 'benefit',
             };
             const icons: string[] = (mod.icons = []);
-            if (dm.bypasses.size && CONFIG.DND5E.damageTypes[key]?.isPhysical)
+            if (
+              dm.bypasses.size &&
+              'isPhysical' in damageType &&
+              damageType?.isPhysical
+            )
               icons.push(...dm.bypasses);
             return mod;
           })

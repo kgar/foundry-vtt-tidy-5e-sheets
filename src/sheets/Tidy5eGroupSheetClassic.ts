@@ -631,7 +631,9 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
         const conditionImmunities: string[] = [];
         for (let entry of member.system.traits.ci.value) {
           conditionImmunities.push(
-            CONFIG.DND5E.conditionTypes[entry]?.label ?? entry
+            CONFIG.DND5E.conditionTypes[
+              entry as keyof typeof CONFIG.DND5E.conditionTypes
+            ]?.label ?? entry
           );
         }
 
@@ -659,7 +661,9 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
                   return prev;
                 }
 
-                const label = CONFIG.DND5E.skills[key]?.label ?? key;
+                const label =
+                  CONFIG.DND5E.skills[key as keyof typeof CONFIG.DND5E.skills]
+                    ?.label ?? key;
 
                 prev.push({
                   key: key,
@@ -709,7 +713,9 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
   #createEmptyGroupSkill(key: string): GroupSkill {
     return {
       key: key,
-      label: CONFIG.DND5E.skills[key]?.label ?? key,
+      label:
+        CONFIG.DND5E.skills[key as keyof typeof CONFIG.DND5E.skills]?.label ??
+        key,
       members: [],
       total: Number.NEGATIVE_INFINITY,
     };

@@ -82,6 +82,7 @@ export class ApplyTidySheetPreferencesApplication extends SvelteFormApplicationB
         }
 
         const typeLabel = FoundryAdapter.localize(
+          // @ts-ignore
           CONFIG[documentName].typeLabels?.[subType]
         );
 

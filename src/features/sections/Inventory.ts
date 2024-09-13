@@ -32,7 +32,9 @@ export class Inventory {
         dataset: { type },
         items: [],
         key: type,
-        label: `${CONFIG.Item.typeLabels[type]}Pl`,
+        label: `${
+          CONFIG.Item.typeLabels[type as keyof typeof CONFIG.Item.typeLabels]
+        }Pl`,
         show: true,
         custom: undefined,
         isExternal: false,

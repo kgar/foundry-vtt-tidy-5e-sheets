@@ -16,7 +16,9 @@
   export let useSavingThrowProficiency: boolean;
   export let useConfigurationOption: boolean;
 
-  $: abbreviation = CONFIG.DND5E.abilities[id]?.abbreviation ?? id;
+  $: abbreviation =
+    CONFIG.DND5E.abilities[id as keyof typeof CONFIG.DND5E.abilities]
+      ?.abbreviation ?? id;
 
   let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,

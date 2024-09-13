@@ -305,9 +305,15 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
       if (!isSupportedItemType) {
         ui.notifications.warn(
           game.i18n.format('DND5E.ActorWarningInvalidItem', {
-            itemType: game.i18n.localize(CONFIG.Item.typeLabels[itemData.type]),
+            itemType: game.i18n.localize(
+              CONFIG.Item.typeLabels[
+                itemData.type as keyof typeof CONFIG.Item.typeLabels
+              ]
+            ),
             actorType: game.i18n.localize(
-              CONFIG.Actor.typeLabels[this.actor.type]
+              CONFIG.Actor.typeLabels[
+                this.actor.type as keyof typeof CONFIG.Actor.typeLabels
+              ]
             ),
           })
         );
@@ -353,16 +359,23 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
         !game.settings.get('dnd5e', 'disableAdvancements')
       ) {
         // Ensure that this item isn't violating the singleton rule
-        const dataModel = CONFIG.Item.dataModels[itemData.type];
+        const dataModel =
+          CONFIG.Item.dataModels[
+            itemData.type as keyof typeof CONFIG.Item.dataModels
+          ];
         const singleton = dataModel?.metadata.singleton ?? false;
         if (singleton && this.actor.itemTypes[itemData.type].length) {
           ui.notifications.error(
             game.i18n.format('DND5E.ActorWarningSingleton', {
               itemType: game.i18n.localize(
-                CONFIG.Item.typeLabels[itemData.type]
+                CONFIG.Item.typeLabels[
+                  itemData.type as keyof typeof CONFIG.Item.typeLabels
+                ]
               ),
               actorType: game.i18n.localize(
-                CONFIG.Actor.typeLabels[this.actor.type]
+                CONFIG.Actor.typeLabels[
+                  this.actor.type as keyof typeof CONFIG.Actor.typeLabels
+                ]
               ),
             })
           );
@@ -457,7 +470,12 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
       if (itemData.system.level === 0 && preparationMode) {
         const modes = CONFIG.DND5E.spellPreparationModes;
 
-        if (modes[preparationMode]?.cantrips) {
+        const mode =
+          modes[
+            preparationMode as keyof typeof CONFIG.DND5E.spellPreparationModes
+          ] ?? {};
+
+        if ('cantrips' in mode && mode.cantrips) {
           prep.mode = 'prepared';
         } else if (!preparationMode) {
           const isCaster =
@@ -467,7 +485,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
           prep.mode = preparationMode;
         }
 
-        if (modes[prep.mode]?.prepares) {
+        if ('prepares' in mode && mode.prepares) {
           prep.prepared = true;
         }
       }

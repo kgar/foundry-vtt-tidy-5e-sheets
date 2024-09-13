@@ -11,9 +11,9 @@
 
   export let document: Actor5e | Item5e;
 
-  let context = getContext<Readable<ActorSheetContextV1 | ContainerSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getContext<
+    Readable<ActorSheetContextV1 | ContainerSheetContext>
+  >(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
 
   $: currencies = Object.entries(document.system.currency).map((e) => ({
     key: e[0],
@@ -25,7 +25,11 @@
   }
 
   function abbreviateCurrency(currencyKey: string) {
-    return CONFIG.DND5E.currencies[currencyKey]?.abbreviation ?? currencyKey;
+    return (
+      CONFIG.DND5E.currencies[
+        currencyKey as keyof typeof CONFIG.DND5E.currencies
+      ]?.abbreviation ?? currencyKey
+    );
   }
 
   const localize = FoundryAdapter.localize;

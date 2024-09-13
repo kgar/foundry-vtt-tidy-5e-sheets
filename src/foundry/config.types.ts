@@ -234,6 +234,7 @@ export type CONFIG = {
     sheetClasses: {
       base: {};
     };
+    documentClass: any;
   };
   Combat: {
     sidebarIcon: string;
@@ -440,7 +441,7 @@ export type CONFIG = {
     compendiumIndexFields: Array<string>;
     compendiumBanner: string;
     sidebarIcon: string;
-    dataModels: {};
+    dataModels: any;
     typeLabels: {
       base: string;
       weapon: string;
@@ -456,7 +457,7 @@ export type CONFIG = {
       feat: string;
       container: string;
       backpack: string;
-    } & Record<string, string>;
+    };
     typeIcons: {};
     sheetClasses: {
       base: {
@@ -2249,6 +2250,7 @@ export type CONFIG = {
       subjectPaths: {};
       debugColorBands: boolean;
     };
+    prototypeSheetClass: any;
     sheetClasses: {
       base: {
         'dnd5e.TokenConfig5e': {
@@ -2532,7 +2534,7 @@ export type CONFIG = {
           vehicle: number;
         };
       };
-    } & Record<string, { label: string }>;
+    };
     defaultAbilities: {
       meleeAttack: string;
       rangedAttack: string;
@@ -2667,7 +2669,7 @@ export type CONFIG = {
         reference: string;
         icon: string;
       };
-    } & Record<string, { label: string }>;
+    };
     alignments: {
       lg: string;
       ng: string;
@@ -3523,7 +3525,7 @@ export type CONFIG = {
       weightlessContents: {
         label: string;
       };
-    } & Record<string, { label: string }>;
+    };
     validProperties: {
       consumable: Set<string>;
       container: Set<string>;
@@ -4390,7 +4392,7 @@ export type CONFIG = {
         statuses: Array<string>;
         riders: Array<string>;
       };
-    } & Record<string, { label: string }>;
+    };
     conditionEffects: {
       noMovement: {};
       halfMovement: {};

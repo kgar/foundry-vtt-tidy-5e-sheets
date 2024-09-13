@@ -512,8 +512,9 @@ export class Tidy5eVehicleSheet
     };
 
     const baseUnits =
-      CONFIG.DND5E.encumbrance.baseUnits[this.actor.type] ??
-      CONFIG.DND5E.encumbrance.baseUnits.default;
+      CONFIG.DND5E.encumbrance.baseUnits[
+        this.actor.type as keyof typeof CONFIG.DND5E.encumbrance.baseUnits
+      ] ?? CONFIG.DND5E.encumbrance.baseUnits.default;
     const units = game.settings.get('dnd5e', 'metricWeightUnits')
       ? baseUnits.metric
       : baseUnits.imperial;
