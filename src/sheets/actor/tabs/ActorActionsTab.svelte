@@ -205,7 +205,7 @@
                         <small>{localize('DND5E.Uses')}</small>
                       {/if}
                     {/if}
-                    {#if actionItem.item.system.activation.type === 'legendary'}
+                    {#if ItemUtils.hasSpecificActivationType(actionItem.item, CONSTANTS.ACTIVATION_COST_LEGENDARY)}
                       {actionItem.item.system.activation.cost}
                     {/if}
                   </div>
