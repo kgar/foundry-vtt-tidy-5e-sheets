@@ -60,7 +60,7 @@ export class CharacterSheetSections {
       },
       active: {
         label: 'DND5E.FeatureActive',
-        items: feats.filter((feat) => feat.system.activation?.type),
+        items: feats.filter((feat) => feat.system.activities.size),
         hasActions: true,
         dataset: {
           type: CONSTANTS.ITEM_TYPE_FEAT,
@@ -76,7 +76,7 @@ export class CharacterSheetSections {
       },
       passive: {
         label: 'DND5E.FeaturePassive',
-        items: feats.filter((feat) => !feat.system.activation?.type),
+        items: feats.filter((feat) => !feat.system.activities.size),
         hasActions: false,
         dataset: { type: CONSTANTS.ITEM_TYPE_FEAT },
         showRequirementsColumn: true,
