@@ -7,6 +7,7 @@
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import Select from 'src/components/inputs/Select.svelte';
   import { CONSTANTS } from 'src/constants';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -52,5 +53,21 @@
         blank=""
       />
     </Select>
+  </div>
+</ItemFormGroup>
+
+<ItemFormGroup
+  field="system.spellcasting.preparation.formula"
+  labelText={localize('DND5E.SpellPreparation.Formula')}
+  let:inputId
+>
+  <div class="form-fields">
+    <TextInput
+      document={$context.item}
+      field="system.spellcasting.preparation.formula"
+      value={$context.system.spellcasting.preparation.formula}
+      id={inputId}
+      dataset={{ formulaEditor: true }}
+    />
   </div>
 </ItemFormGroup>
