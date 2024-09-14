@@ -150,7 +150,7 @@
 
               <InlineSource
                 document={$context.actor}
-                keyPath="system.details.source"
+                keyPath="system.source"
                 editable={$context.unlocked}
               />
             </DelimitedTruncatedContent>
