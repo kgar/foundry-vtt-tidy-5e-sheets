@@ -11,6 +11,7 @@
   import { CONSTANTS } from 'src/constants';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
+  import FieldDamage from '../parts/FieldDamage.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -148,5 +149,7 @@
     </p>
   </ItemFormGroup>
 
-
+  {#if $context.system.type.value === CONSTANTS.ITEM_SYSTEM_TYPE_AMMO}
+    <FieldDamage />
+  {/if}
 </ContentConcealer>
