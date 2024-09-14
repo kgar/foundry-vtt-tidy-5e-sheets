@@ -169,6 +169,8 @@ export class Tidy5eKgarItemSheet
         ) ?? [],
     };
 
+    await this.item.system.getSheetData?.(context);
+
     debug(`${this.item?.type ?? 'Unknown Item Type'} context data`, context);
 
     // TODO: Add hook for preparing Tidy-specific context data
