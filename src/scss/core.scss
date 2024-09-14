@@ -205,6 +205,10 @@
     border: none;
   }
 
+  .invisible {
+    visibility: hidden;
+  }
+
   // TODO: Either put the remainder of the partial style imports here, or move the nonstandard style files to another location.
   // Partials - Styles that can be pulled into anything
   @import './partials/colors';
