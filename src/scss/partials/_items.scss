@@ -543,7 +543,7 @@ input[type='checkbox'] {
     :where(select),
     :where(:is(input[type='text'], input[type='number'], textarea)) {
       background: var(--t5e-item-input-background);
-      height: 1.625rem;
+      height: var(--form-field-height);
       font-size: 0.8125rem;
 
       &:hover {
@@ -552,7 +552,15 @@ input[type='checkbox'] {
     }
 
     & .form-fields > :is(input[type='text'], input[type='number'], textarea) {
-      flex-basis: 1.625rem;
+      flex-basis: var(--form-field-height);
+    }
+
+    &
+      .form-fields
+      .form-group
+      > :is(input[type='text'], input[type='number'], textarea, select) {
+      flex-basis: var(--form-field-height);
+      height: var(--form-field-height);
     }
 
     input:disabled {
