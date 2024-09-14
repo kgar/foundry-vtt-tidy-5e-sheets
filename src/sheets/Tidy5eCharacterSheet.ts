@@ -877,6 +877,22 @@ export class Tidy5eCharacterSheet
         ) ?? [],
     };
 
+    if (context.system.details.xp.boonsEarned !== undefined) {
+      const pluralRules = new Intl.PluralRules(game.i18n.lang);
+
+      context.epicBoonsEarned = FoundryAdapter.localize(
+        `DND5E.ExperiencePointsBoons.${pluralRules.select(
+          this.actor.system.details.xp.boonsEarned ?? 0
+        )}`,
+        {
+          number: dnd5e.utils.formatNumber(
+            this.actor.system.details.xp.boonsEarned ?? 0,
+            { signDisplay: 'always' }
+          ),
+        }
+      );
+    }
+
     for (const panelItem of context.containerPanelItems) {
       const ctx = context.itemContext[panelItem.container.id];
       ctx.containerContents = await Container.getContainerContents(

@@ -97,21 +97,24 @@
                 maxlength={7}
                 disabled={!$context.editable || $context.lockExpChanges}
               />
-              <span class="sep">/</span>
-              {#if $context.editable && FoundryAdapter.userIsGm()}
-                <TextInput
-                  document={$context.actor}
-                  field="system.details.xp.max"
-                  class="max-xp max"
-                  value={$context.system.details.xp.max}
-                  placeholder="0"
-                  selectOnFocus={true}
-                  allowDeltaChanges={true}
-                  maxlength={7}
-                  disabled={!$context.editable}
-                />
-              {:else}
-                <span class="max">{$context.system.details.xp.max}</span>
+
+              {#if !$context.epicBoonsEarned}
+                <span class="sep">/</span>
+                {#if $context.editable && FoundryAdapter.userIsGm()}
+                  <TextInput
+                    document={$context.actor}
+                    field="system.details.xp.max"
+                    class="max-xp max"
+                    value={$context.system.details.xp.max}
+                    placeholder="0"
+                    selectOnFocus={true}
+                    allowDeltaChanges={true}
+                    maxlength={7}
+                    disabled={!$context.editable}
+                  />
+                {:else}
+                  <span class="max">{$context.system.details.xp.max}</span>
+                {/if}
               {/if}
             </div>
             <div class="xp-bar">
@@ -169,6 +172,12 @@
           {/each}
         </span>
       {/if}
+
+      {#if $context.actor.system.details.xp.boonsEarned}
+        <span class="ms-auto">
+          {$context.epicBoonsEarned}
+        </span>
+      {/if}
     </section>
 
     <!-- Origin Summary: Size , Race , Background , Alignment , Proficiency , Origin Summary Configuration Cog -->
@@ -223,7 +232,10 @@
         <SpecialSaves />
       {/if}
     </div>
-    <HorizontalLineSeparator class="header-line-margin-left" borderColor="light" />
+    <HorizontalLineSeparator
+      class="header-line-margin-left"
+      borderColor="light"
+    />
     <!-- AC  -->
     <ActorHeaderStats
       {abilities}
