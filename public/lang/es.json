@@ -812,5 +812,13 @@
     "TIDY5E.SpellSourceClassAssignments.Identifier": "Identificador de clase de origen",
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "Aquí aparece el identificador de clase de origen del hechizo. Para asignar un identificador que no posea el personaje, introduce el identificador de clase en este campo de texto.",
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Mostrar solo los sin asignar",
-    "TIDY5E.PreviewSheetImageHint": "Clic izquierdo: vista previa de la imagen"
+    "TIDY5E.PreviewSheetImageHint": "Clic izquierdo: vista previa de la imagen",
+    "TIDY5E.NoSpecialSenses": "No tiene sentidos especiales",
+    "TIDY5E.Group.RemoveMemberFromGroup": "Eliminar miembro del grupo",
+    "TIDY5E.Group.ShowMemberTabInfoPanel": "Mostrar panel informativo",
+    "TIDY5E.Group.HideMemberTabInfoPanel": "Ocultar panel informativo",
+    "TIDY5E.Group.EmptyMembersTabHint": "Este grupo está vacío. Suelte un actor de la barra lateral para añadir un miembro.",
+    "TIDY5E.Keybindings.ToggleSheetLock.Name": "Activar o desactivar bloqueo de hoja",
+    "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Si una pestaña Tidy es la ventana actualmente activa en la interfaz de usuario, esta combinación de teclas alterna el bloqueo de pestañas.",
+    "TIDY5E.Group.NamePlaceholder": "Nombre del grupo"
 }
