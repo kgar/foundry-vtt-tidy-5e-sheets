@@ -6,6 +6,8 @@
   export let labelProp: string | null = null;
   export let blank: string | null = null;
 
+  $: entries = Object.entries<any>(data);
+
   function getLabel(value: unknown): string {
     if (
       labelProp !== null &&
@@ -38,6 +40,10 @@
 {#if blank !== null}
   <option value="">{localize(blank)}</option>
 {/if}
-{#each Object.entries(data) as [key, value]}
-  <option value={getValue(key, value)}>{localize(getLabel(value))}</option>
+{#each entries as [key, value]}
+  {#if value?.rule}
+    <hr />
+  {:else}
+    <option value={getValue(key, value)}>{localize(getLabel(value))}</option>
+  {/if}
 {/each}
