@@ -45,3 +45,23 @@ export function mapMulticlassingAbilitiesToSave(
     'system.primaryAbility.value': selectedAbilities,
   };
 }
+
+// TODO: Eliminate these specific mappers for more generalized versions, as needed.
+export function mapSystemBaseDamageTypesToSave(
+  context: ItemSheetContext,
+  ev: Event & { currentTarget: HTMLInputElement }
+) {
+  const selectedAbilities: Set<string> = new Set<string>(
+    context.system.damage.base.types
+  );
+
+  if (ev.currentTarget.checked) {
+    selectedAbilities.add(ev.currentTarget.value);
+  } else {
+    selectedAbilities.delete(ev.currentTarget.value);
+  }
+
+  return {
+    'system.damage.base.types': selectedAbilities,
+  };
+}
