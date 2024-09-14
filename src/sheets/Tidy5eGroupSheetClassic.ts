@@ -580,7 +580,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
           member.system.traits.languages.custom?.trim();
         const customLanguages = isNil(customLanguageString, '')
           ? []
-          : customLanguageString.split(';');
+          : foundry.utils.splitSemicolons(customLanguageString);
         const languageKeys = [
           ...member.system.traits.languages.value,
           ...customLanguages,
@@ -620,8 +620,8 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
           }`;
         }
         if (senses.special)
-          senses.special
-            .split(';')
+          foundry.utils
+            .splitSemicolons(senses.special)
             .forEach(
               (c: string, i: number) => (tags[`custom${i + 1}`] = c.trim())
             );

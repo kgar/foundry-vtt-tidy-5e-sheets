@@ -89,11 +89,7 @@
   {/if}
   <div class="description-wrap">
     <div class="info-card-description user-select-text">
-      {#if concealDetails}
-        {@html chatData.unidentified.description}
-      {:else}
-        {@html chatData.description.value}
-      {/if}
+      {@html chatData.description}
     </div>
   </div>
 

@@ -10,7 +10,7 @@ export class ItemUtils {
         ItemUtils.hasSufficientLimitedUses(item)) &&
       (!ItemUtils.hasConsumptionRequirements(item) ||
         ItemUtils.hasSufficientConsumptionAmount(item)) &&
-      (!ItemUtils.hasRecharge(item) || ItemUtils.isCharged(item)) &&
+      (!item.hasRecharge || !item.isOnCooldown) &&
       ItemUtils.atLeastOneExists(item)
     );
   }
@@ -48,13 +48,6 @@ export class ItemUtils {
         0) >= item.system.consume?.amount
     );
   }
-  static hasRecharge(item: any): boolean {
-    return (item.system.recharge?.value ?? 0) > 0;
-  }
-  static isCharged(item: any): boolean {
-    return item.system.recharge?.charged === true;
-  }
-
   static getMaxUses(item: Item5e) {
     return item.system.uses?.max;
   }

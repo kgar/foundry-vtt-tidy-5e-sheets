@@ -5,6 +5,8 @@
   import { coalesce } from 'src/utils/formatting';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  import ItemFormGroup from '../form/ItemFormGroup.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -28,10 +30,30 @@
   </span>
 </h3>
 
-{@html coalesce($context.system.startingEquipmentDescription, localize('None'))}
+<div class="starting-equipment-text">
+  {@html coalesce(
+    $context.system.startingEquipmentDescription,
+    localize('None'),
+  )}
+</div>
+
+<ItemFormGroup labelText={localize('DND5E.StartingEquipment.Wealth.Label')}>
+  <div class="form-fields">
+    <TextInput
+      document={$context.item}
+      field="system.wealth"
+      value={$context.system.wealth}
+    ></TextInput>
+  </div>
+  <p class="hint">{localize('DND5E.StartingEquipment.Wealth.Hint')}</p>
+</ItemFormGroup>
 
 <style lang="scss">
   span:has(.configure-starting-equipment) {
     font-size: 0.875rem;
+  }
+
+  .starting-equipment-text {
+    line-height: 1.75;
   }
 </style>

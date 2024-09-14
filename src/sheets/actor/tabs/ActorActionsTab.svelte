@@ -182,14 +182,14 @@
                     </small>
                   </div>
                 </ItemName>
-                {#if actionItem.item.system.recharge?.value || actionItem.item.hasLimitedUses || ItemUtils.hasSpecificActivationType(actionItem.item, CONSTANTS.ACTIVATION_COST_LEGENDARY)}
+                {#if actionItem.item.hasRecharge || actionItem.item.hasLimitedUses || ItemUtils.hasSpecificActivationType(actionItem.item, CONSTANTS.ACTIVATION_COST_LEGENDARY)}
                   <div class="item-uses" title={localize('DND5E.Uses')}>
-                    {#if actionItem.item.system.recharge?.charged && actionItem.item.system.recharge?.value}
+                    {#if actionItem.item.hasRecharge && !actionItem.item.isOnCooldown}
                       <i
                         class="fas fa-bolt"
                         title={localize('DND5E.Charged')}
                       />
-                    {:else if actionItem.item.system.recharge?.value}
+                    {:else if actionItem.item.isOnCooldown}
                       <RechargeControl item={actionItem.item} />
                     {:else if actionItem.item.hasLimitedUses}
                       {#if actionItem.item.system.uses?.value === actionItem.item.system.uses?.max && actionItem.item.system.uses?.autoDestroy}

@@ -3,6 +3,11 @@
   min-width: 25rem;
 }
 
+.label-top {
+  flex-direction: column;
+  align-items: stretch;
+}
+
 .window-content {
   padding: 0;
 

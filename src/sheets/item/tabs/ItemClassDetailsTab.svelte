@@ -10,13 +10,24 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ItemStartingEquipment from '../parts/ItemStartingEquipment.svelte';
   import { CONSTANTS } from 'src/constants';
+  import { mapMulticlassingAbilitiesToSave } from 'src/utils/system-properties';
+  import Checkbox from 'src/components/inputs/Checkbox.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
+  $: abilities = Object.entries<any>($context.config.abilities).map(
+    ([key, value]) => ({
+      key: key,
+      label: value.label,
+    }),
+  );
+
   const localize = FoundryAdapter.localize;
 </script>
+
+<h3 class="form-header">{localize('DND5E.ItemClassDetails')}</h3>
 
 <ItemFormGroup
   labelText={localize('DND5E.Identifier')}
@@ -44,58 +55,83 @@
 <ItemFormGroup
   labelText={localize('DND5E.HitDice')}
   field="system.hitDice"
+  cssClass="split-group"
   let:inputId
 >
   <div class="form-fields">
-    <Select
-      id={inputId}
-      document={$context.item}
-      field="system.hitDice"
-      value={$context.system.hitDice}
-      disabled={!$context.editable}
-    >
-      {#each $context.config.hitDieTypes as type}
-        <option value={type}>{type}</option>
-      {/each}
-    </Select>
-  </div>
-</ItemFormGroup>
+    <div class="form-group label-top">
+      <label for="{$context.appId}-hit-dice"
+        >{localize('DND5E.Denomination')}</label
+      >
+      <Select
+        id="{$context.appId}-hit-dice"
+        document={$context.item}
+        field="system.hitDice"
+        value={$context.system.hitDice}
+        disabled={!$context.editable}
+      >
+        {#each $context.config.hitDieTypes as type}
+          <option value={type}>{type}</option>
+        {/each}
+      </Select>
+    </div>
+
+    <div class="form-group label-top">
+      <label for="{$context.appId}-hit-dice-spent"
+        >{localize('DND5E.Spent')}</label
+      >
+      <NumberInput
+        id={inputId}
+        document={$context.item}
+        field="system.hitDiceUsed"
+        value={$context.system.hitDiceUsed}
+        placeholder="0"
+        disabled={!$context.editable}
+      />
+    </div>
+  </div></ItemFormGroup
+>
+
+<h3 class="form-header">{localize('DND5E.ItemClassDetails')}</h3>
 
 <ItemFormGroup
-  labelText={localize('DND5E.HitDiceUsed')}
-  field="system.hitDiceUsed"
-  let:inputId
+  cssClass="stacked primary-abilities"
+  labelText={localize('DND5E.CLASS.FIELDS.primaryAbility.value.label')}
 >
-  <div class="form-fields">
-    <NumberInput
-      id={inputId}
+  {#each abilities as { key, label } (key)}
+    <Checkbox
+      labelCssClass="checkbox"
       document={$context.item}
-      field="system.hitDiceUsed"
-      value={$context.system.hitDiceUsed}
-      placeholder="0"
+      field="system.primaryAbility.value"
+      checked={$context.system.primaryAbility.value.has(key)}
+      value={key}
       disabled={!$context.editable}
-    />
-  </div>
+      onDataPreparing={(ev) => mapMulticlassingAbilitiesToSave($context, ev)}
+    >
+      {label}
+    </Checkbox>
+  {/each}
+  <p class="hint">{localize('DND5E.CLASS.FIELDS.primaryAbility.value.hint')}</p>
 </ItemFormGroup>
+
+{#if $context.system.primaryAbility.value.size > 1}
+  <ItemFormGroup
+    labelText={localize('DND5E.CLASS.FIELDS.primaryAbility.all.label')}
+    field="system.primaryAbility.fields.all"
+    let:inputId
+  >
+    <Checkbox
+      document={$context.item}
+      field="system.primaryAbility.fields.all"
+      checked={$context.system.primaryAbility.all}
+      id={inputId}
+    ></Checkbox>
+
+    <p class="hint">{localize('DND5E.CLASS.FIELDS.primaryAbility.all.hint')}</p>
+  </ItemFormGroup>
+{/if}
 
 <h3 class="form-header">{localize('DND5E.Spellcasting')}</h3>
 <ItemSpellcasting />
 
 <ItemStartingEquipment />
-
-<ItemFormGroup
-  labelText={localize('DND5E.StartingEquipment.Wealth.Label')}
-  field="system.wealth"
-  let:inputId
->
-  <div class="form-fields">
-    <TextInput
-      id={inputId}
-      value={$context.system.wealth}
-      field="system.wealth"
-      document={$context.item}
-      disabled={!$context.editable}
-    />
-  </div>
-  <p class="hint">{localize('DND5E.StartingEquipment.Wealth.Hint')}</p>
-</ItemFormGroup>

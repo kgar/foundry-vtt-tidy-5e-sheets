@@ -116,8 +116,7 @@
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
         data-context-menu-document-uuid={item.uuid}
         on:click={(event) =>
-          $context.editable &&
-          FoundryAdapter.actorTryUseItem(item, {}, { event })}
+          $context.editable && FoundryAdapter.actorTryUseItem(item, event)}
         on:contextmenu={(event) =>
           FoundryAdapter.onActorItemButtonContextMenu(item, { event })}
         on:mousedown={(event) => FoundryAdapter.editOnMiddleClick(event, item)}
@@ -192,6 +191,8 @@
                 selectOnFocus={true}
                 on:click={preventUseItemEvent}
                 disabled={!$context.editable}
+                onSaveChange={(ev) =>
+                  FoundryAdapter.handleItemUsesChanged(ev, item) && false}
               />
             {/if}
           </div>

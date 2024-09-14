@@ -21,7 +21,7 @@
     },
   ) => any;
 
-  export let value: number | null = null;
+  export let value: number | string | null = null;
   export let checked: boolean = false;
   export let field: string;
   export let document: any;

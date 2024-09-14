@@ -249,24 +249,25 @@ function getItemContextOptions(item: Item5e) {
         item.update({
           'system.attuned': !item.system.attuned,
         }),
+      condition: () => item.isOwner && !item.compendium?.locked,
     });
   }
 
   // Toggle Charged State
-  if (item.system.recharge?.value) {
-    options.push({
-      name: item.system.recharge.charged
-        ? 'DND5E.ContextMenuActionExpendCharge'
-        : 'DND5E.ContextMenuActionCharge',
-      icon: '<i class="fa-solid fa-bolt"></i>',
-      callback: () =>
-        item.update({
-          'system.recharge.charged': !item.system.recharge?.charged,
-        }),
-      condition: () => item.isOwner,
-      group: 'state',
-    });
-  }
+
+  options.push({
+    name: !item.isOnCooldown
+      ? 'DND5E.ContextMenuActionExpendCharge'
+      : 'DND5E.ContextMenuActionCharge',
+    icon: '<i class="fa-solid fa-bolt"></i>',
+    callback: () =>
+      item.update({
+        'system.uses.spent': !item.isOnCooldown ? item.system.uses.max : 0,
+      }),
+    condition: () =>
+      item.hasRecharge && item.isOwner && !item.compendium?.locked,
+    group: 'state',
+  });
 
   // Toggle Equipped State
   if ('equipped' in item.system) {
@@ -279,6 +280,7 @@ function getItemContextOptions(item: Item5e) {
         ? "<i class='fas fa-user-alt fa-fw' style='color: var(--t5e-warning-accent-color);'></i> "
         : "<i class='fas fa-user-alt fa-fw'></i> ",
       callback: () => item.update({ 'system.equipped': !isEquipped }),
+      condition: () => item.isOwner && !item.compendium?.locked,
     });
   }
 
@@ -295,17 +297,20 @@ function getItemContextOptions(item: Item5e) {
           : "<i class='fas fa-book fa-fw'></i>",
         callback: () =>
           item.update({ 'system.preparation.prepared': !isPrepared }),
+        condition: () => item.isOwner && !item.compendium?.locked,
       });
     }
   }
 
-  if (item.system.identified === false && FoundryAdapter.canIdentify(item)) {
-    options.push({
-      name: 'DND5E.Identify',
-      icon: "<i class='fas fa-magnifying-glass fa-fw'></i>",
-      callback: () => item.update({ 'system.identified': true }),
-    });
-  }
+  options.push({
+    name: 'DND5E.Identify',
+    icon: "<i class='fas fa-magnifying-glass fa-fw'></i>",
+    callback: () => item.update({ 'system.identified': true }),
+    condition: () =>
+      item.system.identified === false &&
+      FoundryAdapter.canIdentify(item) &&
+      !item.compendium?.locked,
+  });
 
   const isCharacter =
     itemParentIsActor && itemParent.type === CONSTANTS.SHEET_TYPE_CHARACTER;
@@ -327,6 +332,7 @@ function getItemContextOptions(item: Item5e) {
         }
         FoundryAdapter.toggleFavoriteItem(item);
       },
+      condition: () => !item.compendium?.locked,
     });
   }
 
@@ -335,62 +341,72 @@ function getItemContextOptions(item: Item5e) {
       name: 'TIDY5E.ContextMenuActionEdit',
       icon: "<i class='fas fa-pencil-alt fa-fw'></i>",
       callback: () => item.sheet.render(true),
+      condition: () => item.isOwner && !item.compendium?.locked,
     });
-    if (isUnlocked) {
-      options.push({
-        name: 'DND5E.ContextMenuActionDuplicate',
-        icon: "<i class='fas fa-copy fa-fw'></i>",
-        condition: () =>
-          !['race', 'background', 'class', 'subclass'].includes(item.type),
-        callback: () =>
-          item.clone(
-            {
-              name: FoundryAdapter.localize('DOCUMENT.CopyOf', {
-                name: item.name,
-              }),
-            },
-            { save: true }
-          ),
-      });
-      options.push({
-        name: 'TIDY5E.ContextMenuActionDelete',
-        icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5e-warning-accent-color);'></i>",
-        callback: () => FoundryAdapter.onActorItemDelete(itemParent, item),
-      });
-    }
+
+    options.push({
+      name: 'DND5E.ContextMenuActionDuplicate',
+      icon: "<i class='fas fa-copy fa-fw'></i>",
+      condition: () =>
+        isUnlocked &&
+        !['race', 'background', 'class', 'subclass'].includes(item.type) &&
+        item.isOwner &&
+        !item.compendium?.locked,
+
+      callback: () =>
+        item.clone(
+          {
+            name: FoundryAdapter.localize('DOCUMENT.CopyOf', {
+              name: item.name,
+            }),
+          },
+          { save: true }
+        ),
+    });
+    
+    options.push({
+      name: 'TIDY5E.ContextMenuActionDelete',
+      icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5e-warning-accent-color);'></i>",
+      callback: () => FoundryAdapter.onActorItemDelete(itemParent, item),
+      condition: () => isUnlocked && item.isOwner && !item.compendium?.locked,
+    });
   } else {
     options.push({
       name: 'DND5E.ContextMenuActionEdit',
       icon: "<i class='fas fa-pencil-alt fa-fw'></i>",
       callback: () => item.sheet.render(true),
+      condition: () => item.isOwner && !item.compendium?.locked,
     });
 
-    if (isUnlocked) {
-      options.push({
-        name: 'DND5E.ContextMenuActionDuplicate',
-        icon: "<i class='fas fa-copy fa-fw'></i>",
-        condition: () =>
-          !['race', 'background', 'class', 'subclass'].includes(item.type),
-        callback: () =>
-          item.clone(
-            {
-              name: FoundryAdapter.localize('DOCUMENT.CopyOf', {
-                name: item.name,
-              }),
-            },
-            { save: true }
-          ),
-      });
-      options.push({
-        name: 'DND5E.ContextMenuActionDelete',
-        icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5e-warning-accent-color);'></i>",
-        callback: () => {
-          return itemParent
-            ? FoundryAdapter.onActorItemDelete(itemParent, item)
-            : item.deleteDialog();
-        },
-      });
-    }
+    options.push({
+      name: 'DND5E.ContextMenuActionDuplicate',
+      icon: "<i class='fas fa-copy fa-fw'></i>",
+      condition: () =>
+        isUnlocked &&
+        !['race', 'background', 'class', 'subclass'].includes(item.type) &&
+        item.isOwner &&
+        !item.compendium?.locked,
+
+      callback: () =>
+        item.clone(
+          {
+            name: FoundryAdapter.localize('DOCUMENT.CopyOf', {
+              name: item.name,
+            }),
+          },
+          { save: true }
+        ),
+    });
+    options.push({
+      name: 'DND5E.ContextMenuActionDelete',
+      icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5e-warning-accent-color);'></i>",
+      callback: () => {
+        return itemParent
+          ? FoundryAdapter.onActorItemDelete(itemParent, item)
+          : item.deleteDialog();
+      },
+      condition: () => isUnlocked && item.isOwner && !item.compendium?.locked,
+    });
   }
 
   if (itemParentIsActor && actorUsesActionFeature(itemParent)) {
@@ -435,7 +451,7 @@ function getGroupMemberContextOptions(group: Actor5e, actor: Actor5e) {
       name: 'TIDY5E.Group.RemoveMemberFromGroup',
       icon: `<i class="fas fa-trash fa-fw t5e-warning-color"></i>`,
       callback: () => group.removeMember(actor.id),
-      condition: () => unlocked,
+      condition: () => unlocked && !group.compendium?.locked,
     },
   ];
 

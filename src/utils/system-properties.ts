@@ -1,5 +1,6 @@
 import type { ItemSheetContext } from 'src/types/item.types';
 
+// TODO: Eliminate these specific mappers for more generalized versions, as needed.
 export function mapPropertiesToSave(
   context: ItemSheetContext,
   ev: Event & { currentTarget: HTMLInputElement },
@@ -22,5 +23,25 @@ export function mapPropertiesToSave(
 
   return {
     'system.properties': propertiesToSave,
+  };
+}
+
+// TODO: Eliminate these specific mappers for more generalized versions, as needed.
+export function mapMulticlassingAbilitiesToSave(
+  context: ItemSheetContext,
+  ev: Event & { currentTarget: HTMLInputElement }
+) {
+  const selectedAbilities: Set<string> = new Set<string>(
+    context.system.primaryAbility.value
+  );
+
+  if (ev.currentTarget.checked) {
+    selectedAbilities.add(ev.currentTarget.value);
+  } else {
+    selectedAbilities.delete(ev.currentTarget.value);
+  }
+
+  return {
+    'system.primaryAbility.value': selectedAbilities,
   };
 }

@@ -18,11 +18,10 @@ import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
 import { TidyFlags } from './TidyFlags';
 import { TidyHooks } from './TidyHooks';
 import { isNil } from 'src/utils/data';
+import { clamp } from 'src/utils/numbers';
+import { processInputChangeDelta } from 'src/utils/form';
 
 export const FoundryAdapter = {
-  isFoundryV12OrHigher() {
-    return foundry.utils.isNewerVersion(game.version, 12);
-  },
   deepClone(obj: any) {
     return foundry.utils.deepClone(obj);
   },
@@ -981,15 +980,17 @@ export const FoundryAdapter = {
   lookupAbility(abbr: string) {
     return game.dnd5e.config.abilities[abbr];
   },
-  actorTryUseItem(item: Item5e, config: any = {}, options: any = {}) {
+  actorTryUseItem(item: Item5e, event: Event) {
+    const config = { legacy: false, event };
+
     const suppressItemUse =
-      TidyHooks.tidy5eSheetsActorPreUseItem(item, config, options) === false;
+      TidyHooks.tidy5eSheetsActorPreUseItem(item, config) === false;
 
     if (suppressItemUse) {
       return;
     }
 
-    item.use(config, options);
+    item.use(config);
   },
   onActorItemButtonContextMenu(item: Item5e, options: { event: Event }) {
     // Allow another module to react to a context menu action on the item use button.
@@ -1367,5 +1368,22 @@ export const FoundryAdapter = {
   },
   formatNumber(num: number) {
     return dnd5e.utils.formatNumber(num);
+  },
+  handleItemUsesChanged(
+    event: Event & {
+      currentTarget: EventTarget & HTMLInputElement;
+    },
+    item: any
+  ) {
+    const value = processInputChangeDelta(
+      event.currentTarget.value,
+      item,
+      'system.uses.value'
+    );
+
+    const uses = clamp(0, value, item.system.uses.max);
+    event.currentTarget.value = uses.toString();
+
+    return item.update({ 'system.uses.spent': item.system.uses.max - uses });
   },
 };
