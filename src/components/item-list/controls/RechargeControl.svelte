@@ -11,16 +11,17 @@
 
   const localize = FoundryAdapter.localize;
 
-  $: rechargeLabel =
-    item.system.recharge?.charged === false
-      ? localize('TIDY5E.RollRecharge.Hint', {
-          rechargeLabel: item.labels?.recharge ?? '',
-        })
-      : item.labels?.recharge ?? '';
+  $: rechargeLabel = item.isOnCooldown
+    ? localize('TIDY5E.RollRecharge.Hint', {
+        rechargeLabel: item.labels?.recharge ?? '',
+      })
+    : (item.labels?.recharge ?? '');
 
   let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
+
+  $: recovery = item.system.uses?.recovery[0];
 </script>
 
 <button
@@ -29,12 +30,11 @@
   title={rechargeLabel}
   on:click={(ev) =>
     ev.shiftKey
-      ? item.update({ 'system.recharge.charged': true })
-      : item.rollRecharge()}
+      ? item.update({ 'system.uses.spent': 0 })
+      : item.system.uses.rollRecharge()}
   disabled={!$context.owner}
   tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
 >
   <i class="fas fa-dice-six" />
-  {item.system.recharge
-    ?.value}{#if item.system.recharge?.value !== 6}+{/if}</button
+  {recovery?.formula}{#if recovery?.value !== 6}+{/if}</button
 >

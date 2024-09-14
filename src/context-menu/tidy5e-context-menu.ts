@@ -253,15 +253,15 @@ function getItemContextOptions(item: Item5e) {
   }
 
   // Toggle Charged State
-  if (item.system.recharge?.value) {
+  if (item.hasRecharge) {
     options.push({
-      name: item.system.recharge.charged
+      name: !item.isOnCooldown
         ? 'DND5E.ContextMenuActionExpendCharge'
         : 'DND5E.ContextMenuActionCharge',
       icon: '<i class="fa-solid fa-bolt"></i>',
       callback: () =>
         item.update({
-          'system.recharge.charged': !item.system.recharge?.charged,
+          'system.uses.spent': !item.isOnCooldown ? item.system.uses.max : 0,
         }),
       condition: () => item.isOwner,
       group: 'state',
