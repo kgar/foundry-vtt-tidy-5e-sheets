@@ -106,9 +106,6 @@ export type Tidy5eSetting = {
 export let settingStore: Writable<CurrentSettings>;
 
 export function createSettings() {
-  // TODO: Remove this when Foundry V12 or later is the minimum version.
-  const isV12OrNewer = FoundryAdapter.isFoundryV12OrHigher();
-
   return {
     menus: {
       worldSettings: {
@@ -203,17 +200,12 @@ export function createSettings() {
           hint: 'TIDY5E.Settings.DefaultTheme.hint',
           scope: 'world',
           config: true,
-          type: isV12OrNewer
-            ? new foundry.data.fields.StringField({
-                required: true,
-                blank: false,
-                initial: CONSTANTS.THEME_ID_DEFAULT_LIGHT,
-                choices: () => getCoreThemes(false),
-              })
-            : String,
-          choices: isV12OrNewer ? undefined : () => getCoreThemes(false),
-          default: isV12OrNewer ? undefined : CONSTANTS.THEME_ID_DEFAULT_LIGHT,
-
+          type: new foundry.data.fields.StringField({
+            required: true,
+            blank: false,
+            initial: CONSTANTS.THEME_ID_DEFAULT_LIGHT,
+            choices: () => getCoreThemes(false),
+          }),
           onChange: (data: string) => {
             const theme = getThemeOrDefault(data);
 
@@ -235,16 +227,12 @@ export function createSettings() {
           hint: 'TIDY5E.Settings.SheetTheme.hint',
           scope: 'client',
           config: true,
-          type: isV12OrNewer
-            ? new foundry.data.fields.StringField({
-                required: true,
-                blank: false,
-                initial: CONSTANTS.THEME_ID_DEFAULT,
-                choices: () => getCoreThemes(true),
-              })
-            : String,
-          choices: isV12OrNewer ? undefined : () => getCoreThemes(true),
-          default: isV12OrNewer ? undefined : CONSTANTS.THEME_ID_DEFAULT,
+          type: new foundry.data.fields.StringField({
+            required: true,
+            blank: false,
+            initial: CONSTANTS.THEME_ID_DEFAULT,
+            choices: () => getCoreThemes(true),
+          }),
           onChange: (
             data: string,
             colorPickerEnabledOverride: boolean | null = null

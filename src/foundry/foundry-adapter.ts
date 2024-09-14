@@ -22,9 +22,6 @@ import { clamp } from 'src/utils/numbers';
 import { processInputChangeDelta } from 'src/utils/form';
 
 export const FoundryAdapter = {
-  isFoundryV12OrHigher() {
-    return foundry.utils.isNewerVersion(game.version, 12);
-  },
   deepClone(obj: any) {
     return foundry.utils.deepClone(obj);
   },

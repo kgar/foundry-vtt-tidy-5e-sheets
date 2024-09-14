@@ -28,6 +28,7 @@ import { CONSTANTS } from 'src/constants';
 import { CustomContentManager } from 'src/runtime/content/CustomContentManager';
 import { ConfigApi } from './config/ConfigApi';
 import { GroupSheetRuntime } from 'src/runtime/GroupSheetRuntime';
+import { Tidy5eGroupSheetClassic } from 'src/sheets/Tidy5eGroupSheetClassic';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -138,8 +139,7 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is a Tidy 5e Group sheet
    */
   isTidy5eGroupSheet(app: any) {
-    // TODO: When Foundry V12 Only, use the class constructor name instead.
-    return 'Tidy5eGroupSheetClassic' === app?.constructor?.name;
+    return Tidy5eGroupSheetClassic.name === app?.constructor?.name;
   }
 
   /**
@@ -172,7 +172,7 @@ export class Tidy5eSheetsApi {
       Tidy5eVehicleSheet.name,
       Tidy5eKgarItemSheet.name,
       Tidy5eKgarContainerSheet.name,
-      'Tidy5eGroupSheetClassic',
+      Tidy5eGroupSheetClassic.name,
     ].includes(app?.constructor?.name);
   }
 

@@ -250,9 +250,7 @@ function calculateDeterministicBonus(rawBonus: string): number {
 
     let bonusTotal = 0;
     if (Roll.validate(bonusRoll.formula)) {
-      bonusTotal = FoundryAdapter.isFoundryV12OrHigher()
-        ? bonusRoll.evaluateSync().total
-        : bonusRoll.evaluate({ async: false }).total;
+      bonusTotal = bonusRoll.evaluateSync().total;
     }
     return bonusTotal;
   } catch (e: any) {
@@ -288,9 +286,7 @@ export function getDcTooltip(actor: Actor5e) {
   const rawBonus = actor.system.bonuses.spell.dc?.toString()?.trim();
   if (!isNil(rawBonus, '') && Roll.validate(rawBonus)) {
     const bonusRoll = new Roll(rawBonus);
-    FoundryAdapter.isFoundryV12OrHigher()
-      ? bonusRoll.evaluateSync()
-      : bonusRoll.evaluate({ async: false });
+    bonusRoll.evaluateSync();
     const bonusTotal = bonusRoll.total;
 
     if (bonusTotal !== 0) {

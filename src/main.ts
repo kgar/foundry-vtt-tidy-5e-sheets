@@ -15,6 +15,7 @@ import { Tidy5eKgarContainerSheet } from './sheets/Tidy5eContainerSheet';
 import { setupModuleIntegrations } from './integration/integration';
 import { TidyHooks } from './foundry/TidyHooks';
 import { initKeybindings } from './keybindings/keybind-init';
+import { Tidy5eGroupSheetClassic } from './sheets/Tidy5eGroupSheetClassic';
 
 Hooks.once('init', () => {
   DocumentSheetConfig.registerSheet(
@@ -79,20 +80,15 @@ Hooks.once('init', () => {
     }
   );
 
-  if (FoundryAdapter.isFoundryV12OrHigher()) {
-    // When Foundry V12 only, remove the dynamic import.
-    import('./sheets/Tidy5eGroupSheetClassic').then((mod) => {
-      DocumentSheetConfig.registerSheet(
-        Actor,
-        CONSTANTS.DND5E_SYSTEM_ID,
-        mod.Tidy5eGroupSheetClassic,
-        {
-          types: [CONSTANTS.SHEET_TYPE_GROUP],
-          label: 'TIDY5E.Tidy5eGroupSheetClassic',
-        }
-      );
-    });
-  }
+  DocumentSheetConfig.registerSheet(
+    Actor,
+    CONSTANTS.DND5E_SYSTEM_ID,
+    Tidy5eGroupSheetClassic,
+    {
+      types: [CONSTANTS.SHEET_TYPE_GROUP],
+      label: 'TIDY5E.Tidy5eGroupSheetClassic',
+    }
+  );
 
   initSettings();
   initRuntime();
