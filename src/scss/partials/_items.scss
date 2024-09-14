@@ -443,6 +443,7 @@ input[type='checkbox'] {
 
   .form-group {
     margin: 0;
+    column-gap: 0.25rem;
 
     padding: 0.1875rem;
     background: var(--t5e-faintest-color);
@@ -451,6 +452,10 @@ input[type='checkbox'] {
     .form-fields {
       justify-content: flex-start;
       gap: 0.25rem;
+
+      &.label-top > label {
+        text-align: start;
+      }
 
       &.spell-preparation-mode {
         gap: 0.25rem;
@@ -538,12 +543,16 @@ input[type='checkbox'] {
     :where(select),
     :where(:is(input[type='text'], input[type='number'], textarea)) {
       background: var(--t5e-item-input-background);
-      height: 1.25rem;
+      height: 1.625rem;
       font-size: 0.8125rem;
 
       &:hover {
         background: var(--t5e-item-input-hover-background);
       }
+    }
+
+    & .form-fields > :is(input[type='text'], input[type='number'], textarea) {
+      flex-basis: 1.625rem;
     }
 
     input:disabled {

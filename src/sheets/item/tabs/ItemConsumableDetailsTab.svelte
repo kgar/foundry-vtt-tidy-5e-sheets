@@ -1,7 +1,5 @@
 <script lang="ts">
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-  import ItemActivation from '../parts/ItemActivation.svelte';
-  import ItemAction from '../parts/ItemAction.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ItemSheetContext } from 'src/types/item.types';
@@ -17,6 +15,8 @@
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
+
+  $: appId = $context.item.sheet.appId;
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -63,34 +63,6 @@
   {/if}
 
   <ItemFormGroup
-    labelText={localize('DND5E.Attunement')}
-    field="system.attunement"
-    let:inputId
-  >
-    <Checkbox
-      id={`${$context.appId}-system-attuned`}
-      document={$context.item}
-      field="system.attuned"
-      checked={$context.system.attuned}
-      disabled={!$context.editable ||
-        !$context.config.attunementTypes[$context.system.attunement]}
-      title={localize('DND5E.AttunementAttuned')}
-    ></Checkbox>
-    <Select
-      id={inputId}
-      document={$context.item}
-      field="system.attunement"
-      value={$context.system.attunement}
-      disabled={!$context.editable}
-    >
-      <SelectOptions
-        data={$context.config.attunementTypes}
-        blank={localize('DND5E.AttunementNone')}
-      />
-    </Select>
-  </ItemFormGroup>
-
-  <ItemFormGroup
     cssClass="stacked weapon-properties"
     labelText={$context.system.type.value === 'ammo'
       ? localize('DND5E.ItemAmmoProperties')
@@ -99,32 +71,82 @@
     <ItemProperties />
   </ItemFormGroup>
 
-  {#if $context.properties.mgc.selected && $context.system.type.value === CONSTANTS.ITEM_SYSTEM_TYPE_AMMO}
+  {#if $context.properties.mgc?.selected}
+    <!-- Attunement -->
     <ItemFormGroup
-      labelText={localize('DND5E.MagicalBonus')}
-      field="system.magicalBonus"
+      labelText={localize('DND5E.Item.Property.Magical')}
+      field="system.attunement"
       let:inputId
     >
-      <div class="form-fields">
-        <NumberInput
-          id={inputId}
-          value={$context.system.magicalBonus}
-          field="system.magicalBonus"
-          document={$context.item}
-          disabled={!$context.editable}
-          min="0"
-          step="1"
-          placeholder="0"
-        />
+      <div class="form-fields label-top no-gap">
+        <label for="">
+          {localize('DND5E.Attunement')}
+        </label>
+        <div class="flex-row no-gap">
+          <!-- Attuned -->
+          <Checkbox
+            id={`${appId}-system-attuned`}
+            document={$context.item}
+            field="system.attuned"
+            checked={$context.system.attuned}
+            disabled={!$context.editable ||
+              !$context.config.attunementTypes[$context.system.attunement]}
+            title={localize('DND5E.AttunementAttuned')}
+          ></Checkbox>
+          <!-- Attunement -->
+          <Select
+            id={inputId}
+            document={$context.item}
+            field="system.attunement"
+            value={$context.system.attunement}
+            disabled={!$context.editable}
+            class="flex-1"
+          >
+            <SelectOptions
+              data={$context.config.attunementTypes}
+              blank={localize('DND5E.AttunementNone')}
+            />
+          </Select>
+        </div>
       </div>
+      <!-- Magical Bonus for Ammo -->
+      {#if $context.system.type.value === CONSTANTS.ITEM_SYSTEM_TYPE_AMMO}
+        <div class="form-fields label-top">
+          <label for="{appId}-magical-bonus">{localize('DND5E.Bonus')}</label>
+          <NumberInput
+            id="{appId}-magical-bonus"
+            value={$context.system.magicalBonus}
+            field="system.magicalBonus"
+            document={$context.item}
+            disabled={!$context.editable}
+            min="0"
+            step="1"
+            placeholder="0"
+          />
+        </div>
+      {/if}
     </ItemFormGroup>
   {/if}
 
-  <h3 class="form-header">{localize('DND5E.ItemConsumableUsage')}</h3>
+  <h3 class="form-header">
+    {localize('DND5E.CONSUMABLE.FIELDS.damage.label')}
+  </h3>
 
-  <ItemActivation />
+  <ItemFormGroup
+    labelText={localize('DND5E.CONSUMABLE.FIELDS.damage.replace.label')}
+    field="system.damage.replace"
+    let:inputId
+  >
+    <Checkbox
+      id={inputId}
+      document={$context.item}
+      field="system.damage.replace"
+      checked={$context.system.damage.replace}
+    />
+    <p class="hint">
+      {localize('DND5E.CONSUMABLE.FIELDS.damage.replace.hint')}
+    </p>
+  </ItemFormGroup>
 
-  <h3 class="form-header">{localize('DND5E.ItemConsumableActivation')}</h3>
 
-  <ItemAction />
 </ContentConcealer>
