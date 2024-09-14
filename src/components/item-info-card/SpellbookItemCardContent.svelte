@@ -45,7 +45,7 @@
   {/if}
   <div class="description-wrap">
     <div class="info-card-description user-select-text">
-      {@html chatData.description.value}
+      {@html chatData.description}
     </div>
   </div>
 
