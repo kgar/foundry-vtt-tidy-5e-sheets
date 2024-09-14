@@ -5,7 +5,6 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { CharacterSheetContext } from 'src/types/types';
-  import AmmoSelector from '../../sheets/actor/AmmoSelector.svelte';
   import { coalesce } from 'src/utils/formatting';
   import { CONSTANTS } from 'src/constants';
 
@@ -38,12 +37,6 @@
         )
       : item.name}
   </p>
-  {#if item.system.properties?.has('amm')}
-    <p class="ammo-switch" data-id={item._id}>
-      <AmmoSelector {item} />
-    </p>
-    <HorizontalLineSeparator borderColor="faint" />
-  {/if}
 
   {#if item.system.properties?.has('mgc') || ctx?.attunement}
     <div class="info-card-states">

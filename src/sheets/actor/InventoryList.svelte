@@ -26,7 +26,6 @@
     NpcSheetContext,
     RenderableClassicControl,
   } from 'src/types/types';
-  import AmmoSelector from './AmmoSelector.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { coalesce } from 'src/utils/formatting';
@@ -216,11 +215,6 @@
                 data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
                 >{itemName}</span
               >
-              {#if item.system?.properties?.has('amm')}
-                <span class="ammo">
-                  <AmmoSelector {item} />
-                </span>
-              {/if}
             </ItemName>
           </ItemTableCell>
           {#if $settingStore.showIconsNextToTheItemName}

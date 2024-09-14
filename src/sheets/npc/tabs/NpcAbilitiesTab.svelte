@@ -32,7 +32,6 @@
   import { settingStore } from 'src/settings/settings';
   import EncumbranceBar from '../../actor/EncumbranceBar.svelte';
   import TabFooter from '../../actor/TabFooter.svelte';
-  import AmmoSelector from '../../actor/AmmoSelector.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { declareLocation } from 'src/types/location-awareness.types';
@@ -269,11 +268,6 @@
                         data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
                         >{item.name}</span
                       >
-                      {#if item.system?.properties?.has('amm')}
-                        <span class="ammo">
-                          <AmmoSelector {item} />
-                        </span>
-                      {/if}
                     </ItemName>
                     {#if item.type === 'class'}
                       <LevelUpDropdown
