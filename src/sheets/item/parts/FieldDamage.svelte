@@ -5,6 +5,13 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
+  import NumberInput from 'src/components/inputs/NumberInput.svelte';
+  import Select from 'src/components/inputs/Select.svelte';
+  import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
+  import Checkbox from 'src/components/inputs/Checkbox.svelte';
+  import type { CONFIG } from 'src/foundry/config.types';
+  import { mapSystemBaseDamageTypesToSave } from 'src/utils/system-properties';
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -17,39 +24,109 @@
 
 <!-- Custom Formula -->
 <ItemFormGroup cssClass="split-group">
+  <!-- <div class="form-fields"> -->
+  <!-- checkbox  system.damage.base.custom.enabled-->
+  <label for="{appId}-damage-base-custom-enabled">Formula</label>
   <div class="form-fields">
-    <!-- checkbox  system.damage.base.custom.enabled-->
-    {#if $context.item.system.damage.base.custom.enabled}
-      <!-- textinput  system.damage.base.custom.formula -->
-    {/if}
+    <Checkbox
+      id="{appId}-damage-base-custom-enabled"
+      document={$context.item}
+      field="system.damage.base.custom.enabled"
+      checked={$context.system.damage.base.custom.enabled}
+    />
+
+    <TextInput
+      id="{appId}-damage-base-custom-formula"
+      document={$context.item}
+      field="system.damage.base.custom.formula"
+      value={$context.system.damage.base.custom.formula}
+      class={$context.item.system.damage.base.custom.enabled ? '' : 'invisible'}
+    />
   </div>
+  <!-- </div> -->
 </ItemFormGroup>
 
 <!-- Simple Input -->
 {#if !$context.item.system.damage.base.custom.enabled}
-  <ItemFormGroup cssClass="split-group">
-    <!-- 
-    <label>{{#if heal}}{{ localize "DND5E.HEAL.Title" }}{{else}}{{ localize "DND5E.DAMAGE.Title" }}{{/if}}</label>
+  <ItemFormGroup
+    cssClass="split-group"
+    labelText={$context.system.damage.heal
+      ? localize('DND5E.HEAL.Title')
+      : localize('DND5E.DAMAGE.Title')}
+  >
     <div class="form-fields">
+      <div class="form-group label-top">
+        <label for="{appId}-damage-base-number"
+          >{localize('DND5E.Number')}</label
+        >
+        <!-- Number -->
+        <NumberInput
+          id="{appId}-damage-base-number"
+          document={$context.item}
+          field="system.damage.base.number"
+          value={$context.system.damage.base.number}
+          min="0"
+          step="1"
+        />
+      </div>
 
-        {{!-- Number --}}
-        {{ formField fields.number name=(concat prefix "number") value=source.number label="DND5E.Number" localize=true
-                     hint=false classes="label-top" placeholder=numberPlaceholder }}
+      <!-- Die -->
+      <div class="form-group label-top">
+        <label for="{appId}-damage-base-denomination"
+          >{localize('DND5E.Die')}</label
+        >
+        <Select
+          id="{appId}-damage-base-denomination"
+          document={$context.item}
+          field="system.damage.base.denomination"
+          value={$context.system.damage.base.denomination}
+          blankValue=""
+        >
+          <SelectOptions
+            data={$context.denominationOptions}
+            labelProp="label"
+            valueProp="value"
+          />
+        </Select>
+      </div>
 
-        {{!-- Die --}}
-        {{ formField fields.denomination name=(concat prefix "denomination") value=source.denomination label="DND5E.Die"
-                     hint=false localize=true options=denominationOptions classes="label-top" }}
-
-        {{!-- Bonus --}}
-        {{ formField fields.bonus name=(concat prefix "bonus") value=source.bonus label="DND5E.Bonus" localize=true
-                     hint=false classes="label-top" }}
-    </div> 
-    -->
+      <!-- Bonus -->
+      <div class="form-group label-top">
+        <label for="{appId}-damage-base-bonus">
+          {localize('DND5E.Bonus')}
+        </label>
+        <TextInput
+          id="{appId}-damage-base-bonus"
+          document={$context.item}
+          field="system.damage.base.bonus"
+          value={$context.system.damage.base.bonus}
+        />
+      </div>
+    </div>
   </ItemFormGroup>
 {/if}
 
 <!-- Types -->
-<!-- checkbox group for system.damage.base.types -->
+{#if $context.damageTypes}
+  <ItemFormGroup
+    cssClass="stacked damage-types"
+    labelText={localize('DND5E.Type')}
+  >
+    {#each $context.damageTypes as { value, label } (value)}
+      <Checkbox
+        labelCssClass="checkbox"
+        document={$context.item}
+        field="system.damage.base.types"
+        checked={$context.system.damage.base.types.has(value)}
+        {value}
+        disabled={!$context.editable}
+        onDataPreparing={(ev) => mapSystemBaseDamageTypesToSave($context, ev)}
+      >
+        {label}
+      </Checkbox>
+    {/each}
+  </ItemFormGroup>
+{/if}
 
 <!-- Scaling -->
 {#if $context.system.damage.canScale}
