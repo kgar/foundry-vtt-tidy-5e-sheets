@@ -1,14 +1,12 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
   import { settingStore } from 'src/settings/settings';
 
   export let item: any;
 
   function onAddUses() {
     let data: Record<string, unknown> = {};
-    data['system.uses.value'] = 1;
-    data['system.uses.max'] = '1';
-    data['system.uses.per'] = CONSTANTS.LIMITED_USES_PER_CHARGES;
+    data['system.uses.spent'] = 0;
+    data['system.uses.max'] = 1;
 
     item.update(data);
   }

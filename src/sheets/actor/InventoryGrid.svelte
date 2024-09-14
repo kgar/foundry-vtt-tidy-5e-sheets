@@ -192,6 +192,8 @@
                 selectOnFocus={true}
                 on:click={preventUseItemEvent}
                 disabled={!$context.editable}
+                onSaveChange={(ev) =>
+                  FoundryAdapter.handleItemUsesChanged(ev, item) && false}
               />
             {/if}
           </div>

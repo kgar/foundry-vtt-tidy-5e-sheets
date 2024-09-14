@@ -18,6 +18,8 @@ import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
 import { TidyFlags } from './TidyFlags';
 import { TidyHooks } from './TidyHooks';
 import { isNil } from 'src/utils/data';
+import { clamp } from 'src/utils/numbers';
+import { processInputChangeDelta } from 'src/utils/form';
 
 export const FoundryAdapter = {
   isFoundryV12OrHigher() {
@@ -1367,5 +1369,22 @@ export const FoundryAdapter = {
   },
   formatNumber(num: number) {
     return dnd5e.utils.formatNumber(num);
+  },
+  handleItemUsesChanged(
+    event: Event & {
+      currentTarget: EventTarget & HTMLInputElement;
+    },
+    item: any
+  ) {
+    const value = processInputChangeDelta(
+      event.currentTarget.value,
+      item,
+      'system.uses.value'
+    );
+
+    const uses = clamp(0, value, item.system.uses.max);
+    event.currentTarget.value = uses.toString();
+
+    return item.update({ 'system.uses.spent': item.system.uses.max - uses });
   },
 };

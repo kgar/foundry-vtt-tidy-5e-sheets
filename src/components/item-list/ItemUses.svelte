@@ -1,28 +1,14 @@
 <script lang="ts">
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { clamp } from 'src/utils/numbers';
 
   export let item: any;
-
-  function onUsesChanged(
-    event: Event & {
-      currentTarget: EventTarget & HTMLInputElement;
-    },
-    item: any
-  ) {
-    const uses = clamp(
-      0,
-      parseInt(event.currentTarget.value),
-      item.system.uses.max
-    );
-    event.currentTarget.value = uses.toString();
-    return item.update({ 'system.uses.value': uses });
-  }
 
   function onUsesMaxChanged(
     event: Event & {
       currentTarget: EventTarget & HTMLInputElement;
     },
-    item: any
+    item: any,
   ) {
     let uses = parseInt(event.currentTarget.value ?? item.system.uses.max ?? 0);
 
@@ -40,7 +26,7 @@
     type="text"
     value={item.system.uses.value}
     on:change|stopPropagation|preventDefault={(event) =>
-      onUsesChanged(event, item)}
+      FoundryAdapter.handleItemUsesChanged(event, item)}
     disabled={!item.isOwner}
     on:focus={(ev) => ev.currentTarget.select()}
     data-tidy-field="system.uses.value"
