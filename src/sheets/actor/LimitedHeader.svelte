@@ -22,6 +22,7 @@
 
 <style lang="scss">
   header {
+    --t5e-portrait-size: 9.375rem;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -30,8 +31,6 @@
     background: var(--t5e-header-background);
 
     .profile {
-      width: 9.375rem;
-      height: 9.375rem;
       flex: 0 0 auto;
 
       .portrait {
