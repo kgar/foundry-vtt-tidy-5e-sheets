@@ -185,7 +185,17 @@
         />
       </svg>
 
-      <TraitSectionTags tags={weaponProfs} />
+      <TraitSectionTags tags={weaponProfs}>
+        <svelte:fragment let:key let:value>
+          {#if $context.traits.traits.weaponProf.mastery.value.has(key)}
+            <i
+              title={localize('DND5E.WEAPON.Mastery.Label')}
+              class="fas fa-medal"
+            ></i>
+          {/if}
+          {value}
+        </svelte:fragment>
+      </TraitSectionTags>
     </TraitSection>
   {/if}
 

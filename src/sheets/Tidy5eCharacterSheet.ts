@@ -1508,6 +1508,20 @@ export class Tidy5eCharacterSheet
     return this._onDropFavorite(event, { type, id });
   }
 
+  _prepareTraits(systemData: any) {
+    const traits = super._prepareTraits(systemData);
+
+    const selectedWeaponProfs = traits.traits?.weaponProf?.selected;
+    for (let key of systemData.traits?.weaponProf?.mastery?.value ?? []) {
+      if (!Object.hasOwn(selectedWeaponProfs, key)) {
+        selectedWeaponProfs[key] =
+          dnd5e.documents.Trait.keyLabel(key, { trait: 'weapon' }) ?? key;
+      }
+    }
+
+    return traits;
+  }
+
   /* -------------------------------------------- */
   /* Favorites
   /* -------------------------------------------- */
