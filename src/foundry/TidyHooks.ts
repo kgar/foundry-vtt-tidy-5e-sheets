@@ -113,12 +113,8 @@ export class TidyHooks {
    * });
    * ```
    */
-  static tidy5eSheetsActorPreUseItem(
-    item: Item5e,
-    config: any,
-    options: any
-  ): boolean {
-    return Hooks.call('tidy5e-sheet.actorPreUseItem', item, config, options);
+  static tidy5eSheetsActorPreUseItem(item: Item5e, options: any): boolean {
+    return Hooks.call('tidy5e-sheet.actorPreUseItem', item, options);
   }
 
   /**
