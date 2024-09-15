@@ -14,6 +14,15 @@ import type {
 } from 'src/runtime/item/item.types';
 
 export type ItemSheetContext = {
+  activities: {
+    id: string;
+    name: string;
+    sort: number;
+    img: {
+      src: string;
+      svg: boolean;
+    };
+  }[];
   activateEditors: (
     node: HTMLElement,
     options?: { bindSecrets?: boolean }

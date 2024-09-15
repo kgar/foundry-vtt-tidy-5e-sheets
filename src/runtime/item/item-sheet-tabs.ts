@@ -17,9 +17,22 @@ import ItemSpellDetailsTab from '../../sheets/item/tabs/ItemSpellDetailsTab.svel
 import ItemSubclassDetailsTab from '../../sheets/item/tabs/ItemSubclassDetailsTab.svelte';
 import ItemToolDetailsTab from '../../sheets/item/tabs/ItemToolDetailsTab.svelte';
 import ItemWeaponDetailsTab from '../../sheets/item/tabs/ItemWeaponDetailsTab.svelte';
+import ItemActivitiesTab from '../../sheets/item/tabs/ItemActivitiesTab.svelte';
 import type { Tab } from 'src/types/types';
 
-const itemSheetTabs: Record<string, Tab> = {
+const itemSheetTabs = {
+  /**
+   * Interface for managing activities for an item.
+   */
+  activities: {
+    id: CONSTANTS.TAB_ITEM_ACTIVITIES_ID,
+    title: 'DND5E.ACTIVITY.Title.other',
+    content: {
+      component: ItemActivitiesTab,
+      cssClass: 'activities-tab-contents',
+      type: 'svelte',
+    },
+  },
   /**
    * Advancement create/read/update/delete interface.
    */
@@ -241,6 +254,6 @@ const itemSheetTabs: Record<string, Tab> = {
     },
     autoHeight: true,
   },
-} as const;
+} satisfies Record<string, Tab>;
 
 export default itemSheetTabs;

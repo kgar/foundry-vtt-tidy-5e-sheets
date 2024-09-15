@@ -79,6 +79,7 @@ export const CONSTANTS = {
   TAB_CONTAINER_SECTION_CONTENTS: 'contents',
   TAB_ITEM_DESCRIPTION_ID: 'description',
   TAB_ITEM_DETAILS_ID: 'details',
+  TAB_ITEM_ACTIVITIES_ID: 'activities',
   TAB_ITEM_ADVANCEMENT_ID: 'advancement',
   TAB_ITEM_EFFECTS_ID: 'effects',
   TAB_CHARACTER_ATTRIBUTES: 'attributes',

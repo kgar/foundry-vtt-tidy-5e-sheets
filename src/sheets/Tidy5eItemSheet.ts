@@ -201,6 +201,17 @@ export class Tidy5eKgarItemSheet
       })
     );
 
+    if (context.system.activities) {
+      context.activities = (context.system.activities ?? [])
+        .map(({ _id: id, name, img, sort }: any) => ({
+          id,
+          name,
+          sort,
+          img: { src: img, svg: img?.endsWith('.svg') },
+        }))
+        .sort((a: any, b: any) => a.sort - b.sort);
+    }
+
     debug(`${this.item?.type ?? 'Unknown Item Type'} context data`, context);
 
     // TODO: Add hook for preparing Tidy-specific context data
@@ -367,6 +378,16 @@ export class Tidy5eKgarItemSheet
   /* -------------------------------------------- */
   /* Actions
   /* -------------------------------------------- */
+
+  addActivity() {
+    return dnd5e.documents.activity.UtilityActivity.createDialog(
+      {},
+      {
+        parent: this.item,
+        types: Object.keys(CONFIG.DND5E.activityTypes),
+      }
+    );
+  }
 
   /**
    * Create a new recovery profile.

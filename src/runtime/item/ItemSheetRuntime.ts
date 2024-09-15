@@ -80,6 +80,7 @@ export class ItemSheetRuntime {
       defaultTabs: () => [
         itemSheetTabs.descriptionWithSidebar,
         itemSheetTabs.consumableDetails,
+        itemSheetTabs.activities,
         itemSheetTabs.effects,
       ],
     },
