@@ -20,6 +20,7 @@
 <ContentConcealer conceal={$context.concealDetails}>
   <h3 class="form-header">{localize('DND5E.ItemLootDetails')}</h3>
 
+  <!-- Loot Type -->
   <ItemFormGroup
     labelText={localize('DND5E.ItemLootType')}
     field="system.type.value"
@@ -40,13 +41,14 @@
     </Select>
   </ItemFormGroup>
 
+  <!-- Loot Subtype -->
   {#if $context.itemSubtypes}
-    {@const subTypeLabel = localize('DND5E.ItemLootSubtype', {
+    {@const subtypeLabel = localize('DND5E.ItemLootSubtype', {
       category:
         $context.config.lootTypes[$context.system.type.value]?.label ?? '',
     })}
     <ItemFormGroup
-      labelText={subTypeLabel}
+      labelText={subtypeLabel}
       field="system.type.subtype"
       let:inputId
     >
@@ -56,12 +58,14 @@
         field="system.type.subtype"
         value={$context.system.type.subtype}
         disabled={!$context.editable}
+        blankValue=""
       >
         <SelectOptions data={$context.itemSubtypes} blank="" />
       </Select>
     </ItemFormGroup>
   {/if}
 
+  <!-- Loot Properties -->
   <ItemFormGroup
     cssClass="stacked loot-properties"
     labelText={localize('DND5E.ItemLootProperties')}
