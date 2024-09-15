@@ -37,6 +37,9 @@
 
     <div class="item-subtitle">
       <h4 class="item-type">{$context.itemType ?? ''}</h4>
+      {#if $context.itemStatus && $context.itemStatus !== $context.itemType}
+        <span class="item-status">{$context.itemStatus ?? ''}</span>
+      {/if}
     </div>
 
     <ul class="summary flexrow">
