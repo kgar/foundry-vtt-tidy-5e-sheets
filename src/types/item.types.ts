@@ -27,6 +27,11 @@ export type ItemSheetContext = {
     node: HTMLElement,
     options?: { bindSecrets?: boolean }
   ) => void;
+  activationTypes: {
+    value: string;
+    label: string;
+    group?: string;
+  }[];
   customContent: CustomContent[];
   customEquipmentTypeGroups: RegisteredEquipmentTypeGroup[];
   equipmentTypes: {

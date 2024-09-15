@@ -59,6 +59,7 @@
         />
       </li>
     </ul>
+    <span class="spell-classes">{$context.labels?.classes ?? ''}</span>
   </div>
 </header>
 <Tabs bind:selectedTabId tabs={$context.tabs} />

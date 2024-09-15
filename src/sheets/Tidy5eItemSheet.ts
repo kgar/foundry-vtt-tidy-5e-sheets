@@ -160,6 +160,7 @@ export class Tidy5eKgarItemSheet
       ),
       identifiedName: FoundryAdapter.getIdentifiedName(this.item),
       itemDescriptions,
+      labels: this.item.labels,
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       originalContext: defaultDocumentContext,
       tabs: tabs,
@@ -168,11 +169,22 @@ export class Tidy5eKgarItemSheet
         defaultDocumentContext.warnings?.filter(
           (w: any) => !isNil(w.message?.trim(), '')
         ) ?? [],
+      activationTypes: [],
       equipmentTypes: [],
       recoveryPeriods: [],
       recoveryTypes: [],
       usesRecovery: [],
     };
+
+    context.activationTypes = [
+      ...Object.entries(CONFIG.DND5E.activityActivationTypes).map(
+        // @ts-ignore
+        ([value, { label, group }]) => {
+          return { value, label, group: group ?? '' };
+        }
+      ),
+      { value: '', label: 'DND5E.NoneActionLabel' },
+    ];
 
     // Properties
     context.properties = {
