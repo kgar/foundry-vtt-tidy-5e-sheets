@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
-  export let data: Record<string, unknown>;
+  export let data: Record<string, unknown> | unknown[];
   export let valueProp: string | null = null;
   export let labelProp: string | null = null;
   export let blank: string | null = null;
