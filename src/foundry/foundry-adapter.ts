@@ -1386,4 +1386,15 @@ export const FoundryAdapter = {
 
     return item.update({ 'system.uses.spent': item.system.uses.max - uses });
   },
+
+  // TEMP: Find better home
+  groupSelectOptions(entries: [string, any][]) {
+    const groupMap: Record<string, typeof entries> = {};
+    for (let [key, value] of entries) {
+      let groupMapKey =
+        typeof value === 'object' && 'group' in value ? value.group : '';
+      (groupMap[groupMapKey] ??= []).push([key, value]);
+    }
+    return Object.entries<any>(groupMap);
+  },
 };
