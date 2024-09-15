@@ -114,6 +114,7 @@ export class ItemSheetRuntime {
       defaultTabs: () => [
         itemSheetTabs.descriptionWithSidebar,
         itemSheetTabs.spellDetails,
+        itemSheetTabs.activities,
         itemSheetTabs.effects,
       ],
     },

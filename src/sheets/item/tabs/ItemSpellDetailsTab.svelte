@@ -13,6 +13,11 @@
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemProperties from '../parts/ItemProperties.svelte';
+  import FieldUses from '../parts/FieldUses.svelte';
+  import FieldTargets from '../parts/FieldTargets.svelte';
+  import FieldActivation from '../parts/FieldActivation.svelte';
+  import FieldRange from '../parts/FieldRange.svelte';
+  import FieldDuration from '../parts/FieldDuration.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -23,7 +28,265 @@
 
 <h3 class="form-header">{localize('DND5E.SpellDetails')}</h3>
 
-<ItemFormGroup
+<!-- Spell Level -->
+<!-- 
+    {{ formField fields.level value=source.level choices=config.spellLevels localize=true }}
+
+ -->
+
+<!-- Spell School -->
+<!-- 
+{{ formField fields.school value=source.school choices=config.spellSchools labelAttr="label" blank=""
+                 localize=true }}
+ -->
+
+<!-- Spell Components -->
+<!-- 
+{{ formField fields.properties options=properties.options label="DND5E.SpellComponents" localize=true
+                 input=inputs.createMultiCheckboxInput stacked=true classes="checkbox-grid checkbox-grid-3" }}
+ -->
+
+<!-- Material Components -->
+{#if $context.properties.object.material}
+  <ItemFormGroup
+    labelText={localize('DND5E.SpellMaterials')}
+    cssClass="split-group"
+  >
+    <div class="form-fields">
+      <!-- Material Supply -->
+      <div class="form-group label-top">
+        <!-- 
+        {{ formField fields.materials.fields.supply value=source.materials.supply label="DND5E.Supply" localize=true
+                         classes="label-top" placeholder="0" }}
+         -->
+      </div>
+
+      <!-- Material Cost -->
+      <div class="form-group label-top">
+        <label
+          for=""
+          class="label-icon currency gp"
+          aria-label={localize('DND5E.CostGP')}
+        >
+          {localize('DND5E.Cost')}
+        </label>
+
+        <div class="form-fields">
+          <!-- <div class="form-fields">
+                    {{ formInput fields.materials.fields.cost value=source.materials.cost placeholder="—" }}
+                </div> -->
+        </div>
+      </div>
+
+      <!-- Material Consumption -->
+      <!-- 
+      {{ formField fields.materials.fields.consumed value=source.materials.consumed label="DND5E.Consumed"
+                         localize=true input=inputs.createCheckboxInput classes="checkbox" }}
+       -->
+    </div>
+
+    <!-- Material Description -->
+    <!-- 
+    {{ formInput fields.materials.fields.value value=source.materials.value input=inputs.createTextInput
+                     classes="full-width" }}
+     -->
+  </ItemFormGroup>
+{/if}
+
+<!-- Preparation Mode -->
+<ItemFormGroup labelText={localize('DND5E.SpellPreparation.Mode')} let:inputId>
+  <div class="form-fields">
+    <!-- Prepared -->
+    {#if $context.source.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED}
+      <!--
+    {{ formInput fields.preparation.fields.prepared value=source.preparation.prepared
+                           dataset=(dnd5e-object tooltip="DND5E.Prepared") input=inputs.createCheckboxInput
+                           ariaLabel=(localize "DND5E.Prepared") }}
+     -->
+    {/if}
+    <!-- Mode -->
+    <!--
+    {{ formInput fields.preparation.fields.mode value=source.preparation.mode
+                           choices=config.spellPreparationModes labelAttr="label" }}
+     -->
+  </div>
+</ItemFormGroup>
+
+<!-- Source Class -->
+{#if $context.isEmbedded}
+  <ItemFormGroup
+    labelText={localize('DND5E.SpellSourceClass')}
+    field="system.sourceClass"
+    let:inputId
+  >
+    <Select
+      id={inputId}
+      document={$context.item}
+      field="system.sourceClass"
+      value={$context.system.sourceClass}
+      disabled={!$context.editable}
+      blankValue=""
+    >
+      <SelectOptions
+        data={$context.document.parent.spellcastingClasses}
+        labelProp="name"
+        blank=""
+      />
+    </Select>
+  </ItemFormGroup>
+
+  <!-- 
+  {{ formField fields.ability value=source.ability localize=true choices=config.abilities
+                 labelAttr="label" blank=defaultAbility }}
+   -->
+{:else}
+  <ItemFormGroup
+    labelText={localize('DND5E.SpellSourceClass')}
+    field="system.sourceClass"
+    let:inputId
+  >
+    <TextInput
+      id={inputId}
+      document={$context.item}
+      field="system.sourceClass"
+      value={$context.system.sourceClass}
+      disabled={!$context.editable}
+    />
+  </ItemFormGroup>
+{/if}
+
+<h3 class="form-header">{localize('DND5E.Casting')}</h3>
+
+<!-- Activation -->
+<FieldActivation />
+<!-- 
+{{> "dnd5e.field-activation" activation=system.activation fields=fields.activation.fields data=source.activation
+        activationTypes=activationTypes inputs=inputs label="DND5E.SpellCastTime" }}
+ -->
+
+<!-- Range -->
+<FieldRange />
+<!-- 
+{{> "dnd5e.field-range" range=system.range fields=fields.range.fields data=source.range rangeTypes=rangeTypes
+        inputs=inputs }}
+ -->
+
+<!-- Duration -->
+<FieldDuration />
+<!-- 
+{{> "dnd5e.field-duration" duration=system.duration fields=fields.duration.fields data=source.duration
+        durationUnits=durationUnits inputs=inputs }}
+ -->
+
+<FieldTargets />
+<!-- 
+{{> "dnd5e.field-targets" target=system.target fields=fields.target.fields data=source.target inputs=inputs
+    disabled=false }}
+
+ -->
+
+<FieldUses />
+
+<!-- ****************** details-spell.hbs ***************** -->
+
+<!-- 
+<fieldset>
+    <legend>{{ localize "DND5E.SpellDetails" }}</legend>
+
+    {{!-- Spell Level --}}
+    {{ formField fields.level value=source.level choices=config.spellLevels localize=true }}
+
+    {{!-- Spell School --}}
+    {{ formField fields.school value=source.school choices=config.spellSchools labelAttr="label" blank=""
+                 localize=true }}
+
+    {{!-- Spell Components --}}
+    {{ formField fields.properties options=properties.options label="DND5E.SpellComponents" localize=true
+                 input=inputs.createMultiCheckboxInput stacked=true classes="checkbox-grid checkbox-grid-3" }}
+
+    {{!-- Material Components --}}
+    {{#if properties.object.material}}
+    <div class="form-group split-group">
+        <label>{{ localize "DND5E.SpellMaterials" }}</label>
+        <div class="form-fields">
+
+            {{!-- Material Supply --}}
+            {{ formField fields.materials.fields.supply value=source.materials.supply label="DND5E.Supply" localize=true
+                         classes="label-top" placeholder="0" }}
+
+            {{!-- Material Cost --}}
+            <div class="form-group label-top">
+                <label class="label-icon currency gp" aria-label="{{ localize "DND5E.CostGP" }}">
+                    {{ localize "DND5E.Cost" }}
+                </label>
+                <div class="form-fields">
+                    {{ formInput fields.materials.fields.cost value=source.materials.cost placeholder="—" }}
+                </div>
+            </div>
+
+            {{!-- Material Consumption --}}
+            {{ formField fields.materials.fields.consumed value=source.materials.consumed label="DND5E.Consumed"
+                         localize=true input=inputs.createCheckboxInput classes="checkbox" }}
+        </div>
+
+        {{!-- Materials Description --}}
+        {{ formInput fields.materials.fields.value value=source.materials.value input=inputs.createTextInput
+                     classes="full-width" }}
+    </div>
+    {{/if}}
+
+    {{!-- Preparation Mode --}}
+    <div class="form-group">
+        <label>{{ localize "DND5E.SpellPreparation.Mode" }}</label>
+        <div class="form-fields">
+
+            {{!-- Prepared --}}
+            {{#if (eq source.preparation.mode "prepared")}}
+            {{ formInput fields.preparation.fields.prepared value=source.preparation.prepared
+                         dataset=(dnd5e-object tooltip="DND5E.Prepared") input=inputs.createCheckboxInput
+                         ariaLabel=(localize "DND5E.Prepared") }}
+            {{/if}}
+
+            {{!-- Mode --}}
+            {{ formInput fields.preparation.fields.mode value=source.preparation.mode
+                         choices=config.spellPreparationModes labelAttr="label" }}
+        </div>
+    </div>
+
+    {{!-- Source Class --}}
+    {{#if isEmbedded}}
+    {{ formField fields.sourceClass value=source.sourceClass localize=true choices=item.parent.spellcastingClasses
+                 labelAttr="name" blank="" }}
+
+    {{ formField fields.ability value=source.ability localize=true choices=config.abilities
+                 labelAttr="label" blank=defaultAbility }}
+    {{/if}}
+</fieldset>
+
+<fieldset>
+    <legend>{{ localize "DND5E.Casting" }}</legend>
+
+    {{!-- Activation --}}
+    {{> "dnd5e.field-activation" activation=system.activation fields=fields.activation.fields data=source.activation
+        activationTypes=activationTypes inputs=inputs label="DND5E.SpellCastTime" }}
+
+    {{!-- Range --}}
+    {{> "dnd5e.field-range" range=system.range fields=fields.range.fields data=source.range rangeTypes=rangeTypes
+        inputs=inputs }}
+
+    {{!-- Duration --}}
+    {{> "dnd5e.field-duration" duration=system.duration fields=fields.duration.fields data=source.duration
+        durationUnits=durationUnits inputs=inputs }}
+</fieldset>
+
+{{> "dnd5e.field-targets" target=system.target fields=fields.target.fields data=source.target inputs=inputs
+    disabled=false }}
+
+ -->
+
+<!-- ****************** PREVIOUS CODE BELOW ***************** -->
+
+<!-- <ItemFormGroup
   labelText={localize('DND5E.SpellLevel')}
   field="system.level"
   let:inputId
@@ -242,4 +505,4 @@
       disabled={!$context.editable}
     />
   </div>
-</ItemFormGroup>
+</ItemFormGroup> -->
