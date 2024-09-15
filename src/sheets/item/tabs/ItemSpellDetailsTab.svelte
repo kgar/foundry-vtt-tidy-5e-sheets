@@ -61,7 +61,7 @@
 </div>
 
 <!-- Spell Components -->
-<div class="form-group spell-components-stacked">
+<div class="form-group spell-components stacked">
   <label for="">
     {localize('DND5E.SpellComponents')}
   </label>
@@ -76,14 +76,12 @@
     <div class="form-fields">
       <!-- Material Supply -->
       <div class="form-group label-top">
-        <label for="{appId}-materials-supply"
-          >{localize('DND5E.SpellMaterials')}</label
-        >
+        <label for="{appId}-materials-supply">{localize('DND5E.Supply')}</label>
         <NumberInput
           id="{appId}-materials-supply"
           document={$context.item}
           field="system.materials.supply"
-          value={$context.item.materials.supply}
+          value={$context.system.materials.supply}
           min="0"
         />
       </div>
@@ -103,7 +101,7 @@
             id="{appId}-materials-cost"
             document={$context.item}
             field="system.materials.cost"
-            value={$context.item.materials.cost}
+            value={$context.system.materials.cost}
             min="0"
             placeholder="—"
           />
@@ -116,21 +114,21 @@
           >{localize('DND5E.Consumed')}</label
         >
         <Checkbox
+          id="{appId}-materials-consumed"
           document={$context.item}
           field="system.materials.consumed"
-          checked={$context.item.system.materials.consumed}
+          checked={$context.system.materials.consumed}
         />
       </div>
     </div>
 
     <!-- Material Description -->
-    <div class="form-group full-width">
-      <TextInput
-        document={$context.item}
-        field="system.materials.value"
-        value={$context.system.materials.value}
-      />
-    </div>
+    <TextInput
+      document={$context.item}
+      field="system.materials.value"
+      value={$context.system.materials.value}
+      class="full-width"
+    />
   </div>
 {/if}
 
@@ -221,10 +219,6 @@
 
 <!-- Activation -->
 <FieldActivation />
-<!-- 
-{{> "dnd5e.field-activation" activation=system.activation fields=fields.activation.fields data=source.activation
-        activationTypes=activationTypes inputs=inputs label="DND5E.SpellCastTime" }}
- -->
 
 <!-- Range -->
 <FieldRange />
