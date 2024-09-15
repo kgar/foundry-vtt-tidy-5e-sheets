@@ -101,6 +101,7 @@
       {...datasetAttributes}
       class={checkboxCssClass}
       data-tidy-field={field}
+      {...$$restProps.attributes}
     />
     <slot />
   </label>
