@@ -12,7 +12,7 @@
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import FieldDamage from '../parts/FieldDamage.svelte';
-    import FieldUses from '../parts/FieldUses.svelte';
+  import FieldUses from '../parts/FieldUses.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -73,7 +73,7 @@
     <ItemProperties />
   </ItemFormGroup>
 
-  {#if $context.properties.mgc?.selected}
+  {#if $context.properties.object.mgc}
     <!-- Attunement -->
     <ItemFormGroup
       labelText={localize('DND5E.Item.Property.Magical')}

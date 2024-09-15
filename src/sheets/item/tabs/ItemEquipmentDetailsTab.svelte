@@ -15,6 +15,8 @@
   import ContentConcealer from 'src/components/content-concealment/ContentConcealer.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import { CONSTANTS } from 'src/constants';
+  import DetailsMountable from '../parts/DetailsMountable.svelte';
+  import FieldUses from '../parts/FieldUses.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -28,199 +30,95 @@
     {localize('DND5E.ItemEquipmentDetails')}
   </h3>
 
-  <ItemFormGroup
-    field="system.type.value"
-    labelText={localize('DND5E.ItemEquipmentType')}
-    let:inputId
-  >
-    <Select
-      id={inputId}
-      value={$context.system.type.value}
-      field="system.type.value"
-      document={$context.item}
-      disabled={!$context.editable}
-    >
-      <option value="" />
-      <optgroup label={localize('DND5E.Armor')}>
-        <SelectOptions data={$context.config.armorTypes} />
-      </optgroup>
-      {#each $context.customEquipmentTypeGroups as group}
-        <optgroup label={localize(group.label)}>
-          <SelectOptions data={group.types} />
-        </optgroup>
-      {/each}
-      <SelectOptions data={$context.config.miscEquipmentTypes} />
-    </Select>
-  </ItemFormGroup>
+  <!-- Equipment Type -->
+  <!-- 
+  {{ formField fields.type.fields.value value=source.type.value label="DND5E.ItemEquipmentType" blank=""
+                 localize=true options=equipmentTypes }}
+   -->
 
-  <ItemFormGroup
-    field="system.baseItem"
-    labelText={localize('DND5E.ItemEquipmentBase')}
-    let:inputId
-  >
-    <Select
-      id={inputId}
-      value={$context.system.type.baseItem}
-      field="system.type.baseItem"
-      document={$context.item}
-      disabled={!$context.editable}
-    >
-      <SelectOptions data={$context.baseItems} blank="" />
-    </Select>
-  </ItemFormGroup>
+  <!-- Equipment Base -->
+  <!-- 
+   {{ formField fields.type.fields.baseItem value=source.type.baseItem label="DND5E.ItemEquipmentBase" blank=""
+                 localize=true choices=baseItems }}
+    -->
 
-  {#if !$context.system.isMountable}
-    <ItemFormGroup
-      labelText={localize('DND5E.Attunement')}
-      field="system.attunement"
-      let:inputId
-    >
-      <Checkbox
-        id={`${$context.appId}-system-attuned`}
-        document={$context.item}
-        field="system.attuned"
-        checked={$context.system.attuned}
-        disabled={!$context.editable ||
-          !$context.config.attunementTypes[$context.system.attunement]}
-        title={localize('DND5E.AttunementAttuned')}
-      ></Checkbox>
-      <Select
-        id={inputId}
-        document={$context.item}
-        field="system.attunement"
-        value={$context.system.attunement}
-        disabled={!$context.editable}
-      >
-        <SelectOptions
-          data={$context.config.attunementTypes}
-          blank={localize('DND5E.AttunementNone')}
-        />
-      </Select>
-    </ItemFormGroup>
+  <!-- Proficiency -->
+  <!-- 
+    {{ formField fields.proficient value=source.proficient blank="DND5E.Automatic" localize=true
+                 choices=config.weaponAndArmorProficiencyLevels }}
+     -->
 
-    <ItemFormGroup labelText={localize('DND5E.Proficiency')}>
-      <Select
-        document={$context.item}
-        field="system.proficient"
-        value={$context.system.proficient}
-        disabled={!$context.editable}
-      >
-        <SelectOptions
-          data={$context.config.weaponAndArmorProficiencyLevels}
-          blank={localize('DND5E.Automatic')}
-        />
-      </Select>
-    </ItemFormGroup>
-  {/if}
-
-  <ItemFormGroup
-    cssClass="stacked weapon-properties"
-    labelText={localize('DND5E.ItemEquipmentProperties')}
-  >
-    <ItemProperties />
-  </ItemFormGroup>
-
-  {#if $context.system.isArmor || $context.system.isMountable}
-    <ItemFormGroup
-      labelText={localize('DND5E.ArmorClass')}
-      field="system.armor.value"
-      let:inputId
-    >
-      <NumberInput
-        id={inputId}
-        value={$context.source.armor.value}
-        step="1"
-        field="system.armor.value"
-        document={$context.item}
-        disabled={!$context.editable}
-      />
-    </ItemFormGroup>
-
-    {#if $context.properties.mgc.selected}
-      <ItemFormGroup
-        labelText={localize('DND5E.MagicalBonus')}
-        field="system.armor.magicalBonus"
-        let:inputId
-      >
+  <!-- Armor -->
+  <!--
+      {{#if system.isArmor}}
+    <div class="form-group split-group">
+        <label>{{ localize "DND5E.Armor" }}</label>
         <div class="form-fields">
-          <NumberInput
-            id={inputId}
-            value={$context.system.armor.magicalBonus}
-            field="system.armor.magicalBonus"
-            document={$context.item}
-            disabled={!$context.editable}
-            min="0"
-            step="1"
-            placeholder="0"
-          />
+
+            <!-- Value --}}
+            {{ formField fields.armor.fields.value value=source.armor.value step=1 label="DND5E.AC" localize=true
+                         classes="label-top" }}
+
+            <!-- Max Dex --}}
+            {{#if hasDexModifier}}
+            {{ formField fields.armor.fields.dex value=source.armor.dex label="DND5E.ItemEquipmentDexModAbbr"
+                         placeholder="∞" localize=true classes="label-top" }}
+            {{/if}}
+
+            <!-- Strength Requirement --}}
+            {{#if system.isArmor}}
+            {{ formField fields.strength value=source.strength label="DND5E.AbilityStr" placeholder="—" localize=true
+                         classes="label-top" }}
+            {{/if}}
         </div>
-      </ItemFormGroup>
-    {/if}
-  {/if}
+    </div>
+    {{/if}}
+     -->
 
-  {#if $context.hasDexModifier}
-    <ItemFormGroup
-      labelText={localize('DND5E.ItemEquipmentDexMod')}
-      field="system.armor.dex"
-      let:inputId
-    >
-      <NumberInput
-        id={inputId}
-        step="1"
-        placeholder={localize('DND5E.Unlimited')}
-        field="system.armor.dex"
-        document={$context.item}
-        value={$context.system.armor.dex}
-        disabled={!$context.editable}
-      />
-    </ItemFormGroup>
-  {/if}
+  <!-- Properties -->
+  <!-- 
+     {{ formField fields.properties options=properties.options label="DND5E.ItemEquipmentProperties" localize=true
+                 input=inputs.createMultiCheckboxInput stacked=true classes="checkbox-grid checkbox-grid-3" }}
+      -->
 
-  {#if $context.system.isArmor}
-    <ItemFormGroup
-      field="system.strength"
-      labelText={localize('DND5E.ItemRequiredStr')}
-      let:inputId
-    >
-      <NumberInput
-        id={inputId}
-        step="1"
-        placeholder={localize('DND5E.None')}
-        field="system.strength"
-        document={$context.item}
-        value={$context.system.strength}
-        disabled={!$context.editable}
-      />
-    </ItemFormGroup>
-  {/if}
+  <!-- Magical Properties -->
+
+  <!-- 
+    {{#if properties.object.mgc}}
+        <div class="form-group split-group">
+            <label>{{ localize "DND5E.Item.Property.Magical" }}</label>
+            <div class="form-fields">
+
+                <!-- Attunement --}}
+                {{#unless isMountable}}
+                <div class="form-group label-top">
+                    <label>{{ localize "DND5E.Attunement" }}</label>
+                    <div class="form-fields">
+
+                        <!-- Attuned --}}
+                        {{#if source.attunement}}
+                        {{ formInput fields.attuned value=source.attuned input=inputs.createCheckboxInput
+                                    ariaLabel=(localize "DND5E.Attuned") dataset=(dnd5e-object tooltip="DND5E.Attuned") }}
+                        {{/if}}
+
+                        <!-- Attunement --}}
+                        {{ formInput fields.attunement value=source.attunement choices=config.attunementTypes
+                                    blank="DND5E.AttunementNone" localize=true }}
+                    </div>
+                </div>
+                {{/unless}}
+
+                <!-- Magical Bonus --}}
+                {{ formField fields.armor.fields.magicalBonus value=source.armor.magicalBonus step=1 placeholder="0"
+                            label="DND5E.Bonus" localize=true classes="label-top" }}
+            </div>
+        </div>
+        {{/if}}
+    -->
 
   {#if $context.system.isMountable}
-    <ItemMountable />
-    <ItemFormGroup labelText={localize('DND5E.Speed')}>
-      <div class="form-fields">
-        <NumberInput
-          placeholder="0"
-          value={$context.system.speed.value}
-          field="system.speed.value"
-          document={$context.item}
-          disabled={!$context.editable}
-        />
-        <span class="sep">{localize('DND5E.FeetAbbr')}</span>
-        <TextInput
-          field="system.speed.conditions"
-          document={$context.item}
-          value={$context.system.speed.conditions}
-          disabled={!$context.editable}
-        />
-      </div>
-    </ItemFormGroup>
+    <DetailsMountable />
   {/if}
 
-  <h3 class="form-header">{localize('DND5E.ItemEquipmentUsage')}</h3>
-
-  <ItemActivation />
-
-  <h3 class="form-header">{localize('DND5E.ItemEquipmentAction')}</h3>
-
-  <ItemAction />
+  <FieldUses />
 </ContentConcealer>

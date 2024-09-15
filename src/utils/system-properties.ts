@@ -8,14 +8,14 @@ export function mapPropertiesToSave(
 ) {
   const allProperties = context.properties;
 
-  const propertiesToSave = Object.entries(allProperties)
+  const propertiesToSave = allProperties.options
     .filter(
-      ([key, value]: [string, any]) =>
-        key !== keyToSave &&
-        value.selected &&
-        !context.itemOverrides.has(`system.properties.${key}`)
+      (property) =>
+        property.value !== keyToSave &&
+        property.selected &&
+        !context.itemOverrides.has(`system.properties.${property.value}`)
     )
-    .map(([key, _]) => key);
+    .map((property) => property.value);
 
   if (ev.currentTarget.checked) {
     propertiesToSave.push(keyToSave);

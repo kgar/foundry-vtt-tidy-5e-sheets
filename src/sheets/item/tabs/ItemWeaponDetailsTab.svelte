@@ -128,7 +128,7 @@
     <ItemMountable />
   {/if}
 
-  {#if $context.properties.mgc.selected}
+  {#if $context.properties.object.mgc}
     <ItemFormGroup
       labelText={localize('DND5E.MagicalBonus')}
       field="system.magicalBonus"

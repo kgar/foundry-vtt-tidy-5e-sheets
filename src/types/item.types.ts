@@ -38,6 +38,15 @@ export type ItemSheetContext = {
   lockItemQuantity: boolean;
   originalContext: unknown;
   owner: boolean;
+  properties: {
+    active: string[];
+    object: Record<string, true>;
+    options: {
+      label: string;
+      selected: boolean;
+      value: string;
+    }[];
+  };
   recoveryPeriods: {
     value: string;
     label: string;

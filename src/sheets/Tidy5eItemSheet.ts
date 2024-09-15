@@ -173,6 +173,29 @@ export class Tidy5eKgarItemSheet
       usesRecovery: [],
     };
 
+    // Properties
+    context.properties = {
+      active: [],
+      object: Object.fromEntries(
+        (context.system.properties ?? []).map((p: string) => [p, true])
+      ),
+      options: (context.system.validProperties ?? []).reduce(
+        (arr: ItemSheetContext['properties']['options'], k: any) => {
+          // @ts-ignore
+          const { label } = CONFIG.DND5E.itemProperties[k];
+          arr.push({
+            label,
+            value: k,
+            selected: this.item._source.system.properties?.includes(k),
+          });
+          return arr;
+        },
+        []
+      ),
+    };
+
+    // getSheetData sometimes depends on the presence of
+    // - .properties
     await this.item.system.getSheetData?.(context);
 
     context.recoveryPeriods = [
