@@ -1392,7 +1392,7 @@ export const FoundryAdapter = {
     const groupMap: Record<string, typeof entries> = {};
     for (let [key, value] of entries) {
       let groupMapKey =
-        typeof value === 'object' && 'group' in value ? value.group : '';
+        typeof value === 'object' && 'group' in value ? value.group ?? '' : '';
       (groupMap[groupMapKey] ??= []).push([key, value]);
     }
     return Object.entries<any>(groupMap);
