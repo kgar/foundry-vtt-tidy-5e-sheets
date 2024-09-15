@@ -171,10 +171,21 @@ export class Tidy5eKgarItemSheet
         ) ?? [],
       activationTypes: [],
       equipmentTypes: [],
+      rangeTypes: [],
       recoveryPeriods: [],
       recoveryTypes: [],
       usesRecovery: [],
     };
+
+    context.rangeTypes = [
+      ...Object.entries(CONFIG.DND5E.rangeTypes).map(([value, label]) => ({
+        value,
+        label,
+      })),
+      ...Object.entries(CONFIG.DND5E.movementUnits).map(([value, label]) => {
+        return { value, label, group: 'DND5E.RangeDistance' };
+      }),
+    ];
 
     context.activationTypes = [
       ...Object.entries(CONFIG.DND5E.activityActivationTypes).map(

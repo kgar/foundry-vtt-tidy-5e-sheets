@@ -57,6 +57,11 @@ export type ItemSheetContext = {
       value: string;
     }[];
   };
+  rangeTypes: {
+    value: string;
+    label: string;
+    group?: string;
+  }[];
   recoveryPeriods: {
     value: string;
     label: string;

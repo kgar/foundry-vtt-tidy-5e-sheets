@@ -1,29 +1,64 @@
 <script lang="ts">
-    import { getContext } from 'svelte';
-    import type { Readable } from 'svelte/store';
-    import type { ItemSheetContext } from 'src/types/item.types';
-    import Select from 'src/components/inputs/Select.svelte';
-    import Checkbox from 'src/components/inputs/Checkbox.svelte';
-    import ItemActivation from '../parts/ItemActivation.svelte';
-    import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-    import TextInput from 'src/components/inputs/TextInput.svelte';
-    import NumberInput from 'src/components/inputs/NumberInput.svelte';
-    import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-    import ItemAction from '../parts/ItemAction.svelte';
-    import ItemFormGroup from '../form/ItemFormGroup.svelte';
-    import { CONSTANTS } from 'src/constants';
-    import ItemProperties from '../parts/ItemProperties.svelte';
-    import FieldUses from '../parts/FieldUses.svelte';
-    import FieldTargets from '../parts/FieldTargets.svelte';
-    import FieldActivation from '../parts/FieldActivation.svelte';
-    import FieldRange from '../parts/FieldRange.svelte';
-    import FieldDuration from '../parts/FieldDuration.svelte';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
+  import type { ItemSheetContext } from 'src/types/item.types';
+  import Select from 'src/components/inputs/Select.svelte';
+  import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { CONSTANTS } from 'src/constants';
   
-    let context = getContext<Readable<ItemSheetContext>>(
-      CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-    );
-  
-    $: appId = $context.item.sheet.appId;
-  
-    const localize = FoundryAdapter.localize;
-  </script>
+  let context = getContext<Readable<ItemSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+
+  $: appId = $context.item.sheet.appId;
+
+  const localize = FoundryAdapter.localize;
+</script>
+
+<!-- Range -->
+<div class="form-group split-group">
+  <label for="{appId}-range-units">{localize('DND5E.Range')}</label>
+  <div class="form-fields">
+    <!-- Value -->
+    {#if $context.system.range.scalar}
+      <div class="form-group label-top">
+        <label for="{appId}-range-value">{localize('DND5E.Value')}</label>
+        <TextInput
+          id="{appId}-range-value"
+          document={$context.item}
+          field="system.range.value"
+          value={$context.system.range.value}
+        />
+      </div>
+    {/if}
+
+    <!-- Units -->
+    <div class="form-group label-top">
+      <label for="{appId}-range-units">{localize('DND5E.MovementUnits')}</label>
+      <Select
+        id="{appId}-range-units"
+        document={$context.item}
+        field="system.range.units"
+        value={$context.system.range.units}
+      >
+        <SelectOptions
+          data={$context.rangeTypes}
+          labelProp="label"
+          valueProp="value"
+        />
+      </Select>
+    </div>
+  </div>
+
+  <!-- Condition -->
+  <TextInput
+    id="{appId}-range-special"
+    document={$context.item}
+    field="system.range.special"
+    value={$context.system.range.special}
+    class="full-width"
+    placeholder={localize('DND5E.RANGE.FIELDS.range.special.label')}
+  />
+</div>
