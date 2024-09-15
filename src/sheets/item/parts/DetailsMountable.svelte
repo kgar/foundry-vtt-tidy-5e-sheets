@@ -1,10 +1,63 @@
+<script lang="ts">
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import type { ItemSheetContext } from 'src/types/item.types';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
+  import ItemFormGroup from '../form/ItemFormGroup.svelte';
+  import ItemMountable from '../parts/ItemMountable.svelte';
+  import ItemActivation from '../parts/ItemActivation.svelte';
+  import ItemAction from '../parts/ItemAction.svelte';
+  import NumberInput from 'src/components/inputs/NumberInput.svelte';
+  import Select from 'src/components/inputs/Select.svelte';
+  import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
+  import ItemProperties from '../parts/ItemProperties.svelte';
+  import ContentConcealer from 'src/components/content-concealment/ContentConcealer.svelte';
+  import Checkbox from 'src/components/inputs/Checkbox.svelte';
+  import { CONSTANTS } from 'src/constants';
+  import FieldUses from '../parts/FieldUses.svelte';
+
+  let context = getContext<Readable<ItemSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+
+  $: appId = $context.item.sheet.appId;
+
+  const localize = FoundryAdapter.localize;
+</script>
+
+<h3 class="form-header">
+  {#if $context.item.type === CONSTANTS.ITEM_TYPE_WEAPON}
+    {localize('DND5E.ItemSiegeProperties')}
+  {:else if $context.item.type === CONSTANTS.ITEM_TYPE_EQUIPMENT}
+    {localize('DND5E.ItemVehicleProperties')}
+  {/if}
+</h3>
 <!-- 
- 
-<fieldset>
-    <legend>
+<legend>
         {{#if (eq item.type "weapon")}}{{ localize "DND5E.ItemSiegeProperties" }}
         {{else if (eq item.type "equipment")}}{{ localize "DND5E.ItemVehicleProperties" }}{{/if}}
     </legend>
+ -->
+
+<!-- Armor Class -->
+<ItemFormGroup
+  field="system.armor.value"
+  labelText={localize('DND5E.AC')}
+  let:inputId
+>
+  <NumberInput
+    id={inputId}
+    document={$context.item}
+    field="system.armor.value"
+    value={$context.system.armor.value}
+    step="1"
+  />
+</ItemFormGroup>
+
+<!-- 
+ 
+    
 
     {{!-- Armor Class --}}
     {{ formField fields.armor.fields.value value=source.armor.value localize=true }}
@@ -48,7 +101,6 @@
                      placeholder=(localize "DND5E.SpeedConditions") localize=true classes="full-width" }}
     </div>
     {{/if}}
-</fieldset>
 
 
 -->
