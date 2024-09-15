@@ -1,18 +1,16 @@
 <script lang="ts">
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-  import ItemAction from '../parts/ItemAction.svelte';
-  import ItemActivation from '../parts/ItemActivation.svelte';
   import type { ItemSheetContext } from 'src/types/item.types';
   import type { Readable } from 'svelte/store';
   import { getContext } from 'svelte';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
-  import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Select from 'src/components/inputs/Select.svelte';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import ItemProperties from '../parts/ItemProperties.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { CONSTANTS } from 'src/constants';
+  import FieldUses from '../parts/FieldUses.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -65,15 +63,6 @@
 {/if}
 
 <ItemFormGroup
-  cssClass="stacked weapon-properties"
-  labelText={localize('DND5E.ItemEquipmentProperties')}
->
-  <ItemProperties />
-</ItemFormGroup>
-
-<h3 class="form-header">{localize('DND5E.Prerequisites.Header')}</h3>
-
-<ItemFormGroup
   labelText={localize('DND5E.Prerequisites.FIELDS.prerequisites.level.label')}
   field="system.prerequisites.level"
   let:inputId
@@ -92,89 +81,61 @@
   </p>
 </ItemFormGroup>
 
-{#if $context.system.isEnchantmentSource}
-  <h3 class="form-header">{localize('DND5E.Enchantment.Label')}</h3>
+<ItemFormGroup
+  cssClass="stacked feature-properties"
+  labelText={localize('DND5E.ItemEquipmentProperties')}
+>
+  <ItemProperties />
+</ItemFormGroup>
 
+{#if $context.system.isEnchantmentSource}
+  <h3 class="form-header">{localize('DND5E.ENCHANTMENT.Label')}</h3>
+
+  <!-- Max Enchantments -->
   <ItemFormGroup
-    labelText={localize('DND5E.Enchantment.FIELDS.enchantment.items.max.label')}
-    field="system.enchantment.items.max"
+    labelText={localize('DND5E.ENCHANTMENT.FIELDS.enchantment.items.max.label')}
+    field="system.enchant.max"
     let:inputId
   >
     <TextInput
       id={inputId}
       document={$context.item}
-      field="system.enchantment.items.max"
-      value={$context.source.enchantment?.items.max}
-      disabled={!$context.editable}
+      field="system.enchant.max"
+      value={$context.system.enchant.max}
     />
+
     <p class="hint">
-      {localize('DND5E.Enchantment.FIELDS.enchantment.items.max.hint')}
+      {localize('DND5E.ENCHANTMENT.FIELDS.enchantment.items.max.hint')}
     </p>
   </ItemFormGroup>
 
+  <!-- Enchantment Replacement -->
   <ItemFormGroup
     labelText={localize(
-      'DND5E.Enchantment.FIELDS.enchantment.items.period.label',
+      'DND5E.ENCHANTMENT.FIELDS.enchantment.items.period.label',
     )}
-    field="system.enchantment.items.period"
+    field="system.enchant.period"
     let:inputId
   >
     <Select
       id={inputId}
       document={$context.item}
-      field="system.enchantment.items.period"
-      value={$context.system.enchantment?.items.period}
+      field="system.enchant.period"
+      value={$context.system.enchant.period}
       blankValue=""
     >
       <SelectOptions
-        blank={localize('DND5E.UsesPeriods.Never')}
         data={$context.config.enchantmentPeriods}
+        blank={localize('DND5E.UsesPeriods.Never')}
         labelProp="label"
+        valueProp="value"
       />
-      <p class="hint">
-        {localize('DND5E.Enchantment.FIELDS.enchantment.items.period.hint')}
-      </p>
     </Select>
+
+    <p class="hint">
+      {localize('DND5E.ENCHANTMENT.FIELDS.enchantment.items.period.hint')}
+    </p>
   </ItemFormGroup>
 {/if}
 
-<h3 class="form-header">{localize('DND5E.FeatureUsage')}</h3>
-
-<ItemActivation />
-
-{#if $context.system.activation.type}
-  <ItemFormGroup
-    cssClass="recharge"
-    labelText={localize('DND5E.FeatureActionRecharge')}
-    field="system.recharge.value"
-    let:inputId
-  >
-    <div class="form-fields">
-      <span>{localize('DND5E.FeatureRechargeOn')}</span>
-      <NumberInput
-        id={inputId}
-        document={$context.item}
-        field="system.recharge.value"
-        placeholder={localize('DND5E.FeatureRechargeResult')}
-        value={$context.system.recharge.value}
-        disabled={!$context.editable}
-      />
-
-      <Checkbox
-        id="{$context.appId}-system-recharge-charged"
-        labelCssClass="checkbox"
-        document={$context.item}
-        field="system.recharge.charged"
-        checked={$context.system.recharge.charged}
-        disabled={!$context.editable}
-        greenCheckboxWidthOverride="{localize('DND5E.Charged').length + 4}ch"
-      >
-        {localize('DND5E.Charged')}
-      </Checkbox>
-    </div>
-  </ItemFormGroup>
-{/if}
-
-<h3 class="form-header">{localize('DND5E.FeatureAttack')}</h3>
-
-<ItemAction />
+<FieldUses />
