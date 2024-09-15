@@ -335,6 +335,24 @@ export class Tidy5eKgarItemSheet
   }
 
   /* -------------------------------------------- */
+  /* Actions
+  /* -------------------------------------------- */
+
+  /**
+   * Create a new recovery profile.
+   */
+  addRecovery(): Promise<any> {
+    return this.submit({
+      updateData: {
+        'system.uses.recovery': [
+          ...this.item.system.toObject().uses.recovery,
+          {},
+        ],
+      },
+    });
+  }
+
+  /* -------------------------------------------- */
   /* SheetTabCacheable
   /* -------------------------------------------- */
 
