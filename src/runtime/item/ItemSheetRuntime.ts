@@ -56,6 +56,7 @@ export class ItemSheetRuntime {
       defaultTabs: () => [
         itemSheetTabs.descriptionWithSidebar,
         itemSheetTabs.equipmentDetails,
+        itemSheetTabs.activities,
         itemSheetTabs.effects,
       ],
     },
@@ -97,6 +98,7 @@ export class ItemSheetRuntime {
       defaultTabs: () => [
         itemSheetTabs.descriptionWithSidebar,
         itemSheetTabs.featDetails,
+        itemSheetTabs.activities,
         itemSheetTabs.effects,
       ],
     },
