@@ -33,12 +33,6 @@
     {localize('DND5E.ItemVehicleProperties')}
   {/if}
 </h3>
-<!-- 
-<legend>
-        {{#if (eq item.type "weapon")}}{{ localize "DND5E.ItemSiegeProperties" }}
-        {{else if (eq item.type "equipment")}}{{ localize "DND5E.ItemVehicleProperties" }}{{/if}}
-    </legend>
- -->
 
 <!-- Armor Class -->
 <ItemFormGroup
@@ -54,53 +48,63 @@
     step="1"
   />
 </ItemFormGroup>
-
-<!-- 
- 
-    
-
-    {{!-- Armor Class --}}
+<!--
+{{!-- Armor Class --}}
     {{ formField fields.armor.fields.value value=source.armor.value localize=true }}
+ -->
 
-    {{!-- Hit Points --}}
-    <div class="form-group split-group">
-        <label>{{ localize "DND5E.HitPoints" }}</label>
-        <div class="form-fields">
-
-            {{!-- Current --}}
-            {{ formField fields.hp.fields.value value=source.hp.value label="DND5E.Current" placeholder="0"
+<!-- Hit Points -->
+<ItemFormGroup
+  cssClass="split-group"
+  labelText={localize('DND5E.HitPoints')}
+  let:inputId
+>
+  <div class="form-fields">
+    <!-- Current -->
+    <!--
+        {{ formField fields.hp.fields.value value=source.hp.value label="DND5E.Current" placeholder="0"
                          localize=true classes="label-top" }}
+         -->
+    <!-- Max -->
 
-            {{!-- Max --}}
-            {{ formField fields.hp.fields.max value=source.hp.max label="DND5E.Max" placeholder="0" localize=true
-                         classes="label-top" }}
+    <!-- {{!-- Max --}}
 
-            {{!-- Threshold --}}
-            {{ formField fields.hp.fields.dt value=source.hp.dt label="DND5E.Threshold" placeholder="—" localize=true
-                         classes="label-top" }}
-        </div>
+    {{ formField fields.hp.fields.max value=source.hp.max label="DND5E.Max" placeholder="0" localize=true
+             classes="label-top" }} -->
 
-        {{!-- Conditions --}}
-        {{ formInput fields.hp.fields.conditions value=source.hp.conditions input=inputs.createTextInput
+    <!-- Threshold -->
+
+    <!-- {{!-- Threshold --}}
+        {{ formField fields.hp.fields.dt value=source.hp.dt label="DND5E.Threshold" placeholder="—" localize=true
+             classes="label-top" }} -->
+
+    <!-- Conditions -->
+    <!--
+    {{ formInput fields.hp.fields.conditions value=source.hp.conditions input=inputs.createTextInput
                      placeholder=(localize "DND5E.HealthConditions") localize=true classes="full-width" }}
-    </div>
+    -->
+  </div>
+</ItemFormGroup>
 
-    {{!-- Speed --}}
-    {{#if (eq item.type "equipment")}}
-    <div class="form-group split-group">
-        <label>{{ localize "DND5E.Speed" }}</label>
-        <div class="form-fields">
-
-            {{!-- Value --}}
-            {{ formField fields.speed.fields.value value=source.speed.value placeholder="0" label="DND5E.Value"
+<!-- Speed -->
+{#if $context.item.type === CONSTANTS.ITEM_TYPE_EQUIPMENT}
+  <ItemFormGroup
+    cssClass="split-group"
+    labelText={localize('DND5E.Speed')}
+    let:inputId
+  >
+    <div class="form-fields">
+      <!-- Value -->
+      <!-- 
+        {{ formField fields.speed.fields.value value=source.speed.value placeholder="0" label="DND5E.Value"
                          localize=true classes="label-top" }}
-        </div>
+         -->
 
-        {{!-- Conditions --}}
+      <!-- Conditions -->
+      <!-- 
         {{ formInput fields.speed.fields.conditions value=source.speed.conditions input=inputs.createTextInput
                      placeholder=(localize "DND5E.SpeedConditions") localize=true classes="full-width" }}
+         -->
     </div>
-    {{/if}}
-
-
--->
+  </ItemFormGroup>
+{/if}
