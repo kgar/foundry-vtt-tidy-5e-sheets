@@ -34,16 +34,38 @@
     return key;
   }
 
+  // Apply optional grouping
+  $: groups = FoundryAdapter.groupSelectOptions(entries);
+
   const localize = FoundryAdapter.localize;
 </script>
 
 {#if blank !== null}
   <option value="">{localize(blank)}</option>
 {/if}
-{#each entries as [key, value]}
-  {#if value?.rule}
-    <hr />
+
+{#each groups as [groupKey, groupValue] (groupKey)}
+  <!-- When Svelte 5, snippets -->
+  {#if groupKey === ''}
+    {#each groupValue as [key, value]}
+      {#if value?.rule}
+        <hr />
+      {:else}
+        <option value={getValue(key, value)}>{localize(getLabel(value))}</option
+        >
+      {/if}
+    {/each}
   {:else}
-    <option value={getValue(key, value)}>{localize(getLabel(value))}</option>
+    <optgroup label={localize(groupKey)}>
+      {#each groupValue as [key, value]}
+        {#if value?.rule}
+          <hr />
+        {:else}
+          <option value={getValue(key, value)}
+            >{localize(getLabel(value))}</option
+          >
+        {/if}
+      {/each}
+    </optgroup>
   {/if}
 {/each}
