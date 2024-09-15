@@ -28,7 +28,7 @@
 <!-- Armor Class -->
 <ItemFormGroup
   field="system.armor.value"
-  labelText={localize('DND5E.AC')}
+  labelText={localize('DND5E.ArmorClass')}
   let:inputId
 >
   <NumberInput
@@ -53,7 +53,7 @@
       <label for="{appId}-hp-value">{localize('DND5E.Current')}</label>
       <NumberInput
         id={inputId}
-        document={$context.items}
+        document={$context.item}
         field="system.hp.value"
         value={$context.system.hp.value}
         placeholder="0"
@@ -66,7 +66,7 @@
       <label for="{appId}-hp-max">{localize('DND5E.Max')}</label>
       <NumberInput
         id="{appId}-hp-max"
-        document={$context.items}
+        document={$context.item}
         field="system.hp.max"
         value={$context.system.hp.max}
         placeholder="0"
@@ -79,24 +79,23 @@
       <label for="{appId}-hp-dt">{localize('DND5E.Threshold')}</label>
       <NumberInput
         id="{appId}-hp-dt"
-        document={$context.items}
+        document={$context.item}
         field="system.hp.dt"
         value={$context.system.hp.dt}
         placeholder="—"
         min="0"
       />
     </div>
-
-    <!-- Conditions -->
-    <TextInput
-      id="{appId}-hp-conditions"
-      document={$context.item}
-      field="system.hp.conditions"
-      value={$context.item.system.hp.conditions}
-      placeholder={localize('DND5E.HealthConditions')}
-      class="full-width"
-    />
   </div>
+  <!-- Conditions -->
+  <TextInput
+    id="{appId}-hp-conditions"
+    document={$context.item}
+    field="system.hp.conditions"
+    value={$context.item.system.hp.conditions}
+    placeholder={localize('DND5E.HealthConditions')}
+    class="full-width"
+  />
 </ItemFormGroup>
 
 <!-- Speed -->
@@ -104,16 +103,17 @@
   <ItemFormGroup
     cssClass="split-group"
     labelText={localize('DND5E.Speed')}
+    field="system.speed.value"
     let:inputId
   >
     <div class="form-fields">
       <!-- Value -->
       <div class="form-group label-top">
-        <label for="{appId}-speed-value">
+        <label for={inputId}>
           {localize('DND5E.Value')}
         </label>
         <NumberInput
-          id="{appId}-speed-value"
+          id={inputId}
           document={$context.item}
           field="system.speed.value"
           value={$context.item.system.speed.value}
@@ -121,16 +121,15 @@
           placeholder="0"
         />
       </div>
-
-      <!-- Conditions -->
-      <TextInput
-        id="{appId}-speed-conditions"
-        document={$context.item}
-        field="system.speed.conditions"
-        value={$context.item.system.speed.conditions}
-        placeholder={localize('DND5E.SpeedConditions')}
-        class="full-width"
-      />
     </div>
+    <!-- Conditions -->
+    <TextInput
+      id="{appId}-speed-conditions"
+      document={$context.item}
+      field="system.speed.conditions"
+      value={$context.item.system.speed.conditions}
+      placeholder={localize('DND5E.SpeedConditions')}
+      class="full-width"
+    />
   </ItemFormGroup>
 {/if}
