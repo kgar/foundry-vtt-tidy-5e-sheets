@@ -23,8 +23,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<!-- Header - DND5E.Usage -->
-<h3 class="form-header">{localize('DND5E.ItemConsumableDetails')}</h3>
+<h3 class="form-header">{localize('DND5E.Usage')}</h3>
 
 <!-- Uses -->
 <ItemFormGroup cssClass="split-group">
@@ -57,18 +56,18 @@
 >
 
 <!-- Auto-Destroy -->
-{#if $context.fields.uses.fields.autoDestroy}
+{#if $context.system.uses.autoDestroy}
   <ItemFormGroup
-    labelText={localize('DND5E.CONSUMABLE.uses.autoDestroy.label')}
+    labelText={localize('DND5E.CONSUMABLE.FIELDS.uses.autoDestroy.label')}
   >
     <Checkbox
       id="{appId}-uses-autoDestroy"
       document={$context.item}
       field="system.uses.autoDestroy"
-      checked={$context.item.system.uses.autoDestroy}
+      checked={$context.system.uses.autoDestroy}
     />
     <p class="hint">
-      {localize('DND5E.CONSUMABLE.uses.autoDestroy.hint')}
+      {localize('DND5E.CONSUMABLE.FIELDS.uses.autoDestroy.hint')}
     </p>
   </ItemFormGroup>
 {/if}
@@ -85,42 +84,118 @@
       aria-label={localize('DND5E.USES.Recovery.Action.Create')}
       on:click={() => $context.item.sheet.addRecovery()}
     >
-      <i class="fas fa-plus" inert></i>
+      <i class="fas fa-plus"></i>
     </button>
   </h3>
 
-  {#each $context.system.usesRecovery as recovery}
-    {JSON.stringify(recovery)}
-
-    <!-- 
-    
-        <div class="form-group split-group full-width card" data-index="{{ @index }}">
-        <div class="form-fields">
-
-            {{!-- Period --}}
-            {{ formField fields.period name=(concat prefix "period") value=source.period options=@root.recoveryPeriods
-                         label="DND5E.Period" localize=true hint=false classes="label-top" }}
-
-            {{!-- Type --}}
-            {{#unless (eq source.period "recharge")}}
-            {{ formField fields.type name=(concat prefix "type") value=source.type options=@root.recoveryTypes
-                         label="DND5E.Recovery" localize=true hint=false classes="label-top" }}
-            {{/unless}}
-
-            {{!-- Formula --}}
-            {{#if (or (eq source.type "formula") formulaOptions)}}
-            {{ formField fields.formula name=(concat prefix "formula") value=source.formula options=formulaOptions
-                         label="DND5E.Formula" localize=true hint=false classes="label-top" }}
-            {{/if}}
-
-            <button type="button" class="unbutton control-button" data-action="deleteRecovery"
-                    data-tooltip="DND5E.USES.Recovery.Action.Delete"
-                    aria-label="{{ localize "DND5E.USES.Recovery.Action.Delete" }}">
-                <i class="fas fa-minus" inert></i>
-            </button>
+  {#each $context.usesRecovery as recovery, index}
+    <ItemFormGroup
+      cssClass="split-group full-width card"
+      attributes={{ ['data-index']: index }}
+    >
+      <div class="form-fields">
+        <!-- Period -->
+        <div class="form-group label-top">
+          <label for="{appId}-uses-recovery-{index}-period">
+            {localize('DND5E.USES.FIELDS.uses.recovery.FIELDS.period.label')}
+          </label>
+          <select
+            id="{appId}-uses-recovery-{index}-period"
+            data-tidy-field="system.uses.recovery.{index}.period"
+            value={recovery.data.period}
+            on:change={(ev) =>
+              $context.item.sheet.updateRecovery(
+                index,
+                'period',
+                ev.currentTarget.value,
+              )}
+          >
+            <SelectOptions
+              data={$context.recoveryPeriods}
+              labelProp="label"
+              valueProp="value"
+            />
+          </select>
         </div>
-    </div>
-    -->
+
+        <!-- Type -->
+        {#if recovery.data.period !== 'recharge'}
+          <div class="form-group label-top">
+            <label for="">
+              {localize('DND5E.USES.FIELDS.uses.recovery.FIELDS.type.label')}
+            </label>
+            <select
+              id="{appId}-uses-recovery-{index}-type"
+              data-tidy-field="system.uses.recovery.{index}.type"
+              value={recovery.data.type}
+              on:change={(ev) =>
+                $context.item.sheet.updateRecovery(
+                  index,
+                  'type',
+                  ev.currentTarget.value,
+                )}
+            >
+              <SelectOptions
+                data={$context.recoveryTypes}
+                labelProp="label"
+                valueProp="value"
+              />
+            </select>
+          </div>
+        {/if}
+
+        <!-- Formula -->
+        {#if recovery.data.type === 'formula' || recovery.formulaOptions}
+          <div class="form-group label-top">
+            <label for="{appId}-uses-recovery-{index}-formula">
+              {localize('DND5E.USES.FIELDS.uses.recovery.FIELDS.formula.label')}
+            </label>
+            {#if recovery.formulaOptions}
+              <select
+                id="{appId}-uses-recovery-{index}-formula"
+                data-tidy-field="system.uses.recovery.{index}.formula"
+                on:change={(ev) =>
+                  $context.item.sheet.updateRecovery(
+                    index,
+                    'formula',
+                    ev.currentTarget.value,
+                  )}
+                value={recovery.data.formula}
+              >
+                <SelectOptions
+                  data={recovery.formulaOptions}
+                  labelProp="label"
+                  valueProp="value"
+                />
+              </select>
+            {:else if recovery.data.type === 'formula'}
+              <input
+                type="text"
+                id="{appId}-uses-recovery-{index}-formula"
+                data-tidy-field="system.uses.recovery.{index}.formula"
+                on:change={(ev) =>
+                  $context.item.sheet.updateRecovery(
+                    index,
+                    'formula',
+                    ev.currentTarget.value,
+                  )}
+              />
+            {/if}
+          </div>
+        {/if}
+
+        <button
+          type="button"
+          class="inline-icon-button align-self-stretch"
+          data-action="deleteRecovery"
+          title={localize('DND5E.USES.Recovery.Action.Delete')}
+          aria-label={localize('DND5E.USES.Recovery.Action.Delete')}
+          on:click={() => $context.item.sheet.deleteRecovery(index)}
+        >
+          <i class="fas fa-minus"></i>
+        </button>
+      </div>
+    </ItemFormGroup>
   {:else}
     <div class="empty">{localize('DND5E.UsesPeriods.Never')}</div>
   {/each}

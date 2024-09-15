@@ -7,6 +7,7 @@
   export let field: string | null = null;
   export let labelText: string | null = null;
   export let cssClass: string = '';
+  export let attributes: Record<string, unknown> = {};
 
   $: inputId =
     field !== null ? `${$context.appId}-${field.replaceAll('.', '-')}` : null;
@@ -16,7 +17,11 @@
   );
 </script>
 
-<div class="form-group {cssClass}" data-form-group-for={field ?? null}>
+<div
+  class="form-group {cssClass}"
+  data-form-group-for={field ?? null}
+  {...attributes}
+>
   {#if labelText !== null}
     <label for={inputId}>{labelText} <slot name="inside-after-label" /></label>
   {/if}
