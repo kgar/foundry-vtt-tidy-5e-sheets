@@ -22,7 +22,7 @@
 <h3 class="form-header">{localize('DND5E.ItemFeatureDetails')}</h3>
 
 <ItemFormGroup
-  labelText={localize('DND5E.ItemFeatureType')}
+  labelText={localize('DND5E.Type')}
   field="system.type.value"
   let:inputId
 >
@@ -83,7 +83,7 @@
 
 <ItemFormGroup
   cssClass="stacked feature-properties"
-  labelText={localize('DND5E.ItemEquipmentProperties')}
+  labelText={localize('DND5E.ItemFeatureProperties')}
 >
   <ItemProperties />
 </ItemFormGroup>
