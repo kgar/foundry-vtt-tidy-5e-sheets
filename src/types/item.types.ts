@@ -29,10 +29,47 @@ export type ItemSheetContext = {
   lockItemQuantity: boolean;
   originalContext: unknown;
   owner: boolean;
+  recoveryPeriods: {
+    value: string;
+    label: string;
+    group?: string;
+  }[];
+  recoveryTypes: {
+    value: string;
+    label: string;
+  }[];
+  usesRecovery: {
+    data: UsesRecoveryData;
+    formulaOptions: { label: string; value: string }[] | null;
+  }[];
   itemOverrides: Set<string>;
   tabs: Tab[];
   viewableWarnings: DocumentPreparationWarning[];
 } & Record<string, any>;
+
+/**
+ * Data for a recovery profile for an activity's uses.
+ */
+export interface UsesRecoveryData {
+  period: string;
+  type: string;
+  formula: string;
+  recharge?: {
+    options?: {
+      label: string;
+      value: string;
+    }[];
+  };
+}
+
+/**
+ * Field for storing uses data.
+ */
+export interface UsesField {
+  spent: number;
+  max: string;
+  recovery: UsesRecoveryData[];
+}
 
 export type ItemDescription = {
   field: string;

@@ -3,6 +3,7 @@ import type {
   Item5e,
   ItemDescription,
   ItemSheetContext,
+  UsesRecoveryData,
 } from 'src/types/item.types';
 import { get, writable } from 'svelte/store';
 import TypeNotFoundSheet from './item/TypeNotFoundSheet.svelte';
@@ -167,9 +168,38 @@ export class Tidy5eKgarItemSheet
         defaultDocumentContext.warnings?.filter(
           (w: any) => !isNil(w.message?.trim(), '')
         ) ?? [],
+      recoveryPeriods: [],
+      recoveryTypes: [],
+      usesRecovery: [],
     };
 
     await this.item.system.getSheetData?.(context);
+
+    context.recoveryPeriods = [
+      ...Object.entries(CONFIG.DND5E.limitedUsePeriods)
+        //@ts-ignore
+        .filter(([, { deprecated }]) => !deprecated)
+        .map(([value, { label }]) => ({
+          value,
+          label,
+          group: 'DND5E.DurationTime',
+        })),
+      { value: 'recharge', label: 'DND5E.USES.Recovery.Recharge.Label' },
+    ];
+
+    context.recoveryTypes = [
+      { value: 'recoverAll', label: 'DND5E.USES.Recovery.Type.RecoverAll' },
+      { value: 'loseAll', label: 'DND5E.USES.Recovery.Type.LoseAll' },
+      { value: 'formula', label: 'DND5E.USES.Recovery.Type.Formula' },
+    ];
+
+    context.usesRecovery = (context.system.uses?.recovery ?? []).map(
+      (data: UsesRecoveryData) => ({
+        data,
+        formulaOptions:
+          data.period === 'recharge' ? data.recharge?.options : null,
+      })
+    );
 
     debug(`${this.item?.type ?? 'Unknown Item Type'} context data`, context);
 
@@ -350,6 +380,19 @@ export class Tidy5eKgarItemSheet
         ],
       },
     });
+  }
+
+  deleteRecovery(index: number) {
+    const recovery = this.item.system.toObject().uses.recovery;
+    recovery.splice(index, 1);
+    return this.submit({ updateData: { 'system.uses.recovery': recovery } });
+  }
+
+  // TODO: Make prop of type `keyof WhateverWeCallTheREcoveryType`
+  updateRecovery(index: number, prop: string, value: keyof UsesRecoveryData) {
+    const recovery = this.item.system.toObject().uses.recovery;
+    recovery[index][prop] = value;
+    return this.submit({ updateData: { 'system.uses.recovery': recovery } });
   }
 
   /* -------------------------------------------- */
