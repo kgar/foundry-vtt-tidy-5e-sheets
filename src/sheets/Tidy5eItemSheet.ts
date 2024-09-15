@@ -168,6 +168,7 @@ export class Tidy5eKgarItemSheet
         defaultDocumentContext.warnings?.filter(
           (w: any) => !isNil(w.message?.trim(), '')
         ) ?? [],
+      equipmentTypes: [],
       recoveryPeriods: [],
       recoveryTypes: [],
       usesRecovery: [],
@@ -194,9 +195,16 @@ export class Tidy5eKgarItemSheet
       ),
     };
 
-    // getSheetData sometimes depends on the presence of
-    // - .properties
-    await this.item.system.getSheetData?.(context);
+    context.equipmentTypes = [
+      ...Object.entries(CONFIG.DND5E.miscEquipmentTypes).map(
+        ([value, label]) => ({ value, label })
+      ),
+      ...Object.entries(CONFIG.DND5E.armorTypes).map(([value, label]) => ({
+        value,
+        label,
+        group: 'DND5E.Armor',
+      })),
+    ];
 
     context.recoveryPeriods = [
       ...Object.entries(CONFIG.DND5E.limitedUsePeriods)
@@ -236,6 +244,10 @@ export class Tidy5eKgarItemSheet
     }
 
     debug(`${this.item?.type ?? 'Unknown Item Type'} context data`, context);
+
+    // getSheetData sometimes depends on the presence of
+    // - .properties
+    await this.item.system.getSheetData?.(context);
 
     // TODO: Add hook for preparing Tidy-specific context data
 

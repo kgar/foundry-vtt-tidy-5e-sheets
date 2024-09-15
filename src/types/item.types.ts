@@ -29,6 +29,11 @@ export type ItemSheetContext = {
   ) => void;
   customContent: CustomContent[];
   customEquipmentTypeGroups: RegisteredEquipmentTypeGroup[];
+  equipmentTypes: {
+    value: string;
+    label: string;
+    group?: string;
+  }[];
   /**
    * Represents remaining health as a percentage within the range of `0` to `100`.
    */
