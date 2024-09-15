@@ -30,30 +30,28 @@
   <label for="">{localize('DND5E.LimitedUses')}</label>
   <div class="form-fields">
     <!-- Spent  -->
-    <div class="form-fields">
-      <div class="form-group label-top">
-        <label for="{appId}-uses-spent">{localize('DND5E.Spent')}</label>
-        <NumberInput
-          id="{appId}-uses-spent"
-          document={$context.item}
-          field="system.uses.spent"
-          value={$context.system.uses.spent}
-        />
-      </div>
-
-      <!-- Max -->
-      <div class="form-group label-top">
-        <label for="{appId}-uses-max">{localize('DND5E.Max')}</label>
-        <TextInput
-          id="{appId}-uses-max"
-          document={$context.item}
-          field="system.uses.max"
-          value={$context.system.uses.max}
-        />
-      </div>
+    <div class="form-group label-top">
+      <label for="{appId}-uses-spent">{localize('DND5E.Spent')}</label>
+      <NumberInput
+        id="{appId}-uses-spent"
+        document={$context.item}
+        field="system.uses.spent"
+        value={$context.system.uses.spent}
+      />
     </div>
-  </div></ItemFormGroup
->
+
+    <!-- Max -->
+    <div class="form-group label-top">
+      <label for="{appId}-uses-max">{localize('DND5E.Max')}</label>
+      <TextInput
+        id="{appId}-uses-max"
+        document={$context.item}
+        field="system.uses.max"
+        value={$context.system.uses.max}
+      />
+    </div>
+  </div>
+</ItemFormGroup>
 
 <!-- Auto-Destroy -->
 {#if $context.system.uses.autoDestroy}
