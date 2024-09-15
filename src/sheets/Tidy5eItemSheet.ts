@@ -243,12 +243,14 @@ export class Tidy5eKgarItemSheet
         .sort((a: any, b: any) => a.sort - b.sort);
     }
 
-    debug(`${this.item?.type ?? 'Unknown Item Type'} context data`, context);
+    // TODO: Add some basic type for this
+    context.fields = context.system.schema.fields;
 
     // getSheetData sometimes depends on the presence of
     // - .properties
     await this.item.system.getSheetData?.(context);
 
+    debug(`${this.item?.type ?? 'Unknown Item Type'} context data`, context);
     // TODO: Add hook for preparing Tidy-specific context data
 
     return context;

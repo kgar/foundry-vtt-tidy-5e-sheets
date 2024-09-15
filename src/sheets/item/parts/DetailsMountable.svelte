@@ -4,18 +4,9 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
-  import ItemMountable from '../parts/ItemMountable.svelte';
-  import ItemActivation from '../parts/ItemActivation.svelte';
-  import ItemAction from '../parts/ItemAction.svelte';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
-  import Select from 'src/components/inputs/Select.svelte';
-  import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import ItemProperties from '../parts/ItemProperties.svelte';
-  import ContentConcealer from 'src/components/content-concealment/ContentConcealer.svelte';
-  import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import { CONSTANTS } from 'src/constants';
-  import FieldUses from '../parts/FieldUses.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -48,41 +39,63 @@
     step="1"
   />
 </ItemFormGroup>
-<!--
-{{!-- Armor Class --}}
-    {{ formField fields.armor.fields.value value=source.armor.value localize=true }}
- -->
 
 <!-- Hit Points -->
 <ItemFormGroup
   cssClass="split-group"
   labelText={localize('DND5E.HitPoints')}
+  field="system.hp.value"
   let:inputId
 >
   <div class="form-fields">
     <!-- Current -->
-    <!--
-        {{ formField fields.hp.fields.value value=source.hp.value label="DND5E.Current" placeholder="0"
-                         localize=true classes="label-top" }}
-         -->
+    <div class="form-group label-top">
+      <label for="{appId}-hp-value">{localize('DND5E.Current')}</label>
+      <NumberInput
+        id={inputId}
+        document={$context.items}
+        field="system.hp.value"
+        value={$context.system.hp.value}
+        placeholder="0"
+        min="0"
+      />
+    </div>
+
     <!-- Max -->
-
-    <!-- {{!-- Max --}}
-
-    {{ formField fields.hp.fields.max value=source.hp.max label="DND5E.Max" placeholder="0" localize=true
-             classes="label-top" }} -->
+    <div class="form-group label-top">
+      <label for="{appId}-hp-max">{localize('DND5E.Max')}</label>
+      <NumberInput
+        id="{appId}-hp-max"
+        document={$context.items}
+        field="system.hp.max"
+        value={$context.system.hp.max}
+        placeholder="0"
+        min="0"
+      />
+    </div>
 
     <!-- Threshold -->
-
-    <!-- {{!-- Threshold --}}
-        {{ formField fields.hp.fields.dt value=source.hp.dt label="DND5E.Threshold" placeholder="—" localize=true
-             classes="label-top" }} -->
+    <div class="form-group label-top">
+      <label for="{appId}-hp-dt">{localize('DND5E.Threshold')}</label>
+      <NumberInput
+        id="{appId}-hp-dt"
+        document={$context.items}
+        field="system.hp.dt"
+        value={$context.system.hp.dt}
+        placeholder="—"
+        min="0"
+      />
+    </div>
 
     <!-- Conditions -->
-    <!--
-    {{ formInput fields.hp.fields.conditions value=source.hp.conditions input=inputs.createTextInput
-                     placeholder=(localize "DND5E.HealthConditions") localize=true classes="full-width" }}
-    -->
+    <TextInput
+      id="{appId}-hp-conditions"
+      document={$context.item}
+      field="system.hp.conditions"
+      value={$context.item.system.hp.conditions}
+      placeholder={localize('DND5E.HealthConditions')}
+      class="full-width"
+    />
   </div>
 </ItemFormGroup>
 
@@ -95,16 +108,29 @@
   >
     <div class="form-fields">
       <!-- Value -->
-      <!-- 
-        {{ formField fields.speed.fields.value value=source.speed.value placeholder="0" label="DND5E.Value"
-                         localize=true classes="label-top" }}
-         -->
+      <div class="form-group label-top">
+        <label for="{appId}-speed-value">
+          {localize('DND5E.Value')}
+        </label>
+        <NumberInput
+          id="{appId}-speed-value"
+          document={$context.item}
+          field="system.speed.value"
+          value={$context.item.system.speed.value}
+          min="0"
+          placeholder="0"
+        />
+      </div>
 
       <!-- Conditions -->
-      <!-- 
-        {{ formInput fields.speed.fields.conditions value=source.speed.conditions input=inputs.createTextInput
-                     placeholder=(localize "DND5E.SpeedConditions") localize=true classes="full-width" }}
-         -->
+      <TextInput
+        id="{appId}-speed-conditions"
+        document={$context.item}
+        field="system.speed.conditions"
+        value={$context.item.system.speed.conditions}
+        placeholder={localize('DND5E.SpeedConditions')}
+        class="full-width"
+      />
     </div>
   </ItemFormGroup>
 {/if}
