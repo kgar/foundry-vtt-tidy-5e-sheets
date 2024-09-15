@@ -53,11 +53,7 @@ select {
   color: var(--t5e-primary-font-color);
 }
 
-select {
-  padding: 0;
-}
-
-:is(input[type='text'], input[type='number'], textarea) {
+:is(input[type='text'], input[type='number'], textarea, select) {
   border: none;
   padding: 0 0.375rem;
 }
@@ -506,7 +502,6 @@ input[type='checkbox'] {
     }
 
     label {
-      margin-left: 0.25rem;
       line-height: 1.25rem;
       font-size: 0.8125rem;
       font-weight: 600;
@@ -625,6 +620,10 @@ input[type='checkbox'] {
       border: none;
       box-shadow: 0 0 0 0.0625rem var(--t5e-primary-accent-color) inset;
     }
+  }
+
+  > .form-group {
+    padding: 0.1875rem 0.5rem;
   }
 }
 
