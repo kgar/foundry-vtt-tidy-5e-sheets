@@ -118,6 +118,7 @@
   {placeholder}
   data-tooltip={activeEffectApplied ? overrideTooltip : tooltip}
   {...actualDataset}
+  {...$$restProps.attributes}
   class={$$restProps.class ?? ''}
   {maxlength}
   aria-describedby={ariaDescribedBy}
@@ -127,6 +128,5 @@
   on:click
   on:keypress
   on:focus={(ev) => selectOnFocus && ev.currentTarget.select()}
-  {...$$props.attributes}
   data-tidy-field={field}
 />
