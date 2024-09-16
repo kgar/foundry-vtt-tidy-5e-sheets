@@ -4,14 +4,10 @@
   import type { Readable } from 'svelte/store';
   import type { ItemSheetContext } from 'src/types/item.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import Select from 'src/components/inputs/Select.svelte';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
-  import ItemProperties from '../parts/ItemProperties.svelte';
-  import ContentConcealer from 'src/components/content-concealment/ContentConcealer.svelte';
   import { CONSTANTS } from 'src/constants';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
-  import FieldDamage from '../parts/FieldDamage.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>(
