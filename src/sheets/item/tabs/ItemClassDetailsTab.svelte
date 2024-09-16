@@ -39,7 +39,7 @@
       id={inputId}
       document={$context.item}
       field="system.identifier"
-      value={$context.system.identifier}
+      value={$context.source.identifier}
       placeholder={$context.item.identifier}
       disabled={!$context.editable}
     />
@@ -67,7 +67,7 @@
         id="{$context.appId}-hit-dice"
         document={$context.item}
         field="system.hitDice"
-        value={$context.system.hitDice}
+        value={$context.source.hitDice}
         disabled={!$context.editable}
       >
         {#each $context.config.hitDieTypes as type}
@@ -84,7 +84,7 @@
         id={inputId}
         document={$context.item}
         field="system.hitDiceUsed"
-        value={$context.system.hitDiceUsed}
+        value={$context.source.hitDiceUsed}
         placeholder="0"
         disabled={!$context.editable}
       />
@@ -103,7 +103,7 @@
       labelCssClass="checkbox"
       document={$context.item}
       field="system.primaryAbility.value"
-      checked={$context.system.primaryAbility.value.has(key)}
+      checked={$context.source.primaryAbility.value.has(key)}
       value={key}
       disabled={!$context.editable}
       onDataPreparing={(ev) => mapMulticlassingAbilitiesToSave($context, ev)}
@@ -114,7 +114,7 @@
   <p class="hint">{localize('DND5E.CLASS.FIELDS.primaryAbility.value.hint')}</p>
 </ItemFormGroup>
 
-{#if $context.system.primaryAbility.value.size > 1}
+{#if $context.source.primaryAbility.value.size > 1}
   <ItemFormGroup
     labelText={localize('DND5E.CLASS.FIELDS.primaryAbility.all.label')}
     field="system.primaryAbility.fields.all"
@@ -123,7 +123,7 @@
     <Checkbox
       document={$context.item}
       field="system.primaryAbility.fields.all"
-      checked={$context.system.primaryAbility.all}
+      checked={$context.source.primaryAbility.all}
       id={inputId}
     ></Checkbox>
 

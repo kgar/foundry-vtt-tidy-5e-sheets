@@ -33,7 +33,7 @@
           id="{appId}-activation-value"
           document={$context.item}
           field="system.activation.value"
-          value={$context.system.activation.value}
+          value={$context.source.activation.value}
           placeholder="—"
           min="0"
         />
@@ -49,7 +49,7 @@
         id="{appId}-activation-type"
         document={$context.item}
         field="system.activation.type"
-        value={$context.system.activation.type}
+        value={$context.source.activation.type}
       >
         <SelectOptions
           data={$context.activationTypes}
@@ -64,7 +64,7 @@
   <TextInput
     document={$context.item}
     field="system.activation.condition"
-    value={$context.system.activation.condition}
+    value={$context.source.activation.condition}
     placeholder={localize('DND5E.ItemActivationCondition')}
     class="full-width"
   />

@@ -30,7 +30,7 @@
     id={inputId}
     document={$context.item}
     field="system.type.value"
-    value={$context.system.type.value}
+    value={$context.source.type.value}
     disabled={!$context.editable}
   >
     <SelectOptions
@@ -43,6 +43,7 @@
 
 {#if $context.itemSubtypes}
   {@const category =
+    // @ts-expect-error
     $context.config.featureTypes[$context.system.type.value]?.label}
 
   <ItemFormGroup
@@ -54,7 +55,7 @@
       id={inputId}
       document={$context.item}
       field="system.type.subtype"
-      value={$context.system.type.subtype}
+      value={$context.source.type.subtype}
       disabled={!$context.editable}
     >
       <SelectOptions data={$context.itemSubtypes} blank="" />
@@ -71,7 +72,7 @@
     id={inputId}
     document={$context.item}
     field="system.prerequisites.level"
-    value={$context.system.prerequisites.level}
+    value={$context.source.prerequisites.level}
     disabled={!$context.editable}
     step="1"
   />
@@ -101,7 +102,7 @@
       id={inputId}
       document={$context.item}
       field="system.enchant.max"
-      value={$context.system.enchant.max}
+      value={$context.source.enchant.max}
     />
 
     <p class="hint">
@@ -121,7 +122,7 @@
       id={inputId}
       document={$context.item}
       field="system.enchant.period"
-      value={$context.system.enchant.period}
+      value={$context.source.enchant.period}
       blankValue=""
     >
       <SelectOptions

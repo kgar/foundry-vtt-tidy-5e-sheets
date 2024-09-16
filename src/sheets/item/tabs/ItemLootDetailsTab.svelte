@@ -30,7 +30,7 @@
       id={inputId}
       document={$context.item}
       field="system.type.value"
-      value={$context.system.type.value}
+      value={$context.source.type.value}
       disabled={!$context.editable}
     >
       <SelectOptions
@@ -45,6 +45,7 @@
   {#if $context.itemSubtypes}
     {@const subtypeLabel = localize('DND5E.ItemLootSubtype', {
       category:
+        // @ts-expect-error 
         $context.config.lootTypes[$context.system.type.value]?.label ?? '',
     })}
     <ItemFormGroup
@@ -56,7 +57,7 @@
         id={inputId}
         document={$context.item}
         field="system.type.subtype"
-        value={$context.system.type.subtype}
+        value={$context.source.type.subtype}
         disabled={!$context.editable}
         blankValue=""
       >

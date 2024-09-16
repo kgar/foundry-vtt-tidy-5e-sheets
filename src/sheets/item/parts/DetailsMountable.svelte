@@ -35,7 +35,7 @@
     id={inputId}
     document={$context.item}
     field="system.armor.value"
-    value={$context.system.armor.value}
+    value={$context.source.armor.value}
     step="1"
   />
 </ItemFormGroup>
@@ -55,7 +55,7 @@
         id={inputId}
         document={$context.item}
         field="system.hp.value"
-        value={$context.system.hp.value}
+        value={$context.source.hp.value}
         placeholder="0"
         min="0"
       />
@@ -68,7 +68,7 @@
         id="{appId}-hp-max"
         document={$context.item}
         field="system.hp.max"
-        value={$context.system.hp.max}
+        value={$context.source.hp.max}
         placeholder="0"
         min="0"
       />
@@ -81,7 +81,7 @@
         id="{appId}-hp-dt"
         document={$context.item}
         field="system.hp.dt"
-        value={$context.system.hp.dt}
+        value={$context.source.hp.dt}
         placeholder="—"
         min="0"
       />

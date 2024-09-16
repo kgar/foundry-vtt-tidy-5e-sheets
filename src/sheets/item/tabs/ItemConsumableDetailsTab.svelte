@@ -44,6 +44,7 @@
   {#if $context.itemSubtypes}
     {@const consumableSubTypeLabel = localize('DND5E.ItemConsumableSubtype', {
       category:
+        // @ts-expect-error
         $context.config.consumableTypes[$context.system.type.value]?.label,
     })}
 
@@ -85,14 +86,15 @@
           <label for={inputId}>
             {localize('DND5E.Attunement')}
           </label>
-          <div class="flex-row no-gap">
+          <div class="form-fields">
             <!-- Attuned -->
             <Checkbox
               id={`${appId}-system-attuned`}
               document={$context.item}
               field="system.attuned"
-              checked={$context.system.attuned}
+              checked={$context.source.attuned}
               disabled={!$context.editable ||
+                // @ts-expect-error
                 !$context.config.attunementTypes[$context.system.attunement]}
               title={localize('DND5E.AttunementAttuned')}
             ></Checkbox>
@@ -145,7 +147,7 @@
       id={inputId}
       document={$context.item}
       field="system.damage.replace"
-      checked={$context.system.damage.replace}
+      checked={$context.source.damage.replace}
     />
     <p class="hint">
       {localize('DND5E.CONSUMABLE.FIELDS.damage.replace.hint')}

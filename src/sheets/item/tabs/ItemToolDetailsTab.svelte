@@ -30,7 +30,7 @@
       id={inputId}
       document={$context.item}
       field="system.type.value"
-      value={$context.system.type.value}
+      value={$context.source.type.value}
       disabled={!$context.editable}
     >
       <SelectOptions data={$context.config.toolTypes} blank="" />
@@ -46,7 +46,7 @@
       id={inputId}
       document={$context.item}
       field="system.type.baseItem"
-      value={$context.system.type.baseItem}
+      value={$context.source.type.baseItem}
       disabled={!$context.editable}
     >
       <SelectOptions data={$context.baseItems} blank="" />
@@ -69,8 +69,9 @@
       id={`${$context.appId}-system-attuned`}
       document={$context.item}
       field="system.attuned"
-      checked={$context.system.attuned}
+      checked={$context.source.attuned}
       disabled={!$context.editable ||
+        // @ts-expect-error
         !$context.config.attunementTypes[$context.system.attunement]}
       title={localize('DND5E.AttunementAttuned')}
     ></Checkbox>
@@ -78,7 +79,7 @@
       id={inputId}
       document={$context.item}
       field="system.attunement"
-      value={$context.system.attunement}
+      value={$context.source.attunement}
       disabled={!$context.editable}
     >
       <SelectOptions
@@ -97,7 +98,7 @@
       id={inputId}
       document={$context.item}
       field="system.proficient"
-      value={$context.system.proficient}
+      value={$context.source.proficient}
       disabled={!$context.editable}
     >
       <SelectOptions
@@ -116,7 +117,7 @@
       id={inputId}
       document={$context.item}
       field="system.ability"
-      value={$context.system.ability}
+      value={$context.source.ability}
       disabled={!$context.editable}
     >
       <SelectOptions
@@ -136,7 +137,7 @@
       id={inputId}
       document={$context.item}
       field="system.bonus"
-      value={$context.system.bonus}
+      value={$context.source.bonus}
       dataset={{ formulaEditor: true }}
       disabled={!$context.editable}
     />
@@ -155,7 +156,7 @@
       id={inputId}
       document={$context.item}
       field="system.chatFlavor"
-      value={$context.system.chatFlavor}
+      value={$context.source.chatFlavor}
       disabled={!$context.editable}
     />
   </ItemFormGroup>

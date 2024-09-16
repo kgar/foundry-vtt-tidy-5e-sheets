@@ -39,7 +39,7 @@
         id={inputId}
         document={$context.item}
         field="system.capacity.value"
-        value={$context.system.capacity.value}
+        value={$context.source.capacity.value}
         disabled={!$context.editable}
         placeholder="&mdash;"
       />
@@ -50,7 +50,7 @@
     <Select
       document={$context.item}
       field="system.capacity.type"
-      value={$context.system.capacity.type}
+      value={$context.source.capacity.type}
       disabled={!$context.editable}
     >
       <SelectOptions data={$context.config.itemCapacityTypes} />
@@ -66,7 +66,7 @@
       id={`${$context.appId}-system-attuned`}
       document={$context.item}
       field="system.attuned"
-      checked={$context.system.attuned}
+      checked={$context.source.attuned}
       disabled={!$context.editable ||
         !$context.config.attunementTypes[$context.system.attunement]}
       title={localize('DND5E.AttunementAttuned')}
@@ -75,7 +75,7 @@
       id={inputId}
       document={$context.item}
       field="system.attunement"
-      value={$context.system.attunement}
+      value={$context.source.attunement}
       disabled={!$context.editable}
     >
       <SelectOptions

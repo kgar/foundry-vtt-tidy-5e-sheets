@@ -25,7 +25,7 @@
       id={inputId}
       document={$context.item}
       field="system.identifier"
-      value={$context.system.identifier}
+      value={$context.source.identifier}
       placeholder={$context.item.identifier}
       disabled={!$context.editable}
     />
@@ -43,7 +43,7 @@
       id={inputId}
       document={$context.item}
       field="system.classIdentifier"
-      value={$context.system.classIdentifier}
+      value={$context.source.classIdentifier}
       disabled={!$context.editable}
     />
   </div>

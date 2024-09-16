@@ -29,7 +29,7 @@
           id="{appId}-range-value"
           document={$context.item}
           field="system.range.value"
-          value={$context.system.range.value}
+          value={$context.source.range.value}
         />
       </div>
     {/if}
@@ -41,7 +41,7 @@
         id="{appId}-range-units"
         document={$context.item}
         field="system.range.units"
-        value={$context.system.range.units}
+        value={$context.source.range.units}
       >
         <SelectOptions
           data={$context.rangeTypes}
@@ -57,7 +57,7 @@
     id="{appId}-range-special"
     document={$context.item}
     field="system.range.special"
-    value={$context.system.range.special}
+    value={$context.source.range.special}
     class="full-width"
     placeholder={localize('DND5E.RANGE.FIELDS.range.special.label')}
   />

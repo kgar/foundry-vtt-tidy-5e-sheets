@@ -42,7 +42,7 @@
     <TextInput
       document={$context.item}
       field="system.wealth"
-      value={$context.system.wealth}
+      value={$context.source.wealth}
     ></TextInput>
   </div>
   <p class="hint">{localize('DND5E.StartingEquipment.Wealth.Hint')}</p>

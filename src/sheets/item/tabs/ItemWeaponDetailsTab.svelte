@@ -34,7 +34,7 @@
       id={inputId}
       document={$context.item}
       field="system.type.value"
-      value={$context.system.type.value}
+      value={$context.source.type.value}
       disabled={!$context.editable}
     >
       <SelectOptions data={$context.config.weaponTypes} />
@@ -50,7 +50,7 @@
       id={inputId}
       document={$context.item}
       field="system.type.baseItem"
-      value={$context.system.type.baseItem}
+      value={$context.source.type.baseItem}
       disabled={!$context.editable}
     >
       <SelectOptions data={$context.baseItems} blank="" />
@@ -67,8 +67,9 @@
         id={`${$context.appId}-system-attuned`}
         document={$context.item}
         field="system.attuned"
-        checked={$context.system.attuned}
+        checked={$context.source.attuned}
         disabled={!$context.editable ||
+          // @ts-ignore
           !$context.config.attunementTypes[$context.system.attunement]}
         title={localize('DND5E.AttunementAttuned')}
       ></Checkbox>
@@ -76,7 +77,7 @@
         id={inputId}
         document={$context.item}
         field="system.attunement"
-        value={$context.system.attunement}
+        value={$context.source.attunement}
         disabled={!$context.editable}
       >
         <SelectOptions
@@ -90,7 +91,7 @@
       <Select
         document={$context.item}
         field="system.proficient"
-        value={$context.system.proficient}
+        value={$context.source.proficient}
         disabled={!$context.editable}
       >
         <SelectOptions
@@ -119,7 +120,7 @@
           id={inputId}
           document={$context.item}
           field="system.armor.value"
-          value={$context.system.armor.value}
+          value={$context.source.armor.value}
           disabled={!$context.editable}
         />
       </div>
@@ -137,7 +138,7 @@
       <div class="form-fields">
         <NumberInput
           id={inputId}
-          value={$context.system.magicalBonus}
+          value={$context.source.magicalBonus}
           field="system.magicalBonus"
           document={$context.item}
           disabled={!$context.editable}

@@ -38,7 +38,7 @@
       id={inputId}
       document={$context.item}
       field="system.type.value"
-      value={$context.system.type.value}
+      value={$context.source.type.value}
       blankValue=""
     >
       <SelectOptions
@@ -60,7 +60,7 @@
       id={inputId}
       document={$context.item}
       field="system.type.baseItem"
-      value={$context.system.type.baseItem}
+      value={$context.source.type.baseItem}
       blankValue=""
     >
       <SelectOptions
@@ -82,7 +82,7 @@
       id={inputId}
       document={$context.item}
       field="system.proficient"
-      value={$context.system.proficient}
+      value={$context.source.proficient}
       blankValue=""
     >
       <SelectOptions
@@ -105,7 +105,7 @@
           <NumberInput
             document={$context.item}
             field="system.armor.value"
-            value={$context.system.armor.value}
+            value={$context.source.armor.value}
             step="1"
           />
         </div>
@@ -118,7 +118,7 @@
             <NumberInput
               document={$context.item}
               field="system.armor.dex"
-              value={$context.system.armor.dex}
+              value={$context.source.armor.dex}
               step="1"
               placeholder="∞"
             />
@@ -130,7 +130,7 @@
           <NumberInput
             document={$context.item}
             field="system.strength"
-            value={$context.system.strength}
+            value={$context.source.strength}
             step="1"
             placeholder="—"
           />
@@ -160,14 +160,15 @@
             <label for={inputId}>
               {localize('DND5E.Attunement')}
             </label>
-            <div class="flex-row no-gap">
+            <div class="form-fields">
               <!-- Attuned -->
               <Checkbox
                 id={`${appId}-system-attuned`}
                 document={$context.item}
                 field="system.attuned"
-                checked={$context.system.attuned}
+                checked={$context.source.attuned}
                 disabled={!$context.editable ||
+                  // @ts-expect-error
                   !$context.config.attunementTypes[$context.system.attunement]}
                 title={localize('DND5E.AttunementAttuned')}
               ></Checkbox>
@@ -176,7 +177,7 @@
                 id={inputId}
                 document={$context.item}
                 field="system.attunement"
-                value={$context.system.attunement}
+                value={$context.source.attunement}
                 disabled={!$context.editable}
                 class="flex-1"
               >
@@ -192,7 +193,7 @@
           <label for="{appId}-magical-bonus">{localize('DND5E.Bonus')}</label>
           <NumberInput
             id="{appId}-magical-bonus"
-            value={$context.system.magicalBonus}
+            value={$context.source.magicalBonus}
             field="system.magicalBonus"
             document={$context.item}
             disabled={!$context.editable}

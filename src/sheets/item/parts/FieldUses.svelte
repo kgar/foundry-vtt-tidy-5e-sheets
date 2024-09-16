@@ -32,7 +32,7 @@
         id="{appId}-uses-spent"
         document={$context.item}
         field="system.uses.spent"
-        value={$context.system.uses.spent}
+        value={$context.source.uses.spent}
       />
     </div>
 
@@ -43,7 +43,7 @@
         id="{appId}-uses-max"
         document={$context.item}
         field="system.uses.max"
-        value={$context.system.uses.max}
+        value={$context.source.uses.max}
       />
     </div>
   </div>
@@ -58,7 +58,7 @@
       id="{appId}-uses-autoDestroy"
       document={$context.item}
       field="system.uses.autoDestroy"
-      checked={$context.system.uses.autoDestroy}
+      checked={$context.source.uses.autoDestroy}
     />
     <p class="hint">
       {localize('DND5E.CONSUMABLE.FIELDS.uses.autoDestroy.hint')}

@@ -65,7 +65,7 @@
           >
           <NumberInput
             id="{$context.appId}-{$context.item.id}-quantity"
-            value={$context.system.quantity}
+            value={$context.source.quantity}
             field="system.quantity"
             document={$context.item}
             step="1"
@@ -83,7 +83,7 @@
         >
         <NumberInput
           id="{$context.appId}-{$context.item.id}-weight-value"
-          value={$context.system.weight.value}
+          value={$context.source.weight.value}
           step="any"
           field="system.weight.value"
           document={$context.item}
@@ -103,7 +103,7 @@
         {:else}
           <NumberInput
             id="{$context.appId}-{$context.item.id}-price"
-            value={$context.system.price.value}
+            value={$context.source.price.value}
             step="any"
             field="system.price.value"
             document={$context.item}
@@ -112,7 +112,7 @@
             cssClass="large-value"
           />
           <Select
-            value={$context.system.price.denomination}
+            value={$context.source.price.denomination}
             field="system.price.denomination"
             document={$context.item}
             disabled={!$context.editable}
