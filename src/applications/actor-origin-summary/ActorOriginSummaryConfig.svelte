@@ -15,18 +15,6 @@
 
 <section class="flex-column">
   {#if $context.isCharacter}
-    {#if $context.canEditRace}
-      <div class="form-field">
-        <label for="race-edit-{appId}">{localize('DND5E.Race')}</label>
-
-        <input
-          id="race-edit-{appId}"
-          type="text"
-          placeholder={localize('DND5E.Race')}
-          bind:value={$context.race}
-        />
-      </div>
-    {/if}
     <div class="form-field">
       <label for="background-edit-{appId}">{localize('DND5E.Background')}</label
       >

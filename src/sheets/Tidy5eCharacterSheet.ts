@@ -1003,7 +1003,7 @@ export class Tidy5eCharacterSheet
       items,
       spells,
       feats,
-      races,
+      species,
       backgrounds,
       classes,
       subclasses,
@@ -1034,7 +1034,7 @@ export class Tidy5eCharacterSheet
         const group = this.actor.items.get(originId);
         switch (group?.type) {
           case 'race':
-            ctx.group = 'race';
+            ctx.group = 'species';
             break;
           case 'background':
             ctx.group = 'background';
@@ -1077,7 +1077,7 @@ export class Tidy5eCharacterSheet
         items: [] as Item5e[],
         spells: [] as Item5e[],
         feats: [] as Item5e[],
-        races: [] as Item5e[],
+        species: [] as Item5e[],
         backgrounds: [] as Item5e[],
         classes: [] as Item5e[],
         subclasses: [] as Item5e[],
@@ -1085,7 +1085,7 @@ export class Tidy5eCharacterSheet
           items: [] as Item5e[],
           spells: [] as Item5e[],
           feats: [] as Item5e[],
-          races: [] as Item5e[],
+          species: [] as Item5e[],
           backgrounds: [] as Item5e[],
           classes: [] as Item5e[],
           subclasses: [] as Item5e[],
@@ -1183,7 +1183,7 @@ export class Tidy5eCharacterSheet
     // Section Features
     const features: Record<string, CharacterFeatureSection> =
       CharacterSheetSections.buildFeaturesSections(
-        races,
+        species,
         backgrounds,
         classes,
         feats,
@@ -1195,7 +1195,7 @@ export class Tidy5eCharacterSheet
     // Section favorite features
     const favoriteFeatures: Record<string, CharacterFeatureSection> =
       CharacterSheetSections.buildFeaturesSections(
-        favorites.races,
+        favorites.species,
         favorites.backgrounds,
         favorites.classes,
         favorites.feats,

@@ -134,7 +134,7 @@ export type CharacterItemPartitions = {
   items: Item5e[];
   spells: Item5e[];
   feats: Item5e[];
-  races: Item5e[];
+  species: Item5e[];
   backgrounds: Item5e[];
   classes: Item5e[];
   subclasses: Item5e[];

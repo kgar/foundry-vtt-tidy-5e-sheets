@@ -12,7 +12,7 @@ import SpellSheet from 'src/sheets/item/SpellSheet.svelte';
 import SubclassSheet from 'src/sheets/item/SubclassSheet.svelte';
 import ToolSheet from 'src/sheets/item/ToolSheet.svelte';
 import WeaponSheet from 'src/sheets/item/WeaponSheet.svelte';
-import RaceSheet from 'src/sheets/item/RaceSheet.svelte';
+import SpeciesSheet from 'src/sheets/item/SpeciesSheet.svelte';
 import type { ComponentType } from 'svelte';
 import type { RegisteredContent, RegisteredTab } from '../types';
 import type { ItemSheetContext } from 'src/types/item.types';
@@ -143,10 +143,10 @@ export class ItemSheetRuntime {
       ],
     },
     [CONSTANTS.ITEM_TYPE_RACE]: {
-      Sheet: RaceSheet,
+      Sheet: SpeciesSheet,
       defaultTabs: () => [
-        itemSheetTabs.raceDescription,
-        itemSheetTabs.raceDetails,
+        itemSheetTabs.speciesDescription,
+        itemSheetTabs.speciesDetails,
         itemSheetTabs.advancement,
       ],
     },

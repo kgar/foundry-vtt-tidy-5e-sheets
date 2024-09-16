@@ -145,7 +145,7 @@ export class CharacterSheetSections {
     } else if (item.type === CONSTANTS.ITEM_TYPE_FEAT) {
       partitions.feats.push(item);
     } else if (item.type === CONSTANTS.ITEM_TYPE_RACE) {
-      partitions.races.push(item);
+      partitions.species.push(item);
     } else if (item.type === CONSTANTS.ITEM_TYPE_BACKGROUND) {
       partitions.backgrounds.push(item);
     } else if (item.type === CONSTANTS.ITEM_TYPE_CLASS) {
