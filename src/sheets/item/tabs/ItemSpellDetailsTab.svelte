@@ -222,10 +222,6 @@
 
 <!-- Range -->
 <FieldRange />
-<!-- 
-{{> "dnd5e.field-range" range=system.range fields=fields.range.fields data=source.range rangeTypes=rangeTypes
-        inputs=inputs }}
- -->
 
 <!-- Duration -->
 <FieldDuration />

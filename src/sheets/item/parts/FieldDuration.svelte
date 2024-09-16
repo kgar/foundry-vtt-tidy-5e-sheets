@@ -27,3 +27,40 @@
   
     const localize = FoundryAdapter.localize;
   </script>
+
+<!-- Duration -->
+<div class="form-group split-group">
+    <label for="{appId}-duration-units">{ localize ("DND5E.Duration") }</label>
+    <div class="form-fields">
+
+        <!-- Amount -->
+        {#if $context.system.duration.scalar}
+        <!-- { formField 
+          fields.value
+          value=data.value
+          label="DND5E.Amount"
+          localize=true hint=false
+          placeholder="—"
+          classes="label-top" } -->
+        {/if}
+
+        <!-- Time -->
+        <!-- { formField 
+          fields.units
+          value=data.units
+          label="DND5E.DurationTime"
+          localize=true hint=false
+          options=durationUnits 
+          classes="label-top" } -->
+    </div>
+
+    <!-- Conditions -->
+    {#if $context.system.duration.units === "spec"}
+    <!-- { formInput 
+      fields.special
+       value=data.special 
+       input=inputs.createTextInput 
+       classes="full-width"    
+       placeholder=(localize "DND5E.DURATION.FIELDS.duration.special.label") } -->
+    {/if}
+</div>
