@@ -150,6 +150,7 @@ export class Tidy5eKgarItemSheet
       appId: this.appId,
       activateEditors: (node, options) =>
         FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
+      affectsPlaceholder: '',
       customContent: await ItemSheetRuntime.getContent(defaultDocumentContext),
       customEquipmentTypeGroups:
         ItemSheetRuntime.getCustomEquipmentTypeGroups(),
@@ -163,6 +164,7 @@ export class Tidy5eKgarItemSheet
       labels: this.item.labels,
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       originalContext: defaultDocumentContext,
+      source: this.item.system.toObject(),
       tabs: tabs,
       toggleAdvancementLock: this.toggleAdvancementLock.bind(this),
       viewableWarnings:
@@ -170,12 +172,39 @@ export class Tidy5eKgarItemSheet
           (w: any) => !isNil(w.message?.trim(), '')
         ) ?? [],
       activationTypes: [],
+      durationUnits: [],
       equipmentTypes: [],
       rangeTypes: [],
       recoveryPeriods: [],
       recoveryTypes: [],
       usesRecovery: [],
+      scalarTarget: false,
     };
+
+    const target = this.item.type === 'spell' ? this.item.system.target : null;
+
+    context.dimensions = target?.template?.dimensions;
+    
+    context.scalarTarget = !['', 'self', 'any'].includes(target?.affects?.type);
+    context.affectsPlaceholder = game.i18n.localize(
+      `DND5E.Target${target?.template?.type ? 'Every' : 'Any'}`
+    );
+
+    context.durationUnits = [
+      ...Object.entries(CONFIG.DND5E.specialTimePeriods).map(
+        ([value, label]) => ({ value, label })
+      ),
+      ...Object.entries(CONFIG.DND5E.scalarTimePeriods).map(
+        ([value, label]) => {
+          return { value, label, group: 'DND5E.DurationTime' };
+        }
+      ),
+      ...Object.entries(CONFIG.DND5E.permanentTimePeriods).map(
+        ([value, label]) => {
+          return { value, label, group: 'DND5E.DurationPermanent' };
+        }
+      ),
+    ];
 
     context.rangeTypes = [
       ...Object.entries(CONFIG.DND5E.rangeTypes).map(([value, label]) => ({

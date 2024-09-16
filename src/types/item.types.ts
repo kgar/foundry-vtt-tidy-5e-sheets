@@ -2,6 +2,7 @@ import type { ComponentType, SvelteComponent } from 'svelte';
 import type {
   AttunementContext,
   CustomContent,
+  GroupableSelectOption,
   InventorySection,
   Tab,
   TidySectionBase,
@@ -27,18 +28,16 @@ export type ItemSheetContext = {
     node: HTMLElement,
     options?: { bindSecrets?: boolean }
   ) => void;
-  activationTypes: {
-    value: string;
-    label: string;
-    group?: string;
-  }[];
+  activationTypes: GroupableSelectOption[];
+  affectsPlaceholder: string;
+  config: typeof CONFIG.DND5E;
   customContent: CustomContent[];
   customEquipmentTypeGroups: RegisteredEquipmentTypeGroup[];
-  equipmentTypes: {
-    value: string;
-    label: string;
-    group?: string;
-  }[];
+  dimensions:
+    | { size: string; width: string | false; height: string | false }
+    | undefined;
+  durationUnits: GroupableSelectOption[];
+  equipmentTypes: GroupableSelectOption[];
   /**
    * Represents remaining health as a percentage within the range of `0` to `100`.
    */
@@ -57,20 +56,13 @@ export type ItemSheetContext = {
       value: string;
     }[];
   };
-  rangeTypes: {
-    value: string;
-    label: string;
-    group?: string;
-  }[];
-  recoveryPeriods: {
-    value: string;
-    label: string;
-    group?: string;
-  }[];
+  rangeTypes: GroupableSelectOption[];
+  recoveryPeriods: GroupableSelectOption[];
   recoveryTypes: {
     value: string;
     label: string;
   }[];
+  scalarTarget: boolean;
   usesRecovery: {
     data: UsesRecoveryData;
     formulaOptions: { label: string; value: string }[] | null;

@@ -628,3 +628,9 @@ export type ActorSheetContextV2<TActor = ActorV2> = {
   unlocked: boolean;
   useRoundedPortraitStyle: boolean;
 };
+
+export type GroupableSelectOption = {
+  value: string;
+  label: string;
+  group?: string;
+};
