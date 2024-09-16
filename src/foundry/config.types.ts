@@ -1,3 +1,5 @@
+import type { GroupableSelectOption } from 'src/types/types';
+
 export type CONFIG = {
   debug: {
     applications: boolean;
@@ -2535,6 +2537,7 @@ export type CONFIG = {
         };
       };
     };
+    areaTargetOptions: GroupableSelectOption[];
     defaultAbilities: {
       meleeAttack: string;
       rangedAttack: string;
