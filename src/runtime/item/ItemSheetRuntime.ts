@@ -131,6 +131,7 @@ export class ItemSheetRuntime {
       defaultTabs: () => [
         itemSheetTabs.descriptionWithSidebar,
         itemSheetTabs.toolDetails,
+        itemSheetTabs.activities,
         itemSheetTabs.effects,
       ],
     },
@@ -139,6 +140,7 @@ export class ItemSheetRuntime {
       defaultTabs: () => [
         itemSheetTabs.descriptionWithSidebar,
         itemSheetTabs.weaponDetails,
+        itemSheetTabs.activities,
         itemSheetTabs.effects,
       ],
     },
