@@ -980,4 +980,9 @@ ol.info {
 
 .form-group.checkbox {
   background: none;
+  align-self: end;
+
+  > label {
+    font-weight: 500;    
+  }
 }
