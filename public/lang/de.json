@@ -596,10 +596,6 @@
     },
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filter",
     "TIDY5E.ItemFilters.Category.Miscellaneous": "Sonstiges",
-    "TIDY5E.Settings.ActionListScaleCantripDamage": {
-        "name": "Zaubertricks mit skalierendem Schaden anzeigen (experimentell)",
-        "hint": ""
-    },
     "TIDY5E.Settings.Migrations": {
         "name": "Migrationen",
         "buttonLabel": "Tidy Daten migrieren",

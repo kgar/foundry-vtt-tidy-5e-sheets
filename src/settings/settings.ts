@@ -1364,22 +1364,6 @@ export function createSettings() {
         },
       },
 
-      actionListScaleCantripDamage: {
-        options: {
-          name: 'TIDY5E.Settings.ActionListScaleCantripDamage.name',
-          hint: 'TIDY5E.Settings.ActionListScaleCantripDamage.hint',
-          scope: 'client',
-          config: false,
-          default: true,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>(
-            'actionListScaleCantripDamage'
-          );
-        },
-      },
-
       exhaustionConfig: {
         options: {
           name: 'TIDY5E.WorldSettings.Exhaustion.name',

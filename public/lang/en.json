@@ -543,10 +543,6 @@
     "name": "Include Consumables as Actions",
     "hint": "Includes consumables which have an activation cost (Action, Bonus Action, etc) in the Actions list by default."
   },
-  "TIDY5E.Settings.ActionListScaleCantripDamage": {
-    "name": "Show Scaled Cantrip Damage (experimental)",
-    "hint": "Scales cantrip damage to match the PC's current level or the NPC's challenge rating."
-  },
   "TIDY5E.Settings.ColorPickerEnabled": {
     "name": "Use Custom Theme Colors",
     "hint": "Shows custom theme colors"

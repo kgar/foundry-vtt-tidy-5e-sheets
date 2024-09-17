@@ -39,8 +39,8 @@ export function simplifyFormula(
   try {
     if (removeFlavor) {
       formula = formula
-        ?.replace(RollTerm.FLAVOR_REGEXP, '')
-        ?.replace(RollTerm.FLAVOR_REGEXP_STRING, '')
+        ?.replace(foundry.dice.terms.RollTerm.FLAVOR_REGEXP, '')
+        ?.replace(foundry.dice.terms.RollTerm.FLAVOR_REGEXP_STRING, '')
         ?.trim();
     }
 

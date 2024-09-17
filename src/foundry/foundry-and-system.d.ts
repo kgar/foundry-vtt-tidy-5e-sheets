@@ -46,7 +46,6 @@ declare global {
   var NumericTerm: any;
   var renderTemplate: any;
   var Roll: any;
-  var RollTerm: any;
   var SortingHelpers: any;
   var TextEditor: any;
   var ui: any;

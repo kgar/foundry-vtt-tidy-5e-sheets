@@ -115,7 +115,7 @@ function buildActionSections(
       customSection.actions.push(actionItem);
     } else {
       const activationType = getActivationType(
-        actionItem.item.system.activation?.type,
+        actionItem.item.system.activities.contents[0]?.activation.type,
         customMappings
       );
       const section = (actionSections[activationType] ??= {
@@ -146,12 +146,15 @@ export function isItemInActionList(item: Item5e): boolean {
       return item.system.equipped;
     }
     case CONSTANTS.ITEM_TYPE_EQUIPMENT: {
-      return item.system.equipped && isActiveItem(item.system.activation?.type);
+      return (
+        item.system.equipped &&
+        isActiveItem(item.system.activities.contents[0]?.activation.type)
+      );
     }
     case CONSTANTS.ITEM_TYPE_CONSUMABLE: {
       return (
         SettingsProvider.settings.actionListIncludeConsumables.get() &&
-        isActiveItem(item.system.activation?.type)
+        isActiveItem(item.system.activities.contents[0]?.activation.type)
       );
     }
     case CONSTANTS.ITEM_TYPE_SPELL: {
@@ -166,12 +169,15 @@ export function isItemInActionList(item: Item5e): boolean {
         return false;
       }
       const isReaction =
-        item.system.activation?.type === CONSTANTS.ACTIVATION_COST_REACTION;
+        item.system.activities.contents[0]?.activation.type ===
+        CONSTANTS.ACTIVATION_COST_REACTION;
       const isBonusAction =
-        item.system.activation?.type === CONSTANTS.ACTIVATION_COST_BONUS;
+        item.system.activities.contents[0]?.activation.type ===
+        CONSTANTS.ACTIVATION_COST_BONUS;
 
       //ASSUMPTION: If the spell causes damage, it will have damageParts
-      const isDamageDealer = item.system.damage?.parts?.length > 0;
+      const damage = getActivityFirstDamage(item);
+      const isDamageDealer = damage?.parts?.length > 0;
       let shouldInclude = isReaction || isBonusAction || isDamageDealer;
       if (
         SettingsProvider.settings.actionListIncludeMinuteLongSpellsAsActions.get()
@@ -193,7 +199,7 @@ export function isItemInActionList(item: Item5e): boolean {
       return shouldInclude;
     }
     case CONSTANTS.ITEM_TYPE_FEAT: {
-      return !!item.system.activation?.type;
+      return !!item.system.activities.contents[0]?.activation.type;
     }
     default: {
       return false;
@@ -201,12 +207,28 @@ export function isItemInActionList(item: Item5e): boolean {
   }
 }
 
+function getActivityFirstDamage(item: Item5e) {
+  const activity =
+    item.system.activities.getByType('attack')[0] ||
+    item.system.activities.getByType('damage')[0] ||
+    item.system.activities.getByType('save')[0];
+  return {
+    parts:
+      activity?.damage.parts.map((d: any) => [
+        d.formula,
+        d.types.first() ?? '',
+      ]) ?? [],
+    versatile: '',
+  };
+}
+
 async function mapActionItem(item: Item5e): Promise<ActionItem> {
   try {
     let calculatedDerivedDamage = Array.isArray(item.labels.damages)
       ? [...item.labels.damages].map(
           ({ formula, label, damageType }: any, i: number) => {
-            const rawDamagePartFormula = item.system.damage?.base?.formula;
+            const damage = getActivityFirstDamage(item);
+            const rawDamagePartFormula = damage.parts?.[0]?.formula;
 
             if (rawDamagePartFormula?.trim() === '') {
               formula = '';
@@ -219,14 +241,13 @@ async function mapActionItem(item: Item5e): Promise<ActionItem> {
               FoundryAdapter.lookupHealingType(damageType) ??
               '';
 
-            if (
-              item.type === 'spell' &&
-              item.system.scaling?.mode === 'cantrip' &&
-              SettingsProvider.settings.actionListScaleCantripDamage.get()
-            ) {
-              formula = scaleCantripDamageFormula(item, formula);
-              label = `${formula} ${damageHealingTypeLabel}`;
-            }
+            /*
+            TODO:
+            When revisiting how to represent damage rolls, 
+            pursue activity.getDamageConfig() for each activity.
+            It provides damage parts and types.            
+            */
+
 
             return {
               label,
@@ -272,13 +293,17 @@ function getRangeTitles(item: Item5e): {
   rangeTitle: string | null;
   rangeSubtitle: string | null;
 } {
+  const firstActivity = item.system.activities.contents[0] ?? {};
+
   const rangeSubtitle =
-    item.system.target?.type !== 'self' && item.labels?.target
+    (firstActivity.target.affects?.type ??
+      firstActivity.target.template?.type) &&
+    item.labels?.target
       ? item.labels.target
       : null;
 
   const rangeTitle =
-    item.system.target?.type === 'self'
+    firstActivity.target?.type === 'self'
       ? item.labels.target
       : hasRange(item)
       ? item.labels.range
@@ -293,59 +318,7 @@ function getRangeTitles(item: Item5e): {
 }
 
 function hasRange(item: Item5e): boolean {
-  return !isNil(item.system.range?.units);
-}
-
-function buildActionSets(filteredItems: any): ActionSets {
-  const customMappings = ActionListRuntime.getActivationTypeMappings();
-
-  // Build action sets based on what items are available.
-  let actionSets = filteredItems.reduce(
-    (acc: ActionSets, actionItem: ActionItem) => {
-      try {
-        /* 
-          Priority 1: Custom Action Sections
-          Priority 2: Custom Mappings via the Tidy API
-          Priority 3: Item Activation Type
-        */
-        const customActionSection = TidyFlags.actionSection.get(
-          actionItem.item
-        );
-
-        const activationType = customActionSection
-          ? customActionSection
-          : getActivationType(
-              actionItem.item.system.activation?.type,
-              customMappings
-            );
-
-        if (!acc[activationType]) {
-          acc[activationType] = new Set<ActionItem>();
-        }
-        acc[activationType].add(actionItem);
-        return acc;
-      } catch (e) {
-        error('error trying to digest item', true, {
-          name: actionItem.item.name,
-          e,
-        });
-        return acc;
-      }
-    },
-    {}
-  );
-
-  // Sort action sets deterministically.
-  return Object.keys(actionSets)
-    .sort(
-      (a, b) =>
-        (activationTypeSortValues[a] || Number.MAX_VALUE) -
-        (activationTypeSortValues[b] || Number.MAX_VALUE)
-    )
-    .reduce<ActionSets>((result, key) => {
-      result[key] = actionSets[key];
-      return result;
-    }, {});
+  return !isNil(item.system.activities.contents[0]?.range?.units);
 }
 
 function getActivationType(

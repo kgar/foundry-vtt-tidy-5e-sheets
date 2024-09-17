@@ -47,10 +47,3 @@
   hint={SettingsProvider.settings.actionListIncludeConsumables.options.hint}
   id="actionListIncludeConsumables"
 />
-
-<CheckboxSetting
-  bind:value={$context.settings.actionListScaleCantripDamage}
-  name={SettingsProvider.settings.actionListScaleCantripDamage.options.name}
-  hint={SettingsProvider.settings.actionListScaleCantripDamage.options.hint}
-  id="actionListScaleCantripDamage"
-/>

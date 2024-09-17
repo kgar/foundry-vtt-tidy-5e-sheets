@@ -595,10 +595,6 @@
         "hint": "",
         "AtLeastOneTabRequiredErrorMessage": ""
     },
-    "TIDY5E.Settings.ActionListScaleCantripDamage": {
-        "hint": "",
-        "name": ""
-    },
     "TIDY5E.WorldSettings.Exhaustion": {
         "options.specific.levels.hint": "",
         "options.open.explanation": "",

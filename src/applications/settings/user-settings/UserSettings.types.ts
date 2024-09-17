@@ -7,7 +7,6 @@ export type UserSettingsContext = {
     actionListIncludeMinuteLongSpellsAsActions: CurrentSettings['actionListIncludeMinuteLongSpellsAsActions'];
     actionListIncludeSpellsWithActiveEffects: CurrentSettings['actionListIncludeSpellsWithActiveEffects'];
     actionListLimitActionsToCantrips: CurrentSettings['actionListLimitActionsToCantrips'];
-    actionListScaleCantripDamage: CurrentSettings['actionListScaleCantripDamage'];
     alwaysShowNpcSkills: CurrentSettings['alwaysShowNpcSkills'];
     alwaysShowNpcTraits: CurrentSettings['alwaysShowNpcTraits'];
     animateInspiration: CurrentSettings['animateInspiration'];
