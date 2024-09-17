@@ -3,7 +3,6 @@
   import type { ItemSheetContext } from 'src/types/item.types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { CONSTANTS } from 'src/constants';
@@ -26,33 +25,26 @@
 </h3>
 
 <!-- Armor Class -->
-<ItemFormGroup
-  field="system.armor.value"
-  labelText={localize('DND5E.ArmorClass')}
-  let:inputId
->
+<div class="form-group">
+  <label for="{appId}-armor-value">{localize('DND5E.ArmorClass')}</label>
   <NumberInput
-    id={inputId}
+    id="{appId}-armor-value"
     document={$context.item}
     field="system.armor.value"
     value={$context.source.armor.value}
     step="1"
   />
-</ItemFormGroup>
+</div>
 
 <!-- Hit Points -->
-<ItemFormGroup
-  cssClass="split-group"
-  labelText={localize('DND5E.HitPoints')}
-  field="system.hp.value"
-  let:inputId
->
+<div class="form-group split-group">
+  <label for="{appId}-hp-value">{localize('DND5E.HitPoints')}</label>
   <div class="form-fields">
     <!-- Current -->
     <div class="form-group label-top">
       <label for="{appId}-hp-value">{localize('DND5E.Current')}</label>
       <NumberInput
-        id={inputId}
+        id="{appId}-hp-value"
         document={$context.item}
         field="system.hp.value"
         value={$context.source.hp.value}
@@ -96,24 +88,20 @@
     placeholder={localize('DND5E.HealthConditions')}
     class="full-width"
   />
-</ItemFormGroup>
+</div>
 
 <!-- Speed -->
 {#if $context.item.type === CONSTANTS.ITEM_TYPE_EQUIPMENT}
-  <ItemFormGroup
-    cssClass="split-group"
-    labelText={localize('DND5E.Speed')}
-    field="system.speed.value"
-    let:inputId
-  >
+  <div class="form-group split-group">
+    <label for="{appId}-speed-value">{localize('DND5E.Speed')}</label>
     <div class="form-fields">
       <!-- Value -->
       <div class="form-group label-top">
-        <label for={inputId}>
+        <label for="{appId}-speed-value">
           {localize('DND5E.Value')}
         </label>
         <NumberInput
-          id={inputId}
+          id="{appId}-speed-value"
           document={$context.item}
           field="system.speed.value"
           value={$context.item.system.speed.value}
@@ -131,5 +119,5 @@
       placeholder={localize('DND5E.SpeedConditions')}
       class="full-width"
     />
-  </ItemFormGroup>
+  </div>
 {/if}

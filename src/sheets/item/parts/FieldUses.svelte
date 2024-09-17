@@ -4,7 +4,6 @@
   import type { Readable } from 'svelte/store';
   import type { ItemSheetContext } from 'src/types/item.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import { CONSTANTS } from 'src/constants';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
@@ -22,8 +21,8 @@
 <h3 class="form-header">{localize('DND5E.Usage')}</h3>
 
 <!-- Uses -->
-<ItemFormGroup cssClass="split-group">
-  <label for="">{localize('DND5E.LimitedUses')}</label>
+<div class="form-group split-group">
+  <label for="{appId}-uses-spent">{localize('DND5E.LimitedUses')}</label>
   <div class="form-fields">
     <!-- Spent  -->
     <div class="form-group label-top">
@@ -47,13 +46,14 @@
       />
     </div>
   </div>
-</ItemFormGroup>
+</div>
 
 <!-- Auto-Destroy -->
 {#if $context.system.uses.autoDestroy}
-  <ItemFormGroup
-    labelText={localize('DND5E.CONSUMABLE.FIELDS.uses.autoDestroy.label')}
-  >
+  <div class="form-group">
+    <label for="{appId}-uses-autoDestroy"
+      >{localize('DND5E.CONSUMABLE.FIELDS.uses.autoDestroy.label')}</label
+    >
     <Checkbox
       id="{appId}-uses-autoDestroy"
       document={$context.item}
@@ -63,7 +63,7 @@
     <p class="hint">
       {localize('DND5E.CONSUMABLE.FIELDS.uses.autoDestroy.hint')}
     </p>
-  </ItemFormGroup>
+  </div>
 {/if}
 
 {#if $context.item.hasLimitedUses}
@@ -83,10 +83,7 @@
   </h3>
 
   {#each $context.usesRecovery as recovery, index}
-    <ItemFormGroup
-      cssClass="split-group full-width card"
-      attributes={{ ['data-index']: index }}
-    >
+    <div class="form-group split-group full-width card" data-index={index}>
       <div class="form-fields">
         <!-- Period -->
         <div class="form-group label-top">
@@ -189,7 +186,7 @@
           <i class="fas fa-minus"></i>
         </button>
       </div>
-    </ItemFormGroup>
+    </div>
   {:else}
     <div class="empty">{localize('DND5E.UsesPeriods.Never')}</div>
   {/each}

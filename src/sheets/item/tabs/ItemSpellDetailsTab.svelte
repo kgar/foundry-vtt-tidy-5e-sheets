@@ -8,7 +8,6 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemProperties from '../parts/ItemProperties.svelte';
   import FieldUses from '../parts/FieldUses.svelte';
@@ -131,11 +130,15 @@
 {/if}
 
 <!-- Preparation Mode -->
-<ItemFormGroup labelText={localize('DND5E.SpellPreparation.Mode')} let:inputId>
+<div class="form-group">
+  <label for="{appId}-preparation-mode"
+    >{localize('DND5E.SpellPreparation.Mode')}</label
+  >
   <div class="form-fields">
     <!-- Prepared -->
     {#if $context.source.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED}
       <Checkbox
+        id="{appId}-preparation-prepared"
         document={$context.item}
         field="system.preparation.prepared"
         checked={$context.source.preparation.prepared}
@@ -148,6 +151,7 @@
 
     <!-- Mode -->
     <Select
+      id="{appId}-preparation-mode"
       document={$context.item}
       field="system.preparation.mode"
       value={$context.source.preparation.mode}
@@ -158,17 +162,15 @@
       />
     </Select>
   </div>
-</ItemFormGroup>
+</div>
 
 <!-- Source Class -->
 {#if $context.isEmbedded}
-  <ItemFormGroup
-    labelText={localize('DND5E.SpellSourceClass')}
-    field="system.sourceClass"
-    let:inputId
-  >
+  <div class="form-group">
+    <label for="{appId}-sourceClass">{localize('DND5E.SpellSourceClass')}</label
+    >
     <Select
-      id={inputId}
+      id="{appId}-sourceClass"
       document={$context.item}
       field="system.sourceClass"
       value={$context.source.sourceClass}
@@ -181,7 +183,7 @@
         blank=""
       />
     </Select>
-  </ItemFormGroup>
+  </div>
 
   <Select
     id="{appId}-ability"
@@ -198,19 +200,17 @@
     />
   </Select>
 {:else}
-  <ItemFormGroup
-    labelText={localize('DND5E.SpellSourceClass')}
-    field="system.sourceClass"
-    let:inputId
-  >
+  <div class="form-group">
+    <label for="{appId}-sourceClass">{localize('DND5E.SpellSourceClass')}</label
+    >
     <TextInput
-      id={inputId}
+      id="{appId}-sourceClass"
       document={$context.item}
       field="system.sourceClass"
       value={$context.source.sourceClass}
       disabled={!$context.editable}
     />
-  </ItemFormGroup>
+  </div>
 {/if}
 
 <h3 class="form-header">{localize('DND5E.Casting')}</h3>

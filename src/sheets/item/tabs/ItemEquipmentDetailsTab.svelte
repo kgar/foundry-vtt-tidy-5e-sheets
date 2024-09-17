@@ -3,7 +3,6 @@
   import type { ItemSheetContext } from 'src/types/item.types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
@@ -29,13 +28,11 @@
   </h3>
 
   <!-- Equipment Type -->
-  <ItemFormGroup
-    labelText={localize('DND5E.ItemEquipmentType')}
-    field="system.type.value"
-    let:inputId
-  >
+  <div class="form-group">
+    <label for="{appId}-type-value">{localize('DND5E.ItemEquipmentType')}</label
+    >
     <Select
-      id={inputId}
+      id="{appId}-type-value"
       document={$context.item}
       field="system.type.value"
       value={$context.source.type.value}
@@ -48,16 +45,15 @@
         blank=""
       />
     </Select>
-  </ItemFormGroup>
+  </div>
 
   <!-- Equipment Base -->
-  <ItemFormGroup
-    labelText={localize('DND5E.ItemEquipmentBase')}
-    field="system.type.baseItem"
-    let:inputId
-  >
+  <div class="form-group">
+    <label for="{appId}-type-baseItem"
+      >{localize('DND5E.ItemEquipmentBase')}</label
+    >
     <Select
-      id={inputId}
+      id="{appId}-type-baseItem"
       document={$context.item}
       field="system.type.baseItem"
       value={$context.source.type.baseItem}
@@ -70,16 +66,13 @@
         blank=""
       />
     </Select>
-  </ItemFormGroup>
+  </div>
 
   <!-- Proficiency -->
-  <ItemFormGroup
-    labelText={localize('DND5E.ProficiencyLevel')}
-    field="system.proficient"
-    let:inputId
-  >
+  <div class="form-group">
+    <label for="{appId}-proficient">{localize('DND5E.ProficiencyLevel')}</label>
     <Select
-      id={inputId}
+      id="{appId}-proficient"
       document={$context.item}
       field="system.proficient"
       value={$context.source.proficient}
@@ -92,17 +85,18 @@
         blank=""
       />
     </Select>
-  </ItemFormGroup>
+  </div>
 
   <!-- Armor -->
   {#if $context.system.isArmor}
-    <ItemFormGroup cssClass="split-group" field="">
+    <div class="form-group split-group">
       <label for="{appId}-armor-value">{localize('DND5E.Armor')}</label>
 
       <div class="form-fields">
         <div class="form-group label-top">
           <label for="{appId}-armor-value">{localize('DND5E.AC')}</label>
           <NumberInput
+            id="{appId}-armor-value"
             document={$context.item}
             field="system.armor.value"
             value={$context.source.armor.value}
@@ -116,6 +110,7 @@
               >{localize('DND5E.ItemEquipmentDexModAbbr')}</label
             >
             <NumberInput
+              id="{appId}-armor-dex"
               document={$context.item}
               field="system.armor.dex"
               value={$context.source.armor.dex}
@@ -128,6 +123,7 @@
         <div class="form-group label-top">
           <label for="{appId}-strength">{localize('DND5E.AbilityStr')}</label>
           <NumberInput
+            id="{appId}-armor-strength"
             document={$context.item}
             field="system.strength"
             value={$context.source.strength}
@@ -136,28 +132,25 @@
           />
         </div>
       </div>
-    </ItemFormGroup>
+    </div>
   {/if}
 
   <!-- Properties -->
-  <ItemFormGroup
-    labelText={localize('DND5E.ItemEquipmentProperties')}
-    cssClass="stacked equipment-properties"
-  >
+  <div class="form-group stacked equipment-properties">
+    <label for="">{localize('DND5E.ItemEquipmentProperties')}</label>
     <ItemProperties />
-  </ItemFormGroup>
+  </div>
 
   <!-- Magical Properties -->
   {#if $context.properties.object.mgc}
-    <ItemFormGroup
-      labelText={localize('DND5E.Item.Property.Magical')}
-      field="system.attunement"
-      let:inputId
-    >
+    <div class="form-group">
+      <label for="{appId}-attunement"
+        >{localize('DND5E.Item.Property.Magical')}</label
+      >
       <div class="form-fields">
         {#if !$context.item.isMountable}
           <div class="form-group label-top no-gap">
-            <label for={inputId}>
+            <label for="{appId}-attuned">
               {localize('DND5E.Attunement')}
             </label>
             <div class="form-fields">
@@ -174,7 +167,7 @@
               ></Checkbox>
               <!-- Attunement -->
               <Select
-                id={inputId}
+                id="{appId}-attunement"
                 document={$context.item}
                 field="system.attunement"
                 value={$context.source.attunement}
@@ -203,7 +196,7 @@
           />
         </div>
       </div>
-    </ItemFormGroup>
+    </div>
   {/if}
 
   {#if $context.system.isMountable}

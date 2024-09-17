@@ -6,7 +6,6 @@
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import Select from 'src/components/inputs/Select.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import ItemProperties from '../parts/ItemProperties.svelte';
   import ContentConcealer from 'src/components/content-concealment/ContentConcealer.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
@@ -24,13 +23,10 @@
 
 <ContentConcealer conceal={$context.concealDetails}>
   <!-- Tool Type -->
-  <ItemFormGroup
-    labelText={localize('DND5E.ItemToolType')}
-    field="system.type.value"
-    let:inputId
-  >
+  <div class="form-group">
+    <label for="{appId}-type-value">{localize('DND5E.ItemToolType')}</label>
     <Select
-      id={inputId}
+      id="{appId}-type-value"
       document={$context.item}
       field="system.type.value"
       value={$context.source.type.value}
@@ -38,16 +34,13 @@
     >
       <SelectOptions data={$context.config.toolTypes} blank="" />
     </Select>
-  </ItemFormGroup>
+  </div>
 
   <!-- Base Tool -->
-  <ItemFormGroup
-    labelText={localize('DND5E.ItemToolBase')}
-    field="system.type.baseItem"
-    let:inputId
-  >
+  <div class="form-group">
+    <label for="{appId}-type-baseItem">{localize('DND5E.ItemToolBase')}</label>
     <Select
-      id={inputId}
+      id="{appId}-type-baseItem"
       document={$context.item}
       field="system.type.baseItem"
       value={$context.source.type.baseItem}
@@ -55,15 +48,13 @@
     >
       <SelectOptions data={$context.baseItems} blank="" />
     </Select>
-  </ItemFormGroup>
+  </div>
 
   <!-- Tool Properties -->
-  <ItemFormGroup
-    cssClass="stacked tool-properties"
-    labelText={localize('DND5E.ItemToolProperties')}
-  >
+  <div class="form-group stacked tool-properties">
+    <label for="">{localize('DND5E.ItemToolProperties')}</label>
     <ItemProperties />
-  </ItemFormGroup>
+  </div>
 
   <!-- Ability Check -->
   <div class="form-group">
@@ -118,11 +109,8 @@
 
   <!-- Attunement -->
   {#if $context.properties.object.mgc}
-    <ItemFormGroup
-      labelText={localize('DND5E.Attunement')}
-      field="system.attunement"
-      let:inputId
-    >
+    <div class="form-group">
+      <label for="{appId}-attunement">{localize('DND5E.Attunement')}</label>
       <div class="form-fields no-gap">
         <!-- Attuned -->
         <Checkbox
@@ -138,7 +126,7 @@
 
         <!-- Attunement -->
         <Select
-          id={inputId}
+          id="{appId}-attunement"
           document={$context.item}
           field="system.attunement"
           value={$context.source.attunement}
@@ -150,7 +138,7 @@
           />
         </Select>
       </div>
-    </ItemFormGroup>
+    </div>
   {/if}
 
   <FieldUses />

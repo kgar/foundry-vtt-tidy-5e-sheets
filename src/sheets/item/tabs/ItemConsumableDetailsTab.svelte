@@ -5,7 +5,6 @@
   import type { ItemSheetContext } from 'src/types/item.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Select from 'src/components/inputs/Select.svelte';
-  import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import ItemProperties from '../parts/ItemProperties.svelte';
   import ContentConcealer from 'src/components/content-concealment/ContentConcealer.svelte';
   import { CONSTANTS } from 'src/constants';
@@ -26,13 +25,12 @@
 <ContentConcealer conceal={$context.concealDetails}>
   <h3 class="form-header">{localize('DND5E.ItemConsumableDetails')}</h3>
 
-  <ItemFormGroup
-    labelText={localize('DND5E.ItemConsumableType')}
-    field="system.type.value"
-    let:inputId
-  >
+  <div class="form-group">
+    <label for="{appId}-type-value"
+      >{localize('DND5E.ItemConsumableType')}</label
+    >
     <Select
-      id={inputId}
+      id="{appId}-type-value"
       document={$context.item}
       field="system.type.value"
       value={$context.system.type.value}
@@ -45,7 +43,7 @@
         blank=""
       />
     </Select>
-  </ItemFormGroup>
+  </div>
   {#if $context.itemSubtypes}
     {@const consumableSubTypeLabel = localize('DND5E.ItemConsumableSubtype', {
       category:
@@ -53,13 +51,10 @@
         $context.config.consumableTypes[$context.system.type.value]?.label,
     })}
 
-    <ItemFormGroup
-      labelText={consumableSubTypeLabel}
-      field="system.type.subtype"
-      let:inputId
-    >
+    <div class="form-group">
+      <label for="{appId}-type-subtype">{consumableSubTypeLabel}</label>
       <Select
-        id={inputId}
+        id="{appId}-type-subtype"
         document={$context.item}
         field="system.type.subtype"
         value={$context.system.type.subtype}
@@ -67,34 +62,33 @@
       >
         <SelectOptions data={$context.itemSubtypes} blank="" />
       </Select>
-    </ItemFormGroup>
+    </div>
   {/if}
 
-  <ItemFormGroup
-    cssClass="stacked consumable-properties"
-    labelText={$context.system.type.value === 'ammo'
-      ? localize('DND5E.ItemAmmoProperties')
-      : localize('DND5E.ItemConsumableProperties')}
-  >
+  <div class="form-group stacked consumable-properties">
+    <label for=""
+      >{$context.system.type.value === 'ammo'
+        ? localize('DND5E.ItemAmmoProperties')
+        : localize('DND5E.ItemConsumableProperties')}</label
+    >
     <ItemProperties />
-  </ItemFormGroup>
+  </div>
 
   {#if $context.properties.object.mgc}
     <!-- Attunement -->
-    <ItemFormGroup
-      labelText={localize('DND5E.Item.Property.Magical')}
-      field="system.attunement"
-      let:inputId
-    >
+    <div class="form-group">
+      <label for="${appId}-system-attunement"
+        >{localize('DND5E.Item.Property.Magical')}</label
+      >
       <div class="form-fields">
         <div class="form-group label-top no-gap">
-          <label for={inputId}>
+          <label for="${appId}-system-attuned">
             {localize('DND5E.Attunement')}
           </label>
           <div class="form-fields">
             <!-- Attuned -->
             <Checkbox
-              id={`${appId}-system-attuned`}
+              id="${appId}-system-attuned"
               document={$context.item}
               field="system.attuned"
               checked={$context.source.attuned}
@@ -105,7 +99,7 @@
             ></Checkbox>
             <!-- Attunement -->
             <Select
-              id={inputId}
+              id="${appId}-system-attunement"
               document={$context.item}
               field="system.attunement"
               value={$context.system.attunement}
@@ -136,20 +130,19 @@
           </div>
         {/if}
       </div>
-    </ItemFormGroup>
+    </div>
   {/if}
 
   <h3 class="form-header">
     {localize('DND5E.CONSUMABLE.FIELDS.damage.label')}
   </h3>
 
-  <ItemFormGroup
-    labelText={localize('DND5E.CONSUMABLE.FIELDS.damage.replace.label')}
-    field="system.damage.replace"
-    let:inputId
-  >
+  <div class="form-group">
+    <label for="{appId}-damage-replace"
+      >{localize('DND5E.CONSUMABLE.FIELDS.damage.replace.label')}</label
+    >
     <Checkbox
-      id={inputId}
+      id="{appId}-damage-replace"
       document={$context.item}
       field="system.damage.replace"
       checked={$context.source.damage.replace}
@@ -157,7 +150,7 @@
     <p class="hint">
       {localize('DND5E.CONSUMABLE.FIELDS.damage.replace.hint')}
     </p>
-  </ItemFormGroup>
+  </div>
 
   {#if $context.system.type.value === CONSTANTS.ITEM_SYSTEM_TYPE_AMMO}
     <FieldDamage

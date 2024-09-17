@@ -4,7 +4,6 @@
   import type { ItemSheetContext } from 'src/types/item.types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
@@ -32,7 +31,7 @@
 </script>
 
 <!-- Custom Formula -->
-<ItemFormGroup cssClass="split-group">
+<div class="form-group split-group">
   <label for="{idPrefix}custom-enabled">Formula</label>
   <div class="form-fields">
     <Checkbox
@@ -51,16 +50,16 @@
       />
     {/if}
   </div>
-</ItemFormGroup>
+</div>
 
 <!-- Simple Input -->
 {#if !source.custom.enabled}
-  <ItemFormGroup
-    cssClass="split-group"
-    labelText={$context.system.damage.heal
-      ? localize('DND5E.HEAL.Title')
-      : localize('DND5E.DAMAGE.Title')}
-  >
+  <div class="form-group split-group">
+    <label for="{idPrefix}number"
+      >{$context.system.damage.heal
+        ? localize('DND5E.HEAL.Title')
+        : localize('DND5E.DAMAGE.Title')}</label
+    >
     <div class="form-fields">
       <div class="form-group label-top">
         <label for="{idPrefix}number">{localize('DND5E.Number')}</label>
@@ -107,15 +106,13 @@
         />
       </div>
     </div>
-  </ItemFormGroup>
+  </div>
 {/if}
 
 <!-- Types -->
 {#if types}
-  <ItemFormGroup
-    cssClass="stacked damage-types"
-    labelText={localize('DND5E.Type')}
-  >
+  <div class="form-group stacked damage-types">
+    <label for="">{localize('DND5E.Type')}</label>
     {#each types as { value, label, selected } (value)}
       <Checkbox
         labelCssClass="checkbox"
@@ -130,5 +127,5 @@
         {label}
       </Checkbox>
     {/each}
-  </ItemFormGroup>
+  </div>
 {/if}

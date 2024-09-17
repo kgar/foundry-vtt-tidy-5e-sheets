@@ -16,13 +16,14 @@
   import OpenSheetEditor from 'src/components/editor/OpenSheetEditor.svelte';
   import SheetEditor from 'src/components/editor/SheetEditor.svelte';
   import { CONSTANTS } from 'src/constants';
-  import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context = getContext<Readable<ItemSheetContext | ContainerSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
+
+  $: appId = $context.item.sheet.appId;
 
   function onEditorActivation(node: HTMLElement) {
     if (editorIsActive) {
@@ -165,38 +166,34 @@
     {/if}
 
     <div class="flex-column small-gap">
-      <ItemFormGroup
-        labelText={localize('TIDY5E.Section.Label')}
-        field={TidyFlags.section.prop}
-        cssClass="section"
-        let:inputId
-      >
+      <div class="form-group section">
+        <label for="{appId}-tidy-section"
+          >{localize('TIDY5E.Section.Label')}</label
+        >
         <TextInput
           document={$context.item}
           field={TidyFlags.section.prop}
-          id={inputId}
+          id="{appId}-tidy-section"
           placeholder={localize('TIDY5E.Section.Default')}
           value={TidyFlags.section.get($context.item) ?? ''}
           selectOnFocus={true}
           title={localize('TIDY5E.Section.Tooltip')}
         ></TextInput>
-      </ItemFormGroup>
-      <ItemFormGroup
-        labelText={localize('TIDY5E.Section.ActionLabel')}
-        field={TidyFlags.actionSection.prop}
-        cssClass="section"
-        let:inputId
-      >
+      </div>
+      <div class="form-group section">
+        <label for="{appId}-tidy-action-section"
+          >{localize('TIDY5E.Section.ActionLabel')}</label
+        >
         <TextInput
           document={$context.item}
           field={TidyFlags.actionSection.prop}
-          id={inputId}
+          id="{appId}-tidy-action-section"
           placeholder={localize('TIDY5E.Section.Default')}
           value={TidyFlags.actionSection.get($context.item) ?? ''}
           selectOnFocus={true}
           title={localize('TIDY5E.Section.ActionTooltip')}
         ></TextInput>
-      </ItemFormGroup>
+      </div>
     </div>
   </div>
 

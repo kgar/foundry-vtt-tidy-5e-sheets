@@ -4,7 +4,6 @@
   import type { ItemSheetContext } from 'src/types/item.types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import Select from 'src/components/inputs/Select.svelte';
   import { CONSTANTS } from 'src/constants';
   import TextInput from 'src/components/inputs/TextInput.svelte';
@@ -13,17 +12,18 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
+  $: appId = $context.item.sheet.appId;
+
   const localize = FoundryAdapter.localize;
 </script>
 
-<ItemFormGroup
-  field="system.spellcasting.progression"
-  labelText={localize('DND5E.SpellProgression')}
-  let:inputId
->
+<div class="form-group">
+  <label for="{appId}-spellcasting-progression"
+    >{localize('DND5E.SpellProgression')}</label
+  >
   <div class="form-fields">
     <Select
-      id={inputId}
+      id="{appId}-spellcasting-progression"
       document={$context.item}
       field="system.spellcasting.progression"
       value={$context.system.spellcasting.progression}
@@ -32,16 +32,15 @@
       <SelectOptions data={$context.config.spellProgression} />
     </Select>
   </div>
-</ItemFormGroup>
+</div>
 
-<ItemFormGroup
-  field="system.spellcasting.ability"
-  labelText={localize('DND5E.SpellAbility')}
-  let:inputId
->
+<div class="form-group">
+  <label for="{appId}-spellcasting-ability"
+    >{localize('DND5E.SpellAbility')}</label
+  >
   <div class="form-fields">
     <Select
-      id={inputId}
+      id="{appId}-spellcasting-ability"
       document={$context.item}
       field="system.spellcasting.ability"
       value={$context.system.spellcasting.ability}
@@ -54,20 +53,19 @@
       />
     </Select>
   </div>
-</ItemFormGroup>
+</div>
 
-<ItemFormGroup
-  field="system.spellcasting.preparation.formula"
-  labelText={localize('DND5E.SpellPreparation.Formula')}
-  let:inputId
->
+<div class="form-group">
+  <label for="{appId}-spellcasting-preparation-formula"
+    >{localize('DND5E.SpellPreparation.Formula')}</label
+  >
   <div class="form-fields">
     <TextInput
       document={$context.item}
       field="system.spellcasting.preparation.formula"
       value={$context.system.spellcasting.preparation.formula}
-      id={inputId}
+      id="{appId}-spellcasting-preparation-formula"
       dataset={{ formulaEditor: true }}
     />
   </div>
-</ItemFormGroup>
+</div>

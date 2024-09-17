@@ -6,7 +6,6 @@
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Select from 'src/components/inputs/Select.svelte';
-  import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import ItemProperties from '../parts/ItemProperties.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { CONSTANTS } from 'src/constants';
@@ -16,18 +15,17 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
+  $: appId = $context.item.sheet.appId;
+
   const localize = FoundryAdapter.localize;
 </script>
 
 <h3 class="form-header">{localize('DND5E.ItemFeatureDetails')}</h3>
 
-<ItemFormGroup
-  labelText={localize('DND5E.Type')}
-  field="system.type.value"
-  let:inputId
->
+<div class="form-group">
+  <label for="{appId}-type-value">{localize('DND5E.Type')}</label>
   <Select
-    id={inputId}
+    id="{appId}-type-value"
     document={$context.item}
     field="system.type.value"
     value={$context.source.type.value}
@@ -39,20 +37,19 @@
       blank=""
     />
   </Select>
-</ItemFormGroup>
+</div>
 
 {#if $context.itemSubtypes}
   {@const category =
     // @ts-expect-error
     $context.config.featureTypes[$context.system.type.value]?.label}
 
-  <ItemFormGroup
-    labelText={localize('DND5E.ItemFeatureSubtype', { category })}
-    field="system.type.subtype"
-    let:inputId
-  >
+  <div class="form-group">
+    <label for="{appId}-type-subtype"
+      >{localize('DND5E.ItemFeatureSubtype', { category })}</label
+    >
     <Select
-      id={inputId}
+      id="{appId}-type-subtype"
       document={$context.item}
       field="system.type.subtype"
       value={$context.source.type.subtype}
@@ -60,16 +57,15 @@
     >
       <SelectOptions data={$context.itemSubtypes} blank="" />
     </Select>
-  </ItemFormGroup>
+  </div>
 {/if}
 
-<ItemFormGroup
-  labelText={localize('DND5E.Prerequisites.FIELDS.prerequisites.level.label')}
-  field="system.prerequisites.level"
-  let:inputId
->
+<div class="form-group">
+  <label for="{appId}-prerequisites-level"
+    >{localize('DND5E.Prerequisites.FIELDS.prerequisites.level.label')}</label
+  >
   <NumberInput
-    id={inputId}
+    id="{appId}-prerequisites-level"
     document={$context.item}
     field="system.prerequisites.level"
     value={$context.source.prerequisites.level}
@@ -80,26 +76,23 @@
   <p class="hint">
     {localize('DND5E.Prerequisites.FIELDS.prerequisites.level.hint')}
   </p>
-</ItemFormGroup>
+</div>
 
-<ItemFormGroup
-  cssClass="stacked feature-properties"
-  labelText={localize('DND5E.ItemFeatureProperties')}
->
+<div class="form-group stacked feature-properties">
+  <label for="">{localize('DND5E.ItemFeatureProperties')}</label>
   <ItemProperties />
-</ItemFormGroup>
+</div>
 
 {#if $context.system.isEnchantmentSource}
   <h3 class="form-header">{localize('DND5E.ENCHANTMENT.Label')}</h3>
 
   <!-- Max Enchantments -->
-  <ItemFormGroup
-    labelText={localize('DND5E.ENCHANTMENT.FIELDS.enchantment.items.max.label')}
-    field="system.enchant.max"
-    let:inputId
-  >
+  <div class="form-group">
+    <label for="{appId}-enchant-max"
+      >{localize('DND5E.ENCHANTMENT.FIELDS.enchantment.items.max.label')}</label
+    >
     <TextInput
-      id={inputId}
+      id="{appId}-enchant-max"
       document={$context.item}
       field="system.enchant.max"
       value={$context.source.enchant.max}
@@ -108,18 +101,17 @@
     <p class="hint">
       {localize('DND5E.ENCHANTMENT.FIELDS.enchantment.items.max.hint')}
     </p>
-  </ItemFormGroup>
+  </div>
 
   <!-- Enchantment Replacement -->
-  <ItemFormGroup
-    labelText={localize(
-      'DND5E.ENCHANTMENT.FIELDS.enchantment.items.period.label',
-    )}
-    field="system.enchant.period"
-    let:inputId
-  >
+  <div class="form-group">
+    <label for="{appId}-enchant-period"
+      >{localize(
+        'DND5E.ENCHANTMENT.FIELDS.enchantment.items.period.label',
+      )}</label
+    >
     <Select
-      id={inputId}
+      id="{appId}-enchant-period"
       document={$context.item}
       field="system.enchant.period"
       value={$context.source.enchant.period}
@@ -136,7 +128,7 @@
     <p class="hint">
       {localize('DND5E.ENCHANTMENT.FIELDS.enchantment.items.period.hint')}
     </p>
-  </ItemFormGroup>
+  </div>
 {/if}
 
 <FieldUses />

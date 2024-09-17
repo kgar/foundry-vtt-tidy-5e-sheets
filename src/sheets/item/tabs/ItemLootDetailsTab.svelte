@@ -3,7 +3,6 @@
   import type { ItemSheetContext } from 'src/types/item.types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import ItemProperties from '../parts/ItemProperties.svelte';
@@ -14,6 +13,8 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
+  $: appId = $context.item.sheet.appId;
+
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -21,13 +22,10 @@
   <h3 class="form-header">{localize('DND5E.ItemLootDetails')}</h3>
 
   <!-- Loot Type -->
-  <ItemFormGroup
-    labelText={localize('DND5E.ItemLootType')}
-    field="system.type.value"
-    let:inputId
-  >
+  <div class="form-group">
+    <label for="{appId}-type-value">{localize('DND5E.ItemLootType')}</label>
     <Select
-      id={inputId}
+      id="{appId}-type-value"
       document={$context.item}
       field="system.type.value"
       value={$context.source.type.value}
@@ -39,22 +37,19 @@
         blank=""
       />
     </Select>
-  </ItemFormGroup>
+  </div>
 
   <!-- Loot Subtype -->
   {#if $context.itemSubtypes}
     {@const subtypeLabel = localize('DND5E.ItemLootSubtype', {
       category:
-        // @ts-expect-error 
+        // @ts-expect-error
         $context.config.lootTypes[$context.system.type.value]?.label ?? '',
     })}
-    <ItemFormGroup
-      labelText={subtypeLabel}
-      field="system.type.subtype"
-      let:inputId
-    >
+    <div class="form-group">
+      <label for="{appId}-type-subtype">{subtypeLabel}</label>
       <Select
-        id={inputId}
+        id="{appId}-type-subtype"
         document={$context.item}
         field="system.type.subtype"
         value={$context.source.type.subtype}
@@ -63,14 +58,12 @@
       >
         <SelectOptions data={$context.itemSubtypes} blank="" />
       </Select>
-    </ItemFormGroup>
+    </div>
   {/if}
 
   <!-- Loot Properties -->
-  <ItemFormGroup
-    cssClass="stacked loot-properties"
-    labelText={localize('DND5E.ItemLootProperties')}
-  >
+  <div class="form-group stacked loot-properties">
+    <label for="">{localize('DND5E.ItemLootProperties')}</label>
     <ItemProperties />
-  </ItemFormGroup>
+  </div>
 </ContentConcealer>

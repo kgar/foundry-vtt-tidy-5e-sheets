@@ -6,7 +6,6 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ItemSheetContext } from 'src/types/item.types';
-  import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ItemStartingEquipment from '../parts/ItemStartingEquipment.svelte';
   import { CONSTANTS } from 'src/constants';
@@ -16,6 +15,8 @@
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
+
+  $: appId = $context.item.sheet.appId;
 
   $: abilities = Object.entries<any>($context.config.abilities).map(
     ([key, value]) => ({
@@ -29,14 +30,11 @@
 
 <h3 class="form-header">{localize('DND5E.ItemClassDetails')}</h3>
 
-<ItemFormGroup
-  labelText={localize('DND5E.Identifier')}
-  field="system.identifier"
-  let:inputId
->
+<div class="form-group">
+  <label for="{appId}-identifier">{localize('DND5E.Identifier')}</label>
   <div class="form-fields">
     <TextInput
-      id={inputId}
+      id="{appId}-identifier"
       document={$context.item}
       field="system.identifier"
       value={$context.source.identifier}
@@ -50,14 +48,10 @@
     })}
     {localize('DND5E.IdentifierError')}
   </p>
-</ItemFormGroup>
+</div>
 
-<ItemFormGroup
-  labelText={localize('DND5E.HitDice')}
-  field="system.hitDice"
-  cssClass="split-group"
-  let:inputId
->
+<div class="form-group split-group">
+  <label for="{$context.appId}-hit-dice">{localize('DND5E.HitDice')}</label>
   <div class="form-fields">
     <div class="form-group label-top">
       <label for="{$context.appId}-hit-dice"
@@ -81,7 +75,7 @@
         >{localize('DND5E.Spent')}</label
       >
       <NumberInput
-        id={inputId}
+        id="{$context.appId}-hitDiceUsed"
         document={$context.item}
         field="system.hitDiceUsed"
         value={$context.source.hitDiceUsed}
@@ -89,15 +83,15 @@
         disabled={!$context.editable}
       />
     </div>
-  </div></ItemFormGroup
->
+  </div>
+</div>
 
 <h3 class="form-header">{localize('DND5E.ItemClassDetails')}</h3>
 
-<ItemFormGroup
-  cssClass="stacked primary-abilities"
-  labelText={localize('DND5E.CLASS.FIELDS.primaryAbility.value.label')}
->
+<div class="form-group stacked primary-abilities">
+  <label for=""
+    >{localize('DND5E.CLASS.FIELDS.primaryAbility.value.label')}</label
+  >
   {#each abilities as { key, label } (key)}
     <Checkbox
       labelCssClass="checkbox"
@@ -112,23 +106,22 @@
     </Checkbox>
   {/each}
   <p class="hint">{localize('DND5E.CLASS.FIELDS.primaryAbility.value.hint')}</p>
-</ItemFormGroup>
+</div>
 
 {#if $context.source.primaryAbility.value.size > 1}
-  <ItemFormGroup
-    labelText={localize('DND5E.CLASS.FIELDS.primaryAbility.all.label')}
-    field="system.primaryAbility.fields.all"
-    let:inputId
-  >
+  <div class="form-group">
+    <label for="{appId}-system-primaryAbility-fields-all"
+      >{localize('DND5E.CLASS.FIELDS.primaryAbility.all.label')}</label
+    >
     <Checkbox
+      id="{appId}-system-primaryAbility-fields-all"
       document={$context.item}
       field="system.primaryAbility.fields.all"
       checked={$context.source.primaryAbility.all}
-      id={inputId}
     ></Checkbox>
 
     <p class="hint">{localize('DND5E.CLASS.FIELDS.primaryAbility.all.hint')}</p>
-  </ItemFormGroup>
+  </div>
 {/if}
 
 <h3 class="form-header">{localize('DND5E.Spellcasting')}</h3>

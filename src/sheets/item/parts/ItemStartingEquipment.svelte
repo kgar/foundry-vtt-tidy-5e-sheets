@@ -5,12 +5,13 @@
   import { coalesce } from 'src/utils/formatting';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
+
+  $: appId = $context.item.sheet.appId;
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -37,7 +38,10 @@
   )}
 </div>
 
-<ItemFormGroup labelText={localize('DND5E.StartingEquipment.Wealth.Label')}>
+<div class="form-group">
+  <label for="{appId}-wealth"
+    >{localize('DND5E.StartingEquipment.Wealth.Label')}</label
+  >
   <div class="form-fields">
     <TextInput
       document={$context.item}
@@ -46,7 +50,7 @@
     ></TextInput>
   </div>
   <p class="hint">{localize('DND5E.StartingEquipment.Wealth.Hint')}</p>
-</ItemFormGroup>
+</div>
 
 <style lang="scss">
   span:has(.configure-starting-equipment) {

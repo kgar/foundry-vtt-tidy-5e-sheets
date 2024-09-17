@@ -5,7 +5,6 @@
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import Select from 'src/components/inputs/Select.svelte';
   import ItemProperties from '../parts/ItemProperties.svelte';
   import ContentConcealer from 'src/components/content-concealment/ContentConcealer.svelte';
@@ -28,13 +27,10 @@
   <h3 class="form-header">{localize('DND5E.ItemWeaponDetails')}</h3>
 
   <!-- Weapon Type -->
-  <ItemFormGroup
-    labelText={localize('DND5E.ItemWeaponType')}
-    field="system.type.value"
-    let:inputId
-  >
+  <div class="form-group">
+    <label for="{appId}-type-value">{localize('DND5E.ItemWeaponType')}</label>
     <Select
-      id={inputId}
+      id="{appId}-type-value"
       document={$context.item}
       field="system.type.value"
       value={$context.source.type.value}
@@ -43,16 +39,14 @@
     >
       <SelectOptions data={$context.config.weaponTypes} blank="" />
     </Select>
-  </ItemFormGroup>
+  </div>
 
   <!-- Weapon Base -->
-  <ItemFormGroup
-    labelText={localize('DND5E.ItemWeaponBase')}
-    field="system.type.baseItem"
-    let:inputId
-  >
+  <div class="form-group">
+    <label for="{appId}-type-baseItem">{localize('DND5E.ItemWeaponBase')}</label
+    >
     <Select
-      id={inputId}
+      id="{appId}-type-baseItem"
       document={$context.item}
       field="system.type.baseItem"
       value={$context.source.type.baseItem}
@@ -60,7 +54,7 @@
     >
       <SelectOptions data={$context.baseItems} blank="" />
     </Select>
-  </ItemFormGroup>
+  </div>
 
   <!-- Proficiency -->
   {#if !$context.item.isMountable}
@@ -98,22 +92,18 @@
   </div>
 
   <!-- Weapon Properties -->
-  <ItemFormGroup
-    cssClass="stacked weapon-properties"
-    labelText={localize('DND5E.ItemWeaponProperties')}
-  >
+  <div class="form-group stacked weapon-properties">
+    <label for="">{localize('DND5E.ItemWeaponProperties')}</label>
     <ItemProperties />
-  </ItemFormGroup>
+  </div>
 
   <!-- Magical Properties -->
   {#if $context.properties.object.mgc}
     <!-- Attunement -->
-    <ItemFormGroup
-      labelText={localize('DND5E.Item.Property.Magical')}
-      field="system.attunement"
-      cssClass="split-group"
-      let:inputId
-    >
+    <div class="form-group split-group">
+      <label for="{appId}-system-attunement"
+        >{localize('DND5E.Item.Property.Magical')}</label
+      >
       <div class="form-fields">
         <!-- Attunement -->
         {#if !$context.item.isMountable}
@@ -124,7 +114,7 @@
             <div class="form-fields">
               <!-- Attuned -->
               <Checkbox
-                id={`${appId}-system-attuned`}
+                id="{appId}-system-attuned"
                 document={$context.item}
                 field="system.attuned"
                 checked={$context.source.attuned}
@@ -135,7 +125,7 @@
               ></Checkbox>
               <!-- Attunement -->
               <Select
-                id={inputId}
+                id="{appId}-system-attunement"
                 document={$context.item}
                 field="system.attunement"
                 value={$context.system.attunement}
@@ -165,7 +155,7 @@
           />
         </div>
       </div>
-    </ItemFormGroup>
+    </div>
   {/if}
 
   <!-- Ammunition Type -->
@@ -192,7 +182,7 @@
 
   {#if $context.system.hasRange || !$context.system.attackType}
     <div class="form-group split-group">
-      <label>{localize('DND5E.RangeDistance')}</label>
+      <label for="">{localize('DND5E.RangeDistance')}</label>
       <div class="form-fields">
         <!-- Normal -->
         <div class="form-group label-top">
@@ -250,7 +240,7 @@
     </div>
   {:else}
     <div class="form-group split-group">
-      <label>{localize('DND5E.RangeDistance')}</label>
+      <label for="">{localize('DND5E.RangeDistance')}</label>
       <div class="form-fields">
         <!-- Reach -->
         {#if $context.system.attackType === 'melee'}
