@@ -16,10 +16,10 @@
 </script>
 
 <div class="form-group">
-  <label for="{$appId}-system.hp.value">{localize('DND5E.HitPoints')}</label>
+  <label for="{appId}-system.hp.value">{localize('DND5E.HitPoints')}</label>
   <div class="form-fields">
     <NumberInput
-      id="{$appId}-system.hp.value"
+      id="{appId}-system.hp.value"
       document={$context.item}
       field="system.hp.value"
       value={$context.item.system.hp.value}
@@ -27,7 +27,7 @@
     />
     <span class="sep">&sol;</span>
     <NumberInput
-      id="{$appId}-system.hp.max"
+      id="{appId}-system.hp.max"
       document={$context.item}
       field="system.hp.max"
       value={$context.item.system.hp.max}
@@ -36,7 +36,7 @@
     <NumberInput
       document={$context.item}
       field="system.hp.dt"
-      id="{$appId}-system.hp.dt"
+      id="{appId}-system.hp.dt"
       placeholder={localize('DND5E.Threshold')}
       value={$context.item.system.hp.dt}
     />
@@ -44,12 +44,12 @@
 </div>
 
 <div class="form-group">
-  <label for="{$appId}-system.hp.conditions"
+  <label for="{appId}-system.hp.conditions"
     >{localize('DND5E.HealthConditions')}</label
   >
   <div class="form-fields">
     <TextInput
-      id="{$appId}-system.hp.conditions"
+      id="{appId}-system.hp.conditions"
       document={$context.item}
       field="system.hp.conditions"
       value={$context.item.system.hp.conditions}
