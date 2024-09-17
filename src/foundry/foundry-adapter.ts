@@ -1242,18 +1242,9 @@ export const FoundryAdapter = {
       debug('Text editor error trobuleshooting info', { node, sheet });
     }
   },
-  async openEnchantmentConfig(item: Item5e) {
-    return new dnd5e.applications.item.EnchantmentConfig(item).render(true);
-  },
   async renderFromUuid(uuid: string, force: boolean = true) {
     const doc = await fromUuid(uuid);
     return doc?.sheet?.render(force);
-  },
-  async removeEnchantment(enchantmentUuid: string, app: any) {
-    const enchantment = fromUuidSync(enchantmentUuid);
-    if (!enchantment) return;
-    await enchantment.delete();
-    await app.render();
   },
   /**
    * Stack identical consumables when a new one is dropped rather than creating a duplicate item.
