@@ -27,6 +27,7 @@ import { AsyncMutex } from 'src/utils/mutex';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
 import { CONSTANTS } from 'src/constants';
+import type { Activity5e } from 'src/foundry/dnd5e.types';
 
 export class Tidy5eKgarItemSheet
   extends dnd5e.applications.item.ItemSheet5e
@@ -108,6 +109,14 @@ export class Tidy5eKgarItemSheet
         '.advancement-item',
         contextOptions
       );
+
+    FoundryAdapter.createContextMenu(html, '.activity[data-activity-id]', [], {
+      onOpen: (target: HTMLElement) =>
+        dnd5e.documents.activity.UtilityActivity.onContextMenu(
+          this.item,
+          target
+        ),
+    });
   }
 
   async getData(options = {}) {
@@ -184,7 +193,7 @@ export class Tidy5eKgarItemSheet
     const target = this.item.type === 'spell' ? this.item.system.target : null;
 
     context.dimensions = target?.template?.dimensions;
-    
+
     context.scalarTarget = !['', 'self', 'any'].includes(target?.affects?.type);
     context.affectsPlaceholder = game.i18n.localize(
       `DND5E.Target${target?.template?.type ? 'Every' : 'Any'}`
@@ -430,6 +439,69 @@ export class Tidy5eKgarItemSheet
       this.component?.$destroy();
       this.subscriptionsService.unsubscribeAll();
       return super.close(...args);
+    }
+  }
+
+  /** @override */
+  _onDragStart(event: DragEvent & { target: HTMLElement }) {
+    const { activityId } =
+      event.target.closest<HTMLElement>('.activity[data-activity-id]')
+        ?.dataset ?? {};
+
+    const activity = this.item.system.activities?.get(activityId);
+
+    if (!activity) {
+      return super._onDragStart(event);
+    }
+
+    event.dataTransfer?.setData(
+      'text/plain',
+      JSON.stringify(activity.toDragData())
+    );
+  }
+
+  /**
+   * Handle dropping an Activity onto the sheet.
+   * @param {DragEvent} event       The drag event.
+   * @param {object} transfer       The dropped data.
+   * @param {object} transfer.data  The Activity data.
+   * @protected
+   */
+  _onDropActivity(
+    event: DragEvent & { target: HTMLElement },
+    { data }: { data: any }
+  ) {
+    const { _id: id, type } = data;
+    const source = this.item.system.activities.get(id);
+
+    // Reordering
+    if (source) {
+      const targetId = event.target.closest<HTMLElement>(
+        '.activity[data-activity-id]'
+      )?.dataset.activityId;
+      const target = this.item.system.activities.get(targetId);
+      if (!target || target === source) return;
+      const siblings = this.item.system.activities.filter(
+        (a: Activity5e) => a._id !== id
+      );
+      const sortUpdates = SortingHelpers.performIntegerSort(source, {
+        target,
+        siblings,
+      });
+      const updateData = Object.fromEntries(
+        sortUpdates.map(
+          ({ target, update }: { target: Activity5e; update: Activity5e }) => {
+            return [target._id, { sort: update.sort }];
+          }
+        )
+      );
+      this.item.update({ 'system.activities': updateData });
+    }
+
+    // Copying
+    else {
+      delete data._id;
+      this.item.createActivity(type, data, { renderSheet: false });
     }
   }
 

@@ -31,7 +31,11 @@
   </header>
   <div class="scroll-container activities">
     {#each $context.activities as activity (activity.id)}
-      <div class="activity card">
+      <div
+        class="activity card"
+        data-activity-id={activity.id}
+        data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
+      >
         <div class="icon" class:svg={activity.img.svg}>
           {#if activity.img.svg}
             <Dnd5eIcon src={activity.img.src} />
