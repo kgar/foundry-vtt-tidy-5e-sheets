@@ -247,15 +247,9 @@ export class Tidy5eNpcSheet
 
     let maxPreparedSpellsTotal = 0;
     try {
-      const formula = TidyFlags.maxPreparedSpells.get(this.actor) ?? '';
-
-      if (formula?.trim() !== '') {
-        const roll = await Roll.create(
-          formula,
-          this.actor.getRollData()
-        ).evaluate();
-        maxPreparedSpellsTotal = roll.total;
-      }
+      maxPreparedSpellsTotal =
+        FoundryAdapter.getFilteredClassOrOriginal(this.actor)?.system
+          ?.spellcasting?.preparation?.max ?? 0;
     } catch (e) {
       error('Unable to calculate max prepared spells', false, e);
     }
@@ -679,6 +673,26 @@ export class Tidy5eNpcSheet
         defaultDocumentContext.effects
       );
 
+    // Organize Spellbook and count the number of prepared spells (excluding always, at will, cantrips, etc...)
+    const currentFilteredClass = FoundryAdapter.getFilteredClassOrOriginal(
+      this.actor
+    );
+    const filterByClass = this.actor.itemTypes.spell.some(
+      (s: Item5e) => !isNil(s.system.sourceClass)
+    );
+
+    // Count prepared spells, excluding "always prepared"
+    const nPrepared = this.actor.itemTypes.spell.filter((spell: Item5e) => {
+      const prep = spell.system.preparation;
+      return (
+        spell.system.level > 0 &&
+        prep.mode === 'prepared' &&
+        prep.prepared &&
+        (!filterByClass ||
+          spell.system.sourceClass === currentFilteredClass.identifier)
+      );
+    }).length;
+
     const context: NpcSheetContext = {
       ...defaultDocumentContext,
       actions: await getActorActionSections(this.actor),
@@ -808,9 +822,7 @@ export class Tidy5eNpcSheet
         }
       ),
       owner: this.actor.isOwner,
-      preparedSpells: FoundryAdapter.countPreparedSpells(
-        defaultDocumentContext.items
-      ),
+      preparedSpells: nPrepared,
       shortRest: this._onShortRest.bind(this),
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
       spellCalculations: calculateSpellAttackAndDc(this.actor),

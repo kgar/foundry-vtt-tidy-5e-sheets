@@ -10,9 +10,11 @@
   import { CONSTANTS } from 'src/constants';
   import { settingStore } from 'src/settings/settings';
   import { rollRawSpellAttack } from 'src/utils/formula';
+  import { TidyFlags } from 'src/api';
 
-  let context =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
+  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
   export let cssClass: string | null = null;
   export let includeAttackMod: boolean = true;
   export let includePreparedSpells: boolean = true;
@@ -22,6 +24,8 @@
   $: abilities = FoundryAdapter.getAbilitiesAsDropdownOptions(
     $context.abilities,
   );
+
+  $: classToUpdate = FoundryAdapter.getFilteredClassOrOriginal($context.actor);
 </script>
 
 <TabFooter cssClass="{cssClass} spellbook-footer" mode="horizontal">
@@ -104,12 +108,15 @@
       {/if}
     </div>
   </h3>
-  {#if includePreparedSpells}
+  {#if includePreparedSpells && classToUpdate}
     <button
       type="button"
       class="transparent-button secondary-footer-field highlight-on-hover"
       on:click={() =>
-        new MaxPreparedSpellsConfigFormApplication($context.actor).render(true)}
+        new MaxPreparedSpellsConfigFormApplication(
+          $context.actor,
+          classToUpdate,
+        ).render(true)}
       title={localize('TIDY5E.MaxPreparedSpellsConfig.ButtonTooltip')}
       disabled={!$context.editable || $context.lockSensitiveFields}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}

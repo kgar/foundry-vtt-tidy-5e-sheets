@@ -1371,4 +1371,16 @@ export const FoundryAdapter = {
     }
     return Object.entries<any>(groupMap);
   },
+  getFilteredClassOrOriginal(actor: Actor5e): Item5e | undefined | null {
+    return (
+      FoundryAdapter.getFilteredClassOrNull(actor) ??
+      actor.items.get(actor.system.details.originalClass) ??
+      actor.itemTypes.class[0]
+    );
+  },
+  getFilteredClassOrNull(actor: Actor5e): Item5e | undefined | null {
+    return actor.itemTypes.class.find(
+      (c: any) => c.system.identifier === TidyFlags.classFilter.get(actor)
+    );
+  },
 };
