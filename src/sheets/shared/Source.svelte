@@ -15,7 +15,7 @@
 </script>
 
 <div class="source-container flex-row extra-small-gap align-items-center">
-  {#if source?.custom === source?.label || source?.label === ''}
+  {#if source?.directlyEditable}
     <TextInput
       {document}
       field={keyPathToCustom}
