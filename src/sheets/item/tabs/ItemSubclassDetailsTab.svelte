@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getContext } from 'svelte';
-  import ItemSpellcasting from '../parts/ItemSpellcasting.svelte';
+  import DetailsSpellcasting from '../parts/DetailsSpellcasting.svelte';
   import type { Readable } from 'svelte/store';
   import type { ItemSheetContext } from 'src/types/item.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -53,4 +53,4 @@
 </ItemFormGroup>
 
 <h3 class="form-header">{localize('DND5E.Spellcasting')}</h3>
-<ItemSpellcasting />
+<DetailsSpellcasting />

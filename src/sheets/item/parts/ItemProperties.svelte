@@ -18,7 +18,7 @@
   {@const field = `system.properties.${property.value}`}
   {@const isEnchanted = $context.itemOverrides.has(field)}
   {@const enchantedTooltip = isEnchanted
-    ? localize('DND5E.Enchantment.Warning.Override')
+    ? localize('DND5E.ENCHANTMENT.Warning.Override')
     : null}
 
   <Checkbox

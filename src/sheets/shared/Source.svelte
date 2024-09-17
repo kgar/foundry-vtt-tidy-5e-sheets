@@ -20,7 +20,7 @@
       {document}
       field={keyPathToCustom}
       value={source?.custom}
-      placeholder={localize('DND5E.Source')}
+      placeholder={localize('DND5E.SOURCE.FIELDS.source.label')}
       class="source-custom"
     />
   {:else}

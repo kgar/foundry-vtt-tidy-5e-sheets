@@ -2,7 +2,7 @@
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import Select from 'src/components/inputs/Select.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import ItemSpellcasting from '../parts/ItemSpellcasting.svelte';
+  import DetailsSpellcasting from '../parts/DetailsSpellcasting.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ItemSheetContext } from 'src/types/item.types';
@@ -132,6 +132,6 @@
 {/if}
 
 <h3 class="form-header">{localize('DND5E.Spellcasting')}</h3>
-<ItemSpellcasting />
+<DetailsSpellcasting />
 
 <ItemStartingEquipment />
