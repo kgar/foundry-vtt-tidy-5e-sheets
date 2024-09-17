@@ -47,12 +47,14 @@ export function mapMulticlassingAbilitiesToSave(
 }
 
 // TODO: Eliminate these specific mappers for more generalized versions, as needed.
-export function mapSystemBaseDamageTypesToSave(
+export function mapSystemDamageTypesToSave(
   context: ItemSheetContext,
+  prefix: string,
+  source: any,
   ev: Event & { currentTarget: HTMLInputElement }
 ) {
   const selectedAbilities: Set<string> = new Set<string>(
-    context.system.damage.base.types
+    source.types
   );
 
   if (ev.currentTarget.checked) {
@@ -62,6 +64,6 @@ export function mapSystemBaseDamageTypesToSave(
   }
 
   return {
-    'system.damage.base.types': selectedAbilities,
+    [`${prefix}types`]: selectedAbilities,
   };
 }

@@ -37,8 +37,13 @@
       field="system.type.value"
       value={$context.system.type.value}
       disabled={!$context.editable}
+      blankValue=""
     >
-      <SelectOptions data={$context.config.consumableTypes} labelProp="label" />
+      <SelectOptions
+        data={$context.config.consumableTypes}
+        labelProp="label"
+        blank=""
+      />
     </Select>
   </ItemFormGroup>
   {#if $context.itemSubtypes}
@@ -155,7 +160,12 @@
   </ItemFormGroup>
 
   {#if $context.system.type.value === CONSTANTS.ITEM_SYSTEM_TYPE_AMMO}
-    <FieldDamage />
+    <FieldDamage
+      prefix="system.damage.base."
+      source={$context.source.damage.base}
+      denominationOptions={$context.denominationOptions}
+      types={$context.damageTypes}
+    />
   {/if}
 
   <FieldUses />
