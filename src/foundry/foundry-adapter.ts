@@ -1198,23 +1198,6 @@ export const FoundryAdapter = {
   getJqueryWrappedElement(el: HTMLElement) {
     return $(el);
   },
-  onAmmoChange(item: Item5e, ammoId: string) {
-    const ammo = item.actor?.items.find((i: any) => i.id === ammoId);
-
-    item.update({
-      system: {
-        consume: {
-          amount: !ammo
-            ? null
-            : !!item.system.consume?.amount
-            ? item.system.consume.amount
-            : 1,
-          target: !ammo ? '' : ammo.id,
-          type: !ammo ? '' : ammo.system.type.value,
-        },
-      },
-    });
-  },
   openSpellSlotsConfig(actor: Actor5e) {
     new dnd5e.applications.actor.ActorSpellSlotsConfig(actor).render(true);
   },
