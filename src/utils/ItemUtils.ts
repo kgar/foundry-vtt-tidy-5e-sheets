@@ -26,13 +26,13 @@ export class ItemUtils {
     );
   }
   static hasUnlimitedUses(item: any): boolean {
-    return isNil(item.system.uses?.per, '');
+    return !item.system.hasLimitedUses;
   }
   static hasSufficientLimitedUses(item: any): any {
     return ItemUtils.hasConfiguredUses(item) && item.system.uses?.value > 0;
   }
   static hasConfiguredUses(item: any) {
-    return item.system.uses?.per !== null;
+    return item.system.hasLimitedUses && item.system.uses.recovery.length;
   }
   static hasConsumptionRequirements(item: any): boolean {
     return !isNil(item.system.consume?.type, '');
