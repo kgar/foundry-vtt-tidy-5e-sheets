@@ -14,6 +14,15 @@
   $: appId = $context.document.sheet.appId;
 
   const localize = FoundryAdapter.localize;
+
+  function handleDragStart(ev: DragEvent, activityId: string) {
+    const activity = $context.item.system.activities?.get(activityId);
+
+    ev.dataTransfer?.setData(
+      'text/plain',
+      JSON.stringify(activity.toDragData()),
+    );
+  }
 </script>
 
 <section class="flex-1 flex-column extra-small-gap">
@@ -31,10 +40,13 @@
   </header>
   <div class="scroll-container activities">
     {#each $context.activities as activity (activity.id)}
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
       <div
         class="activity card"
         data-activity-id={activity.id}
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
+        draggable="true"
+        on:dragstart={(ev) => handleDragStart(ev, activity.id)}
       >
         <div class="icon" class:svg={activity.img.svg}>
           {#if activity.img.svg}

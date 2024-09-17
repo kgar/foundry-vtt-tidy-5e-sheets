@@ -442,24 +442,6 @@ export class Tidy5eKgarItemSheet
     }
   }
 
-  /** @override */
-  _onDragStart(event: DragEvent & { target: HTMLElement }) {
-    const { activityId } =
-      event.target.closest<HTMLElement>('.activity[data-activity-id]')
-        ?.dataset ?? {};
-
-    const activity = this.item.system.activities?.get(activityId);
-
-    if (!activity) {
-      return super._onDragStart(event);
-    }
-
-    event.dataTransfer?.setData(
-      'text/plain',
-      JSON.stringify(activity.toDragData())
-    );
-  }
-
   /**
    * Handle dropping an Activity onto the sheet.
    * @param {DragEvent} event       The drag event.
