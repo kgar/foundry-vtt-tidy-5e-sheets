@@ -32,6 +32,7 @@
     document={$context.item}
     field="system.armor.value"
     value={$context.source.armor.value}
+    disabled={!$context.editable}
     step="1"
   />
 </div>
@@ -48,6 +49,7 @@
         document={$context.item}
         field="system.hp.value"
         value={$context.source.hp.value}
+        disabled={!$context.editable}
         placeholder="0"
         min="0"
       />
@@ -61,6 +63,7 @@
         document={$context.item}
         field="system.hp.max"
         value={$context.source.hp.max}
+        disabled={!$context.editable}
         placeholder="0"
         min="0"
       />
@@ -74,6 +77,7 @@
         document={$context.item}
         field="system.hp.dt"
         value={$context.source.hp.dt}
+        disabled={!$context.editable}
         placeholder="—"
         min="0"
       />
@@ -87,6 +91,7 @@
     value={$context.item.system.hp.conditions}
     placeholder={localize('DND5E.HealthConditions')}
     class="full-width"
+    disabled={!$context.editable}
   />
 </div>
 
@@ -107,6 +112,7 @@
           value={$context.item.system.speed.value}
           min="0"
           placeholder="0"
+          disabled={!$context.editable}
         />
       </div>
     </div>
@@ -118,6 +124,7 @@
       value={$context.item.system.speed.conditions}
       placeholder={localize('DND5E.SpeedConditions')}
       class="full-width"
+      disabled={!$context.editable}
     />
   </div>
 {/if}

@@ -7,7 +7,7 @@
  * globals.
  */
 
-import type { CONFIG } from "./config.types";
+import type { CONFIG } from './config.types';
 
 declare global {
   var $: any;
@@ -109,6 +109,16 @@ declare global {
       height: number
     ): HTMLElement;
   };
+}
+
+declare global {
+  interface String {
+    slugify({
+      replacement = '-',
+      strict = false,
+      lowercase = true,
+    } = {}): string;
+  }
 }
 
 export type Dnd5eActorCondition = {

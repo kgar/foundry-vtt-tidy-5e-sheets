@@ -96,6 +96,7 @@
       document={$context.item}
       field="system.enchant.max"
       value={$context.source.enchant.max}
+      disabled={!$context.editable}
     />
 
     <p class="hint">
@@ -116,6 +117,7 @@
       field="system.enchant.period"
       value={$context.source.enchant.period}
       blankValue=""
+      disabled={!$context.editable}
     >
       <SelectOptions
         data={$context.config.enchantmentPeriods}

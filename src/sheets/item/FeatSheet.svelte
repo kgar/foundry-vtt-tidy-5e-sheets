@@ -14,6 +14,8 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
+  $: appId = $context.item.sheet.appId;
+
   let selectedTabId: string;
 
   const localize = FoundryAdapter.localize;
@@ -31,6 +33,7 @@
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_CONTAINER}
     >
       <TextInput
+        id="{appId}-name"
         document={$context.item}
         field="name"
         placeholder={localize('DND5E.ItemName')}
@@ -52,6 +55,7 @@
       </li>
       <li>
         <TextInput
+          id="{appId}-name"
           document={$context.item}
           field="system.requirements"
           value={$context.system.requirements}

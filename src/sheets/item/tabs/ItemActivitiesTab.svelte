@@ -5,6 +5,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
+  import { settingStore } from 'src/settings/settings';
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -17,13 +18,16 @@
 
 <section class="flex-1 flex-column extra-small-gap">
   <header class="header">
-    <button
-      class="add-activity-button"
-      on:click={() => $context.item.sheet.addActivity()}
-    >
-      <i class="fas fa-plus"></i>
-      {localize('DND5E.Add')}
-    </button>
+    {#if $context.editable}
+      <button
+        class="add-activity-button"
+        on:click={() => $context.item.sheet.addActivity()}
+        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+      >
+        <i class="fas fa-plus"></i>
+        {localize('DND5E.Add')}
+      </button>
+    {/if}
   </header>
   <div class="scroll-container activities">
     {#each $context.activities as activity (activity.id)}
@@ -43,17 +47,23 @@
           class="transparent-button highlight-on-hover name"
           on:click={() =>
             $context.system.activities.get(activity.id).sheet.render(true)}
-          >{activity.name}</button
+          disabled={!$context.editable}
+          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
         >
-        <button
-          type="button"
-          class="inline-icon-button"
-          title={localize('DND5E.ACTIVITY.Action.Delete')}
-          on:click={() =>
-            $context.system.activities.get(activity.id)?.deleteDialog()}
-        >
-          <i class="fas fa-trash"></i>
+          {activity.name}
         </button>
+        {#if $context.editable}
+          <button
+            type="button"
+            class="inline-icon-button"
+            title={localize('DND5E.ACTIVITY.Action.Delete')}
+            on:click={() =>
+              $context.system.activities.get(activity.id)?.deleteDialog()}
+            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+          >
+            <i class="fas fa-trash"></i>
+          </button>
+        {/if}
       </div>
     {/each}
   </div>

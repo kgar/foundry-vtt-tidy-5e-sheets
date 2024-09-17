@@ -61,11 +61,11 @@
     {#if $context.isPhysical}
       {#if $context.item.type !== CONSTANTS.ITEM_TYPE_CONTAINER}
         <div class="form-group">
-          <label for="{$context.appId}-{$context.item.id}-quantity"
+          <label for="{$context.appId}-quantity"
             >{localize('DND5E.Quantity')}</label
           >
           <NumberInput
-            id="{$context.appId}-{$context.item.id}-quantity"
+            id="{$context.appId}-quantity"
             value={$context.source.quantity}
             field="system.quantity"
             document={$context.item}
@@ -79,11 +79,11 @@
       {/if}
 
       <div class="form-group">
-        <label for="{$context.appId}-{$context.item.id}-weight-value"
+        <label for="{$context.appId}-weight-value"
           >{localize('DND5E.Weight')}</label
         >
         <NumberInput
-          id="{$context.appId}-{$context.item.id}-weight-value"
+          id="{$context.appId}-weight-value"
           value={$context.source.weight.value}
           step="any"
           field="system.weight.value"
@@ -96,14 +96,14 @@
       <HorizontalLineSeparator />
 
       <div class="form-group stacked">
-        <label for="{$context.appId}-{$context.item.id}-price"
+        <label for="{$context.appId}-price-value"
           >{localize('DND5E.Price')}</label
         >
         {#if $context.concealDetails}
           <span>{localize('DND5E.Unidentified.Value')}</span>
         {:else}
           <NumberInput
-            id="{$context.appId}-{$context.item.id}-price"
+            id="{$context.appId}-price-value"
             value={$context.source.price.value}
             step="any"
             field="system.price.value"
@@ -171,28 +171,30 @@
           >{localize('TIDY5E.Section.Label')}</label
         >
         <TextInput
+          id="{appId}-tidy-section"
           document={$context.item}
           field={TidyFlags.section.prop}
-          id="{appId}-tidy-section"
           placeholder={localize('TIDY5E.Section.Default')}
           value={TidyFlags.section.get($context.item) ?? ''}
           selectOnFocus={true}
           title={localize('TIDY5E.Section.Tooltip')}
-        ></TextInput>
+          disabled={!$context.editable}
+        />
       </div>
       <div class="form-group section">
         <label for="{appId}-tidy-action-section"
           >{localize('TIDY5E.Section.ActionLabel')}</label
         >
         <TextInput
+          id="{appId}-tidy-action-section"
           document={$context.item}
           field={TidyFlags.actionSection.prop}
-          id="{appId}-tidy-action-section"
           placeholder={localize('TIDY5E.Section.Default')}
           value={TidyFlags.actionSection.get($context.item) ?? ''}
           selectOnFocus={true}
           title={localize('TIDY5E.Section.ActionTooltip')}
-        ></TextInput>
+          disabled={!$context.editable}
+        />
       </div>
     </div>
   </div>

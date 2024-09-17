@@ -6,6 +6,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import TextInput from 'src/components/inputs/TextInput.svelte';
+  import { settingStore } from 'src/settings/settings';
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -18,17 +19,21 @@
 
 <h3 class="form-header flex-row justify-content-space-between">
   {localize('DND5E.StartingEquipment.Title')}
-  <span>
-    <button
-      type="button"
-      class="configure-starting-equipment inline-icon-button"
-      title={localize('DND5E.StartingEquipment.Action.Configure')}
-      aria-label={localize('DND5E.StartingEquipment.Action.Configure')}
-      on:click={() => FoundryAdapter.openStartingEquipmentConfig($context.item)}
-    >
-      <i class="fas fa-gear"></i>
-    </button>
-  </span>
+  {#if $context.editable}
+    <span>
+      <button
+        type="button"
+        class="configure-starting-equipment inline-icon-button"
+        title={localize('DND5E.StartingEquipment.Action.Configure')}
+        aria-label={localize('DND5E.StartingEquipment.Action.Configure')}
+        on:click={() =>
+          FoundryAdapter.openStartingEquipmentConfig($context.item)}
+        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+      >
+        <i class="fas fa-gear"></i>
+      </button>
+    </span>
+  {/if}
 </h3>
 
 <div class="starting-equipment-text">
@@ -44,10 +49,12 @@
   >
   <div class="form-fields">
     <TextInput
+      id="{appId}-wealth"
       document={$context.item}
       field="system.wealth"
       value={$context.source.wealth}
-    ></TextInput>
+      disabled={!$context.editable}
+    />
   </div>
   <p class="hint">{localize('DND5E.StartingEquipment.Wealth.Hint')}</p>
 </div>

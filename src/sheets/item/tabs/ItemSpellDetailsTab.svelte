@@ -35,6 +35,7 @@
     document={$context.item}
     field="system.level"
     value={$context.source.level}
+    disabled={!$context.editable}
   >
     <SelectOptions data={$context.config.spellLevels} />
   </Select>
@@ -48,6 +49,7 @@
     document={$context.item}
     field="system.school"
     value={$context.source.school}
+    disabled={!$context.editable}
   >
     <SelectOptions
       data={$context.config.spellSchools}
@@ -80,6 +82,7 @@
           field="system.materials.supply"
           value={$context.source.materials.supply}
           min="0"
+          disabled={!$context.editable}
         />
       </div>
 
@@ -101,6 +104,7 @@
             value={$context.source.materials.cost}
             min="0"
             placeholder="—"
+            disabled={!$context.editable}
           />
         </div>
       </div>
@@ -115,16 +119,19 @@
           document={$context.item}
           field="system.materials.consumed"
           checked={$context.source.materials.consumed}
+          disabled={!$context.editable}
         />
       </div>
     </div>
 
     <!-- Material Description -->
     <TextInput
+      id="{appId}-materials-value"
       document={$context.item}
       field="system.materials.value"
       value={$context.source.materials.value}
       class="full-width"
+      disabled={!$context.editable}
     />
   </div>
 {/if}
@@ -146,6 +153,7 @@
         attributes={{
           ['aria-label']: localize('DND5E.Prepared'),
         }}
+        disabled={!$context.editable}
       />
     {/if}
 
@@ -155,6 +163,7 @@
       document={$context.item}
       field="system.preparation.mode"
       value={$context.source.preparation.mode}
+      disabled={!$context.editable}
     >
       <SelectOptions
         data={$context.config.spellPreparationModes}

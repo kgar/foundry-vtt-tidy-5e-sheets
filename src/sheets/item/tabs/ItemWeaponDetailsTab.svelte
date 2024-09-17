@@ -59,11 +59,15 @@
   <!-- Proficiency -->
   {#if !$context.item.isMountable}
     <div class="form-group">
-      <label for="">{localize('DND5E.ProficiencyLevel')}</label>
+      <label for="{appId}-proficient"
+        >{localize('DND5E.ProficiencyLevel')}</label
+      >
       <Select
+        id="{appId}-proficient"
         document={$context.item}
         field="system.proficient"
         value={$context.source.proficient}
+        disabled={!$context.editable}
       >
         <SelectOptions
           data={$context.config.weaponAndArmorProficiencyLevels}
@@ -81,6 +85,7 @@
       field="system.mastery"
       value={$context.source.mastery}
       blankValue=""
+      disabled={!$context.editable}
     >
       <SelectOptions
         data={$context.config.weaponMasteries}
@@ -101,7 +106,7 @@
   {#if $context.properties.object.mgc}
     <!-- Attunement -->
     <div class="form-group split-group">
-      <label for="{appId}-system-attunement"
+      <label for="{appId}-attunement"
         >{localize('DND5E.Item.Property.Magical')}</label
       >
       <div class="form-fields">
@@ -114,7 +119,7 @@
             <div class="form-fields">
               <!-- Attuned -->
               <Checkbox
-                id="{appId}-system-attuned"
+                id="{appId}-attuned"
                 document={$context.item}
                 field="system.attuned"
                 checked={$context.source.attuned}
@@ -122,10 +127,10 @@
                   // @ts-expect-error
                   !$context.config.attunementTypes[$context.system.attunement]}
                 title={localize('DND5E.AttunementAttuned')}
-              ></Checkbox>
+              />
               <!-- Attunement -->
               <Select
-                id="{appId}-system-attunement"
+                id="{appId}-attunement"
                 document={$context.item}
                 field="system.attunement"
                 value={$context.system.attunement}
@@ -169,6 +174,7 @@
         field="system.ammunition.type"
         value={$context.source.ammunition.type}
         blankValue=""
+        disabled={!$context.editable}
       >
         <SelectOptions
           data={$context.config.consumableTypes.ammo.subtypes}
@@ -186,33 +192,38 @@
       <div class="form-fields">
         <!-- Normal -->
         <div class="form-group label-top">
-          <label for="">{localize('DND5E.Normal')}</label>
+          <label for="{appId}-range-value">{localize('DND5E.Normal')}</label>
           <NumberInput
+            id="{appId}-range-value"
             document={$context.item}
             field="system.range.value"
             value={$context.source.range.value}
             min="0"
+            disabled={!$context.editable}
           />
         </div>
 
         <!-- Long -->
         <div class="form-group label-top">
-          <label for="">{localize('DND5E.Long')}</label>
+          <label for="{appId}-range-long">{localize('DND5E.Long')}</label>
           <NumberInput
+            id="{appId}-range-long"
             document={$context.item}
             field="system.range.long"
             value={$context.source.range.long}
             min="0"
+            disabled={!$context.editable}
           />
         </div>
 
         <!-- Reach -->
         {#if $context.system.attackType !== 'ranged'}
           <div class="form-group label-top">
-            <label for=""
+            <label for="{appId}-range-reach"
               >{localize('DND5E.RANGE.FIELDS.range.reach.label')}</label
             >
             <NumberInput
+              id="{appId}-range-reach"
               document={$context.item}
               field="system.range.reach"
               value={$context.source.range.reach}
@@ -220,6 +231,7 @@
               placeholder={$context.system.range.reach === null
                 ? '—'
                 : $context.system.range.reach}
+              disabled={!$context.editable}
             />
           </div>
         {/if}
@@ -234,6 +246,7 @@
         field="system.range.units"
         value={$context.source.range.units}
         blankValue=""
+        disabled={!$context.editable}
       >
         <SelectOptions data={$context.config.movementUnits} blank="" />
       </Select>
@@ -246,10 +259,11 @@
         {#if $context.system.attackType === 'melee'}
           <!-- When Svelte 5, snippets -->
           <div class="form-group label-top">
-            <label for=""
+            <label for="{appId}-range-reach"
               >{localize('DND5E.RANGE.FIELDS.range.reach.label')}</label
             >
             <NumberInput
+              id="{appId}-range-reach"
               document={$context.item}
               field="system.range.reach"
               value={$context.source.range.reach}
@@ -257,6 +271,7 @@
               placeholder={$context.system.range.reach === null
                 ? '—'
                 : $context.system.range.reach}
+              disabled={!$context.editable}
             />
           </div>
         {/if}
@@ -268,6 +283,7 @@
             document={$context.item}
             field="system.range.units"
             value={$context.source.range.units}
+            disabled={!$context.editable}
           >
             <SelectOptions data={$context.config.movementUnits} />
           </Select>

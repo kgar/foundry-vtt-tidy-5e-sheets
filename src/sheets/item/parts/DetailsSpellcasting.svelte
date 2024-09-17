@@ -61,11 +61,12 @@
   >
   <div class="form-fields">
     <TextInput
+      id="{appId}-spellcasting-preparation-formula"
       document={$context.item}
       field="system.spellcasting.preparation.formula"
       value={$context.system.spellcasting.preparation.formula}
-      id="{appId}-spellcasting-preparation-formula"
       dataset={{ formulaEditor: true }}
+      disabled={!$context.editable}
     />
   </div>
 </div>

@@ -7,7 +7,7 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
-    import NumberInput from 'src/components/inputs/NumberInput.svelte';
+  import NumberInput from 'src/components/inputs/NumberInput.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -36,6 +36,7 @@
           value={$context.source.activation.value}
           placeholder="—"
           min="0"
+          disabled={!$context.editable}
         />
       </div>
     {/if}
@@ -50,6 +51,7 @@
         document={$context.item}
         field="system.activation.type"
         value={$context.source.activation.type}
+        disabled={!$context.editable}
       >
         <SelectOptions
           data={$context.activationTypes}
@@ -62,10 +64,12 @@
 
   <!-- Condition -->
   <TextInput
+    id="{appId}-activation-condition"
     document={$context.item}
     field="system.activation.condition"
     value={$context.source.activation.condition}
     placeholder={localize('DND5E.ItemActivationCondition')}
     class="full-width"
+    disabled={!$context.editable}
   />
 </div>

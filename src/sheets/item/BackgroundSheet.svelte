@@ -14,6 +14,8 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
+  $: appId = $context.item.sheet.appId;
+
   export let selectedTabId: string = 'description';
 
   const localize = FoundryAdapter.localize;
@@ -30,6 +32,7 @@
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_CONTAINER}
     >
       <TextInput
+        id="{appId}-name"
         field="name"
         document={$context.item}
         value={$context.item.name}

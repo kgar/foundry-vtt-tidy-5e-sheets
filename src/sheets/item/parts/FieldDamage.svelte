@@ -39,6 +39,7 @@
       document={$context.item}
       field="{prefix}custom.enabled"
       checked={source.custom.enabled}
+      disabled={!$context.editable}
     />
 
     {#if source.custom.enabled}
@@ -47,6 +48,7 @@
         document={$context.item}
         field="{prefix}custom.formula"
         value={source.custom.formula}
+        disabled={!$context.editable}
       />
     {/if}
   </div>
@@ -72,6 +74,7 @@
           placeholder={numberPlaceholder}
           min="0"
           step="1"
+          disabled={!$context.editable}
         />
       </div>
 
@@ -84,6 +87,7 @@
           field="{prefix}denomination"
           value={source.denomination}
           blankValue=""
+          disabled={!$context.editable}
         >
           <SelectOptions
             data={denominationOptions}
@@ -103,6 +107,7 @@
           document={$context.item}
           field="{prefix}bonus"
           value={source.bonus}
+          disabled={!$context.editable}
         />
       </div>
     </div>
@@ -115,6 +120,7 @@
     <label for="">{localize('DND5E.Type')}</label>
     {#each types as { value, label, selected } (value)}
       <Checkbox
+        id="{idPrefix}types-{value?.slugify()}"
         labelCssClass="checkbox"
         document={$context.item}
         field="{prefix}types"

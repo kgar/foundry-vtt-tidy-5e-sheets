@@ -37,6 +37,7 @@
       field="system.type.value"
       value={$context.source.type.value}
       blankValue=""
+      disabled={!$context.editable}
     >
       <SelectOptions
         data={$context.equipmentTypes}
@@ -58,6 +59,7 @@
       field="system.type.baseItem"
       value={$context.source.type.baseItem}
       blankValue=""
+      disabled={!$context.editable}
     >
       <SelectOptions
         data={$context.baseItems}
@@ -77,6 +79,7 @@
       field="system.proficient"
       value={$context.source.proficient}
       blankValue=""
+      disabled={!$context.editable}
     >
       <SelectOptions
         data={$context.config.weaponAndArmorProficiencyLevels}
@@ -101,6 +104,7 @@
             field="system.armor.value"
             value={$context.source.armor.value}
             step="1"
+            disabled={!$context.editable}
           />
         </div>
 
@@ -116,6 +120,7 @@
               value={$context.source.armor.dex}
               step="1"
               placeholder="∞"
+              disabled={!$context.editable}
             />
           </div>
         {/if}
@@ -129,6 +134,7 @@
             value={$context.source.strength}
             step="1"
             placeholder="—"
+            disabled={!$context.editable}
           />
         </div>
       </div>
@@ -164,7 +170,7 @@
                   // @ts-expect-error
                   !$context.config.attunementTypes[$context.system.attunement]}
                 title={localize('DND5E.AttunementAttuned')}
-              ></Checkbox>
+              />
               <!-- Attunement -->
               <Select
                 id="{appId}-attunement"

@@ -8,6 +8,7 @@
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
+  import { settingStore } from 'src/settings/settings';
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -32,6 +33,7 @@
         document={$context.item}
         field="system.uses.spent"
         value={$context.source.uses.spent}
+        disabled={!$context.editable}
       />
     </div>
 
@@ -43,6 +45,7 @@
         document={$context.item}
         field="system.uses.max"
         value={$context.source.uses.max}
+        disabled={!$context.editable}
       />
     </div>
   </div>
@@ -59,6 +62,7 @@
       document={$context.item}
       field="system.uses.autoDestroy"
       checked={$context.source.uses.autoDestroy}
+      disabled={!$context.editable}
     />
     <p class="hint">
       {localize('DND5E.CONSUMABLE.FIELDS.uses.autoDestroy.hint')}
@@ -71,15 +75,18 @@
     <span>
       {localize('DND5E.Recovery')}
     </span>
-    <button
-      type="button"
-      class="inline-icon-button create-recovery-button"
-      data-tooltip="DND5E.USES.Recovery.Action.Create"
-      aria-label={localize('DND5E.USES.Recovery.Action.Create')}
-      on:click={() => $context.item.sheet.addRecovery()}
-    >
-      <i class="fas fa-plus"></i>
-    </button>
+    {#if $context.editable}
+      <button
+        type="button"
+        class="inline-icon-button create-recovery-button"
+        data-tooltip="DND5E.USES.Recovery.Action.Create"
+        aria-label={localize('DND5E.USES.Recovery.Action.Create')}
+        on:click={() => $context.item.sheet.addRecovery()}
+        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+      >
+        <i class="fas fa-plus"></i>
+      </button>
+    {/if}
   </h3>
 
   {#each $context.usesRecovery as recovery, index}
@@ -100,6 +107,7 @@
                 'period',
                 ev.currentTarget.value,
               )}
+            disabled={!$context.editable}
           >
             <SelectOptions
               data={$context.recoveryPeriods}
@@ -112,7 +120,7 @@
         <!-- Type -->
         {#if recovery.data.period !== 'recharge'}
           <div class="form-group label-top">
-            <label for="">
+            <label for="{appId}-uses-recovery-{index}-type">
               {localize('DND5E.USES.FIELDS.uses.recovery.FIELDS.type.label')}
             </label>
             <select
@@ -125,6 +133,7 @@
                   'type',
                   ev.currentTarget.value,
                 )}
+              disabled={!$context.editable}
             >
               <SelectOptions
                 data={$context.recoveryTypes}
@@ -152,6 +161,7 @@
                     ev.currentTarget.value,
                   )}
                 value={recovery.data.formula}
+                disabled={!$context.editable}
               >
                 <SelectOptions
                   data={recovery.formulaOptions}
@@ -170,21 +180,25 @@
                     'formula',
                     ev.currentTarget.value,
                   )}
+                disabled={!$context.editable}
               />
             {/if}
           </div>
         {/if}
 
-        <button
-          type="button"
-          class="inline-icon-button align-self-stretch"
-          data-action="deleteRecovery"
-          title={localize('DND5E.USES.Recovery.Action.Delete')}
-          aria-label={localize('DND5E.USES.Recovery.Action.Delete')}
-          on:click={() => $context.item.sheet.deleteRecovery(index)}
-        >
-          <i class="fas fa-minus"></i>
-        </button>
+        {#if $context.editable}
+          <button
+            type="button"
+            class="inline-icon-button align-self-stretch"
+            data-action="deleteRecovery"
+            title={localize('DND5E.USES.Recovery.Action.Delete')}
+            aria-label={localize('DND5E.USES.Recovery.Action.Delete')}
+            on:click={() => $context.item.sheet.deleteRecovery(index)}
+            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+          >
+            <i class="fas fa-minus"></i>
+          </button>
+        {/if}
       </div>
     </div>
   {:else}

@@ -94,6 +94,7 @@
   >
   {#each abilities as { key, label } (key)}
     <Checkbox
+      id="{appId}-primaryAbility-value-{key?.slugify()}"
       labelCssClass="checkbox"
       document={$context.item}
       field="system.primaryAbility.value"
@@ -110,15 +111,16 @@
 
 {#if $context.source.primaryAbility.value.size > 1}
   <div class="form-group">
-    <label for="{appId}-system-primaryAbility-fields-all"
+    <label for="{appId}-primaryAbility-fields-all"
       >{localize('DND5E.CLASS.FIELDS.primaryAbility.all.label')}</label
     >
     <Checkbox
-      id="{appId}-system-primaryAbility-fields-all"
+      id="{appId}-primaryAbility-fields-all"
       document={$context.item}
       field="system.primaryAbility.fields.all"
       checked={$context.source.primaryAbility.all}
-    ></Checkbox>
+      disabled={!$context.editable}
+    />
 
     <p class="hint">{localize('DND5E.CLASS.FIELDS.primaryAbility.all.hint')}</p>
   </div>

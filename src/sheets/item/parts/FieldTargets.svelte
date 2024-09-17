@@ -8,7 +8,7 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
-  
+
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
@@ -38,6 +38,7 @@
           field="system.target.affects.count"
           value={$context.source.target.affects.count}
           placeholder={$context.affectsPlaceholder}
+          disabled={!$context.editable}
         />
       </div>
     {/if}
@@ -51,6 +52,7 @@
         field="system.target.affects.type"
         value={$context.source.target.affects.type}
         blankValue=""
+        disabled={!$context.editable}
       >
         <SelectOptions data={$context.config.individualTargetTypes} blank="" />
       </Select>
@@ -66,6 +68,7 @@
       value={$context.source.target.affects.special}
       class="full-width"
       placeholder={localize('DND5E.TARGET.FIELDS.target.affects.special.label')}
+      disabled={!$context.editable}
     />
   {/if}
 </div>
@@ -81,6 +84,7 @@
       document={$context.item}
       field="system.target.affects.choice"
       checked={$context.source.target.affects.choice}
+      disabled={!$context.editable}
     />
 
     <p class="hint">
@@ -101,6 +105,7 @@
     document={$context.item}
     field="system.target.template.type"
     value={$context.source.target.template.type}
+    disabled={!$context.editable}
   >
     <SelectOptions
       data={$context.config.areaTargetOptions}
@@ -125,6 +130,7 @@
           document={$context.item}
           field="system.target.template.size"
           value={$context.source.target.template.size}
+          disabled={!$context.editable}
         />
       </div>
 
@@ -139,6 +145,7 @@
             document={$context.item}
             field="system.target.template.width"
             value={$context.source.target.template.width}
+            disabled={!$context.editable}
           />
         </div>
       {/if}
@@ -154,6 +161,7 @@
             document={$context.item}
             field="system.target.template.height"
             value={$context.source.target.template.height}
+            disabled={!$context.editable}
           />
         </div>
       {/if}
@@ -168,9 +176,10 @@
           document={$context.item}
           field="system.target.template.units"
           value={$context.source.target.template.units}
+          disabled={!$context.editable}
         >
-        <SelectOptions data={$context.config.movementUnits} />
-      </Select>
+          <SelectOptions data={$context.config.movementUnits} />
+        </Select>
       </div>
     </div>
   </div>
@@ -183,13 +192,14 @@
     <div class="form-fields">
       <!-- Amount -->
       <div class="form-field label-top">
-        <label for="">{localize('DND5E.Amount')}</label>
+        <label for="{appId}-target-template-count">{localize('DND5E.Amount')}</label>
         <TextInput
           id="{appId}-target-template-count"
           document={$context.item}
           field="system.target.template.count"
           value={$context.source.target.template.count}
           placeholder="1"
+          disabled={!$context.editable}
         />
       </div>
 
@@ -204,6 +214,7 @@
             document={$context.item}
             field="system.target.template.contiguous"
             checked={$context.source.target.template.contiguous}
+            disabled={!$context.editable}
           />
         </div>
       {/if}

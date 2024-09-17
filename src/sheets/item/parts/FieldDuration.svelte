@@ -7,7 +7,7 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
-  
+
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
@@ -31,6 +31,7 @@
           field="system.duration.value"
           value={$context.source.duration.value}
           placeholder="—"
+          disabled={!$context.editable}
         />
       </div>
     {/if}
@@ -45,6 +46,7 @@
         document={$context.item}
         field="system.duration.units"
         value={$context.source.duration.units}
+        disabled={!$context.editable}
       >
         <SelectOptions
           data={$context.durationUnits}
@@ -64,6 +66,7 @@
       value={$context.source.duration.special}
       placeholder={localize('DND5E.DURATION.FIELDS.duration.special.label')}
       class="full-width"
+      disabled={!$context.editable}
     />
   {/if}
 </div>

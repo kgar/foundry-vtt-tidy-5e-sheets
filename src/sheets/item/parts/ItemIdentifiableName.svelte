@@ -9,11 +9,15 @@
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
+
+  $: appId = $context.item.sheet.appId;
+
   const localize = FoundryAdapter.localize;
 </script>
 
 {#if $context.system.identified}
   <TextInput
+    id="{appId}-name"
     document={$context.item}
     field="name"
     value={$context.item.name}
@@ -24,6 +28,7 @@
   />
 {:else}
   <TextInput
+    id="{appId}-name"
     document={$context.item}
     field="system.unidentified.name"
     value={$context.system.unidentified.name}

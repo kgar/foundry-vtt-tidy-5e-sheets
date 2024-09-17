@@ -7,7 +7,7 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
-  
+
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
@@ -30,6 +30,7 @@
           document={$context.item}
           field="system.range.value"
           value={$context.source.range.value}
+          disabled={!$context.editable}
         />
       </div>
     {/if}
@@ -42,6 +43,7 @@
         document={$context.item}
         field="system.range.units"
         value={$context.source.range.units}
+        disabled={!$context.editable}
       >
         <SelectOptions
           data={$context.rangeTypes}
@@ -60,5 +62,6 @@
     value={$context.source.range.special}
     class="full-width"
     placeholder={localize('DND5E.RANGE.FIELDS.range.special.label')}
+    disabled={!$context.editable}
   />
 </div>

@@ -11,6 +11,8 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
+  $: appId = $context.item.sheet.appId;
+
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -22,6 +24,7 @@
     : null}
 
   <Checkbox
+    id="{appId}-properties-{property.value?.slugify()}"
     labelCssClass="checkbox"
     document={$context.item}
     {field}

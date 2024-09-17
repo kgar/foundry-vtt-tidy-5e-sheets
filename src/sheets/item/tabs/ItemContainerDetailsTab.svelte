@@ -62,16 +62,16 @@
   <div class="form-group">
     <label for="{appId}-attunement">{localize('DND5E.Attunement')}</label>
     <Checkbox
-      id="{appId}-system-attuned"
+      id="{appId}-attuned"
       document={$context.item}
       field="system.attuned"
       checked={$context.source.attuned}
       disabled={!$context.editable ||
         !$context.config.attunementTypes[$context.system.attunement]}
       title={localize('DND5E.AttunementAttuned')}
-    ></Checkbox>
+    />
     <Select
-      id="{appId}-system-attunement"
+      id="{appId}-attunement"
       document={$context.item}
       field="system.attunement"
       value={$context.source.attunement}

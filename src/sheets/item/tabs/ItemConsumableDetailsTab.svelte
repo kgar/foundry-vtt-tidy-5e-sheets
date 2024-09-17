@@ -96,7 +96,7 @@
                 // @ts-expect-error
                 !$context.config.attunementTypes[$context.system.attunement]}
               title={localize('DND5E.AttunementAttuned')}
-            ></Checkbox>
+            />
             <!-- Attunement -->
             <Select
               id="${appId}-system-attunement"
@@ -146,6 +146,7 @@
       document={$context.item}
       field="system.damage.replace"
       checked={$context.source.damage.replace}
+      disabled={!$context.editable}
     />
     <p class="hint">
       {localize('DND5E.CONSUMABLE.FIELDS.damage.replace.hint')}

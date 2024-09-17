@@ -25,7 +25,8 @@
         field="system.identifier"
         value={$context.source.identifier}
         placeholder={$context.item.identifier}
-      ></TextInput>
+        disabled={!$context.editable}
+      />
     </div>
     <p class="hint">{localize('DND5E.IdentifierError')}</p>
   </div>

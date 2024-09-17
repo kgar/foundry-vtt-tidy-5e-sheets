@@ -58,17 +58,18 @@
 
   <!-- Ability Check -->
   <div class="form-group">
-    <label for="{appId}-system-proficient">{localize('DND5E.ActionAbil')}</label
+    <label for="{appId}-proficient">{localize('DND5E.ActionAbil')}</label
     >
     <div class="form-fields">
       <!-- Proficiency -->
       <div class="form-group label-top">
         <label for="">{localize('DND5E.Proficiency')}</label>
         <Select
-          id="{appId}-system-proficient"
+          id="{appId}-proficient"
           document={$context.item}
           field="system.proficient"
           value={$context.source.proficient}
+          disabled={!$context.editable}
         >
           <SelectOptions
             data={$context.config.proficiencyLevels}
@@ -79,12 +80,13 @@
 
       <!-- Ability -->
       <div class="form-group label-top">
-        <label for="{appId}-system-ability">{localize('DND5E.Ability')}</label>
+        <label for="{appId}-ability">{localize('DND5E.Ability')}</label>
         <Select
-          id="{appId}-system-ability"
+          id="{appId}-ability"
           document={$context.item}
           field="system.ability"
           value={$context.source.ability}
+          disabled={!$context.editable}
         >
           <SelectOptions
             data={$context.config.abilities}
@@ -98,12 +100,13 @@
 
   <!-- Tool Bonus -->
   <div class="form-group">
-    <label for="{appId}-system-bonus">{localize('DND5E.ItemToolBonus')}</label>
+    <label for="{appId}-bonus">{localize('DND5E.ItemToolBonus')}</label>
     <TextInput
       id={`${appId}-system-bonus`}
       document={$context.item}
       field="system.bonus"
       value={$context.source.bonus}
+      disabled={!$context.editable}
     />
   </div>
 

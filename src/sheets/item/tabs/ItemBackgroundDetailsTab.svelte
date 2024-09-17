@@ -20,11 +20,13 @@
   <label for="{appId}-identifier">{localize('DND5E.Identifier')}</label>
   <div class="form-fields">
     <TextInput
+      id="{appId}-identifier"
       document={$context.item}
       field="system.identifier"
       value={$context.source.identifier}
       placeholder={$context.item.identifier}
-    ></TextInput>
+      disabled={!$context.editable}
+    />
   </div>
   <p class="hint">{localize('DND5E.IdentifierError')}</p>
 </div>
