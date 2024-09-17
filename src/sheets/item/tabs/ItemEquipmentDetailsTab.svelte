@@ -82,7 +82,7 @@
         data={$context.config.weaponAndArmorProficiencyLevels}
         labelProp="label"
         valueProp="value"
-        blank=""
+        blank={localize('DND5E.Automatic')}
       />
     </Select>
   </div>
