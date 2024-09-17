@@ -23,7 +23,7 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: appId = $context.item.sheet.appId;
+  $: appId = $context.document.sheet.appId;
 
   function onEditorActivation(node: HTMLElement) {
     if (editorIsActive) {
@@ -127,7 +127,7 @@
       </div>
     {/if}
 
-    {#if $context.labels.toHit || $context.labels.derivedDamage}
+    {#if $context.labels.toHit || $context.labels.damages.length}
       <h4 class="properties-header">
         {localize('DND5E.Attack')}/{localize('DND5E.Damage')}
       </h4>
@@ -145,8 +145,8 @@
           </li>
         {/if}
 
-        {#each $context.labels.derivedDamage ?? [] as derivedDamage}
-          {@const label = derivedDamage.label}
+        {#each $context.labels.damages ?? [] as damage}
+          {@const label = damage.label}
           <li>
             {label}
           </li>

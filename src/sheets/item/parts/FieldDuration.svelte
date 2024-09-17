@@ -12,7 +12,7 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: appId = $context.item.sheet.appId;
+  $: appId = $context.document.sheet.appId;
 
   const localize = FoundryAdapter.localize;
 </script>

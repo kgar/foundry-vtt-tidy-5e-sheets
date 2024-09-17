@@ -14,7 +14,7 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: appId = $context.item.sheet.appId;
+  $: appId = $context.document.sheet.appId;
 
   $: selectedTabId = getContext<string>(
     CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID,

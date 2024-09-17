@@ -314,6 +314,27 @@ export class Tidy5eKgarContainerSheet
       context
     );
 
+    // Properties
+    context.properties = {
+      active: [],
+      object: Object.fromEntries(
+        (context.system.properties ?? []).map((p: string) => [p, true])
+      ),
+      options: (context.system.validProperties ?? []).reduce(
+        (arr: ContainerSheetContext['properties']['options'], k: any) => {
+          // @ts-ignore
+          const { label } = CONFIG.DND5E.itemProperties[k];
+          arr.push({
+            label,
+            value: k,
+            selected: this.item._source.system.properties?.includes(k),
+          });
+          return arr;
+        },
+        []
+      ),
+    };
+
     debug(`Container Sheet context data`, context);
 
     return context;

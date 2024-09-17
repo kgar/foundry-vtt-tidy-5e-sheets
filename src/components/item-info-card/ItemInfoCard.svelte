@@ -202,9 +202,9 @@
     if (item?.labels?.toHit) {
       props.push(item.labels.toHit.replace('+ ', '+').replace('- ', '-'));
     }
-    if (item?.labels?.damage && item.labels?.derivedDamage?.length > 0) {
+    if (item?.labels?.damage && item.labels?.damages?.length > 0) {
       props.push(
-        item.labels.derivedDamage[0].label
+        item.labels.damages[0].label
           .replace(' + ', '+')
           .replace(' - ', '-'),
       );

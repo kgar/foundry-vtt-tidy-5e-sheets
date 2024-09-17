@@ -14,6 +14,16 @@ import type {
   RegisteredEquipmentTypeGroup,
 } from 'src/runtime/item/item.types';
 
+export type PropertyContext = {
+  active: string[];
+  object: Record<string, true>;
+  options: {
+    label: string;
+    selected: boolean;
+    value: string;
+  }[];
+};
+
 export type ItemSheetContext = {
   activities: {
     id: string;
@@ -47,15 +57,7 @@ export type ItemSheetContext = {
   lockItemQuantity: boolean;
   originalContext: unknown;
   owner: boolean;
-  properties: {
-    active: string[];
-    object: Record<string, true>;
-    options: {
-      label: string;
-      selected: boolean;
-      value: string;
-    }[];
-  };
+  properties: PropertyContext;
   rangeTypes: GroupableSelectOption[];
   recoveryPeriods: GroupableSelectOption[];
   recoveryTypes: {
@@ -144,6 +146,7 @@ export type ContainerSheetContext = {
   customContent: CustomContent[];
   originalContext: unknown;
   owner: boolean;
+  properties: PropertyContext;
   tabs: Tab[];
   utilities: Utilities<ContainerSheetContext>;
   viewableWarnings: DocumentPreparationWarning[];

@@ -240,7 +240,7 @@ export function getStandardSpellSchoolFilterCategories(): FilterCategoriesToFilt
       defaultItemFilters.concentration,
       defaultItemFilters.ritual,
     ],
-    'DND5E.SpellPreparationMode': [
+    'DND5E.SpellPreparation.Mode': [
       defaultItemFilters.prepared,
       defaultItemFilters.canCastSpell,
     ],

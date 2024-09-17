@@ -203,10 +203,10 @@ export function isItemInActionList(item: Item5e): boolean {
 
 async function mapActionItem(item: Item5e): Promise<ActionItem> {
   try {
-    let calculatedDerivedDamage = Array.isArray(item.labels.derivedDamage)
-      ? [...item.labels.derivedDamage].map(
+    let calculatedDerivedDamage = Array.isArray(item.labels.damages)
+      ? [...item.labels.damages].map(
           ({ formula, label, damageType }: any, i: number) => {
-            const rawDamagePartFormula = item.system.damage?.parts[i]?.[0];
+            const rawDamagePartFormula = item.system.damage?.base?.formula;
 
             if (rawDamagePartFormula?.trim() === '') {
               formula = '';
@@ -245,7 +245,7 @@ async function mapActionItem(item: Item5e): Promise<ActionItem> {
 
     return {
       item,
-      typeLabel: FoundryAdapter.localize(`ITEM.Type${item.type.titleCase()}`),
+      typeLabel: FoundryAdapter.localize(`TYPES.Item.${item.type}`),
       calculatedDerivedDamage,
       containerContents,
       ...getRangeTitles(item),
@@ -260,7 +260,7 @@ async function mapActionItem(item: Item5e): Promise<ActionItem> {
 
     return {
       item,
-      typeLabel: FoundryAdapter.localize(`ITEM.Type${item.type.titleCase()}`),
+      typeLabel: FoundryAdapter.localize(`TYPES.Item.${item.type}`),
       calculatedDerivedDamage: [],
       rangeTitle: '',
       rangeSubtitle: '',

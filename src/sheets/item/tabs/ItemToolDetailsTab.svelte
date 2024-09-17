@@ -18,7 +18,7 @@
 
   const localize = FoundryAdapter.localize;
 
-  $: appId = $context.item.sheet.appId;
+  $: appId = $context.document.sheet.appId;
 </script>
 
 <ContentConcealer conceal={$context.concealDetails}>
