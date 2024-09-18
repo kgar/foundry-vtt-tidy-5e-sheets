@@ -245,15 +245,6 @@ export class Tidy5eNpcSheet
       (!unlocked && SettingsProvider.settings.useTotalSheetLock.get()) ||
       !defaultDocumentContext.editable;
 
-    let maxPreparedSpellsTotal = 0;
-    try {
-      maxPreparedSpellsTotal =
-        FoundryAdapter.getFilteredClassOrOriginal(this.actor)?.system
-          ?.spellcasting?.preparation?.max ?? 0;
-    } catch (e) {
-      error('Unable to calculate max prepared spells', false, e);
-    }
-
     const showLegendaryToolbarFlagValue = TidyFlags.showLegendaryToolbar.get(
       this.actor
     );
@@ -673,26 +664,6 @@ export class Tidy5eNpcSheet
         defaultDocumentContext.effects
       );
 
-    // Organize Spellbook and count the number of prepared spells (excluding always, at will, cantrips, etc...)
-    const currentFilteredClass = FoundryAdapter.getFilteredClassOrOriginal(
-      this.actor
-    );
-    const filterByClass = this.actor.itemTypes.spell.some(
-      (s: Item5e) => !isNil(s.system.sourceClass)
-    );
-
-    // Count prepared spells, excluding "always prepared"
-    const nPrepared = this.actor.itemTypes.spell.filter((spell: Item5e) => {
-      const prep = spell.system.preparation;
-      return (
-        spell.system.level > 0 &&
-        prep.mode === 'prepared' &&
-        prep.prepared &&
-        (!filterByClass ||
-          spell.system.sourceClass === currentFilteredClass.identifier)
-      );
-    }).length;
-
     const context: NpcSheetContext = {
       ...defaultDocumentContext,
       actions: await getActorActionSections(this.actor),
@@ -773,6 +744,10 @@ export class Tidy5eNpcSheet
           (i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER
         ),
       showLegendaryToolbar: showLegendaryToolbar,
+      spellcastingInfo: FoundryAdapter.getSpellcastingInfo(
+        this.actor,
+        this.actor.itemTypes.spell
+      ),
       lockSensitiveFields: lockSensitiveFields,
       longRest: this._onLongRest.bind(this),
       lockExpChanges: FoundryAdapter.shouldLockExpChanges(),
@@ -780,7 +755,6 @@ export class Tidy5eNpcSheet
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
       lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
-      maxPreparedSpellsTotal,
       notes1EnrichedHtml: await FoundryAdapter.enrichHtml(
         TidyFlags.notes1.members.value.get(this.actor) ?? '',
         {
@@ -822,10 +796,8 @@ export class Tidy5eNpcSheet
         }
       ),
       owner: this.actor.isOwner,
-      preparedSpells: nPrepared,
       shortRest: this._onShortRest.bind(this),
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
-      spellCalculations: calculateSpellAttackAndDc(this.actor),
       spellSlotTrackerMode:
         npcPreferences.spellSlotTrackerMode ??
         CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS,

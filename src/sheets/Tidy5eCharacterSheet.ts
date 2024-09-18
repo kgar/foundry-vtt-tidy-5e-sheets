@@ -28,6 +28,7 @@ import {
   type SpellbookSection,
   type FavoriteSection,
   type EffectFavoriteSection,
+  type SpellcastingInfo as SpellcastingInfo,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
@@ -276,15 +277,6 @@ export class Tidy5eCharacterSheet
     );
 
     TidyHooks.tidy5eSheetsPrepareResources(tidyResources, this.actor);
-
-    let maxPreparedSpellsTotal = 0;
-    try {
-      maxPreparedSpellsTotal =
-        FoundryAdapter.getFilteredClassOrOriginal(this.actor)?.system
-          ?.spellcasting?.preparation?.max ?? 0;
-    } catch (e) {
-      error('Unable to calculate max prepared spells', false, e);
-    }
 
     // TODO: Make a builder for this
     // TODO: Extract to runtime?
@@ -793,7 +785,6 @@ export class Tidy5eCharacterSheet
       lockSensitiveFields:
         (!unlocked && SettingsProvider.settings.useTotalSheetLock.get()) ||
         !defaultDocumentContext.editable,
-      maxPreparedSpellsTotal,
       notes1EnrichedHtml: await FoundryAdapter.enrichHtml(
         TidyFlags.notes1.members.value.get(this.actor) ?? '',
         {
@@ -842,7 +833,6 @@ export class Tidy5eCharacterSheet
           (i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER
         ),
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
-      spellCalculations: calculateSpellAttackAndDc(this.actor),
       spellSlotTrackerMode:
         characterPreferences.spellSlotTrackerMode ??
         CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS,
@@ -1112,25 +1102,7 @@ export class Tidy5eCharacterSheet
       );
     }
 
-    // Organize Spellbook and count the number of prepared spells (excluding always, at will, cantrips, etc...)
-    const currentFilteredClass = FoundryAdapter.getFilteredClassOrOriginal(
-      this.actor
-    );
-    const filterByClass = this.actor.itemTypes.spell.some(
-      (s: Item5e) => !isNil(s.system.sourceClass)
-    );
-
-    // Count prepared spells, excluding "always prepared"
-    const nPrepared = spells.filter((spell) => {
-      const prep = spell.system.preparation;
-      return (
-        spell.system.level > 0 &&
-        prep.mode === 'prepared' &&
-        prep.prepared &&
-        (!filterByClass ||
-          spell.system.sourceClass === currentFilteredClass.identifier)
-      );
-    }).length;
+    context.spellcastingInfo = FoundryAdapter.getSpellcastingInfo(this.actor, spells);
 
     // Section spells
     // TODO: Take over `_prepareSpellbook` and
@@ -1235,8 +1207,6 @@ export class Tidy5eCharacterSheet
           type: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
         })),
     ];
-
-    context.preparedSpells = nPrepared;
   }
 
   private _getFavoritesIdMap(): Map<string, CharacterFavorite> {

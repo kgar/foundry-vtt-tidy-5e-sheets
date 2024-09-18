@@ -97,6 +97,15 @@ export type CharacterFeatureSection = {
   custom?: CustomSectionOptions;
 } & FeatureSection;
 
+export type SpellcastingInfo = {
+  currentFilteredClass: Item5e;
+  calculations: SpellCalculations;
+  prepared?: {
+    value: number;
+    max: number;
+  };
+};
+
 export type SpellCalculations = {
   dc: string;
   dcTooltip: string;
@@ -266,9 +275,8 @@ export type CharacterSheetContext = {
   notes4EnrichedHtml: string;
   notesEnrichedHtml: string;
   showContainerPanel: boolean;
-  preparedSpells: number;
   spellbook: SpellbookSection[];
-  spellCalculations: SpellCalculations;
+  spellcastingInfo: SpellcastingInfo;
   spellSlotTrackerMode:
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
@@ -310,19 +318,17 @@ export type NpcSheetContext = {
   idealEnrichedHtml: string;
   inventory: InventorySection[];
   itemContext: Record<string, NpcItemContext>;
-  maxPreparedSpellsTotal: number;
   notes1EnrichedHtml: string;
   notes2EnrichedHtml: string;
   notes3EnrichedHtml: string;
   notes4EnrichedHtml: string;
   notesEnrichedHtml: string;
-  preparedSpells: number;
   shortRest: (event: Event) => Promise<void>;
   showContainerPanel: boolean;
   showLegendaryToolbar: boolean;
   showSpellbookTab: boolean;
   spellbook: SpellbookSection[];
-  spellCalculations: SpellCalculations;
+  spellcastingInfo: SpellcastingInfo;
   spellSlotTrackerMode:
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;

@@ -8,6 +8,7 @@ import type {
   DropdownListOption,
   HTMLElementOrGettable,
   NpcSheetContext,
+  SpellcastingInfo,
 } from 'src/types/types';
 import { CONSTANTS } from '../constants';
 import type { Actor5e } from 'src/types/types';
@@ -20,6 +21,7 @@ import { TidyHooks } from './TidyHooks';
 import { isNil } from 'src/utils/data';
 import { clamp } from 'src/utils/numbers';
 import { processInputChangeDelta } from 'src/utils/form';
+import { calculateSpellAttackAndDc } from 'src/utils/formula';
 
 export const FoundryAdapter = {
   deepClone(obj: any) {
@@ -1382,5 +1384,38 @@ export const FoundryAdapter = {
     return actor.itemTypes.class.find(
       (c: any) => c.system.identifier === TidyFlags.classFilter.get(actor)
     );
+  },
+  getSpellcastingInfo(actor: Actor5e, spells: Item5e[]): SpellcastingInfo {
+    const currentFilteredClass =
+      FoundryAdapter.getFilteredClassOrOriginal(actor);
+
+    const filterByClass = spells.some(
+      (s: Item5e) => !isNil(s.system.sourceClass)
+    );
+
+    return {
+      currentFilteredClass: currentFilteredClass,
+      prepared: {
+        value: FoundryAdapter.getPreparedSpells(
+          actor,
+          spells,
+          filterByClass ? currentFilteredClass : undefined
+        ),
+        max: currentFilteredClass?.system?.spellcasting?.preparation?.max ?? 0,
+      },
+      calculations: calculateSpellAttackAndDc(actor, currentFilteredClass),
+    };
+  },
+  getPreparedSpells(actor: Actor5e, spells: Item5e[], classFilter?: Item5e) {
+    // Count prepared spells, excluding "always prepared"
+    return spells.filter((spell) => {
+      const prep = spell.system.preparation;
+      return (
+        spell.system.level > 0 &&
+        prep.mode === 'prepared' &&
+        prep.prepared &&
+        (!classFilter || spell.system.sourceClass === classFilter.identifier)
+      );
+    }).length;
   },
 };
