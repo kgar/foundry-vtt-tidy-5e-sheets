@@ -557,7 +557,7 @@ export class Tidy5eVehicleSheet
     // Update the rendering context data
     context.features = Object.values(features);
     context.cargo = Object.values(cargo);
-    context.encumbrance = this._computeEncumbrance(totalWeight, context);
+    context.encumbrance = context.system.attributes.encumbrance;
   }
 
   /**
@@ -588,34 +588,6 @@ export class Tidy5eVehicleSheet
     if (item.type === 'equipment' || item.type === 'weapon') {
       context.threshold = item.system.hp.dt ? item.system.hp.dt : '—';
     }
-  }
-
-  /**
-   * Compute the total weight of the vehicle's cargo.
-   * @param {number} totalWeight    The cumulative item weight from inventory items
-   * @param {object} actorData      The data object for the Actor being rendered
-   * @returns {{max: number, value: number, pct: number}}
-   * @private
-   */
-  _computeEncumbrance(
-    totalWeight: number,
-    actorData: Actor5e
-  ): VehicleEncumbrance {
-    // Compute currency weight
-    const totalCoins = Object.values(
-      // TODO: Use dnd5e types ... one day ...
-      actorData.system.currency as Record<string, number>
-    ).reduce((acc: number, denom: number) => acc + denom, 0);
-
-    const currencyPerWeight = game.settings.get('dnd5e', 'metricWeightUnits')
-      ? CONFIG.DND5E.encumbrance.currencyPerWeight.metric
-      : CONFIG.DND5E.encumbrance.currencyPerWeight.imperial;
-    totalWeight += totalCoins / currencyPerWeight;
-
-    // Compute overall encumbrance
-    const max = actorData.system.attributes.capacity.cargo;
-    const pct = Math.clamp((totalWeight * 100) / max, 0, 100);
-    return { value: totalWeight.toNearest(0.1), max, pct };
   }
 
   private async setExpandedItemData() {
