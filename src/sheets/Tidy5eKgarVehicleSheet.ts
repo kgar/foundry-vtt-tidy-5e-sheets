@@ -543,10 +543,10 @@ export class Tidy5eVehicleSheet
           break;
         case 'feat':
           // TODO: Determine the best way to delineate active, passive, and reaction-based item sections.
-          const firstActivityType = item.system.activities?.contents[0]?.type;
-          if (!firstActivityType || firstActivityType === 'none') {
+          const firstActivityActivationType = item.system.activities?.contents[0]?.activation?.type;
+          if (!firstActivityActivationType || firstActivityActivationType === 'none') {
             features.passive.items.push(item);
-          } else if (firstActivityType === 'reaction') {
+          } else if (firstActivityActivationType === 'reaction') {
             features.reactions.items.push(item);
           } else {
             features.actions.items.push(item);
@@ -579,8 +579,8 @@ export class Tidy5eVehicleSheet
     );
 
     // Handle crew actions
-    const firstActivityType = item.system.activities?.contents[0]?.type;
-    if (item.type === 'feat' && firstActivityType === 'crew') {
+    const firstActivityActivationType = item.system.activities?.contents[0]?.activation?.type;
+    if (item.type === 'feat' && firstActivityActivationType === 'crew') {
       context.cover = game.i18n.localize(
         `DND5E.${item.system.cover ? 'CoverTotal' : 'None'}`
       );
