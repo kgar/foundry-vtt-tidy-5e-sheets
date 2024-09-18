@@ -39,7 +39,7 @@
         field="system.capacity.value"
         value={$context.source.capacity.value}
         disabled={!$context.editable}
-        placeholder="&mdash;"
+        placeholder="—"
       />
     </div>
   </div>

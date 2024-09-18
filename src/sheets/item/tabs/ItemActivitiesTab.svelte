@@ -111,7 +111,7 @@
 
     & > .icon {
       --icon-size: 1.5rem;
-      --icon-fill: var(--color-text-dark-primary);
+      --icon-fill: var(--t5e-primary-font-color);
       flex: 0 0 50px;
       height: 1.5rem;
     }

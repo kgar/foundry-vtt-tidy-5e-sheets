@@ -398,6 +398,17 @@
     }
   }
 
+  /* Activities */
+  .inline-activities-container {
+    padding: 0.25rem 0.25rem 0.25rem 0.5rem;
+    margin-left: 0.5rem;
+    border-left: 0.0625rem dotted var(--t5e-separator-color);
+
+    .tidy-table-row-container  {
+      margin-left: 0;
+    }
+  }
+
   /* Text utilities */
   .capitalize {
     text-transform: capitalize;

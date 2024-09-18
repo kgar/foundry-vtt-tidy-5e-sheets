@@ -22,6 +22,7 @@ import { isNil } from 'src/utils/data';
 import { clamp } from 'src/utils/numbers';
 import { processInputChangeDelta } from 'src/utils/form';
 import { calculateSpellAttackAndDc } from 'src/utils/formula';
+import type { Activity5e } from './dnd5e.types';
 
 export const FoundryAdapter = {
   deepClone(obj: any) {
@@ -1345,6 +1346,7 @@ export const FoundryAdapter = {
   formatNumber(num: number) {
     return dnd5e.utils.formatNumber(num);
   },
+  // TODO: Consolidate uses changed to one function
   handleItemUsesChanged(
     event: Event & {
       currentTarget: EventTarget & HTMLInputElement;
@@ -1362,7 +1364,23 @@ export const FoundryAdapter = {
 
     return item.update({ 'system.uses.spent': item.system.uses.max - uses });
   },
+  handleActivityUsesChanged(
+    event: Event & {
+      currentTarget: EventTarget & HTMLInputElement;
+    },
+    activity: Activity5e
+  ) {
+    const value = processInputChangeDelta(
+      event.currentTarget.value,
+      activity,
+      'uses.value'
+    );
 
+    const uses = clamp(0, value, activity.uses.max);
+    event.currentTarget.value = uses.toString();
+
+    return activity.update({ 'system.uses.spent': activity.uses.max - uses });
+  },
   // TEMP: Find better home
   groupSelectOptions(entries: [string, any][]) {
     const groupMap: Record<string, typeof entries> = {};

@@ -14,12 +14,13 @@
     ItemCardStore,
   } from 'src/types/types';
   import { warn } from 'src/utils/logging';
-  import { getContext, createEventDispatcher, onMount } from 'svelte';
+  import { getContext, onMount } from 'svelte';
   import type { Writable } from 'svelte/store';
   import ItemSummary from '../ItemSummary.svelte';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { TidyHooks } from 'src/foundry/TidyHooks';
+  import InlineActivitiesList from '../InlineActivitiesList.svelte';
 
   export let item: Item5e | null = null;
   export let contextMenu: { type: string; uuid: string } | null = null;
@@ -168,6 +169,7 @@
 
     <svelte:fragment slot="after-row">
       <ExpandableContainer expanded={showSummary}>
+        <InlineActivitiesList {item} />
         <ItemSummary chatData={chatData ?? emptyChatData} {item} />
       </ExpandableContainer>
     </svelte:fragment>
