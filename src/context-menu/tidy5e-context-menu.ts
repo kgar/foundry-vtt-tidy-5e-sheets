@@ -336,34 +336,34 @@ function getItemContextOptions(item: Item5e) {
     });
   }
 
+  options.push({
+    name: 'TIDY5E.ContextMenuActionEdit',
+    icon: "<i class='fas fa-pencil-alt fa-fw'></i>",
+    callback: () => item.sheet.render(true),
+    condition: () => item.isOwner && !item.compendium?.locked,
+  });
+
+  options.push({
+    name: 'DND5E.ContextMenuActionDuplicate',
+    icon: "<i class='fas fa-copy fa-fw'></i>",
+    condition: () =>
+      isUnlocked &&
+      !['race', 'background', 'class', 'subclass'].includes(item.type) &&
+      item.isOwner &&
+      !item.compendium?.locked,
+
+    callback: () =>
+      item.clone(
+        {
+          name: FoundryAdapter.localize('DOCUMENT.CopyOf', {
+            name: item.name,
+          }),
+        },
+        { save: true }
+      ),
+  });
+
   if (item.type === 'spell') {
-    options.push({
-      name: 'TIDY5E.ContextMenuActionEdit',
-      icon: "<i class='fas fa-pencil-alt fa-fw'></i>",
-      callback: () => item.sheet.render(true),
-      condition: () => item.isOwner && !item.compendium?.locked,
-    });
-
-    options.push({
-      name: 'DND5E.ContextMenuActionDuplicate',
-      icon: "<i class='fas fa-copy fa-fw'></i>",
-      condition: () =>
-        isUnlocked &&
-        !['race', 'background', 'class', 'subclass'].includes(item.type) &&
-        item.isOwner &&
-        !item.compendium?.locked,
-
-      callback: () =>
-        item.clone(
-          {
-            name: FoundryAdapter.localize('DOCUMENT.CopyOf', {
-              name: item.name,
-            }),
-          },
-          { save: true }
-        ),
-    });
-    
     options.push({
       name: 'TIDY5E.ContextMenuActionDelete',
       icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5e-warning-accent-color);'></i>",
@@ -371,32 +371,6 @@ function getItemContextOptions(item: Item5e) {
       condition: () => isUnlocked && item.isOwner && !item.compendium?.locked,
     });
   } else {
-    options.push({
-      name: 'DND5E.ContextMenuActionEdit',
-      icon: "<i class='fas fa-pencil-alt fa-fw'></i>",
-      callback: () => item.sheet.render(true),
-      condition: () => item.isOwner && !item.compendium?.locked,
-    });
-
-    options.push({
-      name: 'DND5E.ContextMenuActionDuplicate',
-      icon: "<i class='fas fa-copy fa-fw'></i>",
-      condition: () =>
-        isUnlocked &&
-        !['race', 'background', 'class', 'subclass'].includes(item.type) &&
-        item.isOwner &&
-        !item.compendium?.locked,
-
-      callback: () =>
-        item.clone(
-          {
-            name: FoundryAdapter.localize('DOCUMENT.CopyOf', {
-              name: item.name,
-            }),
-          },
-          { save: true }
-        ),
-    });
     options.push({
       name: 'DND5E.ContextMenuActionDelete',
       icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5e-warning-accent-color);'></i>",
@@ -408,6 +382,22 @@ function getItemContextOptions(item: Item5e) {
       condition: () => isUnlocked && item.isOwner && !item.compendium?.locked,
     });
   }
+
+  options.push({
+    name: 'DND5E.Scroll.CreateScroll',
+    icon: '<i class="fa-solid fa-scroll"></i>',
+    callback: async () => {
+      const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(item);
+      if (scroll) {
+        dnd5e.documents.Item5e.create(scroll, { parent: itemParent });
+      }
+    },
+    condition: () =>
+      item.type === 'spell' &&
+      itemParent?.isOwner &&
+      !itemParent?.compendium?.locked,
+    group: 'action',
+  });
 
   if (itemParentIsActor && actorUsesActionFeature(itemParent)) {
     const active = isItemInActionList(item);
