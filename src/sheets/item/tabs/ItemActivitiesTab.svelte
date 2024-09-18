@@ -62,7 +62,7 @@
         <button
           class="transparent-button highlight-on-hover name"
           on:click={() =>
-            $context.system.activities.get(activity.id).sheet.render(true)}
+            $context.system.activities?.get(activity.id).sheet.render(true)}
           disabled={!$context.editable}
           tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
         >
@@ -74,7 +74,7 @@
             class="inline-icon-button"
             title={localize('DND5E.ACTIVITY.Action.Delete')}
             on:click={() =>
-              $context.system.activities.get(activity.id)?.deleteDialog()}
+              $context.system.activities?.get(activity.id)?.deleteDialog()}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-trash"></i>

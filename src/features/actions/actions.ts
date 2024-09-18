@@ -115,7 +115,7 @@ function buildActionSections(
       customSection.actions.push(actionItem);
     } else {
       const activationType = getActivationType(
-        actionItem.item.system.activities.contents[0]?.activation.type,
+        actionItem.item.system.activities?.contents[0]?.activation.type,
         customMappings
       );
       const section = (actionSections[activationType] ??= {
@@ -148,13 +148,13 @@ export function isItemInActionList(item: Item5e): boolean {
     case CONSTANTS.ITEM_TYPE_EQUIPMENT: {
       return (
         item.system.equipped &&
-        isActiveItem(item.system.activities.contents[0]?.activation.type)
+        isActiveItem(item.system.activities?.contents[0]?.activation.type)
       );
     }
     case CONSTANTS.ITEM_TYPE_CONSUMABLE: {
       return (
         SettingsProvider.settings.actionListIncludeConsumables.get() &&
-        isActiveItem(item.system.activities.contents[0]?.activation.type)
+        isActiveItem(item.system.activities?.contents[0]?.activation.type)
       );
     }
     case CONSTANTS.ITEM_TYPE_SPELL: {
@@ -169,10 +169,10 @@ export function isItemInActionList(item: Item5e): boolean {
         return false;
       }
       const isReaction =
-        item.system.activities.contents[0]?.activation.type ===
+        item.system.activities?.contents[0]?.activation.type ===
         CONSTANTS.ACTIVATION_COST_REACTION;
       const isBonusAction =
-        item.system.activities.contents[0]?.activation.type ===
+        item.system.activities?.contents[0]?.activation.type ===
         CONSTANTS.ACTIVATION_COST_BONUS;
 
       //ASSUMPTION: If the spell causes damage, it will have damageParts
@@ -199,7 +199,7 @@ export function isItemInActionList(item: Item5e): boolean {
       return shouldInclude;
     }
     case CONSTANTS.ITEM_TYPE_FEAT: {
-      return !!item.system.activities.contents[0]?.activation.type;
+      return !!item.system.activities?.contents[0]?.activation.type;
     }
     default: {
       return false;
@@ -209,9 +209,9 @@ export function isItemInActionList(item: Item5e): boolean {
 
 function getActivityFirstDamage(item: Item5e) {
   const activity =
-    item.system.activities.getByType('attack')[0] ||
-    item.system.activities.getByType('damage')[0] ||
-    item.system.activities.getByType('save')[0];
+    item.system.activities?.getByType('attack')[0] ||
+    item.system.activities?.getByType('damage')[0] ||
+    item.system.activities?.getByType('save')[0];
   return {
     parts:
       activity?.damage.parts.map((d: any) => [
@@ -293,7 +293,7 @@ function getRangeTitles(item: Item5e): {
   rangeTitle: string | null;
   rangeSubtitle: string | null;
 } {
-  const firstActivity = item.system.activities.contents[0] ?? {};
+  const firstActivity = item.system.activities?.contents[0] ?? {};
 
   const rangeSubtitle =
     (firstActivity.target.affects?.type ??
@@ -318,7 +318,7 @@ function getRangeTitles(item: Item5e): {
 }
 
 function hasRange(item: Item5e): boolean {
-  return !isNil(item.system.activities.contents[0]?.range?.units);
+  return !isNil(item.system.activities?.contents[0]?.range?.units);
 }
 
 function getActivationType(

@@ -410,7 +410,7 @@ export class Tidy5eVehicleSheet
         hasActions: true,
         crewable: true,
         key: 'actions',
-        dataset: { type: 'feat', 'system.activation.type': 'crew' },
+        dataset: { type: 'feat' },
         columns: [
           {
             label: game.i18n.localize('DND5E.Cover'),
@@ -439,7 +439,7 @@ export class Tidy5eVehicleSheet
       reactions: {
         label: game.i18n.localize('DND5E.ReactionPl'),
         items: [],
-        dataset: { type: 'feat', 'system.activation.type': 'reaction' },
+        dataset: { type: 'feat' },
         key: 'reactions',
         show: true,
       },
@@ -542,11 +542,15 @@ export class Tidy5eVehicleSheet
           features.equipment.items.push(item);
           break;
         case 'feat':
-          const act = item.system.activation;
-          if (!act.type || act.type === 'none')
+          // TODO: Determine the best way to delineate active, passive, and reaction-based item sections.
+          const firstActivityType = item.system.activities?.contents[0]?.type;
+          if (!firstActivityType || firstActivityType === 'none') {
             features.passive.items.push(item);
-          else if (act.type === 'reaction') features.reactions.items.push(item);
-          else features.actions.items.push(item);
+          } else if (firstActivityType === 'reaction') {
+            features.reactions.items.push(item);
+          } else {
+            features.actions.items.push(item);
+          }
           break;
         default:
           totalWeight += item.system.totalWeightIn?.(units) ?? 0;
@@ -575,7 +579,8 @@ export class Tidy5eVehicleSheet
     );
 
     // Handle crew actions
-    if (item.type === 'feat' && item.system.activation.type === 'crew') {
+    const firstActivityType = item.system.activities?.contents[0]?.type;
+    if (item.type === 'feat' && firstActivityType === 'crew') {
       context.cover = game.i18n.localize(
         `DND5E.${item.system.cover ? 'CoverTotal' : 'None'}`
       );

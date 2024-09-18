@@ -454,16 +454,16 @@ export class Tidy5eKgarItemSheet
     { data }: { data: any }
   ) {
     const { _id: id, type } = data;
-    const source = this.item.system.activities.get(id);
+    const source = this.item.system.activities?.get(id);
 
     // Reordering
     if (source) {
       const targetId = event.target.closest<HTMLElement>(
         '.activity[data-activity-id]'
       )?.dataset.activityId;
-      const target = this.item.system.activities.get(targetId);
+      const target = this.item.system.activities?.get(targetId);
       if (!target || target === source) return;
-      const siblings = this.item.system.activities.filter(
+      const siblings = this.item.system.activities?.filter(
         (a: Activity5e) => a._id !== id
       );
       const sortUpdates = SortingHelpers.performIntegerSort(source, {
