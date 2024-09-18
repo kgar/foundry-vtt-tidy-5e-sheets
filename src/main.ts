@@ -16,6 +16,7 @@ import { setupModuleIntegrations } from './integration/integration';
 import { TidyHooks } from './foundry/TidyHooks';
 import { initKeybindings } from './keybindings/keybind-init';
 import { Tidy5eGroupSheetClassic } from './sheets/Tidy5eGroupSheetClassic';
+import { DebugTools } from './utils/DebugTools';
 
 Hooks.once('init', () => {
   DocumentSheetConfig.registerSheet(
@@ -110,4 +111,6 @@ Hooks.once('ready', async () => {
   ) {
     new MigrationNotificationFormApplication().render(true);
   }
+
+  DebugTools.onReady();
 });

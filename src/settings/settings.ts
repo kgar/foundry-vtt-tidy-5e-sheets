@@ -92,6 +92,11 @@ export type Tidy5eSetting = {
      * @param data the new value
      */
     onChange?: (data: any) => void;
+
+    /**
+     * Prompts a reload if the setting is changed.
+     */
+    requiresReload?: boolean;
   };
   get: () => any;
   /**
@@ -1871,6 +1876,7 @@ export function createSettings() {
           config: true,
           default: false,
           type: Boolean,
+          requiresReload: true 
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>('debug');
