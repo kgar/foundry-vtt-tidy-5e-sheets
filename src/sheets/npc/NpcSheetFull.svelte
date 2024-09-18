@@ -24,6 +24,7 @@
   import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
   import ActorName from '../actor/ActorName.svelte';
   import SpecialSaves from '../actor/SpecialSaves.svelte';
+  import NumberInput from 'src/components/inputs/NumberInput.svelte';
 
   let selectedTabId: string;
 
@@ -91,19 +92,28 @@
               })}</span
             >
           </div>
-          <div class="level">
+          <div
+            class="challenge-rating"
+            aria-label={localize('DND5E.CRLabel', {
+              cr: $context.system.details.cr,
+            })}
+            title={!$context.unlocked ? localize('DND5E.ChallengeRating') : ''}
+          >
             {localize('DND5E.AbbreviationCR')}
-            <ContentEditableFormField
-              element="span"
-              editable={!$context.lockSensitiveFields}
-              document={$context.actor}
-              field="system.details.cr"
-              placeholder="0"
-              dataMaxLength={4}
-              value={$context.labels.cr}
-              saveAs="number"
-              selectOnFocus={true}
-            />
+            {#if $context.unlocked}
+              <NumberInput
+                document={$context.actor}
+                value={$context.source.details.cr}
+                field="system.details.cr"
+                step="any"
+                cssClass="challenge-rating-input"
+                selectOnFocus={true}
+                title={localize('DND5E.ChallengeRating')}
+              />
+            {:else}
+              <!-- svelte-ignore missing-declaration -->
+              {dnd5e.utils.formatCR($context.system.details.cr)}
+            {/if}
           </div>
           <SheetMenu defaultSettingsTab={CONSTANTS.TAB_USER_SETTINGS_NPCS} />
         </div>
@@ -272,7 +282,7 @@
       white-space: nowrap;
       align-self: center;
     }
-    .level {
+    .challenge-rating {
       padding: 0.25rem 0.375rem;
       border-radius: 0.1875rem;
       background: var(--t5e-faint-color);
@@ -281,9 +291,12 @@
       line-height: 1;
       height: 1.5rem;
       white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
 
-      :global(span) {
-        display: inline-block;
+      :global(.challenge-rating-input) {
+        max-width: 1.75rem;
       }
     }
     :global(.level [contenteditable]) {
