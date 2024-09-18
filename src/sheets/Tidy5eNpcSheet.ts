@@ -951,7 +951,7 @@ export class Tidy5eNpcSheet
       other: Item5e[];
     }>(
       (features, item) => {
-        const { quantity, uses, target } = item.system;
+        const { quantity, uses } = item.system;
         const ctx = (context.itemContext[item.id] ??= {});
         ctx.attunement = FoundryAdapter.getAttunementContext(item);
         ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;

@@ -767,7 +767,7 @@ export const FoundryAdapter = {
     );
   },
   playDiceSound() {
-    return AudioHelper.play({ src: CONFIG.sounds.dice });
+    return foundry.audio.AudioHelper.play({ src: CONFIG.sounds.dice });
   },
   calculateAverageFromFormula(formula: string) {
     let r = new Roll(formula);
