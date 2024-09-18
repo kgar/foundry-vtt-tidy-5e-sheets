@@ -834,5 +834,14 @@
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "L'identificatore della classe sorgente dell'incantesimo appare qui. Per assegnare un identificatore che il personaggio non possiede, inserisci l'identificatore della classe in questo campo di testo.",
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Mostra Solo Non Assegnato",
     "TIDY5E.SpellSourceIdentifierSelectText": "Identificatore Classe: {identifier}",
-    "TIDY5E.PreviewSheetImageHint": "Clic Sinistro: Anteprima Immagine"
+    "TIDY5E.PreviewSheetImageHint": "Clic Sinistro: Anteprima Immagine",
+    "TIDY5E.Tidy5eGroupSheetClassic": "Scheda gruppo classica Tidy 5e",
+    "TIDY5E.NoSpecialSenses": "Nessun senso speciale",
+    "TIDY5E.Group.ShowMemberTabInfoPanel": "Mostra Pannello Info",
+    "TIDY5E.Group.EmptyMembersTabHint": "Questo gruppo è vuoto. Trascina un personaggio dalla barra laterale per aggiungere un membro.",
+    "TIDY5E.Group.NamePlaceholder": "Nome Gruppo",
+    "TIDY5E.Keybindings.ToggleSheetLock.Name": "Attiva/disattiva Blocco Scheda",
+    "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Se una scheda Tidy è la finestra attualmente attiva nell'interfaccia utente, questa combinazione di tasti attiva/disattiva il blocco scheda.",
+    "TIDY5E.Group.RemoveMemberFromGroup": "Rimuovi Membro dal Gruppo",
+    "TIDY5E.Group.HideMemberTabInfoPanel": "Nascondi Pannello Info"
 }
