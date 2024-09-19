@@ -1407,33 +1407,14 @@ export const FoundryAdapter = {
     const currentFilteredClass =
       FoundryAdapter.getFilteredClassOrOriginal(actor);
 
-    const filterByClass = spells.some(
-      (s: Item5e) => !isNil(s.system.sourceClass)
-    );
-
     return {
       currentFilteredClass: currentFilteredClass,
       prepared: {
-        value: FoundryAdapter.getPreparedSpells(
-          actor,
-          spells,
-          filterByClass ? currentFilteredClass : undefined
-        ),
+        value:
+          currentFilteredClass?.system?.spellcasting?.preparation?.value ?? 0,
         max: currentFilteredClass?.system?.spellcasting?.preparation?.max ?? 0,
       },
       calculations: calculateSpellAttackAndDc(actor, currentFilteredClass),
     };
-  },
-  getPreparedSpells(actor: Actor5e, spells: Item5e[], classFilter?: Item5e) {
-    // Count prepared spells, excluding "always prepared"
-    return spells.filter((spell) => {
-      const prep = spell.system.preparation;
-      return (
-        spell.system.level > 0 &&
-        prep.mode === 'prepared' &&
-        prep.prepared &&
-        (!classFilter || spell.system.sourceClass === classFilter.identifier)
-      );
-    }).length;
   },
 };
