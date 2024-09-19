@@ -11,6 +11,8 @@
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
+  import ItemImage from './ItemImage.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   export let item: Item5e | null = null;
   export let inlineToggleService: InlineToggleService;
@@ -57,6 +59,8 @@
               'data-activity-id': activity.id,
             }}
             rowClass="activity"
+            on:mousedown={(event) =>
+              FoundryAdapter.editOnMiddleClick(event, activity)}
           >
             <TidyTableCell primary={true}>
               <button
@@ -67,11 +71,7 @@
                 {#if activity.img?.endsWith('.svg')}
                   <Dnd5eIcon src={activity.img} />
                 {:else}
-                  <img
-                    src={activity.img}
-                    class="activity-icon"
-                    alt={activity.name}
-                  />
+                  <ItemImage src={activity.img} alt={activity.name} />
                 {/if}
                 {activity.name}
               </button>
@@ -95,22 +95,24 @@
 
 <style lang="scss">
   .inline-activities-container {
-    --icon-size: 20px;
+    --icon-size: 1.25rem;
     --icon-fill: var(--t5e-primary-font-color);
-  }
 
-  .inline-activity-roll-button {
-    background: none;
-    text-align: left;
-    font-size: 0.75rem;
-    border: none;
-    transition: color 0.3s;
-    display: flex;
-    gap: 0.25rem;
-    align-items: center;
-
-    &:hover {
+    .inline-activity-roll-button {
       background: none;
+      text-align: left;
+      font-size: 0.75rem;
+      border: none;
+      transition: color 0.3s;
+      display: flex;
+      gap: 0.25rem;
+      align-items: center;
+      padding: 0;
+      margin: 0;
+
+      &:hover {
+        background: none;
+      }
     }
   }
 </style>
