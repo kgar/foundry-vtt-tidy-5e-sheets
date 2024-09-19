@@ -3,11 +3,17 @@ import type {
   Item5e,
   ItemDescription,
   ItemSheetContext,
+  PropertyContext,
   UsesRecoveryData,
 } from 'src/types/item.types';
 import { get, writable } from 'svelte/store';
 import TypeNotFoundSheet from './item/TypeNotFoundSheet.svelte';
-import type { SheetStats, SheetTabCacheable, Tab } from 'src/types/types';
+import type {
+  GroupableSelectOption,
+  SheetStats,
+  SheetTabCacheable,
+  Tab,
+} from 'src/types/types';
 import {
   applySheetAttributesToWindow,
   applyThemeDataAttributeToWindow,
@@ -241,8 +247,8 @@ export class Tidy5eKgarItemSheet
       object: Object.fromEntries(
         (context.system.properties ?? []).map((p: string) => [p, true])
       ),
-      options: (context.system.validProperties ?? []).reduce(
-        (arr: ItemSheetContext['properties']['options'], k: any) => {
+      options: (context.system.validProperties ?? [])
+        .reduce((arr: ItemSheetContext['properties']['options'], k: any) => {
           // @ts-ignore
           const { label } = CONFIG.DND5E.itemProperties[k];
           arr.push({
@@ -251,9 +257,15 @@ export class Tidy5eKgarItemSheet
             selected: this.item._source.system.properties?.includes(k),
           });
           return arr;
-        },
-        []
-      ),
+        }, [])
+        .sort(
+          (
+            a: PropertyContext['options'][0],
+            b: PropertyContext['options'][0]
+          ) => {
+            return a.label.localeCompare(b.label);
+          }
+        ),
     };
 
     context.equipmentTypes = [
@@ -265,6 +277,18 @@ export class Tidy5eKgarItemSheet
         label,
         group: 'DND5E.Armor',
       })),
+      ...ItemSheetRuntime.getCustomEquipmentTypeGroups().reduce<
+        GroupableSelectOption[]
+      >((prev, curr) => {
+        for (let [key, typeLabel] of Object.entries(curr.types)) {
+          prev.push({
+            value: key,
+            label: typeLabel,
+            group: curr.label,
+          });
+        }
+        return prev;
+      }, []),
     ];
 
     context.recoveryPeriods = [
