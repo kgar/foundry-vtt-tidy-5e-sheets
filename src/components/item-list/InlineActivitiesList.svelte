@@ -44,7 +44,7 @@
 <ExpandableContainer
   expanded={$inlineToggleServiceStore.get(tabId)?.has(item.id) === true}
 >
-  <div class="inline-activities-container">
+  <div class="inline-activities-container" data-item-id={item.id}>
     <TidyTable
       key="activities-{item.name}"
       toggleable={false}
@@ -52,7 +52,12 @@
     >
       <svelte:fragment slot="body">
         {#each item.system.activities.contents as activity (activity.id)}
-          <TidyTableRow>
+          <TidyTableRow
+            rowAttributes={{
+              'data-activity-id': activity.id,
+            }}
+            rowClass="activity"
+          >
             <TidyTableCell primary={true}>
               <button
                 type="button"

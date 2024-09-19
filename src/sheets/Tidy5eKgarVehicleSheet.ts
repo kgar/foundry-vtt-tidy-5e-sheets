@@ -198,6 +198,22 @@ export class Tidy5eVehicleSheet
     });
 
     initTidy5eContextMenu(this, html);
+
+    FoundryAdapter.createContextMenu(html, '.activity[data-activity-id]', [], {
+      onOpen: (element: HTMLElement) => {
+        const itemId =
+          element.closest<HTMLElement>('[data-item-id]')?.dataset.itemId;
+        const item =
+          this.document.type === 'container'
+            ? this.document.system.getContainedItem(itemId)
+            : this.document.items.get(itemId);
+        // Parts of ContextMenu doesn't play well with promises, so don't show menus for containers in packs
+        if (!item || item instanceof Promise) return;
+        if (element.closest('[data-activity-id]')) {
+          dnd5e.documents.activity.UtilityActivity.onContextMenu(item, element);
+        }
+      },
+    });
   }
 
   async getData(options = {}) {

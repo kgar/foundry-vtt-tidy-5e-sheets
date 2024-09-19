@@ -440,6 +440,13 @@
   button:has(.expand-indicator):hover i {
     color: var(--t5e-icon-hover-color);
   }
+
+  /* Inline Activities */
+  .inline-activities-container {
+    button {
+      line-height: unset;
+    }
+  }
 }
 
 @import './partials/floating-context-menu';
