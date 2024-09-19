@@ -25,6 +25,7 @@
   import ActorName from '../actor/ActorName.svelte';
   import SpecialSaves from '../actor/SpecialSaves.svelte';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
+  import { isNil } from 'src/utils/data';
 
   let selectedTabId: string;
 
@@ -142,14 +143,16 @@
             <DelimitedTruncatedContent cssClass="flex-grow-1">
               <span class="flex-row extra-small-gap align-items-center">
                 <InlineCreatureType />
-                <span
-                  class="environment"
-                  title={localize('TIDY5E.EnvironmentTooltip', {
-                    environment: $context.system.details.environment,
-                  })}
-                >
-                  <i class="fas fa-tree" />
-                </span>
+                {#if !isNil($context.system.details.environment, '')}
+                  <span
+                    class="environment"
+                    title={localize('TIDY5E.EnvironmentTooltip', {
+                      environment: $context.system.details.environment,
+                    })}
+                  >
+                    <i class="fas fa-tree" />
+                  </span>
+                {/if}
               </span>
 
               <span
@@ -310,10 +313,14 @@
     justify-content: space-between;
     align-items: center;
     gap: 0.25rem;
-    font-size: 0.75rem;
     line-height: 1;
     padding: 0.1875rem 0 0.125rem 0;
     line-height: 1rem;
+
+    &,
+    :global(button) {
+      font-size: 0.75rem;
+    }
   }
 
   .actor-name-row {
