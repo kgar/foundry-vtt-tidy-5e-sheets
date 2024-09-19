@@ -26,8 +26,8 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
-  import InlineContainerToggle from 'src/sheets/container/InlineContainerToggle.svelte';
-  import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+  import InlineToggleControl from 'src/sheets/shared/InlineToggleControl.svelte';
+  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import InlineContainerView from 'src/sheets/container/InlineContainerView.svelte';
   import { ItemUtils } from 'src/utils/ItemUtils';
 
@@ -35,8 +35,8 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
-  let inlineContainerToggleService = getContext<InlineContainerToggleService>(
-    CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
+  let inlineToggleService = getContext<InlineToggleService>(
+    CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
 
   $: actions = SheetSections.configureActions(
@@ -139,10 +139,10 @@
                   item={actionItem.item}
                 />
                 {#if 'containerContents' in actionItem && !!actionItem.containerContents}
-                  <InlineContainerToggle
+                  <InlineToggleControl
                     iconClass="fa-lg"
-                    item={actionItem.item}
-                    {inlineContainerToggleService}
+                    entityId={actionItem.item.id}
+                    {inlineToggleService}
                   />
                 {/if}
                 <ItemName
@@ -288,7 +288,7 @@
                 container={actionItem.item}
                 containerContents={actionItem.containerContents}
                 editable={$context.editable}
-                {inlineContainerToggleService}
+                {inlineToggleService}
                 lockItemQuantity={$context.lockItemQuantity}
                 sheetDocument={$context.actor}
                 --t5e-image-size-override="1.5rem"

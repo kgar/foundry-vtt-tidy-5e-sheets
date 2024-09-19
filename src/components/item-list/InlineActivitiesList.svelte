@@ -7,8 +7,17 @@
   import Dnd5eIcon from '../icon/Dnd5eIcon.svelte';
   import ActivityUses from './ActivityUses.svelte';
   import ActivityAddUses from './ActivityAddUses.svelte';
+  import ExpandableContainer from '../expandable/ExpandableContainer.svelte';
+  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import { getContext } from 'svelte';
+  import { CONSTANTS } from 'src/constants';
 
   export let item: Item5e | null = null;
+  export let inlineToggleService: InlineToggleService;
+
+  $: inlineToggleServiceStore = inlineToggleService.store;
+
+  let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
   const gridTemplateColumns = `
     /* Name */
@@ -32,7 +41,9 @@
   }
 </script>
 
-{#if item?.system.activities?.contents.length}
+<ExpandableContainer
+  expanded={$inlineToggleServiceStore.get(tabId)?.has(item.id) === true}
+>
   <div class="inline-activities-container">
     <TidyTable
       key="activities-{item.name}"
@@ -75,7 +86,7 @@
       </svelte:fragment>
     </TidyTable>
   </div>
-{/if}
+</ExpandableContainer>
 
 <style lang="scss">
   .inline-activities-container {

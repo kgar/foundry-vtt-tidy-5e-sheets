@@ -55,7 +55,7 @@ import { DocumentTabSectionConfigApplication } from 'src/applications/section-co
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
 import { Container } from 'src/features/containers/Container';
 
 export class Tidy5eVehicleSheet
@@ -73,7 +73,7 @@ export class Tidy5eVehicleSheet
   currentTabId: string;
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
-  inlineContainerToggleService = new InlineContainerToggleService();
+  inlineToggleService = new InlineToggleService();
   itemTableTogglesCache: ItemTableToggleCacheService;
   subscriptionsService: StoreSubscriptionsService;
   itemFilterService: ItemFilterService;
@@ -157,8 +157,8 @@ export class Tidy5eVehicleSheet
         [CONSTANTS.SVELTE_CONTEXT.STATS, this.stats],
         [CONSTANTS.SVELTE_CONTEXT.CARD, this.card],
         [
-          CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
-          this.inlineContainerToggleService,
+          CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
+          this.inlineToggleService,
         ],
         [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.itemFilterService],
         [
@@ -543,8 +543,12 @@ export class Tidy5eVehicleSheet
           break;
         case 'feat':
           // TODO: Determine the best way to delineate active, passive, and reaction-based item sections.
-          const firstActivityActivationType = item.system.activities?.contents[0]?.activation?.type;
-          if (!firstActivityActivationType || firstActivityActivationType === 'none') {
+          const firstActivityActivationType =
+            item.system.activities?.contents[0]?.activation?.type;
+          if (
+            !firstActivityActivationType ||
+            firstActivityActivationType === 'none'
+          ) {
             features.passive.items.push(item);
           } else if (firstActivityActivationType === 'reaction') {
             features.reactions.items.push(item);
@@ -579,7 +583,8 @@ export class Tidy5eVehicleSheet
     );
 
     // Handle crew actions
-    const firstActivityActivationType = item.system.activities?.contents[0]?.activation?.type;
+    const firstActivityActivationType =
+      item.system.activities?.contents[0]?.activation?.type;
     if (item.type === 'feat' && firstActivityActivationType === 'crew') {
       context.cover = game.i18n.localize(
         `DND5E.${item.system.cover ? 'CoverTotal' : 'None'}`

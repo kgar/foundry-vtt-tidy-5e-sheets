@@ -404,7 +404,7 @@
     margin-left: 0.5rem;
     border-left: 0.0625rem dotted var(--t5e-separator-color);
 
-    .tidy-table-row-container  {
+    .tidy-table-row-container {
       margin-left: 0;
     }
   }
@@ -423,6 +423,22 @@
     -moz-user-select: text;
     -ms-user-select: text;
     user-select: text;
+  }
+
+  /* Expand Indicator */
+  .expand-indicator {
+    color: var(--t5e-tertiary-color);
+    transition: color 0.3s, transform 0.15s;
+    align-self: center;
+    justify-self: center;
+
+    &.expanded {
+      transform: rotate(90deg);
+    }
+  }
+
+  button:has(.expand-indicator):hover i {
+    color: var(--t5e-icon-hover-color);
   }
 }
 

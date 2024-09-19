@@ -16,18 +16,6 @@
   &.toggleable {
     cursor: pointer;
   }
-
-  .expand-indicator {
-    color: var(--t5e-tertiary-color);
-    transition: transform 0.2s;
-    align-self: center;
-    justify-self: center;
-    margin-right: 0.325rem;
-
-    &.expanded {
-      transform: rotate(90deg);
-    }
-  }
 }
 
 .tidy-table-header-cell {

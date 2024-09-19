@@ -40,7 +40,7 @@ import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import { GroupSheetRuntime } from 'src/runtime/GroupSheetRuntime';
 import { writable } from 'svelte/store';
-import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { debug, warn } from 'src/utils/logging';
 import { processInputChangeDeltaFromValues } from 'src/utils/form';
@@ -113,7 +113,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
 
   #itemFilterService: ItemFilterService;
   #messageBus: MessageBus = writable<MessageBusMessage | undefined>();
-  #inlineContainerToggleService = new InlineContainerToggleService();
+  #inlineToggleService = new InlineToggleService();
   #card = writable<ItemCardStore>();
 
   // TODO: First render, derive options that come from user preference
@@ -126,8 +126,8 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
         [CONSTANTS.SVELTE_CONTEXT.CARD, this.#card],
         [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._store],
         [
-          CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
-          this.#inlineContainerToggleService,
+          CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
+          this.#inlineToggleService,
         ],
         [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.#itemFilterService],
         [CONSTANTS.SVELTE_CONTEXT.LOCATION, ''],

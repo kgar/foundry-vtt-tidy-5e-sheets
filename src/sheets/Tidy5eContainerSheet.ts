@@ -43,7 +43,7 @@ import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import type { CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
 import { Container } from 'src/features/containers/Container';
 import { BaseSheetCustomSectionMixin } from './mixins/BaseSheetCustomSectionMixin';
 
@@ -65,7 +65,7 @@ export class Tidy5eKgarContainerSheet
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
-  inlineContainerToggleService = new InlineContainerToggleService();
+  inlineToggleService = new InlineToggleService();
   card = writable<ItemCardStore>();
   itemFilterService: ItemFilterService;
   subscriptionsService: StoreSubscriptionsService;
@@ -136,8 +136,8 @@ export class Tidy5eKgarContainerSheet
       ],
       [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
       [
-        CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
-        this.inlineContainerToggleService,
+        CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
+        this.inlineToggleService,
       ],
       [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.itemFilterService],
       [

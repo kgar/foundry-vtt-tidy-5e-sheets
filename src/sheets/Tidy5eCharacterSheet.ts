@@ -69,7 +69,7 @@ import type {
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { Container } from 'src/features/containers/Container';
-import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 
 export class Tidy5eCharacterSheet
@@ -91,7 +91,7 @@ export class Tidy5eCharacterSheet
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
-  inlineContainerToggleService = new InlineContainerToggleService();
+  inlineToggleService = new InlineToggleService();
   itemTableTogglesCache: ItemTableToggleCacheService;
   itemFilterService: ItemFilterService;
   subscriptionsService: StoreSubscriptionsService;
@@ -189,8 +189,8 @@ export class Tidy5eCharacterSheet
         ],
         [CONSTANTS.SVELTE_CONTEXT.SEARCH_FILTERS, new Map(this.searchFilters)],
         [
-          CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
-          this.inlineContainerToggleService,
+          CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
+          this.inlineToggleService,
         ],
         [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.itemFilterService],
         [
@@ -1102,7 +1102,10 @@ export class Tidy5eCharacterSheet
       );
     }
 
-    context.spellcastingInfo = FoundryAdapter.getSpellcastingInfo(this.actor, spells);
+    context.spellcastingInfo = FoundryAdapter.getSpellcastingInfo(
+      this.actor,
+      spells
+    );
 
     // Section spells
     // TODO: Take over `_prepareSpellbook` and

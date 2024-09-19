@@ -169,7 +169,6 @@
 
     <svelte:fragment slot="after-row">
       <ExpandableContainer expanded={showSummary}>
-        <InlineActivitiesList {item} />
         <ItemSummary chatData={chatData ?? emptyChatData} {item} />
       </ExpandableContainer>
     </svelte:fragment>

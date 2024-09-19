@@ -2,7 +2,7 @@
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import CapacityBar from './CapacityBar.svelte';
   import ContainerContentsSections from './ContainerContentsSections.svelte';
-  import type { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ContainerContents, Item5e } from 'src/types/item.types';
@@ -12,12 +12,12 @@
   export let container: Item5e;
   export let containerContents: ContainerContents;
   export let editable: boolean;
-  export let inlineContainerToggleService: InlineContainerToggleService;
+  export let inlineToggleService: InlineToggleService;
   export let lockItemQuantity: boolean;
   export let sheetDocument: any;
   export let unlocked: boolean = true;
 
-  $: inlineContainerToggleServiceStore = inlineContainerToggleService.store;
+  $: inlineToggleServiceStore = inlineToggleService.store;
 
   let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
     CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
@@ -36,8 +36,7 @@
 </script>
 
 <ExpandableContainer
-  expanded={$inlineContainerToggleServiceStore.get(tabId)?.has(container.id) ===
-    true}
+  expanded={$inlineToggleServiceStore.get(tabId)?.has(container.id) === true}
   class={!!$itemIdsToShow && !$itemIdsToShow.has(container.id) ? 'hidden' : ''}
 >
   <!-- TODO: Apply proper a11y trappings for this -->
@@ -54,7 +53,7 @@
       {editable}
       itemContext={containerContents.itemContext}
       {lockItemQuantity}
-      {inlineContainerToggleService}
+      {inlineToggleService}
       {sheetDocument}
       {unlocked}
     />

@@ -14,20 +14,21 @@
   import ItemName from 'src/components/item-list/ItemName.svelte';
   import InlineFavoriteIcon from 'src/components/item-list/InlineFavoriteIcon.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
-  import InlineContainerToggle from 'src/sheets/container/InlineContainerToggle.svelte';
+  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import InlineToggleControl from 'src/sheets/shared/InlineToggleControl.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { getContext, type ComponentType } from 'svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import type { Readable } from 'svelte/store';
   import InlineContainerView from './InlineContainerView.svelte';
+  import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
 
   export let contents: InventorySection[];
   export let container: Item5e;
   export let editable: boolean;
   export let itemContext: Record<string, ContainerItemContext>;
-  export let inlineContainerToggleService: InlineContainerToggleService;
+  export let inlineToggleService: InlineToggleService;
   export let lockItemQuantity: boolean;
   /** The sheet which is rendering this recursive set of container contents. */
   export let sheetDocument: Actor5e | Item5e;
@@ -50,7 +51,7 @@
     component: ComponentType;
     getProps: (item: Item5e) => any;
   }[] = [];
-  
+
   $: {
     classicControls = [];
 
@@ -134,10 +135,10 @@
                   disabled={!FoundryAdapter.canUseItem(item)}
                   {item}
                 />
-                {#if 'containerContents' in ctx && !!ctx.containerContents}
-                  <InlineContainerToggle
-                    {item}
-                    {inlineContainerToggleService}
+                {#if ('containerContents' in ctx && !!ctx.containerContents) || item?.system.activities?.contents.length > 1}
+                  <InlineToggleControl
+                    entityId={item.id}
+                    {inlineToggleService}
                   />
                 {/if}
                 <!-- This is generally what we want in Tidy Tables / Item Table V2; consider breaking off ItemNameV2 to propagate and replace the old ItemName gradually. -->
@@ -207,11 +208,13 @@
                 container={item}
                 containerContents={ctx.containerContents}
                 {editable}
-                {inlineContainerToggleService}
+                {inlineToggleService}
                 {lockItemQuantity}
                 {sheetDocument}
                 {unlocked}
               />
+            {:else if item.system.activities?.contents.length > 1}
+              <InlineActivitiesList {item} {inlineToggleService} />
             {/if}
           {/each}
         </svelte:fragment>

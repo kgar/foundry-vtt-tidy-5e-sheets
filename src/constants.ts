@@ -386,7 +386,7 @@ export const CONSTANTS = {
     EXPANDED_ITEMS: 'expandedItems',
     FUNCTIONS: 'functions',
     INITIAL_TAB_ID: 'initialTabId',
-    INLINE_CONTAINER_TOGGLE_SERVICE: 'inlineContainerToggleService',
+    INLINE_TOGGLE_SERVICE: 'inlineToggleService',
     ITEM_FILTER_SERVICE: 'itemFilterService',
     ITEM_IDS_TO_SHOW: 'itemIdsToShow',
     ITEM_TABLE_TOGGLES: 'itemTableToggles',
