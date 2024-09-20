@@ -98,7 +98,7 @@
       labelCssClass="checkbox"
       document={$context.item}
       field="system.primaryAbility.value"
-      checked={$context.source.primaryAbility.value.has(key)}
+      checked={$context.system.primaryAbility.value.has(key)}
       value={key}
       disabled={!$context.editable}
       onDataPreparing={(ev) => mapMulticlassingAbilitiesToSave($context, ev)}
