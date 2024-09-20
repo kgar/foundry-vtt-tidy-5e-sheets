@@ -37,7 +37,7 @@
     <button
       type="button"
       class="item-use-button icon-button"
-      on:click={(event) => FoundryAdapter.actorTryUseItem(item, {}, { event })}
+      on:click={(event) => FoundryAdapter.actorTryUseItem(item, event)}
       on:contextmenu={(event) =>
         FoundryAdapter.onActorItemButtonContextMenu(item, { event })}
       on:focusin={() => (buttonIsFocused = true)}

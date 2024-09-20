@@ -10,7 +10,7 @@ export class ItemUtils {
         ItemUtils.hasSufficientLimitedUses(item)) &&
       (!ItemUtils.hasConsumptionRequirements(item) ||
         ItemUtils.hasSufficientConsumptionAmount(item)) &&
-      (!ItemUtils.hasRecharge(item) || ItemUtils.isCharged(item)) &&
+      (!item.hasRecharge || !item.isOnCooldown) &&
       ItemUtils.atLeastOneExists(item)
     );
   }
@@ -18,16 +18,21 @@ export class ItemUtils {
     return (item.system.quantity ?? 1) >= 1;
   }
   static hasActivationType(item: any): boolean {
-    return !isNil(item.system.activation?.type, '');
+    return !!item.system.activities?.size;
+  }
+  static hasSpecificActivationType(item: Item5e, type: string) {
+    return !!item.system.activities?.some(
+      (a: any) => a.activation.type === type
+    );
   }
   static hasUnlimitedUses(item: any): boolean {
-    return isNil(item.system.uses?.per, '');
+    return !item.system.hasLimitedUses;
   }
   static hasSufficientLimitedUses(item: any): any {
     return ItemUtils.hasConfiguredUses(item) && item.system.uses?.value > 0;
   }
   static hasConfiguredUses(item: any) {
-    return item.system.uses?.per !== null;
+    return item.system.hasLimitedUses && item.system.uses.recovery.length;
   }
   static hasConsumptionRequirements(item: any): boolean {
     return !isNil(item.system.consume?.type, '');
@@ -43,13 +48,6 @@ export class ItemUtils {
         0) >= item.system.consume?.amount
     );
   }
-  static hasRecharge(item: any): boolean {
-    return (item.system.recharge?.value ?? 0) > 0;
-  }
-  static isCharged(item: any): boolean {
-    return item.system.recharge?.charged === true;
-  }
-
   static getMaxUses(item: Item5e) {
     return item.system.uses?.max;
   }

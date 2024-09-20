@@ -40,6 +40,7 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import { ItemUtils } from 'src/utils/ItemUtils';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -227,7 +228,7 @@
                     <ItemTableCell baseWidth="3.125rem">
                       {#if item.isOnCooldown}
                         <RechargeControl {item} />
-                      {:else if item.system.recharge?.value}
+                      {:else if item.hasRecharge}
                         <i
                           class="fas fa-bolt"
                           title={localize('DND5E.Charged')}
@@ -241,7 +242,7 @@
                   {/if}
                   {#if section.showUsagesColumn}
                     <ItemTableCell baseWidth="7.5rem">
-                      {#if item.system.activation?.type}
+                      {#if ItemUtils.hasActivationType(item)}
                         {item.labels?.activation ?? ''}
                       {/if}
                     </ItemTableCell>

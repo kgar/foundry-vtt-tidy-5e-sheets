@@ -533,10 +533,6 @@
         "name": "Includi oggetti consumabili come azioni",
         "hint": "Include i materiali di consumo che hanno un costo di attivazione (Azione, Azione bonus, ecc.) nell'elenco Azioni per impostazione predefinita."
     },
-    "TIDY5E.Settings.ActionListScaleCantripDamage": {
-        "hint": "Ridimensiona il danno del trucchetto per adattarlo al livello attuale del PG o al grado di sfida del PNG.",
-        "name": "Mostra lo scalare dei danni del trucchetto (sperimentale)"
-    },
     "TIDY5E.Settings.ColorPickerScrollbarThumb": {
         "name": "Testa Barra scorrimento"
     },

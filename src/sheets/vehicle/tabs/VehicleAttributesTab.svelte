@@ -32,6 +32,7 @@
   import ItemCrewedControl from 'src/sheets/vehicle/parts/ItemCrewedControl.svelte';
   import type { Item5e } from 'src/types/item.types';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
+  import { ItemUtils } from 'src/utils/ItemUtils';
 
   let context = getContext<Readable<VehicleSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -186,7 +187,7 @@
                     <ItemTableCell baseWidth="3.125rem">
                       {#if item.isOnCooldown}
                         <RechargeControl {item} />
-                      {:else if item.system.recharge?.value}
+                      {:else if item.hasRecharge}
                         <i
                           class="fas fa-bolt"
                           title={localize('DND5E.Charged')}
@@ -199,7 +200,7 @@
                       {/if}
                     </ItemTableCell>
                     <ItemTableCell baseWidth="7.5rem">
-                      {#if item.system.activation?.type}
+                      {#if ItemUtils.hasActivationType(item)}
                         <span>{item.labels?.activation ?? ''}</span>
                       {/if}
                     </ItemTableCell>

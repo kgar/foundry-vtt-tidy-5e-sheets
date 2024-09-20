@@ -92,6 +92,11 @@ export type Tidy5eSetting = {
      * @param data the new value
      */
     onChange?: (data: any) => void;
+
+    /**
+     * Prompts a reload if the setting is changed.
+     */
+    requiresReload?: boolean;
   };
   get: () => any;
   /**
@@ -106,9 +111,6 @@ export type Tidy5eSetting = {
 export let settingStore: Writable<CurrentSettings>;
 
 export function createSettings() {
-  // TODO: Remove this when Foundry V12 or later is the minimum version.
-  const isV12OrNewer = FoundryAdapter.isFoundryV12OrHigher();
-
   return {
     menus: {
       worldSettings: {
@@ -203,17 +205,12 @@ export function createSettings() {
           hint: 'TIDY5E.Settings.DefaultTheme.hint',
           scope: 'world',
           config: true,
-          type: isV12OrNewer
-            ? new foundry.data.fields.StringField({
-                required: true,
-                blank: false,
-                initial: CONSTANTS.THEME_ID_DEFAULT_LIGHT,
-                choices: () => getCoreThemes(false),
-              })
-            : String,
-          choices: isV12OrNewer ? undefined : () => getCoreThemes(false),
-          default: isV12OrNewer ? undefined : CONSTANTS.THEME_ID_DEFAULT_LIGHT,
-
+          type: new foundry.data.fields.StringField({
+            required: true,
+            blank: false,
+            initial: CONSTANTS.THEME_ID_DEFAULT_LIGHT,
+            choices: () => getCoreThemes(false),
+          }),
           onChange: (data: string) => {
             const theme = getThemeOrDefault(data);
 
@@ -235,16 +232,12 @@ export function createSettings() {
           hint: 'TIDY5E.Settings.SheetTheme.hint',
           scope: 'client',
           config: true,
-          type: isV12OrNewer
-            ? new foundry.data.fields.StringField({
-                required: true,
-                blank: false,
-                initial: CONSTANTS.THEME_ID_DEFAULT,
-                choices: () => getCoreThemes(true),
-              })
-            : String,
-          choices: isV12OrNewer ? undefined : () => getCoreThemes(true),
-          default: isV12OrNewer ? undefined : CONSTANTS.THEME_ID_DEFAULT,
+          type: new foundry.data.fields.StringField({
+            required: true,
+            blank: false,
+            initial: CONSTANTS.THEME_ID_DEFAULT,
+            choices: () => getCoreThemes(true),
+          }),
           onChange: (
             data: string,
             colorPickerEnabledOverride: boolean | null = null
@@ -1376,22 +1369,6 @@ export function createSettings() {
         },
       },
 
-      actionListScaleCantripDamage: {
-        options: {
-          name: 'TIDY5E.Settings.ActionListScaleCantripDamage.name',
-          hint: 'TIDY5E.Settings.ActionListScaleCantripDamage.hint',
-          scope: 'client',
-          config: false,
-          default: true,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>(
-            'actionListScaleCantripDamage'
-          );
-        },
-      },
-
       exhaustionConfig: {
         options: {
           name: 'TIDY5E.WorldSettings.Exhaustion.name',
@@ -1899,6 +1876,7 @@ export function createSettings() {
           config: true,
           default: false,
           type: Boolean,
+          requiresReload: true 
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>('debug');

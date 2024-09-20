@@ -7,6 +7,8 @@
  * globals.
  */
 
+import type { CONFIG } from './config.types';
+
 declare global {
   var $: any;
   var canvas: any;
@@ -17,7 +19,7 @@ declare global {
   var Application: any;
   var AudioHelper: any;
   var ChatMessage: any;
-  var CONFIG: any;
+  var CONFIG: CONFIG;
   var CONST: any;
   var ContextMenu: any;
   var DefaultSheetsConfig: any;
@@ -44,7 +46,6 @@ declare global {
   var NumericTerm: any;
   var renderTemplate: any;
   var Roll: any;
-  var RollTerm: any;
   var SortingHelpers: any;
   var TextEditor: any;
   var ui: any;
@@ -107,6 +108,16 @@ declare global {
       height: number
     ): HTMLElement;
   };
+}
+
+declare global {
+  interface String {
+    slugify({
+      replacement = '-',
+      strict = false,
+      lowercase = true,
+    } = {}): string;
+  }
 }
 
 export type Dnd5eActorCondition = {

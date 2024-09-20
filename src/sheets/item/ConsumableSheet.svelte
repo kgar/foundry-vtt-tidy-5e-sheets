@@ -17,6 +17,8 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
+  $: appId = $context.document.sheet.appId;
+
   let selectedTabId: string;
   const localize = FoundryAdapter.localize;
 </script>
@@ -37,6 +39,9 @@
 
     <div class="item-subtitle">
       <h4 class="item-type">{$context.itemType ?? ''}</h4>
+      {#if $context.itemStatus && $context.itemStatus !== $context.itemType}
+        <span class="item-status">{$context.itemStatus ?? ''}</span>
+      {/if}
     </div>
 
     <ul class="summary flexrow">
@@ -46,6 +51,7 @@
           <span>{localize('DND5E.Unidentified.Title')}</span>
         {:else}
           <Select
+            id="{appId}-rarity"
             document={$context.item}
             field="system.rarity"
             value={$context.system.rarity}

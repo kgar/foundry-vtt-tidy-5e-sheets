@@ -14,6 +14,8 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
+  $: appId = $context.document.sheet.appId;
+
   $: selectedTabId = getContext<string>(
     CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID,
   );
@@ -33,6 +35,7 @@
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_CONTAINER}
     >
       <TextInput
+        id="{appId}-name"
         document={$context.item}
         field="name"
         value={$context.item.name}
@@ -59,6 +62,7 @@
         />
       </li>
     </ul>
+    <span class="spell-classes">{$context.labels?.classes ?? ''}</span>
   </div>
 </header>
 <Tabs bind:selectedTabId tabs={$context.tabs} />

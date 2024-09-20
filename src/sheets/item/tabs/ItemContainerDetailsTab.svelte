@@ -6,7 +6,6 @@
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import Select from 'src/components/inputs/Select.svelte';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
-  import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import ItemProperties from '../parts/ItemProperties.svelte';
   import ContentConcealer from 'src/components/content-concealment/ContentConcealer.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
@@ -16,66 +15,66 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
+  $: appId = $context.document.sheet.appId;
+
   const localize = FoundryAdapter.localize;
 </script>
 
 <ContentConcealer conceal={$context.concealDetails}>
   <h3 class="form-header">{localize('DND5E.ItemContainerDetails')}</h3>
 
-  <ItemFormGroup
-    cssClass="stacked container-properties"
-    labelText={localize('DND5E.ItemContainerProperties')}
-  >
+  <div class="form-group stacked container-properties">
+    <label for="">{localize('DND5E.ItemContainerProperties')}</label>
     <ItemProperties />
-  </ItemFormGroup>
+  </div>
 
-  <ItemFormGroup
-    labelText={localize('DND5E.ItemContainerCapacity')}
-    let:inputId
-    field="system.capacity.value"
-  >
+  <div class="form-group">
+    <label for="{appId}-capacity-value"
+      >{localize('DND5E.ItemContainerCapacity')}</label
+    >
     <div class="form-fields">
       <NumberInput
-        id={inputId}
+        id="{appId}-capacity-value"
         document={$context.item}
         field="system.capacity.value"
-        value={$context.system.capacity.value}
+        value={$context.source.capacity.value}
         disabled={!$context.editable}
-        placeholder="&mdash;"
+        placeholder="—"
       />
     </div>
-  </ItemFormGroup>
+  </div>
 
-  <ItemFormGroup labelText={localize('DND5E.ItemContainerCapacityType')}>
+  <div class="form-group">
+    <label for="{appId}-capacity-type"
+      >{localize('DND5E.ItemContainerCapacityType')}</label
+    >
     <Select
+      id="{appId}-capacity-type"
       document={$context.item}
       field="system.capacity.type"
-      value={$context.system.capacity.type}
+      value={$context.source.capacity.type}
       disabled={!$context.editable}
     >
       <SelectOptions data={$context.config.itemCapacityTypes} />
     </Select>
-  </ItemFormGroup>
+  </div>
 
-  <ItemFormGroup
-    labelText={localize('DND5E.Attunement')}
-    field="system.attunement"
-    let:inputId
-  >
+  <div class="form-group">
+    <label for="{appId}-attunement">{localize('DND5E.Attunement')}</label>
     <Checkbox
-      id={`${$context.appId}-system-attuned`}
+      id="{appId}-attuned"
       document={$context.item}
       field="system.attuned"
-      checked={$context.system.attuned}
+      checked={$context.source.attuned}
       disabled={!$context.editable ||
         !$context.config.attunementTypes[$context.system.attunement]}
       title={localize('DND5E.AttunementAttuned')}
-    ></Checkbox>
+    />
     <Select
-      id={inputId}
+      id="{appId}-attunement"
       document={$context.item}
       field="system.attunement"
-      value={$context.system.attunement}
+      value={$context.source.attunement}
       disabled={!$context.editable}
     >
       <SelectOptions
@@ -83,5 +82,5 @@
         blank={localize('DND5E.AttunementNone')}
       />
     </Select>
-  </ItemFormGroup>
+  </div>
 </ContentConcealer>

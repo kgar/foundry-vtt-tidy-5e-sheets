@@ -6,157 +6,143 @@
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import Select from 'src/components/inputs/Select.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import ItemProperties from '../parts/ItemProperties.svelte';
   import ContentConcealer from 'src/components/content-concealment/ContentConcealer.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
-  import ItemActivation from '../parts/ItemActivation.svelte';
   import { CONSTANTS } from 'src/constants';
+  import FieldUses from '../parts/FieldUses.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
   const localize = FoundryAdapter.localize;
+
+  $: appId = $context.document.sheet.appId;
 </script>
 
 <ContentConcealer conceal={$context.concealDetails}>
-  <ItemFormGroup
-    labelText={localize('DND5E.ItemToolType')}
-    field="system.type.value"
-    let:inputId
-  >
+  <!-- Tool Type -->
+  <div class="form-group">
+    <label for="{appId}-type-value">{localize('DND5E.ItemToolType')}</label>
     <Select
-      id={inputId}
+      id="{appId}-type-value"
       document={$context.item}
       field="system.type.value"
-      value={$context.system.type.value}
+      value={$context.source.type.value}
       disabled={!$context.editable}
     >
       <SelectOptions data={$context.config.toolTypes} blank="" />
     </Select>
-  </ItemFormGroup>
+  </div>
 
-  <ItemFormGroup
-    labelText={localize('DND5E.ItemToolBase')}
-    field="system.type.baseItem"
-    let:inputId
-  >
+  <!-- Base Tool -->
+  <div class="form-group">
+    <label for="{appId}-type-baseItem">{localize('DND5E.ItemToolBase')}</label>
     <Select
-      id={inputId}
+      id="{appId}-type-baseItem"
       document={$context.item}
       field="system.type.baseItem"
-      value={$context.system.type.baseItem}
+      value={$context.source.type.baseItem}
       disabled={!$context.editable}
     >
       <SelectOptions data={$context.baseItems} blank="" />
     </Select>
-  </ItemFormGroup>
+  </div>
 
-  <ItemFormGroup
-    cssClass="stacked tool-properties"
-    labelText={localize('DND5E.ItemToolProperties')}
-  >
+  <!-- Tool Properties -->
+  <div class="form-group stacked tool-properties">
+    <label for="">{localize('DND5E.ItemToolProperties')}</label>
     <ItemProperties />
-  </ItemFormGroup>
+  </div>
 
-  <ItemFormGroup
-    labelText={localize('DND5E.Attunement')}
-    field="system.attunement"
-    let:inputId
-  >
-    <Checkbox
-      id={`${$context.appId}-system-attuned`}
-      document={$context.item}
-      field="system.attuned"
-      checked={$context.system.attuned}
-      disabled={!$context.editable ||
-        !$context.config.attunementTypes[$context.system.attunement]}
-      title={localize('DND5E.AttunementAttuned')}
-    ></Checkbox>
-    <Select
-      id={inputId}
-      document={$context.item}
-      field="system.attunement"
-      value={$context.system.attunement}
-      disabled={!$context.editable}
+  <!-- Ability Check -->
+  <div class="form-group">
+    <label for="{appId}-proficient">{localize('DND5E.ActionAbil')}</label
     >
-      <SelectOptions
-        data={$context.config.attunementTypes}
-        blank={localize('DND5E.AttunementNone')}
-      />
-    </Select>
-  </ItemFormGroup>
+    <div class="form-fields">
+      <!-- Proficiency -->
+      <div class="form-group label-top">
+        <label for="">{localize('DND5E.Proficiency')}</label>
+        <Select
+          id="{appId}-proficient"
+          document={$context.item}
+          field="system.proficient"
+          value={$context.source.proficient}
+          disabled={!$context.editable}
+        >
+          <SelectOptions
+            data={$context.config.proficiencyLevels}
+            blank={localize('DND5E.Automatic')}
+          />
+        </Select>
+      </div>
 
-  <ItemFormGroup
-    labelText={localize('DND5E.ItemToolProficiency')}
-    field="system.proficient"
-    let:inputId
-  >
-    <Select
-      id={inputId}
-      document={$context.item}
-      field="system.proficient"
-      value={$context.system.proficient}
-      disabled={!$context.editable}
-    >
-      <SelectOptions
-        data={$context.config.proficiencyLevels}
-        blank={localize('DND5E.Automatic')}
-      />
-    </Select>
-  </ItemFormGroup>
+      <!-- Ability -->
+      <div class="form-group label-top">
+        <label for="{appId}-ability">{localize('DND5E.Ability')}</label>
+        <Select
+          id="{appId}-ability"
+          document={$context.item}
+          field="system.ability"
+          value={$context.source.ability}
+          disabled={!$context.editable}
+        >
+          <SelectOptions
+            data={$context.config.abilities}
+            labelProp="label"
+            blank={localize('DND5E.Default')}
+          />
+        </Select>
+      </div>
+    </div>
+  </div>
 
-  <ItemFormGroup
-    labelText={localize('DND5E.DefaultAbilityCheck')}
-    field="system.ability"
-    let:inputId
-  >
-    <Select
-      id={inputId}
-      document={$context.item}
-      field="system.ability"
-      value={$context.system.ability}
-      disabled={!$context.editable}
-    >
-      <SelectOptions
-        data={$context.config.abilities}
-        labelProp="label"
-        blank={localize('DND5E.Default')}
-      />
-    </Select>
-  </ItemFormGroup>
-
-  <ItemFormGroup
-    labelText={localize('DND5E.ItemToolBonus')}
-    field="system.bonus"
-    let:inputId
-  >
+  <!-- Tool Bonus -->
+  <div class="form-group">
+    <label for="{appId}-bonus">{localize('DND5E.ItemToolBonus')}</label>
     <TextInput
-      id={inputId}
+      id={`${appId}-system-bonus`}
       document={$context.item}
       field="system.bonus"
-      value={$context.system.bonus}
-      dataset={{ formulaEditor: true }}
+      value={$context.source.bonus}
       disabled={!$context.editable}
     />
-  </ItemFormGroup>
+  </div>
 
-  <h3 class="form-header">{localize('DND5E.ItemToolUsage')}</h3>
-  <ItemActivation />
+  <!-- Attunement -->
+  {#if $context.properties.object.mgc}
+    <div class="form-group">
+      <label for="{appId}-attunement">{localize('DND5E.Attunement')}</label>
+      <div class="form-fields no-gap">
+        <!-- Attuned -->
+        <Checkbox
+          id={`${appId}-system-attuned`}
+          document={$context.item}
+          field="system.attuned"
+          checked={$context.source.attuned}
+          disabled={!$context.editable ||
+            // @ts-expect-error
+            !$context.config.attunementTypes[$context.source.attunement]}
+          title={localize('DND5E.Attuned')}
+        />
 
-  <ItemFormGroup
-    cssClass="stacked"
-    labelText={localize('DND5E.ChatFlavor')}
-    field="system.chatFlavor"
-    let:inputId
-  >
-    <TextInput
-      id={inputId}
-      document={$context.item}
-      field="system.chatFlavor"
-      value={$context.system.chatFlavor}
-      disabled={!$context.editable}
-    />
-  </ItemFormGroup>
+        <!-- Attunement -->
+        <Select
+          id="{appId}-attunement"
+          document={$context.item}
+          field="system.attunement"
+          value={$context.source.attunement}
+          disabled={!$context.editable}
+        >
+          <SelectOptions
+            data={$context.config.attunementTypes}
+            blank={localize('DND5E.AttunementNone')}
+          />
+        </Select>
+      </div>
+    </div>
+  {/if}
+
+  <FieldUses />
 </ContentConcealer>

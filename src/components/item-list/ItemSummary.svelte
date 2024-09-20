@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { slide } from 'svelte/transition';
-  import { quadInOut } from 'svelte/easing';
   import ItemSummaryCommandButtonList from '../item-summary/ItemSummaryCommandButtonList.svelte';
   import type { Item5e, ItemChatData } from 'src/types/item.types';
   import { ItemSummaryRuntime } from 'src/runtime/ItemSummaryRuntime';
@@ -19,11 +17,7 @@
   class="item-summary"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_SUMMARY}
 >
-  {#if concealDetails}
-    {@html chatData.unidentified.description}
-  {:else}
-    {@html chatData.description.value}
-  {/if}
+  {@html chatData.description}
 
   {#if itemSummaryCommands.length}
     <HorizontalLineSeparator />

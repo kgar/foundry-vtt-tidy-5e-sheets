@@ -486,10 +486,6 @@
     },
     "TIDY5E.ActiveEffectsMarkerTitle": "",
     "TIDY5E.GMOnly.Message": "",
-    "TIDY5E.Settings.ActionListScaleCantripDamage": {
-        "hint": "",
-        "name": ""
-    },
     "TIDY5E.Actions": {
         "ResetActionDefault": "",
         "SetOverrideFalse": "",

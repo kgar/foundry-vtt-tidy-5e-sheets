@@ -26,15 +26,16 @@
     NpcSheetContext,
     RenderableClassicControl,
   } from 'src/types/types';
-  import AmmoSelector from './AmmoSelector.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { coalesce } from 'src/utils/formatting';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
-  import InlineContainerToggle from '../container/InlineContainerToggle.svelte';
-  import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+  import InlineToggleControl from 'src/sheets/shared/InlineToggleControl.svelte';
+  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import InlineContainerView from '../container/InlineContainerView.svelte';
+  import { ItemUtils } from 'src/utils/ItemUtils';
+  import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
 
   export let primaryColumnName: string;
   export let items: Item5e[];
@@ -46,8 +47,8 @@
   export let allowAttuneControl: boolean = true;
   export let allowEquipControl: boolean = true;
 
-  let inlineContainerToggleService = getContext<InlineContainerToggleService>(
-    CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
+  let inlineToggleService = getContext<InlineToggleService>(
+    CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
 
   let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
@@ -201,8 +202,8 @@
         >
           <ItemTableCell primary={true}>
             <ItemUseButton disabled={!$context.editable} {item} />
-            {#if 'containerContents' in ctx && !!ctx.containerContents}
-              <InlineContainerToggle {item} {inlineContainerToggleService} />
+            {#if ('containerContents' in ctx && !!ctx.containerContents) || item?.system.activities?.contents.length > 1}
+              <InlineToggleControl entityId={item.id} {inlineToggleService} />
             {/if}
             <ItemName
               on:toggle={() => toggleSummary($context.actor)}
@@ -215,11 +216,6 @@
                 data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
                 >{itemName}</span
               >
-              {#if item.system?.properties?.has('amm')}
-                <span class="ammo">
-                  <AmmoSelector {item} />
-                </span>
-              {/if}
             </ItemName>
           </ItemTableCell>
           {#if $settingStore.showIconsNextToTheItemName}
@@ -263,7 +259,7 @@
             {/if}
           </ItemTableCell>
           <ItemTableCell baseWidth="7.5rem" title={localize('DND5E.Usage')}>
-            {#if item.system.activation?.type}
+            {#if ItemUtils.hasActivationType(item)}
               {item.labels?.activation ?? ''}
             {/if}
           </ItemTableCell>
@@ -285,16 +281,19 @@
             </ItemTableCell>
           {/if}
         </ItemTableRow>
+
         {#if 'containerContents' in ctx && !!ctx.containerContents}
           <InlineContainerView
             container={item}
             containerContents={ctx.containerContents}
             editable={$context.editable}
-            {inlineContainerToggleService}
+            {inlineToggleService}
             lockItemQuantity={$context.lockItemQuantity}
             sheetDocument={$context.actor}
             unlocked={$context.unlocked}
           />
+        {:else if item?.system.activities?.contents.length > 1}
+          <InlineActivitiesList {item} {inlineToggleService} />
         {/if}
       {/each}
       {#if $context.unlocked && section.canCreate}

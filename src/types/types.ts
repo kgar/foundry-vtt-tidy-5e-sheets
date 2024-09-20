@@ -97,6 +97,15 @@ export type CharacterFeatureSection = {
   custom?: CustomSectionOptions;
 } & FeatureSection;
 
+export type SpellcastingInfo = {
+  currentFilteredClass: Item5e;
+  calculations: SpellCalculations;
+  prepared?: {
+    value: number;
+    max: number;
+  };
+};
+
 export type SpellCalculations = {
   dc: string;
   dcTooltip: string;
@@ -134,7 +143,7 @@ export type CharacterItemPartitions = {
   items: Item5e[];
   spells: Item5e[];
   feats: Item5e[];
-  races: Item5e[];
+  species: Item5e[];
   backgrounds: Item5e[];
   classes: Item5e[];
   subclasses: Item5e[];
@@ -202,9 +211,10 @@ export type CharacterItemContext = {
   containerContents?: ContainerContents;
   favoriteId?: string;
   group?: string;
-  hasTarget?: boolean;
+  hasRecharge?: boolean;
   hasUses?: boolean;
   isStack?: boolean;
+  needsSubclass?: boolean;
   toggleClass?: string;
   toggleTitle?: string;
   totalWeight?: number;
@@ -251,6 +261,7 @@ export type CharacterSheetContext = {
   bondEnrichedHtml: string;
   conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
+  epicBoonsEarned: string | undefined;
   favorites: FavoriteSection[];
   features: CharacterFeatureSection[];
   flawEnrichedHtml: string;
@@ -264,9 +275,9 @@ export type CharacterSheetContext = {
   notes4EnrichedHtml: string;
   notesEnrichedHtml: string;
   showContainerPanel: boolean;
-  preparedSpells: number;
+  spellComponentLabels: Record<string, string>;
   spellbook: SpellbookSection[];
-  spellCalculations: SpellCalculations;
+  spellcastingInfo: SpellcastingInfo;
   spellSlotTrackerMode:
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
@@ -286,9 +297,10 @@ export type NpcItemContext = {
   canToggle?: boolean;
   concentration?: boolean;
   containerContents?: ContainerContents;
-  hasTarget?: boolean;
+  hasRecharge?: boolean;
   hasUses?: boolean;
   isStack?: boolean;
+  needsSubclass?: boolean;
   parent?: Item5e;
   toggleTitle?: string;
   totalWeight?: number;
@@ -307,19 +319,18 @@ export type NpcSheetContext = {
   idealEnrichedHtml: string;
   inventory: InventorySection[];
   itemContext: Record<string, NpcItemContext>;
-  maxPreparedSpellsTotal: number;
   notes1EnrichedHtml: string;
   notes2EnrichedHtml: string;
   notes3EnrichedHtml: string;
   notes4EnrichedHtml: string;
   notesEnrichedHtml: string;
-  preparedSpells: number;
   shortRest: (event: Event) => Promise<void>;
   showContainerPanel: boolean;
   showLegendaryToolbar: boolean;
   showSpellbookTab: boolean;
+  spellComponentLabels: Record<string, string>;
   spellbook: SpellbookSection[];
-  spellCalculations: SpellCalculations;
+  spellcastingInfo: SpellcastingInfo;
   spellSlotTrackerMode:
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
@@ -624,4 +635,10 @@ export type ActorSheetContextV2<TActor = ActorV2> = {
   lockSensitiveFields: boolean;
   unlocked: boolean;
   useRoundedPortraitStyle: boolean;
+};
+
+export type GroupableSelectOption = {
+  value: string;
+  label: string;
+  group?: string;
 };

@@ -34,3 +34,6 @@ export type RestConfiguration = {
   autoHD?: boolean;
   autoHDThreshold?: number;
 };
+
+// TODO
+export type Activity5e = any;

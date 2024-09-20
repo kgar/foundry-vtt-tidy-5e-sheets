@@ -185,6 +185,13 @@ export class SheetSections {
         arr.push(subclass);
         const subclassCtx = (context.itemContext[subclass.id] ??= {});
         subclassCtx.parent = cls;
+      } else {
+        const subclassAdvancement = cls.advancement.byType.Subclass?.[0];
+        if (
+          subclassAdvancement &&
+          subclassAdvancement.level <= cls.system.levels
+        )
+          ctx.needsSubclass = true;
       }
       return arr;
     }, []);

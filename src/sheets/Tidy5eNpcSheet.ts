@@ -57,8 +57,9 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { Inventory } from 'src/features/sections/Inventory';
 import { Container } from 'src/features/containers/Container';
-import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
+import { ItemUtils } from 'src/utils/ItemUtils';
 
 export class Tidy5eNpcSheet
   extends BaseSheetCustomSectionMixin(
@@ -79,7 +80,7 @@ export class Tidy5eNpcSheet
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
-  inlineContainerToggleService = new InlineContainerToggleService();
+  inlineToggleService = new InlineToggleService();
   itemTableTogglesCache: ItemTableToggleCacheService;
   itemFilterService: ItemFilterService;
   subscriptionsService: StoreSubscriptionsService;
@@ -171,8 +172,8 @@ export class Tidy5eNpcSheet
         [CONSTANTS.SVELTE_CONTEXT.CARD, this.card],
         [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
         [
-          CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
-          this.inlineContainerToggleService,
+          CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
+          this.inlineToggleService,
         ],
         [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.itemFilterService],
         [
@@ -213,6 +214,22 @@ export class Tidy5eNpcSheet
     });
 
     initTidy5eContextMenu(this, html);
+
+    FoundryAdapter.createContextMenu(html, '.activity[data-activity-id]', [], {
+      onOpen: (element: HTMLElement) => {
+        const itemId =
+          element.closest<HTMLElement>('[data-item-id]')?.dataset.itemId;
+        const item =
+          this.document.type === 'container'
+            ? this.document.system.getContainedItem(itemId)
+            : this.document.items.get(itemId);
+        // Parts of ContextMenu doesn't play well with promises, so don't show menus for containers in packs
+        if (!item || item instanceof Promise) return;
+        if (element.closest('[data-activity-id]')) {
+          dnd5e.documents.activity.UtilityActivity.onContextMenu(item, element);
+        }
+      },
+    });
   }
 
   async getData(options = {}) {
@@ -243,21 +260,6 @@ export class Tidy5eNpcSheet
     const lockSensitiveFields =
       (!unlocked && SettingsProvider.settings.useTotalSheetLock.get()) ||
       !defaultDocumentContext.editable;
-
-    let maxPreparedSpellsTotal = 0;
-    try {
-      const formula = TidyFlags.maxPreparedSpells.get(this.actor) ?? '';
-
-      if (formula?.trim() !== '') {
-        const roll = await Roll.create(
-          formula,
-          this.actor.getRollData()
-        ).evaluate();
-        maxPreparedSpellsTotal = roll.total;
-      }
-    } catch (e) {
-      error('Unable to calculate max prepared spells', false, e);
-    }
 
     const showLegendaryToolbarFlagValue = TidyFlags.showLegendaryToolbar.get(
       this.actor
@@ -691,7 +693,6 @@ export class Tidy5eNpcSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -704,7 +705,6 @@ export class Tidy5eNpcSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -713,7 +713,6 @@ export class Tidy5eNpcSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -737,7 +736,6 @@ export class Tidy5eNpcSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -753,7 +751,6 @@ export class Tidy5eNpcSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -763,6 +760,10 @@ export class Tidy5eNpcSheet
           (i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER
         ),
       showLegendaryToolbar: showLegendaryToolbar,
+      spellcastingInfo: FoundryAdapter.getSpellcastingInfo(
+        this.actor,
+        this.actor.itemTypes.spell
+      ),
       lockSensitiveFields: lockSensitiveFields,
       longRest: this._onLongRest.bind(this),
       lockExpChanges: FoundryAdapter.shouldLockExpChanges(),
@@ -770,13 +771,11 @@ export class Tidy5eNpcSheet
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
       lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
-      maxPreparedSpellsTotal,
       notes1EnrichedHtml: await FoundryAdapter.enrichHtml(
         TidyFlags.notes1.members.value.get(this.actor) ?? '',
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -785,7 +784,6 @@ export class Tidy5eNpcSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -794,7 +792,6 @@ export class Tidy5eNpcSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -803,7 +800,6 @@ export class Tidy5eNpcSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -812,17 +808,13 @@ export class Tidy5eNpcSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
       owner: this.actor.isOwner,
-      preparedSpells: FoundryAdapter.countPreparedSpells(
-        defaultDocumentContext.items
-      ),
       shortRest: this._onShortRest.bind(this),
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
-      spellCalculations: calculateSpellAttackAndDc(this.actor),
+      spellComponentLabels: FoundryAdapter.getSpellComponentLabels(),
       spellSlotTrackerMode:
         npcPreferences.spellSlotTrackerMode ??
         CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS,
@@ -833,7 +825,6 @@ export class Tidy5eNpcSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -949,12 +940,11 @@ export class Tidy5eNpcSheet
       other: Item5e[];
     }>(
       (features, item) => {
-        const { quantity, uses, target } = item.system;
+        const { quantity, uses } = item.system;
         const ctx = (context.itemContext[item.id] ??= {});
         ctx.attunement = FoundryAdapter.getAttunementContext(item);
         ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
         ctx.hasUses = uses && uses.max > 0;
-        ctx.hasTarget = !!target && !['none', ''].includes(target.type);
         ctx.canToggle = 'equipped' in item.system;
 
         ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
@@ -1027,7 +1017,7 @@ export class Tidy5eNpcSheet
           CONSTANTS.ITEM_TYPE_SUBCLASS,
         ].includes(item.type)
       ) {
-        if (item.system.activation?.type) {
+        if (ItemUtils.hasActivationType(item)) {
           features.actions.items.push(item);
         } else {
           // TODO: Partition classes/subclasses to their own area; this may have to happen in the original partition of the spells / other arrays.

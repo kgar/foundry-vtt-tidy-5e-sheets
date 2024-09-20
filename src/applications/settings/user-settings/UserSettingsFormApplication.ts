@@ -63,8 +63,6 @@ export class UserSettingsFormApplication extends SvelteFormApplicationBase {
           currentSettings.actionListIncludeSpellsWithActiveEffects,
         actionListLimitActionsToCantrips:
           currentSettings.actionListLimitActionsToCantrips,
-        actionListScaleCantripDamage:
-          currentSettings.actionListScaleCantripDamage,
         alwaysShowNpcSkills: currentSettings.alwaysShowNpcSkills,
         alwaysShowNpcTraits: currentSettings.alwaysShowNpcTraits,
         animateInspiration: currentSettings.animateInspiration,

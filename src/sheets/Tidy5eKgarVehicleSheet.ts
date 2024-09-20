@@ -55,7 +55,7 @@ import { DocumentTabSectionConfigApplication } from 'src/applications/section-co
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
 import { Container } from 'src/features/containers/Container';
 
 export class Tidy5eVehicleSheet
@@ -73,7 +73,7 @@ export class Tidy5eVehicleSheet
   currentTabId: string;
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
-  inlineContainerToggleService = new InlineContainerToggleService();
+  inlineToggleService = new InlineToggleService();
   itemTableTogglesCache: ItemTableToggleCacheService;
   subscriptionsService: StoreSubscriptionsService;
   itemFilterService: ItemFilterService;
@@ -157,8 +157,8 @@ export class Tidy5eVehicleSheet
         [CONSTANTS.SVELTE_CONTEXT.STATS, this.stats],
         [CONSTANTS.SVELTE_CONTEXT.CARD, this.card],
         [
-          CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
-          this.inlineContainerToggleService,
+          CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
+          this.inlineToggleService,
         ],
         [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.itemFilterService],
         [
@@ -198,6 +198,22 @@ export class Tidy5eVehicleSheet
     });
 
     initTidy5eContextMenu(this, html);
+
+    FoundryAdapter.createContextMenu(html, '.activity[data-activity-id]', [], {
+      onOpen: (element: HTMLElement) => {
+        const itemId =
+          element.closest<HTMLElement>('[data-item-id]')?.dataset.itemId;
+        const item =
+          this.document.type === 'container'
+            ? this.document.system.getContainedItem(itemId)
+            : this.document.items.get(itemId);
+        // Parts of ContextMenu doesn't play well with promises, so don't show menus for containers in packs
+        if (!item || item instanceof Promise) return;
+        if (element.closest('[data-activity-id]')) {
+          dnd5e.documents.activity.UtilityActivity.onContextMenu(item, element);
+        }
+      },
+    });
   }
 
   async getData(options = {}) {
@@ -410,7 +426,7 @@ export class Tidy5eVehicleSheet
         hasActions: true,
         crewable: true,
         key: 'actions',
-        dataset: { type: 'feat', 'system.activation.type': 'crew' },
+        dataset: { type: 'feat' },
         columns: [
           {
             label: game.i18n.localize('DND5E.Cover'),
@@ -439,7 +455,7 @@ export class Tidy5eVehicleSheet
       reactions: {
         label: game.i18n.localize('DND5E.ReactionPl'),
         items: [],
-        dataset: { type: 'feat', 'system.activation.type': 'reaction' },
+        dataset: { type: 'feat' },
         key: 'reactions',
         show: true,
       },
@@ -512,8 +528,9 @@ export class Tidy5eVehicleSheet
     };
 
     const baseUnits =
-      CONFIG.DND5E.encumbrance.baseUnits[this.actor.type] ??
-      CONFIG.DND5E.encumbrance.baseUnits.default;
+      CONFIG.DND5E.encumbrance.baseUnits[
+        this.actor.type as keyof typeof CONFIG.DND5E.encumbrance.baseUnits
+      ] ?? CONFIG.DND5E.encumbrance.baseUnits.default;
     const units = game.settings.get('dnd5e', 'metricWeightUnits')
       ? baseUnits.metric
       : baseUnits.imperial;
@@ -541,11 +558,19 @@ export class Tidy5eVehicleSheet
           features.equipment.items.push(item);
           break;
         case 'feat':
-          const act = item.system.activation;
-          if (!act.type || act.type === 'none')
+          // TODO: Determine the best way to delineate active, passive, and reaction-based item sections.
+          const firstActivityActivationType =
+            item.system.activities?.contents[0]?.activation?.type;
+          if (
+            !firstActivityActivationType ||
+            firstActivityActivationType === 'none'
+          ) {
             features.passive.items.push(item);
-          else if (act.type === 'reaction') features.reactions.items.push(item);
-          else features.actions.items.push(item);
+          } else if (firstActivityActivationType === 'reaction') {
+            features.reactions.items.push(item);
+          } else {
+            features.actions.items.push(item);
+          }
           break;
         default:
           totalWeight += item.system.totalWeightIn?.(units) ?? 0;
@@ -556,7 +581,7 @@ export class Tidy5eVehicleSheet
     // Update the rendering context data
     context.features = Object.values(features);
     context.cargo = Object.values(cargo);
-    context.encumbrance = this._computeEncumbrance(totalWeight, context);
+    context.encumbrance = context.system.attributes.encumbrance;
   }
 
   /**
@@ -574,7 +599,9 @@ export class Tidy5eVehicleSheet
     );
 
     // Handle crew actions
-    if (item.type === 'feat' && item.system.activation.type === 'crew') {
+    const firstActivityActivationType =
+      item.system.activities?.contents[0]?.activation?.type;
+    if (item.type === 'feat' && firstActivityActivationType === 'crew') {
       context.cover = game.i18n.localize(
         `DND5E.${item.system.cover ? 'CoverTotal' : 'None'}`
       );
@@ -587,34 +614,6 @@ export class Tidy5eVehicleSheet
     if (item.type === 'equipment' || item.type === 'weapon') {
       context.threshold = item.system.hp.dt ? item.system.hp.dt : '—';
     }
-  }
-
-  /**
-   * Compute the total weight of the vehicle's cargo.
-   * @param {number} totalWeight    The cumulative item weight from inventory items
-   * @param {object} actorData      The data object for the Actor being rendered
-   * @returns {{max: number, value: number, pct: number}}
-   * @private
-   */
-  _computeEncumbrance(
-    totalWeight: number,
-    actorData: Actor5e
-  ): VehicleEncumbrance {
-    // Compute currency weight
-    const totalCoins = Object.values(
-      // TODO: Use dnd5e types ... one day ...
-      actorData.system.currency as Record<string, number>
-    ).reduce((acc: number, denom: number) => acc + denom, 0);
-
-    const currencyPerWeight = game.settings.get('dnd5e', 'metricWeightUnits')
-      ? CONFIG.DND5E.encumbrance.currencyPerWeight.metric
-      : CONFIG.DND5E.encumbrance.currencyPerWeight.imperial;
-    totalWeight += totalCoins / currencyPerWeight;
-
-    // Compute overall encumbrance
-    const max = actorData.system.attributes.capacity.cargo;
-    const pct = Math.clamp((totalWeight * 100) / max, 0, 100);
-    return { value: totalWeight.toNearest(0.1), max, pct };
   }
 
   private async setExpandedItemData() {

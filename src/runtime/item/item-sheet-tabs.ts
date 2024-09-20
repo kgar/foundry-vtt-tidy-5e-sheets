@@ -7,19 +7,32 @@ import ItemConsumableDetailsTab from '../../sheets/item/tabs/ItemConsumableDetai
 import ItemContainerContentsTab from '../../sheets/item/tabs/ItemContainerContentsTab.svelte';
 import ItemContainerDetailsTab from '../../sheets/item/tabs/ItemContainerDetailsTab.svelte';
 import ItemDescriptionTab from '../../sheets/item/tabs/ItemDescriptionTab.svelte';
-import ItemRaceDetailsTab from '../../sheets/item/tabs/ItemRaceDetailsTab.svelte';
+import ItemSpeciesDetailsTab from '../../sheets/item/tabs/ItemSpeciesDetailsTab.svelte';
 import ItemDescriptionWithSidebarTab from '../../sheets/item/tabs/ItemDescriptionWithSidebarTab.svelte';
 import ItemEquipmentDetailsTab from '../../sheets/item/tabs/ItemEquipmentDetailsTab.svelte';
 import ItemFeatDetailsTab from '../../sheets/item/tabs/ItemFeatDetailsTab.svelte';
 import ItemLootDetailsTab from '../../sheets/item/tabs/ItemLootDetailsTab.svelte';
-import ItemRaceDescriptionTab from '../../sheets/item/tabs/ItemRaceDescriptionTab.svelte';
+import ItemSpeciesDescriptionTab from '../../sheets/item/tabs/ItemSpeciesDescriptionTab.svelte';
 import ItemSpellDetailsTab from '../../sheets/item/tabs/ItemSpellDetailsTab.svelte';
 import ItemSubclassDetailsTab from '../../sheets/item/tabs/ItemSubclassDetailsTab.svelte';
 import ItemToolDetailsTab from '../../sheets/item/tabs/ItemToolDetailsTab.svelte';
 import ItemWeaponDetailsTab from '../../sheets/item/tabs/ItemWeaponDetailsTab.svelte';
+import ItemActivitiesTab from '../../sheets/item/tabs/ItemActivitiesTab.svelte';
 import type { Tab } from 'src/types/types';
 
-const itemSheetTabs: Record<string, Tab> = {
+const itemSheetTabs = {
+  /**
+   * Interface for managing activities for an item.
+   */
+  activities: {
+    id: CONSTANTS.TAB_ITEM_ACTIVITIES_ID,
+    title: 'DND5E.ACTIVITY.Title.other',
+    content: {
+      component: ItemActivitiesTab,
+      cssClass: 'activities-tab-contents',
+      type: 'svelte',
+    },
+  },
   /**
    * Advancement create/read/update/delete interface.
    */
@@ -166,25 +179,25 @@ const itemSheetTabs: Record<string, Tab> = {
     autoHeight: true,
   },
   /**
-   * A sidebar with race properties and configuration buttons, and a description editor.
+   * A sidebar with species properties and configuration buttons, and a description editor.
    */
-  raceDescription: {
+  speciesDescription: {
     id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
     title: 'DND5E.Description',
     content: {
-      component: ItemRaceDescriptionTab,
+      component: ItemSpeciesDescriptionTab,
       cssClass: 'flexrow',
       type: 'svelte',
     },
   },
   /**
-   * A sidebar with race properties and configuration buttons, and a description editor.
+   * Details form for species items.
    */
-  raceDetails: {
+  speciesDetails: {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
     title: 'DND5E.Details',
     content: {
-      component: ItemRaceDetailsTab,
+      component: ItemSpeciesDetailsTab,
       cssClass: 'detail-tab-contents',
       type: 'svelte',
     },
@@ -241,6 +254,6 @@ const itemSheetTabs: Record<string, Tab> = {
     },
     autoHeight: true,
   },
-} as const;
+} satisfies Record<string, Tab>;
 
 export default itemSheetTabs;

@@ -3,6 +3,23 @@
   min-width: 25rem;
 }
 
+.spell-classes {
+  text-align: right;
+  font-size: 0.875rem;
+  font-style: italic;
+  color: var(--t5e-secondary-color);
+}
+
+input.full-width {
+  flex: 0 0 100%;
+  margin-top: 0.25rem;
+}
+
+.label-top {
+  flex-direction: column;
+  align-items: stretch;
+}
+
 .window-content {
   padding: 0;
 
@@ -43,11 +60,7 @@ select {
   color: var(--t5e-primary-font-color);
 }
 
-select {
-  padding: 0;
-}
-
-:is(input[type='text'], input[type='number'], textarea) {
+:is(input[type='text'], input[type='number'], textarea, select) {
   border: none;
   padding: 0 0.375rem;
 }
@@ -438,6 +451,7 @@ input[type='checkbox'] {
 
   .form-group {
     margin: 0;
+    column-gap: 0.25rem;
 
     padding: 0.1875rem;
     background: var(--t5e-faintest-color);
@@ -446,6 +460,10 @@ input[type='checkbox'] {
     .form-fields {
       justify-content: flex-start;
       gap: 0.25rem;
+
+      &.label-top > label {
+        text-align: start;
+      }
 
       &.spell-preparation-mode {
         gap: 0.25rem;
@@ -470,6 +488,7 @@ input[type='checkbox'] {
       display: flex;
       flex-wrap: wrap;
       gap: 0.0625rem;
+      padding-bottom: 0.5rem;
 
       &:has(label.checkbox) {
         display: grid;
@@ -491,7 +510,6 @@ input[type='checkbox'] {
     }
 
     label {
-      margin-left: 0.25rem;
       line-height: 1.25rem;
       font-size: 0.8125rem;
       font-weight: 600;
@@ -499,46 +517,36 @@ input[type='checkbox'] {
       white-space: nowrap;
 
       &.checkbox {
-        position: relative;
-        z-index: 1;
-        margin: 0;
-        padding: 0.0625rem;
-        display: flex;
-        border-radius: 0.1875rem;
-        overflow: hidden;
-        border: 0.0625rem solid var(--t5e-checkbox-outline-color);
-        background: var(--t5e-checkbox-checked-color);
         height: 1.25rem;
         cursor: pointer;
         color: var(--t5e-checkbox-font-color);
         font-size: 0.8125rem;
         line-height: 1rem;
         font-weight: 400;
-
-        &:hover {
-          background: var(--t5e-checkbox-checked-color);
-        }
-
-        &:hover input::after {
-          background: var(--t5e-checkbox-checked-color);
-        }
-      }
-
-      &.checkbox.container-property {
-        padding-right: 0.625rem;
-        flex-basis: auto;
       }
     }
 
     :where(select),
     :where(:is(input[type='text'], input[type='number'], textarea)) {
       background: var(--t5e-item-input-background);
-      height: 1.25rem;
+      height: var(--form-field-height);
       font-size: 0.8125rem;
 
       &:hover {
         background: var(--t5e-item-input-hover-background);
       }
+    }
+
+    & .form-fields > :is(input[type='text'], input[type='number'], textarea) {
+      flex-basis: var(--form-field-height);
+    }
+
+    &
+      .form-fields
+      .form-group
+      > :is(input[type='text'], input[type='number'], textarea, select) {
+      flex-basis: var(--form-field-height);
+      height: var(--form-field-height);
     }
 
     input:disabled {
@@ -548,28 +556,6 @@ input[type='checkbox'] {
       &:hover {
         border: none !important;
         box-shadow: none !important;
-      }
-    }
-
-    .checkbox input {
-      position: static;
-      margin: 0;
-
-      &::after {
-        content: '';
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: -1;
-        background: var(--t5e-checkbox-unchecked-color);
-        width: 100%;
-        height: 100%;
-        cursor: pointer;
-      }
-
-      &:checked::after {
-        display: none;
       }
     }
 
@@ -598,6 +584,10 @@ input[type='checkbox'] {
       border: none;
       box-shadow: 0 0 0 0.0625rem var(--t5e-primary-accent-color) inset;
     }
+  }
+
+  > .form-group {
+    padding: 0.1875rem 0.5rem;
   }
 }
 
@@ -751,41 +741,15 @@ input[type='checkbox'] {
 }
 
 input[type='checkbox'] {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background: none;
   border: 0.0625rem solid var(--t5e-tertiary-color);
   box-shadow: 0 0 0.125rem var(--t5e-light-color) inset;
   border-radius: 0.1875rem;
-  background-image: var(--t5e-check-default-background-image);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 60%;
 }
 
 label input[type='checkbox'] {
   border: none;
   box-shadow: none;
   position: relative;
-}
-
-input[type='checkbox']:checked {
-  background: var(--t5e-checkbox-checked-color);
-  background-image: var(--t5e-check-checked-background-image);
-  background-size: 60%;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.checkbox input[type='checkbox']:checked {
-  background-image: var(--t5e-check-checked-background-image);
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-label input[type='checkbox']:checked {
-  background-color: transparent;
 }
 
 .damage-header {
@@ -939,4 +903,17 @@ ol.info {
 // TODO: In the design overhaul and in CSS revamping for classic sheets, find ways to generalize this. Consider even using bootstrap-style utility classes.
 .source-class-unowned-class-hint-icon {
   margin: 0 0.25rem;
+}
+
+.form-group.split-group > .form-fields .form-group {
+  flex-wrap: nowrap;
+}
+
+.form-group.checkbox {
+  background: none;
+  align-self: end;
+
+  > label {
+    font-weight: 500;
+  }
 }

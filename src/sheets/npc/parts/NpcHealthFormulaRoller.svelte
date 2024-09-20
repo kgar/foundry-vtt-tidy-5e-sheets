@@ -16,9 +16,7 @@
 
     const formula = $context.actor.system.attributes.hp.formula;
     if (!formula) return;
-    const roll_hp = await FoundryAdapter.roll(formula, undefined, {
-      async: true,
-    });
+    const roll_hp = await FoundryAdapter.roll(formula, undefined);
     const hp = roll_hp.total;
     FoundryAdapter.playDiceSound();
     $context.actor.update({

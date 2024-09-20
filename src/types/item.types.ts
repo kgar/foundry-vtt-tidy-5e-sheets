@@ -2,6 +2,7 @@ import type { ComponentType, SvelteComponent } from 'svelte';
 import type {
   AttunementContext,
   CustomContent,
+  GroupableSelectOption,
   InventorySection,
   Tab,
   TidySectionBase,
@@ -13,13 +14,40 @@ import type {
   RegisteredEquipmentTypeGroup,
 } from 'src/runtime/item/item.types';
 
+export type PropertyContext = {
+  active: string[];
+  object: Record<string, true>;
+  options: {
+    label: string;
+    selected: boolean;
+    value: string;
+  }[];
+};
+
 export type ItemSheetContext = {
+  activities: {
+    id: string;
+    name: string;
+    sort: number;
+    img: {
+      src: string;
+      svg: boolean;
+    };
+  }[];
   activateEditors: (
     node: HTMLElement,
     options?: { bindSecrets?: boolean }
   ) => void;
+  activationTypes: GroupableSelectOption[];
+  affectsPlaceholder: string;
+  config: typeof CONFIG.DND5E;
   customContent: CustomContent[];
   customEquipmentTypeGroups: RegisteredEquipmentTypeGroup[];
+  dimensions:
+    | { size: string; width: string | false; height: string | false }
+    | undefined;
+  durationUnits: GroupableSelectOption[];
+  equipmentTypes: GroupableSelectOption[];
   /**
    * Represents remaining health as a percentage within the range of `0` to `100`.
    */
@@ -29,10 +57,46 @@ export type ItemSheetContext = {
   lockItemQuantity: boolean;
   originalContext: unknown;
   owner: boolean;
+  properties: PropertyContext;
+  rangeTypes: GroupableSelectOption[];
+  recoveryPeriods: GroupableSelectOption[];
+  recoveryTypes: {
+    value: string;
+    label: string;
+  }[];
+  scalarTarget: boolean;
+  usesRecovery: {
+    data: UsesRecoveryData;
+    formulaOptions: { label: string; value: string }[] | null;
+  }[];
   itemOverrides: Set<string>;
   tabs: Tab[];
   viewableWarnings: DocumentPreparationWarning[];
 } & Record<string, any>;
+
+/**
+ * Data for a recovery profile for an activity's uses.
+ */
+export interface UsesRecoveryData {
+  period: string;
+  type: string;
+  formula: string;
+  recharge?: {
+    options?: {
+      label: string;
+      value: string;
+    }[];
+  };
+}
+
+/**
+ * Field for storing uses data.
+ */
+export interface UsesField {
+  spent: number;
+  max: string;
+  recovery: UsesRecoveryData[];
+}
 
 export type ItemDescription = {
   field: string;
@@ -82,6 +146,7 @@ export type ContainerSheetContext = {
   customContent: CustomContent[];
   originalContext: unknown;
   owner: boolean;
+  properties: PropertyContext;
   tabs: Tab[];
   utilities: Utilities<ContainerSheetContext>;
   viewableWarnings: DocumentPreparationWarning[];

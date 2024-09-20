@@ -26,16 +26,17 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
-  import InlineContainerToggle from 'src/sheets/container/InlineContainerToggle.svelte';
-  import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+  import InlineToggleControl from 'src/sheets/shared/InlineToggleControl.svelte';
+  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import InlineContainerView from 'src/sheets/container/InlineContainerView.svelte';
+  import { ItemUtils } from 'src/utils/ItemUtils';
 
   let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
-  let inlineContainerToggleService = getContext<InlineContainerToggleService>(
-    CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
+  let inlineToggleService = getContext<InlineToggleService>(
+    CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
 
   $: actions = SheetSections.configureActions(
@@ -138,10 +139,10 @@
                   item={actionItem.item}
                 />
                 {#if 'containerContents' in actionItem && !!actionItem.containerContents}
-                  <InlineContainerToggle
+                  <InlineToggleControl
                     iconClass="fa-lg"
-                    item={actionItem.item}
-                    {inlineContainerToggleService}
+                    entityId={actionItem.item.id}
+                    {inlineToggleService}
                   />
                 {/if}
                 <ItemName
@@ -181,14 +182,14 @@
                     </small>
                   </div>
                 </ItemName>
-                {#if actionItem.item.system.recharge?.value || actionItem.item.hasLimitedUses || actionItem.item.system.activation?.type === 'legendary'}
+                {#if actionItem.item.hasRecharge || actionItem.item.hasLimitedUses || ItemUtils.hasSpecificActivationType(actionItem.item, CONSTANTS.ACTIVATION_COST_LEGENDARY)}
                   <div class="item-uses" title={localize('DND5E.Uses')}>
-                    {#if actionItem.item.system.recharge?.charged && actionItem.item.system.recharge?.value}
+                    {#if actionItem.item.hasRecharge && !actionItem.item.isOnCooldown}
                       <i
                         class="fas fa-bolt"
                         title={localize('DND5E.Charged')}
                       />
-                    {:else if actionItem.item.system.recharge?.value}
+                    {:else if actionItem.item.isOnCooldown}
                       <RechargeControl item={actionItem.item} />
                     {:else if actionItem.item.hasLimitedUses}
                       {#if actionItem.item.system.uses?.value === actionItem.item.system.uses?.max && actionItem.item.system.uses?.autoDestroy}
@@ -204,7 +205,7 @@
                         <small>{localize('DND5E.Uses')}</small>
                       {/if}
                     {/if}
-                    {#if actionItem.item.system.activation.type === 'legendary'}
+                    {#if ItemUtils.hasSpecificActivationType(actionItem.item, CONSTANTS.ACTIVATION_COST_LEGENDARY)}
                       {actionItem.item.system.activation.cost}
                     {/if}
                   </div>
@@ -287,7 +288,7 @@
                 container={actionItem.item}
                 containerContents={actionItem.containerContents}
                 editable={$context.editable}
-                {inlineContainerToggleService}
+                {inlineToggleService}
                 lockItemQuantity={$context.lockItemQuantity}
                 sheetDocument={$context.actor}
                 --t5e-image-size-override="1.5rem"

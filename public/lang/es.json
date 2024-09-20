@@ -550,10 +550,6 @@
         "hint": "Incluye consumibles que tienen un coste de activación (Acción, Acción de bonificación, etc.) en la lista de acciones de forma predeterminada.",
         "name": "Incluir consumible como acciones"
     },
-    "TIDY5E.Settings.ActionListScaleCantripDamage": {
-        "name": "Mostrar daño escalado de trucos (experimental)",
-        "hint": "Escala el daño del truco para que coincida con el nivel actual del PJ o la calificación de desafío del PNJ."
-    },
     "TIDY5E.Actions": {
         "OverriddenSetOverrideTrue": "Agregar a la lista de acciones (Shifts+clic para borrar la sustitución)",
         "ResetActionDefault": "Restablecer acción predeterminada",

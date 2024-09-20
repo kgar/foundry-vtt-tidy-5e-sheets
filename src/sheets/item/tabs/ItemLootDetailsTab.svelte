@@ -3,7 +3,6 @@
   import type { ItemSheetContext } from 'src/types/item.types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import ItemProperties from '../parts/ItemProperties.svelte';
@@ -14,22 +13,22 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
+  $: appId = $context.document.sheet.appId;
+
   const localize = FoundryAdapter.localize;
 </script>
 
 <ContentConcealer conceal={$context.concealDetails}>
   <h3 class="form-header">{localize('DND5E.ItemLootDetails')}</h3>
 
-  <ItemFormGroup
-    labelText={localize('DND5E.ItemLootType')}
-    field="system.type.value"
-    let:inputId
-  >
+  <!-- Loot Type -->
+  <div class="form-group">
+    <label for="{appId}-type-value">{localize('DND5E.ItemLootType')}</label>
     <Select
-      id={inputId}
+      id="{appId}-type-value"
       document={$context.item}
       field="system.type.value"
-      value={$context.system.type.value}
+      value={$context.source.type.value}
       disabled={!$context.editable}
     >
       <SelectOptions
@@ -38,34 +37,33 @@
         blank=""
       />
     </Select>
-  </ItemFormGroup>
+  </div>
 
+  <!-- Loot Subtype -->
   {#if $context.itemSubtypes}
-    {@const subTypeLabel = localize('DND5E.ItemLootSubtype', {
+    {@const subtypeLabel = localize('DND5E.ItemLootSubtype', {
       category:
+        // @ts-expect-error
         $context.config.lootTypes[$context.system.type.value]?.label ?? '',
     })}
-    <ItemFormGroup
-      labelText={subTypeLabel}
-      field="system.type.subtype"
-      let:inputId
-    >
+    <div class="form-group">
+      <label for="{appId}-type-subtype">{subtypeLabel}</label>
       <Select
-        id={inputId}
+        id="{appId}-type-subtype"
         document={$context.item}
         field="system.type.subtype"
-        value={$context.system.type.subtype}
+        value={$context.source.type.subtype}
         disabled={!$context.editable}
+        blankValue=""
       >
         <SelectOptions data={$context.itemSubtypes} blank="" />
       </Select>
-    </ItemFormGroup>
+    </div>
   {/if}
 
-  <ItemFormGroup
-    cssClass="stacked loot-properties"
-    labelText={localize('DND5E.ItemLootProperties')}
-  >
+  <!-- Loot Properties -->
+  <div class="form-group stacked loot-properties">
+    <label for="">{localize('DND5E.ItemLootProperties')}</label>
     <ItemProperties />
-  </ItemFormGroup>
+  </div>
 </ContentConcealer>

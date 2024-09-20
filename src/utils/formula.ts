@@ -39,8 +39,8 @@ export function simplifyFormula(
   try {
     if (removeFlavor) {
       formula = formula
-        ?.replace(RollTerm.FLAVOR_REGEXP, '')
-        ?.replace(RollTerm.FLAVOR_REGEXP_STRING, '')
+        ?.replace(foundry.dice.terms.RollTerm.FLAVOR_REGEXP, '')
+        ?.replace(foundry.dice.terms.RollTerm.FLAVOR_REGEXP_STRING, '')
         ?.trim();
     }
 
@@ -104,12 +104,17 @@ export function getMaxPreparedSpellsSampleFormulas(): MaxPreparedSpellFormula[] 
   ];
 }
 
-export function calculateSpellAttackAndDc(actor: Actor5e): SpellCalculations {
+export function calculateSpellAttackAndDc(
+  actor: Actor5e,
+  spellClass: Item5e
+): SpellCalculations {
   try {
     const rollData = actor.getRollData();
 
     const prof = actor.system.attributes.prof ?? 0;
-    const spellAbility = actor.system.attributes.spellcasting;
+    const spellAbility =
+      spellClass?.system?.spellcasting?.ability ??
+      actor.system.attributes.spellcasting;
     const abilityMod =
       (spellAbility != '' ? actor.system.abilities[spellAbility].mod : 0) ?? 0;
     const spellAttackMod = prof + abilityMod;
@@ -143,12 +148,14 @@ export function calculateSpellAttackAndDc(actor: Actor5e): SpellCalculations {
     }
 
     const abilityName =
-      CONFIG.DND5E.abilities[spellAbility]?.label ??
-      FoundryAdapter.localize('DND5E.None');
+      CONFIG.DND5E.abilities[
+        spellAbility as keyof typeof CONFIG.DND5E.abilities
+      ]?.label ?? FoundryAdapter.localize('DND5E.None');
 
     return {
-      dc: actor.system.attributes.spelldc,
-      dcTooltip: getDcTooltip(actor),
+      dc:
+        spellClass?.system.spellcasting.save ?? actor.system.attributes.spelldc,
+      dcTooltip: getDcTooltip(actor, spellAbility),
       meleeMod: msakTotal,
       meleeTooltip: buildAttackModTooltip(
         abilityName,
@@ -249,9 +256,7 @@ function calculateDeterministicBonus(rawBonus: string): number {
 
     let bonusTotal = 0;
     if (Roll.validate(bonusRoll.formula)) {
-      bonusTotal = FoundryAdapter.isFoundryV12OrHigher()
-        ? bonusRoll.evaluateSync().total
-        : bonusRoll.evaluate({ async: false }).total;
+      bonusTotal = bonusRoll.evaluateSync().total;
     }
     return bonusTotal;
   } catch (e: any) {
@@ -260,14 +265,14 @@ function calculateDeterministicBonus(rawBonus: string): number {
   }
 }
 
-export function getDcTooltip(actor: Actor5e) {
+export function getDcTooltip(actor: Actor5e, spellAbility: string) {
   const base = 8;
-  const spellAbility = actor.system.attributes.spellcasting;
+
   const abilityMod =
     (spellAbility != '' ? actor.system.abilities[spellAbility].mod : 0) ?? 0;
   const abilityName =
-    CONFIG.DND5E.abilities[spellAbility]?.label ??
-    FoundryAdapter.localize('DND5E.None');
+    CONFIG.DND5E.abilities[spellAbility as keyof typeof CONFIG.DND5E.abilities]
+      ?.label ?? FoundryAdapter.localize('DND5E.None');
   const prof = actor.system.attributes.prof ?? 0;
 
   let tooltip = base.toString();
@@ -287,9 +292,7 @@ export function getDcTooltip(actor: Actor5e) {
   const rawBonus = actor.system.bonuses.spell.dc?.toString()?.trim();
   if (!isNil(rawBonus, '') && Roll.validate(rawBonus)) {
     const bonusRoll = new Roll(rawBonus);
-    FoundryAdapter.isFoundryV12OrHigher()
-      ? bonusRoll.evaluateSync()
-      : bonusRoll.evaluate({ async: false });
+    bonusRoll.evaluateSync();
     const bonusTotal = bonusRoll.total;
 
     if (bonusTotal !== 0) {
@@ -308,7 +311,8 @@ type RawSpellAttackType = 'rsak' | 'msak';
 export function rollRawSpellAttack(
   ev: MouseEvent,
   actor: Actor5e,
-  attackType?: RawSpellAttackType
+  attackType?: RawSpellAttackType,
+  spellcastingAbility?: string
 ) {
   let titleKey =
     attackType === 'rsak'
@@ -336,8 +340,8 @@ export function rollRawSpellAttack(
   const parts: string[] = [];
 
   // Ability score modifier
-  const spellcastingAbility = actor.system.attributes.spellcasting;
-  const spellcastingMod = actor.system.abilities[spellcastingAbility]?.mod;
+  spellcastingAbility ??= actor.system.attributes.spellcasting;
+  const spellcastingMod = actor.system.abilities[spellcastingAbility!]?.mod;
   if (spellcastingAbility !== 'none' && spellcastingMod) {
     parts.push('@mod');
     rollData.mod = spellcastingMod;

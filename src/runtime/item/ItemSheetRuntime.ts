@@ -12,7 +12,7 @@ import SpellSheet from 'src/sheets/item/SpellSheet.svelte';
 import SubclassSheet from 'src/sheets/item/SubclassSheet.svelte';
 import ToolSheet from 'src/sheets/item/ToolSheet.svelte';
 import WeaponSheet from 'src/sheets/item/WeaponSheet.svelte';
-import RaceSheet from 'src/sheets/item/RaceSheet.svelte';
+import SpeciesSheet from 'src/sheets/item/SpeciesSheet.svelte';
 import type { ComponentType } from 'svelte';
 import type { RegisteredContent, RegisteredTab } from '../types';
 import type { ItemSheetContext } from 'src/types/item.types';
@@ -56,6 +56,7 @@ export class ItemSheetRuntime {
       defaultTabs: () => [
         itemSheetTabs.descriptionWithSidebar,
         itemSheetTabs.equipmentDetails,
+        itemSheetTabs.activities,
         itemSheetTabs.effects,
       ],
     },
@@ -80,6 +81,7 @@ export class ItemSheetRuntime {
       defaultTabs: () => [
         itemSheetTabs.descriptionWithSidebar,
         itemSheetTabs.consumableDetails,
+        itemSheetTabs.activities,
         itemSheetTabs.effects,
       ],
     },
@@ -96,6 +98,7 @@ export class ItemSheetRuntime {
       defaultTabs: () => [
         itemSheetTabs.descriptionWithSidebar,
         itemSheetTabs.featDetails,
+        itemSheetTabs.activities,
         itemSheetTabs.effects,
       ],
     },
@@ -111,6 +114,7 @@ export class ItemSheetRuntime {
       defaultTabs: () => [
         itemSheetTabs.descriptionWithSidebar,
         itemSheetTabs.spellDetails,
+        itemSheetTabs.activities,
         itemSheetTabs.effects,
       ],
     },
@@ -127,6 +131,7 @@ export class ItemSheetRuntime {
       defaultTabs: () => [
         itemSheetTabs.descriptionWithSidebar,
         itemSheetTabs.toolDetails,
+        itemSheetTabs.activities,
         itemSheetTabs.effects,
       ],
     },
@@ -135,14 +140,15 @@ export class ItemSheetRuntime {
       defaultTabs: () => [
         itemSheetTabs.descriptionWithSidebar,
         itemSheetTabs.weaponDetails,
+        itemSheetTabs.activities,
         itemSheetTabs.effects,
       ],
     },
     [CONSTANTS.ITEM_TYPE_RACE]: {
-      Sheet: RaceSheet,
+      Sheet: SpeciesSheet,
       defaultTabs: () => [
-        itemSheetTabs.raceDescription,
-        itemSheetTabs.raceDetails,
+        itemSheetTabs.speciesDescription,
+        itemSheetTabs.speciesDetails,
         itemSheetTabs.advancement,
       ],
     },

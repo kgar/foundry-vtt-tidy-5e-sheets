@@ -15,7 +15,7 @@
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
   import ContainerContentsSections from 'src/sheets/container/ContainerContentsSections.svelte';
-  import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   let context = getContext<Readable<ContainerSheetContext>>(
@@ -23,8 +23,8 @@
   );
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
-  let inlineContainerToggleService = getContext<InlineContainerToggleService>(
-    CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
+  let inlineToggleService = getContext<InlineToggleService>(
+    CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
 
   let searchCriteria = '';
@@ -80,7 +80,7 @@
     {#if FoundryAdapter.userIsGm()}
       <ButtonMenu
         iconClass="ra ra-fairy-wand"
-        buttonClass="{menuOpen ? 'menu-is-open' : ''}"
+        buttonClass={menuOpen ? 'menu-is-open' : ''}
         position="bottom"
         anchor="right"
         title={localize('TIDY5E.Utilities.GMTools')}
@@ -124,7 +124,7 @@
       container={$context.item}
       editable={$context.editable}
       itemContext={$context.containerContents.itemContext}
-      {inlineContainerToggleService}
+      {inlineToggleService}
       lockItemQuantity={$context.lockItemQuantity}
       sheetDocument={$context.item}
     />

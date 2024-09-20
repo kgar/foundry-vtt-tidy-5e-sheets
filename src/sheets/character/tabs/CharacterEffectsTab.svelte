@@ -110,7 +110,7 @@
                   {localize(section.label)}
                 </ItemTableColumn>
                 <ItemTableColumn baseWidth="12.5rem">
-                  {localize('DND5E.Source')}
+                  {localize('DND5E.SOURCE.FIELDS.source.label')}
                 </ItemTableColumn>
                 <ItemTableColumn baseWidth="7.5rem">
                   {localize('DND5E.Duration')}

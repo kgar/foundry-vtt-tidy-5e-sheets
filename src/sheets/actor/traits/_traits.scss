@@ -1,6 +1,7 @@
 .trait-form-group {
   display: flex;
   flex-direction: row;
+  padding-bottom: 0.25rem;
 
   &.hidden {
     display: none;
@@ -39,7 +40,7 @@
     .trait-list {
       display: flex;
       flex-wrap: wrap;
-      column-gap: 0.25rem;
+      gap: 0.25rem;
 
       &:first-child {
         padding-top: 0.125rem;
@@ -55,17 +56,8 @@
       font-size: 0.75rem;
     }
 
+    .tool,
     .trait-tag {
-      &::after {
-        content: ',';
-      }
-
-      &:last-child::after {
-        content: none;
-      }
-    }
-
-    .tool {
       display: inline-flex;
       align-items: center;
       gap: 0.25rem;

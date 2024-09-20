@@ -28,6 +28,7 @@ import {
   type SpellbookSection,
   type FavoriteSection,
   type EffectFavoriteSection,
+  type SpellcastingInfo as SpellcastingInfo,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
@@ -68,7 +69,7 @@ import type {
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { Container } from 'src/features/containers/Container';
-import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 
 export class Tidy5eCharacterSheet
@@ -90,7 +91,7 @@ export class Tidy5eCharacterSheet
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
-  inlineContainerToggleService = new InlineContainerToggleService();
+  inlineToggleService = new InlineToggleService();
   itemTableTogglesCache: ItemTableToggleCacheService;
   itemFilterService: ItemFilterService;
   subscriptionsService: StoreSubscriptionsService;
@@ -188,8 +189,8 @@ export class Tidy5eCharacterSheet
         ],
         [CONSTANTS.SVELTE_CONTEXT.SEARCH_FILTERS, new Map(this.searchFilters)],
         [
-          CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
-          this.inlineContainerToggleService,
+          CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
+          this.inlineToggleService,
         ],
         [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.itemFilterService],
         [
@@ -225,6 +226,22 @@ export class Tidy5eCharacterSheet
     });
 
     initTidy5eContextMenu(this, html);
+
+    FoundryAdapter.createContextMenu(html, '.activity[data-activity-id]', [], {
+      onOpen: (element: HTMLElement) => {
+        const itemId =
+          element.closest<HTMLElement>('[data-item-id]')?.dataset.itemId;
+        const item =
+          this.document.type === 'container'
+            ? this.document.system.getContainedItem(itemId)
+            : this.document.items.get(itemId);
+        // Parts of ContextMenu doesn't play well with promises, so don't show menus for containers in packs
+        if (!item || item instanceof Promise) return;
+        if (element.closest('[data-activity-id]')) {
+          dnd5e.documents.activity.UtilityActivity.onContextMenu(item, element);
+        }
+      },
+    });
   }
 
   async getData(options = {}) {
@@ -276,21 +293,6 @@ export class Tidy5eCharacterSheet
     );
 
     TidyHooks.tidy5eSheetsPrepareResources(tidyResources, this.actor);
-
-    let maxPreparedSpellsTotal = 0;
-    try {
-      const formula = TidyFlags.maxPreparedSpells.get(this.actor) ?? '';
-
-      if (formula?.trim() !== '') {
-        const roll = await Roll.create(
-          formula,
-          this.actor.getRollData()
-        ).evaluate();
-        maxPreparedSpellsTotal = roll.total;
-      }
-    } catch (e) {
-      error('Unable to calculate max prepared spells', false, e);
-    }
 
     // TODO: Make a builder for this
     // TODO: Extract to runtime?
@@ -737,7 +739,6 @@ export class Tidy5eCharacterSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -747,7 +748,6 @@ export class Tidy5eCharacterSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -756,7 +756,6 @@ export class Tidy5eCharacterSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -779,7 +778,6 @@ export class Tidy5eCharacterSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -792,7 +790,6 @@ export class Tidy5eCharacterSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -804,13 +801,11 @@ export class Tidy5eCharacterSheet
       lockSensitiveFields:
         (!unlocked && SettingsProvider.settings.useTotalSheetLock.get()) ||
         !defaultDocumentContext.editable,
-      maxPreparedSpellsTotal,
       notes1EnrichedHtml: await FoundryAdapter.enrichHtml(
         TidyFlags.notes1.members.value.get(this.actor) ?? '',
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -819,7 +814,6 @@ export class Tidy5eCharacterSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -828,7 +822,6 @@ export class Tidy5eCharacterSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -837,7 +830,6 @@ export class Tidy5eCharacterSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -846,7 +838,6 @@ export class Tidy5eCharacterSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -858,7 +849,7 @@ export class Tidy5eCharacterSheet
           (i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER
         ),
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
-      spellCalculations: calculateSpellAttackAndDc(this.actor),
+      spellComponentLabels: FoundryAdapter.getSpellComponentLabels(),
       spellSlotTrackerMode:
         characterPreferences.spellSlotTrackerMode ??
         CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS,
@@ -869,7 +860,6 @@ export class Tidy5eCharacterSheet
         {
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
-          async: true,
           relativeTo: this.actor,
         }
       ),
@@ -887,6 +877,22 @@ export class Tidy5eCharacterSheet
           (w: any) => !isNil(w.message?.trim(), '')
         ) ?? [],
     };
+
+    if (context.system.details.xp.boonsEarned !== undefined) {
+      const pluralRules = new Intl.PluralRules(game.i18n.lang);
+
+      context.epicBoonsEarned = FoundryAdapter.localize(
+        `DND5E.ExperiencePointsBoons.${pluralRules.select(
+          this.actor.system.details.xp.boonsEarned ?? 0
+        )}`,
+        {
+          number: dnd5e.utils.formatNumber(
+            this.actor.system.details.xp.boonsEarned ?? 0,
+            { signDisplay: 'always' }
+          ),
+        }
+      );
+    }
 
     for (const panelItem of context.containerPanelItems) {
       const ctx = context.itemContext[panelItem.container.id];
@@ -998,7 +1004,7 @@ export class Tidy5eCharacterSheet
       items,
       spells,
       feats,
-      races,
+      species,
       backgrounds,
       classes,
       subclasses,
@@ -1017,7 +1023,7 @@ export class Tidy5eCharacterSheet
 
         // Item usage
         ctx.hasUses = item.hasLimitedUses;
-        ctx.hasTarget = item.hasAreaTarget || item.hasIndividualTarget;
+        ctx.hasRecharge = item.hasRecharge;
 
         // Unidentified items
         ctx.concealDetails =
@@ -1029,7 +1035,7 @@ export class Tidy5eCharacterSheet
         const group = this.actor.items.get(originId);
         switch (group?.type) {
           case 'race':
-            ctx.group = 'race';
+            ctx.group = 'species';
             break;
           case 'background':
             ctx.group = 'background';
@@ -1072,7 +1078,7 @@ export class Tidy5eCharacterSheet
         items: [] as Item5e[],
         spells: [] as Item5e[],
         feats: [] as Item5e[],
-        races: [] as Item5e[],
+        species: [] as Item5e[],
         backgrounds: [] as Item5e[],
         classes: [] as Item5e[],
         subclasses: [] as Item5e[],
@@ -1080,7 +1086,7 @@ export class Tidy5eCharacterSheet
           items: [] as Item5e[],
           spells: [] as Item5e[],
           feats: [] as Item5e[],
-          races: [] as Item5e[],
+          species: [] as Item5e[],
           backgrounds: [] as Item5e[],
           classes: [] as Item5e[],
           subclasses: [] as Item5e[],
@@ -1113,14 +1119,10 @@ export class Tidy5eCharacterSheet
       );
     }
 
-    // Organize Spellbook and count the number of prepared spells (excluding always, at will, cantrips, etc...)
-    // Count prepared spells
-    const nPrepared = spells.filter((spell) => {
-      const prep = spell.system.preparation;
-      return (
-        spell.system.level > 0 && prep.mode === 'prepared' && prep.prepared
-      );
-    }).length;
+    context.spellcastingInfo = FoundryAdapter.getSpellcastingInfo(
+      this.actor,
+      spells
+    );
 
     // Section spells
     // TODO: Take over `_prepareSpellbook` and
@@ -1178,7 +1180,7 @@ export class Tidy5eCharacterSheet
     // Section Features
     const features: Record<string, CharacterFeatureSection> =
       CharacterSheetSections.buildFeaturesSections(
-        races,
+        species,
         backgrounds,
         classes,
         feats,
@@ -1190,7 +1192,7 @@ export class Tidy5eCharacterSheet
     // Section favorite features
     const favoriteFeatures: Record<string, CharacterFeatureSection> =
       CharacterSheetSections.buildFeaturesSections(
-        favorites.races,
+        favorites.species,
         favorites.backgrounds,
         favorites.classes,
         favorites.feats,
@@ -1225,8 +1227,6 @@ export class Tidy5eCharacterSheet
           type: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
         })),
     ];
-
-    context.preparedSpells = nPrepared;
   }
 
   private _getFavoritesIdMap(): Map<string, CharacterFavorite> {
@@ -1501,6 +1501,20 @@ export class Tidy5eCharacterSheet
     let id = (await fromUuid(data.uuid)).getRelativeUUID(this.actor);
 
     return this._onDropFavorite(event, { type, id });
+  }
+
+  _prepareTraits(systemData: any) {
+    const traits = super._prepareTraits(systemData);
+
+    const selectedWeaponProfs = traits.traits?.weaponProf?.selected;
+    for (let key of systemData.traits?.weaponProf?.mastery?.value ?? []) {
+      if (!Object.hasOwn(selectedWeaponProfs, key)) {
+        selectedWeaponProfs[key] =
+          dnd5e.documents.Trait.keyLabel(key, { trait: 'weapon' }) ?? key;
+      }
+    }
+
+    return traits;
   }
 
   /* -------------------------------------------- */

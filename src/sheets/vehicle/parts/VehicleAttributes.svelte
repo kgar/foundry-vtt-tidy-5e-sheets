@@ -49,7 +49,7 @@
         document={$context.actor}
         field="system.attributes.capacity.creature"
         editable={$context.editable && !$context.lockSensitiveFields}
-        placeholder="&mdash;"
+        placeholder="—"
         value={$context.system.attributes.capacity.creature}
         dataMaxLength={1000}
       />
@@ -118,7 +118,7 @@
             value={$context.system.attributes.actions.thresholds['2']}
             min="0"
             step="1"
-            placeholder="&mdash;"
+            placeholder="—"
             title={localize('DND5E.VehicleActionThresholdsFull')}
             selectOnFocus={true}
             disabled={!$context.editable || $context.lockSensitiveFields}
@@ -131,7 +131,7 @@
             value={$context.system.attributes.actions.thresholds['1']}
             min="0"
             step="1"
-            placeholder="&mdash;"
+            placeholder="—"
             title={localize('DND5E.VehicleActionThresholdsMid')}
             selectOnFocus={true}
             disabled={!$context.editable || $context.lockSensitiveFields}
@@ -144,7 +144,7 @@
             value={$context.system.attributes.actions.thresholds['0']}
             min="0"
             step="1"
-            placeholder="&mdash;"
+            placeholder="—"
             title={localize('DND5E.VehicleActionThresholdsMin')}
             selectOnFocus={true}
             disabled={!$context.editable || $context.lockSensitiveFields}

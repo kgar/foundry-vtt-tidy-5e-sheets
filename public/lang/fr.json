@@ -696,10 +696,6 @@
         "name": "Inclure les consommables dans les actions",
         "hint": "Inclut les consommables qui ont un coût d'activation (Action, Action bonus, etc.) dans la liste des actions par défaut."
     },
-    "TIDY5E.Settings.ActionListScaleCantripDamage": {
-        "name": "Afficher l'échelle des dégâts de Cantrip (expérimental)",
-        "hint": "Permet d'ajuster les dégâts du cantrip (sort mineur) en fonction du niveau actuel du PJ ou de la valeur de défi du PNJ."
-    },
     "TIDY5E.Settings.About": {
         "name": "A propos de",
         "buttonLabel": "À propos des feuilles Tidy 5e",

@@ -40,7 +40,7 @@ import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import { GroupSheetRuntime } from 'src/runtime/GroupSheetRuntime';
 import { writable } from 'svelte/store';
-import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { debug, warn } from 'src/utils/logging';
 import { processInputChangeDeltaFromValues } from 'src/utils/form';
@@ -113,7 +113,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
 
   #itemFilterService: ItemFilterService;
   #messageBus: MessageBus = writable<MessageBusMessage | undefined>();
-  #inlineContainerToggleService = new InlineContainerToggleService();
+  #inlineToggleService = new InlineToggleService();
   #card = writable<ItemCardStore>();
 
   // TODO: First render, derive options that come from user preference
@@ -126,8 +126,8 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
         [CONSTANTS.SVELTE_CONTEXT.CARD, this.#card],
         [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._store],
         [
-          CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
-          this.#inlineContainerToggleService,
+          CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
+          this.#inlineToggleService,
         ],
         [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.#itemFilterService],
         [CONSTANTS.SVELTE_CONTEXT.LOCATION, ''],
@@ -154,7 +154,11 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     options: ApplicationRenderOptions
   ): Promise<GroupSheetClassicContext> {
     let xp: Group5eXp | undefined = undefined;
-    if (!game.settings.get('dnd5e', 'disableExperienceTracking')) {
+    if (
+      FoundryAdapter.getSystemSetting(
+        CONSTANTS.SYSTEM_SETTING_LEVELING_MODE
+      ) !== CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP
+    ) {
       xp = this.actor.system.details.xp;
     }
 
@@ -163,7 +167,6 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       {
         secrets: this.actor.isOwner,
         rollData: this.actor.getRollData(),
-        async: true,
         relativeTo: this.actor,
       }
     );
@@ -388,9 +391,10 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       currentHP: stats.currentHP,
       customContent: GroupSheetRuntime.content,
       descriptionFullEnrichedHtml: descriptionFullEnrichedHtml,
-      disableExperience: FoundryAdapter.getSystemSetting(
-        CONSTANTS.SYSTEM_SETTING_DISABLE_EXPERIENCE_TRACKING
-      ),
+      disableExperience:
+        FoundryAdapter.getSystemSetting(
+          CONSTANTS.SYSTEM_SETTING_LEVELING_MODE
+        ) === CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
       document: this.actor,
       editable: editable,
       effects: dnd5e.applications.components.EffectsElement.prepareCategories(
@@ -576,7 +580,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
           member.system.traits.languages.custom?.trim();
         const customLanguages = isNil(customLanguageString, '')
           ? []
-          : customLanguageString.split(';');
+          : foundry.utils.splitSemicolons(customLanguageString);
         const languageKeys = [
           ...member.system.traits.languages.value,
           ...customLanguages,
@@ -616,8 +620,8 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
           }`;
         }
         if (senses.special)
-          senses.special
-            .split(';')
+          foundry.utils
+            .splitSemicolons(senses.special)
             .forEach(
               (c: string, i: number) => (tags[`custom${i + 1}`] = c.trim())
             );
@@ -627,7 +631,9 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
         const conditionImmunities: string[] = [];
         for (let entry of member.system.traits.ci.value) {
           conditionImmunities.push(
-            CONFIG.DND5E.conditionTypes[entry]?.label ?? entry
+            CONFIG.DND5E.conditionTypes[
+              entry as keyof typeof CONFIG.DND5E.conditionTypes
+            ]?.label ?? entry
           );
         }
 
@@ -655,7 +661,9 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
                   return prev;
                 }
 
-                const label = CONFIG.DND5E.skills[key]?.label ?? key;
+                const label =
+                  CONFIG.DND5E.skills[key as keyof typeof CONFIG.DND5E.skills]
+                    ?.label ?? key;
 
                 prev.push({
                   key: key,
@@ -705,7 +713,9 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
   #createEmptyGroupSkill(key: string): GroupSkill {
     return {
       key: key,
-      label: CONFIG.DND5E.skills[key]?.label ?? key,
+      label:
+        CONFIG.DND5E.skills[key as keyof typeof CONFIG.DND5E.skills]?.label ??
+        key,
       members: [],
       total: Number.NEGATIVE_INFINITY,
     };

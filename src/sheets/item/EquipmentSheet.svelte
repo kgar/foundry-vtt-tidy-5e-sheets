@@ -17,6 +17,8 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
+  $: appId = $context.document.sheet.appId;
+
   let selectedTabId: string;
 
   const localize = FoundryAdapter.localize;
@@ -47,6 +49,7 @@
           <span>{localize('DND5E.Unidentified.Title')}</span>
         {:else}
           <Select
+            id="{appId}-rarity"
             document={$context.item}
             field="system.rarity"
             value={$context.system.rarity}

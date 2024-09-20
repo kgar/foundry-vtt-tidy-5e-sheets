@@ -43,7 +43,7 @@ import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import type { CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
 import { Container } from 'src/features/containers/Container';
 import { BaseSheetCustomSectionMixin } from './mixins/BaseSheetCustomSectionMixin';
 
@@ -65,7 +65,7 @@ export class Tidy5eKgarContainerSheet
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
-  inlineContainerToggleService = new InlineContainerToggleService();
+  inlineToggleService = new InlineToggleService();
   card = writable<ItemCardStore>();
   itemFilterService: ItemFilterService;
   subscriptionsService: StoreSubscriptionsService;
@@ -136,8 +136,8 @@ export class Tidy5eKgarContainerSheet
       ],
       [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
       [
-        CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
-        this.inlineContainerToggleService,
+        CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
+        this.inlineToggleService,
       ],
       [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.itemFilterService],
       [
@@ -161,6 +161,22 @@ export class Tidy5eKgarContainerSheet
     });
 
     initTidy5eContextMenu(this, html);
+
+    FoundryAdapter.createContextMenu(html, '.activity[data-activity-id]', [], {
+      onOpen: (element: HTMLElement) => {
+        const itemId =
+          element.closest<HTMLElement>('[data-item-id]')?.dataset.itemId;
+        const item =
+          this.document.type === 'container'
+            ? this.document.system.getContainedItem(itemId)
+            : this.document.items.get(itemId);
+        // Parts of ContextMenu doesn't play well with promises, so don't show menus for containers in packs
+        if (!item || item instanceof Promise) return;
+        if (element.closest('[data-activity-id]')) {
+          dnd5e.documents.activity.UtilityActivity.onContextMenu(item, element);
+        }
+      },
+    });
   }
 
   async getData(options = {}) {
@@ -313,6 +329,27 @@ export class Tidy5eKgarContainerSheet
       this.element.get(0),
       context
     );
+
+    // Properties
+    context.properties = {
+      active: [],
+      object: Object.fromEntries(
+        (context.system.properties ?? []).map((p: string) => [p, true])
+      ),
+      options: (context.system.validProperties ?? []).reduce(
+        (arr: ContainerSheetContext['properties']['options'], k: any) => {
+          // @ts-ignore
+          const { label } = CONFIG.DND5E.itemProperties[k];
+          arr.push({
+            label,
+            value: k,
+            selected: this.item._source.system.properties?.includes(k),
+          });
+          return arr;
+        },
+        []
+      ),
+    };
 
     debug(`Container Sheet context data`, context);
 

@@ -10,7 +10,6 @@ import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
 export type ActorOriginSummaryContext = {
   isCharacter: boolean;
   race: string;
-  canEditRace: boolean;
   canEditBackground: boolean;
   background: boolean;
   alignment: string;
@@ -72,7 +71,6 @@ export default class ActorOriginSummaryConfigFormApplication extends SvelteFormA
 
       isCharacter: this.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER,
       canEditBackground: !this.actor.system.details.background?.name,
-      canEditRace: !this.actor.system.details.race?.name,
       isNpc: this.actor.type === CONSTANTS.SHEET_TYPE_NPC,
       isVehicle: this.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE,
     } satisfies ActorOriginSummaryContext;
@@ -121,9 +119,6 @@ export default class ActorOriginSummaryConfigFormApplication extends SvelteFormA
       };
       if (context.canEditBackground) {
         update['system.details.background'] = context.background;
-      }
-      if (context.canEditRace) {
-        update['system.details.race'] = context.race;
       }
       await this.actor.update(update);
     } else if (context.isNpc) {

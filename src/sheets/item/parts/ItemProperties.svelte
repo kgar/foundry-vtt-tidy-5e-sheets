@@ -11,25 +11,26 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: properties = Object.entries<any>($context.properties);
+  $: appId = $context.document.sheet.appId;
 
   const localize = FoundryAdapter.localize;
 </script>
 
-{#each properties as [key, property]}
-  {@const field = `system.properties.${key}`}
+{#each $context.properties.options as property}
+  {@const field = `system.properties.${property.value}`}
   {@const isEnchanted = $context.itemOverrides.has(field)}
   {@const enchantedTooltip = isEnchanted
-    ? localize('DND5E.Enchantment.Warning.Override')
+    ? localize('DND5E.ENCHANTMENT.Warning.Override')
     : null}
 
   <Checkbox
+    id="{appId}-properties-{property.value?.slugify()}"
     labelCssClass="checkbox"
     document={$context.item}
     {field}
     checked={property.selected}
     disabled={!$context.editable || isEnchanted}
-    onDataPreparing={(ev) => mapPropertiesToSave($context, ev, key)}
+    onDataPreparing={(ev) => mapPropertiesToSave($context, ev, property.value)}
     tooltip={enchantedTooltip}
   >
     {property.label}

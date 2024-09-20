@@ -14,7 +14,7 @@
     ItemCardStore,
   } from 'src/types/types';
   import { warn } from 'src/utils/logging';
-  import { getContext, createEventDispatcher, onMount } from 'svelte';
+  import { getContext, onMount } from 'svelte';
   import type { Writable } from 'svelte/store';
   import ItemSummary from '../ItemSummary.svelte';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';

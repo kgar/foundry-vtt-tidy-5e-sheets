@@ -1,6 +1,5 @@
 <script lang="ts">
   import { getContext } from 'svelte';
-  import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import type { Readable } from 'svelte/store';
   import type { ItemSheetContext } from 'src/types/item.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -11,24 +10,24 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
+  $: appId = $context.document.sheet.appId;
+
   const localize = FoundryAdapter.localize;
 </script>
 
 <div class="form-group">
-  <ItemFormGroup
-    labelText={localize('DND5E.Identifier')}
-    field="system.identifier"
-    let:inputId
-  >
+  <div class="form-group">
+    <label for="{appId}-identifier">{localize('DND5E.Identifier')}</label>
     <div class="form-fields">
       <TextInput
-        id={inputId}
+        id="{appId}-identifier"
         document={$context.item}
         field="system.identifier"
-        value={$context.system.identifier}
+        value={$context.source.identifier}
         placeholder={$context.item.identifier}
-      ></TextInput>
+        disabled={!$context.editable}
+      />
     </div>
     <p class="hint">{localize('DND5E.IdentifierError')}</p>
-  </ItemFormGroup>
+  </div>
 </div>

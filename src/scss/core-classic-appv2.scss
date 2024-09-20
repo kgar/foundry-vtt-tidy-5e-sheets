@@ -237,6 +237,10 @@
     border: none;
   }
 
+  .invisible {
+    visibility: hidden;
+  }
+
   // TODO: Either put the remainder of the partial style imports here, or move the nonstandard style files to another location.
   // Partials - Styles that can be pulled into anything
   @import './partials/colors';
@@ -443,6 +447,13 @@
     }
   }
 
+  /* Activities */
+  .inline-activities-container {
+    padding: 0.25rem 0 0 1rem;
+    margin-left: 1rem;
+    border-left: 0.0625rem dotted var(--t5e-separator-color);
+  }
+
   /* Text utilities */
   .capitalize {
     text-transform: capitalize;
@@ -464,5 +475,28 @@
     padding: 1rem;
   }
 
-  @import './partials/floating-context-menu';
+  /* Expand Indicator */
+  .expand-indicator {
+    color: var(--t5e-tertiary-color);
+    transition: color 0.3s, transform 0.15s;
+    align-self: center;
+    justify-self: center;
+
+    &.expanded {
+      transform: rotate(90deg);
+    }
+  }
+
+  button:has(.expand-indicator):hover i {
+    color: var(--t5e-icon-hover-color);
+  }
+
+  /* Inline Activities */
+  .inline-activities-container {
+    button {
+      line-height: unset;
+    }
+  }
 }
+
+@import './partials/floating-context-menu';

@@ -8,6 +8,7 @@ import type {
   DropdownListOption,
   HTMLElementOrGettable,
   NpcSheetContext,
+  SpellcastingInfo,
 } from 'src/types/types';
 import { CONSTANTS } from '../constants';
 import type { Actor5e } from 'src/types/types';
@@ -18,11 +19,12 @@ import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
 import { TidyFlags } from './TidyFlags';
 import { TidyHooks } from './TidyHooks';
 import { isNil } from 'src/utils/data';
+import { clamp } from 'src/utils/numbers';
+import { processInputChangeDelta } from 'src/utils/form';
+import { calculateSpellAttackAndDc } from 'src/utils/formula';
+import type { Activity5e } from './dnd5e.types';
 
 export const FoundryAdapter = {
-  isFoundryV12OrHigher() {
-    return foundry.utils.isNewerVersion(game.version, 12);
-  },
   deepClone(obj: any) {
     return foundry.utils.deepClone(obj);
   },
@@ -247,7 +249,9 @@ export const FoundryAdapter = {
     const itemData = foundry.utils.mergeObject(
       {
         name: FoundryAdapter.localize('DND5E.ItemNew', {
-          type: FoundryAdapter.localize(CONFIG.Item.typeLabels[type]),
+          type: FoundryAdapter.localize(
+            CONFIG.Item.typeLabels[type as keyof typeof CONFIG.Item.typeLabels]
+          ),
         }),
         type,
       },
@@ -304,15 +308,19 @@ export const FoundryAdapter = {
       'system.levels': classItem.system.levels + delta,
     });
   },
-  getSpellAbbreviationMap() {
-    const map = new Map<string, string>();
-    Object.values(CONFIG.DND5E.spellComponents).forEach((x: any) =>
-      map.set(x.abbr, x.label)
-    );
-    Object.values(CONFIG.DND5E.spellTags).forEach((x: any) =>
-      map.set(x.abbr, x.label)
-    );
-    return map;
+  getSpellComponentLabels() {
+    return Array.from(CONFIG.DND5E.validProperties.spell).reduce<
+      Record<string, string>
+    >((prev, curr) => {
+      const config =
+        CONFIG.DND5E.itemProperties[
+          curr as keyof typeof CONFIG.DND5E.itemProperties
+        ];
+      if ('abbreviation' in config) {
+        prev[config.abbreviation] = config.label;
+      }
+      return prev;
+    }, {});
   },
   getProperty<T = unknown>(obj: any, path: string): T | undefined {
     return foundry.utils.getProperty(obj, path);
@@ -745,77 +753,6 @@ export const FoundryAdapter = {
   ): Promise<any> {
     return new Roll(formula, rollData).roll(rollFnOptions);
   },
-  async rollNpcHitDie(
-    actor: Actor5e,
-    flavor: string,
-    denomination: string,
-    options: any = {}
-  ): Promise<any | null> {
-    const rollConfig = FoundryAdapter.mergeObject(
-      {
-        formula: `max(0, 1${denomination} + @abilities.con.mod)`,
-        data: actor.getRollData(),
-        chatMessage: true,
-        messageData: {
-          speaker: ChatMessage.getSpeaker({ actor }),
-          flavor,
-          title: `${flavor}: ${actor.name}`,
-          rollMode: FoundryAdapter.getGameSetting('core', 'rollMode'),
-          'flags.dnd5e.roll': { type: 'hitDie' },
-        },
-      },
-      options
-    );
-
-    /**
-     * A hook event that fires before a hit die is rolled for an Actor.
-     * @function dnd5e.preRollHitDie
-     * @memberof hookEvents
-     * @param {Actor5e} actor               Actor for which the hit die is to be rolled.
-     * @param {object} config               Configuration data for the pending roll.
-     * @param {string} config.formula       Formula that will be rolled.
-     * @param {object} config.data          Data used when evaluating the roll.
-     * @param {boolean} config.chatMessage  Should a chat message be created for this roll?
-     * @param {object} config.messageData   Data used to create the chat message.
-     * @param {string} denomination         Size of hit die to be rolled.
-     * @returns {boolean}                   Explicitly return `false` to prevent hit die from being rolled.
-     */
-    if (
-      TidyHooks.dnd5ePreRollHitDie(actor, rollConfig, denomination) === false
-    ) {
-      return;
-    }
-
-    const roll = await FoundryAdapter.roll(
-      rollConfig.formula,
-      rollConfig.data,
-      {
-        async: true,
-      }
-    );
-    if (rollConfig.chatMessage) roll.toMessage(rollConfig.messageData);
-
-    const hp = actor.system.attributes.hp;
-    const dhp = Math.min(hp.max + (hp.tempmax ?? 0) - hp.value, roll.total);
-    const updates = {
-      actor: { 'system.attributes.hp.value': hp.value + dhp },
-      //   class: {"system.hitDiceUsed": cls.system.hitDiceUsed + 1}
-    };
-
-    if (TidyHooks.dnd5eRollHitDie(actor, roll, updates) === false) return roll;
-
-    // Re-evaluate dhp in the event that it was changed in the previous hook
-    const updateOptions = {
-      dhp:
-        (updates.actor?.['system.attributes.hp.value'] ?? hp.value) - hp.value,
-    };
-
-    // Perform updates
-    if (!FoundryAdapter.isEmpty(updates.actor)) {
-      await actor.update(updates.actor, updateOptions);
-    }
-    return roll;
-  },
   openActorTypeConfig(actor: Actor5e) {
     return new dnd5e.applications.actor.ActorTypeConfig(actor).render(true);
   },
@@ -832,7 +769,7 @@ export const FoundryAdapter = {
     );
   },
   playDiceSound() {
-    return AudioHelper.play({ src: CONFIG.sounds.dice });
+    return foundry.audio.AudioHelper.play({ src: CONFIG.sounds.dice });
   },
   calculateAverageFromFormula(formula: string) {
     let r = new Roll(formula);
@@ -967,6 +904,11 @@ export const FoundryAdapter = {
       true
     );
   },
+  renderWeaponsConfig(actor: any) {
+    return new dnd5e.applications.actor.WeaponsConfig({
+      document: actor,
+    }).render({ force: true });
+  },
   renderProficiencyConfig(actor: any, property: string, key: string) {
     return new dnd5e.applications.actor.ProficiencyConfig(actor, {
       property,
@@ -989,9 +931,12 @@ export const FoundryAdapter = {
     }).render(true);
   },
   renderSourceConfig(document: any, keyPath: string) {
-    return new dnd5e.applications.SourceConfig(document, {
-      keyPath,
-    }).render(true);
+    return new dnd5e.applications.SourceConfig(
+      { document: document },
+      {
+        keyPath,
+      }
+    ).render(true);
   },
   async onActorItemDelete(actor: Actor5e, item: Item5e) {
     // If item has advancement, handle it separately
@@ -1037,15 +982,17 @@ export const FoundryAdapter = {
   lookupAbility(abbr: string) {
     return game.dnd5e.config.abilities[abbr];
   },
-  actorTryUseItem(item: Item5e, config: any = {}, options: any = {}) {
+  actorTryUseItem(item: Item5e, event: Event) {
+    const config = { legacy: false, event };
+
     const suppressItemUse =
-      TidyHooks.tidy5eSheetsActorPreUseItem(item, config, options) === false;
+      TidyHooks.tidy5eSheetsActorPreUseItem(item, config) === false;
 
     if (suppressItemUse) {
       return;
     }
 
-    item.use(config, options);
+    item.use(config);
   },
   onActorItemButtonContextMenu(item: Item5e, options: { event: Event }) {
     // Allow another module to react to a context menu action on the item use button.
@@ -1204,11 +1151,16 @@ export const FoundryAdapter = {
     title: 'DND5E.AttunementAttuned',
   },
   getAttunementContext(item: Item5e): AttunementContext | undefined {
-    return !!CONFIG.DND5E.attunementTypes[item.system.attunement] &&
-      !item.system.attuned
+    return !!CONFIG.DND5E.attunementTypes[
+      item.system.attunement as keyof typeof CONFIG.DND5E.attunementTypes
+    ] && !item.system.attuned
       ? {
           ...FoundryAdapter.attunementContextApplicable,
-          title: CONFIG.DND5E.attunementTypes[item.system.attunement],
+          title:
+            CONFIG.DND5E.attunementTypes[
+              item.system
+                .attunement as keyof typeof CONFIG.DND5E.attunementTypes
+            ],
         }
       : !!item.system.attunement && item.system.attuned
       ? FoundryAdapter.attunementContextAttune
@@ -1247,23 +1199,6 @@ export const FoundryAdapter = {
   },
   getJqueryWrappedElement(el: HTMLElement) {
     return $(el);
-  },
-  onAmmoChange(item: Item5e, ammoId: string) {
-    const ammo = item.actor?.items.find((i: any) => i.id === ammoId);
-
-    item.update({
-      system: {
-        consume: {
-          amount: !ammo
-            ? null
-            : !!item.system.consume?.amount
-            ? item.system.consume.amount
-            : 1,
-          target: !ammo ? '' : ammo.id,
-          type: !ammo ? '' : ammo.system.type.value,
-        },
-      },
-    });
   },
   openSpellSlotsConfig(actor: Actor5e) {
     new dnd5e.applications.actor.ActorSpellSlotsConfig(actor).render(true);
@@ -1309,18 +1244,9 @@ export const FoundryAdapter = {
       debug('Text editor error trobuleshooting info', { node, sheet });
     }
   },
-  async openEnchantmentConfig(item: Item5e) {
-    return new dnd5e.applications.item.EnchantmentConfig(item).render(true);
-  },
   async renderFromUuid(uuid: string, force: boolean = true) {
     const doc = await fromUuid(uuid);
     return doc?.sheet?.render(force);
-  },
-  async removeEnchantment(enchantmentUuid: string, app: any) {
-    const enchantment = fromUuidSync(enchantmentUuid);
-    if (!enchantment) return;
-    await enchantment.delete();
-    await app.render();
   },
   /**
    * Stack identical consumables when a new one is dropped rather than creating a duplicate item.
@@ -1418,5 +1344,76 @@ export const FoundryAdapter = {
   },
   formatNumber(num: number) {
     return dnd5e.utils.formatNumber(num);
+  },
+  // TODO: Consolidate uses changed to one function
+  handleItemUsesChanged(
+    event: Event & {
+      currentTarget: EventTarget & HTMLInputElement;
+    },
+    item: any
+  ) {
+    const value = processInputChangeDelta(
+      event.currentTarget.value,
+      item,
+      'system.uses.value'
+    );
+
+    const uses = clamp(0, value, item.system.uses.max);
+    event.currentTarget.value = uses.toString();
+
+    return item.update({ 'system.uses.spent': item.system.uses.max - uses });
+  },
+  handleActivityUsesChanged(
+    event: Event & {
+      currentTarget: EventTarget & HTMLInputElement;
+    },
+    activity: Activity5e
+  ) {
+    const value = processInputChangeDelta(
+      event.currentTarget.value,
+      activity,
+      'uses.value'
+    );
+
+    const uses = clamp(0, value, activity.uses.max);
+    event.currentTarget.value = uses.toString();
+
+    return activity.update({ 'system.uses.spent': activity.uses.max - uses });
+  },
+  // TEMP: Find better home
+  groupSelectOptions(entries: [string, any][]) {
+    const groupMap: Record<string, typeof entries> = {};
+    for (let [key, value] of entries) {
+      let groupMapKey =
+        typeof value === 'object' && 'group' in value ? value.group ?? '' : '';
+      (groupMap[groupMapKey] ??= []).push([key, value]);
+    }
+    return Object.entries<any>(groupMap);
+  },
+  getFilteredClassOrOriginal(actor: Actor5e): Item5e | undefined | null {
+    return (
+      FoundryAdapter.getFilteredClassOrNull(actor) ??
+      actor.items.get(actor.system.details.originalClass) ??
+      actor.itemTypes.class[0]
+    );
+  },
+  getFilteredClassOrNull(actor: Actor5e): Item5e | undefined | null {
+    return actor.itemTypes.class.find(
+      (c: any) => c.system.identifier === TidyFlags.classFilter.get(actor)
+    );
+  },
+  getSpellcastingInfo(actor: Actor5e, spells: Item5e[]): SpellcastingInfo {
+    const currentFilteredClass =
+      FoundryAdapter.getFilteredClassOrOriginal(actor);
+
+    return {
+      currentFilteredClass: currentFilteredClass,
+      prepared: {
+        value:
+          currentFilteredClass?.system?.spellcasting?.preparation?.value ?? 0,
+        max: currentFilteredClass?.system?.spellcasting?.preparation?.max ?? 0,
+      },
+      calculations: calculateSpellAttackAndDc(actor, currentFilteredClass),
+    };
   },
 };

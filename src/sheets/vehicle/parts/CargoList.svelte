@@ -22,9 +22,10 @@
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import type { Item5e } from 'src/types/item.types';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
-  import type { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
-  import InlineContainerToggle from 'src/sheets/container/InlineContainerToggle.svelte';
+  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import InlineToggleControl from 'src/sheets/shared/InlineToggleControl.svelte';
   import InlineContainerView from 'src/sheets/container/InlineContainerView.svelte';
+  import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
 
   export let section: VehicleCargoSection;
 
@@ -32,8 +33,8 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  let inlineContainerToggleService = getContext<InlineContainerToggleService>(
-    CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
+  let inlineToggleService = getContext<InlineToggleService>(
+    CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
 
   let baseWidths: Record<string, string> = {
@@ -115,8 +116,8 @@
       >
         <ItemTableCell primary={true}>
           <ItemUseButton disabled={!$context.editable} {item} />
-          {#if 'containerContents' in ctx && !!ctx.containerContents}
-            <InlineContainerToggle {item} {inlineContainerToggleService} />
+          {#if ('containerContents' in ctx && !!ctx.containerContents) || item?.system.activities?.contents.length > 1}
+            <InlineToggleControl entityId={item.id} {inlineToggleService} />
           {/if}
           <ItemName
             on:toggle={() => toggleSummary($context.actor)}
@@ -172,11 +173,13 @@
           container={item}
           containerContents={ctx.containerContents}
           editable={$context.editable}
-          {inlineContainerToggleService}
+          {inlineToggleService}
           lockItemQuantity={$context.lockItemQuantity}
           sheetDocument={$context.actor}
           unlocked={$context.unlocked}
         />
+      {:else if item.system.activities?.contents.length > 1}
+        <InlineActivitiesList {item} {inlineToggleService} />
       {/if}
     {/each}
     {#if $context.unlocked && section.dataset}

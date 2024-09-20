@@ -24,6 +24,8 @@
   import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
   import ActorName from '../actor/ActorName.svelte';
   import SpecialSaves from '../actor/SpecialSaves.svelte';
+  import NumberInput from 'src/components/inputs/NumberInput.svelte';
+  import { isNil } from 'src/utils/data';
 
   let selectedTabId: string;
 
@@ -91,19 +93,28 @@
               })}</span
             >
           </div>
-          <div class="level">
+          <div
+            class="challenge-rating"
+            aria-label={localize('DND5E.CRLabel', {
+              cr: $context.system.details.cr,
+            })}
+            title={!$context.unlocked ? localize('DND5E.ChallengeRating') : ''}
+          >
             {localize('DND5E.AbbreviationCR')}
-            <ContentEditableFormField
-              element="span"
-              editable={!$context.lockSensitiveFields}
-              document={$context.actor}
-              field="system.details.cr"
-              placeholder="0"
-              dataMaxLength={4}
-              value={$context.labels.cr}
-              saveAs="number"
-              selectOnFocus={true}
-            />
+            {#if $context.unlocked}
+              <NumberInput
+                document={$context.actor}
+                value={$context.source.details.cr}
+                field="system.details.cr"
+                step="any"
+                cssClass="challenge-rating-input"
+                selectOnFocus={true}
+                title={localize('DND5E.ChallengeRating')}
+              />
+            {:else}
+              <!-- svelte-ignore missing-declaration -->
+              {dnd5e.utils.formatCR($context.system.details.cr)}
+            {/if}
           </div>
           <SheetMenu defaultSettingsTab={CONSTANTS.TAB_USER_SETTINGS_NPCS} />
         </div>
@@ -132,14 +143,16 @@
             <DelimitedTruncatedContent cssClass="flex-grow-1">
               <span class="flex-row extra-small-gap align-items-center">
                 <InlineCreatureType />
-                <span
-                  class="environment"
-                  title={localize('TIDY5E.EnvironmentTooltip', {
-                    environment: $context.system.details.environment,
-                  })}
-                >
-                  <i class="fas fa-tree" />
-                </span>
+                {#if !isNil($context.system.details.environment, '')}
+                  <span
+                    class="environment"
+                    title={localize('TIDY5E.EnvironmentTooltip', {
+                      environment: $context.system.details.environment,
+                    })}
+                  >
+                    <i class="fas fa-tree" />
+                  </span>
+                {/if}
               </span>
 
               <span
@@ -150,7 +163,7 @@
 
               <InlineSource
                 document={$context.actor}
-                keyPath="system.details.source"
+                keyPath="system.source"
                 editable={$context.unlocked}
               />
             </DelimitedTruncatedContent>
@@ -272,7 +285,7 @@
       white-space: nowrap;
       align-self: center;
     }
-    .level {
+    .challenge-rating {
       padding: 0.25rem 0.375rem;
       border-radius: 0.1875rem;
       background: var(--t5e-faint-color);
@@ -281,9 +294,12 @@
       line-height: 1;
       height: 1.5rem;
       white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
 
-      :global(span) {
-        display: inline-block;
+      :global(.challenge-rating-input) {
+        max-width: 1.75rem;
       }
     }
     :global(.level [contenteditable]) {
@@ -297,10 +313,14 @@
     justify-content: space-between;
     align-items: center;
     gap: 0.25rem;
-    font-size: 0.75rem;
     line-height: 1;
     padding: 0.1875rem 0 0.125rem 0;
     line-height: 1rem;
+
+    &,
+    :global(button) {
+      font-size: 0.75rem;
+    }
   }
 
   .actor-name-row {

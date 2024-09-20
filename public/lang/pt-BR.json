@@ -543,10 +543,6 @@
         "name": "Incluir Consumíveis como Ações",
         "hint": "Por padrão, inclui consumíveis que têm um custo de ativação (Ação, Ação Bônus, etc.) na lista de Ações."
     },
-    "TIDY5E.Settings.ActionListScaleCantripDamage": {
-        "name": "Mostrar Dano de Truque Escalado (experimental)",
-        "hint": "Escala o dano de truques para corresponder ao nível atual do PJ ou ao nível de desafio do PnJ."
-    },
     "TIDY5E.Settings.ColorPickerEnabled": {
         "name": "Usar Cores Personalizadas de Tema",
         "hint": "Mostra cores personalizadas do tema."

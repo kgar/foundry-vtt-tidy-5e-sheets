@@ -38,7 +38,9 @@
       maxlength={1}
       title={localize('DND5E.DeathSaveSuccesses')}
       disabled={!$context.editable}
-      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DEATH_SAVE_SUCCESSES}
+      attributes={{
+        ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.DEATH_SAVE_SUCCESSES,
+      }}
     />
     <button
       type="button"
@@ -61,6 +63,9 @@
       disabled={!$context.editable}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DEATH_SAVE_FAILURES}
       title={localize('DND5E.DeathSaveFailures')}
+      attributes={{
+        ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.DEATH_SAVE_FAILURES,
+      }}
     />
     <i class="fas fa-times" />
   </div>

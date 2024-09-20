@@ -32,7 +32,6 @@
   import { settingStore } from 'src/settings/settings';
   import EncumbranceBar from '../../actor/EncumbranceBar.svelte';
   import TabFooter from '../../actor/TabFooter.svelte';
-  import AmmoSelector from '../../actor/AmmoSelector.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { declareLocation } from 'src/types/location-awareness.types';
@@ -51,20 +50,22 @@
   import ItemControl from 'src/components/item-list/controls/ItemControl.svelte';
   import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
   import { TidyFlags } from 'src/foundry/TidyFlags';
-  import InlineContainerToggle from 'src/sheets/container/InlineContainerToggle.svelte';
-  import type { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
+  import InlineToggleControl from 'src/sheets/shared/InlineToggleControl.svelte';
+  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import InlineContainerView from 'src/sheets/container/InlineContainerView.svelte';
+  import { ItemUtils } from 'src/utils/ItemUtils';
+  import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
 
   let context = getContext<Readable<NpcSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
-  let inlineContainerToggleService = getContext<InlineContainerToggleService>(
-    CONSTANTS.SVELTE_CONTEXT.INLINE_CONTAINER_TOGGLE_SERVICE,
+  let inlineToggleService = getContext<InlineToggleService>(
+    CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
 
   $: noSpellLevels = !$context.spellbook.length;
@@ -247,10 +248,10 @@
                 >
                   <ItemTableCell primary={true}>
                     <ItemUseButton disabled={!$context.editable} {item} />
-                    {#if 'containerContents' in ctx && !!ctx.containerContents}
-                      <InlineContainerToggle
-                        {item}
-                        {inlineContainerToggleService}
+                    {#if ('containerContents' in ctx && !!ctx.containerContents) || item?.system.activities?.contents.length > 1}
+                      <InlineToggleControl
+                        entityId={item.id}
+                        {inlineToggleService}
                       />
                     {/if}
                     <ItemName
@@ -268,11 +269,6 @@
                         data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
                         >{item.name}</span
                       >
-                      {#if item.system?.properties?.has('amm')}
-                        <span class="ammo">
-                          <AmmoSelector {item} />
-                        </span>
-                      {/if}
                     </ItemName>
                     {#if item.type === 'class'}
                       <LevelUpDropdown
@@ -287,7 +283,7 @@
                     <ItemTableCell baseWidth="3.125rem">
                       {#if item.isOnCooldown}
                         <RechargeControl {item} />
-                      {:else if item.system.recharge?.value}
+                      {:else if item.hasRecharge}
                         <i
                           class="fas fa-bolt"
                           title={localize('DND5E.Charged')}
@@ -299,7 +295,7 @@
                       {/if}
                     </ItemTableCell>
                     <ItemTableCell baseWidth="7.5rem">
-                      {#if item.system.activation?.type}
+                      {#if ItemUtils.hasActivationType(item)}
                         {item.labels?.activation ?? ''}
                       {/if}
                     </ItemTableCell>
@@ -330,11 +326,13 @@
                     container={item}
                     containerContents={ctx.containerContents}
                     editable={$context.editable}
-                    {inlineContainerToggleService}
+                    {inlineToggleService}
                     lockItemQuantity={$context.lockItemQuantity}
                     sheetDocument={$context.actor}
                     unlocked={$context.unlocked}
                   />
+                {:else if item.system.activities?.contents.length > 1}
+                  <InlineActivitiesList {item} {inlineToggleService} />
                 {/if}
               {/each}
               {#if $context.unlocked && section.dataset}

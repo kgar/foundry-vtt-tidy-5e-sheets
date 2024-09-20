@@ -63,14 +63,7 @@
     }
 
     .expand-indicator {
-      color: var(--t5e-tertiary-color);
-      transition: transform 0.2s;
       margin-right: 0.325rem;
-      align-self: basline;
-
-      &.expanded {
-        transform: rotate(90deg);
-      }
     }
   }
 </style>

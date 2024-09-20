@@ -20,7 +20,10 @@ export class SpellSchool {
       return SpellSchool._iconsMap[schoolKey] ?? SpellSchool.fallbackIcon;
     }
 
-    const dnd5eConfigIcon = CONFIG.DND5E.spellSchools[schoolKey]?.icon;
+    const dnd5eConfigIcon =
+      CONFIG.DND5E.spellSchools[
+        schoolKey as keyof typeof CONFIG.DND5E.spellSchools
+      ]?.icon;
 
     if (dnd5eConfigIcon) {
       return {

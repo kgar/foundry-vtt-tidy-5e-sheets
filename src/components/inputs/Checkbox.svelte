@@ -21,7 +21,7 @@
     },
   ) => any;
 
-  export let value: number | null = null;
+  export let value: number | string | null = null;
   export let checked: boolean = false;
   export let field: string;
   export let document: any;
@@ -77,7 +77,7 @@
     $context.itemOverrides instanceof Set && $context.itemOverrides.has(field);
 
   $: overrideTooltip = isEnchanted
-    ? localize('DND5E.Enchantment.Warning.Override')
+    ? localize('DND5E.ENCHANTMENT.Warning.Override')
     : localize('DND5E.ActiveEffectOverrideWarning');
 
   const localize = FoundryAdapter.localize;
@@ -101,6 +101,7 @@
       {...datasetAttributes}
       class={checkboxCssClass}
       data-tidy-field={field}
+      {...$$restProps.attributes}
     />
     <slot />
   </label>

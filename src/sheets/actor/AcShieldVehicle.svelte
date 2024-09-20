@@ -28,7 +28,7 @@
       value={$context.actor.system.attributes.ac.flat}
       step="1"
       min="0"
-      placeholder="&mdash;"
+      placeholder="—"
       title={localize('DND5E.ArmorClass')}
       cssClass="armor-class-flat"
       selectOnFocus={true}
@@ -38,7 +38,7 @@
       document={$context.actor}
       field="system.attributes.ac.motionless"
       value={$context.system.attributes.ac.motionless}
-      placeholder="&mdash;"
+      placeholder="—"
       title={localize('DND5E.ArmorClassMotionless')}
       class="armor-class-motionless"
       selectOnFocus={true}

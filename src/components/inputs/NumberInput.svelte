@@ -78,7 +78,7 @@
     $context.itemOverrides instanceof Set && $context.itemOverrides.has(field);
 
   $: overrideTooltip = isEnchanted
-    ? localize('DND5E.Enchantment.Warning.Override')
+    ? localize('DND5E.ENCHANTMENT.Warning.Override')
     : localize('DND5E.ActiveEffectOverrideWarning');
 
   const localize = FoundryAdapter.localize;

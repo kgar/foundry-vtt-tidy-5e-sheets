@@ -8,59 +8,78 @@ export const defaultItemFilters = {
   activationCostAction: {
     name: 'activationCostAction',
     predicate: (item) =>
-      item.system.activation?.type === CONSTANTS.ACTIVATION_COST_ACTION,
+      !!item.system.activities?.some(
+        (a: any) => a.activation.type === CONSTANTS.ACTIVATION_COST_ACTION
+      ),
     text: 'DND5E.Action',
   },
   activationCostBonus: {
     name: 'activationCostBonus',
     predicate: (item) =>
-      item.system.activation?.type === CONSTANTS.ACTIVATION_COST_BONUS,
+      !!item.system.activities?.some(
+        (a: any) => a.activation.type === CONSTANTS.ACTIVATION_COST_BONUS
+      ),
     text: 'DND5E.BonusAction',
   },
   activationCostReaction: {
     name: 'activationCostReaction',
     predicate: (item) =>
-      item.system.activation?.type === CONSTANTS.ACTIVATION_COST_REACTION,
+      !!item.system.activities?.some(
+        (a: any) => a.activation.type === CONSTANTS.ACTIVATION_COST_REACTION
+      ),
     text: 'DND5E.Reaction',
   },
   activationCostLegendary: {
     name: 'activationCostLegendary',
     predicate: (item) =>
-      item.system.activation?.type === CONSTANTS.ACTIVATION_COST_LEGENDARY,
+      !!item.system.activities?.some(
+        (a: any) => a.activation.type === CONSTANTS.ACTIVATION_COST_LEGENDARY
+      ),
     text: 'DND5E.LegendaryActionLabel',
   },
   activationCostMythic: {
     name: 'activationCostMythic',
     predicate: (item) =>
-      item.system.activation?.type === CONSTANTS.ACTIVATION_COST_MYTHIC,
+      !!item.system.activities?.some(
+        (a: any) => a.activation.type === CONSTANTS.ACTIVATION_COST_MYTHIC
+      ),
     text: 'DND5E.MythicActionLabel',
   },
   activationCostLair: {
     name: 'activationCostLair',
     predicate: (item) =>
-      item.system.activation?.type === CONSTANTS.ACTIVATION_COST_LAIR,
+      !!item.system.activities?.some(
+        (a: any) => a.activation.type === CONSTANTS.ACTIVATION_COST_LAIR
+      ),
     text: 'DND5E.LairActionLabel',
   },
   activationCostCrew: {
     name: 'activationCostCrew',
     predicate: (item) =>
-      item.system.activation?.type === CONSTANTS.ACTIVATION_COST_CREW,
+      !!item.system.activities?.some(
+        (a: any) => a.activation.type === CONSTANTS.ACTIVATION_COST_CREW
+      ),
     text: 'DND5E.VehicleCrewAction',
   },
   activationCostSpecial: {
     name: 'activationCostSpecial',
     predicate: (item) =>
-      item.system.activation?.type === CONSTANTS.ACTIVATION_COST_SPECIAL,
+      !!item.system.activities?.some(
+        (a: any) => a.activation.type === CONSTANTS.ACTIVATION_COST_SPECIAL
+      ),
     text: 'DND5E.Special',
   },
   activationCostOther: {
     name: 'activationCostOther',
     predicate: (item) =>
-      ![
-        CONSTANTS.ACTIVATION_COST_ACTION,
-        CONSTANTS.ACTIVATION_COST_BONUS,
-        CONSTANTS.ACTIVATION_COST_REACTION,
-      ].includes(item.system.activation?.type),
+      !!item.system.activities?.every(
+        (a: any) =>
+          ![
+            CONSTANTS.ACTIVATION_COST_ACTION,
+            CONSTANTS.ACTIVATION_COST_BONUS,
+            CONSTANTS.ACTIVATION_COST_REACTION,
+          ].includes(a.activation.type)
+      ),
     text: 'TIDY5E.ItemFilters.Filter.Other',
   },
   ritual: {
@@ -193,7 +212,9 @@ export function getAttunementFilters(): ItemFilter[] {
       name: 'attuned',
       predicate: (item) =>
         !FoundryAdapter.concealDetails(item) &&
-        !!CONFIG.DND5E.attunementTypes[item.system.attunement] &&
+        !!CONFIG.DND5E.attunementTypes[
+          item.system.attunement as keyof typeof CONFIG.DND5E.attunementTypes
+        ] &&
         item.system.attuned,
       text: 'DND5E.AttunementAttuned',
     },
@@ -219,7 +240,7 @@ export function getStandardSpellSchoolFilterCategories(): FilterCategoriesToFilt
       defaultItemFilters.concentration,
       defaultItemFilters.ritual,
     ],
-    'DND5E.SpellPreparationMode': [
+    'DND5E.SpellPreparation.Mode': [
       defaultItemFilters.prepared,
       defaultItemFilters.canCastSpell,
     ],

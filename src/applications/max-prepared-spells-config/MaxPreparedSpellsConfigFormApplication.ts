@@ -2,9 +2,9 @@ import type { SvelteComponent } from 'svelte';
 import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
 import MaxPreparedSpellsConfig from './MaxPreparedSpellsConfig.svelte';
 import type { Actor5e, MaxPreparedSpellFormula } from 'src/types/types';
+import type { Item5e } from 'src/types/item.types';
 import { get, writable, type Writable } from 'svelte/store';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { CONSTANTS } from 'src/constants';
 import { getMaxPreparedSpellsSampleFormulas } from 'src/utils/formula';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 
@@ -18,9 +18,10 @@ export class MaxPreparedSpellsConfigFormApplication extends SvelteFormApplicatio
   context: Writable<MaxPreparedSpellsConfigContext>;
   actor: Actor5e;
 
-  constructor(actor: Actor5e, ...args: any[]) {
+  constructor(actor: Actor5e, classToUpdate: Item5e, ...args: any[]) {
     super(...args);
     this.actor = actor;
+    this.classToUpdate = classToUpdate;
 
     this.context = writable({
       maxPreparedSpells: '',
@@ -66,8 +67,8 @@ export class MaxPreparedSpellsConfigFormApplication extends SvelteFormApplicatio
 
   async _updateObject(): Promise<void> {
     const data = get(this.context);
-    await this.actor.update({
-      [TidyFlags.maxPreparedSpells.prop]: data?.maxPreparedSpells ?? '',
+    await this.classToUpdate.update({
+      'system.spellcasting.preparation.formula': data?.maxPreparedSpells ?? '',
     });
   }
 }

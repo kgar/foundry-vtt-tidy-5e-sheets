@@ -533,10 +533,6 @@
         "name": "소모성 항목을 행동으로 포함",
         "hint": "기본적으로 행동 목록에 활성화 비용(행동, 추가 행동 등)이 있는 소모성 항목이 포함됩니다."
     },
-    "TIDY5E.Settings.ActionListScaleCantripDamage": {
-        "name": "고레벨 소마법 피해량 표시(실험적)",
-        "hint": "소마법 피해량을 PC의 현재 레벨 또는 NPC의 도전 지수에 맞게 조정합니다."
-    },
     "TIDY5E.Settings.ColorPickerEnabled": {
         "name": "사용자 설정 테마 색지정 사용",
         "hint": "사용자 설정 테마 색지정 표시"

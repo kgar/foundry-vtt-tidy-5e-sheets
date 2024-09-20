@@ -3,10 +3,17 @@ import type {
   Item5e,
   ItemDescription,
   ItemSheetContext,
+  PropertyContext,
+  UsesRecoveryData,
 } from 'src/types/item.types';
 import { get, writable } from 'svelte/store';
 import TypeNotFoundSheet from './item/TypeNotFoundSheet.svelte';
-import type { SheetStats, SheetTabCacheable, Tab } from 'src/types/types';
+import type {
+  GroupableSelectOption,
+  SheetStats,
+  SheetTabCacheable,
+  Tab,
+} from 'src/types/types';
 import {
   applySheetAttributesToWindow,
   applyThemeDataAttributeToWindow,
@@ -26,6 +33,7 @@ import { AsyncMutex } from 'src/utils/mutex';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
 import { CONSTANTS } from 'src/constants';
+import type { Activity5e } from 'src/foundry/dnd5e.types';
 
 export class Tidy5eKgarItemSheet
   extends dnd5e.applications.item.ItemSheet5e
@@ -107,6 +115,14 @@ export class Tidy5eKgarItemSheet
         '.advancement-item',
         contextOptions
       );
+
+    FoundryAdapter.createContextMenu(html, '.activity[data-activity-id]', [], {
+      onOpen: (target: HTMLElement) =>
+        dnd5e.documents.activity.UtilityActivity.onContextMenu(
+          this.item,
+          target
+        ),
+    });
   }
 
   async getData(options = {}) {
@@ -149,6 +165,7 @@ export class Tidy5eKgarItemSheet
       appId: this.appId,
       activateEditors: (node, options) =>
         FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
+      affectsPlaceholder: '',
       customContent: await ItemSheetRuntime.getContent(defaultDocumentContext),
       customEquipmentTypeGroups:
         ItemSheetRuntime.getCustomEquipmentTypeGroups(),
@@ -159,18 +176,166 @@ export class Tidy5eKgarItemSheet
       ),
       identifiedName: FoundryAdapter.getIdentifiedName(this.item),
       itemDescriptions,
+      labels: this.item.labels,
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       originalContext: defaultDocumentContext,
+      source: this.item.system.toObject(),
       tabs: tabs,
       toggleAdvancementLock: this.toggleAdvancementLock.bind(this),
       viewableWarnings:
         defaultDocumentContext.warnings?.filter(
           (w: any) => !isNil(w.message?.trim(), '')
         ) ?? [],
+      activationTypes: [],
+      durationUnits: [],
+      equipmentTypes: [],
+      rangeTypes: [],
+      recoveryPeriods: [],
+      recoveryTypes: [],
+      usesRecovery: [],
+      scalarTarget: false,
     };
 
-    debug(`${this.item?.type ?? 'Unknown Item Type'} context data`, context);
+    const target = this.item.type === 'spell' ? this.item.system.target : null;
 
+    context.dimensions = target?.template?.dimensions;
+
+    context.scalarTarget = !['', 'self', 'any'].includes(target?.affects?.type);
+    context.affectsPlaceholder = game.i18n.localize(
+      `DND5E.Target${target?.template?.type ? 'Every' : 'Any'}`
+    );
+
+    context.durationUnits = [
+      ...Object.entries(CONFIG.DND5E.specialTimePeriods).map(
+        ([value, label]) => ({ value, label })
+      ),
+      ...Object.entries(CONFIG.DND5E.scalarTimePeriods).map(
+        ([value, label]) => {
+          return { value, label, group: 'DND5E.DurationTime' };
+        }
+      ),
+      ...Object.entries(CONFIG.DND5E.permanentTimePeriods).map(
+        ([value, label]) => {
+          return { value, label, group: 'DND5E.DurationPermanent' };
+        }
+      ),
+    ];
+
+    context.rangeTypes = [
+      ...Object.entries(CONFIG.DND5E.rangeTypes).map(([value, label]) => ({
+        value,
+        label,
+      })),
+      ...Object.entries(CONFIG.DND5E.movementUnits).map(([value, label]) => {
+        return { value, label, group: 'DND5E.RangeDistance' };
+      }),
+    ];
+
+    context.activationTypes = [
+      ...Object.entries(CONFIG.DND5E.activityActivationTypes).map(
+        // @ts-ignore
+        ([value, { label, group }]) => {
+          return { value, label, group: group ?? '' };
+        }
+      ),
+      { value: '', label: 'DND5E.NoneActionLabel' },
+    ];
+
+    // Properties
+    context.properties = {
+      active: [],
+      object: Object.fromEntries(
+        (context.system.properties ?? []).map((p: string) => [p, true])
+      ),
+      options: (context.system.validProperties ?? [])
+        .reduce((arr: ItemSheetContext['properties']['options'], k: any) => {
+          // @ts-ignore
+          const { label } = CONFIG.DND5E.itemProperties[k];
+          arr.push({
+            label,
+            value: k,
+            selected: this.item._source.system.properties?.includes(k),
+          });
+          return arr;
+        }, [])
+        .sort(
+          (
+            a: PropertyContext['options'][0],
+            b: PropertyContext['options'][0]
+          ) => {
+            return a.label.localeCompare(b.label);
+          }
+        ),
+    };
+
+    context.equipmentTypes = [
+      ...Object.entries(CONFIG.DND5E.miscEquipmentTypes).map(
+        ([value, label]) => ({ value, label })
+      ),
+      ...Object.entries(CONFIG.DND5E.armorTypes).map(([value, label]) => ({
+        value,
+        label,
+        group: 'DND5E.Armor',
+      })),
+      ...ItemSheetRuntime.getCustomEquipmentTypeGroups().reduce<
+        GroupableSelectOption[]
+      >((prev, curr) => {
+        for (let [key, typeLabel] of Object.entries(curr.types)) {
+          prev.push({
+            value: key,
+            label: typeLabel,
+            group: curr.label,
+          });
+        }
+        return prev;
+      }, []),
+    ];
+
+    context.recoveryPeriods = [
+      ...Object.entries(CONFIG.DND5E.limitedUsePeriods)
+        //@ts-ignore
+        .filter(([, { deprecated }]) => !deprecated)
+        .map(([value, { label }]) => ({
+          value,
+          label,
+          group: 'DND5E.DurationTime',
+        })),
+      { value: 'recharge', label: 'DND5E.USES.Recovery.Recharge.Label' },
+    ];
+
+    context.recoveryTypes = [
+      { value: 'recoverAll', label: 'DND5E.USES.Recovery.Type.RecoverAll' },
+      { value: 'loseAll', label: 'DND5E.USES.Recovery.Type.LoseAll' },
+      { value: 'formula', label: 'DND5E.USES.Recovery.Type.Formula' },
+    ];
+
+    context.usesRecovery = (context.system.uses?.recovery ?? []).map(
+      (data: UsesRecoveryData) => ({
+        data,
+        formulaOptions:
+          data.period === 'recharge' ? data.recharge?.options : null,
+      })
+    );
+
+    if (context.system.activities) {
+      context.activities = (context.system.activities ?? [])
+        .map(({ _id: id, name, img, sort }: any) => ({
+          id,
+          name,
+          sort,
+          img: { src: img, svg: img?.endsWith('.svg') },
+        }))
+        .sort((a: any, b: any) => a.sort - b.sort);
+    }
+
+    // TODO: Add some basic type for this
+    context.fields = context.system.schema.fields;
+
+    // getSheetData sometimes depends on the presence of
+    // - .properties
+    await this.item.system.getSheetData?.(context);
+
+    debug(`${this.item?.type ?? 'Unknown Item Type'} context data`, context);
     // TODO: Add hook for preparing Tidy-specific context data
 
     return context;
@@ -301,6 +466,51 @@ export class Tidy5eKgarItemSheet
     }
   }
 
+  /**
+   * Handle dropping an Activity onto the sheet.
+   * @param {DragEvent} event       The drag event.
+   * @param {object} transfer       The dropped data.
+   * @param {object} transfer.data  The Activity data.
+   * @protected
+   */
+  _onDropActivity(
+    event: DragEvent & { target: HTMLElement },
+    { data }: { data: any }
+  ) {
+    const { _id: id, type } = data;
+    const source = this.item.system.activities?.get(id);
+
+    // Reordering
+    if (source) {
+      const targetId = event.target.closest<HTMLElement>(
+        '.activity[data-activity-id]'
+      )?.dataset.activityId;
+      const target = this.item.system.activities?.get(targetId);
+      if (!target || target === source) return;
+      const siblings = this.item.system.activities?.filter(
+        (a: Activity5e) => a._id !== id
+      );
+      const sortUpdates = SortingHelpers.performIntegerSort(source, {
+        target,
+        siblings,
+      });
+      const updateData = Object.fromEntries(
+        sortUpdates.map(
+          ({ target, update }: { target: Activity5e; update: Activity5e }) => {
+            return [target._id, { sort: update.sort }];
+          }
+        )
+      );
+      this.item.update({ 'system.activities': updateData });
+    }
+
+    // Copying
+    else {
+      delete data._id;
+      this.item.createActivity(type, data, { renderSheet: false });
+    }
+  }
+
   async _onDropSingleItem(...args: any[]) {
     return super._onDropSingleItem(...args);
   }
@@ -330,6 +540,47 @@ export class Tidy5eKgarItemSheet
       'width',
       width
     );
+  }
+
+  /* -------------------------------------------- */
+  /* Actions
+  /* -------------------------------------------- */
+
+  addActivity() {
+    return dnd5e.documents.activity.UtilityActivity.createDialog(
+      {},
+      {
+        parent: this.item,
+        types: Object.keys(CONFIG.DND5E.activityTypes),
+      }
+    );
+  }
+
+  /**
+   * Create a new recovery profile.
+   */
+  addRecovery(): Promise<any> {
+    return this.submit({
+      updateData: {
+        'system.uses.recovery': [
+          ...this.item.system.toObject().uses.recovery,
+          {},
+        ],
+      },
+    });
+  }
+
+  deleteRecovery(index: number) {
+    const recovery = this.item.system.toObject().uses.recovery;
+    recovery.splice(index, 1);
+    return this.submit({ updateData: { 'system.uses.recovery': recovery } });
+  }
+
+  // TODO: Make prop of type `keyof WhateverWeCallTheREcoveryType`
+  updateRecovery(index: number, prop: string, value: keyof UsesRecoveryData) {
+    const recovery = this.item.system.toObject().uses.recovery;
+    recovery[index][prop] = value;
+    return this.submit({ updateData: { 'system.uses.recovery': recovery } });
   }
 
   /* -------------------------------------------- */
