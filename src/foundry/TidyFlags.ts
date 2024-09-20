@@ -331,33 +331,6 @@ export class TidyFlags {
   };
 
   /**
-   * A formula that determines the maximum number of
-   * prepared spells an actor can have.
-   */
-  static maxPreparedSpells = {
-    key: 'maxPreparedSpells' as const,
-    prop: TidyFlags.getFlagPropertyPath('maxPreparedSpells'),
-    /** Gets the actor's maximum number of prepared spells. */
-    get(actor: Actor5e): string | undefined {
-      // Legacy values of this flag can be of type `number`, so it is put to string, just in case.
-      return (
-        TidyFlags.tryGetFlag<string>(
-          actor,
-          TidyFlags.maxPreparedSpells.key
-        )?.toString() ?? undefined
-      );
-    },
-    /** Sets the actor's maximum number of prepared spells. */
-    set(actor: Actor5e, value: string): Promise<void> {
-      return TidyFlags.setFlag(actor, TidyFlags.maxPreparedSpells.key, value);
-    },
-    /** Clears the actor's maximum number of prepared spells. */
-    unset(actor: Actor5e) {
-      return TidyFlags.unsetFlag(actor, TidyFlags.maxPreparedSpells.key);
-    },
-  };
-
-  /**
    * Denotes whether a vehicle is moving.
    */
   static motion = {
