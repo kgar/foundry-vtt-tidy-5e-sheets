@@ -308,20 +308,19 @@ export const FoundryAdapter = {
       'system.levels': classItem.system.levels + delta,
     });
   },
-  getSpellAbbreviationMap() {
-    return Array.from(CONFIG.DND5E.validProperties.spell).reduce(
-      (prev, curr) => {
-        const config =
-          CONFIG.DND5E.itemProperties[
-            curr as keyof typeof CONFIG.DND5E.itemProperties
-          ];
-        if ('abbreviation' in config) {
-          prev.set(config.abbreviation, config.label);
-        }
-        return prev;
-      },
-      new Map()
-    );
+  getSpellComponentLabels() {
+    return Array.from(CONFIG.DND5E.validProperties.spell).reduce<
+      Record<string, string>
+    >((prev, curr) => {
+      const config =
+        CONFIG.DND5E.itemProperties[
+          curr as keyof typeof CONFIG.DND5E.itemProperties
+        ];
+      if ('abbreviation' in config) {
+        prev[config.abbreviation] = config.label;
+      }
+      return prev;
+    }, {});
   },
   getProperty<T = unknown>(obj: any, path: string): T | undefined {
     return foundry.utils.getProperty(obj, path);

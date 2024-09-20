@@ -112,7 +112,10 @@
             </ItemTableCell>
           {/if}
           <ItemTableCell baseWidth="4.375rem" cssClass="no-gap">
-            <SpellComponents {spell} />
+            <SpellComponents
+              {spell}
+              spellComponentLabels={$context.spellComponentLabels}
+            />
           </ItemTableCell>
           <ItemTableCell
             baseWidth="7.5rem"

@@ -275,6 +275,7 @@ export type CharacterSheetContext = {
   notes4EnrichedHtml: string;
   notesEnrichedHtml: string;
   showContainerPanel: boolean;
+  spellComponentLabels: Record<string, string>;
   spellbook: SpellbookSection[];
   spellcastingInfo: SpellcastingInfo;
   spellSlotTrackerMode:
@@ -327,6 +328,7 @@ export type NpcSheetContext = {
   showContainerPanel: boolean;
   showLegendaryToolbar: boolean;
   showSpellbookTab: boolean;
+  spellComponentLabels: Record<string, string>;
   spellbook: SpellbookSection[];
   spellcastingInfo: SpellcastingInfo;
   spellSlotTrackerMode:

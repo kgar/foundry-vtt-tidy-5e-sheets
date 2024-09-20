@@ -20,7 +20,6 @@
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { TidyHooks } from 'src/foundry/TidyHooks';
-  import InlineActivitiesList from '../InlineActivitiesList.svelte';
 
   export let item: Item5e | null = null;
   export let contextMenu: { type: string; uuid: string } | null = null;

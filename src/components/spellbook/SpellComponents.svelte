@@ -1,17 +1,14 @@
 <script lang="ts">
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-
   export let spell: any;
-
-  // TODO: Do this once per render, and require it from the component.
-  const spellAbbreviationMap = FoundryAdapter.getSpellAbbreviationMap();
+  export let spellComponentLabels: Record<string, string>;
 </script>
 
 {#each spell.labels.components.all as component}
   <span
     class="spell-component"
     class:spell-tag={component.tag}
-    title={spellAbbreviationMap.get(component.abbr)}>{component.abbr}</span
+    title={spellComponentLabels[component.abbr] ?? component.abbr}
+    >{component.abbr}</span
   >
 {/each}
 

@@ -209,7 +209,7 @@
             <InlineFavoriteIcon />
           {/if}
           <ItemTableCell baseWidth={spellComponentsBaseWidth} cssClass="no-gap">
-            <SpellComponents {spell} />
+            <SpellComponents {spell} spellComponentLabels={$context.spellComponentLabels} />
           </ItemTableCell>
           {#if includeSchool}
             {@const icon = SpellSchool.getIcon(spell.system.school)}

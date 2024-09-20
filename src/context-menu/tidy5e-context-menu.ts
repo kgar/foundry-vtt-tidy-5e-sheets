@@ -31,7 +31,7 @@ export function initTidy5eContextMenu(
 function onItemContext(this: any, element: HTMLElement) {
   const contextMenuType = element.getAttribute('data-context-menu');
 
-  const app: any = this as any;
+  const app = this;
 
   // Active Effects
   if (contextMenuType === CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS) {
