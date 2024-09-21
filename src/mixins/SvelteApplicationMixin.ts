@@ -132,7 +132,6 @@ export function SvelteApplicationMixin<
       context: TContext,
       options: ApplicationRenderOptions
     ): Promise<RenderResult<TContext>> {
-      debug('Group Sheet context data', context);
       this._store.set(context);
 
       // Allow svelte to process its synchronous microtask changes before entertaining custom content.
@@ -222,9 +221,9 @@ export function SvelteApplicationMixin<
       try {
         // Support Tidy's common window attributes
         applySheetAttributesToWindow(
-          this.actor.documentName,
-          this.actor.uuid,
-          this.actor.type,
+          this.document.documentName,
+          this.document.uuid,
+          this.document.type,
           SettingsProvider.settings.colorScheme.get(),
           element
         );

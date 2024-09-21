@@ -54,7 +54,7 @@ export class ItemUtils {
 
   static sortItems(items: Item5e[], sortMode: SortMode) {
     if (sortMode === 'a') {
-      items.sort((a, b) => a.name.localeCompare(b.name));
+      items.sort((a, b) => a.name.localeCompare(b.name, game.i18n.lang));
     } else if (sortMode === 'm') {
       items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     }

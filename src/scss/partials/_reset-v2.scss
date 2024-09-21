@@ -1,6 +1,15 @@
 &.application {
   overflow: visible;
-  --input-height: 1.625rem;
+
+  label.checkbox > input[type='checkbox'],
+  input[type='checkbox'] {
+    --input-height: 1.625rem;
+    --checkbox-font-weight: unset;
+    --checkbox-background-color: var(--t5e-separator-color);
+    --checkbox-checked-color: var(--t5e-secondary-color);
+    --checkbox-checkmark-color: var(--t5e-white);
+    --checkbox-size: 1.25rem;
+  }
 
   a.button.active,
   button.active {

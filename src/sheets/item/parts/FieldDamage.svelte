@@ -24,7 +24,7 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: appId = $context.document.sheet.appId;
+  $: appId = $context.document.id;
   $: idPrefix = `${appId}-${prefix.replaceAll('.', '-')}`;
 
   const localize = FoundryAdapter.localize;

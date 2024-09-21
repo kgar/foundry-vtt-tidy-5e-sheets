@@ -62,8 +62,8 @@ export class Tidy5eKgarItemSheet
         CONSTANTS.MODULE_ID,
         'sheet',
         'item',
-        CONSTANTS.SHEET_LAYOUT_CLASSIC,
         'app-v1',
+        CONSTANTS.SHEET_LAYOUT_CLASSIC,
       ],
     });
   }
@@ -84,7 +84,6 @@ export class Tidy5eKgarItemSheet
     const node = html.get(0);
 
     const context = new Map<any, any>([
-      [CONSTANTS.SVELTE_CONTEXT.APP_ID, this.appId],
       [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this.context],
       [CONSTANTS.SVELTE_CONTEXT.STATS, this.stats],
       [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
@@ -163,8 +162,6 @@ export class Tidy5eKgarItemSheet
     const context: ItemSheetContext = {
       ...defaultDocumentContext,
       appId: this.appId,
-      activateEditors: (node, options) =>
-        FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
       affectsPlaceholder: '',
       customContent: await ItemSheetRuntime.getContent(defaultDocumentContext),
       customEquipmentTypeGroups:
@@ -263,7 +260,7 @@ export class Tidy5eKgarItemSheet
             a: PropertyContext['options'][0],
             b: PropertyContext['options'][0]
           ) => {
-            return a.label.localeCompare(b.label);
+            return a.label.localeCompare(b.label, game.i18n.lang);
           }
         ),
     };

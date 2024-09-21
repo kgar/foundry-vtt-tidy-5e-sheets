@@ -34,10 +34,6 @@ export type ItemSheetContext = {
       svg: boolean;
     };
   }[];
-  activateEditors: (
-    node: HTMLElement,
-    options?: { bindSecrets?: boolean }
-  ) => void;
   activationTypes: GroupableSelectOption[];
   affectsPlaceholder: string;
   config: typeof CONFIG.DND5E;
@@ -55,7 +51,6 @@ export type ItemSheetContext = {
   identifiedName: string;
   itemDescriptions: ItemDescription[];
   lockItemQuantity: boolean;
-  originalContext: unknown;
   owner: boolean;
   properties: PropertyContext;
   rangeTypes: GroupableSelectOption[];
@@ -71,7 +66,6 @@ export type ItemSheetContext = {
   }[];
   itemOverrides: Set<string>;
   tabs: Tab[];
-  viewableWarnings: DocumentPreparationWarning[];
 } & Record<string, any>;
 
 /**

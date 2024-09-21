@@ -17,7 +17,8 @@
 <RerenderAfterFormSubmission
   andOnValueChange={$context.item.system.description.value}
 >
-  <article class="editor-container" use:$context.activateEditors>
+  <article class="editor-container">
+    <!-- use:$context.activateEditors -->
     <h2 class="details-headline">{localize('TIDY5E.ItemDetailsHeadline')}</h2>
     <SheetEditor
       content={$context.enriched.description}

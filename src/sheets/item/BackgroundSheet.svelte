@@ -14,7 +14,7 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: appId = $context.document.sheet.appId;
+  $: appId = $context.document.id;
 
   export let selectedTabId: string = 'description';
 

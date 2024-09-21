@@ -46,7 +46,6 @@ import { debug, warn } from 'src/utils/logging';
 import { processInputChangeDeltaFromValues } from 'src/utils/form';
 import { isNil } from 'src/utils/data';
 import { formatAsModifier } from 'src/utils/formatting';
-import TabSelectionFormApplication from 'src/applications/tab-selection/TabSelectionFormApplication';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin';
 
 type MemberStats = {
@@ -122,7 +121,6 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     const component = new GroupSheet({
       target: node,
       context: new Map<any, any>([
-        [CONSTANTS.SVELTE_CONTEXT.APP_ID, this.appId],
         [CONSTANTS.SVELTE_CONTEXT.CARD, this.#card],
         [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._store],
         [
@@ -695,10 +693,10 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       stats: stats,
       memberContext: memberContext,
       groupLanguages: Object.values(groupLanguages).sort((a, b) =>
-        a.label.localeCompare(b.label)
+        a.label.localeCompare(b.label, game.i18n.lang)
       ),
       groupSkills: Object.values(groupSkills).sort((a, b) =>
-        a.label.localeCompare(b.label)
+        a.label.localeCompare(b.label, game.i18n.lang)
       ),
     };
   }

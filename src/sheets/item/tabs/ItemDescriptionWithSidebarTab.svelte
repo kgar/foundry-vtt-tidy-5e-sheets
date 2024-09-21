@@ -23,7 +23,7 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: appId = $context.document.sheet.appId;
+  $: appId = $context.document.id;
 
   function onEditorActivation(node: HTMLElement) {
     if (editorIsActive) {
@@ -32,7 +32,7 @@
       return;
     }
 
-    $context.activateEditors(node, { bindSecrets: false });
+    // $context.activateEditors(node, { bindSecrets: false });
     editorIsActive = true;
   }
 
@@ -210,7 +210,8 @@
     <RerenderAfterFormSubmission
       andOnValueChange={$context.enriched.unidentified}
     >
-      <div class="flexrow" role="presentation" use:$context.activateEditors>
+      <div class="flexrow" role="presentation">
+        <!-- use:$context.activateEditors -->
         <SheetEditor
           content={$context.enriched.unidentified}
           editable={$context.editable}

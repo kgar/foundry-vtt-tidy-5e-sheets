@@ -16,7 +16,7 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: appId = $context.document.sheet.appId;
+  $: appId = $context.document.id;
 
   $: abilities = Object.entries<any>($context.config.abilities).map(
     ([key, value]) => ({

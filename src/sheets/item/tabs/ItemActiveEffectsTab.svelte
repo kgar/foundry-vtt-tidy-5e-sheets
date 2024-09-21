@@ -48,7 +48,9 @@
           <h3 class="item-name effect-name flexrow">
             {localize(section.label)}
           </h3>
-          <div class="effect-source">{localize('DND5E.SOURCE.FIELDS.source.label')}</div>
+          <div class="effect-source">
+            {localize('DND5E.SOURCE.FIELDS.source.label')}
+          </div>
           <div class="effect-source">{localize('DND5E.Duration')}</div>
           <div class="item-controls active-effect-controls flexrow">
             {#if $context.editable}
@@ -82,7 +84,7 @@
               data-effect-id={effect.id}
               on:mousedown={(event) => handleMiddleClickToEdit(event, effect)}
               on:dragstart={(ev) => handleDragStart(ev, effect)}
-              draggable={true}
+              draggable={$context.editable}
             >
               <div class="item-name effect-name flexrow">
                 <img

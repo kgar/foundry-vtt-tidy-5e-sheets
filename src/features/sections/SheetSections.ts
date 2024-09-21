@@ -108,7 +108,7 @@ export class SheetSections {
       { defaultSections: [], customSections: [] }
     );
 
-    customSections.sort((a, b) => a.localeCompare(b));
+    customSections.sort((a, b) => a.localeCompare(b, game.i18n.lang));
 
     return [...defaultSections, ...customSections];
   }
@@ -363,7 +363,7 @@ export class SheetSections {
             );
           } else {
             effectContexts.sort((a, b) =>
-              a.effect.name.localeCompare(b.effect.name)
+              a.effect.name.localeCompare(b.effect.name, game.i18n.lang)
             );
           }
 

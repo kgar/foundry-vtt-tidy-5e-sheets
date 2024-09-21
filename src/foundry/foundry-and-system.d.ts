@@ -118,6 +118,10 @@ declare global {
       lowercase = true,
     } = {}): string;
   }
+
+  interface Array<T> {
+    filterJoin(sep: string): string;
+  }
 }
 
 export type Dnd5eActorCondition = {

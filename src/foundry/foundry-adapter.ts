@@ -546,7 +546,7 @@ export const FoundryAdapter = {
       allClasses.push(...additionalClasses);
     }
 
-    allClasses.sort((a, b) => a.text.localeCompare(b.text));
+    allClasses.sort((a, b) => a.text.localeCompare(b.text, game.i18n.lang));
 
     return allClasses;
   },

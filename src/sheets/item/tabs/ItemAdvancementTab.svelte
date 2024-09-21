@@ -134,7 +134,7 @@
           class="advancement-item item flexrow"
           data-id={advancement.id}
           on:dragstart={(ev) => handleAdvancementDragStart(ev, advancement)}
-          draggable={$context.owner}
+          draggable={$context.editable}
         >
           <div class="item-name flexrow">
             <div class="item-image" class:svg={isSvgIcon}>

@@ -3,6 +3,7 @@ import { Tidy5eCharacterSheet } from './sheets/Tidy5eCharacterSheet';
 import './scss/core.scss';
 import { SettingsProvider, initSettings } from './settings/settings';
 import { Tidy5eKgarItemSheet } from './sheets/Tidy5eItemSheet';
+import { Tidy5eItemSheetClassic } from './sheets/Tidy5eItemSheetV2';
 import { Tidy5eNpcSheet } from './sheets/Tidy5eNpcSheet';
 import { Tidy5eVehicleSheet } from './sheets/Tidy5eKgarVehicleSheet';
 import { CONSTANTS } from './constants';
@@ -53,6 +54,28 @@ Hooks.once('init', () => {
     Item,
     CONSTANTS.DND5E_SYSTEM_ID,
     Tidy5eKgarItemSheet,
+    {
+      types: [
+        CONSTANTS.ITEM_TYPE_BACKGROUND,
+        CONSTANTS.ITEM_TYPE_CLASS,
+        CONSTANTS.ITEM_TYPE_CONSUMABLE,
+        CONSTANTS.ITEM_TYPE_EQUIPMENT,
+        CONSTANTS.ITEM_TYPE_FEAT,
+        CONSTANTS.ITEM_TYPE_LOOT,
+        CONSTANTS.ITEM_TYPE_RACE,
+        CONSTANTS.ITEM_TYPE_SPELL,
+        CONSTANTS.ITEM_TYPE_SUBCLASS,
+        CONSTANTS.ITEM_TYPE_TOOL,
+        CONSTANTS.ITEM_TYPE_WEAPON,
+      ],
+      label: 'Old Item Sheet',
+    }
+  );
+
+  DocumentSheetConfig.registerSheet(
+    Item,
+    CONSTANTS.DND5E_SYSTEM_ID,
+    Tidy5eItemSheetClassic,
     {
       types: [
         CONSTANTS.ITEM_TYPE_BACKGROUND,
