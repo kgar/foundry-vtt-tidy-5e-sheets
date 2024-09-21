@@ -8,6 +8,7 @@ import { Tidy5eKgarContainerSheet } from 'src/sheets/Tidy5eContainerSheet';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { debug, error } from 'src/utils/logging';
 import { Tidy5eItemSheetClassic } from 'src/sheets/Tidy5eItemSheetClassic';
+import { Tidy5eGroupSheetClassic } from 'src/sheets/Tidy5eGroupSheetClassic';
 
 export type SheetPreferenceOption = {
   label: string;
@@ -24,6 +25,7 @@ const supportedSheetClasses: string[] = [
   Tidy5eVehicleSheet.name,
   Tidy5eItemSheetClassic.name,
   Tidy5eKgarContainerSheet.name,
+  Tidy5eGroupSheetClassic.name,
 ];
 
 export class ApplyTidySheetPreferencesApplication extends SvelteFormApplicationBase {
