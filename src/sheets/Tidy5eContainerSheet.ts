@@ -1,6 +1,6 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type {
-  ContainerSheetContext,
+  ContainerSheetClassicContext,
   ItemChatData,
   ItemDescription,
 } from 'src/types/item.types';
@@ -57,7 +57,7 @@ export class Tidy5eKgarContainerSheet
     SheetExpandedItemsCacheable,
     SearchFilterCacheable
 {
-  context = writable<ContainerSheetContext>();
+  context = writable<ContainerSheetClassicContext>();
   stats = writable<SheetStats>({
     lastSubmissionTime: null,
   });
@@ -240,7 +240,7 @@ export class Tidy5eKgarContainerSheet
       'm';
 
     // Utilities
-    let utilities: Utilities<ContainerSheetContext> = {
+    let utilities: Utilities<ContainerSheetClassicContext> = {
       [CONSTANTS.TAB_CONTAINER_CONTENTS]: {
         utilityToolbarCommands: [
           {
@@ -293,11 +293,9 @@ export class Tidy5eKgarContainerSheet
     };
 
     // Context Data
-    const context: ContainerSheetContext = {
+    const context: ContainerSheetClassicContext = {
       ...defaultDocumentContext,
       appId: this.appId,
-      activateEditors: (node, options) =>
-        FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
       containerContents: await Container.getContainerContents(this.item),
       customContent: await ItemSheetRuntime.getContent(defaultDocumentContext),
       filterData: this.itemFilterService.getDocumentItemFilterData(),
@@ -309,10 +307,6 @@ export class Tidy5eKgarContainerSheet
       originalContext: defaultDocumentContext,
       tabs: tabs,
       utilities: utilities,
-      viewableWarnings:
-        defaultDocumentContext.warnings?.filter(
-          (w: any) => !isNil(w.message?.trim(), '')
-        ) ?? [],
     };
 
     const contents = await this.item.system.contents;
@@ -337,7 +331,10 @@ export class Tidy5eKgarContainerSheet
         (context.system.properties ?? []).map((p: string) => [p, true])
       ),
       options: (context.system.validProperties ?? []).reduce(
-        (arr: ContainerSheetContext['properties']['options'], k: any) => {
+        (
+          arr: ContainerSheetClassicContext['properties']['options'],
+          k: any
+        ) => {
           // @ts-ignore
           const { label } = CONFIG.DND5E.itemProperties[k];
           arr.push({
@@ -448,7 +445,7 @@ export class Tidy5eKgarContainerSheet
   }
 
   private async renderCustomContent(args: {
-    data: ContainerSheetContext;
+    data: ContainerSheetClassicContext;
     isFullRender: boolean;
   }) {
     await CustomContentRenderer.render({

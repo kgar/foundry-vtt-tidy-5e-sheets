@@ -1,6 +1,7 @@
 import type { ComponentType, SvelteComponent } from 'svelte';
 import type {
   AttunementContext,
+  ContainerCapacityContext,
   CustomContent,
   GroupableSelectOption,
   InventorySection,
@@ -13,6 +14,7 @@ import type {
   DocumentFilters,
   RegisteredEquipmentTypeGroup,
 } from 'src/runtime/item/item.types';
+import type { CONFIG } from 'src/foundry/config.types';
 
 export type PropertyContext = {
   active: string[];
@@ -125,26 +127,38 @@ export type ContainerItemContext = {
   containerContents?: ContainerContents;
 };
 
-export type ContainerSheetContext = {
-  activateEditors: (
-    node: HTMLElement,
-    options?: { bindSecrets?: boolean }
-  ) => void;
+export type ContainerSheetClassicContext = {
   appId: string;
+  capacity: ContainerCapacityContext;
+  config: typeof CONFIG.DND5E;
+  concealDetails: boolean;
   containerContents: ContainerContents;
+  document: Item5e;
+  editable: boolean;
+  enriched: {
+    unidentified: string;
+  };
   filterData: DocumentFilters;
+  filterPins: Record<string, Set<string>>;
+  item: Item5e;
   itemContext: Record<string, ContainerItemContext>;
   itemDescriptions: ItemDescription[];
   itemOverrides: Set<string>;
+  itemType: string;
+  isIdentified: boolean;
+  isPhysical: boolean;
+  labels: Record<string, any>;
   lockItemQuantity: boolean;
+  lockMoneyChanges: boolean;
   customContent: CustomContent[];
   originalContext: unknown;
   owner: boolean;
   properties: PropertyContext;
+  source: any;
+  system: any;
   tabs: Tab[];
-  utilities: Utilities<ContainerSheetContext>;
-  viewableWarnings: DocumentPreparationWarning[];
-} & Record<string, any>;
+  utilities: Utilities<ContainerSheetClassicContext>;
+};
 
 export type ContainerSection = { items: Item5e[] } & TidySectionBase;
 

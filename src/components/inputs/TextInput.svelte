@@ -6,7 +6,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type {
-    ContainerSheetContext,
+    ContainerSheetClassicContext,
     ItemSheetContext,
   } from 'src/types/item.types';
   import type {
@@ -90,7 +90,7 @@
         | CharacterSheetContext
         | NpcSheetContext
         | VehicleSheetContext
-        | ContainerSheetContext
+        | ContainerSheetClassicContext
         | ItemSheetContext
       >
     >('context');

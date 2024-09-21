@@ -4,7 +4,7 @@
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
-    ContainerSheetContext,
+    ContainerSheetClassicContext,
     ItemSheetContext,
   } from 'src/types/item.types';
   import { getContext } from 'svelte';
@@ -19,7 +19,7 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
 
-  let context = getContext<Readable<ItemSheetContext | ContainerSheetContext>>(
+  let context = getContext<Readable<ItemSheetContext | ContainerSheetClassicContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
