@@ -11,6 +11,7 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import type { Actor5e } from 'src/types/types';
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
+import type { Group5eMember } from 'src/types/group.types';
 
 export function initTidy5eContextMenu(
   sheet: any,
@@ -54,8 +55,13 @@ function onItemContext(this: any, element: HTMLElement) {
   }
   // Items
   else if (contextMenuType === CONSTANTS.CONTEXT_MENU_TYPE_ITEMS) {
-    const uuid = element.getAttribute('data-context-menu-document-uuid');
-    const item = fromUuidSync(uuid);
+    const id = element.getAttribute('data-item-id');
+
+    let item =
+      this.document.type === CONSTANTS.ITEM_TYPE_CONTAINER
+        ? this.document.system.contents.get(id)
+        : this.document.items.get(id);
+
     if (!item) return;
 
     ui.context.menuItems = getItemContextOptions(item);
@@ -63,21 +69,16 @@ function onItemContext(this: any, element: HTMLElement) {
   }
   // Group Members
   else if (contextMenuType === CONSTANTS.CONTEXT_MENU_TYPE_GROUP_MEMBER) {
-    const actor = fromUuidSync(
-      element.getAttribute('data-context-menu-document-uuid')
+    const memberId = element.getAttribute('data-member-id');
+    const actor = this.document.system.members.find(
+      (m: Group5eMember) => m.actor.id === memberId
     );
 
-    const group = fromUuidSync(
-      element
-        .closest('[data-document-uuid]')
-        ?.getAttribute('data-document-uuid')
-    );
+    if (!actor) return;
 
-    if (!actor || !group) return;
-
-    ui.context.menuItems = getGroupMemberContextOptions(group, actor);
+    ui.context.menuItems = getGroupMemberContextOptions(this.document, actor);
     TidyHooks.tidy5eSheetsGetGroupMemberContextOptions(
-      group,
+      this.document,
       actor,
       ui.context.menuItems
     );
