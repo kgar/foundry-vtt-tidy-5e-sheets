@@ -360,7 +360,7 @@ export function SvelteApplicationMixin<
                 return;
               }
 
-              const controls = this.element.querySelector(
+              const controls = this?.element?.querySelector(
                 '.controls-dropdown'
               ) as HTMLElement;
 
