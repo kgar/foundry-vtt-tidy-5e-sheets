@@ -10,7 +10,6 @@ import type {
   ItemDescription,
   ItemSheetContext as ItemSheetClassicContext,
   ItemSheetContext,
-  PropertyContext,
   UsesRecoveryData,
 } from 'src/types/item.types';
 import TypeNotFoundSheet from './item/TypeNotFoundSheet.svelte';

@@ -1,6 +1,6 @@
 import { SettingsProvider } from 'src/settings/settings';
 import { Tidy5eGroupSheetClassic } from 'src/sheets/Tidy5eGroupSheetClassic';
-import { Tidy5eItemSheetClassic } from 'src/sheets/Tidy5eItemSheetV2';
+import { Tidy5eItemSheetClassic } from 'src/sheets/Tidy5eItemSheetClassic';
 
 export class DebugTools {
   static onReady() {

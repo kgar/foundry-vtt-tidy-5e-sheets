@@ -4,10 +4,10 @@ import ApplyTidySheetPreferences from './ApplyTidySheetPreferences.svelte';
 import { Tidy5eCharacterSheet } from 'src/sheets/Tidy5eCharacterSheet';
 import { Tidy5eNpcSheet } from 'src/sheets/Tidy5eNpcSheet';
 import { Tidy5eVehicleSheet } from 'src/sheets/Tidy5eKgarVehicleSheet';
-import { Tidy5eKgarItemSheet } from 'src/sheets/Tidy5eItemSheet';
 import { Tidy5eKgarContainerSheet } from 'src/sheets/Tidy5eContainerSheet';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { debug, error } from 'src/utils/logging';
+import { Tidy5eItemSheetClassic } from 'src/sheets/Tidy5eItemSheetClassic';
 
 export type SheetPreferenceOption = {
   label: string;
@@ -22,7 +22,7 @@ const supportedSheetClasses: string[] = [
   Tidy5eCharacterSheet.name,
   Tidy5eNpcSheet.name,
   Tidy5eVehicleSheet.name,
-  Tidy5eKgarItemSheet.name,
+  Tidy5eItemSheetClassic.name,
   Tidy5eKgarContainerSheet.name,
 ];
 
