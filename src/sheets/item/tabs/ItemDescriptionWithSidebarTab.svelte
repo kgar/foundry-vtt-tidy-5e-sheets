@@ -146,12 +146,14 @@
       </ol>
     {/if}
 
-    {#if $context.itemProperties.length}
+    {#if $context.properties.active.length}
       <section class="inert-animation-container">
         <h4 class="properties-header">{localize('DND5E.Properties')}</h4>
         <ol class="properties-list" inert={$context.concealDetails}>
-          {#each $context.itemProperties as prop}
-            <li>{prop}</li>
+          {#each $context.properties.active as prop}
+            {#if prop !== null && prop !== undefined}
+              <li>{prop}</li>
+            {/if}
           {/each}
         </ol>
       </section>

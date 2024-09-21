@@ -56,6 +56,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       height: 600,
     },
     actions: {},
+    dragDrop: [{ dropSelector: 'form' }],
   };
 
   _createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
@@ -228,27 +229,12 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       // @ts-expect-error
       itemType: game.i18n.localize(CONFIG.Item.typeLabels[this.item.type]),
       itemStatus: this._getItemStatus(),
-      itemProperties: this._getItemProperties(),
       baseItems: await this._getItemBaseTypes(),
       isPhysical: this.document.system.hasOwnProperty('quantity'),
-
-      // Action Details
-      isHealing: this.document.system.actionType === 'heal',
-      isFlatDC: this.document.system.save?.scaling === 'flat',
-      isLine: ['line', 'wall'].includes(this.document.system.target?.type),
-      isFormulaRecharge:
-        // @ts-expect-error
-        !!CONFIG.DND5E.limitedUsePeriods[this.item.system.uses?.per]?.formula,
-      isCostlessAction:
-        this.document.system.activation?.type in
-        CONFIG.DND5E.staticAbilityActivationTypes,
 
       // Identified state
       isIdentifiable: isIdentifiable,
       isIdentified: this.document.system.identified !== false,
-
-      // Vehicles
-      isCrewed: this.document.system.activation?.type === 'crew',
 
       // Armor Class
       hasDexModifier:
@@ -290,28 +276,8 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
 
       properties: {
         active: [],
-        object: Object.fromEntries(
-          (this.document.system.properties ?? []).map((p: string) => [p, true])
-        ),
-        options: (this.document.system.validProperties ?? [])
-          .reduce((arr: ItemSheetContext['properties']['options'], k: any) => {
-            // @ts-ignore
-            const { label } = CONFIG.DND5E.itemProperties[k];
-            arr.push({
-              label,
-              value: k,
-              selected: this.item._source.system.properties?.includes(k),
-            });
-            return arr;
-          }, [])
-          .sort(
-            (
-              a: PropertyContext['options'][0],
-              b: PropertyContext['options'][0]
-            ) => {
-              return a.label.localeCompare(b.label, game.i18n.lang);
-            }
-          ),
+        object: {},
+        options: [],
       },
 
       equipmentTypes: [
@@ -364,6 +330,42 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       ),
     };
 
+    // Properties
+    context.properties = {
+      active: [],
+      object: Object.fromEntries(
+        (this.document.system.properties ?? []).map((p: string) => [p, true])
+      ),
+      options: (this.document.system.validProperties ?? []).reduce(
+        (arr: ItemSheetContext['properties']['options'], k: any) => {
+          // @ts-ignore
+          const { label } = CONFIG.DND5E.itemProperties[k];
+          arr.push({
+            label,
+            value: k,
+            selected: this.item._source.system.properties?.includes(k),
+          });
+          return arr;
+        },
+        []
+      ),
+    };
+
+    if (this.item.type !== 'spell') {
+      context.properties.options.sort((a, b) =>
+        a.label.localeCompare(b.label, game.i18n.lang)
+      );
+    }
+
+    if (game.user.isGM || this.item.system.identified !== false) {
+      context.properties.active.push(
+        ...(this.item.system.cardProperties ?? []),
+        // @ts-expect-error
+        ...Object.values(this.item.labels.activations[0] ?? {}),
+        ...(this.item.system.equippableItemCardProperties ?? [])
+      );
+    }
+
     // Tabs
     const eligibleCustomTabs = ItemSheetRuntime.getCustomItemTabs(context);
 
@@ -380,40 +382,6 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
 
     // Custom Content
     context.customContent = await ItemSheetRuntime.getContent(context);
-
-    // Etc.
-    if (
-      !this.document.isEmbedded &&
-      foundry.utils.isEmpty(context.abilityConsumptionTargets)
-    ) {
-      context.abilityConsumptionHint =
-        this.item.system.consume?.type === 'attribute'
-          ? 'DND5E.ConsumeHint.Attribute'
-          : 'DND5E.ConsumeHint.Item';
-    }
-
-    // if (
-    //   'properties' in this.document.system &&
-    //   this.document.type in CONFIG.DND5E.validProperties
-    // ) {
-    //   context.properties = this.document.system.validProperties.reduce(
-    //     (obj: Record<string, unknown>, k: any) => {
-    //       // @ts-expect-error
-    //       const v = CONFIG.DND5E.itemProperties[k];
-    //       obj[k] = {
-    //         label: v.label,
-    //         selected: this.document.system.properties.has(k),
-    //       };
-    //       return obj;
-    //     },
-    //     {}
-    //   );
-    //   if (this.document.type !== 'spell')
-    //     context.properties = dnd5e.utils.sortObjectEntries(
-    //       context.properties,
-    //       'label'
-    //     );
-    // }
 
     // Handle item subtypes.
     if (['feat', 'loot', 'consumable'].includes(this.document.type)) {
@@ -632,66 +600,6 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
   /* -------------------------------------------- */
 
   /**
-   * Get the Array of item properties which are used in the small sidebar of the description tab.
-   * @returns {string[]}   List of property labels to be shown.
-   * @private
-   */
-  _getItemProperties() {
-    const props = [];
-    const labels = this.item.labels;
-    switch (this.item.type) {
-      case 'consumable':
-      case 'weapon':
-        if (this.item.isMountable) props.push(labels.armor);
-        const ip: Record<string, any> = CONFIG.DND5E.itemProperties;
-        // @ts-expect-error
-        const vp = CONFIG.DND5E.validProperties[this.item.type];
-        this.item.system.properties.forEach((k: string) => {
-          if (vp.has(k)) props.push(ip[k].label);
-        });
-        break;
-      case 'equipment':
-        // @ts-expect-error
-        props.push(CONFIG.DND5E.equipmentTypes[this.item.system.type.value]);
-        if (this.item.isArmor || this.item.isMountable)
-          props.push(labels.armor);
-        break;
-      case 'feat':
-        props.push(labels.featType);
-        break;
-      case 'spell':
-        props.push(
-          labels.components.vsm,
-          labels.materials,
-          ...labels.components.tags
-        );
-        break;
-    }
-
-    // Action type
-    if (this.item.system.actionType) {
-      // @ts-expect-error
-      props.push(CONFIG.DND5E.itemActionTypes[this.item.system.actionType]);
-    }
-
-    // Action usage
-    if (
-      this.item.type !== 'weapon' &&
-      !foundry.utils.isEmpty(this.item.system.activation)
-    ) {
-      props.push(
-        labels.activation,
-        labels.range,
-        labels.target,
-        labels.duration
-      );
-    }
-    return props.filter((p) => !!p);
-  }
-
-  /* -------------------------------------------- */
-
-  /**
    * Get the set of ContextMenu options which should be applied for advancement entries.
    * @returns {ContextMenuEntry[]}  Context menu entries.
    * @protected
@@ -777,7 +685,9 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
   /* -------------------------------------------- */
 
   /** @inheritDoc */
-  _onDrop(event: DragEvent) {
+  async _onDrop(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
+  ) {
     const data = TextEditor.getDragEventData(event);
     const item = this.item;
 
@@ -843,6 +753,51 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
   /* -------------------------------------------- */
 
   /**
+   * Handle dropping an Activity onto the sheet.
+   * @param {DragEvent} event       The drag event.
+   * @param {object} transfer       The dropped data.
+   * @param {object} transfer.data  The Activity data.
+   * @protected
+   */
+  _onDropActivity(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    { data }: any
+  ) {
+    const { _id: id, type } = data;
+    const source = this.item.system.activities.get(id);
+
+    // Reordering
+    if (source) {
+      const targetId = event.target.closest<HTMLElement>(
+        '.activity[data-activity-id]'
+      )?.dataset.activityId;
+      const target = this.item.system.activities.get(targetId);
+      if (!target || target === source) return;
+      const siblings = this.item.system.activities.filter(
+        (a: any) => a._id !== id
+      );
+      const sortUpdates = SortingHelpers.performIntegerSort(source, {
+        target,
+        siblings,
+      });
+      const updateData = Object.fromEntries(
+        sortUpdates.map(({ target, update }: { target: any; update: any }) => {
+          return [target._id, { sort: update.sort }];
+        })
+      );
+      this.item.update({ 'system.activities': updateData });
+    }
+
+    // Copying
+    else {
+      delete data._id;
+      this.item.createActivity(type, data, { renderSheet: false });
+    }
+  }
+
+  /* -------------------------------------------- */
+
+  /**
    * Handle the dropping of an advancement or item with advancements onto the advancements tab.
    * @param {DragEvent} event                  The concluding DragEvent which contains drop data.
    * @param {object} data                      The data transfer extracted from the event.
@@ -893,11 +848,12 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       this.item.actor?.system.metadata?.supportsAdvancement &&
       !game.settings.get('dnd5e', 'disableAdvancements')
     ) {
-      const manager = AdvancementManager.forNewAdvancement(
-        this.item.actor,
-        this.item.id,
-        advancements
-      );
+      const manager =
+        dnd5e.applications.advancement.AdvancementManager.forNewAdvancement(
+          this.item.actor,
+          this.item.id,
+          advancements
+        );
       if (manager.steps.length) return manager.render(true);
     }
 
@@ -951,5 +907,69 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
     const recovery = this.item.system.toObject().uses.recovery;
     recovery[index][prop] = value;
     return this.submit({ updateData: { 'system.uses.recovery': recovery } });
+  }
+
+  /**
+   * Handle one of the advancement actions from the buttons or context menu.
+   * @param {Element} target  Button or context menu entry that triggered this action.
+   * @param {string} action   Action being triggered.
+   * @returns {Promise|void}
+   */
+  _onAdvancementAction(target: HTMLElement, action: string) {
+    const id = target.closest<HTMLElement>('.advancement-item')?.dataset.id;
+
+    if (!id) {
+      return;
+    }
+
+    const advancement = this.item.advancement.byId[id];
+    let manager;
+    if (['edit', 'delete', 'duplicate'].includes(action) && !advancement)
+      return;
+    switch (action) {
+      case 'add':
+        return game.dnd5e.applications.advancement.AdvancementSelection.createDialog(
+          this.item
+        );
+      case 'edit':
+        return new advancement.constructor.metadata.apps.config(
+          advancement
+        ).render(true);
+      case 'delete':
+        if (
+          this.item.actor?.system.metadata?.supportsAdvancement &&
+          !game.settings.get('dnd5e', 'disableAdvancements')
+        ) {
+          manager =
+            dnd5e.applications.advancement.AdvancementManager.forDeletedAdvancement(
+              this.item.actor,
+              this.item.id,
+              id
+            );
+          if (manager.steps.length) return manager.render(true);
+        }
+        return this.item.deleteAdvancement(id);
+      case 'duplicate':
+        return this.item.duplicateAdvancement(id);
+      case 'modify-choices':
+        const level =
+          target.closest<HTMLElement>('[data-level]')?.dataset.level;
+
+        if (!level) {
+          return;
+        }
+
+        manager =
+          dnd5e.applications.advancement.AdvancementManager.forModifyChoices(
+            this.item.actor,
+            this.item.id,
+            Number(level)
+          );
+        if (manager.steps.length) manager.render(true);
+        return;
+      case 'toggle-configuration':
+        this.advancementConfigurationMode = !this.advancementConfigurationMode;
+        return this.render();
+    }
   }
 }
