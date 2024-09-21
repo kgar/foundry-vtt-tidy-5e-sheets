@@ -939,3 +939,13 @@
     font-style: italic;
   }
 }
+
+&.container {
+  .tidy-sheet-body {
+    padding: 0 0.25rem 0.25rem 0;
+
+    [data-tab-contents-for]:not([data-tab-contents-for="contents"]) {
+      padding: 1rem 0.25rem 0 1rem;
+    }
+  }
+}

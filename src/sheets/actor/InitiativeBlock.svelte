@@ -16,6 +16,8 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
+  $: appId = $context.actor.id;
+
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -29,7 +31,7 @@
   <BlockScore>
     <span>{formatAsModifier(initiative.total)}</span>
   </BlockScore>
-  <label class="ini-bonus" for="{$context.appId}-initiative-mod">
+  <label class="ini-bonus" for="{appId}-initiative-mod">
     <span>{localize('TIDY5E.AbbrMod')}</span>
     <TextInput
       document={$context.actor}
@@ -40,7 +42,7 @@
       allowDeltaChanges={true}
       value={initiative.bonus}
       disabled={!$context.editable || !$context.unlocked}
-      id="{$context.appId}-initiative-mod"
+      id="{appId}-initiative-mod"
     />
   </label>
 

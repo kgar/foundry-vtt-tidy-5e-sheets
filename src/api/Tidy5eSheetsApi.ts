@@ -11,7 +11,6 @@ import type { TabId } from './tab/CustomTabBase';
 import { Tidy5eCharacterSheet } from 'src/sheets/Tidy5eCharacterSheet';
 import { Tidy5eNpcSheet } from 'src/sheets/Tidy5eNpcSheet';
 import { Tidy5eVehicleSheet } from 'src/sheets/Tidy5eKgarVehicleSheet';
-import { Tidy5eKgarContainerSheet } from 'src/sheets/Tidy5eContainerSheet';
 import { SvelteTab } from './tab/SvelteTab';
 import type {
   SupportedTab,
@@ -29,6 +28,7 @@ import { ConfigApi } from './config/ConfigApi';
 import { GroupSheetRuntime } from 'src/runtime/GroupSheetRuntime';
 import { Tidy5eGroupSheetClassic } from 'src/sheets/Tidy5eGroupSheetClassic';
 import { Tidy5eItemSheetClassic } from 'src/sheets/Tidy5eItemSheetClassic';
+import { Tidy5eContainerSheetClassic } from 'src/sheets/Tidy5eContainerSheetClassic';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -130,7 +130,7 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is a Tidy 5e Container sheet
    */
   isTidy5eContainerSheet(app: any) {
-    return Tidy5eKgarContainerSheet.name === app?.constructor?.name;
+    return Tidy5eContainerSheetClassic.name === app?.constructor?.name;
   }
 
   /**
@@ -171,7 +171,7 @@ export class Tidy5eSheetsApi {
       Tidy5eNpcSheet.name,
       Tidy5eVehicleSheet.name,
       Tidy5eItemSheetClassic.name,
-      Tidy5eKgarContainerSheet.name,
+      Tidy5eContainerSheetClassic.name,
       Tidy5eGroupSheetClassic.name,
     ].includes(app?.constructor?.name);
   }

@@ -81,10 +81,35 @@
 
   &.primary {
     color: var(--t5e-primary-color);
+    button {
+      justify-content: flex-start;
+    }
   }
 
   &:not(.primary) {
     justify-content: center;
     text-align: center;
+  }
+
+  input {
+    height: var(--t5e-tidy-table-cell-min-height);
+    border-radius: 0;
+    font-size: inherit;
+  }
+
+  .tidy-table-control {
+    color: var(--t5e-icon-font-color);
+    transition: color 0.15s;
+
+    i {
+      transition: color 0.15s;
+    }
+
+    &:hover {
+      &,
+      i {
+        color: var(--t5e-icon-hover-color);
+      }
+    }
   }
 }

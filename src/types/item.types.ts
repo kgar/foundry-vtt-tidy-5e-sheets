@@ -128,7 +128,6 @@ export type ContainerItemContext = {
 };
 
 export type ContainerSheetClassicContext = {
-  appId: string;
   capacity: ContainerCapacityContext;
   config: typeof CONFIG.DND5E;
   concealDetails: boolean;
@@ -136,24 +135,30 @@ export type ContainerSheetClassicContext = {
   document: Item5e;
   editable: boolean;
   enriched: {
+    description: string;
     unidentified: string;
+    chat: string;
   };
   filterData: DocumentFilters;
   filterPins: Record<string, Set<string>>;
   item: Item5e;
+  identifiedName: string;
+  items: Item5e[];
   itemContext: Record<string, ContainerItemContext>;
   itemDescriptions: ItemDescription[];
   itemOverrides: Set<string>;
   itemType: string;
+  isContainer: true;
+  isIdentifiable: boolean;
   isIdentified: boolean;
   isPhysical: boolean;
   labels: Record<string, any>;
   lockItemQuantity: boolean;
   lockMoneyChanges: boolean;
   customContent: CustomContent[];
-  originalContext: unknown;
   owner: boolean;
   properties: PropertyContext;
+  rollData: Record<string, any>;
   source: any;
   system: any;
   tabs: Tab[];

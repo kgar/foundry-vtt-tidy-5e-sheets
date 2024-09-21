@@ -53,11 +53,11 @@
     {#if $context.isPhysical}
       {#if $context.item.type !== CONSTANTS.ITEM_TYPE_CONTAINER}
         <div class="form-group">
-          <label for="{$context.appId}-quantity"
+          <label for="{appId}-quantity"
             >{localize('DND5E.Quantity')}</label
           >
           <NumberInput
-            id="{$context.appId}-quantity"
+            id="{appId}-quantity"
             value={$context.source.quantity}
             field="system.quantity"
             document={$context.item}
@@ -71,11 +71,11 @@
       {/if}
 
       <div class="form-group">
-        <label for="{$context.appId}-weight-value"
+        <label for="{appId}-weight-value"
           >{localize('DND5E.Weight')}</label
         >
         <NumberInput
-          id="{$context.appId}-weight-value"
+          id="{appId}-weight-value"
           value={$context.source.weight.value}
           step="any"
           field="system.weight.value"
@@ -88,14 +88,14 @@
       <HorizontalLineSeparator />
 
       <div class="form-group stacked">
-        <label for="{$context.appId}-price-value"
+        <label for="{appId}-price-value"
           >{localize('DND5E.Price')}</label
         >
         {#if $context.concealDetails}
           <span>{localize('DND5E.Unidentified.Value')}</span>
         {:else}
           <NumberInput
-            id="{$context.appId}-price-value"
+            id="{appId}-price-value"
             value={$context.source.price.value}
             step="any"
             field="system.price.value"

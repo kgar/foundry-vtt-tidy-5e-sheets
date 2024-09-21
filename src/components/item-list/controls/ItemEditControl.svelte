@@ -8,7 +8,8 @@
 </script>
 
 <ItemControl
-  iconCssClass="fas fa-edit fa-fw"
+  iconCssClass="fas fa-edit fa-fw {$$restProps.class ?? ''}"
+  class={$$restProps.class ?? ''}
   title={localize('DND5E.ItemEdit')}
   onclick={() => item.sheet.render(true)}
 />

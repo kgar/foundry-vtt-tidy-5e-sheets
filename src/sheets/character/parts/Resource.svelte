@@ -12,6 +12,8 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
+  $: appId = $context.actor.id;
+
   const localize = FoundryAdapter.localize;
 
   let configActive = false;
@@ -71,7 +73,7 @@
     <div class="resource-rest">
       <h4>{localize('TIDY5E.RestoreOnRest')}</h4>
       <input
-        id="{$context.appId}-{resource.name}-sr"
+        id="{appId}-{resource.name}-sr"
         type="checkbox"
         checked={resource.sr}
         on:change|stopPropagation|preventDefault={(event) =>
@@ -82,14 +84,14 @@
         data-tidy-field={resource.srName}
       />
       <label
-        for="{$context.appId}-{resource.name}-sr"
+        for="{appId}-{resource.name}-sr"
         class="checkbox"
         title={localize('TIDY5E.ShortRest')}
       >
         {localize('DND5E.RestS')}
       </label>
       <input
-        id="{$context.appId}-{resource.name}-lr"
+        id="{appId}-{resource.name}-lr"
         type="checkbox"
         checked={resource.lr}
         on:change|stopPropagation|preventDefault={(event) =>
@@ -100,7 +102,7 @@
         data-tidy-field={resource.lrName}
       />
       <label
-        for="{$context.appId}-{resource.name}-lr"
+        for="{appId}-{resource.name}-lr"
         class="checkbox"
         title={localize('TIDY5E.LongRest')}
       >

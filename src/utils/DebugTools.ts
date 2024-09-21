@@ -1,4 +1,5 @@
 import { SettingsProvider } from 'src/settings/settings';
+import { Tidy5eContainerSheetClassic } from 'src/sheets/Tidy5eContainerSheetClassic';
 import { Tidy5eGroupSheetClassic } from 'src/sheets/Tidy5eGroupSheetClassic';
 import { Tidy5eItemSheetClassic } from 'src/sheets/Tidy5eItemSheetClassic';
 
@@ -53,7 +54,11 @@ export class DebugTools {
         Hooks.on(hook, addDebugButtonToHeader);
       });
 
-      [Tidy5eItemSheetClassic, Tidy5eGroupSheetClassic].forEach((sheet) => {
+      [
+        Tidy5eItemSheetClassic,
+        Tidy5eGroupSheetClassic,
+        Tidy5eContainerSheetClassic,
+      ].forEach((sheet) => {
         foundry.utils.mergeObject(sheet.DEFAULT_OPTIONS, {
           window: {
             controls: [

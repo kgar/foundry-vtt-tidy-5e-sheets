@@ -208,4 +208,8 @@
       box-shadow: 0 0 0 0.0625rem var(--t5e-magic-accent-color) inset;
     }
   }
+
+  :global(.expand-indicator) {
+    margin-right: 0.325rem;
+  }
 </style>

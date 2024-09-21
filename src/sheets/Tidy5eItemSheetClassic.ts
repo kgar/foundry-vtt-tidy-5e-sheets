@@ -172,7 +172,6 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       affectsPlaceholder: game.i18n.localize(
         `DND5E.Target${target?.template?.type ? 'Every' : 'Any'}`
       ),
-      appId: this.appId,
       advancementEditable:
         (this.advancementConfigurationMode || !this.document.isEmbedded) &&
         editable,

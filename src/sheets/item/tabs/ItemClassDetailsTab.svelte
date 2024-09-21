@@ -51,14 +51,14 @@
 </div>
 
 <div class="form-group split-group">
-  <label for="{$context.appId}-hit-dice">{localize('DND5E.HitDice')}</label>
+  <label for="{appId}-hit-dice">{localize('DND5E.HitDice')}</label>
   <div class="form-fields">
     <div class="form-group label-top">
-      <label for="{$context.appId}-hit-dice"
+      <label for="{appId}-hit-dice"
         >{localize('DND5E.Denomination')}</label
       >
       <Select
-        id="{$context.appId}-hit-dice"
+        id="{appId}-hit-dice"
         document={$context.item}
         field="system.hitDice"
         value={$context.source.hitDice}
@@ -71,11 +71,11 @@
     </div>
 
     <div class="form-group label-top">
-      <label for="{$context.appId}-hit-dice-spent"
+      <label for="{appId}-hit-dice-spent"
         >{localize('DND5E.Spent')}</label
       >
       <NumberInput
-        id="{$context.appId}-hitDiceUsed"
+        id="{appId}-hitDiceUsed"
         document={$context.item}
         field="system.hitDiceUsed"
         value={$context.source.hitDiceUsed}

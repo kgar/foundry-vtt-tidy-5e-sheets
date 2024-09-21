@@ -36,6 +36,18 @@
     margin-bottom: unset;
   }
 
+  input[type='text'],
+  input[type='number'],
+  input[type='password'],
+  input[type='date'],
+  input[type='time'],
+  input[type='search'],
+  input[type='file'],
+  select {
+    --input-height: 1.625rem;
+    --input-background-color: var(--t5e-faintest-color);
+  }
+
   input[type='text']:focus,
   input[type='number']:focus,
   input[type='password']:focus,

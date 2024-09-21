@@ -45,14 +45,14 @@
         <TextInput
           {document}
           field="system.currency.{currency.key}"
-          id="{$context.appId}-system.currency.{currency.key}"
+          id="{document.id}-system.currency.{currency.key}"
           value={currency.value}
           allowDeltaChanges={true}
           selectOnFocus={true}
           disabled={!$context.editable || $context.lockMoneyChanges}
         />
         <label
-          for="{$context.appId}-system.currency.{currency.key}"
+          for="{document.id}-system.currency.{currency.key}"
           class="denomination {currency.key}"
           data-denom={currency.key}>{abbreviateCurrency(currency.key)}</label
         >

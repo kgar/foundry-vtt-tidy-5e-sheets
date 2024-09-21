@@ -14,6 +14,7 @@
 
 <ItemControl
   iconCssClass="fas fa-trash fa-fw"
+  class={$$restProps.class ?? ''}
   onclick={() => onDelete() && deleteFn()}
   title={localize('DND5E.ItemDelete')}
 />
