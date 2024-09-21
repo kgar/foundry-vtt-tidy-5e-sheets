@@ -9,6 +9,7 @@ import type {
 } from 'src/types/application.types';
 import type {
   ContainerSheetClassicContext,
+  Item5e,
   ItemChatData,
   ItemDescription,
 } from 'src/types/item.types';
@@ -34,6 +35,7 @@ import { SheetPreferencesService } from 'src/features/user-preferences/SheetPref
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { TidyHooks } from 'src/foundry/TidyHooks';
+import { SettingsProvider } from 'src/settings/settings';
 
 export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
   SvelteApplicationMixin<ContainerSheetClassicContext>(
@@ -362,6 +364,186 @@ export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
       );
     }
     return overrides;
+  }
+
+  /* -------------------------------------------- */
+
+  /** @inheritDoc */
+  async _onDrop(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
+  ): Promise<unknown> {
+    const data = TextEditor.getDragEventData(event);
+    if (!['Item', 'Folder'].includes(data.type)) {
+      return super._onDrop(event);
+    }
+
+    if (TidyHooks.dnd5eDropItemSheetData(this.item, this, data) === false) {
+      return;
+    }
+
+    if (data.type === 'Folder') {
+      return this._onDropFolder(event, data);
+    }
+
+    return this._onDropItem(event, data);
+  }
+
+  /* -------------------------------------------- */
+
+  async _onDropFolder(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    data: any
+  ): Promise<Item5e[]> {
+    const folder = await Folder.implementation.fromDropData(data);
+    if (!this.item.isOwner || folder.type !== 'Item') return [];
+
+    let recursiveWarning = false;
+    const parentContainers = await this.item.system.allContainers();
+    const containers = new Set();
+
+    let items = await Promise.all(
+      folder.contents.map(async (item: any) => {
+        if (!(item instanceof Item)) item = await fromUuid(item.uuid);
+        if (item.system.container === this.item.id) return;
+        if (this.item.uuid === item.uuid || parentContainers.includes(item)) {
+          recursiveWarning = true;
+          return;
+        }
+        if (item.type === 'container') containers.add(item.id);
+        return item;
+      })
+    );
+    items = items.filter((i) => i && !containers.has(i.system.container));
+
+    // Display recursive warning, but continue with any remaining items
+    if (recursiveWarning)
+      ui.notifications.warn('DND5E.ContainerRecursiveError', {
+        localize: true,
+      });
+    if (!items.length) return [];
+
+    // Create any remaining items
+    const toCreate = await dnd5e.documents.Item5e.createWithContents(items, {
+      container: this.item,
+      transformAll: (itemData: any) => {
+        const options: Record<string, unknown> = {};
+
+        if (SettingsProvider.settings.includeFlagsInSpellScrollCreation.get()) {
+          options.flags = itemData.flags;
+        }
+
+        return itemData.type === 'spell'
+          ? dnd5e.documents.Item5e.createScrollFromSpell(itemData, options)
+          : itemData;
+      },
+    });
+    if (this.item.folder)
+      toCreate.forEach((d: any) => (d.folder = this.item.folder.id));
+    return dnd5e.documents.Item5e.createDocuments(toCreate, {
+      pack: this.item.pack,
+      parent: this.item.parent,
+      keepId: true,
+    });
+  }
+
+  /* -------------------------------------------- */
+
+  async _onDropItem(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    data: any
+  ): Promise<Item5e[] | boolean | void> {
+    const item = await Item.implementation.fromDropData(data);
+    if (!this.item.isOwner || !item) return false;
+
+    // If item already exists in this container, just adjust its sorting
+    if (item.system.container === this.item.id) {
+      return this._onSortItem(event, item);
+    }
+
+    // Prevent dropping containers within themselves
+    const parentContainers = await this.item.system.allContainers();
+    if (this.item.uuid === item.uuid || parentContainers.includes(item)) {
+      ui.notifications.error('DND5E.ContainerRecursiveError', {
+        localize: true,
+      });
+      return;
+    }
+
+    // If item already exists in same DocumentCollection, just adjust its container property
+    if (item.actor === this.item.actor && item.pack === this.item.pack) {
+      return item.update({
+        folder: this.item.folder,
+        'system.container': this.item.id,
+      });
+    }
+
+    // Otherwise, create a new item & contents in this context
+    const toCreate = await dnd5e.documents.Item5e.createWithContents([item], {
+      container: this.item,
+      transformAll: (itemData: any) => {
+        const options: Record<string, unknown> = {};
+
+        if (SettingsProvider.settings.includeFlagsInSpellScrollCreation.get()) {
+          options.flags = itemData.flags;
+        }
+
+        return itemData.type === 'spell'
+          ? dnd5e.documents.Item5e.createScrollFromSpell(itemData, options)
+          : itemData;
+      },
+    });
+    if (this.item.folder)
+      toCreate.forEach((d: any) => (d.folder = this.item.folder.id));
+    return dnd5e.documents.Item5e.createDocuments(toCreate, {
+      pack: this.item.pack,
+      parent: this.item.actor,
+      keepId: true,
+    });
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Handle a drop event for an existing contained Item to sort it relative to its siblings.
+   */
+  async _onSortItem(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    item: Item5e
+  ) {
+    const dropTarget = event.target.closest<HTMLElement>('[data-item-id]');
+    if (!dropTarget) return;
+    const contents = await this.item.system.contents;
+    const target = contents.get(dropTarget.dataset.itemId);
+
+    // Don't sort on yourself
+    if (item.id === target.id) return;
+
+    // Identify sibling items based on adjacent HTML elements
+    const siblings = [];
+    for (const el of Array.from(dropTarget.parentElement!.children)) {
+      if (el instanceof HTMLElement) {
+        const siblingId = el.dataset.itemId;
+        if (siblingId && siblingId !== item.id)
+          siblings.push(contents.get(siblingId));
+      }
+    }
+
+    // Perform the sort
+    const sortUpdates = SortingHelpers.performIntegerSort(item, {
+      target,
+      siblings,
+    });
+    const updateData = sortUpdates.map((u: any) => {
+      const update = u.update;
+      update._id = u.target.id;
+      return update;
+    });
+
+    // Perform the update
+    Item.updateDocuments(updateData, {
+      pack: this.item.pack,
+      parent: this.item.actor,
+    });
   }
 
   // TODO: Determine if `setExpandedItemData()` is needed

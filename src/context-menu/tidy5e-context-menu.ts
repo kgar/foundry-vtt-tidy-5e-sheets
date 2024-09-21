@@ -388,7 +388,13 @@ function getItemContextOptions(item: Item5e) {
     name: 'DND5E.Scroll.CreateScroll',
     icon: '<i class="fa-solid fa-scroll"></i>',
     callback: async () => {
-      const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(item);
+      const options: Record<string, unknown> = {};
+
+      if (SettingsProvider.settings.includeFlagsInSpellScrollCreation.get()) {
+        options.flags = item.flags;
+      }
+      
+      const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(item, options);
       if (scroll) {
         dnd5e.documents.Item5e.create(scroll, { parent: itemParent });
       }

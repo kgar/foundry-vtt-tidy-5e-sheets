@@ -39,7 +39,6 @@ declare global {
   var Hooks: any;
   var ImagePopout: any;
   var Item: any;
-  var Item5e: any;
   var Items: any;
   var KeyboardManager: any;
   var ModuleManagement: any;

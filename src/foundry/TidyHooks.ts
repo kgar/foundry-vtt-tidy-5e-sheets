@@ -41,6 +41,17 @@ export class TidyHooks {
   }
 
   /**
+   * Something has been dropped on an item or container sheet. Return `false` to prevent default behavior.
+   * @param item the target item
+   * @param app the target item sheet
+   * @param data the drop data
+   * @returns `false` to prevent default behavior, else the result is discarded
+   */
+  static dnd5eDropItemSheetData(item: Item5e, app: any, data: any): boolean {
+    return Hooks.call('dnd5e.dropItemSheetData', item, app, data);
+  }
+
+  /**
    * The context menu for the advancements list has been constructed.
    * @param {jQuery} html The HTML element to which the context options are attached.
    * @param {ContextMenuEntry[]} contextOptions The context menu entries.

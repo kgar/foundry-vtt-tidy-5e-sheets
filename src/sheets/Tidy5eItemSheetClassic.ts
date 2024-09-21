@@ -697,7 +697,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
      * @param {object} data                  The data that has been dropped onto the sheet
      * @returns {boolean}                    Explicitly return `false` to prevent normal drop handling.
      */
-    const allowed = Hooks.call('dnd5e.dropItemSheetData', item, this, data);
+    const allowed = TidyHooks.dnd5eDropItemSheetData(item, this, data);
     if (allowed === false) return;
 
     switch (data.type) {
