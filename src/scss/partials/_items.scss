@@ -605,7 +605,7 @@
       }
     }
 
-    > .form-group {
+    [role="presentation"] > .form-group {
       padding: 0.1875rem 0.5rem;
     }
   }
@@ -758,7 +758,6 @@
       }
     }
   }
-
 
   label input[type='checkbox'] {
     border: none;

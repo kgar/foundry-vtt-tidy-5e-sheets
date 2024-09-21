@@ -13,11 +13,11 @@
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
   import ItemDescriptions from '../parts/ItemDescriptions.svelte';
   import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
-  import OpenSheetEditor from 'src/components/editor/OpenSheetEditor.svelte';
   import SheetEditor from 'src/components/editor/SheetEditor.svelte';
   import { CONSTANTS } from 'src/constants';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
+  import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
 
   let context = getContext<Readable<ItemSheetContext | ContainerSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -25,21 +25,13 @@
 
   $: appId = $context.document.id;
 
-  function onEditorActivation(node: HTMLElement) {
-    if (editorIsActive) {
-      editing = false;
-      editorIsActive = false;
-      return;
-    }
-
-    // $context.activateEditors(node, { bindSecrets: false });
-    editorIsActive = true;
-  }
-
   let editing = false;
-  let editorIsActive = false;
   let valueToEdit: string;
   let fieldToEdit: string;
+
+  function stopEditing() {
+    editing = false;
+  }
 
   function edit(value: string, field: string) {
     valueToEdit = value;
@@ -223,11 +215,20 @@
 </div>
 
 {#if editing}
-  <RerenderAfterFormSubmission andOnValueChange={valueToEdit}>
-    <article class="editor-container" use:onEditorActivation>
-      <OpenSheetEditor content={valueToEdit} target={fieldToEdit} />
+  {#key valueToEdit}
+    <article class="editor-container">
+      <SheetEditorV2
+        content={valueToEdit}
+        field={fieldToEdit}
+        editorOptions={{
+          editable: $context.editable,
+          toggled: false,
+        }}
+        documentUuid={$context.item.uuid}
+        on:save={() => stopEditing()}
+      />
     </article>
-  </RerenderAfterFormSubmission>
+  {/key}
 {/if}
 
 <style lang="scss">

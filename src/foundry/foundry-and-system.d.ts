@@ -42,6 +42,7 @@ declare global {
   var Item: any;
   var Item5e: any;
   var Items: any;
+  var KeyboardManager: any;
   var ModuleManagement: any;
   var NumericTerm: any;
   var renderTemplate: any;
