@@ -454,6 +454,9 @@
       border-top: 0.0625rem solid var(--t5e-separator-color);
       border-bottom: 0.0625rem solid var(--t5e-separator-color);
 
+      display: flex;
+      justify-content: space-between;
+
       &:first-child {
         margin-top: 0;
       }
@@ -605,7 +608,7 @@
       }
     }
 
-    [role="presentation"] > .form-group {
+    [role='presentation'] > .form-group {
       padding: 0.1875rem 0.5rem;
     }
   }
@@ -929,5 +932,10 @@
     > label {
       font-weight: 500;
     }
+  }
+
+  .empty {
+    padding-left: 0.5rem;
+    font-style: italic;
   }
 }

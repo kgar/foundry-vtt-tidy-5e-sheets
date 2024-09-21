@@ -1,6 +1,10 @@
 &.application {
   overflow: visible;
 
+  button {
+    --button-hover-background-color: var(--t5e-faint-color);
+  }
+
   label.checkbox > input[type='checkbox'],
   input[type='checkbox'] {
     --input-height: 1.625rem;
@@ -9,6 +13,12 @@
     --checkbox-checked-color: var(--t5e-secondary-color);
     --checkbox-checkmark-color: var(--t5e-white);
     --checkbox-size: 1.25rem;
+  }
+  
+  label.checkbox > input[type='checkbox']::before,
+  input[type='checkbox']::before {
+    --checkbox-disabled-color: var(--t5e-faint-color);
+
   }
 
   a.button.active,
@@ -40,5 +50,13 @@
 
   .window-resize-handle {
     inset: auto 0 0 auto;
+  }
+
+  button:hover, button:focus {
+    box-shadow: none;
+  }
+
+  table {
+    margin-inline: 0;
   }
 }

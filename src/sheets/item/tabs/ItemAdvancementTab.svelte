@@ -144,7 +144,7 @@
                 <img src={advancement.icon} alt="" />
               {/if}
             </div>
-            <h4>{@html advancement.title}</h4>
+            <span class="title truncate" title={advancement.title}>{@html advancement.title}</span>
           </div>
           {#if $context.advancementEditable || !$context.isEmbedded}
             <div class="flexrow">

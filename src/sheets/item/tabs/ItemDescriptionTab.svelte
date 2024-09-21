@@ -6,6 +6,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import { CONSTANTS } from 'src/constants';
+  import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -14,16 +15,18 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<RerenderAfterFormSubmission
-  andOnValueChange={$context.item.system.description.value}
->
+{#key $context.item.system.description.value}
   <article class="editor-container">
     <!-- use:$context.activateEditors -->
     <h2 class="details-headline">{localize('TIDY5E.ItemDetailsHeadline')}</h2>
-    <SheetEditor
+    <SheetEditorV2
       content={$context.enriched.description}
-      editable={$context.editable}
-      target="system.description.value"
+      enriched={$context.descriptionFullEnrichedHtml}
+      field="system.description.value"
+      editorOptions={{
+        editable: $context.editable,
+      }}
+      documentUuid={$context.document.uuid}
     />
   </article>
-</RerenderAfterFormSubmission>
+{/key}

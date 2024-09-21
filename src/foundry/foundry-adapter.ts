@@ -136,22 +136,6 @@ export const FoundryAdapter = {
       },
     });
   },
-  createOpenEditorHtml(
-    content: string,
-    targetDataField: string,
-    textEditorOptions?: Record<string, any>
-  ) {
-    return HandlebarsHelpers.editor(content, {
-      hash: {
-        target: targetDataField,
-        button: false,
-        engine: 'prosemirror',
-        collaborate: false,
-        editable: true,
-        ...textEditorOptions,
-      },
-    });
-  },
   mergeObject<T>(original: T, ...args: any[]) {
     return foundry.utils.mergeObject(original, ...args) as T;
   },

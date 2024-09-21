@@ -92,10 +92,12 @@
                   src={effect.img ?? effect.icon}
                   alt={effect.name ?? ''}
                 />
-                <h4>{effect.name ?? ''}</h4>
+                <span class="title truncate" title={effect.name}
+                  >{effect.name ?? ''}</span
+                >
               </div>
-              <div class="effect-source">{effect.sourceName ?? ''}</div>
-              <div class="effect-duration">
+              <div class="effect-source truncate">{effect.sourceName ?? ''}</div>
+              <div class="effect-duration truncate">
                 {effect.duration.label ?? ''}
               </div>
               <div class="item-controls active-effect-controls flexrow">
@@ -103,7 +105,7 @@
                   {#if section.type !== 'enchantment'}
                     <button
                       type="button"
-                      class="active-effect-control inline-transparent-button"
+                      class="active-effect-control inline-icon-button"
                       title={effect.disabled
                         ? 'DND5E.EffectEnable'
                         : 'DND5E.EffectDisable'}
@@ -122,7 +124,7 @@
                   {/if}
                   <button
                     type="button"
-                    class="active-effect-control inline-transparent-button"
+                    class="active-effect-control inline-icon-button"
                     title={localize('DND5E.EffectEdit')}
                     on:click={() => effect.sheet.render(true)}
                     tabindex={$settingStore.useAccessibleKeyboardSupport
@@ -133,7 +135,7 @@
                   </button>
                   <button
                     type="button"
-                    class="active-effect-control inline-transparent-button"
+                    class="active-effect-control inline-icon-button"
                     title={localize('DND5E.EffectDelete')}
                     on:click={() => effect.deleteDialog()}
                     tabindex={$settingStore.useAccessibleKeyboardSupport

@@ -31,6 +31,8 @@
     .header-control > button {
       justify-content: flex-start;
       gap: 0.5rem;
+      --button-text-color: var(--t5e-primary-font-color);
+      --button-hover-text-color: var(--t5e-primary-font-color);
     }
   }
 
@@ -264,12 +266,12 @@
   // TODO: Buttons V2?
   :where(.window-content) {
     button:not(prose-mirror button) {
-      background-color: var(--t5e-faint-color);
+      background-color: var(--t5e-faintest-color);
       transition: background-color 0.3s ease;
       border: 1px solid var(--t5e-light-color);
 
       &:hover {
-        background-color: var(--t5e-light-color);
+        background-color: var(--t5e-faint-color);
       }
     }
   }
