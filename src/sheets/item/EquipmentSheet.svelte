@@ -51,7 +51,8 @@
           <Select
             id="{appId}-rarity"
             document={$context.item}
-            field="system.rarity" class="item-rarity"
+            field="system.rarity"
+            class="item-rarity"
             value={$context.system.rarity}
             disabled={!$context.editable}
             blankValue=""
