@@ -43,8 +43,7 @@
     <Accordion multiple>
       {#each $context.itemDescriptions as itemDescription, i (itemDescription.field)}
         {#key itemDescription.content}
-          <div bind:this={editorsContainers[i]} >
-            <!-- use:$context.activateEditors -->
+          <div bind:this={editorsContainers[i]}>
             <AccordionItem
               bind:open={accordionItemOpenStates[i]}
               class="editor"

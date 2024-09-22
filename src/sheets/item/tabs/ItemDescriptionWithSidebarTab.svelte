@@ -12,16 +12,14 @@
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
   import ItemDescriptions from '../parts/ItemDescriptions.svelte';
-  import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
-  import SheetEditor from 'src/components/editor/SheetEditor.svelte';
   import { CONSTANTS } from 'src/constants';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
 
-  let context = getContext<Readable<ItemSheetContext | ContainerSheetClassicContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getContext<
+    Readable<ItemSheetContext | ContainerSheetClassicContext>
+  >(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
 
   $: appId = $context.document.id;
 
@@ -53,9 +51,7 @@
     {#if $context.isPhysical}
       {#if $context.item.type !== CONSTANTS.ITEM_TYPE_CONTAINER}
         <div class="form-group">
-          <label for="{appId}-quantity"
-            >{localize('DND5E.Quantity')}</label
-          >
+          <label for="{appId}-quantity">{localize('DND5E.Quantity')}</label>
           <NumberInput
             id="{appId}-quantity"
             value={$context.source.quantity}
@@ -71,9 +67,7 @@
       {/if}
 
       <div class="form-group">
-        <label for="{appId}-weight-value"
-          >{localize('DND5E.Weight')}</label
-        >
+        <label for="{appId}-weight-value">{localize('DND5E.Weight')}</label>
         <NumberInput
           id="{appId}-weight-value"
           value={$context.source.weight.value}
@@ -88,9 +82,7 @@
       <HorizontalLineSeparator />
 
       <div class="form-group stacked">
-        <label for="{appId}-price-value"
-          >{localize('DND5E.Price')}</label
-        >
+        <label for="{appId}-price-value">{localize('DND5E.Price')}</label>
         {#if $context.concealDetails}
           <span>{localize('DND5E.Unidentified.Value')}</span>
         {:else}
@@ -201,18 +193,20 @@
       renderDescriptions={!editing}
     />
   {:else if $context.editable || $context.system.unidentified.description}
-    <RerenderAfterFormSubmission
-      andOnValueChange={$context.enriched.unidentified}
-    >
-      <div class="flexrow" role="presentation">
-        <!-- use:$context.activateEditors -->
-        <SheetEditor
-          content={$context.enriched.unidentified}
-          editable={$context.editable}
-          target="system.unidentified.description"
-        />
-      </div>
-    </RerenderAfterFormSubmission>
+    <article class="full-height-editor-wrapper">
+      {#key $context.enriched.unidentified}
+        <div class="flexrow" role="presentation">
+          <SheetEditorV2
+            content={$context.enriched.unidentified}
+            field="system.unidentified.description"
+            editorOptions={{
+              editable: $context.editable,
+            }}
+            documentUuid={$context.item.uuid}
+          />
+        </div>
+      {/key}
+    </article>
   {/if}
 </div>
 

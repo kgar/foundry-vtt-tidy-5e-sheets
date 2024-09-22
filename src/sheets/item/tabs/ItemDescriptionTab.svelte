@@ -17,7 +17,6 @@
 
 {#key $context.item.system.description.value}
   <article class="editor-container">
-    <!-- use:$context.activateEditors -->
     <h2 class="details-headline">{localize('TIDY5E.ItemDetailsHeadline')}</h2>
     <SheetEditorV2
       content={$context.enriched.description}

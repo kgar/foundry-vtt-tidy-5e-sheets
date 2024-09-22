@@ -295,6 +295,28 @@
     display: none;
   }
 
+  .prosemirror menu {
+    button:hover {
+      background: var(--t5e-prosemirror-button-color);
+    }
+    .pm-dropdown {
+      background: var(--t5e-prosemirror-button-color);
+
+      ul {
+        background: var(--t5e-prosemirror-button-color);
+      }
+
+      li:hover {
+        background: var(--t5e-prosemirror-dropdown-item-hover-color);
+      }
+    }
+  }
+
+  .prosemirror menu button:hover,
+  .prosemirror menu button.active {
+    color: var(--t5e-primary-font-color);
+  }
+
   // Lists
   .separated-list {
     padding: 0;

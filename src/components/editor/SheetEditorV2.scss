@@ -3,6 +3,23 @@ article.full-height-editor-wrapper {
   flex: 1;
   display: flex;
   flex-direction: column;
+  height: 100%;
+
+  .flexrow {
+    align-items: stretch;
+  }
+
+  > * {
+    flex: 1;
+  }
+
+  prose-mirror {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: static;
+    min-height: 100%;
+  }
 
   &:last-child {
     margin-bottom: 0;
@@ -38,6 +55,16 @@ prose-mirror.prosemirror {
     background: var(--t5e-table-header-row-color);
 
     .pm-dropdown {
+      background: var(--t5e-prosemirror-button-color);
+
+      ul {
+        background: var(--t5e-prosemirror-button-color);
+      }
+
+      li:hover {
+        background: var(--t5e-prosemirror-dropdown-item-hover-color);
+      }
+
       i {
         color: var(--t5e-primary-font-color);
       }
@@ -51,8 +78,14 @@ prose-mirror.prosemirror {
       }
     }
 
+    button:hover {
+      background: var(--t5e-prosemirror-button-color);
+      color: var(--t5e-primary-font-color);
+    }
+
     button.active {
       background: var(--t5e-light-color);
+      color: var(--t5e-primary-font-color);
     }
   }
 

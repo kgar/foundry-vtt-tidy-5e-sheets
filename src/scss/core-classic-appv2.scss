@@ -486,6 +486,13 @@
     padding: 1rem;
   }
 
+  .user-select-text * {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
+
   /* Expand Indicator */
   .expand-indicator {
     color: var(--t5e-tertiary-color);
