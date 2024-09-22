@@ -282,8 +282,12 @@ export function SvelteApplicationMixin<
     _onRender(...args: any[]) {
       super._onRender(...args);
 
-      this.#restoreScrollPositions(this.element);
-      this.#restoreInputFocus(this.element);
+      // Some integrations will insert HTML even beyond this point,
+      // so breaking off the current task gives another chance to restore state.
+      setTimeout(() => {
+        this.#restoreScrollPositions(this.element);
+        this.#restoreInputFocus(this.element);
+      });
     }
 
     /* -------------------------------------------- */
@@ -432,12 +436,12 @@ export function SvelteApplicationMixin<
     #saveInputFocus(element: HTMLElement) {
       const focusedElement = element.querySelector<
         HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-      >(':focus');
+      >(':is(input, select, textarea):focus');
 
-      this.#focusedInputSelector = focusedElement?.id
-        ? `#${focusedElement.id}`
-        : focusedElement?.name
+      this.#focusedInputSelector = focusedElement?.name
         ? `${focusedElement.tagName}[name="${focusedElement.name}"]`
+        : focusedElement?.id
+        ? `#${focusedElement.id}`
         : undefined;
     }
 
