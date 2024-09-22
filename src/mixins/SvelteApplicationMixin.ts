@@ -80,6 +80,13 @@ export function SvelteApplicationMixin<
 
     #focusedInputSelector: string | undefined = '';
 
+    /**
+     * Compatibility shim from Application V1.
+     */
+    get object() {
+      return this.document;
+    }
+
     /* -------------------------------------------- */
     /*  Svelte-specific                             */
     /* -------------------------------------------- */
