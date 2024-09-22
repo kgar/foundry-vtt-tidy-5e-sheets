@@ -37,22 +37,52 @@ export type ItemSheetContext = {
     };
   }[];
   activationTypes: GroupableSelectOption[];
+  advancement: any;
+  advancementEditable: boolean;
   affectsPlaceholder: string;
+  baseItems: Record<string, string>;
+  concealDetails: boolean;
   config: typeof CONFIG.DND5E;
   customContent: CustomContent[];
   customEquipmentTypeGroups: RegisteredEquipmentTypeGroup[];
+  data: any;
+  damageTypes:
+    | { label: string; value: string; selected: boolean }[]
+    | undefined;
+  defaultAbility: string;
+  denominationOptions: any;
   dimensions:
     | { size: string; width: string | false; height: string | false }
     | undefined;
+  document: any;
   durationUnits: GroupableSelectOption[];
+  editable: boolean;
+  effects: any;
+  enriched: {
+    description: string;
+    unidentified: string;
+    chat: string;
+  };
   equipmentTypes: GroupableSelectOption[];
+  hasDexModifier: boolean;
   /**
    * Represents remaining health as a percentage within the range of `0` to `100`.
    */
   healthPercentage: number;
   identifiedName: string;
+  isEmbedded: boolean;
+  isIdentifiable: boolean;
+  isIdentified: boolean;
+  isPhysical: boolean;
+  item: Item5e;
   itemDescriptions: ItemDescription[];
+  itemType: string;
+  itemStatus: string | null;
+  itemSubtypes: Record<string, string>;
+  labels: Record<string, string>;
+  limited: boolean;
   lockItemQuantity: boolean;
+  options: any;
   owner: boolean;
   properties: PropertyContext;
   rangeTypes: GroupableSelectOption[];
@@ -61,14 +91,20 @@ export type ItemSheetContext = {
     value: string;
     label: string;
   }[];
+  rollData: Record<string, any>;
   scalarTarget: boolean;
+  source: any;
+  system: any;
+  title: string;
+  toggleAdvancementLock: () => Promise<void>;
+  user: any;
   usesRecovery: {
     data: UsesRecoveryData;
     formulaOptions: { label: string; value: string }[] | null;
   }[];
   itemOverrides: Set<string>;
   tabs: Tab[];
-} & Record<string, any>;
+};
 
 /**
  * Data for a recovery profile for an activity's uses.
@@ -97,6 +133,7 @@ export interface UsesField {
 export type ItemDescription = {
   field: string;
   content: string;
+  enriched: string;
   label: string;
 };
 

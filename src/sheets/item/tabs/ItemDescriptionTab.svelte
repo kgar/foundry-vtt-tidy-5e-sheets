@@ -1,7 +1,5 @@
 <script lang="ts">
-  import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import SheetEditor from 'src/components/editor/SheetEditor.svelte';
   import type { ItemSheetContext } from 'src/types/item.types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -11,16 +9,13 @@
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
-
-  const localize = FoundryAdapter.localize;
 </script>
 
 {#key $context.item.system.description.value}
   <article class="editor-container">
-    <h2 class="details-headline">{localize('TIDY5E.ItemDetailsHeadline')}</h2>
     <SheetEditorV2
-      content={$context.enriched.description}
-      enriched={$context.descriptionFullEnrichedHtml}
+      content={$context.item.system.description.value}
+      enriched={$context.enriched.description}
       field="system.description.value"
       editorOptions={{
         editable: $context.editable,

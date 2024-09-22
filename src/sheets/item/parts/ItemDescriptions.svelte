@@ -28,7 +28,7 @@
 
   const dispatcher = createEventDispatcher<{
     edit: {
-      valueToEdit: string;
+      contentToEdit: string;
       fieldToEdit: string;
     };
   }>();
@@ -60,7 +60,7 @@
                     class="inline-icon-button edit-item-description"
                     on:click|stopPropagation={() =>
                       dispatcher('edit', {
-                        valueToEdit: itemDescription.content,
+                        contentToEdit: itemDescription.content,
                         fieldToEdit: itemDescription.field,
                       })}
                     tabindex={$settingStore.useAccessibleKeyboardSupport
@@ -73,7 +73,7 @@
                 data-edit={itemDescription.field}
                 class="item-editor-descriptions-html-container user-select-text"
               >
-                {@html itemDescription.content}
+                {@html itemDescription.enriched}
               </div>
             </AccordionItem>
           </div>

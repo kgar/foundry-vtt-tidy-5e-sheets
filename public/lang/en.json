@@ -154,8 +154,6 @@
   "TIDY5E.TokenLinked": "Token linked to actor",
   "TIDY5E.TokenUnlinked": "Token not linked to actor",
 
-  "TIDY5E.ItemDetailsHeadline": "Mechanics/Flavor Text",
-
   "TIDY5E.SpellSourceIdentifierSelectText": "Class Identifier: {identifier}",
   "TIDY5E.SpellSourceIdentifierLabelHint": "The actor who has this spell does not have the source class that is specified here.",
 

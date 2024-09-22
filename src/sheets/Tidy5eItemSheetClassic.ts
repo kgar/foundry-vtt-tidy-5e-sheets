@@ -134,20 +134,23 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
 
     const itemDescriptions: ItemDescription[] = [];
     itemDescriptions.push({
-      content: enriched.description,
+      enriched: enriched.description,
+      content: this.document.system.description.value,
       field: 'system.description.value',
       label: FoundryAdapter.localize('DND5E.Description'),
     });
 
     if (isIdentifiable && FoundryAdapter.userIsGm()) {
       itemDescriptions.push({
-        content: enriched.unidentified,
+        enriched: enriched.unidentified,
+        content: this.document.system.unidentified.description,
         field: 'system.unidentified.description',
         label: FoundryAdapter.localize('DND5E.DescriptionUnidentified'),
       });
     }
     itemDescriptions.push({
-      content: enriched.chat,
+      enriched: enriched.chat,
+      content: this.document.system.description.chat,
       field: 'system.description.chat',
       label: FoundryAdapter.localize('DND5E.DescriptionChat'),
     });
@@ -180,6 +183,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       customEquipmentTypeGroups:
         ItemSheetRuntime.getCustomEquipmentTypeGroups(),
       data: this.document.toObject(false),
+      defaultAbility: '',
       dimensions: target?.template?.dimensions,
       document: this.document,
       durationUnits: [
@@ -199,7 +203,6 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       ],
       editable: editable,
       enriched,
-      fields: this.document.system.schema.fields,
       isEmbedded: this.document.isEmbedded,
       item: this.document,
       itemDescriptions,
@@ -225,6 +228,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       // Item Type, Status, and Details
       // @ts-expect-error
       itemType: game.i18n.localize(CONFIG.Item.typeLabels[this.item.type]),
+      itemSubtypes: {},
       itemStatus: this._getItemStatus(),
       baseItems: await this._getItemBaseTypes(),
       isPhysical: this.document.system.hasOwnProperty('quantity'),
@@ -244,7 +248,6 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
         this.document.effects,
         { parent: this.item }
       ),
-      elements: this.options.elements,
 
       concealDetails:
         !game.user.isGM && this.document.system.identified === false,
@@ -325,6 +328,9 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
             data.period === 'recharge' ? data.recharge?.options : null,
         })
       ),
+
+      damageTypes: [],
+      denominationOptions: [],
     };
 
     // Properties

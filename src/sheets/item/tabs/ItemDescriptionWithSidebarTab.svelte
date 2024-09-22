@@ -24,7 +24,7 @@
   $: appId = $context.document.id;
 
   let editing = false;
-  let valueToEdit: string;
+  let contentToEdit: string;
   let fieldToEdit: string;
 
   function stopEditing() {
@@ -32,7 +32,7 @@
   }
 
   function edit(value: string, field: string) {
-    valueToEdit = value;
+    contentToEdit = value;
     fieldToEdit = field;
     editing = true;
   }
@@ -189,7 +189,7 @@
 
   {#if FoundryAdapter.userIsGm() || $context.isIdentified}
     <ItemDescriptions
-      on:edit={(ev) => edit(ev.detail.valueToEdit, ev.detail.fieldToEdit)}
+      on:edit={(ev) => edit(ev.detail.contentToEdit, ev.detail.fieldToEdit)}
       renderDescriptions={!editing}
     />
   {:else if $context.editable || $context.system.unidentified.description}
@@ -197,7 +197,8 @@
       {#key $context.enriched.unidentified}
         <div class="flexrow" role="presentation">
           <SheetEditorV2
-            content={$context.enriched.unidentified}
+            content={$context.system.unidentified.description}
+            enriched={$context.enriched.unidentified}
             field="system.unidentified.description"
             editorOptions={{
               editable: $context.editable,
@@ -211,10 +212,10 @@
 </div>
 
 {#if editing}
-  {#key valueToEdit}
+  {#key contentToEdit}
     <article class="editor-container">
       <SheetEditorV2
-        content={valueToEdit}
+        content={contentToEdit}
         field={fieldToEdit}
         editorOptions={{
           editable: $context.editable,

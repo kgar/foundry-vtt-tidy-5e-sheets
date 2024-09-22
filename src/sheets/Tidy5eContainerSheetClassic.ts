@@ -167,21 +167,24 @@ export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
     const itemDescriptions: ItemDescription[] = [];
 
     itemDescriptions.push({
-      content: enriched.description,
+      enriched: enriched.description,
+      content: this.document.system.description.value,
       field: 'system.description.value',
       label: FoundryAdapter.localize('DND5E.Description'),
     });
 
     if (isIdentifiable && FoundryAdapter.userIsGm()) {
       itemDescriptions.push({
-        content: enriched.unidentified,
+        enriched: enriched.unidentified,
+        content: this.document.system.unidentified.description,
         field: 'system.unidentified.description',
         label: FoundryAdapter.localize('DND5E.DescriptionUnidentified'),
       });
     }
 
     itemDescriptions.push({
-      content: enriched.chat,
+      enriched: enriched.chat,
+      content: this.document.system.description.chat,
       field: 'system.description.chat',
       label: FoundryAdapter.localize('DND5E.DescriptionChat'),
     });
