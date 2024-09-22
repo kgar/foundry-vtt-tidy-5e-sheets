@@ -64,7 +64,6 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
     const context = new Map<any, any>([
       [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._store],
       [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
-      // [CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED, this.onTabSelected.bind(this)],
     ]);
 
     const component = sheetComponent
@@ -688,15 +687,6 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
     const data = TextEditor.getDragEventData(event);
     const item = this.item;
 
-    /**
-     * A hook event that fires when some useful data is dropped onto an ItemSheet5e.
-     * @function dnd5e.dropItemSheetData
-     * @memberof hookEvents
-     * @param {Item5e} item                  The Item5e
-     * @param {ItemSheet5e} sheet            The ItemSheet5e application
-     * @param {object} data                  The data that has been dropped onto the sheet
-     * @returns {boolean}                    Explicitly return `false` to prevent normal drop handling.
-     */
     const allowed = TidyHooks.dnd5eDropItemSheetData(item, this, data);
     if (allowed === false) return;
 
@@ -899,7 +889,6 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
     return this.submit({ updateData: { 'system.uses.recovery': recovery } });
   }
 
-  // TODO: Make prop of type `keyof WhateverWeCallTheREcoveryType`
   updateRecovery(index: number, prop: string, value: keyof UsesRecoveryData) {
     const recovery = this.item.system.toObject().uses.recovery;
     recovery[index][prop] = value;
