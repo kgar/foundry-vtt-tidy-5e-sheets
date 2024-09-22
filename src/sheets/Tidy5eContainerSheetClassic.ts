@@ -546,16 +546,7 @@ export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
     });
   }
 
-  // TODO: Determine if `setExpandedItemData()` is needed
-  // TODO: Determine if `_saveViewState()` is needed
-  // TODO: Determine if `_onDropSingleItem()` is needed
-  //   async _onDropSingleItem(...args: any[]) {
-  //     return super._onDropSingleItem(...args);
-  //   }
-
-  // TODO: Determine if feasible to handle `removeConfigureSettingsButtonWhenLockedForNonGm()` in svelte mixin
-
-  // TODO: Do we need
+  // TODO: Plug in or reimplement
   // - SheetTabCacheable
   // - SheetExpandedItemsCacheable
   // - SearchFilterCacheable

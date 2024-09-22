@@ -1,7 +1,13 @@
 import { getThemes } from 'src/theme/theme-reference';
 import { debug } from './logging';
 import { CONSTANTS } from 'src/constants';
-import { SettingsProvider } from 'src/settings/settings';
+import {
+  SettingsProvider,
+  settingStore,
+  type CurrentSettings,
+} from 'src/settings/settings';
+import { get } from 'svelte/store';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export function applyTitleToWindow(title: string, element: HTMLElement) {
   if (!element) {
@@ -24,13 +30,15 @@ export function applyTitleToWindow(title: string, element: HTMLElement) {
   }
 }
 
-export function applyThemeDataAttributeToWindow(
-  themeId: string,
+export function applyMutableSettingAttributesToWindow(
+  settings: CurrentSettings,
   element?: HTMLElement
 ) {
   if (!element) {
     return;
   }
+
+  let themeId = settings.colorScheme;
 
   themeId =
     themeId === CONSTANTS.THEME_ID_DEFAULT
@@ -43,20 +51,25 @@ export function applyThemeDataAttributeToWindow(
     debug(`Applying theme type ${theme.type} to window`);
     element.setAttribute('data-tidy-theme-type', theme.type);
   }
+
+  if (settings.lockConfigureSheet && !FoundryAdapter.userIsGm()) {
+    element.setAttribute('data-tidy-lock-configure-sheet', 'true');
+  } else {
+    element.removeAttribute('data-tidy-lock-configure-sheet');
+  }
 }
 
 export function applySheetAttributesToWindow(
   documentName: string,
   documentUuid: string,
   type: string,
-  themeId: string,
   element?: HTMLElement
 ) {
   element?.setAttribute('data-sheet-module', 'tidy5e-sheet');
   element?.setAttribute('data-document-name', documentName);
   element?.setAttribute('data-document-type', type);
   element?.setAttribute('data-document-uuid', documentUuid);
-  applyThemeDataAttributeToWindow(themeId, element);
+  applyMutableSettingAttributesToWindow(get(settingStore), element);
 }
 
 export async function maintainCustomContentInputFocus(

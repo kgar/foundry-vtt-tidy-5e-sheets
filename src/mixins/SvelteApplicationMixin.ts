@@ -1,9 +1,9 @@
 import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { SettingsProvider, settingStore } from 'src/settings/settings';
+import { settingStore } from 'src/settings/settings';
 import {
   applySheetAttributesToWindow,
-  applyThemeDataAttributeToWindow,
+  applyMutableSettingAttributesToWindow,
   blurUntabbableButtonsOnClick,
 } from 'src/utils/applications';
 import { debug, error } from 'src/utils/logging';
@@ -231,7 +231,6 @@ export function SvelteApplicationMixin<
           this.document.documentName,
           this.document.uuid,
           this.document.type,
-          SettingsProvider.settings.colorScheme.get(),
           element
         );
 
@@ -307,7 +306,7 @@ export function SvelteApplicationMixin<
         this.#subscriptionsService.registerSubscriptions(
           ...subscriptions,
           settingStore.subscribe((settings) => {
-            applyThemeDataAttributeToWindow(settings.colorScheme, this.element);
+            applyMutableSettingAttributesToWindow(settings, this.element);
           })
         );
 

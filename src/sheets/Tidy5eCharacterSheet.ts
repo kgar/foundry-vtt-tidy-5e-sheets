@@ -32,7 +32,7 @@ import {
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
-  applyThemeDataAttributeToWindow,
+  applyMutableSettingAttributesToWindow,
   applyTitleToWindow,
   blurUntabbableButtonsOnClick,
   maintainCustomContentInputFocus,
@@ -158,7 +158,7 @@ export class Tidy5eCharacterSheet
       }),
       settingStore.subscribe((s) => {
         if (first) return;
-        applyThemeDataAttributeToWindow(s.colorScheme, this.element.get(0));
+        applyMutableSettingAttributesToWindow(s, this.element.get(0));
         this.render();
       }),
       this.messageBus.subscribe((m) => {
@@ -1394,7 +1394,6 @@ export class Tidy5eCharacterSheet
         this.actor.documentName,
         this.actor.uuid,
         this.actor.type,
-        SettingsProvider.settings.colorScheme.get(),
         this.element.get(0)
       );
       await this.renderCustomContent({ data, isFullRender: true });
