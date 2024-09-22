@@ -515,48 +515,6 @@
       line-height: unset;
     }
   }
-
-  /* Missing styles from App v2 (todo: sort out later) */
-  :where(.window-content) {
-    :is(h1, h2, h3, h4, h5, h6) {
-      border: none;
-      font-family: var(--dnd5e-font-roboto-slab);
-      font-weight: bold;
-      color: var(--t5e-primary-font-color);
-      text-shadow: none;
-      margin-block: 0 0.375rem;
-    }
-
-    h1 {
-      font-size: 1.5em;
-    }
-
-    h2 {
-      font-size: 1.4em;
-    }
-
-    h3 {
-      font-size: 1.3em;
-    }
-
-    h4 {
-      font-size: 1.2em;
-    }
-
-    h5 {
-      font-size: 1.1em;
-    }
-
-    h6 {
-      font-size: 1em;
-    }
-
-    code {
-      background: none;
-      border: none;
-      color: var(--t5e-primary-font-color);
-    }
-  }
 }
 
 @import './partials/floating-context-menu';

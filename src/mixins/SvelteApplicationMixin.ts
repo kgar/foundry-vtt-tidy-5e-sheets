@@ -268,6 +268,12 @@ export function SvelteApplicationMixin<
     /* -------------------------------------------- */
 
     async close(options: ApplicationClosingOptions = {}) {
+      // Trigger saving of the form
+      const submit = this.options.submitOnClose;
+      if (submit) {
+        await this.submit({ preventClose: true, preventRender: true });
+      }
+
       this.#subscriptionsService.unsubscribeAll();
       this.#components.forEach((c) => c.$destroy());
       this.#components = [];
