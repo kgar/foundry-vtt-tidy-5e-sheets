@@ -1,7 +1,5 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
-  import { createEventDispatcher, getContext, onMount } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { createEventDispatcher, onMount } from 'svelte';
 
   type EditorOptions =
     any /*foundry.applications.elements.HTMLProseMirrorElement.ProseMirrorInputConfig*/;
@@ -12,8 +10,6 @@
   export let editorOptions: EditorOptions = {};
   export let documentUuid: string;
   export let manageSecrets: boolean = false;
-
-  let editorContainerId = `editor-${foundry.utils.randomID()}`;
 
   let proseMirrorContainerEl: HTMLElement;
 
@@ -96,7 +92,6 @@
 </script>
 
 <div
-  id={editorContainerId}
   style="display: contents;"
   class={$$restProps.class ?? ''}
   bind:this={proseMirrorContainerEl}
