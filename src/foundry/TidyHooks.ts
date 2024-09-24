@@ -12,7 +12,7 @@ import type {
 } from 'src/types/types';
 import type { ContextMenuEntry } from './foundry.types';
 import type {
-  ContainerSheetContext,
+  ContainerSheetClassicContext,
   Item5e,
   ItemSheetContext,
 } from 'src/types/item.types';
@@ -38,6 +38,17 @@ export class TidyHooks {
     menuItems: ContextMenuEntry[]
   ): boolean {
     return Hooks.call('dnd5e.getActiveEffectContextOptions', effect, menuItems);
+  }
+
+  /**
+   * Something has been dropped on an item or container sheet. Return `false` to prevent default behavior.
+   * @param item the target item
+   * @param app the target item sheet
+   * @param data the drop data
+   * @returns `false` to prevent default behavior, else the result is discarded
+   */
+  static dnd5eDropItemSheetData(item: Item5e, app: any, data: any): boolean {
+    return Hooks.call('dnd5e.dropItemSheetData', item, app, data);
   }
 
   /**
@@ -173,7 +184,7 @@ export class TidyHooks {
    * Sheet item/effect sections are about to be configured. Use this hook to inject additional items, sections, etc., or to adjust context data.
    * @param {any} app The sheet application instance.
    * @param {HTMLElement} element The sheet HTML element.
-   * @param {CharacterSheetContext | NpcSheetContext | ContainerSheetContext} data The data context from `getData()`.
+   * @param {CharacterSheetContext | NpcSheetContext | ContainerSheetClassicContext} data The data context from `getData()`.
    *
    * @example
    * ```js
@@ -185,7 +196,7 @@ export class TidyHooks {
   static tidy5eSheetsPreConfigureSections(
     app: any,
     element: HTMLElement,
-    data: CharacterSheetContext | NpcSheetContext | ContainerSheetContext
+    data: CharacterSheetContext | NpcSheetContext | ContainerSheetClassicContext
   ) {
     Hooks.callAll('tidy5e-sheet.preConfigureSections', app, element, data);
   }
@@ -371,7 +382,7 @@ export class TidyHooks {
    * The item sheet has rendered all content and registered custom content. Is called on partial and full renders.
    * @param {any} app The target item sheet application class instance.
    * @param {HTMLElement} element The item sheet's HTML element.
-   * @param {ContainerSheetContext | ItemSheetContext} data The data context from `getData()`.
+   * @param {ContainerSheetClassicContext | ItemSheetContext} data The data context from `getData()`.
    * @param {boolean} forced `true` when performing a full re-render; `false` when performing a partial re-render.
    *
    * @example
@@ -380,11 +391,13 @@ export class TidyHooks {
    *   // Your code here
    * });
    * ```
+   * 
+   * @deprecated This hook is now redundant for App V2 item and container sheets. It will be removed as of Tidy V8.
    */
   static tidy5eSheetsRenderItemSheet(
     app: any,
     element: HTMLElement,
-    data: ContainerSheetContext | ItemSheetContext,
+    data: ContainerSheetClassicContext | ItemSheetContext,
     forced: boolean
   ) {
     Hooks.callAll('tidy5e-sheet.renderItemSheet', app, element, data, forced);

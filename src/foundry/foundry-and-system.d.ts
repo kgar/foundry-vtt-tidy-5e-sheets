@@ -12,7 +12,6 @@ import type { CONFIG } from './config.types';
 declare global {
   var $: any;
   var canvas: any;
-  var AdvancementManager: any;
   var ActiveEffect: any;
   var Actor: any;
   var Actors: any;
@@ -40,8 +39,8 @@ declare global {
   var Hooks: any;
   var ImagePopout: any;
   var Item: any;
-  var Item5e: any;
   var Items: any;
+  var KeyboardManager: any;
   var ModuleManagement: any;
   var NumericTerm: any;
   var renderTemplate: any;
@@ -117,6 +116,10 @@ declare global {
       strict = false,
       lowercase = true,
     } = {}): string;
+  }
+
+  interface Array<T> {
+    filterJoin(sep: string): string;
   }
 }
 

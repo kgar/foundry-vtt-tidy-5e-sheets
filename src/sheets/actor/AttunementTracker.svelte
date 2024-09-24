@@ -15,7 +15,7 @@
 
   $: attunedItems = $context.items
     .filter((i) => i.system.attuned)
-    .sort((a, b) => a.name.localeCompare(b.name));
+    .sort((a, b) => a.name.localeCompare(b.name, game.i18n.lang));
 
   let attunementSummaryTooltip: AttunementSummaryTooltip;
 

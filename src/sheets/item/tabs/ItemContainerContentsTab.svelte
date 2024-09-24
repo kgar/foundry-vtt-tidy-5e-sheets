@@ -1,7 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ContainerSheetContext, Item5e } from 'src/types/item.types';
+  import type { ContainerSheetClassicContext, Item5e } from 'src/types/item.types';
   import { getContext, setContext } from 'svelte';
   import { writable, type Readable } from 'svelte/store';
   import CapacityBar from 'src/sheets/container/CapacityBar.svelte';
@@ -18,7 +18,7 @@
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
-  let context = getContext<Readable<ContainerSheetContext>>(
+  let context = getContext<Readable<ContainerSheetClassicContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);

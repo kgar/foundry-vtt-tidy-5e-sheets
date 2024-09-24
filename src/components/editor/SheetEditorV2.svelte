@@ -1,6 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { getContext, onMount } from 'svelte';
+  import { createEventDispatcher, getContext, onMount } from 'svelte';
   import type { Readable } from 'svelte/store';
 
   type EditorOptions =
@@ -29,6 +29,29 @@
 
   let proseMirrorContainerEl: HTMLElement;
 
+  let dispatcher = createEventDispatcher<{
+    save: void;
+  }>();
+
+  function onEditorActivation(node: HTMLElement) {
+    node.addEventListener('click', (ev: MouseEvent) => {
+      if (
+        ev.target instanceof HTMLElement &&
+        ev.target.matches('[data-action="save"]')
+      ) {
+        dispatcher('save');
+      }
+    });
+    node.addEventListener('keydown', (event) => {
+      if (
+        game.keyboard.isModifierActive(KeyboardManager.MODIFIER_KEYS.CONTROL) &&
+        event.key === 's'
+      ) {
+        dispatcher('save');
+      }
+    });
+  }
+
   // Create Editor element and put it in the contents element.
   onMount(() => {
     const element = foundry.applications.elements.HTMLProseMirrorElement.create(
@@ -45,4 +68,5 @@
   style="display: contents;"
   class={$$restProps.class ?? ''}
   bind:this={proseMirrorContainerEl}
+  use:onEditorActivation
 ></div>

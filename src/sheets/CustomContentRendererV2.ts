@@ -18,6 +18,7 @@ export type RenderedSheetPart = {
   content: string;
   onContentReady?: (params: OnContentReadyParams) => void;
   onRender?: (params: OnRenderParams) => void;
+  tabSelector?: string;
 };
 
 export class CustomContentRendererV2 {
@@ -120,11 +121,12 @@ export class CustomContentRendererV2 {
               tab.onRender?.({
                 app: params.app,
                 data: params.data,
-                element: params.data,
+                element: params.element,
                 isFullRender: params.isFullRender,
                 tabContentsElement:
                   params.element.querySelector<HTMLElement>(selector)!,
               }),
+            tabSelector: selector,
           } satisfies RenderedSheetPart;
         } catch (e) {
           error('Failed to render custom content due to an error', false, e);
@@ -175,16 +177,22 @@ export class CustomContentRendererV2 {
           sheet.element.querySelectorAll(part.selector)
         );
 
-        const wrappedContent = this.#wrapCustomHtmlForRendering(
-          part.content,
-          part.renderScheme
-        );
-
-        for (let el of anchorElements) {
-          el.insertAdjacentHTML(
-            part.position as InsertPosition,
-            wrappedContent
+        if (part.tabSelector && part.renderScheme === 'handlebars') {
+          const tabContentsElement = sheet.element.querySelector(
+            part.tabSelector
           );
+          tabContentsElement.innerHTML = part.content;
+        } else {
+          const wrappedContent = part.tabSelector
+            ? part.content
+            : this.#wrapCustomHtmlForRendering(part.content, part.renderScheme);
+
+          for (let el of anchorElements) {
+            el.insertAdjacentHTML(
+              part.position as InsertPosition,
+              wrappedContent
+            );
+          }
         }
       }
 

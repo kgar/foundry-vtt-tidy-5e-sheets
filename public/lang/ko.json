@@ -144,8 +144,6 @@
     "TIDY5E.TokenLinked": "액터에 연결된 토큰",
     "TIDY5E.TokenUnlinked": "액터에 연결되지 않은 토큰",
 
-    "TIDY5E.ItemDetailsHeadline": "메커닉/플레이버 텍스트",
-
     "TIDY5E.SpellSourceIdentifierSelectText": "클래스 식별: {identifier}",
     "TIDY5E.SpellSourceIdentifierLabelHint": "이 주문이 있는 액터에게 여기에 지정된 출처 클래스가 없습니다.",
 

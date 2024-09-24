@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import type { ContainerSheetContext } from 'src/types/item.types';
+  import type { ContainerSheetClassicContext } from 'src/types/item.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import Select from 'src/components/inputs/Select.svelte';
@@ -11,11 +11,11 @@
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<ContainerSheetContext>>(
+  let context = getContext<Readable<ContainerSheetClassicContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: appId = $context.document.sheet.appId;
+  $: appId = $context.document.id;
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -67,6 +67,7 @@
       field="system.attuned"
       checked={$context.source.attuned}
       disabled={!$context.editable ||
+        // @ts-expect-error
         !$context.config.attunementTypes[$context.system.attunement]}
       title={localize('DND5E.AttunementAttuned')}
     />

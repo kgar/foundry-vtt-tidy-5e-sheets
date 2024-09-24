@@ -4,7 +4,7 @@
   import ItemIdentifiableName from './parts/ItemIdentifiableName.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import type { ContainerSheetContext } from 'src/types/item.types';
+  import type { ContainerSheetClassicContext } from 'src/types/item.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
@@ -14,11 +14,11 @@
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import ItemHeaderToggles from './parts/ItemHeaderToggles.svelte';
 
-  let context = getContext<Readable<ContainerSheetContext>>(
+  let context = getContext<Readable<ContainerSheetClassicContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: appId = $context.document.sheet.appId;
+  $: appId = $context.document.id;
 
   let selectedTabId: string;
 
@@ -54,6 +54,7 @@
             id="{appId}-rarity"
             document={$context.item}
             field="system.rarity"
+            class="item-rarity"
             value={$context.system.rarity}
             disabled={!$context.editable}
             blankValue=""

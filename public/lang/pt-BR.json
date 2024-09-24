@@ -154,8 +154,6 @@
     "TIDY5E.TokenLinked": "Token vinculado a ator",
     "TIDY5E.TokenUnlinked": "Token não vinculado a ator",
 
-    "TIDY5E.ItemDetailsHeadline": "Mecânicas/Texto Opcional",
-
     "TIDY5E.SpellSourceIdentifierSelectText": "Identificador de Classe: {identifier}",
     "TIDY5E.SpellSourceIdentifierLabelHint": "O ator que possui esta magia não possui a classe de origem especificada aqui.",
 

@@ -198,6 +198,7 @@
                     <svelte:component
                       this={control.component}
                       {...control.getProps(item)}
+                      class="tidy-table-control"
                     ></svelte:component>
                   {/each}
                 </TidyTableCell>

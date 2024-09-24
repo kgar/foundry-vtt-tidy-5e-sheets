@@ -27,7 +27,7 @@ export class ActorItemApi {
    *           'Item',
    *           [...itemsToSort]
    *             .sort((a, b) => {
-   *               return a.name.localeCompare(b.name);
+   *               return a.name.localeCompare(b.name, game.i18n.lang);
    *             })
    *             .map((item, idx) => {
    *               return { _id: item.id, sort: idx };

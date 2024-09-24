@@ -13,6 +13,7 @@
   import { CONSTANTS } from 'src/constants';
   import ItemImage from './ItemImage.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { settingStore } from 'src/settings/settings';
 
   export let item: Item5e | null = null;
   export let inlineToggleService: InlineToggleService;
@@ -67,6 +68,7 @@
                 type="button"
                 class="inline-activity-roll-button highlight-on-hover"
                 on:click={(ev) => rollActivity(activity, ev)}
+                tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
               >
                 {#if activity.img?.endsWith('.svg')}
                   <Dnd5eIcon src={activity.img} />

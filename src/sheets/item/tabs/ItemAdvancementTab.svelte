@@ -134,7 +134,7 @@
           class="advancement-item item flexrow"
           data-id={advancement.id}
           on:dragstart={(ev) => handleAdvancementDragStart(ev, advancement)}
-          draggable={$context.owner}
+          draggable={$context.editable}
         >
           <div class="item-name flexrow">
             <div class="item-image" class:svg={isSvgIcon}>
@@ -144,7 +144,7 @@
                 <img src={advancement.icon} alt="" />
               {/if}
             </div>
-            <h4>{@html advancement.title}</h4>
+            <span class="title truncate" title={advancement.title}>{@html advancement.title}</span>
           </div>
           {#if $context.advancementEditable || !$context.isEmbedded}
             <div class="flexrow">

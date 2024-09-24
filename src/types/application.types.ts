@@ -1,4 +1,4 @@
-export interface ApplicationConfiguration {
+export type ApplicationConfiguration = {
   id: string;
   uniqueId: string;
   classes: string[];
@@ -11,7 +11,7 @@ export interface ApplicationConfiguration {
   >;
   form?: ApplicationFormConfiguration;
   position: Partial<ApplicationPosition>;
-}
+} & Record<string, unknown>;
 
 export interface ApplicationPosition {
   top: number;

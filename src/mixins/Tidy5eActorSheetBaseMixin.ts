@@ -382,7 +382,11 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
           return false;
         }
 
-        const manager = AdvancementManager.forNewItem(this.actor, itemData);
+        const manager =
+          dnd5e.applications.advacement.AdvancementManager.forNewItem(
+            this.actor,
+            itemData
+          );
         if (manager.steps.length) {
           manager.render(true);
           return false;

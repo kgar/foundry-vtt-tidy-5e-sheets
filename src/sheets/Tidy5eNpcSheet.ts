@@ -21,7 +21,7 @@ import NpcSheet from './npc/NpcSheet.svelte';
 import { CONSTANTS } from 'src/constants';
 import {
   applySheetAttributesToWindow,
-  applyThemeDataAttributeToWindow,
+  applyMutableSettingAttributesToWindow,
   applyTitleToWindow,
   blurUntabbableButtonsOnClick,
   maintainCustomContentInputFocus,
@@ -146,7 +146,7 @@ export class Tidy5eNpcSheet
       }),
       settingStore.subscribe((s) => {
         if (first) return;
-        applyThemeDataAttributeToWindow(s.colorScheme, this.element.get(0));
+        applyMutableSettingAttributesToWindow(s, this.element.get(0));
         this.render();
       }),
       this.messageBus.subscribe((m) => {
@@ -1158,7 +1158,6 @@ export class Tidy5eNpcSheet
         this.actor.documentName,
         this.actor.uuid,
         this.actor.type,
-        SettingsProvider.settings.colorScheme.get(),
         this.element.get(0)
       );
       await this.renderCustomContent({ data, isFullRender: true });

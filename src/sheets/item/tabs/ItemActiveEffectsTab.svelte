@@ -48,7 +48,9 @@
           <h3 class="item-name effect-name flexrow">
             {localize(section.label)}
           </h3>
-          <div class="effect-source">{localize('DND5E.SOURCE.FIELDS.source.label')}</div>
+          <div class="effect-source">
+            {localize('DND5E.SOURCE.FIELDS.source.label')}
+          </div>
           <div class="effect-source">{localize('DND5E.Duration')}</div>
           <div class="item-controls active-effect-controls flexrow">
             {#if $context.editable}
@@ -82,7 +84,7 @@
               data-effect-id={effect.id}
               on:mousedown={(event) => handleMiddleClickToEdit(event, effect)}
               on:dragstart={(ev) => handleDragStart(ev, effect)}
-              draggable={true}
+              draggable={$context.editable}
             >
               <div class="item-name effect-name flexrow">
                 <img
@@ -90,10 +92,12 @@
                   src={effect.img ?? effect.icon}
                   alt={effect.name ?? ''}
                 />
-                <h4>{effect.name ?? ''}</h4>
+                <span class="title truncate" title={effect.name}
+                  >{effect.name ?? ''}</span
+                >
               </div>
-              <div class="effect-source">{effect.sourceName ?? ''}</div>
-              <div class="effect-duration">
+              <div class="effect-source truncate">{effect.sourceName ?? ''}</div>
+              <div class="effect-duration truncate">
                 {effect.duration.label ?? ''}
               </div>
               <div class="item-controls active-effect-controls flexrow">
@@ -101,7 +105,7 @@
                   {#if section.type !== 'enchantment'}
                     <button
                       type="button"
-                      class="active-effect-control inline-transparent-button"
+                      class="active-effect-control inline-icon-button"
                       title={effect.disabled
                         ? 'DND5E.EffectEnable'
                         : 'DND5E.EffectDisable'}
@@ -120,7 +124,7 @@
                   {/if}
                   <button
                     type="button"
-                    class="active-effect-control inline-transparent-button"
+                    class="active-effect-control inline-icon-button"
                     title={localize('DND5E.EffectEdit')}
                     on:click={() => effect.sheet.render(true)}
                     tabindex={$settingStore.useAccessibleKeyboardSupport
@@ -131,7 +135,7 @@
                   </button>
                   <button
                     type="button"
-                    class="active-effect-control inline-transparent-button"
+                    class="active-effect-control inline-icon-button"
                     title={localize('DND5E.EffectDelete')}
                     on:click={() => effect.deleteDialog()}
                     tabindex={$settingStore.useAccessibleKeyboardSupport

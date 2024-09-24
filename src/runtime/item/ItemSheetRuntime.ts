@@ -15,7 +15,10 @@ import WeaponSheet from 'src/sheets/item/WeaponSheet.svelte';
 import SpeciesSheet from 'src/sheets/item/SpeciesSheet.svelte';
 import type { ComponentType } from 'svelte';
 import type { RegisteredContent, RegisteredTab } from '../types';
-import type { ItemSheetContext } from 'src/types/item.types';
+import type {
+  ContainerSheetClassicContext,
+  ItemSheetContext,
+} from 'src/types/item.types';
 import { CustomContentManager } from '../content/CustomContentManager';
 import type { RegisteredEquipmentTypeGroup } from './item.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -27,7 +30,9 @@ export class ItemSheetRuntime {
   private static _customItemEquipmentTypeGroups: RegisteredEquipmentTypeGroup[] =
     [];
 
-  static async getContent(context: ItemSheetContext): Promise<CustomContent[]> {
+  static async getContent(
+    context: ItemSheetContext | ContainerSheetClassicContext
+  ): Promise<CustomContent[]> {
     return await CustomContentManager.prepareContentForRender(
       context,
       ItemSheetRuntime._content

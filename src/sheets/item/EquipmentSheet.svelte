@@ -17,7 +17,7 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: appId = $context.document.sheet.appId;
+  $: appId = $context.document.id;
 
   let selectedTabId: string;
 
@@ -52,6 +52,7 @@
             id="{appId}-rarity"
             document={$context.item}
             field="system.rarity"
+            class="item-rarity"
             value={$context.system.rarity}
             disabled={!$context.editable}
             blankValue=""

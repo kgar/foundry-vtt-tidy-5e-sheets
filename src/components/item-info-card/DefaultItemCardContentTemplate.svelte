@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
-    ContainerSheetContext,
+    ContainerSheetClassicContext,
     Item5e,
     ItemChatData,
   } from 'src/types/item.types';
@@ -24,7 +24,7 @@
         | CharacterSheetContext
         | ActorSheetContextV1
         | VehicleSheetContext
-        | ContainerSheetContext
+        | ContainerSheetClassicContext
       >
     >('context');
 

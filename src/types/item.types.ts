@@ -1,6 +1,7 @@
 import type { ComponentType, SvelteComponent } from 'svelte';
 import type {
   AttunementContext,
+  ContainerCapacityContext,
   CustomContent,
   GroupableSelectOption,
   InventorySection,
@@ -13,6 +14,7 @@ import type {
   DocumentFilters,
   RegisteredEquipmentTypeGroup,
 } from 'src/runtime/item/item.types';
+import type { CONFIG } from 'src/foundry/config.types';
 
 export type PropertyContext = {
   active: string[];
@@ -34,28 +36,53 @@ export type ItemSheetContext = {
       svg: boolean;
     };
   }[];
-  activateEditors: (
-    node: HTMLElement,
-    options?: { bindSecrets?: boolean }
-  ) => void;
   activationTypes: GroupableSelectOption[];
+  advancement: any;
+  advancementEditable: boolean;
   affectsPlaceholder: string;
+  baseItems: Record<string, string>;
+  concealDetails: boolean;
   config: typeof CONFIG.DND5E;
   customContent: CustomContent[];
   customEquipmentTypeGroups: RegisteredEquipmentTypeGroup[];
+  data: any;
+  damageTypes:
+    | { label: string; value: string; selected: boolean }[]
+    | undefined;
+  defaultAbility: string;
+  denominationOptions: any;
   dimensions:
     | { size: string; width: string | false; height: string | false }
     | undefined;
+  document: any;
   durationUnits: GroupableSelectOption[];
+  editable: boolean;
+  effects: any;
+  enriched: {
+    description: string;
+    unidentified: string;
+    chat: string;
+  };
   equipmentTypes: GroupableSelectOption[];
+  hasDexModifier: boolean;
   /**
    * Represents remaining health as a percentage within the range of `0` to `100`.
    */
   healthPercentage: number;
   identifiedName: string;
+  isEmbedded: boolean;
+  isIdentifiable: boolean;
+  isIdentified: boolean;
+  isPhysical: boolean;
+  item: Item5e;
   itemDescriptions: ItemDescription[];
+  itemType: string;
+  itemStatus: string | null;
+  itemSubtypes: Record<string, string>;
+  labels: Record<string, string>;
+  limited: boolean;
   lockItemQuantity: boolean;
-  originalContext: unknown;
+  options: any;
   owner: boolean;
   properties: PropertyContext;
   rangeTypes: GroupableSelectOption[];
@@ -64,15 +91,20 @@ export type ItemSheetContext = {
     value: string;
     label: string;
   }[];
+  rollData: Record<string, any>;
   scalarTarget: boolean;
+  source: any;
+  system: any;
+  title: string;
+  toggleAdvancementLock: () => Promise<void>;
+  user: any;
   usesRecovery: {
     data: UsesRecoveryData;
     formulaOptions: { label: string; value: string }[] | null;
   }[];
   itemOverrides: Set<string>;
   tabs: Tab[];
-  viewableWarnings: DocumentPreparationWarning[];
-} & Record<string, any>;
+};
 
 /**
  * Data for a recovery profile for an activity's uses.
@@ -101,6 +133,7 @@ export interface UsesField {
 export type ItemDescription = {
   field: string;
   content: string;
+  enriched: string;
   label: string;
 };
 
@@ -131,26 +164,43 @@ export type ContainerItemContext = {
   containerContents?: ContainerContents;
 };
 
-export type ContainerSheetContext = {
-  activateEditors: (
-    node: HTMLElement,
-    options?: { bindSecrets?: boolean }
-  ) => void;
-  appId: string;
+export type ContainerSheetClassicContext = {
+  capacity: ContainerCapacityContext;
+  config: typeof CONFIG.DND5E;
+  concealDetails: boolean;
   containerContents: ContainerContents;
+  document: Item5e;
+  editable: boolean;
+  enriched: {
+    description: string;
+    unidentified: string;
+    chat: string;
+  };
   filterData: DocumentFilters;
+  filterPins: Record<string, Set<string>>;
+  item: Item5e;
+  identifiedName: string;
+  items: Item5e[];
   itemContext: Record<string, ContainerItemContext>;
   itemDescriptions: ItemDescription[];
   itemOverrides: Set<string>;
+  itemType: string;
+  isContainer: true;
+  isIdentifiable: boolean;
+  isIdentified: boolean;
+  isPhysical: boolean;
+  labels: Record<string, any>;
   lockItemQuantity: boolean;
+  lockMoneyChanges: boolean;
   customContent: CustomContent[];
-  originalContext: unknown;
   owner: boolean;
   properties: PropertyContext;
+  rollData: Record<string, any>;
+  source: any;
+  system: any;
   tabs: Tab[];
-  utilities: Utilities<ContainerSheetContext>;
-  viewableWarnings: DocumentPreparationWarning[];
-} & Record<string, any>;
+  utilities: Utilities<ContainerSheetClassicContext>;
+};
 
 export type ContainerSection = { items: Item5e[] } & TidySectionBase;
 

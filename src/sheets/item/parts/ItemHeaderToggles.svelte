@@ -2,14 +2,14 @@
   import PropertyToggle from 'src/components/toggle/PropertyToggle.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
-    ContainerSheetContext,
+    ContainerSheetClassicContext,
     ItemSheetContext,
   } from 'src/types/item.types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<ItemSheetContext | ContainerSheetContext>>(
+  let context = getContext<Readable<ItemSheetContext | ContainerSheetClassicContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 

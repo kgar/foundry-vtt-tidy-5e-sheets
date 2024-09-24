@@ -20,7 +20,7 @@
 
 <button
   type="button"
-  class="item-list-button"
+  class="item-list-button {$$restProps.class ?? ''}"
   class:inactive={!active}
   on:click={onclick}
   title={title !== undefined ? localize(title) : ''}

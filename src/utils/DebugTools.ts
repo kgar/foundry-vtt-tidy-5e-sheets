@@ -1,4 +1,7 @@
 import { SettingsProvider } from 'src/settings/settings';
+import { Tidy5eContainerSheetClassic } from 'src/sheets/Tidy5eContainerSheetClassic';
+import { Tidy5eGroupSheetClassic } from 'src/sheets/Tidy5eGroupSheetClassic';
+import { Tidy5eItemSheetClassic } from 'src/sheets/Tidy5eItemSheetClassic';
 
 export class DebugTools {
   static onReady() {
@@ -50,6 +53,34 @@ export class DebugTools {
       ['renderItemSheet', 'renderContainerSheet'].forEach((hook) => {
         Hooks.on(hook, addDebugButtonToHeader);
       });
+
+      [
+        Tidy5eItemSheetClassic,
+        Tidy5eGroupSheetClassic,
+        Tidy5eContainerSheetClassic,
+      ].forEach((sheet) => {
+        foundry.utils.mergeObject(sheet.DEFAULT_OPTIONS, {
+          window: {
+            controls: [
+              {
+                label: 'Tidy Debug Button',
+                icon: 'fas fa-broom',
+                action: 'onTidyDebug',
+              },
+              ...(sheet.DEFAULT_OPTIONS.window?.controls ?? []),
+            ],
+          },
+          actions: {
+            onTidyDebug: onTidyDebug,
+          },
+        });
+      });
+
+      async function onTidyDebug(this: any, event: PointerEvent) {
+        ui.notifications.info(`${this.document.name} written to the console.`);
+        console.log(this.document);
+        console.log(await this.document.sheet._prepareContext());
+      }
     }
   }
 }

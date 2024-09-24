@@ -1,9 +1,9 @@
 import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { SettingsProvider, settingStore } from 'src/settings/settings';
+import { settingStore } from 'src/settings/settings';
 import {
   applySheetAttributesToWindow,
-  applyThemeDataAttributeToWindow,
+  applyMutableSettingAttributesToWindow,
   blurUntabbableButtonsOnClick,
 } from 'src/utils/applications';
 import { debug, error } from 'src/utils/logging';
@@ -80,6 +80,13 @@ export function SvelteApplicationMixin<
 
     #focusedInputSelector: string | undefined = '';
 
+    /**
+     * Compatibility shim from Application V1.
+     */
+    get object() {
+      return this.document;
+    }
+
     /* -------------------------------------------- */
     /*  Svelte-specific                             */
     /* -------------------------------------------- */
@@ -132,7 +139,6 @@ export function SvelteApplicationMixin<
       context: TContext,
       options: ApplicationRenderOptions
     ): Promise<RenderResult<TContext>> {
-      debug('Group Sheet context data', context);
       this._store.set(context);
 
       // Allow svelte to process its synchronous microtask changes before entertaining custom content.
@@ -222,10 +228,9 @@ export function SvelteApplicationMixin<
       try {
         // Support Tidy's common window attributes
         applySheetAttributesToWindow(
-          this.actor.documentName,
-          this.actor.uuid,
-          this.actor.type,
-          SettingsProvider.settings.colorScheme.get(),
+          this.document.documentName,
+          this.document.uuid,
+          this.document.type,
           element
         );
 
@@ -263,6 +268,12 @@ export function SvelteApplicationMixin<
     /* -------------------------------------------- */
 
     async close(options: ApplicationClosingOptions = {}) {
+      // Trigger saving of the form
+      const submit = this.options.submitOnClose;
+      if (submit) {
+        await this.submit({ preventClose: true, preventRender: true });
+      }
+
       this.#subscriptionsService.unsubscribeAll();
       this.#components.forEach((c) => c.$destroy());
       this.#components = [];
@@ -273,11 +284,15 @@ export function SvelteApplicationMixin<
     /*  Rendering Life-Cycle Methods                */
     /* -------------------------------------------- */
 
-    _onRender(...args: any[]) {
-      super._onRender(...args);
+    _onRender(context: TContext, options: ApplicationRenderOptions) {
+      super._onRender(context, options);
 
-      this.#restoreScrollPositions(this.element);
-      this.#restoreInputFocus(this.element);
+      // Some integrations will insert HTML even beyond this point,
+      // so breaking off the current task gives another chance to restore state.
+      setTimeout(() => {
+        this.#restoreScrollPositions(this.element);
+        this.#restoreInputFocus(this.element);
+      });
     }
 
     /* -------------------------------------------- */
@@ -297,7 +312,7 @@ export function SvelteApplicationMixin<
         this.#subscriptionsService.registerSubscriptions(
           ...subscriptions,
           settingStore.subscribe((settings) => {
-            applyThemeDataAttributeToWindow(settings.colorScheme, this.element);
+            applyMutableSettingAttributesToWindow(settings, this.element);
           })
         );
 
@@ -361,7 +376,7 @@ export function SvelteApplicationMixin<
                 return;
               }
 
-              const controls = this.element.querySelector(
+              const controls = this?.element?.querySelector(
                 '.controls-dropdown'
               ) as HTMLElement;
 
@@ -426,12 +441,12 @@ export function SvelteApplicationMixin<
     #saveInputFocus(element: HTMLElement) {
       const focusedElement = element.querySelector<
         HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-      >(':focus');
+      >(':is(input, select, textarea):focus');
 
-      this.#focusedInputSelector = focusedElement?.id
-        ? `#${focusedElement.id}`
-        : focusedElement?.name
+      this.#focusedInputSelector = focusedElement?.name
         ? `${focusedElement.tagName}[name="${focusedElement.name}"]`
+        : focusedElement?.id
+        ? `#${focusedElement.id}`
         : undefined;
     }
 
