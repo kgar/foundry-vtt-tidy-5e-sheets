@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { ItemSheetContext } from 'src/types/item.types';
-  import { createEventDispatcher, getContext, tick } from 'svelte';
+  import { createEventDispatcher, getContext, onMount, tick } from 'svelte';
   import type { Readable } from 'svelte/store';
   import Accordion from 'src/components/accordion/Accordion.svelte';
   import AccordionItem from 'src/components/accordion/AccordionItem.svelte';
@@ -36,6 +36,32 @@
   let accordionItemOpenStates = $context.itemDescriptions.map(
     (_, i) => i === 0,
   );
+
+  function manageSecrets(node: HTMLElement) {
+    if (!$context.item.isOwner) {
+      return;
+    }
+
+    const secret = new HTMLSecret({
+      parentSelector: `[data-edit]`,
+      callbacks: {
+        content: (secret: HTMLElement) =>
+          foundry.utils.getProperty(
+            $context.item,
+            secret.closest<HTMLElement>('[data-edit]')!.dataset.edit,
+          ),
+        update: (secret: HTMLElement, content: string) =>
+          $context.item.update({
+            [secret.closest<HTMLElement>('[data-edit]')!.dataset.edit!]:
+              content,
+          }),
+      },
+    });
+
+    queueMicrotask(() => {
+      secret.bind(node);
+    });
+  }
 </script>
 
 {#if renderDescriptions}
@@ -43,7 +69,7 @@
     <Accordion multiple>
       {#each $context.itemDescriptions as itemDescription, i (itemDescription.field)}
         {#key itemDescription.content}
-          <div bind:this={editorsContainers[i]}>
+          <div bind:this={editorsContainers[i]} use:manageSecrets>
             <AccordionItem
               bind:open={accordionItemOpenStates[i]}
               class="editor"

@@ -11,6 +11,9 @@
   export let enriched: string | null = null;
   export let editorOptions: EditorOptions = {};
   export let documentUuid: string;
+  export let manageSecrets: boolean = false;
+
+  let editorContainerId = `editor-${foundry.utils.randomID()}`;
 
   // Build Options
   editorOptions = foundry.utils.mergeObject(
@@ -39,7 +42,7 @@
         ev.target instanceof HTMLElement &&
         ev.target.matches('[data-action="save"]')
       ) {
-        dispatcher('save');
+        onSave();
       }
     });
     node.addEventListener('keydown', (event) => {
@@ -47,8 +50,35 @@
         game.keyboard.isModifierActive(KeyboardManager.MODIFIER_KEYS.CONTROL) &&
         event.key === 's'
       ) {
-        dispatcher('save');
+        onSave();
       }
+    });
+  }
+
+  function onSave() {
+    dispatcher('save');
+    bindSecretUi();
+  }
+
+  function bindSecretUi() {
+    if (!manageSecrets) {
+      return;
+    }
+
+    const secret = new HTMLSecret({
+      parentSelector: `#${editorContainerId}`,
+      callbacks: {
+        content: (_secret: HTMLElement) => content,
+        update: (secret: HTMLElement, content: string) => {
+          secret.closest<HTMLElement & { value: string }>(
+            'prose-mirror',
+          )!.value = content;
+        },
+      },
+    });
+
+    queueMicrotask(() => {
+      secret.bind(proseMirrorContainerEl.parentElement);
     });
   }
 
@@ -61,10 +91,13 @@
     );
 
     proseMirrorContainerEl.innerHTML = element.outerHTML;
+
+    bindSecretUi();
   });
 </script>
 
 <div
+  id={editorContainerId}
   style="display: contents;"
   class={$$restProps.class ?? ''}
   bind:this={proseMirrorContainerEl}

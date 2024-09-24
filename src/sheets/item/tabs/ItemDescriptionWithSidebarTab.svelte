@@ -204,6 +204,7 @@
               editable: $context.editable,
             }}
             documentUuid={$context.item.uuid}
+            manageSecrets={$context.document.isOwner}
           />
         </div>
       {/key}
@@ -223,6 +224,7 @@
         }}
         documentUuid={$context.item.uuid}
         on:save={() => stopEditing()}
+        manageSecrets={$context.document.isOwner}
       />
     </article>
   {/key}
