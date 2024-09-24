@@ -284,8 +284,8 @@ export function SvelteApplicationMixin<
     /*  Rendering Life-Cycle Methods                */
     /* -------------------------------------------- */
 
-    _onRender(...args: any[]) {
-      super._onRender(...args);
+    _onRender(context: TContext, options: ApplicationRenderOptions) {
+      super._onRender(context, options);
 
       // Some integrations will insert HTML even beyond this point,
       // so breaking off the current task gives another chance to restore state.

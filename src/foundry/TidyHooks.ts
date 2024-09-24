@@ -391,6 +391,8 @@ export class TidyHooks {
    *   // Your code here
    * });
    * ```
+   * 
+   * @deprecated This hook is now redundant for App V2 item and container sheets. It will be removed as of Tidy V8.
    */
   static tidy5eSheetsRenderItemSheet(
     app: any,
