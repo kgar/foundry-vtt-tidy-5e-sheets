@@ -23,8 +23,8 @@
           editable: $context.editable,
         }}
         documentUuid={$context.actor.uuid}
-        />
         manageSecrets={$context.document.isOwner}
+      />
     {/key}
   </article>
 </div>
