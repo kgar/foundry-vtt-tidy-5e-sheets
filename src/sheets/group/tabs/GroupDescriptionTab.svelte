@@ -11,10 +11,10 @@
 </script>
 
 <div
-  class="flex-1 full-height scroll-container flex-column mt-3 mb-1 full-height-editor-container"
+  class="flex-1 full-height flex-column me-1"
 >
-  <article class="full-height-editor-wrapper">
-    {#key $context.actor.system.description.full}
+  {#key $context.actor.system.description.full}
+    <article class="editor-container mt-3">
       <SheetEditorV2
         content={$context.system.description.full}
         enriched={$context.descriptionFullEnrichedHtml}
@@ -23,7 +23,8 @@
           editable: $context.editable,
         }}
         documentUuid={$context.actor.uuid}
+        manageSecrets={$context.document.isOwner}
       />
-    {/key}
-  </article>
+    </article>
+  {/key}
 </div>

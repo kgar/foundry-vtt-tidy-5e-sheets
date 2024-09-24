@@ -21,6 +21,7 @@
         editable: $context.editable,
       }}
       documentUuid={$context.document.uuid}
+      manageSecrets={$context.document.isOwner}
     />
   </article>
 {/key}

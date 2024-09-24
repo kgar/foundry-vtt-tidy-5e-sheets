@@ -106,7 +106,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       ...this.ACTOR_ACTIONS_AND_CONTROLS.showTokenArtwork.action,
       ...this.ACTOR_ACTIONS_AND_CONTROLS.openTabSelection.action,
     },
-    submitOnClose: true,
+    submitOnClose: false,
   };
 
   static USE_HEADER_SHEET_LOCK = true;
