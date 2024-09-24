@@ -29,6 +29,7 @@
   const dispatcher = createEventDispatcher<{
     edit: {
       contentToEdit: string;
+      enrichedText: string;
       fieldToEdit: string;
     };
   }>();
@@ -87,6 +88,7 @@
                     on:click|stopPropagation={() =>
                       dispatcher('edit', {
                         contentToEdit: itemDescription.content,
+                        enrichedText: itemDescription.enriched,
                         fieldToEdit: itemDescription.field,
                       })}
                     tabindex={$settingStore.useAccessibleKeyboardSupport

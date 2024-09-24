@@ -25,15 +25,17 @@
 
   let editing = false;
   let contentToEdit: string;
+  let enrichedText: string;
   let fieldToEdit: string;
 
   function stopEditing() {
     editing = false;
   }
 
-  function edit(value: string, field: string) {
+  function edit(value: string, enriched: string, field: string) {
     contentToEdit = value;
     fieldToEdit = field;
+    enrichedText = enriched;
     editing = true;
   }
 
@@ -189,26 +191,29 @@
 
   {#if FoundryAdapter.userIsGm() || $context.isIdentified}
     <ItemDescriptions
-      on:edit={(ev) => edit(ev.detail.contentToEdit, ev.detail.fieldToEdit)}
+      on:edit={(ev) =>
+        edit(
+          ev.detail.contentToEdit,
+          ev.detail.enrichedText,
+          ev.detail.fieldToEdit,
+        )}
       renderDescriptions={!editing}
     />
   {:else if $context.editable || $context.system.unidentified.description}
-    <article class="full-height-editor-wrapper">
-      {#key $context.enriched.unidentified}
-        <div class="flexrow" role="presentation">
-          <SheetEditorV2
-            content={$context.system.unidentified.description}
-            enriched={$context.enriched.unidentified}
-            field="system.unidentified.description"
-            editorOptions={{
-              editable: $context.editable,
-            }}
-            documentUuid={$context.item.uuid}
-            manageSecrets={$context.document.isOwner}
-          />
-        </div>
-      {/key}
-    </article>
+    {#key $context.enriched.unidentified}
+      <article class="editor-container">
+        <SheetEditorV2
+          content={$context.system.unidentified.description}
+          enriched={$context.enriched.unidentified}
+          field="system.unidentified.description"
+          editorOptions={{
+            editable: $context.editable,
+          }}
+          documentUuid={$context.item.uuid}
+          manageSecrets={$context.document.isOwner}
+        />
+      </article>
+    {/key}
   {/if}
 </div>
 
@@ -216,6 +221,7 @@
   {#key contentToEdit}
     <article class="editor-container">
       <SheetEditorV2
+        enriched={enrichedText}
         content={contentToEdit}
         field={fieldToEdit}
         editorOptions={{

@@ -15,8 +15,9 @@
 
   let editorContainerId = `editor-${foundry.utils.randomID()}`;
 
-  // Build Options
-  editorOptions = foundry.utils.mergeObject(
+  let proseMirrorContainerEl: HTMLElement;
+
+  $: actualEditorOptions = foundry.utils.mergeObject(
     {
       name: field,
       collaborate: false,
@@ -26,11 +27,10 @@
       height: 200,
       toggled: true,
       value: content,
+      enriched: enriched ?? content,
     },
     editorOptions,
   ) as EditorOptions;
-
-  let proseMirrorContainerEl: HTMLElement;
 
   let dispatcher = createEventDispatcher<{
     save: void;
@@ -61,12 +61,12 @@
   }
 
   function bindSecretUi() {
-    if (!manageSecrets) {
+    if (!manageSecrets || !actualEditorOptions.toggled) {
       return;
     }
 
     const secret = new HTMLSecret({
-      parentSelector: `#${editorContainerId}`,
+      parentSelector: `prose-mirror`,
       callbacks: {
         content: (_secret: HTMLElement) => content,
         update: (secret: HTMLElement, content: string) => {
@@ -78,17 +78,16 @@
     });
 
     queueMicrotask(() => {
-      secret.bind(proseMirrorContainerEl.parentElement);
+      secret.bind(proseMirrorContainerEl);
     });
   }
 
   // Create Editor element and put it in the contents element.
   onMount(() => {
-    const element = foundry.applications.elements.HTMLProseMirrorElement.create(
-      foundry.utils.mergeObject(editorOptions, {
-        enriched: enriched ?? content,
-      }),
-    );
+    const element =
+      foundry.applications.elements.HTMLProseMirrorElement.create(
+        actualEditorOptions,
+      );
 
     proseMirrorContainerEl.innerHTML = element.outerHTML;
 

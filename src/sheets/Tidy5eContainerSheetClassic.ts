@@ -81,7 +81,7 @@ export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
     },
     actions: {},
     dragDrop: [{ dropSelector: 'form' }],
-    submitOnClose: true,
+    submitOnClose: false,
   };
 
   _createComponent(node: HTMLElement): SvelteComponent<any, any, any> {

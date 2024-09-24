@@ -1,31 +1,58 @@
-article.full-height-editor-wrapper {
-  position: relative;
-  flex: 1;
+.editor-container {
+  height: 100%;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
+  position: relative;
 
-  .flexrow {
-    align-items: stretch;
+  &:hover .editor .editor-edit {
+    display: block;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+  }
+  .details-headline {
+    font-weight: 600;
+    font-size: 0.8125rem;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    border: none;
   }
 
-  > * {
-    flex: 1;
+  [contenteditable='true']:hover,
+  [contenteditable='true']:focus {
+    box-shadow: 0 0 0 0.0625rem var(--t5e-primary-accent-color) inset;
   }
 
-  prose-mirror {
+  .editor {
     flex: 1;
+    font-size: 0.8125rem;
     display: flex;
     flex-direction: column;
     position: static;
-    min-height: 100%;
-  }
 
-  &:last-child {
-    margin-bottom: 0;
-  }
+    .toggle {
+      right: 0.75rem;
+      top: 0;
+      padding: 0;
+      border: none;
+      box-shadow: none;
+      background: transparent;
 
-  &:hover .prosemirror:not(.active) button.toggle {
-    display: block;
+      i {
+        font-size: 1em;
+        position: absolute;
+        top: 0;
+        right: 0.3125rem;
+        cursor: pointer;
+        text-shadow: none;
+      }
+    }
+
+    .editor-content {
+      margin: 0;
+      padding: 0 0.75rem 0 0;
+    }
   }
 }
 

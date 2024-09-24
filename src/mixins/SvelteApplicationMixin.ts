@@ -268,8 +268,8 @@ export function SvelteApplicationMixin<
     /* -------------------------------------------- */
 
     async close(options: ApplicationClosingOptions = {}) {
-      // Trigger saving of the form
-      const submit = this.options.submitOnClose;
+      // Trigger saving of the form if configured and allowed
+      const submit = this.options.submitOnClose && this.document.isOwner;
       if (submit) {
         await this.submit({ preventClose: true, preventRender: true });
       }
