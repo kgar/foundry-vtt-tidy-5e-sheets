@@ -145,15 +145,23 @@
                     <span
                       class="align-self-center truncate"
                       data-tidy-effect-name={effectContext.name}
-                      >{effectContext.name}</span
+                      title={effectContext.name}>{effectContext.name}</span
                     >
                   </ItemTableCell>
-                  <ItemTableCell baseWidth="12.5rem"
-                    >{effectContext.source?.name ?? ''}</ItemTableCell
-                  >
-                  <ItemTableCell baseWidth="7.5rem"
-                    >{effectContext.duration?.label ?? ''}</ItemTableCell
-                  >
+                  <ItemTableCell baseWidth="12.5rem">
+                    <span
+                      class="truncate"
+                      title={effectContext.source?.name ?? ''}
+                      >{effectContext.source?.name ?? ''}</span
+                    >
+                  </ItemTableCell>
+                  <ItemTableCell baseWidth="7.5rem">
+                    <span
+                      class="truncate"
+                      title={effectContext.duration?.label ?? ''}
+                      >{effectContext.duration?.label ?? ''}</span
+                    >
+                  </ItemTableCell>
                   {#if $context.editable && $context.useClassicControls && $context.allowEffectsManagement}
                     <ItemTableCell baseWidth={classicControlsColumnWidth}>
                       <ClassicControls

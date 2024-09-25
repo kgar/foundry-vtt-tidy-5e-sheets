@@ -161,12 +161,16 @@
                   {#if FoundryAdapter.isActiveEffectContextFavorited(effectContext, $context.actor) && $settingStore.showIconsNextToTheItemName}
                     <InlineFavoriteIcon />
                   {/if}
-                  <ItemTableCell baseWidth="12.5rem"
-                    >{effectContext.source?.name ?? ''}</ItemTableCell
-                  >
-                  <ItemTableCell baseWidth="7.5rem"
-                    >{effectContext.duration?.label ?? ''}</ItemTableCell
-                  >
+                  <ItemTableCell baseWidth="12.5rem">
+                    <span class="truncate"
+                      >{effectContext.source?.name ?? ''}</span
+                    >
+                  </ItemTableCell>
+                  <ItemTableCell baseWidth="7.5rem">
+                    <span class="truncate"
+                      >{effectContext.duration?.label ?? ''}</span
+                    >
+                  </ItemTableCell>
                   {#if $context.editable && $context.useClassicControls && $context.allowEffectsManagement}
                     <ItemTableCell baseWidth={classicControlsColumnWidth}>
                       <ClassicControls
