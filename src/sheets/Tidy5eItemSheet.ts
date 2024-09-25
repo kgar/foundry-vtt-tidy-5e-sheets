@@ -26,6 +26,7 @@ import { AsyncMutex } from 'src/utils/mutex';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
 import { CONSTANTS } from 'src/constants';
+import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 
 export class Tidy5eKgarItemSheet
   extends dnd5e.applications.item.ItemSheet5e
@@ -107,6 +108,8 @@ export class Tidy5eKgarItemSheet
         '.advancement-item',
         contextOptions
       );
+
+    initTidy5eContextMenu(this, html);
   }
 
   async getData(options = {}) {

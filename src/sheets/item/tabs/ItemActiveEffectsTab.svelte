@@ -83,6 +83,7 @@
               on:mousedown={(event) => handleMiddleClickToEdit(event, effect)}
               on:dragstart={(ev) => handleDragStart(ev, effect)}
               draggable={true}
+              data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS}
             >
               <div class="item-name effect-name flexrow">
                 <img
