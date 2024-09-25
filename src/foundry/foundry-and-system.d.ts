@@ -36,10 +36,12 @@ declare global {
   var getDocumentClass: (className: string) => any;
   var HandlebarsHelpers: any;
   var Hooks: any;
+  var HTMLSecret: any;
   var ImagePopout: any;
   var Item: any;
   var Item5e: any;
   var Items: any;
+  var KeyboardManager: any;
   var ModuleManagement: any;
   var NumericTerm: any;
   var renderTemplate: any;

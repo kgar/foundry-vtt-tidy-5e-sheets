@@ -611,6 +611,7 @@ export type HTMLElementOrGettable =
   | { get(index: number): HTMLElement };
 
 export type ActorV2 = {
+  isOwner: boolean;
   // TODO: Put universal ActorV2 members here.
   uuid: string;
   update(toUpdate: Record<string, unknown>): Promise<ActorV2 | undefined>;

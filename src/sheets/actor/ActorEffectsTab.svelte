@@ -121,15 +121,20 @@
                     <ItemImage src={effect.img ?? effect.icon} />
                     <span
                       class="align-self-center truncate"
+                      title={effect.name}
                       data-tidy-effect-name={effect.name}>{effect.name}</span
                     >
                   </ItemTableCell>
-                  <ItemTableCell baseWidth="12.5rem"
-                    >{effect.sourceName ?? ''}</ItemTableCell
-                  >
-                  <ItemTableCell baseWidth="7.5rem"
-                    >{effect.duration.label ?? ''}</ItemTableCell
-                  >
+                  <ItemTableCell baseWidth="12.5rem">
+                    <span class="truncate" title={effect.sourceName ?? ''}
+                      >{effect.sourceName ?? ''}</span
+                    >
+                  </ItemTableCell>
+                  <ItemTableCell baseWidth="7.5rem">
+                    <span class="truncate" title={effect.duration.label ?? ''}
+                      >{effect.duration.label ?? ''}</span
+                    >
+                  </ItemTableCell>
                   {#if $context.editable && $context.useClassicControls && $context.allowEffectsManagement}
                     <ItemTableCell baseWidth={classicControlsColumnWidth}>
                       <ClassicControls {controls} params={{ effect: effect }} />

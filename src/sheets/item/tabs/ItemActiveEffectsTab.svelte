@@ -83,6 +83,7 @@
               on:mousedown={(event) => handleMiddleClickToEdit(event, effect)}
               on:dragstart={(ev) => handleDragStart(ev, effect)}
               draggable={true}
+              data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS}
             >
               <div class="item-name effect-name flexrow">
                 <img
@@ -90,10 +91,20 @@
                   src={effect.img ?? effect.icon}
                   alt={effect.name ?? ''}
                 />
-                <h4>{effect.name ?? ''}</h4>
+                <h4 class="truncate" title={effect.name ?? ''}>
+                  {effect.name ?? ''}
+                </h4>
               </div>
-              <div class="effect-source">{effect.sourceName ?? ''}</div>
-              <div class="effect-duration">
+              <div
+                class="effect-source truncate"
+                title={effect.sourceName ?? ''}
+              >
+                {effect.sourceName ?? ''}
+              </div>
+              <div
+                class="effect-duration truncate"
+                title={effect.duration.label ?? ''}
+              >
                 {effect.duration.label ?? ''}
               </div>
               <div class="item-controls active-effect-controls flexrow">
