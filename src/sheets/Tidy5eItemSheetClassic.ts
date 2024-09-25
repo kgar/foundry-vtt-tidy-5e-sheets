@@ -21,6 +21,7 @@ import type { GroupableSelectOption, Tab } from 'src/types/types';
 import { getPercentage } from 'src/utils/numbers';
 import { isNil } from 'src/utils/data';
 import { DragAndDropMixin } from 'src/mixins/DragAndDropBaseMixin';
+import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 
 export class Tidy5eItemSheetClassic extends DragAndDropMixin(
   SvelteApplicationMixin<ItemSheetClassicContext>(
@@ -99,6 +100,8 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
           target
         ),
     });
+
+    initTidy5eContextMenu(this, html);
 
     return component;
   }
