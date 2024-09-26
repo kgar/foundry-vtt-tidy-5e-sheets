@@ -579,7 +579,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
           member.system.traits.languages.custom?.trim();
         const customLanguages = isNil(customLanguageString, '')
           ? []
-          : foundry.utils.splitSemicolons(customLanguageString);
+          : dnd5e.utils.splitSemicolons(customLanguageString);
         const languageKeys = [
           ...member.system.traits.languages.value,
           ...customLanguages,
@@ -619,7 +619,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
           }`;
         }
         if (senses.special)
-          foundry.utils
+          dnd5e.utils
             .splitSemicolons(senses.special)
             .forEach(
               (c: string, i: number) => (tags[`custom${i + 1}`] = c.trim())
