@@ -223,7 +223,10 @@
         <SpecialSaves />
       {/if}
     </div>
-    <HorizontalLineSeparator class="header-line-margin-left" borderColor="light" />
+    <HorizontalLineSeparator
+      class="header-line-margin-left"
+      borderColor="light"
+    />
     <!-- AC  -->
     <ActorHeaderStats
       {abilities}
@@ -339,10 +342,14 @@
       gap: 0.25rem;
       border-bottom: 0.0625rem solid var(--t5e-separator-color);
       border-top: 0.0625rem solid var(--t5e-separator-color);
-      font-size: 0.75rem;
       line-height: 1rem;
       padding: 0.1875rem 0 0.125rem 0;
       margin-top: 0.125rem;
+
+      &,
+      :global(button) {
+        font-size: 0.75rem;
+      }
 
       .origin-points {
         flex: 1;
