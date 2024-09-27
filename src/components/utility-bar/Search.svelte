@@ -58,8 +58,12 @@
   .search-container {
     flex-grow: 1;
     position: relative;
+    align-self: stretch;
+    display: flex;
+    align-items: stretch;
 
     .search {
+      height: unset;
       border-radius: 0.3125rem;
       padding-left: 0.25rem;
       padding-right: 0.25rem;
