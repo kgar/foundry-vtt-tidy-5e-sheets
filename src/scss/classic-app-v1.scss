@@ -1,67 +1,33 @@
-:where(.tidy5e-sheet.app-v2.classic) {
-  @import './partials/reset-v2';
-  @import './partials/variables';
-  @import './partials/text';
+:where(.tidy5e-sheet.app-v1.classic) {
+  @font-face {
+    font-family: 'Signika';
+    src: url('../../../fonts/signika/signika-light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Signika';
+    src: url('../../../fonts/signika/signika-semibold.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  @import './partials/reset-v1';
 }
 
-.tidy5e-sheet.application:where(.app-v2.classic) {
-  --t5e-parchment-background: url(../../modules/tidy5e-sheet/images/parchment-texture-top.webp)
-      no-repeat top center / 150% auto,
-    #f1ebe8 url(../../modules/tidy5e-sheet/images/parchment-texture-bottom.webp)
-      no-repeat bottom center / 150% auto;
-
-  // Document V2 sheets need more width to be readable.
-  --minimized-width: 18.75rem;
-
-  .window-header:has(+ .controls-dropdown.expanded)
-    [data-action='toggleControls'] {
-    background: var(--t5e-faint-color);
-  }
-
-  .controls-dropdown {
-    background: var(--t5e-button-menu-background);
-    border-radius: 0.3125rem;
-    transition: none;
-
-    &.expanded {
-      box-shadow: 0 0 0.3125rem var(--t5e-context-shadow-color);
-      outline: 0.0625rem solid var(--t5e-faint-color);
-    }
-
-    .header-control > button {
-      justify-content: flex-start;
-      gap: 0.5rem;
-      --button-text-color: var(--t5e-primary-font-color);
-      --button-hover-text-color: var(--t5e-primary-font-color);
-    }
-  }
-
-  &[data-tidy-lock-configure-sheet='true']
-    .window-header
-    [data-action='configureSheet'] {
-    display: none;
-  }
-
-  &:not(.minimized) {
-    background: var(--t5e-sheet-background, var(--t5e-parchment-background));
-
-    .window-header {
-      background: var(--t5e-header-background);
-      border-bottom: none;
-      &,
-      h1 {
-        color: var(--t5e-primary-font-color);
-      }
-    }
-  }
-
-  .tidy5e-sheet-header {
-    padding: 0 1rem 1rem 1rem;
-    background: var(--t5e-header-background);
-  }
-
+.tidy5e-sheet:where(.app-v1.classic) {
   .window-content {
+    background: url(../../modules/tidy5e-sheet/images/parchment-texture-top.webp)
+        no-repeat top center / 150% auto,
+      #f1ebe8
+        url(../../modules/tidy5e-sheet/images/parchment-texture-bottom.webp)
+        no-repeat bottom center / 150% auto;
+  }
+
+  &.sheet form {
     color: var(--t5e-primary-font-color);
+    background: var(--t5e-sheet-background);
   }
 
   * {
@@ -80,7 +46,6 @@
   @import './compatibility/apps-active-effects';
   @import './compatibility/tabs';
 
-  // TODO: Move partials inputs
   select :is(option, optgroup) {
     color: var(--t5e-primary-font-color);
     background: var(--t5e-background);
@@ -90,7 +55,6 @@
     background: var(--t5e-table-header-row-color);
   }
 
-  // TODO: Move to partials Enrichers
   // Enrichers
   .passive-check {
     text-decoration-color: currentcolor;
@@ -137,19 +101,17 @@
     @import './partials/actor';
     @import '../sheets/actor/traits/traits';
   }
-
   @import './partials/item-card';
 
-  &:is(.group) {
-    --t5e-tab-contents-padding-bottom: 0;
-  }
+  &:is(.character, .npc, .vehicle) form {
+    display: flex;
+    flex-direction: column;
 
-  &:is(.character, .npc, .vehicle, .group) {
     .tidy-sheet-body {
-      padding: var(--t5e-tab-contents-padding-top)
-        var(--t5e-tab-contents-padding-right)
-        var(--t5e-tab-contents-padding-bottom)
-        var(--t5e-tab-contents-padding-left);
+      padding: var(--t5e-classic-tab-contents-padding-top)
+        var(--t5e-classic-tab-contents-padding-right)
+        var(--t5e-classic-tab-contents-padding-bottom)
+        var(--t5e-classic-tab-contents-padding-left);
       flex: 1;
       overflow: hidden;
     }
@@ -235,10 +197,6 @@
     line-height: 1rem;
     border-radius: 0.3125rem;
     font-size: 0.75rem;
-
-    &.tag-outline {
-      background: transparent;
-    }
   }
 
   .no-border {
@@ -253,9 +211,6 @@
   // Partials - Styles that can be pulled into anything
   @import './partials/colors';
 
-  // Shared
-  @import '../sheets/shared/SheetHeaderEditModeToggle';
-
   // Applications
   @import '../applications/section-config/DocumentTabSectionConfig';
 
@@ -266,39 +221,26 @@
   @import '../components/filter/filter.scss';
   @import '../components/pips/pips.scss';
   @import '../components/listbox/listbox.scss';
-  @import '../components/editor/SheetEditorV2.scss';
-  @import '../components/tabs/UnderlinedTabStrip.scss';
-
-  // TODO: Buttons V2?
-  :where(.window-content) {
-    button:not(prose-mirror button) {
-      background-color: var(--t5e-faintest-color);
-      transition: background-color 0.3s ease;
-      border: 1px solid var(--t5e-light-color);
-
-      &:hover {
-        background-color: var(--t5e-faint-color);
-      }
-    }
-  }
-
-  @import './partials/buttons';
-  @import './partials/checkboxes';
 
   // Tooltips
   @import '../tooltips/tooltips.scss';
 
-  // Components - Actor-specific
-  @import '../sheets/actor/ActorMovement.scss';
-  @import '../sheets/actor/ActorProfile.scss';
-  @import '../sheets/actor/AttributeBlock.scss';
-  @import '../sheets/actor/AttunementTracker.scss';
-  @import '../sheets/actor/Currency.scss';
-  @import '../sheets/actor/SheetEditModeToggle.scss';
+  // TODO: Remove these layers of specificity and get everything working in concert better. These should come before all component styles and have the lowest acceptable specificity.
+  &.sheet form,
+  &.application-shell {
+    @import './partials/buttons';
+    @import './partials/checkboxes';
+  }
 
-  // Sheets
-  &.group {
-    @import '../sheets/group/GroupSheet.scss';
+  // TODO: Remove these layers of specificity and get everything working in concert better. These should come after partial utility styles and general component styles. They can have a high level of specificity as needed.
+  &.sheet form {
+    // Components - Actor-specific
+    @import '../sheets/actor/ActorMovement.scss';
+    @import '../sheets/actor/ActorProfile.scss';
+    @import '../sheets/actor/AttributeBlock.scss';
+    @import '../sheets/actor/AttunementTracker.scss';
+    @import '../sheets/actor/Currency.scss';
+    @import '../sheets/actor/SheetEditModeToggle.scss';
   }
 
   /* Unidentified Item Concealment */
@@ -349,6 +291,28 @@
   // Prose Mirror
   .prosemirror.editing-source .editor-container {
     display: none;
+  }
+
+  .prosemirror menu {
+    button:hover {
+      background: var(--t5e-prosemirror-button-color);
+    }
+    .pm-dropdown {
+      background: var(--t5e-prosemirror-button-color);
+
+      ul {
+        background: var(--t5e-prosemirror-button-color);
+      }
+
+      li:hover {
+        background: var(--t5e-prosemirror-dropdown-item-hover-color);
+      }
+    }
+  }
+
+  .prosemirror menu button:hover,
+  .prosemirror menu button.active {
+    color: var(--t5e-primary-font-color);
   }
 
   // Lists
@@ -474,18 +438,6 @@
     font-weight: 500;
   }
 
-  /* Drag and Drop */
-  .drop-zone {
-    align-items: center;
-    border: 0.125rem dashed var(--t5e-separator-color);
-    color: var(--t5e-secondary-color);
-    display: flex;
-    font-style: italic;
-    justify-content: center;
-    margin: 0.25rem 0;
-    padding: 1rem;
-  }
-
   .user-select-text * {
     -webkit-user-select: text;
     -moz-user-select: text;
@@ -517,4 +469,5 @@
   }
 }
 
-@import './partials/floating-context-menu';
+
+

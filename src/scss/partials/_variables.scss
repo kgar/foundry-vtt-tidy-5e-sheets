@@ -1,55 +1,9 @@
 & {
-  // Tabs
-  --t5e-tab-contents-padding-top: 1rem;
-  --t5e-tab-contents-padding-right: 0.25rem;
-  --t5e-tab-contents-padding-bottom: 1rem;
-  --t5e-tab-contents-padding-left: 1rem;
+  /* Classic Sheet Styles */
+  --t5e-classic-tab-contents-padding-top: 1rem;
+  --t5e-classic-tab-contents-padding-right: 0.25rem;
+  --t5e-classic-tab-contents-padding-bottom: 1rem;
+  --t5e-classic-tab-contents-padding-left: 1rem;
 
-  // Tidy Item Tables (V2)
-  --t5e-tidy-table-cell-min-height: 1.5rem;
-
-  // Capacity Tracker
-  --t5e-capacity-container-background: var(--t5e-light-color);
-  --t5e-capacity-container-border-color: var(--t5e-separator-color);
-  --t5e-capacity-text-color: var(--t5e-encumbrance-text-color);
-  --t5e-capacity-bar-text-shadow-color: var(
-    --t5e-encumbrance-bar-text-shadow-color
-  );
-  --t5e-capacity-background: var(--t5e-encumbrance-bar-background);
-  --t5e-capacity-border-color: var(--t5e-encumbrance-bar-outline-color);
-
-  // Container Panel
-  --t5e-container-panel-item-size: 3.125rem;
-
-  // Spellbook School Icons
-  --t5e-spell-school-icon-fill: var(--t5e-secondary-color);
-  --t5e-spell-school-icon-width: 1rem;
-  --t5e-spell-school-icon-height: 1rem;
-  --t5e-spell-school-font-icon-size: 1rem;
-
-  // Filters - TODO: Extract these to color picker
-  --t5e-filter-option-neutral-pin-border-bottom-color: var(--t5e-faint-color);
-  --t5e-filter-option-neutral-pin-hover-border-bottom-color: var(
-    --t5e-light-color
-  );
-  --t5e-filter-option-include-pin-border-bottom-color: var(
-    --t5e-tertiary-color
-  );
-  --t5e-filter-option-exclude-pin-border-bottom-color: var(
-    --t5e-warning-accent-color
-  );
-  --t5e-filter-option-button-hover-background: var(--t5e-faint-color);
-  --t5e-filter-option-include-button-background: var(--t5e-tertiary-color);
-  --t5e-filter-option-exclude-button-background: var(
-    --t5e-warning-accent-color
-  );
-  --t5e-filter-option-include-button-text-color: white;
-  --t5e-filter-option-exclude-button-text-color: white;
-
-  // Item Image Overlay
-  --t5e-item-image-icon-overlay-color: white;
-  --t5e-item-image-icon-overlay-text-shadow: #000 0.0625rem 0 0.25rem,
-    #000 0.0625rem 0 0.25rem, #000 0.0625rem 0 0.25rem;
-
-  // TODO: Extract more standard measurements to include here
+  /* Hightouch Sheet Styles */
 }

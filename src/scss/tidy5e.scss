@@ -1,0 +1,27 @@
+/* Common Styles */
+.tidy5e-sheet {
+  @import 'partials/variables';
+  @import 'partials/text';
+  @import 'partials/floating-context-menu';
+}
+
+/* Classic App V1 */
+@import 'classic-app-v1.scss';
+
+/* Classic App V2 */
+@import 'classic-app-v2/apps.scss';
+
+/* Hightouch App V2 */
+@import 'hightouch/apps.scss';
+@import 'hightouch/forms.scss';
+@import 'hightouch/sheets.scss';
+@import 'hightouch/actors.scss';
+@import 'hightouch/items.scss';
+@import 'hightouch/character.scss';
+@import 'hightouch/npc.scss';
+@import 'hightouch/inventory.scss';
+@import 'hightouch/tooltips.scss';
+
+/* Hightouch App V2 Dark Mode */
+
+/* Hightouch App V2 High Contrast */

@@ -1,6 +1,6 @@
 import { FoundryAdapter } from './foundry/foundry-adapter';
 import { Tidy5eCharacterSheet } from './sheets/Tidy5eCharacterSheet';
-import './scss/core.scss';
+import './scss/tidy5e.scss';
 import { SettingsProvider, initSettings } from './settings/settings';
 import { Tidy5eItemSheetClassic } from './sheets/Tidy5eItemSheetClassic';
 import { Tidy5eNpcSheet } from './sheets/Tidy5eNpcSheet';

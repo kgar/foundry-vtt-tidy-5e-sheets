@@ -43,8 +43,8 @@
     position: relative;
     height: var(--capacity-bar-height, 1rem);
     border-radius: var(--capacity-bar-container-border-radius, 0.1875rem);
-    background: var(--t5e-capacity-container-background);
-    border: 0.0625rem solid var(--t5e-capacity-container-border-color);
+    background: var(--t5e-light-color);
+    border: 0.0625rem solid var(--t5e-separator-color);
 
     &:not(.empty)::before {
       content: '';
@@ -53,9 +53,9 @@
       inset: 0;
       max-inline-size: calc(100% - 0.25rem);
       margin: 0.0625rem;
-      border: 0.0625rem solid var(--t5e-capacity-border-color);
+      border: 0.0625rem solid var(--t5e-encumbrance-bar-outline-color);
       border-radius: 0.125rem;
-      background: var(--t5e-capacity-background);
+      background: var(--t5e-encumbrance-bar-background);
       transition: width 0.5s ease;
     }
 
@@ -65,11 +65,11 @@
       position: relative;
       width: 100%;
       text-align: center;
-      color: var(--t5e-capacity-text-color);
+      color: var(--t5e-encumbrance-text-color);
       text-shadow:
-        0 0 0.125rem var(--t5e-capacity-bar-text-shadow-color),
-        0 0 0.125rem var(--t5e-capacity-bar-text-shadow-color),
-        0 0 0.125rem var(--t5e-capacity-bar-text-shadow-color);
+        0 0 0.125rem var(--t5e-encumbrance-bar-text-shadow-color),
+        0 0 0.125rem var(--t5e-encumbrance-bar-text-shadow-color),
+        0 0 0.125rem var(--t5e-encumbrance-bar-text-shadow-color);
     }
   }
 </style>

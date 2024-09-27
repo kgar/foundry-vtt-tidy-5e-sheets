@@ -221,9 +221,9 @@
                 <i class="spell-school-icon {icon}"></i>
               {:else}
                 <Dnd5eIcon
-                  --icon-fill="var(--t5e-spell-school-icon-fill)"
-                  --icon-width="var(--t5e-spell-school-icon-width)"
-                  --icon-height="var(--t5e-spell-school-icon-height)"
+                  --icon-fill="var(--t5e-secondary-color)"
+                  --icon-width="1rem"
+                  --icon-height="1rem"
                   src={icon.iconSrc}
                 />
               {/if}
@@ -283,7 +283,7 @@
   .spellbook-list-section {
     .spell-school-icon {
       color: var(--t5e-secondary-color);
-      font-size: var(--t5e-spell-school-font-icon-size);
+      font-size: 1rem;
       margin: 0;
       padding: 0;
     }

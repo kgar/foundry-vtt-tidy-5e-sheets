@@ -116,6 +116,8 @@
 
 <style lang="scss">
   .containers {
+    --t5e-container-panel-item-size: 3.125rem;
+
     flex: 1;
     display: grid;
     grid-template-columns: repeat(
