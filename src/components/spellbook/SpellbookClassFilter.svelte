@@ -45,7 +45,7 @@
   {#each allClasses as option}
     <option
       value={option.value}
-      selected={option.value === selectedClassFilter ?? undefined}
+      selected={option.value === (selectedClassFilter ?? undefined)}
       >{localize(option.text)}</option
     >
   {/each}
