@@ -2,13 +2,15 @@
   --sidebar-expanded-width: 9rem;
   --sidebar-width: var(--sidebar-expanded-width);
 
+  // Items and Containers feature a sidebar that extends to the top of the sheet, inside the header area.
   .window-header {
     position: absolute;
     top: 0;
-    left: var(--sidebar-width);
+    left: 0;
     right: 0;
+    padding-inline-start: var(--sidebar-width);
     grid-area: header;
-    transition: left 250ms ease;
+    transition: padding-left 250ms ease;
 
     .window-title {
       visibility: hidden;
@@ -17,7 +19,7 @@
 
   &:is(.minimized, .minimizing) {
     .window-header {
-      left: 0;
+      padding-inline-start: 0.5rem;
     }
 
     .window-title {
@@ -39,6 +41,11 @@
   .sidebar {
     grid-area: sidebar;
     padding: 1rem;
+    border-right: 1px solid var(--t5e-color-gold, #9f9275);
+    background: linear-gradient(180deg, #31313140 0%, #303236 80.5%),
+      url(../../modules/tidy5e-sheet/images/banner-character-dark.png) lightgray
+        50% / cover no-repeat;
+    background-blend-mode: luminosity;
   }
 
   .item-content {

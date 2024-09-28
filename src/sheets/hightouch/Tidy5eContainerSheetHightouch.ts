@@ -77,7 +77,7 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
     },
     position: {
       width: 560,
-      height: 600,
+      height: 560,
     },
     actions: {},
     dragDrop: [{ dropSelector: 'form' }],

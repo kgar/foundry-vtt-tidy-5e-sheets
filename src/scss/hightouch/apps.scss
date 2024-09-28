@@ -3,6 +3,8 @@
 /* ---------------------------------- */
 
 .tidy5e-sheet:where(.hightouch) {
+  --minimized-width: 18.75rem;
+
   .window-header {
     border: none;
     align-items: center;
