@@ -1,9 +1,215 @@
-& {
-  /* Classic Sheet Styles */
+@font-face {
+  font-family: 'Modesto Condensed';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../../fonts/modesto-condensed/modesto-condensed.woff2')
+    format('woff2');
+}
+
+@font-face {
+  font-family: 'Modesto Condensed';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../../fonts/modesto-condensed/modesto-condensed-bold.woff2')
+    format('woff2');
+}
+
+@font-face {
+  font-family: 'Signika';
+  src: url('../../../fonts/signika/signika-light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Signika';
+  src: url('../../../fonts/signika/signika-semibold.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+&.hightouch {
+  --tidy5e-font-modesto: 'Modesto Condensed', 'Palatino Linotype', serif;
+  --tidy5e-font-roboto: 'Roboto', sans-serif;
+  --tidy5e-font-roboto-condensed: 'Roboto Condensed', sans-serif;
+  --tidy5e-font-roboto-slab: 'Roboto Slab', serif;
+  --tidy5e-font-signika: 'Signika', sans-serif;
+
+  --t5e-color-text-onInverse-default: #ffffff;
+  --t5e-color-text-onInverse-gold: #c0ad81;
+  --t5e-color-text-onInverse-gold-light: #f0f0e1;
+  --t5e-color-text-onInverse-lighter: #cfd2da;
+  --t5e-color-text-onInverse-lightest: #999999;
+  --t5e-color-text-onInverse-gold-emphasis: #c0ad81;
+  --t5e-color-text-onInverse-disabled: #777777;
+  --t5e-color-gold: #9f9275;
+  --t5e-color-filigree: #444856;
+  --t5e-color-highlight: #6495ed4d;
+  --t5e-component-card-onDefault-default: #f8f4f1;
+  --t5e-component-card-onDefault-darker: #f1ebe8;
+  --t5e-component-card-onDefault-lighter: #fdfcfc;
+  --t5e-component-pill-onInverse-background: #252830;
+  --t5e-component-pill-onInverse-border: #7a7a7a;
+  --t5e-color-icon-dark-default: #ffffff;
+  --t5e-color-icon-dark-disabled: #ffffff80;
+  --t5e-color-text-onDefault-default: #000000;
+  --t5e-color-text-onDefault-gold: var(--t5e-color-gold);
+  --t5e-color-text-onDefault-gold-light: #f0f0e1;
+  --t5e-color-text-onDefault-lighter: #4b4a44;
+  --t5e-color-text-onDefault-gold-emphasis: #8f7b4e;
+  --t5e-color-text-onDefault-lightest: #666666;
+  --t5e-color-text-onDefault-disabled: #999999;
+  --t5e-component-card-onInverse-default: #252830;
+  --t5e-component-card-onInverse-darker: #16181d;
+  --t5e-component-card-onInverse-lighter: #303236;
+  --t5e-component-pill-onDefault-background: #f8f4f1;
+  --t5e-component-pill-onDefault-border: var(--t5e-color-gold);
+  --t5e-color-icon-light-default: #000000;
+  --t5e-color-icon-light-disabled: #00000066;
+  --t5e-component-field-default-border: var(--t5e-color-gold);
+  --t5e-component-field-default-background: #f8f4f1;
+  --t5e-component-field-default-hover-overlay: #ffffff80;
+  --t5e-component-field-default-hover-overlay-emphasis: #ffffff;
+  --t5e-component-field-focus: #9a2a30;
+  --t5e-color-Spellcasting-at-will: #741b2b;
+  --t5e-color-Spellcasting-always-prepared: #276d3c;
+  --t5e-color-Spellcasting-pact: #8b265d;
+  --t5e-color-Spellcasting-innate: #5b1096;
+  --t5e-color-Spellcasting-ritual: #1f4c91;
+  --t5e-color-Table-divider: #e0d8d4;
+  --t5e-color-Rarity-rare: #247cb2;
+  --t5e-color-Rarity-legendary: #ffb62a;
+  --t5e-color-Rarity-uncommon: #72ad11;
+  --t5e-color-Rarity-very-rare: #c364e7;
+  --t5e-color-Rarity-artifact: #f77558;
+  --t5e-color-Rarity-common: #9f9275;
+  --t5e-color-Rarity-common: #9f9275;
+  --t5e-component-field-inverse-background: #252830;
+  --t5e-component-field-inverse-border: #7a7a7a;
+  --t5e-component-toggle-toggled-border: #44191a;
+  --t5e-component-toggle-toggled-background: #741b2b;
+  --t5e-component-toggle-toggled-text: #ffffff;
+  --t5e-color-Inventory-dark: #3e4a75;
+  --t5e-color-Inventory-light: #6f82c7;
+  --t5e-color-Inventory-max: #515f95;
+  --t5e-color-Inventory-dark-over: #653a25;
+  --t5e-color-Inventory-light-over: #84411f;
+  --t5e-color-Inventory-max-over: #6e3316;
+  --t5e-color-gradient-red-dark: #44191a;
+  --t5e-color-gradient-red-light: #741b2b;
+  --t5e-color-gradient-purple-dark: #320953;
+  --t5e-color-gradient-purple-light: #5b1096;
+  --t5e-color-gradient-orange-dark: #65380e;
+  --t5e-color-gradient-orange-light: #b36319;
+  --t5e-color-gradient-blue-dark: #01405a;
+  --t5e-color-gradient-blue-light: #025a80;
+  --t5e-color-gradient-green-dark: #174023;
+  --t5e-color-gradient-green-light: #276d3c;
+  --t5e-color-gradient-grey-dark: #242731;
+  --t5e-color-gradient-grey-light: #434857;
+  --t5e-color-hp-dark: #1b4b29;
+  --t5e-color-hp-light: #3ba55d;
+  --t5e-color-hp-temp: #4b66de;
+  --t5e-color-hp-default: #276d3c;
+  --t5e-color-hp-hd-dark: #44191a;
+  --t5e-color-hp-hd-light: #741b2b;
+  --t5e-color-hp-hd-medium: #500000;
+  --t5e-components-enricher-background: #9f927526;
+  --t5e-components-enricher-border: #9f927559;
+}
+
+.hightouch.dark {
+  --t5e-color-text-onInverse-default: #000000;
+  --t5e-color-text-onInverse-gold: #9f9275;
+  --t5e-color-text-onInverse-gold-light: #f0f0e1;
+  --t5e-color-text-onInverse-lighter: #4b4a44;
+  --t5e-color-text-onInverse-lightest: #666666;
+  --t5e-color-text-onInverse-gold-emphasis: #8f7b4e;
+  --t5e-color-text-onInverse-disabled: #666666;
+  --t5e-color-gold: #9f9275;
+  --t5e-color-filigree: var(--t5e-color-gold);
+  --t5e-color-highlight: #6495ed4d;
+  --t5e-component-card-onDefault-default: #252830;
+  --t5e-component-card-onDefault-darker: #1b1d23;
+  --t5e-component-card-onDefault-lighter: #303236;
+  --t5e-component-pill-onInverse-background: var(
+    --t5e-component-field-default-background
+  );
+  --t5e-component-pill-onInverse-border: #7a7a7a;
+  --t5e-color-icon-dark-default: #000000;
+  --t5e-color-icon-dark-disabled: #00000066;
+  --t5e-color-text-onDefault-default: #ffffff;
+  --t5e-color-text-onDefault-gold: #c0ad81;
+  --t5e-color-text-onDefault-gold-light: #f0f0e1;
+  --t5e-color-text-onDefault-lighter: #cfd2da;
+  --t5e-color-text-onDefault-gold-emphasis: #c0ad81;
+  --t5e-color-text-onDefault-lightest: #999999;
+  --t5e-color-text-onDefault-disabled: #777777;
+  --t5e-component-card-onInverse-default: #f8f4f1;
+  --t5e-component-card-onInverse-darker: #f1ebe8;
+  --t5e-component-card-onInverse-lighter: #fdfcfc;
+  --t5e-component-pill-onDefault-background: #252830;
+  --t5e-component-pill-onDefault-border: #7a7a7a;
+  --t5e-color-icon-light-default: #ffffff;
+  --t5e-color-icon-light-disabled: #ffffff80;
+  --t5e-component-field-default-border: #7a7a7a;
+  --t5e-component-field-default-background: var(
+    --t5e-component-card-onDefault-default
+  );
+  --t5e-component-field-default-hover-overlay: #000000;
+  --t5e-component-field-default-hover-overlay-emphasis: #000000;
+  --t5e-component-field-focus: #9a2a30;
+  --t5e-color-Spellcasting-at-will: #e28394;
+  --t5e-color-Spellcasting-always-prepared: #8bd5a1;
+  --t5e-color-Spellcasting-pact: #de87b6;
+  --t5e-color-Spellcasting-innate: #ba75f0;
+  --t5e-color-Spellcasting-ritual: #81a8e4;
+  --t5e-color-Table-divider: #ffffff40;
+  --t5e-color-Rarity-rare: #247cb2;
+  --t5e-color-Rarity-legendary: #ffb62a;
+  --t5e-color-Rarity-uncommon: #72ad11;
+  --t5e-color-Rarity-very-rare: #c364e7;
+  --t5e-color-Rarity-artifact: #f77558;
+  --t5e-color-Rarity-common: var(--t5e-color-gold);
+  --t5e-component-field-inverse-background: var(
+    --t5e-component-card-onInverse-default
+  );
+  --t5e-component-field-inverse-border: (--t5e-color-gold);
+  --t5e-component-toggle-toggled-border: #c0ad81;
+  --t5e-component-toggle-toggled-background: #8f7b4e;
+  --t5e-component-toggle-toggled-text: var(--t5e-color-text-onDefault-default);
+  --t5e-color-Inventory-dark: #3e4a75;
+  --t5e-color-Inventory-light: #6f82c7;
+  --t5e-color-Inventory-max: #515f95;
+  --t5e-color-Inventory-dark-over: #ffffff;
+  --t5e-color-Inventory-light-over: #ffffff;
+  --t5e-color-Inventory-max-over: #ffffff;
+  --t5e-color-gradient-red-dark: #44191a;
+  --t5e-color-gradient-red-light: #741b2b;
+  --t5e-color-gradient-purple-dark: #320953;
+  --t5e-color-gradient-purple-light: #5b1096;
+  --t5e-color-gradient-orange-dark: #65380e;
+  --t5e-color-gradient-orange-light: #b36319;
+  --t5e-color-gradient-blue-dark: #01405a;
+  --t5e-color-gradient-blue-light: #025a80;
+  --t5e-color-gradient-green-dark: #174023;
+  --t5e-color-gradient-green-light: #276d3c;
+  --t5e-color-gradient-grey-dark: #242731;
+  --t5e-color-gradient-grey-light: #434857;
+  --t5e-color-hp-dark: #1b4b29;
+  --t5e-color-hp-light: #3ba55d;
+  --t5e-color-hp-temp: #4b66de;
+  --t5e-color-hp-default: #276d3c;
+  --t5e-color-hp-hd-dark: #44191a;
+  --t5e-color-hp-hd-light: #741b2b;
+  --t5e-color-hp-hd-medium: #500000;
+  --t5e-components-enricher-background: #9f927526;
+  --t5e-components-enricher-border: #9f927559;
+}
+
+.tidy5e-sheet.classic {
   --t5e-classic-tab-contents-padding-top: 1rem;
   --t5e-classic-tab-contents-padding-right: 0.25rem;
   --t5e-classic-tab-contents-padding-bottom: 1rem;
   --t5e-classic-tab-contents-padding-left: 1rem;
-
-  /* Hightouch Sheet Styles */
 }

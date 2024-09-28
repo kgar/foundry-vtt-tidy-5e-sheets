@@ -1,9 +1,7 @@
 /* Common Styles */
-.tidy5e-sheet {
-  @import 'partials/variables';
-  @import 'partials/text';
-  @import 'partials/floating-context-menu';
-}
+@import 'partials/variables';
+@import 'partials/text';
+@import 'partials/floating-context-menu';
 
 /* Classic App V1 */
 @import 'classic-app-v1.scss';
