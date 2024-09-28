@@ -1,4 +1,9 @@
 .tidy5e-sheet {
+  // TODO: Find the right home for the equip-icon style
+  .equip-icon {
+    transform: rotate(-90deg) scaleX(-1);
+  }
+
   .fs-lg {
     font-size: 1.25rem !important;
   }
