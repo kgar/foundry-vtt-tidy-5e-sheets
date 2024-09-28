@@ -1,7 +1,7 @@
 import { SettingsProvider } from 'src/settings/settings';
-import { Tidy5eContainerSheetClassic } from 'src/sheets/Tidy5eContainerSheetClassic';
-import { Tidy5eGroupSheetClassic } from 'src/sheets/Tidy5eGroupSheetClassic';
-import { Tidy5eItemSheetClassic } from 'src/sheets/Tidy5eItemSheetClassic';
+import { Tidy5eContainerSheetClassic } from 'src/sheets/classic/Tidy5eContainerSheetClassic';
+import { Tidy5eGroupSheetClassic } from 'src/sheets/classic/Tidy5eGroupSheetClassic';
+import { Tidy5eItemSheetClassic } from 'src/sheets/classic/Tidy5eItemSheetClassic';
 
 export class DebugTools {
   static onReady() {

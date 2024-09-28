@@ -8,9 +8,9 @@ import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import type { TabId } from './tab/CustomTabBase';
-import { Tidy5eCharacterSheet } from 'src/sheets/Tidy5eCharacterSheet';
-import { Tidy5eNpcSheet } from 'src/sheets/Tidy5eNpcSheet';
-import { Tidy5eVehicleSheet } from 'src/sheets/Tidy5eKgarVehicleSheet';
+import { Tidy5eCharacterSheet } from 'src/sheets/classic/Tidy5eCharacterSheet';
+import { Tidy5eNpcSheet } from 'src/sheets/classic/Tidy5eNpcSheet';
+import { Tidy5eVehicleSheet } from 'src/sheets/classic/Tidy5eKgarVehicleSheet';
 import { SvelteTab } from './tab/SvelteTab';
 import type {
   SupportedTab,
@@ -26,9 +26,9 @@ import { CONSTANTS } from 'src/constants';
 import { CustomContentManager } from 'src/runtime/content/CustomContentManager';
 import { ConfigApi } from './config/ConfigApi';
 import { GroupSheetRuntime } from 'src/runtime/GroupSheetRuntime';
-import { Tidy5eGroupSheetClassic } from 'src/sheets/Tidy5eGroupSheetClassic';
-import { Tidy5eItemSheetClassic } from 'src/sheets/Tidy5eItemSheetClassic';
-import { Tidy5eContainerSheetClassic } from 'src/sheets/Tidy5eContainerSheetClassic';
+import { Tidy5eGroupSheetClassic } from 'src/sheets/classic/Tidy5eGroupSheetClassic';
+import { Tidy5eItemSheetClassic } from 'src/sheets/classic/Tidy5eItemSheetClassic';
+import { Tidy5eContainerSheetClassic } from 'src/sheets/classic/Tidy5eContainerSheetClassic';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.

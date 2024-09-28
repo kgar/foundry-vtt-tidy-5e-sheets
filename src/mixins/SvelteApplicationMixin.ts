@@ -9,7 +9,7 @@ import {
 import { debug, error } from 'src/utils/logging';
 import type { SvelteComponent } from 'svelte';
 import { writable, type Unsubscriber, type Writable } from 'svelte/store';
-import SheetHeaderEditModeToggle from 'src/sheets/shared/SheetHeaderEditModeToggle.svelte';
+import SheetHeaderEditModeToggle from 'src/sheets/classic/shared/SheetHeaderEditModeToggle.svelte';
 import { CONSTANTS } from 'src/constants';
 import {
   CustomContentRendererV2,

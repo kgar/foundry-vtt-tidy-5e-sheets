@@ -5,7 +5,7 @@
   import type { Readable } from 'svelte/store';
   import NumberInput from '../inputs/NumberInput.svelte';
   import Select from '../inputs/Select.svelte';
-  import TabFooter from 'src/sheets/actor/TabFooter.svelte';
+  import TabFooter from 'src/sheets/classic/actor/TabFooter.svelte';
   import { MaxPreparedSpellsConfigFormApplication } from 'src/applications/max-prepared-spells-config/MaxPreparedSpellsConfigFormApplication';
   import { CONSTANTS } from 'src/constants';
   import { settingStore } from 'src/settings/settings';

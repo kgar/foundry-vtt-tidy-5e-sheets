@@ -1,10 +1,10 @@
 import { FoundryAdapter } from './foundry/foundry-adapter';
-import { Tidy5eCharacterSheet } from './sheets/Tidy5eCharacterSheet';
+import { Tidy5eCharacterSheet } from './sheets/classic/Tidy5eCharacterSheet';
 import './scss/tidy5e.scss';
 import { SettingsProvider, initSettings } from './settings/settings';
-import { Tidy5eItemSheetClassic } from './sheets/Tidy5eItemSheetClassic';
-import { Tidy5eNpcSheet } from './sheets/Tidy5eNpcSheet';
-import { Tidy5eVehicleSheet } from './sheets/Tidy5eKgarVehicleSheet';
+import { Tidy5eItemSheetClassic } from './sheets/classic/Tidy5eItemSheetClassic';
+import { Tidy5eNpcSheet } from './sheets/classic/Tidy5eNpcSheet';
+import { Tidy5eVehicleSheet } from './sheets/classic/Tidy5eKgarVehicleSheet';
 import { CONSTANTS } from './constants';
 import { Tidy5eSheetsApi } from './api/Tidy5eSheetsApi';
 import '../public/rpg-awesome/style/rpg-awesome.min.css';
@@ -14,9 +14,9 @@ import { MigrationTally } from 'src/migrations/MigrationTally';
 import { setupModuleIntegrations } from './integration/integration';
 import { TidyHooks } from './foundry/TidyHooks';
 import { initKeybindings } from './keybindings/keybind-init';
-import { Tidy5eGroupSheetClassic } from './sheets/Tidy5eGroupSheetClassic';
+import { Tidy5eGroupSheetClassic } from './sheets/classic/Tidy5eGroupSheetClassic';
 import { DebugTools } from './utils/DebugTools';
-import { Tidy5eContainerSheetClassic } from './sheets/Tidy5eContainerSheetClassic';
+import { Tidy5eContainerSheetClassic } from './sheets/classic/Tidy5eContainerSheetClassic';
 
 Hooks.once('init', () => {
   DocumentSheetConfig.registerSheet(

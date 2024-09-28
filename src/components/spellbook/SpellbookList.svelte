@@ -31,7 +31,7 @@
   import Dnd5eIcon from '../icon/Dnd5eIcon.svelte';
   import SpellSlotManagement from './SpellSlotManagement.svelte';
   import type { Item5e } from 'src/types/item.types';
-  import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
+  import ClassicControls from 'src/sheets/classic/shared/ClassicControls.svelte';
   import ConcentrationOverlayIcon from './ConcentrationOverlayIcon.svelte';
 
   let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(

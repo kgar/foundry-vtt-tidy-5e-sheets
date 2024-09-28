@@ -1,4 +1,4 @@
-import type { Tidy5eGroupSheetClassic } from 'src/sheets/Tidy5eGroupSheetClassic';
+import type { Tidy5eGroupSheetClassic } from 'src/sheets/classic/Tidy5eGroupSheetClassic';
 import type { ContainerContents, Item5e } from './item.types';
 import type {
   Actor5e,
