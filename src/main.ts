@@ -17,6 +17,7 @@ import { initKeybindings } from './keybindings/keybind-init';
 import { Tidy5eGroupSheetClassic } from './sheets/classic/Tidy5eGroupSheetClassic';
 import { DebugTools } from './utils/DebugTools';
 import { Tidy5eContainerSheetClassic } from './sheets/classic/Tidy5eContainerSheetClassic';
+import { Tidy5eContainerSheetHightouch } from './sheets/hightouch/Tidy5eContainerSheetHightouch';
 
 Hooks.once('init', () => {
   DocumentSheetConfig.registerSheet(
@@ -70,7 +71,7 @@ Hooks.once('init', () => {
       label: 'TIDY5E.Tidy5eItemSheetClassic',
     }
   );
-  
+
   DocumentSheetConfig.registerSheet(
     Item,
     CONSTANTS.DND5E_SYSTEM_ID,
@@ -78,6 +79,16 @@ Hooks.once('init', () => {
     {
       types: [CONSTANTS.SHEET_TYPE_CONTAINER],
       label: 'TIDY5E.Tidy5eContainerSheetClassic',
+    }
+  );
+
+  DocumentSheetConfig.registerSheet(
+    Item,
+    CONSTANTS.DND5E_SYSTEM_ID,
+    Tidy5eContainerSheetHightouch,
+    {
+      types: [CONSTANTS.SHEET_TYPE_CONTAINER],
+      label: 'Tidy 5e Container Sheet - Codename Hightouch',
     }
   );
 
