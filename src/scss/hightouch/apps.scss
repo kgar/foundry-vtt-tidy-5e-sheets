@@ -3,7 +3,18 @@
 /* ---------------------------------- */
 
 .tidy5e-sheet.hightouch {
-  
+  .window-header {
+    border: none;
+    align-items: center;
 
+    > * {
+      max-block-size: 100%;
+    }
+  }
 
+  // Header button styles
+  // ? Why pseudo-header-button?
+  .header-button,
+  .pseudo-header-button {
+  }
 }

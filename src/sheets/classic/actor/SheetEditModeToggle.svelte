@@ -4,21 +4,20 @@
   import TidySwitch from 'src/components/toggle/TidySwitch.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
-  import type { ActorSheetContextV1 } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
   export let hint: string | null = null;
 
-  let context = getContext<Readable<ActorSheetContextV1>>(
+  let context = getContext<Readable<{ document: any }>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
   async function toggleLock() {
-    await TidyFlags.allowEdit.set($context.actor, !allowEdit);
+    await TidyFlags.allowEdit.set($context.document, !allowEdit);
   }
 
-  $: allowEdit = TidyFlags.allowEdit.get($context.actor);
+  $: allowEdit = TidyFlags.allowEdit.get($context.document);
 
   $: descriptionVariable =
     hint ??

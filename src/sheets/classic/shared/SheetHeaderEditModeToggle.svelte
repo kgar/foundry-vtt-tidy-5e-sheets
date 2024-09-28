@@ -8,15 +8,15 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let context = getContext<Readable<ActorSheetContextV1>>(
+  let context = getContext<Readable<{ document: any; editable: boolean }>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
   async function toggleLock() {
-    await TidyFlags.allowEdit.set($context.actor, !allowEdit);
+    await TidyFlags.allowEdit.set($context.document, !allowEdit);
   }
 
-  $: allowEdit = TidyFlags.allowEdit.get($context.actor);
+  $: allowEdit = TidyFlags.allowEdit.get($context.document);
 
   $: descriptionVariable = $settingStore.useTotalSheetLock
     ? localize('TIDY5E.SheetLock.Description')
