@@ -186,16 +186,46 @@
   --t5e-color-Inventory-max-over: #ffffff;
   --t5e-color-gradient-red-dark: #44191a;
   --t5e-color-gradient-red-light: #741b2b;
+  --t5e-gradient-red: linear-gradient(
+    90deg,
+    var(--t5e-color-gradient-red-dark) 20%,
+    var(--t5e-color-gradient-red-light) 100%
+  );
   --t5e-color-gradient-purple-dark: #320953;
   --t5e-color-gradient-purple-light: #5b1096;
+  --t5e-gradient-purple: linear-gradient(
+    90deg,
+    var(--t5e-color-gradient-purple-dark) 20%,
+    var(--t5e-color-gradient-purple-light) 100%
+  );
   --t5e-color-gradient-orange-dark: #65380e;
   --t5e-color-gradient-orange-light: #b36319;
+  --t5e-gradient-orange: linear-gradient(
+    90deg,
+    var(--t5e-color-gradient-orange-dark) 20%,
+    var(--t5e-color-gradient-orange-light) 100%
+  );
   --t5e-color-gradient-blue-dark: #01405a;
   --t5e-color-gradient-blue-light: #025a80;
+  --t5e-gradient-blue: linear-gradient(
+    90deg,
+    var(--t5e-color-gradient-blue-dark) 20%,
+    var(--t5e-color-gradient-blue-light) 100%
+  );
   --t5e-color-gradient-green-dark: #174023;
   --t5e-color-gradient-green-light: #276d3c;
+  --t5e-gradient-green: linear-gradient(
+    90deg,
+    var(--t5e-color-gradient-green-dark) 20%,
+    var(--t5e-color-gradient-green-light) 100%
+  );
   --t5e-color-gradient-grey-dark: #242731;
   --t5e-color-gradient-grey-light: #434857;
+  --t5e-gradient-grey: linear-gradient(
+    90deg,
+    var(--t5e-color-gradient-grey-dark) 20%,
+    var(--t5e-color-gradient-grey-light) 100%
+  );
   --t5e-color-hp-dark: #1b4b29;
   --t5e-color-hp-light: #3ba55d;
   --t5e-color-hp-temp: #4b66de;
