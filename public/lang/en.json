@@ -823,6 +823,7 @@
   "TIDY5E.Section": {
     "Default": "Default Section",
     "Label": "Section",
+    "LabelPl": "Sections",
     "Tooltip": "Specify a custom section for this item when placed in an actor sheet, or leave it blank for default behavior.",
     "ActionLabel": "Action Section",
     "ActionTooltip": "Specify a custom section for this item when placed in the Actions tab, or leave it blank for default behavior.",
