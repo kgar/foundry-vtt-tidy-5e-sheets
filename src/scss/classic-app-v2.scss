@@ -135,7 +135,7 @@
 
   &:where(.actor) {
     @import './partials/actor';
-    @import '../sheets/actor/traits/traits';
+    @import '../sheets/classic/actor/traits/traits';
   }
 
   @import './partials/item-card';
@@ -254,7 +254,7 @@
   @import './partials/colors';
 
   // Shared
-  @import '../sheets/shared/SheetHeaderEditModeToggle';
+  @import '../sheets/classic/shared/SheetHeaderEditModeToggle';
 
   // Applications
   @import '../applications/section-config/DocumentTabSectionConfig';
@@ -289,16 +289,16 @@
   @import '../tooltips/tooltips.scss';
 
   // Components - Actor-specific
-  @import '../sheets/actor/ActorMovement.scss';
-  @import '../sheets/actor/ActorProfile.scss';
-  @import '../sheets/actor/AttributeBlock.scss';
-  @import '../sheets/actor/AttunementTracker.scss';
-  @import '../sheets/actor/Currency.scss';
-  @import '../sheets/actor/SheetEditModeToggle.scss';
+  @import '../sheets/classic/actor/ActorMovement.scss';
+  @import '../sheets/classic/actor/ActorProfile.scss';
+  @import '../sheets/classic/actor/AttributeBlock.scss';
+  @import '../sheets/classic/actor/AttunementTracker.scss';
+  @import '../sheets/classic/actor/Currency.scss';
+  @import '../sheets/classic/actor/SheetEditModeToggle.scss';
 
   // Sheets
   &.group {
-    @import '../sheets/group/GroupSheet.scss';
+    @import '../sheets/classic/group/GroupSheet.scss';
   }
 
   /* Unidentified Item Concealment */

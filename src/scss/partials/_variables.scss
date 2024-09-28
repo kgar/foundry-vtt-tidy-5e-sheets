@@ -28,7 +28,7 @@
   font-style: normal;
 }
 
-&.hightouch {
+.tidy5e-sheet.hightouch {
   --tidy5e-font-modesto: 'Modesto Condensed', 'Palatino Linotype', serif;
   --tidy5e-font-roboto: 'Roboto', sans-serif;
   --tidy5e-font-roboto-condensed: 'Roboto Condensed', sans-serif;
@@ -118,7 +118,7 @@
   --t5e-components-enricher-border: #9f927559;
 }
 
-.hightouch.dark {
+.tidy5e-sheet.hightouch.dark {
   --t5e-color-text-onInverse-default: #000000;
   --t5e-color-text-onInverse-gold: #9f9275;
   --t5e-color-text-onInverse-gold-light: #f0f0e1;
