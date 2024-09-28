@@ -2,7 +2,7 @@
 /*  All Tidy5e Apps                   */
 /* ---------------------------------- */
 
-.tidy5e-sheet.hightouch {
+.tidy5e-sheet:where(.hightouch) {
   .window-header {
     border: none;
     align-items: center;
@@ -16,5 +16,11 @@
   // ? Why pseudo-header-button?
   .header-button,
   .pseudo-header-button {
+  }
+
+  &.application {
+    &:not(.minimized) .window-header {
+      background: none;
+    }
   }
 }

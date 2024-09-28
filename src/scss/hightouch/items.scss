@@ -1,0 +1,48 @@
+.tidy5e-sheet:where(.hightouch.item) {
+  --sidebar-expanded-width: 9rem;
+  --sidebar-width: var(--sidebar-expanded-width);
+
+  .window-header {
+    position: absolute;
+    top: 0;
+    left: var(--sidebar-width);
+    right: 0;
+    grid-area: header;
+    transition: left 250ms ease;
+
+    .window-title {
+      visibility: hidden;
+    }
+  }
+
+  &:is(.minimized, .minimizing) {
+    .window-header {
+      left: 0;
+    }
+
+    .window-title {
+      visibility: visible;
+    }
+
+    .header-sheet-edit-mode-toggle {
+      display: none;
+    }
+  }
+
+  .window-content {
+    display: grid;
+    grid-template-areas: 'sidebar   content';
+    grid-template-columns: var(--sidebar-width) 1fr;
+    padding: 0;
+  }
+
+  .sidebar {
+    grid-area: sidebar;
+    padding: 1rem;
+  }
+
+  .item-content {
+    margin-block-start: var(--header-height);
+    grid-area: content;
+  }
+}

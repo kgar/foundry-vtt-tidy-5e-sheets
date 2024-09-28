@@ -1,10 +1,7 @@
 /* Styles common to Document sheets */
 
-.tidy5e-sheet.hightouch:is(.item, .actor) {
+.tidy5e-sheet:where(.hightouch:is(.item, .actor)) {
   & > header {
-    background: transparent;
-    position: relative;
-    z-index: 1;
     /* Edit Mode Toggle */
   }
 }
