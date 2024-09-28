@@ -314,6 +314,7 @@ export class Tidy5eVehicleSheet
       customContent: await VehicleSheetRuntime.getContent(
         defaultDocumentContext
       ),
+      document: this.document,
       filterData: this.itemFilterService.getDocumentItemFilterData(),
       filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
       useClassicControls:

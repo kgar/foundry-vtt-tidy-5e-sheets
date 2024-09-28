@@ -724,6 +724,7 @@ export class Tidy5eNpcSheet
         defaultDocumentContext
       ),
       customContent: await NpcSheetRuntime.getContent(defaultDocumentContext),
+      document: this.document,
       useClassicControls:
         SettingsProvider.settings.useClassicControlsForNpc.get(),
       effects: enhancedEffectSections,

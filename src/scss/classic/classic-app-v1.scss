@@ -99,7 +99,7 @@
 
   &:where(.actor) {
     @import './partials/actor';
-    @import '../sheets/classic/actor/traits/traits';
+    @import '../../sheets/classic/actor/traits/traits';
   }
   @import './partials/item-card';
 
@@ -212,18 +212,18 @@
   @import './partials/colors';
 
   // Applications
-  @import '../applications/section-config/DocumentTabSectionConfig';
+  @import '../../applications/section-config/DocumentTabSectionConfig';
 
   // Components
-  @import '../components/button-menu/button-menu.scss';
-  @import '../components/toggle/toggles.scss';
-  @import '../components/table/tidy-table.scss';
-  @import '../components/filter/filter.scss';
-  @import '../components/pips/pips.scss';
-  @import '../components/listbox/listbox.scss';
+  @import '../../components/button-menu/button-menu.scss';
+  @import '../../components/toggle/toggles.scss';
+  @import '../../components/table/tidy-table.scss';
+  @import '../../components/filter/filter.scss';
+  @import '../../components/pips/pips.scss';
+  @import '../../components/listbox/listbox.scss';
 
   // Tooltips
-  @import '../tooltips/tooltips.scss';
+  @import '../../tooltips/tooltips.scss';
 
   // TODO: Remove these layers of specificity and get everything working in concert better. These should come before all component styles and have the lowest acceptable specificity.
   &.sheet form,
@@ -235,12 +235,12 @@
   // TODO: Remove these layers of specificity and get everything working in concert better. These should come after partial utility styles and general component styles. They can have a high level of specificity as needed.
   &.sheet form {
     // Components - Actor-specific
-    @import '../sheets/classic/actor/ActorMovement.scss';
-    @import '../sheets/classic/actor/ActorProfile.scss';
-    @import '../sheets/classic/actor/AttributeBlock.scss';
-    @import '../sheets/classic/actor/AttunementTracker.scss';
-    @import '../sheets/classic/actor/Currency.scss';
-    @import '../sheets/classic/actor/SheetEditModeToggle.scss';
+    @import '../../sheets/classic/actor/ActorMovement.scss';
+    @import '../../sheets/classic/actor/ActorProfile.scss';
+    @import '../../sheets/classic/actor/AttributeBlock.scss';
+    @import '../../sheets/classic/actor/AttunementTracker.scss';
+    @import '../../sheets/classic/actor/Currency.scss';
+    @import '../../sheets/classic/actor/SheetEditModeToggle.scss';
   }
 
   /* Unidentified Item Concealment */

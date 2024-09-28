@@ -1,13 +1,13 @@
 /* Common Styles */
-@import 'partials/variables';
-@import 'partials/text';
-@import 'partials/floating-context-menu';
+@import 'variables';
+@import 'text';
+@import 'floating-context-menu';
 
 /* Classic App V1 */
-@import 'classic-app-v1.scss';
+@import 'classic/classic-app-v1.scss';
 
 /* Classic App V2 */
-@import 'classic-app-v2.scss';
+@import 'classic/classic-app-v2.scss';
 
 /* Hightouch App V2 */
 @import 'hightouch/apps.scss';

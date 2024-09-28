@@ -769,6 +769,7 @@ export class Tidy5eCharacterSheet
       customContent: await CharacterSheetRuntime.getContent(
         defaultDocumentContext
       ),
+      document: this.document,
       editable: defaultDocumentContext.editable,
       effects: enhancedEffectSections,
       filterData: this.itemFilterService.getDocumentItemFilterData(),
