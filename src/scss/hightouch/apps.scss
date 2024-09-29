@@ -4,6 +4,17 @@
 
 .tidy5e-sheet:where(.hightouch) {
   --minimized-width: 18.75rem;
+  
+  /* Font Color */
+  --color-light-text-heading: var(--t5e-color-text-onDefault-default, #000);
+  color: var(--t5e-color-text-onDefault-default, #000);
+  
+  /* Sheet Body Typography */
+  font-family: var(--font-family-default, Roboto);
+  font-size: var(--font-size-13, 0.8125rem);
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 
   .window-header {
     border: none;
