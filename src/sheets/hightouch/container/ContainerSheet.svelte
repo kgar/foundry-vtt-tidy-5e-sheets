@@ -17,8 +17,9 @@
     ? localize('DND5E.Identified')
     : localize('DND5E.Unidentified.Title');
 
-  //@ts-expect-error
-  $: rarityText = CONFIG.DND5E.itemRarity[$context.system.rarity]?.titleCase();
+  $: rarityText =
+    //@ts-expect-error
+    CONFIG.DND5E.itemRarity[$context.system.rarity]?.titleCase() ?? '';
 
   $: rarityColorVariable = `--t5e-color-Rarity-${$context.system.rarity?.slugify() ?? ''}`;
 

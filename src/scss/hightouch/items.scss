@@ -31,6 +31,10 @@
     }
   }
 
+  &:not(:is(.minimized, .minimizing, .maximizing)) {
+    min-width: 31.25rem;
+  }
+
   .window-content {
     display: grid;
     grid-template-areas: 'sidebar content';
