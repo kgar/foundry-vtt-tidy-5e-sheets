@@ -57,8 +57,15 @@
 
     &.inverse .pill {
       background: var(--t5e-component-pill-onInverse-background, #252830);
-      border-color: var(--t5e-component-pill-onInverse-border, #7a7a7a);
+      border-color: var(--t5e-component-pill-onInverse-border, #000);
       color: var(--t5e-color-text-onInverse-default, #fff);
+
+      &.interactive {
+        border-color: var(
+          --t5e-component-pill-onInverse-interactive-border,
+          #7a7a7a
+        );
+      }
 
       .secondary,
       i {

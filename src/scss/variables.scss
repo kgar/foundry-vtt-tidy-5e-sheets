@@ -49,7 +49,8 @@
   --t5e-component-card-onDefault-darker: #f1ebe8;
   --t5e-component-card-onDefault-lighter: #fdfcfc;
   --t5e-component-pill-onInverse-background: #252830;
-  --t5e-component-pill-onInverse-border: #7a7a7a;
+  --t5e-component-pill-onInverse-border: #000;
+  --t5e-component-pill-onInverse-interactive-border: #7a7a7a;
   --t5e-color-icon-dark-default: #ffffff;
   --t5e-color-icon-dark-disabled: #ffffff80;
   --t5e-color-text-onDefault-default: #000000;
@@ -135,7 +136,9 @@
   --t5e-component-pill-onInverse-background: var(
     --t5e-component-field-default-background
   );
-  --t5e-component-pill-onInverse-border: #7a7a7a;
+  // TODO: Determine what this should be for dark mode.
+  --t5e-component-pill-onInverse-border: #000;
+  --t5e-component-pill-onInverse-interactive-border: #7a7a7a;
   --t5e-color-icon-dark-default: #000000;
   --t5e-color-icon-dark-disabled: #00000066;
   --t5e-color-text-onDefault-default: #ffffff;
