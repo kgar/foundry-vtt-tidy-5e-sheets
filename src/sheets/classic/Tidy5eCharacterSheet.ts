@@ -270,7 +270,7 @@ export class Tidy5eCharacterSheet
       characterPreferences.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS]?.sort ?? 'm';
 
     const unlocked =
-      FoundryAdapter.isActorSheetUnlocked(this.actor) &&
+      FoundryAdapter.isSheetUnlocked(this.actor) &&
       defaultDocumentContext.editable;
 
     const tidyResources: TidyResource[] = defaultDocumentContext.resources.map(

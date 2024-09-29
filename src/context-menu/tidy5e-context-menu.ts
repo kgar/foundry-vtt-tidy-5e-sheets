@@ -185,7 +185,7 @@ function getActiveEffectContextOptions(effect: any, app: any) {
 
 function canEditEffect(effect: any) {
   const actor = effect.actor ? effect.actor : effect.parent;
-  return FoundryAdapter.isActorSheetUnlocked(actor);
+  return FoundryAdapter.isSheetUnlocked(actor);
 }
 
 /**
@@ -203,7 +203,7 @@ function getItemContextOptions(item: Item5e) {
   const itemParentIsActor =
     itemParent?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR;
   const isUnlocked =
-    !itemParentIsActor || FoundryAdapter.isActorSheetUnlocked(itemParent);
+    !itemParentIsActor || FoundryAdapter.isSheetUnlocked(itemParent);
   let options = [];
 
   let toggleTitle = '';
@@ -441,7 +441,7 @@ function getItemContextOptions(item: Item5e) {
  * @returns        Context menu options.
  */
 function getGroupMemberContextOptions(group: Actor5e, actor: Actor5e) {
-  const unlocked = FoundryAdapter.isActorSheetUnlocked(group);
+  const unlocked = FoundryAdapter.isSheetUnlocked(group);
 
   let options: ContextMenuEntry[] = [
     {

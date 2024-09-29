@@ -181,7 +181,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     const source = this.actor.toObject();
 
     const unlocked =
-      FoundryAdapter.isActorSheetUnlocked(this.actor) && this.isEditable;
+      FoundryAdapter.isSheetUnlocked(this.actor) && this.isEditable;
 
     const editable = this.isEditable;
 

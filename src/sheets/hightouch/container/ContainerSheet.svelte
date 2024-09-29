@@ -4,8 +4,11 @@
   import { Tidy5eContainerSheetHightouch } from '../Tidy5eContainerSheetHightouch';
   import { CONSTANTS } from 'src/constants';
   import type { Readable } from 'svelte/store';
+  import Tabs from 'src/components/tabs/Tabs.svelte';
+  import type { ContainerSheetHightouchContext } from 'src/types/item.types';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
 
-  let context = getContext<Readable<Tidy5eContainerSheetHightouch>>(
+  let context = getContext<Readable<ContainerSheetHightouchContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
@@ -41,7 +44,7 @@
       <img
         style="width: var(--img-size); height: var(--img-size); border-radius: 1.25rem; object-fit: cover;"
         src={$context.item.img}
-        alt={$context.name}
+        alt={$context.item.name}
       />
       <div style="position: absolute; inset: 0; pointer-events: none;">
         <filigree-box>
@@ -113,4 +116,23 @@
     {/if}
   {/if}
 </aside>
-<main class="item-content"></main>
+<main class="item-content">
+  <div class="flex-row extra-small-gap align-items-center">
+    <!-- Name -->
+    {#if $context.unlocked}
+      <TextInput
+        field="name"
+        document={$context.item}
+        value={$context.item.name}
+        class="document-name"
+      />
+    {:else}
+      <div class="document-name">{$context.item.name ?? ''}</div>
+    {/if}
+  </div>
+
+  <!-- Header Summary -->
+  <!-- Tab Strip -->
+  <Tabs tabs={$context.tabs} />
+  <!-- Tab Contents -->
+</main>

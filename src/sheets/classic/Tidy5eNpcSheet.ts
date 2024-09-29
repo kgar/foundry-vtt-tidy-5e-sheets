@@ -254,7 +254,7 @@ export class Tidy5eNpcSheet
       npcPreferences.tabs?.[CONSTANTS.TAB_ACTOR_INVENTORY]?.sort ?? 'm';
 
     const unlocked =
-      FoundryAdapter.isActorSheetUnlocked(this.actor) &&
+      FoundryAdapter.isSheetUnlocked(this.actor) &&
       defaultDocumentContext.editable;
 
     const lockSensitiveFields =

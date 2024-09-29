@@ -647,18 +647,18 @@ export const FoundryAdapter = {
       });
     }
   },
-  isActorSheetUnlocked(actor: any): boolean {
+  isSheetUnlocked(document: any): boolean {
     return (
-      (actor.isOwner && TidyFlags.allowEdit.get(actor)) ||
+      (document.isOwner && TidyFlags.allowEdit.get(document)) ||
       (FoundryAdapter.userIsGm() &&
         SettingsProvider.settings.permanentlyUnlockCharacterSheetForGm.get() &&
-        actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) ||
+        document.type === CONSTANTS.SHEET_TYPE_CHARACTER) ||
       (FoundryAdapter.userIsGm() &&
         SettingsProvider.settings.permanentlyUnlockNpcSheetForGm.get() &&
-        actor.type === CONSTANTS.SHEET_TYPE_NPC) ||
+        document.type === CONSTANTS.SHEET_TYPE_NPC) ||
       (FoundryAdapter.userIsGm() &&
         SettingsProvider.settings.permanentlyUnlockVehicleSheetForGm.get() &&
-        actor.type === CONSTANTS.SHEET_TYPE_VEHICLE)
+        document.type === CONSTANTS.SHEET_TYPE_VEHICLE)
     );
   },
   allowCharacterEffectsManagement(actor: any) {

@@ -237,7 +237,8 @@ export type ContainerSheetHightouchContext = {
   source: any;
   system: any;
   tabs: Tab[];
-  utilities: Utilities<ContainerSheetClassicContext>;
+  unlocked: boolean;
+  utilities: Utilities<ContainerSheetHightouchContext>;
 };
 
 export type ContainerSection = { items: Item5e[] } & TidySectionBase;

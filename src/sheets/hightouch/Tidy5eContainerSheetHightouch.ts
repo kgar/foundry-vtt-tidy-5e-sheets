@@ -252,6 +252,10 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
       },
     };
 
+    const editable = this.isEditable;
+
+    const unlocked = FoundryAdapter.isSheetUnlocked(this.item) && editable;
+
     const context: ContainerSheetHightouchContext = {
       capacity: await this.item.system.computeCapacity(),
       concealDetails:
@@ -260,7 +264,7 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
       containerContents: await Container.getContainerContents(this.item),
       customContent: [],
       document: this.document,
-      editable: this.isEditable,
+      editable: editable,
       enriched: enriched,
       filterData: this.itemFilterService.getDocumentItemFilterData(),
       filterPins: ItemFilterRuntime.defaultFilterPins[this.item.type],
@@ -290,6 +294,7 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
       system: this.document.system,
       tabs: [],
       utilities: utilities,
+      unlocked: unlocked,
     };
 
     // Properties

@@ -17,6 +17,7 @@ import type { ComponentType } from 'svelte';
 import type { RegisteredContent, RegisteredTab } from '../types';
 import type {
   ContainerSheetClassicContext,
+  ContainerSheetHightouchContext,
   ItemSheetContext,
 } from 'src/types/item.types';
 import { CustomContentManager } from '../content/CustomContentManager';
@@ -31,7 +32,10 @@ export class ItemSheetRuntime {
     [];
 
   static async getContent(
-    context: ItemSheetContext | ContainerSheetClassicContext
+    context:
+      | ItemSheetContext
+      | ContainerSheetClassicContext
+      | ContainerSheetHightouchContext
   ): Promise<CustomContent[]> {
     return await CustomContentManager.prepareContentForRender(
       context,

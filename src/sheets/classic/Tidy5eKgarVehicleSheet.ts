@@ -220,7 +220,7 @@ export class Tidy5eVehicleSheet
     Tidy5eBaseActorSheet.applyCommonContext(defaultDocumentContext);
 
     const unlocked =
-      FoundryAdapter.isActorSheetUnlocked(this.actor) &&
+      FoundryAdapter.isSheetUnlocked(this.actor) &&
       defaultDocumentContext.editable;
 
     const vehiclePreferences = SheetPreferencesService.getByType(

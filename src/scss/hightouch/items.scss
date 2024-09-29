@@ -1,4 +1,4 @@
-.tidy5e-sheet:where(.hightouch.item) {
+.tidy5e-sheet.application:where(.hightouch.item) {
   --sidebar-expanded-width: 9rem;
   --sidebar-width: var(--sidebar-expanded-width);
 
@@ -76,5 +76,18 @@
   .item-content {
     grid-area: content;
     margin-block-start: var(--header-height);
+    padding-left: 1rem;
+  }
+
+  .document-name {
+    color: var(--t5e-color-text-onDefault-default);
+
+    // Typography
+    font-family: var(--tidy5e-font-modesto);
+    font-size: var(--font-size-28, 1.75rem);
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0.0175rem;
   }
 }

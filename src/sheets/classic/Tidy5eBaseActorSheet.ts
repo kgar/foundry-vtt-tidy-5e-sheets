@@ -23,7 +23,7 @@ export class Tidy5eBaseActorSheet {
       const attrConcentration = context.actor.system.attributes.concentration;
       if (
         context.actor.statuses.has(CONFIG.specialStatusEffects.CONCENTRATING) ||
-        (FoundryAdapter.isActorSheetUnlocked(context.actor) &&
+        (FoundryAdapter.isSheetUnlocked(context.actor) &&
           attrConcentration)
       ) {
         (context.saves ??= {}).concentration = {
