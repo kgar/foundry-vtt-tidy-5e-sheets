@@ -29,10 +29,9 @@
 }
 
 .tidy5e-sheet.hightouch {
-  --tidy5e-font-modesto: 'Modesto Condensed', 'Palatino Linotype', serif;
-  --tidy5e-font-roboto: 'Roboto', sans-serif;
-  --tidy5e-font-roboto-condensed: 'Roboto Condensed', sans-serif;
-  --tidy5e-font-roboto-slab: 'Roboto Slab', serif;
+  --t5e-font-modesto: 'Modesto Condensed', 'Palatino Linotype', serif;
+  --t5e-font-roboto: 'Roboto Condensed', sans-serif;
+  --t5e-font-roboto-slab: 'Roboto Slab', serif;
   --tidy5e-font-signika: 'Signika', sans-serif;
 
   --t5e-color-text-onInverse-default: #ffffff;
@@ -72,19 +71,19 @@
   --t5e-component-field-default-hover-overlay: #ffffff80;
   --t5e-component-field-default-hover-overlay-emphasis: #ffffff;
   --t5e-component-field-focus: #9a2a30;
-  --t5e-color-Spellcasting-at-will: #741b2b;
-  --t5e-color-Spellcasting-always-prepared: #276d3c;
-  --t5e-color-Spellcasting-pact: #8b265d;
-  --t5e-color-Spellcasting-innate: #5b1096;
-  --t5e-color-Spellcasting-ritual: #1f4c91;
+  --t5e-color-spellcasting-at-will: #741b2b;
+  --t5e-color-spellcasting-always-prepared: #276d3c;
+  --t5e-color-spellcasting-pact: #8b265d;
+  --t5e-color-spellcasting-innate: #5b1096;
+  --t5e-color-spellcasting-ritual: #1f4c91;
   --t5e-color-Table-divider: #e0d8d4;
-  --t5e-color-Rarity-rare: #247cb2;
-  --t5e-color-Rarity-legendary: #ffb62a;
-  --t5e-color-Rarity-uncommon: #72ad11;
-  --t5e-color-Rarity-very-rare: #c364e7;
-  --t5e-color-Rarity-artifact: #f77558;
-  --t5e-color-Rarity-common: #9f9275;
-  --t5e-color-Rarity-common: #9f9275;
+  --t5e-color-rarity-rare: #247cb2;
+  --t5e-color-rarity-legendary: #ffb62a;
+  --t5e-color-rarity-uncommon: #72ad11;
+  --t5e-color-rarity-very-rare: #c364e7;
+  --t5e-color-rarity-artifact: #f77558;
+  --t5e-color-rarity-common: #9f9275;
+  --t5e-color-rarity-common: #9f9275;
   --t5e-component-field-inverse-background: #252830;
   --t5e-component-field-inverse-border: #7a7a7a;
   --t5e-component-toggle-toggled-border: #44191a;
@@ -162,18 +161,18 @@
   --t5e-component-field-default-hover-overlay: #000000;
   --t5e-component-field-default-hover-overlay-emphasis: #000000;
   --t5e-component-field-focus: #9a2a30;
-  --t5e-color-Spellcasting-at-will: #e28394;
-  --t5e-color-Spellcasting-always-prepared: #8bd5a1;
-  --t5e-color-Spellcasting-pact: #de87b6;
-  --t5e-color-Spellcasting-innate: #ba75f0;
-  --t5e-color-Spellcasting-ritual: #81a8e4;
+  --t5e-color-spellcasting-at-will: #e28394;
+  --t5e-color-spellcasting-always-prepared: #8bd5a1;
+  --t5e-color-spellcasting-pact: #de87b6;
+  --t5e-color-spellcasting-innate: #ba75f0;
+  --t5e-color-spellcasting-ritual: #81a8e4;
   --t5e-color-Table-divider: #ffffff40;
-  --t5e-color-Rarity-rare: #247cb2;
-  --t5e-color-Rarity-legendary: #ffb62a;
-  --t5e-color-Rarity-uncommon: #72ad11;
-  --t5e-color-Rarity-very-rare: #c364e7;
-  --t5e-color-Rarity-artifact: #f77558;
-  --t5e-color-Rarity-common: var(--t5e-color-gold);
+  --t5e-color-rarity-rare: #247cb2;
+  --t5e-color-rarity-legendary: #ffb62a;
+  --t5e-color-rarity-uncommon: #72ad11;
+  --t5e-color-rarity-very-rare: #c364e7;
+  --t5e-color-rarity-artifact: #f77558;
+  --t5e-color-rarity-common: var(--t5e-color-gold);
   --t5e-component-field-inverse-background: var(
     --t5e-component-card-onInverse-default
   );

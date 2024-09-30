@@ -22,7 +22,7 @@
   color: var(--t5e-color-text-onDefault-default);
 
   /* Sheet Body Typography */
-  font-family: var(--font-family-default, Roboto);
+  font-family: var(--font-family-default, var(--t5e-font-roboto));
   font-size: var(--font-size-13, 0.8125rem);
   font-style: normal;
   font-weight: 400;
@@ -43,8 +43,33 @@
     }
   }
 
+  /* Currencies */
+  :is(i, span).currency {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    background: transparent no-repeat center / contain;
+
+    &.cp {
+      background-image: url('../../systems/dnd5e/icons/currency/copper.webp');
+    }
+    &.sp {
+      background-image: url('../../systems/dnd5e/icons/currency/silver.webp');
+    }
+    &.ep {
+      background-image: url('../../systems/dnd5e/icons/currency/electrum.webp');
+    }
+    &.gp {
+      background-image: url('../../systems/dnd5e/icons/currency/gold.webp');
+    }
+    &.pp {
+      background-image: url('../../systems/dnd5e/icons/currency/platinum.webp');
+    }
+  }
+
   /* App V2 Reset */
   /* Reset button & input styles */
+
   input,
   button {
     box-shadow: none;

@@ -6,6 +6,7 @@
   import type { ContainerSheetHightouchContext } from 'src/types/item.types';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ItemImageBorder from '../shared/ItemImageBorder.svelte';
+  import TabContents from 'src/components/tabs/TabContents.svelte';
 
   let context = getContext<Readable<ContainerSheetHightouchContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -23,16 +24,24 @@
     //@ts-expect-error
     CONFIG.DND5E.itemRarity[$context.system.rarity]?.titleCase() ?? '';
 
-  $: rarityColorVariable = `--t5e-color-Rarity-${$context.system.rarity?.slugify() ?? ''}`;
+  $: rarityColorVariable = `--t5e-color-rarity-${$context.system.rarity?.slugify() ?? ''}`;
+
+  $: denomination =
+    //@ts-expect-error
+    CONFIG.DND5E.currencies[$context.system.price.denomination];
+
+  $: itemValueText = FoundryAdapter.formatNumber($context.system.price?.value);
 
   const localize = FoundryAdapter.localize;
+
+  let selectedTabId: string = CONSTANTS.TAB_CONTAINER_CONTENTS;
 </script>
 
 <aside
   class="sidebar"
   style="
-    --t5e-item-rarity-color: var({rarityColorVariable}); 
-    --filigree-border-color: var({rarityColorVariable})"
+    --t5e-item-rarity-color: var({rarityColorVariable}, var(--t5e-color-gold)); 
+    --filigree-border-color: var({rarityColorVariable}, var(--t5e-color-gold))"
 >
   <div class="item-image-rarity-container">
     <div class="item-image-container">
@@ -123,6 +132,54 @@
   </div>
 
   <!-- Header Summary -->
+  <div class="item-header-summary">
+    <!-- Item Type -->
+    <div class="item-type text-lighter">{$context.itemType ?? ''}</div>
+    <div class="item-header-summary-separator" role="presentation"></div>
+    <!-- Value -->
+    <div class="item-value">
+      <!-- Currency Image -->
+      <i
+        class="currency {$context.system?.price?.denomination ?? ''}"
+        aria-label={denomination?.label ?? ''}
+      ></i>
+      <span class="item-value-number">
+        <!-- Value Text -->
+        <span class="text-default">
+          {itemValueText}
+        </span>
+        <!-- Denom -->
+        <span class="item-value-denomination text-lighter">
+          {denomination?.abbreviation ?? ''}
+        </span>
+      </span>
+    </div>
+
+    <div class="item-header-summary-separator" role="presentation"></div>
+
+    <!-- Weight -->
+    <div class="item-weight">
+      <i class="fas fa-weight-hanging item-weight-icon text-lightest"></i>
+      <span class="item-weight-value">
+        {$context.system.weight?.value}
+      </span>
+    </div>
+
+    <div class="item-header-summary-separator" role="presentation"></div>
+
+    <!-- Quantity -->
+    <div class="item-quantity">
+      <span class="item-quantity-label text-lighter">
+        {localize('DND5E.Quantity')}
+      </span>
+      <span class="item-quantity-value">
+        {$context.system.quantity}
+      </span>
+    </div>
+  </div>
+
   <!-- Tab Strip -->
+
   <!-- Tab Contents -->
+  <TabContents tabs={$context.tabs} {selectedTabId} />
 </main>

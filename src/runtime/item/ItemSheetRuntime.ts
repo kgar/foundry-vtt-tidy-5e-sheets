@@ -101,6 +101,11 @@ export class ItemSheetRuntime {
         itemSheetTabs.descriptionWithSidebar,
         itemSheetTabs.containerDetails,
       ],
+      tempHightouchTabs: () => [
+        itemSheetTabs.hightouchContainerContents,
+        itemSheetTabs.hightouchDescription,
+        itemSheetTabs.hightouchContainerDetails,
+      ],
     },
     [CONSTANTS.ITEM_TYPE_FEAT]: {
       Sheet: FeatSheet,
@@ -189,4 +194,6 @@ export class ItemSheetRuntime {
 type ItemSheetInfo = {
   Sheet: ComponentType;
   defaultTabs(): Tab[];
+  // TODO: Remove after replacing item sheets
+  tempHightouchTabs?: () => Tab[];
 };

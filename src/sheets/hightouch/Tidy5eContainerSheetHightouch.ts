@@ -351,7 +351,9 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
       eligibleCustomTabs
     );
 
-    context.tabs = ItemSheetRuntime.sheets[this.item.type]?.defaultTabs() ?? [];
+    context.tabs =
+      // TODO: Eliminate null forgiving operator and temp field when items are fully converted.
+      ItemSheetRuntime.sheets[this.item.type]?.tempHightouchTabs!() ?? [];
     context.tabs.push(...customTabs);
 
     TidyHooks.tidy5eSheetsPreConfigureSections(this, this.element, context);

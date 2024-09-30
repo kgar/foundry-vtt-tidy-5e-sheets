@@ -1,3 +1,4 @@
+/* Module-wide utilities */
 .tidy5e-sheet {
   // TODO: Find the right home for the equip-icon style
   .equip-icon {
@@ -14,5 +15,76 @@
 
   .ff-title {
     font-family: var(--t5e-title-font-family) !important;
+  }
+}
+
+/* Hightouch utilities */
+
+.tidy5e-sheet.application:where(.hightouch) {
+  /* Text Management */
+  .truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Text Color */
+
+  .text-default {
+    color: var(--t5e-color-text-onDefault-default);
+  }
+
+  .text-gold {
+    color: var(--t5e-color-text-onDefault-gold);
+  }
+
+  .text-gold-light {
+    color: var(--t5e-color-text-onDefault-gold-light);
+  }
+
+  .text-lighter {
+    color: var(--t5e-color-text-onDefault-lighter);
+  }
+
+  .text-lightest {
+    color: var(--t5e-color-text-onDefault-lightest);
+  }
+
+  .text-gold-emphasis {
+    color: var(--t5e-color-text-onDefault-gold-emphasis);
+  }
+
+  .text-disabled {
+    color: var(--t5e-color-text-onDefault-disabled);
+  }
+
+  .inverse {
+    .text-default {
+      color: var(--t5e-color-text-onInverse-default);
+    }
+
+    .text-gold {
+      color: var(--t5e-color-text-onInverse-gold);
+    }
+
+    .text-gold-light {
+      color: var(--t5e-color-text-onInverse-gold-light);
+    }
+
+    .text-lighter {
+      color: var(--t5e-color-text-onInverse-lighter);
+    }
+
+    .text-lightest {
+      color: var(--t5e-color-text-onInverse-lightest);
+    }
+
+    .text-gold-emphasis {
+      color: var(--t5e-color-text-onInverse-gold-emphasis);
+    }
+
+    .text-disabled {
+      color: var(--t5e-color-text-onInverse-disabled);
+    }
   }
 }

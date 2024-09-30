@@ -33,7 +33,7 @@
   }
 
   .header-sheet-edit-mode-toggle {
-    margin-right: 0.5rem;
+    margin-right: 0.25rem;
   }
 
   &:not(:is(.minimized, .minimizing, .maximizing)) {
@@ -47,6 +47,8 @@
     padding: 0;
   }
 
+  /* Sidebar */
+
   .sidebar {
     background: linear-gradient(180deg, #31313140 0%, #303236 80.5%),
       url(../../modules/tidy5e-sheet/images/banner-character-dark.png) lightgray
@@ -59,17 +61,9 @@
     grid-area: sidebar;
     padding: 1rem;
 
-    .item-rarity {
-      color: var(--t5e-item-rarity-color);
-      font-family: var(--tidy5e-font-modesto);
-      font-size: var(--font-size-12);
-      mix-blend-mode: plus-lighter;
-      text-align: center;
-    }
-
     h4 {
       color: var(--t5e-color-text-onInverse-gold-light, #f0f0e1);
-      font-family: Roboto;
+      font-family: var(--t5e-font-roboto);
       font-size: 0.8125rem;
       font-style: normal;
       font-weight: 500;
@@ -106,8 +100,15 @@
 
     .item-rarity {
       margin-top: 0.25rem;
+      color: var(--t5e-item-rarity-color);
+      font-family: var(--t5e-font-modesto);
+      font-size: var(--font-size-12);
+      mix-blend-mode: plus-lighter;
+      text-align: center;
     }
   }
+
+  /* Item Main Content Area */
 
   .item-content {
     grid-area: content;
@@ -115,11 +116,60 @@
     padding-inline: 1.5rem;
   }
 
+  .item-header-summary {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 1rem;
+
+    .item-type {
+      font-family: var(--t5e-font-modesto);
+      font-size: 1rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+
+    .item-value {
+      font-size: 0.8125rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+
+      .item-value-denomination {
+        font-weight: 500;
+        text-transform: uppercase;
+      }
+    }
+
+    .item-quantity-label {
+      font-weight: 500;
+    }
+
+    .item-quantity-value {
+      font-weight: 600;
+    }
+
+    .item-weight-value {
+      font-weight: 600;
+    }
+  }
+
+  .item-header-summary-separator {
+    width: 0.0625rem;
+    height: 1rem;
+    opacity: 0.5;
+    background: var(--t5e-color-gold, #9f9275);
+  }
+
   .document-name {
     color: var(--t5e-color-text-onDefault-default);
 
     // Typography
-    font-family: var(--tidy5e-font-modesto);
+    font-family: var(--t5e-font-modesto);
     font-size: var(--font-size-28);
     font-style: normal;
     font-weight: 400;
@@ -138,7 +188,7 @@
 
       // Typography
       color: var(--t5e-color-text-onDefault-lighter, #4b4a44);
-      font-family: var(--tidy5e-font-modesto);
+      font-family: var(--t5e-font-modesto);
       font-size: var(--font-size-24);
       font-style: normal;
       font-weight: 400;

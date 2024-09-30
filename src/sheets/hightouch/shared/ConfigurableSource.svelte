@@ -11,7 +11,7 @@
 </script>
 
 <div class="configurable-source">
-  <span class="source-text">
+  <span class="source-text truncate" title={sourceText ?? ''}>
     {sourceText ?? ''}
   </span>
   {#if unlocked}

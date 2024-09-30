@@ -1,4 +1,5 @@
 import { CONSTANTS } from 'src/constants';
+import ContainerDetailsTab from 'src/sheets/hightouch/container/tabs/ContainerDetailsTab.svelte';
 import ItemActiveEffectsTab from '../../sheets/classic/item/tabs/ItemActiveEffectsTab.svelte';
 import ItemAdvancementTab from '../../sheets/classic/item/tabs/ItemAdvancementTab.svelte';
 import ItemBackgroundDetailsTab from '../../sheets/classic/item/tabs/ItemBackgroundDetailsTab.svelte';
@@ -9,6 +10,7 @@ import ItemContainerDetailsTab from '../../sheets/classic/item/tabs/ItemContaine
 import ItemDescriptionTab from '../../sheets/classic/item/tabs/ItemDescriptionTab.svelte';
 import ItemSpeciesDetailsTab from '../../sheets/classic/item/tabs/ItemSpeciesDetailsTab.svelte';
 import ItemDescriptionWithSidebarTab from '../../sheets/classic/item/tabs/ItemDescriptionWithSidebarTab.svelte';
+import HightouchItemDescriptionsTab from '../../sheets/hightouch/shared/tabs/ItemDescriptionsTab.svelte';
 import ItemEquipmentDetailsTab from '../../sheets/classic/item/tabs/ItemEquipmentDetailsTab.svelte';
 import ItemFeatDetailsTab from '../../sheets/classic/item/tabs/ItemFeatDetailsTab.svelte';
 import ItemLootDetailsTab from '../../sheets/classic/item/tabs/ItemLootDetailsTab.svelte';
@@ -19,6 +21,7 @@ import ItemToolDetailsTab from '../../sheets/classic/item/tabs/ItemToolDetailsTa
 import ItemWeaponDetailsTab from '../../sheets/classic/item/tabs/ItemWeaponDetailsTab.svelte';
 import ItemActivitiesTab from '../../sheets/classic/item/tabs/ItemActivitiesTab.svelte';
 import type { Tab } from 'src/types/types';
+import ContainerContentsTab from 'src/sheets/hightouch/container/tabs/ContainerContentsTab.svelte';
 
 const itemSheetTabs = {
   /**
@@ -164,6 +167,36 @@ const itemSheetTabs = {
       type: 'svelte',
     },
     autoHeight: true,
+  },
+  hightouchContainerContents: {
+    id: CONSTANTS.TAB_CONTAINER_CONTENTS,
+    title: 'DND5E.Contents',
+    content: {
+      component: ContainerContentsTab,
+      type: 'svelte'
+    }
+  },
+  /**
+   * Details form for containers.
+   */
+  hightouchContainerDetails: {
+    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    title: 'DND5E.Details',
+    content: {
+      component: ContainerDetailsTab,
+      type: 'svelte'
+    }
+  },
+  /**
+   * Three-descriptions interface for items
+   */
+  hightouchDescription: {
+    id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
+    title: 'DND5E.Description',
+    content: {
+      component: HightouchItemDescriptionsTab,
+      type: 'svelte'
+    }
   },
   /**
    * Details form for loot.
