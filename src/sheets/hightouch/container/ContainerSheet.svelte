@@ -1,12 +1,11 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
-  import { Tidy5eContainerSheetHightouch } from '../Tidy5eContainerSheetHightouch';
   import { CONSTANTS } from 'src/constants';
   import type { Readable } from 'svelte/store';
-  import Tabs from 'src/components/tabs/Tabs.svelte';
   import type { ContainerSheetHightouchContext } from 'src/types/item.types';
   import TextInput from 'src/components/inputs/TextInput.svelte';
+  import ItemImageBorder from '../shared/ItemImageBorder.svelte';
 
   let context = getContext<Readable<ContainerSheetHightouchContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -35,22 +34,14 @@
     --t5e-item-rarity-color: var({rarityColorVariable}); 
     --filigree-border-color: var({rarityColorVariable})"
 >
-  <!-- TODO: Carve out shared component for new item portrait and extract appropriate styles. -->
-  <!-- It feels like this image + filigree setup is hanging on by a thread. -->
-  <div style="display: flex; flex-direction: column; align-items: center;">
-    <div
-      style="--img-size: 6.5rem; position: relative; --filigree-background-color: none; max-width: 6.5rem; display: flex; align-items: center; justify-content: center; margin-inline: auto;"
-    >
+  <div class="item-image-rarity-container">
+    <div class="item-image-container">
       <img
-        style="width: var(--img-size); height: var(--img-size); border-radius: 1.25rem; object-fit: cover;"
+        class="item-image"
         src={$context.item.img}
         alt={$context.item.name}
       />
-      <div style="position: absolute; inset: 0; pointer-events: none;">
-        <filigree-box>
-          <div style="width: 100%; height: 100%;"></div>
-        </filigree-box>
-      </div>
+      <ItemImageBorder />
     </div>
     <div class="item-rarity">
       <span>{rarityText}</span>
