@@ -47,6 +47,7 @@ import { processInputChangeDeltaFromValues } from 'src/utils/form';
 import { isNil } from 'src/utils/data';
 import { formatAsModifier } from 'src/utils/formatting';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin';
+import SheetHeaderEditModeToggle from 'src/sheets/classic/shared/SheetHeaderEditModeToggle.svelte';
 
 type MemberStats = {
   currentHP: number;
@@ -109,8 +110,6 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     submitOnClose: false,
   };
 
-  static USE_HEADER_SHEET_LOCK = true;
-
   #itemFilterService: ItemFilterService;
   #messageBus: MessageBus = writable<MessageBusMessage | undefined>();
   #inlineToggleService = new InlineToggleService();
@@ -147,6 +146,22 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     initTidy5eContextMenu(this, $(this.element));
 
     return component;
+  }
+
+  _createAdditionalComponents() {
+    const windowHeader = this.element.querySelector('.window-header');
+    const sheetLock = new SheetHeaderEditModeToggle({
+      target: windowHeader,
+      anchor: windowHeader.querySelector('.window-title'),
+      context: new Map<string, any>([
+        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._store],
+      ]),
+      props: {
+        class: 'header-control',
+      },
+    });
+
+    return [sheetLock];
   }
 
   async _prepareContext(

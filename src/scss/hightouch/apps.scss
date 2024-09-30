@@ -4,11 +4,23 @@
 
 .tidy5e-sheet:where(.hightouch) {
   --minimized-width: 18.75rem;
-  
+
+  /* Application window and background */
+  border-radius: 0.3125rem;
+  border: 0.0625rem solid var(--t5e-color-gold);
+  background: url(../../modules/tidy5e-sheet/images/texture-gray-1.png) -4.305px
+      0px / 120.238% 100% no-repeat,
+    var(--t5e-component-card-onDefault-darker);
+  box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.25),
+    0px 0px 12px 0px rgba(0, 0, 0, 0.5);
+
   /* Font Color */
-  --color-light-text-heading: var(--t5e-color-text-onDefault-default, #000);
-  color: var(--t5e-color-text-onDefault-default, #000);
-  
+  &:not(.minimized) {
+    --color-light-text-heading: var(--t5e-color-text-onDefault-lighter);
+  }
+
+  color: var(--t5e-color-text-onDefault-default);
+
   /* Sheet Body Typography */
   font-family: var(--font-family-default, Roboto);
   font-size: var(--font-size-13, 0.8125rem);
@@ -25,15 +37,23 @@
     }
   }
 
-  // Header button styles
-  // ? Why pseudo-header-button?
-  .header-button,
-  .pseudo-header-button {
-  }
-
   &.application {
     &:not(.minimized) .window-header {
       background: none;
+    }
+  }
+
+  /* App V2 Reset */
+  /* Reset button & input styles */
+  input,
+  button {
+    box-shadow: none;
+    outline: none;
+
+    &:hover,
+    &:focus {
+      box-shadow: none;
+      outline: none;
     }
   }
 }

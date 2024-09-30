@@ -1,4 +1,5 @@
-.tidy5e-sheet.application {
-  @import './components/toggles.scss';
+.tidy5e-sheet.application:where(.hightouch) {
+  @import './components/configurable-source.scss';
   @import './components/pills.scss';
+  @import './components/toggles.scss';
 }

@@ -29,6 +29,7 @@ import { GroupSheetRuntime } from 'src/runtime/GroupSheetRuntime';
 import { Tidy5eGroupSheetClassic } from 'src/sheets/classic/Tidy5eGroupSheetClassic';
 import { Tidy5eItemSheetClassic } from 'src/sheets/classic/Tidy5eItemSheetClassic';
 import { Tidy5eContainerSheetClassic } from 'src/sheets/classic/Tidy5eContainerSheetClassic';
+import { Tidy5eContainerSheetHightouch } from 'src/sheets/hightouch/Tidy5eContainerSheetHightouch';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -173,6 +174,7 @@ export class Tidy5eSheetsApi {
       Tidy5eItemSheetClassic.name,
       Tidy5eContainerSheetClassic.name,
       Tidy5eGroupSheetClassic.name,
+      Tidy5eContainerSheetHightouch.name,
     ].includes(app?.constructor?.name);
   }
 

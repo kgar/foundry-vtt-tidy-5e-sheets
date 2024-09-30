@@ -105,6 +105,10 @@ export function SvelteApplicationMixin<
       throw new Error(errorMessage);
     }
 
+    _createAdditionalComponents(content: HTMLElement) {
+      return [];
+    }
+
     /**
      * Retrieves and manages any application-specific subscriptions related to the
      * lifetime of the application, from first render to close.
@@ -190,18 +194,7 @@ export function SvelteApplicationMixin<
     ) {
       if (options.isFirstRender) {
         this.#components.push(this._createComponent(content));
-        const thisConstructor = this.constructor as typeof SvelteApplication;
-        if (thisConstructor.USE_HEADER_SHEET_LOCK) {
-          const windowHeader = this.element.querySelector('.window-header');
-          const sheetLock = new SheetHeaderEditModeToggle({
-            target: windowHeader,
-            anchor: windowHeader.querySelector('.window-title'),
-            context: new Map<string, any>([
-              [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._store],
-            ]),
-          });
-          this.#components.push(sheetLock);
-        }
+        this.#components.push(...this._createAdditionalComponents(content));
       }
 
       try {

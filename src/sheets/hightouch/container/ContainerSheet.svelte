@@ -133,6 +133,5 @@
 
   <!-- Header Summary -->
   <!-- Tab Strip -->
-  <Tabs tabs={$context.tabs} />
   <!-- Tab Contents -->
 </main>

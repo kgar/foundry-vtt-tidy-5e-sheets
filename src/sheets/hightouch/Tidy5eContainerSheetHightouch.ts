@@ -36,6 +36,7 @@ import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { SettingsProvider } from 'src/settings/settings';
+import ItemHeaderStart from './shared/ItemHeaderStart.svelte';
 
 export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
   SvelteApplicationMixin<ContainerSheetHightouchContext>(
@@ -83,8 +84,6 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
     dragDrop: [{ dropSelector: 'form' }],
     submitOnClose: false,
   };
-
-  static USE_HEADER_SHEET_LOCK: boolean = true;
 
   _createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
     this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
@@ -136,6 +135,20 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
     });
 
     return component;
+  }
+
+  _createAdditionalComponents(node: HTMLElement) {
+    const windowHeader = this.element.querySelector('.window-header');
+
+    const sheetLock = new ItemHeaderStart({
+      target: windowHeader,
+      anchor: windowHeader.querySelector('.window-title'),
+      context: new Map<string, any>([
+        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._store],
+      ]),
+    });
+
+    return [sheetLock];
   }
 
   async _prepareContext(

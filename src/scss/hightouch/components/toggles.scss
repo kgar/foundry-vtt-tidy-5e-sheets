@@ -7,18 +7,25 @@
     --tidy-switch-thumb-transform-duration,
     0.3s
   );
+  --tidy-border-width: 0.0625rem;
 
   button {
     width: calc(2.625rem * var(--tidy-switch-scale-internal));
     height: calc(1.375rem * var(--tidy-switch-scale-internal));
     position: relative;
-    background-color: var(--t5e-faint-color);
+    background-color: var(
+      --tidy-switch-unchecked-background-color,
+      var(--t5e-faint-color)
+    );
     border: none;
-    transition: background-color 0.5s ease;
+    transition: background-color 0.5s ease, border-color 0.5s ease;
     border-radius: calc(1.375rem * var(--tidy-switch-scale-internal));
+    border-width: var(--tidy-border-width);
+    border-style: solid;
+    border-color: var(--tidy-switch-unchecked-border-color, transparent);
 
     i {
-        margin: 0;
+      margin: 0;
     }
 
     &::before {
@@ -27,8 +34,12 @@
       width: calc(1.125rem * var(--tidy-switch-scale-internal));
       height: calc(1.125rem * var(--tidy-switch-scale-internal));
       background: var(--t5e-switch-slider-color);
-      top: calc(0.125rem * var(--tidy-switch-scale-internal));
-      right: calc(1.375rem * var(--tidy-switch-scale-internal));
+      top: calc(
+        0.125rem * var(--tidy-switch-scale-internal) - var(--tidy-border-width)
+      );
+      right: calc(
+        1.375rem * var(--tidy-switch-scale-internal) - var(--tidy-border-width)
+      );
       transition: transform var(--tidy-switch-thumb-transform-duration-internal);
       border-radius: 100%;
     }
@@ -36,11 +47,9 @@
     .thumb-icon {
       font-size: calc(0.75rem * var(--tidy-switch-scale-internal));
       position: absolute;
-      color: rgba(
-        0,
-        0,
-        0,
-        0.9
+      color: var(
+        --t5e-thumb-icon-color,
+        rgba(0, 0, 0, 0.9)
       ); // TODO: Theme color? Or at least top-level variable that can be customized?
       display: flex;
       justify-content: center;
@@ -50,13 +59,20 @@
       top: 0;
       bottom: 0;
       align-self: center;
-      right: calc(1.375rem * var(--tidy-switch-scale-internal));
+      right: calc(
+        1.375rem * var(--tidy-switch-scale-internal) - var(--tidy-border-width)
+      );
       transition: transform var(--tidy-switch-thumb-transform-duration-internal);
     }
 
     &[aria-checked='true'] {
+      border-color: var(--tidy-switch-checked-border-color, transparent);
+
       &:not([disabled]) {
-        background-color: var(--t5e-primary-accent-color);
+        background-color: var(
+          --tidy-switch-checked-background-color,
+          var(--t5e-primary-accent-color)
+        );
       }
 
       &::before,
@@ -72,5 +88,31 @@
     &:focus-visible {
       outline: 0.0625rem solid var(--t5e-primary-accent-color);
     }
+  }
+}
+
+.header-sheet-edit-mode-toggle {
+  --tidy-switch-unchecked-border-color: var(
+    --t5e-component-field-default-border
+  );
+  --tidy-switch-unchecked-background-color: rgba(0, 0, 0, 0.15);
+  --tidy-switch-checked-border-color: var(
+    --t5e-component-toggle-toggled-border
+  );
+  --tidy-switch-checked-background-color: var(
+    --t5e-component-toggle-toggled-background
+  );
+  --t5e-switch-slider-color: var(
+    --t5e-component-field-default-hover-overlay-emphasis
+  );
+  --t5e-thumb-icon-color: var(--t5e-color-icon-light-default);
+
+  button {
+    margin: 0;
+    padding: 0;
+  }
+
+  .tidy-switch {
+    --tidy-switch-scale: 0.825;
   }
 }
