@@ -1,9 +1,8 @@
 <div class="item-image-border">
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="112"
-    height="107"
     viewBox="0 0 112 107"
+    preserveAspectRatio="xMidYMid meet"
     fill="none"
   >
     <path
