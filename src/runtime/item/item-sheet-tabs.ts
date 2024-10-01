@@ -10,7 +10,7 @@ import ItemContainerDetailsTab from '../../sheets/classic/item/tabs/ItemContaine
 import ItemDescriptionTab from '../../sheets/classic/item/tabs/ItemDescriptionTab.svelte';
 import ItemSpeciesDetailsTab from '../../sheets/classic/item/tabs/ItemSpeciesDetailsTab.svelte';
 import ItemDescriptionWithSidebarTab from '../../sheets/classic/item/tabs/ItemDescriptionWithSidebarTab.svelte';
-import HightouchItemDescriptionsTab from '../../sheets/hightouch/shared/tabs/ItemDescriptionsTab.svelte';
+import HightouchItemDescriptionsTab from '../../sheets/hightouch/item/tabs/ItemDescriptionsTab.svelte';
 import ItemEquipmentDetailsTab from '../../sheets/classic/item/tabs/ItemEquipmentDetailsTab.svelte';
 import ItemFeatDetailsTab from '../../sheets/classic/item/tabs/ItemFeatDetailsTab.svelte';
 import ItemLootDetailsTab from '../../sheets/classic/item/tabs/ItemLootDetailsTab.svelte';

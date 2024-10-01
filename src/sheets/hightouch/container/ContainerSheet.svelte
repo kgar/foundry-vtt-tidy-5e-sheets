@@ -5,7 +5,7 @@
   import type { Readable } from 'svelte/store';
   import type { ContainerSheetHightouchContext } from 'src/types/item.types';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import ItemImageBorder from '../shared/ItemImageBorder.svelte';
+  import ItemImageBorder from '../item/parts/ItemImageBorder.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
 
   let context = getContext<Readable<ContainerSheetHightouchContext>>(

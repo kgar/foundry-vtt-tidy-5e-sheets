@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getContext } from 'svelte';
-  import ConfigurableSource from './ConfigurableSource.svelte';
+  import ConfigurableSource from '../../shared/ConfigurableSource.svelte';
   import { CONSTANTS } from 'src/constants';
   import type { Readable } from 'svelte/store';
   import type { ContainerSheetHightouchContext } from 'src/types/item.types';
