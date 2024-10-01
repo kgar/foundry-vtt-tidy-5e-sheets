@@ -7,6 +7,7 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ItemImageBorder from '../item/parts/ItemImageBorder.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
+  import Tabs from 'src/components/tabs/Tabs.svelte';
 
   let context = getContext<Readable<ContainerSheetHightouchContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -179,6 +180,7 @@
   </div>
 
   <!-- Tab Strip -->
+  <Tabs bind:selectedTabId tabs={$context.tabs} cssClass="item-tabs" />
 
   <!-- Tab Contents -->
   <TabContents tabs={$context.tabs} {selectedTabId} />

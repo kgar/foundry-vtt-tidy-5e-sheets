@@ -266,6 +266,7 @@
   @import '../../components/listbox/listbox.scss';
   @import '../../components/editor/SheetEditorV2.scss';
   @import '../../components/tabs/UnderlinedTabStrip.scss';
+  @import './components/tabs.scss';
 
   // TODO: Buttons V2?
   :where(.window-content) {
