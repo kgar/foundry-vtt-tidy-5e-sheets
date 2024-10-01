@@ -4,22 +4,6 @@
   gap: 2rem;
   position: relative;
 
-  &::before {
-    content: '';
-    background-image: linear-gradient(
-      to right,
-      #9f927500 0%,
-      rgba(159, 146, 117, 0.5) 10%,
-      rgba(159, 146, 117, 0.5) 90%,
-      rgba(159, 146, 117, 0) 100%
-    );
-    top: 100%;
-    left: -1rem;
-    bottom: -0.0625rem;
-    right: -1rem;
-    position: absolute;
-  }
-
   .tab-option {
     font-family: var(--t5e-roboto-condensed);
     font-size: 0.8125rem;
@@ -37,7 +21,8 @@
     border-bottom-style: solid;
     border-bottom-color: transparent;
 
-    &.active {
+    &.active,
+    &:hover {
       color: var(--t5e-color-text-onDefault-default);
       outline: none;
       box-shadow: none;
@@ -45,4 +30,8 @@
       //   box-shadow: 0px 0px 4px 0px rgba(192, 173, 129, 0.75);
     }
   }
+}
+
+.tidy-tab:not(.active) {
+  display: none;
 }

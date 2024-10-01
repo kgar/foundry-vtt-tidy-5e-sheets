@@ -117,3 +117,41 @@
     }
   }
 }
+
+.tidy-table-row-v2 {
+  &.prepared {
+    --t5e-tidy-table-row-background: var(--t5e-prepared-background);
+  }
+
+  &.always-prepared {
+    --t5e-tidy-table-row-background: var(--t5e-alwaysprepared-background);
+  }
+
+  &.pact {
+    --t5e-tidy-table-row-background: var(--t5e-pact-background);
+  }
+
+  &.at-will {
+    --t5e-tidy-table-row-background: var(--t5e-atwill-background);
+  }
+
+  &.ritual-only {
+    --t5e-tidy-table-row-background: var(--t5e-ritual-only-background);
+  }
+
+  &.innate {
+    --t5e-tidy-table-row-background: var(--t5e-innate-background);
+  }
+
+  &.equipped {
+    --t5e-tidy-table-row-background: var(--t5e-equipped-background);
+  }
+
+  &.magic-item {
+    box-shadow: 0 0 0 0.0625rem var(--t5e-magic-accent-color) inset;
+  }
+
+  .expand-indicator {
+    margin-right: 0.325rem;
+  }
+}

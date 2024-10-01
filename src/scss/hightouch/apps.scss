@@ -4,6 +4,7 @@
 
 .tidy5e-sheet:where(.hightouch) {
   --minimized-width: 18.75rem;
+  --color-scrollbar: rgba(0, 0, 0, 0.35);
 
   /* Application window */
   border-radius: 0.3125rem;

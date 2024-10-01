@@ -1,0 +1,23 @@
+hr.golden-fade {
+  margin: 0;
+  background: none;
+  position: relative;
+  margin-inline: -1rem;
+  height: 0.0625rem;
+
+  &::before {
+    content: '';
+    background-image: linear-gradient(
+      to right,
+      rgba(159, 146, 117, 0) 0%,
+      rgba(159, 146, 117, 0.5) 2rem,
+      rgba(159, 146, 117, 0.5) calc(100% - 2rem),
+      rgba(159, 146, 117, 0) 100%
+    );
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+  }
+}

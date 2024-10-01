@@ -182,6 +182,8 @@
   <!-- Tab Strip -->
   <Tabs bind:selectedTabId tabs={$context.tabs} cssClass="item-tabs" />
 
+  <hr class="golden-fade" />
+
   <!-- Tab Contents -->
   <TabContents tabs={$context.tabs} {selectedTabId} />
 </main>

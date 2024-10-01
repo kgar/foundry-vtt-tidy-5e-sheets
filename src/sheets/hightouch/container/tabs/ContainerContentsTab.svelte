@@ -1,25 +1,15 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type {
-    ContainerSheetClassicContext,
-    Item5e,
-  } from 'src/types/item.types';
+  import type { ContainerSheetClassicContext } from 'src/types/item.types';
   import { getContext, setContext } from 'svelte';
   import { writable, type Readable } from 'svelte/store';
-  import CapacityBar from 'src/sheets/classic/container/CapacityBar.svelte';
-  import Currency from 'src/sheets/classic/actor/Currency.svelte';
-  import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
-  import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
-  import Search from 'src/components/utility-bar/Search.svelte';
-  import FilterMenu from 'src/components/filter/FilterMenu.svelte';
-  import ButtonMenu from 'src/components/button-menu/ButtonMenu.svelte';
-  import ButtonMenuCommand from 'src/components/button-menu/ButtonMenuCommand.svelte';
-  import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
-  import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
-  import ContainerContentsSections from 'src/sheets/classic/container/ContainerContentsSections.svelte';
+  import CapacityBar from 'src/sheets/hightouch/container/parts/CapacityBar.svelte';
+  import UtilityToolbar from 'src/sheets/hightouch/shared/UtilityToolbar.svelte';
+  import ContainerContentsSections from 'src/sheets/hightouch/container/parts/ContainerContentsSections.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import ContainerCurrency from '../parts/ContainerCurrency.svelte';
 
   let context = getContext<Readable<ContainerSheetClassicContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -55,13 +45,29 @@
 </script>
 
 <!-- New Utility Toolbar -->
+<UtilityToolbar />
 
 <!-- Tables -->
 <!-- New Container Contents Sections > New Inline Container View (requires options for column specification, classic controls)  -->
 <!-- Column specification needs to have options for spanning -->
 <!-- These options should be conditional accepted here, since this will also be reused for actor inventories -->
 <!-- ? DO we have to reuse the same components, or can we make curated versions for container and actor? -->
+<ContainerContentsSections
+  contents={$context.containerContents.contents}
+  container={$context.item}
+  editable={$context.editable}
+  itemContext={$context.containerContents.itemContext}
+  {inlineToggleService}
+  lockItemQuantity={$context.lockItemQuantity}
+  sheetDocument={$context.item}
+/>
 
-<!-- Capacity Bar -->
+<footer>
+  <hr class="golden-fade" />
 
-<!-- Currency, with Item Add Button -->
+  <!-- Capacity Bar -->
+  <CapacityBar container={$context.item} capacity={$context.capacity} />
+
+  <!-- Currency, with Item Add Button -->
+  <ContainerCurrency />
+</footer>

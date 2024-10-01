@@ -118,3 +118,13 @@
     }
   }
 }
+
+.tidy-tab {
+  height: 100%;
+  flex-direction: column;
+  display: none;
+
+  &.active {
+    display: flex;
+  }
+}
