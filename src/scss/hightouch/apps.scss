@@ -64,18 +64,4 @@
       background-image: url('../../systems/dnd5e/icons/currency/platinum.webp');
     }
   }
-
-  /* App V2 Reset */
-  /* Reset button & input styles */
-  input,
-  button {
-    box-shadow: none;
-    outline: none;
-
-    &:hover,
-    &:focus {
-      box-shadow: none;
-      outline: none;
-    }
-  }
 }

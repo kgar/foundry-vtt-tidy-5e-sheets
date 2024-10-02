@@ -1,3 +1,18 @@
+/* App V2 Reset */
+
+input {
+  box-shadow: none;
+  outline: none;
+
+  &:hover,
+  &:focus {
+    box-shadow: none;
+    outline: none;
+  }
+}
+
+/* Hightouch-style inputs */
+
 :where(search) {
   display: flex;
   padding: 0.25rem;

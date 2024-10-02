@@ -5,11 +5,11 @@
   import { getContext, setContext } from 'svelte';
   import { writable, type Readable } from 'svelte/store';
   import CapacityBar from 'src/sheets/hightouch/container/parts/CapacityBar.svelte';
-  import UtilityToolbar from 'src/sheets/hightouch/shared/UtilityToolbar.svelte';
   import ContainerContentsSections from 'src/sheets/hightouch/container/parts/ContainerContentsSections.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import ContainerCurrency from '../parts/ContainerCurrency.svelte';
+  import { isNil } from 'src/utils/data';
 
   let context = getContext<Readable<ContainerSheetHightouchContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -44,8 +44,24 @@
   $: menuOpen = false;
 </script>
 
-<!-- New Utility Toolbar -->
-<UtilityToolbar />
+<section
+  class="action-bar"
+  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTION_BAR}
+>
+  <button type="button">
+    <i class="fas fa-angles-down fa-fw"></i>
+  </button>
+
+  <search>
+    <i class="fas fa-magnifying-glass fa-fw"></i>
+    <input type="text" placeholder={localize('TIDY5E.Search')} />
+    {#if !isNil(searchCriteria, '')}
+      <button type="button">
+        <i class="fas fa-xmark fa-fw"></i>
+      </button>
+    {/if}
+  </search>
+</section>
 
 <!-- Tables -->
 <!-- New Container Contents Sections > New Inline Container View (requires options for column specification, classic controls)  -->
