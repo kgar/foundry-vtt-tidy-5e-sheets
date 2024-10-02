@@ -7,7 +7,7 @@
   import type { ContainerContents, Item5e } from 'src/types/item.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
-    import VerticalFiligreeGuideline from '../../shared/VerticalFiligreeGuideline.svelte';
+  import VerticalFiligreeGuideline from '../../shared/VerticalFiligreeGuideline.svelte';
 
   export let container: Item5e;
   export let containerContents: ContainerContents;
@@ -41,7 +41,7 @@
 >
   <!-- TODO: Apply proper a11y trappings for this -->
   <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <div class="filigree-guideline-and-contents full-height">
+  <div class="inline-content-view filigree-guideline-and-contents full-height">
     <VerticalFiligreeGuideline />
     <div
       class="flex-column extra-small-gap flex-1 inline-container-view"

@@ -148,7 +148,7 @@
               {#if ('containerContents' in ctx && !!ctx.containerContents) || item?.system.activities?.contents.length > 1}
                 <button
                   type="button"
-                  class="expand-indicator-button"
+                  class="expand-indicator-button unbutton"
                   on:click={() => inlineToggleService.toggle(tabId, item.id)}
                 >
                   <i
@@ -162,7 +162,7 @@
               {/if}
               <button
                 type="button"
-                class="item-name truncate"
+                class="item-name unbutton truncate"
                 on:click={(ev) => toggleSummary()}
               >
                 <span class="truncate">{item.name}</span>
@@ -176,38 +176,32 @@
             </TidyTableCell>
             <TidyTableCell class="item-actions">
               {#if unlocked}
-                <button type="button" class="item-action inline-icon-button">
+                <button type="button" class="item-action unbutton">
                   <i class="fas fa-edit"></i>
                 </button>
-                <button type="button" class="item-action inline-icon-button">
+                <button type="button" class="item-action unbutton">
                   <i class="fas fa-trash"></i>
                 </button>
               {/if}
-              <button type="button" class="item-action inline-icon-button">
+              <button type="button" class="item-action unbutton">
                 <i class="fas fa-ellipsis-vertical"></i>
               </button>
             </TidyTableCell>
           </ItemTableRowV2>
-          <div
-            class:inline-content-view={$inlineContainerToggleServiceStore
-              .get(tabId)
-              ?.has(item.id)}
-            role="presentation"
-          >
-            {#if 'containerContents' in ctx && !!ctx.containerContents}
-              <InlineContainerView
-                container={item}
-                containerContents={ctx.containerContents}
-                {editable}
-                {inlineToggleService}
-                {lockItemQuantity}
-                {sheetDocument}
-                {unlocked}
-              />
-            {:else if item.system.activities?.contents.length > 1}
-              <InlineActivitiesList {item} {inlineToggleService} />
-            {/if}
-          </div>
+
+          {#if 'containerContents' in ctx && !!ctx.containerContents}
+            <InlineContainerView
+              container={item}
+              containerContents={ctx.containerContents}
+              {editable}
+              {inlineToggleService}
+              {lockItemQuantity}
+              {sheetDocument}
+              {unlocked}
+            />
+          {:else if item.system.activities?.contents.length > 1}
+            <InlineActivitiesList {item} {inlineToggleService} />
+          {/if}
 
           <hr class="table-row-divider" />
         {/each}

@@ -30,7 +30,6 @@ button {
   background: var(--t5e-component-field-default-background);
   color: var(--t5e-color-text-onDefault-default);
 
-  font-family: var(--t5e-roboto-condensed);
   font-size: var(--font-font-size-13, 0.8125rem);
   font-style: normal;
   font-weight: 500;
@@ -43,9 +42,6 @@ button {
 
   :where(i) {
     color: var(--t5e-color-text-onDefault-gold-emphasis);
-  }
-
-  :where(i) {
     margin: 0;
   }
 }
@@ -72,7 +68,8 @@ button {
     box-shadow: none;
   }
 
-  button:not(:last-child) {
+  button:not(:last-child):not(:first-child),
+  button:first-child:not(:last-child) {
     border-right: 0;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
@@ -83,19 +80,27 @@ button {
     border-bottom-left-radius: 0;
   }
 
-  button:last-child {
+  button:last-child:not(:first-child) {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
 }
 
-/* Inline Icon Button */
+/* Inline Icon Button, Header Controls */
 
-button:where(.inline-icon-button) {
-  // TODO: Add some CSS variables for common styles like size.
-  width: unset;
-  border: none;
-  background: none;
-  margin: 0;
-  padding: 0;
+button {
+  &.header-control,
+  &.unbutton {
+    width: unset;
+    border: none;
+    background: none;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    outline: none;
+  }
+}
+
+button.header-control {
+  font-weight: 900;
 }

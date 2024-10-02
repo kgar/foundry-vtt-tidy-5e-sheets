@@ -54,7 +54,7 @@
   .tidy-table-row {
     height: var(--table-row-height);
     // TODO: CSS Variables?
-    background: linear-gradient(90deg, #F8F4F1 0.59%, #F8F4F1 44%);
+    background: linear-gradient(90deg, #f8f4f1 0.59%, #f8f4f1 44%);
   }
 
   .expand-indicator {
@@ -66,11 +66,9 @@
     align-items: center;
     justify-content: center;
 
-    i {
-      color: var(--t5e-color-text-onInverse-gold-emphasis);
-      font-size: 0.6875rem;
-      font-weight: 900;
-    }
+    color: var(--t5e-color-text-onInverse-gold-emphasis);
+    font-size: 0.6875rem;
+    font-weight: 900;
 
     &.expanded {
       transform: rotate(90deg);
@@ -235,12 +233,12 @@
 
 .tidy-table .tidy-table {
   & + .tidy-table {
-    margin-top: 1px;
+    margin-top: 0.0625rem;
   }
 
   .tidy-table-header-row {
     height: var(--table-header-row-height);
-    border-radius: 0.125rem;
+    border-radius: 0;
     border-color: transparent;
     // TODO: CSS Variable?
     background: rgba(0, 0, 0, 0.12);

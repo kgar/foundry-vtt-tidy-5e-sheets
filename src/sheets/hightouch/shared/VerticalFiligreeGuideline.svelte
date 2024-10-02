@@ -1,6 +1,3 @@
-<script lang="ts">
-</script>
-
 <div class="vertical-filigree-guideline" role="presentation">
   <div class="guideline-header" role="presentation">
     <!-- Top Part of Filigree Header -->

@@ -63,11 +63,12 @@
   </search>
 
   <!-- TODO: Wire up actual pinned filter toggles -->
+  <!-- TODO: When wiring up pinned filter toggles, use an additive approach instead of hiding after-the-fact. When the window size changes, trigger a render, throttled. -->
   <div class="button-group">
-    <button type="button">Action</button>
-    <button type="button">Bonus Action</button>
-    <button type="button">Reaction</button>
-    <button type="button">Can Use</button>
+    <button type="button" class="hide-under-450">Action</button>
+    <button type="button" class="hide-under-550">Bonus Action</button>
+    <button type="button" class="hide-under-600">Reaction</button>
+    <button type="button" class="hide-under-400">Can Use</button>
     <button type="button">Magical</button>
   </div>
 </section>
