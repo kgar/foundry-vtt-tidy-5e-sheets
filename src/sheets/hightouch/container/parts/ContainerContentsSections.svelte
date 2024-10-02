@@ -44,47 +44,43 @@
     CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
   );
 
-  let classicControls: {
-    component: ComponentType;
-    getProps: (item: Item5e) => any;
-  }[] = [];
+  // TODO: When Svelte 5, snippets
+  // let itemActions: {
+  //   component: ComponentType;
+  //   getProps: (item: Item5e) => any;
+  // }[] = [];
 
-  $: {
-    classicControls = [];
+  // $: {
+  //   itemActions = [];
 
-    classicControls.push({
-      component: ItemEditControl,
-      getProps: (item: Item5e) => ({ item }),
-    });
+  //   if (unlocked) {
+  //     itemActions.push({
+  //       component: ItemEditControl,
+  //       getProps: (item: Item5e) => ({ item }),
+  //     });
 
-    if (unlocked) {
-      classicControls.push({
-        component: ItemDeleteControl,
-        getProps: (item: Item5e) => ({
-          item,
-          deleteFn: () => item.deleteDialog(),
-        }),
-      });
-    }
-  }
+  //     itemActions.push({
+  //       component: ItemDeleteControl,
+  //       getProps: (item: Item5e) => ({
+  //         item,
+  //         deleteFn: () => item.deleteDialog(),
+  //       }),
+  //     });
+  //   }
+  // }
 
   const weightUnit = FoundryAdapter.getWeightUnit();
 
-  const classicControlWidthRems = 1.5;
-
   $: useClassicControls = FoundryAdapter.useClassicControls(container);
 
-  $: classicControlsWidth = useClassicControls
-    ? `/* Controls */ ${classicControlWidthRems * classicControls.length}rem`
+  // TODO: Figure out how to better scale for custom commands. Maybe they just have to be context menu items...
+  $: itemActionsWidth = useClassicControls
+    ? `/* Actions */ ${1.5 * (unlocked ? 3 : 1)}rem`
     : '';
 
-  $: gridTemplateColumns = `/* Name */ 1fr /* Weight */ 3rem /* Quantity */ 3rem ${classicControlsWidth}`;
+  $: gridTemplateColumns = `/* Name */ 1fr /* Quantity */ 4.125rem /* Weight */ 2.25rem ${itemActionsWidth}`;
 
   $: inlineContainerToggleServiceStore = inlineToggleService.store;
-
-  let quantityBaseWidth = '4.125rem';
-  let weightBaseWidth = '2.25rem';
-  $: actionsBaseWidth = unlocked ? '4.5rem' : '1.5rem';
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -94,6 +90,7 @@
     <TidyTable
       key={section.key}
       data-custom-section={section.custom ? true : null}
+      {gridTemplateColumns}
     >
       <svelte:fragment slot="header">
         <TidyTableHeaderRow>
@@ -101,13 +98,13 @@
             {localize(section.label)}
             <span class="count">{section.items.length}</span>
           </TidyTableHeaderCell>
-          <TidyTableHeaderCell baseWidth={quantityBaseWidth}>
+          <TidyTableHeaderCell>
             {localize('DND5E.Quantity')}
           </TidyTableHeaderCell>
-          <TidyTableHeaderCell baseWidth={weightBaseWidth}>
+          <TidyTableHeaderCell>
             {localize('DND5E.Weight')}
           </TidyTableHeaderCell>
-          <TidyTableHeaderCell baseWidth={actionsBaseWidth} class="item-actions">
+          <TidyTableHeaderCell class="item-actions">
             <!-- Actions -->
           </TidyTableHeaderCell>
         </TidyTableHeaderRow>
@@ -171,13 +168,13 @@
                 <span class="truncate">{item.name}</span>
               </button>
             </TidyTableCell>
-            <TidyTableCell baseWidth={quantityBaseWidth}>
+            <TidyTableCell>
               {item.system.quantity}
             </TidyTableCell>
-            <TidyTableCell baseWidth={weightBaseWidth}>
+            <TidyTableCell>
               {weight}
             </TidyTableCell>
-            <TidyTableCell baseWidth={actionsBaseWidth} class="item-actions">
+            <TidyTableCell class="item-actions">
               {#if unlocked}
                 <button type="button" class="item-action inline-icon-button">
                   <i class="fas fa-edit"></i>
