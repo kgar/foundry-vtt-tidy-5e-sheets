@@ -61,6 +61,15 @@
       </button>
     {/if}
   </search>
+
+  <!-- TODO: Wire up actual pinned filter toggles -->
+  <div class="button-group">
+    <button type="button">Action</button>
+    <button type="button">Bonus Action</button>
+    <button type="button">Reaction</button>
+    <button type="button">Can Use</button>
+    <button type="button">Magical</button>
+  </div>
 </section>
 
 <!-- Tables -->

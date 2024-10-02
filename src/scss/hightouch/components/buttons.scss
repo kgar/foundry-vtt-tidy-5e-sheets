@@ -3,6 +3,11 @@
 button {
   box-shadow: none;
   outline: none;
+  margin: 0;
+
+  i {
+    margin: 0;
+  }
 
   &:hover,
   &:focus {
@@ -23,13 +28,19 @@ button {
   border-radius: 0.125rem;
   border: 1px solid var(--t5e-component-field-default-border);
   background: var(--t5e-component-field-default-background);
+  color: var(--t5e-color-text-onDefault-default);
+
+  font-family: var(--t5e-roboto-condensed);
+  font-size: var(--font-font-size-13, 0.8125rem);
+  font-style: normal;
+  font-weight: 500;
+  line-height: 0.875rem;
 
   /* shadow/field/light */
   box-shadow: 0px 0px 4px 0px var(--dnd5e-shadow-15, rgba(0, 0, 0, 0.15));
 
   padding: 0.25rem;
 
-  &,
   :where(i) {
     color: var(--t5e-color-text-onDefault-gold-emphasis);
   }
@@ -49,6 +60,36 @@ button {
     color: var(--t5e-color-text-onDefault-gold-emphasis);
   }
 }
+
+/* Button Group */
+
+.button-group {
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+
+  button {
+    box-shadow: none;
+  }
+
+  button:not(:last-child) {
+    border-right: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  button:not(:last-child):not(:first-child) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  button:last-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+
+/* Inline Icon Button */
 
 button:where(.inline-icon-button) {
   // TODO: Add some CSS variables for common styles like size.
