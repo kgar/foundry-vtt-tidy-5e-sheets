@@ -1,6 +1,8 @@
 .tidy5e-sheet.application:where(.hightouch) {
+  @import './components/action-bar.scss';
   @import './components/buttons.scss';
   @import './components/configurable-source.scss';
+  @import './components/inputs.scss';
   @import './components/pills.scss';
   @import './components/separators.scss';
   @import './components/tabs.scss';
