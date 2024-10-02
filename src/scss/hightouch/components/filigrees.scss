@@ -3,13 +3,13 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  
+
   .guideline-header,
   .guideline-footer {
     position: relative;
     height: 5.5px;
 
-    svg {
+    svg path {
       stroke-width: 1px;
       stroke: var(--t5e-color-text-onInverse-gold);
     }
@@ -50,5 +50,21 @@
     bottom: 0;
     left: 0;
     right: 0;
+  }
+}
+
+.filigree-guideline-and-contents {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: stretch;
+  gap: 0.5rem;
+
+  > * {
+    flex: 1;
+  }
+
+  > .vertical-filigree-guideline {
+    flex: 0 0 auto;
   }
 }

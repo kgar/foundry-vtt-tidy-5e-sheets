@@ -45,15 +45,16 @@
     &:not(.primary) {
       color: var(--t5e-color-text-onInverse-default);
       text-align: center;
-      // font-family: Roboto;
       font-size: 0.75rem;
       font-weight: 500;
-      line-height: 0.875rem; /* 116.667% */
+      line-height: 0.875rem;
     }
   }
 
   .tidy-table-row {
     height: var(--table-row-height);
+    // TODO: CSS Variables?
+    background: linear-gradient(90deg, #F8F4F1 0.59%, #F8F4F1 44%);
   }
 
   .expand-indicator {
@@ -227,7 +228,7 @@
 }
 
 * + .tidy-table {
-  margin-top: 1rem;
+  margin-top: 0.75rem;
 }
 
 /* Sub-table Overrides */
@@ -252,18 +253,31 @@
     .count {
       color: var(--t5e-color-text-onDefault-lighter);
     }
-    
+
     &.primary {
       flex: 1;
       font-family: var(--t5e-font-modesto-condensed);
     }
-    
+
     &:not(.primary) {
       color: var(--t5e-color-text-onDefault-default);
     }
-    
+
     .expand-indicator {
       color: var(--t5e-color-text-onDefault-lighter);
     }
+  }
+}
+
+.tidy-table {
+  .inline-content-view {
+    padding: 0.25rem 0rem 0.25rem 0.75rem;
+
+    border-radius: 0rem 0rem 0.125rem 0.125rem;
+    // TODO: CSS Variable for border bottom background? Dark mode?
+    border-bottom: 1px solid #eae1dc;
+
+    // TODO: CSS Variables for inline content background? Dark mode?
+    background: linear-gradient(90deg, #fff 0.59%, #f8f4f1 44%);
   }
 }

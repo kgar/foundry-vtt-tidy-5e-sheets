@@ -188,23 +188,28 @@
               </button>
             </TidyTableCell>
           </ItemTableRowV2>
-          {#if 'containerContents' in ctx && !!ctx.containerContents}
-            <InlineContainerView
-              container={item}
-              containerContents={ctx.containerContents}
-              {editable}
-              {inlineToggleService}
-              {lockItemQuantity}
-              {sheetDocument}
-              {unlocked}
-            />
-          {:else if item.system.activities?.contents.length > 1}
-            <InlineActivitiesList {item} {inlineToggleService} />
-          {/if}
+          <div
+            class:inline-content-view={$inlineContainerToggleServiceStore
+              .get(tabId)
+              ?.has(item.id)}
+            role="presentation"
+          >
+            {#if 'containerContents' in ctx && !!ctx.containerContents}
+              <InlineContainerView
+                container={item}
+                containerContents={ctx.containerContents}
+                {editable}
+                {inlineToggleService}
+                {lockItemQuantity}
+                {sheetDocument}
+                {unlocked}
+              />
+            {:else if item.system.activities?.contents.length > 1}
+              <InlineActivitiesList {item} {inlineToggleService} />
+            {/if}
+          </div>
 
-          {#if i !== lastItemIndex}
-            <hr class="table-row-divider" />
-          {/if}
+          <hr class="table-row-divider" />
         {/each}
       </svelte:fragment>
     </TidyTable>
