@@ -1,4 +1,3 @@
-// TODO: Specify/elaborate on tables when needed
 .tidy-table {
   --table-header-row-height: 1.5rem;
   --table-row-height: 1.8125rem;
@@ -60,7 +59,8 @@
   .expand-indicator {
     transition: color 0.3s, transform 0.15s;
     width: 1.5rem;
-    height: 1.5rem;
+    // Anything in the header must account for the top/bottom border
+    height: calc(1.5rem - 2px);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -230,4 +230,40 @@
   margin-top: 1rem;
 }
 
-// TODO: Handle sub-table style overrides (e.g., different header style)
+/* Sub-table Overrides */
+
+.tidy-table .tidy-table {
+  & + .tidy-table {
+    margin-top: 1px;
+  }
+
+  .tidy-table-header-row {
+    height: var(--table-header-row-height);
+    border-radius: 0.125rem;
+    border-color: transparent;
+    // TODO: CSS Variable?
+    background: rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+  }
+
+  .tidy-table-header-cell {
+    color: var(--t5e-color-text-onDefault-default);
+
+    .count {
+      color: var(--t5e-color-text-onDefault-lighter);
+    }
+    
+    &.primary {
+      flex: 1;
+      font-family: var(--t5e-font-modesto-condensed);
+    }
+    
+    &:not(.primary) {
+      color: var(--t5e-color-text-onDefault-default);
+    }
+    
+    .expand-indicator {
+      color: var(--t5e-color-text-onDefault-lighter);
+    }
+  }
+}
