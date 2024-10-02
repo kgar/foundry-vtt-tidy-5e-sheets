@@ -1,7 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ContainerSheetClassicContext } from 'src/types/item.types';
+  import type { ContainerSheetHightouchContext } from 'src/types/item.types';
   import { getContext, setContext } from 'svelte';
   import { writable, type Readable } from 'svelte/store';
   import CapacityBar from 'src/sheets/hightouch/container/parts/CapacityBar.svelte';
@@ -11,7 +11,7 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import ContainerCurrency from '../parts/ContainerCurrency.svelte';
 
-  let context = getContext<Readable<ContainerSheetClassicContext>>(
+  let context = getContext<Readable<ContainerSheetHightouchContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
@@ -60,6 +60,7 @@
   {inlineToggleService}
   lockItemQuantity={$context.lockItemQuantity}
   sheetDocument={$context.item}
+  unlocked={$context.unlocked}
 />
 
 <footer>
