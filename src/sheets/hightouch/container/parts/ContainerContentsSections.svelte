@@ -110,7 +110,6 @@
         </TidyTableHeaderRow>
       </svelte:fragment>
       <svelte:fragment slot="body">
-        {@const lastItemIndex = section.items.length - 1}
         {#each section.items as item, i (item.id)}
           {@const ctx = itemContext[item.id]}
           {@const weight = ctx?.totalWeight ?? item.system.weight.value}
@@ -122,6 +121,9 @@
             'legendary',
             'artifact',
           ].includes(item.system.rarity)}
+
+          <!-- TODO: Put 1px margin top on first row -->
+
           <ItemTableRowV2
             {item}
             hidden={!!$itemIdsToShow && !$itemIdsToShow.has(item.id)}
@@ -136,15 +138,20 @@
             }}
           >
             <TidyTableCell primary={true} class="truncate">
-              <button
+              <!-- svelte-ignore a11y-missing-attribute -->
+              <!-- svelte-ignore a11y-interactive-supports-focus -->
+              <!-- svelte-ignore a11y-click-events-have-key-events -->
+              <div
                 class="item-image"
                 style="--item-img: url({item.img}); --item-border-color: {itemBorderColor};"
                 class:special-rarity={showRarityBoxShadow}
+                role="button"
+                on:click={(ev) => FoundryAdapter.actorTryUseItem(item, ev)}
               >
                 <span class="roll-prompt">
                   <i class="fa fa-dice-d20" />
                 </span>
-              </button>
+              </div>
               {#if ('containerContents' in ctx && !!ctx.containerContents) || item?.system.activities?.contents.length > 1}
                 <button
                   type="button"

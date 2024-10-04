@@ -1,6 +1,7 @@
 .tidy-table {
   --table-header-row-height: 1.5rem;
-  --table-row-height: 1.8125rem;
+  --table-row-height: 1.875rem;
+  --item-img-size: 1.75rem;
 
   .tidy-table-header-row,
   .tidy-table-row {
@@ -12,8 +13,7 @@
 
   .tidy-table-header-row {
     height: var(--table-header-row-height);
-    border-radius: 0.125rem;
-    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.125rem 0.125rem 0rem 0rem;
     background: var(
       --gradient-red,
       linear-gradient(
@@ -23,6 +23,10 @@
       )
     );
     cursor: pointer;
+
+    &:has(+ .expandable:not(.expanded)) {
+      border-radius: 0.125rem;
+    }
   }
 
   .tidy-table-header-cell {
@@ -107,17 +111,18 @@
   }
 
   .item-image {
-    flex: 0 0 1.5rem;
-    width: 1.5rem;
-    height: 1.5rem;
+    margin-left: 0.0625rem;
+    flex: 0 0 var(--item-img-size);
+    width: var(--item-img-size);
+    height: var(--item-img-size);
     background-color: lightgray;
     background-position: 50%;
     background-size: cover;
     background-repeat: no-repeat;
     background-image: var(--item-img);
-    border: 0.0625rem solid var(--item-border-color, transparent);
+    border: 1.5px solid var(--item-border-color, transparent);
     align-self: center;
-    border-radius: 0;
+    border-radius: 0.0625rem;
 
     display: inline-flex;
     justify-content: center;
@@ -133,17 +138,17 @@
       display: none;
       align-items: center;
       justify-content: center;
-      border-radius: 0;
+      border-radius: 0.0625rem;
       background: var(--t5e-component-card-onDefault-default);
-      border: 0.0625rem solid var(--t5e-color-gold);
+      border: 1.5px solid var(--item-border-color, transparent);
 
       align-items: center;
       justify-content: center;
       margin: -0.0625rem;
       padding: 0;
-      flex-basis: 1.5rem;
-      width: 1.5rem;
-      height: 1.5rem;
+      flex-basis: var(--item-img-size);
+      width: var(--item-img-size);
+      height: var(--item-img-size);
 
       i {
         color: var(--t5e-color-text-onInverse-gold);
@@ -160,8 +165,19 @@
     margin-left: 0.5rem;
   }
 
-  .item-image:hover .roll-prompt {
-    display: flex;
+  .item-image {
+    &.special-rarity,
+    &.special-rarity .roll-prompt {
+      box-shadow: 0px 0px 3px 0px var(--item-border-color, transparent);
+    }
+
+    &:hover {
+      box-shadow: none;
+
+      .roll-prompt {
+        display: flex;
+      }
+    }
   }
 
   button.item-name {
@@ -186,6 +202,7 @@
   }
 
   hr.table-row-divider {
+    background-image: none;
     background-color: var(--t5e-color-table-divider);
     margin: 0;
     height: 0.0625rem;
@@ -222,6 +239,10 @@
         line-height: normal;
       }
     }
+  }
+
+  .expandable.expanded {
+    padding-top: 0.0625rem;
   }
 }
 
