@@ -1,7 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
   import type { LocationToSearchTextMap, OnSearchFn } from 'src/types/types';
   import { getContext, onMount } from 'svelte';
 
@@ -43,14 +42,16 @@
     on:blur|preventDefault|stopPropagation={() => rememberSearch()}
   />
   {#if value?.trim() !== ''}
-    <button
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <a
       class="inline-icon-button search-close-button"
       on:click={() => clearSearch()}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SEARCH_CLEAR}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fas fa-times"></i>
-    </button>
+    </a>
   {/if}
 </div>
 

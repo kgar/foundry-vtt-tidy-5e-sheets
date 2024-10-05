@@ -1,7 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
   import type { ActorSheetContextV1 } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -31,13 +30,14 @@
     >
   {/if}
   {#if $context.unlocked}
-    <button
-      type="button"
-      class="configure inline-icon-button"
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <a
+      class="configure inline-icon-button inline-flex-row align-items-center"
       title={localize('DND5E.MovementConfig')}
       on:click={() => FoundryAdapter.renderActorMovementConfig($context.actor)}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-      ><i class="fas fa-cog" /></button
-    >
+      ><i class="fas fa-cog" />
+    </a>
   {/if}
 </section>

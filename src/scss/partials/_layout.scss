@@ -4,6 +4,12 @@
   overflow-y: scroll;
 }
 
+.inline-flex-row {
+  display: inline-flex;
+  flex-direction: row;
+  gap: 0.25rem;
+}
+
 .flex-row {
   display: flex;
   flex-direction: row;

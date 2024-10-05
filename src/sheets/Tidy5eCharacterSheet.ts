@@ -33,7 +33,7 @@ import {
   applySheetAttributesToWindow,
   applyThemeDataAttributeToWindow,
   applyTitleToWindow,
-  blurUntabbableButtonsOnClick,
+  blurButtonsOnClick,
   maintainCustomContentInputFocus,
 } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
@@ -1409,7 +1409,16 @@ export class Tidy5eCharacterSheet
         super.activateListeners,
         this
       );
-      blurUntabbableButtonsOnClick(this.element.get(0));
+      if (!SettingsProvider.settings.useAccessibleKeyboardSupport.get()) {
+        blurButtonsOnClick(this.element.get(0));
+      }
+      if (!SettingsProvider.settings.useAccessibleKeyboardSupport.get()) {
+        this.element
+          .get(0)
+          .querySelectorAll('button')
+          .forEach((b: HTMLButtonElement) => (b.tabIndex = -1));
+      }
+
       return;
     }
 
@@ -1427,6 +1436,12 @@ export class Tidy5eCharacterSheet
         super.activateListeners,
         this
       );
+      if (!SettingsProvider.settings.useAccessibleKeyboardSupport.get()) {
+        this.element
+          .get(0)
+          .querySelectorAll('button')
+          .forEach((b: HTMLButtonElement) => (b.tabIndex = -1));
+      }
     });
   }
 

@@ -4,7 +4,7 @@ import { SettingsProvider, settingStore } from 'src/settings/settings';
 import {
   applySheetAttributesToWindow,
   applyThemeDataAttributeToWindow,
-  blurUntabbableButtonsOnClick,
+  blurButtonsOnClick,
 } from 'src/utils/applications';
 import { debug, error } from 'src/utils/logging';
 import type { SvelteComponent } from 'svelte';
@@ -278,6 +278,12 @@ export function SvelteApplicationMixin<
 
       this.#restoreScrollPositions(this.element);
       this.#restoreInputFocus(this.element);
+
+      if (!SettingsProvider.settings.useAccessibleKeyboardSupport.get()) {
+        this.element
+          .querySelectorAll('button')
+          .forEach((b: HTMLButtonElement) => (b.tabIndex = -1));
+      }
     }
 
     /* -------------------------------------------- */
@@ -288,8 +294,9 @@ export function SvelteApplicationMixin<
       super._attachFrameListeners();
 
       try {
-        // Support Foundry's hotkeys feature by blurring tabindex -1 clicked elements
-        blurUntabbableButtonsOnClick(this.element);
+        if (!SettingsProvider.settings.useAccessibleKeyboardSupport.get()) {
+          blurButtonsOnClick(this.element);
+        }
 
         // Manage application subscriptions
         this.#subscriptionsService.unsubscribeAll();

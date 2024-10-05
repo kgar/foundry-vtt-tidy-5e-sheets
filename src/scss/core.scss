@@ -409,6 +409,12 @@
     -ms-user-select: text;
     user-select: text;
   }
+
+  a:hover {
+    outline: none;
+    box-shadow: none;
+    text-shadow: none;
+  }
 }
 
 @import './partials/floating-context-menu';
