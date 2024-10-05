@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { settingStore } from 'src/settings/settings';
   import type { Item5e } from 'src/types/item.types';
   import { createEventDispatcher } from 'svelte';
   import ActiveEffectsMarker from './ActiveEffectsMarker.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+    import { settingStore } from 'src/settings/settings';
 
   export let cssClass: string = '';
   export let hasChildren = true;
@@ -15,10 +15,9 @@
   const dispatcher = createEventDispatcher<{ toggle: Event }>();
 </script>
 
-<!-- TODO: Make this a button -->
+<!-- svelte-ignore a11y-interactive-supports-focus -->
 <span
   role="button"
-  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
   on:click={(ev) => dispatcher('toggle', ev)}
   class="item-name truncate {cssClass}"
   class:has-children={hasChildren}

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { settingStore } from 'src/settings/settings';
   import { onMount } from 'svelte';
 
   export let isEmpty: boolean;
@@ -33,27 +32,32 @@
   }
 </script>
 
-<button
-  bind:this={pipEl}
-  type="button"
-  class="pip"
-  class:empty={isEmpty}
-  class:change={willChange}
-  class:animate-expended={animateExpended}
-  class:animate-restored={animateRestored}
-  on:click
-  on:mouseenter
-  on:mouseleave
-  on:focusin
-  on:focusout
-  on:transitionend={() => {
-    // Prevent unwanted additional animations after the pip effect has ended.
-    animateExpended = false;
-    animateRestored = false;
-  }}
-  {disabled}
-  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-/>
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y-missing-attribute -->
+<!-- svelte-ignore a11y-missing-content -->
+{#if !disabled}
+  <a
+    bind:this={pipEl}
+    class="pip"
+    class:empty={isEmpty}
+    class:change={willChange}
+    class:animate-expended={animateExpended}
+    class:animate-restored={animateRestored}
+    on:click
+    on:mouseenter
+    on:mouseleave
+    on:focusin
+    on:focusout
+    on:transitionend={() => {
+      // Prevent unwanted additional animations after the pip effect has ended.
+      animateExpended = false;
+      animateRestored = false;
+    }}
+  ></a>
+{:else}
+  <a bind:this={pipEl} class="pip" class:empty={isEmpty}></a>
+{/if}
 
 <style lang="scss">
   .pip {

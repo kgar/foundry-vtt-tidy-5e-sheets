@@ -2,7 +2,6 @@
   import type { ItemFilterService } from 'src/features/filtering/ItemFilterService';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ConfiguredItemFilter } from 'src/runtime/item/item.types';
-  import { settingStore } from 'src/settings/settings';
   import {
     cycleNullTrueFalseForward,
     cycleNullTrueFalseBackward,
@@ -24,15 +23,16 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<button
-  type="button"
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-missing-attribute -->
+<a
   class="pinned-filter-toggle truncate"
   class:include={filter.value === true}
   class:exclude={filter.value === false}
   on:click={() => cycleFilterForward(filter.name, filter.value)}
   on:contextmenu={() => cycleFilterBackward(filter.name, filter.value)}
-  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
   title={localize(filter.text)}
 >
   <slot />
-</button>
+</a>

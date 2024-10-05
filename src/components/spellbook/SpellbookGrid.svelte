@@ -14,7 +14,6 @@
   import GridPaneFavoriteIcon from '../item-grid/GridPaneFavoriteIcon.svelte';
   import { getContext } from 'svelte';
   import type { Readable, Writable } from 'svelte/store';
-  import { settingStore } from 'src/settings/settings';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import { declareLocation } from 'src/types/location-awareness.types';
   import SpellSlotManagement from './SpellSlotManagement.svelte';
@@ -100,8 +99,8 @@
         {@const ctx = $context.itemContext[spell.id]}
         {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($context, spell)}
         {@const hidden = !!$itemIdsToShow && !$itemIdsToShow.has(spell.id)}
-        <button
-          type="button"
+        <!-- svelte-ignore a11y-missing-attribute -->
+        <a
           class="spell {FoundryAdapter.getSpellRowClasses(
             spell,
           )} transparent-button"
@@ -119,10 +118,8 @@
           on:mouseleave={(ev) => onMouseLeave(ev, spell)}
           on:dragstart={(ev) => handleDragStart(ev, spell)}
           draggable={true}
-          disabled={!$context.editable}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
           data-item-id={spell.id}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           data-tidy-grid-item
         >
           {#if 'favoriteId' in ctx && !!ctx.favoriteId}
@@ -139,26 +136,29 @@
               <ConcentrationOverlayIcon --tidy-icon-font-size="1.25rem" {ctx} />
             </div>
           </div>
-        </button>
+        </a>
       {/each}
       {#if $context.unlocked}
         <div class="spells-footer">
           {#if section.canCreate}
-            <button
-              type="button"
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <!-- svelte-ignore a11y-no-static-element-interactions -->
+            <!-- svelte-ignore a11y-missing-attribute -->
+            <a
               class="footer-command icon-button"
               title={localize('DND5E.SpellCreate')}
               on:click|stopPropagation|preventDefault={() =>
                 FoundryAdapter.createItem(section.dataset, $context.actor)}
               data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_CREATE_COMMAND}
-              tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             >
               <i class="fas fa-plus-circle" />
-            </button>
+            </a>
           {/if}
           {#each customCommands as command}
-            <button
-              type="button"
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <!-- svelte-ignore a11y-no-static-element-interactions -->
+            <!-- svelte-ignore a11y-missing-attribute -->
+            <a
               class="footer-command icon-button"
               on:click={(ev) =>
                 command.execute?.({
@@ -167,13 +167,12 @@
                   actor: $context.actor,
                 })}
               title={localize(command.tooltip ?? '')}
-              tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             >
               {#if (command.iconClass ?? '') !== ''}
                 <i class={command.iconClass} />
               {/if}
               {localize(command.label ?? '')}
-            </button>
+            </a>
           {/each}
         </div>
       {/if}

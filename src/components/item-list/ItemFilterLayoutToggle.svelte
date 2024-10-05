@@ -1,6 +1,5 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
   import type { ItemLayoutMode } from 'src/types/types';
   import { createEventDispatcher } from 'svelte';
 
@@ -26,15 +25,16 @@
 
 <svelte:element this={element} class="toggle-layout">
   {#if mode === 'grid' || mode === 'list'}
-    <button
-      type="button"
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <a
       class="icon-button"
       title={toggleButtonPresentation?.title}
       on:click={() => dispatcher('toggle')}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class={toggleButtonPresentation?.iconClass} />
-    </button>
+    </a>
   {:else}
     <span title={localize('TIDY5E.LayoutNotSupported')}>😞</span>
   {/if}

@@ -1,25 +1,26 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { RegisteredItemSummaryCommand } from 'src/runtime/types';
-  import { settingStore } from 'src/settings/settings';
   import type { Item5e } from 'src/types/item.types';
 
   export let command: RegisteredItemSummaryCommand;
   export let item: Item5e;
 </script>
 
-<button
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y-missing-attribute -->
+<a
   type="button"
   class="item-summary-command"
   title={command.tooltip ?? null}
   on:click={() => command.execute?.({ item: item })}
-  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
 >
   {#if command.iconClass}
     <i class={command.iconClass}></i>
   {/if}
   {FoundryAdapter.localize(command.label ?? '')}
-</button>
+</a>
 
 <style lang="scss">
   .item-summary-command {

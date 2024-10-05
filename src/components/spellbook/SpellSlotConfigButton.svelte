@@ -1,7 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -13,13 +12,14 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<button
-  type="button"
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y-missing-attribute -->
+<a
   class="spell-slot-config inline-icon-button"
   title={localize('DND5E.SpellSlotsConfig')}
   aria-label={localize('DND5E.SpellSlotsConfig')}
   on:click={() => FoundryAdapter.openSpellSlotsConfig($context.actor)}
-  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
 >
   <i class="fas fa-pencil" />
-</button>
+</a>

@@ -1,7 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
@@ -34,8 +33,10 @@
     <i class="fas fa-question" />
   </div>
   {#if !disabled}
-    <button
-      type="button"
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <a
       class="item-use-button icon-button"
       on:click={(event) => FoundryAdapter.actorTryUseItem(item, {}, { event })}
       on:contextmenu={(event) =>
@@ -43,10 +44,9 @@
       on:focusin={() => (buttonIsFocused = true)}
       on:focusout={() => (buttonIsFocused = false)}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fa fa-dice-d20" class:invisible={!showDiceIconOnHover} />
-    </button>
+    </a>
   {/if}
   <slot name="after-roll-button" />
 </div>
