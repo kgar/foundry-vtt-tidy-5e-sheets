@@ -15,7 +15,6 @@
   import TidyTableCell from 'src/components/table/TidyTableCell.svelte';
   import TidyTableRow from 'src/components/table/TidyTableRow.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import { settingStore } from 'src/settings/settings';
 
   export let section: GroupMemberSection;
 
@@ -86,15 +85,16 @@
         </TidyTableHeaderCell>
         <TidyTableHeaderCell>
           <span>{localize('DND5E.QuantityAbbr')}</span>&nbsp;
-          <button
-            type="button"
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <!-- svelte-ignore a11y-missing-attribute -->
+          <a
             class="inline-icon-button"
             title={localize('DND5E.QuantityRoll')}
             on:click={() => $context.actor.system.rollQuantities()}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-dice"></i>
-          </button>
+          </a>
         </TidyTableHeaderCell>
         <TidyTableHeaderCell>
           <!-- Formula -->
@@ -123,19 +123,20 @@
               }}
             >
               <TidyTableCell class="flex-row small-gap" primary={true}>
-                <button
-                  type="button"
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-no-static-element-interactions -->
+                <!-- svelte-ignore a11y-missing-attribute -->
+
+                <a
                   class="inline-transparent-button"
-                  disabled={!ctx.canObserve}
                   on:click={() =>
-                    FoundryAdapter.renderImagePopout(member.img, {
+                    ctx.canObserve && FoundryAdapter.renderImagePopout(member.img, {
                       title: FoundryAdapter.localize('TIDY5E.PortraitTitle', {
                         subject: member.name,
                       }),
                       shareable: true,
                       uuid: member.uuid,
                     })}
-                  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
                 >
                   <img
                     class="encounter-member-list-item-image"
@@ -144,15 +145,17 @@
                     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
                       .GROUP_MEMBER_PORTRAIT}
                   />
-                </button>
-                <button
-                  type="button"
+                </a>
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-no-static-element-interactions -->
+                <!-- svelte-ignore a11y-missing-attribute -->
+
+                <a
                   class="encounter-member-name transparent-button highlight-on-hover"
                   on:click={() => member.sheet.render(true)}
-                  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
                 >
                   {member.name}
-                </button>
+                </a>
               </TidyTableCell>
               <TidyTableCell>
                 <TextInput

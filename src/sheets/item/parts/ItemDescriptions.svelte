@@ -4,7 +4,6 @@
   import type { Readable } from 'svelte/store';
   import Accordion from 'src/components/accordion/Accordion.svelte';
   import AccordionItem from 'src/components/accordion/AccordionItem.svelte';
-  import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
 
   /**
@@ -55,18 +54,18 @@
                 {itemDescription.label}
 
                 {#if $context.editable}
-                  <button
-                    type="button"
+                  <!-- svelte-ignore a11y-click-events-have-key-events -->
+                  <!-- svelte-ignore a11y-no-static-element-interactions -->
+                  <!-- svelte-ignore a11y-missing-attribute -->
+                  <a
                     class="inline-icon-button edit-item-description"
                     on:click|stopPropagation={() =>
                       dispatcher('edit', {
                         valueToEdit: itemDescription.content,
                         fieldToEdit: itemDescription.field,
                       })}
-                    tabindex={$settingStore.useAccessibleKeyboardSupport
-                      ? 0
-                      : -1}><i class="fas fa-edit" /></button
-                  >
+                    ><i class="fas fa-edit" />
+                  </a>
                 {/if}
               </span>
               <div

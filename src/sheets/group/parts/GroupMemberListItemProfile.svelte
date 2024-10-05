@@ -3,7 +3,6 @@
   import ResourceWithBar from 'src/components/bar/ResourceWithBar.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
   import type { Actor5e } from 'src/types/types';
   import { getPercentage } from 'src/utils/numbers';
 
@@ -14,9 +13,11 @@
 </script>
 
 <div role="presentation" class="member-list-item-image-wrapper">
-  <button
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- svelte-ignore a11y-missing-attribute -->
+  <a
     class="transparent-button"
-    type="button"
     on:click={() =>
       FoundryAdapter.renderImagePopout(member.img, {
         title: FoundryAdapter.localize('TIDY5E.PortraitTitle', {
@@ -25,7 +26,6 @@
         shareable: true,
         uuid: member.uuid,
       })}
-    tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
   >
     <img
       class="member-list-item-image"
@@ -33,7 +33,7 @@
       alt={member.name}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.GROUP_MEMBER_PORTRAIT}
     />
-  </button>
+  </a>
 
   {#if showHp}
     <div class="member-list-item-hp-bar">

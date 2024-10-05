@@ -11,8 +11,6 @@
   import { CONSTANTS } from 'src/constants';
   import GroupMemberListItemProfile from './GroupMemberListItemProfile.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
-  import { formatAsModifier } from 'src/utils/formatting';
 
   const context = getContext<Readable<GroupSheetClassicContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -25,7 +23,7 @@
 
   function onPerceptionClicked(
     event: MouseEvent & {
-      currentTarget: EventTarget & HTMLButtonElement;
+      currentTarget: EventTarget & HTMLElement;
     },
   ) {
     if (ctx.perception) {
@@ -49,15 +47,15 @@
     <div
       class="flex-row small-gap align-items-center justify-content-space-between"
     >
-      <button
-        type="button"
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <a
         class="inline-transparent-button highlight-on-hover ff-title fs-lg"
-        on:click={() => member.sheet.render(true)}
-        disabled={!ctx.canObserve}
-        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+        on:click={() => ctx.canObserve && member.sheet.render(true)}
       >
         {member.name}
-      </button>
+      </a>
       {#if $context.unlocked}
         <RemoveMemberControl {member} />
       {/if}
@@ -102,16 +100,16 @@
 
       <div class="flex-row flex-wrap skills">
         {#if ctx.perception}
-          <button
-            type="button"
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <!-- svelte-ignore a11y-missing-attribute -->
+          <a
             class="skill"
-            disabled={!$context.isGM}
-            on:click={(event) => onPerceptionClicked(event)}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            on:click={(event) => $context.isGM && onPerceptionClicked(event)}
           >
             {localize(ctx.perception?.label ?? '')}
             {ctx.perception?.formattedTotal} ({ctx.perception?.passive})
-          </button>
+          </a>
         {/if}
         {#each ctx.topSkills as skill (skill.key)}
           <span class="skill">
