@@ -27,7 +27,10 @@
   export let position: ButtonMenuPosition = 'bottom';
   export let anchor: ButtonMenuAnchor = 'center';
   export let menuElement: keyof HTMLElementTagNameMap = 'ul';
-  export let buttonStyle: 'solid' | 'transparent-inline' | 'transparent-inline-icon' = 'solid';
+  export let buttonStyle:
+    | 'solid'
+    | 'transparent-inline'
+    | 'transparent-inline-icon' = 'solid';
 
   let openerEl: HTMLElement;
   let menuStyles: string = '';
@@ -59,8 +62,10 @@
 </script>
 
 <div class="button-menu-wrapper {wrapperClass ?? ''}">
-  <button
-    type="button"
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <!-- svelte-ignore a11y-missing-attribute -->
+  <a
     on:click={() => (open = !open)}
     aria-label={ariaLabel}
     bind:this={openerEl}
@@ -72,7 +77,7 @@
       <i class={actualIconClass} />
     {/if}
     {buttonText}
-  </button>
+  </a>
 
   {#if open}
     <svelte:element

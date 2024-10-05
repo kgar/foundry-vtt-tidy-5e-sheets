@@ -2,7 +2,6 @@
   import InlineTextDropdownList from 'src/components/inputs/InlineTextDropdownList.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
   import type { Actor5e, DropdownListOption } from 'src/types/types';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
@@ -121,8 +120,10 @@
                 $context.actor,
                 `system.skills.${skillRef.key}.value`,
               )}
-            <button
-              type="button"
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <!-- svelte-ignore a11y-no-static-element-interactions -->
+            <!-- svelte-ignore a11y-missing-attribute -->
+            <a
               class="configure-proficiency inline-icon-button"
               on:click={() =>
                 FoundryAdapter.renderProficiencyConfig(
@@ -133,14 +134,16 @@
               title={localize('DND5E.SkillConfigure')}
               data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
                 .SKILL_CONFIGURATION_CONTROL}
-              tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             >
               <i class="fas fa-cog" />
-            </button>
-            <button
-              type="button"
+            </a>
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <!-- svelte-ignore a11y-no-static-element-interactions -->
+            <!-- svelte-ignore a11y-missing-attribute -->
+            <a
               class="skill-proficiency-toggle inline-icon-button"
               on:click={() =>
+                !activeEffectApplied &&
                 FoundryAdapter.cycleProficiency(
                   $context.actor,
                   skillRef.key,
@@ -148,6 +151,7 @@
                   'skills',
                 )}
               on:contextmenu={() =>
+                !activeEffectApplied &&
                 FoundryAdapter.cycleProficiency(
                   $context.actor,
                   skillRef.key,
@@ -158,11 +162,9 @@
               title={skillRef.skill.hover}
               data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
                 .SKILL_PROFICIENCY_TOGGLE}
-              tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-              disabled={activeEffectApplied}
               data-tooltip={activeEffectApplied
                 ? localize('DND5E.ActiveEffectOverrideWarning')
-                : null}>{@html skillRef.skill.icon}</button
+                : null}>{@html skillRef.skill.icon}</a
             >
           {:else}
             <span class="skill-proficiency" title={skillRef.skill.hover}
@@ -170,17 +172,18 @@
             >
           {/if}
           {#if $context.editable}
-            <button
-              type="button"
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <!-- svelte-ignore a11y-no-static-element-interactions -->
+            <!-- svelte-ignore a11y-missing-attribute -->
+            <a
               class="tidy5e-skill-name transparent-button rollable"
               on:click={(event) =>
                 $context.actor.rollSkill(skillRef.key, { event })}
               data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_ROLLER}
-              tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
               title={skillRef.skill.label}
             >
               {skillRef.skill.label}
-            </button>
+            </a>
           {:else}
             <span class="tidy5e-skill-name" title={skillRef.skill.label}>
               {skillRef.skill.label}
@@ -214,20 +217,21 @@
   </ul>
   {#if toggleable}
     <div style="text-align:center;">
-      <button
-        type="button"
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <a
         class="toggle-proficient inline-transparent-button"
         on:click={toggleShowAllSkills}
         data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
           .SKILLS_SHOW_PROFICIENT_TOGGLE}
-        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
         {#if showAllSkills}
           {localize('TIDY5E.HideNotProficientSkills')}
         {:else}
           {localize('TIDY5E.ShowNotProficientSkills')}
-        {/if}</button
-      >
+        {/if}
+      </a>
     </div>
   {/if}
 </div>

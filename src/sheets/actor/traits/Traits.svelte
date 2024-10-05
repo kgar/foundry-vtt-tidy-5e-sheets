@@ -5,7 +5,6 @@
   import TraitSectionTools from './TraitSectionTools.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import { settingStore } from 'src/settings/settings';
   import { error } from 'src/utils/logging';
   import TraitSectionTags from './TraitSectionTags.svelte';
   import TraitSectionModifications from './TraitSectionModifications.svelte';
@@ -270,32 +269,34 @@
   {/if}
 
   {#if toggleable}
-    <button
-      type="button"
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <a
       class="toggle-traits inline-transparent-button"
       on:click|stopPropagation|preventDefault={() => toggleTraitsExpanded()}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       {#if traitsExpanded}
         {localize('TIDY5E.HideEmptyTraits')}
       {:else}
         {localize('TIDY5E.ShowEmptyTraits')}
       {/if}
-    </button>
+    </a>
   {/if}
   {#if enableSpecialTraitsConfiguration && !$context.lockSensitiveFields}
-    <button
-      type="button"
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <a
       class="configure-special-traits inline-icon-button"
       title={localize('DND5E.TraitConfig', {
         trait: localize('DND5E.SpecialTraits'),
       })}
       on:click|stopPropagation|preventDefault={() =>
         FoundryAdapter.renderActorSheetFlags($context.actor)}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fas fa-star" />
-    </button>
+    </a>
   {/if}
 </div>
 

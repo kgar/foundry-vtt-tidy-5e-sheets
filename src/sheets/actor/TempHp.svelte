@@ -4,7 +4,6 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
 
   let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
@@ -38,16 +37,17 @@
     disabled={!$context.editable}
   />
   {#if $context.editable && $context.unlocked}
-    <button
-      type="button"
-      class="inline-icon-button"
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <a
+      class="inline-icon-button inline-flex-row align-items-center"
       title={localize('DND5E.HitPointsConfig')}
       on:click|stopPropagation|preventDefault={() =>
         FoundryAdapter.renderActorHitPointsDialog($context.actor)}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fas fa-cog" />
-    </button>
+    </a>
   {/if}
 </div>
 

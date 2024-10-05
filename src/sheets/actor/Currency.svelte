@@ -2,7 +2,6 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
   import type { ContainerSheetContext, Item5e } from 'src/types/item.types';
   import type { Actor5e } from 'src/types/types';
   import type { ActorSheetContextV1 } from 'src/types/types';
@@ -11,9 +10,9 @@
 
   export let document: Actor5e | Item5e;
 
-  let context = getContext<Readable<ActorSheetContextV1 | ContainerSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getContext<
+    Readable<ActorSheetContextV1 | ContainerSheetContext>
+  >(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
 
   $: currencies = Object.entries(document.system.currency).map((e) => ({
     key: e[0],
@@ -55,16 +54,17 @@
       </li>
     {/each}
     <li class="currency-item convert">
-      <button
-        type="button"
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <a
         class="currency-convert"
         title={localize('DND5E.CurrencyManager.Title')}
-        on:click|stopPropagation|preventDefault={() => confirmConvertCurrency()}
-        disabled={!$context.editable}
-        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+        on:click|stopPropagation|preventDefault={() =>
+          $context.editable && confirmConvertCurrency()}
       >
         <i class="fas fa-coins" />
-      </button>
+      </a>
     </li>
   </ol>
 </div>

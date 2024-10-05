@@ -40,16 +40,17 @@
       <slot />
     </div>
     {#if $context.unlocked}
-      <button
-        type="button"
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <a
         class="trait-editor inline-icon-button flex-row align-items-flex-start justify-content-center"
         title={configureButtonTitle}
         on:click|stopPropagation|preventDefault={(event) =>
           dispatcher('onConfigureClicked', event)}
-        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
         <i class="fas fa-pencil-alt" />
-      </button>
+      </a>
     {/if}
   </div>
 {/if}
