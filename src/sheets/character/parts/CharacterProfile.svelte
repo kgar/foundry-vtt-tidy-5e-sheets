@@ -11,10 +11,10 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import ActorProfile from 'src/sheets/actor/ActorProfile.svelte';
-  import { settingStore } from 'src/settings/settings';
   import ExhaustionInput from 'src/sheets/actor/ExhaustionInput.svelte';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { CONSTANTS } from 'src/constants';
+  import { SettingsProvider } from 'src/settings/settings';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -29,10 +29,14 @@
       'system.attributes.exhaustion': event.detail.level,
     });
   }
+
+  $: exhaustionConfig = SettingsProvider.settings.exhaustionConfig.get();
+  $: specificExhaustionConfig =
+    exhaustionConfig?.type === 'specific' ? exhaustionConfig : null;
 </script>
 
-<ActorProfile useHpOverlay={$settingStore.useHpOverlay}>
-  {#if incapacitated && (!$settingStore.hideDeathSavesFromPlayers || FoundryAdapter.userIsGm())}
+<ActorProfile useHpOverlay={SettingsProvider.settings.useHpOverlay.get()}>
+  {#if incapacitated && (!SettingsProvider.settings.hideDeathSavesFromPlayers.get() || FoundryAdapter.userIsGm())}
     <DeathSaves
       successes={$context.system.attributes.death.success}
       failures={$context.system.attributes.death.failure}
@@ -40,31 +44,31 @@
       failuresField="system.attributes.death.failure"
       on:rollDeathSave={(event) =>
         $context.actor.rollDeathSave({ event: event.detail.mouseEvent })}
-      hasHpOverlay={$settingStore.useHpOverlay}
+      hasHpOverlay={SettingsProvider.settings.useHpOverlay.get()}
     />
   {/if}
 
-  {#if $settingStore.useExhaustion && $settingStore.exhaustionConfig.type === 'specific'}
+  {#if SettingsProvider.settings.useExhaustion.get() && specificExhaustionConfig}
     <ExhaustionTracker
       level={$context.system.attributes.exhaustion}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
-      onlyShowOnHover={$settingStore.showExhaustionOnHover ||
-        ($settingStore.hideIfZero &&
+      onlyShowOnHover={SettingsProvider.settings.showExhaustionOnHover.get() ||
+        (SettingsProvider.settings.hideIfZero.get() &&
           $context.system.attributes.exhaustion === 0)}
-      exhaustionConfig={$settingStore.exhaustionConfig}
+      exhaustionConfig={specificExhaustionConfig}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
         $context.actor,
         'system.attributes.exhaustion',
       )}
     />
-  {:else if $settingStore.useExhaustion && $settingStore.exhaustionConfig.type === 'open'}
+  {:else if SettingsProvider.settings.useExhaustion.get() && SettingsProvider.settings.exhaustionConfig.get()?.type === 'open'}
     <ExhaustionInput
       level={$context.system.attributes.exhaustion}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
-      onlyShowOnHover={$settingStore.showExhaustionOnHover ||
-        ($settingStore.hideIfZero &&
+      onlyShowOnHover={SettingsProvider.settings.showExhaustionOnHover.get() ||
+        (SettingsProvider.settings.hideIfZero.get() &&
           $context.system.attributes.exhaustion === 0)}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
         $context.actor,
@@ -73,14 +77,14 @@
     />
   {/if}
 
-  {#if $settingStore.useCharacterInspiration}
+  {#if SettingsProvider.settings.useCharacterInspiration.get()}
     <Inspiration
       inspired={$context.actor.system.attributes.inspiration}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-right'}
-      onlyShowOnHover={$settingStore.showInspirationOnHover ||
-        ($settingStore.hideIfZero &&
+      onlyShowOnHover={SettingsProvider.settings.showInspirationOnHover.get() ||
+        (SettingsProvider.settings.hideIfZero.get() &&
           !$context.actor.system.attributes.inspiration)}
-      animate={$settingStore.animateInspiration}
+      animate={SettingsProvider.settings.animateInspiration.get()}
     />
   {/if}
 

@@ -19,7 +19,7 @@
         <!-- svelte-ignore a11y-no-static-element-interactions -->
         <!-- svelte-ignore a11y-missing-attribute -->
         <a
-          class="inline-transparent-button"
+          class="warning-link inline-transparent-button"
           on:click={(ev) => $context.actor.sheet._onWarningLink(ev)}
           data-target={warning.link}
           >{warning.message}
@@ -43,7 +43,7 @@
       box-shadow: none;
     }
 
-    button {
+    .warning-link {
       color: inherit;
     }
   }

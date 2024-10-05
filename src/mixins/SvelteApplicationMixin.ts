@@ -1,6 +1,6 @@
 import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { SettingsProvider, settingStore } from 'src/settings/settings';
+import { SettingsProvider } from 'src/settings/settings';
 import {
   applySheetAttributesToWindow,
   applyThemeDataAttributeToWindow,
@@ -303,9 +303,14 @@ export function SvelteApplicationMixin<
         const subscriptions = this._getSubscriptions();
         this.#subscriptionsService.registerSubscriptions(
           ...subscriptions,
-          settingStore.subscribe((settings) => {
-            applyThemeDataAttributeToWindow(settings.colorScheme, this.element);
-          })
+
+          SettingsProvider.getSettingsChangedSubscription(this, () => {
+            applyThemeDataAttributeToWindow(
+              SettingsProvider.settings.colorScheme.get(),
+              this.element
+            );
+            this.render();
+          }),
         );
 
         // If a controls dropdown button is clicked, close the controls dropdown.

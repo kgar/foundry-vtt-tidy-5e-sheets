@@ -2,8 +2,7 @@
   import type { Item5e } from 'src/types/item.types';
   import { createEventDispatcher } from 'svelte';
   import ActiveEffectsMarker from './ActiveEffectsMarker.svelte';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-    import { settingStore } from 'src/settings/settings';
+  import { SettingsProvider } from 'src/settings/settings';
 
   export let cssClass: string = '';
   export let hasChildren = true;
@@ -26,7 +25,7 @@
 >
   <slot />
 </span>
-{#if useActiveEffectsMarker && $settingStore.showActiveEffectsMarker && hasActiveEffects}
+{#if useActiveEffectsMarker && SettingsProvider.settings.showActiveEffectsMarker.get() && hasActiveEffects}
   <ActiveEffectsMarker />
 {/if}
 

@@ -1,6 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { SettingsProvider, settingStore } from 'src/settings/settings';
+import { SettingsProvider } from 'src/settings/settings';
 import type {
   ItemCardStore,
   SheetExpandedItemsCacheable,
@@ -130,9 +130,11 @@ export class Tidy5eVehicleSheet
         if (first) return;
         this.render();
       }),
-      settingStore.subscribe((s) => {
-        if (first) return;
-        applyThemeDataAttributeToWindow(s.colorScheme, this.element.get(0));
+      SettingsProvider.getSettingsChangedSubscription(this, () => {
+        applyThemeDataAttributeToWindow(
+          SettingsProvider.settings.colorScheme.get(),
+          this.element.get(0)
+        );
         this.render();
       }),
       this.messageBus.subscribe((m) => {

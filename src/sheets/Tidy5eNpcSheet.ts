@@ -27,7 +27,7 @@ import {
   maintainCustomContentInputFocus,
 } from 'src/utils/applications';
 import { debug, error } from 'src/utils/logging';
-import { SettingsProvider, settingStore } from 'src/settings/settings';
+import { SettingsProvider } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { getPercentage } from 'src/utils/numbers';
 import type { SvelteComponent } from 'svelte';
@@ -143,9 +143,11 @@ export class Tidy5eNpcSheet
         if (first) return;
         this.render();
       }),
-      settingStore.subscribe((s) => {
-        if (first) return;
-        applyThemeDataAttributeToWindow(s.colorScheme, this.element.get(0));
+      SettingsProvider.getSettingsChangedSubscription(this, () => {
+        applyThemeDataAttributeToWindow(
+          SettingsProvider.settings.colorScheme.get(),
+          this.element.get(0)
+        );
         this.render();
       }),
       this.messageBus.subscribe((m) => {

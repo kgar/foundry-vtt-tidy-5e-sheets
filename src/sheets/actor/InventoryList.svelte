@@ -27,7 +27,6 @@
     RenderableClassicControl,
   } from 'src/types/types';
   import AmmoSelector from './AmmoSelector.svelte';
-  import { settingStore } from 'src/settings/settings';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { coalesce } from 'src/utils/formatting';
   import TextInput from 'src/components/inputs/TextInput.svelte';
@@ -35,6 +34,7 @@
   import InlineContainerToggle from '../container/InlineContainerToggle.svelte';
   import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
   import InlineContainerView from '../container/InlineContainerView.svelte';
+  import { SettingsProvider } from 'src/settings/settings';
 
   export let primaryColumnName: string;
   export let items: Item5e[];
@@ -222,7 +222,7 @@
               {/if}
             </ItemName>
           </ItemTableCell>
-          {#if $settingStore.showIconsNextToTheItemName}
+          {#if SettingsProvider.settings.showIconsNextToTheItemName.get()}
             <ItemTableCell cssClass="no-border">
               {#if ctx?.attunement && !FoundryAdapter.concealDetails(item)}
                 <div class="item-detail attunement">

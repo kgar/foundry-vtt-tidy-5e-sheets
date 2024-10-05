@@ -5,7 +5,6 @@
   import type { Readable } from 'svelte/store';
   import TextInput from '../../../components/inputs/TextInput.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { settingStore } from 'src/settings/settings';
 
   export let resource: TidyResource;
   let context = getContext<Readable<CharacterSheetContext>>(
@@ -108,17 +107,17 @@
       </label>
     </div>
     {#if $context.editable && !$context.lockSensitiveFields}
-      <button
-        type="button"
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <a
         class="inline-icon-button resource-options"
         class:active={configActive}
         on:click={() => {
           configActive = !configActive;
         }}
-        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
         <i class="fas fa-cog" />
-      </button>
+      </a>
     {/if}
   </header>
 </li>

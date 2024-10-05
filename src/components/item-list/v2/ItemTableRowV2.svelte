@@ -1,7 +1,6 @@
 <script lang="ts">
   import TidyTableRow from 'src/components/table/TidyTableRow.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { settingStore } from 'src/settings/settings';
   import type {
     Item5e,
     ItemCardContentComponent,
@@ -14,12 +13,13 @@
     ItemCardStore,
   } from 'src/types/types';
   import { warn } from 'src/utils/logging';
-  import { getContext, createEventDispatcher, onMount } from 'svelte';
+  import { getContext, onMount } from 'svelte';
   import type { Writable } from 'svelte/store';
   import ItemSummary from '../ItemSummary.svelte';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { TidyHooks } from 'src/foundry/TidyHooks';
+    import { SettingsProvider } from 'src/settings/settings';
 
   export let item: Item5e | null = null;
   export let contextMenu: { type: string; uuid: string } | null = null;
@@ -70,7 +70,7 @@
   async function onMouseEnter(event: Event) {
     TidyHooks.tidy5eSheetsItemHoverOn(event, item);
 
-    if (!item?.getChatData || !$settingStore.itemCardsForAllItems) {
+    if (!item?.getChatData || !SettingsProvider.settings.itemCardsForAllItems.get()) {
       return;
     }
 

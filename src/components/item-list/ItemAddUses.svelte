@@ -1,6 +1,5 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { settingStore } from 'src/settings/settings';
 
   export let item: any;
 

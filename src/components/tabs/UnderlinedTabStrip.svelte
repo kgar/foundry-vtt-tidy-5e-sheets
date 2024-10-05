@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { settingStore } from 'src/settings/settings';
-
   export let tabs: string[];
   export let selected: string;
 </script>

@@ -5,7 +5,6 @@
   import type { Readable } from 'svelte/store';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { settingStore } from 'src/settings/settings';
 
   let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,

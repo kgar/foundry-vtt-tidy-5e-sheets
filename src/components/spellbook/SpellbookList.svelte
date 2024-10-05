@@ -24,7 +24,6 @@
   import ItemFavoriteControl from '../item-list/controls/ItemFavoriteControl.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import { settingStore } from 'src/settings/settings';
   import ActionFilterOverrideControl from '../item-list/controls/ActionFilterOverrideControl.svelte';
   import { SpellSchool } from 'src/features/spell-school/SpellSchool';
   import { declareLocation } from 'src/types/location-awareness.types';
@@ -33,6 +32,7 @@
   import type { Item5e } from 'src/types/item.types';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
   import ConcentrationOverlayIcon from './ConcentrationOverlayIcon.svelte';
+  import { SettingsProvider } from 'src/settings/settings';
 
   let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -205,7 +205,7 @@
               <ItemUses item={spell} />
             </ItemTableCell>
           {/if}
-          {#if allowFavorites && $settingStore.showIconsNextToTheItemName && 'favoriteId' in ctx && !!ctx.favoriteId}
+          {#if allowFavorites && SettingsProvider.settings.showIconsNextToTheItemName.get() && 'favoriteId' in ctx && !!ctx.favoriteId}
             <InlineFavoriteIcon />
           {/if}
           <ItemTableCell baseWidth={spellComponentsBaseWidth} cssClass="no-gap">

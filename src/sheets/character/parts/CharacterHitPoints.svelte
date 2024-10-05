@@ -1,13 +1,13 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type Actor5e } from 'src/types/types';
-  import { settingStore } from 'src/settings/settings';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { CharacterSheetContext } from 'src/types/types';
   import HpBar from 'src/components/bar/HpBar.svelte';
   import ResourceWithBar from 'src/components/bar/ResourceWithBar.svelte';
   import { CONSTANTS } from 'src/constants';
+  import { SettingsProvider } from 'src/settings/settings';
 
   export let value: number;
   export let max: number;
@@ -41,7 +41,7 @@
       $context.lockHpMaxChanges ||
       $context.lockSensitiveFields}
     percentage={$context.healthPercentage}
-    Bar={$settingStore.useHpBar ? HpBar : null}
+    Bar={SettingsProvider.settings.useHpBar.get() ? HpBar : null}
   />
 </div>
 

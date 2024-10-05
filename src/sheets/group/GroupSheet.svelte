@@ -9,7 +9,6 @@
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
   import ActorProfile from '../actor/ActorProfile.svelte';
   import ActorMovement from '../actor/ActorMovement.svelte';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
@@ -121,42 +120,46 @@
     <HorizontalLineSeparator class="header-line-margin-left" />
     {#if $context.isGM}
       <div class="group-commands">
-        <button
-          type="button"
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <!-- svelte-ignore a11y-missing-attribute -->
+        <a
           class="group-action-button flex-row small-gap flex-grow-0 flex-basis-max-content"
           on:click={() => $context.actor.sheet.award()}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fa-solid fa-trophy"></i>
           {localize('DND5E.Award.Action')}
-        </button>
-        <button
-          type="button"
+        </a>
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <!-- svelte-ignore a11y-missing-attribute -->
+        <a
           class="group-action-button flex-row small-gap flex-grow-0 flex-basis-max-content"
           on:click={() => $context.actor.system.placeMembers()}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fa-solid fa-location-dot"></i>
           {localize('DND5E.Group.PlaceMembers')}
-        </button>
-        <button
-          type="button"
+        </a>
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <!-- svelte-ignore a11y-missing-attribute -->
+        <a
           class="group-action-button flex-row small-gap rest-button flex-grow-0 flex-basis-max-content"
           on:click={() => $context.actor.shortRest({ advanceTime: true })}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fa-solid fa-utensils"></i>
           {localize('DND5E.ShortRest')}
-        </button>
-        <button
-          type="button"
+        </a>
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <!-- svelte-ignore a11y-missing-attribute -->
+        <a
           class="group-action-button flex-row small-gap rest-button flex-grow-0 flex-basis-max-content"
           on:click={() => $context.actor.longRest({ advanceTime: true })}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fa-solid fa-campground"></i>
           {localize('DND5E.LongRest')}
-        </button>
+        </a>
       </div>
     {/if}
   </div>

@@ -14,7 +14,6 @@
   import Notice from '../../../components/notice/Notice.svelte';
   import EncumbranceBar from 'src/sheets/actor/EncumbranceBar.svelte';
   import TabFooter from 'src/sheets/actor/TabFooter.svelte';
-  import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
@@ -29,6 +28,7 @@
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import AttunementTracker from '../AttunementTracker.svelte';
+    import { SettingsProvider } from 'src/settings/settings';
 
   export let tabId: string;
 
@@ -140,7 +140,7 @@
     <Currency document={$context.actor} />
   </div>
 
-  {#if $settingStore.useCharacterEncumbranceBar}
+  {#if SettingsProvider.settings.useCharacterEncumbranceBar.get()}
     <EncumbranceBar />
   {/if}
 </TabFooter>

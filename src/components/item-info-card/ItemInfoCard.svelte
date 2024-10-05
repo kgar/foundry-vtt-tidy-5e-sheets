@@ -10,15 +10,15 @@
   import type { Writable } from 'svelte/store';
   import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
   import { warn } from 'src/utils/logging';
-  import { settingStore } from 'src/settings/settings';
   import { getItemCardContentTemplate } from './item-info-card';
   import { ItemSummaryRuntime } from 'src/runtime/ItemSummaryRuntime';
   import ItemSummaryCommandButtonList from '../item-summary/ItemSummaryCommandButtonList.svelte';
   import { CONSTANTS } from 'src/constants';
+  import { SettingsProvider } from 'src/settings/settings';
 
   // Fix Key
   let frozen: boolean = false;
-  $: fixKey = $settingStore.itemCardsFixKey?.toUpperCase();
+  $: fixKey = SettingsProvider.settings.itemCardsFixKey.get()?.toUpperCase();
   $: concealDetails = FoundryAdapter.concealDetails(item);
 
   function detectFixStart(ev: KeyboardEvent) {
@@ -47,7 +47,11 @@
   function onMouseMove(args: { clientX: number; clientY: number }) {
     lastMouseEvent = args;
 
-    if (!$settingStore.itemCardsAreFloating || !open || frozen) {
+    if (
+      !SettingsProvider.settings.itemCardsAreFloating.get() ||
+      !open ||
+      frozen
+    ) {
       return;
     }
 
@@ -104,7 +108,7 @@
   let debug = false;
   let timer: any;
   let infoContentTemplate: ItemCardContentComponent | null;
-  $: delayMs = $settingStore.itemCardsDelay ?? 0;
+  $: delayMs = SettingsProvider.settings.itemCardsDelay.get() ?? 0;
 
   async function showCard() {
     if (!$card.item) {
@@ -124,7 +128,7 @@
       infoContentTemplate = $card.itemCardContentTemplate;
       item = $card.item;
 
-      if ($settingStore.itemCardsAreFloating) {
+      if (SettingsProvider.settings.itemCardsAreFloating.get()) {
         rootFontSizePx = getRootFontSizePx();
 
         const boundingClientRect = sheet?.getBoundingClientRect();
@@ -141,7 +145,9 @@
   }
 
   // Content
-  const card = getContext<Writable<ItemCardStore>>(CONSTANTS.SVELTE_CONTEXT.CARD);
+  const card = getContext<Writable<ItemCardStore>>(
+    CONSTANTS.SVELTE_CONTEXT.CARD,
+  );
   const cardWidthRem: number = 17.5;
   const cardHeightRem: number = 28.75;
   const mouseCursorCardGapRem = 1.5;
@@ -223,9 +229,13 @@
   bind:this={itemCardNode}
   class="item-info-container"
   class:open={debug || open}
-  class:floating={$settingStore.itemCardsAreFloating}
-  style:top={$settingStore.itemCardsAreFloating ? floatingTop : undefined}
-  style:left={$settingStore.itemCardsAreFloating ? floatingLeft : undefined}
+  class:floating={SettingsProvider.settings.itemCardsAreFloating.get()}
+  style:top={SettingsProvider.settings.itemCardsAreFloating.get()
+    ? floatingTop
+    : undefined}
+  style:left={SettingsProvider.settings.itemCardsAreFloating.get()
+    ? floatingLeft
+    : undefined}
   style:--card-width="{cardWidthRem}rem"
   style:--card-height="{cardHeightRem}rem"
 >

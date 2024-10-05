@@ -3,7 +3,6 @@
   import type { CharacterSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
 
   let context = getContext<Readable<CharacterSheetContext>>(
@@ -29,10 +28,6 @@
     on:click={$context.editable &&
       FoundryAdapter.renderActorHitDiceConfig($context.actor)}
     disabled={!$context.editable}
-    tabindex={!$settingStore.useDefaultSheetHpTabbing &&
-    $settingStore.useAccessibleKeyboardSupport
-      ? 0
-      : -1}
   >
     {hitDice}
   </button>

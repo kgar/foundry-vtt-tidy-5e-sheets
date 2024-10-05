@@ -3,10 +3,10 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import TidySwitch from 'src/components/toggle/TidySwitch.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
   import type { ActorSheetContextV1 } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  import { SettingsProvider } from 'src/settings/settings';
 
   export let hint: string | null = null;
 
@@ -20,15 +20,17 @@
 
   $: allowEdit = TidyFlags.allowEdit.get($context.actor);
 
+  $: useTotalSheetLock = SettingsProvider.settings.useTotalSheetLock.get();
+
   $: descriptionVariable =
     hint ??
-    ($settingStore.useTotalSheetLock
+    (useTotalSheetLock
       ? localize('TIDY5E.SheetLock.Description')
       : localize('TIDY5E.SheetEdit.Description'));
-  $: lockHintVariable = $settingStore.useTotalSheetLock
+  $: lockHintVariable = useTotalSheetLock
     ? 'TIDY5E.SheetLock.Unlock.Hint'
     : 'TIDY5E.SheetEdit.Enable.Hint';
-  $: unlockHintVariable = $settingStore.useTotalSheetLock
+  $: unlockHintVariable = useTotalSheetLock
     ? 'TIDY5E.SheetLock.Lock.Hint'
     : 'TIDY5E.SheetEdit.Disable.Hint';
   $: unlockTitle = localize(unlockHintVariable, {
