@@ -7,11 +7,11 @@
   import VehicleDamageAndMishapThresholds from './VehicleDamageAndMishapThresholds.svelte';
   import ExhaustionTracker from 'src/sheets/actor/ExhaustionTracker.svelte';
   import VehicleMovement from './VehicleMovement.svelte';
-  import { settingStore } from 'src/settings/settings';
   import ExhaustionInput from 'src/sheets/actor/ExhaustionInput.svelte';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { CONSTANTS } from 'src/constants';
+  import { SettingsProvider } from 'src/settings/settings';
 
   let context = getContext<Readable<VehicleSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -20,21 +20,27 @@
   function onLevelSelected(event: CustomEvent<{ level: number }>) {
     TidyFlags.setFlag($context.actor, 'exhaustion', event.detail.level);
   }
+
+  $: exhaustionConfig = SettingsProvider.settings.exhaustionConfig.get();
+  $: specificExhaustionConfig =
+    exhaustionConfig?.type === 'specific' ? exhaustionConfig : null;
 </script>
 
-<ActorProfile useHpOverlay={$settingStore.useHpOverlayVehicle}>
-  {#if $settingStore.useExhaustion && $settingStore.vehicleExhaustionConfig.type === 'specific'}
+<ActorProfile
+  useHpOverlay={SettingsProvider.settings.useHpOverlayVehicle.get()}
+>
+  {#if SettingsProvider.settings.useExhaustion.get() && specificExhaustionConfig}
     <ExhaustionTracker
       level={TidyFlags.exhaustion.get($context.actor) ?? 0}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
-      exhaustionConfig={$settingStore.vehicleExhaustionConfig}
+      exhaustionConfig={specificExhaustionConfig}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
         $context.actor,
         TidyFlags.exhaustion.prop,
       )}
     />
-  {:else if $settingStore.useExhaustion && $settingStore.vehicleExhaustionConfig.type === 'open'}
+  {:else if SettingsProvider.settings.useExhaustion.get() && SettingsProvider.settings.vehicleExhaustionConfig.get().type === 'open'}
     <ExhaustionInput
       level={TidyFlags.exhaustion.get($context.actor) ?? 0}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
@@ -45,7 +51,7 @@
       )}
     />
   {/if}
-  {#if $settingStore.useVehicleMotion}
+  {#if SettingsProvider.settings.useVehicleMotion.get()}
     <VehicleMovement
       motion={TidyFlags.motion.get($context.actor) === true}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-right'}

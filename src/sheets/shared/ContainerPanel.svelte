@@ -8,10 +8,10 @@
   import type { Writable } from 'svelte/store';
   import { getContext } from 'svelte';
   import type { Item5e } from 'src/types/item.types';
-  import { settingStore } from 'src/settings/settings';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { coalesce } from 'src/utils/formatting';
   import { TidyHooks } from 'src/foundry/TidyHooks';
+  import { SettingsProvider } from 'src/settings/settings';
 
   export let containerPanelItems: ContainerPanelItemContext[] = [];
   export let searchCriteria: string = '';
@@ -28,7 +28,10 @@
   async function onMouseEnter(event: Event, item: Item5e) {
     TidyHooks.tidy5eSheetsItemHoverOn(event, item);
 
-    if (!item?.getChatData || !$settingStore.itemCardsForAllItems) {
+    if (
+      !item?.getChatData ||
+      !SettingsProvider.settings.itemCardsForAllItems.get()
+    ) {
       return;
     }
 
@@ -63,6 +66,7 @@
 
 <ul class="containers">
   {#each containerPanelItems as { container, ...capacity } (container.id)}
+    {@const disabled = !FoundryAdapter.userIsGm() && !container.isOwner}
     <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
     <li
       draggable="true"
@@ -80,13 +84,14 @@
       class:hidden={!visibleContainersIdsSubset.has(container.id)}
       aria-hidden={!visibleContainersIdsSubset.has(container.id)}
     >
-      <button
-        type="button"
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <a
         class="container-image-button transparent-button"
-        on:click={() => container.sheet.render(true)}
+        on:click={() => !disabled && container.sheet.render(true)}
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
         data-context-menu-document-uuid={container.uuid}
-        disabled={!FoundryAdapter.userIsGm() && !container.isOwner}
       >
         <div
           class="container-image"
@@ -102,7 +107,7 @@
             <i class="fas fa-question" />
           </div>
         </div>
-      </button>
+      </a>
       <CapacityBar
         showLabel={false}
         {container}
