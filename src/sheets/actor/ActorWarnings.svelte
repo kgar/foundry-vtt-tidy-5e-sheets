@@ -1,6 +1,5 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { settingStore } from 'src/settings/settings';
   import type { ActorSheetContextV1 } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -15,14 +14,16 @@
 <ol class="warnings">
   {#each warnings as warning}
     <li class="notification {warning.type}">
-      {#if warning.link}
-        <button
-          type="button"
+      {#if true}
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <!-- svelte-ignore a11y-missing-attribute -->
+        <a
           class="inline-transparent-button"
           on:click={(ev) => $context.actor.sheet._onWarningLink(ev)}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-          data-target={warning.link}>{warning.message}</button
-        >
+          data-target={warning.link}
+          >{warning.message}
+        </a>
       {:else}
         {warning.message}
       {/if}
