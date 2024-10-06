@@ -477,21 +477,6 @@ export function SvelteApplicationMixin<
       }
     }
 
-    // /**
-    //  * Actions performed before any render of the Application.
-    //  * Pre-render steps are awaited by the render process.
-    //  */
-    // async _preRender(
-    //   context: TContext,
-    //   options: ApplicationRenderOptions
-    // ): Promise<void> {
-    //   super._preRender(context, options);
-
-    //   if (options.isFirstRender) {
-    //     this.#addCustomHeaderControls();
-    //   }
-    // }
-
     _initializeApplicationOptions(options: ApplicationConfiguration) {
       const updatedOptions = super._initializeApplicationOptions(
         options
