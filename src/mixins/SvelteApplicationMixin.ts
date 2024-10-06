@@ -21,7 +21,12 @@ import type { RegisteredContent } from 'src/runtime/types';
 import type {
   ApplicationRenderOptions,
   ApplicationClosingOptions,
+  ApplicationConfiguration,
+  ApplicationHeaderControlsEntry,
+  ApplicationClickAction,
 } from 'src/types/application.types';
+import { HeaderControlsRuntime } from 'src/runtime/header-controls/HeaderControlsRuntime';
+import type { CustomHeaderControlsEntry } from 'src/api';
 
 type RenderResult<TContext> = {
   customContents: RenderedSheetPart[];
@@ -259,7 +264,13 @@ export function SvelteApplicationMixin<
     _updateFrame(options: ApplicationRenderOptions) {
       options ??= {};
       // For whatever reason, application v2 titles don't update themselves on _updateFrame without an implementing class specifiying window settings.
-      FoundryAdapter.mergeObject(options, { window: { title: this.title } });
+      FoundryAdapter.mergeObject(options, {
+        window: {
+          title: this.title,
+          // TODO: Determine whether it's bad to keep this true always
+          controls: true,
+        },
+      });
       super._updateFrame(options);
     }
 
@@ -464,6 +475,83 @@ export function SvelteApplicationMixin<
           newFocus.focus?.();
         }
       }
+    }
+
+    _initializeApplicationOptions(options: ApplicationConfiguration) {
+      const updatedOptions = super._initializeApplicationOptions(
+        options
+      ) as ApplicationConfiguration;
+
+      try {
+        const customControls = this._getCustomHeaderControls(options.document);
+        /* 
+          Rather than update the source object, make a new one and spread the actions across.
+          Otherwise, it has a change of updating DEFAULT_OPTIONS.
+          For controls, that causes the same control to be added each time the constructor fires.
+          Assigning a new set of actions and controls will avoid any surprise mutations.
+        */
+        updatedOptions.actions = {
+          ...updatedOptions.actions,
+          ...customControls.actions,
+        };
+        updatedOptions.window.controls = [
+          ...(updatedOptions.window.controls ?? []),
+          ...customControls.controls,
+        ];
+      } catch (e) {
+        error('An error occurred while setting up custom controls.', false, {
+          error: e,
+          app: this,
+          options: updatedOptions,
+        });
+      }
+
+      return updatedOptions;
+    }
+
+    _getCustomHeaderControls(document: any): { controls: any[]; actions: any } {
+      const controls: ApplicationHeaderControlsEntry[] = [];
+      const actions: Record<
+        string,
+        | ApplicationClickAction
+        | {
+            handler: ApplicationClickAction;
+            buttons: number[];
+          }
+      > = {};
+      const customControls = HeaderControlsRuntime.getHeaderControls({
+        documentName: document.documentName,
+        documentType: document.type,
+      });
+
+      for (let control of customControls) {
+        const actionId = `custom-control-action-${foundry.utils.randomID()}`;
+
+        control.action = control.action ?? actionId;
+
+        if (control.onClickAction) {
+          actions[control.action ?? actionId] =
+            control.onClickAction?.bind(this);
+        }
+
+        controls.push(control as ApplicationHeaderControlsEntry);
+      }
+
+      return {
+        controls,
+        actions,
+      };
+    }
+
+    /**
+     * Configure the array of header control menu options
+     */
+    _getHeaderControls() {
+      const controls = super._getHeaderControls();
+      return controls.filter(
+        (c: CustomHeaderControlsEntry) =>
+          typeof c.visible !== 'function' || c.visible.call(this)
+      );
     }
   }
 

@@ -18,6 +18,7 @@ import type {
   ContentRegistrationOptions,
   SupportedContent,
   ItemTabRegistrationOptions,
+  HeaderControlRegistrationParams,
 } from './api.types';
 import ApiConstants from './ApiConstants';
 import { HtmlContent } from './content/HtmlContent';
@@ -29,6 +30,7 @@ import { GroupSheetRuntime } from 'src/runtime/GroupSheetRuntime';
 import { Tidy5eGroupSheetClassic } from 'src/sheets/Tidy5eGroupSheetClassic';
 import { Tidy5eItemSheetClassic } from 'src/sheets/Tidy5eItemSheetClassic';
 import { Tidy5eContainerSheetClassic } from 'src/sheets/Tidy5eContainerSheetClassic';
+import { HeaderControlsRuntime } from 'src/runtime/header-controls/HeaderControlsRuntime';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -826,6 +828,284 @@ export class Tidy5eSheetsApi {
     }
 
     VehicleSheetRuntime.registerTab(registeredTab);
+  }
+
+  /**
+   * Registers header controls for all Tidy Application V2 Actor sheets.
+   *
+   * @param params parameters for registering header controls
+   *
+   * @example Registering a header with an icon, a label, and a handler
+   *
+   * ```js
+   * Hooks.once('tidy5e-sheet.ready', (api) => {
+   *   api.registerActorHeaderControls({
+   *     controls: [
+   *       {
+   *         icon: 'fas fa-hand-sparkles',
+   *         label: 'Say Hello',
+   *         async onClickAction() {
+   *           ui.notifications.info(`Hello, Foundry!`);
+   *         },
+   *       },
+   *     ],
+   *   });
+   * });
+   * ```
+   *
+   * @example Registering a header control with a lot of settings.
+   *
+   * ```js
+   * Hooks.once('tidy5e-sheet.ready', (api) => {
+   *   api.registerActorHeaderControls({
+   *     controls: [
+   *       {
+   *         icon: 'fas fa-broom',
+   *         label: 'Debug Button',
+   *         visible() {
+   *           return !this.document.compendium?.locked;
+   *         },
+   *         async onClickAction(event) {
+   *           ui.notifications.info(
+   *             `Logged document data for ${this.document.name} to console for review.`
+   *           );
+   *           console.log(this.document);
+   *           console.log(await this.document.sheet._prepareContext());
+   *         },
+   *         ownership: CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER,
+   *       },
+   *     ],
+   *   });
+   * });
+   * ```
+   */
+  registerActorHeaderControls(params: HeaderControlRegistrationParams) {
+    HeaderControlsRuntime.registerHeaderControls(
+      params.controls.map((c) => ({
+        ...c,
+        supportedDocuments: ['Actor'],
+      }))
+    );
+  }
+
+  /**
+   * Registers header controls for all Tidy Application V2 Character sheets.
+   *
+   * @param params parameters for registering header controls
+   *
+   * @example Registering a header control with a lot of settings.
+   *
+   * ```js
+   * Hooks.once('tidy5e-sheet.ready', (api) => {
+   *   api.registerCharacterHeaderControls({
+   *     controls: [
+   *       {
+   *         icon: 'fas fa-broom',
+   *         label: 'Debug Button',
+   *         visible() {
+   *           return !this.document.compendium?.locked;
+   *         },
+   *         async onClickAction(event) {
+   *           ui.notifications.info(
+   *             `Logged document data for ${this.document.name} to console for review.`
+   *           );
+   *           console.log(this.document);
+   *           console.log(await this.document.sheet._prepareContext());
+   *         },
+   *         ownership: CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER,
+   *       },
+   *     ],
+   *   });
+   * });
+   * ```
+   */
+  registerCharacterHeaderControls(params: HeaderControlRegistrationParams) {
+    HeaderControlsRuntime.registerHeaderControls(
+      params.controls.map((c) => ({
+        ...c,
+        supportedDocuments: ['Actor'],
+        documentTypes: [CONSTANTS.SHEET_TYPE_CHARACTER],
+      }))
+    );
+  }
+
+  /**
+   * Registers header controls for all Tidy Application V2 Group sheets.
+   *
+   * @param params parameters for registering header controls
+   *
+   * @example Registering a header control with a lot of settings.
+   *
+   * ```js
+   * Hooks.once('tidy5e-sheet.ready', (api) => {
+   *   api.registerGroupHeaderControls({
+   *     controls: [
+   *       {
+   *         icon: 'fas fa-broom',
+   *         label: 'Debug Button',
+   *         visible() {
+   *           return !this.document.compendium?.locked;
+   *         },
+   *         async onClickAction(event) {
+   *           ui.notifications.info(
+   *             `Logged document data for ${this.document.name} to console for review.`
+   *           );
+   *           console.log(this.document);
+   *           console.log(await this.document.sheet._prepareContext());
+   *         },
+   *         ownership: CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER,
+   *       },
+   *     ],
+   *   });
+   * });
+   * ```
+   */
+  registerGroupHeaderControls(params: HeaderControlRegistrationParams) {
+    HeaderControlsRuntime.registerHeaderControls(
+      params.controls.map((c) => ({
+        ...c,
+        supportedDocuments: ['Actor'],
+        documentTypes: [CONSTANTS.SHEET_TYPE_GROUP],
+      }))
+    );
+  }
+
+  /**
+   * Registers header controls for all Tidy Application V2 Item sheets.
+   *
+   * @param params parameters for registering header controls
+   *
+   * @example Registering a header control for containers only and with fairly involved usage of the parameters.
+   *
+   * ```js
+   * Hooks.once('tidy5e-sheet.ready', (api) => {
+   *   api.registerItemHeaderControls({
+   *     controls: [
+   *       {
+   *         icon: 'fas fa-coins',
+   *         label: 'Take all the coin!',
+   *         visible() {
+   *           return (
+   *             this.document.type === 'container' &&
+   *             this.document.actor &&
+   *             this.document.isOwner
+   *           );
+   *         },
+   *         async onClickAction(event) {
+   *           ui.notifications.info(`Taking all the money out of the bag!`);
+   *           const actorCurrency = this.actor.toObject().system.currency;
+   *           const containerCurrency = this.document.toObject().system.currency;
+   *           for (let [key, value] of Object.entries(containerCurrency)) {
+   *             actorCurrency[key] += containerCurrency[key];
+   *             containerCurrency[key] = 0;
+   *           }
+   *           this.actor.update({
+   *             system: {
+   *               currency: actorCurrency,
+   *             },
+   *           });
+   *           this.document.update({
+   *             system: {
+   *               currency: containerCurrency,
+   *             },
+   *           });
+   *         },
+   *         ownership: CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER,
+   *       },
+   *     ],
+   *   });
+   * });
+   * ```
+   */
+  registerItemHeaderControls(params: HeaderControlRegistrationParams) {
+    HeaderControlsRuntime.registerHeaderControls(
+      params.controls.map((c) => ({
+        ...c,
+        supportedDocuments: ['Item'],
+      }))
+    );
+  }
+
+  /**
+   * Registers header controls for all Tidy Application V2 NPC sheets.
+   *
+   * @param params parameters for registering header controls
+   *
+   * @example Registering a header control with a lot of settings.
+   *
+   * ```js
+   * Hooks.once('tidy5e-sheet.ready', (api) => {
+   *   api.registerNpcHeaderControls({
+   *     controls: [
+   *       {
+   *         icon: 'fas fa-broom',
+   *         label: 'Debug Button',
+   *         visible() {
+   *           return !this.document.compendium?.locked;
+   *         },
+   *         async onClickAction(event) {
+   *           ui.notifications.info(
+   *             `Logged document data for ${this.document.name} to console for review.`
+   *           );
+   *           console.log(this.document);
+   *           console.log(await this.document.sheet._prepareContext());
+   *         },
+   *         ownership: CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER,
+   *       },
+   *     ],
+   *   });
+   * });
+   * ```
+   */
+  registerNpcHeaderControls(params: HeaderControlRegistrationParams) {
+    HeaderControlsRuntime.registerHeaderControls(
+      params.controls.map((c) => ({
+        ...c,
+        supportedDocuments: ['Actor'],
+        documentTypes: [CONSTANTS.SHEET_TYPE_NPC],
+      }))
+    );
+  }
+
+  /**
+   * Registers header controls for all Tidy Application V2 Vehicle sheets.
+   *
+   * @param params parameters for registering header controls
+   *
+   * @example Registering a header control with a lot of settings.
+   *
+   * ```js
+   * Hooks.once('tidy5e-sheet.ready', (api) => {
+   *   api.registerVehicleHeaderControls({
+   *     controls: [
+   *       {
+   *         icon: 'fas fa-broom',
+   *         label: 'Debug Button',
+   *         visible() {
+   *           return !this.document.compendium?.locked;
+   *         },
+   *         async onClickAction(event) {
+   *           ui.notifications.info(
+   *             `Logged document data for ${this.document.name} to console for review.`
+   *           );
+   *           console.log(this.document);
+   *           console.log(await this.document.sheet._prepareContext());
+   *         },
+   *         ownership: CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER,
+   *       },
+   *     ],
+   *   });
+   * });
+   * ```
+   */
+  registerVehicleHeaderControls(params: HeaderControlRegistrationParams) {
+    HeaderControlsRuntime.registerHeaderControls(
+      params.controls.map((c) => ({
+        ...c,
+        supportedDocuments: ['Actor'],
+        documentTypes: [CONSTANTS.SHEET_TYPE_VEHICLE],
+      }))
+    );
   }
 
   /**

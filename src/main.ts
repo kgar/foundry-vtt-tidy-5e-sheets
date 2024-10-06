@@ -70,7 +70,7 @@ Hooks.once('init', () => {
       label: 'TIDY5E.Tidy5eItemSheetClassic',
     }
   );
-  
+
   DocumentSheetConfig.registerSheet(
     Item,
     CONSTANTS.DND5E_SYSTEM_ID,
@@ -112,5 +112,5 @@ Hooks.once('ready', async () => {
     new MigrationNotificationFormApplication().render(true);
   }
 
-  DebugTools.onReady();
+  DebugTools.onReady(api);
 });

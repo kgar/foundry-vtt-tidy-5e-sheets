@@ -369,8 +369,72 @@ export type EquipmentTypeGroup = {
   /** A group label. Localization keys also work. */
   label: string;
   /**
-   * An object where the key is the equipment type ID, and the value is the label text. 
+   * An object where the key is the equipment type ID, and the value is the label text.
    * Localization keys also work.
    */
   types: Record<string, string>;
+};
+
+/**
+ * A custom header control to be placed in the controls menu of an Application V2 window.
+ *
+ * @example Making a debug button
+ * ```js
+ * const entry = {
+ *   icon: 'fas fa-broom',
+ *   label: 'Debug Button',
+ *   visible(app, document) {
+ *     return document.type === 'container';
+ *   },
+ *   ownership: CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER,
+ *   onClickAction(event, target) {
+ *     ui.notifications.info(`Doing cool stuff with ${this.name}.`)
+ *   }
+ * }
+ * ```
+ */
+export interface CustomHeaderControlsEntry {
+  /**
+   * A fontawesome icon class, e.g., "fas fa-broom"
+   */
+  icon: string;
+  /**
+   * The header control text to show.
+   */
+  label: string;
+  /**
+   * Optional action name. This name is used when coordinating
+   * header control clicks and App V2 action handlers.
+   * If no name is provided, a name will be generated.
+   */
+  action?: string;
+  /**
+   * A boolean or function signifying whether the menu option should be shown.
+   * Use the function to conditionally show/hide the menu option on each render.
+   * `this` is the application v2 instance.
+   */
+  visible?: boolean | ((this: any) => boolean);
+  /**
+   * A key or value in CONST.DOCUMENT_OWNERSHIP_LEVELS that restricts
+   * visibility of this option for the current user.
+   */
+  ownership?: string | number;
+  /**
+   * A handler for when this header control is clicked. `this` is the application instance.
+   *
+   * @param event the pointer event that triggered the handler
+   * @param target the header control that was clicked
+   * @returns
+   */
+  onClickAction?: (event: PointerEvent, target: HTMLElement) => Promise<void>;
+}
+
+/**
+ * The parameters needed to register header controls.
+ */
+export type HeaderControlRegistrationParams = {
+  /**
+   * The controls to be registered.
+   */
+  controls: CustomHeaderControlsEntry[];
 };
