@@ -21,7 +21,7 @@ import { TabManager } from 'src/runtime/tab/TabManager';
 import { BulkMigrationsApplication } from 'src/migrations/BulkMigrationsApplication';
 import { AboutApplication } from 'src/applications/settings/about/AboutApplication';
 import { ApplyTidySheetPreferencesApplication } from 'src/applications/sheet-preferences/ApplyTidySheetPreferencesApplication';
-import { TidyHooks } from 'src/api';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
