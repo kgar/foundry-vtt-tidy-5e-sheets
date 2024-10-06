@@ -1,6 +1,5 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { settingStore } from 'src/settings/settings';
 
   export let item: any;
 
@@ -18,15 +17,16 @@
   }
 </script>
 
-<button
-  type="button"
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y-missing-attribute -->
+<a
   class="item-add-uses item-list-button"
-  on:click={() => onAddUses()}
-  disabled={!item.isOwner}
-  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+  class:disabled={!item.isOwner}
+  on:click={() => item.isOwner && onAddUses()}
 >
   Add
-</button>
+</a>
 
 <style lang="scss">
   .item-add-uses {

@@ -14,23 +14,27 @@
 {#if $context.saves.concentration}
   {@const save = $context.saves.concentration}
   <span class="special-save">
-    <button
-      type="button"
-      class="inline-transparent-button flex-row extra-small-gap align-items-center highlight-on-hover"
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <a
+      class="concentration-roller inline-transparent-button flex-row extra-small-gap align-items-center highlight-on-hover"
       on:click={(ev) => $context.actor.rollConcentration({ event: ev })}
     >
       <Dnd5eIcon src="systems/dnd5e/icons/svg/statuses/concentrating.svg" />
       {save.label}:
       <span class="special-save-mod">{save.sign}{save.mod}</span>
-    </button>
+    </a>
     {#if $context.unlocked}
-      <button
-        type="button"
-        class="inline-icon-button"
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <a
+        class="configure-concentration inline-icon-button"
         on:click={() =>
           FoundryAdapter.openActorConcentrationConfig($context.actor)}
-        ><i class="fas fa-cog" style="font-size: var(--icon-size);"></i></button
-      >
+        ><i class="fas fa-cog" style="font-size: var(--icon-size);"></i>
+      </a>
     {/if}
   </span>
 {/if}
@@ -45,7 +49,7 @@
 
     --icon-fill: var(--t5e-icon-hover-color);
 
-    button {
+    * {
       font-weight: 700;
     }
   }

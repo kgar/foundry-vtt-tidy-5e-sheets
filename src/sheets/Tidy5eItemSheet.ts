@@ -20,7 +20,7 @@ import { isNil } from 'src/utils/data';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { CustomContentRenderer } from './CustomContentRenderer';
-import { SettingsProvider, settingStore } from 'src/settings/settings';
+import { getCurrentSettings, SettingsProvider } from 'src/settings/settings';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { AsyncMutex } from 'src/utils/mutex';
 import { TidyHooks } from 'src/foundry/TidyHooks';
@@ -66,9 +66,11 @@ export class Tidy5eKgarItemSheet
     let first = true;
     this.subscriptionsService.unsubscribeAll();
     this.subscriptionsService.registerSubscriptions(
-      settingStore.subscribe((s) => {
-        if (first) return;
-        applyThemeDataAttributeToWindow(s.colorScheme, this.element.get(0));
+      SettingsProvider.getSettingsChangedSubscription(this, () => {
+        applyThemeDataAttributeToWindow(
+          SettingsProvider.settings.colorScheme.get(),
+          this.element.get(0)
+        );
         this.render();
       })
     );
@@ -164,6 +166,7 @@ export class Tidy5eKgarItemSheet
       itemDescriptions,
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       originalContext: defaultDocumentContext,
+      settings: getCurrentSettings(),
       tabs: tabs,
       toggleAdvancementLock: this.toggleAdvancementLock.bind(this),
       viewableWarnings:

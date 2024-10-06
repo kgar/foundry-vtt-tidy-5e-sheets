@@ -272,6 +272,9 @@ input[type='checkbox'] {
       .hidden-config-button {
         visibility: hidden;
         font-size: 0.75rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
       }
 
       &:hover .hidden-config-button {
@@ -601,7 +604,7 @@ input[type='checkbox'] {
   }
 }
 
-.tab.items-list-container {
+:is(.tab, .tidy-tab).items-list-container {
   .items-list {
     flex: 1;
     padding: 0 0.5625rem 0.5rem 0;
@@ -664,6 +667,7 @@ input[type='checkbox'] {
 
     .active-effect-controls {
       flex: 0 0 3.8125rem;
+      display: flex;
       text-align: center;
       justify-content: center;
     }
@@ -674,7 +678,7 @@ input[type='checkbox'] {
 
     .active-effect-control {
       flex: 0 0 1.25rem;
-      display: flex;
+      display: inline-flex;
       justify-content: center;
       align-items: center;
       color: var(--t5e-tertiary-color);

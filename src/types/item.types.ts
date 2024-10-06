@@ -12,6 +12,7 @@ import type {
   DocumentFilters,
   RegisteredEquipmentTypeGroup,
 } from 'src/runtime/item/item.types';
+import type { CurrentSettings } from 'src/settings/settings';
 
 export type ItemSheetContext = {
   activateEditors: (
@@ -30,6 +31,7 @@ export type ItemSheetContext = {
   originalContext: unknown;
   owner: boolean;
   itemOverrides: Set<string>;
+  settings: CurrentSettings;
   tabs: Tab[];
   viewableWarnings: DocumentPreparationWarning[];
 } & Record<string, any>;
@@ -82,6 +84,7 @@ export type ContainerSheetContext = {
   customContent: CustomContent[];
   originalContext: unknown;
   owner: boolean;
+  settings: CurrentSettings;
   tabs: Tab[];
   utilities: Utilities<ContainerSheetContext>;
   viewableWarnings: DocumentPreparationWarning[];

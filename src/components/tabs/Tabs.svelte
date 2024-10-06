@@ -1,7 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
   import type { Tab, OnTabSelectedFn } from 'src/types/types';
   import { createEventDispatcher, getContext, onMount } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -87,8 +86,10 @@
 >
   {#if tabs.length > 1}
     {#each tabs as tab, i (tab.id)}
-      <button
-        type="button"
+      <!-- svelte-ignore a11y-interactive-supports-focus -->
+      <!-- svelte-ignore a11y-interactive-supports-focus -->
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <a
         class="{CONSTANTS.TAB_OPTION_CLASS} inline-transparent-button"
         class:active={tab.id === selectedTabId}
         class:first-tab={i === 0}
@@ -98,10 +99,9 @@
         role="tab"
         on:click={() => selectTab(tab)}
         on:keydown={(ev) => onKeyDown(ev, i)}
-        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
         {localize(tab.title)}
-      </button>
+      </a>
     {/each}
   {/if}
   <slot name="tab-end" />
@@ -124,6 +124,7 @@
       border-top-left-radius: 0.1875rem;
       border-top-right-radius: 0.1875rem;
       text-shadow: none;
+      line-height: normal;
 
       &:hover {
         background: var(--t5e-tab-background);

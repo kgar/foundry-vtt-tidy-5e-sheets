@@ -1,20 +1,19 @@
 <script lang="ts">
-  import { settingStore } from 'src/settings/settings';
-
   export let tabs: string[];
   export let selected: string;
 </script>
 
 <div class="underlined-tab-strip flex-row no-gap {$$restProps.class ?? ''}">
   {#each tabs as tab (tab)}
-    <button
-      type="button"
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <a
       class="underlined-tab"
       class:active={selected === tab}
       on:click={() => (selected = tab)}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       {tab}
-    </button>
+    </a>
   {/each}
 </div>

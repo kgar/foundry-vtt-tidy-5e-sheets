@@ -3,7 +3,6 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import TidySwitch from 'src/components/toggle/TidySwitch.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
   import type { ActorSheetContextV1 } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -18,13 +17,13 @@
 
   $: allowEdit = TidyFlags.allowEdit.get($context.actor);
 
-  $: descriptionVariable = $settingStore.useTotalSheetLock
+  $: descriptionVariable = $context.settings.useTotalSheetLock
     ? localize('TIDY5E.SheetLock.Description')
     : localize('TIDY5E.SheetEdit.Description');
-  $: lockHintVariable = $settingStore.useTotalSheetLock
+  $: lockHintVariable = $context.settings.useTotalSheetLock
     ? 'TIDY5E.SheetLock.Unlock.Hint'
     : 'TIDY5E.SheetEdit.Enable.Hint';
-  $: unlockHintVariable = $settingStore.useTotalSheetLock
+  $: unlockHintVariable = $context.settings.useTotalSheetLock
     ? 'TIDY5E.SheetLock.Lock.Hint'
     : 'TIDY5E.SheetEdit.Disable.Hint';
   $: unlockTitle = localize(unlockHintVariable, {
@@ -40,7 +39,8 @@
 {#if $context.editable}
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div
-    class="header-sheet-edit-mode-toggle {$$restProps.class ?? ''}"
+    class="header-control header-sheet-edit-mode-toggle {$$restProps.class ??
+      ''}"
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SHEET_LOCK_TOGGLE}
     on:dblclick|stopPropagation
   >

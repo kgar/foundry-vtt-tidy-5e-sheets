@@ -27,7 +27,7 @@ import {
   applyTitleToWindow,
   maintainCustomContentInputFocus,
 } from 'src/utils/applications';
-import { SettingsProvider, settingStore } from 'src/settings/settings';
+import { getCurrentSettings, SettingsProvider } from 'src/settings/settings';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { isNil } from 'src/utils/data';
@@ -105,9 +105,11 @@ export class Tidy5eKgarContainerSheet
         if (first) return;
         this.render();
       }),
-      settingStore.subscribe((s) => {
-        if (first) return;
-        applyThemeDataAttributeToWindow(s.colorScheme, this.element.get(0));
+      SettingsProvider.getSettingsChangedSubscription(this, () => {
+        applyThemeDataAttributeToWindow(
+          SettingsProvider.settings.colorScheme.get(),
+          this.element.get(0)
+        );
         this.render();
       }),
       this.messageBus.subscribe((m) => {
@@ -291,6 +293,7 @@ export class Tidy5eKgarContainerSheet
       itemOverrides: new Set<string>(this._getItemOverrides()),
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       originalContext: defaultDocumentContext,
+      settings: getCurrentSettings(),
       tabs: tabs,
       utilities: utilities,
       viewableWarnings:

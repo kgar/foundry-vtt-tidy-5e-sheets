@@ -10,7 +10,6 @@
   import Currency from '../../actor/Currency.svelte';
   import EncumbranceBar from '../../actor/EncumbranceBar.svelte';
   import TabFooter from '../../actor/TabFooter.svelte';
-  import { settingStore } from 'src/settings/settings';
   import CargoList from '../parts/CargoList.svelte';
   import PassengerOrCrewList from '../parts/PassengerOrCrewList.svelte';
   import { CONSTANTS } from 'src/constants';
@@ -50,7 +49,7 @@
     <Currency document={$context.actor} />
   </div>
 
-  {#if $settingStore.useVehicleEncumbranceBar}
+  {#if $context.settings.useVehicleEncumbranceBar}
     <EncumbranceBar />
   {/if}
 </TabFooter>

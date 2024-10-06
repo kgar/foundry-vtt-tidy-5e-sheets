@@ -8,7 +8,6 @@
   import ItemCreateButton from '../item-list/ItemCreateButton.svelte';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
 
   export let section: TSection;
   export let actor: Actor5e;
@@ -68,18 +67,19 @@
     {/if}
   {/if}
   {#each customCommands as command}
-    <button
-      type="button"
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <a
       class="item-list-footer-button"
       on:click={(ev) => command.execute?.({ section, event: ev, actor: actor })}
       title={localize(command.tooltip ?? '')}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       {#if (command.iconClass ?? '') !== ''}
         <i class={command.iconClass} />
       {/if}
       {localize(command.label ?? '')}
-    </button>
+    </a>
   {/each}
 </footer>
 

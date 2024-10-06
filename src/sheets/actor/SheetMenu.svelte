@@ -26,7 +26,7 @@
   title={localize('TIDY5E.SheetMenu.label')}
   iconClass="fas fa-ellipsis-vertical"
 >
-  <ThemeSelectorButtonMenuCommand />
+  <ThemeSelectorButtonMenuCommand colorScheme={$context.settings.colorScheme} />
   <ButtonMenuDivider />
   <ButtonMenuCommand
     on:click={() => ApplicationsManager.openUserSettings(defaultSettingsTab)}

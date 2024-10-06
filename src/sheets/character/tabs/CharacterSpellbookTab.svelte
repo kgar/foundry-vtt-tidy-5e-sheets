@@ -13,7 +13,6 @@
   import { writable, type Readable } from 'svelte/store';
   import NoSpells from 'src/sheets/actor/NoSpells.svelte';
   import Notice from '../../../components/notice/Notice.svelte';
-  import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
@@ -62,7 +61,7 @@
 
   function tryFilterByClass(spells: any[]) {
     if (
-      !$settingStore.useMulticlassSpellbookFilter ||
+      !$context.settings.useMulticlassSpellbookFilter ||
       selectedClassFilter === ''
     ) {
       return spells;
@@ -89,7 +88,7 @@
 
 <UtilityToolbar>
   <Search bind:value={searchCriteria} />
-  {#if $settingStore.useMulticlassSpellbookFilter}
+  {#if $context.settings.useMulticlassSpellbookFilter}
     <div class="spellbook-class-filter">
       <SpellbookClassFilter />
     </div>

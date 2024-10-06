@@ -15,7 +15,6 @@
   import { getContext } from 'svelte';
   import type { Readable, Writable } from 'svelte/store';
   import TextInput from '../../components/inputs/TextInput.svelte';
-  import { settingStore } from 'src/settings/settings';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import { declareLocation } from 'src/types/location-awareness.types';
   import { TidyHooks } from 'src/foundry/TidyHooks';
@@ -108,8 +107,8 @@
     {#each items as item (item.id)}
       {@const ctx = $context.itemContext[item.id]}
       {@const hidden = !!$itemIdsToShow && !$itemIdsToShow.has(item.id)}
-      <button
-        type="button"
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <a
         class="item {getInventoryRowClasses(item)} transparent-button"
         class:hidden
         aria-hidden={hidden}
@@ -125,10 +124,8 @@
         on:mouseleave={(ev) => onMouseLeave(ev, item)}
         on:dragstart={(ev) => handleDragStart(ev, item)}
         draggable={true}
-        disabled={!$context.editable}
         data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
         data-item-id={item.id}
-        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
         data-tidy-grid-item
       >
         <div class="item-name">
@@ -168,7 +165,6 @@
             style="display:none"
             data-action="itemEdit"
             title={localize('DND5E.ItemEdit')}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-edit fa-fw" />
           </button>
@@ -213,12 +209,14 @@
             />
           </span>
         </div>
-      </button>
+      </a>
     {/each}
     {#if $context.unlocked}
       <div class="items-footer">
-        <button
-          type="button"
+        <!-- svelte-ignore a11y-missing-attribute -->
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <a
           class="footer-command icon-button"
           title={localize('DND5E.ItemCreate')}
           on:click|stopPropagation|preventDefault={() =>
@@ -231,24 +229,25 @@
               $context.actor,
             )}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_CREATE_COMMAND}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fas fa-plus-circle" />
-        </button>
+        </a>
         {#each customCommands as command}
-          <button
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <!-- svelte-ignore a11y-missing-attribute -->
+          <a
             type="button"
             class="footer-command icon-button"
             on:click={(ev) =>
               command.execute?.({ section, event: ev, actor: $context.actor })}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             title={localize(command.tooltip ?? '')}
           >
             {#if (command.iconClass ?? '') !== ''}
               <i class={command.iconClass} />
             {/if}
             {localize(command.label ?? '')}
-          </button>
+          </a>
         {/each}
       </div>
     {/if}

@@ -1,7 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
   import type { ContainerSheetContext, Item5e } from 'src/types/item.types';
   import type { ActorSheetContextV1 } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -9,9 +8,9 @@
 
   export let item: Item5e;
 
-  let context = getContext<Readable<ActorSheetContextV1 | ContainerSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getContext<
+    Readable<ActorSheetContextV1 | ContainerSheetContext>
+  >(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
 
   $: actor = $context.actor ?? $context.item.actor;
 
@@ -26,7 +25,7 @@
       .filter(
         (item: any) =>
           item.system.type?.value === 'ammo' &&
-          (!$settingStore.showEquippedAmmoOnly || item.system.equipped),
+          (!$context.settings.showEquippedAmmoOnly || item.system.equipped),
       )
       .map((item: any) => ({
         text: `${item.name} (${item.system.quantity})`,

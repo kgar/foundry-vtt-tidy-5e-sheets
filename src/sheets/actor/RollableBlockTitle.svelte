@@ -6,7 +6,6 @@
 
   export let title: string | null = null;
   export let text: string;
-  export let hideFromTabOrder: boolean = false;
   export let attributes: Record<string, string> = {};
 
   const dispatcher = createEventDispatcher<{ roll: MouseEvent }>();
@@ -16,20 +15,19 @@
   );
 </script>
 
-<button
-  type="button"
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y-missing-attribute -->
+<a
   class:rollable={$context.editable}
   class="transparent-button"
   {title}
-  on:click={(ev) => dispatcher('roll', ev)}
-  disabled={!$context.editable}
-  tabindex={!hideFromTabOrder ? 0 : -1}
+  on:click={(ev) => $context.editable && dispatcher('roll', ev)}
   {...attributes}
 >
   <h4 class="block-title">
     {text}
   </h4>
-</button>
+</a>
 
 <style lang="scss">
   .block-title {

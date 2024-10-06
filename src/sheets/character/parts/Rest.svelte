@@ -3,7 +3,6 @@
   import type { CharacterSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
 
   let context = getContext<Readable<CharacterSheetContext>>(
@@ -18,32 +17,28 @@
     <span class="resting-icon" title={localize('TIDY5E.RestHint')}
       ><i class="rest-icon fas fa-bed" /></span
     >
-    <button
-      type="button"
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <a
       class="rest icon-button"
       title={localize('TIDY5E.ShortRest')}
-      on:click={(event) => $context.actor.sheet.onShortRest(event)}
-      disabled={!$context.editable}
-      tabindex={!$settingStore.useDefaultSheetHpTabbing &&
-      $settingStore.useAccessibleKeyboardSupport
-        ? 0
-        : -1}
+      on:click={(event) =>
+        $context.editable && $context.actor.sheet.onShortRest(event)}
     >
       <i class="fas fa-hourglass-half" />
-    </button>
-    <button
-      type="button"
+    </a>
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <a
       class="rest icon-button"
       title={localize('TIDY5E.LongRest')}
-      on:click={(event) => $context.actor.sheet.onLongRest(event)}
-      disabled={!$context.editable}
-      tabindex={!$settingStore.useDefaultSheetHpTabbing &&
-      $settingStore.useAccessibleKeyboardSupport
-        ? 0
-        : -1}
+      on:click={(event) =>
+        $context.editable && $context.actor.sheet.onLongRest(event)}
     >
       <i class="fas fa-hourglass-end" />
-    </button>
+    </a>
   </div>
 </div>
 

@@ -1,7 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
   import type { ActorSheetContextV1 } from 'src/types/types';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { getContext } from 'svelte';
@@ -32,11 +31,14 @@
             $context.actor,
             `system.tools.${key}.value`,
           )}
-        <button
-          type="button"
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <!-- svelte-ignore a11y-missing-attribute -->
+        <a
           class="tool-proficiency-toggle inline-transparent-button"
           title={tool.hover}
           on:click|stopPropagation|preventDefault={(event) =>
+            !activeEffectApplied &&
             FoundryAdapter.cycleProficiency(
               $context.actor,
               key,
@@ -44,6 +46,7 @@
               'tools',
             )}
           on:contextmenu|stopPropagation|preventDefault={(event) =>
+            !activeEffectApplied &&
             FoundryAdapter.cycleProficiency(
               $context.actor,
               key,
@@ -52,14 +55,12 @@
               true,
             )}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TOOL_PROFICIENCY_TOGGLE}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-          disabled={activeEffectApplied}
           data-tooltip={activeEffectApplied
             ? localize('DND5E.ActiveEffectOverrideWarning')
             : null}
         >
           {@html tool.icon}
-        </button>
+        </a>
       {:else}
         <span title={tool.hover} class="tool-proficiency-readonly"
           >{@html tool.icon}</span
@@ -67,15 +68,16 @@
       {/if}
 
       {#if $context.editable}
-        <button
-          type="button"
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <!-- svelte-ignore a11y-missing-attribute -->
+        <a
           class="tool-check-roller inline-transparent-button rollable"
           on:click={(event) => $context.actor.rollToolCheck(key, { event })}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TOOL_ROLLER}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
         >
           {tool.label}
-        </button>
+        </a>
       {:else}
         <span class="tool-check-roller">
           {tool.label}
@@ -83,8 +85,10 @@
       {/if}
 
       {#if $context.unlocked}
-        <button
-          type="button"
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <!-- svelte-ignore a11y-missing-attribute -->
+        <a
           class="tool-proficiency-editor inline-icon-button"
           title={localize('DND5E.ToolConfigure')}
           on:click|stopPropagation|preventDefault={() =>
@@ -95,10 +99,9 @@
             )}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
             .TOOL_CONFIGURATION_CONTROL}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fas fa-cog" />
-        </button>
+        </a>
       {/if}
     </li>
   {/each}

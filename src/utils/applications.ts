@@ -75,7 +75,7 @@ export async function maintainCustomContentInputFocus(
   }
 }
 
-export function blurUntabbableButtonsOnClick(element: HTMLElement) {
+export function blurButtonsOnClick(element: HTMLElement) {
   element.removeEventListener('click', blurUntabbableButton);
   element.addEventListener('click', blurUntabbableButton);
 }
@@ -87,9 +87,7 @@ function blurUntabbableButton(event: MouseEvent) {
     return;
   }
 
-  const button = target.closest('button');
-
-  if (button?.tabIndex === -1) {
+  if (target.closest('button')) {
     target.blur();
   }
 }

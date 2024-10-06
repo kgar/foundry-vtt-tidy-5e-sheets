@@ -22,7 +22,6 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
-  import { settingStore } from 'src/settings/settings';
   import InlineCreatureType from '../shared/InlineCreatureType.svelte';
   import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
   import ActorName from '../actor/ActorName.svelte';
@@ -134,7 +133,7 @@
 
     <section class="class-list">
       <!-- Player Name -->
-      {#if $settingStore.showPlayerName}
+      {#if $context.settings.showPlayerName}
         <ContentEditableFormField
           element="span"
           document={$context.actor}
@@ -149,7 +148,7 @@
       {/if}
 
       <!-- Class / Subclass -->
-      {#if $context.owner && $settingStore.showClassList}
+      {#if $context.owner && $context.settings.showClassList}
         <span class="flex-row extra-small-gap">
           {#each classAndSubclassSummaries as summary, i}
             {#if i > 0}
@@ -199,18 +198,19 @@
           {localize('DND5E.Proficiency')}: {$context.labels.proficiency}
         </b>
         {#if $context.unlocked}
-          <button
-            type="button"
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <!-- svelte-ignore a11y-missing-attribute -->
+          <a
             class="inline-icon-button"
             title={localize('TIDY5E.OriginSummaryConfig')}
             on:click={() =>
               new ActorOriginSummaryConfigFormApplication(
                 $context.actor,
               ).render(true)}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-cog" />
-          </button>
+          </a>
         {/if}
       </span>
     </section>
@@ -240,7 +240,7 @@
   <svelte:fragment slot="tab-end">
     {#if $context.editable}
       <SheetEditModeToggle
-        hint={$settingStore.permanentlyUnlockCharacterSheetForGm &&
+        hint={$context.settings.permanentlyUnlockCharacterSheetForGm &&
         FoundryAdapter.userIsGm()
           ? localize(
               'TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM.title',

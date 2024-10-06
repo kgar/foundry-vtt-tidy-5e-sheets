@@ -27,7 +27,7 @@ import type {
   GroupSkill,
 } from 'src/types/group.types';
 import { Inventory } from 'src/features/sections/Inventory';
-import { SettingsProvider, settingStore } from 'src/settings/settings';
+import { getCurrentSettings, SettingsProvider } from 'src/settings/settings';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { getPercentage } from 'src/utils/numbers';
 import type { Item5e } from 'src/types/item.types';
@@ -414,6 +414,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       memberSections: memberSections,
       movement: movement,
       owner: this.actor.isOwner,
+      settings: getCurrentSettings(),
       showContainerPanel:
         TidyFlags.showContainerPanel.get(this.actor) === true &&
         Array.from(uncontainedItems).some(
@@ -766,10 +767,6 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     let first = true;
     const subscriptions = [
       this.#itemFilterService.filterData$.subscribe(() => {
-        if (first) return;
-        this.render();
-      }),
-      settingStore.subscribe((s) => {
         if (first) return;
         this.render();
       }),

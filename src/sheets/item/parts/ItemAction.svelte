@@ -9,7 +9,6 @@
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { settingStore } from 'src/settings/settings';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>(
@@ -162,16 +161,17 @@
       {localize('DND5E.Damage')}
     {/if}
     {localize('DND5E.Formula')}
-    <button
-      type="button"
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <a
       class="damage-formula-control add-damage"
-      on:click={() => addDamageFormula()}
-      disabled={!$context.editable || damageIsEnchanted}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+      on:click={() =>
+        $context.editable && !damageIsEnchanted && addDamageFormula()}
       data-tooltip={enchantedTooltip}
     >
       <i class="fas fa-plus" />
-    </button>
+    </a>
   </h4>
   {#if damageParts?.length}
     <ol class="damage-parts form-group">
@@ -216,18 +216,19 @@
               />
             </optgroup>
           </select>
-          <button
-            type="button"
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <!-- svelte-ignore a11y-missing-attribute -->
+          <a
             class="damage-formula-control delete-damage"
-            on:click={() => deleteDamageFormula(i)}
-            disabled={!$context.editable || damageIsEnchanted}
+            on:click={() =>
+              $context.editable && !damageIsEnchanted && deleteDamageFormula(i)}
             data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
               .DAMAGE_PART_DELETE_COMMAND}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             data-tooltip={enchantedTooltip}
           >
             <i class="fas fa-minus" />
-          </button>
+          </a>
         </li>
       {/each}
     </ol>
@@ -398,16 +399,16 @@
           role="presentation"
           class="summon-controls flex-row justify-content-space-between flex-wrap extra-small-row-gap"
         >
-          <button
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <a
             id={inputId}
-            type="button"
-            class="inline-transparent-button no-wrap highlight-on-hover"
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            class="inline-transparent-button no-wrap highlight-on-hover inline-flex-row align-items-center"
             on:click={() => FoundryAdapter.openSummonConfig($context.item)}
           >
             <i class="fa-solid fa-gear" aria-hidden="true"></i>
             {localize('DND5E.Summoning.Action.Configure')}
-          </button>
+          </a>
 
           <Checkbox
             document={$context.item}

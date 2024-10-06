@@ -11,6 +11,15 @@
     border: none;
     text-align: center;
     transition: background-color, 0.3s;
+    display: inline-flex;
+    flex-direction: row;
+    gap: 0.25rem;
+    align-items: center;
+    justify-content: center;
+
+    &.justify-content-start {
+      justify-content: flex-start;
+    }
 
     &.primary {
       color: var(--t5e-primary-color);

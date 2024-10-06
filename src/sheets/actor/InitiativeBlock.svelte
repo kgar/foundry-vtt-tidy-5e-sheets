@@ -7,7 +7,6 @@
   import type { ActorSheetContextV1 } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
 
   export let initiative: { total: number; bonus: number };
@@ -45,16 +44,17 @@
   </label>
 
   {#if $context.editable && $context.unlocked}
-    <button
-      type="button"
-      class="config-button icon-button"
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <a
+      class="config-button icon-button inline-flex-row align-items-center"
       title={localize('DND5E.InitiativeConfig')}
       on:click={() =>
         FoundryAdapter.renderActorInitiativeConfig($context.actor)}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fas fa-cog" />
-    </button>
+    </a>
   {:else}
     <span
       class="config-button invisible"

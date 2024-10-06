@@ -6,7 +6,7 @@ import { applyTheme, getThemeOrDefault } from 'src/theme/theme';
 import { defaultLightTheme } from 'src/theme/default-light-theme';
 import { getCoreThemes, themeVariables } from 'src/theme/theme-reference';
 import { UserSettingsFormApplication } from 'src/applications/settings/user-settings/UserSettingsFormApplication';
-import { writable, type Writable } from 'svelte/store';
+import { readable, type Unsubscriber, type Writable } from 'svelte/store';
 import { WorldSettingsFormApplication } from 'src/applications/settings/world-settings/WorldSettingsFormApplication';
 import { ThemeSettingsFormApplication } from 'src/applications/theme/ThemeSettingsFormApplication';
 import {
@@ -21,7 +21,7 @@ import { TabManager } from 'src/runtime/tab/TabManager';
 import { BulkMigrationsApplication } from 'src/migrations/BulkMigrationsApplication';
 import { AboutApplication } from 'src/applications/settings/about/AboutApplication';
 import { ApplyTidySheetPreferencesApplication } from 'src/applications/sheet-preferences/ApplyTidySheetPreferencesApplication';
-import { defaultDarkTheme } from 'src/theme/default-dark-theme';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -38,7 +38,15 @@ export type CurrentSettings = {
   >;
 };
 
-export function getCurrentSettings(): CurrentSettings {
+let _currentSettings: CurrentSettings;
+
+export function getCurrentSettings(
+  ignoreCache: boolean = false
+): CurrentSettings {
+  if (!ignoreCache && _currentSettings) {
+    return _currentSettings;
+  }
+
   const keys = Object.keys(
     SettingsProvider.settings
   ) as (keyof (typeof SettingsProvider)['settings'])[];
@@ -99,11 +107,6 @@ export type Tidy5eSetting = {
    */
   representsCssVariable?: keyof typeof themeVariables;
 };
-
-/**
- * The current Tidy 5e settings.
- */
-export let settingStore: Writable<CurrentSettings>;
 
 export function createSettings() {
   // TODO: Remove this when Foundry V12 or later is the minimum version.
@@ -1905,6 +1908,20 @@ export function createSettings() {
         },
       },
     } satisfies Tidy5eSettings,
+    getSettingsChangedSubscription(
+      app: any,
+      hookCallback?: () => void
+    ): Unsubscriber {
+      const hookId = Hooks.on('tidy5e-sheet.settingsUpdated', () => {
+        hookCallback?.();
+      });
+      const unsubscriber = readable<number>(hookId).subscribe(() => {});
+
+      return () => {
+        Hooks.off('tidy5e-sheet.settingsUpdated', hookId);
+        unsubscriber();
+      };
+    },
   } as const;
 }
 
@@ -1917,15 +1934,16 @@ export function initSettings() {
     FoundryAdapter.registerTidyMenu(menu[0], menu[1].options);
   }
 
-  const debouncedSettingStoreRefresh = FoundryAdapter.debounce(() => {
-    settingStore.set(getCurrentSettings());
+  const debouncedOnSettingsChanged = FoundryAdapter.debounce(() => {
+    _currentSettings = getCurrentSettings(true);
+    TidyHooks.tidy5eSheetsSettingsUpdated();
   }, 100);
 
   for (let setting of Object.entries(SettingsProvider.settings)) {
     const options = {
       ...setting[1].options,
       onChange: (...args: any[]) => {
-        debouncedSettingStoreRefresh();
+        debouncedOnSettingsChanged();
 
         (setting[1].options as any).onChange?.(...args);
       },
@@ -1937,10 +1955,4 @@ export function initSettings() {
   SettingsProvider.settings.colorScheme.options.onChange(
     SettingsProvider.settings.colorScheme.get()
   );
-
-  settingStore = writable(getCurrentSettings());
-
-  Hooks.on('closeSettingsConfig', () => {
-    settingStore.set(getCurrentSettings());
-  });
 }

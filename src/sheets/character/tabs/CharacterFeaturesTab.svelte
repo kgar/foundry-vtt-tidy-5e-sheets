@@ -23,7 +23,6 @@
   import { getContext, setContext } from 'svelte';
   import { writable, type Readable } from 'svelte/store';
   import Notice from '../../../components/notice/Notice.svelte';
-  import { settingStore } from 'src/settings/settings';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { declareLocation } from 'src/types/location-awareness.types';
@@ -40,6 +39,7 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+    import { SettingsProvider } from 'src/settings/settings';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -220,7 +220,7 @@
                     </ItemName>
                   </ItemTableCell>
                   <!-- TODO: Handle more gracefully; it is sitting outside of any table cell -->
-                  {#if $settingStore.showIconsNextToTheItemName && 'favoriteId' in ctx && !!ctx.favoriteId}
+                  {#if $context.settings.showIconsNextToTheItemName && 'favoriteId' in ctx && !!ctx.favoriteId}
                     <InlineFavoriteIcon />
                   {/if}
                   {#if section.showUsesColumn}

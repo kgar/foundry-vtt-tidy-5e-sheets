@@ -8,11 +8,11 @@
   import TabFooter from 'src/sheets/actor/TabFooter.svelte';
   import { MaxPreparedSpellsConfigFormApplication } from 'src/applications/max-prepared-spells-config/MaxPreparedSpellsConfigFormApplication';
   import { CONSTANTS } from 'src/constants';
-  import { settingStore } from 'src/settings/settings';
   import { rollRawSpellAttack } from 'src/utils/formula';
 
-  let context =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
+  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
   export let cssClass: string | null = null;
   export let includeAttackMod: boolean = true;
   export let includePreparedSpells: boolean = true;
@@ -42,10 +42,11 @@
         <span>{FoundryAdapter.localize('TIDY5E.AttackMod')}:</span>
 
         {#if $context.spellCalculations.rangedMod !== $context.spellCalculations.meleeMod}
-          <button
-            type="button"
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <!-- svelte-ignore a11y-missing-attribute -->
+          <a
             on:click={(ev) => rollRawSpellAttack(ev, $context.actor, 'rsak')}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             data-tooltip="{FoundryAdapter.localize(
               'TIDY5E.RangedSpellAttackMod',
             )}: {$context.spellCalculations.rangedTooltip}"
@@ -61,11 +62,13 @@
             >
               {$context.spellCalculations.rangedMod}
             </span>
-          </button>
-          <button
+          </a>
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <!-- svelte-ignore a11y-missing-attribute -->
+          <a
             type="button"
             on:click={(ev) => rollRawSpellAttack(ev, $context.actor, 'msak')}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             data-tooltip="{FoundryAdapter.localize(
               'TIDY5E.MeleeSpellAttackMod',
             )}: {$context.spellCalculations.meleeTooltip}"
@@ -80,12 +83,13 @@
             >
               {$context.spellCalculations.meleeMod}
             </span>
-          </button>
+          </a>
         {:else}
-          <button
-            type="button"
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <!-- svelte-ignore a11y-missing-attribute -->
+          <a
             on:click={(ev) => rollRawSpellAttack(ev, $context.actor)}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             data-tooltip="{FoundryAdapter.localize(
               'TIDY5E.SpellAttackMod',
             )}: {$context.spellCalculations.rangedTooltip}"
@@ -99,20 +103,22 @@
             >
               {$context.spellCalculations.rangedMod}
             </span>
-          </button>
+          </a>
         {/if}
       {/if}
     </div>
   </h3>
   {#if includePreparedSpells}
-    <button
-      type="button"
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <a
       class="transparent-button secondary-footer-field highlight-on-hover"
       on:click={() =>
+        $context.editable &&
+        !$context.lockSensitiveFields &&
         new MaxPreparedSpellsConfigFormApplication($context.actor).render(true)}
       title={localize('TIDY5E.MaxPreparedSpellsConfig.ButtonTooltip')}
-      disabled={!$context.editable || $context.lockSensitiveFields}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <p>{localize('TIDY5E.PreparedSpells')}</p>
       <span class="spells-prepared">{$context.preparedSpells ?? 0}</span>
@@ -120,7 +126,7 @@
       <span class="spells-max-prepared"
         >{$context.maxPreparedSpellsTotal ?? 0}</span
       >
-    </button>
+    </a>
   {/if}
   <div class="spellcasting-attribute secondary-footer-field">
     <p>{localize('DND5E.SpellAbility')}</p>

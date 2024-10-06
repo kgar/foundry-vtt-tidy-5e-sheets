@@ -7,7 +7,6 @@
     ButtonMenuPosition,
   } from './button-menu-types';
   import { getPositionStyles } from './button-menu-position';
-  import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
 
   type StatefulIconClass = {
@@ -28,7 +27,10 @@
   export let position: ButtonMenuPosition = 'bottom';
   export let anchor: ButtonMenuAnchor = 'center';
   export let menuElement: keyof HTMLElementTagNameMap = 'ul';
-  export let buttonStyle: 'solid' | 'transparent-inline' | 'transparent-inline-icon' = 'solid';
+  export let buttonStyle:
+    | 'solid'
+    | 'transparent-inline'
+    | 'transparent-inline-icon' = 'solid';
 
   let openerEl: HTMLElement;
   let menuStyles: string = '';
@@ -60,21 +62,22 @@
 </script>
 
 <div class="button-menu-wrapper {wrapperClass ?? ''}">
-  <button
-    type="button"
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <!-- svelte-ignore a11y-missing-attribute -->
+  <a
     on:click={() => (open = !open)}
     aria-label={ariaLabel}
     bind:this={openerEl}
     {title}
     class="button-menu-opener {buttonClass ?? ''} {buttonStyle}"
     style:padding={openerPadding}
-    tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
   >
     {#if iconClass}
       <i class={actualIconClass} />
     {/if}
     {buttonText}
-  </button>
+  </a>
 
   {#if open}
     <svelte:element

@@ -464,5 +464,11 @@
     padding: 1rem;
   }
 
+  a:hover {
+    outline: none;
+    box-shadow: none;
+    text-shadow: none;
+  }
+  
   @import './partials/floating-context-menu';
 }

@@ -1,10 +1,10 @@
 import { FoundryAdapter } from '../foundry/foundry-adapter';
 import CharacterSheet from './character/CharacterSheet.svelte';
 import { debug, error } from 'src/utils/logging';
-import { SettingsProvider, settingStore } from 'src/settings/settings';
+import { getCurrentSettings, SettingsProvider } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { CONSTANTS } from 'src/constants';
-import { writable } from 'svelte/store';
+import { readable, writable } from 'svelte/store';
 import {
   type ItemCardStore,
   type CharacterSheetContext,
@@ -33,7 +33,7 @@ import {
   applySheetAttributesToWindow,
   applyThemeDataAttributeToWindow,
   applyTitleToWindow,
-  blurUntabbableButtonsOnClick,
+  blurButtonsOnClick,
   maintainCustomContentInputFocus,
 } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
@@ -149,15 +149,18 @@ export class Tidy5eCharacterSheet
 
     // Subscriptions
     let first = true;
+
     this.subscriptionsService.unsubscribeAll();
     this.subscriptionsService.registerSubscriptions(
       this.itemFilterService.filterData$.subscribe(() => {
         if (first) return;
         this.render();
       }),
-      settingStore.subscribe((s) => {
-        if (first) return;
-        applyThemeDataAttributeToWindow(s.colorScheme, this.element.get(0));
+      SettingsProvider.getSettingsChangedSubscription(this, () => {
+        applyThemeDataAttributeToWindow(
+          SettingsProvider.settings.colorScheme.get(),
+          this.element.get(0)
+        );
         this.render();
       }),
       this.messageBus.subscribe((m) => {
@@ -852,6 +855,7 @@ export class Tidy5eCharacterSheet
       ),
       originalContext: defaultDocumentContext,
       owner: this.actor.isOwner,
+      settings: getCurrentSettings(),
       showContainerPanel:
         TidyFlags.showContainerPanel.get(this.actor) === true &&
         Array.from(defaultDocumentContext.items).some(
@@ -1409,7 +1413,16 @@ export class Tidy5eCharacterSheet
         super.activateListeners,
         this
       );
-      blurUntabbableButtonsOnClick(this.element.get(0));
+      if (!SettingsProvider.settings.useAccessibleKeyboardSupport.get()) {
+        blurButtonsOnClick(this.element.get(0));
+      }
+      if (!SettingsProvider.settings.useAccessibleKeyboardSupport.get()) {
+        this.element
+          .get(0)
+          .querySelectorAll('button')
+          .forEach((b: HTMLButtonElement) => (b.tabIndex = -1));
+      }
+
       return;
     }
 
@@ -1427,6 +1440,12 @@ export class Tidy5eCharacterSheet
         super.activateListeners,
         this
       );
+      if (!SettingsProvider.settings.useAccessibleKeyboardSupport.get()) {
+        this.element
+          .get(0)
+          .querySelectorAll('button')
+          .forEach((b: HTMLButtonElement) => (b.tabIndex = -1));
+      }
     });
   }
 

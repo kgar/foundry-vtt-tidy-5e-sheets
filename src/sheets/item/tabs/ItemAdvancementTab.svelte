@@ -2,7 +2,6 @@
   import InlineSvg from 'src/components/utility/InlineSvg.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
   import type { Item5e, ItemSheetContext } from 'src/types/item.types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -48,11 +47,13 @@
     >
       <div class="item-controls configuration-mode-control">
         {#if $context.editable && $context.isEmbedded}
-          <button
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <!-- svelte-ignore a11y-missing-attribute -->
+          <a
             class="inline-icon-button"
             on:click={() => toggleAdvancementLock($context.item)}
             title={localize('DND5E.AdvancementConfigurationActionDisable')}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             {#if $context.advancementEditable}
               <i class="fas fa-lock-open" />
@@ -61,23 +62,24 @@
               <i class="fas fa-lock" />
               {localize('DND5E.AdvancementConfigurationModeDisabled')}
             {/if}
-          </button>
+          </a>
         {/if}
       </div>
       {#if $context.editable && $context.advancementEditable}
         <div class="item-controls add-button">
-          <button
-            type="button"
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <!-- svelte-ignore a11y-missing-attribute -->
+          <a
             class="inline-icon-button"
             title={localize('DND5E.AdvancementControlCreate')}
             aria-label={localize('DND5E.AdvancementControlCreate')}
             on:click={() =>
               FoundryAdapter.createAdvancementSelectionDialog($context.item)}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-plus" />
             {localize('DND5E.Add')}
-          </button>
+          </a>
         </div>
       {:else}
         <div role="presentation" />
@@ -99,15 +101,16 @@
 
       {#if $context.editable && data.configured && level !== 'unconfigured'}
         <div>
-          <button
-            type="button"
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <!-- svelte-ignore a11y-missing-attribute -->
+          <a
             class="inline-transparent-button"
             on:click={() =>
               FoundryAdapter.modifyAdvancementChoices(level, $context.item)}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             {localize('DND5E.AdvancementModifyChoices')}
-          </button>
+          </a>
         </div>
       {/if}
 
@@ -157,19 +160,22 @@
           {/if}
           {#if $context.editable && $context.advancementEditable}
             <div class="item-controls flexrow">
-              <button
-                type="button"
+              <!-- svelte-ignore a11y-click-events-have-key-events -->
+              <!-- svelte-ignore a11y-no-static-element-interactions -->
+              <!-- svelte-ignore a11y-missing-attribute -->
+              <a
                 class="inline-icon-button"
                 title={localize('DND5E.AdvancementControlEdit')}
                 aria-label={localize('DND5E.AdvancementControlEdit')}
                 on:click={() =>
                   FoundryAdapter.editAdvancement(advancement.id, $context.item)}
-                tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
               >
                 <i class="fas fa-edit" />
-              </button>
-              <button
-                type="button"
+              </a>
+              <!-- svelte-ignore a11y-click-events-have-key-events -->
+              <!-- svelte-ignore a11y-no-static-element-interactions -->
+              <!-- svelte-ignore a11y-missing-attribute -->
+              <a
                 class="inline-icon-button"
                 title={localize('DND5E.AdvancementControlDelete')}
                 aria-label={localize('DND5E.AdvancementControlDelete')}
@@ -178,10 +184,9 @@
                     advancement.id,
                     $context.item,
                   )}
-                tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
               >
                 <i class="fas fa-trash" />
-              </button>
+              </a>
             </div>
           {/if}
           {#if advancement.summary}

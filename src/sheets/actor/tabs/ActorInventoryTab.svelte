@@ -14,7 +14,6 @@
   import Notice from '../../../components/notice/Notice.svelte';
   import EncumbranceBar from 'src/sheets/actor/EncumbranceBar.svelte';
   import TabFooter from 'src/sheets/actor/TabFooter.svelte';
-  import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
@@ -140,7 +139,7 @@
     <Currency document={$context.actor} />
   </div>
 
-  {#if $settingStore.useCharacterEncumbranceBar}
+  {#if $context.settings.useCharacterEncumbranceBar}
     <EncumbranceBar />
   {/if}
 </TabFooter>

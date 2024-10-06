@@ -4,7 +4,6 @@
   import type { Readable } from 'svelte/store';
   import type { ActorSheetContextV1 } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
 
   /**
@@ -29,20 +28,21 @@
 </script>
 
 <AcShieldBase {cssClass}>
-  <button
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- svelte-ignore a11y-missing-attribute -->
+  <a
     bind:this={acShieldButton}
-    type="button"
-    on:click={() => FoundryAdapter.renderArmorConfig($context.actor)}
+    on:click={() =>
+      $context.editable && FoundryAdapter.renderArmorConfig($context.actor)}
     on:focus
     class="config-button attribute-value transparent-button"
     data-attribution="attributes.ac"
     data-attribution-caption="DND5E.ArmorClass"
     data-tooltip-direction="DOWN"
-    disabled={!$context.editable}
-    tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
   >
     {ac}
-  </button>
+  </a>
 </AcShieldBase>
 
 <style lang="scss">

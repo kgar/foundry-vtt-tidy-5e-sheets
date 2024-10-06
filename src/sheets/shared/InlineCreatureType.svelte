@@ -1,7 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
   import { type ActorSheetContextV1 } from 'src/types/types';
   import { coalesce } from 'src/utils/formatting';
   import { getContext } from 'svelte';
@@ -22,15 +21,16 @@
 </script>
 
 {#if $context.editable && ($context.actor.type === 'npc' || $context.system.details?.race?.id)}
-  <button
-    type="button"
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- svelte-ignore a11y-missing-attribute -->
+  <a
     class="configure-creature-type inline-transparent-button highlight-on-hover truncate"
     on:click={() => configFn($context.actor)}
     title={localize('DND5E.CreatureType')}
-    tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
   >
     {text}
-  </button>
+  </a>
 {:else}
   <span
     class="creature-type-label truncate"

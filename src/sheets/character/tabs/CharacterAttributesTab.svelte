@@ -7,7 +7,6 @@
   import { isNil } from 'src/utils/data';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
@@ -61,20 +60,24 @@
     <section class="side-panel">
       <SkillsList
         actor={$context.actor}
-        toggleable={$settingStore.toggleEmptyCharacterSkills}
+        toggleable={$context.settings.toggleEmptyCharacterSkills}
         expanded={!!TidyFlags.skillsExpanded.get($context.actor)}
         toggleField={TidyFlags.skillsExpanded.prop}
       />
-      {#if !$settingStore.moveTraitsBelowCharacterResources}
-        <Traits toggleable={$settingStore.toggleEmptyCharacterTraits} />
+      {#if !$context.settings.moveTraitsBelowCharacterResources}
+        <Traits
+          toggleable={$context.settings.toggleEmptyCharacterTraits}
+        />
       {/if}
     </section>
     <section class="main-panel">
       {#if showResources}
         <Resources />
       {/if}
-      {#if $settingStore.moveTraitsBelowCharacterResources}
-        <Traits toggleable={$settingStore.toggleEmptyCharacterTraits} />
+      {#if $context.settings.moveTraitsBelowCharacterResources}
+        <Traits
+          toggleable={$context.settings.toggleEmptyCharacterTraits}
+        />
       {/if}
       <Favorites {searchCriteria} />
     </section>

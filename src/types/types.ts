@@ -20,6 +20,7 @@ import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/typ
 import type { CONSTANTS } from 'src/constants';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 import type { Group5e } from './group.types';
+import type { CurrentSettings } from 'src/settings/settings';
 
 export type Actor5e = any;
 
@@ -463,6 +464,7 @@ export type ActorSheetContextV1 = {
    */
   owner: boolean;
   saves: ActorSaves;
+  settings: CurrentSettings;
   showLimitedSheet: boolean;
   tabs: Tab[];
   tidyResources: TidyResource[];
@@ -623,6 +625,7 @@ export type ActorSheetContextV2<TActor = ActorV2> = {
   editable: boolean;
   healthPercentage: number;
   lockSensitiveFields: boolean;
+  settings: CurrentSettings;
   unlocked: boolean;
   useRoundedPortraitStyle: boolean;
 };

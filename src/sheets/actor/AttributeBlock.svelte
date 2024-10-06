@@ -7,7 +7,6 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ActorSheetContextV1 } from 'src/types/types';
-  import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
 
@@ -39,8 +38,6 @@
     title={ability.label}
     text={abbreviation}
     on:roll={(event) => $context.actor.rollAbility(id, { event: event.detail })}
-    hideFromTabOrder={$settingStore.useDefaultSheetAttributeTabbing ||
-      !$settingStore.useAccessibleKeyboardSupport}
     attributes={{
       'data-tidy-sheet-part': CONSTANTS.SHEET_PARTS.ABILITY_ROLLER,
     }}
@@ -60,60 +57,54 @@
     />
   </BlockScore>
   <div class="ability-modifiers">
-    <button
-      type="button"
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <a
       class="ability-mod transparent-button"
       class:rollable={$context.editable}
       title={localize('DND5E.AbilityModifier')}
-      on:click={(event) => $context.actor.rollAbilityTest(id, { event })}
-      tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
-      $settingStore.useAccessibleKeyboardSupport
-        ? 0
-        : -1}
-      disabled={!$context.editable}
+      on:click={(event) =>
+        $context.editable && $context.actor.rollAbilityTest(id, { event })}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ABILITY_TEST_ROLLER}
     >
       {formatAsModifier(ability.mod)}
-    </button>
-    <button
-      type="button"
+    </a>
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <a
       class="ability-save transparent-button"
       class:rollable={$context.editable}
       title={localize('DND5E.ActionSave')}
-      on:click={(event) => $context.actor.rollAbilitySave(id, { event })}
-      tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
-      $settingStore.useAccessibleKeyboardSupport
-        ? 0
-        : -1}
-      disabled={!$context.editable}
+      on:click={(event) =>
+        $context.editable && $context.actor.rollAbilitySave(id, { event })}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ABILITY_SAVE_ROLLER}
     >
       {formatAsModifier(ability.save)}
-    </button>
+    </a>
     {#if useSavingThrowProficiency}
       {#if $context.unlocked}
-        <button
-          type="button"
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <!-- svelte-ignore a11y-missing-attribute -->
+        <a
           title={ability.hover}
           class="proficiency-toggle inline-icon-button"
           on:click={() =>
+            !activeEffectApplied &&
             $context.actor.update({
               [`system.abilities.${id}.proficient`]:
                 1 - parseInt(ability.proficient),
             })}
-          tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
-          $settingStore.useAccessibleKeyboardSupport
-            ? 0
-            : -1}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
             .ABILITY_SAVE_PROFICIENCY_TOGGLE}
-          disabled={activeEffectApplied}
           data-tooltip={activeEffectApplied
             ? localize('DND5E.ActiveEffectOverrideWarning')
             : null}
         >
           {@html ability.icon}
-        </button>
+        </a>
       {:else}
         <span
           title={ability.hover}
@@ -125,21 +116,19 @@
       {/if}
     {/if}
     {#if useConfigurationOption && $context.editable && $context.unlocked}
-      <button
-        type="button"
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <a
         class="config-button inline-icon-button"
         title={localize('DND5E.AbilityConfigure')}
         on:click={() =>
           FoundryAdapter.renderActorAbilityConfig($context.actor, id)}
-        tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
-        $settingStore.useAccessibleKeyboardSupport
-          ? 0
-          : -1}
         data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
           .ABILITY_CONFIGURATION_CONTROL}
       >
         <i class="fas fa-cog" />
-      </button>
+      </a>
     {/if}
   </div>
   <span class="mod-label ability-mod-label">{localize('TIDY5E.AbbrMod')}</span>

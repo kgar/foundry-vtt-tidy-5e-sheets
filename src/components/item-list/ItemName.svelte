@@ -1,24 +1,28 @@
 <script lang="ts">
-  import { settingStore } from 'src/settings/settings';
   import type { Item5e } from 'src/types/item.types';
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, getContext } from 'svelte';
   import ActiveEffectsMarker from './ActiveEffectsMarker.svelte';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import type { Readable } from 'svelte/store';
+  import type { CurrentSettings } from 'src/settings/settings';
+  import { CONSTANTS } from 'src/constants';
 
   export let cssClass: string = '';
   export let hasChildren = true;
   export let item: Item5e;
   export let useActiveEffectsMarker: boolean = true;
 
+  let context = getContext<Readable<{ settings: CurrentSettings }>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+
   $: hasActiveEffects = !!item.effects?.size;
 
   const dispatcher = createEventDispatcher<{ toggle: Event }>();
 </script>
 
-<!-- TODO: Make this a button -->
+<!-- svelte-ignore a11y-interactive-supports-focus -->
 <span
   role="button"
-  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
   on:click={(ev) => dispatcher('toggle', ev)}
   class="item-name truncate {cssClass}"
   class:has-children={hasChildren}
@@ -27,7 +31,7 @@
 >
   <slot />
 </span>
-{#if useActiveEffectsMarker && $settingStore.showActiveEffectsMarker && hasActiveEffects}
+{#if useActiveEffectsMarker && $context.settings.showActiveEffectsMarker && hasActiveEffects}
   <ActiveEffectsMarker />
 {/if}
 

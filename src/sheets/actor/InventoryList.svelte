@@ -27,7 +27,6 @@
     RenderableClassicControl,
   } from 'src/types/types';
   import AmmoSelector from './AmmoSelector.svelte';
-  import { settingStore } from 'src/settings/settings';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { coalesce } from 'src/utils/formatting';
   import TextInput from 'src/components/inputs/TextInput.svelte';
@@ -222,7 +221,7 @@
               {/if}
             </ItemName>
           </ItemTableCell>
-          {#if $settingStore.showIconsNextToTheItemName}
+          {#if $context.settings.showIconsNextToTheItemName}
             <ItemTableCell cssClass="no-border">
               {#if ctx?.attunement && !FoundryAdapter.concealDetails(item)}
                 <div class="item-detail attunement">

@@ -5,7 +5,6 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import ItemDescription from './ItemDescriptionTab.svelte';
-  import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
 
   let context = getContext<Readable<ItemSheetContext>>(
@@ -27,14 +26,15 @@
     <h4 class="properties-header flex-row justify-content-space-between">
       {localize('DND5E.Type')}
       {#if $context.editable}
-        <button
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <!-- svelte-ignore a11y-missing-attribute -->
+        <a
           class="inline-icon-button hidden-config-button"
-          type="button"
           on:click={() => FoundryAdapter.renderItemTypeConfig($context.item)}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fas fa-cog" />
-        </button>
+        </a>
       {/if}
     </h4>
     <ol class="properties-list">
@@ -43,16 +43,17 @@
     <h4 class="properties-header flex-row justify-content-space-between">
       {localize('DND5E.Movement')}
       {#if $context.editable}
-        <button
-          type="button"
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <!-- svelte-ignore a11y-missing-attribute -->
+        <a
           class="inline-icon-button hidden-config-button"
           data-action="movement"
           on:click={() =>
             FoundryAdapter.renderItemMovementConfig($context.item)}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fas fa-cog" />
-        </button>
+        </a>
       {/if}
     </h4>
     <ol class="properties-list">
@@ -65,15 +66,16 @@
     <h4 class="properties-header flex-row justify-content-space-between">
       {localize('DND5E.Senses')}
       {#if $context.editable}
-        <button
-          type="button"
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <!-- svelte-ignore a11y-missing-attribute -->
+        <a
           class="inline-icon-button hidden-config-button"
           data-action="senses"
           on:click={() => FoundryAdapter.renderItemSensesConfig($context.item)}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fas fa-cog" />
-        </button>
+        </a>
       {/if}
     </h4>
     <ol class="properties-list">

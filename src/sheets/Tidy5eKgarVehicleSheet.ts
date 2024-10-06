@@ -1,6 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { SettingsProvider, settingStore } from 'src/settings/settings';
+import { getCurrentSettings, SettingsProvider } from 'src/settings/settings';
 import type {
   ItemCardStore,
   SheetExpandedItemsCacheable,
@@ -27,7 +27,7 @@ import {
   applySheetAttributesToWindow,
   applyThemeDataAttributeToWindow,
   applyTitleToWindow,
-  blurUntabbableButtonsOnClick,
+  blurButtonsOnClick,
   maintainCustomContentInputFocus,
 } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
@@ -130,9 +130,11 @@ export class Tidy5eVehicleSheet
         if (first) return;
         this.render();
       }),
-      settingStore.subscribe((s) => {
-        if (first) return;
-        applyThemeDataAttributeToWindow(s.colorScheme, this.element.get(0));
+      SettingsProvider.getSettingsChangedSubscription(this, () => {
+        applyThemeDataAttributeToWindow(
+          SettingsProvider.settings.colorScheme.get(),
+          this.element.get(0)
+        );
         this.render();
       }),
       this.messageBus.subscribe((m) => {
@@ -318,6 +320,7 @@ export class Tidy5eVehicleSheet
         (!unlocked && SettingsProvider.settings.useTotalSheetLock.get()) ||
         !defaultDocumentContext.editable,
       owner: this.actor.isOwner,
+      settings: getCurrentSettings(),
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
       tabs: [],
       unlocked: unlocked,
@@ -696,7 +699,16 @@ export class Tidy5eVehicleSheet
         super.activateListeners,
         this
       );
-      blurUntabbableButtonsOnClick(this.element.get(0));
+      if (!SettingsProvider.settings.useAccessibleKeyboardSupport.get()) {
+        blurButtonsOnClick(this.element.get(0));
+      }
+      if (!SettingsProvider.settings.useAccessibleKeyboardSupport.get()) {
+        this.element
+          .get(0)
+          .querySelectorAll('button')
+          .forEach((b: HTMLButtonElement) => (b.tabIndex = -1));
+      }
+
       return;
     }
 
@@ -714,6 +726,12 @@ export class Tidy5eVehicleSheet
         super.activateListeners,
         this
       );
+      if (!SettingsProvider.settings.useAccessibleKeyboardSupport.get()) {
+        this.element
+          .get(0)
+          .querySelectorAll('button')
+          .forEach((b: HTMLButtonElement) => (b.tabIndex = -1));
+      }
     });
   }
 

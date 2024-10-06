@@ -474,4 +474,18 @@ export class TidyHooks {
   ) {
     Hooks.callAll('tidy5e-sheet.selectTab', app, element, newTabId);
   }
+
+  /**
+   * Tidy 5e Settings have been updated.
+   *
+   * @example
+   * ```js
+   * Hooks.on('tidy5e-sheet.settingsUpdated', () => {
+   *   // Your code here
+   * });
+   * ```
+   */
+  static tidy5eSheetsSettingsUpdated() {
+    Hooks.callAll('tidy5e-sheet.settingsUpdated');
+  }
 }

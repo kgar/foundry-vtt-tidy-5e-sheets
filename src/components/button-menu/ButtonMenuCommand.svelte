@@ -2,7 +2,6 @@
   import { createEventDispatcher, getContext } from 'svelte';
   import ButtonMenuItem from './ButtonMenuItem.svelte';
   import type { ButtonMenuContext } from './button-menu-types';
-  import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
 
   export let iconClass: string = '';
@@ -16,26 +15,25 @@
   );
   const dispatch = createEventDispatcher<{
     click: {
-      event: MouseEvent & { currentTarget: HTMLButtonElement };
+      event: MouseEvent & { currentTarget: HTMLElement };
     };
   }>();
 
-  function handleClick(
-    event: MouseEvent & { currentTarget: HTMLButtonElement },
-  ) {
+  function handleClick(event: MouseEvent & { currentTarget: HTMLElement }) {
     buttonMenuContext.close();
     dispatch('click', { event });
   }
 </script>
 
 <ButtonMenuItem cssClass="button-menu-command-li">
-  <button
-    type="button"
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- svelte-ignore a11y-missing-attribute -->
+  <a
     class="button-menu-command {size}"
+    class:disabled
     on:click={handleClick}
     {title}
-    {disabled}
-    tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
   >
     {#if useIconColumn}
       <span class="icon-container">
@@ -47,5 +45,5 @@
     <span class="command-text">
       <slot />
     </span>
-  </button>
+  </a>
 </ButtonMenuItem>

@@ -17,10 +17,16 @@
   gap: 0.25rem;
   margin: 0;
 
-  button {
+  .group-action-button {
     padding: 0.25rem;
     line-height: 1;
     border: 1px solid var(--t5e-faint-color);
+    border-radius: 0.25rem;
+    background: var(--t5e-faint-color);
+
+    &:hover {
+      background: var(--t5e-light-color);
+    }
   }
 }
 

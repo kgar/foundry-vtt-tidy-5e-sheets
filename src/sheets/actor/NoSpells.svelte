@@ -2,7 +2,6 @@
   import Notice from 'src/components/notice/Notice.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -20,16 +19,17 @@
 <div class="no-spells-container {cssClass}">
   <Notice>{localize('DND5E.NoSpellLevels')}</Notice>
   {#if $context.editable && editable}
-    <button
-      type="button"
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <a
       class="create-spell-btn flex-row align-items-center extra-small-gap"
       on:click={() =>
         FoundryAdapter.createItem({ type: 'spell', level: '' }, $context.actor)}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fas fa-plus-circle" />
       {localize('DND5E.SpellCreate')}
-    </button>
+    </a>
   {/if}
 </div>
 

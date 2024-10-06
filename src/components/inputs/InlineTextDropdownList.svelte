@@ -25,7 +25,7 @@
   ariaLabel={title}
   {title}
   buttonText={selected.text}
-  buttonClass="primary {buttonClass}"
+  buttonClass="primary justify-content-start {buttonClass}"
   buttonStyle="transparent-inline"
 >
   {#each options as option}

@@ -10,7 +10,6 @@
   import NpcRest from './NpcRest.svelte';
   import NpcHealthFormulaRoller from './NpcHealthFormulaRoller.svelte';
   import ActorProfile from 'src/sheets/actor/ActorProfile.svelte';
-  import { settingStore } from 'src/settings/settings';
   import ExhaustionInput from 'src/sheets/actor/ExhaustionInput.svelte';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { CONSTANTS } from 'src/constants';
@@ -28,10 +27,15 @@
       'system.attributes.exhaustion': event.detail.level,
     });
   }
+
+  $: exhaustionConfig = $context.settings.exhaustionConfig;
+
+  $: specificExhaustionConfig =
+    exhaustionConfig?.type === 'specific' ? exhaustionConfig : null;
 </script>
 
-<ActorProfile useHpOverlay={$settingStore.useHpOverlayNpc}>
-  {#if incapacitated && (!$settingStore.hideDeathSavesFromPlayers || FoundryAdapter.userIsGm())}
+<ActorProfile useHpOverlay={$context.settings.useHpOverlayNpc}>
+  {#if incapacitated && (!$context.settings.hideDeathSavesFromPlayers || FoundryAdapter.userIsGm())}
     <DeathSaves
       successes={$context.system.attributes.death.success}
       failures={$context.system.attributes.death.failure}
@@ -39,21 +43,21 @@
       failuresField="system.attributes.death.failure"
       on:rollDeathSave={(event) =>
         $context.actor.rollDeathSave({ event: event.detail.mouseEvent })}
-      hasHpOverlay={$settingStore.useHpOverlayNpc}
+      hasHpOverlay={$context.settings.useHpOverlayNpc}
     />
   {/if}
-  {#if $settingStore.useExhaustion && $settingStore.exhaustionConfig.type === 'specific'}
+  {#if $context.settings.useExhaustion && specificExhaustionConfig}
     <ExhaustionTracker
       level={$context.system.attributes.exhaustion}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
-      exhaustionConfig={$settingStore.exhaustionConfig}
+      exhaustionConfig={specificExhaustionConfig}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
         $context.actor,
         'system.attributes.exhaustion',
       )}
     />
-  {:else if $settingStore.useExhaustion && $settingStore.exhaustionConfig.type === 'open'}
+  {:else if $context.settings.useExhaustion && $context.settings.exhaustionConfig?.type === 'open'}
     <ExhaustionInput
       level={$context.system.attributes.exhaustion}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}

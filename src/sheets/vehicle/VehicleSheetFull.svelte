@@ -21,7 +21,6 @@
   import AttributeBlock from '../actor/AttributeBlock.svelte';
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
-  import { settingStore } from 'src/settings/settings';
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import InlineSource from '../shared/InlineSource.svelte';
   import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
@@ -64,7 +63,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-{#if $settingStore.itemCardsForNpcs}
+{#if $context.settings.itemCardsForNpcs}
   <ItemInfoCard />
 {/if}
 
@@ -148,18 +147,19 @@
       {/key}
       <div class="flex-row align-items-center extra-small-gap">
         {#if $context.editable && !$context.lockSensitiveFields}
-          <button
-            type="button"
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <!-- svelte-ignore a11y-missing-attribute -->
+          <a
             on:click={() =>
               new ActorOriginSummaryConfigFormApplication(
                 $context.actor,
               ).render(true)}
             class="origin-summary-tidy inline-icon-button"
             title={localize('TIDY5E.OriginSummaryConfig')}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-cog" />
-          </button>
+          </a>
         {/if}
       </div>
     </div>
@@ -192,7 +192,7 @@
   <svelte:fragment slot="tab-end">
     {#if $context.editable}
       <SheetEditModeToggle
-        hint={$settingStore.permanentlyUnlockVehicleSheetForGm &&
+        hint={$context.settings.permanentlyUnlockVehicleSheetForGm &&
         FoundryAdapter.userIsGm()
           ? localize('TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM.title')
           : null}

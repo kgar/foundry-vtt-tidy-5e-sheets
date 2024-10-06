@@ -1,7 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
   import type { GroupSheetClassicContext } from 'src/types/group.types';
   import type { Actor5e } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -16,12 +15,13 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<button
-  type="button"
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y-missing-attribute -->
+<a
   class="inline-icon-button"
   on:click={() => $context.actor.system.removeMember(member.id)}
   title={localize('TIDY5E.Group.RemoveMemberFromGroup')}
-  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
 >
   <i class="fas fa-xmark"></i>
-</button>
+</a>

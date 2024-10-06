@@ -1,8 +1,7 @@
 <script lang="ts">
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
-  
+
   export let iconCssClass: string | undefined = undefined;
   export let iconSrc: string | undefined = undefined;
   export let title: string | undefined = undefined;
@@ -10,7 +9,7 @@
   export let onclick:
     | ((
         ev: MouseEvent & {
-          currentTarget: EventTarget & HTMLButtonElement;
+          currentTarget: EventTarget & HTMLElement;
         },
       ) => any)
     | undefined = undefined;
@@ -18,13 +17,14 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<button
-  type="button"
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y-missing-attribute -->
+<a
   class="item-list-button"
   class:inactive={!active}
   on:click={onclick}
   title={title !== undefined ? localize(title) : ''}
-  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
 >
   {#if iconCssClass}
     <i class={iconCssClass} />
@@ -32,7 +32,7 @@
   {#if iconSrc}
     <Dnd5eIcon src={iconSrc} />
   {/if}
-</button>
+</a>
 
 <style lang="scss">
   .item-list-button {

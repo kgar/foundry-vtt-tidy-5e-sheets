@@ -7,7 +7,6 @@
   import VehicleDamageAndMishapThresholds from './VehicleDamageAndMishapThresholds.svelte';
   import ExhaustionTracker from 'src/sheets/actor/ExhaustionTracker.svelte';
   import VehicleMovement from './VehicleMovement.svelte';
-  import { settingStore } from 'src/settings/settings';
   import ExhaustionInput from 'src/sheets/actor/ExhaustionInput.svelte';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -20,21 +19,27 @@
   function onLevelSelected(event: CustomEvent<{ level: number }>) {
     TidyFlags.setFlag($context.actor, 'exhaustion', event.detail.level);
   }
+
+  $: exhaustionConfig = $context.settings.exhaustionConfig;
+  $: specificExhaustionConfig =
+    exhaustionConfig?.type === 'specific' ? exhaustionConfig : null;
 </script>
 
-<ActorProfile useHpOverlay={$settingStore.useHpOverlayVehicle}>
-  {#if $settingStore.useExhaustion && $settingStore.vehicleExhaustionConfig.type === 'specific'}
+<ActorProfile
+  useHpOverlay={$context.settings.useHpOverlayVehicle}
+>
+  {#if $context.settings.useExhaustion && specificExhaustionConfig}
     <ExhaustionTracker
       level={TidyFlags.exhaustion.get($context.actor) ?? 0}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
-      exhaustionConfig={$settingStore.vehicleExhaustionConfig}
+      exhaustionConfig={specificExhaustionConfig}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
         $context.actor,
         TidyFlags.exhaustion.prop,
       )}
     />
-  {:else if $settingStore.useExhaustion && $settingStore.vehicleExhaustionConfig.type === 'open'}
+  {:else if $context.settings.useExhaustion && $context.settings.vehicleExhaustionConfig.type === 'open'}
     <ExhaustionInput
       level={TidyFlags.exhaustion.get($context.actor) ?? 0}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
@@ -45,7 +50,7 @@
       )}
     />
   {/if}
-  {#if $settingStore.useVehicleMotion}
+  {#if $context.settings.useVehicleMotion}
     <VehicleMovement
       motion={TidyFlags.motion.get($context.actor) === true}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-right'}

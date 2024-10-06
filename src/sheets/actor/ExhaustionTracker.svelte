@@ -6,7 +6,6 @@
     IconWithSeverity,
   } from 'src/features/exhaustion/exhaustion.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
   import type {
     ActorSheetContextV1,
     PortraitCharmRadiusClass,
@@ -50,10 +49,12 @@
     levelSelected: { level: number };
   }>();
 
-  let exhaustionOptionWidthRems = 1.25;
+  let exhaustionOptionWidthRems = 1.5;
   $: exhaustionExpandedWidth = `${
     exhaustionOptionWidthRems * (exhaustionConfig.levels + 1) + 2.125
   }rem`;
+
+  $: disabled = !$context.editable || isActiveEffectApplied;
 </script>
 
 <div
@@ -73,20 +74,29 @@
     <ul class="exhaustion-levels">
       {#each iconsWithSeverities as _, i}
         <li>
-          <button
-            type="button"
-            class="exhaustion-level-option transparent-button"
-            class:colorized={i <= level}
-            title={localize(exhaustionConfig.hints[i] ?? '')}
-            on:click={() => dispatch('levelSelected', { level: i })}
-            disabled={!$context.editable || isActiveEffectApplied}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-            data-tooltip={isActiveEffectApplied
-              ? localize('DND5E.ActiveEffectOverrideWarning')
-              : null}
-          >
-            {i}
-          </button>
+          {#if !disabled}
+            <!-- svelte-ignore a11y-missing-attribute -->
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <!-- svelte-ignore a11y-no-static-element-interactions -->
+            <a
+              class="exhaustion-level-option transparent-button"
+              class:colorized={i <= level}
+              title={localize(exhaustionConfig.hints[i] ?? '')}
+              on:click={() => dispatch('levelSelected', { level: i })}
+              data-tooltip={isActiveEffectApplied
+                ? localize('DND5E.ActiveEffectOverrideWarning')
+                : null}
+            >
+              {i}
+            </a>
+          {:else}
+            <span
+              class="exhaustion-level-option transparent-button"
+              class:colorized={i <= level}
+            >
+              {i}
+            </span>
+          {/if}
         </li>
       {/each}
     </ul>
@@ -124,7 +134,7 @@
     }
 
     &:hover .exhaustion-wrap,
-    .exhaustion-wrap:has(button:focus-visible) {
+    .exhaustion-wrap:has(.exhaustion-level-option:focus-visible) {
       width: var(--t5e-exhaustion-expanded-width);
     }
 
@@ -161,12 +171,16 @@
         flex: 1;
 
         li {
-          flex: 0 0 1.25rem;
+          flex: 0 0 1.5rem;
           text-align: center;
           line-height: 2.125rem;
           display: flex;
 
           .exhaustion-level-option {
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             border-radius: 0;
 
             &:is(:hover, :focus-visible) {

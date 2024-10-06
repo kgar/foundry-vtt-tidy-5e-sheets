@@ -2,7 +2,6 @@
   import ContentConcealer from 'src/components/content-concealment/ContentConcealer.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
   import type { ItemSheetContext } from 'src/types/item.types';
   import type { CharacterSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -52,16 +51,17 @@
           <div class="effect-source">{localize('DND5E.Duration')}</div>
           <div class="item-controls active-effect-controls flexrow">
             {#if $context.editable}
-              <button
-                type="button"
+              <!-- svelte-ignore a11y-click-events-have-key-events -->
+              <!-- svelte-ignore a11y-no-static-element-interactions -->
+              <!-- svelte-ignore a11y-missing-attribute -->
+              <a
                 class="active-effect-control inline-icon-button"
                 title={localize('DND5E.EffectCreate')}
                 on:click={(event) => onAddClicked(section)}
-                tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
               >
                 <i class="fas fa-plus" />
                 {localize('DND5E.Add')}
-              </button>
+              </a>
             {/if}
           </div>
         </li>
@@ -110,47 +110,44 @@
               <div class="item-controls active-effect-controls flexrow">
                 {#if $context.editable}
                   {#if section.type !== 'enchantment'}
-                    <button
-                      type="button"
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
+                    <!-- svelte-ignore a11y-no-static-element-interactions -->
+                    <!-- svelte-ignore a11y-missing-attribute -->
+                    <a
                       class="active-effect-control inline-transparent-button"
                       title={effect.disabled
-                        ? 'DND5E.EffectEnable'
-                        : 'DND5E.EffectDisable'}
+                        ? localize('DND5E.EffectEnable')
+                        : localize('DND5E.EffectDisable')}
                       on:click={() =>
                         effect.update({ disabled: !effect.disabled })}
-                      tabindex={$settingStore.useAccessibleKeyboardSupport
-                        ? 0
-                        : -1}
                     >
                       <i
                         class="fas"
                         class:fa-check={effect.disabled}
                         class:fa-times={!effect.disabled}
                       />
-                    </button>
+                    </a>
                   {/if}
-                  <button
-                    type="button"
+                  <!-- svelte-ignore a11y-click-events-have-key-events -->
+                  <!-- svelte-ignore a11y-no-static-element-interactions -->
+                  <!-- svelte-ignore a11y-missing-attribute -->
+                  <a
                     class="active-effect-control inline-transparent-button"
                     title={localize('DND5E.EffectEdit')}
                     on:click={() => effect.sheet.render(true)}
-                    tabindex={$settingStore.useAccessibleKeyboardSupport
-                      ? 0
-                      : -1}
                   >
                     <i class="fas fa-edit" />
-                  </button>
-                  <button
-                    type="button"
+                  </a>
+                  <!-- svelte-ignore a11y-click-events-have-key-events -->
+                  <!-- svelte-ignore a11y-no-static-element-interactions -->
+                  <!-- svelte-ignore a11y-missing-attribute -->
+                  <a
                     class="active-effect-control inline-transparent-button"
                     title={localize('DND5E.EffectDelete')}
                     on:click={() => effect.deleteDialog()}
-                    tabindex={$settingStore.useAccessibleKeyboardSupport
-                      ? 0
-                      : -1}
                   >
                     <i class="fas fa-trash" />
-                  </button>
+                  </a>
                 {/if}
               </div>
             </li>

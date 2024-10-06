@@ -1,6 +1,5 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { settingStore } from 'src/settings/settings';
   import type { ActorSheetContextV1 } from 'src/types/types';
   import { createEventDispatcher, getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -34,22 +33,23 @@
       class="trait-label-and-list"
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTOR_TRAIT_DETAILS}
     >
-      {#if $settingStore.showTraitLabels}
+      {#if $context.settings.showTraitLabels}
         <span class="trait-label">{title}</span>
       {/if}
       <slot />
     </div>
     {#if $context.unlocked}
-      <button
-        type="button"
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <a
         class="trait-editor inline-icon-button flex-row align-items-flex-start justify-content-center"
         title={configureButtonTitle}
         on:click|stopPropagation|preventDefault={(event) =>
           dispatcher('onConfigureClicked', event)}
-        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
         <i class="fas fa-pencil-alt" />
-      </button>
+      </a>
     {/if}
   </div>
 {/if}
