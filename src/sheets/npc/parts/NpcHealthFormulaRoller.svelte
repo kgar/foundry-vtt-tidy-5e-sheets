@@ -4,7 +4,6 @@
   import { debug } from 'src/utils/logging';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
 
   let context = getContext<Readable<NpcSheetContext>>(
@@ -44,21 +43,19 @@
 </script>
 
 <div class="portrait-hp-formula health" title={localize('DND5E.HPFormula')}>
-  <button
-    type="button"
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- svelte-ignore a11y-missing-attribute -->
+  <a
     title="{localize('DND5E.HitDiceRoll')}/{localize(
       'TIDY5E.HitDiceRollAverage',
     )}"
     on:click={rollNpcHp}
     on:contextmenu={calcAverageHitDie}
     class="roll-hp-formula highlight-on-hover"
-    tabindex={!$settingStore.useDefaultSheetHpTabbing &&
-    $settingStore.useAccessibleKeyboardSupport
-      ? 0
-      : -1}
   >
     <i class="fas fa-dice-six" />
-  </button>
+  </a>
 </div>
 
 <style lang="scss">

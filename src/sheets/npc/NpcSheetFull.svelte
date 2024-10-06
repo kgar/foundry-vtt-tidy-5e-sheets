@@ -17,13 +17,13 @@
   import ActorHeaderStats from '../actor/ActorHeaderStats.svelte';
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
-  import { settingStore } from 'src/settings/settings';
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import InlineSource from '../shared/InlineSource.svelte';
   import InlineCreatureType from '../shared/InlineCreatureType.svelte';
   import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
   import ActorName from '../actor/ActorName.svelte';
   import SpecialSaves from '../actor/SpecialSaves.svelte';
+  import { SettingsProvider } from 'src/settings/settings';
 
   let selectedTabId: string;
 
@@ -48,7 +48,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-{#if $settingStore.itemCardsForNpcs}
+{#if SettingsProvider.settings.itemCardsForNpcs.get()}
   <ItemInfoCard />
 {/if}
 
@@ -163,18 +163,19 @@
             )}
           </b>
           {#if $context.unlocked}
-            <button
-              type="button"
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <!-- svelte-ignore a11y-no-static-element-interactions -->
+            <!-- svelte-ignore a11y-missing-attribute -->
+            <a
               class="origin-summary-tidy inline-icon-button"
               on:click={() =>
                 new ActorOriginSummaryConfigFormApplication(
                   $context.actor,
                 ).render(true)}
               title={localize('TIDY5E.OriginSummaryConfig')}
-              tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             >
               <i class="fas fa-cog" />
-            </button>
+            </a>
           {/if}
         </div>
       </div>
@@ -205,7 +206,7 @@
     <svelte:fragment slot="tab-end">
       {#if $context.editable}
         <SheetEditModeToggle
-          hint={$settingStore.permanentlyUnlockNpcSheetForGm &&
+          hint={SettingsProvider.settings.permanentlyUnlockNpcSheetForGm.get() &&
           FoundryAdapter.userIsGm()
             ? localize('TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM.title')
             : null}
