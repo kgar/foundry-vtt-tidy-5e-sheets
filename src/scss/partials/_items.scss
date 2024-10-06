@@ -272,6 +272,9 @@ input[type='checkbox'] {
       .hidden-config-button {
         visibility: hidden;
         font-size: 0.75rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
       }
 
       &:hover .hidden-config-button {
