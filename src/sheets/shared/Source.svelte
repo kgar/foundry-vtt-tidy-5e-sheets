@@ -1,7 +1,6 @@
 <script lang="ts">
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
 
   export let document: any;
   export let keyPath: string;
@@ -29,13 +28,14 @@
     >
   {/if}
   {#if editable}
-    <button
-      type="button"
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <a
       class="inline-icon-button config-button"
       on:click={() => FoundryAdapter.renderSourceConfig(document, keyPath)}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-      ><i class="fas fa-cog" /></button
-    >
+      ><i class="fas fa-cog" />
+    </a>
   {/if}
 </div>
 

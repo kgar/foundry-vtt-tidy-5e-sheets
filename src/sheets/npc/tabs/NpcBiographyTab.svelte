@@ -7,7 +7,6 @@
   import type { Readable } from 'svelte/store';
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
   import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
-  import { settingStore } from 'src/settings/settings';
   import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context = getContext<Readable<NpcSheetContext>>(
@@ -104,19 +103,20 @@
       </article>
     </div>
     <div class="flex-row extra-small-gap full-height">
-      <button
-        type="button"
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <a
         on:click={togglePersonalityInfo}
         class="toggle-personality-info"
         title={localize('TIDY5E.TogglePersonalityInfo')}
-        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
         {#if showNpcPersonalityInfo}
           <i class="fas fa-angle-double-left" />
         {:else}
           <i class="fas fa-angle-double-right" />
         {/if}
-      </button>
+      </a>
       <div class="main-notes">
         {#if showNpcPersonalityInfo}
           <div

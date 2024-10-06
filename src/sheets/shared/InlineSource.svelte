@@ -1,6 +1,5 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
   import { isNil } from 'src/utils/data';
 
   export let document: any;
@@ -14,15 +13,16 @@
 </script>
 
 {#if editable}
-  <button
-    type="button"
-    class="configure-source inline-transparent-button highlight-on-hover truncate"
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- svelte-ignore a11y-missing-attribute -->
+  <a
+    class="configure-source inline-transparent-button highlight-on-hover truncate align-self-center"
     class:placeholder={usePlaceholder}
     on:click={() => FoundryAdapter.renderSourceConfig(document, keyPath)}
-    tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
   >
     {text}
-  </button>
+  </a>
 {:else}
   <span
     class="source-label truncate"
