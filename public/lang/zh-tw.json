@@ -503,10 +503,6 @@
         "name": "",
         "Header": ""
     },
-    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "hint": "",
-        "name": ""
-    },
     "TIDY5E.Settings.Migrations": {
         "Notification": {
             "Title": "",
@@ -694,10 +690,6 @@
         "name": ""
     },
     "TIDY5E.HitDC": "",
-    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "hint": "",
-        "name": ""
-    },
     "TIDY5E.SpellSourceIdentifierSelectText": "",
     "TIDY5E.SpellSourceIdentifierLabelHint": "",
     "TIDY5E.Utilities.Tools": "",

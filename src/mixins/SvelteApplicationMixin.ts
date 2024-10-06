@@ -278,12 +278,6 @@ export function SvelteApplicationMixin<
 
       this.#restoreScrollPositions(this.element);
       this.#restoreInputFocus(this.element);
-
-      if (!SettingsProvider.settings.useAccessibleKeyboardSupport.get()) {
-        this.element
-          .querySelectorAll('button')
-          .forEach((b: HTMLButtonElement) => (b.tabIndex = -1));
-      }
     }
 
     /* -------------------------------------------- */
@@ -310,7 +304,7 @@ export function SvelteApplicationMixin<
               this.element
             );
             this.render();
-          }),
+          })
         );
 
         // If a controls dropdown button is clicked, close the controls dropdown.

@@ -427,38 +427,6 @@ export function createSettings() {
         },
       },
 
-      useDefaultSheetAttributeTabbing: {
-        options: {
-          name: 'TIDY5E.Settings.UseDefaultSheetAttributeTabbing.name',
-          hint: 'TIDY5E.Settings.UseDefaultSheetAttributeTabbing.hint',
-          scope: 'client',
-          config: true,
-          default: false,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>(
-            'useDefaultSheetAttributeTabbing'
-          );
-        },
-      },
-
-      useDefaultSheetHpTabbing: {
-        options: {
-          name: 'TIDY5E.Settings.UseDefaultSheetHpTabbing.name',
-          hint: 'TIDY5E.Settings.UseDefaultSheetHpTabbing.hint',
-          scope: 'client',
-          config: true,
-          default: false,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>(
-            'useDefaultSheetHpTabbing'
-          );
-        },
-      },
-
       itemCardsFixKey: {
         options: {
           name: 'TIDY5E.Settings.ItemCardsFixKey.name',

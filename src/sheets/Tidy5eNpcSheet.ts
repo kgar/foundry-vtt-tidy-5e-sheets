@@ -1189,12 +1189,6 @@ export class Tidy5eNpcSheet
       if (!SettingsProvider.settings.useAccessibleKeyboardSupport.get()) {
         blurButtonsOnClick(this.element.get(0));
       }
-      if (!SettingsProvider.settings.useAccessibleKeyboardSupport.get()) {
-        this.element
-          .get(0)
-          .querySelectorAll('button')
-          .forEach((b: HTMLButtonElement) => (b.tabIndex = -1));
-      }
 
       return;
     }
@@ -1213,12 +1207,6 @@ export class Tidy5eNpcSheet
         super.activateListeners,
         this
       );
-      if (!SettingsProvider.settings.useAccessibleKeyboardSupport.get()) {
-        this.element
-          .get(0)
-          .querySelectorAll('button')
-          .forEach((b: HTMLButtonElement) => (b.tabIndex = -1));
-      }
     });
   }
 

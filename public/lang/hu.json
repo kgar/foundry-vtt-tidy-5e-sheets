@@ -642,10 +642,6 @@
         "BuyMeACoffeeLink": ""
     },
     "TIDY5E.Tidy5eContainerSheetClassic": "",
-    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "hint": "",
-        "name": ""
-    },
     "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
         "hint": "",
         "name": ""
@@ -684,10 +680,6 @@
         "MoveLeft": "",
         "MoveRight": "",
         "MoveAllLeft": ""
-    },
-    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "hint": "",
-        "name": ""
     },
     "TIDY5E.SortMode.ActionListDefault": "",
     "TIDY5E.Utilities.ConfigureSections": "",

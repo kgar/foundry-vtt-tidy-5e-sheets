@@ -22,15 +22,16 @@
     'DND5E.HitDiceConfig',
   )}"
 >
-  <button
-    type="button"
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- svelte-ignore a11y-missing-attribute -->
+  <a
     class="current-hd config-button transparent-button"
     on:click={$context.editable &&
       FoundryAdapter.renderActorHitDiceConfig($context.actor)}
-    disabled={!$context.editable}
   >
     {hitDice}
-  </button>
+  </a>
 </div>
 
 <style lang="scss">

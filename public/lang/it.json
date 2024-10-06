@@ -706,14 +706,6 @@
         "name": "Utilizza il supporto per tastiera accessibile",
         "hint": "Consente agli utenti di scorrere la maggior parte dei pulsanti/comandi su Tidy 5e Sheets ed eseguirli con i tradizionali tasti di scelta rapida da tastiera basati su pulsanti. Nota: quando è attivo un pulsante in Foundry, le combinazioni di tasti da \"Configura controlli\" non rispondono. Se un modulo utilizza questa funzionalità Foundry per i controlli sui fogli, come l'utilizzo di oggetti tenendo premuto un tasto speciale, l'abilitazione di questa opzione Tidy 5e Sheets interferirà con tali combinazioni di tasti."
     },
-    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "name": "Utilizza la tabulazione della tastiera con attributi del foglio predefiniti",
-        "hint": "Il foglio 5e predefinito consente la tabulazione della tastiera dall'input di un attributo a quello successivo nascondendo i controlli attorno ad essi dall'ordine di tabulazione. Abilitarlo replica quel comportamento. Questa impostazione viene ignorata se \"Utilizza supporto tastiera accessibile\" è disattivato."
-    },
-    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "name": "Utilizza la scheda predefinita dei PF da tastiera",
-        "hint": "Il foglio 5e predefinito consente il tabulazione della tastiera dall'input HP corrente all'input HP temporaneo corrente. Abilitarlo replica quel comportamento. Questa impostazione viene ignorata se \"Utilizza supporto tastiera accessibile\" è disattivato."
-    },
     "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
         "name": "Attiva/disattiva le abilità dei personaggi vuoti",
         "hint": "Aggiunge un pulsante di attivazione/disattivazione per mostrare/nascondere le abilità vuote."

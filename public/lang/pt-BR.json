@@ -316,14 +316,6 @@
         "name": "Use o Suporte de Teclado Acessível",
         "hint": "Permite que os usuários usem tab na maioria dos botões/comandos no Tidy 5e Sheet e os executem com teclas de atalho convencionais baseadas em botões do teclado. Observação: quando focado em um botão no Foundry, as associações de teclas de \"Configurar Controles\" não respondem. Se um módulo usar esse recurso do Foundry para controles nas fichas, como o uso de itens enquanto mantém pressionada uma tecla, a ativação dessa opção do Tidy 5e Sheets interferirá nessas associações de teclas."
     },
-    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "name": "Usar Tab Entre Atributos da Ficha Padrão",
-        "hint": "A ficha padrão permite o uso do tab de uma entrada de atributo para a próxima, ocultando os controles em torno deles na ordem do tab. A ativação dessa opção replica esse comportamento. Essa configuração será ignorada se a opção \"Usar Suporte a Teclado Acessível\" estiver desativada."
-    },
-    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "name": "Usar Tab Entre PVs da Ficha Padrão",
-        "hint": "A ficha padrão permite o uso do tab do PV Atual para PV Temporário. A ativação dessa opção replica esse comportamento. Essa configuração será ignorada se a opção \"Usar Suporte a Teclado Acessível\" estiver desativada."
-    },
     "TIDY5E.Settings.ItemCardsFixKey": {
         "name": "Tecla de Fixação do Cartão de Item",
         "hint": "Segure esta tecla (por exemplo, a tecla \"x\") enquanto estiver visualizando um cartão de item para mantê-lo visível e permitir a interação."

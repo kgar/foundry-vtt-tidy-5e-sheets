@@ -534,14 +534,6 @@
     },
     "TIDY5E.UseDefault": "Utilizar predeterminado",
     "TIDY5E.Reset": "Restablecer",
-    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "hint": "La hoja 5e predeterminada permite tabular desde una entrada de atributo a la siguiente ocultando los controles a su alrededor en orden de tabulación. Habilitar esto replica ese comportamiento. Esta configuración se ignora si \"Usar compatibilidad con teclado accesible\" está desactivado.",
-        "name": "Usar tabulación de atributo de la hoja predeterminada"
-    },
-    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "name": "Usar la tabulación de PS de la hoja predeterminada",
-        "hint": "La hoja 5e predeterminada permite tabular desde la entrada de PS actual hasta la entrada PS temporal actual. Habilitar esto replica ese comportamiento. Esta configuración se ignora si \"Usar compatibilidad con teclado accesible\" está desactivado."
-    },
     "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
         "name": "Incluir hechizos de un minuto como acciones",
         "hint": "Incluye hechizos con una duración de un minuto o menos (por ejemplo, 1 ronda) y un tiempo de activación de 1 acción o 1 acción adicional (por ejemplo, bendecir, azotar, ordenar) en la pestaña/panel de acciones de forma predeterminada."
