@@ -572,10 +572,6 @@
         "hint": "",
         "name": ""
     },
-    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "name": "",
-        "hint": ""
-    },
     "TIDY5E.Settings.MoveTraitsBelowResources": {
         "hint": "",
         "name": ""
@@ -681,10 +677,6 @@
         "hint": ""
     },
     "TIDY5E.Settings.ItemCardsDelay": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
         "name": "",
         "hint": ""
     },

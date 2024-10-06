@@ -259,14 +259,6 @@
         "name": "Use Accessible Keyboard Support",
         "hint": "Enables users to tab through most of the buttons/commands on Tidy 5e Sheets and execute them with conventional button-based keyboard hotkeys. Note: when focused on a button in Foundry, keybindings from \"Configure Controls\" do not respond. If a module uses this Foundry feature for controls on the sheets, such as using items while holding a special key, then enabling this Tidy 5e Sheets option will interfere with those keybindings."
     },
-    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "name": "Use default sheet attribute keyboard tabbing",
-        "hint": "The default 5e sheet allows keyboard tabbing from one attribute input to the next by hiding the controls around them from the tab order. Enabling this replicates that behaviour. This setting is ignored if \"Use Accessible Keyboard Support\" is turned off."
-    },
-    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "name": "Use default sheet HP keyboard tabbing",
-        "hint": "The default 5e sheet allows keyboard tabbing from the current HP input to the current temp HP input. Enabling this replicates that behaviour. This setting is ignored if \"Use Accessible Keyboard Support\" is turned off."
-    },
     "TIDY5E.Settings.ItemCardsFixKey": {
         "name": "アイテム情報カード操作キー",
         "hint": "アイテムカードの操作に使用するキー（例：x）を入力します。ファンクションキー（Ctrl、Altなど）以外の任意のキーにすることができます。(再読み込みが発生します)"

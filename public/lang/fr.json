@@ -578,14 +578,6 @@
         "label": "Paramètres du monde",
         "title": "Paramètres du monde (MD seulement)"
     },
-    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "name": "Utiliser la tabulation par défaut du clavier pour les PV",
-        "hint": "La feuille 5e par défaut permet la tabulation du clavier de l'entrée des PV actuels à l'entrée PV temporaire actuels. L'activation de ce paramètre reproduit ce comportement. Ce paramètre est ignoré si l'option \"Utiliser le support de clavier accessible\" est désactivée."
-    },
-    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "name": "Utiliser l'attribut par défaut de la feuille pour la tabulation au clavier",
-        "hint": "La feuille 5e par défaut permet la tabulation au clavier d'une entrée d'attribut à la suivante en cachant les contrôles autour d'eux de l'ordre de tabulation. L'activation de ce paramètre reproduit ce comportement. Ce paramètre est ignoré si l'option \"Utiliser un support clavier accessible\" est désactivée."
-    },
     "TIDY5E.Settings.DefaultSheetTabs": {
         "name": "Onglets de la feuille par défaut",
         "hint": "Détermine quels onglets seront affichés et dans quel ordre par défaut. S'applique lorsqu'aucun onglet n'a été sélectionné pour un acteur.",

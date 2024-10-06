@@ -683,10 +683,6 @@
         "name": "",
         "hint": ""
     },
-    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "name": "",
-        "hint": ""
-    },
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
         "hint": "",
         "name": ""
@@ -762,10 +758,6 @@
     "TIDY5E.ItemFilters.CanCast": "",
     "TIDY5E.WorldSettings.TabIcons": {
         "tabLabel": ""
-    },
-    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "hint": "",
-        "name": ""
     },
     "TIDY5E.Settings.ActionList.Header": "",
     "TIDY5E.ItemFilters.Category.Miscellaneous": "",

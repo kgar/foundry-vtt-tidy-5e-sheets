@@ -520,10 +520,6 @@
         "name": "Unterstützung für barrierefreie Tastaturen verwenden",
         "hint": "Ermöglicht es dem Benutzer, die meisten Schaltflächen/Befehle auf \"Tidy 5e Sheets\" mit der Tabulatortaste aufzurufen und sie mit herkömmlichen, auf Schaltflächen basierenden Tastenkombinationen auszuführen. Hinweis: Wenn der Fokus auf einer Schaltfläche in Foundry liegt, reagieren die Tastenkombinationen aus \"Steuerelemente konfigurieren\" nicht. Wenn ein Modul diese Foundry-Funktion für Steuerelemente auf den Spielbögen verwendet, wie z. B. die Verwendung von Elementen bei gedrückter Sondertaste, so wird jene Tastenbindungen durch die Aktivierung dieser \"Tidy 5e Sheets\"-Option beeinträchtigt."
     },
-    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "name": "Standardbogen Tabulator-Wechsel für TP verwenden",
-        "hint": "Der 5e-Standardbogen erlaubt den Wechsel mittels Tabulator von der aktuellen TP-Eingabe zur aktuellen temporären TP-Eingabe. Durch Aktivierung, wird dieses Verhalten repliziert. Diese Einstellung wird ignoriert, wenn \"Unterstützung für barrierefreie Tastaturen verwenden\" ausgeschaltet ist."
-    },
     "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
         "hint": "Fügt eine Schaltfläche zum Ein- und Ausblenden von leeren Fertigkeiten hinzu.",
         "name": "Leere Charakterfähigkeiten umschalten"
@@ -580,10 +576,6 @@
     },
     "TIDY5E.UserSettings.TabActionsList": {
         "tabLabel": "Aktionsliste"
-    },
-    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "name": "Standard-Tabulator für Bogenattribute verwenden",
-        "hint": "Der 5e-Standardbogen erlaubt das Wechseln von einer Attributeingabe zur nächsten, indem es die Steuerelemente um sie herum aus der Tabulatorreihenfolge ausblendet. Durch Aktivierung wird dieses Verhalten nachgebildet. Diese Einstellung wird ignoriert, wenn \"Unterstützung für barrierefreie Tastaturen verwenden\" ausgeschaltet ist."
     },
     "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "Nahkampf-Zauberangriff",
