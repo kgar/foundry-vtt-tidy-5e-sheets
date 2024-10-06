@@ -47,7 +47,7 @@
   openerPadding="0.125rem 0.5rem"
   buttonText={localize('TIDY5E.ThemeSettings.Sheet.menuLabel')}
 >
-  <ThemeSelectorButtonMenuCommand />
+  <ThemeSelectorButtonMenuCommand colorScheme={$context.colorScheme} />
   <ButtonMenuDivider />
   <ButtonMenuCommand
     on:click={() => fileImportInput.click()}

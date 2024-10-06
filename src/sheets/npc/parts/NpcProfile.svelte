@@ -13,7 +13,6 @@
   import ExhaustionInput from 'src/sheets/actor/ExhaustionInput.svelte';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { CONSTANTS } from 'src/constants';
-  import { SettingsProvider } from 'src/settings/settings';
 
   let context = getContext<Readable<NpcSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -29,14 +28,14 @@
     });
   }
 
-  $: exhaustionConfig = SettingsProvider.settings.exhaustionConfig.get();
+  $: exhaustionConfig = $context.settings.exhaustionConfig;
 
   $: specificExhaustionConfig =
     exhaustionConfig?.type === 'specific' ? exhaustionConfig : null;
 </script>
 
-<ActorProfile useHpOverlay={SettingsProvider.settings.useHpOverlayNpc.get()}>
-  {#if incapacitated && (!SettingsProvider.settings.hideDeathSavesFromPlayers.get() || FoundryAdapter.userIsGm())}
+<ActorProfile useHpOverlay={$context.settings.useHpOverlayNpc}>
+  {#if incapacitated && (!$context.settings.hideDeathSavesFromPlayers || FoundryAdapter.userIsGm())}
     <DeathSaves
       successes={$context.system.attributes.death.success}
       failures={$context.system.attributes.death.failure}
@@ -44,10 +43,10 @@
       failuresField="system.attributes.death.failure"
       on:rollDeathSave={(event) =>
         $context.actor.rollDeathSave({ event: event.detail.mouseEvent })}
-      hasHpOverlay={SettingsProvider.settings.useHpOverlayNpc.get()}
+      hasHpOverlay={$context.settings.useHpOverlayNpc}
     />
   {/if}
-  {#if SettingsProvider.settings.useExhaustion.get() && specificExhaustionConfig}
+  {#if $context.settings.useExhaustion && specificExhaustionConfig}
     <ExhaustionTracker
       level={$context.system.attributes.exhaustion}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
@@ -58,7 +57,7 @@
         'system.attributes.exhaustion',
       )}
     />
-  {:else if SettingsProvider.settings.useExhaustion.get() && SettingsProvider.settings.exhaustionConfig.get()?.type === 'open'}
+  {:else if $context.settings.useExhaustion && $context.settings.exhaustionConfig?.type === 'open'}
     <ExhaustionInput
       level={$context.system.attributes.exhaustion}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}

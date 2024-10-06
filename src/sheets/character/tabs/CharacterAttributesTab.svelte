@@ -15,7 +15,6 @@
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
-  import { SettingsProvider } from 'src/settings/settings';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -61,13 +60,13 @@
     <section class="side-panel">
       <SkillsList
         actor={$context.actor}
-        toggleable={SettingsProvider.settings.toggleEmptyCharacterSkills.get()}
+        toggleable={$context.settings.toggleEmptyCharacterSkills}
         expanded={!!TidyFlags.skillsExpanded.get($context.actor)}
         toggleField={TidyFlags.skillsExpanded.prop}
       />
-      {#if !SettingsProvider.settings.moveTraitsBelowCharacterResources.get()}
+      {#if !$context.settings.moveTraitsBelowCharacterResources}
         <Traits
-          toggleable={SettingsProvider.settings.toggleEmptyCharacterTraits.get()}
+          toggleable={$context.settings.toggleEmptyCharacterTraits}
         />
       {/if}
     </section>
@@ -75,9 +74,9 @@
       {#if showResources}
         <Resources />
       {/if}
-      {#if SettingsProvider.settings.moveTraitsBelowCharacterResources.get()}
+      {#if $context.settings.moveTraitsBelowCharacterResources}
         <Traits
-          toggleable={SettingsProvider.settings.toggleEmptyCharacterTraits.get()}
+          toggleable={$context.settings.toggleEmptyCharacterTraits}
         />
       {/if}
       <Favorites {searchCriteria} />

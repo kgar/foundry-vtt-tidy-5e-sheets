@@ -1,13 +1,19 @@
 <script lang="ts">
   import type { Item5e } from 'src/types/item.types';
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, getContext } from 'svelte';
   import ActiveEffectsMarker from './ActiveEffectsMarker.svelte';
-  import { SettingsProvider } from 'src/settings/settings';
+  import type { Readable } from 'svelte/store';
+  import type { CurrentSettings } from 'src/settings/settings';
+  import { CONSTANTS } from 'src/constants';
 
   export let cssClass: string = '';
   export let hasChildren = true;
   export let item: Item5e;
   export let useActiveEffectsMarker: boolean = true;
+
+  let context = getContext<Readable<{ settings: CurrentSettings }>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   $: hasActiveEffects = !!item.effects?.size;
 
@@ -25,7 +31,7 @@
 >
   <slot />
 </span>
-{#if useActiveEffectsMarker && SettingsProvider.settings.showActiveEffectsMarker.get() && hasActiveEffects}
+{#if useActiveEffectsMarker && $context.settings.showActiveEffectsMarker && hasActiveEffects}
   <ActiveEffectsMarker />
 {/if}
 

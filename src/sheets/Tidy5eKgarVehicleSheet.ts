@@ -1,6 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { SettingsProvider } from 'src/settings/settings';
+import { getCurrentSettings, SettingsProvider } from 'src/settings/settings';
 import type {
   ItemCardStore,
   SheetExpandedItemsCacheable,
@@ -320,6 +320,7 @@ export class Tidy5eVehicleSheet
         (!unlocked && SettingsProvider.settings.useTotalSheetLock.get()) ||
         !defaultDocumentContext.editable,
       owner: this.actor.isOwner,
+      settings: getCurrentSettings(),
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
       tabs: [],
       unlocked: unlocked,

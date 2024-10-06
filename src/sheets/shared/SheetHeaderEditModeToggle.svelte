@@ -6,7 +6,6 @@
   import type { ActorSheetContextV1 } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import { SettingsProvider } from 'src/settings/settings';
 
   let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -18,13 +17,13 @@
 
   $: allowEdit = TidyFlags.allowEdit.get($context.actor);
 
-  $: descriptionVariable = SettingsProvider.settings.useTotalSheetLock.get()
+  $: descriptionVariable = $context.settings.useTotalSheetLock
     ? localize('TIDY5E.SheetLock.Description')
     : localize('TIDY5E.SheetEdit.Description');
-  $: lockHintVariable = SettingsProvider.settings.useTotalSheetLock.get()
+  $: lockHintVariable = $context.settings.useTotalSheetLock
     ? 'TIDY5E.SheetLock.Unlock.Hint'
     : 'TIDY5E.SheetEdit.Enable.Hint';
-  $: unlockHintVariable = SettingsProvider.settings.useTotalSheetLock.get()
+  $: unlockHintVariable = $context.settings.useTotalSheetLock
     ? 'TIDY5E.SheetLock.Lock.Hint'
     : 'TIDY5E.SheetEdit.Disable.Hint';
   $: unlockTitle = localize(unlockHintVariable, {

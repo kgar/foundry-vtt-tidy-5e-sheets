@@ -11,7 +11,6 @@
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { CONSTANTS } from 'src/constants';
-  import { SettingsProvider } from 'src/settings/settings';
 
   let context = getContext<Readable<VehicleSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -21,15 +20,15 @@
     TidyFlags.setFlag($context.actor, 'exhaustion', event.detail.level);
   }
 
-  $: exhaustionConfig = SettingsProvider.settings.exhaustionConfig.get();
+  $: exhaustionConfig = $context.settings.exhaustionConfig;
   $: specificExhaustionConfig =
     exhaustionConfig?.type === 'specific' ? exhaustionConfig : null;
 </script>
 
 <ActorProfile
-  useHpOverlay={SettingsProvider.settings.useHpOverlayVehicle.get()}
+  useHpOverlay={$context.settings.useHpOverlayVehicle}
 >
-  {#if SettingsProvider.settings.useExhaustion.get() && specificExhaustionConfig}
+  {#if $context.settings.useExhaustion && specificExhaustionConfig}
     <ExhaustionTracker
       level={TidyFlags.exhaustion.get($context.actor) ?? 0}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
@@ -40,7 +39,7 @@
         TidyFlags.exhaustion.prop,
       )}
     />
-  {:else if SettingsProvider.settings.useExhaustion.get() && SettingsProvider.settings.vehicleExhaustionConfig.get().type === 'open'}
+  {:else if $context.settings.useExhaustion && $context.settings.vehicleExhaustionConfig.type === 'open'}
     <ExhaustionInput
       level={TidyFlags.exhaustion.get($context.actor) ?? 0}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
@@ -51,7 +50,7 @@
       )}
     />
   {/if}
-  {#if SettingsProvider.settings.useVehicleMotion.get()}
+  {#if $context.settings.useVehicleMotion}
     <VehicleMovement
       motion={TidyFlags.motion.get($context.actor) === true}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-right'}

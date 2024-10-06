@@ -38,7 +38,15 @@ export type CurrentSettings = {
   >;
 };
 
-export function getCurrentSettings(): CurrentSettings {
+let _currentSettings: CurrentSettings;
+
+export function getCurrentSettings(
+  ignoreCache: boolean = false
+): CurrentSettings {
+  if (!ignoreCache && _currentSettings) {
+    return _currentSettings;
+  }
+
   const keys = Object.keys(
     SettingsProvider.settings
   ) as (keyof (typeof SettingsProvider)['settings'])[];
@@ -1905,7 +1913,6 @@ export function createSettings() {
       hookCallback?: () => void
     ): Unsubscriber {
       const hookId = Hooks.on('tidy5e-sheet.settingsUpdated', () => {
-        console.warn('Reacting to settings changed');
         hookCallback?.();
       });
       const unsubscriber = readable<number>(hookId).subscribe(() => {});
@@ -1927,7 +1934,8 @@ export function initSettings() {
     FoundryAdapter.registerTidyMenu(menu[0], menu[1].options);
   }
 
-  const debouncedSettingHookCall = FoundryAdapter.debounce(() => {
+  const debouncedOnSettingsChanged = FoundryAdapter.debounce(() => {
+    _currentSettings = getCurrentSettings(true);
     TidyHooks.tidy5eSheetsSettingsUpdated();
   }, 100);
 
@@ -1935,7 +1943,7 @@ export function initSettings() {
     const options = {
       ...setting[1].options,
       onChange: (...args: any[]) => {
-        debouncedSettingHookCall();
+        debouncedOnSettingsChanged();
 
         (setting[1].options as any).onChange?.(...args);
       },

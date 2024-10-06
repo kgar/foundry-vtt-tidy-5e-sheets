@@ -12,6 +12,7 @@ import type {
 } from './types';
 import type { DocumentFilters } from 'src/runtime/item/item.types';
 import type { RegisteredContent } from 'src/runtime/types';
+import type { CurrentSettings } from 'src/settings/settings';
 
 export type GroupSheetClassicContext = {
   config: any; // TODO: If possible, convert the full CONFIG (no modules on) to a typescript type.
@@ -37,6 +38,7 @@ export type GroupSheetClassicContext = {
   owner: boolean;
   items: Item5e[];
   effects: unknown[];
+  settings: CurrentSettings;
   showContainerPanel: boolean;
   showGroupMemberTabInfoPanel: boolean;
   source: unknown;

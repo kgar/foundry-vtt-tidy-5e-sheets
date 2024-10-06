@@ -5,16 +5,20 @@
   } from 'src/types/types';
   import CapacityBar from '../container/CapacityBar.svelte';
   import { CONSTANTS } from 'src/constants';
-  import type { Writable } from 'svelte/store';
+  import type { Readable, Writable } from 'svelte/store';
   import { getContext } from 'svelte';
   import type { Item5e } from 'src/types/item.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { coalesce } from 'src/utils/formatting';
   import { TidyHooks } from 'src/foundry/TidyHooks';
-  import { SettingsProvider } from 'src/settings/settings';
+  import type { CurrentSettings } from 'src/settings/settings';
 
   export let containerPanelItems: ContainerPanelItemContext[] = [];
   export let searchCriteria: string = '';
+
+  let context = getContext<Readable<{ settings: CurrentSettings }>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   $: visibleContainersIdsSubset = FoundryAdapter.searchItems(
     searchCriteria,
@@ -28,10 +32,7 @@
   async function onMouseEnter(event: Event, item: Item5e) {
     TidyHooks.tidy5eSheetsItemHoverOn(event, item);
 
-    if (
-      !item?.getChatData ||
-      !SettingsProvider.settings.itemCardsForAllItems.get()
-    ) {
+    if (!item?.getChatData || !$context.settings.itemCardsForAllItems) {
       return;
     }
 

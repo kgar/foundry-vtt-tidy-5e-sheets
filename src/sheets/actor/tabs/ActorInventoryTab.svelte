@@ -28,7 +28,6 @@
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import AttunementTracker from '../AttunementTracker.svelte';
-    import { SettingsProvider } from 'src/settings/settings';
 
   export let tabId: string;
 
@@ -140,7 +139,7 @@
     <Currency document={$context.actor} />
   </div>
 
-  {#if SettingsProvider.settings.useCharacterEncumbranceBar.get()}
+  {#if $context.settings.useCharacterEncumbranceBar}
     <EncumbranceBar />
   {/if}
 </TabFooter>

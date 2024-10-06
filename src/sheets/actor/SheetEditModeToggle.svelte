@@ -6,7 +6,6 @@
   import type { ActorSheetContextV1 } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import { SettingsProvider } from 'src/settings/settings';
 
   export let hint: string | null = null;
 
@@ -20,7 +19,7 @@
 
   $: allowEdit = TidyFlags.allowEdit.get($context.actor);
 
-  $: useTotalSheetLock = SettingsProvider.settings.useTotalSheetLock.get();
+  $: useTotalSheetLock = $context.settings.useTotalSheetLock;
 
   $: descriptionVariable =
     hint ??

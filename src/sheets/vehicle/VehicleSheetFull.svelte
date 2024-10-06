@@ -25,7 +25,6 @@
   import InlineSource from '../shared/InlineSource.svelte';
   import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
   import ActorName from '../actor/ActorName.svelte';
-  import { SettingsProvider } from 'src/settings/settings';
 
   let selectedTabId: string;
 
@@ -64,7 +63,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-{#if SettingsProvider.settings.itemCardsForNpcs.get()}
+{#if $context.settings.itemCardsForNpcs}
   <ItemInfoCard />
 {/if}
 
@@ -193,7 +192,7 @@
   <svelte:fragment slot="tab-end">
     {#if $context.editable}
       <SheetEditModeToggle
-        hint={SettingsProvider.settings.permanentlyUnlockVehicleSheetForGm.get() &&
+        hint={$context.settings.permanentlyUnlockVehicleSheetForGm &&
         FoundryAdapter.userIsGm()
           ? localize('TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM.title')
           : null}

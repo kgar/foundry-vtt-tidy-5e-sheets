@@ -3,7 +3,6 @@
   import ResourceWithBar from 'src/components/bar/ResourceWithBar.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { SettingsProvider } from 'src/settings/settings';
   import type { NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -30,7 +29,7 @@
       $context.lockHpMaxChanges ||
       $context.lockSensitiveFields}
     percentage={$context.healthPercentage}
-    Bar={SettingsProvider.settings.useHpBarNpc.get() ? HpBar : null}
+    Bar={$context.settings.useHpBarNpc ? HpBar : null}
   />
 </div>
 

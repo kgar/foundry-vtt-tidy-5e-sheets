@@ -1,6 +1,5 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { SettingsProvider } from 'src/settings/settings';
   import type { ActorSheetContextV1 } from 'src/types/types';
   import { createEventDispatcher, getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -34,7 +33,7 @@
       class="trait-label-and-list"
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTOR_TRAIT_DETAILS}
     >
-      {#if SettingsProvider.settings.showTraitLabels.get()}
+      {#if $context.settings.showTraitLabels}
         <span class="trait-label">{title}</span>
       {/if}
       <slot />

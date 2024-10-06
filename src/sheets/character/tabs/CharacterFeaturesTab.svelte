@@ -220,7 +220,7 @@
                     </ItemName>
                   </ItemTableCell>
                   <!-- TODO: Handle more gracefully; it is sitting outside of any table cell -->
-                  {#if SettingsProvider.settings.showIconsNextToTheItemName.get() && 'favoriteId' in ctx && !!ctx.favoriteId}
+                  {#if $context.settings.showIconsNextToTheItemName && 'favoriteId' in ctx && !!ctx.favoriteId}
                     <InlineFavoriteIcon />
                   {/if}
                   {#if section.showUsesColumn}

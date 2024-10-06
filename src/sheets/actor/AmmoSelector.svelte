@@ -1,7 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { SettingsProvider } from 'src/settings/settings';
   import type { ContainerSheetContext, Item5e } from 'src/types/item.types';
   import type { ActorSheetContextV1 } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -26,8 +25,7 @@
       .filter(
         (item: any) =>
           item.system.type?.value === 'ammo' &&
-          (!SettingsProvider.settings.showEquippedAmmoOnly.get() ||
-            item.system.equipped),
+          (!$context.settings.showEquippedAmmoOnly || item.system.equipped),
       )
       .map((item: any) => ({
         text: `${item.name} (${item.system.quantity})`,

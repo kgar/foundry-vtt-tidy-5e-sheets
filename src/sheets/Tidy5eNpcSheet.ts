@@ -27,7 +27,7 @@ import {
   maintainCustomContentInputFocus,
 } from 'src/utils/applications';
 import { debug, error } from 'src/utils/logging';
-import { SettingsProvider } from 'src/settings/settings';
+import { getCurrentSettings, SettingsProvider } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { getPercentage } from 'src/utils/numbers';
 import type { SvelteComponent } from 'svelte';
@@ -822,6 +822,7 @@ export class Tidy5eNpcSheet
       preparedSpells: FoundryAdapter.countPreparedSpells(
         defaultDocumentContext.items
       ),
+      settings: getCurrentSettings(),
       shortRest: this._onShortRest.bind(this),
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
       spellCalculations: calculateSpellAttackAndDc(this.actor),

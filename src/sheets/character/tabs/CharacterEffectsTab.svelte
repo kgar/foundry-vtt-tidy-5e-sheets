@@ -22,7 +22,6 @@
   import ActorEffectToggleControl from 'src/components/item-list/controls/ActorEffectToggleControl.svelte';
   import EffectFavoriteControl from 'src/components/item-list/controls/EffectFavoriteControl.svelte';
   import InlineFavoriteIcon from 'src/components/item-list/InlineFavoriteIcon.svelte';
-  import { SettingsProvider } from 'src/settings/settings';
 
   let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -158,7 +157,7 @@
                       >{effectContext.name}</span
                     >
                   </ItemTableCell>
-                  {#if FoundryAdapter.isActiveEffectContextFavorited(effectContext, $context.actor) && SettingsProvider.settings.showIconsNextToTheItemName.get()}
+                  {#if FoundryAdapter.isActiveEffectContextFavorited(effectContext, $context.actor) && $context.settings.showIconsNextToTheItemName}
                     <InlineFavoriteIcon />
                   {/if}
                   <ItemTableCell baseWidth="12.5rem">

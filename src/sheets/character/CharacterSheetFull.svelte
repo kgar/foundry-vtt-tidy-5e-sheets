@@ -26,7 +26,6 @@
   import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
   import ActorName from '../actor/ActorName.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
-  import { SettingsProvider } from 'src/settings/settings';
 
   let selectedTabId: string;
   let context = getContext<Readable<CharacterSheetContext>>(
@@ -134,7 +133,7 @@
 
     <section class="class-list">
       <!-- Player Name -->
-      {#if SettingsProvider.settings.showPlayerName.get()}
+      {#if $context.settings.showPlayerName}
         <ContentEditableFormField
           element="span"
           document={$context.actor}
@@ -149,7 +148,7 @@
       {/if}
 
       <!-- Class / Subclass -->
-      {#if $context.owner && SettingsProvider.settings.showClassList.get()}
+      {#if $context.owner && $context.settings.showClassList}
         <span class="flex-row extra-small-gap">
           {#each classAndSubclassSummaries as summary, i}
             {#if i > 0}
@@ -241,7 +240,7 @@
   <svelte:fragment slot="tab-end">
     {#if $context.editable}
       <SheetEditModeToggle
-        hint={SettingsProvider.settings.permanentlyUnlockCharacterSheetForGm.get() &&
+        hint={$context.settings.permanentlyUnlockCharacterSheetForGm &&
         FoundryAdapter.userIsGm()
           ? localize(
               'TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM.title',

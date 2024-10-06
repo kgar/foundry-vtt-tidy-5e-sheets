@@ -13,7 +13,6 @@
   import CargoList from '../parts/CargoList.svelte';
   import PassengerOrCrewList from '../parts/PassengerOrCrewList.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { SettingsProvider } from 'src/settings/settings';
 
   let context = getContext<Readable<VehicleSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -50,7 +49,7 @@
     <Currency document={$context.actor} />
   </div>
 
-  {#if SettingsProvider.settings.useVehicleEncumbranceBar.get()}
+  {#if $context.settings.useVehicleEncumbranceBar}
     <EncumbranceBar />
   {/if}
 </TabFooter>

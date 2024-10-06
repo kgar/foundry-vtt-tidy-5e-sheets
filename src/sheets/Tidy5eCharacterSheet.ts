@@ -1,7 +1,7 @@
 import { FoundryAdapter } from '../foundry/foundry-adapter';
 import CharacterSheet from './character/CharacterSheet.svelte';
 import { debug, error } from 'src/utils/logging';
-import { SettingsProvider } from 'src/settings/settings';
+import { getCurrentSettings, SettingsProvider } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { CONSTANTS } from 'src/constants';
 import { readable, writable } from 'svelte/store';
@@ -855,6 +855,7 @@ export class Tidy5eCharacterSheet
       ),
       originalContext: defaultDocumentContext,
       owner: this.actor.isOwner,
+      settings: getCurrentSettings(),
       showContainerPanel:
         TidyFlags.showContainerPanel.get(this.actor) === true &&
         Array.from(defaultDocumentContext.items).some(

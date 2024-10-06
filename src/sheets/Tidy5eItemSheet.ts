@@ -20,7 +20,7 @@ import { isNil } from 'src/utils/data';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { CustomContentRenderer } from './CustomContentRenderer';
-import { SettingsProvider } from 'src/settings/settings';
+import { getCurrentSettings, SettingsProvider } from 'src/settings/settings';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { AsyncMutex } from 'src/utils/mutex';
 import { TidyHooks } from 'src/foundry/TidyHooks';
@@ -166,6 +166,7 @@ export class Tidy5eKgarItemSheet
       itemDescriptions,
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       originalContext: defaultDocumentContext,
+      settings: getCurrentSettings(),
       tabs: tabs,
       toggleAdvancementLock: this.toggleAdvancementLock.bind(this),
       viewableWarnings:

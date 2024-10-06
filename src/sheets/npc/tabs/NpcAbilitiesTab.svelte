@@ -56,7 +56,6 @@
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import InlineContainerView from 'src/sheets/container/InlineContainerView.svelte';
-  import { SettingsProvider } from 'src/settings/settings';
 
   let context = getContext<Readable<NpcSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -85,7 +84,7 @@
   const itemIdsToShow = writable<Set<string> | undefined>(undefined);
   setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
 
-  $: spellbook = !SettingsProvider.settings.showSpellbookTabNpc.get()
+  $: spellbook = !$context.settings.showSpellbookTabNpc
     ? SheetSections.configureSpellbook(
         $context.actor,
         tabId,
@@ -173,13 +172,13 @@
   <div class="side-panel">
     <SkillsList
       actor={$context.actor}
-      toggleable={!SettingsProvider.settings.alwaysShowNpcSkills.get()}
+      toggleable={!$context.settings.alwaysShowNpcSkills}
       expanded={!!TidyFlags.skillsExpanded.get($context.actor)}
       toggleField={TidyFlags.skillsExpanded.prop}
     />
-    {#if !SettingsProvider.settings.moveTraitsBelowNpcResources.get()}
+    {#if !$context.settings.moveTraitsBelowNpcResources}
       <Traits
-        toggleable={!SettingsProvider.settings.alwaysShowNpcTraits.get()}
+        toggleable={!$context.settings.alwaysShowNpcTraits}
       />
     {/if}
   </div>
@@ -195,9 +194,9 @@
     >
       <NpcLegendaryActions />
     </ExpandableContainer>
-    {#if SettingsProvider.settings.moveTraitsBelowNpcResources.get()}
+    {#if $context.settings.moveTraitsBelowNpcResources}
       <Traits
-        toggleable={!SettingsProvider.settings.alwaysShowNpcTraits.get()}
+        toggleable={!$context.settings.alwaysShowNpcTraits}
       />
     {/if}
     {#each features as section (section.key)}
@@ -353,7 +352,7 @@
         {/if}
       {/if}
     {/each}
-    {#if !SettingsProvider.settings.showSpellbookTabNpc.get()}
+    {#if !$context.settings.showSpellbookTabNpc}
       {#if noSpellLevels}
         <h2>
           <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -437,7 +436,7 @@
 </section>
 <TabFooter mode="vertical" cssClass="abilities-footer">
   <Currency document={$context.actor} />
-  {#if SettingsProvider.settings.useNpcEncumbranceBar.get()}
+  {#if $context.settings.useNpcEncumbranceBar}
     <EncumbranceBar />
   {/if}
 </TabFooter>

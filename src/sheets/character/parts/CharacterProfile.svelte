@@ -14,7 +14,6 @@
   import ExhaustionInput from 'src/sheets/actor/ExhaustionInput.svelte';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { CONSTANTS } from 'src/constants';
-  import { SettingsProvider } from 'src/settings/settings';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -30,13 +29,13 @@
     });
   }
 
-  $: exhaustionConfig = SettingsProvider.settings.exhaustionConfig.get();
+  $: exhaustionConfig = $context.settings.exhaustionConfig;
   $: specificExhaustionConfig =
     exhaustionConfig?.type === 'specific' ? exhaustionConfig : null;
 </script>
 
-<ActorProfile useHpOverlay={SettingsProvider.settings.useHpOverlay.get()}>
-  {#if incapacitated && (!SettingsProvider.settings.hideDeathSavesFromPlayers.get() || FoundryAdapter.userIsGm())}
+<ActorProfile useHpOverlay={$context.settings.useHpOverlay}>
+  {#if incapacitated && (!$context.settings.hideDeathSavesFromPlayers || FoundryAdapter.userIsGm())}
     <DeathSaves
       successes={$context.system.attributes.death.success}
       failures={$context.system.attributes.death.failure}
@@ -44,17 +43,17 @@
       failuresField="system.attributes.death.failure"
       on:rollDeathSave={(event) =>
         $context.actor.rollDeathSave({ event: event.detail.mouseEvent })}
-      hasHpOverlay={SettingsProvider.settings.useHpOverlay.get()}
+      hasHpOverlay={$context.settings.useHpOverlay}
     />
   {/if}
 
-  {#if SettingsProvider.settings.useExhaustion.get() && specificExhaustionConfig}
+  {#if $context.settings.useExhaustion && specificExhaustionConfig}
     <ExhaustionTracker
       level={$context.system.attributes.exhaustion}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
-      onlyShowOnHover={SettingsProvider.settings.showExhaustionOnHover.get() ||
-        (SettingsProvider.settings.hideIfZero.get() &&
+      onlyShowOnHover={$context.settings.showExhaustionOnHover ||
+        ($context.settings.hideIfZero &&
           $context.system.attributes.exhaustion === 0)}
       exhaustionConfig={specificExhaustionConfig}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
@@ -62,13 +61,13 @@
         'system.attributes.exhaustion',
       )}
     />
-  {:else if SettingsProvider.settings.useExhaustion.get() && SettingsProvider.settings.exhaustionConfig.get()?.type === 'open'}
+  {:else if $context.settings.useExhaustion && $context.settings.exhaustionConfig?.type === 'open'}
     <ExhaustionInput
       level={$context.system.attributes.exhaustion}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
-      onlyShowOnHover={SettingsProvider.settings.showExhaustionOnHover.get() ||
-        (SettingsProvider.settings.hideIfZero.get() &&
+      onlyShowOnHover={$context.settings.showExhaustionOnHover ||
+        ($context.settings.hideIfZero &&
           $context.system.attributes.exhaustion === 0)}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
         $context.actor,
@@ -77,14 +76,14 @@
     />
   {/if}
 
-  {#if SettingsProvider.settings.useCharacterInspiration.get()}
+  {#if $context.settings.useCharacterInspiration}
     <Inspiration
       inspired={$context.actor.system.attributes.inspiration}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-right'}
-      onlyShowOnHover={SettingsProvider.settings.showInspirationOnHover.get() ||
-        (SettingsProvider.settings.hideIfZero.get() &&
+      onlyShowOnHover={$context.settings.showInspirationOnHover ||
+        ($context.settings.hideIfZero &&
           !$context.actor.system.attributes.inspiration)}
-      animate={SettingsProvider.settings.animateInspiration.get()}
+      animate={$context.settings.animateInspiration}
     />
   {/if}
 

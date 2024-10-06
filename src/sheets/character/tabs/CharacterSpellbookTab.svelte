@@ -26,7 +26,6 @@
   import ButtonMenu from 'src/components/button-menu/ButtonMenu.svelte';
   import ButtonMenuCommand from 'src/components/button-menu/ButtonMenuCommand.svelte';
   import SpellSourceClassAssignmentsFormApplication from 'src/applications/spell-source-class-assignments/SpellSourceClassAssignmentsFormApplication';
-  import { SettingsProvider } from 'src/settings/settings';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -62,7 +61,7 @@
 
   function tryFilterByClass(spells: any[]) {
     if (
-      !SettingsProvider.settings.useMulticlassSpellbookFilter.get() ||
+      !$context.settings.useMulticlassSpellbookFilter ||
       selectedClassFilter === ''
     ) {
       return spells;
@@ -89,7 +88,7 @@
 
 <UtilityToolbar>
   <Search bind:value={searchCriteria} />
-  {#if SettingsProvider.settings.useMulticlassSpellbookFilter.get()}
+  {#if $context.settings.useMulticlassSpellbookFilter}
     <div class="spellbook-class-filter">
       <SpellbookClassFilter />
     </div>

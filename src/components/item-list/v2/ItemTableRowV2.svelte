@@ -19,7 +19,7 @@
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { TidyHooks } from 'src/foundry/TidyHooks';
-    import { SettingsProvider } from 'src/settings/settings';
+  import type { CurrentSettings } from 'src/settings/settings';
 
   export let item: Item5e | null = null;
   export let contextMenu: { type: string; uuid: string } | null = null;
@@ -38,7 +38,7 @@
   const expandedItemData = getContext<ExpandedItemData>(
     CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA,
   );
-  const context = getContext<Writable<unknown>>(
+  const context = getContext<Writable<{ settings: CurrentSettings }>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
   const expandedItems = getContext<ExpandedItemIdToLocationsMap>(
@@ -70,7 +70,7 @@
   async function onMouseEnter(event: Event) {
     TidyHooks.tidy5eSheetsItemHoverOn(event, item);
 
-    if (!item?.getChatData || !SettingsProvider.settings.itemCardsForAllItems.get()) {
+    if (!item?.getChatData || !$context.settings.itemCardsForAllItems) {
       return;
     }
 

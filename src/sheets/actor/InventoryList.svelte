@@ -34,7 +34,6 @@
   import InlineContainerToggle from '../container/InlineContainerToggle.svelte';
   import { InlineContainerToggleService } from 'src/features/containers/InlineContainerToggleService';
   import InlineContainerView from '../container/InlineContainerView.svelte';
-  import { SettingsProvider } from 'src/settings/settings';
 
   export let primaryColumnName: string;
   export let items: Item5e[];
@@ -222,7 +221,7 @@
               {/if}
             </ItemName>
           </ItemTableCell>
-          {#if SettingsProvider.settings.showIconsNextToTheItemName.get()}
+          {#if $context.settings.showIconsNextToTheItemName}
             <ItemTableCell cssClass="no-border">
               {#if ctx?.attunement && !FoundryAdapter.concealDetails(item)}
                 <div class="item-detail attunement">

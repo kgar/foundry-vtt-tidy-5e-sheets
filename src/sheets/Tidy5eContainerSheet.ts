@@ -27,7 +27,7 @@ import {
   applyTitleToWindow,
   maintainCustomContentInputFocus,
 } from 'src/utils/applications';
-import { SettingsProvider } from 'src/settings/settings';
+import { getCurrentSettings, SettingsProvider } from 'src/settings/settings';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { isNil } from 'src/utils/data';
@@ -293,6 +293,7 @@ export class Tidy5eKgarContainerSheet
       itemOverrides: new Set<string>(this._getItemOverrides()),
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       originalContext: defaultDocumentContext,
+      settings: getCurrentSettings(),
       tabs: tabs,
       utilities: utilities,
       viewableWarnings:

@@ -7,7 +7,6 @@
   import HpBar from 'src/components/bar/HpBar.svelte';
   import ResourceWithBar from 'src/components/bar/ResourceWithBar.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { SettingsProvider } from 'src/settings/settings';
 
   export let value: number;
   export let max: number;
@@ -38,6 +37,6 @@
     maxTitle={null}
     maxDisabled={true}
     percentage={$context.healthPercentage}
-    Bar={SettingsProvider.settings.useHpBar.get() ? HpBar : null}
+    Bar={$context.settings.useHpBar ? HpBar : null}
   />
 </div>
