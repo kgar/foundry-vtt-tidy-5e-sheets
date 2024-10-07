@@ -123,5 +123,5 @@ Hooks.once('ready', async () => {
     new MigrationNotificationFormApplication().render(true);
   }
 
-  DebugTools.onReady();
+  DebugTools.onReady(api);
 });
