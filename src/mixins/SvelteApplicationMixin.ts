@@ -6,11 +6,9 @@ import {
   applyMutableSettingAttributesToWindow,
   blurUntabbableButtonsOnClick,
 } from 'src/utils/applications';
-import { debug, error } from 'src/utils/logging';
+import { error } from 'src/utils/logging';
 import type { SvelteComponent } from 'svelte';
 import { writable, type Unsubscriber, type Writable } from 'svelte/store';
-import SheetHeaderEditModeToggle from 'src/sheets/classic/shared/SheetHeaderEditModeToggle.svelte';
-import { CONSTANTS } from 'src/constants';
 import {
   CustomContentRendererV2,
   type RenderedSheetPart,
@@ -110,7 +108,9 @@ export function SvelteApplicationMixin<
       throw new Error(errorMessage);
     }
 
-    _createAdditionalComponents(content: HTMLElement) {
+    _createAdditionalComponents(
+      content: HTMLElement
+    ): SvelteComponent<any, any, any>[] {
       return [];
     }
 

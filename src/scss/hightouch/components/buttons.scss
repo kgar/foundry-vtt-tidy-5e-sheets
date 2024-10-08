@@ -18,7 +18,8 @@ button {
 
 /* Hightouch-style buttons */
 
-button {
+button,
+.button {
   display: flex;
   width: unset;
   justify-content: center;
@@ -46,8 +47,8 @@ button {
   }
 }
 
-&:where(.inverse) button,
-:where(.inverse) button {
+&:where(.inverse) :is(button, .button),
+:where(.inverse) :is(button, .button) {
   border: 1px solid var(--t5e-component-field-inverse-border);
   background: var(--t5e-component-field-inverse-background);
 
@@ -64,23 +65,23 @@ button {
   flex-direction: row;
   gap: 0;
 
-  button {
+  :is(button, .button) {
     box-shadow: none;
   }
 
-  button:not(:last-child):not(:first-child),
-  button:first-child:not(:last-child) {
+  :is(button, .button):not(:last-child):not(:first-child),
+  :is(button, .button):first-child:not(:last-child) {
     border-right: 0;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
 
-  button:not(:last-child):not(:first-child) {
+  :is(button, .button):not(:last-child):not(:first-child) {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
 
-  button:last-child:not(:first-child) {
+  :is(button, .button):last-child:not(:first-child) {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
@@ -88,7 +89,7 @@ button {
 
 /* Inline Icon Button, Header Controls */
 
-button {
+:is(button, .button) {
   &.header-control,
   &.unbutton {
     width: unset;
@@ -101,6 +102,43 @@ button {
   }
 }
 
-button.header-control {
+:is(button, .button).header-control {
   font-weight: 900;
+}
+
+/* Button Dropdown */
+
+.button-dropdown-wrapper {
+  position: relative;
+
+  .dropdown {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    position: relative;
+
+    .expand-indicator {
+      font-size: 0.5rem;
+      position: absolute;
+      right: 1px;
+      bottom: 1px;
+    }
+  }
+
+  .options-panel {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 0.5rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .option {
+      display: flex;
+      flex-direction: row;
+      gap: 0.5rem;
+    }
+  }
 }

@@ -26,6 +26,7 @@
   font-weight: 400;
   line-height: normal;
 
+  /* Window Header */
   .window-header {
     border: none;
     align-items: center;
@@ -39,6 +40,33 @@
     &:not(.minimized) .window-header {
       background: none;
     }
+  }
+
+  .controls-dropdown {
+    background: var(--t5e-component-card-onDefault-default);
+    border-radius: 0.3125rem;
+    transition: none;
+
+    &.expanded {
+      box-shadow: 0 0 0.375rem var(--dnd5e-shadow-45);
+    }
+
+    .header-control > button {
+      justify-content: flex-start;
+      gap: 0.5rem;
+      --button-text-color: var(--t5e-color-text-onDefault-default);
+      --button-hover-text-color: var(--t5e-color-text-onDefault-default);
+
+      &:hover {
+        background: var(--t5e-component-card-onDefault-darker);
+      }
+    }
+  }
+
+  &[data-tidy-lock-configure-sheet='true']
+    .window-header
+    [data-action='configureSheet'] {
+    display: none;
   }
 
   /* Currencies */
@@ -63,5 +91,9 @@
     &.pp {
       background-image: url('../../systems/dnd5e/icons/currency/platinum.webp');
     }
+  }
+
+  .inverse {
+    color: var(--t5e-color-text-onInverse-default);
   }
 }
