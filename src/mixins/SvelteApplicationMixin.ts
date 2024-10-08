@@ -6,7 +6,7 @@ import {
   applyMutableSettingAttributesToWindow,
   blurUntabbableButtonsOnClick,
 } from 'src/utils/applications';
-import { error } from 'src/utils/logging';
+import { debug, error } from 'src/utils/logging';
 import type { SvelteComponent } from 'svelte';
 import { writable, type Unsubscriber, type Writable } from 'svelte/store';
 import {
@@ -30,6 +30,11 @@ type RenderResult<TContext> = {
   customContents: RenderedSheetPart[];
   context: TContext;
 };
+
+const HEADER_CONTROLS_DROPDOWN_SELECTOR = '.controls-dropdown';
+const HEADER_CONTROLS_DROPDOWN_EXPANDED_SELECTOR = '.expanded';
+const HEADER_CONTROLS_DROPDOWN_TOGGLE_SELECTOR =
+  '[data-action="toggleControls"]';
 
 /**
  * A context-oriented Svelte mixin to provide Application V2 windows with Svelte integration.
@@ -327,10 +332,40 @@ export function SvelteApplicationMixin<
             return;
           }
 
-          if (target.closest('.controls-dropdown button')) {
-            super.toggleControls(false);
+          if (target.closest(`${HEADER_CONTROLS_DROPDOWN_SELECTOR} button`)) {
+            this.toggleControls(false);
           }
         });
+        this.element
+          .querySelector(HEADER_CONTROLS_DROPDOWN_SELECTOR)
+          ?.addEventListener(
+            'focusout',
+            (
+              ev: FocusEvent & {
+                currentTarget: HTMLElement;
+                relatedTarget?: HTMLElement;
+              }
+            ) => {
+              if (
+                ev.relatedTarget?.closest(
+                  `${HEADER_CONTROLS_DROPDOWN_SELECTOR}, ${HEADER_CONTROLS_DROPDOWN_TOGGLE_SELECTOR}`
+                )
+              ) {
+                return;
+              }
+
+              if (
+                !ev.currentTarget.matches(
+                  HEADER_CONTROLS_DROPDOWN_EXPANDED_SELECTOR
+                )
+              ) {
+                return;
+              }
+
+              this.toggleControls(false);
+            },
+            {}
+          );
       } catch (e) {
         error(
           'An error occurred while attaching frame listeners for the application.',
@@ -364,39 +399,26 @@ export function SvelteApplicationMixin<
     }
 
     /**
-     * Augments the base toggleControls with "Click Outside" handling to close the dropdown.
+     * Augments the base toggleControls with handling for closing menu when focus is lost.
      */
     toggleControls(expanded: boolean | undefined) {
-      // If the controls dropdown is being opened,
-      // listen for clicks outside of the controls dropdown.
-      // If the user clicks anywhere outside the dropdown, close it.
-      if (this.element.querySelector('.controls-dropdown:not(.expanded)')) {
-        if (expanded === undefined || expanded === true) {
-          const controller = new AbortController();
-          window.addEventListener(
-            'click',
-            (ev: MouseEvent) => {
-              if (!(ev.target instanceof HTMLElement)) {
-                return;
-              }
-
-              const controls = this?.element?.querySelector(
-                '.controls-dropdown'
-              ) as HTMLElement;
-
-              if (!controls || !controls.contains(ev.target)) {
-                controller.abort();
-                super.toggleControls(false);
-              }
-            },
-            {
-              signal: controller.signal,
-            }
-          );
-        }
-      }
-
       super.toggleControls(expanded);
+
+      const controlsDropdown = this.element.querySelector(
+        HEADER_CONTROLS_DROPDOWN_SELECTOR
+      );
+      const menuIsExpanded = controlsDropdown?.matches(
+        HEADER_CONTROLS_DROPDOWN_EXPANDED_SELECTOR
+      );
+      if (menuIsExpanded) {
+        debug('App V2 - On Menu Opened');
+        controlsDropdown.tabIndex = 0;
+        controlsDropdown.focus();
+      } else if (controlsDropdown) {
+        debug('App V2 - On Menu Closed');
+        controlsDropdown.blur();
+        controlsDropdown.tabIndex = -1;
+      }
     }
 
     /* -------------------------------------------- */
