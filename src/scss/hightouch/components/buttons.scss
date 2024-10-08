@@ -1,26 +1,6 @@
-/* App V2 Reset */
-
-button {
-  box-shadow: none;
-  outline: none;
-  margin: 0;
-
-  i {
-    margin: 0;
-  }
-
-  &:hover,
-  &:focus {
-    box-shadow: none;
-    outline: none;
-  }
-}
-
 /* Hightouch-style buttons */
-
-button,
-.button {
-  display: flex;
+:is(button, .button):not(.header-control) {
+  display: inline-flex;
   width: unset;
   justify-content: center;
   align-items: center;
@@ -31,7 +11,8 @@ button,
   background: var(--t5e-component-field-default-background);
   color: var(--t5e-color-text-onDefault-default);
 
-  font-size: var(--font-font-size-13, 0.8125rem);
+  font-family: var(--t5e-font-roboto-condensed);
+  font-size: var(--font-font-size-13);
   font-style: normal;
   font-weight: 500;
   line-height: 0.875rem;
@@ -39,11 +20,45 @@ button,
   /* shadow/field/light */
   box-shadow: 0px 0px 4px 0px var(--dnd5e-shadow-15, rgba(0, 0, 0, 0.15));
 
-  padding: 0.25rem;
+  padding: 0.5rem 0.75rem;
 
   :where(i) {
-    color: var(--t5e-color-text-onDefault-gold-emphasis);
+    color: var(--t5e-color-text-onDefault-default);
     margin: 0;
+    font-size: 0.6875rem;
+  }
+
+  &:hover {
+    background: var(--t5e-component-field-default-background);
+    color: var(--t5e-color-text-onDefault-default);
+    border: 1px solid var(--t5e-component-field-default-border);
+
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  &:focus-within {
+    background: linear-gradient(
+        0deg,
+        var(
+            --t5e-component-field-default-hover-overlay,
+            rgba(255, 255, 255, 0.5)
+          )
+          0%,
+        var(--t5e-component-field-default-hover-overlay) 100%
+      ),
+      var(--t5e-component-field-default-background);
+    box-shadow: 0px 0px 0px 2px #9a2a30;
+  }
+
+  &.active,
+  &:active {
+    color: var(--t5e-component-toggle-toggled-text);
+    border: 1px solid var(--t5e-component-toggle-toggled-border);
+    background: var(--t5e-component-toggle-toggled-background);
+
+    i {
+      color: var(--t5e-component-toggle-toggled-text);
+    }
   }
 }
 
@@ -108,10 +123,10 @@ button,
 
 /* Button Dropdown */
 
-.button-dropdown-wrapper {
+.button-with-options-wrapper {
   position: relative;
 
-  .dropdown {
+  .with-options {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -134,11 +149,5 @@ button,
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-
-    .option {
-      display: flex;
-      flex-direction: row;
-      gap: 0.5rem;
-    }
   }
 }

@@ -1,5 +1,32 @@
-:where(.tidy5e-sheet.application.hightouch) {
+:where(.tidy5e-sheet.hightouch).application {
   button {
-    font-family: var(--t5e-font-roboto-condensed);
+    box-shadow: none;
+    outline: none;
+    margin: 0;
+
+    i {
+      margin: 0;
+    }
+
+    &:hover,
+    &:focus {
+      box-shadow: none;
+      outline: none;
+    }
+  }
+
+  button,
+  a.button {
+    transition: none;
+
+    &:hover {
+      text-shadow: none;
+    }
+
+    &.active {
+      box-sizing: inherit;
+      outline: none;
+      box-shadow: none;
+    }
   }
 }

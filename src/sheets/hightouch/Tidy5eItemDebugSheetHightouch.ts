@@ -54,20 +54,6 @@ export class Tidy5eItemDebugSheetHightouch extends SvelteApplicationMixin<ItemDe
     });
   }
 
-  _createAdditionalComponents(node: HTMLElement) {
-    const windowHeader = this.element.querySelector('.window-header');
-
-    const sheetLock = new ItemHeaderStart({
-      target: windowHeader,
-      anchor: windowHeader.querySelector('.window-title'),
-      context: new Map<string, any>([
-        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._store],
-      ]),
-    });
-
-    return [sheetLock];
-  }
-
   async _prepareContext(
     options: ApplicationRenderOptions
   ): Promise<ItemDebugSheetHightouchContext> {

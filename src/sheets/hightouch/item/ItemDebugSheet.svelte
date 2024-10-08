@@ -14,6 +14,8 @@
 
   $: theme = getThemeOrDefault(SettingsProvider.settings.colorScheme.get());
 
+  let inverse = false;
+
   function selectTheme(themeId: string) {
     game.settings.set(CONSTANTS.MODULE_ID, 'colorScheme', themeId);
   }
@@ -24,41 +26,82 @@
   <div style="display: flex; flex-direction: column; gap: 0.25rem">
     <label for="light-mode-toggle">
       <input
-        id="light-mode-toggle"
-        type="radio"
-        name="theme-selector"
+      id="light-mode-toggle"
+      type="radio"
+      name="theme-selector"
         value={CONSTANTS.THEME_ID_DEFAULT_LIGHT}
         checked={theme.id === CONSTANTS.THEME_ID_DEFAULT_LIGHT}
         on:click={(ev) => selectTheme(CONSTANTS.THEME_ID_DEFAULT_LIGHT)}
-      />
-      <!-- svelte-ignore missing-declaration -->
-      {game.i18n.localize('TIDY5E.Settings.SheetTheme.light')}
-    </label>
-    <label for="dark-mode-toggle">
-      <input
+        />
+        <!-- svelte-ignore missing-declaration -->
+        {game.i18n.localize('TIDY5E.Settings.SheetTheme.light')}
+      </label>
+      <label for="dark-mode-toggle">
+        <input
         id="dark-mode-toggle"
         type="radio"
         name="theme-selector"
         value={CONSTANTS.THEME_ID_DEFAULT_DARK}
         checked={theme.id === CONSTANTS.THEME_ID_DEFAULT_DARK}
         on:click={(ev) => selectTheme(CONSTANTS.THEME_ID_DEFAULT_DARK)}
-      />
+        />
       <!-- svelte-ignore missing-declaration -->
       {game.i18n.localize('TIDY5E.Settings.SheetTheme.dark')}
     </label>
   </div>
+  <h4>Inversion</h4>
+  <div style="display: flex; flex-direction: column; gap: 0.25rem">
+  <label for="default-mode-toggle">
+    <input
+      id="default-mode-toggle"
+      type="radio"
+      name="inversion-mode-selector"
+      value={CONSTANTS.VIEW_MODE_DEFAULT}
+      checked={!inverse}
+      on:click={() => (inverse = false)}
+    />
+    Default
+  </label>
+  <label for="inverse-mode-toggle">
+    <input
+      id="inverse-mode-toggle"
+      type="radio"
+      name="inversion-mode-selector"
+      value={CONSTANTS.VIEW_MODE_INVERSE}
+      checked={inverse}
+      on:click={() => (inverse = true)}
+    />
+    Inverse
+  </label>
+  </div>
 </aside>
-<div class="item-content controls-gallery">
-  <fieldset>
+<div class="item-content controls-gallery" class:inverse>
+  <fieldset class="vertical-gallery">
     <legend> Button / Attention </legend>
 
-    <!-- TODO -->
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <a class="button active">
+      <i class="fas fa-edit"></i>
+      Edit Details
+    </a>
+    <button class="active">
+      <i class="fas fa-edit"></i>
+      Edit Details
+    </button>
   </fieldset>
 
-  <fieldset>
+  <fieldset class="vertical-gallery">
     <legend> Button / Default </legend>
 
-    <!-- TODO -->
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <a class="button">
+      <i class="fas fa-edit"></i>
+      Edit Details
+    </a>
+    <button>
+      <i class="fas fa-edit"></i>
+      Edit Details
+    </button>
   </fieldset>
 
   <fieldset>
@@ -247,12 +290,17 @@
     legend {
       white-space: nowrap;
     }
+
+    &.inverse {
+      background: var(--t5e-component-card-onInverse-default);
+    }
   }
 
-  .radio-button-and-label {
+  .vertical-gallery {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    line-height: 2;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 0.25rem;
   }
 </style>
