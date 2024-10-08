@@ -7,6 +7,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ItemDebugSheetHightouchContext } from '../Tidy5eItemDebugSheetHightouch';
+  import ButtonWithOptionPanel from 'src/components/buttons/ButtonWithOptionPanel.svelte';
 
   let context = getContext<Readable<ItemDebugSheetHightouchContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -26,53 +27,53 @@
   <div style="display: flex; flex-direction: column; gap: 0.25rem">
     <label for="light-mode-toggle">
       <input
-      id="light-mode-toggle"
-      type="radio"
-      name="theme-selector"
+        id="light-mode-toggle"
+        type="radio"
+        name="theme-selector"
         value={CONSTANTS.THEME_ID_DEFAULT_LIGHT}
         checked={theme.id === CONSTANTS.THEME_ID_DEFAULT_LIGHT}
         on:click={(ev) => selectTheme(CONSTANTS.THEME_ID_DEFAULT_LIGHT)}
-        />
-        <!-- svelte-ignore missing-declaration -->
-        {game.i18n.localize('TIDY5E.Settings.SheetTheme.light')}
-      </label>
-      <label for="dark-mode-toggle">
-        <input
+      />
+      <!-- svelte-ignore missing-declaration -->
+      {game.i18n.localize('TIDY5E.Settings.SheetTheme.light')}
+    </label>
+    <label for="dark-mode-toggle">
+      <input
         id="dark-mode-toggle"
         type="radio"
         name="theme-selector"
         value={CONSTANTS.THEME_ID_DEFAULT_DARK}
         checked={theme.id === CONSTANTS.THEME_ID_DEFAULT_DARK}
         on:click={(ev) => selectTheme(CONSTANTS.THEME_ID_DEFAULT_DARK)}
-        />
+      />
       <!-- svelte-ignore missing-declaration -->
       {game.i18n.localize('TIDY5E.Settings.SheetTheme.dark')}
     </label>
   </div>
   <h4>Inversion</h4>
   <div style="display: flex; flex-direction: column; gap: 0.25rem">
-  <label for="default-mode-toggle">
-    <input
-      id="default-mode-toggle"
-      type="radio"
-      name="inversion-mode-selector"
-      value={CONSTANTS.VIEW_MODE_DEFAULT}
-      checked={!inverse}
-      on:click={() => (inverse = false)}
-    />
-    Default
-  </label>
-  <label for="inverse-mode-toggle">
-    <input
-      id="inverse-mode-toggle"
-      type="radio"
-      name="inversion-mode-selector"
-      value={CONSTANTS.VIEW_MODE_INVERSE}
-      checked={inverse}
-      on:click={() => (inverse = true)}
-    />
-    Inverse
-  </label>
+    <label for="default-mode-toggle">
+      <input
+        id="default-mode-toggle"
+        type="radio"
+        name="inversion-mode-selector"
+        value={CONSTANTS.VIEW_MODE_DEFAULT}
+        checked={!inverse}
+        on:click={() => (inverse = false)}
+      />
+      Default
+    </label>
+    <label for="inverse-mode-toggle">
+      <input
+        id="inverse-mode-toggle"
+        type="radio"
+        name="inversion-mode-selector"
+        value={CONSTANTS.VIEW_MODE_INVERSE}
+        checked={inverse}
+        on:click={() => (inverse = true)}
+      />
+      Inverse
+    </label>
   </div>
 </aside>
 <div class="item-content controls-gallery" class:inverse>
@@ -80,10 +81,12 @@
     <legend> Button / Attention </legend>
 
     <!-- svelte-ignore a11y-missing-attribute -->
+    Anchor
     <a class="button active">
       <i class="fas fa-edit"></i>
       Edit Details
     </a>
+    Button
     <button class="active">
       <i class="fas fa-edit"></i>
       Edit Details
@@ -94,32 +97,102 @@
     <legend> Button / Default </legend>
 
     <!-- svelte-ignore a11y-missing-attribute -->
+    Anchor
     <a class="button">
       <i class="fas fa-edit"></i>
       Edit Details
     </a>
+    Button
     <button>
       <i class="fas fa-edit"></i>
       Edit Details
     </button>
   </fieldset>
 
-  <fieldset>
+  <fieldset style="display: flex; gap: 0.5rem;">
     <legend> Button / Icon Only </legend>
 
-    <!-- TODO -->
+    <div class="vertical-gallery">
+      Anchors
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <a class="button icon-button">
+        <i class="fas fa-hand"></i>
+      </a>
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <a class="button icon-button active">
+        <i class="fas fa-hand"></i>
+      </a>
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <a class="button icon-button disabled">
+        <i class="fas fa-hand"></i>
+      </a>
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <a class="button icon-button active disabled">
+        <i class="fas fa-hand"></i>
+      </a>
+    </div>
+    <div class="vertical-gallery">
+      Buttons
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <button class="icon-button">
+        <i class="fas fa-hand"></i>
+      </button>
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <button class="icon-button active">
+        <i class="fas fa-hand"></i>
+      </button>
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <button class="icon-button disabled">
+        <i class="fas fa-hand"></i>
+      </button>
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <button class="icon-button active disabled">
+        <i class="fas fa-hand"></i>
+      </button>
+    </div>
   </fieldset>
 
   <fieldset>
     <legend> Button / Icon Only Menu </legend>
 
-    <!-- TODO -->
+    <div class="wrapped-gallery">
+      <ButtonWithOptionPanel class="icon-button">
+        <i class="fas fa-hand"></i>
+        <svelte:fragment slot="options">
+          <label>
+            <input type="radio" name="icon-menu-test" value="1" /> Test Option 1
+          </label>
+          <label>
+            <input type="radio" name="icon-menu-test" value="2" /> Test Option 2
+          </label>
+        </svelte:fragment>
+      </ButtonWithOptionPanel>
+      <ButtonWithOptionPanel class="icon-button active">
+        <i class="fas fa-hand"></i>
+        <svelte:fragment slot="options">O hai 🙋‍♀️</svelte:fragment>
+      </ButtonWithOptionPanel>
+      <ButtonWithOptionPanel class="icon-button disabled">
+        <i class="fas fa-hand"></i>
+        <svelte:fragment slot="options">O hai 🙋‍♀️</svelte:fragment>
+      </ButtonWithOptionPanel>
+      <ButtonWithOptionPanel class="icon-button active disabled">
+        <i class="fas fa-hand"></i>
+        <svelte:fragment slot="options">O hai 🙋‍♀️</svelte:fragment>
+      </ButtonWithOptionPanel>
+    </div>
   </fieldset>
 
   <fieldset>
     <legend> Button / Edit Description </legend>
 
-    <!-- TODO -->
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <a class="button icon-button">
+      <i class="fas fa-hand"></i>
+    </a>
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <a class="button icon-button active">
+      <i class="fas fa-hand"></i>
+    </a>
   </fieldset>
 
   <fieldset>
@@ -301,6 +374,15 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
+    gap: 0.25rem;
+  }
+
+  .wrapped-gallery {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap;
     gap: 0.25rem;
   }
 </style>
