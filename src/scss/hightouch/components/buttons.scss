@@ -60,6 +60,23 @@
       color: var(--t5e-component-toggle-toggled-text);
     }
   }
+
+  &.icon-button {
+    padding: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+  }
+
+  &.disabled {
+    pointer-events: none;
+    background: transparent;
+    border: 1px solid var(--t5e-component-field-default-border);
+
+    &,
+    i {
+      color: var(--t5e-color-icon-light-disabled);
+    }
+  }
 }
 
 &:where(.inverse) :is(button, .button),
@@ -102,7 +119,7 @@
   }
 }
 
-/* Inline Icon Button, Header Controls */
+/* Header Controls */
 
 :is(button, .button) {
   &.header-control,
@@ -141,13 +158,32 @@
     }
   }
 
-  .options-panel {
+  menu {
     position: absolute;
-    right: 0;
-    bottom: 0;
+    margin: 0;
     padding: 0.5rem 0.75rem;
-    display: flex;
+    top: 90%;
+    width: auto;
+    padding: 0.5rem 0.75rem;
+    display: none;
     flex-direction: column;
     gap: 0.5rem;
+    background: var(--t5e-component-card-onDefault-default);
+    border-radius: 0.25rem;
+    z-index: 2;
+    white-space: nowrap;
+    box-shadow: 0px 0px 9px 0px #000;
+
+    &.anchor-left {
+      left: 0;
+    }
+
+    &.anchor-right {
+      right: 0;
+    }
+
+    &.expanded {
+      display: flex;
+    }
   }
 }
