@@ -1,6 +1,6 @@
 <script lang="ts">
   import { settingStore } from 'src/settings/settings';
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, tick } from 'svelte';
 
   export let value: boolean = false;
   export let disabled: boolean = false;
@@ -11,35 +11,40 @@
     change: { originalValue: boolean };
   }>();
 
-  function handleClick(
+  async function handleClick(
     _: MouseEvent & {
-      currentTarget: EventTarget & HTMLButtonElement;
+      currentTarget: EventTarget & HTMLElement;
     },
   ) {
     const originalValue = value;
     value = !value;
     dispatcher('change', { originalValue: originalValue });
+    await tick();
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement?.blur();
+    }
   }
 </script>
 
 <label
   class="tidy-switch {$$props.class ?? ''}"
-  class:disabled={disabled}
+  class:disabled
   id={switchLabelId}
   title={$$props.title ?? null}
 >
   <slot />
-  <button
-    type="button"
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <!-- svelte-ignore a11y-missing-attribute -->
+  <a
     role="switch"
     on:click={(ev) => handleClick(ev)}
     aria-checked={value}
     aria-labelledby={switchLabelId}
     tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-    {disabled}
+    class:disabled
   >
     {#if thumbIconClass}
       <i class="thumb-icon {thumbIconClass}"></i>
     {/if}
-  </button>
+  </a>
 </label>

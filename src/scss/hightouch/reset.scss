@@ -30,7 +30,11 @@
     }
   }
 
-  input[type="radio"] {
+  a:hover {
+    text-shadow: none;
+  }
+
+  input[type='radio'] {
     margin: 0;
   }
 }

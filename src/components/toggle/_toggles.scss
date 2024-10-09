@@ -61,7 +61,7 @@
     0.3s
   );
 
-  button {
+  [role='switch'] {
     width: calc(2.625rem * var(--tidy-switch-scale-internal));
     height: calc(1.375rem * var(--tidy-switch-scale-internal));
     position: relative;

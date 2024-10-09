@@ -1,5 +1,11 @@
 /* Hightouch-style buttons */
 :is(button, .button):not(.header-control) {
+  --button-padding-block-start: 0.5rem;
+  --button-padding-block-end: 0.5rem;
+  --button-padding-inline-start: 0.75rem;
+  --button-padding-inline-end: 0.75rem;
+  --icon-fill: var(--t5e-color-text-onDefault-default);
+
   display: inline-flex;
   width: unset;
   justify-content: center;
@@ -20,7 +26,8 @@
   /* shadow/field/light */
   box-shadow: 0px 0px 4px 0px var(--dnd5e-shadow-15, rgba(0, 0, 0, 0.15));
 
-  padding: 0.5rem 0.75rem;
+  padding: var(--button-padding-block-start) var(--button-padding-inline-end)
+    var(--button-padding-block-end) var(--button-padding-inline-start);
 
   :where(i) {
     color: var(--t5e-color-text-onDefault-default);
@@ -52,6 +59,8 @@
 
   &.active,
   &:active {
+    --icon-fill: var(--t5e-component-toggle-toggled-text);
+
     color: var(--t5e-component-toggle-toggled-text);
     border: 1px solid var(--t5e-component-toggle-toggled-border);
     background: var(--t5e-component-toggle-toggled-background);
@@ -75,6 +84,30 @@
     &,
     i {
       color: var(--t5e-color-icon-light-disabled);
+    }
+  }
+
+  &:has(i, dnd5e-icon) {
+    padding-inline-start: calc(var(--button-padding-inline-start) - 0.125rem);
+  }
+
+  /* Toggle Buttons */
+  &.toggle-button {
+    border: 0.0625rem solid var(--t5e-component-field-default-border);
+
+    &:has(.toggle:checked) {
+      --icon-fill: var(--t5e-component-toggle-toggled-text);
+      color: var(--t5e-component-toggle-toggled-text);
+      background: var(--t5e-component-toggle-toggled-background);
+
+      i {
+        color: var(--t5e-component-toggle-toggled-text);
+      }
+    }
+
+    &.disabled {
+      font-style: italic;
+      color: var(--t5e-color-text-onDefault-lightest);
     }
   }
 }

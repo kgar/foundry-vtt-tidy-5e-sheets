@@ -8,6 +8,15 @@
   import type { Readable } from 'svelte/store';
   import type { ItemDebugSheetHightouchContext } from '../Tidy5eItemDebugSheetHightouch';
   import ButtonWithOptionPanel from 'src/components/buttons/ButtonWithOptionPanel.svelte';
+  import ToggleButton from 'src/components/buttons/ToggleButton.svelte';
+  import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
+  import ItemHeaderStart from './parts/ItemHeaderStart.svelte';
+  import FieldToggle from 'src/components/toggle/FieldToggle.svelte';
+  import UnderlinedTabStrip from 'src/components/tabs/UnderlinedTabStrip.svelte';
+  import type { Tab } from 'src/types/types';
+  import Tabs from 'src/components/tabs/Tabs.svelte';
+  import TabContents from 'src/components/tabs/TabContents.svelte';
 
   let context = getContext<Readable<ItemDebugSheetHightouchContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -16,6 +25,8 @@
   $: theme = getThemeOrDefault(SettingsProvider.settings.colorScheme.get());
 
   let inverse = false;
+
+  let selectedTabId: string = 'hallo-tab';
 
   function selectTheme(themeId: string) {
     game.settings.set(CONSTANTS.MODULE_ID, 'colorScheme', themeId);
@@ -77,6 +88,25 @@
   </div>
 </aside>
 <div class="item-content controls-gallery" class:inverse>
+  <div class="span-all">
+    <!-- Name -->
+    {#if $context.unlocked}
+      <TextInput
+        field="name"
+        document={$context.item}
+        value={$context.item.name}
+        class="document-name"
+      />
+    {:else}
+      <div class="document-name">{$context.item.name ?? ''}</div>
+    {/if}
+  </div>
+  <div class="span-all">
+    <Tabs tabs={$context.tabs} bind:selectedTabId cssClass="item-tabs" />
+  </div>
+  <div class="span-all">
+    <TabContents tabs={$context.tabs} bind:selectedTabId />
+  </div>
   <fieldset class="vertical-gallery">
     <legend> Button / Attention </legend>
 
@@ -195,7 +225,7 @@
     </a>
   </fieldset>
 
-  <fieldset style="flex-basis: 100%">
+  <fieldset class="span-all">
     <legend> Button / Group </legend>
 
     <div>
@@ -206,21 +236,58 @@
 
     <!-- svelte-ignore a11y-missing-attribute -->
     <div class="button-group">
-      <a class="button">
+      <ToggleButton>
         <span class="hide-before-850">Action</span>
         <span class="show-before-850">A</span>
-      </a>
-      <a class="button active">Bonus Action</a>
-      <a class="button hide-before-1000">Reaction</a>
-      <a class="button hide-before-950">Can Use</a>
-      <a class="button hide-before-900">Magical</a>
+      </ToggleButton>
+      <ToggleButton checked={true}>Bonus Action</ToggleButton>
+      <ToggleButton class="hide-before-1000">Reaction</ToggleButton>
+      <ToggleButton class="hide-before-950">Can Use</ToggleButton>
+      <ToggleButton class="hide-before-900">Magical</ToggleButton>
     </div>
   </fieldset>
 
-  <fieldset>
+  <fieldset class="wrapped-gallery">
     <legend> Button / Toggle </legend>
 
-    <!-- TODO -->
+    <div class="vertical-gallery">
+      <ToggleButton checked={false}>Tidy</ToggleButton>
+      <ToggleButton checked={true}>Tidy</ToggleButton>
+      <ToggleButton checked={false} disabled={true}>Tidy</ToggleButton>
+      <ToggleButton checked={true} disabled={true}>Tidy</ToggleButton>
+    </div>
+    <div class="vertical-gallery">
+      <ToggleButton checked={false}>
+        <i class="fas fa-broom"></i> Tidy
+      </ToggleButton>
+      <ToggleButton checked={true}>
+        <i class="fas fa-broom"></i> Tidy
+      </ToggleButton>
+      <ToggleButton checked={false} disabled={true}>
+        <i class="fas fa-broom"></i> Tidy
+      </ToggleButton>
+      <ToggleButton checked={true} disabled={true}>
+        <i class="fas fa-broom"></i> Tidy
+      </ToggleButton>
+    </div>
+    <div class="vertical-gallery">
+      <ToggleButton checked={false}>
+        <Dnd5eIcon src="systems/dnd5e/icons/svg/statuses/concentrating.svg" />
+        Tidy
+      </ToggleButton>
+      <ToggleButton checked={true}>
+        <Dnd5eIcon src="systems/dnd5e/icons/svg/statuses/concentrating.svg" />
+        Tidy
+      </ToggleButton>
+      <ToggleButton checked={false} disabled={true}>
+        <Dnd5eIcon src="systems/dnd5e/icons/svg/statuses/concentrating.svg" />
+        Tidy
+      </ToggleButton>
+      <ToggleButton checked={true} disabled={true}>
+        <Dnd5eIcon src="systems/dnd5e/icons/svg/statuses/concentrating.svg" />
+        Tidy
+      </ToggleButton>
+    </div>
   </fieldset>
 
   <fieldset>
@@ -268,13 +335,16 @@
   <fieldset>
     <legend> Input / Checkbox </legend>
 
-    <!-- TODO -->
-  </fieldset>
-
-  <fieldset>
-    <legend> Input / Document Name </legend>
-
-    <!-- TODO -->
+    <label for="checkbox-test-1"><input type="checkbox" /> Property</label>
+    <label for="checkbox-test-2"
+      ><input type="checkbox" checked /> Property</label
+    >
+    <label for="checkbox-test-3"
+      ><input type="checkbox" disabled /> Property</label
+    >
+    <label for="checkbox-test-3"
+      ><input type="checkbox" checked disabled /> Property</label
+    >
   </fieldset>
 
   <fieldset>
@@ -289,7 +359,7 @@
       - https://github.com/shadcn-ui/ui/pull/2758 - another example of top/left at 50% and translate X/Y at -50%
       
     -->
-    
+
     <ul class="unlist">
       <li>
         <input type="radio" name="test" id="test-1" checked={true} />
@@ -301,7 +371,7 @@
       </li>
       <li>
         <input type="radio" name="test" id="test-2" disabled />
-        <label for="test-3">Property with line breaks</label>
+        <label for="test-3">Property <br />with line breaks</label>
       </li>
     </ul>
   </fieldset>
@@ -319,21 +389,11 @@
   </fieldset>
 
   <fieldset>
-    <legend>Input / Switch</legend>
+    <legend>Input / Switch - Field Toggle</legend>
 
     <!-- TODO -->
-  </fieldset>
-
-  <fieldset>
-    <legend>Input / Switch - Edit Sheet</legend>
-
-    <!-- TODO -->
-  </fieldset>
-
-  <fieldset>
-    <legend>Input / Switch / Sheet Lock</legend>
-
-    <!-- TODO -->
+    <FieldToggle></FieldToggle>
+    <FieldToggle checked={true}></FieldToggle>
   </fieldset>
 
   <fieldset>
@@ -357,7 +417,15 @@
   <fieldset>
     <legend> Pill </legend>
 
-    <!-- TODO -->
+    <ul class="pills unlist">
+      <li class="pill">Label</li>
+      <li class="pill negative">
+        Label <span><span class="lighter">-</span>1</span>
+      </li>
+      <li class="pill positive">
+        Label <span><span class="lighter">+</span>1</span>
+      </li>
+    </ul>
   </fieldset>
 
   <fieldset>
@@ -382,6 +450,7 @@
     align-content: flex-start;
     justify-content: flex-start;
     container-type: inline-size;
+    padding-bottom: 1rem;
 
     > * {
       flex: 1 0 auto;
@@ -394,6 +463,10 @@
     &.inverse {
       background: var(--t5e-component-card-onInverse-default);
     }
+  }
+
+  .span-all {
+    flex-basis: 100%;
   }
 
   .vertical-gallery {

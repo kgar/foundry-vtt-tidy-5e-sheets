@@ -180,9 +180,11 @@
     }
   }
 
-  button.item-name {
+  .item-name {
     flex: 1;
     align-self: stretch;
+    display: inline-flex;
+    align-items: center;
 
     background: none;
     border: 0;
@@ -224,7 +226,7 @@
   }
 
   .item-actions {
-    button {
+    .item-action {
       display: flex;
       width: var(--font-font-size-24, 1.5rem);
       height: 1.75rem;

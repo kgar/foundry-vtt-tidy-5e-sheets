@@ -81,7 +81,7 @@
     <h4>{localize('TIDY5E.Section.LabelPl')}</h4>
     <ul class="pills inverse flexcol">
       <li class="pill">
-        <span class="secondary">
+        <span class="lighter">
           {localize('DND5E.Inventory')}
         </span>
       </li>

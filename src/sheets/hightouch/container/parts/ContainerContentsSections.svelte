@@ -87,6 +87,9 @@
 
 {#each configuredContents as section (section.key)}
   {#if section.show}
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y-missing-attribute -->
     <TidyTable
       key={section.key}
       data-custom-section={section.custom ? true : null}
@@ -153,9 +156,8 @@
                 </span>
               </div>
               {#if ('containerContents' in ctx && !!ctx.containerContents) || item?.system.activities?.contents.length > 1}
-                <button
-                  type="button"
-                  class="expand-indicator-button unbutton"
+                <a
+                  class="expand-indicator-button"
                   on:click={() => inlineToggleService.toggle(tabId, item.id)}
                 >
                   <i
@@ -165,15 +167,11 @@
                       ?.has(item.id)}
                   >
                   </i>
-                </button>
+                </a>
               {/if}
-              <button
-                type="button"
-                class="item-name unbutton truncate"
-                on:click={(ev) => toggleSummary()}
-              >
+              <a class="item-name truncate" on:click={(ev) => toggleSummary()}>
                 <span class="truncate">{item.name}</span>
-              </button>
+              </a>
             </TidyTableCell>
             <TidyTableCell>
               {item.system.quantity}
@@ -183,16 +181,16 @@
             </TidyTableCell>
             <TidyTableCell class="item-actions">
               {#if unlocked}
-                <button type="button" class="item-action unbutton">
+                <a class="item-action">
                   <i class="fas fa-edit"></i>
-                </button>
-                <button type="button" class="item-action unbutton">
+                </a>
+                <a class="item-action">
                   <i class="fas fa-trash"></i>
-                </button>
+                </a>
               {/if}
-              <button type="button" class="item-action unbutton">
+              <a class="item-action">
                 <i class="fas fa-ellipsis-vertical"></i>
-              </button>
+              </a>
             </TidyTableCell>
           </ItemTableRowV2>
 

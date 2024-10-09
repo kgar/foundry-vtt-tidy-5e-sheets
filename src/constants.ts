@@ -1,7 +1,5 @@
-const moduleId = 'tidy5e-sheet';
 export const CONSTANTS = {
-  ALPHA_MODULE_ID: 'tidy5e-sheet-kgar',
-  MODULE_ID: moduleId,
+  MODULE_ID: 'tidy5e-sheet',
   DND5E_SYSTEM_ID: 'dnd5e',
   SYSTEM_SETTING_LEVELING_MODE: 'levelingMode',
   SYSTEM_SETTING_LEVELING_MODE_NO_XP: 'noxp',
