@@ -10,8 +10,6 @@
     "TIDY5E.Tidy5eItemSheetClassic": "Karta Przedmiotu Tidy 5e",
     "TIDY5E.PlayerName": "Nazwa gracza",
     "TIDY5E.ShowPortraitArt": "pokaż portret",
-    "TIDY5E.StandardExhaustion4": "Maks. Punkty Życia zmniejszone o połowę",
-    "TIDY5E.StandardExhaustion0": "Brak negatywnych efektów",
     "TIDY5E.TabSelection": {
         "UnsupportedDocumentErrorMessage": "Dokument typu {documentType} nie jest skonfigurowany do wyboru zakładek.",
         "Title": "Wybór zakładki dla {documentName}",
