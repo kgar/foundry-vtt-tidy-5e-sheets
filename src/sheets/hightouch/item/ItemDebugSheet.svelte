@@ -280,6 +280,16 @@
   <fieldset>
     <legend>Input / Radio</legend>
 
+    <!-- 
+      Radio button checkmarks aren't quite centering. Let's try to fix that:
+      - https://codepen.io/isaacabrahamson/pen/qVXOWW?editors=1100
+      - https://forum.freecodecamp.org/t/css-center-radio-buttons/158932/3
+      - https://github.com/carbon-design-system/carbon/pull/6097/files
+      - Working version, though using divs and not a radio button: https://js.devexpress.com/Angular/Demos/WidgetsGallery/Demo/RadioGroup/Overview/MaterialBlueDark/
+      - https://github.com/shadcn-ui/ui/pull/2758 - another example of top/left at 50% and translate X/Y at -50%
+      
+    -->
+    
     <ul class="unlist">
       <li>
         <input type="radio" name="test" id="test-1" checked={true} />
