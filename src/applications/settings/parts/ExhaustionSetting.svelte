@@ -4,6 +4,8 @@
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import type { ExhaustionConfig } from 'src/features/exhaustion/exhaustion.types';
   import { CONSTANTS } from 'src/constants';
+  import { isNil } from 'src/utils/data';
+  import { coalesce } from 'src/utils/formatting';
 
   export let name: string;
   export let hint: string;
@@ -13,6 +15,7 @@
 
   $: levelsIterator =
     config.type === 'specific' ? Array(config.levels + 1).fill(0) : [];
+
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -63,12 +66,16 @@
 
   {#if config.type === 'specific'}
     {#each levelsIterator as _, i (i)}
+      {@const hint = localize(
+        coalesce(config.hints[i], 'TIDY5E.ExhaustionLevelTooltip'),
+        { level: i },
+      )}
       <article class="setting group">
         <section class="">
           <div class="description">
             <label
               for="exhaustion-level-{i}-{appId}"
-              title={localize(config.hints[i])}
+              title={hint}
               class="flex-row small-gap align-items-center"
             >
               {localize(
@@ -90,6 +97,9 @@
               type="text"
               id="exhaustion-level-{i}-{appId}"
               bind:value={config.hints[i]}
+              placeholder={localize('TIDY5E.ExhaustionLevelTooltip', {
+                level: i,
+              })}
             />
           </div>
         </section>

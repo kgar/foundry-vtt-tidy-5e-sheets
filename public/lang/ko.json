@@ -14,35 +14,6 @@
     "TIDY5E.ShowItemImage": "우클릭: 아이템 이미지 보기",
     "TIDY5E.ShowItemArt": "이미지 보기",
 
-    "TIDY5E.StandardExhaustion0": "부정적 효과 없음",
-    "TIDY5E.StandardExhaustion1": "능력 판정에 불리함",
-    "TIDY5E.StandardExhaustion2": "이동 속도 절반",
-    "TIDY5E.StandardExhaustion3": "공격 굴림과 내성 굴림에 불리함",
-    "TIDY5E.StandardExhaustion4": "최대 히트 포인트 절반",
-    "TIDY5E.StandardExhaustion5": "이동 속도 0",
-    "TIDY5E.StandardExhaustion6": "사망",
-
-    "TIDY5E.OneDnDExhaustion0": "부정적 효과 없음",
-    "TIDY5E.OneDnDExhaustion1": "모든 d20 판정과 주문 내성 DC에 -1",
-    "TIDY5E.OneDnDExhaustion2": "모든 d20 판정과 주문 내성 DC에 -2",
-    "TIDY5E.OneDnDExhaustion3": "모든 d20 판정과 주문 내성 DC에 -3",
-    "TIDY5E.OneDnDExhaustion4": "모든 d20 판정과 주문 내성 DC에 -4",
-    "TIDY5E.OneDnDExhaustion5": "모든 d20 판정과 주문 내성 DC에 -5",
-    "TIDY5E.OneDnDExhaustion6": "모든 d20 판정과 주문 내성 DC에 -6",
-    "TIDY5E.OneDnDExhaustion7": "모든 d20 판정과 주문 내성 DC에 -7",
-    "TIDY5E.OneDnDExhaustion8": "모든 d20 판정과 주문 내성 DC에 -8",
-    "TIDY5E.OneDnDExhaustion9": "모든 d20 판정과 주문 내성 DC에 -9",
-    "TIDY5E.OneDnDExhaustion10": "모든 d20 판정과 주문 내성 DC에 -10",
-    "TIDY5E.OneDnDExhaustion11": "사망",
-
-    "TIDY5E.StandardVehicleExhaustion0": "부정적 효과 없음",
-    "TIDY5E.StandardVehicleExhaustion1": "능력 판정에 불리함",
-    "TIDY5E.StandardVehicleExhaustion2": "이동 속도 절반",
-    "TIDY5E.StandardVehicleExhaustion3": "공격 굴림과 내성 굴림에 불리함",
-    "TIDY5E.StandardVehicleExhaustion4": "최대 히트 포인트 절반",
-    "TIDY5E.StandardVehicleExhaustion5": "이동 속도 0",
-    "TIDY5E.StandardVehicleExhaustion6": "히트 포인트 0, 탈것 완파",
-
     "TIDY5E.AbbrInitiative": "우선권",
 
     "TIDY5E.RestHint": "휴식 취하기",
@@ -215,8 +186,6 @@
         "options.specific.levels.tooltip.hint": "이 탈진 단계에 대한 설명입니다. 번역 키도 작동합니다.",
         "options.open.text": "숫자 입력 열기",
         "options.open.explanation": "사용자가 탈진 단계 입력창을 볼 수 있도록 합니다.",
-        "useStandardExhaustion": "기본 탈진 사용",
-        "useOneDnDExhaustion": "One D&D 탈진 사용",
         "AtLeastOneLevelRequiredErrorMessage": "최소 한 단계의 탈진이 필요합니다."
     },
     "TIDY5E.WorldSettings.VehicleExhaustion": {

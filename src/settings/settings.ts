@@ -9,10 +9,6 @@ import { UserSettingsFormApplication } from 'src/applications/settings/user-sett
 import { writable, type Writable } from 'svelte/store';
 import { WorldSettingsFormApplication } from 'src/applications/settings/world-settings/WorldSettingsFormApplication';
 import { ThemeSettingsFormApplication } from 'src/applications/theme/ThemeSettingsFormApplication';
-import {
-  getStandardExhaustionConfig,
-  getStandardVehicleExhaustionConfig,
-} from 'src/features/exhaustion/exhaustion';
 import type { ExhaustionConfig } from '../features/exhaustion/exhaustion.types';
 import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
@@ -22,6 +18,7 @@ import { BulkMigrationsApplication } from 'src/migrations/BulkMigrationsApplicat
 import { AboutApplication } from 'src/applications/settings/about/AboutApplication';
 import { ApplyTidySheetPreferencesApplication } from 'src/applications/sheet-preferences/ApplyTidySheetPreferencesApplication';
 import { defaultDarkTheme } from 'src/theme/default-dark-theme';
+import { getDefaultExhaustionConfig } from 'src/features/exhaustion/exhaustion';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -1375,7 +1372,7 @@ export function createSettings() {
           hint: 'TIDY5E.WorldSettings.Exhaustion.hint',
           scope: 'world',
           config: false,
-          default: getStandardExhaustionConfig(),
+          default: getDefaultExhaustionConfig(),
           type: Object,
         },
         get() {
@@ -1391,7 +1388,7 @@ export function createSettings() {
           hint: 'TIDY5E.WorldSettings.VehicleExhaustion.hint',
           scope: 'world',
           config: false,
-          default: getStandardVehicleExhaustionConfig(),
+          default: getDefaultExhaustionConfig(),
           type: Object,
         },
         get() {
@@ -1876,7 +1873,7 @@ export function createSettings() {
           config: true,
           default: false,
           type: Boolean,
-          requiresReload: true 
+          requiresReload: true,
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>('debug');

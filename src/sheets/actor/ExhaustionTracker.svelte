@@ -11,6 +11,7 @@
     ActorSheetContextV1,
     PortraitCharmRadiusClass,
   } from 'src/types/types';
+  import { coalesce } from 'src/utils/formatting';
   import { createEventDispatcher, getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
@@ -32,7 +33,10 @@
   let selectedHintKey: string;
   $: {
     selectedLevel = iconsWithSeverities[level] ?? iconsWithSeverities.at(-1);
-    selectedHintKey = exhaustionConfig.hints[level] ?? '';
+    selectedHintKey = localize(
+      coalesce(exhaustionConfig.hints[level], 'TIDY5E.ExhaustionLevelTooltip'),
+      { level: level },
+    );
   }
 
   let severityClass: string;
@@ -64,9 +68,8 @@
   <div class="exhaustion-wrap {radiusClass}">
     <div
       class="exhaustion-icon colorized"
-      title={`${localize('DND5E.Exhaustion')} ${localize(
-        'DND5E.AbbreviationLevel',
-      )} ${level}, ${localize(selectedHintKey)}`}
+      title={exhaustionConfig.hints[level] ??
+        localize('TIDY5E.ExhaustionLevelTooltip', { level: level })}
     >
       <i class={selectedLevel.iconCssClass ?? ''} />
     </div>
@@ -77,7 +80,13 @@
             type="button"
             class="exhaustion-level-option transparent-button"
             class:colorized={i <= level}
-            title={localize(exhaustionConfig.hints[i] ?? '')}
+            title={localize(
+              coalesce(
+                exhaustionConfig.hints[i],
+                'TIDY5E.ExhaustionLevelTooltip',
+              ),
+              { level: i },
+            )}
             on:click={() => dispatch('levelSelected', { level: i })}
             disabled={!$context.editable || isActiveEffectApplied}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
