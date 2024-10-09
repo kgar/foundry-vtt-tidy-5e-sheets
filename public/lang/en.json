@@ -16,34 +16,7 @@
   "TIDY5E.ShowItemImage": "Right Click: Show Item Art",
   "TIDY5E.ShowItemArt": "Show Image",
 
-  "TIDY5E.StandardExhaustion0": "No negative effects",
-  "TIDY5E.StandardExhaustion1": "Disadvantage on Ability Checks",
-  "TIDY5E.StandardExhaustion2": "Speed halved",
-  "TIDY5E.StandardExhaustion3": "Disadvantage on Attack rolls and Saving Throws",
-  "TIDY5E.StandardExhaustion4": "Hit point maximum halved",
-  "TIDY5E.StandardExhaustion5": "Speed reduced to 0",
-  "TIDY5E.StandardExhaustion6": "Death",
-
-  "TIDY5E.OneDnDExhaustion0": "No negative effects",
-  "TIDY5E.OneDnDExhaustion1": "-1 to all D20 Tests and Spell Save DC",
-  "TIDY5E.OneDnDExhaustion2": "-2 to all D20 Tests and Spell Save DC",
-  "TIDY5E.OneDnDExhaustion3": "-3 to all D20 Tests and Spell Save DC",
-  "TIDY5E.OneDnDExhaustion4": "-4 to all D20 Tests and Spell Save DC",
-  "TIDY5E.OneDnDExhaustion5": "-5 to all D20 Tests and Spell Save DC",
-  "TIDY5E.OneDnDExhaustion6": "-6 to all D20 Tests and Spell Save DC",
-  "TIDY5E.OneDnDExhaustion7": "-7 to all D20 Tests and Spell Save DC",
-  "TIDY5E.OneDnDExhaustion8": "-8 to all D20 Tests and Spell Save DC",
-  "TIDY5E.OneDnDExhaustion9": "-9 to all D20 Tests and Spell Save DC",
-  "TIDY5E.OneDnDExhaustion10": "-10 to all D20 Tests and Spell Save DC",
-  "TIDY5E.OneDnDExhaustion11": "Death",
-
-  "TIDY5E.StandardVehicleExhaustion0": "No negative effects",
-  "TIDY5E.StandardVehicleExhaustion1": "Disadvantage on Ability Checks",
-  "TIDY5E.StandardVehicleExhaustion2": "Speed halved",
-  "TIDY5E.StandardVehicleExhaustion3": "Disadvantage on Attack rolls and Saving Throws",
-  "TIDY5E.StandardVehicleExhaustion4": "Hit point maximum halved",
-  "TIDY5E.StandardVehicleExhaustion5": "Speed reduced to 0",
-  "TIDY5E.StandardVehicleExhaustion6": "Hit points drop to 0 and the vehicle breaks down",
+  "TIDY5E.ExhaustionLevelTooltip": "Exhaustion Level {level}",
 
   "TIDY5E.AbbrInitiative": "Ini",
 
@@ -225,8 +198,6 @@
     "options.specific.levels.tooltip.hint": "Tooltip for this level of exhaustion. Localization keys also work.",
     "options.open.text": "Open Number Input",
     "options.open.explanation": "Shows the user a numeric input for entering levels of exhaustion.",
-    "useStandardExhaustion": "Use Standard Exhaustion",
-    "useOneDnDExhaustion": "Use One D&D Exhaustion",
     "AtLeastOneLevelRequiredErrorMessage": "At least one exhaustion level is required."
   },
   "TIDY5E.WorldSettings.VehicleExhaustion": {

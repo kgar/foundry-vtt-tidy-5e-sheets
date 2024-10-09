@@ -3,56 +3,11 @@ import type {
   IconWithSeverity,
 } from 'src/features/exhaustion/exhaustion.types';
 
-export function getStandardExhaustionConfig(): ExhaustionConfig {
+export function getDefaultExhaustionConfig(): ExhaustionConfig {
   return {
     type: 'specific',
     levels: 6,
-    hints: [
-      'TIDY5E.StandardExhaustion0',
-      'TIDY5E.StandardExhaustion1',
-      'TIDY5E.StandardExhaustion2',
-      'TIDY5E.StandardExhaustion3',
-      'TIDY5E.StandardExhaustion4',
-      'TIDY5E.StandardExhaustion5',
-      'TIDY5E.StandardExhaustion6',
-    ],
-  };
-}
-
-export function getOneDnDExhaustionConfig(): ExhaustionConfig {
-  return {
-    type: 'specific',
-    levels: 11,
-    hints: [
-      'TIDY5E.OneDnDExhaustion0',
-      'TIDY5E.OneDnDExhaustion1',
-      'TIDY5E.OneDnDExhaustion2',
-      'TIDY5E.OneDnDExhaustion3',
-      'TIDY5E.OneDnDExhaustion4',
-      'TIDY5E.OneDnDExhaustion5',
-      'TIDY5E.OneDnDExhaustion6',
-      'TIDY5E.OneDnDExhaustion7',
-      'TIDY5E.OneDnDExhaustion8',
-      'TIDY5E.OneDnDExhaustion9',
-      'TIDY5E.OneDnDExhaustion10',
-      'TIDY5E.OneDnDExhaustion11',
-    ],
-  };
-}
-
-export function getStandardVehicleExhaustionConfig(): ExhaustionConfig {
-  return {
-    type: 'specific',
-    levels: 6,
-    hints: [
-      'TIDY5E.StandardVehicleExhaustion0',
-      'TIDY5E.StandardVehicleExhaustion1',
-      'TIDY5E.StandardVehicleExhaustion2',
-      'TIDY5E.StandardVehicleExhaustion3',
-      'TIDY5E.StandardVehicleExhaustion4',
-      'TIDY5E.StandardVehicleExhaustion5',
-      'TIDY5E.StandardVehicleExhaustion6',
-    ],
+    hints: [],
   };
 }
 

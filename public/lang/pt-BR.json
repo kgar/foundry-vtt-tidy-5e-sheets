@@ -16,35 +16,6 @@
     "TIDY5E.ShowItemImage": "Clique Dir.: Mostrar Arte do Item",
     "TIDY5E.ShowItemArt": "Mostrar Imagem",
 
-    "TIDY5E.StandardExhaustion0": "Nenhum efeito negativo",
-    "TIDY5E.StandardExhaustion1": "Desvantagem em Testes de Atributo",
-    "TIDY5E.StandardExhaustion2": "Deslocamento reduzido pela metade",
-    "TIDY5E.StandardExhaustion3": "Desvantagem em jogadas de Ataque e Salvaguardas",
-    "TIDY5E.StandardExhaustion4": "Pontos de vida máximos reduzidos pela metade",
-    "TIDY5E.StandardExhaustion5": "Deslocamento reduzido a 0",
-    "TIDY5E.StandardExhaustion6": "Morte",
-
-    "TIDY5E.OneDnDExhaustion0": "Sem efeitos negativos",
-    "TIDY5E.OneDnDExhaustion1": "-1 em todos os testes de D20 e CD de Salvaguarda de Magias",
-    "TIDY5E.OneDnDExhaustion2": "-2 em todos os testes de D20 e CD de Salvaguarda de Magias",
-    "TIDY5E.OneDnDExhaustion3": "-3 em todos os testes de D20 e CD de Salvaguarda de Magias",
-    "TIDY5E.OneDnDExhaustion4": "-4 em todos os testes de D20 e CD de Salvaguarda de Magias",
-    "TIDY5E.OneDnDExhaustion5": "-5 em todos os testes de D20 e CD de Salvaguarda de Magias",
-    "TIDY5E.OneDnDExhaustion6": "-6 em todos os testes de D20 e CD de Salvaguarda de Magias",
-    "TIDY5E.OneDnDExhaustion7": "-7 em todos os testes de D20 e CD de Salvaguarda de Magias",
-    "TIDY5E.OneDnDExhaustion8": "-8 em todos os testes de D20 e CD de Salvaguarda de Magias",
-    "TIDY5E.OneDnDExhaustion9": "-9 em todos os testes de D20 e CD de Salvaguarda de Magias",
-    "TIDY5E.OneDnDExhaustion10": "-10 em todos os testes de D20 e CD de Salvaguarda de Magias",
-    "TIDY5E.OneDnDExhaustion11": "Morte",
-
-    "TIDY5E.StandardVehicleExhaustion0": "Sem efeitos negativos",
-    "TIDY5E.StandardVehicleExhaustion1": "Desvantagem em Testes de Atributo",
-    "TIDY5E.StandardVehicleExhaustion2": "Deslocamento reduzido pela metade",
-    "TIDY5E.StandardVehicleExhaustion3": "Desvantagem em jogadas de Ataque e Salvaguardas",
-    "TIDY5E.StandardVehicleExhaustion4": "Pontos de vida máximos reduzidos pela metade",
-    "TIDY5E.StandardVehicleExhaustion5": "Deslocamento reduzido a 0",
-    "TIDY5E.StandardVehicleExhaustion6": "Pontos de vida caem para 0 e o veículo quebra",
-
     "TIDY5E.AbbrInitiative": "Ini",
 
     "TIDY5E.NoSpecialSenses": "Sem Sentidos Especiais",
@@ -225,8 +196,6 @@
         "options.specific.levels.tooltip.hint": "Dica para esse nível de exaustão. As chaves de localização também funcionam.",
         "options.open.text": "Abrir Entrada de Número",
         "options.open.explanation": "Mostra ao usuário uma entrada numérica para inserir níveis de exaustão.",
-        "useStandardExhaustion": "Usar Exaustão Padrão",
-        "useOneDnDExhaustion": "Usar Exaustão do OneD&D",
         "AtLeastOneLevelRequiredErrorMessage": "É necessário pelo menos um nível de exaustão."
     },
     "TIDY5E.WorldSettings.VehicleExhaustion": {

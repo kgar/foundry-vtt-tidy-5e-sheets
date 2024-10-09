@@ -4,12 +4,8 @@
   import { getContext } from 'svelte';
   import type { WorldSettingsContextStore } from '../WorldSettings.types';
   import ExhaustionSetting from '../../parts/ExhaustionSetting.svelte';
-  import {
-    getOneDnDExhaustionConfig,
-    getStandardExhaustionConfig,
-    getStandardVehicleExhaustionConfig,
-  } from 'src/features/exhaustion/exhaustion';
   import { CONSTANTS } from 'src/constants';
+  import { getDefaultExhaustionConfig } from 'src/features/exhaustion/exhaustion';
 
   const context = getContext<WorldSettingsContextStore>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -32,15 +28,9 @@
     <button
       type="button"
       on:click={() =>
-        ($context.exhaustionConfig = getStandardExhaustionConfig())}
+        ($context.exhaustionConfig = getDefaultExhaustionConfig())}
     >
-      {localize('TIDY5E.WorldSettings.Exhaustion.useStandardExhaustion')}
-    </button>
-    <button
-      type="button"
-      on:click={() => ($context.exhaustionConfig = getOneDnDExhaustionConfig())}
-    >
-      {localize('TIDY5E.WorldSettings.Exhaustion.useOneDnDExhaustion')}
+      {localize('TIDY5E.UseDefault')}
     </button>
   </article>
 
@@ -56,10 +46,9 @@
     <button
       type="button"
       on:click={() =>
-        ($context.vehicleExhaustionConfig =
-          getStandardVehicleExhaustionConfig())}
+        ($context.vehicleExhaustionConfig = getDefaultExhaustionConfig())}
     >
-      {localize('TIDY5E.WorldSettings.Exhaustion.useStandardExhaustion')}
+      {localize('TIDY5E.UseDefault')}
     </button>
   </article>
 
