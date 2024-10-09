@@ -187,18 +187,34 @@
 
     <!-- svelte-ignore a11y-missing-attribute -->
     <a class="button icon-button">
-      <i class="fas fa-hand"></i>
+      <i class="fa-solid fa-feather"></i>
     </a>
     <!-- svelte-ignore a11y-missing-attribute -->
-    <a class="button icon-button active">
-      <i class="fas fa-hand"></i>
+    <a class="button icon-button disabled">
+      <i class="fa-solid fa-feather"></i>
     </a>
   </fieldset>
 
-  <fieldset>
+  <fieldset style="flex-basis: 100%">
     <legend> Button / Group </legend>
 
-    <!-- TODO -->
+    <div>
+      <span>
+        Change the sheet size to see the options show/hide dynamically.
+      </span>
+    </div>
+
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <div class="button-group">
+      <a class="button">
+        <span class="hide-before-850">Action</span>
+        <span class="show-before-850">A</span>
+      </a>
+      <a class="button active">Bonus Action</a>
+      <a class="button hide-before-1000">Reaction</a>
+      <a class="button hide-before-950">Can Use</a>
+      <a class="button hide-before-900">Magical</a>
+    </div>
   </fieldset>
 
   <fieldset>
@@ -355,9 +371,10 @@
     flex-wrap: wrap;
     align-content: flex-start;
     justify-content: flex-start;
+    container-type: inline-size;
 
     > * {
-      flex: 1 0 min-content;
+      flex: 1 0 auto;
     }
 
     legend {
@@ -384,5 +401,35 @@
     justify-content: flex-start;
     flex-wrap: wrap;
     gap: 0.25rem;
+  }
+
+  .show-before-850 {
+    display: none;
+  }
+
+  @container (width < 850px) {
+    .show-before-850 {
+      display: flex !important;
+    }
+  }
+  @container (width < 850px) {
+    .hide-before-850 {
+      display: none !important;
+    }
+  }
+  @container (width < 900px) {
+    .hide-before-900 {
+      display: none !important;
+    }
+  }
+  @container (width < 950px) {
+    .hide-before-950 {
+      display: none !important;
+    }
+  }
+  @container (width < 1000px) {
+    .hide-before-1000 {
+      display: none !important;
+    }
   }
 </style>
