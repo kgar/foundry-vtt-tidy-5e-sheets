@@ -1,10 +1,9 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getContext, onMount } from 'svelte';
+  import { getContext } from 'svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import type { ExhaustionConfig } from 'src/features/exhaustion/exhaustion.types';
   import { CONSTANTS } from 'src/constants';
-  import { isNil } from 'src/utils/data';
   import { coalesce } from 'src/utils/formatting';
 
   export let name: string;
