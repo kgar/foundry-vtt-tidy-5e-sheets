@@ -181,7 +181,8 @@
         "hint": "Обмежити можливість гравців вносити зміни до рідко змінюваних аспектів своїх персонажів. За бажанням можна приховати деякі елементи, які ви взагалі не хочете використовувати.",
         "labelGeneralLocks": "Загальне блокування",
         "labelInventoryLocks": "Блокування інвентарю",
-        "hint2": "Важливо: функції блокування аркуша призначені для того, щоб керувати використанням аркуша гравця та допомагати запобігти помилкам, таким як випадкове додавання/видалення бонусу володіння рятівного кидка. Параметри блокування аркушів не захистять аркуш від гравців зі злими намірами."
+        "hint2": "Важливо: функції блокування аркуша призначені для того, щоб керувати використанням аркуша гравця та допомагати запобігти помилкам, таким як випадкове додавання/видалення бонусу володіння рятівного кидка. Параметри блокування аркушів не захистять аркуш від гравців зі злими намірами.",
+        "labelFeaturesLocks": "Блокування особливостей"
     },
     "TIDY5E.WorldSettings.TabMisc": {
         "tabLabel": "Налаштування ГМ"
@@ -416,5 +417,172 @@
     "TIDY5E.Settings.UseTotalSheetLock": {
         "name": "Заблокувати редагування чутливих полів",
         "hint": "Блокує для редагування чутливі поля (ім'я, перемикачі володіння), та ховає кнопки налаштувань коли аркуш заблокований."
+    },
+    "TIDY5E.Settings.ShowTraitLabels": {
+        "name": "Показувати назви рис",
+        "hint": "Показує назви для рис ПГ, НІПі транспорту. Вимкніть, щоб відображати лише значки."
+    },
+    "TIDY5E.Settings.InitialSheetTab": {
+        "name": "Початкова вкладка аркуша",
+        "hint": "Відкриває вказану вкладку під час першого відкриття аркуша."
+    },
+    "TIDY5E.Settings.DefaultSheetTabs": {
+        "name": "Усталені вкладки аркуша",
+        "hint": "Визначає, які вкладки та в якому порядку відображатимуться за замовчуванням. Застосовується, якщо для актора не було обрано жодної вкладки.",
+        "AvailableHeader": "Доступні вкладки",
+        "SelectedHeader": "Вибрані вкладки",
+        "AtLeastOneTabRequiredErrorMessage": "Усталені вкладки: для кожного типу актора потрібна принаймні одна вкладка."
+    },
+    "TIDY5E.Settings.HideDeathSavesFromPlayers": {
+        "name": "Ховати рятунки від смерті від гравців",
+        "hint": "Робить рятівні кидки від смерті та їх результати видимими лише для ГМ."
+    },
+    "TIDY5E.Settings.LockMoneyChanges": {
+        "name": "Блокування валюти",
+        "hint": "Не дозволяє нікому окрім ГМ змінювати кількість валюти персонажа."
+    },
+    "TIDY5E.Settings.ActionList.Header": "Дії",
+    "TIDY5E.Settings.ColorPickerInnate": {
+        "name": "Вроджені"
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
+        "name": "Тільки ритуал - контур"
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
+        "name": "Тільки ритуал - акцент"
+    },
+    "TIDY5E.Settings.ColorPickerInnateOutline": {
+        "name": "Вроджені - контур"
+    },
+    "TIDY5E.Settings.ColorPickerInnateAccent": {
+        "name": "Вроджені - акцент"
+    },
+    "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
+        "name": "Завжди підготовлені"
+    },
+    "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
+        "name": "Завжди підготовлені - контур"
+    },
+    "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
+        "name": "Завжди підготовлені - акцент"
+    },
+    "TIDY5E.Settings.ColorPickerScrollbarThumb": {
+        "name": "Каретка смужки прокрутки"
+    },
+    "TIDY5E.Settings.ColorPickerScrollbarTrack": {
+        "name": "Доріжка смужки прокрутки"
+    },
+    "TIDY5E.Settings.ColorPickerMagicAccent": {
+        "name": "Магічний предмет - акцент контуру"
+    },
+    "TIDY5E.Settings.UseNPCEncumbranceBar": {
+        "name": "Використовувати смужку перенавантаження для НІП",
+        "hint": "Показує смужку перенавантаження на аркушах НІП."
+    },
+    "TIDY5E.Settings.UseVehicleEncumbranceBar": {
+        "hint": "Показує смужку перенавантаження на аркушах транспортних засобів.",
+        "name": "Використовувати смужку перенавантаження для транспорту"
+    },
+    "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
+        "name": "Використовувати фільтр чар мультикласу",
+        "hint": "Дозволяє фільтрувати чари за класом на вкладці чар. Чари мають бути пов’язані з класом за допомогою селектора класу на аркуші редагування чар."
+    },
+    "TIDY5E.Settings.UseSpellClassIcons": {
+        "name": "Використовувати іконку класу для чар",
+        "hint": "Показує зображення класу чар на чарах замість зображення самих чар. Чари мають бути пов’язані з класом за допомогою селектора класу на аркуші редагування чар. Під час мультикласу ця функція допомагає розрізняти, які чари належать до якого класу."
+    },
+    "TIDY5E.Settings.AllowCantripsToBePrepared": {
+        "name": "Дозволяти підготовлювати замовляння",
+        "hint": "Необов’язкове правило «формули замовлянь» з посібника «Tasha's Cauldron of Everything» дозволяє чаротворцям підготовлювати замовляння після тривалого відпочинку, так само як вони це роблять із рівневими чарами. Підготовлені замовляння не враховуються до загальної кількості підготовлених чар."
+    },
+    "TIDY5E.Settings.LockExpChanges": {
+        "name": "Блокування очок досвіду",
+        "hint": "Не дозволяє нікому окрім ГМ змінювати кількість очок досвіду персонажа."
+    },
+    "TIDY5E.Settings.LockHpMaxChanges": {
+        "name": "Блокування змін макс. ПЗ",
+        "hint": "Не дозволяє нікому окрім ГМ змінювати максимальну кількість пунктів здоров'я."
+    },
+    "TIDY5E.Settings.LockLevelSelector": {
+        "name": "Блокування селектора рівня",
+        "hint": "Не дозволяє нікому окрім ГМ змінювати рівень персонажа."
+    },
+    "TIDY5E.Settings.LockConfigureSheet": {
+        "name": "Блокування вибору аркуша",
+        "hint": "Не дозволяє нікому окрім ГМ змінювати тип аркуша."
+    },
+    "TIDY5E.Settings.LockItemQuantity": {
+        "hint": "Не дозволяє нікому окрім ГМ змінювати кількість предметів.",
+        "name": "Блокування кількості предметів"
+    },
+    "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
+        "name": "Показувати лише замовляння серед дій",
+        "hint": "Замість того, щоб показувати всі чари, які завдають шкоди, на вкладці/панелі «Дії» за замовчуванням, показані лише замовляння. Це типова поведінка D&DBeyond."
+    },
+    "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
+        "name": "Включити однохвилинні чари до дій",
+        "hint": "Показує чари тривалістю одну хвилину або менше (наприклад, 1 раунд) і з часом активації 1 дія або 1 бонусна дія (наприклад, благословення, знищення, наказ) на вкладці/панелі дій за замовчуванням."
+    },
+    "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
+        "name": "Включити чари з активними ефектами до дій",
+        "hint": "Показує чари що накладають активні ефекти (наприклад Дубова шкіра) на вкладці/панелі дій за замовчуванням."
+    },
+    "TIDY5E.Settings.ColorPickerPrimaryAccent": {
+        "name": "Основний акцент"
+    },
+    "TIDY5E.Settings.ColorPickerEquipped": {
+        "name": "Споряджено"
+    },
+    "TIDY5E.Settings.ColorPickerHpBar": {
+        "name": "Смужки здоров'я"
+    },
+    "TIDY5E.Settings.ColorPickerPrepared": {
+        "name": "Підготовлені"
+    },
+    "TIDY5E.Settings.ColorPickerPact": {
+        "name": "Пакт"
+    },
+    "TIDY5E.Settings.ColorPickerAtWill": {
+        "name": "За бажанням"
+    },
+    "TIDY5E.Settings.ColorPickerAtWillOutline": {
+        "name": "За бажанням - контур"
+    },
+    "TIDY5E.Settings.ColorPickerPactOutline": {
+        "name": "Пакт - контур"
+    },
+    "TIDY5E.Settings.ColorPickerPreparedOutline": {
+        "name": "Підготовлені - контур"
+    },
+    "TIDY5E.Settings.ColorPickerPactAccent": {
+        "name": "Пакт - акцент"
+    },
+    "TIDY5E.Settings.ColorPickerAtWillAccent": {
+        "name": "За бажанням - акцент"
+    },
+    "TIDY5E.ExhaustionLevelTooltip": "Рівень виснаження {level}",
+    "TIDY5E.Settings.UseCharacterEncumbranceBar": {
+        "name": "Використовувати смужку перенавантаження для персонажа",
+        "hint": "Показує смужку перенавантаження на аркушах персонажів."
+    },
+    "TIDY5E.Settings.ActionListIncludeConsumables": {
+        "name": "Включити витратники до дій",
+        "hint": "Показує витратники, що мають вартість активації (дією, бонусною дією тощо) в списку дій за замовчуванням."
+    },
+    "TIDY5E.Settings.ColorPickerEnabled": {
+        "hint": "Показує власні кольори теми",
+        "name": "Використовувати власні кольори теми"
+    },
+    "TIDY5E.Settings.ColorPickerEquippedAccent": {
+        "name": "Споряджено - акцент"
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnly": {
+        "name": "Тільки ритуал"
+    },
+    "TIDY5E.Settings.ColorPickerEquippedOutline": {
+        "name": "Споряджено - контур"
+    },
+    "TIDY5E.Settings.ColorPickerPreparedAccent": {
+        "name": "Підготовлені - акцент"
     }
 }
