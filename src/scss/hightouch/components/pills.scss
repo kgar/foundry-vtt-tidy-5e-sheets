@@ -108,3 +108,36 @@
     }
   }
 }
+
+.pill-switch {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.125rem 0.125rem 0.125rem 0.5rem;
+
+  .pill-switch-icon-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  & > :first-child {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    --icon-fill: var(--t5e-color-icon-light-disabled);
+
+    i {
+      color: var(--t5e-color-icon-light-disabled);
+    }
+  }
+
+  &:has(.toggle:checked) {
+    & > :first-child {
+      --icon-fill: var(--t5e-color-icon-light-default);
+      i {
+        color: var(--t5e-color-icon-light-default);
+      }
+    }
+  }
+}

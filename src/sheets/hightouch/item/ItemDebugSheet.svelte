@@ -1,8 +1,6 @@
 <script lang="ts">
-  import TidySwitch from 'src/components/toggle/TidySwitch.svelte';
   import { CONSTANTS } from 'src/constants';
   import { SettingsProvider } from 'src/settings/settings';
-  import { defaultDarkTheme } from 'src/theme/default-dark-theme';
   import { getThemeOrDefault } from 'src/theme/theme';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -11,12 +9,10 @@
   import ToggleButton from 'src/components/buttons/ToggleButton.svelte';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import ItemHeaderStart from './parts/ItemHeaderStart.svelte';
   import FieldToggle from 'src/components/toggle/FieldToggle.svelte';
-  import UnderlinedTabStrip from 'src/components/tabs/UnderlinedTabStrip.svelte';
-  import type { Tab } from 'src/types/types';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
+  import PillSwitch from 'src/components/toggle/PillSwitch.svelte';
 
   let context = getContext<Readable<ItemDebugSheetHightouchContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -437,7 +433,31 @@
   <fieldset>
     <legend> Pill / Switch </legend>
 
-    <!-- TODO -->
+    Fontawesome
+    <PillSwitch
+      checked={$context.system.equipped}
+      checkedIconClass="fas fa-hand-fist equip-icon fa-fw"
+      uncheckedIconClass="far fa-hand fa-fw"
+      on:change={(ev) =>
+        console.log(
+          $context.item.update({ 'system.equipped': ev.currentTarget.checked }),
+        )}
+    >
+      Equipped
+    </PillSwitch>
+
+    SVG
+    <PillSwitch
+      checked={$context.system.attuned}
+      checkedSvgSrc="systems/dnd5e/icons/svg/statuses/concentrating.svg"
+      uncheckedSvgSrc="systems/dnd5e/icons/svg/statuses/concentrating.svg"
+      on:change={(ev) =>
+        console.log(
+          $context.item.update({ 'system.attuned': ev.currentTarget.checked }),
+        )}
+    >
+      Attuned
+    </PillSwitch>
   </fieldset>
 </div>
 
