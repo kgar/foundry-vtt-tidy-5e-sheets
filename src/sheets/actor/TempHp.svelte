@@ -21,9 +21,9 @@
     placeholder="+{localize('DND5E.Temp')}"
     value={$context.hp.temp || null}
     allowDeltaChanges={true}
-    maxlength={5}
     title={localize('DND5E.HitPointsTemp')}
     disabled={!$context.editable}
+    selectOnFocus={true}
   />
   <TextInput
     document={$context.actor}
@@ -31,10 +31,9 @@
     class="max-temphp"
     placeholder="+{localize('DND5E.Max')}"
     value={$context.hp.tempmax || null}
-    allowDeltaChanges={true}
-    maxlength={5}
     title={localize('DND5E.HitPointsTempMax')}
     disabled={!$context.editable}
+    selectOnFocus={true}
   />
   {#if $context.editable && $context.unlocked}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
