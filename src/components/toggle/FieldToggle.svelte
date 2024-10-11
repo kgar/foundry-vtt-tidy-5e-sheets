@@ -3,14 +3,10 @@
 </script>
 
 <label class="field-toggle">
-  <span class="checked-icon-container">
+  <span class="track">
     <i class="checked-icon fas fa-check"></i>
-  </span>
-  <span class="unchecked-icon-container">
     <i class="unchecked-icon fas fa-xmark"></i>
-  </span>
-  <span class="thumb-container">
-    <i class="thumb fas fa-circle"></i>
+    <span class="thumb"></span>
   </span>
   <input type="checkbox" on:change {checked} class="toggle hidden" />
 </label>

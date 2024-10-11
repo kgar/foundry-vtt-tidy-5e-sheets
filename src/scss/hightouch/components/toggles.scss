@@ -125,10 +125,17 @@
   --field-toggle-checked-color: var(--t5e-color-text-onInverse-default);
   --field-toggle-unchecked-color: var(--t5e-color-text-onDefault-lightest);
   --field-toggle-thumb-color: var(--t5e-color-gold);
+  --width: 2rem;
+  --height: 1rem;
+  --padding: 0.1875rem;
+  --thumb-size: 0.625rem;
+  --thumb-checked-translateX: calc(1rem - 1px);
 
   display: inline-flex;
-  width: 2rem;
-  height: 1rem;
+  width: var(--width);
+  height: var(--height);
+  cursor: pointer;
+  align-items: center;
   border-radius: 6.25rem;
   background: var(--field-toggle-background);
   box-shadow: 0px 0px 4px 0px var(--dnd5e-shadow-15);
@@ -136,69 +143,59 @@
   position: relative;
   transition: all 250ms ease;
 
-  .checked-icon-container {
+  .unchecked-icon {
+    z-index: 0;
     position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    .checked-icon {
-      font-size: 0.6875rem;
-      position: absolute;
-      color: var(--field-toggle-checked-color);
-    }
+    font-size: 0.6875rem;
+    color: var(--field-toggle-unchecked-color);
+    line-height: normal;
+    top: 50%;
+    left: 70%;
+    transform: translate(-50%, -50%);
   }
 
-  .unchecked-icon-container {
+  .checked-icon {
+    z-index: 0;
     position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    right: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    .unchecked-icon {
-      font-size: 0.6875rem;
-      position: absolute;
-      color: var(--field-toggle-unchecked-color);
-    }
+    font-size: 0.6875rem;
+    color: var(--field-toggle-checked-color);
+    line-height: normal;
+    top: 50%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
   }
 
-  .thumb-container {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .track {
+    border: var(--padding) solid transparent;
+  }
+
+  .thumb {
+    z-index: 1;
+    font-size: 0.625rem;
+    background-color: var(--field-toggle-thumb-color);
+    border-radius: 50%;
     transition: all 250ms ease;
-
-    .thumb {
-      font-size: 0.625rem;
-      color: var(--field-toggle-thumb-color);
-      transition: all 250ms ease;
-    }
+    display: block;
+    width: var(--thumb-size);
+    height: var(--thumb-size);
   }
 
   &:has(.toggle:checked) {
     background: var(--t5e-component-toggle-toggled-background);
     border-color: var(--t5e-component-toggle-toggled-border);
 
-    .thumb-container {
-      left: 50%;
-      right: 0;
+    .unchecked-icon {
+      opacity: 0;
+    }
+
+    .checked-icon {
+      opacity: 1;
     }
 
     .thumb {
-      color: #fff;
+      transform: translateX(var(--thumb-checked-translateX));
+      background-color: #fff;
     }
   }
 }
