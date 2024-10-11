@@ -237,12 +237,29 @@ export const FoundryAdapter = {
       type === 'class' &&
       actor.system.details.level + 1 > CONFIG.DND5E.maxLevel
     ) {
-      const err = game.i18n.format('DND5E.MaxCharacterLevelExceededWarn', {
+      const error = game.i18n.format('DND5E.MaxCharacterLevelExceededWarn', {
         max: CONFIG.DND5E.maxLevel,
       });
-      ui.notifications.error(err);
+      ui.notifications.error(error);
       return null;
     }
+
+    // Only one race is allowed
+    const exceededRaceLimit =
+      type === CONSTANTS.ITEM_TYPE_RACE && actor.itemTypes.race.length > 0;
+    const exceededbackgroundLimit =
+      type === CONSTANTS.ITEM_TYPE_BACKGROUND &&
+      actor.itemTypes.background.length > 0;
+    if (exceededRaceLimit || exceededbackgroundLimit) {
+      const error = FoundryAdapter.localize('DND5E.ActorWarningSingleton', {
+        itemType: type,
+        actorType: actor.type,
+      });
+      ui.notifications.error(error);
+      return null;
+    }
+
+    // Only one class is allowed
 
     const itemData = foundry.utils.mergeObject(
       {
