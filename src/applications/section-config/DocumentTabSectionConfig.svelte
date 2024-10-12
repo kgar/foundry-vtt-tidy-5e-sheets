@@ -12,10 +12,35 @@
   ) => void | Promise<void>;
   export let useDefault: () => void | Promise<void>;
 
+  function addPersistedSection() {
+    // TODO: Prompt for a name, such as adding a special listbox item which has an input and a ✅❌ interface. ✅ would be verified unique, else an error notification. ❌ would remove the selection. When in this mode, Save / Apply are disabled, or they simply ignore the pending one.
+    sections.push({
+      key: 'My Custom Persisted Section Example',
+      label: 'My Custom Persisted Section Example',
+      persisted: true,
+      show: true,
+      custom: true,
+    });
+
+    sections = sections;
+  }
+
   const localize = FoundryAdapter.localize;
+
+  function removeCustomSection(item: DocumentTabSectionConfigItem): any {
+    sections = sections.filter((s) => s !== item);
+  }
 </script>
 
-<section class="document-tab-section-config flex-column small-gap full-height">
+<section class="document-tab-section-config flex-column small-gap">
+  <button
+    type="button"
+    class="inline-button"
+    style="align-self: flex-end; width: auto;"
+    on:click={addPersistedSection}
+    ><i class="fas fa-plus"></i>
+    {localize('TIDY5E.Section.ConfigDialog.AddSectionButtonText')}</button
+  >
   <SortingListbox
     bind:items={sections}
     labelProp="label"
@@ -55,6 +80,18 @@
           }}
         >
           <i class="far fa-eye-slash fa-fw"></i>
+        </button>
+      {/if}
+      {#if item.custom}
+        <button
+          type="button"
+          class="inline-icon-button"
+          title={localize(
+            'TIDY5E.Section.ConfigDialog.RemovePersistedSectionTooltip',
+          )}
+          on:click={() => removeCustomSection(item)}
+        >
+          <i class="fas fa-trash"></i>
         </button>
       {/if}
     </svelte:fragment>

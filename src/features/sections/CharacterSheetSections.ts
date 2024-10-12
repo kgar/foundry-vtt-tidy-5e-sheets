@@ -127,6 +127,7 @@ export class CharacterSheetSections {
       custom: {
         section: customSectionName,
         creationItemTypes: [CONSTANTS.ITEM_TYPE_FEAT],
+        persisted: false,
       },
       show: true,
       ...customSectionOptions,
@@ -218,6 +219,7 @@ export class CharacterSheetSections {
       custom: {
         creationItemTypes: [],
         section: key,
+        persisted: false,
       },
       isExternal: false,
       show: true,
