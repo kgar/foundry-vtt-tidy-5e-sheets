@@ -223,10 +223,22 @@ export const FoundryAdapter = {
       type === 'class' &&
       actor.system.details.level + 1 > CONFIG.DND5E.maxLevel
     ) {
-      const err = game.i18n.format('DND5E.MaxCharacterLevelExceededWarn', {
+      const error = game.i18n.format('DND5E.MaxCharacterLevelExceededWarn', {
         max: CONFIG.DND5E.maxLevel,
       });
-      ui.notifications.error(err);
+      ui.notifications.error(error);
+      return null;
+    }
+
+    // Enforce the singleton rule for singleton items (e.g., an actor can have only one race)
+    const dataModel = CONFIG.Item.dataModels[type];
+    const singleton = dataModel?.metadata.singleton ?? false;
+    if (singleton && actor.itemTypes[type].length) {
+      const error = FoundryAdapter.localize('DND5E.ActorWarningSingleton', {
+        itemType: type,
+        actorType: actor.type,
+      });
+      ui.notifications.error(error);
       return null;
     }
 

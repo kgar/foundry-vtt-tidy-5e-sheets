@@ -1,4 +1,4 @@
-import type { ModuleIntegrationBase } from '../ModuleIntegrationBase';
+import type { ModuleIntegrationBase } from '../integration-classes';
 import type { ContextMenuPositionInfo } from 'src/context-menu/context-menu.types';
 
 declare var PopoutModule: any;

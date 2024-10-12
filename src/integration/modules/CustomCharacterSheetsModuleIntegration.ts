@@ -1,5 +1,5 @@
 import type { Tidy5eSheetsApi } from 'src/api/Tidy5eSheetsApi';
-import type { ModuleIntegrationBase } from '../ModuleIntegrationBase';
+import type { ModuleIntegrationBase } from '../integration-classes';
 
 export class CustomCharacterSheetsModuleIntegration
   implements ModuleIntegrationBase
