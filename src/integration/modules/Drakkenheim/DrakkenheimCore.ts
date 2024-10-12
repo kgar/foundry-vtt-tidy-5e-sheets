@@ -1,5 +1,5 @@
 import type { Tidy5eSheetsApi } from 'src/api';
-import type { ModuleIntegrationBase } from 'src/integration/ModuleIntegrationBase';
+import type { ModuleIntegrationBase } from 'src/integration/integration-classes';
 import DrakkenheimCoreContaminationTab from './DrakkenheimCoreContaminationTab.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 

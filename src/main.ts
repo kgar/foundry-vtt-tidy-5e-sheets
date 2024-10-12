@@ -12,7 +12,7 @@ import { initRuntime } from './runtime/runtime-init';
 import MigrationNotificationFormApplication from 'src/migrations/notification/MigrationNotificationFormApplication';
 import { MigrationTally } from 'src/migrations/MigrationTally';
 import { Tidy5eKgarContainerSheet } from './sheets/Tidy5eContainerSheet';
-import { setupModuleIntegrations } from './integration/integration';
+import { setupIntegrations } from './integration/integration';
 import { TidyHooks } from './foundry/TidyHooks';
 import { initKeybindings } from './keybindings/keybind-init';
 
@@ -106,7 +106,7 @@ Hooks.once('ready', async () => {
 
   TidyHooks.tidy5eSheetsReady(api);
 
-  setupModuleIntegrations(api);
+  setupIntegrations(api);
 
   if (
     FoundryAdapter.userIsGm() &&
