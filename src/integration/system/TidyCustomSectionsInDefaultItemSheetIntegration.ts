@@ -15,7 +15,7 @@ export class TidyCustomSectionsInDefaultItemSheetIntegration
         CONSTANTS.ITEM_TYPE_SUBCLASS,
       ].includes(app.document.type);
 
-      if (api.isTidy5eSheet(app) || isUnsupportedItemType) {
+      if (isUnsupportedItemType) {
         return;
       }
 
