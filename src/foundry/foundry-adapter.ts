@@ -244,13 +244,10 @@ export const FoundryAdapter = {
       return null;
     }
 
-    // Only one race is allowed
-    const exceededRaceLimit =
-      type === CONSTANTS.ITEM_TYPE_RACE && actor.itemTypes.race.length > 0;
-    const exceededbackgroundLimit =
-      type === CONSTANTS.ITEM_TYPE_BACKGROUND &&
-      actor.itemTypes.background.length > 0;
-    if (exceededRaceLimit || exceededbackgroundLimit) {
+    // Enforce the singleton rule for singleton items (e.g., an actor can have only one race)
+    const dataModel = CONFIG.Item.dataModels[type];
+    const singleton = dataModel?.metadata.singleton ?? false;
+    if (singleton && actor.itemTypes[type].length) {
       const error = FoundryAdapter.localize('DND5E.ActorWarningSingleton', {
         itemType: type,
         actorType: actor.type,
