@@ -789,5 +789,6 @@
     "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Si una pestaña Tidy es la ventana actualmente activa en la interfaz de usuario, esta combinación de teclas alterna el bloqueo de pestañas.",
     "TIDY5E.Group.NamePlaceholder": "Nombre del grupo",
     "TIDY5E.Tidy5eGroupSheetClassic": "Hoja del grupo Tidy 5e Classic",
-    "TIDY5E.ExhaustionLevelTooltip": "Nivel de desgaste {nivel}"
+    "TIDY5E.ExhaustionLevelTooltip": "Nivel de desgaste {nivel}",
+    "TIDY5E.Tidy5eSettings": "Ajustes de Tidy 5e Sheets"
 }
