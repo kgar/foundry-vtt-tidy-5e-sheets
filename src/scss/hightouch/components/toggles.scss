@@ -127,9 +127,11 @@
   --field-toggle-thumb-color: var(--t5e-color-gold);
   --width: 2rem;
   --height: 1rem;
-  --padding: 0.1875rem;
+  --padding: 0.125rem;
+  --check-indicator-size: 0.6875rem;
   --thumb-size: 0.625rem;
-  --thumb-checked-translateX: calc(1rem - 1px);
+  --thumb-checked-translateX: 1rem;
+  --border-width: 0.0625rem;
 
   display: inline-flex;
   width: var(--width);
@@ -139,46 +141,37 @@
   border-radius: 6.25rem;
   background: var(--field-toggle-background);
   box-shadow: 0px 0px 4px 0px var(--dnd5e-shadow-15);
-  border: 0.0625rem solid var(--field-toggle-border-color);
+  border: var(--border-width) solid var(--field-toggle-border-color);
   position: relative;
   transition: all 250ms ease;
 
   .unchecked-icon {
-    z-index: 0;
     position: absolute;
-    font-size: 0.6875rem;
-    color: var(--field-toggle-unchecked-color);
-    line-height: normal;
-    top: 50%;
-    left: 70%;
-    transform: translate(-50%, -50%);
+    width: var(--check-indicator-size);
+    height: var(--check-indicator-size);
+    fill: var(--field-toggle-unchecked-color);
+    top: var(--padding);
+    right: calc(var(--padding) + var(--border-width));
   }
 
   .checked-icon {
-    z-index: 0;
     position: absolute;
-    font-size: 0.6875rem;
-    color: var(--field-toggle-checked-color);
-    line-height: normal;
-    top: 50%;
-    left: 30%;
-    transform: translate(-50%, -50%);
+    width: var(--check-indicator-size);
+    height: var(--check-indicator-size);
+    fill: var(--field-toggle-checked-color);
     opacity: 0;
-  }
-
-  .track {
-    border: var(--padding) solid transparent;
+    top: var(--padding);
+    left: calc(var(--padding) + var(--border-width));
   }
 
   .thumb {
-    z-index: 1;
-    font-size: 0.625rem;
-    background-color: var(--field-toggle-thumb-color);
-    border-radius: 50%;
-    transition: all 250ms ease;
-    display: block;
+    position: absolute;
     width: var(--thumb-size);
     height: var(--thumb-size);
+    fill: var(--field-toggle-thumb-color);
+    transition: all 250ms ease;
+    top: var(--padding);
+    left: var(--padding);
   }
 
   &:has(.toggle:checked) {
@@ -195,7 +188,7 @@
 
     .thumb {
       transform: translateX(var(--thumb-checked-translateX));
-      background-color: #fff;
+      fill: #fff;
     }
   }
 }
