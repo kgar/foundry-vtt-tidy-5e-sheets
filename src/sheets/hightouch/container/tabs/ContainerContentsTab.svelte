@@ -49,7 +49,7 @@
   class="action-bar"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTION_BAR}
 >
-  <button type="button">
+  <button type="button" class="icon-button">
     <i class="fas fa-angles-down fa-fw"></i>
   </button>
 

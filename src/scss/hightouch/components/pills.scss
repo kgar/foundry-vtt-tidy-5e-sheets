@@ -128,7 +128,7 @@
     --icon-fill: var(--t5e-color-icon-light-disabled);
 
     i {
-      color: var(--t5e-color-icon-light-disabled);
+      color: var(--icon-fill);
     }
   }
 
@@ -136,8 +136,21 @@
     & > :first-child {
       --icon-fill: var(--t5e-color-icon-light-default);
       i {
-        color: var(--t5e-color-icon-light-default);
+        color: var(--icon-fill);
       }
+    }
+  }
+}
+
+&:is(.inverse, .dark) .pill-switch,
+.inverse .pill-switch {
+  & > :first-child {
+    --icon-fill: var(--t5e-color-icon-dark-disabled);
+  }
+
+  &:has(.toggle:checked) {
+    & > :first-child {
+      --icon-fill: var(--t5e-color-icon-dark-default);
     }
   }
 }

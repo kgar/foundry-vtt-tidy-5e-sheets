@@ -8,14 +8,11 @@
   import ItemImageBorder from '../item/parts/ItemImageBorder.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
+  import PillSwitch from 'src/components/toggle/PillSwitch.svelte';
 
   let context = getContext<Readable<ContainerSheetHightouchContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
-
-  $: equippedText = $context.system.equipped
-    ? localize('DND5E.Equipped')
-    : localize('DND5E.Unequipped');
 
   $: identifiedText = $context.system.identified
     ? localize('DND5E.Identified')
@@ -59,15 +56,38 @@
   </div>
 
   <ul class="pills inverse stacked">
+    <li>
+      <PillSwitch
+        checked={$context.system.equipped}
+        checkedIconClass="fas fa-hand-fist equip-icon fa-fw"
+        uncheckedIconClass="far fa-hand fa-fw"
+        on:change={(ev) =>
+          console.log(
+            $context.item.update({
+              'system.equipped': ev.currentTarget.checked,
+            }),
+          )}
+      >
+        {localize('DND5E.Equipped')}
+      </PillSwitch>
+    </li>
     {#if $context.unlocked}
-      <li class="pill">TODO: Super Cool Switch Here</li>
-    {:else}
-      <li class="pill">
-        <i class="fas fa-hand-fist equip-icon"></i>
-        <span class="label">
-          {equippedText}
-        </span>
+      <li>
+        <PillSwitch
+          checked={$context.system.identified}
+          checkedIconClass="fas fa-search fa-fw"
+          uncheckedIconClass="fas fa-search fa-fw"
+          on:change={(ev) =>
+            console.log(
+              $context.item.update({
+                'system.identified': ev.currentTarget.checked,
+              }),
+            )}
+        >
+          {localize('DND5E.Identified')}
+        </PillSwitch>
       </li>
+    {:else}
       <li class="pill">
         <i class="fas fa-search"></i>
         <span class="label">
