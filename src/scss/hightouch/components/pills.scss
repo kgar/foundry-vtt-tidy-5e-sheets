@@ -30,14 +30,16 @@
   min-height: var(--font-size-24, 1.5rem);
   padding: 0.125rem 0.5rem;
   color: var(--t5e-color-text-onDefault-default);
-
+  --icon-fill: var(--t5e-color-icon-light-diminished);
+  
   // TODO: Determine if lighter text can be moved to its own scope and stylesheet and used generically
   .lighter {
     font-weight: 400;
   }
-
+  
   .lighter,
   i {
+    --icon-fill: var(--t5e-color-text-onDefault-lighter);
     color: var(--t5e-color-text-onDefault-lighter);
   }
 
@@ -71,6 +73,7 @@
   background: var(--t5e-component-pill-onInverse-background);
   border-color: var(--t5e-component-pill-onInverse-border);
   color: var(--t5e-color-text-onInverse-default);
+  --icon-fill: var(--t5e-color-icon-dark-diminished);
 
   &.interactive {
     border-color: var(

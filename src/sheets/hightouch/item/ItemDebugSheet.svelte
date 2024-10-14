@@ -429,7 +429,14 @@
   <fieldset>
     <legend> Pill / Readonly </legend>
 
-    <!-- TODO -->
+    <ul class="pills">
+      <li class="pill">Panache <span><span class="lighter">+</span>10</span></li>
+      <li class="pill"><i class="fas fa-broom"></i> Tidy 5e</li>
+      <li class="pill">
+        <Dnd5eIcon src="systems/dnd5e/icons/svg/statuses/concentrating.svg"
+        ></Dnd5eIcon> Big Concentrate
+      </li>
+    </ul>
   </fieldset>
 
   <fieldset>
