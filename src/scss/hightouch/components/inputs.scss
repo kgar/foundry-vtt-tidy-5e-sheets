@@ -92,41 +92,55 @@ input[type='radio'] {
     border: 1px solid var(--t5e-component-field-default-border, #9f9275);
     // TODO: CSS Variable
     background: rgba(159, 146, 117, 0.2);
+  }
+}
+
+input[type='checkbox'] {
+  --checkbox-checked-color: var(--t5e-component-toggle-toggled-background);
+  --checkbox-checkmark-color: var(--t5e-color-text-onDefault-gold-light);
+  --checkbox-size: 1rem;
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  margin: 0;
+  --input-focus-outline-color: ;
+
+  text-align: center;
+
+  &::before,
+  &::after {
+    content: unset;
+    font-weight: 900;
+  }
+
+  border-radius: 0.125rem;
+  border: 0.0625rem solid var(--t5e-component-field-default-border);
+  background: var(--t5e-component-field-default-background);
+  box-shadow: 0px 0px 4px 0px var(--dnd5e-shadow-15);
+
+  &:checked {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &:checked::before {
+    content: '\f00c';
+    font-size: 0.6875rem;
+    color: var(--t5e-color-text-onDefault-gold-light);
+  }
+
+  &:checked {
+    border: 1px solid var(--t5e-component-toggle-toggled-border);
+    background: var(--t5e-component-toggle-toggled-background);
+  }
+
+  &:disabled {
+    border: 0.0625rem solid var(--t5e-component-field-default-border);
+    // TODO: CSS Variable
+    background: rgba(159, 146, 117, 0.2);
 
     &::before {
-      content: '\f023';
-      color: var(--t5e-color-icon-light-diminished, #666);
-      font-family: 'Font Awesome 6 Pro';
-      font-size: 0.5625rem;
-      font-style: normal;
-      font-weight: 900;
-      line-height: normal;
-      text-transform: uppercase;
-      transform: scale(1);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: transparent;
+      color: var(--t5e-color-icon-light-diminished);
     }
   }
-  // &:disabled {
-  //   border: 1px solid var(--t5e-component-field-default-border, #9f9275);
-  //   // TODO: CSS Variable
-  //   background: rgba(159, 146, 117, 0.2);
-  //   --icon-color: var(--t5e-color-icon-light-diminished, #666);
-  //   --icon-size: 0.5625rem;
-  //   display: flex;
-  //   align-items: center;
-  //   justify-content: center;
-
-  //   &::before {
-  //     content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512' style='fill: var(--icon-color, %23000); width: var(--icon-size, 68%25);'%3E%3C!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--%3E%3Cpath d='M144 144v48H304V144c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192V144C80 64.5 144.5 0 224 0s144 64.5 144 144v48h16c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64H80z'/%3E%3C/svg%3E");
-  //     transform: scale(1);
-  //     width: 0.5625rem;
-  //     background: transparent;
-  //     position: absolute;
-  //     left: 2.5px;
-  //     top: 0;
-  //   }
-  // }
 }

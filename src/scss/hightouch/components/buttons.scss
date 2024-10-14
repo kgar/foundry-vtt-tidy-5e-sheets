@@ -106,6 +106,7 @@
     }
 
     &.disabled {
+      --icon-fill: var(--t5e-color-text-onDefault-lightest);
       font-style: italic;
       color: var(--t5e-color-text-onDefault-lightest);
     }

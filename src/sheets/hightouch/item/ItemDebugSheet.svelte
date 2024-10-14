@@ -331,14 +331,16 @@
   <fieldset>
     <legend> Input / Checkbox </legend>
 
-    <label for="checkbox-test-1"><input type="checkbox" /> Property</label>
-    <label for="checkbox-test-2"
+    <label for="checkbox-test-1" class="checkbox"
+      ><input type="checkbox" /> Property</label
+    >
+    <label for="checkbox-test-2" class="checkbox"
       ><input type="checkbox" checked /> Property</label
     >
-    <label for="checkbox-test-3"
+    <label for="checkbox-test-3" class="checkbox"
       ><input type="checkbox" disabled /> Property</label
     >
-    <label for="checkbox-test-3"
+    <label for="checkbox-test-4" class="checkbox"
       ><input type="checkbox" checked disabled /> Property</label
     >
   </fieldset>
