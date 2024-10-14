@@ -13,6 +13,7 @@
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import PillSwitch from 'src/components/toggle/PillSwitch.svelte';
+  import Search from '../shared/Search.svelte';
 
   let context = getContext<Readable<ItemDebugSheetHightouchContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -30,57 +31,59 @@
 </script>
 
 <aside class="sidebar inverse">
-  <h4>Theme</h4>
-  <div style="display: flex; flex-direction: column; gap: 0.25rem">
-    <label for="light-mode-toggle">
-      <input
-        id="light-mode-toggle"
-        type="radio"
-        name="theme-selector"
-        value={CONSTANTS.THEME_ID_DEFAULT_LIGHT}
-        checked={theme.id === CONSTANTS.THEME_ID_DEFAULT_LIGHT}
-        on:click={(ev) => selectTheme(CONSTANTS.THEME_ID_DEFAULT_LIGHT)}
-      />
-      <!-- svelte-ignore missing-declaration -->
-      {game.i18n.localize('TIDY5E.Settings.SheetTheme.light')}
-    </label>
-    <label for="dark-mode-toggle">
-      <input
-        id="dark-mode-toggle"
-        type="radio"
-        name="theme-selector"
-        value={CONSTANTS.THEME_ID_DEFAULT_DARK}
-        checked={theme.id === CONSTANTS.THEME_ID_DEFAULT_DARK}
-        on:click={(ev) => selectTheme(CONSTANTS.THEME_ID_DEFAULT_DARK)}
-      />
-      <!-- svelte-ignore missing-declaration -->
-      {game.i18n.localize('TIDY5E.Settings.SheetTheme.dark')}
-    </label>
-  </div>
-  <h4>Inversion</h4>
-  <div style="display: flex; flex-direction: column; gap: 0.25rem">
-    <label for="default-mode-toggle">
-      <input
-        id="default-mode-toggle"
-        type="radio"
-        name="inversion-mode-selector"
-        value={CONSTANTS.VIEW_MODE_DEFAULT}
-        checked={!inverse}
-        on:click={() => (inverse = false)}
-      />
-      Default
-    </label>
-    <label for="inverse-mode-toggle">
-      <input
-        id="inverse-mode-toggle"
-        type="radio"
-        name="inversion-mode-selector"
-        value={CONSTANTS.VIEW_MODE_INVERSE}
-        checked={inverse}
-        on:click={() => (inverse = true)}
-      />
-      Inverse
-    </label>
+  <div class="sidebar-contents">
+    <h4>Theme</h4>
+    <div style="display: flex; flex-direction: column; gap: 0.25rem">
+      <label for="light-mode-toggle">
+        <input
+          id="light-mode-toggle"
+          type="radio"
+          name="theme-selector"
+          value={CONSTANTS.THEME_ID_DEFAULT_LIGHT}
+          checked={theme.id === CONSTANTS.THEME_ID_DEFAULT_LIGHT}
+          on:click={(ev) => selectTheme(CONSTANTS.THEME_ID_DEFAULT_LIGHT)}
+        />
+        <!-- svelte-ignore missing-declaration -->
+        {game.i18n.localize('TIDY5E.Settings.SheetTheme.light')}
+      </label>
+      <label for="dark-mode-toggle">
+        <input
+          id="dark-mode-toggle"
+          type="radio"
+          name="theme-selector"
+          value={CONSTANTS.THEME_ID_DEFAULT_DARK}
+          checked={theme.id === CONSTANTS.THEME_ID_DEFAULT_DARK}
+          on:click={(ev) => selectTheme(CONSTANTS.THEME_ID_DEFAULT_DARK)}
+        />
+        <!-- svelte-ignore missing-declaration -->
+        {game.i18n.localize('TIDY5E.Settings.SheetTheme.dark')}
+      </label>
+    </div>
+    <h4>Inversion</h4>
+    <div style="display: flex; flex-direction: column; gap: 0.25rem">
+      <label for="default-mode-toggle">
+        <input
+          id="default-mode-toggle"
+          type="radio"
+          name="inversion-mode-selector"
+          value={CONSTANTS.VIEW_MODE_DEFAULT}
+          checked={!inverse}
+          on:click={() => (inverse = false)}
+        />
+        Default
+      </label>
+      <label for="inverse-mode-toggle">
+        <input
+          id="inverse-mode-toggle"
+          type="radio"
+          name="inversion-mode-selector"
+          value={CONSTANTS.VIEW_MODE_INVERSE}
+          checked={inverse}
+          on:click={() => (inverse = true)}
+        />
+        Inverse
+      </label>
+    </div>
   </div>
 </aside>
 <div class="item-content controls-gallery" class:inverse>
@@ -307,7 +310,10 @@
   <fieldset>
     <legend> Data / Time </legend>
 
-    <!-- TODO -->
+    <div class="time">
+      <div class="title">Action</div>
+      <div class="subtitle">Ritual</div>
+    </div>
   </fieldset>
 
   <fieldset>
@@ -383,7 +389,7 @@
   <fieldset>
     <legend> Input / Search </legend>
 
-    <!-- TODO -->
+    <Search />
   </fieldset>
 
   <fieldset>
@@ -479,6 +485,11 @@
 </div>
 
 <style lang="scss">
+  .sidebar-contents {
+    position: sticky;
+    top: var(--header-height);
+  }
+
   .controls-gallery {
     display: flex;
     flex-direction: row;

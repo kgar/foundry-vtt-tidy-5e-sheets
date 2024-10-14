@@ -9,8 +9,8 @@
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import ContainerCurrency from '../parts/ContainerCurrency.svelte';
-  import { isNil } from 'src/utils/data';
-    import ToggleButton from 'src/components/buttons/ToggleButton.svelte';
+  import ToggleButton from 'src/components/buttons/ToggleButton.svelte';
+  import Search from '../../shared/Search.svelte';
 
   let context = getContext<Readable<ContainerSheetHightouchContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -53,15 +53,7 @@
     <i class="fas fa-angles-down fa-fw"></i>
   </button>
 
-  <search>
-    <i class="fas fa-magnifying-glass fa-fw"></i>
-    <input type="text" placeholder={localize('TIDY5E.Search')} />
-    {#if !isNil(searchCriteria, '')}
-      <button type="button">
-        <i class="fas fa-xmark fa-fw"></i>
-      </button>
-    {/if}
-  </search>
+  <Search bind:searchCriteria />
 
   <!-- TODO: Wire up actual pinned filter toggles -->
   <!-- TODO: When wiring up pinned filter toggles, use an additive approach instead of hiding after-the-fact. When the window size changes, trigger a render, throttled. -->

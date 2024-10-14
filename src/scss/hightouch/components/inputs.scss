@@ -14,17 +14,22 @@ input {
 /* Hightouch-style inputs */
 
 :where(search) {
-  display: flex;
-  padding: 0.25rem;
-  align-items: center;
-  gap: 0.375rem;
-
-  border-radius: 0.125rem;
-  border: 1px solid var(--t5e-component-field-default-border, #9f9275);
-  background: var(--t5e-component-card-onDefault-default, #f8f4f1);
-
-  /* shadow/field/light */
+  padding: 0.5rem 0 0.5rem 0.5rem;
   box-shadow: 0px 0px 4px 0px var(--dnd5e-shadow-15, rgba(0, 0, 0, 0.15));
+  border-radius: 0.125rem;
+  background: var(--t5e-component-card-onDefault-default, #f8f4f1);
+  height: 2rem;
+  border: 1px solid var(--t5e-component-field-default-border, #9f9275);
+  display: flex;
+  align-items: center;
+
+  // TODO: Consider how to generalize this particular style, since other inputs use the same technique
+  .icon-and-input {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+  }
 
   input {
     flex: 1 0 0;
@@ -32,6 +37,7 @@ input {
     border: none;
     border-radius: 0;
     height: auto;
+    padding: 0;
 
     line-height: normal;
     color: var(--t5e-color-text-onDefault-default);
@@ -43,11 +49,25 @@ input {
     }
   }
 
-  button {
-    width: auto;
-    border: none;
-    background: none;
-    border-radius: 0;
+  i {
+    font-size: 0.6875rem;
+  }
+
+  .cancel-search {
+    width: 2rem;
+    height: 2rem;
+    color: var(--t5e-color-text-onDefault-lighter);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    i {
+      font-size: 0.6875rem;
+      font-style: normal;
+      font-weight: 900;
+      line-height: normal;
+      text-transform: uppercase;
+    }
   }
 }
 
