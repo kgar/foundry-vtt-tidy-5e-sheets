@@ -295,7 +295,13 @@
   <fieldset>
     <legend> Data / Spell Components </legend>
 
-    <!-- TODO -->
+    <ul class="unlist spell-components">
+      <li class="spell-component">V</li>
+      <li class="spell-component">S</li>
+      <li class="spell-component">M</li>
+      <li class="spell-component-special">R</li>
+      <li class="spell-component-special">C</li>
+    </ul>
   </fieldset>
 
   <fieldset>
@@ -430,7 +436,9 @@
     <legend> Pill / Readonly </legend>
 
     <ul class="pills">
-      <li class="pill">Panache <span><span class="lighter">+</span>10</span></li>
+      <li class="pill">
+        Panache <span><span class="lighter">+</span>10</span>
+      </li>
       <li class="pill"><i class="fas fa-broom"></i> Tidy 5e</li>
       <li class="pill">
         <Dnd5eIcon src="systems/dnd5e/icons/svg/statuses/concentrating.svg"

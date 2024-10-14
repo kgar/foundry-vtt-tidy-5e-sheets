@@ -1,0 +1,33 @@
+.spell-components {
+  display: flex;
+  gap: 0.0625rem;
+  align-items: flex-start;
+
+  .spell-component {
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 0.75rem;
+  }
+
+  .spell-component-special {
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 0.75rem;
+    padding: 0rem 0.03125rem;
+    border-radius: 0.0625rem;
+    background: var(--t5e-color-text-onDefault-gold-emphasis);
+    color: var(--t5e-color-text-onInverse-default);
+  }
+}
+
+&.inverse,
+inverse {
+  .spell-component {
+    color: var(--t5e-color-text-onInverse-lighter);
+  }
+
+  .spell-component-special {
+    color: var(--t5e-color-text-onDefault-default);
+    background-color: var(--t5e-color-text-onInverse-gold);
+  }
+}
