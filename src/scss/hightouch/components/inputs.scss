@@ -13,36 +13,88 @@ input {
 
 /* Hightouch-style inputs */
 
-:where(search) {
-  padding: 0.5rem 0 0.5rem 0.5rem;
-  box-shadow: 0px 0px 4px 0px var(--dnd5e-shadow-15, rgba(0, 0, 0, 0.15));
-  border-radius: 0.125rem;
-  background: var(--t5e-component-card-onDefault-default, #f8f4f1);
-  height: 2rem;
-  border: 1px solid var(--t5e-component-field-default-border, #9f9275);
-  display: flex;
+input[type='text'] {
   align-items: center;
+  background: var(--t5e-component-card-onDefault-default);
+  border-radius: 0.125rem;
+  border: 1px solid var(--t5e-component-field-default-border);
+  box-shadow: 0px 0px 4px 0px var(--dnd5e-shadow-15);
+  display: flex;
+  font-size: var(--font-size-13, 0.8125rem);
+  font-weight: 400;
+  line-height: normal;
+  padding: 0.5rem;
+
+  &:hover {
+    background: linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.5) 0%,
+        rgba(255, 255, 255, 0.5) 100%
+      ),
+      var(--t5e-component-card-onDefault-default);
+  }
+
+  &:focus {
+    border-radius: 0.125rem;
+    border: 1px solid var(--t5e-component-field-default-border);
+    background: linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.5) 0%,
+        rgba(255, 255, 255, 0.5) 100%
+      ),
+      var(--t5e-component-card-onDefault-default);
+
+    /* focus/field */
+    box-shadow: 0px 0px 0px 2px #9a2a30;
+  }
+
+  &:disabled {
+    background: rgba(159, 146, 117, 0.2);
+    color: var(--t5e-color-text-onDefault-lightest);
+  }
+
+  &::placeholder {
+    color: var(--t5e-color-text-onDefault-disabled);
+  }
+}
+
+:where(search) {
+  align-items: center;
+  background: var(--t5e-component-card-onDefault-default);
+  border-radius: 0.125rem;
+  border: 1px solid var(--t5e-component-field-default-border);
+  box-shadow: 0px 0px 4px 0px var(--dnd5e-shadow-15);
+  display: flex;
+  height: 2rem;
+  padding: 0.5rem 0 0.5rem 0.5rem;
+
+  &:focus-within {
+    box-shadow: 0px 0px 0px 2px #9a2a30;
+  }
 
   // TODO: Consider how to generalize this particular style, since other inputs use the same technique
   .icon-and-input {
-    display: flex;
     align-items: center;
-    gap: 0.5rem;
+    display: flex;
     flex: 1;
+    gap: 0.5rem;
   }
 
-  input {
-    flex: 1 0 0;
+  input[type='text'] {
     background: none;
-    border: none;
     border-radius: 0;
+    border: none;
+    box-shadow: none;
+    color: var(--t5e-color-text-onDefault-default);
+    flex: 1 0 0;
+    font-size: var(--font-size-13);
     height: auto;
     padding: 0;
 
-    line-height: normal;
-    color: var(--t5e-color-text-onDefault-default);
-    font-weight: 400;
-    font-size: var(--font-size-13);
+    &:focus {
+      box-shadow: none;
+      border: none;
+    }
 
     &::placeholder {
       color: var(--t5e-color-text-onDefault-disabled);
@@ -109,7 +161,7 @@ input[type='radio'] {
   }
 
   &:disabled {
-    border: 1px solid var(--t5e-component-field-default-border, #9f9275);
+    border: 1px solid var(--t5e-component-field-default-border);
     // TODO: CSS Variable
     background: rgba(159, 146, 117, 0.2);
   }
@@ -162,5 +214,51 @@ input[type='checkbox'] {
     &::before {
       color: var(--t5e-color-icon-light-diminished);
     }
+  }
+}
+
+// To customize the chevron, try the bootstrap approach: https://getbootstrap.com/docs/5.3/forms/select/
+
+select {
+  border-radius: 0.125rem;
+  border: 1px solid var(--t5e-component-field-default-border);
+  background: var(--t5e-component-card-onDefault-default);
+  box-shadow: 0px 0px 4px 0px var(--dnd5e-shadow-15);
+  padding: 0 0.5rem;
+
+  display: flex;
+  height: var(--font-font-size-32, 2rem);
+  align-items: center;
+  gap: 0.375rem;
+  flex-shrink: 0;
+
+  &:hover {
+    background: linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.5) 0%,
+        rgba(255, 255, 255, 0.5) 100%
+      ),
+      var(--t5e-component-card-onDefault-default);
+
+    /* shadow/field/light */
+    box-shadow: 0px 0px 4px 0px var(--dnd5e-shadow-15);
+  }
+
+  &:focus {
+    background: linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.5) 0%,
+        rgba(255, 255, 255, 0.5) 100%
+      ),
+      var(--t5e-component-card-onDefault-default);
+
+    /* focus/field */
+    box-shadow: 0px 0px 0px 2px #9a2a30;
+    outline: none;
+  }
+
+  &:disabled {
+    background: rgba(159, 146, 117, 0.2);
+    color: var(--t5e-color-text-onDefault-lightest, #666);
   }
 }

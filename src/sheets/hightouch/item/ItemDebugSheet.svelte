@@ -357,7 +357,7 @@
     >
   </fieldset>
 
-  <fieldset>
+  <fieldset class="vertical-gallery">
     <legend>Input / Radio</legend>
 
     <!-- 
@@ -392,10 +392,37 @@
     <Search />
   </fieldset>
 
-  <fieldset>
+  <fieldset class="vertical-gallery">
     <legend> Input / Select </legend>
 
-    <!-- TODO -->
+    <select>
+      <option value=""></option>
+      <option value="1">Attunement Required</option>
+      <option value="2">Attunement Optional</option>
+      <option value="3">No Attunement Required</option>
+      <option value="4">Absolutely Cursed 💀</option>
+    </select>
+    <select>
+      <option value=""></option>
+      <option value="1" selected>Attunement Required</option>
+      <option value="2">Attunement Optional</option>
+      <option value="3">No Attunement Required</option>
+      <option value="4">Absolutely Cursed 💀</option>
+    </select>
+    <select disabled>
+      <option value=""></option>
+      <option value="1">Attunement Required</option>
+      <option value="2">Attunement Optional</option>
+      <option value="3">No Attunement Required</option>
+      <option value="4">Absolutely Cursed 💀</option>
+    </select>
+    <select disabled>
+      <option value=""></option>
+      <option value="1" selected>Attunement Required</option>
+      <option value="2">Attunement Optional</option>
+      <option value="3">No Attunement Required</option>
+      <option value="4">Absolutely Cursed 💀</option>
+    </select>
   </fieldset>
 
   <fieldset>
@@ -406,19 +433,31 @@
     <FieldToggle checked={true}></FieldToggle>
   </fieldset>
 
-  <fieldset>
+  <fieldset class="vertical-gallery">
     <legend> Input / Text </legend>
 
-    <!-- TODO -->
+    <input
+      type="text"
+      value="Value"
+      placeholder="Aha! You found me! The hidden placeholder!"
+    />
+    <input type="text" placeholder="A placeholder here" />
+    <input
+      type="text"
+      value="Value"
+      placeholder="Aha! You found me! The hidden placeholder!"
+      disabled
+    />
+    <input type="text" placeholder="A placeholder here" disabled />
   </fieldset>
 
-  <fieldset>
+  <fieldset class="vertical-gallery">
     <legend> Input / Text with Icon </legend>
 
     <!-- TODO -->
   </fieldset>
 
-  <fieldset>
+  <fieldset class="vertical-gallery">
     <legend> Input / Text with Label </legend>
 
     <!-- TODO -->
