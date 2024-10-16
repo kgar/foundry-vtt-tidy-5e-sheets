@@ -30,7 +30,7 @@ Join us on the [Tidy 5e Sheets community discord](https://discord.gg/865zzNscRA)
 ## Installation
 
 It is preferable to install this module through Foundry, the Forge bazaar, or a similar interface for official Foundry packages.
-However, if you are also able to install via URL.
+However, you are also able to install via URL.
 
 Manual installation instructions:
 
