@@ -386,10 +386,11 @@
     </ul>
   </fieldset>
 
-  <fieldset>
+  <fieldset class="vertical-gallery">
     <legend> Input / Search </legend>
 
     <Search />
+    <Search disabled={true} />
   </fieldset>
 
   <fieldset class="vertical-gallery">
@@ -454,13 +455,39 @@
   <fieldset class="vertical-gallery">
     <legend> Input / Text with Icon </legend>
 
-    <!-- TODO -->
+    <div class="input-group">
+      <i class="fa-solid fa-cube"></i>
+      <input type="text" value="Value" />
+    </div>
+    <div class="input-group">
+      <i class="fa-solid fa-cube"></i>
+      <input type="text" value="Value" disabled />
+    </div>
   </fieldset>
 
   <fieldset class="vertical-gallery">
     <legend> Input / Text with Label </legend>
 
-    <!-- TODO -->
+    <div class="input-group">
+      <i class="currency gp" aria-label="gp"></i>
+      <input type="text" value="Value" />
+      <span> GP </span>
+    </div>
+    <div class="input-group">
+      <i class="currency gp" aria-label="gp"></i>
+      <input type="text" value="Value" disabled />
+      <span> GP </span>
+    </div>
+    <div class="input-group right">
+      <i class="currency gp" aria-label="gp"></i>
+      <input type="text" value="Value" />
+      <span> GP </span>
+    </div>
+    <div class="input-group right">
+      <i class="currency gp" aria-label="gp"></i>
+      <input type="text" value="Value" disabled />
+      <span> GP </span>
+    </div>
   </fieldset>
 
   <fieldset>

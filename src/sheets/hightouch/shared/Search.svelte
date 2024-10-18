@@ -3,6 +3,7 @@
   import { isNil } from 'src/utils/data';
 
   export let searchCriteria: string = '';
+  export let disabled = false;
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -14,6 +15,7 @@
       type="text"
       placeholder={localize('TIDY5E.Search')}
       bind:value={searchCriteria}
+      {disabled}
     />
   </span>
   {#if !isNil(searchCriteria, '')}
