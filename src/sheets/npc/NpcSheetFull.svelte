@@ -23,6 +23,7 @@
   import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
   import ActorName from '../actor/ActorName.svelte';
   import SpecialSaves from '../actor/SpecialSaves.svelte';
+  import ActorLinkIndicator from 'src/components/actor-link-indicator/ActorLinkIndicator.svelte';
 
   let selectedTabId: string;
 
@@ -51,203 +52,162 @@
   <ItemInfoCard />
 {/if}
 
-<div class="token-link-wrapper {$context.tokenState}">
-  {#if $context.viewableWarnings.length}
-    <ActorWarnings warnings={$context.viewableWarnings} />
-  {/if}
-  <header>
-    <div class="flex-0">
-      <NpcProfile />
-    </div>
-    <div class="flex-grow-1">
+{#if $context.viewableWarnings.length}
+  <ActorWarnings warnings={$context.viewableWarnings} />
+{/if}
+<header>
+  <div class="flex-0">
+    <NpcProfile />
+  </div>
+  <div class="flex-grow-1">
+    <div
+      class="actor-name-row flex-row justify-content-space-between align-items-center small-gap"
+      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_HEADER_ROW}
+    >
+      <ActorLinkIndicator />
+
       <div
-        class="actor-name-row flex-row justify-content-space-between align-items-center small-gap"
-        data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_HEADER_ROW}
+        class="actor-name"
+        data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_CONTAINER}
       >
-        {#if $context.tokenState === 'linked'}
-          <i
-            class="link-state fas fa-link"
-            title={localize('TIDY5E.TokenLinked')}
-          />
-        {:else if $context.tokenState === 'unlinked'}
-          <i
-            class="link-state fas fa-unlink"
-            title={localize('TIDY5E.TokenUnlinked')}
-          />
-        {/if}
-
-        <div
-          class="actor-name"
-          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_CONTAINER}
-        >
-          <ActorName />
-        </div>
-        <div class="level-information">
-          <div class="xp">
-            <span
-              >{localize('DND5E.ExperiencePointsFormat', {
-                value: $context.system.details.xp.value ?? 0,
-              })}</span
-            >
-          </div>
-          <div class="level">
-            {localize('DND5E.AbbreviationCR')}
-            <ContentEditableFormField
-              element="span"
-              editable={!$context.lockSensitiveFields}
-              document={$context.actor}
-              field="system.details.cr"
-              placeholder="0"
-              dataMaxLength={4}
-              value={$context.labels.cr}
-              saveAs="number"
-              selectOnFocus={true}
-            />
-          </div>
-          <SheetMenu defaultSettingsTab={CONSTANTS.TAB_USER_SETTINGS_NPCS} />
-        </div>
+        <ActorName />
       </div>
-      <HorizontalLineSeparator
-        borderColor="light"
-        class="header-line-margin-left"
-      />
-      <div class="origin-summary">
-        <div class="flex-row extra-small-gap">
-          {#if $context.editable}
-            <InlineTextDropdownList
-              options={sizes}
-              selected={currentSize}
-              on:optionClicked={(event) =>
-                $context.actor.update({
-                  'system.traits.size': event.detail.value,
-                })}
-              title={localize('DND5E.Size')}
-            />
-          {:else}
-            <span title={localize('DND5E.Size')}>{currentSize.text}</span>
-          {/if}
-          <span>&#8226;</span>
-          {#key $context.lockSensitiveFields}
-            <DelimitedTruncatedContent cssClass="flex-grow-1">
-              <span class="flex-row extra-small-gap align-items-center">
-                <InlineCreatureType />
-                <span
-                  class="environment"
-                  title={localize('TIDY5E.EnvironmentTooltip', {
-                    environment: $context.system.details.environment,
-                  })}
-                >
-                  <i class="fas fa-tree" />
-                </span>
-              </span>
-
+      <div class="level-information">
+        <div class="xp">
+          <span
+            >{localize('DND5E.ExperiencePointsFormat', {
+              value: $context.system.details.xp.value ?? 0,
+            })}</span
+          >
+        </div>
+        <div class="level">
+          {localize('DND5E.AbbreviationCR')}
+          <ContentEditableFormField
+            element="span"
+            editable={!$context.lockSensitiveFields}
+            document={$context.actor}
+            field="system.details.cr"
+            placeholder="0"
+            dataMaxLength={4}
+            value={$context.labels.cr}
+            saveAs="number"
+            selectOnFocus={true}
+          />
+        </div>
+        <SheetMenu defaultSettingsTab={CONSTANTS.TAB_USER_SETTINGS_NPCS} />
+      </div>
+    </div>
+    <HorizontalLineSeparator
+      borderColor="light"
+      class="header-line-margin-left"
+    />
+    <div class="origin-summary">
+      <div class="flex-row extra-small-gap">
+        {#if $context.editable}
+          <InlineTextDropdownList
+            options={sizes}
+            selected={currentSize}
+            on:optionClicked={(event) =>
+              $context.actor.update({
+                'system.traits.size': event.detail.value,
+              })}
+            title={localize('DND5E.Size')}
+          />
+        {:else}
+          <span title={localize('DND5E.Size')}>{currentSize.text}</span>
+        {/if}
+        <span>&#8226;</span>
+        {#key $context.lockSensitiveFields}
+          <DelimitedTruncatedContent cssClass="flex-grow-1">
+            <span class="flex-row extra-small-gap align-items-center">
+              <InlineCreatureType />
               <span
-                class="origin-summary-text"
-                title={$context.system.details.alignment}
-                >{$context.system.details.alignment}</span
+                class="environment"
+                title={localize('TIDY5E.EnvironmentTooltip', {
+                  environment: $context.system.details.environment,
+                })}
               >
+                <i class="fas fa-tree" />
+              </span>
+            </span>
 
-              <InlineSource
-                document={$context.actor}
-                keyPath="system.details.source"
-                editable={$context.unlocked}
-              />
-            </DelimitedTruncatedContent>
-          {/key}
-        </div>
-        <div class="flex-row align-items-center extra-small-gap">
-          <b class="proficiency">
-            {localize('DND5E.Proficiency')}: {formatAsModifier(
-              $context.system.attributes.prof,
-            )}
-          </b>
-          {#if $context.unlocked}
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <!-- svelte-ignore a11y-no-static-element-interactions -->
-            <!-- svelte-ignore a11y-missing-attribute -->
-            <a
-              class="origin-summary-tidy inline-icon-button"
-              on:click={() =>
-                new ActorOriginSummaryConfigFormApplication(
-                  $context.actor,
-                ).render(true)}
-              title={localize('TIDY5E.OriginSummaryConfig')}
+            <span
+              class="origin-summary-text"
+              title={$context.system.details.alignment}
+              >{$context.system.details.alignment}</span
             >
-              <i class="fas fa-cog" />
-            </a>
-          {/if}
-        </div>
+
+            <InlineSource
+              document={$context.actor}
+              keyPath="system.details.source"
+              editable={$context.unlocked}
+            />
+          </DelimitedTruncatedContent>
+        {/key}
       </div>
-      <HorizontalLineSeparator
-        borderColor="light"
-        class="header-line-margin-left"
-      />
-      <div
-        class="flex-row extra-small-gap justify-content-space-between header-line-margin"
-      >
-        <ActorMovement class="flex-1" />
-        {#if $context.hasSpecialSaves}
-          <SpecialSaves />
+      <div class="flex-row align-items-center extra-small-gap">
+        <b class="proficiency">
+          {localize('DND5E.Proficiency')}: {formatAsModifier(
+            $context.system.attributes.prof,
+          )}
+        </b>
+        {#if $context.unlocked}
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <!-- svelte-ignore a11y-missing-attribute -->
+          <a
+            class="origin-summary-tidy inline-icon-button"
+            on:click={() =>
+              new ActorOriginSummaryConfigFormApplication(
+                $context.actor,
+              ).render(true)}
+            title={localize('TIDY5E.OriginSummaryConfig')}
+          >
+            <i class="fas fa-cog" />
+          </a>
         {/if}
       </div>
-      <HorizontalLineSeparator
-        borderColor="light"
-        class="header-line-margin-left"
-      />
-      <ActorHeaderStats
-        {abilities}
-        ac={$context.system.attributes.ac}
-        init={$context.system.attributes.init}
-      />
     </div>
-  </header>
-  <Tabs tabs={$context.tabs} bind:selectedTabId>
-    <svelte:fragment slot="tab-end">
-      {#if $context.editable}
-        <SheetEditModeToggle
-          hint={$context.settings.permanentlyUnlockNpcSheetForGm &&
-          FoundryAdapter.userIsGm()
-            ? localize('TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM.title')
-            : null}
-        />
+    <HorizontalLineSeparator
+      borderColor="light"
+      class="header-line-margin-left"
+    />
+    <div
+      class="flex-row extra-small-gap justify-content-space-between header-line-margin"
+    >
+      <ActorMovement class="flex-1" />
+      {#if $context.hasSpecialSaves}
+        <SpecialSaves />
       {/if}
-    </svelte:fragment>
-  </Tabs>
-  <section class="tidy-sheet-body">
-    <TabContents tabs={$context.tabs} {selectedTabId} />
-  </section>
-</div>
+    </div>
+    <HorizontalLineSeparator
+      borderColor="light"
+      class="header-line-margin-left"
+    />
+    <ActorHeaderStats
+      {abilities}
+      ac={$context.system.attributes.ac}
+      init={$context.system.attributes.init}
+    />
+  </div>
+</header>
+<Tabs tabs={$context.tabs} bind:selectedTabId>
+  <svelte:fragment slot="tab-end">
+    {#if $context.editable}
+      <SheetEditModeToggle
+        hint={$context.settings.permanentlyUnlockNpcSheetForGm &&
+        FoundryAdapter.userIsGm()
+          ? localize('TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM.title')
+          : null}
+      />
+    {/if}
+  </svelte:fragment>
+</Tabs>
+<section class="tidy-sheet-body">
+  <TabContents tabs={$context.tabs} {selectedTabId} />
+</section>
 
 <style lang="scss">
-  .token-link-wrapper {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-
-    .link-state {
-      padding: 0.25rem 0.1875rem 0.1875rem 0.25rem;
-      margin-top: -0.0625rem;
-      border-radius: 0.3125rem;
-    }
-
-    &.linked {
-      box-shadow: 0 0 0.25rem 0.125rem var(--t5e-linked-accent-color) inset;
-
-      .link-state.fa-link {
-        background: var(--t5e-linked-light-color);
-      }
-    }
-
-    &.unlinked {
-      box-shadow: 0 0 0.25rem 0.125rem var(--t5e-unlinked-accent-color) inset;
-
-      .link-state.fa-unlink {
-        background: var(--t5e-unlinked-light-color);
-      }
-    }
-  }
-
   header {
     display: flex;
     flex-direction: row;
