@@ -419,12 +419,12 @@
     },
     "TIDY5E.Tidy5eContainerSheetClassic": "Karta Pojemnika Tidy 5e",
     "TIDY5E.Settings.UseHpOverlay": {
-        "hint": "",
-        "name": ""
+        "hint": "Pokazuje kolorową nakładkę HP na portrecie postaci.",
+        "name": "Użyj nakładki zdrowia"
     },
     "TIDY5E.Settings.ItemCardsForAllItems": {
         "name": "",
-        "hint": ""
+        "hint": "Jeśli to ustawienie jest wyłączone, karty przedmiotów wyświetlane są tylko w widoku siatki."
     },
     "TIDY5E.Settings.UseVehicleMotion": {
         "name": "",
@@ -443,8 +443,8 @@
     },
     "TIDY5E.SpellSourceIdentifierSelectText": "",
     "TIDY5E.Settings.ShowIconsNextToTheItemName": {
-        "name": "",
-        "hint": ""
+        "name": "Pokaż ikony obok nazwy przedmiotu",
+        "hint": "Pokazuje pomocnicze ikony obok nazwy przedmiotu (Ulubione, Zestrojenie, itp.)."
     },
     "TIDY5E.Settings.UseCircularPortraitStyle": {
         "all": "",
@@ -460,15 +460,15 @@
         "hint": ""
     },
     "TIDY5E.Settings.UseHpBar": {
-        "hint": "",
-        "name": ""
+        "hint": "Pokazuje kolorowy pasek wskazujący pozostałe HP. Zdrowie podane liczbowo będzie nadal widoczne.",
+        "name": "Użyj paska HP"
     },
     "TIDY5E.Settings.SheetTheme": {
-        "default": "",
-        "light": "",
-        "dark": "",
-        "hint": "",
-        "name": ""
+        "default": "Domyślny",
+        "light": "Jasny",
+        "dark": "Ciemny",
+        "hint": "Motyw dla twoich kart.",
+        "name": "Kolor motywu"
     },
     "TIDY5E.Settings.ShowNPCRestInChat": {
         "hint": "",
@@ -496,27 +496,27 @@
         "name": ""
     },
     "TIDY5E.Settings.ShowExhaustionOnHover": {
-        "hint": "",
-        "name": ""
+        "hint": "Pokazuje wskaźnik wyczerpania tylko po najechaniu kursorem na portret.",
+        "name": "Pokaż wskaźnik wyczerpania tylko po najechaniu kursorem"
     },
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": ""
     },
     "TIDY5E.Settings.UseClassicControls": {
-        "name": "",
-        "hint": ""
+        "name": "Klasyczne sterowanie w widoku listy",
+        "hint": "Pokazuje elementy sterujące w widoku listy. Dotyczy ekwipunku i listy zaklęć w widoku listy."
     },
     "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
         "name": "",
         "hint": ""
     },
     "TIDY5E.Settings.ItemCardsFixKey": {
-        "name": "",
-        "hint": ""
+        "name": "Klawisz blokady karty przedmiotu",
+        "hint": "Przytrzymaj ten klawisz (na przykład „x”) podczas oglądania karty przedmiotu, żeby pozostała widoczna i można było wchodzić z nią w interakcję."
     },
     "TIDY5E.Settings.ShowInspirationOnHover": {
-        "hint": "",
-        "name": ""
+        "hint": "Pokazuje wskaźnik inspiracji tylko po najechaniu kursorem na portret.",
+        "name": "Pokaż wskaźnik inspiracji tylko po najechaniu kursorem"
     },
     "TIDY5E.EmptyContainer": "",
     "TIDY5E.Settings.UseContextMenu": {
@@ -536,12 +536,12 @@
         "name": ""
     },
     "TIDY5E.Settings.ItemCardsForNPCs": {
-        "name": "",
-        "hint": ""
+        "name": "Pokaż karty przedmiotów dla NPC/Pojazdów",
+        "hint": "Włącz, aby wyświetlać karty z informacjami o przedmiotach dla NPC-ów i pojazdów."
     },
     "TIDY5E.Settings.ItemCardsAreFloating": {
-        "hint": "",
-        "name": ""
+        "hint": "Włącz, aby karty z informacjami o przedmiotach unosiły się obok kursora myszy. Zalecane: użyj opóźnienia z tą funkcją.",
+        "name": "Pokaż pływające karty przedmiotów"
     },
     "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
         "name": "",
@@ -648,24 +648,24 @@
         "hint": ""
     },
     "TIDY5E.Settings.ItemCardsDelay": {
-        "name": "",
-        "hint": ""
+        "name": "Opóźnienie kart przedmiotów (ms)",
+        "hint": "Opóźnia wyświetlanie kart przedmiotów o określoną liczbę milisekund (ms). 0 oznacza brak opóźnienia. Domyślnie: 300."
     },
     "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
         "name": "",
         "hint": ""
     },
     "TIDY5E.Settings.DefaultTheme": {
-        "name": "",
-        "hint": ""
+        "name": "Domyślny kolor motywu",
+        "hint": "Domyślny motyw dla wszystkich użytkowników, którzy nie mają wybranego konkretnego motywu."
     },
     "TIDY5E.Settings.InspirationAnimation": {
-        "hint": "",
-        "name": ""
+        "hint": "Pokazuje animację świecącego znacznika inspiracji.",
+        "name": "Animacja znacznika inspiracji"
     },
     "TIDY5E.Settings.HideIfZero": {
-        "name": "",
-        "hint": ""
+        "name": "Ukryj znacznik wyczerpania i inspiracji na poziomie 0",
+        "hint": "Ukrywa wyczerpanie i inspirację, jeśli ich wartość wynosi 0, ale nadal wyświetla je po najechaniu kursorem."
     },
     "TIDY5E.Settings.ShowExpandedLimitedView": {
         "hint": "",
@@ -731,8 +731,8 @@
         "label": ""
     },
     "TIDY5E.Settings.ShowClassList": {
-        "name": "",
-        "hint": ""
+        "name": "Pokaż listę klas",
+        "hint": "Pokazuje listę klas pod nazwą postaci."
     },
     "TIDY5E.Settings.ToggleEmptyCharacterTraits": {
         "name": "",
@@ -767,11 +767,12 @@
         "name": ""
     },
     "TIDY5E.Settings.ShowPlayerName": {
-        "hint": "",
+        "hint": "Pokazuje pole na imię gracza, pod nazwą postaci.",
         "name": ""
     },
     "TIDY5E.Settings.AlwaysShowSkills": {
         "name": "",
         "hint": ""
-    }
+    },
+    "TIDY5E.PreviewSheetImageHint": "Lewy przycisk myszy: podgląd obrazu"
 }
