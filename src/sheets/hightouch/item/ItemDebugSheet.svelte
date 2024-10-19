@@ -196,15 +196,19 @@
           </label>
         </svelte:fragment>
       </ButtonWithOptionPanel>
-      <ButtonWithOptionPanel class="icon-button active">
+      <ButtonWithOptionPanel class="icon-button" active={true}>
         <i class="fas fa-hand"></i>
         <svelte:fragment slot="options">O hai 🙋‍♀️</svelte:fragment>
       </ButtonWithOptionPanel>
-      <ButtonWithOptionPanel class="icon-button disabled">
+      <ButtonWithOptionPanel class="icon-button" disabled={true}>
         <i class="fas fa-hand"></i>
         <svelte:fragment slot="options">O hai 🙋‍♀️</svelte:fragment>
       </ButtonWithOptionPanel>
-      <ButtonWithOptionPanel class="icon-button active disabled">
+      <ButtonWithOptionPanel
+        class="icon-button active"
+        disabled={true}
+        active={true}
+      >
         <i class="fas fa-hand"></i>
         <svelte:fragment slot="options">O hai 🙋‍♀️</svelte:fragment>
       </ButtonWithOptionPanel>

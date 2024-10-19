@@ -63,9 +63,9 @@
   >
     <slot />
     {#if expanded}
-      <i class="expand-indicator fas fa-caret-up fa-fw"></i>
+      <i class="expand-indicator fas fa-caret-up"></i>
     {:else}
-      <i class="expand-indicator fas fa-caret-down fa-fw"></i>
+      <i class="expand-indicator fas fa-caret-down"></i>
     {/if}
   </a>
 

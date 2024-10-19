@@ -1,5 +1,7 @@
 /* Hightouch-style buttons */
-:is(button, .button):not(.header-control) {
+:is(button, .button):where(
+    :not(.header-control):not(.controls-dropdown .control)
+  ) {
   --button-padding-block-start: 0.5rem;
   --button-padding-block-end: 0.5rem;
   --button-padding-inline-start: 0.75rem;
@@ -188,8 +190,13 @@
     .expand-indicator {
       font-size: 0.5rem;
       position: absolute;
-      right: 1px;
-      bottom: 1px;
+      right: 0.125rem;
+      bottom: 0.0625rem;
+      color: var(--t5e-color-text-onDefault-gold);
+    }
+
+    &:is(.active, :active):not(.disabled) .expand-indicator {
+      color: var(--t5e-color-text-onInverse-default);
     }
   }
 
