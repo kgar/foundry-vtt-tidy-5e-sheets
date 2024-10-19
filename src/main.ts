@@ -15,6 +15,7 @@ import { Tidy5eKgarContainerSheet } from './sheets/Tidy5eContainerSheet';
 import { setupIntegrations } from './integration/integration';
 import { TidyHooks } from './foundry/TidyHooks';
 import { initKeybindings } from './keybindings/keybind-init';
+import { initReadyHooks } from './features/ready-hooks';
 
 Hooks.once('init', () => {
   DocumentSheetConfig.registerSheet(
@@ -114,4 +115,6 @@ Hooks.once('ready', async () => {
   ) {
     new MigrationNotificationFormApplication().render(true);
   }
+
+  initReadyHooks();
 });
