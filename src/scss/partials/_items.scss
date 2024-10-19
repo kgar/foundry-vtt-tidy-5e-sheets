@@ -724,6 +724,7 @@ input[type='checkbox'] {
         gap: 0.5em;
         padding: 0.5em 2em;
         border: none;
+        flex-wrap: wrap;
       }
 
       .item-name {
