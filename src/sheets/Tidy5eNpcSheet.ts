@@ -830,7 +830,6 @@ export class Tidy5eNpcSheet
         npcPreferences.spellSlotTrackerMode ??
         CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS,
       tabs: [],
-      tokenState: this.#getTokenState(),
       traitEnrichedHtml: await FoundryAdapter.enrichHtml(
         TidyFlags.trait.get(this.actor) ?? '',
         {
@@ -1073,30 +1072,6 @@ export class Tidy5eNpcSheet
 
   onToggleAbilityProficiency(event: Event) {
     return this._onToggleAbilityProficiency(event);
-  }
-
-  #getTokenState(): 'linked' | 'unlinked' | null {
-    const { token } = this;
-
-    const showNpcActorLinkMarker =
-      SettingsProvider.settings.showNpcActorLinkMarker.get();
-
-    if (!token) {
-      return null;
-    }
-
-    if (token.actorLink && showNpcActorLinkMarker == 'both') {
-      return 'linked';
-    }
-
-    if (
-      !token.actorLink &&
-      (showNpcActorLinkMarker == 'unlinked' || showNpcActorLinkMarker == 'both')
-    ) {
-      return 'unlinked';
-    }
-
-    return null;
   }
 
   async _onDropSingleItem(itemData: any) {
