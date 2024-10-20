@@ -710,8 +710,8 @@
         "text": ""
     },
     "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
-        "name": "",
-        "hint": ""
+        "name": "Przełącznik pustych umiejętności",
+        "hint": "Dodaje przycisk przełączający wyświetlanie/ukrywanie umiejętności w których postać nie ma biegłości."
     },
     "TIDY5E.Settings.UseExhaustion": {
         "name": "",
