@@ -17,18 +17,21 @@
     switchOn = checked;
   }
 
-  async function handleChange(originalValue: boolean) {
+  async function handleChange(newValue: boolean) {
     try {
-      document.update({
-        [field]: !originalValue,
+      const result = await document.update({
+        [field]: newValue,
       });
+      if (!result) {
+        switchOn = !newValue;
+      }
     } catch (e) {
       error('An error occurred while toggling a property', false, e);
       debug('Property toggle error troubleshooting info', {
-        originalValue,
+        originalValue: !newValue,
         state: switchOn,
       });
-      switchOn = originalValue;
+      switchOn = !newValue;
     }
   }
 </script>
@@ -37,8 +40,8 @@
   class="flex-row small-gap tidy-property-toggle {switchOn
     ? 'active'
     : 'inactive'}"
-  bind:value={switchOn}
-  on:change={(ev) => handleChange(ev.detail.originalValue)}
+  bind:checked={switchOn}
+  on:change={(ev) => handleChange(ev.detail.currentTarget.checked)}
   {title}
   {disabled}
 >

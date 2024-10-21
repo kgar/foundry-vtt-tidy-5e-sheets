@@ -49,7 +49,7 @@
     --tidy-switch-scale="1"
     --tidy-switch-thumb-transform-duration="0.15s"
     title={allowEdit ? unlockTitle : lockTitle}
-    value={allowEdit}
+    checked={allowEdit}
     thumbIconClass="{allowEdit ? 'fas fa-unlock' : 'fas fa-lock'} fa-fw"
     on:change={() => toggleLock()}
   ></TidySwitch>
