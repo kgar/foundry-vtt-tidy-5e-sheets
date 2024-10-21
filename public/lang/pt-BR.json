@@ -776,5 +776,6 @@
     "TIDY5E.Keybindings.ToggleSheetLock.Name": "Alternar Bloqueio da Ficha",
     "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Se uma ficha do Tidy for, no momento, a janela ativa na UI, esse atalho alterna o bloqueio da ficha.",
     "TIDY5E.LocalizationTestKey": "Teste de Localização de Chave",
-    "TIDY5E.ExhaustionLevelTooltip": "Exaustão Nível {level}"
+    "TIDY5E.ExhaustionLevelTooltip": "Exaustão Nível {level}",
+    "TIDY5E.Tidy5eSettings": "Configurações Tidy 5e Sheets"
 }
