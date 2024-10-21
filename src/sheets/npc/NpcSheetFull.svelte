@@ -26,6 +26,7 @@
   import SpecialSaves from '../actor/SpecialSaves.svelte';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import { isNil } from 'src/utils/data';
+  import ActorLinkIndicator from 'src/components/actor-link-indicator/ActorLinkIndicator.svelte';
 
   let selectedTabId: string;
 
@@ -54,213 +55,172 @@
   <ItemInfoCard />
 {/if}
 
-<div class="token-link-wrapper {$context.tokenState}">
-  {#if $context.viewableWarnings.length}
-    <ActorWarnings warnings={$context.viewableWarnings} />
-  {/if}
-  <header>
-    <div class="flex-0">
-      <NpcProfile />
-    </div>
-    <div class="flex-grow-1">
-      <div
-        class="actor-name-row flex-row justify-content-space-between align-items-center small-gap"
-        data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_HEADER_ROW}
-      >
-        {#if $context.tokenState === 'linked'}
-          <i
-            class="link-state fas fa-link"
-            title={localize('TIDY5E.TokenLinked')}
-          />
-        {:else if $context.tokenState === 'unlinked'}
-          <i
-            class="link-state fas fa-unlink"
-            title={localize('TIDY5E.TokenUnlinked')}
-          />
-        {/if}
+{#if $context.viewableWarnings.length}
+  <ActorWarnings warnings={$context.viewableWarnings} />
+{/if}
+<header>
+  <div class="flex-0">
+    <NpcProfile />
+  </div>
+  <div class="flex-grow-1">
+    <div
+      class="actor-name-row flex-row justify-content-space-between align-items-center small-gap"
+      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_HEADER_ROW}
+    >
+      <ActorLinkIndicator />
 
-        <div
-          class="actor-name"
-          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_CONTAINER}
-        >
-          <ActorName />
-        </div>
-        <div class="level-information">
-          <div class="xp">
-            <span
-              >{localize('DND5E.ExperiencePointsFormat', {
-                value: $context.system.details.xp.value ?? 0,
-              })}</span
-            >
-          </div>
-          <div
-            class="challenge-rating"
-            aria-label={localize('DND5E.CRLabel', {
-              cr: $context.system.details.cr,
-            })}
-            title={!$context.unlocked ? localize('DND5E.ChallengeRating') : ''}
-          >
-            {localize('DND5E.AbbreviationCR')}
-            {#if $context.unlocked}
-              <NumberInput
-                document={$context.actor}
-                value={$context.source.details.cr}
-                field="system.details.cr"
-                step="any"
-                cssClass="challenge-rating-input"
-                selectOnFocus={true}
-                title={localize('DND5E.ChallengeRating')}
-              />
-            {:else}
-              <!-- svelte-ignore missing-declaration -->
-              {dnd5e.utils.formatCR($context.system.details.cr)}
-            {/if}
-          </div>
-          <SheetMenu defaultSettingsTab={CONSTANTS.TAB_USER_SETTINGS_NPCS} />
-        </div>
+      <div
+        class="actor-name"
+        data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_CONTAINER}
+      >
+        <ActorName />
       </div>
-      <HorizontalLineSeparator
-        borderColor="light"
-        class="header-line-margin-left"
-      />
-      <div class="origin-summary">
-        <div class="flex-row extra-small-gap">
-          {#if $context.editable}
-            <InlineTextDropdownList
-              options={sizes}
-              selected={currentSize}
-              on:optionClicked={(event) =>
-                $context.actor.update({
-                  'system.traits.size': event.detail.value,
-                })}
-              title={localize('DND5E.Size')}
+      <div class="level-information">
+        <div class="xp">
+          <span
+            >{localize('DND5E.ExperiencePointsFormat', {
+              value: $context.system.details.xp.value ?? 0,
+            })}</span
+          >
+        </div>
+        <div
+          class="challenge-rating"
+          aria-label={localize('DND5E.CRLabel', {
+            cr: $context.system.details.cr,
+          })}
+          title={!$context.unlocked ? localize('DND5E.ChallengeRating') : ''}
+        >
+          {localize('DND5E.AbbreviationCR')}
+          {#if $context.unlocked}
+            <NumberInput
+              document={$context.actor}
+              value={$context.source.details.cr}
+              field="system.details.cr"
+              step="any"
+              cssClass="challenge-rating-input"
+              selectOnFocus={true}
+              title={localize('DND5E.ChallengeRating')}
             />
           {:else}
-            <span title={localize('DND5E.Size')}>{currentSize.text}</span>
-          {/if}
-          <span>&#8226;</span>
-          {#key $context.lockSensitiveFields}
-            <DelimitedTruncatedContent cssClass="flex-grow-1">
-              <span class="flex-row extra-small-gap align-items-center">
-                <InlineCreatureType />
-                {#if !isNil($context.system.details.environment, '')}
-                  <span
-                    class="environment"
-                    title={localize('TIDY5E.EnvironmentTooltip', {
-                      environment: $context.system.details.environment,
-                    })}
-                  >
-                    <i class="fas fa-tree" />
-                  </span>
-                {/if}
-              </span>
-
-              <span
-                class="origin-summary-text"
-                title={$context.system.details.alignment}
-                >{$context.system.details.alignment}</span
-              >
-
-              <InlineSource
-                document={$context.actor}
-                keyPath="system.source"
-                editable={$context.unlocked}
-              />
-            </DelimitedTruncatedContent>
-          {/key}
-        </div>
-        <div class="flex-row align-items-center extra-small-gap">
-          <b class="proficiency">
-            {localize('DND5E.Proficiency')}: {formatAsModifier(
-              $context.system.attributes.prof,
-            )}
-          </b>
-          {#if $context.unlocked}
-            <button
-              type="button"
-              class="origin-summary-tidy inline-icon-button"
-              on:click={() =>
-                new ActorOriginSummaryConfigFormApplication(
-                  $context.actor,
-                ).render(true)}
-              title={localize('TIDY5E.OriginSummaryConfig')}
-              tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-            >
-              <i class="fas fa-cog" />
-            </button>
+            <!-- svelte-ignore missing-declaration -->
+            {dnd5e.utils.formatCR($context.system.details.cr)}
           {/if}
         </div>
+        <SheetMenu defaultSettingsTab={CONSTANTS.TAB_USER_SETTINGS_NPCS} />
       </div>
-      <HorizontalLineSeparator
-        borderColor="light"
-        class="header-line-margin-left"
-      />
-      <div
-        class="flex-row extra-small-gap justify-content-space-between header-line-margin"
-      >
-        <ActorMovement class="flex-1" />
-        {#if $context.hasSpecialSaves}
-          <SpecialSaves />
+    </div>
+    <HorizontalLineSeparator
+      borderColor="light"
+      class="header-line-margin-left"
+    />
+    <div class="origin-summary">
+      <div class="flex-row extra-small-gap">
+        {#if $context.editable}
+          <InlineTextDropdownList
+            options={sizes}
+            selected={currentSize}
+            on:optionClicked={(event) =>
+              $context.actor.update({
+                'system.traits.size': event.detail.value,
+              })}
+            title={localize('DND5E.Size')}
+          />
+        {:else}
+          <span title={localize('DND5E.Size')}>{currentSize.text}</span>
+        {/if}
+        <span>&#8226;</span>
+        {#key $context.lockSensitiveFields}
+          <DelimitedTruncatedContent cssClass="flex-grow-1">
+            <span class="flex-row extra-small-gap align-items-center">
+              <InlineCreatureType />
+              {#if !isNil($context.system.details.environment, '')}
+                <span
+                  class="environment"
+                  title={localize('TIDY5E.EnvironmentTooltip', {
+                    environment: $context.system.details.environment,
+                  })}
+                >
+                  <i class="fas fa-tree" />
+                </span>
+              {/if}
+            </span>
+
+            <span
+              class="origin-summary-text"
+              title={$context.system.details.alignment}
+              >{$context.system.details.alignment}</span
+            >
+
+            <InlineSource
+              document={$context.actor}
+              keyPath="system.source"
+              editable={$context.unlocked}
+            />
+          </DelimitedTruncatedContent>
+        {/key}
+      </div>
+      <div class="flex-row align-items-center extra-small-gap">
+        <b class="proficiency">
+          {localize('DND5E.Proficiency')}: {formatAsModifier(
+            $context.system.attributes.prof,
+          )}
+        </b>
+        {#if $context.unlocked}
+          <button
+            type="button"
+            class="origin-summary-tidy inline-icon-button"
+            on:click={() =>
+              new ActorOriginSummaryConfigFormApplication(
+                $context.actor,
+              ).render(true)}
+            title={localize('TIDY5E.OriginSummaryConfig')}
+            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+          >
+            <i class="fas fa-cog" />
+          </button>
         {/if}
       </div>
-      <HorizontalLineSeparator
-        borderColor="light"
-        class="header-line-margin-left"
-      />
-      <ActorHeaderStats
-        {abilities}
-        ac={$context.system.attributes.ac}
-        init={$context.system.attributes.init}
-      />
     </div>
-  </header>
-  <Tabs tabs={$context.tabs} bind:selectedTabId>
-    <svelte:fragment slot="tab-end">
-      {#if $context.editable}
-        <SheetEditModeToggle
-          hint={$settingStore.permanentlyUnlockNpcSheetForGm &&
-          FoundryAdapter.userIsGm()
-            ? localize('TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM.title')
-            : null}
-        />
+    <HorizontalLineSeparator
+      borderColor="light"
+      class="header-line-margin-left"
+    />
+    <div
+      class="flex-row extra-small-gap justify-content-space-between header-line-margin"
+    >
+      <ActorMovement class="flex-1" />
+      {#if $context.hasSpecialSaves}
+        <SpecialSaves />
       {/if}
-    </svelte:fragment>
-  </Tabs>
-  <section class="tidy-sheet-body">
-    <TabContents tabs={$context.tabs} {selectedTabId} />
-  </section>
-</div>
+    </div>
+    <HorizontalLineSeparator
+      borderColor="light"
+      class="header-line-margin-left"
+    />
+    <ActorHeaderStats
+      {abilities}
+      ac={$context.system.attributes.ac}
+      init={$context.system.attributes.init}
+    />
+  </div>
+</header>
+<Tabs tabs={$context.tabs} bind:selectedTabId>
+  <svelte:fragment slot="tab-end">
+    {#if $context.editable}
+      <SheetEditModeToggle
+        hint={$settingStore.permanentlyUnlockNpcSheetForGm &&
+        FoundryAdapter.userIsGm()
+          ? localize('TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM.title')
+          : null}
+      />
+    {/if}
+  </svelte:fragment>
+</Tabs>
+<section class="tidy-sheet-body">
+  <TabContents tabs={$context.tabs} {selectedTabId} />
+</section>
 
 <style lang="scss">
-  .token-link-wrapper {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-
-    .link-state {
-      padding: 0.25rem 0.1875rem 0.1875rem 0.25rem;
-      margin-top: -0.0625rem;
-      border-radius: 0.3125rem;
-    }
-
-    &.linked {
-      box-shadow: 0 0 0.25rem 0.125rem var(--t5e-linked-accent-color) inset;
-
-      .link-state.fa-link {
-        background: var(--t5e-linked-light-color);
-      }
-    }
-
-    &.unlinked {
-      box-shadow: 0 0 0.25rem 0.125rem var(--t5e-unlinked-accent-color) inset;
-
-      .link-state.fa-unlink {
-        background: var(--t5e-unlinked-light-color);
-      }
-    }
-  }
-
   header {
     display: flex;
     flex-direction: row;

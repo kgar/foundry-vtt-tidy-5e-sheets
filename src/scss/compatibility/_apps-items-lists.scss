@@ -114,11 +114,13 @@
     div.item-summary {
       flex: 100%;
       justify-content: flex-start;
-      gap: 0.5rem;
+      gap: 0.25rem;
       padding: 0.5rem;
       border: none;
       border-top: 0.0625rem solid var(--t5e-separator-color);
       color: var(--t5e-primary-font-color);
+      flex-wrap: wrap;
+      display: flex;
     }
   }
 
