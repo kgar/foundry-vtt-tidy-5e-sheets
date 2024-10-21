@@ -17,6 +17,7 @@ import { initKeybindings } from './keybindings/keybind-init';
 import { Tidy5eGroupSheetClassic } from './sheets/Tidy5eGroupSheetClassic';
 import { DebugTools } from './utils/DebugTools';
 import { Tidy5eContainerSheetClassic } from './sheets/Tidy5eContainerSheetClassic';
+import { initReadyHooks } from './features/ready-hooks';
 
 Hooks.once('init', () => {
   DocumentSheetConfig.registerSheet(
@@ -111,6 +112,8 @@ Hooks.once('ready', async () => {
   ) {
     new MigrationNotificationFormApplication().render(true);
   }
+
+  initReadyHooks();
 
   DebugTools.onReady(api);
 });
