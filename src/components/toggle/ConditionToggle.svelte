@@ -21,7 +21,7 @@
     switchOn = !condition.disabled;
   }
 
-  async function handleChange(originalValue: boolean) {
+  async function handleChange(newValue: boolean) {
     try {
       await FoundryAdapter.toggleCondition($context.actor, condition);
     } catch (e) {
@@ -30,7 +30,7 @@
         condition,
         state: switchOn,
       });
-      switchOn = originalValue;
+      switchOn = !newValue;
     }
   }
 </script>
@@ -39,8 +39,8 @@
   class="flex-row small-gap tidy-condition-toggle {switchOn
     ? 'active'
     : 'inactive'}"
-  bind:value={switchOn}
-  on:change={(ev) => handleChange(ev.detail.originalValue)}
+  bind:checked={switchOn}
+  on:change={(ev) => handleChange(ev.detail.currentTarget.checked)}
   title={condition.name}
   disabled={!$context.editable}
   data-uuid={condition.reference}

@@ -54,6 +54,7 @@
 .tidy-switch {
   display: flex;
   align-items: center;
+  cursor: pointer;
 
   --tidy-switch-scale-internal: var(--tidy-switch-scale, 1);
   --tidy-switch-thumb-transform-duration-internal: var(
@@ -61,7 +62,7 @@
     0.3s
   );
 
-  [role="switch"] {
+  [role='switch'] {
     width: calc(2.625rem * var(--tidy-switch-scale-internal));
     height: calc(1.375rem * var(--tidy-switch-scale-internal));
     position: relative;
@@ -103,23 +104,19 @@
       transition: transform var(--tidy-switch-thumb-transform-duration-internal);
     }
 
-    &[aria-checked='true'] {
-      &:not(.disabled) {
-        background-color: var(--t5e-primary-accent-color);
-      }
-
-      &::before,
-      .thumb-icon {
-        transform: translateX(
-          calc(1.25rem * var(--tidy-switch-scale-internal))
-        );
-        transition: transform
-          var(--tidy-switch-thumb-transform-duration-internal);
-      }
-    }
-
     &:focus-visible {
       outline: 0.0625rem solid var(--t5e-primary-accent-color);
+    }
+  }
+
+  &:has(input:checked) [role='switch'] {
+    &:not(.disabled) {
+      background-color: var(--t5e-primary-accent-color);
+    }
+
+    &::before,
+    .thumb-icon {
+      transform: translateX(calc(1.25rem * var(--tidy-switch-scale-internal)));
     }
   }
 }
