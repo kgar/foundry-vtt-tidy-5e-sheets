@@ -88,7 +88,7 @@
     "TIDY5E.ContextMenuActionEdit": "Edytuj",
     "TIDY5E.ContextMenuActionDelete": "Usuń",
     "TIDY5E.EmptySection": "Ta sekcja jest pusta. Odblokuj kartę, w celu edycji.",
-    "TIDY5E.GMOnlyEdit": "Tylko MP może edytować tę sekcję.",
+    "TIDY5E.GMOnlyEdit": "Tylko GM może edytować tę sekcję.",
     "TIDY5E.AttunementWarning": "Zestrojenie: Nie można zestroić się z więcej niż {number} przedmiotami.",
     "TIDY5E.GridLayout": "Układ siatki",
     "TIDY5E.ListLayout": "Układ listy",
@@ -423,12 +423,12 @@
         "name": "Użyj nakładki zdrowia"
     },
     "TIDY5E.Settings.ItemCardsForAllItems": {
-        "name": "",
-        "hint": "Jeśli to ustawienie jest wyłączone, karty przedmiotów wyświetlane są tylko w widoku siatki."
+        "name": "Pokaż karty przedmiotów we wszystkich układach",
+        "hint": "Jeśli to ustawienie jest wyłączone, karty przedmiotów wyświetlane są tylko w układzie siatki."
     },
     "TIDY5E.Settings.UseVehicleMotion": {
-        "name": "",
-        "hint": ""
+        "name": "Użyj znacznika ruchu pojazdu",
+        "hint": "Pokazuje znacznik ruchu w profilu pojazdu."
     },
     "TIDY5E.WorldSettings.TabIcons": {
         "tabLabel": "Ikony"
@@ -447,17 +447,17 @@
         "hint": "Pokazuje pomocnicze ikony obok nazwy przedmiotu (Ulubione, Zestrojenie, itp.)."
     },
     "TIDY5E.Settings.UseCircularPortraitStyle": {
-        "all": "",
-        "pc": "",
-        "name": "",
+        "all": "Wszystkie postacie",
+        "pc": "Postać gracza",
+        "name": "Użyj okrągłych portretów",
         "none": "",
-        "npc": "",
-        "hint": ""
+        "npc": "NPC/Pojazdy",
+        "hint": "Pokazuje okrągłe portrety/ikony postaci."
     },
     "TIDY5E.LocalizationTestKey": "",
     "TIDY5E.Settings.InitialSheetTab": {
-        "name": "",
-        "hint": ""
+        "name": "Początkowa zakładka karty",
+        "hint": "Pokazuje wskazaną zakładkę przy pierwszym otwarciu karty."
     },
     "TIDY5E.Settings.UseHpBar": {
         "hint": "Pokazuje kolorowy pasek wskazujący pozostałe HP. Zdrowie podane liczbowo będzie nadal widoczne.",
@@ -471,16 +471,16 @@
         "name": "Kolor motywu"
     },
     "TIDY5E.Settings.ShowNPCRestInChat": {
-        "hint": "",
-        "name": ""
+        "hint": "Wyświetla wiadomość na czacie, gdy NPC korzysta z odpoczynku.",
+        "name": "Pokaż odpoczynek NPC na czacie"
     },
     "TIDY5E.Settings.UseTotalSheetLock": {
         "name": "",
         "hint": ""
     },
     "TIDY5E.Settings.UseInspiration": {
-        "name": "",
-        "hint": ""
+        "name": "Użyj znacznika inspiracji",
+        "hint": "Pokazuje znacznik inspiracji w profilu postaci."
     },
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
         "hint": "",
@@ -521,11 +521,11 @@
     "TIDY5E.EmptyContainer": "Ten pojemnik jest pusty.",
     "TIDY5E.Settings.UseContextMenu": {
         "name": "Użyj menu kontekstowego",
-        "hint": ""
+        "hint": "Włącza menu kontekstowe przy kliknięciu prawym przyciskiem myszy na przedmiot."
     },
     "TIDY5E.Settings.UseNPCEncumbranceBar": {
-        "hint": "",
-        "name": ""
+        "hint": "Pokazuje pasek obciążenia na kartach NPC.",
+        "name": "Użyj paska obciążenia NPC"
     },
     "TIDY5E.Settings.AllowCantripsToBePrepared": {
         "name": "",
@@ -557,22 +557,22 @@
     },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
         "hint": "Pokazuje zakładkę księgi czarów dla NPC-ów. Wyłącz, aby przenieść sekcję księgi czarów do zakładki Atrybuty.",
-        "name": "Pokaż zakładkę Księgi Zaklęć"
+        "name": "Pokaż zakładkę Księgi Czarów"
     },
     "TIDY5E.Settings.LimitEffectsManagementToGM": {
-        "name": "",
-        "hint": ""
+        "name": "Ogranicz zarządzanie aktywnymi efektami tylko do GM",
+        "hint": "Ogranicza uprawnienia do edycji i przełączania aktywnych efektów wyłącznie do MG."
     },
     "TIDY5E.Settings.DefaultSheetTabs": {
-        "AvailableHeader": "",
-        "SelectedHeader": "",
-        "hint": "",
-        "AtLeastOneTabRequiredErrorMessage": "",
-        "name": ""
+        "AvailableHeader": "Dostępne zakładki",
+        "SelectedHeader": "Wybrane zakładki",
+        "hint": "Określa, które zakładki i w jakiej kolejności będą wyświetlane domyślnie. Ma zastosowanie, gdy nie dokonano wyboru zakładek dla postaci.",
+        "AtLeastOneTabRequiredErrorMessage": "Domyślne zakładki: dla każdego typu aktora wymagana jest co najmniej jedna zakładka.",
+        "name": "Domyślne zakładki karty"
     },
     "TIDY5E.Settings.UseCharacterEncumbranceBar": {
-        "hint": "",
-        "name": ""
+        "hint": "Pokazuje pasek obciążenia na kartach postaci.",
+        "name": "Użyj paska obciążenia postaci"
     },
     "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
         "name": "",
@@ -630,8 +630,8 @@
     "TIDY5E.Utilities.ConfigureSections": "",
     "TIDY5E.SpellSourceIdentifierLabelHint": "",
     "TIDY5E.Settings.UseVehicleEncumbranceBar": {
-        "name": "",
-        "hint": ""
+        "name": "Użyj paska obciążenia pojazdu",
+        "hint": "Pokazuje pasek obciążenia na kartach pojazdu."
     },
     "TIDY5E.Settings.ColorPickerAtWill": {
         "name": ""
@@ -668,12 +668,12 @@
         "hint": "Ukrywa wyczerpanie i inspirację, jeśli ich wartość wynosi 0, ale nadal wyświetla je po najechaniu kursorem."
     },
     "TIDY5E.Settings.ShowExpandedLimitedView": {
-        "hint": "",
-        "name": ""
+        "hint": "Wyświetla całą kartę (bez dziennika) graczom z ograniczonymi uprawnieniami.",
+        "name": "Pokaż rozszerzony, ograniczony widok"
     },
     "TIDY5E.Settings.HideDeathSavesFromPlayers": {
-        "name": "",
-        "hint": ""
+        "name": "Ukryj rzuty przeciw śmierci przed graczami",
+        "hint": "Sprawia, że rzuty przeciw śmierć i ich wyniki są widoczne tylko dla GM."
     },
     "TIDY5E.Settings.LockItemQuantity": {
         "name": "",
@@ -714,8 +714,8 @@
         "hint": "Dodaje przycisk przełączający wyświetlanie/ukrywanie umiejętności w których postać nie ma biegłości."
     },
     "TIDY5E.Settings.UseExhaustion": {
-        "name": "",
-        "hint": ""
+        "name": "Użyj wskaźnika wyczerpania",
+        "hint": "Pokazuje wskaźnik wyczerpania dla postaci, NPC-ów oraz pojazdów."
     },
     "TIDY5E.Settings.ColorPickerAtWillOutline": {
         "name": ""
