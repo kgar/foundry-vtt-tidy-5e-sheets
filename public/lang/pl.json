@@ -88,7 +88,7 @@
     "TIDY5E.ContextMenuActionEdit": "Edytuj",
     "TIDY5E.ContextMenuActionDelete": "Usuń",
     "TIDY5E.EmptySection": "Ta sekcja jest pusta. Odblokuj kartę, w celu edycji.",
-    "TIDY5E.GMOnlyEdit": "Tylko GM może edytować tę sekcję.",
+    "TIDY5E.GMOnlyEdit": "Tylko MG może edytować tę sekcję.",
     "TIDY5E.AttunementWarning": "Zestrojenie: Nie można zestroić się z więcej niż {number} przedmiotami.",
     "TIDY5E.GridLayout": "Układ siatki",
     "TIDY5E.ListLayout": "Układ listy",
@@ -239,7 +239,7 @@
             "mainExplanation1": "Migracja danych do nowego modułu Tidy 5e Sheets nie jest wymagana do korzystania z niego. W najgorszym przypadku, jeśli jesteś użytkownikiem oryginalnego Tidy5e Sheet i pominąłeś migrację, będziesz musiał ponownie zastosować ustawienia zgodnie z własnymi upodobaniami."
         },
         "migrationBeginningMessage": "Migracja danych. Nie odświeżaj strony przed zakończeniem migracji.",
-        "hint": "Jeśli byłeś użytkownikiem oryginalnego modułu Tidy5e Sheet lub arkuszy Alpha, opcjonalnie użyj tego menu Migracje do migracji ustawień MG i danych kart Tidy.",
+        "hint": "Jeśli byłeś użytkownikiem oryginalnego modułu Tidy5e Sheet, opcjonalnie użyj tego menu Migracje do migracji ustawień MG i danych kart Tidy.",
         "migrateDocumentFlagsButtonLabel": "Migracja flag dokumentów",
         "migrationCompleteMessage": "Migracja zakończona.",
         "buttonLabel": "Migracja danych Tidy",
@@ -253,7 +253,7 @@
             "DoNotShowAgain.ConfirmMessage": "Potwierdzono. Ten komunikat nie pojawi się ponownie, dopóki nie będzie dostępnej kolejnej migracji.",
             "Explanation": "Dostępne są nowe migracje danych Tidy 5e Sheets. Więcej informacji można znaleźć w menu {boldStart}config settings Migrations{boldEnd}.",
             "Button.DoNotShowAgain": "Nie pokazuj ponownie",
-            "Explanation2": "Uwaga: Migracje przenoszą dane, które były pierwotnie przechowywane przez Tidy 5e Sheets do oficjalnie obsługiwanych pól danych systemu. Jeśli po aktualizacji Tidy 5e nie ma braków w kartach, migracja nie jest wymagana."
+            "Explanation2": "Uwaga: Migracje przenoszą dane z jednego miejsca do drugiego. Czasami dane, które były pierwotnie przechowywane przez Tidy 5e Sheets, muszą zostać przeniesione do oficjalnie obsługiwanych pól danych systemu. W innych przypadkach Tidy może przejąć funkcjonalność z innego modułu, w wyniku czego może zostać zapewniona wygodna migracja, aby ułatwić przejście. Jeśli nie brakuje danych na kartach po aktualizacji Tidy 5e Sheets, migracja nie jest wymagana."
         },
         "migrateConfirmMessage2": "{boldStart}Uwaga{boldEnd}: zawsze pamiętaj o {boldStart}tworzeniu kopii zapasowych swoich danych{boldEnd}.",
         "migrateConfirmTitle": "Potwierdź migrację",
@@ -434,12 +434,12 @@
         "tabLabel": "Ikony"
     },
     "TIDY5E.Settings.ShowNPCActorLinkMarker": {
-        "name": "",
-        "default": "",
-        "both": "",
-        "hint": "",
-        "unlinked": "",
-        "linked": ""
+        "name": "Oznacz powiązanych/niepowiązanych NPC-ów",
+        "default": "Brak znacznika łącza (domyślnie)",
+        "both": "Podświetl powiązane i niepowiązane tokeny",
+        "hint": "Dodaje kolorową ramkę i ikonę do połączonych/niepołączonych kart NPC.",
+        "unlinked": "Podświetl niepowiązane tokeny",
+        "linked": "Podświetl powiązane tokeny"
     },
     "TIDY5E.SpellSourceIdentifierSelectText": "Identyfikator klasy: {identifier}",
     "TIDY5E.Settings.ShowIconsNextToTheItemName": {
@@ -475,24 +475,24 @@
         "name": "Pokaż odpoczynek NPC na czacie"
     },
     "TIDY5E.Settings.UseTotalSheetLock": {
-        "name": "",
-        "hint": ""
+        "name": "Zablokuj wrażliwe pola",
+        "hint": "Blokuje rzadko zmieniane pola (nazwa, przełączniki biegłości) i ukrywa przyciski konfiguracji, gdy karta jest zablokowana."
     },
     "TIDY5E.Settings.UseInspiration": {
         "name": "Użyj znacznika inspiracji",
         "hint": "Pokazuje znacznik inspiracji w profilu postaci."
     },
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
-        "hint": "",
-        "name": ""
+        "hint": "Zamiast domyślnie pokazywać wszystkie zaklęcia, które zadają obrażenia w zakładce/panelu Akcje, umieszcza tam tylko sztuczki. To domyślne zachowanie D&D Beyond.",
+        "name": "Ogranicz akcje do sztuczek"
     },
     "TIDY5E.UserSettings.TabActionsList": {
         "tabLabel": "Lista akcji"
     },
     "TIDY5E.WorldSettings.ItemIdentificationPermission": {
         "hint": "Określa, jaki typ użytkownika może uzyskać dostęp do elementów interfejsu umożliwiających identyfikację przedmiotów.",
-        "options.GmOnly": "Tylko GM",
-        "options.GmAndOwners": "GM i właściciel przedmiotu",
+        "options.GmOnly": "Tylko MG",
+        "options.GmAndOwners": "MG i właściciel przedmiotu",
         "name": "Uprawnienia do identyfikacji przedmiotu"
     },
     "TIDY5E.Settings.ShowExhaustionOnHover": {
@@ -507,8 +507,8 @@
         "hint": "Pokazuje elementy sterujące w widoku listy. Dotyczy ekwipunku i listy zaklęć w widoku listy."
     },
     "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
-        "name": "",
-        "hint": ""
+        "name": "Uwzględnij zaklęcia z aktywnymi efektami jako akcje",
+        "hint": "Domyślnie obejmuje zaklęcia z dołączonymi aktywnymi efektami (np. Korowa skóra) w zakładce/panelu Akcje."
     },
     "TIDY5E.Settings.ItemCardsFixKey": {
         "name": "Klawisz blokady karty przedmiotu",
@@ -528,12 +528,12 @@
         "name": "Użyj paska obciążenia NPC"
     },
     "TIDY5E.Settings.AllowCantripsToBePrepared": {
-        "name": "",
-        "hint": ""
+        "name": "Pozwól przygotowywać sztuczki",
+        "hint": "Opcjonalna zasada „formuły sztuczek” z Tasha's Cauldron of Everything pozwala magom przygotowywać sztuczki po długim odpoczynku w taki sam sposób, w jaki robią to z zaklęciami poziomowymi. Przygotowane sztuczki nie wliczają się do całkowitej liczby przygotowanych zaklęć."
     },
     "TIDY5E.Settings.LockHpMaxChanges": {
-        "hint": "",
-        "name": ""
+        "hint": "Zapobiega zmianom maksymalnego HP przez graczy niebędących MG.",
+        "name": "Zablokuj zmiany maksymalnego HP"
     },
     "TIDY5E.Settings.ItemCardsForNPCs": {
         "name": "Pokaż karty przedmiotów dla NPC/Pojazdów",
@@ -560,7 +560,7 @@
         "name": "Pokaż zakładkę Księgi Czarów"
     },
     "TIDY5E.Settings.LimitEffectsManagementToGM": {
-        "name": "Ogranicz zarządzanie aktywnymi efektami tylko do GM",
+        "name": "Ogranicz zarządzanie aktywnymi efektami tylko do MG",
         "hint": "Ogranicza uprawnienia do edycji i przełączania aktywnych efektów wyłącznie do MG."
     },
     "TIDY5E.Settings.DefaultSheetTabs": {
@@ -575,36 +575,36 @@
         "name": "Użyj paska obciążenia postaci"
     },
     "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-        "name": "",
-        "hint": ""
+        "name": "Użyj filtra wieloklasowej księgi czarów",
+        "hint": "Umożliwia filtrowanie zaklęć według klasy w zakładce księga czarów. Zaklęcie musi być powiązane z klasą za pomocą selektora klasy na arkuszu edycji zaklęć."
     },
     "TIDY5E.Settings.UseSpellClassIcons": {
-        "name": "",
-        "hint": ""
+        "name": "Użyj ikony klasy dla zaklęć",
+        "hint": "Pokazuje ikonę klasy na zaklęciach zamiast ikony samego zaklęcia. Zaklęcie musi być powiązane z klasą za pomocą selektora klasy na arkuszu edycji zaklęcia. w przypadku postaci wieloklasowych ta funkcja pozwala łatwo rozróżnić, które zaklęcia należą do której klasy."
     },
     "TIDY5E.Settings.LockExpChanges": {
-        "hint": "",
-        "name": ""
+        "hint": "Zapobiega zmianom w doświadczeniu przez graczy niebędących MG.",
+        "name": "Zablokuj doświadczenie"
     },
     "TIDY5E.Settings.LockLevelSelector": {
-        "hint": "",
-        "name": ""
+        "hint": "Zapobiega zmianom poziomu postaci przez graczy niebędących MG.",
+        "name": "Zablokuj selektor poziomu"
     },
-    "TIDY5E.Settings.ActionList.Header": "",
+    "TIDY5E.Settings.ActionList.Header": "Lista akcji",
     "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
-        "hint": "",
-        "name": ""
+        "hint": "Domyślnie obejmuje zaklęcia trwające jedną minutę lub krócej (np. 1 runda) i mające czas aktywacji wynoszący 1 Akcję lub 1 Akcję Bonusową (np. Błogosławieństwo, Zguba, Rozkaz) w zakładce/panelu Akcje.",
+        "name": "Uwzględnij zaklęcia trwające minutę jako akcje"
     },
     "TIDY5E.Settings.ActionListIncludeConsumables": {
-        "name": "",
-        "hint": ""
+        "name": "Uwzględnij materiały eksploatacyjne jako akcje",
+        "hint": "Domyślnie na liście akcji umieszcza materiały eksploatacyjne, które mają koszt aktywacji (Akcja, Akcja bonusowa itp.)."
     },
     "TIDY5E.Settings.ColorPickerPrimaryAccent": {
         "name": ""
     },
     "TIDY5E.Settings.ColorPickerEnabled": {
-        "name": "",
-        "hint": ""
+        "name": "Użyj własnych kolorów motywu",
+        "hint": "Pokazuje własne kolory motywu"
     },
     "TIDY5E.Settings.ColorPickerEquippedOutline": {
         "name": ""
@@ -673,24 +673,24 @@
     },
     "TIDY5E.Settings.HideDeathSavesFromPlayers": {
         "name": "Ukryj rzuty przeciw śmierci przed graczami",
-        "hint": "Sprawia, że rzuty przeciw śmierć i ich wyniki są widoczne tylko dla GM."
+        "hint": "Sprawia, że rzuty przeciw śmierć i ich wyniki są widoczne tylko dla MG."
     },
     "TIDY5E.Settings.LockItemQuantity": {
-        "name": "",
-        "hint": ""
+        "name": "Zablokuj ilość przedmiotu",
+        "hint": "Zapobiega zmianom ilości przedmiotów przez graczy niebędących MG."
     },
     "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
-        "name": ""
+        "name": "Tylko rytuał zarys"
     },
     "TIDY5E.Settings.ColorPickerRitualOnly": {
-        "name": ""
+        "name": "Tylko rytuał"
     },
     "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
-        "name": ""
+        "name": "Tylko rytuał akcent"
     },
     "TIDY5E.Settings.UseTidySpellSchoolIcons": {
-        "hint": "",
-        "name": ""
+        "hint": "Użyj specjalnie wybranych ikon Tidy dla szkół magii. Aby dostosować ikony szkół magii przez CONFIG.DND5E lub przez inne moduły, wyłącz tę opcję. Aby rozszerzyć niestandardowe ikony Tidy dla szkół magii , zapoznaj się z dokumentacją API Tidy.",
+        "name": "Użyj ikon Tidy dla szkół magii"
     },
     "TIDY5E.Section": {
         "Default": "",
@@ -725,7 +725,7 @@
         "hint": "Zaklęcia mogą czasami zawierać specjalne dane z innych modułów, które warto przenieść do zwojów. Włącz, aby skopiować wszystkie dane oparte na flagach do zwoju w momencie jego tworzenia."
     },
     "TIDY5E.WorldSettings.Menu": {
-        "title": "Ustawienia świata (tylko GM)",
+        "title": "Ustawienia świata (tylko MG)",
         "name": "Ustawienia świata",
         "hint": "Zmień ustawienia na poziomie świata, aby spersonalizować korzystanie z Tidy 5e Sheets. Ustawienia te są zapisywane w tym świecie Foundry i mają zastosowanie do całej zawartości związanej z Tidy 5e Sheets.",
         "label": "Ustawienia świata"
@@ -747,12 +747,12 @@
         "hint": "Pokazuje tylko aktualnie wyposażoną amunicję w menu wyboru amunicji broni."
     },
     "TIDY5E.Settings.LockMoneyChanges": {
-        "hint": "",
-        "name": ""
+        "hint": "Zapobiega zmianom w walucie przez graczy niebędących MG.",
+        "name": "Zablokuj walutę"
     },
     "TIDY5E.Settings.LockConfigureSheet": {
-        "hint": "",
-        "name": ""
+        "hint": "Zapobiega wybieraniu innego układu karty przez graczy niebędących MG.",
+        "name": "Zablokuj wybór karty"
     },
     "TIDY5E.ButtonConfirm.Text": "Potwierdź",
     "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
