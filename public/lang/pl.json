@@ -286,24 +286,24 @@
             "sectionTitle": ""
         },
         "CcssToTidy": {
-            "deleteFlagsTooltip": "",
+            "deleteFlagsTooltip": "Podczas migracji z CCSS do Tidy sekcji niestandardowych, flagi CCSS pozostają domyślnie na swoim miejscu. Zaznacz tę opcję, aby usunąć te flagi.",
             "sectionTitle": "",
             "ccss": "",
             "selectionDialogTitle": "",
-            "explanation1": "",
-            "deleteFlags": "",
-            "overwriteTooltip": "",
-            "section": "",
-            "overwrite": ""
+            "explanation1": "Tidy 5e teraz natywnie obsługuje sekcje niestandardowe i zapewnia dodatkowe funkcje z nimi związane. Ta migracja skopiuje nazwy niestandardowych sekcji kart postaci (Custom Character Sheet Sections (CCSS)) do konfiguracji sekcji Tidy.",
+            "deleteFlags": "Usuń powiązane flagi CCSS",
+            "overwriteTooltip": "Włącz, aby nadpisać istniejącą flagę sekcji Tidy. Jeśli niezaznaczone, tylko puste flagi Tidy otrzymają przeniesione dane CCSS.",
+            "section": "Sekcja",
+            "overwrite": "Nadpisz"
         },
         "BondsIdealsFlawsToSystem": {
-            "sectionTitle": "",
-            "selectionDialogTitle": ""
+            "sectionTitle": "Więzi, ideały i słabości NPC",
+            "selectionDialogTitle": "Migracja: Więzi, ideały i wady NPC do systemu"
         },
         "Parent": "",
         "FavoritesToSystem": {
-            "selectionDialogTitle": "",
-            "sectionTitle": ""
+            "selectionDialogTitle": "Migracja: Ulubione rzeczy postaci do systemu",
+            "sectionTitle": "Ulubione rzeczy postaci"
         },
         "MigrateCompendia.TotalEntriesLabel": "",
         "MigrateCompendia.SelectionDialogTitle": "",
@@ -454,7 +454,7 @@
         "npc": "NPC/Pojazdy",
         "hint": "Pokazuje okrągłe portrety/ikony postaci."
     },
-    "TIDY5E.LocalizationTestKey": "",
+    "TIDY5E.LocalizationTestKey": "Klawisz testu lokalizacji",
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Początkowa zakładka karty",
         "hint": "Pokazuje wskazaną zakładkę przy pierwszym otwarciu karty."
@@ -636,10 +636,10 @@
     "TIDY5E.Settings.ColorPickerAtWill": {
         "name": ""
     },
-    "TIDY5E.SpellSourceClassAssignments.Identifier": "",
+    "TIDY5E.SpellSourceClassAssignments.Identifier": "Identyfikator klasy źródłowej",
     "TIDY5E.Utilities.Tools": "",
-    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "",
-    "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "",
+    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Pokaż tylko nieprzypisane",
+    "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "Tutaj pojawia się identyfikator klasy źródłowej zaklęcia. Aby przypisać identyfikator, którego postać nie posiada, wprowadź identyfikator klasy w tym polu tekstowym.",
     "TIDY5E.Utilities.AssignSpellsToClasses": "",
     "TIDY5E.WorldSettings.VehicleExhaustion": {
         "Header": "Wyczerpanie pojazdu",
@@ -695,19 +695,19 @@
     "TIDY5E.Section": {
         "Default": "",
         "Label": "",
-        "ActionTooltip": "",
+        "ActionTooltip": "Określ własną sekcję dla tego przedmiotu po umieszczeniu go w zakładce Akcje lub pozostaw ją pustą, aby zachować domyślne zachowanie.",
         "ConfigDialog": {
-            "title": "",
-            "hideTooltip": "",
-            "showTooltip": ""
+            "title": "Konfiguruj sekcję: {tabTitle}",
+            "hideTooltip": "Ukryj tę sekcję",
+            "showTooltip": "Pokaż tę sekcję"
         },
-        "ActionLabel": "",
-        "Tooltip": ""
+        "ActionLabel": "Sekcja akcji",
+        "Tooltip": "Określ własną sekcję dla tego przedmiotu po umieszczeniu go na karcie postaci lub pozostaw ją pustą, aby zachować domyślne zachowanie."
     },
-    "TIDY5E.RollRecharge.Hint": "",
+    "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+kliknij, aby pominąć rzut i natychmiast odnowić) ",
     "TIDY5E.UseDefaultDialog": {
-        "title": "",
-        "text": ""
+        "title": "Potwierdź: Użyj domyślnych",
+        "text": "Czy na pewno chcesz użyć ustawień domyślnych?"
     },
     "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
         "name": "Przełącznik pustych umiejętności",
@@ -782,5 +782,7 @@
     "TIDY5E.Group.HideMemberTabInfoPanel": "Schowaj panel informacyjny",
     "TIDY5E.Group.EmptyMembersTabHint": "Ta grupa jest pusta. Upuść postać z paska bocznego, żeby dodać członka.",
     "TIDY5E.Tidy5eGroupSheetClassic": "Karta Grupy Tidy 5e",
-    "TIDY5E.Group.ShowMemberTabInfoPanel": "Pokaż panel informacyjny"
+    "TIDY5E.Group.ShowMemberTabInfoPanel": "Pokaż panel informacyjny",
+    "TIDY5E.Keybindings.ToggleSheetLock.Name": "Przełącz blokadę karty",
+    "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Jeśli w interfejsie użytkownika aktywnym oknem jest karta Tidy, to naciśnięcie tego klawisza powoduje przełączenie blokady karty."
 }
