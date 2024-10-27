@@ -14,9 +14,9 @@
     Readable<ActorSheetContextV1 | ContainerSheetContext>
   >(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
 
-  $: currencies = Object.entries(document.system.currency).map((e) => ({
-    key: e[0],
-    value: e[1] as any,
+  $: currencies = Object.keys(CONFIG.DND5E.currencies).map((key) => ({
+    key: key,
+    value: (document.system.currency[key] ?? 0) as number,
   }));
 
   function confirmConvertCurrency() {
