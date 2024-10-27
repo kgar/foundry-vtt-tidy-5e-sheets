@@ -2,7 +2,7 @@
     "TIDY5E.Tidy5eVehicleSheetClassic": "Karta Pojazdu Tidy 5e",
     "TIDY5E.EditSheetImageHint": "Lewy przycisk myszy: edytuj obraz",
     "TIDY5E.ShowTokenArt": "Pokaż token",
-    "TIDY5E.SheetImageOptionsHint": "Prawy przycisk myszy: pokaż portret postaci",
+    "TIDY5E.SheetImageOptionsHint": "Prawy przycisk myszy: pokaż opcje obrazu",
     "TIDY5E.ShowItemImage": "Prawy przycisk myszy: pokaż grafikę przedmiotu",
     "TIDY5E.ShowItemArt": "Pokaż obraz",
     "TIDY5E.Tidy5eCharacterSheetClassic": "Karta Postaci Tidy 5e",
@@ -52,10 +52,10 @@
         "MoreFormulas": "Więcej wzorów"
     },
     "TIDY5E.Actions": {
-        "ResetActionDefault": "Zresetuj domyślną akcję",
+        "ResetActionDefault": "Zresetuj Akcje do domyślnych",
         "TabName": "Akcje",
-        "OverriddenSetOverrideFalse": "Usuń z listy Akcji (Shift+LPM by zlikwidować nadpisanie)",
-        "OverriddenSetOverrideTrue": "Dodaj do listy Akcji (SHIFT+LPM by zlikwidować nadpisanie)",
+        "OverriddenSetOverrideFalse": "Usuń z listy Akcji (Shift+LPM by wyczyścić zastąpienie)",
+        "OverriddenSetOverrideTrue": "Dodaj do listy Akcji (SHIFT+LPM by wyczyścić zastąpienie)",
         "SetOverrideFalse": "Usuń z listy Akcji",
         "SetOverrideTrue": "Dodaj do listy Akcji"
     },
@@ -164,9 +164,9 @@
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "Test Ataku Czarem Wręcz",
     "TIDY5E.WorldSettings.Exhaustion": {
         "options.open.explanation": "Pokazuje użytkownikowi liczbową wartość przy wprowadzaniu poziomu Wyczerpania.",
-        "Header": "Wyczerpanie Postać/BN",
+        "Header": "Wyczerpanie Postać/NPC",
         "name": "Konfiguracja Wyczerpania",
-        "hint": "Ustala w jaki sposób Wyczerpanie nie-pojazdów jest konfigurowane i pokazane na kartach postaci graczy i BNów.",
+        "hint": "Ustala w jaki sposób Wyczerpanie nie-pojazdów jest konfigurowane i pokazane na kartach postaci graczy i NPC.",
         "options.specific.text": "Dane Poziomy",
         "options.specific.levels.name": "Całkowite Poziomy",
         "options.specific.levels.hint": "Ustawia maksymalną wartość poziomów Wyczerpania.",
@@ -188,7 +188,7 @@
         "tabLabel": "Postać"
     },
     "TIDY5E.WorldSettings.TabNpc": {
-        "tabLabel": "BN"
+        "tabLabel": "NPC"
     },
     "TIDY5E.ApplyChanges": "Zastosuj zmiany",
     "TIDY5E.SaveChanges": "Zapisz zmiany",
