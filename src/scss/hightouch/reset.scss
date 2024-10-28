@@ -38,3 +38,15 @@
     margin: 0;
   }
 }
+
+/* Form Resets */
+
+form {
+  .form-group {
+    .form-fields {
+       input[type="checkbox"] {
+        flex-basis: var(--checkbox-size);
+       }
+    }
+  }
+}
