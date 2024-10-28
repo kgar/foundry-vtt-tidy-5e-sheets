@@ -13,7 +13,7 @@ input {
 
 /* Hightouch-style inputs */
 
-input[type='text'] {
+input[type='text'], input[type='number'] {
   align-items: center;
   background: var(--t5e-component-card-onDefault-default);
   border-radius: 0.125rem;
