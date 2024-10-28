@@ -652,10 +652,10 @@
         </div>
 
         <div class="form-group checkbox">
-          <label>Consumed</label>
           <div class="form-fields">
             <input type="checkbox" />
           </div>
+          <label>Consumed</label>
         </div>
       </div>
       <input
