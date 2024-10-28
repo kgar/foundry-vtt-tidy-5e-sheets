@@ -552,6 +552,374 @@
       Attuned
     </PillSwitch>
   </fieldset>
+
+  <fieldset style="max-width: 75rem;">
+    <legend>Form Example</legend>
+
+    <div class="form-group">
+      <label>Spell Level</label>
+      <div class="form-fields">
+        <select>
+          <option>Cantrip</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Spell School</label>
+      <div class="form-fields">
+        <select>
+          <option>Abjuration</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group stacked checkbox-grid checkbox-grid-3">
+      <label>Spell Components</label>
+      <div class="form-fields">
+        <label class="checkbox">
+          <input type="checkbox" />
+          <span>Property</span>
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" />
+          <span>Property</span>
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" />
+          <span>Property</span>
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" />
+          <span>Property</span>
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" />
+          <span>Property</span>
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" />
+          <span>Property</span>
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" />
+          <span>Property</span>
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" />
+          <span>Property</span>
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" />
+          <span>Property</span>
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" />
+          <span>Property</span>
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" />
+          <span>Property</span>
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" />
+          <span>Property</span>
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" />
+          <span>Property</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group split-group">
+      <label>Spellcasting Materials</label>
+      <div class="form-fields">
+        <div class="form-group label-top">
+          <label>Supply</label>
+          <div class="form-fields">
+            <input type="number" value="0" min="0" step="any" placeholder="0" />
+          </div>
+        </div>
+
+        <div class="form-group label-top">
+          <label class="label-icon currency gp" aria-label="Cost (GP)">
+            Cost
+          </label>
+          <div class="form-fields">
+            <input type="number" value="0" min="0" step="any" placeholder="—" />
+          </div>
+        </div>
+
+        <div class="form-group checkbox">
+          <label>Consumed</label>
+          <div class="form-fields">
+            <input type="checkbox" />
+          </div>
+        </div>
+      </div>
+      <input
+        type="text"
+        name="system.materials.value"
+        value="A tiny ball of bat guano and sulfur"
+        class="full-width"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Spell Preparation Mode</label>
+      <div class="form-fields">
+        <input type="checkbox" />
+        <select>
+          <option></option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group split-group">
+      <label>Casting Time</label>
+      <div class="form-fields">
+        <div class="form-group label-top">
+          <label>Cost</label>
+          <div class="form-fields">
+            <select name="system.activation.type"
+              ><optgroup label="Standard"
+                ><option value="action">Action</option><option value="bonus"
+                  >Bonus Action</option
+                ><option value="reaction">Reaction</option></optgroup
+              ><optgroup label="Time"
+                ><option value="minute">Minutes</option><option value="hour"
+                  >Hours</option
+                ><option value="day">Days</option></optgroup
+              ><optgroup label="Monster"
+                ><option value="legendary">Legendary Action</option><option
+                  value="mythic">Mythic Action</option
+                ><option value="lair">Lair Action</option></optgroup
+              ><optgroup label="Vehicle"
+                ><option value="crew">Crew Action</option></optgroup
+              ><option value="special">Special</option><option value=""
+                >None</option
+              ></select
+            >
+          </div>
+        </div>
+      </div>
+
+      <input
+        type="text"
+        name="system.activation.condition"
+        value=""
+        placeholder="Activation Condition"
+        class="full-width"
+      />
+    </div>
+
+    <div class="form-group split-group">
+      <label>Range</label>
+      <div class="form-fields">
+        <div class="form-group label-top">
+          <label>Value</label>
+          <div class="form-fields">
+            <input type="text" name="system.range.value" value="150" />
+          </div>
+        </div>
+
+        <div class="form-group label-top">
+          <label>Units</label>
+          <div class="form-fields">
+            <select name="system.range.units"
+              ><option value="self">Self</option><option value="touch"
+                >Touch</option
+              ><option value="spec">Special</option><option value="any"
+                >Any</option
+              ><optgroup label="Distance"
+                ><option value="ft">Feet</option><option value="mi"
+                  >Miles</option
+                ><option value="m">Meters</option><option value="km"
+                  >Kilometers</option
+                ></optgroup
+              ></select
+            >
+          </div>
+        </div>
+      </div>
+
+      <input
+        type="text"
+        name="system.range.special"
+        value=""
+        placeholder="Special Range"
+        class="full-width"
+      />
+    </div>
+
+    <div class="form-group split-group">
+      <label>Duration</label>
+      <div class="form-fields">
+        <div class="form-group label-top">
+          <label>Time</label>
+          <div class="form-fields">
+            <select>
+              <option value="inst">Instantaneous</option>
+              <option value="spec">Special</option>
+              <optgroup label="Time">
+                <option value="turn">Turns</option>
+                <option value="round">Rounds </option>
+                <option value="minute">Minutes</option>
+                <option value="hour">Hours</option>
+                <option value="day">Days</option>
+                <option value="month">Months</option>
+                <option value="year">Years</option>
+              </optgroup>
+              <optgroup label="Permanent">
+                <option value="disp">Until Dispelled</option>
+                <option value="dstr">Until Dispelled or Triggered</option>
+                <option value="perm">Permanent</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group split-group">
+      <label>Type</label>
+      <div class="form-fields">
+        <div class="form-group label-top">
+          <label>Amount</label>
+          <div class="form-fields">
+            <input type="text" value="" placeholder="Every" />
+          </div>
+        </div>
+
+        <div class="form-group label-top">
+          <label>Type</label>
+          <div class="form-fields">
+            <select>
+              <option value=""></option>
+              <option value="self">Self</option>
+              <option value="ally">Ally</option>
+              <option value="enemy">Enemy</option>
+              <option value="creature">Creature</option>
+              <option value="object">Object</option>
+              <option value="space">Space</option>
+              <option value="creatureOrObject">Creature or Object</option>
+              <option value="any">Any</option>
+              <option value="willing">Willing Creature</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Choose Targets</label>
+      <div class="form-fields">
+        <input type="checkbox" />
+      </div>
+      <p class="hint">
+        When targeting an area, can the user choose who it affects?
+      </p>
+    </div>
+
+    <div class="form-group">
+      <label>Shape</label>
+      <div class="form-fields">
+        <select>
+          <option value=""></option>
+          <option value="cone">Cone</option>
+          <option value="cube">Cube</option>
+          <option value="cylinder">Cylinder</option>
+          <option value="radius">Emanation</option>
+          <option value="line">Line</option>
+          <option value="sphere">Sphere</option>
+          <hr />
+          <option value="circle">Circle</option>
+          <option value="square">Square</option>
+          <option value="wall">Wall</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group split-group">
+      <label>Dimensions</label>
+      <div class="form-fields">
+        <div class="form-group label-top">
+          <label>Radius</label>
+          <div class="form-fields">
+            <input type="text" value="20" />
+          </div>
+        </div>
+
+        <div class="form-group label-top">
+          <label>Units</label>
+          <div class="form-fields">
+            <select>
+              <option value=""> </option>
+              <option value="ft">Feet</option>
+              <option value="mi">Miles</option>
+              <option value="m">Meters</option>
+              <option value="km">Kilometers</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group split-group">
+      <label>Multiple</label>
+      <div class="form-fields">
+        <div class="form-group label-top">
+          <label>Amount</label>
+          <div class="form-fields">
+            <input type="text" value="" placeholder="1" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group split-group">
+      <label>Limited Uses</label>
+      <div class="form-fields">
+        <div class="form-group label-top">
+          <label>Spent</label>
+          <div class="form-fields">
+            <input type="number" value="0" min="0" step="1" />
+          </div>
+        </div>
+
+        <div class="form-group label-top">
+          <label>Max</label>
+          <div class="form-fields">
+            <input type="text" value="" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group custom-section">
+      <label for="i-o8WdxHamTy4ZvN3n-tidy-5e-custom-section"> Section </label>
+      <div class="form-fields">
+        <input
+          type="text"
+          id="i-o8WdxHamTy4ZvN3n-tidy-5e-custom-section"
+          value=""
+        />
+      </div>
+    </div>
+    <div class="form-group custom-action-section">
+      <label for="i-o8WdxHamTy4ZvN3n-tidy-5e-custom-action-section">
+        Action Section
+      </label>
+      <div class="form-fields">
+        <input
+          type="text"
+          id="i-o8WdxHamTy4ZvN3n-tidy-5e-custom-action-section"
+          value=""
+        />
+      </div>
+    </div>
+  </fieldset>
 </div>
 
 <style lang="scss">
