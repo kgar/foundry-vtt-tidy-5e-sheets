@@ -97,8 +97,8 @@
     "TIDY5E.RemoveFavorite": "Usuń z ulubionych",
     "TIDY5E.ShowNotProficientSkills": "Pokaż niebiegłe",
     "TIDY5E.HideNotProficientSkills": "Ukryj niebiegłe",
-    "TIDY5E.ShowEmptyTraits": "Pokaż/edytuj puste cechy",
-    "TIDY5E.HideEmptyTraits": "ukryj puste cechy",
+    "TIDY5E.ShowEmptyTraits": "Pokaż/edytuj puste atrybuty",
+    "TIDY5E.HideEmptyTraits": "Ukryj puste atrybuty",
     "TIDY5E.Abilities": "Umiejętności",
     "TIDY5E.Environment": "Środowisko",
     "TIDY5E.EnvironmentTooltip": "Środowisko: {environment}",
@@ -454,7 +454,7 @@
         "npc": "NPC/Pojazdy",
         "hint": "Pokazuje okrągłe portrety/ikony postaci."
     },
-    "TIDY5E.LocalizationTestKey": "",
+    "TIDY5E.LocalizationTestKey": "Klucz testowy lokalizacji",
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Początkowa zakładka karty",
         "hint": "Pokazuje wskazaną zakładkę przy pierwszym otwarciu karty."
@@ -544,8 +544,8 @@
         "name": "Pokaż pływające karty przedmiotów"
     },
     "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "name": "",
-        "hint": ""
+        "name": "Użyj domyślnego przejścia klawiszem Tab dla atrybutów karty",
+        "hint": "Domyślna karta 5e umożliwia przechodzenie za pomocą klawiatury z jednego atrybutu do następnego, ukrywając elementy sterujące przed kolejności tabulacji. Włączenie tej opcji powiela to zachowanie. To ustawienie jest ignorowane, jeśli opcja „Użyj przystępnego wsparcia dla klawiatury” jest wyłączona."
     },
     "TIDY5E.Settings.MoveTraitsBelowResources": {
         "hint": "Umieszcza atrybuty poniżej zasobów postaci.",
@@ -652,8 +652,8 @@
         "hint": "Opóźnia wyświetlanie kart przedmiotów o określoną liczbę milisekund (ms). 0 oznacza brak opóźnienia. Domyślnie: 300."
     },
     "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "name": "",
-        "hint": ""
+        "name": "Użyj domyślnego przejścia klawiszem Tab dla HP",
+        "hint": "Domyślna karta 5e umożliwia przechodzenie za pomocą klawisza Tab z pola obecne HP do pola obecne tymczasowe HP.Włączenie tej opcji powiela to zachowanie. To ustawienie jest ignorowane, jeśli opcja „Użyj przystępnego wsparcia dla klawiatury” jest wyłączona."
     },
     "TIDY5E.Settings.DefaultTheme": {
         "name": "Domyślny kolor motywu",
@@ -756,8 +756,8 @@
     },
     "TIDY5E.ButtonConfirm.Text": "Potwierdź",
     "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
-        "name": "",
-        "hint": ""
+        "name": "Użyj przystępnego wsparcia dla klawiatury",
+        "hint": "Umożliwia użytkownikom nawigację między większością przycisków/poleceń w Tidy 5e Sheets i wykonywanie ich za pomocą standardowych skrótów klawiszowych .Uwaga: po skupieniu na przycisku w Foundry, skróty klawiszowe z „Skonfiguruj sterowanie” nie reagują. Jeśli moduł używa tej funkcji Foundry do sterowania kartami, np. do używania przedmiotów podczas przytrzymywania specjalnego klawisza, włączenie tej opcji Tidy 5e Sheets będzie kolidować z tymi skrótami klawiszowymi."
     },
     "TIDY5E.Settings.ShowActiveEffectsMarker": {
         "name": "Pokaż znacznik aktywnych efektów",
