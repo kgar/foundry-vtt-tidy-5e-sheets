@@ -14,6 +14,7 @@
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import PillSwitch from 'src/components/toggle/PillSwitch.svelte';
   import Search from '../shared/Search.svelte';
+  import { preventNewlines } from 'src/actions/prevent-newlines';
 
   let context = getContext<Readable<ItemDebugSheetHightouchContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -658,12 +659,18 @@
           <label>Consumed</label>
         </div>
       </div>
-      <input
-        type="text"
-        name="system.materials.value"
-        value="A tiny ball of bat guano and sulfur"
-        class="full-width"
-      />
+    </div>
+    <div class="form-group">
+      <label role="presentation"></label>
+      <div class="form-fields">
+        <textarea
+          rows="2"
+          value="A tiny ball of bat guano and sulfur"
+          class="full-width"
+          aria-multiline="false"
+          use:preventNewlines
+        ></textarea>
+      </div>
     </div>
 
     <div class="form-group">
@@ -815,11 +822,16 @@
     <div class="form-group">
       <label>Choose Targets</label>
       <div class="form-fields">
-        <input type="checkbox" />
+        <span style="display: flex; align-items: center;">
+          <input type="checkbox" />
+        </span>
       </div>
-      <p class="hint">
-        When targeting an area, can the user choose who it affects?
-      </p>
+      <div class="form-group" style="flex-basis: 100%">
+        <label role="presentation"></label>
+        <p class="hint" style="flex-basis: auto; flex: 3;">
+          When targeting an area, can the user choose who it affects?
+        </p>
+      </div>
     </div>
 
     <div class="form-group">

@@ -13,7 +13,14 @@ input {
 
 /* Hightouch-style inputs */
 
-input[type='text'], input[type='number'] {
+input[type='text'],
+input[type='number'],
+textarea {
+  
+  &:is(textarea) {
+    resize: none;
+  }
+
   align-items: center;
   background: var(--t5e-component-card-onDefault-default);
   border-radius: 0.125rem;
