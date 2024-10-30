@@ -92,7 +92,9 @@
                   <ItemTableColumn baseWidth="3.125rem">
                     {localize('DND5E.Uses')}
                   </ItemTableColumn>
-                  <ItemTableColumn baseWidth="7.5rem">
+                {/if}
+                {#if section.useUsage}
+                  <ItemTableColumn baseWidth="7rem">
                     {localize('DND5E.Usage')}
                   </ItemTableColumn>
                 {/if}
@@ -167,7 +169,9 @@
                         <ItemAddUses {item} />
                       {/if}
                     </ItemTableCell>
-                    <ItemTableCell baseWidth="7.5rem">
+                  {/if}
+                  {#if section.useUsage}
+                    <ItemTableCell baseWidth="7rem">
                       {#if item.system.activation.type}
                         <span>{item.labels.activation}</span>
                       {/if}

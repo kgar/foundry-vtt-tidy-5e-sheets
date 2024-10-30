@@ -160,6 +160,7 @@ export class Tidy5eVehicleSheet
 
     Object.values(defaultDocumentContext.features).forEach((f: any) => {
       f.hasActions = true;
+      f.useUsage = f.label === 'Actions';
       if (f.columns) {
         f.columns = f.columns.filter(
           (c: any) => !['cover', 'threshold'].includes(c.property)
