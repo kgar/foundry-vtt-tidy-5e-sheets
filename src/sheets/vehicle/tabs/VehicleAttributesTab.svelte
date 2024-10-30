@@ -29,6 +29,7 @@
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { declareLocation } from 'src/types/location-awareness';
+  import AmmoSelector from 'src/sheets/actor/AmmoSelector.svelte';
 
   let context = getContext<Readable<VehicleSheetContext>>('context');
 
@@ -143,6 +144,11 @@
                         data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
                         >{item.name}</span
                       >
+                      {#if item.system?.properties?.amm}
+                        <span class="ammo">
+                          <AmmoSelector {item} />
+                        </span>
+                      {/if}
                       <ListItemQuantity {item} {ctx} />
                     </ItemName>
                   </ItemTableCell>

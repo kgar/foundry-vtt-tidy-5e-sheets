@@ -158,6 +158,15 @@ export class Tidy5eVehicleSheet
   async getData(options = {}) {
     const defaultDocumentContext = await super.getData(this.options);
 
+    Object.values(defaultDocumentContext.features).forEach((f: any) => {
+      f.hasActions = true;
+      if (f.columns) {
+        f.columns = f.columns.filter(
+          (c: any) => !['cover', 'threshold'].includes(c.property)
+        );
+      }
+    });
+
     const unlocked =
       FoundryAdapter.isActorSheetUnlocked(this.actor) &&
       defaultDocumentContext.editable;
