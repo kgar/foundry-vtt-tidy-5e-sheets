@@ -1,17 +1,17 @@
 {
-    "TIDY5E.Tidy5eCharacterSheetClassic": "Tidy 5e Character Sheet",
-    "TIDY5E.Tidy5eNpcSheetClassic": "Tidy 5e NPC Sheet",
-    "TIDY5E.Tidy5eItemSheetClassic": "Tidy 5e Item Sheet",
-    "TIDY5E.Tidy5eVehicleSheetClassic": "Tidy 5e Vechicle Sheet",
-    "TIDY5E.PlayerName": "Jméno Hráče",
-    "TIDY5E.EditSheetImageHint": "Levý klik: Upravit obrázek",
-    "TIDY5E.SheetImageOptionsHint": "Pravý klik: Ukázat obrázek postavy",
+    "TIDY5E.Tidy5eCharacterSheetClassic": "Tidy 5e Deník postavy",
+    "TIDY5E.Tidy5eNpcSheetClassic": "Tidy 5e Deník NCP",
+    "TIDY5E.Tidy5eItemSheetClassic": "Tidy 5e Deník předmětu",
+    "TIDY5E.Tidy5eVehicleSheetClassic": "Tidy 5e Deník dopravního prostředku",
+    "TIDY5E.PlayerName": "Jméno hráče",
+    "TIDY5E.EditSheetImageHint": "Levé tlačítko myši: Upravit obrázek",
+    "TIDY5E.SheetImageOptionsHint": "Pravé tlačítko myši: Ukázat obrázek postavy",
     "TIDY5E.ShowPortraitArt": "ukázat portrét",
     "TIDY5E.ShowTokenArt": "ukázat žeton",
     "TIDY5E.ShowItemImage": "right click: show item art",
     "TIDY5E.ShowItemArt": "show image",
-    "TIDY5E.AbbrInitiative": "Ini",
-    "TIDY5E.RestHint": "Odpočívat",
+    "TIDY5E.AbbrInitiative": "Inic.",
+    "TIDY5E.RestHint": "Odpočinek",
     "TIDY5E.ShortRest": "Krátký odpočinek",
     "TIDY5E.LongRest": "Důkladný odpočinek",
     "TIDY5E.HitDiceRollAverage": "Right Click: Average",
@@ -22,28 +22,28 @@
     "TIDY5E.JournalQuests": "Úkoly",
     "TIDY5E.JournalMisc": "Různé",
     "TIDY5E.JournalEntries": "Záznamy deníku",
-    "TIDY5E.TogglePersonalityInfo": "Přepnout informace o osobnosti",
+    "TIDY5E.TogglePersonalityInfo": "Přepnout na osobní informace",
     "TIDY5E.SheetEdit.Enable.Hint": "",
     "TIDY5E.SheetEdit.Disable.Hint": "",
-    "TIDY5E.SheetEdit.Description": "Přepne viditelnost tlačítek přidat/smazat a prázdných sekcí",
+    "TIDY5E.SheetEdit.Description": "Přepnout viditelnost tlačítek přidat/smazat a prázdných sekcí",
     "TIDY5E.SheetLock.Unlock.Hint": "",
     "TIDY5E.SheetLock.Lock.Hint": "",
     "TIDY5E.SheetLock.Description": "",
-    "TIDY5E.ContextMenuActionEquip": "Vybavit Předmět",
-    "TIDY5E.ContextMenuActionUnequip": "Odvybavit Předmět",
-    "TIDY5E.ContextMenuActionAttune": "Sladit se s Předmětem",
-    "TIDY5E.ContextMenuActionUnattune": "Ukončit Sladění",
-    "TIDY5E.ContextMenuActionPrepare": "Připravit Kouzlo",
-    "TIDY5E.ContextMenuActionUnprepare": "Odstranit Připravení",
+    "TIDY5E.ContextMenuActionEquip": "Vybavit předmět",
+    "TIDY5E.ContextMenuActionUnequip": "Odložit předmět",
+    "TIDY5E.ContextMenuActionAttune": "Sladit se s předmětem",
+    "TIDY5E.ContextMenuActionUnattune": "Ukončit sladění",
+    "TIDY5E.ContextMenuActionPrepare": "Připravit",
+    "TIDY5E.ContextMenuActionUnprepare": "Odstranit přípravu",
     "TIDY5E.ContextMenuActionEdit": "",
     "TIDY5E.ContextMenuActionDelete": "",
     "TIDY5E.EmptySection": "Tato sekce je prázdná. Pro úpravy odemkněte deník.",
     "TIDY5E.GMOnlyEdit": "Pouze váš PJ může upravovat tuto sekci.",
-    "TIDY5E.AttunementWarning": "Varování: Nemůžete se sladit s více než {number} předměty.",
+    "TIDY5E.AttunementWarning": "Varování: Nemůžete se sladit s více než s {number} předměty.",
     "TIDY5E.AttunementItems": "Sladěné předměty",
     "TIDY5E.AttunementMax": "Maximální sladění",
     "TIDY5E.GridLayout": "Mřížkové rozvržení",
-    "TIDY5E.ListLayout": "Seznamové rozvržení",
+    "TIDY5E.ListLayout": "Rozvržení seznamu",
     "TIDY5E.LayoutNotSupported": "",
     "TIDY5E.Encumbrance": "Zatížení",
     "TIDY5E.AddFavorite": "Přidat do oblíbených",
@@ -58,14 +58,14 @@
     "TIDY5E.Search": "",
     "TIDY5E.SearchClear": "",
     "TIDY5E.SearchHint": "Začněte psát název toho, co hledáte.",
-    "TIDY5E.ItemCardsKeyHint": "drž Klávesu pro interakci s kartou.",
-    "TIDY5E.ItemCardsMouseHint": "prostřední tlačítko pro zobrazení/editaci předmětu.",
+    "TIDY5E.ItemCardsKeyHint": "Pro interakci s kartou stiskněte klávesu.",
+    "TIDY5E.ItemCardsMouseHint": "Prostřední tlačítko myši pro zobrazení/editaci předmětu",
     "TIDY5E.AbbrMod": "Oprava",
-    "TIDY5E.AbbrSavingThrow": "Uložit",
-    "TIDY5E.SpellAttackMod": "Modifikace útoku",
+    "TIDY5E.AbbrSavingThrow": "Záchrana",
+    "TIDY5E.SpellAttackMod": "Oprava útoku",
     "TIDY5E.PreparedSpells": "Připravená kouzla",
-    "TIDY5E.TokenLinked": "Žeton je propojený s aktorem",
-    "TIDY5E.TokenUnlinked": "Žeton není propojený s aktorem",
+    "TIDY5E.TokenLinked": "Token propojený s hercem",
+    "TIDY5E.TokenUnlinked": "Token nepropojený s hercem",
     "TIDY5E.SpellClass": null,
     "TIDY5E.Class.Artificer": "",
     "TIDY5E.Class.Barbarian": "",
@@ -86,12 +86,12 @@
     "TIDY5E.UserSettings.Menu": {
         "name": "",
         "hint": "",
-        "label": "Nastavení deníků",
-        "title": "Tidy5e Nastavení Deníků"
+        "label": "Uživatelské nastavení",
+        "title": "Uživatelské nastavení: {jménoUživatele}"
     },
     "TIDY5E.UserSettings.TabPlayers": {
         "tabLabel": "Hráči",
-        "header": "Deníky Hráčských Postav"
+        "header": "Deníky postav hráčů"
     },
     "TIDY5E.UserSettings.TabNPCs": {
         "tabLabel": "",
@@ -114,23 +114,23 @@
         "labelFeaturesLocks": ""
     },
     "TIDY5E.Settings.ItemCardsForAllItems": {
-        "name": "Zobrazit info karty předmětů ve všech rozvrženích.",
-        "hint": "Vypni, pokud chceš, aby info karty předmětů vyjížděly pouze v mřížkovém rozvržení."
+        "name": "Zobrazit karty předmětů ve všech rozvrženích.",
+        "hint": "Vypni, pokud chceš, aby se karty předmětů ukazovaly pouze v mřížkovém rozvržení."
     },
     "TIDY5E.Settings.ItemCardsForNPCs": {
-        "name": "Zobrazit info karty předmětů pro CP/dopravní prostředky.",
-        "hint": "Vypni, pokud nechceš, aby info karty předmětů vyjížděly pro CP/dopravní prostředky."
+        "name": "Zobrazit karty předmětů pro NCP/dopravní prostředky",
+        "hint": "Umožnit ukazování informací karet NCP/dopravních prostředků."
     },
     "TIDY5E.Settings.ItemCardsAreFloating": {
-        "name": "Info karta předmětu plovoucí vedle kurzoru.",
-        "hint": "Zapni, aby se info karta předmětu odepla z deníku a zobrazila se jako plovoucí rámeček u kurzoru. Toto je nejlépe použít se spožděným zobrazením. Také užitečné, pokud je deník ve vlastním okně."
+        "name": "Karta předmětu plovoucí vedle kurzoru.",
+        "hint": "Umožnění odepnutí karty z deníku a její zobrazení jako plovoucího rámečku u kurzoru. Toto je nejlépe použít se opožděným zobrazením."
     },
     "TIDY5E.Settings.ItemCardsDelay": {
-        "name": "Zpozdi zobrazení info karet.",
+        "name": "Opozdi zobrazení info karet.",
         "hint": "Info Karta se zobrazí při najetí na předmět po dobu delší než hodnota v milisekundách (0 = bez spoždění, 300 je standard)."
     },
     "TIDY5E.Settings.ItemCardsFixKey": {
-        "name": "Klávesa, jejimž držení se interaguje s Kartou Předmětu.",
+        "name": "Klávesa, jejímž podržením se interaguje s kartou předmětu.",
         "hint": "Uveďte klávesu (např.: x) použitou pro interakci s kartou předmětu. Může se jednat o kteroukoliv klávesu kromě funkčních kláves (ctrl, alt, atd.)"
     },
     "TIDY5E.Settings.DefaultTheme": {
