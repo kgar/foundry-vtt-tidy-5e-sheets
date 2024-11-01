@@ -86,6 +86,8 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
         showNpcActorLinkMarker: currentSettings.showNpcActorLinkMarker,
         initialCharacterSheetTab: currentSettings.initialCharacterSheetTab,
         initialVehicleSheetTab: currentSettings.initialVehicleSheetTab,
+        includeTidySectionFieldsInDefaultSheets:
+          currentSettings.includeTidySectionFieldsInDefaultSheets,
         itemIdentificationPermission:
           currentSettings.itemIdentificationPermission,
         includeFlagsInSpellScrollCreation:
