@@ -1,29 +1,15 @@
 <script lang="ts">
-  import { settingStore } from 'src/settings/settings';
-  import { createEventDispatcher, tick } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
 
-  export let value: boolean = false;
+  export let checked: boolean = false;
   export let disabled: boolean = false;
   export let thumbIconClass: string | undefined = undefined;
 
   const switchLabelId = `switch-${foundry.utils.randomID()}-label`;
-  const dispatcher = createEventDispatcher<{
-    change: { originalValue: boolean };
-  }>();
 
-  async function handleClick(
-    _: MouseEvent & {
-      currentTarget: EventTarget & HTMLElement;
-    },
-  ) {
-    const originalValue = value;
-    value = !value;
-    dispatcher('change', { originalValue: originalValue });
-    await tick();
-    if (document.activeElement instanceof HTMLElement) {
-      document.activeElement?.blur();
-    }
-  }
+  const dispatcher = createEventDispatcher<{
+    change: Event & { currentTarget: HTMLInputElement };
+  }>();
 </script>
 
 <label
@@ -33,18 +19,17 @@
   title={$$props.title ?? null}
 >
   <slot />
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <!-- svelte-ignore a11y-missing-attribute -->
-  <a
-    role="switch"
-    on:click={(ev) => handleClick(ev)}
-    aria-checked={value}
-    aria-labelledby={switchLabelId}
-    tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-    class:disabled
-  >
+  <div role="switch" aria-checked={checked} aria-labelledby={switchLabelId}>
     {#if thumbIconClass}
       <i class="thumb-icon {thumbIconClass}"></i>
     {/if}
-  </a>
+  </div>
+
+  <input
+    type="checkbox"
+    on:change={(ev) => dispatcher('change', ev)}
+    {checked}
+    {disabled}
+    class="hidden"
+  />
 </label>

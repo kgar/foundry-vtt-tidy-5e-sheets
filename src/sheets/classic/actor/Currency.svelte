@@ -3,7 +3,10 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
-  import type { ContainerSheetClassicContext, Item5e } from 'src/types/item.types';
+  import type {
+    ContainerSheetClassicContext,
+    Item5e,
+  } from 'src/types/item.types';
   import type { Actor5e } from 'src/types/types';
   import type { ActorSheetContextV1 } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -15,9 +18,9 @@
     Readable<ActorSheetContextV1 | ContainerSheetClassicContext>
   >(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
 
-  $: currencies = Object.entries(document.system.currency).map((e) => ({
-    key: e[0],
-    value: e[1] as any,
+  $: currencies = Object.keys(CONFIG.DND5E.currencies).map((key) => ({
+    key: key,
+    value: (document.system.currency[key] ?? 0) as number,
   }));
 
   function confirmConvertCurrency() {

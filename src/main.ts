@@ -19,6 +19,7 @@ import { DebugTools } from './utils/DebugTools';
 import { Tidy5eContainerSheetClassic } from './sheets/classic/Tidy5eContainerSheetClassic';
 import { Tidy5eContainerSheetHightouch } from './sheets/hightouch/Tidy5eContainerSheetHightouch';
 import { Tidy5eItemDebugSheetHightouch } from './sheets/hightouch/Tidy5eItemDebugSheetHightouch';
+import { initReadyHooks } from './features/ready-hooks';
 
 Hooks.once('init', () => {
   DocumentSheetConfig.registerSheet(
@@ -137,6 +138,8 @@ Hooks.once('ready', async () => {
   ) {
     new MigrationNotificationFormApplication().render(true);
   }
+
+  initReadyHooks();
 
   DebugTools.onReady(api);
 });

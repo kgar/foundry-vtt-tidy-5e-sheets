@@ -2,12 +2,20 @@ import { TidyFlags, type Tidy5eSheetsApi } from 'src/api';
 import type { SystemIntegrationBase } from '../integration-classes';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { SettingsProvider } from 'src/settings/settings';
 
 export class TidyCustomSectionsInDefaultItemSheetIntegration
   implements SystemIntegrationBase
 {
   init(api: Tidy5eSheetsApi): void {
     Hooks.on('renderItemSheet5e', (app: any) => {
+      const includeSectionFields =
+        SettingsProvider.settings.includeTidySectionFieldsInDefaultSheets.get();
+
+      if (!includeSectionFields) {
+        return;
+      }
+
       const isUnsupportedItemType = [
         CONSTANTS.ITEM_TYPE_RACE,
         CONSTANTS.ITEM_TYPE_BACKGROUND,

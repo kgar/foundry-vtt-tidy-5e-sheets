@@ -121,11 +121,11 @@
                 assignment.item.system.sourceClass === classColumn.key}
               <TidyTableHeaderCell>
                 <TidySwitch
-                  value={selected}
-                  on:change={() =>
+                  checked={selected}
+                  on:change={(ev) =>
                     setItemSourceClass(
                       assignment.item,
-                      selected ? '' : classColumn.key,
+                      ev.detail.currentTarget.checked ? classColumn.key : '',
                     )}
                 />
               </TidyTableHeaderCell>

@@ -86,7 +86,7 @@
         <ItemTableCell baseWidth={controlsColumnWidth}>
           <TidySwitch
             disabled={effectContext.suppressed}
-            value={effectContext.toggle.value}
+            checked={effectContext.toggle.value}
             on:change={() => toggleEffect(effectContext)}
           />
         </ItemTableCell>
