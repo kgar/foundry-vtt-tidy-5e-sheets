@@ -97,8 +97,8 @@
     "TIDY5E.RemoveFavorite": "Usuń z ulubionych",
     "TIDY5E.ShowNotProficientSkills": "Pokaż niebiegłe",
     "TIDY5E.HideNotProficientSkills": "Ukryj niebiegłe",
-    "TIDY5E.ShowEmptyTraits": "pokaż/edytuj puste cechy",
-    "TIDY5E.HideEmptyTraits": "ukryj puste cechy",
+    "TIDY5E.ShowEmptyTraits": "Pokaż/edytuj puste atrybuty",
+    "TIDY5E.HideEmptyTraits": "Ukryj puste atrybuty",
     "TIDY5E.Abilities": "Umiejętności",
     "TIDY5E.Environment": "Środowisko",
     "TIDY5E.EnvironmentTooltip": "Środowisko: {environment}",
@@ -135,18 +135,18 @@
     },
     "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Filtr Księgi Czarów dla Multiklasowości",
     "TIDY5E.UserSettings.Menu": {
-        "name": "Ustawienia Karty Tidy",
-        "hint": "Stwórz swoją własną wersję Karty Tidy 5e",
-        "label": "Ustawienia Karty",
-        "title": "Ustawienia Karty T5E"
+        "name": "Ustawienia użytkownika",
+        "hint": "Dostosuj własną wersję Tidy 5e Sheets. Te ustawienia są zapisywane w przeglądarce i mają zastosowanie do Twoich kart.",
+        "label": "Ustawienia użytkownika",
+        "title": "Ustawienia użytkownika: {userName}"
     },
     "TIDY5E.UserSettings.TabPlayers": {
         "tabLabel": "Gracze",
         "header": "Karty Postaci Graczy"
     },
     "TIDY5E.UserSettings.TabNPCs": {
-        "header": "Karty Postaci Niezależnych",
-        "tabLabel": "Postaci Niezależne"
+        "header": "Karty NPC",
+        "tabLabel": "NPC"
     },
     "TIDY5E.AbbrInitiative": "Ini",
     "TIDY5E.HitDC": "Trafienie/ST",
@@ -171,7 +171,7 @@
         "options.specific.levels.name": "Całkowite Poziomy",
         "options.specific.levels.hint": "Ustawia maksymalną wartość poziomów Wyczerpania.",
         "options.specific.levels.tooltip.name": "Opis Poziomu {level} Wyczerpania",
-        "options.specific.levels.tooltip.hint": "Opis dla tego poziomu Wyczerpania. Klawisze skrótów również działają.",
+        "options.specific.levels.tooltip.hint": "Opis dla tego poziomu Wyczerpania. Klucze lokalizacyjne również działają.",
         "options.open.text": "Wprowadź poziom ręcznie",
         "AtLeastOneLevelRequiredErrorMessage": "Wymagany jest co najmniej jeden poziom wyczerpania."
     },
@@ -197,7 +197,7 @@
     "TIDY5E.VehicleInMotion": "Pojazd w ruchu",
     "TIDY5E.VehicleMotionless": "Pojazd w bezruchu",
     "TIDY5E.TotalCrewCount": "Całkowita załoga",
-    "TIDY5E.ActiveEffectsMarkerTitle": "Ten przedmiot ma Aktywne Efekty",
+    "TIDY5E.ActiveEffectsMarkerTitle": "Ten przedmiot ma aktywne efekty",
     "TIDY5E.Commands.ExpandAll": "Rozwiń wszystko",
     "TIDY5E.SortMode.ActionListDefault": "Domyślne sortowanie listy Akcji",
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtry",
@@ -212,8 +212,8 @@
         "name": "Pasek przewijania"
     },
     "TIDY5E.Settings.AllowHpMaxOverride": {
-        "name": "Zezwalaj na nadpisywanie maksymalnego PW postaci",
-        "hint": "Umożliwia MG ręczną zmianę maksymalnego PW na karcie postaci."
+        "name": "Zezwalaj na nadpisywanie maksymalnego HP postaci",
+        "hint": "Umożliwia MG ręczną zmianę maksymalnego HP na karcie postaci."
     },
     "TIDY5E.Settings.Reset": {
         "dialogs": {
@@ -245,13 +245,13 @@
         "buttonLabel": "Migracja danych Tidy",
         "dialogTitle": "Migracja danych Tidy",
         "CharacterBiography": {
-            "sectionTitle": "Biografia Postaci",
-            "selectionDialogTitle": "Migracja: Biografia Postaci"
+            "sectionTitle": "Biografia postaci",
+            "selectionDialogTitle": "Migracja: Biografia postaci"
         },
         "Notification": {
             "Title": "Tidy 5e Sheets: Migracja dostępna",
             "DoNotShowAgain.ConfirmMessage": "Potwierdzono. Ten komunikat nie pojawi się ponownie, dopóki nie będzie dostępnej kolejnej migracji.",
-            "Explanation": "Dostępne są nowe migracje danych Tidy 5e Sheets. Więcej informacji można znaleźć w menu {boldStart}config settings Migrations{boldEnd}.",
+            "Explanation": "Dostępne są nowe migracje danych Tidy 5e Sheets. Więcej informacji można znaleźć w menu ustawień {boldStart}Migracje{boldEnd}.",
             "Button.DoNotShowAgain": "Nie pokazuj ponownie",
             "Explanation2": "Uwaga: Migracje przenoszą dane z jednego miejsca do drugiego. Czasami dane, które były pierwotnie przechowywane przez Tidy 5e Sheets, muszą zostać przeniesione do oficjalnie obsługiwanych pól danych systemu. W innych przypadkach Tidy może przejąć funkcjonalność z innego modułu, w wyniku czego może zostać zapewniona wygodna migracja, aby ułatwić przejście. Jeśli nie brakuje danych na kartach po aktualizacji Tidy 5e Sheets, migracja nie jest wymagana."
         },
@@ -261,35 +261,35 @@
         "migrateConfirmButtonYes": "Migruj",
         "name": "Migracje",
         "NpcDeathSaves": {
-            "sectionTitle": "Rzuty Przeciw Śmierci NPC",
-            "selectionDialogTitle": "Migracja: Rzuty Przeciw Śmierci NPC"
+            "sectionTitle": "Rzuty przeciw śmierci NPC",
+            "selectionDialogTitle": "Migracja: Rzuty przeciw śmierci NPC"
         },
         "Selection": {
             "SelectAllNoneTooltip": "Wybierz wszystkie lub żadne",
-            "ToMigrate": "Aby dokonać migracji",
+            "ToMigrate": "Do migracji",
             "TotalSelectedLabel": "Łączna liczba wybranych: {total}"
         },
         "OptionOverwrite.Text": "Nadpisz",
         "OptionsHeader": "Opcje Migracji",
-        "OptionOverwrite.Tooltip": "Włącz nadpisywanie istniejących danych karty. Jeśli opcja nie jest zaznaczona, tylko puste pola systemowe otrzymają zmigrowane dane Tidy.",
+        "OptionOverwrite.Tooltip": "Włącz nadpisywanie istniejących danych karty. Jeśli opcja nie jest zaznaczona, tylko puste pola systemowe otrzymają przeniesione dane Tidy.",
         "migrationErrorMessage": "Wystąpił błąd. Więcej szczegółów znajduje się w konsoli.",
         "UnlinkedExplanation": "Ta migracja umożliwia migrację niepowiązanych tokenów w bieżącej scenie. W razie potrzeby migrację można uruchomić na dodatkowych scenach.",
         "ButtonMigration.Text": "Migruj",
         "OptionDeleteFlags.Tooltip": "Podczas migracji z niestandardowych flag Tidy do oficjalnych danych systemowych, flagi pozostają domyślnie na swoim miejscu. Zaznacz tę opcję, aby usunąć te flagi.",
         "OptionDeleteFlags.Text": "Usuń flagi Tidy, które zostały zmienione",
         "SpellClassToSourceClass": {
-            "sectionTitle": "",
-            "selectionDialogTitle": ""
+            "sectionTitle": "Klasa czaru do klasy źródłowej",
+            "selectionDialogTitle": "Migracja: Klasa czaru do klasy źródłowej"
         },
         "NpcExhaustion": {
-            "selectionDialogTitle": "",
-            "sectionTitle": ""
+            "selectionDialogTitle": "Migracaj: Wyczerpanie NPC do systemu",
+            "sectionTitle": "Wyczerpanie NPC"
         },
         "CcssToTidy": {
             "deleteFlagsTooltip": "Podczas migracji z CCSS do Tidy sekcji niestandardowych, flagi CCSS pozostają domyślnie na swoim miejscu. Zaznacz tę opcję, aby usunąć te flagi.",
-            "sectionTitle": "",
-            "ccss": "",
-            "selectionDialogTitle": "",
+            "sectionTitle": "CCSS do Tidy 5e",
+            "ccss": "CCSS",
+            "selectionDialogTitle": "Migracja: CCSS do Tidy 5e",
             "explanation1": "Tidy 5e teraz natywnie obsługuje sekcje niestandardowe i zapewnia dodatkowe funkcje z nimi związane. Ta migracja skopiuje nazwy niestandardowych sekcji kart postaci (Custom Character Sheet Sections (CCSS)) do konfiguracji sekcji Tidy.",
             "deleteFlags": "Usuń powiązane flagi CCSS",
             "overwriteTooltip": "Włącz, aby nadpisać istniejącą flagę sekcji Tidy. Jeśli niezaznaczone, tylko puste flagi Tidy otrzymają przeniesione dane CCSS.",
@@ -300,15 +300,15 @@
             "sectionTitle": "Więzi, ideały i słabości NPC",
             "selectionDialogTitle": "Migracja: Więzi, ideały i wady NPC do systemu"
         },
-        "Parent": "",
+        "Parent": "Rodzic",
         "FavoritesToSystem": {
             "selectionDialogTitle": "Migracja: Ulubione rzeczy postaci do systemu",
             "sectionTitle": "Ulubione rzeczy postaci"
         },
-        "MigrateCompendia.TotalEntriesLabel": "",
-        "MigrateCompendia.SelectionDialogTitle": "",
-        "MigrateCompendia.CompendiumLabel": "",
-        "MigrateCompendia.Title": ""
+        "MigrateCompendia.TotalEntriesLabel": "Łączna liczba wpisów",
+        "MigrateCompendia.SelectionDialogTitle": "Wybierz kompendia do migracji",
+        "MigrateCompendia.CompendiumLabel": "Kompendium",
+        "MigrateCompendia.Title": "Przeprowadź migrację kompendium"
     },
     "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
         "name": "Karta postaci: Zawsze odblokowane dla MG",
@@ -343,7 +343,7 @@
     },
     "TIDY5E.Settings.About": {
         "buttonLabel": "Informacje o Tidy 5e Sheets",
-        "name": "O",
+        "name": "O nas",
         "dialogTitle": "Informacje o Tidy 5e Sheets",
         "DiscordParagraph": "{urlStart}Tidy 5e Sheets Discord Server{urlEnd}: Dyskutuj o pomysłach na nowe funkcje, korzystaj z pomocy innych i śledź postępy prac nad tym modułem.",
         "KoFiLink": "{urlStart}Ko-Fi{urlEnd}",
@@ -355,7 +355,7 @@
         "logoAltText": "Tarcza z czterema gwiazdkami i napisem \"Tidy 5e\" na przodzie.",
         "GithubParagraph": "Czy masz pomysł na funkcję? Coś jest nie tak? Zgłoś problem przez {urlStart}Github Issue{urlEnd}.",
         "PatreonLink": "{urlStart}Patreon{urlEnd}",
-        "LocalizationParagraph": "{urlStart}Weblate{urlEnd}: Czy lubisz tłumaczyć treści internetowe? Tidy 5e Sheets przydałaby się twoja pomoc! Wejdź na stronę Weblate, aby zobaczyć postępy w tłumaczeniu na różne języki. Ta strona umożliwia tworzenie modyfikacje już istniejących tłumaczeń."
+        "LocalizationParagraph": "{urlStart}Weblate{urlEnd}: Czy lubisz tłumaczyć treści internetowe? Tidy 5e Sheets przydałaby się twoja pomoc! Wejdź na stronę Weblate, aby zobaczyć postępy w tłumaczeniu na różne języki. Ta strona umożliwia tworzenie i modyfikacje już istniejących tłumaczeń."
     },
     "TIDY5E.ReminderToBackUp": "Zawsze pamiętaj o tworzeniu kopii zapasowych swojego świata.",
     "TIDY5E.GMOnly.Message": "Tylko do MG: {message}",
@@ -381,7 +381,7 @@
         "name": "Wrodzone"
     },
     "TIDY5E.Settings.ColorPickerEquipped": {
-        "name": "Założone"
+        "name": "Wyposażone"
     },
     "TIDY5E.Settings.ColorPickerInnateOutline": {
         "name": "Wrodzone - zarys"
@@ -398,14 +398,14 @@
     "TIDY5E.Utilities.IdentifyAll": "Zidentyfikuj wszystkie przedmioty",
     "TIDY5E.Utilities.MarkAllAsUnidentified": "Oznacz wszystkie przedmioty jako niezidentyfikowane",
     "TIDY5E.Settings.SheetPreferences": {
-        "explanation": "Zaznacz wszystkie typy dokumentów, dla których chcesz, aby Tidy 5e było używane domyślnie.",
+        "explanation": "Zaznacz wszystkie typy kart, dla których chcesz, aby Tidy 5e było używane domyślnie.",
         "buttonLabel": "Ustaw Tidy 5e jako domyślne dla Kart",
-        "hint": "Jeśli chcesz ustawić Tidy 5e Sheets jako domyślne dla jednego lub więcej typów dokumentów, ale menu konfiguracji domyślnych kart nie działa zgodnie z oczekiwaniami, użyj tego menu, aby wybrać ustawienia.",
-        "name": "Ustaw Tidy 5e jako domyślne dla Kart"
+        "hint": "Jeśli chcesz ustawić Tidy 5e Sheets jako domyślne dla jednego lub więcej typów kart, ale menu konfiguracji domyślnych kart nie działa zgodnie z oczekiwaniami, użyj tego menu, aby wybrać ustawienia.",
+        "name": "Ustaw Tidy 5e jako domyślną kartę"
     },
     "TIDY5E.GenericErrorNotification": "Wystąpił błąd podczas wykonywania tej akcji. Więcej szczegółów można znaleźć w konsoli devtools.",
-    "TIDY5E.Commands.ShowContainerPanel": "Pokaż ustawienia Pojemnika",
-    "TIDY5E.Commands.HideContainerPanel": "Ukryj ustawienia Pojemnika",
+    "TIDY5E.Commands.ShowContainerPanel": "Pokaż panel pojemnika",
+    "TIDY5E.Commands.HideContainerPanel": "Ukryj panel pojemnika",
     "TIDY5E.PortraitTitle": "Portret: {subject}",
     "TIDY5E.ItemImageTitle": "Przedmiot: {subject}",
     "TIDY5E.Settings.ColorPickerMagicAccent": {
@@ -450,11 +450,11 @@
         "all": "Wszystkie postacie",
         "pc": "Postać gracza",
         "name": "Użyj okrągłych portretów",
-        "none": "",
+        "none": "Nigdy",
         "npc": "NPC/Pojazdy",
         "hint": "Pokazuje okrągłe portrety/ikony postaci."
     },
-    "TIDY5E.LocalizationTestKey": "Klawisz testu lokalizacji",
+    "TIDY5E.LocalizationTestKey": "Klucz testowy lokalizacji",
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Początkowa zakładka karty",
         "hint": "Pokazuje wskazaną zakładkę przy pierwszym otwarciu karty."
@@ -544,16 +544,16 @@
         "name": "Pokaż pływające karty przedmiotów"
     },
     "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "name": "",
-        "hint": ""
+        "name": "Użyj domyślnego przejścia klawiszem Tab dla atrybutów karty",
+        "hint": "Domyślna karta 5e umożliwia przechodzenie za pomocą klawiatury z jednego atrybutu do następnego, ukrywając elementy sterujące przed kolejności tabulacji. Włączenie tej opcji powiela to zachowanie. To ustawienie jest ignorowane, jeśli opcja „Użyj przystępnego wsparcia dla klawiatury” jest wyłączona."
     },
     "TIDY5E.Settings.MoveTraitsBelowResources": {
-        "hint": "",
-        "name": ""
+        "hint": "Umieszcza atrybuty poniżej zasobów postaci.",
+        "name": "Przenieś atrybuty poniżej zasobów"
     },
     "TIDY5E.Settings.AlwaysShowTraits": {
-        "hint": "",
-        "name": ""
+        "hint": "Usuwa przycisk przełączający widoczność pustych atrybutów (Zmysły, Języki, Odporności, itp.) i pokazuje wszystkie.",
+        "name": "Zawsze pokazuj atrybuty"
     },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
         "hint": "Pokazuje zakładkę księgi czarów dla NPC-ów. Wyłącz, aby przenieść sekcję księgi czarów do zakładki Atrybuty.",
@@ -600,47 +600,47 @@
         "hint": "Domyślnie na liście akcji umieszcza materiały eksploatacyjne, które mają koszt aktywacji (Akcja, Akcja bonusowa itp.)."
     },
     "TIDY5E.Settings.ColorPickerPrimaryAccent": {
-        "name": ""
+        "name": "Główny akcent"
     },
     "TIDY5E.Settings.ColorPickerEnabled": {
         "name": "Użyj własnych kolorów motywu",
         "hint": "Pokazuje własne kolory motywu"
     },
     "TIDY5E.Settings.ColorPickerEquippedOutline": {
-        "name": ""
+        "name": "Wyposażone - zarys"
     },
     "TIDY5E.Settings.ColorPickerEquippedAccent": {
-        "name": ""
+        "name": "Wyposażone - akcent"
     },
     "TIDY5E.Settings.ColorPickerHpBar": {
-        "name": ""
+        "name": "Paski HP"
     },
     "TIDY5E.Settings.ColorPickerPactAccent": {
-        "name": ""
+        "name": "Pakt - akcent"
     },
     "TIDY5E.Settings.ColorPickerPactOutline": {
-        "name": ""
+        "name": "Pakt - zarys"
     },
     "TIDY5E.Settings.ColorPickerPreparedAccent": {
-        "name": ""
+        "name": "Przygotowane - akcent"
     },
     "TIDY5E.Settings.ColorPickerAtWillAccent": {
-        "name": ""
+        "name": "Natychmiastowe - akcent"
     },
-    "TIDY5E.Utilities.ConfigureSections": "",
-    "TIDY5E.SpellSourceIdentifierLabelHint": "",
+    "TIDY5E.Utilities.ConfigureSections": "Konfiguruj sekcje",
+    "TIDY5E.SpellSourceIdentifierLabelHint": "Postać posiadająca ten czar nie ma określonej tutaj klasy źródłowej.",
     "TIDY5E.Settings.UseVehicleEncumbranceBar": {
         "name": "Użyj paska obciążenia pojazdu",
         "hint": "Pokazuje pasek obciążenia na kartach pojazdu."
     },
     "TIDY5E.Settings.ColorPickerAtWill": {
-        "name": ""
+        "name": "Natychmiastowe"
     },
     "TIDY5E.SpellSourceClassAssignments.Identifier": "Identyfikator klasy źródłowej",
-    "TIDY5E.Utilities.Tools": "",
+    "TIDY5E.Utilities.Tools": "Narzędzia",
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Pokaż tylko nieprzypisane",
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "Tutaj pojawia się identyfikator klasy źródłowej zaklęcia. Aby przypisać identyfikator, którego postać nie posiada, wprowadź identyfikator klasy w tym polu tekstowym.",
-    "TIDY5E.Utilities.AssignSpellsToClasses": "",
+    "TIDY5E.Utilities.AssignSpellsToClasses": "Przypisz czary do klas",
     "TIDY5E.WorldSettings.VehicleExhaustion": {
         "Header": "Wyczerpanie pojazdu",
         "AtLeastOneLevelRequiredErrorMessage": "Wymagany jest co najmniej jeden poziom wyczerpania pojazdu.",
@@ -652,8 +652,8 @@
         "hint": "Opóźnia wyświetlanie kart przedmiotów o określoną liczbę milisekund (ms). 0 oznacza brak opóźnienia. Domyślnie: 300."
     },
     "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "name": "",
-        "hint": ""
+        "name": "Użyj domyślnego przejścia klawiszem Tab dla HP",
+        "hint": "Domyślna karta 5e umożliwia przechodzenie za pomocą klawisza Tab z pola obecne HP do pola obecne tymczasowe HP.Włączenie tej opcji powiela to zachowanie. To ustawienie jest ignorowane, jeśli opcja „Użyj przystępnego wsparcia dla klawiatury” jest wyłączona."
     },
     "TIDY5E.Settings.DefaultTheme": {
         "name": "Domyślny kolor motywu",
@@ -680,21 +680,21 @@
         "hint": "Zapobiega zmianom ilości przedmiotów przez graczy niebędących MG."
     },
     "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
-        "name": "Tylko rytuał zarys"
+        "name": "Tylko rytuał - zarys"
     },
     "TIDY5E.Settings.ColorPickerRitualOnly": {
         "name": "Tylko rytuał"
     },
     "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
-        "name": "Tylko rytuał akcent"
+        "name": "Tylko rytuał - akcent"
     },
     "TIDY5E.Settings.UseTidySpellSchoolIcons": {
         "hint": "Użyj specjalnie wybranych ikon Tidy dla szkół magii. Aby dostosować ikony szkół magii przez CONFIG.DND5E lub przez inne moduły, wyłącz tę opcję. Aby rozszerzyć niestandardowe ikony Tidy dla szkół magii , zapoznaj się z dokumentacją API Tidy.",
         "name": "Użyj ikon Tidy dla szkół magii"
     },
     "TIDY5E.Section": {
-        "Default": "",
-        "Label": "",
+        "Default": "Domyślna sekcja",
+        "Label": "Sekcja",
         "ActionTooltip": "Określ własną sekcję dla tego przedmiotu po umieszczeniu go w zakładce Akcje lub pozostaw ją pustą, aby zachować domyślne zachowanie.",
         "ConfigDialog": {
             "title": "Konfiguruj sekcję: {tabTitle}",
@@ -718,7 +718,7 @@
         "hint": "Pokazuje wskaźnik wyczerpania dla postaci, NPC-ów oraz pojazdów."
     },
     "TIDY5E.Settings.ColorPickerAtWillOutline": {
-        "name": ""
+        "name": "Natychmiastowe - zarys"
     },
     "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
         "name": "Dołącz flagi przy tworzeniu zwojów zaklęć",
@@ -735,12 +735,12 @@
         "hint": "Pokazuje listę klas pod nazwą postaci."
     },
     "TIDY5E.Settings.ToggleEmptyCharacterTraits": {
-        "name": "",
-        "hint": ""
+        "name": "Przełącznik pustych atrybutów",
+        "hint": "Dodaje przycisk przełączający wyświetlanie/ukrywanie pustych atrybutów (Zmysły, Języki, Odporności, itp.)."
     },
     "TIDY5E.Settings.ShowTraitLabels": {
-        "name": "",
-        "hint": ""
+        "name": "Pokaż etykiety atrybutów",
+        "hint": "Pokazuje etykiety dla atrybutów postaci gracza, NPC i pojazdu. Wyłącz, aby pokazać tylko ikony."
     },
     "TIDY5E.Settings.ShowEquippedAmmoOnly": {
         "name": "Pokaż tylko wyposażoną amunicję",
@@ -756,15 +756,15 @@
     },
     "TIDY5E.ButtonConfirm.Text": "Potwierdź",
     "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
-        "name": "",
-        "hint": ""
+        "name": "Użyj przystępnego wsparcia dla klawiatury",
+        "hint": "Umożliwia użytkownikom nawigację między większością przycisków/poleceń w Tidy 5e Sheets i wykonywanie ich za pomocą standardowych skrótów klawiszowych .Uwaga: po skupieniu na przycisku w Foundry, skróty klawiszowe z „Skonfiguruj sterowanie” nie reagują. Jeśli moduł używa tej funkcji Foundry do sterowania kartami, np. do używania przedmiotów podczas przytrzymywania specjalnego klawisza, włączenie tej opcji Tidy 5e Sheets będzie kolidować z tymi skrótami klawiszowymi."
     },
     "TIDY5E.Settings.ShowActiveEffectsMarker": {
         "name": "Pokaż znacznik aktywnych efektów",
         "hint": "Pokazuje w widoku listy znacznik dla przedmiotów, które mają aktywne efekty."
     },
     "TIDY5E.Settings.ColorPickerPreparedOutline": {
-        "name": ""
+        "name": "Przygotowane - zarys"
     },
     "TIDY5E.Settings.ShowPlayerName": {
         "hint": "Pokazuje pole na imię gracza, pod nazwą postaci.",
@@ -784,5 +784,6 @@
     "TIDY5E.Tidy5eGroupSheetClassic": "Karta Grupy Tidy 5e",
     "TIDY5E.Group.ShowMemberTabInfoPanel": "Pokaż panel informacyjny",
     "TIDY5E.Keybindings.ToggleSheetLock.Name": "Przełącz blokadę karty",
-    "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Jeśli w interfejsie użytkownika aktywnym oknem jest karta Tidy, to naciśnięcie tego klawisza powoduje przełączenie blokady karty."
+    "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Jeśli w interfejsie użytkownika aktywnym oknem jest karta Tidy, to naciśnięcie tego klawisza powoduje przełączenie blokady karty.",
+    "TIDY5E.NoSpecialSenses": "Brak specjalnych zmysłów"
 }
