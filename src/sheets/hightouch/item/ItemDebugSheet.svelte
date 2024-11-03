@@ -15,6 +15,7 @@
   import PillSwitch from 'src/components/toggle/PillSwitch.svelte';
   import Search from '../shared/Search.svelte';
   import { preventNewlines } from 'src/actions/prevent-newlines';
+  import ItemDescriptions from '../shared/ItemDescriptions.svelte';
 
   let context = getContext<Readable<ItemDebugSheetHightouchContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -106,6 +107,12 @@
   </div>
   <div class="span-all">
     <TabContents tabs={$context.tabs} bind:selectedTabId />
+  </div>
+  <div>
+    <ItemDescriptions
+      document={$context.document}
+      itemDescriptions={$context.itemDescriptions}
+    />
   </div>
   <fieldset class="vertical-gallery">
     <legend> Button / Attention </legend>
