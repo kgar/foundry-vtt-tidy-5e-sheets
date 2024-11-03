@@ -186,17 +186,17 @@
       </span>
     </div>
 
-    <div class="item-header-summary-separator" role="presentation"></div>
+    <!-- <div class="item-header-summary-separator" role="presentation"></div> -->
 
     <!-- Quantity -->
-    <div class="item-quantity">
+    <!-- <div class="item-quantity">
       <span class="item-quantity-label text-lighter">
         {localize('DND5E.Quantity')}
       </span>
       <span class="item-quantity-value">
         {$context.system.quantity}
       </span>
-    </div>
+    </div> -->
   </div>
 
   <!-- Tab Strip -->

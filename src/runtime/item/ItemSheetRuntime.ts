@@ -104,6 +104,7 @@ export class ItemSheetRuntime {
       tempHightouchTabs: () => [
         itemSheetTabs.hightouchContainerContents,
         itemSheetTabs.hightouchDescription,
+        // TODO: Only show to GMs and users when identified
         itemSheetTabs.hightouchContainerDetails,
       ],
     },

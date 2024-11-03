@@ -173,8 +173,8 @@ const itemSheetTabs = {
     title: 'DND5E.Contents',
     content: {
       component: ContainerContentsTab,
-      type: 'svelte'
-    }
+      type: 'svelte',
+    },
   },
   /**
    * Details form for containers.
@@ -184,8 +184,8 @@ const itemSheetTabs = {
     title: 'DND5E.Details',
     content: {
       component: ContainerDetailsTab,
-      type: 'svelte'
-    }
+      type: 'svelte',
+    },
   },
   /**
    * Three-descriptions interface for items
@@ -195,8 +195,8 @@ const itemSheetTabs = {
     title: 'DND5E.Description',
     content: {
       component: HightouchItemDescriptionsTab,
-      type: 'svelte'
-    }
+      type: 'svelte',
+    },
   },
   /**
    * Details form for loot.
