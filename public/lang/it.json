@@ -816,5 +816,9 @@
     "TIDY5E.Group.RemoveMemberFromGroup": "Rimuovi Membro dal Gruppo",
     "TIDY5E.Group.HideMemberTabInfoPanel": "Nascondi Pannello Info",
     "TIDY5E.Tidy5eSettings": "Impostazioni Schede Tidy 5e",
-    "TIDY5E.ExhaustionLevelTooltip": "Livello Indebolimento {level}"
+    "TIDY5E.ExhaustionLevelTooltip": "Livello Indebolimento {level}",
+    "TIDY5E.WorldSettings.IncludeTidySectionFieldsInDefaultSheets": {
+        "name": "Includi Campi Sezione di Tidy nelle schede predefinite",
+        "hint": "Include gli input della Sezione Tidy e della Sezione Azioni nei nelle schede oggetto predefinite."
+    }
 }
