@@ -181,6 +181,7 @@
                     ev.currentTarget.value,
                   )}
                 disabled={!$context.editable}
+                value={recovery.data.formula}
               />
             {/if}
           </div>
