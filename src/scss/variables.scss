@@ -1,8 +1,12 @@
 .tidy5e-sheet.hightouch {
   --t5e-font-modesto-condensed: 'Modesto Condensed', 'Palatino Linotype', serif;
+  --t5e-font-family-title: var(--t5e-font-modesto-condensed);
   --t5e-font-roboto-condensed: 'Roboto Condensed', sans-serif;
   --t5e-font-roboto-slab: 'Roboto Slab', serif;
   --tidy5e-font-signika: 'Signika', sans-serif;
+
+  --font-size-56: 3.5rem;
+  --font-size-11: 0.6875rem;
 
   /* Colors */
 
@@ -17,22 +21,34 @@
   --t5e-color-text-onInverse-disabled: var(--t5e-color-palette-grey-47);
   --t5e-component-card-onDefault-default: rgba(248, 244, 241, 1);
   --t5e-component-card-onDefault-darker: rgba(241, 235, 232, 1);
-  --t5e-component-toggle-toggled-background: var(--t5e-color-gradient-red-light);
+  --t5e-component-toggle-toggled-background: var(
+    --t5e-color-gradient-red-light
+  );
   --t5e-component-toggle-toggled-border: var(--t5e-color-gradient-red-dark);
   --t5e-component-toggle-toggled-text: var(--t5e-color-text-onInverse-default);
   --t5e-component-card-onDefault-lighter: rgba(253, 252, 252, 1);
   --t5e-color-icon-dark-default: var(--t5e-color-palette-grey-100);
   --t5e-color-icon-dark-diminished: var(--t5e-color-palette-grey-85);
   --t5e-color-icon-dark-disabled: rgba(255, 255, 255, 0.5);
-  --t5e-component-pill-onInverse-background: var(--t5e-component-field-inverse-background);
-  --t5e-component-pill-onDefault-background: var(--t5e-component-card-onDefault-default);
-  --t5e-component-pill-onInverse-border: var(--t5e-component-field-inverse-border);
+  --t5e-component-pill-onInverse-background: var(
+    --t5e-component-field-inverse-background
+  );
+  --t5e-component-pill-onDefault-background: var(
+    --t5e-component-card-onDefault-default
+  );
+  --t5e-component-pill-onInverse-border: var(
+    --t5e-component-field-inverse-border
+  );
   --t5e-color-icon-light-default: var(--t5e-color-palette-grey-0);
   --t5e-color-icon-light-diminished: var(--t5e-color-palette-grey-40);
   --t5e-color-icon-light-disabled: rgba(0, 0, 0, 0.4);
-  --t5e-component-pill-onDefault-border: var(--t5e-component-field-default-border);
+  --t5e-component-pill-onDefault-border: var(
+    --t5e-component-field-default-border
+  );
   --t5e-component-field-focus: rgba(154, 42, 48, 1);
-  --t5e-component-field-inverse-background: var(--t5e-component-card-onInverse-default);
+  --t5e-component-field-inverse-background: var(
+    --t5e-component-card-onInverse-default
+  );
   --t5e-color-text-onDefault-default: var(--t5e-color-palette-grey-0);
   --t5e-color-text-onDefault-gold: var(--t5e-color-palette-gold-62);
   --t5e-color-text-onDefault-gold-emphasis: var(--t5e-color-palette-gold-56);
@@ -61,7 +77,9 @@
   --t5e-color-hp-light: rgba(59, 165, 93, 1);
   --t5e-color-hp-temp: rgba(75, 102, 222, 1);
   --t5e-component-field-default-border: var(--t5e-color-gold);
-  --t5e-component-field-default-background: var(--t5e-component-card-onDefault-default);
+  --t5e-component-field-default-background: var(
+    --t5e-component-card-onDefault-default
+  );
   --t5e-component-field-default-hover-overlay: rgba(255, 255, 255, 0.5);
   --t5e-component-field-default-hover-overlay-emphasis: rgba(255, 255, 255, 1);
   --t5e-color-inventory-dark: rgba(62, 74, 117, 1);
@@ -118,9 +136,8 @@
 }
 
 .tidy5e-sheet.hightouch.dark {
-
   /* Dark Mode Colors */
-  
+
   --t5e-color-text-onInverse-default: var(--t5e-color-palette-black);
   --t5e-color-text-onInverse-gold: var(--t5e-color-palette-gold-62);
   --t5e-color-text-onInverse-gold-emphasis: var(--t5e-color-palette-gold-56);
@@ -132,22 +149,34 @@
   --t5e-color-text-onInverse-disabled: var(--t5e-color-palette-grey-60);
   --t5e-component-card-onDefault-default: rgba(37, 40, 48, 1);
   --t5e-component-card-onDefault-darker: rgba(27, 29, 35, 1);
-  --t5e-component-toggle-toggled-background: var(--t5e-color-gradient-red-light);
+  --t5e-component-toggle-toggled-background: var(
+    --t5e-color-gradient-red-light
+  );
   --t5e-component-toggle-toggled-border: var(--t5e-color-gradient-red-dark);
   --t5e-component-toggle-toggled-text: var(--t5e-color-text-onDefault-default);
   --t5e-component-card-onDefault-lighter: rgba(48, 50, 54, 1);
   --t5e-color-icon-dark-default: var(--t5e-color-palette-grey-29);
   --t5e-color-icon-dark-diminished: var(--t5e-color-palette-grey-40);
   --t5e-color-icon-dark-disabled: rgba(0, 0, 0, 0.4);
-  --t5e-component-pill-onInverse-background: var(--t5e-component-field-inverse-background);
-  --t5e-component-pill-onDefault-background: var(--t5e-component-field-default-background);
-  --t5e-component-pill-onInverse-border: var(--t5e-component-field-inverse-border);
+  --t5e-component-pill-onInverse-background: var(
+    --t5e-component-field-inverse-background
+  );
+  --t5e-component-pill-onDefault-background: var(
+    --t5e-component-field-default-background
+  );
+  --t5e-component-pill-onInverse-border: var(
+    --t5e-component-field-inverse-border
+  );
   --t5e-color-icon-light-default: var(--t5e-color-palette-grey-100);
   --t5e-color-icon-light-diminished: var(--t5e-color-palette-grey-85);
   --t5e-color-icon-light-disabled: rgba(255, 255, 255, 0.5);
-  --t5e-component-pill-onDefault-border: var(--t5e-component-field-default-border);
+  --t5e-component-pill-onDefault-border: var(
+    --t5e-component-field-default-border
+  );
   --t5e-component-field-focus: rgba(154, 42, 48, 1);
-  --t5e-component-field-inverse-background: var(--t5e-component-card-onInverse-default);
+  --t5e-component-field-inverse-background: var(
+    --t5e-component-card-onInverse-default
+  );
   --t5e-color-text-onDefault-default: var(--t5e-color-palette-grey-100);
   --t5e-color-text-onDefault-gold: var(--t5e-color-palette-gold-75);
   --t5e-color-text-onDefault-gold-emphasis: var(--t5e-color-palette-gold-75);
@@ -176,7 +205,9 @@
   --t5e-color-hp-light: rgba(59, 165, 93, 1);
   --t5e-color-hp-temp: rgba(75, 102, 222, 1);
   --t5e-component-field-default-border: rgba(122, 122, 122, 1);
-  --t5e-component-field-default-background: var(--t5e-component-card-onDefault-default);
+  --t5e-component-field-default-background: var(
+    --t5e-component-card-onDefault-default
+  );
   --t5e-component-field-default-hover-overlay: rgba(0, 0, 0, 1);
   --t5e-component-field-default-hover-overlay-emphasis: rgba(0, 0, 0, 1);
   --t5e-color-inventory-dark: rgba(62, 74, 117, 1);
