@@ -236,4 +236,11 @@
   .tidy-tabs.item-tabs {
     margin-top: 1rem;
   }
+
+  .tidy-tab {
+    padding-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 }
