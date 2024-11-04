@@ -1146,10 +1146,13 @@ export const FoundryAdapter = {
     cls: 'attuned',
     title: 'DND5E.AttunementAttuned',
   },
-  getAttunementContext(item: Item5e): AttunementContext | undefined {
+  isAttunementApplicable(item: Item5e) {
     return !!CONFIG.DND5E.attunementTypes[
       item.system.attunement as keyof typeof CONFIG.DND5E.attunementTypes
-    ] && !item.system.attuned
+    ];
+  },
+  getAttunementContext(item: Item5e): AttunementContext | undefined {
+    return FoundryAdapter.isAttunementApplicable(item) && !item.system.attuned
       ? {
           ...FoundryAdapter.attunementContextApplicable,
           title:

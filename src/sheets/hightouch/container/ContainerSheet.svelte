@@ -71,6 +71,23 @@
         {localize('DND5E.Equipped')}
       </PillSwitch>
     </li>
+    {#if FoundryAdapter.isAttunementApplicable($context.item)}
+      <li>
+        <PillSwitch
+          checked={$context.system.attuned}
+          checkedIconClass="fas fa-sun equip-icon fa-fw"
+          uncheckedIconClass="fas fa-sun equip-icon fa-fw"
+          on:change={(ev) =>
+            console.log(
+              $context.item.update({
+                'system.attuned': ev.currentTarget.checked,
+              }),
+            )}
+        >
+          {localize('DND5E.Attuned')}
+        </PillSwitch>
+      </li>
+    {/if}
     {#if $context.unlocked}
       <li>
         <PillSwitch
