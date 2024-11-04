@@ -8,14 +8,15 @@
   export let document: any;
 
   let sectionItemOpenStates = itemDescriptions.map((_, i) => i === 0);
-  let fieldToEdit: string = '';
+  let itemDescriptionToEdit: ItemDescription | undefined;
 
-  function handleEdit(detail: { document: any; field: string }): void {
-    fieldToEdit = detail.field;
+  function handleEdit(detail: {
+    document: any;
+    itemDescription: ItemDescription;
+  }): void {
+    itemDescriptionToEdit = detail.itemDescription;
     editing = true;
   }
-
-  $: contentToEdit = foundry.utils.getProperty(document, fieldToEdit);
 </script>
 
 <!-- Collapsible sections -->
@@ -24,21 +25,20 @@
     {#each itemDescriptions as itemDescription, i (itemDescription.field)}
       <CollapsibleEditorSection
         {document}
-        enriched={itemDescription.enriched}
         bind:expanded={sectionItemOpenStates[i]}
-        field={itemDescription.field}
-        title={itemDescription.label}
+        {itemDescription}
         on:edit={(ev) => handleEdit(ev.detail)}
       />
     {/each}
   </section>
-{:else}
+{:else if !!itemDescriptionToEdit}
   <SheetEditorV2
     documentUuid={document.uuid}
-    content={contentToEdit}
+    content={itemDescriptionToEdit.content}
     editorOptions={{ toggled: false }}
     manageSecrets={true}
-    field={fieldToEdit}
+    field={itemDescriptionToEdit.field}
+    enriched={itemDescriptionToEdit.enriched}
     on:save={() => (editing = false)}
   ></SheetEditorV2>
 {/if}

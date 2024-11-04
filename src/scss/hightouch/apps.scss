@@ -82,12 +82,12 @@
     line-height: var(--font-size-16);
     letter-spacing: 0.00813rem;
   }
-  
+
   h5 {
     font-size: var(--font-size-12);
     line-height: var(--font-size-15);
   }
-  
+
   h6 {
     font-size: var(--font-size-11);
     line-height: var(--font-size-14);
@@ -162,5 +162,15 @@
 
   .inverse {
     color: var(--t5e-color-text-onInverse-default);
+  }
+
+  /* Editor Customizations */
+  .editor {
+    .secret {
+      border-radius: var(--t5e-component-card-radius);
+      border: 1px solid var(--t5e-color-table-divider);
+      background: var(--t5e-component-card-onDefault-darker);
+      mix-blend-mode: multiply;
+    }
   }
 }
