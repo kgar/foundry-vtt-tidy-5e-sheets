@@ -82,11 +82,11 @@
   unlocked={$context.unlocked}
 />
 
-<footer>
-  <hr class="golden-fade" />
-
+<footer class="contents-footer">
   <!-- Capacity Bar -->
   <CapacityBar container={$context.item} capacity={$context.capacity} />
+
+  <hr class="golden-fade" />
 
   <!-- Currency, with Item Add Button -->
   <ContainerCurrency />

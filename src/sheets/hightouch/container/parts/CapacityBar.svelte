@@ -10,13 +10,31 @@
 
   $: readableValue =
     container.system.capacity.type === CONSTANTS.ITEM_CAPACITY_TYPE_WEIGHT
-      ? (capacity.value ?? 0).toFixed(2)
-      : Math.ceil(capacity.value ?? 0);
-
-  $: capacityLabel = `${readableValue}/${capacity.max} ${capacity.units}`;
+      ? (capacity.value ?? 0).toFixed(1)
+      : Math.ceil(capacity.value ?? 0).toString();
 
   $: percentage = Math.round(capacity.pct);
+  
   const localize = FoundryAdapter.localize;
+
+  $: barSeverity =
+    percentage > 70 ? `high` : percentage > 30 ? `medium` : `low`;
 </script>
 
-Hello, capacity bar! 🌊
+<div
+  class="meter progress"
+  role="meter"
+  aria-valuemin="0"
+  aria-valuenow={capacity.pct}
+  aria-valuetext={readableValue}
+  aria-valuemax={capacity.max}
+  style="--bar-percentage: {percentage}%;"
+  data-bar-severity={barSeverity}
+>
+  <div class="label">
+    <i class="fas fa-weight-hanging"></i>
+    <span class="value">{readableValue}</span>
+    <span class="separator">/</span>
+    <span class="max">{capacity.max}</span>
+  </div>
+</div>

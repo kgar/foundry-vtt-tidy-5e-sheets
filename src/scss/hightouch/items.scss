@@ -243,4 +243,14 @@
     flex-direction: column;
     gap: 0.5rem;
   }
+
+  &.container .contents-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .meter {
+      flex-basis: var(--meter-height);
+    }
+  }
 }
