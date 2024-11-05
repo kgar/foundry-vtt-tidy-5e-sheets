@@ -157,7 +157,7 @@
 
     .button.icon-button {
       --size: 1.75rem;
-      
+
       i {
         font-size: 0.6875rem;
       }
@@ -191,13 +191,49 @@
     color: var(--t5e-color-text-onInverse-default);
   }
 
-  /* Editor Customizations */
+  /* Prose Mirror Editor Customizations */
+
   .editor {
     .secret {
       border-radius: var(--t5e-component-card-radius);
-      border: 1px solid var(--t5e-color-table-divider);
+      border: 0.0625rem solid var(--t5e-color-table-divider);
       background: var(--t5e-component-card-onDefault-darker);
       mix-blend-mode: multiply;
+    }
+  }
+
+  .inline-roll,
+  .content-link,
+  .enricher-action,
+  .roll-link a {
+    --icon-fill: var(--t5e-color-gold);
+
+    border: none;
+    background: none;
+    font-weight: 500;
+
+    i {
+      color: var(--icon-fill);
+    }
+
+    &:hover {
+      --icon-fill: var(--t5e-color-text-onDefault-gold-emphasis);
+      text-shadow: 0px 0px 6px var(--t5e-color-text-onInverse-gold-emphasis);
+    }
+  }
+
+  .enricher-action {
+    margin-inline: 0.0625rem;
+    padding-inline-start: 0;
+
+    i {
+      margin: 0;
+    }
+  }
+
+  .secret {
+    .reveal {
+      padding: 0.25rem 0.5rem;
     }
   }
 }
