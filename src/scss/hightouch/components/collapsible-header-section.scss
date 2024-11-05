@@ -49,4 +49,8 @@
       color: var(--t5e-color-text-onDefault-default);
     }
   }
+
+  .editor:has(.user-select-text) {
+    overflow: hidden;
+  }
 }
