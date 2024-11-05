@@ -137,6 +137,25 @@
   }
 
   /* Currencies */
+  .currency-tracker {
+    display: flex;
+    gap: 0.25rem;
+
+    input {
+      text-align: right;
+    }
+
+    .denomination {
+      text-transform: uppercase;
+    }
+
+    .input-group {
+      gap: 0.25rem;
+      padding-block: 0.25rem;
+      height: 1.75rem;
+    }
+  }
+
   :is(i, span).currency {
     width: 1em;
     height: 1em;
