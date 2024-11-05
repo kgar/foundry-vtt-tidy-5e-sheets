@@ -1,3 +1,9 @@
+<script context="module" lang="ts">
+  // TODO: Should I somehow make these thresholds configurable?
+  const encumberedPct = (1 / 3) * 100;
+  const heavilyEncumberedPct = (2 / 3) * 100;
+</script>
+
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -6,7 +12,6 @@
 
   export let container: Item5e;
   export let capacity: ContainerCapacityContext;
-  export let showLabel = true;
 
   $: readableValue =
     container.system.capacity.type === CONSTANTS.ITEM_CAPACITY_TYPE_WEIGHT
@@ -14,16 +19,21 @@
       : Math.ceil(capacity.value ?? 0).toString();
 
   $: percentage = Math.round(capacity.pct);
-  
+
   const localize = FoundryAdapter.localize;
 
   $: barSeverity =
-    percentage > 70 ? `high` : percentage > 30 ? `medium` : `low`;
+    percentage > heavilyEncumberedPct
+      ? `high`
+      : percentage > encumberedPct
+        ? `medium`
+        : `low`;
 </script>
 
 <div
   class="meter progress"
   role="meter"
+  aria-label={localize('DND5E.ItemContainerCapacity')}
   aria-valuemin="0"
   aria-valuenow={capacity.pct}
   aria-valuetext={readableValue}

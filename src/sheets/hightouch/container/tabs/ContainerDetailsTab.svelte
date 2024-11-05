@@ -9,6 +9,8 @@
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemProperties from 'src/sheets/classic/item/parts/ItemProperties.svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
 
   let context = getContext<Readable<ContainerSheetClassicContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -134,6 +136,41 @@
           blank={localize('DND5E.AttunementNone')}
         />
       </Select>
+    </div>
+  </div>
+</fieldset>
+
+<!-- TODO: Extract to shared component -->
+<fieldset>
+  <legend>{FoundryAdapter.localize('TIDY5E.Tidy5eSettings')}</legend>
+  <div class="form-group custom-section">
+    <label for="{appId}-custom-section">
+      {FoundryAdapter.localize('TIDY5E.Section.Label')}
+    </label>
+    <div class="form-fields">
+      <TextInput
+        document={$context.item}
+        field={TidyFlags.section.prop}
+        value={TidyFlags.section.get($context.item)}
+        selectOnFocus={true}
+        disabled={!$context.editable}
+        id="{appId}-custom-section"
+      />
+    </div>
+  </div>
+  <div class="form-group custom-action-section">
+    <label for="{appId}-custom-action-section">
+      {FoundryAdapter.localize('TIDY5E.Section.ActionLabel')}
+    </label>
+    <div class="form-fields">
+      <TextInput
+        document={$context.item}
+        field={TidyFlags.actionSection.prop}
+        value={TidyFlags.actionSection.get($context.item)}
+        selectOnFocus={true}
+        disabled={!$context.editable}
+        id="{appId}-custom-action-section"
+      />
     </div>
   </div>
 </fieldset>

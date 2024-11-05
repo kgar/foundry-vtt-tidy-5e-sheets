@@ -154,6 +154,14 @@
       padding-block: 0.25rem;
       height: 1.75rem;
     }
+
+    .button.icon-button {
+      --size: 1.75rem;
+      
+      i {
+        font-size: 0.6875rem;
+      }
+    }
   }
 
   :is(i, span).currency {

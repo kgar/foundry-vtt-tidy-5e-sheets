@@ -61,7 +61,8 @@
   }
 
   &.active,
-  &:active {
+  &:active,
+  &.attention {
     --icon-fill: var(--t5e-component-toggle-toggled-text);
 
     color: var(--t5e-component-toggle-toggled-text);
@@ -74,15 +75,16 @@
   }
 
   &.icon-button {
+    --size: 2rem;
     padding: 0.5rem;
-    width: 2rem;
-    height: 2rem;
+    width: var(--size);
+    height: var(--size);
   }
 
   &.disabled {
     pointer-events: none;
     background: transparent;
-    border: 1px solid var(--t5e-component-field-default-border);
+    border: 0.0625rem solid var(--t5e-component-field-default-border);
 
     &,
     i {
@@ -195,7 +197,7 @@
       color: var(--t5e-color-text-onDefault-gold);
     }
 
-    &:is(.active, :active):not(.disabled) .expand-indicator {
+    &:is(.active, :active, .attention):not(.disabled) .expand-indicator {
       color: var(--t5e-color-text-onInverse-default);
     }
   }
