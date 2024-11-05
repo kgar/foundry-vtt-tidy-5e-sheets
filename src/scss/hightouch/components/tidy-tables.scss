@@ -2,6 +2,7 @@
   --table-header-row-height: 1.5rem;
   --table-row-height: 1.875rem;
   --item-img-size: 1.75rem;
+  --row-background: linear-gradient(90deg, #f8f4f1 0.59%, #f8f4f1 44%);
 
   .tidy-table-header-row,
   .tidy-table-row {
@@ -58,7 +59,7 @@
   .tidy-table-row {
     height: var(--table-row-height);
     // TODO: CSS Variables?
-    background: linear-gradient(90deg, #f8f4f1 0.59%, #f8f4f1 44%);
+    background: var(--row-background);
   }
 
   .expand-indicator {
@@ -296,9 +297,13 @@
 
     border-radius: 0rem 0rem 0.125rem 0.125rem;
     // TODO: CSS Variable for border bottom background? Dark mode?
-    border-bottom: 1px solid #eae1dc;
+    border-bottom: 0.0625rem solid #eae1dc;
 
     // TODO: CSS Variables for inline content background? Dark mode?
     background: linear-gradient(90deg, #fff 0.59%, #f8f4f1 44%);
+  }
+
+  .item-summary {
+    background: var(--row-background);
   }
 }
