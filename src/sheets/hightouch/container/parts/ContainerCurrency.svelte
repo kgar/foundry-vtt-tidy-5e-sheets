@@ -48,7 +48,7 @@
   }
 
   function confirmConvertCurrency() {
-    new dnd5e.applications.CurrencyManager(document).render(true);
+    new dnd5e.applications.CurrencyManager($context.document).render(true);
   }
 </script>
 
