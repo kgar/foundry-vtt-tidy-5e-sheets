@@ -33,9 +33,16 @@
   import type { Item5e } from 'src/types/item.types';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
   import { ItemUtils } from 'src/utils/ItemUtils';
+  import InlineToggleControl from 'src/sheets/shared/InlineToggleControl.svelte';
+  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
 
   let context = getContext<Readable<VehicleSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+
+  let inlineToggleService = getContext<InlineToggleService>(
+    CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
 
   const localize = FoundryAdapter.localize;
@@ -170,6 +177,12 @@
                 >
                   <ItemTableCell primary={true}>
                     <ItemUseButton disabled={!$context.editable} {item} />
+                    {#if item?.system.activities?.contents.length > 1}
+                      <InlineToggleControl
+                        entityId={item.id}
+                        {inlineToggleService}
+                      />
+                    {/if}
                     <ItemName
                       on:toggle={() => toggleSummary($context.actor)}
                       cssClass="extra-small-gap"
@@ -278,6 +291,9 @@
                     </ItemTableCell>
                   {/if}
                 </ItemTableRow>
+                {#if item?.system.activities?.contents.length > 1}
+                  <InlineActivitiesList {item} {inlineToggleService} />
+                {/if}
               {/each}
               {#if $context.unlocked && section.dataset}
                 <ItemTableFooter
