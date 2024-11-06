@@ -228,6 +228,19 @@
 
     &.expanded {
       display: flex;
+      gap: 0.5rem;
+    }
+
+    h4 {
+      color: var(--t5e-color-text-onDefault-lighter);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      line-height: normal;
+    }
+
+    label:has(input[type="radio"]) {
+      display: flex;
+      gap: 0.5rem;
     }
   }
 }

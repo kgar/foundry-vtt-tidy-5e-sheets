@@ -7,4 +7,11 @@
   search {
     flex: 1;
   }
+
+  .button {
+    --icon-fill: var(--t5e-color-text-onDefault-lighter);
+    i {
+      color: var(--icon-fill);
+    }
+  }
 }

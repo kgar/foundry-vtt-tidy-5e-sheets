@@ -819,5 +819,12 @@
   "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Show Unassigned Only",
   "TIDY5E.Keybindings.ToggleSheetLock.Name": "Toggle Sheet Lock",
   "TIDY5E.Keybindings.ToggleSheetLock.Hint": "If a Tidy sheet is the current active window in the UI, this keybinding toggles the sheet lock.",
-  "TIDY5E.LocalizationTestKey": "Localization Test Key"
+  "TIDY5E.LocalizationTestKey": "Localization Test Key",
+  "TIDY5E.ExpandCollapseMenu.OptionTitle": "Expand/Collapse Behavior",
+  "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "Top-Level Sections",
+  "TIDY5E.ExpandCollapseMenu.OptionAllSections": "All Sections",
+  "TIDY5E.SortMenu.OptionAlphabetical": "Alphabetical (A-Z)",
+  "TIDY5E.SortMenu.OptionManual": "Manual",
+  "TIDY5E.SortMenu.OptionPrepared": "Prepared",
+  "TIDY5E.SortMenu.OptionEquipped": "Equipped"
 }

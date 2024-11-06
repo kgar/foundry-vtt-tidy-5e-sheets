@@ -7,6 +7,13 @@
   export let checkedSvgSrc: string | undefined = undefined;
   export let uncheckedIconClass: string | undefined = undefined;
   export let uncheckedSvgSrc: string | undefined = undefined;
+  export let onchange:
+    | ((
+        event: Event & {
+          currentTarget: EventTarget & HTMLInputElement;
+        },
+      ) => void)
+    | undefined = undefined;
 </script>
 
 <!-- svelte-ignore a11y-label-has-associated-control -->
@@ -30,5 +37,5 @@
     </span>
     <slot />
   </span>
-  <FieldToggle bind:checked on:change />
+  <FieldToggle bind:checked {onchange} />
 </label>

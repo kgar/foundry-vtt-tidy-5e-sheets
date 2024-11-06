@@ -11,6 +11,7 @@
   import ContainerCurrency from '../parts/ContainerCurrency.svelte';
   import ToggleButton from 'src/components/buttons/ToggleButton.svelte';
   import Search from '../../shared/Search.svelte';
+  import ButtonWithOptionPanel from 'src/components/buttons/ButtonWithOptionPanel.svelte';
 
   let context = getContext<Readable<ContainerSheetHightouchContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -49,14 +50,29 @@
   class="action-bar"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTION_BAR}
 >
-  <button type="button" class="icon-button">
+  <ButtonWithOptionPanel class="icon-button">
     <i class="fas fa-angles-down fa-fw"></i>
-  </button>
+    <svelte:fragment slot="options">
+      <h4>{localize('TIDY5E.ExpandCollapseMenu.OptionTitle')}</h4>
+      <label
+        for="{$context.document.id}-expand-collapse-behavior-top-level-sections"
+      >
+        <input type="radio" checked={true} />
+        {localize('TIDY5E.ExpandCollapseMenu.OptionTopLevel')}
+      </label>
+      <label for="{$context.document.id}-expand-collapse-behavior-all-sections">
+        <input
+          type="radio"
+          id="{$context.document.id}-expand-collapse-behavior-all-sections"
+          checked={false}
+        />
+        {localize('TIDY5E.ExpandCollapseMenu.OptionAllSections')}
+      </label>
+    </svelte:fragment>
+  </ButtonWithOptionPanel>
 
   <Search bind:searchCriteria />
 
-  <!-- TODO: Wire up actual pinned filter toggles -->
-  <!-- TODO: When wiring up pinned filter toggles, use an additive approach instead of hiding after-the-fact. When the window size changes, trigger a render, throttled. -->
   <div class="button-group">
     <ToggleButton class="hide-under-450">Action</ToggleButton>
     <ToggleButton class="hide-under-550">Bonus Action</ToggleButton>
@@ -64,6 +80,44 @@
     <ToggleButton class="hide-under-400">Can Use</ToggleButton>
     <ToggleButton>Magical</ToggleButton>
   </div>
+
+  <a class="button icon-button">
+    <i class="fas fa-filter"></i>
+  </a>
+
+  <ButtonWithOptionPanel class="icon-button" anchor="right">
+    <i class="fas fa-arrow-down-a-z fa-fw"></i>
+    <svelte:fragment slot="options">
+      <label for="{$context.document.id}-sort-option-alphabetical">
+        <input
+          type="radio"
+          id="{$context.document.id}-sort-option-alphabetical"
+          checked={true}
+        />
+        {localize('TIDY5E.SortMenu.OptionAlphabetical')}
+      </label>
+      <label for="{$context.document.id}-sort-option-manual">
+        <input
+          type="radio"
+          id="{$context.document.id}-sort-option-manual"
+          checked={false}
+        />
+        {localize('TIDY5E.SortMenu.OptionManual')}
+      </label>
+      <label for="{$context.document.id}-sort-option-equipped">
+        <input
+          type="radio"
+          id="{$context.document.id}-sort-option-equipped"
+          checked={false}
+        />
+        {localize('TIDY5E.SortMenu.OptionEquipped')}
+      </label>
+    </svelte:fragment>
+  </ButtonWithOptionPanel>
+
+  <a class="button icon-button">
+    <i class="fas fa-gear"></i>
+  </a>
 </section>
 
 <!-- Tables -->
