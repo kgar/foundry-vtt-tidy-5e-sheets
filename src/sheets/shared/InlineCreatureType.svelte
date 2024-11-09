@@ -13,11 +13,6 @@
 
   $: text = coalesce($context.labels.type, localize('DND5E.CreatureType'));
 
-  $: configFn =
-    $context.actor.type === 'character'
-      ? FoundryAdapter.openCharacterActorTypeConfig
-      : FoundryAdapter.openActorTypeConfig;
-
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -25,7 +20,7 @@
   <button
     type="button"
     class="configure-creature-type inline-transparent-button highlight-on-hover truncate"
-    on:click={() => configFn($context.actor)}
+    on:click={() => FoundryAdapter.openActorTypeConfig($context.actor)}
     title={localize('DND5E.CreatureType')}
     tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
   >

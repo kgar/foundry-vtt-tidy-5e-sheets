@@ -749,19 +749,19 @@ export const FoundryAdapter = {
   ): Promise<any> {
     return new Roll(formula, rollData).roll(rollFnOptions);
   },
-  openActorTypeConfig(actor: Actor5e) {
-    return new dnd5e.applications.actor.ActorTypeConfig(actor).render(true);
-  },
-  openCharacterActorTypeConfig(actor: Actor5e) {
-    if (actor.system.details.race?.id) {
-      return new dnd5e.applications.actor.ActorTypeConfig(
-        actor.system.details.race,
-        { keyPath: 'system.type' }
-      ).render(true);
+  openActorTypeConfig(document: Actor5e) {
+    const options: Record<string, any> = {
+      document: document.system.details.race?.id
+        ? document.system.details.race
+        : document,
+    };
+
+    if (document.system.details.race?.id) {
+      options.keyPath = 'type';
     }
 
-    warn(
-      'Unable to open actor type config for player character because they do not have a race.'
+    return new dnd5e.applications.shared.CreatureTypeConfig(options).render(
+      true
     );
   },
   playDiceSound() {
