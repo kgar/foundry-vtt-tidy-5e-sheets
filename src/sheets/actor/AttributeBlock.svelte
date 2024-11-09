@@ -135,7 +135,7 @@
         class="config-button inline-icon-button"
         title={localize('DND5E.AbilityConfigure')}
         on:click={() =>
-          FoundryAdapter.renderActorAbilityConfig($context.actor, id)}
+          FoundryAdapter.renderAbilityConfig($context.actor, id)}
         tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
         $settingStore.useAccessibleKeyboardSupport
           ? 0

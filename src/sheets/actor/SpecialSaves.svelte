@@ -28,7 +28,7 @@
         type="button"
         class="inline-icon-button"
         on:click={() =>
-          FoundryAdapter.openActorConcentrationConfig($context.actor)}
+          FoundryAdapter.openConcentrationConfig($context.actor)}
         ><i class="fas fa-cog" style="font-size: var(--icon-size);"></i></button
       >
     {/if}

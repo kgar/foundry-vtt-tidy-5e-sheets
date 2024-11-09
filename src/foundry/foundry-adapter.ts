@@ -858,28 +858,32 @@ export const FoundryAdapter = {
   renderArmorConfig(actor: any) {
     return new dnd5e.applications.actor.ActorArmorConfig(actor).render(true);
   },
-  renderActorInitiativeConfig(actor: any) {
-    return new dnd5e.applications.actor.ActorInitiativeConfig(actor).render(
+  renderInitiativeConfig(document: any) {
+    return new dnd5e.applications.actor.InitiativeConfig({
+      document,
+    }).render(true);
+  },
+  renderAbilityConfig(document: any, key: any) {
+    return new dnd5e.applications.actor.AbilityConfig({
+      document,
+      key,
+    }).render(true);
+  },
+  renderMovementSensesConfig(document: any, type: 'movement' | 'senses') {
+    return new dnd5e.applications.shared.MovementSensesConfig({
+      document,
+      type,
+    }).render(true);
+  },
+  renderHitPointsDialog(document: any) {
+    return new dnd5e.applications.actor.HitPointsConfig({ document }).render(
       true
     );
   },
-  renderActorAbilityConfig(actor: any, abbreviation: any) {
-    return new dnd5e.applications.actor.ActorAbilityConfig(
-      actor,
-      null,
-      abbreviation
-    ).render(true);
-  },
-  renderActorMovementConfig(actor: any) {
-    return new dnd5e.applications.actor.ActorMovementConfig(actor).render(true);
-  },
-  renderActorHitPointsDialog(actor: any) {
-    return new dnd5e.applications.actor.ActorHitPointsConfig(actor).render(
+  renderHitDiceConfig(document: any) {
+    return new dnd5e.applications.actor.HitDiceConfig({ document }).render(
       true
     );
-  },
-  renderActorHitDiceConfig(actor: any) {
-    return new dnd5e.applications.actor.ActorHitDiceConfig(actor).render(true);
   },
   dialogConfirm(...args: any[]) {
     return Dialog.confirm(...args);
@@ -887,27 +891,28 @@ export const FoundryAdapter = {
   renderActorSheetFlags(actor: any) {
     return new dnd5e.applications.actor.ActorSheetFlags(actor).render(true);
   },
-  renderToolSelector(actor: any) {
-    return new dnd5e.applications.actor.ToolSelector(actor, 'tool').render(
-      true
-    );
+  renderToolsConfig(document: any) {
+    return new dnd5e.applications.actor.ToolsConfig({
+      document,
+      trait: 'tool',
+    }).render(true);
   },
-  renderActorSensesConfig(actor: any) {
-    return new dnd5e.applications.actor.ActorSensesConfig(actor).render(true);
-  },
-  renderTraitsSelector(actor: any, trait: string) {
-    return new dnd5e.applications.actor.TraitSelector(actor, trait).render(
-      true
-    );
+  renderTraitsConfig(document: any, trait: string) {
+    return new dnd5e.applications.actor.TraitsConfig({
+      document,
+      trait,
+    }).render(true);
   },
   renderWeaponsConfig(actor: any) {
     return new dnd5e.applications.actor.WeaponsConfig({
       document: actor,
+      trait: 'weapon',
     }).render({ force: true });
   },
-  renderProficiencyConfig(actor: any, property: string, key: string) {
-    return new dnd5e.applications.actor.ProficiencyConfig(actor, {
-      property,
+  renderSkillToolConfig(document: any, trait: 'skills' | 'tools', key: string) {
+    return new dnd5e.applications.actor.SkillToolConfig({
+      document,
+      trait,
       key,
     }).render(true);
   },
@@ -1202,11 +1207,15 @@ export const FoundryAdapter = {
   openSummonConfig(item: Item5e) {
     new dnd5e.applications.item.SummoningConfig(item).render(true);
   },
-  openDamageModificationConfig(actor: Actor5e) {
-    new dnd5e.applications.actor.DamageModificationConfig(actor).render(true);
+  openDamagesConfig(document: Actor5e, trait: 'dr' | 'di' | 'dv' | 'dm') {
+    new dnd5e.applications.actor.DamagesConfig({ document, trait }).render(
+      true
+    );
   },
-  openActorConcentrationConfig(actor: Actor5e) {
-    new dnd5e.applications.actor.ActorConcentrationConfig(actor).render(true);
+  openConcentrationConfig(document: any) {
+    new dnd5e.applications.actor.ConcentrationConfig({
+      document: document,
+    }).render(true);
   },
   openStartingEquipmentConfig(item: Item5e) {
     new dnd5e.applications.item.StartingEquipmentConfig(item).render(true);

@@ -125,7 +125,7 @@
               type="button"
               class="configure-proficiency inline-icon-button"
               on:click={() =>
-                FoundryAdapter.renderProficiencyConfig(
+                FoundryAdapter.renderSkillToolConfig(
                   $context.actor,
                   'skills',
                   skillRef.key,
@@ -174,7 +174,7 @@
               type="button"
               class="tidy5e-skill-name transparent-button rollable"
               on:click={(event) =>
-                $context.actor.rollSkill(skillRef.key, { event })}
+                $context.actor.rollSkill({ skill: skillRef.key, event })}
               data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_ROLLER}
               tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
               title={skillRef.skill.label}

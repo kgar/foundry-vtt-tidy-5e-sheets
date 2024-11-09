@@ -52,7 +52,7 @@
       class="config-button icon-button"
       title={localize('DND5E.InitiativeConfig')}
       on:click={() =>
-        FoundryAdapter.renderActorInitiativeConfig($context.actor)}
+        FoundryAdapter.renderInitiativeConfig($context.actor)}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fas fa-cog" />

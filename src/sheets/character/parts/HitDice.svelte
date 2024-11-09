@@ -27,7 +27,7 @@
     type="button"
     class="current-hd config-button transparent-button"
     on:click={$context.editable &&
-      FoundryAdapter.renderActorHitDiceConfig($context.actor)}
+      FoundryAdapter.renderHitDiceConfig($context.actor)}
     disabled={!$context.editable}
     tabindex={!$settingStore.useDefaultSheetHpTabbing &&
     $settingStore.useAccessibleKeyboardSupport
