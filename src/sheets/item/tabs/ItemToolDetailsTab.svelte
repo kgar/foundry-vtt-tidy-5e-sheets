@@ -37,18 +37,21 @@
   </div>
 
   <!-- Base Tool -->
-  <div class="form-group">
-    <label for="{appId}-type-baseItem">{localize('DND5E.ItemToolBase')}</label>
-    <Select
-      id="{appId}-type-baseItem"
-      document={$context.item}
-      field="system.type.baseItem"
-      value={$context.source.type.baseItem}
-      disabled={!$context.editable}
-    >
-      <SelectOptions data={$context.baseItems} blank="" />
-    </Select>
-  </div>
+  {#if Object.keys($context.baseItems ?? {}).length}
+    <div class="form-group">
+      <label for="{appId}-type-baseItem">{localize('DND5E.ItemToolBase')}</label
+      >
+      <Select
+        id="{appId}-type-baseItem"
+        document={$context.item}
+        field="system.type.baseItem"
+        value={$context.source.type.baseItem}
+        disabled={!$context.editable}
+      >
+        <SelectOptions data={$context.baseItems} blank="" />
+      </Select>
+    </div>
+  {/if}
 
   <!-- Tool Properties -->
   <div class="form-group stacked tool-properties">
@@ -58,8 +61,7 @@
 
   <!-- Ability Check -->
   <div class="form-group">
-    <label for="{appId}-proficient">{localize('DND5E.ActionAbil')}</label
-    >
+    <label for="{appId}-proficient">{localize('DND5E.ActionAbil')}</label>
     <div class="form-fields">
       <!-- Proficiency -->
       <div class="form-group label-top">
