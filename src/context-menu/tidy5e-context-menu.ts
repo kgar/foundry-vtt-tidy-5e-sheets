@@ -377,6 +377,16 @@ function getItemContextOptions(item: Item5e) {
         item.isOwner &&
         !item.compendium?.locked,
     });
+    options.push({
+      name: 'DOCUMENT.DND5E.Activity',
+      icon: "<i class='fas fa-gear fa-fw'></i>",
+      callback: () => item.system.linkedActivity.sheet.render(true),
+      condition: () =>
+        !item.canDelete &&
+        item.system.linkedActivity &&
+        item.isOwner &&
+        !item.compendium?.locked,
+    });
   } else {
     options.push({
       name: 'DND5E.ContextMenuActionDelete',
