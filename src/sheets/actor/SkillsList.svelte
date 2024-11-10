@@ -106,12 +106,12 @@
   >
     {#each skillRefs as skillRef (skillRef.key)}
       {@const showSkill =
-        skillRef.skill && (showAllSkills || skillRef.skill.value > 0)}
+        skillRef.skill && (showAllSkills || skillRef.skill.prof.hasProficiency > 0)}
 
       {#if showSkill}
         <li
           class="proficiency-row skill"
-          class:proficient={skillRef.skill.value}
+          class:proficient={skillRef.skill.prof.hasProficiency}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_CONTAINER}
           data-key={skillRef.key}
         >
