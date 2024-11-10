@@ -1201,8 +1201,8 @@ export const FoundryAdapter = {
   getJqueryWrappedElement(el: HTMLElement) {
     return $(el);
   },
-  openSpellSlotsConfig(actor: Actor5e) {
-    new dnd5e.applications.actor.ActorSpellSlotsConfig(actor).render(true);
+  openSpellSlotsConfig(document: any) {
+    new dnd5e.applications.actor.SpellSlotsConfig({ document }).render(true);
   },
   openSummonConfig(item: Item5e) {
     new dnd5e.applications.item.SummoningConfig(item).render(true);
