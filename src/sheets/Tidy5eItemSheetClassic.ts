@@ -894,7 +894,11 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       {},
       {
         parent: this.item,
-        types: Object.keys(CONFIG.DND5E.activityTypes),
+        types: Object.entries(CONFIG.DND5E.activityTypes)
+          .filter(([, { configurable }]: any) => {
+            return configurable !== false;
+          })
+          .map(([k]) => k),
       }
     );
   }
