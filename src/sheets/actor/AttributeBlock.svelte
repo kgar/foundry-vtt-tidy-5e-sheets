@@ -40,7 +40,8 @@
   <BlockTitle
     title={ability.label}
     text={abbreviation}
-    on:roll={(event) => $context.actor.rollAbility(id, { event: event.detail })}
+    on:roll={(event) =>
+      $context.actor.rollAbility({ ability: id, event: event.detail })}
     hideFromTabOrder={$settingStore.useDefaultSheetAttributeTabbing ||
       !$settingStore.useAccessibleKeyboardSupport}
     attributes={{
@@ -67,7 +68,8 @@
       class="ability-mod transparent-button"
       class:rollable={$context.editable}
       title={localize('DND5E.AbilityModifier')}
-      on:click={(event) => $context.actor.rollAbilityTest(id, { event })}
+      on:click={(event) =>
+        $context.actor.rollAbilityCheck({ ability: id, event })}
       tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
       $settingStore.useAccessibleKeyboardSupport
         ? 0
@@ -82,7 +84,8 @@
       class="ability-save transparent-button"
       class:rollable={$context.editable}
       title={localize('DND5E.ActionSave')}
-      on:click={(event) => $context.actor.rollAbilitySave(id, { event })}
+      on:click={(event) =>
+        $context.actor.rollSavingThrow({ ability: id, event })}
       tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
       $settingStore.useAccessibleKeyboardSupport
         ? 0
@@ -132,7 +135,7 @@
         class="config-button inline-icon-button"
         title={localize('DND5E.AbilityConfigure')}
         on:click={() =>
-          FoundryAdapter.renderActorAbilityConfig($context.actor, id)}
+          FoundryAdapter.renderAbilityConfig($context.actor, id)}
         tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
         $settingStore.useAccessibleKeyboardSupport
           ? 0

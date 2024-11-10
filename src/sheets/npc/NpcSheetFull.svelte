@@ -250,7 +250,7 @@
       border-radius: 0.1875rem;
       background: var(--t5e-faint-color);
       color: var(--t5e-secondary-color);
-      font-size: 1.25rem;
+      font-size: 1.125rem;
       line-height: 1;
       height: 1.5rem;
       white-space: nowrap;

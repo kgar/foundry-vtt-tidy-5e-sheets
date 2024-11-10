@@ -29,10 +29,19 @@
     },
   ) {
     if (ctx.perception) {
-      member.rollSkill(ctx.perception.key, {
-        rollMode: CONST.DICE_ROLL_MODES.BLIND,
-        event: event,
-      });
+      member.rollSkill(
+        {
+          skill: ctx.perception.key,
+          event: event,
+        },
+        {
+          options: {
+            default: {
+              rollMode: CONST.DICE_ROLL_MODES.BLIND,
+            },
+          },
+        },
+      );
     }
   }
 </script>

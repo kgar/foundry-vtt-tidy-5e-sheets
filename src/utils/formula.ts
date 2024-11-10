@@ -52,7 +52,7 @@ export function simplifyFormula(
 
     const simplifiedTerms = roll.terms.map((t: any) =>
       t.isIntermediate
-        ? new NumericTerm({
+        ? new foundry.dice.terms.NumericTerm({
             number: t.evaluate().total,
             options: t.options,
           })
@@ -250,7 +250,7 @@ function calculateDeterministicBonus(rawBonus: string): number {
     return 0;
   }
 
-  let bonusRoll = Roll.fromTerms([new NumericTerm(0)]);
+  let bonusRoll = Roll.fromTerms([new foundry.dice.terms.NumericTerm(0)]);
   try {
     bonusRoll = Roll.fromTerms(deterministicRawBonus);
 

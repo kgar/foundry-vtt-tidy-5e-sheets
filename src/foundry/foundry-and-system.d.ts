@@ -43,7 +43,6 @@ declare global {
   var Items: any;
   var KeyboardManager: any;
   var ModuleManagement: any;
-  var NumericTerm: any;
   var renderTemplate: any;
   var Roll: any;
   var SortingHelpers: any;

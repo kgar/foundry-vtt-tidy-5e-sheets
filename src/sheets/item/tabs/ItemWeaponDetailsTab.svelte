@@ -42,19 +42,22 @@
   </div>
 
   <!-- Weapon Base -->
-  <div class="form-group">
-    <label for="{appId}-type-baseItem">{localize('DND5E.ItemWeaponBase')}</label
-    >
-    <Select
-      id="{appId}-type-baseItem"
-      document={$context.item}
-      field="system.type.baseItem"
-      value={$context.source.type.baseItem}
-      disabled={!$context.editable}
-    >
-      <SelectOptions data={$context.baseItems} blank="" />
-    </Select>
-  </div>
+  {#if Object.keys($context.baseItems ?? {}).length}
+    <div class="form-group">
+      <label for="{appId}-type-baseItem"
+        >{localize('DND5E.ItemWeaponBase')}</label
+      >
+      <Select
+        id="{appId}-type-baseItem"
+        document={$context.item}
+        field="system.type.baseItem"
+        value={$context.source.type.baseItem}
+        disabled={!$context.editable}
+      >
+        <SelectOptions data={$context.baseItems} blank="" />
+      </Select>
+    </div>
+  {/if}
 
   <!-- Proficiency -->
   {#if !$context.item.isMountable}

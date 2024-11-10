@@ -70,7 +70,8 @@
         <button
           type="button"
           class="tool-check-roller inline-transparent-button rollable"
-          on:click={(event) => $context.actor.rollToolCheck(key, { event })}
+          on:click={(event) =>
+            $context.actor.rollToolCheck({ tool: key, event })}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TOOL_ROLLER}
           tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
         >
@@ -88,11 +89,7 @@
           class="tool-proficiency-editor inline-icon-button"
           title={localize('DND5E.ToolConfigure')}
           on:click|stopPropagation|preventDefault={() =>
-            FoundryAdapter.renderProficiencyConfig(
-              $context.actor,
-              'tools',
-              key,
-            )}
+            FoundryAdapter.renderSkillToolConfig($context.actor, 'tools', key)}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
             .TOOL_CONFIGURATION_CONTROL}
           tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}

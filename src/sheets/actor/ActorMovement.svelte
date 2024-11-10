@@ -35,7 +35,8 @@
       type="button"
       class="configure inline-icon-button"
       title={localize('DND5E.MovementConfig')}
-      on:click={() => FoundryAdapter.renderActorMovementConfig($context.actor)}
+      on:click={() =>
+        FoundryAdapter.renderMovementSensesConfig($context.actor, 'movement')}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       ><i class="fas fa-cog" /></button
     >
