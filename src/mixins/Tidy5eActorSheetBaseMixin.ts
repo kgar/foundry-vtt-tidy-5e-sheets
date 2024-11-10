@@ -402,19 +402,20 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
     /**
      * Stack identical consumables when a new one is dropped rather than creating a duplicate item.
      */
-    _onDropStackConsumables(itemData: any): Promise<Item5e> | null {
+    _onDropStackConsumables(
+      itemData: any,
+      { container = null } = {}
+    ): Promise<Item5e> | null {
       const droppedSourceId =
         itemData._stats?.compendiumSource ?? itemData.flags.core?.sourceId;
       if (itemData.type !== 'consumable' || !droppedSourceId) return null;
-      const similarItem = this.actor.items.find((i: Item5e) => {
-        const sourceId = i.getFlag('core', 'sourceId');
-        return (
-          sourceId &&
-          sourceId === droppedSourceId &&
-          i.type === 'consumable' &&
-          i.name === itemData.name
-        );
-      });
+      const similarItem = this.actor.sourcedItems
+        .get('Compendium.dnd5e.items.Item.ytlsBjYsZ7OBSEBs', { legacy: false })
+        ?.filter(
+          (i: Item5e) =>
+            i.system.container === container && i.name === itemData.name
+        )
+        ?.first();
       if (!similarItem) return null;
       return similarItem.update({
         'system.quantity':

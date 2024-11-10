@@ -90,6 +90,7 @@
         props: ({ item }) => ({
           item,
         }),
+        visible: ({ item }) => item.canDelete,
       });
     }
 
@@ -209,7 +210,10 @@
             <InlineFavoriteIcon />
           {/if}
           <ItemTableCell baseWidth={spellComponentsBaseWidth} cssClass="no-gap">
-            <SpellComponents {spell} spellComponentLabels={$context.spellComponentLabels} />
+            <SpellComponents
+              {spell}
+              spellComponentLabels={$context.spellComponentLabels}
+            />
           </ItemTableCell>
           {#if includeSchool}
             {@const icon = SpellSchool.getIcon(spell.system.school)}
