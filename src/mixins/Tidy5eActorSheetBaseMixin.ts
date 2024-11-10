@@ -342,7 +342,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
           options
         );
 
-        return scroll?.toObject?.();
+        return scroll?.toObject?.() ?? false;
       }
 
       // Clean up data

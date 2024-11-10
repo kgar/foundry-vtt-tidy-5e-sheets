@@ -20,7 +20,7 @@
   <button
     type="button"
     class="configure-creature-type inline-transparent-button highlight-on-hover truncate"
-    on:click={() => FoundryAdapter.openActorTypeConfig($context.actor)}
+    on:click={() => FoundryAdapter.renderCreatureTypeConfig($context.actor)}
     title={localize('DND5E.CreatureType')}
     tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
   >

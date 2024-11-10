@@ -749,16 +749,22 @@ export const FoundryAdapter = {
   ): Promise<any> {
     return new Roll(formula, rollData).roll(rollFnOptions);
   },
-  openActorTypeConfig(document: Actor5e) {
-    const options: Record<string, any> = {
-      document: document.system.details.race?.id
-        ? document.system.details.race
-        : document,
-    };
+  renderCreatureTypeConfig(document: Actor5e) {
+    const raceId: string | undefined = document.system.details?.race?.id;
 
-    if (document.system.details.race?.id) {
-      options.keyPath = 'type';
-    }
+    const documentToUpdate = raceId ? document.system.details.race : document;
+
+    const keyPath =
+      documentToUpdate.type === CONSTANTS.ITEM_TYPE_RACE
+        ? // A species document
+          'type'
+        : // An actor without a species
+          'details.type';
+
+    const options: Record<string, any> = {
+      document: documentToUpdate,
+      keyPath,
+    };
 
     return new dnd5e.applications.shared.CreatureTypeConfig(options).render(
       true
@@ -914,21 +920,6 @@ export const FoundryAdapter = {
       document,
       trait,
       key,
-    }).render(true);
-  },
-  renderItemTypeConfig(item: any) {
-    return new dnd5e.applications.actor.ActorTypeConfig(item, {
-      keyPath: 'system.type',
-    }).render(true);
-  },
-  renderItemMovementConfig(item: any) {
-    return new dnd5e.applications.actor.ActorMovementConfig(item, {
-      keyPath: 'system.movement',
-    }).render(true);
-  },
-  renderItemSensesConfig(item: any) {
-    return new dnd5e.applications.actor.ActorSensesConfig(item, {
-      keyPath: 'system.senses',
     }).render(true);
   },
   renderSourceConfig(document: any, keyPath: string) {
