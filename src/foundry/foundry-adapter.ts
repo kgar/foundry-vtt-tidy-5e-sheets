@@ -1249,21 +1249,29 @@ export const FoundryAdapter = {
    */
   onDropStackConsumablesForActor(
     actor: Actor5e,
-    itemData: any
+    itemData: any,
+    { container = null }: { container: any | null }
   ): Promise<Item5e> | null {
+    // TODO: Move this to the base actor sheet in app V2 when all actors go App V2.
     const droppedSourceId =
       itemData._stats?.compendiumSource ?? itemData.flags.core?.sourceId;
-    if (itemData.type !== 'consumable' || !droppedSourceId) return null;
-    const similarItem = actor.items.find((i: Item5e) => {
-      const sourceId = i.getFlag('core', 'sourceId');
-      return (
-        sourceId &&
-        sourceId === droppedSourceId &&
-        i.type === 'consumable' &&
-        i.name === itemData.name
-      );
-    });
-    if (!similarItem) return null;
+
+    if (itemData.type !== 'consumable' || !droppedSourceId) {
+      return null;
+    }
+
+    const similarItem = actor.sourcedItems
+      .get(droppedSourceId, { legacy: false })
+      ?.filter(
+        (i: Item5e) =>
+          i.system.container === container && i.name === itemData.name
+      )
+      ?.first();
+
+    if (!similarItem) {
+      return null;
+    }
+    
     return similarItem.update({
       'system.quantity':
         similarItem.system.quantity + Math.max(itemData.system.quantity, 1),

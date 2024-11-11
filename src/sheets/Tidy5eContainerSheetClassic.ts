@@ -544,7 +544,8 @@ export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
     }
 
     if (this.item.actor && container === this.item.id) {
-      const result = await this.item.actor.sheet._onDropStackConsumables(
+      const result = await FoundryAdapter.onDropStackConsumablesForActor(
+        this.actor,
         itemData,
         { container }
       );
