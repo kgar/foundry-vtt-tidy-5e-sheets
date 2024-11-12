@@ -1250,7 +1250,8 @@ export const FoundryAdapter = {
   onDropStackConsumablesForActor(
     actor: Actor5e,
     itemData: any,
-    { container = null }: { container: any | null }
+    { container = null }: { container: any | null },
+    event: DragEvent
   ): Promise<Item5e> | null {
     // TODO: Move this to the base actor sheet in app V2 when all actors go App V2.
     const droppedSourceId =
