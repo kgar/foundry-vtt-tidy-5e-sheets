@@ -81,10 +81,11 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
           Tidy5eActorSheetBase.ACTOR_ACTIONS_AND_CONTROLS.configureToken.control
             .action
       );
-      if (configureTokenControl) {
-        configureTokenControl.label = this.token
-          ? 'Token'
-          : 'TOKEN.TitlePrototype';
+      if (configureTokenControl && this.token) {
+        configureTokenControl.label = 'Token';
+        configureTokenControl.icon = 'far fa-user-circle';
+      } else {
+        configureTokenControl.label = 'TOKEN.TitlePrototype';
       }
       return controls;
     }
