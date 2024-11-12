@@ -30,6 +30,7 @@
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { declareLocation } from 'src/types/location-awareness';
   import AmmoSelector from 'src/sheets/actor/AmmoSelector.svelte';
+  import MaterialSelector from 'src/sheets/actor/MaterialSelector.svelte';
 
   let context = getContext<Readable<VehicleSheetContext>>('context');
 
@@ -150,6 +151,8 @@
                         <span class="ammo">
                           <AmmoSelector {item} />
                         </span>
+                      {:else if item.system.consume.type === 'material'}
+                        <MaterialSelector {item} />
                       {/if}
                       <ListItemQuantity {item} {ctx} />
                     </ItemName>
