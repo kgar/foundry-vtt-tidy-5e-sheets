@@ -861,8 +861,8 @@ export const FoundryAdapter = {
   browseFilePicker(...args: any[]) {
     return new FilePicker(...args).browse();
   },
-  renderArmorConfig(actor: any) {
-    return new dnd5e.applications.actor.ActorArmorConfig(actor).render(true);
+  renderArmorConfig(document: any) {
+    return new dnd5e.applications.actor.ArmorClassConfig({ document }).render(true);
   },
   renderInitiativeConfig(document: any) {
     return new dnd5e.applications.actor.InitiativeConfig({
