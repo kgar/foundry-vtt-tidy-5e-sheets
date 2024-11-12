@@ -748,7 +748,7 @@ export class Tidy5eVehicleSheet
     }
   }
 
-  async _onDropSingleItem(itemData: any) {
+  async _onDropSingleItem(itemData: any, event: DragEvent) {
     const cargoTypes = [
       'weapon',
       'equipment',
@@ -779,13 +779,13 @@ export class Tidy5eVehicleSheet
     }
 
     if (itemData.type === 'consumable') {
-      return super._onDropSingleItem(itemData);
+      return super._onDropSingleItem(itemData, event);
     }
 
     // Skip the default vehicle sheet handler, as we are handling all use cases.
     const baseActor5eClass = getBaseActorSheet5e(this);
     if (baseActor5eClass) {
-      return baseActor5eClass._onDropSingleItem.call(this, itemData);
+      return baseActor5eClass._onDropSingleItem.call(this, itemData, event);
     }
   }
 

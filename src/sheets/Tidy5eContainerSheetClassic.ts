@@ -36,6 +36,7 @@ import { DocumentTabSectionConfigApplication } from 'src/applications/section-co
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { SettingsProvider } from 'src/settings/settings';
+import { Inventory } from 'src/features/sections/Inventory';
 
 export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
   SvelteApplicationMixin<ContainerSheetClassicContext>(
@@ -485,7 +486,11 @@ export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
     }
 
     // If item already exists in same DocumentCollection, just adjust its container property
-    if (item.actor === this.item.actor && item.pack === this.item.pack) {
+    if (
+      item.actor === this.item.actor &&
+      item.pack === this.item.pack &&
+      Inventory.getDefaultInventoryTypes().includes(item.type)
+    ) {
       return item.update({
         folder: this.item.folder,
         'system.container': this.item.id,
@@ -535,7 +540,7 @@ export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
         createOptions.flags = itemData.flags;
       }
 
-      const scroll = dnd5e.documents.Item5e.createScrollFromSpell(
+      const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(
         itemData,
         createOptions
       );
@@ -544,9 +549,11 @@ export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
     }
 
     if (this.item.actor && container === this.item.id) {
-      const result = await this.item.actor.sheet._onDropStackConsumables(
+      const result = await FoundryAdapter.onDropStackConsumablesForActor(
+        this.actor,
         itemData,
-        { container }
+        { container },
+        event
       );
       if (result) return false;
     }

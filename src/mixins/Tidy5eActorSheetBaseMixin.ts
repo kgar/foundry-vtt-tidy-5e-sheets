@@ -81,10 +81,11 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
           Tidy5eActorSheetBase.ACTOR_ACTIONS_AND_CONTROLS.configureToken.control
             .action
       );
-      if (configureTokenControl) {
-        configureTokenControl.label = this.token
-          ? 'Token'
-          : 'TOKEN.TitlePrototype';
+      if (configureTokenControl && this.token) {
+        configureTokenControl.label = 'Token';
+        configureTokenControl.icon = 'far fa-user-circle';
+      } else {
+        configureTokenControl.label = 'TOKEN.TitlePrototype';
       }
       return controls;
     }
@@ -250,13 +251,16 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
         );
       }
 
-      return this._onDropItemCreate(item);
+      return this._onDropItemCreate(item, event);
     }
 
     /**
      * Handle the final creation of dropped Item data on the Actor.
      */
-    async _onDropItemCreate(itemData: Item5e[] | Item5e): Promise<Item5e[]> {
+    async _onDropItemCreate(
+      itemData: Item5e[] | Item5e,
+      event: DragEvent
+    ): Promise<Item5e[]> {
       let items = itemData instanceof Array ? itemData : [itemData];
       const itemsWithoutAdvancement = items.filter(
         (i) => !i.system.advancement?.length
@@ -283,7 +287,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
       // Create the owned items & contents as normal
       const toCreate = await dnd5e.documents.Item5e.createWithContents(items, {
         transformFirst: (item: Item5e) =>
-          this._onDropSingleItem(item.toObject()),
+          this._onDropSingleItem(item.toObject(), event),
       });
 
       return dnd5e.documents.Item5e.createDocuments(toCreate, {
@@ -296,7 +300,10 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
     /**
      * Handles dropping of a single item onto this character sheet.
      */
-    async _onDropSingleItem(itemData: any): Promise<object | boolean> {
+    async _onDropSingleItem(
+      itemData: any,
+      event: DragEvent
+    ): Promise<object | boolean> {
       const isSupportedItemType =
         this._supportedItemTypes.size === 0 ||
         this._supportedItemTypes.has(itemData.type);
@@ -349,7 +356,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
       this._onDropResetData(itemData);
 
       // Stack identical consumables
-      const stacked = this._onDropStackConsumables(itemData);
+      const stacked = this._onDropStackConsumables(itemData, {}, event);
       if (stacked) return false;
 
       // Bypass normal creation flow for any items with advancement
@@ -404,25 +411,15 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
      */
     _onDropStackConsumables(
       itemData: any,
-      { container = null } = {}
+      { container = null } = {},
+      event: DragEvent
     ): Promise<Item5e> | null {
-      const droppedSourceId =
-        itemData._stats?.compendiumSource ?? itemData.flags.core?.sourceId;
-      if (itemData.type !== 'consumable' || !droppedSourceId) return null;
-      const similarItem = this.actor.items.find((i: Item5e) => {
-        const sourceId = i._stats?.compendiumSource;
-        return (
-          sourceId &&
-          sourceId === droppedSourceId &&
-          i.type === 'consumable' &&
-          i.name === itemData.name
-        );
-      });
-      if (!similarItem) return null;
-      return similarItem.update({
-        'system.quantity':
-          similarItem.system.quantity + Math.max(itemData.system.quantity, 1),
-      });
+      return FoundryAdapter.onDropStackConsumablesForActor(
+        this.actor,
+        itemData,
+        { container },
+        event
+      );
     }
 
     /**
@@ -516,7 +513,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
     }
 
     async _onDropFolder(
-      _event: DragEvent & { currentTarget: HTMLElement },
+      event: DragEvent & { currentTarget: HTMLElement },
       data: Record<string, any>
     ): Promise<object | boolean | undefined> {
       if (!this.actor.isOwner) {
@@ -536,7 +533,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
         })
       );
 
-      return this._onDropItemCreate(droppedItemData);
+      return this._onDropItemCreate(droppedItemData, event);
     }
 
     /* -------------------------------------------- */

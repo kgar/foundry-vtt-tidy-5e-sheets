@@ -82,8 +82,11 @@
 
   <!-- Weapon Mastery -->
   <div class="form-group">
-    <label for="">{localize('DND5E.WEAPON.FIELDS.mastery.label')}</label>
+    <label for="{appId}-weapon-mastery">
+      {localize('DND5E.WEAPON.FIELDS.mastery.label')}
+    </label>
     <Select
+      id="{appId}-weapon-mastery"
       document={$context.item}
       field="system.mastery"
       value={$context.source.mastery}
