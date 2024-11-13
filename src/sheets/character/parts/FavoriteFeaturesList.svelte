@@ -19,6 +19,9 @@
   import type { Readable } from 'svelte/store';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import { ItemUtils } from 'src/utils/ItemUtils';
+  import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
+  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import InlineToggleControl from 'src/sheets/shared/InlineToggleControl.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -28,6 +31,10 @@
 
   let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
     CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
+  );
+
+  let inlineToggleService = getContext<InlineToggleService>(
+    CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
 
   const localize = FoundryAdapter.localize;
@@ -64,6 +71,9 @@
       >
         <ItemTableCell primary={true}>
           <ItemUseButton disabled={!$context.editable} {item} />
+          {#if item?.system.activities?.contents.length > 1}
+            <InlineToggleControl entityId={item.id} {inlineToggleService} />
+          {/if}
           <ItemName
             on:toggle={() => toggleSummary($context.actor)}
             hasChildren={false}
@@ -93,6 +103,9 @@
           {/if}
         </ItemTableCell>
       </ItemTableRow>
+      {#if item?.system.activities?.contents.length > 1}
+        <InlineActivitiesList {item} {inlineToggleService} />
+      {/if}
     {/each}
   </svelte:fragment>
 </ItemTable>
