@@ -46,8 +46,8 @@
         {#if $context.spellcastingInfo.calculations.rangedMod !== $context.spellcastingInfo.calculations.meleeMod}
           <button
             type="button"
-            on:click={(ev) =>
-              rollRawSpellAttack(
+            on:click={async (ev) =>
+              await rollRawSpellAttack(
                 ev,
                 $context.actor,
                 'rsak',
@@ -73,8 +73,8 @@
           </button>
           <button
             type="button"
-            on:click={(ev) =>
-              rollRawSpellAttack(
+            on:click={async (ev) =>
+              await rollRawSpellAttack(
                 ev,
                 $context.actor,
                 'msak',
@@ -101,8 +101,8 @@
         {:else}
           <button
             type="button"
-            on:click={(ev) =>
-              rollRawSpellAttack(
+            on:click={async (ev) =>
+              await rollRawSpellAttack(
                 ev,
                 $context.actor,
                 undefined,
