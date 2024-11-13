@@ -5,6 +5,7 @@
   export let expanded: boolean = false;
   export let active: boolean = false;
   export let disabled: boolean = false;
+  export let anchor: 'left' | 'right' = 'left';
 
   let menuEl: HTMLElement;
   let menuOpenerEl: HTMLElement;
@@ -12,7 +13,6 @@
   function handleFocusOut(
     event: FocusEvent & { currentTarget: EventTarget & HTMLElement },
   ) {
-    console.warn('focusout');
     const relatedTarget = event.relatedTarget;
     const nearestMenuElement =
       relatedTarget instanceof HTMLElement
@@ -23,17 +23,14 @@
       nearestMenuElement &&
       [menuEl, menuOpenerEl].includes(nearestMenuElement)
     ) {
-      console.warn('focusout : still within menu or opener, ignoring');
       return;
     }
 
-    console.warn('focusout : blurring');
     menuEl.blur();
     expanded = false;
   }
 
   async function toggleMenu(expand?: boolean): Promise<void> {
-    console.warn('contextmenu');
     expanded = expand ?? !expanded;
 
     if (expanded) {
@@ -72,6 +69,7 @@
   <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
   <menu
     class:expanded
+    class="anchor-{anchor}"
     on:focusout={handleFocusOut}
     tabindex={expanded ? 0 : null}
     bind:this={menuEl}

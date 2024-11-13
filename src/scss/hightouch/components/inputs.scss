@@ -16,7 +16,6 @@ input {
 input[type='text'],
 input[type='number'],
 textarea {
-  
   &:is(textarea) {
     resize: none;
   }
@@ -261,21 +260,16 @@ input[type='radio'] {
 
   &:not(.disabled)::before {
     content: '';
-    width: 0.65em;
-    height: 0.65em;
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
-    transform: scale(0);
-    transition: 120ms transform ease-in-out;
+    transform: scale(0.5);
     background-color: var(--t5e-color-text-onDefault-gold-light);
   }
 
   &:checked {
     border: 1px solid var(--t5e-component-toggle-toggled-border);
     background: var(--t5e-component-toggle-toggled-background);
-
-    &::before {
-      transform: scale(1);
-    }
   }
 
   &:disabled {

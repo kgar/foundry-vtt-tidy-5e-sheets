@@ -28,6 +28,10 @@
       outline: none;
       box-shadow: none;
     }
+
+    &:focus {
+      outline: none;
+    }
   }
 
   a:hover {

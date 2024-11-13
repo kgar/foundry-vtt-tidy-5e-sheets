@@ -1,5 +1,12 @@
 <script lang="ts">
   export let checked = false;
+  export let onchange:
+    | ((
+        event: Event & {
+          currentTarget: EventTarget & HTMLInputElement;
+        },
+      ) => void)
+    | undefined = undefined;
 </script>
 
 <label class="field-toggle">
@@ -27,5 +34,5 @@
       d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"
     /></svg
   >
-  <input type="checkbox" on:change {checked} class="toggle hidden" />
+  <input type="checkbox" on:change={onchange} {checked} class="toggle hidden" />
 </label>

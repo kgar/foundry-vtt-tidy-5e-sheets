@@ -255,13 +255,28 @@
     }
   }
 
-  &.container .contents-footer {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  &.container {
+    .tidy-tab.contents {
+      flex: 1;
 
-    .meter {
-      flex-basis: var(--meter-height);
+      .container-contents-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        flex: 1;
+      }
+    }
+
+    .contents-footer {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      .meter {
+        flex-grow: 0;
+        flex-shrink: 0;
+        flex-basis: var(--meter-height);
+      }
     }
   }
 }
