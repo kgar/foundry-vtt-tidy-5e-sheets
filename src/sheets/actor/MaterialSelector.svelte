@@ -24,9 +24,12 @@
       material: null,
     },
     ...$context.actor.items
+      // This is a special filter so that the Material Selector only shows Loot -> Resource item types for knoself's setup
       .filter(
         (x: any) =>
-          ['consumable', 'loot'].includes(x.type) && !x.system.activation,
+          x.type === 'loot' &&
+          !x.system.activation &&
+          x.system.type.value === 'resource',
       )
       .map((x: any) => ({
         text: `${x.name} (${x.system.quantity})`,
