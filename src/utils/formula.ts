@@ -13,6 +13,7 @@ import type {
   BasicRollMessageConfiguration,
   BasicRollProcessConfiguration,
 } from 'src/foundry/foundry.types';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 
 export function scaleCantripDamageFormula(spell: Item5e, formula: string) {
   try {
@@ -323,7 +324,7 @@ export async function rollRawSpellAttack(
   const rollConfig: BasicRollProcessConfiguration = {
     evaluate: true,
     event: ev,
-    hookNames: [],
+    hookNames: ['rawSpellAttack', 'd20Test'],
     rolls: [getSpellAttackRoll(actor, attackType, spellcastingAbility)],
     subject: actor,
   };
@@ -379,19 +380,27 @@ function getSpellAttackRoll(
 ): BasicRollConfiguration {
   const effectiveAttackType = attackType ?? 'rsak';
 
-  const rollData = actor.getRollData();
+  const rollData: Record<string, any> = {};
 
   const parts: string[] = [];
 
   // Ability score modifier
-  spellcastingAbility ??= actor.system.attributes.spellcasting;
+  const filteredClass = TidyFlags.classFilter.get(actor);
+
+  spellcastingAbility ??= actor.itemTypes.class.find(
+    (x: Item5e) => x.system.identifier === filteredClass
+  )?.system.spellcasting?.ability;
+
   const spellcastingMod = actor.system.abilities[spellcastingAbility!]?.mod;
+
   if (spellcastingAbility !== 'none' && spellcastingMod) {
     parts.push('@mod');
+    rollData.mod = spellcastingMod;
   }
 
   // Add proficiency bonus.
   parts.push('@prof');
+  rollData.prof = actor.system.attributes.prof;
 
   // Actor-level global bonus to attack rolls
   const actorBonusAttack = actor.system.bonuses?.[effectiveAttackType]?.attack;
