@@ -18,7 +18,7 @@ declare global {
   var Application: any;
   var AudioHelper: any;
   var ChatMessage: any;
-  var CONFIG: CONFIG;
+  var CONFIG: CONFIG & { Dice: any };
   var CONST: any;
   var ContextMenu: any;
   var DefaultSheetsConfig: any;

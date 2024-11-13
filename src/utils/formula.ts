@@ -7,6 +7,12 @@ import type {
 } from 'src/types/types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { isNil } from './data';
+import type {
+  BasicRollConfiguration,
+  BasicRollDialogConfiguration,
+  BasicRollMessageConfiguration,
+  BasicRollProcessConfiguration,
+} from 'src/foundry/foundry.types';
 
 export function scaleCantripDamageFormula(spell: Item5e, formula: string) {
   try {
@@ -308,12 +314,40 @@ export function getDcTooltip(actor: Actor5e, spellAbility: string) {
 
 type RawSpellAttackType = 'rsak' | 'msak';
 
-export function rollRawSpellAttack(
+export async function rollRawSpellAttack(
   ev: MouseEvent,
   actor: Actor5e,
   attackType?: RawSpellAttackType,
   spellcastingAbility?: string
 ) {
+  const rollConfig: BasicRollProcessConfiguration = {
+    evaluate: true,
+    event: ev,
+    hookNames: [],
+    rolls: [getSpellAttackRoll(actor, attackType, spellcastingAbility)],
+    subject: actor,
+  };
+
+  let flavorKey =
+    attackType === 'rsak'
+      ? 'TIDY5E.ActorRangedSpellAttackFlavorText'
+      : attackType === 'msak'
+      ? 'TIDY5E.ActorMeleeSpellAttackFlavorText'
+      : 'TIDY5E.ActorSpellAttackFlavorText';
+
+  let flavor = FoundryAdapter.localize(flavorKey);
+
+  const messageConfig: BasicRollMessageConfiguration = {
+    rollMode: game.settings.get('core', 'rollMode'),
+    data: {
+      'flags.dnd5e.roll': {
+        type: 'attack',
+      },
+      speaker: ChatMessage.getSpeaker({ actor: actor }),
+      flavor,
+    },
+  };
+
   let titleKey =
     attackType === 'rsak'
       ? 'TIDY5E.ActorRangedSpellAttackTitle'
@@ -325,18 +359,28 @@ export function rollRawSpellAttack(
     actorName: actor.name,
   });
 
-  let flavorKey =
-    attackType === 'rsak'
-      ? 'TIDY5E.ActorRangedSpellAttackFlavorText'
-      : attackType === 'msak'
-      ? 'TIDY5E.ActorMeleeSpellAttackFlavorText'
-      : 'TIDY5E.ActorSpellAttackFlavorText';
+  const dialog: BasicRollDialogConfiguration = {
+    options: { title },
+  };
 
-  let flavor = FoundryAdapter.localize(flavorKey);
+  const rolls = await CONFIG.Dice.D20Roll.build(
+    rollConfig,
+    dialog,
+    messageConfig
+  );
 
+  debug(rolls);
+}
+
+function getSpellAttackRoll(
+  actor: any,
+  attackType: string | undefined,
+  spellcastingAbility: string | undefined
+): BasicRollConfiguration {
   const effectiveAttackType = attackType ?? 'rsak';
 
-  const rollData: Record<string, string> = {};
+  const rollData = actor.getRollData();
+
   const parts: string[] = [];
 
   // Ability score modifier
@@ -344,12 +388,10 @@ export function rollRawSpellAttack(
   const spellcastingMod = actor.system.abilities[spellcastingAbility!]?.mod;
   if (spellcastingAbility !== 'none' && spellcastingMod) {
     parts.push('@mod');
-    rollData.mod = spellcastingMod;
   }
 
   // Add proficiency bonus.
   parts.push('@prof');
-  rollData.prof = actor.system.attributes.prof;
 
   // Actor-level global bonus to attack rolls
   const actorBonusAttack = actor.system.bonuses?.[effectiveAttackType]?.attack;
@@ -357,30 +399,13 @@ export function rollRawSpellAttack(
     parts.push(actorBonusAttack);
   }
 
-  const rollConfig = foundry.utils.mergeObject(
-    {
-      actor: actor,
-      data: rollData,
-      critical: actor.flags['dnd5e']?.spellCriticalThreshold,
-      title: title,
-      flavor: flavor,
+  return {
+    parts,
+    data: rollData,
+    options: {
       elvenAccuracy: actor.flags['dnd5e']?.elvenAccuracy ?? false,
       halflingLucky: actor.flags['dnd5e']?.halflingLucky ?? false,
-      dialogOptions: {
-        width: 400,
-        top: ev ? ev.clientY - 80 : null,
-        left: ev ? ev.clientX + 40 : null,
-      },
-      messageData: {
-        'flags.dnd5e.roll': {
-          type: 'attack',
-        },
-        speaker: ChatMessage.getSpeaker({ actor: actor }),
-      },
-      event: ev,
     },
-    {}
-  );
-  rollConfig.parts = parts;
-  dnd5e.dice.d20Roll(rollConfig);
+    subject: actor,
+  };
 }
