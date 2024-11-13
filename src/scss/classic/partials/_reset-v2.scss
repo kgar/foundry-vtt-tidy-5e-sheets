@@ -5,6 +5,10 @@
     --button-hover-background-color: var(--t5e-faint-color);
   }
 
+  input[type='checkbox'] {
+    margin: 0;
+  }
+
   label.checkbox > input[type='checkbox'],
   input[type='checkbox'] {
     --input-height: 1.625rem;
@@ -46,6 +50,10 @@
   select {
     --input-height: 1.625rem;
     --input-background-color: var(--t5e-faintest-color);
+  }
+
+  select {
+    width: unset;
   }
 
   input[type='text']:focus,

@@ -18,7 +18,7 @@ declare global {
   var Application: any;
   var AudioHelper: any;
   var ChatMessage: any;
-  var CONFIG: CONFIG;
+  var CONFIG: CONFIG & { Dice: any };
   var CONST: any;
   var ContextMenu: any;
   var DefaultSheetsConfig: any;
@@ -43,7 +43,6 @@ declare global {
   var Items: any;
   var KeyboardManager: any;
   var ModuleManagement: any;
-  var NumericTerm: any;
   var renderTemplate: any;
   var Roll: any;
   var SortingHelpers: any;

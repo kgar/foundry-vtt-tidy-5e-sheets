@@ -296,8 +296,8 @@ function getRangeTitles(item: Item5e): {
   const firstActivity = item.system.activities?.contents[0] ?? {};
 
   const rangeSubtitle =
-    (firstActivity.target.affects?.type ??
-      firstActivity.target.template?.type) &&
+    (firstActivity.target?.affects?.type ??
+      firstActivity.target?.template?.type) &&
     item.labels?.target
       ? item.labels.target
       : null;

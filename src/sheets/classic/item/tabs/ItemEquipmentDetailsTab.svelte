@@ -49,26 +49,28 @@
   </div>
 
   <!-- Equipment Base -->
-  <div class="form-group">
-    <label for="{appId}-type-baseItem"
-      >{localize('DND5E.ItemEquipmentBase')}</label
-    >
-    <Select
-      id="{appId}-type-baseItem"
-      document={$context.item}
-      field="system.type.baseItem"
-      value={$context.source.type.baseItem}
-      blankValue=""
-      disabled={!$context.editable}
-    >
-      <SelectOptions
-        data={$context.baseItems}
-        labelProp="label"
-        valueProp="value"
-        blank=""
-      />
-    </Select>
-  </div>
+  {#if Object.keys($context.baseItems ?? {}).length}
+    <div class="form-group">
+      <label for="{appId}-type-baseItem"
+        >{localize('DND5E.ItemEquipmentBase')}</label
+      >
+      <Select
+        id="{appId}-type-baseItem"
+        document={$context.item}
+        field="system.type.baseItem"
+        value={$context.source.type.baseItem}
+        blankValue=""
+        disabled={!$context.editable}
+      >
+        <SelectOptions
+          data={$context.baseItems}
+          labelProp="label"
+          valueProp="value"
+          blank=""
+        />
+      </Select>
+    </div>
+  {/if}
 
   <!-- Proficiency -->
   <div class="form-group">
@@ -126,7 +128,9 @@
         {/if}
 
         <div class="form-group label-top">
-          <label for="{appId}-strength">{localize('DND5E.AbilityStr')}</label>
+          <label for="{appId}-armor-strength"
+            >{localize('DND5E.AbilityStr')}</label
+          >
           <NumberInput
             id="{appId}-armor-strength"
             document={$context.item}

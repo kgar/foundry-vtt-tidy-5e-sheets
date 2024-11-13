@@ -41,11 +41,18 @@
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { ItemUtils } from 'src/utils/ItemUtils';
+  import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
+  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import InlineToggleControl from 'src/sheets/shared/InlineToggleControl.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
+
+  let inlineToggleService = getContext<InlineToggleService>(
+    CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
+  );
 
   $: features = SheetSections.configureFeatures(
     $context.features,
@@ -200,6 +207,12 @@
                 >
                   <ItemTableCell primary={true}>
                     <ItemUseButton disabled={!$context.editable} {item} />
+                    {#if item?.system.activities?.contents.length > 1}
+                      <InlineToggleControl
+                        entityId={item.id}
+                        {inlineToggleService}
+                      />
+                    {/if}
                     <ItemName
                       on:toggle={() => toggleSummary($context.actor)}
                       hasChildren={false}
@@ -274,6 +287,9 @@
                     </ItemTableCell>
                   {/if}
                 </ItemTableRow>
+                {#if item?.system.activities?.contents.length > 1}
+                  <InlineActivitiesList {item} {inlineToggleService} />
+                {/if}
               {/each}
               {#if $context.unlocked}
                 <ItemTableFooter

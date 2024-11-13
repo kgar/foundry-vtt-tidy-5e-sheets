@@ -33,6 +33,7 @@
   import type { Item5e } from 'src/types/item.types';
   import ClassicControls from 'src/sheets/classic/shared/ClassicControls.svelte';
   import ConcentrationOverlayIcon from './ConcentrationOverlayIcon.svelte';
+  import DeleteOrOpenActivity from '../item-list/controls/DeleteOrOpenActivity.svelte';
 
   let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -86,7 +87,8 @@
 
     if ($context.unlocked) {
       controls.push({
-        component: ItemDeleteControl,
+        // svelte 5 - snippet?
+        component: DeleteOrOpenActivity,
         props: ({ item }) => ({
           item,
         }),
@@ -209,7 +211,10 @@
             <InlineFavoriteIcon />
           {/if}
           <ItemTableCell baseWidth={spellComponentsBaseWidth} cssClass="no-gap">
-            <SpellComponents {spell} spellComponentLabels={$context.spellComponentLabels} />
+            <SpellComponents
+              {spell}
+              spellComponentLabels={$context.spellComponentLabels}
+            />
           </ItemTableCell>
           {#if includeSchool}
             {@const icon = SpellSchool.getIcon(spell.system.school)}

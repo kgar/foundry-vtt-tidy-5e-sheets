@@ -1060,7 +1060,7 @@ export class Tidy5eNpcSheet
     return this._onToggleAbilityProficiency(event);
   }
 
-  async _onDropSingleItem(itemData: any) {
+  async _onDropSingleItem(itemData: any, event: DragEvent) {
     // Create a Consumable spell scroll on the Inventory tab
     if (
       itemData.type === CONSTANTS.ITEM_TYPE_SPELL &&
@@ -1080,7 +1080,7 @@ export class Tidy5eNpcSheet
       return scroll.toObject();
     }
 
-    return super._onDropSingleItem(itemData);
+    return super._onDropSingleItem(itemData, event);
   }
 
   /**

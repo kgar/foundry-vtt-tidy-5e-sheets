@@ -39,7 +39,10 @@
       successesField="system.attributes.death.success"
       failuresField="system.attributes.death.failure"
       on:rollDeathSave={(event) =>
-        $context.actor.rollDeathSave({ event: event.detail.mouseEvent })}
+        $context.actor.rollDeathSave({
+          event: event.detail.mouseEvent,
+          legacy: false,
+        })}
       hasHpOverlay={$settingStore.useHpOverlay}
     />
   {/if}

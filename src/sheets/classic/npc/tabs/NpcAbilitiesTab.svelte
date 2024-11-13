@@ -133,6 +133,7 @@
       controls.push({
         component: ItemDeleteControl,
         props: ({ item }) => ({ item }),
+        visible: ({ item }) => item.canDelete,
       });
     }
 
