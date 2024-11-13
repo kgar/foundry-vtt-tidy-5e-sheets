@@ -42,7 +42,7 @@
       class="inline-icon-button"
       title={localize('DND5E.HitPointsConfig')}
       on:click|stopPropagation|preventDefault={() =>
-        FoundryAdapter.renderActorHitPointsDialog($context.actor)}
+        FoundryAdapter.renderHitPointsDialog($context.actor)}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fas fa-cog" />

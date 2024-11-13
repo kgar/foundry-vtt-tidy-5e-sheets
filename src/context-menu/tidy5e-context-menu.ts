@@ -286,21 +286,23 @@ function getItemContextOptions(item: Item5e) {
   }
 
   // Toggle Prepared State
-  if ('preparation' in item.system) {
-    if (FoundryAdapter.canPrepareSpell(item)) {
-      const isPrepared = item.system?.preparation?.prepared === true;
-      options.push({
-        name: isActive
-          ? 'TIDY5E.ContextMenuActionUnprepare'
-          : 'TIDY5E.ContextMenuActionPrepare',
-        icon: isActive
-          ? "<i class='fas fa-book fa-fw'></i>"
-          : "<i class='fas fa-book fa-fw'></i>",
-        callback: () =>
-          item.update({ 'system.preparation.prepared': !isPrepared }),
-        condition: () => item.isOwner && !item.compendium?.locked,
-      });
-    }
+  if (
+    'preparation' in item.system &&
+    FoundryAdapter.canPrepareSpell(item) &&
+    !item.getFlag('dnd5e', 'cachedFor')
+  ) {
+    const isPrepared = item.system?.preparation?.prepared === true;
+    options.push({
+      name: isActive
+        ? 'TIDY5E.ContextMenuActionUnprepare'
+        : 'TIDY5E.ContextMenuActionPrepare',
+      icon: isActive
+        ? "<i class='fas fa-book fa-fw'></i>"
+        : "<i class='fas fa-book fa-fw'></i>",
+      callback: () =>
+        item.update({ 'system.preparation.prepared': !isPrepared }),
+      condition: () => item.isOwner && !item.compendium?.locked,
+    });
   }
 
   options.push({
@@ -349,7 +351,7 @@ function getItemContextOptions(item: Item5e) {
     icon: "<i class='fas fa-copy fa-fw'></i>",
     condition: () =>
       isUnlocked &&
-      !['race', 'background', 'class', 'subclass'].includes(item.type) &&
+      item.canDuplicate &&
       item.isOwner &&
       !item.compendium?.locked,
 
@@ -369,7 +371,21 @@ function getItemContextOptions(item: Item5e) {
       name: 'TIDY5E.ContextMenuActionDelete',
       icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5e-warning-accent-color);'></i>",
       callback: () => FoundryAdapter.onActorItemDelete(itemParent, item),
-      condition: () => isUnlocked && item.isOwner && !item.compendium?.locked,
+      condition: () =>
+        item.canDelete &&
+        isUnlocked &&
+        item.isOwner &&
+        !item.compendium?.locked,
+    });
+    options.push({
+      name: 'DOCUMENT.DND5E.Activity',
+      icon: "<i class='fas fa-gear fa-fw'></i>",
+      callback: () => item.system.linkedActivity.sheet.render(true),
+      condition: () =>
+        !item.canDelete &&
+        item.system.linkedActivity &&
+        item.isOwner &&
+        !item.compendium?.locked,
     });
   } else {
     options.push({
@@ -393,14 +409,18 @@ function getItemContextOptions(item: Item5e) {
       if (SettingsProvider.settings.includeFlagsInSpellScrollCreation.get()) {
         options.flags = item.flags;
       }
-      
-      const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(item, options);
+
+      const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(
+        item,
+        options
+      );
       if (scroll) {
         dnd5e.documents.Item5e.create(scroll, { parent: itemParent });
       }
     },
     condition: () =>
       item.type === 'spell' &&
+      !item.getFlag('dnd5e', 'cachedFor') &&
       itemParent?.isOwner &&
       !itemParent?.compendium?.locked,
     group: 'action',

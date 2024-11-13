@@ -49,7 +49,7 @@
       iconCssClass="fas fa-eye"
       configureButtonTitle={localize('DND5E.SensesConfig')}
       on:onConfigureClicked={() =>
-        FoundryAdapter.renderActorSensesConfig($context.actor)}
+        FoundryAdapter.renderMovementSensesConfig($context.actor, 'senses')}
       show={traitsExpanded || !!senses.length}
     >
       <TraitSectionTags tags={senses} />
@@ -66,7 +66,7 @@
         trait: localize('DND5E.Languages'),
       })}
       on:onConfigureClicked={() =>
-        FoundryAdapter.renderTraitsSelector($context.actor, 'languages')}
+        FoundryAdapter.renderTraitsConfig($context.actor, 'languages')}
       show={traitsExpanded || !!languages.length}
     >
       <TraitSectionTags tags={languages} />
@@ -83,7 +83,7 @@
         trait: localize('DND5E.DamImm'),
       })}
       on:onConfigureClicked={() =>
-        FoundryAdapter.renderTraitsSelector($context.actor, 'di')}
+        FoundryAdapter.openDamagesConfig($context.actor, 'di')}
       show={traitsExpanded || !!damageImmunities.length}
     >
       <TraitSectionTags tags={damageImmunities} />
@@ -100,7 +100,7 @@
         trait: localize('DND5E.DamRes'),
       })}
       on:onConfigureClicked={() =>
-        FoundryAdapter.renderTraitsSelector($context.actor, 'dr')}
+        FoundryAdapter.openDamagesConfig($context.actor, 'dr')}
       show={traitsExpanded || !!damageResistances.length}
     >
       <TraitSectionTags tags={damageResistances} />
@@ -117,7 +117,7 @@
         trait: localize('DND5E.DamVuln'),
       })}
       on:onConfigureClicked={() =>
-        FoundryAdapter.renderTraitsSelector($context.actor, 'dv')}
+        FoundryAdapter.openDamagesConfig($context.actor, 'dv')}
       show={traitsExpanded || !!vulnerabilities.length}
     >
       <TraitSectionTags tags={vulnerabilities} />
@@ -132,7 +132,7 @@
         trait: localize('DND5E.DamageModification.Label'),
       })}
       on:onConfigureClicked={() =>
-        FoundryAdapter.openDamageModificationConfig($context.actor)}
+        FoundryAdapter.openDamagesConfig($context.actor, 'dm')}
       show={traitsExpanded || !!$context.traits.traits.dm.length}
     >
       <TraitSectionModifications modifications={$context.traits.traits?.dm} />
@@ -149,7 +149,7 @@
         trait: localize('DND5E.ConImm'),
       })}
       on:onConfigureClicked={() =>
-        FoundryAdapter.renderTraitsSelector($context.actor, 'ci')}
+        FoundryAdapter.renderTraitsConfig($context.actor, 'ci')}
       show={traitsExpanded || !!conditionImmunities.length}
     >
       <TraitSectionTags tags={conditionImmunities} />
@@ -208,7 +208,7 @@
         trait: localize('DND5E.TraitArmorProf'),
       })}
       on:onConfigureClicked={() =>
-        FoundryAdapter.renderTraitsSelector($context.actor, 'armor')}
+        FoundryAdapter.renderTraitsConfig($context.actor, 'armor')}
       show={traitsExpanded || !!armorProfs.length}
     >
       <svg
@@ -241,7 +241,7 @@
         trait: localize('DND5E.TraitToolProf'),
       })}
       on:onConfigureClicked={() =>
-        FoundryAdapter.renderToolSelector($context.actor)}
+        FoundryAdapter.renderToolsConfig($context.actor)}
       show={traitsExpanded || !!tools.length}
     >
       {#if tools.length}
