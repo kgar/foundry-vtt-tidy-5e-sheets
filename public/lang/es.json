@@ -792,6 +792,7 @@
     "TIDY5E.ExhaustionLevelTooltip": "Nivel de desgaste {nivel}",
     "TIDY5E.Tidy5eSettings": "Ajustes de Tidy 5e Sheets",
     "TIDY5E.WorldSettings.IncludeTidySectionFieldsInDefaultSheets": {
-        "name": "Incluir campos de la sección Tidy en las pestañas predeterminadas"
+        "name": "Incluir campos de la sección Tidy en las pestañas predeterminadas",
+        "hint": "Incluyendo campos de la sección Tide y secciones de acción en los diarios predeterminados."
     }
 }
