@@ -2,6 +2,7 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
   import type { CharacterSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -31,8 +32,8 @@
       <h3>
         <i class="fas fa-building-columns"></i>
         {localize('DND5E.FACILITY.Types.Special.Label.other')}
-        <span class="count">
-          <span class="added">2</span> / <span class="total">2</span>
+        <span class="counter">
+          <span class="value">2</span> / <span class="max">2</span>
         </span>
       </h3>
       <ul>
@@ -54,7 +55,7 @@
           <div class="slots hirelings">
             <div
               data-actor-uuid="Actor.q2zeMwiDSCq2rcso"
-              class="slot occupant-slot hireling"
+              class="slot occupant-slot hireling token"
               data-index="0"
             >
               <img
@@ -64,7 +65,7 @@
             </div>
             <div
               data-actor-uuid="Actor.q2zeMwiDSCq2rcso"
-              class="slot occupant-slot hireling"
+              class="slot occupant-slot hireling token"
               data-index="1"
             >
               <img
@@ -74,7 +75,7 @@
             </div>
             <div
               data-actor-uuid="Actor.q2zeMwiDSCq2rcso"
-              class="slot occupant-slot hireling"
+              class="slot occupant-slot hireling portrait"
               data-index="2"
             >
               <img
@@ -82,7 +83,9 @@
                 alt="Hobgoblin (Tidy)"
               />
             </div>
-            <div class="slot occupant-slot hireling empty" data-index="3"></div>
+            <div class="slot occupant-slot hireling empty" data-index="3">
+              <i class="far fa-user"></i>
+            </div>
           </div>
           <div class="sub-header">
             {localize('DND5E.FACILITY.FIELDS.defenders.max.label')}
@@ -118,14 +121,25 @@
                 alt="Hobgoblin (Tidy)"
               />
             </div>
-            <div class="slot occupant-slot defender empty" data-index="3"></div>
+            <div class="slot occupant-slot defender empty" data-index="3">
+              <i class="far fa-shield"></i>
+            </div>
           </div>
           <div class="sub-header">Order</div>
           <div class="meter progress">
-            <span class="order"> Recruit </span>
-            <span>
-              <span class="elapsed">45</span> / <span class="total">80</span>
-            </span>
+            <div class="label">
+              <span class="order">
+                <!-- Make this with a const directive -->
+                <i
+                  class={CharacterSheetRuntime.getTidyFacilityIcon('recruit')
+                    ?.className ?? ''}
+                ></i>
+                Recruit
+              </span>
+              <span class="counter">
+                <span class="value">45</span> / <span class="max">80</span>
+              </span>
+            </div>
           </div>
         </li>
         <li class="facility special"></li>
@@ -218,6 +232,6 @@
     </section>
   </section>
   <section class="description">
-    <h3><i class="fa-solid fa-feather"></i> Description</h3>
+    <h3><i class="fa-solid fa-books"></i> Description</h3>
   </section>
 </div>

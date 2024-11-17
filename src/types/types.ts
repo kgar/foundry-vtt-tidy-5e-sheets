@@ -257,6 +257,12 @@ export type CharacterSheetContext = {
   actorClassesToImages: Record<string, string>;
   allowMaxHpOverride: boolean;
   appearanceEnrichedHtml: string;
+  bastion: {
+    description: string;
+    defenders: TODO-Add Types;
+    hirelings:;
+    facilities:;
+  };
   biographyEnrichedHtml: string;
   bondEnrichedHtml: string;
   conditions: Dnd5eActorCondition[];

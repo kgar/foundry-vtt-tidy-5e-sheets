@@ -2753,7 +2753,10 @@ export type CONFIG = {
           label: string;
           icon: string;
         };
-      };
+      } & Record<
+        string,
+        { label: string; icon: string; hidden?: boolean; basic?: boolean }
+      >;
       sizes: {
         cramped: {
           label: string;

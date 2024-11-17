@@ -418,13 +418,13 @@ select:hover {
     color: var(--t5e-secondary-color);
     margin-block-end: 0.75rem;
 
-    .count {
+    .counter {
       padding-left: 0.25rem;
 
       color: var(--t5e-tertiary-color);
 
-      .added,
-      .total {
+      .value,
+      .max {
         color: var(--t5e-secondary-color);
       }
     }
@@ -463,6 +463,17 @@ select:hover {
   .slot.occupant-slot {
     width: 1.5rem;
     height: 1.5rem;
+    border-radius: 0.125rem;
+
+    &.empty {
+      border-radius: 0.125rem;
+      border: 0.0625rem dashed var(--t5e-separator-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--t5e-tertiary-color);
+      font-size: 0.6875rem;
+    }
   }
 
   .facility-menu {
@@ -479,6 +490,7 @@ select:hover {
     .sub-header {
       color: var(--t5e-secondary-color);
       margin-block-end: 0.25rem;
+      font-weight: 500;
     }
   }
 
@@ -498,5 +510,57 @@ select:hover {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+  }
+
+  /* Order Progress Meter */
+
+  .meter.progress {
+    --text-color: #fff;
+    --icon-fill: var(--text-color);
+    --bar-percentage: 95%;
+
+    box-shadow: inset 0 0 16px rgb(0 0 0 / 25%);
+    background-color: #3d3d3d;
+    color: #fff;
+    position: relative;
+    display: flex;
+    border-radius: 0.1875rem;
+    height: var(--bar-height, 1.5rem);
+
+    align-items: center;
+    overflow: hidden;
+
+    .label {
+      position: relative;
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      padding-inline: 0.5rem;
+      text-shadow: #000 0 0 5px;
+    }
+
+    .order {
+      display: flex;
+      gap: 0.25rem;
+      align-items: center;
+    }
+
+    i {
+      font-size: 0.75rem;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      block-size: 100%;
+      inline-size: var(--bar-percentage);
+      box-shadow: 0 0 0.375rem var(--dnd5e-shadow-45);
+      transition: all 0.3s ease;
+      background: linear-gradient(
+        90deg,
+        #000 -100%,
+        var(--t5e-resource-bar-color)
+      );
+    }
   }
 }
