@@ -259,18 +259,31 @@ export type CharacterSheetContext = {
   appearanceEnrichedHtml: string;
   bastion: {
     description: string;
-    defenders: TODO-Add Types;
-    hirelings:;
-    facilities:;
   };
   biographyEnrichedHtml: string;
   bondEnrichedHtml: string;
   conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
+  defenders: Actor5e[];
   epicBoonsEarned: string | undefined;
+  facilities: {
+    basic: {
+      available: AvailableBastionActionContext[];
+      chosen: ChosenFacilityContext[];
+      max: number;
+      value: number;
+    };
+    special: {
+      available: AvailableBastionActionContext[];
+      chosen: ChosenFacilityContext[];
+      max: number;
+      value: number;
+    };
+  };
   favorites: FavoriteSection[];
   features: CharacterFeatureSection[];
   flawEnrichedHtml: string;
+  hirelings: Actor5e[];
   idealEnrichedHtml: string;
   inventory: InventorySection[];
   itemContext: Record<string, CharacterItemContext>;
@@ -290,6 +303,43 @@ export type CharacterSheetContext = {
   traitEnrichedHtml: string;
   utilities: Utilities<CharacterSheetContext>;
 } & ActorSheetContextV1;
+
+/** A list of available actions that can be done on behalf of a facility type. */
+type AvailableBastionActionContext = {
+  label: string;
+};
+
+type ChosenFacilityContext = {
+  id: string;
+  labels: {
+    order: string;
+  };
+  name: string;
+  building: {
+    built: boolean;
+    size: string;
+  };
+  disabled: boolean;
+  free: boolean;
+  progress: {
+    value: number;
+    max: number;
+    order: string;
+  };
+  craft: Item5e | null;
+  creatures: FacilityOccupantContext[];
+  defenders: FacilityOccupantContext[];
+  executing: string | undefined;
+  hirelings: FacilityOccupantContext[];
+  img: string;
+  isSpecial: boolean;
+  subtitle: string;
+};
+
+type FacilityOccupantContext = {
+  actor?: Actor5e;
+  empty?: boolean;
+};
 
 export type NpcAbilitySection = {
   canCreate: boolean;
