@@ -279,7 +279,15 @@ export type CharacterSheetContext = {
       max: number;
       value: number;
     };
-  };
+  } & Record<
+    string,
+    {
+      available: AvailableBastionActionContext[];
+      chosen: ChosenFacilityContext[];
+      max: number;
+      value: number;
+    }
+  >;
   favorites: FavoriteSection[];
   features: CharacterFeatureSection[];
   flawEnrichedHtml: string;
@@ -336,7 +344,7 @@ type ChosenFacilityContext = {
   subtitle: string;
 };
 
-type FacilityOccupantContext = {
+export type FacilityOccupantContext = {
   actor?: Actor5e;
   empty?: boolean;
 };
