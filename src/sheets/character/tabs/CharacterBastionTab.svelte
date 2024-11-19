@@ -13,8 +13,37 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
+  $: allDefenders = $context.facilities.special.chosen
+    .flatMap((x) => x.defenders)
+    .filter((x) => !x.empty);
+  $: allHirelings = $context.facilities.special.chosen
+    .flatMap((x) => x.hirelings)
+    .filter((x) => !x.empty);
+  $: allCreatures = $context.facilities.special.chosen
+    .flatMap((x) => x.creatures)
+    .filter((x) => !x.empty);
+
   function getOrderLabel(order: string) {
     return CONFIG.DND5E.facilities.orders[order]?.label ?? order;
+  }
+
+  async function addFacility(type: string) {
+    const otherType = type === 'basic' ? 'special' : 'basic';
+    const result = await dnd5e.applications.CompendiumBrowser.selectOne({
+      filters: {
+        locked: {
+          types: new Set(['facility']),
+          additional: {
+            type: { [type]: 1, [otherType]: -1 },
+            level: { max: $context.actor.system.details.level },
+          },
+        },
+      },
+    });
+
+    if (result) {
+      $context.actor.sheet._onDropItemCreate(await fromUuid(result));
+    }
   }
 
   const localize = FoundryAdapter.localize;
@@ -28,6 +57,7 @@
         field="system.bastion.name"
         value={$context.system.bastion.name}
         selectOnFocus={true}
+        placeholder={localize('DND5E.Bastion.Label')}
       />
     {:else}
       <div class="document-name">{$context.system.bastion.name}</div>
@@ -71,7 +101,11 @@
               </div>
               <div class="slots hirelings">
                 {#each chosen.hirelings as { actor, empty }, index}
-                  <FacilityOccupant {actor} {index} type="hireling"
+                  <FacilityOccupant
+                    {actor}
+                    {index}
+                    type="hireling"
+                    iconClass="far fa-user"
                   ></FacilityOccupant>
                 {/each}
               </div>
@@ -82,18 +116,26 @@
               </div>
               <div class="slots defenders">
                 {#each chosen.defenders as { actor, empty }, index}
-                  <FacilityOccupant {actor} {index} type="defender"
+                  <FacilityOccupant
+                    {actor}
+                    {index}
+                    type="defender"
+                    iconClass="far fa-shield"
                   ></FacilityOccupant>
                 {/each}
               </div>
             {/if}
             {#if chosen.creatures.length}
               <div class="sub-header">
-                {localize('DND5E.FACILITY.FIELDS.creatures.max.label')}
+                {localize('TIDY5E.Facilities.Creatures.Label')}
               </div>
               <div class="slots creatures">
                 {#each chosen.creatures as { actor, empty }, index}
-                  <FacilityOccupant {actor} {index} type="creature"
+                  <FacilityOccupant
+                    {actor}
+                    {index}
+                    type="creature"
+                    iconClass="far fa-horse-head"
                   ></FacilityOccupant>
                 {/each}
               </div>
@@ -138,7 +180,11 @@
         {#each $context.facilities.special.available as available}
           <li class="facility empty">
             <!-- svelte-ignore a11y-missing-attribute -->
-            <a class="highlight-on-hover">
+            <a
+              class="highlight-on-hover"
+              on:click={() => addFacility('special')}
+            >
+              <!-- TODO: 'special' -> to constants -->
               <i class="fas fa-building-columns"></i>
               {localize(available.label)}
             </a>
@@ -193,38 +239,45 @@
         </li>
       </ul>
     </section>
-    <section class="roster defenders">
-      <h3>
-        <i class="fa-solid fa-shield"></i>
-        {localize('DND5E.FACILITY.FIELDS.defenders.max.label')}
-      </h3>
-      <ul>
-        <li>Actor Image</li>
-        <li>Actor Image</li>
-        <li>Actor Image</li>
-        <li>Actor Image</li>
-      </ul>
-
-      <ul>
-        <li class="empty">{localize('DND5E.FACILITY.NoDefenders')}</li>
-      </ul>
-    </section>
-    <section class="roster hirelings">
-      <h3>
-        <i class="fa-solid fa-users"></i>
-        {localize('DND5E.FACILITY.FIELDS.hirelings.max.label')}
-      </h3>
-      <ul>
-        <li>Actor Image</li>
-        <li>Actor Image</li>
-        <li>Actor Image</li>
-        <li>Actor Image</li>
-      </ul>
-
-      <ul>
-        <li></li>
-      </ul>
-    </section>
+    {#if allDefenders.length}
+      <section class="roster defenders">
+        <h3>
+          <i class="fa-solid fa-shield"></i>
+          {localize('TIDY5E.Facilities.Defenders.Label')}
+        </h3>
+        <ul>
+          {#each allDefenders as defender}
+            <li>{defender.name}</li>
+          {/each}
+        </ul>
+      </section>
+    {/if}
+    {#if allHirelings.length}
+      <section class="roster hirelings">
+        <h3>
+          <i class="fa-solid fa-users"></i>
+          {localize('TIDY5E.Facilities.Hirelings.Label')}
+        </h3>
+        <ul>
+          {#each allHirelings as hireling}
+            <li>{hireling.name}</li>
+          {/each}
+        </ul>
+      </section>
+    {/if}
+    {#if allCreatures.length}
+      <section class="roster creatures">
+        <h3>
+          <i class="fa-solid fa-horse-head"></i>
+          {localize('TIDY5E.Facilities.Creatures.Label')}
+        </h3>
+        <ul>
+          {#each allCreatures as creature}
+            <li>{creature.name}</li>
+          {/each}
+        </ul>
+      </section>
+    {/if}
   </section>
   <section class="description">
     <h3><i class="fa-solid fa-books"></i> Description</h3>

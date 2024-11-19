@@ -4,6 +4,7 @@
   export let actor: Actor5e | undefined;
   export let index: number;
   export let type: string;
+  export let iconClass: string;
 </script>
 
 <!-- TODO: When unlocked, include overlay with left/right click for context menu with options Edit and "Remove from {FacilityName}" -->
@@ -21,6 +22,6 @@
   </div>
 {:else}
   <div class="slot occupant-slot {type} empty" data-index={index}>
-    <i class="far fa-shield"></i>
+    <i class={iconClass}></i>
   </div>
 {/if}
