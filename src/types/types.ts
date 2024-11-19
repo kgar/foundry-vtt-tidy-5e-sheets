@@ -333,6 +333,7 @@ type ChosenFacilityContext = {
     value: number;
     max: number;
     order: string;
+    pct: number;
   };
   craft: Item5e | null;
   creatures: FacilityOccupantContext[];

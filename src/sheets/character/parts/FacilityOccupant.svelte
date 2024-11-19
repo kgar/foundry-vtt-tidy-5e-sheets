@@ -1,9 +1,12 @@
 <script lang="ts">
+  import type { Actor5e } from 'src/types/types';
+
   export let actor: Actor5e | undefined;
   export let index: number;
   export let type: string;
 </script>
 
+<!-- TODO: When unlocked, include overlay with left/right click for context menu with options Edit and "Remove from {FacilityName}" -->
 <!-- TODO: When Svelte 5, inline into Bastion tab as snippet -->
 {#if actor}
   {@const imageTypeClassName = actor.token ? 'token' : 'portrait'}

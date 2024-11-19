@@ -440,6 +440,10 @@ select:hover {
       flex-direction: column;
 
       flex: 1;
+
+      &:hover .title {
+        color: var(--t5e-primary-accent-color);
+      }
     }
 
     .title {
