@@ -912,7 +912,7 @@ export class Tidy5eCharacterSheet
       ),
     };
 
-    this._prepareFacilities(context);
+    await this._prepareFacilities(context);
 
     let tabs = await CharacterSheetRuntime.getTabs(context);
 
@@ -1244,11 +1244,8 @@ export class Tidy5eCharacterSheet
 
   /**
    * Prepare bastion facility data for display.
-   * @param {object} context  Render context.
-   * @returns {Promise<void>}
-   * @protected
    */
-  async _prepareFacilities(context: CharacterSheetContext) {
+  async _prepareFacilities(context: CharacterSheetContext): Promise<void> {
     const allDefenders = [];
     const basic = [];
     const special = [];
