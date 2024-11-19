@@ -6,6 +6,7 @@
   import type { CharacterSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  import FacilityOccupant from 'src/sheets/character/parts/FacilityOccupant.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -33,10 +34,62 @@
         <i class="fas fa-building-columns"></i>
         {localize('DND5E.FACILITY.Types.Special.Label.other')}
         <span class="counter">
-          <span class="value">2</span> / <span class="max">2</span>
+          <span class="value">{$context.facilities.special.value}</span> /
+          <span class="max">{$context.facilities.special.max}</span>
         </span>
       </h3>
       <ul>
+        {#each $context.facilities.special.chosen as chosen}
+          <li class="facility special">
+            <div class="facility-header">
+              <div class="title-and-subtitle">
+                <a class="title highlight-on-hover"> {chosen.name} </a>
+                <span class="subtitle">
+                  {chosen.subtitle}
+                </span>
+              </div>
+              <a class="facility-menu highlight-on-hover">
+                <i class="fas fa-ellipsis-vertical"></i>
+              </a>
+            </div>
+            <div class="sub-header">
+              {localize('DND5E.FACILITY.FIELDS.hirelings.max.label')}
+            </div>
+            {#if chosen.hirelings.length}
+              <div class="sub-header">
+                {localize('DND5E.FACILITY.FIELDS.hirelings.max.label')}
+              </div>
+              <div class="slots hirelings">
+                {#each chosen.hirelings as { actor, empty }, index}
+                  <FacilityOccupant {actor} {index} type="hireling"
+                  ></FacilityOccupant>
+                {/each}
+              </div>
+            {/if}
+            {#if chosen.defenders.length}
+              <div class="sub-header">
+                {localize('DND5E.FACILITY.FIELDS.defenders.max.label')}
+              </div>
+              <div class="slots defenders">
+                {#each chosen.defenders as { actor, empty }, index}
+                  <FacilityOccupant {actor} {index} type="defender"
+                  ></FacilityOccupant>
+                {/each}
+              </div>
+            {/if}
+            {#if chosen.creatures.length}
+              <div class="sub-header">
+                {localize('DND5E.FACILITY.FIELDS.creatures.max.label')}
+              </div>
+              <div class="slots creatures">
+                {#each chosen.creatures as { actor, empty }, index}
+                  <FacilityOccupant {actor} {index} type="creature"
+                  ></FacilityOccupant>
+                {/each}
+              </div>
+            {/if}
+          </li>
+        {/each}
         <li class="facility special">
           <div class="facility-header">
             <div class="title-and-subtitle">
