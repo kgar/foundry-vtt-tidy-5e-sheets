@@ -2704,7 +2704,7 @@ export type CONFIG = {
           '13': number;
           '17': number;
         };
-      };
+      } & Record<string, Record<string, number>>;
       orders: {
         build: {
           label: string;
@@ -2776,7 +2776,15 @@ export type CONFIG = {
           squares: number;
           value: number;
         };
-      };
+      } & Record<
+        string,
+        {
+          label: string;
+          days: number;
+          squares: number;
+          value: number;
+        }
+      >;
       types: {
         basic: {
           label: string;
