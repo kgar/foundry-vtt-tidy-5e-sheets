@@ -4,6 +4,11 @@ export type CharacterFavorite = {
   id: string;
 };
 
+export type FacilityOccupants = {
+  value: string[];
+  max: number;
+}
+
 export type UnsortedCharacterFavorite = {
   type: 'item' | 'effect';
   id: string;
