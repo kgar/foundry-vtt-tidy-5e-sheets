@@ -317,7 +317,7 @@ type AvailableBastionActionContext = {
   label: string;
 };
 
-type ChosenFacilityContext = {
+export type ChosenFacilityContext = {
   id: string;
   labels: {
     order: string;

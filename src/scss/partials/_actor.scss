@@ -366,6 +366,29 @@ select:hover {
   }
 
   .name {
+    .document-name {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      white-space: nowrap;
+      border: none;
+
+      &::before {
+        content: '';
+        width: 50%;
+        margin-right: 0.5rem;
+        border-top: 0.125rem ridge var(--t5e-light-color);
+        mask-image: linear-gradient(90deg, transparent 0%, black 100%);
+      }
+      &::after {
+        content: '';
+        width: 50%;
+        margin-left: 0.5rem;
+        border-top: 0.125rem ridge var(--t5e-light-color);
+        mask-image: linear-gradient(270deg, transparent 0%, black 100%);
+      }
+    }
+
     input,
     .document-name {
       text-align: center;
@@ -382,7 +405,8 @@ select:hover {
     grid-template-areas:
       'special basic'
       'defenders defenders'
-      'hirelings hirelings';
+      'hirelings hirelings'
+      'creatures creatures';
     grid-template-columns: 1fr 1fr;
     row-gap: 1.5rem;
     column-gap: 2rem;
@@ -401,6 +425,20 @@ select:hover {
       }
       &.hirelings {
         grid-area: hirelings;
+      }
+      &.creatures {
+        grid-area: creatures;
+      }
+
+      ul {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      img {
+        width: var(--roster-member-size, 3rem);
+        height: var(--roster-member-size, 3rem);
+        border-radius: 0.25rem;
       }
     }
   }
@@ -434,6 +472,14 @@ select:hover {
     display: flex;
     gap: 0.125rem;
     margin-block-end: 1rem;
+
+    img {
+      --img-size: 2rem;
+      width: var(--img-size);
+      height: var(--img-size);
+      margin-inline-end: 0.25rem;
+      border-radius: 0.1875rem;
+    }
 
     .title-and-subtitle {
       display: flex;
@@ -490,6 +536,20 @@ select:hover {
     border-radius: 0.1875rem;
     padding: 0.75rem 0.5rem;
     background-color: var(--t5e-faintest-color);
+    // position: relative;
+    // background: linear-gradient(
+    //     110deg,
+    //     rgba(27, 29, 35, 0.9) 17.43%,
+    //     rgba(27, 29, 35, 0.3) 97.5%
+    //   ),
+    //   var(--underlay) center / cover no-repeat,
+    //   var(--t5e-faintest-color);
+    // background: linear-gradient(
+    //     110deg,
+    //     rgba(27, 29, 35, 0.9) 17.43%,
+    //     rgba(27, 29, 35, 0) 97.5%
+    //   ),
+    //   var(--underlay) lightgray 50% / cover no-repeat, var(--t5e-faintest-color);
 
     .sub-header {
       color: var(--t5e-secondary-color);
@@ -500,7 +560,7 @@ select:hover {
 
   .facility.empty a {
     border-radius: var(--radius-card, 0.1875rem);
-    border: 1px dashed var(--t5e-light-color);
+    border: 0.0625rem dashed var(--t5e-light-color);
     height: 3rem;
     gap: 0.25rem;
     display: flex;
@@ -540,7 +600,7 @@ select:hover {
       display: flex;
       justify-content: space-between;
       padding-inline: 0.5rem;
-      text-shadow: #000 0 0 5px;
+      text-shadow: #000 0 0 0.3125rem;
     }
 
     .order {

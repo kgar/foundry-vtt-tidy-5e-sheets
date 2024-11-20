@@ -1286,7 +1286,7 @@ export class Tidy5eCharacterSheet
         executing: CONFIG.DND5E.facilities.orders[progress.order]?.icon,
         hirelings: await this._prepareFacilityOccupants(hirelings),
         img: foundry.utils.getRoute(img),
-        isSpecial: type.value === 'special',
+        isSpecial: type.value === CONSTANTS.FACILITY_TYPE_SPECIAL,
         subtitle: subtitle.join(' &bull; '),
       };
       allDefenders.push(
@@ -1307,24 +1307,28 @@ export class Tidy5eCharacterSheet
       basic: { chosen: basic, available: [], value: 0, max: 0 },
       special: { chosen: special, available: [], value: 0, max: 0 },
     };
-    ['basic', 'special'].forEach((type) => {
-      const facilities = context.facilities[type];
-      const config = CONFIG.DND5E.facilities.advancement[type];
-      let [, available] =
-        Object.entries(config)
-          .reverse()
-          .find(([level]) => {
-            return level <= this.actor.system.details.level;
-          }) ?? [];
-      facilities.value = facilities.chosen.filter(
-        ({ free }) => type === 'basic' || !free
-      ).length;
-      facilities.max = available ?? 0;
-      available = (available ?? 0) - facilities.value;
-      facilities.available = Array.fromRange(Math.max(0, available)).map(() => {
-        return { label: `DND5E.FACILITY.AvailableFacility.${type}.free` };
-      });
-    });
+    [CONSTANTS.FACILITY_TYPE_BASIC, CONSTANTS.FACILITY_TYPE_SPECIAL].forEach(
+      (type) => {
+        const facilities = context.facilities[type];
+        const config = CONFIG.DND5E.facilities.advancement[type];
+        let [, available] =
+          Object.entries(config)
+            .reverse()
+            .find(([level]) => {
+              return level <= this.actor.system.details.level;
+            }) ?? [];
+        facilities.value = facilities.chosen.filter(
+          ({ free }) => type === CONSTANTS.FACILITY_TYPE_BASIC || !free
+        ).length;
+        facilities.max = available ?? 0;
+        available = (available ?? 0) - facilities.value;
+        facilities.available = Array.fromRange(Math.max(0, available)).map(
+          () => {
+            return { label: `DND5E.FACILITY.AvailableFacility.${type}.free` };
+          }
+        );
+      }
+    );
 
     if (!context.facilities.basic.available.length) {
       context.facilities.basic.available.push({

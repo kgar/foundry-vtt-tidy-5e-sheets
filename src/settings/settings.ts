@@ -300,6 +300,7 @@ export function createSettings() {
             CONSTANTS.TAB_CHARACTER_EFFECTS,
             CONSTANTS.TAB_CHARACTER_BIOGRAPHY,
             CONSTANTS.TAB_CHARACTER_JOURNAL,
+            CONSTANTS.TAB_CHARACTER_BASTION,
           ],
         },
         get() {

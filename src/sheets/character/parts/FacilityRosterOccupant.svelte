@@ -1,13 +1,8 @@
 <script lang="ts">
-  import TextInput from 'src/components/inputs/TextInput.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
-  import type { CharacterSheetContext } from 'src/types/types';
+  import type { Actor5e, CharacterSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import FacilityOccupant from 'src/sheets/character/parts/FacilityOccupant.svelte';
-  import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -17,6 +12,10 @@
   export let type: string;
   export let index: number;
   export let prop: string;
+
+  function onRosterMemberClicked(): any {
+    occupant.sheet.render(true);
+  }
 </script>
 
 <!-- When svelte 5, inline with snippet -->
@@ -28,8 +27,13 @@
   data-prop={prop}
   data-index={index}
 >
-  <img src={occupant.img} alt={occupant.name} />
-  {#if $context.unlocked}
-    <!-- TODO: Options overlay on unlocked -->
-  {/if}
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- svelte-ignore a11y-missing-attribute -->
+  <a on:click={() => onRosterMemberClicked()}>
+    <img src={occupant.img} alt={occupant.name} />
+    {#if $context.unlocked}
+      <!-- TODO: Options overlay on unlocked -->
+    {/if}
+  </a>
 </li>

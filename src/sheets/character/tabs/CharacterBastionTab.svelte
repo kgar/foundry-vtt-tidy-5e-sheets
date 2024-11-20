@@ -2,13 +2,15 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
-  import type { CharacterSheetContext } from 'src/types/types';
+  import type {
+    CharacterSheetContext,
+    ChosenFacilityContext,
+  } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import FacilityOccupant from 'src/sheets/character/parts/FacilityOccupant.svelte';
   import FacilityRosterOccupant from 'src/sheets/character/parts/FacilityRosterOccupant.svelte';
-  import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
+  import FacilityOrderProgressTracker from '../parts/FacilityOrderProgressTracker.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -32,7 +34,10 @@
   }
 
   async function addFacility(type: string) {
-    const otherType = type === 'basic' ? 'special' : 'basic';
+    const otherType =
+      type === CONSTANTS.FACILITY_TYPE_BASIC
+        ? CONSTANTS.FACILITY_TYPE_SPECIAL
+        : CONSTANTS.FACILITY_TYPE_BASIC;
     const result = await dnd5e.applications.CompendiumBrowser.selectOne({
       filters: {
         locked: {
@@ -48,6 +53,16 @@
     if (result) {
       $context.actor.sheet._onDropItemCreate(await fromUuid(result));
     }
+  }
+
+  function editFacility(chosen: ChosenFacilityContext) {
+    const facility = $context.actor.items.get(chosen.id);
+    return facility?.sheet.render(true);
+  }
+
+  function useFacility(event: MouseEvent, chosen: ChosenFacilityContext) {
+    const facility = $context.actor.items.get(chosen.id);
+    return facility?.use({ legacy: false, chooseActivity: true, event });
   }
 
   const localize = FoundryAdapter.localize;
@@ -85,13 +100,25 @@
             data-facility-id={chosen.id}
             class:disabled={chosen.disabled}
             class:building={chosen.building}
+            style="--underlay: url('{chosen.img}')"
           >
             <div class="facility-header">
               <!-- svelte-ignore a11y-missing-attribute -->
-              <a class="title-and-subtitle">
+              <!-- svelte-ignore a11y-click-events-have-key-events -->
+              <!-- svelte-ignore a11y-no-static-element-interactions -->
+              <a on:click={() => editFacility(chosen)}>
+                <img src={chosen.img} alt={chosen.name} />
+              </a>
+              <!-- svelte-ignore a11y-missing-attribute -->
+              <!-- svelte-ignore a11y-click-events-have-key-events -->
+              <!-- svelte-ignore a11y-no-static-element-interactions -->
+              <a
+                class="title-and-subtitle"
+                on:click={(ev) => useFacility(ev, chosen)}
+              >
                 <span class="title"> {chosen.name} </span>
                 <span class="subtitle">
-                  {chosen.subtitle}
+                  {@html chosen.subtitle}
                 </span>
               </a>
               <!-- svelte-ignore a11y-missing-attribute -->
@@ -153,51 +180,18 @@
                 {/each}
               </div>
             {/if}
-            {#if chosen.progress.max || chosen.executing}
-              {@const icon = CharacterSheetRuntime.getTidyFacilityIcon(
-                chosen.progress.order,
-              )}
-
-              <div class="sub-header">
-                {localize('DND5E.FACILITY.FIELDS.order.label')}
-              </div>
-              <!-- TODO: To Component with TODO about svelte 5 snippets -->
-              <div
-                class="meter progress"
-                role="meter"
-                aria-valuemin="0"
-                aria-valuenow={chosen.progress.pct}
-                aria-valuetext={chosen.progress.value?.toString()}
-                aria-valuemax={chosen.progress.max}
-                style="--bar-percentage: {chosen.progress.pct}%"
-              >
-                <div class="label">
-                  <span class="order">
-                    {#if icon?.type === 'fa-icon-class'}
-                      <i class={icon.className}></i>
-                    {:else if icon?.type === 'dnd5e-icon'}
-                      <Dnd5eIcon src={icon.src}></Dnd5eIcon>
-                    {/if}
-                    {getOrderLabel(chosen.progress.order)}
-                  </span>
-                  <span class="counter">
-                    <span class="value">{chosen.progress.value}</span> &sol;
-                    <span class="max">{chosen.progress.max}</span>
-                  </span>
-                </div>
-                <!-- TODO: Handle showing item image when crafting an item -->
-              </div>
-            {/if}
+            <FacilityOrderProgressTracker {chosen} />
           </li>
         {/each}
         {#each $context.facilities.special.available as available}
           <li class="facility empty">
             <!-- svelte-ignore a11y-missing-attribute -->
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <!-- svelte-ignore a11y-no-static-element-interactions -->
             <a
               class="highlight-on-hover"
-              on:click={() => addFacility('special')}
+              on:click={() => addFacility(CONSTANTS.FACILITY_TYPE_SPECIAL)}
             >
-              <!-- TODO: 'special' -> to constants -->
               <i class="fas fa-building-columns"></i>
               {localize(available.label)}
             </a>
@@ -211,45 +205,60 @@
         {localize('DND5E.FACILITY.Types.Basic.Label.other')}
       </h3>
       <ul>
-        <li class="facility">
-          <div class="facility-header">
-            <a class="title">Keeping Room</a>
-            <ul>
-              <li>Unbuilt</li>
-            </ul>
-          </div>
-        </li>
-        <li class="facility">
-          <div class="facility-header">
-            <a class="title">Bedchambers</a>
-            <ul>
-              <li>Cramped</li>
-              <li>Bedroom</li>
-            </ul>
-            <a class="transparent-icon-button">
-              <i class="fas fa-ellipsis-vertical"></i>
+        {#each $context.facilities.basic.chosen as chosen}
+          <li
+            class="facility basic"
+            data-item-id={chosen.id}
+            data-facility-id={chosen.id}
+            class:disabled={chosen.disabled}
+            class:building={chosen.building}
+            style="--underlay: url('{chosen.img}')"
+          >
+            <div class="facility-header">
+              <!-- svelte-ignore a11y-missing-attribute -->
+              <!-- svelte-ignore a11y-click-events-have-key-events -->
+              <!-- svelte-ignore a11y-no-static-element-interactions -->
+              <a on:click={() => editFacility(chosen)}>
+                <img src={chosen.img} alt={chosen.name} />
+              </a>
+              <!-- svelte-ignore a11y-missing-attribute -->
+              <!-- svelte-ignore a11y-click-events-have-key-events -->
+              <!-- svelte-ignore a11y-no-static-element-interactions -->
+              <a
+                class="title-and-subtitle"
+                on:click={(ev) => useFacility(ev, chosen)}
+              >
+                <span class="title">{chosen.name}</span>
+                <span class="subtitle">
+                  {@html chosen.subtitle}
+                </span>
+              </a>
+              <!-- svelte-ignore a11y-missing-attribute -->
+              <a class="facility-menu highlight-on-hover">
+                <i class="fas fa-ellipsis-vertical"></i>
+              </a>
+            </div>
+            <FacilityOrderProgressTracker {chosen} />
+          </li>
+        {/each}
+        {#each $context.facilities.basic.available as available}
+          <div class="facility empty">
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <!-- svelte-ignore a11y-no-static-element-interactions -->
+            <!-- svelte-ignore a11y-missing-attribute -->
+            <a
+              class="highlight-on-hover"
+              on:click={() => addFacility(CONSTANTS.FACILITY_TYPE_BASIC)}
+            >
+              {#if available.label.includes('build')}
+                <i class="fa-solid fa-trowel"></i>
+              {:else}
+                <i class="fas fa-chess-rook"></i>
+              {/if}
+              {localize(available.label)}
             </a>
           </div>
-          <div class="sub-header">Order</div>
-          <div class="meter progress">
-            <span class="order"> Enlarge </span>
-            <span>
-              <span class="elapsed">45</span> / <span class="total">80</span>
-            </span>
-          </div>
-        </li>
-        <li class="facility empty">
-          <a class="highlight-on-hover">
-            <i class="fa-solid fa-trowel"></i>
-            {localize('DND5E.FACILITY.AvailableFacility.basic.build')}
-          </a>
-        </li>
-        <li class="facility empty">
-          <a class="highlight-on-hover">
-            <i class="fas fa-chess-rook"></i>
-            {localize('DND5E.FACILITY.AvailableFacility.basic.free')}
-          </a>
-        </li>
+        {/each}
       </ul>
     </section>
     {#if allDefenders.length}
