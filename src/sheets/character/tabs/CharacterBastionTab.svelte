@@ -7,6 +7,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import FacilityOccupant from 'src/sheets/character/parts/FacilityOccupant.svelte';
+  import FacilityRosterOccupant from 'src/sheets/character/parts/FacilityRosterOccupant.svelte';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>(
@@ -15,13 +16,16 @@
 
   $: allDefenders = $context.facilities.special.chosen
     .flatMap((x) => x.defenders)
-    .filter((x) => !x.empty);
+    .filter((x) => !x.empty)
+    .map((x) => x.actor);
   $: allHirelings = $context.facilities.special.chosen
     .flatMap((x) => x.hirelings)
-    .filter((x) => !x.empty);
+    .filter((x) => !x.empty)
+    .map((x) => x.actor);
   $: allCreatures = $context.facilities.special.chosen
     .flatMap((x) => x.creatures)
-    .filter((x) => !x.empty);
+    .filter((x) => !x.empty)
+    .map((x) => x.actor);
 
   function getOrderLabel(order: string) {
     return CONFIG.DND5E.facilities.orders[order]?.label ?? order;
@@ -99,7 +103,10 @@
               <div class="sub-header">
                 {localize('DND5E.FACILITY.FIELDS.hirelings.max.label')}
               </div>
-              <div class="slots hirelings">
+              <div
+                class="slots facility-occupants hirelings"
+                data-prop="system.hirelings"
+              >
                 {#each chosen.hirelings as { actor, empty }, index}
                   <FacilityOccupant
                     {actor}
@@ -114,7 +121,10 @@
               <div class="sub-header">
                 {localize('DND5E.FACILITY.FIELDS.defenders.max.label')}
               </div>
-              <div class="slots defenders">
+              <div
+                class="slots facility-occupants defenders"
+                data-prop="system.defenders"
+              >
                 {#each chosen.defenders as { actor, empty }, index}
                   <FacilityOccupant
                     {actor}
@@ -129,7 +139,10 @@
               <div class="sub-header">
                 {localize('TIDY5E.Facilities.Creatures.Label')}
               </div>
-              <div class="slots creatures">
+              <div
+                class="slots facility-occupants creatures"
+                data-prop="system.trade.creatures"
+              >
                 {#each chosen.creatures as { actor, empty }, index}
                   <FacilityOccupant
                     {actor}
@@ -246,8 +259,13 @@
           {localize('TIDY5E.Facilities.Defenders.Label')}
         </h3>
         <ul>
-          {#each allDefenders as defender}
-            <li>{defender.name}</li>
+          {#each allDefenders as defender, index}
+            <FacilityRosterOccupant
+              occupant={defender}
+              type="defender"
+              {index}
+              prop="system.defenders"
+            />
           {/each}
         </ul>
       </section>
@@ -259,8 +277,13 @@
           {localize('TIDY5E.Facilities.Hirelings.Label')}
         </h3>
         <ul>
-          {#each allHirelings as hireling}
-            <li>{hireling.name}</li>
+          {#each allHirelings as hireling, index}
+            <FacilityRosterOccupant
+              occupant={hireling}
+              type="defender"
+              {index}
+              prop="system.hirelings"
+            />
           {/each}
         </ul>
       </section>
@@ -272,8 +295,13 @@
           {localize('TIDY5E.Facilities.Creatures.Label')}
         </h3>
         <ul>
-          {#each allCreatures as creature}
-            <li>{creature.name}</li>
+          {#each allCreatures as creature, index}
+            <FacilityRosterOccupant
+              occupant={creature}
+              type="creature"
+              {index}
+              prop="system.trade.creatures"
+            />
           {/each}
         </ul>
       </section>

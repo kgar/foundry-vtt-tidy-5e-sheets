@@ -1636,6 +1636,37 @@ export class Tidy5eCharacterSheet
     return traits;
   }
 
+  /** @inheritDoc */
+  async _onDropActor(event: DragEvent & { target: HTMLElement }, data: any) {
+    if (!event.target.closest('.facility-occupants') || !data.uuid) {
+      return super._onDropActor(event, data);
+    }
+
+    const facilityId =
+      event.target.closest<HTMLElement>('[data-facility-id]')?.dataset?.[
+        'facilityId'
+      ];
+
+    const facility = this.actor.items.get(facilityId);
+
+    if (!facility) {
+      return;
+    }
+
+    const propDataset =
+      event.target.closest<HTMLElement>('[data-prop]')?.dataset;
+
+    const prop = propDataset?.['prop'];
+
+    const { max, value } = foundry.utils.getProperty(facility, prop);
+
+    if (value.length + 1 > max) {
+      return;
+    }
+
+    return facility.update({ [`${prop}.value`]: [...value, data.uuid] });
+  }
+
   /* -------------------------------------------- */
   /* Favorites
   /* -------------------------------------------- */
