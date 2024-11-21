@@ -11,6 +11,8 @@
   import FacilityOccupant from 'src/sheets/character/parts/FacilityOccupant.svelte';
   import FacilityRosterOccupant from 'src/sheets/character/parts/FacilityRosterOccupant.svelte';
   import FacilityOrderProgressTracker from '../parts/FacilityOrderProgressTracker.svelte';
+  import SheetEditor from 'src/components/editor/SheetEditor.svelte';
+  import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -316,7 +318,20 @@
       </section>
     {/if}
   </section>
-  <section class="description">
-    <h3><i class="fa-solid fa-books"></i> Description</h3>
-  </section>
+  <!-- 
+    TODO:
+    - Singleton editor UI that flexes the whole height of the screen, except for Bastion name.
+   -->
+  <RerenderAfterFormSubmission
+    andOnValueChange={$context.bastion.description ?? ''}
+  >
+    <section class="description" use:$context.activateEditors>
+      <h3><i class="fa-solid fa-books"></i> Description</h3>
+      <SheetEditor
+        content={$context.bastion.description}
+        target="system.bastion.description"
+        editable={$context.editable}
+      />
+    </section>
+  </RerenderAfterFormSubmission>
 </div>
