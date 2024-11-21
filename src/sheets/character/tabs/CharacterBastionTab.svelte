@@ -31,9 +31,15 @@
     .filter((x) => !x.empty)
     .map((x) => x.actor);
 
-  function getOrderLabel(order: string) {
-    return CONFIG.DND5E.facilities.orders[order]?.label ?? order;
-  }
+  /*
+    // Example of triggering the context menu from a left click event:
+        event.preventDefault();
+        event.stopPropagation();
+        const { clientX, clientY } = event;
+        event.currentTarget.closest("[data-item-id]").dispatchEvent(new PointerEvent("contextmenu", {
+          view: window, bubbles: true, cancelable: true, clientX, clientY
+        }));
+  */
 
   async function addFacility(type: string) {
     const otherType =
