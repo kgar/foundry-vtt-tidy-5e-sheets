@@ -318,10 +318,6 @@
       </section>
     {/if}
   </section>
-  <!-- 
-    TODO:
-    - Singleton editor UI that flexes the whole height of the screen, except for Bastion name.
-   -->
   <RerenderAfterFormSubmission
     andOnValueChange={$context.bastion.description ?? ''}
   >

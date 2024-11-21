@@ -634,8 +634,6 @@ select:hover {
     display: flex;
     flex-direction: column;
 
-    min-height: 12.5rem;
-
     &:hover .editor .editor-edit {
       display: block;
       padding: 0;
@@ -659,5 +657,14 @@ select:hover {
         box-shadow: var(--t5e-focus-visible-box-shadow);
       }
     }
+
+    .editor-container {
+      min-height: 31.25rem;
+      overflow-y: hidden;
+
+      .ProseMirror {
+        overflow-y: auto;
+      }
+    } 
   }
 }
