@@ -13,6 +13,7 @@
   import FacilityOrderProgressTracker from '../parts/FacilityOrderProgressTracker.svelte';
   import SheetEditor from 'src/components/editor/SheetEditor.svelte';
   import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
+  import { EventHelper } from 'src/utils/events';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -130,7 +131,11 @@
                 </span>
               </a>
               <!-- svelte-ignore a11y-missing-attribute -->
-              <a class="facility-menu highlight-on-hover">
+              <a
+                class="facility-menu highlight-on-hover"
+                on:click={(ev) =>
+                  EventHelper.triggerContextMenu(ev, '[data-item-id]')}
+              >
                 <i class="fas fa-ellipsis-vertical"></i>
               </a>
             </div>
@@ -252,7 +257,11 @@
                 </span>
               </a>
               <!-- svelte-ignore a11y-missing-attribute -->
-              <a class="facility-menu highlight-on-hover">
+              <a
+                class="facility-menu highlight-on-hover"
+                on:click={(ev) =>
+                  EventHelper.triggerContextMenu(ev, '[data-item-id]')}
+              >
                 <i class="fas fa-ellipsis-vertical"></i>
               </a>
             </div>
