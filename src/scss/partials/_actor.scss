@@ -400,16 +400,12 @@ select:hover {
     }
   }
 
-  .contents {
+  .facility-panels {
     display: grid;
-    grid-template-areas:
-      'special basic'
-      'defenders defenders'
-      'hirelings hirelings'
-      'creatures creatures';
+    grid-template-areas: 'special basic';
     grid-template-columns: 1fr 1fr;
-    row-gap: 1.5rem;
     column-gap: 2rem;
+    margin-block-end: 0.5rem;
 
     .facilities {
       &.special {
@@ -419,27 +415,18 @@ select:hover {
         grid-area: basic;
       }
     }
-    .roster {
-      &.defenders {
-        grid-area: defenders;
-      }
-      &.hirelings {
-        grid-area: hirelings;
-      }
-      &.creatures {
-        grid-area: creatures;
-      }
+  }
 
-      ul {
-        display: flex;
-        gap: 0.5rem;
-      }
+  .roster {
+    ul {
+      display: flex;
+      gap: 0.5rem;
+    }
 
-      img {
-        width: var(--roster-member-size, 3rem);
-        height: var(--roster-member-size, 3rem);
-        border-radius: 0.25rem;
-      }
+    img {
+      width: var(--roster-member-size, 3rem);
+      height: var(--roster-member-size, 3rem);
+      border-radius: 0.25rem;
     }
   }
 
@@ -576,25 +563,6 @@ select:hover {
     gap: 0.75rem;
   }
 
-  /* Item Crafting */
-  .craft-and-progress {
-    display: flex;
-    gap: 0.25rem;
-    align-items: center;
-
-    .progress-container {
-      flex: 1;
-    }
-  }
-
-  .crafting-item {
-    --img-size: 2rem;
-    width: var(--img-size);
-    height: var(--img-size);
-    margin-inline-end: 0.125rem;
-    border-radius: 0.1875rem;
-  }
-
   /* Order Progress Meter */
 
   .meter.progress {
@@ -615,9 +583,13 @@ select:hover {
 
     .label {
       position: relative;
+
       flex: 1;
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr auto;
       justify-content: space-between;
+      gap: 0.5rem;
+
       padding-inline: 0.5rem;
       text-shadow: #000 0 0 0.3125rem;
     }
@@ -626,6 +598,11 @@ select:hover {
       display: flex;
       gap: 0.25rem;
       align-items: center;
+      min-width: 0;
+    }
+
+    .counter {
+      text-wrap: nowrap;
     }
 
     i {
@@ -644,6 +621,23 @@ select:hover {
         #000 -100%,
         var(--t5e-resource-bar-color)
       );
+    }
+  }
+
+  .crafting-item {
+    --img-size: 1.5rem;
+    width: var(--img-size);
+    height: var(--img-size);
+    margin-inline-end: 0.125rem;
+    border-radius: 0.1875rem;
+  }
+
+  .craft-and-meter {
+    display: flex;
+    gap: 0.125rem;
+
+    .meter {
+      flex: 1;
     }
   }
 

@@ -5,20 +5,15 @@
   import type {
     CharacterSheetContext,
     ChosenFacilityContext,
-    ItemCardStore,
   } from 'src/types/types';
   import { getContext } from 'svelte';
-  import type { Readable, Writable } from 'svelte/store';
+  import type { Readable } from 'svelte/store';
   import FacilityOccupant from 'src/sheets/character/parts/FacilityOccupant.svelte';
   import FacilityRosterOccupant from 'src/sheets/character/parts/FacilityRosterOccupant.svelte';
   import FacilityOrderProgressTracker from '../parts/FacilityOrderProgressTracker.svelte';
   import SheetEditor from 'src/components/editor/SheetEditor.svelte';
   import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
   import { EventHelper } from 'src/utils/events';
-  import { TidyHooks } from 'src/foundry/TidyHooks';
-  import { settingStore } from 'src/settings/settings';
-  import DefaultItemCardContentTemplate from 'src/components/item-info-card/DefaultItemCardContentTemplate.svelte';
-  import InventoryItemCardContent from 'src/components/item-info-card/InventoryItemCardContent.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -35,36 +30,6 @@
   $: hasCreatures = $context.facilities.special.chosen.some(
     (c: ChosenFacilityContext) => c.creatures.some((d) => !d.empty),
   );
-
-  let card: Writable<ItemCardStore> | undefined = getContext<
-    Writable<ItemCardStore>
-  >(CONSTANTS.SVELTE_CONTEXT.CARD);
-
-  async function onMouseEnterCraft(event: Event, itemUuid: string) {
-    const item = await fromUuid(itemUuid);
-    TidyHooks.tidy5eSheetsItemHoverOn(event, item);
-
-    if (!item?.getChatData || !$settingStore.itemCardsForAllItems) {
-      return;
-    }
-
-    card?.update((card) => {
-      card.item = item;
-      card.itemCardContentTemplate = InventoryItemCardContent;
-      return card;
-    });
-  }
-
-  async function onMouseLeaveCraft(event: Event, itemUuid: string) {
-    const item = await fromUuid(itemUuid);
-    TidyHooks.tidy5eSheetsItemHoverOff(event, item);
-
-    card?.update((card) => {
-      card.item = null;
-      card.itemCardContentTemplate = null;
-      return card;
-    });
-  }
 
   async function addFacility(type: string) {
     const otherType =
@@ -98,15 +63,12 @@
     return facility?.use({ legacy: false, chooseActivity: true, event });
   }
 
-  async function editCraftingItem(itemUuid: string) {
-    const item = await fromUuidSync(itemUuid);
-    item.sheet.render(true);
-  }
-
   const localize = FoundryAdapter.localize;
 </script>
 
 <div class="bastion-container scroll-container">
+  <!-- Name -->
+
   <section class="name">
     {#if $context.unlocked}
       <TextInput
@@ -120,7 +82,12 @@
       <div class="document-name">{$context.system.bastion.name}</div>
     {/if}
   </section>
-  <section class="contents">
+
+  <!-- Facilities -->
+
+  <section class="facility-panels">
+    <!-- Special Facilities -->
+
     <section class="facilities special">
       <h3>
         <i class="fas fa-building-columns"></i>
@@ -161,6 +128,8 @@
                 </span>
               </a>
               <!-- svelte-ignore a11y-missing-attribute -->
+              <!-- svelte-ignore a11y-click-events-have-key-events -->
+              <!-- svelte-ignore a11y-no-static-element-interactions -->
               <a
                 class="facility-menu highlight-on-hover"
                 on:click={(ev) =>
@@ -232,26 +201,8 @@
                 {/each}
               </div>
             {/if}
-            <div class="craft-and-progress">
-              {#if chosen.craft}
-                <a on:click={() => editCraftingItem(chosen.craft.uuid)}>
-                  <img
-                    class="crafting-item"
-                    data-uuid={chosen.craft.uuid}
-                    on:mouseenter={(ev) =>
-                      onMouseEnterCraft(ev, chosen.craft.uuid)}
-                    on:mouseleave={(ev) =>
-                      onMouseLeaveCraft(ev, chosen.craft.uuid)}
-                    src={chosen.craft.img}
-                    alt={chosen.craft.name}
-                  />
-                </a>
-              {/if}
-              <div class="progress-container">
-                TODO: If crafting item, put item name to right of craft order.
-                <FacilityOrderProgressTracker {chosen} />
-              </div>
-            </div>
+
+            <FacilityOrderProgressTracker {chosen} />
           </li>
         {/each}
         {#each $context.facilities.special.available as available}
@@ -270,6 +221,9 @@
         {/each}
       </ul>
     </section>
+
+    <!-- Basic Facilities -->
+
     <section class="facilities basic">
       <h3>
         <i class="fas fa-chess-rook"></i>
@@ -306,6 +260,8 @@
                 </span>
               </a>
               <!-- svelte-ignore a11y-missing-attribute -->
+              <!-- svelte-ignore a11y-click-events-have-key-events -->
+              <!-- svelte-ignore a11y-no-static-element-interactions -->
               <a
                 class="facility-menu highlight-on-hover"
                 on:click={(ev) =>
@@ -337,79 +293,91 @@
         {/each}
       </ul>
     </section>
-    {#if hasDefenders}
-      <section class="roster defenders">
-        <h3>
-          <i class="fa-solid fa-shield"></i>
-          {localize('TIDY5E.Facilities.Defenders.Label')}
-        </h3>
-        <ul>
-          {#each $context.facilities.special.chosen as chosen}
-            {#each chosen.defenders as { actor, empty }, index}
-              {#if !empty}
-                <FacilityRosterOccupant
-                  occupant={actor}
-                  type="defender"
-                  {index}
-                  prop="system.defenders"
-                  facilityId={chosen.id}
-                  facilityName={chosen.name}
-                />
-              {/if}
-            {/each}
-          {/each}
-        </ul>
-      </section>
-    {/if}
-    {#if hasHirelings}
-      <section class="roster hirelings">
-        <h3>
-          <i class="fa-solid fa-users"></i>
-          {localize('TIDY5E.Facilities.Hirelings.Label')}
-        </h3>
-        <ul>
-          {#each $context.facilities.special.chosen as chosen}
-            {#each chosen.hirelings as { actor, empty }, index}
-              {#if !empty}
-                <FacilityRosterOccupant
-                  occupant={actor}
-                  type="hireling"
-                  {index}
-                  prop="system.hirelings"
-                  facilityId={chosen.id}
-                  facilityName={chosen.name}
-                />
-              {/if}
-            {/each}
-          {/each}
-        </ul>
-      </section>
-    {/if}
-    {#if hasCreatures}
-      <section class="roster creatures">
-        <h3>
-          <i class="fa-solid fa-horse-head"></i>
-          {localize('TIDY5E.Facilities.Creatures.Label')}
-        </h3>
-        <ul>
-          {#each $context.facilities.special.chosen as chosen}
-            {#each chosen.creatures as { actor, empty }, index}
-              {#if !empty}
-                <FacilityRosterOccupant
-                  occupant={actor}
-                  type="creature"
-                  {index}
-                  prop="system.trade.creatures"
-                  facilityId={chosen.id}
-                  facilityName={chosen.name}
-                />
-              {/if}
-            {/each}
-          {/each}
-        </ul>
-      </section>
-    {/if}
   </section>
+
+  <!-- Defender Roster -->
+
+  {#if hasDefenders}
+    <section class="roster defenders">
+      <h3>
+        <i class="fa-solid fa-shield"></i>
+        {localize('TIDY5E.Facilities.Defenders.Label')}
+      </h3>
+      <ul>
+        {#each $context.facilities.special.chosen as chosen}
+          {#each chosen.defenders as { actor, empty }, index}
+            {#if !empty}
+              <FacilityRosterOccupant
+                occupant={actor}
+                type="defender"
+                {index}
+                prop="system.defenders"
+                facilityId={chosen.id}
+                facilityName={chosen.name}
+              />
+            {/if}
+          {/each}
+        {/each}
+      </ul>
+    </section>
+  {/if}
+
+  <!-- Hireling Roster -->
+
+  {#if hasHirelings}
+    <section class="roster hirelings">
+      <h3>
+        <i class="fa-solid fa-users"></i>
+        {localize('TIDY5E.Facilities.Hirelings.Label')}
+      </h3>
+      <ul>
+        {#each $context.facilities.special.chosen as chosen}
+          {#each chosen.hirelings as { actor, empty }, index}
+            {#if !empty}
+              <FacilityRosterOccupant
+                occupant={actor}
+                type="hireling"
+                {index}
+                prop="system.hirelings"
+                facilityId={chosen.id}
+                facilityName={chosen.name}
+              />
+            {/if}
+          {/each}
+        {/each}
+      </ul>
+    </section>
+  {/if}
+
+  <!-- Creatures Roster -->
+
+  {#if hasCreatures}
+    <section class="roster creatures">
+      <h3>
+        <i class="fa-solid fa-horse-head"></i>
+        {localize('TIDY5E.Facilities.Creatures.Label')}
+      </h3>
+      <ul>
+        {#each $context.facilities.special.chosen as chosen}
+          {#each chosen.creatures as { actor, empty }, index}
+            {#if !empty}
+              <FacilityRosterOccupant
+                occupant={actor}
+                type="creature"
+                {index}
+                prop="system.trade.creatures"
+                facilityId={chosen.id}
+                facilityName={chosen.name}
+              />
+            {/if}
+          {/each}
+        {/each}
+      </ul>
+    </section>
+  {/if}
+
+  <!-- Description -->
+
   <RerenderAfterFormSubmission
     andOnValueChange={$context.bastion.description ?? ''}
   >

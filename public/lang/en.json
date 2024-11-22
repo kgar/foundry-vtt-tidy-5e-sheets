@@ -822,5 +822,6 @@
   "TIDY5E.Facilities.Defenders.Label": "Defenders",
   "TIDY5E.Facilities.Creatures.Label": "Creatures",
   "TIDY5E.Facilities.ContextMenuActionRemove": "Remove from {facilityName}",
+  "TIDY5E.Facilities.Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}",
   "TIDY5E.LocalizationTestKey": "Localization Test Key"
 }
