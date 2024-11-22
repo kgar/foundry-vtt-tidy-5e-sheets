@@ -576,6 +576,25 @@ select:hover {
     gap: 0.75rem;
   }
 
+  /* Item Crafting */
+  .craft-and-progress {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+
+    .progress-container {
+      flex: 1;
+    }
+  }
+
+  .crafting-item {
+    --img-size: 2rem;
+    width: var(--img-size);
+    height: var(--img-size);
+    margin-inline-end: 0.125rem;
+    border-radius: 0.1875rem;
+  }
+
   /* Order Progress Meter */
 
   .meter.progress {
@@ -665,6 +684,6 @@ select:hover {
       .ProseMirror {
         overflow-y: auto;
       }
-    } 
+    }
   }
 }

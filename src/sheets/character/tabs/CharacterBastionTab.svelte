@@ -5,15 +5,20 @@
   import type {
     CharacterSheetContext,
     ChosenFacilityContext,
+    ItemCardStore,
   } from 'src/types/types';
   import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import type { Readable, Writable } from 'svelte/store';
   import FacilityOccupant from 'src/sheets/character/parts/FacilityOccupant.svelte';
   import FacilityRosterOccupant from 'src/sheets/character/parts/FacilityRosterOccupant.svelte';
   import FacilityOrderProgressTracker from '../parts/FacilityOrderProgressTracker.svelte';
   import SheetEditor from 'src/components/editor/SheetEditor.svelte';
   import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
   import { EventHelper } from 'src/utils/events';
+  import { TidyHooks } from 'src/foundry/TidyHooks';
+  import { settingStore } from 'src/settings/settings';
+  import DefaultItemCardContentTemplate from 'src/components/item-info-card/DefaultItemCardContentTemplate.svelte';
+  import InventoryItemCardContent from 'src/components/item-info-card/InventoryItemCardContent.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -31,15 +36,35 @@
     (c: ChosenFacilityContext) => c.creatures.some((d) => !d.empty),
   );
 
-  /*
-    // Example of triggering the context menu from a left click event:
-        event.preventDefault();
-        event.stopPropagation();
-        const { clientX, clientY } = event;
-        event.currentTarget.closest("[data-item-id]").dispatchEvent(new PointerEvent("contextmenu", {
-          view: window, bubbles: true, cancelable: true, clientX, clientY
-        }));
-  */
+  let card: Writable<ItemCardStore> | undefined = getContext<
+    Writable<ItemCardStore>
+  >(CONSTANTS.SVELTE_CONTEXT.CARD);
+
+  async function onMouseEnterCraft(event: Event, itemUuid: string) {
+    const item = await fromUuid(itemUuid);
+    TidyHooks.tidy5eSheetsItemHoverOn(event, item);
+
+    if (!item?.getChatData || !$settingStore.itemCardsForAllItems) {
+      return;
+    }
+
+    card?.update((card) => {
+      card.item = item;
+      card.itemCardContentTemplate = InventoryItemCardContent;
+      return card;
+    });
+  }
+
+  async function onMouseLeaveCraft(event: Event, itemUuid: string) {
+    const item = await fromUuid(itemUuid);
+    TidyHooks.tidy5eSheetsItemHoverOff(event, item);
+
+    card?.update((card) => {
+      card.item = null;
+      card.itemCardContentTemplate = null;
+      return card;
+    });
+  }
 
   async function addFacility(type: string) {
     const otherType =
@@ -71,6 +96,11 @@
   function useFacility(event: MouseEvent, chosen: ChosenFacilityContext) {
     const facility = $context.actor.items.get(chosen.id);
     return facility?.use({ legacy: false, chooseActivity: true, event });
+  }
+
+  async function editCraftingItem(itemUuid: string) {
+    const item = await fromUuidSync(itemUuid);
+    item.sheet.render(true);
   }
 
   const localize = FoundryAdapter.localize;
@@ -202,7 +232,26 @@
                 {/each}
               </div>
             {/if}
-            <FacilityOrderProgressTracker {chosen} />
+            <div class="craft-and-progress">
+              {#if chosen.craft}
+                <a on:click={() => editCraftingItem(chosen.craft.uuid)}>
+                  <img
+                    class="crafting-item"
+                    data-uuid={chosen.craft.uuid}
+                    on:mouseenter={(ev) =>
+                      onMouseEnterCraft(ev, chosen.craft.uuid)}
+                    on:mouseleave={(ev) =>
+                      onMouseLeaveCraft(ev, chosen.craft.uuid)}
+                    src={chosen.craft.img}
+                    alt={chosen.craft.name}
+                  />
+                </a>
+              {/if}
+              <div class="progress-container">
+                TODO: If crafting item, put item name to right of craft order.
+                <FacilityOrderProgressTracker {chosen} />
+              </div>
+            </div>
           </li>
         {/each}
         {#each $context.facilities.special.available as available}
