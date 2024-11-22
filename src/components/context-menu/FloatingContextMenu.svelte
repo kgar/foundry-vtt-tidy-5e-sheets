@@ -1,11 +1,11 @@
 <script lang="ts">
   import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ContextMenuOption } from 'src/types/types';
+  import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 
   export let containingElement: HTMLElement;
   export let targetSelector: string;
-  export let options: ContextMenuOption[];
+  export let options: ContextMenuEntry[];
 
   $: {
     if (containingElement) {

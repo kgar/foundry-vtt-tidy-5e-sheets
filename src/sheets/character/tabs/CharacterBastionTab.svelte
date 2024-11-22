@@ -18,18 +18,17 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: allDefenders = $context.facilities.special.chosen
-    .flatMap((x) => x.defenders)
-    .filter((x) => !x.empty)
-    .map((x) => x.actor);
-  $: allHirelings = $context.facilities.special.chosen
-    .flatMap((x) => x.hirelings)
-    .filter((x) => !x.empty)
-    .map((x) => x.actor);
-  $: allCreatures = $context.facilities.special.chosen
-    .flatMap((x) => x.creatures)
-    .filter((x) => !x.empty)
-    .map((x) => x.actor);
+  $: hasDefenders = $context.facilities.special.chosen.some(
+    (c: ChosenFacilityContext) => c.defenders.some((d) => !d.empty),
+  );
+
+  $: hasHirelings = $context.facilities.special.chosen.some(
+    (c: ChosenFacilityContext) => c.hirelings.some((d) => !d.empty),
+  );
+
+  $: hasCreatures = $context.facilities.special.chosen.some(
+    (c: ChosenFacilityContext) => c.creatures.some((d) => !d.empty),
+  );
 
   /*
     // Example of triggering the context menu from a left click event:
@@ -108,6 +107,7 @@
             data-facility-id={chosen.id}
             class:disabled={chosen.disabled}
             class:building={chosen.building}
+            data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
             style="--underlay: url('{chosen.img}')"
           >
             <div class="facility-header">
@@ -148,6 +148,9 @@
                     {index}
                     type="hireling"
                     iconClass="far fa-user"
+                    facilityId={chosen.id}
+                    facilityName={chosen.name}
+                    prop="system.hirelings"
                   ></FacilityOccupant>
                 {/each}
               </div>
@@ -166,6 +169,9 @@
                     {index}
                     type="defender"
                     iconClass="far fa-shield"
+                    facilityId={chosen.id}
+                    facilityName={chosen.name}
+                    prop="system.defenders"
                   ></FacilityOccupant>
                 {/each}
               </div>
@@ -184,6 +190,9 @@
                     {index}
                     type="creature"
                     iconClass="far fa-horse-head"
+                    facilityId={chosen.id}
+                    facilityName={chosen.name}
+                    prop="system.trade.creatures"
                   ></FacilityOccupant>
                 {/each}
               </div>
@@ -220,6 +229,7 @@
             data-facility-id={chosen.id}
             class:disabled={chosen.disabled}
             class:building={chosen.building}
+            data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
             style="--underlay: url('{chosen.img}')"
           >
             <div class="facility-header">
@@ -269,56 +279,74 @@
         {/each}
       </ul>
     </section>
-    {#if allDefenders.length}
+    {#if hasDefenders}
       <section class="roster defenders">
         <h3>
           <i class="fa-solid fa-shield"></i>
           {localize('TIDY5E.Facilities.Defenders.Label')}
         </h3>
         <ul>
-          {#each allDefenders as defender, index}
-            <FacilityRosterOccupant
-              occupant={defender}
-              type="defender"
-              {index}
-              prop="system.defenders"
-            />
+          {#each $context.facilities.special.chosen as chosen}
+            {#each chosen.defenders as { actor, empty }, index}
+              {#if !empty}
+                <FacilityRosterOccupant
+                  occupant={actor}
+                  type="defender"
+                  {index}
+                  prop="system.defenders"
+                  facilityId={chosen.id}
+                  facilityName={chosen.name}
+                />
+              {/if}
+            {/each}
           {/each}
         </ul>
       </section>
     {/if}
-    {#if allHirelings.length}
+    {#if hasHirelings}
       <section class="roster hirelings">
         <h3>
           <i class="fa-solid fa-users"></i>
           {localize('TIDY5E.Facilities.Hirelings.Label')}
         </h3>
         <ul>
-          {#each allHirelings as hireling, index}
-            <FacilityRosterOccupant
-              occupant={hireling}
-              type="defender"
-              {index}
-              prop="system.hirelings"
-            />
+          {#each $context.facilities.special.chosen as chosen}
+            {#each chosen.hirelings as { actor, empty }, index}
+              {#if !empty}
+                <FacilityRosterOccupant
+                  occupant={actor}
+                  type="hireling"
+                  {index}
+                  prop="system.hirelings"
+                  facilityId={chosen.id}
+                  facilityName={chosen.name}
+                />
+              {/if}
+            {/each}
           {/each}
         </ul>
       </section>
     {/if}
-    {#if allCreatures.length}
+    {#if hasCreatures}
       <section class="roster creatures">
         <h3>
           <i class="fa-solid fa-horse-head"></i>
           {localize('TIDY5E.Facilities.Creatures.Label')}
         </h3>
         <ul>
-          {#each allCreatures as creature, index}
-            <FacilityRosterOccupant
-              occupant={creature}
-              type="creature"
-              {index}
-              prop="system.trade.creatures"
-            />
+          {#each $context.facilities.special.chosen as chosen}
+            {#each chosen.creatures as { actor, empty }, index}
+              {#if !empty}
+                <FacilityRosterOccupant
+                  occupant={actor}
+                  type="creature"
+                  {index}
+                  prop="system.trade.creatures"
+                  facilityId={chosen.id}
+                  facilityName={chosen.name}
+                />
+              {/if}
+            {/each}
           {/each}
         </ul>
       </section>

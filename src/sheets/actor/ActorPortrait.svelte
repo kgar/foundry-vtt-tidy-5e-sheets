@@ -5,7 +5,6 @@
   import type {
     ActorSheetContextV1,
     ActorSheetContextV2,
-    ContextMenuOption,
   } from 'src/types/types';
   import { isNil } from 'src/utils/data';
   import { getContext } from 'svelte';
@@ -13,6 +12,7 @@
   import FloatingContextMenu from 'src/components/context-menu/FloatingContextMenu.svelte';
   import { debug, error } from 'src/utils/logging';
   import { TidyHooks } from 'src/foundry/TidyHooks';
+    import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 
   export let actor: Actor5e;
   export let useHpOverlay: boolean;
@@ -71,7 +71,7 @@
 
   let portraitContainer: HTMLElement;
   // TODO: Consider sending context menu options down through document context in the first place.
-  let contextMenuOptions: ContextMenuOption[] = [];
+  let contextMenuOptions: ContextMenuEntry[] = [];
   $: {
     try {
       contextMenuOptions = $context.actorPortraitCommands.map((c) => ({

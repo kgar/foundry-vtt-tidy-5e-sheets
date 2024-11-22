@@ -635,12 +635,6 @@ export type ContainerCapacityContext = {
   units: string;
 };
 
-export type ContextMenuOption = {
-  name: string;
-  icon?: string;
-  callback?: () => void;
-};
-
 export type RenderableClassicControl<TParams> = {
   component: ComponentType;
   props?: (params: TParams) => Record<string, unknown>;

@@ -1,10 +1,14 @@
 <script lang="ts">
+  import { CONSTANTS } from 'src/constants';
   import type { Actor5e } from 'src/types/types';
 
   export let actor: Actor5e | undefined;
   export let index: number;
   export let type: string;
   export let iconClass: string;
+  export let facilityId: string;
+  export let facilityName: string;
+  export let prop: string;
 
   function onOccupantClick() {
     actor.sheet.render(true);
@@ -26,6 +30,10 @@
     class="slot occupant-slot {type} {imageTypeClassName}"
     data-index={index}
     data-tooltip={actor.name}
+    data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_FACILITY_OCCUPANTS}
+    data-facility-id={facilityId}
+    data-facility-name={facilityName}
+    data-prop={prop}
     on:click={() => onOccupantClick()}
   >
     <img src={imageSrc} alt={actor.name} />

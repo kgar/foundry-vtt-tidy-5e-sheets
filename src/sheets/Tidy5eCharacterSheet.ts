@@ -1568,6 +1568,20 @@ export class Tidy5eCharacterSheet
     });
   }
 
+  deleteOccupant(facilityId: string, prop: string, index: number) {
+    const facility = this.actor.items.get(facilityId);
+
+    if (!facility || !prop || index === undefined) {
+      return;
+    }
+
+    let { value } = foundry.utils.getProperty(facility, prop);
+
+    value = value.filter((_: any, i: number) => i !== index);
+
+    return facility.update({ [`${prop}.value`]: value });
+  }
+
   _getHeaderButtons() {
     const buttons = super._getHeaderButtons();
     return FoundryAdapter.removeConfigureSettingsButtonWhenLockedForNonGm(

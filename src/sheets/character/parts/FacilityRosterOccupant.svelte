@@ -12,6 +12,8 @@
   export let type: string;
   export let index: number;
   export let prop: string;
+  export let facilityId: string;
+  export let facilityName: string;
 
   function onRosterMemberClicked(): any {
     occupant.sheet.render(true);
@@ -23,9 +25,11 @@
   class={type}
   data-actor-uuid={occupant.uuid}
   data-tooltip={occupant.name}
-  data-facility-id={occupant.facility}
+  data-facility-id={facilityId}
+  data-facility-name={facilityName}
   data-prop={prop}
   data-index={index}
+  data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_FACILITY_OCCUPANTS}
 >
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <!-- svelte-ignore a11y-no-static-element-interactions -->
