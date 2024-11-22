@@ -391,6 +391,7 @@ export const CONSTANTS = {
     EXPANDED_ITEM_DATA: 'expandedItemData',
     EXPANDED_ITEMS: 'expandedItems',
     FUNCTIONS: 'functions',
+    HOVERED_FACILITY_OCCUPANT: 'hoveredFacilityOccupant',
     INITIAL_TAB_ID: 'initialTabId',
     INLINE_TOGGLE_SERVICE: 'inlineToggleService',
     ITEM_FILTER_SERVICE: 'itemFilterService',

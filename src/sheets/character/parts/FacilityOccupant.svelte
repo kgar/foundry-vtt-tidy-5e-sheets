@@ -1,8 +1,10 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import type { Actor5e } from 'src/types/types';
+  import { getContext } from 'svelte';
+  import type { Writable } from 'svelte/store';
 
-  export let actor: Actor5e | undefined;
+  export let occupant: Actor5e | undefined;
   export let index: number;
   export let type: string;
   export let iconClass: string;
@@ -11,33 +13,44 @@
   export let prop: string;
 
   function onOccupantClick() {
-    actor.sheet.render(true);
+    occupant.sheet.render(true);
     // TODO: handle when unlocked, and show context menu options.
   }
+
+  let hoveredFacilityOccupant = getContext<Writable<string>>(
+    CONSTANTS.SVELTE_CONTEXT.HOVERED_FACILITY_OCCUPANT,
+  );
 </script>
 
 <!-- TODO: When unlocked, include overlay with left/right click for context menu with options Edit and "Remove from {FacilityName}" -->
 <!-- TODO: When Svelte 5, inline into Bastion tab as snippet -->
-{#if actor}
-  {@const imageTypeClassName = actor.token ? 'token' : 'portrait'}
+{#if occupant}
+  {@const imageTypeClassName = occupant.token ? 'token' : 'portrait'}
   {@const imageSrc =
-    imageTypeClassName == 'token' ? actor.token.img : actor.img}
+    imageTypeClassName == 'token' ? occupant.token.img : occupant.img}
   <!-- svelte-ignore a11y-missing-attribute -->
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <a
-    data-actor-uuid={actor.uuid}
+  <li
+    class:highlight={$hoveredFacilityOccupant ===
+      `${facilityId}-${index}-${occupant.uuid}`}
     class="slot occupant-slot {type} {imageTypeClassName}"
-    data-index={index}
-    data-tooltip={actor.name}
-    data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_FACILITY_OCCUPANTS}
+    data-actor-uuid={occupant.uuid}
+    data-tooltip={occupant.name}
     data-facility-id={facilityId}
     data-facility-name={facilityName}
     data-prop={prop}
+    data-index={index}
+    data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_FACILITY_OCCUPANTS}
     on:click={() => onOccupantClick()}
+    on:mouseenter={() =>
+      ($hoveredFacilityOccupant = `${facilityId}-${index}-${occupant.uuid}`)}
+    on:mouseleave={() => ($hoveredFacilityOccupant = '')}
   >
-    <img src={imageSrc} alt={actor.name} />
-  </a>
+    <a>
+      <img src={imageSrc} alt={occupant.name} />
+    </a>
+  </li>
 {:else}
   <div class="slot occupant-slot {type} empty" data-index={index}>
     <i class={iconClass}></i>

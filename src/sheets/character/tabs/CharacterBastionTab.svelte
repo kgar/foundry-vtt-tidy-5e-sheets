@@ -6,17 +6,25 @@
     CharacterSheetContext,
     ChosenFacilityContext,
   } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { getContext, setContext } from 'svelte';
+  import { writable, type Readable, type Writable } from 'svelte/store';
   import FacilityOccupant from 'src/sheets/character/parts/FacilityOccupant.svelte';
   import FacilityRosterOccupant from 'src/sheets/character/parts/FacilityRosterOccupant.svelte';
   import FacilityOrderProgressTracker from '../parts/FacilityOrderProgressTracker.svelte';
   import SheetEditor from 'src/components/editor/SheetEditor.svelte';
   import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
   import { EventHelper } from 'src/utils/events';
+  import { isNil } from 'src/utils/data';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+
+  let hoveredFacilityOccupant = writable<string>('');
+
+  setContext<Writable<string>>(
+    CONSTANTS.SVELTE_CONTEXT.HOVERED_FACILITY_OCCUPANT,
+    hoveredFacilityOccupant,
   );
 
   $: hasDefenders = $context.facilities.special.chosen.some(
@@ -78,7 +86,7 @@
         selectOnFocus={true}
         placeholder={localize('DND5E.Bastion.Label')}
       />
-    {:else}
+    {:else if !isNil($context.system.bastion.name, '')}
       <div class="document-name">{$context.system.bastion.name}</div>
     {/if}
   </section>
@@ -97,7 +105,7 @@
           <span class="max">{$context.facilities.special.max}</span>
         </span>
       </h3>
-      <ul>
+      <ul class="facility-list">
         {#each $context.facilities.special.chosen as chosen}
           <li
             class="facility special"
@@ -142,13 +150,13 @@
               <div class="sub-header">
                 {localize('DND5E.FACILITY.FIELDS.hirelings.max.label')}
               </div>
-              <div
+              <ul
                 class="slots facility-occupants hirelings"
                 data-prop="system.hirelings"
               >
                 {#each chosen.hirelings as { actor, empty }, index}
                   <FacilityOccupant
-                    {actor}
+                    occupant={actor}
                     {index}
                     type="hireling"
                     iconClass="far fa-user"
@@ -157,19 +165,19 @@
                     prop="system.hirelings"
                   ></FacilityOccupant>
                 {/each}
-              </div>
+              </ul>
             {/if}
             {#if chosen.defenders.length}
               <div class="sub-header">
                 {localize('DND5E.FACILITY.FIELDS.defenders.max.label')}
               </div>
-              <div
+              <ul
                 class="slots facility-occupants defenders"
                 data-prop="system.defenders"
               >
                 {#each chosen.defenders as { actor, empty }, index}
                   <FacilityOccupant
-                    {actor}
+                    occupant={actor}
                     {index}
                     type="defender"
                     iconClass="far fa-shield"
@@ -178,19 +186,19 @@
                     prop="system.defenders"
                   ></FacilityOccupant>
                 {/each}
-              </div>
+              </ul>
             {/if}
             {#if chosen.creatures.length}
               <div class="sub-header">
                 {localize('TIDY5E.Facilities.Creatures.Label')}
               </div>
-              <div
+              <ul
                 class="slots facility-occupants creatures"
                 data-prop="system.trade.creatures"
               >
                 {#each chosen.creatures as { actor, empty }, index}
                   <FacilityOccupant
-                    {actor}
+                    occupant={actor}
                     {index}
                     type="creature"
                     iconClass="far fa-horse-head"
@@ -199,7 +207,7 @@
                     prop="system.trade.creatures"
                   ></FacilityOccupant>
                 {/each}
-              </div>
+              </ul>
             {/if}
 
             <FacilityOrderProgressTracker {chosen} />
@@ -229,7 +237,7 @@
         <i class="fas fa-chess-rook"></i>
         {localize('DND5E.FACILITY.Types.Basic.Label.other')}
       </h3>
-      <ul>
+      <ul class="facility-list">
         {#each $context.facilities.basic.chosen as chosen}
           <li
             class="facility basic"
@@ -303,7 +311,7 @@
         <i class="fa-solid fa-shield"></i>
         {localize('TIDY5E.Facilities.Defenders.Label')}
       </h3>
-      <ul>
+      <ul class="roster-list">
         {#each $context.facilities.special.chosen as chosen}
           {#each chosen.defenders as { actor, empty }, index}
             {#if !empty}
@@ -330,7 +338,7 @@
         <i class="fa-solid fa-users"></i>
         {localize('TIDY5E.Facilities.Hirelings.Label')}
       </h3>
-      <ul>
+      <ul class="roster-list">
         {#each $context.facilities.special.chosen as chosen}
           {#each chosen.hirelings as { actor, empty }, index}
             {#if !empty}
@@ -357,7 +365,7 @@
         <i class="fa-solid fa-horse-head"></i>
         {localize('TIDY5E.Facilities.Creatures.Label')}
       </h3>
-      <ul>
+      <ul class="roster-list">
         {#each $context.facilities.special.chosen as chosen}
           {#each chosen.creatures as { actor, empty }, index}
             {#if !empty}
