@@ -455,6 +455,15 @@ select:hover {
       &.basic {
         grid-area: basic;
       }
+
+      .occupant-dropzone {
+        background: var(--t5e-faint-color);
+        border-radius: 0.125rem;
+        outline: 0.125rem solid var(--t5e-faint-color);
+        > * {
+          pointer-events: none;
+        }
+      }
     }
   }
 

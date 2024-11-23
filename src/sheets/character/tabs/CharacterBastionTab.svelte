@@ -20,6 +20,7 @@
   import type { Item5e } from 'src/types/item.types';
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import DefaultItemCardContentTemplate from 'src/components/item-info-card/DefaultItemCardContentTemplate.svelte';
+  import { applyDropzoneClass } from 'src/events/drag-and-drop';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -92,11 +93,6 @@
     if (result) {
       $context.actor.sheet._onDropItemCreate(await fromUuid(result));
     }
-  }
-
-  function editFacility(chosen: ChosenFacilityContext) {
-    const facility = $context.actor.items.get(chosen.id);
-    return facility?.sheet.render(true);
   }
 
   function useFacility(event: MouseEvent, chosen: ChosenFacilityContext) {
@@ -189,67 +185,76 @@
             </div>
 
             {#if chosen.hirelings.length}
-              <div class="sub-header">
-                {localize('DND5E.FACILITY.FIELDS.hirelings.max.label')}
-              </div>
-              <ul
-                class="slots facility-occupants hirelings"
+              <div
+                class="facility-occupants"
                 data-prop="system.hirelings"
+                use:applyDropzoneClass={'occupant-dropzone'}
               >
-                {#each chosen.hirelings as { actor, empty }, index}
-                  <FacilityOccupant
-                    occupant={actor}
-                    {index}
-                    type="hireling"
-                    iconClass="far fa-user"
-                    facilityId={chosen.id}
-                    facilityName={chosen.name}
-                    prop="system.hirelings"
-                  ></FacilityOccupant>
-                {/each}
-              </ul>
+                <div class="sub-header">
+                  {localize('DND5E.FACILITY.FIELDS.hirelings.max.label')}
+                </div>
+                <ul class="slots hirelings">
+                  {#each chosen.hirelings as { actor, empty }, index}
+                    <FacilityOccupant
+                      occupant={actor}
+                      {index}
+                      type="hireling"
+                      iconClass="far fa-user"
+                      facilityId={chosen.id}
+                      facilityName={chosen.name}
+                      prop="system.hirelings"
+                    ></FacilityOccupant>
+                  {/each}
+                </ul>
+              </div>
             {/if}
             {#if chosen.defenders.length}
-              <div class="sub-header">
-                {localize('DND5E.FACILITY.FIELDS.defenders.max.label')}
-              </div>
-              <ul
-                class="slots facility-occupants defenders"
+              <div
+                class="facility-occupants"
                 data-prop="system.defenders"
+                use:applyDropzoneClass={'occupant-dropzone'}
               >
-                {#each chosen.defenders as { actor, empty }, index}
-                  <FacilityOccupant
-                    occupant={actor}
-                    {index}
-                    type="defender"
-                    iconClass="far fa-shield"
-                    facilityId={chosen.id}
-                    facilityName={chosen.name}
-                    prop="system.defenders"
-                  ></FacilityOccupant>
-                {/each}
-              </ul>
+                <div class="sub-header">
+                  {localize('DND5E.FACILITY.FIELDS.defenders.max.label')}
+                </div>
+                <ul class="slots facility-occupants defenders">
+                  {#each chosen.defenders as { actor, empty }, index}
+                    <FacilityOccupant
+                      occupant={actor}
+                      {index}
+                      type="defender"
+                      iconClass="far fa-shield"
+                      facilityId={chosen.id}
+                      facilityName={chosen.name}
+                      prop="system.defenders"
+                    ></FacilityOccupant>
+                  {/each}
+                </ul>
+              </div>
             {/if}
             {#if chosen.creatures.length}
-              <div class="sub-header">
-                {localize('TIDY5E.Facilities.Creatures.Label')}
-              </div>
-              <ul
-                class="slots facility-occupants creatures"
+              <div
+                class="facility-occupants"
                 data-prop="system.trade.creatures"
+                use:applyDropzoneClass={'occupant-dropzone'}
               >
-                {#each chosen.creatures as { actor, empty }, index}
-                  <FacilityOccupant
-                    occupant={actor}
-                    {index}
-                    type="creature"
-                    iconClass="far fa-horse-head"
-                    facilityId={chosen.id}
-                    facilityName={chosen.name}
-                    prop="system.trade.creatures"
-                  ></FacilityOccupant>
-                {/each}
-              </ul>
+                <div class="sub-header">
+                  {localize('TIDY5E.Facilities.Creatures.Label')}
+                </div>
+                <ul class="slots creatures">
+                  {#each chosen.creatures as { actor, empty }, index}
+                    <FacilityOccupant
+                      occupant={actor}
+                      {index}
+                      type="creature"
+                      iconClass="far fa-horse-head"
+                      facilityId={chosen.id}
+                      facilityName={chosen.name}
+                      prop="system.trade.creatures"
+                    ></FacilityOccupant>
+                  {/each}
+                </ul>
+              </div>
             {/if}
 
             <FacilityOrderProgressTracker {chosen} />
