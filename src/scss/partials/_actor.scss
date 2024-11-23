@@ -409,47 +409,6 @@ select:hover {
     }
   }
 
-  .facility-panels {
-    display: grid;
-    grid-template-areas: 'special basic';
-    grid-template-columns: 1fr 1fr;
-    column-gap: 2rem;
-
-    .facilities {
-      &.special {
-        grid-area: special;
-      }
-      &.basic {
-        grid-area: basic;
-      }
-    }
-  }
-
-  .roster {
-    ul {
-      display: flex;
-      gap: 0.5rem;
-      margin-inline: var(--occupant-hightlight-width);
-
-      li {
-        border-radius: 0.125rem;
-      }
-    }
-
-    img {
-      width: var(--roster-member-size, 3rem);
-      height: var(--roster-member-size, 3rem);
-      border-radius: 0.25rem;
-      object-fit: cover;
-    }
-  }
-
-  .highlight {
-    background: var(--t5e-faintest-color);
-    outline: var(--occupant-hightlight-width) solid
-      var(--t5e-primary-accent-color);
-  }
-
   h3 {
     height: 1.1875rem;
     padding-bottom: 0.25rem;
@@ -472,6 +431,89 @@ select:hover {
       .max {
         color: var(--t5e-secondary-color);
       }
+    }
+  }
+
+  .highlight {
+    background: var(--t5e-faintest-color);
+    outline: var(--occupant-hightlight-width) solid
+      var(--t5e-primary-accent-color);
+  }
+
+  /* Facilities */
+
+  .facility-panels {
+    display: grid;
+    grid-template-areas: 'special basic';
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2rem;
+
+    .facilities {
+      &.special {
+        grid-area: special;
+      }
+      &.basic {
+        grid-area: basic;
+      }
+    }
+  }
+
+  .facilities .facility-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .facility:not(.empty) {
+    border: 0.0625rem solid var(--t5e-separator-color);
+    border-radius: 0.1875rem;
+    padding: 0.75rem 0.5rem;
+    background-color: var(--t5e-faintest-color);
+
+    .sub-header {
+      color: var(--t5e-secondary-color);
+      margin-block-end: 0.25rem;
+      font-weight: 500;
+    }
+  }
+
+  .facility.empty a {
+    border-radius: var(--radius-card, 0.1875rem);
+    border: 0.0625rem dashed var(--t5e-light-color);
+    height: 3rem;
+    gap: 0.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: all 0.3s ease;
+  }
+
+  .facility-menu {
+    transition: all 0.3s ease;
+    padding: 0.5rem 0.75rem;
+  }
+
+  /* Rosters */
+
+  .roster {
+    ul {
+      display: flex;
+      gap: 0.5rem;
+      margin-inline: var(--occupant-hightlight-width);
+
+      li {
+        border-radius: 0.25rem;
+        width: var(--roster-member-size, 3rem);
+        height: var(--roster-member-size, 3rem);
+      }
+    }
+
+    img {
+      width: var(--roster-member-size, 3rem);
+      height: var(--roster-member-size, 3rem);
+      border-radius: 0.25rem;
+      object-fit: cover;
     }
   }
 
@@ -510,6 +552,8 @@ select:hover {
     }
   }
 
+  /* Facility Occupant Slots */
+
   .slots {
     display: flex;
     flex-direction: row;
@@ -524,6 +568,7 @@ select:hover {
     height: var(--img-size);
     border-radius: 0.125rem;
     display: inline-flex;
+    position: relative;
 
     img {
       object-fit: cover;
@@ -548,54 +593,42 @@ select:hover {
     }
   }
 
-  .facility-menu {
-    transition: all 0.3s ease;
-    padding: 0.5rem 0.75rem;
-  }
+  /* Occupant Menu */
 
-  .facility:not(.empty) {
-    border: 0.0625rem solid var(--t5e-separator-color);
-    border-radius: 0.1875rem;
-    padding: 0.75rem 0.5rem;
-    background-color: var(--t5e-faintest-color);
-    // position: relative;
-    // background: linear-gradient(
-    //     110deg,
-    //     rgba(27, 29, 35, 0.9) 17.43%,
-    //     rgba(27, 29, 35, 0.3) 97.5%
-    //   ),
-    //   var(--underlay) center / cover no-repeat,
-    //   var(--t5e-faintest-color);
-    // background: linear-gradient(
-    //     110deg,
-    //     rgba(27, 29, 35, 0.9) 17.43%,
-    //     rgba(27, 29, 35, 0) 97.5%
-    //   ),
-    //   var(--underlay) lightgray 50% / cover no-repeat, var(--t5e-faintest-color);
+  .occupant-with-menu {
+    position: relative;
 
-    .sub-header {
-      color: var(--t5e-secondary-color);
-      margin-block-end: 0.25rem;
-      font-weight: 500;
+    a {
+      position: absolute;
+      inset: 0;
+    }
+
+    &.unlocked:not(.empty):hover {
+      background-color: var(--t5e-light-color);
+
+      img {
+        display: none;
+      }
+
+      .occupant-menu-icon {
+        opacity: 1;
+      }
     }
   }
 
-  .facility.empty a {
-    border-radius: var(--radius-card, 0.1875rem);
-    border: 0.0625rem dashed var(--t5e-light-color);
-    height: 3rem;
-    gap: 0.25rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    transition: all 0.3s ease;
+  .occupant-menu-icon {
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--t5e-primary-font-color);
+    text-shadow: 0px 0px 0.5rem black;
+    font-size: 1rem;
   }
 
-  .facilities .facility-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+  .roster .occupant-menu-icon {
+    font-size: 1.125rem;
   }
 
   /* Order Progress Meter */
@@ -675,6 +708,8 @@ select:hover {
       flex: 1;
     }
   }
+
+  /* Description */
 
   .description {
     position: relative;
