@@ -129,6 +129,21 @@ export class TidyHooks {
   }
 
   /**
+   * The facility add button has been clicked for the specified facility type. Normally, this prompts the Compendium Browser.
+   * @param event     The inciting event.
+   * @param actor     The affected actor who will own the facility.
+   * @param type      The type of facility that is intended to be added.
+   * @returns         `true` to allow the default behavior, `false` to prevent it.
+   */
+  static tidy5eSheetsAddFacilityClicked(
+    event: Event,
+    actor: Actor5e,
+    type: string
+  ): boolean {
+    return Hooks.call('tidy5e-sheet.addFacilityClicked', event, actor, type);
+  }
+
+  /**
    * An empty slot on a facility was clicked. Normally, this opens the Compendium Browser, scoped to actors of any type.
    * @param event The inciting click event
    * @param item The affected facility

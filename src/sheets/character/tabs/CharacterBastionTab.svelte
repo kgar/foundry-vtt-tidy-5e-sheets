@@ -73,11 +73,16 @@
     (c: ChosenFacilityContext) => c.creatures.some((d) => !d.empty),
   );
 
-  async function addFacility(type: string) {
+  async function addFacility(ev: Event, type: string) {
+    if (!TidyHooks.tidy5eSheetsAddFacilityClicked(ev, $context.actor, type)) {
+      return;
+    }
+
     const otherType =
       type === CONSTANTS.FACILITY_TYPE_BASIC
         ? CONSTANTS.FACILITY_TYPE_SPECIAL
         : CONSTANTS.FACILITY_TYPE_BASIC;
+
     const result = await dnd5e.applications.CompendiumBrowser.selectOne({
       filters: {
         locked: {
@@ -267,9 +272,9 @@
             <!-- svelte-ignore a11y-no-static-element-interactions -->
             <a
               class="highlight-on-hover"
-              on:click={() =>
+              on:click={(ev) =>
                 $context.editable &&
-                addFacility(CONSTANTS.FACILITY_TYPE_SPECIAL)}
+                addFacility(ev, CONSTANTS.FACILITY_TYPE_SPECIAL)}
             >
               <i class="fas fa-building-columns"></i>
               {localize(available.label)}
@@ -346,8 +351,9 @@
             <!-- svelte-ignore a11y-missing-attribute -->
             <a
               class="highlight-on-hover"
-              on:click={() =>
-                $context.editable && addFacility(CONSTANTS.FACILITY_TYPE_BASIC)}
+              on:click={(ev) =>
+                $context.editable &&
+                addFacility(ev, CONSTANTS.FACILITY_TYPE_BASIC)}
             >
               {#if available.label.includes('build')}
                 <i class="fa-solid fa-trowel"></i>
