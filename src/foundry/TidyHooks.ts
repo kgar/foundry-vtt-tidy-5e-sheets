@@ -152,6 +152,35 @@ export class TidyHooks {
   }
 
   /**
+   * The facility occupant context menu has established its options and is about to show.
+   * @param actor           The affected actor.
+   * @param facility        The affected facility.
+   * @param occupantUuid    The occupant UUID.
+   * @param prop            The property for saving changes to the target occupant.
+   * @param index           The index of the occupant.
+   * @param contextOptions  The menu items for this occupant.
+   * @returns               `true` to allow the menu to show, `false` to prevent the default menu from showing.
+   */
+  static dnd5eGetFacilityOccupantContextOptions(
+    actor: Actor5e,
+    facility: Item5e,
+    occupantUuid: string | null,
+    prop: string | null,
+    index: number | null,
+    contextOptions: ContextMenuEntry[]
+  ): boolean {
+    return Hooks.call(
+      'tidy5e-sheet.getFacilityOccupantContextOptions',
+      actor,
+      facility,
+      occupantUuid,
+      prop,
+      index,
+      contextOptions
+    );
+  }
+
+  /**
    * The group member context menu has established its options and is about to show.
    * @param group             The affected group document instance.
    * @param member            The actor which is a member of the group.

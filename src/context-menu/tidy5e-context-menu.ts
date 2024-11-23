@@ -117,6 +117,14 @@ function onItemContext(this: any, element: HTMLElement) {
     ];
 
     ui.context.menuItems = contextOptions;
+    TidyHooks.dnd5eGetFacilityOccupantContextOptions(
+      this.document,
+      this.document.items.get(facilityId),
+      occupantUuid,
+      prop,
+      index !== null ? Number(index) : null,
+      ui.context.menuItems
+    );
   } else {
     warn(
       `Unable to show context menu. The menu type ${contextMenuType} is not supported. Put a [data-context-menu] attribute on the target entity and implement the handler where this warning appears.`
