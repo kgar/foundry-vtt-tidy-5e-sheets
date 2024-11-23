@@ -343,6 +343,7 @@ export type ChosenFacilityContext = {
   img: string;
   isSpecial: boolean;
   subtitle: string;
+  facility: Item5e;
 };
 
 export type FacilityOccupantContext = {

@@ -434,12 +434,14 @@ select:hover {
       width: var(--roster-member-size, 3rem);
       height: var(--roster-member-size, 3rem);
       border-radius: 0.25rem;
+      object-fit: cover;
     }
   }
 
   .highlight {
     background: var(--t5e-faintest-color);
-    outline: var(--occupant-hightlight-width) solid var(--t5e-primary-accent-color);
+    outline: var(--occupant-hightlight-width) solid
+      var(--t5e-primary-accent-color);
   }
 
   h3 {
@@ -516,6 +518,12 @@ select:hover {
     height: var(--img-size);
     border-radius: 0.125rem;
     display: inline-flex;
+
+    img {
+      object-fit: cover;
+      width: var(--img-size);
+      height: var(--img-size);
+    }
 
     li {
       border-radius: 0.125rem;

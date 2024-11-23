@@ -5,6 +5,7 @@
   import type {
     CharacterSheetContext,
     ChosenFacilityContext,
+    ItemCardStore,
   } from 'src/types/types';
   import { getContext, setContext } from 'svelte';
   import { writable, type Readable, type Writable } from 'svelte/store';
@@ -15,10 +16,42 @@
   import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
   import { EventHelper } from 'src/utils/events';
   import { isNil } from 'src/utils/data';
+  import { settingStore } from 'src/settings/settings';
+  import type { Item5e } from 'src/types/item.types';
+  import { TidyHooks } from 'src/foundry/TidyHooks';
+  import DefaultItemCardContentTemplate from 'src/components/item-info-card/DefaultItemCardContentTemplate.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
+
+  let card: Writable<ItemCardStore> | undefined = getContext<
+    Writable<ItemCardStore>
+  >(CONSTANTS.SVELTE_CONTEXT.CARD);
+
+  function onMouseEnterFacility(event: Event, item: Item5e) {
+    TidyHooks.tidy5eSheetsItemHoverOn(event, item);
+
+    if (!item?.getChatData || !$settingStore.itemCardsForAllItems) {
+      return;
+    }
+
+    card?.update((card) => {
+      card.item = item;
+      card.itemCardContentTemplate = DefaultItemCardContentTemplate;
+      return card;
+    });
+  }
+
+  function onMouseLeaveFacility(event: Event, item: Item5e) {
+    TidyHooks.tidy5eSheetsItemHoverOff(event, item);
+
+    card?.update((card) => {
+      card.item = null;
+      card.itemCardContentTemplate = null;
+      return card;
+    });
+  }
 
   let hoveredFacilityOccupant = writable<string>('');
 
@@ -116,7 +149,11 @@
             data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
             style="--underlay: url('{chosen.img}')"
           >
-            <div class="facility-header">
+            <div
+              class="facility-header"
+              on:mouseenter={(ev) => onMouseEnterFacility(ev, chosen.facility)}
+              on:mouseleave={(ev) => onMouseLeaveFacility(ev, chosen.facility)}
+            >
               <!-- svelte-ignore a11y-missing-attribute -->
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -248,7 +285,11 @@
             data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
             style="--underlay: url('{chosen.img}')"
           >
-            <div class="facility-header">
+            <div
+              class="facility-header"
+              on:mouseenter={(ev) => onMouseEnterFacility(ev, chosen.facility)}
+              on:mouseleave={(ev) => onMouseLeaveFacility(ev, chosen.facility)}
+            >
               <!-- svelte-ignore a11y-missing-attribute -->
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <!-- svelte-ignore a11y-no-static-element-interactions -->

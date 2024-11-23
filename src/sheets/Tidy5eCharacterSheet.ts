@@ -1270,8 +1270,11 @@ export class Tidy5eCharacterSheet
           ? CONFIG.DND5E.facilities.sizes[size].label
           : game.i18n.localize('DND5E.FACILITY.Build.Unbuilt'),
       ];
-      if (trade.stock.max)
+
+      if (trade.stock.max) {
         subtitle.push(`${trade.stock.value ?? 0} &sol; ${trade.stock.max}`);
+      }
+
       const context = {
         id,
         labels,
@@ -1280,6 +1283,7 @@ export class Tidy5eCharacterSheet
         disabled,
         free,
         progress,
+        facility: facility,
         craft: craft.item ? await fromUuid(craft.item) : null,
         creatures: await this._prepareFacilityOccupants(trade.creatures),
         defenders: await this._prepareFacilityOccupants(defenders),
