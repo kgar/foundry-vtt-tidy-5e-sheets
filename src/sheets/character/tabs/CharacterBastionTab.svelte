@@ -149,28 +149,32 @@
             data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
             style="--underlay: url('{chosen.img}')"
           >
-            <div
-              class="facility-header"
-              on:mouseenter={(ev) => onMouseEnterFacility(ev, chosen.facility)}
-              on:mouseleave={(ev) => onMouseLeaveFacility(ev, chosen.facility)}
-            >
-              <!-- svelte-ignore a11y-missing-attribute -->
-              <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <div class="facility-header">
               <!-- svelte-ignore a11y-no-static-element-interactions -->
-              <a on:click={() => editFacility(chosen)}>
-                <img src={chosen.img} alt={chosen.name} />
-              </a>
-              <!-- svelte-ignore a11y-missing-attribute -->
               <!-- svelte-ignore a11y-click-events-have-key-events -->
-              <!-- svelte-ignore a11y-no-static-element-interactions -->
+              <!-- svelte-ignore a11y-missing-attribute -->
               <a
-                class="title-and-subtitle"
+                class="facility-header-details"
+                on:mouseenter={(ev) =>
+                  onMouseEnterFacility(ev, chosen.facility)}
+                on:mouseleave={(ev) =>
+                  onMouseLeaveFacility(ev, chosen.facility)}
+                on:mousedown={(ev) =>
+                  FoundryAdapter.editOnMiddleClick(ev, chosen.facility)}
                 on:click={(ev) => useFacility(ev, chosen)}
               >
-                <span class="title"> {chosen.name} </span>
-                <span class="subtitle">
-                  {@html chosen.subtitle}
-                </span>
+                <img
+                  class="facility-image"
+                  src={chosen.img}
+                  alt={chosen.name}
+                />
+
+                <div class="title-and-subtitle">
+                  <span class="title"> {chosen.name} </span>
+                  <span class="subtitle">
+                    {@html chosen.subtitle}
+                  </span>
+                </div>
               </a>
               <!-- svelte-ignore a11y-missing-attribute -->
               <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -183,6 +187,7 @@
                 <i class="fas fa-ellipsis-vertical"></i>
               </a>
             </div>
+
             {#if chosen.hirelings.length}
               <div class="sub-header">
                 {localize('DND5E.FACILITY.FIELDS.hirelings.max.label')}
@@ -285,28 +290,32 @@
             data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
             style="--underlay: url('{chosen.img}')"
           >
-            <div
-              class="facility-header"
-              on:mouseenter={(ev) => onMouseEnterFacility(ev, chosen.facility)}
-              on:mouseleave={(ev) => onMouseLeaveFacility(ev, chosen.facility)}
-            >
-              <!-- svelte-ignore a11y-missing-attribute -->
+            <div class="facility-header">
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <!-- svelte-ignore a11y-no-static-element-interactions -->
-              <a on:click={() => editFacility(chosen)}>
-                <img src={chosen.img} alt={chosen.name} />
-              </a>
               <!-- svelte-ignore a11y-missing-attribute -->
-              <!-- svelte-ignore a11y-click-events-have-key-events -->
-              <!-- svelte-ignore a11y-no-static-element-interactions -->
               <a
-                class="title-and-subtitle"
+                class="facility-header-details"
+                on:mouseenter={(ev) =>
+                  onMouseEnterFacility(ev, chosen.facility)}
+                on:mouseleave={(ev) =>
+                  onMouseLeaveFacility(ev, chosen.facility)}
+                on:mousedown={(ev) =>
+                  FoundryAdapter.editOnMiddleClick(ev, chosen.facility)}
                 on:click={(ev) => useFacility(ev, chosen)}
               >
-                <span class="title">{chosen.name}</span>
-                <span class="subtitle">
-                  {@html chosen.subtitle}
-                </span>
+                <img
+                  class="facility-image"
+                  src={chosen.img}
+                  alt={chosen.name}
+                />
+
+                <div class="title-and-subtitle">
+                  <span class="title">{chosen.name}</span>
+                  <span class="subtitle">
+                    {@html chosen.subtitle}
+                  </span>
+                </div>
               </a>
               <!-- svelte-ignore a11y-missing-attribute -->
               <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -319,6 +328,7 @@
                 <i class="fas fa-ellipsis-vertical"></i>
               </a>
             </div>
+
             <FacilityOrderProgressTracker {chosen} />
           </li>
         {/each}

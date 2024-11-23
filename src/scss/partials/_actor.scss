@@ -530,15 +530,21 @@ select:hover {
       border-radius: 0.1875rem;
     }
 
-    .title-and-subtitle {
+    .facility-header-details {
       display: flex;
-      flex-direction: column;
-
+      gap: 0.125rem;
       flex: 1;
 
       &:hover .title {
         color: var(--t5e-primary-accent-color);
       }
+    }
+
+    .title-and-subtitle {
+      display: flex;
+      flex-direction: column;
+
+      flex: 1;
     }
 
     .title {
