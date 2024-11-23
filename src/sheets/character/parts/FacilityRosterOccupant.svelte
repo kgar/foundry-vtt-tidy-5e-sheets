@@ -56,7 +56,7 @@
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <!-- svelte-ignore a11y-missing-attribute -->
-  <a on:click={(ev) => onRosterMemberClicked(ev)}>
+  <a on:click={(ev) => $context.editable && onRosterMemberClicked(ev)}>
     <img src={occupant.img} alt={occupant.name} />
     {#if $context.unlocked}
       <i class="fa-solid fa-cog occupant-menu-icon"></i>

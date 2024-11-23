@@ -1,9 +1,13 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
-  import type { ChosenFacilityContext, ItemCardStore } from 'src/types/types';
+  import type {
+    CharacterSheetContext,
+    ChosenFacilityContext,
+    ItemCardStore,
+  } from 'src/types/types';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
-  import type { Writable } from 'svelte/store';
+  import type { Readable, Writable } from 'svelte/store';
   import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
   import { TidyHooks } from 'src/foundry/TidyHooks';
@@ -12,6 +16,10 @@
   import type { Item5e } from 'src/types/item.types';
 
   export let chosen: ChosenFacilityContext;
+
+  let context = getContext<Readable<CharacterSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   $: orderLabel =
     CONFIG.DND5E.facilities.orders[chosen.progress.order]?.label ??
@@ -67,7 +75,10 @@
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <!-- svelte-ignore a11y-no-static-element-interactions -->
       <!-- svelte-ignore a11y-missing-attribute -->
-      <a on:click={() => editCraftingItem(chosen.craft.uuid)}>
+      <a
+        on:click={() =>
+          $context.editable && editCraftingItem(chosen.craft.uuid)}
+      >
         <img
           class="crafting-item"
           data-uuid={chosen.craft.uuid}

@@ -55,7 +55,7 @@
       ($hoveredFacilityOccupant = `${facilityId}-${index}-${occupant.uuid}`)}
     on:mouseleave={() => ($hoveredFacilityOccupant = '')}
   >
-    <a on:click={(ev) => onOccupantClick(ev)}>
+    <a on:click={(ev) => $context.editable && onOccupantClick(ev)}>
       <img src={imageSrc} alt={occupant.name} />
 
       {#if $context.unlocked}

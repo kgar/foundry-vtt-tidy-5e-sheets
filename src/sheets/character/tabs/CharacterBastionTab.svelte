@@ -157,7 +157,7 @@
                   onMouseLeaveFacility(ev, chosen.facility)}
                 on:mousedown={(ev) =>
                   FoundryAdapter.editOnMiddleClick(ev, chosen.facility)}
-                on:click={(ev) => useFacility(ev, chosen)}
+                on:click={(ev) => $context.editable && useFacility(ev, chosen)}
               >
                 <img
                   class="facility-image"
@@ -267,7 +267,9 @@
             <!-- svelte-ignore a11y-no-static-element-interactions -->
             <a
               class="highlight-on-hover"
-              on:click={() => addFacility(CONSTANTS.FACILITY_TYPE_SPECIAL)}
+              on:click={() =>
+                $context.editable &&
+                addFacility(CONSTANTS.FACILITY_TYPE_SPECIAL)}
             >
               <i class="fas fa-building-columns"></i>
               {localize(available.label)}
@@ -307,7 +309,7 @@
                   onMouseLeaveFacility(ev, chosen.facility)}
                 on:mousedown={(ev) =>
                   FoundryAdapter.editOnMiddleClick(ev, chosen.facility)}
-                on:click={(ev) => useFacility(ev, chosen)}
+                on:click={(ev) => $context.editable && useFacility(ev, chosen)}
               >
                 <img
                   class="facility-image"
@@ -344,7 +346,8 @@
             <!-- svelte-ignore a11y-missing-attribute -->
             <a
               class="highlight-on-hover"
-              on:click={() => addFacility(CONSTANTS.FACILITY_TYPE_BASIC)}
+              on:click={() =>
+                $context.editable && addFacility(CONSTANTS.FACILITY_TYPE_BASIC)}
             >
               {#if available.label.includes('build')}
                 <i class="fa-solid fa-trowel"></i>
