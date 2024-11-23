@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { TidyHooks } from 'src/api';
   import { CONSTANTS } from 'src/constants';
   import type { Actor5e, CharacterSheetContext } from 'src/types/types';
   import { EventHelper } from 'src/utils/events';
@@ -25,6 +26,36 @@
       return;
     }
     occupant.sheet.render(true);
+  }
+
+  async function onSlotClick(ev: Event) {
+    if (
+      !TidyHooks.tidy5eSheetsFacilityEmptyOccupantSlotClicked(
+        ev,
+        $context.actor.items.get(facilityId),
+        type,
+        prop,
+      )
+    ) {
+      return;
+    }
+
+    const result = await dnd5e.applications.CompendiumBrowser.selectOne({
+      filters: {
+        locked: {
+          documentClass: 'Actor',
+          types: new Set(['character', 'npc', 'vehicle', 'group']),
+        },
+      },
+    });
+
+    if (result) {
+      $context.actor.sheet._onDropActorAddToFacility(
+        $context.actor.items.get(facilityId),
+        prop,
+        result,
+      );
+    }
   }
 
   let hoveredFacilityOccupant = getContext<Writable<string>>(
@@ -64,7 +95,12 @@
     </a>
   </li>
 {:else}
-  <div class="slot occupant-slot {type} empty" data-index={index}>
-    <i class={iconClass}></i>
-  </div>
+  <li class="slot occupant-slot {type} empty" data-index={index}>
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <a on:click={(ev) => $context.editable && onSlotClick(ev)}>
+      <i class={iconClass}></i>
+    </a>
+  </li>
 {/if}

@@ -1694,13 +1694,21 @@ export class Tidy5eCharacterSheet
 
     const prop = propDataset?.['prop'];
 
+    if (!prop) {
+      return;
+    }
+
+    this._onDropActorAddToFacility(facility, prop, data.uuid);
+  }
+
+  _onDropActorAddToFacility(facility: Item5e, prop: string, actorUuid: string) {
     const { max, value } = foundry.utils.getProperty(facility, prop);
 
     if (value.length + 1 > max) {
       return;
     }
 
-    return facility.update({ [`${prop}.value`]: [...value, data.uuid] });
+    return facility.update({ [`${prop}.value`]: [...value, actorUuid] });
   }
 
   /* -------------------------------------------- */

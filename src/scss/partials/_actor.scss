@@ -600,11 +600,20 @@ select:hover {
       height: var(--img-size);
       border-radius: 0.125rem;
       border: 0.0625rem dashed var(--t5e-light-color);
-      display: flex;
-      justify-content: center;
-      align-items: center;
       color: var(--t5e-tertiary-color);
       font-size: 0.6875rem;
+
+      &:hover {
+        border-style: solid;
+      }
+
+      a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: var(--img-size);
+        height: var(--img-size);
+      }
     }
   }
 
