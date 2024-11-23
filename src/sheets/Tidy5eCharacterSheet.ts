@@ -1260,37 +1260,51 @@ export class Tidy5eCharacterSheet
         disabled,
         free,
         hirelings,
+        level,
+        order,
         progress,
         size,
         trade,
         type,
       } = system;
-      const subtitle = [
-        building.built
-          ? CONFIG.DND5E.facilities.sizes[size].label
-          : game.i18n.localize('DND5E.FACILITY.Build.Unbuilt'),
-      ];
+      const subtitle = [];
+
+      if (!isNil(order, '')) {
+        subtitle.push(CONFIG.DND5E.facilities.orders[order]?.label ?? order);
+      }
 
       if (trade.stock.max) {
         subtitle.push(`${trade.stock.value ?? 0} &sol; ${trade.stock.max}`);
       }
 
+      subtitle.push(
+        building.built
+          ? CONFIG.DND5E.facilities.sizes[size].label
+          : FoundryAdapter.localize('DND5E.FACILITY.Build.Unbuilt')
+      );
+
+      if (!isNil(level)) {
+        subtitle.push(
+          FoundryAdapter.localize('DND5E.LevelNumber', { level: level })
+        );
+      }
+
       const context = {
-        id,
-        labels,
-        name,
         building,
-        disabled,
-        free,
-        progress,
-        facility: facility,
         craft: craft.item ? await fromUuid(craft.item) : null,
         creatures: await this._prepareFacilityOccupants(trade.creatures),
         defenders: await this._prepareFacilityOccupants(defenders),
+        disabled,
         executing: CONFIG.DND5E.facilities.orders[progress.order]?.icon,
+        facility: facility,
+        free,
         hirelings: await this._prepareFacilityOccupants(hirelings),
+        id,
         img: foundry.utils.getRoute(img),
         isSpecial: type.value === CONSTANTS.FACILITY_TYPE_SPECIAL,
+        labels,
+        name,
+        progress,
         subtitle: subtitle.join(' &bull; '),
       };
       allDefenders.push(
