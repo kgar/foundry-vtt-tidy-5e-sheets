@@ -20,14 +20,18 @@ body #context-menu.tidy5e-sheet.floating {
   [data-group-id]:has(li)::before {
     inset-inline: 0.5rem;
   }
-
+  
   a,
   li.context-item {
+    cursor: pointer;
     display: flex;
     align-items: center;
-    padding: 0.325rem 0.5rem 0.325rem 0rem;
+    padding-block: 0.625rem;
+    padding-inline: 0rem 0.5rem;
     margin: 0.0625rem 0;
     white-space: nowrap;
+    text-wrap-mode: wrap;
+    text-wrap: wrap;
     line-height: 1;
     font-weight: 400;
     font-size: 0.75rem;
@@ -60,17 +64,19 @@ body #context-menu.tidy5e-sheet.floating {
     }
 
     &:hover {
-      box-shadow: 0 0 0.125rem var(--t5e-tertiary-color),
-        0 0 0 0.0625rem var(--t5e-tertiary-color) inset;
+      background: var(--t5e-faint-color);
       color: var(--t5e-primary-accent-color);
       text-shadow: none;
     }
 
     i,
     dnd5e-icon {
+      --icon-fill: var(--t5e-primary-font-color);
       margin: 0;
-      width: var(--icon-width);
+      width: 2rem;
+      flex-basis: 2rem;
       text-align: center;
+      flex-shrink: 0;
     }
 
     &.warning {
@@ -84,19 +90,10 @@ body #context-menu.tidy5e-sheet.floating {
     }
   }
 
-  .context-divider {
+  .context-group::before {
     margin: 0.0625rem 0 0 0;
-    border-top: 0.0625rem solid var(--t5e-light-color);
+    border-top: 0.0625rem solid var(--t5e-faint-color);
     border-bottom: none;
-
-    + .context-divider {
-      display: none;
-    }
-
-    &:first-child,
-    &:last-child {
-      display: none;
-    }
   }
 
   .item-buttons {

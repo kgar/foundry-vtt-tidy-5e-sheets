@@ -129,6 +129,73 @@ export class TidyHooks {
   }
 
   /**
+   * The facility add button has been clicked for the specified facility type. Normally, this prompts the Compendium Browser.
+   * @param event     The inciting event.
+   * @param actor     The affected actor who will own the facility.
+   * @param type      The type of facility that is intended to be added.
+   * @returns         `true` to allow the default behavior, `false` to prevent it.
+   */
+  static tidy5eSheetsAddFacilityClicked(
+    event: Event,
+    actor: Actor5e,
+    type: string
+  ): boolean {
+    return Hooks.call('tidy5e-sheet.addFacilityClicked', event, actor, type);
+  }
+
+  /**
+   * An empty slot on a facility was clicked. Normally, this opens the Compendium Browser, scoped to actors of any type.
+   * @param event The inciting click event
+   * @param item The affected facility
+   * @param occupantType The intended occupant type
+   * @param prop The property path on the target facility to which changes would be applied
+   * @returns `true` to allow the default behavior, `false` to prevent it.
+   */
+  static tidy5eSheetsFacilityEmptyOccupantSlotClicked(
+    event: Event,
+    item: Item5e,
+    occupantType: string,
+    prop: string
+  ) {
+    return Hooks.call(
+      'tidy5e-sheet.facilityEmptyOccupantSlotClicked',
+      event,
+      item,
+      occupantType,
+      prop
+    );
+  }
+
+  /**
+   * The facility occupant context menu has established its options and is about to show.
+   * @param actor           The affected actor.
+   * @param facility        The affected facility.
+   * @param occupantUuid    The occupant UUID.
+   * @param prop            The property for saving changes to the target occupant.
+   * @param index           The index of the occupant.
+   * @param contextOptions  The menu items for this occupant.
+   * @returns               `true` to allow the menu to show, `false` to prevent the default menu from showing.
+   */
+  static dnd5eGetFacilityOccupantContextOptions(
+    actor: Actor5e,
+    facility: Item5e,
+    occupantUuid: string | null,
+    prop: string | null,
+    index: number | null,
+    contextOptions: ContextMenuEntry[]
+  ): boolean {
+    return Hooks.call(
+      'tidy5e-sheet.getFacilityOccupantContextOptions',
+      actor,
+      facility,
+      occupantUuid,
+      prop,
+      index,
+      contextOptions
+    );
+  }
+
+  /**
    * The group member context menu has established its options and is about to show.
    * @param group             The affected group document instance.
    * @param member            The actor which is a member of the group.
@@ -391,7 +458,7 @@ export class TidyHooks {
    *   // Your code here
    * });
    * ```
-   * 
+   *
    * @deprecated This hook is now redundant for App V2 item and container sheets. It will be removed as of Tidy V8.
    */
   static tidy5eSheetsRenderItemSheet(

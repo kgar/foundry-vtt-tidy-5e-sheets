@@ -2693,6 +2693,146 @@ export type CONFIG = {
       '1': string;
       '2': string;
     };
+    facilities: {
+      advancement: {
+        basic: {
+          '5': number;
+        };
+        special: {
+          '5': number;
+          '9': number;
+          '13': number;
+          '17': number;
+        };
+      } & Record<string, Record<string, number>>;
+      orders: {
+        build: {
+          label: string;
+          icon: string;
+        };
+        change: {
+          label: string;
+          icon: string;
+          duration: number;
+        };
+        craft: {
+          label: string;
+          icon: string;
+        };
+        empower: {
+          label: string;
+          icon: string;
+        };
+        enlarge: {
+          label: string;
+          icon: string;
+          basic: boolean;
+        };
+        harvest: {
+          label: string;
+          icon: string;
+        };
+        maintain: {
+          label: string;
+          icon: string;
+        };
+        recruit: {
+          label: string;
+          icon: string;
+        };
+        repair: {
+          label: string;
+          icon: string;
+          hidden: boolean;
+        };
+        research: {
+          label: string;
+          icon: string;
+        };
+        trade: {
+          label: string;
+          icon: string;
+        };
+      } & Record<
+        string,
+        { label: string; icon: string; hidden?: boolean; basic?: boolean }
+      >;
+      sizes: {
+        cramped: {
+          label: string;
+          days: number;
+          squares: number;
+          value: number;
+        };
+        roomy: {
+          label: string;
+          days: number;
+          squares: number;
+          value: number;
+        };
+        vast: {
+          label: string;
+          days: number;
+          squares: number;
+          value: number;
+        };
+      } & Record<
+        string,
+        {
+          label: string;
+          days: number;
+          squares: number;
+          value: number;
+        }
+      >;
+      types: {
+        basic: {
+          label: string;
+          subtypes: {
+            bedroom: string;
+            courtyard: string;
+            diningRoom: string;
+            kitchen: string;
+            parlor: string;
+            storage: string;
+          };
+        };
+        special: {
+          label: string;
+          subtypes: {
+            arcaneStudy: string;
+            archive: string;
+            armory: string;
+            barrack: string;
+            demiplane: string;
+            gamingHall: string;
+            garden: string;
+            greenhouse: string;
+            guildhall: string;
+            laboratory: string;
+            library: string;
+            meditationChamber: string;
+            menagerie: string;
+            observatory: string;
+            pub: string;
+            reliquary: string;
+            sacristy: string;
+            sanctuary: string;
+            sanctum: string;
+            scriptorium: string;
+            smithy: string;
+            stable: string;
+            storehouse: string;
+            teleportationCircle: string;
+            theater: string;
+            trainingArea: string;
+            trophyRoom: string;
+            warRoom: string;
+            workshop: string;
+          };
+        };
+      };
+    };
     weaponTypes: {
       simpleM: string;
       simpleR: string;

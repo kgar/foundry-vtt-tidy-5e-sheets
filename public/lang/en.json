@@ -818,5 +818,11 @@
   "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Show Unassigned Only",
   "TIDY5E.Keybindings.ToggleSheetLock.Name": "Toggle Sheet Lock",
   "TIDY5E.Keybindings.ToggleSheetLock.Hint": "If a Tidy sheet is the current active window in the UI, this keybinding toggles the sheet lock.",
+  "TIDY5E.Facilities.Hirelings.Label": "Hirelings",
+  "TIDY5E.Facilities.Defenders.Label": "Defenders",
+  "TIDY5E.Facilities.Creatures.Label": "Creatures",
+  "TIDY5E.Facilities.RosterMember.Label": "{actorName} - {facilityName}",
+  "TIDY5E.Facilities.ContextMenuActionRemove": "Remove from {facilityName}",
+  "TIDY5E.Facilities.Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}",
   "TIDY5E.LocalizationTestKey": "Localization Test Key"
 }

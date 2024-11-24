@@ -257,14 +257,41 @@ export type CharacterSheetContext = {
   actorClassesToImages: Record<string, string>;
   allowMaxHpOverride: boolean;
   appearanceEnrichedHtml: string;
+  bastion: {
+    description: string;
+  };
   biographyEnrichedHtml: string;
   bondEnrichedHtml: string;
   conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
+  defenders: Actor5e[];
   epicBoonsEarned: string | undefined;
+  facilities: {
+    basic: {
+      available: AvailableBastionActionContext[];
+      chosen: ChosenFacilityContext[];
+      max: number;
+      value: number;
+    };
+    special: {
+      available: AvailableBastionActionContext[];
+      chosen: ChosenFacilityContext[];
+      max: number;
+      value: number;
+    };
+  } & Record<
+    string,
+    {
+      available: AvailableBastionActionContext[];
+      chosen: ChosenFacilityContext[];
+      max: number;
+      value: number;
+    }
+  >;
   favorites: FavoriteSection[];
   features: CharacterFeatureSection[];
   flawEnrichedHtml: string;
+  hirelings: Actor5e[];
   idealEnrichedHtml: string;
   inventory: InventorySection[];
   itemContext: Record<string, CharacterItemContext>;
@@ -284,6 +311,45 @@ export type CharacterSheetContext = {
   traitEnrichedHtml: string;
   utilities: Utilities<CharacterSheetContext>;
 } & ActorSheetContextV1;
+
+/** A list of available actions that can be done on behalf of a facility type. */
+type AvailableBastionActionContext = {
+  label: string;
+};
+
+export type ChosenFacilityContext = {
+  id: string;
+  labels: {
+    order: string;
+  };
+  name: string;
+  building: {
+    built: boolean;
+    size: string;
+  };
+  disabled: boolean;
+  free: boolean;
+  progress: {
+    value: number;
+    max: number;
+    order: string;
+    pct: number;
+  };
+  craft: Item5e | null;
+  creatures: FacilityOccupantContext[];
+  defenders: FacilityOccupantContext[];
+  executing: string | undefined;
+  hirelings: FacilityOccupantContext[];
+  img: string;
+  isSpecial: boolean;
+  subtitle: string;
+  facility: Item5e;
+};
+
+export type FacilityOccupantContext = {
+  actor?: Actor5e;
+  empty?: boolean;
+};
 
 export type NpcAbilitySection = {
   canCreate: boolean;
@@ -568,12 +634,6 @@ export type ContainerCapacityContext = {
   pct: number;
   value: number;
   units: string;
-};
-
-export type ContextMenuOption = {
-  name: string;
-  icon?: string;
-  callback?: () => void;
 };
 
 export type RenderableClassicControl<TParams> = {

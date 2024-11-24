@@ -5,7 +5,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import FloatingContextMenu from 'src/components/context-menu/FloatingContextMenu.svelte';
-  import type { ContextMenuOption } from 'src/types/types';
+  import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -38,7 +38,7 @@
   }
 
   let itemImageContainer: HTMLElement;
-  let contextMenuOptions: ContextMenuOption[] = [];
+  let contextMenuOptions: ContextMenuEntry[] = [];
   $: contextMenuOptions = [
     {
       name: 'TIDY5E.ShowItemArt',

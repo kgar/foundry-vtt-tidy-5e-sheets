@@ -4,6 +4,7 @@ import type {
   Tab,
 } from 'src/types/types';
 import CharacterAttributesTab from 'src/sheets/character/tabs/CharacterAttributesTab.svelte';
+import CharacterBastionTab from 'src/sheets/character/tabs/CharacterBastionTab.svelte';
 import ActorInventoryTab from 'src/sheets/actor/tabs/ActorInventoryTab.svelte';
 import CharacterSpellbookTab from 'src/sheets/character/tabs/CharacterSpellbookTab.svelte';
 import CharacterFeaturesTab from 'src/sheets/character/tabs/CharacterFeaturesTab.svelte';
@@ -98,6 +99,27 @@ export class CharacterSheetRuntime {
         type: 'svelte',
       },
       enabled: (context) => context.owner,
+      layout: 'classic',
+    },
+    {
+      id: CONSTANTS.TAB_CHARACTER_BASTION,
+      title: 'DND5E.Bastion.Label',
+      content: {
+        component: CharacterBastionTab,
+        type: 'svelte',
+      },
+      enabled: (context) => {
+        const { enabled } = FoundryAdapter.getSystemSetting<{
+          enabled: boolean;
+        }>(CONSTANTS.SYSTEM_SETTING_BASTION_CONFIGURATION);
+        const { basic, special } = CONFIG.DND5E.facilities.advancement;
+        const threshold = Math.min(
+          ...Object.keys(basic).map(Number),
+          ...Object.keys(special).map(Number)
+        );
+
+        return context.actor.system.details.level >= threshold && enabled;
+      },
       layout: 'classic',
     },
   ];
