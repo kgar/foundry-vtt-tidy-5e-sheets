@@ -890,3 +890,26 @@ document-tags button {
     object-fit: cover;
   }
 }
+
+[data-tab-contents-for='details'] {
+  .harvesting {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .separated-list {
+      flex: 1;
+    }
+
+    .quantity {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex: 0;
+
+      input {
+        width: 4rem;
+      }
+    }
+  }
+}

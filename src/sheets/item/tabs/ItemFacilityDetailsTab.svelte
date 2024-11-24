@@ -362,15 +362,15 @@
 
   {#if $context.canCraft}
     <!-- TODO -->
-    <div class:harvesting={$context.isHarvesting} class="mt-1">
-      <h3 class="form-header">
-        {localize(`DND5E.FACILITY.Orders.${source.order}.present`)}
-      </h3>
+    <h3 class="form-header">
+      {localize(`DND5E.FACILITY.Orders.${source.order}.present`)}
+    </h3>
 
-      <p class="hint">
-        {localize('DND5E.FACILITY.Craft.Hint')}
-      </p>
+    <p class="hint">
+      {localize('DND5E.FACILITY.Craft.Hint')}
+    </p>
 
+    <div class:harvesting={$context.isHarvesting}>
       <ul class="separated-list single-item facility-craft">
         <li>
           {#if $context.craft}
