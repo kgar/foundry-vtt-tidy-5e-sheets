@@ -12,7 +12,7 @@
   import FloatingContextMenu from 'src/components/context-menu/FloatingContextMenu.svelte';
   import { debug, error } from 'src/utils/logging';
   import { TidyHooks } from 'src/foundry/TidyHooks';
-    import type { ContextMenuEntry } from 'src/foundry/foundry.types';
+  import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 
   export let actor: Actor5e;
   export let useHpOverlay: boolean;
