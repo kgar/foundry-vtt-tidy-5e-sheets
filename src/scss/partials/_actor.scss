@@ -477,7 +477,23 @@ select:hover {
     border: 0.0625rem solid var(--t5e-separator-color);
     border-radius: 0.1875rem;
     padding: 0.75rem 0.5rem;
-    background-color: var(--t5e-faintest-color);
+  
+    // Begin wild background experiments here:
+    // background-color: var(--t5e-faintest-color);
+    position: relative;
+
+    > * {
+      position: relative;
+    }
+
+    &::before {
+      position: absolute;
+      content: '';
+      inset: 0;
+      background: var(--underlay) 50% / cover no-repeat;
+      mask-image: linear-gradient(135deg, transparent 35%, black);
+      opacity: 0.4;
+    }
 
     .sub-header {
       color: var(--t5e-secondary-color);
