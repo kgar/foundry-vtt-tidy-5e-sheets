@@ -6,10 +6,6 @@
   import { getContext } from 'svelte';
   import type { Readable, Writable } from 'svelte/store';
 
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
-
   export let occupant: Actor5e | undefined;
   export let index: number;
   export let type: string;
@@ -17,6 +13,10 @@
   export let facilityId: string;
   export let facilityName: string;
   export let prop: string;
+
+  let context = getContext<Readable<CharacterSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   function onOccupantClick(
     event: (MouseEvent | PointerEvent) & { currentTarget: HTMLElement },

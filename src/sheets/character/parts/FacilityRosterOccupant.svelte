@@ -6,6 +6,13 @@
   import { getContext } from 'svelte';
   import type { Readable, Writable } from 'svelte/store';
 
+  export let occupant: Actor5e;
+  export let type: string;
+  export let index: number;
+  export let prop: string;
+  export let facilityId: string;
+  export let facilityName: string;
+
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
@@ -13,13 +20,6 @@
   let hoveredFacilityOccupant = getContext<Writable<string>>(
     CONSTANTS.SVELTE_CONTEXT.HOVERED_FACILITY_OCCUPANT,
   );
-
-  export let occupant: Actor5e;
-  export let type: string;
-  export let index: number;
-  export let prop: string;
-  export let facilityId: string;
-  export let facilityName: string;
 
   function onRosterMemberClicked(
     event: (MouseEvent | PointerEvent) & { currentTarget: HTMLElement },
