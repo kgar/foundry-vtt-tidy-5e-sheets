@@ -477,22 +477,17 @@ select:hover {
     border: 0.0625rem solid var(--t5e-separator-color);
     border-radius: 0.1875rem;
     padding: 0.75rem 0.5rem;
-  
-    // Begin wild background experiments here:
-    // background-color: var(--t5e-faintest-color);
-    position: relative;
+    background: linear-gradient(
+        145deg,
+        rgba(248, 244, 241, 0.85) 10%,
+        rgba(248, 244, 241, 0.1) 160%
+      ),
+      var(--underlay) 40%, #f8f4f1;
+    background-blend-mode: normal, multiply;
+    background-size: cover, cover;
 
-    > * {
-      position: relative;
-    }
-
-    &::before {
-      position: absolute;
-      content: '';
-      inset: 0;
-      background: var(--underlay) 50% / cover no-repeat;
-      mask-image: linear-gradient(135deg, transparent 35%, black);
-      opacity: 0.4;
+    &.basic {
+      background-blend-mode: normal, luminosity;
     }
 
     .sub-header {
@@ -615,7 +610,7 @@ select:hover {
       width: var(--img-size);
       height: var(--img-size);
       border-radius: 0.125rem;
-      border: 0.0625rem dashed var(--t5e-light-color);
+      border: 0.0625rem dashed var(--t5e-tertiary-color);
       color: var(--t5e-tertiary-color);
       font-size: 0.6875rem;
 
@@ -788,6 +783,23 @@ select:hover {
       .ProseMirror {
         overflow-y: auto;
       }
+    }
+  }
+}
+
+&[data-tidy-theme-type='dark'] {
+  .tidy-tab.bastion .facility:not(.empty) {
+    background: linear-gradient(
+        145deg,
+        rgba(27, 29, 35, 0.95) 10%,
+        rgba(27, 29, 35, 0.1) 170%
+      ),
+      var(--underlay) 40%, #2c3e50;
+    background-blend-mode: normal, normal;
+    background-size: cover, cover;
+
+    &.basic {
+      background-blend-mode: normal, luminosity;
     }
   }
 }

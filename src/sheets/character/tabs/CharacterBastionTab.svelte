@@ -141,6 +141,11 @@
       </h3>
       <ul class="facility-list">
         {#each $context.facilities.special.chosen as chosen}
+          {@const img = chosen.img.includes(
+            'systems/dnd5e/icons/svg/items/facility.svg',
+          )
+            ? '../../modules/tidy5e-sheet/images/facility-default-background.webp'
+            : chosen.img}
           <li
             class="facility special"
             data-item-id={chosen.id}
@@ -148,7 +153,7 @@
             class:disabled={chosen.disabled}
             class:building={chosen.building}
             data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
-            style="--underlay: url('{chosen.img}')"
+            style="--underlay: url('{img}')"
           >
             <div class="facility-header">
               <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -293,6 +298,11 @@
       </h3>
       <ul class="facility-list">
         {#each $context.facilities.basic.chosen as chosen}
+          {@const img = chosen.img.includes(
+            'systems/dnd5e/icons/svg/items/facility.svg',
+          )
+            ? '../../modules/tidy5e-sheet/images/facility-default-background.webp'
+            : chosen.img}
           <li
             class="facility basic"
             data-item-id={chosen.id}
@@ -300,7 +310,7 @@
             class:disabled={chosen.disabled}
             class:building={chosen.building}
             data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
-            style="--underlay: url('{chosen.img}')"
+            style="--underlay: url('{img}')"
           >
             <div class="facility-header">
               <!-- svelte-ignore a11y-click-events-have-key-events -->
