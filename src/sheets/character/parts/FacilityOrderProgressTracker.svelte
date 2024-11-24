@@ -14,6 +14,7 @@
   import { settingStore } from 'src/settings/settings';
   import InventoryItemCardContent from 'src/components/item-info-card/InventoryItemCardContent.svelte';
   import type { Item5e } from 'src/types/item.types';
+  import { getTidyFacilityIcon } from 'src/features/facility/facility';
 
   export let chosen: ChosenFacilityContext;
 
@@ -62,9 +63,7 @@
 </script>
 
 {#if chosen.progress.max || chosen.executing}
-  {@const icon = CharacterSheetRuntime.getTidyFacilityIcon(
-    chosen.progress.order,
-  )}
+  {@const icon = getTidyFacilityIcon(chosen.progress.order)}
 
   <div class="sub-header">
     {localize('DND5E.FACILITY.FIELDS.order.label')}
