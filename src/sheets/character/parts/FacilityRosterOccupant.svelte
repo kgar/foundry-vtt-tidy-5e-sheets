@@ -40,7 +40,7 @@
     `${facilityId}-${index}-${occupant.uuid}`}
   class:unlocked={$context.unlocked}
   data-actor-uuid={occupant.uuid}
-  data-tooltip={localize('TIDY5E.Facilities.Roster.MemberLabel', {
+  data-tooltip={localize('TIDY5E.Facilities.RosterMember.Label', {
     actorName: occupant.name,
     facilityName: facilityName,
   })}
