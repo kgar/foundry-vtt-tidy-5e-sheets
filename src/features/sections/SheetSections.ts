@@ -140,6 +140,7 @@ export class SheetSections {
         // Handle "Additional Spells" section
         if (curr.order === 'item') {
           key = 'dnd5e-cast-activity-additional-spells';
+          curr.canCreate = false;
         }
 
         curr.key = key;
