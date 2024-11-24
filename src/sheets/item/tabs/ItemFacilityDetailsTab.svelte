@@ -49,7 +49,6 @@
           data={$context.config.facilities.types}
           labelProp="label"
           valueProp="value"
-          blank=""
         ></SelectOptions>
       </Select>
     </div>
@@ -71,6 +70,7 @@
           data={$context.facilitySubtypes ?? {}}
           labelProp="label"
           valueProp="value"
+          blank=""
         ></SelectOptions>
       </Select>
     </div>
@@ -223,10 +223,10 @@
           field="system.free"
           checked={source.free}
         ></Checkbox>
-        <p class="hint">
-          {localize('DND5E.FACILITY.FIELDS.free.hint')}
-        </p>
       </div>
+      <p class="hint">
+        {localize('DND5E.FACILITY.FIELDS.free.hint')}
+      </p>
     </div>
 
     <!-- Enlargeable -->
@@ -241,10 +241,10 @@
           field="system.enlargeable"
           checked={source.enlargeable}
         ></Checkbox>
-        <p class="hint">
-          {localize('DND5E.FACILITY.FIELDS.enlargeable.hint')}
-        </p>
       </div>
+      <p class="hint">
+        {localize('DND5E.FACILITY.FIELDS.enlargeable.hint')}
+      </p>
     </div>
 
     <!-- Disabled -->
@@ -259,10 +259,10 @@
           field="system.disabled"
           checked={source.disabled}
         ></Checkbox>
-        <p class="hint">
-          {localize('DND5E.FACILITY.FIELDS.disabled.hint')}
-        </p>
       </div>
+      <p class="hint">
+        {localize('DND5E.FACILITY.FIELDS.disabled.hint')}
+      </p>
     </div>
   {:else}
     <!-- Built -->
@@ -277,10 +277,10 @@
           field="system.building.built"
           checked={source.building.built}
         ></Checkbox>
-        <p class="hint">
-          {localize('DND5E.FACILITY.FIELDS.building.built.hint')}
-        </p>
       </div>
+      <p class="hint">
+        {localize('DND5E.FACILITY.FIELDS.building.built.hint')}
+      </p>
     </div>
   {/if}
 
@@ -345,7 +345,7 @@
         <div class="form-fields">
           <div class="form-fields">
             <NumberInput
-              id="{appId}-system-progress-v"
+              id="{appId}-system-progress-max"
               document={$context.document}
               field="system.progress.max"
               value={source.progress.max}
@@ -362,15 +362,15 @@
 
   {#if $context.canCraft}
     <!-- TODO -->
-    <div class:harvesting={$context.isHarvesting}>
+    <div class:harvesting={$context.isHarvesting} class="mt-1">
       <h3 class="form-header">
         {localize(`DND5E.FACILITY.Orders.${source.order}.present`)}
       </h3>
-      <div class="form-group">
-        <p class="hint">
-          {localize('DND5E.FACILITY.Craft.Hint')}
-        </p>
-      </div>
+
+      <p class="hint">
+        {localize('DND5E.FACILITY.Craft.Hint')}
+      </p>
+
       <ul class="separated-list single-item facility-craft">
         <li>
           {#if $context.craft}
@@ -381,7 +381,7 @@
               <div class="list-controls flexrow">
                 <button
                   type="button"
-                  class="unbutton control-button"
+                  class="icon-button"
                   on:click={() =>
                     $context.item.sheet.submit({
                       updateData: { 'system.craft': null },
@@ -389,24 +389,16 @@
                   data-tooltip={localize('DND5E.FACILITY.Action.RemoveCraft')}
                   aria-label={localize('DND5E.FACILITY.Action.RemoveCraft')}
                 >
+                  <i class="fa-solid fa-trash"></i>
                 </button>
               </div>
             </div>
           {:else}
-            <div class="form-group">
-              <label for="{appId}-system-craft-item">
-                {localize('DND5E.FACILITY.FIELDS.craft.item.label')}
-              </label>
-              <div class="form-fields">
-                <TextInput
-                  id="{appId}-system-craft-item"
-                  document={$context.document}
-                  field="system.craft.item"
-                  value={source.craft.item}
-                  selectOnFocus={true}
-                ></TextInput>
-              </div>
-            </div>
+            <document-tags
+              name="system.craft.item"
+              single
+              on:change={() => $context.item.sheet.submit()}
+            ></document-tags>
           {/if}
         </li>
       </ul>
