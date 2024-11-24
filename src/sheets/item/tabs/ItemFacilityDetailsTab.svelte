@@ -513,10 +513,10 @@
       </label>
       <div class="form-fields">
         <NumberInput
-          id="{appId}-system-trade-trade-profit"
+          id="{appId}-system-trade-profit"
           document={$context.document}
-          field="system.trade.trade.profit"
-          value={source.trade.trade.profit}
+          field="system.trade.profit"
+          value={source.trade.profit}
           selectOnFocus={true}
           min="0"
           step="0"
