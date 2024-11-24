@@ -34,6 +34,7 @@
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
   import ConcentrationOverlayIcon from './ConcentrationOverlayIcon.svelte';
   import DeleteOrOpenActivity from '../item-list/controls/DeleteOrOpenActivity.svelte';
+  import ActivityUses from '../item-list/ActivityUses.svelte';
 
   let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -205,6 +206,10 @@
           {#if spell.hasLimitedUses}
             <ItemTableCell baseWidth="3.125rem">
               <ItemUses item={spell} />
+            </ItemTableCell>
+          {:else if (spell.system.linkedActivity?.uses?.max ?? 0) > 0}
+            <ItemTableCell baseWidth="3.125rem">
+              <ActivityUses activity={spell.system.linkedActivity} />
             </ItemTableCell>
           {/if}
           {#if allowFavorites && $settingStore.showIconsNextToTheItemName && 'favoriteId' in ctx && !!ctx.favoriteId}

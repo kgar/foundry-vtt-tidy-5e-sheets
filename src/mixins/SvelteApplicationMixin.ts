@@ -457,7 +457,7 @@ export function SvelteApplicationMixin<
       this.#focusedInputSelector = focusedElement?.name
         ? `${focusedElement.tagName}[name="${focusedElement.name}"]`
         : focusedElement?.id
-        ? `#${focusedElement.id}`
+        ? `[id="${focusedElement.id}"]`
         : undefined;
     }
 

@@ -135,7 +135,14 @@ export class SheetSections {
 
     const spellbookMap = spellbook.reduce<Record<string, SpellbookSection>>(
       (prev, curr) => {
-        const key = curr.prop ?? '';
+        let key = curr.prop ?? '';
+
+        // Handle "Additional Spells" section
+        if (curr.order === 'item') {
+          key = 'dnd5e-cast-activity-additional-spells';
+          curr.canCreate = false;
+        }
+
         curr.key = key;
 
         // Tidy passes the dataset directly to the item creation code, rather than planting it on the HTML.

@@ -184,7 +184,7 @@ export type SimpleEditableColumn = {
 };
 
 export type SpellbookSection = {
-  order?: number;
+  order?: number | string;
   usesSlots: boolean;
   canCreate: boolean;
   canPrepare: boolean;
