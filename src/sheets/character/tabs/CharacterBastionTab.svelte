@@ -152,7 +152,9 @@
             data-facility-id={chosen.id}
             class:disabled={chosen.disabled}
             class:building={chosen.building}
-            data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
+            data-context-menu={(!chosen.disabled ||
+              FoundryAdapter.userIsGm()) &&
+              CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
             style="--underlay: url('{img}')"
           >
             <div class="facility-header">
@@ -166,6 +168,7 @@
                 on:mouseleave={(ev) =>
                   onMouseLeaveFacility(ev, chosen.facility)}
                 on:mousedown={(ev) =>
+                  (!chosen.disabled || FoundryAdapter.userIsGm()) &&
                   FoundryAdapter.editOnMiddleClick(ev, chosen.facility)}
                 on:click={(ev) => $context.editable && useFacility(ev, chosen)}
               >
@@ -186,8 +189,11 @@
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <!-- svelte-ignore a11y-no-static-element-interactions -->
               <a
-                class="facility-menu highlight-on-hover"
+                class="facility-menu"
+                class:highlight-on-hover={!chosen.disabled ||
+                  FoundryAdapter.userIsGm()}
                 on:click={(ev) =>
+                  (!chosen.disabled || FoundryAdapter.userIsGm()) &&
                   EventHelper.triggerContextMenu(ev, '[data-item-id]')}
               >
                 <i class="fas fa-ellipsis-vertical"></i>
@@ -309,7 +315,9 @@
             data-facility-id={chosen.id}
             class:disabled={chosen.disabled}
             class:building={chosen.building}
-            data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
+            data-context-menu={(!chosen.disabled ||
+              FoundryAdapter.userIsGm()) &&
+              CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
             style="--underlay: url('{img}')"
           >
             <div class="facility-header">
@@ -323,6 +331,7 @@
                 on:mouseleave={(ev) =>
                   onMouseLeaveFacility(ev, chosen.facility)}
                 on:mousedown={(ev) =>
+                  (!chosen.disabled || FoundryAdapter.userIsGm()) &&
                   FoundryAdapter.editOnMiddleClick(ev, chosen.facility)}
                 on:click={(ev) => $context.editable && useFacility(ev, chosen)}
               >
@@ -343,7 +352,9 @@
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <!-- svelte-ignore a11y-no-static-element-interactions -->
               <a
-                class="facility-menu highlight-on-hover"
+                class="facility-menu"
+                class:highlight-on-hover={!chosen.disabled ||
+                  FoundryAdapter.userIsGm()}
                 on:click={(ev) =>
                   EventHelper.triggerContextMenu(ev, '[data-item-id]')}
               >

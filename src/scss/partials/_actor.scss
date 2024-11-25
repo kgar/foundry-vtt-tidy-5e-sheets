@@ -497,6 +497,10 @@ select:hover {
     }
   }
 
+  .facility.disabled {
+    filter: grayscale(1);
+  }
+
   .facility.empty a {
     border-radius: var(--radius-card, 0.1875rem);
     border: 0.0625rem dashed var(--t5e-light-color);
