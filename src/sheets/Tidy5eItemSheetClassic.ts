@@ -8,6 +8,7 @@ import type {
 import type {
   Item5e,
   ItemDescription,
+  ItemFacilityOrdersContext,
   ItemSheetContext as ItemSheetClassicContext,
   ItemSheetContext,
   UsesRecoveryData,
@@ -165,16 +166,17 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
     const target = this.item.type === 'spell' ? this.item.system.target : null;
 
     const context: ItemSheetContext = {
-      activities: this.document.system.activities
-        ? (this.document.system.activities ?? [])
-            .map(({ _id: id, name, img, sort }: any) => ({
-              id,
-              name,
-              sort,
-              img: { src: img, svg: img?.endsWith('.svg') },
-            }))
-            .sort((a: any, b: any) => a.sort - b.sort)
-        : undefined,
+      activities: (this.document.system.activities ?? [])
+        .filter((a: any) => {
+          return CONFIG.DND5E.activityTypes[a.type]?.configurable !== false;
+        })
+        .map(({ _id: id, name, img, sort }: any) => ({
+          id,
+          name,
+          sort,
+          img: { src: img, svg: img?.endsWith('.svg') },
+        }))
+        .sort((a: any, b: any) => a.sort - b.sort),
       affectsPlaceholder: game.i18n.localize(
         `DND5E.Target${target?.template?.type ? 'Every' : 'Any'}`
       ),
@@ -370,6 +372,61 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
         ...Object.values(this.item.labels.activations[0] ?? {}),
         ...(this.item.system.equippableItemCardProperties ?? [])
       );
+    }
+
+    // Facilities
+    const { building, craft, order, type } = this.item.system;
+
+    if (this.item.type === 'facility') {
+      context.orders = Object.entries(
+        CONFIG.DND5E.facilities.orders
+      ).reduce<ItemFacilityOrdersContext>(
+        (obj, [value, config]) => {
+          const { label, basic, hidden } = config;
+          if (hidden) {
+            return obj;
+          }
+
+          if (value === 'build') {
+            if (!building.built) obj.executable.push({ value, label });
+            return obj;
+          }
+
+          if (value === 'change') {
+            if (type.subtype === 'garden')
+              obj.executable.push({ value, label });
+            return obj;
+          }
+
+          if (type.value === 'basic') {
+            if (!building.built) return obj;
+            if (basic) obj.executable.push({ value, label });
+          } else if (type.value === 'special' && !basic) {
+            obj.available.push({ value, label });
+            if (value === order || value === 'maintain')
+              obj.executable.push({ value, label });
+          }
+
+          return obj;
+        },
+        { available: [], executable: [] }
+      );
+    }
+
+    if (
+      type?.value === 'special' &&
+      (order === 'craft' || order === 'harvest')
+    ) {
+      context.canCraft = true;
+      context.isHarvesting = order === 'harvest';
+      const crafting = await fromUuid(craft.item);
+      if (crafting) {
+        context.craft = {
+          img: crafting.img,
+          name: crafting.name,
+          contentLink: crafting.toAnchor().outerHTML,
+        };
+      }
     }
 
     // Tabs

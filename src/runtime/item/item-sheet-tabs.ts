@@ -19,6 +19,7 @@ import ItemToolDetailsTab from '../../sheets/item/tabs/ItemToolDetailsTab.svelte
 import ItemWeaponDetailsTab from '../../sheets/item/tabs/ItemWeaponDetailsTab.svelte';
 import ItemActivitiesTab from '../../sheets/item/tabs/ItemActivitiesTab.svelte';
 import type { Tab } from 'src/types/types';
+import ItemFacilityDetailsTab from 'src/sheets/item/tabs/ItemFacilityDetailsTab.svelte';
 
 const itemSheetTabs = {
   /**
@@ -151,6 +152,14 @@ const itemSheetTabs = {
       type: 'svelte',
     },
     autoHeight: true,
+  },
+  facilityDetails: {
+    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    title: 'DND5E.Details',
+    content: {
+      component: ItemFacilityDetailsTab,
+      type: 'svelte',
+    },
   },
   /**
    * Details form for feat items.

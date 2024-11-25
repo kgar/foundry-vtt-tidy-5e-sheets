@@ -26,6 +26,17 @@ export type PropertyContext = {
   }[];
 };
 
+export type ItemFacilityOrdersContext = {
+  available: {
+    value: string;
+    label: string;
+  }[];
+  executable: {
+    value: string;
+    label: string;
+  }[];
+};
+
 export type ItemSheetContext = {
   activities: {
     id: string;
@@ -41,8 +52,14 @@ export type ItemSheetContext = {
   advancementEditable: boolean;
   affectsPlaceholder: string;
   baseItems: Record<string, string>;
+  canCraft?: boolean;
   concealDetails: boolean;
   config: typeof CONFIG.DND5E;
+  craft?: {
+    img: string;
+    name: string;
+    contentLink: string;
+  };
   customContent: CustomContent[];
   customEquipmentTypeGroups: RegisteredEquipmentTypeGroup[];
   data: any;
@@ -64,6 +81,7 @@ export type ItemSheetContext = {
     chat: string;
   };
   equipmentTypes: GroupableSelectOption[];
+  facilitySubtypes?: Record<string, string>;
   hasDexModifier: boolean;
   /**
    * Represents remaining health as a percentage within the range of `0` to `100`.
@@ -71,6 +89,7 @@ export type ItemSheetContext = {
   healthPercentage: number;
   identifiedName: string;
   isEmbedded: boolean;
+  isHarvesting?: boolean;
   isIdentifiable: boolean;
   isIdentified: boolean;
   isPhysical: boolean;
@@ -83,6 +102,7 @@ export type ItemSheetContext = {
   limited: boolean;
   lockItemQuantity: boolean;
   options: any;
+  orders?: ItemFacilityOrdersContext;
   owner: boolean;
   properties: PropertyContext;
   rangeTypes: GroupableSelectOption[];

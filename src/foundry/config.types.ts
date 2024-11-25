@@ -2706,57 +2706,18 @@ export type CONFIG = {
         };
       } & Record<string, Record<string, number>>;
       orders: {
-        build: {
-          label: string;
-          icon: string;
-        };
-        change: {
-          label: string;
-          icon: string;
-          duration: number;
-        };
-        craft: {
-          label: string;
-          icon: string;
-        };
-        empower: {
-          label: string;
-          icon: string;
-        };
-        enlarge: {
-          label: string;
-          icon: string;
-          basic: boolean;
-        };
-        harvest: {
-          label: string;
-          icon: string;
-        };
-        maintain: {
-          label: string;
-          icon: string;
-        };
-        recruit: {
-          label: string;
-          icon: string;
-        };
-        repair: {
-          label: string;
-          icon: string;
-          hidden: boolean;
-        };
-        research: {
-          label: string;
-          icon: string;
-        };
-        trade: {
-          label: string;
-          icon: string;
-        };
-      } & Record<
-        string,
-        { label: string; icon: string; hidden?: boolean; basic?: boolean }
-      >;
+        build: FacilityOrder;
+        change: FacilityOrder;
+        craft: FacilityOrder;
+        empower: FacilityOrder;
+        enlarge: FacilityOrder;
+        harvest: FacilityOrder;
+        maintain: FacilityOrder;
+        recruit: FacilityOrder;
+        repair: FacilityOrder;
+        research: FacilityOrder;
+        trade: FacilityOrder;
+      } & Record<string, FacilityOrder>;
       sizes: {
         cramped: {
           label: string;
@@ -4863,15 +4824,15 @@ export type CONFIG = {
       encounter: string;
     };
     activityTypes: {
-      attack: {};
-      check: {};
-      damage: {};
-      enchant: {};
-      heal: {};
-      save: {};
-      summon: {};
-      utility: {};
-    };
+      attack: ActivityType;
+      check: ActivityType;
+      damage: ActivityType;
+      enchant: ActivityType;
+      heal: ActivityType;
+      save: ActivityType;
+      summon: ActivityType;
+      utility: ActivityType;
+    } & Record<string, ActivityType>;
     advancementTypes: {
       AbilityScoreImprovement: {
         validItemTypes: {};
@@ -5666,4 +5627,17 @@ export type CONFIG = {
       };
     };
   };
+};
+
+type ActivityType = {
+  documentClass: any;
+  configurable?: boolean;
+};
+
+type FacilityOrder = {
+  label: string;
+  icon: string;
+  hidden?: boolean;
+  basic?: boolean;
+  duration?: number;
 };

@@ -20,7 +20,7 @@
         error(
           'An error occurred while getting SVG images. See devtools console for more details.',
           true,
-          e
+          e,
         );
         svgHtml = `<img src="${svgUrl}" alt="" />`;
       }
@@ -33,7 +33,7 @@
 </script>
 
 {#key svgHtml}
-  <div use:preprocessSvg>
+  <div use:preprocessSvg class={$$restProps.class ?? ''}>
     {@html svgHtml}
   </div>
 {/key}

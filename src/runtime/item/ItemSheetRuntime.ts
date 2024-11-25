@@ -6,6 +6,7 @@ import BackgroundSheet from 'src/sheets/item/BackgroundSheet.svelte';
 import ClassSheet from 'src/sheets/item/ClassSheet.svelte';
 import ConsumableSheet from 'src/sheets/item/ConsumableSheet.svelte';
 import ContainerSheet from 'src/sheets/item/ContainerSheet.svelte';
+import FacilitySheet from 'src/sheets/item/FacilitySheet.svelte';
 import FeatSheet from 'src/sheets/item/FeatSheet.svelte';
 import LootSheet from 'src/sheets/item/LootSheet.svelte';
 import SpellSheet from 'src/sheets/item/SpellSheet.svelte';
@@ -96,6 +97,14 @@ export class ItemSheetRuntime {
         itemSheetTabs.containerContents,
         itemSheetTabs.descriptionWithSidebar,
         itemSheetTabs.containerDetails,
+      ],
+    },
+    [CONSTANTS.ITEM_TYPE_FACILITY]: {
+      Sheet: FacilitySheet,
+      defaultTabs: () => [
+        itemSheetTabs.description,
+        itemSheetTabs.facilityDetails,
+        itemSheetTabs.activities
       ],
     },
     [CONSTANTS.ITEM_TYPE_FEAT]: {

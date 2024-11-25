@@ -99,27 +99,40 @@
       style="--bar-percentage: {chosen.progress.pct}%"
     >
       <div class="label">
-        <span class="order">
-          {#if icon?.type === 'fa-icon-class'}
-            <i class={icon.className}></i>
-          {:else if icon?.type === 'dnd5e-icon'}
-            <Dnd5eIcon src={icon.src}></Dnd5eIcon>
-          {/if}
-          <span class="progress-meter-label truncate">
-            {#if chosen.craft}
-              {localize('TIDY5E.Facilities.Progress.OrderAndCraftLabel', {
-                orderName: orderLabel,
-                craftingItemName: chosen.craft.name,
-              })}
-            {:else}
-              {orderLabel}
+        {#if !chosen.disabled}
+          <span class="order">
+            {#if icon?.type === 'fa-icon-class'}
+              <i class={icon.className}></i>
+            {:else if icon?.type === 'dnd5e-icon'}
+              <Dnd5eIcon src={icon.src}></Dnd5eIcon>
             {/if}
+            <span class="progress-meter-label truncate">
+              {#if chosen.craft}
+                {localize('TIDY5E.Facilities.Progress.OrderAndCraftLabel', {
+                  orderName: orderLabel,
+                  craftingItemName: chosen.craft.name,
+                })}
+              {:else}
+                {orderLabel}
+              {/if}
+            </span>
           </span>
-        </span>
-        <span class="counter">
-          <span class="value">{chosen.progress.value}</span> &sol;
-          <span class="max">{chosen.progress.max}</span>
-        </span>
+          <span class="counter">
+            <span class="value">{chosen.progress.value}</span> &sol;
+            <span class="max">{chosen.progress.max}</span>
+          </span>
+        {:else}
+          <span class="order">
+            {#if icon?.type === 'fa-icon-class'}
+              <i class={icon.className}></i>
+            {:else if icon?.type === 'dnd5e-icon'}
+              <Dnd5eIcon src={icon.src}></Dnd5eIcon>
+            {/if}
+            <span class="progress-meter-label truncate">
+              {orderLabel}
+            </span>
+          </span>
+        {/if}
       </div>
     </div>
   </div>
