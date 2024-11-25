@@ -95,7 +95,7 @@
   >
     <div class="form-fields">
       {#if $context.system.hasScalarTarget}
-        <NumberInput
+        <TextInput
           id="{$context.appId}-system-target-value"
           value={$context.system.target.value}
           placeholder="&mdash;"

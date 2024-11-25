@@ -254,7 +254,7 @@ export class Tidy5eNpcSheet
         const roll = await Roll.create(
           formula,
           this.actor.getRollData()
-        ).evaluate();
+        ).evaluate({ allowInteractive: false });
         maxPreparedSpellsTotal = roll.total;
       }
     } catch (e) {
