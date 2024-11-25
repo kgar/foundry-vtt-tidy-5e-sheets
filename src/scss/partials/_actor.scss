@@ -495,6 +495,10 @@ select:hover {
       margin-block-end: 0.25rem;
       font-weight: 500;
     }
+
+    &.no-events {
+      pointer-events: none;
+    }
   }
 
   .facility.disabled {
@@ -546,8 +550,10 @@ select:hover {
     gap: 0.125rem;
     margin-block-end: 1rem;
 
-    img {
+    .facility-image,
+    .facility-image svg {
       --img-size: 2rem;
+      --icon-fill: var(--t5e-tertiary-color);
       width: var(--img-size);
       height: var(--img-size);
       margin-inline-end: 0.25rem;
@@ -803,6 +809,10 @@ select:hover {
 
     &.basic {
       background-blend-mode: normal, luminosity;
+    }
+
+    .facility-header :is(.facility-image, .facility-image svg) {
+      --icon-fill: var(--t5e-secondary-color);
     }
   }
 }

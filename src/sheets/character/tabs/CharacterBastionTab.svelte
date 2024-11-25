@@ -21,6 +21,7 @@
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import DefaultItemCardContentTemplate from 'src/components/item-info-card/DefaultItemCardContentTemplate.svelte';
   import { applyDropzoneClass } from 'src/events/drag-and-drop';
+  import InlineSvg from 'src/components/utility/InlineSvg.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -72,6 +73,13 @@
   $: hasCreatures = $context.facilities.special.chosen.some(
     (c: ChosenFacilityContext) => c.creatures.some((d) => !d.empty),
   );
+
+  // TODO: Extract and share between this and advancements
+  const basicSvgFilePathRegex = /\.svg$/i;
+
+  function isSvg(iconPath: string) {
+    return basicSvgFilePathRegex.test(iconPath?.trim());
+  }
 
   async function addFacility(ev: Event, type: string) {
     if (!TidyHooks.tidy5eSheetsAddFacilityClicked(ev, $context.actor, type)) {
@@ -141,21 +149,25 @@
       </h3>
       <ul class="facility-list">
         {#each $context.facilities.special.chosen as chosen}
-          {@const img = chosen.img.includes(
+          {@const bgImg = chosen.img.includes(
             'systems/dnd5e/icons/svg/items/facility.svg',
           )
             ? '../../modules/tidy5e-sheet/images/facility-default-background.webp'
             : chosen.img}
+
+          {@const img = !chosen.disabled
+            ? chosen.img
+            : $context.config.facilities.orders.repair.icon}
+
           <li
             class="facility special"
             data-item-id={chosen.id}
             data-facility-id={chosen.id}
             class:disabled={chosen.disabled}
+            class:no-events={chosen.disabled && !FoundryAdapter.userIsGm()}
             class:building={chosen.building}
-            data-context-menu={(!chosen.disabled ||
-              FoundryAdapter.userIsGm()) &&
-              CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
-            style="--underlay: url('{img}')"
+            data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
+            style="--underlay: url('{bgImg}')"
           >
             <div class="facility-header">
               <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -168,15 +180,16 @@
                 on:mouseleave={(ev) =>
                   onMouseLeaveFacility(ev, chosen.facility)}
                 on:mousedown={(ev) =>
-                  (!chosen.disabled || FoundryAdapter.userIsGm()) &&
                   FoundryAdapter.editOnMiddleClick(ev, chosen.facility)}
                 on:click={(ev) => $context.editable && useFacility(ev, chosen)}
               >
-                <img
-                  class="facility-image"
-                  src={chosen.img}
-                  alt={chosen.name}
-                />
+                <!-- <img class="facility-image" src={img} alt={chosen.name} /> -->
+
+                {#if isSvg(img)}
+                  <InlineSvg class="facility-image" svgUrl={img} />
+                {:else}
+                  <img class="facility-image" src={img} alt={chosen.name} />
+                {/if}
 
                 <div class="title-and-subtitle">
                   <span class="title"> {chosen.name} </span>
@@ -189,11 +202,8 @@
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <!-- svelte-ignore a11y-no-static-element-interactions -->
               <a
-                class="facility-menu"
-                class:highlight-on-hover={!chosen.disabled ||
-                  FoundryAdapter.userIsGm()}
+                class="facility-menu highlight-on-hover"
                 on:click={(ev) =>
-                  (!chosen.disabled || FoundryAdapter.userIsGm()) &&
                   EventHelper.triggerContextMenu(ev, '[data-item-id]')}
               >
                 <i class="fas fa-ellipsis-vertical"></i>
@@ -304,21 +314,25 @@
       </h3>
       <ul class="facility-list">
         {#each $context.facilities.basic.chosen as chosen}
-          {@const img = chosen.img.includes(
+          {@const bgImg = chosen.img.includes(
             'systems/dnd5e/icons/svg/items/facility.svg',
           )
             ? '../../modules/tidy5e-sheet/images/facility-default-background.webp'
             : chosen.img}
+
+          {@const img = !chosen.disabled
+            ? chosen.img
+            : $context.config.facilities.orders.repair.icon}
+
           <li
             class="facility basic"
             data-item-id={chosen.id}
             data-facility-id={chosen.id}
             class:disabled={chosen.disabled}
+            class:no-events={chosen.disabled && !FoundryAdapter.userIsGm()}
             class:building={chosen.building}
-            data-context-menu={(!chosen.disabled ||
-              FoundryAdapter.userIsGm()) &&
-              CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
-            style="--underlay: url('{img}')"
+            data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
+            style="--underlay: url('{bgImg}')"
           >
             <div class="facility-header">
               <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -331,15 +345,14 @@
                 on:mouseleave={(ev) =>
                   onMouseLeaveFacility(ev, chosen.facility)}
                 on:mousedown={(ev) =>
-                  (!chosen.disabled || FoundryAdapter.userIsGm()) &&
                   FoundryAdapter.editOnMiddleClick(ev, chosen.facility)}
                 on:click={(ev) => $context.editable && useFacility(ev, chosen)}
               >
-                <img
-                  class="facility-image"
-                  src={chosen.img}
-                  alt={chosen.name}
-                />
+                {#if isSvg(img)}
+                  <InlineSvg class="facility-image" svgUrl={img} />
+                {:else}
+                  <img class="facility-image" src={img} alt={chosen.name} />
+                {/if}
 
                 <div class="title-and-subtitle">
                   <span class="title">{chosen.name}</span>
@@ -352,9 +365,7 @@
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <!-- svelte-ignore a11y-no-static-element-interactions -->
               <a
-                class="facility-menu"
-                class:highlight-on-hover={!chosen.disabled ||
-                  FoundryAdapter.userIsGm()}
+                class="facility-menu highlight-on-hover"
                 on:click={(ev) =>
                   EventHelper.triggerContextMenu(ev, '[data-item-id]')}
               >
