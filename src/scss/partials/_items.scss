@@ -912,3 +912,15 @@ document-tags button {
     }
   }
 }
+
+&[data-document-type='facility'] {
+  .quantity {
+    flex: 1 0 auto;
+  }
+
+  .price {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem
+  }
+}

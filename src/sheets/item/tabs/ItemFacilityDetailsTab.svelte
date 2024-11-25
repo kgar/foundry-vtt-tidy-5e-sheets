@@ -6,15 +6,9 @@
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Select from 'src/components/inputs/Select.svelte';
-  import ItemProperties from '../parts/ItemProperties.svelte';
   import ContentConcealer from 'src/components/content-concealment/ContentConcealer.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import { CONSTANTS } from 'src/constants';
-  import DetailsMountable from '../parts/DetailsMountable.svelte';
-  import FieldDamage from '../parts/FieldDamage.svelte';
-  import FieldUses from '../parts/FieldUses.svelte';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
-  import NumberInputSetting from 'src/applications/settings/parts/NumberInputSetting.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -361,7 +355,6 @@
   </div>
 
   {#if $context.canCraft}
-    <!-- TODO -->
     <h3 class="form-header">
       {localize(`DND5E.FACILITY.Orders.${source.order}.present`)}
     </h3>
@@ -374,7 +367,6 @@
       <ul class="separated-list single-item facility-craft">
         <li>
           {#if $context.craft}
-            <!-- TODO -->
             <div class="details flexrow">
               <img src={$context.craft.img} alt={$context.craft.name} />
               {@html $context.craft.contentLink}
