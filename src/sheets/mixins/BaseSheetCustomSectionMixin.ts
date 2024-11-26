@@ -1,5 +1,6 @@
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { Item5e } from 'src/types/item.types';
+import type { Actor5e } from 'src/types/types';
 import { isNil } from 'src/utils/data';
 
 /**
@@ -16,15 +17,38 @@ type OwnedItemsFunction = (object: any) => Map<string, Item5e>;
  */
 export function BaseSheetCustomSectionMixin<
   T extends new (...args: any[]) => {
+    _onDropItemCreate(item: any, event: DragEvent): Promise<any> | void;
     _onSortItem(
       event: DragEvent,
-      itemData: Record<string, unknown>
+      itemData: Record<string, unknown>,
+      allowSectionTransfer?: boolean
     ): Promise<any> | void;
+    actor: Actor5e;
     object: any;
   }
 >(itemsFn: OwnedItemsFunction, Base: T) {
   return class extends Base {
-    async _onSortItem(event: DragEvent, itemData: Record<string, unknown>) {
+    async _onDropItem(event: DragEvent, data: any) {
+      if (!this.actor.isOwner) return false;
+      const item = await Item.implementation.fromDropData(data);
+
+      // Handle moving out of container & item sorting
+      if (this.actor.uuid === item.parent?.uuid) {
+        const removingFromContainer = item.system.container !== null;
+        if (removingFromContainer) {
+          await item.update({ 'system.container': null });
+        }
+        return this._onSortItem(event, item.toObject(), !removingFromContainer);
+      }
+
+      return this._onDropItemCreate(item, event);
+    }
+
+    async _onSortItem(
+      event: DragEvent,
+      itemData: Record<string, unknown>,
+      allowSectionTransfer: boolean = true
+    ) {
       const sourceSection = foundry.utils.getProperty(
         itemData,
         TidyFlags.section.prop
@@ -41,6 +65,10 @@ export function BaseSheetCustomSectionMixin<
         !isNil(sourceSection?.trim(), '') && isNil(targetSection?.trim(), '');
 
       const initialSortResult = await super._onSortItem(event, itemData);
+
+      if (!allowSectionTransfer) {
+        return initialSortResult;
+      }
 
       const item = itemsFn(this.object).get(itemData._id as string);
 
