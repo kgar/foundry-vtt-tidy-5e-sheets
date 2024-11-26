@@ -86,97 +86,95 @@
         </ul>
       </article>
     </div>
-    <div class="main-notes">
-      <div
-        class="left-notes note-entries"
-        class:limited={$context.showLimitedSheet}
+    <div
+      class="left-notes note-entries"
+      class:limited={$context.showLimitedSheet}
+    >
+      <RerenderAfterFormSubmission
+        andOnValueChange={$context.system.details.trait}
       >
-        <RerenderAfterFormSubmission
-          andOnValueChange={$context.system.details.trait}
-        >
-          <article use:$context.activateEditors>
-            <div class="section-titles biopage">
-              {localize('DND5E.PersonalityTraits')}
-            </div>
-            <SheetEditor
-              content={$context.traitEnrichedHtml}
-              target="system.details.trait"
-              editable={$context.editable}
-            />
-          </article>
-        </RerenderAfterFormSubmission>
+        <article use:$context.activateEditors>
+          <div class="section-titles biopage">
+            {localize('DND5E.PersonalityTraits')}
+          </div>
+          <SheetEditor
+            content={$context.traitEnrichedHtml}
+            target="system.details.trait"
+            editable={$context.editable}
+          />
+        </article>
+      </RerenderAfterFormSubmission>
 
-        <RerenderAfterFormSubmission
-          andOnValueChange={$context.system.details.ideal}
-        >
-          <article use:$context.activateEditors>
-            <div class="section-titles biopage">{localize('DND5E.Ideals')}</div>
-            <SheetEditor
-              content={$context.idealEnrichedHtml}
-              target="system.details.ideal"
-              editable={$context.editable}
-            />
-          </article>
-        </RerenderAfterFormSubmission>
-        <RerenderAfterFormSubmission
-          andOnValueChange={$context.system.details.bond}
-        >
-          <article use:$context.activateEditors>
-            <div class="section-titles biopage">{localize('DND5E.Bonds')}</div>
-            <SheetEditor
-              content={$context.bondEnrichedHtml}
-              target="system.details.bond"
-              editable={$context.editable}
-            />
-          </article>
-        </RerenderAfterFormSubmission>
-        <RerenderAfterFormSubmission
-          andOnValueChange={$context.system.details.flaw}
-        >
-          <article use:$context.activateEditors>
-            <div class="section-titles biopage">{localize('DND5E.Flaws')}</div>
-            <SheetEditor
-              content={$context.flawEnrichedHtml}
-              target="system.details.flaw"
-              editable={$context.editable}
-            />
-          </article>
-        </RerenderAfterFormSubmission>
-      </div>
-
-      <div
-        class="right-notes note-entries"
-        class:limited={$context.showLimitedSheet}
+      <RerenderAfterFormSubmission
+        andOnValueChange={$context.system.details.ideal}
       >
-        <RerenderAfterFormSubmission
-          andOnValueChange={$context.system.details.appearance}
-        >
-          <article class="appearance-notes" use:$context.activateEditors>
-            <div class="section-titles biopage">
-              {localize('DND5E.Appearance')}
-            </div>
-            <SheetEditor
-              content={$context.appearanceEnrichedHtml}
-              target="system.details.appearance"
-              editable={$context.editable}
-            />
-          </article>
-        </RerenderAfterFormSubmission>
-        <RerenderAfterFormSubmission
-          andOnValueChange={$context.system.details.biography.value}
-        >
-          <article class="biography-notes" use:$context.activateEditors>
-            <div class="section-titles">
-              {localize('DND5E.Background')}/{localize('DND5E.Biography')}
-            </div>
-            <SheetEditor
-              content={$context.biographyEnrichedHtml}
-              target="system.details.biography.value"
-              editable={$context.editable}
-            />
-          </article>
-        </RerenderAfterFormSubmission>
-      </div>
+        <article use:$context.activateEditors>
+          <div class="section-titles biopage">{localize('DND5E.Ideals')}</div>
+          <SheetEditor
+            content={$context.idealEnrichedHtml}
+            target="system.details.ideal"
+            editable={$context.editable}
+          />
+        </article>
+      </RerenderAfterFormSubmission>
+      <RerenderAfterFormSubmission
+        andOnValueChange={$context.system.details.bond}
+      >
+        <article use:$context.activateEditors>
+          <div class="section-titles biopage">{localize('DND5E.Bonds')}</div>
+          <SheetEditor
+            content={$context.bondEnrichedHtml}
+            target="system.details.bond"
+            editable={$context.editable}
+          />
+        </article>
+      </RerenderAfterFormSubmission>
+      <RerenderAfterFormSubmission
+        andOnValueChange={$context.system.details.flaw}
+      >
+        <article use:$context.activateEditors>
+          <div class="section-titles biopage">{localize('DND5E.Flaws')}</div>
+          <SheetEditor
+            content={$context.flawEnrichedHtml}
+            target="system.details.flaw"
+            editable={$context.editable}
+          />
+        </article>
+      </RerenderAfterFormSubmission>
+    </div>
+
+    <div
+      class="right-notes note-entries"
+      class:limited={$context.showLimitedSheet}
+    >
+      <RerenderAfterFormSubmission
+        andOnValueChange={$context.system.details.appearance}
+      >
+        <article class="appearance-notes" use:$context.activateEditors>
+          <div class="section-titles biopage">
+            {localize('DND5E.Appearance')}
+          </div>
+          <SheetEditor
+            content={$context.appearanceEnrichedHtml}
+            target="system.details.appearance"
+            editable={$context.editable}
+          />
+        </article>
+      </RerenderAfterFormSubmission>
+      <RerenderAfterFormSubmission
+        andOnValueChange={$context.system.details.biography.value}
+      >
+        <article class="biography-notes" use:$context.activateEditors>
+          <div class="section-titles">
+            {localize('DND5E.Background')}/{localize('DND5E.Biography')}
+          </div>
+          <SheetEditor
+            content={$context.biographyEnrichedHtml}
+            target="system.details.biography.value"
+            editable={$context.editable}
+          />
+        </article>
+      </RerenderAfterFormSubmission>
     </div>
   </div>
 </div>
@@ -190,23 +188,38 @@
     gap: 1rem;
   }
 
-  .main-notes {
-    display: flex;
-    flex: 1;
-    gap: 1rem;
+  .notes-container {
+    display: grid;
+    grid-template-areas:
+      'top    top'
+      'left   right';
+    grid-template-columns: 21.5rem 1fr;
+    grid-template-rows: auto 1fr;
+    min-height: 31.25rem;
+  }
+
+  .top-notes {
+    grid-area: top;
+  }
+
+  .left-notes {
+    grid-area: left;
+  }
+
+  .right-notes {
+    grid-area: right;
   }
 
   .left-notes,
   .right-notes {
-    flex: 1;
-    height: 100%;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
     gap: 1rem;
-  }
-
-  .left-notes {
-    max-width: 21.875rem;
+    > * {
+      flex: 1;
+      overflow: auto;
+    }
   }
 
   .top-notes {
