@@ -820,5 +820,11 @@
     "TIDY5E.WorldSettings.IncludeTidySectionFieldsInDefaultSheets": {
         "name": "Includi Campi Sezione di Tidy nelle schede predefinite",
         "hint": "Include gli input della Sezione Tidy e della Sezione Azioni nei nelle schede oggetto predefinite."
-    }
+    },
+    "TIDY5E.Facilities.Hirelings.Label": "Mercenari",
+    "TIDY5E.Facilities.Creatures.Label": "Creature",
+    "TIDY5E.Facilities.RosterMember.Label": "{actorName} - {facilityName}",
+    "TIDY5E.Facilities.Defenders.Label": "Difensori",
+    "TIDY5E.Facilities.ContextMenuActionRemove": "Rimuovi da {facilityName}",
+    "TIDY5E.Facilities.Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}"
 }
