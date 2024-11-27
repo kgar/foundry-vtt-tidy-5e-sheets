@@ -212,6 +212,7 @@ export type CharacterItemContext = {
   attunement?: AttunementContext;
   availableLevels?: AvailableLevel[];
   canToggle?: boolean;
+  chosen?: ChosenFacilityContext;
   concealDetails?: boolean;
   containerContents?: ContainerContents;
   favoriteId?: string;

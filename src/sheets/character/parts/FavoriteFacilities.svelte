@@ -19,6 +19,7 @@
   import InlineToggleControl from 'src/sheets/shared/InlineToggleControl.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import type { Item5e } from 'src/types/item.types';
+  import FacilityOrderProgressMeter from './FacilityOrderProgressMeter.svelte';
 
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
@@ -80,9 +81,12 @@
     <svelte:fragment slot="body">
       {#each items as item (item.id)}
         {@const ctx = $context.itemContext[item.id]}
+        {@const disabledClass =
+          ctx?.chosen?.disabled === true ? 'disabled' : ''}
 
         <ItemTableRow
           {item}
+          cssClass="favorite-facility-row {disabledClass}"
           on:mousedown={(event) =>
             FoundryAdapter.editOnMiddleClick(event.detail, item)}
           contextMenu={{
@@ -95,7 +99,11 @@
         >
           <!-- Name -->
           <ItemTableCell primary={true}>
-            <ItemUseButton disabled={!$context.editable} {item}></ItemUseButton>
+            <ItemUseButton
+              disabled={!$context.editable &&
+                (!ctx?.chosen?.disabled || FoundryAdapter.userIsGm())}
+              {item}
+            ></ItemUseButton>
             {#if item?.system.activities?.contents.length > 1}
               <InlineToggleControl entityId={item.id} {inlineToggleService} />
             {/if}
@@ -109,9 +117,16 @@
             </ItemName>
           </ItemTableCell>
           <!-- Orders -->
-          <ItemTableCell baseWidth={ordersWidth}>
-            <!-- TODO: Progress meter here -->
-            TODO: Beautiful Meter Here
+          <ItemTableCell
+            baseWidth={ordersWidth}
+            cssClass="justify-content-stretch"
+          >
+            {@const chosen = ctx?.chosen}
+
+            {#if chosen?.progress?.max || chosen?.executing}
+              <FacilityOrderProgressMeter class="flex-1" {chosen}
+              ></FacilityOrderProgressMeter>
+            {/if}
           </ItemTableCell>
           <!-- Defenders -->
           <ItemTableCell baseWidth={defendersWidth}>

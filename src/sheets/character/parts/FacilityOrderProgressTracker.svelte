@@ -1,12 +1,10 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
   import type {
     CharacterSheetContext,
     ChosenFacilityContext,
     ItemCardStore,
   } from 'src/types/types';
-  import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import type { Readable, Writable } from 'svelte/store';
   import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
@@ -14,17 +12,13 @@
   import { settingStore } from 'src/settings/settings';
   import InventoryItemCardContent from 'src/components/item-info-card/InventoryItemCardContent.svelte';
   import type { Item5e } from 'src/types/item.types';
-  import { getTidyFacilityIcon } from 'src/features/facility/facility';
+  import FacilityOrderProgressMeter from './FacilityOrderProgressMeter.svelte';
 
   export let chosen: ChosenFacilityContext;
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
-
-  $: orderLabel =
-    CONFIG.DND5E.facilities.orders[chosen.progress.order]?.label ??
-    chosen.progress.order;
 
   const localize = FoundryAdapter.localize;
 
@@ -63,8 +57,6 @@
 </script>
 
 {#if chosen.progress.max || chosen.executing}
-  {@const icon = getTidyFacilityIcon(chosen.progress.order)}
-
   <div class="sub-header">
     {localize('DND5E.FACILITY.FIELDS.order.label')}
   </div>
@@ -89,51 +81,8 @@
       </a>
     {/if}
 
-    <div
-      class="meter progress"
-      role="meter"
-      aria-valuemin="0"
-      aria-valuenow={chosen.progress.pct}
-      aria-valuetext={chosen.progress.value?.toString()}
-      aria-valuemax={chosen.progress.max}
-      style="--bar-percentage: {chosen.progress.pct}%"
-    >
-      <div class="label">
-        {#if !chosen.disabled}
-          <span class="order">
-            {#if icon?.type === 'fa-icon-class'}
-              <i class={icon.className}></i>
-            {:else if icon?.type === 'dnd5e-icon'}
-              <Dnd5eIcon src={icon.src}></Dnd5eIcon>
-            {/if}
-            <span class="progress-meter-label truncate">
-              {#if chosen.craft}
-                {localize('TIDY5E.Facilities.Progress.OrderAndCraftLabel', {
-                  orderName: orderLabel,
-                  craftingItemName: chosen.craft.name,
-                })}
-              {:else}
-                {orderLabel}
-              {/if}
-            </span>
-          </span>
-          <span class="counter">
-            <span class="value">{chosen.progress.value}</span> &sol;
-            <span class="max">{chosen.progress.max}</span>
-          </span>
-        {:else}
-          <span class="order">
-            {#if icon?.type === 'fa-icon-class'}
-              <i class={icon.className}></i>
-            {:else if icon?.type === 'dnd5e-icon'}
-              <Dnd5eIcon src={icon.src}></Dnd5eIcon>
-            {/if}
-            <span class="progress-meter-label truncate">
-              {orderLabel}
-            </span>
-          </span>
-        {/if}
-      </div>
-    </div>
+    <FacilityOrderProgressMeter
+      {chosen}
+    ></FacilityOrderProgressMeter>
   </div>
 {/if}

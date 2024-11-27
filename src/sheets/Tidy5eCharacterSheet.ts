@@ -30,6 +30,7 @@ import {
   type EffectFavoriteSection,
   type FacilityOccupantContext,
   type FacilitySection,
+  type ChosenFacilityContext,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
@@ -1317,7 +1318,7 @@ export class Tidy5eCharacterSheet
         );
       }
 
-      const context = {
+      const chosenFacilityContext: ChosenFacilityContext = {
         building,
         craft: craft.item ? await fromUuid(craft.item) : null,
         creatures: await this._prepareFacilityOccupants(trade.creatures),
@@ -1336,7 +1337,7 @@ export class Tidy5eCharacterSheet
         subtitle: subtitle.join(' &bull; '),
       };
       allDefenders.push(
-        ...context.defenders
+        ...chosenFacilityContext.defenders
           .map(({ actor }) => {
             if (!actor) return null;
             const { img, name, uuid } = actor;
@@ -1344,8 +1345,15 @@ export class Tidy5eCharacterSheet
           })
           .filter((_) => _)
       );
-      if (context.isSpecial) special.push(context);
-      else basic.push(context);
+
+      if (chosenFacilityContext.isSpecial) {
+        special.push(chosenFacilityContext);
+      } else {
+        basic.push(chosenFacilityContext);
+      }
+
+      const itemContext = (context.itemContext[facility.id] ??= {});
+      itemContext.chosen = chosenFacilityContext;
     }
 
     context.defenders = allDefenders;
