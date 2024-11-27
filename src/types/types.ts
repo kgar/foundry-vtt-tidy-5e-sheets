@@ -142,6 +142,7 @@ export type EffectFavoriteSection = {
 export type CharacterItemPartitions = {
   items: Item5e[];
   spells: Item5e[];
+  facilities: Item5e[];
   feats: Item5e[];
   species: Item5e[];
   backgrounds: Item5e[];
@@ -161,6 +162,10 @@ export type TidySectionBase = {
 export type FeatureSection = {
   items: Item5e[];
   hasActions?: boolean;
+} & TidySectionBase;
+
+export type FacilitySection = {
+  items: Item5e[];
 } & TidySectionBase;
 
 export type VehicleCargoSection = {
@@ -207,6 +212,7 @@ export type CharacterItemContext = {
   attunement?: AttunementContext;
   availableLevels?: AvailableLevel[];
   canToggle?: boolean;
+  chosen?: ChosenFacilityContext;
   concealDetails?: boolean;
   containerContents?: ContainerContents;
   favoriteId?: string;
@@ -244,6 +250,7 @@ export type FavoriteEffectContext = {
 
 export type FavoriteSection =
   | (InventorySection & { type: typeof CONSTANTS.TAB_ACTOR_INVENTORY })
+  | (FacilitySection & { type: typeof CONSTANTS.TAB_CHARACTER_BASTION })
   | (SpellbookSection & { type: typeof CONSTANTS.TAB_CHARACTER_SPELLBOOK })
   | (CharacterFeatureSection & {
       type: typeof CONSTANTS.TAB_CHARACTER_FEATURES;

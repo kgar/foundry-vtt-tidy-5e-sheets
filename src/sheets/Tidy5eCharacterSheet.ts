@@ -29,6 +29,8 @@ import {
   type FavoriteSection,
   type EffectFavoriteSection,
   type FacilityOccupantContext,
+  type FacilitySection,
+  type ChosenFacilityContext,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
@@ -227,21 +229,29 @@ export class Tidy5eCharacterSheet
 
     initTidy5eContextMenu(this, html);
 
-    FoundryAdapter.createContextMenu(html, '.activity[data-activity-id]', [], {
-      onOpen: (element: HTMLElement) => {
-        const itemId =
-          element.closest<HTMLElement>('[data-item-id]')?.dataset.itemId;
-        const item =
-          this.document.type === 'container'
-            ? this.document.system.getContainedItem(itemId)
-            : this.document.items.get(itemId);
-        // Parts of ContextMenu doesn't play well with promises, so don't show menus for containers in packs
-        if (!item || item instanceof Promise) return;
-        if (element.closest('[data-activity-id]')) {
-          dnd5e.documents.activity.UtilityActivity.onContextMenu(item, element);
-        }
-      },
-    });
+    FoundryAdapter.createContextMenu(
+      html,
+      '.activity[data-activity-id][data-configurable="true"]',
+      [],
+      {
+        onOpen: (element: HTMLElement) => {
+          const itemId =
+            element.closest<HTMLElement>('[data-item-id]')?.dataset.itemId;
+          const item =
+            this.document.type === 'container'
+              ? this.document.system.getContainedItem(itemId)
+              : this.document.items.get(itemId);
+          // Parts of ContextMenu doesn't play well with promises, so don't show menus for containers in packs
+          if (!item || item instanceof Promise) return;
+          if (element.closest('[data-activity-id]')) {
+            dnd5e.documents.activity.UtilityActivity.onContextMenu(
+              item,
+              element
+            );
+          }
+        },
+      }
+    );
   }
 
   async getData(options = {}) {
@@ -1014,14 +1024,14 @@ export class Tidy5eCharacterSheet
 
     // Partition items by category
     let {
-      items,
-      spells,
-      feats,
-      species,
       backgrounds,
       classes,
-      subclasses,
       favorites,
+      feats,
+      items,
+      species,
+      spells,
+      subclasses,
     } = Array.from(this.actor.items).reduce(
       (
         obj: CharacterItemPartitions & { favorites: CharacterItemPartitions },
@@ -1090,6 +1100,7 @@ export class Tidy5eCharacterSheet
       {
         items: [] as Item5e[],
         spells: [] as Item5e[],
+        facilities: [] as Item5e[],
         feats: [] as Item5e[],
         species: [] as Item5e[],
         backgrounds: [] as Item5e[],
@@ -1098,6 +1109,7 @@ export class Tidy5eCharacterSheet
         favorites: {
           items: [] as Item5e[],
           spells: [] as Item5e[],
+          facilities: [] as Item5e[],
           feats: [] as Item5e[],
           species: [] as Item5e[],
           backgrounds: [] as Item5e[],
@@ -1212,6 +1224,19 @@ export class Tidy5eCharacterSheet
         { canCreate: false }
       );
 
+    // Facility Favorites
+    let bastionFacilitiesLabel = !isNil(context.system.bastion.name, '')
+      ? context.system.bastion.name
+      : 'TYPES.Item.facilityPl';
+
+    let facilitiesSection: FacilitySection = {
+      dataset: {},
+      items: favorites.facilities,
+      key: 'tidy.bastion.facilities',
+      label: bastionFacilitiesLabel,
+      show: true,
+    };
+
     // Apply sections to their section lists
 
     context.inventory = Object.values(inventory);
@@ -1239,6 +1264,10 @@ export class Tidy5eCharacterSheet
           ...s,
           type: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
         })),
+      {
+        ...facilitiesSection,
+        type: CONSTANTS.TAB_CHARACTER_BASTION,
+      },
     ];
   }
 
@@ -1289,7 +1318,7 @@ export class Tidy5eCharacterSheet
         );
       }
 
-      const context = {
+      const chosenFacilityContext: ChosenFacilityContext = {
         building,
         craft: craft.item ? await fromUuid(craft.item) : null,
         creatures: await this._prepareFacilityOccupants(trade.creatures),
@@ -1308,7 +1337,7 @@ export class Tidy5eCharacterSheet
         subtitle: subtitle.join(' &bull; '),
       };
       allDefenders.push(
-        ...context.defenders
+        ...chosenFacilityContext.defenders
           .map(({ actor }) => {
             if (!actor) return null;
             const { img, name, uuid } = actor;
@@ -1316,8 +1345,15 @@ export class Tidy5eCharacterSheet
           })
           .filter((_) => _)
       );
-      if (context.isSpecial) special.push(context);
-      else basic.push(context);
+
+      if (chosenFacilityContext.isSpecial) {
+        special.push(chosenFacilityContext);
+      } else {
+        basic.push(chosenFacilityContext);
+      }
+
+      const itemContext = (context.itemContext[facility.id] ??= {});
+      itemContext.chosen = chosenFacilityContext;
     }
 
     context.defenders = allDefenders;

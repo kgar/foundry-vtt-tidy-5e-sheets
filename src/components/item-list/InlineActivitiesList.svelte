@@ -14,6 +14,7 @@
   import ItemImage from './ItemImage.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
+  import { Activities } from 'src/features/activities/activities';
 
   export let item: Item5e | null = null;
   export let inlineToggleService: InlineToggleService;
@@ -26,7 +27,7 @@
     /* Name */
     1fr
     /* Uses */
-    5rem
+    2.5rem
     /* Usage */
     5rem
   `;
@@ -38,8 +39,9 @@
   function getActivityUsageLabel(activity: Activity5e) {
     return (
       // @ts-expect-error
-      CONFIG.DND5E.activityActivationTypes[activity.activation.type]?.label ??
-      activity.activation.type
+      CONFIG.DND5E.activityActivationTypes[activity.activation?.type]?.label ??
+      activity.activation?.type ??
+      ''
     );
   }
 </script>
@@ -55,9 +57,11 @@
     >
       <svelte:fragment slot="body">
         {#each item.system.activities.contents as activity (activity.id)}
+          {@const configurable = Activities.isConfigurable(activity)}
           <TidyTableRow
             rowAttributes={{
               'data-activity-id': activity.id,
+              'data-configurable': configurable,
             }}
             rowClass="activity"
             on:mousedown={(event) =>
@@ -79,10 +83,12 @@
               </button>
             </TidyTableCell>
             <TidyTableCell>
-              {#if !!activity.uses.max}
-                <ActivityUses {activity} />
-              {:else}
-                <ActivityAddUses {activity} />
+              {#if configurable}
+                {#if !!activity.uses?.max}
+                  <ActivityUses {activity} />
+                {:else if activity.uses?.max !== undefined}
+                  <ActivityAddUses {activity} />
+                {/if}
               {/if}
             </TidyTableCell>
             <TidyTableCell>

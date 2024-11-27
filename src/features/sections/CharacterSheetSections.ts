@@ -152,6 +152,8 @@ export class CharacterSheetSections {
       partitions.classes.push(item);
     } else if (item.type === CONSTANTS.ITEM_TYPE_SUBCLASS) {
       partitions.subclasses.push(item);
+    } else if (item.type === CONSTANTS.ITEM_TYPE_FACILITY) {
+      partitions.facilities.push(item);
     } else if (Object.keys(inventory).includes(item.type)) {
       partitions.items.push(item);
     }
