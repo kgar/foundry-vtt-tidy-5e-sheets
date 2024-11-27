@@ -481,16 +481,17 @@ function getItemContextOptions(item: Item5e) {
   });
 
   const overridden = TidyFlags.actionFilterOverride.get(item) !== undefined;
-  if (overridden) {
-    options.push({
-      name: 'TIDY5E.Actions.ResetActionDefault',
-      icon: '<i class="fas fa-fist-raised" style="color: var(--t5e-warning-accent-color)"></i>',
-      callback: () => {
-        TidyFlags.actionFilterOverride.unset(item);
-      },
-      condition: () => itemParentIsActor && actorUsesActionFeature(itemParent),
-    });
-  }
+
+  options.push({
+    name: 'TIDY5E.Actions.ResetActionDefault',
+    icon: '<i class="fas fa-fist-raised" style="color: var(--t5e-warning-accent-color)"></i>',
+    callback: () => {
+      TidyFlags.actionFilterOverride.unset(item);
+    },
+    condition: () =>
+      overridden && itemParentIsActor && actorUsesActionFeature(itemParent),
+  });
+
   return options;
 }
 
