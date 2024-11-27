@@ -23,6 +23,7 @@ import { getPercentage } from 'src/utils/numbers';
 import { isNil } from 'src/utils/data';
 import { DragAndDropMixin } from 'src/mixins/DragAndDropBaseMixin';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
+import { Activities } from 'src/features/activities/activities';
 
 export class Tidy5eItemSheetClassic extends DragAndDropMixin(
   SvelteApplicationMixin<ItemSheetClassicContext>(
@@ -168,7 +169,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
     const context: ItemSheetContext = {
       activities: (this.document.system.activities ?? [])
         .filter((a: any) => {
-          return CONFIG.DND5E.activityTypes[a.type]?.configurable !== false;
+          return Activities.isConfigurable(a);
         })
         .map(({ _id: id, name, img, sort }: any) => ({
           id,

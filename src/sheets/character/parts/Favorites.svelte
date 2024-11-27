@@ -12,6 +12,7 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import FavoriteFacilities from './FavoriteFacilities.svelte';
 
   export let searchCriteria: string = '';
 
@@ -74,6 +75,10 @@
           section.effects.map((e) => e.effect),
         )}
         <FavoriteEffectsList {section} {visibleEffectIdSubset} />
+      {/if}
+      {#if section.type === CONSTANTS.TAB_CHARACTER_BASTION}
+        <FavoriteFacilities {section} items={section.items}
+        ></FavoriteFacilities>
       {/if}
     {/if}
   {/each}
