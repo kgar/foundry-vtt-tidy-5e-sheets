@@ -20,6 +20,7 @@ import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/typ
 import type { CONSTANTS } from 'src/constants';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 import type { Group5e } from './group.types';
+import type { Activity5e } from 'src/foundry/dnd5e.types';
 
 export type Actor5e = any;
 
@@ -168,6 +169,14 @@ export type FacilitySection = {
   items: Item5e[];
 } & TidySectionBase;
 
+export type ActivitySection = {
+  activities: Activity5e[];
+} & TidySectionBase;
+
+export type TypedActivityFavoriteSection = ActivitySection & {
+  type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_ACTIVITY;
+};
+
 export type VehicleCargoSection = {
   items: Item5e[];
   css?: string;
@@ -229,7 +238,7 @@ export type CharacterItemContext = {
 };
 
 export type TypedEffectFavoriteSection = EffectFavoriteSection & {
-  type: typeof CONSTANTS.TAB_CHARACTER_EFFECTS;
+  type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_EFFECT;
 };
 
 // TODO: Trim to minimum necessary
@@ -249,15 +258,22 @@ export type FavoriteEffectContext = {
 };
 
 export type FavoriteSection =
-  | (InventorySection & { type: typeof CONSTANTS.TAB_ACTOR_INVENTORY })
-  | (FacilitySection & { type: typeof CONSTANTS.TAB_CHARACTER_BASTION })
-  | (SpellbookSection & { type: typeof CONSTANTS.TAB_CHARACTER_SPELLBOOK })
-  | (CharacterFeatureSection & {
-      type: typeof CONSTANTS.TAB_CHARACTER_FEATURES;
+  | (InventorySection & {
+      type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_INVENTORY;
     })
+  | (FacilitySection & {
+      type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_FACILITY;
+    })
+  | (SpellbookSection & {
+      type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_SPELLBOOK;
+    })
+  | (CharacterFeatureSection & {
+      type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_FEATURE;
+    })
+  | TypedActivityFavoriteSection
   | TypedEffectFavoriteSection
   | (GenericFavoriteSection & {
-      type: typeof CONSTANTS.CHARACTER_FAVORITE_SECTION_GENERIC;
+      type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_GENERIC;
     });
 
 export type CharacterSheetContext = {

@@ -1,6 +1,6 @@
 import { FoundryAdapter } from '../foundry/foundry-adapter';
 import CharacterSheet from './character/CharacterSheet.svelte';
-import { debug } from 'src/utils/logging';
+import { debug, warn } from 'src/utils/logging';
 import { SettingsProvider, settingStore } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { CONSTANTS } from 'src/constants';
@@ -31,6 +31,8 @@ import {
   type FacilityOccupantContext,
   type FacilitySection,
   type ChosenFacilityContext,
+  type ActivitySection,
+  type TypedActivityFavoriteSection,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
@@ -73,6 +75,7 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import { Container } from 'src/features/containers/Container';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
+import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 
 export class Tidy5eCharacterSheet
   extends BaseSheetCustomSectionMixin(
@@ -229,29 +232,54 @@ export class Tidy5eCharacterSheet
 
     initTidy5eContextMenu(this, html);
 
-    FoundryAdapter.createContextMenu(
-      html,
-      '.activity[data-activity-id][data-configurable="true"]',
-      [],
-      {
-        onOpen: (element: HTMLElement) => {
-          const itemId =
-            element.closest<HTMLElement>('[data-item-id]')?.dataset.itemId;
-          const item =
-            this.document.type === 'container'
-              ? this.document.system.getContainedItem(itemId)
-              : this.document.items.get(itemId);
-          // Parts of ContextMenu doesn't play well with promises, so don't show menus for containers in packs
-          if (!item || item instanceof Promise) return;
-          if (element.closest('[data-activity-id]')) {
-            dnd5e.documents.activity.UtilityActivity.onContextMenu(
-              item,
-              element
-            );
+    FoundryAdapter.createContextMenu(html, '.activity[data-activity-id]', [], {
+      onOpen: (element: HTMLElement) => {
+        const itemId =
+          element.closest<HTMLElement>('[data-item-id]')?.dataset.itemId;
+        const item =
+          this.document.type === 'container'
+            ? this.document.system.getContainedItem(itemId)
+            : this.document.items.get(itemId);
+        // Parts of ContextMenu doesn't play well with promises, so don't show menus for containers in packs
+        if (!item || item instanceof Promise) {
+          return;
+        }
+
+        const activityElement =
+          element.closest<HTMLElement>('[data-activity-id]');
+
+        if (activityElement?.matches('[data-configurable="true"]')) {
+          dnd5e.documents.activity.UtilityActivity.onContextMenu(item, element);
+        } else if (activityElement) {
+          const activityId = activityElement.getAttribute('data-activity-id');
+          const activity = item.system.activities.get(activityId);
+          if (!activity) {
+            return;
           }
-        },
-      }
-    );
+
+          const isFav = this.actor.system.hasFavorite(activity.relativeUUID);
+          const favoriteIcon = 'fa-bookmark';
+
+          const contextMenuItems: ContextMenuEntry[] = [
+            {
+              name: isFav ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
+              icon: isFav
+                ? `<i class='fas ${favoriteIcon} fa-fw' style='color: var(--t5e-warning-accent-color)'></i>`
+                : `<i class='fas ${favoriteIcon} fa-fw inactive'></i>`,
+              callback: () => {
+                if (!item) {
+                  warn(`tidy5e-context-menu | Item Not Found`);
+                  return;
+                }
+                FoundryAdapter.toggleFavoriteActivity(activity);
+              },
+              condition: () => !item.compendium?.locked,
+            },
+          ];
+          ui.context.menuItems = contextMenuItems;
+        }
+      },
+    });
   }
 
   async getData(options = {}) {
@@ -993,16 +1021,45 @@ export class Tidy5eCharacterSheet
       });
     }
 
+    const activitiesSection: TypedActivityFavoriteSection = {
+      activities: [],
+      dataset: {},
+      key: 'tidy.activities',
+      label: 'DND5E.ACTIVITY.Title.other',
+      show: true,
+      type: CONSTANTS.FAVORITES_SECTION_TYPE_ACTIVITY,
+    };
+
+    const favoriteActivities = (
+      this.actor.system.favorites as CharacterFavorite[]
+    ).filter((f) => f.type === 'activity');
+
+    for (const favoriteActivity of favoriteActivities) {
+      const activity = fromUuidSync(favoriteActivity.id, {
+        relative: this.actor,
+      });
+
+      if (!activity) {
+        continue;
+      }
+
+      activitiesSection.activities.push(activity);
+    }
+
     // Favorites
     context.favorites = CharacterSheetSections.mergeDuplicateFavoriteSections(
       context.favorites
     );
 
     if (effectsSection.effects.length) {
-      (context.favorites as FavoriteSection[]).push({
+      context.favorites.push({
         ...effectsSection,
-        type: CONSTANTS.TAB_CHARACTER_EFFECTS,
+        type: CONSTANTS.FAVORITES_SECTION_TYPE_EFFECT,
       });
+    }
+
+    if (activitiesSection.activities.length) {
+      context.favorites.push(activitiesSection);
     }
 
     debug('Character Sheet context data', context);
@@ -1250,23 +1307,23 @@ export class Tidy5eCharacterSheet
         .filter((i) => i.items.length)
         .map((i) => ({
           ...i,
-          type: CONSTANTS.TAB_ACTOR_INVENTORY,
+          type: CONSTANTS.FAVORITES_SECTION_TYPE_INVENTORY,
         })),
       ...Object.values(favoriteFeatures)
         .filter((i) => i.items.length)
         .map((i) => ({
           ...i,
-          type: CONSTANTS.TAB_CHARACTER_FEATURES,
+          type: CONSTANTS.FAVORITES_SECTION_TYPE_FEATURE,
         })),
       ...favoriteSpellbook
         .filter((s: SpellbookSection) => s.spells.length)
         .map((s: SpellbookSection) => ({
           ...s,
-          type: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+          type: CONSTANTS.FAVORITES_SECTION_TYPE_SPELLBOOK,
         })),
       {
         ...facilitiesSection,
-        type: CONSTANTS.TAB_CHARACTER_BASTION,
+        type: CONSTANTS.FAVORITES_SECTION_TYPE_FACILITY,
       },
     ];
   }
