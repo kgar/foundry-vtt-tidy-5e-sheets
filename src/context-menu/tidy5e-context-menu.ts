@@ -378,7 +378,6 @@ function getItemContextOptions(item: Item5e) {
       condition: () =>
         !!itemParent &&
         'favorites' in itemParent.system &&
-        item.type !== CONSTANTS.ITEM_TYPE_FACILITY &&
         !item.compendium?.locked,
     });
   }
@@ -464,31 +463,35 @@ function getItemContextOptions(item: Item5e) {
     group: 'action',
   });
 
-  if (itemParentIsActor && actorUsesActionFeature(itemParent)) {
-    const active = isItemInActionList(item);
-    options.push({
-      name: active
-        ? 'TIDY5E.Actions.SetOverrideFalse'
-        : 'TIDY5E.Actions.SetOverrideTrue',
-      icon: active
-        ? '<i class="fas fa-fist-raised" style="color: var(--t5e-warning-accent-color)"></i>'
-        : '<i class="fas fa-fist-raised"></i>',
-      callback: () => {
-        TidyFlags.actionFilterOverride.set(item, !isItemInActionList(item));
-      },
-    });
+  const active = isItemInActionList(item);
+  options.push({
+    name: active
+      ? 'TIDY5E.Actions.SetOverrideFalse'
+      : 'TIDY5E.Actions.SetOverrideTrue',
+    icon: active
+      ? '<i class="fas fa-fist-raised" style="color: var(--t5e-warning-accent-color)"></i>'
+      : '<i class="fas fa-fist-raised"></i>',
+    callback: () => {
+      TidyFlags.actionFilterOverride.set(item, !isItemInActionList(item));
+    },
+    condition: () =>
+      item.type !== CONSTANTS.ITEM_TYPE_FACILITY &&
+      itemParentIsActor &&
+      actorUsesActionFeature(itemParent),
+  });
 
-    const overridden = TidyFlags.actionFilterOverride.get(item) !== undefined;
-    if (overridden) {
-      options.push({
-        name: 'TIDY5E.Actions.ResetActionDefault',
-        icon: '<i class="fas fa-fist-raised" style="color: var(--t5e-warning-accent-color)"></i>',
-        callback: () => {
-          TidyFlags.actionFilterOverride.unset(item);
-        },
-      });
-    }
-  }
+  const overridden = TidyFlags.actionFilterOverride.get(item) !== undefined;
+
+  options.push({
+    name: 'TIDY5E.Actions.ResetActionDefault',
+    icon: '<i class="fas fa-fist-raised" style="color: var(--t5e-warning-accent-color)"></i>',
+    callback: () => {
+      TidyFlags.actionFilterOverride.unset(item);
+    },
+    condition: () =>
+      overridden && itemParentIsActor && actorUsesActionFeature(itemParent),
+  });
+
   return options;
 }
 

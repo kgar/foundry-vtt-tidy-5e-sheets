@@ -678,64 +678,6 @@ select:hover {
 
   /* Order Progress Meter */
 
-  .meter.progress {
-    --text-color: #fff;
-    --icon-fill: var(--text-color);
-
-    box-shadow: inset 0 0 16px rgb(0 0 0 / 25%);
-    background-color: #3d3d3d;
-    color: #fff;
-    position: relative;
-    display: flex;
-    border-radius: 0.1875rem;
-    height: var(--bar-height, 1.5rem);
-
-    align-items: center;
-    overflow: hidden;
-
-    .label {
-      position: relative;
-
-      flex: 1;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      justify-content: space-between;
-      gap: 0.5rem;
-
-      padding-inline: 0.5rem;
-      text-shadow: #000 0 0 0.3125rem;
-    }
-
-    .order {
-      display: flex;
-      gap: 0.25rem;
-      align-items: center;
-      min-width: 0;
-    }
-
-    .counter {
-      text-wrap: nowrap;
-    }
-
-    i {
-      font-size: 0.75rem;
-    }
-
-    &::before {
-      content: '';
-      position: absolute;
-      block-size: 100%;
-      inline-size: var(--bar-percentage);
-      box-shadow: 0 0 0.375rem var(--dnd5e-shadow-45);
-      transition: all 0.3s ease;
-      background: linear-gradient(
-        90deg,
-        #000 -100%,
-        var(--t5e-resource-bar-color)
-      );
-    }
-  }
-
   .crafting-item {
     --img-size: 1.5rem;
     width: var(--img-size);
@@ -748,7 +690,7 @@ select:hover {
     display: flex;
     gap: 0.125rem;
 
-    .meter {
+    .facility-progress-meter {
       flex: 1;
     }
   }
@@ -813,6 +755,132 @@ select:hover {
 
     .facility-header :is(.facility-image, .facility-image svg) {
       --icon-fill: var(--t5e-secondary-color);
+    }
+  }
+}
+
+.facility-progress-meter {
+  --text-color: #fff;
+  --icon-fill: var(--text-color);
+
+  box-shadow: inset 0 0 16px rgb(0 0 0 / 25%);
+  background-color: #3d3d3d;
+  color: #fff;
+  position: relative;
+  display: flex;
+  height: var(--bar-height, 1.5rem);
+
+  align-items: center;
+  overflow: hidden;
+
+  &:not(:is(.item-table-cell, .tidy-table-cell) .facility-progress-meter) {
+    border-radius: 0.1875rem;
+  }
+
+  .label {
+    position: relative;
+
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    justify-content: space-between;
+    gap: 0.5rem;
+
+    padding-inline: 0.5rem;
+    text-shadow: #000 0 0 0.3125rem;
+  }
+
+  .order {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .counter {
+    text-wrap: nowrap;
+  }
+
+  i {
+    font-size: 0.75rem;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    block-size: 100%;
+    inline-size: var(--bar-percentage);
+    box-shadow: 0 0 0.375rem var(--dnd5e-shadow-45);
+    transition: all 0.3s ease;
+    background: linear-gradient(
+      90deg,
+      #000 -100%,
+      var(--t5e-resource-bar-color)
+    );
+  }
+}
+
+.favorite-facility-row.disabled {
+  filter: grayscale(1);
+}
+
+// Activity Favorites
+
+.favorite-activities {
+  // Admittedly, I should be revamping the item table CSS
+  // for stuff like rollable item images, but with the
+  // Tidy visual overhaul underway, there's a good chance
+  // this stuff is disposable.
+  // In any case, a more comprehensive reorganization of
+  // these styles will come along eventually.
+  .tidy-table-cell {
+    display: flex;
+    gap: 0.25rem;
+
+    &:not([primary="true"]) {
+      border-left: 0.0625rem solid var(--t5e-faintest-color);
+    }
+  }
+
+  .activity-item-link {
+    padding-inline: 0.125rem;
+  }
+
+  .item-table-image-button {
+    position: relative;
+
+    img {
+      width: var(--t5e-image-size-override, 1.5rem);
+      height: var(--t5e-image-size-override, 1.5rem);
+      border-top-left-radius: 0.3125rem;
+      border-bottom-left-radius: 0.3125rem;
+      object-fit: cover;
+    }
+
+    .roll-indicator {
+      opacity: 0;
+      position: absolute;
+      font-size: 1.125rem;
+      pointer-events: none;
+      color: var(--t5e-tertiary-color);
+      transition: color 0.3s ease;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    &:hover .roll-indicator {
+      color: var(--t5e-primary-font-color);
+    }
+  }
+
+  .tidy-table-cell:hover .item-table-image-button {
+    img {
+      opacity: 0;
+    }
+
+    .roll-indicator {
+      opacity: 1;
     }
   }
 }

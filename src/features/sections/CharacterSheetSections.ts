@@ -7,6 +7,7 @@ import type {
   FavoriteSection,
   GenericFavoriteSection,
   InventorySection,
+  TypedActivityFavoriteSection,
   TypedEffectFavoriteSection,
 } from 'src/types/types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -152,6 +153,8 @@ export class CharacterSheetSections {
       partitions.classes.push(item);
     } else if (item.type === CONSTANTS.ITEM_TYPE_SUBCLASS) {
       partitions.subclasses.push(item);
+    } else if (item.type === CONSTANTS.ITEM_TYPE_FACILITY) {
+      partitions.facilities.push(item);
     } else if (Object.keys(inventory).includes(item.type)) {
       partitions.items.push(item);
     }
@@ -161,10 +164,16 @@ export class CharacterSheetSections {
   static mergeDuplicateFavoriteSections(sections: FavoriteSection[]) {
     let sectionsMap: Record<
       string,
-      Exclude<FavoriteSection, TypedEffectFavoriteSection>
+      Exclude<
+        FavoriteSection,
+        TypedEffectFavoriteSection | TypedActivityFavoriteSection
+      >
     > = {};
     for (let section of sections) {
-      if (section.type === CONSTANTS.TAB_CHARACTER_EFFECTS) {
+      if (
+        section.type === CONSTANTS.FAVORITES_SECTION_TYPE_EFFECT ||
+        section.type === CONSTANTS.FAVORITES_SECTION_TYPE_ACTIVITY
+      ) {
         continue;
       }
 
@@ -178,7 +187,7 @@ export class CharacterSheetSections {
       const incomingItems =
         CharacterSheetSections.getItemsFromFavoriteSection(section);
 
-      if (mappedSection.type !== CONSTANTS.CHARACTER_FAVORITE_SECTION_GENERIC) {
+      if (mappedSection.type !== CONSTANTS.FAVORITES_SECTION_TYPE_GENERIC) {
         const mappedItems =
           CharacterSheetSections.getItemsFromFavoriteSection(mappedSection);
 
@@ -198,7 +207,10 @@ export class CharacterSheetSections {
   }
 
   static getItemsFromFavoriteSection(
-    section: Exclude<FavoriteSection, TypedEffectFavoriteSection>
+    section: Exclude<
+      FavoriteSection,
+      TypedEffectFavoriteSection | TypedActivityFavoriteSection
+    >
   ) {
     return section.type === CONSTANTS.TAB_CHARACTER_SPELLBOOK
       ? section.spells

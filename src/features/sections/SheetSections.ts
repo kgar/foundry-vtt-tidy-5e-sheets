@@ -22,7 +22,7 @@ import type { SectionConfig } from './sections.types';
 import { ItemUtils } from 'src/utils/ItemUtils';
 import { SheetPreferencesService } from '../user-preferences/SheetPreferencesService';
 import type { SheetPreference } from '../user-preferences/user-preferences.types';
-import type { CharacterFavorite } from 'src/foundry/dnd5e.types';
+import type { Activity5e, CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { error } from 'src/utils/logging';
 import { sortActions } from '../actions/actions';
 
@@ -375,6 +375,23 @@ export class SheetSections {
           }
 
           // TODO: Filter Favorite Effects ?
+        } else if ('activities' in section) {
+          let activities = section.activities;
+
+          // Sort Favorite Activities
+          if (sortMode === 'm') {
+            const getSort = (activity: Activity5e) =>
+              favoritesIdMap.get(activity.relativeUUID)?.sort ??
+              Number.MAX_SAFE_INTEGER;
+
+            activities.sort((a, b) => getSort(a) - getSort(b));
+          } else {
+            activities.sort((a, b) =>
+              a.name.localeCompare(b.name, game.i18n.lang)
+            );
+          }
+
+          // TODO: Filter Favorite Activities?
         } else {
           let items = 'spells' in section ? section.spells : section.items;
           // Sort Favorites Items

@@ -2479,64 +2479,13 @@ export type CONFIG = {
   DND5E: {
     ASCII: string;
     abilities: {
-      str: {
-        label: string;
-        abbreviation: string;
-        type: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      dex: {
-        label: string;
-        abbreviation: string;
-        type: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      con: {
-        label: string;
-        abbreviation: string;
-        type: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      int: {
-        label: string;
-        abbreviation: string;
-        type: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-        defaults: {
-          vehicle: number;
-        };
-      };
-      wis: {
-        label: string;
-        abbreviation: string;
-        type: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-        defaults: {
-          vehicle: number;
-        };
-      };
-      cha: {
-        label: string;
-        abbreviation: string;
-        type: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-        defaults: {
-          vehicle: number;
-        };
-      };
-    };
+      str: Dnd5eAbility;
+      dex: Dnd5eAbility;
+      con: Dnd5eAbility;
+      int: Dnd5eAbility;
+      wis: Dnd5eAbility;
+      cha: Dnd5eAbility;
+    } & Record<string, Dnd5eAbility>;
     areaTargetOptions: GroupableSelectOption[];
     defaultAbilities: {
       meleeAttack: string;
@@ -5641,3 +5590,15 @@ type FacilityOrder = {
   basic?: boolean;
   duration?: number;
 };
+
+export type Dnd5eAbility = {
+  label: string;
+  abbreviation: string;
+  type: string;
+  fullKey: string;
+  reference: string;
+  icon: string;
+  defaults?: {
+    vehicle: number;
+  };
+}
