@@ -1030,8 +1030,6 @@ export class Tidy5eCharacterSheet
       type: CONSTANTS.FAVORITES_SECTION_TYPE_ACTIVITY,
     };
 
-    // const favoriteActivities = ;
-
     const favoriteActivities = (
       this.actor.system.favorites as CharacterFavorite[]
     ).filter((f) => f.type === 'activity');

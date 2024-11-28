@@ -86,7 +86,6 @@
         hidden={visibleActivityUuidSubset !== null &&
           !visibleActivityUuidSubset.has(activity.uuid)}
       >
-        <!-- TODO: Have a look at inline activities list table styles and maybe just use that. -->
         <TidyTableCell primary={true}>
           <a
             class="item-table-image-button"
