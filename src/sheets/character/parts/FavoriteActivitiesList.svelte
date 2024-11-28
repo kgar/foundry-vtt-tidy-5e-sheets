@@ -86,15 +86,17 @@
   </svelte:fragment>
   <svelte:fragment slot="body">
     {#each activities as activity (activity.uuid)}
-      <TidyTableRow>
+      <TidyTableRow
+        rowClass="activity"
+        rowAttributes={{
+          'data-activity-id': activity.id,
+          'data-configurable': Activities.isConfigurable(activity),
+          'data-item-id': activity.item.id,
+        }}
+        on:mousedown={(ev) => FoundryAdapter.editOnMiddleClick(ev, activity)}
+      >
         <!-- TODO: Have a look at inline activities list table styles and maybe just use that. -->
-        <TidyTableCell
-          primary={true}
-          attributes={{
-            'data-activity-id': activity.id,
-            'data-configurable': Activities.isConfigurable(activity),
-          }}
-        >
+        <TidyTableCell primary={true}>
           <a
             class="item-table-image-button"
             on:click={(event) => $context.editable && activity.use({ event })}
