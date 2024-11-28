@@ -21,7 +21,7 @@
   );
 
   export let section: ActivitySection;
-  export let activities: Activity5e[];
+  export let visibleActivityUuidSubset: Set<string>;
 
   const gridTemplateColumns = `
     /* Name */
@@ -74,7 +74,7 @@
     </TidyTableHeaderRow>
   </svelte:fragment>
   <svelte:fragment slot="body">
-    {#each activities as activity (activity.uuid)}
+    {#each section.activities as activity (activity.uuid)}
       <TidyTableRow
         rowClass="activity"
         rowAttributes={{
@@ -83,6 +83,8 @@
           'data-item-id': activity.item.id,
         }}
         on:mousedown={(ev) => FoundryAdapter.editOnMiddleClick(ev, activity)}
+        hidden={visibleActivityUuidSubset !== null &&
+          !visibleActivityUuidSubset.has(activity.uuid)}
       >
         <!-- TODO: Have a look at inline activities list table styles and maybe just use that. -->
         <TidyTableCell primary={true}>

@@ -507,6 +507,20 @@ export const FoundryAdapter = {
         .map((effect) => effect.id)
     );
   },
+  searchActivities(
+    searchCriteria: string,
+    activities: Activity5e[]
+  ): Set<string> {
+    return new Set(
+      activities
+        .filter(
+          (activities: any) =>
+            searchCriteria.trim() === '' ||
+            activities.name.toLowerCase().includes(searchCriteria.toLowerCase())
+        )
+        .map((activities) => activities.uuid)
+    );
+  },
   getFilteredActionItems(searchCriteria: string, items: ActionItem[]) {
     return items.filter(
       (x: ActionItem) =>

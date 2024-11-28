@@ -84,7 +84,11 @@
         ></FavoriteFacilitiesList>
       {/if}
       {#if section.type === CONSTANTS.FAVORITES_SECTION_TYPE_ACTIVITY}
-        <FavoriteActivitiesList {section} activities={section.activities}
+        {@const visibleActivityUuidSubset = FoundryAdapter.searchActivities(
+          searchCriteria,
+          section.activities,
+        )}
+        <FavoriteActivitiesList {section} {visibleActivityUuidSubset}
         ></FavoriteActivitiesList>
       {/if}
     {/if}
