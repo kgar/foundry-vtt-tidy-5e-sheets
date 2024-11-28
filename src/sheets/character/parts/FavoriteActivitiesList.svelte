@@ -49,23 +49,10 @@
 
   const localize = FoundryAdapter.localize;
 
-  function getFred(activity: Activity5e) {
-    for (let target of activity.consumption?.targets ?? []) {
-      const consumes = (target.value ?? 0) > 0;
-      if (target.type === 'itemUses' && consumes) {
-        return {
-          type: 'itemUses',
-          item: target.item,
-        };
-      }
-      if (target.type === 'activityUses' && consumes) {
-        return {
-          type: 'activityUses',
-        };
-      }
-    }
-
-    return {};
+  function activityHasUses(activity: Activity5e) {
+    return (activity.consumption?.targets ?? []).some(
+      (t: any) => (t.value ?? 0) > 0 && t.type === 'activityUses',
+    );
   }
 </script>
 
@@ -135,11 +122,11 @@
           </a>
         </TidyTableCell>
         <TidyTableCell>
-          {@const fred = getFred(activity)}
-          {#if fred.type === 'itemUses'}
-            <ItemUses item={fred.item}></ItemUses>
-          {:else if fred.type === 'activityUses'}
+          {@const hasActivityUses = activityHasUses(activity)}
+          {#if hasActivityUses}
             <ActivityUses {activity}></ActivityUses>
+          {:else}
+            <span>—</span>
           {/if}
         </TidyTableCell>
         <TidyTableCell>
@@ -150,7 +137,7 @@
           {/if}
         </TidyTableCell>
         <TidyTableCell>
-          {@const label = activity.labels.toHit ?? activity.labels.save ?? ''}
+          {@const label = activity.labels.toHit ?? activity.labels.save ?? '—'}
 
           <span class="truncate" title={label}>
             {label}
