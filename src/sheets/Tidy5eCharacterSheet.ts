@@ -31,6 +31,8 @@ import {
   type FacilityOccupantContext,
   type FacilitySection,
   type ChosenFacilityContext,
+  type ActivitySection,
+  type TypedActivityFavoriteSection,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
@@ -64,6 +66,7 @@ import { DocumentTabSectionConfigApplication } from 'src/applications/section-co
 import { BaseSheetCustomSectionMixin } from './mixins/BaseSheetCustomSectionMixin';
 import { Inventory } from 'src/features/sections/Inventory';
 import type {
+  ActivityFavoriteData,
   CharacterFavorite,
   FacilityOccupants,
   UnsortedCharacterFavorite,
@@ -993,6 +996,32 @@ export class Tidy5eCharacterSheet
       });
     }
 
+    const activitiesSection: TypedActivityFavoriteSection = {
+      activities: (this.actor.system.favorites as CharacterFavorite[]).filter(
+        (f) => f.type === 'activity'
+      ),
+      dataset: {},
+      key: 'tidy.activities',
+      label: 'DND5E.ACTIVITY.Title.other',
+      show: true,
+      type: CONSTANTS.FAVORITES_SECTION_TYPE_ACTIVITY,
+    };
+
+    context.favorites.push(activitiesSection);
+
+    // const favoriteActivities = ;
+
+    // for (const favoriteActivity of favoriteActivities) {
+    //   const activity = fromUuidSync(favoriteActivity.id, {
+    //     relative: this.actor,
+    //   });
+
+    //   if (!activity) {
+    //     continue;
+    //   }
+
+    // }
+
     // Favorites
     context.favorites = CharacterSheetSections.mergeDuplicateFavoriteSections(
       context.favorites
@@ -1001,7 +1030,7 @@ export class Tidy5eCharacterSheet
     if (effectsSection.effects.length) {
       (context.favorites as FavoriteSection[]).push({
         ...effectsSection,
-        type: CONSTANTS.TAB_CHARACTER_EFFECTS,
+        type: CONSTANTS.FAVORITES_SECTION_TYPE_EFFECT,
       });
     }
 
@@ -1250,23 +1279,23 @@ export class Tidy5eCharacterSheet
         .filter((i) => i.items.length)
         .map((i) => ({
           ...i,
-          type: CONSTANTS.TAB_ACTOR_INVENTORY,
+          type: CONSTANTS.FAVORITES_SECTION_TYPE_INVENTORY,
         })),
       ...Object.values(favoriteFeatures)
         .filter((i) => i.items.length)
         .map((i) => ({
           ...i,
-          type: CONSTANTS.TAB_CHARACTER_FEATURES,
+          type: CONSTANTS.FAVORITES_SECTION_TYPE_FEATURE,
         })),
       ...favoriteSpellbook
         .filter((s: SpellbookSection) => s.spells.length)
         .map((s: SpellbookSection) => ({
           ...s,
-          type: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+          type: CONSTANTS.FAVORITES_SECTION_TYPE_SPELLBOOK,
         })),
       {
         ...facilitiesSection,
-        type: CONSTANTS.TAB_CHARACTER_BASTION,
+        type: CONSTANTS.FAVORITES_SECTION_TYPE_FACILITY,
       },
     ];
   }

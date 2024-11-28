@@ -12,7 +12,8 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
-  import FavoriteFacilities from './FavoriteFacilities.svelte';
+  import FavoriteFacilitiesList from './FavoriteFacilitiesList.svelte';
+  import FavoriteActivitiesList from './FavoriteActivitiesList.svelte';
 
   export let searchCriteria: string = '';
 
@@ -34,7 +35,9 @@
 
   $: {
     const sections = favorites.filter(
-      (x) => x.type !== CONSTANTS.TAB_CHARACTER_EFFECTS,
+      (x) =>
+        x.type !== CONSTANTS.FAVORITES_SECTION_TYPE_EFFECT &&
+        x.type !== CONSTANTS.FAVORITES_SECTION_TYPE_ACTIVITY,
     );
 
     $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
@@ -63,22 +66,26 @@
         />
       {/if}
       <!-- TODO: Cut a copy of the Favorite Features component and custom tailor it for the generic section -->
-      {#if section.type === CONSTANTS.TAB_CHARACTER_FEATURES || section.type === CONSTANTS.CHARACTER_FAVORITE_SECTION_GENERIC}
+      {#if section.type === CONSTANTS.FAVORITES_SECTION_TYPE_FEATURE || section.type === CONSTANTS.FAVORITES_SECTION_TYPE_GENERIC}
         <FavoriteFeaturesList {section} items={section.items} />
       {/if}
-      {#if section.type === CONSTANTS.TAB_CHARACTER_SPELLBOOK}
+      {#if section.type === CONSTANTS.FAVORITES_SECTION_TYPE_SPELLBOOK}
         <FavoriteSpellsList {section} spells={section.spells} />
       {/if}
-      {#if section.type === CONSTANTS.TAB_CHARACTER_EFFECTS}
+      {#if section.type === CONSTANTS.FAVORITES_SECTION_TYPE_EFFECT}
         {@const visibleEffectIdSubset = FoundryAdapter.searchEffects(
           searchCriteria,
           section.effects.map((e) => e.effect),
         )}
         <FavoriteEffectsList {section} {visibleEffectIdSubset} />
       {/if}
-      {#if section.type === CONSTANTS.TAB_CHARACTER_BASTION}
-        <FavoriteFacilities {section} items={section.items}
-        ></FavoriteFacilities>
+      {#if section.type === CONSTANTS.FAVORITES_SECTION_TYPE_FACILITY}
+        <FavoriteFacilitiesList {section} items={section.items}
+        ></FavoriteFacilitiesList>
+      {/if}
+      {#if section.type === CONSTANTS.FAVORITES_SECTION_TYPE_ACTIVITY}
+        <FavoriteActivitiesList {section} activities={section.activities}
+        ></FavoriteActivitiesList>
       {/if}
     {/if}
   {/each}
