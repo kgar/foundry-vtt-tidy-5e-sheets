@@ -997,9 +997,7 @@ export class Tidy5eCharacterSheet
     }
 
     const activitiesSection: TypedActivityFavoriteSection = {
-      activities: (this.actor.system.favorites as CharacterFavorite[]).filter(
-        (f) => f.type === 'activity'
-      ),
+      activities: [],
       dataset: {},
       key: 'tidy.activities',
       label: 'DND5E.ACTIVITY.Title.other',
@@ -1007,20 +1005,23 @@ export class Tidy5eCharacterSheet
       type: CONSTANTS.FAVORITES_SECTION_TYPE_ACTIVITY,
     };
 
-    context.favorites.push(activitiesSection);
-
     // const favoriteActivities = ;
 
-    // for (const favoriteActivity of favoriteActivities) {
-    //   const activity = fromUuidSync(favoriteActivity.id, {
-    //     relative: this.actor,
-    //   });
+    const favoriteActivities = (
+      this.actor.system.favorites as CharacterFavorite[]
+    ).filter((f) => f.type === 'activity');
 
-    //   if (!activity) {
-    //     continue;
-    //   }
+    for (const favoriteActivity of favoriteActivities) {
+      const activity = fromUuidSync(favoriteActivity.id, {
+        relative: this.actor,
+      });
 
-    // }
+      if (!activity) {
+        continue;
+      }
+
+      activitiesSection.activities.push(activity);
+    }
 
     // Favorites
     context.favorites = CharacterSheetSections.mergeDuplicateFavoriteSections(
@@ -1028,10 +1029,14 @@ export class Tidy5eCharacterSheet
     );
 
     if (effectsSection.effects.length) {
-      (context.favorites as FavoriteSection[]).push({
+      context.favorites.push({
         ...effectsSection,
         type: CONSTANTS.FAVORITES_SECTION_TYPE_EFFECT,
       });
+    }
+
+    if (activitiesSection.activities.length) {
+      context.favorites.push(activitiesSection);
     }
 
     debug('Character Sheet context data', context);

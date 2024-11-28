@@ -378,16 +378,16 @@ export class SheetSections {
         } else if ('activities' in section) {
           let activities = section.activities;
 
-          // Sort Favorite Effects
+          // Sort Favorite Activities
           if (sortMode === 'm') {
             const getSort = (activity: Activity5e) =>
-              favoritesIdMap.get(activity.getRelativeUUID(actor))?.sort ??
+              favoritesIdMap.get(activity.relativeUUID)?.sort ??
               Number.MAX_SAFE_INTEGER;
 
             activities.sort((a, b) => getSort(a) - getSort(b));
           } else {
             activities.sort((a, b) =>
-              a.effect.name.localeCompare(b.effect.name, game.i18n.lang)
+              a.name.localeCompare(b.name, game.i18n.lang)
             );
           }
 
