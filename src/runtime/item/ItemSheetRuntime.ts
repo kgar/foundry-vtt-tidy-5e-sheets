@@ -6,6 +6,7 @@ import BackgroundSheet from 'src/sheets/classic/item/BackgroundSheet.svelte';
 import ClassSheet from 'src/sheets/classic/item/ClassSheet.svelte';
 import ConsumableSheet from 'src/sheets/classic/item/ConsumableSheet.svelte';
 import ContainerSheet from 'src/sheets/classic/item/ContainerSheet.svelte';
+import FacilitySheet from 'src/sheets/classic/item/FacilitySheet.svelte';
 import FeatSheet from 'src/sheets/classic/item/FeatSheet.svelte';
 import LootSheet from 'src/sheets/classic/item/LootSheet.svelte';
 import SpellSheet from 'src/sheets/classic/item/SpellSheet.svelte';
@@ -106,6 +107,14 @@ export class ItemSheetRuntime {
         itemSheetTabs.hightouchDescription,
         // TODO: Only show to GMs and users when identified
         itemSheetTabs.hightouchContainerDetails,
+      ],
+    },
+    [CONSTANTS.ITEM_TYPE_FACILITY]: {
+      Sheet: FacilitySheet,
+      defaultTabs: () => [
+        itemSheetTabs.description,
+        itemSheetTabs.facilityDetails,
+        itemSheetTabs.activities
       ],
     },
     [CONSTANTS.ITEM_TYPE_FEAT]: {

@@ -402,7 +402,6 @@
       border-radius: 0.3125rem;
 
       .form-fields {
-        justify-content: flex-start;
         gap: 0.25rem;
 
         &.label-top > label {
@@ -867,8 +866,68 @@
   .tidy-sheet-body {
     padding: 0 0.25rem 0.25rem 0;
 
-    [data-tab-contents-for]:not([data-tab-contents-for="contents"]) {
+    [data-tab-contents-for]:not([data-tab-contents-for='contents']) {
       padding: 1rem 0.25rem 0 1rem;
     }
   }
+}
+
+document-tags button {
+  display: flex;
+
+  font-family: 'Font Awesome 6 Pro' !important;
+  color: var(--t5e-primary-font-color);
+}
+
+.facility-craft {
+  --img-size: 1.5rem;
+
+  img {
+    width: var(--img-size);
+    height: var(--img-size);
+    flex: 0 0 auto;
+    object-fit: cover;
+  }
+}
+
+[data-tab-contents-for='details'] {
+  .harvesting {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .separated-list {
+      flex: 1;
+    }
+
+    .quantity {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex: 0;
+
+      input {
+        width: 4rem;
+      }
+    }
+  }
+}
+
+&[data-document-type='facility'] {
+  .quantity {
+    flex: 1 0 auto;
+  }
+
+  .price {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+}
+
+.window-content
+  :is(.tidy-table-cell, .inventory-currency)
+  :is(input[type='text'], input[type='number']) {
+  --input-background-color: transparent;
+  padding-inline: 0.125rem;
 }

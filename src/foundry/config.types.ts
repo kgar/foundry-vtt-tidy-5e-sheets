@@ -2479,64 +2479,13 @@ export type CONFIG = {
   DND5E: {
     ASCII: string;
     abilities: {
-      str: {
-        label: string;
-        abbreviation: string;
-        type: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      dex: {
-        label: string;
-        abbreviation: string;
-        type: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      con: {
-        label: string;
-        abbreviation: string;
-        type: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      int: {
-        label: string;
-        abbreviation: string;
-        type: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-        defaults: {
-          vehicle: number;
-        };
-      };
-      wis: {
-        label: string;
-        abbreviation: string;
-        type: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-        defaults: {
-          vehicle: number;
-        };
-      };
-      cha: {
-        label: string;
-        abbreviation: string;
-        type: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-        defaults: {
-          vehicle: number;
-        };
-      };
-    };
+      str: Dnd5eAbility;
+      dex: Dnd5eAbility;
+      con: Dnd5eAbility;
+      int: Dnd5eAbility;
+      wis: Dnd5eAbility;
+      cha: Dnd5eAbility;
+    } & Record<string, Dnd5eAbility>;
     areaTargetOptions: GroupableSelectOption[];
     defaultAbilities: {
       meleeAttack: string;
@@ -2692,6 +2641,107 @@ export type CONFIG = {
       '0': string;
       '1': string;
       '2': string;
+    };
+    facilities: {
+      advancement: {
+        basic: {
+          '5': number;
+        };
+        special: {
+          '5': number;
+          '9': number;
+          '13': number;
+          '17': number;
+        };
+      } & Record<string, Record<string, number>>;
+      orders: {
+        build: FacilityOrder;
+        change: FacilityOrder;
+        craft: FacilityOrder;
+        empower: FacilityOrder;
+        enlarge: FacilityOrder;
+        harvest: FacilityOrder;
+        maintain: FacilityOrder;
+        recruit: FacilityOrder;
+        repair: FacilityOrder;
+        research: FacilityOrder;
+        trade: FacilityOrder;
+      } & Record<string, FacilityOrder>;
+      sizes: {
+        cramped: {
+          label: string;
+          days: number;
+          squares: number;
+          value: number;
+        };
+        roomy: {
+          label: string;
+          days: number;
+          squares: number;
+          value: number;
+        };
+        vast: {
+          label: string;
+          days: number;
+          squares: number;
+          value: number;
+        };
+      } & Record<
+        string,
+        {
+          label: string;
+          days: number;
+          squares: number;
+          value: number;
+        }
+      >;
+      types: {
+        basic: {
+          label: string;
+          subtypes: {
+            bedroom: string;
+            courtyard: string;
+            diningRoom: string;
+            kitchen: string;
+            parlor: string;
+            storage: string;
+          };
+        };
+        special: {
+          label: string;
+          subtypes: {
+            arcaneStudy: string;
+            archive: string;
+            armory: string;
+            barrack: string;
+            demiplane: string;
+            gamingHall: string;
+            garden: string;
+            greenhouse: string;
+            guildhall: string;
+            laboratory: string;
+            library: string;
+            meditationChamber: string;
+            menagerie: string;
+            observatory: string;
+            pub: string;
+            reliquary: string;
+            sacristy: string;
+            sanctuary: string;
+            sanctum: string;
+            scriptorium: string;
+            smithy: string;
+            stable: string;
+            storehouse: string;
+            teleportationCircle: string;
+            theater: string;
+            trainingArea: string;
+            trophyRoom: string;
+            warRoom: string;
+            workshop: string;
+          };
+        };
+      };
     };
     weaponTypes: {
       simpleM: string;
@@ -4723,15 +4773,15 @@ export type CONFIG = {
       encounter: string;
     };
     activityTypes: {
-      attack: {};
-      check: {};
-      damage: {};
-      enchant: {};
-      heal: {};
-      save: {};
-      summon: {};
-      utility: {};
-    };
+      attack: ActivityType;
+      check: ActivityType;
+      damage: ActivityType;
+      enchant: ActivityType;
+      heal: ActivityType;
+      save: ActivityType;
+      summon: ActivityType;
+      utility: ActivityType;
+    } & Record<string, ActivityType>;
     advancementTypes: {
       AbilityScoreImprovement: {
         validItemTypes: {};
@@ -5527,3 +5577,28 @@ export type CONFIG = {
     };
   };
 };
+
+type ActivityType = {
+  documentClass: any;
+  configurable?: boolean;
+};
+
+type FacilityOrder = {
+  label: string;
+  icon: string;
+  hidden?: boolean;
+  basic?: boolean;
+  duration?: number;
+};
+
+export type Dnd5eAbility = {
+  label: string;
+  abbreviation: string;
+  type: string;
+  fullKey: string;
+  reference: string;
+  icon: string;
+  defaults?: {
+    vehicle: number;
+  };
+}

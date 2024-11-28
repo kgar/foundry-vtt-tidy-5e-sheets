@@ -33,7 +33,7 @@
   import type { Item5e } from 'src/types/item.types';
   import ClassicControls from 'src/sheets/classic/shared/ClassicControls.svelte';
   import { ItemUtils } from 'src/utils/ItemUtils';
-  import InlineToggleControl from 'src/sheets/shared/InlineToggleControl.svelte';
+  import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
 

@@ -21,7 +21,7 @@
   import { ItemUtils } from 'src/utils/ItemUtils';
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
-  import InlineToggleControl from 'src/sheets/shared/InlineToggleControl.svelte';
+  import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,

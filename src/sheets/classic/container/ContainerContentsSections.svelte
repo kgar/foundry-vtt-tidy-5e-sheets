@@ -23,6 +23,8 @@
   import type { Readable } from 'svelte/store';
   import InlineContainerView from './InlineContainerView.svelte';
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
+  import ItemUses from 'src/components/item-list/ItemUses.svelte';
+  import ItemAddUses from 'src/components/item-list/ItemAddUses.svelte';
 
   export let contents: InventorySection[];
   export let container: Item5e;
@@ -81,7 +83,7 @@
     ? `/* Controls */ ${classicControlWidthRems * classicControls.length}rem`
     : '';
 
-  $: gridTemplateColumns = `/* Name */ 1fr /* Weight */ 3rem /* Quantity */ 3rem ${classicControlsWidth}`;
+  $: gridTemplateColumns = `/* Name */ 1fr /* Uses */ 3.125rem /* Weight */ 3rem /* Quantity */ 3rem ${classicControlsWidth}`;
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -98,6 +100,9 @@
           <TidyTableHeaderRow>
             <TidyTableHeaderCell primary={true}>
               {localize(section.label)} ({section.items.length})
+            </TidyTableHeaderCell>
+            <TidyTableHeaderCell title={localize('DND5E.Charges')}>
+              <i class="fas fa-bolt" />
             </TidyTableHeaderCell>
             <TidyTableHeaderCell>
               {localize('DND5E.Weight')}
@@ -152,6 +157,7 @@
                     >{item.name}</span
                   >
                 </ItemName>
+
                 {#if !FoundryAdapter.concealDetails(item)}
                   {@const attunementContext =
                     FoundryAdapter.getAttunementContext(item)}
@@ -166,6 +172,13 @@
                 {/if}
                 {#if !!ctx.favoriteId}
                   <InlineFavoriteIcon />
+                {/if}
+              </TidyTableCell>
+              <TidyTableCell>
+                {#if item.hasLimitedUses}
+                  <ItemUses {item} />
+                {:else}
+                  <ItemAddUses {item} />
                 {/if}
               </TidyTableCell>
               <TidyTableCell

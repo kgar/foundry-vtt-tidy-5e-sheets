@@ -18,6 +18,13 @@
   import type { Readable } from 'svelte/store';
   import SpellSlotManagement from 'src/components/spellbook/SpellSlotManagement.svelte';
   import ConcentrationOverlayIcon from 'src/components/spellbook/ConcentrationOverlayIcon.svelte';
+  import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
+  import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
+  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+
+  let inlineToggleService = getContext<InlineToggleService>(
+    CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
+  );
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -94,6 +101,9 @@
                 <ConcentrationOverlayIcon {ctx} />
               </svelte:fragment>
             </ItemUseButton>
+            {#if spell?.system.activities?.contents.length > 1}
+              <InlineToggleControl entityId={spell.id} {inlineToggleService} />
+            {/if}
             <ItemName
               on:toggle={() => toggleSummary($context.actor)}
               item={spell}
@@ -124,6 +134,9 @@
             {spell.labels.activation}
           </ItemTableCell>
         </ItemTableRow>
+        {#if spell?.system.activities?.contents.length > 1}
+          <InlineActivitiesList item={spell} {inlineToggleService} />
+        {/if}
       {/each}
     </svelte:fragment>
   </ItemTable>

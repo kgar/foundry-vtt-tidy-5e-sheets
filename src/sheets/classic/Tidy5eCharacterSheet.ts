@@ -1,6 +1,6 @@
 import { FoundryAdapter } from '../../foundry/foundry-adapter';
 import CharacterSheet from './character/CharacterSheet.svelte';
-import { debug, error } from 'src/utils/logging';
+import { debug, warn } from 'src/utils/logging';
 import { SettingsProvider, settingStore } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { CONSTANTS } from 'src/constants';
@@ -28,7 +28,11 @@ import {
   type SpellbookSection,
   type FavoriteSection,
   type EffectFavoriteSection,
-  type SpellcastingInfo as SpellcastingInfo,
+  type FacilityOccupantContext,
+  type FacilitySection,
+  type ChosenFacilityContext,
+  type ActivitySection,
+  type TypedActivityFavoriteSection,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
@@ -48,7 +52,6 @@ import {
 import { isNil } from 'src/utils/data';
 import { CustomContentRenderer } from '../CustomContentRenderer';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
-import { calculateSpellAttackAndDc } from 'src/utils/formula';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
@@ -64,6 +67,7 @@ import { BaseSheetCustomSectionMixin } from './mixins/BaseSheetCustomSectionMixi
 import { Inventory } from 'src/features/sections/Inventory';
 import type {
   CharacterFavorite,
+  FacilityOccupants,
   UnsortedCharacterFavorite,
 } from 'src/foundry/dnd5e.types';
 import { TidyHooks } from 'src/foundry/TidyHooks';
@@ -71,6 +75,7 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import { Container } from 'src/features/containers/Container';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
+import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 
 export class Tidy5eCharacterSheet
   extends BaseSheetCustomSectionMixin(
@@ -236,9 +241,42 @@ export class Tidy5eCharacterSheet
             ? this.document.system.getContainedItem(itemId)
             : this.document.items.get(itemId);
         // Parts of ContextMenu doesn't play well with promises, so don't show menus for containers in packs
-        if (!item || item instanceof Promise) return;
-        if (element.closest('[data-activity-id]')) {
+        if (!item || item instanceof Promise) {
+          return;
+        }
+
+        const activityElement =
+          element.closest<HTMLElement>('[data-activity-id]');
+
+        if (activityElement?.matches('[data-configurable="true"]')) {
           dnd5e.documents.activity.UtilityActivity.onContextMenu(item, element);
+        } else if (activityElement) {
+          const activityId = activityElement.getAttribute('data-activity-id');
+          const activity = item.system.activities.get(activityId);
+          if (!activity) {
+            return;
+          }
+
+          const isFav = this.actor.system.hasFavorite(activity.relativeUUID);
+          const favoriteIcon = 'fa-bookmark';
+
+          const contextMenuItems: ContextMenuEntry[] = [
+            {
+              name: isFav ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
+              icon: isFav
+                ? `<i class='fas ${favoriteIcon} fa-fw' style='color: var(--t5e-warning-accent-color)'></i>`
+                : `<i class='fas ${favoriteIcon} fa-fw inactive'></i>`,
+              callback: () => {
+                if (!item) {
+                  warn(`tidy5e-context-menu | Item Not Found`);
+                  return;
+                }
+                FoundryAdapter.toggleFavoriteActivity(activity);
+              },
+              condition: () => !item.compendium?.locked,
+            },
+          ];
+          ui.context.menuItems = contextMenuItems;
         }
       },
     });
@@ -902,6 +940,19 @@ export class Tidy5eCharacterSheet
       );
     }
 
+    context.bastion = {
+      description: await TextEditor.enrichHTML(
+        this.actor.system.bastion.description,
+        {
+          secrets: this.actor.isOwner,
+          rollData: context.rollData,
+          relativeTo: this.actor,
+        }
+      ),
+    };
+
+    await this._prepareFacilities(context);
+
     let tabs = await CharacterSheetRuntime.getTabs(context);
 
     const selectedTabs = TidyFlags.selectedTabs.get(context.actor);
@@ -971,16 +1022,45 @@ export class Tidy5eCharacterSheet
       });
     }
 
+    const activitiesSection: TypedActivityFavoriteSection = {
+      activities: [],
+      dataset: {},
+      key: 'tidy.activities',
+      label: 'DND5E.ACTIVITY.Title.other',
+      show: true,
+      type: CONSTANTS.FAVORITES_SECTION_TYPE_ACTIVITY,
+    };
+
+    const favoriteActivities = (
+      this.actor.system.favorites as CharacterFavorite[]
+    ).filter((f) => f.type === 'activity');
+
+    for (const favoriteActivity of favoriteActivities) {
+      const activity = fromUuidSync(favoriteActivity.id, {
+        relative: this.actor,
+      });
+
+      if (!activity) {
+        continue;
+      }
+
+      activitiesSection.activities.push(activity);
+    }
+
     // Favorites
     context.favorites = CharacterSheetSections.mergeDuplicateFavoriteSections(
       context.favorites
     );
 
     if (effectsSection.effects.length) {
-      (context.favorites as FavoriteSection[]).push({
+      context.favorites.push({
         ...effectsSection,
-        type: CONSTANTS.TAB_CHARACTER_EFFECTS,
+        type: CONSTANTS.FAVORITES_SECTION_TYPE_EFFECT,
       });
+    }
+
+    if (activitiesSection.activities.length) {
+      context.favorites.push(activitiesSection);
     }
 
     debug('Character Sheet context data', context);
@@ -1002,14 +1082,14 @@ export class Tidy5eCharacterSheet
 
     // Partition items by category
     let {
-      items,
-      spells,
-      feats,
-      species,
       backgrounds,
       classes,
-      subclasses,
       favorites,
+      feats,
+      items,
+      species,
+      spells,
+      subclasses,
     } = Array.from(this.actor.items).reduce(
       (
         obj: CharacterItemPartitions & { favorites: CharacterItemPartitions },
@@ -1078,6 +1158,7 @@ export class Tidy5eCharacterSheet
       {
         items: [] as Item5e[],
         spells: [] as Item5e[],
+        facilities: [] as Item5e[],
         feats: [] as Item5e[],
         species: [] as Item5e[],
         backgrounds: [] as Item5e[],
@@ -1086,6 +1167,7 @@ export class Tidy5eCharacterSheet
         favorites: {
           items: [] as Item5e[],
           spells: [] as Item5e[],
+          facilities: [] as Item5e[],
           feats: [] as Item5e[],
           species: [] as Item5e[],
           backgrounds: [] as Item5e[],
@@ -1200,6 +1282,19 @@ export class Tidy5eCharacterSheet
         { canCreate: false }
       );
 
+    // Facility Favorites
+    let bastionFacilitiesLabel = !isNil(context.system.bastion.name, '')
+      ? context.system.bastion.name
+      : 'TYPES.Item.facilityPl';
+
+    let facilitiesSection: FacilitySection = {
+      dataset: {},
+      items: favorites.facilities,
+      key: 'tidy.bastion.facilities',
+      label: bastionFacilitiesLabel,
+      show: true,
+    };
+
     // Apply sections to their section lists
 
     context.inventory = Object.values(inventory);
@@ -1213,21 +1308,161 @@ export class Tidy5eCharacterSheet
         .filter((i) => i.items.length)
         .map((i) => ({
           ...i,
-          type: CONSTANTS.TAB_ACTOR_INVENTORY,
+          type: CONSTANTS.FAVORITES_SECTION_TYPE_INVENTORY,
         })),
       ...Object.values(favoriteFeatures)
         .filter((i) => i.items.length)
         .map((i) => ({
           ...i,
-          type: CONSTANTS.TAB_CHARACTER_FEATURES,
+          type: CONSTANTS.FAVORITES_SECTION_TYPE_FEATURE,
         })),
       ...favoriteSpellbook
         .filter((s: SpellbookSection) => s.spells.length)
         .map((s: SpellbookSection) => ({
           ...s,
-          type: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+          type: CONSTANTS.FAVORITES_SECTION_TYPE_SPELLBOOK,
         })),
+      {
+        ...facilitiesSection,
+        type: CONSTANTS.FAVORITES_SECTION_TYPE_FACILITY,
+      },
     ];
+  }
+
+  /**
+   * Prepare bastion facility data for display.
+   */
+  async _prepareFacilities(context: CharacterSheetContext): Promise<void> {
+    const allDefenders = [];
+    const basic = [];
+    const special = [];
+
+    // TODO: Consider batching compendium lookups. Most occupants are likely to all be from the same compendium.
+    for (const facility of Object.values<any>(this.actor.itemTypes.facility)) {
+      const { id, img, labels, name, system } = facility;
+      const {
+        building,
+        craft,
+        defenders,
+        disabled,
+        free,
+        hirelings,
+        level,
+        order,
+        progress,
+        size,
+        trade,
+        type,
+      } = system;
+      const subtitle = [];
+
+      if (!isNil(order, '')) {
+        subtitle.push(CONFIG.DND5E.facilities.orders[order]?.label ?? order);
+      }
+
+      if (trade.stock.max) {
+        subtitle.push(`${trade.stock.value ?? 0} &sol; ${trade.stock.max}`);
+      }
+
+      subtitle.push(
+        building.built
+          ? CONFIG.DND5E.facilities.sizes[size].label
+          : FoundryAdapter.localize('DND5E.FACILITY.Build.Unbuilt')
+      );
+
+      if (!isNil(level)) {
+        subtitle.push(
+          FoundryAdapter.localize('DND5E.LevelNumber', { level: level })
+        );
+      }
+
+      const chosenFacilityContext: ChosenFacilityContext = {
+        building,
+        craft: craft.item ? await fromUuid(craft.item) : null,
+        creatures: await this._prepareFacilityOccupants(trade.creatures),
+        defenders: await this._prepareFacilityOccupants(defenders),
+        disabled,
+        executing: CONFIG.DND5E.facilities.orders[progress.order]?.icon,
+        facility: facility,
+        free,
+        hirelings: await this._prepareFacilityOccupants(hirelings),
+        id,
+        img: foundry.utils.getRoute(img),
+        isSpecial: type.value === CONSTANTS.FACILITY_TYPE_SPECIAL,
+        labels,
+        name,
+        progress,
+        subtitle: subtitle.join(' &bull; '),
+      };
+      allDefenders.push(
+        ...chosenFacilityContext.defenders
+          .map(({ actor }) => {
+            if (!actor) return null;
+            const { img, name, uuid } = actor;
+            return { img, name, uuid, facility: facility.id };
+          })
+          .filter((_) => _)
+      );
+
+      if (chosenFacilityContext.isSpecial) {
+        special.push(chosenFacilityContext);
+      } else {
+        basic.push(chosenFacilityContext);
+      }
+
+      const itemContext = (context.itemContext[facility.id] ??= {});
+      itemContext.chosen = chosenFacilityContext;
+    }
+
+    context.defenders = allDefenders;
+    context.facilities = {
+      basic: { chosen: basic, available: [], value: 0, max: 0 },
+      special: { chosen: special, available: [], value: 0, max: 0 },
+    };
+    [CONSTANTS.FACILITY_TYPE_BASIC, CONSTANTS.FACILITY_TYPE_SPECIAL].forEach(
+      (type) => {
+        const facilities = context.facilities[type];
+        const config = CONFIG.DND5E.facilities.advancement[type];
+        let [, available] =
+          Object.entries(config)
+            .reverse()
+            .find(([level]) => {
+              return level <= this.actor.system.details.level;
+            }) ?? [];
+        facilities.value = facilities.chosen.filter(
+          ({ free }) => type === CONSTANTS.FACILITY_TYPE_BASIC || !free
+        ).length;
+        facilities.max = available ?? 0;
+        available = (available ?? 0) - facilities.value;
+        facilities.available = Array.fromRange(Math.max(0, available)).map(
+          () => {
+            return { label: `DND5E.FACILITY.AvailableFacility.${type}.free` };
+          }
+        );
+      }
+    );
+
+    if (!context.facilities.basic.available.length) {
+      context.facilities.basic.available.push({
+        label: 'DND5E.FACILITY.AvailableFacility.basic.build',
+      });
+    }
+  }
+
+  /**
+   * Prepare facility occupants for display.
+   */
+  _prepareFacilityOccupants(
+    occupants: FacilityOccupants
+  ): Promise<FacilityOccupantContext[]> {
+    const { max, value } = occupants;
+    return Promise.all(
+      Array.fromRange(max).map(async (i) => {
+        const uuid = value[i];
+        if (uuid) return { actor: await fromUuid(uuid) };
+        return { empty: true };
+      })
+    );
   }
 
   private _getFavoritesIdMap(): Map<string, CharacterFavorite> {
@@ -1445,6 +1680,20 @@ export class Tidy5eCharacterSheet
     });
   }
 
+  deleteOccupant(facilityId: string, prop: string, index: number) {
+    const facility = this.actor.items.get(facilityId);
+
+    if (!facility || !prop || index === undefined) {
+      return;
+    }
+
+    let { value } = foundry.utils.getProperty(facility, prop);
+
+    value = value.filter((_: any, i: number) => i !== index);
+
+    return facility.update({ [`${prop}.value`]: value });
+  }
+
   _getHeaderButtons() {
     const buttons = super._getHeaderButtons();
     return FoundryAdapter.removeConfigureSettingsButtonWhenLockedForNonGm(
@@ -1515,6 +1764,45 @@ export class Tidy5eCharacterSheet
     }
 
     return traits;
+  }
+
+  /** @inheritDoc */
+  async _onDropActor(event: DragEvent & { target: HTMLElement }, data: any) {
+    if (!event.target.closest('.facility-occupants') || !data.uuid) {
+      return super._onDropActor(event, data);
+    }
+
+    const facilityId =
+      event.target.closest<HTMLElement>('[data-facility-id]')?.dataset?.[
+        'facilityId'
+      ];
+
+    const facility = this.actor.items.get(facilityId);
+
+    if (!facility) {
+      return;
+    }
+
+    const propDataset =
+      event.target.closest<HTMLElement>('[data-prop]')?.dataset;
+
+    const prop = propDataset?.['prop'];
+
+    if (!prop) {
+      return;
+    }
+
+    this._onDropActorAddToFacility(facility, prop, data.uuid);
+  }
+
+  _onDropActorAddToFacility(facility: Item5e, prop: string, actorUuid: string) {
+    const { max, value } = foundry.utils.getProperty(facility, prop);
+
+    if (value.length + 1 > max) {
+      return;
+    }
+
+    return facility.update({ [`${prop}.value`]: [...value, actorUuid] });
   }
 
   /* -------------------------------------------- */

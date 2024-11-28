@@ -515,6 +515,30 @@
     }
   }
 
+  // Temp holding place for this style until overhaul
+  :is(i, span).currency {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    background: transparent no-repeat center / contain;
+
+    &.cp {
+      background-image: url('../../systems/dnd5e/icons/currency/copper.webp');
+    }
+    &.sp {
+      background-image: url('../../systems/dnd5e/icons/currency/silver.webp');
+    }
+    &.ep {
+      background-image: url('../../systems/dnd5e/icons/currency/electrum.webp');
+    }
+    &.gp {
+      background-image: url('../../systems/dnd5e/icons/currency/gold.webp');
+    }
+    &.pp {
+      background-image: url('../../systems/dnd5e/icons/currency/platinum.webp');
+    }
+  }
+
   /* Item Summary */
   .item-summary {
     flex: 0 0 100%;

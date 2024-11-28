@@ -7,7 +7,6 @@
     type RenderableClassicControl,
     type SpellbookSection,
   } from 'src/types/types';
-  import ItemDeleteControl from '../item-list/controls/ItemDeleteControl.svelte';
   import ItemEditControl from '../item-list/controls/ItemEditControl.svelte';
   import ItemName from '../item-list/ItemName.svelte';
   import ItemTable from '../item-list/v1/ItemTable.svelte';
@@ -34,6 +33,10 @@
   import ClassicControls from 'src/sheets/classic/shared/ClassicControls.svelte';
   import ConcentrationOverlayIcon from './ConcentrationOverlayIcon.svelte';
   import DeleteOrOpenActivity from '../item-list/controls/DeleteOrOpenActivity.svelte';
+  import ActivityUses from '../item-list/ActivityUses.svelte';
+  import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
+  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
 
   let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -49,6 +52,10 @@
   export let spellComponentsBaseWidth: string = '3.75rem';
   export let targetBaseWidth: string = '7.5rem';
   export let usageBaseWidth: string = '7.5rem';
+
+  let inlineToggleService = getContext<InlineToggleService>(
+    CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
+  );
 
   let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
     CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
@@ -190,6 +197,9 @@
                 <ConcentrationOverlayIcon {ctx} />
               </svelte:fragment>
             </ItemUseButton>
+            {#if spell?.system.activities?.contents.length > 1}
+              <InlineToggleControl entityId={spell.id} {inlineToggleService} />
+            {/if}
             <ItemName
               on:toggle={() => toggleSummary($context.actor)}
               item={spell}
@@ -205,6 +215,10 @@
           {#if spell.hasLimitedUses}
             <ItemTableCell baseWidth="3.125rem">
               <ItemUses item={spell} />
+            </ItemTableCell>
+          {:else if (spell.system.linkedActivity?.uses?.max ?? 0) > 0}
+            <ItemTableCell baseWidth="3.125rem">
+              <ActivityUses activity={spell.system.linkedActivity} />
             </ItemTableCell>
           {/if}
           {#if allowFavorites && $settingStore.showIconsNextToTheItemName && 'favoriteId' in ctx && !!ctx.favoriteId}
@@ -264,6 +278,9 @@
             </ItemTableCell>
           {/if}
         </ItemTableRow>
+        {#if spell?.system.activities?.contents.length > 1}
+          <InlineActivitiesList item={spell} {inlineToggleService} />
+        {/if}
       {/each}
       {#if $context.unlocked}
         <ItemTableFooter

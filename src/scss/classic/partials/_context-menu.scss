@@ -16,6 +16,11 @@
   overflow-y: auto;
   box-shadow: 0 0 0.3125rem var(--t5e-context-shadow-color);
 
+  .context-item {
+    text-wrap-mode: wrap;
+    text-wrap: wrap;
+  }
+
   a,
   li {
     display: flex;

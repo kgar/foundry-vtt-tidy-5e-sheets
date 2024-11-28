@@ -64,7 +64,7 @@
         on:change={(ev) =>
           console.log(
             $context.item.update({
-              'system.equipped': ev.currentTarget.checked,
+              'system.equipped': ev.currentTarget?.checked,
             }),
           )}
       >
@@ -80,7 +80,7 @@
           on:change={(ev) =>
             console.log(
               $context.item.update({
-                'system.attuned': ev.currentTarget.checked,
+                'system.attuned': ev.currentTarget?.checked,
               }),
             )}
         >
@@ -97,7 +97,7 @@
           on:change={(ev) =>
             console.log(
               $context.item.update({
-                'system.identified': ev.currentTarget.checked,
+                'system.identified': ev.currentTarget?.checked,
               }),
             )}
         >

@@ -31,10 +31,10 @@
   import { coalesce } from 'src/utils/formatting';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ClassicControls from 'src/sheets/classic/shared/ClassicControls.svelte';
-  import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
-  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import InlineContainerView from '../container/InlineContainerView.svelte';
   import { ItemUtils } from 'src/utils/ItemUtils';
+  import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
+  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
 
   export let primaryColumnName: string;

@@ -6,6 +6,7 @@
   import { CONSTANTS } from 'src/constants';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { settingStore } from 'src/settings/settings';
+  import { Activities } from 'src/features/activities/activities';
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -44,6 +45,7 @@
       <div
         class="activity card"
         data-activity-id={activity.id}
+        data-configurable={Activities.isConfigurable(activity)}
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
         draggable="true"
         on:dragstart={(ev) => handleDragStart(ev, activity.id)}

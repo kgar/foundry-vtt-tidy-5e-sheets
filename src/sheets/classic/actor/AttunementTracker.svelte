@@ -4,6 +4,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import AttunementSummaryTooltip from 'src/tooltips/AttunementSummaryTooltip.svelte';
   import { Tooltip } from 'src/tooltips/Tooltip';
+  import type { Item5e } from 'src/types/item.types';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -13,9 +14,11 @@
   );
   const localize = FoundryAdapter.localize;
 
-  $: attunedItems = $context.items
-    .filter((i) => i.system.attuned)
-    .sort((a, b) => a.name.localeCompare(b.name, game.i18n.lang));
+  $: attunedItems = $context.actor.items
+    .filter((i: Item5e) => i.system.attuned)
+    .sort((a: Item5e, b: Item5e) =>
+      a.name.localeCompare(b.name, game.i18n.lang),
+    );
 
   let attunementSummaryTooltip: AttunementSummaryTooltip;
 

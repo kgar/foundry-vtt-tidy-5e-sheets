@@ -84,6 +84,47 @@ function onItemContext(this: any, element: HTMLElement) {
     );
 
     return;
+  } else if (
+    contextMenuType === CONSTANTS.CONTEXT_MENU_TYPE_FACILITY_OCCUPANTS
+  ) {
+    const occupantUuid = element.getAttribute('data-actor-uuid');
+    const index = element.getAttribute('data-index');
+    const facilityId = element.getAttribute('data-facility-id');
+    const facilityName = element.getAttribute('data-facility-name');
+    const prop = element.getAttribute('data-prop');
+
+    let contextOptions: ContextMenuEntry[] = [
+      {
+        name: 'TIDY5E.ContextMenuActionEdit',
+        icon: "<i class='fas fas fa-pencil-alt fa-fw'></i>",
+        callback: async () => {
+          const actor = await fromUuid(occupantUuid);
+          actor?.sheet.render(true);
+        },
+        condition: () => app.actor.isOwner && !app.actor.compendium?.locked,
+      },
+      {
+        name: FoundryAdapter.localize(
+          'TIDY5E.Facilities.ContextMenuActionRemove',
+          { facilityName }
+        ),
+        icon: "<i class='fas fas fa-trash t5e-warning-color fa-fw'></i>",
+        callback: async () => {
+          await app.actor.sheet.deleteOccupant(facilityId, prop, Number(index));
+        },
+        condition: () => app.actor.isOwner && !app.actor.compendium?.locked,
+      },
+    ];
+
+    ui.context.menuItems = contextOptions;
+    TidyHooks.dnd5eGetFacilityOccupantContextOptions(
+      this.document,
+      this.document.items.get(facilityId),
+      occupantUuid,
+      prop,
+      index !== null ? Number(index) : null,
+      ui.context.menuItems
+    );
   } else {
     warn(
       `Unable to show context menu. The menu type ${contextMenuType} is not supported. Put a [data-context-menu] attribute on the target entity and implement the handler where this warning appears.`
@@ -119,7 +160,7 @@ function getActiveEffectContextOptions(effect: any, app: any) {
   const isFav = FoundryAdapter.isEffectFavorited(effect, actor);
   const favoriteIcon = 'fa-bookmark';
 
-  let tidy5eKgarContextOptions = [
+  let tidy5eKgarContextOptions: ContextMenuEntry[] = [
     {
       name: 'DND5E.ContextMenuActionEdit',
       icon: "<i class='fas fas fa-pencil-alt fa-fw'></i>",
@@ -202,9 +243,8 @@ function getItemContextOptions(item: Item5e) {
   const itemParent = item.actor ? item.actor : item.parent;
   const itemParentIsActor =
     itemParent?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR;
-  const isUnlocked =
-    !itemParentIsActor || FoundryAdapter.isSheetUnlocked(itemParent);
-  let options = [];
+
+  let options: ContextMenuEntry[] = [];
 
   let toggleTitle = '';
   let canToggle = false;
@@ -335,7 +375,10 @@ function getItemContextOptions(item: Item5e) {
         }
         FoundryAdapter.toggleFavoriteItem(item);
       },
-      condition: () => !item.compendium?.locked,
+      condition: () =>
+        !!itemParent &&
+        'favorites' in itemParent.system &&
+        !item.compendium?.locked,
     });
   }
 
@@ -350,10 +393,7 @@ function getItemContextOptions(item: Item5e) {
     name: 'DND5E.ContextMenuActionDuplicate',
     icon: "<i class='fas fa-copy fa-fw'></i>",
     condition: () =>
-      isUnlocked &&
-      item.canDuplicate &&
-      item.isOwner &&
-      !item.compendium?.locked,
+      item.canDuplicate && item.isOwner && !item.compendium?.locked,
 
     callback: () =>
       item.clone(
@@ -372,10 +412,7 @@ function getItemContextOptions(item: Item5e) {
       icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5e-warning-accent-color);'></i>",
       callback: () => FoundryAdapter.onActorItemDelete(itemParent, item),
       condition: () =>
-        item.canDelete &&
-        isUnlocked &&
-        item.isOwner &&
-        !item.compendium?.locked,
+        item.canDelete && item.isOwner && !item.compendium?.locked,
     });
     options.push({
       name: 'DOCUMENT.DND5E.Activity',
@@ -396,7 +433,7 @@ function getItemContextOptions(item: Item5e) {
           ? FoundryAdapter.onActorItemDelete(itemParent, item)
           : item.deleteDialog();
       },
-      condition: () => isUnlocked && item.isOwner && !item.compendium?.locked,
+      condition: () => item.isOwner && !item.compendium?.locked,
     });
   }
 
@@ -426,31 +463,35 @@ function getItemContextOptions(item: Item5e) {
     group: 'action',
   });
 
-  if (itemParentIsActor && actorUsesActionFeature(itemParent)) {
-    const active = isItemInActionList(item);
-    options.push({
-      name: active
-        ? 'TIDY5E.Actions.SetOverrideFalse'
-        : 'TIDY5E.Actions.SetOverrideTrue',
-      icon: active
-        ? '<i class="fas fa-fist-raised" style="color: var(--t5e-warning-accent-color)"></i>'
-        : '<i class="fas fa-fist-raised"></i>',
-      callback: () => {
-        TidyFlags.actionFilterOverride.set(item, !isItemInActionList(item));
-      },
-    });
+  const active = isItemInActionList(item);
+  options.push({
+    name: active
+      ? 'TIDY5E.Actions.SetOverrideFalse'
+      : 'TIDY5E.Actions.SetOverrideTrue',
+    icon: active
+      ? '<i class="fas fa-fist-raised" style="color: var(--t5e-warning-accent-color)"></i>'
+      : '<i class="fas fa-fist-raised"></i>',
+    callback: () => {
+      TidyFlags.actionFilterOverride.set(item, !isItemInActionList(item));
+    },
+    condition: () =>
+      item.type !== CONSTANTS.ITEM_TYPE_FACILITY &&
+      itemParentIsActor &&
+      actorUsesActionFeature(itemParent),
+  });
 
-    const overridden = TidyFlags.actionFilterOverride.get(item) !== undefined;
-    if (overridden) {
-      options.push({
-        name: 'TIDY5E.Actions.ResetActionDefault',
-        icon: '<i class="fas fa-fist-raised" style="color: var(--t5e-warning-accent-color)"></i>',
-        callback: () => {
-          TidyFlags.actionFilterOverride.unset(item);
-        },
-      });
-    }
-  }
+  const overridden = TidyFlags.actionFilterOverride.get(item) !== undefined;
+
+  options.push({
+    name: 'TIDY5E.Actions.ResetActionDefault',
+    icon: '<i class="fas fa-fist-raised" style="color: var(--t5e-warning-accent-color)"></i>',
+    callback: () => {
+      TidyFlags.actionFilterOverride.unset(item);
+    },
+    condition: () =>
+      overridden && itemParentIsActor && actorUsesActionFeature(itemParent),
+  });
+
   return options;
 }
 
@@ -461,14 +502,12 @@ function getItemContextOptions(item: Item5e) {
  * @returns        Context menu options.
  */
 function getGroupMemberContextOptions(group: Actor5e, actor: Actor5e) {
-  const unlocked = FoundryAdapter.isSheetUnlocked(group);
-
   let options: ContextMenuEntry[] = [
     {
       name: 'TIDY5E.Group.RemoveMemberFromGroup',
       icon: `<i class="fas fa-trash fa-fw t5e-warning-color"></i>`,
       callback: () => group.removeMember(actor.id),
-      condition: () => unlocked && !group.compendium?.locked,
+      condition: () => !group.compendium?.locked,
     },
   ];
 
