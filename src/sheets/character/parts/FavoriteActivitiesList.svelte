@@ -16,13 +16,7 @@
   import ItemUseButton from '../../../components/item-list/ItemUseButton.svelte';
   import { getContext, tick } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
-  import InlineToggleControl from 'src/sheets/shared/InlineToggleControl.svelte';
-  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import type { Item5e } from 'src/types/item.types';
-  import FacilityOrderProgressMeter from './FacilityOrderProgressMeter.svelte';
-  import { Tooltip } from 'src/tooltips/Tooltip';
-  import OccupantSummaryTooltip from 'src/tooltips/OccupantSummaryTooltip.svelte';
   import type { Activity5e } from 'src/foundry/dnd5e.types';
   import { Activities } from 'src/features/activities/activities';
   import TidyTable from 'src/components/table/TidyTable.svelte';
@@ -30,6 +24,8 @@
   import TidyTableHeaderCell from 'src/components/table/TidyTableHeaderCell.svelte';
   import TidyTableRow from 'src/components/table/TidyTableRow.svelte';
   import TidyTableCell from 'src/components/table/TidyTableCell.svelte';
+  import ActivityUses from 'src/components/item-list/ActivityUses.svelte';
+  import ItemUses from 'src/components/item-list/ItemUses.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -38,23 +34,73 @@
   export let section: ActivitySection;
   export let activities: Activity5e[];
 
+  const gridTemplateColumns = `
+    /* Name */
+    1fr
+    /* Item Source */
+    7rem
+    /* Uses */
+    2.5rem
+    /* Usage */
+    5rem
+    /* Mod/Save */
+    3.25rem
+  `;
+
   const localize = FoundryAdapter.localize;
+
+  function getFred(activity: Activity5e) {
+    for (let target of activity.consumption?.targets ?? []) {
+      const consumes = (target.value ?? 0) > 0;
+      if (target.type === 'itemUses' && consumes) {
+        return {
+          type: 'itemUses',
+          item: target.item,
+        };
+      }
+      if (target.type === 'activityUses' && consumes) {
+        return {
+          type: 'activityUses',
+        };
+      }
+    }
+
+    return {};
+  }
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-missing-attribute -->
-<TidyTable key={section.key} class="favorite-activities">
+<TidyTable
+  key={section.key}
+  class="favorite-activities"
+  --grid-template-columns={gridTemplateColumns}
+>
   <svelte:fragment slot="header">
     <TidyTableHeaderRow>
       <TidyTableHeaderCell primary={true}>
         {localize(section.label ?? 'DND5E.Effect')}
+      </TidyTableHeaderCell>
+      <TidyTableHeaderCell>
+        {localize('DOCUMENT.Item')}
+      </TidyTableHeaderCell>
+      <TidyTableHeaderCell>
+        <i class="fas fa-bolt" />
+      </TidyTableHeaderCell>
+      <TidyTableHeaderCell>
+        {localize('DND5E.Usage')}
+      </TidyTableHeaderCell>
+      <TidyTableHeaderCell>
+        <i class="fas fa-wand-sparkles"></i>
+        <i class="fas fa-shield"></i>
       </TidyTableHeaderCell>
     </TidyTableHeaderRow>
   </svelte:fragment>
   <svelte:fragment slot="body">
     {#each activities as activity (activity.uuid)}
       <TidyTableRow>
+        <!-- TODO: Have a look at inline activities list table styles and maybe just use that. -->
         <TidyTableCell
           primary={true}
           attributes={{
@@ -76,6 +122,38 @@
             data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
           >
             {activity.name}
+          </span>
+        </TidyTableCell>
+        <TidyTableCell>
+          <a
+            class="truncate align-self-stretch align-content-center flex-1"
+            class:highlight-on-hover={$context.editable}
+            on:click={(ev) =>
+              $context.editable && activity.item.sheet.render(true)}
+          >
+            {activity.item.name}
+          </a>
+        </TidyTableCell>
+        <TidyTableCell>
+          {@const fred = getFred(activity)}
+          {#if fred.type === 'itemUses'}
+            <ItemUses item={fred.item}></ItemUses>
+          {:else if fred.type === 'activityUses'}
+            <ActivityUses {activity}></ActivityUses>
+          {/if}
+        </TidyTableCell>
+        <TidyTableCell>
+          {#if activity.activation?.type}
+            <span class="truncate">
+              {activity.activationLabels?.activation ?? ''}
+            </span>
+          {/if}
+        </TidyTableCell>
+        <TidyTableCell>
+          {@const label = activity.labels.toHit ?? activity.labels.save ?? ''}
+
+          <span class="truncate" title={label}>
+            {label}
           </span>
         </TidyTableCell>
       </TidyTableRow>
