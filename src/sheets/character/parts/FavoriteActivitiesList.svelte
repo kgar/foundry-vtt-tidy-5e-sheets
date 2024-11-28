@@ -3,20 +3,10 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import {
     type ActivitySection,
-    type Actor5e,
     type CharacterSheetContext,
-    type FacilitySection,
   } from 'src/types/types';
-  import ItemName from '../../../components/item-list/ItemName.svelte';
-  import ItemTable from '../../../components/item-list/v1/ItemTable.svelte';
-  import ItemTableCell from '../../../components/item-list/v1/ItemTableCell.svelte';
-  import ItemTableColumn from '../../../components/item-list/v1/ItemTableColumn.svelte';
-  import ItemTableHeaderRow from '../../../components/item-list/v1/ItemTableHeaderRow.svelte';
-  import ItemTableRow from '../../../components/item-list/v1/ItemTableRow.svelte';
-  import ItemUseButton from '../../../components/item-list/ItemUseButton.svelte';
-  import { getContext, tick } from 'svelte';
+  import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import type { Item5e } from 'src/types/item.types';
   import type { Activity5e } from 'src/foundry/dnd5e.types';
   import { Activities } from 'src/features/activities/activities';
   import TidyTable from 'src/components/table/TidyTable.svelte';
@@ -25,7 +15,6 @@
   import TidyTableRow from 'src/components/table/TidyTableRow.svelte';
   import TidyTableCell from 'src/components/table/TidyTableCell.svelte';
   import ActivityUses from 'src/components/item-list/ActivityUses.svelte';
-  import ItemUses from 'src/components/item-list/ItemUses.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -38,13 +27,13 @@
     /* Name */
     1fr
     /* Item Source */
-    7rem
+    12rem
     /* Uses */
     2.5rem
     /* Usage */
     5rem
     /* Mod/Save */
-    3.25rem
+    3.5rem
   `;
 
   const localize = FoundryAdapter.localize;
@@ -115,7 +104,7 @@
         </TidyTableCell>
         <TidyTableCell>
           <a
-            class="truncate align-self-stretch align-content-center flex-1"
+            class="activity-item-link truncate align-self-stretch align-content-center flex-1"
             class:highlight-on-hover={$context.editable}
             on:click={(ev) =>
               $context.editable && activity.item.sheet.render(true)}
@@ -139,7 +128,11 @@
           {/if}
         </TidyTableCell>
         <TidyTableCell>
-          {@const label = activity.labels.toHit ?? activity.labels.save ?? '—'}
+          {@const label = activity.labels.toHit
+            ? activity.labels.toHit
+            : activity.save?.ability && activity.save?.dc?.value
+              ? `${FoundryAdapter.getSaveAbilityAbbreviation(activity.save)} ${activity.save.dc.value}`.toLocaleUpperCase()
+              : '—'}
 
           <span class="truncate" title={label}>
             {label}

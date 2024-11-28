@@ -1,6 +1,6 @@
 import { FoundryAdapter } from '../foundry/foundry-adapter';
 import CharacterSheet from './character/CharacterSheet.svelte';
-import { debug } from 'src/utils/logging';
+import { debug, warn } from 'src/utils/logging';
 import { SettingsProvider, settingStore } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { CONSTANTS } from 'src/constants';
@@ -66,7 +66,6 @@ import { DocumentTabSectionConfigApplication } from 'src/applications/section-co
 import { BaseSheetCustomSectionMixin } from './mixins/BaseSheetCustomSectionMixin';
 import { Inventory } from 'src/features/sections/Inventory';
 import type {
-  ActivityFavoriteData,
   CharacterFavorite,
   FacilityOccupants,
   UnsortedCharacterFavorite,
@@ -76,6 +75,7 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import { Container } from 'src/features/containers/Container';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
+import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 
 export class Tidy5eCharacterSheet
   extends BaseSheetCustomSectionMixin(
@@ -232,29 +232,54 @@ export class Tidy5eCharacterSheet
 
     initTidy5eContextMenu(this, html);
 
-    FoundryAdapter.createContextMenu(
-      html,
-      '.activity[data-activity-id][data-configurable="true"]',
-      [],
-      {
-        onOpen: (element: HTMLElement) => {
-          const itemId =
-            element.closest<HTMLElement>('[data-item-id]')?.dataset.itemId;
-          const item =
-            this.document.type === 'container'
-              ? this.document.system.getContainedItem(itemId)
-              : this.document.items.get(itemId);
-          // Parts of ContextMenu doesn't play well with promises, so don't show menus for containers in packs
-          if (!item || item instanceof Promise) return;
-          if (element.closest('[data-activity-id]')) {
-            dnd5e.documents.activity.UtilityActivity.onContextMenu(
-              item,
-              element
-            );
+    FoundryAdapter.createContextMenu(html, '.activity[data-activity-id]', [], {
+      onOpen: (element: HTMLElement) => {
+        const itemId =
+          element.closest<HTMLElement>('[data-item-id]')?.dataset.itemId;
+        const item =
+          this.document.type === 'container'
+            ? this.document.system.getContainedItem(itemId)
+            : this.document.items.get(itemId);
+        // Parts of ContextMenu doesn't play well with promises, so don't show menus for containers in packs
+        if (!item || item instanceof Promise) {
+          return;
+        }
+
+        const activityElement =
+          element.closest<HTMLElement>('[data-activity-id]');
+
+        if (activityElement?.matches('[data-configurable="true"]')) {
+          dnd5e.documents.activity.UtilityActivity.onContextMenu(item, element);
+        } else if (activityElement) {
+          const activityId = activityElement.getAttribute('data-activity-id');
+          const activity = item.system.activities.get(activityId);
+          if (!activity) {
+            return;
           }
-        },
-      }
-    );
+
+          const isFav = this.actor.system.hasFavorite(activity.relativeUUID);
+          const favoriteIcon = 'fa-bookmark';
+
+          const contextMenuItems: ContextMenuEntry[] = [
+            {
+              name: isFav ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
+              icon: isFav
+                ? `<i class='fas ${favoriteIcon} fa-fw' style='color: var(--t5e-warning-accent-color)'></i>`
+                : `<i class='fas ${favoriteIcon} fa-fw inactive'></i>`,
+              callback: () => {
+                if (!item) {
+                  warn(`tidy5e-context-menu | Item Not Found`);
+                  return;
+                }
+                FoundryAdapter.toggleFavoriteActivity(activity);
+              },
+              condition: () => !item.compendium?.locked,
+            },
+          ];
+          ui.context.menuItems = contextMenuItems;
+        }
+      },
+    });
   }
 
   async getData(options = {}) {

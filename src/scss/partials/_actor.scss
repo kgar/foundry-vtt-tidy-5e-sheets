@@ -836,6 +836,14 @@ select:hover {
   .tidy-table-cell {
     display: flex;
     gap: 0.25rem;
+
+    &:not([primary="true"]) {
+      border-left: 0.0625rem solid var(--t5e-faintest-color);
+    }
+  }
+
+  .activity-item-link {
+    padding-inline: 0.125rem;
   }
 
   .item-table-image-button {

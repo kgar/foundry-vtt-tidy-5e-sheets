@@ -642,6 +642,15 @@ export const FoundryAdapter = {
 
     return false;
   },
+  isActivityFavorited(activity: Activity5e) {
+    const actor = activity.actor;
+
+    if (actor && 'favorites' in actor.system) {
+      return actor.system.hasFavorite(activity.relativeUUID);
+    }
+
+    return false;
+  },
   async toggleFavoriteItem(document: any) {
     const actor = document.actor;
 
@@ -650,12 +659,31 @@ export const FoundryAdapter = {
     }
 
     const favorited = FoundryAdapter.isItemFavorited(document);
+
     if (favorited) {
       await actor.system.removeFavorite(document.getRelativeUUID(actor));
     } else {
       await actor.system.addFavorite({
         type: 'item',
         id: document.getRelativeUUID(actor),
+      });
+    }
+  },
+  async toggleFavoriteActivity(activity: Activity5e) {
+    const actor = activity.actor;
+
+    if (!actor || !actor.system?.addFavorite) {
+      return;
+    }
+
+    const favorited = FoundryAdapter.isActivityFavorited(activity);
+
+    if (favorited) {
+      await actor.system.removeFavorite(activity.relativeUUID);
+    } else {
+      await actor.system.addFavorite({
+        type: 'activity',
+        id: activity.relativeUUID,
       });
     }
   },
@@ -862,7 +890,9 @@ export const FoundryAdapter = {
     return new FilePicker(...args).browse();
   },
   renderArmorConfig(document: any) {
-    return new dnd5e.applications.actor.ArmorClassConfig({ document }).render(true);
+    return new dnd5e.applications.actor.ArmorClassConfig({ document }).render(
+      true
+    );
   },
   renderInitiativeConfig(document: any) {
     return new dnd5e.applications.actor.InitiativeConfig({
@@ -1272,7 +1302,7 @@ export const FoundryAdapter = {
     if (!similarItem) {
       return null;
     }
-    
+
     return similarItem.update({
       'system.quantity':
         similarItem.system.quantity + Math.max(itemData.system.quantity, 1),
@@ -1420,5 +1450,12 @@ export const FoundryAdapter = {
       },
       calculations: calculateSpellAttackAndDc(actor, currentFilteredClass),
     };
+  },
+  getSaveAbilityAbbreviation(save: any) {
+    return save.ability?.size
+      ? save.ability.size === 1
+        ? CONFIG.DND5E.abilities[save.ability.first()]?.abbreviation
+        : FoundryAdapter.localize('DND5E.AbbreviationDC')
+      : null;
   },
 };
