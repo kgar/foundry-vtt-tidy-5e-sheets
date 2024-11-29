@@ -7,6 +7,7 @@
   import type { Readable } from 'svelte/store';
   import RerenderAfterFormSubmission from '../../../components/utility/RerenderAfterFormSubmission.svelte';
   import { CONSTANTS } from 'src/constants';
+  import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -59,10 +60,45 @@
       text: 'DND5E.Faith',
     },
   ];
+
+  let editing = false;
+  let contentToEdit: string;
+  let enrichedText: string;
+  let fieldToEdit: string;
+
+  async function stopEditing() {
+    await $context.actor.sheet.submit();
+    editing = false;
+  }
+
+  function edit(value: string, enriched: string, field: string) {
+    contentToEdit = value;
+    fieldToEdit = field;
+    enrichedText = enriched;
+    editing = true;
+  }
 </script>
 
 <div class="scroll-container">
-  <div class="notes-container">
+  {#if editing}
+    {#key contentToEdit}
+      <article class="editor-container flex-column full-height">
+        <SheetEditorV2
+          enriched={enrichedText}
+          content={contentToEdit}
+          field={fieldToEdit}
+          editorOptions={{
+            editable: $context.editable,
+            toggled: false,
+          }}
+          documentUuid={$context.actor.uuid}
+          on:save={() => stopEditing()}
+          manageSecrets={$context.actor.isOwner}
+        />
+      </article>
+    {/key}
+  {/if}
+  <div class="notes-container" class:hidden={editing}>
     <div
       class="top-notes note-entries"
       class:limited={$context.showLimitedSheet}
@@ -96,6 +132,14 @@
         <article use:$context.activateEditors>
           <div class="section-titles biopage">
             {localize('DND5E.PersonalityTraits')}
+            <a
+              on:click={(ev) =>
+                edit(
+                  $context.system.details.trait,
+                  $context.traitEnrichedHtml,
+                  'system.details.trait',
+                )}>TEST</a
+            >
           </div>
           <SheetEditor
             content={$context.traitEnrichedHtml}
