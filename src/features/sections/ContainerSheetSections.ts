@@ -25,6 +25,7 @@ export class ContainerSheetSections {
           custom: {
             section: customSectionName,
             creationItemTypes: [],
+            persisted: false,
           },
           show: true,
           ...customSectionOptions,
