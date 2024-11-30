@@ -27,7 +27,7 @@
     /* Name */
     1fr
     /* Item Source */
-    12rem
+    10rem
     /* Uses */
     2.5rem
     /* Usage */
@@ -109,6 +109,7 @@
             class:highlight-on-hover={$context.editable}
             on:click={(ev) =>
               $context.editable && activity.item.sheet.render(true)}
+            title={activity.item.name}
           >
             {activity.item.name}
           </a>
