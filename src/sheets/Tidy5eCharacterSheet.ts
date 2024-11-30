@@ -26,13 +26,12 @@ import {
   type CharacterFeatureSection,
   type CharacterItemContext,
   type SpellbookSection,
-  type FavoriteSection,
   type EffectFavoriteSection,
   type FacilityOccupantContext,
   type FacilitySection,
   type ChosenFacilityContext,
-  type ActivitySection,
   type TypedActivityFavoriteSection,
+  type ActivityItemContext,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
@@ -66,6 +65,7 @@ import { DocumentTabSectionConfigApplication } from 'src/applications/section-co
 import { BaseSheetCustomSectionMixin } from './mixins/BaseSheetCustomSectionMixin';
 import { Inventory } from 'src/features/sections/Inventory';
 import type {
+  Activity5e,
   CharacterFavorite,
   FacilityOccupants,
   UnsortedCharacterFavorite,
@@ -76,6 +76,7 @@ import { Container } from 'src/features/containers/Container';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
+import { Activities } from 'src/features/activities/activities';
 
 export class Tidy5eCharacterSheet
   extends BaseSheetCustomSectionMixin(
@@ -1506,6 +1507,22 @@ export class Tidy5eCharacterSheet
       );
       context.canToggle = 'equipped' in item.system;
     }
+
+    // Activities
+    context.activities = Activities.getVisibleActivities(
+      item,
+      item.system.activities
+    )?.map(this._prepareActivity.bind(this));
+  }
+
+  /**
+   * Prepare activity data.
+   */
+  _prepareActivity(activity: Activity5e): ActivityItemContext {
+    return {
+      id: activity.id,
+      activity: activity,
+    };
   }
 
   private async setExpandedItemData() {

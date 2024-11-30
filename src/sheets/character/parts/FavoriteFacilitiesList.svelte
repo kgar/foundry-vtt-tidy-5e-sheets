@@ -214,7 +214,11 @@
           </ItemTableCell>
         </ItemTableRow>
         {#if item?.system.activities?.contents.length > 1}
-          <InlineActivitiesList {item} {inlineToggleService} />
+          <InlineActivitiesList
+            {item}
+            activities={ctx.activities}
+            {inlineToggleService}
+          />
         {/if}
       {/each}
     </svelte:fragment>

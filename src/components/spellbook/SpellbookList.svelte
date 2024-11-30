@@ -279,7 +279,11 @@
           {/if}
         </ItemTableRow>
         {#if spell?.system.activities?.contents.length > 1}
-          <InlineActivitiesList item={spell} {inlineToggleService} />
+          <InlineActivitiesList
+            item={spell}
+            activities={ctx.activities}
+            {inlineToggleService}
+          />
         {/if}
       {/each}
       {#if $context.unlocked}

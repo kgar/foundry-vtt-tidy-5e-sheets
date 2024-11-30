@@ -1,6 +1,7 @@
 import type { Tidy5eGroupSheetClassic } from 'src/sheets/Tidy5eGroupSheetClassic';
 import type { ContainerContents, Item5e } from './item.types';
 import type {
+  ActivityItemContext,
   Actor5e,
   ActorSheetContextV2,
   ActorV2,
@@ -49,6 +50,7 @@ export type GroupSheetClassicContext = {
 } & ActorSheetContextV2<Group5e>;
 
 export interface GroupItemContext {
+  activities?: ActivityItemContext[];
   canToggle?: false;
   containerContents?: ContainerContents;
   hasUses?: boolean;
