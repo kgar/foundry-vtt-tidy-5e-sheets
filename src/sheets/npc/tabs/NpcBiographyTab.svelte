@@ -9,6 +9,7 @@
   import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
   import { settingStore } from 'src/settings/settings';
   import { TidyFlags } from 'src/foundry/TidyFlags';
+  import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
 
   let context = getContext<Readable<NpcSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -76,10 +77,45 @@
       text: 'DND5E.Faith',
     },
   ];
+
+  let editing = false;
+  let contentToEdit: string;
+  let enrichedText: string;
+  let fieldToEdit: string;
+
+  async function stopEditing() {
+    await $context.actor.sheet.submit();
+    editing = false;
+  }
+
+  function edit(value: string, enriched: string, field: string) {
+    contentToEdit = value;
+    fieldToEdit = field;
+    enrichedText = enriched;
+    editing = true;
+  }
 </script>
 
 <div class="scroll-container">
-  <div class="notes-container">
+  {#if editing}
+    {#key contentToEdit}
+      <article class="editor-container flex-column full-height singleton">
+        <SheetEditorV2
+          enriched={enrichedText}
+          content={contentToEdit}
+          field={fieldToEdit}
+          editorOptions={{
+            editable: $context.editable,
+            toggled: false,
+          }}
+          documentUuid={$context.actor.uuid}
+          on:save={() => stopEditing()}
+          manageSecrets={$context.actor.isOwner}
+        />
+      </article>
+    {/key}
+  {/if}
+  <div class="notes-container" class:hidden={editing}>
     <div
       class="top-notes note-entries"
       class:limited={$context.showLimitedSheet}
@@ -103,7 +139,7 @@
         </ul>
       </article>
     </div>
-    <div class="flex-row extra-small-gap full-height">
+    <div class="bottom-notes">
       <button
         type="button"
         on:click={togglePersonalityInfo}
@@ -120,15 +156,34 @@
       <div class="main-notes">
         {#if showNpcPersonalityInfo}
           <div
-            class="left-notes note-entries"
+            class="left-notes note-entries hide-editor-edit"
             class:limited={$context.showLimitedSheet}
           >
             <RerenderAfterFormSubmission
               andOnValueChange={TidyFlags.trait.get($context.actor) ?? ''}
             >
               <article use:$context.activateEditors>
-                <div class="section-titles biopage">
-                  {localize('DND5E.PersonalityTraits')}
+                <div
+                  class="section-titles biopage flex-row justify-content-space-between"
+                >
+                  <span>
+                    {localize('DND5E.PersonalityTraits')}
+                  </span>
+                  <!-- svelte-ignore a11y-click-events-have-key-events -->
+                  <!-- svelte-ignore a11y-no-static-element-interactions -->
+                  <!-- svelte-ignore a11y-missing-attribute -->
+                  <a
+                    class="icon-button"
+                    on:click={(ev) =>
+                      $context.editable &&
+                      edit(
+                        TidyFlags.trait.get($context.actor) ?? '',
+                        $context.traitEnrichedHtml,
+                        TidyFlags.trait.prop,
+                      )}
+                  >
+                    <i class="fa-solid fa-feather"></i>
+                  </a>
                 </div>
                 <SheetEditor
                   content={$context.traitEnrichedHtml}
@@ -141,8 +196,27 @@
               andOnValueChange={$context.system.details.ideal}
             >
               <article use:$context.activateEditors>
-                <div class="section-titles biopage">
-                  {localize('DND5E.Ideals')}
+                <div
+                  class="section-titles biopage flex-row justify-content-space-between"
+                >
+                  <span>
+                    {localize('DND5E.Ideals')}
+                  </span>
+                  <!-- svelte-ignore a11y-click-events-have-key-events -->
+                  <!-- svelte-ignore a11y-no-static-element-interactions -->
+                  <!-- svelte-ignore a11y-missing-attribute -->
+                  <a
+                    class="icon-button"
+                    on:click={(ev) =>
+                      $context.editable &&
+                      edit(
+                        $context.system.details.ideal,
+                        $context.idealEnrichedHtml,
+                        'system.details.ideal',
+                      )}
+                  >
+                    <i class="fa-solid fa-feather"></i>
+                  </a>
                 </div>
                 <SheetEditor
                   content={$context.idealEnrichedHtml}
@@ -155,8 +229,27 @@
               andOnValueChange={$context.system.details.bond}
             >
               <article use:$context.activateEditors>
-                <div class="section-titles biopage">
-                  {localize('DND5E.Bonds')}
+                <div
+                  class="section-titles biopage flex-row justify-content-space-between"
+                >
+                  <span>
+                    {localize('DND5E.Bonds')}
+                  </span>
+                  <!-- svelte-ignore a11y-click-events-have-key-events -->
+                  <!-- svelte-ignore a11y-no-static-element-interactions -->
+                  <!-- svelte-ignore a11y-missing-attribute -->
+                  <a
+                    class="icon-button"
+                    on:click={(ev) =>
+                      $context.editable &&
+                      edit(
+                        $context.system.details.bond,
+                        $context.bondEnrichedHtml,
+                        'system.details.bond',
+                      )}
+                  >
+                    <i class="fa-solid fa-feather"></i>
+                  </a>
                 </div>
                 <SheetEditor
                   content={$context.bondEnrichedHtml}
@@ -169,8 +262,27 @@
               andOnValueChange={$context.system.details.flaw}
             >
               <article use:$context.activateEditors>
-                <div class="section-titles biopage">
-                  {localize('DND5E.Flaws')}
+                <div
+                  class="section-titles biopage flex-row justify-content-space-between"
+                >
+                  <span>
+                    {localize('DND5E.Flaws')}
+                  </span>
+                  <!-- svelte-ignore a11y-click-events-have-key-events -->
+                  <!-- svelte-ignore a11y-no-static-element-interactions -->
+                  <!-- svelte-ignore a11y-missing-attribute -->
+                  <a
+                    class="icon-button"
+                    on:click={(ev) =>
+                      $context.editable &&
+                      edit(
+                        $context.system.details.flaw,
+                        $context.flawEnrichedHtml,
+                        'system.details.flaw',
+                      )}
+                  >
+                    <i class="fa-solid fa-feather"></i>
+                  </a>
                 </div>
                 <SheetEditor
                   content={$context.flawEnrichedHtml}
@@ -182,7 +294,7 @@
           </div>
         {/if}
         <div
-          class="right-notes note-entries"
+          class="right-notes note-entries hide-editor-edit"
           class:limited={$context.showLimitedSheet}
         >
           <!-- TODO: Offload this kind of thing to itemContext -->
@@ -190,8 +302,27 @@
             andOnValueChange={TidyFlags.appearance.get($context.actor) ?? ''}
           >
             <article class="appearance-notes" use:$context.activateEditors>
-              <div class="section-titles biopage">
-                {localize('DND5E.Appearance')}
+              <div
+                class="section-titles biopage flex-row justify-content-space-between"
+              >
+                <span>
+                  {localize('DND5E.Appearance')}
+                </span>
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-no-static-element-interactions -->
+                <!-- svelte-ignore a11y-missing-attribute -->
+                <a
+                  class="icon-button"
+                  on:click={(ev) =>
+                    $context.editable &&
+                    edit(
+                      TidyFlags.appearance.get($context.actor) ?? '',
+                      $context.appearanceEnrichedHtml,
+                      TidyFlags.appearance.prop,
+                    )}
+                >
+                  <i class="fa-solid fa-feather"></i>
+                </a>
               </div>
               <SheetEditor
                 content={$context.appearanceEnrichedHtml}
@@ -204,8 +335,27 @@
             andOnValueChange={$context.system.details.biography.value}
           >
             <article class="biography-notes" use:$context.activateEditors>
-              <div class="section-titles">
-                {localize('DND5E.Background')}/{localize('DND5E.Biography')}
+              <div
+                class="section-titles flex-row justify-content-space-between"
+              >
+                <span>
+                  {localize('DND5E.Background')}/{localize('DND5E.Biography')}
+                </span>
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-no-static-element-interactions -->
+                <!-- svelte-ignore a11y-missing-attribute -->
+                <a
+                  class="icon-button"
+                  on:click={(ev) =>
+                    $context.editable &&
+                    edit(
+                      $context.system.details.biography.value,
+                      $context.biographyEnrichedHtml,
+                      'system.details.biography.value',
+                    )}
+                >
+                  <i class="fa-solid fa-feather"></i>
+                </a>
               </div>
               <SheetEditor
                 content={$context.biographyEnrichedHtml}
@@ -231,7 +381,7 @@
   .main-notes {
     display: flex;
     flex: 1;
-    gap: 1rem;
+    gap: 0.5rem;
   }
 
   .left-notes,
@@ -240,7 +390,11 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.5rem;
+    > * {
+      flex: 1;
+      overflow: auto;
+    }
   }
 
   .left-notes {
@@ -249,7 +403,7 @@
 
   .top-notes {
     width: 100%;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 
     .character-details {
       margin: 0;
@@ -298,5 +452,16 @@
     &:hover {
       color: var(--t5e-secondary-color);
     }
+  }
+
+  .singleton :global(.editor.prosemirror) {
+    flex: 1;
+  }
+
+  .bottom-notes {
+    display: flex;
+    gap: 0.25rem;
+    height: 100%;
+    min-height: 0;
   }
 </style>

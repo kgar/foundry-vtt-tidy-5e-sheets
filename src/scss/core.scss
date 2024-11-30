@@ -148,7 +148,7 @@
   }
 
   .hidden {
-    display: none;
+    display: none !important;
   }
 
   // TODO: Propagate this across the entire app

@@ -8,17 +8,54 @@
   import TextInput from '../../../components/inputs/TextInput.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { CONSTANTS } from 'src/constants';
+  import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
+  let editing = false;
+  let contentToEdit: string;
+  let enrichedText: string;
+  let fieldToEdit: string;
+
+  async function stopEditing() {
+    await $context.actor.sheet.submit();
+    editing = false;
+  }
+
+  function edit(value: string, enriched: string, field: string) {
+    contentToEdit = value;
+    fieldToEdit = field;
+    enrichedText = enriched;
+    editing = true;
+  }
+
   const localize = FoundryAdapter.localize;
 </script>
 
 <div class="scroll-container journal-container">
+  {#if editing}
+    {#key contentToEdit}
+      <article class="editor-container flex-column full-height singleton">
+        <SheetEditorV2
+          enriched={enrichedText}
+          content={contentToEdit}
+          field={fieldToEdit}
+          editorOptions={{
+            editable: $context.editable,
+            toggled: false,
+          }}
+          documentUuid={$context.actor.uuid}
+          on:save={() => stopEditing()}
+          manageSecrets={$context.actor.isOwner}
+        />
+      </article>
+    {/key}
+  {/if}
   <div
-    class="left-notes note-entries"
+    class="left-notes note-entries hide-editor-edit"
+    class:hidden={editing}
     class:limited={$context.showLimitedSheet}
   >
     <RerenderAfterFormSubmission
@@ -26,7 +63,7 @@
         ''}
     >
       <article use:$context.activateEditors>
-        <div class="section-titles">
+        <div class="section-titles flex-row">
           <TextInput
             document={$context.actor}
             field={TidyFlags.notes1.members.name.prop}
@@ -36,6 +73,21 @@
             stopChangePropagation={true}
             disabled={!$context.editable}
           />
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <!-- svelte-ignore a11y-missing-attribute -->
+          <a
+            class="icon-button"
+            on:click={(ev) =>
+              $context.editable &&
+              edit(
+                TidyFlags.notes1.members.value.get($context.actor) ?? '',
+                $context.notes1EnrichedHtml,
+                TidyFlags.notes1.members.value.prop,
+              )}
+          >
+            <i class="fa-solid fa-feather"></i>
+          </a>
         </div>
         <SheetEditor
           content={$context.notes1EnrichedHtml}
@@ -49,7 +101,7 @@
         ''}
     >
       <article use:$context.activateEditors>
-        <div class="section-titles">
+        <div class="section-titles flex-row">
           <TextInput
             document={$context.actor}
             field={TidyFlags.notes2.members.name.prop}
@@ -59,6 +111,21 @@
             stopChangePropagation={true}
             disabled={!$context.editable}
           />
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <!-- svelte-ignore a11y-missing-attribute -->
+          <a
+            class="icon-button"
+            on:click={(ev) =>
+              $context.editable &&
+              edit(
+                TidyFlags.notes2.members.value.get($context.actor) ?? '',
+                $context.notes2EnrichedHtml,
+                TidyFlags.notes2.members.value.prop,
+              )}
+          >
+            <i class="fa-solid fa-feather"></i>
+          </a>
         </div>
         <SheetEditor
           content={$context.notes2EnrichedHtml}
@@ -72,7 +139,7 @@
         ''}
     >
       <article use:$context.activateEditors>
-        <div class="section-titles">
+        <div class="section-titles flex-row">
           <TextInput
             document={$context.actor}
             field={TidyFlags.notes3.members.name.prop}
@@ -82,6 +149,21 @@
             stopChangePropagation={true}
             disabled={!$context.editable}
           />
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <!-- svelte-ignore a11y-missing-attribute -->
+          <a
+            class="icon-button"
+            on:click={(ev) =>
+              $context.editable &&
+              edit(
+                TidyFlags.notes3.members.value.get($context.actor) ?? '',
+                $context.notes3EnrichedHtml,
+                TidyFlags.notes3.members.value.prop,
+              )}
+          >
+            <i class="fa-solid fa-feather"></i>
+          </a>
         </div>
         <SheetEditor
           content={$context.notes3EnrichedHtml}
@@ -95,7 +177,7 @@
         ''}
     >
       <article use:$context.activateEditors>
-        <div class="section-titles">
+        <div class="section-titles flex-row">
           <TextInput
             document={$context.actor}
             field={TidyFlags.notes4.members.name.prop}
@@ -105,6 +187,21 @@
             stopChangePropagation={true}
             disabled={!$context.editable}
           />
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <!-- svelte-ignore a11y-missing-attribute -->
+          <a
+            class="icon-button"
+            on:click={(ev) =>
+              $context.editable &&
+              edit(
+                TidyFlags.notes4.members.value.get($context.actor) ?? '',
+                $context.notes4EnrichedHtml,
+                TidyFlags.notes4.members.value.prop,
+              )}
+          >
+            <i class="fa-solid fa-feather"></i>
+          </a>
         </div>
         <SheetEditor
           content={$context.notes4EnrichedHtml}
@@ -115,14 +212,34 @@
     </RerenderAfterFormSubmission>
   </div>
   <div
-    class="right-notes note-entries"
+    class="right-notes note-entries hide-editor-edit"
+    class:hidden={editing}
     class:limited={$context.showLimitedSheet}
   >
     <RerenderAfterFormSubmission
       andOnValueChange={TidyFlags.notes.members.value.get($context.actor) ?? ''}
     >
       <article class="journal-notes" use:$context.activateEditors>
-        <div class="section-titles">{localize('TIDY5E.JournalEntries')}</div>
+        <div class="section-titles flex-row justify-content-space-between">
+          <span>
+            {localize('TIDY5E.JournalEntries')}
+          </span>
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <!-- svelte-ignore a11y-missing-attribute -->
+          <a
+            class="icon-button"
+            on:click={(ev) =>
+              $context.editable &&
+              edit(
+                TidyFlags.notes.members.value.get($context.actor) ?? '',
+                $context.notesEnrichedHtml,
+                TidyFlags.notes.members.value.prop,
+              )}
+          >
+            <i class="fa-solid fa-feather"></i>
+          </a>
+        </div>
         <SheetEditor
           content={$context.notesEnrichedHtml}
           target={TidyFlags.notes.members.value.prop}
@@ -139,7 +256,7 @@
     align-items: flex-start;
     flex-direction: row;
     overflow-x: inherit;
-    gap: 1rem;
+    gap: 0.5rem;
   }
 
   .left-notes,
@@ -148,10 +265,22 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.5rem;
+    > * {
+      flex: 1;
+      overflow: auto;
+    }
   }
 
   .left-notes {
     max-width: 21.875rem;
+  }
+
+  .singleton {
+    flex: 1;
+
+    & :global(.editor.prosemirror) {
+      flex: 1;
+    }
   }
 </style>

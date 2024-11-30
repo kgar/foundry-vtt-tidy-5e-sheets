@@ -60,7 +60,7 @@ export function simplifyFormula(
     const simplifiedTerms = roll.terms.map((t: any) =>
       t.isIntermediate
         ? new foundry.dice.terms.NumericTerm({
-            number: t.evaluate().total,
+            number: t.evaluate({ allowInteractive: false }).total,
             options: t.options,
           })
         : t
@@ -263,7 +263,7 @@ function calculateDeterministicBonus(rawBonus: string): number {
 
     let bonusTotal = 0;
     if (Roll.validate(bonusRoll.formula)) {
-      bonusTotal = bonusRoll.evaluateSync().total;
+      bonusTotal = bonusRoll.evaluateSync({ allowInteractive: false }).total;
     }
     return bonusTotal;
   } catch (e: any) {
@@ -299,7 +299,7 @@ export function getDcTooltip(actor: Actor5e, spellAbility: string) {
   const rawBonus = actor.system.bonuses.spell.dc?.toString()?.trim();
   if (!isNil(rawBonus, '') && Roll.validate(rawBonus)) {
     const bonusRoll = new Roll(rawBonus);
-    bonusRoll.evaluateSync();
+    bonusRoll.evaluateSync({ allowInteractive: false });
     const bonusTotal = bonusRoll.total;
 
     if (bonusTotal !== 0) {
