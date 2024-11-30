@@ -789,5 +789,11 @@
     "TIDY5E.WorldSettings.IncludeTidySectionFieldsInDefaultSheets": {
         "name": "Dołącz pola sekcji Tidy do domyślnych kart",
         "hint": "Dołącza pole sekcja i pole sekcja akcji w domyślnych kartach przedmiotów."
-    }
+    },
+    "TIDY5E.Facilities.Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}",
+    "TIDY5E.Facilities.ContextMenuActionRemove": "Usuń z {facilityName}",
+    "TIDY5E.Facilities.Hirelings.Label": "Najemnicy",
+    "TIDY5E.Facilities.Defenders.Label": "Obrońcy",
+    "TIDY5E.Facilities.Creatures.Label": "Stworzenia",
+    "TIDY5E.Facilities.RosterMember.Label": "{actorName} - {facilityName}"
 }
