@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import type { SelectableMigrationSelectionParams } from './migration-selection.types';
   import TidyTable from 'src/components/table/TidyTable.svelte';
   import TidyTableCell from 'src/components/table/TidyTableCell.svelte';
@@ -32,22 +30,19 @@
     ),
   );
 
-  let gridTemplateColumns: string = $state();
-
-  run(() => {
-    gridTemplateColumns = `/* Select */ 2.5rem`;
+  let gridTemplateColumns: string = $derived.by(() => {
+    let result = `/* Select */ 2.5rem`;
     params.columns.forEach((c) => {
       const measurement = c.cellWidth === 'primary' ? '1fr' : c.cellWidth;
-      gridTemplateColumns += ` /* ${c.name} */ ${measurement}`;
+      result += ` /* ${c.name} */ ${measurement}`;
     });
+    return result;
   });
+
   let totalSelected = $derived(
     params.selectables.filter((t) => t.selected).length,
   );
-  let allSelected;
-  run(() => {
-    allSelected = totalSelected >= params.selectables.length;
-  });
+  let allSelected = $derived(totalSelected >= params.selectables.length);
 
   function onMigrateClicked() {
     const selectedTargets = params.selectables
@@ -75,7 +70,7 @@
           <TidyTableHeaderCell>
             <input
               type="checkbox"
-              bind:checked={allSelected}
+              checked={allSelected}
               onclick={() => toggleAll()}
               title={localize(
                 'TIDY5E.Settings.Migrations.Selection.SelectAllNoneTooltip',

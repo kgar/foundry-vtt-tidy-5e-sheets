@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import type { Readable, Writable } from 'svelte/store';
   import type { SpellSourceClassAssignmentsContext } from './SpellSourceClassAssignmentsFormApplication';
   import { getContext } from 'svelte';
@@ -43,8 +41,7 @@
     ),
   );
 
-  let gridTemplateColumns: string = $state('');
-  run(() => {
+  let gridTemplateColumns: string = $derived.by(() => {
     let standardClassColumnWidth = '10rem';
     let columns = '/* Spell Name */ minmax(200px, 1fr)';
 
@@ -53,7 +50,7 @@
     });
 
     columns += ' /* Identifier */ 200px';
-    gridTemplateColumns = columns;
+    return columns;
   });
 
   async function setItemSourceClass(item: Item5e, sourceClass: string) {

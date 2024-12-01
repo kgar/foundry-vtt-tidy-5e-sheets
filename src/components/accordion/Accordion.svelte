@@ -9,8 +9,6 @@
 </script>
 
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   interface Props {
     multiple?: boolean;
     children?: import('svelte').Snippet;
@@ -19,7 +17,7 @@
 
   let { multiple = false, children, ...rest }: Props = $props();
 
-  run(() => {
+  $effect(() => {
     setContext<AccordionCtxType>(CONSTANTS.SVELTE_CONTEXT.ACCORDION_CONTEXT, {
       selected: multiple ? undefined : writable(),
     });

@@ -66,9 +66,9 @@
   });
 
   let editing = $state(false);
-  let contentToEdit: string = $state();
-  let enrichedText: string = $state();
-  let fieldToEdit: string = $state();
+  let contentToEdit: string = $state('');
+  let enrichedText: string = $state('');
+  let fieldToEdit: string = $state('');
 
   async function stopEditing() {
     await $context.actor.sheet.submit();
@@ -139,9 +139,6 @@
             class="section-titles biopage flex-row justify-content-space-between"
           >
             <span>{localize('DND5E.PersonalityTraits')}</span>
-            <!-- svelte-ignore a11y_click_events_have_key_events -->
-            <!-- svelte-ignore a11y_no_static_element_interactions -->
-            <!-- svelte-ignore a11y_missing_attribute -->
             <a
               class="icon-button"
               onclick={(ev) =>

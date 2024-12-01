@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { CurrentSettings } from 'src/settings/settings';
   import { getContext, onDestroy } from 'svelte';
@@ -27,7 +25,8 @@
   }
 
   let { themeableColors }: Props = $props();
-  run(() => {
+
+  $effect(() => {
     if ($context.colorPickerEnabled) {
       themeableColors.forEach((color) =>
         trySetRootCssVariable(

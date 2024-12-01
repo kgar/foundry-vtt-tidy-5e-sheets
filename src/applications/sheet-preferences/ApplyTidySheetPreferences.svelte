@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import { type SheetPreferenceOption } from './ApplyTidySheetPreferencesApplication';
   import { ApplyTidySheetPreferencesApplication } from './ApplyTidySheetPreferencesApplication';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -24,11 +22,8 @@
     /* Label */ 1fr`;
 
   let totalSelected = $derived(options.filter((t) => t.selected).length);
-  let allSelected;
-  run(() => {
-    allSelected = totalSelected >= options.length;
-  });
-
+  let allSelected = $derived(totalSelected >= options.length);
+  
   function toggleAll() {
     const targetState = !allSelected;
     options.forEach((o) => (o.selected = targetState));
@@ -54,7 +49,7 @@
           <TidyTableHeaderCell>
             <input
               type="checkbox"
-              bind:checked={allSelected}
+              checked={allSelected}
               onclick={() => toggleAll()}
               title={localize(
                 'TIDY5E.Settings.Migrations.Selection.SelectAllNoneTooltip',
