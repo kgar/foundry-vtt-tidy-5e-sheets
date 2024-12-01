@@ -2,7 +2,7 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Tab, OnTabSelectedFn } from 'src/types/types';
-  import { createEventDispatcher, getContext, onMount } from 'svelte';
+  import { getContext, onMount, type Snippet } from 'svelte';
   import type { Readable } from 'svelte/store';
 
   interface Props {
@@ -10,7 +10,8 @@
     selectedTabId?: string | undefined;
     cssClass?: string;
     orientation?: 'horizontal' | 'vertical';
-    tabEnd?: import('svelte').Snippet;
+    onTabSelected?: (selectedTab: Tab) => void;
+    tabEnd?: Snippet;
   }
 
   let {
@@ -18,17 +19,17 @@
     selectedTabId = $bindable(undefined),
     cssClass = '',
     orientation = 'horizontal',
+    onTabSelected,
     tabEnd,
   }: Props = $props();
 
   const context = getContext<Readable<any> | undefined>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
-  const onTabSelected = getContext<OnTabSelectedFn>(
+
+  const onTabSelectedContextFn = getContext<OnTabSelectedFn>(
     CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED,
   );
-
-  const dispatcher = createEventDispatcher<{ tabSelected: Tab }>();
 
   let nav: HTMLElement;
 
@@ -38,8 +39,8 @@
       return;
     }
     selectedTabId = tab.id;
-    dispatcher('tabSelected', tab);
-    onTabSelected?.(tab.id);
+    onTabSelectedContextFn?.(tab.id);
+    onTabSelected?.(tab);
   }
 
   function onKeyDown(ev: KeyboardEvent, i: number) {
@@ -97,8 +98,6 @@
 >
   {#if tabs.length > 1}
     {#each tabs as tab, i (tab.id)}
-      <!-- svelte-ignore a11y_missing_attribute -->
-      <!-- svelte-ignore a11y_interactive_supports_focus -->
       <a
         class={CONSTANTS.TAB_OPTION_CLASS}
         class:active={tab.id === selectedTabId}

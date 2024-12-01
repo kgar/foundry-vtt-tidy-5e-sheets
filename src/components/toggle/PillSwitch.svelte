@@ -1,4 +1,5 @@
 <script lang="ts">
+    import type { Snippet } from 'svelte';
   import Dnd5eIcon from '../icon/Dnd5eIcon.svelte';
   import FieldToggle from './FieldToggle.svelte';
 
@@ -15,7 +16,7 @@
           },
         ) => void)
       | undefined;
-    children?: import('svelte').Snippet;
+    children?: Snippet;
   }
 
   let {

@@ -1,12 +1,13 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
+  import type { Snippet } from 'svelte';
   import { writable } from 'svelte/store';
 
   interface Props {
     primary?: boolean;
     title?: string | undefined;
     baseWidth?: string | null;
-    children?: import('svelte').Snippet<[any]>;
+    children?: Snippet<[any]>;
     [key: string]: any;
   }
 

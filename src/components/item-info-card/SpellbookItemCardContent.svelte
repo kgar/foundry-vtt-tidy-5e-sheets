@@ -3,14 +3,14 @@
   import type { Item5e, ItemChatData } from 'src/types/item.types';
   import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
   import type { Readable } from 'svelte/store';
-  import { getContext } from 'svelte';
+  import { getContext, type Snippet } from 'svelte';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { CONSTANTS } from 'src/constants';
 
   interface Props {
     item: Item5e;
     chatData: ItemChatData;
-    children?: import('svelte').Snippet;
+    children?: Snippet;
   }
 
   let { item, chatData, children }: Props = $props();

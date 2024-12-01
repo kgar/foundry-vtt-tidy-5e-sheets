@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
+  import { getContext, type Snippet } from 'svelte';
   import ActorPortrait from './ActorPortrait.svelte';
   import type { Readable } from 'svelte/store';
   import type { ActorSheetContextV1 } from 'src/types/types';
@@ -8,7 +8,7 @@
   interface Props {
     useHpOverlay: boolean;
     size?: 'medium' | 'small';
-    children?: import('svelte').Snippet;
+    children?: Snippet;
   }
 
   let { useHpOverlay, size = 'medium', children }: Props = $props();

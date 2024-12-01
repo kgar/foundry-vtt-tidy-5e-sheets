@@ -3,7 +3,7 @@
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService';
   import { declareLocation } from 'src/types/location-awareness.types';
-  import { getContext } from 'svelte';
+  import { getContext, type Snippet } from 'svelte';
   import type { MessageBus } from 'src/types/types';
 
   interface Props {
@@ -15,8 +15,8 @@
      * Denotes whether the table can be expanded and collapsed.
      */
     toggleable?: boolean;
-    header?: import('svelte').Snippet;
-    body?: import('svelte').Snippet;
+    header?: Snippet;
+    body?: Snippet;
     [key: string]: any;
   }
 

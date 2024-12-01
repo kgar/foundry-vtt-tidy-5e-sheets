@@ -206,8 +206,7 @@
             : item.name}
         <ItemTableRow
           {item}
-          on:mousedown={(event) =>
-            FoundryAdapter.editOnMiddleClick(event.detail, item)}
+          onMouseDown={(event) => FoundryAdapter.editOnMiddleClick(event, item)}
           contextMenu={{
             type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
             uuid: item.uuid,

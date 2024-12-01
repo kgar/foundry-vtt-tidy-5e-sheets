@@ -2,12 +2,13 @@
   import { CONSTANTS } from 'src/constants';
   import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService';
   import TidyTableToggleIcon from 'src/components/table/TidyTableToggleIcon.svelte';
+  import type { Snippet } from 'svelte';
 
   interface Props {
     primary?: boolean;
     baseWidth?: string | null;
     title?: string | null;
-    children?: import('svelte').Snippet;
+    children?: Snippet;
     [key: string]: any;
   }
 

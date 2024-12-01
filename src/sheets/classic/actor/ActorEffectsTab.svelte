@@ -108,8 +108,8 @@
             {#snippet body()}
               {#each section.effects as effect}
                 <ItemTableRow
-                  on:mousedown={(event) =>
-                    FoundryAdapter.editOnMiddleClick(event.detail, effect)}
+                  onMouseDown={(event) =>
+                    FoundryAdapter.editOnMiddleClick(event, effect)}
                   contextMenu={{
                     type: CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS,
                     uuid: effect.uuid,

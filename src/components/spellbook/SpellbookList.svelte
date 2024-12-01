@@ -192,8 +192,8 @@
         {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($context, spell)}
         <ItemTableRow
           item={spell}
-          on:mousedown={(event) =>
-            FoundryAdapter.editOnMiddleClick(event.detail, spell)}
+          onMouseDown={(event) =>
+            FoundryAdapter.editOnMiddleClick(event, spell)}
           contextMenu={{
             type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
             uuid: spell.uuid,

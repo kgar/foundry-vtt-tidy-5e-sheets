@@ -2,7 +2,7 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
-  import { getContext } from 'svelte';
+  import { getContext, type Snippet } from 'svelte';
   import type { Readable } from 'svelte/store';
 
   interface Props {
@@ -10,7 +10,7 @@
     imgUrlOverride?: string | undefined;
     disabled?: boolean;
     showDiceIconOnHover?: boolean;
-    afterRollButton?: import('svelte').Snippet;
+    afterRollButton?: Snippet;
   }
 
   let {

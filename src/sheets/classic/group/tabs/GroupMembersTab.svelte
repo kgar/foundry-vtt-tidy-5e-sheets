@@ -65,7 +65,7 @@
       iconClass={command.iconClass}
       text={command.text}
       visible={command.visible ?? true}
-      on:execute={(ev) => command.execute?.(ev.detail)}
+      onExecute={(ev) => command.execute?.(ev)}
     />
   {/each}
 </UtilityToolbar>

@@ -2,7 +2,7 @@
   import { CONSTANTS } from 'src/constants';
   import { settingStore } from 'src/settings/settings';
   import type { ActorSheetContextV1 } from 'src/types/types';
-  import { createEventDispatcher, getContext } from 'svelte';
+  import { createEventDispatcher, getContext, type Snippet } from 'svelte';
   import type { Readable } from 'svelte/store';
 
   let context = getContext<Readable<ActorSheetContextV1>>(
@@ -14,8 +14,8 @@
     iconCssClass?: string | undefined;
     traitCssClass?: string | undefined;
     show: boolean;
-    customIcon?: import('svelte').Snippet;
-    children?: import('svelte').Snippet;
+    customIcon?: Snippet;
+    children?: Snippet;
   }
 
   let {

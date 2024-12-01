@@ -17,8 +17,8 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  function onLevelSelected(event: CustomEvent<{ level: number }>) {
-    TidyFlags.setFlag($context.actor, 'exhaustion', event.detail.level);
+  function onLevelSelected(level: number) {
+    TidyFlags.setFlag($context.actor, 'exhaustion', level);
   }
 </script>
 
@@ -27,7 +27,7 @@
     <ExhaustionTracker
       level={TidyFlags.exhaustion.get($context.actor) ?? 0}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
-      on:levelSelected={onLevelSelected}
+      {onLevelSelected}
       exhaustionConfig={$settingStore.vehicleExhaustionConfig}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
         $context.actor,
@@ -38,7 +38,7 @@
     <ExhaustionInput
       level={TidyFlags.exhaustion.get($context.actor) ?? 0}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
-      on:levelSelected={onLevelSelected}
+      {onLevelSelected}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
         $context.actor,
         TidyFlags.exhaustion.prop,

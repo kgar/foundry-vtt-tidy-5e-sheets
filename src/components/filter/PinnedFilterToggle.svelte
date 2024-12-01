@@ -7,12 +7,12 @@
     cycleNullTrueFalseForward,
     cycleNullTrueFalseBackward,
   } from 'src/utils/value-cycling';
-  import { getContext } from 'svelte';
+  import { getContext, type Snippet } from 'svelte';
 
   interface Props {
     filter: ConfiguredItemFilter;
     filterGroupName: string;
-    children?: import('svelte').Snippet;
+    children?: Snippet;
   }
 
   let { filter, filterGroupName, children }: Props = $props();

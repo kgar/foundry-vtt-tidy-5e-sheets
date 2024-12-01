@@ -1,7 +1,9 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
+  import type { Snippet } from 'svelte';
+  
   interface Props {
-    children?: import('svelte').Snippet;
+    children?: Snippet;
     [key: string]: any;
   }
 

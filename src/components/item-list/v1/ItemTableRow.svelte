@@ -2,7 +2,7 @@
   import { type Actor5e, type OnItemToggledFn } from 'src/types/types';
   import ItemSummary from '../ItemSummary.svelte';
   import { warn } from 'src/utils/logging';
-  import { createEventDispatcher, getContext, onMount } from 'svelte';
+  import { getContext, onMount, type Snippet } from 'svelte';
   import type {
     ItemCardStore,
     ExpandedItemData,
@@ -20,6 +20,7 @@
   import { CONSTANTS } from 'src/constants';
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
+  import type { MouseEventHandler } from 'svelte/elements';
 
   interface Props {
     item?: Item5e | null;
@@ -30,7 +31,8 @@
     itemCardContentTemplate?: ItemCardContentComponent | null;
     hidden?: boolean;
     getDragData?: (() => any) | null;
-    children?: import('svelte').Snippet<[any]>;
+    onMouseDown?: MouseEventHandler<HTMLElement>;
+    children?: Snippet<[any]>;
   }
 
   let {
@@ -42,6 +44,7 @@
     itemCardContentTemplate = null,
     hidden = false,
     getDragData = null,
+    onMouseDown,
     children,
   }: Props = $props();
 
@@ -56,16 +59,19 @@
   const expandedItemData = getContext<ExpandedItemData>(
     CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA,
   );
+
   const context = getContext<Writable<unknown>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
+
   const expandedItems = getContext<ExpandedItemIdToLocationsMap>(
     CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEMS,
   );
+
   const onItemToggled = getContext<OnItemToggledFn>(
     CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TOGGLED,
   );
-  const dispatcher = createEventDispatcher<{ mousedown: MouseEvent }>();
+
   const location = getContext<string>(CONSTANTS.SVELTE_CONTEXT.LOCATION);
 
   let card: Writable<ItemCardStore> | undefined = getContext<
@@ -173,7 +179,7 @@
   data-context-menu-document-uuid={contextMenu?.uuid}
   data-effect-id={effect?.id}
   data-parent-id={effect?.parentId ?? effect?.parent?.id}
-  onmousedown={(event) => dispatcher('mousedown', event)}
+  onmousedown={onMouseDown}
   onmouseenter={onMouseEnter}
   onmouseleave={onMouseLeave}
   ondragstart={handleDragStart}

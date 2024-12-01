@@ -1,7 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { PortraitCharmRadiusClass } from 'src/types/types';
-  import { createEventDispatcher } from 'svelte';
 
   interface Props {
     cssClass?: string;
@@ -9,6 +8,7 @@
     level: number;
     onlyShowOnHover?: boolean;
     isActiveEffectApplied?: boolean;
+    onLevelSelected?: (level: number) => void;
   }
 
   let {
@@ -17,12 +17,10 @@
     level = $bindable(),
     onlyShowOnHover = false,
     isActiveEffectApplied = false,
+    onLevelSelected,
   }: Props = $props();
 
   const localize = FoundryAdapter.localize;
-  const dispatch = createEventDispatcher<{
-    levelSelected: { level: number };
-  }>();
 
   let fontScales = ['1.25rem', '1.125rem', '1rem'] as const;
 
@@ -44,7 +42,7 @@
   <div class="exhaustion-wrap {radiusClass}">
     <input
       type="number"
-      onchange={() => dispatch('levelSelected', { level: level })}
+      onchange={() => onLevelSelected?.(level)}
       bind:value={level}
       placeholder="0"
       onfocus={(ev) => ev.currentTarget.select()}

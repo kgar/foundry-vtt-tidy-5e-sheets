@@ -1,11 +1,13 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
+  import type { Snippet } from 'svelte';
+  import type { ChangeEventHandler } from 'svelte/elements';
 
   interface Props {
     checked?: boolean;
     disabled?: boolean;
     thumbIconClass?: string | undefined;
-    children?: import('svelte').Snippet;
+    onChange?: ChangeEventHandler<HTMLElement>;
+    children?: Snippet;
     [key: string]: any;
   }
 
@@ -13,15 +15,12 @@
     checked = $bindable(false),
     disabled = false,
     thumbIconClass = undefined,
+    onChange,
     children,
     ...rest
   }: Props = $props();
 
   const switchLabelId = `switch-${foundry.utils.randomID()}-label`;
-
-  const dispatcher = createEventDispatcher<{
-    change: Event & { currentTarget: HTMLInputElement };
-  }>();
 </script>
 
 <label
@@ -39,7 +38,7 @@
 
   <input
     type="checkbox"
-    onchange={(ev) => dispatcher('change', ev)}
+    onchange={onChange}
     {checked}
     {disabled}
     class="hidden"

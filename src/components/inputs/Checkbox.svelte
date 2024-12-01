@@ -11,7 +11,7 @@
   } from 'src/types/types';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { buildDataset } from 'src/utils/data';
-  import { getContext } from 'svelte';
+  import { getContext, type Snippet } from 'svelte';
   import type { Readable } from 'svelte/store';
 
   // TODO: File this away somewhere.
@@ -36,7 +36,7 @@
     onDataPreparing?: SvelteInputEvent | null;
     // TODO: Get rid of the these horrendous green checkboxes and remove all the code that barely props them up.
     greenCheckboxWidthOverride?: string | null;
-    children?: import('svelte').Snippet;
+    children?: Snippet;
     [key: string]: any;
   }
 
@@ -113,7 +113,7 @@
     <input
       type="checkbox"
       {id}
-      bind:value={value}
+      bind:value
       {checked}
       onchange={saveChange}
       disabled={disabled || activeEffectApplied}
@@ -128,7 +128,7 @@
   <input
     type="checkbox"
     {id}
-    bind:value={value}
+    bind:value
     {checked}
     onchange={saveChange}
     {title}

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { Snippet } from 'svelte';
   import Listbox from './Listbox.svelte';
   import SelectionListboxToolbar from './SelectionListboxToolbar.svelte';
 
@@ -12,10 +13,10 @@
     labelProp: keyof TItem;
     valueProp: keyof TItem;
     listboxCssClass?: string;
-    leftHeader?: import('svelte').Snippet;
-    rightHeader?: import('svelte').Snippet;
-    leftItemTemplate?: import('svelte').Snippet<[any]>;
-    rightItemTemplate?: import('svelte').Snippet<[any]>;
+    leftHeader?: Snippet;
+    rightHeader?: Snippet;
+    leftItemTemplate?: Snippet<[any]>;
+    rightItemTemplate?: Snippet<[any]>;
     [key: string]: any;
   }
 
@@ -165,26 +166,26 @@
   }
 
   function handleLeftListboxKeydown(
-    e: CustomEvent<KeyboardEvent & { currentTarget: HTMLElement }>,
+    e: KeyboardEvent & { currentTarget: HTMLElement },
   ): void {
-    if (e.detail.code === 'Space') {
+    if (e.code === 'Space') {
       moveRight();
-      e.detail.preventDefault();
-    } else if (e.detail.key === 'ArrowUp' && e.detail.altKey) {
+      e.preventDefault();
+    } else if (e.key === 'ArrowUp' && e.altKey) {
       moveUp();
-    } else if (e.detail.key === 'ArrowDown' && e.detail.altKey) {
+    } else if (e.key === 'ArrowDown' && e.altKey) {
       moveDown();
     }
   }
   function handleRightListboxKeydown(
-    e: CustomEvent<KeyboardEvent & { currentTarget: HTMLElement }>,
+    e: KeyboardEvent & { currentTarget: HTMLElement },
   ): void {
-    if (e.detail.code === 'Space') {
+    if (e.code === 'Space') {
       moveLeft();
-      e.detail.preventDefault();
-    } else if (e.detail.key === 'ArrowUp' && e.detail.altKey) {
+      e.preventDefault();
+    } else if (e.key === 'ArrowUp' && e.altKey) {
       moveUp();
-    } else if (e.detail.key === 'ArrowDown' && e.detail.altKey) {
+    } else if (e.key === 'ArrowDown' && e.altKey) {
       moveDown();
     }
   }
@@ -204,10 +205,10 @@
     {labelProp}
     {valueProp}
     bind:selectedItemIndex={selectedLeftItemIndex}
-    on:select={() => {
+    onSelect={() => {
       selectedRightItemIndex = null;
     }}
-    on:keydown={handleLeftListboxKeydown}
+    onkeydown={handleLeftListboxKeydown}
     class="column-1 {listboxCssClass}"
   >
     {#snippet itemTemplate({ item })}
@@ -240,10 +241,10 @@
     {labelProp}
     {valueProp}
     bind:selectedItemIndex={selectedRightItemIndex}
-    on:select={() => {
+    onSelect={() => {
       selectedLeftItemIndex = null;
     }}
-    on:keydown={handleRightListboxKeydown}
+    onkeydown={handleRightListboxKeydown}
     class="column-3 {listboxCssClass}"
   >
     {#snippet itemTemplate({ item })}

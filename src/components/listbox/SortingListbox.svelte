@@ -1,6 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Listbox from './Listbox.svelte';
+  import type { Snippet } from 'svelte';
 
   type TItem = $$Generic;
 
@@ -10,7 +11,7 @@
     labelProp: keyof TItem;
     valueProp: keyof TItem;
     listboxCssClass?: string | null;
-    itemTemplate?: import('svelte').Snippet<[any]>;
+    itemTemplate?: Snippet<[any]>;
     [key: string]: any;
   }
 
@@ -29,11 +30,11 @@
   }
 
   function handleListboxKeydown(
-    e: CustomEvent<KeyboardEvent & { currentTarget: HTMLElement }>,
+    e: KeyboardEvent & { currentTarget: HTMLElement },
   ): void {
-    if (e.detail.key === 'ArrowUp' && e.detail.altKey) {
+    if (e.key === 'ArrowUp' && e.altKey) {
       moveUp();
-    } else if (e.detail.key === 'ArrowDown' && e.detail.altKey) {
+    } else if (e.key === 'ArrowDown' && e.altKey) {
       moveDown();
     }
   }
@@ -91,24 +92,17 @@
     }
   }
 
-  function onDragStart(
-    ev: CustomEvent<{ item: TItem; index: number; event: DragEvent }>,
-  ) {
-    selectedItemIndex = ev.detail.index;
-    ev.detail.event.dataTransfer?.setData(
-      'text/plain',
-      ev.detail.index.toString(),
-    );
+  function onDragStart(ev: { item: TItem; index: number; event: DragEvent }) {
+    selectedItemIndex = ev.index;
+    ev.event.dataTransfer?.setData('text/plain', ev.index.toString());
   }
 
-  function onDrop(
-    ev: CustomEvent<{ item: TItem; index: number; event: DragEvent }>,
-  ) {
-    ev.detail.event.stopPropagation();
-    ev.detail.event.preventDefault();
+  function onDrop(ev: { item: TItem; index: number; event: DragEvent }) {
+    ev.event.stopPropagation();
+    ev.event.preventDefault();
 
     const draggedIndex = parseInt(
-      ev.detail.event.dataTransfer?.getData('text/plain') ?? '',
+      ev.event.dataTransfer?.getData('text/plain') ?? '',
     );
 
     if (isNaN(draggedIndex)) {
@@ -121,7 +115,7 @@
       return;
     }
 
-    const dropTargetIndex = ev.detail.index;
+    const dropTargetIndex = ev.index;
 
     items = items.reduce<TItem[]>((acc, item, index) => {
       // When dropping onto a higher entry, the dragged should come before the target.
@@ -147,10 +141,8 @@
     selectedItemIndex = items.indexOf(theDragged);
   }
 
-  function onListboxDrop(ev: CustomEvent<{ event: DragEvent }>) {
-    const draggedIndex = parseInt(
-      ev.detail.event.dataTransfer?.getData('text/plain') ?? '',
-    );
+  function onListboxDrop(ev: DragEvent) {
+    const draggedIndex = parseInt(ev.dataTransfer?.getData('text/plain') ?? '');
 
     if (isNaN(draggedIndex)) {
       return;
@@ -197,12 +189,12 @@
     {labelProp}
     {valueProp}
     bind:selectedItemIndex
-    on:keydown={handleListboxKeydown}
+    onkeydown={handleListboxKeydown}
     class="flex-1 {listboxCssClass ?? ''}"
     draggable={true}
-    on:dragstart={(ev) => onDragStart(ev)}
-    on:drop={(ev) => onDrop(ev)}
-    on:listboxDrop={(ev) => onListboxDrop(ev)}
+    ondragstart={(ev) => onDragStart(ev)}
+    ondrop={(ev) => onDrop(ev)}
+    onlistboxDrop={(ev) => onListboxDrop(ev)}
   >
     {#snippet itemTemplate({ item })}
       {#if itemTemplate_render}{@render itemTemplate_render({ item })}{:else}

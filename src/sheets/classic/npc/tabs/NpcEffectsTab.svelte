@@ -118,9 +118,9 @@
             {#snippet body()}
               {#each section.effects as effectContext}
                 <ItemTableRow
-                  on:mousedown={(event) =>
+                  onMouseDown={(event) =>
                     FoundryAdapter.editOnMiddleClick(
-                      event.detail,
+                      event,
                       FoundryAdapter.getEffect({
                         document: $context.actor,
                         effectId: effectContext.id,

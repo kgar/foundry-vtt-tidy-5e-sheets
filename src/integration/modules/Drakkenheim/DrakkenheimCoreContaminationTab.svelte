@@ -54,6 +54,6 @@
   <Pips
     total={levels.length}
     selected={contanimationLevel}
-    on:change={(ev) => onContaminationLevelChanged(ev.detail)}
+    onChange={(ev) => onContaminationLevelChanged(ev)}
   />
 </div>

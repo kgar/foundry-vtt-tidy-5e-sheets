@@ -1,10 +1,12 @@
 <script lang="ts">
+  import type { Snippet } from 'svelte';
+
   interface Props {
     /**
      * Optional CSS class list string to apply to the AC Shield container element.
      */
     cssClass?: string;
-    children?: import('svelte').Snippet;
+    children?: Snippet;
   }
 
   let { cssClass = '', children }: Props = $props();

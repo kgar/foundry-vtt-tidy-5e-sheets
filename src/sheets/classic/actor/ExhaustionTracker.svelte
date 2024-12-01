@@ -12,7 +12,7 @@
     PortraitCharmRadiusClass,
   } from 'src/types/types';
   import { coalesce } from 'src/utils/formatting';
-  import { createEventDispatcher, getContext } from 'svelte';
+  import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
   interface Props {
@@ -22,6 +22,7 @@
     onlyShowOnHover?: boolean;
     exhaustionConfig: SpecificExhaustionConfig;
     isActiveEffectApplied: boolean;
+    onLevelSelected?: (level: number) => void;
   }
 
   let {
@@ -31,6 +32,7 @@
     onlyShowOnHover = false,
     exhaustionConfig,
     isActiveEffectApplied,
+    onLevelSelected,
   }: Props = $props();
 
   const localize = FoundryAdapter.localize;
@@ -50,10 +52,6 @@
   let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
-
-  const dispatch = createEventDispatcher<{
-    levelSelected: { level: number };
-  }>();
 
   let exhaustionOptionWidthRems = 1.25;
 
@@ -89,7 +87,7 @@
               ),
               { level: i },
             )}
-            onclick={() => dispatch('levelSelected', { level: i })}
+            onclick={() => onLevelSelected?.(i)}
             disabled={!$context.editable || isActiveEffectApplied}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             data-tooltip={isActiveEffectApplied

@@ -1,8 +1,10 @@
 <script lang="ts">
+  import type { Snippet } from 'svelte';
+
   interface Props {
     delimiter?: string;
     cssClass?: string | null;
-    children?: import('svelte').Snippet;
+    children?: Snippet;
   }
 
   let {

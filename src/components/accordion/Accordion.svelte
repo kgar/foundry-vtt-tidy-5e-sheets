@@ -1,6 +1,6 @@
 <script module lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { setContext } from 'svelte';
+  import { setContext, type Snippet } from 'svelte';
   import { writable, type Writable } from 'svelte/store';
 
   export interface AccordionCtxType {
@@ -11,7 +11,7 @@
 <script lang="ts">
   interface Props {
     multiple?: boolean;
-    children?: import('svelte').Snippet;
+    children?: Snippet;
     [key: string]: any;
   }
 

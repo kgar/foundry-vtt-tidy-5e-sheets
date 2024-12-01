@@ -1,6 +1,5 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { createEventDispatcher } from 'svelte';
 
   interface Props {
     moveAllToTheLeftDisabled: boolean;
@@ -9,19 +8,24 @@
     moveLeftDisabled: boolean;
     moveRightDisabled: boolean;
     moveAllToTheRightDisabled: boolean;
+    onMoveAllToTheLeft?: () => void;
+    onMoveUp?: () => void;
+    onMoveDown?: () => void;
+    onMoveLeft?: () => void;
+    onMoveRight?: () => void;
+    onMoveAllToTheRight?: () => void;
     [key: string]: any;
   }
 
-  let { ...props }: Props = $props();
-
-  const dispatcher = createEventDispatcher<{
-    moveAllToTheLeft: void;
-    moveUp: void;
-    moveDown: void;
-    moveLeft: void;
-    moveRight: void;
-    moveAllToTheRight: void;
-  }>();
+  let {
+    onMoveAllToTheLeft,
+    onMoveUp,
+    onMoveDown,
+    onMoveLeft,
+    onMoveRight,
+    onMoveAllToTheRight,
+    ...props
+  }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -31,7 +35,7 @@
     title={localize('TIDY5E.Listbox.MoveUp')}
     type="button"
     disabled={props.moveUpDisabled}
-    onclick={() => dispatcher('moveUp')}
+    onclick={() => onMoveUp?.()}
   >
     <i class="fas fa-angle-up"></i>
   </button>
@@ -39,7 +43,7 @@
     title={localize('TIDY5E.Listbox.MoveDown')}
     type="button"
     disabled={props.moveDownDisabled}
-    onclick={() => dispatcher('moveDown')}
+    onclick={() => onMoveDown?.()}
   >
     <i class="fas fa-angle-down"></i>
   </button>
@@ -47,7 +51,7 @@
     title={localize('TIDY5E.Listbox.MoveLeft')}
     type="button"
     disabled={props.moveLeftDisabled}
-    onclick={() => dispatcher('moveLeft')}
+    onclick={() => onMoveLeft?.()}
   >
     <i class="fas fa-angle-left"></i>
   </button>
@@ -55,7 +59,7 @@
     title={localize('TIDY5E.Listbox.MoveRight')}
     type="button"
     disabled={props.moveRightDisabled}
-    onclick={() => dispatcher('moveRight')}
+    onclick={() => onMoveRight?.()}
   >
     <i class="fas fa-angle-right"></i>
   </button>
@@ -63,7 +67,7 @@
     title={localize('TIDY5E.Listbox.MoveAllLeft')}
     type="button"
     disabled={props.moveAllToTheLeftDisabled}
-    onclick={() => dispatcher('moveAllToTheLeft')}
+    onclick={() => onMoveAllToTheLeft?.()}
   >
     <i class="fas fa-angles-left"></i>
   </button>
@@ -71,7 +75,7 @@
     title={localize('TIDY5E.Listbox.MoveAllRight')}
     type="button"
     disabled={props.moveAllToTheRightDisabled}
-    onclick={() => dispatcher('moveAllToTheRight')}
+    onclick={() => onMoveAllToTheRight?.()}
   >
     <i class="fas fa-angles-right"></i>
   </button>

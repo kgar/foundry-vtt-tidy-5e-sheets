@@ -2,6 +2,7 @@
   import TidySwitch from './TidySwitch.svelte';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { debug, error } from 'src/utils/logging';
+  import type { Snippet } from 'svelte';
 
   interface Props {
     document: any;
@@ -11,7 +12,7 @@
     disabled?: boolean;
     iconSrc?: string | null;
     iconClass?: string | null;
-    children?: import('svelte').Snippet;
+    children?: Snippet;
   }
 
   let {

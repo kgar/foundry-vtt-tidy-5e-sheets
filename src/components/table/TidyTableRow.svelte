@@ -1,5 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
+  import type { Snippet } from 'svelte';
   import type { DragEventHandler, MouseEventHandler } from 'svelte/elements';
 
   interface Props {
@@ -8,8 +9,8 @@
     rowClass?: string;
     rowContainerAttributes?: Record<string, unknown>;
     rowAttributes?: Record<string, unknown>;
-    children?: import('svelte').Snippet;
-    afterRow?: import('svelte').Snippet;
+    children?: Snippet;
+    afterRow?: Snippet;
     onmousedown?: MouseEventHandler<HTMLElement>;
     onmouseenter?: MouseEventHandler<HTMLElement>;
     onmouseleave?: MouseEventHandler<HTMLElement>;

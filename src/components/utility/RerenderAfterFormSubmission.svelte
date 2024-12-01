@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
+  import { getContext, type Snippet } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { SheetStats } from 'src/types/types';
   import { CONSTANTS } from 'src/constants';
@@ -8,7 +8,7 @@
 
   interface Props {
     andOnValueChange?: unknown | null;
-    children?: import('svelte').Snippet;
+    children?: Snippet;
   }
 
   let { andOnValueChange = null, children }: Props = $props();

@@ -2,8 +2,10 @@
   import { CONSTANTS } from 'src/constants';
   import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService';
   import { isUserInteractable } from 'src/utils/element';
+  import type { Snippet } from 'svelte';
+
   interface Props {
-    children?: import('svelte').Snippet;
+    children?: Snippet;
   }
 
   let { children }: Props = $props();

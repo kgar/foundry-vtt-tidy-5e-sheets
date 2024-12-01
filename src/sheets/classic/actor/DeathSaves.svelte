@@ -1,11 +1,12 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { createEventDispatcher, getContext } from 'svelte';
+  import { getContext } from 'svelte';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import type { Readable } from 'svelte/store';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { CONSTANTS } from 'src/constants';
   import { settingStore } from 'src/settings/settings';
+  import type { MouseEventHandler } from 'svelte/elements';
 
   let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -17,6 +18,7 @@
     successesField: string;
     failuresField: string;
     hasHpOverlay: boolean;
+    onRollDeathSave?: MouseEventHandler<HTMLElement>;
   }
 
   let {
@@ -25,13 +27,10 @@
     successesField,
     failuresField,
     hasHpOverlay,
+    onRollDeathSave,
   }: Props = $props();
 
   const localize = FoundryAdapter.localize;
-
-  const dispatcher = createEventDispatcher<{
-    rollDeathSave: { mouseEvent: MouseEvent };
-  }>();
 </script>
 
 <div class="death-saves" class:rounded={$context.useRoundedPortraitStyle}>
@@ -55,7 +54,7 @@
     <button
       type="button"
       class="death-save rollable"
-      onclick={(event) => dispatcher('rollDeathSave', { mouseEvent: event })}
+      onclick={(event) => onRollDeathSave?.(event)}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DEATH_SAVE_ROLLER}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >

@@ -24,9 +24,9 @@
       $context.actor?.system?.attributes?.hp?.max !== 0,
   );
 
-  async function onLevelSelected(event: CustomEvent<{ level: number }>) {
+  async function onLevelSelected(level: number) {
     await $context.actor.update({
-      'system.attributes.exhaustion': event.detail.level,
+      'system.attributes.exhaustion': level,
     });
   }
 </script>
@@ -38,9 +38,9 @@
       failures={$context.system.attributes.death.failure}
       successesField="system.attributes.death.success"
       failuresField="system.attributes.death.failure"
-      on:rollDeathSave={(event) =>
+      onRollDeathSave={(event) =>
         $context.actor.rollDeathSave({
-          event: event.detail.mouseEvent,
+          event: event,
           legacy: false,
         })}
       hasHpOverlay={$settingStore.useHpOverlayNpc}
@@ -50,7 +50,7 @@
     <ExhaustionTracker
       level={$context.system.attributes.exhaustion}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
-      on:levelSelected={onLevelSelected}
+      {onLevelSelected}
       exhaustionConfig={$settingStore.exhaustionConfig}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
         $context.actor,
@@ -61,7 +61,7 @@
     <ExhaustionInput
       level={$context.system.attributes.exhaustion}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
-      on:levelSelected={onLevelSelected}
+      {onLevelSelected}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
         $context.actor,
         'system.attributes.exhaustion',

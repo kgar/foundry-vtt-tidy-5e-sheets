@@ -1,10 +1,12 @@
 <script lang="ts">
+  import type { Snippet } from 'svelte';
+
   interface Props {
     primary?: boolean;
     baseWidth?: string | null;
     title?: string | null;
     cssClass?: string | null;
-    children?: import('svelte').Snippet;
+    children?: Snippet;
   }
 
   let {

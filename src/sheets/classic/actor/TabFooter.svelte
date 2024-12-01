@@ -1,9 +1,11 @@
 <script lang="ts">
+  import type { Snippet } from 'svelte';
+
   interface Props {
     cssClass?: string | null;
     mode: 'vertical' | 'horizontal';
     appV2?: boolean;
-    children?: import('svelte').Snippet;
+    children?: Snippet;
   }
 
   let { cssClass = null, mode, appV2 = false, children }: Props = $props();

@@ -2,6 +2,7 @@
   import { settingStore } from 'src/settings/settings';
   import type { Item5e } from 'src/types/item.types';
   import ActiveEffectsMarker from './ActiveEffectsMarker.svelte';
+  import type { Snippet } from 'svelte';
 
   interface Props {
     cssClass?: string;
@@ -9,7 +10,7 @@
     item: Item5e;
     useActiveEffectsMarker?: boolean;
     onToggle?: (event: Event) => void;
-    children?: import('svelte').Snippet;
+    children?: Snippet;
   }
 
   let {

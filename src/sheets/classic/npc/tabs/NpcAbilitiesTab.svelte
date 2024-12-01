@@ -177,7 +177,7 @@
       iconClass={command.iconClass}
       text={command.text}
       visible={command.visible ?? true}
-      on:execute={(ev) => command.execute?.(ev.detail)}
+      onExecute={(ev) => command.execute?.(ev)}
     />
   {/each}
 </UtilityToolbar>
@@ -247,8 +247,8 @@
               {#each section.items as item}
                 {@const ctx = $context.itemContext[item.id]}
                 <ItemTableRow
-                  on:mousedown={(event) =>
-                    FoundryAdapter.editOnMiddleClick(event.detail, item)}
+                  onMouseDown={(event) =>
+                    FoundryAdapter.editOnMiddleClick(event, item)}
                   contextMenu={{
                     type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
                     uuid: item.uuid,

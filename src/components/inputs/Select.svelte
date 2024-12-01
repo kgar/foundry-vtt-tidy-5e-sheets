@@ -11,7 +11,7 @@
   } from 'src/types/types';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { buildDataset } from 'src/utils/data';
-  import { getContext } from 'svelte';
+  import { getContext, type Snippet } from 'svelte';
   import type { Readable } from 'svelte/store';
 
   interface Props {
@@ -24,7 +24,7 @@
     title?: string | null;
     disabled?: boolean;
     blankValue?: any;
-    children?: import('svelte').Snippet;
+    children?: Snippet;
     [key: string]: any;
   }
 

@@ -14,7 +14,7 @@
     ItemCardStore,
   } from 'src/types/types';
   import { warn } from 'src/utils/logging';
-  import { getContext, onMount } from 'svelte';
+  import { getContext, onMount, type Snippet } from 'svelte';
   import type { Writable } from 'svelte/store';
   import ItemSummary from '../ItemSummary.svelte';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
@@ -27,7 +27,7 @@
     rowClass?: string;
     itemCardContentTemplate?: ItemCardContentComponent | null;
     hidden?: boolean;
-    children?: import('svelte').Snippet<[any]>;
+    children?: Snippet<[any]>;
   }
 
   let {
@@ -169,8 +169,7 @@
     draggable: !!draggable,
   }}
   rowClass="tidy-table-row-v2 {rowClass ?? ''}"
-  onmousedown={(event) =>
-    item && FoundryAdapter.editOnMiddleClick(event, item)}
+  onmousedown={(event) => item && FoundryAdapter.editOnMiddleClick(event, item)}
   onmouseenter={onMouseEnter}
   onmouseleave={onMouseLeave}
   ondragstart={handleDragStart}
