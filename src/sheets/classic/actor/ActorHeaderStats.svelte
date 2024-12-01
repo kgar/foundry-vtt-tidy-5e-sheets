@@ -5,7 +5,7 @@
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
 
   interface Props {
-    ac: any;
+    ac: { value: string | number };
     init: any;
     abilities: any[];
   }

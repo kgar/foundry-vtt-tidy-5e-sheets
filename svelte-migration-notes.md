@@ -12,11 +12,11 @@
   - Component descruction is replaced by `unmount()`
 - [x] Replace all calls to svelte `run()` with `$derived` or `$effect`, whichever is most appropriate
 - [x] Eliminate `preventDefault`, `stopPropagation`, and similar legacy stopgap functions
-- [ ] Resolve all check errors
-- [ ] Address custom HTML events
+- [x] Resolve all check errors
+- [x] Address custom HTML events
   - [x] longpress
   - [x] onclickoutside
-  - [ ] ...
+  - [x] ...
 - [ ] Eliminate `createBubbler` calls by specifying event handler props
 - [ ] look for `svelte/legacy` imports and resolve
 - [ ] Eliminate `createEventDispatcher` uses
