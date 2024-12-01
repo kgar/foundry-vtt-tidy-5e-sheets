@@ -59,17 +59,13 @@
 </script>
 
 <div class="button-with-options-wrapper">
-  <!-- svelte-ignore a11y_missing_attribute -->
-  <!-- svelte-ignore a11y_click_events_have_key_events -->
-  <!-- svelte-ignore a11y_no_static_element_interactions -->
-  <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+  <!-- kgar-migration-task - ensure longpress works as advertized -->
   <a
     class="button with-options {rest.class ?? ''}"
     class:expanded
     class:active
     class:disabled
-    use:longpress
-    onlongpress={() => toggleMenu()}
+    use:longpress={{ callback: () => toggleMenu() }}
     onclick={bubble('click')}
     oncontextmenu={() => toggleMenu(true)}
     onfocusout={handleFocusOut}
@@ -84,7 +80,6 @@
     {/if}
   </a>
 
-  <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
   <menu
     class:expanded
     class="anchor-{anchor}"

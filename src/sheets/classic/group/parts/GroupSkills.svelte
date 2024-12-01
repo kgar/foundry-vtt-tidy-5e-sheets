@@ -14,7 +14,7 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  let groupSkillTooltip: GroupSkillTooltip = $state();
+  let groupSkillTooltip: GroupSkillTooltip;
   let hoveredSkill: GroupSkill = $state({
     key: '',
     label: '',
@@ -22,6 +22,7 @@
     total: Number.NEGATIVE_INFINITY,
   });
 
+  // kgar-migration-task - does it work as advertized?
   function showGroupLanguageTooltip(
     event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
     groupSkill: GroupSkill,
@@ -33,6 +34,7 @@
     hoveredSkill = groupSkill;
 
     const target = event?.currentTarget;
+
     setTimeout(() => {
       Tooltip.show(target, groupSkillTooltip.getMarkup());
     });

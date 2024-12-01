@@ -13,7 +13,7 @@
 - [x] Replace all calls to svelte `run()` with `$derived` or `$effect`, whichever is most appropriate
 - [ ] Replace stores with runes
 - [ ] Address custom HTML events
-  - [ ] longpress
+  - [x] longpress
   - [ ] onclickoutside
   - [ ] ...
 - [ ] Eliminate `createBubbler` calls by specifying event handler props

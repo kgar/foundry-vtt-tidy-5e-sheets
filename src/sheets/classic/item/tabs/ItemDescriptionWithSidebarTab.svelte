@@ -24,9 +24,9 @@
   let appId = $derived($context.document.id);
 
   let editing = $state(false);
-  let contentToEdit: string = $state();
-  let enrichedText: string = $state();
-  let fieldToEdit: string = $state();
+  let contentToEdit: string = $state('');
+  let enrichedText: string = $state('');
+  let fieldToEdit: string = $state('');
 
   function stopEditing() {
     editing = false;

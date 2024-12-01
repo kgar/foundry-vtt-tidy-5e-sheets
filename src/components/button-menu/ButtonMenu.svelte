@@ -97,12 +97,12 @@
     {buttonText}
   </button>
 
+  <!-- kgar-migration-task - make sure this is working as advertized -->
   {#if open}
     <svelte:element
       this={menuElement}
       class="button-menu-list {listClass ?? ''}"
-      use:clickOutside
-      onoutsideclick={() => close()}
+      use:clickOutside={{ callback: () => close() }}
       style={menuStyles}
       use:positionMenu
     >

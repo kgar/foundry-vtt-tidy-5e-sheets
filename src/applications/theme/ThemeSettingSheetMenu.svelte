@@ -20,7 +20,7 @@
     selectFile: File;
   }>();
 
-  let fileImportInput: HTMLInputElement = $state();
+  let fileImportInput: HTMLInputElement;
 
   const localize = FoundryAdapter.localize;
 
