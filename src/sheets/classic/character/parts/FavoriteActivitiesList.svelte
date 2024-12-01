@@ -48,11 +48,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-missing-attribute -->
-<TidyTable
-  key={section.key}
-  class="favorite-activities"
-  --grid-template-columns={gridTemplateColumns}
->
+<TidyTable key={section.key} class="favorite-activities" {gridTemplateColumns}>
   <svelte:fragment slot="header">
     <TidyTableHeaderRow>
       <TidyTableHeaderCell primary={true}>

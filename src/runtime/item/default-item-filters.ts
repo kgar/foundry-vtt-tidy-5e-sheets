@@ -9,7 +9,7 @@ export const defaultItemFilters = {
     name: 'activationCostAction',
     predicate: (item) =>
       !!item.system.activities?.some(
-        (a: any) => a.activation.type === CONSTANTS.ACTIVATION_COST_ACTION
+        (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_ACTION
       ),
     text: 'DND5E.Action',
   },
@@ -17,7 +17,7 @@ export const defaultItemFilters = {
     name: 'activationCostBonus',
     predicate: (item) =>
       !!item.system.activities?.some(
-        (a: any) => a.activation.type === CONSTANTS.ACTIVATION_COST_BONUS
+        (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_BONUS
       ),
     text: 'DND5E.BonusAction',
   },
@@ -25,7 +25,7 @@ export const defaultItemFilters = {
     name: 'activationCostReaction',
     predicate: (item) =>
       !!item.system.activities?.some(
-        (a: any) => a.activation.type === CONSTANTS.ACTIVATION_COST_REACTION
+        (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_REACTION
       ),
     text: 'DND5E.Reaction',
   },
@@ -33,7 +33,7 @@ export const defaultItemFilters = {
     name: 'activationCostLegendary',
     predicate: (item) =>
       !!item.system.activities?.some(
-        (a: any) => a.activation.type === CONSTANTS.ACTIVATION_COST_LEGENDARY
+        (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_LEGENDARY
       ),
     text: 'DND5E.LegendaryActionLabel',
   },
@@ -41,7 +41,7 @@ export const defaultItemFilters = {
     name: 'activationCostMythic',
     predicate: (item) =>
       !!item.system.activities?.some(
-        (a: any) => a.activation.type === CONSTANTS.ACTIVATION_COST_MYTHIC
+        (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_MYTHIC
       ),
     text: 'DND5E.MythicActionLabel',
   },
@@ -49,7 +49,7 @@ export const defaultItemFilters = {
     name: 'activationCostLair',
     predicate: (item) =>
       !!item.system.activities?.some(
-        (a: any) => a.activation.type === CONSTANTS.ACTIVATION_COST_LAIR
+        (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_LAIR
       ),
     text: 'DND5E.LairActionLabel',
   },
@@ -57,7 +57,7 @@ export const defaultItemFilters = {
     name: 'activationCostCrew',
     predicate: (item) =>
       !!item.system.activities?.some(
-        (a: any) => a.activation.type === CONSTANTS.ACTIVATION_COST_CREW
+        (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_CREW
       ),
     text: 'DND5E.VehicleCrewAction',
   },
@@ -65,7 +65,7 @@ export const defaultItemFilters = {
     name: 'activationCostSpecial',
     predicate: (item) =>
       !!item.system.activities?.some(
-        (a: any) => a.activation.type === CONSTANTS.ACTIVATION_COST_SPECIAL
+        (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_SPECIAL
       ),
     text: 'DND5E.Special',
   },
@@ -78,7 +78,7 @@ export const defaultItemFilters = {
             CONSTANTS.ACTIVATION_COST_ACTION,
             CONSTANTS.ACTIVATION_COST_BONUS,
             CONSTANTS.ACTIVATION_COST_REACTION,
-          ].includes(a.activation.type)
+          ].includes(a.activation?.type)
       ),
     text: 'TIDY5E.ItemFilters.Filter.Other',
   },

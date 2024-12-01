@@ -88,16 +88,6 @@ Hooks.once('init', () => {
   );
 
   DocumentSheetConfig.registerSheet(
-    Item,
-    CONSTANTS.DND5E_SYSTEM_ID,
-    Tidy5eContainerSheetHightouch,
-    {
-      types: [CONSTANTS.SHEET_TYPE_CONTAINER],
-      label: 'Tidy 5e Container Sheet - Codename Hightouch',
-    }
-  );
-
-  DocumentSheetConfig.registerSheet(
     Actor,
     CONSTANTS.DND5E_SYSTEM_ID,
     Tidy5eGroupSheetClassic,
@@ -112,6 +102,16 @@ Hooks.once('init', () => {
   initKeybindings();
 
   if (SettingsProvider.settings.debug.get()) {
+    DocumentSheetConfig.registerSheet(
+      Item,
+      CONSTANTS.DND5E_SYSTEM_ID,
+      Tidy5eContainerSheetHightouch,
+      {
+        types: [CONSTANTS.SHEET_TYPE_CONTAINER],
+        label: 'Tidy 5e Container Sheet - Codename Hightouch',
+      }
+    );
+
     DocumentSheetConfig.registerSheet(
       Item,
       CONSTANTS.DND5E_SYSTEM_ID,
