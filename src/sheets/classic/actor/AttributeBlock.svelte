@@ -52,8 +52,8 @@
   <BlockTitle
     title={ability.label}
     text={abbreviation}
-    on:roll={(event) =>
-      $context.actor.rollAbility({ ability: id, event: event.detail })}
+    onRoll={(event) =>
+      $context.actor.rollAbility({ ability: id, event: event })}
     hideFromTabOrder={$settingStore.useDefaultSheetAttributeTabbing ||
       !$settingStore.useAccessibleKeyboardSupport}
     attributes={{

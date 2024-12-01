@@ -19,7 +19,7 @@
   - [x] ...
 - [x] Eliminate `createBubbler` calls by specifying event handler props
 - [x] look for `svelte/legacy` imports and resolve
-- [ ] Eliminate `createEventDispatcher` uses
+- [x] Eliminate `createEventDispatcher` uses
 - [ ] Replace stores with runes
 - [ ] Ensure context API where reactivity is expected is using runes
 - [ ] Resolve `kgar-migration-task` content

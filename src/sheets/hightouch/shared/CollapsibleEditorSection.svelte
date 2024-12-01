@@ -1,7 +1,6 @@
 <script lang="ts">
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { isNil } from 'src/utils/data';
-  import { createEventDispatcher } from 'svelte';
   import GoldHeaderUnderline from './GoldHeaderUnderline.svelte';
   import type { ItemDescription } from 'src/types/item.types';
 
@@ -9,15 +8,20 @@
     expanded: boolean;
     document: any;
     itemDescription: ItemDescription;
+    onEdit?: (detail: {
+      document: any;
+      itemDescription: ItemDescription;
+    }) => void;
   }
 
-  let { expanded = $bindable(), document, itemDescription }: Props = $props();
+  let {
+    expanded = $bindable(),
+    document,
+    itemDescription,
+    onEdit,
+  }: Props = $props();
 
   let showIndicator = $derived(!isNil(itemDescription.enriched, ''));
-
-  const dispatcher = createEventDispatcher<{
-    edit: { document: any; itemDescription: ItemDescription };
-  }>();
 
   function manageSecrets(node: HTMLElement) {
     if (!document.isOwner) {
@@ -60,7 +64,7 @@
     <!-- Journal Edit Button -->
     <a
       class="edit icon-button"
-      onclick={() => dispatcher('edit', { document, itemDescription })}
+      onclick={() => onEdit?.({ document, itemDescription })}
     >
       <i class="fas fa-feather fa-fw"></i>
     </a>

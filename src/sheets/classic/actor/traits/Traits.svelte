@@ -57,7 +57,7 @@
       title={localize('DND5E.Senses')}
       iconCssClass="fas fa-eye"
       configureButtonTitle={localize('DND5E.SensesConfig')}
-      on:onConfigureClicked={() =>
+      onConfigureClicked={() =>
         FoundryAdapter.renderMovementSensesConfig($context.actor, 'senses')}
       show={traitsExpanded || !!senses.length}
     >
@@ -74,7 +74,7 @@
       configureButtonTitle={localize('DND5e.TraitConfig', {
         trait: localize('DND5E.Languages'),
       })}
-      on:onConfigureClicked={() =>
+      onConfigureClicked={() =>
         FoundryAdapter.renderTraitsConfig($context.actor, 'languages')}
       show={traitsExpanded || !!languages.length}
     >
@@ -91,7 +91,7 @@
       configureButtonTitle={localize('DND5E.TraitConfig', {
         trait: localize('DND5E.DamImm'),
       })}
-      on:onConfigureClicked={() =>
+      onConfigureClicked={() =>
         FoundryAdapter.openDamagesConfig($context.actor, 'di')}
       show={traitsExpanded || !!damageImmunities.length}
     >
@@ -108,7 +108,7 @@
       configureButtonTitle={localize('DND5E.TraitConfig', {
         trait: localize('DND5E.DamRes'),
       })}
-      on:onConfigureClicked={() =>
+      onConfigureClicked={() =>
         FoundryAdapter.openDamagesConfig($context.actor, 'dr')}
       show={traitsExpanded || !!damageResistances.length}
     >
@@ -125,7 +125,7 @@
       configureButtonTitle={localize('DND5E.TraitConfig', {
         trait: localize('DND5E.DamVuln'),
       })}
-      on:onConfigureClicked={() =>
+      onConfigureClicked={() =>
         FoundryAdapter.openDamagesConfig($context.actor, 'dv')}
       show={traitsExpanded || !!vulnerabilities.length}
     >
@@ -140,7 +140,7 @@
       configureButtonTitle={localize('DND5E.TraitConfig', {
         trait: localize('DND5E.DamageModification.Label'),
       })}
-      on:onConfigureClicked={() =>
+      onConfigureClicked={() =>
         FoundryAdapter.openDamagesConfig($context.actor, 'dm')}
       show={traitsExpanded || !!$context.traits.traits.dm.length}
     >
@@ -157,7 +157,7 @@
       configureButtonTitle={localize('DND5E.TraitConfig', {
         trait: localize('DND5E.ConImm'),
       })}
-      on:onConfigureClicked={() =>
+      onConfigureClicked={() =>
         FoundryAdapter.renderTraitsConfig($context.actor, 'ci')}
       show={traitsExpanded || !!conditionImmunities.length}
     >
@@ -173,7 +173,7 @@
       configureButtonTitle={localize('DND5E.TraitConfig', {
         trait: localize('DND5E.TraitWeaponProf'),
       })}
-      on:onConfigureClicked={() =>
+      onConfigureClicked={() =>
         FoundryAdapter.renderWeaponsConfig($context.actor)}
       show={traitsExpanded || !!weaponProfs.length}
     >
@@ -212,7 +212,7 @@
       configureButtonTitle={localize('DND5E.TraitConfig', {
         trait: localize('DND5E.TraitArmorProf'),
       })}
-      on:onConfigureClicked={() =>
+      onConfigureClicked={() =>
         FoundryAdapter.renderTraitsConfig($context.actor, 'armor')}
       show={traitsExpanded || !!armorProfs.length}
     >
@@ -241,7 +241,7 @@
       configureButtonTitle={localize('DND5E.TraitConfig', {
         trait: localize('DND5E.TraitToolProf'),
       })}
-      on:onConfigureClicked={() =>
+      onConfigureClicked={() =>
         FoundryAdapter.renderToolsConfig($context.actor)}
       show={traitsExpanded || !!tools.length}
     >
@@ -257,7 +257,7 @@
         title={trait.title}
         iconCssClass={trait.iconClass}
         configureButtonTitle={trait.openConfigurationTooltip ?? ''}
-        on:onConfigureClicked={(ev) => {
+        onConfigureClicked={(ev) => {
           try {
             trait.openConfiguration?.({
               app: $context.actor.sheet,
@@ -265,7 +265,7 @@
               element: FoundryAdapter.getElementFromAppV1OrV2(
                 $context.actor.sheet.element,
               ),
-              event: ev.detail,
+              event: ev,
             });
           } catch (e) {
             error(

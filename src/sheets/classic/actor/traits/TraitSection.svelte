@@ -2,7 +2,8 @@
   import { CONSTANTS } from 'src/constants';
   import { settingStore } from 'src/settings/settings';
   import type { ActorSheetContextV1 } from 'src/types/types';
-  import { createEventDispatcher, getContext, type Snippet } from 'svelte';
+  import { getContext, type Snippet } from 'svelte';
+  import type { MouseEventHandler } from 'svelte/elements';
   import type { Readable } from 'svelte/store';
 
   let context = getContext<Readable<ActorSheetContextV1>>(
@@ -15,6 +16,7 @@
     traitCssClass?: string | undefined;
     show: boolean;
     customIcon?: Snippet;
+    onConfigureClicked?: MouseEventHandler<HTMLElement>;
     children?: Snippet;
   }
 
@@ -25,12 +27,9 @@
     traitCssClass = '',
     show,
     customIcon,
+    onConfigureClicked,
     children,
   }: Props = $props();
-
-  const dispatcher = createEventDispatcher<{
-    onConfigureClicked: MouseEvent;
-  }>();
 </script>
 
 {#if show}
@@ -61,7 +60,7 @@
         onclick={(event) => {
           event.preventDefault();
           event.stopPropagation();
-          dispatcher('onConfigureClicked', event);
+          onConfigureClicked?.(event);
         }}
         tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >

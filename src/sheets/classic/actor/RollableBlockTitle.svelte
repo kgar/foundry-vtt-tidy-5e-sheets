@@ -1,7 +1,8 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import type { ActorSheetContextV1 } from 'src/types/types';
-  import { createEventDispatcher, getContext } from 'svelte';
+  import { getContext } from 'svelte';
+  import type { MouseEventHandler } from 'svelte/elements';
   import type { Readable } from 'svelte/store';
 
   interface Props {
@@ -9,6 +10,7 @@
     text: string;
     hideFromTabOrder?: boolean;
     attributes?: Record<string, string>;
+    onRoll?: MouseEventHandler<HTMLElement>;
   }
 
   let {
@@ -16,9 +18,8 @@
     text,
     hideFromTabOrder = false,
     attributes = {},
+    onRoll,
   }: Props = $props();
-
-  const dispatcher = createEventDispatcher<{ roll: MouseEvent }>();
 
   let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -30,7 +31,7 @@
   class:rollable={$context.editable}
   class="transparent-button"
   {title}
-  onclick={(ev) => dispatcher('roll', ev)}
+  onclick={(ev) => onRoll?.(ev)}
   disabled={!$context.editable}
   tabindex={!hideFromTabOrder ? 0 : -1}
   {...attributes}

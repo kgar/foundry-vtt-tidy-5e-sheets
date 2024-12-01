@@ -29,8 +29,7 @@
   <BlockTitle
     title={localize('DND5E.Initiative')}
     text={localize('TIDY5E.AbbrInitiative')}
-    on:roll={(event) =>
-      $context.actor.rollInitiativeDialog({ event: event.detail })}
+    onRoll={(event) => $context.actor.rollInitiativeDialog({ event: event })}
   />
   <BlockScore>
     <span>{formatAsModifier(initiative.total)}</span>

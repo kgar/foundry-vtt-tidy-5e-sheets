@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { ItemSheetContext } from 'src/types/item.types';
-  import { createEventDispatcher, getContext, onMount, tick } from 'svelte';
+  import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import Accordion from 'src/components/accordion/Accordion.svelte';
   import AccordionItem from 'src/components/accordion/AccordionItem.svelte';
@@ -20,23 +20,20 @@
      * readonly editors should not be in the form / DOM, else strange side effects occur.
      */
     renderDescriptions?: boolean;
+    onEdit?: (detail: {
+      contentToEdit: string;
+      enrichedText: string;
+      fieldToEdit: string;
+    }) => void;
   }
 
-  let { renderDescriptions = true }: Props = $props();
+  let { renderDescriptions = true, onEdit }: Props = $props();
 
   let editorsContainers: HTMLElement[] = $state([]);
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
-
-  const dispatcher = createEventDispatcher<{
-    edit: {
-      contentToEdit: string;
-      enrichedText: string;
-      fieldToEdit: string;
-    };
-  }>();
 
   let accordionItemOpenStates = $state(
     $context.itemDescriptions.map((_, i) => i === 0),
@@ -89,7 +86,7 @@
                       class="inline-icon-button edit-item-description"
                       onclick={(event) => {
                         event.stopPropagation();
-                        dispatcher('edit', {
+                        onEdit?.({
                           contentToEdit: itemDescription.content,
                           enrichedText: itemDescription.enriched,
                           fieldToEdit: itemDescription.field,

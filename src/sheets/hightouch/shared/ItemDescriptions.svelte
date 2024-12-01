@@ -35,7 +35,7 @@
         {document}
         bind:expanded={sectionItemOpenStates[i]}
         {itemDescription}
-        on:edit={(ev) => handleEdit(ev.detail)}
+        onEdit={(detail) => handleEdit(detail)}
       />
     {/each}
   </section>

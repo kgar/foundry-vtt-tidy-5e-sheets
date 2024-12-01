@@ -191,12 +191,8 @@
 
   {#if FoundryAdapter.userIsGm() || $context.isIdentified}
     <ItemDescriptions
-      on:edit={(ev) =>
-        edit(
-          ev.detail.contentToEdit,
-          ev.detail.enrichedText,
-          ev.detail.fieldToEdit,
-        )}
+      onEdit={(detail) =>
+        edit(detail.contentToEdit, detail.enrichedText, detail.fieldToEdit)}
       renderDescriptions={!editing}
     />
   {:else if $context.editable || $context.system.unidentified.description}
