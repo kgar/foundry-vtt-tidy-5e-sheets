@@ -17,8 +17,8 @@
   - [x] longpress
   - [x] onclickoutside
   - [x] ...
-- [ ] Eliminate `createBubbler` calls by specifying event handler props
-- [ ] look for `svelte/legacy` imports and resolve
+- [x] Eliminate `createBubbler` calls by specifying event handler props
+- [x] look for `svelte/legacy` imports and resolve
 - [ ] Eliminate `createEventDispatcher` uses
 - [ ] Replace stores with runes
 - [ ] Ensure context API where reactivity is expected is using runes

@@ -1,7 +1,4 @@
 <script lang="ts">
-  import { createBubbler } from 'svelte/legacy';
-
-  const bubble = createBubbler();
   import AcShieldBase from './AcShieldBase.svelte';
   import { getContext, onMount } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -9,6 +6,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
+  import type { FocusEventHandler } from 'svelte/elements';
 
   interface Props {
     /**
@@ -19,9 +17,10 @@
      * Optional CSS class list string to apply to the AC Shield container element.
      */
     cssClass?: string;
+    onfocus?: FocusEventHandler<HTMLElement>;
   }
 
-  let { ac = '0', cssClass = '' }: Props = $props();
+  let { ac = '0', cssClass = '', onfocus }: Props = $props();
 
   let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -39,7 +38,7 @@
     bind:this={acShieldButton}
     type="button"
     onclick={() => FoundryAdapter.renderArmorConfig($context.actor)}
-    onfocus={bubble('focus')}
+    {onfocus}
     class="config-button attribute-value transparent-button"
     data-attribution="attributes.ac"
     data-attribution-caption="DND5E.ArmorClass"

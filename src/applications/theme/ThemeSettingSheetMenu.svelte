@@ -3,12 +3,18 @@
   import ButtonMenuCommand from 'src/components/button-menu/ButtonMenuCommand.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { createEventDispatcher, getContext } from 'svelte';
+  import { getContext } from 'svelte';
   import type { Writable } from 'svelte/store';
   import type { CurrentSettings } from 'src/settings/settings';
   import ThemeSelectorButtonMenuCommand from 'src/sheets/classic/shared/ThemeSelectorButtonMenuCommand.svelte';
   import ButtonMenuDivider from 'src/components/button-menu/ButtonMenuDivider.svelte';
   import type { ThemeSettingsSheetFunctions } from './ThemeSettingsFormApplication';
+
+  interface Props {
+    onSelectFile?: (file: File) => void;
+  }
+
+  let { onSelectFile }: Props = $props();
 
   let functions = getContext<ThemeSettingsSheetFunctions>(
     CONSTANTS.SVELTE_CONTEXT.FUNCTIONS,
@@ -16,9 +22,6 @@
   let context = getContext<Writable<CurrentSettings>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
-  const dispatch = createEventDispatcher<{
-    selectFile: File;
-  }>();
 
   let fileImportInput: HTMLInputElement;
 
@@ -37,7 +40,7 @@
       return;
     }
 
-    dispatch('selectFile', file);
+    onSelectFile?.(file);
   }
 </script>
 
@@ -54,26 +57,26 @@
   <ThemeSelectorButtonMenuCommand />
   <ButtonMenuDivider />
   <ButtonMenuCommand
-    on:click={() => fileImportInput.click()}
+    onMenuClick={() => fileImportInput.click()}
     iconClass="fas fa-file-import"
   >
     {localize('TIDY5E.ThemeSettings.Sheet.import')}
   </ButtonMenuCommand>
   <ButtonMenuCommand
-    on:click={() => functions.exportTheme($context)}
+    onMenuClick={() => functions.exportTheme($context)}
     iconClass="fas fa-file-export"
   >
     {localize('TIDY5E.ThemeSettings.Sheet.export')}
   </ButtonMenuCommand>
   <ButtonMenuCommand
-    on:click={() =>
+    onMenuClick={() =>
       functions.useExistingThemeColors(CONSTANTS.THEME_ID_DEFAULT_LIGHT)}
     iconClass="fas fa-sun"
   >
     {localize('TIDY5E.ThemeSettings.Sheet.useDefaultLightColors')}
   </ButtonMenuCommand>
   <ButtonMenuCommand
-    on:click={() =>
+    onMenuClick={() =>
       functions.useExistingThemeColors(CONSTANTS.THEME_ID_DEFAULT_DARK)}
     iconClass="fas fa-moon"
   >

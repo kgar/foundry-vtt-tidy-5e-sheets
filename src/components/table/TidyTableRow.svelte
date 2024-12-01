@@ -1,7 +1,4 @@
 <script lang="ts">
-  import { createBubbler } from 'svelte/legacy';
-
-  const bubble = createBubbler();
   import { CONSTANTS } from 'src/constants';
   import type { DragEventHandler, MouseEventHandler } from 'svelte/elements';
 

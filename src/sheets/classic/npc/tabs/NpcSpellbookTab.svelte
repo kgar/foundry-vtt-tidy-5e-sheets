@@ -77,7 +77,7 @@
     menuElement="div"
   >
     <ButtonMenuCommand
-      on:click={() => {
+      onMenuClick={() => {
         new SpellSourceClassAssignmentsFormApplication($context.actor).render(
           true,
         );

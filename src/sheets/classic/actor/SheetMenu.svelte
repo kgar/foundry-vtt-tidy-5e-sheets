@@ -33,20 +33,20 @@
   <ThemeSelectorButtonMenuCommand />
   <ButtonMenuDivider />
   <ButtonMenuCommand
-    on:click={() => ApplicationsManager.openUserSettings(defaultSettingsTab)}
+    onMenuClick={() => ApplicationsManager.openUserSettings(defaultSettingsTab)}
     iconClass="fas fa-cog"
   >
     {localize('TIDY5E.UserSettings.Menu.label')}
   </ButtonMenuCommand>
   <ButtonMenuCommand
-    on:click={() => ApplicationsManager.openThemeSettings()}
+    onMenuClick={() => ApplicationsManager.openThemeSettings()}
     iconClass="fas fa-palette"
   >
     {localize('TIDY5E.ThemeSettings.SheetMenu.buttonLabel')}
   </ButtonMenuCommand>
   {#if $context.owner}
     <ButtonMenuCommand
-      on:click={() =>
+      onMenuClick={() =>
         new TabSelectionFormApplication($context.actor).render(true)}
       iconClass="fas fa-file-invoice"
       disabled={!$context.editable}

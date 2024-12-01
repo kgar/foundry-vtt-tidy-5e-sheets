@@ -41,7 +41,7 @@
   {#each options as option}
     <ButtonMenuCommand
       useIconColumn={false}
-      on:click={() => optionClicked(option)}
+      onMenuClick={() => optionClicked(option)}
       size="compact"
     >
       {option.text}

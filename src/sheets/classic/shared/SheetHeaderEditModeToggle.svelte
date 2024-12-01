@@ -1,7 +1,4 @@
 <script lang="ts">
-  import { createBubbler } from 'svelte/legacy';
-
-  const bubble = createBubbler();
   import { CONSTANTS } from 'src/constants';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import TidySwitch from 'src/components/toggle/TidySwitch.svelte';
@@ -9,11 +6,13 @@
   import { settingStore } from 'src/settings/settings';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  import type { MouseEventHandler } from 'svelte/elements';
   interface Props {
+    ondblclick?: MouseEventHandler<HTMLElement>;
     [key: string]: any;
   }
 
-  let { ...rest }: Props = $props();
+  let { ondblclick, ...rest }: Props = $props();
 
   let context = getContext<Readable<{ document: any; editable: boolean }>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -59,7 +58,7 @@
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SHEET_LOCK_TOGGLE}
     ondblclick={(event) => {
       event.stopPropagation();
-      bubble('dblclick')(event);
+      ondblclick?.(event);
     }}
   >
     <TidySwitch

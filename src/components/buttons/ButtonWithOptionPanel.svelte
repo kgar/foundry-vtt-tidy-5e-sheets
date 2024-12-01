@@ -1,9 +1,7 @@
 <script lang="ts">
-  import { createBubbler } from 'svelte/legacy';
-
-  const bubble = createBubbler();
   import { longpress } from 'src/actions/longpress';
   import { tick, type Snippet } from 'svelte';
+  import type { MouseEventHandler } from 'svelte/elements';
 
   interface Props {
     expanded?: boolean;
@@ -12,6 +10,7 @@
     anchor?: 'left' | 'right';
     children?: Snippet;
     options?: Snippet;
+    onclick?: MouseEventHandler<HTMLElement>;
     [key: string]: any;
   }
 
@@ -22,6 +21,7 @@
     anchor = 'left',
     children,
     options,
+    onclick,
     ...rest
   }: Props = $props();
 
@@ -66,7 +66,7 @@
     class:active
     class:disabled
     use:longpress={{ callback: () => toggleMenu() }}
-    onclick={bubble('click')}
+    {onclick}
     oncontextmenu={() => toggleMenu(true)}
     onfocusout={handleFocusOut}
     tabindex={expanded ? 0 : null}

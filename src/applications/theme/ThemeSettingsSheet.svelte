@@ -109,9 +109,7 @@
   <div class="theme-settings-form scroll-container">
     <h2 class="header flex-row justify-content-space-between">
       {localize('TIDY5E.ThemeSettings.Sheet.header')}
-      <ThemeSettingSheetMenu
-        on:selectFile={(ev) => processImportFile(ev.detail)}
-      />
+      <ThemeSettingSheetMenu onSelectFile={processImportFile} />
     </h2>
 
     <div>

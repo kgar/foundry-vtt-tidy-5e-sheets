@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { createEventDispatcher, getContext, type Snippet } from 'svelte';
+  import { getContext, type Snippet } from 'svelte';
   import ButtonMenuItem from './ButtonMenuItem.svelte';
   import type { ButtonMenuContext } from './button-menu-types';
   import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
+  import type { MouseEventHandler } from 'svelte/elements';
 
   interface Props {
     iconClass?: string;
@@ -11,6 +12,7 @@
     title?: string | null;
     size?: 'standard' | 'compact';
     disabled?: boolean;
+    onMenuClick?: MouseEventHandler<HTMLElement>;
     children?: Snippet;
   }
 
@@ -20,23 +22,19 @@
     title = null,
     size = 'standard',
     disabled = false,
+    onMenuClick,
     children,
   }: Props = $props();
 
   const buttonMenuContext = getContext<ButtonMenuContext>(
     CONSTANTS.SVELTE_CONTEXT.BUTTON_MENU_CONTEXT,
   );
-  const dispatch = createEventDispatcher<{
-    click: {
-      event: MouseEvent & { currentTarget: HTMLButtonElement };
-    };
-  }>();
 
   function handleClick(
     event: MouseEvent & { currentTarget: HTMLButtonElement },
   ) {
     buttonMenuContext.close();
-    dispatch('click', { event });
+    onMenuClick?.(event);
   }
 </script>
 

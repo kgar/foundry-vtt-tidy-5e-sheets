@@ -96,7 +96,7 @@
       >
         <!-- TODO: identify all items recursively -->
         <ButtonMenuCommand
-          on:click={() => {
+          onMenuClick={() => {
             FoundryAdapter.identifyAllItemsForContainer(
               $context.item,
               allItems,
@@ -107,7 +107,7 @@
           {localize('TIDY5E.Utilities.IdentifyAll')}
         </ButtonMenuCommand>
         <ButtonMenuCommand
-          on:click={() => {
+          onMenuClick={() => {
             FoundryAdapter.markAllItemsAsUnidentifiedForContainer(
               $context.item,
               allItems,

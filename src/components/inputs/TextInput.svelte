@@ -1,7 +1,4 @@
 <script lang="ts">
-  import { createBubbler } from 'svelte/legacy';
-
-  const bubble = createBubbler();
   import { processInputChangeDelta } from 'src/utils/form';
   import { buildDataset } from 'src/utils/data';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
@@ -17,6 +14,10 @@
     NpcSheetContext,
     VehicleSheetContext,
   } from 'src/types/types';
+  import type {
+    KeyboardEventHandler,
+    MouseEventHandler,
+  } from 'svelte/elements';
 
   type OnSaveChangeFn = (
     event: Event & {
@@ -53,6 +54,8 @@
      * do not use the `[name]` attribute.
      */
     stopChangePropagation?: boolean;
+    onclick?: MouseEventHandler<HTMLElement>;
+    onkeypress?: KeyboardEventHandler<HTMLElement>;
     [key: string]: any;
   }
 
@@ -74,6 +77,8 @@
     onSaveChange = () => true,
     additionalDataToSave = {},
     stopChangePropagation = false,
+    onclick,
+    onkeypress,
     ...rest
   }: Props = $props();
 
@@ -121,7 +126,7 @@
     >('context');
 
   const localize = FoundryAdapter.localize;
-  
+
   let actualDataset = $derived(buildDataset(dataset));
   let activeEffectApplied = $derived(
     ActiveEffectsHelper.isActiveEffectAppliedToField(document, field),
@@ -140,7 +145,7 @@
   bind:this={theInput}
   type="text"
   {id}
-  bind:value={value}
+  bind:value
   {placeholder}
   data-tooltip={activeEffectApplied ? overrideTooltip : tooltip}
   {...actualDataset}
@@ -151,8 +156,8 @@
   {title}
   disabled={disabled || activeEffectApplied}
   onchange={(ev) => onSaveChange(ev) && saveChange(ev)}
-  onclick={bubble('click')}
-  onkeypress={bubble('keypress')}
+  {onclick}
+  {onkeypress}
   onfocus={(ev) => selectOnFocus && ev.currentTarget.select()}
   data-tidy-field={field}
 />
