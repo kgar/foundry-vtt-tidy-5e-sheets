@@ -222,7 +222,7 @@
                         />
                       {/if}
                       <ItemName
-                        on:toggle={() => toggleSummary($context.actor)}
+                        onToggle={() => toggleSummary($context.actor)}
                         hasChildren={false}
                         {item}
                       >

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher, onMount } from 'svelte';
+  import { onMount } from 'svelte';
 
   type EditorOptions =
     any /*foundry.applications.elements.HTMLProseMirrorElement.ProseMirrorInputConfig*/;
@@ -11,6 +11,7 @@
     editorOptions?: EditorOptions;
     documentUuid: string;
     manageSecrets?: boolean;
+    onSave?: () => void;
     [key: string]: any;
   }
 
@@ -21,6 +22,7 @@
     editorOptions = {},
     documentUuid,
     manageSecrets = false,
+    onSave,
     ...rest
   }: Props = $props();
 
@@ -43,17 +45,13 @@
     ) as EditorOptions,
   );
 
-  let dispatcher = createEventDispatcher<{
-    save: void;
-  }>();
-
   function onEditorActivation(node: HTMLElement) {
     node.addEventListener('click', (ev: MouseEvent) => {
       if (
         ev.target instanceof HTMLElement &&
         ev.target.matches('[data-action="save"]')
       ) {
-        onSave();
+        handleSave();
       }
     });
     node.addEventListener('keydown', (event) => {
@@ -61,13 +59,13 @@
         game.keyboard.isModifierActive(KeyboardManager.MODIFIER_KEYS.CONTROL) &&
         event.key === 's'
       ) {
-        onSave();
+        handleSave();
       }
     });
   }
 
-  function onSave() {
-    dispatcher('save');
+  function handleSave() {
+    onSave?.();
     bindSecretUi();
   }
 

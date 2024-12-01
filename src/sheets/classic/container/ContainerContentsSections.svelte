@@ -172,7 +172,7 @@
                   {/if}
                   <!-- This is generally what we want in Tidy Tables / Item Table V2; consider breaking off ItemNameV2 to propagate and replace the old ItemName gradually. -->
                   <ItemName
-                    on:toggle={() => toggleSummary()}
+                    onToggle={() => toggleSummary()}
                     cssClass="align-self-stretch flex-row align-items-center"
                     {item}
                   >

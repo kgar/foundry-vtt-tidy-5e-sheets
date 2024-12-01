@@ -267,7 +267,7 @@
                         />
                       {/if}
                       <ItemName
-                        on:toggle={() => toggleSummary($context.actor)}
+                        onToggle={() => toggleSummary($context.actor)}
                         cssClass="extra-small-gap"
                         {item}
                       >
@@ -385,7 +385,7 @@
             <ItemFilterLayoutToggle
               mode={layoutMode}
               element="span"
-              on:toggle={() => toggleLayout()}
+              onToggle={() => toggleLayout()}
             />
             <ItemControl
               iconCssClass="fas fa-cog"

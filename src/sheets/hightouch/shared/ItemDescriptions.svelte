@@ -47,6 +47,6 @@
     manageSecrets={true}
     field={itemDescriptionToEdit.field}
     enriched={itemDescriptionToEdit.enriched}
-    on:save={() => (editing = false)}
+    onSave={() => (editing = false)}
   ></SheetEditorV2>
 {/if}

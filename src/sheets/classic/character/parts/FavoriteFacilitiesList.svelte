@@ -146,7 +146,7 @@
               {#if item?.system.activities?.contents.length > 1}
                 <InlineToggleControl entityId={item.id} {inlineToggleService} />
               {/if}
-              <ItemName on:toggle={() => toggleSummary($context.actor)} {item}>
+              <ItemName onToggle={() => toggleSummary($context.actor)} {item}>
                 <span
                   class="truncate"
                   data-tidy-item-name={item.name}

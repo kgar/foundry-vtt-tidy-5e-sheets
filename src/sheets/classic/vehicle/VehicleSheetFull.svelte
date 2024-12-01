@@ -100,9 +100,9 @@
           <InlineTextDropdownList
             options={sizes}
             selected={currentSize}
-            on:optionClicked={(event) =>
+            onOptionClicked={(option) =>
               $context.actor.update({
-                'system.traits.size': event.detail.value,
+                'system.traits.size': option,
               })}
             title={localize('DND5E.Size')}
           />
@@ -116,9 +116,9 @@
           <InlineTextDropdownList
             options={vehicleTypes}
             selected={currentVehicleType}
-            on:optionClicked={(event) =>
+            onOptionClicked={(option) =>
               $context.actor.update({
-                'system.vehicleType': event.detail.value,
+                'system.vehicleType': option,
               })}
             title={localize('DND5E.VehicleType')}
           />

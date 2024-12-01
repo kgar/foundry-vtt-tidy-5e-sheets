@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { DropdownListOption } from 'src/types/types';
-  import { createEventDispatcher } from 'svelte';
   import ButtonMenu from '../button-menu/ButtonMenu.svelte';
   import ButtonMenuCommand from '../button-menu/ButtonMenuCommand.svelte';
 
@@ -10,6 +9,7 @@
     isOpen?: boolean;
     title?: string | null;
     buttonClass?: string;
+    onOptionClicked: (option: DropdownListOption) => void;
   }
 
   let {
@@ -18,14 +18,11 @@
     isOpen = $bindable(false),
     title = null,
     buttonClass = '',
+    onOptionClicked,
   }: Props = $props();
 
-  const dispatch = createEventDispatcher<{
-    optionClicked: DropdownListOption;
-  }>();
-
   function optionClicked(selection: DropdownListOption): void {
-    dispatch('optionClicked', { ...selection });
+    onOptionClicked?.({ ...selection });
     isOpen = false;
   }
 </script>

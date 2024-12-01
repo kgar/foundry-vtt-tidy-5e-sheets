@@ -82,7 +82,7 @@
   }
 
   function onSkillAbilityChange(
-    ev: CustomEvent<DropdownListOption>,
+    option: DropdownListOption,
     skillRef: {
       key: string;
       label: string;
@@ -94,7 +94,7 @@
       system: {
         skills: {
           [skillRef.key]: {
-            ability: ev.detail.value,
+            ability: option,
           },
         },
       },
@@ -204,7 +204,8 @@
               }}
               buttonClass="skill-ability"
               title={$context.abilities?.[skillRef.ability]?.label}
-              on:optionClicked={(ev) => onSkillAbilityChange(ev, skillRef)}
+              onOptionClicked={(option) =>
+                onSkillAbilityChange(option, skillRef)}
             />
           {:else}
             <span class="skill-ability">{skillRef.skill.abbreviation}</span>

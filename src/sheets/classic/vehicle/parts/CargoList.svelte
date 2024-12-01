@@ -128,7 +128,7 @@
               <InlineToggleControl entityId={item.id} {inlineToggleService} />
             {/if}
             <ItemName
-              on:toggle={() => toggleSummary($context.actor)}
+              onToggle={() => toggleSummary($context.actor)}
               cssClass="extra-small-gap"
               {item}
             >

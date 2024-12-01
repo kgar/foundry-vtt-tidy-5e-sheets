@@ -33,7 +33,8 @@
 - [ ] Especially test item cards
 - [ ] Action filter override control (had some odd run/derived behavior)
 - [ ] SpellbookList component, controls (had some elaborate run/derived behavior)
-- [ ]
+- [ ] Test Sheet Editor V2 fairly closely
+- [ ] 
 
 ## Notes and Examples
 

@@ -229,7 +229,7 @@
           toggled: false,
         }}
         documentUuid={$context.item.uuid}
-        on:save={() => stopEditing()}
+        onSave={() => stopEditing()}
         manageSecrets={$context.document.isOwner}
       />
     </article>

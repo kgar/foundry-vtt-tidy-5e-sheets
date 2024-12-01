@@ -151,7 +151,7 @@
                   {/if}
                   <ItemName
                     item={actionItem.item}
-                    on:toggle={() => toggleSummary($context.actor)}
+                    onToggle={() => toggleSummary($context.actor)}
                     useActiveEffectsMarker={false}
                   >
                     {@const sourceClassText =
