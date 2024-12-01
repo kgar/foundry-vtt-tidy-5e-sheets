@@ -30,6 +30,7 @@
   <header class="header">
     {#if $context.editable}
       <button
+        type="button"
         class="add-activity-button"
         on:click={() => $context.item.sheet.addActivity()}
         tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
@@ -62,6 +63,7 @@
           {/if}
         </div>
         <button
+          type="button"
           class="transparent-button highlight-on-hover name"
           on:click={() =>
             $context.system.activities?.get(activity.id).sheet.render(true)}
