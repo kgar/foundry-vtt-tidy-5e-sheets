@@ -21,7 +21,9 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  let theme = $derived(getThemeOrDefault(SettingsProvider.settings.colorScheme.get()));
+  let theme = $derived(
+    getThemeOrDefault(SettingsProvider.settings.colorScheme.get()),
+  );
 
   let inverse = $state(false);
 
@@ -45,7 +47,6 @@
           checked={theme.id === CONSTANTS.THEME_ID_DEFAULT_LIGHT}
           onclick={(ev) => selectTheme(CONSTANTS.THEME_ID_DEFAULT_LIGHT)}
         />
-        <!-- svelte-ignore missing_declaration -->
         {game.i18n.localize('TIDY5E.Settings.SheetTheme.light')}
       </label>
       <label for="dark-mode-toggle">
@@ -57,7 +58,6 @@
           checked={theme.id === CONSTANTS.THEME_ID_DEFAULT_DARK}
           onclick={(ev) => selectTheme(CONSTANTS.THEME_ID_DEFAULT_DARK)}
         />
-        <!-- svelte-ignore missing_declaration -->
         {game.i18n.localize('TIDY5E.Settings.SheetTheme.dark')}
       </label>
     </div>
@@ -107,7 +107,7 @@
       <Tabs tabs={$context.tabs} bind:selectedTabId cssClass="item-tabs" />
     </div>
     <div class="span-all">
-      <TabContents tabs={$context.tabs} bind:selectedTabId />
+      <TabContents tabs={$context.tabs} {selectedTabId} />
     </div>
     <div>
       <ItemDescriptions
@@ -190,29 +190,27 @@
         <ButtonWithOptionPanel class="icon-button">
           <i class="fas fa-hand"></i>
           {#snippet options()}
-                  
-              <label>
-                <input type="radio" name="icon-menu-test" value="1" /> Test Option
-                1
-              </label>
-              <label>
-                <input type="radio" name="icon-menu-test" value="2" /> Test Option
-                2
-              </label>
-            
-                  {/snippet}
+            <label>
+              <input type="radio" name="icon-menu-test" value="1" /> Test Option
+              1
+            </label>
+            <label>
+              <input type="radio" name="icon-menu-test" value="2" /> Test Option
+              2
+            </label>
+          {/snippet}
         </ButtonWithOptionPanel>
         <ButtonWithOptionPanel class="icon-button" active={true}>
           <i class="fas fa-hand"></i>
           {#snippet options()}
-                    O hai 🙋‍♀️
-                  {/snippet}
+            O hai 🙋‍♀️
+          {/snippet}
         </ButtonWithOptionPanel>
         <ButtonWithOptionPanel class="icon-button" disabled={true}>
           <i class="fas fa-hand"></i>
           {#snippet options()}
-                    O hai 🙋‍♀️
-                  {/snippet}
+            O hai 🙋‍♀️
+          {/snippet}
         </ButtonWithOptionPanel>
         <ButtonWithOptionPanel
           class="icon-button active"
@@ -221,8 +219,8 @@
         >
           <i class="fas fa-hand"></i>
           {#snippet options()}
-                    O hai 🙋‍♀️
-                  {/snippet}
+            O hai 🙋‍♀️
+          {/snippet}
         </ButtonWithOptionPanel>
       </div>
     </fieldset>

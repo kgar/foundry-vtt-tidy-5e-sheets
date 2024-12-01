@@ -3,6 +3,7 @@
 
   const bubble = createBubbler();
   import { CONSTANTS } from 'src/constants';
+  import type { DragEventHandler, MouseEventHandler } from 'svelte/elements';
 
   interface Props {
     hidden?: boolean;
@@ -12,6 +13,10 @@
     rowAttributes?: Record<string, unknown>;
     children?: import('svelte').Snippet;
     afterRow?: import('svelte').Snippet;
+    onmousedown?: MouseEventHandler<HTMLElement>;
+    onmouseenter?: MouseEventHandler<HTMLElement>;
+    onmouseleave?: MouseEventHandler<HTMLElement>;
+    ondragstart?: DragEventHandler<HTMLElement>;
   }
 
   let {
@@ -22,6 +27,10 @@
     rowAttributes = {},
     children,
     afterRow,
+    onmousedown,
+    onmouseenter,
+    onmouseleave,
+    ondragstart,
   }: Props = $props();
 </script>
 
@@ -37,10 +46,10 @@
     data-tidy-table-row
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TABLE_ROW}
     {...rowAttributes}
-    onmousedown={bubble('mousedown')}
-    onmouseenter={bubble('mouseenter')}
-    onmouseleave={bubble('mouseleave')}
-    ondragstart={bubble('dragstart')}
+    {onmousedown}
+    {onmouseenter}
+    {onmouseleave}
+    {ondragstart}
   >
     {@render children?.()}
   </div>

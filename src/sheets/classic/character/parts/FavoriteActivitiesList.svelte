@@ -82,7 +82,7 @@
           'data-configurable': Activities.isConfigurable(activity),
           'data-item-id': activity.item.id,
         }}
-        on:mousedown={(ev) => FoundryAdapter.editOnMiddleClick(ev, activity)}
+        onmousedown={(ev) => FoundryAdapter.editOnMiddleClick(ev, activity)}
         hidden={visibleActivityUuidSubset !== null &&
           !visibleActivityUuidSubset.has(activity.uuid)}
       >

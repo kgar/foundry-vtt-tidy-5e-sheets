@@ -50,5 +50,6 @@
     </span>
     {@render children?.()}
   </span>
-  <FieldToggle bind:checked {onchange} />
+  <!-- kgar-migration-task - make sure this still works as intended -->
+  <FieldToggle {checked} {onchange} />
 </label>

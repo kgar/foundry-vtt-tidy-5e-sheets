@@ -27,7 +27,7 @@
   import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
   import ActorName from '../actor/ActorName.svelte';
 
-  let selectedTabId: string = $state();
+  let selectedTabId: string = $state('');
 
   let context = getContext<Readable<VehicleSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,

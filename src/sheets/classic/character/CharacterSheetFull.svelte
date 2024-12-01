@@ -28,7 +28,7 @@
   import ActorName from '../actor/ActorName.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
 
-  let selectedTabId: string = $state();
+  let selectedTabId: string = $state('');
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );

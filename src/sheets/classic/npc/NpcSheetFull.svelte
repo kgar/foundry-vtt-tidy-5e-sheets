@@ -28,7 +28,7 @@
   import { isNil } from 'src/utils/data';
   import ActorLinkIndicator from 'src/components/actor-link-indicator/ActorLinkIndicator.svelte';
 
-  let selectedTabId: string = $state();
+  let selectedTabId: string = $state('');
 
   let context = getContext<Readable<NpcSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -104,7 +104,6 @@
               title={localize('DND5E.ChallengeRating')}
             />
           {:else}
-            <!-- svelte-ignore missing_declaration -->
             {dnd5e.utils.formatCR($context.system.details.cr)}
           {/if}
         </div>

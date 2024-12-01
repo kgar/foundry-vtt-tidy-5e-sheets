@@ -18,7 +18,7 @@
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import IconsWorldSettingsTab from './tabs/IconsWorldSettingsTab.svelte';
 
-  let selectedTabId: string = $state();
+  let selectedTabId: string = $state('');
   let functions = getContext<WorldSettingsFunctions>(
     CONSTANTS.SVELTE_CONTEXT.FUNCTIONS,
   );

@@ -30,12 +30,16 @@
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
+
   interface Props {
     section: FacilitySection;
     items: Item5e[];
   }
 
   let { section, items }: Props = $props();
+
+  let tooltipOccupants = $state<Actor5e[]>([]);
+  let tooltipTitle = $state('');
 
   let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
     CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
@@ -48,7 +52,7 @@
 
   const localize = FoundryAdapter.localize;
 
-  let occupantSummaryTooltip: OccupantSummaryTooltip = $state();
+  let occupantSummaryTooltip: OccupantSummaryTooltip;
 
   async function showOccupantSummaryTooltip(
     event: MouseEvent & { currentTarget: EventTarget & HTMLDivElement },
@@ -64,9 +68,11 @@
       occupants.push(await fromUuid(uuid));
     }
 
-    occupantSummaryTooltip.$set({ occupants: occupants, title: title });
+    tooltipOccupants = occupants;
+    tooltipTitle = title;
 
-    await tick();
+    // kgar-migration-task - ensure that this tick is not actually needed. If the tooltip doesn't work right, uncomment this tick
+    // await tick();
 
     Tooltip.show(event?.currentTarget, occupantSummaryTooltip.getMarkup());
   }

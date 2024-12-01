@@ -20,7 +20,7 @@
 
   let appId = $derived($context.document.id);
 
-  let selectedTabId: string = $state();
+  let selectedTabId: string = $state('');
 
   const localize = FoundryAdapter.localize;
 </script>
