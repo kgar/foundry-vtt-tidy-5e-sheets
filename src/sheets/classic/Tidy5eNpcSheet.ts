@@ -30,7 +30,7 @@ import { debug, error } from 'src/utils/logging';
 import { SettingsProvider, settingStore } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { getPercentage } from 'src/utils/numbers';
-import { mount } from 'svelte';
+import { mount, unmount } from 'svelte';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
 import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import {
@@ -1193,7 +1193,9 @@ export class Tidy5eNpcSheet
   }
 
   _destroySvelteComponent() {
-    this.component?.$destroy();
+    if (this.component) {
+      unmount(this.component);
+    }
     this.component = undefined;
   }
 

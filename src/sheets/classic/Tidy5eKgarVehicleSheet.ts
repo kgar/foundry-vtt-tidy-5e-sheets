@@ -28,7 +28,7 @@ import {
   blurUntabbableButtonsOnClick,
   maintainCustomContentInputFocus,
 } from 'src/utils/applications';
-import { mount } from 'svelte';
+import { mount, unmount } from 'svelte';
 import { debug } from 'src/utils/logging';
 import { getPercentage } from 'src/utils/numbers';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
@@ -737,7 +737,9 @@ export class Tidy5eVehicleSheet
   }
 
   _destroySvelteComponent() {
-    this.component?.$destroy();
+    if (this.component) {
+      unmount(this.component);
+    }
     this.component = undefined;
   }
 

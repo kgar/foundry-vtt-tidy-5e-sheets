@@ -24,6 +24,7 @@ import type {
 } from 'src/types/application.types';
 import { HeaderControlsRuntime } from 'src/runtime/header-controls/HeaderControlsRuntime';
 import type { CustomHeaderControlsEntry } from 'src/api';
+import { unmount } from 'svelte';
 
 type RenderResult<TContext> = {
   customContents: RenderedSheetPart[];
@@ -281,7 +282,7 @@ export function SvelteApplicationMixin<
       }
 
       this.#subscriptionsService.unsubscribeAll();
-      this.#components.forEach((c) => c.$destroy());
+      this.#components.forEach((c) => unmount(c));
       this.#components = [];
       await super.close(options);
     }
