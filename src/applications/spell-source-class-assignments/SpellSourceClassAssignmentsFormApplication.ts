@@ -1,4 +1,4 @@
-import type { SvelteComponent, mount } from 'svelte';
+import { mount } from 'svelte';
 import AssignSpellsToSourceClasses from './SpellSourceClassAssignments.svelte';
 import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
 import type { Actor5e } from 'src/types/types';
@@ -36,7 +36,7 @@ export default class SpellSourceClassAssignmentsFormApplication extends SvelteFo
     this.subscriptionsService = new StoreSubscriptionsService();
   }
 
-  createComponent(node: HTMLElement): SvelteComponent {
+  createComponent(node: HTMLElement): Record<string, any> {
     this.context.set(this.getData());
 
     return mount(AssignSpellsToSourceClasses, {

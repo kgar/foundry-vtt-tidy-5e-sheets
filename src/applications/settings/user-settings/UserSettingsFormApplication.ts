@@ -1,5 +1,5 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { SvelteComponent, mount } from 'svelte';
+import { mount } from 'svelte';
 import { writable } from 'svelte/store';
 import {
   getCurrentSettings,
@@ -98,7 +98,7 @@ export class UserSettingsFormApplication extends SvelteFormApplicationBase {
     };
   }
 
-  createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
+  createComponent(node: HTMLElement): Record<string, any> {
     const data = this.getData();
 
     debug('Sheet Settings context data', data);

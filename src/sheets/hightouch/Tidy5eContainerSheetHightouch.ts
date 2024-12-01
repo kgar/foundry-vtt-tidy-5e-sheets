@@ -1,4 +1,4 @@
-import type { SvelteComponent, mount } from 'svelte';
+import { mount } from 'svelte';
 import { CONSTANTS } from 'src/constants';
 import ContainerSheet from './container/ContainerSheet.svelte';
 import type {
@@ -85,7 +85,7 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
     submitOnClose: false,
   };
 
-  _createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
+  _createComponent(node: HTMLElement): Record<string, any> {
     this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
 
     const context = new Map<any, any>([

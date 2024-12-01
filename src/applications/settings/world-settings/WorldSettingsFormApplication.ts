@@ -1,5 +1,5 @@
 import SvelteFormApplicationBase from 'src/applications/SvelteFormApplicationBase';
-import type { SvelteComponent, mount } from 'svelte';
+import { mount } from 'svelte';
 import WorldSettings from './WorldSettings.svelte';
 import {
   SettingsProvider,
@@ -117,7 +117,7 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
     };
   }
 
-  createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
+  createComponent(node: HTMLElement): Record<string, any> {
     const data = this.getData();
 
     debug('World Settings context data', data);

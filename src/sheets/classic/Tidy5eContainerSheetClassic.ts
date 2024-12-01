@@ -23,7 +23,7 @@ import type {
   Utilities,
   Tab,
 } from 'src/types/types';
-import type { SvelteComponent, mount } from 'svelte';
+import { mount } from 'svelte';
 import { writable } from 'svelte/store';
 import ContainerSheet from './item/ContainerSheet.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
@@ -85,7 +85,7 @@ export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
     submitOnClose: false,
   };
 
-  _createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
+  _createComponent(node: HTMLElement): Record<string, any> {
     this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
 
     const context = new Map<any, any>([

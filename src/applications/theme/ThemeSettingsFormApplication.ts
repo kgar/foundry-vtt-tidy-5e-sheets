@@ -12,7 +12,7 @@ import type {
   ThemeColorSetting,
   Tidy5eThemeDataV1,
 } from 'src/types/theme.types';
-import type { SvelteComponent, mount } from 'svelte';
+import { mount } from 'svelte';
 import { get, writable, type Writable } from 'svelte/store';
 import ThemeSettingsSheet from './ThemeSettingsSheet.svelte';
 import { downloadTextFile } from 'src/utils/file';
@@ -48,7 +48,7 @@ export class ThemeSettingsFormApplication extends SvelteFormApplicationBase {
     });
   }
 
-  createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
+  createComponent(node: HTMLElement): Record<string, any> {
     return mount(ThemeSettingsSheet, {
       target: node,
       props: {

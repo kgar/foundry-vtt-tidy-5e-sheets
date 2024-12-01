@@ -4,7 +4,7 @@ import {
   type ApplicationConfiguration,
   type ApplicationRenderOptions,
 } from 'src/types/application.types';
-import type { SvelteComponent, mount } from 'svelte';
+import { mount } from 'svelte';
 import GroupSheet from './group/GroupSheet.svelte';
 import type {
   Actor5e,
@@ -117,7 +117,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
 
   // TODO: First render, derive options that come from user preference
 
-  _createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
+  _createComponent(node: HTMLElement): Record<string, any> {
     const component = mount(GroupSheet, {
       target: node,
       context: new Map<any, any>([

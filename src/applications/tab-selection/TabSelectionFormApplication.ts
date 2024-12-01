@@ -1,4 +1,4 @@
-import type { SvelteComponent, mount } from 'svelte';
+import { mount } from 'svelte';
 import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
 import TabSelection from './TabSelection.svelte';
 import type { Actor5e } from 'src/types/types';
@@ -76,7 +76,7 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
     return [];
   }
 
-  createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
+  createComponent(node: HTMLElement): Record<string, any> {
     return mount(TabSelection, {
       target: node,
       context: new Map<any, any>([

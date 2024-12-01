@@ -1,4 +1,4 @@
-import type { Component, SvelteComponent } from 'svelte';
+import type { Component } from 'svelte';
 import type {
   ContainerContents,
   Item5e,

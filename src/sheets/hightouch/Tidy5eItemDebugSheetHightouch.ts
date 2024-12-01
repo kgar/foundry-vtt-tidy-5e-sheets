@@ -4,7 +4,7 @@ import type {
   ApplicationConfiguration,
   ApplicationRenderOptions,
 } from 'src/types/application.types';
-import type { SvelteComponent, mount } from 'svelte';
+import { mount } from 'svelte';
 import ItemDebugSheet from './item/ItemDebugSheet.svelte';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import type { Tab } from 'src/types/types';
@@ -51,7 +51,7 @@ export class Tidy5eItemDebugSheetHightouch extends SvelteApplicationMixin<ItemDe
     submitOnClose: false,
   };
 
-  _createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
+  _createComponent(node: HTMLElement): Record<string, any> {
     return mount(ItemDebugSheet, {
       target: node,
       context: new Map<any, any>([

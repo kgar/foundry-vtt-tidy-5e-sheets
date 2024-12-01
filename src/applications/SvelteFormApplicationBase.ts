@@ -1,9 +1,8 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { SvelteComponent } from 'svelte';
 
 export default abstract class SvelteFormApplicationBase extends FormApplication {
-  component: SvelteComponent | undefined;
+  component: Record<string, any> | undefined;
   staticExtraApplicationClasses: string[] = [];
 
   constructor(...args: any[]) {
@@ -36,7 +35,7 @@ export default abstract class SvelteFormApplicationBase extends FormApplication 
     this.component = this.createComponent(node);
   }
 
-  abstract createComponent(node: HTMLElement): SvelteComponent;
+  abstract createComponent(node: HTMLElement): Record<string, any>;
 
   close(options: unknown = {}) {
     this.component?.$destroy();

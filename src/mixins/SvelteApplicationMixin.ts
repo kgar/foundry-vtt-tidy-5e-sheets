@@ -7,7 +7,6 @@ import {
   blurUntabbableButtonsOnClick,
 } from 'src/utils/applications';
 import { debug, error } from 'src/utils/logging';
-import type { SvelteComponent } from 'svelte';
 import { writable, type Unsubscriber, type Writable } from 'svelte/store';
 import {
   CustomContentRendererV2,
@@ -71,7 +70,7 @@ export function SvelteApplicationMixin<
     static USE_HEADER_SHEET_LOCK: boolean = false;
 
     /** The component which represents the UI. */
-    #components: SvelteComponent[] = [];
+    #components: Record<string, any>[] = [];
 
     #customHTMLTags: string[] = ['PROSE-MIRROR'];
 
@@ -107,15 +106,13 @@ export function SvelteApplicationMixin<
     _store: Writable<TContext> = writable<TContext>();
 
     /** Creates the component which represents the window content area. */
-    _createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
+    _createComponent(node: HTMLElement): Record<string, any> {
       const errorMessage =
         'Unable to render Svelte application. To implement a Svelte application, override _createComponent and provide context data matching the specified sheet context type.';
       throw new Error(errorMessage);
     }
 
-    _createAdditionalComponents(
-      content: HTMLElement
-    ): SvelteComponent<any, any, any>[] {
+    _createAdditionalComponents(content: HTMLElement): Record<string, any>[] {
       return [];
     }
 

@@ -1,4 +1,4 @@
-import type { SvelteComponent, mount } from 'svelte';
+import { mount } from 'svelte';
 import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
 import ApplyTidySheetPreferences from './ApplyTidySheetPreferences.svelte';
 import { Tidy5eCharacterSheet } from 'src/sheets/classic/Tidy5eCharacterSheet';
@@ -39,7 +39,7 @@ export class ApplyTidySheetPreferencesApplication extends SvelteFormApplicationB
     });
   }
 
-  createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
+  createComponent(node: HTMLElement): Record<string, any> {
     return mount(ApplyTidySheetPreferences, {
       target: node,
       props: {

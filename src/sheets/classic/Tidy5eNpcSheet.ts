@@ -30,7 +30,7 @@ import { debug, error } from 'src/utils/logging';
 import { SettingsProvider, settingStore } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { getPercentage } from 'src/utils/numbers';
-import type { SvelteComponent, mount } from 'svelte';
+import { mount } from 'svelte';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
 import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import {
@@ -131,7 +131,7 @@ export class Tidy5eNpcSheet
     });
   }
 
-  component: SvelteComponent | undefined;
+  component: Record<string, any> | undefined;
   activateListeners(html: { get: (index: 0) => HTMLElement }) {
     // Document Apps Reactivity
     game.user.apps[this.id] = this;

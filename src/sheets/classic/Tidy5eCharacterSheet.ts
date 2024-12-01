@@ -41,7 +41,7 @@ import {
   blurUntabbableButtonsOnClick,
   maintainCustomContentInputFocus,
 } from 'src/utils/applications';
-import type { SvelteComponent, mount } from 'svelte';
+import { mount } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
 import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
@@ -148,7 +148,7 @@ export class Tidy5eCharacterSheet
     });
   }
 
-  component: SvelteComponent | undefined;
+  component: Record<string, any> | undefined;
   activateListeners(html: { get: (index: 0) => HTMLElement }) {
     // Document Apps Reactivity
     game.user.apps[this.id] = this;
