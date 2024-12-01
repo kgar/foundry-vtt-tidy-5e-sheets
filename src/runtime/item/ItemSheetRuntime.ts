@@ -14,7 +14,6 @@ import SubclassSheet from 'src/sheets/classic/item/SubclassSheet.svelte';
 import ToolSheet from 'src/sheets/classic/item/ToolSheet.svelte';
 import WeaponSheet from 'src/sheets/classic/item/WeaponSheet.svelte';
 import SpeciesSheet from 'src/sheets/classic/item/SpeciesSheet.svelte';
-import type { ComponentType } from 'svelte';
 import type { RegisteredContent, RegisteredTab } from '../types';
 import type {
   ContainerSheetClassicContext,
@@ -25,6 +24,7 @@ import { CustomContentManager } from '../content/CustomContentManager';
 import type { RegisteredEquipmentTypeGroup } from './item.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { debug, error } from 'src/utils/logging';
+import type { Component } from 'svelte';
 
 export class ItemSheetRuntime {
   private static _content: RegisteredContent<ItemSheetContext>[] = [];
@@ -114,7 +114,7 @@ export class ItemSheetRuntime {
       defaultTabs: () => [
         itemSheetTabs.description,
         itemSheetTabs.facilityDetails,
-        itemSheetTabs.activities
+        itemSheetTabs.activities,
       ],
     },
     [CONSTANTS.ITEM_TYPE_FEAT]: {
@@ -202,7 +202,7 @@ export class ItemSheetRuntime {
 }
 
 type ItemSheetInfo = {
-  Sheet: ComponentType;
+  Sheet: Component;
   defaultTabs(): Tab[];
   // TODO: Remove after replacing item sheets
   tempHightouchTabs?: () => Tab[];

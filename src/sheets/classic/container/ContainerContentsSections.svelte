@@ -17,7 +17,7 @@
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import { getContext, type ComponentType } from 'svelte';
+  import { getContext, type Component } from 'svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import type { Readable } from 'svelte/store';
@@ -50,7 +50,7 @@
   );
 
   let classicControls: {
-    component: ComponentType;
+    component: Component<any>;
     getProps: (item: Item5e) => any;
   }[] = [];
 

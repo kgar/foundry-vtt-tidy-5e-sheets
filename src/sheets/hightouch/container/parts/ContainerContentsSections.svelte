@@ -12,7 +12,7 @@
   import TidyTableCell from 'src/components/table/TidyTableCell.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import { getContext, type ComponentType } from 'svelte';
+  import { getContext } from 'svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import type { Readable } from 'svelte/store';
@@ -46,7 +46,7 @@
 
   // TODO: When Svelte 5, snippets
   // let itemActions: {
-  //   component: ComponentType;
+  //   component: Component;
   //   getProps: (item: Item5e) => any;
   // }[] = [];
 

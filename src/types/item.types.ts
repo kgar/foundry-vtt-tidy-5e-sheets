@@ -1,4 +1,4 @@
-import type { ComponentType, SvelteComponent } from 'svelte';
+import type { Component } from 'svelte';
 import type {
   AttunementContext,
   ContainerCapacityContext,
@@ -165,16 +165,7 @@ export type ItemChatData = {
   properties: string[];
 };
 
-export type ItemCardContentComponent = ComponentType<
-  SvelteComponent<
-    {
-      item: Item5e;
-      chatData: ItemChatData;
-    },
-    any,
-    any
-  >
->;
+export type ItemCardContentComponent = Component<any>;
 
 export type ContainerItemContext = {
   totalWeight?: number;

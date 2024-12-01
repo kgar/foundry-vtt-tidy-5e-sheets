@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ComponentType } from 'svelte';
+  import type { Component } from 'svelte';
   import TextInput from '../inputs/TextInput.svelte';
 
   export let document: any;
@@ -12,7 +12,7 @@
   export let maxTitle: string | null = null;
   export let maxDisabled: boolean = false;
   export let percentage: number | null = null;
-  export let Bar: ComponentType | null = null;
+  export let Bar: Component<any> | null = null;
 </script>
 
 <div class="resource-container">

@@ -33,12 +33,12 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: sizes = <DropdownListOption[]>Object.entries(
-    $context.config.actorSizes,
-  ).map(([key, size]: [string, any]) => ({
-    value: key,
-    text: size.label,
-  }));
+  $: sizes = Object.entries($context.config.actorSizes).map(
+    ([key, size]: [string, any]) => ({
+      value: key,
+      text: size.label,
+    }),
+  ) satisfies DropdownListOption[];
 
   let currentSize: DropdownListOption;
   $: currentSize = {
@@ -46,12 +46,12 @@
     text: $context.config.actorSizes[$context.system.traits.size]?.label,
   };
 
-  $: vehicleTypes = <DropdownListOption[]>Object.entries(
-    $context.config.vehicleTypes,
-  ).map(([key, label]: [string, any]) => ({
-    value: key,
-    text: label,
-  }));
+  $: vehicleTypes = Object.entries($context.config.vehicleTypes).map(
+    ([key, label]: [string, any]) => ({
+      value: key,
+      text: label,
+    }),
+  ) satisfies DropdownListOption[];
 
   let currentVehicleType: DropdownListOption;
   $: currentVehicleType = {

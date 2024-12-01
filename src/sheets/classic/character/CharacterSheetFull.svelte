@@ -46,17 +46,17 @@
 
   $: abilities = Object.entries<any>($context.abilities);
 
-  $: sizes = <DropdownListOption[]>Object.entries(
-    $context.config.actorSizes,
-  ).map(([abbreviation, size]: [string, any]) => ({
-    value: abbreviation,
-    text: size.label,
-  }));
+  $: sizes = Object.entries($context.config.actorSizes).map(
+    ([abbreviation, size]: [string, any]) => ({
+      value: abbreviation,
+      text: size.label,
+    }),
+  ) satisfies DropdownListOption[];
 
-  $: currentSize = <DropdownListOption>{
+  $: currentSize = {
     value: $context.system.traits.size,
     text: $context.config.actorSizes[$context.system.traits.size]?.label,
-  };
+  } satisfies DropdownListOption;
 </script>
 
 <ItemInfoCard />

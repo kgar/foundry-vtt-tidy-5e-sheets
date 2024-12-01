@@ -14,7 +14,7 @@ import type {
   UsesRecoveryData,
 } from 'src/types/item.types';
 import TypeNotFoundSheet from './item/TypeNotFoundSheet.svelte';
-import type { SvelteComponent } from 'svelte';
+import { mount } from 'svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TabManager } from 'src/runtime/tab/TabManager';
@@ -62,7 +62,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
     submitOnClose: false,
   };
 
-  _createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
+  _createComponent(node: HTMLElement): Record<string, any> {
     const sheetComponent = ItemSheetRuntime.sheets[this.item.type];
 
     const context = new Map<any, any>([
@@ -71,11 +71,11 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
     ]);
 
     const component = sheetComponent
-      ? new sheetComponent.Sheet({
+      ? mount(sheetComponent.Sheet, {
           target: node,
           context: context,
         })
-      : new TypeNotFoundSheet({
+      : mount(TypeNotFoundSheet, {
           target: node,
           context: context,
         });

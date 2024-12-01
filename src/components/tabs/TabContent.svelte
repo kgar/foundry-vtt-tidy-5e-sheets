@@ -2,7 +2,14 @@
   import type { Tab } from 'src/types/types';
   import { declareLocation } from 'src/types/location-awareness.types';
   import { CONSTANTS } from 'src/constants';
-  import { getAllContexts, getContext, onMount, setContext } from 'svelte';
+  import {
+    getAllContexts,
+    getContext,
+    mount,
+    onMount,
+    setContext,
+    unmount,
+  } from 'svelte';
   import type { Readable } from 'svelte/store';
   import { error } from 'src/utils/logging';
 
@@ -31,14 +38,14 @@
       const props = tab.content.getProps?.($context) ?? {};
       const tabComponentContext =
         tab.content.getContext?.(allContexts) ?? allContexts;
-      const svelteTabComponent = new tab.content.component({
+      const svelteTabComponent = mount(tab.content.component, {
         target: tidyTab,
         context: tabComponentContext,
         props: props,
       });
 
       return () => {
-        svelteTabComponent.$destroy();
+        unmount(svelteTabComponent);
       };
     } catch (e) {
       error('Failed to render svelte tab', false, e);

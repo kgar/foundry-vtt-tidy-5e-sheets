@@ -1,4 +1,4 @@
-import type { ComponentType, SvelteComponent } from 'svelte';
+import type { Component, SvelteComponent } from 'svelte';
 import type {
   ContainerContents,
   Item5e,
@@ -24,11 +24,9 @@ import type { Activity5e } from 'src/foundry/dnd5e.types';
 
 export type Actor5e = any;
 
-export type SvelteTabContent<
-  T extends SvelteComponent<any, any, any> = SvelteComponent<any, any, any>
-> = {
+export type SvelteTabContent = {
   type: 'svelte';
-  component: ComponentType<T>;
+  component: Component<any>;
   cssClass?: string;
   getProps?: (data: any) => Record<string, any>;
   getContext?: (context: Map<any, any>) => Map<any, any>;
@@ -55,11 +53,11 @@ export interface OnRenderTabParams extends OnRenderParams {
 
 // TODO: Make this generic in such a way that correct props are actually required and that an array of tabs can have hetergeneity of component types without a crazy TS type
 export type Tab<
-  T extends SvelteComponent<any, any, any> = SvelteComponent<any, any, any>
+  T extends Component = Component
 > = {
   title: string;
   id: string;
-  content: SvelteTabContent<T> | HtmlTabContent;
+  content: SvelteTabContent | HtmlTabContent;
   onRender?: (params: OnRenderTabParams) => void;
   activateDefaultSheetListeners?: boolean;
   autoHeight?: boolean;
@@ -660,7 +658,7 @@ export type ContainerCapacityContext = {
 };
 
 export type RenderableClassicControl<TParams> = {
-  component: ComponentType;
+  component: Component<any>;
   props?: (params: TParams) => Record<string, unknown>;
   visible?: (params: TParams) => boolean;
 };
