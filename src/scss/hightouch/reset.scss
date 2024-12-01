@@ -1,0 +1,56 @@
+:where(.tidy5e-sheet.hightouch).application {
+  button {
+    box-shadow: none;
+    outline: none;
+    margin: 0;
+
+    i {
+      margin: 0;
+    }
+
+    &:hover,
+    &:focus {
+      box-shadow: none;
+      outline: none;
+    }
+  }
+
+  button,
+  a.button {
+    transition: none;
+
+    &:hover {
+      text-shadow: none;
+    }
+
+    &.active {
+      box-sizing: inherit;
+      outline: none;
+      box-shadow: none;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  a:hover {
+    text-shadow: none;
+  }
+
+  input[type='radio'] {
+    margin: 0;
+  }
+}
+
+/* Form Resets */
+
+form {
+  .form-group {
+    .form-fields {
+       input[type="checkbox"] {
+        flex-basis: var(--checkbox-size);
+       }
+    }
+  }
+}

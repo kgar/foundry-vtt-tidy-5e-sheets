@@ -1,0 +1,246 @@
+/* Hightouch-style buttons */
+:is(button, .button):where(
+    :not(.header-control):not(.controls-dropdown .control)
+  ) {
+  --button-padding-block-start: 0.5rem;
+  --button-padding-block-end: 0.5rem;
+  --button-padding-inline-start: 0.75rem;
+  --button-padding-inline-end: 0.75rem;
+  --icon-fill: var(--t5e-color-text-onDefault-default);
+
+  display: inline-flex;
+  width: unset;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+  flex-shrink: 0;
+  border-radius: 0.125rem;
+  border: 1px solid var(--t5e-component-field-default-border);
+  background: var(--t5e-component-field-default-background);
+  color: var(--t5e-color-text-onDefault-default);
+  cursor: pointer;
+
+  font-family: var(--t5e-font-roboto-condensed);
+  font-size: var(--font-font-size-13);
+  font-style: normal;
+  font-weight: 500;
+  line-height: 0.875rem;
+
+  /* shadow/field/light */
+  box-shadow: 0px 0px 4px 0px var(--dnd5e-shadow-15, rgba(0, 0, 0, 0.15));
+
+  padding: var(--button-padding-block-start) var(--button-padding-inline-end)
+    var(--button-padding-block-end) var(--button-padding-inline-start);
+
+  :where(i) {
+    color: var(--t5e-color-text-onDefault-default);
+    margin: 0;
+    font-size: 0.6875rem;
+  }
+
+  &:hover {
+    background: var(--t5e-component-field-default-background);
+    color: var(--t5e-color-text-onDefault-default);
+    border: 1px solid var(--t5e-component-field-default-border);
+
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  &:focus-within {
+    background: linear-gradient(
+        0deg,
+        var(
+            --t5e-component-field-default-hover-overlay,
+            rgba(255, 255, 255, 0.5)
+          )
+          0%,
+        var(--t5e-component-field-default-hover-overlay) 100%
+      ),
+      var(--t5e-component-field-default-background);
+    box-shadow: 0px 0px 0px 2px #9a2a30;
+  }
+
+  &.active,
+  &:active,
+  &.attention {
+    --icon-fill: var(--t5e-component-toggle-toggled-text);
+
+    color: var(--t5e-component-toggle-toggled-text);
+    border: 1px solid var(--t5e-component-toggle-toggled-border);
+    background: var(--t5e-component-toggle-toggled-background);
+
+    i {
+      color: var(--t5e-component-toggle-toggled-text);
+    }
+  }
+
+  &.icon-button {
+    --size: 2rem;
+    padding: 0.5rem;
+    width: var(--size);
+    height: var(--size);
+  }
+
+  &.disabled {
+    pointer-events: none;
+    background: transparent;
+    border: 0.0625rem solid var(--t5e-component-field-default-border);
+
+    &,
+    i {
+      color: var(--t5e-color-icon-light-disabled);
+    }
+  }
+
+  &:has(i, dnd5e-icon) {
+    padding-inline-start: calc(var(--button-padding-inline-start) - 0.125rem);
+  }
+
+  /* Toggle Buttons */
+  &.toggle-button {
+    border: 0.0625rem solid var(--t5e-component-field-default-border);
+
+    &:has(.toggle:checked) {
+      --icon-fill: var(--t5e-component-toggle-toggled-text);
+      color: var(--t5e-component-toggle-toggled-text);
+      background: var(--t5e-component-toggle-toggled-background);
+
+      i {
+        color: var(--t5e-component-toggle-toggled-text);
+      }
+    }
+
+    &.disabled {
+      --icon-fill: var(--t5e-color-text-onDefault-lightest);
+      font-style: italic;
+      color: var(--t5e-color-text-onDefault-lightest);
+    }
+  }
+}
+
+&:where(.inverse) :is(button, .button),
+:where(.inverse) :is(button, .button) {
+  border: 1px solid var(--t5e-component-field-inverse-border);
+  background: var(--t5e-component-field-inverse-background);
+
+  &,
+  i {
+    color: var(--t5e-color-text-onDefault-gold-emphasis);
+  }
+}
+
+/* Button Group */
+
+.button-group {
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+
+  :is(button, .button) {
+    box-shadow: none;
+  }
+
+  :is(button, .button):not(:last-child):not(:first-child),
+  :is(button, .button):first-child:not(:last-child) {
+    border-right: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  :is(button, .button):not(:last-child):not(:first-child) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  :is(button, .button):last-child:not(:first-child) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+
+/* Header Controls */
+
+:is(button, .button) {
+  &.header-control,
+  &.unbutton {
+    width: unset;
+    border: none;
+    background: none;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    outline: none;
+  }
+}
+
+:is(button, .button).header-control {
+  font-weight: 900;
+}
+
+/* Button Dropdown */
+
+.button-with-options-wrapper {
+  position: relative;
+
+  .with-options {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    position: relative;
+
+    .expand-indicator {
+      font-size: 0.5rem;
+      position: absolute;
+      right: 0.125rem;
+      bottom: 0.0625rem;
+      color: var(--t5e-color-text-onDefault-gold);
+    }
+
+    &:is(.active, :active, .attention):not(.disabled) .expand-indicator {
+      color: var(--t5e-color-text-onInverse-default);
+    }
+  }
+
+  menu {
+    position: absolute;
+    margin: 0;
+    padding: 0.5rem 0.75rem;
+    top: 90%;
+    width: auto;
+    padding: 0.5rem 0.75rem;
+    display: none;
+    flex-direction: column;
+    gap: 0.5rem;
+    background: var(--t5e-component-card-onDefault-default);
+    border-radius: 0.25rem;
+    z-index: 2;
+    white-space: nowrap;
+    box-shadow: 0px 0px 9px 0px #000;
+
+    &.anchor-left {
+      left: 0;
+    }
+
+    &.anchor-right {
+      right: 0;
+    }
+
+    &.expanded {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    h4 {
+      color: var(--t5e-color-text-onDefault-lighter);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      line-height: normal;
+    }
+
+    label:has(input[type="radio"]) {
+      display: flex;
+      gap: 0.5rem;
+    }
+  }
+}

@@ -1,0 +1,275 @@
+.tidy5e-sheet.hightouch {
+  --t5e-font-modesto-condensed: 'Modesto Condensed', 'Palatino Linotype', serif;
+  --t5e-font-family-title: var(--t5e-font-modesto-condensed);
+  --t5e-font-roboto-condensed: 'Roboto Condensed', sans-serif;
+  --t5e-font-roboto-slab: 'Roboto Slab', serif;
+  --tidy5e-font-signika: 'Signika', sans-serif;
+
+  --font-size-56: 3.5rem;
+  --font-size-11: 0.6875rem;
+
+  /* Cards */
+
+  --t5e-component-card-radius: 0.1875rem;
+
+  /* Colors */
+
+  --t5e-color-text-onInverse-default: var(--t5e-color-palette-white);
+  --t5e-color-text-onInverse-gold: var(--t5e-color-palette-gold-89);
+  --t5e-color-text-onInverse-gold-emphasis: var(--t5e-color-palette-gold-75);
+  --t5e-color-text-onInverse-gold-light: var(--t5e-color-palette-gold-94);
+  --t5e-color-gold: rgba(159, 146, 117, 1);
+  --t5e-color-text-onInverse-lighter: var(--t5e-color-palette-grey-85);
+  --t5e-color-filigree: rgba(68, 72, 86, 1);
+  --t5e-color-text-onInverse-lightest: var(--t5e-color-palette-grey-60);
+  --t5e-color-text-onInverse-disabled: var(--t5e-color-palette-grey-47);
+  --t5e-component-card-onDefault-default: rgba(248, 244, 241, 1);
+  --t5e-component-card-onDefault-darker: rgba(241, 235, 232, 1);
+  --t5e-component-toggle-toggled-background: var(
+    --t5e-color-gradient-red-light
+  );
+  --t5e-component-toggle-toggled-border: var(--t5e-color-gradient-red-dark);
+  --t5e-component-toggle-toggled-text: var(--t5e-color-text-onInverse-default);
+  --t5e-component-card-onDefault-lighter: rgba(253, 252, 252, 1);
+  --t5e-color-icon-dark-default: var(--t5e-color-palette-grey-100);
+  --t5e-color-icon-dark-diminished: var(--t5e-color-palette-grey-85);
+  --t5e-color-icon-dark-disabled: rgba(255, 255, 255, 0.5);
+  --t5e-component-pill-onInverse-background: var(
+    --t5e-component-field-inverse-background
+  );
+  --t5e-component-pill-onDefault-background: var(
+    --t5e-component-card-onDefault-default
+  );
+  --t5e-component-pill-onInverse-border: var(
+    --t5e-component-field-inverse-border
+  );
+  --t5e-color-icon-light-default: var(--t5e-color-palette-grey-0);
+  --t5e-color-icon-light-diminished: var(--t5e-color-palette-grey-40);
+  --t5e-color-icon-light-disabled: rgba(0, 0, 0, 0.4);
+  --t5e-component-pill-onDefault-border: var(
+    --t5e-component-field-default-border
+  );
+  --t5e-component-field-focus: rgba(154, 42, 48, 1);
+  --t5e-component-field-inverse-background: var(
+    --t5e-component-card-onInverse-default
+  );
+  --t5e-color-text-onDefault-default: var(--t5e-color-palette-grey-0);
+  --t5e-color-text-onDefault-gold: var(--t5e-color-palette-gold-62);
+  --t5e-color-text-onDefault-gold-emphasis: var(--t5e-color-palette-gold-56);
+  --t5e-color-text-onDefault-gold-light: var(--t5e-color-palette-gold-94);
+  --t5e-component-field-inverse-border: rgba(122, 122, 122, 1);
+  --t5e-color-text-onDefault-lighter: var(--t5e-color-palette-grey-29);
+  --t5e-color-gradient-orange-dark: rgba(101, 56, 14, 1);
+  --t5e-color-text-onDefault-lightest: var(--t5e-color-palette-grey-40);
+  --t5e-color-gradient-red-dark: var(--t5e-color-palette-red-27);
+  --t5e-color-gradient-purple-light: rgba(91, 16, 150, 1);
+  --t5e-color-gradient-blue-light: rgba(2, 90, 128, 1);
+  --t5e-color-gradient-purple-dark: rgba(50, 9, 83, 1);
+  --t5e-color-gradient-green-light: rgba(39, 109, 60, 1);
+  --t5e-color-text-onDefault-disabled: var(--t5e-color-palette-grey-60);
+  --t5e-color-gradient-green-dark: rgba(23, 64, 35, 1);
+  --t5e-color-gradient-blue-dark: rgba(1, 64, 90, 1);
+  --t5e-color-gradient-red-light: var(--t5e-color-palette-red-45);
+  --t5e-color-hp-dark: rgba(27, 75, 41, 1);
+  --t5e-color-gradient-grey-light: rgba(87, 67, 72, 1);
+  --t5e-color-gradient-grey-dark: rgba(36, 39, 49, 1);
+  --t5e-color-gradient-orange-light: rgba(179, 99, 25, 1);
+  --t5e-component-card-onInverse-default: rgba(37, 40, 48, 1);
+  --t5e-color-hp-default: rgba(39, 109, 60, 1);
+  --t5e-component-card-onInverse-darker: rgba(22, 24, 29, 1);
+  --t5e-component-card-onInverse-lighter: rgba(48, 50, 54, 1);
+  --t5e-color-hp-light: rgba(59, 165, 93, 1);
+  --t5e-color-hp-temp: rgba(75, 102, 222, 1);
+  --t5e-component-field-default-border: var(--t5e-color-gold);
+  --t5e-component-field-default-background: var(
+    --t5e-component-card-onDefault-default
+  );
+  --t5e-component-field-default-hover-overlay: rgba(255, 255, 255, 0.5);
+  --t5e-component-field-default-hover-overlay-emphasis: rgba(255, 255, 255, 1);
+  --t5e-color-inventory-dark: rgba(62, 74, 117, 1);
+  --t5e-color-inventory-light: rgba(111, 130, 199, 1);
+  --t5e-color-inventory-max: rgba(81, 95, 149, 1);
+  --t5e-color-inventory-dark-over: rgba(101, 58, 37, 1);
+  --t5e-color-inventory-light-over: rgba(132, 65, 31, 1);
+  --t5e-color-inventory-max-over: rgba(110, 51, 22, 1);
+  --t5e-color-spellcasting-at-will: var(--t5e-color-palette-red-45);
+  --t5e-color-spellcasting-always-prepared: rgba(39, 109, 60, 1);
+  --t5e-color-spellcasting-pact: rgba(139, 38, 93, 1);
+  --t5e-color-spellcasting-innate: rgba(91, 16, 150, 1);
+  --t5e-color-spellcasting-ritual: rgba(31, 76, 145, 1);
+  --t5e-color-table-divider: rgba(224, 216, 212, 1);
+  --t5e-color-rarity-common: var(--t5e-color-gold);
+  --t5e-color-rarity-uncommon: rgba(114, 173, 17, 1);
+  --t5e-color-rarity-rare: rgba(36, 124, 178, 1);
+  --t5e-color-rarity-very-rare: rgba(195, 100, 231, 1);
+  --t5e-color-rarity-legendary: rgba(255, 182, 42, 1);
+  --t5e-color-rarity-artifact: rgba(247, 117, 88, 1);
+  --t5e-color-hp-hd-dark: rgba(68, 25, 26, 1);
+  --t5e-color-hp-hd-medium: rgba(80, 0, 0, 1);
+  --t5e-color-hp-hd-light: rgba(116, 27, 43, 1);
+  --t5e-color-highlight: rgba(100, 149, 237, 0.3);
+  --t5e-components-enricher-background: rgba(159, 146, 117, 0.15);
+  --t5e-components-enricher-border: rgba(159, 146, 117, 0.35);
+  --t5e-color-palette-white: var(--t5e-color-palette-grey-100);
+  --t5e-color-palette-black: var(--t5e-color-palette-grey-0);
+  --t5e-color-palette-gold-94: rgba(240, 240, 225, 1);
+  --t5e-color-palette-red-27: rgba(68, 25, 26, 1);
+  --t5e-color-palette-green-65: rgba(59, 165, 93, 1);
+  --t5e-color-palette-gold-89: rgba(226, 208, 168, 1);
+  --t5e-color-palette-grey-0: rgba(0, 0, 0, 1);
+  --t5e-color-palette-grey-29: rgba(75, 74, 68, 1);
+  --t5e-color-palette-grey-21: rgba(48, 50, 54, 1);
+  --t5e-color-palette-red-31: rgba(80, 0, 0, 1);
+  --t5e-color-palette-grey-19: rgba(37, 40, 48, 1);
+  --t5e-color-palette-grey-11: rgba(22, 24, 29, 1);
+  --t5e-color-palette-red-45: rgba(116, 27, 43, 1);
+  --t5e-color-palette-grey-34: rgba(68, 72, 86, 1);
+  --t5e-color-palette-green-43: rgba(39, 109, 60, 1);
+  --t5e-color-palette-gold-75: rgba(192, 173, 129, 1);
+  --t5e-color-palette-green-29: rgba(27, 75, 41, 1);
+  --t5e-color-palette-grey-40: rgba(102, 102, 102, 1);
+  --t5e-color-palette-grey-47: rgba(119, 119, 119, 1);
+  --t5e-color-palette-gold-62: rgba(159, 146, 117, 1);
+  --t5e-color-palette-green-25: rgba(23, 64, 35, 1);
+  --t5e-color-palette-red-60: rgba(154, 42, 48, 1);
+  --t5e-color-palette-grey-60: rgba(153, 153, 153, 1);
+  --t5e-color-palette-gold-56: rgba(143, 123, 78, 1);
+  --t5e-color-palette-grey-85: rgba(207, 210, 218, 1);
+  --t5e-color-palette-grey-100: rgba(255, 255, 255, 1);
+  --t5e-color-palette-red-100: rgba(255, 0, 0, 1);
+}
+
+.tidy5e-sheet.hightouch.dark {
+  /* Dark Mode Colors */
+
+  --t5e-color-text-onInverse-default: var(--t5e-color-palette-black);
+  --t5e-color-text-onInverse-gold: var(--t5e-color-palette-gold-62);
+  --t5e-color-text-onInverse-gold-emphasis: var(--t5e-color-palette-gold-56);
+  --t5e-color-text-onInverse-gold-light: var(--t5e-color-palette-gold-94);
+  --t5e-color-gold: rgba(159, 146, 117, 1);
+  --t5e-color-text-onInverse-lighter: var(--t5e-color-palette-grey-29);
+  --t5e-color-filigree: var(--t5e-color-gold);
+  --t5e-color-text-onInverse-lightest: var(--t5e-color-palette-grey-40);
+  --t5e-color-text-onInverse-disabled: var(--t5e-color-palette-grey-60);
+  --t5e-component-card-onDefault-default: rgba(37, 40, 48, 1);
+  --t5e-component-card-onDefault-darker: rgba(27, 29, 35, 1);
+  --t5e-component-toggle-toggled-background: var(
+    --t5e-color-gradient-red-light
+  );
+  --t5e-component-toggle-toggled-border: var(--t5e-color-gradient-red-dark);
+  --t5e-component-toggle-toggled-text: var(--t5e-color-text-onDefault-default);
+  --t5e-component-card-onDefault-lighter: rgba(48, 50, 54, 1);
+  --t5e-color-icon-dark-default: var(--t5e-color-palette-grey-29);
+  --t5e-color-icon-dark-diminished: var(--t5e-color-palette-grey-40);
+  --t5e-color-icon-dark-disabled: rgba(0, 0, 0, 0.4);
+  --t5e-component-pill-onInverse-background: var(
+    --t5e-component-field-inverse-background
+  );
+  --t5e-component-pill-onDefault-background: var(
+    --t5e-component-field-default-background
+  );
+  --t5e-component-pill-onInverse-border: var(
+    --t5e-component-field-inverse-border
+  );
+  --t5e-color-icon-light-default: var(--t5e-color-palette-grey-100);
+  --t5e-color-icon-light-diminished: var(--t5e-color-palette-grey-85);
+  --t5e-color-icon-light-disabled: rgba(255, 255, 255, 0.5);
+  --t5e-component-pill-onDefault-border: var(
+    --t5e-component-field-default-border
+  );
+  --t5e-component-field-focus: rgba(154, 42, 48, 1);
+  --t5e-component-field-inverse-background: var(
+    --t5e-component-card-onInverse-default
+  );
+  --t5e-color-text-onDefault-default: var(--t5e-color-palette-grey-100);
+  --t5e-color-text-onDefault-gold: var(--t5e-color-palette-gold-75);
+  --t5e-color-text-onDefault-gold-emphasis: var(--t5e-color-palette-gold-75);
+  --t5e-color-text-onDefault-gold-light: var(--t5e-color-palette-gold-94);
+  --t5e-component-field-inverse-border: var(--t5e-color-gold);
+  --t5e-color-text-onDefault-lighter: var(--t5e-color-palette-grey-85);
+  --t5e-color-gradient-orange-dark: rgba(101, 56, 14, 1);
+  --t5e-color-text-onDefault-lightest: var(--t5e-color-palette-grey-60);
+  --t5e-color-gradient-red-dark: var(--t5e-color-palette-red-27);
+  --t5e-color-gradient-purple-light: rgba(91, 16, 150, 1);
+  --t5e-color-gradient-blue-light: rgba(2, 90, 128, 1);
+  --t5e-color-gradient-purple-dark: rgba(50, 9, 83, 1);
+  --t5e-color-gradient-green-light: rgba(39, 109, 60, 1);
+  --t5e-color-text-onDefault-disabled: var(--t5e-color-palette-grey-47);
+  --t5e-color-gradient-green-dark: rgba(23, 64, 35, 1);
+  --t5e-color-gradient-blue-dark: rgba(1, 64, 90, 1);
+  --t5e-color-gradient-red-light: var(--t5e-color-palette-red-45);
+  --t5e-color-hp-dark: rgba(27, 75, 41, 1);
+  --t5e-color-gradient-grey-light: rgba(67, 72, 87, 1);
+  --t5e-color-gradient-grey-dark: rgba(36, 39, 49, 1);
+  --t5e-color-gradient-orange-light: rgba(179, 99, 25, 1);
+  --t5e-component-card-onInverse-default: rgba(248, 244, 241, 1);
+  --t5e-color-hp-default: rgba(39, 109, 60, 1);
+  --t5e-component-card-onInverse-darker: rgba(241, 235, 232, 1);
+  --t5e-component-card-onInverse-lighter: rgba(253, 252, 252, 1);
+  --t5e-color-hp-light: rgba(59, 165, 93, 1);
+  --t5e-color-hp-temp: rgba(75, 102, 222, 1);
+  --t5e-component-field-default-border: rgba(122, 122, 122, 1);
+  --t5e-component-field-default-background: var(
+    --t5e-component-card-onDefault-default
+  );
+  --t5e-component-field-default-hover-overlay: rgba(0, 0, 0, 1);
+  --t5e-component-field-default-hover-overlay-emphasis: rgba(0, 0, 0, 1);
+  --t5e-color-inventory-dark: rgba(62, 74, 117, 1);
+  --t5e-color-inventory-light: rgba(111, 130, 199, 1);
+  --t5e-color-inventory-max: rgba(81, 95, 149, 1);
+  --t5e-color-inventory-dark-over: rgba(255, 255, 255, 1);
+  --t5e-color-inventory-light-over: rgba(255, 255, 255, 1);
+  --t5e-color-inventory-max-over: rgba(255, 255, 255, 1);
+  --t5e-color-spellcasting-at-will: rgba(226, 131, 148, 1);
+  --t5e-color-spellcasting-always-prepared: rgba(139, 213, 161, 1);
+  --t5e-color-spellcasting-pact: rgba(222, 135, 182, 1);
+  --t5e-color-spellcasting-innate: rgba(186, 117, 240, 1);
+  --t5e-color-spellcasting-ritual: rgba(129, 168, 228, 1);
+  --t5e-color-table-divider: rgba(255, 255, 255, 0.25);
+  --t5e-color-rarity-common: var(--t5e-color-gold);
+  --t5e-color-rarity-uncommon: rgba(114, 173, 17, 1);
+  --t5e-color-rarity-rare: rgba(36, 124, 178, 1);
+  --t5e-color-rarity-very-rare: rgba(195, 100, 231, 1);
+  --t5e-color-rarity-legendary: rgba(255, 182, 42, 1);
+  --t5e-color-rarity-artifact: rgba(247, 117, 88, 1);
+  --t5e-color-hp-hd-dark: rgba(68, 25, 26, 1);
+  --t5e-color-hp-hd-medium: rgba(80, 0, 0, 1);
+  --t5e-color-hp-hd-light: rgba(116, 27, 43, 1);
+  --t5e-color-highlight: rgba(100, 149, 237, 0.3);
+  --t5e-components-enricher-background: rgba(159, 146, 117, 0.15);
+  --t5e-components-enricher-border: rgba(159, 146, 117, 0.35);
+  --t5e-color-palette-white: var(--t5e-color-palette-grey-100);
+  --t5e-color-palette-black: var(--t5e-color-palette-grey-0);
+  --t5e-color-palette-gold-94: rgba(240, 240, 225, 1);
+  --t5e-color-palette-red-27: rgba(68, 25, 26, 1);
+  --t5e-color-palette-green-65: rgba(59, 165, 93, 1);
+  --t5e-color-palette-gold-89: rgba(226, 208, 168, 1);
+  --t5e-color-palette-grey-0: rgba(0, 0, 0, 1);
+  --t5e-color-palette-grey-29: rgba(75, 74, 68, 1);
+  --t5e-color-palette-grey-21: rgba(48, 50, 54, 1);
+  --t5e-color-palette-red-31: rgba(80, 0, 0, 1);
+  --t5e-color-palette-grey-19: rgba(37, 40, 48, 1);
+  --t5e-color-palette-grey-11: rgba(22, 24, 29, 1);
+  --t5e-color-palette-red-45: rgba(116, 27, 43, 1);
+  --t5e-color-palette-grey-34: rgba(68, 72, 86, 1);
+  --t5e-color-palette-green-43: rgba(39, 109, 60, 1);
+  --t5e-color-palette-gold-75: rgba(192, 173, 129, 1);
+  --t5e-color-palette-green-29: rgba(27, 75, 41, 1);
+  --t5e-color-palette-grey-40: rgba(102, 102, 102, 1);
+  --t5e-color-palette-grey-47: rgba(119, 119, 119, 1);
+  --t5e-color-palette-gold-62: rgba(159, 146, 117, 1);
+  --t5e-color-palette-green-25: rgba(23, 64, 35, 1);
+  --t5e-color-palette-red-60: rgba(154, 42, 48, 1);
+  --t5e-color-palette-grey-60: rgba(153, 153, 153, 1);
+  --t5e-color-palette-gold-56: rgba(143, 123, 78, 1);
+  --t5e-color-palette-grey-85: rgba(207, 210, 218, 1);
+  --t5e-color-palette-grey-100: rgba(255, 255, 255, 1);
+  --t5e-color-palette-red-100: rgba(255, 0, 0, 1);
+}
+
+.tidy5e-sheet.classic {
+  --t5e-classic-tab-contents-padding-top: 1rem;
+  --t5e-classic-tab-contents-padding-right: 0.25rem;
+  --t5e-classic-tab-contents-padding-bottom: 1rem;
+  --t5e-classic-tab-contents-padding-left: 1rem;
+}

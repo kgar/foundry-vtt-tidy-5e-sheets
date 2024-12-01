@@ -143,73 +143,31 @@
   });
 </script>
 
-<div style="display: contents;" class="item-table-row">
-  <TidyTableRow
-    {hidden}
-    rowContainerAttributes={{
-      ['data-context-menu']: contextMenu?.type,
-      ['data-context-menu-document-uuid']: contextMenu?.uuid,
-      ['data-item-id']: item?.id,
-      ['data-tidy-table-row']: '',
-      ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.ITEM_TABLE_ROW,
-      ['data-tidy-item-type']: item?.type ?? 'unknown',
-    }}
-    rowAttributes={{
-      draggable: !!draggable,
-    }}
-    {rowClass}
-    on:mousedown={(event) =>
-      item && FoundryAdapter.editOnMiddleClick(event, item)}
-    on:mouseenter={onMouseEnter}
-    on:mouseleave={onMouseLeave}
-    on:dragstart={handleDragStart}
-  >
-    <slot {toggleSummary} />
+<TidyTableRow
+  {hidden}
+  rowContainerAttributes={{
+    ['data-context-menu']: contextMenu?.type,
+    ['data-context-menu-document-uuid']: contextMenu?.uuid,
+    ['data-item-id']: item?.id,
+    ['data-tidy-table-row']: '',
+    ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.ITEM_TABLE_ROW,
+    ['data-tidy-item-type']: item?.type ?? 'unknown',
+  }}
+  rowAttributes={{
+    draggable: !!draggable,
+  }}
+  rowClass="tidy-table-row-v2 {rowClass ?? ''}"
+  on:mousedown={(event) =>
+    item && FoundryAdapter.editOnMiddleClick(event, item)}
+  on:mouseenter={onMouseEnter}
+  on:mouseleave={onMouseLeave}
+  on:dragstart={handleDragStart}
+>
+  <slot {toggleSummary} />
 
-    <svelte:fragment slot="after-row">
-      <ExpandableContainer expanded={showSummary}>
-        <ItemSummary chatData={chatData ?? emptyChatData} {item} />
-      </ExpandableContainer>
-    </svelte:fragment>
-  </TidyTableRow>
-</div>
-
-<style lang="scss">
-  .item-table-row {
-    :global(.tidy-table-row.prepared) {
-      --t5e-tidy-table-row-background: var(--t5e-prepared-background);
-    }
-
-    :global(.tidy-table-row.always-prepared) {
-      --t5e-tidy-table-row-background: var(--t5e-alwaysprepared-background);
-    }
-
-    :global(.tidy-table-row.pact) {
-      --t5e-tidy-table-row-background: var(--t5e-pact-background);
-    }
-
-    :global(.tidy-table-row.at-will) {
-      --t5e-tidy-table-row-background: var(--t5e-atwill-background);
-    }
-
-    :global(.tidy-table-row.ritual-only) {
-      --t5e-tidy-table-row-background: var(--t5e-ritual-only-background);
-    }
-
-    :global(.tidy-table-row.innate) {
-      --t5e-tidy-table-row-background: var(--t5e-innate-background);
-    }
-
-    :global(.tidy-table-row.equipped) {
-      --t5e-tidy-table-row-background: var(--t5e-equipped-background);
-    }
-
-    :global(.tidy-table-row.magic-item) {
-      box-shadow: 0 0 0 0.0625rem var(--t5e-magic-accent-color) inset;
-    }
-  }
-
-  :global(.expand-indicator) {
-    margin-right: 0.325rem;
-  }
-</style>
+  <svelte:fragment slot="after-row">
+    <ExpandableContainer expanded={showSummary}>
+      <ItemSummary chatData={chatData ?? emptyChatData} {item} />
+    </ExpandableContainer>
+  </svelte:fragment>
+</TidyTableRow>

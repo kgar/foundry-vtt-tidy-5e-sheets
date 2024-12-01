@@ -57,7 +57,7 @@
     <TidyTable
       key="bulk-selection"
       toggleable={false}
-      --grid-template-columns={gridTemplateColumns}
+      {gridTemplateColumns}
     >
       <svelte:fragment slot="header">
         <TidyTableHeaderRow>

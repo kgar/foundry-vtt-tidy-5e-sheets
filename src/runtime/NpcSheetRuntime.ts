@@ -5,19 +5,19 @@ import type {
   Tab,
 } from 'src/types/types';
 import { CONSTANTS } from 'src/constants';
-import NpcAbilitiesTab from 'src/sheets/npc/tabs/NpcAbilitiesTab.svelte';
-import NpcSpellbookTab from 'src/sheets/npc/tabs/NpcSpellbookTab.svelte';
-import NpcBiographyTab from 'src/sheets/npc/tabs/NpcBiographyTab.svelte';
-import NpcEffectsTab from 'src/sheets/npc/tabs/NpcEffectsTab.svelte';
-import ActorJournalTab from 'src/sheets/actor/tabs/ActorJournalTab.svelte';
-import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
+import NpcAbilitiesTab from 'src/sheets/classic/npc/tabs/NpcAbilitiesTab.svelte';
+import NpcSpellbookTab from 'src/sheets/classic/npc/tabs/NpcSpellbookTab.svelte';
+import NpcBiographyTab from 'src/sheets/classic/npc/tabs/NpcBiographyTab.svelte';
+import NpcEffectsTab from 'src/sheets/classic/npc/tabs/NpcEffectsTab.svelte';
+import ActorJournalTab from 'src/sheets/classic/actor/tabs/ActorJournalTab.svelte';
+import ActorActionsTab from 'src/sheets/classic/actor/tabs/ActorActionsTab.svelte';
 import type { RegisteredContent, RegisteredTab } from './types';
 import { debug, error, warn } from 'src/utils/logging';
 import { TabManager } from './tab/TabManager';
 import type { ActorTabRegistrationOptions } from 'src/api/api.types';
 import { CustomContentManager } from './content/CustomContentManager';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import ActorInventoryTab from 'src/sheets/actor/tabs/ActorInventoryTab.svelte';
+import ActorInventoryTab from 'src/sheets/classic/actor/tabs/ActorInventoryTab.svelte';
 
 export class NpcSheetRuntime {
   private static _content: RegisteredContent<NpcSheetContext>[] = [];

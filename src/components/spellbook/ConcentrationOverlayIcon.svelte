@@ -21,7 +21,10 @@
     font-size: var(--tidy-icon-font-size-internal);
     pointer-events: none;
 
-    color: var(--t5e-item-image-icon-overlay-color);
-    text-shadow: var(--t5e-item-image-icon-overlay-text-shadow);
+    color: white;
+    text-shadow:
+      #000 0.0625rem 0 0.25rem,
+      #000 0.0625rem 0 0.25rem,
+      #000 0.0625rem 0 0.25rem;
   }
 </style>

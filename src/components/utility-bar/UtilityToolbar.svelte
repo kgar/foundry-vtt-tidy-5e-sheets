@@ -22,7 +22,7 @@
     margin-top: var(
       --utility-toolbar-margin-top,
       calc(
-        var(--vertical-padding-internal) - var(--t5e-tab-contents-padding-top)
+        var(--vertical-padding-internal) - var(--t5e-classic-tab-contents-padding-top)
       )
     );
     padding-bottom: var(--vertical-padding-internal);

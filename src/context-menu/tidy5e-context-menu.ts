@@ -226,7 +226,7 @@ function getActiveEffectContextOptions(effect: any, app: any) {
 
 function canEditEffect(effect: any) {
   const actor = effect.actor ? effect.actor : effect.parent;
-  return FoundryAdapter.isActorSheetUnlocked(actor);
+  return FoundryAdapter.isSheetUnlocked(actor);
 }
 
 /**

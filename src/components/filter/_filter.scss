@@ -12,32 +12,24 @@
     border: none;
     border-bottom-width: 0.1875rem;
     border-bottom-style: solid;
-    border-bottom-color: var(
-      --t5e-filter-option-neutral-pin-border-bottom-color
-    );
+    border-bottom-color: var(--t5e-faint-color);
     line-height: normal;
     padding: 0.25rem 0.125rem;
     margin: 0;
 
     &:hover {
       background: inherit;
-      border-bottom-color: var(
-        --t5e-filter-option-neutral-pin-hover-border-bottom-color
-      );
+      border-bottom-color: var(--t5e-light-color);
     }
 
     &.include,
     &.include:hover {
-      border-bottom-color: var(
-        --t5e-filter-option-include-pin-border-bottom-color
-      );
+      border-bottom-color: var(--t5e-tertiary-color);
     }
 
     &.exclude,
     &.exclude:hover {
-      border-bottom-color: var(
-        --t5e-filter-option-exclude-pin-border-bottom-color
-      );
+      border-bottom-color: var(--t5e-warning-accent-color);
     }
   }
 }
@@ -91,19 +83,19 @@
       border: 1px solid var(--t5e-faint-color);
 
       &:hover {
-        background: var(--t5e-filter-option-button-hover-background);
+        background: var(--t5e-faint-color);
       }
 
       &.include,
       &.include:hover {
-        color: var(--t5e-filter-option-include-button-text-color);
-        background: var(--t5e-filter-option-include-button-background);
+        color: white;
+        background: var(--t5e-tertiary-color);
       }
 
       &.exclude,
       &.exclude:hover {
-        color: var(--t5e-filter-option-exclude-button-text-color);
-        background: var(--t5e-filter-option-exclude-button-background);
+        color: white;
+        background: var(--t5e-warning-accent-color);
       }
     }
   }

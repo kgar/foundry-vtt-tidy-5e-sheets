@@ -1,7 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import type { Tidy5eCharacterSheet } from 'src/sheets/Tidy5eCharacterSheet';
-import type { Tidy5eNpcSheet } from 'src/sheets/Tidy5eNpcSheet';
+import type { Tidy5eCharacterSheet } from 'src/sheets/classic/Tidy5eCharacterSheet';
+import type { Tidy5eNpcSheet } from 'src/sheets/classic/Tidy5eNpcSheet';
 import type { Item5e } from 'src/types/item.types';
 import type {
   ActionSection,

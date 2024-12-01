@@ -8,6 +8,7 @@
 
   export let key: string;
   export let toggleable: boolean = true;
+  export let gridTemplateColumns: string = '';
 
   let { class: cssClass, ...attributes } = $$restProps;
 
@@ -42,6 +43,7 @@
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_TABLE}
   data-tidy-section-key={key}
   {...attributes}
+  style="--grid-template-columns: {gridTemplateColumns}"
 >
   <slot name="header" />
   <ExpandableContainer expanded={$expandedState.expanded}>

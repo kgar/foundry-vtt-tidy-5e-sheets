@@ -222,6 +222,45 @@ export type ContainerSheetClassicContext = {
   utilities: Utilities<ContainerSheetClassicContext>;
 };
 
+export type ContainerSheetHightouchContext = {
+  capacity: ContainerCapacityContext;
+  config: typeof CONFIG.DND5E;
+  concealDetails: boolean;
+  containerContents: ContainerContents;
+  document: Item5e;
+  editable: boolean;
+  enriched: {
+    description: string;
+    unidentified: string;
+    chat: string;
+  };
+  filterData: DocumentFilters;
+  filterPins: Record<string, Set<string>>;
+  item: Item5e;
+  identifiedName: string;
+  items: Item5e[];
+  itemContext: Record<string, ContainerItemContext>;
+  itemDescriptions: ItemDescription[];
+  itemOverrides: Set<string>;
+  itemType: string;
+  isContainer: true;
+  isIdentifiable: boolean;
+  isIdentified: boolean;
+  isPhysical: boolean;
+  labels: Record<string, any>;
+  lockItemQuantity: boolean;
+  lockMoneyChanges: boolean;
+  customContent: CustomContent[];
+  owner: boolean;
+  properties: PropertyContext;
+  rollData: Record<string, any>;
+  source: any;
+  system: any;
+  tabs: Tab[];
+  unlocked: boolean;
+  utilities: Utilities<ContainerSheetHightouchContext>;
+};
+
 export type ContainerSection = { items: Item5e[] } & TidySectionBase;
 
 export type ContainerContents = {

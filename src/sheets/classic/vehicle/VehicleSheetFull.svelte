@@ -1,0 +1,241 @@
+<script lang="ts">
+  import type {
+    DropdownListOption,
+    VehicleSheetContext,
+  } from 'src/types/types';
+  import Tabs from 'src/components/tabs/Tabs.svelte';
+  import { CONSTANTS } from 'src/constants';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
+  import SheetEditModeToggle from 'src/sheets/classic/actor/SheetEditModeToggle.svelte';
+  import TabContents from 'src/components/tabs/TabContents.svelte';
+  import VehicleProfile from './parts/VehicleProfile.svelte';
+  import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
+  import DelimitedTruncatedContent from 'src/components/layout/DelimitedTruncatedContent.svelte';
+  import InlineTextDropdownList from '../../../components/inputs/InlineTextDropdownList.svelte';
+  import ActorMovement from '../actor/ActorMovement.svelte';
+  import AcShieldVehicle from '../actor/AcShieldVehicle.svelte';
+  import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
+  import AttributeBlock from '../actor/AttributeBlock.svelte';
+  import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
+  import SheetMenu from '../actor/SheetMenu.svelte';
+  import { settingStore } from 'src/settings/settings';
+  import ActorWarnings from '../actor/ActorWarnings.svelte';
+  import InlineSource from '../shared/InlineSource.svelte';
+  import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
+  import ActorName from '../actor/ActorName.svelte';
+
+  let selectedTabId: string;
+
+  let context = getContext<Readable<VehicleSheetContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+
+  $: sizes = <DropdownListOption[]>Object.entries(
+    $context.config.actorSizes,
+  ).map(([key, size]: [string, any]) => ({
+    value: key,
+    text: size.label,
+  }));
+
+  let currentSize: DropdownListOption;
+  $: currentSize = {
+    value: $context.system.traits.size,
+    text: $context.config.actorSizes[$context.system.traits.size]?.label,
+  };
+
+  $: vehicleTypes = <DropdownListOption[]>Object.entries(
+    $context.config.vehicleTypes,
+  ).map(([key, label]: [string, any]) => ({
+    value: key,
+    text: label,
+  }));
+
+  let currentVehicleType: DropdownListOption;
+  $: currentVehicleType = {
+    value: $context.system.vehicleType,
+    text: $context.config.vehicleTypes[$context.system.vehicleType],
+  };
+
+  $: abilities = Object.entries<any>($context.abilities);
+
+  const localize = FoundryAdapter.localize;
+</script>
+
+{#if $settingStore.itemCardsForNpcs}
+  <ItemInfoCard />
+{/if}
+
+{#if $context.viewableWarnings.length}
+  <ActorWarnings warnings={$context.viewableWarnings} />
+{/if}
+<header>
+  <div class="flex-0">
+    <VehicleProfile />
+  </div>
+  <div class="flex-grow-1">
+    <div
+      class="actor-name-row flex-row justify-content-space-between align-items-center small-gap"
+      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_HEADER_ROW}
+    >
+      <div
+        class="actor-name"
+        data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_CONTAINER}
+      >
+        <ActorName />
+      </div>
+      <SheetMenu defaultSettingsTab={CONSTANTS.TAB_USER_SETTINGS_VEHICLES} />
+    </div>
+    <HorizontalLineSeparator
+      borderColor="light"
+      class="header-line-margin-left"
+    />
+    <div class="origin-summary">
+      <div class="flex-row extra-small-gap">
+        {#if $context.editable}
+          <InlineTextDropdownList
+            options={sizes}
+            selected={currentSize}
+            on:optionClicked={(event) =>
+              $context.actor.update({
+                'system.traits.size': event.detail.value,
+              })}
+            title={localize('DND5E.Size')}
+          />
+        {:else}
+          <span title={localize('DND5E.Size')}>{currentSize.text}</span>
+        {/if}
+      </div>
+      <span>&#8226;</span>
+      <div class="flex-row extra-small-gap">
+        {#if $context.editable}
+          <InlineTextDropdownList
+            options={vehicleTypes}
+            selected={currentVehicleType}
+            on:optionClicked={(event) =>
+              $context.actor.update({
+                'system.vehicleType': event.detail.value,
+              })}
+            title={localize('DND5E.VehicleType')}
+          />
+        {:else}
+          <span title={localize('DND5E.VehicleType')}
+            >{currentVehicleType.text}</span
+          >
+        {/if}
+      </div>
+      <span>&#8226;</span>
+      {#key $context.lockSensitiveFields}
+        <DelimitedTruncatedContent cssClass="flex-1">
+          <ContentEditableFormField
+            element="span"
+            document={$context.actor}
+            field="system.traits.dimensions"
+            value={$context.system.traits.dimensions}
+            title={$context.system.traits.dimensions}
+            editable={$context.editable && !$context.lockSensitiveFields}
+            placeholder={localize('DND5E.Dimensions')}
+            selectOnFocus={true}
+          />
+          <InlineSource
+            document={$context.actor}
+            keyPath="system.source"
+            editable={$context.unlocked}
+          />
+        </DelimitedTruncatedContent>
+      {/key}
+      <div class="flex-row align-items-center extra-small-gap">
+        {#if $context.editable && !$context.lockSensitiveFields}
+          <button
+            type="button"
+            on:click={() =>
+              new ActorOriginSummaryConfigFormApplication(
+                $context.actor,
+              ).render(true)}
+            class="origin-summary-tidy inline-icon-button"
+            title={localize('TIDY5E.OriginSummaryConfig')}
+            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+          >
+            <i class="fas fa-cog" />
+          </button>
+        {/if}
+      </div>
+    </div>
+    <HorizontalLineSeparator
+      borderColor="light"
+      class="header-line-margin-left"
+    />
+    <ActorMovement class="header-line-margin" />
+    <HorizontalLineSeparator
+      borderColor="light"
+      class="header-line-margin-left"
+    />
+    <section class="actor-stats">
+      <AcShieldVehicle />
+      {#each abilities as [id, ability]}
+        <VerticalLineSeparator />
+        <div>
+          <AttributeBlock
+            {id}
+            {ability}
+            useConfigurationOption={false}
+            useSavingThrowProficiency={false}
+          />
+        </div>
+      {/each}
+    </section>
+  </div>
+</header>
+<Tabs tabs={$context.tabs} bind:selectedTabId>
+  <svelte:fragment slot="tab-end">
+    {#if $context.editable}
+      <SheetEditModeToggle
+        hint={$settingStore.permanentlyUnlockVehicleSheetForGm &&
+        FoundryAdapter.userIsGm()
+          ? localize('TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM.title')
+          : null}
+      />
+    {/if}
+  </svelte:fragment>
+</Tabs>
+<section class="tidy-sheet-body">
+  <TabContents tabs={$context.tabs} {selectedTabId} />
+</section>
+
+<style lang="scss">
+  header {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
+    padding: 0.625rem 1rem 1rem 1rem;
+    background: var(--t5e-header-background);
+
+    .actor-name-row {
+      margin-bottom: 0.125rem;
+    }
+
+    .origin-summary {
+      margin-left: 0.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.75rem;
+      line-height: 1rem;
+      padding: 0.1875rem 0 0.125rem 0;
+    }
+  }
+
+  .tidy-sheet-body {
+    :global(.item-table-cell:not(.primary) input) {
+      text-align: center;
+    }
+
+    :global(.item-table-cell input) {
+      height: 1.5rem;
+    }
+  }
+</style>

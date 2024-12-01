@@ -4,6 +4,7 @@
 
   export let primary: boolean = false;
   export let title: string | undefined = undefined;
+  export let baseWidth: string | null = null;
 
   const isHovering = writable<boolean>(false);
 
@@ -24,6 +25,7 @@
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TABLE_CELL}
   on:mouseenter={mouseEnter}
   on:mouseleave={mouseLeave}
+  style:flex-basis={baseWidth}
   {...$$restProps.attributes}
 >
   <slot {isHovering} />

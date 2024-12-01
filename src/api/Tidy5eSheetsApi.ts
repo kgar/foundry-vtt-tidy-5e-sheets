@@ -8,9 +8,9 @@ import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import type { TabId } from './tab/CustomTabBase';
-import { Tidy5eCharacterSheet } from 'src/sheets/Tidy5eCharacterSheet';
-import { Tidy5eNpcSheet } from 'src/sheets/Tidy5eNpcSheet';
-import { Tidy5eVehicleSheet } from 'src/sheets/Tidy5eKgarVehicleSheet';
+import { Tidy5eCharacterSheet } from 'src/sheets/classic/Tidy5eCharacterSheet';
+import { Tidy5eNpcSheet } from 'src/sheets/classic/Tidy5eNpcSheet';
+import { Tidy5eVehicleSheet } from 'src/sheets/classic/Tidy5eKgarVehicleSheet';
 import { SvelteTab } from './tab/SvelteTab';
 import type {
   SupportedTab,
@@ -27,10 +27,12 @@ import { CONSTANTS } from 'src/constants';
 import { CustomContentManager } from 'src/runtime/content/CustomContentManager';
 import { ConfigApi } from './config/ConfigApi';
 import { GroupSheetRuntime } from 'src/runtime/GroupSheetRuntime';
-import { Tidy5eGroupSheetClassic } from 'src/sheets/Tidy5eGroupSheetClassic';
-import { Tidy5eItemSheetClassic } from 'src/sheets/Tidy5eItemSheetClassic';
-import { Tidy5eContainerSheetClassic } from 'src/sheets/Tidy5eContainerSheetClassic';
+import { Tidy5eGroupSheetClassic } from 'src/sheets/classic/Tidy5eGroupSheetClassic';
+import { Tidy5eItemSheetClassic } from 'src/sheets/classic/Tidy5eItemSheetClassic';
+import { Tidy5eContainerSheetClassic } from 'src/sheets/classic/Tidy5eContainerSheetClassic';
+import { Tidy5eContainerSheetHightouch } from 'src/sheets/hightouch/Tidy5eContainerSheetHightouch';
 import { HeaderControlsRuntime } from 'src/runtime/header-controls/HeaderControlsRuntime';
+import { Tidy5eItemDebugSheetHightouch } from 'src/sheets/hightouch/Tidy5eItemDebugSheetHightouch';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -123,7 +125,7 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is a Tidy 5e Character sheet
    */
   isTidy5eCharacterSheet(app: any) {
-    return Tidy5eCharacterSheet.name === app?.constructor?.name;
+    return app.element.matches(`.tidy5e-sheet.sheet.character`);
   }
 
   /**
@@ -132,7 +134,7 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is a Tidy 5e Container sheet
    */
   isTidy5eContainerSheet(app: any) {
-    return Tidy5eContainerSheetClassic.name === app?.constructor?.name;
+    return app.element.matches(`.tidy5e-sheet.sheet.container`);
   }
 
   /**
@@ -141,7 +143,7 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is a Tidy 5e Group sheet
    */
   isTidy5eGroupSheet(app: any) {
-    return Tidy5eGroupSheetClassic.name === app?.constructor?.name;
+    return app.element.matches(`.tidy5e-sheet.sheet.group`);
   }
 
   /**
@@ -150,7 +152,7 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is a Tidy 5e Item sheet
    */
   isTidy5eItemSheet(app: any) {
-    return Tidy5eItemSheetClassic.name === app?.constructor?.name;
+    return app.element.matches(`.tidy5e-sheet.sheet.item`);
   }
 
   /**
@@ -159,7 +161,7 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is a Tidy 5e NPC sheet
    */
   isTidy5eNpcSheet(app: any) {
-    return Tidy5eNpcSheet.name === app?.constructor?.name;
+    return app.element.matches(`.tidy5e-sheet.sheet.npc`);
   }
 
   /**
@@ -168,14 +170,7 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is any Tidy 5e sheet
    */
   isTidy5eSheet(app: any) {
-    return [
-      Tidy5eCharacterSheet.name,
-      Tidy5eNpcSheet.name,
-      Tidy5eVehicleSheet.name,
-      Tidy5eItemSheetClassic.name,
-      Tidy5eContainerSheetClassic.name,
-      Tidy5eGroupSheetClassic.name,
-    ].includes(app?.constructor?.name);
+    return app.element.matches(`.tidy5e-sheet.sheet`);
   }
 
   /**
@@ -184,7 +179,7 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is a Tidy 5e Vehicle sheet
    */
   isTidy5eVehicleSheet(app: any) {
-    return Tidy5eVehicleSheet.name === app.constructor.name;
+    return app.element.matches(`.tidy5e-sheet.sheet.vehicle`);
   }
 
   /**{@inheritDoc ItemSummaryApi} */

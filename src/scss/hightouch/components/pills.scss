@@ -1,0 +1,169 @@
+.pills {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+
+  &.stacked {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}
+
+.pill {
+  align-items: center;
+  background: var(--t5e-component-pill-onDefault-background);
+  border-radius: var(--radius-card, 0.1875rem);
+  border: 0.0625rem solid var(--t5e-component-pill-onDefault-border);
+  box-shadow: 0 0 0.25rem 0 var(--dnd5e-shadow-15, rgba(0, 0, 0, 0.15));
+  display: flex;
+  font-size: var(--font-size-11, 0.6875rem);
+  font-style: normal;
+  font-weight: 500;
+  gap: 0.25rem;
+  justify-content: center;
+  line-height: normal;
+  margin: 0;
+  min-height: var(--font-size-24, 1.5rem);
+  padding: 0.125rem 0.5rem;
+  color: var(--t5e-color-text-onDefault-default);
+  --icon-fill: var(--t5e-color-icon-light-diminished);
+
+  i {
+    color: var(--icon-fill);
+  }
+
+  // TODO: Determine if lighter text can be moved to its own scope and stylesheet and used generically
+  .lighter {
+    font-weight: 400;
+    color: var(--t5e-color-text-onDefault-lighter);
+    --icon-fill: var(--t5e-color-text-onDefault-lighter);
+  }
+
+  &.negative {
+    border-color: var(--t5e-color-palette-red-27);
+    background: var(--t5e-color-palette-red-31);
+    color: var(--t5e-color-text-onInverse-default);
+
+    .lighter {
+      color: var(--t5e-color-text-onInverse-lighter);
+    }
+  }
+
+  &.positive {
+    border-color: var(--t5e-color-palette-green-25);
+    background: var(--t5e-color-palette-green-43);
+  }
+
+  &.positive,
+  &.negative {
+    color: var(--t5e-color-text-onInverse-default);
+
+    .lighter {
+      color: var(--t5e-color-text-onInverse-lighter);
+    }
+  }
+}
+
+&.inverse .pill,
+.inverse .pill {
+  background: var(--t5e-component-pill-onInverse-background);
+  border-color: var(--t5e-component-pill-onInverse-border);
+  color: var(--t5e-color-text-onInverse-default);
+  --icon-fill: var(--t5e-color-icon-dark-diminished);
+
+  &.interactive {
+    border-color: var(
+      --t5e-component-pill-onInverse-interactive-border,
+      #7a7a7a
+    );
+  }
+
+  .lighter {
+    color: var(--t5e-color-text-onInverse-lighter);
+    --icon-fill: var(--t5e-color-text-onInverse-lighter);
+  }
+
+  &.negative {
+    border-color: var(--t5e-color-palette-red-27);
+    background: var(--t5e-color-palette-red-31);
+    color: var(--t5e-color-text-onInverse-default);
+
+    .lighter {
+      color: var(--t5e-color-text-onInverse-lighter);
+    }
+  }
+
+  &.positive {
+    border-color: var(--t5e-color-palette-green-25);
+    background: var(--t5e-color-palette-green-43);
+  }
+
+  &.positive,
+  &.negative {
+    color: var(--t5e-color-text-onInverse-default);
+
+    .lighter {
+      color: var(--t5e-color-text-onInverse-lighter);
+    }
+  }
+}
+
+.pill-switch {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.125rem 0.125rem 0.125rem 0.5rem;
+
+  .pill-switch-icon-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  & > :first-child {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    --icon-fill: var(--t5e-color-icon-light-disabled);
+  }
+
+  &:has(.toggle:checked) {
+    & > :first-child {
+      --icon-fill: var(--t5e-color-text-onDefault-lighter);
+    }
+  }
+}
+
+&:is(.inverse, .dark) .pill-switch,
+.inverse .pill-switch {
+  & > :first-child {
+    --icon-fill: var(--t5e-color-icon-dark-disabled);
+  }
+
+  &:has(.toggle:checked) {
+    & > :first-child {
+      --icon-fill: var(--t5e-color-text-onInverse-lighter);
+    }
+  }
+}
+
+.tag {
+  border-radius: 0.125rem;
+  border: 0.0625rem solid var(--t5e-components-enricher-border, rgba(159, 146, 117, 0.35));
+  background: var(--t5e-components-enricher-background, rgba(159, 146, 117, 0.15));
+
+  display: flex;
+  padding: 0.0625rem 0.125rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.125rem;
+
+  color: var(--t5e-color-text-onDefault-lighter);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: normal;
+}

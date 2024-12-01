@@ -13,6 +13,7 @@ import type {
 import type { ContextMenuEntry } from './foundry.types';
 import type {
   ContainerSheetClassicContext,
+  ContainerSheetHightouchContext,
   Item5e,
   ItemSheetContext,
 } from 'src/types/item.types';
@@ -263,7 +264,11 @@ export class TidyHooks {
   static tidy5eSheetsPreConfigureSections(
     app: any,
     element: HTMLElement,
-    data: CharacterSheetContext | NpcSheetContext | ContainerSheetClassicContext
+    data:
+      | CharacterSheetContext
+      | NpcSheetContext
+      | ContainerSheetClassicContext
+      | ContainerSheetHightouchContext
   ) {
     Hooks.callAll('tidy5e-sheet.preConfigureSections', app, element, data);
   }
@@ -464,7 +469,10 @@ export class TidyHooks {
   static tidy5eSheetsRenderItemSheet(
     app: any,
     element: HTMLElement,
-    data: ContainerSheetClassicContext | ItemSheetContext,
+    data:
+      | ContainerSheetClassicContext
+      | ItemSheetContext
+      | ContainerSheetHightouchContext,
     forced: boolean
   ) {
     Hooks.callAll('tidy5e-sheet.renderItemSheet', app, element, data, forced);

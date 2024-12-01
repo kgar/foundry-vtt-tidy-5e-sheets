@@ -1,23 +1,24 @@
 import { CONSTANTS } from 'src/constants';
-import EquipmentSheet from 'src/sheets/item/EquipmentSheet.svelte';
+import EquipmentSheet from 'src/sheets/classic/item/EquipmentSheet.svelte';
 import type { CustomContent, Tab } from 'src/types/types';
 import itemSheetTabs from './item-sheet-tabs';
-import BackgroundSheet from 'src/sheets/item/BackgroundSheet.svelte';
-import ClassSheet from 'src/sheets/item/ClassSheet.svelte';
-import ConsumableSheet from 'src/sheets/item/ConsumableSheet.svelte';
-import ContainerSheet from 'src/sheets/item/ContainerSheet.svelte';
-import FacilitySheet from 'src/sheets/item/FacilitySheet.svelte';
-import FeatSheet from 'src/sheets/item/FeatSheet.svelte';
-import LootSheet from 'src/sheets/item/LootSheet.svelte';
-import SpellSheet from 'src/sheets/item/SpellSheet.svelte';
-import SubclassSheet from 'src/sheets/item/SubclassSheet.svelte';
-import ToolSheet from 'src/sheets/item/ToolSheet.svelte';
-import WeaponSheet from 'src/sheets/item/WeaponSheet.svelte';
-import SpeciesSheet from 'src/sheets/item/SpeciesSheet.svelte';
+import BackgroundSheet from 'src/sheets/classic/item/BackgroundSheet.svelte';
+import ClassSheet from 'src/sheets/classic/item/ClassSheet.svelte';
+import ConsumableSheet from 'src/sheets/classic/item/ConsumableSheet.svelte';
+import ContainerSheet from 'src/sheets/classic/item/ContainerSheet.svelte';
+import FacilitySheet from 'src/sheets/classic/item/FacilitySheet.svelte';
+import FeatSheet from 'src/sheets/classic/item/FeatSheet.svelte';
+import LootSheet from 'src/sheets/classic/item/LootSheet.svelte';
+import SpellSheet from 'src/sheets/classic/item/SpellSheet.svelte';
+import SubclassSheet from 'src/sheets/classic/item/SubclassSheet.svelte';
+import ToolSheet from 'src/sheets/classic/item/ToolSheet.svelte';
+import WeaponSheet from 'src/sheets/classic/item/WeaponSheet.svelte';
+import SpeciesSheet from 'src/sheets/classic/item/SpeciesSheet.svelte';
 import type { ComponentType } from 'svelte';
 import type { RegisteredContent, RegisteredTab } from '../types';
 import type {
   ContainerSheetClassicContext,
+  ContainerSheetHightouchContext,
   ItemSheetContext,
 } from 'src/types/item.types';
 import { CustomContentManager } from '../content/CustomContentManager';
@@ -32,7 +33,10 @@ export class ItemSheetRuntime {
     [];
 
   static async getContent(
-    context: ItemSheetContext | ContainerSheetClassicContext
+    context:
+      | ItemSheetContext
+      | ContainerSheetClassicContext
+      | ContainerSheetHightouchContext
   ): Promise<CustomContent[]> {
     return await CustomContentManager.prepareContentForRender(
       context,
@@ -97,6 +101,12 @@ export class ItemSheetRuntime {
         itemSheetTabs.containerContents,
         itemSheetTabs.descriptionWithSidebar,
         itemSheetTabs.containerDetails,
+      ],
+      tempHightouchTabs: () => [
+        itemSheetTabs.hightouchContainerContents,
+        itemSheetTabs.hightouchDescription,
+        // TODO: Only show to GMs and users when identified
+        itemSheetTabs.hightouchContainerDetails,
       ],
     },
     [CONSTANTS.ITEM_TYPE_FACILITY]: {
@@ -194,4 +204,6 @@ export class ItemSheetRuntime {
 type ItemSheetInfo = {
   Sheet: ComponentType;
   defaultTabs(): Tab[];
+  // TODO: Remove after replacing item sheets
+  tempHightouchTabs?: () => Tab[];
 };
