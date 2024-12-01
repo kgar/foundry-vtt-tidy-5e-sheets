@@ -101,14 +101,16 @@ Hooks.once('init', () => {
   initRuntime();
   initKeybindings();
 
-  if (SettingsProvider.settings.debug.get()) {
+  const thisIsKGarsVisualOverhaulBranch = false; // When the first draft of the container overhaul sheet is done, remove this extra layer and let it depend on the debug setting alone.
+
+  if (SettingsProvider.settings.debug.get() && thisIsKGarsVisualOverhaulBranch) {
     DocumentSheetConfig.registerSheet(
       Item,
       CONSTANTS.DND5E_SYSTEM_ID,
       Tidy5eContainerSheetHightouch,
       {
         types: [CONSTANTS.SHEET_TYPE_CONTAINER],
-        label: 'Tidy 5e Container Sheet - Codename Hightouch',
+        label: 'Tidy 5e Container Sheet - Under Development',
       }
     );
 
@@ -118,7 +120,7 @@ Hooks.once('init', () => {
       Tidy5eItemDebugSheetHightouch,
       {
         types: supportedItemTypes,
-        label: 'Tidy 5e Debug Item Sheet (Hightouch)',
+        label: 'Tidy 5e Debug Item Sheet (Visual Overhaul)',
       }
     );
   }
