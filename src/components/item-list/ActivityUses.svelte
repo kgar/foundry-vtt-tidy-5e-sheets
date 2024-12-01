@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { preventDefault, stopPropagation } from 'svelte/legacy';
-
   import type { Activity5e } from 'src/foundry/dnd5e.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
@@ -31,11 +29,11 @@
     class="uses-value"
     type="text"
     value={activity.uses.value}
-    onchange={stopPropagation(
-      preventDefault((event) =>
-        FoundryAdapter.handleActivityUsesChanged(event, activity),
-      ),
-    )}
+    onchange={(event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      FoundryAdapter.handleActivityUsesChanged(event, activity);
+    }}
     disabled={!activity.item.isOwner}
     onfocus={(ev) => ev.currentTarget.select()}
     data-tidy-field="uses.value"
@@ -45,9 +43,11 @@
     class="uses-max"
     type="text"
     value={activity.uses.max}
-    onchange={stopPropagation(
-      preventDefault((event) => onUsesMaxChanged(event, activity)),
-    )}
+    onchange={(event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      onUsesMaxChanged(event, activity);
+    }}
     disabled={!activity.item.isOwner}
     onfocus={(ev) => ev.currentTarget.select()}
     data-tidy-field="uses.max"

@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { preventDefault, stopPropagation } from 'svelte/legacy';
-
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { CharacterSheetContext, TidyResource } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -82,13 +80,13 @@
         id="{appId}-{resource.name}-sr"
         type="checkbox"
         checked={resource.sr}
-        onchange={stopPropagation(
-          preventDefault((event) =>
-            $context.actor.update({
-              [resource.srName]: event.currentTarget.checked,
-            }),
-          ),
-        )}
+        onchange={(event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          $context.actor.update({
+            [resource.srName]: event.currentTarget.checked,
+          });
+        }}
         disabled={!$context.editable || $context.lockSensitiveFields}
         data-tidy-field={resource.srName}
       />
@@ -103,13 +101,13 @@
         id="{appId}-{resource.name}-lr"
         type="checkbox"
         checked={resource.lr}
-        onchange={stopPropagation(
-          preventDefault((event) =>
-            $context.actor.update({
-              [resource.lrName]: event.currentTarget.checked,
-            }),
-          ),
-        )}
+        onchange={(event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          $context.actor.update({
+            [resource.lrName]: event.currentTarget.checked,
+          });
+        }}
         disabled={!$context.editable || $context.lockSensitiveFields}
         data-tidy-field={resource.lrName}
       />

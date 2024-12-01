@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { preventDefault, stopPropagation } from 'svelte/legacy';
-
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
@@ -46,7 +44,11 @@
     placeholder={localize('TIDY5E.Search')}
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SEARCH_INPUT}
     bind:value
-    onblur={stopPropagation(preventDefault(() => rememberSearch()))}
+    onblur={(event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      rememberSearch();
+    }}
   />
   {#if value?.trim() !== ''}
     <button

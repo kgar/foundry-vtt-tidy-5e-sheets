@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { preventDefault, stopPropagation } from 'svelte/legacy';
-
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ActorSheetContextV1 } from 'src/types/types';
   import TraitSection from './TraitSection.svelte';
@@ -286,7 +284,11 @@
     <button
       type="button"
       class="toggle-traits inline-transparent-button"
-      onclick={stopPropagation(preventDefault(() => toggleTraitsExpanded()))}
+      onclick={(event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        toggleTraitsExpanded();
+      }}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       {#if traitsExpanded}
@@ -303,11 +305,11 @@
       title={localize('DND5E.TraitConfig', {
         trait: localize('DND5E.SpecialTraits'),
       })}
-      onclick={stopPropagation(
-        preventDefault(() =>
-          FoundryAdapter.renderActorSheetFlags($context.actor),
-        ),
-      )}
+      onclick={(event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        FoundryAdapter.renderActorSheetFlags($context.actor);
+      }}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fas fa-star"></i>

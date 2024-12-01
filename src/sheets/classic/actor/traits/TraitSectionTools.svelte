@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { preventDefault, stopPropagation } from 'svelte/legacy';
-
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
@@ -42,27 +40,27 @@
           type="button"
           class="tool-proficiency-toggle inline-transparent-button"
           title={tool.hover}
-          onclick={stopPropagation(
-            preventDefault((event) =>
-              FoundryAdapter.cycleProficiency(
-                $context.actor,
-                key,
-                tool.value,
-                'tools',
-              ),
-            ),
-          )}
-          oncontextmenu={stopPropagation(
-            preventDefault((event) =>
-              FoundryAdapter.cycleProficiency(
-                $context.actor,
-                key,
-                tool.value,
-                'tools',
-                true,
-              ),
-            ),
-          )}
+          onclick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            FoundryAdapter.cycleProficiency(
+              $context.actor,
+              key,
+              tool.value,
+              'tools',
+            );
+          }}
+          oncontextmenu={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            FoundryAdapter.cycleProficiency(
+              $context.actor,
+              key,
+              tool.value,
+              'tools',
+              true,
+            );
+          }}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TOOL_PROFICIENCY_TOGGLE}
           tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           disabled={activeEffectApplied}
@@ -100,15 +98,11 @@
           type="button"
           class="tool-proficiency-editor inline-icon-button"
           title={localize('DND5E.ToolConfigure')}
-          onclick={stopPropagation(
-            preventDefault(() =>
-              FoundryAdapter.renderSkillToolConfig(
-                $context.actor,
-                'tools',
-                key,
-              ),
-            ),
-          )}
+          onclick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            FoundryAdapter.renderSkillToolConfig($context.actor, 'tools', key);
+          }}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
             .TOOL_CONFIGURATION_CONTROL}
           tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}

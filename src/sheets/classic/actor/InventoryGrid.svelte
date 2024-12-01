@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { preventDefault, stopPropagation } from 'svelte/legacy';
-
   import type {
     CharacterSheetContext,
     InventorySection,
@@ -231,18 +229,18 @@
             type="button"
             class="footer-command icon-button"
             title={localize('DND5E.ItemCreate')}
-            onclick={stopPropagation(
-              preventDefault(() =>
-                FoundryAdapter.createItem(
-                  {
-                    ...section.dataset,
-                    action: 'itemCreate',
-                    tooltip: 'DND5E.ItemCreate',
-                  },
-                  $context.actor,
-                ),
-              ),
-            )}
+            onclick={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              FoundryAdapter.createItem(
+                {
+                  ...section.dataset,
+                  action: 'itemCreate',
+                  tooltip: 'DND5E.ItemCreate',
+                },
+                $context.actor,
+              );
+            }}
             data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_CREATE_COMMAND}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >

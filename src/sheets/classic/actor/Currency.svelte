@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { preventDefault, stopPropagation } from 'svelte/legacy';
-
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -74,9 +72,11 @@
         type="button"
         class="currency-convert"
         title={localize('DND5E.CurrencyManager.Title')}
-        onclick={stopPropagation(
-          preventDefault(() => confirmConvertCurrency()),
-        )}
+        onclick={(event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          confirmConvertCurrency();
+        }}
         disabled={!$context.editable}
         tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >

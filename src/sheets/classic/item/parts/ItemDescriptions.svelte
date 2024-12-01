@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { stopPropagation } from 'svelte/legacy';
-
   import type { ItemSheetContext } from 'src/types/item.types';
   import { createEventDispatcher, getContext, onMount, tick } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -89,13 +87,14 @@
                     <button
                       type="button"
                       class="inline-icon-button edit-item-description"
-                      onclick={stopPropagation(() =>
+                      onclick={(event) => {
+                        event.stopPropagation();
                         dispatcher('edit', {
                           contentToEdit: itemDescription.content,
                           enrichedText: itemDescription.enriched,
                           fieldToEdit: itemDescription.field,
-                        }),
-                      )}
+                        });
+                      }}
                       tabindex={$settingStore.useAccessibleKeyboardSupport
                         ? 0
                         : -1}><i class="fas fa-edit"></i></button

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { run, createBubbler } from 'svelte/legacy';
+  import { createBubbler } from 'svelte/legacy';
 
   const bubble = createBubbler();
   import { processInputChangeDelta } from 'src/utils/form';
@@ -100,7 +100,7 @@
       [field]: valueToSave,
     });
 
-    draftValue = value?.toString() ?? '';
+    value = value?.toString() ?? '';
 
     setTimeout(() => {
       if (selectOnFocus && theInput === window.document.activeElement) {
@@ -121,10 +121,7 @@
     >('context');
 
   const localize = FoundryAdapter.localize;
-  let draftValue;
-  run(() => {
-    draftValue = value?.toString() ?? '';
-  });
+  
   let actualDataset = $derived(buildDataset(dataset));
   let activeEffectApplied = $derived(
     ActiveEffectsHelper.isActiveEffectAppliedToField(document, field),
@@ -143,7 +140,7 @@
   bind:this={theInput}
   type="text"
   {id}
-  bind:value={draftValue}
+  bind:value={value}
   {placeholder}
   data-tooltip={activeEffectApplied ? overrideTooltip : tooltip}
   {...actualDataset}

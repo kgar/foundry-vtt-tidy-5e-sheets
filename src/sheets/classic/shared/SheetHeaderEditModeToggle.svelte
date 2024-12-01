@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createBubbler, stopPropagation } from 'svelte/legacy';
+  import { createBubbler } from 'svelte/legacy';
 
   const bubble = createBubbler();
   import { CONSTANTS } from 'src/constants';
@@ -57,7 +57,10 @@
   <div
     class="header-sheet-edit-mode-toggle {rest.class ?? ''}"
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SHEET_LOCK_TOGGLE}
-    ondblclick={stopPropagation(bubble('dblclick'))}
+    ondblclick={(event) => {
+      event.stopPropagation();
+      bubble('dblclick')(event);
+    }}
   >
     <TidySwitch
       --tidy-switch-scale="1"

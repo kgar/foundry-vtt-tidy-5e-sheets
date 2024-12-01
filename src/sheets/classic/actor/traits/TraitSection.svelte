@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { preventDefault, stopPropagation } from 'svelte/legacy';
-
   import { CONSTANTS } from 'src/constants';
   import { settingStore } from 'src/settings/settings';
   import type { ActorSheetContextV1 } from 'src/types/types';
@@ -60,9 +58,11 @@
         type="button"
         class="trait-editor inline-icon-button flex-row align-items-flex-start justify-content-center"
         title={configureButtonTitle}
-        onclick={stopPropagation(
-          preventDefault((event) => dispatcher('onConfigureClicked', event)),
-        )}
+        onclick={(event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          dispatcher('onConfigureClicked', event);
+        }}
         tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
         <i class="fas fa-pencil-alt"></i>
