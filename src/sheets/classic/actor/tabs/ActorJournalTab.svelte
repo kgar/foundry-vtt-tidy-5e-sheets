@@ -15,9 +15,9 @@
   );
 
   let editing = $state(false);
-  let contentToEdit: string = $state();
-  let enrichedText: string = $state();
-  let fieldToEdit: string = $state();
+  let contentToEdit: string = $state('');
+  let enrichedText: string = $state('');
+  let fieldToEdit: string = $state('');
 
   async function stopEditing() {
     await $context.actor.sheet.submit();

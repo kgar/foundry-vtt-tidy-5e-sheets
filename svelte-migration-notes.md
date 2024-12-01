@@ -11,18 +11,19 @@
   - Component construction is replaced by `mount()`
   - Component descruction is replaced by `unmount()`
 - [x] Replace all calls to svelte `run()` with `$derived` or `$effect`, whichever is most appropriate
-- [ ] Replace stores with runes
+- [x] Eliminate `preventDefault`, `stopPropagation`, and similar legacy stopgap functions
+- [ ] Resolve all check errors
 - [ ] Address custom HTML events
   - [x] longpress
-  - [ ] onclickoutside
+  - [x] onclickoutside
   - [ ] ...
 - [ ] Eliminate `createBubbler` calls by specifying event handler props
-- [ ] Eliminate `preventDefault`, `stopPropagation`, and similar legacy stopgap functions
-- [ ] Eliminate `createEventDispatcher` uses
 - [ ] look for `svelte/legacy` imports and resolve
+- [ ] Eliminate `createEventDispatcher` uses
+- [ ] Replace stores with runes
 - [ ] Ensure context API where reactivity is expected is using runes
 - [ ] Resolve `kgar-migration-task` content
-- [ ] Peruse errors and task out more
+
 
 ## Testing To Dos
 

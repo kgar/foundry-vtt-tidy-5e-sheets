@@ -18,6 +18,10 @@ Because the controls are mutually exclusive, it is more ergonomic to distinguish
 
   let { effect }: Props = $props();
 
+  let context = getContext<Readable<ActorSheetContextV1>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+
   /** Character effects are not the full ActiveEffect5e instance;
    * they are instead a subset of contextual data.
    * Also, there are cases when, such as with deleting effects,
@@ -34,10 +38,6 @@ Because the controls are mutually exclusive, it is more ergonomic to distinguish
             parentId: effect.parentId,
           })
         : undefined,
-  );
-
-  let context = getContext<Readable<ActorSheetContextV1>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
   const localize = FoundryAdapter.localize;

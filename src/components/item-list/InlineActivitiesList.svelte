@@ -68,7 +68,7 @@
               'data-configurable': configurable,
             }}
             rowClass="activity"
-            on:mousedown={(event) =>
+            onmousedown={(event) =>
               FoundryAdapter.editOnMiddleClick(event, activity)}
           >
             <TidyTableCell primary={true}>

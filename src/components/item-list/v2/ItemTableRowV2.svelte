@@ -169,11 +169,11 @@
     draggable: !!draggable,
   }}
   rowClass="tidy-table-row-v2 {rowClass ?? ''}"
-  on:mousedown={(event) =>
+  onmousedown={(event) =>
     item && FoundryAdapter.editOnMiddleClick(event, item)}
-  on:mouseenter={onMouseEnter}
-  on:mouseleave={onMouseLeave}
-  on:dragstart={handleDragStart}
+  onmouseenter={onMouseEnter}
+  onmouseleave={onMouseLeave}
+  ondragstart={handleDragStart}
 >
   {@render children?.({ toggleSummary })}
 

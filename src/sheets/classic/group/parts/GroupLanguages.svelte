@@ -14,10 +14,11 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  let groupLanguageTooltip: GroupLanguageTooltip = $state();
+  let groupLanguageTooltip: GroupLanguageTooltip;
   let hoveredLanguage = $state('');
   let hoveredMembers: Actor5e[] = $state([]);
 
+  // kgar-migration-task - does it work as advertized?
   function showGroupLanguageTooltip(
     event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
     groupLanguage: GroupLanguage,

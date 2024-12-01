@@ -27,8 +27,9 @@
       ),
   );
 
-  let attunementSummaryTooltip: AttunementSummaryTooltip = $state();
+  let attunementSummaryTooltip: AttunementSummaryTooltip;
 
+  // kgar-migration-task - does it work as advertized?
   function showAttunementSummaryTooltip(
     event: MouseEvent & { currentTarget: EventTarget & HTMLDivElement },
   ): any {
@@ -47,8 +48,6 @@
   />
 </div>
 
-<!-- svelte-ignore a11y_no_static_element_interactions -->
-<!-- svelte-ignore a11y_mouse_events_have_key_events -->
 <div
   class="attunement-tracker {rest.class ?? ''}"
   class:overattuned={$context.actor.system.attributes.attunement.value >
