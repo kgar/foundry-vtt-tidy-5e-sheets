@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import { CONSTANTS } from 'src/constants';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService';
@@ -36,7 +34,7 @@
 
   let expandedState = $derived(expandCollapseService.state);
 
-  run(() => {
+  $effect(() => {
     if (
       $messageBus?.tabId === tabId &&
       $messageBus?.message === CONSTANTS.MESSAGE_BUS_EXPAND_ALL

@@ -1,17 +1,31 @@
 <script lang="ts">
-  import { run, createBubbler } from 'svelte/legacy';
-
-  const bubble = createBubbler();
+  import { run } from 'svelte/legacy';
+  
   import { settingStore } from 'src/settings/settings';
   import { onMount } from 'svelte';
+  import type { FocusEventHandler, MouseEventHandler } from 'svelte/elements';
 
   interface Props {
     isEmpty: boolean;
     willChange: boolean;
     disabled: boolean;
+    onclick?: MouseEventHandler<HTMLButtonElement>;
+    onmouseenter?: MouseEventHandler<HTMLButtonElement>;
+    onmouseleave?: MouseEventHandler<HTMLButtonElement>;
+    onfocusin?: FocusEventHandler<HTMLButtonElement>;
+    onfocusout?: FocusEventHandler<HTMLButtonElement>;
   }
 
-  let { isEmpty, willChange, disabled }: Props = $props();
+  let {
+    isEmpty,
+    willChange,
+    disabled,
+    onclick,
+    onmouseenter,
+    onmouseleave,
+    onfocusin,
+    onfocusout,
+  }: Props = $props();
 
   let pipEl: HTMLElement;
   let animateExpended = $state(false);
@@ -48,11 +62,11 @@
   class:change={willChange}
   class:animate-expended={animateExpended}
   class:animate-restored={animateRestored}
-  onclick={bubble('click')}
-  onmouseenter={bubble('mouseenter')}
-  onmouseleave={bubble('mouseleave')}
-  onfocusin={bubble('focusin')}
-  onfocusout={bubble('focusout')}
+  {onclick}
+  {onmouseenter}
+  {onmouseleave}
+  {onfocusin}
+  {onfocusout}
   ontransitionend={() => {
     // Prevent unwanted additional animations after the pip effect has ended.
     animateExpended = false;

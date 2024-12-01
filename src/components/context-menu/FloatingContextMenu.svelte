@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ContextMenuEntry } from 'src/foundry/foundry.types';
@@ -25,7 +23,8 @@
       },
     );
   }
-  run(() => {
+
+  $effect(() => {
     if (containingElement) {
       initContextMenu(containingElement);
     }

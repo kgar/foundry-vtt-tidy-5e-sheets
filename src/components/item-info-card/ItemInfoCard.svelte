@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     Item5e,
@@ -95,7 +93,7 @@
   }
   let debug = false;
   let timer: any = $state();
-  let infoContentTemplate: ItemCardContentComponent | null = $state();
+  let infoContentTemplate: ItemCardContentComponent | null = $state(null);
 
   async function showCard() {
     if (!$card.item) {
@@ -187,30 +185,29 @@
   let fixKey = $derived($settingStore.itemCardsFixKey?.toUpperCase());
   let concealDetails = $derived(FoundryAdapter.concealDetails(item));
   let delayMs = $derived($settingStore.itemCardsDelay ?? 0);
-  run(() => {
-    $card,
-      (async () => {
-        if (frozen) {
-          return;
-        }
+  $effect(() => {
+    if (frozen) {
+      return;
+    }
 
-        if ($card.item?.id === item?.id && open) {
-          return;
-        }
+    if ($card.item?.id === item?.id && open) {
+      return;
+    }
 
-        open = false;
-        clearTimeout(timer);
+    open = false;
 
-        const newItem = $card.item;
+    const newItem = $card.item;
 
-        if (!newItem) {
-          return;
-        }
+    if (!newItem) {
+      return;
+    }
 
-        timer = setTimeout(() => showCard(), delayMs);
-      })();
+    clearTimeout(timer);
+
+    timer = setTimeout(() => showCard(), delayMs);
   });
-  run(() => {
+
+  $effect(() => {
     const body = itemCardNode?.ownerDocument?.body;
     if (body && open) {
       listenForBodyEvents(body);
@@ -218,6 +215,7 @@
       stopListeningForBodyEvents(body);
     }
   });
+
   let itemSummaryCommands = $derived(
     ItemSummaryRuntime.getItemSummaryCommands(item),
   );

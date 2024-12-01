@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     ContainerSheetClassicContext,
@@ -73,8 +71,6 @@
       [field]: parsedValueToSave,
     });
 
-    draftValue = value;
-
     if (selectOnFocus && theInput === window.document.activeElement) {
       theInput.select();
     }
@@ -92,10 +88,7 @@
     >('context');
 
   const localize = FoundryAdapter.localize;
-  let draftValue;
-  run(() => {
-    draftValue = value;
-  });
+
   let datasetAttributes = $derived(buildDataset(dataset));
   let activeEffectApplied = $derived(
     ActiveEffectsHelper.isActiveEffectAppliedToField(document, field),
@@ -115,7 +108,7 @@
   type="number"
   {id}
   {step}
-  bind:value={draftValue}
+  bind:value
   {min}
   {max}
   {placeholder}

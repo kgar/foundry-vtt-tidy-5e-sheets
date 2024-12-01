@@ -12,5 +12,87 @@
   - Component descruction is replaced by `unmount()`
 - [ ] Replace all calls to svelte `run()` with `$derived` or `$effect`, whichever is most appropriate
 - [ ] Replace stores with runes
+- [ ] Address custom HTML events
+  - [ ] longpress
+  - [ ] onclickoutside
+  - [ ] ...
+- [ ] Eliminate `createBubbler` calls by specifying event handler props
 - [ ] Ensure context API where reactivity is expected is using runes
+- [ ] Resolve `kgar-migration-task` content
 - [ ] Peruse errors and task out more
+
+## Testing To Dos
+
+- [ ] Smoke test every sheet
+- [ ] Test Checkboxes and other inputs that formerly had a `draftValue` and see if they now just work as expected
+- [ ] Especially test Select elements with empty options, null options, and with default blank string options
+- [ ] Especially test item cards
+- [ ] Action filter override control (had some odd run/derived behavior)
+- [ ] SpellbookList component, controls (had some elaborate run/derived behavior)
+- [ ]
+
+## Notes and Examples
+
+### How to handle custom events, Clickoutside event handler example
+
+https://svelte.dev/playground/8031c800d7e34fd692dd18174b514e4e?version=5.3.0
+
+```svelte
+<script>
+	function clickOutside(element, callbackFunction) {
+		function onClick(event) {
+			if (!element.contains(event.target)) {
+				callbackFunction();
+			}
+		}
+
+		document.body.addEventListener('click', onClick);
+
+		return {
+			update(newCallbackFunction) {
+				callbackFunction = newCallbackFunction;
+			},
+			destroy() {
+				document.body.removeEventListener('click', onClick);
+			}
+		}
+	}
+	let showModal = false;
+</script>
+
+{#if showModal}
+	<div class="modal"
+			 use:clickOutside={() => {
+		     console.log('clicked outside');
+		     showModal = false;
+		   }}>
+		Some Modal
+	</div>
+{:else}
+	<button on:click={(event) => {
+		showModal = true;
+		event.stopPropagation();
+	}}>Open Modal</button>
+{/if}
+
+<style>
+	.modal {
+		padding: 16px;
+		border: 1px solid black;
+	}
+</style>
+```
+
+### async work in `$effect()` runes
+
+https://dev.to/jdgamble555/async-fetching-in-svelte-5-826
+
+https://github.com/sveltejs/svelte/issues/9520
+
+### Event Handler types in Svelte 5
+
+Svelte 5 has convenience types for event handler functions!
+
+- `MouseEventHandler<HTMLElement>`
+- `FocusEventHandler<HTMLElement>`
+- etc.

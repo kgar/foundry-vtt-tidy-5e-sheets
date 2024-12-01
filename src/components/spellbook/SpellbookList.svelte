@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import {
@@ -79,56 +77,56 @@
 
   var spellSchoolBaseWidth = '2rem';
 
-  let controls: RenderableClassicControl<{ item: Item5e; ctx: any }>[] = $state(
-    [],
-  );
-  run(() => {
-    controls = [
-      {
-        component: SpellPrepareControl,
-        props: ({ item, ctx }) => ({
-          spell: item,
-          ctx,
-        }),
-        visible: ({ item }) => FoundryAdapter.canPrepareSpell(item),
-      },
-    ];
+  let controls: RenderableClassicControl<{ item: Item5e; ctx: any }>[] =
+    $derived.by(() => {
+      let result: RenderableClassicControl<{ item: Item5e; ctx: any }>[] = [
+        {
+          component: SpellPrepareControl,
+          props: ({ item, ctx }) => ({
+            spell: item,
+            ctx,
+          }),
+          visible: ({ item }) => FoundryAdapter.canPrepareSpell(item),
+        },
+      ];
 
-    if (allowFavorites) {
-      controls.push({
-        component: ItemFavoriteControl,
+      if (allowFavorites) {
+        result.push({
+          component: ItemFavoriteControl,
+          props: ({ item }) => ({
+            item,
+          }),
+        });
+      }
+
+      result.push({
+        component: ItemEditControl,
         props: ({ item }) => ({
           item,
         }),
       });
-    }
 
-    controls.push({
-      component: ItemEditControl,
-      props: ({ item }) => ({
-        item,
-      }),
+      if ($context.unlocked) {
+        result.push({
+          // svelte 5 - snippet?
+          component: DeleteOrOpenActivity,
+          props: ({ item }) => ({
+            item,
+          }),
+        });
+      }
+
+      if ($context.useActionsFeature) {
+        result.push({
+          component: ActionFilterOverrideControl,
+          props: ({ item }) => ({
+            item,
+          }),
+        });
+      }
+
+      return result;
     });
-
-    if ($context.unlocked) {
-      controls.push({
-        // svelte 5 - snippet?
-        component: DeleteOrOpenActivity,
-        props: ({ item }) => ({
-          item,
-        }),
-      });
-    }
-
-    if ($context.useActionsFeature) {
-      controls.push({
-        component: ActionFilterOverrideControl,
-        props: ({ item }) => ({
-          item,
-        }),
-      });
-    }
-  });
 
   const localize = FoundryAdapter.localize;
 

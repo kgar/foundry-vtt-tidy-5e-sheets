@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import type {
     CharacterSheetContext,
     NpcSheetContext,
@@ -11,7 +9,7 @@
   import SpellPip from './SpellPip.svelte';
   import { CONSTANTS } from 'src/constants';
 
-  type SpellPipProps = ComponentProps<SpellPip> & { index: number };
+  type SpellPipProps = ComponentProps<typeof SpellPip> & { index: number };
 
   let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -68,10 +66,8 @@
     }));
   }
 
-  let pips: SpellPipProps[] = $state();
-  run(() => {
-    section, (pips = generatePips());
-  });
+  // kgar-migration-task - especially test this component for proper pip behavior
+  let pips: SpellPipProps[] = $derived.by(() => generatePips());
 </script>
 
 {#if (section.slots ?? 0) > 0}
@@ -81,11 +77,11 @@
         disabled={pip.disabled}
         isEmpty={pip.isEmpty}
         willChange={pip.willChange}
-        on:click={() => onSpellMarkerClick(section, pip.index)}
-        on:mouseenter={() => onMouseEnterDot(pip.index)}
-        on:mouseleave={() => onMouseLeaveDot(pip.index)}
-        on:focusin={() => onMouseEnterDot(pip.index)}
-        on:focusout={() => onMouseLeaveDot(pip.index)}
+        onclick={() => onSpellMarkerClick(section, pip.index)}
+        onmouseenter={() => onMouseEnterDot(pip.index)}
+        onmouseleave={() => onMouseLeaveDot(pip.index)}
+        onfocusin={() => onMouseEnterDot(pip.index)}
+        onfocusout={() => onMouseLeaveDot(pip.index)}
       />
     {/each}
   </div>

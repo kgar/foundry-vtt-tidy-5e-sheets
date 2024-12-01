@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     ContainerSheetClassicContext,
@@ -47,17 +45,13 @@
   }: Props = $props();
 
   async function update() {
-    if (draftValue.length > dataMaxLength) {
-      draftValue = draftValue.substring(0, dataMaxLength);
+    if (value.length > dataMaxLength) {
+      value = value.substring(0, dataMaxLength);
     }
 
-    const valueToSave = saveAs === 'number' ? toNumber(draftValue) : draftValue;
+    const valueToSave = saveAs === 'number' ? toNumber(value) : value;
 
-    const result = await document.update({ [field]: valueToSave });
-
-    if (!result) {
-      draftValue = value;
-    }
+    await document.update({ [field]: valueToSave });
   }
 
   function submitWhenEnterKey(e: KeyboardEvent) {
@@ -67,7 +61,9 @@
     }
   }
 
-  let _el: HTMLElement;
+  // kgar-migration-task - test this
+  // svelte-ignore non_reactive_update
+    let _el: HTMLElement;
 
   // [contenteditable] pasting can include HTML
   // Only the text content is appropriate for this component
@@ -99,10 +95,7 @@
     >('context');
 
   const localize = FoundryAdapter.localize;
-  let draftValue;
-  run(() => {
-    draftValue = value;
-  });
+
   let activeEffectApplied = $derived(
     ActiveEffectsHelper.isActiveEffectAppliedToField(document, field),
   );
@@ -122,7 +115,7 @@
     bind:this={_el}
     contenteditable="true"
     class={cssClass}
-    bind:innerHTML={draftValue}
+    bind:innerHTML={value}
     onblur={update}
     onkeypress={submitWhenEnterKey}
     onpaste={handlePaste}

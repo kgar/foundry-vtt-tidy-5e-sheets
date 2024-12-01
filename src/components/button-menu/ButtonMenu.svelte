@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import { setContext, type Snippet } from 'svelte';
   import { clickOutside } from '../../events/clickOutside';
   import type {
@@ -68,17 +66,17 @@
     menuStyles = getPositionStyles(openerEl, menuEl, position, anchor, gap);
   }
 
-  let actualIconClass: string | null = $state(null);
-  run(() => {
+  let actualIconClass: string | null = $derived.by(() => {
     if (iconClass !== null) {
       if (typeof iconClass === 'string') {
-        actualIconClass = iconClass;
+        return iconClass;
       } else {
         let potentialClass = open ? iconClass.opened : iconClass.closed;
         potentialClass ??= iconClass.opened ?? iconClass.closed;
-        actualIconClass = potentialClass;
+        return potentialClass;
       }
     }
+    return null;
   });
 </script>
 

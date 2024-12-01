@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     ContainerSheetClassicContext,
@@ -44,18 +42,16 @@
     ...rest
   }: Props = $props();
 
-  function saveChange(
+  async function saveChange(
     event: Event & {
       currentTarget: EventTarget & HTMLSelectElement;
     },
   ) {
     const targetValue = event.currentTarget.value;
 
-    document.update({
+    await document.update({
       [field]: targetValue !== '' ? targetValue : blankValue,
     });
-
-    draftValue = value?.toString() ?? '';
   }
 
   const context =
@@ -70,10 +66,7 @@
     >('context');
 
   const localize = FoundryAdapter.localize;
-  let draftValue;
-  run(() => {
-    draftValue = value?.toString() ?? '';
-  });
+
   let datasetAttributes = $derived(buildDataset(dataset));
   let activeEffectApplied = $derived(
     ActiveEffectsHelper.isActiveEffectAppliedToField(document, field),
@@ -90,7 +83,7 @@
 
 <select
   {id}
-  bind:value={draftValue}
+  bind:value
   data-tooltip={activeEffectApplied ? overrideTooltip : tooltip}
   onchange={document && saveChange}
   {title}

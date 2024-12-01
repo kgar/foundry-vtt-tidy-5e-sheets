@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     ContainerSheetClassicContext,
@@ -70,8 +68,6 @@
     };
 
     await document.update(data);
-
-    draftValue = value;
   }
 
   const context =
@@ -91,10 +87,7 @@
       ? `width: ${greenCheckboxWidthOverride}`
       : '',
   );
-  let draftValue;
-  run(() => {
-    draftValue = value;
-  });
+
   let datasetAttributes = $derived(buildDataset(dataset));
   let activeEffectApplied = $derived(
     ActiveEffectsHelper.isActiveEffectAppliedToField(document, field),
@@ -120,7 +113,7 @@
     <input
       type="checkbox"
       {id}
-      bind:value={draftValue}
+      bind:value={value}
       {checked}
       onchange={saveChange}
       disabled={disabled || activeEffectApplied}
@@ -135,7 +128,7 @@
   <input
     type="checkbox"
     {id}
-    bind:value={draftValue}
+    bind:value={value}
     {checked}
     onchange={saveChange}
     {title}
