@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SheetEditor from 'src/components/editor/SheetEditor.svelte';
   import type { NpcSheetContext } from 'src/types/types';
@@ -37,56 +35,53 @@
     text: string;
   };
 
-  let bioFields: FlagBioField[] = $state([]);
-  run(() => {
-    bioFields = [
-      {
-        prop: TidyFlags.gender.prop,
-        value: TidyFlags.gender.get($context.actor),
-        text: 'DND5E.Gender',
-      },
-      {
-        prop: TidyFlags.age.prop,
-        value: TidyFlags.age.get($context.actor),
-        text: 'DND5E.Age',
-      },
-      {
-        prop: TidyFlags.height.prop,
-        value: TidyFlags.height.get($context.actor),
-        text: 'DND5E.Height',
-      },
-      {
-        prop: TidyFlags.weight.prop,
-        value: TidyFlags.weight.get($context.actor),
-        text: 'DND5E.Weight',
-      },
-      {
-        prop: TidyFlags.eyes.prop,
-        value: TidyFlags.eyes.get($context.actor),
-        text: 'DND5E.Eyes',
-      },
-      {
-        prop: TidyFlags.skin.prop,
-        value: TidyFlags.skin.get($context.actor),
-        text: 'DND5E.Skin',
-      },
-      {
-        prop: TidyFlags.hair.prop,
-        value: TidyFlags.hair.get($context.actor),
-        text: 'DND5E.Hair',
-      },
-      {
-        prop: TidyFlags.faith.prop,
-        value: TidyFlags.faith.get($context.actor),
-        text: 'DND5E.Faith',
-      },
-    ];
-  });
+  let bioFields: FlagBioField[] = $derived([
+    {
+      prop: TidyFlags.gender.prop,
+      value: TidyFlags.gender.get($context.actor),
+      text: 'DND5E.Gender',
+    },
+    {
+      prop: TidyFlags.age.prop,
+      value: TidyFlags.age.get($context.actor),
+      text: 'DND5E.Age',
+    },
+    {
+      prop: TidyFlags.height.prop,
+      value: TidyFlags.height.get($context.actor),
+      text: 'DND5E.Height',
+    },
+    {
+      prop: TidyFlags.weight.prop,
+      value: TidyFlags.weight.get($context.actor),
+      text: 'DND5E.Weight',
+    },
+    {
+      prop: TidyFlags.eyes.prop,
+      value: TidyFlags.eyes.get($context.actor),
+      text: 'DND5E.Eyes',
+    },
+    {
+      prop: TidyFlags.skin.prop,
+      value: TidyFlags.skin.get($context.actor),
+      text: 'DND5E.Skin',
+    },
+    {
+      prop: TidyFlags.hair.prop,
+      value: TidyFlags.hair.get($context.actor),
+      text: 'DND5E.Hair',
+    },
+    {
+      prop: TidyFlags.faith.prop,
+      value: TidyFlags.faith.get($context.actor),
+      text: 'DND5E.Faith',
+    },
+  ]);
 
   let editing = $state(false);
-  let contentToEdit: string = $state();
-  let enrichedText: string = $state();
-  let fieldToEdit: string = $state();
+  let contentToEdit: string = $state('');
+  let enrichedText: string = $state('');
+  let fieldToEdit: string = $state('');
 
   async function stopEditing() {
     await $context.actor.sheet.submit();

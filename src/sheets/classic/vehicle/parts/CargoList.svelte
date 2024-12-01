@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     RenderableClassicControl,
@@ -49,36 +47,38 @@
     weight: '3.75rem',
   };
 
-  let controls: RenderableClassicControl<{ item: Item5e }>[] = $state([]);
+  let controls: RenderableClassicControl<{ item: Item5e }>[] = $derived.by(
+    () => {
+      let result: RenderableClassicControl<{ item: Item5e }>[] = [
+        {
+          component: ItemEditControl,
+          props: ({ item }) => ({
+            item,
+          }),
+        },
+      ];
 
-  run(() => {
-    controls = [
-      {
-        component: ItemEditControl,
-        props: ({ item }) => ({
-          item,
-        }),
-      },
-    ];
+      if ($context.unlocked) {
+        result.push({
+          component: ItemDeleteControl,
+          props: ({ item }) => ({
+            item,
+          }),
+        });
+      }
 
-    if ($context.unlocked) {
-      controls.push({
-        component: ItemDeleteControl,
-        props: ({ item }) => ({
-          item,
-        }),
-      });
-    }
+      if ($context.useActionsFeature) {
+        result.push({
+          component: ActionFilterOverrideControl,
+          props: ({ item }) => ({
+            item,
+          }),
+        });
+      }
 
-    if ($context.useActionsFeature) {
-      controls.push({
-        component: ActionFilterOverrideControl,
-        props: ({ item }) => ({
-          item,
-        }),
-      });
-    }
-  });
+      return result;
+    },
+  );
 
   let classicControlsIconWidth = 1.25;
 

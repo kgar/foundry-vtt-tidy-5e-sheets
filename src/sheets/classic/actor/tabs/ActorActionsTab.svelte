@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import ItemTable from 'src/components/item-list/v1/ItemTable.svelte';
   import ItemTableColumn from 'src/components/item-list/v1/ItemTableColumn.svelte';
   import ItemTableHeaderRow from 'src/components/item-list/v1/ItemTableHeaderRow.svelte';
@@ -52,10 +50,11 @@
 
   let searchCriteria: string = $state('');
 
+  // kgar-migration-task - swap to a state or derived rune | consider using a service of some kind
   const itemIdsToShow = writable<Set<string> | undefined>(undefined);
   setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
 
-  run(() => {
+  $effect(() => {
     $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
       itemContext: $context.itemContext,

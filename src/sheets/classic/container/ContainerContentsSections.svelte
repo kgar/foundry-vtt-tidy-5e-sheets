@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import TidyTable from 'src/components/table/TidyTable.svelte';
   import TidyTableHeaderCell from 'src/components/table/TidyTableHeaderCell.svelte';
   import TidyTableHeaderRow from 'src/components/table/TidyTableHeaderRow.svelte';
@@ -71,18 +69,19 @@
   let classicControls: {
     component: Component<any>;
     getProps: (item: Item5e) => any;
-  }[] = $state([]);
+  }[] = $derived.by(() => {
+    let result: {
+      component: Component<any>;
+      getProps: (item: Item5e) => any;
+    }[] = [];
 
-  run(() => {
-    classicControls = [];
-
-    classicControls.push({
+    result.push({
       component: ItemEditControl,
       getProps: (item: Item5e) => ({ item }),
     });
 
     if (unlocked) {
-      classicControls.push({
+      result.push({
         component: ItemDeleteControl,
         getProps: (item: Item5e) => ({
           item,
@@ -90,6 +89,8 @@
         }),
       });
     }
+
+    return result;
   });
 
   const weightUnit = FoundryAdapter.getWeightUnit();

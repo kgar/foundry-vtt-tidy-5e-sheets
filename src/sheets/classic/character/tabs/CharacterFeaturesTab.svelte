@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import {
     type CharacterFeatureSection,
@@ -65,7 +63,36 @@
 
   declareLocation('features');
 
-  let controls: RenderableClassicControl<{ item: Item5e }>[] = $state([]);
+  let controls: RenderableClassicControl<{ item: Item5e }>[] = $derived.by(
+    () => {
+      let result: RenderableClassicControl<{ item: Item5e }>[] = [
+        {
+          component: ItemFavoriteControl,
+          props: ({ item }) => ({ item }),
+        },
+        {
+          component: ItemEditControl,
+          props: ({ item }) => ({ item }),
+        },
+      ];
+
+      if ($context.unlocked) {
+        result.push({
+          component: ItemDeleteControl,
+          props: ({ item }) => ({ item }),
+        });
+      }
+
+      if ($context.useActionsFeature) {
+        result.push({
+          component: ActionFilterOverrideControl,
+          props: ({ item }) => ({ item }),
+        });
+      }
+
+      return result;
+    },
+  );
 
   let classicControlsIconWidth = 1.25;
 
@@ -83,7 +110,8 @@
       (section: CharacterFeatureSection) => section.items.length > 0,
     ) === false,
   );
-  run(() => {
+
+  $effect(() => {
     $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
       itemContext: $context.itemContext,
@@ -91,35 +119,11 @@
       tabId: tabId,
     });
   });
+
   let utilityBarCommands = $derived(
     $context.utilities[tabId]?.utilityToolbarCommands ?? [],
   );
-  run(() => {
-    controls = [
-      {
-        component: ItemFavoriteControl,
-        props: ({ item }) => ({ item }),
-      },
-      {
-        component: ItemEditControl,
-        props: ({ item }) => ({ item }),
-      },
-    ];
 
-    if ($context.unlocked) {
-      controls.push({
-        component: ItemDeleteControl,
-        props: ({ item }) => ({ item }),
-      });
-    }
-
-    if ($context.useActionsFeature) {
-      controls.push({
-        component: ActionFilterOverrideControl,
-        props: ({ item }) => ({ item }),
-      });
-    }
-  });
   let classicControlsColumnWidth = $derived(
     `${classicControlsIconWidth * controls.length}rem`,
   );

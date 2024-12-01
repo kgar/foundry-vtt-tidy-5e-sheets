@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SheetEditor from 'src/components/editor/SheetEditor.svelte';
   import ContentEditableFormField from '../../../../components/inputs/ContentEditableFormField.svelte';
@@ -19,51 +17,49 @@
 
   type SystemBioField = { field: string; value: string; text: string };
 
-  let bioFields: SystemBioField[] = $state([]);
-  run(() => {
-    bioFields = [
-      {
-        field: 'system.details.gender',
-        value: $context.system.details.gender,
-        text: 'DND5E.Gender',
-      },
-      {
-        field: 'system.details.age',
-        value: $context.system.details.age,
-        text: 'DND5E.Age',
-      },
-      {
-        field: 'system.details.height',
-        value: $context.system.details.height,
-        text: 'DND5E.Height',
-      },
-      {
-        field: 'system.details.weight',
-        value: $context.system.details.weight,
-        text: 'DND5E.Weight',
-      },
-      {
-        field: 'system.details.eyes',
-        value: $context.system.details.eyes,
-        text: 'DND5E.Eyes',
-      },
-      {
-        field: 'system.details.skin',
-        value: $context.system.details.skin,
-        text: 'DND5E.Skin',
-      },
-      {
-        field: 'system.details.hair',
-        value: $context.system.details.hair,
-        text: 'DND5E.Hair',
-      },
-      {
-        field: 'system.details.faith',
-        value: $context.system.details.faith,
-        text: 'DND5E.Faith',
-      },
-    ];
-  });
+  // kgar-migration-task - make sure these are properly reactive  when editing the form
+  let bioFields: SystemBioField[] = $derived([
+    {
+      field: 'system.details.gender',
+      value: $context.system.details.gender,
+      text: 'DND5E.Gender',
+    },
+    {
+      field: 'system.details.age',
+      value: $context.system.details.age,
+      text: 'DND5E.Age',
+    },
+    {
+      field: 'system.details.height',
+      value: $context.system.details.height,
+      text: 'DND5E.Height',
+    },
+    {
+      field: 'system.details.weight',
+      value: $context.system.details.weight,
+      text: 'DND5E.Weight',
+    },
+    {
+      field: 'system.details.eyes',
+      value: $context.system.details.eyes,
+      text: 'DND5E.Eyes',
+    },
+    {
+      field: 'system.details.skin',
+      value: $context.system.details.skin,
+      text: 'DND5E.Skin',
+    },
+    {
+      field: 'system.details.hair',
+      value: $context.system.details.hair,
+      text: 'DND5E.Hair',
+    },
+    {
+      field: 'system.details.faith',
+      value: $context.system.details.faith,
+      text: 'DND5E.Faith',
+    },
+  ]);
 
   let editing = $state(false);
   let contentToEdit: string = $state('');

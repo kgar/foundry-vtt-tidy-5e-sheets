@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import { CONSTANTS } from 'src/constants';
   import type { GroupSheetClassicContext } from 'src/types/group.types';
   import { getContext, setContext } from 'svelte';
@@ -34,7 +32,8 @@
 
   const memberActorIdsToShow = writable<Set<string> | undefined>(undefined);
   setContext(CONSTANTS.SVELTE_CONTEXT.MEMBER_IDS_TO_SHOW, memberActorIdsToShow);
-  run(() => {
+
+  $effect(() => {
     $memberActorIdsToShow = FoundryAdapter.searchActors(
       searchCriteria,
       $context.system.members.map((m) => m.actor),

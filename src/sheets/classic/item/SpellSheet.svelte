@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import type { ItemSheetContext } from 'src/types/item.types';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
@@ -18,8 +16,10 @@
 
   let appId = $derived($context.document.id);
 
-  let selectedTabId;
-  run(() => {
+  let selectedTabId: string;
+
+  // kgar-migration-task - is this necessary? Does it even work? It sounds like we need the current tab ID source to be a state rune
+  $effect(() => {
     selectedTabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID);
   });
 

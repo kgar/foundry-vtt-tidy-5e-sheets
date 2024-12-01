@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import ItemTableFooter from 'src/components/item-list/ItemTableFooter.svelte';
   import ItemDeleteControl from 'src/components/item-list/controls/ItemDeleteControl.svelte';
   import ItemTable from 'src/components/item-list/v1/ItemTable.svelte';
@@ -87,13 +85,15 @@
     item: CargoOrCrewItem;
     index: number;
     section: VehicleCargoSection;
-  }>[] = $state([]);
-
-  run(() => {
-    controls = [];
+  }>[] = $derived.by(() => {
+    let result: RenderableClassicControl<{
+      item: CargoOrCrewItem;
+      index: number;
+      section: VehicleCargoSection;
+    }>[] = [];
 
     if ($context.unlocked) {
-      controls.push({
+      result.push({
         component: ItemDeleteControl,
         props: ({ item, index, section }) => ({
           onDelete: () => deleteCrewOrPassenger(section, index),
@@ -101,6 +101,8 @@
         }),
       });
     }
+
+    return result;
   });
 
   const localize = FoundryAdapter.localize;

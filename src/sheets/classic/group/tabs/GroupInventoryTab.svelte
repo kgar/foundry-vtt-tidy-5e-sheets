@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
@@ -45,7 +43,7 @@
   const itemIdsToShow = writable<Set<string> | undefined>(undefined);
   setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
 
-  run(() => {
+  $effect(() => {
     $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
       itemContext: $context.itemContext,

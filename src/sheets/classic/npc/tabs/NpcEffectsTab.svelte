@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import {
     type ActorSheetContextV1,
@@ -37,48 +35,50 @@
 
   declareLocation('effects');
 
-  let controls: RenderableClassicControl<{ effect: any }>[] = $state([]);
+  let controls: RenderableClassicControl<{ effect: any }>[] = $derived.by(
+    () => {
+      let result: RenderableClassicControl<{ effect: any }>[] = [];
+      result.push(
+        {
+          component: ActorEffectToggleControl,
+          props: ({ effect }) => ({
+            effect: effect,
+          }),
+        },
+        {
+          component: ItemControl,
+          props: ({ effect }) => ({
+            onclick: () =>
+              FoundryAdapter.getEffect({
+                document: $context.actor,
+                effectId: effect.id,
+                parentId: effect.parentId,
+              }).sheet.render(true),
+            title: localize('DND5E.EffectEdit'),
+            iconCssClass: 'fas fa-edit',
+          }),
+        },
+      );
 
-  run(() => {
-    controls = [];
-    controls.push(
-      {
-        component: ActorEffectToggleControl,
-        props: ({ effect }) => ({
-          effect: effect,
-        }),
-      },
-      {
-        component: ItemControl,
-        props: ({ effect }) => ({
-          onclick: () =>
-            FoundryAdapter.getEffect({
-              document: $context.actor,
-              effectId: effect.id,
-              parentId: effect.parentId,
-            }).sheet.render(true),
-          title: localize('DND5E.EffectEdit'),
-          iconCssClass: 'fas fa-edit',
-        }),
-      },
-    );
+      if ($context.unlocked) {
+        result.push({
+          component: ItemControl,
+          props: ({ effect }) => ({
+            onclick: () =>
+              FoundryAdapter.getEffect({
+                document: $context.actor,
+                effectId: effect.id,
+                parentId: effect.parentId,
+              }).deleteDialog(),
+            title: localize('DND5E.EffectDelete'),
+            iconCssClass: 'fas fa-trash',
+          }),
+        });
+      }
 
-    if ($context.unlocked) {
-      controls.push({
-        component: ItemControl,
-        props: ({ effect }) => ({
-          onclick: () =>
-            FoundryAdapter.getEffect({
-              document: $context.actor,
-              effectId: effect.id,
-              parentId: effect.parentId,
-            }).deleteDialog(),
-          title: localize('DND5E.EffectDelete'),
-          iconCssClass: 'fas fa-trash',
-        }),
-      });
-    }
-  });
+      return result;
+    },
+  );
 
   let classicControlsIconWidth = 1.25;
 

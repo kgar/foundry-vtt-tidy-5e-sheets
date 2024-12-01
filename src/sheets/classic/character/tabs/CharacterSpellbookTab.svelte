@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     CharacterSheetContext,
@@ -63,7 +61,8 @@
   let spellbook = $derived(
     SheetSections.configureSpellbook($context.actor, tabId, $context.spellbook),
   );
-  run(() => {
+
+  $effect(() => {
     $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
       itemContext: $context.itemContext,

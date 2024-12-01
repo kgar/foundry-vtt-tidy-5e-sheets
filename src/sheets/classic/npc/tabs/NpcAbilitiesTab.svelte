@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import SkillsList from 'src/sheets/classic/actor/SkillsList.svelte';
   import Traits from '../../actor/traits/Traits.svelte';
   import { getContext, setContext } from 'svelte';
@@ -101,7 +99,7 @@
       : [],
   );
 
-  run(() => {
+  $effect(() => {
     $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
       itemContext: $context.itemContext,
@@ -128,30 +126,33 @@
 
   declareLocation('abilities');
 
-  let controls: RenderableClassicControl<{ item: Item5e }>[] = $state([]);
-  run(() => {
-    controls = [
-      {
-        component: ItemEditControl,
-        props: ({ item }) => ({ item }),
-      },
-    ];
+  let controls: RenderableClassicControl<{ item: Item5e }>[] = $derived.by(
+    () => {
+      let result: RenderableClassicControl<{ item: Item5e }>[] = [
+        {
+          component: ItemEditControl,
+          props: ({ item }) => ({ item }),
+        },
+      ];
 
-    if ($context.unlocked) {
-      controls.push({
-        component: ItemDeleteControl,
-        props: ({ item }) => ({ item }),
-        visible: ({ item }) => item.canDelete,
-      });
-    }
+      if ($context.unlocked) {
+        result.push({
+          component: ItemDeleteControl,
+          props: ({ item }) => ({ item }),
+          visible: ({ item }) => item.canDelete,
+        });
+      }
 
-    if ($context.useActionsFeature) {
-      controls.push({
-        component: ActionFilterOverrideControl,
-        props: ({ item }) => ({ item }),
-      });
-    }
-  });
+      if ($context.useActionsFeature) {
+        result.push({
+          component: ActionFilterOverrideControl,
+          props: ({ item }) => ({ item }),
+        });
+      }
+
+      return result;
+    },
+  );
 
   let classicControlsIconWidth = 1.25;
   let classicControlsColumnWidth = $derived(

@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Item5e, ItemSheetContext } from 'src/types/item.types';
@@ -41,16 +39,13 @@
 
   // kgar-migration-task
   let itemImageContainer: HTMLElement;
-  let contextMenuOptions: ContextMenuEntry[] = $state([]);
-  run(() => {
-    contextMenuOptions = [
-      {
-        name: 'TIDY5E.ShowItemArt',
-        icon: '<i class="fa-solid fa-image fa-fw"></i>',
-        callback: () => showItemArt($context.item),
-      },
-    ];
-  });
+  let contextMenuOptions: ContextMenuEntry[] = $derived([
+    {
+      name: 'TIDY5E.ShowItemArt',
+      icon: '<i class="fa-solid fa-image fa-fw"></i>',
+      callback: () => showItemArt($context.item),
+    },
+  ]);
 </script>
 
 <FloatingContextMenu

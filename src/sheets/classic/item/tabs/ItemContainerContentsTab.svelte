@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
@@ -41,7 +39,7 @@
   const itemIdsToShow = writable<Set<string> | undefined>(undefined);
   setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
 
-  run(() => {
+  $effect(() => {
     $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
       itemContext: $context.itemContext,

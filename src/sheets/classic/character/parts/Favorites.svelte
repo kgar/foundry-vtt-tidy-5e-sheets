@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import type { CharacterSheetContext } from 'src/types/types';
   import InventoryList from '../../actor/InventoryList.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -38,10 +36,11 @@
     ),
   );
 
+  // kgar-migration-task - swap to a state or derived rune | consider using a service of some kind
   const itemIdsToShow = writable<Set<string> | undefined>(undefined);
   setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
 
-  run(() => {
+  $effect(() => {
     const sections = favorites.filter(
       (x) =>
         x.type !== CONSTANTS.FAVORITES_SECTION_TYPE_EFFECT &&

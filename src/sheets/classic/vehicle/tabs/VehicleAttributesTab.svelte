@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import { getContext } from 'svelte';
   import Traits from '../../actor/traits/Traits.svelte';
   import VehicleAttributes from '../parts/VehicleAttributes.svelte';
@@ -71,46 +69,45 @@
 
   declareLocation('attributes');
 
-  let controls: RenderableClassicControl<{ item: Item5e; ctx: any }>[] = $state(
-    [],
-  );
+  let controls: RenderableClassicControl<{ item: Item5e; ctx: any }>[] =
+    $derived.by(() => {
+      let result: RenderableClassicControl<{ item: Item5e; ctx: any }>[] = [];
+      result.push(
+        {
+          component: ItemCrewedControl,
+          props: ({ item, ctx }) => ({
+            item,
+            ctx,
+          }),
+        },
+        {
+          component: ItemEditControl,
+          props: ({ item }) => ({
+            item,
+          }),
+        },
+      );
 
-  run(() => {
-    controls = [];
-    controls.push(
-      {
-        component: ItemCrewedControl,
-        props: ({ item, ctx }) => ({
-          item,
-          ctx,
-        }),
-      },
-      {
-        component: ItemEditControl,
-        props: ({ item }) => ({
-          item,
-        }),
-      },
-    );
+      if ($context.unlocked) {
+        result.push({
+          component: ItemDeleteControl,
+          props: ({ item }) => ({
+            item,
+          }),
+        });
+      }
 
-    if ($context.unlocked) {
-      controls.push({
-        component: ItemDeleteControl,
-        props: ({ item }) => ({
-          item,
-        }),
-      });
-    }
+      if ($context.useActionsFeature) {
+        result.push({
+          component: ActionFilterOverrideControl,
+          props: ({ item }) => ({
+            item,
+          }),
+        });
+      }
 
-    if ($context.useActionsFeature) {
-      controls.push({
-        component: ActionFilterOverrideControl,
-        props: ({ item }) => ({
-          item,
-        }),
-      });
-    }
-  });
+      return result;
+    });
 
   let classicControlsIconWidth = 1.25;
 
