@@ -20,6 +20,7 @@
 - [x] Eliminate `createBubbler` calls by specifying event handler props
 - [x] look for `svelte/legacy` imports and resolve
 - [x] Eliminate `createEventDispatcher` uses
+- [ ] Fix item card effect depth error
 - [ ] Replace stores with runes
 - [ ] Ensure context API where reactivity is expected is using runes
 - [ ] Resolve `kgar-migration-task` content
@@ -101,3 +102,6 @@ Svelte 5 has convenience types for event handler functions!
 - `MouseEventHandler<HTMLElement>`
 - `FocusEventHandler<HTMLElement>`
 - etc.
+
+### Effect depth error
+

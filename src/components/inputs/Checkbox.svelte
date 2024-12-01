@@ -113,7 +113,7 @@
     <input
       type="checkbox"
       {id}
-      bind:value
+      {value}
       {checked}
       onchange={saveChange}
       disabled={disabled || activeEffectApplied}
@@ -128,7 +128,7 @@
   <input
     type="checkbox"
     {id}
-    bind:value
+    {value}
     {checked}
     onchange={saveChange}
     {title}
