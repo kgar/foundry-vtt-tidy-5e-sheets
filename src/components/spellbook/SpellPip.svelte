@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-  
   import { settingStore } from 'src/settings/settings';
   import { onMount } from 'svelte';
   import type { FocusEventHandler, MouseEventHandler } from 'svelte/elements';
@@ -49,7 +47,8 @@
     animateExpended = isEmpty;
     animateRestored = !isEmpty;
   }
-  run(() => {
+
+  $effect(() => {
     handlePipAnimation(isEmpty);
   });
 </script>

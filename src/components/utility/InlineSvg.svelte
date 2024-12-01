@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import { error } from 'src/utils/logging';
 
   interface Props {
@@ -12,12 +10,14 @@
   let { svgUrl, removeInlineStyles = true, ...rest }: Props = $props();
 
   let svgHtml: string = $state('');
-  run(() => {
-    (async () => {
-      if (!svgUrl) {
-        return;
-      }
 
+  // kgar-migration-task - make sure this is working as desired. Async effects are not a thing, and the effect should be running and mutating whenever svgUrl changes
+  $effect(() => {
+    if (!svgUrl) {
+      return;
+    }
+
+    (async () => {
       try {
         const response = await fetch(svgUrl);
         if (response.ok) {

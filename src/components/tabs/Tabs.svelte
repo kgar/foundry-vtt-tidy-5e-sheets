@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Tab, OnTabSelectedFn } from 'src/types/types';
@@ -85,7 +83,7 @@
     mounted = true;
   });
 
-  run(() => {
+  $effect(() => {
     if (mounted && !tabs.some((tab) => tab.id === selectedTabId)) {
       selectTab(tabs[0]);
     }

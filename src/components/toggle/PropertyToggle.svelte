@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import TidySwitch from './TidySwitch.svelte';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { debug, error } from 'src/utils/logging';
@@ -29,7 +27,8 @@
 
   let switchOn: boolean = $state(checked);
 
-  run(() => {
+  // kgar-migration-tast - is there a simpler way to deal with this scenario? This is far too much indirection for something so seemingly simple
+  $effect(() => {
     switchOn = checked;
   });
 

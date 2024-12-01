@@ -10,7 +10,7 @@
   }
 
   let {
-    checked = false,
+    checked = $bindable(false),
     disabled = false,
     thumbIconClass = undefined,
     children,

@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type Actor5e } from 'src/types/types';
@@ -77,13 +75,13 @@
     }
   }
 
-  // kgar-migration-task
+  // kgar-migration-task ensure this works as intended
+  // svelte-ignore non_reactive_update
   let portraitContainer: HTMLElement;
   // TODO: Consider sending context menu options down through document context in the first place.
-  let contextMenuOptions: ContextMenuEntry[] = $state([]);
-  run(() => {
+  let contextMenuOptions: ContextMenuEntry[] = $derived.by(() => {
     try {
-      contextMenuOptions = $context.actorPortraitCommands.map((c) => ({
+      return $context.actorPortraitCommands.map((c) => ({
         name: c.label ?? '',
         icon: !isNil(c.iconClass, '') ? `<i class="${c.iconClass}"></i>` : '',
         callback: () => c.execute?.({ actor, context: $context }),
@@ -95,6 +93,8 @@
         commands: $context.actorPortraitCommands,
       });
     }
+
+    return [];
   });
 </script>
 

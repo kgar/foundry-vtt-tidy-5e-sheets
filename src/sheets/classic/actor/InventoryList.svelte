@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Item5e } from 'src/types/item.types';
   import ItemTable from '../../../components/item-list/v1/ItemTable.svelte';
@@ -79,70 +77,69 @@
   const weightUnit = FoundryAdapter.getWeightUnit();
 
   // TODO: Assign these controls to the inventory prop in `getData()`. Leave room for the API to inject additional controls.
-  let controls: RenderableClassicControl<{ item: Item5e; ctx: any }>[] = $state(
-    [],
-  );
+  let controls: RenderableClassicControl<{ item: Item5e; ctx: any }>[] =
+    $derived.by(() => {
+      let result: RenderableClassicControl<{ item: Item5e; ctx: any }>[] = [];
 
-  run(() => {
-    controls = [];
+      if (allowAttuneControl) {
+        result.push({
+          component: AttuneControl,
+          props: ({ item, ctx }) => ({
+            item,
+            ctx,
+          }),
+          visible: ({ item, ctx }) =>
+            ctx?.attunement && !FoundryAdapter.concealDetails(item),
+        });
+      }
 
-    if (allowAttuneControl) {
-      controls.push({
-        component: AttuneControl,
-        props: ({ item, ctx }) => ({
-          item,
-          ctx,
-        }),
-        visible: ({ item, ctx }) =>
-          ctx?.attunement && !FoundryAdapter.concealDetails(item),
-      });
-    }
+      if (allowEquipControl) {
+        result.push({
+          component: EquipControl,
+          props: ({ item, ctx }) => ({
+            item,
+            ctx,
+          }),
+          visible: ({ ctx }) => ctx?.canToggle === true,
+        });
+      }
 
-    if (allowEquipControl) {
-      controls.push({
-        component: EquipControl,
-        props: ({ item, ctx }) => ({
-          item,
-          ctx,
-        }),
-        visible: ({ ctx }) => ctx?.canToggle === true,
-      });
-    }
+      if ('favorites' in $context.actor.system) {
+        result.push({
+          component: ItemFavoriteControl,
+          props: ({ item }) => ({
+            item,
+          }),
+        });
+      }
 
-    if ('favorites' in $context.actor.system) {
-      controls.push({
-        component: ItemFavoriteControl,
+      result.push({
+        component: ItemEditControl,
         props: ({ item }) => ({
           item,
         }),
       });
-    }
 
-    controls.push({
-      component: ItemEditControl,
-      props: ({ item }) => ({
-        item,
-      }),
+      if ($context.unlocked) {
+        result.push({
+          component: ItemDeleteControl,
+          props: ({ item }) => ({
+            item,
+          }),
+        });
+      }
+
+      if ($context.useActionsFeature) {
+        result.push({
+          component: ActionFilterOverrideControl,
+          props: ({ item }) => ({
+            item,
+          }),
+        });
+      }
+
+      return result;
     });
-
-    if ($context.unlocked) {
-      controls.push({
-        component: ItemDeleteControl,
-        props: ({ item }) => ({
-          item,
-        }),
-      });
-    }
-
-    if ($context.useActionsFeature) {
-      controls.push({
-        component: ActionFilterOverrideControl,
-        props: ({ item }) => ({
-          item,
-        }),
-      });
-    }
-  });
 
   let classicControlsIconWidth = 1.25;
 

@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import { CONSTANTS } from 'src/constants';
   import { getExhaustionIconsWithSeverity } from 'src/features/exhaustion/exhaustion';
   import type {
@@ -35,16 +33,19 @@
     isActiveEffectApplied,
   }: Props = $props();
 
-  let iconsWithSeverities: IconWithSeverity[] = $state();
+  const localize = FoundryAdapter.localize;
 
-  let selectedLevel: IconWithSeverity = $state();
-  let selectedHintKey: string = $state();
+  let iconsWithSeverities: IconWithSeverity[] = $derived.by(() => {
+    return getExhaustionIconsWithSeverity(exhaustionConfig.levels);
+  });
+
+  let selectedLevel: IconWithSeverity | null = $derived(
+    iconsWithSeverities[level] ?? iconsWithSeverities.at(-1),
+  );
 
   let severityClass: string = $derived(
     `severity-${selectedLevel?.severity ?? 0}`,
   );
-
-  const localize = FoundryAdapter.localize;
 
   let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -55,18 +56,6 @@
   }>();
 
   let exhaustionOptionWidthRems = 1.25;
-  run(() => {
-    iconsWithSeverities = getExhaustionIconsWithSeverity(
-      exhaustionConfig.levels,
-    );
-  });
-  run(() => {
-    selectedLevel = iconsWithSeverities[level] ?? iconsWithSeverities.at(-1);
-    selectedHintKey = localize(
-      coalesce(exhaustionConfig.hints[level], 'TIDY5E.ExhaustionLevelTooltip'),
-      { level: level },
-    );
-  });
 
   let exhaustionExpandedWidth = $derived(
     `${exhaustionOptionWidthRems * (exhaustionConfig.levels + 1) + 2.125}rem`,
