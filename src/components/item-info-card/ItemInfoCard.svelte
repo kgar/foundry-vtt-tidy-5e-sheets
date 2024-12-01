@@ -41,7 +41,7 @@
   let floatingLeft: string | null = $state(null);
   let sheetBorderRight: number = 0;
   let sheetBorderBottom: number = 0;
-  let itemCardNode: HTMLElement = $state();
+  let itemCardNode: HTMLElement;
   let sheet: HTMLElement | null = null;
 
   function onMouseMove(args: { clientX: number; clientY: number }) {

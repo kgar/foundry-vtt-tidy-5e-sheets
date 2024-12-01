@@ -10,7 +10,7 @@
   let { expanded = true, children, ...rest }: Props = $props();
 
   let overflowYHidden = $state(!expanded);
-  let expandableContainer: HTMLElement = $state();
+  let expandableContainer: HTMLElement;
 
   onMount(() => {
     const controller = new AbortController();

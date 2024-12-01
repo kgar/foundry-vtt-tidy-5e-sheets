@@ -77,7 +77,8 @@
     }
   }
 
-  let portraitContainer: HTMLElement = $state();
+  // kgar-migration-task
+  let portraitContainer: HTMLElement;
   // TODO: Consider sending context menu options down through document context in the first place.
   let contextMenuOptions: ContextMenuEntry[] = $state([]);
   run(() => {

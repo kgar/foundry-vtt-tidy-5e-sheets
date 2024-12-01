@@ -52,7 +52,7 @@
     };
   }
 
-  let article: HTMLElement = $state();
+  let article: HTMLElement;
   onMount(() => {
     // Required in order to prevent unwanted form submissions by the chosen Color Picker.
     article.querySelectorAll('button').forEach((button) => {

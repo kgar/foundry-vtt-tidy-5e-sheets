@@ -53,7 +53,7 @@
     children,
   }: Props = $props();
 
-  let openerEl: HTMLElement = $state();
+  let openerEl: HTMLElement;
   let menuStyles: string = $state('');
 
   setContext<ButtonMenuContext>(CONSTANTS.SVELTE_CONTEXT.BUTTON_MENU_CONTEXT, {
@@ -68,7 +68,7 @@
     menuStyles = getPositionStyles(openerEl, menuEl, position, anchor, gap);
   }
 
-  let actualIconClass: string | null = $state();
+  let actualIconClass: string | null = $state(null);
   run(() => {
     if (iconClass !== null) {
       if (typeof iconClass === 'string') {

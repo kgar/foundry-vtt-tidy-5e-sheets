@@ -39,7 +39,8 @@
     });
   }
 
-  let itemImageContainer: HTMLElement = $state();
+  // kgar-migration-task
+  let itemImageContainer: HTMLElement;
   let contextMenuOptions: ContextMenuEntry[] = $state([]);
   run(() => {
     contextMenuOptions = [

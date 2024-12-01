@@ -13,7 +13,7 @@
 
   let { isEmpty, willChange, disabled }: Props = $props();
 
-  let pipEl: HTMLElement = $state();
+  let pipEl: HTMLElement;
   let animateExpended = $state(false);
   let animateRestored = $state(false);
 

@@ -27,7 +27,7 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  let acShieldButton: HTMLElement = $state();
+  let acShieldButton: HTMLElement;
 
   onMount(() => {
     $context.actor.sheet._applyAttributionTooltips(acShieldButton);

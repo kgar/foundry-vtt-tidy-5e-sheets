@@ -67,7 +67,7 @@
     }
   }
 
-  let _el: HTMLElement = $state();
+  let _el: HTMLElement;
 
   // [contenteditable] pasting can include HTML
   // Only the text content is appropriate for this component

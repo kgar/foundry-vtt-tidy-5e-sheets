@@ -33,7 +33,7 @@
       : '',
   );
 
-  let tidyTab: HTMLElement = $state();
+  let tidyTab: HTMLElement;
 
   onMount(() => {
     if (tab.content.type !== 'svelte') {

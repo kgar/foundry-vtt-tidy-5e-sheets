@@ -32,7 +32,7 @@
 
   const dispatcher = createEventDispatcher<{ tabSelected: Tab }>();
 
-  let nav: HTMLElement = $state();
+  let nav: HTMLElement;
 
   function selectTab(tab: Tab) {
     const sheet = $context?.actor?.sheet ?? $context?.item?.sheet;

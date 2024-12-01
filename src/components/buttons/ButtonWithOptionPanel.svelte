@@ -25,8 +25,8 @@
     ...rest
   }: Props = $props();
 
-  let menuEl: HTMLElement = $state();
-  let menuOpenerEl: HTMLElement = $state();
+  let menuEl: HTMLElement;
+  let menuOpenerEl: HTMLElement;
 
   function handleFocusOut(
     event: FocusEvent & { currentTarget: EventTarget & HTMLElement },

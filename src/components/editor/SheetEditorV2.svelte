@@ -24,7 +24,7 @@
     ...rest
   }: Props = $props();
 
-  let proseMirrorContainerEl: HTMLElement = $state();
+  let proseMirrorContainerEl: HTMLElement;
 
   let actualEditorOptions = $derived(
     foundry.utils.mergeObject(

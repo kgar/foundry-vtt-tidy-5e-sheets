@@ -8,7 +8,7 @@
 
   let { members, language }: Props = $props();
 
-  let tooltip: HTMLElement = $state();
+  let tooltip: HTMLElement;
 
   export function getMarkup() {
     return tooltip.outerHTML;

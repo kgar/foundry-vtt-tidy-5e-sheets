@@ -44,7 +44,7 @@
     dragleave: { item: TItem; index: number; event: DragEvent };
   }>();
 
-  let listbox: HTMLElement = $state();
+  let listbox: HTMLElement;
 
   function handleListboxKeyDown(
     ev: KeyboardEvent & { currentTarget: HTMLElement },
