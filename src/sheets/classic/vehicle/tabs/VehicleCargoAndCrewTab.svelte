@@ -19,10 +19,11 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: noCargoOrCrew =
+  let noCargoOrCrew = $derived(
     $context.cargo.some(
       (section: VehicleCargoSection) => section.items.length > 0,
-    ) === false;
+    ) === false,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>

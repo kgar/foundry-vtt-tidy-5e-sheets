@@ -14,10 +14,14 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  export let motion: boolean;
-  export let cssClass: string = '';
-  export let radiusClass: PortraitCharmRadiusClass;
-  export let animate: boolean = true;
+  interface Props {
+    motion: boolean;
+    cssClass?: string;
+    radiusClass: PortraitCharmRadiusClass;
+    animate?: boolean;
+  }
+
+  let { motion, cssClass = '', radiusClass, animate = true }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -37,7 +41,7 @@
     checked={motion}
     disabled={!$context.editable}
   >
-    <i class="motion-icon fas fa-sailboat" class:animate />
+    <i class="motion-icon fas fa-sailboat" class:animate></i>
   </Checkbox>
 </div>
 

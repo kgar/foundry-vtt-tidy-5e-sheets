@@ -1,11 +1,17 @@
 <script lang="ts">
+  import { preventDefault, stopPropagation } from 'svelte/legacy';
+
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
   import type { LocationToSearchTextMap, OnSearchFn } from 'src/types/types';
   import { getContext, onMount } from 'svelte';
 
-  export let value: string;
+  interface Props {
+    value: string;
+  }
+
+  let { value = $bindable() }: Props = $props();
 
   async function rememberSearch() {
     onSearch?.(location, value);
@@ -40,12 +46,12 @@
     placeholder={localize('TIDY5E.Search')}
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SEARCH_INPUT}
     bind:value
-    on:blur|preventDefault|stopPropagation={() => rememberSearch()}
+    onblur={stopPropagation(preventDefault(() => rememberSearch()))}
   />
   {#if value?.trim() !== ''}
     <button
       class="inline-icon-button search-close-button"
-      on:click={() => clearSearch()}
+      onclick={() => clearSearch()}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SEARCH_CLEAR}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >

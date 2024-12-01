@@ -1,9 +1,21 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
 
-  export let checked: boolean = false;
-  export let disabled: boolean = false;
-  export let thumbIconClass: string | undefined = undefined;
+  interface Props {
+    checked?: boolean;
+    disabled?: boolean;
+    thumbIconClass?: string | undefined;
+    children?: import('svelte').Snippet;
+    [key: string]: any;
+  }
+
+  let {
+    checked = false,
+    disabled = false,
+    thumbIconClass = undefined,
+    children,
+    ...rest
+  }: Props = $props();
 
   const switchLabelId = `switch-${foundry.utils.randomID()}-label`;
 
@@ -13,12 +25,12 @@
 </script>
 
 <label
-  class="tidy-switch {$$props.class ?? ''}"
+  class="tidy-switch {rest.class ?? ''}"
   class:disabled
   id={switchLabelId}
-  title={$$props.title ?? null}
+  title={rest.title ?? null}
 >
-  <slot />
+  {@render children?.()}
   <div role="switch" aria-checked={checked} aria-labelledby={switchLabelId}>
     {#if thumbIconClass}
       <i class="thumb-icon {thumbIconClass}"></i>
@@ -27,7 +39,7 @@
 
   <input
     type="checkbox"
-    on:change={(ev) => dispatcher('change', ev)}
+    onchange={(ev) => dispatcher('change', ev)}
     {checked}
     {disabled}
     class="hidden"

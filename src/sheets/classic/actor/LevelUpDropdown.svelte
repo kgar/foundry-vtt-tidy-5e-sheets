@@ -3,15 +3,19 @@
   import type { AvailableClassLevel } from 'src/types/types';
   import { formatAsModifier } from 'src/utils/formatting';
 
-  export let availableLevels: AvailableClassLevel[] = [];
-  export let disabled: boolean = false;
-  export let item: any;
+  interface Props {
+    availableLevels?: AvailableClassLevel[];
+    disabled?: boolean;
+    item: any;
+  }
+
+  let { availableLevels = [], disabled = false, item }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <select
-  on:change={(event) => FoundryAdapter.onLevelChange(event, item, item.actor)}
+  onchange={(event) => FoundryAdapter.onLevelChange(event, item, item.actor)}
   {disabled}
 >
   {#each availableLevels as availableLevel}

@@ -1,5 +1,5 @@
 import SvelteFormApplicationBase from 'src/applications/SvelteFormApplicationBase';
-import type { SvelteComponent } from 'svelte';
+import type { SvelteComponent, mount } from 'svelte';
 import WorldSettings from './WorldSettings.svelte';
 import {
   SettingsProvider,
@@ -122,7 +122,7 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
 
     debug('World Settings context data', data);
 
-    return new WorldSettings({
+    return mount(WorldSettings, {
       target: node,
       context: new Map<any, any>([
         ['context', writable(data) satisfies WorldSettingsContextStore],

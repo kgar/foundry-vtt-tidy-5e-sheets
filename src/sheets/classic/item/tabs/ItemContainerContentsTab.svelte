@@ -1,7 +1,12 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ContainerSheetClassicContext, Item5e } from 'src/types/item.types';
+  import type {
+    ContainerSheetClassicContext,
+    Item5e,
+  } from 'src/types/item.types';
   import { getContext, setContext } from 'svelte';
   import { writable, type Readable } from 'svelte/store';
   import CapacityBar from 'src/sheets/classic/container/CapacityBar.svelte';
@@ -27,28 +32,31 @@
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
 
-  let searchCriteria = '';
+  let searchCriteria = $state('');
 
-  $: allItems = $context.containerContents.contents.flatMap((x) => x.items);
+  let allItems = $derived(
+    $context.containerContents.contents.flatMap((x) => x.items),
+  );
 
   const itemIdsToShow = writable<Set<string> | undefined>(undefined);
   setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
 
-  $: {
+  run(() => {
     $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
       itemContext: $context.itemContext,
       sections: $context.containerContents.contents,
       tabId: tabId,
     });
-  }
+  });
 
   const localize = FoundryAdapter.localize;
 
-  $: utilityBarCommands =
-    $context.utilities[tabId]?.utilityToolbarCommands ?? [];
+  let utilityBarCommands = $derived(
+    $context.utilities[tabId]?.utilityToolbarCommands ?? [],
+  );
 
-  $: menuOpen = false;
+  let menuOpen = $state(false);
 </script>
 
 <div class="container-contents-wrapper">

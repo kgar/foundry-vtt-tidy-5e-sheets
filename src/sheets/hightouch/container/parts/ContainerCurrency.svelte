@@ -12,10 +12,12 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: currencies = Object.keys(CONFIG.DND5E.currencies).map((key) => ({
-    key: key,
-    value: $context.system.currency[key] as number,
-  }));
+  let currencies = $derived(
+    Object.keys(CONFIG.DND5E.currencies).map((key) => ({
+      key: key,
+      value: $context.system.currency[key] as number,
+    })),
+  );
 
   const localize = FoundryAdapter.localize;
 
@@ -74,7 +76,7 @@
   <!-- CURRENCY CONVERT Button? -->
   <a
     class="button icon-button"
-    on:click={() => confirmConvertCurrency()}
+    onclick={() => confirmConvertCurrency()}
     title={localize('DND5E.CurrencyManager.Title')}
   >
     <i class="fas fa-database"></i>
@@ -82,7 +84,7 @@
   <a
     title={localize('DND5E.ItemCreate')}
     class="button icon-button attention"
-    on:click={() => promptCreateInventoryItem()}
+    onclick={() => promptCreateInventoryItem()}
   >
     <i class="fas fa-plus"></i>
   </a>

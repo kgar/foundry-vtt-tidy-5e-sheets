@@ -12,7 +12,9 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: effects = Object.entries($context.effects) as Iterable<[string, any]>;
+  let effects = $derived(
+    Object.entries($context.effects) as Iterable<[string, any]>,
+  );
 
   const localize = FoundryAdapter.localize;
 
@@ -40,7 +42,7 @@
 <ContentConcealer conceal={$context.concealDetails}>
   <ol
     class="items-list effects-list"
-    on:drop={(ev) => $context.item.sheet._onDrop(ev)}
+    ondrop={(ev) => $context.item.sheet._onDrop(ev)}
   >
     {#each effects as [_, section]}
       {#if !section.hidden}
@@ -58,10 +60,10 @@
                 type="button"
                 class="active-effect-control inline-icon-button"
                 title={localize('DND5E.EffectCreate')}
-                on:click={(event) => onAddClicked(section)}
+                onclick={(event) => onAddClicked(section)}
                 tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
               >
-                <i class="fas fa-plus" />
+                <i class="fas fa-plus"></i>
                 {localize('DND5E.Add')}
               </button>
             {/if}
@@ -78,12 +80,12 @@
 
         <ol class="item-list">
           {#each section.effects as effect}
-            <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+            <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
             <li
               class="item effect flexrow"
               data-effect-id={effect.id}
-              on:mousedown={(event) => handleMiddleClickToEdit(event, effect)}
-              on:dragstart={(ev) => handleDragStart(ev, effect)}
+              onmousedown={(event) => handleMiddleClickToEdit(event, effect)}
+              ondragstart={(ev) => handleDragStart(ev, effect)}
               draggable={$context.editable}
               data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS}
             >
@@ -118,7 +120,7 @@
                       title={effect.disabled
                         ? 'DND5E.EffectEnable'
                         : 'DND5E.EffectDisable'}
-                      on:click={() =>
+                      onclick={() =>
                         effect.update({ disabled: !effect.disabled })}
                       tabindex={$settingStore.useAccessibleKeyboardSupport
                         ? 0
@@ -128,30 +130,30 @@
                         class="fas"
                         class:fa-check={effect.disabled}
                         class:fa-times={!effect.disabled}
-                      />
+                      ></i>
                     </button>
                   {/if}
                   <button
                     type="button"
                     class="active-effect-control inline-icon-button"
                     title={localize('DND5E.EffectEdit')}
-                    on:click={() => effect.sheet.render(true)}
+                    onclick={() => effect.sheet.render(true)}
                     tabindex={$settingStore.useAccessibleKeyboardSupport
                       ? 0
                       : -1}
                   >
-                    <i class="fas fa-edit" />
+                    <i class="fas fa-edit"></i>
                   </button>
                   <button
                     type="button"
                     class="active-effect-control inline-icon-button"
                     title={localize('DND5E.EffectDelete')}
-                    on:click={() => effect.deleteDialog()}
+                    onclick={() => effect.deleteDialog()}
                     tabindex={$settingStore.useAccessibleKeyboardSupport
                       ? 0
                       : -1}
                   >
-                    <i class="fas fa-trash" />
+                    <i class="fas fa-trash"></i>
                   </button>
                 {/if}
               </div>

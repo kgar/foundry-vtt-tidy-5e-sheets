@@ -14,7 +14,11 @@
   import type { Item5e } from 'src/types/item.types';
   import FacilityOrderProgressMeter from './FacilityOrderProgressMeter.svelte';
 
-  export let chosen: ChosenFacilityContext;
+  interface Props {
+    chosen: ChosenFacilityContext;
+  }
+
+  let { chosen }: Props = $props();
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -63,26 +67,23 @@
   <!-- TODO: When svelte 5, snippets? -->
   <div class="craft-and-meter">
     {#if chosen.craft}
-      <!-- svelte-ignore a11y-click-events-have-key-events -->
-      <!-- svelte-ignore a11y-no-static-element-interactions -->
-      <!-- svelte-ignore a11y-missing-attribute -->
+      <!-- svelte-ignore a11y_click_events_have_key_events -->
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
+      <!-- svelte-ignore a11y_missing_attribute -->
       <a
-        on:click={() =>
-          $context.editable && editCraftingItem(chosen.craft.uuid)}
+        onclick={() => $context.editable && editCraftingItem(chosen.craft.uuid)}
       >
         <img
           class="crafting-item"
           data-uuid={chosen.craft.uuid}
-          on:mouseenter={(ev) => onMouseEnterCraft(ev, chosen.craft)}
-          on:mouseleave={(ev) => onMouseLeaveCraft(ev, chosen.craft)}
+          onmouseenter={(ev) => onMouseEnterCraft(ev, chosen.craft)}
+          onmouseleave={(ev) => onMouseLeaveCraft(ev, chosen.craft)}
           src={chosen.craft.img}
           alt={chosen.craft.name}
         />
       </a>
     {/if}
 
-    <FacilityOrderProgressMeter
-      {chosen}
-    ></FacilityOrderProgressMeter>
+    <FacilityOrderProgressMeter {chosen}></FacilityOrderProgressMeter>
   </div>
 {/if}

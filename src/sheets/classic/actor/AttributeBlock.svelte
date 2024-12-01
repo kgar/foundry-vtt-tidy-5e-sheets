@@ -11,14 +11,24 @@
   import { CONSTANTS } from 'src/constants';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
 
-  export let id: string;
-  export let ability: any;
-  export let useSavingThrowProficiency: boolean;
-  export let useConfigurationOption: boolean;
+  interface Props {
+    id: string;
+    ability: any;
+    useSavingThrowProficiency: boolean;
+    useConfigurationOption: boolean;
+  }
 
-  $: abbreviation =
+  let {
+    id,
+    ability,
+    useSavingThrowProficiency,
+    useConfigurationOption,
+  }: Props = $props();
+
+  let abbreviation = $derived(
     CONFIG.DND5E.abilities[id as keyof typeof CONFIG.DND5E.abilities]
-      ?.abbreviation ?? id;
+      ?.abbreviation ?? id,
+  );
 
   let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -26,9 +36,11 @@
 
   const localize = FoundryAdapter.localize;
 
-  $: activeEffectApplied = ActiveEffectsHelper.isActiveEffectAppliedToField(
-    $context.actor,
-    `system.abilities.${id}.proficient`,
+  let activeEffectApplied = $derived(
+    ActiveEffectsHelper.isActiveEffectAppliedToField(
+      $context.actor,
+      `system.abilities.${id}.proficient`,
+    ),
   );
 </script>
 
@@ -68,7 +80,7 @@
       class="ability-mod transparent-button"
       class:rollable={$context.editable}
       title={localize('DND5E.AbilityModifier')}
-      on:click={(event) =>
+      onclick={(event) =>
         $context.actor.rollAbilityCheck({ ability: id, event })}
       tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
       $settingStore.useAccessibleKeyboardSupport
@@ -84,7 +96,7 @@
       class="ability-save transparent-button"
       class:rollable={$context.editable}
       title={localize('DND5E.ActionSave')}
-      on:click={(event) =>
+      onclick={(event) =>
         $context.actor.rollSavingThrow({ ability: id, event })}
       tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
       $settingStore.useAccessibleKeyboardSupport
@@ -101,7 +113,7 @@
           type="button"
           title={ability.hover}
           class="proficiency-toggle inline-icon-button"
-          on:click={() =>
+          onclick={() =>
             $context.actor.update({
               [`system.abilities.${id}.proficient`]:
                 1 - parseInt(ability.proficient),
@@ -134,8 +146,7 @@
         type="button"
         class="config-button inline-icon-button"
         title={localize('DND5E.AbilityConfigure')}
-        on:click={() =>
-          FoundryAdapter.renderAbilityConfig($context.actor, id)}
+        onclick={() => FoundryAdapter.renderAbilityConfig($context.actor, id)}
         tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
         $settingStore.useAccessibleKeyboardSupport
           ? 0
@@ -143,7 +154,7 @@
         data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
           .ABILITY_CONFIGURATION_CONTROL}
       >
-        <i class="fas fa-cog" />
+        <i class="fas fa-cog"></i>
       </button>
     {/if}
   </div>

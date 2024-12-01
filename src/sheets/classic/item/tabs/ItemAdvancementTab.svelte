@@ -11,9 +11,9 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: advancements = Object.entries($context.advancement) as Iterable<
-    [string, any]
-  >;
+  let advancements = $derived(
+    Object.entries($context.advancement) as Iterable<[string, any]>,
+  );
 
   const localize = FoundryAdapter.localize;
 
@@ -40,7 +40,7 @@
 
 <ol
   class="items-list flex-1"
-  on:drop={(ev) => $context.owner && $context.item.sheet._onDrop(ev)}
+  ondrop={(ev) => $context.owner && $context.item.sheet._onDrop(ev)}
 >
   {#if $context.editable}
     <li
@@ -50,15 +50,15 @@
         {#if $context.editable && $context.isEmbedded}
           <button
             class="inline-icon-button"
-            on:click={() => toggleAdvancementLock($context.item)}
+            onclick={() => toggleAdvancementLock($context.item)}
             title={localize('DND5E.AdvancementConfigurationActionDisable')}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             {#if $context.advancementEditable}
-              <i class="fas fa-lock-open" />
+              <i class="fas fa-lock-open"></i>
               {localize('DND5E.AdvancementConfigurationModeEnabled')}
             {:else}
-              <i class="fas fa-lock" />
+              <i class="fas fa-lock"></i>
               {localize('DND5E.AdvancementConfigurationModeDisabled')}
             {/if}
           </button>
@@ -71,16 +71,16 @@
             class="inline-icon-button"
             title={localize('DND5E.AdvancementControlCreate')}
             aria-label={localize('DND5E.AdvancementControlCreate')}
-            on:click={() =>
+            onclick={() =>
               FoundryAdapter.createAdvancementSelectionDialog($context.item)}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
-            <i class="fas fa-plus" />
+            <i class="fas fa-plus"></i>
             {localize('DND5E.Add')}
           </button>
         </div>
       {:else}
-        <div role="presentation" />
+        <div role="presentation"></div>
       {/if}
     </li>
   {/if}
@@ -102,7 +102,7 @@
           <button
             type="button"
             class="inline-transparent-button"
-            on:click={() =>
+            onclick={() =>
               FoundryAdapter.modifyAdvancementChoices(level, $context.item)}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
@@ -116,14 +116,14 @@
           class="item-checkmark"
           title={localize('DND5E.AdvancementConfiguredComplete')}
         >
-          <i class="fas fa-check-circle" />
+          <i class="fas fa-check-circle"></i>
         </div>
       {:else if data.configured === 'partial'}
         <div
           class="item-warning"
           title={localize('DND5E.AdvancementConfiguredIncomplete')}
         >
-          <i class="fas fa-exclamation-triangle" />
+          <i class="fas fa-exclamation-triangle"></i>
         </div>
       {/if}
     </li>
@@ -133,7 +133,7 @@
         <li
           class="advancement-item item flexrow"
           data-id={advancement.id}
-          on:dragstart={(ev) => handleAdvancementDragStart(ev, advancement)}
+          ondragstart={(ev) => handleAdvancementDragStart(ev, advancement)}
           draggable={$context.editable}
         >
           <div class="item-name flexrow">
@@ -144,7 +144,9 @@
                 <img src={advancement.icon} alt="" />
               {/if}
             </div>
-            <span class="title truncate" title={advancement.title}>{@html advancement.title}</span>
+            <span class="title truncate" title={advancement.title}
+              >{@html advancement.title}</span
+            >
           </div>
           {#if $context.advancementEditable || !$context.isEmbedded}
             <div class="flexrow">
@@ -162,25 +164,25 @@
                 class="inline-icon-button"
                 title={localize('DND5E.AdvancementControlEdit')}
                 aria-label={localize('DND5E.AdvancementControlEdit')}
-                on:click={() =>
+                onclick={() =>
                   FoundryAdapter.editAdvancement(advancement.id, $context.item)}
                 tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
               >
-                <i class="fas fa-edit" />
+                <i class="fas fa-edit"></i>
               </button>
               <button
                 type="button"
                 class="inline-icon-button"
                 title={localize('DND5E.AdvancementControlDelete')}
                 aria-label={localize('DND5E.AdvancementControlDelete')}
-                on:click={() =>
+                onclick={() =>
                   FoundryAdapter.deleteAdvancement(
                     advancement.id,
                     $context.item,
                   )}
                 tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
               >
-                <i class="fas fa-trash" />
+                <i class="fas fa-trash"></i>
               </button>
             </div>
           {/if}

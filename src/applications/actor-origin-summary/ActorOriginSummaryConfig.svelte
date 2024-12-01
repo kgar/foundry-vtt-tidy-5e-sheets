@@ -72,12 +72,12 @@
         name="dimensions"
         placeholder={localize('DND5E.Dimensions')}
         bind:value={$context.dimensions}
-      />
+      ></textarea>
     </div>
   {/if}
 
   <button type="submit">
-    <i class="far fa-save" />
+    <i class="far fa-save"></i>
     {localize('Save')}
   </button>
 </section>

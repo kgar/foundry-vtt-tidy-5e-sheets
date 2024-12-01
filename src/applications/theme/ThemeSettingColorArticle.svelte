@@ -12,13 +12,17 @@
   } from 'src/theme/theme';
   import { CONSTANTS } from 'src/constants';
 
-  export let colorToConfigure: ThemeColorSetting;
+  interface Props {
+    colorToConfigure: ThemeColorSetting;
+  }
+
+  let { colorToConfigure }: Props = $props();
 
   let appId = getContext(CONSTANTS.SVELTE_CONTEXT.APP_ID);
   let context = getContext<Writable<CurrentSettings>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
-  let colorPickerIsOpen: boolean = false;
+  let colorPickerIsOpen: boolean = $state(false);
 
   const eyeDropperEnabled = 'EyeDropper' in window;
 
@@ -48,7 +52,7 @@
     };
   }
 
-  let article: HTMLElement;
+  let article: HTMLElement = $state();
   onMount(() => {
     // Required in order to prevent unwanted form submissions by the chosen Color Picker.
     article.querySelectorAll('button').forEach((button) => {
@@ -84,15 +88,15 @@
       id="{colorToConfigure.key}-{appId}"
       value={$context[colorToConfigure.key]}
       class="theme-color-textbox"
-      on:change={(ev) =>
+      onchange={(ev) =>
         onColorSelected(colorToConfigure, ev.currentTarget.value)}
     />
     {#if eyeDropperEnabled}
       <button
         type="button"
         class="eye-dropper"
-        on:click={() => activateEyeDropper(colorToConfigure)}
-        ><i class="fas fa-eye-dropper" /></button
+        onclick={() => activateEyeDropper(colorToConfigure)}
+        ><i class="fas fa-eye-dropper"></i></button
       >
     {/if}
   </div>

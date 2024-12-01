@@ -9,8 +9,13 @@
   } from 'src/utils/value-cycling';
   import { getContext } from 'svelte';
 
-  export let filter: ConfiguredItemFilter;
-  export let filterGroupName: string;
+  interface Props {
+    filter: ConfiguredItemFilter;
+    filterGroupName: string;
+    children?: import('svelte').Snippet;
+  }
+
+  let { filter, filterGroupName, children }: Props = $props();
   const onFilter = getContext<ItemFilterService['onFilter']>('onFilter');
 
   function cycleFilterForward(name: string, currentValue: boolean | null) {
@@ -29,10 +34,10 @@
   class="pinned-filter-toggle truncate"
   class:include={filter.value === true}
   class:exclude={filter.value === false}
-  on:click={() => cycleFilterForward(filter.name, filter.value)}
-  on:contextmenu={() => cycleFilterBackward(filter.name, filter.value)}
+  onclick={() => cycleFilterForward(filter.name, filter.value)}
+  oncontextmenu={() => cycleFilterBackward(filter.name, filter.value)}
   tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
   title={localize(filter.text)}
 >
-  <slot />
+  {@render children?.()}
 </button>

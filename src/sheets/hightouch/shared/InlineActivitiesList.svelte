@@ -6,10 +6,14 @@
   import { CONSTANTS } from 'src/constants';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
 
-  export let item: Item5e | null = null;
-  export let inlineToggleService: InlineToggleService;
+  interface Props {
+    item?: Item5e | null;
+    inlineToggleService: InlineToggleService;
+  }
 
-  $: inlineToggleServiceStore = inlineToggleService.store;
+  let { item = null, inlineToggleService }: Props = $props();
+
+  let inlineToggleServiceStore = $derived(inlineToggleService.store);
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 

@@ -1,4 +1,7 @@
 <script lang="ts">
+  import { createBubbler, stopPropagation } from 'svelte/legacy';
+
+  const bubble = createBubbler();
   import { CONSTANTS } from 'src/constants';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import TidySwitch from 'src/components/toggle/TidySwitch.svelte';
@@ -6,6 +9,11 @@
   import { settingStore } from 'src/settings/settings';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  interface Props {
+    [key: string]: any;
+  }
+
+  let { ...rest }: Props = $props();
 
   let context = getContext<Readable<{ document: any; editable: boolean }>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -15,33 +23,41 @@
     await TidyFlags.allowEdit.set($context.document, !allowEdit);
   }
 
-  $: allowEdit = TidyFlags.allowEdit.get($context.document);
-
-  $: descriptionVariable = $settingStore.useTotalSheetLock
-    ? localize('TIDY5E.SheetLock.Description')
-    : localize('TIDY5E.SheetEdit.Description');
-  $: lockHintVariable = $settingStore.useTotalSheetLock
-    ? 'TIDY5E.SheetLock.Unlock.Hint'
-    : 'TIDY5E.SheetEdit.Enable.Hint';
-  $: unlockHintVariable = $settingStore.useTotalSheetLock
-    ? 'TIDY5E.SheetLock.Lock.Hint'
-    : 'TIDY5E.SheetEdit.Disable.Hint';
-  $: unlockTitle = localize(unlockHintVariable, {
-    description: descriptionVariable,
-  });
-  $: lockTitle = localize(lockHintVariable, {
-    description: descriptionVariable,
-  });
-
   const localize = FoundryAdapter.localize;
+  let allowEdit = $derived(TidyFlags.allowEdit.get($context.document));
+  let descriptionVariable = $derived(
+    $settingStore.useTotalSheetLock
+      ? localize('TIDY5E.SheetLock.Description')
+      : localize('TIDY5E.SheetEdit.Description'),
+  );
+  let lockHintVariable = $derived(
+    $settingStore.useTotalSheetLock
+      ? 'TIDY5E.SheetLock.Unlock.Hint'
+      : 'TIDY5E.SheetEdit.Enable.Hint',
+  );
+  let unlockHintVariable = $derived(
+    $settingStore.useTotalSheetLock
+      ? 'TIDY5E.SheetLock.Lock.Hint'
+      : 'TIDY5E.SheetEdit.Disable.Hint',
+  );
+  let unlockTitle = $derived(
+    localize(unlockHintVariable, {
+      description: descriptionVariable,
+    }),
+  );
+  let lockTitle = $derived(
+    localize(lockHintVariable, {
+      description: descriptionVariable,
+    }),
+  );
 </script>
 
 {#if $context.editable}
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div
-    class="header-sheet-edit-mode-toggle {$$restProps.class ?? ''}"
+    class="header-sheet-edit-mode-toggle {rest.class ?? ''}"
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SHEET_LOCK_TOGGLE}
-    on:dblclick|stopPropagation
+    ondblclick={stopPropagation(bubble('dblclick'))}
   >
     <TidySwitch
       --tidy-switch-scale="1"

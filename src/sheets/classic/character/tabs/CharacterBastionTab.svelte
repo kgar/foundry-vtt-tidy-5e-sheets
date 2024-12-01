@@ -62,16 +62,22 @@
     hoveredFacilityOccupant,
   );
 
-  $: hasDefenders = $context.facilities.special.chosen.some(
-    (c: ChosenFacilityContext) => c.defenders.some((d) => !d.empty),
+  let hasDefenders = $derived(
+    $context.facilities.special.chosen.some((c: ChosenFacilityContext) =>
+      c.defenders.some((d) => !d.empty),
+    ),
   );
 
-  $: hasHirelings = $context.facilities.special.chosen.some(
-    (c: ChosenFacilityContext) => c.hirelings.some((d) => !d.empty),
+  let hasHirelings = $derived(
+    $context.facilities.special.chosen.some((c: ChosenFacilityContext) =>
+      c.hirelings.some((d) => !d.empty),
+    ),
   );
 
-  $: hasCreatures = $context.facilities.special.chosen.some(
-    (c: ChosenFacilityContext) => c.creatures.some((d) => !d.empty),
+  let hasCreatures = $derived(
+    $context.facilities.special.chosen.some((c: ChosenFacilityContext) =>
+      c.creatures.some((d) => !d.empty),
+    ),
   );
 
   // TODO: Extract and share between this and advancements
@@ -170,18 +176,16 @@
             style="--underlay: url('{bgImg}')"
           >
             <div class="facility-header">
-              <!-- svelte-ignore a11y-no-static-element-interactions -->
-              <!-- svelte-ignore a11y-click-events-have-key-events -->
-              <!-- svelte-ignore a11y-missing-attribute -->
+              <!-- svelte-ignore a11y_no_static_element_interactions -->
+              <!-- svelte-ignore a11y_click_events_have_key_events -->
+              <!-- svelte-ignore a11y_missing_attribute -->
               <a
                 class="facility-header-details"
-                on:mouseenter={(ev) =>
-                  onMouseEnterFacility(ev, chosen.facility)}
-                on:mouseleave={(ev) =>
-                  onMouseLeaveFacility(ev, chosen.facility)}
-                on:mousedown={(ev) =>
+                onmouseenter={(ev) => onMouseEnterFacility(ev, chosen.facility)}
+                onmouseleave={(ev) => onMouseLeaveFacility(ev, chosen.facility)}
+                onmousedown={(ev) =>
                   FoundryAdapter.editOnMiddleClick(ev, chosen.facility)}
-                on:click={(ev) => $context.editable && useFacility(ev, chosen)}
+                onclick={(ev) => $context.editable && useFacility(ev, chosen)}
               >
                 <!-- <img class="facility-image" src={img} alt={chosen.name} /> -->
 
@@ -198,12 +202,12 @@
                   </span>
                 </div>
               </a>
-              <!-- svelte-ignore a11y-missing-attribute -->
-              <!-- svelte-ignore a11y-click-events-have-key-events -->
-              <!-- svelte-ignore a11y-no-static-element-interactions -->
+              <!-- svelte-ignore a11y_missing_attribute -->
+              <!-- svelte-ignore a11y_click_events_have_key_events -->
+              <!-- svelte-ignore a11y_no_static_element_interactions -->
               <a
                 class="facility-menu highlight-on-hover"
-                on:click={(ev) =>
+                onclick={(ev) =>
                   EventHelper.triggerContextMenu(ev, '[data-item-id]')}
               >
                 <i class="fas fa-ellipsis-vertical"></i>
@@ -288,12 +292,12 @@
         {/each}
         {#each $context.facilities.special.available as available}
           <li class="facility empty">
-            <!-- svelte-ignore a11y-missing-attribute -->
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <!-- svelte-ignore a11y-no-static-element-interactions -->
+            <!-- svelte-ignore a11y_missing_attribute -->
+            <!-- svelte-ignore a11y_click_events_have_key_events -->
+            <!-- svelte-ignore a11y_no_static_element_interactions -->
             <a
               class="highlight-on-hover"
-              on:click={(ev) =>
+              onclick={(ev) =>
                 $context.editable &&
                 addFacility(ev, CONSTANTS.FACILITY_TYPE_SPECIAL)}
             >
@@ -335,18 +339,16 @@
             style="--underlay: url('{bgImg}')"
           >
             <div class="facility-header">
-              <!-- svelte-ignore a11y-click-events-have-key-events -->
-              <!-- svelte-ignore a11y-no-static-element-interactions -->
-              <!-- svelte-ignore a11y-missing-attribute -->
+              <!-- svelte-ignore a11y_click_events_have_key_events -->
+              <!-- svelte-ignore a11y_no_static_element_interactions -->
+              <!-- svelte-ignore a11y_missing_attribute -->
               <a
                 class="facility-header-details"
-                on:mouseenter={(ev) =>
-                  onMouseEnterFacility(ev, chosen.facility)}
-                on:mouseleave={(ev) =>
-                  onMouseLeaveFacility(ev, chosen.facility)}
-                on:mousedown={(ev) =>
+                onmouseenter={(ev) => onMouseEnterFacility(ev, chosen.facility)}
+                onmouseleave={(ev) => onMouseLeaveFacility(ev, chosen.facility)}
+                onmousedown={(ev) =>
                   FoundryAdapter.editOnMiddleClick(ev, chosen.facility)}
-                on:click={(ev) => $context.editable && useFacility(ev, chosen)}
+                onclick={(ev) => $context.editable && useFacility(ev, chosen)}
               >
                 {#if isSvg(img)}
                   <InlineSvg class="facility-image" svgUrl={img} />
@@ -361,12 +363,12 @@
                   </span>
                 </div>
               </a>
-              <!-- svelte-ignore a11y-missing-attribute -->
-              <!-- svelte-ignore a11y-click-events-have-key-events -->
-              <!-- svelte-ignore a11y-no-static-element-interactions -->
+              <!-- svelte-ignore a11y_missing_attribute -->
+              <!-- svelte-ignore a11y_click_events_have_key_events -->
+              <!-- svelte-ignore a11y_no_static_element_interactions -->
               <a
                 class="facility-menu highlight-on-hover"
-                on:click={(ev) =>
+                onclick={(ev) =>
                   EventHelper.triggerContextMenu(ev, '[data-item-id]')}
               >
                 <i class="fas fa-ellipsis-vertical"></i>
@@ -378,12 +380,12 @@
         {/each}
         {#each $context.facilities.basic.available as available}
           <div class="facility empty">
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <!-- svelte-ignore a11y-no-static-element-interactions -->
-            <!-- svelte-ignore a11y-missing-attribute -->
+            <!-- svelte-ignore a11y_click_events_have_key_events -->
+            <!-- svelte-ignore a11y_no_static_element_interactions -->
+            <!-- svelte-ignore a11y_missing_attribute -->
             <a
               class="highlight-on-hover"
-              on:click={(ev) =>
+              onclick={(ev) =>
                 $context.editable &&
                 addFacility(ev, CONSTANTS.FACILITY_TYPE_BASIC)}
             >

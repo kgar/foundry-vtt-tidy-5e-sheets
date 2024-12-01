@@ -10,10 +10,12 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: sourceText = $context.editable
-    ? $context.system.source?.label ||
-      game.i18n.localize('DND5E.SOURCE.FIELDS.source.label')
-    : $context.system.source?.label;
+  let sourceText = $derived(
+    $context.editable
+      ? $context.system.source?.label ||
+          game.i18n.localize('DND5E.SOURCE.FIELDS.source.label')
+      : $context.system.source?.label,
+  );
 </script>
 
 <SheetHeaderEditModeToggle class="header-control" />

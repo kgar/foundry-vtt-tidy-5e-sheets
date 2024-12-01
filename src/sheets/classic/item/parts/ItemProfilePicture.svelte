@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Item5e, ItemSheetContext } from 'src/types/item.types';
@@ -37,15 +39,17 @@
     });
   }
 
-  let itemImageContainer: HTMLElement;
-  let contextMenuOptions: ContextMenuEntry[] = [];
-  $: contextMenuOptions = [
-    {
-      name: 'TIDY5E.ShowItemArt',
-      icon: '<i class="fa-solid fa-image fa-fw"></i>',
-      callback: () => showItemArt($context.item),
-    },
-  ];
+  let itemImageContainer: HTMLElement = $state();
+  let contextMenuOptions: ContextMenuEntry[] = $state([]);
+  run(() => {
+    contextMenuOptions = [
+      {
+        name: 'TIDY5E.ShowItemArt',
+        icon: '<i class="fa-solid fa-image fa-fw"></i>',
+        callback: () => showItemArt($context.item),
+      },
+    ];
+  });
 </script>
 
 <FloatingContextMenu
@@ -59,8 +63,8 @@
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_IMAGE_CONTAINER}
   bind:this={itemImageContainer}
 >
-  <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+  <!-- svelte-ignore a11y_click_events_have_key_events -->
   <!-- TODO: Figure out if there is an accessible way to provide this feature. -->
   <img
     class="profile"
@@ -70,8 +74,7 @@
     title="{localize('TIDY5E.EditSheetImageHint')} / {localize(
       'TIDY5E.SheetImageOptionsHint',
     )}"
-    on:click={(event) =>
-      openItemImagePicker(event.currentTarget, $context.item)}
+    onclick={(event) => openItemImagePicker(event.currentTarget, $context.item)}
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_IMAGE}
   />
   <div
@@ -80,6 +83,6 @@
     class="unidentified-glyph"
     class:conceal={$context.item.system.identified === false}
   >
-    <i class="fas fa-question" />
+    <i class="fas fa-question"></i>
   </div>
 </div>

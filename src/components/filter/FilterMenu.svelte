@@ -10,7 +10,11 @@
   import type { ContainerSheetClassicContext } from 'src/types/item.types';
   import { CONSTANTS } from 'src/constants';
 
-  export let tabId: string;
+  interface Props {
+    tabId: string;
+  }
+
+  let { tabId }: Props = $props();
 
   const localize = FoundryAdapter.localize;
   const context = getContext<
@@ -18,12 +22,14 @@
   >(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
   const onFilterClearAll =
     getContext<ItemFilterService['onFilterClearAll']>('onFilterClearAll');
-  $: categories = $context.filterData[tabId] ?? {};
-  $: hasActiveFilters = Object.entries(categories).some(([_, filters]) =>
-    filters.some((f) => f.value !== null),
+  let categories = $derived($context.filterData[tabId] ?? {});
+  let hasActiveFilters = $derived(
+    Object.entries(categories).some(([_, filters]) =>
+      filters.some((f) => f.value !== null),
+    ),
   );
 
-  $: menuOpen = false;
+  let menuOpen = $state(false);
 </script>
 
 <div role="presentation" class="filter-menu">
@@ -58,7 +64,7 @@
       <button
         type="button"
         class="clear-all-button pill-button flex-row extra-small-gap align-items-center"
-        on:click={(ev) => {
+        onclick={(ev) => {
           onFilterClearAll(tabId);
           menuOpen = false;
         }}

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     ContainerSheetClassicContext,
@@ -14,20 +16,35 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  export let element: keyof HTMLElementTagNameMap;
-  export let document: any;
-  export let field: string;
-  export let value: string;
-  export let editable: boolean;
-  export let cssClass: string = '';
-  export let spellcheck: boolean = false;
-  export let dataMaxLength: number = 40;
-  export let placeholder: string | null = null;
-  export let saveAs: 'string' | 'number' = 'string';
-  export let title: string | null = null;
-  export let selectOnFocus: boolean = false;
+  interface Props {
+    element: keyof HTMLElementTagNameMap;
+    document: any;
+    field: string;
+    value: string;
+    editable: boolean;
+    cssClass?: string;
+    spellcheck?: boolean;
+    dataMaxLength?: number;
+    placeholder?: string | null;
+    saveAs?: 'string' | 'number';
+    title?: string | null;
+    selectOnFocus?: boolean;
+  }
 
-  $: draftValue = value;
+  let {
+    element,
+    document,
+    field,
+    value = $bindable(),
+    editable,
+    cssClass = '',
+    spellcheck = false,
+    dataMaxLength = 40,
+    placeholder = null,
+    saveAs = 'string',
+    title = null,
+    selectOnFocus = false,
+  }: Props = $props();
 
   async function update() {
     if (draftValue.length > dataMaxLength) {
@@ -50,7 +67,7 @@
     }
   }
 
-  let _el: HTMLElement;
+  let _el: HTMLElement = $state();
 
   // [contenteditable] pasting can include HTML
   // Only the text content is appropriate for this component
@@ -81,19 +98,22 @@
       >
     >('context');
 
-  $: activeEffectApplied = ActiveEffectsHelper.isActiveEffectAppliedToField(
-    document,
-    field,
-  );
-
-  $: isEnchanted =
-    $context.itemOverrides instanceof Set && $context.itemOverrides.has(field);
-
-  $: overrideTooltip = isEnchanted
-    ? localize('DND5E.ENCHANTMENT.Warning.Override')
-    : localize('DND5E.ActiveEffectOverrideWarning');
-
   const localize = FoundryAdapter.localize;
+  let draftValue;
+  run(() => {
+    draftValue = value;
+  });
+  let activeEffectApplied = $derived(
+    ActiveEffectsHelper.isActiveEffectAppliedToField(document, field),
+  );
+  let isEnchanted = $derived(
+    $context.itemOverrides instanceof Set && $context.itemOverrides.has(field),
+  );
+  let overrideTooltip = $derived(
+    isEnchanted
+      ? localize('DND5E.ENCHANTMENT.Warning.Override')
+      : localize('DND5E.ActiveEffectOverrideWarning'),
+  );
 </script>
 
 {#if editable && !activeEffectApplied}
@@ -103,10 +123,10 @@
     contenteditable="true"
     class={cssClass}
     bind:innerHTML={draftValue}
-    on:blur={update}
-    on:keypress={submitWhenEnterKey}
-    on:paste={handlePaste}
-    on:focus={onFocus}
+    onblur={update}
+    onkeypress={submitWhenEnterKey}
+    onpaste={handlePaste}
+    onfocus={onFocus}
     role="textbox"
     tabindex="0"
     {spellcheck}

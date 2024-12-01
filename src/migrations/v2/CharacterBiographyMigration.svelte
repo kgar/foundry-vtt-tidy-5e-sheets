@@ -7,9 +7,9 @@
 
   import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication';
 
-  let migrating = false;
-  let overwrite = false;
-  let deleteFlags = false;
+  let migrating = $state(false);
+  let overwrite = $state(false);
+  let deleteFlags = $state(false);
 
   const localize = FoundryAdapter.localize;
 
@@ -135,7 +135,7 @@
     </label>
   </div>
 
-  <button type="button" on:click={(ev) => migrate()} disabled={migrating}
+  <button type="button" onclick={(ev) => migrate()} disabled={migrating}
     >{localize('TIDY5E.Settings.Migrations.ButtonMigration.Text')}</button
   >
 </section>

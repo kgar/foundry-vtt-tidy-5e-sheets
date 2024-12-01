@@ -12,7 +12,11 @@ Because the controls are mutually exclusive, it is more ergonomic to distinguish
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
 
-  export let effect: ActiveEffect5e;
+  interface Props {
+    effect: ActiveEffect5e;
+  }
+
+  let { effect }: Props = $props();
 
   /** Character effects are not the full ActiveEffect5e instance;
    * they are instead a subset of contextual data.
@@ -20,7 +24,7 @@ Because the controls are mutually exclusive, it is more ergonomic to distinguish
    * that this logic fires immediately as an effect deletion is occurring.
    * This seems related specifically to character sheets.
    */
-  $: actualEffect =
+  let actualEffect = $derived(
     effect instanceof dnd5e.documents.ActiveEffect5e
       ? effect
       : !!effect
@@ -29,7 +33,8 @@ Because the controls are mutually exclusive, it is more ergonomic to distinguish
             effectId: effect.id,
             parentId: effect.parentId,
           })
-        : undefined;
+        : undefined,
+  );
 
   let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -37,9 +42,8 @@ Because the controls are mutually exclusive, it is more ergonomic to distinguish
 
   const localize = FoundryAdapter.localize;
 
-  $: isConcentration = FoundryAdapter.isConcentrationEffect(
-    actualEffect,
-    $context.actor.sheet,
+  let isConcentration = $derived(
+    FoundryAdapter.isConcentrationEffect(actualEffect, $context.actor.sheet),
   );
 </script>
 

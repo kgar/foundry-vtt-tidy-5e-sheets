@@ -20,33 +20,33 @@
 >
   <div class="resting">
     <span class="resting-icon">
-      <i class="rest-icon fas fa-bed" />
+      <i class="rest-icon fas fa-bed"></i>
     </span>
     <button
       type="button"
       class="rest short-rest inline-icon-button"
       title={localize('TIDY5E.ShortRest')}
-      on:click={(ev) => $context.shortRest(ev)}
+      onclick={(ev) => $context.shortRest(ev)}
       disabled={!$context.editable}
       tabindex={!$settingStore.useDefaultSheetHpTabbing &&
       $settingStore.useAccessibleKeyboardSupport
         ? 0
         : -1}
     >
-      <i class="fas fa-hourglass-half" />
+      <i class="fas fa-hourglass-half"></i>
     </button>
     <button
       type="button"
       class="rest long-rest inline-icon-button"
       title={localize('TIDY5E.LongRest')}
-      on:click={(ev) => $context.longRest(ev)}
+      onclick={(ev) => $context.longRest(ev)}
       disabled={!$context.editable}
       tabindex={!$settingStore.useDefaultSheetHpTabbing &&
       $settingStore.useAccessibleKeyboardSupport
         ? 0
         : -1}
     >
-      <i class="fas fa-hourglass-end" />
+      <i class="fas fa-hourglass-end"></i>
     </button>
   </div>
 </div>

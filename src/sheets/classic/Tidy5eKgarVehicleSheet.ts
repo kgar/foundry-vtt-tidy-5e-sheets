@@ -28,7 +28,7 @@ import {
   blurUntabbableButtonsOnClick,
   maintainCustomContentInputFocus,
 } from 'src/utils/applications';
-import type { SvelteComponent } from 'svelte';
+import type { SvelteComponent, mount } from 'svelte';
 import { debug } from 'src/utils/logging';
 import { getPercentage } from 'src/utils/numbers';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
@@ -146,7 +146,7 @@ export class Tidy5eVehicleSheet
     const node = html.get(0);
     this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
 
-    this.component = new VehicleSheet({
+    this.component = mount(VehicleSheet, {
       target: node,
       context: new Map<any, any>([
         [CONSTANTS.SVELTE_CONTEXT.APP_ID, this.appId],

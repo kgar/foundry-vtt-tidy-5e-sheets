@@ -14,10 +14,10 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  let editing = false;
-  let contentToEdit: string;
-  let enrichedText: string;
-  let fieldToEdit: string;
+  let editing = $state(false);
+  let contentToEdit: string = $state();
+  let enrichedText: string = $state();
+  let fieldToEdit: string = $state();
 
   async function stopEditing() {
     await $context.actor.sheet.submit();
@@ -73,12 +73,12 @@
             stopChangePropagation={true}
             disabled={!$context.editable}
           />
-          <!-- svelte-ignore a11y-click-events-have-key-events -->
-          <!-- svelte-ignore a11y-no-static-element-interactions -->
-          <!-- svelte-ignore a11y-missing-attribute -->
+          <!-- svelte-ignore a11y_click_events_have_key_events -->
+          <!-- svelte-ignore a11y_no_static_element_interactions -->
+          <!-- svelte-ignore a11y_missing_attribute -->
           <a
             class="icon-button"
-            on:click={(ev) =>
+            onclick={(ev) =>
               $context.editable &&
               edit(
                 TidyFlags.notes1.members.value.get($context.actor) ?? '',
@@ -111,12 +111,12 @@
             stopChangePropagation={true}
             disabled={!$context.editable}
           />
-          <!-- svelte-ignore a11y-click-events-have-key-events -->
-          <!-- svelte-ignore a11y-no-static-element-interactions -->
-          <!-- svelte-ignore a11y-missing-attribute -->
+          <!-- svelte-ignore a11y_click_events_have_key_events -->
+          <!-- svelte-ignore a11y_no_static_element_interactions -->
+          <!-- svelte-ignore a11y_missing_attribute -->
           <a
             class="icon-button"
-            on:click={(ev) =>
+            onclick={(ev) =>
               $context.editable &&
               edit(
                 TidyFlags.notes2.members.value.get($context.actor) ?? '',
@@ -149,12 +149,12 @@
             stopChangePropagation={true}
             disabled={!$context.editable}
           />
-          <!-- svelte-ignore a11y-click-events-have-key-events -->
-          <!-- svelte-ignore a11y-no-static-element-interactions -->
-          <!-- svelte-ignore a11y-missing-attribute -->
+          <!-- svelte-ignore a11y_click_events_have_key_events -->
+          <!-- svelte-ignore a11y_no_static_element_interactions -->
+          <!-- svelte-ignore a11y_missing_attribute -->
           <a
             class="icon-button"
-            on:click={(ev) =>
+            onclick={(ev) =>
               $context.editable &&
               edit(
                 TidyFlags.notes3.members.value.get($context.actor) ?? '',
@@ -187,12 +187,12 @@
             stopChangePropagation={true}
             disabled={!$context.editable}
           />
-          <!-- svelte-ignore a11y-click-events-have-key-events -->
-          <!-- svelte-ignore a11y-no-static-element-interactions -->
-          <!-- svelte-ignore a11y-missing-attribute -->
+          <!-- svelte-ignore a11y_click_events_have_key_events -->
+          <!-- svelte-ignore a11y_no_static_element_interactions -->
+          <!-- svelte-ignore a11y_missing_attribute -->
           <a
             class="icon-button"
-            on:click={(ev) =>
+            onclick={(ev) =>
               $context.editable &&
               edit(
                 TidyFlags.notes4.members.value.get($context.actor) ?? '',
@@ -224,12 +224,12 @@
           <span>
             {localize('TIDY5E.JournalEntries')}
           </span>
-          <!-- svelte-ignore a11y-click-events-have-key-events -->
-          <!-- svelte-ignore a11y-no-static-element-interactions -->
-          <!-- svelte-ignore a11y-missing-attribute -->
+          <!-- svelte-ignore a11y_click_events_have_key_events -->
+          <!-- svelte-ignore a11y_no_static_element_interactions -->
+          <!-- svelte-ignore a11y_missing_attribute -->
           <a
             class="icon-button"
-            on:click={(ev) =>
+            onclick={(ev) =>
               $context.editable &&
               edit(
                 TidyFlags.notes.members.value.get($context.actor) ?? '',

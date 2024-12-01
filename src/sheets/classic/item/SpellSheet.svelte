@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import type { ItemSheetContext } from 'src/types/item.types';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
@@ -14,11 +16,12 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: appId = $context.document.id;
+  let appId = $derived($context.document.id);
 
-  $: selectedTabId = getContext<string>(
-    CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID,
-  );
+  let selectedTabId;
+  run(() => {
+    selectedTabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID);
+  });
 
   const localize = FoundryAdapter.localize;
 </script>

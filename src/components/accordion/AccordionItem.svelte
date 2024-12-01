@@ -1,14 +1,23 @@
 <script lang="ts">
-  import { getContext, onMount } from 'svelte';
+  import { getContext, onMount, type Snippet } from 'svelte';
   import type { AccordionCtxType } from './Accordion.svelte';
   import { writable } from 'svelte/store';
   import { settingStore } from 'src/settings/settings';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { CONSTANTS } from 'src/constants';
 
-  export let open: boolean = false;
+  interface Props {
+    open?: boolean;
+    header?: Snippet;
+    children?: Snippet;
+    [key: string]: any;
+  }
 
-  const ctx = getContext<AccordionCtxType>(CONSTANTS.SVELTE_CONTEXT.ACCORDION_CONTEXT) ?? {};
+  let { open = $bindable(false), header, children, ...rest }: Props = $props();
+
+  const ctx =
+    getContext<AccordionCtxType>(CONSTANTS.SVELTE_CONTEXT.ACCORDION_CONTEXT) ??
+    {};
 
   const self = {};
   const selected = ctx.selected ?? writable();
@@ -25,25 +34,25 @@
   });
 </script>
 
-<section class="accordion-item {$$props.class ?? ''}">
+<section class="accordion-item {rest.class ?? ''}">
   <h2 class="accordion-item-header" class:open>
     <button
       class="accordion-item-toggle transparent-button"
       type="button"
-      on:click={() => toggle()}
+      onclick={() => toggle()}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.EXPANSION_TOGGLE}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <span class="accordion-arrow" class:open
-        ><i class="fas fa-chevron-right" /></span
+        ><i class="fas fa-chevron-right"></i></span
       >
-      <slot name="header" />
+      {@render header?.()}
     </button>
   </h2>
 
   <ExpandableContainer expanded={open}>
     <div class="accordion-item-content">
-      <slot />
+      {@render children?.()}
     </div>
   </ExpandableContainer>
 </section>

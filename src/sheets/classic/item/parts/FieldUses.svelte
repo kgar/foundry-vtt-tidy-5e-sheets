@@ -14,7 +14,7 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: appId = $context.document.id;
+  let appId = $derived($context.document.id);
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -81,7 +81,7 @@
         class="inline-icon-button create-recovery-button"
         data-tooltip="DND5E.USES.Recovery.Action.Create"
         aria-label={localize('DND5E.USES.Recovery.Action.Create')}
-        on:click={() => $context.item.sheet.addRecovery()}
+        onclick={() => $context.item.sheet.addRecovery()}
         tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
         <i class="fas fa-plus"></i>
@@ -101,7 +101,7 @@
             id="{appId}-uses-recovery-{index}-period"
             data-tidy-field="system.uses.recovery.{index}.period"
             value={recovery.data.period}
-            on:change={(ev) =>
+            onchange={(ev) =>
               $context.item.sheet.updateRecovery(
                 index,
                 'period',
@@ -127,7 +127,7 @@
               id="{appId}-uses-recovery-{index}-type"
               data-tidy-field="system.uses.recovery.{index}.type"
               value={recovery.data.type}
-              on:change={(ev) =>
+              onchange={(ev) =>
                 $context.item.sheet.updateRecovery(
                   index,
                   'type',
@@ -154,7 +154,7 @@
               <select
                 id="{appId}-uses-recovery-{index}-formula"
                 data-tidy-field="system.uses.recovery.{index}.formula"
-                on:change={(ev) =>
+                onchange={(ev) =>
                   $context.item.sheet.updateRecovery(
                     index,
                     'formula',
@@ -174,7 +174,7 @@
                 type="text"
                 id="{appId}-uses-recovery-{index}-formula"
                 data-tidy-field="system.uses.recovery.{index}.formula"
-                on:change={(ev) =>
+                onchange={(ev) =>
                   $context.item.sheet.updateRecovery(
                     index,
                     'formula',
@@ -194,7 +194,7 @@
             data-action="deleteRecovery"
             title={localize('DND5E.USES.Recovery.Action.Delete')}
             aria-label={localize('DND5E.USES.Recovery.Action.Delete')}
-            on:click={() => $context.item.sheet.deleteRecovery(index)}
+            onclick={() => $context.item.sheet.deleteRecovery(index)}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-minus"></i>

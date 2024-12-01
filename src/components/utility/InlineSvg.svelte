@@ -1,11 +1,18 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { error } from 'src/utils/logging';
 
-  export let svgUrl: string;
-  export let removeInlineStyles: boolean = true;
+  interface Props {
+    svgUrl: string;
+    removeInlineStyles?: boolean;
+    [key: string]: any;
+  }
 
-  let svgHtml: string = '';
-  $: {
+  let { svgUrl, removeInlineStyles = true, ...rest }: Props = $props();
+
+  let svgHtml: string = $state('');
+  run(() => {
     (async () => {
       if (!svgUrl) {
         return;
@@ -25,7 +32,7 @@
         svgHtml = `<img src="${svgUrl}" alt="" />`;
       }
     })();
-  }
+  });
 
   function preprocessSvg(node: HTMLElement) {
     removeInlineStyles && node.querySelector('svg')?.removeAttribute('style');
@@ -33,7 +40,7 @@
 </script>
 
 {#key svgHtml}
-  <div use:preprocessSvg class={$$restProps.class ?? ''}>
+  <div use:preprocessSvg class={rest.class ?? ''}>
     {@html svgHtml}
   </div>
 {/key}

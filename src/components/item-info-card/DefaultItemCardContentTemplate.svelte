@@ -15,8 +15,13 @@
   } from 'src/types/types';
   import { coalesce } from 'src/utils/formatting';
 
-  export let item: Item5e;
-  export let chatData: ItemChatData;
+  interface Props {
+    item: Item5e;
+    chatData: ItemChatData;
+    children?: import('svelte').Snippet;
+  }
+
+  let { item, chatData, children }: Props = $props();
 
   let context =
     getContext<
@@ -28,8 +33,8 @@
       >
     >('context');
 
-  $: ctx = $context.itemContext[item.id] ?? {};
-  $: concealDetails = FoundryAdapter.concealDetails(item);
+  let ctx = $derived($context.itemContext[item.id] ?? {});
+  let concealDetails = $derived(FoundryAdapter.concealDetails(item));
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -51,7 +56,7 @@
   {#if 'hasUses' in ctx && ctx.hasUses}
     <div class="info-card-amount">
       <span
-        ><i class="fas fa-bolt" /><b>{localize('DND5E.Charges')}:</b>
+        ><i class="fas fa-bolt"></i><b>{localize('DND5E.Charges')}:</b>
         {item.system.uses.value}/{item.system.uses.max}</span
       >
     </div>
@@ -63,5 +68,5 @@
     </div>
   </div>
 
-  <slot />
+  {@render children?.()}
 </div>

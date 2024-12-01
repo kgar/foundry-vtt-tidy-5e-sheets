@@ -1,5 +1,7 @@
 <script lang="ts">
-  import { setContext } from 'svelte';
+  import { run } from 'svelte/legacy';
+
+  import { setContext, type Snippet } from 'svelte';
   import { clickOutside } from '../../events/clickOutside';
   import type {
     ButtonMenuAnchor,
@@ -15,23 +17,44 @@
     closed: string | null;
   };
 
-  export let open = false;
-  export let buttonText: string = '';
-  export let iconClass: string | StatefulIconClass | null = null;
-  export let wrapperClass: string | null = null;
-  export let listClass: string | null = null;
-  export let buttonClass: string | null = null;
-  export let openerPadding: string | null = null;
-  export let ariaLabel: string | null = null;
-  export let title: string | null = null;
-  export let gap: string | false = '0.25rem';
-  export let position: ButtonMenuPosition = 'bottom';
-  export let anchor: ButtonMenuAnchor = 'center';
-  export let menuElement: keyof HTMLElementTagNameMap = 'ul';
-  export let buttonStyle: 'solid' | 'transparent-inline' | 'transparent-inline-icon' = 'solid';
+  interface Props {
+    open?: boolean;
+    buttonText?: string;
+    iconClass?: string | StatefulIconClass | null;
+    wrapperClass?: string | null;
+    listClass?: string | null;
+    buttonClass?: string | null;
+    openerPadding?: string | null;
+    ariaLabel?: string | null;
+    title?: string | null;
+    gap?: string | false;
+    position?: ButtonMenuPosition;
+    anchor?: ButtonMenuAnchor;
+    menuElement?: keyof HTMLElementTagNameMap;
+    buttonStyle?: 'solid' | 'transparent-inline' | 'transparent-inline-icon';
+    children?: Snippet;
+  }
 
-  let openerEl: HTMLElement;
-  let menuStyles: string = '';
+  let {
+    open = $bindable(false),
+    buttonText = '',
+    iconClass = null,
+    wrapperClass = null,
+    listClass = null,
+    buttonClass = null,
+    openerPadding = null,
+    ariaLabel = null,
+    title = null,
+    gap = '0.25rem',
+    position = 'bottom',
+    anchor = 'center',
+    menuElement = 'ul',
+    buttonStyle = 'solid',
+    children,
+  }: Props = $props();
+
+  let openerEl: HTMLElement = $state();
+  let menuStyles: string = $state('');
 
   setContext<ButtonMenuContext>(CONSTANTS.SVELTE_CONTEXT.BUTTON_MENU_CONTEXT, {
     close: close,
@@ -45,8 +68,8 @@
     menuStyles = getPositionStyles(openerEl, menuEl, position, anchor, gap);
   }
 
-  let actualIconClass: string | null;
-  $: {
+  let actualIconClass: string | null = $state();
+  run(() => {
     if (iconClass !== null) {
       if (typeof iconClass === 'string') {
         actualIconClass = iconClass;
@@ -56,13 +79,13 @@
         actualIconClass = potentialClass;
       }
     }
-  }
+  });
 </script>
 
 <div class="button-menu-wrapper {wrapperClass ?? ''}">
   <button
     type="button"
-    on:click={() => (open = !open)}
+    onclick={() => (open = !open)}
     aria-label={ariaLabel}
     bind:this={openerEl}
     {title}
@@ -71,7 +94,7 @@
     tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
   >
     {#if iconClass}
-      <i class={actualIconClass} />
+      <i class={actualIconClass}></i>
     {/if}
     {buttonText}
   </button>
@@ -81,11 +104,11 @@
       this={menuElement}
       class="button-menu-list {listClass ?? ''}"
       use:clickOutside
-      on:outsideclick={() => close()}
+      onoutsideclick={() => close()}
       style={menuStyles}
       use:positionMenu
     >
-      <slot />
+      {@render children?.()}
     </svelte:element>
   {/if}
 </div>

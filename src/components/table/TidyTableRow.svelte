@@ -1,11 +1,28 @@
 <script lang="ts">
+  import { createBubbler } from 'svelte/legacy';
+
+  const bubble = createBubbler();
   import { CONSTANTS } from 'src/constants';
 
-  export let hidden: boolean = false;
-  export let rowContainerClass: string = '';
-  export let rowClass: string = '';
-  export let rowContainerAttributes: Record<string, unknown> = {};
-  export let rowAttributes: Record<string, unknown> = {};
+  interface Props {
+    hidden?: boolean;
+    rowContainerClass?: string;
+    rowClass?: string;
+    rowContainerAttributes?: Record<string, unknown>;
+    rowAttributes?: Record<string, unknown>;
+    children?: import('svelte').Snippet;
+    afterRow?: import('svelte').Snippet;
+  }
+
+  let {
+    hidden = false,
+    rowContainerClass = '',
+    rowClass = '',
+    rowContainerAttributes = {},
+    rowAttributes = {},
+    children,
+    afterRow,
+  }: Props = $props();
 </script>
 
 <div
@@ -14,20 +31,20 @@
   aria-hidden={hidden}
   {...rowContainerAttributes}
 >
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div
     class="tidy-table-row {rowClass ?? ''}"
     data-tidy-table-row
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TABLE_ROW}
     {...rowAttributes}
-    on:mousedown
-    on:mouseenter
-    on:mouseleave
-    on:dragstart
+    onmousedown={bubble('mousedown')}
+    onmouseenter={bubble('mouseenter')}
+    onmouseleave={bubble('mouseleave')}
+    ondragstart={bubble('dragstart')}
   >
-    <slot />
+    {@render children?.()}
   </div>
 
   <!-- Consider an alternative: don't require content to be nested within this component in order to be associated visually with the target row. -->
-  <slot name="after-row" />
+  {@render afterRow?.()}
 </div>

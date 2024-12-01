@@ -4,9 +4,13 @@
   import { settingStore } from 'src/settings/settings';
   import { type Actor5e } from 'src/types/types';
 
-  export let dataset: any;
-  export let actor: Actor5e;
-  export let create: (() => void) | undefined = defaultCreateFunction;
+  interface Props {
+    dataset: any;
+    actor: Actor5e;
+    create?: (() => void) | undefined;
+  }
+
+  let { dataset, actor, create = defaultCreateFunction }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
@@ -18,11 +22,11 @@
 <button
   type="button"
   class="item-list-footer-button"
-  on:click={create}
+  onclick={create}
   title={localize('DND5E.FeatureAdd')}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_CREATE_COMMAND}
   tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
 >
-  <i class="fas fa-plus-circle" />
+  <i class="fas fa-plus-circle"></i>
   {localize('DND5E.Add')}
 </button>

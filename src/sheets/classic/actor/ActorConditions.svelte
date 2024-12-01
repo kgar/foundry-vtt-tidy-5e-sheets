@@ -17,14 +17,14 @@
 </script>
 
 <ItemTable key="conditions">
-  <svelte:fragment slot="header">
+  {#snippet header()}
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>
         {localize('DND5E.Conditions')}
       </ItemTableColumn>
     </ItemTableHeaderRow>
-  </svelte:fragment>
-  <svelte:fragment slot="body">
+  {/snippet}
+  {#snippet body()}
     <ul class="conditions-list">
       {#each $context.conditions as condition (condition.id)}
         <li
@@ -37,7 +37,7 @@
         </li>
       {/each}
     </ul>
-  </svelte:fragment>
+  {/snippet}
 </ItemTable>
 
 <style lang="scss">

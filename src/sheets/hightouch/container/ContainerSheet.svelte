@@ -14,25 +14,27 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: identifiedText = $context.system.identified
-    ? localize('DND5E.Identified')
-    : localize('DND5E.Unidentified.Title');
-
-  $: rarityText =
-    //@ts-expect-error
-    CONFIG.DND5E.itemRarity[$context.system.rarity]?.titleCase() ?? '';
-
-  $: rarityColorVariable = `--t5e-color-rarity-${$context.system.rarity?.slugify() ?? ''}`;
-
-  $: denomination =
-    //@ts-expect-error
-    CONFIG.DND5E.currencies[$context.system.price.denomination];
-
-  $: itemValueText = FoundryAdapter.formatNumber($context.system.price?.value);
-
   const localize = FoundryAdapter.localize;
 
-  let selectedTabId: string = CONSTANTS.TAB_CONTAINER_CONTENTS;
+  let selectedTabId: string = $state(CONSTANTS.TAB_CONTAINER_CONTENTS);
+  let identifiedText = $derived(
+    $context.system.identified
+      ? localize('DND5E.Identified')
+      : localize('DND5E.Unidentified.Title'),
+  );
+  let rarityText = $derived(
+    //@ts-expect-error
+    CONFIG.DND5E.itemRarity[$context.system.rarity]?.titleCase() ?? '',
+  );
+  let rarityColorVariable = $derived(
+    `--t5e-color-rarity-${$context.system.rarity?.slugify() ?? ''}`,
+  );
+  let denomination =
+    //@ts-expect-error
+    $derived(CONFIG.DND5E.currencies[$context.system.price.denomination]);
+  let itemValueText = $derived(
+    FoundryAdapter.formatNumber($context.system.price?.value),
+  );
 </script>
 
 <aside

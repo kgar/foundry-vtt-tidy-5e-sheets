@@ -1,17 +1,17 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 
-  export let containingElement: HTMLElement;
-  export let targetSelector: string;
-  export let options: ContextMenuEntry[];
-
-  $: {
-    if (containingElement) {
-      initContextMenu(containingElement);
-    }
+  interface Props {
+    containingElement: HTMLElement;
+    targetSelector: string;
+    options: ContextMenuEntry[];
   }
+
+  let { containingElement, targetSelector, options }: Props = $props();
 
   function initContextMenu(el: HTMLElement) {
     new FloatingContextMenu(
@@ -25,4 +25,9 @@
       },
     );
   }
+  run(() => {
+    if (containingElement) {
+      initContextMenu(containingElement);
+    }
+  });
 </script>

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     Item5e,
@@ -17,9 +19,7 @@
   import { CONSTANTS } from 'src/constants';
 
   // Fix Key
-  let frozen: boolean = false;
-  $: fixKey = $settingStore.itemCardsFixKey?.toUpperCase();
-  $: concealDetails = FoundryAdapter.concealDetails(item);
+  let frozen: boolean = $state(false);
 
   function detectFixStart(ev: KeyboardEvent) {
     if (frozen) {
@@ -37,11 +37,11 @@
 
   // Floating
   let lastMouseEvent: { clientX: number; clientY: number } | null = null;
-  let floatingTop: string | null = null;
-  let floatingLeft: string | null = null;
+  let floatingTop: string | null = $state(null);
+  let floatingLeft: string | null = $state(null);
   let sheetBorderRight: number = 0;
   let sheetBorderBottom: number = 0;
-  let itemCardNode: HTMLElement;
+  let itemCardNode: HTMLElement = $state();
   let sheet: HTMLElement | null = null;
 
   function onMouseMove(args: { clientX: number; clientY: number }) {
@@ -82,15 +82,7 @@
   }
 
   // Show/Hide
-  let open = false;
-  $: {
-    const body = itemCardNode?.ownerDocument?.body;
-    if (body && open) {
-      listenForBodyEvents(body);
-    } else if (body && !open) {
-      stopListeningForBodyEvents(body);
-    }
-  }
+  let open = $state(false);
   function listenForBodyEvents(body: HTMLElement) {
     body.addEventListener('keydown', detectFixStart);
     body.addEventListener('keyup', detectFixStop);
@@ -102,9 +94,8 @@
     body.addEventListener('mousemove', onMouseMove);
   }
   let debug = false;
-  let timer: any;
-  let infoContentTemplate: ItemCardContentComponent | null;
-  $: delayMs = $settingStore.itemCardsDelay ?? 0;
+  let timer: any = $state();
+  let infoContentTemplate: ItemCardContentComponent | null = $state();
 
   async function showCard() {
     if (!$card.item) {
@@ -141,37 +132,15 @@
   }
 
   // Content
-  const card = getContext<Writable<ItemCardStore>>(CONSTANTS.SVELTE_CONTEXT.CARD);
+  const card = getContext<Writable<ItemCardStore>>(
+    CONSTANTS.SVELTE_CONTEXT.CARD,
+  );
   const cardWidthRem: number = 17.5;
   const cardHeightRem: number = 28.75;
   const mouseCursorCardGapRem = 1.5;
   let rootFontSizePx = getRootFontSizePx();
-  let item: Item5e | undefined;
-  $: itemSummaryCommands = ItemSummaryRuntime.getItemSummaryCommands(item);
-  let chatData: ItemChatData | undefined;
-  $: specialProps = getSpecialProperties(item);
-  $: itemProps = chatData?.properties ?? [];
-  $: $card,
-    (async () => {
-      if (frozen) {
-        return;
-      }
-
-      if ($card.item?.id === item?.id && open) {
-        return;
-      }
-
-      open = false;
-      clearTimeout(timer);
-
-      const newItem = $card.item;
-
-      if (!newItem) {
-        return;
-      }
-
-      timer = setTimeout(() => showCard(), delayMs);
-    })();
+  let item: Item5e | undefined = $state();
+  let chatData: ItemChatData | undefined = $state();
 
   // Lifecycle
   onMount(() => {
@@ -204,9 +173,7 @@
     }
     if (item?.labels?.damage && item.labels?.damages?.length > 0) {
       props.push(
-        item.labels.damages[0].label
-          .replace(' + ', '+')
-          .replace(' - ', '-'),
+        item.labels.damages[0].label.replace(' + ', '+').replace(' - ', '-'),
       );
     }
     if (item?.labels?.save) {
@@ -217,6 +184,45 @@
   }
 
   const localize = FoundryAdapter.localize;
+  let fixKey = $derived($settingStore.itemCardsFixKey?.toUpperCase());
+  let concealDetails = $derived(FoundryAdapter.concealDetails(item));
+  let delayMs = $derived($settingStore.itemCardsDelay ?? 0);
+  run(() => {
+    $card,
+      (async () => {
+        if (frozen) {
+          return;
+        }
+
+        if ($card.item?.id === item?.id && open) {
+          return;
+        }
+
+        open = false;
+        clearTimeout(timer);
+
+        const newItem = $card.item;
+
+        if (!newItem) {
+          return;
+        }
+
+        timer = setTimeout(() => showCard(), delayMs);
+      })();
+  });
+  run(() => {
+    const body = itemCardNode?.ownerDocument?.body;
+    if (body && open) {
+      listenForBodyEvents(body);
+    } else if (body && !open) {
+      stopListeningForBodyEvents(body);
+    }
+  });
+  let itemSummaryCommands = $derived(
+    ItemSummaryRuntime.getItemSummaryCommands(item),
+  );
+  let specialProps = $derived(getSpecialProperties(item));
+  let itemProps = $derived(chatData?.properties ?? []);
 </script>
 
 <section
@@ -232,11 +238,9 @@
   <div class="info-wrap">
     <article class="item-info-container-content">
       {#if !!item && !!chatData}
-        <svelte:component
-          this={infoContentTemplate ?? getItemCardContentTemplate(item)}
-          {item}
-          {chatData}
-        >
+        {@const SvelteComponent =
+          infoContentTemplate ?? getItemCardContentTemplate(item)}
+        <SvelteComponent {item} {chatData}>
           {#if specialProps.length}
             <HorizontalLineSeparator />
             <div
@@ -267,7 +271,7 @@
               <ItemSummaryCommandButtonList {item} />
             </div>
           {/if}
-        </svelte:component>
+        </SvelteComponent>
       {:else}
         <h2>😢 Unable to show item card contents</h2>
       {/if}
@@ -279,7 +283,10 @@
         <span class="key">{fixKey}</span>
         {localize('TIDY5E.ItemCardsKeyHint')}
       </p>
-      <p><i class="fas fa-mouse" /> {localize('TIDY5E.ItemCardsMouseHint')}</p>
+      <p>
+        <i class="fas fa-mouse"></i>
+        {localize('TIDY5E.ItemCardsMouseHint')}
+      </p>
     </article>
   </div>
 </section>

@@ -20,9 +20,10 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: incapacitated =
+  let incapacitated = $derived(
     ($context.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
-    $context.actor?.system?.attributes?.hp?.max !== 0;
+      $context.actor?.system?.attributes?.hp?.max !== 0,
+  );
 
   async function onLevelSelected(event: CustomEvent<{ level: number }>) {
     await $context.actor.update({

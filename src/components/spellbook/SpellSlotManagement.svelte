@@ -11,7 +11,11 @@
   import SpellSlotConfigButton from './SpellSlotConfigButton.svelte';
   import SpellSlotUses from './SpellSlotUses.svelte';
 
-  export let section: SpellbookSection;
+  interface Props {
+    section: SpellbookSection;
+  }
+
+  let { section }: Props = $props();
 
   let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,

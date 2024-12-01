@@ -8,8 +8,11 @@ import {
   getThemeOrDefault,
   getThemeableColors,
 } from 'src/theme/theme';
-import type { ThemeColorSetting, Tidy5eThemeDataV1 } from 'src/types/theme.types';
-import type { SvelteComponent } from 'svelte';
+import type {
+  ThemeColorSetting,
+  Tidy5eThemeDataV1,
+} from 'src/types/theme.types';
+import type { SvelteComponent, mount } from 'svelte';
 import { get, writable, type Writable } from 'svelte/store';
 import ThemeSettingsSheet from './ThemeSettingsSheet.svelte';
 import { downloadTextFile } from 'src/utils/file';
@@ -46,7 +49,7 @@ export class ThemeSettingsFormApplication extends SvelteFormApplicationBase {
   }
 
   createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
-    return new ThemeSettingsSheet({
+    return mount(ThemeSettingsSheet, {
       target: node,
       props: {
         themeableColors: this.themeableColors,

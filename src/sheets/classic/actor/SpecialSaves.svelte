@@ -17,7 +17,7 @@
     <button
       type="button"
       class="inline-transparent-button flex-row extra-small-gap align-items-center highlight-on-hover"
-      on:click={(ev) =>
+      onclick={(ev) =>
         $context.actor.rollConcentration({ event: ev, legacy: false })}
     >
       <Dnd5eIcon src="systems/dnd5e/icons/svg/statuses/concentrating.svg" />
@@ -28,7 +28,7 @@
       <button
         type="button"
         class="inline-icon-button"
-        on:click={() => FoundryAdapter.openConcentrationConfig($context.actor)}
+        onclick={() => FoundryAdapter.openConcentrationConfig($context.actor)}
         ><i class="fas fa-cog" style="font-size: var(--icon-size);"></i></button
       >
     {/if}

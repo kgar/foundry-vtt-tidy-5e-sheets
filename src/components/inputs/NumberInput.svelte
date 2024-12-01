@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     ContainerSheetClassicContext,
@@ -14,27 +16,47 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  export let value: number | null = null;
-  export let step: string = 'any';
-  export let placeholder: string | null = null;
-  export let field: string;
-  export let document: any;
-  export let tooltip: string | null = null;
-  export let min: string | number | null | undefined = null;
-  export let max: string | number | null | undefined = null;
-  export let id: string | null = null;
-  export let disabled: boolean | null = null;
-  export let dataset: Record<string, unknown> | null = null;
-  export let readonly: boolean | null = null;
-  export let cssClass: string | null = null;
-  export let maxlength: HTMLInputElement['maxLength'] | null = null;
-  export let selectOnFocus: boolean = false;
-  export let title: string | null = null;
-  export let stopClickPropagation: boolean = false;
+  interface Props {
+    value?: number | null;
+    step?: string;
+    placeholder?: string | null;
+    field: string;
+    document: any;
+    tooltip?: string | null;
+    min?: string | number | null | undefined;
+    max?: string | number | null | undefined;
+    id?: string | null;
+    disabled?: boolean | null;
+    dataset?: Record<string, unknown> | null;
+    readonly?: boolean | null;
+    cssClass?: string | null;
+    maxlength?: HTMLInputElement['maxLength'] | null;
+    selectOnFocus?: boolean;
+    title?: string | null;
+    stopClickPropagation?: boolean;
+  }
 
-  $: draftValue = value;
-  $: datasetAttributes = buildDataset(dataset);
-  let theInput: HTMLInputElement | undefined;
+  let {
+    value = null,
+    step = 'any',
+    placeholder = null,
+    field,
+    document,
+    tooltip = null,
+    min = null,
+    max = null,
+    id = null,
+    disabled = null,
+    dataset = null,
+    readonly = null,
+    cssClass = null,
+    maxlength = null,
+    selectOnFocus = false,
+    title = null,
+    stopClickPropagation = false,
+  }: Props = $props();
+
+  let theInput: HTMLInputElement | undefined = $state();
 
   async function saveChange(
     event: Event & {
@@ -69,19 +91,23 @@
       >
     >('context');
 
-  $: activeEffectApplied = ActiveEffectsHelper.isActiveEffectAppliedToField(
-    document,
-    field,
-  );
-
-  $: isEnchanted =
-    $context.itemOverrides instanceof Set && $context.itemOverrides.has(field);
-
-  $: overrideTooltip = isEnchanted
-    ? localize('DND5E.ENCHANTMENT.Warning.Override')
-    : localize('DND5E.ActiveEffectOverrideWarning');
-
   const localize = FoundryAdapter.localize;
+  let draftValue;
+  run(() => {
+    draftValue = value;
+  });
+  let datasetAttributes = $derived(buildDataset(dataset));
+  let activeEffectApplied = $derived(
+    ActiveEffectsHelper.isActiveEffectAppliedToField(document, field),
+  );
+  let isEnchanted = $derived(
+    $context.itemOverrides instanceof Set && $context.itemOverrides.has(field),
+  );
+  let overrideTooltip = $derived(
+    isEnchanted
+      ? localize('DND5E.ENCHANTMENT.Warning.Override')
+      : localize('DND5E.ActiveEffectOverrideWarning'),
+  );
 </script>
 
 <input
@@ -93,15 +119,15 @@
   {min}
   {max}
   {placeholder}
-  on:change={saveChange}
+  onchange={saveChange}
   data-tooltip={activeEffectApplied ? overrideTooltip : tooltip}
   disabled={disabled || activeEffectApplied}
   {readonly}
   class={cssClass}
   {maxlength}
   {...datasetAttributes}
-  on:focus={(ev) => selectOnFocus && ev.currentTarget.select()}
-  on:click={(ev) => stopClickPropagation && ev.stopPropagation()}
+  onfocus={(ev) => selectOnFocus && ev.currentTarget.select()}
+  onclick={(ev) => stopClickPropagation && ev.stopPropagation()}
   {title}
   data-tidy-field={field}
 />

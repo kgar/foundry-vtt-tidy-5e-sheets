@@ -6,12 +6,17 @@
   import { getContext } from 'svelte';
   import type { Readable, Writable } from 'svelte/store';
 
-  export let occupant: Actor5e;
-  export let type: string;
-  export let index: number;
-  export let prop: string;
-  export let facilityId: string;
-  export let facilityName: string;
+  interface Props {
+    occupant: Actor5e;
+    type: string;
+    index: number;
+    prop: string;
+    facilityId: string;
+    facilityName: string;
+  }
+
+  let { occupant, type, index, prop, facilityId, facilityName }: Props =
+    $props();
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -49,14 +54,14 @@
   data-prop={prop}
   data-index={index}
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_FACILITY_OCCUPANTS}
-  on:mouseenter={() =>
+  onmouseenter={() =>
     ($hoveredFacilityOccupant = `${facilityId}-${index}-${occupant.uuid}`)}
-  on:mouseleave={() => ($hoveredFacilityOccupant = '')}
+  onmouseleave={() => ($hoveredFacilityOccupant = '')}
 >
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <!-- svelte-ignore a11y-missing-attribute -->
-  <a on:click={(ev) => $context.editable && onRosterMemberClicked(ev)}>
+  <!-- svelte-ignore a11y_click_events_have_key_events -->
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
+  <!-- svelte-ignore a11y_missing_attribute -->
+  <a onclick={(ev) => $context.editable && onRosterMemberClicked(ev)}>
     <img src={occupant.img} alt={occupant.name} />
     {#if $context.unlocked}
       <i class="fa-solid fa-cog occupant-menu-icon"></i>

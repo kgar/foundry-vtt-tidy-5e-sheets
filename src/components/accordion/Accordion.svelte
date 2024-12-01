@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { setContext } from 'svelte';
   import { writable, type Writable } from 'svelte/store';
@@ -9,15 +9,25 @@
 </script>
 
 <script lang="ts">
-  export let multiple: boolean = false;
+  import { run } from 'svelte/legacy';
 
-  $: setContext<AccordionCtxType>(CONSTANTS.SVELTE_CONTEXT.ACCORDION_CONTEXT, {
-    selected: multiple ? undefined : writable(),
+  interface Props {
+    multiple?: boolean;
+    children?: import('svelte').Snippet;
+    [key: string]: any;
+  }
+
+  let { multiple = false, children, ...rest }: Props = $props();
+
+  run(() => {
+    setContext<AccordionCtxType>(CONSTANTS.SVELTE_CONTEXT.ACCORDION_CONTEXT, {
+      selected: multiple ? undefined : writable(),
+    });
   });
 </script>
 
 {#key multiple}
-  <div class={$$props.class}>
-    <slot />
+  <div class={rest.class}>
+    {@render children?.()}
   </div>
 {/key}

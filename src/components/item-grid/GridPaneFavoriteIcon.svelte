@@ -7,7 +7,7 @@
 <i
   class="fas fa-bookmark icon-fav no-pointer-events"
   title={localize('TIDY5E.Favorite')}
-/>
+></i>
 
 <style lang="scss">
   .icon-fav {

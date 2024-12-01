@@ -4,10 +4,19 @@
   import { createEventDispatcher, getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  export let title: string | null = null;
-  export let text: string;
-  export let hideFromTabOrder: boolean = false;
-  export let attributes: Record<string, string> = {};
+  interface Props {
+    title?: string | null;
+    text: string;
+    hideFromTabOrder?: boolean;
+    attributes?: Record<string, string>;
+  }
+
+  let {
+    title = null,
+    text,
+    hideFromTabOrder = false,
+    attributes = {},
+  }: Props = $props();
 
   const dispatcher = createEventDispatcher<{ roll: MouseEvent }>();
 
@@ -21,7 +30,7 @@
   class:rollable={$context.editable}
   class="transparent-button"
   {title}
-  on:click={(ev) => dispatcher('roll', ev)}
+  onclick={(ev) => dispatcher('roll', ev)}
   disabled={!$context.editable}
   tabindex={!hideFromTabOrder ? 0 : -1}
   {...attributes}

@@ -1,10 +1,14 @@
 <script lang="ts">
   import type { Actor5e } from 'src/types/types';
 
-  export let members: Actor5e[];
-  export let language: string;
+  interface Props {
+    members: Actor5e[];
+    language: string;
+  }
 
-  let tooltip: HTMLElement;
+  let { members, language }: Props = $props();
+
+  let tooltip: HTMLElement = $state();
 
   export function getMarkup() {
     return tooltip.outerHTML;

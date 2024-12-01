@@ -21,13 +21,25 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { TidyHooks } from 'src/foundry/TidyHooks';
 
-  export let item: Item5e | null = null;
-  export let contextMenu: { type: string; uuid: string } | null = null;
-  export let rowClass: string = '';
-  export let itemCardContentTemplate: ItemCardContentComponent | null = null;
-  export let hidden: boolean = false;
+  interface Props {
+    item?: Item5e | null;
+    contextMenu?: { type: string; uuid: string } | null;
+    rowClass?: string;
+    itemCardContentTemplate?: ItemCardContentComponent | null;
+    hidden?: boolean;
+    children?: import('svelte').Snippet<[any]>;
+  }
 
-  $: draggable = item;
+  let {
+    item = null,
+    contextMenu = null,
+    rowClass = '',
+    itemCardContentTemplate = null,
+    hidden = false,
+    children,
+  }: Props = $props();
+
+  let draggable = $derived(item);
 
   const emptyChatData: ItemChatData = {
     description: { value: '' },
@@ -52,8 +64,8 @@
   let card: Writable<ItemCardStore> | undefined = getContext<
     Writable<ItemCardStore>
   >(CONSTANTS.SVELTE_CONTEXT.CARD);
-  let showSummary = false;
-  let chatData: ItemChatData | undefined;
+  let showSummary = $state(false);
+  let chatData: ItemChatData | undefined = $state();
 
   async function toggleSummary() {
     if (!item) {
@@ -163,11 +175,11 @@
   on:mouseleave={onMouseLeave}
   on:dragstart={handleDragStart}
 >
-  <slot {toggleSummary} />
+  {@render children?.({ toggleSummary })}
 
-  <svelte:fragment slot="after-row">
+  {#snippet afterRow()}
     <ExpandableContainer expanded={showSummary}>
       <ItemSummary chatData={chatData ?? emptyChatData} {item} />
     </ExpandableContainer>
-  </svelte:fragment>
+  {/snippet}
 </TidyTableRow>

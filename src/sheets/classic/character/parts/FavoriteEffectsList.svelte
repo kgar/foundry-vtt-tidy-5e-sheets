@@ -19,13 +19,17 @@
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
-  export let section: EffectFavoriteSection;
 
-  /**
-   * An optional subset of item IDs which will hide all other items not included in this set.
-   * Useful for showing only search results, for example.
-   */
-  export let visibleEffectIdSubset: Set<string> | null = null;
+  interface Props {
+    section: EffectFavoriteSection;
+    /**
+     * An optional subset of item IDs which will hide all other items not included in this set.
+     * Useful for showing only search results, for example.
+     */
+    visibleEffectIdSubset?: Set<string> | null;
+  }
+
+  let { section, visibleEffectIdSubset = null }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
@@ -38,7 +42,7 @@
 </script>
 
 <ItemTable key={section.key} class="favorite-effects">
-  <svelte:fragment slot="header">
+  {#snippet header()}
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>
         {localize(section.label ?? 'DND5E.Effect')}
@@ -50,8 +54,8 @@
         <!-- Controls -->
       </ItemTableColumn>
     </ItemTableHeaderRow>
-  </svelte:fragment>
-  <svelte:fragment slot="body">
+  {/snippet}
+  {#snippet body()}
     {#each section.effects as effectContext (effectContext.effectId)}
       <ItemTableRow
         effect={effectContext.effect}
@@ -92,5 +96,5 @@
         </ItemTableCell>
       </ItemTableRow>
     {/each}
-  </svelte:fragment>
+  {/snippet}
 </ItemTable>

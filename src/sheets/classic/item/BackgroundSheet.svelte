@@ -14,9 +14,13 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: appId = $context.document.id;
+  let appId = $derived($context.document.id);
 
-  export let selectedTabId: string = 'description';
+  interface Props {
+    selectedTabId?: string;
+  }
+
+  let { selectedTabId = $bindable('description') }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 </script>

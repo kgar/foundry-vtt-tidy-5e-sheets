@@ -9,10 +9,14 @@
   import ResourceWithBar from 'src/components/bar/ResourceWithBar.svelte';
   import { CONSTANTS } from 'src/constants';
 
-  export let value: number;
-  export let max: number;
-  export let actor: Actor5e;
-  export let incapacitated: boolean;
+  interface Props {
+    value: number;
+    max: number;
+    actor: Actor5e;
+    incapacitated: boolean;
+  }
+
+  let { value, max, actor, incapacitated }: Props = $props();
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,

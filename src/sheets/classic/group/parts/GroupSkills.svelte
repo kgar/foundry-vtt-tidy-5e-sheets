@@ -14,13 +14,13 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  let groupSkillTooltip: GroupSkillTooltip;
-  let hoveredSkill: GroupSkill = {
+  let groupSkillTooltip: GroupSkillTooltip = $state();
+  let hoveredSkill: GroupSkill = $state({
     key: '',
     label: '',
     members: [],
     total: Number.NEGATIVE_INFINITY,
-  };
+  });
 
   function showGroupLanguageTooltip(
     event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
@@ -41,11 +41,11 @@
 
 <div class="flex-row extra-small-gap flex-wrap">
   {#each $context.groupSkills as groupSkill}
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <!-- svelte-ignore a11y-mouse-events-have-key-events -->
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
+    <!-- svelte-ignore a11y_mouse_events_have_key_events -->
     <span
       class="tag"
-      on:mouseover={(ev) => showGroupLanguageTooltip(ev, groupSkill)}
+      onmouseover={(ev) => showGroupLanguageTooltip(ev, groupSkill)}
     >
       {groupSkill.label}
       {formatAsModifier(groupSkill.total)}

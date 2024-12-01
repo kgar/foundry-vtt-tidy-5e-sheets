@@ -1,15 +1,27 @@
 <script lang="ts">
-  import { createEventDispatcher, getContext } from 'svelte';
+  import { createEventDispatcher, getContext, type Snippet } from 'svelte';
   import ButtonMenuItem from './ButtonMenuItem.svelte';
   import type { ButtonMenuContext } from './button-menu-types';
   import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
 
-  export let iconClass: string = '';
-  export let useIconColumn: boolean = true;
-  export let title: string | null = null;
-  export let size: 'standard' | 'compact' = 'standard';
-  export let disabled = false;
+  interface Props {
+    iconClass?: string;
+    useIconColumn?: boolean;
+    title?: string | null;
+    size?: 'standard' | 'compact';
+    disabled?: boolean;
+    children?: Snippet;
+  }
+
+  let {
+    iconClass = '',
+    useIconColumn = true,
+    title = null,
+    size = 'standard',
+    disabled = false,
+    children,
+  }: Props = $props();
 
   const buttonMenuContext = getContext<ButtonMenuContext>(
     CONSTANTS.SVELTE_CONTEXT.BUTTON_MENU_CONTEXT,
@@ -32,7 +44,7 @@
   <button
     type="button"
     class="button-menu-command {size}"
-    on:click={handleClick}
+    onclick={handleClick}
     {title}
     {disabled}
     tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
@@ -40,12 +52,12 @@
     {#if useIconColumn}
       <span class="icon-container">
         {#if iconClass}
-          <i class={iconClass} role="presentation" />
+          <i class={iconClass} role="presentation"></i>
         {/if}
       </span>
     {/if}
     <span class="command-text">
-      <slot />
+      {@render children?.()}
     </span>
   </button>
 </ButtonMenuItem>

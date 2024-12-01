@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import type { CharacterSheetContext } from 'src/types/types';
   import InventoryList from '../../actor/InventoryList.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -15,25 +17,31 @@
   import FavoriteFacilitiesList from './FavoriteFacilitiesList.svelte';
   import FavoriteActivitiesList from './FavoriteActivitiesList.svelte';
 
-  export let searchCriteria: string = '';
+  interface Props {
+    searchCriteria?: string;
+  }
+
+  let { searchCriteria = '' }: Props = $props();
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
-  $: favorites = SheetSections.configureFavorites(
-    $context.favorites,
-    $context.actor,
-    tabId,
-    SheetPreferencesService.getByType($context.actor.type),
-    TidyFlags.sectionConfig.get($context.actor)?.[tabId],
+  let favorites = $derived(
+    SheetSections.configureFavorites(
+      $context.favorites,
+      $context.actor,
+      tabId,
+      SheetPreferencesService.getByType($context.actor.type),
+      TidyFlags.sectionConfig.get($context.actor)?.[tabId],
+    ),
   );
 
   const itemIdsToShow = writable<Set<string> | undefined>(undefined);
   setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
 
-  $: {
+  run(() => {
     const sections = favorites.filter(
       (x) =>
         x.type !== CONSTANTS.FAVORITES_SECTION_TYPE_EFFECT &&
@@ -46,7 +54,7 @@
       sections: sections,
       tabId: tabId,
     });
-  }
+  });
 
   const localize = FoundryAdapter.localize;
 </script>

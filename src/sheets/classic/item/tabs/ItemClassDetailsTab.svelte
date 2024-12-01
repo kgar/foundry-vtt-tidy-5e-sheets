@@ -16,13 +16,13 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: appId = $context.document.id;
+  let appId = $derived($context.document.id);
 
-  $: abilities = Object.entries<any>($context.config.abilities).map(
-    ([key, value]) => ({
+  let abilities = $derived(
+    Object.entries<any>($context.config.abilities).map(([key, value]) => ({
       key: key,
       label: value.label,
-    }),
+    })),
   );
 
   const localize = FoundryAdapter.localize;
@@ -54,9 +54,7 @@
   <label for="{appId}-hit-dice">{localize('DND5E.HitDice')}</label>
   <div class="form-fields">
     <div class="form-group label-top">
-      <label for="{appId}-hit-dice"
-        >{localize('DND5E.Denomination')}</label
-      >
+      <label for="{appId}-hit-dice">{localize('DND5E.Denomination')}</label>
       <Select
         id="{appId}-hit-dice"
         document={$context.item}
@@ -71,9 +69,7 @@
     </div>
 
     <div class="form-group label-top">
-      <label for="{appId}-hit-dice-spent"
-        >{localize('DND5E.Spent')}</label
-      >
+      <label for="{appId}-hit-dice-spent">{localize('DND5E.Spent')}</label>
       <NumberInput
         id="{appId}-hitDiceUsed"
         document={$context.item}

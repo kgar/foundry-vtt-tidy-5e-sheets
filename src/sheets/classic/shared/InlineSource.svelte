@@ -3,14 +3,18 @@
   import { settingStore } from 'src/settings/settings';
   import { isNil } from 'src/utils/data';
 
-  export let document: any;
-  export let keyPath: string;
-  export let editable: boolean;
+  interface Props {
+    document: any;
+    keyPath: string;
+    editable: boolean;
+  }
 
-  $: source = FoundryAdapter.getProperty<any>(document, keyPath);
+  let { document, keyPath, editable }: Props = $props();
 
-  $: text = !isNil(source?.label, '') ? source.label : 'Source';
-  $: usePlaceholder = isNil(source?.label, '');
+  let source = $derived(FoundryAdapter.getProperty<any>(document, keyPath));
+
+  let text = $derived(!isNil(source?.label, '') ? source.label : 'Source');
+  let usePlaceholder = $derived(isNil(source?.label, ''));
 </script>
 
 {#if editable}
@@ -18,7 +22,7 @@
     type="button"
     class="configure-source inline-transparent-button highlight-on-hover truncate"
     class:placeholder={usePlaceholder}
-    on:click={() => FoundryAdapter.renderSourceConfig(document, keyPath)}
+    onclick={() => FoundryAdapter.renderSourceConfig(document, keyPath)}
     tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
   >
     {text}

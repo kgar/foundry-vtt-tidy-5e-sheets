@@ -1,12 +1,16 @@
 <script lang="ts">
-  export let checked = false;
-  export let onchange:
-    | ((
-        event: Event & {
-          currentTarget: EventTarget & HTMLInputElement;
-        },
-      ) => void)
-    | undefined = undefined;
+  interface Props {
+    checked?: boolean;
+    onchange?:
+      | ((
+          event: Event & {
+            currentTarget: EventTarget & HTMLInputElement;
+          },
+        ) => void)
+      | undefined;
+  }
+
+  let { checked = false, onchange = undefined }: Props = $props();
 </script>
 
 <label class="field-toggle">
@@ -34,5 +38,5 @@
       d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"
     /></svg
   >
-  <input type="checkbox" on:change={onchange} {checked} class="toggle hidden" />
+  <input type="checkbox" {onchange} {checked} class="toggle hidden" />
 </label>

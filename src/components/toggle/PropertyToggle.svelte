@@ -1,21 +1,37 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import TidySwitch from './TidySwitch.svelte';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { debug, error } from 'src/utils/logging';
 
-  export let document: any;
-  export let field: string;
-  export let checked: boolean;
-  export let title: string = '';
-  export let disabled: boolean = false;
-  export let iconSrc: string | null = null;
-  export let iconClass: string | null = null;
-
-  let switchOn: boolean = checked;
-
-  $: {
-    switchOn = checked;
+  interface Props {
+    document: any;
+    field: string;
+    checked: boolean;
+    title?: string;
+    disabled?: boolean;
+    iconSrc?: string | null;
+    iconClass?: string | null;
+    children?: import('svelte').Snippet;
   }
+
+  let {
+    document,
+    field,
+    checked,
+    title = '',
+    disabled = false,
+    iconSrc = null,
+    iconClass = null,
+    children,
+  }: Props = $props();
+
+  let switchOn: boolean = $state(checked);
+
+  run(() => {
+    switchOn = checked;
+  });
 
   async function handleChange(newValue: boolean) {
     try {
@@ -51,5 +67,5 @@
   {#if iconClass}
     <i class={iconClass}></i>
   {/if}
-  <slot />
+  {@render children?.()}
 </TidySwitch>

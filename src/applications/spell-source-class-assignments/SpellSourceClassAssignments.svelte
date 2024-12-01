@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import type { Readable, Writable } from 'svelte/store';
   import type { SpellSourceClassAssignmentsContext } from './SpellSourceClassAssignmentsFormApplication';
   import { getContext } from 'svelte';
@@ -18,27 +20,31 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  let searchCriteria: string = '';
+  let searchCriteria: string = $state('');
 
-  $: visibleSelectablesIdSubset = new Set<string>(
-    $context.assignments
-      .filter(
-        (s) =>
-          searchCriteria.trim() === '' ||
-          s.item.name?.toLowerCase().includes(searchCriteria.toLowerCase()),
-      )
-      .map((d) => d.item.id),
+  let visibleSelectablesIdSubset = $derived(
+    new Set<string>(
+      $context.assignments
+        .filter(
+          (s) =>
+            searchCriteria.trim() === '' ||
+            s.item.name?.toLowerCase().includes(searchCriteria.toLowerCase()),
+        )
+        .map((d) => d.item.id),
+    ),
   );
 
-  $: classColumns = Object.entries<Item5e>(
-    $context.actor.spellcastingClasses,
-  ).map(([key, value]) => ({
-    key: key,
-    item: value,
-  }));
+  let classColumns = $derived(
+    Object.entries<Item5e>($context.actor.spellcastingClasses).map(
+      ([key, value]) => ({
+        key: key,
+        item: value,
+      }),
+    ),
+  );
 
-  let gridTemplateColumns: string = '';
-  $: {
+  let gridTemplateColumns: string = $state('');
+  run(() => {
     let standardClassColumnWidth = '10rem';
     let columns = '/* Spell Name */ minmax(200px, 1fr)';
 
@@ -48,7 +54,7 @@
 
     columns += ' /* Identifier */ 200px';
     gridTemplateColumns = columns;
-  }
+  });
 
   async function setItemSourceClass(item: Item5e, sourceClass: string) {
     await item.update({
@@ -58,7 +64,7 @@
 
   const localize = FoundryAdapter.localize;
 
-  var showUnassignedOnly = false;
+  var showUnassignedOnly = $state(false);
 </script>
 
 <section class="flex-column small-gap full-height">
@@ -75,7 +81,7 @@
       toggleable={false}
       {gridTemplateColumns}
     >
-      <svelte:fragment slot="header">
+      {#snippet header()}
         <TidyTableHeaderRow>
           <TidyTableHeaderCell primary={true} class="p-1 capitalize">
             {localize('DND5E.spell')}
@@ -97,8 +103,8 @@
             ></i>
           </TidyTableHeaderCell>
         </TidyTableHeaderRow>
-      </svelte:fragment>
-      <svelte:fragment slot="body">
+      {/snippet}
+      {#snippet body()}
         {#each $context.assignments as assignment (assignment.item.id)}
           {@const sourceClassIsUnassigned =
             (assignment.item.system.sourceClass?.trim() ?? '') === ''}
@@ -110,7 +116,7 @@
               <button
                 type="button"
                 class="inline-transparent-button highlight-on-hover"
-                on:click={async () =>
+                onclick={async () =>
                   FoundryAdapter.renderSheetFromUuid(assignment.item.uuid)}
               >
                 {assignment.item.name}
@@ -141,7 +147,7 @@
             </TidyTableCell>
           </TidyTableRow>
         {/each}
-      </svelte:fragment>
+      {/snippet}
     </TidyTable>
   </div>
 </section>

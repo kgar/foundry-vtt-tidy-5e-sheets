@@ -11,16 +11,17 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: text = coalesce($context.labels.type, localize('DND5E.CreatureType'));
-
   const localize = FoundryAdapter.localize;
+  let text = $derived(
+    coalesce($context.labels.type, localize('DND5E.CreatureType')),
+  );
 </script>
 
 {#if $context.editable && ($context.actor.type === 'npc' || $context.system.details?.race?.id)}
   <button
     type="button"
     class="configure-creature-type inline-transparent-button highlight-on-hover truncate"
-    on:click={() => FoundryAdapter.renderCreatureTypeConfig($context.actor)}
+    onclick={() => FoundryAdapter.renderCreatureTypeConfig($context.actor)}
     title={localize('DND5E.CreatureType')}
     tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
   >

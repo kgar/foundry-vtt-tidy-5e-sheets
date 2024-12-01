@@ -47,15 +47,15 @@
     title="{localize('DND5E.HitDiceRoll')}/{localize(
       'TIDY5E.HitDiceRollAverage',
     )}"
-    on:click={rollNpcHp}
-    on:contextmenu={calcAverageHitDie}
+    onclick={rollNpcHp}
+    oncontextmenu={calcAverageHitDie}
     class="roll-hp-formula highlight-on-hover"
     tabindex={!$settingStore.useDefaultSheetHpTabbing &&
     $settingStore.useAccessibleKeyboardSupport
       ? 0
       : -1}
   >
-    <i class="fas fa-dice-six" />
+    <i class="fas fa-dice-six"></i>
   </button>
 </div>
 

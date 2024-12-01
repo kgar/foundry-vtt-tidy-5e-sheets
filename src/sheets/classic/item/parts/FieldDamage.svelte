@@ -12,20 +12,28 @@
   import { mapSystemDamageTypesToSave } from 'src/utils/system-properties';
   import type { GroupableSelectOption } from 'src/types/types';
 
-  export let source: any;
-  export let prefix: string;
-  export let denominationOptions: GroupableSelectOption[];
-  export let numberPlaceholder: string = '';
-  export let types:
-    | { label: string; value: string; selected: boolean }[]
-    | undefined = undefined;
+  interface Props {
+    source: any;
+    prefix: string;
+    denominationOptions: GroupableSelectOption[];
+    numberPlaceholder?: string;
+    types?: { label: string; value: string; selected: boolean }[] | undefined;
+  }
+
+  let {
+    source,
+    prefix,
+    denominationOptions,
+    numberPlaceholder = '',
+    types = undefined,
+  }: Props = $props();
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: appId = $context.document.id;
-  $: idPrefix = `${appId}-${prefix.replaceAll('.', '-')}`;
+  let appId = $derived($context.document.id);
+  let idPrefix = $derived(`${appId}-${prefix.replaceAll('.', '-')}`);
 
   const localize = FoundryAdapter.localize;
 </script>

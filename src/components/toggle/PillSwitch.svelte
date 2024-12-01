@@ -2,21 +2,34 @@
   import Dnd5eIcon from '../icon/Dnd5eIcon.svelte';
   import FieldToggle from './FieldToggle.svelte';
 
-  export let checked: boolean = false;
-  export let checkedIconClass: string | undefined = undefined;
-  export let checkedSvgSrc: string | undefined = undefined;
-  export let uncheckedIconClass: string | undefined = undefined;
-  export let uncheckedSvgSrc: string | undefined = undefined;
-  export let onchange:
-    | ((
-        event: Event & {
-          currentTarget: EventTarget & HTMLInputElement;
-        },
-      ) => void)
-    | undefined = undefined;
+  interface Props {
+    checked?: boolean;
+    checkedIconClass?: string | undefined;
+    checkedSvgSrc?: string | undefined;
+    uncheckedIconClass?: string | undefined;
+    uncheckedSvgSrc?: string | undefined;
+    onchange?:
+      | ((
+          event: Event & {
+            currentTarget: EventTarget & HTMLInputElement;
+          },
+        ) => void)
+      | undefined;
+    children?: import('svelte').Snippet;
+  }
+
+  let {
+    checked = $bindable(false),
+    checkedIconClass = undefined,
+    checkedSvgSrc = undefined,
+    uncheckedIconClass = undefined,
+    uncheckedSvgSrc = undefined,
+    onchange = undefined,
+    children,
+  }: Props = $props();
 </script>
 
-<!-- svelte-ignore a11y-label-has-associated-control -->
+<!-- svelte-ignore a11y_label_has_associated_control -->
 <label class="pill pill-switch">
   <span>
     <span class="pill-switch-icon-container" class:hidden={!checked}>
@@ -35,7 +48,7 @@
         <Dnd5eIcon class="fa-fw" src={uncheckedSvgSrc} />
       {/if}
     </span>
-    <slot />
+    {@render children?.()}
   </span>
   <FieldToggle bind:checked {onchange} />
 </label>

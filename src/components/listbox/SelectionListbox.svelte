@@ -4,13 +4,35 @@
 
   type TItem = $$Generic;
 
-  export let leftItems: TItem[];
-  export let selectedLeftItemIndex: number | null = null;
-  export let rightItems: TItem[];
-  export let selectedRightItemIndex: number | null = null;
-  export let labelProp: keyof TItem;
-  export let valueProp: keyof TItem;
-  export let listboxCssClass: string = '';
+  interface Props {
+    leftItems: TItem[];
+    selectedLeftItemIndex?: number | null;
+    rightItems: TItem[];
+    selectedRightItemIndex?: number | null;
+    labelProp: keyof TItem;
+    valueProp: keyof TItem;
+    listboxCssClass?: string;
+    leftHeader?: import('svelte').Snippet;
+    rightHeader?: import('svelte').Snippet;
+    leftItemTemplate?: import('svelte').Snippet<[any]>;
+    rightItemTemplate?: import('svelte').Snippet<[any]>;
+    [key: string]: any;
+  }
+
+  let {
+    leftItems = $bindable(),
+    selectedLeftItemIndex = $bindable(null),
+    rightItems = $bindable(),
+    selectedRightItemIndex = $bindable(null),
+    labelProp,
+    valueProp,
+    listboxCssClass = '',
+    leftHeader,
+    rightHeader,
+    leftItemTemplate,
+    rightItemTemplate,
+    ...rest
+  }: Props = $props();
 
   interface $$Slots {
     leftHeader: any;
@@ -19,13 +41,16 @@
     rightItemTemplate: { item: TItem };
   }
 
-  $: selectedItemIndex = selectedLeftItemIndex ?? selectedRightItemIndex;
-  $: selectedArray =
+  let selectedItemIndex = $derived(
+    selectedLeftItemIndex ?? selectedRightItemIndex,
+  );
+  let selectedArray = $derived(
     selectedLeftItemIndex !== null
       ? leftItems
       : selectedRightItemIndex !== null
         ? rightItems
-        : null;
+        : null,
+  );
 
   function moveAllToTheLeft() {
     leftItems = [...leftItems, ...rightItems];
@@ -165,13 +190,13 @@
   }
 </script>
 
-<div class="selection-listbox {$$props.class ?? ''}">
-  {#if $$slots['leftHeader'] || $$slots['rightHeader']}
+<div class="selection-listbox {rest.class ?? ''}">
+  {#if leftHeader || rightHeader}
     <div class="column-1">
-      <slot name="leftHeader" />
+      {@render leftHeader?.()}
     </div>
     <div class="column-3">
-      <slot name="rightHeader" />
+      {@render rightHeader?.()}
     </div>
   {/if}
   <Listbox
@@ -185,11 +210,11 @@
     on:keydown={handleLeftListboxKeydown}
     class="column-1 {listboxCssClass}"
   >
-    <svelte:fragment slot="itemTemplate" let:item>
-      <slot name="leftItemTemplate" {item}>
+    {#snippet itemTemplate({ item })}
+      {#if leftItemTemplate}{@render leftItemTemplate({ item })}{:else}
         {item[labelProp]}
-      </slot>
-    </svelte:fragment>
+      {/if}
+    {/snippet}
   </Listbox>
   <SelectionListboxToolbar
     moveUpDisabled={selectedItemIndex === null || selectedItemIndex === 0}
@@ -221,10 +246,10 @@
     on:keydown={handleRightListboxKeydown}
     class="column-3 {listboxCssClass}"
   >
-    <svelte:fragment slot="itemTemplate" let:item>
-      <slot name="rightItemTemplate" {item}>
+    {#snippet itemTemplate({ item })}
+      {#if rightItemTemplate}{@render rightItemTemplate({ item })}{:else}
         {item[labelProp]}
-      </slot>
-    </svelte:fragment>
+      {/if}
+    {/snippet}
   </Listbox>
 </div>

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { CONSTANTS } from 'src/constants';
   import { getExhaustionIconsWithSeverity } from 'src/features/exhaustion/exhaustion';
   import type {
@@ -15,34 +17,32 @@
   import { createEventDispatcher, getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  export let cssClass: string = '';
-  export let radiusClass: PortraitCharmRadiusClass;
-  export let level: number;
-  export let onlyShowOnHover: boolean = false;
-  export let exhaustionConfig: SpecificExhaustionConfig;
-  export let isActiveEffectApplied: boolean;
-
-  let iconsWithSeverities: IconWithSeverity[];
-  $: {
-    iconsWithSeverities = getExhaustionIconsWithSeverity(
-      exhaustionConfig.levels,
-    );
+  interface Props {
+    cssClass?: string;
+    radiusClass: PortraitCharmRadiusClass;
+    level: number;
+    onlyShowOnHover?: boolean;
+    exhaustionConfig: SpecificExhaustionConfig;
+    isActiveEffectApplied: boolean;
   }
 
-  let selectedLevel: IconWithSeverity;
-  let selectedHintKey: string;
-  $: {
-    selectedLevel = iconsWithSeverities[level] ?? iconsWithSeverities.at(-1);
-    selectedHintKey = localize(
-      coalesce(exhaustionConfig.hints[level], 'TIDY5E.ExhaustionLevelTooltip'),
-      { level: level },
-    );
-  }
+  let {
+    cssClass = '',
+    radiusClass,
+    level,
+    onlyShowOnHover = false,
+    exhaustionConfig,
+    isActiveEffectApplied,
+  }: Props = $props();
 
-  let severityClass: string;
-  $: {
-    severityClass = `severity-${selectedLevel?.severity ?? 0}`;
-  }
+  let iconsWithSeverities: IconWithSeverity[] = $state();
+
+  let selectedLevel: IconWithSeverity = $state();
+  let selectedHintKey: string = $state();
+
+  let severityClass: string = $derived(
+    `severity-${selectedLevel?.severity ?? 0}`,
+  );
 
   const localize = FoundryAdapter.localize;
 
@@ -55,9 +55,22 @@
   }>();
 
   let exhaustionOptionWidthRems = 1.25;
-  $: exhaustionExpandedWidth = `${
-    exhaustionOptionWidthRems * (exhaustionConfig.levels + 1) + 2.125
-  }rem`;
+  run(() => {
+    iconsWithSeverities = getExhaustionIconsWithSeverity(
+      exhaustionConfig.levels,
+    );
+  });
+  run(() => {
+    selectedLevel = iconsWithSeverities[level] ?? iconsWithSeverities.at(-1);
+    selectedHintKey = localize(
+      coalesce(exhaustionConfig.hints[level], 'TIDY5E.ExhaustionLevelTooltip'),
+      { level: level },
+    );
+  });
+
+  let exhaustionExpandedWidth = $derived(
+    `${exhaustionOptionWidthRems * (exhaustionConfig.levels + 1) + 2.125}rem`,
+  );
 </script>
 
 <div
@@ -71,7 +84,7 @@
       title={exhaustionConfig.hints[level] ??
         localize('TIDY5E.ExhaustionLevelTooltip', { level: level })}
     >
-      <i class={selectedLevel.iconCssClass ?? ''} />
+      <i class={selectedLevel.iconCssClass ?? ''}></i>
     </div>
     <ul class="exhaustion-levels">
       {#each iconsWithSeverities as _, i}
@@ -87,7 +100,7 @@
               ),
               { level: i },
             )}
-            on:click={() => dispatch('levelSelected', { level: i })}
+            onclick={() => dispatch('levelSelected', { level: i })}
             disabled={!$context.editable || isActiveEffectApplied}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             data-tooltip={isActiveEffectApplied
@@ -133,7 +146,7 @@
     }
 
     &:hover .exhaustion-wrap,
-    .exhaustion-wrap:has(button:focus-visible) {
+    .exhaustion-wrap:has(:global(button:focus-visible)) {
       width: var(--t5e-exhaustion-expanded-width);
     }
 
@@ -178,7 +191,7 @@
           .exhaustion-level-option {
             border-radius: 0;
 
-            &:is(:hover, :focus-visible) {
+            &:is(:global(:hover, :focus-visible)) {
               background: var(--t5e-tertiary-color);
               color: var(--t5e-primary-font-color);
             }

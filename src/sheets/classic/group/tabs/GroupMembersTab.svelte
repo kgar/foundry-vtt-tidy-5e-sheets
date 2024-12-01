@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { CONSTANTS } from 'src/constants';
   import type { GroupSheetClassicContext } from 'src/types/group.types';
   import { getContext, setContext } from 'svelte';
@@ -24,22 +26,27 @@
 
   const localize = FoundryAdapter.localize;
 
-  let searchCriteria: string = '';
+  let searchCriteria: string = $state('');
 
-  $: utilityBarCommands =
-    $context.utilities[tabId]?.utilityToolbarCommands ?? [];
+  let utilityBarCommands = $derived(
+    $context.utilities[tabId]?.utilityToolbarCommands ?? [],
+  );
 
   const memberActorIdsToShow = writable<Set<string> | undefined>(undefined);
   setContext(CONSTANTS.SVELTE_CONTEXT.MEMBER_IDS_TO_SHOW, memberActorIdsToShow);
-  $: $memberActorIdsToShow = FoundryAdapter.searchActors(
-    searchCriteria,
-    $context.system.members.map((m) => m.actor),
-  );
+  run(() => {
+    $memberActorIdsToShow = FoundryAdapter.searchActors(
+      searchCriteria,
+      $context.system.members.map((m) => m.actor),
+    );
+  });
 
-  $: memberSections = GroupSheetSections.configureMemberSections(
-    $context.memberSections,
-    tabId,
-    SheetPreferencesService.getByType($context.actor.type),
+  let memberSections = $derived(
+    GroupSheetSections.configureMemberSections(
+      $context.memberSections,
+      tabId,
+      SheetPreferencesService.getByType($context.actor.type),
+    ),
   );
 
   let aggregateTabs = {
@@ -47,7 +54,7 @@
     skills: localize('DND5E.Skills'),
   } as const;
 
-  let selectedAggregateTab = aggregateTabs.languages;
+  let selectedAggregateTab = $state(aggregateTabs.languages);
 </script>
 
 <UtilityToolbar>

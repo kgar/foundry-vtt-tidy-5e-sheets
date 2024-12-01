@@ -12,13 +12,14 @@
   const context =
     getContext<Readable<ActorSheetContextV1 | ActorSheetContextV2>>('context');
 
-  $: contanimationLevel =
+  let contanimationLevel = $derived(
     FoundryAdapter.getProperty<number | undefined>(
       $context.actor,
       DRAKKENHEIM_CORE_CONSTANTS.CONTAMINATION_LEVEL_FLAG_PROP,
-    ) ?? 0;
+    ) ?? 0,
+  );
 
-  $: levels = Array.fromRange(6, 1);
+  let levels = $derived(Array.fromRange(6, 1));
 
   async function onContaminationLevelChanged(level: number): Promise<void> {
     await $context.actor.update({

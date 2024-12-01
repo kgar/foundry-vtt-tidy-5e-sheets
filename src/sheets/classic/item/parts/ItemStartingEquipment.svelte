@@ -12,7 +12,7 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: appId = $context.document.id;
+  let appId = $derived($context.document.id);
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -26,7 +26,7 @@
         class="configure-starting-equipment inline-icon-button"
         title={localize('DND5E.StartingEquipment.Action.Configure')}
         aria-label={localize('DND5E.StartingEquipment.Action.Configure')}
-        on:click={() =>
+        onclick={() =>
           FoundryAdapter.openStartingEquipmentConfig($context.item)}
         tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
@@ -60,7 +60,7 @@
 </div>
 
 <style lang="scss">
-  span:has(.configure-starting-equipment) {
+  span:has(:global(.configure-starting-equipment)) {
     font-size: 0.875rem;
   }
 

@@ -4,10 +4,16 @@
   import type { ItemLayoutMode } from 'src/types/types';
   import { createEventDispatcher } from 'svelte';
 
-  export let mode: ItemLayoutMode;
-  export let element: HTMLElement['tagName'] = 'li';
+  interface Props {
+    mode: ItemLayoutMode;
+    element?: HTMLElement['tagName'];
+  }
 
-  $: toggleButtonPresentation =
+  let { mode, element = 'li' }: Props = $props();
+
+  const localize = FoundryAdapter.localize;
+  const dispatcher = createEventDispatcher<{ toggle: void }>();
+  let toggleButtonPresentation = $derived(
     mode === 'grid'
       ? {
           title: localize('TIDY5E.ListLayout'),
@@ -18,10 +24,8 @@
             title: localize('TIDY5E.GridLayout'),
             iconClass: 'fas fa-th-large fa-fw toggle-grid',
           }
-        : null;
-
-  const localize = FoundryAdapter.localize;
-  const dispatcher = createEventDispatcher<{ toggle: void }>();
+        : null,
+  );
 </script>
 
 <svelte:element this={element} class="toggle-layout">
@@ -30,10 +34,10 @@
       type="button"
       class="icon-button"
       title={toggleButtonPresentation?.title}
-      on:click={() => dispatcher('toggle')}
+      onclick={() => dispatcher('toggle')}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
-      <i class={toggleButtonPresentation?.iconClass} />
+      <i class={toggleButtonPresentation?.iconClass}></i>
     </button>
   {:else}
     <span title={localize('TIDY5E.LayoutNotSupported')}>😞</span>

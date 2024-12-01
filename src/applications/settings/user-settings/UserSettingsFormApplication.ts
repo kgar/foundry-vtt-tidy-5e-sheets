@@ -1,5 +1,5 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { SvelteComponent } from 'svelte';
+import type { SvelteComponent, mount } from 'svelte';
 import { writable } from 'svelte/store';
 import {
   getCurrentSettings,
@@ -103,7 +103,7 @@ export class UserSettingsFormApplication extends SvelteFormApplicationBase {
 
     debug('Sheet Settings context data', data);
 
-    return new UserSettings({
+    return mount(UserSettings, {
       target: node,
       context: new Map<any, any>([
         ['context', writable(data) satisfies UserSettingsStore],

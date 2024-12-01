@@ -27,8 +27,7 @@
   <article class="setting buttons">
     <button
       type="button"
-      on:click={() =>
-        ($context.exhaustionConfig = getDefaultExhaustionConfig())}
+      onclick={() => ($context.exhaustionConfig = getDefaultExhaustionConfig())}
     >
       {localize('TIDY5E.UseDefault')}
     </button>
@@ -45,7 +44,7 @@
   <article class="setting buttons">
     <button
       type="button"
-      on:click={() =>
+      onclick={() =>
         ($context.vehicleExhaustionConfig = getDefaultExhaustionConfig())}
     >
       {localize('TIDY5E.UseDefault')}

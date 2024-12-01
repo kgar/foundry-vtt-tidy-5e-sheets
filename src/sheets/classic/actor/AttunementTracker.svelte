@@ -8,19 +8,26 @@
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  interface Props {
+    [key: string]: any;
+  }
+
+  let { ...rest }: Props = $props();
 
   let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
   const localize = FoundryAdapter.localize;
 
-  $: attunedItems = $context.actor.items
-    .filter((i: Item5e) => i.system.attuned)
-    .sort((a: Item5e, b: Item5e) =>
-      a.name.localeCompare(b.name, game.i18n.lang),
-    );
+  let attunedItems = $derived(
+    $context.actor.items
+      .filter((i: Item5e) => i.system.attuned)
+      .sort((a: Item5e, b: Item5e) =>
+        a.name.localeCompare(b.name, game.i18n.lang),
+      ),
+  );
 
-  let attunementSummaryTooltip: AttunementSummaryTooltip;
+  let attunementSummaryTooltip: AttunementSummaryTooltip = $state();
 
   function showAttunementSummaryTooltip(
     event: MouseEvent & { currentTarget: EventTarget & HTMLDivElement },
@@ -40,16 +47,16 @@
   />
 </div>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<!-- svelte-ignore a11y-mouse-events-have-key-events -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<!-- svelte-ignore a11y_mouse_events_have_key_events -->
 <div
-  class="attunement-tracker {$$restProps.class ?? ''}"
+  class="attunement-tracker {rest.class ?? ''}"
   class:overattuned={$context.actor.system.attributes.attunement.value >
     $context.actor.system.attributes.attunement.max}
   data-tooltip-direction="UP"
-  on:mouseover={(ev) => showAttunementSummaryTooltip(ev)}
+  onmouseover={(ev) => showAttunementSummaryTooltip(ev)}
 >
-  <i class="attunement-icon fas fa-sun" />
+  <i class="attunement-icon fas fa-sun"></i>
   <span class="attuned-items-current" title={localize('TIDY5E.AttunementItems')}
     >{$context.system.attributes.attunement.value}</span
   >

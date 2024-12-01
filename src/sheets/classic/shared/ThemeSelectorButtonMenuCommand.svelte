@@ -21,7 +21,7 @@
   </label>
   <select
     id="sheet-menu-{idSuffix}"
-    on:change={(ev) => setTheme(ev.currentTarget.value)}
+    onchange={(ev) => setTheme(ev.currentTarget.value)}
     value={$settingStore.colorScheme}
   >
     {#each themes as [key, value]}

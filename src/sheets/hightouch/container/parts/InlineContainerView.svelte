@@ -9,15 +9,27 @@
   import { CONSTANTS } from 'src/constants';
   import VerticalFiligreeGuideline from '../../shared/VerticalFiligreeGuideline.svelte';
 
-  export let container: Item5e;
-  export let containerContents: ContainerContents;
-  export let editable: boolean;
-  export let inlineToggleService: InlineToggleService;
-  export let lockItemQuantity: boolean;
-  export let sheetDocument: any;
-  export let unlocked: boolean = true;
+  interface Props {
+    container: Item5e;
+    containerContents: ContainerContents;
+    editable: boolean;
+    inlineToggleService: InlineToggleService;
+    lockItemQuantity: boolean;
+    sheetDocument: any;
+    unlocked?: boolean;
+  }
 
-  $: inlineToggleServiceStore = inlineToggleService.store;
+  let {
+    container,
+    containerContents,
+    editable,
+    inlineToggleService,
+    lockItemQuantity,
+    sheetDocument,
+    unlocked = true,
+  }: Props = $props();
+
+  let inlineToggleServiceStore = $derived(inlineToggleService.store);
 
   let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
     CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
@@ -40,13 +52,13 @@
   class={!!$itemIdsToShow && !$itemIdsToShow.has(container.id) ? 'hidden' : ''}
 >
   <!-- TODO: Apply proper a11y trappings for this -->
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div class="inline-content-view filigree-guideline-and-contents full-height">
     <VerticalFiligreeGuideline />
     <div
       class="flex-column extra-small-gap flex-1 inline-container-view"
       data-tidy-container-id={container.id}
-      on:drop={onDrop}
+      ondrop={onDrop}
     >
       <ContainerContentsSections
         contents={containerContents.contents}

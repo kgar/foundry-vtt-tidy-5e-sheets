@@ -12,9 +12,9 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: movementLabels = Object.values(
-    $context.item.system.movementLabels,
-  ) as string[];
+  let movementLabels = $derived(
+    Object.values($context.item.system.movementLabels) as string[],
+  );
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -30,11 +30,10 @@
         <button
           class="inline-icon-button hidden-config-button"
           type="button"
-          on:click={() =>
-            FoundryAdapter.renderCreatureTypeConfig($context.item)}
+          onclick={() => FoundryAdapter.renderCreatureTypeConfig($context.item)}
           tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
         >
-          <i class="fas fa-cog" />
+          <i class="fas fa-cog"></i>
         </button>
       {/if}
     </h4>
@@ -48,14 +47,14 @@
           type="button"
           class="inline-icon-button hidden-config-button"
           data-action="movement"
-          on:click={() =>
+          onclick={() =>
             FoundryAdapter.renderMovementSensesConfig(
               $context.item,
               'movement',
             )}
           tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
         >
-          <i class="fas fa-cog" />
+          <i class="fas fa-cog"></i>
         </button>
       {/if}
     </h4>
@@ -73,11 +72,11 @@
           type="button"
           class="inline-icon-button hidden-config-button"
           data-action="senses"
-          on:click={() =>
+          onclick={() =>
             FoundryAdapter.renderMovementSensesConfig($context.item, 'senses')}
           tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
         >
-          <i class="fas fa-cog" />
+          <i class="fas fa-cog"></i>
         </button>
       {/if}
     </h4>

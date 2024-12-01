@@ -4,7 +4,11 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  export let rounded: boolean;
+  interface Props {
+    rounded: boolean;
+  }
+
+  let { rounded }: Props = $props();
 
   let context = getContext<Readable<VehicleSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,

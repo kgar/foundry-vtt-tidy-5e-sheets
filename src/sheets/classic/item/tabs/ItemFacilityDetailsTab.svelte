@@ -14,9 +14,9 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: appId = $context.document.id;
+  let appId = $derived($context.document.id);
 
-  $: source = $context.source;
+  let source = $derived($context.source);
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -374,7 +374,7 @@
                 <button
                   type="button"
                   class="icon-button"
-                  on:click={() =>
+                  onclick={() =>
                     $context.item.sheet.submit({
                       updateData: { 'system.craft': null },
                     })}
@@ -389,7 +389,7 @@
             <document-tags
               name="system.craft.item"
               single
-              on:change={() => $context.item.sheet.submit()}
+              onchange={() => $context.item.sheet.submit()}
             ></document-tags>
           {/if}
         </li>

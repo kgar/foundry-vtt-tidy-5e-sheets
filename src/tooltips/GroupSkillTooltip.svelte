@@ -3,9 +3,13 @@
   import type { GroupSkill } from 'src/types/group.types';
   import { formatAsModifier } from 'src/utils/formatting';
 
-  export let skill: GroupSkill;
+  interface Props {
+    skill: GroupSkill;
+  }
 
-  let tooltip: HTMLElement;
+  let { skill }: Props = $props();
+
+  let tooltip: HTMLElement = $state();
 
   export function getMarkup() {
     return tooltip.outerHTML;

@@ -5,12 +5,23 @@
   import ActiveEffectsMarker from './ActiveEffectsMarker.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
-  export let cssClass: string = '';
-  export let hasChildren = true;
-  export let item: Item5e;
-  export let useActiveEffectsMarker: boolean = true;
+  interface Props {
+    cssClass?: string;
+    hasChildren?: boolean;
+    item: Item5e;
+    useActiveEffectsMarker?: boolean;
+    children?: import('svelte').Snippet;
+  }
 
-  $: hasActiveEffects = !!item.effects?.size;
+  let {
+    cssClass = '',
+    hasChildren = true,
+    item,
+    useActiveEffectsMarker = true,
+    children,
+  }: Props = $props();
+
+  let hasActiveEffects = $derived(!!item.effects?.size);
 
   const dispatcher = createEventDispatcher<{ toggle: Event }>();
 </script>
@@ -19,13 +30,13 @@
 <span
   role="button"
   tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-  on:click={(ev) => dispatcher('toggle', ev)}
+  onclick={(ev) => dispatcher('toggle', ev)}
   class="item-name truncate {cssClass}"
   class:has-children={hasChildren}
-  on:keypress={(ev) => ev.key === 'Enter' && dispatcher('toggle', ev)}
+  onkeypress={(ev) => ev.key === 'Enter' && dispatcher('toggle', ev)}
   class:italic={item.system.identified === false}
 >
-  <slot />
+  {@render children?.()}
 </span>
 {#if useActiveEffectsMarker && $settingStore.showActiveEffectsMarker && hasActiveEffects}
   <ActiveEffectsMarker />

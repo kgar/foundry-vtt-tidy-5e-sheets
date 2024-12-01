@@ -10,20 +10,24 @@
   import ButtonMenuDivider from 'src/components/button-menu/ButtonMenuDivider.svelte';
   import type { ThemeSettingsSheetFunctions } from './ThemeSettingsFormApplication';
 
-  let functions = getContext<ThemeSettingsSheetFunctions>(CONSTANTS.SVELTE_CONTEXT.FUNCTIONS);
-  let context = getContext<Writable<CurrentSettings>>(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
+  let functions = getContext<ThemeSettingsSheetFunctions>(
+    CONSTANTS.SVELTE_CONTEXT.FUNCTIONS,
+  );
+  let context = getContext<Writable<CurrentSettings>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
   const dispatch = createEventDispatcher<{
     selectFile: File;
   }>();
 
-  let fileImportInput: HTMLInputElement;
+  let fileImportInput: HTMLInputElement = $state();
 
   const localize = FoundryAdapter.localize;
 
   function onFileChanged(
     ev: Event & {
       currentTarget: EventTarget & HTMLInputElement;
-    }
+    },
   ) {
     const file = ev.currentTarget.files?.[0];
 
@@ -80,7 +84,7 @@
   class="theme-import-input"
   type="file"
   accept={CONSTANTS.THEME_EXTENSION_WITH_DOT}
-  on:change={onFileChanged}
+  onchange={onFileChanged}
   bind:this={fileImportInput}
 />
 

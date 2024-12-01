@@ -5,16 +5,27 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  export let item: any;
-  export let imgUrlOverride: string | undefined = undefined;
-  export let disabled: boolean = false;
-  export let showDiceIconOnHover: boolean = true;
+  interface Props {
+    item: any;
+    imgUrlOverride?: string | undefined;
+    disabled?: boolean;
+    showDiceIconOnHover?: boolean;
+    afterRollButton?: import('svelte').Snippet;
+  }
+
+  let {
+    item,
+    imgUrlOverride = undefined,
+    disabled = false,
+    showDiceIconOnHover = true,
+    afterRollButton,
+  }: Props = $props();
 
   const showRoll = getContext<Readable<boolean>>(
     CONSTANTS.CONTEXT_GRID_CELL_HOVER,
   );
 
-  let buttonIsFocused = false;
+  let buttonIsFocused = $state(false);
 </script>
 
 <div
@@ -31,24 +42,24 @@
     class:conceal={item.system.identified === false}
     class:hidden={$showRoll}
   >
-    <i class="fas fa-question" />
+    <i class="fas fa-question"></i>
   </div>
   {#if !disabled}
     <button
       type="button"
       class="item-use-button icon-button"
-      on:click={(event) => FoundryAdapter.actorTryUseItem(item, event)}
-      on:contextmenu={(event) =>
+      onclick={(event) => FoundryAdapter.actorTryUseItem(item, event)}
+      oncontextmenu={(event) =>
         FoundryAdapter.onActorItemButtonContextMenu(item, { event })}
-      on:focusin={() => (buttonIsFocused = true)}
-      on:focusout={() => (buttonIsFocused = false)}
+      onfocusin={() => (buttonIsFocused = true)}
+      onfocusout={() => (buttonIsFocused = false)}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
-      <i class="fa fa-dice-d20" class:invisible={!showDiceIconOnHover} />
+      <i class="fa fa-dice-d20" class:invisible={!showDiceIconOnHover}></i>
     </button>
   {/if}
-  <slot name="after-roll-button" />
+  {@render afterRollButton?.()}
 </div>
 
 <style lang="scss">
@@ -78,7 +89,7 @@
         }
       }
 
-      &:is(:hover, :focus-visible) i {
+      &:is(:global(:hover, :focus-visible)) i {
         color: var(--t5e-primary-font-color);
       }
     }

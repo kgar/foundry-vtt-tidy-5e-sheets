@@ -6,11 +6,17 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
 
-  export let chatData: ItemChatData;
-  export let item: Item5e;
+  interface Props {
+    chatData: ItemChatData;
+    item: Item5e;
+  }
 
-  $: itemSummaryCommands = ItemSummaryRuntime.getItemSummaryCommands(item);
-  $: concealDetails = FoundryAdapter.concealDetails(item);
+  let { chatData, item }: Props = $props();
+
+  let itemSummaryCommands = $derived(
+    ItemSummaryRuntime.getItemSummaryCommands(item),
+  );
+  let concealDetails = $derived(FoundryAdapter.concealDetails(item));
 </script>
 
 <div

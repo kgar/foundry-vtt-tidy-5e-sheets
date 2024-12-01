@@ -13,12 +13,18 @@
   import { coalesce } from 'src/utils/formatting';
   import { TidyHooks } from 'src/foundry/TidyHooks';
 
-  export let containerPanelItems: ContainerPanelItemContext[] = [];
-  export let searchCriteria: string = '';
+  interface Props {
+    containerPanelItems?: ContainerPanelItemContext[];
+    searchCriteria?: string;
+  }
 
-  $: visibleContainersIdsSubset = FoundryAdapter.searchItems(
-    searchCriteria,
-    containerPanelItems.map((c) => c.container),
+  let { containerPanelItems = [], searchCriteria = '' }: Props = $props();
+
+  let visibleContainersIdsSubset = $derived(
+    FoundryAdapter.searchItems(
+      searchCriteria,
+      containerPanelItems.map((c) => c.container),
+    ),
   );
 
   let card: Writable<ItemCardStore> | undefined = getContext<
@@ -63,13 +69,13 @@
 
 <ul class="containers">
   {#each containerPanelItems as { container, ...capacity } (container.id)}
-    <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+    <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
     <li
       draggable="true"
       data-item-id={container.id}
-      on:dragstart={(ev) => handleDragStart(ev, container)}
-      on:mouseenter={(ev) => onMouseEnter(ev, container)}
-      on:mouseleave={(ev) => onMouseLeave(ev, container)}
+      ondragstart={(ev) => handleDragStart(ev, container)}
+      onmouseenter={(ev) => onMouseEnter(ev, container)}
+      onmouseleave={(ev) => onMouseLeave(ev, container)}
       class="container"
       title={container.system.identified === false
         ? coalesce(
@@ -83,7 +89,7 @@
       <button
         type="button"
         class="container-image-button transparent-button"
-        on:click={() => container.sheet.render(true)}
+        onclick={() => container.sheet.render(true)}
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
         data-context-menu-document-uuid={container.uuid}
         disabled={!FoundryAdapter.userIsGm() && !container.isOwner}
@@ -99,7 +105,7 @@
             class="unidentified-glyph"
             class:conceal={container.system.identified === false}
           >
-            <i class="fas fa-question" />
+            <i class="fas fa-question"></i>
           </div>
         </div>
       </button>

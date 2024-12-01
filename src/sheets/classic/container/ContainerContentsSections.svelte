@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import TidyTable from 'src/components/table/TidyTable.svelte';
   import TidyTableHeaderCell from 'src/components/table/TidyTableHeaderCell.svelte';
   import TidyTableHeaderRow from 'src/components/table/TidyTableHeaderRow.svelte';
@@ -26,23 +28,40 @@
   import ItemUses from 'src/components/item-list/ItemUses.svelte';
   import ItemAddUses from 'src/components/item-list/ItemAddUses.svelte';
 
-  export let contents: InventorySection[];
-  export let container: Item5e;
-  export let editable: boolean;
-  export let itemContext: Record<string, ContainerItemContext>;
-  export let inlineToggleService: InlineToggleService;
-  export let lockItemQuantity: boolean;
-  /** The sheet which is rendering this recursive set of container contents. */
-  export let sheetDocument: Actor5e | Item5e;
-  export let unlocked: boolean = true;
+  interface Props {
+    contents: InventorySection[];
+    container: Item5e;
+    editable: boolean;
+    itemContext: Record<string, ContainerItemContext>;
+    inlineToggleService: InlineToggleService;
+    lockItemQuantity: boolean;
+    /** The sheet which is rendering this recursive set of container contents. */
+    sheetDocument: Actor5e | Item5e;
+    unlocked?: boolean;
+  }
+
+  let {
+    contents,
+    container,
+    editable,
+    itemContext,
+    inlineToggleService,
+    lockItemQuantity,
+    sheetDocument,
+    unlocked = true,
+  }: Props = $props();
 
   const tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
-  $: configuredContents = SheetSections.configureInventory(
-    contents.filter((i) => i.items.length),
-    tabId,
-    SheetPreferencesService.getByType(sheetDocument.type),
-    TidyFlags.sectionConfig.get(container)?.[CONSTANTS.TAB_CONTAINER_CONTENTS],
+  let configuredContents = $derived(
+    SheetSections.configureInventory(
+      contents.filter((i) => i.items.length),
+      tabId,
+      SheetPreferencesService.getByType(sheetDocument.type),
+      TidyFlags.sectionConfig.get(container)?.[
+        CONSTANTS.TAB_CONTAINER_CONTENTS
+      ],
+    ),
   );
 
   let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
@@ -52,9 +71,9 @@
   let classicControls: {
     component: Component<any>;
     getProps: (item: Item5e) => any;
-  }[] = [];
+  }[] = $state([]);
 
-  $: {
+  run(() => {
     classicControls = [];
 
     classicControls.push({
@@ -71,19 +90,25 @@
         }),
       });
     }
-  }
+  });
 
   const weightUnit = FoundryAdapter.getWeightUnit();
 
   const classicControlWidthRems = 1.5;
 
-  $: useClassicControls = FoundryAdapter.useClassicControls(container);
+  let useClassicControls = $derived(
+    FoundryAdapter.useClassicControls(container),
+  );
 
-  $: classicControlsWidth = useClassicControls
-    ? `/* Controls */ ${classicControlWidthRems * classicControls.length}rem`
-    : '';
+  let classicControlsWidth = $derived(
+    useClassicControls
+      ? `/* Controls */ ${classicControlWidthRems * classicControls.length}rem`
+      : '',
+  );
 
-  $: gridTemplateColumns = `/* Name */ 1fr /* Uses */ 3.125rem /* Weight */ 3rem /* Quantity */ 3rem ${classicControlsWidth}`;
+  let gridTemplateColumns = $derived(
+    `/* Name */ 1fr /* Uses */ 3.125rem /* Weight */ 3rem /* Quantity */ 3rem ${classicControlsWidth}`,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -96,13 +121,13 @@
         data-custom-section={section.custom ? true : null}
         {gridTemplateColumns}
       >
-        <svelte:fragment slot="header">
+        {#snippet header()}
           <TidyTableHeaderRow>
             <TidyTableHeaderCell primary={true}>
               {localize(section.label)} ({section.items.length})
             </TidyTableHeaderCell>
             <TidyTableHeaderCell title={localize('DND5E.Charges')}>
-              <i class="fas fa-bolt" />
+              <i class="fas fa-bolt"></i>
             </TidyTableHeaderCell>
             <TidyTableHeaderCell>
               {localize('DND5E.Weight')}
@@ -114,8 +139,8 @@
               <TidyTableHeaderCell></TidyTableHeaderCell>
             {/if}
           </TidyTableHeaderRow>
-        </svelte:fragment>
-        <svelte:fragment slot="body">
+        {/snippet}
+        {#snippet body()}
           {#each section.items as item (item.id)}
             {@const ctx = itemContext[item.id]}
             {@const weight = ctx?.totalWeight ?? item.system.weight.value}
@@ -127,93 +152,93 @@
                 item,
                 itemContext[item.id]?.attunement,
               )}
-              let:toggleSummary
               contextMenu={{
                 type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
                 uuid: item.uuid,
               }}
             >
-              <TidyTableCell class="flex-row extra-small-gap">
-                <ItemUseButton
-                  disabled={!FoundryAdapter.canUseItem(item)}
-                  {item}
-                />
-                {#if ('containerContents' in ctx && !!ctx.containerContents) || item?.system.activities?.contents.length > 1}
-                  <InlineToggleControl
-                    entityId={item.id}
-                    {inlineToggleService}
+              {#snippet children({ toggleSummary })}
+                <TidyTableCell class="flex-row extra-small-gap">
+                  <ItemUseButton
+                    disabled={!FoundryAdapter.canUseItem(item)}
+                    {item}
                   />
-                {/if}
-                <!-- This is generally what we want in Tidy Tables / Item Table V2; consider breaking off ItemNameV2 to propagate and replace the old ItemName gradually. -->
-                <ItemName
-                  on:toggle={() => toggleSummary()}
-                  cssClass="align-self-stretch flex-row align-items-center"
-                  {item}
-                >
-                  <span
-                    class="truncate"
-                    data-tidy-item-name={item.name}
-                    data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
-                    >{item.name}</span
-                  >
-                </ItemName>
-
-                {#if !FoundryAdapter.concealDetails(item)}
-                  {@const attunementContext =
-                    FoundryAdapter.getAttunementContext(item)}
-
-                  {#if attunementContext}
-                    <i
-                      style="margin-left: auto; align-self: center;"
-                      class="item-state-icon fas {attunementContext.icon} {attunementContext.cls} fa-fw"
-                      title={localize(attunementContext.title)}
+                  {#if ('containerContents' in ctx && !!ctx.containerContents) || item?.system.activities?.contents.length > 1}
+                    <InlineToggleControl
+                      entityId={item.id}
+                      {inlineToggleService}
                     />
                   {/if}
-                {/if}
-                {#if !!ctx.favoriteId}
-                  <InlineFavoriteIcon />
-                {/if}
-              </TidyTableCell>
-              <TidyTableCell>
-                {#if item.hasLimitedUses}
-                  <ItemUses {item} />
-                {:else}
-                  <ItemAddUses {item} />
-                {/if}
-              </TidyTableCell>
-              <TidyTableCell
-                title={localize('TIDY5E.Inventory.Weight.Text', {
-                  weight: weight,
-                  weightUnit: weightUnit,
-                })}
-              >
-                <span class="truncate">
-                  {weight}
-                </span>
-              </TidyTableCell>
-              <TidyTableCell>
-                <!-- Qty -->
-                <TextInput
-                  document={item}
-                  field="system.quantity"
-                  value={item.system.quantity}
-                  selectOnFocus={true}
-                  disabled={!editable || lockItemQuantity}
-                  placeholder="0"
-                  allowDeltaChanges={true}
-                />
-              </TidyTableCell>
-              {#if editable && useClassicControls}
-                <TidyTableCell>
-                  {#each classicControls as control}
-                    <svelte:component
-                      this={control.component}
-                      {...control.getProps(item)}
-                      class="tidy-table-control"
-                    ></svelte:component>
-                  {/each}
+                  <!-- This is generally what we want in Tidy Tables / Item Table V2; consider breaking off ItemNameV2 to propagate and replace the old ItemName gradually. -->
+                  <ItemName
+                    on:toggle={() => toggleSummary()}
+                    cssClass="align-self-stretch flex-row align-items-center"
+                    {item}
+                  >
+                    <span
+                      class="truncate"
+                      data-tidy-item-name={item.name}
+                      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
+                      >{item.name}</span
+                    >
+                  </ItemName>
+
+                  {#if !FoundryAdapter.concealDetails(item)}
+                    {@const attunementContext =
+                      FoundryAdapter.getAttunementContext(item)}
+
+                    {#if attunementContext}
+                      <i
+                        style="margin-left: auto; align-self: center;"
+                        class="item-state-icon fas {attunementContext.icon} {attunementContext.cls} fa-fw"
+                        title={localize(attunementContext.title)}
+                      ></i>
+                    {/if}
+                  {/if}
+                  {#if !!ctx.favoriteId}
+                    <InlineFavoriteIcon />
+                  {/if}
                 </TidyTableCell>
-              {/if}
+                <TidyTableCell>
+                  {#if item.hasLimitedUses}
+                    <ItemUses {item} />
+                  {:else}
+                    <ItemAddUses {item} />
+                  {/if}
+                </TidyTableCell>
+                <TidyTableCell
+                  title={localize('TIDY5E.Inventory.Weight.Text', {
+                    weight: weight,
+                    weightUnit: weightUnit,
+                  })}
+                >
+                  <span class="truncate">
+                    {weight}
+                  </span>
+                </TidyTableCell>
+                <TidyTableCell>
+                  <!-- Qty -->
+                  <TextInput
+                    document={item}
+                    field="system.quantity"
+                    value={item.system.quantity}
+                    selectOnFocus={true}
+                    disabled={!editable || lockItemQuantity}
+                    placeholder="0"
+                    allowDeltaChanges={true}
+                  />
+                </TidyTableCell>
+                {#if editable && useClassicControls}
+                  <TidyTableCell>
+                    {#each classicControls as control}
+                      <control.component
+                        {...control.getProps(item)}
+                        class="tidy-table-control"
+                      ></control.component>
+                    {/each}
+                  </TidyTableCell>
+                {/if}
+              {/snippet}
             </ItemTableRowV2>
             {#if 'containerContents' in ctx && !!ctx.containerContents}
               <InlineContainerView
@@ -229,7 +254,7 @@
               <InlineActivitiesList {item} {inlineToggleService} />
             {/if}
           {/each}
-        </svelte:fragment>
+        {/snippet}
       </TidyTable>
     </section>
   {/if}

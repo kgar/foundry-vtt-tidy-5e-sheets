@@ -2,9 +2,13 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Item5e } from 'src/types/item.types';
 
-  export let attunedItems: Item5e[] = [];
+  interface Props {
+    attunedItems?: Item5e[];
+  }
 
-  let tooltip: HTMLElement;
+  let { attunedItems = [] }: Props = $props();
+
+  let tooltip: HTMLElement = $state();
 
   export function getMarkup() {
     return tooltip.outerHTML;
@@ -19,7 +23,10 @@
   <ul>
     {#each attunedItems as item}
       <li class="flex-row extra-small-gap align-items-center">
-        <div class="item-image" style="background-image: url('{item.img}')"></div>
+        <div
+          class="item-image"
+          style="background-image: url('{item.img}')"
+        ></div>
         <div class="item-name truncate">{item.name}</div>
       </li>
     {/each}

@@ -1,4 +1,4 @@
-import type { SvelteComponent } from 'svelte';
+import type { SvelteComponent, mount } from 'svelte';
 import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
 import MaxPreparedSpellsConfig from './MaxPreparedSpellsConfig.svelte';
 import type { Actor5e, MaxPreparedSpellFormula } from 'src/types/types';
@@ -33,7 +33,7 @@ export class MaxPreparedSpellsConfigFormApplication extends SvelteFormApplicatio
   createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
     this.context.set(this.getData());
 
-    return new MaxPreparedSpellsConfig({
+    return mount(MaxPreparedSpellsConfig, {
       target: node,
       context: new Map<any, any>([
         ['context', this.context],

@@ -9,19 +9,23 @@
   import type { Readable } from 'svelte/store';
   import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<ItemSheetContext | ContainerSheetClassicContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getContext<
+    Readable<ItemSheetContext | ContainerSheetClassicContext>
+  >(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
 
   const localize = FoundryAdapter.localize;
 
-  $: equipLabelWidthCh = Math.max(
-    localize('DND5E.Equipped').length,
-    localize('DND5E.Unequipped').length,
+  let equipLabelWidthCh = $derived(
+    Math.max(
+      localize('DND5E.Equipped').length,
+      localize('DND5E.Unequipped').length,
+    ),
   );
-  $: identifiedLabelWidthCh = Math.max(
-    localize('DND5E.Identified').length,
-    localize('DND5E.Unidentified.Title').length,
+  let identifiedLabelWidthCh = $derived(
+    Math.max(
+      localize('DND5E.Identified').length,
+      localize('DND5E.Unidentified.Title').length,
+    ),
   );
 </script>
 

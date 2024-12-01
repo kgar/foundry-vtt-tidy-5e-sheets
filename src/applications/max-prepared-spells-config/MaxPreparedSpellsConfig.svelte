@@ -32,7 +32,7 @@
         <button
           type="button"
           class="highlight-on-hover"
-          on:click={() => {
+          onclick={() => {
             $context.maxPreparedSpells = formula.value;
           }}>{localize(formula.label)}</button
         >
@@ -47,7 +47,7 @@
     </p>
   </div>
   <button type="submit">
-    <i class="far fa-save" />
+    <i class="far fa-save"></i>
     {localize('Save')}
   </button>
 </section>

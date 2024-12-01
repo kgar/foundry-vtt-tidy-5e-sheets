@@ -13,11 +13,21 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  export let inspired: boolean;
-  export let cssClass: string = '';
-  export let radiusClass: PortraitCharmRadiusClass;
-  export let onlyShowOnHover: boolean = false;
-  export let animate: boolean = true;
+  interface Props {
+    inspired: boolean;
+    cssClass?: string;
+    radiusClass: PortraitCharmRadiusClass;
+    onlyShowOnHover?: boolean;
+    animate?: boolean;
+  }
+
+  let {
+    inspired,
+    cssClass = '',
+    radiusClass,
+    onlyShowOnHover = false,
+    animate = true,
+  }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -37,7 +47,7 @@
     checked={inspired}
     disabled={!$context.editable}
   >
-    <i class="inspiration-icon fas fa-dice-d20" class:animate />
+    <i class="inspiration-icon fas fa-dice-d20" class:animate></i>
   </Checkbox>
 </div>
 

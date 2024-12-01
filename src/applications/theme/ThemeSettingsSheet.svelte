@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { CurrentSettings } from 'src/settings/settings';
   import { getContext, onDestroy } from 'svelte';
@@ -20,8 +22,12 @@
   import { getSingleFileFromDropEvent, readFileAsText } from 'src/utils/file';
   import { CONSTANTS } from 'src/constants';
 
-  export let themeableColors: ThemeColorSetting[];
-  $: {
+  interface Props {
+    themeableColors: ThemeColorSetting[];
+  }
+
+  let { themeableColors }: Props = $props();
+  run(() => {
     if ($context.colorPickerEnabled) {
       themeableColors.forEach((color) =>
         trySetRootCssVariable(
@@ -34,7 +40,7 @@
       clearTidy5eRootCssVariables();
       applyCurrentTheme(false);
     }
-  }
+  });
 
   let context = getContext<Writable<CurrentSettings>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -100,7 +106,7 @@
   });
 </script>
 
-<section class="theme-settings-wrapper" on:drop={onDrop} aria-label="dropzone">
+<section class="theme-settings-wrapper" ondrop={onDrop} aria-label="dropzone">
   <div class="theme-settings-form scroll-container">
     <h2 class="header flex-row justify-content-space-between">
       {localize('TIDY5E.ThemeSettings.Sheet.header')}
@@ -139,7 +145,7 @@
   </div>
   <div class="button-bar">
     <button type="submit" class="save-changes-btn">
-      <i class="fas fa-save" />
+      <i class="fas fa-save"></i>
       {localize('TIDY5E.SaveChanges')}
     </button>
   </div>

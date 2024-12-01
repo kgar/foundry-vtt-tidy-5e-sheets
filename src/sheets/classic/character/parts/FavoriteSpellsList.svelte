@@ -29,8 +29,12 @@
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
-  export let section: SpellbookSection;
-  export let spells: any[];
+  interface Props {
+    section: SpellbookSection;
+    spells: any[];
+  }
+
+  let { section, spells }: Props = $props();
 
   let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
     CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
@@ -44,7 +48,7 @@
     key={section.key}
     data-custom-section={section.custom ? true : null}
   >
-    <svelte:fragment slot="header">
+    {#snippet header()}
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>
           {#if section.dataset['preparation.mode'] === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED && section.dataset.level > 0}
@@ -64,7 +68,7 @@
           baseWidth="4.375rem"
           title={localize('DND5E.SpellComponents')}
         >
-          <i class="fas fa-mortar-pestle" />
+          <i class="fas fa-mortar-pestle"></i>
         </ItemTableColumn>
         <ItemTableColumn
           title={localize('DND5E.SpellUsage')}
@@ -73,8 +77,8 @@
           {localize('DND5E.Usage')}
         </ItemTableColumn>
       </ItemTableHeaderRow>
-    </svelte:fragment>
-    <svelte:fragment slot="body">
+    {/snippet}
+    {#snippet body()}
       {#each spells as spell}
         {@const ctx = $context.itemContext[spell.id]}
         {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($context, spell)}
@@ -86,59 +90,63 @@
             type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
             uuid: spell.uuid,
           }}
-          let:toggleSummary
           cssClass={FoundryAdapter.getSpellRowClasses(spell)}
           hidden={!!$itemIdsToShow && !$itemIdsToShow.has(spell.id)}
           favoriteId={ctx.favoriteId}
         >
-          <ItemTableCell primary={true}>
-            <ItemUseButton
-              disabled={!$context.editable}
-              item={spell}
-              imgUrlOverride={spellImgUrl}
-            >
-              <svelte:fragment slot="after-roll-button">
-                <ConcentrationOverlayIcon {ctx} />
-              </svelte:fragment>
-            </ItemUseButton>
-            {#if spell?.system.activities?.contents.length > 1}
-              <InlineToggleControl entityId={spell.id} {inlineToggleService} />
-            {/if}
-            <ItemName
-              on:toggle={() => toggleSummary($context.actor)}
-              item={spell}
-            >
-              <span
-                class="truncate"
-                data-tidy-item-name={spell.name}
-                data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
-                >{spell.name}</span
+          {#snippet children({ toggleSummary })}
+            <ItemTableCell primary={true}>
+              <ItemUseButton
+                disabled={!$context.editable}
+                item={spell}
+                imgUrlOverride={spellImgUrl}
               >
-            </ItemName>
-          </ItemTableCell>
-          {#if spell.system.uses.per}
-            <ItemTableCell baseWidth="3.125rem">
-              <ItemUses item={spell} />
+                {#snippet afterRollButton()}
+                  <ConcentrationOverlayIcon {ctx} />
+                {/snippet}
+              </ItemUseButton>
+              {#if spell?.system.activities?.contents.length > 1}
+                <InlineToggleControl
+                  entityId={spell.id}
+                  {inlineToggleService}
+                />
+              {/if}
+              <ItemName
+                on:toggle={() => toggleSummary($context.actor)}
+                item={spell}
+              >
+                <span
+                  class="truncate"
+                  data-tidy-item-name={spell.name}
+                  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
+                  >{spell.name}</span
+                >
+              </ItemName>
             </ItemTableCell>
-          {/if}
-          <ItemTableCell baseWidth="4.375rem" cssClass="no-gap">
-            <SpellComponents
-              {spell}
-              spellComponentLabels={$context.spellComponentLabels}
-            />
-          </ItemTableCell>
-          <ItemTableCell
-            baseWidth="7.5rem"
-            title={localize('DND5E.SpellUsage')}
-          >
-            {spell.labels.activation}
-          </ItemTableCell>
+            {#if spell.system.uses.per}
+              <ItemTableCell baseWidth="3.125rem">
+                <ItemUses item={spell} />
+              </ItemTableCell>
+            {/if}
+            <ItemTableCell baseWidth="4.375rem" cssClass="no-gap">
+              <SpellComponents
+                {spell}
+                spellComponentLabels={$context.spellComponentLabels}
+              />
+            </ItemTableCell>
+            <ItemTableCell
+              baseWidth="7.5rem"
+              title={localize('DND5E.SpellUsage')}
+            >
+              {spell.labels.activation}
+            </ItemTableCell>
+          {/snippet}
         </ItemTableRow>
         {#if spell?.system.activities?.contents.length > 1}
           <InlineActivitiesList item={spell} {inlineToggleService} />
         {/if}
       {/each}
-    </svelte:fragment>
+    {/snippet}
   </ItemTable>
 </section>
 

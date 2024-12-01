@@ -6,11 +6,16 @@
 
   let stats = getContext<Readable<SheetStats>>(CONSTANTS.SVELTE_CONTEXT.STATS);
 
-  export let andOnValueChange: unknown | null = null;
+  interface Props {
+    andOnValueChange?: unknown | null;
+    children?: import('svelte').Snippet;
+  }
+
+  let { andOnValueChange = null, children }: Props = $props();
 </script>
 
 {#key $stats.lastSubmissionTime}
   {#key andOnValueChange}
-    <slot />
+    {@render children?.()}
   {/key}
 {/key}

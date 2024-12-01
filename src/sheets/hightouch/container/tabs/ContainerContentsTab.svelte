@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ContainerSheetHightouchContext } from 'src/types/item.types';
@@ -22,28 +24,31 @@
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
 
-  let searchCriteria = '';
+  let searchCriteria = $state('');
 
-  $: allItems = $context.containerContents.contents.flatMap((x) => x.items);
+  let allItems = $derived(
+    $context.containerContents.contents.flatMap((x) => x.items),
+  );
 
   const itemIdsToShow = writable<Set<string> | undefined>(undefined);
   setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
 
-  $: {
+  run(() => {
     $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
       itemContext: $context.itemContext,
       sections: $context.containerContents.contents,
       tabId: tabId,
     });
-  }
+  });
 
   const localize = FoundryAdapter.localize;
 
-  $: utilityBarCommands =
-    $context.utilities[tabId]?.utilityToolbarCommands ?? [];
+  let utilityBarCommands = $derived(
+    $context.utilities[tabId]?.utilityToolbarCommands ?? [],
+  );
 
-  $: menuOpen = false;
+  let menuOpen = $derived(false);
 </script>
 
 <section
@@ -52,7 +57,7 @@
 >
   <ButtonWithOptionPanel class="icon-button">
     <i class="fas fa-angles-down fa-fw"></i>
-    <svelte:fragment slot="options">
+    {#snippet options()}
       <h4>{localize('TIDY5E.ExpandCollapseMenu.OptionTitle')}</h4>
       <label
         for="{$context.document.id}-expand-collapse-behavior-top-level-sections"
@@ -68,7 +73,7 @@
         />
         {localize('TIDY5E.ExpandCollapseMenu.OptionAllSections')}
       </label>
-    </svelte:fragment>
+    {/snippet}
   </ButtonWithOptionPanel>
 
   <Search bind:searchCriteria />
@@ -87,7 +92,7 @@
 
   <ButtonWithOptionPanel class="icon-button" anchor="right">
     <i class="fas fa-arrow-down-a-z fa-fw"></i>
-    <svelte:fragment slot="options">
+    {#snippet options()}
       <label for="{$context.document.id}-sort-option-alphabetical">
         <input
           type="radio"
@@ -112,7 +117,7 @@
         />
         {localize('TIDY5E.SortMenu.OptionEquipped')}
       </label>
-    </svelte:fragment>
+    {/snippet}
   </ButtonWithOptionPanel>
 
   <a class="button icon-button">

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import {
@@ -41,17 +43,31 @@
   let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
-  export let section: SpellbookSection;
-  export let spells: any[];
-  export let allowFavorites: boolean = true;
-  export let cssClass: string | null = null;
 
-  // TODO: replace this with column specification array default and then allow the caller to customize the table.
-  export let includeSchool: boolean = true;
-  export let includeRange: boolean = true;
-  export let spellComponentsBaseWidth: string = '3.75rem';
-  export let targetBaseWidth: string = '7.5rem';
-  export let usageBaseWidth: string = '7.5rem';
+  interface Props {
+    section: SpellbookSection;
+    spells: any[];
+    allowFavorites?: boolean;
+    cssClass?: string | null;
+    // TODO: replace this with column specification array default and then allow the caller to customize the table.
+    includeSchool?: boolean;
+    includeRange?: boolean;
+    spellComponentsBaseWidth?: string;
+    targetBaseWidth?: string;
+    usageBaseWidth?: string;
+  }
+
+  let {
+    section,
+    spells,
+    allowFavorites = true,
+    cssClass = null,
+    includeSchool = true,
+    includeRange = true,
+    spellComponentsBaseWidth = '3.75rem',
+    targetBaseWidth = '7.5rem',
+    usageBaseWidth = '7.5rem',
+  }: Props = $props();
 
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
@@ -63,8 +79,10 @@
 
   var spellSchoolBaseWidth = '2rem';
 
-  let controls: RenderableClassicControl<{ item: Item5e; ctx: any }>[] = [];
-  $: {
+  let controls: RenderableClassicControl<{ item: Item5e; ctx: any }>[] = $state(
+    [],
+  );
+  run(() => {
     controls = [
       {
         component: SpellPrepareControl,
@@ -110,11 +128,11 @@
         }),
       });
     }
-  }
+  });
 
   const localize = FoundryAdapter.localize;
 
-  $: classicControlsColumnWidth = `${controls.length * 1.25}rem`;
+  let classicControlsColumnWidth = $derived(`${controls.length * 1.25}rem`);
 
   declareLocation('spellbook-list-view');
 </script>
@@ -124,7 +142,7 @@
     key={section.key}
     data-custom-section={section.custom ? true : null}
   >
-    <svelte:fragment slot="header">
+    {#snippet header()}
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>
           <span class="spell-primary-column-label">
@@ -138,14 +156,14 @@
           baseWidth={spellComponentsBaseWidth}
           title={localize('DND5E.SpellComponents')}
         >
-          <i class="fas fa-mortar-pestle" />
+          <i class="fas fa-mortar-pestle"></i>
         </ItemTableColumn>
         {#if includeSchool}
           <ItemTableColumn
             baseWidth={spellSchoolBaseWidth}
             title={localize('DND5E.SpellSchool')}
           >
-            <i class="fas fa-hat-wizard" />
+            <i class="fas fa-hat-wizard"></i>
           </ItemTableColumn>
         {/if}
         <ItemTableColumn
@@ -169,8 +187,8 @@
           <ItemTableColumn baseWidth={classicControlsColumnWidth} />
         {/if}
       </ItemTableHeaderRow>
-    </svelte:fragment>
-    <svelte:fragment slot="body">
+    {/snippet}
+    {#snippet body()}
       {#each spells as spell (spell.id)}
         {@const ctx = $context.itemContext[spell.id]}
         {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($context, spell)}
@@ -182,101 +200,111 @@
             type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
             uuid: spell.uuid,
           }}
-          let:toggleSummary
           cssClass={FoundryAdapter.getSpellRowClasses(spell)}
           hidden={!!$itemIdsToShow && !$itemIdsToShow.has(spell.id)}
         >
-          <ItemTableCell primary={true}>
-            <ItemUseButton
-              disabled={!$context.editable}
-              item={spell}
-              imgUrlOverride={spellImgUrl}
-              showDiceIconOnHover={!ctx.concentration}
-            >
-              <svelte:fragment slot="after-roll-button">
-                <ConcentrationOverlayIcon {ctx} />
-              </svelte:fragment>
-            </ItemUseButton>
-            {#if spell?.system.activities?.contents.length > 1}
-              <InlineToggleControl entityId={spell.id} {inlineToggleService} />
-            {/if}
-            <ItemName
-              on:toggle={() => toggleSummary($context.actor)}
-              item={spell}
-            >
-              <span
-                class="truncate"
-                data-tidy-item-name={spell.name}
-                data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
-                >{spell.name}</span
+          {#snippet children({ toggleSummary })}
+            <ItemTableCell primary={true}>
+              <ItemUseButton
+                disabled={!$context.editable}
+                item={spell}
+                imgUrlOverride={spellImgUrl}
+                showDiceIconOnHover={!ctx.concentration}
               >
-            </ItemName>
-          </ItemTableCell>
-          {#if spell.hasLimitedUses}
-            <ItemTableCell baseWidth="3.125rem">
-              <ItemUses item={spell} />
-            </ItemTableCell>
-          {:else if (spell.system.linkedActivity?.uses?.max ?? 0) > 0}
-            <ItemTableCell baseWidth="3.125rem">
-              <ActivityUses activity={spell.system.linkedActivity} />
-            </ItemTableCell>
-          {/if}
-          {#if allowFavorites && $settingStore.showIconsNextToTheItemName && 'favoriteId' in ctx && !!ctx.favoriteId}
-            <InlineFavoriteIcon />
-          {/if}
-          <ItemTableCell baseWidth={spellComponentsBaseWidth} cssClass="no-gap">
-            <SpellComponents
-              {spell}
-              spellComponentLabels={$context.spellComponentLabels}
-            />
-          </ItemTableCell>
-          {#if includeSchool}
-            {@const icon = SpellSchool.getIcon(spell.system.school)}
-            <ItemTableCell
-              baseWidth={spellSchoolBaseWidth}
-              title={spell.labels.school ?? ''}
-            >
-              {#if typeof icon === 'string'}
-                <i class="spell-school-icon {icon}"></i>
-              {:else}
-                <Dnd5eIcon
-                  --icon-fill="var(--t5e-secondary-color)"
-                  --icon-width="1rem"
-                  --icon-height="1rem"
-                  src={icon.iconSrc}
+                {#snippet afterRollButton()}
+                  <ConcentrationOverlayIcon {ctx} />
+                {/snippet}
+              </ItemUseButton>
+              {#if spell?.system.activities?.contents.length > 1}
+                <InlineToggleControl
+                  entityId={spell.id}
+                  {inlineToggleService}
                 />
               {/if}
+              <ItemName
+                on:toggle={() => toggleSummary($context.actor)}
+                item={spell}
+              >
+                <span
+                  class="truncate"
+                  data-tidy-item-name={spell.name}
+                  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
+                  >{spell.name}</span
+                >
+              </ItemName>
             </ItemTableCell>
-          {/if}
-          <ItemTableCell
-            baseWidth={targetBaseWidth}
-            title="{localize('DND5E.Target')}: {spell.labels.target}"
-          >
-            {#if spell.labels.target}
-              {spell.labels.target}
-            {:else}
-              {localize('DND5E.None')}
+            {#if spell.hasLimitedUses}
+              <ItemTableCell baseWidth="3.125rem">
+                <ItemUses item={spell} />
+              </ItemTableCell>
+            {:else if (spell.system.linkedActivity?.uses?.max ?? 0) > 0}
+              <ItemTableCell baseWidth="3.125rem">
+                <ActivityUses activity={spell.system.linkedActivity} />
+              </ItemTableCell>
             {/if}
-          </ItemTableCell>
-          {#if includeRange}
+            {#if allowFavorites && $settingStore.showIconsNextToTheItemName && 'favoriteId' in ctx && !!ctx.favoriteId}
+              <InlineFavoriteIcon />
+            {/if}
             <ItemTableCell
-              baseWidth="4.375rem"
-              title="{localize('DND5E.Range')}: {spell.labels.range}"
+              baseWidth={spellComponentsBaseWidth}
+              cssClass="no-gap"
             >
-              {spell.labels.range}
+              <SpellComponents
+                {spell}
+                spellComponentLabels={$context.spellComponentLabels}
+              />
             </ItemTableCell>
-          {/if}
-          <ItemTableCell
-            baseWidth={usageBaseWidth}
-            title={localize('DND5E.SpellUsage')}
-          >
-            {spell.labels.activation}
-          </ItemTableCell>
-          {#if $context.editable && $context.useClassicControls}
-            <ItemTableCell baseWidth={classicControlsColumnWidth}>
-              <ClassicControls {controls} params={{ item: spell, ctx: ctx }} />
+            {#if includeSchool}
+              {@const icon = SpellSchool.getIcon(spell.system.school)}
+              <ItemTableCell
+                baseWidth={spellSchoolBaseWidth}
+                title={spell.labels.school ?? ''}
+              >
+                {#if typeof icon === 'string'}
+                  <i class="spell-school-icon {icon}"></i>
+                {:else}
+                  <Dnd5eIcon
+                    --icon-fill="var(--t5e-secondary-color)"
+                    --icon-width="1rem"
+                    --icon-height="1rem"
+                    src={icon.iconSrc}
+                  />
+                {/if}
+              </ItemTableCell>
+            {/if}
+            <ItemTableCell
+              baseWidth={targetBaseWidth}
+              title="{localize('DND5E.Target')}: {spell.labels.target}"
+            >
+              {#if spell.labels.target}
+                {spell.labels.target}
+              {:else}
+                {localize('DND5E.None')}
+              {/if}
             </ItemTableCell>
-          {/if}
+            {#if includeRange}
+              <ItemTableCell
+                baseWidth="4.375rem"
+                title="{localize('DND5E.Range')}: {spell.labels.range}"
+              >
+                {spell.labels.range}
+              </ItemTableCell>
+            {/if}
+            <ItemTableCell
+              baseWidth={usageBaseWidth}
+              title={localize('DND5E.SpellUsage')}
+            >
+              {spell.labels.activation}
+            </ItemTableCell>
+            {#if $context.editable && $context.useClassicControls}
+              <ItemTableCell baseWidth={classicControlsColumnWidth}>
+                <ClassicControls
+                  {controls}
+                  params={{ item: spell, ctx: ctx }}
+                />
+              </ItemTableCell>
+            {/if}
+          {/snippet}
         </ItemTableRow>
         {#if spell?.system.activities?.contents.length > 1}
           <InlineActivitiesList item={spell} {inlineToggleService} />
@@ -290,7 +318,7 @@
           isItem={true}
         />
       {/if}
-    </svelte:fragment>
+    {/snippet}
   </ItemTable>
 </section>
 

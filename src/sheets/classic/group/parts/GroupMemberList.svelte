@@ -13,7 +13,11 @@
   import TidyTableHeaderCell from 'src/components/table/TidyTableHeaderCell.svelte';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
 
-  export let section: GroupMemberSection;
+  interface Props {
+    section: GroupMemberSection;
+  }
+
+  let { section }: Props = $props();
 
   const memberActorIdsToShow = getContext<Readable<Set<string> | undefined>>(
     CONSTANTS.SVELTE_CONTEXT.MEMBER_IDS_TO_SHOW,
@@ -27,14 +31,14 @@
 </script>
 
 <TidyTable key={section.key} data-custom-section={section.custom ? true : null}>
-  <svelte:fragment slot="header">
+  {#snippet header()}
     <TidyTableHeaderRow>
       <TidyTableHeaderCell primary={true}>
         {localize(section.label)}
       </TidyTableHeaderCell>
     </TidyTableHeaderRow>
-  </svelte:fragment>
-  <svelte:fragment slot="body">
+  {/snippet}
+  {#snippet body()}
     <div class="flex-column small-gap mt-2">
       {#each section.members as member, index (member.uuid)}
         {#if $memberActorIdsToShow === undefined || $memberActorIdsToShow.has(member.id)}
@@ -49,5 +53,5 @@
         {/if}
       {/each}
     </div>
-  </svelte:fragment>
+  {/snippet}
 </TidyTable>

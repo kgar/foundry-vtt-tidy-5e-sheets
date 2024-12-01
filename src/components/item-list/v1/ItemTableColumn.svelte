@@ -1,8 +1,19 @@
 <script lang="ts">
-  export let primary: boolean = false;
-  export let baseWidth: string | null = null;
-  export let title: string | null = null;
-  export let cssClass: string | null = '';
+  interface Props {
+    primary?: boolean;
+    baseWidth?: string | null;
+    title?: string | null;
+    cssClass?: string | null;
+    children?: import('svelte').Snippet;
+  }
+
+  let {
+    primary = false,
+    baseWidth = null,
+    title = null,
+    cssClass = '',
+    children,
+  }: Props = $props();
 </script>
 
 <div
@@ -11,7 +22,7 @@
   style:flex-basis={baseWidth}
   {title}
 >
-  <slot />
+  {@render children?.()}
 </div>
 
 <style lang="scss">

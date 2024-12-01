@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { preventDefault, stopPropagation } from 'svelte/legacy';
+
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
@@ -41,11 +43,14 @@
       type="button"
       class="inline-icon-button"
       title={localize('DND5E.HitPointsConfig')}
-      on:click|stopPropagation|preventDefault={() =>
-        FoundryAdapter.renderHitPointsDialog($context.actor)}
+      onclick={stopPropagation(
+        preventDefault(() =>
+          FoundryAdapter.renderHitPointsDialog($context.actor),
+        ),
+      )}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
-      <i class="fas fa-cog" />
+      <i class="fas fa-cog"></i>
     </button>
   {/if}
 </div>

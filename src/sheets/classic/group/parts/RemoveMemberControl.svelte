@@ -11,7 +11,11 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  export let member: Actor5e;
+  interface Props {
+    member: Actor5e;
+  }
+
+  let { member }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -19,7 +23,7 @@
 <button
   type="button"
   class="inline-icon-button"
-  on:click={() => $context.actor.system.removeMember(member.id)}
+  onclick={() => $context.actor.system.removeMember(member.id)}
   title={localize('TIDY5E.Group.RemoveMemberFromGroup')}
   tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
 >

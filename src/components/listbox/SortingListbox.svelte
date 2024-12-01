@@ -4,11 +4,25 @@
 
   type TItem = $$Generic;
 
-  export let items: TItem[];
-  export let selectedItemIndex: number | null = null;
-  export let labelProp: keyof TItem;
-  export let valueProp: keyof TItem;
-  export let listboxCssClass: string | null = null;
+  interface Props {
+    items: TItem[];
+    selectedItemIndex?: number | null;
+    labelProp: keyof TItem;
+    valueProp: keyof TItem;
+    listboxCssClass?: string | null;
+    itemTemplate?: import('svelte').Snippet<[any]>;
+    [key: string]: any;
+  }
+
+  let {
+    items = $bindable(),
+    selectedItemIndex = $bindable(null),
+    labelProp,
+    valueProp,
+    listboxCssClass = null,
+    itemTemplate,
+    ...rest
+  }: Props = $props();
 
   interface $$Slots {
     itemTemplate: { item: TItem };
@@ -149,9 +163,11 @@
   }
 
   const localize = FoundryAdapter.localize;
+
+  const itemTemplate_render = $derived(itemTemplate);
 </script>
 
-<div class="sorting-listbox flex-row small-gap {$$restProps.class ?? ''}">
+<div class="sorting-listbox flex-row small-gap {rest.class ?? ''}">
   <div class="controls">
     <button
       title={localize('TIDY5E.Listbox.MoveUp')}
@@ -159,7 +175,7 @@
       disabled={selectedItemIndex === null || selectedItemIndex === 0}
       aria-keyshortcuts="Alt+ArrowUp"
       data-testid="sorting-listbox-move-up"
-      on:click={() => moveUp()}
+      onclick={() => moveUp()}
     >
       <i class="fas fa-angle-up"></i>
     </button>
@@ -170,7 +186,7 @@
         items === null ||
         selectedItemIndex >= items.length - 1}
       aria-keyshortcuts="Alt+ArrowDown"
-      on:click={() => moveDown()}
+      onclick={() => moveDown()}
       data-testid="sorting-listbox-move-down"
     >
       <i class="fas fa-angle-down"></i>
@@ -188,10 +204,10 @@
     on:drop={(ev) => onDrop(ev)}
     on:listboxDrop={(ev) => onListboxDrop(ev)}
   >
-    <svelte:fragment slot="itemTemplate" let:item>
-      <slot name="itemTemplate" {item}>
+    {#snippet itemTemplate({ item })}
+      {#if itemTemplate_render}{@render itemTemplate_render({ item })}{:else}
         {item[labelProp]}
-      </slot>
-    </svelte:fragment>
+      {/if}
+    {/snippet}
   </Listbox>
 </div>

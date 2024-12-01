@@ -2,9 +2,13 @@
   import type { Tab } from 'src/types/types';
   import TabContent from './TabContent.svelte';
 
-  export let tabs: Tab[];
-  export let selectedTabId: string;
-  export let cssClass: string = '';
+  interface Props {
+    tabs: Tab[];
+    selectedTabId: string;
+    cssClass?: string;
+  }
+
+  let { tabs, selectedTabId, cssClass = '' }: Props = $props();
 </script>
 
 {#each tabs as tab (tab.id)}

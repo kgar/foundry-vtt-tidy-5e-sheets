@@ -3,11 +3,21 @@
   import type { PortraitCharmRadiusClass } from 'src/types/types';
   import { createEventDispatcher } from 'svelte';
 
-  export let cssClass: string = '';
-  export let radiusClass: PortraitCharmRadiusClass;
-  export let level: number;
-  export let onlyShowOnHover: boolean = false;
-  export let isActiveEffectApplied: boolean = false;
+  interface Props {
+    cssClass?: string;
+    radiusClass: PortraitCharmRadiusClass;
+    level: number;
+    onlyShowOnHover?: boolean;
+    isActiveEffectApplied?: boolean;
+  }
+
+  let {
+    cssClass = '',
+    radiusClass,
+    level = $bindable(),
+    onlyShowOnHover = false,
+    isActiveEffectApplied = false,
+  }: Props = $props();
 
   const localize = FoundryAdapter.localize;
   const dispatch = createEventDispatcher<{
@@ -16,15 +26,13 @@
 
   let fontScales = ['1.25rem', '1.125rem', '1rem'] as const;
 
-  let inputFontSize: string;
-  $: {
-    inputFontSize =
-      !level || level < 100
-        ? fontScales[0]
-        : level < 1000
-          ? fontScales[1]
-          : fontScales[2];
-  }
+  let inputFontSize: string = $derived(
+    !level || level < 100
+      ? fontScales[0]
+      : level < 1000
+        ? fontScales[1]
+        : fontScales[2],
+  );
 </script>
 
 <div
@@ -36,10 +44,10 @@
   <div class="exhaustion-wrap {radiusClass}">
     <input
       type="number"
-      on:change={() => dispatch('levelSelected', { level: level })}
+      onchange={() => dispatch('levelSelected', { level: level })}
       bind:value={level}
       placeholder="0"
-      on:focus={(ev) => ev.currentTarget.select()}
+      onfocus={(ev) => ev.currentTarget.select()}
       disabled={isActiveEffectApplied}
       data-tooltip={isActiveEffectApplied
         ? localize('DND5E.ActiveEffectOverrideWarning')

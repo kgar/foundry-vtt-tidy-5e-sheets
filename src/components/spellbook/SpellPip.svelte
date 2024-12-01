@@ -1,17 +1,21 @@
 <script lang="ts">
+  import { run, createBubbler } from 'svelte/legacy';
+
+  const bubble = createBubbler();
   import { settingStore } from 'src/settings/settings';
   import { onMount } from 'svelte';
 
-  export let isEmpty: boolean;
-  export let willChange: boolean;
-  export let disabled: boolean;
-
-  let pipEl: HTMLElement;
-  let animateExpended = false;
-  let animateRestored = false;
-  $: {
-    handlePipAnimation(isEmpty);
+  interface Props {
+    isEmpty: boolean;
+    willChange: boolean;
+    disabled: boolean;
   }
+
+  let { isEmpty, willChange, disabled }: Props = $props();
+
+  let pipEl: HTMLElement = $state();
+  let animateExpended = $state(false);
+  let animateRestored = $state(false);
 
   let animatePips = false;
   onMount(() => {
@@ -31,6 +35,9 @@
     animateExpended = isEmpty;
     animateRestored = !isEmpty;
   }
+  run(() => {
+    handlePipAnimation(isEmpty);
+  });
 </script>
 
 <button
@@ -41,19 +48,19 @@
   class:change={willChange}
   class:animate-expended={animateExpended}
   class:animate-restored={animateRestored}
-  on:click
-  on:mouseenter
-  on:mouseleave
-  on:focusin
-  on:focusout
-  on:transitionend={() => {
+  onclick={bubble('click')}
+  onmouseenter={bubble('mouseenter')}
+  onmouseleave={bubble('mouseleave')}
+  onfocusin={bubble('focusin')}
+  onfocusout={bubble('focusout')}
+  ontransitionend={() => {
     // Prevent unwanted additional animations after the pip effect has ended.
     animateExpended = false;
     animateRestored = false;
   }}
   {disabled}
   tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-/>
+></button>
 
 <style lang="scss">
   .pip {
@@ -67,7 +74,7 @@
     border: 0.0625rem solid var(--t5e-spell-pip-border-color);
     transition: background-color 0.3s ease;
 
-    &:is(:hover, :focus-visible),
+    &:is(:global(:hover, :focus-visible)),
     &.change {
       background-color: var(--t5e-warning-accent-color);
     }
@@ -75,7 +82,7 @@
     &.empty {
       background: var(--t5e-spell-pip-empty-background);
 
-      &:is(:hover, :focus-visible),
+      &:is(:global(:hover, :focus-visible)),
       &.change {
         background-color: var(--t5e-prepared-background);
       }

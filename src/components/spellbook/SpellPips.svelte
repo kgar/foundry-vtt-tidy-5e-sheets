@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import type {
     CharacterSheetContext,
     NpcSheetContext,
@@ -14,7 +16,11 @@
   let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
-  export let section: SpellbookSection;
+  interface Props {
+    section: SpellbookSection;
+  }
+
+  let { section }: Props = $props();
 
   let targetedDotIndex: number | null = null;
 
@@ -62,8 +68,10 @@
     }));
   }
 
-  let pips: SpellPipProps[];
-  $: section, (pips = generatePips());
+  let pips: SpellPipProps[] = $state();
+  run(() => {
+    section, (pips = generatePips());
+  });
 </script>
 
 {#if (section.slots ?? 0) > 0}

@@ -6,7 +6,12 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  export let movementLabelKey: string = 'DND5E.Speed';
+  interface Props {
+    movementLabelKey?: string;
+    [key: string]: any;
+  }
+
+  let { movementLabelKey = 'DND5E.Speed', ...rest }: Props = $props();
 
   let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -15,7 +20,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<section class="actor-movement flex-row small-gap {$$restProps.class ?? ''}">
+<section class="actor-movement flex-row small-gap {rest.class ?? ''}">
   <strong>{localize(movementLabelKey)}</strong>
   {#if $context.movement.primary}
     <span title={$context.movement.primary}>{$context.movement.primary}</span>
@@ -35,10 +40,10 @@
       type="button"
       class="configure inline-icon-button"
       title={localize('DND5E.MovementConfig')}
-      on:click={() =>
+      onclick={() =>
         FoundryAdapter.renderMovementSensesConfig($context.actor, 'movement')}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-      ><i class="fas fa-cog" /></button
+      ><i class="fas fa-cog"></i></button
     >
   {/if}
 </section>

@@ -4,11 +4,21 @@
   import ButtonMenu from '../button-menu/ButtonMenu.svelte';
   import ButtonMenuCommand from '../button-menu/ButtonMenuCommand.svelte';
 
-  export let options: DropdownListOption[];
-  export let selected: DropdownListOption;
-  export let isOpen = false;
-  export let title: string | null = null;
-  export let buttonClass: string = '';
+  interface Props {
+    options: DropdownListOption[];
+    selected: DropdownListOption;
+    isOpen?: boolean;
+    title?: string | null;
+    buttonClass?: string;
+  }
+
+  let {
+    options,
+    selected,
+    isOpen = $bindable(false),
+    title = null,
+    buttonClass = '',
+  }: Props = $props();
 
   const dispatch = createEventDispatcher<{
     optionClicked: DropdownListOption;

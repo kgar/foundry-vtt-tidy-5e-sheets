@@ -1,9 +1,14 @@
 <script lang="ts">
-  export let cssClass: string | null = null;
+  interface Props {
+    cssClass?: string | null;
+    children?: import('svelte').Snippet;
+  }
+
+  let { cssClass = null, children }: Props = $props();
 </script>
 
 <div class="notice {cssClass}">
-  <slot />
+  {@render children?.()}
 </div>
 
 <style lang="scss">

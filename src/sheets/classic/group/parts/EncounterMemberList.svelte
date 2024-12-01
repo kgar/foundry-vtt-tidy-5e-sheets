@@ -17,7 +17,11 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { settingStore } from 'src/settings/settings';
 
-  export let section: GroupMemberSection;
+  interface Props {
+    section: GroupMemberSection;
+  }
+
+  let { section }: Props = $props();
 
   const memberActorIdsToShow = getContext<Readable<Set<string> | undefined>>(
     CONSTANTS.SVELTE_CONTEXT.MEMBER_IDS_TO_SHOW,
@@ -38,19 +42,23 @@
     },
   ];
 
-  $: useClassicControls = FoundryAdapter.useClassicControls($context.actor);
+  let useClassicControls = $derived(
+    FoundryAdapter.useClassicControls($context.actor),
+  );
 
-  $: classicControlsWidth = useClassicControls
-    ? `/* Controls */ ${classicControlWidthRems * classicControls.length}rem`
-    : '';
+  let classicControlsWidth = $derived(
+    useClassicControls
+      ? `/* Controls */ ${classicControlWidthRems * classicControls.length}rem`
+      : '',
+  );
 
   const crColumnDef = section.showCrColumn ? '/* CR */ 7rem' : '';
-  $: gridTemplateColumns = `
+  let gridTemplateColumns = $derived(`
     /* Image and name */ 1fr 
     /* Quantity */ 5rem 
     /* Formula */ 7rem 
     ${crColumnDef} 
-    ${classicControlsWidth}`;
+    ${classicControlsWidth}`);
 
   function saveQuantityChange(
     $context: GroupSheetClassicContext,
@@ -79,7 +87,7 @@
     key={section.key}
     data-custom-section={section.custom ? true : null}
   >
-    <svelte:fragment slot="header">
+    {#snippet header()}
       <TidyTableHeaderRow>
         <TidyTableHeaderCell primary={true}>
           {localize(section.label)}
@@ -90,7 +98,7 @@
             type="button"
             class="inline-icon-button"
             title={localize('DND5E.QuantityRoll')}
-            on:click={() => $context.actor.system.rollQuantities()}
+            onclick={() => $context.actor.system.rollQuantities()}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-dice"></i>
@@ -108,8 +116,8 @@
           <!-- Controls -->
         </TidyTableHeaderCell>
       </TidyTableHeaderRow>
-    </svelte:fragment>
-    <svelte:fragment slot="body">
+    {/snippet}
+    {#snippet body()}
       <div class="flex-column no-gap">
         {#each section.members as member, index (member.uuid)}
           {@const ctx = $context.memberContext[member.id]}
@@ -127,7 +135,7 @@
                   type="button"
                   class="inline-transparent-button"
                   disabled={!ctx.canObserve}
-                  on:click={() =>
+                  onclick={() =>
                     FoundryAdapter.renderImagePopout(member.img, {
                       title: FoundryAdapter.localize('TIDY5E.PortraitTitle', {
                         subject: member.name,
@@ -148,7 +156,7 @@
                 <button
                   type="button"
                   class="encounter-member-name transparent-button highlight-on-hover"
-                  on:click={() => member.sheet.render(true)}
+                  onclick={() => member.sheet.render(true)}
                   tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
                 >
                   {member.name}
@@ -209,6 +217,6 @@
           {/if}
         {/each}
       </div>
-    </svelte:fragment>
+    {/snippet}
   </TidyTable>
 </section>

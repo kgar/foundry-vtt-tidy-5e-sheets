@@ -15,29 +15,32 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: totalCrew = $context.system.cargo.crew.reduce(
-    (count: number, c: { quantity: number }) => count + c.quantity,
-    0,
+  const localize = FoundryAdapter.localize;
+  let totalCrew = $derived(
+    $context.system.cargo.crew.reduce(
+      (count: number, c: { quantity: number }) => count + c.quantity,
+      0,
+    ),
   );
-  $: totalActions = $context.system.attributes.actions.value ?? 0;
-  $: actionsPerTurn =
+  let totalActions = $derived($context.system.attributes.actions.value ?? 0);
+  let actionsPerTurn = $derived(
     totalCrew >= $context.system.attributes.actions.thresholds[2]
       ? totalActions
       : totalCrew >= $context.system.attributes.actions.thresholds[1]
         ? Math.max(totalActions - 1, 0)
         : totalCrew >= $context.system.attributes.actions.thresholds[0]
           ? Math.max(totalActions - 2, 0)
-          : 0;
-  $: crewTallyDescription =
+          : 0,
+  );
+  let crewTallyDescription = $derived(
     actionsPerTurn === totalActions
       ? localize('DND5E.VehicleActionThresholdsFull')
       : actionsPerTurn === totalActions - 1
         ? localize('DND5E.VehicleActionThresholdsMid')
         : actionsPerTurn === totalActions - 2
           ? localize('DND5E.VehicleActionThresholdsMin')
-          : null;
-
-  const localize = FoundryAdapter.localize;
+          : null,
+  );
 </script>
 
 <div class="counters counter-flex">

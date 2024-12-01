@@ -26,8 +26,12 @@
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
-  export let items: Item5e[] = [];
-  export let section: CharacterFeatureSection;
+  interface Props {
+    items?: Item5e[];
+    section: CharacterFeatureSection;
+  }
+
+  let { items = [], section }: Props = $props();
 
   let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
     CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
@@ -41,7 +45,7 @@
 </script>
 
 <ItemTable key={section.key} data-custom-section={section.custom ? true : null}>
-  <svelte:fragment slot="header">
+  {#snippet header()}
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>
         {localize(section.label ?? 'DND5E.Features')}
@@ -53,13 +57,12 @@
         {localize('DND5E.Usage')}
       </ItemTableColumn>
     </ItemTableHeaderRow>
-  </svelte:fragment>
-  <svelte:fragment slot="body">
+  {/snippet}
+  {#snippet body()}
     {#each items as item (item.id)}
       {@const ctx = $context.itemContext[item.id]}
       <ItemTableRow
         {item}
-        let:toggleSummary
         on:mousedown={(event) =>
           FoundryAdapter.editOnMiddleClick(event.detail, item)}
         contextMenu={{
@@ -69,43 +72,45 @@
         hidden={!!$itemIdsToShow && !$itemIdsToShow.has(item.id)}
         favoriteId={ctx.favoriteId}
       >
-        <ItemTableCell primary={true}>
-          <ItemUseButton disabled={!$context.editable} {item} />
-          {#if item?.system.activities?.contents.length > 1}
-            <InlineToggleControl entityId={item.id} {inlineToggleService} />
-          {/if}
-          <ItemName
-            on:toggle={() => toggleSummary($context.actor)}
-            hasChildren={false}
-            {item}
-          >
-            <span
-              data-tidy-item-name={item.name}
-              data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
-              >{item.name}</span
+        {#snippet children({ toggleSummary })}
+          <ItemTableCell primary={true}>
+            <ItemUseButton disabled={!$context.editable} {item} />
+            {#if item?.system.activities?.contents.length > 1}
+              <InlineToggleControl entityId={item.id} {inlineToggleService} />
+            {/if}
+            <ItemName
+              on:toggle={() => toggleSummary($context.actor)}
+              hasChildren={false}
+              {item}
             >
-          </ItemName>
-        </ItemTableCell>
-        <ItemTableCell baseWidth="3.125rem">
-          {#if item.isOnCooldown}
-            <RechargeControl {item} />
-          {:else if item.hasRecharge}
-            <i class="fas fa-bolt" title={localize('DND5E.Charged')} />
-          {:else if ctx?.hasUses}
-            <ItemUses {item} />
-          {:else}
-            <ItemAddUses {item} />
-          {/if}
-        </ItemTableCell>
-        <ItemTableCell baseWidth="7.5rem">
-          {#if ItemUtils.hasActivationType(item)}
-            {item.labels?.activation ?? ''}
-          {/if}
-        </ItemTableCell>
+              <span
+                data-tidy-item-name={item.name}
+                data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
+                >{item.name}</span
+              >
+            </ItemName>
+          </ItemTableCell>
+          <ItemTableCell baseWidth="3.125rem">
+            {#if item.isOnCooldown}
+              <RechargeControl {item} />
+            {:else if item.hasRecharge}
+              <i class="fas fa-bolt" title={localize('DND5E.Charged')}></i>
+            {:else if ctx?.hasUses}
+              <ItemUses {item} />
+            {:else}
+              <ItemAddUses {item} />
+            {/if}
+          </ItemTableCell>
+          <ItemTableCell baseWidth="7.5rem">
+            {#if ItemUtils.hasActivationType(item)}
+              {item.labels?.activation ?? ''}
+            {/if}
+          </ItemTableCell>
+        {/snippet}
       </ItemTableRow>
       {#if item?.system.activities?.contents.length > 1}
         <InlineActivitiesList {item} {inlineToggleService} />
       {/if}
     {/each}
-  </svelte:fragment>
+  {/snippet}
 </ItemTable>

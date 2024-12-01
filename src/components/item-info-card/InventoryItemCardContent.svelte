@@ -8,15 +8,20 @@
   import { coalesce } from 'src/utils/formatting';
   import { CONSTANTS } from 'src/constants';
 
-  export let item: Item5e;
-  export let chatData: ItemChatData;
+  interface Props {
+    item: Item5e;
+    chatData: ItemChatData;
+    children?: import('svelte').Snippet;
+  }
+
+  let { item, chatData, children }: Props = $props();
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: ctx = $context.itemContext?.[item.id];
-  $: concealDetails = FoundryAdapter.concealDetails(item);
+  let ctx = $derived($context.itemContext?.[item.id]);
+  let concealDetails = $derived(FoundryAdapter.concealDetails(item));
 
   const localize = FoundryAdapter.localize;
   const weightUnit = FoundryAdapter.getWeightUnit();
@@ -42,7 +47,7 @@
     <div class="info-card-states">
       {#if item.system.properties?.has('mgc')}
         <span class="flex-row extra-small-gap align-items-center"
-          ><i class="fas fa-magic" />Magic Item</span
+          ><i class="fas fa-magic"></i>Magic Item</span
         >
       {/if}
       {#if ctx?.attunement && !concealDetails}
@@ -50,7 +55,7 @@
           class="flex-row extra-small-gap align-items-center info-attuned {ctx
             .attunement.cls ?? ''}"
         >
-          <i class="fas fa-sun" />
+          <i class="fas fa-sun"></i>
           {localize(ctx.attunement.title)}
         </span>
       {/if}
@@ -81,7 +86,7 @@
   {#if ctx?.hasUses}
     <div class="info-card-amount">
       <span
-        ><i class="fas fa-bolt" /><b>{localize('DND5E.Charges')}:</b>
+        ><i class="fas fa-bolt"></i><b>{localize('DND5E.Charges')}:</b>
         {item.system.uses.value}/{item.system.uses.max}</span
       >
     </div>
@@ -93,5 +98,5 @@
     </div>
   </div>
 
-  <slot />
+  {@render children?.()}
 </div>

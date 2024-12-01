@@ -9,7 +9,11 @@
   import TextInput from '../inputs/TextInput.svelte';
   import { CONSTANTS } from 'src/constants';
 
-  export let section: SpellbookSection;
+  interface Props {
+    section: SpellbookSection;
+  }
+
+  let { section }: Props = $props();
 
   let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,

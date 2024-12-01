@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { preventDefault, stopPropagation } from 'svelte/legacy';
+
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { CharacterSheetContext, TidyResource } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -7,18 +9,22 @@
   import { CONSTANTS } from 'src/constants';
   import { settingStore } from 'src/settings/settings';
 
-  export let resource: TidyResource;
+  interface Props {
+    resource: TidyResource;
+  }
+
+  let { resource }: Props = $props();
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: appId = $context.actor.id;
+  let appId = $derived($context.actor.id);
 
   const localize = FoundryAdapter.localize;
 
-  let configActive = false;
+  let configActive = $state(false);
   // TODO: Remove this mouseenter/mouseleave show/hide logic when Firefox supports `:has()`
-  let viewingConfig = false;
+  let viewingConfig = $state(false);
 </script>
 
 <li
@@ -63,12 +69,12 @@
       disabled={!$context.editable || $context.lockSensitiveFields}
     />
   </div>
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
   <header
     class="resource-header"
     class:active={configActive}
-    on:mouseenter={() => (viewingConfig = true)}
-    on:mouseleave={() => (viewingConfig = false)}
+    onmouseenter={() => (viewingConfig = true)}
+    onmouseleave={() => (viewingConfig = false)}
   >
     <div class="resource-rest">
       <h4>{localize('TIDY5E.RestoreOnRest')}</h4>
@@ -76,10 +82,13 @@
         id="{appId}-{resource.name}-sr"
         type="checkbox"
         checked={resource.sr}
-        on:change|stopPropagation|preventDefault={(event) =>
-          $context.actor.update({
-            [resource.srName]: event.currentTarget.checked,
-          })}
+        onchange={stopPropagation(
+          preventDefault((event) =>
+            $context.actor.update({
+              [resource.srName]: event.currentTarget.checked,
+            }),
+          ),
+        )}
         disabled={!$context.editable || $context.lockSensitiveFields}
         data-tidy-field={resource.srName}
       />
@@ -94,10 +103,13 @@
         id="{appId}-{resource.name}-lr"
         type="checkbox"
         checked={resource.lr}
-        on:change|stopPropagation|preventDefault={(event) =>
-          $context.actor.update({
-            [resource.lrName]: event.currentTarget.checked,
-          })}
+        onchange={stopPropagation(
+          preventDefault((event) =>
+            $context.actor.update({
+              [resource.lrName]: event.currentTarget.checked,
+            }),
+          ),
+        )}
         disabled={!$context.editable || $context.lockSensitiveFields}
         data-tidy-field={resource.lrName}
       />
@@ -114,12 +126,12 @@
         type="button"
         class="inline-icon-button resource-options"
         class:active={configActive}
-        on:click={() => {
+        onclick={() => {
           configActive = !configActive;
         }}
         tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
-        <i class="fas fa-cog" />
+        <i class="fas fa-cog"></i>
       </button>
     {/if}
   </header>
@@ -146,7 +158,12 @@
       padding-top: 0;
     }
 
-    &:is(:has(> .resource-header:hover), :has(.resource-options:focus-visible))
+    &:is(
+        :global(
+            :has(> .resource-header:hover),
+            :has(.resource-options:focus-visible)
+          )
+      )
       > :not(.resource-header) {
       display: none;
     }
@@ -218,8 +235,8 @@
 
       &.active,
       &:hover,
-      // `:is()` is required to prevent this selector from crashing the whole style set if `:has()` is not supported
-      &:is(:has(.resource-options:focus-visible)) {
+      // `:is(:global())` is required to prevent this selector from crashing the whole style set if `:has(:global())` is not supported
+      &:is(:global(:has(.resource-options:focus-visible))) {
         width: 100%;
         height: 100%;
 

@@ -23,7 +23,7 @@ import type {
   Utilities,
   Tab,
 } from 'src/types/types';
-import type { SvelteComponent } from 'svelte';
+import type { SvelteComponent, mount } from 'svelte';
 import { writable } from 'svelte/store';
 import ContainerSheet from './item/ContainerSheet.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
@@ -109,7 +109,7 @@ export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
       [CONSTANTS.SVELTE_CONTEXT.SEARCH_FILTERS, new Map(this.searchFilters)],
     ]);
 
-    const component = new ContainerSheet({
+    const component = mount(ContainerSheet, {
       target: node,
       context: context,
     });

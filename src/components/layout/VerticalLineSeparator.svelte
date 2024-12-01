@@ -1,4 +1,8 @@
-<div class="vertical-line-separator" aria-hidden="true" role="presentation" />
+<div
+  class="vertical-line-separator"
+  aria-hidden="true"
+  role="presentation"
+></div>
 
 <style lang="scss">
   .vertical-line-separator {

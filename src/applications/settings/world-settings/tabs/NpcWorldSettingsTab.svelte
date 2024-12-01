@@ -11,8 +11,12 @@
   import ListboxSetting from '../../parts/ListboxSetting.svelte';
   import { CONSTANTS } from 'src/constants';
 
-  const context = getContext<WorldSettingsContextStore>(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
-  let functions = getContext<WorldSettingsFunctions>(CONSTANTS.SVELTE_CONTEXT.FUNCTIONS);
+  const context = getContext<WorldSettingsContextStore>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
+  let functions = getContext<WorldSettingsFunctions>(
+    CONSTANTS.SVELTE_CONTEXT.FUNCTIONS,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -29,23 +33,25 @@
   <ListboxSetting
     name={SettingsProvider.settings.defaultNpcSheetTabs.options.name}
     hint={SettingsProvider.settings.defaultNpcSheetTabs.options.hint}
-    leftHeader="TIDY5E.Settings.DefaultSheetTabs.AvailableHeader"
+    leftHeaderText="TIDY5E.Settings.DefaultSheetTabs.AvailableHeader"
     bind:leftItems={$context.defaultNpcTabs.available}
-    rightHeader="TIDY5E.Settings.DefaultSheetTabs.SelectedHeader"
+    rightHeaderText="TIDY5E.Settings.DefaultSheetTabs.SelectedHeader"
     bind:rightItems={$context.defaultNpcTabs.selected}
     labelProp="label"
     valueProp="id"
   >
-    <div slot="below-listbox">
-      <button
-        type="button"
-        on:click={() =>
-          functions.resetDefaultTabs(context, CONSTANTS.SHEET_TYPE_NPC)}
-      >
-        <i class="fas fa-rotate-right" />
-        {localize('TIDY5E.Reset')}
-      </button>
-    </div>
+    {#snippet belowListbox()}
+      <div>
+        <button
+          type="button"
+          onclick={() =>
+            functions.resetDefaultTabs(context, CONSTANTS.SHEET_TYPE_NPC)}
+        >
+          <i class="fas fa-rotate-right"></i>
+          {localize('TIDY5E.Reset')}
+        </button>
+      </div>
+    {/snippet}
   </ListboxSetting>
 
   <CheckboxSetting

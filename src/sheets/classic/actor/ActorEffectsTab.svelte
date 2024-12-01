@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import {
     type ActorSheetContextV1,
@@ -26,16 +28,17 @@
 
   const localize = FoundryAdapter.localize;
 
-  $: effectSections = Object.values<any>($context.effects);
+  let effectSections = $derived(Object.values<any>($context.effects));
 
-  $: noEffects =
-    effectSections.some((section: any) => section.effects.length > 0) === false;
+  let noEffects = $derived(
+    effectSections.some((section: any) => section.effects.length > 0) === false,
+  );
 
   declareLocation('effects');
 
-  let controls: RenderableClassicControl<{ effect: any }>[] = [];
+  let controls: RenderableClassicControl<{ effect: any }>[] = $state([]);
 
-  $: {
+  run(() => {
     controls = [];
 
     controls.push(
@@ -65,11 +68,13 @@
         }),
       });
     }
-  }
+  });
 
   let classicControlsIconWidth = 1.25;
 
-  $: classicControlsColumnWidth = `${classicControlsIconWidth * controls.length}rem`;
+  let classicControlsColumnWidth = $derived(
+    `${classicControlsIconWidth * controls.length}rem`,
+  );
 </script>
 
 <div class="scroll-container flex-column small-gap">
@@ -84,7 +89,7 @@
       {#if !section.hidden}
         {#if ($context.unlocked && $context.allowEffectsManagement) || section.effects.length > 0}
           <ItemTable key={section.label}>
-            <svelte:fragment slot="header">
+            {#snippet header()}
               <ItemTableHeaderRow>
                 <ItemTableColumn primary={true}>
                   {localize(section.label)}
@@ -99,8 +104,8 @@
                   <ItemTableColumn baseWidth={classicControlsColumnWidth} />
                 {/if}
               </ItemTableHeaderRow>
-            </svelte:fragment>
-            <svelte:fragment slot="body">
+            {/snippet}
+            {#snippet body()}
               {#each section.effects as effect}
                 <ItemTableRow
                   on:mousedown={(event) =>
@@ -151,7 +156,7 @@
                   isItem={false}
                 />
               {/if}
-            </svelte:fragment>
+            {/snippet}
           </ItemTable>
         {/if}
       {/if}

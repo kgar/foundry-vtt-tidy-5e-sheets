@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { type SheetPreferenceOption } from './ApplyTidySheetPreferencesApplication';
   import { ApplyTidySheetPreferencesApplication } from './ApplyTidySheetPreferencesApplication';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -8,8 +10,12 @@
   import TidyTableRow from 'src/components/table/TidyTableRow.svelte';
   import TidyTableCell from 'src/components/table/TidyTableCell.svelte';
 
-  export let options: SheetPreferenceOption[];
-  export let onConfirm: ApplyTidySheetPreferencesApplication['_onConfirm'];
+  interface Props {
+    options: SheetPreferenceOption[];
+    onConfirm: ApplyTidySheetPreferencesApplication['_onConfirm'];
+  }
+
+  let { options, onConfirm }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
@@ -17,8 +23,11 @@
     /* Select */ 2.5rem 
     /* Label */ 1fr`;
 
-  $: totalSelected = options.filter((t) => t.selected).length;
-  $: allSelected = totalSelected >= options.length;
+  let totalSelected = $derived(options.filter((t) => t.selected).length);
+  let allSelected;
+  run(() => {
+    allSelected = totalSelected >= options.length;
+  });
 
   function toggleAll() {
     const targetState = !allSelected;
@@ -40,13 +49,13 @@
       toggleable={false}
       {gridTemplateColumns}
     >
-      <svelte:fragment slot="header">
+      {#snippet header()}
         <TidyTableHeaderRow>
           <TidyTableHeaderCell>
             <input
               type="checkbox"
               bind:checked={allSelected}
-              on:click={() => toggleAll()}
+              onclick={() => toggleAll()}
               title={localize(
                 'TIDY5E.Settings.Migrations.Selection.SelectAllNoneTooltip',
               )}
@@ -56,8 +65,8 @@
             >{localize('Sheet')}</TidyTableHeaderCell
           >
         </TidyTableHeaderRow>
-      </svelte:fragment>
-      <svelte:fragment slot="body">
+      {/snippet}
+      {#snippet body()}
         {#each options as option}
           {@const checkboxId = getRandomId()}
           <TidyTableRow>
@@ -73,7 +82,7 @@
             >
           </TidyTableRow>
         {/each}
-      </svelte:fragment>
+      {/snippet}
     </TidyTable>
   </div>
   <footer>
@@ -82,7 +91,7 @@
         total: totalSelected,
       })}
     </p>
-    <button type="button" on:click={() => onConfirm(options)}
+    <button type="button" onclick={() => onConfirm(options)}
       >{localize('TIDY5E.ButtonConfirm.Text')}</button
     >
   </footer>

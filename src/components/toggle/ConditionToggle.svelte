@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
   import { getContext } from 'svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
@@ -13,13 +15,17 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  export let condition: Dnd5eActorCondition;
-
-  let switchOn: boolean = !condition.disabled;
-
-  $: {
-    switchOn = !condition.disabled;
+  interface Props {
+    condition: Dnd5eActorCondition;
   }
+
+  let { condition }: Props = $props();
+
+  let switchOn: boolean = $state(!condition.disabled);
+
+  run(() => {
+    switchOn = !condition.disabled;
+  });
 
   async function handleChange(newValue: boolean) {
     try {

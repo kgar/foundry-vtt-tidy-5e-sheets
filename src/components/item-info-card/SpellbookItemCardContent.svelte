@@ -7,8 +7,13 @@
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { CONSTANTS } from 'src/constants';
 
-  export let item: Item5e;
-  export let chatData: ItemChatData;
+  interface Props {
+    item: Item5e;
+    chatData: ItemChatData;
+    children?: import('svelte').Snippet;
+  }
+
+  let { item, chatData, children }: Props = $props();
 
   let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -16,9 +21,9 @@
 
   const localize = FoundryAdapter.localize;
 
-  $: spellRowClasses = FoundryAdapter.getSpellRowClasses(item);
-  $: ctx = $context.itemContext[item.id];
-  $: canPrepare = FoundryAdapter.canPrepareSpell(item);
+  let spellRowClasses = $derived(FoundryAdapter.getSpellRowClasses(item));
+  let ctx = $derived($context.itemContext[item.id]);
+  let canPrepare = $derived(FoundryAdapter.canPrepareSpell(item));
 </script>
 
 <div class="info-card spellbook {spellRowClasses}" data-item-id={item._id}>
@@ -37,7 +42,7 @@
   {#if ctx?.hasUses}
     <div class="info-card-amount">
       <span
-        ><i class="fas fa-bolt" /><b>{localize('DND5E.Charges')}:</b>
+        ><i class="fas fa-bolt"></i><b>{localize('DND5E.Charges')}:</b>
         {item.system.uses.value}/{item.system.uses.max}</span
       >
     </div>
@@ -49,5 +54,5 @@
     </div>
   </div>
 
-  <slot />
+  {@render children?.()}
 </div>

@@ -1,9 +1,12 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
 
-  export let total = 5;
+  interface Props {
+    total?: number;
+    selected?: number;
+  }
 
-  export let selected = 0;
+  let { total = 5, selected = 0 }: Props = $props();
 
   const dispatcher = createEventDispatcher<{ change: number }>();
 
@@ -17,7 +20,7 @@
     dispatcher('change', index + 1);
   }
 
-  $: pipArray = Array(total);
+  let pipArray = $derived(Array(total));
 </script>
 
 <div class="pips">
@@ -28,7 +31,7 @@
       class:inactive={selected < i + 1}
       class:active={selected >= i + 1}
       class:last-selected={selected === i + 1}
-      on:click={() => onPipClick(i)}><i></i></button
+      onclick={() => onPipClick(i)}><i></i></button
     >
   {/each}
 

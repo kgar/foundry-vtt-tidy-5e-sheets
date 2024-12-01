@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import SpellbookFooter from 'src/components/spellbook/SpellbookFooter.svelte';
   import SpellbookGrid from 'src/components/spellbook/SpellbookGrid.svelte';
   import SpellbookList from 'src/components/spellbook/SpellbookList.svelte';
@@ -26,33 +28,33 @@
   );
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
-  let searchCriteria: string = '';
+  let searchCriteria: string = $state('');
 
-  $: spellbook = SheetSections.configureSpellbook(
-    $context.actor,
-    tabId,
-    $context.spellbook,
+  let spellbook = $derived(
+    SheetSections.configureSpellbook($context.actor, tabId, $context.spellbook),
   );
 
   const itemIdsToShow = writable<Set<string> | undefined>(undefined);
   setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
 
-  $: {
+  run(() => {
     $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
       itemContext: $context.itemContext,
       sections: spellbook,
       tabId: tabId,
     });
-  }
+  });
 
-  let layoutMode: ItemLayoutMode;
-  $: layoutMode = TidyFlags.spellbookGrid.get($context.actor) ? 'grid' : 'list';
+  let layoutMode: ItemLayoutMode = $derived(
+    TidyFlags.spellbookGrid.get($context.actor) ? 'grid' : 'list',
+  );
 
-  $: noSpellLevels = !$context.spellbook.length;
+  let noSpellLevels = $derived(!$context.spellbook.length);
 
-  $: utilityBarCommands =
-    $context.utilities[tabId]?.utilityToolbarCommands ?? [];
+  let utilityBarCommands = $derived(
+    $context.utilities[tabId]?.utilityToolbarCommands ?? [],
+  );
 
   const localize = FoundryAdapter.localize;
 </script>

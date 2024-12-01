@@ -20,8 +20,12 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  export let section: ActivitySection;
-  export let visibleActivityUuidSubset: Set<string>;
+  interface Props {
+    section: ActivitySection;
+    visibleActivityUuidSubset: Set<string>;
+  }
+
+  let { section, visibleActivityUuidSubset }: Props = $props();
 
   const gridTemplateColumns = `
     /* Name */
@@ -45,11 +49,11 @@
   }
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<!-- svelte-ignore a11y-missing-attribute -->
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<!-- svelte-ignore a11y_missing_attribute -->
 <TidyTable key={section.key} class="favorite-activities" {gridTemplateColumns}>
-  <svelte:fragment slot="header">
+  {#snippet header()}
     <TidyTableHeaderRow>
       <TidyTableHeaderCell primary={true}>
         {localize(section.label ?? 'DND5E.Effect')}
@@ -58,7 +62,7 @@
         {localize('DOCUMENT.Item')}
       </TidyTableHeaderCell>
       <TidyTableHeaderCell>
-        <i class="fas fa-bolt" />
+        <i class="fas fa-bolt"></i>
       </TidyTableHeaderCell>
       <TidyTableHeaderCell>
         {localize('DND5E.Usage')}
@@ -68,8 +72,8 @@
         <i class="fas fa-shield"></i>
       </TidyTableHeaderCell>
     </TidyTableHeaderRow>
-  </svelte:fragment>
-  <svelte:fragment slot="body">
+  {/snippet}
+  {#snippet body()}
     {#each section.activities as activity (activity.uuid)}
       <TidyTableRow
         rowClass="activity"
@@ -85,10 +89,10 @@
         <TidyTableCell primary={true}>
           <a
             class="item-table-image-button"
-            on:click={(event) => $context.editable && activity.use({ event })}
+            onclick={(event) => $context.editable && activity.use({ event })}
           >
             <img src={activity.img} />
-            <i class="fa fa-dice-d20 roll-indicator" />
+            <i class="fa fa-dice-d20 roll-indicator"></i>
           </a>
 
           <span
@@ -103,7 +107,7 @@
           <a
             class="activity-item-link truncate align-self-stretch align-content-center flex-1"
             class:highlight-on-hover={$context.editable}
-            on:click={(ev) =>
+            onclick={(ev) =>
               $context.editable && activity.item.sheet.render(true)}
             title={activity.item.name}
           >
@@ -138,5 +142,5 @@
         </TidyTableCell>
       </TidyTableRow>
     {/each}
-  </svelte:fragment>
+  {/snippet}
 </TidyTable>

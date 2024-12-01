@@ -18,7 +18,7 @@
 
   const localize = FoundryAdapter.localize;
 
-  $: appId = $context.document.id;
+  let appId = $derived($context.document.id);
 </script>
 
 <ContentConcealer conceal={$context.concealDetails}>

@@ -28,35 +28,40 @@
   import ActorName from '../actor/ActorName.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
 
-  let selectedTabId: string;
+  let selectedTabId: string = $state();
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
   const localize = FoundryAdapter.localize;
 
-  $: playerName = TidyFlags.playerName.get($context.actor) ?? '';
+  let playerName = $derived(TidyFlags.playerName.get($context.actor) ?? '');
 
-  $: classAndSubclassSummaries = Array.from(
-    FoundryAdapter.getClassAndSubclassSummaries($context.actor).values(),
+  let classAndSubclassSummaries = $derived(
+    Array.from(
+      FoundryAdapter.getClassAndSubclassSummaries($context.actor).values(),
+    ),
   );
 
-  $: characterSummaryEntries =
-    FoundryAdapter.getActorCharacterSummaryEntries($context);
+  let characterSummaryEntries = $derived(
+    FoundryAdapter.getActorCharacterSummaryEntries($context),
+  );
 
-  $: abilities = Object.entries<any>($context.abilities);
+  let abilities = $derived(Object.entries<any>($context.abilities));
 
-  $: sizes = Object.entries($context.config.actorSizes).map(
-    ([abbreviation, size]: [string, any]) => ({
-      value: abbreviation,
-      text: size.label,
-    }),
-  ) satisfies DropdownListOption[];
+  let sizes = $derived(
+    Object.entries($context.config.actorSizes).map(
+      ([abbreviation, size]: [string, any]) => ({
+        value: abbreviation,
+        text: size.label,
+      }),
+    ) satisfies DropdownListOption[],
+  );
 
-  $: currentSize = {
+  let currentSize = $derived({
     value: $context.system.traits.size,
     text: $context.config.actorSizes[$context.system.traits.size]?.label,
-  } satisfies DropdownListOption;
+  } satisfies DropdownListOption);
 </script>
 
 <ItemInfoCard />
@@ -122,7 +127,7 @@
                 <span
                   class="xp-bar-current"
                   style="width: {$context.system.details.xp.pct}%"
-                />
+                ></span>
               </div>
             </div>
           </div>
@@ -212,13 +217,13 @@
             type="button"
             class="inline-icon-button"
             title={localize('TIDY5E.OriginSummaryConfig')}
-            on:click={() =>
+            onclick={() =>
               new ActorOriginSummaryConfigFormApplication(
                 $context.actor,
               ).render(true)}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
-            <i class="fas fa-cog" />
+            <i class="fas fa-cog"></i>
           </button>
         {/if}
       </span>
@@ -246,7 +251,7 @@
 </header>
 
 <Tabs tabs={$context.tabs} bind:selectedTabId>
-  <svelte:fragment slot="tab-end">
+  {#snippet tabEnd()}
     {#if $context.editable}
       <SheetEditModeToggle
         hint={$settingStore.permanentlyUnlockCharacterSheetForGm &&
@@ -257,7 +262,7 @@
           : null}
       />
     {/if}
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 <section class="tidy-sheet-body">

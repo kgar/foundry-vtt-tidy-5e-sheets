@@ -12,7 +12,7 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: appId = $context.document.id;
+  let appId = $derived($context.document.id);
 
   const localize = FoundryAdapter.localize;
 
@@ -32,7 +32,7 @@
       <button
         type="button"
         class="add-activity-button"
-        on:click={() => $context.item.sheet.addActivity()}
+        onclick={() => $context.item.sheet.addActivity()}
         tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
         <i class="fas fa-plus"></i>
@@ -42,14 +42,14 @@
   </header>
   <div class="scroll-container activities">
     {#each $context.activities as activity (activity.id)}
-      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div
         class="activity card"
         data-activity-id={activity.id}
         data-configurable={Activities.isConfigurable(activity)}
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
         draggable="true"
-        on:dragstart={(ev) => handleDragStart(ev, activity.id)}
+        ondragstart={(ev) => handleDragStart(ev, activity.id)}
       >
         <div class="icon" class:svg={activity.img.svg}>
           {#if activity.img.svg}
@@ -65,7 +65,7 @@
         <button
           type="button"
           class="transparent-button highlight-on-hover name"
-          on:click={() =>
+          onclick={() =>
             $context.system.activities?.get(activity.id).sheet.render(true)}
           disabled={!$context.editable}
           tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
@@ -77,7 +77,7 @@
             type="button"
             class="inline-icon-button"
             title={localize('DND5E.ACTIVITY.Action.Delete')}
-            on:click={() =>
+            onclick={() =>
               $context.system.activities?.get(activity.id)?.deleteDialog()}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >

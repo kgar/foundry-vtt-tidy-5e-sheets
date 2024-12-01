@@ -18,8 +18,12 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  export let member: Actor5e;
-  export let ctx: GroupMemberContext;
+  interface Props {
+    member: Actor5e;
+    ctx: GroupMemberContext;
+  }
+
+  let { member, ctx }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
@@ -61,7 +65,7 @@
       <button
         type="button"
         class="inline-transparent-button highlight-on-hover ff-title fs-lg"
-        on:click={() => member.sheet.render(true)}
+        onclick={() => member.sheet.render(true)}
         disabled={!ctx.canObserve}
         tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
@@ -115,7 +119,7 @@
             type="button"
             class="skill"
             disabled={!$context.isGM}
-            on:click={(event) => onPerceptionClicked(event)}
+            onclick={(event) => onPerceptionClicked(event)}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             {localize(ctx.perception?.label ?? '')}

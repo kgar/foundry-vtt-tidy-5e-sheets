@@ -2,22 +2,38 @@
   import type { Component } from 'svelte';
   import TextInput from '../inputs/TextInput.svelte';
 
-  export let document: any;
-  export let value: number;
-  export let valueField: string;
-  export let valueTitle: string | null = null;
-  export let valueDisabled: boolean = false;
-  export let max: number;
-  export let maxField: string;
-  export let maxTitle: string | null = null;
-  export let maxDisabled: boolean = false;
-  export let percentage: number | null = null;
-  export let Bar: Component<any> | null = null;
+  interface Props {
+    document: any;
+    value: number;
+    valueField: string;
+    valueTitle?: string | null;
+    valueDisabled?: boolean;
+    max: number;
+    maxField: string;
+    maxTitle?: string | null;
+    maxDisabled?: boolean;
+    percentage?: number | null;
+    Bar?: Component<any> | null;
+  }
+
+  let {
+    document,
+    value,
+    valueField,
+    valueTitle = null,
+    valueDisabled = false,
+    max,
+    maxField,
+    maxTitle = null,
+    maxDisabled = false,
+    percentage = null,
+    Bar = null,
+  }: Props = $props();
 </script>
 
 <div class="resource-container">
   {#if Bar}
-    <svelte:component this={Bar} {percentage} {value} {max} />
+    <Bar {percentage} {value} {max} />
   {/if}
   {#if !valueDisabled}
     <TextInput

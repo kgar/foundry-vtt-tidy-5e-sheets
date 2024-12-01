@@ -6,13 +6,25 @@
   import { getContext } from 'svelte';
   import type { Readable, Writable } from 'svelte/store';
 
-  export let occupant: Actor5e | undefined;
-  export let index: number;
-  export let type: string;
-  export let iconClass: string;
-  export let facilityId: string;
-  export let facilityName: string;
-  export let prop: string;
+  interface Props {
+    occupant: Actor5e | undefined;
+    index: number;
+    type: string;
+    iconClass: string;
+    facilityId: string;
+    facilityName: string;
+    prop: string;
+  }
+
+  let {
+    occupant,
+    index,
+    type,
+    iconClass,
+    facilityId,
+    facilityName,
+    prop,
+  }: Props = $props();
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -67,9 +79,9 @@
   {@const imageTypeClassName = occupant.token ? 'token' : 'portrait'}
   {@const imageSrc =
     imageTypeClassName == 'token' ? occupant.token.img : occupant.img}
-  <!-- svelte-ignore a11y-missing-attribute -->
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- svelte-ignore a11y_missing_attribute -->
+  <!-- svelte-ignore a11y_click_events_have_key_events -->
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
   <li
     class:highlight={$hoveredFacilityOccupant ===
       `${facilityId}-${index}-${occupant.uuid}`}
@@ -82,11 +94,11 @@
     data-prop={prop}
     data-index={index}
     data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_FACILITY_OCCUPANTS}
-    on:mouseenter={() =>
+    onmouseenter={() =>
       ($hoveredFacilityOccupant = `${facilityId}-${index}-${occupant.uuid}`)}
-    on:mouseleave={() => ($hoveredFacilityOccupant = '')}
+    onmouseleave={() => ($hoveredFacilityOccupant = '')}
   >
-    <a on:click={(ev) => $context.editable && onOccupantClick(ev)}>
+    <a onclick={(ev) => $context.editable && onOccupantClick(ev)}>
       <img src={imageSrc} alt={occupant.name} />
 
       {#if $context.unlocked}
@@ -96,10 +108,10 @@
   </li>
 {:else}
   <li class="slot occupant-slot {type} empty" data-index={index}>
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <!-- svelte-ignore a11y-missing-attribute -->
-    <a on:click={(ev) => $context.editable && onSlotClick(ev)}>
+    <!-- svelte-ignore a11y_click_events_have_key_events -->
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
+    <!-- svelte-ignore a11y_missing_attribute -->
+    <a onclick={(ev) => $context.editable && onSlotClick(ev)}>
       <i class={iconClass}></i>
     </a>
   </li>

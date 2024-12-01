@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SheetEditor from 'src/components/editor/SheetEditor.svelte';
   import ContentEditableFormField from '../../../../components/inputs/ContentEditableFormField.svelte';
@@ -17,54 +19,56 @@
 
   type SystemBioField = { field: string; value: string; text: string };
 
-  let bioFields: SystemBioField[] = [];
-  $: bioFields = [
-    {
-      field: 'system.details.gender',
-      value: $context.system.details.gender,
-      text: 'DND5E.Gender',
-    },
-    {
-      field: 'system.details.age',
-      value: $context.system.details.age,
-      text: 'DND5E.Age',
-    },
-    {
-      field: 'system.details.height',
-      value: $context.system.details.height,
-      text: 'DND5E.Height',
-    },
-    {
-      field: 'system.details.weight',
-      value: $context.system.details.weight,
-      text: 'DND5E.Weight',
-    },
-    {
-      field: 'system.details.eyes',
-      value: $context.system.details.eyes,
-      text: 'DND5E.Eyes',
-    },
-    {
-      field: 'system.details.skin',
-      value: $context.system.details.skin,
-      text: 'DND5E.Skin',
-    },
-    {
-      field: 'system.details.hair',
-      value: $context.system.details.hair,
-      text: 'DND5E.Hair',
-    },
-    {
-      field: 'system.details.faith',
-      value: $context.system.details.faith,
-      text: 'DND5E.Faith',
-    },
-  ];
+  let bioFields: SystemBioField[] = $state([]);
+  run(() => {
+    bioFields = [
+      {
+        field: 'system.details.gender',
+        value: $context.system.details.gender,
+        text: 'DND5E.Gender',
+      },
+      {
+        field: 'system.details.age',
+        value: $context.system.details.age,
+        text: 'DND5E.Age',
+      },
+      {
+        field: 'system.details.height',
+        value: $context.system.details.height,
+        text: 'DND5E.Height',
+      },
+      {
+        field: 'system.details.weight',
+        value: $context.system.details.weight,
+        text: 'DND5E.Weight',
+      },
+      {
+        field: 'system.details.eyes',
+        value: $context.system.details.eyes,
+        text: 'DND5E.Eyes',
+      },
+      {
+        field: 'system.details.skin',
+        value: $context.system.details.skin,
+        text: 'DND5E.Skin',
+      },
+      {
+        field: 'system.details.hair',
+        value: $context.system.details.hair,
+        text: 'DND5E.Hair',
+      },
+      {
+        field: 'system.details.faith',
+        value: $context.system.details.faith,
+        text: 'DND5E.Faith',
+      },
+    ];
+  });
 
-  let editing = false;
-  let contentToEdit: string;
-  let enrichedText: string;
-  let fieldToEdit: string;
+  let editing = $state(false);
+  let contentToEdit: string = $state();
+  let enrichedText: string = $state();
+  let fieldToEdit: string = $state();
 
   async function stopEditing() {
     await $context.actor.sheet.submit();
@@ -135,12 +139,12 @@
             class="section-titles biopage flex-row justify-content-space-between"
           >
             <span>{localize('DND5E.PersonalityTraits')}</span>
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <!-- svelte-ignore a11y-no-static-element-interactions -->
-            <!-- svelte-ignore a11y-missing-attribute -->
+            <!-- svelte-ignore a11y_click_events_have_key_events -->
+            <!-- svelte-ignore a11y_no_static_element_interactions -->
+            <!-- svelte-ignore a11y_missing_attribute -->
             <a
               class="icon-button"
-              on:click={(ev) =>
+              onclick={(ev) =>
                 $context.editable &&
                 edit(
                   $context.system.details.trait,
@@ -169,12 +173,12 @@
             <span>
               {localize('DND5E.Ideals')}
             </span>
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <!-- svelte-ignore a11y-no-static-element-interactions -->
-            <!-- svelte-ignore a11y-missing-attribute -->
+            <!-- svelte-ignore a11y_click_events_have_key_events -->
+            <!-- svelte-ignore a11y_no_static_element_interactions -->
+            <!-- svelte-ignore a11y_missing_attribute -->
             <a
               class="icon-button"
-              on:click={(ev) =>
+              onclick={(ev) =>
                 $context.editable &&
                 edit(
                   $context.system.details.ideal,
@@ -202,12 +206,12 @@
             <span>
               {localize('DND5E.Bonds')}
             </span>
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <!-- svelte-ignore a11y-no-static-element-interactions -->
-            <!-- svelte-ignore a11y-missing-attribute -->
+            <!-- svelte-ignore a11y_click_events_have_key_events -->
+            <!-- svelte-ignore a11y_no_static_element_interactions -->
+            <!-- svelte-ignore a11y_missing_attribute -->
             <a
               class="icon-button"
-              on:click={(ev) =>
+              onclick={(ev) =>
                 $context.editable &&
                 edit(
                   $context.system.details.bond,
@@ -235,12 +239,12 @@
             <span>
               {localize('DND5E.Flaws')}
             </span>
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <!-- svelte-ignore a11y-no-static-element-interactions -->
-            <!-- svelte-ignore a11y-missing-attribute -->
+            <!-- svelte-ignore a11y_click_events_have_key_events -->
+            <!-- svelte-ignore a11y_no_static_element_interactions -->
+            <!-- svelte-ignore a11y_missing_attribute -->
             <a
               class="icon-button"
-              on:click={(ev) =>
+              onclick={(ev) =>
                 $context.editable &&
                 edit(
                   $context.system.details.flaw,
@@ -274,12 +278,12 @@
             <span>
               {localize('DND5E.Appearance')}
             </span>
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <!-- svelte-ignore a11y-no-static-element-interactions -->
-            <!-- svelte-ignore a11y-missing-attribute -->
+            <!-- svelte-ignore a11y_click_events_have_key_events -->
+            <!-- svelte-ignore a11y_no_static_element_interactions -->
+            <!-- svelte-ignore a11y_missing_attribute -->
             <a
               class="icon-button"
-              on:click={(ev) =>
+              onclick={(ev) =>
                 $context.editable &&
                 edit(
                   $context.system.details.appearance,
@@ -305,12 +309,12 @@
             <span>
               {localize('DND5E.Background')}/{localize('DND5E.Biography')}
             </span>
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <!-- svelte-ignore a11y-no-static-element-interactions -->
-            <!-- svelte-ignore a11y-missing-attribute -->
+            <!-- svelte-ignore a11y_click_events_have_key_events -->
+            <!-- svelte-ignore a11y_no_static_element_interactions -->
+            <!-- svelte-ignore a11y_missing_attribute -->
             <a
               class="icon-button"
-              on:click={(ev) =>
+              onclick={(ev) =>
                 $context.editable &&
                 edit(
                   $context.system.details.biography.value,

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SheetEditor from 'src/components/editor/SheetEditor.svelte';
   import type { NpcSheetContext } from 'src/types/types';
@@ -17,8 +19,9 @@
 
   const localize = FoundryAdapter.localize;
 
-  $: showNpcPersonalityInfo =
-    TidyFlags.showNpcPersonalityInfo.get($context.actor) ?? false;
+  let showNpcPersonalityInfo = $derived(
+    TidyFlags.showNpcPersonalityInfo.get($context.actor) ?? false,
+  );
 
   function togglePersonalityInfo() {
     TidyFlags.setFlag(
@@ -34,54 +37,56 @@
     text: string;
   };
 
-  let bioFields: FlagBioField[] = [];
-  $: bioFields = [
-    {
-      prop: TidyFlags.gender.prop,
-      value: TidyFlags.gender.get($context.actor),
-      text: 'DND5E.Gender',
-    },
-    {
-      prop: TidyFlags.age.prop,
-      value: TidyFlags.age.get($context.actor),
-      text: 'DND5E.Age',
-    },
-    {
-      prop: TidyFlags.height.prop,
-      value: TidyFlags.height.get($context.actor),
-      text: 'DND5E.Height',
-    },
-    {
-      prop: TidyFlags.weight.prop,
-      value: TidyFlags.weight.get($context.actor),
-      text: 'DND5E.Weight',
-    },
-    {
-      prop: TidyFlags.eyes.prop,
-      value: TidyFlags.eyes.get($context.actor),
-      text: 'DND5E.Eyes',
-    },
-    {
-      prop: TidyFlags.skin.prop,
-      value: TidyFlags.skin.get($context.actor),
-      text: 'DND5E.Skin',
-    },
-    {
-      prop: TidyFlags.hair.prop,
-      value: TidyFlags.hair.get($context.actor),
-      text: 'DND5E.Hair',
-    },
-    {
-      prop: TidyFlags.faith.prop,
-      value: TidyFlags.faith.get($context.actor),
-      text: 'DND5E.Faith',
-    },
-  ];
+  let bioFields: FlagBioField[] = $state([]);
+  run(() => {
+    bioFields = [
+      {
+        prop: TidyFlags.gender.prop,
+        value: TidyFlags.gender.get($context.actor),
+        text: 'DND5E.Gender',
+      },
+      {
+        prop: TidyFlags.age.prop,
+        value: TidyFlags.age.get($context.actor),
+        text: 'DND5E.Age',
+      },
+      {
+        prop: TidyFlags.height.prop,
+        value: TidyFlags.height.get($context.actor),
+        text: 'DND5E.Height',
+      },
+      {
+        prop: TidyFlags.weight.prop,
+        value: TidyFlags.weight.get($context.actor),
+        text: 'DND5E.Weight',
+      },
+      {
+        prop: TidyFlags.eyes.prop,
+        value: TidyFlags.eyes.get($context.actor),
+        text: 'DND5E.Eyes',
+      },
+      {
+        prop: TidyFlags.skin.prop,
+        value: TidyFlags.skin.get($context.actor),
+        text: 'DND5E.Skin',
+      },
+      {
+        prop: TidyFlags.hair.prop,
+        value: TidyFlags.hair.get($context.actor),
+        text: 'DND5E.Hair',
+      },
+      {
+        prop: TidyFlags.faith.prop,
+        value: TidyFlags.faith.get($context.actor),
+        text: 'DND5E.Faith',
+      },
+    ];
+  });
 
-  let editing = false;
-  let contentToEdit: string;
-  let enrichedText: string;
-  let fieldToEdit: string;
+  let editing = $state(false);
+  let contentToEdit: string = $state();
+  let enrichedText: string = $state();
+  let fieldToEdit: string = $state();
 
   async function stopEditing() {
     await $context.actor.sheet.submit();
@@ -142,15 +147,15 @@
     <div class="bottom-notes">
       <button
         type="button"
-        on:click={togglePersonalityInfo}
+        onclick={togglePersonalityInfo}
         class="toggle-personality-info"
         title={localize('TIDY5E.TogglePersonalityInfo')}
         tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
         {#if showNpcPersonalityInfo}
-          <i class="fas fa-angle-double-left" />
+          <i class="fas fa-angle-double-left"></i>
         {:else}
-          <i class="fas fa-angle-double-right" />
+          <i class="fas fa-angle-double-right"></i>
         {/if}
       </button>
       <div class="main-notes">
@@ -169,12 +174,12 @@
                   <span>
                     {localize('DND5E.PersonalityTraits')}
                   </span>
-                  <!-- svelte-ignore a11y-click-events-have-key-events -->
-                  <!-- svelte-ignore a11y-no-static-element-interactions -->
-                  <!-- svelte-ignore a11y-missing-attribute -->
+                  <!-- svelte-ignore a11y_click_events_have_key_events -->
+                  <!-- svelte-ignore a11y_no_static_element_interactions -->
+                  <!-- svelte-ignore a11y_missing_attribute -->
                   <a
                     class="icon-button"
-                    on:click={(ev) =>
+                    onclick={(ev) =>
                       $context.editable &&
                       edit(
                         TidyFlags.trait.get($context.actor) ?? '',
@@ -202,12 +207,12 @@
                   <span>
                     {localize('DND5E.Ideals')}
                   </span>
-                  <!-- svelte-ignore a11y-click-events-have-key-events -->
-                  <!-- svelte-ignore a11y-no-static-element-interactions -->
-                  <!-- svelte-ignore a11y-missing-attribute -->
+                  <!-- svelte-ignore a11y_click_events_have_key_events -->
+                  <!-- svelte-ignore a11y_no_static_element_interactions -->
+                  <!-- svelte-ignore a11y_missing_attribute -->
                   <a
                     class="icon-button"
-                    on:click={(ev) =>
+                    onclick={(ev) =>
                       $context.editable &&
                       edit(
                         $context.system.details.ideal,
@@ -235,12 +240,12 @@
                   <span>
                     {localize('DND5E.Bonds')}
                   </span>
-                  <!-- svelte-ignore a11y-click-events-have-key-events -->
-                  <!-- svelte-ignore a11y-no-static-element-interactions -->
-                  <!-- svelte-ignore a11y-missing-attribute -->
+                  <!-- svelte-ignore a11y_click_events_have_key_events -->
+                  <!-- svelte-ignore a11y_no_static_element_interactions -->
+                  <!-- svelte-ignore a11y_missing_attribute -->
                   <a
                     class="icon-button"
-                    on:click={(ev) =>
+                    onclick={(ev) =>
                       $context.editable &&
                       edit(
                         $context.system.details.bond,
@@ -268,12 +273,12 @@
                   <span>
                     {localize('DND5E.Flaws')}
                   </span>
-                  <!-- svelte-ignore a11y-click-events-have-key-events -->
-                  <!-- svelte-ignore a11y-no-static-element-interactions -->
-                  <!-- svelte-ignore a11y-missing-attribute -->
+                  <!-- svelte-ignore a11y_click_events_have_key_events -->
+                  <!-- svelte-ignore a11y_no_static_element_interactions -->
+                  <!-- svelte-ignore a11y_missing_attribute -->
                   <a
                     class="icon-button"
-                    on:click={(ev) =>
+                    onclick={(ev) =>
                       $context.editable &&
                       edit(
                         $context.system.details.flaw,
@@ -308,12 +313,12 @@
                 <span>
                   {localize('DND5E.Appearance')}
                 </span>
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <!-- svelte-ignore a11y-no-static-element-interactions -->
-                <!-- svelte-ignore a11y-missing-attribute -->
+                <!-- svelte-ignore a11y_click_events_have_key_events -->
+                <!-- svelte-ignore a11y_no_static_element_interactions -->
+                <!-- svelte-ignore a11y_missing_attribute -->
                 <a
                   class="icon-button"
-                  on:click={(ev) =>
+                  onclick={(ev) =>
                     $context.editable &&
                     edit(
                       TidyFlags.appearance.get($context.actor) ?? '',
@@ -341,12 +346,12 @@
                 <span>
                   {localize('DND5E.Background')}/{localize('DND5E.Biography')}
                 </span>
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <!-- svelte-ignore a11y-no-static-element-interactions -->
-                <!-- svelte-ignore a11y-missing-attribute -->
+                <!-- svelte-ignore a11y_click_events_have_key_events -->
+                <!-- svelte-ignore a11y_no_static_element_interactions -->
+                <!-- svelte-ignore a11y_missing_attribute -->
                 <a
                   class="icon-button"
-                  on:click={(ev) =>
+                  onclick={(ev) =>
                     $context.editable &&
                     edit(
                       $context.system.details.biography.value,

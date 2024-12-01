@@ -1,4 +1,4 @@
-import type { SvelteComponent } from 'svelte';
+import type { SvelteComponent, mount } from 'svelte';
 import SvelteFormApplicationBase from 'src/applications/SvelteFormApplicationBase';
 import BulkMigrations from './BulkMigrations.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -32,7 +32,7 @@ export class BulkMigrationsApplication
   }
 
   createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
-    return new BulkMigrations({
+    return mount(BulkMigrations, {
       target: node,
       context: new Map<any, any>([['confirm', this.confirm]]),
       props: {

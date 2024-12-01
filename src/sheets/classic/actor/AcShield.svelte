@@ -1,4 +1,7 @@
 <script lang="ts">
+  import { createBubbler } from 'svelte/legacy';
+
+  const bubble = createBubbler();
   import AcShieldBase from './AcShieldBase.svelte';
   import { getContext, onMount } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -7,21 +10,24 @@
   import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
 
-  /**
-   * The Armor Class value.
-   */
-  export let ac: string | number = '0';
+  interface Props {
+    /**
+     * The Armor Class value.
+     */
+    ac?: string | number;
+    /**
+     * Optional CSS class list string to apply to the AC Shield container element.
+     */
+    cssClass?: string;
+  }
 
-  /**
-   * Optional CSS class list string to apply to the AC Shield container element.
-   */
-  export let cssClass: string = '';
+  let { ac = '0', cssClass = '' }: Props = $props();
 
   let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  let acShieldButton: HTMLElement;
+  let acShieldButton: HTMLElement = $state();
 
   onMount(() => {
     $context.actor.sheet._applyAttributionTooltips(acShieldButton);
@@ -32,8 +38,8 @@
   <button
     bind:this={acShieldButton}
     type="button"
-    on:click={() => FoundryAdapter.renderArmorConfig($context.actor)}
-    on:focus
+    onclick={() => FoundryAdapter.renderArmorConfig($context.actor)}
+    onfocus={bubble('focus')}
     class="config-button attribute-value transparent-button"
     data-attribution="attributes.ac"
     data-attribution-caption="DND5E.ArmorClass"

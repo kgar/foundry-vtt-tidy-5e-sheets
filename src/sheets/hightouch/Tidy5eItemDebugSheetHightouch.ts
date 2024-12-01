@@ -4,7 +4,7 @@ import type {
   ApplicationConfiguration,
   ApplicationRenderOptions,
 } from 'src/types/application.types';
-import type { SvelteComponent } from 'svelte';
+import type { SvelteComponent, mount } from 'svelte';
 import ItemDebugSheet from './item/ItemDebugSheet.svelte';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import type { Tab } from 'src/types/types';
@@ -52,7 +52,7 @@ export class Tidy5eItemDebugSheetHightouch extends SvelteApplicationMixin<ItemDe
   };
 
   _createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
-    return new ItemDebugSheet({
+    return mount(ItemDebugSheet, {
       target: node,
       context: new Map<any, any>([
         [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._store],
@@ -63,7 +63,7 @@ export class Tidy5eItemDebugSheetHightouch extends SvelteApplicationMixin<ItemDe
   _createAdditionalComponents(node: HTMLElement) {
     const windowHeader = this.element.querySelector('.window-header');
 
-    const sheetLock = new ItemHeaderStart({
+    const sheetLock = mount(ItemHeaderStart, {
       target: windowHeader,
       anchor: windowHeader.querySelector('.window-title'),
       context: new Map<string, any>([

@@ -22,16 +22,18 @@
   );
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
-  $: showResources =
+  let showResources = $derived(
     $context.unlocked ||
-    $context.resources.some(
-      (x: any) => !isNil(x.value) || !isNil(x.value, '') || !isNil(x.max),
-    );
+      $context.resources.some(
+        (x: any) => !isNil(x.value) || !isNil(x.value, '') || !isNil(x.max),
+      ),
+  );
 
-  let searchCriteria: string = '';
+  let searchCriteria: string = $state('');
 
-  $: utilityBarCommands =
-    $context.utilities[tabId]?.utilityToolbarCommands ?? [];
+  let utilityBarCommands = $derived(
+    $context.utilities[tabId]?.utilityToolbarCommands ?? [],
+  );
 </script>
 
 <UtilityToolbar>

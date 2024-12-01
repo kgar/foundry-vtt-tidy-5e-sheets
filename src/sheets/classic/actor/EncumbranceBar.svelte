@@ -23,14 +23,15 @@
     (2 / 3) * 100}%
   "
 >
-  <span class="encumbrance-bar" style="width:{$context.encumbrance.pct}%" />
+  <span class="encumbrance-bar" style="width:{$context.encumbrance.pct}%"
+  ></span>
   <span class="encumbrance-label"
     >{$context.encumbrance.value} / {$context.encumbrance.max}</span
   >
-  <i class="encumbrance-breakpoint encumbrance-low arrow-up" />
-  <i class="encumbrance-breakpoint encumbrance-low arrow-down" />
-  <i class="encumbrance-breakpoint encumbrance-high arrow-up" />
-  <i class="encumbrance-breakpoint encumbrance-high arrow-down" />
+  <i class="encumbrance-breakpoint encumbrance-low arrow-up"></i>
+  <i class="encumbrance-breakpoint encumbrance-low arrow-down"></i>
+  <i class="encumbrance-breakpoint encumbrance-high arrow-up"></i>
+  <i class="encumbrance-breakpoint encumbrance-high arrow-down"></i>
 </div>
 
 <style lang="scss">

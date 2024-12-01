@@ -10,13 +10,17 @@
   import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
 
-  export let initiative: { total: number; bonus: number };
+  interface Props {
+    initiative: { total: number; bonus: number };
+  }
+
+  let { initiative }: Props = $props();
 
   let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: appId = $context.actor.id;
+  let appId = $derived($context.actor.id);
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -51,10 +55,10 @@
       type="button"
       class="config-button icon-button"
       title={localize('DND5E.InitiativeConfig')}
-      on:click={() => FoundryAdapter.renderInitiativeConfig($context.actor)}
+      onclick={() => FoundryAdapter.renderInitiativeConfig($context.actor)}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
-      <i class="fas fa-cog" />
+      <i class="fas fa-cog"></i>
     </button>
   {:else}
     <span
@@ -62,7 +66,7 @@
       title={localize('DND5E.InitiativeConfig')}
       role="presentation"
     >
-      <i class="fas fa-cog" />
+      <i class="fas fa-cog"></i>
     </span>
   {/if}
 </div>

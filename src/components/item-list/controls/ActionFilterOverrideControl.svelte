@@ -1,16 +1,23 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import type { Item5e } from 'src/types/item.types';
   import ItemControl from './ItemControl.svelte';
   import { isItemInActionList } from 'src/features/actions/actions';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { TidyFlags } from 'src/foundry/TidyFlags';
 
-  export let item: Item5e;
+  interface Props {
+    item: Item5e;
+  }
 
-  $: active = isItemInActionList(item);
+  let { item }: Props = $props();
 
-  let title: string;
-  $: {
+  let title: string = $state();
+
+  const localize = FoundryAdapter.localize;
+  let active = $derived(isItemInActionList(item));
+  run(() => {
     const flagValue = TidyFlags.actionFilterOverride.get(item);
     const titleKey =
       flagValue === true
@@ -22,9 +29,7 @@
             : 'TIDY5E.Actions.SetOverrideTrue';
 
     title = localize(titleKey);
-  }
-
-  const localize = FoundryAdapter.localize;
+  });
 </script>
 
 <ItemControl

@@ -2,8 +2,12 @@
   import type { Item5e } from 'src/types/item.types';
   import ItemControl from 'src/components/item-list/controls/ItemControl.svelte';
 
-  export let item: Item5e;
-  export let ctx: any;
+  interface Props {
+    item: Item5e;
+    ctx: any;
+  }
+
+  let { item, ctx }: Props = $props();
 </script>
 
 <ItemControl

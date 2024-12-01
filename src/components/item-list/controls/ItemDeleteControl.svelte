@@ -4,17 +4,26 @@
 
   type OnDelete = () => boolean;
 
-  export let item: any;
-  export let onDelete: OnDelete = () => true;
-  export let deleteFn: Function = () =>
-    FoundryAdapter.onActorItemDelete(item.actor, item);
+  interface Props {
+    item: any;
+    onDelete?: OnDelete;
+    deleteFn?: Function;
+    [key: string]: any;
+  }
+
+  let {
+    item,
+    onDelete = () => true,
+    deleteFn = () => FoundryAdapter.onActorItemDelete(item.actor, item),
+    ...rest
+  }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <ItemControl
   iconCssClass="fas fa-trash fa-fw"
-  class={$$restProps.class ?? ''}
+  class={rest.class ?? ''}
   onclick={() => onDelete() && deleteFn()}
   title={localize('DND5E.ItemDelete')}
 />

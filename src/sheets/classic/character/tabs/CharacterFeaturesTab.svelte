@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import {
     type CharacterFeatureSection,
@@ -54,42 +56,45 @@
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
 
-  $: features = SheetSections.configureFeatures(
-    $context.features,
-    $context,
-    tabId,
-    SheetPreferencesService.getByType($context.actor.type),
-    TidyFlags.sectionConfig.get($context.actor)?.[tabId],
-  );
-
   const localize = FoundryAdapter.localize;
-
-  $: noFeatures =
-    features.some(
-      (section: CharacterFeatureSection) => section.items.length > 0,
-    ) === false;
 
   const itemIdsToShow = writable<Set<string> | undefined>(undefined);
   setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
 
-  $: {
+  let searchCriteria: string = $state('');
+
+  declareLocation('features');
+
+  let controls: RenderableClassicControl<{ item: Item5e }>[] = $state([]);
+
+  let classicControlsIconWidth = 1.25;
+
+  let features = $derived(
+    SheetSections.configureFeatures(
+      $context.features,
+      $context,
+      tabId,
+      SheetPreferencesService.getByType($context.actor.type),
+      TidyFlags.sectionConfig.get($context.actor)?.[tabId],
+    ),
+  );
+  let noFeatures = $derived(
+    features.some(
+      (section: CharacterFeatureSection) => section.items.length > 0,
+    ) === false,
+  );
+  run(() => {
     $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
       itemContext: $context.itemContext,
       sections: features,
       tabId: tabId,
     });
-  }
-
-  let searchCriteria: string = '';
-
-  declareLocation('features');
-
-  $: utilityBarCommands =
-    $context.utilities[tabId]?.utilityToolbarCommands ?? [];
-
-  let controls: RenderableClassicControl<{ item: Item5e }>[] = [];
-  $: {
+  });
+  let utilityBarCommands = $derived(
+    $context.utilities[tabId]?.utilityToolbarCommands ?? [],
+  );
+  run(() => {
     controls = [
       {
         component: ItemFavoriteControl,
@@ -114,11 +119,10 @@
         props: ({ item }) => ({ item }),
       });
     }
-  }
-
-  let classicControlsIconWidth = 1.25;
-
-  $: classicControlsColumnWidth = `${classicControlsIconWidth * controls.length}rem`;
+  });
+  let classicControlsColumnWidth = $derived(
+    `${classicControlsIconWidth * controls.length}rem`,
+  );
 </script>
 
 <UtilityToolbar>
@@ -161,7 +165,7 @@
             key={section.key}
             data-custom-section={section.custom ? true : null}
           >
-            <svelte:fragment slot="header">
+            {#snippet header()}
               <ItemTableHeaderRow>
                 <ItemTableColumn primary={true}>
                   {localize(section.label)}
@@ -190,13 +194,12 @@
                   <ItemTableColumn baseWidth={classicControlsColumnWidth} />
                 {/if}
               </ItemTableHeaderRow>
-            </svelte:fragment>
-            <svelte:fragment slot="body">
+            {/snippet}
+            {#snippet body()}
               {#each section.items as item (item.id)}
                 {@const ctx = $context.itemContext[item.id]}
                 <ItemTableRow
                   {item}
-                  let:toggleSummary
                   on:mousedown={(event) =>
                     FoundryAdapter.editOnMiddleClick(event.detail, item)}
                   contextMenu={{
@@ -205,87 +208,90 @@
                   }}
                   hidden={!!$itemIdsToShow && !$itemIdsToShow.has(item.id)}
                 >
-                  <ItemTableCell primary={true}>
-                    <ItemUseButton disabled={!$context.editable} {item} />
-                    {#if item?.system.activities?.contents.length > 1}
-                      <InlineToggleControl
-                        entityId={item.id}
-                        {inlineToggleService}
-                      />
+                  {#snippet children({ toggleSummary })}
+                    <ItemTableCell primary={true}>
+                      <ItemUseButton disabled={!$context.editable} {item} />
+                      {#if item?.system.activities?.contents.length > 1}
+                        <InlineToggleControl
+                          entityId={item.id}
+                          {inlineToggleService}
+                        />
+                      {/if}
+                      <ItemName
+                        on:toggle={() => toggleSummary($context.actor)}
+                        hasChildren={false}
+                        {item}
+                      >
+                        {#if ctx.parent}&rdsh;{/if}
+                        {#if !section.isClass && item.type === 'subclass'}
+                          <i class="fa-solid fa-link-slash align-self-center"
+                          ></i>
+                        {/if}
+                        <span
+                          data-tidy-item-name={item.name}
+                          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
+                          >{item.name}</span
+                        >
+                        {#if item.isOriginalClass}<i
+                            title={localize('DND5E.ClassOriginal')}
+                            class="fas fa-crown primary-accent-color"
+                          ></i>{/if}
+                      </ItemName>
+                    </ItemTableCell>
+                    <!-- TODO: Handle more gracefully; it is sitting outside of any table cell -->
+                    {#if $settingStore.showIconsNextToTheItemName && 'favoriteId' in ctx && !!ctx.favoriteId}
+                      <InlineFavoriteIcon />
                     {/if}
-                    <ItemName
-                      on:toggle={() => toggleSummary($context.actor)}
-                      hasChildren={false}
-                      {item}
-                    >
-                      {#if ctx.parent}&rdsh;{/if}
-                      {#if !section.isClass && item.type === 'subclass'}
-                        <i class="fa-solid fa-link-slash align-self-center"></i>
-                      {/if}
-                      <span
-                        data-tidy-item-name={item.name}
-                        data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
-                        >{item.name}</span
-                      >
-                      {#if item.isOriginalClass}<i
-                          title={localize('DND5E.ClassOriginal')}
-                          class="fas fa-crown primary-accent-color"
-                        ></i>{/if}
-                    </ItemName>
-                  </ItemTableCell>
-                  <!-- TODO: Handle more gracefully; it is sitting outside of any table cell -->
-                  {#if $settingStore.showIconsNextToTheItemName && 'favoriteId' in ctx && !!ctx.favoriteId}
-                    <InlineFavoriteIcon />
-                  {/if}
-                  {#if section.showUsesColumn}
-                    <ItemTableCell baseWidth="3.125rem">
-                      {#if item.isOnCooldown}
-                        <RechargeControl {item} />
-                      {:else if item.hasRecharge}
-                        <i
-                          class="fas fa-bolt"
-                          title={localize('DND5E.Charged')}
-                        />
-                      {:else if ctx?.hasUses}
-                        <ItemUses {item} />
-                      {:else}
-                        <ItemAddUses {item} />
-                      {/if}
-                    </ItemTableCell>
-                  {/if}
-                  {#if section.showUsagesColumn}
-                    <ItemTableCell baseWidth="7.5rem">
-                      {#if ItemUtils.hasActivationType(item)}
-                        {item.labels?.activation ?? ''}
-                      {/if}
-                    </ItemTableCell>
-                  {/if}
-                  {#if section.showLevelColumn}
-                    <ItemTableCell baseWidth="7.5rem">
-                      {#if item.type === 'class'}
-                        <LevelUpDropdown
-                          availableLevels={ctx?.availableLevels}
-                          {item}
-                          disabled={!$context.editable ||
-                            $context.lockLevelSelector}
-                        />
-                      {/if}
-                    </ItemTableCell>
-                  {/if}
-                  {#if section.showRequirementsColumn}
-                    <ItemTableCell baseWidth="7.5rem">
-                      <span
-                        class="truncate"
-                        title={item.system.requirements ?? ''}
-                        >{item.system.requirements ?? ''}</span
-                      >
-                    </ItemTableCell>
-                  {/if}
-                  {#if $context.editable && $context.useClassicControls}
-                    <ItemTableCell baseWidth={classicControlsColumnWidth}>
-                      <ClassicControls {controls} params={{ item: item }} />
-                    </ItemTableCell>
-                  {/if}
+                    {#if section.showUsesColumn}
+                      <ItemTableCell baseWidth="3.125rem">
+                        {#if item.isOnCooldown}
+                          <RechargeControl {item} />
+                        {:else if item.hasRecharge}
+                          <i
+                            class="fas fa-bolt"
+                            title={localize('DND5E.Charged')}
+                          ></i>
+                        {:else if ctx?.hasUses}
+                          <ItemUses {item} />
+                        {:else}
+                          <ItemAddUses {item} />
+                        {/if}
+                      </ItemTableCell>
+                    {/if}
+                    {#if section.showUsagesColumn}
+                      <ItemTableCell baseWidth="7.5rem">
+                        {#if ItemUtils.hasActivationType(item)}
+                          {item.labels?.activation ?? ''}
+                        {/if}
+                      </ItemTableCell>
+                    {/if}
+                    {#if section.showLevelColumn}
+                      <ItemTableCell baseWidth="7.5rem">
+                        {#if item.type === 'class'}
+                          <LevelUpDropdown
+                            availableLevels={ctx?.availableLevels}
+                            {item}
+                            disabled={!$context.editable ||
+                              $context.lockLevelSelector}
+                          />
+                        {/if}
+                      </ItemTableCell>
+                    {/if}
+                    {#if section.showRequirementsColumn}
+                      <ItemTableCell baseWidth="7.5rem">
+                        <span
+                          class="truncate"
+                          title={item.system.requirements ?? ''}
+                          >{item.system.requirements ?? ''}</span
+                        >
+                      </ItemTableCell>
+                    {/if}
+                    {#if $context.editable && $context.useClassicControls}
+                      <ItemTableCell baseWidth={classicControlsColumnWidth}>
+                        <ClassicControls {controls} params={{ item: item }} />
+                      </ItemTableCell>
+                    {/if}
+                  {/snippet}
                 </ItemTableRow>
                 {#if item?.system.activities?.contents.length > 1}
                   <InlineActivitiesList {item} {inlineToggleService} />
@@ -298,7 +304,7 @@
                   isItem={true}
                 />
               {/if}
-            </svelte:fragment>
+            {/snippet}
           </ItemTable>
         {/if}
       {/if}

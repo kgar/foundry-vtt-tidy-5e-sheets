@@ -17,9 +17,9 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: appId = $context.document.id;
+  let appId = $derived($context.document.id);
 
-  let selectedTabId: string;
+  let selectedTabId: string = $state();
   const localize = FoundryAdapter.localize;
 </script>
 

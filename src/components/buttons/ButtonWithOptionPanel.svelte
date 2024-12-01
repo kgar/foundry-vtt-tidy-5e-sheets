@@ -1,14 +1,32 @@
 <script lang="ts">
+  import { createBubbler } from 'svelte/legacy';
+
+  const bubble = createBubbler();
   import { longpress } from 'src/actions/longpress';
-  import { tick } from 'svelte';
+  import { tick, type Snippet } from 'svelte';
 
-  export let expanded: boolean = false;
-  export let active: boolean = false;
-  export let disabled: boolean = false;
-  export let anchor: 'left' | 'right' = 'left';
+  interface Props {
+    expanded?: boolean;
+    active?: boolean;
+    disabled?: boolean;
+    anchor?: 'left' | 'right';
+    children?: Snippet;
+    options?: Snippet;
+    [key: string]: any;
+  }
 
-  let menuEl: HTMLElement;
-  let menuOpenerEl: HTMLElement;
+  let {
+    expanded = $bindable(false),
+    active = false,
+    disabled = false,
+    anchor = 'left',
+    children,
+    options,
+    ...rest
+  }: Props = $props();
+
+  let menuEl: HTMLElement = $state();
+  let menuOpenerEl: HTMLElement = $state();
 
   function handleFocusOut(
     event: FocusEvent & { currentTarget: EventTarget & HTMLElement },
@@ -41,24 +59,24 @@
 </script>
 
 <div class="button-with-options-wrapper">
-  <!-- svelte-ignore a11y-missing-attribute -->
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+  <!-- svelte-ignore a11y_missing_attribute -->
+  <!-- svelte-ignore a11y_click_events_have_key_events -->
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
+  <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
   <a
-    class="button with-options {$$restProps.class ?? ''}"
+    class="button with-options {rest.class ?? ''}"
     class:expanded
     class:active
     class:disabled
     use:longpress
-    on:longpress={() => toggleMenu()}
-    on:click
-    on:contextmenu={() => toggleMenu(true)}
-    on:focusout={handleFocusOut}
+    onlongpress={() => toggleMenu()}
+    onclick={bubble('click')}
+    oncontextmenu={() => toggleMenu(true)}
+    onfocusout={handleFocusOut}
     tabindex={expanded ? 0 : null}
     bind:this={menuOpenerEl}
   >
-    <slot />
+    {@render children?.()}
     {#if expanded}
       <i class="expand-indicator fas fa-caret-up"></i>
     {:else}
@@ -66,14 +84,14 @@
     {/if}
   </a>
 
-  <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+  <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
   <menu
     class:expanded
     class="anchor-{anchor}"
-    on:focusout={handleFocusOut}
+    onfocusout={handleFocusOut}
     tabindex={expanded ? 0 : null}
     bind:this={menuEl}
   >
-    <slot name="options" />
+    {@render options?.()}
   </menu>
 </div>

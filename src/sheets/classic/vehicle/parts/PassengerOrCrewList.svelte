@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import ItemTableFooter from 'src/components/item-list/ItemTableFooter.svelte';
   import ItemDeleteControl from 'src/components/item-list/controls/ItemDeleteControl.svelte';
   import ItemTable from 'src/components/item-list/v1/ItemTable.svelte';
@@ -19,7 +21,11 @@
   import ClassicControls from 'src/sheets/classic/shared/ClassicControls.svelte';
   import { CONSTANTS } from 'src/constants';
 
-  export let section: VehicleCargoSection;
+  interface Props {
+    section: VehicleCargoSection;
+  }
+
+  let { section }: Props = $props();
 
   let baseWidths: Record<string, string> = {
     quantity: '5rem',
@@ -81,9 +87,9 @@
     item: CargoOrCrewItem;
     index: number;
     section: VehicleCargoSection;
-  }>[] = [];
+  }>[] = $state([]);
 
-  $: {
+  run(() => {
     controls = [];
 
     if ($context.unlocked) {
@@ -95,14 +101,14 @@
         }),
       });
     }
-  }
+  });
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <div style="display: contents;" class="passenger-crew-list-container">
   <ItemTable key={section.key}>
-    <svelte:fragment slot="header">
+    {#snippet header()}
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>
           {localize(section.label)}
@@ -119,8 +125,8 @@
           <ItemTableColumn baseWidth={classicControlsEditableRowBaseWidth} />
         {/if}
       </ItemTableHeaderRow>
-    </svelte:fragment>
-    <svelte:fragment slot="body">
+    {/snippet}
+    {#snippet body()}
       {#each section.items as item, index (item.id ?? index)}
         {@const ctx = $context.itemContext[item.id]}
         <ItemTableRow>
@@ -193,7 +199,7 @@
             section.dataset.type !== 'passengers'}
         />
       {/if}
-    </svelte:fragment>
+    {/snippet}
   </ItemTable>
 </div>
 

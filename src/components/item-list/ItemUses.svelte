@@ -1,8 +1,14 @@
 <script lang="ts">
+  import { preventDefault, stopPropagation } from 'svelte/legacy';
+
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { clamp } from 'src/utils/numbers';
 
-  export let item: any;
+  interface Props {
+    item: any;
+  }
+
+  let { item }: Props = $props();
 
   function onUsesMaxChanged(
     event: Event & {
@@ -25,10 +31,13 @@
     class="uses-value"
     type="text"
     value={item.system.uses.value}
-    on:change|stopPropagation|preventDefault={(event) =>
-      FoundryAdapter.handleItemUsesChanged(event, item)}
+    onchange={stopPropagation(
+      preventDefault((event) =>
+        FoundryAdapter.handleItemUsesChanged(event, item),
+      ),
+    )}
     disabled={!item.isOwner}
-    on:focus={(ev) => ev.currentTarget.select()}
+    onfocus={(ev) => ev.currentTarget.select()}
     data-tidy-field="system.uses.value"
   />
   /
@@ -36,10 +45,11 @@
     class="uses-max"
     type="text"
     value={item.system.uses.max}
-    on:change|stopPropagation|preventDefault={(event) =>
-      onUsesMaxChanged(event, item)}
+    onchange={stopPropagation(
+      preventDefault((event) => onUsesMaxChanged(event, item)),
+    )}
     disabled={!item.isOwner}
-    on:focus={(ev) => ev.currentTarget.select()}
+    onfocus={(ev) => ev.currentTarget.select()}
     data-tidy-field="system.uses.max"
   />
 </div>

@@ -14,11 +14,15 @@
     UserSettingsStore,
   } from './UserSettings.types';
 
-  let selectedTabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.INITIAL_TAB_ID);
+  let selectedTabId = $state(
+    getContext<string>(CONSTANTS.SVELTE_CONTEXT.INITIAL_TAB_ID),
+  );
   let context = getContext<UserSettingsStore>(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
-  let functions = getContext<UserSettingsFunctions>(CONSTANTS.SVELTE_CONTEXT.FUNCTIONS);
+  let functions = getContext<UserSettingsFunctions>(
+    CONSTANTS.SVELTE_CONTEXT.FUNCTIONS,
+  );
 
-  let tabs: Tab[] = [];
+  let tabs: Tab[] = $state([]);
 
   tabs = [
     {
@@ -58,7 +62,7 @@
 
   selectedTabId ??= tabs[0].id;
 
-  let applyingChanges = false;
+  let applyingChanges = $state(false);
 
   async function save() {
     applyingChanges = true;
@@ -86,7 +90,7 @@
 <div class="settings-form">
   <div role="presentation" class="vertical-tab-container flex-column no-gap">
     <Tabs {tabs} bind:selectedTabId orientation="vertical" />
-    <div role="presentation" class="remaining-vertical-space" />
+    <div role="presentation" class="remaining-vertical-space"></div>
   </div>
 
   <TabContents {tabs} {selectedTabId} cssClass="tidy-sheet-body" />
@@ -94,19 +98,19 @@
     <button
       type="button"
       class="save-changes-btn"
-      on:click={save}
+      onclick={save}
       disabled={applyingChanges}
     >
-      <i class="fas fa-save" />
+      <i class="fas fa-save"></i>
       {localize('TIDY5E.SaveChanges')}
     </button>
     <button
       type="button"
       class="apply-changes-btn"
-      on:click={apply}
+      onclick={apply}
       disabled={applyingChanges}
     >
-      <i class="fas fa-check" />
+      <i class="fas fa-check"></i>
       {localize('TIDY5E.ApplyChanges')}
     </button>
   </div>

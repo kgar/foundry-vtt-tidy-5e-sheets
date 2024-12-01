@@ -10,15 +10,19 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: isLinked =
-    $context.actor.token?.actorLink ?? $context.actor.prototypeToken.actorLink;
-
-  $: showUnlinked = ['unlinked', 'both'].includes(
-    SettingsProvider.settings.showNpcActorLinkMarker.get(),
+  let isLinked = $derived(
+    $context.actor.token?.actorLink ?? $context.actor.prototypeToken.actorLink,
   );
 
-  $: showLinked =
-    SettingsProvider.settings.showNpcActorLinkMarker.get() === 'both';
+  let showUnlinked = $derived(
+    ['unlinked', 'both'].includes(
+      SettingsProvider.settings.showNpcActorLinkMarker.get(),
+    ),
+  );
+
+  let showLinked = $derived(
+    SettingsProvider.settings.showNpcActorLinkMarker.get() === 'both',
+  );
 
   async function togglePrototypeLinkState() {
     const isNowLinked = $context.actor.prototypeToken.actorLink;
@@ -40,35 +44,34 @@
     await togglePrototypeLinkState();
   }
 
-  $: canLink = !$context.actor.token;
+  let canLink = $derived(!$context.actor.token);
 
   const localize = FoundryAdapter.localize;
 </script>
 
 {#if showLinked && isLinked}
-  <!-- svelte-ignore a11y-missing-attribute -->
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- svelte-ignore a11y_missing_attribute -->
+  <!-- svelte-ignore a11y_click_events_have_key_events -->
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
   <a
     class="link-state-button"
-    on:click={(ev) => tryUnlink()}
+    onclick={(ev) => tryUnlink()}
     class:disabled={!$context.unlocked}
   >
-    <i class="link-state fas fa-link" title={localize('TIDY5E.TokenLinked')} />
+    <i class="link-state fas fa-link" title={localize('TIDY5E.TokenLinked')}
+    ></i>
   </a>
 {:else if showUnlinked && !isLinked}
-  <!-- svelte-ignore a11y-missing-attribute -->
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- svelte-ignore a11y_missing_attribute -->
+  <!-- svelte-ignore a11y_click_events_have_key_events -->
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
   <a
     class="link-state-button"
     class:disabled={!$context.unlocked || !canLink}
-    on:click={(ev) => canLink && tryLink()}
+    onclick={(ev) => canLink && tryLink()}
   >
-    <i
-      class="link-state fas fa-unlink"
-      title={localize('TIDY5E.TokenUnlinked')}
-    />
+    <i class="link-state fas fa-unlink" title={localize('TIDY5E.TokenUnlinked')}
+    ></i>
   </a>
 {/if}
 

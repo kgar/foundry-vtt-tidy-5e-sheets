@@ -1,4 +1,4 @@
-import type { SvelteComponent } from 'svelte';
+import type { SvelteComponent, mount } from 'svelte';
 import AssignSpellsToSourceClasses from './SpellSourceClassAssignments.svelte';
 import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
 import type { Actor5e } from 'src/types/types';
@@ -39,7 +39,7 @@ export default class SpellSourceClassAssignmentsFormApplication extends SvelteFo
   createComponent(node: HTMLElement): SvelteComponent {
     this.context.set(this.getData());
 
-    return new AssignSpellsToSourceClasses({
+    return mount(AssignSpellsToSourceClasses, {
       target: node,
       context: new Map<any, any>([
         ['appId', this.appId],

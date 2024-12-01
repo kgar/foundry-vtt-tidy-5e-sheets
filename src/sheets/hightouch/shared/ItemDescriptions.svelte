@@ -3,12 +3,20 @@
   import CollapsibleEditorSection from './CollapsibleEditorSection.svelte';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
 
-  export let itemDescriptions: ItemDescription[];
-  export let editing = false;
-  export let document: any;
+  interface Props {
+    itemDescriptions: ItemDescription[];
+    editing?: boolean;
+    document: any;
+  }
 
-  let sectionItemOpenStates = itemDescriptions.map((_, i) => i === 0);
-  let itemDescriptionToEdit: ItemDescription | undefined;
+  let {
+    itemDescriptions,
+    editing = $bindable(false),
+    document,
+  }: Props = $props();
+
+  let sectionItemOpenStates = $state(itemDescriptions.map((_, i) => i === 0));
+  let itemDescriptionToEdit: ItemDescription | undefined = $state();
 
   function handleEdit(detail: {
     document: any;

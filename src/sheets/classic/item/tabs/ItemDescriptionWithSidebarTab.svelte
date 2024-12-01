@@ -21,12 +21,12 @@
     Readable<ItemSheetContext | ContainerSheetClassicContext>
   >(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
 
-  $: appId = $context.document.id;
+  let appId = $derived($context.document.id);
 
-  let editing = false;
-  let contentToEdit: string;
-  let enrichedText: string;
-  let fieldToEdit: string;
+  let editing = $state(false);
+  let contentToEdit: string = $state();
+  let enrichedText: string = $state();
+  let fieldToEdit: string = $state();
 
   function stopEditing() {
     editing = false;

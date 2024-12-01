@@ -27,39 +27,41 @@
   import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
   import ActorName from '../actor/ActorName.svelte';
 
-  let selectedTabId: string;
+  let selectedTabId: string = $state();
 
   let context = getContext<Readable<VehicleSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: sizes = Object.entries($context.config.actorSizes).map(
-    ([key, size]: [string, any]) => ({
-      value: key,
-      text: size.label,
-    }),
-  ) satisfies DropdownListOption[];
+  let sizes = $derived(
+    Object.entries($context.config.actorSizes).map(
+      ([key, size]: [string, any]) => ({
+        value: key,
+        text: size.label,
+      }),
+    ) satisfies DropdownListOption[],
+  );
 
-  let currentSize: DropdownListOption;
-  $: currentSize = {
+  let currentSize: DropdownListOption = $derived({
     value: $context.system.traits.size,
     text: $context.config.actorSizes[$context.system.traits.size]?.label,
-  };
+  });
 
-  $: vehicleTypes = Object.entries($context.config.vehicleTypes).map(
-    ([key, label]: [string, any]) => ({
-      value: key,
-      text: label,
-    }),
-  ) satisfies DropdownListOption[];
+  let vehicleTypes = $derived(
+    Object.entries($context.config.vehicleTypes).map(
+      ([key, label]: [string, any]) => ({
+        value: key,
+        text: label,
+      }),
+    ) satisfies DropdownListOption[],
+  );
 
-  let currentVehicleType: DropdownListOption;
-  $: currentVehicleType = {
+  let currentVehicleType: DropdownListOption = $derived({
     value: $context.system.vehicleType,
     text: $context.config.vehicleTypes[$context.system.vehicleType],
-  };
+  });
 
-  $: abilities = Object.entries<any>($context.abilities);
+  let abilities = $derived(Object.entries<any>($context.abilities));
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -150,7 +152,7 @@
         {#if $context.editable && !$context.lockSensitiveFields}
           <button
             type="button"
-            on:click={() =>
+            onclick={() =>
               new ActorOriginSummaryConfigFormApplication(
                 $context.actor,
               ).render(true)}
@@ -158,7 +160,7 @@
             title={localize('TIDY5E.OriginSummaryConfig')}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
-            <i class="fas fa-cog" />
+            <i class="fas fa-cog"></i>
           </button>
         {/if}
       </div>
@@ -189,7 +191,7 @@
   </div>
 </header>
 <Tabs tabs={$context.tabs} bind:selectedTabId>
-  <svelte:fragment slot="tab-end">
+  {#snippet tabEnd()}
     {#if $context.editable}
       <SheetEditModeToggle
         hint={$settingStore.permanentlyUnlockVehicleSheetForGm &&
@@ -198,7 +200,7 @@
           : null}
       />
     {/if}
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 <section class="tidy-sheet-body">
   <TabContents tabs={$context.tabs} {selectedTabId} />

@@ -12,10 +12,14 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  /**
-   * Optional CSS class list string to apply to the AC Shield container element.
-   */
-  export let cssClass: string = '';
+  interface Props {
+    /**
+     * Optional CSS class list string to apply to the AC Shield container element.
+     */
+    cssClass?: string;
+  }
+
+  let { cssClass = '' }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 </script>

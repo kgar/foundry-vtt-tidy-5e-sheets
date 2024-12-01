@@ -1,4 +1,4 @@
-import type { SvelteComponent } from 'svelte';
+import type { SvelteComponent, mount } from 'svelte';
 import ActorOriginSummaryConfig from './ActorOriginSummaryConfig.svelte';
 import { get, writable, type Writable } from 'svelte/store';
 import type { Actor5e } from 'src/types/types';
@@ -32,7 +32,7 @@ export default class ActorOriginSummaryConfigFormApplication extends SvelteFormA
   createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
     this.context.set(this.getData());
 
-    return new ActorOriginSummaryConfig({
+    return mount(ActorOriginSummaryConfig, {
       target: node,
       context: new Map<any, any>([
         ['appId', this.appId],

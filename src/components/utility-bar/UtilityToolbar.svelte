@@ -1,12 +1,18 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
+  interface Props {
+    children?: import('svelte').Snippet;
+    [key: string]: any;
+  }
+
+  let { ...props }: Props = $props();
 </script>
 
 <section
-  class="utility-toolbar {$$props.class ?? ''}"
+  class="utility-toolbar {props.class ?? ''}"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.UTILITY_TOOLBAR}
 >
-  <slot />
+  {@render props.children?.()}
 </section>
 
 <style lang="scss">
@@ -22,7 +28,9 @@
     margin-top: var(
       --utility-toolbar-margin-top,
       calc(
-        var(--vertical-padding-internal) - var(--t5e-classic-tab-contents-padding-top)
+        var(--vertical-padding-internal) - var(
+            --t5e-classic-tab-contents-padding-top
+          )
       )
     );
     padding-bottom: var(--vertical-padding-internal);

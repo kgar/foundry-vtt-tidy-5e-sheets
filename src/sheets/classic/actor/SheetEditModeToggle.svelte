@@ -7,7 +7,12 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  export let hint: string | null = null;
+  interface Props {
+    hint?: string | null;
+    [key: string]: any;
+  }
+
+  let { hint = null, ...rest }: Props = $props();
 
   let context = getContext<Readable<{ document: any }>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -17,31 +22,38 @@
     await TidyFlags.allowEdit.set($context.document, !allowEdit);
   }
 
-  $: allowEdit = TidyFlags.allowEdit.get($context.document);
-
-  $: descriptionVariable =
-    hint ??
-    ($settingStore.useTotalSheetLock
-      ? localize('TIDY5E.SheetLock.Description')
-      : localize('TIDY5E.SheetEdit.Description'));
-  $: lockHintVariable = $settingStore.useTotalSheetLock
-    ? 'TIDY5E.SheetLock.Unlock.Hint'
-    : 'TIDY5E.SheetEdit.Enable.Hint';
-  $: unlockHintVariable = $settingStore.useTotalSheetLock
-    ? 'TIDY5E.SheetLock.Lock.Hint'
-    : 'TIDY5E.SheetEdit.Disable.Hint';
-  $: unlockTitle = localize(unlockHintVariable, {
-    description: descriptionVariable,
-  });
-  $: lockTitle = localize(lockHintVariable, {
-    description: descriptionVariable,
-  });
-
   const localize = FoundryAdapter.localize;
+  let allowEdit = $derived(TidyFlags.allowEdit.get($context.document));
+  let descriptionVariable = $derived(
+    hint ??
+      ($settingStore.useTotalSheetLock
+        ? localize('TIDY5E.SheetLock.Description')
+        : localize('TIDY5E.SheetEdit.Description')),
+  );
+  let lockHintVariable = $derived(
+    $settingStore.useTotalSheetLock
+      ? 'TIDY5E.SheetLock.Unlock.Hint'
+      : 'TIDY5E.SheetEdit.Enable.Hint',
+  );
+  let unlockHintVariable = $derived(
+    $settingStore.useTotalSheetLock
+      ? 'TIDY5E.SheetLock.Lock.Hint'
+      : 'TIDY5E.SheetEdit.Disable.Hint',
+  );
+  let unlockTitle = $derived(
+    localize(unlockHintVariable, {
+      description: descriptionVariable,
+    }),
+  );
+  let lockTitle = $derived(
+    localize(lockHintVariable, {
+      description: descriptionVariable,
+    }),
+  );
 </script>
 
 <div
-  class="sheet-edit-mode-toggle {$$restProps.class ?? ''}"
+  class="sheet-edit-mode-toggle {rest.class ?? ''}"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SHEET_LOCK_TOGGLE}
 >
   <TidySwitch

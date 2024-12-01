@@ -2,6 +2,11 @@
   import { CONSTANTS } from 'src/constants';
   import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService';
   import { isUserInteractable } from 'src/utils/element';
+  interface Props {
+    children?: import('svelte').Snippet;
+  }
+
+  let { children }: Props = $props();
 
   const expandCollapseService = ExpandCollapseService.getService();
 
@@ -25,15 +30,15 @@
     expandCollapseService.toggle();
   }
 
-  $: expandState = expandCollapseService.state;
+  let expandState = $derived(expandCollapseService.state);
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 <header
   class="item-table-header-row"
   class:toggleable={$expandState.toggleable}
-  on:click={handleHeaderRowClick}
+  onclick={handleHeaderRowClick}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_TABLE_HEADER_ROW}
 >
   {#if $expandState.toggleable}
@@ -43,7 +48,7 @@
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.EXPANSION_TOGGLE}
     ></i>
   {/if}
-  <slot />
+  {@render children?.()}
 </header>
 
 <style lang="scss">

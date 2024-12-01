@@ -4,15 +4,19 @@
   import { settingStore } from 'src/settings/settings';
   import type { Item5e } from 'src/types/item.types';
 
-  export let command: RegisteredItemSummaryCommand;
-  export let item: Item5e;
+  interface Props {
+    command: RegisteredItemSummaryCommand;
+    item: Item5e;
+  }
+
+  let { command, item }: Props = $props();
 </script>
 
 <button
   type="button"
   class="item-summary-command"
   title={command.tooltip ?? null}
-  on:click={() => command.execute?.({ item: item })}
+  onclick={() => command.execute?.({ item: item })}
   tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
 >
   {#if command.iconClass}

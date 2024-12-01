@@ -15,14 +15,22 @@
   let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
-  export let cssClass: string | null = null;
-  export let includeAttackMod: boolean = true;
-  export let includePreparedSpells: boolean = true;
+  interface Props {
+    cssClass?: string | null;
+    includeAttackMod?: boolean;
+    includePreparedSpells?: boolean;
+  }
+
+  let {
+    cssClass = null,
+    includeAttackMod = true,
+    includePreparedSpells = true,
+  }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
-  $: abilities = FoundryAdapter.getAbilitiesAsDropdownOptions(
-    $context.abilities,
+  let abilities = $derived(
+    FoundryAdapter.getAbilitiesAsDropdownOptions($context.abilities),
   );
 </script>
 
@@ -46,7 +54,7 @@
         {#if $context.spellcastingInfo.calculations.rangedMod !== $context.spellcastingInfo.calculations.meleeMod}
           <button
             type="button"
-            on:click={async (ev) =>
+            onclick={async (ev) =>
               await rollRawSpellAttack(
                 ev,
                 $context.actor,
@@ -73,7 +81,7 @@
           </button>
           <button
             type="button"
-            on:click={async (ev) =>
+            onclick={async (ev) =>
               await rollRawSpellAttack(
                 ev,
                 $context.actor,
@@ -101,7 +109,7 @@
         {:else}
           <button
             type="button"
-            on:click={async (ev) =>
+            onclick={async (ev) =>
               await rollRawSpellAttack(
                 ev,
                 $context.actor,
@@ -133,7 +141,7 @@
     <button
       type="button"
       class="transparent-button secondary-footer-field highlight-on-hover"
-      on:click={() =>
+      onclick={() =>
         new MaxPreparedSpellsConfigFormApplication(
           $context.actor,
           $context.spellcastingInfo.currentFilteredClass,

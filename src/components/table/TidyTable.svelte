@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { CONSTANTS } from 'src/constants';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService';
@@ -6,11 +8,25 @@
   import { getContext } from 'svelte';
   import type { MessageBus } from 'src/types/types';
 
-  export let key: string;
-  export let toggleable: boolean = true;
-  export let gridTemplateColumns: string = '';
+  interface Props {
+    key: string;
+    toggleable?: boolean;
+    gridTemplateColumns?: string;
+    header?: import('svelte').Snippet;
+    body?: import('svelte').Snippet;
+    [key: string]: any;
+  }
 
-  let { class: cssClass, ...attributes } = $$restProps;
+  let {
+    key,
+    toggleable = true,
+    gridTemplateColumns = '',
+    header,
+    body,
+    ...rest
+  }: Props = $props();
+
+  let { class: cssClass, ...attributes } = rest;
 
   const messageBus = getContext<MessageBus>(
     CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS,
@@ -20,9 +36,9 @@
 
   const expandCollapseService = ExpandCollapseService.initService(toggleable);
 
-  $: expandedState = expandCollapseService.state;
+  let expandedState = $derived(expandCollapseService.state);
 
-  $: {
+  run(() => {
     if (
       $messageBus?.tabId === tabId &&
       $messageBus?.message === CONSTANTS.MESSAGE_BUS_EXPAND_ALL
@@ -35,7 +51,7 @@
     ) {
       expandCollapseService.set(false);
     }
-  }
+  });
 </script>
 
 <section
@@ -45,10 +61,10 @@
   {...attributes}
   style="--grid-template-columns: {gridTemplateColumns}"
 >
-  <slot name="header" />
+  {@render header?.()}
   <ExpandableContainer expanded={$expandedState.expanded}>
     <div class="item-table-body">
-      <slot name="body" />
+      {@render body?.()}
     </div>
   </ExpandableContainer>
 </section>

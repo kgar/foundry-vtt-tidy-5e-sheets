@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
@@ -29,38 +31,43 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: inventory = SheetSections.configureInventory(
-    $context.inventory,
-    tabId,
-    SheetPreferencesService.getByType($context.actor.type),
-    TidyFlags.sectionConfig.get($context.actor)?.[tabId],
+  let inventory = $derived(
+    SheetSections.configureInventory(
+      $context.inventory,
+      tabId,
+      SheetPreferencesService.getByType($context.actor.type),
+      TidyFlags.sectionConfig.get($context.actor)?.[tabId],
+    ),
   );
 
-  let searchCriteria: string = '';
+  let searchCriteria: string = $state('');
 
   const itemIdsToShow = writable<Set<string> | undefined>(undefined);
   setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
 
-  $: {
+  run(() => {
     $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
       itemContext: $context.itemContext,
       sections: inventory,
       tabId: tabId,
     });
-  }
+  });
 
   const localize = FoundryAdapter.localize;
 
-  let layoutMode: ItemLayoutMode;
-  $: layoutMode = TidyFlags.inventoryGrid.get($context.actor) ? 'grid' : 'list';
+  let layoutMode: ItemLayoutMode = $derived(
+    TidyFlags.inventoryGrid.get($context.actor) ? 'grid' : 'list',
+  );
 
-  $: noItems =
+  let noItems = $derived(
     inventory.some((section: InventorySection) => section.items.length > 0) ===
-    false;
+      false,
+  );
 
-  $: utilityBarCommands =
-    $context.utilities[tabId]?.utilityToolbarCommands ?? [];
+  let utilityBarCommands = $derived(
+    $context.utilities[tabId]?.utilityToolbarCommands ?? [],
+  );
 </script>
 
 <UtilityToolbar>

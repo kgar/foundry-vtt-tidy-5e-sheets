@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type Actor5e } from 'src/types/types';
@@ -14,8 +16,12 @@
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 
-  export let actor: Actor5e;
-  export let useHpOverlay: boolean;
+  interface Props {
+    actor: Actor5e;
+    useHpOverlay: boolean;
+  }
+
+  let { actor, useHpOverlay }: Props = $props();
 
   let context = getContext<
     Readable<ActorSheetContextV1 | ActorSheetContextV2<any>>
@@ -23,9 +29,11 @@
 
   const localize = FoundryAdapter.localize;
 
-  $: actorImageTitle = $context.unlocked
-    ? `${localize('TIDY5E.EditSheetImageHint')} / ${localize('TIDY5E.SheetImageOptionsHint')}`
-    : `${localize('TIDY5E.PreviewSheetImageHint')} / ${localize('TIDY5E.SheetImageOptionsHint')}`;
+  let actorImageTitle = $derived(
+    $context.unlocked
+      ? `${localize('TIDY5E.EditSheetImageHint')} / ${localize('TIDY5E.SheetImageOptionsHint')}`
+      : `${localize('TIDY5E.PreviewSheetImageHint')} / ${localize('TIDY5E.SheetImageOptionsHint')}`,
+  );
 
   function openPortraitPicker(
     event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
@@ -69,10 +77,10 @@
     }
   }
 
-  let portraitContainer: HTMLElement;
+  let portraitContainer: HTMLElement = $state();
   // TODO: Consider sending context menu options down through document context in the first place.
-  let contextMenuOptions: ContextMenuEntry[] = [];
-  $: {
+  let contextMenuOptions: ContextMenuEntry[] = $state([]);
+  run(() => {
     try {
       contextMenuOptions = $context.actorPortraitCommands.map((c) => ({
         name: c.label ?? '',
@@ -86,7 +94,7 @@
         commands: $context.actorPortraitCommands,
       });
     }
-  }
+  });
 </script>
 
 <FloatingContextMenu
@@ -95,12 +103,12 @@
     .ACTOR_PORTRAIT_CONTAINER}]"
   options={contextMenuOptions}
 ></FloatingContextMenu>
-<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
   bind:this={portraitContainer}
   class="portrait"
   class:round-portrait={$context.useRoundedPortraitStyle}
-  on:mousedown={onPortraitClick}
+  onmousedown={onPortraitClick}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTOR_PORTRAIT_CONTAINER}
 >
   <div

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run, preventDefault, stopPropagation } from 'svelte/legacy';
+
   import { CONSTANTS } from 'src/constants';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -14,9 +16,9 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  let allClasses: DropdownListOption[] = [];
+  let allClasses: DropdownListOption[] = $state([]);
 
-  $: {
+  run(() => {
     allClasses = [
       { text: 'DND5E.Spellbook', value: '' },
       ...Object.entries($context.actor.spellcastingClasses).map(
@@ -26,19 +28,24 @@
         }),
       ),
     ];
-  }
+  });
 
   const localize = FoundryAdapter.localize;
 
-  $: selectedClassFilter = TidyFlags.classFilter.get($context.actor) ?? '';
+  let selectedClassFilter = $derived(
+    TidyFlags.classFilter.get($context.actor) ?? '',
+  );
 </script>
 
 <select
   class="class-filter"
-  on:change|stopPropagation|preventDefault={(event) =>
-    $context.actor.update({
-      [TidyFlags.classFilter.prop]: event.currentTarget.value,
-    })}
+  onchange={stopPropagation(
+    preventDefault((event) =>
+      $context.actor.update({
+        [TidyFlags.classFilter.prop]: event.currentTarget.value,
+      }),
+    ),
+  )}
   disabled={!$context.editable}
   data-tidy-field={TidyFlags.classFilter.prop}
 >

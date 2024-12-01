@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
   // TODO: Should I somehow make these thresholds configurable?
   const encumberedPct = (1 / 3) * 100;
   const heavilyEncumberedPct = (2 / 3) * 100;
@@ -10,24 +10,30 @@
   import type { Item5e } from 'src/types/item.types';
   import type { ContainerCapacityContext } from 'src/types/types';
 
-  export let container: Item5e;
-  export let capacity: ContainerCapacityContext;
+  interface Props {
+    container: Item5e;
+    capacity: ContainerCapacityContext;
+  }
 
-  $: readableValue =
+  let { container, capacity }: Props = $props();
+
+  let readableValue = $derived(
     container.system.capacity.type === CONSTANTS.ITEM_CAPACITY_TYPE_WEIGHT
       ? (capacity.value ?? 0).toFixed(1)
-      : Math.ceil(capacity.value ?? 0).toString();
+      : Math.ceil(capacity.value ?? 0).toString(),
+  );
 
-  $: percentage = Math.round(capacity.pct);
+  let percentage = $derived(Math.round(capacity.pct));
 
   const localize = FoundryAdapter.localize;
 
-  $: barSeverity =
+  let barSeverity = $derived(
     percentage > heavilyEncumberedPct
       ? `high`
       : percentage > encumberedPct
         ? `medium`
-        : `low`;
+        : `low`,
+  );
 </script>
 
 <div

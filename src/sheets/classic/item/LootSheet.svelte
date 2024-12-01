@@ -17,16 +17,16 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: appId = $context.document.id;
-
-  let selectedTabId: string;
-
-  $: identifiedLabelWidthCh = Math.max(
-    localize('DND5E.Identified').length,
-    localize('DND5E.Unidentified.Title').length,
-  );
+  let selectedTabId: string = $state();
 
   const localize = FoundryAdapter.localize;
+  let appId = $derived($context.document.id);
+  let identifiedLabelWidthCh = $derived(
+    Math.max(
+      localize('DND5E.Identified').length,
+      localize('DND5E.Unidentified.Title').length,
+    ),
+  );
 </script>
 
 <header class="sheet-header loot-header flexrow gap">

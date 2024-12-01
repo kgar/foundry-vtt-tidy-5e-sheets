@@ -28,25 +28,27 @@
   import { isNil } from 'src/utils/data';
   import ActorLinkIndicator from 'src/components/actor-link-indicator/ActorLinkIndicator.svelte';
 
-  let selectedTabId: string;
+  let selectedTabId: string = $state();
 
   let context = getContext<Readable<NpcSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: sizes = Object.entries($context.config.actorSizes).map(
-    ([abbreviation, size]: [string, any]) => ({
-      value: abbreviation,
-      text: size.label,
-    }),
-  ) satisfies DropdownListOption[];
+  let sizes = $derived(
+    Object.entries($context.config.actorSizes).map(
+      ([abbreviation, size]: [string, any]) => ({
+        value: abbreviation,
+        text: size.label,
+      }),
+    ) satisfies DropdownListOption[],
+  );
 
-  $: currentSize = {
+  let currentSize = $derived({
     value: $context.system.traits.size,
     text: $context.config.actorSizes[$context.system.traits.size]?.label,
-  } satisfies DropdownListOption;
+  } satisfies DropdownListOption);
 
-  $: abilities = Object.entries<any>($context.abilities);
+  let abilities = $derived(Object.entries<any>($context.abilities));
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -102,7 +104,7 @@
               title={localize('DND5E.ChallengeRating')}
             />
           {:else}
-            <!-- svelte-ignore missing-declaration -->
+            <!-- svelte-ignore missing_declaration -->
             {dnd5e.utils.formatCR($context.system.details.cr)}
           {/if}
         </div>
@@ -140,7 +142,7 @@
                     environment: $context.system.details.environment,
                   })}
                 >
-                  <i class="fas fa-tree" />
+                  <i class="fas fa-tree"></i>
                 </span>
               {/if}
             </span>
@@ -169,14 +171,14 @@
           <button
             type="button"
             class="origin-summary-tidy inline-icon-button"
-            on:click={() =>
+            onclick={() =>
               new ActorOriginSummaryConfigFormApplication(
                 $context.actor,
               ).render(true)}
             title={localize('TIDY5E.OriginSummaryConfig')}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
-            <i class="fas fa-cog" />
+            <i class="fas fa-cog"></i>
           </button>
         {/if}
       </div>
@@ -205,7 +207,7 @@
   </div>
 </header>
 <Tabs tabs={$context.tabs} bind:selectedTabId>
-  <svelte:fragment slot="tab-end">
+  {#snippet tabEnd()}
     {#if $context.editable}
       <SheetEditModeToggle
         hint={$settingStore.permanentlyUnlockNpcSheetForGm &&
@@ -214,7 +216,7 @@
           : null}
       />
     {/if}
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 <section class="tidy-sheet-body">
   <TabContents tabs={$context.tabs} {selectedTabId} />

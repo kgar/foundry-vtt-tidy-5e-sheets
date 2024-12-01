@@ -11,12 +11,19 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  export let toggleable: boolean = false;
-  export let actor: Actor5e;
-  export let expanded: boolean = true;
-  export let toggleField: string | null = null;
+  interface Props {
+    toggleable?: boolean;
+    actor: Actor5e;
+    expanded?: boolean;
+    toggleField?: string | null;
+  }
 
-  $: showAllSkills = !toggleable || expanded;
+  let {
+    toggleable = false,
+    actor,
+    expanded = true,
+    toggleField = null,
+  }: Props = $props();
 
   let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -29,35 +36,31 @@
     skill: any | null;
   };
 
-  let skillRefs: SkillRef[];
-  $: {
-    skillRefs = Array.from(Object.entries($context.config.skills)).reduce<
-      SkillRef[]
-    >((prev, [key, configSkill]: [string, any]) => {
-      const skill = getSkill(key);
+  let skillRefs: SkillRef[] = $derived(
+    Array.from(Object.entries($context.config.skills)).reduce<SkillRef[]>(
+      (prev, [key, configSkill]: [string, any]) => {
+        const skill = getSkill(key);
 
-      if (!skill) {
-        warn(
-          'Unable to find skill. Ensure custom skills are added at "init" time.',
-          false,
-          { key, configSkill },
-        );
+        if (!skill) {
+          warn(
+            'Unable to find skill. Ensure custom skills are added at "init" time.',
+            false,
+            { key, configSkill },
+          );
+          return prev;
+        }
+
+        prev.push({
+          key: key,
+          label: configSkill.label,
+          ability: skill.ability,
+          skill: skill,
+        });
+
         return prev;
-      }
-
-      prev.push({
-        key: key,
-        label: configSkill.label,
-        ability: skill.ability,
-        skill: skill,
-      });
-
-      return prev;
-    }, []);
-  }
-
-  $: abilities = FoundryAdapter.getAbilitiesAsDropdownOptions(
-    $context.abilities,
+      },
+      [],
+    ),
   );
 
   const localize = FoundryAdapter.localize;
@@ -97,6 +100,11 @@
       },
     });
   }
+  let showAllSkills = $derived(!toggleable || expanded);
+
+  let abilities = $derived(
+    FoundryAdapter.getAbilitiesAsDropdownOptions($context.abilities),
+  );
 </script>
 
 <div class="skills-list-container">
@@ -106,7 +114,8 @@
   >
     {#each skillRefs as skillRef (skillRef.key)}
       {@const showSkill =
-        skillRef.skill && (showAllSkills || skillRef.skill.prof.hasProficiency > 0)}
+        skillRef.skill &&
+        (showAllSkills || skillRef.skill.prof.hasProficiency > 0)}
 
       {#if showSkill}
         <li
@@ -124,7 +133,7 @@
             <button
               type="button"
               class="configure-proficiency inline-icon-button"
-              on:click={() =>
+              onclick={() =>
                 FoundryAdapter.renderSkillToolConfig(
                   $context.actor,
                   'skills',
@@ -135,19 +144,19 @@
                 .SKILL_CONFIGURATION_CONTROL}
               tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             >
-              <i class="fas fa-cog" />
+              <i class="fas fa-cog"></i>
             </button>
             <button
               type="button"
               class="skill-proficiency-toggle inline-icon-button"
-              on:click={() =>
+              onclick={() =>
                 FoundryAdapter.cycleProficiency(
                   $context.actor,
                   skillRef.key,
                   skillRef.skill?.value,
                   'skills',
                 )}
-              on:contextmenu={() =>
+              oncontextmenu={() =>
                 FoundryAdapter.cycleProficiency(
                   $context.actor,
                   skillRef.key,
@@ -173,7 +182,7 @@
             <button
               type="button"
               class="tidy5e-skill-name transparent-button rollable"
-              on:click={(event) =>
+              onclick={(event) =>
                 $context.actor.rollSkill({ skill: skillRef.key, event })}
               data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_ROLLER}
               tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
@@ -217,7 +226,7 @@
       <button
         type="button"
         class="toggle-proficient inline-transparent-button"
-        on:click={toggleShowAllSkills}
+        onclick={toggleShowAllSkills}
         data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
           .SKILLS_SHOW_PROFICIENT_TOGGLE}
         tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}

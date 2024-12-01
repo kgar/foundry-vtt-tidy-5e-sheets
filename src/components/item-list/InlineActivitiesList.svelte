@@ -16,10 +16,14 @@
   import { settingStore } from 'src/settings/settings';
   import { Activities } from 'src/features/activities/activities';
 
-  export let item: Item5e | null = null;
-  export let inlineToggleService: InlineToggleService;
+  interface Props {
+    item?: Item5e | null;
+    inlineToggleService: InlineToggleService;
+  }
 
-  $: inlineToggleServiceStore = inlineToggleService.store;
+  let { item = null, inlineToggleService }: Props = $props();
+
+  let inlineToggleServiceStore = $derived(inlineToggleService.store);
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
@@ -55,7 +59,7 @@
       toggleable={false}
       {gridTemplateColumns}
     >
-      <svelte:fragment slot="body">
+      {#snippet body()}
         {#each item.system.activities.contents as activity (activity.id)}
           {@const configurable = Activities.isConfigurable(activity)}
           <TidyTableRow
@@ -71,7 +75,7 @@
               <button
                 type="button"
                 class="inline-activity-roll-button highlight-on-hover"
-                on:click={(ev) => rollActivity(activity, ev)}
+                onclick={(ev) => rollActivity(activity, ev)}
                 tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
               >
                 {#if activity.img?.endsWith('.svg')}
@@ -96,7 +100,7 @@
             </TidyTableCell>
           </TidyTableRow>
         {/each}
-      </svelte:fragment>
+      {/snippet}
     </TidyTable>
   </div>
 </ExpandableContainer>

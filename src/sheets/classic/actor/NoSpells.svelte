@@ -7,8 +7,12 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  export let editable: boolean;
-  export let cssClass: string | null = null;
+  interface Props {
+    editable: boolean;
+    cssClass?: string | null;
+  }
+
+  let { editable, cssClass = null }: Props = $props();
 
   let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -23,11 +27,11 @@
     <button
       type="button"
       class="create-spell-btn flex-row align-items-center extra-small-gap"
-      on:click={() =>
+      onclick={() =>
         FoundryAdapter.createItem({ type: 'spell', level: '' }, $context.actor)}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
-      <i class="fas fa-plus-circle" />
+      <i class="fas fa-plus-circle"></i>
       {localize('DND5E.SpellCreate')}
     </button>
   {/if}

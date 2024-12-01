@@ -10,8 +10,8 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: hitDice = $context.system.attributes.hd;
-  $: actorLevel = $context.system.details.level;
+  let hitDice = $derived($context.system.attributes.hd);
+  let actorLevel = $derived($context.system.details.level);
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -26,7 +26,7 @@
   <button
     type="button"
     class="current-hd config-button transparent-button"
-    on:click={$context.editable &&
+    onclick={$context.editable &&
       FoundryAdapter.renderHitDiceConfig($context.actor)}
     disabled={!$context.editable}
     tabindex={!$settingStore.useDefaultSheetHpTabbing &&

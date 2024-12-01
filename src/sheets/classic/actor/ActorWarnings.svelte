@@ -5,7 +5,11 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  export let warnings: any;
+  interface Props {
+    warnings: any;
+  }
+
+  let { warnings }: Props = $props();
 
   let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -19,7 +23,7 @@
         <button
           type="button"
           class="inline-transparent-button"
-          on:click={(ev) => $context.actor.sheet._onWarningLink(ev)}
+          onclick={(ev) => $context.actor.sheet._onWarningLink(ev)}
           tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           data-target={warning.link}>{warning.message}</button
         >

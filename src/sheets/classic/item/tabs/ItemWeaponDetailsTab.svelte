@@ -18,7 +18,7 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: appId = $context.document.id;
+  let appId = $derived($context.document.id);
 
   const localize = FoundryAdapter.localize;
 </script>

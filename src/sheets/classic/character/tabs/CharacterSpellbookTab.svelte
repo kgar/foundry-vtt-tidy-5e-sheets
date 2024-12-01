@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     CharacterSheetContext,
@@ -33,32 +35,16 @@
   );
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
-  $: spellbook = SheetSections.configureSpellbook(
-    $context.actor,
-    tabId,
-    $context.spellbook,
-  );
-
   const itemIdsToShow = writable<Set<string> | undefined>(undefined);
   setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
 
-  $: {
-    $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
-      criteria: searchCriteria,
-      itemContext: $context.itemContext,
-      sections: spellbook,
-      tabId: tabId,
-    });
-  }
-
   const localize = FoundryAdapter.localize;
 
-  let searchCriteria: string = '';
+  let searchCriteria: string = $state('');
 
-  let layoutMode: ItemLayoutMode;
-  $: layoutMode = TidyFlags.spellbookGrid.get($context.actor) ? 'grid' : 'list';
-
-  $: selectedClassFilter = TidyFlags.classFilter.get($context.actor) ?? '';
+  let layoutMode: ItemLayoutMode = $derived(
+    TidyFlags.spellbookGrid.get($context.actor) ? 'grid' : 'list',
+  );
 
   function tryFilterByClass(spells: any[]) {
     if (
@@ -74,17 +60,32 @@
     );
   }
 
-  $: noSpellLevels = !$context.spellbook.length;
+  let spellbook = $derived(
+    SheetSections.configureSpellbook($context.actor, tabId, $context.spellbook),
+  );
+  run(() => {
+    $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
+      criteria: searchCriteria,
+      itemContext: $context.itemContext,
+      sections: spellbook,
+      tabId: tabId,
+    });
+  });
 
-  $: noSpells =
+  let selectedClassFilter = $derived(
+    TidyFlags.classFilter.get($context.actor) ?? '',
+  );
+  let noSpellLevels = $derived(!$context.spellbook.length);
+  let noSpells = $derived(
     spellbook.reduce(
       (count: number, section: SpellbookSection) =>
         count + section.spells.length,
       0,
-    ) === 0;
-
-  $: utilityBarCommands =
-    $context.utilities[tabId]?.utilityToolbarCommands ?? [];
+    ) === 0,
+  );
+  let utilityBarCommands = $derived(
+    $context.utilities[tabId]?.utilityToolbarCommands ?? [],
+  );
 </script>
 
 <UtilityToolbar>

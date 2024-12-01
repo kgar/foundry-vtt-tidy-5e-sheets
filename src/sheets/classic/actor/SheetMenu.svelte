@@ -10,7 +10,11 @@
   import type { ActorSheetContextV1 } from 'src/types/types';
   import { ApplicationsManager } from 'src/applications/ApplicationsManager';
   import { CONSTANTS } from 'src/constants';
-  export let defaultSettingsTab: string | undefined = undefined;
+  interface Props {
+    defaultSettingsTab?: string | undefined;
+  }
+
+  let { defaultSettingsTab = undefined }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 

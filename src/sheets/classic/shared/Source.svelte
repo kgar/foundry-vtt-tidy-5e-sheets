@@ -3,13 +3,17 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
 
-  export let document: any;
-  export let keyPath: string;
-  export let editable: boolean;
+  interface Props {
+    document: any;
+    keyPath: string;
+    editable: boolean;
+  }
 
-  $: keyPathToCustom = `${keyPath}.custom`;
+  let { document, keyPath, editable }: Props = $props();
 
-  $: source = FoundryAdapter.getProperty<any>(document, keyPath);
+  let keyPathToCustom = $derived(`${keyPath}.custom`);
+
+  let source = $derived(FoundryAdapter.getProperty<any>(document, keyPath));
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -32,9 +36,9 @@
     <button
       type="button"
       class="inline-icon-button config-button"
-      on:click={() => FoundryAdapter.renderSourceConfig(document, keyPath)}
+      onclick={() => FoundryAdapter.renderSourceConfig(document, keyPath)}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-      ><i class="fas fa-cog" /></button
+      ><i class="fas fa-cog"></i></button
     >
   {/if}
 </div>

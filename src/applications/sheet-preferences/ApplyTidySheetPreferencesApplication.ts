@@ -1,4 +1,4 @@
-import type { SvelteComponent } from 'svelte';
+import type { SvelteComponent, mount } from 'svelte';
 import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
 import ApplyTidySheetPreferences from './ApplyTidySheetPreferences.svelte';
 import { Tidy5eCharacterSheet } from 'src/sheets/classic/Tidy5eCharacterSheet';
@@ -40,7 +40,7 @@ export class ApplyTidySheetPreferencesApplication extends SvelteFormApplicationB
   }
 
   createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
-    return new ApplyTidySheetPreferences({
+    return mount(ApplyTidySheetPreferences, {
       target: node,
       props: {
         options: this.getTidySheetPreferenceOptions(),
@@ -89,7 +89,8 @@ export class ApplyTidySheetPreferencesApplication extends SvelteFormApplicationB
         );
 
         const isDefault =
-          tidySheetClass === foundry.utils.getProperty(setting, `${documentName}.${subType}`);
+          tidySheetClass ===
+          foundry.utils.getProperty(setting, `${documentName}.${subType}`);
 
         sheetClassOptions.push({
           label: typeLabel,

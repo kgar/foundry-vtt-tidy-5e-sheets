@@ -1,4 +1,4 @@
-import type { SvelteComponent } from 'svelte';
+import type { SvelteComponent, mount } from 'svelte';
 import { CONSTANTS } from 'src/constants';
 import ContainerSheet from './container/ContainerSheet.svelte';
 import type {
@@ -109,7 +109,7 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
       [CONSTANTS.SVELTE_CONTEXT.SEARCH_FILTERS, new Map(this.searchFilters)],
     ]);
 
-    const component = new ContainerSheet({
+    const component = mount(ContainerSheet, {
       target: node,
       context: context,
     });
@@ -140,7 +140,7 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
   _createAdditionalComponents(node: HTMLElement) {
     const windowHeader = this.element.querySelector('.window-header');
 
-    const sheetLock = new ItemHeaderStart({
+    const sheetLock = mount(ItemHeaderStart, {
       target: windowHeader,
       anchor: windowHeader.querySelector('.window-title'),
       context: new Map<string, any>([

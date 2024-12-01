@@ -21,16 +21,31 @@
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
 
-  export let item: Item5e | null = null;
-  export let effect: ActiveEffect5e | ActiveEffectContext | null = null;
-  export let favoriteId: string | null = null;
-  export let contextMenu: { type: string; uuid: string } | null = null;
-  export let cssClass: string = '';
-  export let itemCardContentTemplate: ItemCardContentComponent | null = null;
-  export let hidden: boolean = false;
-  export let getDragData: (() => any) | null = null;
+  interface Props {
+    item?: Item5e | null;
+    effect?: ActiveEffect5e | ActiveEffectContext | null;
+    favoriteId?: string | null;
+    contextMenu?: { type: string; uuid: string } | null;
+    cssClass?: string;
+    itemCardContentTemplate?: ItemCardContentComponent | null;
+    hidden?: boolean;
+    getDragData?: (() => any) | null;
+    children?: import('svelte').Snippet<[any]>;
+  }
 
-  $: draggable = item ?? effect;
+  let {
+    item = null,
+    effect = null,
+    favoriteId = null,
+    contextMenu = null,
+    cssClass = '',
+    itemCardContentTemplate = null,
+    hidden = false,
+    getDragData = null,
+    children,
+  }: Props = $props();
+
+  let draggable = $derived(item ?? effect);
 
   const emptyChatData: ItemChatData = {
     description: { value: '' },
@@ -56,8 +71,8 @@
   let card: Writable<ItemCardStore> | undefined = getContext<
     Writable<ItemCardStore>
   >(CONSTANTS.SVELTE_CONTEXT.CARD);
-  let showSummary = false;
-  let chatData: ItemChatData | undefined;
+  let showSummary = $state(false);
+  let chatData: ItemChatData | undefined = $state();
 
   async function toggleSummary(actor: Actor5e) {
     if (!item) {
@@ -149,7 +164,7 @@
   });
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
   class="item-table-row-container"
   class:hidden
@@ -158,10 +173,10 @@
   data-context-menu-document-uuid={contextMenu?.uuid}
   data-effect-id={effect?.id}
   data-parent-id={effect?.parentId ?? effect?.parent?.id}
-  on:mousedown={(event) => dispatcher('mousedown', event)}
-  on:mouseenter={onMouseEnter}
-  on:mouseleave={onMouseLeave}
-  on:dragstart={handleDragStart}
+  onmousedown={(event) => dispatcher('mousedown', event)}
+  onmouseenter={onMouseEnter}
+  onmouseleave={onMouseLeave}
+  ondragstart={handleDragStart}
   draggable={!!draggable}
   data-item-id={item?.id}
   data-tidy-table-row
@@ -170,7 +185,7 @@
   data-favorite-id={favoriteId ?? null}
 >
   <div class="item-table-row {cssClass ?? ''}">
-    <slot {toggleSummary} />
+    {@render children?.({ toggleSummary })}
   </div>
   <ExpandableContainer expanded={showSummary}>
     <ItemSummary chatData={chatData ?? emptyChatData} {item} />

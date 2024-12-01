@@ -8,7 +8,11 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  export let modifications: DamageModificationContextEntry[];
+  interface Props {
+    modifications: DamageModificationContextEntry[];
+  }
+
+  let { modifications }: Props = $props();
 
   let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,

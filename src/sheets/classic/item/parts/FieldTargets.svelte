@@ -13,7 +13,7 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  $: appId = $context.document.id;
+  let appId = $derived($context.document.id);
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -192,7 +192,9 @@
     <div class="form-fields">
       <!-- Amount -->
       <div class="form-field label-top">
-        <label for="{appId}-target-template-count">{localize('DND5E.Amount')}</label>
+        <label for="{appId}-target-template-count"
+          >{localize('DND5E.Amount')}</label
+        >
         <TextInput
           id="{appId}-target-template-count"
           document={$context.item}

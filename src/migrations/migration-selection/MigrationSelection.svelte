@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import type { SelectableMigrationSelectionParams } from './migration-selection.types';
   import TidyTable from 'src/components/table/TidyTable.svelte';
   import TidyTableCell from 'src/components/table/TidyTableCell.svelte';
@@ -8,31 +10,44 @@
   import Search from 'src/components/utility-bar/Search.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
-  export let params: SelectableMigrationSelectionParams<any>;
+  interface Props {
+    params: SelectableMigrationSelectionParams<any>;
+  }
 
-  let searchCriteria: string = '';
+  let { params }: Props = $props();
 
-  $: visibleSelectablesIdSubset = new Set<string>(
-    params.selectables
-      .filter(
-        (s) =>
-          searchCriteria.trim() === '' ||
-          s.document.name?.toLowerCase().includes(searchCriteria.toLowerCase()),
-      )
-      .map((d) => d.document.id),
+  let searchCriteria: string = $state('');
+
+  let visibleSelectablesIdSubset = $derived(
+    new Set<string>(
+      params.selectables
+        .filter(
+          (s) =>
+            searchCriteria.trim() === '' ||
+            s.document.name
+              ?.toLowerCase()
+              .includes(searchCriteria.toLowerCase()),
+        )
+        .map((d) => d.document.id),
+    ),
   );
 
-  let gridTemplateColumns: string;
+  let gridTemplateColumns: string = $state();
 
-  $: {
+  run(() => {
     gridTemplateColumns = `/* Select */ 2.5rem`;
     params.columns.forEach((c) => {
       const measurement = c.cellWidth === 'primary' ? '1fr' : c.cellWidth;
       gridTemplateColumns += ` /* ${c.name} */ ${measurement}`;
     });
-  }
-  $: totalSelected = params.selectables.filter((t) => t.selected).length;
-  $: allSelected = totalSelected >= params.selectables.length;
+  });
+  let totalSelected = $derived(
+    params.selectables.filter((t) => t.selected).length,
+  );
+  let allSelected;
+  run(() => {
+    allSelected = totalSelected >= params.selectables.length;
+  });
 
   function onMigrateClicked() {
     const selectedTargets = params.selectables
@@ -54,18 +69,14 @@
     <Search bind:value={searchCriteria} />
   </div>
   <div role="presentation" class="scroll-container">
-    <TidyTable
-      key="bulk-selection"
-      toggleable={false}
-      {gridTemplateColumns}
-    >
-      <svelte:fragment slot="header">
+    <TidyTable key="bulk-selection" toggleable={false} {gridTemplateColumns}>
+      {#snippet header()}
         <TidyTableHeaderRow>
           <TidyTableHeaderCell>
             <input
               type="checkbox"
               bind:checked={allSelected}
-              on:click={() => toggleAll()}
+              onclick={() => toggleAll()}
               title={localize(
                 'TIDY5E.Settings.Migrations.Selection.SelectAllNoneTooltip',
               )}
@@ -77,8 +88,8 @@
             </TidyTableHeaderCell>
           {/each}
         </TidyTableHeaderRow>
-      </svelte:fragment>
-      <svelte:fragment slot="body">
+      {/snippet}
+      {#snippet body()}
         {#each params.selectables as selectable}
           <TidyTableRow
             hidden={!visibleSelectablesIdSubset.has(selectable.document.id)}
@@ -103,7 +114,7 @@
                   {#if field.onClick}
                     <button
                       type="button"
-                      on:click={() => field.onClick?.(selectable.document)}
+                      onclick={() => field.onClick?.(selectable.document)}
                       class="inline-transparent-button"
                     >
                       {text}
@@ -116,7 +127,7 @@
             {/each}
           </TidyTableRow>
         {/each}
-      </svelte:fragment>
+      {/snippet}
     </TidyTable>
   </div>
   <footer>
@@ -125,7 +136,7 @@
         total: totalSelected,
       })}
     </p>
-    <button on:click={() => onMigrateClicked()}
+    <button onclick={() => onMigrateClicked()}
       >{localize('TIDY5E.ButtonConfirm.Text')}</button
     >
   </footer>

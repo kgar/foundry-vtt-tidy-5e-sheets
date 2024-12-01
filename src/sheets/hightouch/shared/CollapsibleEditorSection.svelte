@@ -5,11 +5,15 @@
   import GoldHeaderUnderline from './GoldHeaderUnderline.svelte';
   import type { ItemDescription } from 'src/types/item.types';
 
-  export let expanded: boolean;
-  export let document: any;
-  export let itemDescription: ItemDescription;
+  interface Props {
+    expanded: boolean;
+    document: any;
+    itemDescription: ItemDescription;
+  }
 
-  $: showIndicator = !isNil(itemDescription.enriched, '');
+  let { expanded = $bindable(), document, itemDescription }: Props = $props();
+
+  let showIndicator = $derived(!isNil(itemDescription.enriched, ''));
 
   const dispatcher = createEventDispatcher<{
     edit: { document: any; itemDescription: ItemDescription };
@@ -45,7 +49,7 @@
 <section class="collapsible-editor">
   <!-- Header -->
   <header>
-    <a class="title" on:click={() => (expanded = !expanded)}>
+    <a class="title" onclick={() => (expanded = !expanded)}>
       <!-- Title -->
       {itemDescription.label}
       {#if showIndicator}
@@ -56,7 +60,7 @@
     <!-- Journal Edit Button -->
     <a
       class="edit icon-button"
-      on:click={() => dispatcher('edit', { document, itemDescription })}
+      onclick={() => dispatcher('edit', { document, itemDescription })}
     >
       <i class="fas fa-feather fa-fw"></i>
     </a>
