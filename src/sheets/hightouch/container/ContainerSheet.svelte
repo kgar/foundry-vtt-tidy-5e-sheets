@@ -61,7 +61,7 @@
         checked={$context.system.equipped}
         checkedIconClass="fas fa-hand-fist equip-icon fa-fw"
         uncheckedIconClass="far fa-hand fa-fw"
-        on:change={(ev) =>
+        onchange={(ev) =>
           console.log(
             $context.item.update({
               'system.equipped': ev.currentTarget?.checked,
@@ -77,7 +77,7 @@
           checked={$context.system.attuned}
           checkedIconClass="fas fa-sun equip-icon fa-fw"
           uncheckedIconClass="fas fa-sun equip-icon fa-fw"
-          on:change={(ev) =>
+          onchange={(ev) =>
             console.log(
               $context.item.update({
                 'system.attuned': ev.currentTarget?.checked,
@@ -94,7 +94,7 @@
           checked={$context.system.identified}
           checkedIconClass="fas fa-search fa-fw"
           uncheckedIconClass="fas fa-search fa-fw"
-          on:change={(ev) =>
+          onchange={(ev) =>
             console.log(
               $context.item.update({
                 'system.identified': ev.currentTarget?.checked,
