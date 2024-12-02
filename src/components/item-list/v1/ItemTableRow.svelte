@@ -189,6 +189,8 @@
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_TABLE_ROW}
   data-tidy-item-type={item?.type ?? 'unknown'}
   data-favorite-id={favoriteId ?? null}
+  data-info-card={item ? 'item' : null}
+  data-info-card-entity-uuid={item?.uuid ?? null}
 >
   <div class="item-table-row {cssClass ?? ''}">
     {@render children?.({ toggleSummary })}

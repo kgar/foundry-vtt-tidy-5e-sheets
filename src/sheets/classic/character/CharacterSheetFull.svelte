@@ -20,13 +20,13 @@
   import ActorHeaderStats from '../actor/ActorHeaderStats.svelte';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
   import { settingStore } from 'src/settings/settings';
   import InlineCreatureType from '../shared/InlineCreatureType.svelte';
   import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
   import ActorName from '../actor/ActorName.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
+  import InfoCardV2 from 'src/components/item-info-card/InfoCardV2.svelte';
 
   let selectedTabId: string = $state('');
   let context = getContext<Readable<CharacterSheetContext>>(
@@ -64,7 +64,12 @@
   } satisfies DropdownListOption);
 </script>
 
-<ItemInfoCard />
+<InfoCardV2
+  sheet={$context.sheet}
+  floating={$settingStore.itemCardsAreFloating}
+  delay={$settingStore.itemCardsDelay}
+  fixKey={$settingStore.itemCardsFixKey}
+/>
 
 {#if $context.viewableWarnings.length}
   <ActorWarnings warnings={$context.viewableWarnings} />

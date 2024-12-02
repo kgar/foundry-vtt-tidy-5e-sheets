@@ -11,7 +11,7 @@
   import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
   import { warn } from 'src/utils/logging';
   import { settingStore } from 'src/settings/settings';
-  import { getItemCardContentTemplate } from './item-info-card';
+  import { getItemCardContentTemplate } from './item-info-card.svelte';
   import { ItemSummaryRuntime } from 'src/runtime/ItemSummaryRuntime';
   import ItemSummaryCommandButtonList from '../item-summary/ItemSummaryCommandButtonList.svelte';
   import { CONSTANTS } from 'src/constants';

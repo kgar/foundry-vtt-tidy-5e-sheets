@@ -66,6 +66,8 @@
             rowAttributes={{
               'data-activity-id': activity.id,
               'data-configurable': configurable,
+              'data-info-card': 'activity',
+              'data-info-card-entity-uuid': activity.uuid,
             }}
             rowClass="activity"
             onmousedown={(event) =>

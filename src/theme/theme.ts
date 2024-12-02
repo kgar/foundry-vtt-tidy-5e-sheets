@@ -10,6 +10,7 @@ import { defaultDarkTheme } from './default-dark-theme';
 import { defaultLightTheme } from './default-light-theme';
 import { Colord } from 'colord';
 import { CONSTANTS } from 'src/constants';
+import type { Item5e } from 'src/types/item.types';
 
 export function applyTheme(
   theme: Tidy5eTheme,
@@ -188,4 +189,14 @@ export function extractSettingsUpdateDeltaFromTheme(
 
 export function validateImportFile(theme: Tidy5eThemeDataV1) {
   return theme.version === 1 && typeof theme.variables === 'object';
+}
+
+export function getInventoryItemThemeBackground(item: Item5e) {
+  if (item?.system?.equipped) {
+    return '--t5e-equipped-background';
+  }
+}
+
+export function getSpellItemThemeBackground(item: Item5e) {
+  // TODO
 }

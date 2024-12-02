@@ -20,7 +20,12 @@
 - [x] Eliminate `createBubbler` calls by specifying event handler props
 - [x] look for `svelte/legacy` imports and resolve
 - [x] Eliminate `createEventDispatcher` uses
-- [ ] Fix item card effect depth error
+- [x] Fix item card effect depth error by making new info card framework with revamped setup
+- [ ] Finish item card revamp
+  - [ ] Finish Spell Info Cards
+  - [ ] Plant all item attributes for actors, containers
+  - [ ] Plant all activity attributes for actors, containers, items
+  - [ ] Anything else?
 - [ ] Replace stores with runes
 - [ ] Ensure context API where reactivity is expected is using runes
 - [ ] Resolve `kgar-migration-task` content

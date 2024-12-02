@@ -81,6 +81,8 @@
           'data-activity-id': activity.id,
           'data-configurable': Activities.isConfigurable(activity),
           'data-item-id': activity.item.id,
+          'data-info-card': 'activity',
+          'data-info-card-entity-uuid': activity.uuid,
         }}
         onmousedown={(ev) => FoundryAdapter.editOnMiddleClick(ev, activity)}
         hidden={visibleActivityUuidSubset !== null &&

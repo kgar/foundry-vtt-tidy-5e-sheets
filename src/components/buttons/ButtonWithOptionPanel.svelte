@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { longpress } from 'src/actions/longpress';
+  import { longpress } from 'src/actions/longpress.svelte';
   import { tick, type Snippet } from 'svelte';
   import type { MouseEventHandler } from 'svelte/elements';
 
