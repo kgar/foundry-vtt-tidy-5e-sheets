@@ -5,7 +5,7 @@ import {
   type ApplicationRenderOptions,
 } from 'src/types/application.types';
 import type { SvelteComponent } from 'svelte';
-import GroupSheet from './group/GroupSheet.svelte';
+import GroupSheet from '../group/GroupSheet.svelte';
 import type {
   ActivityItemContext,
   Actor5e,

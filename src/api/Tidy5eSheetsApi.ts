@@ -27,7 +27,7 @@ import { CONSTANTS } from 'src/constants';
 import { CustomContentManager } from 'src/runtime/content/CustomContentManager';
 import { ConfigApi } from './config/ConfigApi';
 import { GroupSheetRuntime } from 'src/runtime/GroupSheetRuntime';
-import { Tidy5eGroupSheetClassic } from 'src/sheets/Tidy5eGroupSheetClassic';
+import { Tidy5eGroupSheetClassic } from 'src/sheets/classic/Tidy5eGroupSheetClassic';
 import { Tidy5eItemSheetClassic } from 'src/sheets/Tidy5eItemSheetClassic';
 import { Tidy5eContainerSheetClassic } from 'src/sheets/Tidy5eContainerSheetClassic';
 import { HeaderControlsRuntime } from 'src/runtime/header-controls/HeaderControlsRuntime';

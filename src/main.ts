@@ -14,7 +14,7 @@ import { MigrationTally } from 'src/migrations/MigrationTally';
 import { setupIntegrations } from './integration/integration';
 import { TidyHooks } from './foundry/TidyHooks';
 import { initKeybindings } from './keybindings/keybind-init';
-import { Tidy5eGroupSheetClassic } from './sheets/Tidy5eGroupSheetClassic';
+import { Tidy5eGroupSheetClassic } from './sheets/classic/Tidy5eGroupSheetClassic';
 import { DebugTools } from './utils/DebugTools';
 import { Tidy5eContainerSheetClassic } from './sheets/Tidy5eContainerSheetClassic';
 import { initReadyHooks } from './features/ready-hooks';

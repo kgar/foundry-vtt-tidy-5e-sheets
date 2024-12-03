@@ -7,7 +7,7 @@ import { Tidy5eVehicleSheet } from 'src/sheets/Tidy5eKgarVehicleSheet';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { debug, error } from 'src/utils/logging';
 import { Tidy5eItemSheetClassic } from 'src/sheets/Tidy5eItemSheetClassic';
-import { Tidy5eGroupSheetClassic } from 'src/sheets/Tidy5eGroupSheetClassic';
+import { Tidy5eGroupSheetClassic } from 'src/sheets/classic/Tidy5eGroupSheetClassic';
 import { Tidy5eContainerSheetClassic } from 'src/sheets/Tidy5eContainerSheetClassic';
 
 export type SheetPreferenceOption = {
