@@ -50,6 +50,8 @@
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
         draggable="true"
         ondragstart={(ev) => handleDragStart(ev, activity.id)}
+        data-info-card="activity"
+        data-info-card-entity-uuid={activity.uuid}
       >
         <div class="icon" class:svg={activity.img.svg}>
           {#if activity.img.svg}

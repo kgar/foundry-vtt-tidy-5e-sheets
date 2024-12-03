@@ -6,7 +6,8 @@
   // TODO: Remove when App V2 migration completed
   form {
     height: 100%;
-    overflow: hidden;
+    // TODO: Test and ensure this won't be a problem
+    // overflow: hidden;
 
     .hint {
       color: var(--t5e-secondary-color);

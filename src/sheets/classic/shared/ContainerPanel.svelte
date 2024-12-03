@@ -56,6 +56,8 @@
         : container.name}
       class:hidden={!visibleContainersIdsSubset.has(container.id)}
       aria-hidden={!visibleContainersIdsSubset.has(container.id)}
+      data-info-card={'item'}
+      data-info-card-entity-uuid={container.uuid}
     >
       <button
         type="button"

@@ -49,6 +49,8 @@
       <!-- svelte-ignore a11y_missing_attribute -->
       <a
         onclick={() => $context.editable && editCraftingItem(chosen.craft.uuid)}
+        data-info-card={'item'}
+        data-info-card-entity-uuid={chosen.craft.uuid}
       >
         <img
           class="crafting-item"

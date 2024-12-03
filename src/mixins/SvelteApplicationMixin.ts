@@ -226,31 +226,37 @@ export function SvelteApplicationMixin<
     async _renderFrame(options: ApplicationRenderOptions) {
       const element = await super._renderFrame(options);
 
-      try {
-        // Support Tidy's common window attributes
-        applySheetAttributesToWindow(
-          this.document.documentName,
-          this.document.uuid,
-          this.document.type,
-          element
-        );
+      if (this.document) {
+        try {
+          // Support Tidy's common window attributes
+          applySheetAttributesToWindow(
+            this.document.documentName,
+            this.document.uuid,
+            this.document.type,
+            element
+          );
 
-        // Support injected named inputs
-        element.addEventListener(
-          'change',
-          (ev: InputEvent & { target: HTMLElement }) => {
-            if (
-              ev.target.matches('input[name], textarea[name], select[name]')
-            ) {
-              this.submit();
+          // Support injected named inputs
+          element.addEventListener(
+            'change',
+            (ev: InputEvent & { target: HTMLElement }) => {
+              if (
+                ev.target.matches('input[name], textarea[name], select[name]')
+              ) {
+                this.submit();
+              }
             }
-          }
-        );
-      } catch (e) {
-        error(
-          'An error occurred while preparing the rendered frame of the application.',
-          false,
-          { error: e, sheet: this }
+          );
+        } catch (e) {
+          error(
+            'An error occurred while preparing the rendered frame of the application.',
+            false,
+            { error: e, sheet: this }
+          );
+        }
+      } else {
+        debug(
+          'Skipping common window attributes and form submit shim. No document provided.'
         );
       }
 
@@ -379,6 +385,7 @@ export function SvelteApplicationMixin<
       if (event.type !== 'change') {
         return;
       }
+
       if (!this.document) {
         return;
       }
@@ -532,6 +539,16 @@ export function SvelteApplicationMixin<
             buttons: number[];
           }
       > = {};
+
+      // TODO: Figure out how we're going to handle this for apps without documents. Having it in the core mixin seems wrong.
+      if (!document) {
+        debug('Skipping custom header controls. No document provided');
+        return {
+          actions,
+          controls,
+        };
+      }
+
       const customControls = HeaderControlsRuntime.getHeaderControls({
         documentName: document.documentName,
         documentType: document.type,

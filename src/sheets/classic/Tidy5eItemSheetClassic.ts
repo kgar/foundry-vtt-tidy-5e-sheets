@@ -171,10 +171,11 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
         .filter((a: any) => {
           return Activities.isConfigurable(a);
         })
-        .map(({ _id: id, name, img, sort }: any) => ({
+        .map(({ _id: id, name, img, sort, uuid }: any) => ({
           id,
           name,
           sort,
+          uuid,
           img: { src: img, svg: img?.endsWith('.svg') },
         }))
         .sort((a: any, b: any) => a.sort - b.sort),

@@ -61,15 +61,6 @@ export class ItemSheetRuntime {
   }
 
   static sheets: Record<string, ItemSheetInfo> = {
-    [CONSTANTS.ITEM_TYPE_EQUIPMENT]: {
-      Sheet: EquipmentSheet,
-      defaultTabs: () => [
-        itemSheetTabs.descriptionWithSidebar,
-        itemSheetTabs.equipmentDetails,
-        itemSheetTabs.activities,
-        itemSheetTabs.effects,
-      ],
-    },
     [CONSTANTS.ITEM_TYPE_BACKGROUND]: {
       Sheet: BackgroundSheet,
       defaultTabs: () => [
@@ -107,6 +98,15 @@ export class ItemSheetRuntime {
         itemSheetTabs.hightouchDescription,
         // TODO: Only show to GMs and users when identified
         itemSheetTabs.hightouchContainerDetails,
+      ],
+    },
+    [CONSTANTS.ITEM_TYPE_EQUIPMENT]: {
+      Sheet: EquipmentSheet,
+      defaultTabs: () => [
+        itemSheetTabs.descriptionWithSidebar,
+        itemSheetTabs.equipmentDetails,
+        itemSheetTabs.activities,
+        itemSheetTabs.effects,
       ],
     },
     [CONSTANTS.ITEM_TYPE_FACILITY]: {

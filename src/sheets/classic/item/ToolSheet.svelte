@@ -12,6 +12,8 @@
   import { CONSTANTS } from 'src/constants';
   import ItemIdentifiableName from './parts/ItemIdentifiableName.svelte';
   import ItemHeaderToggles from './parts/ItemHeaderToggles.svelte';
+  import InfoCardV2 from 'src/components/item-info-card/InfoCardV2.svelte';
+  import { settingStore } from 'src/settings/settings';
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -23,6 +25,13 @@
 
   const localize = FoundryAdapter.localize;
 </script>
+
+<InfoCardV2
+  sheet={$context.item.sheet}
+  floating={$settingStore.itemCardsAreFloating}
+  delay={$settingStore.itemCardsDelay}
+  inspectKey={$settingStore.itemCardsFixKey}
+/>
 
 <header class="sheet-header flexrow gap">
   <ItemProfilePicture />

@@ -23,26 +23,40 @@
 - [x] Fix item card effect depth error by making new info card framework with revamped setup
 - [ ] Finish item card revamp
   - [x] Finish Spell Info Cards
-  - [ ] Plant all item attributes for 
-    - [ ] actors, 
-    - [ ] containers, 
-    - [ ] actor container panels
-    - [ ] actor facilities
-    - [ ] actor facility craft items
+  - [x] Plant all item attributes for 
+    - [x] actors, 
+    - [x] containers, 
+    - [x] actor container panels
+    - [x] actor facilities
+    - [x] actor facility craft items
+	- [x] container panel items
+    - [x] inventory grid
+    - [x] spell grid
     - [x] prepare necessary scaffolding for T Inspect
     - [x] ~~allow hover on card to keep the card shown, as long as there's still a component to view~~ / not worth it. Press T to Inspect
-  - [ ] Plant all activity attributes for actors, containers, items
-  - [ ] Anything else?
-- [ ] Fixit: Hide card on drag
+  - [x] Plant all activity attributes for actors, containers, items
+  - [ ] Actually implement the activity card content. There's nothing there!
+- [x] Fixit: Hide card on drag
 - [x] Fixit: choppy floating card; 
   - Idea for fixing it: simply have the card follow the mouse while on the sheet ✅
     - This can simply be an effect on the component, related to the floating setting.
+- [ ] Item Card Refinement: Shift from mouseover to mouseleave with hiding cards. This is going to be tricky. Make sure it works in a variety of scenarios. One idea: when showing the card for an event target, then wire the mouseleave on that target to ensure show turns off when that target is left.
 - [ ] T Inspect!
+  - [ ] Implement Inspected Card component
+  - [ ] Figure out how to get a title on there for the affected entity; this may just be a requirement when setting up Card State
+  - [ ] Header Height should always be card height
+  - [ ] The stock header should be absolutely positioned with transparent background, with close button 
+  - [ ] Should be able to minimize and see the item card title/color
+  - [ ] When opening the card, set its width/height to the prescribed card dimensions, accounting for root font size adjustments from Foundry
+  - [ ] The card content should span the entirety of the application surface area
+  - [ ] Ensure the show/hide/transition/transform styles do not apply to the popped out / inspected card; they should only apply to the attached card; ==attached== should perhaps be a class on the attached card
+  - [ ] Should "inspected" instead be "detached"?
 - [ ] Fixit: Accordion Item error
 - [ ] Replace stores with runes
 - [ ] Ensure context API where reactivity is expected is using runes
 - [ ] Resolve `kgar-migration-task` content
-
+- [ ] Fix inventory grid styles
+- [ ] Fix? Activities Tab context menu not showing anything
 
 ## Testing To Dos
 
@@ -54,7 +68,8 @@
 - [ ] SpellbookList component, controls (had some elaborate run/derived behavior)
 - [ ] Test Sheet Editor V2 fairly closely
 - [ ] Test: Floating card with PopOut!
-- [ ] 
+- [ ] Test: Detached card with PopOut!
+- [ ] Test: Detached card reactivity with changes to 
 
 ## Notes and Examples
 

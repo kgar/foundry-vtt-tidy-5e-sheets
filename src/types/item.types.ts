@@ -41,6 +41,7 @@ export type ItemFacilityOrdersContext = {
 export type ItemSheetContext = {
   activities: {
     id: string;
+    uuid: string;
     name: string;
     sort: number;
     img: {

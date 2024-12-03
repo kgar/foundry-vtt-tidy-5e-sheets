@@ -17,6 +17,7 @@
   import { CONSTANTS } from 'src/constants';
   import type { Component, ComponentProps } from 'svelte';
   import { isUserInteractable } from 'src/utils/element';
+  import { InspectedTidyInfoCardApplicationV2 } from 'src/applications/info-card/InspectedTidyInfoCardApplicationV2';
 
   interface Props {
     sheet: any;
@@ -134,7 +135,7 @@
   }
 
   function inspectKeyUp() {
-    if (!show) {
+    if (!show || !card) {
       return;
     }
 
@@ -148,7 +149,9 @@
       return;
     }
 
-    ui.notifications.info('TODO: Spawn application with current card info');
+    new InspectedTidyInfoCardApplicationV2({ ...card }).render(true);
+
+    hoverOff();
   }
 
   function onError(error: unknown) {

@@ -151,6 +151,8 @@
             class:building={chosen.building}
             data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
             style="--underlay: url('{bgImg}')"
+            data-info-card={'item'}
+            data-info-card-entity-uuid={chosen.facility.uuid}
           >
             <div class="facility-header">
               <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -314,6 +316,8 @@
             class:building={chosen.building}
             data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
             style="--underlay: url('{bgImg}')"
+            data-info-card={'item'}
+            data-info-card-entity-uuid={chosen.facility.uuid}
           >
             <div class="facility-header">
               <!-- svelte-ignore a11y_click_events_have_key_events -->
