@@ -3,6 +3,7 @@
   import {
     getInfoCardDimensions,
     getInfoCardFloatingPosition,
+    getStaticCardPosition,
     infoCardEventWatcher,
     type InfoCardDimensions,
     type InfoCardState,
@@ -34,6 +35,11 @@
   const sheetEl = $derived<HTMLElement>(
     sheet.element.get?.(0) ?? sheet.element,
   );
+
+  let staticCardPosition = $derived.by<'left' | 'right'>(() => {
+    show;
+    return getStaticCardPosition({ dimensions, sheetEl });
+  });
 
   let show = $state(false);
 
@@ -155,8 +161,7 @@
 </script>
 
 <section
-  class="tidy-info-card"
-  class:left={!floating}
+  class="tidy-info-card {!floating ? staticCardPosition : ''}"
   class:show
   class:floating
   data-tidy-info-card

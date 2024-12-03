@@ -49,7 +49,23 @@ type FloatingPositionParams = {
   sheet: any;
 };
 
+type StaticCardPositionParams = {
+  dimensions: InfoCardDimensions;
+  sheetEl: HTMLElement;
+};
+
 const mouseCursorCardGapRem = 1.5;
+
+export function getStaticCardPosition({
+  sheetEl,
+  dimensions,
+}: StaticCardPositionParams): 'left' | 'right' {
+  return sheetEl.offsetLeft >
+    dimensions.cardWidthAbsolute +
+      mouseCursorCardGapRem * dimensions.rootFontSize
+    ? 'left'
+    : 'right';
+}
 
 export function getInfoCardFloatingPosition(params: FloatingPositionParams) {
   const { clientX: x, clientY: y } = params.event;
