@@ -17,6 +17,7 @@ import type {
   ItemSheetContext,
 } from 'src/types/item.types';
 import type { Group5e } from 'src/types/group.types';
+import type { Activity5e } from './dnd5e.types';
 
 /** Manages all Hook usage in Tidy 5e Sheets */
 export class TidyHooks {
@@ -200,7 +201,15 @@ export class TidyHooks {
    * @param group             The affected group document instance.
    * @param member            The actor which is a member of the group.
    * @param contextOptions    The menu items for this group member.
+   *
    * @returns {boolean}       `true` to allow the menu to show, `false` to prevent the default menu from showing.
+   * 
+   * @example
+   * ```js
+   * Hooks.on('tidy5e-sheet.getGroupMemberContextOptions', (group, member, contextOptions) => {
+   *    // Your code here
+   * });
+   * ```
    */
   static tidy5eSheetsGetGroupMemberContextOptions(
     group: Group5e,
@@ -213,6 +222,26 @@ export class TidyHooks {
       member,
       contextOptions
     );
+  }
+
+  /**
+   * A list of visible activities has been prepared for showing on a sheet for gameplay. This is in contrast to showing activities for maintenance in a place like the Item Activities tab.
+   * @param parent             The document (usually an item) which owns the activities.
+   * @param data               A containing object with a filtered array of activities to show.
+   *
+   * @example
+   * ```js
+   * Hooks.on('tidy5e-sheet.getActivitiesForPlay', (parent, data) => {
+   *    data.activities = data.activities.filter(a => a.name === "Hide me!");
+   *    data.activities.push(mySecretActivity);
+   * });
+   * ```
+   */
+  static tidy5eSheetsGetActivitiesForPlay(
+    parent: any,
+    data: { activities: Activity5e[] }
+  ) {
+    Hooks.callAll('tidy5e-sheet.getActivitiesForPlay', parent, data);
   }
 
   /**
