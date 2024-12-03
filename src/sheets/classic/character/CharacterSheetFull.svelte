@@ -65,7 +65,7 @@
 </script>
 
 <InfoCardV2
-  sheet={$context.sheet}
+  sheet={$context.actor.sheet}
   floating={$settingStore.itemCardsAreFloating}
   delay={$settingStore.itemCardsDelay}
   fixKey={$settingStore.itemCardsFixKey}

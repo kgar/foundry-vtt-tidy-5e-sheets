@@ -11,8 +11,9 @@
   import Source from '../shared/Source.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
-  import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import ItemHeaderToggles from './parts/ItemHeaderToggles.svelte';
+    import InfoCardV2 from 'src/components/item-info-card/InfoCardV2.svelte';
+    import { settingStore } from 'src/settings/settings';
 
   let context = getContext<Readable<ContainerSheetClassicContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -25,7 +26,12 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<ItemInfoCard />
+<InfoCardV2
+  sheet={$context.item.sheet}
+  floating={$settingStore.itemCardsAreFloating}
+  delay={$settingStore.itemCardsDelay}
+  fixKey={$settingStore.itemCardsFixKey}
+/>
 
 <header class="sheet-header container-header flexrow gap">
   <ItemProfilePicture />

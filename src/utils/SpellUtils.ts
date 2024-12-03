@@ -70,7 +70,7 @@ export class SpellUtils {
   static isUnlimitedInnate(item: any): boolean {
     return SpellUtils.isInnate(item) && !ItemUtils.hasConfiguredUses(item);
   }
-  
+
   /** Is an Innate spell. */
   static isInnate(item: any): boolean {
     return (
@@ -99,5 +99,19 @@ export class SpellUtils {
       item.system.preparation?.mode === 'prepared' &&
       !item.system.preparation?.prepared
     );
+  }
+
+  static getToggleTitle(item: Item5e) {
+    const prep = item.system.preparation || {};
+    const isAlways = prep.mode === 'always';
+    const isPrepared = !!prep.prepared;
+
+    if (isAlways) {
+      return CONFIG.DND5E.spellPreparationModes.always.label;
+    } else if (isPrepared) {
+      return CONFIG.DND5E.spellPreparationModes.prepared.label;
+    }
+    
+    return game.i18n.localize('DND5E.SpellUnprepared');
   }
 }

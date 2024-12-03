@@ -393,7 +393,6 @@ export const CONSTANTS = {
     APP_ID: 'appId',
     APPLY: 'apply',
     BUTTON_MENU_CONTEXT: 'buttonMenuContext',
-    CARD: 'card',
     CONFIRM: 'confirm',
     CONTEXT: 'context',
     CURRENT_TAB_ID: 'currentTabId',

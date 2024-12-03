@@ -4,7 +4,6 @@
   import { warn } from 'src/utils/logging';
   import { getContext, onMount, type Snippet } from 'svelte';
   import type {
-    ItemCardStore,
     ExpandedItemData,
     ExpandedItemIdToLocationsMap,
     ActiveEffect5e,
@@ -13,10 +12,8 @@
   import type { Writable } from 'svelte/store';
   import type {
     Item5e,
-    ItemCardContentComponent,
     ItemChatData,
   } from 'src/types/item.types';
-  import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
@@ -28,7 +25,6 @@
     favoriteId?: string | null;
     contextMenu?: { type: string; uuid: string } | null;
     cssClass?: string;
-    itemCardContentTemplate?: ItemCardContentComponent | null;
     hidden?: boolean;
     getDragData?: (() => any) | null;
     onMouseDown?: MouseEventHandler<HTMLElement>;
@@ -41,7 +37,6 @@
     favoriteId = null,
     contextMenu = null,
     cssClass = '',
-    itemCardContentTemplate = null,
     hidden = false,
     getDragData = null,
     onMouseDown,
@@ -74,9 +69,6 @@
 
   const location = getContext<string>(CONSTANTS.SVELTE_CONTEXT.LOCATION);
 
-  let card: Writable<ItemCardStore> | undefined = getContext<
-    Writable<ItemCardStore>
-  >(CONSTANTS.SVELTE_CONTEXT.CARD);
   let showSummary = $state(false);
   let chatData: ItemChatData | undefined = $state();
 
@@ -94,26 +86,10 @@
 
   async function onMouseEnter(event: Event) {
     TidyHooks.tidy5eSheetsItemHoverOn(event, item);
-
-    if (!item?.getChatData || !$settingStore.itemCardsForAllItems) {
-      return;
-    }
-
-    card?.update((card) => {
-      card.item = item;
-      card.itemCardContentTemplate = itemCardContentTemplate;
-      return card;
-    });
   }
 
   async function onMouseLeave(event: Event) {
     TidyHooks.tidy5eSheetsItemHoverOff(event, item);
-
-    card?.update((card) => {
-      card.item = null;
-      card.itemCardContentTemplate = null;
-      return card;
-    });
   }
 
   function handleDragStart(event: DragEvent) {
@@ -121,12 +97,7 @@
       return;
     }
 
-    // Don't show cards while dragging
     onMouseLeave(event);
-
-    card?.update((card) => {
-      return card;
-    });
 
     const dragData = getDragData?.() ?? draggable.toDragData?.();
     if (dragData) {

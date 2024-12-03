@@ -2,7 +2,6 @@ import type { Component } from 'svelte';
 import type {
   ContainerContents,
   Item5e,
-  ItemCardContentComponent,
   ItemChatData,
 } from './item.types';
 import type {
@@ -19,7 +18,6 @@ import type { Writable } from 'svelte/store';
 import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
 import type { CONSTANTS } from 'src/constants';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
-import type { Group5e } from './group.types';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 
 export type Actor5e = any;
@@ -78,12 +76,6 @@ export type ClassSummary = {
   class?: string;
   subclass?: string;
   level?: string;
-};
-
-export type ItemCardStore = {
-  item: Item5e | null;
-  itemCardContentTemplate: ItemCardContentComponent | null;
-  sheet: HTMLElement;
 };
 
 export type CharacterFeatureSection = {

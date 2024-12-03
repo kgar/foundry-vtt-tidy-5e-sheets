@@ -19,7 +19,6 @@ import type {
   LocationToSearchTextMap,
   ExpandedItemIdToLocationsMap,
   ExpandedItemData,
-  ItemCardStore,
   MessageBus,
   MessageBusMessage,
   Utilities,
@@ -48,7 +47,6 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   inlineToggleService = new InlineToggleService();
-  card = writable<ItemCardStore>();
   itemFilterService: ItemFilterService;
   messageBus: MessageBus = writable<MessageBusMessage | undefined>();
 
@@ -86,10 +84,7 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
   };
 
   _createComponent(node: HTMLElement): Record<string, any> {
-    this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
-
     const context = new Map<any, any>([
-      [CONSTANTS.SVELTE_CONTEXT.CARD, this.card],
       [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._store],
       [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
       [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],

@@ -6,7 +6,6 @@ import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { CONSTANTS } from 'src/constants';
 import { writable } from 'svelte/store';
 import {
-  type ItemCardStore,
   type CharacterSheetContext,
   type SheetStats,
   type Actor5e,
@@ -26,12 +25,10 @@ import {
   type CharacterFeatureSection,
   type CharacterItemContext,
   type SpellbookSection,
-  type FavoriteSection,
   type EffectFavoriteSection,
   type FacilityOccupantContext,
   type FacilitySection,
   type ChosenFacilityContext,
-  type ActivitySection,
   type TypedActivityFavoriteSection,
 } from 'src/types/types';
 import {
@@ -91,7 +88,6 @@ export class Tidy5eCharacterSheet
   stats = writable<SheetStats>({
     lastSubmissionTime: null,
   });
-  card = writable<ItemCardStore>();
   currentTabId: string;
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
@@ -177,8 +173,7 @@ export class Tidy5eCharacterSheet
     first = false;
 
     const node = html.get(0);
-    this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
-
+    
     this.component = mount(CharacterSheet, {
       target: node,
       context: new Map<any, any>([
@@ -186,7 +181,6 @@ export class Tidy5eCharacterSheet
         [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this.context],
         [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
         [CONSTANTS.SVELTE_CONTEXT.STATS, this.stats],
-        [CONSTANTS.SVELTE_CONTEXT.CARD, this.card],
         [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
         [
           CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED,

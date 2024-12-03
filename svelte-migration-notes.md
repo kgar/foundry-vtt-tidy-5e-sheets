@@ -22,10 +22,17 @@
 - [x] Eliminate `createEventDispatcher` uses
 - [x] Fix item card effect depth error by making new info card framework with revamped setup
 - [ ] Finish item card revamp
-  - [ ] Finish Spell Info Cards
-  - [ ] Plant all item attributes for actors, containers
+  - [x] Finish Spell Info Cards
+  - [ ] Plant all item attributes for 
+    - [ ] actors, 
+    - [ ] containers, 
+    - [ ] actor container panels
+    - [ ] actor facilities
+    - [ ] actor facility craft items
   - [ ] Plant all activity attributes for actors, containers, items
   - [ ] Anything else?
+- [ ] Fixit: Hide card on drag
+- [ ] Fixit: Accordion Item error
 - [ ] Replace stores with runes
 - [ ] Ensure context API where reactivity is expected is using runes
 - [ ] Resolve `kgar-migration-task` content
@@ -108,5 +115,8 @@ Svelte 5 has convenience types for event handler functions!
 - `FocusEventHandler<HTMLElement>`
 - etc.
 
-### Effect depth error
+### Accordion Item error
 
+```
+AccordionItem.svelte:33 [svelte] state_proxy_equality_mismatchReactive `$state(...)` proxies and the values they proxy have different identities. Because of this, comparisons with `===` will produce unexpected results
+```

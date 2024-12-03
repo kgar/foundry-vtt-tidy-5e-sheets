@@ -613,7 +613,6 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       case 'consumable':
         return this.item.system.type.label;
       case 'spell':
-        // @ts-expect-error
         return CONFIG.DND5E.spellPreparationModes[
           this.item.system.preparation.mode
         ]?.label;

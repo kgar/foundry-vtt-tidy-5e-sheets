@@ -1,17 +1,11 @@
 <script lang="ts">
   import TidyTableRow from 'src/components/table/TidyTableRow.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { settingStore } from 'src/settings/settings';
-  import type {
-    Item5e,
-    ItemCardContentComponent,
-    ItemChatData,
-  } from 'src/types/item.types';
+  import type { Item5e, ItemChatData } from 'src/types/item.types';
   import type {
     ExpandedItemData,
     ExpandedItemIdToLocationsMap,
     OnItemToggledFn,
-    ItemCardStore,
   } from 'src/types/types';
   import { warn } from 'src/utils/logging';
   import { getContext, onMount, type Snippet } from 'svelte';
@@ -25,7 +19,6 @@
     item?: Item5e | null;
     contextMenu?: { type: string; uuid: string } | null;
     rowClass?: string;
-    itemCardContentTemplate?: ItemCardContentComponent | null;
     hidden?: boolean;
     children?: Snippet<[any]>;
   }
@@ -34,7 +27,6 @@
     item = null,
     contextMenu = null,
     rowClass = '',
-    itemCardContentTemplate = null,
     hidden = false,
     children,
   }: Props = $props();
@@ -61,9 +53,6 @@
   );
   const location = getContext<string>(CONSTANTS.SVELTE_CONTEXT.LOCATION);
 
-  let card: Writable<ItemCardStore> | undefined = getContext<
-    Writable<ItemCardStore>
-  >(CONSTANTS.SVELTE_CONTEXT.CARD);
   let showSummary = $state(false);
   let chatData: ItemChatData | undefined = $state();
 
@@ -81,26 +70,10 @@
 
   async function onMouseEnter(event: Event) {
     TidyHooks.tidy5eSheetsItemHoverOn(event, item);
-
-    if (!item?.getChatData || !$settingStore.itemCardsForAllItems) {
-      return;
-    }
-
-    card?.update((card) => {
-      card.item = item;
-      card.itemCardContentTemplate = itemCardContentTemplate;
-      return card;
-    });
   }
 
   async function onMouseLeave(event: Event) {
     TidyHooks.tidy5eSheetsItemHoverOff(event, item);
-
-    card?.update((card) => {
-      card.item = null;
-      card.itemCardContentTemplate = null;
-      return card;
-    });
   }
 
   function handleDragStart(event: DragEvent) {
@@ -108,12 +81,7 @@
       return;
     }
 
-    // Don't show cards while dragging
     onMouseLeave(event);
-
-    card?.update((card) => {
-      return card;
-    });
 
     const dragData = draggable.toDragData();
     event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
@@ -164,6 +132,8 @@
     ['data-tidy-table-row']: '',
     ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.ITEM_TABLE_ROW,
     ['data-tidy-item-type']: item?.type ?? 'unknown',
+    ['data-info-card']: item ? 'item' : null,
+    ['data-info-card-entity-uuid']: item?.uuid ?? null,
   }}
   rowAttributes={{
     draggable: !!draggable,

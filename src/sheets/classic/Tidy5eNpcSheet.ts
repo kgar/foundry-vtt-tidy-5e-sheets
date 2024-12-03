@@ -1,6 +1,5 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type {
-  ItemCardStore,
   NpcSheetContext,
   SearchFilterCacheable,
   LocationToSearchTextMap,
@@ -26,7 +25,7 @@ import {
   blurUntabbableButtonsOnClick,
   maintainCustomContentInputFocus,
 } from 'src/utils/applications';
-import { debug, error } from 'src/utils/logging';
+import { debug } from 'src/utils/logging';
 import { SettingsProvider, settingStore } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { getPercentage } from 'src/utils/numbers';
@@ -40,7 +39,6 @@ import {
 import { isNil } from 'src/utils/data';
 import { CustomContentRenderer } from '../CustomContentRenderer';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
-import { calculateSpellAttackAndDc } from 'src/utils/formula';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
@@ -75,7 +73,6 @@ export class Tidy5eNpcSheet
   stats = writable<SheetStats>({
     lastSubmissionTime: null,
   });
-  card = writable<ItemCardStore>();
   currentTabId: string;
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
@@ -160,7 +157,6 @@ export class Tidy5eNpcSheet
     first = false;
 
     const node = html.get(0);
-    this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
 
     this.component = mount(NpcSheet, {
       target: node,
@@ -169,7 +165,6 @@ export class Tidy5eNpcSheet
         [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this.context],
         [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
         [CONSTANTS.SVELTE_CONTEXT.STATS, this.stats],
-        [CONSTANTS.SVELTE_CONTEXT.CARD, this.card],
         [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
         [
           CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,

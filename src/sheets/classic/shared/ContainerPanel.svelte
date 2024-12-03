@@ -1,14 +1,8 @@
 <script lang="ts">
-  import type {
-    ContainerPanelItemContext,
-    ItemCardStore,
-  } from 'src/types/types';
+  import type { ContainerPanelItemContext } from 'src/types/types';
   import CapacityBar from '../container/CapacityBar.svelte';
   import { CONSTANTS } from 'src/constants';
-  import type { Writable } from 'svelte/store';
-  import { getContext } from 'svelte';
   import type { Item5e } from 'src/types/item.types';
-  import { settingStore } from 'src/settings/settings';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { coalesce } from 'src/utils/formatting';
   import { TidyHooks } from 'src/foundry/TidyHooks';
@@ -27,40 +21,17 @@
     ),
   );
 
-  let card: Writable<ItemCardStore> | undefined = getContext<
-    Writable<ItemCardStore>
-  >(CONSTANTS.SVELTE_CONTEXT.CARD);
-
   async function onMouseEnter(event: Event, item: Item5e) {
     TidyHooks.tidy5eSheetsItemHoverOn(event, item);
-
-    if (!item?.getChatData || !$settingStore.itemCardsForAllItems) {
-      return;
-    }
-
-    card?.update((card) => {
-      card.item = item;
-      return card;
-    });
   }
 
   async function onMouseLeave(event: Event, item: Item5e) {
     TidyHooks.tidy5eSheetsItemHoverOff(event, item);
-
-    card?.update((card) => {
-      card.item = null;
-      card.itemCardContentTemplate = null;
-      return card;
-    });
   }
 
   function handleDragStart(event: DragEvent, item: Item5e) {
     // Don't show cards while dragging
     onMouseLeave(event, item);
-
-    card?.update((card) => {
-      return card;
-    });
 
     const dragData = item.toDragData();
     event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));

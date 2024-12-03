@@ -7,7 +7,6 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import NpcProfile from './parts/NpcProfile.svelte';
-  import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import InlineTextDropdownList from '../../../components/inputs/InlineTextDropdownList.svelte';
   import { formatAsModifier } from 'src/utils/formatting';
@@ -15,7 +14,6 @@
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import ActorMovement from '../actor/ActorMovement.svelte';
   import ActorHeaderStats from '../actor/ActorHeaderStats.svelte';
-  import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActorWarnings from '../actor/ActorWarnings.svelte';
@@ -27,6 +25,7 @@
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import { isNil } from 'src/utils/data';
   import ActorLinkIndicator from 'src/components/actor-link-indicator/ActorLinkIndicator.svelte';
+  import InfoCardV2 from 'src/components/item-info-card/InfoCardV2.svelte';
 
   let selectedTabId: string = $state('');
 
@@ -54,7 +53,12 @@
 </script>
 
 {#if $settingStore.itemCardsForNpcs}
-  <ItemInfoCard />
+  <InfoCardV2
+    sheet={$context.actor.sheet}
+    floating={$settingStore.itemCardsAreFloating}
+    delay={$settingStore.itemCardsDelay}
+    fixKey={$settingStore.itemCardsFixKey}
+  />
 {/if}
 
 {#if $context.viewableWarnings.length}

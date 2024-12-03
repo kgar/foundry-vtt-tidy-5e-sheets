@@ -9,7 +9,6 @@ import GroupSheet from './group/GroupSheet.svelte';
 import type {
   Actor5e,
   ActorInventoryTypes,
-  ItemCardStore,
   MessageBus,
   MessageBusMessage,
   Utilities,
@@ -113,7 +112,6 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
   #itemFilterService: ItemFilterService;
   #messageBus: MessageBus = writable<MessageBusMessage | undefined>();
   #inlineToggleService = new InlineToggleService();
-  #card = writable<ItemCardStore>();
 
   // TODO: First render, derive options that come from user preference
 
@@ -121,7 +119,6 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     const component = mount(GroupSheet, {
       target: node,
       context: new Map<any, any>([
-        [CONSTANTS.SVELTE_CONTEXT.CARD, this.#card],
         [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._store],
         [
           CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
@@ -813,13 +810,6 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     context: GroupSheetClassicContext,
     options: ApplicationRenderOptions
   ) {
-    // Clear the item card anytime a render occurs, in case that render was the deletion of the current item being visualized.
-    this.#card.set({
-      sheet: this.element,
-      item: null,
-      itemCardContentTemplate: null,
-    });
-
     game.user.apps[this.id] = this;
     for (const member of this.actor.system.members) {
       member.actor.apps[this.id] = this;

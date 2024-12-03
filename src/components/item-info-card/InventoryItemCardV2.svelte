@@ -12,24 +12,26 @@
 
   let { item }: Props = $props();
 
-  const localize = FoundryAdapter.localize;
-  const weightUnit = FoundryAdapter.getWeightUnit();
   const concealDetails = $derived(FoundryAdapter.concealDetails(item));
   const attunementContext = $derived.by(() =>
     FoundryAdapter.getAttunementContext(item),
   );
 
-  const headerBackgroundVariable = $derived.by(() => {
+  const headerBackground = $derived.by(() => {
     const variableName = getInventoryItemThemeBackground(item) ?? '';
     if (variableName !== '') {
       return `var(${variableName})`;
     }
     return null;
   });
+
+  const localize = FoundryAdapter.localize;
+  const weightUnit = FoundryAdapter.getWeightUnit();
+
 </script>
 
 {#await item.getChatData({ secrets: item.actor?.isOwner }) then chatData}
-  <header style:--card-header-background={headerBackgroundVariable}>
+  <header style:--card-header-background={headerBackground}>
     {item.system.identified === false
       ? coalesce(
           item.system.unidentified.name,

@@ -19,13 +19,13 @@
   import AcShieldVehicle from '../actor/AcShieldVehicle.svelte';
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
   import AttributeBlock from '../actor/AttributeBlock.svelte';
-  import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import InlineSource from '../shared/InlineSource.svelte';
   import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
   import ActorName from '../actor/ActorName.svelte';
+  import InfoCardV2 from 'src/components/item-info-card/InfoCardV2.svelte';
 
   let selectedTabId: string = $state('');
 
@@ -67,7 +67,12 @@
 </script>
 
 {#if $settingStore.itemCardsForNpcs}
-  <ItemInfoCard />
+  <InfoCardV2
+    sheet={$context.actor.sheet}
+    floating={$settingStore.itemCardsAreFloating}
+    delay={$settingStore.itemCardsDelay}
+    fixKey={$settingStore.itemCardsFixKey}
+  />
 {/if}
 
 {#if $context.viewableWarnings.length}

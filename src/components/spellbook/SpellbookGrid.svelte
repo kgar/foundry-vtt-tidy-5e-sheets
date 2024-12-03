@@ -3,7 +3,6 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import {
     type CharacterSheetContext,
-    type ItemCardStore,
     type NpcSheetContext,
     type SpellbookSection,
   } from 'src/types/types';
@@ -13,7 +12,7 @@
   import type { Item5e } from 'src/types/item.types';
   import GridPaneFavoriteIcon from '../item-grid/GridPaneFavoriteIcon.svelte';
   import { getContext } from 'svelte';
-  import type { Readable, Writable } from 'svelte/store';
+  import type { Readable } from 'svelte/store';
   import { settingStore } from 'src/settings/settings';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import { declareLocation } from 'src/types/location-awareness.types';
@@ -32,7 +31,6 @@
   let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
-  let card = getContext<Writable<ItemCardStore>>(CONSTANTS.SVELTE_CONTEXT.CARD);
 
   let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
     CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
@@ -49,20 +47,10 @@
 
   async function onMouseEnter(event: Event, item: Item5e) {
     TidyHooks.tidy5eSheetsItemHoverOn(event, item);
-
-    card.update((card) => {
-      card.item = item;
-      return card;
-    });
   }
 
   async function onMouseLeave(event: Event, item: Item5e) {
     TidyHooks.tidy5eSheetsItemHoverOff(event, item);
-
-    card.update((card) => {
-      card.item = null;
-      return card;
-    });
   }
 
   function handleDragStart(event: DragEvent, item: Item5e) {
@@ -70,12 +58,7 @@
       return;
     }
 
-    // Don't show cards while dragging
     onMouseLeave(event, item);
-
-    card.update((card) => {
-      return card;
-    });
 
     const dragData = item.toDragData();
     event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
@@ -133,6 +116,8 @@
             data-item-id={spell.id}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             data-tidy-grid-item
+            data-info-card={spell ? 'item' : null}
+            data-info-card-entity-uuid={spell?.uuid ?? null}
           >
             {#if 'favoriteId' in ctx && !!ctx.favoriteId}
               <GridPaneFavoriteIcon />

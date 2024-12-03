@@ -2,7 +2,6 @@
   import type {
     CharacterSheetContext,
     InventorySection,
-    ItemCardStore,
     NpcSheetContext,
   } from 'src/types/types';
   import type { Item5e } from 'src/types/item.types';
@@ -13,7 +12,7 @@
   import { CONSTANTS } from 'src/constants';
   import GridPaneFavoriteIcon from '../../../components/item-grid/GridPaneFavoriteIcon.svelte';
   import { getContext } from 'svelte';
-  import type { Readable, Writable } from 'svelte/store';
+  import type { Readable } from 'svelte/store';
   import TextInput from '../../../components/inputs/TextInput.svelte';
   import { settingStore } from 'src/settings/settings';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
@@ -31,7 +30,6 @@
   let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
-  let card = getContext<Writable<ItemCardStore>>(CONSTANTS.SVELTE_CONTEXT.CARD);
 
   let customCommands = $derived(
     ActorItemRuntime.getActorItemSectionCommands({
@@ -62,20 +60,10 @@
 
   async function onMouseEnter(event: Event, item: Item5e) {
     TidyHooks.tidy5eSheetsItemHoverOn(event, item);
-
-    card.update((card) => {
-      card.item = item;
-      return card;
-    });
   }
 
   async function onMouseLeave(event: Event, item: Item5e) {
     TidyHooks.tidy5eSheetsItemHoverOff(event, item);
-
-    card.update((card) => {
-      card.item = null;
-      return card;
-    });
   }
 
   function handleDragStart(event: DragEvent, item: Item5e) {
@@ -83,12 +71,7 @@
       return;
     }
 
-    // Don't show cards while dragging
     onMouseLeave(event, item);
-
-    card.update((card) => {
-      return card;
-    });
 
     const dragData = item.toDragData();
     event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
@@ -136,6 +119,8 @@
           data-item-id={item.id}
           tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           data-tidy-grid-item
+          data-info-card={item ? 'item' : null}
+          data-info-card-entity-uuid={item?.uuid ?? null}
         >
           <div class="item-name">
             <div

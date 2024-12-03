@@ -1,8 +1,3 @@
-import type { Item5e } from 'src/types/item.types';
-import DefaultItemCardContentTemplate from './DefaultItemCardContentTemplate.svelte';
-import SpellbookItemCardContent from './SpellbookItemCardContent.svelte';
-import InventoryItemCardContent from './InventoryItemCardContent.svelte';
-import { Inventory } from 'src/features/sections/Inventory';
 import type { Component, ComponentProps } from 'svelte';
 import { warn } from 'src/utils/logging';
 
@@ -10,28 +5,6 @@ export type InfoCardState<T extends Component<any>> = {
   component: T;
   props: ComponentProps<T>;
 };
-
-export function getItemCardContentTemplate(item: Item5e) {
-  // TODO: Make item type to Card Content Template mod-able via the API.
-  const inventoryTypes = Inventory.getDefaultInventoryTypes();
-  const intentoryItems = new Set(inventoryTypes);
-
-  if (intentoryItems.has(item?.type)) {
-    return InventoryItemCardContent;
-  }
-
-  switch (item?.type) {
-    case 'spell':
-      return SpellbookItemCardContent;
-    case 'race':
-    case 'background':
-    case 'class':
-    case 'subclass':
-    case 'feat':
-    default:
-      return DefaultItemCardContentTemplate;
-  }
-}
 
 type InfoCardWatcherArgs = {
   hoverOn: (event: MouseEvent, target: HTMLElement) => void;

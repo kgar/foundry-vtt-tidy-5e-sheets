@@ -5,7 +5,6 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import { CONSTANTS } from 'src/constants';
-  import ActorName from '../actor/ActorName.svelte';
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -15,7 +14,7 @@
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import GroupHitPoints from './parts/GroupHitPoints.svelte';
-  import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
+  import InfoCardV2 from 'src/components/item-info-card/InfoCardV2.svelte';
 
   const context = getContext<Readable<GroupSheetClassicContext>>('context');
 
@@ -24,7 +23,12 @@
   let selectedTabId = $state($context.tabs[0].id);
 </script>
 
-<ItemInfoCard />
+<InfoCardV2
+  sheet={$context.actor.sheet}
+  floating={$settingStore.itemCardsAreFloating}
+  delay={$settingStore.itemCardsDelay}
+  fixKey={$settingStore.itemCardsFixKey}
+/>
 
 <header class="tidy5e-sheet-header flex-row">
   <div class="flex-0">

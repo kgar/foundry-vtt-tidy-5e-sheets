@@ -165,8 +165,6 @@ export type ItemChatData = {
   properties: string[];
 };
 
-export type ItemCardContentComponent = Component<any>;
-
 export type ContainerItemContext = {
   totalWeight?: number;
   isStack?: boolean;

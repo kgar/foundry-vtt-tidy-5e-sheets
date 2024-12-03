@@ -2,7 +2,6 @@ import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SettingsProvider, settingStore } from 'src/settings/settings';
 import type {
-  ItemCardStore,
   SheetExpandedItemsCacheable,
   SheetStats,
   SheetTabCacheable,
@@ -67,7 +66,6 @@ export class Tidy5eVehicleSheet
   stats = writable<SheetStats>({
     lastSubmissionTime: null,
   });
-  card = writable<ItemCardStore>();
   currentTabId: string;
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
@@ -144,8 +142,7 @@ export class Tidy5eVehicleSheet
     first = false;
 
     const node = html.get(0);
-    this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
-
+    
     this.component = mount(VehicleSheet, {
       target: node,
       context: new Map<any, any>([
@@ -153,7 +150,6 @@ export class Tidy5eVehicleSheet
         [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this.context],
         [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
         [CONSTANTS.SVELTE_CONTEXT.STATS, this.stats],
-        [CONSTANTS.SVELTE_CONTEXT.CARD, this.card],
         [
           CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
           this.inlineToggleService,

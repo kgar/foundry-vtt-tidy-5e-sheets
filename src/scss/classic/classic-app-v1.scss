@@ -101,7 +101,6 @@
     @import './partials/actor';
     @import '../../sheets/classic/actor/traits/traits';
   }
-  @import './partials/item-card';
 
   &:is(.character, .npc, .vehicle) form {
     display: flex;

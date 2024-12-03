@@ -136,8 +136,6 @@
     @import '../../sheets/classic/actor/traits/traits';
   }
 
-  @import './partials/item-card';
-
   &:is(.group) {
     --t5e-classic-tab-contents-padding-bottom: 0;
   }
