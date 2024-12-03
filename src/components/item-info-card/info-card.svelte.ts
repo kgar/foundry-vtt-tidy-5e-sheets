@@ -1,5 +1,6 @@
 import type { Component, ComponentProps } from 'svelte';
 import { warn } from 'src/utils/logging';
+import { clamp } from 'src/utils/numbers';
 
 export type InfoCardState<T extends Component<any>> = {
   component: T;
@@ -22,10 +23,8 @@ export type InfoCardDimensions = {
   widthRem: string;
   heightRem: string;
   rootFontSize: number;
-  widthRelative: number;
-  heightRelative: number;
-  widthAbsolute: number;
-  heightAbsolute: number;
+  cardWidthAbsolute: number;
+  cardHeightAbsolute: number;
   widthPx: string;
   heightPx: string;
 };
@@ -37,10 +36,8 @@ export function getInfoCardDimensions(): InfoCardDimensions {
     widthRem: `${cardWidthRem}rem`,
     heightRem: `${cardHeightRem}rem`,
     rootFontSize: rootFontSize,
-    widthRelative: cardWidthRem,
-    heightRelative: cardHeightRem,
-    widthAbsolute: cardWidthRem * rootFontSize,
-    heightAbsolute: cardHeightRem * rootFontSize,
+    cardWidthAbsolute: cardWidthRem * rootFontSize,
+    cardHeightAbsolute: cardHeightRem * rootFontSize,
     widthPx: `${cardWidthRem * rootFontSize}px`,
     heightPx: `${cardHeightRem * rootFontSize}px`,
   };
@@ -56,33 +53,38 @@ const mouseCursorCardGapRem = 1.5;
 
 export function getInfoCardFloatingPosition(params: FloatingPositionParams) {
   const { clientX: x, clientY: y } = params.event;
-  const { rootFontSize, widthAbsolute, heightAbsolute } = params.dimensions;
+  const { rootFontSize, cardWidthAbsolute, cardHeightAbsolute } =
+    params.dimensions;
   const sheetEl = params.sheet.element.get?.(0) ?? params.sheet.element;
 
-  let sheetBorderRight: number = params.sheet.position.right;
-  let sheetBorderBottom: number = params.sheet.position.bottom;
-  let sheetBorderLeft: number = params.sheet.position.left;
-  let sheetBorderTop: number = params.sheet.position.top;
-
-  const cardHalfHeightPx = heightAbsolute / 2;
+  const cardHalfHeightPx = cardHeightAbsolute / 2;
   const mouseCursorCardGapPx = rootFontSize * mouseCursorCardGapRem;
 
-  const relativeY = y - sheetBorderTop;
-  const relativeX = x - sheetBorderLeft;
+  const relativeY = y - params.sheet.position.top;
+  const relativeX = x - params.sheet.position.left;
 
-  let top = `${relativeY - sheetEl.offsetTop - cardHalfHeightPx}px`;
-  let left = `${relativeX + mouseCursorCardGapPx}px`;
+  const putCardOnLeftSide =
+    x + mouseCursorCardGapPx + cardWidthAbsolute > window.innerWidth;
 
-  if (relativeX + widthAbsolute > sheetBorderRight) {
-    left = `${relativeX - widthAbsolute - mouseCursorCardGapPx}px`;
+  const minTop = sheetEl.offsetTop * -1 + mouseCursorCardGapPx;
+  const verticallyCenteredCardTop = relativeY - cardHalfHeightPx;
+  const maxTop =
+    window.innerHeight -
+    sheetEl.offsetTop -
+    cardHeightAbsolute -
+    mouseCursorCardGapPx;
+
+  let top = clamp(verticallyCenteredCardTop, minTop, maxTop);
+  let left = putCardOnLeftSide
+    ? relativeX - mouseCursorCardGapPx - cardWidthAbsolute
+    : relativeX + mouseCursorCardGapPx;
+
+  if (relativeY + cardHalfHeightPx > params.sheet.position.bottom) {
+    let diff = window.innerHeight - (relativeY + cardHalfHeightPx);
+    top = relativeY - cardHalfHeightPx + diff;
   }
 
-  if (relativeY + cardHalfHeightPx > sheetBorderBottom) {
-    let diff = sheetBorderBottom - (relativeY + cardHalfHeightPx);
-    top = `${relativeY - cardHalfHeightPx + diff}px`;
-  }
-
-  return { top, left };
+  return { top: `${top}px`, left: `${left}px` };
 }
 
 function getRootFontSizePx(): number {
@@ -144,9 +146,13 @@ export function infoCardEventWatcher(
     sheetNode?.addEventListener(
       'dragstart',
       (ev) => {
-        const target = (
-          ev.target as HTMLElement | undefined
-        )?.closest<HTMLElement>(args.selector);
+        if (ev.target === null) {
+          return;
+        }
+
+        const target = (ev.target as HTMLElement | undefined)?.closest?.(
+          args.selector
+        );
 
         args.dragStart(ev, !!target);
       },

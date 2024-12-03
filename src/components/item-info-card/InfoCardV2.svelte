@@ -31,12 +31,37 @@
   const infoCardAttributeKey = 'data-info-card';
   const selector = `[${infoCardAttributeKey}], .tidy-info-card`;
   const uuidAttribute = 'data-info-card-entity-uuid';
+  const sheetEl = $derived<HTMLElement>(
+    sheet.element.get?.(0) ?? sheet.element,
+  );
 
   let show = $state(false);
-  // TODO: Support card on right side when no room on left
-  let position: 'left' | 'right' | 'floating' = $state(
-    floating ? 'floating' : 'left',
-  );
+
+  // When floating, reposition the card whenever shown and mousing over the sheet.
+  $effect(() => {
+    const controller = new AbortController();
+
+    if (floating /*&& show*/) {
+      sheetEl.addEventListener(
+        'mousemove',
+        (event) => {
+          let { top, left } = getInfoCardFloatingPosition({
+            event,
+            sheet,
+            dimensions,
+          });
+          floatingLeft = left;
+          floatingTop = top;
+        },
+        { signal: controller.signal },
+      );
+    }
+
+    return () => {
+      controller.abort();
+    };
+  });
+
   let card = $state<InfoCardState<any> | undefined>();
   let floatingLeft = $state<string | undefined>();
   let floatingTop = $state<string | undefined>();
@@ -90,20 +115,6 @@
       }
     }
 
-    // Position the card
-
-    if (floating) {
-      let { top, left } = getInfoCardFloatingPosition({
-        event,
-        sheet,
-        dimensions,
-      });
-      floatingLeft = left;
-      floatingTop = top;
-    } else {
-      // handle left vs. right positioning
-    }
-
     // if everything is good, show it
     show = true;
   }
@@ -144,7 +155,8 @@
 </script>
 
 <section
-  class="tidy-info-card {position}"
+  class="tidy-info-card"
+  class:left={!floating}
   class:show
   class:floating
   data-tidy-info-card

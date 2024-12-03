@@ -34,10 +34,9 @@
   - [ ] Plant all activity attributes for actors, containers, items
   - [ ] Anything else?
 - [ ] Fixit: Hide card on drag
-- [ ] Fixit: choppy floating card; 
-  - possibly due to listening for hoverOn / hoverOff at sheet node level as opposed to individually on each watchable element
-  - consider attempting to key the info card to context store changes and then apply the appropriate listeners individually
-  - alternatively, find some way to just ignore any mouseenter / mouseleave events that are not relevant
+- [x] Fixit: choppy floating card; 
+  - Idea for fixing it: simply have the card follow the mouse while on the sheet ✅
+    - This can simply be an effect on the component, related to the floating setting.
 - [ ] T Inspect!
 - [ ] Fixit: Accordion Item error
 - [ ] Replace stores with runes
@@ -54,6 +53,7 @@
 - [ ] Action filter override control (had some odd run/derived behavior)
 - [ ] SpellbookList component, controls (had some elaborate run/derived behavior)
 - [ ] Test Sheet Editor V2 fairly closely
+- [ ] Test: Floating card with PopOut!
 - [ ] 
 
 ## Notes and Examples
@@ -127,3 +127,19 @@ Svelte 5 has convenience types for event handler functions!
 ```
 AccordionItem.svelte:33 [svelte] state_proxy_equality_mismatchReactive `$state(...)` proxies and the values they proxy have different identities. Because of this, comparisons with `===` will produce unexpected results
 ```
+
+### Floating Card Notes
+
+- ~~Trial 1:~~
+
+If floating, simply reposition the card on mousemove within sheet element, whether visible or not.
+
+- [x] Trial 2: 🔥
+
+When showing, turn on an effect which triggers tracking and positioning the card, directly correlated with the shown element.
+
+Debrief: 
+
+- [x] Trial 3:
+
+Cry.
