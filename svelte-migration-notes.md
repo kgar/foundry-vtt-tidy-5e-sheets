@@ -29,9 +29,16 @@
     - [ ] actor container panels
     - [ ] actor facilities
     - [ ] actor facility craft items
+    - [x] prepare necessary scaffolding for T Inspect
+    - [x] ~~allow hover on card to keep the card shown, as long as there's still a component to view~~ / not worth it. Press T to Inspect
   - [ ] Plant all activity attributes for actors, containers, items
   - [ ] Anything else?
 - [ ] Fixit: Hide card on drag
+- [ ] Fixit: choppy floating card; 
+  - possibly due to listening for hoverOn / hoverOff at sheet node level as opposed to individually on each watchable element
+  - consider attempting to key the info card to context store changes and then apply the appropriate listeners individually
+  - alternatively, find some way to just ignore any mouseenter / mouseleave events that are not relevant
+- [ ] T Inspect!
 - [ ] Fixit: Accordion Item error
 - [ ] Replace stores with runes
 - [ ] Ensure context API where reactivity is expected is using runes

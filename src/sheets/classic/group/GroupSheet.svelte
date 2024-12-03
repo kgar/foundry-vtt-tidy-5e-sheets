@@ -27,7 +27,7 @@
   sheet={$context.actor.sheet}
   floating={$settingStore.itemCardsAreFloating}
   delay={$settingStore.itemCardsDelay}
-  fixKey={$settingStore.itemCardsFixKey}
+  inspectKey={$settingStore.itemCardsFixKey}
 />
 
 <header class="tidy5e-sheet-header flex-row">

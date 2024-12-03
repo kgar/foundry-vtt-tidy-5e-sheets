@@ -11,17 +11,32 @@
   background: var(--t5e-item-info-card-background);
   overflow: hidden;
 
-  top: 50%;
-  transform: translateY(-53%) scale(0.98);
   transition: opacity 0.2s, transform 0.2s;
   transition-delay: var(--transition-hide-delay);
 
   border-radius: var(--card-border-radius);
 
+  pointer-events: none;
+
+  &.floating {
+    z-index: 9001;
+  }
+  
+  &:not(.floating) {
+    top: 50%;
+    transform: translateY(-53%) scale(0.98);
+  }
+
   &.show {
+    pointer-events: all;
     opacity: 1;
-    transform: translateY(-50%);
+
     transition-delay: var(--transition-show-delay);
+
+    &:not(.floating) {
+      top: 50%;
+      transform: translateY(-50%);
+    }
   }
 
   &.left {

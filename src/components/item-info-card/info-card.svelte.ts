@@ -9,6 +9,9 @@ export type InfoCardState<T extends Component<any>> = {
 type InfoCardWatcherArgs = {
   hoverOn: (event: MouseEvent, target: HTMLElement) => void;
   hoverOff: (event: MouseEvent) => void;
+  dragStart: (event: DragEvent, isWatchedElement: boolean) => void;
+  inspectKeyUp: (event: KeyboardEvent) => void;
+  inspectKey: string;
   selector: string;
 };
 
@@ -46,38 +49,37 @@ export function getInfoCardDimensions(): InfoCardDimensions {
 type FloatingPositionParams = {
   event: MouseEvent;
   dimensions: InfoCardDimensions;
-  sheet: HTMLElement;
+  sheet: any;
 };
 
 const mouseCursorCardGapRem = 1.5;
 
 export function getInfoCardFloatingPosition(params: FloatingPositionParams) {
-  const { clientX, clientY } = params.event;
+  const { clientX: x, clientY: y } = params.event;
   const { rootFontSize, widthAbsolute, heightAbsolute } = params.dimensions;
+  const sheetEl = params.sheet.element.get?.(0) ?? params.sheet.element;
+
+  let sheetBorderRight: number = params.sheet.position.right;
+  let sheetBorderBottom: number = params.sheet.position.bottom;
+  let sheetBorderLeft: number = params.sheet.position.left;
+  let sheetBorderTop: number = params.sheet.position.top;
 
   const cardHalfHeightPx = heightAbsolute / 2;
   const mouseCursorCardGapPx = rootFontSize * mouseCursorCardGapRem;
 
-  let mousePos = { x: clientX, y: clientY };
-  let top = `${mousePos.y - cardHalfHeightPx}px`;
-  let left = `${mousePos.x + mouseCursorCardGapPx}px`;
+  const relativeY = y - sheetBorderTop;
+  const relativeX = x - sheetBorderLeft;
 
-  let sheetBorderRight: number = 0;
-  let sheetBorderBottom: number = 0;
+  let top = `${relativeY - sheetEl.offsetTop - cardHalfHeightPx}px`;
+  let left = `${relativeX + mouseCursorCardGapPx}px`;
 
-  const boundingClientRect = params.sheet.getBoundingClientRect();
-  if (boundingClientRect) {
-    sheetBorderRight = boundingClientRect.right;
-    sheetBorderBottom = boundingClientRect.bottom;
+  if (relativeX + widthAbsolute > sheetBorderRight) {
+    left = `${relativeX - widthAbsolute - mouseCursorCardGapPx}px`;
   }
 
-  if (mousePos.x + widthAbsolute > sheetBorderRight) {
-    left = `${mousePos.x - widthAbsolute - mouseCursorCardGapPx}px`;
-  }
-
-  if (mousePos.y + cardHalfHeightPx > sheetBorderBottom) {
-    let diff = sheetBorderBottom - (mousePos.y + cardHalfHeightPx);
-    top = `${mousePos.y - cardHalfHeightPx + diff}px`;
+  if (relativeY + cardHalfHeightPx > sheetBorderBottom) {
+    let diff = sheetBorderBottom - (relativeY + cardHalfHeightPx);
+    top = `${relativeY - cardHalfHeightPx + diff}px`;
   }
 
   return { top, left };
@@ -95,7 +97,7 @@ function getRootFontSizePx(): number {
  * @param node the info card
  * @param args parameters for wiring up info card hover watch behavior
  */
-export function infoCardHoverWatcher(
+export function infoCardEventWatcher(
   node: HTMLElement,
   args: InfoCardWatcherArgs
 ) {
@@ -134,6 +136,28 @@ export function infoCardHoverWatcher(
           args.hoverOn(ev, target);
         } else {
           args.hoverOff(ev);
+        }
+      },
+      { passive: true, signal: controller.signal }
+    );
+
+    sheetNode?.addEventListener(
+      'dragstart',
+      (ev) => {
+        const target = (
+          ev.target as HTMLElement | undefined
+        )?.closest<HTMLElement>(args.selector);
+
+        args.dragStart(ev, !!target);
+      },
+      { signal: controller.signal }
+    );
+
+    document?.addEventListener(
+      'keyup',
+      (ev) => {
+        if (ev.key.toUpperCase() === args.inspectKey.toUpperCase()) {
+          args.inspectKeyUp(ev);
         }
       },
       { passive: true, signal: controller.signal }

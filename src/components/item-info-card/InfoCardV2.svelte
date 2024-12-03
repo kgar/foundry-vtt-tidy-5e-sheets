@@ -3,10 +3,10 @@
   import {
     getInfoCardDimensions,
     getInfoCardFloatingPosition,
-    infoCardHoverWatcher,
+    infoCardEventWatcher,
     type InfoCardDimensions,
     type InfoCardState,
-  } from './item-info-card.svelte';
+  } from './info-card.svelte';
   import ActivityInfoCardV2 from './ActivityInfoCardV2.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import DefaultItemCardV2 from './DefaultItemCardV2.svelte';
@@ -15,20 +15,21 @@
   import { Inventory } from 'src/features/sections/Inventory';
   import { CONSTANTS } from 'src/constants';
   import type { Component, ComponentProps } from 'svelte';
+  import { isUserInteractable } from 'src/utils/element';
 
   interface Props {
     sheet: any;
     floating: boolean;
-    fixKey: string;
+    inspectKey: string;
     delay: number;
   }
 
-  let { sheet, floating, fixKey, delay }: Props = $props();
+  let { sheet, floating, inspectKey, delay }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
   const infoCardAttributeKey = 'data-info-card';
-  const selector = `[${infoCardAttributeKey}]`;
+  const selector = `[${infoCardAttributeKey}], .tidy-info-card`;
   const uuidAttribute = 'data-info-card-entity-uuid';
 
   let show = $state(false);
@@ -90,15 +91,17 @@
     }
 
     // Position the card
+
     if (floating) {
       let { top, left } = getInfoCardFloatingPosition({
         event,
-        sheet: sheet,
+        sheet,
         dimensions,
       });
       floatingLeft = left;
       floatingTop = top;
     } else {
+      // handle left vs. right positioning
     }
 
     // if everything is good, show it
@@ -107,6 +110,28 @@
 
   function hoverOff() {
     show = false;
+  }
+
+  function dragStart() {
+    show = false;
+  }
+
+  function inspectKeyUp() {
+    if (!show) {
+      return;
+    }
+
+    const focusedElement = document.activeElement;
+
+    if (
+      focusedElement instanceof HTMLElement &&
+      isUserInteractable(focusedElement)
+    ) {
+      console.warn('a user interactable detected');
+      return;
+    }
+
+    ui.notifications.info('TODO: Spawn application with current card info');
   }
 
   function onError(error: unknown) {
@@ -121,12 +146,21 @@
 <section
   class="tidy-info-card {position}"
   class:show
+  class:floating
+  data-tidy-info-card
   style:top={floating ? floatingTop : undefined}
   style:left={floating ? floatingLeft : undefined}
   style:--card-width={dimensions.widthRem}
   style:--card-height={dimensions.heightRem}
   style:--transition-show-delay="{delay}ms"
-  use:infoCardHoverWatcher={{ hoverOn, hoverOff, selector: selector }}
+  use:infoCardEventWatcher={{
+    hoverOn,
+    hoverOff,
+    dragStart,
+    inspectKeyUp,
+    selector: selector,
+    inspectKey: inspectKey,
+  }}
 >
   {#if card?.component}
     <section class="info-card-body">
@@ -136,8 +170,9 @@
     </section>
     <footer>
       <span>
-        <span class="key">{fixKey}</span>
-        {localize('TIDY5E.ItemCardsKeyHint')}
+        {@html localize('TIDY5E.InfoCardInspectHint', {
+          inspectKey: `<span class="key">${inspectKey}</span>`,
+        })}
       </span>
       <span>
         <i class="fas fa-mouse"></i>

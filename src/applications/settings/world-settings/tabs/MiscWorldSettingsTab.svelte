@@ -28,8 +28,8 @@
 
 <TextInputSetting
   bind:value={$context.settings.itemCardsFixKey}
-  name={'TIDY5E.Settings.ItemCardsFixKey.name'}
-  hint={'TIDY5E.Settings.ItemCardsFixKey.hint'}
+  name={SettingsProvider.settings.itemCardsFixKey.options.name}
+  hint={SettingsProvider.settings.itemCardsFixKey.options.hint}
   id="itemCardsFixKey"
 />
 

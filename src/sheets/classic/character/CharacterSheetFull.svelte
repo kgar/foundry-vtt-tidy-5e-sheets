@@ -68,7 +68,7 @@
   sheet={$context.actor.sheet}
   floating={$settingStore.itemCardsAreFloating}
   delay={$settingStore.itemCardsDelay}
-  fixKey={$settingStore.itemCardsFixKey}
+  inspectKey={$settingStore.itemCardsFixKey}
 />
 
 {#if $context.viewableWarnings.length}

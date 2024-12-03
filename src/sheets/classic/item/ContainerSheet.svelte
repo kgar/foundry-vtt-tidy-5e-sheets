@@ -30,7 +30,7 @@
   sheet={$context.item.sheet}
   floating={$settingStore.itemCardsAreFloating}
   delay={$settingStore.itemCardsDelay}
-  fixKey={$settingStore.itemCardsFixKey}
+  inspectKey={$settingStore.itemCardsFixKey}
 />
 
 <header class="sheet-header container-header flexrow gap">

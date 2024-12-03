@@ -105,7 +105,6 @@
     "TIDY5E.Search": "Szukaj",
     "TIDY5E.SearchClear": "Wyczyść wyszukiwanie",
     "TIDY5E.SearchHint": "Zacznij pisać, żeby pokazać wyniki zapytania",
-    "TIDY5E.ItemCardsKeyHint": "przytrzymaj klawisz, żeby działać z kartą",
     "TIDY5E.AbbrSavingThrow": "Rz. Obr.",
     "TIDY5E.AttackMod": "Modyfikator do ataku",
     "TIDY5E.SpellAttackMod": "Modyfikator do Ataku Czarem",
@@ -509,10 +508,6 @@
     "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
         "name": "Uwzględnij zaklęcia z aktywnymi efektami jako akcje",
         "hint": "Domyślnie obejmuje zaklęcia z dołączonymi aktywnymi efektami (np. Korowa skóra) w zakładce/panelu Akcje."
-    },
-    "TIDY5E.Settings.ItemCardsFixKey": {
-        "name": "Klawisz blokady karty przedmiotu",
-        "hint": "Przytrzymaj ten klawisz (na przykład „x”) podczas oglądania karty przedmiotu, żeby pozostała widoczna i można było wchodzić z nią w interakcję."
     },
     "TIDY5E.Settings.ShowInspirationOnHover": {
         "hint": "Pokazuje wskaźnik inspiracji tylko po najechaniu kursorem na portret.",

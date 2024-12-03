@@ -58,7 +58,6 @@
     "TIDY5E.Search": "Suche",
     "TIDY5E.SearchClear": "Suche leeren",
     "TIDY5E.SearchHint": "Tippe ein wonach du suchst um Ergebnisse anzeigen zu lassen.",
-    "TIDY5E.ItemCardsKeyHint": "Taste zum interagieren halten.",
     "TIDY5E.ItemCardsMouseHint": "Mittlere Maustaste zum ansehen/bearbeiten.",
     "TIDY5E.AbbrMod": "Mod",
     "TIDY5E.AbbrSavingThrow": "Rettung",
@@ -128,10 +127,6 @@
     "TIDY5E.Settings.ItemCardsDelay": {
         "name": "Verzögerung zum Anzeigen der Gegenstandinfokarten (in ms)",
         "hint": "Die Infokarte wird erst nach dieser Zeit in Millisekunden angezeigt (0 = sofort, 300 ist Standard)."
-    },
-    "TIDY5E.Settings.ItemCardsFixKey": {
-        "name": "Interaktionstaste für Gegenstands-Infokarten",
-        "hint": "Gib eine Taste (z. B.: \"x\") für die Infokarten-Interaktion ein. Alle Tasten außer Funktionstasten (STRG, ALT, etc.) möglich."
     },
     "TIDY5E.Settings.DefaultTheme": {
         "name": "Standardfarbschema",

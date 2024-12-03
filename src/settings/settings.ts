@@ -449,11 +449,11 @@ export function createSettings() {
 
       itemCardsFixKey: {
         options: {
-          name: 'TIDY5E.Settings.ItemCardsFixKey.name',
-          hint: 'TIDY5E.Settings.ItemCardsFixKey.hint',
+          name: 'TIDY5E.Settings.InfoCardsInspectKey.name',
+          hint: 'TIDY5E.Settings.InfoCardsInspectKey.hint',
           scope: 'world',
           config: false,
-          default: 'x',
+          default: 't',
           type: String,
         },
         get() {
