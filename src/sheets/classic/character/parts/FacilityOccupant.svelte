@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { TidyHooks } from 'src/api';
+  import { TidyHooks } from 'src/foundry/TidyHooks';
   import { CONSTANTS } from 'src/constants';
   import type { Actor5e, CharacterSheetContext } from 'src/types/types';
   import { EventHelper } from 'src/utils/events';

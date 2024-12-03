@@ -14,6 +14,7 @@ import type {
   ActiveEffect5e,
   NpcAbilitySection,
   ActorInventoryTypes,
+  ActivityItemContext,
 } from 'src/types/types';
 import { writable } from 'svelte/store';
 import NpcSheet from './npc/NpcSheet.svelte';
@@ -58,6 +59,8 @@ import { Container } from 'src/features/containers/Container';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 import { ItemUtils } from 'src/utils/ItemUtils';
+import { Activities } from 'src/features/activities/activities';
+import type { Activity5e } from 'src/foundry/dnd5e.types';
 
 export class Tidy5eNpcSheet
   extends BaseSheetCustomSectionMixin(
@@ -937,6 +940,13 @@ export class Tidy5eNpcSheet
       (features, item) => {
         const { quantity, uses } = item.system;
         const ctx = (context.itemContext[item.id] ??= {});
+
+        // Activities
+        ctx.activities = Activities.getVisibleActivities(
+          item,
+          item.system.activities
+        )?.map(this._prepareActivity.bind(this));
+
         ctx.attunement = FoundryAdapter.getAttunementContext(item);
         ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
         ctx.hasUses = uses && uses.max > 0;
@@ -1036,6 +1046,16 @@ export class Tidy5eNpcSheet
     context.features = Object.values(features);
     context.spellbook = spellbook;
     context.inventory = Object.values(inventory);
+  }
+
+  /**
+   * Prepare activity data.
+   */
+  _prepareActivity(activity: Activity5e): ActivityItemContext {
+    return {
+      id: activity.id,
+      activity: activity,
+    };
   }
 
   private async setExpandedItemData() {

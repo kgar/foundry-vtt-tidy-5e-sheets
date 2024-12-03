@@ -142,7 +142,7 @@
                   (!ctx?.chosen?.disabled || FoundryAdapter.userIsGm())}
                 {item}
               ></ItemUseButton>
-              {#if item?.system.activities?.contents.length > 1}
+              {#if (ctx.activities?.length ?? 0) > 1}
                 <InlineToggleControl entityId={item.id} {inlineToggleService} />
               {/if}
               <ItemName onToggle={() => toggleSummary($context.actor)} {item}>
@@ -225,8 +225,12 @@
             </ItemTableCell>
           {/snippet}
         </ItemTableRow>
-        {#if item?.system.activities?.contents.length > 1}
-          <InlineActivitiesList {item} {inlineToggleService} />
+        {#if (ctx.activities?.length ?? 0) > 1}
+          <InlineActivitiesList
+            {item}
+            activities={ctx.activities}
+            {inlineToggleService}
+          />
         {/if}
       {/each}
     {/snippet}

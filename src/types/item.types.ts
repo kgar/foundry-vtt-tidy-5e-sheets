@@ -1,5 +1,6 @@
 import type { Component } from 'svelte';
 import type {
+  ActivityItemContext,
   AttunementContext,
   ContainerCapacityContext,
   CustomContent,
@@ -166,6 +167,7 @@ export type ItemChatData = {
 };
 
 export type ContainerItemContext = {
+  activities?: ActivityItemContext[];
   totalWeight?: number;
   isStack?: boolean;
   favoriteId?: string;

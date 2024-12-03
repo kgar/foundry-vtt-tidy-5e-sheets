@@ -7,6 +7,7 @@ import { Inventory } from '../sections/Inventory';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { CONSTANTS } from 'src/constants';
 import type { CharacterFavorite } from 'src/foundry/dnd5e.types';
+import { Activities } from '../activities/activities';
 
 export class Container {
   static async getContainerContents(item: Item5e): Promise<ContainerContents> {
@@ -29,7 +30,7 @@ export class Container {
       container.actor?.system.favorites;
 
     const containerValues = (await container.system.contents).values();
-    
+
     for (const item of containerValues) {
       const ctx = (itemContext[item.id] ??= {});
       ctx.totalWeight = (await item.system.totalWeight).toNearest(0.1);
@@ -47,6 +48,14 @@ export class Container {
       if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
         ctx.containerContents = await Container.getContainerContents(item);
       }
+
+      ctx.activities = Activities.getVisibleActivities(
+        item,
+        item.system.activities
+      )?.map((activity) => ({
+        id: activity.id,
+        activity: activity,
+      }));
     }
 
     return itemContext;

@@ -15,13 +15,15 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
   import { Activities } from 'src/features/activities/activities';
+  import type { ActivityItemContext } from 'src/types/types';
 
   interface Props {
     item?: Item5e | null;
     inlineToggleService: InlineToggleService;
+    activities: ActivityItemContext[] | undefined;
   }
 
-  let { item = null, inlineToggleService }: Props = $props();
+  let { item = null, inlineToggleService, activities = [] }: Props = $props();
 
   let inlineToggleServiceStore = $derived(inlineToggleService.store);
 
@@ -60,7 +62,7 @@
       {gridTemplateColumns}
     >
       {#snippet body()}
-        {#each item.system.activities.contents as activity (activity.id)}
+        {#each activities as { activity } (activity.id)}
           {@const configurable = Activities.isConfigurable(activity)}
           <TidyTableRow
             rowAttributes={{
