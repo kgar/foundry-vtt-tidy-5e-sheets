@@ -799,6 +799,7 @@
   "TIDY5E.Section": {
     "Default": "Default Section",
     "Label": "Section",
+    "LabelPl": "Sections",
     "Tooltip": "Specify a custom section for this item when placed in an actor sheet, or leave it blank for default behavior.",
     "ActionLabel": "Action Section",
     "ActionTooltip": "Specify a custom section for this item when placed in the Actions tab, or leave it blank for default behavior.",
@@ -824,5 +825,12 @@
   "TIDY5E.Facilities.RosterMember.Label": "{actorName} - {facilityName}",
   "TIDY5E.Facilities.ContextMenuActionRemove": "Remove from {facilityName}",
   "TIDY5E.Facilities.Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}",
-  "TIDY5E.LocalizationTestKey": "Localization Test Key"
+  "TIDY5E.LocalizationTestKey": "Localization Test Key",
+  "TIDY5E.ExpandCollapseMenu.OptionTitle": "Expand/Collapse Behavior",
+  "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "Top-Level Sections",
+  "TIDY5E.ExpandCollapseMenu.OptionAllSections": "All Sections",
+  "TIDY5E.SortMenu.OptionAlphabetical": "Alphabetical (A-Z)",
+  "TIDY5E.SortMenu.OptionManual": "Manual",
+  "TIDY5E.SortMenu.OptionPrepared": "Prepared",
+  "TIDY5E.SortMenu.OptionEquipped": "Equipped"
 }

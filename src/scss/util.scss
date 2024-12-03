@@ -1,0 +1,221 @@
+/* Module-wide utilities */
+.tidy5e-sheet {
+  // TODO: Find the right home for the equip-icon style
+  .equip-icon {
+    transform: rotate(-90deg) scaleX(-1);
+  }
+
+  /* Height */
+
+  .full-height {
+    height: 100%;
+  }
+
+  /* Font-size */
+
+  .fs-lg {
+    font-size: 1.25rem !important;
+  }
+
+  .fs-sm {
+    font-size: 0.75rem !important;
+  }
+
+  .ff-title {
+    font-family: var(--t5e-title-font-family) !important;
+  }
+}
+
+/* Hightouch utilities */
+
+.tidy5e-sheet.application:where(.hightouch) {
+  /* Text Management */
+  .truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Text Color */
+
+  .text-default {
+    color: var(--t5e-color-text-onDefault-default);
+  }
+
+  .text-gold {
+    color: var(--t5e-color-text-onDefault-gold);
+  }
+
+  .text-gold-light {
+    color: var(--t5e-color-text-onDefault-gold-light);
+  }
+
+  .text-lighter {
+    color: var(--t5e-color-text-onDefault-lighter);
+  }
+
+  .text-lightest {
+    color: var(--t5e-color-text-onDefault-lightest);
+  }
+
+  .text-gold-emphasis {
+    color: var(--t5e-color-text-onDefault-gold-emphasis);
+  }
+
+  .text-disabled {
+    color: var(--t5e-color-text-onDefault-disabled);
+  }
+
+  .inverse {
+    .text-default {
+      color: var(--t5e-color-text-onInverse-default);
+    }
+
+    .text-gold {
+      color: var(--t5e-color-text-onInverse-gold);
+    }
+
+    .text-gold-light {
+      color: var(--t5e-color-text-onInverse-gold-light);
+    }
+
+    .text-lighter {
+      color: var(--t5e-color-text-onInverse-lighter);
+    }
+
+    .text-lightest {
+      color: var(--t5e-color-text-onInverse-lightest);
+    }
+
+    .text-gold-emphasis {
+      color: var(--t5e-color-text-onInverse-gold-emphasis);
+    }
+
+    .text-disabled {
+      color: var(--t5e-color-text-onInverse-disabled);
+    }
+  }
+
+  /* Lists */
+  .unlist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    :where(li) {
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
+
+/* Container Queries */
+.tidy5e-sheet.application.hightouch {
+  @container (width < 3.125rem) {
+    .hide-under-50 {
+      display: none;
+    }
+  }
+
+  @container (width < 6.25rem) {
+    .hide-under-100 {
+      display: none;
+    }
+  }
+
+  @container (width < 9.375rem) {
+    .hide-under-150 {
+      display: none;
+    }
+  }
+
+  @container (width < 12.5rem) {
+    .hide-under-200 {
+      display: none;
+    }
+  }
+
+  @container (width < 15.625rem) {
+    .hide-under-250 {
+      display: none;
+    }
+  }
+
+  @container (width < 18.75rem) {
+    .hide-under-300 {
+      display: none;
+    }
+  }
+
+  @container (width < 21.875rem) {
+    .hide-under-350 {
+      display: none;
+    }
+  }
+
+  @container (width < 25rem) {
+    .hide-under-400 {
+      display: none;
+    }
+  }
+
+  @container (width < 28.125rem) {
+    .hide-under-450 {
+      display: none;
+    }
+  }
+
+  @container (width < 31.25rem) {
+    .hide-under-500 {
+      display: none;
+    }
+  }
+
+  @container (width < 34.375rem) {
+    .hide-under-550 {
+      display: none;
+    }
+  }
+
+  @container (width < 37.5rem) {
+    .hide-under-600 {
+      display: none;
+    }
+  }
+
+  @container (width < 40.625rem) {
+    .hide-under-650 {
+      display: none;
+    }
+  }
+
+  @container (width < 43.75rem) {
+    .hide-under-700 {
+      display: none;
+    }
+  }
+
+  @container (width < 46.875rem) {
+    .hide-under-750 {
+      display: none;
+    }
+  }
+
+  @container (width < 50rem) {
+    .hide-under-800 {
+      display: none;
+    }
+  }
+
+  @container (width < 53.125rem) {
+    .hide-under-850 {
+      display: none;
+    }
+  }
+
+  @container (width < 56.25rem) {
+    .hide-under-900 {
+      display: none;
+    }
+  }
+}

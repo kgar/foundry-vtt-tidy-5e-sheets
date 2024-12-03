@@ -5,7 +5,7 @@ import {
   type ApplicationRenderOptions,
 } from 'src/types/application.types';
 import type { SvelteComponent } from 'svelte';
-import GroupSheet from '../group/GroupSheet.svelte';
+import GroupSheet from './group/GroupSheet.svelte';
 import type {
   ActivityItemContext,
   Actor5e,
@@ -49,6 +49,7 @@ import { processInputChangeDeltaFromValues } from 'src/utils/form';
 import { isNil } from 'src/utils/data';
 import { formatAsModifier } from 'src/utils/formatting';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin';
+import SheetHeaderEditModeToggle from 'src/sheets/classic/shared/SheetHeaderEditModeToggle.svelte';
 import { Activities } from 'src/features/activities/activities';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 
@@ -113,8 +114,6 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     submitOnClose: false,
   };
 
-  static USE_HEADER_SHEET_LOCK = true;
-
   #itemFilterService: ItemFilterService;
   #messageBus: MessageBus = writable<MessageBusMessage | undefined>();
   #inlineToggleService = new InlineToggleService();
@@ -153,6 +152,22 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     return component;
   }
 
+  _createAdditionalComponents() {
+    const windowHeader = this.element.querySelector('.window-header');
+    const sheetLock = new SheetHeaderEditModeToggle({
+      target: windowHeader,
+      anchor: windowHeader.querySelector('.window-title'),
+      context: new Map<string, any>([
+        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._store],
+      ]),
+      props: {
+        class: 'header-control',
+      },
+    });
+
+    return [sheetLock];
+  }
+
   async _prepareContext(
     options: ApplicationRenderOptions
   ): Promise<GroupSheetClassicContext> {
@@ -185,7 +200,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     const source = this.actor.toObject();
 
     const unlocked =
-      FoundryAdapter.isActorSheetUnlocked(this.actor) && this.isEditable;
+      FoundryAdapter.isSheetUnlocked(this.actor) && this.isEditable;
 
     const editable = this.isEditable;
 

@@ -6,7 +6,7 @@
   import { createEventDispatcher, getContext } from 'svelte';
   import type { Writable } from 'svelte/store';
   import type { CurrentSettings } from 'src/settings/settings';
-  import ThemeSelectorButtonMenuCommand from 'src/sheets/shared/ThemeSelectorButtonMenuCommand.svelte';
+  import ThemeSelectorButtonMenuCommand from 'src/sheets/classic/shared/ThemeSelectorButtonMenuCommand.svelte';
   import ButtonMenuDivider from 'src/components/button-menu/ButtonMenuDivider.svelte';
   import type { ThemeSettingsSheetFunctions } from './ThemeSettingsFormApplication';
 

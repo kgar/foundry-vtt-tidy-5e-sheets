@@ -1,10 +1,10 @@
 import type { CustomContent, Tab, VehicleSheetContext } from 'src/types/types';
 import { CONSTANTS } from 'src/constants';
-import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
-import VehicleAttributesTab from 'src/sheets/vehicle/tabs/VehicleAttributesTab.svelte';
-import VehicleCargoAndCrewTab from 'src/sheets/vehicle/tabs/VehicleCargoAndCrewTab.svelte';
-import VehicleDescriptionTab from 'src/sheets/vehicle/tabs/VehicleDescriptionTab.svelte';
-import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
+import ActorEffectsTab from 'src/sheets/classic/actor/ActorEffectsTab.svelte';
+import VehicleAttributesTab from 'src/sheets/classic/vehicle/tabs/VehicleAttributesTab.svelte';
+import VehicleCargoAndCrewTab from 'src/sheets/classic/vehicle/tabs/VehicleCargoAndCrewTab.svelte';
+import VehicleDescriptionTab from 'src/sheets/classic/vehicle/tabs/VehicleDescriptionTab.svelte';
+import ActorActionsTab from 'src/sheets/classic/actor/tabs/ActorActionsTab.svelte';
 import type { RegisteredContent, RegisteredTab } from './types';
 import { debug, error, warn } from 'src/utils/logging';
 import { TabManager } from './tab/TabManager';

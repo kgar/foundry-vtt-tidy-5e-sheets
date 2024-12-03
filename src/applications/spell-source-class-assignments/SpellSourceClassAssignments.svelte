@@ -73,7 +73,7 @@
     <TidyTable
       key="spell-source-class-assignments-matrix"
       toggleable={false}
-      --grid-template-columns={gridTemplateColumns}
+      {gridTemplateColumns}
     >
       <svelte:fragment slot="header">
         <TidyTableHeaderRow>

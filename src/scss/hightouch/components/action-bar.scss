@@ -1,0 +1,18 @@
+.action-bar {
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+  container: action-bar / inline-size;
+
+  search {
+    flex: 1;
+  }
+
+  .button {
+    --icon-fill: var(--t5e-color-text-onDefault-lighter);
+    i {
+      color: var(--icon-fill);
+      font-size: 0.8125rem;
+    }
+  }
+}

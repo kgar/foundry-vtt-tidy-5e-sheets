@@ -53,15 +53,3 @@
   data-tab-contents-for={tab.id}
   bind:this={tidyTab}
 ></div>
-
-<style lang="scss">
-  .tidy-tab {
-    height: 100%;
-    flex-direction: column;
-    display: none;
-
-    &.active {
-      display: flex;
-    }
-  }
-</style>

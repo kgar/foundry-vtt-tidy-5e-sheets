@@ -1,7 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
   import type { Tab, OnTabSelectedFn } from 'src/types/types';
   import { createEventDispatcher, getContext, onMount } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -87,9 +86,10 @@
 >
   {#if tabs.length > 1}
     {#each tabs as tab, i (tab.id)}
-      <button
-        type="button"
-        class="{CONSTANTS.TAB_OPTION_CLASS} inline-transparent-button"
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <!-- svelte-ignore a11y-interactive-supports-focus -->
+      <a
+        class={CONSTANTS.TAB_OPTION_CLASS}
         class:active={tab.id === selectedTabId}
         class:first-tab={i === 0}
         class:no-border-on-last-tab={!$$slots['tab-end'] &&
@@ -98,111 +98,10 @@
         role="tab"
         on:click={() => selectTab(tab)}
         on:keydown={(ev) => onKeyDown(ev, i)}
-        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
         {localize(tab.title)}
-      </button>
+      </a>
     {/each}
   {/if}
   <slot name="tab-end" />
 </nav>
-
-<style lang="scss">
-  .tidy-tabs {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
-    flex-wrap: wrap;
-    background: var(--t5e-tabs-background);
-
-    .tab-option {
-      background: var(--t5e-tab-background);
-      font-size: 0.8125rem;
-      text-align: left;
-      flex: 1 1 auto;
-      border-top-left-radius: 0.1875rem;
-      border-top-right-radius: 0.1875rem;
-      text-shadow: none;
-
-      &:hover {
-        background: var(--t5e-tab-background);
-        color: var(--t5e-primary-accent-color);
-      }
-
-      &.active {
-        background: var(--t5e-active-tab-background);
-        font-weight: 700;
-        cursor: default;
-        text-shadow: none;
-
-        &:hover {
-          color: inherit;
-        }
-      }
-    }
-
-    &:not(.vertical) {
-      .tab-option {
-        height: 1.625rem;
-        padding: 0.3125rem 0.5rem 0 0.5rem;
-        border-bottom: 0.0625rem solid var(--t5e-tab-strip-border-color);
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-
-        &.first-tab.active {
-          border-left-color: transparent;
-          border-top-left-radius: 0;
-        }
-
-        &.no-border-on-last-tab.active {
-          border-right-color: transparent;
-          border-top-right-radius: 0;
-        }
-
-        &:first-child {
-          padding-left: 1rem;
-        }
-
-        &.active {
-          border: 0.0625rem solid var(--t5e-tab-strip-border-color);
-          border-bottom-color: transparent;
-        }
-      }
-    }
-
-    &.vertical {
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: stretch;
-
-      > * {
-        flex: 0;
-        padding: 0.5rem;
-      }
-
-      .tab-option {
-        border-top: none;
-        border-left: none;
-        border-bottom: none;
-        border-right: 0.0625rem solid var(--t5e-tab-strip-border-color);
-        transition: border-left-width 0.125s;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-
-        &.first-tab.active {
-          border-top-color: transparent;
-        }
-
-        &.active {
-          border: 0.0625rem solid var(--t5e-tab-strip-border-color);
-          border-right-color: transparent;
-          border-left-width: 0.25rem;
-          border-left-color: var(--t5e-primary-accent-color);
-          border-top-left-radius: 0.3125rem;
-          border-bottom-left-radius: 0.3125rem;
-        }
-      }
-    }
-  }
-</style>

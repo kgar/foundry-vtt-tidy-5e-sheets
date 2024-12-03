@@ -38,7 +38,7 @@
     <TidyTable
       key="default-sheet-preferences"
       toggleable={false}
-      --grid-template-columns={gridTemplateColumns}
+      {gridTemplateColumns}
     >
       <svelte:fragment slot="header">
         <TidyTableHeaderRow>

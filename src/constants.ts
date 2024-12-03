@@ -1,7 +1,5 @@
-const moduleId = 'tidy5e-sheet';
 export const CONSTANTS = {
-  ALPHA_MODULE_ID: 'tidy5e-sheet-kgar',
-  MODULE_ID: moduleId,
+  MODULE_ID: 'tidy5e-sheet',
   DND5E_SYSTEM_ID: 'dnd5e',
   SYSTEM_SETTING_BASTION_CONFIGURATION: 'bastionConfiguration',
   SYSTEM_SETTING_LEVELING_MODE: 'levelingMode',
@@ -137,6 +135,8 @@ export const CONSTANTS = {
   THEME_ID_DEFAULT_LIGHT: 'light',
   THEME_ID_DEFAULT_DARK: 'dark',
   THEME_ID_DEFAULT: 'default',
+  VIEW_MODE_DEFAULT: 'default',
+  VIEW_MODE_INVERSE: 'inverse',
   SHEET_TYPE_CHARACTER: 'character',
   SHEET_TYPE_NPC: 'npc',
   SHEET_TYPE_VEHICLE: 'vehicle',
@@ -187,6 +187,9 @@ export const CONSTANTS = {
 
     /** A rollable/interactable element which rolls an ability test. */
     ABILITY_TEST_ROLLER: 'ability-test-roller',
+
+    /** A toolbar with available actions for affeting the contents of a tab, usually item table contents (e.g., filter, sort, config). */
+    ACTION_BAR: 'action-bar',
 
     /** A container which houses an actor portrait and other parts related to actor portrait features. */
     ACTOR_PORTRAIT_CONTAINER: 'actor-portrait-container',

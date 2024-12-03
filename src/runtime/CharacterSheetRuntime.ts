@@ -3,15 +3,15 @@ import type {
   CustomContent,
   Tab,
 } from 'src/types/types';
-import CharacterAttributesTab from 'src/sheets/character/tabs/CharacterAttributesTab.svelte';
-import CharacterBastionTab from 'src/sheets/character/tabs/CharacterBastionTab.svelte';
-import ActorInventoryTab from 'src/sheets/actor/tabs/ActorInventoryTab.svelte';
-import CharacterSpellbookTab from 'src/sheets/character/tabs/CharacterSpellbookTab.svelte';
-import CharacterFeaturesTab from 'src/sheets/character/tabs/CharacterFeaturesTab.svelte';
-import CharacterEffectsTab from 'src/sheets/character/tabs/CharacterEffectsTab.svelte';
-import CharacterBiographyTab from 'src/sheets/character/tabs/CharacterBiographyTab.svelte';
-import ActorJournalTab from 'src/sheets/actor/tabs/ActorJournalTab.svelte';
-import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
+import CharacterAttributesTab from 'src/sheets/classic/character/tabs/CharacterAttributesTab.svelte';
+import CharacterBastionTab from 'src/sheets/classic/character/tabs/CharacterBastionTab.svelte';
+import ActorInventoryTab from 'src/sheets/classic/actor/tabs/ActorInventoryTab.svelte';
+import CharacterSpellbookTab from 'src/sheets/classic/character/tabs/CharacterSpellbookTab.svelte';
+import CharacterFeaturesTab from 'src/sheets/classic/character/tabs/CharacterFeaturesTab.svelte';
+import CharacterEffectsTab from 'src/sheets/classic/character/tabs/CharacterEffectsTab.svelte';
+import CharacterBiographyTab from 'src/sheets/classic/character/tabs/CharacterBiographyTab.svelte';
+import ActorJournalTab from 'src/sheets/classic/actor/tabs/ActorJournalTab.svelte';
+import ActorActionsTab from 'src/sheets/classic/actor/tabs/ActorActionsTab.svelte';
 import type { RegisteredContent, RegisteredTab } from './types';
 import { CONSTANTS } from 'src/constants';
 import { debug, error, warn } from 'src/utils/logging';

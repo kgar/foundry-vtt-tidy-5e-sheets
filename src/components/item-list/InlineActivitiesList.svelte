@@ -55,7 +55,7 @@
     <TidyTable
       key="activities-{item.name}"
       toggleable={false}
-      --grid-template-columns={gridTemplateColumns}
+      {gridTemplateColumns}
     >
       <svelte:fragment slot="body">
         {#each activities as { activity } (activity.id)}

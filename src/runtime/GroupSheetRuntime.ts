@@ -6,9 +6,9 @@ import { TabManager } from './tab/TabManager';
 import type { ActorTabRegistrationOptions } from 'src/api/api.types';
 import { CustomContentManager } from './content/CustomContentManager';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import GroupMembersTab from 'src/sheets/group/tabs/GroupMembersTab.svelte';
-import GroupInventoryTab from 'src/sheets/group/tabs/GroupInventoryTab.svelte';
-import GroupDescriptionTab from 'src/sheets/group/tabs/GroupDescriptionTab.svelte';
+import GroupMembersTab from 'src/sheets/classic/group/tabs/GroupMembersTab.svelte';
+import GroupInventoryTab from 'src/sheets/classic/group/tabs/GroupInventoryTab.svelte';
+import GroupDescriptionTab from 'src/sheets/classic/group/tabs/GroupDescriptionTab.svelte';
 import type { GroupSheetClassicContext } from 'src/types/group.types';
 
 export class GroupSheetRuntime {

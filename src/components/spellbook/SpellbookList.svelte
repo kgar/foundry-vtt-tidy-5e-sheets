@@ -30,11 +30,11 @@
   import Dnd5eIcon from '../icon/Dnd5eIcon.svelte';
   import SpellSlotManagement from './SpellSlotManagement.svelte';
   import type { Item5e } from 'src/types/item.types';
-  import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
+  import ClassicControls from 'src/sheets/classic/shared/ClassicControls.svelte';
   import ConcentrationOverlayIcon from './ConcentrationOverlayIcon.svelte';
   import DeleteOrOpenActivity from '../item-list/controls/DeleteOrOpenActivity.svelte';
   import ActivityUses from '../item-list/ActivityUses.svelte';
-  import InlineToggleControl from 'src/sheets/shared/InlineToggleControl.svelte';
+  import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
 
@@ -240,9 +240,9 @@
                 <i class="spell-school-icon {icon}"></i>
               {:else}
                 <Dnd5eIcon
-                  --icon-fill="var(--t5e-spell-school-icon-fill)"
-                  --icon-width="var(--t5e-spell-school-icon-width)"
-                  --icon-height="var(--t5e-spell-school-icon-height)"
+                  --icon-fill="var(--t5e-secondary-color)"
+                  --icon-width="1rem"
+                  --icon-height="1rem"
                   src={icon.iconSrc}
                 />
               {/if}
@@ -309,7 +309,7 @@
   .spellbook-list-section {
     .spell-school-icon {
       color: var(--t5e-secondary-color);
-      font-size: var(--t5e-spell-school-font-icon-size);
+      font-size: 1rem;
       margin: 0;
       padding: 0;
     }

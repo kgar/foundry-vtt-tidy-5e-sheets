@@ -1,25 +1,28 @@
 import { CONSTANTS } from 'src/constants';
-import ItemActiveEffectsTab from '../../sheets/item/tabs/ItemActiveEffectsTab.svelte';
-import ItemAdvancementTab from '../../sheets/item/tabs/ItemAdvancementTab.svelte';
-import ItemBackgroundDetailsTab from '../../sheets/item/tabs/ItemBackgroundDetailsTab.svelte';
-import ItemClassDetailsTab from '../../sheets/item/tabs/ItemClassDetailsTab.svelte';
-import ItemConsumableDetailsTab from '../../sheets/item/tabs/ItemConsumableDetailsTab.svelte';
-import ItemContainerContentsTab from '../../sheets/item/tabs/ItemContainerContentsTab.svelte';
-import ItemContainerDetailsTab from '../../sheets/item/tabs/ItemContainerDetailsTab.svelte';
-import ItemDescriptionTab from '../../sheets/item/tabs/ItemDescriptionTab.svelte';
-import ItemSpeciesDetailsTab from '../../sheets/item/tabs/ItemSpeciesDetailsTab.svelte';
-import ItemDescriptionWithSidebarTab from '../../sheets/item/tabs/ItemDescriptionWithSidebarTab.svelte';
-import ItemEquipmentDetailsTab from '../../sheets/item/tabs/ItemEquipmentDetailsTab.svelte';
-import ItemFeatDetailsTab from '../../sheets/item/tabs/ItemFeatDetailsTab.svelte';
-import ItemLootDetailsTab from '../../sheets/item/tabs/ItemLootDetailsTab.svelte';
-import ItemSpeciesDescriptionTab from '../../sheets/item/tabs/ItemSpeciesDescriptionTab.svelte';
-import ItemSpellDetailsTab from '../../sheets/item/tabs/ItemSpellDetailsTab.svelte';
-import ItemSubclassDetailsTab from '../../sheets/item/tabs/ItemSubclassDetailsTab.svelte';
-import ItemToolDetailsTab from '../../sheets/item/tabs/ItemToolDetailsTab.svelte';
-import ItemWeaponDetailsTab from '../../sheets/item/tabs/ItemWeaponDetailsTab.svelte';
-import ItemActivitiesTab from '../../sheets/item/tabs/ItemActivitiesTab.svelte';
+import ContainerDetailsTab from 'src/sheets/hightouch/container/tabs/ContainerDetailsTab.svelte';
+import ItemActiveEffectsTab from '../../sheets/classic/item/tabs/ItemActiveEffectsTab.svelte';
+import ItemAdvancementTab from '../../sheets/classic/item/tabs/ItemAdvancementTab.svelte';
+import ItemBackgroundDetailsTab from '../../sheets/classic/item/tabs/ItemBackgroundDetailsTab.svelte';
+import ItemClassDetailsTab from '../../sheets/classic/item/tabs/ItemClassDetailsTab.svelte';
+import ItemConsumableDetailsTab from '../../sheets/classic/item/tabs/ItemConsumableDetailsTab.svelte';
+import ItemContainerContentsTab from '../../sheets/classic/item/tabs/ItemContainerContentsTab.svelte';
+import ItemContainerDetailsTab from '../../sheets/classic/item/tabs/ItemContainerDetailsTab.svelte';
+import ItemDescriptionTab from '../../sheets/classic/item/tabs/ItemDescriptionTab.svelte';
+import ItemSpeciesDetailsTab from '../../sheets/classic/item/tabs/ItemSpeciesDetailsTab.svelte';
+import ItemDescriptionWithSidebarTab from '../../sheets/classic/item/tabs/ItemDescriptionWithSidebarTab.svelte';
+import HightouchItemDescriptionsTab from '../../sheets/hightouch/item/tabs/ItemDescriptionsTab.svelte';
+import ItemEquipmentDetailsTab from '../../sheets/classic/item/tabs/ItemEquipmentDetailsTab.svelte';
+import ItemFeatDetailsTab from '../../sheets/classic/item/tabs/ItemFeatDetailsTab.svelte';
+import ItemLootDetailsTab from '../../sheets/classic/item/tabs/ItemLootDetailsTab.svelte';
+import ItemSpeciesDescriptionTab from '../../sheets/classic/item/tabs/ItemSpeciesDescriptionTab.svelte';
+import ItemSpellDetailsTab from '../../sheets/classic/item/tabs/ItemSpellDetailsTab.svelte';
+import ItemSubclassDetailsTab from '../../sheets/classic/item/tabs/ItemSubclassDetailsTab.svelte';
+import ItemToolDetailsTab from '../../sheets/classic/item/tabs/ItemToolDetailsTab.svelte';
+import ItemWeaponDetailsTab from '../../sheets/classic/item/tabs/ItemWeaponDetailsTab.svelte';
+import ItemActivitiesTab from '../../sheets/classic/item/tabs/ItemActivitiesTab.svelte';
 import type { Tab } from 'src/types/types';
-import ItemFacilityDetailsTab from 'src/sheets/item/tabs/ItemFacilityDetailsTab.svelte';
+import ItemFacilityDetailsTab from 'src/sheets/classic/item/tabs/ItemFacilityDetailsTab.svelte';
+import ContainerContentsTab from 'src/sheets/hightouch/container/tabs/ContainerContentsTab.svelte';
 
 const itemSheetTabs = {
   /**
@@ -173,6 +176,36 @@ const itemSheetTabs = {
       type: 'svelte',
     },
     autoHeight: true,
+  },
+  hightouchContainerContents: {
+    id: CONSTANTS.TAB_CONTAINER_CONTENTS,
+    title: 'DND5E.Contents',
+    content: {
+      component: ContainerContentsTab,
+      type: 'svelte',
+    },
+  },
+  /**
+   * Details form for containers.
+   */
+  hightouchContainerDetails: {
+    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    title: 'DND5E.Details',
+    content: {
+      component: ContainerDetailsTab,
+      type: 'svelte',
+    },
+  },
+  /**
+   * Three-descriptions interface for items
+   */
+  hightouchDescription: {
+    id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
+    title: 'DND5E.Description',
+    content: {
+      component: HightouchItemDescriptionsTab,
+      type: 'svelte',
+    },
   },
   /**
    * Details form for loot.

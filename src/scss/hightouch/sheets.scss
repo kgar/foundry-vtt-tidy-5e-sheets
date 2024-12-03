@@ -1,0 +1,7 @@
+/* Styles common to Document sheets */
+
+.tidy5e-sheet:where(.hightouch:is(.item, .actor)) {
+  & > header {
+    /* Edit Mode Toggle */
+  }
+}
