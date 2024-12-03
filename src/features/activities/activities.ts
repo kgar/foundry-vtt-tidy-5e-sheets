@@ -1,5 +1,5 @@
-import { TidyHooks } from 'src/api';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 import type { Item5e } from 'src/types/item.types';
 
 export class Activities {
