@@ -177,7 +177,7 @@
                 >
                   <ItemTableCell primary={true}>
                     <ItemUseButton disabled={!$context.editable} {item} />
-                    {#if item?.system.activities?.contents.length > 1}
+                    {#if (ctx.activities?.length ?? 0) > 1}
                       <InlineToggleControl
                         entityId={item.id}
                         {inlineToggleService}
@@ -291,8 +291,12 @@
                     </ItemTableCell>
                   {/if}
                 </ItemTableRow>
-                {#if item?.system.activities?.contents.length > 1}
-                  <InlineActivitiesList {item} {inlineToggleService} />
+                {#if (ctx.activities?.length ?? 0) > 1}
+                  <InlineActivitiesList
+                    {item}
+                    activities={ctx.activities}
+                    {inlineToggleService}
+                  />
                 {/if}
               {/each}
               {#if $context.unlocked && section.dataset}

@@ -7,6 +7,7 @@ import {
 import type { SvelteComponent } from 'svelte';
 import GroupSheet from './group/GroupSheet.svelte';
 import type {
+  ActivityItemContext,
   Actor5e,
   ActorInventoryTypes,
   ItemCardStore,
@@ -19,6 +20,7 @@ import type {
   Group5e,
   Group5eMember,
   Group5eXp,
+  GroupItemContext,
   GroupLanguage,
   GroupMemberContext,
   GroupMemberSection,
@@ -48,6 +50,8 @@ import { isNil } from 'src/utils/data';
 import { formatAsModifier } from 'src/utils/formatting';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin';
 import SheetHeaderEditModeToggle from 'src/sheets/classic/shared/SheetHeaderEditModeToggle.svelte';
+import { Activities } from 'src/features/activities/activities';
+import type { Activity5e } from 'src/foundry/dnd5e.types';
 
 type MemberStats = {
   currentHP: number;
@@ -421,7 +425,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       healthPercentage: getPercentage(stats.currentHP, stats.maxHP),
       inventory: Object.values(inventory),
       isGM: game.user.isGM,
-      itemContext: {}, // TODO: Implement
+      itemContext: {},
       items: Array.from(this.actor.items),
       limited: this.actor.limited,
       lockSensitiveFields:
@@ -453,7 +457,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       xp: xp,
     };
 
-    await this.#prepareItems(context);
+    await this._prepareItems(context);
 
     let tabs = await GroupSheetRuntime.getTabs(context);
 
@@ -767,15 +771,9 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     return null;
   }
 
-  async #prepareItems(context: GroupSheetClassicContext) {
+  async _prepareItems(context: GroupSheetClassicContext) {
     for (const item of context.items) {
-      context.itemContext[item.id] ??= {
-        canToggle: false,
-        containerContents: undefined,
-        hasUses: item.hasLimitedUses,
-        isStack: item.system.quantity > 1,
-        totalWeight: (await item.system.totalWeight).toNearest(0.1),
-      };
+      context.itemContext[item.id] ??= await this._prepareItem(item, context);
     }
 
     for (const panelItem of context.containerPanelItems) {
@@ -784,6 +782,33 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
         panelItem.container
       );
     }
+  }
+
+  async _prepareItem(
+    item: Item5e,
+    context: GroupSheetClassicContext
+  ): Promise<GroupItemContext> {
+    return {
+      activities: Activities.getVisibleActivities(
+        item,
+        item.system.activities
+      )?.map(this._prepareActivity.bind(this)),
+      canToggle: false,
+      containerContents: undefined,
+      hasUses: item.hasLimitedUses,
+      isStack: item.system.quantity > 1,
+      totalWeight: (await item.system.totalWeight).toNearest(0.1),
+    };
+  }
+
+  /**
+   * Prepare activity data.
+   */
+  _prepareActivity(activity: Activity5e): ActivityItemContext {
+    return {
+      id: activity.id,
+      activity: activity,
+    };
   }
 
   _getSubscriptions() {

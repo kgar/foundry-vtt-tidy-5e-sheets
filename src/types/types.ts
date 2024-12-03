@@ -218,6 +218,7 @@ export type AvailableLevel = {
 export type AttunementContext = { icon: string; cls: string; title: string };
 
 export type CharacterItemContext = {
+  activities?: ActivityItemContext[];
   attunement?: AttunementContext;
   availableLevels?: AvailableLevel[];
   canToggle?: boolean;
@@ -236,6 +237,11 @@ export type CharacterItemContext = {
   concentration?: boolean;
   parent?: Item5e;
 };
+
+export type ActivityItemContext = {
+  id: string;
+  activity: Activity5e;
+}
 
 export type TypedEffectFavoriteSection = EffectFavoriteSection & {
   type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_EFFECT;
@@ -381,6 +387,7 @@ export type NpcAbilitySection = {
 } & FeatureSection;
 
 export type NpcItemContext = {
+  activities?: ActivityItemContext[];
   attunement?: AttunementContext;
   availableLevels?: AvailableLevel[];
   canToggle?: boolean;
@@ -428,6 +435,7 @@ export type NpcSheetContext = {
 } & ActorSheetContextV1;
 
 export type VehicleItemContext = {
+  activities?: ActivityItemContext[];
   canToggle?: boolean;
   containerContents?: ContainerContents;
   cover?: string;

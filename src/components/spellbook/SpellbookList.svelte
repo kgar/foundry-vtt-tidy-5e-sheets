@@ -197,7 +197,7 @@
                 <ConcentrationOverlayIcon {ctx} />
               </svelte:fragment>
             </ItemUseButton>
-            {#if spell?.system.activities?.contents.length > 1}
+            {#if (ctx.activities?.length ?? 0) > 1}
               <InlineToggleControl entityId={spell.id} {inlineToggleService} />
             {/if}
             <ItemName
@@ -278,8 +278,12 @@
             </ItemTableCell>
           {/if}
         </ItemTableRow>
-        {#if spell?.system.activities?.contents.length > 1}
-          <InlineActivitiesList item={spell} {inlineToggleService} />
+        {#if (ctx.activities?.length ?? 0) > 1}
+          <InlineActivitiesList
+            item={spell}
+            activities={ctx.activities}
+            {inlineToggleService}
+          />
         {/if}
       {/each}
       {#if $context.unlocked}

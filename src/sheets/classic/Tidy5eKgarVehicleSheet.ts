@@ -17,6 +17,7 @@ import type {
   VehicleFeatureSection,
   SimpleEditableColumn,
   VehicleItemContext,
+  ActivityItemContext,
 } from 'src/types/types';
 import { writable } from 'svelte/store';
 import VehicleSheet from './vehicle/VehicleSheet.svelte';
@@ -55,6 +56,8 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
 import { Container } from 'src/features/containers/Container';
+import { Activities } from 'src/features/activities/activities';
+import type { Activity5e } from 'src/foundry/dnd5e.types';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -470,10 +473,7 @@ export class Tidy5eVehicleSheet
     };
 
     context.items.forEach((item) => {
-      const { uses } = item.system;
-      const ctx = (context.itemContext[item.id] ??= {});
-      ctx.canToggle = false;
-      ctx.hasUses = uses && uses.max > 0;
+      context.itemContext[item.id] ??= this._prepareItem(item, context);
     });
 
     const cargo: Record<string, VehicleCargoSection> = {
@@ -581,6 +581,29 @@ export class Tidy5eVehicleSheet
     context.features = Object.values(features);
     context.cargo = Object.values(cargo);
     context.encumbrance = context.system.attributes.encumbrance;
+  }
+
+  _prepareItem(item: Item5e, context: VehicleSheetContext): VehicleItemContext {
+    const { uses } = item.system;
+    const ctx: VehicleItemContext = {};
+    ctx.canToggle = false;
+    ctx.hasUses = uses && uses.max > 0;
+    // Activities
+    ctx.activities = Activities.getVisibleActivities(
+      item,
+      item.system.activities
+    )?.map(this._prepareActivity.bind(this));
+    return ctx;
+  }
+
+  /**
+   * Prepare activity data.
+   */
+  _prepareActivity(activity: Activity5e): ActivityItemContext {
+    return {
+      id: activity.id,
+      activity: activity,
+    };
   }
 
   /**

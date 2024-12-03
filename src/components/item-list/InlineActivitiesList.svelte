@@ -15,8 +15,10 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
   import { Activities } from 'src/features/activities/activities';
+  import type { ActivityItemContext } from 'src/types/types';
 
-  export let item: Item5e | null = null;
+  export let item: Item5e;
+  export let activities: ActivityItemContext[] = [];
   export let inlineToggleService: InlineToggleService;
 
   $: inlineToggleServiceStore = inlineToggleService.store;
@@ -56,7 +58,7 @@
       {gridTemplateColumns}
     >
       <svelte:fragment slot="body">
-        {#each item.system.activities.contents as activity (activity.id)}
+        {#each activities as { activity } (activity.id)}
           {@const configurable = Activities.isConfigurable(activity)}
           <TidyTableRow
             rowAttributes={{

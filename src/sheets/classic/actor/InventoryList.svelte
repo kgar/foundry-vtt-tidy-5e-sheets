@@ -202,7 +202,7 @@
         >
           <ItemTableCell primary={true}>
             <ItemUseButton disabled={!$context.editable} {item} />
-            {#if ('containerContents' in ctx && !!ctx.containerContents) || item?.system.activities?.contents.length > 1}
+            {#if ('containerContents' in ctx && !!ctx.containerContents) || (ctx.activities?.length ?? 0) > 1}
               <InlineToggleControl entityId={item.id} {inlineToggleService} />
             {/if}
             <ItemName
@@ -292,8 +292,12 @@
             sheetDocument={$context.actor}
             unlocked={$context.unlocked}
           />
-        {:else if item?.system.activities?.contents.length > 1}
-          <InlineActivitiesList {item} {inlineToggleService} />
+        {:else if (ctx.activities?.length ?? 0) > 1}
+          <InlineActivitiesList
+            {item}
+            activities={ctx.activities}
+            {inlineToggleService}
+          />
         {/if}
       {/each}
       {#if $context.unlocked && section.canCreate}
