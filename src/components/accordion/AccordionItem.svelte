@@ -19,7 +19,7 @@
     getContext<AccordionCtxType>(CONSTANTS.SVELTE_CONTEXT.ACCORDION_CONTEXT) ??
     {};
 
-  const self = {};
+  const self = foundry.utils.randomID();
   const selected = ctx.selected ?? writable();
 
   function toggle() {

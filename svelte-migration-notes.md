@@ -1,6 +1,5 @@
 ## To Do
 
-- [ ] Actually implement the activity card content. There's nothing there!
 - [ ] Fixit: Accordion Item error
 - [ ] Replace stores with runes
 - [ ] Ensure context API where reactivity is expected is using runes
@@ -9,6 +8,10 @@
 - [ ] Fix? Activities Tab context menu not showing anything
 - [ ] Fix: Spell Pip animations are buck wild, now. Either get them back to normal, or eliminate.
 - [ ] Fix: Item sheets are not showing selected tabs
+- [ ] Actually implement the activity card content. There's nothing there!
+- [ ] Provide separate option for showing activity cards
+- [ ] Implement Effect card and content.
+- [ ] Provide separate option for showing effect cards.
 
 ## Testing To Dos
 
