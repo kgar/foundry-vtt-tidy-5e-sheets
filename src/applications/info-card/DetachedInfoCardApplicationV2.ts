@@ -3,9 +3,9 @@ import { CONSTANTS } from 'src/constants';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { mount } from 'svelte';
-import InspectedTidyInfoCard from './DetachedTidyInfoCard.svelte';
+import DetachedInfoCard from './DetachedInfoCard.svelte';
 
-export class DetachedTidyInfoCardApplicationV2 extends SvelteApplicationMixin<{}>(
+export class DetachedInfoCardApplicationV2 extends SvelteApplicationMixin<{}>(
   foundry.applications.api.ApplicationV2
 ) {
   #cardState: InfoCardState<any>;
@@ -42,7 +42,7 @@ export class DetachedTidyInfoCardApplicationV2 extends SvelteApplicationMixin<{}
   };
 
   _createComponent(node: HTMLElement): Record<string, any> {
-    const component = mount(InspectedTidyInfoCard, {
+    const component = mount(DetachedInfoCard, {
       target: node,
       props: {
         cardState: this.#cardState,

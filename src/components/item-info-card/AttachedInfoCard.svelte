@@ -17,7 +17,7 @@
   import { CONSTANTS } from 'src/constants';
   import type { Component, ComponentProps } from 'svelte';
   import { isUserInteractable } from 'src/utils/element';
-  import { DetachedTidyInfoCardApplicationV2 } from 'src/applications/info-card/DetachedTidyInfoCardApplicationV2';
+  import { DetachedInfoCardApplicationV2 } from 'src/applications/info-card/DetachedInfoCardApplicationV2';
 
   interface Props {
     sheet: any;
@@ -159,7 +159,7 @@
       return;
     }
 
-    new DetachedTidyInfoCardApplicationV2(
+    new DetachedInfoCardApplicationV2(
       { ...card },
       {
         window: { title: card.title },
