@@ -1,54 +1,5 @@
 ## To Do
 
-- [x] Update deps
-- [x] Install latest Svelte-related deps (and TypeScript)
-- [x] Resolve TS errors
-- [x] Perform the initial migration across all files
-- [x] Address all migration tasks
-- [x] Resolve all HTML element binding errors (the migration puts `$state()` on them, triggering an error)
-- [x] Resolve all component mount / unmount / mounted component return types
-  - Mounted components are of type `Record<string, any>` now
-  - Component construction is replaced by `mount()`
-  - Component descruction is replaced by `unmount()`
-- [x] Replace all calls to svelte `run()` with `$derived` or `$effect`, whichever is most appropriate
-- [x] Eliminate `preventDefault`, `stopPropagation`, and similar legacy stopgap functions
-- [x] Resolve all check errors
-- [x] Address custom HTML events
-  - [x] longpress
-  - [x] onclickoutside
-  - [x] ...
-- [x] Eliminate `createBubbler` calls by specifying event handler props
-- [x] look for `svelte/legacy` imports and resolve
-- [x] Eliminate `createEventDispatcher` uses
-- [x] Fix item card effect depth error by making new info card framework with revamped setup
-- [ ] Finish item card revamp
-  - [x] Finish Spell Info Cards
-  - [x] Plant all item attributes for
-    - [x] actors,
-    - [x] containers,
-    - [x] actor container panels
-    - [x] actor facilities
-    - [x] actor facility craft items
-  - [x] container panel items
-    - [x] inventory grid
-    - [x] spell grid
-    - [x] prepare necessary scaffolding for T Inspect
-    - [x] ~~allow hover on card to keep the card shown, as long as there's still a component to view~~ / not worth it. Press T to Inspect
-  - [x] Plant all activity attributes for actors, containers, items
-- [x] Fixit: Hide card on drag
-- [x] Fixit: choppy floating card;
-  - Idea for fixing it: simply have the card follow the mouse while on the sheet ✅
-    - This can simply be an effect on the component, related to the floating setting.
-- [x] T Inspect!
-  - [x] Implement Detached Card component
-  - [x] Figure out how to get a title on there for the affected entity; this may just be a requirement when setting up Card State
-  - [x] Header Height should always be card title height (sort of... it should be the height of one line of the header.)
-  - [x] The stock header should be absolutely positioned with transparent background, with close button
-  - [x] Should be able to minimize and see the item card title~~/color~~; getting the color is too damned complicated. Forget it.
-  - [x] When opening the card, set its width/height to the prescribed card dimensions, accounting for root font size adjustments from Foundry
-  - [x] The card content should span the entirety of the application surface area
-  - [x] Ensure the show/hide/transition/transform styles do not apply to the popped out / inspected card; they should only apply to the attached card; ==attached== should perhaps be a class on the attached card
-  - [x] Should "inspected" instead be "detached"? Yes.
 - [ ] Item Card Refinement: Shift from mouseover to mouseleave with hiding cards. This is going to be tricky. Make sure it works in a variety of scenarios. One idea: when showing the card for an event target, then wire the mouseleave on that target to ensure show turns off when that target is left.
 - [ ] Actually implement the activity card content. There's nothing there!
 - [ ] Fixit: Accordion Item error
@@ -159,3 +110,56 @@ Debrief:
 - [x] Trial 3:
 
 Cry.
+
+
+## TODO List Item Graveyard
+
+- [x] Update deps
+- [x] Install latest Svelte-related deps (and TypeScript)
+- [x] Resolve TS errors
+- [x] Perform the initial migration across all files
+- [x] Address all migration tasks
+- [x] Resolve all HTML element binding errors (the migration puts `$state()` on them, triggering an error)
+- [x] Resolve all component mount / unmount / mounted component return types
+  - Mounted components are of type `Record<string, any>` now
+  - Component construction is replaced by `mount()`
+  - Component descruction is replaced by `unmount()`
+- [x] Replace all calls to svelte `run()` with `$derived` or `$effect`, whichever is most appropriate
+- [x] Eliminate `preventDefault`, `stopPropagation`, and similar legacy stopgap functions
+- [x] Resolve all check errors
+- [x] Address custom HTML events
+  - [x] longpress
+  - [x] onclickoutside
+  - [x] ...
+- [x] Eliminate `createBubbler` calls by specifying event handler props
+- [x] look for `svelte/legacy` imports and resolve
+- [x] Eliminate `createEventDispatcher` uses
+- [x] Fix item card effect depth error by making new info card framework with revamped setup
+- [x] Finish item card revamp
+  - [x] Finish Spell Info Cards
+  - [x] Plant all item attributes for
+    - [x] actors,
+    - [x] containers,
+    - [x] actor container panels
+    - [x] actor facilities
+    - [x] actor facility craft items
+  - [x] container panel items
+    - [x] inventory grid
+    - [x] spell grid
+    - [x] prepare necessary scaffolding for T Inspect
+    - [x] ~~allow hover on card to keep the card shown, as long as there's still a component to view~~ / not worth it. Press T to Inspect
+  - [x] Plant all activity attributes for actors, containers, items
+- [x] Fixit: Hide card on drag
+- [x] Fixit: choppy floating card;
+  - Idea for fixing it: simply have the card follow the mouse while on the sheet ✅
+    - This can simply be an effect on the component, related to the floating setting.
+- [x] T Inspect!
+  - [x] Implement Detached Card component
+  - [x] Figure out how to get a title on there for the affected entity; this may just be a requirement when setting up Card State
+  - [x] Header Height should always be card title height (sort of... it should be the height of one line of the header.)
+  - [x] The stock header should be absolutely positioned with transparent background, with close button
+  - [x] Should be able to minimize and see the item card title~~/color~~; getting the color is too damned complicated. Forget it.
+  - [x] When opening the card, set its width/height to the prescribed card dimensions, accounting for root font size adjustments from Foundry
+  - [x] The card content should span the entirety of the application surface area
+  - [x] Ensure the show/hide/transition/transform styles do not apply to the popped out / inspected card; they should only apply to the attached card; ==attached== should perhaps be a class on the attached card
+  - [x] Should "inspected" instead be "detached"? Yes.
