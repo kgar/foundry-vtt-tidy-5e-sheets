@@ -125,7 +125,8 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is a Tidy 5e Character sheet
    */
   isTidy5eCharacterSheet(app: any) {
-    return app.element.matches(`.tidy5e-sheet.sheet.character`);
+    const element = app.element.get?.(0) ?? app.element;
+    return element.matches(`.tidy5e-sheet.sheet.character`);
   }
 
   /**
@@ -134,7 +135,8 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is a Tidy 5e Container sheet
    */
   isTidy5eContainerSheet(app: any) {
-    return app.element.matches(`.tidy5e-sheet.sheet.container`);
+    const element = app.element.get?.(0) ?? app.element;
+    return element.matches(`.tidy5e-sheet.sheet.container`);
   }
 
   /**
@@ -143,7 +145,8 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is a Tidy 5e Group sheet
    */
   isTidy5eGroupSheet(app: any) {
-    return app.element.matches(`.tidy5e-sheet.sheet.group`);
+    const element = app.element.get?.(0) ?? app.element;
+    return element.matches(`.tidy5e-sheet.sheet.group`);
   }
 
   /**
@@ -152,7 +155,8 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is a Tidy 5e Item sheet
    */
   isTidy5eItemSheet(app: any) {
-    return app.element.matches(`.tidy5e-sheet.sheet.item`);
+    const element = app.element.get?.(0) ?? app.element;
+    return element.matches(`.tidy5e-sheet.sheet.item`);
   }
 
   /**
@@ -161,7 +165,8 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is a Tidy 5e NPC sheet
    */
   isTidy5eNpcSheet(app: any) {
-    return app.element.matches(`.tidy5e-sheet.sheet.npc`);
+    const element = app.element.get?.(0) ?? app.element;
+    return element.matches(`.tidy5e-sheet.sheet.npc`);
   }
 
   /**
@@ -170,7 +175,8 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is any Tidy 5e sheet
    */
   isTidy5eSheet(app: any) {
-    return app.element.matches(`.tidy5e-sheet.sheet`);
+    const element = app.element.get?.(0) ?? app.element;
+    return element.matches(`.tidy5e-sheet.sheet`);
   }
 
   /**
@@ -179,7 +185,8 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is a Tidy 5e Vehicle sheet
    */
   isTidy5eVehicleSheet(app: any) {
-    return app.element.matches(`.tidy5e-sheet.sheet.vehicle`);
+    const element = app.element.get?.(0) ?? app.element;
+    return element.matches(`.tidy5e-sheet.sheet.vehicle`);
   }
 
   /**{@inheritDoc ItemSummaryApi} */
