@@ -149,7 +149,7 @@
       return;
     }
 
-    const focusedElement = document.activeElement;
+    const focusedElement = sheetEl.ownerDocument.activeElement;
 
     if (
       focusedElement instanceof HTMLElement &&

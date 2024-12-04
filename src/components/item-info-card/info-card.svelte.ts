@@ -161,6 +161,14 @@ export function infoCardEventWatcher(
     );
 
     sheetNode?.addEventListener(
+      'mouseleave',
+      (ev) => {
+        args.hoverOff(ev);
+      },
+      { passive: true, signal: controller.signal }
+    );
+
+    sheetNode?.addEventListener(
       'dragstart',
       (ev) => {
         if (ev.target === null) {
