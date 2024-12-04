@@ -98,9 +98,8 @@
       {#each items as item (item.id)}
         {@const ctx = $context.itemContext[item.id]}
         {@const hidden = !!$itemIdsToShow && !$itemIdsToShow.has(item.id)}
-        <button
-          type="button"
-          class="item {getInventoryRowClasses(item)} transparent-button"
+        <a
+          class="item {getInventoryRowClasses(item)}"
           class:hidden
           aria-hidden={hidden}
           data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
@@ -114,7 +113,6 @@
           onmouseleave={(ev) => onMouseLeave(ev, item)}
           ondragstart={(ev) => handleDragStart(ev, item)}
           draggable={true}
-          disabled={!$context.editable}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
           data-item-id={item.id}
           tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
@@ -206,7 +204,7 @@
               />
             </span>
           </div>
-        </button>
+        </a>
       {/each}
       {#if $context.unlocked}
         <div class="items-footer">

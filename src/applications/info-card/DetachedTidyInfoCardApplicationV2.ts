@@ -3,7 +3,7 @@ import { CONSTANTS } from 'src/constants';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { mount } from 'svelte';
-import InspectedTidyInfoCard from './InspectedTidyInfoCard.svelte';
+import InspectedTidyInfoCard from './DetachedTidyInfoCard.svelte';
 
 export class InspectedTidyInfoCardApplicationV2 extends SvelteApplicationMixin<{}>(
   foundry.applications.api.ApplicationV2
@@ -22,7 +22,7 @@ export class InspectedTidyInfoCardApplicationV2 extends SvelteApplicationMixin<{
     classes: [
       CONSTANTS.MODULE_ID,
       'application-shell',
-      'inspected-tidy-info-card',
+      'tidy-info-card-application',
       'app-v2',
       CONSTANTS.SHEET_LAYOUT_CLASSIC,
     ],

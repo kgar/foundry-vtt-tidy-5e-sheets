@@ -4,52 +4,53 @@
   --transition-show-delay: 300ms;
   --transition-hide-delay: 500ms;
 
-  position: absolute;
-  opacity: 0;
-  width: var(--card-width);
-  height: var(--card-height);
-  background: var(--t5e-item-info-card-background);
-  overflow: hidden;
+  &.attached {
+    position: absolute;
+    opacity: 0;
+    width: var(--card-width);
+    height: var(--card-height);
+    overflow: hidden;
+    pointer-events: none;
 
-  transition: opacity 0.2s, transform 0.2s;
-  transition-delay: var(--transition-hide-delay);
-
-  border-radius: var(--card-border-radius);
-
-  pointer-events: none;
-
-  &.floating {
-    z-index: 9001;
-  }
-  
-  &:not(.floating) {
-    top: 50%;
-    transform: translateY(-53%) scale(0.98);
-  }
-
-  &.show {
-    pointer-events: all;
-    opacity: 1;
-
-    transition-delay: var(--transition-show-delay);
+    &.floating {
+      z-index: 9001;
+    }
 
     &:not(.floating) {
       top: 50%;
-      transform: translateY(-50%);
+      transform: translateY(-53%) scale(0.98);
     }
+
+    &.show {
+      pointer-events: all;
+      opacity: 1;
+
+      transition-delay: var(--transition-show-delay);
+
+      &:not(.floating) {
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+
+    &.left {
+      right: calc(100%);
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    &.right {
+      left: calc(100%);
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    transition: opacity 0.2s, transform 0.2s;
+    transition-delay: var(--transition-hide-delay);
   }
 
-  &.left {
-    right: calc(100%);
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-
-  &.right {
-    left: calc(100%);
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
+  background: var(--t5e-item-info-card-background);
+  border-radius: var(--card-border-radius);
 
   display: flex;
   flex-direction: column;
@@ -183,5 +184,28 @@
   a.content-link,
   a.inline-roll {
     font-size: 0.8125rem;
+  }
+}
+
+&.tidy-info-card-application {
+  .window-header {
+    background: transparent;
+    position: absolute;
+    height: 32px;
+    left: 0;
+    right: 0;
+  }
+
+  .window-content {
+    padding: 0;
+  }
+
+  .tidy-info-card {
+    padding: 0;
+
+    > .info-card-body header {
+      border-top-left-radius: 0.375rem;
+      border-top-right-radius: 0.375rem;
+    }
   }
 }

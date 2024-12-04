@@ -17,7 +17,7 @@
   import { CONSTANTS } from 'src/constants';
   import type { Component, ComponentProps } from 'svelte';
   import { isUserInteractable } from 'src/utils/element';
-  import { InspectedTidyInfoCardApplicationV2 } from 'src/applications/info-card/InspectedTidyInfoCardApplicationV2';
+  import { InspectedTidyInfoCardApplicationV2 } from 'src/applications/info-card/DetachedTidyInfoCardApplicationV2';
 
   interface Props {
     sheet: any;
@@ -164,7 +164,7 @@
 </script>
 
 <section
-  class="tidy-info-card {!floating ? staticCardPosition : ''}"
+  class="tidy-info-card attached {!floating ? staticCardPosition : ''}"
   class:show
   class:floating
   data-tidy-info-card

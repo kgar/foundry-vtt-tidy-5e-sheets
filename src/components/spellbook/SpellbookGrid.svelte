@@ -93,11 +93,10 @@
             spell,
           )}
           {@const hidden = !!$itemIdsToShow && !$itemIdsToShow.has(spell.id)}
-          <button
-            type="button"
+          <a
             class="spell {FoundryAdapter.getSpellRowClasses(
               spell,
-            )} transparent-button"
+            )}"
             class:hidden
             aria-hidden={hidden}
             data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
@@ -111,7 +110,6 @@
             onmouseleave={(ev) => onMouseLeave(ev, spell)}
             ondragstart={(ev) => handleDragStart(ev, spell)}
             draggable={true}
-            disabled={!$context.editable}
             data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
             data-item-id={spell.id}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
@@ -136,7 +134,7 @@
                 />
               </div>
             </div>
-          </button>
+          </a>
         {/each}
         {#if $context.unlocked}
           <div class="spells-footer">
