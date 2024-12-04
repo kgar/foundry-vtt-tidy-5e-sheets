@@ -1,6 +1,5 @@
 ## To Do
 
-- [ ] Item Card Refinement: Shift from mouseover to mouseleave with hiding cards. This is going to be tricky. Make sure it works in a variety of scenarios. One idea: when showing the card for an event target, then wire the mouseleave on that target to ensure show turns off when that target is left.
 - [ ] Actually implement the activity card content. There's nothing there!
 - [ ] Fixit: Accordion Item error
 - [ ] Replace stores with runes
@@ -163,3 +162,4 @@ Cry.
   - [x] The card content should span the entirety of the application surface area
   - [x] Ensure the show/hide/transition/transform styles do not apply to the popped out / inspected card; they should only apply to the attached card; ==attached== should perhaps be a class on the attached card
   - [x] Should "inspected" instead be "detached"? Yes.
+- [x] Item Card Refinement: Shift from mouseover to mouseleave with hiding cards. This is going to be tricky. Make sure it works in a variety of scenarios. One idea: when showing the card for an event target, then wire the mouseleave on that target to ensure show turns off when that target is left.
