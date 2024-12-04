@@ -5,7 +5,7 @@ import type { ApplicationConfiguration } from 'src/types/application.types';
 import { mount } from 'svelte';
 import InspectedTidyInfoCard from './DetachedTidyInfoCard.svelte';
 
-export class InspectedTidyInfoCardApplicationV2 extends SvelteApplicationMixin<{}>(
+export class DetachedTidyInfoCardApplicationV2 extends SvelteApplicationMixin<{}>(
   foundry.applications.api.ApplicationV2
 ) {
   #cardState: InfoCardState<any>;

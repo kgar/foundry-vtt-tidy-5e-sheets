@@ -6,8 +6,7 @@
   import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
   import { SpellUtils } from 'src/utils/SpellUtils';
   import ItemCardPills from './ItemCardPills.svelte';
-  import { CONSTANTS } from 'src/constants';
-
+  
   interface Props {
     item: Item5e;
   }

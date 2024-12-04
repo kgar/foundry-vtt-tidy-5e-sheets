@@ -197,6 +197,38 @@ export function getInventoryItemThemeBackground(item: Item5e) {
   }
 }
 
-export function getSpellItemThemeBackground(item: Item5e) {
-  // TODO
+export function getSpellItemThemeBackground(spell: Item5e) {
+  if (
+    spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_INNATE
+  ) {
+    return '--t5e-innate-background';
+  }
+
+  if (
+    spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_RITUAL
+  ) {
+    return '--t5e-ritual-only-background';
+  }
+
+  if (
+    spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_ATWILL
+  ) {
+    return '--t5e-atwill-background';
+  }
+
+  if (spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_PACT) {
+    return '--t5e-pact-background';
+  }
+
+  if (
+    spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS
+  ) {
+    return '--t5e-alwaysprepared-background';
+  }
+
+  if (spell.system.preparation.prepared) {
+    return '--t5e-prepared-background';
+  }
+
+  // TODO: in the future, offer up and API for this, or use a slugify convention based on what modes exist
 }

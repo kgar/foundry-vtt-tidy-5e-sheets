@@ -17,7 +17,7 @@
   import { CONSTANTS } from 'src/constants';
   import type { Component, ComponentProps } from 'svelte';
   import { isUserInteractable } from 'src/utils/element';
-  import { InspectedTidyInfoCardApplicationV2 } from 'src/applications/info-card/DetachedTidyInfoCardApplicationV2';
+  import { DetachedTidyInfoCardApplicationV2 } from 'src/applications/info-card/DetachedTidyInfoCardApplicationV2';
 
   interface Props {
     sheet: any;
@@ -102,18 +102,29 @@
         card = {
           component: ActivityInfoCardV2,
           props: { activity: entity },
+          title: entity.name,
         };
         break;
       }
 
       case 'item': {
-        // TODO: Distinguish the item card component based on the item type.
-        // Inventory
-        card = Inventory.isInventoryType(entity)
-          ? withProps(InventoryItemCardV2, { item: entity })
-          : entity?.type === CONSTANTS.ITEM_TYPE_SPELL
-            ? withProps(SpellItemCardV2, { item: entity })
-            : withProps(DefaultItemCardV2, { item: entity });
+        if (Inventory.isInventoryType(entity)) {
+          card = {
+            ...withProps(InventoryItemCardV2, { item: entity }),
+            title: entity.name,
+          };
+        } else if (entity?.type === CONSTANTS.ITEM_TYPE_SPELL) {
+          card = {
+            ...withProps(SpellItemCardV2, { item: entity }),
+            title: entity.name,
+          };
+        } else {
+          card = {
+            ...withProps(DefaultItemCardV2, { item: entity }),
+            title: entity.name,
+          };
+        }
+
         break;
       }
       default: {
@@ -122,7 +133,6 @@
       }
     }
 
-    // if everything is good, show it
     show = true;
   }
 
@@ -149,7 +159,16 @@
       return;
     }
 
-    new InspectedTidyInfoCardApplicationV2({ ...card }).render(true);
+    new DetachedTidyInfoCardApplicationV2(
+      { ...card },
+      {
+        window: { title: card.title },
+        position: {
+          width: dimensions.cardWidthAbsolute,
+          height: dimensions.cardHeightAbsolute,
+        },
+      },
+    ).render(true);
 
     hoverOff();
   }

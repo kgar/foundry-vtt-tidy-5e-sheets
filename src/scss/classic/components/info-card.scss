@@ -188,12 +188,18 @@
 }
 
 &.tidy-info-card-application {
-  .window-header {
-    background: transparent;
-    position: absolute;
-    height: 32px;
-    left: 0;
-    right: 0;
+  &:not(.minimized) {
+    .window-title {
+      opacity: 0;
+    }
+
+    .window-header {
+      position: absolute;
+      background: transparent;
+      left: 0;
+      right: 0;
+      height: 2rem;
+    }
   }
 
   .window-content {

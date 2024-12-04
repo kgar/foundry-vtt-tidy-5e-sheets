@@ -5,6 +5,7 @@ import { clamp } from 'src/utils/numbers';
 export type InfoCardState<T extends Component<any>> = {
   component: T;
   props: ComponentProps<T>;
+  title: string;
 };
 
 type InfoCardWatcherArgs = {
