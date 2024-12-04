@@ -26,7 +26,7 @@
   import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
   import ActorName from '../actor/ActorName.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
-  import InfoCardV2 from 'src/components/item-info-card/InfoCardV2.svelte';
+  import AttachedInfoCard from 'src/components/item-info-card/AttachedInfoCard.svelte';
 
   let selectedTabId: string = $state('');
   let context = getContext<Readable<CharacterSheetContext>>(
@@ -64,7 +64,7 @@
   } satisfies DropdownListOption);
 </script>
 
-<InfoCardV2
+<AttachedInfoCard
   sheet={$context.actor.sheet}
   floating={$settingStore.itemCardsAreFloating}
   delay={$settingStore.itemCardsDelay}

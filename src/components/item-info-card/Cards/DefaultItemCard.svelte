@@ -1,9 +1,9 @@
 <script lang="ts">
   import type { Item5e } from 'src/types/item.types';
-  import ItemCardPills from './ItemCardPills.svelte';
+  import ItemCardPills from '../Parts/ItemCardPills.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { coalesce } from 'src/utils/formatting';
-  import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
+  import HorizontalLineSeparator from '../../layout/HorizontalLineSeparator.svelte';
 
   interface Props {
     item: Item5e;

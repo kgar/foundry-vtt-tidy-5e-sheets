@@ -25,7 +25,7 @@
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import { isNil } from 'src/utils/data';
   import ActorLinkIndicator from 'src/components/actor-link-indicator/ActorLinkIndicator.svelte';
-  import InfoCardV2 from 'src/components/item-info-card/InfoCardV2.svelte';
+  import AttachedInfoCard from 'src/components/item-info-card/AttachedInfoCard.svelte';
 
   let selectedTabId: string = $state('');
 
@@ -53,7 +53,7 @@
 </script>
 
 {#if $settingStore.itemCardsForNpcs}
-  <InfoCardV2
+  <AttachedInfoCard
     sheet={$context.actor.sheet}
     floating={$settingStore.itemCardsAreFloating}
     delay={$settingStore.itemCardsDelay}

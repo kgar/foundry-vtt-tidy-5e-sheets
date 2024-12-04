@@ -3,9 +3,9 @@
   import { getSpellItemThemeBackground } from 'src/theme/theme';
   import type { Item5e } from 'src/types/item.types';
   import { coalesce } from 'src/utils/formatting';
-  import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
+  import HorizontalLineSeparator from '../../layout/HorizontalLineSeparator.svelte';
   import { SpellUtils } from 'src/utils/SpellUtils';
-  import ItemCardPills from './ItemCardPills.svelte';
+  import ItemCardPills from '../Parts/ItemCardPills.svelte';
   
   interface Props {
     item: Item5e;

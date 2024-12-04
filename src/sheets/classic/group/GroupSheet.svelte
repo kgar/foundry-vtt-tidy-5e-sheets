@@ -14,7 +14,7 @@
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import GroupHitPoints from './parts/GroupHitPoints.svelte';
-  import InfoCardV2 from 'src/components/item-info-card/InfoCardV2.svelte';
+  import AttachedInfoCard from 'src/components/item-info-card/AttachedInfoCard.svelte';
 
   const context = getContext<Readable<GroupSheetClassicContext>>('context');
 
@@ -23,7 +23,7 @@
   let selectedTabId = $state($context.tabs[0].id);
 </script>
 
-<InfoCardV2
+<AttachedInfoCard
   sheet={$context.actor.sheet}
   floating={$settingStore.itemCardsAreFloating}
   delay={$settingStore.itemCardsDelay}

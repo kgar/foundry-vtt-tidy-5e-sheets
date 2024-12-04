@@ -25,7 +25,7 @@
   import InlineSource from '../shared/InlineSource.svelte';
   import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
   import ActorName from '../actor/ActorName.svelte';
-  import InfoCardV2 from 'src/components/item-info-card/InfoCardV2.svelte';
+  import AttachedInfoCard from 'src/components/item-info-card/AttachedInfoCard.svelte';
 
   let selectedTabId: string = $state('');
 
@@ -67,7 +67,7 @@
 </script>
 
 {#if $settingStore.itemCardsForNpcs}
-  <InfoCardV2
+  <AttachedInfoCard
     sheet={$context.actor.sheet}
     floating={$settingStore.itemCardsAreFloating}
     delay={$settingStore.itemCardsDelay}

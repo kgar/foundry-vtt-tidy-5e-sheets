@@ -9,7 +9,7 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import Source from '../shared/Source.svelte';
   import { CONSTANTS } from 'src/constants';
-  import InfoCardV2 from 'src/components/item-info-card/InfoCardV2.svelte';
+  import AttachedInfoCard from 'src/components/item-info-card/AttachedInfoCard.svelte';
   import { settingStore } from 'src/settings/settings';
 
   let context = getContext<Readable<ItemSheetContext>>(
@@ -23,7 +23,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<InfoCardV2
+<AttachedInfoCard
   sheet={$context.item.sheet}
   floating={$settingStore.itemCardsAreFloating}
   delay={$settingStore.itemCardsDelay}

@@ -2,8 +2,8 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Item5e } from 'src/types/item.types';
   import { coalesce } from 'src/utils/formatting';
-  import ItemCardPills from './ItemCardPills.svelte';
-  import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
+  import ItemCardPills from '../Parts/ItemCardPills.svelte';
+  import HorizontalLineSeparator from '../../layout/HorizontalLineSeparator.svelte';
   import { getInventoryItemThemeBackground } from 'src/theme/theme';
 
   interface Props {

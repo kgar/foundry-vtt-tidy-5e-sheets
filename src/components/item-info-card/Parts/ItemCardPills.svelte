@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { Item5e } from 'src/types/item.types';
-  import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
+  import HorizontalLineSeparator from '../../layout/HorizontalLineSeparator.svelte';
   import { CONSTANTS } from 'src/constants';
-  import ItemSummaryCommandButtonList from '../item-summary/ItemSummaryCommandButtonList.svelte';
+  import ItemSummaryCommandButtonList from '../../item-summary/ItemSummaryCommandButtonList.svelte';
   import { ItemSummaryRuntime } from 'src/runtime/ItemSummaryRuntime';
 
   interface Props {

@@ -8,11 +8,11 @@
     type InfoCardDimensions,
     type InfoCardState,
   } from './info-card.svelte';
-  import ActivityInfoCardV2 from './ActivityInfoCardV2.svelte';
+  import ActivityInfoCardV2 from './Cards/ActivityInfoCard.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import DefaultItemCardV2 from './DefaultItemCardV2.svelte';
-  import InventoryItemCardV2 from './InventoryItemCardV2.svelte';
-  import SpellItemCardV2 from './SpellItemCardV2.svelte';
+  import DefaultItemCardV2 from './Cards/DefaultItemCard.svelte';
+  import InventoryItemCardV2 from './Cards/InventoryItemCard.svelte';
+  import SpellItemCardV2 from './Cards/SpellItemCard.svelte';
   import { Inventory } from 'src/features/sections/Inventory';
   import { CONSTANTS } from 'src/constants';
   import type { Component, ComponentProps } from 'svelte';
