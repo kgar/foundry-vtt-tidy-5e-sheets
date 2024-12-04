@@ -212,6 +212,12 @@
     > .info-card-body header {
       border-top-left-radius: 0.375rem;
       border-top-right-radius: 0.375rem;
+
+      padding-right: 2rem;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }

@@ -27,7 +27,6 @@
 
   const localize = FoundryAdapter.localize;
   const weightUnit = FoundryAdapter.getWeightUnit();
-
 </script>
 
 {#await item.getChatData({ secrets: item.actor?.isOwner }) then chatData}

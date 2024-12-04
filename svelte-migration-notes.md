@@ -8,6 +8,7 @@
 - [ ] Fix inventory grid styles
 - [ ] Fix? Activities Tab context menu not showing anything
 - [ ] Fix: Spell Pip animations are buck wild, now. Either get them back to normal, or eliminate.
+- [ ] Fix: Item sheets are not showing selected tabs
 
 ## Testing To Dos
 
