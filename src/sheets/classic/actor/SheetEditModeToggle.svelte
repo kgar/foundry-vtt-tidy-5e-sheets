@@ -62,6 +62,6 @@
     title={allowEdit ? unlockTitle : lockTitle}
     checked={allowEdit}
     thumbIconClass="{allowEdit ? 'fas fa-unlock' : 'fas fa-lock'} fa-fw"
-    on:change={() => toggleLock()}
+    onChange={() => toggleLock()}
   ></TidySwitch>
 </div>

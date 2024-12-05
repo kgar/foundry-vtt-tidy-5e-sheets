@@ -199,7 +199,7 @@
             selected={currentSize}
             onOptionClicked={(option) =>
               $context.actor.update({
-                'system.traits.size': option,
+                'system.traits.size': option.value,
               })}
             title={localize('DND5E.Size')}
           />

@@ -1,13 +1,16 @@
 ## To Do
 
-- [ ] Fixit: Accordion Item error
-- [ ] Replace stores with runes
-- [ ] Ensure context API where reactivity is expected is using runes
+- [ ] Search and address all instances of `on:` in svelte templates
 - [ ] Resolve `kgar-migration-task` content
-- [ ] Fix inventory grid styles
 - [ ] Fix? Activities Tab context menu not showing anything
 - [ ] Fix: Spell Pip animations are buck wild, now. Either get them back to normal, or eliminate.
 - [ ] Fix: Item sheets are not showing selected tabs
+- [ ] Ensure context API where reactivity is expected is using runes
+- [ ] Replace stores with runes
+- [ ] Fix: Use the broken identify toggle for containers to vet error handling and getting latest from the source data.
+
+## Stretch, or defer to post V7.3.0
+
 - [ ] Actually implement the activity card content. There's nothing there!
 - [ ] Provide separate option for showing activity cards
 - [ ] Implement Effect card and content.
@@ -167,3 +170,7 @@ Cry.
   - [x] Ensure the show/hide/transition/transform styles do not apply to the popped out / inspected card; they should only apply to the attached card; ==attached== should perhaps be a class on the attached card
   - [x] Should "inspected" instead be "detached"? Yes.
 - [x] Item Card Refinement: Shift from mouseover to mouseleave with hiding cards. This is going to be tricky. Make sure it works in a variety of scenarios. One idea: when showing the card for an event target, then wire the mouseleave on that target to ensure show turns off when that target is left.
+- [x] Fixit: Accordion Item error
+- [x] Fix: Item Identified / Equipped toggles are not processing switch change events properly
+ - It's the underlying Tidy Switch
+- [x] Fix inventory grid styles

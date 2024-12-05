@@ -125,10 +125,10 @@
               <TidyTableHeaderCell>
                 <TidySwitch
                   checked={selected}
-                  on:change={(ev) =>
+                  onChange={(ev) =>
                     setItemSourceClass(
                       assignment.item,
-                      ev.detail.currentTarget.checked ? classColumn.key : '',
+                      ev.currentTarget.checked ? classColumn.key : '',
                     )}
                 />
               </TidyTableHeaderCell>

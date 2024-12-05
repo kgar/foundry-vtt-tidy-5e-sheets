@@ -44,7 +44,7 @@
     ? 'active'
     : 'inactive'}"
   bind:checked={switchOn}
-  on:change={(ev) => handleChange(ev.detail.currentTarget.checked)}
+  onChange={(ev) => handleChange(ev.currentTarget.checked)}
   title={condition.name}
   disabled={!$context.editable}
   data-uuid={condition.reference}

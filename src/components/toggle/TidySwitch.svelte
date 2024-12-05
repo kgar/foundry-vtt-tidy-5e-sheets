@@ -6,7 +6,7 @@
     checked?: boolean;
     disabled?: boolean;
     thumbIconClass?: string | undefined;
-    onChange?: ChangeEventHandler<HTMLElement>;
+    onChange?: ChangeEventHandler<HTMLInputElement>;
     children?: Snippet;
     [key: string]: any;
   }

@@ -91,7 +91,7 @@
           <TidySwitch
             disabled={effectContext.suppressed}
             checked={effectContext.toggle.value}
-            on:change={() => toggleEffect(effectContext)}
+            onChange={() => toggleEffect(effectContext)}
           />
         </ItemTableCell>
       </ItemTableRow>
