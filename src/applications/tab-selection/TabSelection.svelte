@@ -2,7 +2,7 @@
   import { getContext } from 'svelte';
   import SelectionListbox from '../../components/listbox/SelectionListbox.svelte';
   import type { Writable } from 'svelte/store';
-  import type { TabSelectionContext } from './TabSelectionFormApplication';
+  import type { TabSelectionContext } from './TabSelectionFormApplication.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
 

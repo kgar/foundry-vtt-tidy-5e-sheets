@@ -4,12 +4,13 @@
   import ButtonMenuDivider from 'src/components/button-menu/ButtonMenuDivider.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ThemeSelectorButtonMenuCommand from '../shared/ThemeSelectorButtonMenuCommand.svelte';
-  import TabSelectionFormApplication from 'src/applications/tab-selection/TabSelectionFormApplication';
+  import TabSelectionFormApplication from 'src/applications/tab-selection/TabSelectionFormApplication.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ActorSheetContextV1 } from 'src/types/types';
   import { ApplicationsManager } from 'src/applications/ApplicationsManager';
   import { CONSTANTS } from 'src/constants';
+
   interface Props {
     defaultSettingsTab?: string | undefined;
   }
