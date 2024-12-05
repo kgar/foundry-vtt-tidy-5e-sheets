@@ -59,7 +59,6 @@
 </script>
 
 <div class="button-with-options-wrapper">
-  <!-- kgar-migration-task - ensure longpress works as advertized -->
   <a
     class="button with-options {rest.class ?? ''}"
     class:expanded

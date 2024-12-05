@@ -61,9 +61,8 @@
     }
   }
 
-  // kgar-migration-task - test this
   // svelte-ignore non_reactive_update
-    let _el: HTMLElement;
+  let _el: HTMLElement;
 
   // [contenteditable] pasting can include HTML
   // Only the text content is appropriate for this component
@@ -127,7 +126,7 @@
     data-placeholder={placeholder}
     {title}
     data-tidy-field={field}
-  />
+  ></svelte:element>
 {:else}
   <svelte:element
     this={element}
