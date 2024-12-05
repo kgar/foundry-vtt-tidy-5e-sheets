@@ -1,12 +1,11 @@
 <script lang="ts">
   import { getContext } from 'svelte';
   import SelectionListbox from '../../components/listbox/SelectionListbox.svelte';
-  import type { Writable } from 'svelte/store';
   import type { TabSelectionContext } from './TabSelectionFormApplication.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Writable<TabSelectionContext>>(
+  let context = getContext<TabSelectionContext>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
@@ -22,8 +21,8 @@
   <SelectionListbox
     labelProp="label"
     valueProp="id"
-    bind:leftItems={$context.available}
-    bind:rightItems={$context.selected}
+    bind:leftItems={context.available}
+    bind:rightItems={context.selected}
     listboxCssClass="scroll-container"
     class="flex-1"
   >

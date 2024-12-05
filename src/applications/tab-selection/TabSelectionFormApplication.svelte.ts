@@ -2,7 +2,6 @@ import { mount } from 'svelte';
 import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
 import TabSelection from './TabSelection.svelte';
 import type { Actor5e } from 'src/types/types';
-import { get, writable } from 'svelte/store';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { error } from 'src/utils/logging';
 import type { RegisteredTab } from 'src/runtime/types';
@@ -27,7 +26,7 @@ export type TabSelectionContext = {
 
 export default class TabSelectionFormApplication extends SvelteFormApplicationBase {
   actor: Actor5e;
-  context = writable<TabSelectionContext>({ available: [], selected: [] });
+  context = $state<TabSelectionContext>({ available: [], selected: [] });
   registeredTabs: RegisteredTab<any>[];
 
   constructor(actor: Actor5e, ...args: any[]) {
@@ -144,8 +143,7 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
   }
 
   validate() {
-    const context = get(this.context);
-    if (context.selected.length === 0) {
+    if (this.context.selected.length === 0) {
       error(
         FoundryAdapter.localize(
           'TIDY5E.TabSelection.AtLeastOneRequiredErrorMessage'
@@ -159,11 +157,9 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
   }
 
   async save() {
-    const context = get(this.context);
-
     await TidyFlags.selectedTabs.set(
       this.actor,
-      context.selected.map((t) => t.id)
+      this.context.selected.map((t) => t.id)
     );
   }
 
@@ -172,7 +168,7 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
   }
 
   refreshContext() {
-    this.context.set(this.getData());
+    this.context = this.getData();
   }
 
   async apply() {

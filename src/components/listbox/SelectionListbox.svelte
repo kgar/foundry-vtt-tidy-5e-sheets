@@ -45,7 +45,7 @@
   let selectedItemIndex = $derived(
     selectedLeftItemIndex ?? selectedRightItemIndex,
   );
-  
+
   let selectedArray = $derived(
     selectedLeftItemIndex !== null
       ? leftItems
@@ -206,7 +206,7 @@
     {labelProp}
     {valueProp}
     bind:selectedItemIndex={selectedLeftItemIndex}
-    onSelect={() => {
+    onselect={() => {
       selectedRightItemIndex = null;
     }}
     onkeydown={handleLeftListboxKeydown}
@@ -242,7 +242,7 @@
     {labelProp}
     {valueProp}
     bind:selectedItemIndex={selectedRightItemIndex}
-    onSelect={() => {
+    onselect={() => {
       selectedLeftItemIndex = null;
     }}
     onkeydown={handleRightListboxKeydown}
