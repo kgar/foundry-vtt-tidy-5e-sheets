@@ -45,6 +45,7 @@
   let selectedItemIndex = $derived(
     selectedLeftItemIndex ?? selectedRightItemIndex,
   );
+  
   let selectedArray = $derived(
     selectedLeftItemIndex !== null
       ? leftItems
@@ -219,21 +220,21 @@
   </Listbox>
   <SelectionListboxToolbar
     moveUpDisabled={selectedItemIndex === null || selectedItemIndex === 0}
-    on:moveUp={moveUp}
+    onMoveUp={moveUp}
     moveDownDisabled={selectedItemIndex === null ||
       selectedArray === null ||
       selectedItemIndex >= selectedArray.length - 1}
-    on:moveDown={moveDown}
+    onMoveDown={moveDown}
     moveLeftDisabled={selectedLeftItemIndex !== null ||
       selectedRightItemIndex === null}
-    on:moveLeft={moveLeft}
+    onMoveLeft={moveLeft}
     moveRightDisabled={selectedLeftItemIndex === null ||
       selectedRightItemIndex !== null}
-    on:moveRight={moveRight}
+    onMoveRight={moveRight}
     moveAllToTheLeftDisabled={rightItems.length === 0}
-    on:moveAllToTheLeft={moveAllToTheLeft}
+    onMoveAllToTheLeft={moveAllToTheLeft}
     moveAllToTheRightDisabled={leftItems.length === 0}
-    on:moveAllToTheRight={moveAllToTheRight}
+    onMoveAllToTheRight={moveAllToTheRight}
     class="column-2"
   />
   <Listbox

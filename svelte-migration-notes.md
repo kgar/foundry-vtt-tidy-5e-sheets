@@ -1,6 +1,7 @@
 ## To Do
 
-- [ ] Search and address all instances of `on:` in svelte templates
+- [x] Search and address all instances of `on:` in svelte templates
+- [ ] Fix: Tab Selection is behaving inconsistently. Consider revamping.
 - [ ] Resolve `kgar-migration-task` content
 - [ ] Fix? Activities Tab context menu not showing anything
 - [ ] Fix: Spell Pip animations are buck wild, now. Either get them back to normal, or eliminate.

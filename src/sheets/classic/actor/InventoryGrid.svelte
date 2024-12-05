@@ -179,7 +179,7 @@
                   maxlength={2}
                   allowDeltaChanges={true}
                   selectOnFocus={true}
-                  on:click={preventUseItemEvent}
+                  onclick={preventUseItemEvent}
                   disabled={!$context.editable}
                   onSaveChange={(ev) =>
                     FoundryAdapter.handleItemUsesChanged(ev, item) && false}
@@ -200,7 +200,7 @@
                 disabled={!$context.editable || $context.lockItemQuantity}
                 allowDeltaChanges={true}
                 selectOnFocus={true}
-                on:click={preventUseItemEvent}
+                onclick={preventUseItemEvent}
               />
             </span>
           </div>
