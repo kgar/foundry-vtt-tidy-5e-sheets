@@ -8,16 +8,13 @@
 - [ ] Replace stores with runes
 - [ ] Fix: Use the broken identify toggle for containers to vet error handling and getting latest from the source data.
 
-to the graveyard:
-- [x] Search and address all instances of `on:` in svelte templates
-- [x] Fix: Tab Selection is behaving inconsistently. Consider revamping.
-
 ## Stretch, or defer to post V7.3.0
 
 - [ ] Actually implement the activity card content. There's nothing there!
 - [ ] Provide separate option for showing activity cards
 - [ ] Implement Effect card and content.
 - [ ] Provide separate option for showing effect cards.
+- [ ] Eliminate ContentEditable elements and use Locked Readonly / Unlocked Text Input
 
 ## Testing To Dos
 
@@ -177,3 +174,5 @@ Cry.
 - [x] Fix: Item Identified / Equipped toggles are not processing switch change events properly
  - It's the underlying Tidy Switch
 - [x] Fix inventory grid styles
+- [x] Search and address all instances of `on:` in svelte templates
+- [x] Fix: Tab Selection is behaving inconsistently. Consider revamping.
