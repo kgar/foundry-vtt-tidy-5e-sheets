@@ -1,7 +1,5 @@
 ## To Do
 
-- [x] Search and address all instances of `on:` in svelte templates
-- [ ] Fix: Tab Selection is behaving inconsistently. Consider revamping.
 - [ ] Resolve `kgar-migration-task` content
 - [ ] Fix? Activities Tab context menu not showing anything
 - [ ] Fix: Spell Pip animations are buck wild, now. Either get them back to normal, or eliminate.
@@ -9,6 +7,10 @@
 - [ ] Ensure context API where reactivity is expected is using runes
 - [ ] Replace stores with runes
 - [ ] Fix: Use the broken identify toggle for containers to vet error handling and getting latest from the source data.
+
+to the graveyard:
+- [x] Search and address all instances of `on:` in svelte templates
+- [x] Fix: Tab Selection is behaving inconsistently. Consider revamping.
 
 ## Stretch, or defer to post V7.3.0
 

@@ -13,8 +13,7 @@
   let expandableContainer: HTMLElement;
 
   onMount(() => {
-    const controller = new AbortController();
-    const signal = controller.signal;
+    const { signal, abort } = new AbortController();
 
     expandableContainer.addEventListener(
       'transitionstart',
@@ -24,7 +23,7 @@
         }
       },
       {
-        signal: signal,
+        signal,
       },
     );
 
@@ -35,14 +34,13 @@
           overflowYHidden = !expanded;
         }
       },
-
       {
-        signal: signal,
+        signal,
       },
     );
 
     return () => {
-      controller.abort();
+      abort();
     };
   });
 </script>

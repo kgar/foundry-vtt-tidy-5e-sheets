@@ -97,7 +97,6 @@
     {buttonText}
   </button>
 
-  <!-- kgar-migration-task - make sure this is working as advertized -->
   {#if open}
     <svelte:element
       this={menuElement}

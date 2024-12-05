@@ -3,18 +3,22 @@ export function clickOutside(
   { callback }: { callback?: (event: MouseEvent, node: HTMLElement) => void }
 ) {
   $effect(() => {
-    function handleClick(e: MouseEvent) {
-      if (e.target instanceof Node && !node.contains(e.target)) {
-        callback?.(e, node);
-      }
-    }
+    const { signal, abort } = new AbortController();
 
     setTimeout(() => {
-      window.addEventListener('click', handleClick);
+      window.addEventListener(
+        'click',
+        (e: MouseEvent) => {
+          if (e.target instanceof Node && !node.contains(e.target)) {
+            callback?.(e, node);
+          }
+        },
+        { signal }
+      );
     });
 
     return () => {
-      window.removeEventListener('click', handleClick);
+      abort();
     };
   });
 }
