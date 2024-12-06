@@ -29,9 +29,8 @@
 
   let attunementSummaryTooltip: AttunementSummaryTooltip;
 
-  // kgar-migration-task - does it work as advertized?
   function showAttunementSummaryTooltip(
-    event: MouseEvent & { currentTarget: EventTarget & HTMLDivElement },
+    event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
   ): any {
     if (!attunedItems.length) {
       return;

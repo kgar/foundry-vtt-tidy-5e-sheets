@@ -1,13 +1,9 @@
 <script lang="ts">
+  import type { ChangeEventHandler } from 'svelte/elements';
+
   interface Props {
     checked?: boolean;
-    onchange?:
-      | ((
-          event: Event & {
-            currentTarget: EventTarget & HTMLInputElement;
-          },
-        ) => void)
-      | undefined;
+    onchange?: ChangeEventHandler<HTMLInputElement>;
   }
 
   let { checked = false, onchange = undefined }: Props = $props();

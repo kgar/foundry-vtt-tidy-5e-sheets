@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Snippet } from 'svelte';
+  import type { Snippet } from 'svelte';
   import Dnd5eIcon from '../icon/Dnd5eIcon.svelte';
   import FieldToggle from './FieldToggle.svelte';
 
@@ -51,6 +51,5 @@
     </span>
     {@render children?.()}
   </span>
-  <!-- kgar-migration-task - make sure this still works as intended -->
   <FieldToggle {checked} {onchange} />
 </label>
