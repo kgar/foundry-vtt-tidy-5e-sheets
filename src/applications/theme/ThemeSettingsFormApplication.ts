@@ -39,6 +39,7 @@ export class ThemeSettingsFormApplication extends SvelteFormApplicationBase {
       id: 'tidy-5e-sheets-theme-settings',
       popOut: true,
       resizable: true,
+      closeOnSubmit: false,
     };
   }
 
@@ -85,7 +86,7 @@ export class ThemeSettingsFormApplication extends SvelteFormApplicationBase {
 
     applyCurrentTheme();
 
-    this.close();
+    await this.close();
   }
 
   useExistingThemeColors(themeId: string) {
