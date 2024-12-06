@@ -32,6 +32,7 @@
     SheetSections.configureSpellbook($context.actor, tabId, $context.spellbook),
   );
 
+  // kgar-migration-task - swap to a state or derived rune | consider using a service of some kind
   const itemIdsToShow = writable<Set<string> | undefined>(undefined);
   setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
 
