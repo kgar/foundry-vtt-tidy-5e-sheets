@@ -4,8 +4,8 @@
   import type { Item5e, ItemSheetContext } from 'src/types/item.types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import FloatingContextMenu from 'src/components/context-menu/FloatingContextMenu.svelte';
   import type { ContextMenuEntry } from 'src/foundry/foundry.types';
+  import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -37,7 +37,6 @@
     });
   }
 
-  // kgar-migration-task
   let itemImageContainer: HTMLElement;
   let contextMenuOptions: ContextMenuEntry[] = $derived([
     {
@@ -46,14 +45,21 @@
       callback: () => showItemArt($context.item),
     },
   ]);
+
+  $effect(() => {
+    new FloatingContextMenu(
+      FoundryAdapter.getJqueryWrappedElement(itemImageContainer),
+      `[data-tidy-sheet-part=${CONSTANTS.SHEET_PARTS.ITEM_IMAGE_CONTAINER}]`,
+      [],
+      {
+        onOpen: () => {
+          ui.context.menuItems = contextMenuOptions;
+        },
+      },
+    );
+  });
 </script>
 
-<FloatingContextMenu
-  containingElement={itemImageContainer}
-  targetSelector="[data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
-    .ITEM_IMAGE_CONTAINER}]"
-  options={contextMenuOptions}
-></FloatingContextMenu>
 <div
   class="item-image item-image-show-item-art"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_IMAGE_CONTAINER}

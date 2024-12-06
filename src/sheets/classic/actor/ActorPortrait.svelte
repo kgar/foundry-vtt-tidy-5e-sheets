@@ -9,10 +9,10 @@
   import { isNil } from 'src/utils/data';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import FloatingContextMenu from 'src/components/context-menu/FloatingContextMenu.svelte';
   import { debug, error } from 'src/utils/logging';
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import type { ContextMenuEntry } from 'src/foundry/foundry.types';
+  import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
 
   interface Props {
     actor: Actor5e;
@@ -75,9 +75,8 @@
     }
   }
 
-  // kgar-migration-task ensure this works as intended
-  // svelte-ignore non_reactive_update
   let portraitContainer: HTMLElement;
+
   // TODO: Consider sending context menu options down through document context in the first place.
   let contextMenuOptions: ContextMenuEntry[] = $derived.by(() => {
     try {
@@ -96,14 +95,21 @@
 
     return [];
   });
+
+  $effect(() => {
+    new FloatingContextMenu(
+      FoundryAdapter.getJqueryWrappedElement(portraitContainer),
+      `[data-tidy-sheet-part=${CONSTANTS.SHEET_PARTS.ACTOR_PORTRAIT_CONTAINER}]`,
+      [],
+      {
+        onOpen: () => {
+          ui.context.menuItems = contextMenuOptions;
+        },
+      },
+    );
+  });
 </script>
 
-<FloatingContextMenu
-  containingElement={portraitContainer}
-  targetSelector="[data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
-    .ACTOR_PORTRAIT_CONTAINER}]"
-  options={contextMenuOptions}
-></FloatingContextMenu>
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
   bind:this={portraitContainer}

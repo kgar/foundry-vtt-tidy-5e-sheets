@@ -11,7 +11,6 @@
 
   let svgHtml: string = $state('');
 
-  // kgar-migration-task - make sure this is working as desired. Async effects are not a thing, and the effect should be running and mutating whenever svgUrl changes
   $effect(() => {
     if (!svgUrl) {
       return;
