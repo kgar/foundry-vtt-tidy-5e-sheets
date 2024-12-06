@@ -21,7 +21,7 @@
 </script>
 
 <div class="pips">
-  {#each pipArray as _, i}
+  {#each pipArray, i}
     <button
       type="button"
       class="pip"

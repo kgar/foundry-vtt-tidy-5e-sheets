@@ -7,9 +7,9 @@
   } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import SpellPips from './SpellPips.svelte';
   import SpellSlotConfigButton from './SpellSlotConfigButton.svelte';
   import SpellSlotUses from './SpellSlotUses.svelte';
+  import SpellPips from '../pips/SpellPips.svelte';
 
   interface Props {
     section: SpellbookSection;
