@@ -4,6 +4,7 @@
 - [ ] Fix? Activities Tab context menu not showing anything
 - [ ] Fix: Spell Pip animations are buck wild, now. Either get them back to normal, or eliminate.
 - [ ] Fix: Item sheets are not showing selected tabs
+- [ ] Fix: World Settings has warning: [svelte] binding_property_non_reactive`bind:value={config.type}` (src/applications/settings/parts/ExhaustionSetting.svelte:33:48) is binding to a non-reactive property
 - [ ] Ensure context API where reactivity is expected is using runes
 - [ ] Replace stores with runes
 - [ ] Fix: Use the broken identify toggle for containers to vet error handling and getting latest from the source data.
