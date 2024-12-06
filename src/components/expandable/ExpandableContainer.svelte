@@ -13,7 +13,7 @@
   let expandableContainer: HTMLElement;
 
   onMount(() => {
-    const { signal, abort } = new AbortController();
+    const controller = new AbortController();
 
     expandableContainer.addEventListener(
       'transitionstart',
@@ -23,7 +23,7 @@
         }
       },
       {
-        signal,
+        signal: controller.signal,
       },
     );
 
@@ -35,12 +35,12 @@
         }
       },
       {
-        signal,
+        signal: controller.signal,
       },
     );
 
     return () => {
-      abort();
+      controller.abort();
     };
   });
 </script>

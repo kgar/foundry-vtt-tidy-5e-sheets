@@ -3,7 +3,7 @@ export function clickOutside(
   { callback }: { callback?: (event: MouseEvent, node: HTMLElement) => void }
 ) {
   $effect(() => {
-    const { signal, abort } = new AbortController();
+    const controller = new AbortController();
 
     setTimeout(() => {
       window.addEventListener(
@@ -13,12 +13,12 @@ export function clickOutside(
             callback?.(e, node);
           }
         },
-        { signal }
+        { signal: controller.signal }
       );
     });
 
     return () => {
-      abort();
+      controller.abort();
     };
   });
 }

@@ -8,14 +8,14 @@ export function longpress(
 
   $effect(() => {
     const handleMouseDown = () => {
-      const { signal, abort } = new AbortController();
+      const controller = new AbortController();
       const timeout = setTimeout(() => {
         options?.callback?.(node);
       }, threshold);
 
       const cancel = () => {
         clearTimeout(timeout);
-        abort();
+        controller.abort();
       };
 
       let cancellableActions: (keyof HTMLElementEventMap)[] = [
@@ -27,18 +27,22 @@ export function longpress(
 
       cancellableActions.forEach((a) =>
         node.addEventListener(a, cancel, {
-          signal,
+          signal: controller.signal,
         })
       );
     };
 
-    const { signal, abort } = new AbortController();
+    const controller = new AbortController();
 
-    node.addEventListener('mousedown', handleMouseDown, { signal });
-    node.addEventListener('touchstart', handleMouseDown, { signal });
+    node.addEventListener('mousedown', handleMouseDown, {
+      signal: controller.signal,
+    });
+    node.addEventListener('touchstart', handleMouseDown, {
+      signal: controller.signal,
+    });
 
     return () => {
-      abort();
+      controller.abort();
     };
   });
 }

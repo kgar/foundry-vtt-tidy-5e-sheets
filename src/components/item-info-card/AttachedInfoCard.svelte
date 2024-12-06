@@ -46,7 +46,7 @@
 
   // When floating, reposition the card whenever shown and mousing over the sheet.
   $effect(() => {
-    const { signal, abort } = new AbortController();
+    const controller = new AbortController();
 
     if (floating) {
       sheetEl.addEventListener(
@@ -60,12 +60,12 @@
           floatingLeft = left;
           floatingTop = top;
         },
-        { signal },
+        { signal: controller.signal },
       );
     }
 
     return () => {
-      abort();
+      controller.abort();
     };
   });
 

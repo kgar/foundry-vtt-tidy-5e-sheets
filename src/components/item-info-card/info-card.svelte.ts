@@ -128,7 +128,7 @@ export function infoCardEventWatcher(
       return;
     }
 
-    const { signal, abort } = new AbortController();
+    const controller = new AbortController();
 
     sheetNode?.addEventListener(
       'mouseenter',
@@ -141,7 +141,7 @@ export function infoCardEventWatcher(
           args.hoverOn(ev, target);
         }
       },
-      { passive: true, signal }
+      { passive: true, signal: controller.signal }
     );
 
     sheetNode?.addEventListener(
@@ -157,7 +157,7 @@ export function infoCardEventWatcher(
           args.hoverOff(ev);
         }
       },
-      { passive: true, signal }
+      { passive: true, signal: controller.signal }
     );
 
     sheetNode?.addEventListener(
@@ -165,7 +165,7 @@ export function infoCardEventWatcher(
       (ev) => {
         args.hoverOff(ev);
       },
-      { passive: true, signal }
+      { passive: true, signal: controller.signal }
     );
 
     sheetNode?.addEventListener(
@@ -181,7 +181,7 @@ export function infoCardEventWatcher(
 
         args.dragStart(ev, !!target);
       },
-      { signal }
+      { signal: controller.signal }
     );
 
     document?.addEventListener(
@@ -191,11 +191,11 @@ export function infoCardEventWatcher(
           args.inspectKeyUp(ev);
         }
       },
-      { passive: true, signal }
+      { passive: true, signal: controller.signal }
     );
 
     return () => {
-      abort();
+      controller.abort();
     };
   });
 }
