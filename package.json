@@ -33,7 +33,7 @@
     "eslint-plugin-playwright": "^2.0.0",
     "fs-extra": "^11.2.0",
     "sass": "^1.79.3",
-    "svelte": "^5.4.0",
+    "svelte": "^5.7.1",
     "svelte-awesome-color-picker": "^3.1.4",
     "svelte-check": "^4.1.0",
     "terser": "^5.36.0",
