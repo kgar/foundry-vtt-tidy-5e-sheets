@@ -20,11 +20,11 @@
   import { getContext, type Component } from 'svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-  import type { Readable } from 'svelte/store';
   import InlineContainerView from './InlineContainerView.svelte';
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import ItemUses from 'src/components/item-list/ItemUses.svelte';
   import ItemAddUses from 'src/components/item-list/ItemAddUses.svelte';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
 
   interface Props {
     contents: InventorySection[];
@@ -62,9 +62,7 @@
     ),
   );
 
-  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
-    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
-  );
+  const searchResults = getSearchResultsContext();
 
   let classicControls: {
     component: Component<any>;
@@ -148,7 +146,7 @@
 
             <ItemTableRowV2
               {item}
-              hidden={!!$itemIdsToShow && !$itemIdsToShow.has(item.id)}
+              hidden={!searchResults.show(item.uuid)}
               rowClass={FoundryAdapter.getInventoryRowClasses(
                 item,
                 itemContext[item.id]?.attunement,

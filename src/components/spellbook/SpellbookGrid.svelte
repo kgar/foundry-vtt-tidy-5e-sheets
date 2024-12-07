@@ -19,6 +19,7 @@
   import SpellSlotManagement from './SpellSlotManagement.svelte';
   import ConcentrationOverlayIcon from './ConcentrationOverlayIcon.svelte';
   import { TidyHooks } from 'src/foundry/TidyHooks';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
 
   interface Props {
     section: SpellbookSection;
@@ -32,9 +33,7 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
-    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
-  );
+  let searchResultContext = getSearchResultsContext();
 
   let customCommands = $derived(
     ActorItemRuntime.getActorItemSectionCommands({
@@ -92,11 +91,9 @@
             $context,
             spell,
           )}
-          {@const hidden = !!$itemIdsToShow && !$itemIdsToShow.has(spell.id)}
+          {@const hidden = !searchResultContext.show(spell.uuid)}
           <a
-            class="spell {FoundryAdapter.getSpellRowClasses(
-              spell,
-            )}"
+            class="spell {FoundryAdapter.getSpellRowClasses(spell)}"
             class:hidden
             aria-hidden={hidden}
             data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}

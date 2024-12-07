@@ -19,6 +19,7 @@
   import { declareLocation } from 'src/types/location-awareness.types';
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
 
   interface Props {
     section: InventorySection;
@@ -38,9 +39,7 @@
     }),
   );
 
-  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
-    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
-  );
+  const searchResults = getSearchResultsContext();
 
   const localize = FoundryAdapter.localize;
 
@@ -87,7 +86,7 @@
         <span class="inventory-primary-column-label">
           {localize(section.label)} ({ItemVisibility.countVisibleItems(
             items,
-            $itemIdsToShow,
+            searchResults.uuids,
           )})
         </span>
       </ItemTableColumn>
@@ -97,7 +96,7 @@
     <div class="items">
       {#each items as item (item.id)}
         {@const ctx = $context.itemContext[item.id]}
-        {@const hidden = !!$itemIdsToShow && !$itemIdsToShow.has(item.id)}
+        {@const hidden = !searchResults.show(item.uuid)}
         <a
           class="item {getInventoryRowClasses(item)}"
           class:hidden

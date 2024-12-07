@@ -36,6 +36,7 @@
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
 
   interface Props {
     primaryColumnName: string;
@@ -69,9 +70,7 @@
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
-    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
-  );
+  const searchResults = getSearchResultsContext();
 
   const localize = FoundryAdapter.localize;
   const weightUnit = FoundryAdapter.getWeightUnit();
@@ -212,7 +211,7 @@
             uuid: item.uuid,
           }}
           cssClass={getInventoryRowClasses(item)}
-          hidden={!!$itemIdsToShow && !$itemIdsToShow.has(item.id)}
+          hidden={!searchResults.show(item.uuid)}
           favoriteId={'favoriteId' in ctx ? ctx.favoriteId : null}
         >
           {#snippet children({ toggleSummary })}

@@ -22,6 +22,7 @@
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -33,9 +34,7 @@
 
   let { items = [], section }: Props = $props();
 
-  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
-    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
-  );
+  const searchResults = getSearchResultsContext();
 
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
@@ -68,7 +67,7 @@
           type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
           uuid: item.uuid,
         }}
-        hidden={!!$itemIdsToShow && !$itemIdsToShow.has(item.id)}
+        hidden={!searchResults.show(item.uuid)}
         favoriteId={ctx.favoriteId}
       >
         {#snippet children({ toggleSummary })}

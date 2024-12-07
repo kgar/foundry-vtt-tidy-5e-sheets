@@ -20,6 +20,10 @@
   import ContainerContentsSections from 'src/sheets/classic/container/ContainerContentsSections.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import {
+    createSearchResultsState,
+    setSearchResultsContext,
+  } from 'src/features/search/search.svelte';
 
   let context = getContext<Readable<ContainerSheetClassicContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -36,12 +40,11 @@
     $context.containerContents.contents.flatMap((x) => x.items),
   );
 
-  // kgar-migration-task - swap to a state or derived rune | consider using a service of some kind
-  const itemIdsToShow = writable<Set<string> | undefined>(undefined);
-  setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
+  const searchResults = createSearchResultsState();
+  setSearchResultsContext(searchResults);
 
   $effect(() => {
-    $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
+    searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
       itemContext: $context.itemContext,
       sections: $context.containerContents.contents,

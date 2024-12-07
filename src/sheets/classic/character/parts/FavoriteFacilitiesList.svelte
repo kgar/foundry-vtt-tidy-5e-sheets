@@ -22,6 +22,7 @@
   import FacilityOrderProgressMeter from './FacilityOrderProgressMeter.svelte';
   import { Tooltip } from 'src/tooltips/Tooltip';
   import OccupantSummaryTooltip from 'src/tooltips/OccupantSummaryTooltip.svelte';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
 
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
@@ -41,9 +42,7 @@
   let tooltipOccupants = $state<Actor5e[]>([]);
   let tooltipTitle = $state('');
 
-  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
-    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
-  );
+  const searchResults = getSearchResultsContext();
 
   const ordersWidth = '10rem';
   const defendersWidth = '2.5rem';
@@ -131,7 +130,7 @@
             type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
             uuid: item.uuid,
           }}
-          hidden={!!$itemIdsToShow && !$itemIdsToShow.has(item.id)}
+          hidden={!searchResults.show(item.uuid)}
           favoriteId={ctx.favoriteId}
         >
           {#snippet children({ toggleSummary })}

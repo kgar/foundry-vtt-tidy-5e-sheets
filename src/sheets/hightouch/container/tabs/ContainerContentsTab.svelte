@@ -12,6 +12,10 @@
   import ToggleButton from 'src/components/buttons/ToggleButton.svelte';
   import Search from '../../shared/Search.svelte';
   import ButtonWithOptionPanel from 'src/components/buttons/ButtonWithOptionPanel.svelte';
+  import {
+    createSearchResultsState,
+    setSearchResultsContext,
+  } from 'src/features/search/search.svelte';
 
   let context = getContext<Readable<ContainerSheetHightouchContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -24,12 +28,11 @@
 
   let searchCriteria = $state('');
 
-  // kgar-migration-task - swap to a state or derived rune | consider using a service of some kind
-  const itemIdsToShow = writable<Set<string> | undefined>(undefined);
-  setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
+  const searchResults = createSearchResultsState();
+  setSearchResultsContext(searchResults);
 
   $effect(() => {
-    $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
+    searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
       itemContext: $context.itemContext,
       sections: $context.containerContents.contents,

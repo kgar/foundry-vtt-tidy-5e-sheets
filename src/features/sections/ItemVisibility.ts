@@ -6,13 +6,13 @@ import { debug } from 'src/utils/logging';
 import type { ActionItem } from 'src/types/types';
 
 export class ItemVisibility {
-  static countVisibleItems(items: Item5e[], itemIdsToShow?: Set<string>) {
-    if (!itemIdsToShow) {
+  static countVisibleItems(items: Item5e[], uuids?: Set<string>) {
+    if (!uuids) {
       return items.length;
     }
 
     return items.reduce(
-      (prev, curr) => prev + (itemIdsToShow.has(curr.id) ? 1 : 0),
+      (prev, curr) => prev + (uuids.has(curr.uuid) ? 1 : 0),
       0
     );
   }
@@ -83,7 +83,7 @@ export class ItemVisibility {
         (FoundryAdapter.searchItem(item, args.criteria) && args.filter(item)) ||
         !!containedItemsToInclude.length;
       if (includeItem) {
-        results.push(item.id);
+        results.push(item.uuid);
       }
     }
 

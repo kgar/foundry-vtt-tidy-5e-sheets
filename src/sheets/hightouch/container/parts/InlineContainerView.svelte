@@ -3,11 +3,11 @@
   import ContainerContentsSections from './ContainerContentsSections.svelte';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import type { ContainerContents, Item5e } from 'src/types/item.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
   import VerticalFiligreeGuideline from '../../shared/VerticalFiligreeGuideline.svelte';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
 
   interface Props {
     container: Item5e;
@@ -31,9 +31,7 @@
 
   let inlineToggleServiceStore = $derived(inlineToggleService.store);
 
-  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
-    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
-  );
+  const searchResults = getSearchResultsContext();
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
@@ -49,7 +47,7 @@
 
 <ExpandableContainer
   expanded={$inlineToggleServiceStore.get(tabId)?.has(container.id) === true}
-  class={!!$itemIdsToShow && !$itemIdsToShow.has(container.id) ? 'hidden' : ''}
+  class={!searchResults.show(container.uuid) ? 'hidden' : ''}
 >
   <!-- TODO: Apply proper a11y trappings for this -->
   <!-- svelte-ignore a11y_no_static_element_interactions -->

@@ -20,6 +20,7 @@
   import InlineContainerView from './InlineContainerView.svelte';
   import { isNil } from 'src/utils/data';
   import TidyTableToggleIcon from 'src/components/table/TidyTableToggleIcon.svelte';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
 
   interface Props {
     contents: InventorySection[];
@@ -57,9 +58,7 @@
     ),
   );
 
-  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
-    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
-  );
+  const searchResults = getSearchResultsContext();
 
   // TODO: When Svelte 5, snippets
   // let itemActions: {
@@ -150,7 +149,7 @@
 
           <ItemTableRowV2
             {item}
-            hidden={!!$itemIdsToShow && !$itemIdsToShow.has(item.id)}
+            hidden={!searchResults.show(item.uuid)}
             rowClass={FoundryAdapter.getInventoryRowClasses(
               item,
               itemContext[item.id]?.attunement,

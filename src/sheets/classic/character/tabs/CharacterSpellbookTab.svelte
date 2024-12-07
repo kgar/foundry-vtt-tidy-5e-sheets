@@ -27,15 +27,18 @@
   import ButtonMenu from 'src/components/button-menu/ButtonMenu.svelte';
   import ButtonMenuCommand from 'src/components/button-menu/ButtonMenuCommand.svelte';
   import SpellSourceClassAssignmentsFormApplication from 'src/applications/spell-source-class-assignments/SpellSourceClassAssignmentsFormApplication';
+  import {
+    createSearchResultsState,
+    setSearchResultsContext,
+  } from 'src/features/search/search.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
-  // kgar-migration-task - swap to a state or derived rune | consider using a service of some kind
-  const itemIdsToShow = writable<Set<string> | undefined>(undefined);
-  setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
+  const searchResults = createSearchResultsState();
+  setSearchResultsContext(searchResults);
 
   const localize = FoundryAdapter.localize;
 
@@ -64,7 +67,7 @@
   );
 
   $effect(() => {
-    $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
+    searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
       itemContext: $context.itemContext,
       sections: spellbook,
@@ -147,7 +150,7 @@
 
         {@const visibleItemCount = ItemVisibility.countVisibleItems(
           section.spells,
-          $itemIdsToShow,
+          searchResults.uuids,
         )}
 
         {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemCount > 0 || !!section.slots}

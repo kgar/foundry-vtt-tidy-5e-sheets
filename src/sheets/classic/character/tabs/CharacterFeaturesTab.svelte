@@ -44,6 +44,10 @@
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
+  import {
+    createSearchResultsState,
+    setSearchResultsContext,
+  } from 'src/features/search/search.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -56,9 +60,8 @@
 
   const localize = FoundryAdapter.localize;
 
-  // kgar-migration-task - swap to a state or derived rune | consider using a service of some kind
-  const itemIdsToShow = writable<Set<string> | undefined>(undefined);
-  setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
+  const searchResults = createSearchResultsState();
+  setSearchResultsContext(searchResults);
 
   let searchCriteria: string = $state('');
 
@@ -113,7 +116,7 @@
   );
 
   $effect(() => {
-    $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
+    searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
       itemContext: $context.itemContext,
       sections: features,
@@ -162,7 +165,7 @@
       {#if section.show}
         {@const visibleItemCount = ItemVisibility.countVisibleItems(
           section.items,
-          $itemIdsToShow,
+          searchResults.uuids,
         )}
 
         {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemCount > 0}
@@ -211,7 +214,7 @@
                     type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
                     uuid: item.uuid,
                   }}
-                  hidden={!!$itemIdsToShow && !$itemIdsToShow.has(item.id)}
+                  hidden={!searchResults.show(item.uuid)}
                 >
                   {#snippet children({ toggleSummary })}
                     <ItemTableCell primary={true}>

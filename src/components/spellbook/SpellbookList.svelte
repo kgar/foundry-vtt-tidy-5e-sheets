@@ -37,6 +37,7 @@
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
 
   let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -71,9 +72,7 @@
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
 
-  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
-    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
-  );
+  const searchResults = getSearchResultsContext();
 
   var spellSchoolBaseWidth = '2rem';
 
@@ -199,7 +198,7 @@
             uuid: spell.uuid,
           }}
           cssClass={FoundryAdapter.getSpellRowClasses(spell)}
-          hidden={!!$itemIdsToShow && !$itemIdsToShow.has(spell.id)}
+          hidden={!searchResults.show(spell.uuid)}
         >
           {#snippet children({ toggleSummary })}
             <ItemTableCell primary={true}>

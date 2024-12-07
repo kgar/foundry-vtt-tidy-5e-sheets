@@ -7,6 +7,10 @@
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
   import { CONSTANTS } from 'src/constants';
+  import {
+    createSearchResultsState,
+    setSearchResultsContext,
+  } from 'src/features/search/search.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
@@ -40,12 +44,11 @@
 
   let searchCriteria: string = $state('');
 
-  // kgar-migration-task - swap to a state or derived rune | consider using a service of some kind
-  const itemIdsToShow = writable<Set<string> | undefined>(undefined);
-  setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
+  const searchResults = createSearchResultsState();
+  setSearchResultsContext(searchResults);
 
   $effect(() => {
-    $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
+    searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
       itemContext: $context.itemContext,
       sections: inventory,
@@ -117,7 +120,7 @@
     {#each inventory as section (section.key)}
       {@const visibleItemCount = ItemVisibility.countVisibleItems(
         section.items,
-        $itemIdsToShow,
+        searchResults.uuids,
       )}
       {#if section.show}
         {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemCount > 0}

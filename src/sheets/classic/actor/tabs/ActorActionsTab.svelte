@@ -30,6 +30,10 @@
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import InlineContainerView from 'src/sheets/classic/container/InlineContainerView.svelte';
   import { ItemUtils } from 'src/utils/ItemUtils';
+  import {
+    createSearchResultsState,
+    setSearchResultsContext,
+  } from 'src/features/search/search.svelte';
 
   let context = getContext<Readable<ActorSheetContextV1>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -50,12 +54,11 @@
 
   let searchCriteria: string = $state('');
 
-  // kgar-migration-task - swap to a state or derived rune | consider using a service of some kind
-  const itemIdsToShow = writable<Set<string> | undefined>(undefined);
-  setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
+  const searchResults = createSearchResultsState();
+  setSearchResultsContext(searchResults);
 
   $effect(() => {
-    $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
+    searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
       itemContext: $context.itemContext,
       sections: actions,
@@ -100,7 +103,7 @@
   {#each actions as section (section.key)}
     {@const visibleItemCount = ItemVisibility.countVisibleItems(
       section.actions.map((a) => a.item),
-      $itemIdsToShow,
+      searchResults.uuids,
     )}
     {#if visibleItemCount > 0 && section.show}
       <ItemTable key={section.key}>
@@ -133,8 +136,7 @@
                 type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
                 uuid: actionItem.item.uuid,
               }}
-              hidden={!!$itemIdsToShow &&
-                !$itemIdsToShow.has(actionItem.item.id)}
+              hidden={!searchResults.show(actionItem.item.uuid)}
             >
               {#snippet children({ toggleSummary })}
                 <ItemTableCell primary={true}>

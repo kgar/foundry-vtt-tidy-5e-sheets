@@ -58,6 +58,10 @@
   import InlineContainerView from 'src/sheets/classic/container/InlineContainerView.svelte';
   import { ItemUtils } from 'src/utils/ItemUtils';
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
+  import {
+    createSearchResultsState,
+    setSearchResultsContext,
+  } from 'src/features/search/search.svelte';
 
   let context = getContext<Readable<NpcSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -86,9 +90,8 @@
 
   let searchCriteria: string = $state('');
 
-  // kgar-migration-task - swap to a state or derived rune | consider using a service of some kind
-  const itemIdsToShow = writable<Set<string> | undefined>(undefined);
-  setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
+  const searchResults = createSearchResultsState();
+  setSearchResultsContext(searchResults);
 
   let spellbook = $derived(
     !$settingStore.showSpellbookTabNpc
@@ -101,7 +104,7 @@
   );
 
   $effect(() => {
-    $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
+    searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
       itemContext: $context.itemContext,
       sections: [...features, ...spellbook],
@@ -214,7 +217,7 @@
       {#if section.show}
         {@const visibleItemCount = ItemVisibility.countVisibleItems(
           section.items,
-          $itemIdsToShow,
+          searchResults.uuids,
         )}
         {#if $context.unlocked || visibleItemCount > 0}
           <ItemTable
@@ -256,7 +259,7 @@
                   }}
                   {item}
                   cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
-                  hidden={!!$itemIdsToShow && !$itemIdsToShow.has(item.id)}
+                  hidden={!searchResults.show(item.uuid)}
                 >
                   {#snippet children({ toggleSummary })}
                     <ItemTableCell primary={true}>

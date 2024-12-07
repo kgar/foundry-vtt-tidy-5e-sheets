@@ -21,6 +21,7 @@
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
 
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
@@ -36,9 +37,7 @@
 
   let { section, spells }: Props = $props();
 
-  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
-    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
-  );
+  const searchResults = getSearchResultsContext();
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -91,7 +90,7 @@
             uuid: spell.uuid,
           }}
           cssClass={FoundryAdapter.getSpellRowClasses(spell)}
-          hidden={!!$itemIdsToShow && !$itemIdsToShow.has(spell.id)}
+          hidden={!searchResults.show(spell.uuid)}
           favoriteId={ctx.favoriteId}
         >
           {#snippet children({ toggleSummary })}
