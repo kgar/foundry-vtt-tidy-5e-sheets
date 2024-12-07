@@ -47,7 +47,6 @@
         class="activity card"
         data-activity-id={activity.id}
         data-configurable={Activities.isConfigurable(activity)}
-        data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
         draggable="true"
         ondragstart={(ev) => handleDragStart(ev, activity.id)}
         data-info-card="activity"
