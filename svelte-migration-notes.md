@@ -1,9 +1,9 @@
 ## To Do
 
-- [ ] Fix: World Settings has warning: [svelte] binding_property_non_reactive`bind:value={config.type}` (src/applications/settings/parts/ExhaustionSetting.svelte:33:48) is binding to a non-reactive property
-- [ ] Ensure context API where reactivity is expected is using runes
 - [ ] Replace stores with runes
-- [ ] Fix: Use the broken identify toggle for containers to vet error handling and getting latest from the source data.
+- [ ] Ensure context API where reactivity is expected is using runes
+- [ ] Fix: Use the broken identify toggle for containers to vet error handling and getting latest from the source data. Or, if it's not feasible, just catch and handle error.
+- [ ] Fix: World Settings has warning: [svelte] binding_property_non_reactive`bind:value={config.type}` (src/applications/settings/parts/ExhaustionSetting.svelte:33:48) is binding to a non-reactive property
 
 ## Stretch, or defer to post V7.3.0
 
