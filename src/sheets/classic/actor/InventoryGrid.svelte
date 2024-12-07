@@ -11,8 +11,6 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
   import GridPaneFavoriteIcon from '../../../components/item-grid/GridPaneFavoriteIcon.svelte';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import TextInput from '../../../components/inputs/TextInput.svelte';
   import { settingStore } from 'src/settings/settings.svelte';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
@@ -20,6 +18,7 @@
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     section: InventorySection;
@@ -28,13 +27,11 @@
 
   let { section, items }: Props = $props();
 
-  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getSheetContext<CharacterSheetContext | NpcSheetContext>();
 
   let customCommands = $derived(
     ActorItemRuntime.getActorItemSectionCommands({
-      actor: $context.actor,
+      actor: context.actor,
       section,
     }),
   );
@@ -48,7 +45,7 @@
 
     return FoundryAdapter.getInventoryRowClasses(
       item,
-      $context.itemContext[item.id],
+      context.itemContext[item.id],
       extras,
     );
   }
@@ -95,7 +92,7 @@
   {#snippet body()}
     <div class="items">
       {#each items as item (item.id)}
-        {@const ctx = $context.itemContext[item.id]}
+        {@const ctx = context.itemContext[item.id]}
         {@const hidden = !searchResults.show(item.uuid)}
         <a
           class="item {getInventoryRowClasses(item)}"
@@ -104,7 +101,7 @@
           data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
           data-context-menu-document-uuid={item.uuid}
           onclick={(event) =>
-            $context.editable && FoundryAdapter.actorTryUseItem(item, event)}
+            context.editable && FoundryAdapter.actorTryUseItem(item, event)}
           oncontextmenu={(event) =>
             FoundryAdapter.onActorItemButtonContextMenu(item, { event })}
           onmousedown={(event) => FoundryAdapter.editOnMiddleClick(event, item)}
@@ -149,7 +146,7 @@
             <GridPaneFavoriteIcon />
           {/if}
 
-          {#if $context.editable}
+          {#if context.editable}
             <button
               type="button"
               class="item-control item-edit"
@@ -179,7 +176,7 @@
                   allowDeltaChanges={true}
                   selectOnFocus={true}
                   onclick={preventUseItemEvent}
-                  disabled={!$context.editable}
+                  disabled={!context.editable}
                   onSaveChange={(ev) =>
                     FoundryAdapter.handleItemUsesChanged(ev, item) && false}
                 />
@@ -196,7 +193,7 @@
                 class="item-count"
                 value={item.system.quantity}
                 maxlength={2}
-                disabled={!$context.editable || $context.lockItemQuantity}
+                disabled={!context.editable || context.lockItemQuantity}
                 allowDeltaChanges={true}
                 selectOnFocus={true}
                 onclick={preventUseItemEvent}
@@ -205,7 +202,7 @@
           </div>
         </a>
       {/each}
-      {#if $context.unlocked}
+      {#if context.unlocked}
         <div class="items-footer">
           <button
             type="button"
@@ -220,7 +217,7 @@
                   action: 'itemCreate',
                   tooltip: 'DND5E.ItemCreate',
                 },
-                $context.actor,
+                context.actor,
               );
             }}
             data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_CREATE_COMMAND}
@@ -236,7 +233,7 @@
                 command.execute?.({
                   section,
                   event: ev,
-                  actor: $context.actor,
+                  actor: context.actor,
                 })}
               tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
               title={localize(command.tooltip ?? '')}

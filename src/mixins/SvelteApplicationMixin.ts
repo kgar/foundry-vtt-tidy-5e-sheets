@@ -104,7 +104,7 @@ export function SvelteApplicationMixin<
      * This store is made available as Svelte context to the component
      * and can be retrieved from any child component within.
      */
-    _store: Writable<TContext> = writable<TContext>();
+    _context = $state<TContext>();
 
     /** Creates the component which represents the window content area. */
     _createComponent(node: HTMLElement): Record<string, any> {
@@ -151,7 +151,7 @@ export function SvelteApplicationMixin<
       context: TContext,
       options: ApplicationRenderOptions
     ): Promise<RenderResult<TContext>> {
-      this._store.set(context);
+      this._context = context;
 
       // Allow svelte to process its synchronous microtask changes before entertaining custom content.
       await delay(0);

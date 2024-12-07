@@ -1,33 +1,27 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ItemSheetContext } from 'src/types/item.types';
   import { coalesce } from 'src/utils/formatting';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { settingStore } from 'src/settings/settings.svelte';
+  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<ItemSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getItemSheetContext();
 
-  let appId = $derived($context.document.id);
+  let appId = $derived(context.document.id);
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <h3 class="form-header flex-row justify-content-space-between">
   {localize('DND5E.StartingEquipment.Title')}
-  {#if $context.editable}
+  {#if context.editable}
     <span>
       <button
         type="button"
         class="configure-starting-equipment inline-icon-button"
         title={localize('DND5E.StartingEquipment.Action.Configure')}
         aria-label={localize('DND5E.StartingEquipment.Action.Configure')}
-        onclick={() =>
-          FoundryAdapter.openStartingEquipmentConfig($context.item)}
+        onclick={() => FoundryAdapter.openStartingEquipmentConfig(context.item)}
         tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
         <i class="fas fa-gear"></i>
@@ -38,7 +32,7 @@
 
 <div class="starting-equipment-text">
   {@html coalesce(
-    $context.system.startingEquipmentDescription,
+    context.system.startingEquipmentDescription,
     localize('None'),
   )}
 </div>
@@ -50,10 +44,10 @@
   <div class="form-fields">
     <TextInput
       id="{appId}-wealth"
-      document={$context.item}
+      document={context.item}
       field="system.wealth"
-      value={$context.source.wealth}
-      disabled={!$context.editable}
+      value={context.source.wealth}
+      disabled={!context.editable}
     />
   </div>
   <p class="hint">{localize('DND5E.StartingEquipment.Wealth.Hint')}</p>

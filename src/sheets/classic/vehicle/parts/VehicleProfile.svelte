@@ -1,8 +1,5 @@
 <script lang="ts">
   import ActorProfile from 'src/sheets/classic/actor/ActorProfile.svelte';
-  import type { VehicleSheetContext } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import VehicleHitPoints from './VehicleHitPoints.svelte';
   import VehicleDamageAndMishapThresholds from './VehicleDamageAndMishapThresholds.svelte';
   import ExhaustionTracker from 'src/sheets/classic/actor/ExhaustionTracker.svelte';
@@ -11,44 +8,42 @@
   import ExhaustionInput from 'src/sheets/classic/actor/ExhaustionInput.svelte';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { TidyFlags } from 'src/foundry/TidyFlags';
-  import { CONSTANTS } from 'src/constants';
+  import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<VehicleSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getVehicleSheetContext();
 
   function onLevelSelected(level: number) {
-    TidyFlags.setFlag($context.actor, 'exhaustion', level);
+    TidyFlags.setFlag(context.actor, 'exhaustion', level);
   }
 </script>
 
 <ActorProfile useHpOverlay={$settingStore.useHpOverlayVehicle}>
   {#if $settingStore.useExhaustion && $settingStore.vehicleExhaustionConfig.type === 'specific'}
     <ExhaustionTracker
-      level={TidyFlags.exhaustion.get($context.actor) ?? 0}
-      radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
+      level={TidyFlags.exhaustion.get(context.actor) ?? 0}
+      radiusClass={context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       {onLevelSelected}
       exhaustionConfig={$settingStore.vehicleExhaustionConfig}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
-        $context.actor,
+        context.actor,
         TidyFlags.exhaustion.prop,
       )}
     />
   {:else if $settingStore.useExhaustion && $settingStore.vehicleExhaustionConfig.type === 'open'}
     <ExhaustionInput
-      level={TidyFlags.exhaustion.get($context.actor) ?? 0}
-      radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
+      level={TidyFlags.exhaustion.get(context.actor) ?? 0}
+      radiusClass={context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       {onLevelSelected}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
-        $context.actor,
+        context.actor,
         TidyFlags.exhaustion.prop,
       )}
     />
   {/if}
   {#if $settingStore.useVehicleMotion}
     <VehicleMovement
-      motion={TidyFlags.motion.get($context.actor) === true}
-      radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-right'}
+      motion={TidyFlags.motion.get(context.actor) === true}
+      radiusClass={context.useRoundedPortraitStyle ? 'rounded' : 'top-right'}
       animate={true}
     />
   {/if}

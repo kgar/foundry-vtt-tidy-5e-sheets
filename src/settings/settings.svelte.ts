@@ -17,9 +17,7 @@ import { TabManager } from 'src/runtime/tab/TabManager';
 import { BulkMigrationsApplication } from 'src/migrations/BulkMigrationsApplication';
 import { AboutApplication } from 'src/applications/settings/about/AboutApplication';
 import { ApplyTidySheetPreferencesApplication } from 'src/applications/sheet-preferences/ApplyTidySheetPreferencesApplication';
-import { defaultDarkTheme } from 'src/theme/default-dark-theme';
 import { getDefaultExhaustionConfig } from 'src/features/exhaustion/exhaustion';
-import Coloris from '@melloware/coloris';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;

@@ -1,12 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type {
-    ContainerSheetClassicContext,
-    Item5e,
-  } from 'src/types/item.types';
-  import { getContext, setContext } from 'svelte';
-  import { writable, type Readable } from 'svelte/store';
+  import { getContext } from 'svelte';
   import CapacityBar from 'src/sheets/classic/container/CapacityBar.svelte';
   import Currency from 'src/sheets/classic/actor/Currency.svelte';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
@@ -24,10 +19,10 @@
     createSearchResultsState,
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
+  import { getContainerSheetClassicContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<ContainerSheetClassicContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getContainerSheetClassicContext();
+
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
   let inlineToggleService = getContext<InlineToggleService>(
@@ -37,7 +32,7 @@
   let searchCriteria = $state('');
 
   let allItems = $derived(
-    $context.containerContents.contents.flatMap((x) => x.items),
+    context.containerContents.contents.flatMap((x) => x.items),
   );
 
   const searchResults = createSearchResultsState();
@@ -46,8 +41,8 @@
   $effect(() => {
     searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
-      itemContext: $context.itemContext,
-      sections: $context.containerContents.contents,
+      itemContext: context.itemContext,
+      sections: context.containerContents.contents,
       tabId: tabId,
     });
   });
@@ -55,7 +50,7 @@
   const localize = FoundryAdapter.localize;
 
   let utilityBarCommands = $derived(
-    $context.utilities[tabId]?.utilityToolbarCommands ?? [],
+    context.utilities[tabId]?.utilityToolbarCommands ?? [],
   );
 
   let menuOpen = $state(false);
@@ -63,7 +58,7 @@
 
 <div class="container-contents-wrapper">
   <div role="presentation" class="currency-wrapper">
-    <Currency document={$context.item} />
+    <Currency document={context.item} />
   </div>
 
   <UtilityToolbar>
@@ -71,8 +66,8 @@
     <PinnedFilterToggles
       filterGroupName={tabId}
       filters={ItemFilterRuntime.getPinnedFiltersForTab(
-        $context.filterPins,
-        $context.filterData,
+        context.filterPins,
+        context.filterData,
         tabId,
       )}
     />
@@ -101,10 +96,7 @@
         <!-- TODO: identify all items recursively -->
         <ButtonMenuCommand
           onMenuClick={() => {
-            FoundryAdapter.identifyAllItemsForContainer(
-              $context.item,
-              allItems,
-            );
+            FoundryAdapter.identifyAllItemsForContainer(context.item, allItems);
           }}
           iconClass="fas fa-magnifying-glass"
         >
@@ -113,7 +105,7 @@
         <ButtonMenuCommand
           onMenuClick={() => {
             FoundryAdapter.markAllItemsAsUnidentifiedForContainer(
-              $context.item,
+              context.item,
               allItems,
             );
           }}
@@ -130,17 +122,17 @@
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEMS_CONTAINER}
   >
     <ContainerContentsSections
-      contents={$context.containerContents.contents}
-      container={$context.item}
-      editable={$context.editable}
-      itemContext={$context.containerContents.itemContext}
+      contents={context.containerContents.contents}
+      container={context.item}
+      editable={context.editable}
+      itemContext={context.containerContents.itemContext}
       {inlineToggleService}
-      lockItemQuantity={$context.lockItemQuantity}
-      sheetDocument={$context.item}
+      lockItemQuantity={context.lockItemQuantity}
+      sheetDocument={context.item}
     />
   </div>
   <footer class="container-contents-footer">
-    <CapacityBar container={$context.item} capacity={$context.capacity} />
+    <CapacityBar container={context.item} capacity={context.capacity} />
   </footer>
 </div>
 

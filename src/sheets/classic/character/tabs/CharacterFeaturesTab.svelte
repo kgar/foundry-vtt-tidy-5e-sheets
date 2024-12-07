@@ -2,7 +2,6 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import {
     type CharacterFeatureSection,
-    type CharacterSheetContext,
     type RenderableClassicControl,
   } from 'src/types/types';
   import ItemEditControl from '../../../../components/item-list/controls/ItemEditControl.svelte';
@@ -20,8 +19,7 @@
   import ItemAddUses from '../../../../components/item-list/ItemAddUses.svelte';
   import InlineFavoriteIcon from '../../../../components/item-list/InlineFavoriteIcon.svelte';
   import ItemFavoriteControl from '../../../../components/item-list/controls/ItemFavoriteControl.svelte';
-  import { getContext, setContext } from 'svelte';
-  import { writable, type Readable } from 'svelte/store';
+  import { getContext } from 'svelte';
   import Notice from '../../../../components/notice/Notice.svelte';
   import { settingStore } from 'src/settings/settings.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
@@ -48,10 +46,10 @@
     createSearchResultsState,
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
+  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getCharacterSheetContext();
+
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
   let inlineToggleService = getContext<InlineToggleService>(
@@ -80,14 +78,14 @@
         },
       ];
 
-      if ($context.unlocked) {
+      if (context.unlocked) {
         result.push({
           component: ItemDeleteControl,
           props: ({ item }) => ({ item }),
         });
       }
 
-      if ($context.useActionsFeature) {
+      if (context.useActionsFeature) {
         result.push({
           component: ActionFilterOverrideControl,
           props: ({ item }) => ({ item }),
@@ -102,11 +100,11 @@
 
   let features = $derived(
     SheetSections.configureFeatures(
-      $context.features,
-      $context,
+      context.features,
+      context,
       tabId,
-      SheetPreferencesService.getByType($context.actor.type),
-      TidyFlags.sectionConfig.get($context.actor)?.[tabId],
+      SheetPreferencesService.getByType(context.actor.type),
+      TidyFlags.sectionConfig.get(context.actor)?.[tabId],
     ),
   );
   let noFeatures = $derived(
@@ -118,14 +116,14 @@
   $effect(() => {
     searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
-      itemContext: $context.itemContext,
+      itemContext: context.itemContext,
       sections: features,
       tabId: tabId,
     });
   });
 
   let utilityBarCommands = $derived(
-    $context.utilities[tabId]?.utilityToolbarCommands ?? [],
+    context.utilities[tabId]?.utilityToolbarCommands ?? [],
   );
 
   let classicControlsColumnWidth = $derived(
@@ -138,8 +136,8 @@
   <PinnedFilterToggles
     filterGroupName={tabId}
     filters={ItemFilterRuntime.getPinnedFiltersForTab(
-      $context.filterPins,
-      $context.filterData,
+      context.filterPins,
+      context.filterData,
       tabId,
     )}
   />
@@ -158,7 +156,7 @@
   class="scroll-container flex-column small-gap"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEMS_CONTAINER}
 >
-  {#if noFeatures && !$context.unlocked}
+  {#if noFeatures && !context.unlocked}
     <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {:else}
     {#each features as section (section.key)}
@@ -168,7 +166,7 @@
           searchResults.uuids,
         )}
 
-        {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemCount > 0}
+        {#if (searchCriteria.trim() === '' && context.unlocked) || visibleItemCount > 0}
           <ItemTable
             key={section.key}
             data-custom-section={section.custom ? true : null}
@@ -198,14 +196,14 @@
                     {localize('DND5E.Requirements')}
                   </ItemTableColumn>
                 {/if}
-                {#if $context.editable && $context.useClassicControls}
+                {#if context.editable && context.useClassicControls}
                   <ItemTableColumn baseWidth={classicControlsColumnWidth} />
                 {/if}
               </ItemTableHeaderRow>
             {/snippet}
             {#snippet body()}
               {#each section.items as item (item.id)}
-                {@const ctx = $context.itemContext[item.id]}
+                {@const ctx = context.itemContext[item.id]}
                 <ItemTableRow
                   {item}
                   onMouseDown={(event) =>
@@ -218,7 +216,7 @@
                 >
                   {#snippet children({ toggleSummary })}
                     <ItemTableCell primary={true}>
-                      <ItemUseButton disabled={!$context.editable} {item} />
+                      <ItemUseButton disabled={!context.editable} {item} />
                       {#if (ctx.activities?.length ?? 0) > 1}
                         <InlineToggleControl
                           entityId={item.id}
@@ -226,7 +224,7 @@
                         />
                       {/if}
                       <ItemName
-                        onToggle={() => toggleSummary($context.actor)}
+                        onToggle={() => toggleSummary(context.actor)}
                         hasChildren={false}
                         {item}
                       >
@@ -279,8 +277,8 @@
                           <LevelUpDropdown
                             availableLevels={ctx?.availableLevels}
                             {item}
-                            disabled={!$context.editable ||
-                              $context.lockLevelSelector}
+                            disabled={!context.editable ||
+                              context.lockLevelSelector}
                           />
                         {/if}
                       </ItemTableCell>
@@ -294,7 +292,7 @@
                         >
                       </ItemTableCell>
                     {/if}
-                    {#if $context.editable && $context.useClassicControls}
+                    {#if context.editable && context.useClassicControls}
                       <ItemTableCell baseWidth={classicControlsColumnWidth}>
                         <ClassicControls {controls} params={{ item: item }} />
                       </ItemTableCell>
@@ -309,10 +307,10 @@
                   />
                 {/if}
               {/each}
-              {#if $context.unlocked}
+              {#if context.unlocked}
                 <ItemTableFooter
                   {section}
-                  actor={$context.actor}
+                  actor={context.actor}
                   isItem={true}
                 />
               {/if}

@@ -1,18 +1,12 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
+  import { getGroupSheetClassicContext } from 'src/sheets/sheet-context.svelte';
   import GroupLanguageTooltip from 'src/tooltips/GroupLanguageTooltip.svelte';
   import { Tooltip } from 'src/tooltips/Tooltip';
-  import type {
-    GroupLanguage,
-    GroupSheetClassicContext,
-  } from 'src/types/group.types';
+  import type { GroupLanguage } from 'src/types/group.types';
   import type { Actor5e } from 'src/types/types';
-  import { getContext, tick } from 'svelte';
-  import { type Readable } from 'svelte/store';
+  import { tick } from 'svelte';
 
-  let context = getContext<Readable<GroupSheetClassicContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getGroupSheetClassicContext();
 
   let groupLanguageTooltip: GroupLanguageTooltip;
   let hoveredLanguage = $state('');
@@ -38,7 +32,7 @@
 </script>
 
 <div class="flex-row extra-small-gap flex-wrap">
-  {#each $context.groupLanguages as groupLanguage}
+  {#each context.groupLanguages as groupLanguage}
     <!-- svelte-ignore a11y_no_static_element_interactions -->
     <!-- svelte-ignore a11y_mouse_events_have_key_events -->
     <span

@@ -3,18 +3,14 @@
   import type { ActorSheetContextV1 } from 'src/types/types';
   import TraitSection from './TraitSection.svelte';
   import TraitSectionTools from './TraitSectionTools.svelte';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import { settingStore } from 'src/settings/settings.svelte';
   import { error } from 'src/utils/logging';
   import TraitSectionTags from './TraitSectionTags.svelte';
   import TraitSectionModifications from './TraitSectionModifications.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
-  import { CONSTANTS } from 'src/constants';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<ActorSheetContextV1>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getSheetContext<ActorSheetContextV1>();
   interface Props {
     toggleable: boolean;
     useSenses?: boolean;
@@ -28,14 +24,14 @@
   }: Props = $props();
 
   let traitsExpanded = $derived(
-    !toggleable || TidyFlags.traitsExpanded.get($context.actor) === true,
+    !toggleable || TidyFlags.traitsExpanded.get(context.actor) === true,
   );
 
   function toggleTraitsExpanded() {
     if (traitsExpanded) {
-      TidyFlags.traitsExpanded.unset($context.actor);
+      TidyFlags.traitsExpanded.unset(context.actor);
     } else {
-      TidyFlags.traitsExpanded.set($context.actor, true);
+      TidyFlags.traitsExpanded.set(context.actor, true);
     }
   }
 
@@ -49,91 +45,91 @@
 
 <div
   class="traits"
-  class:expanded={TidyFlags.traitsExpanded.get($context.actor)}
+  class:expanded={TidyFlags.traitsExpanded.get(context.actor)}
 >
-  {#if useSenses && $context.senses}
-    {@const senses = getTags($context.senses)}
+  {#if useSenses && context.senses}
+    {@const senses = getTags(context.senses)}
     <TraitSection
       title={localize('DND5E.Senses')}
       iconCssClass="fas fa-eye"
       configureButtonTitle={localize('DND5E.SensesConfig')}
       onConfigureClicked={() =>
-        FoundryAdapter.renderMovementSensesConfig($context.actor, 'senses')}
+        FoundryAdapter.renderMovementSensesConfig(context.actor, 'senses')}
       show={traitsExpanded || !!senses.length}
     >
       <TraitSectionTags tags={senses} />
     </TraitSection>
   {/if}
 
-  {#if $context.traits?.traits?.languages}
-    {@const languages = getTags($context.traits?.traits?.languages?.selected)}
+  {#if context.traits?.traits?.languages}
+    {@const languages = getTags(context.traits?.traits?.languages?.selected)}
     <TraitSection
-      traitCssClass={$context.traits?.traits?.languages?.cssClass ?? ''}
+      traitCssClass={context.traits?.traits?.languages?.cssClass ?? ''}
       title={localize('DND5E.Languages')}
       iconCssClass="fas fa-comment"
       configureButtonTitle={localize('DND5e.TraitConfig', {
         trait: localize('DND5E.Languages'),
       })}
       onConfigureClicked={() =>
-        FoundryAdapter.renderTraitsConfig($context.actor, 'languages')}
+        FoundryAdapter.renderTraitsConfig(context.actor, 'languages')}
       show={traitsExpanded || !!languages.length}
     >
       <TraitSectionTags tags={languages} />
     </TraitSection>
   {/if}
 
-  {#if $context.traits.traits?.di}
-    {@const damageImmunities = getTags($context.traits.traits.di.selected)}
+  {#if context.traits.traits?.di}
+    {@const damageImmunities = getTags(context.traits.traits.di.selected)}
     <TraitSection
-      traitCssClass={$context.traits.traits?.di?.cssClass ?? ''}
+      traitCssClass={context.traits.traits?.di?.cssClass ?? ''}
       title={localize('DND5E.DamImm')}
       iconCssClass="fas fa-heart"
       configureButtonTitle={localize('DND5E.TraitConfig', {
         trait: localize('DND5E.DamImm'),
       })}
       onConfigureClicked={() =>
-        FoundryAdapter.openDamagesConfig($context.actor, 'di')}
+        FoundryAdapter.openDamagesConfig(context.actor, 'di')}
       show={traitsExpanded || !!damageImmunities.length}
     >
       <TraitSectionTags tags={damageImmunities} />
     </TraitSection>
   {/if}
 
-  {#if $context.traits.traits?.dr}
-    {@const damageResistances = getTags($context.traits.traits.dr.selected)}
+  {#if context.traits.traits?.dr}
+    {@const damageResistances = getTags(context.traits.traits.dr.selected)}
     <TraitSection
-      traitCssClass={$context.traits.traits?.dr?.cssClass ?? ''}
+      traitCssClass={context.traits.traits?.dr?.cssClass ?? ''}
       title={localize('DND5E.DamRes')}
       iconCssClass="far fa-heart"
       configureButtonTitle={localize('DND5E.TraitConfig', {
         trait: localize('DND5E.DamRes'),
       })}
       onConfigureClicked={() =>
-        FoundryAdapter.openDamagesConfig($context.actor, 'dr')}
+        FoundryAdapter.openDamagesConfig(context.actor, 'dr')}
       show={traitsExpanded || !!damageResistances.length}
     >
       <TraitSectionTags tags={damageResistances} />
     </TraitSection>
   {/if}
 
-  {#if $context.traits.traits?.dv}
-    {@const vulnerabilities = getTags($context.traits.traits.dv.selected)}
+  {#if context.traits.traits?.dv}
+    {@const vulnerabilities = getTags(context.traits.traits.dv.selected)}
     <TraitSection
-      traitCssClass={$context.traits.traits?.dv?.cssClass ?? ''}
+      traitCssClass={context.traits.traits?.dv?.cssClass ?? ''}
       title={localize('DND5E.DamVuln')}
       iconCssClass="fas fa-heart-broken"
       configureButtonTitle={localize('DND5E.TraitConfig', {
         trait: localize('DND5E.DamVuln'),
       })}
       onConfigureClicked={() =>
-        FoundryAdapter.openDamagesConfig($context.actor, 'dv')}
+        FoundryAdapter.openDamagesConfig(context.actor, 'dv')}
       show={traitsExpanded || !!vulnerabilities.length}
     >
       <TraitSectionTags tags={vulnerabilities} />
     </TraitSection>
   {/if}
 
-  {#if $context.traits.traits?.dm}
+  {#if context.traits.traits?.dm}
     <TraitSection
       title={localize('DND5E.DamageModification.Label')}
       iconCssClass="fas fa-heart-circle-plus"
@@ -141,40 +137,40 @@
         trait: localize('DND5E.DamageModification.Label'),
       })}
       onConfigureClicked={() =>
-        FoundryAdapter.openDamagesConfig($context.actor, 'dm')}
-      show={traitsExpanded || !!$context.traits.traits.dm.length}
+        FoundryAdapter.openDamagesConfig(context.actor, 'dm')}
+      show={traitsExpanded || !!context.traits.traits.dm.length}
     >
-      <TraitSectionModifications modifications={$context.traits.traits?.dm} />
+      <TraitSectionModifications modifications={context.traits.traits?.dm} />
     </TraitSection>
   {/if}
 
-  {#if $context.traits.traits?.ci}
-    {@const conditionImmunities = getTags($context.traits.traits.ci.selected)}
+  {#if context.traits.traits?.ci}
+    {@const conditionImmunities = getTags(context.traits.traits.ci.selected)}
     <TraitSection
-      traitCssClass={$context.traits.traits?.ci?.cssClass ?? ''}
+      traitCssClass={context.traits.traits?.ci?.cssClass ?? ''}
       title={localize('DND5E.ConImm')}
       iconCssClass="fas fa-shield-virus"
       configureButtonTitle={localize('DND5E.TraitConfig', {
         trait: localize('DND5E.ConImm'),
       })}
       onConfigureClicked={() =>
-        FoundryAdapter.renderTraitsConfig($context.actor, 'ci')}
+        FoundryAdapter.renderTraitsConfig(context.actor, 'ci')}
       show={traitsExpanded || !!conditionImmunities.length}
     >
       <TraitSectionTags tags={conditionImmunities} />
     </TraitSection>
   {/if}
 
-  {#if $context.traits.traits?.weaponProf}
-    {@const weaponProfs = getTags($context.traits.traits.weaponProf.selected)}
+  {#if context.traits.traits?.weaponProf}
+    {@const weaponProfs = getTags(context.traits.traits.weaponProf.selected)}
     <TraitSection
-      traitCssClass={$context.traits.traits?.weaponProf?.cssClass ?? ''}
+      traitCssClass={context.traits.traits?.weaponProf?.cssClass ?? ''}
       title={localize('DND5E.TraitWeaponProf')}
       configureButtonTitle={localize('DND5E.TraitConfig', {
         trait: localize('DND5E.TraitWeaponProf'),
       })}
       onConfigureClicked={() =>
-        FoundryAdapter.renderWeaponsConfig($context.actor)}
+        FoundryAdapter.renderWeaponsConfig(context.actor)}
       show={traitsExpanded || !!weaponProfs.length}
     >
       {#snippet customIcon()}
@@ -192,7 +188,7 @@
 
       <TraitSectionTags tags={weaponProfs}>
         {#snippet children({ key, value })}
-          {#if $context.traits.traits.weaponProf.mastery.value.has(key)}
+          {#if context.traits.traits.weaponProf.mastery.value.has(key)}
             <i
               title={localize('DND5E.WEAPON.Mastery.Label')}
               class="fas fa-medal"
@@ -204,16 +200,16 @@
     </TraitSection>
   {/if}
 
-  {#if $context.traits.traits?.armorProf}
-    {@const armorProfs = getTags($context.traits.traits.armorProf.selected)}
+  {#if context.traits.traits?.armorProf}
+    {@const armorProfs = getTags(context.traits.traits.armorProf.selected)}
     <TraitSection
-      traitCssClass={$context.traits.traits?.armorProf?.cssClass ?? ''}
+      traitCssClass={context.traits.traits?.armorProf?.cssClass ?? ''}
       title={localize('DND5E.TraitArmorProf')}
       configureButtonTitle={localize('DND5E.TraitConfig', {
         trait: localize('DND5E.TraitArmorProf'),
       })}
       onConfigureClicked={() =>
-        FoundryAdapter.renderTraitsConfig($context.actor, 'armor')}
+        FoundryAdapter.renderTraitsConfig(context.actor, 'armor')}
       show={traitsExpanded || !!armorProfs.length}
     >
       {#snippet customIcon()}
@@ -232,17 +228,17 @@
     </TraitSection>
   {/if}
 
-  {#if $context.traits.tools}
-    {@const tools = Object.entries($context.tools)}
+  {#if context.traits.tools}
+    {@const tools = Object.entries(context.tools)}
     <TraitSection
-      traitCssClass={$context.traits.tools?.toolProf?.cssClass ?? ''}
+      traitCssClass={context.traits.tools?.toolProf?.cssClass ?? ''}
       title={localize('DND5E.TraitToolProf')}
       iconCssClass="fas fa-hammer"
       configureButtonTitle={localize('DND5E.TraitConfig', {
         trait: localize('DND5E.TraitToolProf'),
       })}
       onConfigureClicked={() =>
-        FoundryAdapter.renderToolsConfig($context.actor)}
+        FoundryAdapter.renderToolsConfig(context.actor)}
       show={traitsExpanded || !!tools.length}
     >
       {#if tools.length}
@@ -251,8 +247,8 @@
     </TraitSection>
   {/if}
 
-  {#if $context.customActorTraits?.length}
-    {#each $context.customActorTraits as trait}
+  {#if context.customActorTraits?.length}
+    {#each context.customActorTraits as trait}
       <TraitSection
         title={trait.title}
         iconCssClass={trait.iconClass}
@@ -260,10 +256,10 @@
         onConfigureClicked={(ev) => {
           try {
             trait.openConfiguration?.({
-              app: $context.actor.sheet,
-              data: $context,
+              app: context.actor.sheet,
+              data: context,
               element: FoundryAdapter.getElementFromAppV1OrV2(
-                $context.actor.sheet.element,
+                context.actor.sheet.element,
               ),
               event: ev,
             });
@@ -298,7 +294,7 @@
       {/if}
     </button>
   {/if}
-  {#if enableSpecialTraitsConfiguration && !$context.lockSensitiveFields}
+  {#if enableSpecialTraitsConfiguration && !context.lockSensitiveFields}
     <button
       type="button"
       class="configure-special-traits inline-icon-button"
@@ -308,7 +304,7 @@
       onclick={(event) => {
         event.preventDefault();
         event.stopPropagation();
-        FoundryAdapter.renderActorSheetFlags($context.actor);
+        FoundryAdapter.renderActorSheetFlags(context.actor);
       }}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >

@@ -3,23 +3,20 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemSheetContext } from 'src/types/item.types';
   import type { CharacterSheetContext } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
 
-  let context = getContext<Readable<ItemSheetContext | CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getSheetContext<ItemSheetContext | CharacterSheetContext>();
 
   let effects = $derived(
-    Object.entries($context.effects) as Iterable<[string, any]>,
+    Object.entries(context.effects) as Iterable<[string, any]>,
   );
 
   const localize = FoundryAdapter.localize;
 
   function onAddClicked(section: any) {
-    const owner = $context.item;
+    const owner = context.item;
     return FoundryAdapter.addEffect(section.type, owner);
   }
 
@@ -39,10 +36,10 @@
   }
 </script>
 
-<ContentConcealer conceal={$context.concealDetails}>
+<ContentConcealer conceal={context.concealDetails}>
   <ol
     class="items-list effects-list"
-    ondrop={(ev) => $context.item.sheet._onDrop(ev)}
+    ondrop={(ev) => context.item.sheet._onDrop(ev)}
   >
     {#each effects as [_, section]}
       {#if !section.hidden}
@@ -55,7 +52,7 @@
           </div>
           <div class="effect-source">{localize('DND5E.Duration')}</div>
           <div class="item-controls active-effect-controls flexrow">
-            {#if $context.editable}
+            {#if context.editable}
               <button
                 type="button"
                 class="active-effect-control inline-icon-button"
@@ -86,7 +83,7 @@
               data-effect-id={effect.id}
               onmousedown={(event) => handleMiddleClickToEdit(event, effect)}
               ondragstart={(ev) => handleDragStart(ev, effect)}
-              draggable={$context.editable}
+              draggable={context.editable}
               data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS}
             >
               <div class="item-name effect-name flexrow">
@@ -112,7 +109,7 @@
                 {effect.duration.label ?? ''}
               </div>
               <div class="item-controls active-effect-controls flexrow">
-                {#if $context.editable}
+                {#if context.editable}
                   {#if section.type !== 'enchantment'}
                     <button
                       type="button"

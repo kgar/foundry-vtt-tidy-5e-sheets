@@ -1,7 +1,4 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
-  import type { ItemSheetContext } from 'src/types/item.types';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -9,19 +6,18 @@
   import ContentConcealer from 'src/components/content-concealment/ContentConcealer.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import { CONSTANTS } from 'src/constants';
+  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<ItemSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getItemSheetContext();
 
-  let appId = $derived($context.document.id);
+  let appId = $derived(context.document.id);
 
-  let source = $derived($context.source);
+  let source = $derived(context.source);
 
   const localize = FoundryAdapter.localize;
 </script>
 
-<ContentConcealer conceal={$context.concealDetails}>
+<ContentConcealer conceal={context.concealDetails}>
   <h3 class="form-header">
     {localize('DND5E.ItemFacilityDetails')}
   </h3>
@@ -33,14 +29,14 @@
     </label>
     <div class="form-fields">
       <Select
-        document={$context.document}
+        document={context.document}
         field="system.type.value"
         value={source.type.value}
         id="{appId}-system-type-value"
         blankValue={null}
       >
         <SelectOptions
-          data={$context.config.facilities.types}
+          data={context.config.facilities.types}
           labelProp="label"
           valueProp="value"
         ></SelectOptions>
@@ -55,13 +51,13 @@
     </label>
     <div class="form-fields">
       <Select
-        document={$context.document}
+        document={context.document}
         field="system.type.subtype"
         value={source.type.subtype}
         id="{appId}-system-type-subtype"
       >
         <SelectOptions
-          data={$context.facilitySubtypes ?? {}}
+          data={context.facilitySubtypes ?? {}}
           labelProp="label"
           valueProp="value"
           blank=""
@@ -77,12 +73,12 @@
     </label>
     <div class="form-fields">
       <Select
-        document={$context.document}
+        document={context.document}
         field="system.size"
         value={source.size}
         id="{appId}-system-size"
       >
-        <SelectOptions data={$context.config.facilities.sizes} labelProp="label"
+        <SelectOptions data={context.config.facilities.sizes} labelProp="label"
         ></SelectOptions>
       </Select>
     </div>
@@ -97,7 +93,7 @@
       <div class="form-fields">
         <NumberInput
           id="{appId}-system-level"
-          document={$context.document}
+          document={context.document}
           field="system.level"
           value={source.level}
           selectOnFocus={true}
@@ -123,7 +119,7 @@
           <div class="form-fields">
             <NumberInput
               id="{appId}-system-level"
-              document={$context.document}
+              document={context.document}
               field="system.level"
               value={source.level}
               selectOnFocus={true}
@@ -140,13 +136,13 @@
           </label>
           <div class="form-fields">
             <Select
-              document={$context.document}
+              document={context.document}
               field="system.order"
               value={source.order}
               id="{appId}-system-order"
             >
               <SelectOptions
-                data={$context.orders?.available ?? []}
+                data={context.orders?.available ?? []}
                 blank=""
                 labelProp="label"
                 valueProp="value"
@@ -171,7 +167,7 @@
           <div class="form-fields">
             <NumberInput
               id="{appId}-system-hirelings-max"
-              document={$context.document}
+              document={context.document}
               field="system.hirelings.max"
               value={source.hirelings.max}
               selectOnFocus={true}
@@ -191,7 +187,7 @@
             <div class="form-fields">
               <NumberInput
                 id="{appId}-system-defenders-max"
-                document={$context.document}
+                document={context.document}
                 field="system.defenders.max"
                 value={source.defenders.max}
                 selectOnFocus={true}
@@ -213,7 +209,7 @@
       <div class="form-fields">
         <Checkbox
           id="{appId}-system-free"
-          document={$context.document}
+          document={context.document}
           field="system.free"
           checked={source.free}
         ></Checkbox>
@@ -231,7 +227,7 @@
       <div class="form-fields">
         <Checkbox
           id="{appId}-system-enlargeable"
-          document={$context.document}
+          document={context.document}
           field="system.enlargeable"
           checked={source.enlargeable}
         ></Checkbox>
@@ -249,7 +245,7 @@
       <div class="form-fields">
         <Checkbox
           id="{appId}-system-disabled"
-          document={$context.document}
+          document={context.document}
           field="system.disabled"
           checked={source.disabled}
         ></Checkbox>
@@ -267,7 +263,7 @@
       <div class="form-fields">
         <Checkbox
           id="{appId}-system-building-built"
-          document={$context.document}
+          document={context.document}
           field="system.building.built"
           checked={source.building.built}
         ></Checkbox>
@@ -289,13 +285,13 @@
     </label>
     <div class="form-fields">
       <Select
-        document={$context.document}
+        document={context.document}
         field="system.progress.order"
         value={source.progress.order}
         id="{appId}-system-progress-order"
       >
         <SelectOptions
-          data={$context.orders?.executable ?? []}
+          data={context.orders?.executable ?? []}
           blank=""
           labelProp="label"
           valueProp="value"
@@ -319,7 +315,7 @@
           <div class="form-fields">
             <NumberInput
               id="{appId}-system-progress-value"
-              document={$context.document}
+              document={context.document}
               field="system.progress.value"
               value={source.progress.value}
               selectOnFocus={true}
@@ -340,7 +336,7 @@
           <div class="form-fields">
             <NumberInput
               id="{appId}-system-progress-max"
-              document={$context.document}
+              document={context.document}
               field="system.progress.max"
               value={source.progress.max}
               selectOnFocus={true}
@@ -354,7 +350,7 @@
     </div>
   </div>
 
-  {#if $context.canCraft}
+  {#if context.canCraft}
     <h3 class="form-header">
       {localize(`DND5E.FACILITY.Orders.${source.order}.present`)}
     </h3>
@@ -363,19 +359,19 @@
       {localize('DND5E.FACILITY.Craft.Hint')}
     </p>
 
-    <div class:harvesting={$context.isHarvesting}>
+    <div class:harvesting={context.isHarvesting}>
       <ul class="separated-list single-item facility-craft">
         <li>
-          {#if $context.craft}
+          {#if context.craft}
             <div class="details flexrow">
-              <img src={$context.craft.img} alt={$context.craft.name} />
-              {@html $context.craft.contentLink}
+              <img src={context.craft.img} alt={context.craft.name} />
+              {@html context.craft.contentLink}
               <div class="list-controls flexrow">
                 <button
                   type="button"
                   class="icon-button"
                   onclick={() =>
-                    $context.item.sheet.submit({
+                    context.item.sheet.submit({
                       updateData: { 'system.craft': null },
                     })}
                   data-tooltip={localize('DND5E.FACILITY.Action.RemoveCraft')}
@@ -389,17 +385,17 @@
             <document-tags
               name="system.craft.item"
               single
-              onchange={() => $context.item.sheet.submit()}
+              onchange={() => context.item.sheet.submit()}
             ></document-tags>
           {/if}
         </li>
       </ul>
-      {#if $context.isHarvesting}
+      {#if context.isHarvesting}
         <div class="quantity">
           <span class="separator">&times;</span>
           <NumberInput
             id="{appId}-system-craft-quantity"
-            document={$context.document}
+            document={context.document}
             field="system.craft.quantity"
             value={source.craft.quantity}
             selectOnFocus={true}
@@ -422,7 +418,7 @@
       <div class="form-fields">
         <Checkbox
           id="{appId}-system-trade-stock-stocked"
-          document={$context.document}
+          document={context.document}
           field="system.trade.stock.stocked"
           checked={source.trade.stock.stocked}
         ></Checkbox>
@@ -444,7 +440,7 @@
             <div class="form-fields">
               <NumberInput
                 id="{appId}-system-trade-stock-value"
-                document={$context.document}
+                document={context.document}
                 field="system.trade.stock.value"
                 value={source.trade.stock.value}
                 selectOnFocus={true}
@@ -465,7 +461,7 @@
             <div class="form-fields">
               <NumberInput
                 id="{appId}-system-trade-stock-max"
-                document={$context.document}
+                document={context.document}
                 field="system.trade.stock.max"
                 value={source.trade.stock.max}
                 selectOnFocus={true}
@@ -487,7 +483,7 @@
       <div class="form-fields">
         <NumberInput
           id="{appId}-system-trade-creatures-max"
-          document={$context.document}
+          document={context.document}
           field="system.trade.creatures.max"
           value={source.trade.creatures.max}
           selectOnFocus={true}
@@ -506,7 +502,7 @@
       <div class="form-fields">
         <NumberInput
           id="{appId}-system-trade-profit"
-          document={$context.document}
+          document={context.document}
           field="system.trade.profit"
           value={source.trade.profit}
           selectOnFocus={true}

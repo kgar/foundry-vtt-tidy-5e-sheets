@@ -5,13 +5,11 @@
     ContainerSheetClassicContext,
     ItemSheetContext,
   } from 'src/types/item.types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
-  import { CONSTANTS } from 'src/constants';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<
-    Readable<ItemSheetContext | ContainerSheetClassicContext>
-  >(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
+  let context = getSheetContext<
+    ItemSheetContext | ContainerSheetClassicContext
+  >();
 
   const localize = FoundryAdapter.localize;
 
@@ -31,35 +29,35 @@
 
 <div class="flex-row extra-small-gap flex-wrap">
   <PropertyToggle
-    document={$context.item}
+    document={context.item}
     field="system.equipped"
-    checked={$context.system.equipped}
-    disabled={!$context.editable}
-    title={$context.system.equipped
+    checked={context.system.equipped}
+    disabled={!context.editable}
+    title={context.system.equipped
       ? localize('DND5E.Equipped')
       : localize('DND5E.Unequipped')}
     iconClass="fas fa-user-alt fa-fw"
   >
     <div style="width: {equipLabelWidthCh}ch">
-      {$context.system.equipped
+      {context.system.equipped
         ? localize('DND5E.Equipped')
         : localize('DND5E.Unequipped')}
     </div>
   </PropertyToggle>
 
-  {#if FoundryAdapter.canIdentify($context.item)}
+  {#if FoundryAdapter.canIdentify(context.item)}
     <PropertyToggle
-      document={$context.item}
+      document={context.item}
       field="system.identified"
-      checked={$context.system.identified}
-      disabled={!$context.editable}
-      title={$context.system.identified
+      checked={context.system.identified}
+      disabled={!context.editable}
+      title={context.system.identified
         ? localize('DND5E.Identified')
         : localize('DND5E.Unidentified.Title')}
       iconClass="fas fa-magnifying-glass fa-fw"
     >
       <div style="width: {identifiedLabelWidthCh}ch">
-        {$context.system.identified
+        {context.system.identified
           ? localize('DND5E.Identified')
           : localize('DND5E.Unidentified.Title')}
       </div>

@@ -19,7 +19,6 @@
   import InlineFavoriteIcon from '../../../components/item-list/InlineFavoriteIcon.svelte';
   import ItemFavoriteControl from '../../../components/item-list/controls/ItemFavoriteControl.svelte';
   import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import type {
     CharacterSheetContext,
     InventorySection,
@@ -37,6 +36,7 @@
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     primaryColumnName: string;
@@ -66,9 +66,7 @@
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
 
-  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getSheetContext<CharacterSheetContext | NpcSheetContext>();
 
   const searchResults = getSearchResultsContext();
 
@@ -103,7 +101,7 @@
         });
       }
 
-      if ('favorites' in $context.actor.system) {
+      if ('favorites' in context.actor.system) {
         result.push({
           component: ItemFavoriteControl,
           props: ({ item }) => ({
@@ -119,7 +117,7 @@
         }),
       });
 
-      if ($context.unlocked) {
+      if (context.unlocked) {
         result.push({
           component: ItemDeleteControl,
           props: ({ item }) => ({
@@ -128,7 +126,7 @@
         });
       }
 
-      if ($context.useActionsFeature) {
+      if (context.useActionsFeature) {
         result.push({
           component: ActionFilterOverrideControl,
           props: ({ item }) => ({
@@ -155,7 +153,7 @@
 
     return FoundryAdapter.getInventoryRowClasses(
       item,
-      $context.itemContext[item.id],
+      context.itemContext[item.id],
       extras,
     );
   }
@@ -188,14 +186,14 @@
         <ItemTableColumn baseWidth="3rem">
           {localize('DND5E.QuantityAbbr')}
         </ItemTableColumn>
-        {#if $context.editable && $context.useClassicControls && !lockControls}
+        {#if context.editable && context.useClassicControls && !lockControls}
           <ItemTableColumn baseWidth={classicControlsColumnWidth} />
         {/if}
       </ItemTableHeaderRow>
     {/snippet}
     {#snippet body()}
       {#each items as item (item.id)}
-        {@const ctx = $context.itemContext[item.id]}
+        {@const ctx = context.itemContext[item.id]}
         {@const itemName =
           item.system.identified === false
             ? coalesce(
@@ -216,12 +214,12 @@
         >
           {#snippet children({ toggleSummary })}
             <ItemTableCell primary={true}>
-              <ItemUseButton disabled={!$context.editable} {item} />
+              <ItemUseButton disabled={!context.editable} {item} />
               {#if ('containerContents' in ctx && !!ctx.containerContents) || (ctx.activities?.length ?? 0) > 1}
                 <InlineToggleControl entityId={item.id} {inlineToggleService} />
               {/if}
               <ItemName
-                onToggle={() => toggleSummary($context.actor)}
+                onToggle={() => toggleSummary(context.actor)}
                 cssClass="extra-small-gap"
                 {item}
               >
@@ -284,13 +282,13 @@
                 field="system.quantity"
                 value={item.system.quantity}
                 selectOnFocus={true}
-                disabled={!$context.editable || $context.lockItemQuantity}
+                disabled={!context.editable || context.lockItemQuantity}
                 placeholder="0"
                 allowDeltaChanges={true}
                 class="text-align-center"
               />
             </ItemTableCell>
-            {#if $context.editable && $context.useClassicControls && !lockControls}
+            {#if context.editable && context.useClassicControls && !lockControls}
               <ItemTableCell baseWidth={classicControlsColumnWidth}>
                 <ClassicControls {controls} params={{ item: item, ctx: ctx }} />
               </ItemTableCell>
@@ -302,11 +300,11 @@
           <InlineContainerView
             container={item}
             containerContents={ctx.containerContents}
-            editable={$context.editable}
+            editable={context.editable}
             {inlineToggleService}
-            lockItemQuantity={$context.lockItemQuantity}
-            sheetDocument={$context.actor}
-            unlocked={$context.unlocked}
+            lockItemQuantity={context.lockItemQuantity}
+            sheetDocument={context.actor}
+            unlocked={context.unlocked}
           />
         {:else if (ctx.activities?.length ?? 0) > 1}
           <InlineActivitiesList
@@ -316,8 +314,8 @@
           />
         {/if}
       {/each}
-      {#if $context.unlocked && section.canCreate}
-        <ItemTableFooter actor={$context.actor} {section} isItem={true} />
+      {#if context.unlocked && section.canCreate}
+        <ItemTableFooter actor={context.actor} {section} isItem={true} />
       {/if}
     {/snippet}
   </ItemTable>

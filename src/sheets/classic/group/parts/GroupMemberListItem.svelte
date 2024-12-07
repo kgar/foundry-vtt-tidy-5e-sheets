@@ -2,21 +2,14 @@
   import type { Actor5e } from 'src/types/types';
   import RemoveMemberControl from './RemoveMemberControl.svelte';
   import AcShieldBase from 'src/sheets/classic/actor/AcShieldBase.svelte';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
-  import type {
-    GroupMemberContext,
-    GroupSheetClassicContext,
-  } from 'src/types/group.types';
+  import type { GroupMemberContext } from 'src/types/group.types';
   import { CONSTANTS } from 'src/constants';
   import GroupMemberListItemProfile from './GroupMemberListItemProfile.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings.svelte';
-  import { formatAsModifier } from 'src/utils/formatting';
+  import { getGroupSheetClassicContext } from 'src/sheets/sheet-context.svelte';
 
-  const context = getContext<Readable<GroupSheetClassicContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  const context = getGroupSheetClassicContext();
 
   interface Props {
     member: Actor5e;
@@ -71,7 +64,7 @@
       >
         {member.name}
       </button>
-      {#if $context.unlocked}
+      {#if context.unlocked}
         <RemoveMemberControl {member} />
       {/if}
     </div>
@@ -118,7 +111,7 @@
           <button
             type="button"
             class="skill"
-            disabled={!$context.isGM}
+            disabled={!context.isGM}
             onclick={(event) => onPerceptionClicked(event)}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >

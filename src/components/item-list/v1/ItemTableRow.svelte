@@ -10,10 +10,7 @@
     ActiveEffectContext,
   } from 'src/types/types';
   import type { Writable } from 'svelte/store';
-  import type {
-    Item5e,
-    ItemChatData,
-  } from 'src/types/item.types';
+  import type { Item5e, ItemChatData } from 'src/types/item.types';
   import { CONSTANTS } from 'src/constants';
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
@@ -21,7 +18,7 @@
 
   interface Props {
     item?: Item5e | null;
-    effect?: ActiveEffect5e | ActiveEffectContext | null;
+    activeEffect?: ActiveEffect5e | ActiveEffectContext | null;
     favoriteId?: string | null;
     contextMenu?: { type: string; uuid: string } | null;
     cssClass?: string;
@@ -33,7 +30,7 @@
 
   let {
     item = null,
-    effect = null,
+    activeEffect = null,
     favoriteId = null,
     contextMenu = null,
     cssClass = '',
@@ -43,7 +40,7 @@
     children,
   }: Props = $props();
 
-  let draggable = $derived(item ?? effect);
+  let draggable = $derived(item ?? activeEffect);
 
   const emptyChatData: ItemChatData = {
     description: { value: '' },
@@ -118,10 +115,10 @@
     }
   }
 
-  onMount(() => {
-    let first = true;
+  let first = true;
 
-    const subscription = context?.subscribe(async (c: any) => {
+  $effect(() => {
+    (async function () {
       if (first) {
         first = false;
         restoreItemSummaryIfExpanded();
@@ -135,9 +132,7 @@
         // so it rehydrates on next open
         chatData = undefined;
       }
-    });
-
-    return subscription;
+    })();
   });
 </script>
 
@@ -148,8 +143,8 @@
   aria-hidden={hidden}
   data-context-menu={contextMenu?.type}
   data-context-menu-document-uuid={contextMenu?.uuid}
-  data-effect-id={effect?.id}
-  data-parent-id={effect?.parentId ?? effect?.parent?.id}
+  data-effect-id={activeEffect?.id}
+  data-parent-id={activeEffect?.parentId ?? activeEffect?.parent?.id}
   onmousedown={onMouseDown}
   onmouseenter={onMouseEnter}
   onmouseleave={onMouseLeave}

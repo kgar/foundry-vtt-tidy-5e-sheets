@@ -100,10 +100,10 @@
     }
   }
 
-  onMount(() => {
+  $effect(() => {
     let first = true;
 
-    const subscription = context?.subscribe(async (c: any) => {
+    (async () => {
       if (first) {
         first = false;
         restoreItemSummaryIfExpanded();
@@ -117,9 +117,7 @@
         // so it rehydrates on next open
         chatData = undefined;
       }
-    });
-
-    return subscription;
+    })();
   });
 </script>
 

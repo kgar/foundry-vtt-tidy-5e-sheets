@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
   import { getExhaustionIconsWithSeverity } from 'src/features/exhaustion/exhaustion';
   import type {
     SpecificExhaustionConfig,
@@ -7,13 +6,12 @@
   } from 'src/features/exhaustion/exhaustion.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     ActorSheetContextV1,
     PortraitCharmRadiusClass,
   } from 'src/types/types';
   import { coalesce } from 'src/utils/formatting';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
 
   interface Props {
     cssClass?: string;
@@ -49,9 +47,7 @@
     `severity-${selectedLevel?.severity ?? 0}`,
   );
 
-  let context = getContext<Readable<ActorSheetContextV1>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getSheetContext<ActorSheetContextV1>();
 
   let exhaustionOptionWidthRems = 1.25;
 
@@ -88,7 +84,7 @@
               { level: i },
             )}
             onclick={() => onLevelSelected?.(i)}
-            disabled={!$context.editable || isActiveEffectApplied}
+            disabled={!context.editable || isActiveEffectApplied}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             data-tooltip={isActiveEffectApplied
               ? localize('DND5E.ActiveEffectOverrideWarning')

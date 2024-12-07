@@ -1,15 +1,12 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { Item5e, ItemSheetContext } from 'src/types/item.types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import type { Item5e } from 'src/types/item.types';
   import type { ContextMenuEntry } from 'src/foundry/foundry.types';
   import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
+  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<ItemSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getItemSheetContext();
 
   const localize = FoundryAdapter.localize;
 
@@ -42,7 +39,7 @@
     {
       name: 'TIDY5E.ShowItemArt',
       icon: '<i class="fa-solid fa-image fa-fw"></i>',
-      callback: () => showItemArt($context.item),
+      callback: () => showItemArt(context.item),
     },
   ]);
 
@@ -70,20 +67,20 @@
   <!-- TODO: Figure out if there is an accessible way to provide this feature. -->
   <img
     class="profile"
-    class:conceal={$context.item.system.identified === false}
-    src={$context.item.img}
-    alt={$context.item.name}
+    class:conceal={context.item.system.identified === false}
+    src={context.item.img}
+    alt={context.item.name}
     title="{localize('TIDY5E.EditSheetImageHint')} / {localize(
       'TIDY5E.SheetImageOptionsHint',
     )}"
-    onclick={(event) => openItemImagePicker(event.currentTarget, $context.item)}
+    onclick={(event) => openItemImagePicker(event.currentTarget, context.item)}
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_IMAGE}
   />
   <div
     role="presentation"
     aria-hidden="true"
     class="unidentified-glyph"
-    class:conceal={$context.item.system.identified === false}
+    class:conceal={context.item.system.identified === false}
   >
     <i class="fas fa-question"></i>
   </div>

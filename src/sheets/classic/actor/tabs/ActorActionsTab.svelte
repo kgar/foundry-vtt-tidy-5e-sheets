@@ -6,8 +6,7 @@
   import ItemTableCell from 'src/components/item-list/v1/ItemTableCell.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ActorSheetContextV1 } from 'src/types/types';
-  import { getContext, setContext } from 'svelte';
-  import { writable, type Readable } from 'svelte/store';
+  import { getContext } from 'svelte';
   import ItemName from 'src/components/item-list/ItemName.svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
@@ -34,10 +33,9 @@
     createSearchResultsState,
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<ActorSheetContextV1>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getSheetContext<ActorSheetContextV1>();
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
@@ -45,10 +43,10 @@
 
   let actions = $derived(
     SheetSections.configureActions(
-      $context.actions,
+      context.actions,
       tabId,
-      SheetPreferencesService.getByType($context.actor.type),
-      TidyFlags.sectionConfig.get($context.actor)?.[tabId],
+      SheetPreferencesService.getByType(context.actor.type),
+      TidyFlags.sectionConfig.get(context.actor)?.[tabId],
     ),
   );
 
@@ -60,14 +58,14 @@
   $effect(() => {
     searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
-      itemContext: $context.itemContext,
+      itemContext: context.itemContext,
       sections: actions,
       tabId: tabId,
     });
   });
 
   let utilityBarCommands = $derived(
-    $context.utilities[tabId]?.utilityToolbarCommands ?? [],
+    context.utilities[tabId]?.utilityToolbarCommands ?? [],
   );
 
   const localize = FoundryAdapter.localize;
@@ -82,8 +80,8 @@
   <PinnedFilterToggles
     filterGroupName={tabId}
     filters={ItemFilterRuntime.getPinnedFiltersForTab(
-      $context.filterPins,
-      $context.filterData,
+      context.filterPins,
+      context.filterData,
       tabId,
     )}
   />
@@ -121,7 +119,7 @@
             <ItemTableColumn baseWidth="7.5rem"
               >{localize('DND5E.Damage')}</ItemTableColumn
             >
-            {#if $context.editable && $context.useClassicControls}
+            {#if context.editable && context.useClassicControls}
               <ItemTableColumn baseWidth="1.5rem"></ItemTableColumn>
             {/if}
           </ItemTableHeaderRow>
@@ -141,7 +139,7 @@
               {#snippet children({ toggleSummary })}
                 <ItemTableCell primary={true}>
                   <ItemUseButton
-                    disabled={!$context.editable}
+                    disabled={!context.editable}
                     item={actionItem.item}
                   />
                   {#if 'containerContents' in actionItem && !!actionItem.containerContents}
@@ -153,11 +151,11 @@
                   {/if}
                   <ItemName
                     item={actionItem.item}
-                    onToggle={() => toggleSummary($context.actor)}
+                    onToggle={() => toggleSummary(context.actor)}
                     useActiveEffectsMarker={false}
                   >
                     {@const sourceClassText =
-                      $context.actor.spellcastingClasses?.[
+                      context.actor.spellcastingClasses?.[
                         actionItem.item.system.sourceClass
                       ]?.name ?? ''}
                     <div class="flex-1 min-width-0">
@@ -283,7 +281,7 @@
                     </div>
                   {/each}
                 </ItemTableCell>
-                {#if $context.editable && $context.useClassicControls}
+                {#if context.editable && context.useClassicControls}
                   <ItemTableCell baseWidth="1.5rem">
                     <ActionFilterOverrideControl item={actionItem.item} />
                   </ItemTableCell>
@@ -294,12 +292,12 @@
               <InlineContainerView
                 container={actionItem.item}
                 containerContents={actionItem.containerContents}
-                editable={$context.editable}
+                editable={context.editable}
                 {inlineToggleService}
-                lockItemQuantity={$context.lockItemQuantity}
-                sheetDocument={$context.actor}
+                lockItemQuantity={context.lockItemQuantity}
+                sheetDocument={context.actor}
                 --t5e-image-size-override="1.5rem"
-                unlocked={$context.unlocked}
+                unlocked={context.unlocked}
               />
             {/if}
           {/each}

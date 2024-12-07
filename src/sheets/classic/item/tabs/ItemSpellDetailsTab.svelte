@@ -1,7 +1,4 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
-  import type { ItemSheetContext } from 'src/types/item.types';
   import Select from 'src/components/inputs/Select.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
@@ -15,12 +12,11 @@
   import FieldActivation from '../parts/FieldActivation.svelte';
   import FieldRange from '../parts/FieldRange.svelte';
   import FieldDuration from '../parts/FieldDuration.svelte';
+  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<ItemSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getItemSheetContext();
 
-  let appId = $derived($context.document.id);
+  let appId = $derived(context.document.id);
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -32,12 +28,12 @@
   <label for="{appId}-level">{localize('DND5E.SpellLevel')}</label>
   <Select
     id="{appId}-level"
-    document={$context.item}
+    document={context.item}
     field="system.level"
-    value={$context.source.level}
-    disabled={!$context.editable}
+    value={context.source.level}
+    disabled={!context.editable}
   >
-    <SelectOptions data={$context.config.spellLevels} />
+    <SelectOptions data={context.config.spellLevels} />
   </Select>
 </div>
 
@@ -46,13 +42,13 @@
   <label for="{appId}-school">{localize('DND5E.SpellSchool')}</label>
   <Select
     id="{appId}-school"
-    document={$context.item}
+    document={context.item}
     field="system.school"
-    value={$context.source.school}
-    disabled={!$context.editable}
+    value={context.source.school}
+    disabled={!context.editable}
   >
     <SelectOptions
-      data={$context.config.spellSchools}
+      data={context.config.spellSchools}
       labelProp="label"
       blank=""
     />
@@ -68,7 +64,7 @@
 </div>
 
 <!-- Material Components -->
-{#if $context.properties.object.material}
+{#if context.properties.object.material}
   <div class="form-group split-group">
     <label for="">{localize('DND5E.SpellMaterials')}</label>
 
@@ -78,11 +74,11 @@
         <label for="{appId}-materials-supply">{localize('DND5E.Supply')}</label>
         <NumberInput
           id="{appId}-materials-supply"
-          document={$context.item}
+          document={context.item}
           field="system.materials.supply"
-          value={$context.source.materials.supply}
+          value={context.source.materials.supply}
           min="0"
-          disabled={!$context.editable}
+          disabled={!context.editable}
         />
       </div>
 
@@ -99,12 +95,12 @@
         <div class="form-fields">
           <NumberInput
             id="{appId}-materials-cost"
-            document={$context.item}
+            document={context.item}
             field="system.materials.cost"
-            value={$context.source.materials.cost}
+            value={context.source.materials.cost}
             min="0"
             placeholder="—"
-            disabled={!$context.editable}
+            disabled={!context.editable}
           />
         </div>
       </div>
@@ -116,10 +112,10 @@
         >
         <Checkbox
           id="{appId}-materials-consumed"
-          document={$context.item}
+          document={context.item}
           field="system.materials.consumed"
-          checked={$context.source.materials.consumed}
-          disabled={!$context.editable}
+          checked={context.source.materials.consumed}
+          disabled={!context.editable}
         />
       </div>
     </div>
@@ -127,11 +123,11 @@
     <!-- Material Description -->
     <TextInput
       id="{appId}-materials-value"
-      document={$context.item}
+      document={context.item}
       field="system.materials.value"
-      value={$context.source.materials.value}
+      value={context.source.materials.value}
       class="full-width"
-      disabled={!$context.editable}
+      disabled={!context.editable}
     />
   </div>
 {/if}
@@ -143,30 +139,30 @@
   >
   <div class="form-fields">
     <!-- Prepared -->
-    {#if $context.source.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED}
+    {#if context.source.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED}
       <Checkbox
         id="{appId}-preparation-prepared"
-        document={$context.item}
+        document={context.item}
         field="system.preparation.prepared"
-        checked={$context.source.preparation.prepared}
+        checked={context.source.preparation.prepared}
         title={localize('DND5E.Prepared')}
         attributes={{
           ['aria-label']: localize('DND5E.Prepared'),
         }}
-        disabled={!$context.editable}
+        disabled={!context.editable}
       />
     {/if}
 
     <!-- Mode -->
     <Select
       id="{appId}-preparation-mode"
-      document={$context.item}
+      document={context.item}
       field="system.preparation.mode"
-      value={$context.source.preparation.mode}
-      disabled={!$context.editable}
+      value={context.source.preparation.mode}
+      disabled={!context.editable}
     >
       <SelectOptions
-        data={$context.config.spellPreparationModes}
+        data={context.config.spellPreparationModes}
         labelProp="label"
       />
     </Select>
@@ -174,20 +170,20 @@
 </div>
 
 <!-- Source Class -->
-{#if $context.isEmbedded}
+{#if context.isEmbedded}
   <div class="form-group">
     <label for="{appId}-sourceClass">{localize('DND5E.SpellSourceClass')}</label
     >
     <Select
       id="{appId}-sourceClass"
-      document={$context.item}
+      document={context.item}
       field="system.sourceClass"
-      value={$context.source.sourceClass}
-      disabled={!$context.editable}
+      value={context.source.sourceClass}
+      disabled={!context.editable}
       blankValue=""
     >
       <SelectOptions
-        data={$context.document.parent.spellcastingClasses}
+        data={context.document.parent.spellcastingClasses}
         labelProp="name"
         blank=""
       />
@@ -196,16 +192,16 @@
 
   <Select
     id="{appId}-ability"
-    document={$context.item}
+    document={context.item}
     field="system.ability"
-    value={$context.source.ability}
-    disabled={!$context.editable}
+    value={context.source.ability}
+    disabled={!context.editable}
     blankValue=""
   >
     <SelectOptions
-      data={$context.config.abilities}
+      data={context.config.abilities}
       labelProp="label"
-      blank={$context.defaultAbility}
+      blank={context.defaultAbility}
     />
   </Select>
 {:else}
@@ -214,10 +210,10 @@
     >
     <TextInput
       id="{appId}-sourceClass"
-      document={$context.item}
+      document={context.item}
       field="system.sourceClass"
-      value={$context.source.sourceClass}
-      disabled={!$context.editable}
+      value={context.source.sourceClass}
+      disabled={!context.editable}
     />
   </div>
 {/if}

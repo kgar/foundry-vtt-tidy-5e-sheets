@@ -2,9 +2,7 @@
   import { CONSTANTS } from 'src/constants';
   import { SettingsProvider } from 'src/settings/settings.svelte';
   import { getThemeOrDefault } from 'src/theme/theme';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
-  import type { ItemDebugSheetHightouchContext } from '../Tidy5eItemDebugSheetHightouch';
+  import type { ItemDebugSheetHightouchContext } from '../Tidy5eItemDebugSheetHightouch.svelte';
   import ButtonWithOptionPanel from 'src/components/buttons/ButtonWithOptionPanel.svelte';
   import ToggleButton from 'src/components/buttons/ToggleButton.svelte';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
@@ -16,10 +14,9 @@
   import Search from '../shared/Search.svelte';
   import { preventNewlines } from 'src/actions/prevent-newlines';
   import ItemDescriptions from '../shared/ItemDescriptions.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<ItemDebugSheetHightouchContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getSheetContext<ItemDebugSheetHightouchContext>();
 
   let theme = $derived(
     getThemeOrDefault(SettingsProvider.settings.colorScheme.get()),
@@ -92,27 +89,27 @@
   <div class="controls-gallery">
     <div class="span-all">
       <!-- Name -->
-      {#if $context.unlocked}
+      {#if context.unlocked}
         <TextInput
           field="name"
-          document={$context.item}
-          value={$context.item.name}
+          document={context.item}
+          value={context.item.name}
           class="document-name"
         />
       {:else}
-        <div class="document-name">{$context.item.name ?? ''}</div>
+        <div class="document-name">{context.item.name ?? ''}</div>
       {/if}
     </div>
     <div class="span-all">
-      <Tabs tabs={$context.tabs} bind:selectedTabId cssClass="item-tabs" />
+      <Tabs tabs={context.tabs} bind:selectedTabId cssClass="item-tabs" />
     </div>
     <div class="span-all">
-      <TabContents tabs={$context.tabs} {selectedTabId} />
+      <TabContents tabs={context.tabs} {selectedTabId} />
     </div>
     <div>
       <ItemDescriptions
-        document={$context.document}
-        itemDescriptions={$context.itemDescriptions}
+        document={context.document}
+        itemDescriptions={context.itemDescriptions}
       />
     </div>
     <fieldset class="vertical-gallery">
@@ -494,12 +491,12 @@
       <legend> Pill / Switch </legend>
       Fontawesome
       <PillSwitch
-        checked={$context.system.equipped}
+        checked={context.system.equipped}
         checkedIconClass="fas fa-hand-fist equip-icon fa-fw"
         uncheckedIconClass="far fa-hand fa-fw"
         onchange={(ev) =>
           console.log(
-            $context.item.update({
+            context.item.update({
               'system.equipped': ev.currentTarget.checked,
             }),
           )}
@@ -508,12 +505,12 @@
       </PillSwitch>
       SVG
       <PillSwitch
-        checked={$context.system.attuned}
+        checked={context.system.attuned}
         checkedSvgSrc="systems/dnd5e/icons/svg/statuses/concentrating.svg"
         uncheckedSvgSrc="systems/dnd5e/icons/svg/statuses/concentrating.svg"
         onchange={(ev) =>
           console.log(
-            $context.item.update({
+            context.item.update({
               'system.attuned': ev.currentTarget.checked,
             }),
           )}

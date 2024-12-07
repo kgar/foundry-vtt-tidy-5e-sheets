@@ -5,16 +5,14 @@
     ActorSheetContextV1,
     ActorSheetContextV2,
   } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import { DRAKKENHEIM_CORE_CONSTANTS } from './DrakkenheimCoreConstants';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  const context =
-    getContext<Readable<ActorSheetContextV1 | ActorSheetContextV2>>('context');
+  const context = getSheetContext<ActorSheetContextV1 | ActorSheetContextV2>();
 
   let contanimationLevel = $derived(
     FoundryAdapter.getProperty<number | undefined>(
-      $context.actor,
+      context.actor,
       DRAKKENHEIM_CORE_CONSTANTS.CONTAMINATION_LEVEL_FLAG_PROP,
     ) ?? 0,
   );
@@ -22,7 +20,7 @@
   let levels = $derived(Array.fromRange(6, 1));
 
   async function onContaminationLevelChanged(level: number): Promise<void> {
-    await $context.actor.update({
+    await context.actor.update({
       [DRAKKENHEIM_CORE_CONSTANTS.CONTAMINATION_LEVEL_FLAG_PROP]: level,
     });
   }

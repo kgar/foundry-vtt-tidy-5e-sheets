@@ -4,8 +4,7 @@
   import TidySwitch from 'src/components/toggle/TidySwitch.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings.svelte';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     hint?: string | null;
@@ -14,16 +13,14 @@
 
   let { hint = null, ...rest }: Props = $props();
 
-  let context = getContext<Readable<{ document: any }>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getSheetContext<{ document: any }>();
 
   async function toggleLock() {
-    await TidyFlags.allowEdit.set($context.document, !allowEdit);
+    await TidyFlags.allowEdit.set(context.document, !allowEdit);
   }
 
   const localize = FoundryAdapter.localize;
-  let allowEdit = $derived(TidyFlags.allowEdit.get($context.document));
+  let allowEdit = $derived(TidyFlags.allowEdit.get(context.document));
   let descriptionVariable = $derived(
     hint ??
       ($settingStore.useTotalSheetLock

@@ -1,11 +1,9 @@
 <script lang="ts">
-  import type { CharacterSheetContext } from 'src/types/types';
   import InventoryList from '../../actor/InventoryList.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import FavoriteFeaturesList from './FavoriteFeaturesList.svelte';
   import FavoriteSpellsList from 'src/sheets/classic/character/parts/FavoriteSpellsList.svelte';
-  import { getContext, setContext } from 'svelte';
-  import { writable, type Readable } from 'svelte/store';
+  import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
   import FavoriteEffectsList from './FavoriteEffectsList.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
@@ -18,6 +16,7 @@
     createSearchResultsState,
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
+  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     searchCriteria?: string;
@@ -25,18 +24,17 @@
 
   let { searchCriteria = '' }: Props = $props();
 
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getCharacterSheetContext();
+
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
   let favorites = $derived(
     SheetSections.configureFavorites(
-      $context.favorites,
-      $context.actor,
+      context.favorites,
+      context.actor,
       tabId,
-      SheetPreferencesService.getByType($context.actor.type),
-      TidyFlags.sectionConfig.get($context.actor)?.[tabId],
+      SheetPreferencesService.getByType(context.actor.type),
+      TidyFlags.sectionConfig.get(context.actor)?.[tabId],
     ),
   );
 
@@ -52,7 +50,7 @@
 
     searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
-      itemContext: $context.itemContext,
+      itemContext: context.itemContext,
       sections: sections,
       tabId: tabId,
     });

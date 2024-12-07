@@ -11,13 +11,10 @@
     CargoOrCrewItem,
     RenderableClassicControl,
     VehicleCargoSection,
-    VehicleSheetContext,
   } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ClassicControls from 'src/sheets/classic/shared/ClassicControls.svelte';
-  import { CONSTANTS } from 'src/constants';
+  import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     section: VehicleCargoSection;
@@ -31,9 +28,7 @@
     weight: '3.75rem',
   };
 
-  let context = getContext<Readable<VehicleSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getVehicleSheetContext();
 
   const classicControlsEditableRowBaseWidth = '1.5rem';
 
@@ -44,7 +39,7 @@
     section: VehicleCargoSection,
   ) {
     const cargo = foundry.utils.deepClone(
-      $context.actor.system.cargo[section.dataset.type],
+      context.actor.system.cargo[section.dataset.type],
     );
 
     const value = ev.currentTarget.value;
@@ -54,7 +49,7 @@
     if (item) {
       item[field] = ev.currentTarget.type === 'number' ? Number(value) : value;
 
-      $context.actor.update({
+      context.actor.update({
         [`system.cargo.${section.dataset.type}`]: cargo,
       });
     }
@@ -64,10 +59,10 @@
 
   function deleteCrewOrPassenger(section: VehicleCargoSection, index: number) {
     const cargo = foundry.utils
-      .deepClone($context.actor.system.cargo[section.dataset.type])
+      .deepClone(context.actor.system.cargo[section.dataset.type])
       .filter((_: unknown, i: number) => i !== index);
 
-    $context.actor.update({
+    context.actor.update({
       [`system.cargo.${section.dataset.type}`]: cargo,
     });
 
@@ -75,7 +70,7 @@
   }
 
   async function onItemCreate(type: string) {
-    const actor = $context.actor;
+    const actor = context.actor;
     const cargo = foundry.utils.deepClone(actor.system.cargo[type]);
     cargo.push(FoundryAdapter.getNewCargo());
     return actor.update({ [`system.cargo.${type}`]: cargo });
@@ -92,7 +87,7 @@
       section: VehicleCargoSection;
     }>[] = [];
 
-    if ($context.unlocked) {
+    if (context.unlocked) {
       result.push({
         component: ItemDeleteControl,
         props: ({ item, index, section }) => ({
@@ -123,14 +118,14 @@
             {column.label}
           </ItemTableColumn>
         {/each}
-        {#if $context.editable && $context.unlocked}
+        {#if context.editable && context.unlocked}
           <ItemTableColumn baseWidth={classicControlsEditableRowBaseWidth} />
         {/if}
       </ItemTableHeaderRow>
     {/snippet}
     {#snippet body()}
       {#each section.items as item, index (item.id ?? index)}
-        {@const ctx = $context.itemContext[item.id]}
+        {@const ctx = context.itemContext[item.id]}
         <ItemTableRow>
           <ItemTableCell primary={true}>
             <TextInput
@@ -141,7 +136,7 @@
                 saveNonItemSectionData(ev, index, 'name', section)}
               value={item.name}
               class="editable-name"
-              disabled={!$context.editable}
+              disabled={!context.editable}
               attributes={{ 'data-tidy-item-name': item.name }}
             />
           </ItemTableCell>
@@ -170,9 +165,9 @@
                         column.property,
                         section,
                       )}
-                    disabled={!$context.editable ||
+                    disabled={!context.editable ||
                       (column.property === 'quantity' &&
-                        $context.lockItemQuantity)}
+                        context.lockItemQuantity)}
                   />
                 {:else}
                   {FoundryAdapter.getProperty(item, column.property) ??
@@ -182,7 +177,7 @@
               </ItemTableCell>
             {/each}
           {/if}
-          {#if $context.editable && $context.unlocked}
+          {#if context.editable && context.unlocked}
             <ItemTableCell baseWidth={classicControlsEditableRowBaseWidth}>
               <ClassicControls
                 {controls}
@@ -192,9 +187,9 @@
           {/if}
         </ItemTableRow>
       {/each}
-      {#if $context.unlocked && section.dataset}
+      {#if context.unlocked && section.dataset}
         <ItemTableFooter
-          actor={$context.actor}
+          actor={context.actor}
           {section}
           create={() => onItemCreate(section.dataset.type)}
           isItem={section.dataset.type !== 'crew' &&

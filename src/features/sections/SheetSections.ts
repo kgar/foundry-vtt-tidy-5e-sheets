@@ -1,7 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import type { Tidy5eCharacterSheet } from 'src/sheets/classic/Tidy5eCharacterSheet';
-import type { Tidy5eNpcSheet } from 'src/sheets/classic/Tidy5eNpcSheet';
+import type { Tidy5eCharacterSheet } from 'src/sheets/classic/Tidy5eCharacterSheet.svelte';
+import type { Tidy5eNpcSheet } from 'src/sheets/classic/Tidy5eNpcSheet.svelte';
 import type { Item5e } from 'src/types/item.types';
 import type {
   ActionSection,
@@ -82,13 +82,12 @@ export class SheetSections {
     );
 
     const maxLength = sections.length;
-    sections.sort(
+
+    return sections.toSorted(
       (a, b) =>
         (sortMap.get(a.key) ?? defaultSortMap.get(a.key) ?? maxLength) -
         (sortMap.get(b.key) ?? defaultSortMap.get(b.key) ?? maxLength)
     );
-
-    return sections;
   }
 
   static getDefaultSortOrder<
@@ -108,9 +107,11 @@ export class SheetSections {
       { defaultSections: [], customSections: [] }
     );
 
-    customSections.sort((a, b) => a.localeCompare(b, game.i18n.lang));
+    var sortedCustomSections = customSections.toSorted((a, b) =>
+      a.localeCompare(b, game.i18n.lang)
+    );
 
-    return [...defaultSections, ...customSections];
+    return [...defaultSections, ...sortedCustomSections];
   }
 
   static prepareTidySpellbook(
@@ -339,8 +340,10 @@ export class SheetSections {
     sheetPreferences: SheetPreference,
     sectionConfig?: Record<string, SectionConfig>
   ) {
+    let configuredFavorites: FavoriteSection[] = [];
+
     try {
-      favoriteSections = SheetSections.sortKeyedSections(
+      configuredFavorites = SheetSections.sortKeyedSections(
         favoriteSections,
         sectionConfig
       );
@@ -355,7 +358,7 @@ export class SheetSections {
         new Map<string, CharacterFavorite>()
       );
 
-      (favoriteSections as FavoriteSection[]).forEach((section) => {
+      (configuredFavorites as FavoriteSection[]).forEach((section) => {
         if ('effects' in section) {
           let effectContexts = section.effects;
 
@@ -421,7 +424,7 @@ export class SheetSections {
       error('An error occurred while configuring favorites', false, e);
     }
 
-    return favoriteSections;
+    return configuredFavorites;
   }
 
   static configureFeatures<

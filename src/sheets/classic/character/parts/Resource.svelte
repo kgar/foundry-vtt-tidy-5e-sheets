@@ -1,22 +1,20 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { CharacterSheetContext, TidyResource } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import type { TidyResource } from 'src/types/types';
   import TextInput from '../../../../components/inputs/TextInput.svelte';
   import { CONSTANTS } from 'src/constants';
   import { settingStore } from 'src/settings/settings.svelte';
+  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     resource: TidyResource;
   }
 
   let { resource }: Props = $props();
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
 
-  let appId = $derived($context.actor.id);
+  let context = getCharacterSheetContext();
+
+  let appId = $derived(context.actor.id);
 
   const localize = FoundryAdapter.localize;
 
@@ -31,12 +29,12 @@
 >
   <h4 class="resource-name" class:hidden={viewingConfig || configActive}>
     <TextInput
-      document={$context.actor}
+      document={context.actor}
       field={resource.labelName}
       value={resource.label}
       placeholder={resource.placeholder}
       selectOnFocus={true}
-      disabled={!$context.editable || $context.lockSensitiveFields}
+      disabled={!context.editable || context.lockSensitiveFields}
     />
   </h4>
   <div
@@ -45,18 +43,18 @@
   >
     <TextInput
       class="resource-value"
-      document={$context.actor}
+      document={context.actor}
       field={resource.valueName}
       value={resource.value ?? null}
       placeholder="0"
       allowDeltaChanges={true}
       maxlength={3}
       selectOnFocus={true}
-      disabled={!$context.editable}
+      disabled={!context.editable}
     />
     <span class="sep"> / </span>
     <TextInput
-      document={$context.actor}
+      document={context.actor}
       field={resource.maxName}
       class="resource-max"
       value={resource.max ?? null}
@@ -64,7 +62,7 @@
       allowDeltaChanges={true}
       maxlength={3}
       selectOnFocus={true}
-      disabled={!$context.editable || $context.lockSensitiveFields}
+      disabled={!context.editable || context.lockSensitiveFields}
     />
   </div>
   <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -83,11 +81,11 @@
         onchange={(event) => {
           event.preventDefault();
           event.stopPropagation();
-          $context.actor.update({
+          context.actor.update({
             [resource.srName]: event.currentTarget.checked,
           });
         }}
-        disabled={!$context.editable || $context.lockSensitiveFields}
+        disabled={!context.editable || context.lockSensitiveFields}
         data-tidy-field={resource.srName}
       />
       <label
@@ -104,11 +102,11 @@
         onchange={(event) => {
           event.preventDefault();
           event.stopPropagation();
-          $context.actor.update({
+          context.actor.update({
             [resource.lrName]: event.currentTarget.checked,
           });
         }}
-        disabled={!$context.editable || $context.lockSensitiveFields}
+        disabled={!context.editable || context.lockSensitiveFields}
         data-tidy-field={resource.lrName}
       />
       <label
@@ -119,7 +117,7 @@
         {localize('DND5E.RestL')}
       </label>
     </div>
-    {#if $context.editable && !$context.lockSensitiveFields}
+    {#if context.editable && !context.lockSensitiveFields}
       <button
         type="button"
         class="inline-icon-button resource-options"

@@ -66,7 +66,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
     const sheetComponent = ItemSheetRuntime.sheets[this.item.type];
 
     const context = new Map<any, any>([
-      [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._store],
+      [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
       [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
     ]);
 
@@ -83,7 +83,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
     // Advancement context menu
     const contextOptions = this._getAdvancementContextMenuOptions();
 
-    const html = $(this.element);
+    const html = globalThis.$(this.element);
 
     TidyHooks.dnd5eGetItemAdvancementContext(html, contextOptions);
 

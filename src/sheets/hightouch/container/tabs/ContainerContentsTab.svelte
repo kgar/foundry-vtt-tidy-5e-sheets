@@ -1,9 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ContainerSheetHightouchContext } from 'src/types/item.types';
-  import { getContext, setContext } from 'svelte';
-  import { writable, type Readable } from 'svelte/store';
+  import { getContext } from 'svelte';
   import CapacityBar from 'src/sheets/hightouch/container/parts/CapacityBar.svelte';
   import ContainerContentsSections from 'src/sheets/hightouch/container/parts/ContainerContentsSections.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
@@ -16,10 +14,9 @@
     createSearchResultsState,
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
+  import { getContainerSheetHightouchContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<ContainerSheetHightouchContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getContainerSheetHightouchContext();
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
   let inlineToggleService = getContext<InlineToggleService>(
@@ -34,8 +31,8 @@
   $effect(() => {
     searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
-      itemContext: $context.itemContext,
-      sections: $context.containerContents.contents,
+      itemContext: context.itemContext,
+      sections: context.containerContents.contents,
       tabId: tabId,
     });
   });
@@ -43,7 +40,7 @@
   const localize = FoundryAdapter.localize;
 
   let utilityBarCommands = $derived(
-    $context.utilities[tabId]?.utilityToolbarCommands ?? [],
+    context.utilities[tabId]?.utilityToolbarCommands ?? [],
   );
 
   let menuOpen = $derived(false);
@@ -58,15 +55,15 @@
     {#snippet options()}
       <h4>{localize('TIDY5E.ExpandCollapseMenu.OptionTitle')}</h4>
       <label
-        for="{$context.document.id}-expand-collapse-behavior-top-level-sections"
+        for="{context.document.id}-expand-collapse-behavior-top-level-sections"
       >
         <input type="radio" checked={true} />
         {localize('TIDY5E.ExpandCollapseMenu.OptionTopLevel')}
       </label>
-      <label for="{$context.document.id}-expand-collapse-behavior-all-sections">
+      <label for="{context.document.id}-expand-collapse-behavior-all-sections">
         <input
           type="radio"
-          id="{$context.document.id}-expand-collapse-behavior-all-sections"
+          id="{context.document.id}-expand-collapse-behavior-all-sections"
           checked={false}
         />
         {localize('TIDY5E.ExpandCollapseMenu.OptionAllSections')}
@@ -91,26 +88,26 @@
   <ButtonWithOptionPanel class="icon-button" anchor="right">
     <i class="fas fa-arrow-down-a-z fa-fw"></i>
     {#snippet options()}
-      <label for="{$context.document.id}-sort-option-alphabetical">
+      <label for="{context.document.id}-sort-option-alphabetical">
         <input
           type="radio"
-          id="{$context.document.id}-sort-option-alphabetical"
+          id="{context.document.id}-sort-option-alphabetical"
           checked={true}
         />
         {localize('TIDY5E.SortMenu.OptionAlphabetical')}
       </label>
-      <label for="{$context.document.id}-sort-option-manual">
+      <label for="{context.document.id}-sort-option-manual">
         <input
           type="radio"
-          id="{$context.document.id}-sort-option-manual"
+          id="{context.document.id}-sort-option-manual"
           checked={false}
         />
         {localize('TIDY5E.SortMenu.OptionManual')}
       </label>
-      <label for="{$context.document.id}-sort-option-equipped">
+      <label for="{context.document.id}-sort-option-equipped">
         <input
           type="radio"
-          id="{$context.document.id}-sort-option-equipped"
+          id="{context.document.id}-sort-option-equipped"
           checked={false}
         />
         {localize('TIDY5E.SortMenu.OptionEquipped')}
@@ -130,20 +127,20 @@
 <!-- ? DO we have to reuse the same components, or can we make curated versions for container and actor? -->
 <div class="container-contents-wrapper">
   <ContainerContentsSections
-    contents={$context.containerContents.contents}
-    container={$context.item}
-    editable={$context.editable}
-    itemContext={$context.containerContents.itemContext}
+    contents={context.containerContents.contents}
+    container={context.item}
+    editable={context.editable}
+    itemContext={context.containerContents.itemContext}
     {inlineToggleService}
-    lockItemQuantity={$context.lockItemQuantity}
-    sheetDocument={$context.item}
-    unlocked={$context.unlocked}
+    lockItemQuantity={context.lockItemQuantity}
+    sheetDocument={context.item}
+    unlocked={context.unlocked}
   />
 </div>
 
 <footer class="contents-footer">
   <!-- Capacity Bar -->
-  <CapacityBar container={$context.item} capacity={$context.capacity} />
+  <CapacityBar container={context.item} capacity={context.capacity} />
 
   <hr class="golden-fade" />
 

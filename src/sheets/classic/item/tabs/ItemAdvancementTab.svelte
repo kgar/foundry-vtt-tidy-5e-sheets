@@ -1,24 +1,20 @@
 <script lang="ts">
   import InlineSvg from 'src/components/utility/InlineSvg.svelte';
-  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings.svelte';
-  import type { Item5e, ItemSheetContext } from 'src/types/item.types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import type { Item5e } from 'src/types/item.types';
 
-  let context = getContext<Readable<ItemSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getItemSheetContext();
 
   let advancements = $derived(
-    Object.entries($context.advancement) as Iterable<[string, any]>,
+    Object.entries(context.advancement) as Iterable<[string, any]>,
   );
 
   const localize = FoundryAdapter.localize;
 
   function toggleAdvancementLock(item: Item5e) {
-    $context.toggleAdvancementLock();
+    context.toggleAdvancementLock();
   }
 
   const basicSvgFilePathRegex = /\.svg$/i;
@@ -33,28 +29,28 @@
     }
 
     const dragData =
-      $context.item.advancement.byId[advancement.id]?.toDragData();
+      context.item.advancement.byId[advancement.id]?.toDragData();
     event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
   }
 </script>
 
 <ol
   class="items-list flex-1"
-  ondrop={(ev) => $context.owner && $context.item.sheet._onDrop(ev)}
+  ondrop={(ev) => context.owner && context.item.sheet._onDrop(ev)}
 >
-  {#if $context.editable}
+  {#if context.editable}
     <li
       class="items-header main-controls advancement flex-row justify-content-space-between"
     >
       <div class="item-controls configuration-mode-control">
-        {#if $context.editable && $context.isEmbedded}
+        {#if context.editable && context.isEmbedded}
           <button
             class="inline-icon-button"
-            onclick={() => toggleAdvancementLock($context.item)}
+            onclick={() => toggleAdvancementLock(context.item)}
             title={localize('DND5E.AdvancementConfigurationActionDisable')}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
-            {#if $context.advancementEditable}
+            {#if context.advancementEditable}
               <i class="fas fa-lock-open"></i>
               {localize('DND5E.AdvancementConfigurationModeEnabled')}
             {:else}
@@ -64,7 +60,7 @@
           </button>
         {/if}
       </div>
-      {#if $context.editable && $context.advancementEditable}
+      {#if context.editable && context.advancementEditable}
         <div class="item-controls add-button">
           <button
             type="button"
@@ -72,7 +68,7 @@
             title={localize('DND5E.AdvancementControlCreate')}
             aria-label={localize('DND5E.AdvancementControlCreate')}
             onclick={() =>
-              FoundryAdapter.createAdvancementSelectionDialog($context.item)}
+              FoundryAdapter.createAdvancementSelectionDialog(context.item)}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-plus"></i>
@@ -97,13 +93,13 @@
         {/if}
       </h3>
 
-      {#if $context.editable && data.configured && level !== 'unconfigured'}
+      {#if context.editable && data.configured && level !== 'unconfigured'}
         <div>
           <button
             type="button"
             class="inline-transparent-button"
             onclick={() =>
-              FoundryAdapter.modifyAdvancementChoices(level, $context.item)}
+              FoundryAdapter.modifyAdvancementChoices(level, context.item)}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             {localize('DND5E.AdvancementModifyChoices')}
@@ -134,7 +130,7 @@
           class="advancement-item item flexrow"
           data-id={advancement.id}
           ondragstart={(ev) => handleAdvancementDragStart(ev, advancement)}
-          draggable={$context.editable}
+          draggable={context.editable}
         >
           <div class="item-name flexrow">
             <div class="item-image" class:svg={isSvgIcon}>
@@ -148,7 +144,7 @@
               >{@html advancement.title}</span
             >
           </div>
-          {#if $context.advancementEditable || !$context.isEmbedded}
+          {#if context.advancementEditable || !context.isEmbedded}
             <div class="flexrow">
               {#if advancement.classRestriction === 'primary'}
                 {localize('DND5E.AdvancementClassRestrictionPrimary')}
@@ -157,7 +153,7 @@
               {/if}
             </div>
           {/if}
-          {#if $context.editable && $context.advancementEditable}
+          {#if context.editable && context.advancementEditable}
             <div class="item-controls flexrow">
               <button
                 type="button"
@@ -165,7 +161,7 @@
                 title={localize('DND5E.AdvancementControlEdit')}
                 aria-label={localize('DND5E.AdvancementControlEdit')}
                 onclick={() =>
-                  FoundryAdapter.editAdvancement(advancement.id, $context.item)}
+                  FoundryAdapter.editAdvancement(advancement.id, context.item)}
                 tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
               >
                 <i class="fas fa-edit"></i>
@@ -178,7 +174,7 @@
                 onclick={() =>
                   FoundryAdapter.deleteAdvancement(
                     advancement.id,
-                    $context.item,
+                    context.item,
                   )}
                 tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
               >

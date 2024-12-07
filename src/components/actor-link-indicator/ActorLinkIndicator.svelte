@@ -1,17 +1,12 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings.svelte';
-  import type { NpcSheetContext } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<NpcSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getNpcSheetContext();
 
   let isLinked = $derived(
-    $context.actor.token?.actorLink ?? $context.actor.prototypeToken.actorLink,
+    context.actor.token?.actorLink ?? context.actor.prototypeToken.actorLink,
   );
 
   let showUnlinked = $derived(
@@ -25,15 +20,15 @@
   );
 
   async function togglePrototypeLinkState() {
-    const isNowLinked = $context.actor.prototypeToken.actorLink;
-    await $context.actor.prototypeToken.update({ actorLink: !isNowLinked });
+    const isNowLinked = context.actor.prototypeToken.actorLink;
+    await context.actor.prototypeToken.update({ actorLink: !isNowLinked });
   }
 
   async function tryUnlink() {
-    if ($context.actor.sheet.token) {
-      await $context.actor.sheet.token.update({ actorLink: false });
-      const newToken = $context.actor.sheet.token;
-      await $context.actor.sheet.close();
+    if (context.actor.sheet.token) {
+      await context.actor.sheet.token.update({ actorLink: false });
+      const newToken = context.actor.sheet.token;
+      await context.actor.sheet.close();
       newToken.actor.sheet.render(true);
     } else {
       await togglePrototypeLinkState();
@@ -44,7 +39,7 @@
     await togglePrototypeLinkState();
   }
 
-  let canLink = $derived(!$context.actor.token);
+  let canLink = $derived(!context.actor.token);
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -55,8 +50,8 @@
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <a
     class="link-state-button"
-    onclick={(ev) => tryUnlink()}
-    class:disabled={!$context.unlocked}
+    onclick={() => tryUnlink()}
+    class:disabled={!context.unlocked}
   >
     <i class="link-state fas fa-link" title={localize('TIDY5E.TokenLinked')}
     ></i>
@@ -67,8 +62,8 @@
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <a
     class="link-state-button"
-    class:disabled={!$context.unlocked || !canLink}
-    onclick={(ev) => canLink && tryLink()}
+    class:disabled={!context.unlocked || !canLink}
+    onclick={() => canLink && tryLink()}
   >
     <i class="link-state fas fa-unlink" title={localize('TIDY5E.TokenUnlinked')}
     ></i>

@@ -1,16 +1,14 @@
 <script lang="ts">
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     ContainerSheetClassicContext,
     Item5e,
   } from 'src/types/item.types';
   import type { Actor5e } from 'src/types/types';
   import type { ActorSheetContextV1 } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
 
   interface Props {
     document: Actor5e | Item5e;
@@ -18,9 +16,9 @@
 
   let { document }: Props = $props();
 
-  let context = getContext<
-    Readable<ActorSheetContextV1 | ContainerSheetClassicContext>
-  >(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
+  let context = getSheetContext<
+    ActorSheetContextV1 | ContainerSheetClassicContext
+  >();
 
   let currencies = $derived(
     Object.keys(CONFIG.DND5E.currencies).map((key) => ({
@@ -49,7 +47,7 @@
     {#each currencies as currency}
       <li
         class="currency-item {currency.key}"
-        title={$context.config.currencies[currency.key]?.label}
+        title={context.config.currencies[currency.key]?.label}
       >
         <TextInput
           {document}
@@ -58,7 +56,7 @@
           value={currency.value}
           allowDeltaChanges={true}
           selectOnFocus={true}
-          disabled={!$context.editable || $context.lockMoneyChanges}
+          disabled={!context.editable || context.lockMoneyChanges}
         />
         <label
           for="{document.id}-system.currency.{currency.key}"
@@ -77,7 +75,7 @@
           event.stopPropagation();
           confirmConvertCurrency();
         }}
-        disabled={!$context.editable}
+        disabled={!context.editable}
         tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
         <i class="fas fa-coins"></i>

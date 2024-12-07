@@ -1,14 +1,13 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { settingStore } from 'src/settings/settings.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
-  import { getContext, type Snippet } from 'svelte';
+  import { type Snippet } from 'svelte';
   import type { MouseEventHandler } from 'svelte/elements';
-  import type { Readable } from 'svelte/store';
 
-  let context = getContext<Readable<ActorSheetContextV1>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getSheetContext<ActorSheetContextV1>();
+
   interface Props {
     title: string;
     configureButtonTitle: string;
@@ -52,7 +51,7 @@
       {/if}
       {@render children?.()}
     </div>
-    {#if $context.unlocked}
+    {#if context.unlocked}
       <button
         type="button"
         class="trait-editor inline-icon-button flex-row align-items-flex-start justify-content-center"

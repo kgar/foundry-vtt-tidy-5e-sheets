@@ -2,9 +2,8 @@
   import SpellbookFooter from 'src/components/spellbook/SpellbookFooter.svelte';
   import SpellbookGrid from 'src/components/spellbook/SpellbookGrid.svelte';
   import SpellbookList from 'src/components/spellbook/SpellbookList.svelte';
-  import type { ItemLayoutMode, NpcSheetContext } from 'src/types/types';
-  import { getContext, setContext } from 'svelte';
-  import { writable, type Readable } from 'svelte/store';
+  import type { ItemLayoutMode } from 'src/types/types';
+  import { getContext } from 'svelte';
   import NoSpells from '../../actor/NoSpells.svelte';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
@@ -24,16 +23,15 @@
     createSearchResultsState,
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
+  import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<NpcSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getNpcSheetContext();
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
   let searchCriteria: string = $state('');
 
   let spellbook = $derived(
-    SheetSections.configureSpellbook($context.actor, tabId, $context.spellbook),
+    SheetSections.configureSpellbook(context.actor, tabId, context.spellbook),
   );
 
   const searchResults = createSearchResultsState();
@@ -42,20 +40,20 @@
   $effect(() => {
     searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
-      itemContext: $context.itemContext,
+      itemContext: context.itemContext,
       sections: spellbook,
       tabId: tabId,
     });
   });
 
   let layoutMode: ItemLayoutMode = $derived(
-    TidyFlags.spellbookGrid.get($context.actor) ? 'grid' : 'list',
+    TidyFlags.spellbookGrid.get(context.actor) ? 'grid' : 'list',
   );
 
-  let noSpellLevels = $derived(!$context.spellbook.length);
+  let noSpellLevels = $derived(!context.spellbook.length);
 
   let utilityBarCommands = $derived(
-    $context.utilities[tabId]?.utilityToolbarCommands ?? [],
+    context.utilities[tabId]?.utilityToolbarCommands ?? [],
   );
 
   const localize = FoundryAdapter.localize;
@@ -66,8 +64,8 @@
   <PinnedFilterToggles
     filterGroupName={tabId}
     filters={ItemFilterRuntime.getPinnedFiltersForTab(
-      $context.filterPins,
-      $context.filterData,
+      context.filterPins,
+      context.filterData,
       tabId,
     )}
   />
@@ -82,12 +80,12 @@
   >
     <ButtonMenuCommand
       onMenuClick={() => {
-        new SpellSourceClassAssignmentsFormApplication($context.actor).render(
+        new SpellSourceClassAssignmentsFormApplication(context.actor).render(
           true,
         );
       }}
       iconClass="fas fa-list-check"
-      disabled={!$context.editable}
+      disabled={!context.editable}
     >
       {localize('TIDY5E.Utilities.AssignSpellsToClasses')}
     </ButtonMenuCommand>
@@ -105,7 +103,7 @@
 
 <div class="scroll-container flex-column small-gap">
   {#if noSpellLevels}
-    <NoSpells editable={$context.unlocked} />
+    <NoSpells editable={context.unlocked} />
   {:else}
     {#each spellbook as section (section.key)}
       {#if section.show}
@@ -113,7 +111,7 @@
           section.spells,
           searchResults.uuids,
         )}
-        {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemCount > 0 || !!section.slots}
+        {#if (searchCriteria.trim() === '' && context.unlocked) || visibleItemCount > 0 || !!section.slots}
           {#if layoutMode === 'list'}
             <SpellbookList
               allowFavorites={false}

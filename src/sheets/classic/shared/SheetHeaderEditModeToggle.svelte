@@ -4,9 +4,8 @@
   import TidySwitch from 'src/components/toggle/TidySwitch.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings.svelte';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import type { MouseEventHandler } from 'svelte/elements';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   interface Props {
     ondblclick?: MouseEventHandler<HTMLElement>;
     [key: string]: any;
@@ -14,16 +13,14 @@
 
   let { ondblclick, ...rest }: Props = $props();
 
-  let context = getContext<Readable<{ document: any; editable: boolean }>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getSheetContext<{ document: any; editable: boolean }>();
 
   async function toggleLock() {
-    await TidyFlags.allowEdit.set($context.document, !allowEdit);
+    await TidyFlags.allowEdit.set(context.document, !allowEdit);
   }
 
   const localize = FoundryAdapter.localize;
-  let allowEdit = $derived(TidyFlags.allowEdit.get($context.document));
+  let allowEdit = $derived(TidyFlags.allowEdit.get(context.document));
   let descriptionVariable = $derived(
     $settingStore.useTotalSheetLock
       ? localize('TIDY5E.SheetLock.Description')
@@ -51,7 +48,7 @@
   );
 </script>
 
-{#if $context.editable}
+{#if context.editable}
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div
     class="header-sheet-edit-mode-toggle {rest.class ?? ''}"

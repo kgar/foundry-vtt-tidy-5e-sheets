@@ -1,19 +1,14 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { CharacterSheetContext } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import { settingStore } from 'src/settings/settings.svelte';
-  import { CONSTANTS } from 'src/constants';
+  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getCharacterSheetContext();
 
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="rest-container" class:rounded={$context.useRoundedPortraitStyle}>
+<div class="rest-container" class:rounded={context.useRoundedPortraitStyle}>
   <div class="resting">
     <span class="resting-icon" title={localize('TIDY5E.RestHint')}
       ><i class="rest-icon fas fa-bed"></i></span
@@ -22,8 +17,8 @@
       type="button"
       class="rest icon-button"
       title={localize('TIDY5E.ShortRest')}
-      onclick={(event) => $context.actor.sheet.onShortRest(event)}
-      disabled={!$context.editable}
+      onclick={(event) => context.actor.sheet.onShortRest(event)}
+      disabled={!context.editable}
       tabindex={!$settingStore.useDefaultSheetHpTabbing &&
       $settingStore.useAccessibleKeyboardSupport
         ? 0
@@ -35,8 +30,8 @@
       type="button"
       class="rest icon-button"
       title={localize('TIDY5E.LongRest')}
-      onclick={(event) => $context.actor.sheet.onLongRest(event)}
-      disabled={!$context.editable}
+      onclick={(event) => context.actor.sheet.onLongRest(event)}
+      disabled={!context.editable}
       tabindex={!$settingStore.useDefaultSheetHpTabbing &&
       $settingStore.useAccessibleKeyboardSupport
         ? 0

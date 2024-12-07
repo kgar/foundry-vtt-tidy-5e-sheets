@@ -3,15 +3,11 @@
   import ItemTableColumn from 'src/components/item-list/v1/ItemTableColumn.svelte';
   import ItemTableHeaderRow from 'src/components/item-list/v1/ItemTableHeaderRow.svelte';
   import ConditionToggle from 'src/components/toggle/ConditionToggle.svelte';
-  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
 
-  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getSheetContext<CharacterSheetContext | NpcSheetContext>();
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -26,7 +22,7 @@
   {/snippet}
   {#snippet body()}
     <ul class="conditions-list">
-      {#each $context.conditions as condition (condition.id)}
+      {#each context.conditions as condition (condition.id)}
         <li
           class="condition"
           class:active={!condition.disabled}

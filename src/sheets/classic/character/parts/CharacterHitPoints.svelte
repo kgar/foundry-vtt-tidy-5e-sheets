@@ -2,12 +2,9 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type Actor5e } from 'src/types/types';
   import { settingStore } from 'src/settings/settings.svelte';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
-  import type { CharacterSheetContext } from 'src/types/types';
   import HpBar from 'src/components/bar/HpBar.svelte';
   import ResourceWithBar from 'src/components/bar/ResourceWithBar.svelte';
-  import { CONSTANTS } from 'src/constants';
+  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     value: number;
@@ -18,9 +15,7 @@
 
   let { value, max, actor, incapacitated }: Props = $props();
 
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getCharacterSheetContext();
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -28,7 +23,7 @@
 <div
   class="portrait-hp"
   class:incapacitated
-  class:widen-for-rounded-portrait={$context.useRoundedPortraitStyle}
+  class:widen-for-rounded-portrait={context.useRoundedPortraitStyle}
   title={localize('DND5E.HitPoints')}
 >
   <ResourceWithBar
@@ -36,15 +31,15 @@
     {value}
     valueField="system.attributes.hp.value"
     valueTitle={localize('DND5E.HitPointsCurrent')}
-    valueDisabled={!$context.editable}
+    valueDisabled={!context.editable}
     {max}
     maxField="system.attributes.hp.max"
     maxTitle={localize('DND5E.HitPointsMax')}
-    maxDisabled={!$context.allowMaxHpOverride ||
-      !$context.editable ||
-      $context.lockHpMaxChanges ||
-      $context.lockSensitiveFields}
-    percentage={$context.healthPercentage}
+    maxDisabled={!context.allowMaxHpOverride ||
+      !context.editable ||
+      context.lockHpMaxChanges ||
+      context.lockSensitiveFields}
+    percentage={context.healthPercentage}
     Bar={$settingStore.useHpBar ? HpBar : null}
   />
 </div>

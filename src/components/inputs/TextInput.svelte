@@ -3,8 +3,6 @@
   import { buildDataset } from 'src/utils/data';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import type {
     ContainerSheetClassicContext,
     ItemSheetContext,
@@ -18,6 +16,7 @@
     KeyboardEventHandler,
     MouseEventHandler,
   } from 'svelte/elements';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
   type OnSaveChangeFn = (
     event: Event & {
@@ -114,16 +113,13 @@
     });
   }
 
-  const context =
-    getContext<
-      Readable<
-        | CharacterSheetContext
-        | NpcSheetContext
-        | VehicleSheetContext
-        | ContainerSheetClassicContext
-        | ItemSheetContext
-      >
-    >('context');
+  const context = getSheetContext<
+    | CharacterSheetContext
+    | NpcSheetContext
+    | VehicleSheetContext
+    | ContainerSheetClassicContext
+    | ItemSheetContext
+  >();
 
   const localize = FoundryAdapter.localize;
 
@@ -132,7 +128,7 @@
     ActiveEffectsHelper.isActiveEffectAppliedToField(document, field),
   );
   let isEnchanted = $derived(
-    $context.itemOverrides instanceof Set && $context.itemOverrides.has(field),
+    context.itemOverrides instanceof Set && context.itemOverrides.has(field),
   );
   let overrideTooltip = $derived(
     isEnchanted

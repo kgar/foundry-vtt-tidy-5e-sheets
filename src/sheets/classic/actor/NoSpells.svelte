@@ -1,11 +1,9 @@
 <script lang="ts">
   import Notice from 'src/components/notice/Notice.svelte';
-  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
 
   interface Props {
     editable: boolean;
@@ -14,21 +12,19 @@
 
   let { editable, cssClass = null }: Props = $props();
 
-  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getSheetContext<CharacterSheetContext | NpcSheetContext>();
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <div class="no-spells-container {cssClass}">
   <Notice>{localize('DND5E.NoSpellLevels')}</Notice>
-  {#if $context.editable && editable}
+  {#if context.editable && editable}
     <button
       type="button"
       class="create-spell-btn flex-row align-items-center extra-small-gap"
       onclick={() =>
-        FoundryAdapter.createItem({ type: 'spell', level: '' }, $context.actor)}
+        FoundryAdapter.createItem({ type: 'spell', level: '' }, context.actor)}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fas fa-plus-circle"></i>

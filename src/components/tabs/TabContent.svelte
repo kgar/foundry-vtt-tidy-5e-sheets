@@ -2,16 +2,9 @@
   import type { Tab } from 'src/types/types';
   import { declareLocation } from 'src/types/location-awareness.types';
   import { CONSTANTS } from 'src/constants';
-  import {
-    getAllContexts,
-    getContext,
-    mount,
-    onMount,
-    setContext,
-    unmount,
-  } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { getAllContexts, mount, onMount, setContext, unmount } from 'svelte';
   import { error } from 'src/utils/logging';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     tab: Tab;
@@ -21,7 +14,7 @@
 
   let { tab, active, cssClass = '' }: Props = $props();
 
-  const context = getContext<Readable<any>>(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
+  const context = getSheetContext();
   const allContexts = getAllContexts();
 
   declareLocation('tab', tab.id);
@@ -41,7 +34,7 @@
     }
 
     try {
-      const props = tab.content.getProps?.($context) ?? {};
+      const props = tab.content.getProps?.(context) ?? {};
       const tabComponentContext =
         tab.content.getContext?.(allContexts) ?? allContexts;
       const svelteTabComponent = mount(tab.content.component, {

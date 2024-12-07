@@ -1,11 +1,8 @@
 <script lang="ts">
-  import type { ItemSheetContext } from 'src/types/item.types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import Accordion from 'src/components/accordion/Accordion.svelte';
   import AccordionItem from 'src/components/accordion/AccordionItem.svelte';
   import { settingStore } from 'src/settings/settings.svelte';
-  import { CONSTANTS } from 'src/constants';
+  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     /**
@@ -31,16 +28,14 @@
 
   let editorsContainers: HTMLElement[] = $state([]);
 
-  let context = getContext<Readable<ItemSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getItemSheetContext();
 
   let accordionItemOpenStates = $state(
-    $context.itemDescriptions.map((_, i) => i === 0),
+    context.itemDescriptions.map((_, i) => i === 0),
   );
 
   function manageSecrets(node: HTMLElement) {
-    if (!$context.item.isOwner) {
+    if (!context.item.isOwner) {
       return;
     }
 
@@ -49,11 +44,11 @@
       callbacks: {
         content: (secret: HTMLElement) =>
           foundry.utils.getProperty(
-            $context.item,
+            context.item,
             secret.closest<HTMLElement>('[data-edit]')!.dataset.edit,
           ),
         update: (secret: HTMLElement, content: string) =>
-          $context.item.update({
+          context.item.update({
             [secret.closest<HTMLElement>('[data-edit]')!.dataset.edit!]:
               content,
           }),
@@ -69,7 +64,7 @@
 {#if renderDescriptions}
   <div class="item-descriptions-container">
     <Accordion multiple>
-      {#each $context.itemDescriptions as itemDescription, i (itemDescription.field)}
+      {#each context.itemDescriptions as itemDescription, i (itemDescription.field)}
         {#key itemDescription.content}
           <div bind:this={editorsContainers[i]} use:manageSecrets>
             <AccordionItem
@@ -80,7 +75,7 @@
                 <span class="flex-1 flex-row justify-content-space-between">
                   {itemDescription.label}
 
-                  {#if $context.editable}
+                  {#if context.editable}
                     <button
                       type="button"
                       class="inline-icon-button edit-item-description"

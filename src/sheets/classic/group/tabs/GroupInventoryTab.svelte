@@ -20,25 +20,21 @@
   import Currency from 'src/sheets/classic/actor/Currency.svelte';
   import InventoryGrid from 'src/sheets/classic/actor/InventoryGrid.svelte';
   import InventoryList from 'src/sheets/classic/actor/InventoryList.svelte';
-  import TabFooter from 'src/sheets/classic/actor/TabFooter.svelte';
   import ContainerPanel from 'src/sheets/classic/shared/ContainerPanel.svelte';
-  import type { GroupSheetClassicContext } from 'src/types/group.types';
+  import { getGroupSheetClassicContext } from 'src/sheets/sheet-context.svelte';
   import type { InventorySection, ItemLayoutMode } from 'src/types/types';
-  import { getContext, setContext } from 'svelte';
-  import { writable, type Readable } from 'svelte/store';
+  import { getContext } from 'svelte';
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
-  let context = getContext<Readable<GroupSheetClassicContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  const context = getGroupSheetClassicContext();
 
   let inventory = $derived(
     SheetSections.configureInventory(
-      $context.inventory,
+      context.inventory,
       tabId,
-      SheetPreferencesService.getByType($context.actor.type),
-      TidyFlags.sectionConfig.get($context.actor)?.[tabId],
+      SheetPreferencesService.getByType(context.actor.type),
+      TidyFlags.sectionConfig.get(context.actor)?.[tabId],
     ),
   );
 
@@ -50,7 +46,7 @@
   $effect(() => {
     searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
-      itemContext: $context.itemContext,
+      itemContext: context.itemContext,
       sections: inventory,
       tabId: tabId,
     });
@@ -59,7 +55,7 @@
   const localize = FoundryAdapter.localize;
 
   let layoutMode: ItemLayoutMode = $derived(
-    TidyFlags.inventoryGrid.get($context.actor) ? 'grid' : 'list',
+    TidyFlags.inventoryGrid.get(context.actor) ? 'grid' : 'list',
   );
 
   let noItems = $derived(
@@ -68,7 +64,7 @@
   );
 
   let utilityBarCommands = $derived(
-    $context.utilities[tabId]?.utilityToolbarCommands ?? [],
+    context.utilities[tabId]?.utilityToolbarCommands ?? [],
   );
 </script>
 
@@ -77,8 +73,8 @@
   <PinnedFilterToggles
     filterGroupName={tabId}
     filters={ItemFilterRuntime.getPinnedFiltersForTab(
-      $context.filterPins,
-      $context.filterData,
+      context.filterPins,
+      context.filterData,
       tabId,
     )}
   />
@@ -98,13 +94,13 @@
   class="tidy-inventory-container scroll-container flex-column small-gap"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEMS_CONTAINER}
 >
-  {#if noItems && !$context.unlocked}
+  {#if noItems && !context.unlocked}
     <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {:else}
     {@const containerPanelExpanded =
-      $context.showContainerPanel && !!$context.containerPanelItems.length}
+      context.showContainerPanel && !!context.containerPanelItems.length}
 
-    <Currency document={$context.actor} />
+    <Currency document={context.actor} />
 
     <ExpandableContainer
       expanded={containerPanelExpanded}
@@ -113,7 +109,7 @@
         : ''}"
     >
       <ContainerPanel
-        containerPanelItems={$context.containerPanelItems}
+        containerPanelItems={context.containerPanelItems}
         {searchCriteria}
       />
     </ExpandableContainer>
@@ -123,7 +119,7 @@
         searchResults.uuids,
       )}
       {#if section.show}
-        {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemCount > 0}
+        {#if (searchCriteria.trim() === '' && context.unlocked) || visibleItemCount > 0}
           {#if layoutMode === 'list'}
             <InventoryList
               primaryColumnName="{localize(section.label)} ({visibleItemCount})"

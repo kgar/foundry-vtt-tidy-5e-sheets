@@ -1,8 +1,5 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
-  import type { VehicleSheetContext } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     rounded: boolean;
@@ -10,18 +7,16 @@
 
   let { rounded }: Props = $props();
 
-  let context = getContext<Readable<VehicleSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getVehicleSheetContext();
 </script>
 
 <header>
   <div class="profile">
     <div class="portrait" class:rounded>
-      <img src={$context.actor.img} alt={$context.actor.name} data-edit="img" />
+      <img src={context.actor.img} alt={context.actor.name} data-edit="img" />
     </div>
   </div>
-  <h1>{$context.actor.name}</h1>
+  <h1>{context.actor.name}</h1>
 </header>
 
 <style lang="scss">

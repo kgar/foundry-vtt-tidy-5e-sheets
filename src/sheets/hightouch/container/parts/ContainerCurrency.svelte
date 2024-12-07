@@ -1,21 +1,16 @@
 <script lang="ts">
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import { CONSTANTS } from 'src/constants';
   import { Inventory } from 'src/features/sections/Inventory';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { TidyHooks } from 'src/foundry/TidyHooks';
-  import type { ContainerSheetHightouchContext } from 'src/types/item.types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { getContainerSheetHightouchContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<ContainerSheetHightouchContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getContainerSheetHightouchContext();
 
   let currencies = $derived(
     Object.keys(CONFIG.DND5E.currencies).map((key) => ({
       key: key,
-      value: $context.system.currency[key] as number,
+      value: context.system.currency[key] as number,
     })),
   );
 
@@ -30,11 +25,11 @@
   }
 
   function promptCreateInventoryItem() {
-    const actor = $context.item.actor;
+    const actor = context.item.actor;
 
     const createData = {
-      folder: $context.item.folder,
-      'system.container': $context.item.id,
+      folder: context.item.folder,
+      'system.container': context.item.id,
     };
 
     if (!TidyHooks.tidy5eSheetsPreCreateItem(actor, createData, game.user.id)) {
@@ -43,14 +38,14 @@
 
     Item.implementation.createDialog(createData, {
       parent: actor,
-      pack: $context.item.pack,
+      pack: context.item.pack,
       types: Inventory.getDefaultInventoryTypes(),
       keepId: true,
     });
   }
 
   function confirmConvertCurrency() {
-    new dnd5e.applications.CurrencyManager($context.document).render(true);
+    new dnd5e.applications.CurrencyManager(context.document).render(true);
   }
 </script>
 
@@ -58,13 +53,13 @@
   {#each currencies as currency}
     <label class="input-group">
       <TextInput
-        document={$context.document}
+        document={context.document}
         field="system.currency.{currency.key}"
-        id="{$context.document.id}-system.currency.{currency.key}"
+        id="{context.document.id}-system.currency.{currency.key}"
         value={currency.value}
         allowDeltaChanges={true}
         selectOnFocus={true}
-        disabled={!$context.editable || $context.lockMoneyChanges}
+        disabled={!context.editable || context.lockMoneyChanges}
         class="currency-item currency-{currency.key}"
         placeholder="0"
       />

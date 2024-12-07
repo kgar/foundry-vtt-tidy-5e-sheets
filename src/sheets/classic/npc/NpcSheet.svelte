@@ -1,17 +1,12 @@
 <script lang="ts">
-  import type { NpcSheetContext } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import NpcSheetFull from './NpcSheetFull.svelte';
   import NpcSheetLimited from './NpcSheetLimited.svelte';
-  import { CONSTANTS } from 'src/constants';
+  import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<NpcSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getNpcSheetContext();
 </script>
 
-{#if $context.showLimitedSheet}
+{#if context.showLimitedSheet}
   <NpcSheetLimited />
 {:else}
   <NpcSheetFull />

@@ -57,7 +57,7 @@ import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptions
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { AsyncMutex } from 'src/utils/mutex';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
-import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
+import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet.svelte';
 import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSections';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
@@ -87,7 +87,8 @@ export class Tidy5eCharacterSheet
     SheetExpandedItemsCacheable,
     SearchFilterCacheable
 {
-  context = writable<CharacterSheetContext>();
+  context = $state<CharacterSheetContext>();
+
   stats = writable<SheetStats>({
     lastSubmissionTime: null,
   });
@@ -176,7 +177,7 @@ export class Tidy5eCharacterSheet
     first = false;
 
     const node = html.get(0);
-    
+
     this.component = mount(CharacterSheet, {
       target: node,
       context: new Map<any, any>([
@@ -1625,7 +1626,7 @@ export class Tidy5eCharacterSheet
       ['actions', 'favorites', 'inventory', 'spellbook', 'features'],
       data
     );
-    this.context.set(data);
+    this.context = data;
 
     if (force) {
       const { width, height } =

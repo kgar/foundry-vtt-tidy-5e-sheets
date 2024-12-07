@@ -86,7 +86,7 @@ export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
   _createComponent(node: HTMLElement): Record<string, any> {
 
     const context = new Map<any, any>([
-      [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._store],
+      [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
       [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
       [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
       [
@@ -110,7 +110,7 @@ export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
       context: context,
     });
 
-    const html = $(this.element);
+    const html = globalThis.$(this.element);
 
     initTidy5eContextMenu(this, html);
 

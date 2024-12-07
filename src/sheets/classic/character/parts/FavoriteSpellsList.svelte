@@ -1,10 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import {
-    type CharacterSheetContext,
-    type SpellbookSection,
-  } from 'src/types/types';
+  import { type SpellbookSection } from 'src/types/types';
   import ItemName from '../../../../components/item-list/ItemName.svelte';
   import ItemTable from '../../../../components/item-list/v1/ItemTable.svelte';
   import ItemTableCell from '../../../../components/item-list/v1/ItemTableCell.svelte';
@@ -15,21 +12,20 @@
   import ItemUses from '../../../../components/item-list/ItemUses.svelte';
   import SpellComponents from '../../../../components/spellbook/SpellComponents.svelte';
   import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import SpellSlotManagement from 'src/components/spellbook/SpellSlotManagement.svelte';
   import ConcentrationOverlayIcon from 'src/components/spellbook/ConcentrationOverlayIcon.svelte';
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
+  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
 
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getCharacterSheetContext();
+
   interface Props {
     section: SpellbookSection;
     spells: any[];
@@ -79,8 +75,8 @@
     {/snippet}
     {#snippet body()}
       {#each spells as spell}
-        {@const ctx = $context.itemContext[spell.id]}
-        {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($context, spell)}
+        {@const ctx = context.itemContext[spell.id]}
+        {@const spellImgUrl = FoundryAdapter.getSpellImageUrl(context, spell)}
         <ItemTableRow
           item={spell}
           onMouseDown={(event) =>
@@ -96,7 +92,7 @@
           {#snippet children({ toggleSummary })}
             <ItemTableCell primary={true}>
               <ItemUseButton
-                disabled={!$context.editable}
+                disabled={!context.editable}
                 item={spell}
                 imgUrlOverride={spellImgUrl}
               >
@@ -111,7 +107,7 @@
                 />
               {/if}
               <ItemName
-                onToggle={() => toggleSummary($context.actor)}
+                onToggle={() => toggleSummary(context.actor)}
                 item={spell}
               >
                 <span
@@ -130,7 +126,7 @@
             <ItemTableCell baseWidth="4.375rem" cssClass="no-gap">
               <SpellComponents
                 {spell}
-                spellComponentLabels={$context.spellComponentLabels}
+                spellComponentLabels={context.spellComponentLabels}
               />
             </ItemTableCell>
             <ItemTableCell

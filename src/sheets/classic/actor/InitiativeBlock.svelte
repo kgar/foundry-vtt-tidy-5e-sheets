@@ -5,10 +5,8 @@
   import BlockScore from './BlockScore.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import { settingStore } from 'src/settings/settings.svelte';
-  import { CONSTANTS } from 'src/constants';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     initiative: { total: number; bonus: number };
@@ -16,11 +14,9 @@
 
   let { initiative }: Props = $props();
 
-  let context = getContext<Readable<ActorSheetContextV1>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getSheetContext<ActorSheetContextV1>();
 
-  let appId = $derived($context.actor.id);
+  let appId = $derived(context.actor.id);
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -29,7 +25,7 @@
   <BlockTitle
     title={localize('DND5E.Initiative')}
     text={localize('TIDY5E.AbbrInitiative')}
-    onRoll={(event) => $context.actor.rollInitiativeDialog({ event: event })}
+    onRoll={(event) => context.actor.rollInitiativeDialog({ event: event })}
   />
   <BlockScore>
     <span>{formatAsModifier(initiative.total)}</span>
@@ -37,24 +33,24 @@
   <label class="ini-bonus" for="{appId}-initiative-mod">
     <span>{localize('TIDY5E.AbbrMod')}</span>
     <TextInput
-      document={$context.actor}
+      document={context.actor}
       field="system.attributes.init.bonus"
       class="ini-mod"
       placeholder="0"
       selectOnFocus={true}
       allowDeltaChanges={true}
       value={initiative.bonus}
-      disabled={!$context.editable || !$context.unlocked}
+      disabled={!context.editable || !context.unlocked}
       id="{appId}-initiative-mod"
     />
   </label>
 
-  {#if $context.editable && $context.unlocked}
+  {#if context.editable && context.unlocked}
     <button
       type="button"
       class="config-button icon-button"
       title={localize('DND5E.InitiativeConfig')}
-      onclick={() => FoundryAdapter.renderInitiativeConfig($context.actor)}
+      onclick={() => FoundryAdapter.renderInitiativeConfig(context.actor)}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fas fa-cog"></i>

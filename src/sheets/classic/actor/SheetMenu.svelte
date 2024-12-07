@@ -5,11 +5,9 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ThemeSelectorButtonMenuCommand from '../shared/ThemeSelectorButtonMenuCommand.svelte';
   import TabSelectionFormApplication from 'src/applications/tab-selection/TabSelectionFormApplication.svelte';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import type { ActorSheetContextV1 } from 'src/types/types';
   import { ApplicationsManager } from 'src/applications/ApplicationsManager';
-  import { CONSTANTS } from 'src/constants';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     defaultSettingsTab?: string | undefined;
@@ -19,9 +17,7 @@
 
   const localize = FoundryAdapter.localize;
 
-  let context = getContext<Readable<ActorSheetContextV1>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getSheetContext<ActorSheetContextV1>();
 </script>
 
 <ButtonMenu
@@ -45,12 +41,12 @@
   >
     {localize('TIDY5E.ThemeSettings.SheetMenu.buttonLabel')}
   </ButtonMenuCommand>
-  {#if $context.owner}
+  {#if context.owner}
     <ButtonMenuCommand
       onMenuClick={() =>
-        new TabSelectionFormApplication($context.actor).render(true)}
+        new TabSelectionFormApplication(context.actor).render(true)}
       iconClass="fas fa-file-invoice"
-      disabled={!$context.editable}
+      disabled={!context.editable}
     >
       {localize('TIDY5E.TabSelection.MenuOptionText')}
     </ButtonMenuCommand>

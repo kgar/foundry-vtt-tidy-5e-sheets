@@ -1,17 +1,14 @@
 <script lang="ts">
   import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
-  import { getContext } from 'svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
-  import type { Readable } from 'svelte/store';
   import TidySwitch from './TidySwitch.svelte';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { debug, error } from 'src/utils/logging';
   import { CONSTANTS } from 'src/constants';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  const context = getContext<Readable<ActorSheetContextV1>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  const context = getSheetContext<ActorSheetContextV1>();
 
   interface Props {
     condition: Dnd5eActorCondition;
@@ -27,7 +24,7 @@
 
   async function handleChange(newValue: boolean) {
     try {
-      await FoundryAdapter.toggleCondition($context.actor, condition);
+      await FoundryAdapter.toggleCondition(context.actor, condition);
     } catch (e) {
       error('An error occurred while toggling a condition', false, e);
       debug('Condition toggle error troubleshooting info', {
@@ -46,7 +43,7 @@
   bind:checked={switchOn}
   onChange={(ev) => handleChange(ev.currentTarget.checked)}
   title={condition.name}
-  disabled={!$context.editable}
+  disabled={!context.editable}
   data-uuid={condition.reference}
   data-condition-id={condition.id}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.CONDITION_TOGGLE}

@@ -1,34 +1,30 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
   import { FoundryAdapter } from '../../../foundry/foundry-adapter';
-  import type { Readable } from 'svelte/store';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
-  import { CONSTANTS } from 'src/constants';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<ActorSheetContextV1>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getSheetContext<ActorSheetContextV1>();
 </script>
 
-{#if $context.saves.concentration}
-  {@const save = $context.saves.concentration}
+{#if context.saves.concentration}
+  {@const save = context.saves.concentration}
   <span class="special-save">
     <button
       type="button"
       class="inline-transparent-button flex-row extra-small-gap align-items-center highlight-on-hover"
       onclick={(ev) =>
-        $context.actor.rollConcentration({ event: ev, legacy: false })}
+        context.actor.rollConcentration({ event: ev, legacy: false })}
     >
       <Dnd5eIcon src="systems/dnd5e/icons/svg/statuses/concentrating.svg" />
       {save.label}:
       <span class="special-save-mod">{save.sign}{save.mod}</span>
     </button>
-    {#if $context.unlocked}
+    {#if context.unlocked}
       <button
         type="button"
         class="inline-icon-button"
-        onclick={() => FoundryAdapter.openConcentrationConfig($context.actor)}
+        onclick={() => FoundryAdapter.openConcentrationConfig(context.actor)}
         ><i class="fas fa-cog" style="font-size: var(--icon-size);"></i></button
       >
     {/if}

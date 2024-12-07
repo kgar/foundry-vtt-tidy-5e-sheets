@@ -1,18 +1,11 @@
 <script lang="ts">
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
-  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { TidyFlags } from 'src/foundry/TidyFlags';
-  import type {
-    PortraitCharmRadiusClass,
-    VehicleSheetContext,
-  } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
+  import type { PortraitCharmRadiusClass } from 'src/types/types';
 
-  let context = getContext<Readable<VehicleSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getVehicleSheetContext();
 
   interface Props {
     motion: boolean;
@@ -36,10 +29,10 @@
   <Checkbox
     checkboxCssClass="motion-toggle"
     labelCssClass="{motion ? 'motion' : ''} {radiusClass}"
-    document={$context.actor}
+    document={context.actor}
     field={TidyFlags.motion.prop}
     checked={motion}
-    disabled={!$context.editable}
+    disabled={!context.editable}
   >
     <i class="motion-icon fas fa-sailboat" class:animate></i>
   </Checkbox>

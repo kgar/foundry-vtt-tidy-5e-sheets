@@ -1237,7 +1237,7 @@ export const FoundryAdapter = {
     );
   },
   getJqueryWrappedElement(el: HTMLElement) {
-    return $(el);
+    return globalThis.$(el);
   },
   openSpellSlotsConfig(document: any) {
     new dnd5e.applications.actor.SpellSlotsConfig({ document }).render(true);

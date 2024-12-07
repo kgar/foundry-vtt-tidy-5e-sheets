@@ -7,10 +7,8 @@ Because the controls are mutually exclusive, it is more ergonomic to distinguish
 <script lang="ts">
   import type { ActiveEffect5e, ActorSheetContextV1 } from 'src/types/types';
   import ItemControl from './ItemControl.svelte';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { CONSTANTS } from 'src/constants';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     effect: ActiveEffect5e;
@@ -18,9 +16,7 @@ Because the controls are mutually exclusive, it is more ergonomic to distinguish
 
   let { effect }: Props = $props();
 
-  let context = getContext<Readable<ActorSheetContextV1>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getSheetContext<ActorSheetContextV1>();
 
   /** Character effects are not the full ActiveEffect5e instance;
    * they are instead a subset of contextual data.
@@ -33,7 +29,7 @@ Because the controls are mutually exclusive, it is more ergonomic to distinguish
       ? effect
       : !!effect
         ? FoundryAdapter.getEffect({
-            document: $context.actor,
+            document: context.actor,
             effectId: effect.id,
             parentId: effect.parentId,
           })
@@ -43,7 +39,7 @@ Because the controls are mutually exclusive, it is more ergonomic to distinguish
   const localize = FoundryAdapter.localize;
 
   let isConcentration = $derived(
-    FoundryAdapter.isConcentrationEffect(actualEffect, $context.actor.sheet),
+    FoundryAdapter.isConcentrationEffect(actualEffect, context.actor.sheet),
   );
 </script>
 
@@ -51,7 +47,7 @@ Because the controls are mutually exclusive, it is more ergonomic to distinguish
   {#if isConcentration}
     <ItemControl
       iconSrc={`systems/dnd5e/icons/svg/break-concentration.svg`}
-      onclick={() => $context.actor.endConcentration(actualEffect)}
+      onclick={() => context.actor.endConcentration(actualEffect)}
       title={localize('DND5E.ConcentrationBreak')}
     />
   {:else}

@@ -4,12 +4,11 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import BlockTitle from './RollableBlockTitle.svelte';
   import BlockScore from './BlockScore.svelte';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import type { ActorSheetContextV1 } from 'src/types/types';
   import { settingStore } from 'src/settings/settings.svelte';
   import { CONSTANTS } from 'src/constants';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     id: string;
@@ -30,15 +29,13 @@
       ?.abbreviation ?? id,
   );
 
-  let context = getContext<Readable<ActorSheetContextV1>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getSheetContext<ActorSheetContextV1>();
 
   const localize = FoundryAdapter.localize;
 
   let activeEffectApplied = $derived(
     ActiveEffectsHelper.isActiveEffectAppliedToField(
-      $context.actor,
+      context.actor,
       `system.abilities.${id}.proficient`,
     ),
   );
@@ -52,8 +49,7 @@
   <BlockTitle
     title={ability.label}
     text={abbreviation}
-    onRoll={(event) =>
-      $context.actor.rollAbility({ ability: id, event: event })}
+    onRoll={(event) => context.actor.rollAbility({ ability: id, event: event })}
     hideFromTabOrder={$settingStore.useDefaultSheetAttributeTabbing ||
       !$settingStore.useAccessibleKeyboardSupport}
     attributes={{
@@ -62,13 +58,13 @@
   />
   <BlockScore>
     <TextInput
-      document={$context.actor}
+      document={context.actor}
       field="system.abilities.{id}.value"
       value={ability.value}
       placeholder="10"
       selectOnFocus={true}
       allowDeltaChanges={true}
-      disabled={$context.lockSensitiveFields}
+      disabled={context.lockSensitiveFields}
       attributes={{
         'data-tidy-sheet-part': CONSTANTS.SHEET_PARTS.ABILITY_SCORE,
       }}
@@ -78,15 +74,15 @@
     <button
       type="button"
       class="ability-mod transparent-button"
-      class:rollable={$context.editable}
+      class:rollable={context.editable}
       title={localize('DND5E.AbilityModifier')}
       onclick={(event) =>
-        $context.actor.rollAbilityCheck({ ability: id, event })}
+        context.actor.rollAbilityCheck({ ability: id, event })}
       tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
       $settingStore.useAccessibleKeyboardSupport
         ? 0
         : -1}
-      disabled={!$context.editable}
+      disabled={!context.editable}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ABILITY_TEST_ROLLER}
     >
       {formatAsModifier(ability.mod)}
@@ -94,27 +90,26 @@
     <button
       type="button"
       class="ability-save transparent-button"
-      class:rollable={$context.editable}
+      class:rollable={context.editable}
       title={localize('DND5E.ActionSave')}
-      onclick={(event) =>
-        $context.actor.rollSavingThrow({ ability: id, event })}
+      onclick={(event) => context.actor.rollSavingThrow({ ability: id, event })}
       tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
       $settingStore.useAccessibleKeyboardSupport
         ? 0
         : -1}
-      disabled={!$context.editable}
+      disabled={!context.editable}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ABILITY_SAVE_ROLLER}
     >
       {formatAsModifier(ability.save)}
     </button>
     {#if useSavingThrowProficiency}
-      {#if $context.unlocked}
+      {#if context.unlocked}
         <button
           type="button"
           title={ability.hover}
           class="proficiency-toggle inline-icon-button"
           onclick={() =>
-            $context.actor.update({
+            context.actor.update({
               [`system.abilities.${id}.proficient`]:
                 1 - parseInt(ability.proficient),
             })}
@@ -141,12 +136,12 @@
         >
       {/if}
     {/if}
-    {#if useConfigurationOption && $context.editable && $context.unlocked}
+    {#if useConfigurationOption && context.editable && context.unlocked}
       <button
         type="button"
         class="config-button inline-icon-button"
         title={localize('DND5E.AbilityConfigure')}
-        onclick={() => FoundryAdapter.renderAbilityConfig($context.actor, id)}
+        onclick={() => FoundryAdapter.renderAbilityConfig(context.actor, id)}
         tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
         $settingStore.useAccessibleKeyboardSupport
           ? 0

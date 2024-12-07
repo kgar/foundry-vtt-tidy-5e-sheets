@@ -13,8 +13,6 @@
   import ItemTableCell from '../../../../components/item-list/v1/ItemTableCell.svelte';
   import ItemControl from '../../../../components/item-list/controls/ItemControl.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import Notice from 'src/components/notice/Notice.svelte';
   import { declareLocation } from 'src/types/location-awareness.types';
   import ActorConditions from '../../actor/ActorConditions.svelte';
@@ -23,14 +21,13 @@
   import EffectFavoriteControl from 'src/components/item-list/controls/EffectFavoriteControl.svelte';
   import InlineFavoriteIcon from 'src/components/item-list/InlineFavoriteIcon.svelte';
   import { settingStore } from 'src/settings/settings.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<ActorSheetContextV1>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getSheetContext<ActorSheetContextV1>();
 
   const localize = FoundryAdapter.localize;
 
-  let effectSections = $derived(Object.values<any>($context.effects));
+  let effectSections = $derived(Object.values<any>(context.effects));
 
   let noEffects = $derived(
     effectSections.some((section: any) => section.effects.length > 0) === false,
@@ -52,7 +49,7 @@
           component: EffectFavoriteControl,
           props: ({ effect }) => ({
             effect: effect,
-            actor: $context.actor,
+            actor: context.actor,
           }),
         },
         {
@@ -60,7 +57,7 @@
           props: ({ effect }) => ({
             onclick: () =>
               FoundryAdapter.getEffect({
-                document: $context.actor,
+                document: context.actor,
                 effectId: effect.id,
                 parentId: effect.parentId,
               }).sheet.render(true),
@@ -70,13 +67,13 @@
         },
       );
 
-      if ($context.unlocked) {
+      if (context.unlocked) {
         result.push({
           component: ItemControl,
           props: ({ effect }) => ({
             onclick: () =>
               FoundryAdapter.getEffect({
-                document: $context.actor,
+                document: context.actor,
                 effectId: effect.id,
                 parentId: effect.parentId,
               }).deleteDialog(),
@@ -98,16 +95,16 @@
 </script>
 
 <div class="scroll-container flex-column small-gap">
-  {#if !$context.allowEffectsManagement && $context.unlocked}
+  {#if !context.allowEffectsManagement && context.unlocked}
     <Notice>{localize('TIDY5E.GMOnlyEdit')}</Notice>
   {/if}
 
-  {#if noEffects && !$context.unlocked && $context.allowEffectsManagement}
+  {#if noEffects && !context.unlocked && context.allowEffectsManagement}
     <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {:else}
     {#each effectSections as section}
       {#if !section.hidden}
-        {#if ($context.unlocked && $context.allowEffectsManagement) || section.effects.length > 0}
+        {#if (context.unlocked && context.allowEffectsManagement) || section.effects.length > 0}
           <ItemTable key={section.label}>
             {#snippet header()}
               <ItemTableHeaderRow>
@@ -120,7 +117,7 @@
                 <ItemTableColumn baseWidth="7.5rem">
                   {localize('DND5E.Duration')}
                 </ItemTableColumn>
-                {#if $context.editable && $context.useClassicControls && $context.allowEffectsManagement}
+                {#if context.editable && context.useClassicControls && context.allowEffectsManagement}
                   <ItemTableColumn baseWidth={classicControlsColumnWidth} />
                 {/if}
               </ItemTableHeaderRow>
@@ -132,7 +129,7 @@
                     FoundryAdapter.editOnMiddleClick(
                       event,
                       FoundryAdapter.getEffect({
-                        document: $context.actor,
+                        document: context.actor,
                         effectId: effectContext.id,
                         parentId: effectContext.parentId,
                       }),
@@ -143,11 +140,11 @@
                   }}
                   getDragData={() =>
                     FoundryAdapter.getEffect({
-                      document: $context.actor,
+                      document: context.actor,
                       effectId: effectContext.id,
                       parentId: effectContext.parentId,
                     })?.toDragData()}
-                  effect={effectContext}
+                  activeEffect={effectContext}
                 >
                   <ItemTableCell
                     primary={true}
@@ -163,7 +160,7 @@
                       title={effectContext.name}>{effectContext.name}</span
                     >
                   </ItemTableCell>
-                  {#if FoundryAdapter.isActiveEffectContextFavorited(effectContext, $context.actor) && $settingStore.showIconsNextToTheItemName}
+                  {#if FoundryAdapter.isActiveEffectContextFavorited(effectContext, context.actor) && $settingStore.showIconsNextToTheItemName}
                     <InlineFavoriteIcon />
                   {/if}
                   <ItemTableCell baseWidth="12.5rem">
@@ -180,7 +177,7 @@
                       >{effectContext.duration?.label ?? ''}</span
                     >
                   </ItemTableCell>
-                  {#if $context.editable && $context.useClassicControls && $context.allowEffectsManagement}
+                  {#if context.editable && context.useClassicControls && context.allowEffectsManagement}
                     <ItemTableCell baseWidth={classicControlsColumnWidth}>
                       <ClassicControls
                         {controls}
@@ -190,12 +187,12 @@
                   {/if}
                 </ItemTableRow>
               {/each}
-              {#if $context.unlocked && $context.allowEffectsManagement}
+              {#if context.unlocked && context.allowEffectsManagement}
                 <ItemTableFooter
-                  actor={$context.actor}
+                  actor={context.actor}
                   {section}
                   create={() =>
-                    FoundryAdapter.addEffect(section.type, $context.actor)}
+                    FoundryAdapter.addEffect(section.type, context.actor)}
                   isItem={false}
                 />
               {/if}
@@ -205,7 +202,7 @@
       {/if}
     {/each}
   {/if}
-  {#if $context.conditions}
+  {#if context.conditions}
     <ActorConditions />
   {/if}
 </div>

@@ -1,11 +1,9 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { Item5e } from 'src/types/item.types';
   import type { ActorSheetContextV1 } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
 
   interface Props {
     item: Item5e;
@@ -23,9 +21,7 @@
       : (item.labels?.recharge ?? ''),
   );
 
-  let context = getContext<Readable<ActorSheetContextV1>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getSheetContext<ActorSheetContextV1>();
 
   let recovery = $derived(item.system.uses?.recovery[0]);
 </script>
@@ -38,7 +34,7 @@
     ev.shiftKey
       ? item.update({ 'system.uses.spent': 0 })
       : item.system.uses.rollRecharge()}
-  disabled={!$context.owner}
+  disabled={!context.owner}
   tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
 >
   <i class="fas fa-dice-six"></i>

@@ -1,9 +1,7 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
-  import { getContext } from 'svelte';
   import type { MouseEventHandler } from 'svelte/elements';
-  import type { Readable } from 'svelte/store';
 
   interface Props {
     title?: string | null;
@@ -21,18 +19,16 @@
     onRoll,
   }: Props = $props();
 
-  let context = getContext<Readable<ActorSheetContextV1>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getSheetContext<ActorSheetContextV1>();
 </script>
 
 <button
   type="button"
-  class:rollable={$context.editable}
+  class:rollable={context.editable}
   class="transparent-button"
   {title}
   onclick={(ev) => onRoll?.(ev)}
-  disabled={!$context.editable}
+  disabled={!context.editable}
   tabindex={!hideFromTabOrder ? 0 : -1}
   {...attributes}
 >

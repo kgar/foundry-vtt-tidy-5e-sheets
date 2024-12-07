@@ -55,7 +55,7 @@ export class Tidy5eItemDebugSheetHightouch extends SvelteApplicationMixin<ItemDe
     return mount(ItemDebugSheet, {
       target: node,
       context: new Map<any, any>([
-        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._store],
+        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
       ]),
     });
   }
@@ -67,7 +67,7 @@ export class Tidy5eItemDebugSheetHightouch extends SvelteApplicationMixin<ItemDe
       target: windowHeader,
       anchor: windowHeader.querySelector('.window-title'),
       context: new Map<string, any>([
-        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._store],
+        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
       ]),
     });
 

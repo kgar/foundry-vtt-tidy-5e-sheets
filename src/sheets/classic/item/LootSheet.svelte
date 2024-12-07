@@ -1,8 +1,5 @@
 <script lang="ts">
   import ItemProfilePicture from './parts/ItemProfilePicture.svelte';
-  import type { ItemSheetContext } from 'src/types/item.types';
-  import type { Readable } from 'svelte/store';
-  import { getContext } from 'svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
@@ -12,15 +9,14 @@
   import { CONSTANTS } from 'src/constants';
   import ItemIdentifiableName from './parts/ItemIdentifiableName.svelte';
   import PropertyToggle from 'src/components/toggle/PropertyToggle.svelte';
+  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<ItemSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getItemSheetContext();
 
   let selectedTabId: string = $state('');
 
   const localize = FoundryAdapter.localize;
-  let appId = $derived($context.document.id);
+  let appId = $derived(context.document.id);
   let identifiedLabelWidthCh = $derived(
     Math.max(
       localize('DND5E.Identified').length,
@@ -43,50 +39,50 @@
     </h1>
 
     <div class="item-subtitle">
-      <h4 class="item-type">{$context.itemType ?? ''}</h4>
-      <span class="item-status">{$context.itemStatus ?? ''}</span>
+      <h4 class="item-type">{context.itemType ?? ''}</h4>
+      <span class="item-status">{context.itemStatus ?? ''}</span>
     </div>
 
     <ul class="summary flexrow">
       <li>
-        {#if $context.concealDetails}
+        {#if context.concealDetails}
           <span>{localize('DND5E.Unidentified.Title')}</span>
         {:else}
           <Select
             id="{appId}-rarity"
-            document={$context.item}
+            document={context.item}
             field="system.rarity"
             class="item-rarity"
-            value={$context.system.rarity}
-            disabled={!$context.editable}
+            value={context.system.rarity}
+            disabled={!context.editable}
             blankValue=""
           >
-            <SelectOptions data={$context.config.itemRarity} blank="" />
+            <SelectOptions data={context.config.itemRarity} blank="" />
           </Select>
         {/if}
       </li>
       <li class="flex-row">
         <Source
-          document={$context.item}
+          document={context.item}
           keyPath="system.source"
-          editable={$context.editable && !$context.concealDetails}
+          editable={context.editable && !context.concealDetails}
         />
       </li>
     </ul>
     <div class="flex-row no-gap">
-      {#if FoundryAdapter.canIdentify($context.item)}
+      {#if FoundryAdapter.canIdentify(context.item)}
         <PropertyToggle
-          document={$context.item}
+          document={context.item}
           field="system.identified"
-          checked={$context.system.identified}
-          disabled={!$context.editable}
-          title={$context.system.identified
+          checked={context.system.identified}
+          disabled={!context.editable}
+          title={context.system.identified
             ? localize('DND5E.Identified')
             : localize('DND5E.Unidentified.Title')}
           iconClass="fas fa-magnifying-glass fa-fw"
         >
           <div style="width: {identifiedLabelWidthCh}ch">
-            {$context.system.identified
+            {context.system.identified
               ? localize('DND5E.Identified')
               : localize('DND5E.Unidentified.Title')}
           </div>
@@ -95,7 +91,7 @@
     </div>
   </div>
 </header>
-<Tabs bind:selectedTabId tabs={$context.tabs} />
+<Tabs bind:selectedTabId tabs={context.tabs} />
 <section class="tidy-sheet-body">
-  <TabContents tabs={$context.tabs} {selectedTabId} />
+  <TabContents tabs={context.tabs} {selectedTabId} />
 </section>

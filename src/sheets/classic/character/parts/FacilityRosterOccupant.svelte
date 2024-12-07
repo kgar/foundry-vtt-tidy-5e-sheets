@@ -1,10 +1,11 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { Actor5e, CharacterSheetContext } from 'src/types/types';
+  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
+  import type { Actor5e } from 'src/types/types';
   import { EventHelper } from 'src/utils/events';
   import { getContext } from 'svelte';
-  import type { Readable, Writable } from 'svelte/store';
+  import type { Writable } from 'svelte/store';
 
   interface Props {
     occupant: Actor5e;
@@ -18,9 +19,7 @@
   let { occupant, type, index, prop, facilityId, facilityName }: Props =
     $props();
 
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getCharacterSheetContext();
 
   let hoveredFacilityOccupant = getContext<Writable<string>>(
     CONSTANTS.SVELTE_CONTEXT.HOVERED_FACILITY_OCCUPANT,
@@ -29,7 +28,7 @@
   function onRosterMemberClicked(
     event: (MouseEvent | PointerEvent) & { currentTarget: HTMLElement },
   ): any {
-    if ($context.unlocked) {
+    if (context.unlocked) {
       EventHelper.triggerContextMenu(event, '[data-actor-uuid]');
       return;
     }
@@ -43,7 +42,7 @@
   class="roster-member {type} occupant-with-menu"
   class:highlight={$hoveredFacilityOccupant ===
     `${facilityId}-${index}-${occupant.uuid}`}
-  class:unlocked={$context.unlocked}
+  class:unlocked={context.unlocked}
   data-actor-uuid={occupant.uuid}
   data-tooltip={localize('TIDY5E.Facilities.RosterMember.Label', {
     actorName: occupant.name,
@@ -61,9 +60,9 @@
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <!-- svelte-ignore a11y_missing_attribute -->
-  <a onclick={(ev) => $context.editable && onRosterMemberClicked(ev)}>
+  <a onclick={(ev) => context.editable && onRosterMemberClicked(ev)}>
     <img src={occupant.img} alt={occupant.name} />
-    {#if $context.unlocked}
+    {#if context.unlocked}
       <i class="fa-solid fa-cog occupant-menu-icon"></i>
     {/if}
   </a>

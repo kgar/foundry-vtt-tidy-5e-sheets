@@ -1,15 +1,10 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type {
-    CharacterSheetContext,
-    ChosenFacilityContext,
-  } from 'src/types/types';
-  import type { Readable, Writable } from 'svelte/store';
-  import { getContext } from 'svelte';
-  import { CONSTANTS } from 'src/constants';
+  import type { ChosenFacilityContext } from 'src/types/types';
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import type { Item5e } from 'src/types/item.types';
   import FacilityOrderProgressMeter from './FacilityOrderProgressMeter.svelte';
+  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     chosen: ChosenFacilityContext;
@@ -17,9 +12,7 @@
 
   let { chosen }: Props = $props();
 
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getCharacterSheetContext();
 
   const localize = FoundryAdapter.localize;
 
@@ -48,7 +41,7 @@
       <!-- svelte-ignore a11y_no_static_element_interactions -->
       <!-- svelte-ignore a11y_missing_attribute -->
       <a
-        onclick={() => $context.editable && editCraftingItem(chosen.craft.uuid)}
+        onclick={() => context.editable && editCraftingItem(chosen.craft.uuid)}
         data-info-card={'item'}
         data-info-card-entity-uuid={chosen.craft.uuid}
       >

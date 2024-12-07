@@ -9,13 +9,13 @@
     type Group5eMember,
     type GroupMemberSection,
   } from 'src/types/group.types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import RemoveMemberControl from './RemoveMemberControl.svelte';
   import TidyTableCell from 'src/components/table/TidyTableCell.svelte';
   import TidyTableRow from 'src/components/table/TidyTableRow.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { settingStore } from 'src/settings/settings.svelte';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
+  import { getGroupSheetClassicContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     section: GroupMemberSection;
@@ -23,13 +23,9 @@
 
   let { section }: Props = $props();
 
-  const memberActorIdsToShow = getContext<Readable<Set<string> | undefined>>(
-    CONSTANTS.SVELTE_CONTEXT.MEMBER_IDS_TO_SHOW,
-  );
+  const searchResults = getSearchResultsContext();
 
-  const context = getContext<Readable<GroupSheetClassicContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  const context = getGroupSheetClassicContext();
 
   const localize = FoundryAdapter.localize;
 
@@ -43,7 +39,7 @@
   ];
 
   let useClassicControls = $derived(
-    FoundryAdapter.useClassicControls($context.actor),
+    FoundryAdapter.useClassicControls(context.actor),
   );
 
   let classicControlsWidth = $derived(
@@ -61,20 +57,20 @@
     ${classicControlsWidth}`);
 
   function saveQuantityChange(
-    $context: GroupSheetClassicContext,
+    context: GroupSheetClassicContext,
     ev: Event & { currentTarget: HTMLInputElement },
     memberActorId: string,
   ) {
-    $context.actor.sheet.updateMemberQuantity(memberActorId, ev);
+    context.actor.sheet.updateMemberQuantity(memberActorId, ev);
     return false;
   }
 
   function saveFormulaChange(
-    $context: GroupSheetClassicContext,
+    context: GroupSheetClassicContext,
     ev: Event & { currentTarget: HTMLInputElement },
     memberActorId: string,
   ) {
-    $context.actor.sheet.updateMemberFormula(memberActorId, ev);
+    context.actor.sheet.updateMemberFormula(memberActorId, ev);
     return false;
   }
 </script>
@@ -98,7 +94,7 @@
             type="button"
             class="inline-icon-button"
             title={localize('DND5E.QuantityRoll')}
-            onclick={() => $context.actor.system.rollQuantities()}
+            onclick={() => context.actor.system.rollQuantities()}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-dice"></i>
@@ -120,8 +116,8 @@
     {#snippet body()}
       <div class="flex-column no-gap">
         {#each section.members as member, index (member.uuid)}
-          {@const ctx = $context.memberContext[member.id]}
-          {#if $memberActorIdsToShow === undefined || $memberActorIdsToShow.has(member.id)}
+          {@const ctx = context.memberContext[member.id]}
+          {#if searchResults.show(member.uuid)}
             <TidyTableRow
               rowContainerAttributes={{
                 ['data-member-drag']: '',
@@ -164,25 +160,25 @@
               </TidyTableCell>
               <TidyTableCell>
                 <TextInput
-                  document={$context.actor}
+                  document={context.actor}
                   field="system.members.{ctx.index}.quantity.value"
-                  value={$context.system.members[ctx.index].quantity.value}
+                  value={context.system.members[ctx.index].quantity.value}
                   allowDeltaChanges={true}
                   selectOnFocus={true}
                   onSaveChange={(ev) =>
-                    saveQuantityChange($context, ev, member.id)}
+                    saveQuantityChange(context, ev, member.id)}
                   placeholder="1"
                 />
               </TidyTableCell>
               <TidyTableCell>
                 <TextInput
-                  document={$context.actor}
+                  document={context.actor}
                   field="system.members.{ctx.index}.quantity.formula"
-                  value={$context.system.members[ctx.index].quantity.formula}
+                  value={context.system.members[ctx.index].quantity.formula}
                   allowDeltaChanges={true}
                   selectOnFocus={true}
                   onSaveChange={(ev) =>
-                    saveFormulaChange($context, ev, member.id)}
+                    saveFormulaChange(context, ev, member.id)}
                   placeholder={localize('DND5E.Formula')}
                 />
               </TidyTableCell>
@@ -195,7 +191,7 @@
                     <span class="text-body semibold"
                       >{FoundryAdapter.formatCr(member.system.details.cr)}</span
                     >
-                    {#if !$context.disableExperience}
+                    {#if !context.disableExperience}
                       &nbsp;—&nbsp;
                       <span class="text-body semibold">
                         {FoundryAdapter.formatNumber(
@@ -209,7 +205,7 @@
                 </TidyTableCell>
               {/if}
               <TidyTableCell>
-                {#if $context.unlocked}
+                {#if context.unlocked}
                   <RemoveMemberControl {member} />
                 {/if}
               </TidyTableCell>

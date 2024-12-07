@@ -1,22 +1,17 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
-  import type { ContainerSheetClassicContext } from 'src/types/item.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import Select from 'src/components/inputs/Select.svelte';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
-  import { CONSTANTS } from 'src/constants';
   import ItemProperties from 'src/sheets/classic/item/parts/ItemProperties.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import TextInput from 'src/components/inputs/TextInput.svelte';
+  import { getContainerSheetClassicContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<ContainerSheetClassicContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getContainerSheetClassicContext();
 
-  let appId = $derived($context.document.id);
+  let appId = $derived(context.document.id);
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -29,11 +24,11 @@
     <div class="form-fields">
       <NumberInput
         id="{appId}-weight-value"
-        value={$context.source.weight.value}
+        value={context.source.weight.value}
         step="any"
         field="system.weight.value"
-        document={$context.item}
-        disabled={!$context.editable}
+        document={context.item}
+        disabled={!context.editable}
         selectOnFocus={true}
       />
     </div>
@@ -45,22 +40,22 @@
     <div class="form-fields">
       <NumberInput
         id="{appId}-price-value"
-        value={$context.source.price.value}
+        value={context.source.price.value}
         step="any"
         field="system.price.value"
-        document={$context.item}
-        disabled={!$context.editable}
+        document={context.item}
+        disabled={!context.editable}
         selectOnFocus={true}
         cssClass="large-value"
       />
       <Select
-        value={$context.source.price.denomination}
+        value={context.source.price.denomination}
         field="system.price.denomination"
-        document={$context.item}
-        disabled={!$context.editable}
+        document={context.item}
+        disabled={!context.editable}
       >
         <SelectOptions
-          data={$context.config.currencies}
+          data={context.config.currencies}
           labelProp="abbreviation"
         />
       </Select>
@@ -85,10 +80,10 @@
     <div class="form-fields">
       <NumberInput
         id="{appId}-capacity-value"
-        document={$context.item}
+        document={context.item}
         field="system.capacity.value"
-        value={$context.source.capacity.value}
-        disabled={!$context.editable}
+        value={context.source.capacity.value}
+        disabled={!context.editable}
         placeholder="—"
       />
     </div>
@@ -101,12 +96,12 @@
     <div class="form-fields">
       <Select
         id="{appId}-capacity-type"
-        document={$context.item}
+        document={context.item}
         field="system.capacity.type"
-        value={$context.source.capacity.type}
-        disabled={!$context.editable}
+        value={context.source.capacity.type}
+        disabled={!context.editable}
       >
-        <SelectOptions data={$context.config.itemCapacityTypes} />
+        <SelectOptions data={context.config.itemCapacityTypes} />
       </Select>
     </div>
   </div>
@@ -116,23 +111,23 @@
     <div class="form-fields">
       <Checkbox
         id="{appId}-attuned"
-        document={$context.item}
+        document={context.item}
         field="system.attuned"
-        checked={$context.source.attuned}
-        disabled={!$context.editable ||
+        checked={context.source.attuned}
+        disabled={!context.editable ||
           // @ts-expect-error
-          !$context.config.attunementTypes[$context.system.attunement]}
+          !context.config.attunementTypes[context.system.attunement]}
         title={localize('DND5E.AttunementAttuned')}
       />
       <Select
         id="{appId}-attunement"
-        document={$context.item}
+        document={context.item}
         field="system.attunement"
-        value={$context.source.attunement}
-        disabled={!$context.editable}
+        value={context.source.attunement}
+        disabled={!context.editable}
       >
         <SelectOptions
-          data={$context.config.attunementTypes}
+          data={context.config.attunementTypes}
           blank={localize('DND5E.AttunementNone')}
         />
       </Select>
@@ -149,11 +144,11 @@
     </label>
     <div class="form-fields">
       <TextInput
-        document={$context.item}
+        document={context.item}
         field={TidyFlags.section.prop}
-        value={TidyFlags.section.get($context.item)}
+        value={TidyFlags.section.get(context.item)}
         selectOnFocus={true}
-        disabled={!$context.editable}
+        disabled={!context.editable}
         id="{appId}-custom-section"
       />
     </div>
@@ -164,11 +159,11 @@
     </label>
     <div class="form-fields">
       <TextInput
-        document={$context.item}
+        document={context.item}
         field={TidyFlags.actionSection.prop}
-        value={TidyFlags.actionSection.get($context.item)}
+        value={TidyFlags.actionSection.get(context.item)}
         selectOnFocus={true}
-        disabled={!$context.editable}
+        disabled={!context.editable}
         id="{appId}-custom-action-section"
       />
     </div>

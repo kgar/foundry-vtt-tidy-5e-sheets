@@ -2,11 +2,9 @@
   import { getContext } from 'svelte';
   import Traits from '../../actor/traits/Traits.svelte';
   import VehicleAttributes from '../parts/VehicleAttributes.svelte';
-  import type { Readable } from 'svelte/store';
   import type {
     RenderableClassicControl,
     VehicleFeatureSection,
-    VehicleSheetContext,
   } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ItemTable from 'src/components/item-list/v1/ItemTable.svelte';
@@ -36,10 +34,9 @@
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
+  import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<VehicleSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getVehicleSheetContext();
 
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
@@ -62,7 +59,7 @@
   };
 
   let noFeatures = $derived(
-    !$context.features.some(
+    !context.features.some(
       (section: VehicleFeatureSection) => section.items.length,
     ),
   );
@@ -88,7 +85,7 @@
         },
       );
 
-      if ($context.unlocked) {
+      if (context.unlocked) {
         result.push({
           component: ItemDeleteControl,
           props: ({ item }) => ({
@@ -97,7 +94,7 @@
         });
       }
 
-      if ($context.useActionsFeature) {
+      if (context.useActionsFeature) {
         result.push({
           component: ActionFilterOverrideControl,
           props: ({ item }) => ({
@@ -126,13 +123,13 @@
     />
   </div>
   <div class="main-panel flex-column small-gap">
-    {#if noFeatures && !$context.unlocked}
+    {#if noFeatures && !context.unlocked}
       <Notice>
         {localize('TIDY5E.EmptySection')}
       </Notice>
     {:else}
-      {#each $context.features as section (section.key)}
-        {#if $context.unlocked || section.items.length}
+      {#each context.features as section (section.key)}
+        {#if context.unlocked || section.items.length}
           <ItemTable key={section.key}>
             {#snippet header()}
               <ItemTableHeaderRow>
@@ -161,14 +158,14 @@
                     </ItemTableColumn>
                   {/each}
                 {/if}
-                {#if $context.editable && $context.useClassicControls}
+                {#if context.editable && context.useClassicControls}
                   <ItemTableColumn baseWidth={classicControlsColumnWidth} />
                 {/if}
               </ItemTableHeaderRow>
             {/snippet}
             {#snippet body()}
               {#each section.items as item (item.id)}
-                {@const ctx = $context.itemContext[item.id]}
+                {@const ctx = context.itemContext[item.id]}
                 <ItemTableRow
                   onMouseDown={(event) =>
                     FoundryAdapter.editOnMiddleClick(event, item)}
@@ -181,7 +178,7 @@
                 >
                   {#snippet children({ toggleSummary })}
                     <ItemTableCell primary={true}>
-                      <ItemUseButton disabled={!$context.editable} {item} />
+                      <ItemUseButton disabled={!context.editable} {item} />
                       {#if (ctx.activities?.length ?? 0) > 1}
                         <InlineToggleControl
                           entityId={item.id}
@@ -189,7 +186,7 @@
                         />
                       {/if}
                       <ItemName
-                        onToggle={() => toggleSummary($context.actor)}
+                        onToggle={() => toggleSummary(context.actor)}
                         cssClass="extra-small-gap"
                         {item}
                       >
@@ -237,12 +234,12 @@
                                 value={item.system.hp.value}
                                 valueField="system.hp.value"
                                 valueTitle={localize('DND5E.HitPointsCurrent')}
-                                valueDisabled={!$context.editable}
+                                valueDisabled={!context.editable}
                                 max={item.system.hp.max}
                                 maxField="system.hp.max"
                                 maxTitle={localize('DND5E.HitPointsMax')}
-                                maxDisabled={!$context.editable ||
-                                  $context.lockSensitiveFields}
+                                maxDisabled={!context.editable ||
+                                  context.lockSensitiveFields}
                                 Bar={HpBar}
                               />
                             </div>
@@ -271,7 +268,7 @@
                                 allowDeltaChanges={isNumber}
                                 selectOnFocus={true}
                                 {value}
-                                disabled={!$context.editable}
+                                disabled={!context.editable}
                               />
                             {:else}
                               {FoundryAdapter.getProperty(
@@ -288,7 +285,7 @@
                         {/if}
                       {/each}
                     {/if}
-                    {#if $context.editable && $context.useClassicControls}
+                    {#if context.editable && context.useClassicControls}
                       <ItemTableCell baseWidth={classicControlsColumnWidth}>
                         <ClassicControls
                           {controls}
@@ -306,9 +303,9 @@
                   />
                 {/if}
               {/each}
-              {#if $context.unlocked && section.dataset}
+              {#if context.unlocked && section.dataset}
                 <ItemTableFooter
-                  actor={$context.actor}
+                  actor={context.actor}
                   {section}
                   isItem={true}
                 />

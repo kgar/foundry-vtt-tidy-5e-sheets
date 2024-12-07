@@ -47,7 +47,7 @@ import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptions
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { AsyncMutex } from 'src/utils/mutex';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
-import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
+import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
@@ -72,7 +72,7 @@ export class Tidy5eNpcSheet
     SheetExpandedItemsCacheable,
     SearchFilterCacheable
 {
-  context = writable<NpcSheetContext>();
+  context = $state<NpcSheetContext>();
   stats = writable<SheetStats>({
     lastSubmissionTime: null,
   });
@@ -1131,7 +1131,7 @@ export class Tidy5eNpcSheet
     await this.setExpandedItemData();
     const data = await this.getData();
     SheetSections.accountForExternalSections(['features', 'spellbook'], data);
-    this.context.set(data);
+    this.context = data;
 
     if (force) {
       const { width, height } =

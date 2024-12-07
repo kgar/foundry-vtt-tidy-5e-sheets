@@ -11,8 +11,6 @@
   import ItemTableHeaderRow from '../item-list/v1/ItemTableHeaderRow.svelte';
   import type { Item5e } from 'src/types/item.types';
   import GridPaneFavoriteIcon from '../item-grid/GridPaneFavoriteIcon.svelte';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import { settingStore } from 'src/settings/settings.svelte';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import { declareLocation } from 'src/types/location-awareness.types';
@@ -20,6 +18,7 @@
   import ConcentrationOverlayIcon from './ConcentrationOverlayIcon.svelte';
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     section: SpellbookSection;
@@ -29,15 +28,13 @@
 
   let { section, spells, cssClass = null }: Props = $props();
 
-  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getSheetContext<CharacterSheetContext | NpcSheetContext>();
 
   let searchResultContext = getSearchResultsContext();
 
   let customCommands = $derived(
     ActorItemRuntime.getActorItemSectionCommands({
-      actor: $context.actor,
+      actor: context.actor,
       section,
     }),
   );
@@ -86,9 +83,9 @@
     {#snippet body()}
       <div class="spells">
         {#each spells as spell}
-          {@const ctx = $context.itemContext[spell.id]}
+          {@const ctx = context.itemContext[spell.id]}
           {@const spellImgUrl = FoundryAdapter.getSpellImageUrl(
-            $context,
+            context,
             spell,
           )}
           {@const hidden = !searchResultContext.show(spell.uuid)}
@@ -133,7 +130,7 @@
             </div>
           </a>
         {/each}
-        {#if $context.unlocked}
+        {#if context.unlocked}
           <div class="spells-footer">
             {#if section.canCreate}
               <button
@@ -143,7 +140,7 @@
                 onclick={(event) => {
                   event.preventDefault();
                   event.stopPropagation();
-                  FoundryAdapter.createItem(section.dataset, $context.actor);
+                  FoundryAdapter.createItem(section.dataset, context.actor);
                 }}
                 data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_CREATE_COMMAND}
                 tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
@@ -159,7 +156,7 @@
                   command.execute?.({
                     section,
                     event: ev,
-                    actor: $context.actor,
+                    actor: context.actor,
                   })}
                 title={localize(command.tooltip ?? '')}
                 tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}

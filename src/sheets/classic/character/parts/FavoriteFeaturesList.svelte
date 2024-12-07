@@ -1,9 +1,6 @@
 <script lang="ts">
   import type { Item5e } from 'src/types/item.types';
-  import type {
-    CharacterFeatureSection,
-    CharacterSheetContext,
-  } from 'src/types/types';
+  import type { CharacterFeatureSection } from 'src/types/types';
   import ItemTable from '../../../../components/item-list/v1/ItemTable.svelte';
   import ItemTableHeaderRow from '../../../../components/item-list/v1/ItemTableHeaderRow.svelte';
   import ItemTableColumn from '../../../../components/item-list/v1/ItemTableColumn.svelte';
@@ -16,17 +13,16 @@
   import ItemUseButton from '../../../../components/item-list/ItemUseButton.svelte';
   import ItemUses from '../../../../components/item-list/ItemUses.svelte';
   import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import { ItemUtils } from 'src/utils/ItemUtils';
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
+  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getCharacterSheetContext();
+
   interface Props {
     items?: Item5e[];
     section: CharacterFeatureSection;
@@ -59,7 +55,7 @@
   {/snippet}
   {#snippet body()}
     {#each items as item (item.id)}
-      {@const ctx = $context.itemContext[item.id]}
+      {@const ctx = context.itemContext[item.id]}
       <ItemTableRow
         {item}
         onMouseDown={(event) => FoundryAdapter.editOnMiddleClick(event, item)}
@@ -72,12 +68,12 @@
       >
         {#snippet children({ toggleSummary })}
           <ItemTableCell primary={true}>
-            <ItemUseButton disabled={!$context.editable} {item} />
+            <ItemUseButton disabled={!context.editable} {item} />
             {#if (ctx.activities?.length ?? 0) > 1}
               <InlineToggleControl entityId={item.id} {inlineToggleService} />
             {/if}
             <ItemName
-              onToggle={() => toggleSummary($context.actor)}
+              onToggle={() => toggleSummary(context.actor)}
               hasChildren={false}
               {item}
             >

@@ -1,11 +1,9 @@
 <script lang="ts">
   import SkillsList from 'src/sheets/classic/actor/SkillsList.svelte';
   import Traits from '../../actor/traits/Traits.svelte';
-  import { getContext, setContext } from 'svelte';
-  import { writable, type Readable } from 'svelte/store';
+  import { getContext } from 'svelte';
   import type {
     ItemLayoutMode,
-    NpcSheetContext,
     RenderableClassicControl,
   } from 'src/types/types';
   import Currency from '../../actor/Currency.svelte';
@@ -62,29 +60,28 @@
     createSearchResultsState,
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
+  import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<NpcSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getNpcSheetContext();
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
 
-  let noSpellLevels = $derived(!$context.spellbook.length);
+  let noSpellLevels = $derived(!context.spellbook.length);
 
   let utilityBarCommands = $derived(
-    $context.utilities[tabId]?.utilityToolbarCommands ?? [],
+    context.utilities[tabId]?.utilityToolbarCommands ?? [],
   );
 
   let features = $derived(
     SheetSections.configureFeatures(
-      $context.features,
-      $context,
+      context.features,
+      context,
       tabId,
-      SheetPreferencesService.getByType($context.actor.type),
-      TidyFlags.sectionConfig.get($context.actor)?.[tabId],
+      SheetPreferencesService.getByType(context.actor.type),
+      TidyFlags.sectionConfig.get(context.actor)?.[tabId],
     ),
   );
 
@@ -96,9 +93,9 @@
   let spellbook = $derived(
     !$settingStore.showSpellbookTabNpc
       ? SheetSections.configureSpellbook(
-          $context.actor,
+          context.actor,
           tabId,
-          $context.spellbook,
+          context.spellbook,
         )
       : [],
   );
@@ -106,7 +103,7 @@
   $effect(() => {
     searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
-      itemContext: $context.itemContext,
+      itemContext: context.itemContext,
       sections: [...features, ...spellbook],
       tabId: tabId,
     });
@@ -114,15 +111,15 @@
 
   function toggleLayout() {
     if (layoutMode === 'grid') {
-      TidyFlags.spellbookGrid.unset($context.actor);
+      TidyFlags.spellbookGrid.unset(context.actor);
       return;
     }
 
-    TidyFlags.spellbookGrid.set($context.actor);
+    TidyFlags.spellbookGrid.set(context.actor);
   }
 
   let layoutMode: ItemLayoutMode = $derived(
-    TidyFlags.spellbookGrid.get($context.actor) ? 'grid' : 'list',
+    TidyFlags.spellbookGrid.get(context.actor) ? 'grid' : 'list',
   );
 
   let showNoSpellsView = $state(false);
@@ -139,7 +136,7 @@
         },
       ];
 
-      if ($context.unlocked) {
+      if (context.unlocked) {
         result.push({
           component: ItemDeleteControl,
           props: ({ item }) => ({ item }),
@@ -147,7 +144,7 @@
         });
       }
 
-      if ($context.useActionsFeature) {
+      if (context.useActionsFeature) {
         result.push({
           component: ActionFilterOverrideControl,
           props: ({ item }) => ({ item }),
@@ -169,8 +166,8 @@
   <PinnedFilterToggles
     filterGroupName={tabId}
     filters={ItemFilterRuntime.getPinnedFiltersForTab(
-      $context.filterPins,
-      $context.filterData,
+      context.filterPins,
+      context.filterData,
       tabId,
     )}
   />
@@ -189,9 +186,9 @@
 <section class="npc-abilities-content" data-tidy-track-scroll-y>
   <div class="side-panel">
     <SkillsList
-      actor={$context.actor}
+      actor={context.actor}
       toggleable={!$settingStore.alwaysShowNpcSkills}
-      expanded={!!TidyFlags.skillsExpanded.get($context.actor)}
+      expanded={!!TidyFlags.skillsExpanded.get(context.actor)}
       toggleField={TidyFlags.skillsExpanded.prop}
     />
     {#if !$settingStore.moveTraitsBelowNpcResources}
@@ -203,8 +200,8 @@
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NPC_ABILITIES_CONTAINER}
   >
     <ExpandableContainer
-      expanded={$context.showLegendaryToolbar}
-      class="legendary-wrapper {$context.showLegendaryToolbar
+      expanded={context.showLegendaryToolbar}
+      class="legendary-wrapper {context.showLegendaryToolbar
         ? 'legendary-expanded'
         : ''}"
     >
@@ -219,7 +216,7 @@
           section.items,
           searchResults.uuids,
         )}
-        {#if $context.unlocked || visibleItemCount > 0}
+        {#if context.unlocked || visibleItemCount > 0}
           <ItemTable
             key={section.key}
             data-custom-section={section.custom ? true : null}
@@ -242,14 +239,14 @@
                     {localize('DND5E.QuantityAbbr')}
                   </ItemTableColumn>
                 {/if}
-                {#if $context.editable && $context.useClassicControls}
+                {#if context.editable && context.useClassicControls}
                   <ItemTableColumn baseWidth={classicControlsColumnWidth} />
                 {/if}
               </ItemTableHeaderRow>
             {/snippet}
             {#snippet body()}
               {#each section.items as item}
-                {@const ctx = $context.itemContext[item.id]}
+                {@const ctx = context.itemContext[item.id]}
                 <ItemTableRow
                   onMouseDown={(event) =>
                     FoundryAdapter.editOnMiddleClick(event, item)}
@@ -263,7 +260,7 @@
                 >
                   {#snippet children({ toggleSummary })}
                     <ItemTableCell primary={true}>
-                      <ItemUseButton disabled={!$context.editable} {item} />
+                      <ItemUseButton disabled={!context.editable} {item} />
                       {#if ('containerContents' in ctx && !!ctx.containerContents) || (ctx.activities?.length ?? 0) > 1}
                         <InlineToggleControl
                           entityId={item.id}
@@ -271,7 +268,7 @@
                         />
                       {/if}
                       <ItemName
-                        onToggle={() => toggleSummary($context.actor)}
+                        onToggle={() => toggleSummary(context.actor)}
                         cssClass="extra-small-gap"
                         {item}
                       >
@@ -291,8 +288,8 @@
                         <LevelUpDropdown
                           availableLevels={ctx?.availableLevels}
                           {item}
-                          disabled={!$context.editable ||
-                            $context.lockLevelSelector}
+                          disabled={!context.editable ||
+                            context.lockLevelSelector}
                         />
                       {/if}
                     </ItemTableCell>
@@ -324,15 +321,15 @@
                           field="system.quantity"
                           value={item.system.quantity}
                           selectOnFocus={true}
-                          disabled={!$context.editable ||
-                            $context.lockItemQuantity}
+                          disabled={!context.editable ||
+                            context.lockItemQuantity}
                           placeholder="0"
                           allowDeltaChanges={true}
                           class="text-align-center"
                         />
                       </ItemTableCell>
                     {/if}
-                    {#if $context.editable && $context.useClassicControls}
+                    {#if context.editable && context.useClassicControls}
                       <ItemTableCell baseWidth={classicControlsColumnWidth}>
                         <ClassicControls {controls} params={{ item }} />
                       </ItemTableCell>
@@ -343,11 +340,11 @@
                   <InlineContainerView
                     container={item}
                     containerContents={ctx.containerContents}
-                    editable={$context.editable}
+                    editable={context.editable}
                     {inlineToggleService}
-                    lockItemQuantity={$context.lockItemQuantity}
-                    sheetDocument={$context.actor}
-                    unlocked={$context.unlocked}
+                    lockItemQuantity={context.lockItemQuantity}
+                    sheetDocument={context.actor}
+                    unlocked={context.unlocked}
                   />
                 {:else if (ctx.activities?.length ?? 0) > 1}
                   <InlineActivitiesList
@@ -357,9 +354,9 @@
                   />
                 {/if}
               {/each}
-              {#if $context.unlocked && section.dataset}
+              {#if context.unlocked && section.dataset}
                 <ItemTableFooter
-                  actor={$context.actor}
+                  actor={context.actor}
                   {section}
                   isItem={true}
                 />
@@ -400,8 +397,8 @@
               title="TIDY5E.Utilities.ConfigureSections"
               onclick={() =>
                 new DocumentTabSectionConfigApplication({
-                  document: $context.actor,
-                  sections: $context.spellbook,
+                  document: context.actor,
+                  sections: context.spellbook,
                   tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
                   tabTitle: NpcSheetRuntime.getTabTitle(
                     CONSTANTS.TAB_NPC_SPELLBOOK,
@@ -417,7 +414,7 @@
         class:hidden={noSpellLevels && !showNoSpellsView}
       >
         {#if noSpellLevels}
-          <NoSpells cssClass="flex-1" editable={$context.unlocked} />
+          <NoSpells cssClass="flex-1" editable={context.unlocked} />
         {:else}
           <div class="flex-1 small-padding-bottom flex-column small-gap">
             {#each spellbook as section (section.key)}
@@ -451,7 +448,7 @@
   </div>
 </section>
 <TabFooter mode="vertical" cssClass="abilities-footer">
-  <Currency document={$context.actor} />
+  <Currency document={context.actor} />
   {#if $settingStore.useNpcEncumbranceBar}
     <EncumbranceBar />
   {/if}

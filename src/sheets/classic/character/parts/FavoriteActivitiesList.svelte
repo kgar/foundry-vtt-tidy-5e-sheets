@@ -1,12 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import {
-    type ActivitySection,
-    type CharacterSheetContext,
-  } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { type ActivitySection } from 'src/types/types';
   import type { Activity5e } from 'src/foundry/dnd5e.types';
   import { Activities } from 'src/features/activities/activities';
   import TidyTable from 'src/components/table/TidyTable.svelte';
@@ -15,10 +10,9 @@
   import TidyTableRow from 'src/components/table/TidyTableRow.svelte';
   import TidyTableCell from 'src/components/table/TidyTableCell.svelte';
   import ActivityUses from 'src/components/item-list/ActivityUses.svelte';
+  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getCharacterSheetContext();
 
   interface Props {
     section: ActivitySection;
@@ -91,7 +85,7 @@
         <TidyTableCell primary={true}>
           <a
             class="item-table-image-button"
-            onclick={(event) => $context.editable && activity.use({ event })}
+            onclick={(event) => context.editable && activity.use({ event })}
           >
             <img src={activity.img} />
             <i class="fa fa-dice-d20 roll-indicator"></i>
@@ -108,9 +102,9 @@
         <TidyTableCell>
           <a
             class="activity-item-link truncate align-self-stretch align-content-center flex-1"
-            class:highlight-on-hover={$context.editable}
+            class:highlight-on-hover={context.editable}
             onclick={(ev) =>
-              $context.editable && activity.item.sheet.render(true)}
+              context.editable && activity.item.sheet.render(true)}
             title={activity.item.name}
           >
             {activity.item.name}

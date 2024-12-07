@@ -1,29 +1,24 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
   import ConfigurableSource from '../../shared/ConfigurableSource.svelte';
-  import { CONSTANTS } from 'src/constants';
-  import type { Readable } from 'svelte/store';
-  import type { ContainerSheetHightouchContext } from 'src/types/item.types';
   import SheetHeaderEditModeToggle from 'src/sheets/classic/shared/SheetHeaderEditModeToggle.svelte';
+  import { getContainerSheetHightouchContext } from 'src/sheets/sheet-context.svelte';
 
-  const context = getContext<Readable<ContainerSheetHightouchContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  const context = getContainerSheetHightouchContext();
 
   let sourceText = $derived(
-    $context.editable
-      ? $context.system.source?.label ||
+    context.editable
+      ? context.system.source?.label ||
           game.i18n.localize('DND5E.SOURCE.FIELDS.source.label')
-      : $context.system.source?.label,
+      : context.system.source?.label,
   );
 </script>
 
 <SheetHeaderEditModeToggle class="header-control" />
 
 <ConfigurableSource
-  document={$context.document}
+  document={context.document}
   keyPath="system.source"
   {sourceText}
-  unlocked={$context.unlocked}
+  unlocked={context.unlocked}
   buttonClass="header-control unbutton"
 />

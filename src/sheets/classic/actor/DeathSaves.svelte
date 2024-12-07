@@ -1,16 +1,13 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getContext } from 'svelte';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
-  import type { Readable } from 'svelte/store';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { CONSTANTS } from 'src/constants';
   import { settingStore } from 'src/settings/settings.svelte';
   import type { MouseEventHandler } from 'svelte/elements';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getSheetContext<CharacterSheetContext | NpcSheetContext>();
 
   interface Props {
     successes: number;
@@ -33,11 +30,11 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="death-saves" class:rounded={$context.useRoundedPortraitStyle}>
+<div class="death-saves" class:rounded={context.useRoundedPortraitStyle}>
   <div class="death-save-counters" class:show-backdrop={!hasHpOverlay}>
     <i class="fas fa-check"></i>
     <TextInput
-      document={$context.actor}
+      document={context.actor}
       field={successesField}
       class="death-save-result"
       selectOnFocus={true}
@@ -46,7 +43,7 @@
       value={successes}
       maxlength={1}
       title={localize('DND5E.DeathSaveSuccesses')}
-      disabled={!$context.editable}
+      disabled={!context.editable}
       attributes={{
         ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.DEATH_SAVE_SUCCESSES,
       }}
@@ -61,7 +58,7 @@
       <i class="fas fa-skull"></i>
     </button>
     <TextInput
-      document={$context.actor}
+      document={context.actor}
       field={failuresField}
       class="death-save-result"
       selectOnFocus={true}
@@ -69,7 +66,7 @@
       placeholder="0"
       value={failures}
       maxlength={1}
-      disabled={!$context.editable}
+      disabled={!context.editable}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DEATH_SAVE_FAILURES}
       title={localize('DND5E.DeathSaveFailures')}
       attributes={{

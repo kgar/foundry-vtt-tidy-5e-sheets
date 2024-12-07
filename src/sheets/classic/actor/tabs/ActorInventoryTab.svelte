@@ -8,8 +8,6 @@
   } from 'src/types/types';
   import InventoryList from '../InventoryList.svelte';
   import InventoryGrid from '../InventoryGrid.svelte';
-  import { getContext, setContext } from 'svelte';
-  import { writable, type Readable } from 'svelte/store';
   import Currency from 'src/sheets/classic/actor/Currency.svelte';
   import Notice from '../../../../components/notice/Notice.svelte';
   import EncumbranceBar from 'src/sheets/classic/actor/EncumbranceBar.svelte';
@@ -33,6 +31,7 @@
     createSearchResultsState,
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     tabId: string;
@@ -40,16 +39,14 @@
 
   let { tabId }: Props = $props();
 
-  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getSheetContext<CharacterSheetContext | NpcSheetContext>();
 
   let inventory = $derived(
     SheetSections.configureInventory(
-      $context.inventory,
+      context.inventory,
       tabId,
-      SheetPreferencesService.getByType($context.actor.type),
-      TidyFlags.sectionConfig.get($context.actor)?.[tabId],
+      SheetPreferencesService.getByType(context.actor.type),
+      TidyFlags.sectionConfig.get(context.actor)?.[tabId],
     ),
   );
 
@@ -61,7 +58,7 @@
   $effect(() => {
     searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
-      itemContext: $context.itemContext,
+      itemContext: context.itemContext,
       sections: inventory,
       tabId: tabId,
     });
@@ -70,7 +67,7 @@
   const localize = FoundryAdapter.localize;
 
   let layoutMode: ItemLayoutMode = $derived(
-    TidyFlags.inventoryGrid.get($context.actor) ? 'grid' : 'list',
+    TidyFlags.inventoryGrid.get(context.actor) ? 'grid' : 'list',
   );
 
   let noItems = $derived(
@@ -79,7 +76,7 @@
   );
 
   let utilityBarCommands = $derived(
-    $context.utilities[tabId]?.utilityToolbarCommands ?? [],
+    context.utilities[tabId]?.utilityToolbarCommands ?? [],
   );
 </script>
 
@@ -88,8 +85,8 @@
   <PinnedFilterToggles
     filterGroupName={tabId}
     filters={ItemFilterRuntime.getPinnedFiltersForTab(
-      $context.filterPins,
-      $context.filterData,
+      context.filterPins,
+      context.filterData,
       tabId,
     )}
   />
@@ -109,11 +106,11 @@
   class="tidy-inventory-container scroll-container flex-column small-gap"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEMS_CONTAINER}
 >
-  {#if noItems && !$context.unlocked}
+  {#if noItems && !context.unlocked}
     <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {:else}
     {@const containerPanelExpanded =
-      $context.showContainerPanel && !!$context.containerPanelItems.length}
+      context.showContainerPanel && !!context.containerPanelItems.length}
     <ExpandableContainer
       expanded={containerPanelExpanded}
       class="container-panel-wrapper {containerPanelExpanded
@@ -121,7 +118,7 @@
         : ''}"
     >
       <ContainerPanel
-        containerPanelItems={$context.containerPanelItems}
+        containerPanelItems={context.containerPanelItems}
         {searchCriteria}
       />
     </ExpandableContainer>
@@ -131,7 +128,7 @@
         searchResults.uuids,
       )}
       {#if section.show}
-        {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemCount > 0}
+        {#if (searchCriteria.trim() === '' && context.unlocked) || visibleItemCount > 0}
           {#if layoutMode === 'list'}
             <InventoryList
               primaryColumnName="{localize(section.label)} ({visibleItemCount})"
@@ -150,7 +147,7 @@
 <TabFooter mode="vertical">
   <div class="attunement-and-currency">
     <AttunementTracker class="align-self-center" />
-    <Currency document={$context.actor} />
+    <Currency document={context.actor} />
   </div>
 
   {#if $settingStore.useCharacterEncumbranceBar}

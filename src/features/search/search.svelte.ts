@@ -13,8 +13,8 @@ export function createSearchResultsState() {
     set uuids(value: MaybeSearchResults) {
       uuids = value;
     },
-    show(id: string) {
-      return !uuids || uuids.has(id);
+    show(uuid: string) {
+      return !uuids || uuids.has(uuid);
     },
   };
 }

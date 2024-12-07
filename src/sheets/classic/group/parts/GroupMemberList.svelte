@@ -2,16 +2,14 @@
   import { CONSTANTS } from 'src/constants';
   import GroupMemberListItem from './GroupMemberListItem.svelte';
   import { getContext } from 'svelte';
-  import type {
-    GroupMemberSection,
-    GroupSheetClassicContext,
-  } from 'src/types/group.types';
+  import type { GroupMemberSection } from 'src/types/group.types';
   import type { Readable } from 'svelte/store';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TidyTable from 'src/components/table/TidyTable.svelte';
   import TidyTableHeaderRow from 'src/components/table/TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from 'src/components/table/TidyTableHeaderCell.svelte';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
+  import { getGroupSheetClassicContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     section: GroupMemberSection;
@@ -23,9 +21,7 @@
     CONSTANTS.SVELTE_CONTEXT.MEMBER_IDS_TO_SHOW,
   );
 
-  const context = getContext<Readable<GroupSheetClassicContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  const context = getGroupSheetClassicContext();
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -44,7 +40,7 @@
         {#if $memberActorIdsToShow === undefined || $memberActorIdsToShow.has(member.id)}
           <GroupMemberListItem
             {member}
-            ctx={$context.memberContext[member.id]}
+            ctx={context.memberContext[member.id]}
           />
 
           {#if section.members.length > 1 && index !== section.members.length - 1}

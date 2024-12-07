@@ -22,7 +22,6 @@
   import InlineFavoriteIcon from '../item-list/InlineFavoriteIcon.svelte';
   import ItemFavoriteControl from '../item-list/controls/ItemFavoriteControl.svelte';
   import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import { settingStore } from 'src/settings/settings.svelte';
   import ActionFilterOverrideControl from '../item-list/controls/ActionFilterOverrideControl.svelte';
   import { SpellSchool } from 'src/features/spell-school/SpellSchool';
@@ -38,10 +37,9 @@
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
+    import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getSheetContext<CharacterSheetContext | NpcSheetContext>();
 
   interface Props {
     section: SpellbookSection;
@@ -105,7 +103,7 @@
         }),
       });
 
-      if ($context.unlocked) {
+      if (context.unlocked) {
         result.push({
           // svelte 5 - snippet?
           component: DeleteOrOpenActivity,
@@ -115,7 +113,7 @@
         });
       }
 
-      if ($context.useActionsFeature) {
+      if (context.useActionsFeature) {
         result.push({
           component: ActionFilterOverrideControl,
           props: ({ item }) => ({
@@ -180,15 +178,15 @@
         >
           {localize('DND5E.Usage')}
         </ItemTableColumn>
-        {#if $context.editable && $context.useClassicControls}
+        {#if context.editable && context.useClassicControls}
           <ItemTableColumn baseWidth={classicControlsColumnWidth} />
         {/if}
       </ItemTableHeaderRow>
     {/snippet}
     {#snippet body()}
       {#each spells as spell (spell.id)}
-        {@const ctx = $context.itemContext[spell.id]}
-        {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($context, spell)}
+        {@const ctx = context.itemContext[spell.id]}
+        {@const spellImgUrl = FoundryAdapter.getSpellImageUrl(context, spell)}
         <ItemTableRow
           item={spell}
           onMouseDown={(event) =>
@@ -203,7 +201,7 @@
           {#snippet children({ toggleSummary })}
             <ItemTableCell primary={true}>
               <ItemUseButton
-                disabled={!$context.editable}
+                disabled={!context.editable}
                 item={spell}
                 imgUrlOverride={spellImgUrl}
                 showDiceIconOnHover={!ctx.concentration}
@@ -219,7 +217,7 @@
                 />
               {/if}
               <ItemName
-                onToggle={() => toggleSummary($context.actor)}
+                onToggle={() => toggleSummary(context.actor)}
                 item={spell}
               >
                 <span
@@ -248,7 +246,7 @@
             >
               <SpellComponents
                 {spell}
-                spellComponentLabels={$context.spellComponentLabels}
+                spellComponentLabels={context.spellComponentLabels}
               />
             </ItemTableCell>
             {#if includeSchool}
@@ -293,7 +291,7 @@
             >
               {spell.labels.activation}
             </ItemTableCell>
-            {#if $context.editable && $context.useClassicControls}
+            {#if context.editable && context.useClassicControls}
               <ItemTableCell baseWidth={classicControlsColumnWidth}>
                 <ClassicControls
                   {controls}
@@ -311,9 +309,9 @@
           />
         {/if}
       {/each}
-      {#if $context.unlocked}
+      {#if context.unlocked}
         <ItemTableFooter
-          actor={$context.actor}
+          actor={context.actor}
           {section}
           canCreate={section.canCreate}
           isItem={true}

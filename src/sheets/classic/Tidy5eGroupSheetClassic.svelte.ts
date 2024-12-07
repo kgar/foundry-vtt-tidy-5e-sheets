@@ -123,7 +123,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     const component = mount(GroupSheet, {
       target: node,
       context: new Map<any, any>([
-        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._store],
+        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
         [
           CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
           this.#inlineToggleService,
@@ -144,7 +144,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       ]),
     });
 
-    initTidy5eContextMenu(this, $(this.element));
+    initTidy5eContextMenu(this, globalThis.$(this.element));
 
     return component;
   }
@@ -155,7 +155,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       target: windowHeader,
       anchor: windowHeader.querySelector('.window-title'),
       context: new Map<string, any>([
-        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._store],
+        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
       ]),
       props: {
         class: 'header-control',

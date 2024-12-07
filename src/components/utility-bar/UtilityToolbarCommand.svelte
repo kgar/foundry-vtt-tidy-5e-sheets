@@ -1,10 +1,9 @@
 <script lang="ts">
   import { isNil } from 'src/utils/data';
-  import { getContext } from 'svelte';
   import type { UtilityToolbarCommandExecuteEvent } from './types';
   import { settingStore } from 'src/settings/settings.svelte';
-  import type { Readable } from 'svelte/store';
   import { CONSTANTS } from 'src/constants';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     title?: string | undefined;
@@ -22,16 +21,14 @@
     onExecute,
   }: Props = $props();
 
-  const context = getContext<Readable<unknown>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  const context = getSheetContext<unknown>();
 </script>
 
 <button
   type="button"
   class="inline-icon-button"
   class:hidden={!visible}
-  onclick={(ev) => onExecute?.({ event: ev, context: $context })}
+  onclick={(ev) => onExecute?.({ event: ev, context: context })}
   {title}
   tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.UTILITY_TOOLBAR_COMMAND}

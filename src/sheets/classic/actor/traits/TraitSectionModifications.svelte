@@ -1,12 +1,10 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     ActorSheetContextV1,
     DamageModificationContextEntry,
   } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
 
   interface Props {
     modifications: DamageModificationContextEntry[];
@@ -14,9 +12,7 @@
 
   let { modifications }: Props = $props();
 
-  let context = getContext<Readable<ActorSheetContextV1>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getSheetContext<ActorSheetContextV1>();
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -28,7 +24,7 @@
     >
       {#each modification.icons ?? [] as icon}
         {@const propertyLabel =
-          $context.config.itemProperties[icon]?.label ?? ''}
+          context.config.itemProperties[icon]?.label ?? ''}
         <i
           class="damage-modification-icon {icon}"
           title={localize('DND5E.DamagePhysicalBypassesShort', {

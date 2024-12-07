@@ -1,23 +1,18 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
-  import type { ItemSheetContext } from 'src/types/item.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { CONSTANTS } from 'src/constants';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { settingStore } from 'src/settings/settings.svelte';
   import { Activities } from 'src/features/activities/activities';
+  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<ItemSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getItemSheetContext();
 
-  let appId = $derived($context.document.id);
+  let appId = $derived(context.document.id);
 
   const localize = FoundryAdapter.localize;
 
   function handleDragStart(ev: DragEvent, activityId: string) {
-    const activity = $context.item.system.activities?.get(activityId);
+    const activity = context.item.system.activities?.get(activityId);
 
     ev.dataTransfer?.setData(
       'text/plain',
@@ -28,11 +23,11 @@
 
 <section class="flex-1 flex-column extra-small-gap">
   <header class="header">
-    {#if $context.editable}
+    {#if context.editable}
       <button
         type="button"
         class="add-activity-button"
-        onclick={() => $context.item.sheet.addActivity()}
+        onclick={() => context.item.sheet.addActivity()}
         tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
         <i class="fas fa-plus"></i>
@@ -41,7 +36,7 @@
     {/if}
   </header>
   <div class="scroll-container activities">
-    {#each $context.activities as activity (activity.id)}
+    {#each context.activities as activity (activity.id)}
       <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div
         class="activity card"
@@ -67,19 +62,19 @@
           type="button"
           class="transparent-button highlight-on-hover name"
           onclick={() =>
-            $context.system.activities?.get(activity.id).sheet.render(true)}
-          disabled={!$context.editable}
+            context.system.activities?.get(activity.id).sheet.render(true)}
+          disabled={!context.editable}
           tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
         >
           {activity.name}
         </button>
-        {#if $context.editable}
+        {#if context.editable}
           <button
             type="button"
             class="inline-icon-button"
             title={localize('DND5E.ACTIVITY.Action.Delete')}
             onclick={() =>
-              $context.system.activities?.get(activity.id)?.deleteDialog()}
+              context.system.activities?.get(activity.id)?.deleteDialog()}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-trash"></i>

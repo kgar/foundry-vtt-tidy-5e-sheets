@@ -48,7 +48,7 @@ import { SheetPreferencesService } from 'src/features/user-preferences/SheetPref
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
 import { AsyncMutex } from 'src/utils/mutex';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
-import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
+import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet.svelte';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -65,7 +65,7 @@ export class Tidy5eVehicleSheet
     SheetExpandedItemsCacheable,
     SearchFilterCacheable
 {
-  context = writable<VehicleSheetContext>();
+  context = $state<VehicleSheetContext>();
   stats = writable<SheetStats>({
     lastSubmissionTime: null,
   });
@@ -145,7 +145,7 @@ export class Tidy5eVehicleSheet
     first = false;
 
     const node = html.get(0);
-    
+
     this.component = mount(VehicleSheet, {
       target: node,
       context: new Map<any, any>([
@@ -680,7 +680,7 @@ export class Tidy5eVehicleSheet
     await this.setExpandedItemData();
     const data = await this.getData();
     SheetSections.accountForExternalSections(['features'], data);
-    this.context.set(data);
+    this.context = data;
 
     if (force) {
       const { width, height } =

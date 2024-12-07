@@ -13,20 +13,17 @@
   import ItemTableCell from '../../../components/item-list/v1/ItemTableCell.svelte';
   import ItemControl from '../../../components/item-list/controls/ItemControl.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import Notice from 'src/components/notice/Notice.svelte';
   import { declareLocation } from 'src/types/location-awareness.types';
   import ClassicControls from '../shared/ClassicControls.svelte';
   import ActorEffectToggleControl from 'src/components/item-list/controls/ActorEffectToggleControl.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<ActorSheetContextV1>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getSheetContext<ActorSheetContextV1>();
 
   const localize = FoundryAdapter.localize;
 
-  let effectSections = $derived(Object.values<any>($context.effects));
+  let effectSections = $derived(Object.values<any>(context.effects));
 
   let noEffects = $derived(
     effectSections.some((section: any) => section.effects.length > 0) === false,
@@ -55,7 +52,7 @@
         },
       );
 
-      if ($context.unlocked) {
+      if (context.unlocked) {
         result.push({
           component: ItemControl,
           props: ({ effect }) => ({
@@ -78,16 +75,16 @@
 </script>
 
 <div class="scroll-container flex-column small-gap">
-  {#if !$context.allowEffectsManagement && $context.unlocked}
+  {#if !context.allowEffectsManagement && context.unlocked}
     <Notice>{localize('TIDY5E.GMOnlyEdit')}</Notice>
   {/if}
 
-  {#if noEffects && !$context.unlocked && $context.allowEffectsManagement}
+  {#if noEffects && !context.unlocked && context.allowEffectsManagement}
     <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {:else}
     {#each effectSections as section}
       {#if !section.hidden}
-        {#if ($context.unlocked && $context.allowEffectsManagement) || section.effects.length > 0}
+        {#if (context.unlocked && context.allowEffectsManagement) || section.effects.length > 0}
           <ItemTable key={section.label}>
             {#snippet header()}
               <ItemTableHeaderRow>
@@ -100,7 +97,7 @@
                 <ItemTableColumn baseWidth="7.5rem">
                   {localize('DND5E.Duration')}
                 </ItemTableColumn>
-                {#if $context.editable && $context.useClassicControls && $context.allowEffectsManagement}
+                {#if context.editable && context.useClassicControls && context.allowEffectsManagement}
                   <ItemTableColumn baseWidth={classicControlsColumnWidth} />
                 {/if}
               </ItemTableHeaderRow>
@@ -114,7 +111,7 @@
                     type: CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS,
                     uuid: effect.uuid,
                   }}
-                  {effect}
+                  activeEffect={effect}
                 >
                   <ItemTableCell
                     primary={true}
@@ -140,19 +137,19 @@
                       >{effect.duration.label ?? ''}</span
                     >
                   </ItemTableCell>
-                  {#if $context.editable && $context.useClassicControls && $context.allowEffectsManagement}
+                  {#if context.editable && context.useClassicControls && context.allowEffectsManagement}
                     <ItemTableCell baseWidth={classicControlsColumnWidth}>
                       <ClassicControls {controls} params={{ effect: effect }} />
                     </ItemTableCell>
                   {/if}
                 </ItemTableRow>
               {/each}
-              {#if $context.unlocked && $context.allowEffectsManagement}
+              {#if context.unlocked && context.allowEffectsManagement}
                 <ItemTableFooter
-                  actor={$context.actor}
+                  actor={context.actor}
                   {section}
                   create={() =>
-                    FoundryAdapter.addEffect(section.type, $context.actor)}
+                    FoundryAdapter.addEffect(section.type, context.actor)}
                   isItem={false}
                 />
               {/if}

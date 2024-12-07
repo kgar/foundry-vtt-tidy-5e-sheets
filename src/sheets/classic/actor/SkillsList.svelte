@@ -3,13 +3,12 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { Actor5e, DropdownListOption } from 'src/types/types';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { formatAsModifier } from 'src/utils/formatting';
   import { warn } from 'src/utils/logging';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
 
   interface Props {
     toggleable?: boolean;
@@ -25,9 +24,7 @@
     toggleField = null,
   }: Props = $props();
 
-  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getSheetContext<CharacterSheetContext | NpcSheetContext>();
 
   type SkillRef = {
     key: string;
@@ -37,7 +34,7 @@
   };
 
   let skillRefs: SkillRef[] = $derived(
-    Array.from(Object.entries($context.config.skills)).reduce<SkillRef[]>(
+    Array.from(Object.entries(context.config.skills)).reduce<SkillRef[]>(
       (prev, [key, configSkill]: [string, any]) => {
         const skill = getSkill(key);
 
@@ -66,8 +63,8 @@
   const localize = FoundryAdapter.localize;
 
   function getSkill(key: string): any | null {
-    if (key in $context.actor.system.skills) {
-      return $context.skills[key];
+    if (key in context.actor.system.skills) {
+      return context.skills[key];
     }
 
     return null;
@@ -90,7 +87,7 @@
       skill: any | null;
     },
   ): void {
-    $context.actor.update({
+    context.actor.update({
       system: {
         skills: {
           [skillRef.key]: {
@@ -103,7 +100,7 @@
   let showAllSkills = $derived(!toggleable || expanded);
 
   let abilities = $derived(
-    FoundryAdapter.getAbilitiesAsDropdownOptions($context.abilities),
+    FoundryAdapter.getAbilitiesAsDropdownOptions(context.abilities),
   );
 </script>
 
@@ -124,10 +121,10 @@
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_CONTAINER}
           data-key={skillRef.key}
         >
-          {#if $context.editable && $context.unlocked}
+          {#if context.editable && context.unlocked}
             {@const activeEffectApplied =
               ActiveEffectsHelper.isActiveEffectAppliedToField(
-                $context.actor,
+                context.actor,
                 `system.skills.${skillRef.key}.value`,
               )}
             <button
@@ -135,7 +132,7 @@
               class="configure-proficiency inline-icon-button"
               onclick={() =>
                 FoundryAdapter.renderSkillToolConfig(
-                  $context.actor,
+                  context.actor,
                   'skills',
                   skillRef.key,
                 )}
@@ -151,14 +148,14 @@
               class="skill-proficiency-toggle inline-icon-button"
               onclick={() =>
                 FoundryAdapter.cycleProficiency(
-                  $context.actor,
+                  context.actor,
                   skillRef.key,
                   skillRef.skill?.value,
                   'skills',
                 )}
               oncontextmenu={() =>
                 FoundryAdapter.cycleProficiency(
-                  $context.actor,
+                  context.actor,
                   skillRef.key,
                   skillRef.skill?.value,
                   'skills',
@@ -178,12 +175,12 @@
               >{@html skillRef.skill.icon}</span
             >
           {/if}
-          {#if $context.editable}
+          {#if context.editable}
             <button
               type="button"
               class="tidy5e-skill-name transparent-button rollable"
               onclick={(event) =>
-                $context.actor.rollSkill({ skill: skillRef.key, event })}
+                context.actor.rollSkill({ skill: skillRef.key, event })}
               data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_ROLLER}
               tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
               title={skillRef.skill.label}
@@ -195,7 +192,7 @@
               {skillRef.skill.label}
             </span>
           {/if}
-          {#if $context.unlocked && $context.editable}
+          {#if context.unlocked && context.editable}
             <InlineTextDropdownList
               options={abilities}
               selected={{
@@ -203,7 +200,7 @@
                 value: skillRef.skill.abbreviation,
               }}
               buttonClass="skill-ability"
-              title={$context.abilities?.[skillRef.ability]?.label}
+              title={context.abilities?.[skillRef.ability]?.label}
               onOptionClicked={(option) =>
                 onSkillAbilityChange(option, skillRef)}
             />

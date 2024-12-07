@@ -77,7 +77,7 @@ export async function maintainCustomContentInputFocus(
   asyncRender: () => Promise<unknown>
 ) {
   // TODO: Eliminate jQuery
-  let focus = $(app.element).find(':focus');
+  let focus = globalThis.$(app.element).find(':focus');
   focus = focus.length ? focus[0] : null;
 
   await asyncRender();

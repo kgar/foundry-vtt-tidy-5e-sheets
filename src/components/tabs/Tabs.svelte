@@ -1,9 +1,9 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { Tab, OnTabSelectedFn } from 'src/types/types';
   import { getContext, onMount, type Snippet } from 'svelte';
-  import type { Readable } from 'svelte/store';
 
   interface Props {
     tabs: Tab[];
@@ -23,9 +23,7 @@
     tabEnd,
   }: Props = $props();
 
-  const context = getContext<Readable<any> | undefined>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  const context = getSheetContext<any>();
 
   const onTabSelectedContextFn = getContext<OnTabSelectedFn>(
     CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED,
@@ -34,7 +32,7 @@
   let nav: HTMLElement;
 
   function selectTab(tab: Tab) {
-    const sheet = $context?.actor?.sheet ?? $context?.item?.sheet;
+    const sheet = context?.actor?.sheet ?? context?.item?.sheet;
     if (sheet && !FoundryAdapter.onTabSelecting(sheet, tab.id)) {
       return;
     }

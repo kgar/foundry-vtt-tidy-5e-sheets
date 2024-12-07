@@ -2,15 +2,10 @@
   import AcShieldBase from './AcShieldBase.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
-  import type { VehicleSheetContext } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { CONSTANTS } from 'src/constants';
+  import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<VehicleSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getVehicleSheetContext();
 
   interface Props {
     /**
@@ -27,26 +22,26 @@
 <div class="vehicle-armor-class-wrapper">
   <AcShieldBase cssClass="{cssClass} vehicle-ac-shield">
     <NumberInput
-      document={$context.actor}
+      document={context.actor}
       field="system.attributes.ac.flat"
-      value={$context.actor.system.attributes.ac.flat}
+      value={context.actor.system.attributes.ac.flat}
       step="1"
       min="0"
       placeholder="—"
       title={localize('DND5E.ArmorClass')}
       cssClass="armor-class-flat"
       selectOnFocus={true}
-      disabled={!$context.editable || $context.lockSensitiveFields}
+      disabled={!context.editable || context.lockSensitiveFields}
     />
     <TextInput
-      document={$context.actor}
+      document={context.actor}
       field="system.attributes.ac.motionless"
-      value={$context.system.attributes.ac.motionless}
+      value={context.system.attributes.ac.motionless}
       placeholder="—"
       title={localize('DND5E.ArmorClassMotionless')}
       class="armor-class-motionless"
       selectOnFocus={true}
-      disabled={!$context.editable || $context.lockSensitiveFields}
+      disabled={!context.editable || context.lockSensitiveFields}
     />
   </AcShieldBase>
 </div>

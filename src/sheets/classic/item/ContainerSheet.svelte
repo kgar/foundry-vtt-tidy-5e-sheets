@@ -2,9 +2,6 @@
   import { CONSTANTS } from 'src/constants';
   import ItemProfilePicture from './parts/ItemProfilePicture.svelte';
   import ItemIdentifiableName from './parts/ItemIdentifiableName.svelte';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
-  import type { ContainerSheetClassicContext } from 'src/types/item.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
@@ -12,14 +9,13 @@
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import ItemHeaderToggles from './parts/ItemHeaderToggles.svelte';
-    import AttachedInfoCard from 'src/components/item-info-card/AttachedInfoCard.svelte';
-    import { settingStore } from 'src/settings/settings.svelte';
+  import AttachedInfoCard from 'src/components/item-info-card/AttachedInfoCard.svelte';
+  import { settingStore } from 'src/settings/settings.svelte';
+  import { getContainerSheetClassicContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<ContainerSheetClassicContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getContainerSheetClassicContext();
 
-  let appId = $derived($context.document.id);
+  let appId = $derived(context.document.id);
 
   let selectedTabId: string = $state('');
 
@@ -27,7 +23,7 @@
 </script>
 
 <AttachedInfoCard
-  sheet={$context.item.sheet}
+  sheet={context.item.sheet}
   floating={$settingStore.itemCardsAreFloating}
   delay={$settingStore.itemCardsDelay}
   inspectKey={$settingStore.itemCardsFixKey}
@@ -48,32 +44,32 @@
     </h1>
 
     <div class="item-subtitle">
-      <h4 class="item-type">{$context.itemType ?? ''}</h4>
+      <h4 class="item-type">{context.itemType ?? ''}</h4>
     </div>
 
     <ul class="summary flexrow">
       <li>
-        {#if $context.concealDetails}
+        {#if context.concealDetails}
           <span>{localize('DND5E.Unidentified.Title')}</span>
         {:else}
           <Select
             id="{appId}-rarity"
-            document={$context.item}
+            document={context.item}
             field="system.rarity"
             class="item-rarity"
-            value={$context.system.rarity}
-            disabled={!$context.editable}
+            value={context.system.rarity}
+            disabled={!context.editable}
             blankValue=""
           >
-            <SelectOptions data={$context.config.itemRarity} blank="" />
+            <SelectOptions data={context.config.itemRarity} blank="" />
           </Select>
         {/if}
       </li>
       <li class="flex-row">
         <Source
-          document={$context.item}
+          document={context.item}
           keyPath="system.source"
-          editable={$context.editable && !$context.concealDetails}
+          editable={context.editable && !context.concealDetails}
         />
       </li>
     </ul>
@@ -81,10 +77,10 @@
   </div>
 </header>
 
-<Tabs bind:selectedTabId tabs={$context.tabs} />
+<Tabs bind:selectedTabId tabs={context.tabs} />
 
 <section class="tidy-sheet-body">
-  <TabContents tabs={$context.tabs} {selectedTabId} />
+  <TabContents tabs={context.tabs} {selectedTabId} />
 </section>
 
 <style lang="scss">

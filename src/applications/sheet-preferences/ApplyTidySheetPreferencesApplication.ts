@@ -1,14 +1,14 @@
 import { mount } from 'svelte';
 import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
 import ApplyTidySheetPreferences from './ApplyTidySheetPreferences.svelte';
-import { Tidy5eCharacterSheet } from 'src/sheets/classic/Tidy5eCharacterSheet';
-import { Tidy5eNpcSheet } from 'src/sheets/classic/Tidy5eNpcSheet';
-import { Tidy5eVehicleSheet } from 'src/sheets/classic/Tidy5eKgarVehicleSheet';
+import { Tidy5eCharacterSheet } from 'src/sheets/classic/Tidy5eCharacterSheet.svelte';
+import { Tidy5eNpcSheet } from 'src/sheets/classic/Tidy5eNpcSheet.svelte';
+import { Tidy5eVehicleSheet } from 'src/sheets/classic/Tidy5eKgarVehicleSheet.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { debug, error } from 'src/utils/logging';
-import { Tidy5eItemSheetClassic } from 'src/sheets/classic/Tidy5eItemSheetClassic';
-import { Tidy5eGroupSheetClassic } from 'src/sheets/classic/Tidy5eGroupSheetClassic';
-import { Tidy5eContainerSheetClassic } from 'src/sheets/classic/Tidy5eContainerSheetClassic';
+import { Tidy5eItemSheetClassic } from 'src/sheets/classic/Tidy5eItemSheetClassic.svelte';
+import { Tidy5eGroupSheetClassic } from 'src/sheets/classic/Tidy5eGroupSheetClassic.svelte';
+import { Tidy5eContainerSheetClassic } from 'src/sheets/classic/Tidy5eContainerSheetClassic.svelte';
 
 export type SheetPreferenceOption = {
   label: string;

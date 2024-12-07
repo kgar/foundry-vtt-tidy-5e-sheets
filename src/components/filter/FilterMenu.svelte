@@ -3,12 +3,11 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
-  import type { Readable } from 'svelte/store';
   import FilterToggleButton from './FilterToggleButton.svelte';
   import type { ItemFilterService } from 'src/features/filtering/ItemFilterService';
   import ButtonMenuDivider from 'src/components/button-menu/ButtonMenuDivider.svelte';
   import type { ContainerSheetClassicContext } from 'src/types/item.types';
-  import { CONSTANTS } from 'src/constants';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     tabId: string;
@@ -17,12 +16,12 @@
   let { tabId }: Props = $props();
 
   const localize = FoundryAdapter.localize;
-  const context = getContext<
-    Readable<ActorSheetContextV1 | ContainerSheetClassicContext>
-  >(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
+  const context = getSheetContext<
+    ActorSheetContextV1 | ContainerSheetClassicContext
+  >();
   const onFilterClearAll =
     getContext<ItemFilterService['onFilterClearAll']>('onFilterClearAll');
-  let categories = $derived($context.filterData[tabId] ?? {});
+  let categories = $derived(context.filterData[tabId] ?? {});
   let hasActiveFilters = $derived(
     Object.entries(categories).some(([_, filters]) =>
       filters.some((f) => f.value !== null),

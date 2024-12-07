@@ -1,10 +1,11 @@
 <script lang="ts">
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import { CONSTANTS } from 'src/constants';
-  import type { Actor5e, CharacterSheetContext } from 'src/types/types';
+  import type { Actor5e } from 'src/types/types';
   import { EventHelper } from 'src/utils/events';
   import { getContext } from 'svelte';
-  import type { Readable, Writable } from 'svelte/store';
+  import type { Writable } from 'svelte/store';
+  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     occupant: Actor5e | undefined;
@@ -26,14 +27,12 @@
     prop,
   }: Props = $props();
 
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getCharacterSheetContext();
 
   function onOccupantClick(
     event: (MouseEvent | PointerEvent) & { currentTarget: HTMLElement },
   ) {
-    if ($context.unlocked) {
+    if (context.unlocked) {
       EventHelper.triggerContextMenu(event, '[data-actor-uuid]');
       return;
     }
@@ -44,7 +43,7 @@
     if (
       !TidyHooks.tidy5eSheetsFacilityEmptyOccupantSlotClicked(
         ev,
-        $context.actor.items.get(facilityId),
+        context.actor.items.get(facilityId),
         type,
         prop,
       )
@@ -62,8 +61,8 @@
     });
 
     if (result) {
-      $context.actor.sheet._onDropActorAddToFacility(
-        $context.actor.items.get(facilityId),
+      context.actor.sheet._onDropActorAddToFacility(
+        context.actor.items.get(facilityId),
         prop,
         result,
       );
@@ -85,7 +84,7 @@
   <li
     class:highlight={$hoveredFacilityOccupant ===
       `${facilityId}-${index}-${occupant.uuid}`}
-    class:unlocked={$context.unlocked}
+    class:unlocked={context.unlocked}
     class="slot occupant-slot {type} {imageTypeClassName} occupant-with-menu"
     data-actor-uuid={occupant.uuid}
     data-tooltip={occupant.name}
@@ -98,10 +97,10 @@
       ($hoveredFacilityOccupant = `${facilityId}-${index}-${occupant.uuid}`)}
     onmouseleave={() => ($hoveredFacilityOccupant = '')}
   >
-    <a onclick={(ev) => $context.editable && onOccupantClick(ev)}>
+    <a onclick={(ev) => context.editable && onOccupantClick(ev)}>
       <img src={imageSrc} alt={occupant.name} />
 
-      {#if $context.unlocked}
+      {#if context.unlocked}
         <i class="fa-solid fa-cog occupant-menu-icon"></i>
       {/if}
     </a>
@@ -111,7 +110,7 @@
     <!-- svelte-ignore a11y_click_events_have_key_events -->
     <!-- svelte-ignore a11y_no_static_element_interactions -->
     <!-- svelte-ignore a11y_missing_attribute -->
-    <a onclick={(ev) => $context.editable && onSlotClick(ev)}>
+    <a onclick={(ev) => context.editable && onSlotClick(ev)}>
       <i class={iconClass}></i>
     </a>
   </li>

@@ -1,17 +1,12 @@
 <script lang="ts">
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
-  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
-    CharacterSheetContext,
     PortraitCharmRadiusClass,
   } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
-
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  
+  let context = getCharacterSheetContext();
 
   interface Props {
     inspired: boolean;
@@ -39,13 +34,13 @@
 >
   <Checkbox
     checkboxCssClass="inspiration-toggle"
-    labelCssClass="{inspired ? 'inspired' : ''} {radiusClass} {$context.editable
+    labelCssClass="{inspired ? 'inspired' : ''} {radiusClass} {context.editable
       ? 'pointer'
       : ''}"
-    document={$context.actor}
+    document={context.actor}
     field="system.attributes.inspiration"
     checked={inspired}
-    disabled={!$context.editable}
+    disabled={!context.editable}
   >
     <i class="inspiration-icon fas fa-dice-d20" class:animate></i>
   </Checkbox>

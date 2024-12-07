@@ -2,15 +2,10 @@
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { NpcSheetContext } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<NpcSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getNpcSheetContext();
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -20,25 +15,25 @@
     <h4>{localize('DND5E.LegAct')}</h4>
     <div class="counter-value">
       <NumberInput
-        document={$context.actor}
+        document={context.actor}
         field="system.resources.legact.value"
-        value={$context.system.resources.legact.value}
+        value={context.system.resources.legact.value}
         step="any"
         placeholder="0"
         title={localize('DND5E.LegActRemaining')}
         selectOnFocus={true}
-        disabled={!$context.editable}
+        disabled={!context.editable}
       />
       <span class="sep">/</span>
       <NumberInput
-        document={$context.actor}
+        document={context.actor}
         field="system.resources.legact.max"
-        value={$context.system.resources.legact.max}
+        value={context.system.resources.legact.max}
         min={0}
         step="1"
         placeholder="0"
         selectOnFocus={true}
-        disabled={!$context.editable || $context.lockSensitiveFields}
+        disabled={!context.editable || context.lockSensitiveFields}
       />
     </div>
   </div>
@@ -46,9 +41,9 @@
     <h4>{localize('DND5E.LegRes')}</h4>
     <div class="counter-value">
       <NumberInput
-        document={$context.actor}
+        document={context.actor}
         field="system.resources.legres.value"
-        value={$context.system.resources.legres.value}
+        value={context.system.resources.legres.value}
         step="any"
         placeholder="0"
         title={localize('DND5E.LegResRemaining')}
@@ -56,14 +51,14 @@
       />
       <span class="sep">/</span>
       <NumberInput
-        document={$context.actor}
+        document={context.actor}
         field="system.resources.legres.max"
-        value={$context.system.resources.legres.max}
+        value={context.system.resources.legres.max}
         min="0"
         step="1"
         placeholder="0"
         selectOnFocus={true}
-        disabled={!$context.editable || $context.lockSensitiveFields}
+        disabled={!context.editable || context.lockSensitiveFields}
       />
     </div>
   </div>
@@ -71,20 +66,20 @@
     <h4>{localize('DND5E.LairAct')}</h4>
     <div class="counter-value">
       <Checkbox
-        document={$context.actor}
+        document={context.actor}
         field="system.resources.lair.value"
-        checked={$context.system.resources.lair.value}
-        disabled={!$context.editable || $context.lockSensitiveFields}
+        checked={context.system.resources.lair.value}
+        disabled={!context.editable || context.lockSensitiveFields}
       />
       <TextInput
-        document={$context.actor}
+        document={context.actor}
         field="system.resources.lair.initiative"
-        value={$context.system.resources.lair.initiative}
+        value={context.system.resources.lair.initiative}
         placeholder="Init."
         allowDeltaChanges={true}
         selectOnFocus={true}
         saveEmptyAsNull={true}
-        disabled={!$context.editable || $context.lockSensitiveFields}
+        disabled={!context.editable || context.lockSensitiveFields}
       />
     </div>
   </div>

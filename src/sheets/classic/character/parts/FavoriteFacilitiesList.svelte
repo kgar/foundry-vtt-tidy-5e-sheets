@@ -14,7 +14,6 @@
   import ItemTableRow from '../../../../components/item-list/v1/ItemTableRow.svelte';
   import ItemUseButton from '../../../../components/item-list/ItemUseButton.svelte';
   import { getContext, tick } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
@@ -23,14 +22,13 @@
   import { Tooltip } from 'src/tooltips/Tooltip';
   import OccupantSummaryTooltip from 'src/tooltips/OccupantSummaryTooltip.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
+  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
 
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getCharacterSheetContext();
 
   interface Props {
     section: FacilitySection;
@@ -124,7 +122,7 @@
     {/snippet}
     {#snippet body()}
       {#each items as item (item.id)}
-        {@const ctx = $context.itemContext[item.id]}
+        {@const ctx = context.itemContext[item.id]}
         {@const disabledClass =
           ctx?.chosen?.disabled === true ? 'disabled' : ''}
 
@@ -143,14 +141,14 @@
             <!-- Name -->
             <ItemTableCell primary={true}>
               <ItemUseButton
-                disabled={!$context.editable &&
+                disabled={!context.editable &&
                   (!ctx?.chosen?.disabled || FoundryAdapter.userIsGm())}
                 {item}
               ></ItemUseButton>
               {#if (ctx.activities?.length ?? 0) > 1}
                 <InlineToggleControl entityId={item.id} {inlineToggleService} />
               {/if}
-              <ItemName onToggle={() => toggleSummary($context.actor)} {item}>
+              <ItemName onToggle={() => toggleSummary(context.actor)} {item}>
                 <span
                   class="truncate"
                   data-tidy-item-name={item.name}

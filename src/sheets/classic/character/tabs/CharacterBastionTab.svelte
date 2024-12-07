@@ -2,12 +2,9 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type {
-    CharacterSheetContext,
-    ChosenFacilityContext,
-  } from 'src/types/types';
-  import { getContext, setContext } from 'svelte';
-  import { writable, type Readable, type Writable } from 'svelte/store';
+  import type { ChosenFacilityContext } from 'src/types/types';
+  import { setContext } from 'svelte';
+  import { writable, type Writable } from 'svelte/store';
   import FacilityOccupant from 'src/sheets/classic/character/parts/FacilityOccupant.svelte';
   import FacilityRosterOccupant from 'src/sheets/classic/character/parts/FacilityRosterOccupant.svelte';
   import FacilityOrderProgressTracker from '../parts/FacilityOrderProgressTracker.svelte';
@@ -19,10 +16,9 @@
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import { applyDropzoneClass } from 'src/events/drag-and-drop';
   import InlineSvg from 'src/components/utility/InlineSvg.svelte';
+  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getCharacterSheetContext();
 
   function onMouseEnterFacility(event: Event, item: Item5e) {
     TidyHooks.tidy5eSheetsItemHoverOn(event, item);
@@ -40,19 +36,19 @@
   );
 
   let hasDefenders = $derived(
-    $context.facilities.special.chosen.some((c: ChosenFacilityContext) =>
+    context.facilities.special.chosen.some((c: ChosenFacilityContext) =>
       c.defenders.some((d) => !d.empty),
     ),
   );
 
   let hasHirelings = $derived(
-    $context.facilities.special.chosen.some((c: ChosenFacilityContext) =>
+    context.facilities.special.chosen.some((c: ChosenFacilityContext) =>
       c.hirelings.some((d) => !d.empty),
     ),
   );
 
   let hasCreatures = $derived(
-    $context.facilities.special.chosen.some((c: ChosenFacilityContext) =>
+    context.facilities.special.chosen.some((c: ChosenFacilityContext) =>
       c.creatures.some((d) => !d.empty),
     ),
   );
@@ -65,7 +61,7 @@
   }
 
   async function addFacility(ev: Event, type: string) {
-    if (!TidyHooks.tidy5eSheetsAddFacilityClicked(ev, $context.actor, type)) {
+    if (!TidyHooks.tidy5eSheetsAddFacilityClicked(ev, context.actor, type)) {
       return;
     }
 
@@ -80,19 +76,19 @@
           types: new Set(['facility']),
           additional: {
             type: { [type]: 1, [otherType]: -1 },
-            level: { max: $context.actor.system.details.level },
+            level: { max: context.actor.system.details.level },
           },
         },
       },
     });
 
     if (result) {
-      $context.actor.sheet._onDropItemCreate(await fromUuid(result));
+      context.actor.sheet._onDropItemCreate(await fromUuid(result));
     }
   }
 
   function useFacility(event: MouseEvent, chosen: ChosenFacilityContext) {
-    const facility = $context.actor.items.get(chosen.id);
+    const facility = context.actor.items.get(chosen.id);
     return facility?.use({ legacy: false, chooseActivity: true, event });
   }
 
@@ -103,16 +99,16 @@
   <!-- Name -->
 
   <section class="name">
-    {#if $context.unlocked}
+    {#if context.unlocked}
       <TextInput
-        document={$context.actor}
+        document={context.actor}
         field="system.bastion.name"
-        value={$context.system.bastion.name}
+        value={context.system.bastion.name}
         selectOnFocus={true}
         placeholder={localize('DND5E.Bastion.Label')}
       />
-    {:else if !isNil($context.system.bastion.name, '')}
-      <div class="document-name">{$context.system.bastion.name}</div>
+    {:else if !isNil(context.system.bastion.name, '')}
+      <div class="document-name">{context.system.bastion.name}</div>
     {/if}
   </section>
 
@@ -126,12 +122,12 @@
         <i class="fas fa-building-columns"></i>
         {localize('DND5E.FACILITY.Types.Special.Label.other')}
         <span class="counter">
-          <span class="value">{$context.facilities.special.value}</span> /
-          <span class="max">{$context.facilities.special.max}</span>
+          <span class="value">{context.facilities.special.value}</span> /
+          <span class="max">{context.facilities.special.max}</span>
         </span>
       </h3>
       <ul class="facility-list">
-        {#each $context.facilities.special.chosen as chosen}
+        {#each context.facilities.special.chosen as chosen}
           {@const bgImg = chosen.img.includes(
             'systems/dnd5e/icons/svg/items/facility.svg',
           )
@@ -140,7 +136,7 @@
 
           {@const img = !chosen.disabled
             ? chosen.img
-            : $context.config.facilities.orders.repair.icon}
+            : context.config.facilities.orders.repair.icon}
 
           <li
             class="facility special"
@@ -164,7 +160,7 @@
                 onmouseleave={(ev) => onMouseLeaveFacility(ev, chosen.facility)}
                 onmousedown={(ev) =>
                   FoundryAdapter.editOnMiddleClick(ev, chosen.facility)}
-                onclick={(ev) => $context.editable && useFacility(ev, chosen)}
+                onclick={(ev) => context.editable && useFacility(ev, chosen)}
               >
                 <!-- <img class="facility-image" src={img} alt={chosen.name} /> -->
 
@@ -269,7 +265,7 @@
             <FacilityOrderProgressTracker {chosen} />
           </li>
         {/each}
-        {#each $context.facilities.special.available as available}
+        {#each context.facilities.special.available as available}
           <li class="facility empty">
             <!-- svelte-ignore a11y_missing_attribute -->
             <!-- svelte-ignore a11y_click_events_have_key_events -->
@@ -277,7 +273,7 @@
             <a
               class="highlight-on-hover"
               onclick={(ev) =>
-                $context.editable &&
+                context.editable &&
                 addFacility(ev, CONSTANTS.FACILITY_TYPE_SPECIAL)}
             >
               <i class="fas fa-building-columns"></i>
@@ -296,7 +292,7 @@
         {localize('DND5E.FACILITY.Types.Basic.Label.other')}
       </h3>
       <ul class="facility-list">
-        {#each $context.facilities.basic.chosen as chosen}
+        {#each context.facilities.basic.chosen as chosen}
           {@const bgImg = chosen.img.includes(
             'systems/dnd5e/icons/svg/items/facility.svg',
           )
@@ -305,7 +301,7 @@
 
           {@const img = !chosen.disabled
             ? chosen.img
-            : $context.config.facilities.orders.repair.icon}
+            : context.config.facilities.orders.repair.icon}
 
           <li
             class="facility basic"
@@ -329,7 +325,7 @@
                 onmouseleave={(ev) => onMouseLeaveFacility(ev, chosen.facility)}
                 onmousedown={(ev) =>
                   FoundryAdapter.editOnMiddleClick(ev, chosen.facility)}
-                onclick={(ev) => $context.editable && useFacility(ev, chosen)}
+                onclick={(ev) => context.editable && useFacility(ev, chosen)}
               >
                 {#if isSvg(img)}
                   <InlineSvg class="facility-image" svgUrl={img} />
@@ -359,7 +355,7 @@
             <FacilityOrderProgressTracker {chosen} />
           </li>
         {/each}
-        {#each $context.facilities.basic.available as available}
+        {#each context.facilities.basic.available as available}
           <div class="facility empty">
             <!-- svelte-ignore a11y_click_events_have_key_events -->
             <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -367,7 +363,7 @@
             <a
               class="highlight-on-hover"
               onclick={(ev) =>
-                $context.editable &&
+                context.editable &&
                 addFacility(ev, CONSTANTS.FACILITY_TYPE_BASIC)}
             >
               {#if available.label.includes('build')}
@@ -392,7 +388,7 @@
         {localize('TIDY5E.Facilities.Defenders.Label')}
       </h3>
       <ul class="roster-list">
-        {#each $context.facilities.special.chosen as chosen}
+        {#each context.facilities.special.chosen as chosen}
           {#each chosen.defenders as { actor, empty }, index}
             {#if !empty}
               <FacilityRosterOccupant
@@ -419,7 +415,7 @@
         {localize('TIDY5E.Facilities.Hirelings.Label')}
       </h3>
       <ul class="roster-list">
-        {#each $context.facilities.special.chosen as chosen}
+        {#each context.facilities.special.chosen as chosen}
           {#each chosen.hirelings as { actor, empty }, index}
             {#if !empty}
               <FacilityRosterOccupant
@@ -446,7 +442,7 @@
         {localize('TIDY5E.Facilities.Creatures.Label')}
       </h3>
       <ul class="roster-list">
-        {#each $context.facilities.special.chosen as chosen}
+        {#each context.facilities.special.chosen as chosen}
           {#each chosen.creatures as { actor, empty }, index}
             {#if !empty}
               <FacilityRosterOccupant
@@ -467,14 +463,14 @@
   <!-- Description -->
 
   <RerenderAfterFormSubmission
-    andOnValueChange={$context.bastion.description ?? ''}
+    andOnValueChange={context.bastion.description ?? ''}
   >
-    <section class="description" use:$context.activateEditors>
+    <section class="description" use:context.activateEditors>
       <h3><i class="fa-solid fa-books"></i> Description</h3>
       <SheetEditor
-        content={$context.bastion.description}
+        content={context.bastion.description}
         target="system.bastion.description"
-        editable={$context.editable}
+        editable={context.editable}
       />
     </section>
   </RerenderAfterFormSubmission>

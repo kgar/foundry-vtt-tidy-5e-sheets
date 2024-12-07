@@ -1,25 +1,20 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { NpcSheetContext } from 'src/types/types';
   import { debug } from 'src/utils/logging';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import { settingStore } from 'src/settings/settings.svelte';
-  import { CONSTANTS } from 'src/constants';
+  import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<NpcSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getNpcSheetContext();
 
   async function rollNpcHp(event: Event) {
     event.preventDefault();
 
-    const formula = $context.actor.system.attributes.hp.formula;
+    const formula = context.actor.system.attributes.hp.formula;
     if (!formula) return;
     const roll_hp = await FoundryAdapter.roll(formula, undefined);
     const hp = roll_hp.total;
     FoundryAdapter.playDiceSound();
-    $context.actor.update({
+    context.actor.update({
       'system.attributes.hp.value': hp,
       'system.attributes.hp.max': hp,
     });
@@ -28,11 +23,11 @@
   function calcAverageHitDie(event: Event) {
     event.preventDefault();
 
-    let formula = $context.actor.system.attributes.hp.formula;
+    let formula = context.actor.system.attributes.hp.formula;
     debug(`tidy5e-npc | activateListeners | formula: ${formula}`);
     const average = FoundryAdapter.calculateAverageFromFormula(formula);
 
-    $context.actor.update({
+    context.actor.update({
       ['system.attributes.hp.value']: average,
       ['system.attributes.hp.max']: average,
     });
