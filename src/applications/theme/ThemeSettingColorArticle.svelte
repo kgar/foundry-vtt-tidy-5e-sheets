@@ -2,7 +2,6 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ThemeColorSetting } from 'src/types/theme.types';
   import { getContext, onMount } from 'svelte';
-  import ColorPicker from 'svelte-awesome-color-picker';
   import type { Writable } from 'svelte/store';
   import type { CurrentSettings } from 'src/settings/settings';
   import {
@@ -22,7 +21,6 @@
   let context = getContext<Writable<CurrentSettings>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
-  let colorPickerIsOpen: boolean = $state(false);
 
   const eyeDropperEnabled = 'EyeDropper' in window;
 
@@ -72,22 +70,17 @@
     </label>
   </div>
   <div class="theme-settings-group flex-row align-items-center extra-small-gap">
-    <ColorPicker
-      bind:isOpen={colorPickerIsOpen}
-      isDialog={true}
-      label=""
-      hex={settingValueToHexaString(
-        $context[colorToConfigure.key]?.toString() ?? '',
-      ).hexa}
-      on:input={(ev) =>
-        colorPickerIsOpen &&
-        onColorSelected(colorToConfigure, colorToHexaString(ev.detail.color))}
-    />
+    <label
+      for="{colorToConfigure.key}-{appId}"
+      class="color-picker-preview"
+      style="--bg-color: {$context[colorToConfigure.key]};"
+    ></label>
+
     <input
       type="text"
       id="{colorToConfigure.key}-{appId}"
       value={$context[colorToConfigure.key]}
-      class="theme-color-textbox"
+      class="theme-color-textbox coloris"
       onchange={(ev) =>
         onColorSelected(colorToConfigure, ev.currentTarget.value)}
     />
@@ -129,15 +122,12 @@
       }
     }
 
-    :global(:is(.color-picker .wrapper)) {
-      color: unset;
-      box-shadow: 0 0 0.25rem 0.125rem var(--t5e-light-color);
-      background: var(--t5e-background);
-    }
-
-    :global(:is(.color-picker .wrapper input)) {
-      background: var(--t5e-faintest-color);
-      color: var(--t5e-primary-font-color);
+    .color-picker-preview {
+      background: var(--bg-color);
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      cursor: pointer;
     }
   }
 </style>

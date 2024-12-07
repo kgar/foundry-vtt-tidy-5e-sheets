@@ -1,8 +1,6 @@
 ## To Do
 
-- [ ] Fix? Activities Tab context menu not showing anything
-- [ ] Fix: Spell Pip animations are buck wild, now. Either get them back to normal, or eliminate.
-- [ ] Fix: Item sheets are not showing selected tabs
+- [ ] Fix: Theme Settings, lots and lots of warnings
 - [ ] Fix: World Settings has warning: [svelte] binding_property_non_reactive`bind:value={config.type}` (src/applications/settings/parts/ExhaustionSetting.svelte:33:48) is binding to a non-reactive property
 - [ ] Ensure context API where reactivity is expected is using runes
 - [ ] Replace stores with runes
@@ -176,3 +174,6 @@ Cry.
 - [x] Search and address all instances of `on:` in svelte templates
 - [x] Fix: Tab Selection is behaving inconsistently. Consider revamping.
 - [x] Resolve `kgar-migration-task` content
+- [x] Fix? Activities Tab context menu not showing anything
+- [x] Fix: Spell Pip animations are buck wild, now. Either get them back to normal, or eliminate.
+- [x] Fix: Item sheets are not showing selected tabs

@@ -20,6 +20,8 @@ import { Tidy5eContainerSheetClassic } from './sheets/classic/Tidy5eContainerShe
 import { Tidy5eContainerSheetHightouch } from './sheets/hightouch/Tidy5eContainerSheetHightouch';
 import { Tidy5eItemDebugSheetHightouch } from './sheets/hightouch/Tidy5eItemDebugSheetHightouch';
 import { initReadyHooks } from './features/ready-hooks';
+import '@melloware/coloris/dist/coloris.css';
+import Coloris from '@melloware/coloris';
 
 Hooks.once('init', () => {
   DocumentSheetConfig.registerSheet(
@@ -103,7 +105,10 @@ Hooks.once('init', () => {
 
   const thisIsKGarsVisualOverhaulBranch = false; // When the first draft of the container overhaul sheet is done, remove this extra layer and let it depend on the debug setting alone.
 
-  if (SettingsProvider.settings.debug.get() && thisIsKGarsVisualOverhaulBranch) {
+  if (
+    SettingsProvider.settings.debug.get() &&
+    thisIsKGarsVisualOverhaulBranch
+  ) {
     DocumentSheetConfig.registerSheet(
       Item,
       CONSTANTS.DND5E_SYSTEM_ID,
@@ -145,4 +150,33 @@ Hooks.once('ready', async () => {
   initReadyHooks();
 
   DebugTools.onReady(api);
+});
+
+// Coloris Color Picker setup
+Coloris.init();
+Coloris.coloris({
+  el: '.coloris',
+  formatToggle: true,
+  swatches: [
+    'rgba(58, 116, 126, 1)',
+    'rgba(60, 179, 113, 0.3)',
+    'rgba(60, 179, 113, 0.3)',
+    'rgba(25, 94, 59, 1)',
+    'rgba(144, 238, 144, 1)',
+    'rgba(60, 179, 113, 0.3)',
+    'rgba(25, 94, 59, 1)',
+    'rgba(144, 238, 144, 1)',
+    'rgba(255, 99, 71, 0.3)',
+    'rgba(139, 0, 0, 1)',
+    'rgba(255, 160, 122, 1)',
+    'rgba(102, 205, 170, 0.3)',
+    'rgba(0, 100, 0, 1)',
+    'rgba(152, 251, 152, 1)',
+    'rgba(221, 160, 221, 0.3)',
+    'rgba(138, 43, 226, 1)',
+    'rgba(255, 182, 193, 1)',
+    'rgba(255, 165, 0, 0.3)',
+    'rgba(184, 134, 11, 1)',
+    'rgba(255, 215, 0, 1)',
+  ],
 });
