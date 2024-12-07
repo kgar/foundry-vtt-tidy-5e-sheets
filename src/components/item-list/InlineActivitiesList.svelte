@@ -13,7 +13,7 @@
   import { CONSTANTS } from 'src/constants';
   import ItemImage from './ItemImage.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import { Activities } from 'src/features/activities/activities';
   import type { ActivityItemContext } from 'src/types/types';
 

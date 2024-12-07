@@ -1,7 +1,7 @@
 <script lang="ts">
   import ButtonMenuItem from 'src/components/button-menu/ButtonMenuItem.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import { getCoreThemes } from 'src/theme/theme-reference';
 
   const themes = Object.entries(getCoreThemes(true));

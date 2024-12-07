@@ -5,7 +5,7 @@ import { firstOfSet } from 'src/utils/set';
 import { CONSTANTS } from 'src/constants';
 import type { ApplicationPosition } from 'src/types/application.types';
 import type { Actor5e } from 'src/types/types';
-import { SettingsProvider } from 'src/settings/settings';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 import TabSelectionFormApplication from 'src/applications/tab-selection/TabSelectionFormApplication.svelte';
 
 export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {

@@ -13,7 +13,7 @@
   import { writable, type Readable } from 'svelte/store';
   import NoSpells from 'src/sheets/classic/actor/NoSpells.svelte';
   import Notice from '../../../../components/notice/Notice.svelte';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import { CONSTANTS } from 'src/constants';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';

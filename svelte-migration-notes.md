@@ -1,6 +1,5 @@
 ## To Do
 
-- [ ] Fix: Theme Settings, lots and lots of warnings
 - [ ] Fix: World Settings has warning: [svelte] binding_property_non_reactive`bind:value={config.type}` (src/applications/settings/parts/ExhaustionSetting.svelte:33:48) is binding to a non-reactive property
 - [ ] Ensure context API where reactivity is expected is using runes
 - [ ] Replace stores with runes
@@ -177,3 +176,5 @@ Cry.
 - [x] Fix? Activities Tab context menu not showing anything
 - [x] Fix: Spell Pip animations are buck wild, now. Either get them back to normal, or eliminate.
 - [x] Fix: Item sheets are not showing selected tabs
+- [x] Fix: Theme Settings, lots and lots of warnings
+- [x] Fix: Make Coloris' theme mode match Tidy's

@@ -7,7 +7,7 @@
     ButtonMenuPosition,
   } from './button-menu-types';
   import { getPositionStyles } from './button-menu-position';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import { CONSTANTS } from 'src/constants';
 
   type StatefulIconClass = {

@@ -1,5 +1,5 @@
 import type { ExhaustionConfig } from 'src/features/exhaustion/exhaustion.types';
-import type { CurrentSettings } from 'src/settings/settings';
+import type { CurrentSettings } from 'src/settings/settings.svelte';
 import type { Writable } from 'svelte/store';
 
 export type WorldSettingsContext = {

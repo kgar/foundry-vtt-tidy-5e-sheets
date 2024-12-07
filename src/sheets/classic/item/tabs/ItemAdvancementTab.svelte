@@ -2,7 +2,7 @@
   import InlineSvg from 'src/components/utility/InlineSvg.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import type { Item5e, ItemSheetContext } from 'src/types/item.types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';

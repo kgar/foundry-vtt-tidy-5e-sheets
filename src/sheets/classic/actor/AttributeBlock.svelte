@@ -7,7 +7,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ActorSheetContextV1 } from 'src/types/types';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import { CONSTANTS } from 'src/constants';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
 

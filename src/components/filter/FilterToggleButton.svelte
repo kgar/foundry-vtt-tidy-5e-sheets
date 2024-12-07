@@ -2,7 +2,7 @@
   import type { ItemFilterService } from 'src/features/filtering/ItemFilterService';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ConfiguredItemFilter } from 'src/runtime/item/item.types';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import {
     cycleNullTrueFalseForward,
     cycleNullTrueFalseBackward,

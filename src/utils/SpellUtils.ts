@@ -1,4 +1,4 @@
-import { SettingsProvider } from 'src/settings/settings';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 import type { Item5e } from 'src/types/item.types';
 import { ItemUtils } from './ItemUtils';
 import { CONSTANTS } from 'src/constants';

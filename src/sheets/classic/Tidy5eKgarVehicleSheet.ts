@@ -1,6 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { SettingsProvider, settingStore } from 'src/settings/settings';
+import { SettingsProvider, settingStore } from 'src/settings/settings.svelte';
 import type {
   SheetExpandedItemsCacheable,
   SheetStats,

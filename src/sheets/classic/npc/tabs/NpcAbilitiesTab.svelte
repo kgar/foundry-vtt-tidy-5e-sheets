@@ -29,7 +29,7 @@
   import SpellbookFooter from 'src/components/spellbook/SpellbookFooter.svelte';
   import ItemFilterLayoutToggle from 'src/components/item-list/ItemFilterLayoutToggle.svelte';
   import SpellbookGrid from 'src/components/spellbook/SpellbookGrid.svelte';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import EncumbranceBar from '../../actor/EncumbranceBar.svelte';
   import TabFooter from '../../actor/TabFooter.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';

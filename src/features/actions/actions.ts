@@ -1,7 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ActionListRuntime } from 'src/runtime/action-list/ActionListRuntime';
-import { SettingsProvider } from 'src/settings/settings';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 import type { ContainerContents, Item5e } from 'src/types/item.types';
 import type {
   ActionItem,

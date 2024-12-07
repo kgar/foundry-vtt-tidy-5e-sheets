@@ -3,7 +3,7 @@
   import CheckboxSetting from 'src/applications/settings/parts/CheckboxSetting.svelte';
   import { getContext } from 'svelte';
   import type { Writable } from 'svelte/store';
-  import { SettingsProvider } from 'src/settings/settings';
+  import { SettingsProvider } from 'src/settings/settings.svelte';
   import type { UserSettingsContext } from '../UserSettings.types';
   import { CONSTANTS } from 'src/constants';
 

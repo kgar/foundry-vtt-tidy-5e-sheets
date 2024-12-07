@@ -1,6 +1,6 @@
 import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { settingStore } from 'src/settings/settings';
+import { settingStore } from 'src/settings/settings.svelte';
 import {
   applySheetAttributesToWindow,
   applyMutableSettingAttributesToWindow,

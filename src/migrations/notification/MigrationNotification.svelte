@@ -2,7 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
   import type MigrationNotificationFormApplication from './MigrationNotificationFormApplication';
-  import { SettingsProvider } from 'src/settings/settings';
+  import { SettingsProvider } from 'src/settings/settings.svelte';
   import { BulkMigrationsApplication } from '../BulkMigrationsApplication';
   import { CONSTANTS } from 'src/constants';
 

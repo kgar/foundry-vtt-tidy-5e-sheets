@@ -5,7 +5,7 @@
   import TraitSectionTools from './TraitSectionTools.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import { error } from 'src/utils/logging';
   import TraitSectionTags from './TraitSectionTags.svelte';
   import TraitSectionModifications from './TraitSectionModifications.svelte';

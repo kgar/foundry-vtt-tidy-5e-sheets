@@ -28,7 +28,7 @@ import type {
   GroupSkill,
 } from 'src/types/group.types';
 import { Inventory } from 'src/features/sections/Inventory';
-import { SettingsProvider, settingStore } from 'src/settings/settings';
+import { SettingsProvider, settingStore } from 'src/settings/settings.svelte';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { getPercentage } from 'src/utils/numbers';
 import type { Item5e } from 'src/types/item.types';

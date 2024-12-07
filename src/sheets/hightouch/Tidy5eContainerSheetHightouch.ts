@@ -34,7 +34,7 @@ import { Container } from 'src/features/containers/Container';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import { SettingsProvider } from 'src/settings/settings';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 
 export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(

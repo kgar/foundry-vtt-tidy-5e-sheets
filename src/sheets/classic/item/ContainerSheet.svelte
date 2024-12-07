@@ -13,7 +13,7 @@
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import ItemHeaderToggles from './parts/ItemHeaderToggles.svelte';
     import AttachedInfoCard from 'src/components/item-info-card/AttachedInfoCard.svelte';
-    import { settingStore } from 'src/settings/settings';
+    import { settingStore } from 'src/settings/settings.svelte';
 
   let context = getContext<Readable<ContainerSheetClassicContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getContext } from 'svelte';
-  import { SettingsProvider } from 'src/settings/settings';
+  import { SettingsProvider } from 'src/settings/settings.svelte';
   import SelectSetting from 'src/applications/settings/parts/SelectSetting.svelte';
   import type { WorldSettingsContextStore } from '../WorldSettings.types';
   import CheckboxSetting from '../../parts/CheckboxSetting.svelte';

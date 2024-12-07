@@ -4,7 +4,7 @@
   import type { Readable } from 'svelte/store';
   import type { ActorSheetContextV1 } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import { CONSTANTS } from 'src/constants';
   import type { FocusEventHandler } from 'svelte/elements';
 

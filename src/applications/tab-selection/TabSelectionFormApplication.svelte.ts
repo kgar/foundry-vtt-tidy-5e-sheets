@@ -6,7 +6,7 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { error } from 'src/utils/logging';
 import type { RegisteredTab } from 'src/runtime/types';
 import { CONSTANTS } from 'src/constants';
-import { SettingsProvider } from 'src/settings/settings';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';

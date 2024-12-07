@@ -1,7 +1,7 @@
 <script lang="ts">
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
 
   interface Props {
     document: any;

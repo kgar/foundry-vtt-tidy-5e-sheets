@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import type { Item5e } from 'src/types/item.types';
   import ActiveEffectsMarker from './ActiveEffectsMarker.svelte';
   import type { Snippet } from 'svelte';

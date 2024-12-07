@@ -14,7 +14,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import TextInput from '../../../components/inputs/TextInput.svelte';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import { declareLocation } from 'src/types/location-awareness.types';
   import { TidyHooks } from 'src/foundry/TidyHooks';

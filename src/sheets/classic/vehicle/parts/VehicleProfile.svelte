@@ -7,7 +7,7 @@
   import VehicleDamageAndMishapThresholds from './VehicleDamageAndMishapThresholds.svelte';
   import ExhaustionTracker from 'src/sheets/classic/actor/ExhaustionTracker.svelte';
   import VehicleMovement from './VehicleMovement.svelte';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import ExhaustionInput from 'src/sheets/classic/actor/ExhaustionInput.svelte';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { TidyFlags } from 'src/foundry/TidyFlags';

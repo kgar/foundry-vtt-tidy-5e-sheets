@@ -10,7 +10,7 @@
   import NpcRest from './NpcRest.svelte';
   import NpcHealthFormulaRoller from './NpcHealthFormulaRoller.svelte';
   import ActorProfile from 'src/sheets/classic/actor/ActorProfile.svelte';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import ExhaustionInput from 'src/sheets/classic/actor/ExhaustionInput.svelte';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { CONSTANTS } from 'src/constants';

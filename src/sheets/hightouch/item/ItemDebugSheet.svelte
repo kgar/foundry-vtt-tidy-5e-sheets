@@ -1,6 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { SettingsProvider } from 'src/settings/settings';
+  import { SettingsProvider } from 'src/settings/settings.svelte';
   import { getThemeOrDefault } from 'src/theme/theme';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';

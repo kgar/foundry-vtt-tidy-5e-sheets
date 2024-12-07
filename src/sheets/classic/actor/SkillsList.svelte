@@ -2,7 +2,7 @@
   import InlineTextDropdownList from 'src/components/inputs/InlineTextDropdownList.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import type { Actor5e, DropdownListOption } from 'src/types/types';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';

@@ -1,5 +1,5 @@
 import { type Tidy5eSheetsApi } from 'src/api';
-import { SettingsProvider } from 'src/settings/settings';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 
 export class DebugTools {
   static onReady(api: Tidy5eSheetsApi) {

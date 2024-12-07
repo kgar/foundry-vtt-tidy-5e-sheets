@@ -1,5 +1,5 @@
 import type { SupportedSpellSchoolIcon } from 'src/api/config/spell-school/spell-school.types';
-import { SettingsProvider } from 'src/settings/settings';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 
 export class SpellSchool {
   protected static _iconsMap: Record<string, SupportedSpellSchoolIcon> = {

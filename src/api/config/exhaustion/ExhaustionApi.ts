@@ -1,4 +1,4 @@
-import { SettingsProvider } from 'src/settings/settings';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 import type { UseSpecificLevelExhaustionParams } from '../../api.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type {

@@ -13,7 +13,7 @@
   import GridPaneFavoriteIcon from '../item-grid/GridPaneFavoriteIcon.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import { declareLocation } from 'src/types/location-awareness.types';
   import SpellSlotManagement from './SpellSlotManagement.svelte';

@@ -5,7 +5,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import { Activities } from 'src/features/activities/activities';
 
   let context = getContext<Readable<ItemSheetContext>>(

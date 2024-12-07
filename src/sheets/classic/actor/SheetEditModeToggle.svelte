@@ -3,7 +3,7 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import TidySwitch from 'src/components/toggle/TidySwitch.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 

@@ -10,7 +10,7 @@
   import Source from '../shared/Source.svelte';
   import { CONSTANTS } from 'src/constants';
   import AttachedInfoCard from 'src/components/item-info-card/AttachedInfoCard.svelte';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,

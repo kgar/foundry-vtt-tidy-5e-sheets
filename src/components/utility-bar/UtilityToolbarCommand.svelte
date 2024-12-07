@@ -2,7 +2,7 @@
   import { isNil } from 'src/utils/data';
   import { getContext } from 'svelte';
   import type { UtilityToolbarCommandExecuteEvent } from './types';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import type { Readable } from 'svelte/store';
   import { CONSTANTS } from 'src/constants';
 

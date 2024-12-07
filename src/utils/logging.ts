@@ -3,7 +3,7 @@
 // ================================
 
 import { CONSTANTS } from 'src/constants';
-import { SettingsProvider } from 'src/settings/settings';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 
 // 0 = none, warnings = 1, debug = 2, all = 3
 export function debug(msg: string, args?: any) {

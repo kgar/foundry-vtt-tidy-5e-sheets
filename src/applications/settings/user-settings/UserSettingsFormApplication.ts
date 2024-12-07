@@ -5,7 +5,7 @@ import {
   getCurrentSettings,
   type CurrentSettings,
   type Tidy5eSettingKey,
-} from 'src/settings/settings';
+} from 'src/settings/settings.svelte';
 import { debug } from 'src/utils/logging';
 import { CONSTANTS } from 'src/constants';
 import SvelteFormApplicationBase from 'src/applications/SvelteFormApplicationBase';

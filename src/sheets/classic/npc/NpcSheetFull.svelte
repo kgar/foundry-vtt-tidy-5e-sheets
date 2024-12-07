@@ -15,7 +15,7 @@
   import ActorMovement from '../actor/ActorMovement.svelte';
   import ActorHeaderStats from '../actor/ActorHeaderStats.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import InlineSource from '../shared/InlineSource.svelte';
   import InlineCreatureType from '../shared/InlineCreatureType.svelte';

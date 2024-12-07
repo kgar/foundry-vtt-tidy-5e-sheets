@@ -1,6 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';

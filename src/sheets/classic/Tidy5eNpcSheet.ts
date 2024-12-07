@@ -27,7 +27,7 @@ import {
   maintainCustomContentInputFocus,
 } from 'src/utils/applications';
 import { debug } from 'src/utils/logging';
-import { SettingsProvider, settingStore } from 'src/settings/settings';
+import { SettingsProvider, settingStore } from 'src/settings/settings.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { getPercentage } from 'src/utils/numbers';
 import { mount, unmount } from 'svelte';

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { CurrentSettings } from 'src/settings/settings';
+  import type { CurrentSettings } from 'src/settings/settings.svelte';
   import { getContext, onDestroy } from 'svelte';
   import type { Writable } from 'svelte/store';
   import type {

@@ -11,7 +11,7 @@
   import { CONSTANTS } from 'src/constants';
   import GroupMemberListItemProfile from './GroupMemberListItemProfile.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import { formatAsModifier } from 'src/utils/formatting';
 
   const context = getContext<Readable<GroupSheetClassicContext>>(

@@ -8,7 +8,7 @@
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,

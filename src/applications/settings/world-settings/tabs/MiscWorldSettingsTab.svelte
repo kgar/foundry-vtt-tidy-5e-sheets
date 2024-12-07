@@ -1,7 +1,7 @@
 <script lang="ts">
   import CheckboxSetting from 'src/applications/settings/parts/CheckboxSetting.svelte';
   import { getContext } from 'svelte';
-  import { SettingsProvider } from 'src/settings/settings';
+  import { SettingsProvider } from 'src/settings/settings.svelte';
   import TextInputSetting from 'src/applications/settings/parts/TextInputSetting.svelte';
   import SelectSetting from 'src/applications/settings/parts/SelectSetting.svelte';
   import type { WorldSettingsContextStore } from '../WorldSettings.types';

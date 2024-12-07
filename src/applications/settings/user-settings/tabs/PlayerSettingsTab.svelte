@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { SettingsProvider } from 'src/settings/settings';
+  import { SettingsProvider } from 'src/settings/settings.svelte';
   import { getContext } from 'svelte';
   import type { Writable } from 'svelte/store';
   import CheckboxSetting from 'src/applications/settings/parts/CheckboxSetting.svelte';

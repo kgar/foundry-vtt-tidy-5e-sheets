@@ -13,7 +13,7 @@ import type {
 import { CONSTANTS } from '../constants';
 import type { Actor5e } from 'src/types/types';
 import type { Item5e } from 'src/types/item.types';
-import { SettingsProvider } from 'src/settings/settings';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 import { debug, error, warn } from 'src/utils/logging';
 import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
 import { TidyFlags } from './TidyFlags';

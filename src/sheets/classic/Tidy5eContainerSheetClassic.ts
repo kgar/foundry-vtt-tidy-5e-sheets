@@ -34,7 +34,7 @@ import { SheetPreferencesService } from 'src/features/user-preferences/SheetPref
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import { SettingsProvider } from 'src/settings/settings';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 import { Inventory } from 'src/features/sections/Inventory';
 
 export class Tidy5eContainerSheetClassic extends DragAndDropMixin(

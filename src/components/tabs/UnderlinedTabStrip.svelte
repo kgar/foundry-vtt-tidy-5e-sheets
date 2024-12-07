@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
 
   interface Props {
     tabs: string[];

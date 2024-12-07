@@ -6,7 +6,7 @@ import {
   getCurrentSettings,
   type Tidy5eSettingKey,
   type CurrentSettings,
-} from 'src/settings/settings';
+} from 'src/settings/settings.svelte';
 import type {
   DefaultTabSelectionFields,
   WorldSettingsContext,

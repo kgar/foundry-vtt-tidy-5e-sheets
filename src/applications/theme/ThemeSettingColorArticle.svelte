@@ -3,7 +3,7 @@
   import type { ThemeColorSetting } from 'src/types/theme.types';
   import { getContext, onMount } from 'svelte';
   import type { Writable } from 'svelte/store';
-  import type { CurrentSettings } from 'src/settings/settings';
+  import type { CurrentSettings } from 'src/settings/settings.svelte';
   import {
     settingValueToHexaString,
     trySetRootCssVariable,

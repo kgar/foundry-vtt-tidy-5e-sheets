@@ -2,7 +2,7 @@
   import { getContext, type Snippet } from 'svelte';
   import ButtonMenuItem from './ButtonMenuItem.svelte';
   import type { ButtonMenuContext } from './button-menu-types';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import { CONSTANTS } from 'src/constants';
   import type { MouseEventHandler } from 'svelte/elements';
 

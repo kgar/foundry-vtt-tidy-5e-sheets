@@ -15,7 +15,7 @@
   import TidyTableCell from 'src/components/table/TidyTableCell.svelte';
   import TidyTableRow from 'src/components/table/TidyTableRow.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
 
   interface Props {
     section: GroupMemberSection;

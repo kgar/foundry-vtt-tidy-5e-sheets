@@ -23,7 +23,7 @@
   import { getContext, setContext } from 'svelte';
   import { writable, type Readable } from 'svelte/store';
   import Notice from '../../../../components/notice/Notice.svelte';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { declareLocation } from 'src/types/location-awareness.types';

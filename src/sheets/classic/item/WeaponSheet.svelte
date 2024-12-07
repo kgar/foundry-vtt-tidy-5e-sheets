@@ -13,7 +13,7 @@
   import ItemIdentifiableName from './parts/ItemIdentifiableName.svelte';
   import ItemHeaderToggles from './parts/ItemHeaderToggles.svelte';
   import AttachedInfoCard from 'src/components/item-info-card/AttachedInfoCard.svelte';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,

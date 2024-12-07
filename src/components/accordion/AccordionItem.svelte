@@ -2,7 +2,7 @@
   import { getContext, onMount, type Snippet } from 'svelte';
   import type { AccordionCtxType } from './Accordion.svelte';
   import { writable } from 'svelte/store';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { CONSTANTS } from 'src/constants';
 

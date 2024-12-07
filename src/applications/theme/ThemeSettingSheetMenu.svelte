@@ -5,7 +5,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
   import type { Writable } from 'svelte/store';
-  import type { CurrentSettings } from 'src/settings/settings';
+  import type { CurrentSettings } from 'src/settings/settings.svelte';
   import ThemeSelectorButtonMenuCommand from 'src/sheets/classic/shared/ThemeSelectorButtonMenuCommand.svelte';
   import ButtonMenuDivider from 'src/components/button-menu/ButtonMenuDivider.svelte';
   import type { ThemeSettingsSheetFunctions } from './ThemeSettingsFormApplication';

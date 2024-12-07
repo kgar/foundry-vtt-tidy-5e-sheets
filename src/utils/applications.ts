@@ -5,7 +5,7 @@ import {
   SettingsProvider,
   settingStore,
   type CurrentSettings,
-} from 'src/settings/settings';
+} from 'src/settings/settings.svelte';
 import { get } from 'svelte/store';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 

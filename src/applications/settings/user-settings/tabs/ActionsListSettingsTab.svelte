@@ -2,7 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
   import type { Writable } from 'svelte/store';
-  import { SettingsProvider } from 'src/settings/settings';
+  import { SettingsProvider } from 'src/settings/settings.svelte';
   import CheckboxSetting from '../../parts/CheckboxSetting.svelte';
   import type { UserSettingsContext } from '../UserSettings.types';
   import { CONSTANTS } from 'src/constants';

@@ -14,7 +14,7 @@
   import Notice from '../../../../components/notice/Notice.svelte';
   import EncumbranceBar from 'src/sheets/classic/actor/EncumbranceBar.svelte';
   import TabFooter from 'src/sheets/classic/actor/TabFooter.svelte';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import { CONSTANTS } from 'src/constants';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';

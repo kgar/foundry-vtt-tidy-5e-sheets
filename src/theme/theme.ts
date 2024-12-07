@@ -5,7 +5,7 @@ import type {
 } from 'src/types/theme.types';
 import { themeVariables } from './theme-reference';
 import { debug } from 'src/utils/logging';
-import { SettingsProvider } from 'src/settings/settings';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 import { defaultDarkTheme } from './default-dark-theme';
 import { defaultLightTheme } from './default-light-theme';
 import { Colord } from 'colord';

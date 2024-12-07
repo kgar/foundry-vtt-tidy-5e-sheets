@@ -1,7 +1,7 @@
 import { FoundryAdapter } from '../../foundry/foundry-adapter';
 import CharacterSheet from './character/CharacterSheet.svelte';
 import { debug, warn } from 'src/utils/logging';
-import { SettingsProvider, settingStore } from 'src/settings/settings';
+import { SettingsProvider, settingStore } from 'src/settings/settings.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { CONSTANTS } from 'src/constants';
 import { writable } from 'svelte/store';

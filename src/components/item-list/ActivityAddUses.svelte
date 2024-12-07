@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Activity5e } from 'src/foundry/dnd5e.types';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   interface Props {

@@ -2,7 +2,7 @@ import { TidyFlags, type Tidy5eSheetsApi } from 'src/api';
 import type { SystemIntegrationBase } from '../integration-classes';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { SettingsProvider } from 'src/settings/settings';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 
 export class TidyCustomSectionsInDefaultItemSheetIntegration
   implements SystemIntegrationBase

@@ -8,7 +8,7 @@
   import TabFooter from 'src/sheets/classic/actor/TabFooter.svelte';
   import { MaxPreparedSpellsConfigFormApplication } from 'src/applications/max-prepared-spells-config/MaxPreparedSpellsConfigFormApplication';
   import { CONSTANTS } from 'src/constants';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import { rollRawSpellAttack } from 'src/utils/formula';
   import { TidyFlags } from 'src/api';
 

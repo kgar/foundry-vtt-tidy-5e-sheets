@@ -1,7 +1,7 @@
 <script lang="ts">
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
 
   interface Props {
     iconCssClass?: string | undefined;

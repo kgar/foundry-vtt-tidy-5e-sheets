@@ -2,7 +2,7 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import {
   getCurrentSettings,
   type CurrentSettings,
-} from 'src/settings/settings';
+} from 'src/settings/settings.svelte';
 import {
   applyCurrentTheme,
   getThemeOrDefault,

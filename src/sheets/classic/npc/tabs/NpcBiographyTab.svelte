@@ -7,7 +7,7 @@
   import type { Readable } from 'svelte/store';
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
   import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
-  import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
 
