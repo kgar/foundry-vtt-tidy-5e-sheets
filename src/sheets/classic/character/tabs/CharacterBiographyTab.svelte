@@ -17,8 +17,7 @@
 
   type SystemBioField = { field: string; value: string; text: string };
 
-  // kgar-migration-task - make sure these are properly reactive  when editing the form
-  let bioFields: SystemBioField[] = $derived([
+  let bioFields: SystemBioField[] = [
     {
       field: 'system.details.gender',
       value: $context.system.details.gender,
@@ -59,7 +58,7 @@
       value: $context.system.details.faith,
       text: 'DND5E.Faith',
     },
-  ]);
+  ];
 
   let editing = $state(false);
   let contentToEdit: string = $state('');

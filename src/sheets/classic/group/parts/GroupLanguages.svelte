@@ -7,7 +7,7 @@
     GroupSheetClassicContext,
   } from 'src/types/group.types';
   import type { Actor5e } from 'src/types/types';
-  import { getContext } from 'svelte';
+  import { getContext, tick } from 'svelte';
   import { type Readable } from 'svelte/store';
 
   let context = getContext<Readable<GroupSheetClassicContext>>(
@@ -18,11 +18,10 @@
   let hoveredLanguage = $state('');
   let hoveredMembers: Actor5e[] = $state([]);
 
-  // kgar-migration-task - does it work as advertized?
-  function showGroupLanguageTooltip(
+  async function showGroupLanguageTooltip(
     event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
     groupLanguage: GroupLanguage,
-  ): any {
+  ): Promise<any> {
     if (!groupLanguage.members.length) {
       return;
     }
@@ -31,9 +30,10 @@
     hoveredMembers = groupLanguage.members;
 
     const target = event?.currentTarget;
-    setTimeout(() => {
-      Tooltip.show(target, groupLanguageTooltip.getMarkup());
-    });
+
+    await tick();
+
+    Tooltip.show(target, groupLanguageTooltip.getMarkup());
   }
 </script>
 

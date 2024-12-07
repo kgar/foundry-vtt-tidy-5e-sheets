@@ -1,6 +1,5 @@
 ## To Do
 
-- [ ] Resolve `kgar-migration-task` content
 - [ ] Fix? Activities Tab context menu not showing anything
 - [ ] Fix: Spell Pip animations are buck wild, now. Either get them back to normal, or eliminate.
 - [ ] Fix: Item sheets are not showing selected tabs
@@ -118,7 +117,6 @@ Debrief:
 
 Cry.
 
-
 ## TODO List Item Graveyard
 
 - [x] Update deps
@@ -173,7 +171,8 @@ Cry.
 - [x] Item Card Refinement: Shift from mouseover to mouseleave with hiding cards. This is going to be tricky. Make sure it works in a variety of scenarios. One idea: when showing the card for an event target, then wire the mouseleave on that target to ensure show turns off when that target is left.
 - [x] Fixit: Accordion Item error
 - [x] Fix: Item Identified / Equipped toggles are not processing switch change events properly
- - It's the underlying Tidy Switch
+- It's the underlying Tidy Switch
 - [x] Fix inventory grid styles
 - [x] Search and address all instances of `on:` in svelte templates
 - [x] Fix: Tab Selection is behaving inconsistently. Consider revamping.
+- [x] Resolve `kgar-migration-task` content

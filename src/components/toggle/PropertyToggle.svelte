@@ -18,7 +18,7 @@
   let {
     document,
     field,
-    checked,
+    checked = $bindable(false),
     title = '',
     disabled = false,
     iconSrc = null,
@@ -26,37 +26,26 @@
     children,
   }: Props = $props();
 
-  let switchOn: boolean = $state(checked);
-
-  // kgar-migration-tast - is there a simpler way to deal with this scenario? This is far too much indirection for something so seemingly simple
-  $effect(() => {
-    switchOn = checked;
-  });
-
   async function handleChange(newValue: boolean) {
     try {
       const result = await document.update({
         [field]: newValue,
       });
-      if (!result) {
-        switchOn = !newValue;
-      }
     } catch (e) {
       error('An error occurred while toggling a property', false, e);
       debug('Property toggle error troubleshooting info', {
         originalValue: !newValue,
-        state: switchOn,
+        state: checked,
       });
-      switchOn = !newValue;
     }
   }
 </script>
 
 <TidySwitch
-  class="flex-row small-gap tidy-property-toggle {switchOn
+  class="flex-row small-gap tidy-property-toggle {checked
     ? 'active'
     : 'inactive'}"
-  bind:checked={switchOn}
+  bind:checked
   onChange={(ev) => handleChange(ev.currentTarget.checked)}
   {title}
   {disabled}

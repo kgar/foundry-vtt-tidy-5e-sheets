@@ -18,12 +18,7 @@
 
   let appId = $derived($context.document.id);
 
-  let selectedTabId: string;
-
-  // kgar-migration-task - is this necessary? Does it even work? It sounds like we need the current tab ID source to be a state rune
-  $effect(() => {
-    selectedTabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID);
-  });
+  let selectedTabId: string = $state('');
 
   const localize = FoundryAdapter.localize;
 </script>

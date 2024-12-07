@@ -7,7 +7,7 @@
     GroupSkill,
   } from 'src/types/group.types';
   import { formatAsModifier } from 'src/utils/formatting';
-  import { getContext } from 'svelte';
+  import { getContext, tick } from 'svelte';
   import { type Readable } from 'svelte/store';
 
   let context = getContext<Readable<GroupSheetClassicContext>>(
@@ -22,11 +22,10 @@
     total: Number.NEGATIVE_INFINITY,
   });
 
-  // kgar-migration-task - does it work as advertized?
-  function showGroupLanguageTooltip(
+  async function showGroupLanguageTooltip(
     event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
     groupSkill: GroupSkill,
-  ): any {
+  ): Promise<any> {
     if (!groupSkill.members.length) {
       return;
     }
@@ -35,9 +34,9 @@
 
     const target = event?.currentTarget;
 
-    setTimeout(() => {
-      Tooltip.show(target, groupSkillTooltip.getMarkup());
-    });
+    await tick();
+
+    Tooltip.show(target, groupSkillTooltip.getMarkup());
   }
 </script>
 
@@ -47,6 +46,7 @@
     <!-- svelte-ignore a11y_mouse_events_have_key_events -->
     <span
       class="tag"
+      data-tooltip-direction="UP"
       onmouseover={(ev) => showGroupLanguageTooltip(ev, groupSkill)}
     >
       {groupSkill.label}

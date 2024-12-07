@@ -98,14 +98,15 @@
     }
 
     switch (cardType) {
-      case 'activity': {
-        card = {
-          component: ActivityInfoCardV2,
-          props: { activity: entity },
-          title: entity.name,
-        };
-        break;
-      }
+      // case 'activity': {
+      //   card = {
+      //     component: ActivityInfoCardV2,
+      //     props: { activity: entity },
+      //     title: entity.name,
+      //   };
+      //   break;
+      // }
+      // TODO: Uncomment the above case when it's time to implement it
 
       case 'item': {
         if (Inventory.isInventoryType(entity)) {

@@ -70,15 +70,21 @@
     tooltipOccupants = occupants;
     tooltipTitle = title;
 
-    // kgar-migration-task - ensure that this tick is not actually needed. If the tooltip doesn't work right, uncomment this tick
-    // await tick();
+    await tick();
 
-    Tooltip.show(event?.currentTarget, occupantSummaryTooltip.getMarkup());
+    Tooltip.show(
+      (event?.target as HTMLElement | null) ?? event.currentTarget,
+      occupantSummaryTooltip.getMarkup(),
+    );
   }
 </script>
 
 <div class="hidden">
-  <OccupantSummaryTooltip bind:this={occupantSummaryTooltip} />
+  <OccupantSummaryTooltip
+    bind:this={occupantSummaryTooltip}
+    occupants={tooltipOccupants}
+    title={tooltipTitle}
+  />
 </div>
 
 <section class="facility-list-section">
