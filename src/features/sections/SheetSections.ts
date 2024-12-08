@@ -24,7 +24,7 @@ import { SheetPreferencesService } from '../user-preferences/SheetPreferencesSer
 import type { SheetPreference } from '../user-preferences/user-preferences.types';
 import type { Activity5e, CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { error } from 'src/utils/logging';
-import { sortActions } from '../actions/actions.svelte';
+import { getSortedActions } from '../actions/actions.svelte';
 
 export class SheetSections {
   static generateCustomSpellbookSections(
@@ -283,11 +283,13 @@ export class SheetSections {
 
       const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
 
-      sections.forEach((section) => {
-        ItemUtils.sortItems(section.items, sortMode);
+      return sections.map(({ ...section }) => {
+        section.items = ItemUtils.getSortedItems(section.items, sortMode);
 
         // Apply visibility from configuration
         section.show = sectionConfig?.[section.key]?.show !== false;
+
+        return section;
       });
     } catch (e) {
       error('An error occurred while configuring inventory', false, e);
@@ -315,9 +317,9 @@ export class SheetSections {
 
       const sortMode = characterPreferences.tabs?.[tabId]?.sort ?? 'm';
 
-      sections.forEach((section) => {
+      return sections.map(({ ...section }) => {
         // Sort Spellbook
-        ItemUtils.sortItems(section.spells, sortMode);
+        section.spells = ItemUtils.getSortedItems(section.spells, sortMode);
 
         // TODO: Collocate Spellbook Sub Items
 
@@ -325,6 +327,8 @@ export class SheetSections {
         section.show =
           sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.[section.key]
             ?.show !== false;
+
+        return section;
       });
     } catch (e) {
       error('An error occurred while configuring spells', false, e);
@@ -358,7 +362,7 @@ export class SheetSections {
         new Map<string, CharacterFavorite>()
       );
 
-      (configuredFavorites as FavoriteSection[]).forEach((section) => {
+      (configuredFavorites as FavoriteSection[]).forEach(({ ...section }) => {
         if ('effects' in section) {
           let effectContexts = section.effects;
 
@@ -368,11 +372,11 @@ export class SheetSections {
               favoritesIdMap.get(effects.getRelativeUUID(actor))?.sort ??
               Number.MAX_SAFE_INTEGER;
 
-            effectContexts.sort(
+            effectContexts = effectContexts.toSorted(
               (a, b) => getSort(a.effect) - getSort(b.effect)
             );
           } else {
-            effectContexts.sort((a, b) =>
+            effectContexts = effectContexts.toSorted((a, b) =>
               a.effect.name.localeCompare(b.effect.name, game.i18n.lang)
             );
           }
@@ -387,9 +391,9 @@ export class SheetSections {
               favoritesIdMap.get(activity.relativeUUID)?.sort ??
               Number.MAX_SAFE_INTEGER;
 
-            activities.sort((a, b) => getSort(a) - getSort(b));
+            activities = activities.toSorted((a, b) => getSort(a) - getSort(b));
           } else {
-            activities.sort((a, b) =>
+            activities = activities.toSorted((a, b) =>
               a.name.localeCompare(b.name, game.i18n.lang)
             );
           }
@@ -403,9 +407,9 @@ export class SheetSections {
               favoritesIdMap.get(item.getRelativeUUID(actor))?.sort ??
               Number.MAX_SAFE_INTEGER;
 
-            items.sort((a, b) => getSort(a) - getSort(b));
+            items = items.toSorted((a, b) => getSort(a) - getSort(b));
           } else {
-            ItemUtils.sortItems(items, sortMode);
+            items = ItemUtils.getSortedItems(items, sortMode);
           }
 
           // TODO: Collocate Favorite Sub Items
@@ -444,15 +448,17 @@ export class SheetSections {
 
       const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
 
-      features.forEach((section) => {
+      return features.map(({ ...section }) => {
         // Sort Features
-        ItemUtils.sortItems(section.items, sortMode);
+        section.items = ItemUtils.getSortedItems(section.items, sortMode);
 
         // Collocate Feature Sub Items
         section.items = SheetSections.collocateSubItems(context, section.items);
 
         // Apply visibility from configuration
         section.show = sectionConfig?.[section.key]?.show !== false;
+
+        return section;
       });
     } catch (e) {
       error('An error occurred while configuring features', false, e);
@@ -472,10 +478,12 @@ export class SheetSections {
 
       const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
 
-      sections.forEach((section) => {
-        sortActions(section, sortMode);
+      return sections.map(({ ...section }) => {
+        section.actions = getSortedActions(section, sortMode);
 
         section.show = sectionConfigs?.[section.key]?.show !== false;
+
+        return section;
       });
     } catch (e) {
       error('An error occurred while configuring actions', false, e);

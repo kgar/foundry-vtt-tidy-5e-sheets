@@ -61,8 +61,8 @@ export async function getActorActionSections(
   }
 }
 
-export function sortActions(section: ActionSection, sortMode: SortMode) {
-  section.actions.sort(({ item: a }, { item: b }) => {
+export function getSortedActions(section: ActionSection, sortMode: SortMode) {
+  return section.actions.toSorted(({ item: a }, { item: b }) => {
     if (sortMode === 'a') {
       return a.name.localeCompare(b.name, game.i18n.lang);
     }
