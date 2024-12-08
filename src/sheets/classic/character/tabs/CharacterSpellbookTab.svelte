@@ -1,19 +1,14 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type {
-    CharacterSheetContext,
-    ItemLayoutMode,
-    SpellbookSection,
-  } from 'src/types/types';
+  import type { ItemLayoutMode, SpellbookSection } from 'src/types/types';
   import SpellbookList from '../../../../components/spellbook/SpellbookList.svelte';
   import SpellbookFooter from '../../../../components/spellbook/SpellbookFooter.svelte';
   import SpellbookGrid from '../../../../components/spellbook/SpellbookGrid.svelte';
   import SpellbookClassFilter from '../../../../components/spellbook/SpellbookClassFilter.svelte';
-  import { getContext, setContext } from 'svelte';
-  import { writable, type Readable } from 'svelte/store';
+  import { getContext } from 'svelte';
   import NoSpells from 'src/sheets/classic/actor/NoSpells.svelte';
   import Notice from '../../../../components/notice/Notice.svelte';
-  import { settingStore } from 'src/settings/settings';
+  import { settings } from 'src/settings/settings.svelte';
   import { CONSTANTS } from 'src/constants';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
@@ -26,43 +21,31 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import ButtonMenu from 'src/components/button-menu/ButtonMenu.svelte';
   import ButtonMenuCommand from 'src/components/button-menu/ButtonMenuCommand.svelte';
-  import SpellSourceClassAssignmentsFormApplication from 'src/applications/spell-source-class-assignments/SpellSourceClassAssignmentsFormApplication';
+  import SpellSourceClassAssignmentsFormApplication from 'src/applications/spell-source-class-assignments/SpellSourceClassAssignmentsFormApplication.svelte';
+  import {
+    createSearchResultsState,
+    setSearchResultsContext,
+  } from 'src/features/search/search.svelte';
+  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = $derived(getCharacterSheetContext());
+
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
-  $: spellbook = SheetSections.configureSpellbook(
-    $context.actor,
-    tabId,
-    $context.spellbook,
-  );
-
-  const itemIdsToShow = writable<Set<string> | undefined>(undefined);
-  setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
-
-  $: {
-    $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
-      criteria: searchCriteria,
-      itemContext: $context.itemContext,
-      sections: spellbook,
-      tabId: tabId,
-    });
-  }
+  const searchResults = createSearchResultsState();
+  setSearchResultsContext(searchResults);
 
   const localize = FoundryAdapter.localize;
 
-  let searchCriteria: string = '';
+  let searchCriteria: string = $state('');
 
-  let layoutMode: ItemLayoutMode;
-  $: layoutMode = TidyFlags.spellbookGrid.get($context.actor) ? 'grid' : 'list';
-
-  $: selectedClassFilter = TidyFlags.classFilter.get($context.actor) ?? '';
+  let layoutMode: ItemLayoutMode = $derived(
+    TidyFlags.spellbookGrid.get(context.actor) ? 'grid' : 'list',
+  );
 
   function tryFilterByClass(spells: any[]) {
     if (
-      !$settingStore.useMulticlassSpellbookFilter ||
+      !settings.value.useMulticlassSpellbookFilter ||
       selectedClassFilter === ''
     ) {
       return spells;
@@ -74,22 +57,38 @@
     );
   }
 
-  $: noSpellLevels = !$context.spellbook.length;
+  let spellbook = $derived(
+    SheetSections.configureSpellbook(context.actor, tabId, context.spellbook),
+  );
 
-  $: noSpells =
+  $effect(() => {
+    searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
+      criteria: searchCriteria,
+      itemContext: context.itemContext,
+      sections: spellbook,
+      tabId: tabId,
+    });
+  });
+
+  let selectedClassFilter = $derived(
+    TidyFlags.classFilter.get(context.actor) ?? '',
+  );
+  let noSpellLevels = $derived(!context.spellbook.length);
+  let noSpells = $derived(
     spellbook.reduce(
       (count: number, section: SpellbookSection) =>
         count + section.spells.length,
       0,
-    ) === 0;
-
-  $: utilityBarCommands =
-    $context.utilities[tabId]?.utilityToolbarCommands ?? [];
+    ) === 0,
+  );
+  let utilityBarCommands = $derived(
+    context.utilities[tabId]?.utilityToolbarCommands ?? [],
+  );
 </script>
 
 <UtilityToolbar>
   <Search bind:value={searchCriteria} />
-  {#if $settingStore.useMulticlassSpellbookFilter}
+  {#if settings.value.useMulticlassSpellbookFilter}
     <div class="spellbook-class-filter">
       <SpellbookClassFilter />
     </div>
@@ -97,8 +96,8 @@
   <PinnedFilterToggles
     filterGroupName={tabId}
     filters={ItemFilterRuntime.getPinnedFiltersForTab(
-      $context.filterPins,
-      $context.filterData,
+      context.filterPins,
+      context.filterData,
       tabId,
     )}
   />
@@ -112,13 +111,13 @@
     menuElement="div"
   >
     <ButtonMenuCommand
-      on:click={() => {
-        new SpellSourceClassAssignmentsFormApplication($context.actor).render(
+      onMenuClick={() => {
+        new SpellSourceClassAssignmentsFormApplication(context.actor).render(
           true,
         );
       }}
       iconClass="fas fa-list-check"
-      disabled={!$context.editable}
+      disabled={!context.editable}
     >
       {localize('TIDY5E.Utilities.AssignSpellsToClasses')}
     </ButtonMenuCommand>
@@ -129,7 +128,7 @@
       iconClass={command.iconClass}
       text={command.text}
       visible={command.visible ?? true}
-      on:execute={(ev) => command.execute?.(ev.detail)}
+      onExecute={(ev) => command.execute?.(ev)}
     />
   {/each}
 </UtilityToolbar>
@@ -138,7 +137,7 @@
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEMS_CONTAINER}
 >
   {#if noSpellLevels}
-    <NoSpells editable={$context.unlocked} />
+    <NoSpells editable={context.unlocked} />
   {:else}
     {#each spellbook as section (section.key)}
       {#if section.show}
@@ -146,10 +145,10 @@
 
         {@const visibleItemCount = ItemVisibility.countVisibleItems(
           section.spells,
-          $itemIdsToShow,
+          searchResults.uuids,
         )}
 
-        {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemCount > 0 || !!section.slots}
+        {#if (searchCriteria.trim() === '' && context.unlocked) || visibleItemCount > 0 || !!section.slots}
           {#if layoutMode === 'list'}
             <SpellbookList spells={classSpells} {section} />
           {:else}
@@ -160,7 +159,7 @@
     {/each}
   {/if}
 
-  {#if noSpells && !$context.unlocked}
+  {#if noSpells && !context.unlocked}
     <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {/if}
 </div>

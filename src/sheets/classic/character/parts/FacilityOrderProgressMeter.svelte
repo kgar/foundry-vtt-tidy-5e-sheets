@@ -4,20 +4,26 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ChosenFacilityContext } from 'src/types/types';
 
-  export let chosen: ChosenFacilityContext;
-  export let showCraftName: boolean = true;
+  interface Props {
+    chosen: ChosenFacilityContext;
+    showCraftName?: boolean;
+    [key: string]: any;
+  }
 
-  $: icon = getTidyFacilityIcon(chosen.progress.order);
+  let { chosen, showCraftName = true, ...rest }: Props = $props();
 
-  $: orderLabel =
+  let icon = $derived(getTidyFacilityIcon(chosen.progress.order));
+
+  let orderLabel = $derived(
     CONFIG.DND5E.facilities.orders[chosen.progress.order]?.label ??
-    chosen.progress.order;
+      chosen.progress.order,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <div
-  class="facility-progress-meter {$$restProps.class ?? ''}"
+  class="facility-progress-meter {rest.class ?? ''}"
   role="meter"
   aria-valuemin="0"
   aria-valuenow={chosen.progress.pct}

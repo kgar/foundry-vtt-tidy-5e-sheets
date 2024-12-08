@@ -1,12 +1,17 @@
 <script lang="ts">
-  export let borderColor: 'faint' | 'light' | 'separator' = 'faint';
+  interface Props {
+    borderColor?: 'faint' | 'light' | 'separator';
+    [key: string]: any;
+  }
+
+  let { borderColor = 'faint', ...rest }: Props = $props();
 </script>
 
 <div
   aria-hidden="true"
   role="presentation"
-  class="horizontal-line-separator {borderColor} {$$restProps.class ?? ''}"
-/>
+  class="horizontal-line-separator {borderColor} {rest.class ?? ''}"
+></div>
 
 <style lang="scss">
   .horizontal-line-separator {

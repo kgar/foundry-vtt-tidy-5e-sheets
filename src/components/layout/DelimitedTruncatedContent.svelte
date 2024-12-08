@@ -1,8 +1,19 @@
 <script lang="ts">
-  export let delimiter: string = '<span>&#8226;</span>';
-  export let cssClass: string | null = null;
+  import type { Snippet } from 'svelte';
 
-  let dynamicStyles: string = '';
+  interface Props {
+    delimiter?: string;
+    cssClass?: string | null;
+    children?: Snippet;
+  }
+
+  let {
+    delimiter = '<span>&#8226;</span>',
+    cssClass = null,
+    children,
+  }: Props = $props();
+
+  let dynamicStyles: string = $state('');
 
   function contentWithGridStyles(node: HTMLElement) {
     const childrenEntries = Array.from(node.children).entries();
@@ -43,7 +54,7 @@
   use:contentWithGridStyles
   style={dynamicStyles}
 >
-  <slot />
+  {@render children?.()}
 </div>
 
 <style lang="scss">

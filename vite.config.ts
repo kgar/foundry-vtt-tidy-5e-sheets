@@ -37,7 +37,7 @@ export default defineConfig({
     emptyOutDir: true,
     target: ['es2022'],
     lib: {
-      entry: './main.ts',
+      entry: './main.svelte.ts',
       name: 'Tidy5e-Sheet-Kgar',
       fileName: 'main',
       formats: ['es'],

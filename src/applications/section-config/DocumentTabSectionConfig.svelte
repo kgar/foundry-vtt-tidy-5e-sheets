@@ -3,14 +3,21 @@
   import SortingListbox from 'src/components/listbox/SortingListbox.svelte';
   import type { DocumentTabSectionConfigItem } from './section-config.types';
 
-  export let sections: DocumentTabSectionConfigItem[];
-  export let onSaveChanges: (
-    sections: DocumentTabSectionConfigItem[],
-  ) => void | Promise<void>;
-  export let onApply: (
-    sections: DocumentTabSectionConfigItem[],
-  ) => void | Promise<void>;
-  export let useDefault: () => void | Promise<void>;
+  interface Props {
+    sections: DocumentTabSectionConfigItem[];
+    onSaveChanges: (
+      sections: DocumentTabSectionConfigItem[],
+    ) => void | Promise<void>;
+    onApply: (sections: DocumentTabSectionConfigItem[]) => void | Promise<void>;
+    useDefault: () => void | Promise<void>;
+  }
+
+  let {
+    sections = $bindable(),
+    onSaveChanges,
+    onApply,
+    useDefault,
+  }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -23,7 +30,7 @@
     listboxCssClass="scroll-container"
     class="flex-1 overflow-y-hidden"
   >
-    <svelte:fragment slot="itemTemplate" let:item>
+    {#snippet itemTemplate({ item })}
       <span
         data-section-key={item['key']}
         data-testid="section-config-item-label"
@@ -36,7 +43,7 @@
           class="inline-icon-button"
           title={localize('TIDY5E.Section.ConfigDialog.hideTooltip')}
           data-testid="section-config-hide"
-          on:click={() => {
+          onclick={() => {
             item.show = false;
             sections = sections;
           }}
@@ -49,7 +56,7 @@
           class="inline-icon-button"
           title={localize('TIDY5E.Section.ConfigDialog.showTooltip')}
           data-testid="section-config-show"
-          on:click={() => {
+          onclick={() => {
             item.show = true;
             sections = sections;
           }}
@@ -57,7 +64,7 @@
           <i class="far fa-eye-slash fa-fw"></i>
         </button>
       {/if}
-    </svelte:fragment>
+    {/snippet}
   </SortingListbox>
 
   <div class="flex-row small-gap">
@@ -65,27 +72,27 @@
       type="button"
       class="use-default-btn"
       data-testid="section-config-use-default"
-      on:click={(ev) => useDefault()}
+      onclick={(ev) => useDefault()}
     >
-      <i class="fas fa-rotate-right" />
+      <i class="fas fa-rotate-right"></i>
       {localize('TIDY5E.UseDefault')}
     </button>
     <button
       type="button"
       data-testid="section-config-save-changes"
-      on:click={(ev) => onSaveChanges(sections)}
+      onclick={(ev) => onSaveChanges(sections)}
       class="save-changes-btn"
     >
-      <i class="fas fa-save" />
+      <i class="fas fa-save"></i>
       {localize('TIDY5E.SaveChanges')}
     </button>
     <button
       type="button"
       class="apply-changes-btn"
       data-testid="section-config-apply-changes"
-      on:click={() => onApply(sections)}
+      onclick={() => onApply(sections)}
     >
-      <i class="fas fa-check" />
+      <i class="fas fa-check"></i>
       {localize('TIDY5E.ApplyChanges')}
     </button>
   </div>

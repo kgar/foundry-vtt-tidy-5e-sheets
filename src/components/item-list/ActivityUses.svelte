@@ -2,7 +2,11 @@
   import type { Activity5e } from 'src/foundry/dnd5e.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
-  export let activity: any;
+  interface Props {
+    activity: any;
+  }
+
+  let { activity }: Props = $props();
 
   function onUsesMaxChanged(
     event: Event & {
@@ -25,10 +29,13 @@
     class="uses-value"
     type="text"
     value={activity.uses.value}
-    on:change|stopPropagation|preventDefault={(event) =>
-      FoundryAdapter.handleActivityUsesChanged(event, activity)}
+    onchange={(event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      FoundryAdapter.handleActivityUsesChanged(event, activity);
+    }}
     disabled={!activity.item.isOwner}
-    on:focus={(ev) => ev.currentTarget.select()}
+    onfocus={(ev) => ev.currentTarget.select()}
     data-tidy-field="uses.value"
   />
   /
@@ -36,10 +43,13 @@
     class="uses-max"
     type="text"
     value={activity.uses.max}
-    on:change|stopPropagation|preventDefault={(event) =>
-      onUsesMaxChanged(event, activity)}
+    onchange={(event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      onUsesMaxChanged(event, activity);
+    }}
     disabled={!activity.item.isOwner}
-    on:focus={(ev) => ev.currentTarget.select()}
+    onfocus={(ev) => ev.currentTarget.select()}
     data-tidy-field="uses.max"
   />
 </div>

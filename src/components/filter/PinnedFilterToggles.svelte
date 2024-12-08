@@ -3,8 +3,12 @@
   import PinnedFilterToggle from './PinnedFilterToggle.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
-  export let filters: ConfiguredItemFilter[];
-  export let filterGroupName: string;
+  interface Props {
+    filters: ConfiguredItemFilter[];
+    filterGroupName: string;
+  }
+
+  let { filters, filterGroupName }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -18,4 +22,3 @@
     {/each}
   </div>
 {/if}
-

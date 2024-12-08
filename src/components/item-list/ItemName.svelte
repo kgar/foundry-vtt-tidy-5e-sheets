@@ -1,33 +1,43 @@
 <script lang="ts">
-  import { settingStore } from 'src/settings/settings';
+  import { settings } from 'src/settings/settings.svelte';
   import type { Item5e } from 'src/types/item.types';
-  import { createEventDispatcher } from 'svelte';
   import ActiveEffectsMarker from './ActiveEffectsMarker.svelte';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import type { Snippet } from 'svelte';
 
-  export let cssClass: string = '';
-  export let hasChildren = true;
-  export let item: Item5e;
-  export let useActiveEffectsMarker: boolean = true;
+  interface Props {
+    cssClass?: string;
+    hasChildren?: boolean;
+    item: Item5e;
+    useActiveEffectsMarker?: boolean;
+    onToggle?: (event: Event) => void;
+    children?: Snippet;
+  }
 
-  $: hasActiveEffects = !!item.effects?.size;
+  let {
+    cssClass = '',
+    hasChildren = true,
+    item,
+    useActiveEffectsMarker = true,
+    onToggle,
+    children,
+  }: Props = $props();
 
-  const dispatcher = createEventDispatcher<{ toggle: Event }>();
+  let hasActiveEffects = $derived(!!item.effects?.size);
 </script>
 
-<!-- TODO: Make this a button -->
+<!-- TODO: Make this an anchor -->
 <span
   role="button"
-  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-  on:click={(ev) => dispatcher('toggle', ev)}
+  tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
+  onclick={(ev) => onToggle?.(ev)}
   class="item-name truncate {cssClass}"
   class:has-children={hasChildren}
-  on:keypress={(ev) => ev.key === 'Enter' && dispatcher('toggle', ev)}
+  onkeypress={(ev) => ev.key === 'Enter' && onToggle?.(ev)}
   class:italic={item.system.identified === false}
 >
-  <slot />
+  {@render children?.()}
 </span>
-{#if useActiveEffectsMarker && $settingStore.showActiveEffectsMarker && hasActiveEffects}
+{#if useActiveEffectsMarker && settings.value.showActiveEffectsMarker && hasActiveEffects}
   <ActiveEffectsMarker />
 {/if}
 

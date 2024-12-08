@@ -1,4 +1,4 @@
-import type { CurrentSettings } from 'src/settings/settings';
+import type { CurrentSettings } from 'src/settings/settings.svelte';
 
 export type Tidy5eTheme = {
   id: string;

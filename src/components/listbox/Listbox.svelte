@@ -1,34 +1,74 @@
 <script lang="ts">
+  import type { Snippet } from 'svelte';
   import { flip } from 'svelte/animate';
   import { crossfade } from 'svelte/transition';
-  import { createEventDispatcher } from 'svelte';
 
   const [send, receive] = crossfade({});
 
   type TItem = $$Generic;
-  export let items: TItem[];
-  export let labelProp: keyof TItem;
-  export let valueProp: keyof TItem;
-  export let selectedItemIndex: number | null = null;
-  export let draggable = false;
+  interface Props {
+    items: TItem[];
+    labelProp: keyof TItem;
+    valueProp: keyof TItem;
+    selectedItemIndex?: number | null;
+    draggable?: boolean;
+    itemTemplate?: Snippet<[any]>;
+    onselect?: (selectedIndex: number) => void;
+    onkeydown?: (event: KeyboardEvent & { currentTarget: HTMLElement }) => void;
+    ondragstart?: (detail: {
+      item: TItem;
+      index: number;
+      event: DragEvent;
+    }) => void;
+    ondragend?: (detail: {
+      item: TItem;
+      index: number;
+      event: DragEvent;
+    }) => void;
+    onlistboxDrop?: (event: DragEvent) => void;
+    ondrop?: (detail: { item: TItem; index: number; event: DragEvent }) => void;
+    ondragover?: (detail: {
+      item: TItem;
+      index: number;
+      event: DragEvent;
+    }) => void;
+    ondragenter?: (detail: {
+      item: TItem;
+      index: number;
+      event: DragEvent;
+    }) => void;
+    ondragleave?: (detail: {
+      item: TItem;
+      index: number;
+      event: DragEvent;
+    }) => void;
+    [key: string]: any;
+  }
+
+  let {
+    items = $bindable([]),
+    labelProp,
+    valueProp,
+    selectedItemIndex = $bindable(null),
+    draggable = false,
+    itemTemplate,
+    onselect,
+    onkeydown,
+    ondragstart,
+    ondragend,
+    onlistboxDrop,
+    ondrop,
+    ondragover,
+    ondragenter,
+    ondragleave,
+    ...rest
+  }: Props = $props();
 
   interface $$Slots {
     itemTemplate: { item: TItem };
   }
 
   let idRandomizer = Math.random().toString().substring(2);
-
-  const dispatcher = createEventDispatcher<{
-    select: number;
-    keydown: KeyboardEvent & { currentTarget: HTMLElement };
-    dragstart: { item: TItem; index: number; event: DragEvent };
-    dragend: { item: TItem; index: number; event: DragEvent };
-    listboxDrop: { event: DragEvent };
-    drop: { item: TItem; index: number; event: DragEvent };
-    dragover: { item: TItem; index: number; event: DragEvent };
-    dragenter: { item: TItem; index: number; event: DragEvent };
-    dragleave: { item: TItem; index: number; event: DragEvent };
-  }>();
 
   let listbox: HTMLElement;
 
@@ -57,25 +97,25 @@
         ?.scrollIntoView({ block: 'nearest' });
     }
 
-    dispatcher('keydown', ev);
+    onkeydown?.(ev);
   }
 
   function selectItemAt(index: number) {
     selectedItemIndex = index;
-    dispatcher('select', index);
+    onselect?.(index);
   }
 </script>
 
 <ul
   bind:this={listbox}
   role="listbox"
-  class="listbox {$$props.class ?? ''}"
+  class="listbox {rest.class ?? ''}"
   aria-activedescendant={selectedItemIndex !== null
     ? `listbox-item-${selectedItemIndex}-${idRandomizer}`
     : null}
   tabindex="0"
-  on:keydown={handleListboxKeyDown}
-  on:drop={(ev) => dispatcher('listboxDrop', { event: ev })}
+  onkeydown={handleListboxKeyDown}
+  ondrop={(ev) => onlistboxDrop?.(ev)}
 >
   {#each items as item, i (item[valueProp])}
     <li
@@ -84,19 +124,15 @@
       aria-selected={selectedItemIndex === i}
       class:focused={selectedItemIndex === i}
       class="flex-row small-gap align-items-center"
-      on:click={() => selectItemAt(i)}
-      on:keydown={(ev) => handleListboxKeyDown(ev)}
+      onclick={() => selectItemAt(i)}
+      onkeydown={(ev) => handleListboxKeyDown(ev)}
       {draggable}
-      on:dragstart={(ev) =>
-        dispatcher('dragstart', { event: ev, item, index: i })}
-      on:dragend={(ev) => dispatcher('dragend', { event: ev, item, index: i })}
-      on:drop={(ev) => dispatcher('drop', { event: ev, item, index: i })}
-      on:dragover={(ev) =>
-        dispatcher('dragover', { event: ev, item, index: i })}
-      on:dragenter={(ev) =>
-        dispatcher('dragenter', { event: ev, item, index: i })}
-      on:dragleave={(ev) =>
-        dispatcher('dragleave', { event: ev, item, index: i })}
+      ondragstart={(ev) => ondragstart?.({ event: ev, item, index: i })}
+      ondragend={(ev) => ondragend?.({ event: ev, item, index: i })}
+      ondrop={(ev) => ondrop?.({ event: ev, item, index: i })}
+      ondragover={(ev) => ondragover?.({ event: ev, item, index: i })}
+      ondragenter={(ev) => ondragenter?.({ event: ev, item, index: i })}
+      ondragleave={(ev) => ondragleave?.({ event: ev, item, index: i })}
       animate:flip={{ duration: 150 }}
       in:receive={{ key: item[valueProp] }}
       out:send={{ key: item[valueProp] }}
@@ -104,9 +140,9 @@
       {#if draggable}
         <i class="drag-grip fa-solid fa-grip-lines fa-fw"></i>
       {/if}
-      <slot name="itemTemplate" {item}>
+      {#if itemTemplate}{@render itemTemplate({ item })}{:else}
         {item[labelProp]}
-      </slot>
+      {/if}
     </li>
   {/each}
 </ul>

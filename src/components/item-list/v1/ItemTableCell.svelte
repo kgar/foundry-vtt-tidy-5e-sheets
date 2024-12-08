@@ -1,36 +1,49 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { setContext } from 'svelte';
-  import { writable } from 'svelte/store';
+  import { setContext, type Snippet } from 'svelte';
 
-  export let baseWidth: string | undefined = undefined;
-  export let primary: boolean = false;
-  export let cssClass: string = '';
-  export let title: string | undefined = undefined;
+  interface Props {
+    baseWidth?: string | undefined;
+    primary?: boolean;
+    cssClass?: string;
+    title?: string | undefined;
+    children?: Snippet;
+    [key: string]: any;
+  }
 
-  const isHovering = writable<boolean>(false);
+  let {
+    baseWidth = undefined,
+    primary = false,
+    cssClass = '',
+    title = undefined,
+    children,
+    ...rest
+  }: Props = $props();
+
+  let isHovering = $state(false);
+  
   setContext(CONSTANTS.CONTEXT_GRID_CELL_HOVER, isHovering);
 
   function mouseEnter(ev: MouseEvent) {
-    isHovering.set(true);
+    isHovering = true;
   }
 
   function mouseLeave(ev: MouseEvent) {
-    isHovering.set(false);
+    isHovering = false;
   }
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
   class="item-table-cell {cssClass}"
   class:primary
   style:flex-basis={baseWidth}
   {title}
-  on:mouseenter={mouseEnter}
-  on:mouseleave={mouseLeave}
-  {...$$props.attributes}
+  onmouseenter={mouseEnter}
+  onmouseleave={mouseLeave}
+  {...rest.attributes}
 >
-  <slot />
+  {@render children?.()}
 </div>
 
 <style lang="scss">

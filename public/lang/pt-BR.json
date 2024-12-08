@@ -82,7 +82,6 @@
     "TIDY5E.Search": "Procurar",
     "TIDY5E.SearchClear": "Limpar Pesquisa",
     "TIDY5E.SearchHint": "Digite para exibir os resultados da busca",
-    "TIDY5E.ItemCardsKeyHint": "Pressione e segure a tecla para interagir com o cartão",
     "TIDY5E.ItemCardsMouseHint": "Clique com o botão do meio do mouse para visualizar/editar o item",
     "TIDY5E.AbbrMod": "Mod",
     "TIDY5E.AbbrSavingThrow": "Salvaguarda",
@@ -254,10 +253,6 @@
     "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
         "name": "Usar Tab Entre PVs da Ficha Padrão",
         "hint": "A ficha padrão permite o uso do tab do PV Atual para PV Temporário. A ativação dessa opção replica esse comportamento. Essa configuração será ignorada se a opção \"Usar Suporte a Teclado Acessível\" estiver desativada."
-    },
-    "TIDY5E.Settings.ItemCardsFixKey": {
-        "name": "Tecla de Fixação do Cartão de Item",
-        "hint": "Segure esta tecla (por exemplo, a tecla \"x\") enquanto estiver visualizando um cartão de item para mantê-lo visível e permitir a interação."
     },
     "TIDY5E.Settings.DefaultTheme": {
         "name": "Tema de Cor Padrão",

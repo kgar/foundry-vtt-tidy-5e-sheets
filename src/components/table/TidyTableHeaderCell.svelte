@@ -1,25 +1,38 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService';
+  import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService.svelte';
   import TidyTableToggleIcon from 'src/components/table/TidyTableToggleIcon.svelte';
+  import type { Snippet } from 'svelte';
 
-  export let primary: boolean = false;
-  export let baseWidth: string | null = null;
-  export let title: string | null = null;
+  interface Props {
+    primary?: boolean;
+    baseWidth?: string | null;
+    title?: string | null;
+    children?: Snippet;
+    [key: string]: any;
+  }
+
+  let {
+    primary = false,
+    baseWidth = null,
+    title = null,
+    children,
+    ...rest
+  }: Props = $props();
 
   const expandCollapseService = ExpandCollapseService.getService();
-  $: expandState = expandCollapseService.state;
+  let expandState = $derived(expandCollapseService.state);
 </script>
 
 <div
-  class="tidy-table-header-cell {$$restProps.class ?? ''}"
+  class="tidy-table-header-cell {rest.class ?? ''}"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TABLE_HEADER_CELL}
   class:primary
   style:flex-basis={baseWidth}
   {title}
 >
-  {#if primary && $expandState.toggleable}
-    <TidyTableToggleIcon expanded={$expandState.expanded} />
+  {#if primary && expandState?.toggleable}
+    <TidyTableToggleIcon expanded={expandState.expanded} />
   {/if}
-  <slot />
+  {@render children?.()}
 </div>

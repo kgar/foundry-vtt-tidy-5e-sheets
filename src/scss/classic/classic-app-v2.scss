@@ -136,8 +136,6 @@
     @import '../../sheets/classic/actor/traits/traits';
   }
 
-  @import './partials/item-card';
-
   &:is(.group) {
     --t5e-classic-tab-contents-padding-bottom: 0;
   }
@@ -266,6 +264,7 @@
   @import '../../components/listbox/listbox.scss';
   @import '../../components/editor/SheetEditorV2.scss';
   @import '../../components/tabs/UnderlinedTabStrip.scss';
+  @import './components/info-card.scss';
   @import './components/tabs.scss';
 
   // TODO: Buttons V2?

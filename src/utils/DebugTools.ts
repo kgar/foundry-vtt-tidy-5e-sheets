@@ -1,9 +1,9 @@
 import { type Tidy5eSheetsApi } from 'src/api';
-import { SettingsProvider } from 'src/settings/settings';
+import { settings } from 'src/settings/settings.svelte';
 
 export class DebugTools {
   static onReady(api: Tidy5eSheetsApi) {
-    if (SettingsProvider.settings.debug.get()) {
+    if (settings.value.debug) {
       async function onDebugButtonClick(app: any) {
         ui.notifications.info(`${app.document.name} written to the console.`);
         console.log(app.document);

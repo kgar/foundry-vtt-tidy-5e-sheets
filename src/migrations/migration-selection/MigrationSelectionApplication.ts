@@ -1,4 +1,4 @@
-import type { SvelteComponent } from 'svelte';
+import { mount } from 'svelte';
 import SvelteFormApplicationBase from 'src/applications/SvelteFormApplicationBase';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import MigrationSelection from './MigrationSelection.svelte';
@@ -45,7 +45,7 @@ export class MigrationSelectionApplication<
     );
   }
 
-  createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
+  createComponent(node: HTMLElement): Record<string, any> {
     const selectableParams: SelectableMigrationSelectionParams<T> = {
       ...this._params,
       selectables: this._params.documents.map((d) => ({
@@ -53,7 +53,7 @@ export class MigrationSelectionApplication<
         selected: true,
       })),
     };
-    return new MigrationSelection({
+    return mount(MigrationSelection, {
       target: node,
       props: {
         params: selectableParams,

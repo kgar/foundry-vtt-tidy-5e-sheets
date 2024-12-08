@@ -1,19 +1,29 @@
 <script lang="ts">
   import { getPercentage } from 'src/utils/numbers';
 
-  export let value: number | null | undefined = null;
-  export let max: number | null | undefined = null;
-  export let percentage: number | null = null;
-  export let color: string = 'var(--t5e-hp-bar-color)';
-  export let cssClass: string | null = null;
+  interface Props {
+    value?: number | null | undefined;
+    max?: number | null | undefined;
+    percentage?: number | null;
+    color?: string;
+    cssClass?: string | null;
+  }
 
-  $: barPercentage = percentage ?? getPercentage(value, max);
+  let {
+    value = null,
+    max = null,
+    percentage = null,
+    color = 'var(--t5e-hp-bar-color)',
+    cssClass = null,
+  }: Props = $props();
+
+  let barPercentage = $derived(percentage ?? getPercentage(value, max));
 </script>
 
 <div
   class="bar {cssClass}"
   style="width: {barPercentage}%; --bar-color: {color}"
-/>
+></div>
 
 <style lang="scss">
   .bar {

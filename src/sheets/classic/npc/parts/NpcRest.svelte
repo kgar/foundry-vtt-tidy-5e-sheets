@@ -1,52 +1,47 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { NpcSheetContext } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
-  import { settingStore } from 'src/settings/settings';
-  import { CONSTANTS } from 'src/constants';
+  import { settings } from 'src/settings/settings.svelte';
+  import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<NpcSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = $derived(getNpcSheetContext());
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <div
   class="rest-container"
-  class:has-rounded-portrait={$context.useRoundedPortraitStyle}
+  class:has-rounded-portrait={context.useRoundedPortraitStyle}
   title={localize('TIDY5E.RestHint')}
 >
   <div class="resting">
     <span class="resting-icon">
-      <i class="rest-icon fas fa-bed" />
+      <i class="rest-icon fas fa-bed"></i>
     </span>
     <button
       type="button"
       class="rest short-rest inline-icon-button"
       title={localize('TIDY5E.ShortRest')}
-      on:click={(ev) => $context.shortRest(ev)}
-      disabled={!$context.editable}
-      tabindex={!$settingStore.useDefaultSheetHpTabbing &&
-      $settingStore.useAccessibleKeyboardSupport
+      onclick={(ev) => context.shortRest(ev)}
+      disabled={!context.editable}
+      tabindex={!settings.value.useDefaultSheetHpTabbing &&
+      settings.value.useAccessibleKeyboardSupport
         ? 0
         : -1}
     >
-      <i class="fas fa-hourglass-half" />
+      <i class="fas fa-hourglass-half"></i>
     </button>
     <button
       type="button"
       class="rest long-rest inline-icon-button"
       title={localize('TIDY5E.LongRest')}
-      on:click={(ev) => $context.longRest(ev)}
-      disabled={!$context.editable}
-      tabindex={!$settingStore.useDefaultSheetHpTabbing &&
-      $settingStore.useAccessibleKeyboardSupport
+      onclick={(ev) => context.longRest(ev)}
+      disabled={!context.editable}
+      tabindex={!settings.value.useDefaultSheetHpTabbing &&
+      settings.value.useAccessibleKeyboardSupport
         ? 0
         : -1}
     >
-      <i class="fas fa-hourglass-end" />
+      <i class="fas fa-hourglass-end"></i>
     </button>
   </div>
 </div>

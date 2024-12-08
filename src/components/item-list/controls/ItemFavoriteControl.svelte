@@ -3,11 +3,17 @@
   import ItemControl from './ItemControl.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
-  export let item: Item5e;
+  interface Props {
+    item: Item5e;
+  }
 
-  $: active = FoundryAdapter.isItemFavorited(item);
-  $: title = FoundryAdapter.localize(
-    active ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
+  let { item }: Props = $props();
+
+  let active = $derived(FoundryAdapter.isItemFavorited(item));
+  let title = $derived(
+    FoundryAdapter.localize(
+      active ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
+    ),
   );
 </script>
 

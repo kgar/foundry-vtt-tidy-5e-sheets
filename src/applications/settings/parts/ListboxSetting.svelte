@@ -1,15 +1,31 @@
 <script lang="ts">
   import SelectionListbox from 'src/components/listbox/SelectionListbox.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import type { Snippet } from 'svelte';
 
-  export let name: string;
-  export let hint: string;
-  export let leftHeader: string = '';
-  export let leftItems: any[];
-  export let rightHeader: string = '';
-  export let rightItems: any[];
-  export let labelProp: string;
-  export let valueProp: string;
+  interface Props {
+    name: string;
+    hint: string;
+    leftHeaderText?: string;
+    leftItems: any[];
+    rightHeaderText?: string;
+    rightItems: any[];
+    labelProp: string;
+    valueProp: string;
+    belowListbox?: Snippet;
+  }
+
+  let {
+    name,
+    hint,
+    leftHeaderText = '',
+    leftItems = $bindable(),
+    rightHeaderText = '',
+    rightItems = $bindable(),
+    labelProp,
+    valueProp,
+    belowListbox,
+  }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -22,10 +38,14 @@
     </p>
     <div class="flex-column small-gap">
       <SelectionListbox bind:leftItems bind:rightItems {labelProp} {valueProp}>
-        <b slot="leftHeader">{localize(leftHeader)}</b>
-        <b slot="rightHeader">{localize(rightHeader)}</b>
+        {#snippet leftHeader()}
+          <b>{localize(leftHeaderText)}</b>
+        {/snippet}
+        {#snippet rightHeader()}
+          <b>{localize(rightHeaderText)}</b>
+        {/snippet}
       </SelectionListbox>
-      <slot name="below-listbox" />
+      {@render belowListbox?.()}
     </div>
   </div>
 </article>

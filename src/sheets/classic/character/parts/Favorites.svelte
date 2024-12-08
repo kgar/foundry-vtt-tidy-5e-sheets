@@ -1,11 +1,9 @@
 <script lang="ts">
-  import type { CharacterSheetContext } from 'src/types/types';
   import InventoryList from '../../actor/InventoryList.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import FavoriteFeaturesList from './FavoriteFeaturesList.svelte';
   import FavoriteSpellsList from 'src/sheets/classic/character/parts/FavoriteSpellsList.svelte';
-  import { getContext, setContext } from 'svelte';
-  import { writable, type Readable } from 'svelte/store';
+  import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
   import FavoriteEffectsList from './FavoriteEffectsList.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
@@ -14,39 +12,49 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import FavoriteFacilitiesList from './FavoriteFacilitiesList.svelte';
   import FavoriteActivitiesList from './FavoriteActivitiesList.svelte';
+  import {
+    createSearchResultsState,
+    setSearchResultsContext,
+  } from 'src/features/search/search.svelte';
+  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  export let searchCriteria: string = '';
+  interface Props {
+    searchCriteria?: string;
+  }
 
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let { searchCriteria = '' }: Props = $props();
+
+  let context = $derived(getCharacterSheetContext());
+
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
-  $: favorites = SheetSections.configureFavorites(
-    $context.favorites,
-    $context.actor,
-    tabId,
-    SheetPreferencesService.getByType($context.actor.type),
-    TidyFlags.sectionConfig.get($context.actor)?.[tabId],
+  let favorites = $derived(
+    SheetSections.configureFavorites(
+      context.favorites,
+      context.actor,
+      tabId,
+      SheetPreferencesService.getByType(context.actor.type),
+      TidyFlags.sectionConfig.get(context.actor)?.[tabId],
+    ),
   );
 
-  const itemIdsToShow = writable<Set<string> | undefined>(undefined);
-  setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
+  const searchResults = createSearchResultsState();
+  setSearchResultsContext(searchResults);
 
-  $: {
+  $effect(() => {
     const sections = favorites.filter(
       (x) =>
         x.type !== CONSTANTS.FAVORITES_SECTION_TYPE_EFFECT &&
         x.type !== CONSTANTS.FAVORITES_SECTION_TYPE_ACTIVITY,
     );
 
-    $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
+    searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
-      itemContext: $context.itemContext,
+      itemContext: context.itemContext,
       sections: sections,
       tabId: tabId,
     });
-  }
+  });
 
   const localize = FoundryAdapter.localize;
 </script>

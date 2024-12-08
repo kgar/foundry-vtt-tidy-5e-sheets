@@ -1,8 +1,12 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService';
+  import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService.svelte';
 
-  export let expanded = true;
+  interface Props {
+    expanded?: boolean;
+  }
+
+  let { expanded = true }: Props = $props();
 </script>
 
 <i

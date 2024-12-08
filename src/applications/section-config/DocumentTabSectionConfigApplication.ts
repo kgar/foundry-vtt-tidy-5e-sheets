@@ -1,4 +1,4 @@
-import type { SvelteComponent } from 'svelte';
+import { mount } from 'svelte';
 import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
 import DocumentTabSectionConfig from './DocumentTabSectionConfig.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -53,8 +53,8 @@ export class DocumentTabSectionConfigApplication extends SvelteFormApplicationBa
     });
   }
 
-  createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
-    return new DocumentTabSectionConfig({
+  createComponent(node: HTMLElement): Record<string, any> {
+    return mount(DocumentTabSectionConfig, {
       target: node,
       props: {
         sections: this.sections.map((curr: DocumentTabSectionConfigItem) => {

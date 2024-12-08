@@ -1,9 +1,13 @@
 <script lang="ts">
   import Bar from './Bar.svelte';
 
-  export let value: number | null | undefined = null;
-  export let max: number | null | undefined = null;
-  export let percentage: number | null = null;
+  interface Props {
+    value?: number | null | undefined;
+    max?: number | null | undefined;
+    percentage?: number | null;
+  }
+
+  let { value = null, max = null, percentage = null }: Props = $props();
 </script>
 
 <Bar {value} {max} {percentage} color="var(--t5e-resource-bar-color)" />

@@ -108,7 +108,6 @@
     "TIDY5E.SearchClear": "검색 지우기",
     "TIDY5E.SearchHint": "찾고자 하는 것을 입력합니다.",
 
-    "TIDY5E.ItemCardsKeyHint": "키를 눌러 카드와 상호작용",
     "TIDY5E.ItemCardsMouseHint": "마우스 휠 클릭을 통해 아이템 보기/편집",
 
     "TIDY5E.AbbrMod": "수정치",
@@ -297,10 +296,6 @@
     "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
         "name": "기본 시트 HP 키보드 탭 사용",
         "hint": "기본 5e 시트는 현재 HP 입력에서 현재 임시 HP 입력으로 키보드 탭 이동을 허용합니다. 이 설정을 활성화하면 해당 동작이 복제됩니다. \"접근 가능한 키보드 지원 사용\"이 꺼져 있으면 이 설정은 무시됩니다."
-    },
-    "TIDY5E.Settings.ItemCardsFixKey": {
-        "name": "아이템 카드 상호 작용 키",
-        "hint": "키(e.g.: x)를 눌러 아이템 카드와 상호작용합니다. 기능 키(Ctrl, alt, etc..)를 제외한 모든 키가 될 수 있습니다."
     },
     "TIDY5E.Settings.DefaultTheme": {
         "name": "기본 색 테마",
