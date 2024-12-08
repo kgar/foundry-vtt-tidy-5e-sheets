@@ -34,7 +34,7 @@
   const selector = `[${infoCardAttributeKey}], .tidy-info-card`;
   const uuidAttribute = 'data-info-card-entity-uuid';
   const sheetEl = $derived<HTMLElement>(
-    sheet.element.get?.(0) ?? sheet.element,
+    FoundryAdapter.getElementFromAppV1OrV2(sheet.element)
   );
 
   let staticCardPosition = $derived.by<'left' | 'right'>(() => {

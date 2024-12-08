@@ -1,14 +1,21 @@
 ## To Do
 
 - [ ] Check all Tidy Migration applications
+  - [ ] Migration Selection is not closing after Confirm clicked
+  - [ ] 
 - [ ] Finish more migration tasks that came from recent work
-- [ ] Ensure context API where reactivity is expected is using runes
+- [ ] Ensure context API where reactivity is expected is using runes / proper closures; it might be time to come up with a common type for stateful primitives sent through context API
 - [ ] Fix: World Settings has warning: [svelte] binding_property_non_reactive`bind:value={config.type}` (src/applications/settings/parts/ExhaustionSetting.svelte:33:48) is binding to a non-reactive property
 - [ ] Fix: Settings tabs are blank
+- [ ] Fix: Message Bus is not reactive
+- [ ] Fix: Item Filters are bugged. They don't fully cycle and don't visualize current state after a change.
 - [ ] Optimize: Section Config prep / setup
   - Section config is a little cumbersome to deal with right now. It is requiring a `sections` param on the utility toolbar command params and a duplicate set of section data for container.
   - Can we isolate the actual section preparation, indpependent of the item preparation for those sections? Can that be shared?
   - Can the section config application somehow do the isolated section ordering / showing / hiding / etc. by itself?
+- [ ] Refactor: `Tabs` wants a sheet prop so it can check if a tab navigation is allowed and to trigger some tab selection events when permitted. Now that context sans stores has been upended in Svelte 5, consider instead sending exactly what `Tabs` needs for its specific use case as context from the sheet, directly, in the form of a callback or function binding.
+- [ ] Fix: MigrationSelection.svelte:90 [svelte] binding_property_non_reactive `bind:checked={selectable.selected}` (src/migrations/migration-selection/MigrationSelection.svelte:93:37) is binding to a non-reactive property
+- [ ] 
 
 ## Stretch, or defer to post V7.3.0
 

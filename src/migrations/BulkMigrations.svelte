@@ -19,9 +19,7 @@
   }
 
   let {
-    selectedTabId = $bindable(
-      CONSTANTS.TAB_MIGRATIONS_SPELL_CLASS_TO_SOURCE_CLASS,
-    ),
+    selectedTabId = $bindable(CONSTANTS.TAB_MIGRATIONS_NPC_EXHAUSTION),
   }: Props = $props();
 
   const localize = FoundryAdapter.localize;

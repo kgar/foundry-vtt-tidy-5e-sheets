@@ -25,6 +25,7 @@ import { CustomContentManager } from 'src/runtime/content/CustomContentManager';
 import { ConfigApi } from './config/ConfigApi';
 import { GroupSheetRuntime } from 'src/runtime/GroupSheetRuntime';
 import { HeaderControlsRuntime } from 'src/runtime/header-controls/HeaderControlsRuntime';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -117,7 +118,7 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is a Tidy 5e Character sheet
    */
   isTidy5eCharacterSheet(app: any) {
-    const element = app.element.get?.(0) ?? app.element;
+    const element = FoundryAdapter.getElementFromAppV1OrV2(app.element);
     return element.matches(`.tidy5e-sheet.sheet.character`);
   }
 
@@ -127,7 +128,7 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is a Tidy 5e Container sheet
    */
   isTidy5eContainerSheet(app: any) {
-    const element = app.element.get?.(0) ?? app.element;
+    const element = FoundryAdapter.getElementFromAppV1OrV2(app.element);
     return element.matches(`.tidy5e-sheet.sheet.container`);
   }
 
@@ -137,7 +138,7 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is a Tidy 5e Group sheet
    */
   isTidy5eGroupSheet(app: any) {
-    const element = app.element.get?.(0) ?? app.element;
+    const element = FoundryAdapter.getElementFromAppV1OrV2(app.element);
     return element.matches(`.tidy5e-sheet.sheet.group`);
   }
 
@@ -147,7 +148,7 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is a Tidy 5e Item sheet
    */
   isTidy5eItemSheet(app: any) {
-    const element = app.element.get?.(0) ?? app.element;
+    const element = FoundryAdapter.getElementFromAppV1OrV2(app.element);
     return element.matches(`.tidy5e-sheet.sheet.item`);
   }
 
@@ -157,7 +158,7 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is a Tidy 5e NPC sheet
    */
   isTidy5eNpcSheet(app: any) {
-    const element = app.element.get?.(0) ?? app.element;
+    const element = FoundryAdapter.getElementFromAppV1OrV2(app.element);
     return element.matches(`.tidy5e-sheet.sheet.npc`);
   }
 
@@ -167,7 +168,7 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is any Tidy 5e sheet
    */
   isTidy5eSheet(app: any) {
-    const element = app.element.get?.(0) ?? app.element;
+    const element = FoundryAdapter.getElementFromAppV1OrV2(app.element);
     return element.matches(`.tidy5e-sheet.sheet`);
   }
 
@@ -177,7 +178,7 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is a Tidy 5e Vehicle sheet
    */
   isTidy5eVehicleSheet(app: any) {
-    const element = app.element.get?.(0) ?? app.element;
+    const element = FoundryAdapter.getElementFromAppV1OrV2(app.element);
     return element.matches(`.tidy5e-sheet.sheet.vehicle`);
   }
 

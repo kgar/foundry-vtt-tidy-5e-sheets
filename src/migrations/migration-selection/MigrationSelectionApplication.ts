@@ -35,6 +35,7 @@ export class MigrationSelectionApplication<
       height: 500,
       id: 'tidy-5e-sheets-migration-selection',
       popOut: true,
+      closeOnSubmit: true,
     });
   }
 

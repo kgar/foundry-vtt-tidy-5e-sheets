@@ -1,6 +1,7 @@
 import type { Component, ComponentProps } from 'svelte';
 import { warn } from 'src/utils/logging';
 import { clamp } from 'src/utils/numbers';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export type InfoCardState<T extends Component<any>> = {
   component: T;
@@ -72,7 +73,7 @@ export function getInfoCardFloatingPosition(params: FloatingPositionParams) {
   const { clientX: x, clientY: y } = params.event;
   const { rootFontSize, cardWidthAbsolute, cardHeightAbsolute } =
     params.dimensions;
-  const sheetEl = params.sheet.element.get?.(0) ?? params.sheet.element;
+  const sheetEl = FoundryAdapter.getElementFromAppV1OrV2(params.sheet.element);
 
   const cardHalfHeightPx = cardHeightAbsolute / 2;
   const mouseCursorCardGapPx = rootFontSize * mouseCursorCardGapRem;
