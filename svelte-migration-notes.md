@@ -30,6 +30,34 @@
 
 ## Notes and Examples
 
+### Dealing with Sheet getData Context Reactivity
+
+Switching from a store to a state rune with the `context` property on the sheet classes has almost completely broken reactivity. This is because the context itself has to be provided via a getter or some other closure. With that mind, *there is no other choice than to introduce an extra property in the prop path throughout the sheets code surface area.* Add to this Svelte 5 does not provide reactivity for classes, only POJOs (see https://github.com/sveltejs/svelte/issues/10560#issuecomment-2057092046). If I am keeping with the current context property scheme, then I need to wrap the entire context in the aforementioned `External` class:
+
+```ts
+export class External<T> {
+  #data;
+  #version = $state(0);
+
+  constructor(data: T) {
+    this.#data = data;
+  }
+  get data() {
+    this.#version;
+    return this.#data;
+  }
+  set data(_data) {
+    this.#version++;
+    this.#data = _data;
+  }
+  invalidate() {
+    this.#version++;
+  }
+}
+```
+
+Then, all references to `context.something` must reference as `context.data.something`. This will ensure that all fields are reactive again.
+
 ### How to handle custom events, Clickoutside event handler example
 
 https://svelte.dev/playground/8031c800d7e34fd692dd18174b514e4e?version=5.3.0
