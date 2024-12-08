@@ -10,13 +10,13 @@
   import { CONSTANTS } from 'src/constants';
 
   interface Props {
+    settings: CurrentSettings;
     colorToConfigure: ThemeColorSetting;
   }
 
-  let { colorToConfigure }: Props = $props();
+  let { colorToConfigure, settings }: Props = $props();
 
   let appId = getContext(CONSTANTS.SVELTE_CONTEXT.APP_ID);
-  let context = getContext<CurrentSettings>(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
 
   const eyeDropperEnabled = 'EyeDropper' in window;
 
@@ -38,12 +38,11 @@
     trySetRootCssVariable(
       colorToConfigure.cssVariable,
       value,
-      context.colorPickerEnabled,
+      settings.colorPickerEnabled,
     );
-    context = {
-      ...context,
-      [colorToConfigure.key]: value,
-    };
+
+    //@ts-expect-error
+    settings[colorToConfigure.key] = value;
   }
 
   let article: HTMLElement;
@@ -69,13 +68,13 @@
     <label
       for="{colorToConfigure.key}-{appId}"
       class="color-picker-preview"
-      style="--bg-color: {context[colorToConfigure.key]};"
+      style="--bg-color: {settings[colorToConfigure.key]};"
     ></label>
 
     <input
       type="text"
       id="{colorToConfigure.key}-{appId}"
-      value={context[colorToConfigure.key]}
+      value={settings[colorToConfigure.key]}
       class="theme-color-textbox coloris"
       onchange={(ev) =>
         onColorSelected(colorToConfigure, ev.currentTarget.value)}

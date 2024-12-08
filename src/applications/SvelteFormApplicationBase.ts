@@ -43,6 +43,7 @@ export default abstract class SvelteFormApplicationBase extends FormApplication 
     if (this.component) {
       unmount(this.component);
     }
+    this.component = undefined;
     return super.close(options);
   }
 

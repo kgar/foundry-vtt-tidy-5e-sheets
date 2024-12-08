@@ -5,6 +5,7 @@ import type { Actor5e } from 'src/types/types';
 import type { Item5e } from 'src/types/item.types';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { CoarseReactivityProvider } from 'src/features/reactivity/CoaseReactivityProvider.svelte';
 
 export type SpellSourceClassAssignment = {
   /**
@@ -23,7 +24,9 @@ export type SpellSourceClassAssignmentsContext = {
 };
 
 export default class SpellSourceClassAssignmentsFormApplication extends SvelteFormApplicationBase {
-  context = $state<SpellSourceClassAssignmentsContext>();
+  context = new CoarseReactivityProvider<
+    SpellSourceClassAssignmentsContext | undefined
+  >(undefined);
   actor: Actor5e;
   updateHook: number | undefined;
 
@@ -33,7 +36,7 @@ export default class SpellSourceClassAssignmentsFormApplication extends SvelteFo
   }
 
   createComponent(node: HTMLElement): Record<string, any> {
-    this.context = this.getData();
+    this.context.data = this.getData();
 
     return mount(AssignSpellsToSourceClasses, {
       target: node,
@@ -70,7 +73,7 @@ export default class SpellSourceClassAssignmentsFormApplication extends SvelteFo
         return;
       }
 
-      this.context = this.getData();
+      this.context.data = this.getData();
     });
   }
 

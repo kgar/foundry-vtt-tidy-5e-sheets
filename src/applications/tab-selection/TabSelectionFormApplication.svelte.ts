@@ -157,10 +157,8 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
   }
 
   async save() {
-    await TidyFlags.selectedTabs.set(
-      this.actor,
-      this.context.selected.map((t) => t.id)
-    );
+    await this.apply();
+    await this.close();
   }
 
   async _updateObject(): Promise<void> {
@@ -172,6 +170,9 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
   }
 
   async apply() {
-    await this.save();
+    await TidyFlags.selectedTabs.set(
+      this.actor,
+      this.context.selected.map((t) => t.id)
+    );
   }
 }

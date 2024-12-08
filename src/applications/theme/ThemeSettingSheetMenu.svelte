@@ -11,14 +11,14 @@
 
   interface Props {
     onSelectFile?: (file: File) => void;
+    settings: CurrentSettings;
   }
 
-  let { onSelectFile }: Props = $props();
+  let { onSelectFile, settings }: Props = $props();
 
   let functions = getContext<ThemeSettingsSheetFunctions>(
     CONSTANTS.SVELTE_CONTEXT.FUNCTIONS,
   );
-  let context = getContext<CurrentSettings>(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
 
   let fileImportInput: HTMLInputElement;
 
@@ -60,7 +60,7 @@
     {localize('TIDY5E.ThemeSettings.Sheet.import')}
   </ButtonMenuCommand>
   <ButtonMenuCommand
-    onMenuClick={() => functions.exportTheme(context)}
+    onMenuClick={() => functions.exportTheme(settings)}
     iconClass="fas fa-file-export"
   >
     {localize('TIDY5E.ThemeSettings.Sheet.export')}

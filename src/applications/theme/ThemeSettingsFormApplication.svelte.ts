@@ -26,7 +26,7 @@ export type ThemeSettingsSheetFunctions = {
 
 export class ThemeSettingsFormApplication extends SvelteFormApplicationBase {
   themeableColors: ThemeColorSetting[] = getThemeableColors();
-  context = $state(getCurrentSettings());
+  settings = $state(getCurrentSettings());
 
   static get defaultOptions() {
     return {
@@ -53,9 +53,9 @@ export class ThemeSettingsFormApplication extends SvelteFormApplicationBase {
       target: node,
       props: {
         themeableColors: this.themeableColors,
+        settings: this.settings,
       },
       context: new Map<any, any>([
-        ['context', this.context],
         [
           'functions',
           {
@@ -70,7 +70,7 @@ export class ThemeSettingsFormApplication extends SvelteFormApplicationBase {
   }
 
   refreshContext(): void {
-    this.context = getCurrentSettings();
+    Object.assign(this.settings, getCurrentSettings());
   }
 
   async saveChangedSettings(newSettings: CurrentSettings) {
@@ -99,10 +99,7 @@ export class ThemeSettingsFormApplication extends SvelteFormApplicationBase {
       {}
     );
 
-    this.context = {
-      ...this.context,
-      ...colorsToUpdate,
-    };
+    Object.assign(this.settings, colorsToUpdate);
   }
 
   exportTheme(settings: CurrentSettings) {
@@ -126,6 +123,6 @@ export class ThemeSettingsFormApplication extends SvelteFormApplicationBase {
   }
 
   async _updateObject() {
-    await this.saveChangedSettings(this.context);
+    await this.saveChangedSettings(this.settings);
   }
 }

@@ -16,10 +16,6 @@ export class ColorisThirdPartyIntegration extends ThirdPartyIntegrationBase {
       swatches: [
         'rgba(58, 116, 126, 1)',
         'rgba(60, 179, 113, 0.3)',
-        'rgba(60, 179, 113, 0.3)',
-        'rgba(25, 94, 59, 1)',
-        'rgba(144, 238, 144, 1)',
-        'rgba(60, 179, 113, 0.3)',
         'rgba(25, 94, 59, 1)',
         'rgba(144, 238, 144, 1)',
         'rgba(255, 99, 71, 0.3)',

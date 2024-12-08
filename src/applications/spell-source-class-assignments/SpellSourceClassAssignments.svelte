@@ -12,9 +12,12 @@
   import TidyTableCell from 'src/components/table/TidyTableCell.svelte';
   import TidySwitch from 'src/components/toggle/TidySwitch.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
+  import type { CoarseReactivityProvider } from 'src/features/reactivity/CoaseReactivityProvider.svelte';
 
-  let context = getContext<SpellSourceClassAssignmentsContext>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  let context = $derived(
+    getContext<CoarseReactivityProvider<SpellSourceClassAssignmentsContext>>(
+      CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+    ).data,
   );
 
   let searchCriteria: string = $state('');

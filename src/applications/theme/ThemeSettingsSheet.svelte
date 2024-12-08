@@ -21,17 +21,18 @@
 
   interface Props {
     themeableColors: ThemeColorSetting[];
+    settings: CurrentSettings;
   }
 
-  let { themeableColors }: Props = $props();
+  let { themeableColors, settings }: Props = $props();
 
   $effect(() => {
-    if (context.colorPickerEnabled) {
+    if (settings.colorPickerEnabled) {
       themeableColors.forEach((color) =>
         trySetRootCssVariable(
           color.cssVariable,
-          context[color.key]?.toString(),
-          context.colorPickerEnabled,
+          settings[color.key]?.toString(),
+          settings.colorPickerEnabled,
         ),
       );
     } else {
@@ -40,7 +41,6 @@
     }
   });
 
-  let context = getContext<CurrentSettings>(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
   let appId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.APP_ID);
 
   const localize = FoundryAdapter.localize;
@@ -65,10 +65,7 @@
         themeableColors,
       );
 
-      context = {
-        ...context,
-        ...updateDelta,
-      };
+      Object.assign(settings, updateDelta);
 
       ui.notifications.info(
         localize('TIDY5E.ThemeSettings.Sheet.importSuccess'),
@@ -106,7 +103,7 @@
   <div class="theme-settings-form scroll-container">
     <h2 class="header flex-row justify-content-space-between">
       {localize('TIDY5E.ThemeSettings.Sheet.header')}
-      <ThemeSettingSheetMenu onSelectFile={processImportFile} />
+      <ThemeSettingSheetMenu {settings} onSelectFile={processImportFile} />
     </h2>
 
     <div>
@@ -117,7 +114,7 @@
         <input
           type="checkbox"
           id="colorPickerEnabled-{appId}"
-          bind:checked={context.colorPickerEnabled}
+          bind:checked={settings.colorPickerEnabled}
         />
         {localize('TIDY5E.Settings.ColorPickerEnabled.name')}
       </label>
@@ -133,7 +130,7 @@
 
     <div class="color-pickers">
       {#each themeableColors as colorToConfigure}
-        <ThemeSettingColorArticle {colorToConfigure} />
+        <ThemeSettingColorArticle {settings} {colorToConfigure} />
       {/each}
     </div>
   </div>
