@@ -99,7 +99,12 @@
       {/if}
     </div>
     <div class="span-all">
-      <Tabs tabs={context.tabs} bind:selectedTabId cssClass="item-tabs" />
+      <Tabs
+        tabs={context.tabs}
+        bind:selectedTabId
+        cssClass="item-tabs"
+        sheet={context.item.sheet}
+      />
     </div>
     <div class="span-all">
       <TabContents tabs={context.tabs} {selectedTabId} />

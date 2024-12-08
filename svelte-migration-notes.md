@@ -1,6 +1,5 @@
 ## To Do
 
-- [x] Check/fix Section Config
 - [ ] Check all Tidy Migration applications
 - [ ] Finish more migration tasks that came from recent work
 - [ ] Ensure context API where reactivity is expected is using runes
@@ -252,3 +251,4 @@ Cry.
   - [x] src\applications\theme\ThemeSettingColorArticle.svelte:
   - [x] src\applications\theme\ThemeSettingSheetMenu.svelte:
   - [x] src\applications\theme\ThemeSettingsSheet.svelte:
+- [x] Check/fix Section Config

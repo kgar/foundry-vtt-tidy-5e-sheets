@@ -189,7 +189,7 @@
     </section>
   </div>
 </header>
-<Tabs tabs={context.tabs} bind:selectedTabId>
+<Tabs tabs={context.tabs} bind:selectedTabId sheet={context.actor.sheet}>
   {#snippet tabEnd()}
     {#if context.editable}
       <SheetEditModeToggle

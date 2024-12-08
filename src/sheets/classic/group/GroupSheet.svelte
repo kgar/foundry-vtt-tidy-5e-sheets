@@ -163,7 +163,7 @@
   </div>
 </header>
 
-<Tabs tabs={context.tabs} bind:selectedTabId />
+<Tabs tabs={context.tabs} bind:selectedTabId sheet={context.actor.sheet} />
 
 <section class="tidy-sheet-body">
   <TabContents tabs={context.tabs} {selectedTabId} />

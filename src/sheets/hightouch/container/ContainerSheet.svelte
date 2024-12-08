@@ -211,7 +211,7 @@
   </div>
 
   <!-- Tab Strip -->
-  <Tabs bind:selectedTabId tabs={context.tabs} cssClass="item-tabs" />
+  <Tabs bind:selectedTabId tabs={context.tabs} cssClass="item-tabs" sheet={context.item.sheet} />
 
   <hr class="golden-fade" />
 

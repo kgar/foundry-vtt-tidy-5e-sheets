@@ -12,6 +12,7 @@
     orientation?: 'horizontal' | 'vertical';
     onTabSelected?: (selectedTab: Tab) => void;
     tabEnd?: Snippet;
+    sheet?: any;
   }
 
   let {
@@ -21,9 +22,8 @@
     orientation = 'horizontal',
     onTabSelected,
     tabEnd,
+    sheet,
   }: Props = $props();
-
-  const context = $derived(getSheetContext<any>());
 
   const onTabSelectedContextFn = getContext<OnTabSelectedFn>(
     CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED,
@@ -32,7 +32,6 @@
   let nav: HTMLElement;
 
   function selectTab(tab: Tab) {
-    const sheet = context?.actor?.sheet ?? context?.item?.sheet;
     if (sheet && !FoundryAdapter.onTabSelecting(sheet, tab.id)) {
       return;
     }
