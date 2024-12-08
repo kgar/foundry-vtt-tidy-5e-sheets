@@ -102,6 +102,8 @@ export class UserSettingsFormApplication extends SvelteFormApplicationBase {
 
     debug('Sheet Settings context data', data);
 
+    this.context = data;
+
     return mount(UserSettings, {
       target: node,
       context: new Map<any, any>([

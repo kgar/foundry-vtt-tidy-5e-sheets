@@ -12,7 +12,7 @@
   import ActivityUses from 'src/components/item-list/ActivityUses.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getCharacterSheetContext();
+  let context = $derived(getCharacterSheetContext());
 
   interface Props {
     section: ActivitySection;

@@ -62,7 +62,7 @@
   } from 'src/features/search/search.svelte';
   import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getNpcSheetContext();
+  let context = $derived(getNpcSheetContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
   let inlineToggleService = getContext<InlineToggleService>(

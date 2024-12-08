@@ -12,7 +12,7 @@
 
   let { editable, cssClass = null }: Props = $props();
 
-  let context = getSheetContext<CharacterSheetContext | NpcSheetContext>();
+  let context = $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
 
   const localize = FoundryAdapter.localize;
 </script>

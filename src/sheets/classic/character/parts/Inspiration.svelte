@@ -6,7 +6,7 @@
     PortraitCharmRadiusClass,
   } from 'src/types/types';
   
-  let context = getCharacterSheetContext();
+  let context = $derived(getCharacterSheetContext());
 
   interface Props {
     inspired: boolean;

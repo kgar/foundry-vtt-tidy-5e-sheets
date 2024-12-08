@@ -8,7 +8,7 @@
   import { CONSTANTS } from 'src/constants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  const context = getSheetContext<ActorSheetContextV1>();
+  const context = $derived(getSheetContext<ActorSheetContextV1>());
 
   interface Props {
     condition: Dnd5eActorCondition;

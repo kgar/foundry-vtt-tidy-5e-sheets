@@ -13,7 +13,7 @@
 
   let { hint = null, ...rest }: Props = $props();
 
-  let context = getSheetContext<{ document: any }>();
+  let context = $derived(getSheetContext<{ document: any }>());
 
   async function toggleLock() {
     await TidyFlags.allowEdit.set(context.document, !allowEdit);

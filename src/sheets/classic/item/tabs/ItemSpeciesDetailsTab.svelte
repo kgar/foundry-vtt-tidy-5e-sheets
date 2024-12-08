@@ -3,7 +3,7 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getItemSheetContext();
+  let context = $derived(getItemSheetContext());
 
   let appId = $derived(context.document.id);
 

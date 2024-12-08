@@ -16,9 +16,9 @@
 
   let { document }: Props = $props();
 
-  let context = getSheetContext<
+  let context = $derived(getSheetContext<
     ActorSheetContextV1 | ContainerSheetClassicContext
-  >();
+  >());
 
   let currencies = $derived(
     Object.keys(CONFIG.DND5E.currencies).map((key) => ({

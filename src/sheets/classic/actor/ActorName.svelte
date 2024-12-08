@@ -7,7 +7,7 @@
     ActorSheetContextV2,
   } from 'src/types/types';
 
-  let context = getSheetContext<ActorSheetContextV1 | ActorSheetContextV2>();
+  let context = $derived(getSheetContext<ActorSheetContextV1 | ActorSheetContextV2>());
 
   const localize = FoundryAdapter.localize;
 </script>

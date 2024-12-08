@@ -5,7 +5,7 @@
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { Item5e } from 'src/types/item.types';
 
-  let context = getItemSheetContext();
+  let context = $derived(getItemSheetContext());
 
   let advancements = $derived(
     Object.entries(context.advancement) as Iterable<[string, any]>,

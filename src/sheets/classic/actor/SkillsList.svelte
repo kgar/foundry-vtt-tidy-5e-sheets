@@ -24,7 +24,8 @@
     toggleField = null,
   }: Props = $props();
 
-  let context = getSheetContext<CharacterSheetContext | NpcSheetContext>();
+  let context =
+    $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
 
   type SkillRef = {
     key: string;
@@ -219,11 +220,10 @@
       {/if}
     {/each}
   </ul>
-  {#if toggleable}
+  {#if toggleable && context.editable}
     <div style="text-align:center;">
-      <button
-        type="button"
-        class="toggle-proficient inline-transparent-button"
+      <a
+        class="toggle-proficient"
         onclick={toggleShowAllSkills}
         data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
           .SKILLS_SHOW_PROFICIENT_TOGGLE}
@@ -233,8 +233,8 @@
           {localize('TIDY5E.HideNotProficientSkills')}
         {:else}
           {localize('TIDY5E.ShowNotProficientSkills')}
-        {/if}</button
-      >
+        {/if}
+      </a>
     </div>
   {/if}
 </div>

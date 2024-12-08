@@ -14,7 +14,7 @@
 
   let { value, max, actor }: Props = $props();
 
-  let context = getCharacterSheetContext();
+  let context = $derived(getCharacterSheetContext());
 
   const localize = FoundryAdapter.localize;
 </script>

@@ -9,7 +9,7 @@
   import { settings } from 'src/settings/settings.svelte';
   import { getGroupSheetClassicContext } from 'src/sheets/sheet-context.svelte';
 
-  const context = getGroupSheetClassicContext();
+  const context = $derived(getGroupSheetClassicContext());
 
   interface Props {
     member: Actor5e;

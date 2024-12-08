@@ -21,7 +21,7 @@
   } from 'src/features/search/search.svelte';
   import { getContainerSheetClassicContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContainerSheetClassicContext();
+  let context = $derived(getContainerSheetClassicContext());
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 

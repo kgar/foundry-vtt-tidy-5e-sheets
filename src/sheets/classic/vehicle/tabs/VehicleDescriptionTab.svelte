@@ -3,7 +3,7 @@
   import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
   import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getVehicleSheetContext();
+  let context = $derived(getVehicleSheetContext());
 </script>
 
 <div class="note-entries" data-tidy-track-scroll-y>

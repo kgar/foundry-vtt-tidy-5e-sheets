@@ -3,7 +3,7 @@
   import { settings } from 'src/settings/settings.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getCharacterSheetContext();
+  let context = $derived(getCharacterSheetContext());
 
   let hitDice = $derived(context.system.attributes.hd);
   let actorLevel = $derived(context.system.details.level);

@@ -12,7 +12,7 @@
 
   let { chosen }: Props = $props();
 
-  let context = getCharacterSheetContext();
+  let context = $derived(getCharacterSheetContext());
 
   const localize = FoundryAdapter.localize;
 

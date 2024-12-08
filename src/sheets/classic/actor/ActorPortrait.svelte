@@ -20,9 +20,8 @@
 
   let { actor, useHpOverlay }: Props = $props();
 
-  let context = getSheetContext<
-    ActorSheetContextV1 | ActorSheetContextV2<any>
-  >();
+  let context =
+    $derived(getSheetContext<ActorSheetContextV1 | ActorSheetContextV2<any>>());
 
   const localize = FoundryAdapter.localize;
 
@@ -35,9 +34,7 @@
   function openPortraitPicker(
     event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
   ) {
-    if (
-      !TidyHooks.tidy5eSheetsPreOpenActorPortraitFilePicker(context, event)
-    ) {
+    if (!TidyHooks.tidy5eSheetsPreOpenActorPortraitFilePicker(context, event)) {
       return;
     }
     const rect = event.currentTarget.getBoundingClientRect();

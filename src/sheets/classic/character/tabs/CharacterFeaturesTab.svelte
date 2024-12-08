@@ -48,7 +48,7 @@
   } from 'src/features/search/search.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getCharacterSheetContext();
+  let context = $derived(getCharacterSheetContext());
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 

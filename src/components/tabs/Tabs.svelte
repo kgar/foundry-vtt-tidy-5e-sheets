@@ -23,7 +23,7 @@
     tabEnd,
   }: Props = $props();
 
-  const context = getSheetContext<any>();
+  const context = $derived(getSheetContext<any>());
 
   const onTabSelectedContextFn = getContext<OnTabSelectedFn>(
     CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED,

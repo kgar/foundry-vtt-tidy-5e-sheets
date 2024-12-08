@@ -39,7 +39,7 @@
 
   let { tabId }: Props = $props();
 
-  let context = getSheetContext<CharacterSheetContext | NpcSheetContext>();
+  let context = $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
 
   let inventory = $derived(
     SheetSections.configureInventory(

@@ -16,7 +16,7 @@
 
   let { section }: Props = $props();
 
-  let context = getSheetContext<CharacterSheetContext | NpcSheetContext>();
+  let context = $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
 </script>
 
 <div class="flex-row extra-small-gap">

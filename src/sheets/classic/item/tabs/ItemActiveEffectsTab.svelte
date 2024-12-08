@@ -7,7 +7,7 @@
   import type { ItemSheetContext } from 'src/types/item.types';
   import type { CharacterSheetContext } from 'src/types/types';
 
-  let context = getSheetContext<ItemSheetContext | CharacterSheetContext>();
+  let context = $derived(getSheetContext<ItemSheetContext | CharacterSheetContext>());
 
   let effects = $derived(
     Object.entries(context.effects) as Iterable<[string, any]>,

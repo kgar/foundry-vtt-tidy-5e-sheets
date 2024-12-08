@@ -73,6 +73,7 @@ import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleSe
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import { Activities } from 'src/features/activities/activities';
+import { CoarseReactivityProvider } from 'src/features/reactivity/CoaseReactivityProvider.svelte';
 
 export class Tidy5eCharacterSheet
   extends BaseSheetCustomSectionMixin(
@@ -84,7 +85,7 @@ export class Tidy5eCharacterSheet
     SheetExpandedItemsCacheable,
     SearchFilterCacheable
 {
-  context = $state<CharacterSheetContext>();
+  context = new CoarseReactivityProvider<CharacterSheetContext | undefined>(undefined);
 
   stats = $state<SheetStats>({
     lastSubmissionTime: null,
@@ -1624,7 +1625,7 @@ export class Tidy5eCharacterSheet
       ['actions', 'favorites', 'inventory', 'spellbook', 'features'],
       data
     );
-    this.context = data;
+    this.context.data = data;
 
     if (force) {
       const { width, height } =

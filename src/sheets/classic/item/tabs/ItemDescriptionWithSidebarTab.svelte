@@ -16,9 +16,9 @@
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getSheetContext<
+  let context = $derived(getSheetContext<
     ItemSheetContext | ContainerSheetClassicContext
-  >();
+  >());
 
   let appId = $derived(context.document.id);
 

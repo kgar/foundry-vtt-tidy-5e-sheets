@@ -5,7 +5,7 @@
   import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getSheetContext<CharacterSheetContext | NpcSheetContext>();
+  let context = $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
 
   const localize = FoundryAdapter.localize;
 </script>

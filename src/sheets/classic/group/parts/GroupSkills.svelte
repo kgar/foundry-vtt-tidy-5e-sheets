@@ -6,7 +6,7 @@
   import { formatAsModifier } from 'src/utils/formatting';
   import { tick } from 'svelte';
 
-  const context = getGroupSheetClassicContext();
+  const context = $derived(getGroupSheetClassicContext());
 
   let groupSkillTooltip: GroupSkillTooltip;
   let hoveredSkill: GroupSkill = $state({

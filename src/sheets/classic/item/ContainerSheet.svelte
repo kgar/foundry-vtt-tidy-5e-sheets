@@ -13,7 +13,7 @@
   import { settings } from 'src/settings/settings.svelte';
   import { getContainerSheetClassicContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContainerSheetClassicContext();
+  let context = $derived(getContainerSheetClassicContext());
 
   let appId = $derived(context.document.id);
 

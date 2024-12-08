@@ -10,7 +10,7 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getSheetContext<ActorSheetContextV1>();
+  let context = $derived(getSheetContext<ActorSheetContextV1>());
   interface Props {
     toggleable: boolean;
     useSenses?: boolean;
@@ -237,8 +237,7 @@
       configureButtonTitle={localize('DND5E.TraitConfig', {
         trait: localize('DND5E.TraitToolProf'),
       })}
-      onConfigureClicked={() =>
-        FoundryAdapter.renderToolsConfig(context.actor)}
+      onConfigureClicked={() => FoundryAdapter.renderToolsConfig(context.actor)}
       show={traitsExpanded || !!tools.length}
     >
       {#if tools.length}
@@ -277,27 +276,26 @@
   {/if}
 
   {#if toggleable}
-    <button
-      type="button"
-      class="toggle-traits inline-transparent-button"
+    <a
+      class="toggle-traits"
+      class:no-pointer-events={!context.editable}
       onclick={(event) => {
         event.preventDefault();
         event.stopPropagation();
         toggleTraitsExpanded();
       }}
-      tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
     >
       {#if traitsExpanded}
         {localize('TIDY5E.HideEmptyTraits')}
       {:else}
         {localize('TIDY5E.ShowEmptyTraits')}
       {/if}
-    </button>
+    </a>
   {/if}
   {#if enableSpecialTraitsConfiguration && !context.lockSensitiveFields}
-    <button
-      type="button"
-      class="configure-special-traits inline-icon-button"
+    <a
+      class="configure-special-traits"
+      class:no-pointer-events={!context.editable}
       title={localize('DND5E.TraitConfig', {
         trait: localize('DND5E.SpecialTraits'),
       })}
@@ -309,7 +307,7 @@
       tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fas fa-star"></i>
-    </button>
+    </a>
   {/if}
 </div>
 

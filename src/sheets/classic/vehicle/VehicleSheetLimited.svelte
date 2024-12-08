@@ -5,7 +5,7 @@
   import LimitedHeader from '../actor/LimitedHeader.svelte';
   import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getVehicleSheetContext();
+  let context = $derived(getVehicleSheetContext());
 
   const localize = FoundryAdapter.localize;
 </script>

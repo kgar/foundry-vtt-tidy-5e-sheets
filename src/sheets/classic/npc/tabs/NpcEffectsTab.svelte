@@ -20,7 +20,7 @@
   import ActorEffectToggleControl from 'src/components/item-list/controls/ActorEffectToggleControl.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getSheetContext<ActorSheetContextV1>();
+  let context = $derived(getSheetContext<ActorSheetContextV1>());
 
   const localize = FoundryAdapter.localize;
 

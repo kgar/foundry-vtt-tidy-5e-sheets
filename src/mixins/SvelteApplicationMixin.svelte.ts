@@ -23,6 +23,7 @@ import type {
 import { HeaderControlsRuntime } from 'src/runtime/header-controls/HeaderControlsRuntime';
 import type { CustomHeaderControlsEntry } from 'src/api';
 import { unmount } from 'svelte';
+import { CoarseReactivityProvider } from 'src/features/reactivity/CoaseReactivityProvider.svelte';
 
 type RenderResult<TContext> = {
   customContents: RenderedSheetPart[];
@@ -94,7 +95,7 @@ export function SvelteApplicationMixin<
      * This store is made available as Svelte context to the component
      * and can be retrieved from any child component within.
      */
-    _context = $state<TContext>();
+    _context = new CoarseReactivityProvider<TContext | undefined>(undefined);
 
     /** Creates the component which represents the window content area. */
     _createComponent(node: HTMLElement): Record<string, any> {
@@ -138,7 +139,7 @@ export function SvelteApplicationMixin<
       context: TContext,
       options: ApplicationRenderOptions
     ): Promise<RenderResult<TContext>> {
-      this._context = context;
+      this._context.data = context;
 
       // Allow svelte to process its synchronous microtask changes before entertaining custom content.
       await delay(0);

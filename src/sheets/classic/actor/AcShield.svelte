@@ -21,7 +21,7 @@
 
   let { ac = '0', cssClass = '', onfocus }: Props = $props();
 
-  let context = getSheetContext<ActorSheetContextV1>();
+  let context = $derived(getSheetContext<ActorSheetContextV1>());
 
   let acShieldButton: HTMLElement;
 

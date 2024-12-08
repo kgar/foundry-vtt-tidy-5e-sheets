@@ -8,7 +8,7 @@
   import { slide } from 'svelte/transition';
   import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getVehicleSheetContext();
+  let context = $derived(getVehicleSheetContext());
 
   const localize = FoundryAdapter.localize;
   let totalCrew = $derived(

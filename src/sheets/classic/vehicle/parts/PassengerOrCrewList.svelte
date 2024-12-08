@@ -28,7 +28,7 @@
     weight: '3.75rem',
   };
 
-  let context = getVehicleSheetContext();
+  let context = $derived(getVehicleSheetContext());
 
   const classicControlsEditableRowBaseWidth = '1.5rem';
 

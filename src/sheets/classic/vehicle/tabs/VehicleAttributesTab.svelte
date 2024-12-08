@@ -36,7 +36,7 @@
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getVehicleSheetContext();
+  let context = $derived(getVehicleSheetContext());
 
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,

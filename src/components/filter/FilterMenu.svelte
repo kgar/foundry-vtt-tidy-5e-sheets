@@ -16,9 +16,9 @@
   let { tabId }: Props = $props();
 
   const localize = FoundryAdapter.localize;
-  const context = getSheetContext<
+  const context = $derived(getSheetContext<
     ActorSheetContextV1 | ContainerSheetClassicContext
-  >();
+  >());
   const onFilterClearAll =
     getContext<ItemFilterService['onFilterClearAll']>('onFilterClearAll');
   let categories = $derived(context.filterData[tabId] ?? {});

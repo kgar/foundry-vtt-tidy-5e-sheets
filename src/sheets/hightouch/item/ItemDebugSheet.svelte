@@ -16,7 +16,7 @@
   import ItemDescriptions from '../shared/ItemDescriptions.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getSheetContext<ItemDebugSheetHightouchContext>();
+  let context = $derived(getSheetContext<ItemDebugSheetHightouchContext>());
 
   let theme = $derived(getThemeOrDefault(settings.value.colorScheme));
 

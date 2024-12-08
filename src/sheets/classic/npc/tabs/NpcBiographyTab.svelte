@@ -8,7 +8,7 @@
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
   import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getNpcSheetContext();
+  let context = $derived(getNpcSheetContext());
 
   const localize = FoundryAdapter.localize;
 

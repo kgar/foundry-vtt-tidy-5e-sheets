@@ -7,7 +7,7 @@
   import type { MouseEventHandler } from 'svelte/elements';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getSheetContext<CharacterSheetContext | NpcSheetContext>();
+  let context = $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
 
   interface Props {
     successes: number;

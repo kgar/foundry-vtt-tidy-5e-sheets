@@ -21,7 +21,7 @@
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getCharacterSheetContext();
+  let context = $derived(getCharacterSheetContext());
 
   interface Props {
     items?: Item5e[];

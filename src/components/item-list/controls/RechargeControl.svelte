@@ -21,7 +21,7 @@
       : (item.labels?.recharge ?? ''),
   );
 
-  let context = getSheetContext<ActorSheetContextV1>();
+  let context = $derived(getSheetContext<ActorSheetContextV1>());
 
   let recovery = $derived(item.system.uses?.recovery[0]);
 </script>

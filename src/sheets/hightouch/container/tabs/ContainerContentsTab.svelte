@@ -16,7 +16,7 @@
   } from 'src/features/search/search.svelte';
   import { getContainerSheetHightouchContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContainerSheetHightouchContext();
+  let context = $derived(getContainerSheetHightouchContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
   let inlineToggleService = getContext<InlineToggleService>(

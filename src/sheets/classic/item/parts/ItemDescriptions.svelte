@@ -28,7 +28,7 @@
 
   let editorsContainers: HTMLElement[] = $state([]);
 
-  let context = getItemSheetContext();
+  let context = $derived(getItemSheetContext());
 
   let accordionItemOpenStates = $state(
     context.itemDescriptions.map((_, i) => i === 0),

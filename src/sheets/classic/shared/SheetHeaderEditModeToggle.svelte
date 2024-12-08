@@ -13,7 +13,8 @@
 
   let { ondblclick, ...rest }: Props = $props();
 
-  let context = getSheetContext<{ document: any; editable: boolean }>();
+  let context =
+    $derived(getSheetContext<{ document: any; editable: boolean }>());
 
   async function toggleLock() {
     await TidyFlags.allowEdit.set(context.document, !allowEdit);

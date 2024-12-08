@@ -54,6 +54,7 @@ import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleSe
 import { Container } from 'src/features/containers/Container';
 import { Activities } from 'src/features/activities/activities';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
+import { CoarseReactivityProvider } from 'src/features/reactivity/CoaseReactivityProvider.svelte';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -62,7 +63,9 @@ export class Tidy5eVehicleSheet
     SheetExpandedItemsCacheable,
     SearchFilterCacheable
 {
-  context = $state<VehicleSheetContext>();
+  context = new CoarseReactivityProvider<VehicleSheetContext | undefined>(
+    undefined
+  );
   stats = $state<SheetStats>({
     lastSubmissionTime: null,
   });
@@ -684,7 +687,7 @@ export class Tidy5eVehicleSheet
     await this.setExpandedItemData();
     const data = await this.getData();
     SheetSections.accountForExternalSections(['features'], data);
-    this.context = data;
+    this.context.data = data;
 
     if (force) {
       const { width, height } =

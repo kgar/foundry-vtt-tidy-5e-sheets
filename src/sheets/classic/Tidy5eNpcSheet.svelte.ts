@@ -59,6 +59,7 @@ import { ConditionsAndEffects } from 'src/features/conditions-and-effects/Condit
 import { ItemUtils } from 'src/utils/ItemUtils';
 import { Activities } from 'src/features/activities/activities';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
+import { CoarseReactivityProvider } from 'src/features/reactivity/CoaseReactivityProvider.svelte';
 
 export class Tidy5eNpcSheet
   extends BaseSheetCustomSectionMixin(
@@ -70,7 +71,9 @@ export class Tidy5eNpcSheet
     SheetExpandedItemsCacheable,
     SearchFilterCacheable
 {
-  context = $state<NpcSheetContext>();
+  context = new CoarseReactivityProvider<NpcSheetContext | undefined>(
+    undefined
+  );
   stats = $state<SheetStats>({
     lastSubmissionTime: null,
   });
@@ -1137,7 +1140,7 @@ export class Tidy5eNpcSheet
     await this.setExpandedItemData();
     const data = await this.getData();
     SheetSections.accountForExternalSections(['features', 'spellbook'], data);
-    this.context = data;
+    this.context.data = data;
 
     if (force) {
       const { width, height } =

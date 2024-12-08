@@ -5,7 +5,7 @@
   import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { PortraitCharmRadiusClass } from 'src/types/types';
 
-  let context = getVehicleSheetContext();
+  let context = $derived(getVehicleSheetContext());
 
   interface Props {
     motion: boolean;

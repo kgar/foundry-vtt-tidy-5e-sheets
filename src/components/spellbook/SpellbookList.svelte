@@ -39,7 +39,7 @@
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
     import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getSheetContext<CharacterSheetContext | NpcSheetContext>();
+  let context = $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
 
   interface Props {
     section: SpellbookSection;

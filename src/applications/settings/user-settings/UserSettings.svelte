@@ -24,45 +24,49 @@
     CONSTANTS.SVELTE_CONTEXT.FUNCTIONS,
   );
 
-  let tabs: Tab[] = $state([]);
+  let tabs: Tab[] = $derived.by(() => {
+    const result: Tab[] = [
+      {
+        id: CONSTANTS.TAB_USER_SETTINGS_PLAYERS,
+        title: 'TIDY5E.UserSettings.TabPlayers.tabLabel',
+        content: {
+          component: PlayerSettingsTab,
+          type: 'svelte',
+        },
+      },
+      {
+        id: CONSTANTS.TAB_USER_SETTINGS_NPCS,
+        title: 'TIDY5E.UserSettings.TabNPCs.tabLabel',
+        content: {
+          component: NpcSettingsTab,
+          type: 'svelte',
+        },
+      },
+      {
+        id: CONSTANTS.TAB_USER_SETTINGS_VEHICLES,
+        title: 'TIDY5E.UserSettings.TabVehicles.tabLabel',
+        content: {
+          component: VehicleSettingsTab,
+          type: 'svelte',
+        },
+      },
+    ];
 
-  tabs = [
-    {
-      id: CONSTANTS.TAB_USER_SETTINGS_PLAYERS,
-      title: 'TIDY5E.UserSettings.TabPlayers.tabLabel',
+    result.push({
+      id: CONSTANTS.TAB_USER_SETTINGS_ACTIONS_LIST,
+      title: 'TIDY5E.UserSettings.TabActionsList.tabLabel',
       content: {
-        component: PlayerSettingsTab,
+        component: ActionsListSettingsTab,
         type: 'svelte',
       },
-    },
-    {
-      id: CONSTANTS.TAB_USER_SETTINGS_NPCS,
-      title: 'TIDY5E.UserSettings.TabNPCs.tabLabel',
-      content: {
-        component: NpcSettingsTab,
-        type: 'svelte',
-      },
-    },
-    {
-      id: CONSTANTS.TAB_USER_SETTINGS_VEHICLES,
-      title: 'TIDY5E.UserSettings.TabVehicles.tabLabel',
-      content: {
-        component: VehicleSettingsTab,
-        type: 'svelte',
-      },
-    },
-  ];
+    });
 
-  tabs.push({
-    id: CONSTANTS.TAB_USER_SETTINGS_ACTIONS_LIST,
-    title: 'TIDY5E.UserSettings.TabActionsList.tabLabel',
-    content: {
-      component: ActionsListSettingsTab,
-      type: 'svelte',
-    },
+    return result;
   });
 
-  selectedTabId ??= tabs[0].id;
+  $effect(() => {
+    selectedTabId ??= tabs[0].id;
+  })
 
   let applyingChanges = $state(false);
 

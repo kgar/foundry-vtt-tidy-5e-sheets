@@ -2,7 +2,7 @@
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getItemSheetContext();
+  let context = $derived(getItemSheetContext());
 </script>
 
 {#key context.item.system.description.value}

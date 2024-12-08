@@ -24,7 +24,7 @@
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
 
-  let context = getCharacterSheetContext();
+  let context = $derived(getCharacterSheetContext());
 
   interface Props {
     section: SpellbookSection;

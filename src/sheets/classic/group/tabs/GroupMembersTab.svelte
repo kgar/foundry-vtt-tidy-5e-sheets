@@ -21,7 +21,7 @@
 
   const tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
-  const context = getGroupSheetClassicContext();
+  const context = $derived(getGroupSheetClassicContext());
 
   const localize = FoundryAdapter.localize;
 

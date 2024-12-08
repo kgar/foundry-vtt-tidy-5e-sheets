@@ -3,7 +3,7 @@
   import { CONSTANTS } from 'src/constants';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getCharacterSheetContext();
+  let context = $derived(getCharacterSheetContext());
 </script>
 
 <ul

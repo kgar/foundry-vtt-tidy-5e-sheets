@@ -6,7 +6,7 @@
   import type { Actor5e } from 'src/types/types';
   import { tick } from 'svelte';
 
-  let context = getGroupSheetClassicContext();
+  let context = $derived(getGroupSheetClassicContext());
 
   let groupLanguageTooltip: GroupLanguageTooltip;
   let hoveredLanguage = $state('');

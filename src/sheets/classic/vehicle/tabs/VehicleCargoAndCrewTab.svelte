@@ -10,7 +10,7 @@
   import PassengerOrCrewList from '../parts/PassengerOrCrewList.svelte';
   import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getVehicleSheetContext();
+  let context = $derived(getVehicleSheetContext());
 
   let noCargoOrCrew = $derived(
     context.cargo.some(

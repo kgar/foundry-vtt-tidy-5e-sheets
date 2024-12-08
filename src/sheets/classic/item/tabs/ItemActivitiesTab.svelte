@@ -5,7 +5,7 @@
   import { Activities } from 'src/features/activities/activities';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getItemSheetContext();
+  let context = $derived(getItemSheetContext());
 
   let appId = $derived(context.document.id);
 

@@ -4,7 +4,7 @@
   import { getGroupSheetClassicContext } from 'src/sheets/sheet-context.svelte';
   import type { Actor5e } from 'src/types/types';
 
-  const context = getGroupSheetClassicContext();
+  const context = $derived(getGroupSheetClassicContext());
 
   interface Props {
     member: Actor5e;

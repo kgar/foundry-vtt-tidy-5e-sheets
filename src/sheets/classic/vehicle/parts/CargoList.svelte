@@ -32,7 +32,7 @@
 
   let { section }: Props = $props();
 
-  let context = getVehicleSheetContext();
+  let context = $derived(getVehicleSheetContext());
 
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,

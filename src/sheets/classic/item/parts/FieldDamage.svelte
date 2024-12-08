@@ -25,7 +25,7 @@
     types = undefined,
   }: Props = $props();
 
-  let context = getItemSheetContext();
+  let context = $derived(getItemSheetContext());
 
   let appId = $derived(context.document.id);
   let idPrefix = $derived(`${appId}-${prefix.replaceAll('.', '-')}`);

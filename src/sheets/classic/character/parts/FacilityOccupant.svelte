@@ -26,7 +26,7 @@
     prop,
   }: Props = $props();
 
-  let context = getCharacterSheetContext();
+  let context = $derived(getCharacterSheetContext());
 
   function onOccupantClick(
     event: (MouseEvent | PointerEvent) & { currentTarget: HTMLElement },

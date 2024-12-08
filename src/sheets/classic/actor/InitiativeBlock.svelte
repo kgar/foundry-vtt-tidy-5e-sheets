@@ -14,7 +14,7 @@
 
   let { initiative }: Props = $props();
 
-  let context = getSheetContext<ActorSheetContextV1>();
+  let context = $derived(getSheetContext<ActorSheetContextV1>());
 
   let appId = $derived(context.actor.id);
 

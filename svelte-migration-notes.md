@@ -1,14 +1,40 @@
 ## To Do
 
 - [x] Convert sheet subscriptions to sheet effects and test sheet effects
-- [ ] Resolve runtime errors related to section/item deferred prep.
+- [x] Resolve runtime errors related to section/item deferred prep.
+- [x] Convert all sheet contexts to `External<T>` (renamed to `CoarseReactivityProvider`)
+- [x] Update all sheet context functions to return `result.data` instead of `result`
+- [x] Update all callers of context functions to use `$derived(contextFn())`
+- [ ] Review auxiliary applications to determine their need for coarse reactivity. As a general rule, it's just the ones with live reactivity.
+  - [x] src\applications\actor-origin-summary\ActorOriginSummaryConfig.svelte:
+  - [x] src\applications\max-prepared-spells-config\MaxPreparedSpellsConfig.svelte:
+  - [x] src\applications\settings\user-settings\tabs\ActionsListSettingsTab.svelte:
+  - [x] src\applications\settings\user-settings\tabs\NpcSettingsTab.svelte:
+  - [x] src\applications\settings\user-settings\tabs\PlayerSettingsTab.svelte:
+  - [x] src\applications\settings\user-settings\tabs\VehicleSettingsTab.svelte:
+  - [x] src\applications\settings\user-settings\UserSettings.svelte:
+  - [x] src\applications\settings\world-settings\tabs\CharacterWorldSettingsTab.svelte:
+  - [x] src\applications\settings\world-settings\tabs\ExhaustionWorldSettingsTab.svelte:
+  - [x] src\applications\settings\world-settings\tabs\IconsWorldSettingsTab.svelte:
+  - [x] src\applications\settings\world-settings\tabs\ItemWorldSettingsTab.svelte:
+  - [x] src\applications\settings\world-settings\tabs\MiscWorldSettingsTab.svelte:
+  - [x] src\applications\settings\world-settings\tabs\NpcWorldSettingsTab.svelte:
+  - [x] src\applications\settings\world-settings\tabs\SheetLockWorldSettingsTab.svelte:
+  - [x] src\applications\settings\world-settings\tabs\VehicleWorldSettingsTab.svelte:
+  - [x] src\applications\settings\world-settings\WorldSettings.svelte:
+  - [ ] src\applications\spell-source-class-assignments\SpellSourceClassAssignments.svelte:
+  - [ ] src\applications\tab-selection\TabSelection.svelte:
+  - [ ] src\applications\theme\ThemeSettingColorArticle.svelte:
+  - [ ] src\applications\theme\ThemeSettingSheetMenu.svelte:
+  - [ ] src\applications\theme\ThemeSettingsSheet.svelte:
 - [ ] Finish more migration tasks that came from recent work
 - [ ] Ensure context API where reactivity is expected is using runes
-- [ ] Fix: Use the broken identify toggle for containers to vet error handling and getting latest from the source data. Or, if it's not feasible, just catch and handle error.
 - [ ] Fix: World Settings has warning: [svelte] binding_property_non_reactive`bind:value={config.type}` (src/applications/settings/parts/ExhaustionSetting.svelte:33:48) is binding to a non-reactive property
+- [ ] Fix: Settings tabs are blank
 
 ## Stretch, or defer to post V7.3.0
 
+- [ ] Fix: Use the broken identify toggle for containers to vet error handling and getting latest from the source data. Or, if it's not feasible, just catch and handle error.
 - [ ] Actually implement the activity card content. There's nothing there!
 - [ ] Provide separate option for showing activity cards
 - [ ] Implement Effect card and content.
@@ -57,6 +83,18 @@ export class External<T> {
 ```
 
 Then, all references to `context.something` must reference as `context.data.something`. This will ensure that all fields are reactive again.
+
+**Update**: We can achieve this in terser fashion and still remain svelte-idiomatic:
+
+```ts
+function getCharacterSheetContext() {
+	return getContext<{ data: CharacterSheetContext }>('context').data;
+}
+
+
+// In the component:
+let context = $derived(getCharacterSheetContext());
+```
 
 ### How to handle custom events, Clickoutside event handler example
 

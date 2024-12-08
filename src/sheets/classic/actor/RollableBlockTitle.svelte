@@ -19,7 +19,7 @@
     onRoll,
   }: Props = $props();
 
-  let context = getSheetContext<ActorSheetContextV1>();
+  let context = $derived(getSheetContext<ActorSheetContextV1>());
 </script>
 
 <button

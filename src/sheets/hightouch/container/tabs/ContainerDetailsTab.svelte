@@ -9,7 +9,7 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { getContainerSheetClassicContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContainerSheetClassicContext();
+  let context = $derived(getContainerSheetClassicContext());
 
   let appId = $derived(context.document.id);
 

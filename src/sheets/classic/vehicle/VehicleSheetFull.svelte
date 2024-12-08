@@ -25,7 +25,7 @@
 
   let selectedTabId: string = $state('');
 
-  let context = getVehicleSheetContext();
+  let context = $derived(getVehicleSheetContext());
 
   let sizes = $derived(
     Object.entries(context.config.actorSizes).map(

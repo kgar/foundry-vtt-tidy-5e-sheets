@@ -8,7 +8,7 @@
   import { DRAKKENHEIM_CORE_CONSTANTS } from './DrakkenheimCoreConstants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  const context = getSheetContext<ActorSheetContextV1 | ActorSheetContextV2>();
+  const context = $derived(getSheetContext<ActorSheetContextV1 | ActorSheetContextV2>());
 
   let contanimationLevel = $derived(
     FoundryAdapter.getProperty<number | undefined>(

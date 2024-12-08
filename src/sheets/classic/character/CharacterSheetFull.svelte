@@ -24,7 +24,7 @@
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
   let selectedTabId: string = $state('');
-  let context = getCharacterSheetContext();
+  let context = $derived(getCharacterSheetContext());
 
   const localize = FoundryAdapter.localize;
 

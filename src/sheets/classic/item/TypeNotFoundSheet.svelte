@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getItemSheetContext();
+  let context = $derived(getItemSheetContext());
 </script>
 
 <h2>Item Type Not Found</h2>

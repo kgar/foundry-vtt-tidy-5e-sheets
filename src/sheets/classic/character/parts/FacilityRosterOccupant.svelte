@@ -18,7 +18,7 @@
   let { occupant, type, index, prop, facilityId, facilityName }: Props =
     $props();
 
-  let context = getCharacterSheetContext();
+  let context = $derived(getCharacterSheetContext());
 
   // kgar-migration-task - does it work? If not, then pursue an object with getter / setter or similar
   let hoveredFacilityOccupant = getContext<string>(

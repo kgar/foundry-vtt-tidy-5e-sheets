@@ -25,7 +25,7 @@
 
   const searchResults = getSearchResultsContext();
 
-  const context = getGroupSheetClassicContext();
+  const context = $derived(getGroupSheetClassicContext());
 
   const localize = FoundryAdapter.localize;
 

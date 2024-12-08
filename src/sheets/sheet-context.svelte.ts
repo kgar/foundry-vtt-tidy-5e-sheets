@@ -1,4 +1,5 @@
 import { CONSTANTS } from 'src/constants';
+import type { CoarseReactivityProvider } from 'src/features/reactivity/CoaseReactivityProvider.svelte';
 import type { GroupSheetClassicContext } from 'src/types/group.types';
 import type {
   ContainerSheetClassicContext,
@@ -13,7 +14,9 @@ import type {
 import { getContext } from 'svelte';
 
 export function getSheetContext<TContext = any>(): TContext {
-  return getContext<TContext>(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
+  return getContext<CoarseReactivityProvider<TContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT
+  ).data;
 }
 
 export function getCharacterSheetContext(): CharacterSheetContext {

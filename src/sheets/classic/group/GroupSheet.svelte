@@ -14,7 +14,7 @@
   import AttachedInfoCard from 'src/components/item-info-card/AttachedInfoCard.svelte';
   import { getGroupSheetClassicContext } from 'src/sheets/sheet-context.svelte';
 
-  const context = getGroupSheetClassicContext();
+  const context = $derived(getGroupSheetClassicContext());
 
   const localize = FoundryAdapter.localize;
 

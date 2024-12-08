@@ -7,7 +7,7 @@
  * As seen on https://github.com/sveltejs/svelte/issues/10560#issuecomment-2057092046
  * 
  */
-export class External<T> {
+export class CoarseReactivityProvider<T> {
   #data;
   #version = $state(0);
 

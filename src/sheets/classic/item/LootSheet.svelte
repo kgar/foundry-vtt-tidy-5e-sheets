@@ -11,7 +11,7 @@
   import PropertyToggle from 'src/components/toggle/PropertyToggle.svelte';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getItemSheetContext();
+  let context = $derived(getItemSheetContext());
 
   let selectedTabId: string = $state('');
 

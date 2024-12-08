@@ -3,7 +3,7 @@
   import { settings } from 'src/settings/settings.svelte';
   import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getNpcSheetContext();
+  let context = $derived(getNpcSheetContext());
 
   let isLinked = $derived(
     context.actor.token?.actorLink ?? context.actor.prototypeToken.actorLink,

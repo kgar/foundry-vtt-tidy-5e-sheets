@@ -4,7 +4,7 @@
   import type { ActorSheetContextV1 } from 'src/types/types';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getSheetContext<ActorSheetContextV1>();
+  let context = $derived(getSheetContext<ActorSheetContextV1>());
 </script>
 
 {#if context.saves.concentration}

@@ -12,7 +12,7 @@
 
   let { resource }: Props = $props();
 
-  let context = getCharacterSheetContext();
+  let context = $derived(getCharacterSheetContext());
 
   let appId = $derived(context.actor.id);
 

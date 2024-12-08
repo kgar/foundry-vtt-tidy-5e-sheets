@@ -8,7 +8,7 @@
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import { getContainerSheetClassicContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContainerSheetClassicContext();
+  let context = $derived(getContainerSheetClassicContext());
 
   let appId = $derived(context.document.id);
 

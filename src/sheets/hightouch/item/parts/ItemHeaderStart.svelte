@@ -3,7 +3,7 @@
   import SheetHeaderEditModeToggle from 'src/sheets/classic/shared/SheetHeaderEditModeToggle.svelte';
   import { getContainerSheetHightouchContext } from 'src/sheets/sheet-context.svelte';
 
-  const context = getContainerSheetHightouchContext();
+  const context = $derived(getContainerSheetHightouchContext());
 
   let sourceText = $derived(
     context.editable

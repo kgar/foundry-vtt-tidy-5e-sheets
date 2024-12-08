@@ -4,7 +4,7 @@
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
   import { mapPropertiesToSave } from 'src/utils/system-properties';
 
-  let context = getItemSheetContext();
+  let context = $derived(getItemSheetContext());
 
   let appId = $derived(context.document.id);
 

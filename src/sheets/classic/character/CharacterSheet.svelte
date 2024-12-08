@@ -3,7 +3,7 @@
   import CharacterSheetLimited from './CharacterSheetLimited.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getCharacterSheetContext();
+  let context = $derived(getCharacterSheetContext());
 </script>
 
 {#if context.showLimitedSheet}

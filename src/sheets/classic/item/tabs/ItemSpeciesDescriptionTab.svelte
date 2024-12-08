@@ -6,7 +6,7 @@
   import { CONSTANTS } from 'src/constants';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getItemSheetContext();
+  let context = $derived(getItemSheetContext());
 
   let movementLabels = $derived(
     Object.values(context.item.system.movementLabels) as string[],

@@ -16,7 +16,7 @@ Because the controls are mutually exclusive, it is more ergonomic to distinguish
 
   let { effect }: Props = $props();
 
-  let context = getSheetContext<ActorSheetContextV1>();
+  let context = $derived(getSheetContext<ActorSheetContextV1>());
 
   /** Character effects are not the full ActiveEffect5e instance;
    * they are instead a subset of contextual data.

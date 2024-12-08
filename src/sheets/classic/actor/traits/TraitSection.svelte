@@ -6,7 +6,7 @@
   import { type Snippet } from 'svelte';
   import type { MouseEventHandler } from 'svelte/elements';
 
-  let context = getSheetContext<ActorSheetContextV1>();
+  let context = $derived(getSheetContext<ActorSheetContextV1>());
 
   interface Props {
     title: string;

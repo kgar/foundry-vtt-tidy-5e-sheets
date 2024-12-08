@@ -4,7 +4,7 @@
   import VehicleSheetLimited from './VehicleSheetLimited.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getSheetContext<VehicleSheetContext>();
+  let context = $derived(getSheetContext<VehicleSheetContext>());
 </script>
 
 {#if context.showLimitedSheet}

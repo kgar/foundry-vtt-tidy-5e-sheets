@@ -29,7 +29,7 @@
       ?.abbreviation ?? id,
   );
 
-  let context = getSheetContext<ActorSheetContextV1>();
+  let context = $derived(getSheetContext<ActorSheetContextV1>());
 
   const localize = FoundryAdapter.localize;
 

@@ -28,7 +28,7 @@
 
   let selectedTabId: string = $state('');
 
-  let context = getNpcSheetContext();
+  let context = $derived(getNpcSheetContext());
 
   let sizes = $derived(
     Object.entries(context.config.actorSizes).map(

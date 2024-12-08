@@ -12,7 +12,7 @@
 
   let { useHpOverlay, size = 'medium', children }: Props = $props();
 
-  let context = getSheetContext<ActorSheetContextV1>();
+  let context = $derived(getSheetContext<ActorSheetContextV1>());
 </script>
 
 <div class="actor-profile-wrap" class:small-profile={size === 'small'}>

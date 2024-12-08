@@ -7,7 +7,7 @@
   import { settings } from 'src/settings/settings.svelte';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getItemSheetContext();
+  let context = $derived(getItemSheetContext());
 
   let appId = $derived(context.document.id);
 

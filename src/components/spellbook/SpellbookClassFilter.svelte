@@ -5,7 +5,7 @@
   import type { Item5e } from 'src/types/item.types';
   import { type DropdownListOption } from 'src/types/types';
 
-  let context = getCharacterSheetContext();
+  let context = $derived(getCharacterSheetContext());
 
   let allClasses: DropdownListOption[] = $derived([
     { text: 'DND5E.Spellbook', value: '' },

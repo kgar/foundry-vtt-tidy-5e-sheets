@@ -28,7 +28,7 @@
 
   let { section, spells, cssClass = null }: Props = $props();
 
-  let context = getSheetContext<CharacterSheetContext | NpcSheetContext>();
+  let context = $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
 
   let searchResultContext = getSearchResultsContext();
 

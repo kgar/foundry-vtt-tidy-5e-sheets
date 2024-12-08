@@ -8,7 +8,7 @@
   import PillSwitch from 'src/components/toggle/PillSwitch.svelte';
   import { getContainerSheetHightouchContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContainerSheetHightouchContext();
+  let context = $derived(getContainerSheetHightouchContext());
 
   const localize = FoundryAdapter.localize;
 

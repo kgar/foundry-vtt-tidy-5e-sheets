@@ -7,7 +7,7 @@
 
   let { rounded }: Props = $props();
 
-  let context = getVehicleSheetContext();
+  let context = $derived(getVehicleSheetContext());
 </script>
 
 <header>

@@ -17,7 +17,7 @@
   import InlineSvg from 'src/components/utility/InlineSvg.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getCharacterSheetContext();
+  let context = $derived(getCharacterSheetContext());
 
   function onMouseEnterFacility(event: Event, item: Item5e) {
     TidyHooks.tidy5eSheetsItemHoverOn(event, item);

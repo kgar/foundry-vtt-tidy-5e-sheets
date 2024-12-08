@@ -13,7 +13,7 @@
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getCharacterSheetContext();
+  let context = $derived(getCharacterSheetContext());
 
   let incapacitated = $derived(
     (context.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&

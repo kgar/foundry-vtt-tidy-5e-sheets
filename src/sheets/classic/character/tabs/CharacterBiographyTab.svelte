@@ -6,7 +6,7 @@
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getCharacterSheetContext();
+  let context = $derived(getCharacterSheetContext());
 
   const localize = FoundryAdapter.localize;
 

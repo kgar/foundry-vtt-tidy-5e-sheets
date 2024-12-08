@@ -35,7 +35,7 @@
   } from 'src/features/search/search.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getSheetContext<ActorSheetContextV1>();
+  let context = $derived(getSheetContext<ActorSheetContextV1>());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,

@@ -10,7 +10,7 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getVehicleSheetContext();
+  let context = $derived(getVehicleSheetContext());
 
   function onLevelSelected(level: number) {
     TidyFlags.setFlag(context.actor, 'exhaustion', level);

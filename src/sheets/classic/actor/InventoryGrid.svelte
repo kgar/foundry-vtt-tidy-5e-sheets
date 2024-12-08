@@ -27,7 +27,7 @@
 
   let { section, items }: Props = $props();
 
-  let context = getSheetContext<CharacterSheetContext | NpcSheetContext>();
+  let context = $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
 
   let customCommands = $derived(
     ActorItemRuntime.getActorItemSectionCommands({

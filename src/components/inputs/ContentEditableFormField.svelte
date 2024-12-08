@@ -81,13 +81,13 @@
     }
   }
 
-  const context = getSheetContext<
+  const context = $derived(getSheetContext<
     | CharacterSheetContext
     | NpcSheetContext
     | VehicleSheetContext
     | ContainerSheetClassicContext
     | ItemSheetContext
-  >();
+  >());
 
   const localize = FoundryAdapter.localize;
 

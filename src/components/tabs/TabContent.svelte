@@ -14,7 +14,7 @@
 
   let { tab, active, cssClass = '' }: Props = $props();
 
-  const context = getSheetContext();
+  const context = $derived(getSheetContext());
   const allContexts = getAllContexts();
 
   declareLocation('tab', tab.id);

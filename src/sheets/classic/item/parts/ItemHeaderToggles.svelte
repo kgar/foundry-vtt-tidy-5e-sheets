@@ -7,9 +7,9 @@
   } from 'src/types/item.types';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getSheetContext<
+  let context = $derived(getSheetContext<
     ItemSheetContext | ContainerSheetClassicContext
-  >();
+  >());
 
   const localize = FoundryAdapter.localize;
 

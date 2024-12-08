@@ -2,7 +2,7 @@
   import ItemDescriptions from '../../shared/ItemDescriptions.svelte';
   import { getContainerSheetHightouchContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContainerSheetHightouchContext();
+  let context = $derived(getContainerSheetHightouchContext());
 </script>
 
 <ItemDescriptions

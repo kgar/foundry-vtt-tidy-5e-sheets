@@ -17,7 +17,7 @@
 
   const localize = FoundryAdapter.localize;
 
-  let context = getSheetContext<ActorSheetContextV1>();
+  let context = $derived(getSheetContext<ActorSheetContextV1>());
 </script>
 
 <ButtonMenu

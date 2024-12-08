@@ -27,7 +27,7 @@
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
-  const context = getGroupSheetClassicContext();
+  const context = $derived(getGroupSheetClassicContext());
 
   let inventory = $derived(
     SheetSections.configureInventory(

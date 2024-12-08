@@ -47,7 +47,7 @@
     `severity-${selectedLevel?.severity ?? 0}`,
   );
 
-  let context = getSheetContext<ActorSheetContextV1>();
+  let context = $derived(getSheetContext<ActorSheetContextV1>());
 
   let exhaustionOptionWidthRems = 1.25;
 

@@ -11,7 +11,7 @@
 
   let { movementLabelKey = 'DND5E.Speed', ...rest }: Props = $props();
 
-  let context = getSheetContext<ActorSheetContextV1>();
+  let context = $derived(getSheetContext<ActorSheetContextV1>());
 
   const localize = FoundryAdapter.localize;
 </script>

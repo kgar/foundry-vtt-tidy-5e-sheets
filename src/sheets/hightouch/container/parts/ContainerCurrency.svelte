@@ -5,7 +5,7 @@
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import { getContainerSheetHightouchContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContainerSheetHightouchContext();
+  let context = $derived(getContainerSheetHightouchContext());
 
   let currencies = $derived(
     Object.keys(CONFIG.DND5E.currencies).map((key) => ({

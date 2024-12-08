@@ -3,7 +3,7 @@
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
 
-  let context = getSheetContext<ActorSheetContextV1>();
+  let context = $derived(getSheetContext<ActorSheetContextV1>());
 
   const localize = FoundryAdapter.localize;
 </script>

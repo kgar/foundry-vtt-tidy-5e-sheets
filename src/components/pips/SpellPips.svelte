@@ -9,7 +9,7 @@
 
   let { section }: Props = $props();
 
-  let context = getSheetContext<ActorSheetContextV2>();
+  let context = $derived(getSheetContext<ActorSheetContextV2>());
 
   function onPipClick(index: number) {
     let isEmpty = index >= (section.uses ?? 0);

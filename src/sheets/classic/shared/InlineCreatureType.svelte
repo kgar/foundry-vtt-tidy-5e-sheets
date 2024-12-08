@@ -5,7 +5,7 @@
   import { type ActorSheetContextV1 } from 'src/types/types';
   import { coalesce } from 'src/utils/formatting';
 
-  let context = getSheetContext<ActorSheetContextV1>();
+  let context = $derived(getSheetContext<ActorSheetContextV1>());
 
   const localize = FoundryAdapter.localize;
   let text = $derived(

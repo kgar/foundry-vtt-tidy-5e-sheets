@@ -2,7 +2,7 @@
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
   import { getGroupSheetClassicContext } from 'src/sheets/sheet-context.svelte';
 
-  const context = getGroupSheetClassicContext();
+  const context = $derived(getGroupSheetClassicContext());
 </script>
 
 <div class="flex-1 full-height flex-column me-1">

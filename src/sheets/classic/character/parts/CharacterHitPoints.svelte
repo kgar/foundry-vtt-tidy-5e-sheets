@@ -15,7 +15,7 @@
 
   let { value, max, actor, incapacitated }: Props = $props();
 
-  let context = getCharacterSheetContext();
+  let context = $derived(getCharacterSheetContext());
 
   const localize = FoundryAdapter.localize;
 </script>

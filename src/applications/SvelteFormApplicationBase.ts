@@ -20,6 +20,7 @@ export default abstract class SvelteFormApplicationBase extends FormApplication 
         CONSTANTS.SHEET_LAYOUT_CLASSIC,
       ],
       submitOnClose: false,
+      closeOnSubmit: false,
       minimizable: true,
       popOut: true,
       resizable: true,

@@ -4,7 +4,7 @@
   import { settings } from 'src/settings/settings.svelte';
   import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getNpcSheetContext();
+  let context = $derived(getNpcSheetContext());
 
   async function rollNpcHp(event: Event) {
     event.preventDefault();

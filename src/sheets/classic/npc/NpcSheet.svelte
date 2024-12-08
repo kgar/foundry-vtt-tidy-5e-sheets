@@ -3,7 +3,7 @@
   import NpcSheetLimited from './NpcSheetLimited.svelte';
   import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getNpcSheetContext();
+  let context = $derived(getNpcSheetContext());
 </script>
 
 {#if context.showLimitedSheet}

@@ -21,7 +21,7 @@
     onExecute,
   }: Props = $props();
 
-  const context = getSheetContext<unknown>();
+  const context = $derived(getSheetContext<unknown>());
 </script>
 
 <button
