@@ -1,10 +1,15 @@
 ## To Do
 
+- [x] Check/fix Section Config
 - [ ] Check all Tidy Migration applications
 - [ ] Finish more migration tasks that came from recent work
 - [ ] Ensure context API where reactivity is expected is using runes
 - [ ] Fix: World Settings has warning: [svelte] binding_property_non_reactive`bind:value={config.type}` (src/applications/settings/parts/ExhaustionSetting.svelte:33:48) is binding to a non-reactive property
 - [ ] Fix: Settings tabs are blank
+- [ ] Optimize: Section Config prep / setup
+  - Section config is a little cumbersome to deal with right now. It is requiring a `sections` param on the utility toolbar command params and a duplicate set of section data for container.
+  - Can we isolate the actual section preparation, indpependent of the item preparation for those sections? Can that be shared?
+  - Can the section config application somehow do the isolated section ordering / showing / hiding / etc. by itself?
 
 ## Stretch, or defer to post V7.3.0
 
@@ -32,7 +37,7 @@
 
 ### Dealing with Sheet getData Context Reactivity
 
-Switching from a store to a state rune with the `context` property on the sheet classes has almost completely broken reactivity. This is because the context itself has to be provided via a getter or some other closure. With that mind, *there is no other choice than to introduce an extra property in the prop path throughout the sheets code surface area.* Add to this Svelte 5 does not provide reactivity for classes, only POJOs (see https://github.com/sveltejs/svelte/issues/10560#issuecomment-2057092046). If I am keeping with the current context property scheme, then I need to wrap the entire context in the aforementioned `External` class:
+Switching from a store to a state rune with the `context` property on the sheet classes has almost completely broken reactivity. This is because the context itself has to be provided via a getter or some other closure. With that mind, _there is no other choice than to introduce an extra property in the prop path throughout the sheets code surface area._ Add to this Svelte 5 does not provide reactivity for classes, only POJOs (see https://github.com/sveltejs/svelte/issues/10560#issuecomment-2057092046). If I am keeping with the current context property scheme, then I need to wrap the entire context in the aforementioned `External` class:
 
 ```ts
 export class External<T> {
@@ -62,9 +67,8 @@ Then, all references to `context.something` must reference as `context.data.some
 
 ```ts
 function getCharacterSheetContext() {
-	return getContext<{ data: CharacterSheetContext }>('context').data;
+  return getContext<{ data: CharacterSheetContext }>('context').data;
 }
-
 
 // In the component:
 let context = $derived(getCharacterSheetContext());

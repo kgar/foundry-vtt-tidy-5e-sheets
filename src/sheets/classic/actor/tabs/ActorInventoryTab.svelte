@@ -98,6 +98,7 @@
       text={command.text}
       visible={command.visible ?? true}
       onExecute={(ev) => command.execute?.(ev)}
+      sections={inventory}
     />
   {/each}
 </UtilityToolbar>

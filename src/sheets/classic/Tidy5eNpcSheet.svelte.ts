@@ -26,7 +26,7 @@ import {
   maintainCustomContentInputFocus,
 } from 'src/utils/applications.svelte';
 import { debug } from 'src/utils/logging';
-import { SettingsProvider, settings } from 'src/settings/settings.svelte';
+import { settings } from 'src/settings/settings.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { getPercentage } from 'src/utils/numbers';
 import { mount, unmount } from 'svelte';
@@ -48,7 +48,7 @@ import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
-import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
+import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
 import { BaseSheetCustomSectionMixin } from './mixins/BaseSheetCustomSectionMixin';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
@@ -386,10 +386,10 @@ export class Tidy5eNpcSheet
               'TIDY5E.Utilities.ConfigureSections'
             ),
             iconClass: 'fas fa-cog',
-            execute: ({ context }) => {
+            execute: ({ context, sections }) => {
               new DocumentTabSectionConfigApplication({
                 document: context.actor,
-                sections: context.features,
+                sections: sections,
                 tabId: CONSTANTS.TAB_NPC_ABILITIES,
                 tabTitle: NpcSheetRuntime.getTabTitle(
                   CONSTANTS.TAB_NPC_ABILITIES
@@ -497,10 +497,10 @@ export class Tidy5eNpcSheet
               'TIDY5E.Utilities.ConfigureSections'
             ),
             iconClass: 'fas fa-cog',
-            execute: ({ context }) => {
+            execute: ({ context, sections }) => {
               new DocumentTabSectionConfigApplication({
                 document: context.actor,
-                sections: context.spellbook,
+                sections: sections,
                 tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
                 tabTitle: NpcSheetRuntime.getTabTitle(
                   CONSTANTS.TAB_NPC_SPELLBOOK
@@ -563,10 +563,10 @@ export class Tidy5eNpcSheet
               'TIDY5E.Utilities.ConfigureSections'
             ),
             iconClass: 'fas fa-cog',
-            execute: ({ context }) => {
+            execute: ({ context, sections }) => {
               new DocumentTabSectionConfigApplication({
                 document: context.actor,
-                sections: context.actions,
+                sections: sections,
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
                 tabTitle: NpcSheetRuntime.getTabTitle(
                   CONSTANTS.TAB_ACTOR_ACTIONS
@@ -665,10 +665,10 @@ export class Tidy5eNpcSheet
               'TIDY5E.Utilities.ConfigureSections'
             ),
             iconClass: 'fas fa-cog',
-            execute: ({ context }) => {
+            execute: ({ context, sections }) => {
               new DocumentTabSectionConfigApplication({
                 document: context.actor,
-                sections: context.inventory,
+                sections: sections,
                 tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 tabTitle: NpcSheetRuntime.getTabTitle(
                   CONSTANTS.TAB_ACTOR_INVENTORY

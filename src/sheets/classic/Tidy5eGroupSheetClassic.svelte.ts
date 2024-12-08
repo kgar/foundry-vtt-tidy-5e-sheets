@@ -28,7 +28,7 @@ import type {
   GroupSkill,
 } from 'src/types/group.types';
 import { Inventory } from 'src/features/sections/Inventory';
-import { SettingsProvider, settings } from 'src/settings/settings.svelte';
+import { settings } from 'src/settings/settings.svelte';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { getPercentage } from 'src/utils/numbers';
 import type { Item5e } from 'src/types/item.types';
@@ -38,7 +38,7 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import { Container } from 'src/features/containers/Container';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
-import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
+import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
 import { GroupSheetRuntime } from 'src/runtime/GroupSheetRuntime';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
@@ -356,10 +356,10 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
               'TIDY5E.Utilities.ConfigureSections'
             ),
             iconClass: 'fas fa-cog',
-            execute: ({ context }) => {
+            execute: ({ context, sections }) => {
               new DocumentTabSectionConfigApplication({
                 document: context.actor,
-                sections: context.inventory,
+                sections: sections,
                 tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 tabTitle: GroupSheetRuntime.getTabTitle(
                   CONSTANTS.TAB_ACTOR_INVENTORY

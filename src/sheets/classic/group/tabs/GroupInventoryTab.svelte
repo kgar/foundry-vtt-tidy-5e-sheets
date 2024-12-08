@@ -86,6 +86,7 @@
       text={command.text}
       visible={command.visible ?? true}
       onExecute={(ev) => command.execute?.(ev)}
+      sections={inventory}
     />
   {/each}
 </UtilityToolbar>
@@ -108,9 +109,7 @@
         ? 'container-panel-expanded'
         : ''}"
     >
-      <ContainerPanel
-        containerPanelItems={context.containerPanelItems}
-      />
+      <ContainerPanel containerPanelItems={context.containerPanelItems} />
     </ExpandableContainer>
     {#each inventory as section (section.key)}
       {@const visibleItemCount = ItemVisibility.countVisibleItems(

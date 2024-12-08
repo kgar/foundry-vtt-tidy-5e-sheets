@@ -46,7 +46,7 @@ import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svel
 import { AsyncMutex } from 'src/utils/mutex';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet.svelte';
-import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
+import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
@@ -292,10 +292,10 @@ export class Tidy5eVehicleSheet
               'TIDY5E.Utilities.ConfigureSections'
             ),
             iconClass: 'fas fa-cog',
-            execute: ({ context }) => {
+            execute: ({ context, sections }) => {
               new DocumentTabSectionConfigApplication({
                 document: context.actor,
-                sections: context.actions,
+                sections: sections,
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
                 tabTitle: VehicleSheetRuntime.getTabTitle(
                   CONSTANTS.TAB_ACTOR_ACTIONS

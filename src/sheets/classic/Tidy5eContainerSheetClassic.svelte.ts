@@ -30,10 +30,10 @@ import { Container } from 'src/features/containers/Container';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
+import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import { settings, SettingsProvider } from 'src/settings/settings.svelte';
+import { settings } from 'src/settings/settings.svelte';
 import { Inventory } from 'src/features/sections/Inventory';
 
 export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
@@ -229,11 +229,11 @@ export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
               'TIDY5E.Utilities.ConfigureSections'
             ),
             iconClass: 'fas fa-cog',
-            execute: ({ context }) => {
+            execute: ({ context, sections }) => {
               new DocumentTabSectionConfigApplication({
                 document: context.item,
                 // Provide a way to build the necessary config, perhaps within the application constructor. We've got all the info we need in order to perform the operation.
-                sections: context.containerContents.contents,
+                sections: sections,
                 tabId: CONSTANTS.TAB_CONTAINER_CONTENTS,
                 tabTitle: ItemSheetRuntime.getTabTitle(
                   CONSTANTS.TAB_CONTAINER_CONTENTS

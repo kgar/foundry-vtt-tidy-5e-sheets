@@ -15,6 +15,8 @@
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { SheetSections } from 'src/features/sections/SheetSections';
+  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 
   let context = $derived(getCharacterSheetContext());
 
@@ -31,6 +33,16 @@
 
   let utilityBarCommands = $derived(
     context.utilities[tabId]?.utilityToolbarCommands ?? [],
+  );
+
+  let favorites = $derived(
+    SheetSections.configureFavorites(
+      context.favorites,
+      context.actor,
+      tabId,
+      SheetPreferencesService.getByType(context.actor.type),
+      TidyFlags.sectionConfig.get(context.actor)?.[tabId],
+    ),
   );
 </script>
 
@@ -76,7 +88,7 @@
       {#if settings.value.moveTraitsBelowCharacterResources}
         <Traits toggleable={settings.value.toggleEmptyCharacterTraits} />
       {/if}
-      <Favorites {searchCriteria} />
+      <Favorites {favorites} {searchCriteria} />
     </section>
   </div>
 </div>

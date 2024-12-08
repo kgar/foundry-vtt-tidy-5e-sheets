@@ -6,9 +6,6 @@
   import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
   import FavoriteEffectsList from './FavoriteEffectsList.svelte';
-  import { SheetSections } from 'src/features/sections/SheetSections';
-  import { TidyFlags } from 'src/foundry/TidyFlags';
-  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import FavoriteFacilitiesList from './FavoriteFacilitiesList.svelte';
   import FavoriteActivitiesList from './FavoriteActivitiesList.svelte';
@@ -17,26 +14,18 @@
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
+  import type { FavoriteSection } from 'src/types/types';
 
   interface Props {
     searchCriteria?: string;
+    favorites: FavoriteSection[];
   }
 
-  let { searchCriteria = '' }: Props = $props();
+  let { searchCriteria = '', favorites }: Props = $props();
 
   let context = $derived(getCharacterSheetContext());
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
-
-  let favorites = $derived(
-    SheetSections.configureFavorites(
-      context.favorites,
-      context.actor,
-      tabId,
-      SheetPreferencesService.getByType(context.actor.type),
-      TidyFlags.sectionConfig.get(context.actor)?.[tabId],
-    ),
-  );
 
   const searchResults = createSearchResultsState();
   setSearchResultsContext(searchResults);

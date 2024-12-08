@@ -17,7 +17,7 @@ type SectionConfigConstructorArgs = {
 
 export class DocumentTabSectionConfigApplication extends SvelteFormApplicationBase {
   document: Actor5e | Item5e;
-  sections: DocumentTabSectionConfigItem[];
+  sections = $state<DocumentTabSectionConfigItem[]>()!;
   tabId: string;
   tabTitle: string;
 
@@ -31,7 +31,7 @@ export class DocumentTabSectionConfigApplication extends SvelteFormApplicationBa
     this.document = document;
     this.sections = sections.map((section) => ({
       key: section.key,
-      label: section.label,
+      label: FoundryAdapter.localize(section.label),
       show: section.show !== false,
     }));
     this.tabId = tabId;
@@ -57,13 +57,7 @@ export class DocumentTabSectionConfigApplication extends SvelteFormApplicationBa
     return mount(DocumentTabSectionConfig, {
       target: node,
       props: {
-        sections: this.sections.map((curr: DocumentTabSectionConfigItem) => {
-          return {
-            key: curr.key,
-            label: FoundryAdapter.localize(curr.label),
-            show: curr.show,
-          };
-        }, {}),
+        sections: this.sections,
         onSaveChanges: this._onSaveChanges.bind(this),
         onApply: this._onApply.bind(this),
         useDefault: this._useDefault.bind(this),

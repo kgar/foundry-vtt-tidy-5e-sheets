@@ -4,12 +4,14 @@
   import { settings } from 'src/settings/settings.svelte';
   import { CONSTANTS } from 'src/constants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import type { TidySectionBase } from 'src/types/types';
 
   interface Props {
     title?: string | undefined;
     iconClass?: string | undefined;
     text?: string | undefined;
     visible?: boolean;
+    sections?: TidySectionBase[];
     onExecute?: (event: UtilityToolbarCommandExecuteEvent) => void;
   }
 
@@ -18,6 +20,7 @@
     iconClass = undefined,
     text = undefined,
     visible = true,
+    sections = [],
     onExecute,
   }: Props = $props();
 
@@ -28,7 +31,7 @@
   type="button"
   class="inline-icon-button"
   class:hidden={!visible}
-  onclick={(ev) => onExecute?.({ event: ev, context: context })}
+  onclick={(ev) => onExecute?.({ event: ev, context: context, sections })}
   {title}
   tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.UTILITY_TOOLBAR_COMMAND}

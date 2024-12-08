@@ -44,7 +44,7 @@
   import ClassicControls from 'src/sheets/classic/shared/ClassicControls.svelte';
   import type { Item5e } from 'src/types/item.types';
   import LevelUpDropdown from 'src/sheets/classic/actor/LevelUpDropdown.svelte';
-  import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
+  import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
   import ItemControl from 'src/components/item-list/controls/ItemControl.svelte';
   import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
   import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -179,6 +179,7 @@
       text={command.text}
       visible={command.visible ?? true}
       onExecute={(ev) => command.execute?.(ev)}
+      sections={features}
     />
   {/each}
 </UtilityToolbar>

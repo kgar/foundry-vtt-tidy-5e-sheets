@@ -2,6 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Listbox from './Listbox.svelte';
   import type { Snippet } from 'svelte';
+  import { arrayMove } from 'src/utils/array';
 
   type TItem = $$Generic;
 
@@ -117,26 +118,7 @@
 
     const dropTargetIndex = ev.index;
 
-    items = items.reduce<TItem[]>((acc, item, index) => {
-      // When dropping onto a higher entry, the dragged should come before the target.
-      if (index === dropTargetIndex && draggedIndex > dropTargetIndex) {
-        acc.push(theDragged);
-      }
-
-      // The dragged item is being excluded from its original place in the list, to be placed elsewhere.
-      if (index === draggedIndex) {
-        return acc;
-      }
-
-      acc.push(item);
-
-      // When dropping onto a lower entry, the dragged should come after the target.
-      if (index === dropTargetIndex && draggedIndex < dropTargetIndex) {
-        acc.push(theDragged);
-      }
-
-      return acc;
-    }, []);
+    arrayMove(items, draggedIndex, dropTargetIndex);
 
     selectedItemIndex = items.indexOf(theDragged);
   }

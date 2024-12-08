@@ -20,6 +20,9 @@
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
   import { getContainerSheetClassicContext } from 'src/sheets/sheet-context.svelte';
+  import { TidyFlags } from 'src/api';
+  import { SheetSections } from 'src/features/sections/SheetSections';
+  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 
   let context = $derived(getContainerSheetClassicContext());
 
@@ -54,6 +57,18 @@
   );
 
   let menuOpen = $state(false);
+
+  // TODO: Figure out how to avoid duplicating the recursive inline container section config :/
+  let configuredContents = $derived(
+    SheetSections.configureInventory(
+      context.containerContents.contents.filter((i) => i.items.length),
+      tabId,
+      SheetPreferencesService.getByType(context.item.type),
+      TidyFlags.sectionConfig.get(context.item)?.[
+        CONSTANTS.TAB_CONTAINER_CONTENTS
+      ],
+    ),
+  );
 </script>
 
 <div class="container-contents-wrapper">
@@ -79,6 +94,7 @@
         text={command.text}
         visible={command.visible ?? true}
         onExecute={(ev) => command.execute?.(ev)}
+        sections={configuredContents}
       />
     {/each}
 

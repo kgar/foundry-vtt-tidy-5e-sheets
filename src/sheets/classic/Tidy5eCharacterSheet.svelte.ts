@@ -57,7 +57,7 @@ import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet.svelte';
 import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSections';
 import { SheetSections } from 'src/features/sections/SheetSections';
-import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
+import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
 import { BaseSheetCustomSectionMixin } from './mixins/BaseSheetCustomSectionMixin';
 import { Inventory } from 'src/features/sections/Inventory';
 import type {
@@ -85,7 +85,9 @@ export class Tidy5eCharacterSheet
     SheetExpandedItemsCacheable,
     SearchFilterCacheable
 {
-  context = new CoarseReactivityProvider<CharacterSheetContext | undefined>(undefined);
+  context = new CoarseReactivityProvider<CharacterSheetContext | undefined>(
+    undefined
+  );
 
   stats = $state<SheetStats>({
     lastSubmissionTime: null,
@@ -391,11 +393,11 @@ export class Tidy5eCharacterSheet
               'TIDY5E.Utilities.ConfigureSections'
             ),
             iconClass: 'fas fa-cog',
-            execute: ({ context }) => {
+            execute: ({ context, sections }) => {
               new DocumentTabSectionConfigApplication({
                 document: context.actor,
                 // Provide a way to build the necessary config, perhaps within the application constructor. We've got all the info we need in order to perform the operation.
-                sections: context.favorites,
+                sections: sections,
                 tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
                 tabTitle: CharacterSheetRuntime.getTabTitle(
                   CONSTANTS.TAB_CHARACTER_ATTRIBUTES
@@ -494,10 +496,10 @@ export class Tidy5eCharacterSheet
               'TIDY5E.Utilities.ConfigureSections'
             ),
             iconClass: 'fas fa-cog',
-            execute: ({ context }) => {
+            execute: ({ context, sections }) => {
               new DocumentTabSectionConfigApplication({
                 document: context.actor,
-                sections: context.inventory,
+                sections: sections,
                 tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 tabTitle: CharacterSheetRuntime.getTabTitle(
                   CONSTANTS.TAB_ACTOR_INVENTORY
@@ -605,10 +607,10 @@ export class Tidy5eCharacterSheet
               'TIDY5E.Utilities.ConfigureSections'
             ),
             iconClass: 'fas fa-cog',
-            execute: ({ context }) => {
+            execute: ({ context, sections }) => {
               new DocumentTabSectionConfigApplication({
                 document: context.actor,
-                sections: context.spellbook,
+                sections: sections,
                 tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
                 tabTitle: CharacterSheetRuntime.getTabTitle(
                   CONSTANTS.TAB_CHARACTER_SPELLBOOK
@@ -671,10 +673,10 @@ export class Tidy5eCharacterSheet
               'TIDY5E.Utilities.ConfigureSections'
             ),
             iconClass: 'fas fa-cog',
-            execute: ({ context }) => {
+            execute: ({ context, sections }) => {
               new DocumentTabSectionConfigApplication({
                 document: context.actor,
-                sections: context.features,
+                sections: sections,
                 tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
                 tabTitle: CharacterSheetRuntime.getTabTitle(
                   CONSTANTS.TAB_CHARACTER_FEATURES
@@ -737,10 +739,10 @@ export class Tidy5eCharacterSheet
               'TIDY5E.Utilities.ConfigureSections'
             ),
             iconClass: 'fas fa-cog',
-            execute: ({ context }) => {
+            execute: ({ context, sections }) => {
               new DocumentTabSectionConfigApplication({
                 document: context.actor,
-                sections: context.actions,
+                sections: sections,
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
                 tabTitle: CharacterSheetRuntime.getTabTitle(
                   CONSTANTS.TAB_ACTOR_ACTIONS
