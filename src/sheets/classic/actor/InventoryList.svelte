@@ -25,7 +25,7 @@
     NpcSheetContext,
     RenderableClassicControl,
   } from 'src/types/types';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { coalesce } from 'src/utils/formatting';
   import TextInput from 'src/components/inputs/TextInput.svelte';
@@ -33,7 +33,7 @@
   import InlineContainerView from '../container/InlineContainerView.svelte';
   import { ItemUtils } from 'src/utils/ItemUtils';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
-  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
@@ -231,7 +231,7 @@
                 >
               </ItemName>
             </ItemTableCell>
-            {#if $settingStore.showIconsNextToTheItemName}
+            {#if settings.showIconsNextToTheItemName}
               <ItemTableCell cssClass="no-border">
                 {#if ctx?.attunement && !FoundryAdapter.concealDetails(item)}
                   <div class="item-detail attunement">

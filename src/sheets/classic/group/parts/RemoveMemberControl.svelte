@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { getGroupSheetClassicContext } from 'src/sheets/sheet-context.svelte';
   import type { Actor5e } from 'src/types/types';
 
@@ -20,7 +20,7 @@
   class="inline-icon-button"
   onclick={() => context.actor.system.removeMember(member.id)}
   title={localize('TIDY5E.Group.RemoveMemberFromGroup')}
-  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+  tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
 >
   <i class="fas fa-xmark"></i>
 </button>

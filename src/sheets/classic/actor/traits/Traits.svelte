@@ -3,7 +3,7 @@
   import type { ActorSheetContextV1 } from 'src/types/types';
   import TraitSection from './TraitSection.svelte';
   import TraitSectionTools from './TraitSectionTools.svelte';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { error } from 'src/utils/logging';
   import TraitSectionTags from './TraitSectionTags.svelte';
   import TraitSectionModifications from './TraitSectionModifications.svelte';
@@ -285,7 +285,7 @@
         event.stopPropagation();
         toggleTraitsExpanded();
       }}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+      tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
     >
       {#if traitsExpanded}
         {localize('TIDY5E.HideEmptyTraits')}
@@ -306,7 +306,7 @@
         event.stopPropagation();
         FoundryAdapter.renderActorSheetFlags(context.actor);
       }}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+      tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fas fa-star"></i>
     </button>

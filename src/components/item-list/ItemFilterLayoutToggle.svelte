@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import type { ItemLayoutMode } from 'src/types/types';
 
   interface Props {
@@ -34,7 +34,7 @@
       class="icon-button"
       title={toggleButtonPresentation?.title}
       onclick={() => onToggle?.()}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+      tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class={toggleButtonPresentation?.iconClass}></i>
     </button>

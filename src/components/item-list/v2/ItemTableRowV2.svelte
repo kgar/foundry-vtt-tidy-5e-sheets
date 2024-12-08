@@ -8,8 +8,7 @@
     OnItemToggledFn,
   } from 'src/types/types';
   import { warn } from 'src/utils/logging';
-  import { getContext, onMount, type Snippet } from 'svelte';
-  import type { Writable } from 'svelte/store';
+  import { getContext, type Snippet } from 'svelte';
   import ItemSummary from '../ItemSummary.svelte';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -42,15 +41,15 @@
   const expandedItemData = getContext<ExpandedItemData>(
     CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA,
   );
-  const context = getContext<Writable<unknown>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+
   const expandedItems = getContext<ExpandedItemIdToLocationsMap>(
     CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEMS,
   );
+
   const onItemToggled = getContext<OnItemToggledFn>(
     CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TOGGLED,
   );
+
   const location = getContext<string>(CONSTANTS.SVELTE_CONTEXT.LOCATION);
 
   let showSummary = $state(false);

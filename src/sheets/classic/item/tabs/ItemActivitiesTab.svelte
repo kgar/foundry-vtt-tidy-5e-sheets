@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { Activities } from 'src/features/activities/activities';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
@@ -28,7 +28,7 @@
         type="button"
         class="add-activity-button"
         onclick={() => context.item.sheet.addActivity()}
-        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+        tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
       >
         <i class="fas fa-plus"></i>
         {localize('DND5E.Add')}
@@ -64,7 +64,7 @@
           onclick={() =>
             context.system.activities?.get(activity.id).sheet.render(true)}
           disabled={!context.editable}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+          tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
         >
           {activity.name}
         </button>
@@ -75,7 +75,7 @@
             title={localize('DND5E.ACTIVITY.Action.Delete')}
             onclick={() =>
               context.system.activities?.get(activity.id)?.deleteDialog()}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-trash"></i>
           </button>

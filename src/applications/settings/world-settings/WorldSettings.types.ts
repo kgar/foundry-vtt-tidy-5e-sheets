@@ -1,6 +1,5 @@
 import type { ExhaustionConfig } from 'src/features/exhaustion/exhaustion.types';
 import type { CurrentSettings } from 'src/settings/settings.svelte';
-import type { Writable } from 'svelte/store';
 
 export type WorldSettingsContext = {
   settings: {
@@ -58,9 +57,7 @@ export type DefaultTabSelectionFields = {
 };
 
 export type WorldSettingsFunctions = {
-  save(context: WorldSettingsContext): Promise<void>;
-  apply(context: WorldSettingsContext): Promise<boolean>;
-  resetDefaultTabs(context: WorldSettingsContextStore, sheetType: string): void;
+  save(): Promise<void>;
+  apply(): Promise<boolean>;
+  resetDefaultTabs(sheetType: string): void;
 };
-
-export type WorldSettingsContextStore = Writable<WorldSettingsContext>;

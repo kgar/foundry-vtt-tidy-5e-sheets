@@ -6,25 +6,23 @@ import type {
   ApplicationRenderOptions,
 } from 'src/types/application.types';
 import { DragAndDropMixin } from 'src/mixins/DragAndDropBaseMixin';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin';
+import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type {
   ContainerSheetHightouchContext,
   Item5e,
   ItemChatData,
   ItemDescription,
 } from 'src/types/item.types';
-import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
 import type {
   LocationToSearchTextMap,
   ExpandedItemIdToLocationsMap,
   ExpandedItemData,
-  MessageBus,
   MessageBusMessage,
   Utilities,
   Tab,
 } from 'src/types/types';
-import { writable } from 'svelte/store';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
@@ -48,7 +46,7 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   inlineToggleService = new InlineToggleService();
   itemFilterService: ItemFilterService;
-  messageBus: MessageBus = writable<MessageBusMessage | undefined>();
+  messageBus = $state<MessageBusMessage | undefined>();
 
   constructor(...args: any[]) {
     super(...args);

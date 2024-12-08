@@ -3,7 +3,6 @@ import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
 import MaxPreparedSpellsConfig from './MaxPreparedSpellsConfig.svelte';
 import type { Actor5e, MaxPreparedSpellFormula } from 'src/types/types';
 import type { Item5e } from 'src/types/item.types';
-import { get, writable, type Writable } from 'svelte/store';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { getMaxPreparedSpellsSampleFormulas } from 'src/utils/formula';
 
@@ -14,7 +13,7 @@ export type MaxPreparedSpellsConfigContext = {
 };
 
 export class MaxPreparedSpellsConfigFormApplication extends SvelteFormApplicationBase {
-  context: Writable<MaxPreparedSpellsConfigContext>;
+  context = $state<MaxPreparedSpellsConfigContext>();
   actor: Actor5e;
   classToUpdate: Item5e;
 
@@ -23,15 +22,15 @@ export class MaxPreparedSpellsConfigFormApplication extends SvelteFormApplicatio
     this.actor = actor;
     this.classToUpdate = classToUpdate;
 
-    this.context = writable({
+    this.context = {
       maxPreparedSpells: '',
       formulas: getMaxPreparedSpellsSampleFormulas(),
       actor,
-    });
+    };
   }
 
   createComponent(node: HTMLElement): Record<string, any> {
-    this.context.set(this.getData());
+    this.context = this.getData();
 
     return mount(MaxPreparedSpellsConfig, {
       target: node,
@@ -67,9 +66,9 @@ export class MaxPreparedSpellsConfigFormApplication extends SvelteFormApplicatio
   }
 
   async _updateObject(): Promise<void> {
-    const data = get(this.context);
     await this.classToUpdate.update({
-      'system.spellcasting.preparation.formula': data?.maxPreparedSpells ?? '',
+      'system.spellcasting.preparation.formula':
+        this.context?.maxPreparedSpells ?? '',
     });
   }
 }

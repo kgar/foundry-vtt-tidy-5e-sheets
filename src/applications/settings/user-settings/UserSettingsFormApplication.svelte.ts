@@ -1,6 +1,5 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { mount } from 'svelte';
-import { writable } from 'svelte/store';
 import {
   getCurrentSettings,
   type CurrentSettings,
@@ -13,11 +12,11 @@ import UserSettings from './UserSettings.svelte';
 import type {
   UserSettingsContext,
   UserSettingsFunctions,
-  UserSettingsStore,
 } from './UserSettings.types';
 
 export class UserSettingsFormApplication extends SvelteFormApplicationBase {
   initialTabId: string;
+  context = $state<UserSettingsContext>();
 
   constructor(initialTabId: string, ...args: any[]) {
     super(...args);
@@ -106,7 +105,7 @@ export class UserSettingsFormApplication extends SvelteFormApplicationBase {
     return mount(UserSettings, {
       target: node,
       context: new Map<any, any>([
-        ['context', writable(data) satisfies UserSettingsStore],
+        ['context', this.context],
         [
           'functions',
           {
@@ -138,13 +137,17 @@ export class UserSettingsFormApplication extends SvelteFormApplicationBase {
     return valid;
   }
 
-  async applyChangedSettings(context: UserSettingsContext) {
-    if (!this.validate(context)) {
+  async applyChangedSettings() {
+    if (!this.context) {
+      return;
+    }
+
+    if (!this.validate(this.context)) {
       return false;
     }
 
     const newSettings: Partial<CurrentSettings> = {
-      ...context.settings,
+      ...this.context.settings,
     };
 
     const currentSettings = getCurrentSettings();
@@ -161,8 +164,8 @@ export class UserSettingsFormApplication extends SvelteFormApplicationBase {
     return true;
   }
 
-  async saveChangedSettings(context: UserSettingsContext) {
-    const changesApplied = await this.applyChangedSettings(context);
+  async saveChangedSettings() {
+    const changesApplied = await this.applyChangedSettings();
 
     if (!changesApplied) {
       return;

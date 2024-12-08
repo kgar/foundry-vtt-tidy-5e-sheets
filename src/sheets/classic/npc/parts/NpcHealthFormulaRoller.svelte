@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { debug } from 'src/utils/logging';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
 
   let context = getNpcSheetContext();
@@ -45,8 +45,8 @@
     onclick={rollNpcHp}
     oncontextmenu={calcAverageHitDie}
     class="roll-hp-formula highlight-on-hover"
-    tabindex={!$settingStore.useDefaultSheetHpTabbing &&
-    $settingStore.useAccessibleKeyboardSupport
+    tabindex={!settings.useDefaultSheetHpTabbing &&
+    settings.useAccessibleKeyboardSupport
       ? 0
       : -1}
   >

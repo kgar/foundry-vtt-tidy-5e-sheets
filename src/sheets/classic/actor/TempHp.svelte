@@ -2,7 +2,7 @@
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
   let context = getSheetContext<CharacterSheetContext | NpcSheetContext>();
@@ -42,7 +42,7 @@
         event.stopPropagation();
         FoundryAdapter.renderHitPointsDialog(context.actor);
       }}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+      tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fas fa-cog"></i>
     </button>

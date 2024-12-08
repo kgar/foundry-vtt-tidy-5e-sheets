@@ -12,7 +12,7 @@
   import { CONSTANTS } from 'src/constants';
   import GridPaneFavoriteIcon from '../../../components/item-grid/GridPaneFavoriteIcon.svelte';
   import TextInput from '../../../components/inputs/TextInput.svelte';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import { declareLocation } from 'src/types/location-awareness.types';
   import { TidyHooks } from 'src/foundry/TidyHooks';
@@ -111,7 +111,7 @@
           draggable={true}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
           data-item-id={item.id}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+          tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
           data-tidy-grid-item
           data-info-card={item ? 'item' : null}
           data-info-card-entity-uuid={item?.uuid ?? null}
@@ -153,7 +153,7 @@
               style="display:none"
               data-action="itemEdit"
               title={localize('DND5E.ItemEdit')}
-              tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+              tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
             >
               <i class="fas fa-edit fa-fw"></i>
             </button>
@@ -221,7 +221,7 @@
               );
             }}
             data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_CREATE_COMMAND}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-plus-circle"></i>
           </button>
@@ -235,7 +235,7 @@
                   event: ev,
                   actor: context.actor,
                 })}
-              tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+              tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
               title={localize(command.tooltip ?? '')}
             >
               {#if (command.iconClass ?? '') !== ''}

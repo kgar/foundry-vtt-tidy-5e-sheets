@@ -1,7 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { setContext, type Snippet } from 'svelte';
-  import { writable } from 'svelte/store';
 
   interface Props {
     baseWidth?: string | undefined;
@@ -21,15 +20,16 @@
     ...rest
   }: Props = $props();
 
-  const isHovering = writable<boolean>(false);
+  let isHovering = $state(false);
+  
   setContext(CONSTANTS.CONTEXT_GRID_CELL_HOVER, isHovering);
 
   function mouseEnter(ev: MouseEvent) {
-    isHovering.set(true);
+    isHovering = true;
   }
 
   function mouseLeave(ev: MouseEvent) {
-    isHovering.set(false);
+    isHovering = false;
   }
 </script>
 

@@ -15,10 +15,10 @@
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
   import AttributeBlock from '../actor/AttributeBlock.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import InlineSource from '../shared/InlineSource.svelte';
-  import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
+  import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication.svelte';
   import ActorName from '../actor/ActorName.svelte';
   import AttachedInfoCard from 'src/components/item-info-card/AttachedInfoCard.svelte';
   import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
@@ -60,12 +60,12 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-{#if $settingStore.itemCardsForNpcs}
+{#if settings.itemCardsForNpcs}
   <AttachedInfoCard
     sheet={context.actor.sheet}
-    floating={$settingStore.itemCardsAreFloating}
-    delay={$settingStore.itemCardsDelay}
-    inspectKey={$settingStore.itemCardsFixKey}
+    floating={settings.itemCardsAreFloating}
+    delay={settings.itemCardsDelay}
+    inspectKey={settings.itemCardsFixKey}
   />
 {/if}
 
@@ -157,7 +157,7 @@
               )}
             class="origin-summary-tidy inline-icon-button"
             title={localize('TIDY5E.OriginSummaryConfig')}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-cog"></i>
           </button>
@@ -193,7 +193,7 @@
   {#snippet tabEnd()}
     {#if context.editable}
       <SheetEditModeToggle
-        hint={$settingStore.permanentlyUnlockVehicleSheetForGm &&
+        hint={settings.permanentlyUnlockVehicleSheetForGm &&
         FoundryAdapter.userIsGm()
           ? localize('TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM.title')
           : null}

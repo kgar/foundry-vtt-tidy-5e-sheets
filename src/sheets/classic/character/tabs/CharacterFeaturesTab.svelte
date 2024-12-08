@@ -21,7 +21,7 @@
   import ItemFavoriteControl from '../../../../components/item-list/controls/ItemFavoriteControl.svelte';
   import { getContext } from 'svelte';
   import Notice from '../../../../components/notice/Notice.svelte';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { declareLocation } from 'src/types/location-awareness.types';
@@ -40,7 +40,7 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { ItemUtils } from 'src/utils/ItemUtils';
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
-  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import {
     createSearchResultsState,
@@ -245,7 +245,7 @@
                       </ItemName>
                     </ItemTableCell>
                     <!-- TODO: Handle more gracefully; it is sitting outside of any table cell -->
-                    {#if $settingStore.showIconsNextToTheItemName && 'favoriteId' in ctx && !!ctx.favoriteId}
+                    {#if settings.showIconsNextToTheItemName && 'favoriteId' in ctx && !!ctx.favoriteId}
                       <InlineFavoriteIcon />
                     {/if}
                     {#if section.showUsesColumn}

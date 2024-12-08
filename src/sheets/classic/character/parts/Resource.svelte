@@ -3,7 +3,7 @@
   import type { TidyResource } from 'src/types/types';
   import TextInput from '../../../../components/inputs/TextInput.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
@@ -125,7 +125,7 @@
         onclick={() => {
           configActive = !configActive;
         }}
-        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+        tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
       >
         <i class="fas fa-cog"></i>
       </button>

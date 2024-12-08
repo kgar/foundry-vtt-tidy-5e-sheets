@@ -16,7 +16,7 @@
   import { getContext, tick } from 'svelte';
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
-  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import type { Item5e } from 'src/types/item.types';
   import FacilityOrderProgressMeter from './FacilityOrderProgressMeter.svelte';
   import { Tooltip } from 'src/tooltips/Tooltip';

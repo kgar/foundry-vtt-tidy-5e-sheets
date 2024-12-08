@@ -1,6 +1,6 @@
 import type { InfoCardState } from 'src/components/item-info-card/info-card.svelte';
 import { CONSTANTS } from 'src/constants';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin';
+import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { mount } from 'svelte';
 import DetachedInfoCard from './DetachedInfoCard.svelte';

@@ -1,12 +1,11 @@
 <script lang="ts">
   import { getContext } from 'svelte';
-  import type { MaxPreparedSpellsConfigContext } from './MaxPreparedSpellsConfigFormApplication';
-  import type { Writable } from 'svelte/store';
+  import type { MaxPreparedSpellsConfigContext } from './MaxPreparedSpellsConfigFormApplication.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
 
   const appId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.APP_ID);
-  const context = getContext<Writable<MaxPreparedSpellsConfigContext>>(
+  const context = getContext<MaxPreparedSpellsConfigContext>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
@@ -22,18 +21,18 @@
       id="max-prepared-spells-edit-{appId}"
       type="text"
       placeholder="0"
-      bind:value={$context.maxPreparedSpells}
+      bind:value={context.maxPreparedSpells}
     />
   </div>
   <div role="presentation">
     <h3>{localize('TIDY5E.MaxPreparedSpellsConfig.ExamplesHeader')}</h3>
     <p class="flex-row flex-wrap sample-formulas">
-      {#each $context.formulas as formula}
+      {#each context.formulas as formula}
         <button
           type="button"
           class="highlight-on-hover"
           onclick={() => {
-            $context.maxPreparedSpells = formula.value;
+            context.maxPreparedSpells = formula.value;
           }}>{localize(formula.label)}</button
         >
       {/each}

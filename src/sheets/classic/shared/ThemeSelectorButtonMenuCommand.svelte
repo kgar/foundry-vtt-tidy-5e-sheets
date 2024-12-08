@@ -1,7 +1,7 @@
 <script lang="ts">
   import ButtonMenuItem from 'src/components/button-menu/ButtonMenuItem.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { getCoreThemes } from 'src/theme/theme-reference';
 
   const themes = Object.entries(getCoreThemes(true));
@@ -22,7 +22,7 @@
   <select
     id="sheet-menu-{idSuffix}"
     onchange={(ev) => setTheme(ev.currentTarget.value)}
-    value={$settingStore.colorScheme}
+    value={settings.colorScheme}
   >
     {#each themes as [key, value]}
       <option value={key}>{localize(value)}</option>

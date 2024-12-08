@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
 
   interface Props {
     tabs: string[];
@@ -17,7 +17,7 @@
       class="underlined-tab"
       class:active={selected === tab}
       onclick={() => (selected = tab)}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+      tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
     >
       {tab}
     </button>

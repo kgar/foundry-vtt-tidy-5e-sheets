@@ -1,9 +1,8 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { getContext, type Snippet } from 'svelte';
-  import type { Readable } from 'svelte/store';
 
   interface Props {
     item: any;
@@ -21,7 +20,7 @@
     afterRollButton,
   }: Props = $props();
 
-  const showRoll = getContext<Readable<boolean>>(
+  const showRoll = getContext<boolean>(
     CONSTANTS.CONTEXT_GRID_CELL_HOVER,
   );
 
@@ -32,7 +31,7 @@
   class="item-image"
   class:item-use-button-has-focus={buttonIsFocused}
   style="background-image: url('{imgUrlOverride ?? item.img}')"
-  class:show-roll={!disabled && $showRoll}
+  class:show-roll={!disabled && showRoll}
   class:conceal={item.system.identified === false}
 >
   <div
@@ -40,7 +39,7 @@
     aria-hidden="true"
     class="unidentified-glyph no-transition"
     class:conceal={item.system.identified === false}
-    class:hidden={$showRoll}
+    class:hidden={showRoll}
   >
     <i class="fas fa-question"></i>
   </div>
@@ -54,7 +53,7 @@
       onfocusin={() => (buttonIsFocused = true)}
       onfocusout={() => (buttonIsFocused = false)}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+      tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fa fa-dice-d20" class:invisible={!showDiceIconOnHover}></i>
     </button>

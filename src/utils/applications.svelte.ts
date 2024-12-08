@@ -3,10 +3,9 @@ import { debug } from './logging';
 import { CONSTANTS } from 'src/constants';
 import {
   SettingsProvider,
-  settingStore,
+  settings,
   type CurrentSettings,
 } from 'src/settings/settings.svelte';
-import { get } from 'svelte/store';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export function applyTitleToWindow(title: string, element: HTMLElement) {
@@ -69,7 +68,7 @@ export function applySheetAttributesToWindow(
   element?.setAttribute('data-document-name', documentName);
   element?.setAttribute('data-document-type', type);
   element?.setAttribute('data-document-uuid', documentUuid);
-  applyMutableSettingAttributesToWindow(get(settingStore), element);
+  applyMutableSettingAttributesToWindow(settings, element);
 }
 
 export async function maintainCustomContentInputFocus(

@@ -1,7 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import type { Snippet } from 'svelte';
-  import { writable } from 'svelte/store';
 
   interface Props {
     primary?: boolean;
@@ -19,14 +18,14 @@
     ...rest
   }: Props = $props();
 
-  const isHovering = writable<boolean>(false);
+  let isHovering = $state(false);
 
   function mouseEnter(ev: MouseEvent) {
-    isHovering.set(true);
+    isHovering = true;
   }
 
   function mouseLeave(ev: MouseEvent) {
-    isHovering.set(false);
+    isHovering = false;
   }
 </script>
 

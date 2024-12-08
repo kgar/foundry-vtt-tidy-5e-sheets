@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
   let context = getCharacterSheetContext();
@@ -24,8 +24,8 @@
     onclick={context.editable &&
       FoundryAdapter.renderHitDiceConfig(context.actor)}
     disabled={!context.editable}
-    tabindex={!$settingStore.useDefaultSheetHpTabbing &&
-    $settingStore.useAccessibleKeyboardSupport
+    tabindex={!settings.useDefaultSheetHpTabbing &&
+    settings.useAccessibleKeyboardSupport
       ? 0
       : -1}
   >

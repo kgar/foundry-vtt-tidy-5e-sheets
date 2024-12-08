@@ -5,7 +5,7 @@
   import BlockTitle from './RollableBlockTitle.svelte';
   import BlockScore from './BlockScore.svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { CONSTANTS } from 'src/constants';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
@@ -50,8 +50,8 @@
     title={ability.label}
     text={abbreviation}
     onRoll={(event) => context.actor.rollAbility({ ability: id, event: event })}
-    hideFromTabOrder={$settingStore.useDefaultSheetAttributeTabbing ||
-      !$settingStore.useAccessibleKeyboardSupport}
+    hideFromTabOrder={settings.useDefaultSheetAttributeTabbing ||
+      !settings.useAccessibleKeyboardSupport}
     attributes={{
       'data-tidy-sheet-part': CONSTANTS.SHEET_PARTS.ABILITY_ROLLER,
     }}
@@ -78,8 +78,8 @@
       title={localize('DND5E.AbilityModifier')}
       onclick={(event) =>
         context.actor.rollAbilityCheck({ ability: id, event })}
-      tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
-      $settingStore.useAccessibleKeyboardSupport
+      tabindex={!settings.useDefaultSheetAttributeTabbing &&
+      settings.useAccessibleKeyboardSupport
         ? 0
         : -1}
       disabled={!context.editable}
@@ -93,8 +93,8 @@
       class:rollable={context.editable}
       title={localize('DND5E.ActionSave')}
       onclick={(event) => context.actor.rollSavingThrow({ ability: id, event })}
-      tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
-      $settingStore.useAccessibleKeyboardSupport
+      tabindex={!settings.useDefaultSheetAttributeTabbing &&
+      settings.useAccessibleKeyboardSupport
         ? 0
         : -1}
       disabled={!context.editable}
@@ -113,8 +113,8 @@
               [`system.abilities.${id}.proficient`]:
                 1 - parseInt(ability.proficient),
             })}
-          tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
-          $settingStore.useAccessibleKeyboardSupport
+          tabindex={!settings.useDefaultSheetAttributeTabbing &&
+          settings.useAccessibleKeyboardSupport
             ? 0
             : -1}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
@@ -142,8 +142,8 @@
         class="config-button inline-icon-button"
         title={localize('DND5E.AbilityConfigure')}
         onclick={() => FoundryAdapter.renderAbilityConfig(context.actor, id)}
-        tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
-        $settingStore.useAccessibleKeyboardSupport
+        tabindex={!settings.useDefaultSheetAttributeTabbing &&
+        settings.useAccessibleKeyboardSupport
           ? 0
           : -1}
         data-tidy-sheet-part={CONSTANTS.SHEET_PARTS

@@ -1,6 +1,5 @@
 <script lang="ts">
-  import type { Readable, Writable } from 'svelte/store';
-  import type { SpellSourceClassAssignmentsContext } from './SpellSourceClassAssignmentsFormApplication';
+  import type { SpellSourceClassAssignmentsContext } from './SpellSourceClassAssignmentsFormApplication.svelte';
   import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
   import Search from 'src/components/utility-bar/Search.svelte';
@@ -14,7 +13,7 @@
   import TidySwitch from 'src/components/toggle/TidySwitch.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
 
-  let context = getContext<Writable<SpellSourceClassAssignmentsContext>>(
+  let context = getContext<SpellSourceClassAssignmentsContext>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
@@ -22,7 +21,7 @@
 
   let visibleSelectablesIdSubset = $derived(
     new Set<string>(
-      $context.assignments
+      context.assignments
         .filter(
           (s) =>
             searchCriteria.trim() === '' ||
@@ -33,7 +32,7 @@
   );
 
   let classColumns = $derived(
-    Object.entries<Item5e>($context.actor.spellcastingClasses).map(
+    Object.entries<Item5e>(context.actor.spellcastingClasses).map(
       ([key, value]) => ({
         key: key,
         item: value,
@@ -102,7 +101,7 @@
         </TidyTableHeaderRow>
       {/snippet}
       {#snippet body()}
-        {#each $context.assignments as assignment (assignment.item.id)}
+        {#each context.assignments as assignment (assignment.item.id)}
           {@const sourceClassIsUnassigned =
             (assignment.item.system.sourceClass?.trim() ?? '') === ''}
           {@const hideRow =

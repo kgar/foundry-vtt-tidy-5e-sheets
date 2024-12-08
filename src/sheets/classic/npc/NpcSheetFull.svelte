@@ -13,11 +13,11 @@
   import ActorMovement from '../actor/ActorMovement.svelte';
   import ActorHeaderStats from '../actor/ActorHeaderStats.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import InlineSource from '../shared/InlineSource.svelte';
   import InlineCreatureType from '../shared/InlineCreatureType.svelte';
-  import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
+  import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication.svelte';
   import ActorName from '../actor/ActorName.svelte';
   import SpecialSaves from '../actor/SpecialSaves.svelte';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
@@ -49,12 +49,12 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-{#if $settingStore.itemCardsForNpcs}
+{#if settings.itemCardsForNpcs}
   <AttachedInfoCard
     sheet={context.actor.sheet}
-    floating={$settingStore.itemCardsAreFloating}
-    delay={$settingStore.itemCardsDelay}
-    inspectKey={$settingStore.itemCardsFixKey}
+    floating={settings.itemCardsAreFloating}
+    delay={settings.itemCardsDelay}
+    inspectKey={settings.itemCardsFixKey}
   />
 {/if}
 
@@ -176,7 +176,7 @@
                 true,
               )}
             title={localize('TIDY5E.OriginSummaryConfig')}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-cog"></i>
           </button>
@@ -210,7 +210,7 @@
   {#snippet tabEnd()}
     {#if context.editable}
       <SheetEditModeToggle
-        hint={$settingStore.permanentlyUnlockNpcSheetForGm &&
+        hint={settings.permanentlyUnlockNpcSheetForGm &&
         FoundryAdapter.userIsGm()
           ? localize('TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM.title')
           : null}

@@ -9,16 +9,9 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
-    CharacterSheetContext,
     EffectFavoriteSection,
     FavoriteEffectContext,
   } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
-
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
 
   interface Props {
     section: EffectFavoriteSection;

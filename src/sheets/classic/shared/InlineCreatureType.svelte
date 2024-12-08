@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import { type ActorSheetContextV1 } from 'src/types/types';
   import { coalesce } from 'src/utils/formatting';
@@ -19,7 +19,7 @@
     class="configure-creature-type inline-transparent-button highlight-on-hover truncate"
     onclick={() => FoundryAdapter.renderCreatureTypeConfig(context.actor)}
     title={localize('DND5E.CreatureType')}
-    tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+    tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
   >
     {text}
   </button>

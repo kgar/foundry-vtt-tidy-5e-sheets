@@ -1,5 +1,5 @@
 import { CONSTANTS } from 'src/constants';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin';
+import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import type {
   ApplicationConfiguration,

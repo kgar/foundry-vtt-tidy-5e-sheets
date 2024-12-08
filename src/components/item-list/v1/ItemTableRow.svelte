@@ -9,7 +9,6 @@
     ActiveEffect5e,
     ActiveEffectContext,
   } from 'src/types/types';
-  import type { Writable } from 'svelte/store';
   import type { Item5e, ItemChatData } from 'src/types/item.types';
   import { CONSTANTS } from 'src/constants';
   import { TidyHooks } from 'src/foundry/TidyHooks';
@@ -50,10 +49,6 @@
 
   const expandedItemData = getContext<ExpandedItemData>(
     CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA,
-  );
-
-  const context = getContext<Writable<unknown>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
   const expandedItems = getContext<ExpandedItemIdToLocationsMap>(

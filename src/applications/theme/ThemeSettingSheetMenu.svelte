@@ -4,11 +4,10 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
-  import type { Writable } from 'svelte/store';
   import type { CurrentSettings } from 'src/settings/settings.svelte';
   import ThemeSelectorButtonMenuCommand from 'src/sheets/classic/shared/ThemeSelectorButtonMenuCommand.svelte';
   import ButtonMenuDivider from 'src/components/button-menu/ButtonMenuDivider.svelte';
-  import type { ThemeSettingsSheetFunctions } from './ThemeSettingsFormApplication';
+  import type { ThemeSettingsSheetFunctions } from './ThemeSettingsFormApplication.svelte';
 
   interface Props {
     onSelectFile?: (file: File) => void;
@@ -19,9 +18,7 @@
   let functions = getContext<ThemeSettingsSheetFunctions>(
     CONSTANTS.SVELTE_CONTEXT.FUNCTIONS,
   );
-  let context = getContext<Writable<CurrentSettings>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getContext<CurrentSettings>(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
 
   let fileImportInput: HTMLInputElement;
 
@@ -63,7 +60,7 @@
     {localize('TIDY5E.ThemeSettings.Sheet.import')}
   </ButtonMenuCommand>
   <ButtonMenuCommand
-    onMenuClick={() => functions.exportTheme($context)}
+    onMenuClick={() => functions.exportTheme(context)}
     iconClass="fas fa-file-export"
   >
     {localize('TIDY5E.ThemeSettings.Sheet.export')}

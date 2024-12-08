@@ -20,7 +20,7 @@
   import ActorEffectToggleControl from 'src/components/item-list/controls/ActorEffectToggleControl.svelte';
   import EffectFavoriteControl from 'src/components/item-list/controls/EffectFavoriteControl.svelte';
   import InlineFavoriteIcon from 'src/components/item-list/InlineFavoriteIcon.svelte';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
   let context = getSheetContext<ActorSheetContextV1>();
@@ -160,7 +160,7 @@
                       title={effectContext.name}>{effectContext.name}</span
                     >
                   </ItemTableCell>
-                  {#if FoundryAdapter.isActiveEffectContextFavorited(effectContext, context.actor) && $settingStore.showIconsNextToTheItemName}
+                  {#if FoundryAdapter.isActiveEffectContextFavorited(effectContext, context.actor) && settings.showIconsNextToTheItemName}
                     <InlineFavoriteIcon />
                   {/if}
                   <ItemTableCell baseWidth="12.5rem">

@@ -22,7 +22,7 @@
   import InlineFavoriteIcon from '../item-list/InlineFavoriteIcon.svelte';
   import ItemFavoriteControl from '../item-list/controls/ItemFavoriteControl.svelte';
   import { getContext } from 'svelte';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import ActionFilterOverrideControl from '../item-list/controls/ActionFilterOverrideControl.svelte';
   import { SpellSchool } from 'src/features/spell-school/SpellSchool';
   import { declareLocation } from 'src/types/location-awareness.types';
@@ -34,7 +34,7 @@
   import DeleteOrOpenActivity from '../item-list/controls/DeleteOrOpenActivity.svelte';
   import ActivityUses from '../item-list/ActivityUses.svelte';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
-  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
     import { getSheetContext } from 'src/sheets/sheet-context.svelte';
@@ -237,7 +237,7 @@
                 <ActivityUses activity={spell.system.linkedActivity} />
               </ItemTableCell>
             {/if}
-            {#if allowFavorites && $settingStore.showIconsNextToTheItemName && 'favoriteId' in ctx && !!ctx.favoriteId}
+            {#if allowFavorites && settings.showIconsNextToTheItemName && 'favoriteId' in ctx && !!ctx.favoriteId}
               <InlineFavoriteIcon />
             {/if}
             <ItemTableCell

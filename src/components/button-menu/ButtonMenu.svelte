@@ -7,7 +7,7 @@
     ButtonMenuPosition,
   } from './button-menu-types';
   import { getPositionStyles } from './button-menu-position';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { CONSTANTS } from 'src/constants';
 
   type StatefulIconClass = {
@@ -89,7 +89,7 @@
     {title}
     class="button-menu-opener {buttonClass ?? ''} {buttonStyle}"
     style:padding={openerPadding}
-    tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+    tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
   >
     {#if iconClass}
       <i class={actualIconClass}></i>

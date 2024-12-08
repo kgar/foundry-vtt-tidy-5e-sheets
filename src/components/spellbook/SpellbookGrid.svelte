@@ -11,7 +11,7 @@
   import ItemTableHeaderRow from '../item-list/v1/ItemTableHeaderRow.svelte';
   import type { Item5e } from 'src/types/item.types';
   import GridPaneFavoriteIcon from '../item-grid/GridPaneFavoriteIcon.svelte';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import { declareLocation } from 'src/types/location-awareness.types';
   import SpellSlotManagement from './SpellSlotManagement.svelte';
@@ -106,7 +106,7 @@
             draggable={true}
             data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
             data-item-id={spell.id}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
             data-tidy-grid-item
             data-info-card={spell ? 'item' : null}
             data-info-card-entity-uuid={spell?.uuid ?? null}
@@ -143,7 +143,7 @@
                   FoundryAdapter.createItem(section.dataset, context.actor);
                 }}
                 data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_CREATE_COMMAND}
-                tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+                tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
               >
                 <i class="fas fa-plus-circle"></i>
               </button>
@@ -159,7 +159,7 @@
                     actor: context.actor,
                   })}
                 title={localize(command.tooltip ?? '')}
-                tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+                tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
               >
                 {#if (command.iconClass ?? '') !== ''}
                   <i class={command.iconClass}></i>

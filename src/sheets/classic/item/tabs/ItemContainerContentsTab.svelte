@@ -13,7 +13,7 @@
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
   import ContainerContentsSections from 'src/sheets/classic/container/ContainerContentsSections.svelte';
-  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import {
     createSearchResultsState,

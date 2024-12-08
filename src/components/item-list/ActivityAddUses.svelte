@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Activity5e } from 'src/foundry/dnd5e.types';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   interface Props {
@@ -25,7 +25,7 @@
   class="activity-add-uses item-list-button"
   onclick={() => onAddUses()}
   disabled={!activity.item.isOwner}
-  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+  tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
 >
   <span class="placeholder">—</span>
   <span class="add-prompt">{localize('DND5E.Add')}</span>

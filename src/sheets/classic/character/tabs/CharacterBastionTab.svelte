@@ -4,7 +4,6 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ChosenFacilityContext } from 'src/types/types';
   import { setContext } from 'svelte';
-  import { writable, type Writable } from 'svelte/store';
   import FacilityOccupant from 'src/sheets/classic/character/parts/FacilityOccupant.svelte';
   import FacilityRosterOccupant from 'src/sheets/classic/character/parts/FacilityRosterOccupant.svelte';
   import FacilityOrderProgressTracker from '../parts/FacilityOrderProgressTracker.svelte';
@@ -28,9 +27,10 @@
     TidyHooks.tidy5eSheetsItemHoverOff(event, item);
   }
 
-  let hoveredFacilityOccupant = writable<string>('');
+  let hoveredFacilityOccupant = $state<string>('');
 
-  setContext<Writable<string>>(
+  // kgar-migration-task - does it work? If not, then pursue an object with getter / setter or similar
+  setContext<string>(
     CONSTANTS.SVELTE_CONTEXT.HOVERED_FACILITY_OCCUPANT,
     hoveredFacilityOccupant,
   );

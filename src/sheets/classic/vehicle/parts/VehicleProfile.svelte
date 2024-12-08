@@ -4,7 +4,7 @@
   import VehicleDamageAndMishapThresholds from './VehicleDamageAndMishapThresholds.svelte';
   import ExhaustionTracker from 'src/sheets/classic/actor/ExhaustionTracker.svelte';
   import VehicleMovement from './VehicleMovement.svelte';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import ExhaustionInput from 'src/sheets/classic/actor/ExhaustionInput.svelte';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -17,19 +17,19 @@
   }
 </script>
 
-<ActorProfile useHpOverlay={$settingStore.useHpOverlayVehicle}>
-  {#if $settingStore.useExhaustion && $settingStore.vehicleExhaustionConfig.type === 'specific'}
+<ActorProfile useHpOverlay={settings.useHpOverlayVehicle}>
+  {#if settings.useExhaustion && settings.vehicleExhaustionConfig.type === 'specific'}
     <ExhaustionTracker
       level={TidyFlags.exhaustion.get(context.actor) ?? 0}
       radiusClass={context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       {onLevelSelected}
-      exhaustionConfig={$settingStore.vehicleExhaustionConfig}
+      exhaustionConfig={settings.vehicleExhaustionConfig}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
         context.actor,
         TidyFlags.exhaustion.prop,
       )}
     />
-  {:else if $settingStore.useExhaustion && $settingStore.vehicleExhaustionConfig.type === 'open'}
+  {:else if settings.useExhaustion && settings.vehicleExhaustionConfig.type === 'open'}
     <ExhaustionInput
       level={TidyFlags.exhaustion.get(context.actor) ?? 0}
       radiusClass={context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
@@ -40,7 +40,7 @@
       )}
     />
   {/if}
-  {#if $settingStore.useVehicleMotion}
+  {#if settings.useVehicleMotion}
     <VehicleMovement
       motion={TidyFlags.motion.get(context.actor) === true}
       radiusClass={context.useRoundedPortraitStyle ? 'rounded' : 'top-right'}

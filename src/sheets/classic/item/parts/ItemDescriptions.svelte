@@ -1,7 +1,7 @@
 <script lang="ts">
   import Accordion from 'src/components/accordion/Accordion.svelte';
   import AccordionItem from 'src/components/accordion/AccordionItem.svelte';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
@@ -87,7 +87,7 @@
                           fieldToEdit: itemDescription.field,
                         });
                       }}
-                      tabindex={$settingStore.useAccessibleKeyboardSupport
+                      tabindex={settings.useAccessibleKeyboardSupport
                         ? 0
                         : -1}><i class="fas fa-edit"></i></button
                     >

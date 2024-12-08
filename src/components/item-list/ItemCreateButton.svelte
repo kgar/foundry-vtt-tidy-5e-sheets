@@ -1,7 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { type Actor5e } from 'src/types/types';
 
   interface Props {
@@ -25,7 +25,7 @@
   onclick={create}
   title={localize('DND5E.FeatureAdd')}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_CREATE_COMMAND}
-  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+  tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
 >
   <i class="fas fa-plus-circle"></i>
   {localize('DND5E.Add')}

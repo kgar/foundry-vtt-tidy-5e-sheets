@@ -6,7 +6,7 @@
   import { CONSTANTS } from 'src/constants';
   import GroupMemberListItemProfile from './GroupMemberListItemProfile.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { getGroupSheetClassicContext } from 'src/sheets/sheet-context.svelte';
 
   const context = getGroupSheetClassicContext();
@@ -60,7 +60,7 @@
         class="inline-transparent-button highlight-on-hover ff-title fs-lg"
         onclick={() => member.sheet.render(true)}
         disabled={!ctx.canObserve}
-        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+        tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
       >
         {member.name}
       </button>
@@ -113,7 +113,7 @@
             class="skill"
             disabled={!context.isGM}
             onclick={(event) => onPerceptionClicked(event)}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
           >
             {localize(ctx.perception?.label ?? '')}
             {ctx.perception?.formattedTotal} ({ctx.perception?.passive})

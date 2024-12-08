@@ -1,7 +1,7 @@
 <script lang="ts">
   import { isNil } from 'src/utils/data';
   import type { UtilityToolbarCommandExecuteEvent } from './types';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { CONSTANTS } from 'src/constants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
@@ -30,7 +30,7 @@
   class:hidden={!visible}
   onclick={(ev) => onExecute?.({ event: ev, context: context })}
   {title}
-  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+  tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.UTILITY_TOOLBAR_COMMAND}
 >
   {#if !isNil(iconClass, '')}

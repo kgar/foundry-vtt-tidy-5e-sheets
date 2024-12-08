@@ -2,7 +2,6 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { CurrentSettings } from 'src/settings/settings.svelte';
   import { getContext, onDestroy } from 'svelte';
-  import type { Writable } from 'svelte/store';
   import type {
     ThemeColorSetting,
     Tidy5eThemeDataV1,
@@ -27,12 +26,12 @@
   let { themeableColors }: Props = $props();
 
   $effect(() => {
-    if ($context.colorPickerEnabled) {
+    if (context.colorPickerEnabled) {
       themeableColors.forEach((color) =>
         trySetRootCssVariable(
           color.cssVariable,
-          $context[color.key]?.toString(),
-          $context.colorPickerEnabled,
+          context[color.key]?.toString(),
+          context.colorPickerEnabled,
         ),
       );
     } else {
@@ -41,9 +40,7 @@
     }
   });
 
-  let context = getContext<Writable<CurrentSettings>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getContext<CurrentSettings>(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
   let appId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.APP_ID);
 
   const localize = FoundryAdapter.localize;
@@ -63,15 +60,15 @@
         throw new Error(`Theme file ${file.name} is in an invalid format.`);
       }
 
-      const storeUpdateData = extractSettingsUpdateDeltaFromTheme(
+      const updateDelta = extractSettingsUpdateDeltaFromTheme(
         theme,
         themeableColors,
       );
 
-      context.update((settings) => ({
-        ...settings,
-        ...storeUpdateData,
-      }));
+      context = {
+        ...context,
+        ...updateDelta,
+      };
 
       ui.notifications.info(
         localize('TIDY5E.ThemeSettings.Sheet.importSuccess'),
@@ -120,7 +117,7 @@
         <input
           type="checkbox"
           id="colorPickerEnabled-{appId}"
-          bind:checked={$context.colorPickerEnabled}
+          bind:checked={context.colorPickerEnabled}
         />
         {localize('TIDY5E.Settings.ColorPickerEnabled.name')}
       </label>

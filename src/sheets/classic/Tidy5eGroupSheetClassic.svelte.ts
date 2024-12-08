@@ -28,7 +28,7 @@ import type {
   GroupSkill,
 } from 'src/types/group.types';
 import { Inventory } from 'src/features/sections/Inventory';
-import { SettingsProvider, settingStore } from 'src/settings/settings.svelte';
+import { SettingsProvider, settings } from 'src/settings/settings.svelte';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { getPercentage } from 'src/utils/numbers';
 import type { Item5e } from 'src/types/item.types';
@@ -40,14 +40,13 @@ import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import { GroupSheetRuntime } from 'src/runtime/GroupSheetRuntime';
-import { writable } from 'svelte/store';
-import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { debug, warn } from 'src/utils/logging';
 import { processInputChangeDeltaFromValues } from 'src/utils/form';
 import { isNil } from 'src/utils/data';
 import { formatAsModifier } from 'src/utils/formatting';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin';
+import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import SheetHeaderEditModeToggle from 'src/sheets/classic/shared/SheetHeaderEditModeToggle.svelte';
 import { Activities } from 'src/features/activities/activities';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
@@ -114,7 +113,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
   };
 
   #itemFilterService: ItemFilterService;
-  #messageBus: MessageBus = writable<MessageBusMessage | undefined>();
+  #messageBus = $state<MessageBusMessage | undefined>();
   #inlineToggleService = new InlineToggleService();
 
   // TODO: First render, derive options that come from user preference
@@ -321,7 +320,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
             iconClass: 'fas fa-angles-down',
             execute: () =>
               // TODO: Use app.messageBus
-              this.#messageBus.set({
+              (this.messageBus = {
                 tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
@@ -331,7 +330,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
             iconClass: 'fas fa-angles-up',
             execute: () =>
               // TODO: Use app.messageBus
-              this.#messageBus.set({
+              (this.messageBus = {
                 tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
@@ -808,27 +807,38 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     };
   }
 
-  _getSubscriptions() {
+  _configureEffects() {
     let first = true;
-    const subscriptions = [
-      this.#itemFilterService.filterData$.subscribe(() => {
-        if (first) return;
-        this.render();
-      }),
-      settingStore.subscribe((s) => {
-        if (first) return;
-        this.render();
-      }),
-      this.#messageBus.subscribe((m) => {
-        debug('Message bus message received', {
-          app: this,
-          actor: this.actor,
-          message: m,
-        });
-      }),
-    ];
+
+    $effect(() => {
+      this.#itemFilterService.filterData;
+
+      if (first) {
+        return;
+      }
+
+      this.render();
+    });
+
+    $effect(() => {
+      settings;
+
+      if (first) {
+        return;
+      }
+
+      this.render();
+    });
+
+    $effect(() => {
+      debug('Message bus message received', {
+        app: this,
+        actor: this.actor,
+        message: this.#messageBus,
+      });
+    });
+
     first = false;
-    return subscriptions;
   }
 
   async _renderHTML(

@@ -8,12 +8,12 @@
   import ActivityUses from './ActivityUses.svelte';
   import ActivityAddUses from './ActivityAddUses.svelte';
   import ExpandableContainer from '../expandable/ExpandableContainer.svelte';
-  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemImage from './ItemImage.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { Activities } from 'src/features/activities/activities';
   import type { ActivityItemContext } from 'src/types/types';
 
@@ -25,7 +25,7 @@
 
   let { item = null, inlineToggleService, activities = [] }: Props = $props();
 
-  let inlineToggleServiceStore = $derived(inlineToggleService.store);
+  let toggleServiceMap = $derived(inlineToggleService.map);
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
@@ -53,7 +53,7 @@
 </script>
 
 <ExpandableContainer
-  expanded={$inlineToggleServiceStore.get(tabId)?.has(item.id) === true}
+  expanded={toggleServiceMap.get(tabId)?.has(item.id) === true}
 >
   <div class="inline-activities-container" data-item-id={item.id}>
     <TidyTable
@@ -80,7 +80,7 @@
                 type="button"
                 class="inline-activity-roll-button highlight-on-hover"
                 onclick={(ev) => rollActivity(activity, ev)}
-                tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+                tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
               >
                 {#if activity.img?.endsWith('.svg')}
                   <Dnd5eIcon src={activity.img} />

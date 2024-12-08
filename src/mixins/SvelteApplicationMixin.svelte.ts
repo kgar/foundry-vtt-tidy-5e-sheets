@@ -1,13 +1,11 @@
-import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { settingStore } from 'src/settings/settings.svelte';
+import { settings } from 'src/settings/settings.svelte';
 import {
   applySheetAttributesToWindow,
   applyMutableSettingAttributesToWindow,
   blurUntabbableButtonsOnClick,
-} from 'src/utils/applications';
+} from 'src/utils/applications.svelte';
 import { debug, error } from 'src/utils/logging';
-import { writable, type Unsubscriber, type Writable } from 'svelte/store';
 import {
   CustomContentRendererV2,
   type RenderedSheetPart,
@@ -51,8 +49,6 @@ export function SvelteApplicationMixin<
   class SvelteApplication extends BaseApplication {
     constructor(...args: any[]) {
       super(...args);
-
-      this.#subscriptionsService = new StoreSubscriptionsService();
     }
 
     /**
@@ -77,12 +73,6 @@ export function SvelteApplicationMixin<
 
     #customContentRenderer: CustomContentRendererV2 =
       new CustomContentRendererV2();
-
-    /**
-     * Any subscriptions which should be managed during the lifetime of the application window.
-     * They are retrieved once, during _renderFrame, and then unsubscribed during close.
-     */
-    #subscriptionsService: StoreSubscriptionsService;
 
     #scrollPositions: Record<string, PriorElementScrollPosition[]> = {};
 
@@ -118,12 +108,9 @@ export function SvelteApplicationMixin<
     }
 
     /**
-     * Retrieves and manages any application-specific subscriptions related to the
-     * lifetime of the application, from first render to close.
+     * Allows for configuring any effects related to the sheet.
      */
-    _getSubscriptions(): Unsubscriber[] {
-      return [];
-    }
+    _configureEffects(): void {}
 
     /* -------------------------------------------- */
     /*  Rendering                                   */
@@ -281,13 +268,13 @@ export function SvelteApplicationMixin<
     /* -------------------------------------------- */
 
     async close(options: ApplicationClosingOptions = {}) {
+      this._effectCleanup?.();
       // Trigger saving of the form if configured and allowed
       const submit = this.options.submitOnClose && this.document.isOwner;
       if (submit) {
         await this.submit({ preventClose: true, preventRender: true });
       }
 
-      this.#subscriptionsService.unsubscribeAll();
       this.#components.forEach((c) => unmount(c));
       this.#components = [];
       await super.close(options);
@@ -311,7 +298,7 @@ export function SvelteApplicationMixin<
     /* -------------------------------------------- */
     /*  Event Listeners and Handlers                */
     /* -------------------------------------------- */
-
+    _effectCleanup?: () => void;
     _attachFrameListeners() {
       super._attachFrameListeners();
 
@@ -319,15 +306,15 @@ export function SvelteApplicationMixin<
         // Support Foundry's hotkeys feature by blurring tabindex -1 clicked elements
         blurUntabbableButtonsOnClick(this.element);
 
-        // Manage application subscriptions
-        this.#subscriptionsService.unsubscribeAll();
-        const subscriptions = this._getSubscriptions();
-        this.#subscriptionsService.registerSubscriptions(
-          ...subscriptions,
-          settingStore.subscribe((settings) => {
+        // Manage application effects
+        this._effectCleanup?.();
+        this._effectCleanup = $effect.root(() => {
+          this._configureEffects();
+
+          $effect(() => {
             applyMutableSettingAttributesToWindow(settings, this.element);
-          })
-        );
+          });
+        });
 
         // If a controls dropdown button is clicked, close the controls dropdown.
         this.element.addEventListener('click', (ev: MouseEvent) => {

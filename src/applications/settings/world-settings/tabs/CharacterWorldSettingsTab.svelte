@@ -5,13 +5,13 @@
   import { SettingsProvider } from 'src/settings/settings.svelte';
   import SelectSetting from 'src/applications/settings/parts/SelectSetting.svelte';
   import type {
-    WorldSettingsContextStore,
+    WorldSettingsContext,
     WorldSettingsFunctions,
   } from '../WorldSettings.types';
   import ListboxSetting from '../../parts/ListboxSetting.svelte';
   import { CONSTANTS } from 'src/constants';
 
-  const context = getContext<WorldSettingsContextStore>(
+  const context = getContext<WorldSettingsContext>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
   let functions = getContext<WorldSettingsFunctions>(
@@ -24,7 +24,7 @@
 <div class="settings-form">
   <SelectSetting
     options={SettingsProvider.settings.initialCharacterSheetTab.options.choices()}
-    bind:value={$context.settings.initialCharacterSheetTab}
+    bind:value={context.settings.initialCharacterSheetTab}
     name={SettingsProvider.settings.initialCharacterSheetTab.options.name}
     hint={SettingsProvider.settings.initialCharacterSheetTab.options.hint}
     id="initialCharacterSheetTab"
@@ -34,9 +34,9 @@
     name={SettingsProvider.settings.defaultCharacterSheetTabs.options.name}
     hint={SettingsProvider.settings.defaultCharacterSheetTabs.options.hint}
     leftHeaderText="TIDY5E.Settings.DefaultSheetTabs.AvailableHeader"
-    bind:leftItems={$context.defaultCharacterTabs.available}
+    bind:leftItems={context.defaultCharacterTabs.available}
     rightHeaderText="TIDY5E.Settings.DefaultSheetTabs.SelectedHeader"
-    bind:rightItems={$context.defaultCharacterTabs.selected}
+    bind:rightItems={context.defaultCharacterTabs.selected}
     labelProp="label"
     valueProp="id"
   >
@@ -45,7 +45,7 @@
         <button
           type="button"
           onclick={() =>
-            functions.resetDefaultTabs(context, CONSTANTS.SHEET_TYPE_CHARACTER)}
+            functions.resetDefaultTabs(CONSTANTS.SHEET_TYPE_CHARACTER)}
         >
           <i class="fas fa-rotate-right"></i>
           {localize('TIDY5E.Reset')}
@@ -55,28 +55,28 @@
   </ListboxSetting>
 
   <CheckboxSetting
-    bind:value={$context.settings.useCharacterEncumbranceBar}
+    bind:value={context.settings.useCharacterEncumbranceBar}
     name={SettingsProvider.settings.useCharacterEncumbranceBar.options.name}
     hint={SettingsProvider.settings.useCharacterEncumbranceBar.options.hint}
     id="useCharacterEncumbranceBar"
   />
 
   <CheckboxSetting
-    bind:value={$context.settings.showPlayerName}
+    bind:value={context.settings.showPlayerName}
     name={'TIDY5E.Settings.ShowPlayerName.name'}
     hint={'TIDY5E.Settings.ShowPlayerName.hint'}
     id="showPlayerName"
   />
 
   <CheckboxSetting
-    bind:value={$context.settings.useCharacterInspiration}
+    bind:value={context.settings.useCharacterInspiration}
     name={'TIDY5E.Settings.UseInspiration.name'}
     hint={'TIDY5E.Settings.UseInspiration.hint'}
     id="useCharacterInspiration"
   />
 
   <CheckboxSetting
-    bind:value={$context.settings.allowHpMaxOverride}
+    bind:value={context.settings.allowHpMaxOverride}
     name={'TIDY5E.Settings.AllowHpMaxOverride.name'}
     hint={'TIDY5E.Settings.AllowHpMaxOverride.hint'}
     id="allowHpMaxOverride"

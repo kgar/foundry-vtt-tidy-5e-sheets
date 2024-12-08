@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { isNil } from 'src/utils/data';
 
   interface Props {
@@ -23,7 +23,7 @@
     class="configure-source inline-transparent-button highlight-on-hover truncate"
     class:placeholder={usePlaceholder}
     onclick={() => FoundryAdapter.renderSourceConfig(document, keyPath)}
-    tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+    tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
   >
     {text}
   </button>

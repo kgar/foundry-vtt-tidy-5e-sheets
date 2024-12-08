@@ -466,7 +466,7 @@ export const FoundryAdapter = {
     return new Set(
       actors
         .filter((actor) => FoundryAdapter.searchActor(searchCriteria, actor))
-        .map((actor) => actor.id)
+        .map((actor) => actor.uuid)
     );
   },
   searchActor(searchCriteria: string, actor: Actor5e) {
@@ -479,7 +479,7 @@ export const FoundryAdapter = {
     return new Set(
       items
         .filter((item) => FoundryAdapter.searchItem(item, searchCriteria))
-        .map((item) => item.id)
+        .map((item) => item.uuid)
     );
   },
   searchItem(item: any, searchCriteria: string): boolean {

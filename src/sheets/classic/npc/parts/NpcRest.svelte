@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
 
   let context = getNpcSheetContext();
@@ -23,8 +23,8 @@
       title={localize('TIDY5E.ShortRest')}
       onclick={(ev) => context.shortRest(ev)}
       disabled={!context.editable}
-      tabindex={!$settingStore.useDefaultSheetHpTabbing &&
-      $settingStore.useAccessibleKeyboardSupport
+      tabindex={!settings.useDefaultSheetHpTabbing &&
+      settings.useAccessibleKeyboardSupport
         ? 0
         : -1}
     >
@@ -36,8 +36,8 @@
       title={localize('TIDY5E.LongRest')}
       onclick={(ev) => context.longRest(ev)}
       disabled={!context.editable}
-      tabindex={!$settingStore.useDefaultSheetHpTabbing &&
-      $settingStore.useAccessibleKeyboardSupport
+      tabindex={!settings.useDefaultSheetHpTabbing &&
+      settings.useAccessibleKeyboardSupport
         ? 0
         : -1}
     >

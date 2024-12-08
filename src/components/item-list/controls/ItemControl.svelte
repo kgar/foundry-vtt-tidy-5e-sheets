@@ -1,7 +1,7 @@
 <script lang="ts">
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
 
   interface Props {
     iconCssClass?: string | undefined;
@@ -36,7 +36,7 @@
   class:inactive={!active}
   {onclick}
   title={title !== undefined ? localize(title) : ''}
-  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+  tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
 >
   {#if iconCssClass}
     <i class={iconCssClass}></i>

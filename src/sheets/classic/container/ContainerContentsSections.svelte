@@ -14,7 +14,7 @@
   import ItemName from 'src/components/item-list/ItemName.svelte';
   import InlineFavoriteIcon from 'src/components/item-list/InlineFavoriteIcon.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { getContext, type Component } from 'svelte';

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
   import { type Snippet } from 'svelte';
@@ -46,7 +46,7 @@
       class="trait-label-and-list"
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTOR_TRAIT_DETAILS}
     >
-      {#if $settingStore.showTraitLabels}
+      {#if settings.showTraitLabels}
         <span class="trait-label">{title}</span>
       {/if}
       {@render children?.()}
@@ -61,7 +61,7 @@
           event.stopPropagation();
           onConfigureClicked?.(event);
         }}
-        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+        tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
       >
         <i class="fas fa-pencil-alt"></i>
       </button>

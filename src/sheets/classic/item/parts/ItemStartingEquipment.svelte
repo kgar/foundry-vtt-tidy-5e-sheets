@@ -2,7 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { coalesce } from 'src/utils/formatting';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
   let context = getItemSheetContext();
@@ -22,7 +22,7 @@
         title={localize('DND5E.StartingEquipment.Action.Configure')}
         aria-label={localize('DND5E.StartingEquipment.Action.Configure')}
         onclick={() => FoundryAdapter.openStartingEquipmentConfig(context.item)}
-        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+        tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
       >
         <i class="fas fa-gear"></i>
       </button>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import type { Item5e } from 'src/types/item.types';
   import ActiveEffectsMarker from './ActiveEffectsMarker.svelte';
   import type { Snippet } from 'svelte';
@@ -28,7 +28,7 @@
 <!-- TODO: Make this an anchor -->
 <span
   role="button"
-  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+  tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
   onclick={(ev) => onToggle?.(ev)}
   class="item-name truncate {cssClass}"
   class:has-children={hasChildren}
@@ -37,7 +37,7 @@
 >
   {@render children?.()}
 </span>
-{#if useActiveEffectsMarker && $settingStore.showActiveEffectsMarker && hasActiveEffects}
+{#if useActiveEffectsMarker && settings.showActiveEffectsMarker && hasActiveEffects}
   <ActiveEffectsMarker />
 {/if}
 

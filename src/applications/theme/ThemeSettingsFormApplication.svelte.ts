@@ -13,7 +13,6 @@ import type {
   Tidy5eThemeDataV1,
 } from 'src/types/theme.types';
 import { mount } from 'svelte';
-import { get, writable, type Writable } from 'svelte/store';
 import ThemeSettingsSheet from './ThemeSettingsSheet.svelte';
 import { downloadTextFile } from 'src/utils/file';
 import { CONSTANTS } from 'src/constants';
@@ -27,7 +26,7 @@ export type ThemeSettingsSheetFunctions = {
 
 export class ThemeSettingsFormApplication extends SvelteFormApplicationBase {
   themeableColors: ThemeColorSetting[] = getThemeableColors();
-  context: Writable<CurrentSettings> = writable(getCurrentSettings());
+  context = $state(getCurrentSettings());
 
   static get defaultOptions() {
     return {
@@ -71,7 +70,7 @@ export class ThemeSettingsFormApplication extends SvelteFormApplicationBase {
   }
 
   refreshContext(): void {
-    this.context.set(getCurrentSettings());
+    this.context = getCurrentSettings();
   }
 
   async saveChangedSettings(newSettings: CurrentSettings) {
@@ -100,12 +99,10 @@ export class ThemeSettingsFormApplication extends SvelteFormApplicationBase {
       {}
     );
 
-    this.context.update((current) => {
-      return {
-        ...current,
-        ...colorsToUpdate,
-      };
-    });
+    this.context = {
+      ...this.context,
+      ...colorsToUpdate,
+    };
   }
 
   exportTheme(settings: CurrentSettings) {
@@ -129,7 +126,6 @@ export class ThemeSettingsFormApplication extends SvelteFormApplicationBase {
   }
 
   async _updateObject() {
-    const settings = get(this.context);
-    await this.saveChangedSettings(settings);
+    await this.saveChangedSettings(this.context);
   }
 }

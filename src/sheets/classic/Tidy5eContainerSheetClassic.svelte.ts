@@ -1,8 +1,8 @@
 import { CONSTANTS } from 'src/constants';
-import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
 import { DragAndDropMixin } from 'src/mixins/DragAndDropBaseMixin';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin';
+import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type {
   ApplicationConfiguration,
   ApplicationRenderOptions,
@@ -23,7 +23,6 @@ import type {
   Tab,
 } from 'src/types/types';
 import { mount } from 'svelte';
-import { writable } from 'svelte/store';
 import ContainerSheet from './item/ContainerSheet.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -48,7 +47,7 @@ export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   inlineToggleService = new InlineToggleService();
   itemFilterService: ItemFilterService;
-  messageBus: MessageBus = writable<MessageBusMessage | undefined>();
+  messageBus = $state<MessageBusMessage | undefined>();
 
   constructor(...args: any[]) {
     super(...args);
@@ -84,7 +83,6 @@ export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
   };
 
   _createComponent(node: HTMLElement): Record<string, any> {
-
     const context = new Map<any, any>([
       [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
       [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],

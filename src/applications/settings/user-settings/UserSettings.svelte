@@ -10,14 +10,16 @@
   import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
   import type {
+    UserSettingsContext,
     UserSettingsFunctions,
-    UserSettingsStore,
   } from './UserSettings.types';
 
   let selectedTabId = $state(
     getContext<string>(CONSTANTS.SVELTE_CONTEXT.INITIAL_TAB_ID),
   );
-  let context = getContext<UserSettingsStore>(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
+  let context = getContext<UserSettingsContext>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
   let functions = getContext<UserSettingsFunctions>(
     CONSTANTS.SVELTE_CONTEXT.FUNCTIONS,
   );
@@ -68,7 +70,7 @@
     applyingChanges = true;
 
     try {
-      await functions.save($context);
+      await functions.save(context);
     } finally {
       applyingChanges = false;
     }
@@ -78,7 +80,7 @@
     applyingChanges = true;
 
     try {
-      await functions.apply($context);
+      await functions.apply(context);
     } finally {
       applyingChanges = false;
     }

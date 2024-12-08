@@ -3,7 +3,7 @@
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import type { MouseEventHandler } from 'svelte/elements';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
@@ -53,7 +53,7 @@
       class="death-save rollable"
       onclick={(event) => onRollDeathSave?.(event)}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DEATH_SAVE_ROLLER}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+      tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fas fa-skull"></i>
     </button>

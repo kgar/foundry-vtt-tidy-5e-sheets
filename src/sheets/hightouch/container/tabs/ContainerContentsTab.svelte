@@ -4,7 +4,7 @@
   import { getContext } from 'svelte';
   import CapacityBar from 'src/sheets/hightouch/container/parts/CapacityBar.svelte';
   import ContainerContentsSections from 'src/sheets/hightouch/container/parts/ContainerContentsSections.svelte';
-  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import ContainerCurrency from '../parts/ContainerCurrency.svelte';
   import ToggleButton from 'src/components/buttons/ToggleButton.svelte';

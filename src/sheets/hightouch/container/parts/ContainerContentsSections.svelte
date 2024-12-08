@@ -10,12 +10,11 @@
   import ItemEditControl from 'src/components/item-list/controls/ItemEditControl.svelte';
   import ItemTableRowV2 from 'src/components/item-list/v2/ItemTableRowV2.svelte';
   import TidyTableCell from 'src/components/table/TidyTableCell.svelte';
-  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { getContext } from 'svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-  import type { Readable } from 'svelte/store';
   import InlineActivitiesList from '../../shared/InlineActivitiesList.svelte';
   import InlineContainerView from './InlineContainerView.svelte';
   import { isNil } from 'src/utils/data';
@@ -100,7 +99,7 @@
     `/* Name */ 1fr /* Quantity */ 4.125rem /* Weight */ 2.25rem ${itemActionsWidth}`,
   );
 
-  let inlineContainerToggleServiceStore = $derived(inlineToggleService.store);
+  let containerToggleMap = $derived(inlineToggleService.map);
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -182,7 +181,7 @@
                   >
                     <i
                       class="fa-solid fa-angle-right expand-indicator"
-                      class:expanded={$inlineContainerToggleServiceStore
+                      class:expanded={containerToggleMap
                         .get(tabId)
                         ?.has(item.id)}
                     >

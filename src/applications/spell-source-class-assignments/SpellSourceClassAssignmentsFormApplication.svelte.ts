@@ -2,10 +2,8 @@ import { mount } from 'svelte';
 import AssignSpellsToSourceClasses from './SpellSourceClassAssignments.svelte';
 import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
 import type { Actor5e } from 'src/types/types';
-import { writable, type Writable } from 'svelte/store';
 import type { Item5e } from 'src/types/item.types';
 import { CONSTANTS } from 'src/constants';
-import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export type SpellSourceClassAssignment = {
@@ -25,19 +23,17 @@ export type SpellSourceClassAssignmentsContext = {
 };
 
 export default class SpellSourceClassAssignmentsFormApplication extends SvelteFormApplicationBase {
-  context: Writable<SpellSourceClassAssignmentsContext> = writable();
+  context = $state<SpellSourceClassAssignmentsContext>();
   actor: Actor5e;
-  subscriptionsService: StoreSubscriptionsService;
   updateHook: number | undefined;
 
   constructor(actor: Actor5e, ...args: any[]) {
     super(...args);
     this.actor = actor;
-    this.subscriptionsService = new StoreSubscriptionsService();
   }
 
   createComponent(node: HTMLElement): Record<string, any> {
-    this.context.set(this.getData());
+    this.context = this.getData();
 
     return mount(AssignSpellsToSourceClasses, {
       target: node,
@@ -74,7 +70,7 @@ export default class SpellSourceClassAssignmentsFormApplication extends SvelteFo
         return;
       }
 
-      this.context.set(this.getData());
+      this.context = this.getData();
     });
   }
 

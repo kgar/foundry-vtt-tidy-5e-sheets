@@ -1,5 +1,4 @@
 import { getContext, setContext } from 'svelte';
-import { writable, type Readable, type Writable } from 'svelte/store';
 import type { OnItemTableToggleFn } from '../caching/ItemTableToggleCacheService';
 import { CONSTANTS } from 'src/constants';
 
@@ -13,8 +12,11 @@ export class ExpandCollapseService {
 
   private _onItemTableToggle: OnItemTableToggleFn | undefined | null;
   private _location: string | undefined | null;
-  private _state: Writable<ExpandCollapseServiceState>;
-  state: Readable<ExpandCollapseServiceState>;
+  private _state = $state<ExpandCollapseServiceState>();
+
+  get state() {
+    return this._state;
+  }
 
   constructor(
     initialState: ExpandCollapseServiceState = {
@@ -22,8 +24,7 @@ export class ExpandCollapseService {
       toggleable: true,
     }
   ) {
-    this._state = writable({ ...initialState });
-    this.state = this._state;
+    this._state = { ...initialState };
     this._onItemTableToggle = getContext<OnItemTableToggleFn>(
       CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TABLE_TOGGLE
     );
@@ -31,14 +32,13 @@ export class ExpandCollapseService {
   }
 
   toggle() {
-    this._state.update((current) => {
-      const newState = !current.expanded;
-      this._tryCacheExpandedState(newState);
-      return {
-        ...current,
-        expanded: newState,
-      };
-    });
+    if (!this._state) {
+      return;
+    }
+
+    const newState = !this._state.expanded;
+    this._tryCacheExpandedState(newState);
+    this._state.expanded = newState;
   }
 
   private _tryCacheExpandedState(newState: boolean) {
@@ -48,12 +48,11 @@ export class ExpandCollapseService {
   }
 
   set(expanded: boolean) {
-    this._state.update((current) => {
-      return {
-        ...current,
-        expanded: expanded,
-      };
-    });
+    if (!this._state) {
+      return;
+    }
+
+    this._state.expanded = expanded;
     this._tryCacheExpandedState(expanded);
   }
 

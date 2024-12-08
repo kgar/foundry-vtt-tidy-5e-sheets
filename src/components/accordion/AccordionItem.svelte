@@ -1,8 +1,7 @@
 <script lang="ts">
   import { getContext, onMount, type Snippet } from 'svelte';
   import type { AccordionCtxType } from './Accordion.svelte';
-  import { writable } from 'svelte/store';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { CONSTANTS } from 'src/constants';
 
@@ -15,22 +14,28 @@
 
   let { open = $bindable(false), header, children, ...rest }: Props = $props();
 
-  const ctx =
-    getContext<AccordionCtxType>(CONSTANTS.SVELTE_CONTEXT.ACCORDION_CONTEXT) ??
-    {};
+  const ctx = getContext<AccordionCtxType>(
+    CONSTANTS.SVELTE_CONTEXT.ACCORDION_CONTEXT,
+  );
 
   const self = foundry.utils.randomID();
-  const selected = ctx.selected ?? writable();
 
   function toggle() {
-    selected.set(open ? {} : self);
+    ctx.selected = open ? {} : self;
   }
+
+  $effect(() => {
+    if (!ctx.multiple) {
+      return;
+    }
+
+    open = ctx.selected === self;
+  });
 
   onMount(() => {
     if (open) {
-      $selected = self;
+      ctx.selected = self;
     }
-    return selected.subscribe((x) => (open = x === self));
   });
 </script>
 
@@ -41,7 +46,7 @@
       type="button"
       onclick={() => toggle()}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.EXPANSION_TOGGLE}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+      tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <span class="accordion-arrow" class:open
         ><i class="fas fa-chevron-right"></i></span

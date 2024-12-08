@@ -10,7 +10,7 @@
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import ItemHeaderToggles from './parts/ItemHeaderToggles.svelte';
   import AttachedInfoCard from 'src/components/item-info-card/AttachedInfoCard.svelte';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { getContainerSheetClassicContext } from 'src/sheets/sheet-context.svelte';
 
   let context = getContainerSheetClassicContext();
@@ -24,9 +24,9 @@
 
 <AttachedInfoCard
   sheet={context.item.sheet}
-  floating={$settingStore.itemCardsAreFloating}
-  delay={$settingStore.itemCardsDelay}
-  inspectKey={$settingStore.itemCardsFixKey}
+  floating={settings.itemCardsAreFloating}
+  delay={settings.itemCardsDelay}
+  inspectKey={settings.itemCardsFixKey}
 />
 
 <header class="sheet-header container-header flexrow gap">

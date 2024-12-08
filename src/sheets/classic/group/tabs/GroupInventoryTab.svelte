@@ -110,7 +110,6 @@
     >
       <ContainerPanel
         containerPanelItems={context.containerPanelItems}
-        {searchCriteria}
       />
     </ExpandableContainer>
     {#each inventory as section (section.key)}

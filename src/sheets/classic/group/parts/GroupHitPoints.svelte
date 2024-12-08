@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type Actor5e } from 'src/types/types';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import HpBar from 'src/components/bar/HpBar.svelte';
   import ResourceWithBar from 'src/components/bar/ResourceWithBar.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
@@ -37,6 +37,6 @@
     maxTitle={null}
     maxDisabled={true}
     percentage={context.healthPercentage}
-    Bar={$settingStore.useHpBar ? HpBar : null}
+    Bar={settings.useHpBar ? HpBar : null}
   />
 </div>

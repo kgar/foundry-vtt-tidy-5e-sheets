@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { Item5e } from 'src/types/item.types';
   import type { ActorSheetContextV1 } from 'src/types/types';
@@ -35,7 +35,7 @@
       ? item.update({ 'system.uses.spent': 0 })
       : item.system.uses.rollRecharge()}
   disabled={!context.owner}
-  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+  tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
 >
   <i class="fas fa-dice-six"></i>
   {recovery?.formula}{#if recovery?.value !== 6}+{/if}</button

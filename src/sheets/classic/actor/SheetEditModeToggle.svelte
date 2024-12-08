@@ -3,7 +3,7 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import TidySwitch from 'src/components/toggle/TidySwitch.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
@@ -23,17 +23,17 @@
   let allowEdit = $derived(TidyFlags.allowEdit.get(context.document));
   let descriptionVariable = $derived(
     hint ??
-      ($settingStore.useTotalSheetLock
+      (settings.useTotalSheetLock
         ? localize('TIDY5E.SheetLock.Description')
         : localize('TIDY5E.SheetEdit.Description')),
   );
   let lockHintVariable = $derived(
-    $settingStore.useTotalSheetLock
+    settings.useTotalSheetLock
       ? 'TIDY5E.SheetLock.Unlock.Hint'
       : 'TIDY5E.SheetEdit.Enable.Hint',
   );
   let unlockHintVariable = $derived(
-    $settingStore.useTotalSheetLock
+    settings.useTotalSheetLock
       ? 'TIDY5E.SheetLock.Lock.Hint'
       : 'TIDY5E.SheetEdit.Disable.Hint',
   );

@@ -3,7 +3,7 @@
   import ResourceWithBar from 'src/components/bar/ResourceWithBar.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import type { Actor5e } from 'src/types/types';
   import { getPercentage } from 'src/utils/numbers';
 
@@ -29,7 +29,7 @@
         shareable: true,
         uuid: member.uuid,
       })}
-    tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+    tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
   >
     <img
       class="member-list-item-image"

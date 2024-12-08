@@ -2,7 +2,7 @@
   import ContentConcealer from 'src/components/content-concealment/ContentConcealer.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemSheetContext } from 'src/types/item.types';
   import type { CharacterSheetContext } from 'src/types/types';
@@ -58,7 +58,7 @@
                 class="active-effect-control inline-icon-button"
                 title={localize('DND5E.EffectCreate')}
                 onclick={(event) => onAddClicked(section)}
-                tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+                tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
               >
                 <i class="fas fa-plus"></i>
                 {localize('DND5E.Add')}
@@ -119,7 +119,7 @@
                         : 'DND5E.EffectDisable'}
                       onclick={() =>
                         effect.update({ disabled: !effect.disabled })}
-                      tabindex={$settingStore.useAccessibleKeyboardSupport
+                      tabindex={settings.useAccessibleKeyboardSupport
                         ? 0
                         : -1}
                     >
@@ -135,7 +135,7 @@
                     class="active-effect-control inline-icon-button"
                     title={localize('DND5E.EffectEdit')}
                     onclick={() => effect.sheet.render(true)}
-                    tabindex={$settingStore.useAccessibleKeyboardSupport
+                    tabindex={settings.useAccessibleKeyboardSupport
                       ? 0
                       : -1}
                   >
@@ -146,7 +146,7 @@
                     class="active-effect-control inline-icon-button"
                     title={localize('DND5E.EffectDelete')}
                     onclick={() => effect.deleteDialog()}
-                    tabindex={$settingStore.useAccessibleKeyboardSupport
+                    tabindex={settings.useAccessibleKeyboardSupport
                       ? 0
                       : -1}
                   >

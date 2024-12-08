@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { RegisteredItemSummaryCommand } from 'src/runtime/types';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import type { Item5e } from 'src/types/item.types';
 
   interface Props {
@@ -17,7 +17,7 @@
   class="item-summary-command"
   title={command.tooltip ?? null}
   onclick={() => command.execute?.({ item: item })}
-  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+  tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
 >
   {#if command.iconClass}
     <i class={command.iconClass}></i>

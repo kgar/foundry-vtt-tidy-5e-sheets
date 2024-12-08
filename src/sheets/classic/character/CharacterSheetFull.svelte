@@ -15,9 +15,9 @@
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import InlineCreatureType from '../shared/InlineCreatureType.svelte';
-  import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
+  import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication.svelte';
   import ActorName from '../actor/ActorName.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import AttachedInfoCard from 'src/components/item-info-card/AttachedInfoCard.svelte';
@@ -59,9 +59,9 @@
 
 <AttachedInfoCard
   sheet={context.actor.sheet}
-  floating={$settingStore.itemCardsAreFloating}
-  delay={$settingStore.itemCardsDelay}
-  inspectKey={$settingStore.itemCardsFixKey}
+  floating={settings.itemCardsAreFloating}
+  delay={settings.itemCardsDelay}
+  inspectKey={settings.itemCardsFixKey}
 />
 
 {#if context.viewableWarnings.length}
@@ -140,7 +140,7 @@
 
     <section class="class-list">
       <!-- Player Name -->
-      {#if $settingStore.showPlayerName}
+      {#if settings.showPlayerName}
         <ContentEditableFormField
           element="span"
           document={context.actor}
@@ -155,7 +155,7 @@
       {/if}
 
       <!-- Class / Subclass -->
-      {#if context.owner && $settingStore.showClassList}
+      {#if context.owner && settings.showClassList}
         <span class="flex-row extra-small-gap">
           {#each classAndSubclassSummaries as summary, i}
             {#if i > 0}
@@ -219,7 +219,7 @@
               new ActorOriginSummaryConfigFormApplication(context.actor).render(
                 true,
               )}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-cog"></i>
           </button>
@@ -252,7 +252,7 @@
   {#snippet tabEnd()}
     {#if context.editable}
       <SheetEditModeToggle
-        hint={$settingStore.permanentlyUnlockCharacterSheetForGm &&
+        hint={settings.permanentlyUnlockCharacterSheetForGm &&
         FoundryAdapter.userIsGm()
           ? localize(
               'TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM.title',

@@ -7,7 +7,7 @@
   import Source from '../shared/Source.svelte';
   import { CONSTANTS } from 'src/constants';
   import AttachedInfoCard from 'src/components/item-info-card/AttachedInfoCard.svelte';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
   let context = getItemSheetContext();
@@ -21,9 +21,9 @@
 
 <AttachedInfoCard
   sheet={context.item.sheet}
-  floating={$settingStore.itemCardsAreFloating}
-  delay={$settingStore.itemCardsDelay}
-  inspectKey={$settingStore.itemCardsFixKey}
+  floating={settings.itemCardsAreFloating}
+  delay={settings.itemCardsDelay}
+  inspectKey={settings.itemCardsFixKey}
 />
 
 <header class="sheet-header flexrow gap">

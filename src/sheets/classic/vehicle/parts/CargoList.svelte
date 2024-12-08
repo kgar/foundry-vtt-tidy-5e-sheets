@@ -20,7 +20,7 @@
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import type { Item5e } from 'src/types/item.types';
   import ClassicControls from 'src/sheets/classic/shared/ClassicControls.svelte';
-  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import InlineContainerView from 'src/sheets/classic/container/InlineContainerView.svelte';
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';

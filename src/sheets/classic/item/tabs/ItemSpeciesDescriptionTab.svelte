@@ -2,7 +2,7 @@
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ItemDescription from './ItemDescriptionTab.svelte';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { CONSTANTS } from 'src/constants';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
@@ -27,7 +27,7 @@
           class="inline-icon-button hidden-config-button"
           type="button"
           onclick={() => FoundryAdapter.renderCreatureTypeConfig(context.item)}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+          tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fas fa-cog"></i>
         </button>
@@ -45,7 +45,7 @@
           data-action="movement"
           onclick={() =>
             FoundryAdapter.renderMovementSensesConfig(context.item, 'movement')}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+          tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fas fa-cog"></i>
         </button>
@@ -67,7 +67,7 @@
           data-action="senses"
           onclick={() =>
             FoundryAdapter.renderMovementSensesConfig(context.item, 'senses')}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+          tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fas fa-cog"></i>
         </button>

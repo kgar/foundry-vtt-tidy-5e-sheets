@@ -2,12 +2,10 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ThemeColorSetting } from 'src/types/theme.types';
   import { getContext, onMount } from 'svelte';
-  import type { Writable } from 'svelte/store';
   import type { CurrentSettings } from 'src/settings/settings.svelte';
   import {
     settingValueToHexaString,
     trySetRootCssVariable,
-    colorToHexaString,
   } from 'src/theme/theme';
   import { CONSTANTS } from 'src/constants';
 
@@ -18,9 +16,7 @@
   let { colorToConfigure }: Props = $props();
 
   let appId = getContext(CONSTANTS.SVELTE_CONTEXT.APP_ID);
-  let context = getContext<Writable<CurrentSettings>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = getContext<CurrentSettings>(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
 
   const eyeDropperEnabled = 'EyeDropper' in window;
 
@@ -42,10 +38,10 @@
     trySetRootCssVariable(
       colorToConfigure.cssVariable,
       value,
-      $context.colorPickerEnabled,
+      context.colorPickerEnabled,
     );
-    $context = {
-      ...$context,
+    context = {
+      ...context,
       [colorToConfigure.key]: value,
     };
   }
@@ -73,13 +69,13 @@
     <label
       for="{colorToConfigure.key}-{appId}"
       class="color-picker-preview"
-      style="--bg-color: {$context[colorToConfigure.key]};"
+      style="--bg-color: {context[colorToConfigure.key]};"
     ></label>
 
     <input
       type="text"
       id="{colorToConfigure.key}-{appId}"
-      value={$context[colorToConfigure.key]}
+      value={context[colorToConfigure.key]}
       class="theme-color-textbox coloris"
       onchange={(ev) =>
         onColorSelected(colorToConfigure, ev.currentTarget.value)}

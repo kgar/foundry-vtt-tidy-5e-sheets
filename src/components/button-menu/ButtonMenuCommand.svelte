@@ -2,7 +2,7 @@
   import { getContext, type Snippet } from 'svelte';
   import ButtonMenuItem from './ButtonMenuItem.svelte';
   import type { ButtonMenuContext } from './button-menu-types';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { CONSTANTS } from 'src/constants';
   import type { MouseEventHandler } from 'svelte/elements';
 
@@ -45,7 +45,7 @@
     onclick={handleClick}
     {title}
     {disabled}
-    tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+    tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
   >
     {#if useIconColumn}
       <span class="icon-container">

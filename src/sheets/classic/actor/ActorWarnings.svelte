@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
 
@@ -20,7 +20,7 @@
           type="button"
           class="inline-transparent-button"
           onclick={(ev) => context.actor.sheet._onWarningLink(ev)}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+          tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
           data-target={warning.link}>{warning.message}</button
         >
       {:else}

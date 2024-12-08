@@ -6,20 +6,16 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { coalesce } from 'src/utils/formatting';
   import { TidyHooks } from 'src/foundry/TidyHooks';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
 
   interface Props {
     containerPanelItems?: ContainerPanelItemContext[];
     searchCriteria?: string;
   }
 
-  let { containerPanelItems = [], searchCriteria = '' }: Props = $props();
+  let { containerPanelItems = [] }: Props = $props();
 
-  let visibleContainersIdsSubset = $derived(
-    FoundryAdapter.searchItems(
-      searchCriteria,
-      containerPanelItems.map((c) => c.container),
-    ),
-  );
+  let searchResults = getSearchResultsContext();
 
   async function onMouseEnter(event: Event, item: Item5e) {
     TidyHooks.tidy5eSheetsItemHoverOn(event, item);
@@ -54,8 +50,8 @@
             FoundryAdapter.localize('DND5E.Unidentified.Title'),
           )
         : container.name}
-      class:hidden={!visibleContainersIdsSubset.has(container.id)}
-      aria-hidden={!visibleContainersIdsSubset.has(container.id)}
+      class:hidden={!searchResults.show(container.uuid)}
+      aria-hidden={!searchResults.show(container.uuid)}
       data-info-card={'item'}
       data-info-card-entity-uuid={container.uuid}
     >

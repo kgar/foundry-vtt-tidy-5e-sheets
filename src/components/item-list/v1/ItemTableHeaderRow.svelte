@@ -13,7 +13,7 @@
   const expandCollapseService = ExpandCollapseService.getService();
 
   function handleHeaderRowClick(ev: MouseEvent) {
-    if (!$expandState.toggleable) {
+    if (!expandState?.toggleable) {
       return;
     }
 
@@ -39,14 +39,14 @@
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <header
   class="item-table-header-row"
-  class:toggleable={$expandState.toggleable}
+  class:toggleable={expandState?.toggleable}
   onclick={handleHeaderRowClick}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_TABLE_HEADER_ROW}
 >
-  {#if $expandState.toggleable}
+  {#if expandState?.toggleable}
     <i
       class="expand-indicator fas fa-angle-right"
-      class:expanded={$expandState.expanded}
+      class:expanded={expandState.expanded}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.EXPANSION_TOGGLE}
     ></i>
   {/if}

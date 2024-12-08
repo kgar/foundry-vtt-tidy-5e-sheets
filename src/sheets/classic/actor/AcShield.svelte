@@ -3,7 +3,7 @@
   import { onMount } from 'svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import type { FocusEventHandler } from 'svelte/elements';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
@@ -41,7 +41,7 @@
     data-attribution-caption="DND5E.ArmorClass"
     data-tooltip-direction="DOWN"
     disabled={!context.editable}
-    tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+    tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
   >
     {ac}
   </button>

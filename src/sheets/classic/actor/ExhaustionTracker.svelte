@@ -5,7 +5,7 @@
     IconWithSeverity,
   } from 'src/features/exhaustion/exhaustion.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     ActorSheetContextV1,
@@ -85,7 +85,7 @@
             )}
             onclick={() => onLevelSelected?.(i)}
             disabled={!context.editable || isActiveEffectApplied}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
             data-tooltip={isActiveEffectApplied
               ? localize('DND5E.ActiveEffectOverrideWarning')
               : null}

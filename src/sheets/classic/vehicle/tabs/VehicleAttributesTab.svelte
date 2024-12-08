@@ -32,7 +32,7 @@
   import ClassicControls from 'src/sheets/classic/shared/ClassicControls.svelte';
   import { ItemUtils } from 'src/utils/ItemUtils';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
-  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
 

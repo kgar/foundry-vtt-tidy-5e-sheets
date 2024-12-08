@@ -10,7 +10,6 @@ import {
 import type {
   DefaultTabSelectionFields,
   WorldSettingsContext,
-  WorldSettingsContextStore,
   WorldSettingsFunctions,
 } from './WorldSettings.types';
 import type { RegisteredTab } from 'src/runtime/types';
@@ -20,11 +19,11 @@ import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { debug, error } from 'src/utils/logging';
-import { writable } from 'svelte/store';
 import { CONSTANTS } from 'src/constants';
 
 export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
   unchangedSettings?: CurrentSettings;
+  context = $state<WorldSettingsContext>();
 
   static get defaultOptions() {
     return {
@@ -118,14 +117,14 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
   }
 
   createComponent(node: HTMLElement): Record<string, any> {
-    const data = this.getData();
+    this.context = this.getData();
 
-    debug('World Settings context data', data);
+    debug('World Settings context data', this.context);
 
     return mount(WorldSettings, {
       target: node,
       context: new Map<any, any>([
-        ['context', writable(data) satisfies WorldSettingsContextStore],
+        ['context', this.context],
         [
           'functions',
           {
@@ -214,37 +213,40 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
     return valid;
   }
 
-  async applyChangedSettings(context: WorldSettingsContext) {
-    if (!this.validate(context)) {
+  async applyChangedSettings() {
+    if (!this.context || !this.validate(this.context)) {
       return false;
     }
 
-    if (context.exhaustionConfig.type === 'specific') {
-      context.exhaustionConfig.hints = context.exhaustionConfig.hints.slice(
-        0,
-        context.exhaustionConfig.levels + 1
-      );
+    if (this.context.exhaustionConfig.type === 'specific') {
+      this.context.exhaustionConfig.hints =
+        this.context.exhaustionConfig.hints.slice(
+          0,
+          this.context.exhaustionConfig.levels + 1
+        );
     }
 
-    if (context.vehicleExhaustionConfig.type === 'specific') {
-      context.vehicleExhaustionConfig.hints =
-        context.vehicleExhaustionConfig.hints.slice(
+    if (this.context.vehicleExhaustionConfig.type === 'specific') {
+      this.context.vehicleExhaustionConfig.hints =
+        this.context.vehicleExhaustionConfig.hints.slice(
           0,
-          context.vehicleExhaustionConfig.levels + 1
+          this.context.vehicleExhaustionConfig.levels + 1
         );
     }
 
     const newSettings: Partial<CurrentSettings> = {
-      ...context.settings,
-      defaultCharacterSheetTabs: context.defaultCharacterTabs.selected.map(
+      ...this.context.settings,
+      defaultCharacterSheetTabs: this.context.defaultCharacterTabs.selected.map(
         (t) => t.id
       ),
-      defaultNpcSheetTabs: context.defaultNpcTabs.selected.map((t) => t.id),
-      defaultVehicleSheetTabs: context.defaultVehicleTabs.selected.map(
+      defaultNpcSheetTabs: this.context.defaultNpcTabs.selected.map(
         (t) => t.id
       ),
-      exhaustionConfig: context.exhaustionConfig,
-      vehicleExhaustionConfig: context.vehicleExhaustionConfig,
+      defaultVehicleSheetTabs: this.context.defaultVehicleTabs.selected.map(
+        (t) => t.id
+      ),
+      exhaustionConfig: this.context.exhaustionConfig,
+      vehicleExhaustionConfig: this.context.vehicleExhaustionConfig,
     };
 
     const currentSettings = getCurrentSettings();
@@ -262,8 +264,8 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
     return true;
   }
 
-  async saveChangedSettings(context: WorldSettingsContext) {
-    const changesApplied = await this.applyChangedSettings(context);
+  async saveChangedSettings() {
+    const changesApplied = await this.applyChangedSettings();
 
     if (!changesApplied) {
       return;
@@ -272,40 +274,32 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
     this.close();
   }
 
-  resetDefaultTabs(store: WorldSettingsContextStore, actorType: string) {
+  resetDefaultTabs(actorType: string) {
+    if (!this.context) {
+      return;
+    }
+
     switch (actorType) {
       case CONSTANTS.SHEET_TYPE_CHARACTER:
-        store.update((context) => {
-          context.defaultCharacterTabs = this.mapTabSelectionFields(
-            CharacterSheetRuntime.getAllRegisteredTabs(),
-            [
-              ...SettingsProvider.settings.defaultCharacterSheetTabs.options
-                .default,
-            ]
-          );
-          return context;
-        });
+        this.context.defaultCharacterTabs = this.mapTabSelectionFields(
+          CharacterSheetRuntime.getAllRegisteredTabs(),
+          [
+            ...SettingsProvider.settings.defaultCharacterSheetTabs.options
+              .default,
+          ]
+        );
         break;
       case CONSTANTS.SHEET_TYPE_NPC:
-        store.update((context) => {
-          context.defaultNpcTabs = this.mapTabSelectionFields(
-            NpcSheetRuntime.getAllRegisteredTabs(),
-            [...SettingsProvider.settings.defaultNpcSheetTabs.options.default]
-          );
-          return context;
-        });
+        this.context.defaultNpcTabs = this.mapTabSelectionFields(
+          NpcSheetRuntime.getAllRegisteredTabs(),
+          [...SettingsProvider.settings.defaultNpcSheetTabs.options.default]
+        );
         break;
       case CONSTANTS.SHEET_TYPE_VEHICLE:
-        store.update((context) => {
-          context.defaultVehicleTabs = this.mapTabSelectionFields(
-            VehicleSheetRuntime.getAllRegisteredTabs(),
-            [
-              ...SettingsProvider.settings.defaultVehicleSheetTabs.options
-                .default,
-            ]
-          );
-          return context;
-        });
+        this.context.defaultVehicleTabs = this.mapTabSelectionFields(
+          VehicleSheetRuntime.getAllRegisteredTabs(),
+          [...SettingsProvider.settings.defaultVehicleSheetTabs.options.default]
+        );
         break;
     }
   }

@@ -8,7 +8,7 @@
   import CharacterHitPoints from './CharacterHitPoints.svelte';
   import TempHp from '../../actor/TempHp.svelte';
   import ActorProfile from 'src/sheets/classic/actor/ActorProfile.svelte';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import ExhaustionInput from 'src/sheets/classic/actor/ExhaustionInput.svelte';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
@@ -27,8 +27,8 @@
   }
 </script>
 
-<ActorProfile useHpOverlay={$settingStore.useHpOverlay}>
-  {#if incapacitated && (!$settingStore.hideDeathSavesFromPlayers || FoundryAdapter.userIsGm())}
+<ActorProfile useHpOverlay={settings.useHpOverlay}>
+  {#if incapacitated && (!settings.hideDeathSavesFromPlayers || FoundryAdapter.userIsGm())}
     <DeathSaves
       successes={context.system.attributes.death.success}
       failures={context.system.attributes.death.failure}
@@ -39,31 +39,31 @@
           event: event,
           legacy: false,
         })}
-      hasHpOverlay={$settingStore.useHpOverlay}
+      hasHpOverlay={settings.useHpOverlay}
     />
   {/if}
 
-  {#if $settingStore.useExhaustion && $settingStore.exhaustionConfig.type === 'specific'}
+  {#if settings.useExhaustion && settings.exhaustionConfig.type === 'specific'}
     <ExhaustionTracker
       level={context.system.attributes.exhaustion}
       radiusClass={context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       {onLevelSelected}
-      onlyShowOnHover={$settingStore.showExhaustionOnHover ||
-        ($settingStore.hideIfZero &&
+      onlyShowOnHover={settings.showExhaustionOnHover ||
+        (settings.hideIfZero &&
           context.system.attributes.exhaustion === 0)}
-      exhaustionConfig={$settingStore.exhaustionConfig}
+      exhaustionConfig={settings.exhaustionConfig}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
         context.actor,
         'system.attributes.exhaustion',
       )}
     />
-  {:else if $settingStore.useExhaustion && $settingStore.exhaustionConfig.type === 'open'}
+  {:else if settings.useExhaustion && settings.exhaustionConfig.type === 'open'}
     <ExhaustionInput
       level={context.system.attributes.exhaustion}
       radiusClass={context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       {onLevelSelected}
-      onlyShowOnHover={$settingStore.showExhaustionOnHover ||
-        ($settingStore.hideIfZero &&
+      onlyShowOnHover={settings.showExhaustionOnHover ||
+        (settings.hideIfZero &&
           context.system.attributes.exhaustion === 0)}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
         context.actor,
@@ -72,14 +72,14 @@
     />
   {/if}
 
-  {#if $settingStore.useCharacterInspiration}
+  {#if settings.useCharacterInspiration}
     <Inspiration
       inspired={context.actor.system.attributes.inspiration}
       radiusClass={context.useRoundedPortraitStyle ? 'rounded' : 'top-right'}
-      onlyShowOnHover={$settingStore.showInspirationOnHover ||
-        ($settingStore.hideIfZero &&
+      onlyShowOnHover={settings.showInspirationOnHover ||
+        (settings.hideIfZero &&
           !context.actor.system.attributes.inspiration)}
-      animate={$settingStore.animateInspiration}
+      animate={settings.animateInspiration}
     />
   {/if}
 

@@ -27,7 +27,7 @@
   import SpellbookFooter from 'src/components/spellbook/SpellbookFooter.svelte';
   import ItemFilterLayoutToggle from 'src/components/item-list/ItemFilterLayoutToggle.svelte';
   import SpellbookGrid from 'src/components/spellbook/SpellbookGrid.svelte';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import EncumbranceBar from '../../actor/EncumbranceBar.svelte';
   import TabFooter from '../../actor/TabFooter.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
@@ -49,7 +49,7 @@
   import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
-  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
@@ -91,7 +91,7 @@
   setSearchResultsContext(searchResults);
 
   let spellbook = $derived(
-    !$settingStore.showSpellbookTabNpc
+    !settings.showSpellbookTabNpc
       ? SheetSections.configureSpellbook(
           context.actor,
           tabId,
@@ -187,12 +187,12 @@
   <div class="side-panel">
     <SkillsList
       actor={context.actor}
-      toggleable={!$settingStore.alwaysShowNpcSkills}
+      toggleable={!settings.alwaysShowNpcSkills}
       expanded={!!TidyFlags.skillsExpanded.get(context.actor)}
       toggleField={TidyFlags.skillsExpanded.prop}
     />
-    {#if !$settingStore.moveTraitsBelowNpcResources}
-      <Traits toggleable={!$settingStore.alwaysShowNpcTraits} />
+    {#if !settings.moveTraitsBelowNpcResources}
+      <Traits toggleable={!settings.alwaysShowNpcTraits} />
     {/if}
   </div>
   <div
@@ -207,8 +207,8 @@
     >
       <NpcLegendaryActions />
     </ExpandableContainer>
-    {#if $settingStore.moveTraitsBelowNpcResources}
-      <Traits toggleable={!$settingStore.alwaysShowNpcTraits} />
+    {#if settings.moveTraitsBelowNpcResources}
+      <Traits toggleable={!settings.alwaysShowNpcTraits} />
     {/if}
     {#each features as section (section.key)}
       {#if section.show}
@@ -366,14 +366,14 @@
         {/if}
       {/if}
     {/each}
-    {#if !$settingStore.showSpellbookTabNpc}
+    {#if !settings.showSpellbookTabNpc}
       {#if noSpellLevels}
         <h2>
           <button
             type="button"
             class="transparent-button spellbook-title toggle-spellbook"
             onclick={() => (showNoSpellsView = !showNoSpellsView)}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
           >
             {localize('DND5E.Spellbook')}
             {#if showNoSpellsView}
@@ -449,7 +449,7 @@
 </section>
 <TabFooter mode="vertical" cssClass="abilities-footer">
   <Currency document={context.actor} />
-  {#if $settingStore.useNpcEncumbranceBar}
+  {#if settings.useNpcEncumbranceBar}
     <EncumbranceBar />
   {/if}
 </TabFooter>

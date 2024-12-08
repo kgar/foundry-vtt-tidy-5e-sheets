@@ -26,7 +26,7 @@
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
-  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import InlineContainerView from 'src/sheets/classic/container/InlineContainerView.svelte';
   import { ItemUtils } from 'src/utils/ItemUtils';
   import {

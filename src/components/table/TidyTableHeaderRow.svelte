@@ -13,7 +13,7 @@
   const expandCollapseService = ExpandCollapseService.getService();
 
   function handleHeaderRowClick(ev: MouseEvent) {
-    if (!$expandState.toggleable) {
+    if (!expandState?.toggleable) {
       return;
     }
 
@@ -39,7 +39,7 @@
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <header
   class="tidy-table-header-row"
-  class:toggleable={$expandState.toggleable}
+  class:toggleable={expandState?.toggleable}
   onclick={handleHeaderRowClick}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TABLE_HEADER_ROW}
 >

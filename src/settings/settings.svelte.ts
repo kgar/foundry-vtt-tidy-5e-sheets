@@ -5,10 +5,9 @@ import type { GetFunctionReturnType } from 'src/types/types';
 import { applyTheme, getThemeOrDefault } from 'src/theme/theme';
 import { defaultLightTheme } from 'src/theme/default-light-theme';
 import { getCoreThemes, themeVariables } from 'src/theme/theme-reference';
-import { UserSettingsFormApplication } from 'src/applications/settings/user-settings/UserSettingsFormApplication';
-import { writable, type Writable } from 'svelte/store';
-import { WorldSettingsFormApplication } from 'src/applications/settings/world-settings/WorldSettingsFormApplication';
-import { ThemeSettingsFormApplication } from 'src/applications/theme/ThemeSettingsFormApplication';
+import { UserSettingsFormApplication } from 'src/applications/settings/user-settings/UserSettingsFormApplication.svelte';
+import { WorldSettingsFormApplication } from 'src/applications/settings/world-settings/WorldSettingsFormApplication.svelte';
+import { ThemeSettingsFormApplication } from 'src/applications/theme/ThemeSettingsFormApplication.svelte';
 import type { ExhaustionConfig } from '../features/exhaustion/exhaustion.types';
 import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
@@ -104,7 +103,7 @@ export type Tidy5eSetting = {
 /**
  * The current Tidy 5e settings.
  */
-export let settingStore: Writable<CurrentSettings>;
+export let settings: CurrentSettings;
 
 export function createSettings() {
   return {
@@ -1909,7 +1908,7 @@ export function initSettings() {
   }
 
   const debouncedSettingStoreRefresh = FoundryAdapter.debounce(() => {
-    settingStore.set(getCurrentSettings());
+    settings = getCurrentSettings();
   }, 100);
 
   for (let setting of Object.entries(SettingsProvider.settings)) {
@@ -1929,9 +1928,9 @@ export function initSettings() {
     SettingsProvider.settings.colorScheme.get()
   );
 
-  settingStore = writable(getCurrentSettings());
+  settings = $state(getCurrentSettings());
 
   Hooks.on('closeSettingsConfig', () => {
-    settingStore.set(getCurrentSettings());
+    settings = getCurrentSettings();
   });
 }

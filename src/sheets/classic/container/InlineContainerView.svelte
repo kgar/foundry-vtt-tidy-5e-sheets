@@ -2,7 +2,7 @@
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import CapacityBar from './CapacityBar.svelte';
   import ContainerContentsSections from './ContainerContentsSections.svelte';
-  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { getContext } from 'svelte';
   import type { ContainerContents, Item5e } from 'src/types/item.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -29,7 +29,7 @@
     unlocked = true,
   }: Props = $props();
 
-  let inlineToggleServiceStore = $derived(inlineToggleService.store);
+  let toggleServiceMap = $derived(inlineToggleService.map);
 
   const searchResults = getSearchResultsContext();
 
@@ -46,7 +46,7 @@
 </script>
 
 <ExpandableContainer
-  expanded={$inlineToggleServiceStore.get(tabId)?.has(container.id) === true}
+  expanded={toggleServiceMap.get(tabId)?.has(container.id) === true}
   class={!searchResults.show(container.uuid) ? 'hidden' : ''}
 >
   <!-- TODO: Apply proper a11y trappings for this -->

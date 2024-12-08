@@ -9,10 +9,7 @@
   import ExhaustionWorldSettingsTab from './tabs/ExhaustionWorldSettingsTab.svelte';
   import SheetLockWorldSettingsTab from './tabs/SheetLockWorldSettingsTab.svelte';
   import { getContext } from 'svelte';
-  import type {
-    WorldSettingsContextStore,
-    WorldSettingsFunctions,
-  } from './WorldSettings.types';
+  import type { WorldSettingsContext, WorldSettingsFunctions } from './WorldSettings.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
@@ -22,7 +19,7 @@
   let functions = getContext<WorldSettingsFunctions>(
     CONSTANTS.SVELTE_CONTEXT.FUNCTIONS,
   );
-  let context = getContext<WorldSettingsContextStore>(
+  let context = getContext<WorldSettingsContext>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
@@ -101,7 +98,7 @@
     applyingChanges = true;
 
     try {
-      await functions.save($context);
+      await functions.save();
     } finally {
       applyingChanges = false;
     }
@@ -111,7 +108,7 @@
     applyingChanges = true;
 
     try {
-      await functions.apply($context);
+      await functions.apply();
     } finally {
       applyingChanges = false;
     }

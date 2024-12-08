@@ -3,7 +3,7 @@
   import SheetEditor from 'src/components/editor/SheetEditor.svelte';
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
   import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
   import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
@@ -140,7 +140,7 @@
         onclick={togglePersonalityInfo}
         class="toggle-personality-info"
         title={localize('TIDY5E.TogglePersonalityInfo')}
-        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+        tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
       >
         {#if showNpcPersonalityInfo}
           <i class="fas fa-angle-double-left"></i>

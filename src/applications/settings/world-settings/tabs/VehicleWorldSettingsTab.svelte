@@ -5,13 +5,13 @@
   import { SettingsProvider } from 'src/settings/settings.svelte';
   import SelectSetting from 'src/applications/settings/parts/SelectSetting.svelte';
   import type {
-    WorldSettingsContextStore,
+    WorldSettingsContext,
     WorldSettingsFunctions,
   } from '../WorldSettings.types';
   import ListboxSetting from '../../parts/ListboxSetting.svelte';
   import { CONSTANTS } from 'src/constants';
 
-  const context = getContext<WorldSettingsContextStore>(
+  const context = getContext<WorldSettingsContext>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
   let functions = getContext<WorldSettingsFunctions>(
@@ -24,7 +24,7 @@
 <div class="settings-form">
   <SelectSetting
     options={SettingsProvider.settings.initialVehicleSheetTab.options.choices()}
-    bind:value={$context.settings.initialVehicleSheetTab}
+    bind:value={context.settings.initialVehicleSheetTab}
     name={SettingsProvider.settings.initialVehicleSheetTab.options.name}
     hint={SettingsProvider.settings.initialVehicleSheetTab.options.hint}
     id="initialVehicleSheetTab"
@@ -34,9 +34,9 @@
     name={SettingsProvider.settings.defaultVehicleSheetTabs.options.name}
     hint={SettingsProvider.settings.defaultVehicleSheetTabs.options.hint}
     leftHeaderText="TIDY5E.Settings.DefaultSheetTabs.AvailableHeader"
-    bind:leftItems={$context.defaultVehicleTabs.available}
+    bind:leftItems={context.defaultVehicleTabs.available}
     rightHeaderText="TIDY5E.Settings.DefaultSheetTabs.SelectedHeader"
-    bind:rightItems={$context.defaultVehicleTabs.selected}
+    bind:rightItems={context.defaultVehicleTabs.selected}
     labelProp="label"
     valueProp="id"
   >
@@ -45,7 +45,7 @@
         <button
           type="button"
           onclick={() =>
-            functions.resetDefaultTabs(context, CONSTANTS.SHEET_TYPE_VEHICLE)}
+            functions.resetDefaultTabs(CONSTANTS.SHEET_TYPE_VEHICLE)}
         >
           <i class="fas fa-rotate-right"></i>
           {localize('TIDY5E.Reset')}
@@ -55,14 +55,14 @@
   </ListboxSetting>
 
   <CheckboxSetting
-    bind:value={$context.settings.useVehicleEncumbranceBar}
+    bind:value={context.settings.useVehicleEncumbranceBar}
     name={SettingsProvider.settings.useVehicleEncumbranceBar.options.name}
     hint={SettingsProvider.settings.useVehicleEncumbranceBar.options.hint}
     id="useVehicleEncumbranceBar"
   />
 
   <CheckboxSetting
-    bind:value={$context.settings.useVehicleMotion}
+    bind:value={context.settings.useVehicleMotion}
     name={'TIDY5E.Settings.UseVehicleMotion.name'}
     hint={'TIDY5E.Settings.UseVehicleMotion.hint'}
     id="useVehicleMotion"

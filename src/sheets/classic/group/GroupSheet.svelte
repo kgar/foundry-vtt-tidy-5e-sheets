@@ -5,7 +5,7 @@
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import ActorProfile from '../actor/ActorProfile.svelte';
   import ActorMovement from '../actor/ActorMovement.svelte';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
@@ -23,9 +23,9 @@
 
 <AttachedInfoCard
   sheet={context.actor.sheet}
-  floating={$settingStore.itemCardsAreFloating}
-  delay={$settingStore.itemCardsDelay}
-  inspectKey={$settingStore.itemCardsFixKey}
+  floating={settings.itemCardsAreFloating}
+  delay={settings.itemCardsDelay}
+  inspectKey={settings.itemCardsFixKey}
 />
 
 <header class="tidy5e-sheet-header flex-row">
@@ -126,7 +126,7 @@
           type="button"
           class="group-action-button flex-row small-gap flex-grow-0 flex-basis-max-content"
           onclick={() => context.actor.sheet.award()}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+          tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fa-solid fa-trophy"></i>
           {localize('DND5E.Award.Action')}
@@ -135,7 +135,7 @@
           type="button"
           class="group-action-button flex-row small-gap flex-grow-0 flex-basis-max-content"
           onclick={() => context.actor.system.placeMembers()}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+          tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fa-solid fa-location-dot"></i>
           {localize('DND5E.Group.PlaceMembers')}
@@ -144,7 +144,7 @@
           type="button"
           class="group-action-button flex-row small-gap rest-button flex-grow-0 flex-basis-max-content"
           onclick={() => context.actor.shortRest({ advanceTime: true })}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+          tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fa-solid fa-utensils"></i>
           {localize('DND5E.ShortRest')}
@@ -153,7 +153,7 @@
           type="button"
           class="group-action-button flex-row small-gap rest-button flex-grow-0 flex-basis-max-content"
           onclick={() => context.actor.longRest({ advanceTime: true })}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+          tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fa-solid fa-campground"></i>
           {localize('DND5E.LongRest')}

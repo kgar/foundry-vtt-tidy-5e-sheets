@@ -1,9 +1,5 @@
 import type { Component } from 'svelte';
-import type {
-  ContainerContents,
-  Item5e,
-  ItemChatData,
-} from './item.types';
+import type { ContainerContents, Item5e, ItemChatData } from './item.types';
 import type {
   OnContentReadyParams,
   OnRenderParams,
@@ -14,7 +10,6 @@ import type {
   RegisteredPortraitMenuCommand,
 } from 'src/runtime/types';
 import type { DocumentFilters } from 'src/runtime/item/item.types';
-import type { Writable } from 'svelte/store';
 import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
 import type { CONSTANTS } from 'src/constants';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
@@ -50,9 +45,7 @@ export interface OnRenderTabParams extends OnRenderParams {
 }
 
 // TODO: Make this generic in such a way that correct props are actually required and that an array of tabs can have hetergeneity of component types without a crazy TS type
-export type Tab<
-  T extends Component = Component
-> = {
+export type Tab<T extends Component = Component> = {
   title: string;
   id: string;
   content: SvelteTabContent | HtmlTabContent;
@@ -231,7 +224,7 @@ export type CharacterItemContext = {
 export type ActivityItemContext = {
   id: string;
   activity: Activity5e;
-}
+};
 
 export type TypedEffectFavoriteSection = EffectFavoriteSection & {
   type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_EFFECT;
@@ -489,7 +482,7 @@ export type SortModeAlphabetical = 'a';
 export type SortModeManual = 'm';
 export type SortMode = SortModeAlphabetical | SortModeManual;
 
-export type MessageBus = Writable<MessageBusMessage | undefined>;
+export type MessageBus = MessageBusMessage | undefined;
 
 export type MessageBusMessage =
   | { tabId: string; message: typeof CONSTANTS.MESSAGE_BUS_EXPAND_ALL }

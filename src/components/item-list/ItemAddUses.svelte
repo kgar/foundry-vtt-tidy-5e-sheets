@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
 
   interface Props {
     item: any;
@@ -21,7 +21,7 @@
   class="item-add-uses item-list-button"
   onclick={() => onAddUses()}
   disabled={!item.isOwner}
-  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+  tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
 >
   Add
 </button>

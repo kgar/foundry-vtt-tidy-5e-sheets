@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
 
@@ -38,7 +38,7 @@
       title={localize('DND5E.MovementConfig')}
       onclick={() =>
         FoundryAdapter.renderMovementSensesConfig(context.actor, 'movement')}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+      tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
       ><i class="fas fa-cog"></i></button
     >
   {/if}

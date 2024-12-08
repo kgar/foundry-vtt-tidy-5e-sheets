@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Item5e } from 'src/types/item.types';
   import type { Activity5e } from 'src/foundry/dnd5e.types';
-  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
@@ -13,7 +13,7 @@
 
   let { item = null, inlineToggleService }: Props = $props();
 
-  let inlineToggleServiceStore = $derived(inlineToggleService.store);
+  let toggleServiceMap = $derived(inlineToggleService.map);
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
@@ -40,7 +40,7 @@
 </script>
 
 <ExpandableContainer
-  expanded={$inlineToggleServiceStore.get(tabId)?.has(item.id) === true}
+  expanded={toggleServiceMap.get(tabId)?.has(item.id) === true}
 >
   Activities List Here! 💪🏋️‍♂️
 </ExpandableContainer>

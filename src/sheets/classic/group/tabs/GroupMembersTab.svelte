@@ -1,7 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { getContext, setContext } from 'svelte';
-  import { writable } from 'svelte/store';
   import GroupMemberList from '../parts/GroupMemberList.svelte';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
@@ -15,6 +14,10 @@
   import UnderlinedTabStrip from 'src/components/tabs/UnderlinedTabStrip.svelte';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { getGroupSheetClassicContext } from 'src/sheets/sheet-context.svelte';
+  import {
+    createSearchResultsState,
+    setSearchResultsContext,
+  } from 'src/features/search/search.svelte';
 
   const tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
@@ -28,11 +31,12 @@
     context.utilities[tabId]?.utilityToolbarCommands ?? [],
   );
 
-  const memberActorIdsToShow = writable<Set<string> | undefined>(undefined);
-  setContext(CONSTANTS.SVELTE_CONTEXT.MEMBER_IDS_TO_SHOW, memberActorIdsToShow);
+  // kgar-migration-task - does it work? If not, then pursue an object with getter / setter or similar
+  let searchResults = createSearchResultsState();
+  setSearchResultsContext(searchResults);
 
   $effect(() => {
-    $memberActorIdsToShow = FoundryAdapter.searchActors(
+    searchResults.uuids = FoundryAdapter.searchActors(
       searchCriteria,
       context.system.members.map((m) => m.actor),
     );

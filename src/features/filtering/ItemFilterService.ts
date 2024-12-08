@@ -3,7 +3,6 @@ import type { DocumentFilters, ItemFilter } from 'src/runtime/item/item.types';
 import type { Item5e } from 'src/types/item.types';
 import { isNil } from 'src/utils/data';
 import { debug, error } from 'src/utils/logging';
-import { writable, type Readable, type Writable } from 'svelte/store';
 
 /*
 // Filter Data
@@ -32,18 +31,11 @@ export class ItemFilterService {
   // Maybe svelte runes will make this easier?
   private _filterData: ItemFilterData;
 
-  private _filterDataStore: Writable<ItemFilterData>;
-
   private _document: any;
-
-  get filterData$(): Readable<ItemFilterData> {
-    return this._filterDataStore;
-  }
 
   // TODO: Have sheets send in what they have in session storage upon construction
   constructor(filterData: ItemFilterData = {}, document: any) {
-    this._filterData = filterData;
-    this._filterDataStore = writable(this._filterData);
+    this._filterData = $state(filterData);
     this._document = document;
   }
 
@@ -87,18 +79,14 @@ export class ItemFilterService {
     filterName: ItemFilterName,
     value: boolean | null
   ) {
-    try {
-      let group = this._getGroup(filterGroup);
+    let group = this._getGroup(filterGroup);
 
-      if (value === null) {
-        delete group[filterName];
-        return;
-      }
-
-      group[filterName] = value;
-    } finally {
-      this._notifyOfChange();
+    if (value === null) {
+      delete group[filterName];
+      return;
     }
+
+    group[filterName] = value;
   }
 
   onFilterClearAll(filterGroup?: ItemFilterGroupName) {
@@ -107,8 +95,6 @@ export class ItemFilterService {
     } else {
       this._filterData = {};
     }
-
-    this._notifyOfChange();
   }
 
   private _getGroup(filterGroup: ItemFilterGroupName) {
@@ -119,10 +105,6 @@ export class ItemFilterService {
     }
 
     return group;
-  }
-
-  private _notifyOfChange() {
-    this._filterDataStore.set(this._filterData);
   }
 
   getDocumentItemFilterData(): DocumentFilters {
@@ -162,5 +144,9 @@ export class ItemFilterService {
     }
 
     return documentItemFilterData;
+  }
+
+  get filterData() {
+    return this._filterData;
   }
 }

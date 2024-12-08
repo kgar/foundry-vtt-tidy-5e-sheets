@@ -1,14 +1,12 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import NumberInput from '../inputs/NumberInput.svelte';
   import Select from '../inputs/Select.svelte';
   import TabFooter from 'src/sheets/classic/actor/TabFooter.svelte';
-  import { MaxPreparedSpellsConfigFormApplication } from 'src/applications/max-prepared-spells-config/MaxPreparedSpellsConfigFormApplication';
+  import { MaxPreparedSpellsConfigFormApplication } from 'src/applications/max-prepared-spells-config/MaxPreparedSpellsConfigFormApplication.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { rollRawSpellAttack } from 'src/utils/formula';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
@@ -60,7 +58,7 @@
                 context.spellcastingInfo.currentFilteredClass?.system
                   ?.spellcasting?.ability,
               )}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
             data-tooltip="{FoundryAdapter.localize(
               'TIDY5E.RangedSpellAttackMod',
             )}: {context.spellcastingInfo.calculations.rangedTooltip}"
@@ -87,7 +85,7 @@
                 context.spellcastingInfo.currentFilteredClass?.system
                   ?.spellcasting?.ability,
               )}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
             data-tooltip="{FoundryAdapter.localize(
               'TIDY5E.MeleeSpellAttackMod',
             )}: {context.spellcastingInfo.calculations.meleeTooltip}"
@@ -115,7 +113,7 @@
                 context.spellcastingInfo.currentFilteredClass?.system
                   ?.spellcasting?.ability,
               )}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
             data-tooltip="{FoundryAdapter.localize(
               'TIDY5E.SpellAttackMod',
             )}: {context.spellcastingInfo.calculations.rangedTooltip}"
@@ -146,7 +144,7 @@
         ).render(true)}
       title={localize('TIDY5E.MaxPreparedSpellsConfig.ButtonTooltip')}
       disabled={!context.editable || context.lockSensitiveFields}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+      tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <p>{localize('TIDY5E.PreparedSpells')}</p>
       <span class="spells-prepared"

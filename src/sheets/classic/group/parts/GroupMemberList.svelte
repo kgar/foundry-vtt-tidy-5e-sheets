@@ -3,13 +3,13 @@
   import GroupMemberListItem from './GroupMemberListItem.svelte';
   import { getContext } from 'svelte';
   import type { GroupMemberSection } from 'src/types/group.types';
-  import type { Readable } from 'svelte/store';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TidyTable from 'src/components/table/TidyTable.svelte';
   import TidyTableHeaderRow from 'src/components/table/TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from 'src/components/table/TidyTableHeaderCell.svelte';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import { getGroupSheetClassicContext } from 'src/sheets/sheet-context.svelte';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
 
   interface Props {
     section: GroupMemberSection;
@@ -17,9 +17,7 @@
 
   let { section }: Props = $props();
 
-  const memberActorIdsToShow = getContext<Readable<Set<string> | undefined>>(
-    CONSTANTS.SVELTE_CONTEXT.MEMBER_IDS_TO_SHOW,
-  );
+  const searchResults = getSearchResultsContext();
 
   const context = getGroupSheetClassicContext();
 
@@ -37,7 +35,7 @@
   {#snippet body()}
     <div class="flex-column small-gap mt-2">
       {#each section.members as member, index (member.uuid)}
-        {#if $memberActorIdsToShow === undefined || $memberActorIdsToShow.has(member.id)}
+        {#if searchResults.show(member.uuid)}
           <GroupMemberListItem
             {member}
             ctx={context.memberContext[member.id]}

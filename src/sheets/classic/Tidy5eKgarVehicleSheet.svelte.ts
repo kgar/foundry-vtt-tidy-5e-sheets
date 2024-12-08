@@ -1,6 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { SettingsProvider, settingStore } from 'src/settings/settings.svelte';
+import { SettingsProvider, settings } from 'src/settings/settings.svelte';
 import type {
   SheetExpandedItemsCacheable,
   SheetStats,
@@ -9,7 +9,6 @@ import type {
   ExpandedItemIdToLocationsMap,
   VehicleSheetContext,
   Utilities,
-  MessageBus,
   MessageBusMessage,
   SearchFilterCacheable,
   VehicleCargoSection,
@@ -18,7 +17,6 @@ import type {
   VehicleItemContext,
   ActivityItemContext,
 } from 'src/types/types';
-import { writable } from 'svelte/store';
 import VehicleSheet from './vehicle/VehicleSheet.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import {
@@ -27,7 +25,7 @@ import {
   applyTitleToWindow,
   blurUntabbableButtonsOnClick,
   maintainCustomContentInputFocus,
-} from 'src/utils/applications';
+} from 'src/utils/applications.svelte';
 import { mount, unmount } from 'svelte';
 import { debug } from 'src/utils/logging';
 import { getPercentage } from 'src/utils/numbers';
@@ -43,7 +41,6 @@ import { getBaseActorSheet5e } from 'src/utils/class-inheritance';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
-import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
 import { AsyncMutex } from 'src/utils/mutex';
@@ -53,7 +50,7 @@ import { DocumentTabSectionConfigApplication } from 'src/applications/section-co
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { Container } from 'src/features/containers/Container';
 import { Activities } from 'src/features/activities/activities';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
@@ -66,7 +63,7 @@ export class Tidy5eVehicleSheet
     SearchFilterCacheable
 {
   context = $state<VehicleSheetContext>();
-  stats = writable<SheetStats>({
+  stats = $state<SheetStats>({
     lastSubmissionTime: null,
   });
   currentTabId: string;
@@ -74,14 +71,11 @@ export class Tidy5eVehicleSheet
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   inlineToggleService = new InlineToggleService();
   itemTableTogglesCache: ItemTableToggleCacheService;
-  subscriptionsService: StoreSubscriptionsService;
   itemFilterService: ItemFilterService;
-  messageBus: MessageBus = writable<MessageBusMessage | undefined>();
+  messageBus = $state<MessageBusMessage | undefined>();
 
   constructor(...args: any[]) {
     super(...args);
-
-    this.subscriptionsService = new StoreSubscriptionsService();
 
     this.itemTableTogglesCache = new ItemTableToggleCacheService({
       userId: game.user.id,
@@ -117,31 +111,40 @@ export class Tidy5eVehicleSheet
   }
 
   component: Record<string, any> | undefined;
+  _effectCleanup?: () => void;
   activateListeners(html: { get: (index: 0) => HTMLElement }) {
     // Document Apps Reactivity
     game.user.apps[this.id] = this;
 
-    // Subscriptions
+    // Sheet effects
     let first = true;
-    this.subscriptionsService.unsubscribeAll();
-    this.subscriptionsService.registerSubscriptions(
-      this.itemFilterService.filterData$.subscribe(() => {
-        if (first) return;
+
+    this._effectCleanup = $effect.root(() => {
+      $effect(() => {
+        this.itemFilterService.filterData;
+
+        if (first) {
+          return;
+        }
+
         this.render();
-      }),
-      settingStore.subscribe((s) => {
+      });
+
+      $effect(() => {
         if (first) return;
-        applyMutableSettingAttributesToWindow(s, this.element.get(0));
+        applyMutableSettingAttributesToWindow(settings, this.element.get(0));
         this.render();
-      }),
-      this.messageBus.subscribe((m) => {
+      });
+
+      $effect(() => {
         debug('Message bus message received', {
           app: this,
           actor: this.actor,
-          message: m,
+          message: this.messageBus,
         });
-      })
-    );
+      });
+    });
+
     first = false;
 
     const node = html.get(0);
@@ -263,7 +266,7 @@ export class Tidy5eVehicleSheet
             iconClass: 'fas fa-angles-down',
             execute: () =>
               // TODO: Use app.messageBus
-              this.messageBus.set({
+              (this.messageBus = {
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
                 message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
@@ -273,7 +276,7 @@ export class Tidy5eVehicleSheet
             iconClass: 'fas fa-angles-up',
             execute: () =>
               // TODO: Use app.messageBus
-              this.messageBus.set({
+              (this.messageBus = {
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
@@ -812,18 +815,15 @@ export class Tidy5eVehicleSheet
   }
 
   close(options: unknown = {}) {
+    this._effectCleanup?.();
     this._destroySvelteComponent();
-    this.subscriptionsService.unsubscribeAll();
     delete game.user.apps[this.id];
     return super.close(options);
   }
 
   async _onSubmit(...args: any[]) {
     await super._onSubmit(...args);
-    this.stats.update((stats) => {
-      stats.lastSubmissionTime = new Date();
-      return stats;
-    });
+    this.stats.lastSubmissionTime = new Date();
   }
 
   _disableFields(...args: any[]) {

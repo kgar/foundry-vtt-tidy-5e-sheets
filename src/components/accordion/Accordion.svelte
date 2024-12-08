@@ -1,10 +1,10 @@
 <script module lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { setContext, type Snippet } from 'svelte';
-  import { writable, type Writable } from 'svelte/store';
 
   export interface AccordionCtxType {
-    selected?: Writable<object>;
+    selected: string;
+    multiple: boolean;
   }
 </script>
 
@@ -17,10 +17,12 @@
 
   let { multiple = false, children, ...rest }: Props = $props();
 
-  $effect(() => {
-    setContext<AccordionCtxType>(CONSTANTS.SVELTE_CONTEXT.ACCORDION_CONTEXT, {
-      selected: multiple ? undefined : writable(),
-    });
+  let selected = $state<string>('');
+
+  // kgar-migration-task - check this, verify it in the docs, and if it works, then suppress the warning
+  setContext<AccordionCtxType>(CONSTANTS.SVELTE_CONTEXT.ACCORDION_CONTEXT, {
+    selected: selected,
+    multiple: multiple,
   });
 </script>
 

@@ -1,10 +1,9 @@
 import { FoundryAdapter } from '../../foundry/foundry-adapter';
 import CharacterSheet from './character/CharacterSheet.svelte';
 import { debug, warn } from 'src/utils/logging';
-import { SettingsProvider, settingStore } from 'src/settings/settings.svelte';
+import { SettingsProvider, settings } from 'src/settings/settings.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { CONSTANTS } from 'src/constants';
-import { writable } from 'svelte/store';
 import {
   type CharacterSheetContext,
   type SheetStats,
@@ -38,7 +37,7 @@ import {
   applyTitleToWindow,
   blurUntabbableButtonsOnClick,
   maintainCustomContentInputFocus,
-} from 'src/utils/applications';
+} from 'src/utils/applications.svelte';
 import { mount, unmount } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
@@ -53,7 +52,6 @@ import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
-import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { AsyncMutex } from 'src/utils/mutex';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
@@ -72,7 +70,7 @@ import type {
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { Container } from 'src/features/containers/Container';
-import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import { Activities } from 'src/features/activities/activities';
@@ -89,7 +87,7 @@ export class Tidy5eCharacterSheet
 {
   context = $state<CharacterSheetContext>();
 
-  stats = writable<SheetStats>({
+  stats = $state<SheetStats>({
     lastSubmissionTime: null,
   });
   currentTabId: string;
@@ -99,8 +97,7 @@ export class Tidy5eCharacterSheet
   inlineToggleService = new InlineToggleService();
   itemTableTogglesCache: ItemTableToggleCacheService;
   itemFilterService: ItemFilterService;
-  subscriptionsService: StoreSubscriptionsService;
-  messageBus: MessageBus = writable<MessageBusMessage | undefined>();
+  messageBus = $state<MessageBusMessage | undefined>();
 
   /**
    * The cached concentration information for the character.
@@ -114,8 +111,6 @@ export class Tidy5eCharacterSheet
 
   constructor(...args: any[]) {
     super(...args);
-
-    this.subscriptionsService = new StoreSubscriptionsService();
 
     this.itemTableTogglesCache = new ItemTableToggleCacheService({
       userId: game.user.id,
@@ -149,31 +144,39 @@ export class Tidy5eCharacterSheet
   }
 
   component: Record<string, any> | undefined;
+  _effectCleanup?: () => void;
   activateListeners(html: { get: (index: 0) => HTMLElement }) {
     // Document Apps Reactivity
     game.user.apps[this.id] = this;
 
-    // Subscriptions
     let first = true;
-    this.subscriptionsService.unsubscribeAll();
-    this.subscriptionsService.registerSubscriptions(
-      this.itemFilterService.filterData$.subscribe(() => {
-        if (first) return;
+
+    this._effectCleanup = $effect.root(() => {
+      $effect(() => {
+        this.itemFilterService.filterData;
+
+        if (first) {
+          return;
+        }
+
         this.render();
-      }),
-      settingStore.subscribe((s) => {
+      });
+
+      $effect(() => {
         if (first) return;
-        applyMutableSettingAttributesToWindow(s, this.element.get(0));
+        applyMutableSettingAttributesToWindow(settings, this.element.get(0));
         this.render();
-      }),
-      this.messageBus.subscribe((m) => {
+      });
+
+      $effect(() => {
         debug('Message bus message received', {
           app: this,
           actor: this.actor,
-          message: m,
+          message: this.messageBus,
         });
-      })
-    );
+      });
+    });
+
     first = false;
 
     const node = html.get(0);
@@ -366,7 +369,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fas fa-angles-down',
             execute: () =>
               // TODO: Use app.messageBus
-              this.messageBus.set({
+              (this.messageBus = {
                 tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
                 message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
@@ -376,7 +379,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fas fa-angles-up',
             execute: () =>
               // TODO: Use app.messageBus
-              this.messageBus.set({
+              (this.messageBus = {
                 tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
@@ -453,7 +456,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fas fa-angles-down',
             execute: () =>
               // TODO: Use app.messageBus
-              this.messageBus.set({
+              (this.messageBus = {
                 tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
@@ -463,7 +466,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fas fa-angles-up',
             execute: () =>
               // TODO: Use app.messageBus
-              this.messageBus.set({
+              (this.messageBus = {
                 tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
@@ -564,7 +567,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fas fa-angles-down',
             execute: () =>
               // TODO: Use app.messageBus
-              this.messageBus.set({
+              (this.messageBus = {
                 tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
                 message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
@@ -574,7 +577,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fas fa-angles-up',
             execute: () =>
               // TODO: Use app.messageBus
-              this.messageBus.set({
+              (this.messageBus = {
                 tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
@@ -646,7 +649,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fas fa-angles-down',
             execute: () =>
               // TODO: Use app.messageBus
-              this.messageBus.set({
+              (this.messageBus = {
                 tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
                 message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
@@ -656,7 +659,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fas fa-angles-up',
             execute: () =>
               // TODO: Use app.messageBus
-              this.messageBus.set({
+              (this.messageBus = {
                 tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
@@ -712,7 +715,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fas fa-angles-down',
             execute: () =>
               // TODO: Use app.messageBus
-              this.messageBus.set({
+              (this.messageBus = {
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
                 message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
@@ -722,7 +725,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fas fa-angles-up',
             execute: () =>
               // TODO: Use app.messageBus
-              this.messageBus.set({
+              (this.messageBus = {
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
@@ -1572,8 +1575,8 @@ export class Tidy5eCharacterSheet
   }
 
   close(options: unknown = {}) {
+    this._effectCleanup?.();
     this._destroySvelteComponent();
-    this.subscriptionsService.unsubscribeAll();
     delete game.user.apps[this.id];
     return super.close(options);
   }
@@ -1584,10 +1587,7 @@ export class Tidy5eCharacterSheet
 
   async _onSubmit(...args: any[]) {
     await super._onSubmit(...args);
-    this.stats.update((stats) => {
-      stats.lastSubmissionTime = new Date();
-      return stats;
-    });
+    this.stats.lastSubmissionTime = new Date();
   }
 
   /**

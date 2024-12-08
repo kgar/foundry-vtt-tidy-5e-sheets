@@ -1,6 +1,5 @@
 import { mount } from 'svelte';
 import ActorOriginSummaryConfig from './ActorOriginSummaryConfig.svelte';
-import { get, writable, type Writable } from 'svelte/store';
 import type { Actor5e } from 'src/types/types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { CONSTANTS } from 'src/constants';
@@ -20,7 +19,7 @@ export type ActorOriginSummaryContext = {
 };
 
 export default class ActorOriginSummaryConfigFormApplication extends SvelteFormApplicationBase {
-  context: Writable<ActorOriginSummaryContext | null> = writable(null);
+  context = $state<ActorOriginSummaryContext>();
   actor: Actor5e;
   actorHook: number | undefined;
 
@@ -30,7 +29,7 @@ export default class ActorOriginSummaryConfigFormApplication extends SvelteFormA
   }
 
   createComponent(node: HTMLElement): Record<string, any> {
-    this.context.set(this.getData());
+    this.context = this.getData();
 
     return mount(ActorOriginSummaryConfig, {
       target: node,
@@ -92,7 +91,7 @@ export default class ActorOriginSummaryConfigFormApplication extends SvelteFormA
   }
 
   refreshContext() {
-    this.context.set(this.getData());
+    this.context = this.getData();
   }
 
   close(options?: unknown) {
@@ -102,33 +101,32 @@ export default class ActorOriginSummaryConfigFormApplication extends SvelteFormA
   }
 
   async save() {
-    const context = get(this.context);
-    if (!context) {
+    if (!this.context) {
       error('Unable to save data due to an error.', true);
       console.error(
         'Unable to save Actor Origin Summary Config because the context is unexpectedly null.',
         this.actor,
-        context
+        this.context
       );
       return;
     }
 
-    if (context.isCharacter) {
+    if (this.context.isCharacter) {
       const update: Record<string, any> = {
-        'system.details.alignment': context.alignment,
+        'system.details.alignment': this.context.alignment,
       };
-      if (context.canEditBackground) {
-        update['system.details.background'] = context.background;
+      if (this.context.canEditBackground) {
+        update['system.details.background'] = this.context.background;
       }
       await this.actor.update(update);
-    } else if (context.isNpc) {
+    } else if (this.context.isNpc) {
       await this.actor.update({
-        'system.details.environment': context.environment,
-        'system.details.alignment': context.alignment,
+        'system.details.environment': this.context.environment,
+        'system.details.alignment': this.context.alignment,
       });
-    } else if (context.isVehicle) {
+    } else if (this.context.isVehicle) {
       await this.actor.update({
-        'system.traits.dimensions': context.dimensions,
+        'system.traits.dimensions': this.context.dimensions,
       });
     }
     this.close();

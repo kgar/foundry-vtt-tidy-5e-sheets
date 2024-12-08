@@ -31,8 +31,8 @@
   style:flex-basis={baseWidth}
   {title}
 >
-  {#if primary && $expandState.toggleable}
-    <TidyTableToggleIcon expanded={$expandState.expanded} />
+  {#if primary && expandState?.toggleable}
+    <TidyTableToggleIcon expanded={expandState.expanded} />
   {/if}
   {@render children?.()}
 </div>

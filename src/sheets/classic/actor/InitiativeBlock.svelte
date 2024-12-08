@@ -5,7 +5,7 @@
   import BlockScore from './BlockScore.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
-  import { settingStore } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
@@ -51,7 +51,7 @@
       class="config-button icon-button"
       title={localize('DND5E.InitiativeConfig')}
       onclick={() => FoundryAdapter.renderInitiativeConfig(context.actor)}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+      tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fas fa-cog"></i>
     </button>
