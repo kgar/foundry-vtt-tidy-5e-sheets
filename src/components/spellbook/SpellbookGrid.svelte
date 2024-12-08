@@ -84,10 +84,7 @@
       <div class="spells">
         {#each spells as spell}
           {@const ctx = context.itemContext[spell.id]}
-          {@const spellImgUrl = FoundryAdapter.getSpellImageUrl(
-            context,
-            spell,
-          )}
+          {@const spellImgUrl = FoundryAdapter.getSpellImageUrl(context, spell)}
           {@const hidden = !searchResultContext.show(spell.uuid)}
           <a
             class="spell {FoundryAdapter.getSpellRowClasses(spell)}"
@@ -106,7 +103,7 @@
             draggable={true}
             data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
             data-item-id={spell.id}
-            tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
             data-tidy-grid-item
             data-info-card={spell ? 'item' : null}
             data-info-card-entity-uuid={spell?.uuid ?? null}
@@ -143,7 +140,7 @@
                   FoundryAdapter.createItem(section.dataset, context.actor);
                 }}
                 data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_CREATE_COMMAND}
-                tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+                tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
               >
                 <i class="fas fa-plus-circle"></i>
               </button>
@@ -159,7 +156,7 @@
                     actor: context.actor,
                   })}
                 title={localize(command.tooltip ?? '')}
-                tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+                tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
               >
                 {#if (command.iconClass ?? '') !== ''}
                   <i class={command.iconClass}></i>

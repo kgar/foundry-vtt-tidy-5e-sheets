@@ -83,7 +83,7 @@
       class="item-list-footer-button"
       onclick={(ev) => command.execute?.({ section, event: ev, actor: actor })}
       title={localize(command.tooltip ?? '')}
-      tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+      tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
     >
       {#if (command.iconClass ?? '') !== ''}
         <i class={command.iconClass}></i>

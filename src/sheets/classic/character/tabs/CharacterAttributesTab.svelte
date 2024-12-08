@@ -61,20 +61,20 @@
     <section class="side-panel">
       <SkillsList
         actor={context.actor}
-        toggleable={settings.toggleEmptyCharacterSkills}
+        toggleable={settings.value.toggleEmptyCharacterSkills}
         expanded={!!TidyFlags.skillsExpanded.get(context.actor)}
         toggleField={TidyFlags.skillsExpanded.prop}
       />
-      {#if !settings.moveTraitsBelowCharacterResources}
-        <Traits toggleable={settings.toggleEmptyCharacterTraits} />
+      {#if !settings.value.moveTraitsBelowCharacterResources}
+        <Traits toggleable={settings.value.toggleEmptyCharacterTraits} />
       {/if}
     </section>
     <section class="main-panel">
       {#if showResources}
         <Resources />
       {/if}
-      {#if settings.moveTraitsBelowCharacterResources}
-        <Traits toggleable={settings.toggleEmptyCharacterTraits} />
+      {#if settings.value.moveTraitsBelowCharacterResources}
+        <Traits toggleable={settings.value.toggleEmptyCharacterTraits} />
       {/if}
       <Favorites {searchCriteria} />
     </section>

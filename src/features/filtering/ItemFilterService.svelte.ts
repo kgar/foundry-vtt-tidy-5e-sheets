@@ -29,13 +29,13 @@ type ItemFilterData = Record<ItemFilterGroupName, ItemFilters>;
 
 export class ItemFilterService {
   // Maybe svelte runes will make this easier?
-  private _filterData: ItemFilterData;
+  private _filterData = $state<ItemFilterData>()!;
 
   private _document: any;
 
   // TODO: Have sheets send in what they have in session storage upon construction
   constructor(filterData: ItemFilterData = {}, document: any) {
-    this._filterData = $state(filterData);
+    this._filterData = filterData;
     this._document = document;
   }
 

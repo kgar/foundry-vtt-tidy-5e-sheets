@@ -15,7 +15,7 @@
   title={localize('DND5E.SpellSlotsConfig')}
   aria-label={localize('DND5E.SpellSlotsConfig')}
   onclick={() => FoundryAdapter.openSpellSlotsConfig(context.actor)}
-  tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+  tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
 >
   <i class="fas fa-pencil"></i>
 </button>

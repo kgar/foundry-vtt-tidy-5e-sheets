@@ -27,8 +27,8 @@
   }
 </script>
 
-<ActorProfile useHpOverlay={settings.useHpOverlay}>
-  {#if incapacitated && (!settings.hideDeathSavesFromPlayers || FoundryAdapter.userIsGm())}
+<ActorProfile useHpOverlay={settings.value.useHpOverlay}>
+  {#if incapacitated && (!settings.value.hideDeathSavesFromPlayers || FoundryAdapter.userIsGm())}
     <DeathSaves
       successes={context.system.attributes.death.success}
       failures={context.system.attributes.death.failure}
@@ -39,31 +39,31 @@
           event: event,
           legacy: false,
         })}
-      hasHpOverlay={settings.useHpOverlay}
+      hasHpOverlay={settings.value.useHpOverlay}
     />
   {/if}
 
-  {#if settings.useExhaustion && settings.exhaustionConfig.type === 'specific'}
+  {#if settings.value.useExhaustion && settings.value.exhaustionConfig.type === 'specific'}
     <ExhaustionTracker
       level={context.system.attributes.exhaustion}
       radiusClass={context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       {onLevelSelected}
-      onlyShowOnHover={settings.showExhaustionOnHover ||
-        (settings.hideIfZero &&
+      onlyShowOnHover={settings.value.showExhaustionOnHover ||
+        (settings.value.hideIfZero &&
           context.system.attributes.exhaustion === 0)}
-      exhaustionConfig={settings.exhaustionConfig}
+      exhaustionConfig={settings.value.exhaustionConfig}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
         context.actor,
         'system.attributes.exhaustion',
       )}
     />
-  {:else if settings.useExhaustion && settings.exhaustionConfig.type === 'open'}
+  {:else if settings.value.useExhaustion && settings.value.exhaustionConfig.type === 'open'}
     <ExhaustionInput
       level={context.system.attributes.exhaustion}
       radiusClass={context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       {onLevelSelected}
-      onlyShowOnHover={settings.showExhaustionOnHover ||
-        (settings.hideIfZero &&
+      onlyShowOnHover={settings.value.showExhaustionOnHover ||
+        (settings.value.hideIfZero &&
           context.system.attributes.exhaustion === 0)}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
         context.actor,
@@ -72,14 +72,14 @@
     />
   {/if}
 
-  {#if settings.useCharacterInspiration}
+  {#if settings.value.useCharacterInspiration}
     <Inspiration
       inspired={context.actor.system.attributes.inspiration}
       radiusClass={context.useRoundedPortraitStyle ? 'rounded' : 'top-right'}
-      onlyShowOnHover={settings.showInspirationOnHover ||
-        (settings.hideIfZero &&
+      onlyShowOnHover={settings.value.showInspirationOnHover ||
+        (settings.value.hideIfZero &&
           !context.actor.system.attributes.inspiration)}
-      animate={settings.animateInspiration}
+      animate={settings.value.animateInspiration}
     />
   {/if}
 

@@ -48,7 +48,7 @@
             class="inline-icon-button"
             onclick={() => toggleAdvancementLock(context.item)}
             title={localize('DND5E.AdvancementConfigurationActionDisable')}
-            tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
           >
             {#if context.advancementEditable}
               <i class="fas fa-lock-open"></i>
@@ -69,7 +69,7 @@
             aria-label={localize('DND5E.AdvancementControlCreate')}
             onclick={() =>
               FoundryAdapter.createAdvancementSelectionDialog(context.item)}
-            tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-plus"></i>
             {localize('DND5E.Add')}
@@ -100,7 +100,7 @@
             class="inline-transparent-button"
             onclick={() =>
               FoundryAdapter.modifyAdvancementChoices(level, context.item)}
-            tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
           >
             {localize('DND5E.AdvancementModifyChoices')}
           </button>
@@ -162,7 +162,7 @@
                 aria-label={localize('DND5E.AdvancementControlEdit')}
                 onclick={() =>
                   FoundryAdapter.editAdvancement(advancement.id, context.item)}
-                tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+                tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
               >
                 <i class="fas fa-edit"></i>
               </button>
@@ -176,7 +176,7 @@
                     advancement.id,
                     context.item,
                   )}
-                tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+                tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
               >
                 <i class="fas fa-trash"></i>
               </button>

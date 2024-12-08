@@ -46,7 +46,7 @@
       type="button"
       onclick={() => toggle()}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.EXPANSION_TOGGLE}
-      tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+      tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <span class="accordion-arrow" class:open
         ><i class="fas fa-chevron-right"></i></span

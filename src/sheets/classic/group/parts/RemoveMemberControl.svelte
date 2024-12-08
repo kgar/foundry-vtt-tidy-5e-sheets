@@ -20,7 +20,7 @@
   class="inline-icon-button"
   onclick={() => context.actor.system.removeMember(member.id)}
   title={localize('TIDY5E.Group.RemoveMemberFromGroup')}
-  tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+  tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
 >
   <i class="fas fa-xmark"></i>
 </button>

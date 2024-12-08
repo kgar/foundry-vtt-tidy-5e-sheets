@@ -46,7 +46,7 @@
       class="trait-label-and-list"
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTOR_TRAIT_DETAILS}
     >
-      {#if settings.showTraitLabels}
+      {#if settings.value.showTraitLabels}
         <span class="trait-label">{title}</span>
       {/if}
       {@render children?.()}
@@ -61,7 +61,7 @@
           event.stopPropagation();
           onConfigureClicked?.(event);
         }}
-        tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+        tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
       >
         <i class="fas fa-pencil-alt"></i>
       </button>

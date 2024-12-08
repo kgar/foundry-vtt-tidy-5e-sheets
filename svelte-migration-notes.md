@@ -1,7 +1,6 @@
 ## To Do
 
-- [ ] Replace stores with runes
-- [ ] Convert sheet subscriptions to sheet effects and test sheet effects
+- [x] Convert sheet subscriptions to sheet effects and test sheet effects
 - [ ] Resolve runtime errors related to section/item deferred prep.
 - [ ] Finish more migration tasks that came from recent work
 - [ ] Ensure context API where reactivity is expected is using runes
@@ -181,3 +180,4 @@ Cry.
 - [x] Fix: Item sheets are not showing selected tabs
 - [x] Fix: Theme Settings, lots and lots of warnings
 - [x] Fix: Make Coloris' theme mode match Tidy's
+- [x] Replace stores with runes

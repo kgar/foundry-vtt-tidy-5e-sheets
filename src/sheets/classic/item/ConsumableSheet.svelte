@@ -23,9 +23,9 @@
 
 <AttachedInfoCard
   sheet={context.item.sheet}
-  floating={settings.itemCardsAreFloating}
-  delay={settings.itemCardsDelay}
-  inspectKey={settings.itemCardsFixKey}
+  floating={settings.value.itemCardsAreFloating}
+  delay={settings.value.itemCardsDelay}
+  inspectKey={settings.value.itemCardsFixKey}
 />
 
 <header class="sheet-header flexrow gap">

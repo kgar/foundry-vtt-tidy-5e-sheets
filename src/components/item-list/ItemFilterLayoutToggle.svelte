@@ -34,7 +34,7 @@
       class="icon-button"
       title={toggleButtonPresentation?.title}
       onclick={() => onToggle?.()}
-      tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+      tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class={toggleButtonPresentation?.iconClass}></i>
     </button>

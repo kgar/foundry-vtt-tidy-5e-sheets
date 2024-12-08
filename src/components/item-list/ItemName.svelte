@@ -28,7 +28,7 @@
 <!-- TODO: Make this an anchor -->
 <span
   role="button"
-  tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+  tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
   onclick={(ev) => onToggle?.(ev)}
   class="item-name truncate {cssClass}"
   class:has-children={hasChildren}
@@ -37,7 +37,7 @@
 >
   {@render children?.()}
 </span>
-{#if useActiveEffectsMarker && settings.showActiveEffectsMarker && hasActiveEffects}
+{#if useActiveEffectsMarker && settings.value.showActiveEffectsMarker && hasActiveEffects}
   <ActiveEffectsMarker />
 {/if}
 

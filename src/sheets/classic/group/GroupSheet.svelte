@@ -23,9 +23,9 @@
 
 <AttachedInfoCard
   sheet={context.actor.sheet}
-  floating={settings.itemCardsAreFloating}
-  delay={settings.itemCardsDelay}
-  inspectKey={settings.itemCardsFixKey}
+  floating={settings.value.itemCardsAreFloating}
+  delay={settings.value.itemCardsDelay}
+  inspectKey={settings.value.itemCardsFixKey}
 />
 
 <header class="tidy5e-sheet-header flex-row">
@@ -126,7 +126,7 @@
           type="button"
           class="group-action-button flex-row small-gap flex-grow-0 flex-basis-max-content"
           onclick={() => context.actor.sheet.award()}
-          tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+          tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fa-solid fa-trophy"></i>
           {localize('DND5E.Award.Action')}
@@ -135,7 +135,7 @@
           type="button"
           class="group-action-button flex-row small-gap flex-grow-0 flex-basis-max-content"
           onclick={() => context.actor.system.placeMembers()}
-          tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+          tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fa-solid fa-location-dot"></i>
           {localize('DND5E.Group.PlaceMembers')}
@@ -144,7 +144,7 @@
           type="button"
           class="group-action-button flex-row small-gap rest-button flex-grow-0 flex-basis-max-content"
           onclick={() => context.actor.shortRest({ advanceTime: true })}
-          tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+          tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fa-solid fa-utensils"></i>
           {localize('DND5E.ShortRest')}
@@ -153,7 +153,7 @@
           type="button"
           class="group-action-button flex-row small-gap rest-button flex-grow-0 flex-basis-max-content"
           onclick={() => context.actor.longRest({ advanceTime: true })}
-          tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+          tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fa-solid fa-campground"></i>
           {localize('DND5E.LongRest')}

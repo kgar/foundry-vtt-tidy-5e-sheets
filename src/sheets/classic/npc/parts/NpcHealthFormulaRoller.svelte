@@ -45,8 +45,8 @@
     onclick={rollNpcHp}
     oncontextmenu={calcAverageHitDie}
     class="roll-hp-formula highlight-on-hover"
-    tabindex={!settings.useDefaultSheetHpTabbing &&
-    settings.useAccessibleKeyboardSupport
+    tabindex={!settings.value.useDefaultSheetHpTabbing &&
+    settings.value.useAccessibleKeyboardSupport
       ? 0
       : -1}
   >

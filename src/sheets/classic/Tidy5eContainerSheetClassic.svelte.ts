@@ -1,6 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
-import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
+import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { DragAndDropMixin } from 'src/mixins/DragAndDropBaseMixin';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type {
@@ -33,7 +33,7 @@ import { SheetPreferencesService } from 'src/features/user-preferences/SheetPref
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import { SettingsProvider } from 'src/settings/settings.svelte';
+import { settings, SettingsProvider } from 'src/settings/settings.svelte';
 import { Inventory } from 'src/features/sections/Inventory';
 
 export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
@@ -530,7 +530,7 @@ export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
     if (itemData.type === 'spell') {
       const createOptions: Record<string, unknown> = {};
 
-      if (SettingsProvider.settings.includeFlagsInSpellScrollCreation.get()) {
+      if (settings.value.includeFlagsInSpellScrollCreation) {
         createOptions.flags = itemData.flags;
       }
 

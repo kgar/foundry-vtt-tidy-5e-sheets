@@ -53,7 +53,7 @@
       onfocusin={() => (buttonIsFocused = true)}
       onfocusout={() => (buttonIsFocused = false)}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
-      tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+      tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fa fa-dice-d20" class:invisible={!showDiceIconOnHover}></i>
     </button>

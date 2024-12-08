@@ -139,7 +139,7 @@
               title={localize('DND5E.SkillConfigure')}
               data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
                 .SKILL_CONFIGURATION_CONTROL}
-              tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+              tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
             >
               <i class="fas fa-cog"></i>
             </button>
@@ -164,7 +164,7 @@
               title={skillRef.skill.hover}
               data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
                 .SKILL_PROFICIENCY_TOGGLE}
-              tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+              tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
               disabled={activeEffectApplied}
               data-tooltip={activeEffectApplied
                 ? localize('DND5E.ActiveEffectOverrideWarning')
@@ -182,7 +182,7 @@
               onclick={(event) =>
                 context.actor.rollSkill({ skill: skillRef.key, event })}
               data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_ROLLER}
-              tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+              tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
               title={skillRef.skill.label}
             >
               {skillRef.skill.label}
@@ -227,7 +227,7 @@
         onclick={toggleShowAllSkills}
         data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
           .SKILLS_SHOW_PROFICIENT_TOGGLE}
-        tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+        tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
       >
         {#if showAllSkills}
           {localize('TIDY5E.HideNotProficientSkills')}

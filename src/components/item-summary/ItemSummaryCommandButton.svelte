@@ -17,7 +17,7 @@
   class="item-summary-command"
   title={command.tooltip ?? null}
   onclick={() => command.execute?.({ item: item })}
-  tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+  tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
 >
   {#if command.iconClass}
     <i class={command.iconClass}></i>

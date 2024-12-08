@@ -20,7 +20,7 @@
           type="button"
           class="inline-transparent-button"
           onclick={(ev) => context.actor.sheet._onWarningLink(ev)}
-          tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+          tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
           data-target={warning.link}>{warning.message}</button
         >
       {:else}

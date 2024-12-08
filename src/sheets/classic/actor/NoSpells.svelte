@@ -25,7 +25,7 @@
       class="create-spell-btn flex-row align-items-center extra-small-gap"
       onclick={() =>
         FoundryAdapter.createItem({ type: 'spell', level: '' }, context.actor)}
-      tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+      tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fas fa-plus-circle"></i>
       {localize('DND5E.SpellCreate')}

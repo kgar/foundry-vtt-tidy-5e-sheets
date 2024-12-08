@@ -1,7 +1,11 @@
 import { FoundryAdapter } from './foundry/foundry-adapter';
 import { Tidy5eCharacterSheet } from './sheets/classic/Tidy5eCharacterSheet.svelte';
 import './scss/tidy5e.scss';
-import { SettingsProvider, initSettings } from './settings/settings.svelte';
+import {
+  SettingsProvider,
+  initSettings,
+  settings,
+} from './settings/settings.svelte';
 import { Tidy5eItemSheetClassic } from './sheets/classic/Tidy5eItemSheetClassic.svelte';
 import { Tidy5eNpcSheet } from './sheets/classic/Tidy5eNpcSheet.svelte';
 import { Tidy5eVehicleSheet } from './sheets/classic/Tidy5eKgarVehicleSheet.svelte';
@@ -104,10 +108,7 @@ Hooks.once('init', () => {
 
   const thisIsKGarsVisualOverhaulBranch = false; // When the first draft of the container overhaul sheet is done, remove this extra layer and let it depend on the debug setting alone.
 
-  if (
-    SettingsProvider.settings.debug.get() &&
-    thisIsKGarsVisualOverhaulBranch
-  ) {
+  if (settings.value.debug && thisIsKGarsVisualOverhaulBranch) {
     DocumentSheetConfig.registerSheet(
       Item,
       CONSTANTS.DND5E_SYSTEM_ID,

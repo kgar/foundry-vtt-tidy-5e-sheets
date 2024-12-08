@@ -1,6 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService';
+  import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService.svelte';
   import { isUserInteractable } from 'src/utils/element';
   import type { Snippet } from 'svelte';
 

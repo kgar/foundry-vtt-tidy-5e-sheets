@@ -49,12 +49,12 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-{#if settings.itemCardsForNpcs}
+{#if settings.value.itemCardsForNpcs}
   <AttachedInfoCard
     sheet={context.actor.sheet}
-    floating={settings.itemCardsAreFloating}
-    delay={settings.itemCardsDelay}
-    inspectKey={settings.itemCardsFixKey}
+    floating={settings.value.itemCardsAreFloating}
+    delay={settings.value.itemCardsDelay}
+    inspectKey={settings.value.itemCardsFixKey}
   />
 {/if}
 
@@ -176,7 +176,7 @@
                 true,
               )}
             title={localize('TIDY5E.OriginSummaryConfig')}
-            tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-cog"></i>
           </button>
@@ -210,7 +210,7 @@
   {#snippet tabEnd()}
     {#if context.editable}
       <SheetEditModeToggle
-        hint={settings.permanentlyUnlockNpcSheetForGm &&
+        hint={settings.value.permanentlyUnlockNpcSheetForGm &&
         FoundryAdapter.userIsGm()
           ? localize('TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM.title')
           : null}

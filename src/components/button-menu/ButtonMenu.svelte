@@ -89,7 +89,7 @@
     {title}
     class="button-menu-opener {buttonClass ?? ''} {buttonStyle}"
     style:padding={openerPadding}
-    tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+    tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
   >
     {#if iconClass}
       <i class={actualIconClass}></i>

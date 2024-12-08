@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Item5e } from 'src/types/item.types';
   import ItemControl from './ItemControl.svelte';
-  import { isItemInActionList } from 'src/features/actions/actions';
+  import { isItemInActionList } from 'src/features/actions/actions.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { TidyFlags } from 'src/foundry/TidyFlags';
 

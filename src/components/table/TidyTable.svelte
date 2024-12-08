@@ -1,7 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
-  import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService';
+  import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService.svelte';
   import { declareLocation } from 'src/types/location-awareness.types';
   import { getContext, type Snippet } from 'svelte';
   import type { MessageBus } from 'src/types/types';

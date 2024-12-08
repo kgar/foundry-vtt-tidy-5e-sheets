@@ -41,7 +41,7 @@
     data-attribution-caption="DND5E.ArmorClass"
     data-tooltip-direction="DOWN"
     disabled={!context.editable}
-    tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+    tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
   >
     {ac}
   </button>

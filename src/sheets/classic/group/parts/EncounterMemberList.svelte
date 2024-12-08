@@ -95,7 +95,7 @@
             class="inline-icon-button"
             title={localize('DND5E.QuantityRoll')}
             onclick={() => context.actor.system.rollQuantities()}
-            tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-dice"></i>
           </button>
@@ -139,7 +139,7 @@
                       shareable: true,
                       uuid: member.uuid,
                     })}
-                  tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+                  tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
                 >
                   <img
                     class="encounter-member-list-item-image"
@@ -153,7 +153,7 @@
                   type="button"
                   class="encounter-member-name transparent-button highlight-on-hover"
                   onclick={() => member.sheet.render(true)}
-                  tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+                  tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
                 >
                   {member.name}
                 </button>

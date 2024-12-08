@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { SettingsProvider } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
 
   let context = getNpcSheetContext();
@@ -10,14 +10,10 @@
   );
 
   let showUnlinked = $derived(
-    ['unlinked', 'both'].includes(
-      SettingsProvider.settings.showNpcActorLinkMarker.get(),
-    ),
+    ['unlinked', 'both'].includes(settings.value.showNpcActorLinkMarker),
   );
 
-  let showLinked = $derived(
-    SettingsProvider.settings.showNpcActorLinkMarker.get() === 'both',
-  );
+  let showLinked = $derived(settings.value.showNpcActorLinkMarker === 'both');
 
   async function togglePrototypeLinkState() {
     const isNowLinked = context.actor.prototypeToken.actorLink;

@@ -44,7 +44,7 @@
     <Currency document={context.actor} />
   </div>
 
-  {#if settings.useVehicleEncumbranceBar}
+  {#if settings.value.useVehicleEncumbranceBar}
     <EncumbranceBar />
   {/if}
 </TabFooter>

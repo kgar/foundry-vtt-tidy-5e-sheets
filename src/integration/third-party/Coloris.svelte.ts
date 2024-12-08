@@ -37,8 +37,8 @@ export class ColorisThirdPartyIntegration extends ThirdPartyIntegrationBase {
       ],
     });
 
-    $effect(() => {
-      const theme = getThemeOrDefault(settings.colorScheme);
+    $effect.root(() => {
+      const theme = getThemeOrDefault(settings.value.colorScheme);
       // The documentation supports this usage, even if TypeScript does not.
       //@ts-expect-error
       Coloris({ themeMode: theme.type });

@@ -312,7 +312,7 @@ export function SvelteApplicationMixin<
           this._configureEffects();
 
           $effect(() => {
-            applyMutableSettingAttributesToWindow(settings, this.element);
+            applyMutableSettingAttributesToWindow(settings.value, this.element);
           });
         });
 

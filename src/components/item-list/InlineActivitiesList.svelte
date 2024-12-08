@@ -80,7 +80,7 @@
                 type="button"
                 class="inline-activity-roll-button highlight-on-hover"
                 onclick={(ev) => rollActivity(activity, ev)}
-                tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+                tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
               >
                 {#if activity.img?.endsWith('.svg')}
                   <Dnd5eIcon src={activity.img} />

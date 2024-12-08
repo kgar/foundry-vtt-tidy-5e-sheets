@@ -24,8 +24,8 @@
     onclick={context.editable &&
       FoundryAdapter.renderHitDiceConfig(context.actor)}
     disabled={!context.editable}
-    tabindex={!settings.useDefaultSheetHpTabbing &&
-    settings.useAccessibleKeyboardSupport
+    tabindex={!settings.value.useDefaultSheetHpTabbing &&
+    settings.value.useAccessibleKeyboardSupport
       ? 0
       : -1}
   >

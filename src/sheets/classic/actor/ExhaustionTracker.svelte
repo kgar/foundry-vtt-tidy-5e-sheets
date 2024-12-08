@@ -85,7 +85,7 @@
             )}
             onclick={() => onLevelSelected?.(i)}
             disabled={!context.editable || isActiveEffectApplied}
-            tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
             data-tooltip={isActiveEffectApplied
               ? localize('DND5E.ActiveEffectOverrideWarning')
               : null}

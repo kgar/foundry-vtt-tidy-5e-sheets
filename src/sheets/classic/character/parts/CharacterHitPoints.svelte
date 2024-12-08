@@ -40,7 +40,7 @@
       context.lockHpMaxChanges ||
       context.lockSensitiveFields}
     percentage={context.healthPercentage}
-    Bar={settings.useHpBar ? HpBar : null}
+    Bar={settings.value.useHpBar ? HpBar : null}
   />
 </div>
 

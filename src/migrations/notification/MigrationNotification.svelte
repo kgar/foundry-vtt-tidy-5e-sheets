@@ -2,7 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
   import type MigrationNotificationFormApplication from './MigrationNotificationFormApplication';
-  import { SettingsProvider } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { BulkMigrationsApplication } from '../BulkMigrationsApplication';
   import { CONSTANTS } from 'src/constants';
 
@@ -12,7 +12,7 @@
     getContext<MigrationNotificationFormApplication['confirm']>('confirm');
 
   const migrationsConfirmedTally =
-    SettingsProvider.settings.migrationsConfirmationTally.get();
+    settings.value.migrationsConfirmationTally;
 
   const migrations = [
     {

@@ -231,7 +231,7 @@
                 >
               </ItemName>
             </ItemTableCell>
-            {#if settings.showIconsNextToTheItemName}
+            {#if settings.value.showIconsNextToTheItemName}
               <ItemTableCell cssClass="no-border">
                 {#if ctx?.attunement && !FoundryAdapter.concealDetails(item)}
                   <div class="item-detail attunement">

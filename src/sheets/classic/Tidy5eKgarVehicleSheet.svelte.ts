@@ -1,6 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { SettingsProvider, settings } from 'src/settings/settings.svelte';
+import { settings } from 'src/settings/settings.svelte';
 import type {
   SheetExpandedItemsCacheable,
   SheetStats,
@@ -34,7 +34,7 @@ import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import {
   actorUsesActionFeature,
   getActorActionSections,
-} from 'src/features/actions/actions';
+} from 'src/features/actions/actions.svelte';
 import { isNil } from 'src/utils/data';
 import { CustomContentRenderer } from '../CustomContentRenderer';
 import { getBaseActorSheet5e } from 'src/utils/class-inheritance';
@@ -42,7 +42,7 @@ import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
+import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { AsyncMutex } from 'src/utils/mutex';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet.svelte';
@@ -84,7 +84,7 @@ export class Tidy5eVehicleSheet
 
     this.itemFilterService = new ItemFilterService({}, this.actor);
 
-    this.currentTabId = SettingsProvider.settings.initialVehicleSheetTab.get();
+    this.currentTabId = settings.value.initialVehicleSheetTab;
   }
 
   get template() {
@@ -132,7 +132,10 @@ export class Tidy5eVehicleSheet
 
       $effect(() => {
         if (first) return;
-        applyMutableSettingAttributesToWindow(settings, this.element.get(0));
+        applyMutableSettingAttributesToWindow(
+          settings.value,
+          this.element.get(0)
+        );
         this.render();
       });
 
@@ -319,8 +322,7 @@ export class Tidy5eVehicleSheet
       document: this.document,
       filterData: this.itemFilterService.getDocumentItemFilterData(),
       filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
-      useClassicControls:
-        SettingsProvider.settings.useClassicControlsForVehicle.get(),
+      useClassicControls: settings.value.useClassicControlsForVehicle,
       editable: defaultDocumentContext.editable,
       healthPercentage: getPercentage(
         this.actor?.system?.attributes?.hp?.value,
@@ -332,7 +334,7 @@ export class Tidy5eVehicleSheet
       lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
       lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
       lockSensitiveFields:
-        (!unlocked && SettingsProvider.settings.useTotalSheetLock.get()) ||
+        (!unlocked && settings.value.useTotalSheetLock) ||
         !defaultDocumentContext.editable,
       owner: this.actor.isOwner,
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
@@ -342,7 +344,7 @@ export class Tidy5eVehicleSheet
       useRoundedPortraitStyle: [
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_NPCVEHICLE as string,
-      ].includes(SettingsProvider.settings.useCircularPortraitStyle.get()),
+      ].includes(settings.value.useCircularPortraitStyle),
       utilities: utilities,
       viewableWarnings:
         defaultDocumentContext.warnings?.filter(
@@ -368,8 +370,7 @@ export class Tidy5eVehicleSheet
           (a, b) => selectedTabs.indexOf(a.id) - selectedTabs.indexOf(b.id)
         );
     } else {
-      const defaultTabs =
-        SettingsProvider.settings.defaultVehicleSheetTabs.get();
+      const defaultTabs = settings.value.defaultVehicleSheetTabs;
       tabs = tabs
         .filter((t) => defaultTabs?.includes(t.id))
         .sort((a, b) => defaultTabs.indexOf(a.id) - defaultTabs.indexOf(b.id));
@@ -791,7 +792,7 @@ export class Tidy5eVehicleSheet
     if (itemData.type === 'spell') {
       const options: Record<string, unknown> = {};
 
-      if (SettingsProvider.settings.includeFlagsInSpellScrollCreation.get()) {
+      if (settings.value.includeFlagsInSpellScrollCreation) {
         options.flags = itemData.flags;
       }
 

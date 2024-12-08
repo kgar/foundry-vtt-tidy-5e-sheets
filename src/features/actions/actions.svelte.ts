@@ -1,7 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ActionListRuntime } from 'src/runtime/action-list/ActionListRuntime';
-import { SettingsProvider } from 'src/settings/settings.svelte';
+import { settings } from 'src/settings/settings.svelte';
 import type { ContainerContents, Item5e } from 'src/types/item.types';
 import type {
   ActionItem,
@@ -10,7 +10,7 @@ import type {
   SortMode,
 } from 'src/types/types';
 import { isNil } from 'src/utils/data';
-import { scaleCantripDamageFormula, simplifyFormula } from 'src/utils/formula';
+import { simplifyFormula } from 'src/utils/formula';
 import { debug, error } from 'src/utils/logging';
 import { SpellUtils } from 'src/utils/SpellUtils';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -153,13 +153,12 @@ export function isItemInActionList(item: Item5e): boolean {
     }
     case CONSTANTS.ITEM_TYPE_CONSUMABLE: {
       return (
-        SettingsProvider.settings.actionListIncludeConsumables.get() &&
+        settings.value.actionListIncludeConsumables &&
         isActiveItem(item.system.activities?.contents[0]?.activation.type)
       );
     }
     case CONSTANTS.ITEM_TYPE_SPELL: {
-      const limitToCantrips =
-        SettingsProvider.settings.actionListLimitActionsToCantrips.get();
+      const limitToCantrips = settings.value.actionListLimitActionsToCantrips;
 
       // only exclude spells which need to be prepared but aren't
       if (
@@ -179,9 +178,7 @@ export function isItemInActionList(item: Item5e): boolean {
       const damage = getActivityFirstDamage(item);
       const isDamageDealer = damage?.parts?.length > 0;
       let shouldInclude = isReaction || isBonusAction || isDamageDealer;
-      if (
-        SettingsProvider.settings.actionListIncludeMinuteLongSpellsAsActions.get()
-      ) {
+      if (settings.value.actionListIncludeMinuteLongSpellsAsActions) {
         const isOneMinuter =
           item.system?.duration?.units === 'minute' &&
           item.system?.duration?.value === 1;
@@ -190,9 +187,7 @@ export function isItemInActionList(item: Item5e): boolean {
           item.system?.duration?.value === 1;
         shouldInclude = shouldInclude || isOneMinuter || isOneRounder;
       }
-      if (
-        SettingsProvider.settings.actionListIncludeSpellsWithActiveEffects.get()
-      ) {
+      if (settings.value.actionListIncludeSpellsWithActiveEffects) {
         const hasEffects = !!item.effects.size;
         shouldInclude = shouldInclude || hasEffects;
       }
@@ -247,7 +242,6 @@ async function mapActionItem(item: Item5e): Promise<ActionItem> {
             pursue activity.getDamageConfig() for each activity.
             It provides damage parts and types.            
             */
-
 
             return {
               label,
@@ -378,11 +372,11 @@ export function actorUsesActionFeature(actor: Actor5e) {
 
   const defaultTabIds =
     actor.type === CONSTANTS.SHEET_TYPE_CHARACTER
-      ? SettingsProvider.settings.defaultCharacterSheetTabs.get()
+      ? settings.value.defaultCharacterSheetTabs
       : actor.type === CONSTANTS.SHEET_TYPE_NPC
-      ? SettingsProvider.settings.defaultNpcSheetTabs.get()
+      ? settings.value.defaultNpcSheetTabs
       : actor.type === CONSTANTS.SHEET_TYPE_VEHICLE
-      ? SettingsProvider.settings.defaultVehicleSheetTabs.get()
+      ? settings.value.defaultVehicleSheetTabs
       : [];
 
   return defaultTabIds.includes(CONSTANTS.TAB_ACTOR_ACTIONS);

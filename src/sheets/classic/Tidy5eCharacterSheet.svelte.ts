@@ -16,7 +16,6 @@ import {
   type ExpandedItemData,
   type TidyResource,
   type MessageBusMessage,
-  type MessageBus,
   type Utilities,
   type ActiveEffect5e,
   type ActorInventoryTypes,
@@ -45,13 +44,13 @@ import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 import {
   actorUsesActionFeature,
   getActorActionSections,
-} from 'src/features/actions/actions';
+} from 'src/features/actions/actions.svelte';
 import { isNil } from 'src/utils/data';
 import { CustomContentRenderer } from '../CustomContentRenderer';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
-import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
+import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { AsyncMutex } from 'src/utils/mutex';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
@@ -119,8 +118,7 @@ export class Tidy5eCharacterSheet
 
     this.itemFilterService = new ItemFilterService({}, this.actor);
 
-    this.currentTabId =
-      SettingsProvider.settings.initialCharacterSheetTab.get();
+    this.currentTabId = settings.value.initialCharacterSheetTab;
   }
 
   get template() {
@@ -164,7 +162,10 @@ export class Tidy5eCharacterSheet
 
       $effect(() => {
         if (first) return;
-        applyMutableSettingAttributesToWindow(settings, this.element.get(0));
+        applyMutableSettingAttributesToWindow(
+          settings.value,
+          this.element.get(0)
+        );
         this.render();
       });
 
@@ -770,9 +771,8 @@ export class Tidy5eCharacterSheet
         this.actor
       ),
       allowMaxHpOverride:
-        SettingsProvider.settings.allowHpMaxOverride.get() &&
-        (!SettingsProvider.settings.lockHpMaxChanges.get() ||
-          FoundryAdapter.userIsGm()),
+        settings.value.allowHpMaxOverride &&
+        (!settings.value.lockHpMaxChanges || FoundryAdapter.userIsGm()),
       appearanceEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.appearance,
         {
@@ -839,7 +839,7 @@ export class Tidy5eCharacterSheet
       lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
       lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
       lockSensitiveFields:
-        (!unlocked && SettingsProvider.settings.useTotalSheetLock.get()) ||
+        (!unlocked && settings.value.useTotalSheetLock) ||
         !defaultDocumentContext.editable,
       notes1EnrichedHtml: await FoundryAdapter.enrichHtml(
         TidyFlags.notes1.members.value.get(this.actor) ?? '',
@@ -905,12 +905,11 @@ export class Tidy5eCharacterSheet
       ),
       unlocked: unlocked,
       useActionsFeature: actorUsesActionFeature(this.actor),
-      useClassicControls:
-        SettingsProvider.settings.useClassicControlsForCharacter.get(),
+      useClassicControls: settings.value.useClassicControlsForCharacter,
       useRoundedPortraitStyle: [
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_CHARACTER as string,
-      ].includes(SettingsProvider.settings.useCircularPortraitStyle.get()),
+      ].includes(settings.value.useCircularPortraitStyle),
       utilities: utilities,
       viewableWarnings:
         defaultDocumentContext.warnings?.filter(
@@ -965,8 +964,7 @@ export class Tidy5eCharacterSheet
           (a, b) => selectedTabs.indexOf(a.id) - selectedTabs.indexOf(b.id)
         );
     } else {
-      const defaultTabs =
-        SettingsProvider.settings.defaultCharacterSheetTabs.get();
+      const defaultTabs = settings.value.defaultCharacterSheetTabs;
       tabs = tabs
         .filter((t) => defaultTabs?.includes(t.id))
         .sort((a, b) => defaultTabs.indexOf(a.id) - defaultTabs.indexOf(b.id));
@@ -1559,7 +1557,7 @@ export class Tidy5eCharacterSheet
     ) {
       const options: Record<string, unknown> = {};
 
-      if (SettingsProvider.settings.includeFlagsInSpellScrollCreation.get()) {
+      if (settings.value.includeFlagsInSpellScrollCreation) {
         options.flags = itemData.flags;
       }
 

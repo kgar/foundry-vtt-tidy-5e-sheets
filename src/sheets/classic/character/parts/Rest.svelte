@@ -19,8 +19,8 @@
       title={localize('TIDY5E.ShortRest')}
       onclick={(event) => context.actor.sheet.onShortRest(event)}
       disabled={!context.editable}
-      tabindex={!settings.useDefaultSheetHpTabbing &&
-      settings.useAccessibleKeyboardSupport
+      tabindex={!settings.value.useDefaultSheetHpTabbing &&
+      settings.value.useAccessibleKeyboardSupport
         ? 0
         : -1}
     >
@@ -32,8 +32,8 @@
       title={localize('TIDY5E.LongRest')}
       onclick={(event) => context.actor.sheet.onLongRest(event)}
       disabled={!context.editable}
-      tabindex={!settings.useDefaultSheetHpTabbing &&
-      settings.useAccessibleKeyboardSupport
+      tabindex={!settings.value.useDefaultSheetHpTabbing &&
+      settings.value.useAccessibleKeyboardSupport
         ? 0
         : -1}
     >

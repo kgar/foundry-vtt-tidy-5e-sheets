@@ -1,11 +1,7 @@
 import { getThemes } from 'src/theme/theme-reference';
 import { debug } from './logging';
 import { CONSTANTS } from 'src/constants';
-import {
-  SettingsProvider,
-  settings,
-  type CurrentSettings,
-} from 'src/settings/settings.svelte';
+import { settings, type CurrentSettings } from 'src/settings/settings.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export function applyTitleToWindow(title: string, element: HTMLElement) {
@@ -30,18 +26,18 @@ export function applyTitleToWindow(title: string, element: HTMLElement) {
 }
 
 export function applyMutableSettingAttributesToWindow(
-  settings: CurrentSettings,
+  currentSettings: CurrentSettings,
   element?: HTMLElement
 ) {
   if (!element) {
     return;
   }
 
-  let themeId = settings.colorScheme;
+  let themeId = currentSettings.colorScheme;
 
   themeId =
     themeId === CONSTANTS.THEME_ID_DEFAULT
-      ? SettingsProvider.settings.defaultTheme.get()
+      ? settings.value.defaultTheme
       : themeId;
 
   const themes = getThemes();
@@ -51,7 +47,7 @@ export function applyMutableSettingAttributesToWindow(
     element.setAttribute('data-tidy-theme-type', theme.type);
   }
 
-  if (settings.lockConfigureSheet && !FoundryAdapter.userIsGm()) {
+  if (currentSettings.lockConfigureSheet && !FoundryAdapter.userIsGm()) {
     element.setAttribute('data-tidy-lock-configure-sheet', 'true');
   } else {
     element.removeAttribute('data-tidy-lock-configure-sheet');
@@ -68,7 +64,7 @@ export function applySheetAttributesToWindow(
   element?.setAttribute('data-document-name', documentName);
   element?.setAttribute('data-document-type', type);
   element?.setAttribute('data-document-uuid', documentUuid);
-  applyMutableSettingAttributesToWindow(settings, element);
+  applyMutableSettingAttributesToWindow(settings.value, element);
 }
 
 export async function maintainCustomContentInputFocus(

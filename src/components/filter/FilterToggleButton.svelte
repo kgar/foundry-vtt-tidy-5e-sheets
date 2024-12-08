@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ItemFilterService } from 'src/features/filtering/ItemFilterService';
+  import type { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ConfiguredItemFilter } from 'src/runtime/item/item.types';
   import { settings } from 'src/settings/settings.svelte';
@@ -36,7 +36,7 @@
   class:exclude={filter.value === false}
   onclick={() => cycleFilterForward(filter.name, filter.value)}
   oncontextmenu={() => cycleFilterBackward(filter.name, filter.value)}
-  tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+  tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
   title={localize(filter.text)}
 >
   {@render children?.()}

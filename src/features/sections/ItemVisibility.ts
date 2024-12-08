@@ -1,7 +1,7 @@
 import type { ContainerContents, Item5e } from 'src/types/item.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { getContext } from 'svelte';
-import { ItemFilterService } from '../filtering/ItemFilterService';
+import { ItemFilterService } from '../filtering/ItemFilterService.svelte';
 import { debug } from 'src/utils/logging';
 import type { ActionItem } from 'src/types/types';
 

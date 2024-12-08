@@ -28,7 +28,7 @@
         type="button"
         class="add-activity-button"
         onclick={() => context.item.sheet.addActivity()}
-        tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+        tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
       >
         <i class="fas fa-plus"></i>
         {localize('DND5E.Add')}
@@ -64,7 +64,7 @@
           onclick={() =>
             context.system.activities?.get(activity.id).sheet.render(true)}
           disabled={!context.editable}
-          tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+          tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
         >
           {activity.name}
         </button>
@@ -75,7 +75,7 @@
             title={localize('DND5E.ACTIVITY.Action.Delete')}
             onclick={() =>
               context.system.activities?.get(activity.id)?.deleteDialog()}
-            tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-trash"></i>
           </button>

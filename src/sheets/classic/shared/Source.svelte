@@ -37,7 +37,7 @@
       type="button"
       class="inline-icon-button config-button"
       onclick={() => FoundryAdapter.renderSourceConfig(document, keyPath)}
-      tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+      tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
       ><i class="fas fa-cog"></i></button
     >
   {/if}

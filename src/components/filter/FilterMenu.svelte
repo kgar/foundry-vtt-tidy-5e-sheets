@@ -4,7 +4,7 @@
   import { getContext } from 'svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
   import FilterToggleButton from './FilterToggleButton.svelte';
-  import type { ItemFilterService } from 'src/features/filtering/ItemFilterService';
+  import type { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
   import ButtonMenuDivider from 'src/components/button-menu/ButtonMenuDivider.svelte';
   import type { ContainerSheetClassicContext } from 'src/types/item.types';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';

@@ -27,7 +27,7 @@
           class="inline-icon-button hidden-config-button"
           type="button"
           onclick={() => FoundryAdapter.renderCreatureTypeConfig(context.item)}
-          tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+          tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fas fa-cog"></i>
         </button>
@@ -45,7 +45,7 @@
           data-action="movement"
           onclick={() =>
             FoundryAdapter.renderMovementSensesConfig(context.item, 'movement')}
-          tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+          tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fas fa-cog"></i>
         </button>
@@ -67,7 +67,7 @@
           data-action="senses"
           onclick={() =>
             FoundryAdapter.renderMovementSensesConfig(context.item, 'senses')}
-          tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+          tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fas fa-cog"></i>
         </button>

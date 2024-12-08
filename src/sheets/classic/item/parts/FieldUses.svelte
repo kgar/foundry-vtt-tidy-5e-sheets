@@ -77,7 +77,7 @@
         data-tooltip="DND5E.USES.Recovery.Action.Create"
         aria-label={localize('DND5E.USES.Recovery.Action.Create')}
         onclick={() => context.item.sheet.addRecovery()}
-        tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+        tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
       >
         <i class="fas fa-plus"></i>
       </button>
@@ -190,7 +190,7 @@
             title={localize('DND5E.USES.Recovery.Action.Delete')}
             aria-label={localize('DND5E.USES.Recovery.Action.Delete')}
             onclick={() => context.item.sheet.deleteRecovery(index)}
-            tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-minus"></i>
           </button>

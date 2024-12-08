@@ -87,7 +87,7 @@
                           fieldToEdit: itemDescription.field,
                         });
                       }}
-                      tabindex={settings.useAccessibleKeyboardSupport
+                      tabindex={settings.value.useAccessibleKeyboardSupport
                         ? 0
                         : -1}><i class="fas fa-edit"></i></button
                     >

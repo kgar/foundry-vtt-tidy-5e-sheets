@@ -26,8 +26,8 @@
   }
 </script>
 
-<ActorProfile useHpOverlay={settings.useHpOverlayNpc}>
-  {#if incapacitated && (!settings.hideDeathSavesFromPlayers || FoundryAdapter.userIsGm())}
+<ActorProfile useHpOverlay={settings.value.useHpOverlayNpc}>
+  {#if incapacitated && (!settings.value.hideDeathSavesFromPlayers || FoundryAdapter.userIsGm())}
     <DeathSaves
       successes={context.system.attributes.death.success}
       failures={context.system.attributes.death.failure}
@@ -38,21 +38,21 @@
           event: event,
           legacy: false,
         })}
-      hasHpOverlay={settings.useHpOverlayNpc}
+      hasHpOverlay={settings.value.useHpOverlayNpc}
     />
   {/if}
-  {#if settings.useExhaustion && settings.exhaustionConfig.type === 'specific'}
+  {#if settings.value.useExhaustion && settings.value.exhaustionConfig.type === 'specific'}
     <ExhaustionTracker
       level={context.system.attributes.exhaustion}
       radiusClass={context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       {onLevelSelected}
-      exhaustionConfig={settings.exhaustionConfig}
+      exhaustionConfig={settings.value.exhaustionConfig}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
         context.actor,
         'system.attributes.exhaustion',
       )}
     />
-  {:else if settings.useExhaustion && settings.exhaustionConfig.type === 'open'}
+  {:else if settings.value.useExhaustion && settings.value.exhaustionConfig.type === 'open'}
     <ExhaustionInput
       level={context.system.attributes.exhaustion}
       radiusClass={context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}

@@ -50,8 +50,8 @@
     title={ability.label}
     text={abbreviation}
     onRoll={(event) => context.actor.rollAbility({ ability: id, event: event })}
-    hideFromTabOrder={settings.useDefaultSheetAttributeTabbing ||
-      !settings.useAccessibleKeyboardSupport}
+    hideFromTabOrder={settings.value.useDefaultSheetAttributeTabbing ||
+      !settings.value.useAccessibleKeyboardSupport}
     attributes={{
       'data-tidy-sheet-part': CONSTANTS.SHEET_PARTS.ABILITY_ROLLER,
     }}
@@ -78,8 +78,8 @@
       title={localize('DND5E.AbilityModifier')}
       onclick={(event) =>
         context.actor.rollAbilityCheck({ ability: id, event })}
-      tabindex={!settings.useDefaultSheetAttributeTabbing &&
-      settings.useAccessibleKeyboardSupport
+      tabindex={!settings.value.useDefaultSheetAttributeTabbing &&
+      settings.value.useAccessibleKeyboardSupport
         ? 0
         : -1}
       disabled={!context.editable}
@@ -93,8 +93,8 @@
       class:rollable={context.editable}
       title={localize('DND5E.ActionSave')}
       onclick={(event) => context.actor.rollSavingThrow({ ability: id, event })}
-      tabindex={!settings.useDefaultSheetAttributeTabbing &&
-      settings.useAccessibleKeyboardSupport
+      tabindex={!settings.value.useDefaultSheetAttributeTabbing &&
+      settings.value.useAccessibleKeyboardSupport
         ? 0
         : -1}
       disabled={!context.editable}
@@ -113,8 +113,8 @@
               [`system.abilities.${id}.proficient`]:
                 1 - parseInt(ability.proficient),
             })}
-          tabindex={!settings.useDefaultSheetAttributeTabbing &&
-          settings.useAccessibleKeyboardSupport
+          tabindex={!settings.value.useDefaultSheetAttributeTabbing &&
+          settings.value.useAccessibleKeyboardSupport
             ? 0
             : -1}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
@@ -142,8 +142,8 @@
         class="config-button inline-icon-button"
         title={localize('DND5E.AbilityConfigure')}
         onclick={() => FoundryAdapter.renderAbilityConfig(context.actor, id)}
-        tabindex={!settings.useDefaultSheetAttributeTabbing &&
-        settings.useAccessibleKeyboardSupport
+        tabindex={!settings.value.useDefaultSheetAttributeTabbing &&
+        settings.value.useAccessibleKeyboardSupport
           ? 0
           : -1}
         data-tidy-sheet-part={CONSTANTS.SHEET_PARTS

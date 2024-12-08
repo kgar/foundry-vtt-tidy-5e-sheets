@@ -59,9 +59,9 @@
 
 <AttachedInfoCard
   sheet={context.actor.sheet}
-  floating={settings.itemCardsAreFloating}
-  delay={settings.itemCardsDelay}
-  inspectKey={settings.itemCardsFixKey}
+  floating={settings.value.itemCardsAreFloating}
+  delay={settings.value.itemCardsDelay}
+  inspectKey={settings.value.itemCardsFixKey}
 />
 
 {#if context.viewableWarnings.length}
@@ -140,7 +140,7 @@
 
     <section class="class-list">
       <!-- Player Name -->
-      {#if settings.showPlayerName}
+      {#if settings.value.showPlayerName}
         <ContentEditableFormField
           element="span"
           document={context.actor}
@@ -155,7 +155,7 @@
       {/if}
 
       <!-- Class / Subclass -->
-      {#if context.owner && settings.showClassList}
+      {#if context.owner && settings.value.showClassList}
         <span class="flex-row extra-small-gap">
           {#each classAndSubclassSummaries as summary, i}
             {#if i > 0}
@@ -219,7 +219,7 @@
               new ActorOriginSummaryConfigFormApplication(context.actor).render(
                 true,
               )}
-            tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-cog"></i>
           </button>
@@ -252,10 +252,10 @@
   {#snippet tabEnd()}
     {#if context.editable}
       <SheetEditModeToggle
-        hint={settings.permanentlyUnlockCharacterSheetForGm &&
+        hint={settings.value.permanentlyUnlockCharacterSheetForGm &&
         FoundryAdapter.userIsGm()
           ? localize(
-              'TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM.title',
+              'TIDY5E.Settings.value.PermanentlyUnlockCharacterSheetForGM.title',
             )
           : null}
       />

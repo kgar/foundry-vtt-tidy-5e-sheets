@@ -22,7 +22,7 @@
         title={localize('DND5E.StartingEquipment.Action.Configure')}
         aria-label={localize('DND5E.StartingEquipment.Action.Configure')}
         onclick={() => FoundryAdapter.openStartingEquipmentConfig(context.item)}
-        tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+        tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
       >
         <i class="fas fa-gear"></i>
       </button>

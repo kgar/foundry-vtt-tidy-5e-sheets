@@ -1,4 +1,4 @@
-import { SettingsProvider } from 'src/settings/settings.svelte';
+import { settings, SettingsProvider } from 'src/settings/settings.svelte';
 import type { Item5e } from 'src/types/item.types';
 import { ItemUtils } from './ItemUtils';
 import { CONSTANTS } from 'src/constants';
@@ -23,8 +23,7 @@ export class SpellUtils {
 
   /** While the Cantrip Formulas rule is enabled, this cantrip must have prepared status. If the rule is not enabled, a cantrip is always prepared.  */
   static isCantripPrepared(item: Item5e) {
-    const prepareCantrips =
-      SettingsProvider.settings.allowCantripsToBePrepared.get();
+    const prepareCantrips = settings.value.allowCantripsToBePrepared;
 
     return !prepareCantrips || (prepareCantrips && SpellUtils.isPrepared(item));
   }
@@ -111,7 +110,7 @@ export class SpellUtils {
     } else if (isPrepared) {
       return CONFIG.DND5E.spellPreparationModes.prepared.label;
     }
-    
+
     return game.i18n.localize('DND5E.SpellUnprepared');
   }
 }

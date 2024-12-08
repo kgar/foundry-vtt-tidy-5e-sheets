@@ -1,6 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { SettingsProvider } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { getThemeOrDefault } from 'src/theme/theme';
   import type { ItemDebugSheetHightouchContext } from '../Tidy5eItemDebugSheetHightouch.svelte';
   import ButtonWithOptionPanel from 'src/components/buttons/ButtonWithOptionPanel.svelte';
@@ -18,9 +18,7 @@
 
   let context = getSheetContext<ItemDebugSheetHightouchContext>();
 
-  let theme = $derived(
-    getThemeOrDefault(SettingsProvider.settings.colorScheme.get()),
-  );
+  let theme = $derived(getThemeOrDefault(settings.value.colorScheme));
 
   let inverse = $state(false);
 

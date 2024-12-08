@@ -22,7 +22,7 @@
   <select
     id="sheet-menu-{idSuffix}"
     onchange={(ev) => setTheme(ev.currentTarget.value)}
-    value={settings.colorScheme}
+    value={settings.value.colorScheme}
   >
     {#each themes as [key, value]}
       <option value={key}>{localize(value)}</option>

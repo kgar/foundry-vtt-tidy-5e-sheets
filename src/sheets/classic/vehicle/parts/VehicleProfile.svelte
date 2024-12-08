@@ -17,19 +17,19 @@
   }
 </script>
 
-<ActorProfile useHpOverlay={settings.useHpOverlayVehicle}>
-  {#if settings.useExhaustion && settings.vehicleExhaustionConfig.type === 'specific'}
+<ActorProfile useHpOverlay={settings.value.useHpOverlayVehicle}>
+  {#if settings.value.useExhaustion && settings.value.vehicleExhaustionConfig.type === 'specific'}
     <ExhaustionTracker
       level={TidyFlags.exhaustion.get(context.actor) ?? 0}
       radiusClass={context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       {onLevelSelected}
-      exhaustionConfig={settings.vehicleExhaustionConfig}
+      exhaustionConfig={settings.value.vehicleExhaustionConfig}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
         context.actor,
         TidyFlags.exhaustion.prop,
       )}
     />
-  {:else if settings.useExhaustion && settings.vehicleExhaustionConfig.type === 'open'}
+  {:else if settings.value.useExhaustion && settings.value.vehicleExhaustionConfig.type === 'open'}
     <ExhaustionInput
       level={TidyFlags.exhaustion.get(context.actor) ?? 0}
       radiusClass={context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
@@ -40,7 +40,7 @@
       )}
     />
   {/if}
-  {#if settings.useVehicleMotion}
+  {#if settings.value.useVehicleMotion}
     <VehicleMovement
       motion={TidyFlags.motion.get(context.actor) === true}
       radiusClass={context.useRoundedPortraitStyle ? 'rounded' : 'top-right'}

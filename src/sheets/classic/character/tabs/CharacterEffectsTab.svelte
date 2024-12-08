@@ -160,7 +160,7 @@
                       title={effectContext.name}>{effectContext.name}</span
                     >
                   </ItemTableCell>
-                  {#if FoundryAdapter.isActiveEffectContextFavorited(effectContext, context.actor) && settings.showIconsNextToTheItemName}
+                  {#if FoundryAdapter.isActiveEffectContextFavorited(effectContext, context.actor) && settings.value.showIconsNextToTheItemName}
                     <InlineFavoriteIcon />
                   {/if}
                   <ItemTableCell baseWidth="12.5rem">

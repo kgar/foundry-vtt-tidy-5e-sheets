@@ -35,7 +35,7 @@
       ? item.update({ 'system.uses.spent': 0 })
       : item.system.uses.rollRecharge()}
   disabled={!context.owner}
-  tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+  tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
 >
   <i class="fas fa-dice-six"></i>
   {recovery?.formula}{#if recovery?.value !== 6}+{/if}</button

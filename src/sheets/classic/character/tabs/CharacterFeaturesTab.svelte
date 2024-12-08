@@ -245,7 +245,7 @@
                       </ItemName>
                     </ItemTableCell>
                     <!-- TODO: Handle more gracefully; it is sitting outside of any table cell -->
-                    {#if settings.showIconsNextToTheItemName && 'favoriteId' in ctx && !!ctx.favoriteId}
+                    {#if settings.value.showIconsNextToTheItemName && 'favoriteId' in ctx && !!ctx.favoriteId}
                       <InlineFavoriteIcon />
                     {/if}
                     {#if section.showUsesColumn}

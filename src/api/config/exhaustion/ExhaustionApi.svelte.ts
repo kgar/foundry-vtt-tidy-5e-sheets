@@ -1,4 +1,4 @@
-import { SettingsProvider } from 'src/settings/settings.svelte';
+import { settings, SettingsProvider } from 'src/settings/settings.svelte';
 import type { UseSpecificLevelExhaustionParams } from '../../api.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type {
@@ -53,7 +53,7 @@ export class ExhaustionApi {
   async useSpecificLevelExhaustion(
     params?: UseSpecificLevelExhaustionParams
   ): Promise<void> {
-    const exhaustion = SettingsProvider.settings.exhaustionConfig.get();
+    const exhaustion = settings.value.exhaustionConfig;
 
     const fallbackHints =
       exhaustion.type === 'specific' ? exhaustion.hints : [];
@@ -103,7 +103,7 @@ export class ExhaustionApi {
   async useSpecificLevelVehicleExhaustion(
     params?: UseSpecificLevelExhaustionParams
   ): Promise<void> {
-    const exhaustion = SettingsProvider.settings.vehicleExhaustionConfig.get();
+    const exhaustion = settings.value.vehicleExhaustionConfig;
 
     const fallbackHints =
       exhaustion.type === 'specific' ? exhaustion.hints : [];

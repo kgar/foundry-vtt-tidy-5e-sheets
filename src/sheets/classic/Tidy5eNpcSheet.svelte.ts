@@ -35,13 +35,13 @@ import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import {
   actorUsesActionFeature,
   getActorActionSections,
-} from 'src/features/actions/actions';
+} from 'src/features/actions/actions.svelte';
 import { isNil } from 'src/utils/data';
 import { CustomContentRenderer } from '../CustomContentRenderer';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
-import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
+import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { AsyncMutex } from 'src/utils/mutex';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
@@ -103,7 +103,7 @@ export class Tidy5eNpcSheet
 
     this.itemFilterService = new ItemFilterService({}, this.actor);
 
-    this.currentTabId = SettingsProvider.settings.initialNpcSheetTab.get();
+    this.currentTabId = settings.value.initialNpcSheetTab;
   }
 
   get template() {
@@ -148,7 +148,10 @@ export class Tidy5eNpcSheet
 
       $effect(() => {
         if (first) return;
-        applyMutableSettingAttributesToWindow(settings, this.element.get(0));
+        applyMutableSettingAttributesToWindow(
+          settings.value,
+          this.element.get(0)
+        );
         this.render();
       });
 
@@ -260,7 +263,7 @@ export class Tidy5eNpcSheet
       defaultDocumentContext.editable;
 
     const lockSensitiveFields =
-      (!unlocked && SettingsProvider.settings.useTotalSheetLock.get()) ||
+      (!unlocked && settings.value.useTotalSheetLock) ||
       !defaultDocumentContext.editable;
 
     const showLegendaryToolbarFlagValue = TidyFlags.showLegendaryToolbar.get(
@@ -335,7 +338,7 @@ export class Tidy5eNpcSheet
               );
             },
             visible:
-              !SettingsProvider.settings.showSpellbookTabNpc.get() &&
+              !settings.value.showSpellbookTabNpc &&
               (npcPreferences?.spellSlotTrackerMode ??
                 CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS) ===
                 CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS,
@@ -351,7 +354,7 @@ export class Tidy5eNpcSheet
               );
             },
             visible:
-              !SettingsProvider.settings.showSpellbookTabNpc.get() &&
+              !settings.value.showSpellbookTabNpc &&
               npcPreferences?.spellSlotTrackerMode ===
                 CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX,
           },
@@ -727,8 +730,7 @@ export class Tidy5eNpcSheet
       ),
       customContent: await NpcSheetRuntime.getContent(defaultDocumentContext),
       document: this.document,
-      useClassicControls:
-        SettingsProvider.settings.useClassicControlsForNpc.get(),
+      useClassicControls: settings.value.useClassicControlsForNpc,
       effects: enhancedEffectSections,
       editable: defaultDocumentContext.editable,
       encumbrance: this.actor.system.attributes.encumbrance,
@@ -748,7 +750,7 @@ export class Tidy5eNpcSheet
         this.actor?.system?.attributes?.hp?.value,
         this.actor?.system?.attributes?.hp?.max
       ),
-      showSpellbookTab: SettingsProvider.settings.showSpellbookTabNpc.get(),
+      showSpellbookTab: settings.value.showSpellbookTabNpc,
       idealEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.ideal,
         {
@@ -835,7 +837,7 @@ export class Tidy5eNpcSheet
       useRoundedPortraitStyle: [
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_NPCVEHICLE as string,
-      ].includes(SettingsProvider.settings.useCircularPortraitStyle.get()),
+      ].includes(settings.value.useCircularPortraitStyle),
       utilities: utilities,
       viewableWarnings:
         defaultDocumentContext.warnings?.filter(
@@ -861,7 +863,7 @@ export class Tidy5eNpcSheet
           (a, b) => selectedTabs.indexOf(a.id) - selectedTabs.indexOf(b.id)
         );
     } else {
-      const defaultTabs = SettingsProvider.settings.defaultNpcSheetTabs.get();
+      const defaultTabs = settings.value.defaultNpcSheetTabs;
       tabs = tabs
         .filter((t) => defaultTabs?.includes(t.id))
         .sort((a, b) => defaultTabs.indexOf(a.id) - defaultTabs.indexOf(b.id));
@@ -1087,7 +1089,7 @@ export class Tidy5eNpcSheet
     ) {
       const options: Record<string, unknown> = {};
 
-      if (SettingsProvider.settings.includeFlagsInSpellScrollCreation.get()) {
+      if (settings.value.includeFlagsInSpellScrollCreation) {
         options.flags = itemData.flags;
       }
 
@@ -1235,7 +1237,7 @@ export class Tidy5eNpcSheet
     event.preventDefault();
     await this._onSubmit(event);
     return this.actor.shortRest({
-      chat: SettingsProvider.settings.showNpcRestInChat.get(),
+      chat: settings.value.showNpcRestInChat,
     });
   }
 
@@ -1248,7 +1250,7 @@ export class Tidy5eNpcSheet
     event.preventDefault();
     await this._onSubmit(event);
     return this.actor.longRest({
-      chat: SettingsProvider.settings.showNpcRestInChat.get(),
+      chat: settings.value.showNpcRestInChat,
     });
   }
 

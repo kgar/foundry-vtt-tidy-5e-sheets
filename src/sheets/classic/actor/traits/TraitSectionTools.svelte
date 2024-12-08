@@ -59,7 +59,7 @@
             );
           }}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TOOL_PROFICIENCY_TOGGLE}
-          tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+          tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
           disabled={activeEffectApplied}
           data-tooltip={activeEffectApplied
             ? localize('DND5E.ActiveEffectOverrideWarning')
@@ -79,7 +79,7 @@
           class="tool-check-roller inline-transparent-button rollable"
           onclick={(event) => context.actor.rollToolCheck({ tool: key, event })}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TOOL_ROLLER}
-          tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+          tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
         >
           {tool.label}
         </button>
@@ -101,7 +101,7 @@
           }}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
             .TOOL_CONFIGURATION_CONTROL}
-          tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+          tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fas fa-cog"></i>
         </button>

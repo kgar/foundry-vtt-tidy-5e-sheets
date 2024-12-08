@@ -23,7 +23,7 @@
     class="configure-source inline-transparent-button highlight-on-hover truncate"
     class:placeholder={usePlaceholder}
     onclick={() => FoundryAdapter.renderSourceConfig(document, keyPath)}
-    tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+    tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
   >
     {text}
   </button>

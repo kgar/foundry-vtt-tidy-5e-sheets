@@ -22,7 +22,7 @@
   type="button"
   class="inline-toggle inline-transparent-button px-1"
   onclick={() => inlineToggleService.toggle(tabId, entityId)}
-  tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+  tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.INLINE_CONTAINER_TOGGLE}
 >
   <i

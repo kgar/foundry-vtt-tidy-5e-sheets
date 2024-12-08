@@ -91,7 +91,7 @@
   setSearchResultsContext(searchResults);
 
   let spellbook = $derived(
-    !settings.showSpellbookTabNpc
+    !settings.value.showSpellbookTabNpc
       ? SheetSections.configureSpellbook(
           context.actor,
           tabId,
@@ -187,12 +187,12 @@
   <div class="side-panel">
     <SkillsList
       actor={context.actor}
-      toggleable={!settings.alwaysShowNpcSkills}
+      toggleable={!settings.value.alwaysShowNpcSkills}
       expanded={!!TidyFlags.skillsExpanded.get(context.actor)}
       toggleField={TidyFlags.skillsExpanded.prop}
     />
-    {#if !settings.moveTraitsBelowNpcResources}
-      <Traits toggleable={!settings.alwaysShowNpcTraits} />
+    {#if !settings.value.moveTraitsBelowNpcResources}
+      <Traits toggleable={!settings.value.alwaysShowNpcTraits} />
     {/if}
   </div>
   <div
@@ -207,8 +207,8 @@
     >
       <NpcLegendaryActions />
     </ExpandableContainer>
-    {#if settings.moveTraitsBelowNpcResources}
-      <Traits toggleable={!settings.alwaysShowNpcTraits} />
+    {#if settings.value.moveTraitsBelowNpcResources}
+      <Traits toggleable={!settings.value.alwaysShowNpcTraits} />
     {/if}
     {#each features as section (section.key)}
       {#if section.show}
@@ -366,14 +366,14 @@
         {/if}
       {/if}
     {/each}
-    {#if !settings.showSpellbookTabNpc}
+    {#if !settings.value.showSpellbookTabNpc}
       {#if noSpellLevels}
         <h2>
           <button
             type="button"
             class="transparent-button spellbook-title toggle-spellbook"
             onclick={() => (showNoSpellsView = !showNoSpellsView)}
-            tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
           >
             {localize('DND5E.Spellbook')}
             {#if showNoSpellsView}
@@ -449,7 +449,7 @@
 </section>
 <TabFooter mode="vertical" cssClass="abilities-footer">
   <Currency document={context.actor} />
-  {#if settings.useNpcEncumbranceBar}
+  {#if settings.value.useNpcEncumbranceBar}
     <EncumbranceBar />
   {/if}
 </TabFooter>

@@ -14,7 +14,7 @@ import type {
   ItemDescription,
 } from 'src/types/item.types';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
-import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
+import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import type {
   LocationToSearchTextMap,
   ExpandedItemIdToLocationsMap,
@@ -32,7 +32,7 @@ import { Container } from 'src/features/containers/Container';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import { SettingsProvider } from 'src/settings/settings.svelte';
+import { settings, SettingsProvider } from 'src/settings/settings.svelte';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 
 export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
@@ -467,7 +467,7 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
       transformAll: (itemData: any) => {
         const options: Record<string, unknown> = {};
 
-        if (SettingsProvider.settings.includeFlagsInSpellScrollCreation.get()) {
+        if (settings.value.includeFlagsInSpellScrollCreation) {
           options.flags = itemData.flags;
         }
 
@@ -522,7 +522,7 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
       transformAll: (itemData: any) => {
         const options: Record<string, unknown> = {};
 
-        if (SettingsProvider.settings.includeFlagsInSpellScrollCreation.get()) {
+        if (settings.value.includeFlagsInSpellScrollCreation) {
           options.flags = itemData.flags;
         }
 

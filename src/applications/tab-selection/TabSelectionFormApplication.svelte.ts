@@ -6,7 +6,7 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { error } from 'src/utils/logging';
 import type { RegisteredTab } from 'src/runtime/types';
 import { CONSTANTS } from 'src/constants';
-import { SettingsProvider } from 'src/settings/settings.svelte';
+import { settings, SettingsProvider } from 'src/settings/settings.svelte';
 import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
@@ -57,11 +57,11 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
 
   getDefaultTabIds(actor: Actor5e): string[] {
     if (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) {
-      return SettingsProvider.settings.defaultCharacterSheetTabs.get();
+      return settings.value.defaultCharacterSheetTabs;
     } else if (actor.type === CONSTANTS.SHEET_TYPE_NPC) {
-      return SettingsProvider.settings.defaultNpcSheetTabs.get();
+      return settings.value.defaultNpcSheetTabs;
     } else if (actor.type === CONSTANTS.SHEET_TYPE_VEHICLE) {
-      return SettingsProvider.settings.defaultVehicleSheetTabs.get();
+      return settings.value.defaultVehicleSheetTabs;
     } else if (actor.type === CONSTANTS.SHEET_TYPE_GROUP) {
       return GroupSheetRuntime.getDefaultTabs();
     }

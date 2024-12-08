@@ -103,7 +103,13 @@ export type Tidy5eSetting = {
 /**
  * The current Tidy 5e settings.
  */
-export let settings: CurrentSettings;
+let _settings: CurrentSettings = $state()!; // For ergonomics, pretend like this is never undefined, because it is initialized in the hooks lifecycle.
+
+export const settings = {
+  get value() {
+    return _settings;
+  }
+} 
 
 export function createSettings() {
   return {
@@ -1908,7 +1914,7 @@ export function initSettings() {
   }
 
   const debouncedSettingStoreRefresh = FoundryAdapter.debounce(() => {
-    settings = getCurrentSettings();
+    _settings = getCurrentSettings();
   }, 100);
 
   for (let setting of Object.entries(SettingsProvider.settings)) {
@@ -1928,9 +1934,9 @@ export function initSettings() {
     SettingsProvider.settings.colorScheme.get()
   );
 
-  settings = $state(getCurrentSettings());
+  _settings = getCurrentSettings();
 
   Hooks.on('closeSettingsConfig', () => {
-    settings = getCurrentSettings();
+    _settings = getCurrentSettings();
   });
 }

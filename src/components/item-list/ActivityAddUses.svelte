@@ -25,7 +25,7 @@
   class="activity-add-uses item-list-button"
   onclick={() => onAddUses()}
   disabled={!activity.item.isOwner}
-  tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+  tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
 >
   <span class="placeholder">—</span>
   <span class="add-prompt">{localize('DND5E.Add')}</span>

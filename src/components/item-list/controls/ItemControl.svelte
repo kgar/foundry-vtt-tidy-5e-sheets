@@ -36,7 +36,7 @@
   class:inactive={!active}
   {onclick}
   title={title !== undefined ? localize(title) : ''}
-  tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+  tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
 >
   {#if iconCssClass}
     <i class={iconCssClass}></i>

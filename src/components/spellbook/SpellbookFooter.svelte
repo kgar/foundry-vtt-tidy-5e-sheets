@@ -58,7 +58,7 @@
                 context.spellcastingInfo.currentFilteredClass?.system
                   ?.spellcasting?.ability,
               )}
-            tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
             data-tooltip="{FoundryAdapter.localize(
               'TIDY5E.RangedSpellAttackMod',
             )}: {context.spellcastingInfo.calculations.rangedTooltip}"
@@ -85,7 +85,7 @@
                 context.spellcastingInfo.currentFilteredClass?.system
                   ?.spellcasting?.ability,
               )}
-            tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
             data-tooltip="{FoundryAdapter.localize(
               'TIDY5E.MeleeSpellAttackMod',
             )}: {context.spellcastingInfo.calculations.meleeTooltip}"
@@ -113,7 +113,7 @@
                 context.spellcastingInfo.currentFilteredClass?.system
                   ?.spellcasting?.ability,
               )}
-            tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
             data-tooltip="{FoundryAdapter.localize(
               'TIDY5E.SpellAttackMod',
             )}: {context.spellcastingInfo.calculations.rangedTooltip}"
@@ -144,7 +144,7 @@
         ).render(true)}
       title={localize('TIDY5E.MaxPreparedSpellsConfig.ButtonTooltip')}
       disabled={!context.editable || context.lockSensitiveFields}
-      tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+      tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <p>{localize('TIDY5E.PreparedSpells')}</p>
       <span class="spells-prepared"

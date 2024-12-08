@@ -38,7 +38,7 @@
       title={localize('DND5E.MovementConfig')}
       onclick={() =>
         FoundryAdapter.renderMovementSensesConfig(context.actor, 'movement')}
-      tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+      tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
       ><i class="fas fa-cog"></i></button
     >
   {/if}

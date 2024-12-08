@@ -23,17 +23,17 @@
   let allowEdit = $derived(TidyFlags.allowEdit.get(context.document));
   let descriptionVariable = $derived(
     hint ??
-      (settings.useTotalSheetLock
+      (settings.value.useTotalSheetLock
         ? localize('TIDY5E.SheetLock.Description')
         : localize('TIDY5E.SheetEdit.Description')),
   );
   let lockHintVariable = $derived(
-    settings.useTotalSheetLock
+    settings.value.useTotalSheetLock
       ? 'TIDY5E.SheetLock.Unlock.Hint'
       : 'TIDY5E.SheetEdit.Enable.Hint',
   );
   let unlockHintVariable = $derived(
-    settings.useTotalSheetLock
+    settings.value.useTotalSheetLock
       ? 'TIDY5E.SheetLock.Lock.Hint'
       : 'TIDY5E.SheetEdit.Disable.Hint',
   );

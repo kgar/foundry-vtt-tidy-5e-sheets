@@ -24,7 +24,7 @@ import { SheetPreferencesService } from '../user-preferences/SheetPreferencesSer
 import type { SheetPreference } from '../user-preferences/user-preferences.types';
 import type { Activity5e, CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { error } from 'src/utils/logging';
-import { sortActions } from '../actions/actions';
+import { sortActions } from '../actions/actions.svelte';
 
 export class SheetSections {
   static generateCustomSpellbookSections(

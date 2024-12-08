@@ -29,7 +29,7 @@
         shareable: true,
         uuid: member.uuid,
       })}
-    tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+    tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
   >
     <img
       class="member-list-item-image"

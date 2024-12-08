@@ -285,7 +285,7 @@
         event.stopPropagation();
         toggleTraitsExpanded();
       }}
-      tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+      tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
     >
       {#if traitsExpanded}
         {localize('TIDY5E.HideEmptyTraits')}
@@ -306,7 +306,7 @@
         event.stopPropagation();
         FoundryAdapter.renderActorSheetFlags(context.actor);
       }}
-      tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+      tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fas fa-star"></i>
     </button>

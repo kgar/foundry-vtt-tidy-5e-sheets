@@ -21,7 +21,7 @@
   class="item-add-uses item-list-button"
   onclick={() => onAddUses()}
   disabled={!item.isOwner}
-  tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+  tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
 >
   Add
 </button>

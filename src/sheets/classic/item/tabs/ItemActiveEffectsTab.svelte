@@ -58,7 +58,7 @@
                 class="active-effect-control inline-icon-button"
                 title={localize('DND5E.EffectCreate')}
                 onclick={(event) => onAddClicked(section)}
-                tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+                tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
               >
                 <i class="fas fa-plus"></i>
                 {localize('DND5E.Add')}
@@ -119,7 +119,7 @@
                         : 'DND5E.EffectDisable'}
                       onclick={() =>
                         effect.update({ disabled: !effect.disabled })}
-                      tabindex={settings.useAccessibleKeyboardSupport
+                      tabindex={settings.value.useAccessibleKeyboardSupport
                         ? 0
                         : -1}
                     >
@@ -135,7 +135,7 @@
                     class="active-effect-control inline-icon-button"
                     title={localize('DND5E.EffectEdit')}
                     onclick={() => effect.sheet.render(true)}
-                    tabindex={settings.useAccessibleKeyboardSupport
+                    tabindex={settings.value.useAccessibleKeyboardSupport
                       ? 0
                       : -1}
                   >
@@ -146,7 +146,7 @@
                     class="active-effect-control inline-icon-button"
                     title={localize('DND5E.EffectDelete')}
                     onclick={() => effect.deleteDialog()}
-                    tabindex={settings.useAccessibleKeyboardSupport
+                    tabindex={settings.value.useAccessibleKeyboardSupport
                       ? 0
                       : -1}
                   >

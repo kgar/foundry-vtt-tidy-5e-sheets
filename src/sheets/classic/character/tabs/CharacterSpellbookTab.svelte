@@ -45,7 +45,7 @@
 
   function tryFilterByClass(spells: any[]) {
     if (
-      !settings.useMulticlassSpellbookFilter ||
+      !settings.value.useMulticlassSpellbookFilter ||
       selectedClassFilter === ''
     ) {
       return spells;
@@ -88,7 +88,7 @@
 
 <UtilityToolbar>
   <Search bind:value={searchCriteria} />
-  {#if settings.useMulticlassSpellbookFilter}
+  {#if settings.value.useMulticlassSpellbookFilter}
     <div class="spellbook-class-filter">
       <SpellbookClassFilter />
     </div>

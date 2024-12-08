@@ -37,7 +37,7 @@ import { SheetPreferencesService } from 'src/features/user-preferences/SheetPref
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { Container } from 'src/features/containers/Container';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
-import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
+import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import { GroupSheetRuntime } from 'src/runtime/GroupSheetRuntime';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
@@ -425,8 +425,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       items: Array.from(this.actor.items),
       limited: this.actor.limited,
       lockSensitiveFields:
-        (!unlocked && SettingsProvider.settings.useTotalSheetLock.get()) ||
-        !editable,
+        (!unlocked && settings.value.useTotalSheetLock) || !editable,
       maxHP: stats.maxHP,
       memberContext: memberContext,
       memberSections: memberSections,
@@ -448,7 +447,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       useClassicControls: true, // TODO: Establish setting for this; and group section in settings
       useRoundedPortraitStyle: [
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
-      ].includes(SettingsProvider.settings.useCircularPortraitStyle.get()),
+      ].includes(settings.value.useCircularPortraitStyle),
       utilities: utilities,
       xp: xp,
     };

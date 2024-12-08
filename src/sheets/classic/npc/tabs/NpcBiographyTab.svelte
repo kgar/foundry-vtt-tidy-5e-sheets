@@ -140,7 +140,7 @@
         onclick={togglePersonalityInfo}
         class="toggle-personality-info"
         title={localize('TIDY5E.TogglePersonalityInfo')}
-        tabindex={settings.useAccessibleKeyboardSupport ? 0 : -1}
+        tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
       >
         {#if showNpcPersonalityInfo}
           <i class="fas fa-angle-double-left"></i>
