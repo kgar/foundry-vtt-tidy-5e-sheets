@@ -702,7 +702,8 @@
             "showTooltip": "Pokaż tę sekcję"
         },
         "ActionLabel": "Sekcja akcji",
-        "Tooltip": "Określ własną sekcję dla tego przedmiotu po umieszczeniu go na karcie postaci lub pozostaw ją pustą, aby zachować domyślne zachowanie."
+        "Tooltip": "Określ własną sekcję dla tego przedmiotu po umieszczeniu go na karcie postaci lub pozostaw ją pustą, aby zachować domyślne zachowanie.",
+        "LabelPl": "Sekcje"
     },
     "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+kliknij, aby pominąć rzut i natychmiast odnowić) ",
     "TIDY5E.UseDefaultDialog": {
@@ -795,5 +796,6 @@
     "TIDY5E.Facilities.Hirelings.Label": "Najemnicy",
     "TIDY5E.Facilities.Defenders.Label": "Obrońcy",
     "TIDY5E.Facilities.Creatures.Label": "Stworzenia",
-    "TIDY5E.Facilities.RosterMember.Label": "{actorName} - {facilityName}"
+    "TIDY5E.Facilities.RosterMember.Label": "{actorName} - {facilityName}",
+    "TIDY5E.ExpandCollapseMenu.OptionTitle": "Rozwiń/Zwiń"
 }
