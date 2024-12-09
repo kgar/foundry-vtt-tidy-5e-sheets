@@ -10,8 +10,9 @@ import type {
 export class MigrationSelectionApplication<
   T
 > extends SvelteFormApplicationBase {
-  _params: MigrationSelectionParams<T>;
+  _params = $state<SelectableMigrationSelectionParams<T>>()!;
   _onClose?: Function;
+  _title?: string;
 
   constructor(
     params: MigrationSelectionParams<T>,
@@ -25,7 +26,17 @@ export class MigrationSelectionApplication<
         options
       )
     );
-    this._params = params;
+
+    this._params = {
+      ...params,
+      selectables: params.documents.map((d) => ({
+        document: d,
+        selected: true,
+      })),
+    };
+
+    this._title = params.title;
+
     this._onClose = onClose;
   }
 
@@ -41,23 +52,16 @@ export class MigrationSelectionApplication<
 
   get title() {
     return (
-      this._params.title ??
+      this._title ??
       FoundryAdapter.localize('TIDY5E.Settings.Migrations.dialogTitle')
     );
   }
 
   createComponent(node: HTMLElement): Record<string, any> {
-    const selectableParams: SelectableMigrationSelectionParams<T> = {
-      ...this._params,
-      selectables: this._params.documents.map((d) => ({
-        document: d,
-        selected: true,
-      })),
-    };
     return mount(MigrationSelection, {
       target: node,
       props: {
-        params: selectableParams,
+        params: this._params,
       },
     });
   }

@@ -5,7 +5,7 @@
   import { migrateBiographicalFlagsToSystemData } from './biographical-flags-to-system';
   import { CONSTANTS } from 'src/constants';
 
-  import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication';
+  import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication.svelte';
 
   let migrating = $state(false);
   let overwrite = $state(false);

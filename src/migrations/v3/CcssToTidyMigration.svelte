@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { debug, error } from 'src/utils/logging';
-  import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication';
+  import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication.svelte';
   import type { Item5e } from 'src/types/item.types';
   import {
     ccssFlagPropPath,

@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Actor5e } from 'src/types/types';
-  import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication';
+  import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication.svelte';
   import { CONSTANTS } from 'src/constants';
   import { migrateBondsIdealsFlawsToSystem } from './bonds-ideals-flaws-to-system';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';

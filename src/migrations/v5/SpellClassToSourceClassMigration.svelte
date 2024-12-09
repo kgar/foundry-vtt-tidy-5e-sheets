@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication';
+  import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { CompendiumToMigrate } from '../migration.types';

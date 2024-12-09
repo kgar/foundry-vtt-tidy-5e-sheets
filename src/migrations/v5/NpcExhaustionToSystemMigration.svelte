@@ -3,7 +3,7 @@
   import type { Actor5e } from 'src/types/types';
   import { debug, error } from 'src/utils/logging';
 
-  import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication';
+  import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication.svelte';
   import { CONSTANTS } from 'src/constants';
   import { migrateNpcExhaustionToSystem } from './npc-exhaustion-to-system';
 

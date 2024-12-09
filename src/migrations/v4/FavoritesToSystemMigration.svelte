@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication';
+  import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication.svelte';
   import type { Actor5e } from 'src/types/types';
   import { migrateFavoritesToSystem } from './favorites-to-system';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
