@@ -11,7 +11,6 @@ import type {
   Actor5e,
   ActorInventoryTypes,
   MessageBus,
-  MessageBusMessage,
   Utilities,
 } from 'src/types/types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -113,8 +112,8 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
   };
 
   #itemFilterService: ItemFilterService;
-  #messageBus = $state<MessageBusMessage | undefined>();
   #inlineToggleService = new InlineToggleService();
+  messageBus = $state<MessageBus>({ message: undefined });
 
   // TODO: First render, derive options that come from user preference
 
@@ -129,7 +128,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
         ],
         [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.#itemFilterService],
         [CONSTANTS.SVELTE_CONTEXT.LOCATION, ''],
-        [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.#messageBus],
+        [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
         [
           CONSTANTS.SVELTE_CONTEXT.ON_FILTER,
           this.#itemFilterService.onFilter.bind(this.#itemFilterService),
@@ -320,7 +319,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
             iconClass: 'fas fa-angles-down',
             execute: () =>
               // TODO: Use app.messageBus
-              (this.messageBus = {
+              (this.messageBus.message = {
                 tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
@@ -330,7 +329,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
             iconClass: 'fas fa-angles-up',
             execute: () =>
               // TODO: Use app.messageBus
-              (this.messageBus = {
+              (this.messageBus.message = {
                 tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
@@ -835,7 +834,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       debug('Message bus message received', {
         app: this,
         actor: this.actor,
-        message: this.#messageBus,
+        message: this.messageBus,
       });
     });
 

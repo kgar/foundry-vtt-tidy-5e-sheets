@@ -38,14 +38,14 @@
 
   $effect(() => {
     if (
-      messageBus?.tabId === tabId &&
-      messageBus?.message === CONSTANTS.MESSAGE_BUS_EXPAND_ALL
+      messageBus?.message?.tabId === tabId &&
+      messageBus?.message?.message === CONSTANTS.MESSAGE_BUS_EXPAND_ALL
     ) {
       expandCollapseService.set(true);
     }
     if (
-      messageBus?.tabId === tabId &&
-      messageBus?.message === CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL
+      messageBus?.message?.tabId === tabId &&
+      messageBus?.message?.message === CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL
     ) {
       expandCollapseService.set(false);
     }

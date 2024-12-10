@@ -9,7 +9,6 @@ import type {
   ExpandedItemIdToLocationsMap,
   ExpandedItemData,
   MessageBus,
-  MessageBusMessage,
   Utilities,
   ActiveEffect5e,
   NpcAbilitySection,
@@ -84,7 +83,7 @@ export class Tidy5eNpcSheet
   inlineToggleService = new InlineToggleService();
   itemTableTogglesCache: ItemTableToggleCacheService;
   itemFilterService: ItemFilterService;
-  messageBus = $state<MessageBusMessage | undefined>();
+  messageBus = $state<MessageBus>({ message: undefined });
 
   /**
    * The cached concentration information for the character.
@@ -366,7 +365,7 @@ export class Tidy5eNpcSheet
             iconClass: 'fas fa-angles-down',
             execute: () =>
               // TODO: Use app.messageBus
-              (this.messageBus = {
+              (this.messageBus.message = {
                 tabId: CONSTANTS.TAB_NPC_ABILITIES,
                 message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
@@ -376,7 +375,7 @@ export class Tidy5eNpcSheet
             iconClass: 'fas fa-angles-up',
             execute: () =>
               // TODO: Use app.messageBus
-              (this.messageBus = {
+              (this.messageBus.message = {
                 tabId: CONSTANTS.TAB_NPC_ABILITIES,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
@@ -461,7 +460,7 @@ export class Tidy5eNpcSheet
             iconClass: 'fas fa-angles-down',
             execute: () =>
               // TODO: Use app.messageBus
-              (this.messageBus = {
+              (this.messageBus.message = {
                 tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
                 message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
@@ -471,7 +470,7 @@ export class Tidy5eNpcSheet
             iconClass: 'fas fa-angles-up',
             execute: () =>
               // TODO: Use app.messageBus
-              (this.messageBus = {
+              (this.messageBus.message = {
                 tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
@@ -543,7 +542,7 @@ export class Tidy5eNpcSheet
             iconClass: 'fas fa-angles-down',
             execute: () =>
               // TODO: Use app.messageBus
-              (this.messageBus = {
+              (this.messageBus.message = {
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
                 message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
@@ -553,7 +552,7 @@ export class Tidy5eNpcSheet
             iconClass: 'fas fa-angles-up',
             execute: () =>
               // TODO: Use app.messageBus
-              (this.messageBus = {
+              (this.messageBus.message = {
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
@@ -629,7 +628,7 @@ export class Tidy5eNpcSheet
             iconClass: 'fas fa-angles-down',
             execute: () =>
               // TODO: Use app.messageBus
-              (this.messageBus = {
+              (this.messageBus.message = {
                 tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
@@ -639,7 +638,7 @@ export class Tidy5eNpcSheet
             iconClass: 'fas fa-angles-up',
             execute: () =>
               // TODO: Use app.messageBus
-              (this.messageBus = {
+              (this.messageBus.message = {
                 tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),

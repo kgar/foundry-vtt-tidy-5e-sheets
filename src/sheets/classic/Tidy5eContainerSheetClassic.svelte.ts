@@ -18,7 +18,6 @@ import type {
   ExpandedItemIdToLocationsMap,
   ExpandedItemData,
   MessageBus,
-  MessageBusMessage,
   Utilities,
   Tab,
 } from 'src/types/types';
@@ -47,7 +46,7 @@ export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   inlineToggleService = new InlineToggleService();
   itemFilterService: ItemFilterService;
-  messageBus = $state<MessageBusMessage | undefined>();
+  messageBus = $state<MessageBus>({ message: undefined });
 
   constructor(...args: any[]) {
     super(...args);

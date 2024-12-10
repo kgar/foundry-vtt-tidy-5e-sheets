@@ -1,12 +1,8 @@
 ## To Do
 
-- [ ] Fix: World Settings has warning: [svelte] binding_property_non_reactive`bind:value={config.type}` (src/applications/settings/parts/ExhaustionSetting.svelte:33:48) is binding to a non-reactive property
-- [ ] Fix: Settings tabs are blank
-- [ ] Fix: Message Bus is not reactive
 - [ ] Fix: Item Filters are bugged. They don't fully cycle and don't visualize current state after a change.
-- Review warnings and tag all the Svelte 5 / reactivity-related ones for resolution
+- [ ] Review warnings and tag all the Svelte 5 / reactivity-related ones for resolution
 - [ ] Finish more migration tasks that came from recent work
-- [x] Ensure context API where reactivity is expected is using runes / proper closures; it might be time to come up with a common type for stateful primitives sent through context API
 
 ## Stretch, or defer to post V7.3.0
 
@@ -258,3 +254,7 @@ Cry.
 - [x] Check all Tidy Migration applications
   - [x] Migration Selection is not closing after Confirm clicked
   - [x] Fix: MigrationSelection.svelte:90 [svelte] binding_property_non_reactive `bind:checked={selectable.selected}` (src/migrations/migration-selection/MigrationSelection.svelte:93:37) is binding to a non-reactive property
+- [x] Ensure context API where reactivity is expected is using runes / proper closures; it might be time to come up with a common type for stateful primitives sent through context API
+- [x] Fix: World Settings has warning: [svelte] binding_property_non_reactive`bind:value={config.type}` (src/applications/settings/parts/ExhaustionSetting.svelte:33:48) is binding to a non-reactive property
+- [x] Fix: Settings tabs are blank
+- [x] Fix: Message Bus is not reactive

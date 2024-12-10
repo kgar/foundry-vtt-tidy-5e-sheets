@@ -482,7 +482,7 @@ export type SortModeAlphabetical = 'a';
 export type SortModeManual = 'm';
 export type SortMode = SortModeAlphabetical | SortModeManual;
 
-export type MessageBus = MessageBusMessage | undefined;
+export type MessageBus = { message: MessageBusMessage | undefined };
 
 export type MessageBusMessage =
   | { tabId: string; message: typeof CONSTANTS.MESSAGE_BUS_EXPAND_ALL }

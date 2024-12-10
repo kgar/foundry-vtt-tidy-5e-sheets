@@ -1,7 +1,7 @@
 import { FoundryAdapter } from '../../foundry/foundry-adapter';
 import CharacterSheet from './character/CharacterSheet.svelte';
 import { debug, warn } from 'src/utils/logging';
-import { SettingsProvider, settings } from 'src/settings/settings.svelte';
+import { settings } from 'src/settings/settings.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { CONSTANTS } from 'src/constants';
 import {
@@ -15,7 +15,7 @@ import {
   type ExpandedItemIdToLocationsMap,
   type ExpandedItemData,
   type TidyResource,
-  type MessageBusMessage,
+  type MessageBus,
   type Utilities,
   type ActiveEffect5e,
   type ActorInventoryTypes,
@@ -99,7 +99,7 @@ export class Tidy5eCharacterSheet
   inlineToggleService = new InlineToggleService();
   itemTableTogglesCache: ItemTableToggleCacheService;
   itemFilterService: ItemFilterService;
-  messageBus = $state<MessageBusMessage | undefined>();
+  messageBus = $state<MessageBus>({ message: undefined });
 
   /**
    * The cached concentration information for the character.
@@ -373,7 +373,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fas fa-angles-down',
             execute: () =>
               // TODO: Use app.messageBus
-              (this.messageBus = {
+              (this.messageBus.message = {
                 tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
                 message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
@@ -383,7 +383,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fas fa-angles-up',
             execute: () =>
               // TODO: Use app.messageBus
-              (this.messageBus = {
+              (this.messageBus.message = {
                 tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
@@ -460,7 +460,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fas fa-angles-down',
             execute: () =>
               // TODO: Use app.messageBus
-              (this.messageBus = {
+              (this.messageBus.message = {
                 tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
@@ -470,7 +470,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fas fa-angles-up',
             execute: () =>
               // TODO: Use app.messageBus
-              (this.messageBus = {
+              (this.messageBus.message = {
                 tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
@@ -571,7 +571,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fas fa-angles-down',
             execute: () =>
               // TODO: Use app.messageBus
-              (this.messageBus = {
+              (this.messageBus.message = {
                 tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
                 message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
@@ -581,7 +581,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fas fa-angles-up',
             execute: () =>
               // TODO: Use app.messageBus
-              (this.messageBus = {
+              (this.messageBus.message = {
                 tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
@@ -653,7 +653,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fas fa-angles-down',
             execute: () =>
               // TODO: Use app.messageBus
-              (this.messageBus = {
+              (this.messageBus.message = {
                 tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
                 message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
@@ -663,7 +663,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fas fa-angles-up',
             execute: () =>
               // TODO: Use app.messageBus
-              (this.messageBus = {
+              (this.messageBus.message = {
                 tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
@@ -719,7 +719,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fas fa-angles-down',
             execute: () =>
               // TODO: Use app.messageBus
-              (this.messageBus = {
+              (this.messageBus.message = {
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
                 message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
@@ -729,7 +729,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fas fa-angles-up',
             execute: () =>
               // TODO: Use app.messageBus
-              (this.messageBus = {
+              (this.messageBus.message = {
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),

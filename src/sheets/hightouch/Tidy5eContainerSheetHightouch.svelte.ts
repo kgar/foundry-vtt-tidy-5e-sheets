@@ -19,7 +19,7 @@ import type {
   LocationToSearchTextMap,
   ExpandedItemIdToLocationsMap,
   ExpandedItemData,
-  MessageBusMessage,
+  MessageBus,
   Utilities,
   Tab,
 } from 'src/types/types';
@@ -46,7 +46,7 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   inlineToggleService = new InlineToggleService();
   itemFilterService: ItemFilterService;
-  messageBus = $state<MessageBusMessage | undefined>();
+  messageBus = $state<MessageBus>({ message: undefined });
 
   constructor(...args: any[]) {
     super(...args);

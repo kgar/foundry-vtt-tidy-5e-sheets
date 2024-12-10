@@ -9,7 +9,7 @@ import type {
   ExpandedItemIdToLocationsMap,
   VehicleSheetContext,
   Utilities,
-  MessageBusMessage,
+  MessageBus,
   SearchFilterCacheable,
   VehicleCargoSection,
   VehicleFeatureSection,
@@ -75,7 +75,7 @@ export class Tidy5eVehicleSheet
   inlineToggleService = new InlineToggleService();
   itemTableTogglesCache: ItemTableToggleCacheService;
   itemFilterService: ItemFilterService;
-  messageBus = $state<MessageBusMessage | undefined>();
+  messageBus = $state<MessageBus>({ message: undefined });
 
   constructor(...args: any[]) {
     super(...args);
@@ -272,7 +272,7 @@ export class Tidy5eVehicleSheet
             iconClass: 'fas fa-angles-down',
             execute: () =>
               // TODO: Use app.messageBus
-              (this.messageBus = {
+              (this.messageBus.message = {
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
                 message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
@@ -282,7 +282,7 @@ export class Tidy5eVehicleSheet
             iconClass: 'fas fa-angles-up',
             execute: () =>
               // TODO: Use app.messageBus
-              (this.messageBus = {
+              (this.messageBus.message = {
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
