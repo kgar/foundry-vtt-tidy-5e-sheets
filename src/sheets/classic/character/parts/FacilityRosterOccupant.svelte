@@ -21,7 +21,6 @@
 
   let context = $derived(getCharacterSheetContext());
 
-  // kgar-migration-task - does it work? If not, then pursue an object with getter / setter or similar
   let hoveredFacilityOccupant = getContext<ContextPrimitive<string>>(
     CONSTANTS.SVELTE_CONTEXT.HOVERED_FACILITY_OCCUPANT,
   );

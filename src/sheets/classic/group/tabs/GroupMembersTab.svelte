@@ -31,7 +31,6 @@
     context.utilities[tabId]?.utilityToolbarCommands ?? [],
   );
 
-  // kgar-migration-task - does it work? If not, then pursue an object with getter / setter or similar
   let searchResults = createSearchResultsState();
   setSearchResultsContext(searchResults);
 

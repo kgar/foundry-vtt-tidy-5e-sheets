@@ -32,7 +32,6 @@
     value: '',
   });
 
-  // kgar-migration-task - does it work? If not, then pursue an object with getter / setter or similar
   setContext<ContextPrimitive<string>>(
     CONSTANTS.SVELTE_CONTEXT.HOVERED_FACILITY_OCCUPANT,
     hoveredFacilityOccupant,

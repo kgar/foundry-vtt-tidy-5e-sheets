@@ -71,7 +71,6 @@
       {#each accordionItemOpenStates, i}
         {@const itemDescription = context.itemDescriptions[i]}
         {#key itemDescription.content}
-          <!-- kgar-migration-task - figure out once more how to properly track accordion item states so that they're remembered -->
           <div use:manageSecrets>
             <AccordionItem
               bind:open={accordionItemOpenStates[i]}
