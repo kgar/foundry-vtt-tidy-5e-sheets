@@ -26,14 +26,7 @@
 
   let { renderDescriptions = true, onEdit }: Props = $props();
 
-  let editorsContainers: HTMLElement[] = $state([]);
-
   let context = $derived(getItemSheetContext());
-
-  // kgar-migration-task - fix this and tag more like it
-  let accordionItemOpenStates = $state(
-    context.itemDescriptions.map((_, i) => i === 0),
-  );
 
   function manageSecrets(node: HTMLElement) {
     if (!context.item.isOwner) {
@@ -67,11 +60,9 @@
     <Accordion multiple>
       {#each context.itemDescriptions as itemDescription, i (itemDescription.field)}
         {#key itemDescription.content}
-          <div bind:this={editorsContainers[i]} use:manageSecrets>
-            <AccordionItem
-              bind:open={accordionItemOpenStates[i]}
-              class="editor"
-            >
+          <!-- kgar-migration-task - figure out once more how to properly track accordion item states so that they're remembered -->
+          <div use:manageSecrets>
+            <AccordionItem open={i === 0} class="editor">
               {#snippet header()}
                 <span class="flex-1 flex-row justify-content-space-between">
                   {itemDescription.label}
@@ -90,7 +81,7 @@
                       }}
                       tabindex={settings.value.useAccessibleKeyboardSupport
                         ? 0
-                        : -1}><i class="fas fa-edit"></i></button
+                        : -1}><i class="fas fa-feather"></i></button
                     >
                   {/if}
                 </span>

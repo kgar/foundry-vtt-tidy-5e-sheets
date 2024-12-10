@@ -16,7 +16,7 @@
   }: Props = $props();
 
   let sectionItemOpenStates = $state(itemDescriptions.map((_, i) => i === 0));
-  let itemDescriptionToEdit: ItemDescription | undefined = $state();
+  let itemDescriptionToEdit = $state<ItemDescription>();
 
   function handleEdit(detail: {
     document: any;
