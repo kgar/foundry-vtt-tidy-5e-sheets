@@ -1,5 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
+  import type { ContextPrimitive } from 'src/features/reactivity/reactivity.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settings } from 'src/settings/settings.svelte';
   import { getContext, type Snippet } from 'svelte';
@@ -20,7 +21,7 @@
     afterRollButton,
   }: Props = $props();
 
-  const showRoll = getContext<boolean>(
+  const showRoll = getContext<ContextPrimitive<boolean> | undefined>(
     CONSTANTS.CONTEXT_GRID_CELL_HOVER,
   );
 
@@ -31,7 +32,7 @@
   class="item-image"
   class:item-use-button-has-focus={buttonIsFocused}
   style="background-image: url('{imgUrlOverride ?? item.img}')"
-  class:show-roll={!disabled && showRoll}
+  class:show-roll={!disabled && showRoll?.value}
   class:conceal={item.system.identified === false}
 >
   <div
@@ -39,7 +40,7 @@
     aria-hidden="true"
     class="unidentified-glyph no-transition"
     class:conceal={item.system.identified === false}
-    class:hidden={showRoll}
+    class:hidden={showRoll?.value}
   >
     <i class="fas fa-question"></i>
   </div>

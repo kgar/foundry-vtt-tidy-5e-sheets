@@ -1,5 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
+  import type { ContextPrimitive } from 'src/features/reactivity/reactivity.types';
   import { setContext, type Snippet } from 'svelte';
 
   interface Props {
@@ -20,16 +21,16 @@
     ...rest
   }: Props = $props();
 
-  let isHovering = $state(false);
-  
+  let isHovering = $state<ContextPrimitive<boolean>>({ value: false });
+
   setContext(CONSTANTS.CONTEXT_GRID_CELL_HOVER, isHovering);
 
   function mouseEnter(ev: MouseEvent) {
-    isHovering = true;
+    isHovering.value = true;
   }
 
   function mouseLeave(ev: MouseEvent) {
-    isHovering = false;
+    isHovering.value = false;
   }
 </script>
 
