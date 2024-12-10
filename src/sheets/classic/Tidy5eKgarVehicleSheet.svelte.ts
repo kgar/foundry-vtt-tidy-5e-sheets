@@ -44,7 +44,7 @@ import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggl
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { AsyncMutex } from 'src/utils/mutex';
-import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet.svelte';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
@@ -123,16 +123,6 @@ export class Tidy5eVehicleSheet
     let first = true;
 
     this._effectCleanup = $effect.root(() => {
-      $effect(() => {
-        this.itemFilterService.filterData;
-
-        if (first) {
-          return;
-        }
-
-        this.render();
-      });
-
       $effect(() => {
         if (first) return;
         applyMutableSettingAttributesToWindow(

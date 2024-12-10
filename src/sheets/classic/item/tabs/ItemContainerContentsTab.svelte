@@ -11,7 +11,7 @@
   import ButtonMenu from 'src/components/button-menu/ButtonMenu.svelte';
   import ButtonMenuCommand from 'src/components/button-menu/ButtonMenuCommand.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
-  import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+  import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
   import ContainerContentsSections from 'src/sheets/classic/container/ContainerContentsSections.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';

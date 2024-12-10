@@ -35,7 +35,7 @@ import { Tidy5eActorSheetBaseMixin } from 'src/mixins/Tidy5eActorSheetBaseMixin'
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { Container } from 'src/features/containers/Container';
-import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
 import { GroupSheetRuntime } from 'src/runtime/GroupSheetRuntime';
@@ -809,16 +809,6 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
 
   _configureEffects() {
     let first = true;
-
-    $effect(() => {
-      this.#itemFilterService.filterData;
-
-      if (first) {
-        return;
-      }
-
-      this.render();
-    });
 
     $effect(() => {
       settings;

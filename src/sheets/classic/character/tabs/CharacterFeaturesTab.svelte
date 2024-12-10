@@ -30,7 +30,7 @@
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
-  import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+  import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
   import type { Item5e } from 'src/types/item.types';
   import ClassicControls from 'src/sheets/classic/shared/ClassicControls.svelte';
   import LevelUpDropdown from 'src/sheets/classic/actor/LevelUpDropdown.svelte';

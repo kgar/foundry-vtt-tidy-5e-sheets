@@ -1,11 +1,11 @@
 ## To Do
 
-- [ ] Fix: Item Filters are bugged. They don't fully cycle and don't visualize current state after a change.
 - [ ] Review warnings and tag all the Svelte 5 / reactivity-related ones for resolution
 - [ ] Finish more migration tasks that came from recent work
 
 ## Stretch, or defer to post V7.3.0
 
+- [ ] Overhaul: Item Filter Service is a mess. Is there a way to consolidate all functionality to the ItemFilterService so that it can serve up reactive filters all the way through?
 - [ ] Optimize: Section Config prep / setup
   - Section config is a little cumbersome to deal with right now. It is requiring a `sections` param on the utility toolbar command params and a duplicate set of section data for container.
   - Can we isolate the actual section preparation, indpependent of the item preparation for those sections? Can that be shared?
@@ -258,3 +258,4 @@ Cry.
 - [x] Fix: World Settings has warning: [svelte] binding_property_non_reactive`bind:value={config.type}` (src/applications/settings/parts/ExhaustionSetting.svelte:33:48) is binding to a non-reactive property
 - [x] Fix: Settings tabs are blank
 - [x] Fix: Message Bus is not reactive
+- [x] Fix: Item Filters are bugged. They don't fully cycle and don't visualize current state after a change.

@@ -16,7 +16,7 @@
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { TidyFlags } from 'src/foundry/TidyFlags';
-  import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+  import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
   import Currency from 'src/sheets/classic/actor/Currency.svelte';
   import InventoryGrid from 'src/sheets/classic/actor/InventoryGrid.svelte';
   import InventoryList from 'src/sheets/classic/actor/InventoryList.svelte';

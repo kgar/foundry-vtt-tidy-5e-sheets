@@ -21,7 +21,7 @@
   import ContainerPanel from 'src/sheets/classic/shared/ContainerPanel.svelte';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
-  import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+  import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
@@ -39,7 +39,8 @@
 
   let { tabId }: Props = $props();
 
-  let context = $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
+  let context =
+    $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
 
   let inventory = $derived(
     SheetSections.configureInventory(
@@ -118,9 +119,7 @@
         ? 'container-panel-expanded'
         : ''}"
     >
-      <ContainerPanel
-        containerPanelItems={context.containerPanelItems}
-      />
+      <ContainerPanel containerPanelItems={context.containerPanelItems} />
     </ExpandableContainer>
     {#each inventory as section (section.key)}
       {@const visibleItemCount = ItemVisibility.countVisibleItems(

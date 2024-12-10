@@ -26,7 +26,7 @@ import ContainerSheet from './item/ContainerSheet.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { Container } from 'src/features/containers/Container';
-import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';

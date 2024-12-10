@@ -1,4 +1,4 @@
-import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import type { DocumentFilters, ItemFilter } from 'src/runtime/item/item.types';
 import type { Item5e } from 'src/types/item.types';
 import { isNil } from 'src/utils/data';
@@ -28,7 +28,6 @@ type ItemFilterGroupName = string;
 type ItemFilterData = Record<ItemFilterGroupName, ItemFilters>;
 
 export class ItemFilterService {
-  // Maybe svelte runes will make this easier?
   private _filterData = $state<ItemFilterData>()!;
 
   private _document: any;
@@ -79,14 +78,18 @@ export class ItemFilterService {
     filterName: ItemFilterName,
     value: boolean | null
   ) {
-    let group = this._getGroup(filterGroup);
+    try {
+      let group = this._getGroup(filterGroup);
 
-    if (value === null) {
-      delete group[filterName];
-      return;
+      if (value === null) {
+        delete group[filterName];
+        return;
+      }
+
+      group[filterName] = value;
+    } finally {
+      this._document.render();
     }
-
-    group[filterName] = value;
   }
 
   onFilterClearAll(filterGroup?: ItemFilterGroupName) {
@@ -95,6 +98,8 @@ export class ItemFilterService {
     } else {
       this._filterData = {};
     }
+
+    this._document.render();
   }
 
   private _getGroup(filterGroup: ItemFilterGroupName) {

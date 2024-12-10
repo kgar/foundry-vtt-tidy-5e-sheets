@@ -53,7 +53,7 @@ import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggl
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { AsyncMutex } from 'src/utils/mutex';
-import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet.svelte';
 import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSections';
 import { SheetSections } from 'src/features/sections/SheetSections';
@@ -153,16 +153,6 @@ export class Tidy5eCharacterSheet
     let first = true;
 
     this._effectCleanup = $effect.root(() => {
-      $effect(() => {
-        this.itemFilterService.filterData;
-
-        if (first) {
-          return;
-        }
-
-        this.render();
-      });
-
       $effect(() => {
         if (first) return;
         applyMutableSettingAttributesToWindow(

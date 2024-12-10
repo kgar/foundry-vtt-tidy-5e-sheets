@@ -19,7 +19,7 @@
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
   import { Actions } from 'src/features/actions/actions.svelte';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
-  import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+  import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetSections } from 'src/features/sections/SheetSections';
