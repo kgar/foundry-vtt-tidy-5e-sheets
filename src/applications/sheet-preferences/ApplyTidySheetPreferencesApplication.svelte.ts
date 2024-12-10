@@ -29,6 +29,8 @@ const supportedSheetClasses: string[] = [
 ];
 
 export class ApplyTidySheetPreferencesApplication extends SvelteFormApplicationBase {
+  sheetOptions = $state<SheetPreferenceOption[]>([]);
+
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
       width: 650,
@@ -40,10 +42,11 @@ export class ApplyTidySheetPreferencesApplication extends SvelteFormApplicationB
   }
 
   createComponent(node: HTMLElement): Record<string, any> {
+    this.sheetOptions = this.getTidySheetPreferenceOptions();
     return mount(ApplyTidySheetPreferences, {
       target: node,
       props: {
-        options: this.getTidySheetPreferenceOptions(),
+        options: this.sheetOptions,
         onConfirm: this._onConfirm.bind(this),
       },
     });
@@ -105,13 +108,13 @@ export class ApplyTidySheetPreferencesApplication extends SvelteFormApplicationB
     return sheetClassOptions;
   }
 
-  private async _onConfirm(options: SheetPreferenceOption[]): Promise<void> {
+  private async _onConfirm(): Promise<void> {
     try {
       // We intend to adjust the existing settings.
       let sheetSettings = this.getSheetClassesSetting();
 
       // Evaluate each option.
-      options.forEach((o) => {
+      this.sheetOptions.forEach((o) => {
         const compositeSettingKey = `${o.documentName}.${o.subType}`;
 
         // When selected, simply assign the Tidy class to the appropriate subtype of the appropriate document name

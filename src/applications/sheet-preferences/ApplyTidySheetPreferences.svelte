@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { type SheetPreferenceOption } from './ApplyTidySheetPreferencesApplication';
-  import { ApplyTidySheetPreferencesApplication } from './ApplyTidySheetPreferencesApplication';
+  import { type SheetPreferenceOption } from './ApplyTidySheetPreferencesApplication.svelte';
+  import { ApplyTidySheetPreferencesApplication } from './ApplyTidySheetPreferencesApplication.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TidyTable from 'src/components/table/TidyTable.svelte';
   import TidyTableHeaderRow from 'src/components/table/TidyTableHeaderRow.svelte';
@@ -86,7 +86,7 @@
         total: totalSelected,
       })}
     </p>
-    <button type="button" onclick={() => onConfirm(options)}
+    <button type="button" onclick={() => onConfirm()}
       >{localize('TIDY5E.ButtonConfirm.Text')}</button
     >
   </footer>

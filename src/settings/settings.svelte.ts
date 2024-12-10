@@ -15,7 +15,7 @@ import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { BulkMigrationsApplication } from 'src/migrations/BulkMigrationsApplication';
 import { AboutApplication } from 'src/applications/settings/about/AboutApplication';
-import { ApplyTidySheetPreferencesApplication } from 'src/applications/sheet-preferences/ApplyTidySheetPreferencesApplication';
+import { ApplyTidySheetPreferencesApplication } from 'src/applications/sheet-preferences/ApplyTidySheetPreferencesApplication.svelte';
 import { getDefaultExhaustionConfig } from 'src/features/exhaustion/exhaustion';
 
 export type Tidy5eSettings = {
