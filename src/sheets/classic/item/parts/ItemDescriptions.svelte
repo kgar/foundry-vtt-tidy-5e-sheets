@@ -28,6 +28,16 @@
 
   let context = $derived(getItemSheetContext());
 
+  let accordionItemOpenStates = $state<boolean[]>([]);
+
+  $effect(() => {
+    if (context.itemDescriptions.length !== accordionItemOpenStates.length) {
+      accordionItemOpenStates = context.itemDescriptions.map(
+        (_, i) => accordionItemOpenStates[i] ?? i === 0,
+      );
+    }
+  });
+
   function manageSecrets(node: HTMLElement) {
     if (!context.item.isOwner) {
       return;
@@ -57,12 +67,16 @@
 
 {#if renderDescriptions}
   <div class="item-descriptions-container">
-    <Accordion multiple>
-      {#each context.itemDescriptions as itemDescription, i (itemDescription.field)}
+    <Accordion>
+      {#each accordionItemOpenStates, i}
+        {@const itemDescription = context.itemDescriptions[i]}
         {#key itemDescription.content}
           <!-- kgar-migration-task - figure out once more how to properly track accordion item states so that they're remembered -->
           <div use:manageSecrets>
-            <AccordionItem open={i === 0} class="editor">
+            <AccordionItem
+              bind:open={accordionItemOpenStates[i]}
+              class="editor"
+            >
               {#snippet header()}
                 <span class="flex-1 flex-row justify-content-space-between">
                   {itemDescription.label}
