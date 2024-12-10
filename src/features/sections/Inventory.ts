@@ -19,6 +19,10 @@ export class Inventory {
       .map((entry) => entry[0]);
   }
 
+  static isInventoryType(item: Item5e) {
+    return !!CONFIG.Item.dataModels[item.type]?.metadata?.inventoryItem;
+  }
+
   static getDefaultInventorySections(
     options: Partial<InventorySection> = {}
   ): Record<string, InventorySection> {
