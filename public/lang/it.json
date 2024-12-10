@@ -773,7 +773,8 @@
         },
         "Tooltip": "Specifica una sezione personalizzata per questo elemento quando viene inserito in un foglio attore o lascialo vuoto per il comportamento predefinito.",
         "ActionLabel": "Sezione Azioni",
-        "ActionTooltip": "Specifica una sezione personalizzata per questo elemento quando viene inserito nella scheda Azioni oppure lasciala vuota per il comportamento predefinito."
+        "ActionTooltip": "Specifica una sezione personalizzata per questo elemento quando viene inserito nella scheda Azioni oppure lasciala vuota per il comportamento predefinito.",
+        "LabelPl": "Sezioni"
     },
     "TIDY5E.LocalizationTestKey": "Tasto Prova Localizzazione",
     "TIDY5E.UseDefaultDialog": {
@@ -826,5 +827,12 @@
     "TIDY5E.Facilities.RosterMember.Label": "{actorName} - {facilityName}",
     "TIDY5E.Facilities.Defenders.Label": "Difensori",
     "TIDY5E.Facilities.ContextMenuActionRemove": "Rimuovi da {facilityName}",
-    "TIDY5E.Facilities.Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}"
+    "TIDY5E.Facilities.Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}",
+    "TIDY5E.ExpandCollapseMenu.OptionTitle": "Comportamento Espandi/Comprimi",
+    "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "Sezioni Primo Livello",
+    "TIDY5E.ExpandCollapseMenu.OptionAllSections": "Tutte le sezioni",
+    "TIDY5E.SortMenu.OptionPrepared": "Preparato",
+    "TIDY5E.SortMenu.OptionEquipped": "Equipaggiato",
+    "TIDY5E.SortMenu.OptionAlphabetical": "Alfabetico (A-Z)",
+    "TIDY5E.SortMenu.OptionManual": "Manuale"
 }
