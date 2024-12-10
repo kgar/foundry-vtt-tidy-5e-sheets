@@ -988,7 +988,7 @@ export class Tidy5eCharacterSheet
       canCreate: false,
       dataset: {},
       effects: [],
-      key: 'tidy.effects',
+      key: 'tidy-favorite-effects',
       label: 'DND5E.Effects',
       show: true,
     };
@@ -1027,7 +1027,7 @@ export class Tidy5eCharacterSheet
     const activitiesSection: TypedActivityFavoriteSection = {
       activities: [],
       dataset: {},
-      key: 'tidy.activities',
+      key: 'tidy-favorite-activities',
       label: 'DND5E.ACTIVITY.Title.other',
       show: true,
       type: CONSTANTS.FAVORITES_SECTION_TYPE_ACTIVITY,
@@ -1292,7 +1292,7 @@ export class Tidy5eCharacterSheet
     let facilitiesSection: FacilitySection = {
       dataset: {},
       items: favorites.facilities,
-      key: 'tidy.bastion.facilities',
+      key: 'tidy-favorite-bastion-facilities',
       label: bastionFacilitiesLabel,
       show: true,
     };
