@@ -1,5 +1,5 @@
 import SvelteFormApplicationBase from 'src/applications/SvelteFormApplicationBase';
-import type { SvelteComponent } from 'svelte';
+import { mount } from 'svelte';
 import Info from './About.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
@@ -18,8 +18,8 @@ export class AboutApplication extends SvelteFormApplicationBase {
     return FoundryAdapter.localize('TIDY5E.Settings.About.dialogTitle');
   }
 
-  createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
-    return new Info({
+  createComponent(node: HTMLElement): Record<string, any> {
+    return mount(Info, {
       target: node,
     });
   }

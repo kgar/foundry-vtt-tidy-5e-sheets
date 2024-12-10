@@ -2,8 +2,12 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ItemControl from './ItemControl.svelte';
 
-  export let ctx: any;
-  export let item: any;
+  interface Props {
+    ctx: any;
+    item: any;
+  }
+
+  let { ctx, item }: Props = $props();
 
   function toggleEquipped() {
     const value = FoundryAdapter.getProperty(item, 'system.equipped');

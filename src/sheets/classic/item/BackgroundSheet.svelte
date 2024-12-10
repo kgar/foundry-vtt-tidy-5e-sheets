@@ -3,20 +3,20 @@
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import ItemProfilePicture from './parts/ItemProfilePicture.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
-  import type { ItemSheetContext } from 'src/types/item.types';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import Source from '../shared/Source.svelte';
   import { CONSTANTS } from 'src/constants';
+  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<ItemSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = $derived(getItemSheetContext());
 
-  $: appId = $context.document.id;
+  let appId = $derived(context.document.id);
 
-  export let selectedTabId: string = 'description';
+  interface Props {
+    selectedTabId?: string;
+  }
+
+  let { selectedTabId = $bindable('description') }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -34,32 +34,32 @@
       <TextInput
         id="{appId}-name"
         field="name"
-        document={$context.item}
-        value={$context.item.name}
-        attributes={{ 'data-tidy-item-name': $context.item.name }}
+        document={context.item}
+        value={context.item.name}
+        attributes={{ 'data-tidy-item-name': context.item.name }}
         placeholder={localize('DND5E.BackgroundName')}
-        disabled={!$context.editable}
-        title={$context.item.name}
+        disabled={!context.editable}
+        title={context.item.name}
       />
     </h1>
 
     <div class="item-subtitle">
-      <h4 class="item-type">{$context.itemType ?? ''}</h4>
-      <span class="item-status">{$context.itemStatus ?? ''}</span>
+      <h4 class="item-type">{context.itemType ?? ''}</h4>
+      <span class="item-status">{context.itemStatus ?? ''}</span>
     </div>
 
     <ul class="summary flexrow">
       <li class="flex-row">
         <Source
-          document={$context.item}
+          document={context.item}
           keyPath="system.source"
-          editable={$context.editable}
+          editable={context.editable}
         />
       </li>
     </ul>
   </div>
 </header>
-<Tabs bind:selectedTabId tabs={$context.tabs} />
+<Tabs bind:selectedTabId tabs={context.tabs} sheet={context.item.sheet} />
 <section class="tidy-sheet-body">
-  <TabContents tabs={$context.tabs} {selectedTabId} />
+  <TabContents tabs={context.tabs} {selectedTabId} />
 </section>

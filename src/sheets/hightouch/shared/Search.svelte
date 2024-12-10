@@ -2,8 +2,12 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { isNil } from 'src/utils/data';
 
-  export let searchCriteria: string = '';
-  export let disabled = false;
+  interface Props {
+    searchCriteria?: string;
+    disabled?: boolean;
+  }
+
+  let { searchCriteria = $bindable(''), disabled = false }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -19,10 +23,10 @@
     />
   </span>
   {#if !isNil(searchCriteria, '')}
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <!-- svelte-ignore a11y-missing-attribute -->
-    <a class="cancel-search" on:click={() => (searchCriteria = '')}>
+    <!-- svelte-ignore a11y_click_events_have_key_events -->
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
+    <!-- svelte-ignore a11y_missing_attribute -->
+    <a class="cancel-search" onclick={() => (searchCriteria = '')}>
       <i class="fas fa-x fa-fw"></i>
     </a>
   {/if}

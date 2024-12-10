@@ -3,7 +3,11 @@
   import SpellOpenCastActivityControl from './SpellOpenCastActivityControl.svelte';
   import ItemDeleteControl from './ItemDeleteControl.svelte';
 
-  export let item: Item5e;
+  interface Props {
+    item: Item5e;
+  }
+
+  let { item }: Props = $props();
 </script>
 
 {#if item.canDelete || !item.system.linkedActivity}

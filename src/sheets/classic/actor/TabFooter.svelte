@@ -1,11 +1,18 @@
 <script lang="ts">
-  export let cssClass: string | null = null;
-  export let mode: 'vertical' | 'horizontal';
-  export let appV2: boolean = false;
+  import type { Snippet } from 'svelte';
+
+  interface Props {
+    cssClass?: string | null;
+    mode: 'vertical' | 'horizontal';
+    appV2?: boolean;
+    children?: Snippet;
+  }
+
+  let { cssClass = null, mode, appV2 = false, children }: Props = $props();
 </script>
 
 <footer class="tab-footer {cssClass} {mode}" class:app-v2={appV2}>
-  <slot />
+  {@render children?.()}
 </footer>
 
 <style lang="scss">

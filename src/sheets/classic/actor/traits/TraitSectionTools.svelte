@@ -1,17 +1,18 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
+  import { settings } from 'src/settings/settings.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
 
-  export let tools: [key: string, value: any][] = [];
+  interface Props {
+    tools?: [key: string, value: any][];
+  }
 
-  let context = getContext<Readable<ActorSheetContextV1>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let { tools = [] }: Props = $props();
+
+  let context = $derived(getSheetContext<ActorSheetContextV1>());
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -26,33 +27,39 @@
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TOOL_CONTAINER}
       data-key={key}
     >
-      {#if $context.editable && !$context.lockSensitiveFields}
+      {#if context.editable && !context.lockSensitiveFields}
         {@const activeEffectApplied =
           ActiveEffectsHelper.isActiveEffectAppliedToField(
-            $context.actor,
+            context.actor,
             `system.tools.${key}.value`,
           )}
         <button
           type="button"
           class="tool-proficiency-toggle inline-transparent-button"
           title={tool.hover}
-          on:click|stopPropagation|preventDefault={(event) =>
+          onclick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
             FoundryAdapter.cycleProficiency(
-              $context.actor,
+              context.actor,
               key,
               tool.value,
               'tools',
-            )}
-          on:contextmenu|stopPropagation|preventDefault={(event) =>
+            );
+          }}
+          oncontextmenu={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
             FoundryAdapter.cycleProficiency(
-              $context.actor,
+              context.actor,
               key,
               tool.value,
               'tools',
               true,
-            )}
+            );
+          }}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TOOL_PROFICIENCY_TOGGLE}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+          tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
           disabled={activeEffectApplied}
           data-tooltip={activeEffectApplied
             ? localize('DND5E.ActiveEffectOverrideWarning')
@@ -66,14 +73,13 @@
         >
       {/if}
 
-      {#if $context.editable}
+      {#if context.editable}
         <button
           type="button"
           class="tool-check-roller inline-transparent-button rollable"
-          on:click={(event) =>
-            $context.actor.rollToolCheck({ tool: key, event })}
+          onclick={(event) => context.actor.rollToolCheck({ tool: key, event })}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TOOL_ROLLER}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+          tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
         >
           {tool.label}
         </button>
@@ -83,18 +89,21 @@
         </span>
       {/if}
 
-      {#if $context.unlocked}
+      {#if context.unlocked}
         <button
           type="button"
           class="tool-proficiency-editor inline-icon-button"
           title={localize('DND5E.ToolConfigure')}
-          on:click|stopPropagation|preventDefault={() =>
-            FoundryAdapter.renderSkillToolConfig($context.actor, 'tools', key)}
+          onclick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            FoundryAdapter.renderSkillToolConfig(context.actor, 'tools', key);
+          }}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
             .TOOL_CONFIGURATION_CONTROL}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+          tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
         >
-          <i class="fas fa-cog" />
+          <i class="fas fa-cog"></i>
         </button>
       {/if}
     </li>

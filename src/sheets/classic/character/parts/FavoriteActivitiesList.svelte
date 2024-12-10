@@ -1,12 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import {
-    type ActivitySection,
-    type CharacterSheetContext,
-  } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { type ActivitySection } from 'src/types/types';
   import type { Activity5e } from 'src/foundry/dnd5e.types';
   import { Activities } from 'src/features/activities/activities';
   import TidyTable from 'src/components/table/TidyTable.svelte';
@@ -15,13 +10,16 @@
   import TidyTableRow from 'src/components/table/TidyTableRow.svelte';
   import TidyTableCell from 'src/components/table/TidyTableCell.svelte';
   import ActivityUses from 'src/components/item-list/ActivityUses.svelte';
+  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = $derived(getCharacterSheetContext());
 
-  export let section: ActivitySection;
-  export let visibleActivityUuidSubset: Set<string>;
+  interface Props {
+    section: ActivitySection;
+    visibleActivityUuidSubset: Set<string>;
+  }
+
+  let { section, visibleActivityUuidSubset }: Props = $props();
 
   const gridTemplateColumns = `
     /* Name */
@@ -45,11 +43,11 @@
   }
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<!-- svelte-ignore a11y-missing-attribute -->
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<!-- svelte-ignore a11y_missing_attribute -->
 <TidyTable key={section.key} class="favorite-activities" {gridTemplateColumns}>
-  <svelte:fragment slot="header">
+  {#snippet header()}
     <TidyTableHeaderRow>
       <TidyTableHeaderCell primary={true}>
         {localize(section.label ?? 'DND5E.Effect')}
@@ -58,7 +56,7 @@
         {localize('DOCUMENT.Item')}
       </TidyTableHeaderCell>
       <TidyTableHeaderCell>
-        <i class="fas fa-bolt" />
+        <i class="fas fa-bolt"></i>
       </TidyTableHeaderCell>
       <TidyTableHeaderCell>
         {localize('DND5E.Usage')}
@@ -68,8 +66,8 @@
         <i class="fas fa-shield"></i>
       </TidyTableHeaderCell>
     </TidyTableHeaderRow>
-  </svelte:fragment>
-  <svelte:fragment slot="body">
+  {/snippet}
+  {#snippet body()}
     {#each section.activities as activity (activity.uuid)}
       <TidyTableRow
         rowClass="activity"
@@ -77,18 +75,20 @@
           'data-activity-id': activity.id,
           'data-configurable': Activities.isConfigurable(activity),
           'data-item-id': activity.item.id,
+          'data-info-card': 'activity',
+          'data-info-card-entity-uuid': activity.uuid,
         }}
-        on:mousedown={(ev) => FoundryAdapter.editOnMiddleClick(ev, activity)}
+        onmousedown={(ev) => FoundryAdapter.editOnMiddleClick(ev, activity)}
         hidden={visibleActivityUuidSubset !== null &&
           !visibleActivityUuidSubset.has(activity.uuid)}
       >
         <TidyTableCell primary={true}>
           <a
             class="item-table-image-button"
-            on:click={(event) => $context.editable && activity.use({ event })}
+            onclick={(event) => context.editable && activity.use({ event })}
           >
             <img src={activity.img} />
-            <i class="fa fa-dice-d20 roll-indicator" />
+            <i class="fa fa-dice-d20 roll-indicator"></i>
           </a>
 
           <span
@@ -102,9 +102,9 @@
         <TidyTableCell>
           <a
             class="activity-item-link truncate align-self-stretch align-content-center flex-1"
-            class:highlight-on-hover={$context.editable}
-            on:click={(ev) =>
-              $context.editable && activity.item.sheet.render(true)}
+            class:highlight-on-hover={context.editable}
+            onclick={(ev) =>
+              context.editable && activity.item.sheet.render(true)}
             title={activity.item.name}
           >
             {activity.item.name}
@@ -138,5 +138,5 @@
         </TidyTableCell>
       </TidyTableRow>
     {/each}
-  </svelte:fragment>
+  {/snippet}
 </TidyTable>

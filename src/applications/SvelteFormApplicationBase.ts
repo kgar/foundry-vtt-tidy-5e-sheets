@@ -1,9 +1,9 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { SvelteComponent } from 'svelte';
+import { unmount } from 'svelte';
 
 export default abstract class SvelteFormApplicationBase extends FormApplication {
-  component: SvelteComponent | undefined;
+  component: Record<string, any> | undefined;
   staticExtraApplicationClasses: string[] = [];
 
   constructor(...args: any[]) {
@@ -20,6 +20,7 @@ export default abstract class SvelteFormApplicationBase extends FormApplication 
         CONSTANTS.SHEET_LAYOUT_CLASSIC,
       ],
       submitOnClose: false,
+      closeOnSubmit: false,
       minimizable: true,
       popOut: true,
       resizable: true,
@@ -36,16 +37,21 @@ export default abstract class SvelteFormApplicationBase extends FormApplication 
     this.component = this.createComponent(node);
   }
 
-  abstract createComponent(node: HTMLElement): SvelteComponent;
+  abstract createComponent(node: HTMLElement): Record<string, any>;
 
   close(options: unknown = {}) {
-    this.component?.$destroy();
+    if (this.component) {
+      unmount(this.component);
+    }
+    this.component = undefined;
     return super.close(options);
   }
 
   render(force = false, ...args: any[]) {
     if (force) {
-      this.component?.$destroy();
+      if (this.component) {
+        unmount(this.component);
+      }
       super.render(force, ...args);
       return this;
     }

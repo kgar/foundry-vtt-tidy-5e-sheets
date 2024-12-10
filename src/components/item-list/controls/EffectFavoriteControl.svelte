@@ -3,12 +3,20 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ActiveEffectContext, Actor5e } from 'src/types/types';
 
-  export let effect: ActiveEffectContext;
-  export let actor: Actor5e;
+  interface Props {
+    effect: ActiveEffectContext;
+    actor: Actor5e;
+  }
 
-  $: active = FoundryAdapter.isActiveEffectContextFavorited(effect, actor);
-  $: title = FoundryAdapter.localize(
-    active ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
+  let { effect, actor }: Props = $props();
+
+  let active = $derived(
+    FoundryAdapter.isActiveEffectContextFavorited(effect, actor),
+  );
+  let title = $derived(
+    FoundryAdapter.localize(
+      active ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
+    ),
   );
 </script>
 

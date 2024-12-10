@@ -34,13 +34,13 @@
 </h2>
 <p>{@html localize('TIDY5E.Settings.Migrations.v1.originalExplanation')}</p>
 <div class="flex-row extra-small-gap">
-  <button type="button" on:click={() => confirm(migrateOgFlagsToV1)}>
+  <button type="button" onclick={() => confirm(migrateOgFlagsToV1)}>
     <i class="fas fa-flag"></i>
     {@html localize(
       'TIDY5E.Settings.Migrations.migrateDocumentFlagsButtonLabel',
     )}
   </button>
-  <button type="button" on:click={() => confirm(migrateOgSettingsToV1)}>
+  <button type="button" onclick={() => confirm(migrateOgSettingsToV1)}>
     <i class="fas fa-cog"></i>
     {@html localize('TIDY5E.Settings.Migrations.migrateGmSettingsButtonLabel')}
   </button>

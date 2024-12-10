@@ -1,8 +1,12 @@
 <script lang="ts">
   import type { Actor5e } from 'src/types/types';
 
-  export let occupants: Actor5e[] = [];
-  export let title: string = '';
+  interface Props {
+    occupants?: Actor5e[];
+    title?: string;
+  }
+
+  let { occupants = [], title = '' }: Props = $props();
 
   let tooltip: HTMLElement;
 

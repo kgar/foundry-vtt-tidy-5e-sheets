@@ -54,7 +54,6 @@
     "TIDY5E.Search": "Buscar",
     "TIDY5E.SearchClear": "Borrar búsqueda",
     "TIDY5E.SearchHint": "Comienza a escribir lo que estás buscando",
-    "TIDY5E.ItemCardsKeyHint": "Mantén la tecla para interactuar con la carta",
     "TIDY5E.ItemCardsMouseHint": "Botón central del ratón para ver/editar el objeto",
     "TIDY5E.AbbrMod": "Mod",
     "TIDY5E.AbbrSavingThrow": "Salvación",
@@ -140,10 +139,6 @@
     "TIDY5E.Settings.ItemCardsDelay": {
         "name": "Retardo en mostrar las tarjetas de información del objeto",
         "hint": "La Tarjeta de Información se mostrará al mantener el ratón sobre un objeto durante el valor en milisegundos (0 = no hay retardo, 300 es el valor por defecto)."
-    },
-    "TIDY5E.Settings.ItemCardsFixKey": {
-        "name": "Tecla a mantener para la interacción con la Tarjeta de Información",
-        "hint": "Introduce una tecla (p. ej: x) para interactuar con la tarjeta de información del objeto. Puede tratarse de cualquier tecla excepto las teclas de función (ctrl, alt, etc.)."
     },
     "TIDY5E.Settings.DefaultTheme": {
         "name": "Tema de color predeterminado",

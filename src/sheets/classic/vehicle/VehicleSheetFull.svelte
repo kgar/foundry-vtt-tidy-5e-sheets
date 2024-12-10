@@ -1,12 +1,7 @@
 <script lang="ts">
-  import type {
-    DropdownListOption,
-    VehicleSheetContext,
-  } from 'src/types/types';
+  import type { DropdownListOption } from 'src/types/types';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import SheetEditModeToggle from 'src/sheets/classic/actor/SheetEditModeToggle.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import VehicleProfile from './parts/VehicleProfile.svelte';
@@ -19,57 +14,63 @@
   import AcShieldVehicle from '../actor/AcShieldVehicle.svelte';
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
   import AttributeBlock from '../actor/AttributeBlock.svelte';
-  import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
-  import { settingStore } from 'src/settings/settings';
+  import { settings } from 'src/settings/settings.svelte';
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import InlineSource from '../shared/InlineSource.svelte';
-  import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
+  import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication.svelte';
   import ActorName from '../actor/ActorName.svelte';
+  import AttachedInfoCard from 'src/components/item-info-card/AttachedInfoCard.svelte';
+  import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let selectedTabId: string;
+  let selectedTabId: string = $state('');
 
-  let context = getContext<Readable<VehicleSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  let context = $derived(getVehicleSheetContext());
+
+  let sizes = $derived(
+    Object.entries(context.config.actorSizes).map(
+      ([key, size]: [string, any]) => ({
+        value: key,
+        text: size.label,
+      }),
+    ) satisfies DropdownListOption[],
   );
 
-  $: sizes = <DropdownListOption[]>Object.entries(
-    $context.config.actorSizes,
-  ).map(([key, size]: [string, any]) => ({
-    value: key,
-    text: size.label,
-  }));
+  let currentSize: DropdownListOption = $derived({
+    value: context.system.traits.size,
+    text: context.config.actorSizes[context.system.traits.size]?.label,
+  });
 
-  let currentSize: DropdownListOption;
-  $: currentSize = {
-    value: $context.system.traits.size,
-    text: $context.config.actorSizes[$context.system.traits.size]?.label,
-  };
+  let vehicleTypes = $derived(
+    Object.entries(context.config.vehicleTypes).map(
+      ([key, label]: [string, any]) => ({
+        value: key,
+        text: label,
+      }),
+    ) satisfies DropdownListOption[],
+  );
 
-  $: vehicleTypes = <DropdownListOption[]>Object.entries(
-    $context.config.vehicleTypes,
-  ).map(([key, label]: [string, any]) => ({
-    value: key,
-    text: label,
-  }));
+  let currentVehicleType: DropdownListOption = $derived({
+    value: context.system.vehicleType,
+    text: context.config.vehicleTypes[context.system.vehicleType],
+  });
 
-  let currentVehicleType: DropdownListOption;
-  $: currentVehicleType = {
-    value: $context.system.vehicleType,
-    text: $context.config.vehicleTypes[$context.system.vehicleType],
-  };
-
-  $: abilities = Object.entries<any>($context.abilities);
+  let abilities = $derived(Object.entries<any>(context.abilities));
 
   const localize = FoundryAdapter.localize;
 </script>
 
-{#if $settingStore.itemCardsForNpcs}
-  <ItemInfoCard />
+{#if settings.value.itemCardsForNpcs}
+  <AttachedInfoCard
+    sheet={context.actor.sheet}
+    floating={settings.value.itemCardsAreFloating}
+    delay={settings.value.itemCardsDelay}
+    inspectKey={settings.value.itemCardsFixKey}
+  />
 {/if}
 
-{#if $context.viewableWarnings.length}
-  <ActorWarnings warnings={$context.viewableWarnings} />
+{#if context.viewableWarnings.length}
+  <ActorWarnings warnings={context.viewableWarnings} />
 {/if}
 <header>
   <div class="flex-0">
@@ -94,13 +95,13 @@
     />
     <div class="origin-summary">
       <div class="flex-row extra-small-gap">
-        {#if $context.editable}
+        {#if context.editable}
           <InlineTextDropdownList
             options={sizes}
             selected={currentSize}
-            on:optionClicked={(event) =>
-              $context.actor.update({
-                'system.traits.size': event.detail.value,
+            onOptionClicked={(option) =>
+              context.actor.update({
+                'system.traits.size': option.value,
               })}
             title={localize('DND5E.Size')}
           />
@@ -110,13 +111,13 @@
       </div>
       <span>&#8226;</span>
       <div class="flex-row extra-small-gap">
-        {#if $context.editable}
+        {#if context.editable}
           <InlineTextDropdownList
             options={vehicleTypes}
             selected={currentVehicleType}
-            on:optionClicked={(event) =>
-              $context.actor.update({
-                'system.vehicleType': event.detail.value,
+            onOptionClicked={(option) =>
+              context.actor.update({
+                'system.vehicleType': option,
               })}
             title={localize('DND5E.VehicleType')}
           />
@@ -127,38 +128,38 @@
         {/if}
       </div>
       <span>&#8226;</span>
-      {#key $context.lockSensitiveFields}
+      {#key context.lockSensitiveFields}
         <DelimitedTruncatedContent cssClass="flex-1">
           <ContentEditableFormField
             element="span"
-            document={$context.actor}
+            document={context.actor}
             field="system.traits.dimensions"
-            value={$context.system.traits.dimensions}
-            title={$context.system.traits.dimensions}
-            editable={$context.editable && !$context.lockSensitiveFields}
+            value={context.system.traits.dimensions}
+            title={context.system.traits.dimensions}
+            editable={context.editable && !context.lockSensitiveFields}
             placeholder={localize('DND5E.Dimensions')}
             selectOnFocus={true}
           />
           <InlineSource
-            document={$context.actor}
+            document={context.actor}
             keyPath="system.source"
-            editable={$context.unlocked}
+            editable={context.unlocked}
           />
         </DelimitedTruncatedContent>
       {/key}
       <div class="flex-row align-items-center extra-small-gap">
-        {#if $context.editable && !$context.lockSensitiveFields}
+        {#if context.editable && !context.lockSensitiveFields}
           <button
             type="button"
-            on:click={() =>
-              new ActorOriginSummaryConfigFormApplication(
-                $context.actor,
-              ).render(true)}
+            onclick={() =>
+              new ActorOriginSummaryConfigFormApplication(context.actor).render(
+                true,
+              )}
             class="origin-summary-tidy inline-icon-button"
             title={localize('TIDY5E.OriginSummaryConfig')}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
           >
-            <i class="fas fa-cog" />
+            <i class="fas fa-cog"></i>
           </button>
         {/if}
       </div>
@@ -188,20 +189,20 @@
     </section>
   </div>
 </header>
-<Tabs tabs={$context.tabs} bind:selectedTabId>
-  <svelte:fragment slot="tab-end">
-    {#if $context.editable}
+<Tabs tabs={context.tabs} bind:selectedTabId sheet={context.actor.sheet}>
+  {#snippet tabEnd()}
+    {#if context.editable}
       <SheetEditModeToggle
-        hint={$settingStore.permanentlyUnlockVehicleSheetForGm &&
+        hint={settings.value.permanentlyUnlockVehicleSheetForGm &&
         FoundryAdapter.userIsGm()
-          ? localize('TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM.title')
+          ? localize('TIDY5E.Settings.value.PermanentlyUnlockVehicleSheetForGM.title')
           : null}
       />
     {/if}
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 <section class="tidy-sheet-body">
-  <TabContents tabs={$context.tabs} {selectedTabId} />
+  <TabContents tabs={context.tabs} {selectedTabId} />
 </section>
 
 <style lang="scss">

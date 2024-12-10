@@ -3,14 +3,19 @@
   import ItemControl from './ItemControl.svelte';
   import type { Item5e } from 'src/types/item.types';
 
-  export let item: Item5e;
+  interface Props {
+    item: Item5e;
+    [key: string]: any;
+  }
+
+  let { item, ...rest }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <ItemControl
   iconCssClass="fas fa-gear"
-  class={$$restProps.class ?? ''}
+  class={rest.class ?? ''}
   onclick={() => item.system.linkedActivity.sheet.render(true)}
   title={localize('DOCUMENT.DND5E.Activity')}
 />

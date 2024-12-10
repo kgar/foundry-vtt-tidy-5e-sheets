@@ -2,13 +2,25 @@
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getContext } from 'svelte';
+  import { getContext, type Snippet } from 'svelte';
 
-  export let value: string;
-  export let name: string;
-  export let hint: string;
-  export let id: string;
-  export let options: Record<string, unknown>;
+  interface Props {
+    value: string;
+    name: string;
+    hint: string;
+    id: string;
+    options: Record<string, unknown>;
+    additionalInputs?: Snippet;
+  }
+
+  let {
+    value = $bindable(),
+    name,
+    hint,
+    id,
+    options,
+    additionalInputs,
+  }: Props = $props();
 
   const appId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.APP_ID);
 
@@ -25,7 +37,7 @@
       <select id="{id}-{appId}" bind:value>
         <SelectOptions data={options} />
       </select>
-      <slot name="additional-inputs" />
+      {@render additionalInputs?.()}
     </div>
   </section>
 </article>

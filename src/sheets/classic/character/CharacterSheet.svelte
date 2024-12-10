@@ -1,17 +1,12 @@
 <script lang="ts">
-  import type { CharacterSheetContext } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import CharacterSheetFull from './CharacterSheetFull.svelte';
   import CharacterSheetLimited from './CharacterSheetLimited.svelte';
-  import { CONSTANTS } from 'src/constants';
+  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = $derived(getCharacterSheetContext());
 </script>
 
-{#if $context.showLimitedSheet}
+{#if context.showLimitedSheet}
   <CharacterSheetLimited />
 {:else}
   <CharacterSheetFull />

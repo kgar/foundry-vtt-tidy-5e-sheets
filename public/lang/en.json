@@ -108,7 +108,8 @@
   "TIDY5E.SearchClear": "Clear Search",
   "TIDY5E.SearchHint": "Start typing to show search results",
 
-  "TIDY5E.ItemCardsKeyHint": "hold key to interact with card",
+  "TIDY5E.InfoCardInspectHint": "{inspectKey} Inspect",
+
   "TIDY5E.ItemCardsMouseHint": "middle mouse to view/edit item",
 
   "TIDY5E.AbbrMod": "Mod",
@@ -298,9 +299,9 @@
     "name": "Use default sheet HP keyboard tabbing",
     "hint": "The default 5e sheet allows keyboard tabbing from the current HP input to the current temp HP input. Enabling this replicates that behaviour. This setting is ignored if \"Use Accessible Keyboard Support\" is turned off."
   },
-  "TIDY5E.Settings.ItemCardsFixKey": {
-    "name": "Item Card Fix Key",
-    "hint": "Hold this keyboard character (for example, the \"x\" key) while viewing an item card to keep it visible and allow for interaction."
+  "TIDY5E.Settings.InfoCardsInspectKey": {
+    "name": "Info Card Inspect Key",
+    "hint": "Press this keyboard character (for example, the \"t\" key) while viewing an info card to pop it out."
   },
   "TIDY5E.Settings.DefaultTheme": {
     "name": "Default Color Theme",

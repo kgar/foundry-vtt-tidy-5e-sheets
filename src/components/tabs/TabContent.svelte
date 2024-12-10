@@ -2,23 +2,29 @@
   import type { Tab } from 'src/types/types';
   import { declareLocation } from 'src/types/location-awareness.types';
   import { CONSTANTS } from 'src/constants';
-  import { getAllContexts, getContext, onMount, setContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { getAllContexts, mount, onMount, setContext, unmount } from 'svelte';
   import { error } from 'src/utils/logging';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  export let tab: Tab;
-  export let active: boolean;
-  export let cssClass: string = '';
+  interface Props {
+    tab: Tab;
+    active: boolean;
+    cssClass?: string;
+  }
 
-  const context = getContext<Readable<any>>(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
+  let { tab, active, cssClass = '' }: Props = $props();
+
+  const context = $derived(getSheetContext());
   const allContexts = getAllContexts();
 
   declareLocation('tab', tab.id);
   setContext(CONSTANTS.SVELTE_CONTEXT.TAB_ID, tab.id);
 
-  $: useCoreListenersClass = tab.activateDefaultSheetListeners
-    ? CONSTANTS.CLASS_TIDY_USE_CORE_LISTENERS
-    : '';
+  let useCoreListenersClass = $derived(
+    tab.activateDefaultSheetListeners
+      ? CONSTANTS.CLASS_TIDY_USE_CORE_LISTENERS
+      : '',
+  );
 
   let tidyTab: HTMLElement;
 
@@ -28,17 +34,17 @@
     }
 
     try {
-      const props = tab.content.getProps?.($context) ?? {};
+      const props = tab.content.getProps?.(context) ?? {};
       const tabComponentContext =
         tab.content.getContext?.(allContexts) ?? allContexts;
-      const svelteTabComponent = new tab.content.component({
+      const svelteTabComponent = mount(tab.content.component, {
         target: tidyTab,
         context: tabComponentContext,
         props: props,
       });
 
       return () => {
-        svelteTabComponent.$destroy();
+        unmount(svelteTabComponent);
       };
     } catch (e) {
       error('Failed to render svelte tab', false, e);

@@ -1,28 +1,23 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ItemSheetContext } from 'src/types/item.types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import ItemProperties from '../parts/ItemProperties.svelte';
   import ContentConcealer from 'src/components/content-concealment/ContentConcealer.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
-  import { CONSTANTS } from 'src/constants';
   import DetailsMountable from '../parts/DetailsMountable.svelte';
   import FieldUses from '../parts/FieldUses.svelte';
+  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<ItemSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = $derived(getItemSheetContext());
 
-  $: appId = $context.document.id;
+  let appId = $derived(context.document.id);
 
   const localize = FoundryAdapter.localize;
 </script>
 
-<ContentConcealer conceal={$context.concealDetails}>
+<ContentConcealer conceal={context.concealDetails}>
   <h3 class="form-header">
     {localize('DND5E.ItemEquipmentDetails')}
   </h3>
@@ -33,14 +28,14 @@
     >
     <Select
       id="{appId}-type-value"
-      document={$context.item}
+      document={context.item}
       field="system.type.value"
-      value={$context.source.type.value}
+      value={context.source.type.value}
       blankValue=""
-      disabled={!$context.editable}
+      disabled={!context.editable}
     >
       <SelectOptions
-        data={$context.equipmentTypes}
+        data={context.equipmentTypes}
         labelProp="label"
         valueProp="value"
         blank=""
@@ -49,21 +44,21 @@
   </div>
 
   <!-- Equipment Base -->
-  {#if Object.keys($context.baseItems ?? {}).length}
+  {#if Object.keys(context.baseItems ?? {}).length}
     <div class="form-group">
       <label for="{appId}-type-baseItem"
         >{localize('DND5E.ItemEquipmentBase')}</label
       >
       <Select
         id="{appId}-type-baseItem"
-        document={$context.item}
+        document={context.item}
         field="system.type.baseItem"
-        value={$context.source.type.baseItem}
+        value={context.source.type.baseItem}
         blankValue=""
-        disabled={!$context.editable}
+        disabled={!context.editable}
       >
         <SelectOptions
-          data={$context.baseItems}
+          data={context.baseItems}
           labelProp="label"
           valueProp="value"
           blank=""
@@ -77,14 +72,14 @@
     <label for="{appId}-proficient">{localize('DND5E.ProficiencyLevel')}</label>
     <Select
       id="{appId}-proficient"
-      document={$context.item}
+      document={context.item}
       field="system.proficient"
-      value={$context.source.proficient}
+      value={context.source.proficient}
       blankValue=""
-      disabled={!$context.editable}
+      disabled={!context.editable}
     >
       <SelectOptions
-        data={$context.config.weaponAndArmorProficiencyLevels}
+        data={context.config.weaponAndArmorProficiencyLevels}
         labelProp="label"
         valueProp="value"
         blank={localize('DND5E.Automatic')}
@@ -93,7 +88,7 @@
   </div>
 
   <!-- Armor -->
-  {#if $context.system.isArmor}
+  {#if context.system.isArmor}
     <div class="form-group split-group">
       <label for="{appId}-armor-value">{localize('DND5E.Armor')}</label>
 
@@ -102,27 +97,27 @@
           <label for="{appId}-armor-value">{localize('DND5E.AC')}</label>
           <NumberInput
             id="{appId}-armor-value"
-            document={$context.item}
+            document={context.item}
             field="system.armor.value"
-            value={$context.source.armor.value}
+            value={context.source.armor.value}
             step="1"
-            disabled={!$context.editable}
+            disabled={!context.editable}
           />
         </div>
 
-        {#if $context.hasDexModifier}
+        {#if context.hasDexModifier}
           <div class="form-group label-top">
             <label for="{appId}-armor-dex"
               >{localize('DND5E.ItemEquipmentDexModAbbr')}</label
             >
             <NumberInput
               id="{appId}-armor-dex"
-              document={$context.item}
+              document={context.item}
               field="system.armor.dex"
-              value={$context.source.armor.dex}
+              value={context.source.armor.dex}
               step="1"
               placeholder="∞"
-              disabled={!$context.editable}
+              disabled={!context.editable}
             />
           </div>
         {/if}
@@ -133,12 +128,12 @@
           >
           <NumberInput
             id="{appId}-armor-strength"
-            document={$context.item}
+            document={context.item}
             field="system.strength"
-            value={$context.source.strength}
+            value={context.source.strength}
             step="1"
             placeholder="—"
-            disabled={!$context.editable}
+            disabled={!context.editable}
           />
         </div>
       </div>
@@ -152,13 +147,13 @@
   </div>
 
   <!-- Magical Properties -->
-  {#if $context.properties.object.mgc}
+  {#if context.properties.object.mgc}
     <div class="form-group">
       <label for="{appId}-attunement"
         >{localize('DND5E.Item.Property.Magical')}</label
       >
       <div class="form-fields">
-        {#if !$context.item.isMountable}
+        {#if !context.item.isMountable}
           <div class="form-group label-top no-gap">
             <label for="{appId}-attuned">
               {localize('DND5E.Attunement')}
@@ -167,25 +162,25 @@
               <!-- Attuned -->
               <Checkbox
                 id={`${appId}-system-attuned`}
-                document={$context.item}
+                document={context.item}
                 field="system.attuned"
-                checked={$context.source.attuned}
-                disabled={!$context.editable ||
+                checked={context.source.attuned}
+                disabled={!context.editable ||
                   // @ts-expect-error
-                  !$context.config.attunementTypes[$context.system.attunement]}
+                  !context.config.attunementTypes[context.system.attunement]}
                 title={localize('DND5E.AttunementAttuned')}
               />
               <!-- Attunement -->
               <Select
                 id="{appId}-attunement"
-                document={$context.item}
+                document={context.item}
                 field="system.attunement"
-                value={$context.source.attunement}
-                disabled={!$context.editable}
+                value={context.source.attunement}
+                disabled={!context.editable}
                 class="flex-1"
               >
                 <SelectOptions
-                  data={$context.config.attunementTypes}
+                  data={context.config.attunementTypes}
                   blank={localize('DND5E.AttunementNone')}
                 />
               </Select>
@@ -196,10 +191,10 @@
           <label for="{appId}-magical-bonus">{localize('DND5E.Bonus')}</label>
           <NumberInput
             id="{appId}-magical-bonus"
-            value={$context.source.magicalBonus}
+            value={context.source.magicalBonus}
             field="system.magicalBonus"
-            document={$context.item}
-            disabled={!$context.editable}
+            document={context.item}
+            disabled={!context.editable}
             min="0"
             step="1"
             placeholder="0"
@@ -209,7 +204,7 @@
     </div>
   {/if}
 
-  {#if $context.system.isMountable}
+  {#if context.system.isMountable}
     <DetailsMountable />
   {/if}
 

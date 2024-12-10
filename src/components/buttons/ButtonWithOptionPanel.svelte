@@ -1,11 +1,29 @@
 <script lang="ts">
-  import { longpress } from 'src/actions/longpress';
-  import { tick } from 'svelte';
+  import { longpress } from 'src/actions/longpress.svelte';
+  import { tick, type Snippet } from 'svelte';
+  import type { MouseEventHandler } from 'svelte/elements';
 
-  export let expanded: boolean = false;
-  export let active: boolean = false;
-  export let disabled: boolean = false;
-  export let anchor: 'left' | 'right' = 'left';
+  interface Props {
+    expanded?: boolean;
+    active?: boolean;
+    disabled?: boolean;
+    anchor?: 'left' | 'right';
+    children?: Snippet;
+    options?: Snippet;
+    onclick?: MouseEventHandler<HTMLElement>;
+    [key: string]: any;
+  }
+
+  let {
+    expanded = $bindable(false),
+    active = false,
+    disabled = false,
+    anchor = 'left',
+    children,
+    options,
+    onclick,
+    ...rest
+  }: Props = $props();
 
   let menuEl: HTMLElement;
   let menuOpenerEl: HTMLElement;
@@ -41,24 +59,19 @@
 </script>
 
 <div class="button-with-options-wrapper">
-  <!-- svelte-ignore a11y-missing-attribute -->
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
   <a
-    class="button with-options {$$restProps.class ?? ''}"
+    class="button with-options {rest.class ?? ''}"
     class:expanded
     class:active
     class:disabled
-    use:longpress
-    on:longpress={() => toggleMenu()}
-    on:click
-    on:contextmenu={() => toggleMenu(true)}
-    on:focusout={handleFocusOut}
+    use:longpress={{ callback: () => toggleMenu() }}
+    {onclick}
+    oncontextmenu={() => toggleMenu(true)}
+    onfocusout={handleFocusOut}
     tabindex={expanded ? 0 : null}
     bind:this={menuOpenerEl}
   >
-    <slot />
+    {@render children?.()}
     {#if expanded}
       <i class="expand-indicator fas fa-caret-up"></i>
     {:else}
@@ -66,14 +79,13 @@
     {/if}
   </a>
 
-  <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
   <menu
     class:expanded
     class="anchor-{anchor}"
-    on:focusout={handleFocusOut}
+    onfocusout={handleFocusOut}
     tabindex={expanded ? 0 : null}
     bind:this={menuEl}
   >
-    <slot name="options" />
+    {@render options?.()}
   </menu>
 </div>

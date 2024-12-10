@@ -1,25 +1,20 @@
 <script lang="ts">
   import SheetEditor from '../../../../components/editor/SheetEditor.svelte';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
-  import type { VehicleSheetContext } from 'src/types/types';
   import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
-  import { CONSTANTS } from 'src/constants';
+  import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<VehicleSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = $derived(getVehicleSheetContext());
 </script>
 
 <div class="note-entries" data-tidy-track-scroll-y>
   <RerenderAfterFormSubmission
-    andOnValueChange={$context.system.details.biography.value}
+    andOnValueChange={context.system.details.biography.value}
   >
-    <article class="biography-notes" use:$context.activateEditors>
+    <article class="biography-notes" use:context.activateEditors>
       <SheetEditor
-        content={$context.biographyHTML}
+        content={context.biographyHTML}
         target="system.details.biography.value"
-        editable={$context.editable}
+        editable={context.editable}
       />
     </article>
   </RerenderAfterFormSubmission>
