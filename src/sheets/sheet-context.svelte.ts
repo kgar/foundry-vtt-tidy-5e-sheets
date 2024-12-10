@@ -1,5 +1,5 @@
 import { CONSTANTS } from 'src/constants';
-import type { CoarseReactivityProvider } from 'src/features/reactivity/CoaseReactivityProvider.svelte';
+import type { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 import type { GroupSheetClassicContext } from 'src/types/group.types';
 import type {
   ContainerSheetClassicContext,

@@ -5,6 +5,7 @@
   import { EventHelper } from 'src/utils/events';
   import { getContext } from 'svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
+    import type { ContextPrimitive } from 'src/features/reactivity/reactivity.types';
 
   interface Props {
     occupant: Actor5e | undefined;
@@ -68,8 +69,7 @@
     }
   }
 
-  // kgar-migration-task - does it work? If not, then pursue an object with getter / setter or similar
-  let hoveredFacilityOccupant = getContext<string>(
+  let hoveredFacilityOccupant = getContext<ContextPrimitive<string>>(
     CONSTANTS.SVELTE_CONTEXT.HOVERED_FACILITY_OCCUPANT,
   );
 </script>
@@ -82,7 +82,7 @@
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <li
-    class:highlight={hoveredFacilityOccupant ===
+    class:highlight={hoveredFacilityOccupant.value ===
       `${facilityId}-${index}-${occupant.uuid}`}
     class:unlocked={context.unlocked}
     class="slot occupant-slot {type} {imageTypeClassName} occupant-with-menu"
@@ -94,8 +94,8 @@
     data-index={index}
     data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_FACILITY_OCCUPANTS}
     onmouseenter={() =>
-      (hoveredFacilityOccupant = `${facilityId}-${index}-${occupant.uuid}`)}
-    onmouseleave={() => (hoveredFacilityOccupant = '')}
+      (hoveredFacilityOccupant.value = `${facilityId}-${index}-${occupant.uuid}`)}
+    onmouseleave={() => (hoveredFacilityOccupant.value = '')}
   >
     <a onclick={(ev) => context.editable && onOccupantClick(ev)}>
       <img src={imageSrc} alt={occupant.name} />

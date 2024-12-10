@@ -30,6 +30,7 @@
 
   let context = $derived(getItemSheetContext());
 
+  // kgar-migration-task - fix this and tag more like it
   let accordionItemOpenStates = $state(
     context.itemDescriptions.map((_, i) => i === 0),
   );

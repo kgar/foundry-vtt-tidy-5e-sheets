@@ -73,7 +73,7 @@ import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleSe
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import { Activities } from 'src/features/activities/activities';
-import { CoarseReactivityProvider } from 'src/features/reactivity/CoaseReactivityProvider.svelte';
+import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 
 export class Tidy5eCharacterSheet
   extends BaseSheetCustomSectionMixin(

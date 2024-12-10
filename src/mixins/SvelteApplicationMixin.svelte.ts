@@ -23,7 +23,7 @@ import type {
 import { HeaderControlsRuntime } from 'src/runtime/header-controls/HeaderControlsRuntime';
 import type { CustomHeaderControlsEntry } from 'src/api';
 import { unmount } from 'svelte';
-import { CoarseReactivityProvider } from 'src/features/reactivity/CoaseReactivityProvider.svelte';
+import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 
 type RenderResult<TContext> = {
   customContents: RenderedSheetPart[];

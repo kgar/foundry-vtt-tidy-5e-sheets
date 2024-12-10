@@ -54,7 +54,7 @@ import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleSe
 import { Container } from 'src/features/containers/Container';
 import { Activities } from 'src/features/activities/activities';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
-import { CoarseReactivityProvider } from 'src/features/reactivity/CoaseReactivityProvider.svelte';
+import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle

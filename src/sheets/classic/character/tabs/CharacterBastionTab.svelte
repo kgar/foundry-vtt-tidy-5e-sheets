@@ -16,6 +16,7 @@
   import { applyDropzoneClass } from 'src/events/drag-and-drop';
   import InlineSvg from 'src/components/utility/InlineSvg.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
+  import type { ContextPrimitive } from 'src/features/reactivity/reactivity.types';
 
   let context = $derived(getCharacterSheetContext());
 
@@ -27,10 +28,12 @@
     TidyHooks.tidy5eSheetsItemHoverOff(event, item);
   }
 
-  let hoveredFacilityOccupant = $state<string>('');
+  let hoveredFacilityOccupant = $state<ContextPrimitive<string>>({
+    value: '',
+  });
 
   // kgar-migration-task - does it work? If not, then pursue an object with getter / setter or similar
-  setContext<string>(
+  setContext<ContextPrimitive<string>>(
     CONSTANTS.SVELTE_CONTEXT.HOVERED_FACILITY_OCCUPANT,
     hoveredFacilityOccupant,
   );

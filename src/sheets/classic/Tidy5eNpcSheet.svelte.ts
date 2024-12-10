@@ -59,7 +59,7 @@ import { ConditionsAndEffects } from 'src/features/conditions-and-effects/Condit
 import { ItemUtils } from 'src/utils/ItemUtils';
 import { Activities } from 'src/features/activities/activities';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
-import { CoarseReactivityProvider } from 'src/features/reactivity/CoaseReactivityProvider.svelte';
+import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 
 export class Tidy5eNpcSheet
   extends BaseSheetCustomSectionMixin(

@@ -12,7 +12,7 @@
   import TidyTableCell from 'src/components/table/TidyTableCell.svelte';
   import TidySwitch from 'src/components/toggle/TidySwitch.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import type { CoarseReactivityProvider } from 'src/features/reactivity/CoaseReactivityProvider.svelte';
+  import type { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 
   let context = $derived(
     getContext<CoarseReactivityProvider<SpellSourceClassAssignmentsContext>>(

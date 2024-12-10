@@ -17,13 +17,15 @@
 
   let { multiple = false, children, ...rest }: Props = $props();
 
-  let selected = $state<string>('');
-
-  // kgar-migration-task - check this, verify it in the docs, and if it works, then suppress the warning
-  setContext<AccordionCtxType>(CONSTANTS.SVELTE_CONTEXT.ACCORDION_CONTEXT, {
-    selected: selected,
+  let accordionContext = $state<AccordionCtxType>({
+    selected: '',
     multiple: multiple,
   });
+
+  setContext<AccordionCtxType>(
+    CONSTANTS.SVELTE_CONTEXT.ACCORDION_CONTEXT,
+    accordionContext,
+  );
 </script>
 
 {#key multiple}

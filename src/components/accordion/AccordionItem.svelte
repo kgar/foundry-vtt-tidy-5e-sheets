@@ -14,6 +14,7 @@
 
   let { open = $bindable(false), header, children, ...rest }: Props = $props();
 
+  // kgar-migration-task - accordion items are not registering as open when initializing. Figure this one out.
   const ctx = getContext<AccordionCtxType>(
     CONSTANTS.SVELTE_CONTEXT.ACCORDION_CONTEXT,
   );

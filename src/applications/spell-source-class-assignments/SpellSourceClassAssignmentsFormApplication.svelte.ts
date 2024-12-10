@@ -5,7 +5,7 @@ import type { Actor5e } from 'src/types/types';
 import type { Item5e } from 'src/types/item.types';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { CoarseReactivityProvider } from 'src/features/reactivity/CoaseReactivityProvider.svelte';
+import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 
 export type SpellSourceClassAssignment = {
   /**
