@@ -21,16 +21,10 @@
     "e2e": "npm run lint-tests && playwright test"
   },
   "devDependencies": {
-    "@eslint/js": "^9.14.0",
-    "@playwright/test": "^1.48.2",
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
     "@tsconfig/svelte": "^5.0.4",
     "@types/node": "^20.14.10",
-    "@typescript-eslint/eslint-plugin": "^8.13.0",
-    "@typescript-eslint/parser": "^8.13.0",
     "dotenv": "^16.4.5",
-    "eslint": "^9.14.0",
-    "eslint-plugin-playwright": "^2.0.0",
     "fs-extra": "^11.2.0",
     "sass": "^1.79.3",
     "svelte": "^5.10.0",
