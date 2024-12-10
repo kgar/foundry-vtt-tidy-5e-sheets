@@ -12,7 +12,7 @@
 
   type SystemBioField = { field: string; value: string; text: string };
 
-  let bioFields: SystemBioField[] = [
+  let bioFields: SystemBioField[] = $derived([
     {
       field: 'system.details.gender',
       value: context.system.details.gender,
@@ -53,7 +53,7 @@
       value: context.system.details.faith,
       text: 'DND5E.Faith',
     },
-  ];
+  ]);
 
   let editing = $state(false);
   let contentToEdit: string = $state('');

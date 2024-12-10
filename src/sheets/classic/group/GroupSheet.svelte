@@ -13,12 +13,17 @@
   import GroupHitPoints from './parts/GroupHitPoints.svelte';
   import AttachedInfoCard from 'src/components/item-info-card/AttachedInfoCard.svelte';
   import { getGroupSheetClassicContext } from 'src/sheets/sheet-context.svelte';
+  import { onMount } from 'svelte';
 
   const context = $derived(getGroupSheetClassicContext());
 
   const localize = FoundryAdapter.localize;
 
-  let selectedTabId = $state(context.tabs[0].id);
+  let selectedTabId = $state<string>('');
+
+  onMount(() => {
+    selectedTabId = context.tabs[0]?.id ?? '';
+  });
 </script>
 
 <AttachedInfoCard

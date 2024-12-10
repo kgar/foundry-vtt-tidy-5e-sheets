@@ -1,5 +1,14 @@
 ## To Do
 
+- [ ] Resolve
+  - [ ] CharacterBiographyTab.svelte, snippets comment
+  - [ ] Checkbox.svelte, snippets comment
+  - [ ] ContainerContentsSections.svelte, snippets comment
+  - [ ] FacilityOrderProgressTracker.svelte snippets comment
+  - [ ] GroupMembersTab.svelte, snippets comment
+  - [ ] ItemWeaponDetailsTab.svelte, snippets comment
+  - [ ] SelectOptions.svelte snippets comment
+  - [ ] SpellbookList.svelte, snippets comment
 - [ ] Review warnings and tag all the Svelte 5 / reactivity-related ones for resolution
 - [ ] Finish more migration tasks that came from recent work
 
@@ -259,3 +268,14 @@ Cry.
 - [x] Fix: Settings tabs are blank
 - [x] Fix: Message Bus is not reactive
 - [x] Fix: Item Filters are bugged. They don't fully cycle and don't visualize current state after a change.
+- [x] Address these warnings
+  - [x] transforming (145) sheets\classic\npc\NpcSheet.svelte4:48:23 PM [vite-plugin-svelte] src/sheets/classic/group/GroupSheet.svelte:21:29 State referenced in its own scope will never update. Did you mean to reference it inside a closure? - https://svelte.dev/e/state_referenced_locally
+  - [x] 4:48:24 PM [vite-plugin-svelte] src/sheets/classic/character/tabs/CharacterBiographyTab.svelte:18:13 State referenced in its own scope will never update. Did you mean to reference it inside a closure? - https://svelte.dev/e/state_referenced_locally
+  - [x] 4:48:24 PM [vite-plugin-svelte] src/sheets/classic/character/tabs/CharacterBiographyTab.svelte:23:13 State referenced in its own scope will never update. Did you mean to reference it inside a closure? - https://svelte.dev/e/state_referenced_locally
+  - [x] 4:48:24 PM [vite-plugin-svelte] src/sheets/classic/character/tabs/CharacterBiographyTab.svelte:28:13 State referenced in its own scope will never update. Did you mean to reference it inside a closure? - https://svelte.dev/e/state_referenced_locally
+  - [x] 4:48:24 PM [vite-plugin-svelte] src/sheets/classic/character/tabs/CharacterBiographyTab.svelte:33:13 State referenced in its own scope will never update. Did you mean to reference it inside a closure? - https://svelte.dev/e/state_referenced_locally
+  - [x] 4:48:24 PM [vite-plugin-svelte] src/sheets/classic/character/tabs/CharacterBiographyTab.svelte:38:13 State referenced in its own scope will never update. Did you mean to reference it inside a closure? - https://svelte.dev/e/state_referenced_locally
+  - [x] 4:48:24 PM [vite-plugin-svelte] src/sheets/classic/character/tabs/CharacterBiographyTab.svelte:43:13 State referenced in its own scope will never update. Did you mean to reference it inside a closure? - https://svelte.dev/e/state_referenced_locally
+  - [x] 4:48:24 PM [vite-plugin-svelte] src/sheets/classic/character/tabs/CharacterBiographyTab.svelte:48:13 State referenced in its own scope will never update. Did you mean to reference it inside a closure? - https://svelte.dev/e/state_referenced_locally
+  - [x] 4:48:24 PM [vite-plugin-svelte] src/sheets/classic/character/tabs/CharacterBiographyTab.svelte:53:13 State referenced in its own scope will never update. Did you mean to reference it inside a closure? - https://svelte.dev/e/state_referenced_locally
+  - [x] 4:48:25 PM [vite-plugin-svelte] src/components/inputs/SelectOptions.svelte:71:10 `<hr>` cannot be a child of `<optgroup>`. `<optgroup>` only allows these children: `<option>`, `<#text>`. When rendering this component on the server, the resulting HTML will be modified by the browser (by moving, removing, or inserting elements), likely resulting in a `hydration_mismatch` warning - https://svelte.dev/e/node_invalid_placement_ssr

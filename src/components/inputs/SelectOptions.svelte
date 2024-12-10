@@ -67,9 +67,7 @@
   {:else}
     <optgroup label={localize(groupKey)}>
       {#each groupValue as [key, value]}
-        {#if value?.rule}
-          <hr />
-        {:else}
+        {#if !value?.rule}
           <option value={getValue(key, value)}
             >{localize(getLabel(value))}</option
           >
