@@ -741,7 +741,8 @@
         "Default": "Sección predeterminada",
         "Label": "Sección",
         "Tooltip": "Especifique una sección personalizada para este elemento cuando lo coloque en una hoja de actor o déjela en blanco para un comportamiento predeterminado.",
-        "ActionTooltip": "Especifique una sección personalizada para este elemento cuando lo coloque en la pestaña Acciones o déjela en blanco para un comportamiento predeterminado."
+        "ActionTooltip": "Especifique una sección personalizada para este elemento cuando lo coloque en la pestaña Acciones o déjela en blanco para un comportamiento predeterminado.",
+        "LabelPl": "Secciones"
     },
     "TIDY5E.Settings.UseTidySpellSchoolIcons": {
         "name": "Utilice iconos de Tidy Spell School",
@@ -795,5 +796,12 @@
     "TIDY5E.Facilities.ContextMenuActionRemove": "Eliminar de {facilityName}",
     "TIDY5E.Facilities.Hirelings.Label": "Mercenarios",
     "TIDY5E.Facilities.RosterMember.Label": "{actorName} - {facilityName}",
-    "TIDY5E.Facilities.Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}"
+    "TIDY5E.Facilities.Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}",
+    "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "Secciones de primer nivel",
+    "TIDY5E.ExpandCollapseMenu.OptionAllSections": "Todas las secciones",
+    "TIDY5E.SortMenu.OptionAlphabetical": "Alfabético (A-Z)",
+    "TIDY5E.SortMenu.OptionManual": "Manual",
+    "TIDY5E.SortMenu.OptionPrepared": "Preparado",
+    "TIDY5E.SortMenu.OptionEquipped": "Equipado",
+    "TIDY5E.ExpandCollapseMenu.OptionTitle": "Expandir/contraer"
 }
