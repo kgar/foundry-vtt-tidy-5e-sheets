@@ -773,7 +773,9 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
 
   async _prepareItems(context: GroupSheetClassicContext) {
     for (const item of context.items) {
-      context.itemContext[item.id] ??= await this._prepareItem(item, context);
+      if (Inventory.isInventoryType(item)) {
+        context.itemContext[item.id] ??= await this._prepareItem(item, context);
+      }
     }
 
     for (const panelItem of context.containerPanelItems) {
