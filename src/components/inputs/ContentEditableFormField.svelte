@@ -32,7 +32,7 @@
     element,
     document,
     field,
-    value = $bindable(),
+    value,
     editable,
     cssClass = '',
     spellcheck = false,
@@ -43,12 +43,21 @@
     selectOnFocus = false,
   }: Props = $props();
 
+  let draftValue = $state('');
+
+  $effect(() => {
+    draftValue = value;
+  });
+
   async function update() {
-    if (value.length > dataMaxLength) {
-      value = value.substring(0, dataMaxLength);
+    draftValue = new DOMParser().parseFromString(draftValue, 'text/html').body
+      .textContent ?? '';
+      
+    if (draftValue.length > dataMaxLength) {
+      draftValue = draftValue.substring(0, dataMaxLength)?.replaceAll('\n', '');
     }
 
-    const valueToSave = saveAs === 'number' ? toNumber(value) : value;
+    const valueToSave = saveAs === 'number' ? toNumber(draftValue) : draftValue;
 
     await document.update({ [field]: valueToSave });
   }
@@ -65,9 +74,9 @@
 
   // [contenteditable] pasting can include HTML
   // Only the text content is appropriate for this component
-  function handlePaste() {
+  function handlePaste(ev: ClipboardEvent) {
     setTimeout(() => {
-      value = _el.textContent ?? '';
+      value = _el.textContent?.replaceAll('\n', '') ?? '';
     }, 0);
   }
 
@@ -81,13 +90,16 @@
     }
   }
 
-  const context = $derived(getSheetContext<
-    | CharacterSheetContext
-    | NpcSheetContext
-    | VehicleSheetContext
-    | ContainerSheetClassicContext
-    | ItemSheetContext
-  >());
+  const context =
+    $derived(
+      getSheetContext<
+        | CharacterSheetContext
+        | NpcSheetContext
+        | VehicleSheetContext
+        | ContainerSheetClassicContext
+        | ItemSheetContext
+      >(),
+    );
 
   const localize = FoundryAdapter.localize;
 
@@ -110,7 +122,7 @@
     bind:this={_el}
     contenteditable="true"
     class={cssClass}
-    bind:innerHTML={value}
+    bind:innerHTML={draftValue}
     onblur={update}
     onkeypress={submitWhenEnterKey}
     onpaste={handlePaste}

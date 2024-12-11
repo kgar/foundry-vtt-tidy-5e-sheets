@@ -34,12 +34,8 @@
   <div class="sub-header">
     {localize('DND5E.FACILITY.FIELDS.order.label')}
   </div>
-  <!-- TODO: When svelte 5, snippets? -->
   <div class="craft-and-meter">
     {#if chosen.craft}
-      <!-- svelte-ignore a11y_click_events_have_key_events -->
-      <!-- svelte-ignore a11y_no_static_element_interactions -->
-      <!-- svelte-ignore a11y_missing_attribute -->
       <a
         onclick={() => context.editable && editCraftingItem(chosen.craft.uuid)}
         data-info-card={'item'}

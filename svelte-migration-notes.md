@@ -1,16 +1,11 @@
 ## To Do
 
-- [ ] Resolve
-  - [x] CharacterBiographyTab.svelte, snippets comment
-  - [ ] Checkbox.svelte, snippets comment
-  - [ ] ContainerContentsSections.svelte, snippets comment
-  - [ ] FacilityOrderProgressTracker.svelte snippets comment
-  - [ ] GroupMembersTab.svelte, snippets comment
-  - [ ] ItemWeaponDetailsTab.svelte, snippets comment
-  - [ ] SelectOptions.svelte snippets comment
-  - [ ] SpellbookList.svelte, snippets comment
-- [ ] Review warnings and tag all the Svelte 5 / reactivity-related ones for resolution
-- [ ] Finish more migration tasks that came from recent work
+- [ ] Item changes are not reflecting on the character sheet when changed from the item sheet. Change an item name and see it not update
+  - The actor sheet does rerender, but the item table row does not update.
+- [ ] Info Cards are not reactive to their target items or actors
+  - This does not rerender when the item/actor changes. This can be remedied by subscribing self to their list of apps to update on change.
+  - Rendering alone will not help. Triggering a render doesn't update the card. The card data has to be refreshed somehow.
+- [ ] Attached info cards in popout force some width onto the popout window. Any idea how to get around that? Maybe some trick with parent container width perhaps?
 
 ## Stretch, or defer to post V7.3.0
 
@@ -21,24 +16,24 @@
   - Can the section config application somehow do the isolated section ordering / showing / hiding / etc. by itself?
 - [ ] Refactor: `Tabs` wants a sheet prop so it can check if a tab navigation is allowed and to trigger some tab selection events when permitted. Now that context sans stores has been upended in Svelte 5, consider instead sending exactly what `Tabs` needs for its specific use case as context from the sheet, directly, in the form of a callback or function binding.
 - [ ] Fix: Use the broken identify toggle for containers to vet error handling and getting latest from the source data. Or, if it's not feasible, just catch and handle error.
-- [ ] Actually implement the activity card content. There's nothing there!
-- [ ] Provide separate option for showing activity cards
-- [ ] Implement Effect card and content.
-- [ ] Provide separate option for showing effect cards.
-- [ ] Eliminate ContentEditable elements and use Locked Readonly / Unlocked Text Input
 
 ## Testing To Dos
 
-- [ ] Smoke test every sheet
-- [ ] Test Checkboxes and other inputs that formerly had a `draftValue` and see if they now just work as expected
-- [ ] Especially test Select elements with empty options, null options, and with default blank string options
-- [ ] Especially test item cards
-- [ ] Action filter override control (had some odd run/derived behavior)
-- [ ] SpellbookList component, controls (had some elaborate run/derived behavior)
-- [ ] Test Sheet Editor V2 fairly closely
-- [ ] Test: Floating card with PopOut!
-- [ ] Test: Detached card with PopOut!
-- [ ] Test: Detached card reactivity with changes to
+- [x] Smoke test every sheet
+- [x] Test Checkboxes and other inputs that formerly had a `draftValue` and see if they now just work as expected
+  - [x] Select : needs it
+  - [x] Checkbox : no need
+  - [x] ContentEditableFormField : needed it
+  - [x] NumberInput : no need
+  - [x] TextInput : no need
+- [x] Especially test Select elements with empty options, null options, and with default blank string options
+- [x] Especially test item cards
+- [x] Action filter override control (had some odd run/derived behavior)
+- [x] SpellbookList component, controls (had some elaborate run/derived behavior)
+- [x] Test Sheet Editor V2 fairly closely
+- [x] Test: Floating card with PopOut! : it forces the popout window to accommodate the card width 😬
+- [x] Test: Detached card with PopOut! : it always thinks we're too far right and favors left
+- [x] Test: Detached card reactivity with changes : it doesn't react
 
 ## Notes and Examples
 
@@ -279,3 +274,19 @@ Cry.
   - [x] 4:48:24 PM [vite-plugin-svelte] src/sheets/classic/character/tabs/CharacterBiographyTab.svelte:48:13 State referenced in its own scope will never update. Did you mean to reference it inside a closure? - https://svelte.dev/e/state_referenced_locally
   - [x] 4:48:24 PM [vite-plugin-svelte] src/sheets/classic/character/tabs/CharacterBiographyTab.svelte:53:13 State referenced in its own scope will never update. Did you mean to reference it inside a closure? - https://svelte.dev/e/state_referenced_locally
   - [x] 4:48:25 PM [vite-plugin-svelte] src/components/inputs/SelectOptions.svelte:71:10 `<hr>` cannot be a child of `<optgroup>`. `<optgroup>` only allows these children: `<option>`, `<#text>`. When rendering this component on the server, the resulting HTML will be modified by the browser (by moving, removing, or inserting elements), likely resulting in a `hydration_mismatch` warning - https://svelte.dev/e/node_invalid_placement_ssr
+- [x] Resolve
+  - [x] CharacterBiographyTab.svelte, snippets comment
+  - [x] Checkbox.svelte, snippets comment
+  - [x] ContainerContentsSections.svelte, snippets comment
+  - [x] FacilityOrderProgressTracker.svelte snippets comment
+  - [x] GroupMembersTab.svelte, snippets comment
+  - [x] ItemWeaponDetailsTab.svelte, snippets comment
+  - [x] SelectOptions.svelte snippets comment
+  - [x] SpellbookList.svelte, snippets comment
+- [x] Review warnings and tag all the Svelte 5 / reactivity-related ones for resolution
+- [x] Finish more migration tasks that came from recent work
+- [x] ~~Actually implement the activity card content. There's nothing there!~~ Will work the github issue separate
+- [x] ~~Provide separate option for showing activity cards~~ Will work the github issue separate
+- [x] ~~Implement Effect card and content.~~ Will work the github issue separate
+- [x] ~~Provide separate option for showing effect cards.~~ Will work the github issue separate
+- [x] ~~Eliminate ContentEditable elements and use Locked Readonly / Unlocked Text Input~~ This component will die of natural causes when the overhaul takes over.

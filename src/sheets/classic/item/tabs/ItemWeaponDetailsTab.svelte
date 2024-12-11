@@ -258,7 +258,6 @@
       <div class="form-fields">
         <!-- Reach -->
         {#if context.system.attackType === 'melee'}
-          <!-- When Svelte 5, snippets -->
           <div class="form-group label-top">
             <label for="{appId}-range-reach"
               >{localize('DND5E.RANGE.FIELDS.range.reach.label')}</label

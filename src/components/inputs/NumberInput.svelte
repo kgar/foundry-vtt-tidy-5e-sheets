@@ -75,13 +75,16 @@
     }
   }
 
-  const context = $derived(getSheetContext<
-    | CharacterSheetContext
-    | NpcSheetContext
-    | VehicleSheetContext
-    | ContainerSheetClassicContext
-    | ItemSheetContext
-  >());
+  const context =
+    $derived(
+      getSheetContext<
+        | CharacterSheetContext
+        | NpcSheetContext
+        | VehicleSheetContext
+        | ContainerSheetClassicContext
+        | ItemSheetContext
+      >(),
+    );
 
   const localize = FoundryAdapter.localize;
 
@@ -104,7 +107,7 @@
   type="number"
   {id}
   {step}
-  bind:value
+  {value}
   {min}
   {max}
   {placeholder}

@@ -37,9 +37,10 @@
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
-    import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
+  let context =
+    $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
 
   interface Props {
     section: SpellbookSection;
@@ -105,7 +106,6 @@
 
       if (context.unlocked) {
         result.push({
-          // svelte 5 - snippet?
           component: DeleteOrOpenActivity,
           props: ({ item }) => ({
             item,

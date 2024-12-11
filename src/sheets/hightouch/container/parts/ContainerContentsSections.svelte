@@ -59,7 +59,6 @@
 
   const searchResults = getSearchResultsContext();
 
-  // TODO: When Svelte 5, snippets
   // let itemActions: {
   //   component: Component;
   //   getProps: (item: Item5e) => any;
@@ -106,9 +105,6 @@
 
 {#each configuredContents as section (section.key)}
   {#if section.show}
-    <!-- svelte-ignore a11y_click_events_have_key_events -->
-    <!-- svelte-ignore a11y_no_static_element_interactions -->
-    <!-- svelte-ignore a11y_missing_attribute -->
     <TidyTable
       key={section.key}
       data-custom-section={section.custom ? true : null}
@@ -160,9 +156,7 @@
           >
             {#snippet children({ toggleSummary })}
               <TidyTableCell primary={true} class="truncate">
-                <!-- svelte-ignore a11y_missing_attribute -->
                 <!-- svelte-ignore a11y_interactive_supports_focus -->
-                <!-- svelte-ignore a11y_click_events_have_key_events -->
                 <div
                   class="item-image"
                   style="--item-img: url({item.img}); --item-border-color: {itemBorderColor};"

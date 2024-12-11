@@ -141,7 +141,7 @@
   bind:this={theInput}
   type="text"
   {id}
-  bind:value
+  {value}
   {placeholder}
   data-tooltip={activeEffectApplied ? overrideTooltip : tooltip}
   {...actualDataset}

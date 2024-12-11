@@ -42,6 +42,12 @@
     ...rest
   }: Props = $props();
 
+  let draftValue = $state('');
+
+  $effect(() => {
+    draftValue = value?.toString() ?? '';
+  });
+
   async function saveChange(
     event: Event & {
       currentTarget: EventTarget & HTMLSelectElement;
@@ -54,13 +60,16 @@
     });
   }
 
-  const context = $derived(getSheetContext<
-    | CharacterSheetContext
-    | NpcSheetContext
-    | VehicleSheetContext
-    | ContainerSheetClassicContext
-    | ItemSheetContext
-  >());
+  const context =
+    $derived(
+      getSheetContext<
+        | CharacterSheetContext
+        | NpcSheetContext
+        | VehicleSheetContext
+        | ContainerSheetClassicContext
+        | ItemSheetContext
+      >(),
+    );
 
   const localize = FoundryAdapter.localize;
 
@@ -80,7 +89,7 @@
 
 <select
   {id}
-  bind:value
+  bind:value={draftValue}
   data-tooltip={activeEffectApplied ? overrideTooltip : tooltip}
   onchange={document && saveChange}
   {title}

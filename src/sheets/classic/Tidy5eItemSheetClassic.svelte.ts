@@ -160,7 +160,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       label: FoundryAdapter.localize('DND5E.DescriptionChat'),
     });
 
-    const sourceSystem = this.document.toObject().system;
+    const sourceSystem = this.item.system.toObject();
 
     const editable = this.isEditable;
 

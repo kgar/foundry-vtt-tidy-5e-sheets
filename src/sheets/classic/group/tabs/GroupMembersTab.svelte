@@ -1,6 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { getContext, setContext } from 'svelte';
+  import { getContext } from 'svelte';
   import GroupMemberList from '../parts/GroupMemberList.svelte';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
@@ -95,7 +95,6 @@
     {/if}
 
     {#if context.actor.system.type.value !== CONSTANTS.GROUP_TYPE_ENCOUNTER}
-      <!-- TODO: Svelte 5 - snippets -->
       {#each memberSections as section (section.key)}
         <GroupMemberList {section} />
       {/each}

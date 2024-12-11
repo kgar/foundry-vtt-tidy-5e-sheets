@@ -54,25 +54,25 @@
 {/if}
 
 {#each groups as [groupKey, groupValue] (groupKey)}
-  <!-- When Svelte 5, snippets -->
   {#if groupKey === ''}
     {#each groupValue as [key, value]}
       {#if value?.rule}
         <hr />
       {:else}
-        <option value={getValue(key, value)}>{localize(getLabel(value))}</option
-        >
+        {@render optionElement(key, value)}
       {/if}
     {/each}
   {:else}
     <optgroup label={localize(groupKey)}>
       {#each groupValue as [key, value]}
         {#if !value?.rule}
-          <option value={getValue(key, value)}
-            >{localize(getLabel(value))}</option
-          >
+          {@render optionElement(key, value)}
         {/if}
       {/each}
     </optgroup>
   {/if}
 {/each}
+
+{#snippet optionElement(key: any, value: any)}
+  <option value={getValue(key, value)}>{localize(getLabel(value))}</option>
+{/snippet}

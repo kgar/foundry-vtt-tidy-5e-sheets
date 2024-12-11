@@ -70,13 +70,16 @@
     await document.update(data);
   }
 
-  const context = $derived(getSheetContext<
-    | CharacterSheetContext
-    | NpcSheetContext
-    | VehicleSheetContext
-    | ContainerSheetClassicContext
-    | ItemSheetContext
-  >());
+  const context =
+    $derived(
+      getSheetContext<
+        | CharacterSheetContext
+        | NpcSheetContext
+        | VehicleSheetContext
+        | ContainerSheetClassicContext
+        | ItemSheetContext
+      >(),
+    );
 
   const localize = FoundryAdapter.localize;
   let greenCheckboxStyle = $derived(
@@ -99,7 +102,23 @@
   );
 </script>
 
-<!-- TODO: Make label wrapper conditional when Svelte 5 snippets come out -->
+{#snippet checkboxInput()}
+  <input
+    type="checkbox"
+    {id}
+    {value}
+    {checked}
+    {title}
+    onchange={saveChange}
+    disabled={disabled || activeEffectApplied}
+    {...datasetAttributes}
+    class={checkboxCssClass}
+    data-tidy-field={field}
+    {...rest.attributes}
+    data-tooltip={activeEffectApplied ? overrideTooltip : tooltip}
+  />
+{/snippet}
+
 {#if children}
   <label
     class={labelCssClass}
@@ -107,34 +126,11 @@
     style={greenCheckboxStyle}
     data-tooltip={activeEffectApplied ? overrideTooltip : tooltip}
   >
-    <input
-      type="checkbox"
-      {id}
-      {value}
-      {checked}
-      onchange={saveChange}
-      disabled={disabled || activeEffectApplied}
-      {...datasetAttributes}
-      class={checkboxCssClass}
-      data-tidy-field={field}
-      {...rest.attributes}
-    />
+    {@render checkboxInput()}
     {@render children?.()}
   </label>
 {:else}
-  <input
-    type="checkbox"
-    {id}
-    {value}
-    {checked}
-    onchange={saveChange}
-    {title}
-    disabled={disabled || activeEffectApplied}
-    data-tooltip={activeEffectApplied ? overrideTooltip : tooltip}
-    {...datasetAttributes}
-    class={checkboxCssClass}
-    data-tidy-field={field}
-  />
+  {@render checkboxInput()}
 {/if}
 
 <style lang="scss">
