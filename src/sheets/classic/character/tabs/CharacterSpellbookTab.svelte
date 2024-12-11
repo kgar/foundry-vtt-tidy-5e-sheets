@@ -43,22 +43,13 @@
     TidyFlags.spellbookGrid.get(context.actor) ? 'grid' : 'list',
   );
 
-  function tryFilterByClass(spells: any[]) {
-    if (
-      !settings.value.useMulticlassSpellbookFilter ||
-      selectedClassFilter === ''
-    ) {
-      return spells;
-    }
-
-    return spells.filter(
-      (spell) =>
-        spell.system.sourceClass?.trim() === selectedClassFilter?.trim(),
-    );
-  }
-
   let spellbook = $derived(
-    SheetSections.configureSpellbook(context.actor, tabId, context.spellbook),
+    SheetSections.configureSpellbook(
+      context.actor,
+      tabId,
+      context.spellbook,
+      TidyFlags.classFilter.get(context.actor) ?? '',
+    ),
   );
 
   $effect(() => {
@@ -70,9 +61,6 @@
     });
   });
 
-  let selectedClassFilter = $derived(
-    TidyFlags.classFilter.get(context.actor) ?? '',
-  );
   let noSpellLevels = $derived(!context.spellbook.length);
   let noSpells = $derived(
     spellbook.reduce(
@@ -142,8 +130,6 @@
   {:else}
     {#each spellbook as section (section.key)}
       {#if section.show}
-        {@const classSpells = tryFilterByClass(section.spells)}
-
         {@const visibleItemCount = ItemVisibility.countVisibleItems(
           section.spells,
           searchResults.uuids,
@@ -151,9 +137,9 @@
 
         {#if (searchCriteria.trim() === '' && context.unlocked) || visibleItemCount > 0 || !!section.slots}
           {#if layoutMode === 'list'}
-            <SpellbookList spells={classSpells} {section} />
+            <SpellbookList {section} />
           {:else}
-            <SpellbookGrid spells={classSpells} {section} />
+            <SpellbookGrid {section} />
           {/if}
         {/if}
       {/if}

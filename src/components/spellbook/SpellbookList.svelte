@@ -44,7 +44,6 @@
 
   interface Props {
     section: SpellbookSection;
-    spells: any[];
     allowFavorites?: boolean;
     cssClass?: string | null;
     // TODO: replace this with column specification array default and then allow the caller to customize the table.
@@ -57,7 +56,6 @@
 
   let {
     section,
-    spells,
     allowFavorites = true,
     cssClass = null,
     includeSchool = true,
@@ -69,6 +67,14 @@
 
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
+  );
+
+  let spellEntries = $derived(
+    section.spells.map((s) => ({
+      spell: s,
+      spellImgUrl: FoundryAdapter.getSpellImageUrl(context, s),
+      ctx: context.itemContext[s.id],
+    })),
   );
 
   const searchResults = getSearchResultsContext();
@@ -184,9 +190,7 @@
       </ItemTableHeaderRow>
     {/snippet}
     {#snippet body()}
-      {#each spells as spell (spell.id)}
-        {@const ctx = context.itemContext[spell.id]}
-        {@const spellImgUrl = FoundryAdapter.getSpellImageUrl(context, spell)}
+      {#each spellEntries as { spell, spellImgUrl, ctx } (spell.id)}
         <ItemTableRow
           item={spell}
           onMouseDown={(event) =>

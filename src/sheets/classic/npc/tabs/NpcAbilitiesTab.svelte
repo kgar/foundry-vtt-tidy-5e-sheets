@@ -422,7 +422,6 @@
               {#if section.show}
                 {#if layoutMode === 'list'}
                   <SpellbookList
-                    spells={section.spells}
                     {section}
                     allowFavorites={false}
                     includeRange={false}
@@ -432,7 +431,7 @@
                     usageBaseWidth="5.625rem"
                   />
                 {:else}
-                  <SpellbookGrid spells={section.spells} {section} />
+                  <SpellbookGrid {section} />
                 {/if}
               {/if}
             {/each}

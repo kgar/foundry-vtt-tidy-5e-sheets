@@ -22,15 +22,23 @@
 
   interface Props {
     section: SpellbookSection;
-    spells: Item5e[];
     cssClass?: string | null;
   }
 
-  let { section, spells, cssClass = null }: Props = $props();
+  let { section, cssClass = null }: Props = $props();
 
-  let context = $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
+  let context =
+    $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
 
   let searchResultContext = getSearchResultsContext();
+
+  let spellEntries = $derived(
+    section.spells.map((s) => ({
+      spell: s,
+      ctx: context.itemContext[s.id],
+      spellImgUrl: FoundryAdapter.getSpellImageUrl(context, s),
+    })),
+  );
 
   let customCommands = $derived(
     ActorItemRuntime.getActorItemSectionCommands({
@@ -82,9 +90,7 @@
     {/snippet}
     {#snippet body()}
       <div class="spells">
-        {#each spells as spell}
-          {@const ctx = context.itemContext[spell.id]}
-          {@const spellImgUrl = FoundryAdapter.getSpellImageUrl(context, spell)}
+        {#each spellEntries as { spell, ctx, spellImgUrl } (spell.id)}
           {@const hidden = !searchResultContext.show(spell.uuid)}
           <a
             class="spell {FoundryAdapter.getSpellRowClasses(spell)}"

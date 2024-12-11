@@ -2,9 +2,9 @@
 
 - [ ] Item changes are not reflecting on the character sheet when changed from the item sheet. Change an item name and see it not update
   - The actor sheet does rerender, but the item table row does not update.
-  - [ ] Fix: All each loops that reference classes must reference a POJO wrapper instead.
-    - [ ] Spellbook Grid
-    - [ ] Spellbook List
+  - [ ] Fix: All `#each` loops that reference Foundry classes must reference a POJO wrapper instead. Suggested approach: derived collection that stitches in any additional data like itemContext or unidentified name, to bypass the need for `@const` content.
+    - [x] Spellbook Grid
+    - [x] Spellbook List
     - [ ] Actor Effects Tab
     - [ ] Inventory Grid
     - [ ] Inventory List

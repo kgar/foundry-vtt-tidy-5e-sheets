@@ -116,11 +116,10 @@
           {#if layoutMode === 'list'}
             <SpellbookList
               allowFavorites={false}
-              spells={section.spells}
               {section}
             />
           {:else}
-            <SpellbookGrid spells={section.spells} {section} />
+            <SpellbookGrid {section} />
           {/if}
         {/if}
       {/if}

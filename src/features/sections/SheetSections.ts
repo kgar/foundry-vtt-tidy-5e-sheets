@@ -25,6 +25,7 @@ import type { SheetPreference } from '../user-preferences/user-preferences.types
 import type { Activity5e, CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { error } from 'src/utils/logging';
 import { getSortedActions } from '../actions/actions.svelte';
+import { SpellUtils } from 'src/utils/SpellUtils';
 
 export class SheetSections {
   static generateCustomSpellbookSections(
@@ -301,7 +302,8 @@ export class SheetSections {
   static configureSpellbook(
     document: any,
     tabId: string,
-    sections: SpellbookSection[]
+    sections: SpellbookSection[],
+    spellClassFilter: string = ''
   ) {
     try {
       const sectionConfigs = TidyFlags.sectionConfig.get(document);
@@ -318,6 +320,12 @@ export class SheetSections {
       const sortMode = characterPreferences.tabs?.[tabId]?.sort ?? 'm';
 
       return sections.map(({ ...section }) => {
+        // Filter Spellbook by Class Filter, if needed
+        section.spells = SpellUtils.tryFilterByClass(
+          section.spells,
+          spellClassFilter
+        );
+
         // Sort Spellbook
         section.spells = ItemUtils.getSortedItems(section.spells, sortMode);
 

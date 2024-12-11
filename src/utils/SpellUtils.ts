@@ -113,4 +113,18 @@ export class SpellUtils {
 
     return game.i18n.localize('DND5E.SpellUnprepared');
   }
+
+  static tryFilterByClass(spells: any[], selectedClassFilter?: string) {
+    if (
+      !settings.value.useMulticlassSpellbookFilter ||
+      selectedClassFilter === ''
+    ) {
+      return spells;
+    }
+
+    return spells.filter(
+      (spell) =>
+        spell.system.sourceClass?.trim() === selectedClassFilter?.trim(),
+    );
+  }
 }
