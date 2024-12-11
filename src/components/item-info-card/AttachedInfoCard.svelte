@@ -156,7 +156,6 @@
       focusedElement instanceof HTMLElement &&
       isUserInteractable(focusedElement)
     ) {
-      console.warn('a user interactable detected');
       return;
     }
 
