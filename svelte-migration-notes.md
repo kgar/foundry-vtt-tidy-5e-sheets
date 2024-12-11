@@ -2,12 +2,41 @@
 
 - [ ] Item changes are not reflecting on the character sheet when changed from the item sheet. Change an item name and see it not update
   - The actor sheet does rerender, but the item table row does not update.
+  - [ ] Fix: All each loops that reference classes must reference a POJO wrapper instead.
+    - [ ] Spellbook Grid
+    - [ ] Spellbook List
+    - [ ] Actor Effects Tab
+    - [ ] Inventory Grid
+    - [ ] Inventory List
+    - [ ] Favorite Activities List
+    - [ ] Favorite Facilities List
+    - [ ] Favorite Features List
+    - [ ] Favorite Spells List
+    - [ ] Character Effects tab
+    - [ ] Character Features tab
+    - [ ] Container Contents sections
+    - [ ] Encounter Member List
+    - [ ] Group Member List
+    - [ ] Item Active Effects Tab
+    - [ ] maybe: ItemAdvancementTab
+    - [ ] maybe: ItemSpeciesDescriptionTab
+    - [ ] NPC Abilities Tab
+    - [ ] Cargo List
+    - [ ] PassengerOrCrewList
+    - [ ] VehicleAttributesTab
+    - [ ] ContainerContentsSections
+    - [ ] AttunementSummaryTooltip
+    - [ ] GroupLanguageTooltip
+    - [ ] GroupSkillTooltip
+    - [ ] OccupantSummaryTooltip
 - [ ] Info Cards are not reactive to their target items or actors
   - This does not rerender when the item/actor changes. This can be remedied by subscribing self to their list of apps to update on change.
   - Rendering alone will not help. Triggering a render doesn't update the card. The card data has to be refreshed somehow.
   - Try a coarse reactivity provider whose data is set on each render, and sign up the card to refresh when any of its related entities are updated.
 - [ ] Attached info cards in popout force some width onto the popout window. Any idea how to get around that? Maybe some trick with parent container width perhaps?
+- [ ] Container Panel ctx menu seems to be getting confused when clicking Edit.
 
+ 
 ## Stretch, or defer to post V7.3.0
 
 - [ ] Overhaul: Item Filter Service is a mess. Is there a way to consolidate all functionality to the ItemFilterService so that it can serve up reactive filters all the way through?
@@ -162,6 +191,63 @@ Debrief:
 - [x] Trial 3:
 
 Cry.
+
+## Reactivity Troubleshooting for Item Table Rows
+
+🚷 Things that aren't reacting to change:
+- Item Name
+- Qty
+- Item Summary
+
+✅ Things that are reacting:
+- Equip/Unequip
+- Attune
+- Item Weight
+- Activity add/delete/rename
+- Item add/delete
+
+THOERY: After some extensive testing, the ActorInventoryTab call to `$derived(SheetSections.configureInventory(...))` is where reactivity stops. This call does the following:
+- Sort keyed sections
+- Sort items in section
+- Determine section visibility
+
+This was meant to allow for deferred execution and therefore deferred computation, so when a user didn't use a tab, this calculation was not done. For whatever reason, this call is causing svelte to be unable to detect changes, even when this function is passed in to a `CoarseReactivityProvider`.
+
+> [!IMPORTANT]
+> `@const` is reactive; it's not the problem
+
+UPDATED THEORY: I removed the custom section config from the equation and tried again. Latest results:
+
+**Without custom section config:**
+
+Reactive:
+- In Inventory Tab
+- In Inventory List, outside of Item Table body
+- In Inventory List, inside of Item Table body, outside of loop
+
+Not Reactive:
+- In Inventory List, **inside of Item Table body loop**
+- In Inventory List, **inside of Item Table body loop** item table row
+- In Inventory List, outside of Item Table body, **inside an each loop**
+
+I added it back and retested. ***Same results as without. So the custom section content is not the culprit.***
+
+So, it seems that reactivity breaks when we start the each loop on the section. It doesn't matter what component it's in. The each loop is not refreshing.
+
+Next thing to try: *wrap the Item reference with a `value` getter*
+
+**EUREKA**: Looping over a wrapper with a value getter solves the problem. Deep class reactivity *would be fucking nice, Svelte*, but since that is not an option, any each loop needs to loop over POJOs. Does it specifically need a getter? **Nope, you can just use a wrapped object, no getter required.**
+
+
+
+
+### Reactivity Scratch
+
+```
+const sword = fromUuidSync('Actor.jyVFPunMzXbhlAUe.Item.fnBoDKvOSltAIe7l');
+const newName = sword.name.endsWith('1') ? sword.name.substring(0, sword.name.length - 1) : sword.name + '1';
+fromUuidSync('Actor.jyVFPunMzXbhlAUe.Item.fnBoDKvOSltAIe7l').update({ name: newName});
+```
 
 ## TODO List Item Graveyard
 
