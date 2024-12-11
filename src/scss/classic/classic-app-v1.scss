@@ -317,6 +317,10 @@
     color: var(--t5e-primary-font-color);
   }
 
+  .prosemirror .ProseMirror {
+    padding-inline: 0.5rem;
+  }
+
   // Lists
   .separated-list {
     padding: 0;

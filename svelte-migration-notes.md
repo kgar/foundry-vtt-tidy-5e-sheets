@@ -1,7 +1,7 @@
 ## To Do
 
 - [ ] Resolve
-  - [ ] CharacterBiographyTab.svelte, snippets comment
+  - [x] CharacterBiographyTab.svelte, snippets comment
   - [ ] Checkbox.svelte, snippets comment
   - [ ] ContainerContentsSections.svelte, snippets comment
   - [ ] FacilityOrderProgressTracker.svelte snippets comment

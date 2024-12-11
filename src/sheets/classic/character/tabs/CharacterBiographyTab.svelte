@@ -120,135 +120,33 @@
       class="left-notes note-entries hide-editor-edit"
       class:limited={context.showLimitedSheet}
     >
-      <!-- When Svelte 5, Snippet -->
-      <RerenderAfterFormSubmission
-        andOnValueChange={context.system.details.trait}
-      >
-        <article use:context.activateEditors>
-          <div
-            class="section-titles biopage flex-row justify-content-space-between"
-          >
-            <span>{localize('DND5E.PersonalityTraits')}</span>
-            <a
-              class="icon-button"
-              onclick={(ev) =>
-                context.editable &&
-                edit(
-                  context.system.details.trait,
-                  context.traitEnrichedHtml,
-                  'system.details.trait',
-                )}
-            >
-              <i class="fa-solid fa-feather"></i>
-            </a>
-          </div>
-          <SheetEditor
-            content={context.traitEnrichedHtml}
-            target="system.details.trait"
-            editable={context.editable}
-          />
-        </article>
-      </RerenderAfterFormSubmission>
+      {@render biopage(
+        'DND5E.PersonalityTraits',
+        context.system.details.trait,
+        context.traitEnrichedHtml,
+        'system.details.trait',
+      )}
 
-      <RerenderAfterFormSubmission
-        andOnValueChange={context.system.details.ideal}
-      >
-        <article use:context.activateEditors>
-          <div
-            class="section-titles biopage flex-row justify-content-space-between"
-          >
-            <span>
-              {localize('DND5E.Ideals')}
-            </span>
-            <!-- svelte-ignore a11y_click_events_have_key_events -->
-            <!-- svelte-ignore a11y_no_static_element_interactions -->
-            <!-- svelte-ignore a11y_missing_attribute -->
-            <a
-              class="icon-button"
-              onclick={(ev) =>
-                context.editable &&
-                edit(
-                  context.system.details.ideal,
-                  context.idealEnrichedHtml,
-                  'system.details.ideal',
-                )}
-            >
-              <i class="fa-solid fa-feather"></i>
-            </a>
-          </div>
-          <SheetEditor
-            content={context.idealEnrichedHtml}
-            target="system.details.ideal"
-            editable={context.editable}
-          />
-        </article>
-      </RerenderAfterFormSubmission>
-      <RerenderAfterFormSubmission
-        andOnValueChange={context.system.details.bond}
-      >
-        <article use:context.activateEditors>
-          <div
-            class="section-titles biopage flex-row justify-content-space-between"
-          >
-            <span>
-              {localize('DND5E.Bonds')}
-            </span>
-            <!-- svelte-ignore a11y_click_events_have_key_events -->
-            <!-- svelte-ignore a11y_no_static_element_interactions -->
-            <!-- svelte-ignore a11y_missing_attribute -->
-            <a
-              class="icon-button"
-              onclick={(ev) =>
-                context.editable &&
-                edit(
-                  context.system.details.bond,
-                  context.bondEnrichedHtml,
-                  'system.details.bond',
-                )}
-            >
-              <i class="fa-solid fa-feather"></i>
-            </a>
-          </div>
-          <SheetEditor
-            content={context.bondEnrichedHtml}
-            target="system.details.bond"
-            editable={context.editable}
-          />
-        </article>
-      </RerenderAfterFormSubmission>
-      <RerenderAfterFormSubmission
-        andOnValueChange={context.system.details.flaw}
-      >
-        <article use:context.activateEditors>
-          <div
-            class="section-titles biopage flex-row justify-content-space-between"
-          >
-            <span>
-              {localize('DND5E.Flaws')}
-            </span>
-            <!-- svelte-ignore a11y_click_events_have_key_events -->
-            <!-- svelte-ignore a11y_no_static_element_interactions -->
-            <!-- svelte-ignore a11y_missing_attribute -->
-            <a
-              class="icon-button"
-              onclick={(ev) =>
-                context.editable &&
-                edit(
-                  context.system.details.flaw,
-                  context.flawEnrichedHtml,
-                  'system.details.flaw',
-                )}
-            >
-              <i class="fa-solid fa-feather"></i>
-            </a>
-          </div>
-          <SheetEditor
-            content={context.flawEnrichedHtml}
-            target="system.details.flaw"
-            editable={context.editable}
-          />
-        </article>
-      </RerenderAfterFormSubmission>
+      {@render biopage(
+        'DND5E.Ideals',
+        context.system.details.ideal,
+        context.idealEnrichedHtml,
+        'system.details.ideal',
+      )}
+
+      {@render biopage(
+        'DND5E.Bonds',
+        context.system.details.bond,
+        context.bondEnrichedHtml,
+        'system.details.bond',
+      )}
+
+      {@render biopage(
+        'DND5E.Flaws',
+        context.system.details.flaw,
+        context.flawEnrichedHtml,
+        'system.details.flaw',
+      )}
     </div>
 
     <div
@@ -322,6 +220,30 @@
     </div>
   </div>
 </div>
+
+{#snippet biopage(
+  label: string,
+  value: string,
+  content: string,
+  target: string,
+)}
+  <RerenderAfterFormSubmission andOnValueChange={value ?? ''}>
+    <article use:context.activateEditors>
+      <div
+        class="section-titles biopage flex-row justify-content-space-between"
+      >
+        <span>{localize(label)}</span>
+        <a
+          class="icon-button"
+          onclick={(ev) => context.editable && edit(value, content, target)}
+        >
+          <i class="fa-solid fa-feather"></i>
+        </a>
+      </div>
+      <SheetEditor {content} {target} editable={context.editable} />
+    </article>
+  </RerenderAfterFormSubmission>
+{/snippet}
 
 <style lang="scss">
   .notes-container {
