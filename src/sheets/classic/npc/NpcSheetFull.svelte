@@ -93,7 +93,9 @@
           })}
           title={!context.unlocked ? localize('DND5E.ChallengeRating') : ''}
         >
-          {localize('DND5E.AbbreviationCR')}
+          <label for="{context.appId}-system-details-cr">
+            {localize('DND5E.AbbreviationCR')}
+          </label>
           {#if context.unlocked}
             <NumberInput
               document={context.actor}
@@ -103,6 +105,7 @@
               cssClass="challenge-rating-input"
               selectOnFocus={true}
               title={localize('DND5E.ChallengeRating')}
+              id="{context.appId}-system-details-cr"
             />
           {:else}
             {dnd5e.utils.formatCR(context.system.details.cr)}
