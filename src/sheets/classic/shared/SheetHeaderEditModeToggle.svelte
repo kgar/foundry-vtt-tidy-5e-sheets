@@ -50,7 +50,6 @@
 </script>
 
 {#if context.editable}
-  <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div
     class="header-sheet-edit-mode-toggle {rest.class ?? ''}"
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SHEET_LOCK_TOGGLE}

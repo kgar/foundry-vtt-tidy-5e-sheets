@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { Item5e } from 'src/types/item.types';
   import type { CharacterFeatureSection } from 'src/types/types';
   import ItemTable from '../../../../components/item-list/v1/ItemTable.svelte';
   import ItemTableHeaderRow from '../../../../components/item-list/v1/ItemTableHeaderRow.svelte';
@@ -21,14 +20,17 @@
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = $derived(getCharacterSheetContext());
-
   interface Props {
-    items?: Item5e[];
     section: CharacterFeatureSection;
   }
 
-  let { items = [], section }: Props = $props();
+  let { section }: Props = $props();
+
+  let context = $derived(getCharacterSheetContext());
+
+  let itemEntries = $derived(
+    section.items.map((item) => ({ item, ctx: context.itemContext[item.id] })),
+  );
 
   const searchResults = getSearchResultsContext();
 
@@ -54,8 +56,7 @@
     </ItemTableHeaderRow>
   {/snippet}
   {#snippet body()}
-    {#each items as item (item.id)}
-      {@const ctx = context.itemContext[item.id]}
+    {#each itemEntries as { item, ctx } (item.id)}
       <ItemTableRow
         {item}
         onMouseDown={(event) => FoundryAdapter.editOnMiddleClick(event, item)}

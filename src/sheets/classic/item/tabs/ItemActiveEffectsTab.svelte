@@ -77,7 +77,6 @@
 
         <ol class="item-list">
           {#each section.effects as effect}
-            <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
             <li
               class="item effect flexrow"
               data-effect-id={effect.id}

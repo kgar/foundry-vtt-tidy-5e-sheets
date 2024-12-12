@@ -163,9 +163,6 @@
             <span>
               {localize('DND5E.Appearance')}
             </span>
-            <!-- svelte-ignore a11y_click_events_have_key_events -->
-            <!-- svelte-ignore a11y_no_static_element_interactions -->
-            <!-- svelte-ignore a11y_missing_attribute -->
             <a
               class="icon-button"
               onclick={(ev) =>
@@ -194,9 +191,6 @@
             <span>
               {localize('DND5E.Background')}/{localize('DND5E.Biography')}
             </span>
-            <!-- svelte-ignore a11y_click_events_have_key_events -->
-            <!-- svelte-ignore a11y_no_static_element_interactions -->
-            <!-- svelte-ignore a11y_missing_attribute -->
             <a
               class="icon-button"
               onclick={(ev) =>

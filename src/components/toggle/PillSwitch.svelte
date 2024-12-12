@@ -30,7 +30,6 @@
   }: Props = $props();
 </script>
 
-<!-- svelte-ignore a11y_label_has_associated_control -->
 <label class="pill pill-switch">
   <span>
     <span class="pill-switch-icon-container" class:hidden={!checked}>

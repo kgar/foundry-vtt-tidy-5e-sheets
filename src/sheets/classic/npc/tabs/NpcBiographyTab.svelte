@@ -154,33 +154,33 @@
             class="left-notes note-entries hide-editor-edit"
             class:limited={context.showLimitedSheet}
           >
-          {@render biopage(
-            'DND5E.PersonalityTraits',
-            TidyFlags.trait.get(context.actor) ?? '',
-            context.traitEnrichedHtml,
-            TidyFlags.trait.prop,
-          )}
-    
-          {@render biopage(
-            'DND5E.Ideals',
-            context.system.details.ideal,
-            context.idealEnrichedHtml,
-            'system.details.ideal',
-          )}
-    
-          {@render biopage(
-            'DND5E.Bonds',
-            context.system.details.bond,
-            context.bondEnrichedHtml,
-            'system.details.bond',
-          )}
-    
-          {@render biopage(
-            'DND5E.Flaws',
-            context.system.details.flaw,
-            context.flawEnrichedHtml,
-            'system.details.flaw',
-          )}
+            {@render biopage(
+              'DND5E.PersonalityTraits',
+              TidyFlags.trait.get(context.actor) ?? '',
+              context.traitEnrichedHtml,
+              TidyFlags.trait.prop,
+            )}
+
+            {@render biopage(
+              'DND5E.Ideals',
+              context.system.details.ideal,
+              context.idealEnrichedHtml,
+              'system.details.ideal',
+            )}
+
+            {@render biopage(
+              'DND5E.Bonds',
+              context.system.details.bond,
+              context.bondEnrichedHtml,
+              'system.details.bond',
+            )}
+
+            {@render biopage(
+              'DND5E.Flaws',
+              context.system.details.flaw,
+              context.flawEnrichedHtml,
+              'system.details.flaw',
+            )}
           </div>
         {/if}
         <div
@@ -198,9 +198,6 @@
                 <span>
                   {localize('DND5E.Appearance')}
                 </span>
-                <!-- svelte-ignore a11y_click_events_have_key_events -->
-                <!-- svelte-ignore a11y_no_static_element_interactions -->
-                <!-- svelte-ignore a11y_missing_attribute -->
                 <a
                   class="icon-button"
                   onclick={(ev) =>
@@ -231,9 +228,6 @@
                 <span>
                   {localize('DND5E.Background')}/{localize('DND5E.Biography')}
                 </span>
-                <!-- svelte-ignore a11y_click_events_have_key_events -->
-                <!-- svelte-ignore a11y_no_static_element_interactions -->
-                <!-- svelte-ignore a11y_missing_attribute -->
                 <a
                   class="icon-button"
                   onclick={(ev) =>

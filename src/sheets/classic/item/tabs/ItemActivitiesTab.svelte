@@ -37,7 +37,6 @@
   </header>
   <div class="scroll-container activities">
     {#each context.activities as activity (activity.id)}
-      <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div
         class="activity card"
         data-activity-id={activity.id}

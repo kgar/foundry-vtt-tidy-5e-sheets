@@ -62,9 +62,6 @@
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_IMAGE_CONTAINER}
   bind:this={itemImageContainer}
 >
-  <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-  <!-- svelte-ignore a11y_click_events_have_key_events -->
-  <!-- TODO: Figure out if there is an accessible way to provide this feature. -->
   <img
     class="profile"
     class:conceal={context.item.system.identified === false}

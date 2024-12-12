@@ -5,7 +5,7 @@
   import { EventHelper } from 'src/utils/events';
   import { getContext } from 'svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
-    import type { ContextPrimitive } from 'src/features/reactivity/reactivity.types';
+  import type { ContextPrimitive } from 'src/features/reactivity/reactivity.types';
 
   interface Props {
     occupant: Actor5e | undefined;
@@ -78,9 +78,6 @@
   {@const imageTypeClassName = occupant.token ? 'token' : 'portrait'}
   {@const imageSrc =
     imageTypeClassName == 'token' ? occupant.token.img : occupant.img}
-  <!-- svelte-ignore a11y_missing_attribute -->
-  <!-- svelte-ignore a11y_click_events_have_key_events -->
-  <!-- svelte-ignore a11y_no_static_element_interactions -->
   <li
     class:highlight={hoveredFacilityOccupant.value ===
       `${facilityId}-${index}-${occupant.uuid}`}
@@ -107,9 +104,6 @@
   </li>
 {:else}
   <li class="slot occupant-slot {type} empty" data-index={index}>
-    <!-- svelte-ignore a11y_click_events_have_key_events -->
-    <!-- svelte-ignore a11y_no_static_element_interactions -->
-    <!-- svelte-ignore a11y_missing_attribute -->
     <a onclick={(ev) => context.editable && onSlotClick(ev)}>
       <i class={iconClass}></i>
     </a>

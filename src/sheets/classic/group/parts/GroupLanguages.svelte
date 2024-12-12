@@ -33,8 +33,6 @@
 
 <div class="flex-row extra-small-gap flex-wrap">
   {#each context.groupLanguages as groupLanguage}
-    <!-- svelte-ignore a11y_no_static_element_interactions -->
-    <!-- svelte-ignore a11y_mouse_events_have_key_events -->
     <span
       data-tooltip-direction="UP"
       class="tag"

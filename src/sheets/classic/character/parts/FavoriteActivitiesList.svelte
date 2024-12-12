@@ -12,8 +12,6 @@
   import ActivityUses from 'src/components/item-list/ActivityUses.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = $derived(getCharacterSheetContext());
-
   interface Props {
     section: ActivitySection;
     visibleActivityUuidSubset: Set<string>;
@@ -36,6 +34,14 @@
 
   const localize = FoundryAdapter.localize;
 
+  let context = $derived(getCharacterSheetContext());
+
+  let activityEntries = $derived(
+    section.activities.map((activity) => ({
+      activity,
+    })),
+  );
+
   function activityHasUses(activity: Activity5e) {
     return (activity.consumption?.targets ?? []).some(
       (t: any) => (t.value ?? 0) > 0 && t.type === 'activityUses',
@@ -43,9 +49,6 @@
   }
 </script>
 
-<!-- svelte-ignore a11y_click_events_have_key_events -->
-<!-- svelte-ignore a11y_no_static_element_interactions -->
-<!-- svelte-ignore a11y_missing_attribute -->
 <TidyTable key={section.key} class="favorite-activities" {gridTemplateColumns}>
   {#snippet header()}
     <TidyTableHeaderRow>
@@ -68,7 +71,7 @@
     </TidyTableHeaderRow>
   {/snippet}
   {#snippet body()}
-    {#each section.activities as activity (activity.uuid)}
+    {#each activityEntries as { activity } (activity.uuid)}
       <TidyTableRow
         rowClass="activity"
         rowAttributes={{

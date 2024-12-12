@@ -49,8 +49,6 @@
   expanded={toggleServiceMap.get(tabId)?.has(container.id) === true}
   class={!searchResults.show(container.uuid) ? 'hidden' : ''}
 >
-  <!-- TODO: Apply proper a11y trappings for this -->
-  <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div
     class="flex-column extra-small-gap flex-1 inline-container-view"
     data-tidy-container-id={container.id}

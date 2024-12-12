@@ -36,7 +36,6 @@
 
 <ul class="containers">
   {#each containerPanelItems as { container, ...capacity } (container.id)}
-    <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
     <li
       draggable="true"
       data-item-id={container.id}

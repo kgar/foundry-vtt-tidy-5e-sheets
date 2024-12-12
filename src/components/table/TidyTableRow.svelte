@@ -38,7 +38,6 @@
   aria-hidden={hidden}
   {...rowContainerAttributes}
 >
-  <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div
     class="tidy-table-row {rowClass ?? ''}"
     data-tidy-table-row

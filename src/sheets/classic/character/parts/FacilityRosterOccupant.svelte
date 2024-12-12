@@ -57,9 +57,6 @@
     (hoveredFacilityOccupant.value = `${facilityId}-${index}-${occupant.uuid}`)}
   onmouseleave={() => (hoveredFacilityOccupant.value = '')}
 >
-  <!-- svelte-ignore a11y_click_events_have_key_events -->
-  <!-- svelte-ignore a11y_no_static_element_interactions -->
-  <!-- svelte-ignore a11y_missing_attribute -->
   <a onclick={(ev) => context.editable && onRosterMemberClicked(ev)}>
     <img src={occupant.img} alt={occupant.name} />
     {#if context.unlocked}

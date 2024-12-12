@@ -156,7 +156,6 @@
           >
             {#snippet children({ toggleSummary })}
               <TidyTableCell primary={true} class="truncate">
-                <!-- svelte-ignore a11y_interactive_supports_focus -->
                 <div
                   class="item-image"
                   style="--item-img: url({item.img}); --item-border-color: {itemBorderColor};"

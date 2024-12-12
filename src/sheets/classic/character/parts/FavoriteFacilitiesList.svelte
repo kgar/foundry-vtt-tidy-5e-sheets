@@ -1,11 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import {
-    type Actor5e,
-    type CharacterSheetContext,
-    type FacilitySection,
-  } from 'src/types/types';
+  import { type Actor5e, type FacilitySection } from 'src/types/types';
   import ItemName from '../../../../components/item-list/ItemName.svelte';
   import ItemTable from '../../../../components/item-list/v1/ItemTable.svelte';
   import ItemTableCell from '../../../../components/item-list/v1/ItemTableCell.svelte';
@@ -17,12 +13,17 @@
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
-  import type { Item5e } from 'src/types/item.types';
   import FacilityOrderProgressMeter from './FacilityOrderProgressMeter.svelte';
   import { Tooltip } from 'src/tooltips/Tooltip';
   import OccupantSummaryTooltip from 'src/tooltips/OccupantSummaryTooltip.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
+
+  interface Props {
+    section: FacilitySection;
+  }
+
+  let { section }: Props = $props();
 
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
@@ -30,12 +31,9 @@
 
   let context = $derived(getCharacterSheetContext());
 
-  interface Props {
-    section: FacilitySection;
-    items: Item5e[];
-  }
-
-  let { section, items }: Props = $props();
+  let itemEntries = $derived(
+    section.items.map((item) => ({ item, ctx: context.itemContext[item.id] })),
+  );
 
   let tooltipOccupants = $state<Actor5e[]>([]);
   let tooltipTitle = $state('');
@@ -121,8 +119,7 @@
       </ItemTableHeaderRow>
     {/snippet}
     {#snippet body()}
-      {#each items as item (item.id)}
-        {@const ctx = context.itemContext[item.id]}
+      {#each itemEntries as { item, ctx } (item.id)}
         {@const disabledClass =
           ctx?.chosen?.disabled === true ? 'disabled' : ''}
 

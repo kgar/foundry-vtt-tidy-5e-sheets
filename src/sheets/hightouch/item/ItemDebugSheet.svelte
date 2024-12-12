@@ -117,7 +117,6 @@
     </div>
     <fieldset class="vertical-gallery">
       <legend> Button / Attention </legend>
-      <!-- svelte-ignore a11y_missing_attribute -->
       Anchor
       <a class="button active">
         <i class="fas fa-edit"></i>
@@ -131,7 +130,6 @@
     </fieldset>
     <fieldset class="vertical-gallery">
       <legend> Button / Default </legend>
-      <!-- svelte-ignore a11y_missing_attribute -->
       Anchor
       <a class="button">
         <i class="fas fa-edit"></i>
@@ -147,38 +145,30 @@
       <legend> Button / Icon Only </legend>
       <div class="vertical-gallery">
         Anchors
-        <!-- svelte-ignore a11y_missing_attribute -->
         <a class="button icon-button">
           <i class="fas fa-hand"></i>
         </a>
-        <!-- svelte-ignore a11y_missing_attribute -->
         <a class="button icon-button active">
           <i class="fas fa-hand"></i>
         </a>
-        <!-- svelte-ignore a11y_missing_attribute -->
         <a class="button icon-button disabled">
           <i class="fas fa-hand"></i>
         </a>
-        <!-- svelte-ignore a11y_missing_attribute -->
         <a class="button icon-button active disabled">
           <i class="fas fa-hand"></i>
         </a>
       </div>
       <div class="vertical-gallery">
         Buttons
-        <!-- svelte-ignore a11y_missing_attribute -->
         <button class="icon-button">
           <i class="fas fa-hand"></i>
         </button>
-        <!-- svelte-ignore a11y_missing_attribute -->
         <button class="icon-button active">
           <i class="fas fa-hand"></i>
         </button>
-        <!-- svelte-ignore a11y_missing_attribute -->
         <button class="icon-button disabled">
           <i class="fas fa-hand"></i>
         </button>
-        <!-- svelte-ignore a11y_missing_attribute -->
         <button class="icon-button active disabled">
           <i class="fas fa-hand"></i>
         </button>
@@ -226,11 +216,9 @@
     </fieldset>
     <fieldset>
       <legend> Button / Edit Description </legend>
-      <!-- svelte-ignore a11y_missing_attribute -->
       <a class="button icon-button">
         <i class="fa-solid fa-feather"></i>
       </a>
-      <!-- svelte-ignore a11y_missing_attribute -->
       <a class="button icon-button disabled">
         <i class="fa-solid fa-feather"></i>
       </a>
@@ -242,7 +230,6 @@
           Change the sheet size to see the options show/hide dynamically.
         </span>
       </div>
-      <!-- svelte-ignore a11y_missing_attribute -->
       <div class="button-group">
         <ToggleButton>
           <span class="hide-before-850">Action</span>

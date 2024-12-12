@@ -8,10 +8,10 @@
     - [x] Actor Effects Tab
     - [x] Inventory Grid
     - [x] Inventory List
-    - [ ] Favorite Activities List
-    - [ ] Favorite Facilities List
-    - [ ] Favorite Features List
-    - [ ] Favorite Spells List
+    - [x] Favorite Activities List
+    - [x] Favorite Facilities List
+    - [x] Favorite Features List
+    - [x] Favorite Spells List
     - [ ] Character Effects tab
     - [ ] Character Features tab
     - [ ] Container Contents sections

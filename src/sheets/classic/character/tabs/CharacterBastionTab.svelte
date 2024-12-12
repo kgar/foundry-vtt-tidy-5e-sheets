@@ -153,9 +153,6 @@
             data-info-card-entity-uuid={chosen.facility.uuid}
           >
             <div class="facility-header">
-              <!-- svelte-ignore a11y_no_static_element_interactions -->
-              <!-- svelte-ignore a11y_click_events_have_key_events -->
-              <!-- svelte-ignore a11y_missing_attribute -->
               <a
                 class="facility-header-details"
                 onmouseenter={(ev) => onMouseEnterFacility(ev, chosen.facility)}
@@ -179,9 +176,6 @@
                   </span>
                 </div>
               </a>
-              <!-- svelte-ignore a11y_missing_attribute -->
-              <!-- svelte-ignore a11y_click_events_have_key_events -->
-              <!-- svelte-ignore a11y_no_static_element_interactions -->
               <a
                 class="facility-menu highlight-on-hover"
                 onclick={(ev) =>
@@ -269,9 +263,6 @@
         {/each}
         {#each context.facilities.special.available as available}
           <li class="facility empty">
-            <!-- svelte-ignore a11y_missing_attribute -->
-            <!-- svelte-ignore a11y_click_events_have_key_events -->
-            <!-- svelte-ignore a11y_no_static_element_interactions -->
             <a
               class="highlight-on-hover"
               onclick={(ev) =>
@@ -318,9 +309,6 @@
             data-info-card-entity-uuid={chosen.facility.uuid}
           >
             <div class="facility-header">
-              <!-- svelte-ignore a11y_click_events_have_key_events -->
-              <!-- svelte-ignore a11y_no_static_element_interactions -->
-              <!-- svelte-ignore a11y_missing_attribute -->
               <a
                 class="facility-header-details"
                 onmouseenter={(ev) => onMouseEnterFacility(ev, chosen.facility)}
@@ -342,9 +330,6 @@
                   </span>
                 </div>
               </a>
-              <!-- svelte-ignore a11y_missing_attribute -->
-              <!-- svelte-ignore a11y_click_events_have_key_events -->
-              <!-- svelte-ignore a11y_no_static_element_interactions -->
               <a
                 class="facility-menu highlight-on-hover"
                 onclick={(ev) =>
@@ -359,9 +344,6 @@
         {/each}
         {#each context.facilities.basic.available as available}
           <div class="facility empty">
-            <!-- svelte-ignore a11y_click_events_have_key_events -->
-            <!-- svelte-ignore a11y_no_static_element_interactions -->
-            <!-- svelte-ignore a11y_missing_attribute -->
             <a
               class="highlight-on-hover"
               onclick={(ev) =>

@@ -67,9 +67,6 @@
             stopChangePropagation={true}
             disabled={!context.editable}
           />
-          <!-- svelte-ignore a11y_click_events_have_key_events -->
-          <!-- svelte-ignore a11y_no_static_element_interactions -->
-          <!-- svelte-ignore a11y_missing_attribute -->
           <a
             class="icon-button"
             onclick={(ev) =>
@@ -104,9 +101,6 @@
             stopChangePropagation={true}
             disabled={!context.editable}
           />
-          <!-- svelte-ignore a11y_click_events_have_key_events -->
-          <!-- svelte-ignore a11y_no_static_element_interactions -->
-          <!-- svelte-ignore a11y_missing_attribute -->
           <a
             class="icon-button"
             onclick={(ev) =>
@@ -141,9 +135,6 @@
             stopChangePropagation={true}
             disabled={!context.editable}
           />
-          <!-- svelte-ignore a11y_click_events_have_key_events -->
-          <!-- svelte-ignore a11y_no_static_element_interactions -->
-          <!-- svelte-ignore a11y_missing_attribute -->
           <a
             class="icon-button"
             onclick={(ev) =>
@@ -178,9 +169,6 @@
             stopChangePropagation={true}
             disabled={!context.editable}
           />
-          <!-- svelte-ignore a11y_click_events_have_key_events -->
-          <!-- svelte-ignore a11y_no_static_element_interactions -->
-          <!-- svelte-ignore a11y_missing_attribute -->
           <a
             class="icon-button"
             onclick={(ev) =>
@@ -215,9 +203,6 @@
           <span>
             {localize('TIDY5E.JournalEntries')}
           </span>
-          <!-- svelte-ignore a11y_click_events_have_key_events -->
-          <!-- svelte-ignore a11y_no_static_element_interactions -->
-          <!-- svelte-ignore a11y_missing_attribute -->
           <a
             class="icon-button"
             onclick={(ev) =>

@@ -20,18 +20,25 @@
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
+  interface Props {
+    section: SpellbookSection;
+  }
+
+  let { section }: Props = $props();
+
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
 
   let context = $derived(getCharacterSheetContext());
 
-  interface Props {
-    section: SpellbookSection;
-    spells: any[];
-  }
-
-  let { section, spells }: Props = $props();
+  let spellEntries = $derived(
+    section.spells.map((spell) => ({
+      spell,
+      ctx: context.itemContext[spell.id],
+      spellImgUrl: FoundryAdapter.getSpellImageUrl(context, spell),
+    })),
+  );
 
   const searchResults = getSearchResultsContext();
 
@@ -74,9 +81,7 @@
       </ItemTableHeaderRow>
     {/snippet}
     {#snippet body()}
-      {#each spells as spell}
-        {@const ctx = context.itemContext[spell.id]}
-        {@const spellImgUrl = FoundryAdapter.getSpellImageUrl(context, spell)}
+      {#each spellEntries as { spell, ctx, spellImgUrl } (spell.id)}
         <ItemTableRow
           item={spell}
           onMouseDown={(event) =>

@@ -49,8 +49,6 @@
   expanded={toggleServiceMap.get(tabId)?.has(container.id) === true}
   class={!searchResults.show(container.uuid) ? 'hidden' : ''}
 >
-  <!-- TODO: Apply proper a11y trappings for this -->
-  <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div class="inline-content-view filigree-guideline-and-contents full-height">
     <VerticalFiligreeGuideline />
     <div
