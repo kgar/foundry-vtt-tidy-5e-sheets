@@ -5,7 +5,7 @@
   - [ ] Fix: All `#each` loops that reference Foundry classes must reference a POJO wrapper instead. Suggested approach: derived collection that stitches in any additional data like itemContext or unidentified name, to bypass the need for `@const` content.
     - [x] Spellbook Grid
     - [x] Spellbook List
-    - [ ] Actor Effects Tab
+    - [x] Actor Effects Tab
     - [x] Inventory Grid
     - [x] Inventory List
     - [ ] Favorite Activities List
