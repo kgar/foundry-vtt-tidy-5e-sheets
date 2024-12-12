@@ -40,7 +40,6 @@
 
   interface Props {
     primaryColumnName: string;
-    items: Item5e[];
     section: InventorySection;
     extraInventoryRowClasses?: string;
     lockControls?: boolean;
@@ -52,7 +51,6 @@
 
   let {
     primaryColumnName,
-    items,
     section,
     extraInventoryRowClasses = '',
     lockControls = false,
@@ -66,7 +64,23 @@
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
 
-  let context = $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
+  let context =
+    $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
+
+  let itemEntries = $derived(
+    section.items.map((item) => ({
+      item: item,
+      ctx: context.itemContext[item.id],
+      // TODO: Determine if this is needed any longer
+      itemName:
+        item.system.identified === false
+          ? coalesce(
+              item.system.unidentified.name,
+              localize('DND5E.Unidentified.Title'),
+            )
+          : item.name,
+    })),
+  );
 
   const searchResults = getSearchResultsContext();
 
@@ -192,15 +206,7 @@
       </ItemTableHeaderRow>
     {/snippet}
     {#snippet body()}
-      {#each items as item (item.id)}
-        {@const ctx = context.itemContext[item.id]}
-        {@const itemName =
-          item.system.identified === false
-            ? coalesce(
-                item.system.unidentified.name,
-                localize('DND5E.Unidentified.Title'),
-              )
-            : item.name}
+      {#each itemEntries as { item, ctx, itemName } (item.id)}
         <ItemTableRow
           {item}
           onMouseDown={(event) => FoundryAdapter.editOnMiddleClick(event, item)}

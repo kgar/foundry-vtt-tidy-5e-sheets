@@ -122,13 +122,12 @@
             <InventoryList
               primaryColumnName="{localize(section.label)} ({visibleItemCount})"
               {section}
-              items={section.items}
               allowAttuneControl={false}
               allowFavoriteIconNextToName={false}
               allowEquipControl={false}
             />
           {:else}
-            <InventoryGrid items={section.items} {section} />
+            <InventoryGrid {section} />
           {/if}
         {/if}
       {/if}

@@ -22,12 +22,19 @@
 
   interface Props {
     section: InventorySection;
-    items: Item5e[];
   }
 
-  let { section, items }: Props = $props();
+  let { section }: Props = $props();
 
-  let context = $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
+  let context =
+    $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
+
+  let itemEntries = $derived(
+    section.items.map((item) => ({
+      item: item,
+      ctx: context.itemContext[item.id],
+    })),
+  );
 
   let customCommands = $derived(
     ActorItemRuntime.getActorItemSectionCommands({
@@ -82,7 +89,7 @@
       <ItemTableColumn primary={true}>
         <span class="inventory-primary-column-label">
           {localize(section.label)} ({ItemVisibility.countVisibleItems(
-            items,
+            section.items,
             searchResults.uuids,
           )})
         </span>
@@ -91,8 +98,7 @@
   {/snippet}
   {#snippet body()}
     <div class="items">
-      {#each items as item (item.id)}
-        {@const ctx = context.itemContext[item.id]}
+      {#each itemEntries as { item, ctx } (item.id)}
         {@const hidden = !searchResults.show(item.uuid)}
         <a
           class="item {getInventoryRowClasses(item)}"

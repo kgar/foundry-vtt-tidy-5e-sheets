@@ -6,8 +6,8 @@
     - [x] Spellbook Grid
     - [x] Spellbook List
     - [ ] Actor Effects Tab
-    - [ ] Inventory Grid
-    - [ ] Inventory List
+    - [x] Inventory Grid
+    - [x] Inventory List
     - [ ] Favorite Activities List
     - [ ] Favorite Facilities List
     - [ ] Favorite Features List

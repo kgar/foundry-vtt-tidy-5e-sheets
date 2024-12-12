@@ -55,7 +55,6 @@
       {#if section.type === CONSTANTS.TAB_ACTOR_INVENTORY}
         <InventoryList
           {section}
-          items={section.items}
           primaryColumnName={localize(section.label)}
           lockControls={true}
           allowFavoriteIconNextToName={false}
