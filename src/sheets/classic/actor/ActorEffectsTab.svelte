@@ -85,6 +85,10 @@
     {#each effectSections as section}
       {#if !section.hidden}
         {#if (context.unlocked && context.allowEffectsManagement) || section.effects.length > 0}
+          {@const effectEntries = section.effects.map((e: any) => ({
+            effect: e,
+          }))}
+
           <ItemTable key={section.label}>
             {#snippet header()}
               <ItemTableHeaderRow>
@@ -103,7 +107,7 @@
               </ItemTableHeaderRow>
             {/snippet}
             {#snippet body()}
-              {#each section.effects as effect}
+              {#each effectEntries as { effect } (effect.id)}
                 <ItemTableRow
                   onMouseDown={(event) =>
                     FoundryAdapter.editOnMiddleClick(event, effect)}
