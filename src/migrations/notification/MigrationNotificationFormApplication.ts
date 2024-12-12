@@ -1,4 +1,4 @@
-import type { SvelteComponent } from 'svelte';
+import { mount } from 'svelte';
 import SvelteFormApplicationBase from 'src/applications/SvelteFormApplicationBase';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import MigrationNotification from './MigrationNotification.svelte';
@@ -27,8 +27,8 @@ export default class MigrationNotificationFormApplication extends SvelteFormAppl
     );
   }
 
-  createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
-    return new MigrationNotification({
+  createComponent(node: HTMLElement): Record<string, any> {
+    return mount(MigrationNotification, {
       target: node,
       context: new Map<string, any>([['confirm', this.confirm.bind(this)]]),
     });

@@ -2,26 +2,36 @@
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import CapacityBar from './CapacityBar.svelte';
   import ContainerContentsSections from './ContainerContentsSections.svelte';
-  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import type { ContainerContents, Item5e } from 'src/types/item.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
 
-  export let container: Item5e;
-  export let containerContents: ContainerContents;
-  export let editable: boolean;
-  export let inlineToggleService: InlineToggleService;
-  export let lockItemQuantity: boolean;
-  export let sheetDocument: any;
-  export let unlocked: boolean = true;
+  interface Props {
+    container: Item5e;
+    containerContents: ContainerContents;
+    editable: boolean;
+    inlineToggleService: InlineToggleService;
+    lockItemQuantity: boolean;
+    sheetDocument: any;
+    unlocked?: boolean;
+  }
 
-  $: inlineToggleServiceStore = inlineToggleService.store;
+  let {
+    container,
+    containerContents,
+    editable,
+    inlineToggleService,
+    lockItemQuantity,
+    sheetDocument,
+    unlocked = true,
+  }: Props = $props();
 
-  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
-    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
-  );
+  let toggleServiceMap = $derived(inlineToggleService.map);
+
+  const searchResults = getSearchResultsContext();
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
@@ -36,15 +46,13 @@
 </script>
 
 <ExpandableContainer
-  expanded={$inlineToggleServiceStore.get(tabId)?.has(container.id) === true}
-  class={!!$itemIdsToShow && !$itemIdsToShow.has(container.id) ? 'hidden' : ''}
+  expanded={toggleServiceMap.get(tabId)?.has(container.id) === true}
+  class={!searchResults.show(container.uuid) ? 'hidden' : ''}
 >
-  <!-- TODO: Apply proper a11y trappings for this -->
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div
     class="flex-column extra-small-gap flex-1 inline-container-view"
     data-tidy-container-id={container.id}
-    on:drop={onDrop}
+    ondrop={onDrop}
   >
     <CapacityBar {container} capacity={containerContents.capacity} />
     <ContainerContentsSections

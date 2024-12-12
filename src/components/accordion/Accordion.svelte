@@ -1,23 +1,14 @@
-<script context="module" lang="ts">
-  import { CONSTANTS } from 'src/constants';
-  import { setContext } from 'svelte';
-  import { writable, type Writable } from 'svelte/store';
-
-  export interface AccordionCtxType {
-    selected?: Writable<object>;
-  }
-</script>
-
 <script lang="ts">
-  export let multiple: boolean = false;
+  import type { Snippet } from 'svelte';
 
-  $: setContext<AccordionCtxType>(CONSTANTS.SVELTE_CONTEXT.ACCORDION_CONTEXT, {
-    selected: multiple ? undefined : writable(),
-  });
+  interface Props {
+    children?: Snippet;
+    [key: string]: any;
+  }
+
+  let { children, ...rest }: Props = $props();
 </script>
 
-{#key multiple}
-  <div class={$$props.class}>
-    <slot />
-  </div>
-{/key}
+<div class="accordion {rest.class}">
+  {@render children?.()}
+</div>

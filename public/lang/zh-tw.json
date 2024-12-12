@@ -58,7 +58,6 @@
     "TIDY5E.Search": "",
     "TIDY5E.SearchClear": "",
     "TIDY5E.SearchHint": "輸入你想要搜索的東西就夠了。",
-    "TIDY5E.ItemCardsKeyHint": "hold Key to interact with card.",
     "TIDY5E.ItemCardsMouseHint": "middle mouse to view/edit item.",
     "TIDY5E.AbbrMod": "加值",
     "TIDY5E.AbbrSavingThrow": "豁免",
@@ -126,10 +125,6 @@
         "hint": ""
     },
     "TIDY5E.Settings.ItemCardsDelay": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.ItemCardsFixKey": {
         "name": "",
         "hint": ""
     },

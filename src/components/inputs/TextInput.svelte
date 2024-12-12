@@ -3,8 +3,6 @@
   import { buildDataset } from 'src/utils/data';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import type {
     ContainerSheetClassicContext,
     ItemSheetContext,
@@ -14,6 +12,11 @@
     NpcSheetContext,
     VehicleSheetContext,
   } from 'src/types/types';
+  import type {
+    KeyboardEventHandler,
+    MouseEventHandler,
+  } from 'svelte/elements';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
   type OnSaveChangeFn = (
     event: Event & {
@@ -21,38 +24,64 @@
     },
   ) => boolean;
 
-  export let value: string | number | null = null;
-  export let placeholder: string | null = null;
-  export let field: string;
-  export let document: any;
-  export let tooltip: string | null = null;
-  export let id: string | null = null;
-  export let dataset: Record<string, unknown> | null = null;
-  export let maxlength: number | null = null;
-  export let ariaDescribedBy: string | null = null;
-  export let selectOnFocus: boolean = false;
-  export let saveEmptyAsNull: boolean = false;
-  export let title: string | null = null;
-  export let allowDeltaChanges: boolean = false;
-  export let disabled: boolean = false;
-  export let onSaveChange: OnSaveChangeFn = () => true;
-  /**
-   * There are cases where related data must be updated together,
-   * else odd behaviors will result.
-   */
-  export let additionalDataToSave: Record<string, any> = {};
-  /**
-   * Stop propagation on input change event.
-   * Useful for cases when outside listeners like
-   * the FormApplication are clearing an input
-   * during a change event, since these inputs
-   * do not use the `[name]` attribute.
-   */
-  export let stopChangePropagation: boolean = false;
+  interface Props {
+    value?: string | number | null;
+    placeholder?: string | null;
+    field: string;
+    document: any;
+    tooltip?: string | null;
+    id?: string | null;
+    dataset?: Record<string, unknown> | null;
+    maxlength?: number | null;
+    ariaDescribedBy?: string | null;
+    selectOnFocus?: boolean;
+    saveEmptyAsNull?: boolean;
+    title?: string | null;
+    allowDeltaChanges?: boolean;
+    disabled?: boolean;
+    onSaveChange?: OnSaveChangeFn;
+    /**
+     * There are cases where related data must be updated together,
+     * else odd behaviors will result.
+     */
+    additionalDataToSave?: Record<string, any>;
+    /**
+     * Stop propagation on input change event.
+     * Useful for cases when outside listeners like
+     * the FormApplication are clearing an input
+     * during a change event, since these inputs
+     * do not use the `[name]` attribute.
+     */
+    stopChangePropagation?: boolean;
+    onclick?: MouseEventHandler<HTMLElement>;
+    onkeypress?: KeyboardEventHandler<HTMLElement>;
+    [key: string]: any;
+  }
 
-  $: draftValue = value?.toString() ?? '';
-  $: actualDataset = buildDataset(dataset);
-  let theInput: HTMLInputElement | undefined;
+  let {
+    value = null,
+    placeholder = null,
+    field,
+    document,
+    tooltip = null,
+    id = null,
+    dataset = null,
+    maxlength = null,
+    ariaDescribedBy = null,
+    selectOnFocus = false,
+    saveEmptyAsNull = false,
+    title = null,
+    allowDeltaChanges = false,
+    disabled = false,
+    onSaveChange = () => true,
+    additionalDataToSave = {},
+    stopChangePropagation = false,
+    onclick,
+    onkeypress,
+    ...rest
+  }: Props = $props();
+
+  let theInput: HTMLInputElement | undefined = $state();
 
   async function saveChange(
     event: Event & {
@@ -75,7 +104,7 @@
       [field]: valueToSave,
     });
 
-    draftValue = value?.toString() ?? '';
+    value = value?.toString() ?? '';
 
     setTimeout(() => {
       if (selectOnFocus && theInput === window.document.activeElement) {
@@ -84,49 +113,47 @@
     });
   }
 
-  const context =
-    getContext<
-      Readable<
-        | CharacterSheetContext
-        | NpcSheetContext
-        | VehicleSheetContext
-        | ContainerSheetClassicContext
-        | ItemSheetContext
-      >
-    >('context');
-
-  $: activeEffectApplied = ActiveEffectsHelper.isActiveEffectAppliedToField(
-    document,
-    field,
-  );
-
-  $: isEnchanted =
-    $context.itemOverrides instanceof Set && $context.itemOverrides.has(field);
-
-  $: overrideTooltip = isEnchanted
-    ? localize('DND5E.ENCHANTMENT.Warning.Override')
-    : localize('DND5E.ActiveEffectOverrideWarning');
+  const context = $derived(getSheetContext<
+    | CharacterSheetContext
+    | NpcSheetContext
+    | VehicleSheetContext
+    | ContainerSheetClassicContext
+    | ItemSheetContext
+  >());
 
   const localize = FoundryAdapter.localize;
+
+  let actualDataset = $derived(buildDataset(dataset));
+  let activeEffectApplied = $derived(
+    ActiveEffectsHelper.isActiveEffectAppliedToField(document, field),
+  );
+  let isEnchanted = $derived(
+    context.itemOverrides instanceof Set && context.itemOverrides.has(field),
+  );
+  let overrideTooltip = $derived(
+    isEnchanted
+      ? localize('DND5E.ENCHANTMENT.Warning.Override')
+      : localize('DND5E.ActiveEffectOverrideWarning'),
+  );
 </script>
 
 <input
   bind:this={theInput}
   type="text"
   {id}
-  bind:value={draftValue}
+  {value}
   {placeholder}
   data-tooltip={activeEffectApplied ? overrideTooltip : tooltip}
   {...actualDataset}
-  {...$$restProps.attributes}
-  class={$$restProps.class ?? ''}
+  {...rest.attributes}
+  class={rest.class ?? ''}
   {maxlength}
   aria-describedby={ariaDescribedBy}
   {title}
   disabled={disabled || activeEffectApplied}
-  on:change={(ev) => onSaveChange(ev) && saveChange(ev)}
-  on:click
-  on:keypress
-  on:focus={(ev) => selectOnFocus && ev.currentTarget.select()}
+  onchange={(ev) => onSaveChange(ev) && saveChange(ev)}
+  {onclick}
+  {onkeypress}
+  onfocus={(ev) => selectOnFocus && ev.currentTarget.select()}
   data-tidy-field={field}
 />

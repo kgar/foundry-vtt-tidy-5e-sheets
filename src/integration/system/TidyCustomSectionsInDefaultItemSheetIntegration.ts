@@ -2,7 +2,7 @@ import { TidyFlags, type Tidy5eSheetsApi } from 'src/api';
 import type { SystemIntegrationBase } from '../integration-classes';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { SettingsProvider } from 'src/settings/settings';
+import { settings } from 'src/settings/settings.svelte';
 
 export class TidyCustomSectionsInDefaultItemSheetIntegration
   implements SystemIntegrationBase
@@ -10,7 +10,7 @@ export class TidyCustomSectionsInDefaultItemSheetIntegration
   init(api: Tidy5eSheetsApi): void {
     Hooks.on('renderItemSheet5e', (app: any) => {
       const includeSectionFields =
-        SettingsProvider.settings.includeTidySectionFieldsInDefaultSheets.get();
+        settings.value.includeTidySectionFieldsInDefaultSheets;
 
       if (!includeSectionFields) {
         return;
@@ -66,19 +66,21 @@ export class TidyCustomSectionsInDefaultItemSheetIntegration
             </div>
           </fieldset>`;
 
-      const element = app.element.get?.(0) ?? app.element;
+      const element = FoundryAdapter.getElementFromAppV1OrV2(app.element);
 
       element
         .querySelector('.tab.details')
         ?.insertAdjacentHTML('beforeend', html);
 
-      const sectionInput = element.querySelector(`#${customSectionId}`);
+      const sectionInput = element.querySelector<HTMLInputElement>(
+        `#${customSectionId}`
+      );
 
       if (sectionInput) {
         sectionInput.value = section;
       }
 
-      const actionSectionInput = element.querySelector(
+      const actionSectionInput = element.querySelector<HTMLInputElement>(
         `#${customActionSectionId}`
       );
 

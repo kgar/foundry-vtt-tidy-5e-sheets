@@ -5,18 +5,18 @@
   import BlockScore from './BlockScore.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
-  import { settingStore } from 'src/settings/settings';
-  import { CONSTANTS } from 'src/constants';
+  import { settings } from 'src/settings/settings.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  export let initiative: { total: number; bonus: number };
+  interface Props {
+    initiative: { total: number; bonus: number };
+  }
 
-  let context = getContext<Readable<ActorSheetContextV1>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let { initiative }: Props = $props();
 
-  $: appId = $context.actor.id;
+  let context = $derived(getSheetContext<ActorSheetContextV1>());
+
+  let appId = $derived(context.actor.id);
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -25,8 +25,7 @@
   <BlockTitle
     title={localize('DND5E.Initiative')}
     text={localize('TIDY5E.AbbrInitiative')}
-    on:roll={(event) =>
-      $context.actor.rollInitiativeDialog({ event: event.detail })}
+    onRoll={(event) => context.actor.rollInitiativeDialog({ event: event })}
   />
   <BlockScore>
     <span>{formatAsModifier(initiative.total)}</span>
@@ -34,27 +33,27 @@
   <label class="ini-bonus" for="{appId}-initiative-mod">
     <span>{localize('TIDY5E.AbbrMod')}</span>
     <TextInput
-      document={$context.actor}
+      document={context.actor}
       field="system.attributes.init.bonus"
       class="ini-mod"
       placeholder="0"
       selectOnFocus={true}
       allowDeltaChanges={true}
       value={initiative.bonus}
-      disabled={!$context.editable || !$context.unlocked}
+      disabled={!context.editable || !context.unlocked}
       id="{appId}-initiative-mod"
     />
   </label>
 
-  {#if $context.editable && $context.unlocked}
+  {#if context.editable && context.unlocked}
     <button
       type="button"
       class="config-button icon-button"
       title={localize('DND5E.InitiativeConfig')}
-      on:click={() => FoundryAdapter.renderInitiativeConfig($context.actor)}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+      onclick={() => FoundryAdapter.renderInitiativeConfig(context.actor)}
+      tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
     >
-      <i class="fas fa-cog" />
+      <i class="fas fa-cog"></i>
     </button>
   {:else}
     <span
@@ -62,7 +61,7 @@
       title={localize('DND5E.InitiativeConfig')}
       role="presentation"
     >
-      <i class="fas fa-cog" />
+      <i class="fas fa-cog"></i>
     </span>
   {/if}
 </div>

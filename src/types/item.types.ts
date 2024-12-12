@@ -1,4 +1,4 @@
-import type { ComponentType, SvelteComponent } from 'svelte';
+import type { Component } from 'svelte';
 import type {
   ActivityItemContext,
   AttunementContext,
@@ -41,6 +41,7 @@ export type ItemFacilityOrdersContext = {
 export type ItemSheetContext = {
   activities: {
     id: string;
+    uuid: string;
     name: string;
     sort: number;
     img: {
@@ -165,17 +166,6 @@ export type ItemChatData = {
   unidentified: { description: string };
   properties: string[];
 };
-
-export type ItemCardContentComponent = ComponentType<
-  SvelteComponent<
-    {
-      item: Item5e;
-      chatData: ItemChatData;
-    },
-    any,
-    any
-  >
->;
 
 export type ContainerItemContext = {
   activities?: ActivityItemContext[];

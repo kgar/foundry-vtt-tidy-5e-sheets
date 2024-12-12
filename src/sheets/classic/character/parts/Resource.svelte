@@ -1,24 +1,26 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { CharacterSheetContext, TidyResource } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import type { TidyResource } from 'src/types/types';
   import TextInput from '../../../../components/inputs/TextInput.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { settingStore } from 'src/settings/settings';
+  import { settings } from 'src/settings/settings.svelte';
+  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  export let resource: TidyResource;
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  interface Props {
+    resource: TidyResource;
+  }
 
-  $: appId = $context.actor.id;
+  let { resource }: Props = $props();
+
+  let context = $derived(getCharacterSheetContext());
+
+  let appId = $derived(context.actor.id);
 
   const localize = FoundryAdapter.localize;
 
-  let configActive = false;
+  let configActive = $state(false);
   // TODO: Remove this mouseenter/mouseleave show/hide logic when Firefox supports `:has()`
-  let viewingConfig = false;
+  let viewingConfig = $state(false);
 </script>
 
 <li
@@ -27,12 +29,12 @@
 >
   <h4 class="resource-name" class:hidden={viewingConfig || configActive}>
     <TextInput
-      document={$context.actor}
+      document={context.actor}
       field={resource.labelName}
       value={resource.label}
       placeholder={resource.placeholder}
       selectOnFocus={true}
-      disabled={!$context.editable || $context.lockSensitiveFields}
+      disabled={!context.editable || context.lockSensitiveFields}
     />
   </h4>
   <div
@@ -41,18 +43,18 @@
   >
     <TextInput
       class="resource-value"
-      document={$context.actor}
+      document={context.actor}
       field={resource.valueName}
       value={resource.value ?? null}
       placeholder="0"
       allowDeltaChanges={true}
       maxlength={3}
       selectOnFocus={true}
-      disabled={!$context.editable}
+      disabled={!context.editable}
     />
     <span class="sep"> / </span>
     <TextInput
-      document={$context.actor}
+      document={context.actor}
       field={resource.maxName}
       class="resource-max"
       value={resource.max ?? null}
@@ -60,15 +62,14 @@
       allowDeltaChanges={true}
       maxlength={3}
       selectOnFocus={true}
-      disabled={!$context.editable || $context.lockSensitiveFields}
+      disabled={!context.editable || context.lockSensitiveFields}
     />
   </div>
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
   <header
     class="resource-header"
     class:active={configActive}
-    on:mouseenter={() => (viewingConfig = true)}
-    on:mouseleave={() => (viewingConfig = false)}
+    onmouseenter={() => (viewingConfig = true)}
+    onmouseleave={() => (viewingConfig = false)}
   >
     <div class="resource-rest">
       <h4>{localize('TIDY5E.RestoreOnRest')}</h4>
@@ -76,11 +77,14 @@
         id="{appId}-{resource.name}-sr"
         type="checkbox"
         checked={resource.sr}
-        on:change|stopPropagation|preventDefault={(event) =>
-          $context.actor.update({
+        onchange={(event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          context.actor.update({
             [resource.srName]: event.currentTarget.checked,
-          })}
-        disabled={!$context.editable || $context.lockSensitiveFields}
+          });
+        }}
+        disabled={!context.editable || context.lockSensitiveFields}
         data-tidy-field={resource.srName}
       />
       <label
@@ -94,11 +98,14 @@
         id="{appId}-{resource.name}-lr"
         type="checkbox"
         checked={resource.lr}
-        on:change|stopPropagation|preventDefault={(event) =>
-          $context.actor.update({
+        onchange={(event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          context.actor.update({
             [resource.lrName]: event.currentTarget.checked,
-          })}
-        disabled={!$context.editable || $context.lockSensitiveFields}
+          });
+        }}
+        disabled={!context.editable || context.lockSensitiveFields}
         data-tidy-field={resource.lrName}
       />
       <label
@@ -109,17 +116,17 @@
         {localize('DND5E.RestL')}
       </label>
     </div>
-    {#if $context.editable && !$context.lockSensitiveFields}
+    {#if context.editable && !context.lockSensitiveFields}
       <button
         type="button"
         class="inline-icon-button resource-options"
         class:active={configActive}
-        on:click={() => {
+        onclick={() => {
           configActive = !configActive;
         }}
-        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+        tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
       >
-        <i class="fas fa-cog" />
+        <i class="fas fa-cog"></i>
       </button>
     {/if}
   </header>
@@ -146,7 +153,12 @@
       padding-top: 0;
     }
 
-    &:is(:has(> .resource-header:hover), :has(.resource-options:focus-visible))
+    &:is(
+        :global(
+            :has(> .resource-header:hover),
+            :has(.resource-options:focus-visible)
+          )
+      )
       > :not(.resource-header) {
       display: none;
     }
@@ -218,8 +230,8 @@
 
       &.active,
       &:hover,
-      // `:is()` is required to prevent this selector from crashing the whole style set if `:has()` is not supported
-      &:is(:has(.resource-options:focus-visible)) {
+      // `:is(:global())` is required to prevent this selector from crashing the whole style set if `:has(:global())` is not supported
+      &:is(:global(:has(.resource-options:focus-visible))) {
         width: 100%;
         height: 100%;
 

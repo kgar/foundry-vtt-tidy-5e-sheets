@@ -2,23 +2,21 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ThemeColorSetting } from 'src/types/theme.types';
   import { getContext, onMount } from 'svelte';
-  import ColorPicker from 'svelte-awesome-color-picker';
-  import type { Writable } from 'svelte/store';
-  import type { CurrentSettings } from 'src/settings/settings';
+  import type { CurrentSettings } from 'src/settings/settings.svelte';
   import {
     settingValueToHexaString,
     trySetRootCssVariable,
-    colorToHexaString,
   } from 'src/theme/theme';
   import { CONSTANTS } from 'src/constants';
 
-  export let colorToConfigure: ThemeColorSetting;
+  interface Props {
+    settings: CurrentSettings;
+    colorToConfigure: ThemeColorSetting;
+  }
+
+  let { colorToConfigure, settings }: Props = $props();
 
   let appId = getContext(CONSTANTS.SVELTE_CONTEXT.APP_ID);
-  let context = getContext<Writable<CurrentSettings>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
-  let colorPickerIsOpen: boolean = false;
 
   const eyeDropperEnabled = 'EyeDropper' in window;
 
@@ -40,12 +38,11 @@
     trySetRootCssVariable(
       colorToConfigure.cssVariable,
       value,
-      $context.colorPickerEnabled,
+      settings.colorPickerEnabled,
     );
-    $context = {
-      ...$context,
-      [colorToConfigure.key]: value,
-    };
+
+    //@ts-expect-error
+    settings[colorToConfigure.key] = value;
   }
 
   let article: HTMLElement;
@@ -68,31 +65,26 @@
     </label>
   </div>
   <div class="theme-settings-group flex-row align-items-center extra-small-gap">
-    <ColorPicker
-      bind:isOpen={colorPickerIsOpen}
-      isDialog={true}
-      label=""
-      hex={settingValueToHexaString(
-        $context[colorToConfigure.key]?.toString() ?? '',
-      ).hexa}
-      on:input={(ev) =>
-        colorPickerIsOpen &&
-        onColorSelected(colorToConfigure, colorToHexaString(ev.detail.color))}
-    />
+    <label
+      for="{colorToConfigure.key}-{appId}"
+      class="color-picker-preview"
+      style="--bg-color: {settings[colorToConfigure.key]};"
+    ></label>
+
     <input
       type="text"
       id="{colorToConfigure.key}-{appId}"
-      value={$context[colorToConfigure.key]}
-      class="theme-color-textbox"
-      on:change={(ev) =>
+      value={settings[colorToConfigure.key]}
+      class="theme-color-textbox coloris"
+      onchange={(ev) =>
         onColorSelected(colorToConfigure, ev.currentTarget.value)}
     />
     {#if eyeDropperEnabled}
       <button
         type="button"
         class="eye-dropper"
-        on:click={() => activateEyeDropper(colorToConfigure)}
-        ><i class="fas fa-eye-dropper" /></button
+        onclick={() => activateEyeDropper(colorToConfigure)}
+        ><i class="fas fa-eye-dropper"></i></button
       >
     {/if}
   </div>
@@ -125,15 +117,12 @@
       }
     }
 
-    :global(:is(.color-picker .wrapper)) {
-      color: unset;
-      box-shadow: 0 0 0.25rem 0.125rem var(--t5e-light-color);
-      background: var(--t5e-background);
-    }
-
-    :global(:is(.color-picker .wrapper input)) {
-      background: var(--t5e-faintest-color);
-      color: var(--t5e-primary-font-color);
+    .color-picker-preview {
+      background: var(--bg-color);
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      cursor: pointer;
     }
   }
 </style>

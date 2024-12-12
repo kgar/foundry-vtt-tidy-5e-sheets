@@ -59,4 +59,15 @@ export class ItemUtils {
       items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     }
   }
+
+  static getSortedItems(items: Item5e[], sortMode: SortMode) {
+    if (sortMode === 'a') {
+      return items.toSorted((a, b) =>
+        a.name.localeCompare(b.name, game.i18n.lang)
+      );
+    } else if (sortMode === 'm') {
+      return items.toSorted((a, b) => (a.sort || 0) - (b.sort || 0));
+    }
+    return items;
+  }
 }

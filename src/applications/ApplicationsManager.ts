@@ -1,5 +1,5 @@
-import { UserSettingsFormApplication } from './settings/user-settings/UserSettingsFormApplication';
-import { ThemeSettingsFormApplication } from './theme/ThemeSettingsFormApplication';
+import { UserSettingsFormApplication } from './settings/user-settings/UserSettingsFormApplication.svelte';
+import { ThemeSettingsFormApplication } from './theme/ThemeSettingsFormApplication.svelte';
 import { CONSTANTS } from 'src/constants';
 
 export class ApplicationsManager {

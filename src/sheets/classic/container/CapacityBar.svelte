@@ -4,18 +4,25 @@
   import type { Item5e } from 'src/types/item.types';
   import type { ContainerCapacityContext } from 'src/types/types';
 
-  export let container: Item5e;
-  export let capacity: ContainerCapacityContext;
-  export let showLabel = true;
+  interface Props {
+    container: Item5e;
+    capacity: ContainerCapacityContext;
+    showLabel?: boolean;
+  }
 
-  $: readableValue =
+  let { container, capacity, showLabel = true }: Props = $props();
+
+  let readableValue = $derived(
     container.system.capacity.type === CONSTANTS.ITEM_CAPACITY_TYPE_WEIGHT
       ? (capacity.value ?? 0).toFixed(2)
-      : Math.ceil(capacity.value ?? 0);
+      : Math.ceil(capacity.value ?? 0),
+  );
 
-  $: capacityLabel = `${readableValue}/${capacity.max} ${capacity.units}`;
+  let capacityLabel = $derived(
+    `${readableValue}/${capacity.max} ${capacity.units}`,
+  );
 
-  $: percentage = Math.round(capacity.pct);
+  let percentage = $derived(Math.round(capacity.pct));
   const localize = FoundryAdapter.localize;
 </script>
 

@@ -3,7 +3,11 @@
   import type { GroupSkill } from 'src/types/group.types';
   import { formatAsModifier } from 'src/utils/formatting';
 
-  export let skill: GroupSkill;
+  interface Props {
+    skill: GroupSkill;
+  }
+
+  let { skill }: Props = $props();
 
   let tooltip: HTMLElement;
 

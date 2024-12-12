@@ -1,5 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     ContainerSheetClassicContext,
     ItemSheetContext,
@@ -11,36 +12,54 @@
   } from 'src/types/types';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { toNumber } from 'src/utils/numbers';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
 
-  export let element: keyof HTMLElementTagNameMap;
-  export let document: any;
-  export let field: string;
-  export let value: string;
-  export let editable: boolean;
-  export let cssClass: string = '';
-  export let spellcheck: boolean = false;
-  export let dataMaxLength: number = 40;
-  export let placeholder: string | null = null;
-  export let saveAs: 'string' | 'number' = 'string';
-  export let title: string | null = null;
-  export let selectOnFocus: boolean = false;
+  interface Props {
+    element: keyof HTMLElementTagNameMap;
+    document: any;
+    field: string;
+    value: string;
+    editable: boolean;
+    cssClass?: string;
+    spellcheck?: boolean;
+    dataMaxLength?: number;
+    placeholder?: string | null;
+    saveAs?: 'string' | 'number';
+    title?: string | null;
+    selectOnFocus?: boolean;
+  }
 
-  $: draftValue = value;
+  let {
+    element,
+    document,
+    field,
+    value,
+    editable,
+    cssClass = '',
+    spellcheck = false,
+    dataMaxLength = 40,
+    placeholder = null,
+    saveAs = 'string',
+    title = null,
+    selectOnFocus = false,
+  }: Props = $props();
+
+  let draftValue = $state('');
+
+  $effect(() => {
+    draftValue = value;
+  });
 
   async function update() {
+    draftValue = new DOMParser().parseFromString(draftValue, 'text/html').body
+      .textContent ?? '';
+      
     if (draftValue.length > dataMaxLength) {
-      draftValue = draftValue.substring(0, dataMaxLength);
+      draftValue = draftValue.substring(0, dataMaxLength)?.replaceAll('\n', '');
     }
 
     const valueToSave = saveAs === 'number' ? toNumber(draftValue) : draftValue;
 
-    const result = await document.update({ [field]: valueToSave });
-
-    if (!result) {
-      draftValue = value;
-    }
+    await document.update({ [field]: valueToSave });
   }
 
   function submitWhenEnterKey(e: KeyboardEvent) {
@@ -50,13 +69,14 @@
     }
   }
 
+  // svelte-ignore non_reactive_update
   let _el: HTMLElement;
 
   // [contenteditable] pasting can include HTML
   // Only the text content is appropriate for this component
-  function handlePaste() {
+  function handlePaste(ev: ClipboardEvent) {
     setTimeout(() => {
-      value = _el.textContent ?? '';
+      value = _el.textContent?.replaceAll('\n', '') ?? '';
     }, 0);
   }
 
@@ -71,29 +91,29 @@
   }
 
   const context =
-    getContext<
-      Readable<
+    $derived(
+      getSheetContext<
         | CharacterSheetContext
         | NpcSheetContext
         | VehicleSheetContext
         | ContainerSheetClassicContext
         | ItemSheetContext
-      >
-    >('context');
-
-  $: activeEffectApplied = ActiveEffectsHelper.isActiveEffectAppliedToField(
-    document,
-    field,
-  );
-
-  $: isEnchanted =
-    $context.itemOverrides instanceof Set && $context.itemOverrides.has(field);
-
-  $: overrideTooltip = isEnchanted
-    ? localize('DND5E.ENCHANTMENT.Warning.Override')
-    : localize('DND5E.ActiveEffectOverrideWarning');
+      >(),
+    );
 
   const localize = FoundryAdapter.localize;
+
+  let activeEffectApplied = $derived(
+    ActiveEffectsHelper.isActiveEffectAppliedToField(document, field),
+  );
+  let isEnchanted = $derived(
+    context.itemOverrides instanceof Set && context.itemOverrides.has(field),
+  );
+  let overrideTooltip = $derived(
+    isEnchanted
+      ? localize('DND5E.ENCHANTMENT.Warning.Override')
+      : localize('DND5E.ActiveEffectOverrideWarning'),
+  );
 </script>
 
 {#if editable && !activeEffectApplied}
@@ -103,10 +123,10 @@
     contenteditable="true"
     class={cssClass}
     bind:innerHTML={draftValue}
-    on:blur={update}
-    on:keypress={submitWhenEnterKey}
-    on:paste={handlePaste}
-    on:focus={onFocus}
+    onblur={update}
+    onkeypress={submitWhenEnterKey}
+    onpaste={handlePaste}
+    onfocus={onFocus}
     role="textbox"
     tabindex="0"
     {spellcheck}
@@ -114,7 +134,7 @@
     data-placeholder={placeholder}
     {title}
     data-tidy-field={field}
-  />
+  ></svelte:element>
 {:else}
   <svelte:element
     this={element}

@@ -4,28 +4,28 @@
     type NpcSheetContext,
     type SpellbookSection,
   } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import TextInput from '../inputs/TextInput.svelte';
-  import { CONSTANTS } from 'src/constants';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  export let section: SpellbookSection;
+  interface Props {
+    section: SpellbookSection;
+  }
 
-  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let { section }: Props = $props();
+
+  let context = $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
 </script>
 
 <div class="spell-slots-detail">
   <TextInput
-    document={$context.actor}
+    document={context.actor}
     field="system.spells.{section.prop}.value"
     class="spell-slot-uses"
     value={section.uses}
     placeholder="0"
     selectOnFocus={true}
     allowDeltaChanges={true}
-    disabled={!$context.editable}
+    disabled={!context.editable}
   />
   <span class="sep"> / </span>
 

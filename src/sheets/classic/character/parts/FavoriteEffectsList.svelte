@@ -9,23 +9,20 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
-    CharacterSheetContext,
     EffectFavoriteSection,
     FavoriteEffectContext,
   } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
 
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
-  export let section: EffectFavoriteSection;
+  interface Props {
+    section: EffectFavoriteSection;
+    /**
+     * An optional subset of item IDs which will hide all other items not included in this set.
+     * Useful for showing only search results, for example.
+     */
+    visibleEffectIdSubset?: Set<string> | null;
+  }
 
-  /**
-   * An optional subset of item IDs which will hide all other items not included in this set.
-   * Useful for showing only search results, for example.
-   */
-  export let visibleEffectIdSubset: Set<string> | null = null;
+  let { section, visibleEffectIdSubset = null }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
@@ -38,7 +35,7 @@
 </script>
 
 <ItemTable key={section.key} class="favorite-effects">
-  <svelte:fragment slot="header">
+  {#snippet header()}
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>
         {localize(section.label ?? 'DND5E.Effect')}
@@ -50,13 +47,13 @@
         <!-- Controls -->
       </ItemTableColumn>
     </ItemTableHeaderRow>
-  </svelte:fragment>
-  <svelte:fragment slot="body">
+  {/snippet}
+  {#snippet body()}
     {#each section.effects as effectContext (effectContext.effectId)}
       <ItemTableRow
-        effect={effectContext.effect}
-        on:mousedown={(event) =>
-          FoundryAdapter.editOnMiddleClick(event.detail, effectContext.effect)}
+        activeEffect={effectContext.effect}
+        onMouseDown={(event) =>
+          FoundryAdapter.editOnMiddleClick(event, effectContext.effect)}
         contextMenu={{
           type: CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS,
           uuid: effectContext.effect.uuid,
@@ -87,10 +84,10 @@
           <TidySwitch
             disabled={effectContext.suppressed}
             checked={effectContext.toggle.value}
-            on:change={() => toggleEffect(effectContext)}
+            onChange={() => toggleEffect(effectContext)}
           />
         </ItemTableCell>
       </ItemTableRow>
     {/each}
-  </svelte:fragment>
+  {/snippet}
 </ItemTable>

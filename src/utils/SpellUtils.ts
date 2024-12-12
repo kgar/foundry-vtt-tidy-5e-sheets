@@ -1,4 +1,4 @@
-import { SettingsProvider } from 'src/settings/settings';
+import { settings, SettingsProvider } from 'src/settings/settings.svelte';
 import type { Item5e } from 'src/types/item.types';
 import { ItemUtils } from './ItemUtils';
 import { CONSTANTS } from 'src/constants';
@@ -23,8 +23,7 @@ export class SpellUtils {
 
   /** While the Cantrip Formulas rule is enabled, this cantrip must have prepared status. If the rule is not enabled, a cantrip is always prepared.  */
   static isCantripPrepared(item: Item5e) {
-    const prepareCantrips =
-      SettingsProvider.settings.allowCantripsToBePrepared.get();
+    const prepareCantrips = settings.value.allowCantripsToBePrepared;
 
     return !prepareCantrips || (prepareCantrips && SpellUtils.isPrepared(item));
   }
@@ -70,7 +69,7 @@ export class SpellUtils {
   static isUnlimitedInnate(item: any): boolean {
     return SpellUtils.isInnate(item) && !ItemUtils.hasConfiguredUses(item);
   }
-  
+
   /** Is an Innate spell. */
   static isInnate(item: any): boolean {
     return (
@@ -98,6 +97,34 @@ export class SpellUtils {
     return (
       item.system.preparation?.mode === 'prepared' &&
       !item.system.preparation?.prepared
+    );
+  }
+
+  static getToggleTitle(item: Item5e) {
+    const prep = item.system.preparation || {};
+    const isAlways = prep.mode === 'always';
+    const isPrepared = !!prep.prepared;
+
+    if (isAlways) {
+      return CONFIG.DND5E.spellPreparationModes.always.label;
+    } else if (isPrepared) {
+      return CONFIG.DND5E.spellPreparationModes.prepared.label;
+    }
+
+    return game.i18n.localize('DND5E.SpellUnprepared');
+  }
+
+  static tryFilterByClass(spells: any[], selectedClassFilter?: string) {
+    if (
+      !settings.value.useMulticlassSpellbookFilter ||
+      selectedClassFilter === ''
+    ) {
+      return spells;
+    }
+
+    return spells.filter(
+      (spell) =>
+        spell.system.sourceClass?.trim() === selectedClassFilter?.trim(),
     );
   }
 }

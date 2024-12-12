@@ -19,14 +19,13 @@
   import InlineFavoriteIcon from '../../../components/item-list/InlineFavoriteIcon.svelte';
   import ItemFavoriteControl from '../../../components/item-list/controls/ItemFavoriteControl.svelte';
   import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import type {
     CharacterSheetContext,
     InventorySection,
     NpcSheetContext,
     RenderableClassicControl,
   } from 'src/types/types';
-  import { settingStore } from 'src/settings/settings';
+  import { settings } from 'src/settings/settings.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { coalesce } from 'src/utils/formatting';
   import TextInput from 'src/components/inputs/TextInput.svelte';
@@ -34,101 +33,130 @@
   import InlineContainerView from '../container/InlineContainerView.svelte';
   import { ItemUtils } from 'src/utils/ItemUtils';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
-  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  export let primaryColumnName: string;
-  export let items: Item5e[];
-  export let section: InventorySection;
-  export let extraInventoryRowClasses: string = '';
-  export let lockControls: boolean = false;
-  export let allowFavoriteIconNextToName: boolean = true;
-  export let includeWeightColumn: boolean = true;
-  export let allowAttuneControl: boolean = true;
-  export let allowEquipControl: boolean = true;
+  interface Props {
+    primaryColumnName: string;
+    section: InventorySection;
+    extraInventoryRowClasses?: string;
+    lockControls?: boolean;
+    allowFavoriteIconNextToName?: boolean;
+    includeWeightColumn?: boolean;
+    allowAttuneControl?: boolean;
+    allowEquipControl?: boolean;
+  }
+
+  let {
+    primaryColumnName,
+    section,
+    extraInventoryRowClasses = '',
+    lockControls = false,
+    allowFavoriteIconNextToName = true,
+    includeWeightColumn = true,
+    allowAttuneControl = true,
+    allowEquipControl = true,
+  }: Props = $props();
 
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
 
-  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  let context =
+    $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
+
+  let itemEntries = $derived(
+    section.items.map((item) => ({
+      item: item,
+      ctx: context.itemContext[item.id],
+      // TODO: Determine if this is needed any longer
+      itemName:
+        item.system.identified === false
+          ? coalesce(
+              item.system.unidentified.name,
+              localize('DND5E.Unidentified.Title'),
+            )
+          : item.name,
+    })),
   );
 
-  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
-    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
-  );
+  const searchResults = getSearchResultsContext();
 
   const localize = FoundryAdapter.localize;
   const weightUnit = FoundryAdapter.getWeightUnit();
 
   // TODO: Assign these controls to the inventory prop in `getData()`. Leave room for the API to inject additional controls.
-  let controls: RenderableClassicControl<{ item: Item5e; ctx: any }>[] = [];
+  let controls: RenderableClassicControl<{ item: Item5e; ctx: any }>[] =
+    $derived.by(() => {
+      let result: RenderableClassicControl<{ item: Item5e; ctx: any }>[] = [];
 
-  $: {
-    controls = [];
+      if (allowAttuneControl) {
+        result.push({
+          component: AttuneControl,
+          props: ({ item, ctx }) => ({
+            item,
+            ctx,
+          }),
+          visible: ({ item, ctx }) =>
+            ctx?.attunement && !FoundryAdapter.concealDetails(item),
+        });
+      }
 
-    if (allowAttuneControl) {
-      controls.push({
-        component: AttuneControl,
-        props: ({ item, ctx }) => ({
-          item,
-          ctx,
-        }),
-        visible: ({ item, ctx }) =>
-          ctx?.attunement && !FoundryAdapter.concealDetails(item),
-      });
-    }
+      if (allowEquipControl) {
+        result.push({
+          component: EquipControl,
+          props: ({ item, ctx }) => ({
+            item,
+            ctx,
+          }),
+          visible: ({ ctx }) => ctx?.canToggle === true,
+        });
+      }
 
-    if (allowEquipControl) {
-      controls.push({
-        component: EquipControl,
-        props: ({ item, ctx }) => ({
-          item,
-          ctx,
-        }),
-        visible: ({ ctx }) => ctx?.canToggle === true,
-      });
-    }
+      if ('favorites' in context.actor.system) {
+        result.push({
+          component: ItemFavoriteControl,
+          props: ({ item }) => ({
+            item,
+          }),
+        });
+      }
 
-    if ('favorites' in $context.actor.system) {
-      controls.push({
-        component: ItemFavoriteControl,
+      result.push({
+        component: ItemEditControl,
         props: ({ item }) => ({
           item,
         }),
       });
-    }
 
-    controls.push({
-      component: ItemEditControl,
-      props: ({ item }) => ({
-        item,
-      }),
+      if (context.unlocked) {
+        result.push({
+          component: ItemDeleteControl,
+          props: ({ item }) => ({
+            item,
+          }),
+        });
+      }
+
+      if (context.useActionsFeature) {
+        result.push({
+          component: ActionFilterOverrideControl,
+          props: ({ item }) => ({
+            item,
+          }),
+        });
+      }
+
+      return result;
     });
-
-    if ($context.unlocked) {
-      controls.push({
-        component: ItemDeleteControl,
-        props: ({ item }) => ({
-          item,
-        }),
-      });
-    }
-
-    if ($context.useActionsFeature) {
-      controls.push({
-        component: ActionFilterOverrideControl,
-        props: ({ item }) => ({
-          item,
-        }),
-      });
-    }
-  }
 
   let classicControlsIconWidth = 1.25;
 
-  $: classicControlsColumnWidth = `${classicControlsIconWidth * controls.length}rem`;
+  let classicControlsColumnWidth = $derived(
+    `${classicControlsIconWidth * controls.length}rem`,
+  );
 
   function getInventoryRowClasses(item: Item5e) {
     const extras: string[] = [];
@@ -139,7 +167,7 @@
 
     return FoundryAdapter.getInventoryRowClasses(
       item,
-      $context.itemContext[item.id],
+      context.itemContext[item.id],
       extras,
     );
   }
@@ -150,7 +178,7 @@
     key={section.key}
     data-custom-section={section.custom ? true : null}
   >
-    <svelte:fragment slot="header">
+    {#snippet header()}
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>
           {primaryColumnName}
@@ -160,11 +188,11 @@
             title="{localize('DND5E.Weight')} ({weightUnit})"
             baseWidth="4rem"
           >
-            <i class="fas fa-weight-hanging" />
+            <i class="fas fa-weight-hanging"></i>
           </ItemTableColumn>
         {/if}
         <ItemTableColumn title={localize('DND5E.Charges')} baseWidth="3.125rem">
-          <i class="fas fa-bolt" />
+          <i class="fas fa-bolt"></i>
         </ItemTableColumn>
         <ItemTableColumn baseWidth="7.5rem">
           {localize('DND5E.Usage')}
@@ -172,125 +200,117 @@
         <ItemTableColumn baseWidth="3rem">
           {localize('DND5E.QuantityAbbr')}
         </ItemTableColumn>
-        {#if $context.editable && $context.useClassicControls && !lockControls}
+        {#if context.editable && context.useClassicControls && !lockControls}
           <ItemTableColumn baseWidth={classicControlsColumnWidth} />
         {/if}
       </ItemTableHeaderRow>
-    </svelte:fragment>
-    <svelte:fragment slot="body">
-      {#each items as item (item.id)}
-        {@const ctx = $context.itemContext[item.id]}
-        {@const itemName =
-          item.system.identified === false
-            ? coalesce(
-                item.system.unidentified.name,
-                localize('DND5E.Unidentified.Title'),
-              )
-            : item.name}
+    {/snippet}
+    {#snippet body()}
+      {#each itemEntries as { item, ctx, itemName } (item.id)}
         <ItemTableRow
           {item}
-          on:mousedown={(event) =>
-            FoundryAdapter.editOnMiddleClick(event.detail, item)}
+          onMouseDown={(event) => FoundryAdapter.editOnMiddleClick(event, item)}
           contextMenu={{
             type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
             uuid: item.uuid,
           }}
-          let:toggleSummary
           cssClass={getInventoryRowClasses(item)}
-          hidden={!!$itemIdsToShow && !$itemIdsToShow.has(item.id)}
+          hidden={!searchResults.show(item.uuid)}
           favoriteId={'favoriteId' in ctx ? ctx.favoriteId : null}
         >
-          <ItemTableCell primary={true}>
-            <ItemUseButton disabled={!$context.editable} {item} />
-            {#if ('containerContents' in ctx && !!ctx.containerContents) || (ctx.activities?.length ?? 0) > 1}
-              <InlineToggleControl entityId={item.id} {inlineToggleService} />
-            {/if}
-            <ItemName
-              on:toggle={() => toggleSummary($context.actor)}
-              cssClass="extra-small-gap"
-              {item}
-            >
-              <span
-                class="truncate"
-                data-tidy-item-name={itemName}
-                data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
-                >{itemName}</span
-              >
-            </ItemName>
-          </ItemTableCell>
-          {#if $settingStore.showIconsNextToTheItemName}
-            <ItemTableCell cssClass="no-border">
-              {#if ctx?.attunement && !FoundryAdapter.concealDetails(item)}
-                <div class="item-detail attunement">
-                  <i
-                    class="item-state-icon fas {ctx.attunement.icon} {ctx
-                      .attunement.cls}"
-                    title={localize(ctx.attunement.title)}
-                  />
-                </div>
+          {#snippet children({ toggleSummary })}
+            <ItemTableCell primary={true}>
+              <ItemUseButton disabled={!context.editable} {item} />
+              {#if ('containerContents' in ctx && !!ctx.containerContents) || (ctx.activities?.length ?? 0) > 1}
+                <InlineToggleControl entityId={item.id} {inlineToggleService} />
               {/if}
+              <ItemName
+                onToggle={() => toggleSummary(context.actor)}
+                cssClass="extra-small-gap"
+                {item}
+              >
+                <span
+                  class="truncate"
+                  data-tidy-item-name={itemName}
+                  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
+                  >{itemName}</span
+                >
+              </ItemName>
             </ItemTableCell>
-            {#if 'favoriteId' in ctx && !!ctx.favoriteId && allowFavoriteIconNextToName}
-              <InlineFavoriteIcon />
+            {#if settings.value.showIconsNextToTheItemName}
+              <ItemTableCell cssClass="no-border">
+                {#if ctx?.attunement && !FoundryAdapter.concealDetails(item)}
+                  <div class="item-detail attunement">
+                    <i
+                      class="item-state-icon fas {ctx.attunement.icon} {ctx
+                        .attunement.cls}"
+                      title={localize(ctx.attunement.title)}
+                    ></i>
+                  </div>
+                {/if}
+              </ItemTableCell>
+              {#if 'favoriteId' in ctx && !!ctx.favoriteId && allowFavoriteIconNextToName}
+                <InlineFavoriteIcon />
+              {/if}
             {/if}
-          {/if}
-          {#if includeWeightColumn}
-            {@const weight = ctx?.totalWeight ?? item.system.weight.value}
-            <ItemTableCell
-              baseWidth="4rem"
-              title={localize('TIDY5E.Inventory.Weight.Tooltip', {
-                weight: weight,
-                weightUnit: weightUnit,
-              })}
-            >
-              <span class="truncate">
-                {localize('TIDY5E.Inventory.Weight.Text', {
+            {#if includeWeightColumn}
+              {@const weight = ctx?.totalWeight ?? item.system.weight.value}
+              <ItemTableCell
+                baseWidth="4rem"
+                title={localize('TIDY5E.Inventory.Weight.Tooltip', {
                   weight: weight,
                   weightUnit: weightUnit,
                 })}
-              </span>
-            </ItemTableCell>
-          {/if}
-          <ItemTableCell baseWidth="3.125rem" title={localize('DND5E.Uses')}>
-            {#if ctx?.hasUses}
-              <ItemUses {item} />
-            {:else}
-              <ItemAddUses {item} />
+              >
+                <span class="truncate">
+                  {localize('TIDY5E.Inventory.Weight.Text', {
+                    weight: weight,
+                    weightUnit: weightUnit,
+                  })}
+                </span>
+              </ItemTableCell>
             {/if}
-          </ItemTableCell>
-          <ItemTableCell baseWidth="7.5rem" title={localize('DND5E.Usage')}>
-            {#if ItemUtils.hasActivationType(item)}
-              {item.labels?.activation ?? ''}
-            {/if}
-          </ItemTableCell>
-          <ItemTableCell baseWidth="3rem">
-            <TextInput
-              document={item}
-              field="system.quantity"
-              value={item.system.quantity}
-              selectOnFocus={true}
-              disabled={!$context.editable || $context.lockItemQuantity}
-              placeholder="0"
-              allowDeltaChanges={true}
-              class="text-align-center"
-            />
-          </ItemTableCell>
-          {#if $context.editable && $context.useClassicControls && !lockControls}
-            <ItemTableCell baseWidth={classicControlsColumnWidth}>
-              <ClassicControls {controls} params={{ item: item, ctx: ctx }} />
+            <ItemTableCell baseWidth="3.125rem" title={localize('DND5E.Uses')}>
+              {#if ctx?.hasUses}
+                <ItemUses {item} />
+              {:else}
+                <ItemAddUses {item} />
+              {/if}
             </ItemTableCell>
-          {/if}
+            <ItemTableCell baseWidth="7.5rem" title={localize('DND5E.Usage')}>
+              {#if ItemUtils.hasActivationType(item)}
+                {item.labels?.activation ?? ''}
+              {/if}
+            </ItemTableCell>
+            <ItemTableCell baseWidth="3rem">
+              <TextInput
+                document={item}
+                field="system.quantity"
+                value={item.system.quantity}
+                selectOnFocus={true}
+                disabled={!context.editable || context.lockItemQuantity}
+                placeholder="0"
+                allowDeltaChanges={true}
+                class="text-align-center"
+              />
+            </ItemTableCell>
+            {#if context.editable && context.useClassicControls && !lockControls}
+              <ItemTableCell baseWidth={classicControlsColumnWidth}>
+                <ClassicControls {controls} params={{ item: item, ctx: ctx }} />
+              </ItemTableCell>
+            {/if}
+          {/snippet}
         </ItemTableRow>
 
         {#if 'containerContents' in ctx && !!ctx.containerContents}
           <InlineContainerView
             container={item}
             containerContents={ctx.containerContents}
-            editable={$context.editable}
+            editable={context.editable}
             {inlineToggleService}
-            lockItemQuantity={$context.lockItemQuantity}
-            sheetDocument={$context.actor}
-            unlocked={$context.unlocked}
+            lockItemQuantity={context.lockItemQuantity}
+            sheetDocument={context.actor}
+            unlocked={context.unlocked}
           />
         {:else if (ctx.activities?.length ?? 0) > 1}
           <InlineActivitiesList
@@ -300,10 +320,10 @@
           />
         {/if}
       {/each}
-      {#if $context.unlocked && section.canCreate}
-        <ItemTableFooter actor={$context.actor} {section} isItem={true} />
+      {#if context.unlocked && section.canCreate}
+        <ItemTableFooter actor={context.actor} {section} isItem={true} />
       {/if}
-    </svelte:fragment>
+    {/snippet}
   </ItemTable>
 </section>
 

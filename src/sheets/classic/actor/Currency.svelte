@@ -1,27 +1,31 @@
 <script lang="ts">
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
+  import { settings } from 'src/settings/settings.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     ContainerSheetClassicContext,
     Item5e,
   } from 'src/types/item.types';
   import type { Actor5e } from 'src/types/types';
   import type { ActorSheetContextV1 } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
 
-  export let document: Actor5e | Item5e;
+  interface Props {
+    document: Actor5e | Item5e;
+  }
 
-  let context = getContext<
-    Readable<ActorSheetContextV1 | ContainerSheetClassicContext>
-  >(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
+  let { document }: Props = $props();
 
-  $: currencies = Object.keys(CONFIG.DND5E.currencies).map((key) => ({
-    key: key,
-    value: (document.system.currency[key] ?? 0) as number,
-  }));
+  let context = $derived(getSheetContext<
+    ActorSheetContextV1 | ContainerSheetClassicContext
+  >());
+
+  let currencies = $derived(
+    Object.keys(CONFIG.DND5E.currencies).map((key) => ({
+      key: key,
+      value: (document.system.currency[key] ?? 0) as number,
+    })),
+  );
 
   function confirmConvertCurrency() {
     new dnd5e.applications.CurrencyManager(document).render(true);
@@ -43,7 +47,7 @@
     {#each currencies as currency}
       <li
         class="currency-item {currency.key}"
-        title={$context.config.currencies[currency.key]?.label}
+        title={context.config.currencies[currency.key]?.label}
       >
         <TextInput
           {document}
@@ -52,7 +56,7 @@
           value={currency.value}
           allowDeltaChanges={true}
           selectOnFocus={true}
-          disabled={!$context.editable || $context.lockMoneyChanges}
+          disabled={!context.editable || context.lockMoneyChanges}
         />
         <label
           for="{document.id}-system.currency.{currency.key}"
@@ -66,11 +70,15 @@
         type="button"
         class="currency-convert"
         title={localize('DND5E.CurrencyManager.Title')}
-        on:click|stopPropagation|preventDefault={() => confirmConvertCurrency()}
-        disabled={!$context.editable}
-        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+        onclick={(event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          confirmConvertCurrency();
+        }}
+        disabled={!context.editable}
+        tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
       >
-        <i class="fas fa-coins" />
+        <i class="fas fa-coins"></i>
       </button>
     </li>
   </ol>

@@ -1,10 +1,8 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { SettingsProvider } from 'src/settings/settings';
+  import { settings } from 'src/settings/settings.svelte';
   import { getThemeOrDefault } from 'src/theme/theme';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
-  import type { ItemDebugSheetHightouchContext } from '../Tidy5eItemDebugSheetHightouch';
+  import type { ItemDebugSheetHightouchContext } from '../Tidy5eItemDebugSheetHightouch.svelte';
   import ButtonWithOptionPanel from 'src/components/buttons/ButtonWithOptionPanel.svelte';
   import ToggleButton from 'src/components/buttons/ToggleButton.svelte';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
@@ -16,16 +14,15 @@
   import Search from '../shared/Search.svelte';
   import { preventNewlines } from 'src/actions/prevent-newlines';
   import ItemDescriptions from '../shared/ItemDescriptions.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<ItemDebugSheetHightouchContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = $derived(getSheetContext<ItemDebugSheetHightouchContext>());
 
-  $: theme = getThemeOrDefault(SettingsProvider.settings.colorScheme.get());
+  let theme = $derived(getThemeOrDefault(settings.value.colorScheme));
 
-  let inverse = false;
+  let inverse = $state(false);
 
-  let selectedTabId: string = 'hallo-tab';
+  let selectedTabId: string = $state('hallo-tab');
 
   function selectTheme(themeId: string) {
     game.settings.set(CONSTANTS.MODULE_ID, 'colorScheme', themeId);
@@ -43,9 +40,8 @@
           name="theme-selector"
           value={CONSTANTS.THEME_ID_DEFAULT_LIGHT}
           checked={theme.id === CONSTANTS.THEME_ID_DEFAULT_LIGHT}
-          on:click={(ev) => selectTheme(CONSTANTS.THEME_ID_DEFAULT_LIGHT)}
+          onclick={(ev) => selectTheme(CONSTANTS.THEME_ID_DEFAULT_LIGHT)}
         />
-        <!-- svelte-ignore missing-declaration -->
         {game.i18n.localize('TIDY5E.Settings.SheetTheme.light')}
       </label>
       <label for="dark-mode-toggle">
@@ -55,9 +51,8 @@
           name="theme-selector"
           value={CONSTANTS.THEME_ID_DEFAULT_DARK}
           checked={theme.id === CONSTANTS.THEME_ID_DEFAULT_DARK}
-          on:click={(ev) => selectTheme(CONSTANTS.THEME_ID_DEFAULT_DARK)}
+          onclick={(ev) => selectTheme(CONSTANTS.THEME_ID_DEFAULT_DARK)}
         />
-        <!-- svelte-ignore missing-declaration -->
         {game.i18n.localize('TIDY5E.Settings.SheetTheme.dark')}
       </label>
     </div>
@@ -70,7 +65,7 @@
           name="inversion-mode-selector"
           value={CONSTANTS.VIEW_MODE_DEFAULT}
           checked={!inverse}
-          on:click={() => (inverse = false)}
+          onclick={() => (inverse = false)}
         />
         Default
       </label>
@@ -81,7 +76,7 @@
           name="inversion-mode-selector"
           value={CONSTANTS.VIEW_MODE_INVERSE}
           checked={inverse}
-          on:click={() => (inverse = true)}
+          onclick={() => (inverse = true)}
         />
         Inverse
       </label>
@@ -92,32 +87,36 @@
   <div class="controls-gallery">
     <div class="span-all">
       <!-- Name -->
-      {#if $context.unlocked}
+      {#if context.unlocked}
         <TextInput
           field="name"
-          document={$context.item}
-          value={$context.item.name}
+          document={context.item}
+          value={context.item.name}
           class="document-name"
         />
       {:else}
-        <div class="document-name">{$context.item.name ?? ''}</div>
+        <div class="document-name">{context.item.name ?? ''}</div>
       {/if}
     </div>
     <div class="span-all">
-      <Tabs tabs={$context.tabs} bind:selectedTabId cssClass="item-tabs" />
+      <Tabs
+        tabs={context.tabs}
+        bind:selectedTabId
+        cssClass="item-tabs"
+        sheet={context.item.sheet}
+      />
     </div>
     <div class="span-all">
-      <TabContents tabs={$context.tabs} bind:selectedTabId />
+      <TabContents tabs={context.tabs} {selectedTabId} />
     </div>
     <div>
       <ItemDescriptions
-        document={$context.document}
-        itemDescriptions={$context.itemDescriptions}
+        document={context.document}
+        itemDescriptions={context.itemDescriptions}
       />
     </div>
     <fieldset class="vertical-gallery">
       <legend> Button / Attention </legend>
-      <!-- svelte-ignore a11y-missing-attribute -->
       Anchor
       <a class="button active">
         <i class="fas fa-edit"></i>
@@ -131,7 +130,6 @@
     </fieldset>
     <fieldset class="vertical-gallery">
       <legend> Button / Default </legend>
-      <!-- svelte-ignore a11y-missing-attribute -->
       Anchor
       <a class="button">
         <i class="fas fa-edit"></i>
@@ -147,38 +145,30 @@
       <legend> Button / Icon Only </legend>
       <div class="vertical-gallery">
         Anchors
-        <!-- svelte-ignore a11y-missing-attribute -->
         <a class="button icon-button">
           <i class="fas fa-hand"></i>
         </a>
-        <!-- svelte-ignore a11y-missing-attribute -->
         <a class="button icon-button active">
           <i class="fas fa-hand"></i>
         </a>
-        <!-- svelte-ignore a11y-missing-attribute -->
         <a class="button icon-button disabled">
           <i class="fas fa-hand"></i>
         </a>
-        <!-- svelte-ignore a11y-missing-attribute -->
         <a class="button icon-button active disabled">
           <i class="fas fa-hand"></i>
         </a>
       </div>
       <div class="vertical-gallery">
         Buttons
-        <!-- svelte-ignore a11y-missing-attribute -->
         <button class="icon-button">
           <i class="fas fa-hand"></i>
         </button>
-        <!-- svelte-ignore a11y-missing-attribute -->
         <button class="icon-button active">
           <i class="fas fa-hand"></i>
         </button>
-        <!-- svelte-ignore a11y-missing-attribute -->
         <button class="icon-button disabled">
           <i class="fas fa-hand"></i>
         </button>
-        <!-- svelte-ignore a11y-missing-attribute -->
         <button class="icon-button active disabled">
           <i class="fas fa-hand"></i>
         </button>
@@ -189,7 +179,7 @@
       <div class="wrapped-gallery">
         <ButtonWithOptionPanel class="icon-button">
           <i class="fas fa-hand"></i>
-          <svelte:fragment slot="options">
+          {#snippet options()}
             <label>
               <input type="radio" name="icon-menu-test" value="1" /> Test Option
               1
@@ -198,15 +188,19 @@
               <input type="radio" name="icon-menu-test" value="2" /> Test Option
               2
             </label>
-          </svelte:fragment>
+          {/snippet}
         </ButtonWithOptionPanel>
         <ButtonWithOptionPanel class="icon-button" active={true}>
           <i class="fas fa-hand"></i>
-          <svelte:fragment slot="options">O hai 🙋‍♀️</svelte:fragment>
+          {#snippet options()}
+            O hai 🙋‍♀️
+          {/snippet}
         </ButtonWithOptionPanel>
         <ButtonWithOptionPanel class="icon-button" disabled={true}>
           <i class="fas fa-hand"></i>
-          <svelte:fragment slot="options">O hai 🙋‍♀️</svelte:fragment>
+          {#snippet options()}
+            O hai 🙋‍♀️
+          {/snippet}
         </ButtonWithOptionPanel>
         <ButtonWithOptionPanel
           class="icon-button active"
@@ -214,17 +208,17 @@
           active={true}
         >
           <i class="fas fa-hand"></i>
-          <svelte:fragment slot="options">O hai 🙋‍♀️</svelte:fragment>
+          {#snippet options()}
+            O hai 🙋‍♀️
+          {/snippet}
         </ButtonWithOptionPanel>
       </div>
     </fieldset>
     <fieldset>
       <legend> Button / Edit Description </legend>
-      <!-- svelte-ignore a11y-missing-attribute -->
       <a class="button icon-button">
         <i class="fa-solid fa-feather"></i>
       </a>
-      <!-- svelte-ignore a11y-missing-attribute -->
       <a class="button icon-button disabled">
         <i class="fa-solid fa-feather"></i>
       </a>
@@ -236,7 +230,6 @@
           Change the sheet size to see the options show/hide dynamically.
         </span>
       </div>
-      <!-- svelte-ignore a11y-missing-attribute -->
       <div class="button-group">
         <ToggleButton>
           <span class="hide-before-850">Action</span>
@@ -488,12 +481,12 @@
       <legend> Pill / Switch </legend>
       Fontawesome
       <PillSwitch
-        checked={$context.system.equipped}
+        checked={context.system.equipped}
         checkedIconClass="fas fa-hand-fist equip-icon fa-fw"
         uncheckedIconClass="far fa-hand fa-fw"
         onchange={(ev) =>
           console.log(
-            $context.item.update({
+            context.item.update({
               'system.equipped': ev.currentTarget.checked,
             }),
           )}
@@ -502,12 +495,12 @@
       </PillSwitch>
       SVG
       <PillSwitch
-        checked={$context.system.attuned}
+        checked={context.system.attuned}
         checkedSvgSrc="systems/dnd5e/icons/svg/statuses/concentrating.svg"
         uncheckedSvgSrc="systems/dnd5e/icons/svg/statuses/concentrating.svg"
         onchange={(ev) =>
           console.log(
-            $context.item.update({
+            context.item.update({
               'system.attuned': ev.currentTarget.checked,
             }),
           )}

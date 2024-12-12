@@ -6,14 +6,19 @@
   import { CONSTANTS } from 'src/constants';
   import { coalesce } from 'src/utils/formatting';
 
-  export let name: string;
-  export let hint: string;
-  export let config: ExhaustionConfig;
+  interface Props {
+    name: string;
+    hint: string;
+    config: ExhaustionConfig;
+  }
+
+  let { name, hint, config = $bindable() }: Props = $props();
 
   let appId = getContext(CONSTANTS.SVELTE_CONTEXT.APP_ID);
 
-  $: levelsIterator =
-    config.type === 'specific' ? Array(config.levels + 1).fill(0) : [];
+  let levelsIterator = $derived(
+    config.type === 'specific' ? Array(config.levels + 1).fill(0) : [],
+  );
 
   const localize = FoundryAdapter.localize;
 </script>

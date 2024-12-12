@@ -1,34 +1,34 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
+  interface Props {
+    total?: number;
+    selected?: number;
+    onChange?: (change: number) => void;
+  }
 
-  export let total = 5;
-
-  export let selected = 0;
-
-  const dispatcher = createEventDispatcher<{ change: number }>();
+  let { total = 5, selected = 0, onChange }: Props = $props();
 
   function onPipClick(index: number) {
     if (selected === index + 1) {
-      dispatcher('change', selected - 1);
+      onChange?.(selected - 1);
 
       return;
     }
 
-    dispatcher('change', index + 1);
+    onChange?.(index + 1);
   }
 
-  $: pipArray = Array(total);
+  let pipArray = $derived(Array(total));
 </script>
 
 <div class="pips">
-  {#each pipArray as _, i}
+  {#each pipArray, i}
     <button
       type="button"
       class="pip"
       class:inactive={selected < i + 1}
       class:active={selected >= i + 1}
       class:last-selected={selected === i + 1}
-      on:click={() => onPipClick(i)}><i></i></button
+      onclick={() => onPipClick(i)}><i></i></button
     >
   {/each}
 

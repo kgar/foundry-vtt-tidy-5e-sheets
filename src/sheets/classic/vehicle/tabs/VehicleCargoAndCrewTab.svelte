@@ -1,41 +1,35 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type {
-    VehicleCargoSection,
-    VehicleSheetContext,
-  } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import type { VehicleCargoSection } from 'src/types/types';
   import Notice from 'src/components/notice/Notice.svelte';
   import Currency from '../../actor/Currency.svelte';
   import EncumbranceBar from '../../actor/EncumbranceBar.svelte';
   import TabFooter from '../../actor/TabFooter.svelte';
-  import { settingStore } from 'src/settings/settings';
+  import { settings } from 'src/settings/settings.svelte';
   import CargoList from '../parts/CargoList.svelte';
   import PassengerOrCrewList from '../parts/PassengerOrCrewList.svelte';
-  import { CONSTANTS } from 'src/constants';
+  import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<VehicleSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = $derived(getVehicleSheetContext());
 
-  $: noCargoOrCrew =
-    $context.cargo.some(
+  let noCargoOrCrew = $derived(
+    context.cargo.some(
       (section: VehicleCargoSection) => section.items.length > 0,
-    ) === false;
+    ) === false,
+  );
 
   const localize = FoundryAdapter.localize;
 </script>
 
-{#if noCargoOrCrew && !$context.unlocked}
+{#if noCargoOrCrew && !context.unlocked}
   <Notice>
     {localize('TIDY5E.EmptySection')}
   </Notice>
 {/if}
 
 <div class="scroll-container flex-column small-gap">
-  {#each $context.cargo as section (section.key)}
-    {#if $context.unlocked || section.items.length}
+  {#each context.cargo as section (section.key)}
+    {#if context.unlocked || section.items.length}
       {#if section.editableName}
         <PassengerOrCrewList {section} />
       {:else}
@@ -47,10 +41,10 @@
 
 <TabFooter mode="vertical">
   <div class="currency">
-    <Currency document={$context.actor} />
+    <Currency document={context.actor} />
   </div>
 
-  {#if $settingStore.useVehicleEncumbranceBar}
+  {#if settings.value.useVehicleEncumbranceBar}
     <EncumbranceBar />
   {/if}
 </TabFooter>

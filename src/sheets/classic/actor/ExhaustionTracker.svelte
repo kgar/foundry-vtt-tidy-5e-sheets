@@ -1,63 +1,59 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
   import { getExhaustionIconsWithSeverity } from 'src/features/exhaustion/exhaustion';
   import type {
     SpecificExhaustionConfig,
     IconWithSeverity,
   } from 'src/features/exhaustion/exhaustion.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
+  import { settings } from 'src/settings/settings.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     ActorSheetContextV1,
     PortraitCharmRadiusClass,
   } from 'src/types/types';
   import { coalesce } from 'src/utils/formatting';
-  import { createEventDispatcher, getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
 
-  export let cssClass: string = '';
-  export let radiusClass: PortraitCharmRadiusClass;
-  export let level: number;
-  export let onlyShowOnHover: boolean = false;
-  export let exhaustionConfig: SpecificExhaustionConfig;
-  export let isActiveEffectApplied: boolean;
-
-  let iconsWithSeverities: IconWithSeverity[];
-  $: {
-    iconsWithSeverities = getExhaustionIconsWithSeverity(
-      exhaustionConfig.levels,
-    );
+  interface Props {
+    cssClass?: string;
+    radiusClass: PortraitCharmRadiusClass;
+    level: number;
+    onlyShowOnHover?: boolean;
+    exhaustionConfig: SpecificExhaustionConfig;
+    isActiveEffectApplied: boolean;
+    onLevelSelected?: (level: number) => void;
   }
 
-  let selectedLevel: IconWithSeverity;
-  let selectedHintKey: string;
-  $: {
-    selectedLevel = iconsWithSeverities[level] ?? iconsWithSeverities.at(-1);
-    selectedHintKey = localize(
-      coalesce(exhaustionConfig.hints[level], 'TIDY5E.ExhaustionLevelTooltip'),
-      { level: level },
-    );
-  }
-
-  let severityClass: string;
-  $: {
-    severityClass = `severity-${selectedLevel?.severity ?? 0}`;
-  }
+  let {
+    cssClass = '',
+    radiusClass,
+    level,
+    onlyShowOnHover = false,
+    exhaustionConfig,
+    isActiveEffectApplied,
+    onLevelSelected,
+  }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
-  let context = getContext<Readable<ActorSheetContextV1>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  let iconsWithSeverities: IconWithSeverity[] = $derived.by(() => {
+    return getExhaustionIconsWithSeverity(exhaustionConfig.levels);
+  });
+
+  let selectedLevel: IconWithSeverity | null = $derived(
+    iconsWithSeverities[level] ?? iconsWithSeverities.at(-1),
   );
 
-  const dispatch = createEventDispatcher<{
-    levelSelected: { level: number };
-  }>();
+  let severityClass: string = $derived(
+    `severity-${selectedLevel?.severity ?? 0}`,
+  );
+
+  let context = $derived(getSheetContext<ActorSheetContextV1>());
 
   let exhaustionOptionWidthRems = 1.25;
-  $: exhaustionExpandedWidth = `${
-    exhaustionOptionWidthRems * (exhaustionConfig.levels + 1) + 2.125
-  }rem`;
+
+  let exhaustionExpandedWidth = $derived(
+    `${exhaustionOptionWidthRems * (exhaustionConfig.levels + 1) + 2.125}rem`,
+  );
 </script>
 
 <div
@@ -71,7 +67,7 @@
       title={exhaustionConfig.hints[level] ??
         localize('TIDY5E.ExhaustionLevelTooltip', { level: level })}
     >
-      <i class={selectedLevel.iconCssClass ?? ''} />
+      <i class={selectedLevel.iconCssClass ?? ''}></i>
     </div>
     <ul class="exhaustion-levels">
       {#each iconsWithSeverities as _, i}
@@ -87,9 +83,9 @@
               ),
               { level: i },
             )}
-            on:click={() => dispatch('levelSelected', { level: i })}
-            disabled={!$context.editable || isActiveEffectApplied}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            onclick={() => onLevelSelected?.(i)}
+            disabled={!context.editable || isActiveEffectApplied}
+            tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
             data-tooltip={isActiveEffectApplied
               ? localize('DND5E.ActiveEffectOverrideWarning')
               : null}
@@ -133,7 +129,7 @@
     }
 
     &:hover .exhaustion-wrap,
-    .exhaustion-wrap:has(button:focus-visible) {
+    .exhaustion-wrap:has(:global(button:focus-visible)) {
       width: var(--t5e-exhaustion-expanded-width);
     }
 
@@ -178,7 +174,7 @@
           .exhaustion-level-option {
             border-radius: 0;
 
-            &:is(:hover, :focus-visible) {
+            &:is(:global(:hover, :focus-visible)) {
               background: var(--t5e-tertiary-color);
               color: var(--t5e-primary-font-color);
             }

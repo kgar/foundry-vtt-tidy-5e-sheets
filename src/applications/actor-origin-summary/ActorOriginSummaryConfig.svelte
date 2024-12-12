@@ -1,11 +1,10 @@
 <script lang="ts">
   import { getContext } from 'svelte';
-  import type { ActorOriginSummaryContext } from './ActorOriginSummaryConfigFormApplication';
+  import type { ActorOriginSummaryContext } from './ActorOriginSummaryConfigFormApplication.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { Readable } from 'svelte/store';
   import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<ActorOriginSummaryContext>>(
+  let context = getContext<ActorOriginSummaryContext>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
   let appId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.APP_ID);
@@ -14,19 +13,19 @@
 </script>
 
 <section class="flex-column">
-  {#if $context.isCharacter}
+  {#if context.isCharacter}
     <div class="form-field">
       <label for="background-edit-{appId}">{localize('DND5E.Background')}</label
       >
-      {#if $context.canEditBackground}
+      {#if context.canEditBackground}
         <input
           id="background-edit-{appId}"
           type="text"
           placeholder={localize('DND5E.Background')}
-          bind:value={$context.background}
+          bind:value={context.background}
         />
       {:else}
-        <span>{$context.background}</span>
+        <span>{context.background}</span>
       {/if}
     </div>
     <div class="form-field">
@@ -37,10 +36,10 @@
         id="alignment-edit-{appId}"
         type="text"
         placeholder={localize('DND5E.Alignment')}
-        bind:value={$context.alignment}
+        bind:value={context.alignment}
       />
     </div>
-  {:else if $context.isNpc}
+  {:else if context.isNpc}
     <div class="environment form-field">
       <label for="environment-edit-{appId}"
         >{localize('TIDY5E.Environment')}</label
@@ -49,7 +48,7 @@
         id="environment-edit-{appId}"
         type="text"
         placeholder={localize('TIDY5E.Environment')}
-        bind:value={$context.environment}
+        bind:value={context.environment}
       />
     </div>
     <div class="form-field">
@@ -58,10 +57,10 @@
         id="alignment-edit-{appId}"
         type="text"
         placeholder={localize('DND5E.Alignment')}
-        bind:value={$context.alignment}
+        bind:value={context.alignment}
       />
     </div>
-  {:else if $context.isVehicle}
+  {:else if context.isVehicle}
     <div class="form-field">
       <label for="dimensions-edit-{appId}">{localize('DND5E.Dimensions')}</label
       >
@@ -71,13 +70,13 @@
         cols="50"
         name="dimensions"
         placeholder={localize('DND5E.Dimensions')}
-        bind:value={$context.dimensions}
-      />
+        bind:value={context.dimensions}
+      ></textarea>
     </div>
   {/if}
 
   <button type="submit">
-    <i class="far fa-save" />
+    <i class="far fa-save"></i>
     {localize('Save')}
   </button>
 </section>

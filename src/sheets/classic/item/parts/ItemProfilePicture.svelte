@@ -1,15 +1,12 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { Item5e, ItemSheetContext } from 'src/types/item.types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
-  import FloatingContextMenu from 'src/components/context-menu/FloatingContextMenu.svelte';
+  import type { Item5e } from 'src/types/item.types';
   import type { ContextMenuEntry } from 'src/foundry/foundry.types';
+  import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
+  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<ItemSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = $derived(getItemSheetContext());
 
   const localize = FoundryAdapter.localize;
 
@@ -38,48 +35,50 @@
   }
 
   let itemImageContainer: HTMLElement;
-  let contextMenuOptions: ContextMenuEntry[] = [];
-  $: contextMenuOptions = [
+  let contextMenuOptions: ContextMenuEntry[] = $derived([
     {
       name: 'TIDY5E.ShowItemArt',
       icon: '<i class="fa-solid fa-image fa-fw"></i>',
-      callback: () => showItemArt($context.item),
+      callback: () => showItemArt(context.item),
     },
-  ];
+  ]);
+
+  $effect(() => {
+    new FloatingContextMenu(
+      FoundryAdapter.getJqueryWrappedElement(itemImageContainer),
+      `[data-tidy-sheet-part=${CONSTANTS.SHEET_PARTS.ITEM_IMAGE_CONTAINER}]`,
+      [],
+      {
+        onOpen: () => {
+          ui.context.menuItems = contextMenuOptions;
+        },
+      },
+    );
+  });
 </script>
 
-<FloatingContextMenu
-  containingElement={itemImageContainer}
-  targetSelector="[data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
-    .ITEM_IMAGE_CONTAINER}]"
-  options={contextMenuOptions}
-></FloatingContextMenu>
 <div
   class="item-image item-image-show-item-art"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_IMAGE_CONTAINER}
   bind:this={itemImageContainer}
 >
-  <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <!-- TODO: Figure out if there is an accessible way to provide this feature. -->
   <img
     class="profile"
-    class:conceal={$context.item.system.identified === false}
-    src={$context.item.img}
-    alt={$context.item.name}
+    class:conceal={context.item.system.identified === false}
+    src={context.item.img}
+    alt={context.item.name}
     title="{localize('TIDY5E.EditSheetImageHint')} / {localize(
       'TIDY5E.SheetImageOptionsHint',
     )}"
-    on:click={(event) =>
-      openItemImagePicker(event.currentTarget, $context.item)}
+    onclick={(event) => openItemImagePicker(event.currentTarget, context.item)}
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_IMAGE}
   />
   <div
     role="presentation"
     aria-hidden="true"
     class="unidentified-glyph"
-    class:conceal={$context.item.system.identified === false}
+    class:conceal={context.item.system.identified === false}
   >
-    <i class="fas fa-question" />
+    <i class="fas fa-question"></i>
   </div>
 </div>

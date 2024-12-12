@@ -1,36 +1,49 @@
 <script lang="ts">
-  import { createEventDispatcher, onMount } from 'svelte';
+  import { onMount } from 'svelte';
 
   type EditorOptions =
     any /*foundry.applications.elements.HTMLProseMirrorElement.ProseMirrorInputConfig*/;
 
-  export let field: string;
-  export let content: string;
-  export let enriched: string | null = null;
-  export let editorOptions: EditorOptions = {};
-  export let documentUuid: string;
-  export let manageSecrets: boolean = false;
+  interface Props {
+    field: string;
+    content: string;
+    enriched?: string | null;
+    editorOptions?: EditorOptions;
+    documentUuid: string;
+    manageSecrets?: boolean;
+    onSave?: () => void;
+    [key: string]: any;
+  }
+
+  let {
+    field,
+    content,
+    enriched = null,
+    editorOptions = {},
+    documentUuid,
+    manageSecrets = false,
+    onSave,
+    ...rest
+  }: Props = $props();
 
   let proseMirrorContainerEl: HTMLElement;
 
-  $: actualEditorOptions = foundry.utils.mergeObject(
-    {
-      name: field,
-      collaborate: false,
-      compact: false,
-      documentUUID: documentUuid,
-      editable: true,
-      height: 200,
-      toggled: true,
-      value: content,
-      enriched: enriched ?? content,
-    },
-    editorOptions,
-  ) as EditorOptions;
-
-  let dispatcher = createEventDispatcher<{
-    save: void;
-  }>();
+  let actualEditorOptions = $derived(
+    foundry.utils.mergeObject(
+      {
+        name: field,
+        collaborate: false,
+        compact: false,
+        documentUUID: documentUuid,
+        editable: true,
+        height: 200,
+        toggled: true,
+        value: content,
+        enriched: enriched ?? content,
+      },
+      editorOptions,
+    ) as EditorOptions,
+  );
 
   function onEditorActivation(node: HTMLElement) {
     node.addEventListener('click', (ev: MouseEvent) => {
@@ -38,7 +51,7 @@
         ev.target instanceof HTMLElement &&
         ev.target.matches('[data-action="save"]')
       ) {
-        onSave();
+        handleSave();
       }
     });
     node.addEventListener('keydown', (event) => {
@@ -46,13 +59,13 @@
         game.keyboard.isModifierActive(KeyboardManager.MODIFIER_KEYS.CONTROL) &&
         event.key === 's'
       ) {
-        onSave();
+        handleSave();
       }
     });
   }
 
-  function onSave() {
-    dispatcher('save');
+  function handleSave() {
+    onSave?.();
     bindSecretUi();
   }
 
@@ -93,7 +106,7 @@
 
 <div
   style="display: contents;"
-  class={$$restProps.class ?? ''}
+  class={rest.class ?? ''}
   bind:this={proseMirrorContainerEl}
   use:onEditorActivation
 ></div>

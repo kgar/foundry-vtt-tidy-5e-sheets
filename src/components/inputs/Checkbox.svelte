@@ -1,5 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     ContainerSheetClassicContext,
     ItemSheetContext,
@@ -11,8 +12,7 @@
   } from 'src/types/types';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { buildDataset } from 'src/utils/data';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { type Snippet } from 'svelte';
 
   // TODO: File this away somewhere.
   type SvelteInputEvent = (
@@ -21,27 +21,42 @@
     },
   ) => any;
 
-  export let value: number | string | null = null;
-  export let checked: boolean = false;
-  export let field: string;
-  export let document: any;
-  export let title: string | null = null;
-  export let tooltip: string | null = null;
-  export let id: string | null = null;
-  export let disabled: boolean | null = null;
-  export let dataset: Record<string, unknown> | null = null;
-  export let labelCssClass: string | null = null;
-  export let checkboxCssClass: string | null = null;
-  export let onDataPreparing: SvelteInputEvent | null = null;
-  // TODO: Get rid of the these horrendous green checkboxes and remove all the code that barely props them up.
-  export let greenCheckboxWidthOverride: string | null = null;
-  $: greenCheckboxStyle =
-    greenCheckboxWidthOverride !== null
-      ? `width: ${greenCheckboxWidthOverride}`
-      : '';
+  interface Props {
+    value?: number | string | null;
+    checked?: boolean;
+    field: string;
+    document: any;
+    title?: string | null;
+    tooltip?: string | null;
+    id?: string | null;
+    disabled?: boolean | null;
+    dataset?: Record<string, unknown> | null;
+    labelCssClass?: string | null;
+    checkboxCssClass?: string | null;
+    onDataPreparing?: SvelteInputEvent | null;
+    // TODO: Get rid of the these horrendous green checkboxes and remove all the code that barely props them up.
+    greenCheckboxWidthOverride?: string | null;
+    children?: Snippet;
+    [key: string]: any;
+  }
 
-  $: draftValue = value;
-  $: datasetAttributes = buildDataset(dataset);
+  let {
+    value = null,
+    checked = false,
+    field,
+    document,
+    title = null,
+    tooltip = null,
+    id = null,
+    disabled = null,
+    dataset = null,
+    labelCssClass = null,
+    checkboxCssClass = null,
+    onDataPreparing = null,
+    greenCheckboxWidthOverride = null,
+    children,
+    ...rest
+  }: Props = $props();
 
   async function saveChange(
     event: Event & {
@@ -53,72 +68,69 @@
     };
 
     await document.update(data);
-
-    draftValue = value;
   }
 
   const context =
-    getContext<
-      Readable<
+    $derived(
+      getSheetContext<
         | CharacterSheetContext
         | NpcSheetContext
         | VehicleSheetContext
         | ContainerSheetClassicContext
         | ItemSheetContext
-      >
-    >('context');
-
-  $: activeEffectApplied = ActiveEffectsHelper.isActiveEffectAppliedToField(
-    document,
-    field,
-  );
-
-  $: isEnchanted =
-    $context.itemOverrides instanceof Set && $context.itemOverrides.has(field);
-
-  $: overrideTooltip = isEnchanted
-    ? localize('DND5E.ENCHANTMENT.Warning.Override')
-    : localize('DND5E.ActiveEffectOverrideWarning');
+      >(),
+    );
 
   const localize = FoundryAdapter.localize;
+  let greenCheckboxStyle = $derived(
+    greenCheckboxWidthOverride !== null
+      ? `width: ${greenCheckboxWidthOverride}`
+      : '',
+  );
+
+  let datasetAttributes = $derived(buildDataset(dataset));
+  let activeEffectApplied = $derived(
+    ActiveEffectsHelper.isActiveEffectAppliedToField(document, field),
+  );
+  let isEnchanted = $derived(
+    context.itemOverrides instanceof Set && context.itemOverrides.has(field),
+  );
+  let overrideTooltip = $derived(
+    isEnchanted
+      ? localize('DND5E.ENCHANTMENT.Warning.Override')
+      : localize('DND5E.ActiveEffectOverrideWarning'),
+  );
 </script>
 
-<!-- TODO: Make label wrapper conditional when Svelte 5 snippets come out -->
-{#if $$slots.default}
+{#snippet checkboxInput()}
+  <input
+    type="checkbox"
+    {id}
+    {value}
+    {checked}
+    {title}
+    onchange={saveChange}
+    disabled={disabled || activeEffectApplied}
+    {...datasetAttributes}
+    class={checkboxCssClass}
+    data-tidy-field={field}
+    {...rest.attributes}
+    data-tooltip={activeEffectApplied ? overrideTooltip : tooltip}
+  />
+{/snippet}
+
+{#if children}
   <label
     class={labelCssClass}
     {title}
     style={greenCheckboxStyle}
     data-tooltip={activeEffectApplied ? overrideTooltip : tooltip}
   >
-    <input
-      type="checkbox"
-      {id}
-      bind:value={draftValue}
-      {checked}
-      on:change={saveChange}
-      disabled={disabled || activeEffectApplied}
-      {...datasetAttributes}
-      class={checkboxCssClass}
-      data-tidy-field={field}
-      {...$$restProps.attributes}
-    />
-    <slot />
+    {@render checkboxInput()}
+    {@render children?.()}
   </label>
 {:else}
-  <input
-    type="checkbox"
-    {id}
-    bind:value={draftValue}
-    {checked}
-    on:change={saveChange}
-    {title}
-    disabled={disabled || activeEffectApplied}
-    data-tooltip={activeEffectApplied ? overrideTooltip : tooltip}
-    {...datasetAttributes}
-    class={checkboxCssClass}
-    data-tidy-field={field}
-  />
+  {@render checkboxInput()}
 {/if}
 
 <style lang="scss">

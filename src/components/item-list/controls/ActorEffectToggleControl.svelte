@@ -7,12 +7,16 @@ Because the controls are mutually exclusive, it is more ergonomic to distinguish
 <script lang="ts">
   import type { ActiveEffect5e, ActorSheetContextV1 } from 'src/types/types';
   import ItemControl from './ItemControl.svelte';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { CONSTANTS } from 'src/constants';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  export let effect: ActiveEffect5e;
+  interface Props {
+    effect: ActiveEffect5e;
+  }
+
+  let { effect }: Props = $props();
+
+  let context = $derived(getSheetContext<ActorSheetContextV1>());
 
   /** Character effects are not the full ActiveEffect5e instance;
    * they are instead a subset of contextual data.
@@ -20,26 +24,22 @@ Because the controls are mutually exclusive, it is more ergonomic to distinguish
    * that this logic fires immediately as an effect deletion is occurring.
    * This seems related specifically to character sheets.
    */
-  $: actualEffect =
+  let actualEffect = $derived(
     effect instanceof dnd5e.documents.ActiveEffect5e
       ? effect
       : !!effect
         ? FoundryAdapter.getEffect({
-            document: $context.actor,
+            document: context.actor,
             effectId: effect.id,
             parentId: effect.parentId,
           })
-        : undefined;
-
-  let context = getContext<Readable<ActorSheetContextV1>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+        : undefined,
   );
 
   const localize = FoundryAdapter.localize;
 
-  $: isConcentration = FoundryAdapter.isConcentrationEffect(
-    actualEffect,
-    $context.actor.sheet,
+  let isConcentration = $derived(
+    FoundryAdapter.isConcentrationEffect(actualEffect, context.actor.sheet),
   );
 </script>
 
@@ -47,7 +47,7 @@ Because the controls are mutually exclusive, it is more ergonomic to distinguish
   {#if isConcentration}
     <ItemControl
       iconSrc={`systems/dnd5e/icons/svg/break-concentration.svg`}
-      onclick={() => $context.actor.endConcentration(actualEffect)}
+      onclick={() => context.actor.endConcentration(actualEffect)}
       title={localize('DND5E.ConcentrationBreak')}
     />
   {:else}

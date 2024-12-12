@@ -1,30 +1,34 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
+  import type { ContextPrimitive } from 'src/features/reactivity/reactivity.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { Actor5e, CharacterSheetContext } from 'src/types/types';
+  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
+  import type { Actor5e } from 'src/types/types';
   import { EventHelper } from 'src/utils/events';
   import { getContext } from 'svelte';
-  import type { Readable, Writable } from 'svelte/store';
 
-  export let occupant: Actor5e;
-  export let type: string;
-  export let index: number;
-  export let prop: string;
-  export let facilityId: string;
-  export let facilityName: string;
+  interface Props {
+    occupant: Actor5e;
+    type: string;
+    index: number;
+    prop: string;
+    facilityId: string;
+    facilityName: string;
+  }
 
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let { occupant, type, index, prop, facilityId, facilityName }: Props =
+    $props();
 
-  let hoveredFacilityOccupant = getContext<Writable<string>>(
+  let context = $derived(getCharacterSheetContext());
+
+  let hoveredFacilityOccupant = getContext<ContextPrimitive<string>>(
     CONSTANTS.SVELTE_CONTEXT.HOVERED_FACILITY_OCCUPANT,
   );
 
   function onRosterMemberClicked(
     event: (MouseEvent | PointerEvent) & { currentTarget: HTMLElement },
   ): any {
-    if ($context.unlocked) {
+    if (context.unlocked) {
       EventHelper.triggerContextMenu(event, '[data-actor-uuid]');
       return;
     }
@@ -36,9 +40,9 @@
 
 <li
   class="roster-member {type} occupant-with-menu"
-  class:highlight={$hoveredFacilityOccupant ===
+  class:highlight={hoveredFacilityOccupant.value ===
     `${facilityId}-${index}-${occupant.uuid}`}
-  class:unlocked={$context.unlocked}
+  class:unlocked={context.unlocked}
   data-actor-uuid={occupant.uuid}
   data-tooltip={localize('TIDY5E.Facilities.RosterMember.Label', {
     actorName: occupant.name,
@@ -49,16 +53,13 @@
   data-prop={prop}
   data-index={index}
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_FACILITY_OCCUPANTS}
-  on:mouseenter={() =>
-    ($hoveredFacilityOccupant = `${facilityId}-${index}-${occupant.uuid}`)}
-  on:mouseleave={() => ($hoveredFacilityOccupant = '')}
+  onmouseenter={() =>
+    (hoveredFacilityOccupant.value = `${facilityId}-${index}-${occupant.uuid}`)}
+  onmouseleave={() => (hoveredFacilityOccupant.value = '')}
 >
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <!-- svelte-ignore a11y-missing-attribute -->
-  <a on:click={(ev) => $context.editable && onRosterMemberClicked(ev)}>
+  <a onclick={(ev) => context.editable && onRosterMemberClicked(ev)}>
     <img src={occupant.img} alt={occupant.name} />
-    {#if $context.unlocked}
+    {#if context.unlocked}
       <i class="fa-solid fa-cog occupant-menu-icon"></i>
     {/if}
   </a>

@@ -1,16 +1,20 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { getContext, type Snippet } from 'svelte';
   import type { SheetStats } from 'src/types/types';
   import { CONSTANTS } from 'src/constants';
 
-  let stats = getContext<Readable<SheetStats>>(CONSTANTS.SVELTE_CONTEXT.STATS);
+  let stats = getContext<SheetStats>(CONSTANTS.SVELTE_CONTEXT.STATS);
 
-  export let andOnValueChange: unknown | null = null;
+  interface Props {
+    andOnValueChange?: unknown | null;
+    children?: Snippet;
+  }
+
+  let { andOnValueChange = null, children }: Props = $props();
 </script>
 
-{#key $stats.lastSubmissionTime}
+{#key stats.lastSubmissionTime}
   {#key andOnValueChange}
-    <slot />
+    {@render children?.()}
   {/key}
 {/key}

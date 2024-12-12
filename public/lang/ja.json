@@ -73,7 +73,6 @@
     "TIDY5E.Search": "検索",
     "TIDY5E.SearchClear": "検索クリア",
     "TIDY5E.SearchHint": "検索……",
-    "TIDY5E.ItemCardsKeyHint": "キーを押したままカードを操作",
     "TIDY5E.ItemCardsMouseHint": "マウスホイールボタン（中央）で、アイテムを表示/編集",
     "TIDY5E.AbbrMod": "修正",
     "TIDY5E.AbbrSavingThrow": "セーヴ",
@@ -237,10 +236,6 @@
     "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
         "name": "Use default sheet HP keyboard tabbing",
         "hint": "The default 5e sheet allows keyboard tabbing from the current HP input to the current temp HP input. Enabling this replicates that behaviour. This setting is ignored if \"Use Accessible Keyboard Support\" is turned off."
-    },
-    "TIDY5E.Settings.ItemCardsFixKey": {
-        "name": "アイテム情報カード操作キー",
-        "hint": "アイテムカードの操作に使用するキー（例：x）を入力します。ファンクションキー（Ctrl、Altなど）以外の任意のキーにすることができます。(再読み込みが発生します)"
     },
     "TIDY5E.Settings.DefaultTheme": {
         "name": "Default Color Theme",

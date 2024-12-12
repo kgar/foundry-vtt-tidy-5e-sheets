@@ -58,7 +58,6 @@
     "TIDY5E.Search": "",
     "TIDY5E.SearchClear": "",
     "TIDY5E.SearchHint": "Kezdd el írni, amit keresel.",
-    "TIDY5E.ItemCardsKeyHint": "tartsd lenyomva, hogy interakcióba lépj.",
     "TIDY5E.ItemCardsMouseHint": "középső egérgomb, hogy megnézed/szerkeszd.",
     "TIDY5E.AbbrMod": "Mód.",
     "TIDY5E.AbbrSavingThrow": "Mentő",
@@ -128,10 +127,6 @@
     "TIDY5E.Settings.ItemCardsDelay": {
         "name": "Info kártyák mutatása késleltetéssel.",
         "hint": "A kurzort a kártya fölött kell tartanod bizonyos ideig, hogy előjöjjön (0 = nincs késleltetés, 300 az alapértelmezett (milliszekundum))."
-    },
-    "TIDY5E.Settings.ItemCardsFixKey": {
-        "name": "Billentyű a kártya interakcióhoz.",
-        "hint": "Üss be egy billentyűt (pl. x) a kártya interakcióhoz. Bármilyen billentyű lehet, kivéve a vezérlőbillentyűk(ctrl, alt, stb.)"
     },
     "TIDY5E.Settings.DefaultTheme": {
         "name": "",

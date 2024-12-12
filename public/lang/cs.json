@@ -58,7 +58,6 @@
     "TIDY5E.Search": "Vyhledat",
     "TIDY5E.SearchClear": "Vyčistit hledání",
     "TIDY5E.SearchHint": "Začni psát název toho, co hledáš.",
-    "TIDY5E.ItemCardsKeyHint": "Pro interakci s kartou stiskni klávesu.",
     "TIDY5E.ItemCardsMouseHint": "Střední tlačítko myši pro zobrazení/editaci položky",
     "TIDY5E.AbbrMod": "Oprava",
     "TIDY5E.AbbrSavingThrow": "Záchrana",
@@ -128,10 +127,6 @@
     "TIDY5E.Settings.ItemCardsDelay": {
         "name": "Opozdi zobrazení karet položek (v ms)",
         "hint": "Zpozdí zobrazení karet položek o zadané milisekundy (ms). 0 znamená bez zpoždění. Výchozí hodnota: 300."
-    },
-    "TIDY5E.Settings.ItemCardsFixKey": {
-        "name": "Klávesa, jejímž podržením se interaguje s kartou předmětu.",
-        "hint": "Podržením dané klávesy (například klávesy „x“) při prohlížení karty položky ji udržíš viditelnou a umožníš interakci."
     },
     "TIDY5E.Settings.DefaultTheme": {
         "name": "Základní motiv barev",

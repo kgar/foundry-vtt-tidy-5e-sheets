@@ -1,23 +1,20 @@
 <script lang="ts">
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
-  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { TidyFlags } from 'src/foundry/TidyFlags';
-  import type {
-    PortraitCharmRadiusClass,
-    VehicleSheetContext,
-  } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
+  import type { PortraitCharmRadiusClass } from 'src/types/types';
 
-  let context = getContext<Readable<VehicleSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = $derived(getVehicleSheetContext());
 
-  export let motion: boolean;
-  export let cssClass: string = '';
-  export let radiusClass: PortraitCharmRadiusClass;
-  export let animate: boolean = true;
+  interface Props {
+    motion: boolean;
+    cssClass?: string;
+    radiusClass: PortraitCharmRadiusClass;
+    animate?: boolean;
+  }
+
+  let { motion, cssClass = '', radiusClass, animate = true }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -32,12 +29,12 @@
   <Checkbox
     checkboxCssClass="motion-toggle"
     labelCssClass="{motion ? 'motion' : ''} {radiusClass}"
-    document={$context.actor}
+    document={context.actor}
     field={TidyFlags.motion.prop}
     checked={motion}
-    disabled={!$context.editable}
+    disabled={!context.editable}
   >
-    <i class="motion-icon fas fa-sailboat" class:animate />
+    <i class="motion-icon fas fa-sailboat" class:animate></i>
   </Checkbox>
 </div>
 

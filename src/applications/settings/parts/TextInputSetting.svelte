@@ -1,16 +1,27 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getContext } from 'svelte';
+  import { getContext, type Snippet } from 'svelte';
 
-  export let value: string;
-  export let name: string;
-  export let hint: string;
-  export let id: string;
+  interface Props {
+    value: string;
+    name: string;
+    hint: string;
+    id: string;
+    additionalInputs?: Snippet;
+  }
+
+  let {
+    value = $bindable(),
+    name,
+    hint,
+    id,
+    additionalInputs,
+  }: Props = $props();
 
   const appId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.APP_ID);
 
-  $: calculatedId = `${id}-${appId}`;
+  let calculatedId = $derived(`${id}-${appId}`);
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -25,7 +36,7 @@
       <article>
         <input type="text" id={calculatedId} bind:value />
       </article>
-      <slot name="additional-inputs" />
+      {@render additionalInputs?.()}
     </div>
   </div>
 </article>

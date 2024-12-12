@@ -1,11 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import {
-    type Actor5e,
-    type CharacterSheetContext,
-    type FacilitySection,
-  } from 'src/types/types';
+  import { type Actor5e, type FacilitySection } from 'src/types/types';
   import ItemName from '../../../../components/item-list/ItemName.svelte';
   import ItemTable from '../../../../components/item-list/v1/ItemTable.svelte';
   import ItemTableCell from '../../../../components/item-list/v1/ItemTableCell.svelte';
@@ -14,28 +10,35 @@
   import ItemTableRow from '../../../../components/item-list/v1/ItemTableRow.svelte';
   import ItemUseButton from '../../../../components/item-list/ItemUseButton.svelte';
   import { getContext, tick } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
-  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
-  import type { Item5e } from 'src/types/item.types';
+  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import FacilityOrderProgressMeter from './FacilityOrderProgressMeter.svelte';
   import { Tooltip } from 'src/tooltips/Tooltip';
   import OccupantSummaryTooltip from 'src/tooltips/OccupantSummaryTooltip.svelte';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
+  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
+
+  interface Props {
+    section: FacilitySection;
+  }
+
+  let { section }: Props = $props();
 
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
 
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
-  export let section: FacilitySection;
-  export let items: Item5e[];
+  let context = $derived(getCharacterSheetContext());
 
-  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
-    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
+  let itemEntries = $derived(
+    section.items.map((item) => ({ item, ctx: context.itemContext[item.id] })),
   );
+
+  let tooltipOccupants = $state<Actor5e[]>([]);
+  let tooltipTitle = $state('');
+
+  const searchResults = getSearchResultsContext();
 
   const ordersWidth = '10rem';
   const defendersWidth = '2.5rem';
@@ -60,21 +63,29 @@
       occupants.push(await fromUuid(uuid));
     }
 
-    occupantSummaryTooltip.$set({ occupants: occupants, title: title });
+    tooltipOccupants = occupants;
+    tooltipTitle = title;
 
     await tick();
 
-    Tooltip.show(event?.currentTarget, occupantSummaryTooltip.getMarkup());
+    Tooltip.show(
+      (event?.target as HTMLElement | null) ?? event.currentTarget,
+      occupantSummaryTooltip.getMarkup(),
+    );
   }
 </script>
 
 <div class="hidden">
-  <OccupantSummaryTooltip bind:this={occupantSummaryTooltip} />
+  <OccupantSummaryTooltip
+    bind:this={occupantSummaryTooltip}
+    occupants={tooltipOccupants}
+    title={tooltipTitle}
+  />
 </div>
 
 <section class="facility-list-section">
   <ItemTable key={section.key}>
-    <svelte:fragment slot="header">
+    {#snippet header()}
       <ItemTableHeaderRow>
         <!-- Name -->
         <ItemTableColumn primary={true}>
@@ -106,112 +117,113 @@
           <i class="fas fa-horse-head"></i>
         </ItemTableColumn>
       </ItemTableHeaderRow>
-    </svelte:fragment>
-    <svelte:fragment slot="body">
-      {#each items as item (item.id)}
-        {@const ctx = $context.itemContext[item.id]}
+    {/snippet}
+    {#snippet body()}
+      {#each itemEntries as { item, ctx } (item.id)}
         {@const disabledClass =
           ctx?.chosen?.disabled === true ? 'disabled' : ''}
 
         <ItemTableRow
           {item}
           cssClass="favorite-facility-row {disabledClass}"
-          on:mousedown={(event) =>
-            FoundryAdapter.editOnMiddleClick(event.detail, item)}
+          onMouseDown={(event) => FoundryAdapter.editOnMiddleClick(event, item)}
           contextMenu={{
             type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
             uuid: item.uuid,
           }}
-          let:toggleSummary
-          hidden={!!$itemIdsToShow && !$itemIdsToShow.has(item.id)}
+          hidden={!searchResults.show(item.uuid)}
           favoriteId={ctx.favoriteId}
         >
-          <!-- Name -->
-          <ItemTableCell primary={true}>
-            <ItemUseButton
-              disabled={!$context.editable &&
-                (!ctx?.chosen?.disabled || FoundryAdapter.userIsGm())}
-              {item}
-            ></ItemUseButton>
-            {#if (ctx.activities?.length ?? 0) > 1}
-              <InlineToggleControl entityId={item.id} {inlineToggleService} />
-            {/if}
-            <ItemName on:toggle={() => toggleSummary($context.actor)} {item}>
-              <span
-                class="truncate"
-                data-tidy-item-name={item.name}
-                data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
-                >{item.name}</span
-              >
-            </ItemName>
-          </ItemTableCell>
-          <!-- Orders -->
-          <ItemTableCell
-            baseWidth={ordersWidth}
-            cssClass="justify-content-stretch"
-          >
-            {@const chosen = ctx?.chosen}
+          {#snippet children({ toggleSummary })}
+            <!-- Name -->
+            <ItemTableCell primary={true}>
+              <ItemUseButton
+                disabled={!context.editable &&
+                  (!ctx?.chosen?.disabled || FoundryAdapter.userIsGm())}
+                {item}
+              ></ItemUseButton>
+              {#if (ctx.activities?.length ?? 0) > 1}
+                <InlineToggleControl entityId={item.id} {inlineToggleService} />
+              {/if}
+              <ItemName onToggle={() => toggleSummary(context.actor)} {item}>
+                <span
+                  class="truncate"
+                  data-tidy-item-name={item.name}
+                  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
+                  >{item.name}</span
+                >
+              </ItemName>
+            </ItemTableCell>
+            <!-- Orders -->
+            <ItemTableCell
+              baseWidth={ordersWidth}
+              cssClass="justify-content-stretch"
+            >
+              {@const chosen = ctx?.chosen}
 
-            {#if chosen?.progress?.max || chosen?.executing}
-              <FacilityOrderProgressMeter class="flex-1" {chosen}
-              ></FacilityOrderProgressMeter>
-            {/if}
-          </ItemTableCell>
-          <!-- Defenders -->
-          <ItemTableCell baseWidth={defendersWidth}>
-            <div
-              on:mouseover={(ev) =>
-                showOccupantSummaryTooltip(
-                  ev,
-                  item.system.defenders.value ?? [],
-                  localize('TIDY5E.Facilities.Defenders.Label'),
-                )}
-              data-tooltip-direction="UP"
-            >
-              {#if item.system.type.value === CONSTANTS.FACILITY_TYPE_SPECIAL && item.system.defenders.max}
-                {item.system.defenders.value.length}/{item.system.defenders.max}
-              {:else}
-                —
+              {#if chosen?.progress?.max || chosen?.executing}
+                <FacilityOrderProgressMeter class="flex-1" {chosen}
+                ></FacilityOrderProgressMeter>
               {/if}
-            </div>
-          </ItemTableCell>
-          <!-- Hirelings -->
-          <ItemTableCell baseWidth={hirelingsWidth}>
-            <div
-              on:mouseover={(ev) =>
-                showOccupantSummaryTooltip(
-                  ev,
-                  item.system.hirelings.value ?? [],
-                  localize('TIDY5E.Facilities.Hirelings.Label'),
-                )}
-              data-tooltip-direction="UP"
-            >
-              {#if item.system.type.value === CONSTANTS.FACILITY_TYPE_SPECIAL && item.system.hirelings.max}
-                {item.system.hirelings.value.length}/{item.system.hirelings.max}
-              {:else}
-                —
-              {/if}
-            </div>
-          </ItemTableCell>
-          <!-- Creatures -->
-          <ItemTableCell baseWidth={creaturesWidth}>
-            <div
-              on:mouseover={(ev) =>
-                showOccupantSummaryTooltip(
-                  ev,
-                  item.system.trade.creatures.value ?? [],
-                  localize('TIDY5E.Facilities.Creatures.Label'),
-                )}
-              data-tooltip-direction="UP"
-            >
-              {#if item.system.type.value === CONSTANTS.FACILITY_TYPE_SPECIAL && item.system.trade.creatures.max}
-                {item.system.trade.creatures.value.length}/{item.system.trade
-                  .creatures.max}
-              {:else}
-                —
-              {/if}
-            </div>
-          </ItemTableCell>
+            </ItemTableCell>
+            <!-- Defenders -->
+            <ItemTableCell baseWidth={defendersWidth}>
+              <div
+                onmouseover={(ev) =>
+                  showOccupantSummaryTooltip(
+                    ev,
+                    item.system.defenders.value ?? [],
+                    localize('TIDY5E.Facilities.Defenders.Label'),
+                  )}
+                data-tooltip-direction="UP"
+              >
+                {#if item.system.type.value === CONSTANTS.FACILITY_TYPE_SPECIAL && item.system.defenders.max}
+                  {item.system.defenders.value.length}/{item.system.defenders
+                    .max}
+                {:else}
+                  —
+                {/if}
+              </div>
+            </ItemTableCell>
+            <!-- Hirelings -->
+            <ItemTableCell baseWidth={hirelingsWidth}>
+              <div
+                onmouseover={(ev) =>
+                  showOccupantSummaryTooltip(
+                    ev,
+                    item.system.hirelings.value ?? [],
+                    localize('TIDY5E.Facilities.Hirelings.Label'),
+                  )}
+                data-tooltip-direction="UP"
+              >
+                {#if item.system.type.value === CONSTANTS.FACILITY_TYPE_SPECIAL && item.system.hirelings.max}
+                  {item.system.hirelings.value.length}/{item.system.hirelings
+                    .max}
+                {:else}
+                  —
+                {/if}
+              </div>
+            </ItemTableCell>
+            <!-- Creatures -->
+            <ItemTableCell baseWidth={creaturesWidth}>
+              <div
+                onmouseover={(ev) =>
+                  showOccupantSummaryTooltip(
+                    ev,
+                    item.system.trade.creatures.value ?? [],
+                    localize('TIDY5E.Facilities.Creatures.Label'),
+                  )}
+                data-tooltip-direction="UP"
+              >
+                {#if item.system.type.value === CONSTANTS.FACILITY_TYPE_SPECIAL && item.system.trade.creatures.max}
+                  {item.system.trade.creatures.value.length}/{item.system.trade
+                    .creatures.max}
+                {:else}
+                  —
+                {/if}
+              </div>
+            </ItemTableCell>
+          {/snippet}
         </ItemTableRow>
         {#if (ctx.activities?.length ?? 0) > 1}
           <InlineActivitiesList
@@ -221,6 +233,6 @@
           />
         {/if}
       {/each}
-    </svelte:fragment>
+    {/snippet}
   </ItemTable>
 </section>

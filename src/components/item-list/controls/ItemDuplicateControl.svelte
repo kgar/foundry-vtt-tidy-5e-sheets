@@ -2,7 +2,11 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ItemControl from './ItemControl.svelte';
 
-  export let item: any;
+  interface Props {
+    item: any;
+  }
+
+  let { item }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -16,7 +20,7 @@
           name: item.name,
         }),
       },
-      { save: true }
+      { save: true },
     )}
   title={localize('DND5E.ContextMenuActionDuplicate')}
 />

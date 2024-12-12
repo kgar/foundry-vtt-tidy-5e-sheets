@@ -58,7 +58,6 @@
     "TIDY5E.Search": "Chercher",
     "TIDY5E.SearchClear": "Vider la recherche",
     "TIDY5E.SearchHint": "Saisir votre recherche",
-    "TIDY5E.ItemCardsKeyHint": "Maintenir la touche pour interagir avec la carte",
     "TIDY5E.ItemCardsMouseHint": "Clic central de la souris pour voir / éditer",
     "TIDY5E.AbbrMod": "Mod",
     "TIDY5E.AbbrSavingThrow": "Sauvegarde",
@@ -128,10 +127,6 @@
     "TIDY5E.Settings.ItemCardsDelay": {
         "name": "Délai avant l'affichage de la carte d'information",
         "hint": "La carte d'information s'affichera au survol d'un élément après un délai en millisecondes (0 = pas de délai, 300 par défaut)."
-    },
-    "TIDY5E.Settings.ItemCardsFixKey": {
-        "name": "Touche à maintenir pour interagir avec la carte d'information",
-        "hint": "Saisir une touche (par exemple : x) à utiliser pour l'interaction avec la carte d'information. Il peut s'agir de n'importe quelle touche, à l'exception des touches de fonction (ctrl, alt, etc.)."
     },
     "TIDY5E.Settings.DefaultTheme": {
         "name": "Thème de couleur par défaut",

@@ -3,10 +3,14 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
 
-  export let value: boolean;
-  export let name: string;
-  export let hint: string;
-  export let id: string;
+  interface Props {
+    value: boolean;
+    name: string;
+    hint: string;
+    id: string;
+  }
+
+  let { value = $bindable(), name, hint, id }: Props = $props();
 
   const appId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.APP_ID);
 

@@ -1,27 +1,21 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
+  import { getGroupSheetClassicContext } from 'src/sheets/sheet-context.svelte';
   import GroupLanguageTooltip from 'src/tooltips/GroupLanguageTooltip.svelte';
   import { Tooltip } from 'src/tooltips/Tooltip';
-  import type {
-    GroupLanguage,
-    GroupSheetClassicContext,
-  } from 'src/types/group.types';
+  import type { GroupLanguage } from 'src/types/group.types';
   import type { Actor5e } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import { type Readable } from 'svelte/store';
+  import { tick } from 'svelte';
 
-  let context = getContext<Readable<GroupSheetClassicContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = $derived(getGroupSheetClassicContext());
 
   let groupLanguageTooltip: GroupLanguageTooltip;
-  let hoveredLanguage = '';
-  let hoveredMembers: Actor5e[] = [];
+  let hoveredLanguage = $state('');
+  let hoveredMembers: Actor5e[] = $state([]);
 
-  function showGroupLanguageTooltip(
+  async function showGroupLanguageTooltip(
     event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
     groupLanguage: GroupLanguage,
-  ): any {
+  ): Promise<any> {
     if (!groupLanguage.members.length) {
       return;
     }
@@ -30,20 +24,19 @@
     hoveredMembers = groupLanguage.members;
 
     const target = event?.currentTarget;
-    setTimeout(() => {
-      Tooltip.show(target, groupLanguageTooltip.getMarkup());
-    });
+
+    await tick();
+
+    Tooltip.show(target, groupLanguageTooltip.getMarkup());
   }
 </script>
 
 <div class="flex-row extra-small-gap flex-wrap">
-  {#each $context.groupLanguages as groupLanguage}
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <!-- svelte-ignore a11y-mouse-events-have-key-events -->
+  {#each context.groupLanguages as groupLanguage}
     <span
       data-tooltip-direction="UP"
       class="tag"
-      on:mouseover={(ev) => showGroupLanguageTooltip(ev, groupLanguage)}
+      onmouseover={(ev) => showGroupLanguageTooltip(ev, groupLanguage)}
     >
       {groupLanguage.label}
       {#if groupLanguage.members.length > 1}
