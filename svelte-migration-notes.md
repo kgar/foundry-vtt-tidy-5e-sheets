@@ -5,7 +5,6 @@
   - Rendering alone will not help. Triggering a render doesn't update the card. The card data has to be refreshed somehow.
   - Try a coarse reactivity provider whose data is set on each render, and sign up the card to refresh when any of its related entities are updated.
 - [ ] Attached info cards in popout force some width onto the popout window. Any idea how to get around that? Maybe some trick with parent container width perhaps?
-- [ ] Container Panel ctx menu seems to be getting confused when clicking Edit.
 
 ## Stretch, or defer to post V7.3.0
 
@@ -377,3 +376,4 @@ fromUuidSync('Actor.jyVFPunMzXbhlAUe.Item.fnBoDKvOSltAIe7l').update({ name: newN
     - [x] GroupLanguageTooltip
     - [x] GroupSkillTooltip
     - [x] OccupantSummaryTooltip
+- [x] Container Panel ctx menu seems to be getting confused when clicking Edit.

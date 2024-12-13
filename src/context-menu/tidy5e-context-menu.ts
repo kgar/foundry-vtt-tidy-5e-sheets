@@ -55,7 +55,7 @@ function onItemContext(this: any, element: HTMLElement) {
   }
   // Items
   else if (contextMenuType === CONSTANTS.CONTEXT_MENU_TYPE_ITEMS) {
-    const id = element.getAttribute('data-item-id');
+    const id = element.closest('[data-item-id]')?.getAttribute('data-item-id');
 
     let item =
       this.document.type === CONSTANTS.ITEM_TYPE_CONTAINER
@@ -138,10 +138,7 @@ function getActiveEffectContextOptions(effect: any, app: any) {
   // Assumption: Either the effect belongs to the character or is transferred from an item.
   const actor = effectParent.actor ?? effectParent;
 
-  if (
-    !effectParent?.isOwner ||
-    !settings.value.useContextMenu
-  ) {
+  if (!effectParent?.isOwner || !settings.value.useContextMenu) {
     return [];
   }
 

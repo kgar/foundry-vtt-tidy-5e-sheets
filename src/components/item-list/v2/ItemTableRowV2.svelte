@@ -124,7 +124,6 @@
   {hidden}
   rowContainerAttributes={{
     ['data-context-menu']: contextMenu?.type,
-    ['data-context-menu-document-uuid']: contextMenu?.uuid,
     ['data-item-id']: item?.id,
     ['data-tidy-table-row']: '',
     ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.ITEM_TABLE_ROW,

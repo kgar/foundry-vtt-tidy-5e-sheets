@@ -136,7 +136,6 @@
   class:hidden
   aria-hidden={hidden}
   data-context-menu={contextMenu?.type}
-  data-context-menu-document-uuid={contextMenu?.uuid}
   data-effect-id={activeEffect?.id}
   data-parent-id={activeEffect?.parentId ?? activeEffect?.parent?.id}
   onmousedown={onMouseDown}

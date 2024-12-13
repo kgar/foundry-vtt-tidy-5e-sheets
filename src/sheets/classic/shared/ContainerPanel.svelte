@@ -54,13 +54,13 @@
       data-info-card={'item'}
       data-info-card-entity-uuid={container.uuid}
     >
-      <button
+      <a
         type="button"
-        class="container-image-button transparent-button"
-        onclick={() => container.sheet.render(true)}
+        class="container-image-button"
+        onclick={() =>
+          (FoundryAdapter.userIsGm() || container.isOwner) &&
+          container.sheet.render(true)}
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
-        data-context-menu-document-uuid={container.uuid}
-        disabled={!FoundryAdapter.userIsGm() && !container.isOwner}
       >
         <div
           class="container-image"
@@ -76,7 +76,7 @@
             <i class="fas fa-question"></i>
           </div>
         </div>
-      </button>
+      </a>
       <CapacityBar
         showLabel={false}
         {container}
