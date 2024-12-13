@@ -12,7 +12,7 @@
     - [x] Favorite Facilities List
     - [x] Favorite Features List
     - [x] Favorite Spells List
-    - [ ] Character Effects tab
+    - [x] Character Effects tab
     - [ ] Character Features tab
     - [ ] Container Contents sections
     - [ ] Encounter Member List

@@ -114,6 +114,11 @@
 
 {#each configuredContents as section (section.key)}
   {#if section.show}
+    {@const itemEntries = section.items.map((item) => ({
+      item,
+      ctx: itemContext[item.id],
+    }))}
+
     <section class="container-contents-list-section">
       <TidyTable
         key={section.key}
@@ -123,7 +128,7 @@
         {#snippet header()}
           <TidyTableHeaderRow>
             <TidyTableHeaderCell primary={true}>
-              {localize(section.label)} ({section.items.length})
+              {localize(section.label)} ({itemEntries.length})
             </TidyTableHeaderCell>
             <TidyTableHeaderCell title={localize('DND5E.Charges')}>
               <i class="fas fa-bolt"></i>
@@ -140,8 +145,7 @@
           </TidyTableHeaderRow>
         {/snippet}
         {#snippet body()}
-          {#each section.items as item (item.id)}
-            {@const ctx = itemContext[item.id]}
+          {#each itemEntries as { item, ctx } (item.id)}
             {@const weight = ctx?.totalWeight ?? item.system.weight.value}
 
             <ItemTableRowV2
