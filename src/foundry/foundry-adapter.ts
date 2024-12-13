@@ -59,11 +59,6 @@ export const FoundryAdapter = {
   ): Promise<void> {
     await game.settings.set(namespace, key, value);
   },
-  onActor5eSheetRender(func: (...args: any[]) => void) {
-    Hooks.on('renderActorSheet', (...args: any[]) => {
-      func(args);
-    });
-  },
   onGetActiveEffectContextOptions(func: (...args: any[]) => void) {
     Hooks.on('dnd5e.getActiveEffectContextOptions', func);
   },

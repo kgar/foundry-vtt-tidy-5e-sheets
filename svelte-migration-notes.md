@@ -1,10 +1,9 @@
 ## To Do
 
-- [ ] Info Cards are not reactive to their target items or actors
-  - This does not rerender when the item/actor changes. This can be remedied by subscribing self to their list of apps to update on change.
-  - Rendering alone will not help. Triggering a render doesn't update the card. The card data has to be refreshed somehow.
-  - Try a coarse reactivity provider whose data is set on each render, and sign up the card to refresh when any of its related entities are updated.
 - [ ] Attached info cards in popout force some width onto the popout window. Any idea how to get around that? Maybe some trick with parent container width perhaps?
+  - Suggestion: if popout is detected, override card availability (or visibility) if the card isn't floating.
+  - Another suggestion: use animation sequences so that when the card is fully transparent, then set width to 0.
+- [ ] cleanup: there are a number of V2 components floating around. Rename the ones that have already replaced their predecessors.
 
 ## Stretch, or defer to post V7.3.0
 
@@ -15,6 +14,10 @@
   - Can the section config application somehow do the isolated section ordering / showing / hiding / etc. by itself?
 - [ ] Refactor: `Tabs` wants a sheet prop so it can check if a tab navigation is allowed and to trigger some tab selection events when permitted. Now that context sans stores has been upended in Svelte 5, consider instead sending exactly what `Tabs` needs for its specific use case as context from the sheet, directly, in the form of a callback or function binding.
 - [ ] Fix: Use the broken identify toggle for containers to vet error handling and getting latest from the source data. Or, if it's not feasible, just catch and handle error.
+- [ ] Info Cards are not reactive to their target items or actors
+  - This does not rerender when the item/actor changes. This can be remedied by subscribing self to their list of apps to update on change.
+  - Rendering alone will not help. Triggering a render doesn't update the card. The card data has to be refreshed somehow.
+  - The class-based props probably need wrappers.
 
 ## Testing To Dos
 
