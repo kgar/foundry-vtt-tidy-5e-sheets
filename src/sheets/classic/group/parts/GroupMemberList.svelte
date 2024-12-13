@@ -21,6 +21,8 @@
 
   const context = $derived(getGroupSheetClassicContext());
 
+  const memberEntries = $derived(section.members.map((member) => ({ member })));
+
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -34,7 +36,7 @@
   {/snippet}
   {#snippet body()}
     <div class="flex-column small-gap mt-2">
-      {#each section.members as member, index (member.uuid)}
+      {#each memberEntries as { member }, index (member.uuid)}
         {#if searchResults.show(member.uuid)}
           <GroupMemberListItem
             {member}

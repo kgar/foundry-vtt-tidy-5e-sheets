@@ -317,10 +317,7 @@ export class Tidy5eVehicleSheet
       filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
       useClassicControls: settings.value.useClassicControlsForVehicle,
       editable: defaultDocumentContext.editable,
-      healthPercentage: getPercentage(
-        this.actor?.system?.attributes?.hp?.value,
-        this.actor?.system?.attributes?.hp?.max
-      ),
+      healthPercentage: this.actor.system.attributes.hp.pct.toNearest(0.1),
       lockExpChanges: FoundryAdapter.shouldLockExpChanges(),
       lockHpMaxChanges: FoundryAdapter.shouldLockHpMaxChanges(),
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),

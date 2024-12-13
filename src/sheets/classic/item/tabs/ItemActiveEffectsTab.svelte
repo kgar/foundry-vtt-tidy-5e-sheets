@@ -7,7 +7,8 @@
   import type { ItemSheetContext } from 'src/types/item.types';
   import type { CharacterSheetContext } from 'src/types/types';
 
-  let context = $derived(getSheetContext<ItemSheetContext | CharacterSheetContext>());
+  let context =
+    $derived(getSheetContext<ItemSheetContext | CharacterSheetContext>());
 
   let effects = $derived(
     Object.entries(context.effects) as Iterable<[string, any]>,
@@ -42,6 +43,10 @@
     ondrop={(ev) => context.item.sheet._onDrop(ev)}
   >
     {#each effects as [_, section]}
+      {@const effectEntries = section.effects.map((effect: any) => ({
+        effect,
+      }))}
+
       {#if !section.hidden}
         <li class="items-header flexrow" data-effect-type={section.type}>
           <h3 class="item-name effect-name flexrow">
@@ -76,7 +81,7 @@
         {/if}
 
         <ol class="item-list">
-          {#each section.effects as effect}
+          {#each effectEntries as { effect }}
             <li
               class="item effect flexrow"
               data-effect-id={effect.id}

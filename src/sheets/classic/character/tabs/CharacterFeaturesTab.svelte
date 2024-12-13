@@ -162,6 +162,10 @@
   {:else}
     {#each features as section (section.key)}
       {#if section.show}
+        {@const itemEntries = section.items.map((item) => ({
+          item,
+          ctx: context.itemContext[item.id],
+        }))}
         {@const visibleItemCount = ItemVisibility.countVisibleItems(
           section.items,
           searchResults.uuids,
@@ -203,8 +207,7 @@
               </ItemTableHeaderRow>
             {/snippet}
             {#snippet body()}
-              {#each section.items as item (item.id)}
-                {@const ctx = context.itemContext[item.id]}
+              {#each itemEntries as { item, ctx } (item.id)}
                 <ItemTableRow
                   {item}
                   onMouseDown={(event) =>

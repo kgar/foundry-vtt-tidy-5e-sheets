@@ -27,7 +27,10 @@
   }
 </script>
 
-<ActorProfile useHpOverlay={settings.value.useHpOverlay}>
+<ActorProfile
+  useHpOverlay={settings.value.useHpOverlay &&
+    context.system.attributes.hp.max > 0}
+>
   {#if incapacitated && (!settings.value.hideDeathSavesFromPlayers || FoundryAdapter.userIsGm())}
     <DeathSaves
       successes={context.system.attributes.death.success}

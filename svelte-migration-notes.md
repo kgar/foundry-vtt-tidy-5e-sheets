@@ -1,34 +1,5 @@
 ## To Do
 
-- [ ] Item changes are not reflecting on the character sheet when changed from the item sheet. Change an item name and see it not update
-  - The actor sheet does rerender, but the item table row does not update.
-  - [ ] Fix: All `#each` loops that reference Foundry classes must reference a POJO wrapper instead. Suggested approach: derived collection that stitches in any additional data like itemContext or unidentified name, to bypass the need for `@const` content.
-    - [x] Spellbook Grid
-    - [x] Spellbook List
-    - [x] Actor Effects Tab
-    - [x] Inventory Grid
-    - [x] Inventory List
-    - [x] Favorite Activities List
-    - [x] Favorite Facilities List
-    - [x] Favorite Features List
-    - [x] Favorite Spells List
-    - [x] Character Effects tab
-    - [ ] Character Features tab
-    - [ ] Container Contents sections
-    - [ ] Encounter Member List
-    - [ ] Group Member List
-    - [ ] Item Active Effects Tab
-    - [ ] maybe: ItemAdvancementTab
-    - [ ] maybe: ItemSpeciesDescriptionTab
-    - [ ] NPC Abilities Tab
-    - [ ] Cargo List
-    - [ ] PassengerOrCrewList
-    - [ ] VehicleAttributesTab
-    - [ ] ContainerContentsSections
-    - [ ] AttunementSummaryTooltip
-    - [ ] GroupLanguageTooltip
-    - [ ] GroupSkillTooltip
-    - [ ] OccupantSummaryTooltip
 - [ ] Info Cards are not reactive to their target items or actors
   - This does not rerender when the item/actor changes. This can be remedied by subscribing self to their list of apps to update on change.
   - Rendering alone will not help. Triggering a render doesn't update the card. The card data has to be refreshed somehow.
@@ -36,7 +7,6 @@
 - [ ] Attached info cards in popout force some width onto the popout window. Any idea how to get around that? Maybe some trick with parent container width perhaps?
 - [ ] Container Panel ctx menu seems to be getting confused when clicking Edit.
 
- 
 ## Stretch, or defer to post V7.3.0
 
 - [ ] Overhaul: Item Filter Service is a mess. Is there a way to consolidate all functionality to the ItemFilterService so that it can serve up reactive filters all the way through?
@@ -195,11 +165,13 @@ Cry.
 ## Reactivity Troubleshooting for Item Table Rows
 
 🚷 Things that aren't reacting to change:
+
 - Item Name
 - Qty
 - Item Summary
 
 ✅ Things that are reacting:
+
 - Equip/Unequip
 - Attune
 - Item Weight
@@ -207,39 +179,38 @@ Cry.
 - Item add/delete
 
 THOERY: After some extensive testing, the ActorInventoryTab call to `$derived(SheetSections.configureInventory(...))` is where reactivity stops. This call does the following:
+
 - Sort keyed sections
 - Sort items in section
 - Determine section visibility
 
 This was meant to allow for deferred execution and therefore deferred computation, so when a user didn't use a tab, this calculation was not done. For whatever reason, this call is causing svelte to be unable to detect changes, even when this function is passed in to a `CoarseReactivityProvider`.
 
-> [!IMPORTANT]
-> `@const` is reactive; it's not the problem
+> [!IMPORTANT] > `@const` is reactive; it's not the problem
 
 UPDATED THEORY: I removed the custom section config from the equation and tried again. Latest results:
 
 **Without custom section config:**
 
 Reactive:
+
 - In Inventory Tab
 - In Inventory List, outside of Item Table body
 - In Inventory List, inside of Item Table body, outside of loop
 
 Not Reactive:
+
 - In Inventory List, **inside of Item Table body loop**
 - In Inventory List, **inside of Item Table body loop** item table row
 - In Inventory List, outside of Item Table body, **inside an each loop**
 
-I added it back and retested. ***Same results as without. So the custom section content is not the culprit.***
+I added it back and retested. **_Same results as without. So the custom section content is not the culprit._**
 
 So, it seems that reactivity breaks when we start the each loop on the section. It doesn't matter what component it's in. The each loop is not refreshing.
 
-Next thing to try: *wrap the Item reference with a `value` getter*
+Next thing to try: _wrap the Item reference with a `value` getter_
 
-**EUREKA**: Looping over a wrapper with a value getter solves the problem. Deep class reactivity *would be fucking nice, Svelte*, but since that is not an option, any each loop needs to loop over POJOs. Does it specifically need a getter? **Nope, you can just use a wrapped object, no getter required.**
-
-
-
+**EUREKA**: Looping over a wrapper with a value getter solves the problem. Deep class reactivity _would be fucking nice, Svelte_, but since that is not an option, any each loop needs to loop over POJOs. Does it specifically need a getter? **Nope, you can just use a wrapped object, no getter required.**
 
 ### Reactivity Scratch
 
@@ -377,3 +348,32 @@ fromUuidSync('Actor.jyVFPunMzXbhlAUe.Item.fnBoDKvOSltAIe7l').update({ name: newN
 - [x] ~~Implement Effect card and content.~~ Will work the github issue separate
 - [x] ~~Provide separate option for showing effect cards.~~ Will work the github issue separate
 - [x] ~~Eliminate ContentEditable elements and use Locked Readonly / Unlocked Text Input~~ This component will die of natural causes when the overhaul takes over.
+- [x] Item changes are not reflecting on the character sheet when changed from the item sheet. Change an item name and see it not update
+  - The actor sheet does rerender, but the item table row does not update.
+  - [x] Fix: All `#each` loops that reference Foundry classes must reference a POJO wrapper instead. Suggested approach: derived collection that stitches in any additional data like itemContext or unidentified name, to bypass the need for `@const` content.
+    - [x] Spellbook Grid
+    - [x] Spellbook List
+    - [x] Actor Effects Tab
+    - [x] Inventory Grid
+    - [x] Inventory List
+    - [x] Favorite Activities List
+    - [x] Favorite Facilities List
+    - [x] Favorite Features List
+    - [x] Favorite Spells List
+    - [x] Character Effects tab
+    - [x] Character Features tab
+    - [x] Container Contents sections
+    - [x] Encounter Member List
+    - [x] Group Member List
+    - [x] Item Active Effects Tab
+    - [x] maybe: ItemAdvancementTab
+    - [x] maybe: ItemSpeciesDescriptionTab
+    - [x] NPC Abilities Tab
+    - [x] Cargo List
+    - [x] PassengerOrCrewList
+    - [x] VehicleAttributesTab
+    - [x] ContainerContentsSections
+    - [x] AttunementSummaryTooltip
+    - [x] GroupLanguageTooltip
+    - [x] GroupSkillTooltip
+    - [x] OccupantSummaryTooltip

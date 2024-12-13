@@ -130,6 +130,11 @@
     {:else}
       {#each context.features as section (section.key)}
         {#if context.unlocked || section.items.length}
+          {@const itemEntries = section.items.map((item) => ({
+            item,
+            ctx: context.itemContext[item.id],
+          }))}
+
           <ItemTable key={section.key}>
             {#snippet header()}
               <ItemTableHeaderRow>
@@ -164,8 +169,7 @@
               </ItemTableHeaderRow>
             {/snippet}
             {#snippet body()}
-              {#each section.items as item (item.id)}
-                {@const ctx = context.itemContext[item.id]}
+              {#each itemEntries as { item, ctx } (item.id)}
                 <ItemTableRow
                   onMouseDown={(event) =>
                     FoundryAdapter.editOnMiddleClick(event, item)}

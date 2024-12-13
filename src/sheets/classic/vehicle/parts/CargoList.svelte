@@ -34,6 +34,10 @@
 
   let context = $derived(getVehicleSheetContext());
 
+  let itemEntries = $derived(
+    section.items.map((item) => ({ item, ctx: context.itemContext[item.id] })),
+  );
+
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
@@ -106,8 +110,7 @@
     </ItemTableHeaderRow>
   {/snippet}
   {#snippet body()}
-    {#each section.items as item, index (item.id ?? index)}
-      {@const ctx = context.itemContext[item.id]}
+    {#each itemEntries as { item, ctx }, index (item.id ?? index)}
       <ItemTableRow
         onMouseDown={(event) => FoundryAdapter.editOnMiddleClick(event, item)}
         contextMenu={{

@@ -738,10 +738,7 @@ export class Tidy5eNpcSheet
       ),
       hideEmptySpellbook:
         lockSensitiveFields && defaultDocumentContext.spellbook.length === 0,
-      healthPercentage: getPercentage(
-        this.actor?.system?.attributes?.hp?.value,
-        this.actor?.system?.attributes?.hp?.max
-      ),
+      healthPercentage: this.actor.system.attributes.hp.pct.toNearest(0.1),
       showSpellbookTab: settings.value.showSpellbookTabNpc,
       idealEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.ideal,

@@ -213,6 +213,10 @@
     {/if}
     {#each features as section (section.key)}
       {#if section.show}
+        {@const featureEntries = section.items.map((item) => ({
+          item,
+          ctx: context.itemContext[item.id],
+        }))}
         {@const visibleItemCount = ItemVisibility.countVisibleItems(
           section.items,
           searchResults.uuids,
@@ -246,8 +250,7 @@
               </ItemTableHeaderRow>
             {/snippet}
             {#snippet body()}
-              {#each section.items as item}
-                {@const ctx = context.itemContext[item.id]}
+              {#each featureEntries as { item, ctx } (item.id)}
                 <ItemTableRow
                   onMouseDown={(event) =>
                     FoundryAdapter.editOnMiddleClick(event, item)}

@@ -17,7 +17,10 @@
   }
 </script>
 
-<ActorProfile useHpOverlay={settings.value.useHpOverlayVehicle}>
+<ActorProfile
+  useHpOverlay={settings.value.useHpOverlayVehicle &&
+    context.system.attributes.hp.max > 0}
+>
   {#if settings.value.useExhaustion && settings.value.vehicleExhaustionConfig.type === 'specific'}
     <ExhaustionTracker
       level={TidyFlags.exhaustion.get(context.actor) ?? 0}

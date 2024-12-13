@@ -27,6 +27,8 @@
 
   const context = $derived(getGroupSheetClassicContext());
 
+  const memberEntries = $derived(section.members.map((member) => ({ member })));
+
   const localize = FoundryAdapter.localize;
 
   const classicControlWidthRems = 1.5;
@@ -75,13 +77,11 @@
   }
 </script>
 
-<section
-  class="encounter-member-list-section"
-  style="--grid-template-columns: {gridTemplateColumns}"
->
+<section class="encounter-member-list-section">
   <TidyTable
     key={section.key}
     data-custom-section={section.custom ? true : null}
+    {gridTemplateColumns}
   >
     {#snippet header()}
       <TidyTableHeaderRow>
@@ -115,7 +115,7 @@
     {/snippet}
     {#snippet body()}
       <div class="flex-column no-gap">
-        {#each section.members as member, index (member.uuid)}
+        {#each memberEntries as { member }, index (member.uuid)}
           {@const ctx = context.memberContext[member.id]}
           {#if searchResults.show(member.uuid)}
             <TidyTableRow
@@ -139,7 +139,9 @@
                       shareable: true,
                       uuid: member.uuid,
                     })}
-                  tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
+                  tabindex={settings.value.useAccessibleKeyboardSupport
+                    ? 0
+                    : -1}
                 >
                   <img
                     class="encounter-member-list-item-image"
@@ -153,7 +155,9 @@
                   type="button"
                   class="encounter-member-name transparent-button highlight-on-hover"
                   onclick={() => member.sheet.render(true)}
-                  tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
+                  tabindex={settings.value.useAccessibleKeyboardSupport
+                    ? 0
+                    : -1}
                 >
                   {member.name}
                 </button>

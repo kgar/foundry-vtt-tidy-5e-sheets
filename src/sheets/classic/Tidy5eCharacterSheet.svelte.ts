@@ -814,10 +814,7 @@ export class Tidy5eCharacterSheet
           relativeTo: this.actor,
         }
       ),
-      healthPercentage: getPercentage(
-        this.actor?.system?.attributes?.hp?.value,
-        this.actor?.system?.attributes?.hp?.max
-      ),
+      healthPercentage: this.actor.system.attributes.hp.pct.toNearest(0.1),
       idealEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.ideal,
         {

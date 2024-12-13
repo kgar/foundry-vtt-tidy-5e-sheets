@@ -104,6 +104,11 @@
 </script>
 
 {#each configuredContents as section (section.key)}
+  {@const itemEntries = section.items.map((item) => ({
+    item,
+    ctx: itemContext[item.id],
+  }))}
+
   {#if section.show}
     <TidyTable
       key={section.key}
@@ -128,8 +133,7 @@
         </TidyTableHeaderRow>
       {/snippet}
       {#snippet body()}
-        {#each section.items as item, i (item.id)}
-          {@const ctx = itemContext[item.id]}
+        {#each itemEntries as { item, ctx }, i (item.id)}
           {@const weight = ctx?.totalWeight ?? item.system.weight.value}
           {@const itemBorderColor = item.system.rarity
             ? `var(--t5e-color-rarity-${item.system.rarity.slugify()})`

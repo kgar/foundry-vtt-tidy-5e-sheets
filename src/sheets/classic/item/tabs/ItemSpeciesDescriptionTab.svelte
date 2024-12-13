@@ -12,6 +12,8 @@
     Object.values(context.item.system.movementLabels) as string[],
   );
 
+  let sensesLabels = $derived(context.item.system.sensesLabels);
+
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -74,7 +76,7 @@
       {/if}
     </h4>
     <ol class="properties-list">
-      {#each context.item.system.sensesLabels as label}
+      {#each sensesLabels as label}
         <li>{label}</li>
       {:else}
         <li>{localize('DND5E.None')}</li>
