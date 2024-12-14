@@ -63,10 +63,10 @@
       {/if}
       <!-- TODO: Cut a copy of the Favorite Features component and custom tailor it for the generic section -->
       {#if section.type === CONSTANTS.FAVORITES_SECTION_TYPE_FEATURE || section.type === CONSTANTS.FAVORITES_SECTION_TYPE_GENERIC}
-        <FavoriteFeaturesList {section} items={section.items} />
+        <FavoriteFeaturesList {section} />
       {/if}
       {#if section.type === CONSTANTS.FAVORITES_SECTION_TYPE_SPELLBOOK}
-        <FavoriteSpellsList {section} spells={section.spells} />
+        <FavoriteSpellsList {section} />
       {/if}
       {#if section.type === CONSTANTS.FAVORITES_SECTION_TYPE_EFFECT}
         {@const visibleEffectIdSubset = FoundryAdapter.searchEffects(
@@ -76,16 +76,14 @@
         <FavoriteEffectsList {section} {visibleEffectIdSubset} />
       {/if}
       {#if section.type === CONSTANTS.FAVORITES_SECTION_TYPE_FACILITY}
-        <FavoriteFacilitiesList {section} items={section.items}
-        ></FavoriteFacilitiesList>
+        <FavoriteFacilitiesList {section} />
       {/if}
       {#if section.type === CONSTANTS.FAVORITES_SECTION_TYPE_ACTIVITY}
         {@const visibleActivityUuidSubset = FoundryAdapter.searchActivities(
           searchCriteria,
           section.activities,
         )}
-        <FavoriteActivitiesList {section} {visibleActivityUuidSubset}
-        ></FavoriteActivitiesList>
+        <FavoriteActivitiesList {section} {visibleActivityUuidSubset} />
       {/if}
     {/if}
   {/each}
