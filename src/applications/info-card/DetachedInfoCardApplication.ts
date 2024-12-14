@@ -5,7 +5,7 @@ import type { ApplicationConfiguration } from 'src/types/application.types';
 import { mount } from 'svelte';
 import DetachedInfoCard from './DetachedInfoCard.svelte';
 
-export class DetachedInfoCardApplicationV2 extends SvelteApplicationMixin<{}>(
+export class DetachedInfoCardApplication extends SvelteApplicationMixin<{}>(
   foundry.applications.api.ApplicationV2
 ) {
   #cardState: InfoCardState<any>;

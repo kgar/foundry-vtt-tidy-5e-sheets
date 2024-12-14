@@ -8,16 +8,15 @@
     type InfoCardDimensions,
     type InfoCardState,
   } from './info-card.svelte';
-  import ActivityInfoCardV2 from './Cards/ActivityInfoCard.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import DefaultItemCardV2 from './Cards/DefaultItemCard.svelte';
-  import InventoryItemCardV2 from './Cards/InventoryItemCard.svelte';
-  import SpellItemCardV2 from './Cards/SpellItemCard.svelte';
+  import DefaultItemCard from './Cards/DefaultItemCard.svelte';
+  import InventoryItemCard from './Cards/InventoryItemCard.svelte';
+  import SpellItemCard from './Cards/SpellItemCard.svelte';
   import { Inventory } from 'src/features/sections/Inventory';
   import { CONSTANTS } from 'src/constants';
   import type { Component, ComponentProps } from 'svelte';
   import { isUserInteractable } from 'src/utils/element';
-  import { DetachedInfoCardApplicationV2 } from 'src/applications/info-card/DetachedInfoCardApplicationV2';
+  import { DetachedInfoCardApplication } from 'src/applications/info-card/DetachedInfoCardApplication';
 
   interface Props {
     sheet: any;
@@ -100,7 +99,7 @@
     switch (cardType) {
       // case 'activity': {
       //   card = {
-      //     component: ActivityInfoCardV2,
+      //     component: ActivityInfoCard,
       //     props: { activity: entity },
       //     title: entity.name,
       //   };
@@ -111,17 +110,17 @@
       case 'item': {
         if (Inventory.isInventoryType(entity)) {
           card = {
-            ...withProps(InventoryItemCardV2, { item: entity }),
+            ...withProps(InventoryItemCard, { item: entity }),
             title: entity.name,
           };
         } else if (entity?.type === CONSTANTS.ITEM_TYPE_SPELL) {
           card = {
-            ...withProps(SpellItemCardV2, { item: entity }),
+            ...withProps(SpellItemCard, { item: entity }),
             title: entity.name,
           };
         } else {
           card = {
-            ...withProps(DefaultItemCardV2, { item: entity }),
+            ...withProps(DefaultItemCard, { item: entity }),
             title: entity.name,
           };
         }
@@ -159,7 +158,7 @@
       return;
     }
 
-    new DetachedInfoCardApplicationV2(
+    new DetachedInfoCardApplication(
       { ...card },
       {
         window: { title: card.title },

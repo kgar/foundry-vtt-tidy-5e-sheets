@@ -1,10 +1,6 @@
 ## To Do
 
-
-- [ ] Attached info cards in popout force some width onto the popout window. Any idea how to get around that? Maybe some trick with parent container width perhaps?
-  - Suggestion: if popout is detected, override card availability (or visibility) if the card isn't floating.
-  - Another suggestion: use animation sequences so that when the card is fully transparent, then set width to 0.
-- [ ] cleanup: there are a number of V2 components floating around. Rename the ones that have already replaced their predecessors.
+Ya did it.
 
 ## Stretch, or defer to post V7.3.0
 
@@ -421,4 +417,8 @@ fromUuidSync('Actor.jyVFPunMzXbhlAUe.Item.fnBoDKvOSltAIe7l').update({ name: newN
 - [x] Container Panel ctx menu seems to be getting confused when clicking Edit.
 - [x] Finish overhauling item use buttons so they can comfortably accommodate Forge URLs
 - [x] Consolidate item table styles to one SCSS file for App V1 / App V2 classic
-
+- [x] Attached info cards in popout force some width onto the popout window. Any idea how to get around that? Maybe some trick with parent container width perhaps?
+  - Suggestion: if popout is detected, override card availability (or visibility) if the card isn't floating.
+  - Another suggestion: use animation sequences so that when the card is fully transparent, then set width to 0.
+  - ✍ The solution was to submit a github issue to PopOut! https://github.com/League-of-Foundry-Developers/fvtt-module-popout/issues/132
+- [x] cleanup: there are a number of V2 components floating around. Rename the ones that have already replaced their predecessors.
