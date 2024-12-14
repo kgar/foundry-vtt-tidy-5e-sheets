@@ -217,6 +217,7 @@
   @import './components/accordion.scss';
   @import '../../components/button-menu/button-menu.scss';
   @import '../../components/toggle/toggles.scss';
+  @import '../../components/item-list/item-table.scss';
   @import '../../components/table/tidy-table.scss';
   @import '../../components/filter/filter.scss';
   @import '../../components/pips/pips.scss';
@@ -503,74 +504,4 @@
   }
 
   // TODO: Extract to shared SCSS file to use with all classic sheets
-  /* Item Tables */
-  .item-table {
-    .item-table-cell {
-      .item-use-button {
-        --img-size: var(--t5e-image-size-override, 1.5rem);
-        position: relative;
-        align-self: center;
-        flex: 0 0 var(--img-size);
-        height: var(--img-size);
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        border-radius: 0.3125rem 0 0 0.3125rem;
-        border-left: 1px solid transparent;
-
-        .item-image {
-          position: absolute;
-          border-radius: 0.3125rem 0 0 0.3125rem;
-          width: var(--img-size);
-          height: var(--img-size);
-
-          &.conceal {
-            filter: grayscale(100%);
-          }
-        }
-
-        i {
-          color: var(--t5e-tertiary-color);
-          font-size: 1.125rem;
-
-          &.invisible {
-            visibility: hidden;
-          }
-        }
-
-        .roll-indicator {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          opacity: 0;
-          transition: all 0.2s ease;
-        }
-
-        .unidentified-glyph {
-          font-size: calc(var(--t5e-image-size-override, 1.5rem) - 0.75rem);
-        }
-      }
-
-      &:hover .item-use-button {
-        &:hover {
-          .roll-indicator {
-            color: var(--t5e-primary-font-color);
-          }
-
-          .item-image {
-            opacity: 0;
-          }
-
-          .unidentified-glyph {
-            opacity: 0;
-          }
-        }
-
-        .roll-indicator {
-          opacity: 1;
-        }
-      }
-    }
-  }
 }

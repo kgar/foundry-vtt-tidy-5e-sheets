@@ -1,7 +1,6 @@
 ## To Do
 
-- [ ] Finish overhauling item use buttons so they can comfortably accommodate Forge URLs
-- [ ] Consolidate item table styles to one SCSS file for App V1 / App V2 classic
+
 - [ ] Attached info cards in popout force some width onto the popout window. Any idea how to get around that? Maybe some trick with parent container width perhaps?
   - Suggestion: if popout is detected, override card availability (or visibility) if the card isn't floating.
   - Another suggestion: use animation sequences so that when the card is fully transparent, then set width to 0.
@@ -17,7 +16,7 @@
 - [ ] Refactor: `Tabs` wants a sheet prop so it can check if a tab navigation is allowed and to trigger some tab selection events when permitted. Now that context sans stores has been upended in Svelte 5, consider instead sending exactly what `Tabs` needs for its specific use case as context from the sheet, directly, in the form of a callback or function binding.
 - [ ] Fix: Use the broken identify toggle for containers to vet error handling and getting latest from the source data. Or, if it's not feasible, just catch and handle error.
 - [ ] Info Cards are not reactive to their target items or actors
-  - This does not rerender when the item/actor changes. This can be remedied by subscribing self to their list of apps to update on change.
+  - This does not rerender when the i tem/actor changes. This can be remedied by subscribing self to their list of apps to update on change.
   - Rendering alone will not help. Triggering a render doesn't update the card. The card data has to be refreshed somehow.
   - The class-based props probably need wrappers.
 
@@ -224,6 +223,44 @@ const newName = sword.name.endsWith('1') ? sword.name.substring(0, sword.name.le
 fromUuidSync('Actor.jyVFPunMzXbhlAUe.Item.fnBoDKvOSltAIe7l').update({ name: newName});
 ```
 
+## Item Use Button Scratch
+
+```
+<div
+  class="item-image"
+  class:item-use-button-has-focus={buttonIsFocused}
+  style="background-image: url('{imgUrlOverride ?? item.img}')"
+  class:show-roll={!disabled && showRoll?.value}
+  class:conceal={item.system.identified === false}
+>
+  <div
+    role="presentation"
+    aria-hidden="true"
+    class="unidentified-glyph no-transition"
+    class:conceal={item.system.identified === false}
+    class:hidden={showRoll?.value}
+  >
+    <i class="fas fa-question"></i>
+  </div>
+  {#if !disabled}
+    <button
+      type="button"
+      class="item-use-button icon-button"
+      onclick={(event) => FoundryAdapter.actorTryUseItem(item, event)}
+      oncontextmenu={(event) =>
+        FoundryAdapter.onActorItemButtonContextMenu(item, { event })}
+      onfocusin={() => (buttonIsFocused = true)}
+      onfocusout={() => (buttonIsFocused = false)}
+      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
+      tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
+    >
+      <i class="fa fa-dice-d20" class:invisible={!showDiceIconOnHover}></i>
+    </button>
+  {/if}
+  {@render afterRollButton?.()}
+</div>
+```
+
 ## TODO List Item Graveyard
 
 - [x] Update deps
@@ -382,41 +419,6 @@ fromUuidSync('Actor.jyVFPunMzXbhlAUe.Item.fnBoDKvOSltAIe7l').update({ name: newN
     - [x] GroupSkillTooltip
     - [x] OccupantSummaryTooltip
 - [x] Container Panel ctx menu seems to be getting confused when clicking Edit.
+- [x] Finish overhauling item use buttons so they can comfortably accommodate Forge URLs
+- [x] Consolidate item table styles to one SCSS file for App V1 / App V2 classic
 
-## Item Use Button Scratch
-
-```
-<div
-  class="item-image"
-  class:item-use-button-has-focus={buttonIsFocused}
-  style="background-image: url('{imgUrlOverride ?? item.img}')"
-  class:show-roll={!disabled && showRoll?.value}
-  class:conceal={item.system.identified === false}
->
-  <div
-    role="presentation"
-    aria-hidden="true"
-    class="unidentified-glyph no-transition"
-    class:conceal={item.system.identified === false}
-    class:hidden={showRoll?.value}
-  >
-    <i class="fas fa-question"></i>
-  </div>
-  {#if !disabled}
-    <button
-      type="button"
-      class="item-use-button icon-button"
-      onclick={(event) => FoundryAdapter.actorTryUseItem(item, event)}
-      oncontextmenu={(event) =>
-        FoundryAdapter.onActorItemButtonContextMenu(item, { event })}
-      onfocusin={() => (buttonIsFocused = true)}
-      onfocusout={() => (buttonIsFocused = false)}
-      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
-      tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
-    >
-      <i class="fa fa-dice-d20" class:invisible={!showDiceIconOnHover}></i>
-    </button>
-  {/if}
-  {@render afterRollButton?.()}
-</div>
-```

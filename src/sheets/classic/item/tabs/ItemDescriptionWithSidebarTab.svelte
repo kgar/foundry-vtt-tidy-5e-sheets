@@ -16,9 +16,10 @@
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = $derived(getSheetContext<
-    ItemSheetContext | ContainerSheetClassicContext
-  >());
+  let context =
+    $derived(
+      getSheetContext<ItemSheetContext | ContainerSheetClassicContext>(),
+    );
 
   let appId = $derived(context.document.id);
 
@@ -64,7 +65,7 @@
           />
         </div>
 
-        <HorizontalLineSeparator />
+        <HorizontalLineSeparator borderColor="separator" />
       {/if}
 
       <div class="form-group">
@@ -80,7 +81,7 @@
         />
       </div>
 
-      <HorizontalLineSeparator />
+      <HorizontalLineSeparator borderColor="separator" />
 
       <div class="form-group stacked">
         <label for="{appId}-price-value">{localize('DND5E.Price')}</label>
@@ -234,6 +235,7 @@
 <style lang="scss">
   .item-properties {
     flex: 0 0 7.5rem;
+    padding-top: 0.0625rem;
   }
 
   .editor-container {
