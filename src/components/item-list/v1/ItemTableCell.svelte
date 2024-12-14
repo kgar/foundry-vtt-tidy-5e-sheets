@@ -1,7 +1,5 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
-  import type { ContextPrimitive } from 'src/features/reactivity/reactivity.types';
-  import { setContext, type Snippet } from 'svelte';
+  import { type Snippet } from 'svelte';
 
   interface Props {
     baseWidth?: string | undefined;
@@ -20,18 +18,6 @@
     children,
     ...rest
   }: Props = $props();
-
-  let isHovering = $state<ContextPrimitive<boolean>>({ value: false });
-
-  setContext(CONSTANTS.CONTEXT_GRID_CELL_HOVER, isHovering);
-
-  function mouseEnter(ev: MouseEvent) {
-    isHovering.value = true;
-  }
-
-  function mouseLeave(ev: MouseEvent) {
-    isHovering.value = false;
-  }
 </script>
 
 <div
@@ -39,8 +25,6 @@
   class:primary
   style:flex-basis={baseWidth}
   {title}
-  onmouseenter={mouseEnter}
-  onmouseleave={mouseLeave}
   {...rest.attributes}
 >
   {@render children?.()}
@@ -67,15 +51,6 @@
       justify-content: initial;
       color: var(--t5e-primary-color);
     }
-
-    // &:hover {
-    //   :global(.item-use-button-image) {
-    //     background-image: none;
-    //   }
-    //   :global(.item-use-button i) {
-    //     display: initial;
-    //   }
-    // }
 
     &:not(.primary) {
       border-left: 0.0625rem solid var(--t5e-faintest-color);
