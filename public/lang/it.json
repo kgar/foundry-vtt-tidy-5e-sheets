@@ -829,5 +829,10 @@
     "TIDY5E.SortMenu.OptionPrepared": "Preparato",
     "TIDY5E.SortMenu.OptionEquipped": "Equipaggiato",
     "TIDY5E.SortMenu.OptionAlphabetical": "Alfabetico (A-Z)",
-    "TIDY5E.SortMenu.OptionManual": "Manuale"
+    "TIDY5E.SortMenu.OptionManual": "Manuale",
+    "TIDY5E.Settings.InfoCardsInspectKey": {
+        "name": "Chiave Ispezione Scheda Informativa",
+        "hint": "Premi questo carattere della tastiera (ad esempio il tasto \"t\") mentre visualizzi una scheda informativa per farla apparire."
+    },
+    "TIDY5E.InfoCardInspectHint": "{inspectKey} Ispeziona"
 }
