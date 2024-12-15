@@ -1,20 +1,18 @@
 <script lang="ts">
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ItemSheetContext } from 'src/types/item.types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import ItemDescription from './ItemDescriptionTab.svelte';
-  import { settingStore } from 'src/settings/settings';
+  import { settings } from 'src/settings/settings.svelte';
   import { CONSTANTS } from 'src/constants';
+  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<ItemSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  let context = $derived(getItemSheetContext());
+
+  let movementLabels = $derived(
+    Object.values(context.item.system.movementLabels) as string[],
   );
 
-  $: movementLabels = Object.values(
-    $context.item.system.movementLabels,
-  ) as string[];
+  let sensesLabels = $derived(context.item.system.sensesLabels);
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -26,36 +24,32 @@
   >
     <h4 class="properties-header flex-row justify-content-space-between">
       {localize('DND5E.Type')}
-      {#if $context.editable}
+      {#if context.editable}
         <button
           class="inline-icon-button hidden-config-button"
           type="button"
-          on:click={() =>
-            FoundryAdapter.renderCreatureTypeConfig($context.item)}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+          onclick={() => FoundryAdapter.renderCreatureTypeConfig(context.item)}
+          tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
         >
-          <i class="fas fa-cog" />
+          <i class="fas fa-cog"></i>
         </button>
       {/if}
     </h4>
     <ol class="properties-list">
-      <li>{$context.item.system.typeLabel}</li>
+      <li>{context.item.system.typeLabel}</li>
     </ol>
     <h4 class="properties-header flex-row justify-content-space-between">
       {localize('DND5E.Movement')}
-      {#if $context.editable}
+      {#if context.editable}
         <button
           type="button"
           class="inline-icon-button hidden-config-button"
           data-action="movement"
-          on:click={() =>
-            FoundryAdapter.renderMovementSensesConfig(
-              $context.item,
-              'movement',
-            )}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+          onclick={() =>
+            FoundryAdapter.renderMovementSensesConfig(context.item, 'movement')}
+          tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
         >
-          <i class="fas fa-cog" />
+          <i class="fas fa-cog"></i>
         </button>
       {/if}
     </h4>
@@ -68,21 +62,21 @@
     </ol>
     <h4 class="properties-header flex-row justify-content-space-between">
       {localize('DND5E.Senses')}
-      {#if $context.editable}
+      {#if context.editable}
         <button
           type="button"
           class="inline-icon-button hidden-config-button"
           data-action="senses"
-          on:click={() =>
-            FoundryAdapter.renderMovementSensesConfig($context.item, 'senses')}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+          onclick={() =>
+            FoundryAdapter.renderMovementSensesConfig(context.item, 'senses')}
+          tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
         >
-          <i class="fas fa-cog" />
+          <i class="fas fa-cog"></i>
         </button>
       {/if}
     </h4>
     <ol class="properties-list">
-      {#each $context.item.system.sensesLabels as label}
+      {#each sensesLabels as label}
         <li>{label}</li>
       {:else}
         <li>{localize('DND5E.None')}</li>

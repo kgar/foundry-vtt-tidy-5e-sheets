@@ -2,35 +2,44 @@
   import { type Actor5e, type OnItemToggledFn } from 'src/types/types';
   import ItemSummary from '../ItemSummary.svelte';
   import { warn } from 'src/utils/logging';
-  import { createEventDispatcher, getContext, onMount } from 'svelte';
+  import { getContext, onMount, type Snippet } from 'svelte';
   import type {
-    ItemCardStore,
     ExpandedItemData,
     ExpandedItemIdToLocationsMap,
     ActiveEffect5e,
     ActiveEffectContext,
   } from 'src/types/types';
-  import type { Writable } from 'svelte/store';
-  import type {
-    Item5e,
-    ItemCardContentComponent,
-    ItemChatData,
-  } from 'src/types/item.types';
-  import { settingStore } from 'src/settings/settings';
+  import type { Item5e, ItemChatData } from 'src/types/item.types';
   import { CONSTANTS } from 'src/constants';
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
+  import type { MouseEventHandler } from 'svelte/elements';
 
-  export let item: Item5e | null = null;
-  export let effect: ActiveEffect5e | ActiveEffectContext | null = null;
-  export let favoriteId: string | null = null;
-  export let contextMenu: { type: string; uuid: string } | null = null;
-  export let cssClass: string = '';
-  export let itemCardContentTemplate: ItemCardContentComponent | null = null;
-  export let hidden: boolean = false;
-  export let getDragData: (() => any) | null = null;
+  interface Props {
+    item?: Item5e | null;
+    activeEffect?: ActiveEffect5e | ActiveEffectContext | null;
+    favoriteId?: string | null;
+    contextMenu?: { type: string; uuid: string } | null;
+    cssClass?: string;
+    hidden?: boolean;
+    getDragData?: (() => any) | null;
+    onMouseDown?: MouseEventHandler<HTMLElement>;
+    children?: Snippet<[any]>;
+  }
 
-  $: draggable = item ?? effect;
+  let {
+    item = null,
+    activeEffect = null,
+    favoriteId = null,
+    contextMenu = null,
+    cssClass = '',
+    hidden = false,
+    getDragData = null,
+    onMouseDown,
+    children,
+  }: Props = $props();
+
+  let draggable = $derived(item ?? activeEffect);
 
   const emptyChatData: ItemChatData = {
     description: { value: '' },
@@ -41,23 +50,19 @@
   const expandedItemData = getContext<ExpandedItemData>(
     CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA,
   );
-  const context = getContext<Writable<unknown>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+
   const expandedItems = getContext<ExpandedItemIdToLocationsMap>(
     CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEMS,
   );
+
   const onItemToggled = getContext<OnItemToggledFn>(
     CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TOGGLED,
   );
-  const dispatcher = createEventDispatcher<{ mousedown: MouseEvent }>();
+
   const location = getContext<string>(CONSTANTS.SVELTE_CONTEXT.LOCATION);
 
-  let card: Writable<ItemCardStore> | undefined = getContext<
-    Writable<ItemCardStore>
-  >(CONSTANTS.SVELTE_CONTEXT.CARD);
-  let showSummary = false;
-  let chatData: ItemChatData | undefined;
+  let showSummary = $state(false);
+  let chatData: ItemChatData | undefined = $state();
 
   async function toggleSummary(actor: Actor5e) {
     if (!item) {
@@ -73,26 +78,10 @@
 
   async function onMouseEnter(event: Event) {
     TidyHooks.tidy5eSheetsItemHoverOn(event, item);
-
-    if (!item?.getChatData || !$settingStore.itemCardsForAllItems) {
-      return;
-    }
-
-    card?.update((card) => {
-      card.item = item;
-      card.itemCardContentTemplate = itemCardContentTemplate;
-      return card;
-    });
   }
 
   async function onMouseLeave(event: Event) {
     TidyHooks.tidy5eSheetsItemHoverOff(event, item);
-
-    card?.update((card) => {
-      card.item = null;
-      card.itemCardContentTemplate = null;
-      return card;
-    });
   }
 
   function handleDragStart(event: DragEvent) {
@@ -100,12 +89,7 @@
       return;
     }
 
-    // Don't show cards while dragging
     onMouseLeave(event);
-
-    card?.update((card) => {
-      return card;
-    });
 
     const dragData = getDragData?.() ?? draggable.toDragData?.();
     if (dragData) {
@@ -126,10 +110,10 @@
     }
   }
 
-  onMount(() => {
-    let first = true;
+  let first = true;
 
-    const subscription = context?.subscribe(async (c: any) => {
+  $effect(() => {
+    (async function () {
       if (first) {
         first = false;
         restoreItemSummaryIfExpanded();
@@ -143,34 +127,32 @@
         // so it rehydrates on next open
         chatData = undefined;
       }
-    });
-
-    return subscription;
+    })();
   });
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   class="item-table-row-container"
   class:hidden
   aria-hidden={hidden}
   data-context-menu={contextMenu?.type}
-  data-context-menu-document-uuid={contextMenu?.uuid}
-  data-effect-id={effect?.id}
-  data-parent-id={effect?.parentId ?? effect?.parent?.id}
-  on:mousedown={(event) => dispatcher('mousedown', event)}
-  on:mouseenter={onMouseEnter}
-  on:mouseleave={onMouseLeave}
-  on:dragstart={handleDragStart}
+  data-effect-id={activeEffect?.id}
+  data-parent-id={activeEffect?.parentId ?? activeEffect?.parent?.id}
+  onmousedown={onMouseDown}
+  onmouseenter={onMouseEnter}
+  onmouseleave={onMouseLeave}
+  ondragstart={handleDragStart}
   draggable={!!draggable}
   data-item-id={item?.id}
   data-tidy-table-row
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_TABLE_ROW}
   data-tidy-item-type={item?.type ?? 'unknown'}
   data-favorite-id={favoriteId ?? null}
+  data-info-card={item ? 'item' : null}
+  data-info-card-entity-uuid={item?.uuid ?? null}
 >
   <div class="item-table-row {cssClass ?? ''}">
-    <slot {toggleSummary} />
+    {@render children?.({ toggleSummary })}
   </div>
   <ExpandableContainer expanded={showSummary}>
     <ItemSummary chatData={chatData ?? emptyChatData} {item} />

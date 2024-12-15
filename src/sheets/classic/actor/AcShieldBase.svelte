@@ -1,8 +1,15 @@
 <script lang="ts">
-  /**
-   * Optional CSS class list string to apply to the AC Shield container element.
-   */
-  export let cssClass: string = '';
+  import type { Snippet } from 'svelte';
+
+  interface Props {
+    /**
+     * Optional CSS class list string to apply to the AC Shield container element.
+     */
+    cssClass?: string;
+    children?: Snippet;
+  }
+
+  let { cssClass = '', children }: Props = $props();
 </script>
 
 <div class="ac-display {cssClass}">
@@ -20,7 +27,7 @@
       />
     </svg>
   </div>
-  <slot />
+  {@render children?.()}
 </div>
 
 <style lang="scss">

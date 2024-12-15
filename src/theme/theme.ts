@@ -5,11 +5,12 @@ import type {
 } from 'src/types/theme.types';
 import { themeVariables } from './theme-reference';
 import { debug } from 'src/utils/logging';
-import { SettingsProvider } from 'src/settings/settings';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 import { defaultDarkTheme } from './default-dark-theme';
 import { defaultLightTheme } from './default-light-theme';
 import { Colord } from 'colord';
 import { CONSTANTS } from 'src/constants';
+import type { Item5e } from 'src/types/item.types';
 
 export function applyTheme(
   theme: Tidy5eTheme,
@@ -188,4 +189,46 @@ export function extractSettingsUpdateDeltaFromTheme(
 
 export function validateImportFile(theme: Tidy5eThemeDataV1) {
   return theme.version === 1 && typeof theme.variables === 'object';
+}
+
+export function getInventoryItemThemeBackground(item: Item5e) {
+  if (item?.system?.equipped) {
+    return '--t5e-equipped-background';
+  }
+}
+
+export function getSpellItemThemeBackground(spell: Item5e) {
+  if (
+    spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_INNATE
+  ) {
+    return '--t5e-innate-background';
+  }
+
+  if (
+    spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_RITUAL
+  ) {
+    return '--t5e-ritual-only-background';
+  }
+
+  if (
+    spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_ATWILL
+  ) {
+    return '--t5e-atwill-background';
+  }
+
+  if (spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_PACT) {
+    return '--t5e-pact-background';
+  }
+
+  if (
+    spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS
+  ) {
+    return '--t5e-alwaysprepared-background';
+  }
+
+  if (spell.system.preparation.prepared) {
+    return '--t5e-prepared-background';
+  }
+
+  // TODO: in the future, offer up and API for this, or use a slugify convention based on what modes exist
 }

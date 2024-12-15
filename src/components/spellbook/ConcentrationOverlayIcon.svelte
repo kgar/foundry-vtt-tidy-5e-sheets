@@ -1,7 +1,11 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
-  export let ctx: any;
+  interface Props {
+    ctx: any;
+  }
+
+  let { ctx }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 </script>

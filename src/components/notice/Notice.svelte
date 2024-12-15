@@ -1,9 +1,16 @@
 <script lang="ts">
-  export let cssClass: string | null = null;
+  import type { Snippet } from 'svelte';
+
+  interface Props {
+    cssClass?: string | null;
+    children?: Snippet;
+  }
+
+  let { cssClass = null, children }: Props = $props();
 </script>
 
 <div class="notice {cssClass}">
-  <slot />
+  {@render children?.()}
 </div>
 
 <style lang="scss">

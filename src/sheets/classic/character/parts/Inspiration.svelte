@@ -1,23 +1,28 @@
 <script lang="ts">
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
-  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
-    CharacterSheetContext,
     PortraitCharmRadiusClass,
   } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  
+  let context = $derived(getCharacterSheetContext());
 
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  interface Props {
+    inspired: boolean;
+    cssClass?: string;
+    radiusClass: PortraitCharmRadiusClass;
+    onlyShowOnHover?: boolean;
+    animate?: boolean;
+  }
 
-  export let inspired: boolean;
-  export let cssClass: string = '';
-  export let radiusClass: PortraitCharmRadiusClass;
-  export let onlyShowOnHover: boolean = false;
-  export let animate: boolean = true;
+  let {
+    inspired,
+    cssClass = '',
+    radiusClass,
+    onlyShowOnHover = false,
+    animate = true,
+  }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -29,15 +34,15 @@
 >
   <Checkbox
     checkboxCssClass="inspiration-toggle"
-    labelCssClass="{inspired ? 'inspired' : ''} {radiusClass} {$context.editable
+    labelCssClass="{inspired ? 'inspired' : ''} {radiusClass} {context.editable
       ? 'pointer'
       : ''}"
-    document={$context.actor}
+    document={context.actor}
     field="system.attributes.inspiration"
     checked={inspired}
-    disabled={!$context.editable}
+    disabled={!context.editable}
   >
-    <i class="inspiration-icon fas fa-dice-d20" class:animate />
+    <i class="inspiration-icon fas fa-dice-d20" class:animate></i>
   </Checkbox>
 </div>
 

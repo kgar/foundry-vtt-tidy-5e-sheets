@@ -1,51 +1,50 @@
 <script lang="ts">
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import { settingStore } from 'src/settings/settings';
-  import { CONSTANTS } from 'src/constants';
+  import { settings } from 'src/settings/settings.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <div class="profile-temp">
   <TextInput
-    document={$context.actor}
+    document={context.actor}
     field="system.attributes.hp.temp"
     class="temphp"
     placeholder="+{localize('DND5E.Temp')}"
-    value={$context.hp.temp || null}
+    value={context.hp.temp || null}
     allowDeltaChanges={true}
     title={localize('DND5E.HitPointsTemp')}
-    disabled={!$context.editable}
+    disabled={!context.editable}
     selectOnFocus={true}
   />
   <TextInput
-    document={$context.actor}
+    document={context.actor}
     field="system.attributes.hp.tempmax"
     class="max-temphp"
     placeholder="+{localize('DND5E.Max')}"
-    value={$context.hp.tempmax || null}
+    value={context.hp.tempmax || null}
     title={localize('DND5E.HitPointsTempMax')}
-    disabled={!$context.editable}
+    disabled={!context.editable}
     selectOnFocus={true}
   />
-  {#if $context.editable && $context.unlocked}
+  {#if context.editable && context.unlocked}
     <button
       type="button"
       class="inline-icon-button"
       title={localize('DND5E.HitPointsConfig')}
-      on:click|stopPropagation|preventDefault={() =>
-        FoundryAdapter.renderHitPointsDialog($context.actor)}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+      onclick={(event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        FoundryAdapter.renderHitPointsDialog(context.actor);
+      }}
+      tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
     >
-      <i class="fas fa-cog" />
+      <i class="fas fa-cog"></i>
     </button>
   {/if}
 </div>

@@ -1,8 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { CurrentSettings } from 'src/settings/settings';
+  import type { CurrentSettings } from 'src/settings/settings.svelte';
   import { getContext, onDestroy } from 'svelte';
-  import type { Writable } from 'svelte/store';
   import type {
     ThemeColorSetting,
     Tidy5eThemeDataV1,
@@ -20,25 +19,28 @@
   import { getSingleFileFromDropEvent, readFileAsText } from 'src/utils/file';
   import { CONSTANTS } from 'src/constants';
 
-  export let themeableColors: ThemeColorSetting[];
-  $: {
-    if ($context.colorPickerEnabled) {
+  interface Props {
+    themeableColors: ThemeColorSetting[];
+    settings: CurrentSettings;
+  }
+
+  let { themeableColors, settings }: Props = $props();
+
+  $effect(() => {
+    if (settings.colorPickerEnabled) {
       themeableColors.forEach((color) =>
         trySetRootCssVariable(
           color.cssVariable,
-          $context[color.key]?.toString(),
-          $context.colorPickerEnabled,
+          settings[color.key]?.toString(),
+          settings.colorPickerEnabled,
         ),
       );
     } else {
       clearTidy5eRootCssVariables();
       applyCurrentTheme(false);
     }
-  }
+  });
 
-  let context = getContext<Writable<CurrentSettings>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
   let appId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.APP_ID);
 
   const localize = FoundryAdapter.localize;
@@ -58,15 +60,12 @@
         throw new Error(`Theme file ${file.name} is in an invalid format.`);
       }
 
-      const storeUpdateData = extractSettingsUpdateDeltaFromTheme(
+      const updateDelta = extractSettingsUpdateDeltaFromTheme(
         theme,
         themeableColors,
       );
 
-      context.update((settings) => ({
-        ...settings,
-        ...storeUpdateData,
-      }));
+      Object.assign(settings, updateDelta);
 
       ui.notifications.info(
         localize('TIDY5E.ThemeSettings.Sheet.importSuccess'),
@@ -100,13 +99,11 @@
   });
 </script>
 
-<section class="theme-settings-wrapper" on:drop={onDrop} aria-label="dropzone">
+<section class="theme-settings-wrapper" ondrop={onDrop} aria-label="dropzone">
   <div class="theme-settings-form scroll-container">
     <h2 class="header flex-row justify-content-space-between">
       {localize('TIDY5E.ThemeSettings.Sheet.header')}
-      <ThemeSettingSheetMenu
-        on:selectFile={(ev) => processImportFile(ev.detail)}
-      />
+      <ThemeSettingSheetMenu {settings} onSelectFile={processImportFile} />
     </h2>
 
     <div>
@@ -117,7 +114,7 @@
         <input
           type="checkbox"
           id="colorPickerEnabled-{appId}"
-          bind:checked={$context.colorPickerEnabled}
+          bind:checked={settings.colorPickerEnabled}
         />
         {localize('TIDY5E.Settings.ColorPickerEnabled.name')}
       </label>
@@ -133,13 +130,13 @@
 
     <div class="color-pickers">
       {#each themeableColors as colorToConfigure}
-        <ThemeSettingColorArticle {colorToConfigure} />
+        <ThemeSettingColorArticle {settings} {colorToConfigure} />
       {/each}
     </div>
   </div>
   <div class="button-bar">
     <button type="submit" class="save-changes-btn">
-      <i class="fas fa-save" />
+      <i class="fas fa-save"></i>
       {localize('TIDY5E.SaveChanges')}
     </button>
   </div>

@@ -8,31 +8,41 @@
   import Search from 'src/components/utility-bar/Search.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
-  export let params: SelectableMigrationSelectionParams<any>;
+  interface Props {
+    params: SelectableMigrationSelectionParams<any>;
+  }
 
-  let searchCriteria: string = '';
+  let { params }: Props = $props();
 
-  $: visibleSelectablesIdSubset = new Set<string>(
-    params.selectables
-      .filter(
-        (s) =>
-          searchCriteria.trim() === '' ||
-          s.document.name?.toLowerCase().includes(searchCriteria.toLowerCase()),
-      )
-      .map((d) => d.document.id),
+  let searchCriteria: string = $state('');
+
+  let visibleSelectablesIdSubset = $derived(
+    new Set<string>(
+      params.selectables
+        .filter(
+          (s) =>
+            searchCriteria.trim() === '' ||
+            s.document.name
+              ?.toLowerCase()
+              .includes(searchCriteria.toLowerCase()),
+        )
+        .map((d) => d.document.id),
+    ),
   );
 
-  let gridTemplateColumns: string;
-
-  $: {
-    gridTemplateColumns = `/* Select */ 2.5rem`;
+  let gridTemplateColumns: string = $derived.by(() => {
+    let result = `/* Select */ 2.5rem`;
     params.columns.forEach((c) => {
       const measurement = c.cellWidth === 'primary' ? '1fr' : c.cellWidth;
-      gridTemplateColumns += ` /* ${c.name} */ ${measurement}`;
+      result += ` /* ${c.name} */ ${measurement}`;
     });
-  }
-  $: totalSelected = params.selectables.filter((t) => t.selected).length;
-  $: allSelected = totalSelected >= params.selectables.length;
+    return result;
+  });
+
+  let totalSelected = $derived(
+    params.selectables.filter((t) => t.selected).length,
+  );
+  let allSelected = $derived(totalSelected >= params.selectables.length);
 
   function onMigrateClicked() {
     const selectedTargets = params.selectables
@@ -54,18 +64,14 @@
     <Search bind:value={searchCriteria} />
   </div>
   <div role="presentation" class="scroll-container">
-    <TidyTable
-      key="bulk-selection"
-      toggleable={false}
-      {gridTemplateColumns}
-    >
-      <svelte:fragment slot="header">
+    <TidyTable key="bulk-selection" toggleable={false} {gridTemplateColumns}>
+      {#snippet header()}
         <TidyTableHeaderRow>
           <TidyTableHeaderCell>
             <input
               type="checkbox"
-              bind:checked={allSelected}
-              on:click={() => toggleAll()}
+              checked={allSelected}
+              onclick={() => toggleAll()}
               title={localize(
                 'TIDY5E.Settings.Migrations.Selection.SelectAllNoneTooltip',
               )}
@@ -77,8 +83,8 @@
             </TidyTableHeaderCell>
           {/each}
         </TidyTableHeaderRow>
-      </svelte:fragment>
-      <svelte:fragment slot="body">
+      {/snippet}
+      {#snippet body()}
         {#each params.selectables as selectable}
           <TidyTableRow
             hidden={!visibleSelectablesIdSubset.has(selectable.document.id)}
@@ -103,7 +109,7 @@
                   {#if field.onClick}
                     <button
                       type="button"
-                      on:click={() => field.onClick?.(selectable.document)}
+                      onclick={() => field.onClick?.(selectable.document)}
                       class="inline-transparent-button"
                     >
                       {text}
@@ -116,7 +122,7 @@
             {/each}
           </TidyTableRow>
         {/each}
-      </svelte:fragment>
+      {/snippet}
     </TidyTable>
   </div>
   <footer>
@@ -125,7 +131,7 @@
         total: totalSelected,
       })}
     </p>
-    <button on:click={() => onMigrateClicked()}
+    <button onclick={() => onMigrateClicked()}
       >{localize('TIDY5E.ButtonConfirm.Text')}</button
     >
   </footer>

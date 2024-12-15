@@ -1,72 +1,81 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { createEventDispatcher } from 'svelte';
 
-  export let moveAllToTheLeftDisabled: boolean;
-  export let moveUpDisabled: boolean;
-  export let moveDownDisabled: boolean;
-  export let moveLeftDisabled: boolean;
-  export let moveRightDisabled: boolean;
-  export let moveAllToTheRightDisabled: boolean;
+  interface Props {
+    moveAllToTheLeftDisabled: boolean;
+    moveUpDisabled: boolean;
+    moveDownDisabled: boolean;
+    moveLeftDisabled: boolean;
+    moveRightDisabled: boolean;
+    moveAllToTheRightDisabled: boolean;
+    onMoveAllToTheLeft?: () => void;
+    onMoveUp?: () => void;
+    onMoveDown?: () => void;
+    onMoveLeft?: () => void;
+    onMoveRight?: () => void;
+    onMoveAllToTheRight?: () => void;
+    [key: string]: any;
+  }
 
-  const dispatcher = createEventDispatcher<{
-    moveAllToTheLeft: void;
-    moveUp: void;
-    moveDown: void;
-    moveLeft: void;
-    moveRight: void;
-    moveAllToTheRight: void;
-  }>();
+  let {
+    onMoveAllToTheLeft,
+    onMoveUp,
+    onMoveDown,
+    onMoveLeft,
+    onMoveRight,
+    onMoveAllToTheRight,
+    ...props
+  }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="selection-listbox-toolbar {$$props.class ?? ''}">
+<div class="selection-listbox-toolbar {props.class ?? ''}">
   <button
     title={localize('TIDY5E.Listbox.MoveUp')}
     type="button"
-    disabled={moveUpDisabled}
-    on:click={() => dispatcher('moveUp')}
+    disabled={props.moveUpDisabled}
+    onclick={() => onMoveUp?.()}
   >
     <i class="fas fa-angle-up"></i>
   </button>
   <button
     title={localize('TIDY5E.Listbox.MoveDown')}
     type="button"
-    disabled={moveDownDisabled}
-    on:click={() => dispatcher('moveDown')}
+    disabled={props.moveDownDisabled}
+    onclick={() => onMoveDown?.()}
   >
     <i class="fas fa-angle-down"></i>
   </button>
   <button
     title={localize('TIDY5E.Listbox.MoveLeft')}
     type="button"
-    disabled={moveLeftDisabled}
-    on:click={() => dispatcher('moveLeft')}
+    disabled={props.moveLeftDisabled}
+    onclick={() => onMoveLeft?.()}
   >
     <i class="fas fa-angle-left"></i>
   </button>
   <button
     title={localize('TIDY5E.Listbox.MoveRight')}
     type="button"
-    disabled={moveRightDisabled}
-    on:click={() => dispatcher('moveRight')}
+    disabled={props.moveRightDisabled}
+    onclick={() => onMoveRight?.()}
   >
     <i class="fas fa-angle-right"></i>
   </button>
   <button
     title={localize('TIDY5E.Listbox.MoveAllLeft')}
     type="button"
-    disabled={moveAllToTheLeftDisabled}
-    on:click={() => dispatcher('moveAllToTheLeft')}
+    disabled={props.moveAllToTheLeftDisabled}
+    onclick={() => onMoveAllToTheLeft?.()}
   >
     <i class="fas fa-angles-left"></i>
   </button>
   <button
     title={localize('TIDY5E.Listbox.MoveAllRight')}
     type="button"
-    disabled={moveAllToTheRightDisabled}
-    on:click={() => dispatcher('moveAllToTheRight')}
+    disabled={props.moveAllToTheRightDisabled}
+    onclick={() => onMoveAllToTheRight?.()}
   >
     <i class="fas fa-angles-right"></i>
   </button>

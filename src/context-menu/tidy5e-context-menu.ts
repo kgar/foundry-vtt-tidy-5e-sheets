@@ -1,10 +1,10 @@
 import {
   actorUsesActionFeature,
   isItemInActionList,
-} from 'src/features/actions/actions';
+} from 'src/features/actions/actions.svelte';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { SettingsProvider } from 'src/settings/settings';
+import { settings, SettingsProvider } from 'src/settings/settings.svelte';
 import type { Item5e } from 'src/types/item.types';
 import { warn } from 'src/utils/logging';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -55,7 +55,7 @@ function onItemContext(this: any, element: HTMLElement) {
   }
   // Items
   else if (contextMenuType === CONSTANTS.CONTEXT_MENU_TYPE_ITEMS) {
-    const id = element.getAttribute('data-item-id');
+    const id = element.closest('[data-item-id]')?.getAttribute('data-item-id');
 
     let item =
       this.document.type === CONSTANTS.ITEM_TYPE_CONTAINER
@@ -138,10 +138,7 @@ function getActiveEffectContextOptions(effect: any, app: any) {
   // Assumption: Either the effect belongs to the character or is transferred from an item.
   const actor = effectParent.actor ?? effectParent;
 
-  if (
-    !effectParent?.isOwner ||
-    !SettingsProvider.settings.useContextMenu.get()
-  ) {
+  if (!effectParent?.isOwner || !settings.value.useContextMenu) {
     return [];
   }
 
@@ -236,7 +233,7 @@ function canEditEffect(effect: any) {
  * @returns                               Context menu options.
  */
 function getItemContextOptions(item: Item5e) {
-  if (!item?.isOwner || !SettingsProvider.settings.useContextMenu.get()) {
+  if (!item?.isOwner || !settings.value.useContextMenu) {
     return [];
   }
 
@@ -443,7 +440,7 @@ function getItemContextOptions(item: Item5e) {
     callback: async () => {
       const options: Record<string, unknown> = {};
 
-      if (SettingsProvider.settings.includeFlagsInSpellScrollCreation.get()) {
+      if (settings.value.includeFlagsInSpellScrollCreation) {
         options.flags = item.flags;
       }
 

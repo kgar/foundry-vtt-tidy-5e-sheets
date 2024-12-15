@@ -1,12 +1,21 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
-  export let data: Record<string, unknown> | Record<string, unknown>[];
-  export let valueProp: string | null = null;
-  export let labelProp: string | null = null;
-  export let blank: string | null = null;
+  interface Props {
+    data: Record<string, unknown> | Record<string, unknown>[];
+    valueProp?: string | null;
+    labelProp?: string | null;
+    blank?: string | null;
+  }
 
-  $: entries = Object.entries<any>(data);
+  let {
+    data,
+    valueProp = null,
+    labelProp = null,
+    blank = null,
+  }: Props = $props();
+
+  let entries = $derived(Object.entries<any>(data));
 
   function getLabel(value: unknown): string {
     if (
@@ -35,7 +44,7 @@
   }
 
   // Apply optional grouping
-  $: groups = FoundryAdapter.groupSelectOptions(entries);
+  let groups = $derived(FoundryAdapter.groupSelectOptions(entries));
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -45,27 +54,25 @@
 {/if}
 
 {#each groups as [groupKey, groupValue] (groupKey)}
-  <!-- When Svelte 5, snippets -->
   {#if groupKey === ''}
     {#each groupValue as [key, value]}
       {#if value?.rule}
         <hr />
       {:else}
-        <option value={getValue(key, value)}>{localize(getLabel(value))}</option
-        >
+        {@render optionElement(key, value)}
       {/if}
     {/each}
   {:else}
     <optgroup label={localize(groupKey)}>
       {#each groupValue as [key, value]}
-        {#if value?.rule}
-          <hr />
-        {:else}
-          <option value={getValue(key, value)}
-            >{localize(getLabel(value))}</option
-          >
+        {#if !value?.rule}
+          {@render optionElement(key, value)}
         {/if}
       {/each}
     </optgroup>
   {/if}
 {/each}
+
+{#snippet optionElement(key: any, value: any)}
+  <option value={getValue(key, value)}>{localize(getLabel(value))}</option>
+{/snippet}

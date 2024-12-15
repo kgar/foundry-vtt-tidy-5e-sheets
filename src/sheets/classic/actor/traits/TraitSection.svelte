@@ -1,22 +1,34 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { settingStore } from 'src/settings/settings';
+  import { settings } from 'src/settings/settings.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
-  import { createEventDispatcher, getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { type Snippet } from 'svelte';
+  import type { MouseEventHandler } from 'svelte/elements';
 
-  let context = getContext<Readable<ActorSheetContextV1>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
-  export let title: string;
-  export let configureButtonTitle: string;
-  export let iconCssClass: string | undefined = undefined;
-  export let traitCssClass: string | undefined = '';
-  export let show: boolean;
+  let context = $derived(getSheetContext<ActorSheetContextV1>());
 
-  const dispatcher = createEventDispatcher<{
-    onConfigureClicked: MouseEvent;
-  }>();
+  interface Props {
+    title: string;
+    configureButtonTitle: string;
+    iconCssClass?: string | undefined;
+    traitCssClass?: string | undefined;
+    show: boolean;
+    customIcon?: Snippet;
+    onConfigureClicked?: MouseEventHandler<HTMLElement>;
+    children?: Snippet;
+  }
+
+  let {
+    title,
+    configureButtonTitle,
+    iconCssClass = undefined,
+    traitCssClass = '',
+    show,
+    customIcon,
+    onConfigureClicked,
+    children,
+  }: Props = $props();
 </script>
 
 {#if show}
@@ -26,29 +38,32 @@
   >
     <span class="trait-icon" aria-label={title} {title}>
       {#if iconCssClass !== undefined}
-        <i class={iconCssClass} />
+        <i class={iconCssClass}></i>
       {/if}
-      <slot name="custom-icon" />
+      {@render customIcon?.()}
     </span>
     <div
       class="trait-label-and-list"
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTOR_TRAIT_DETAILS}
     >
-      {#if $settingStore.showTraitLabels}
+      {#if settings.value.showTraitLabels}
         <span class="trait-label">{title}</span>
       {/if}
-      <slot />
+      {@render children?.()}
     </div>
-    {#if $context.unlocked}
+    {#if context.unlocked}
       <button
         type="button"
         class="trait-editor inline-icon-button flex-row align-items-flex-start justify-content-center"
         title={configureButtonTitle}
-        on:click|stopPropagation|preventDefault={(event) =>
-          dispatcher('onConfigureClicked', event)}
-        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+        onclick={(event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          onConfigureClicked?.(event);
+        }}
+        tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
       >
-        <i class="fas fa-pencil-alt" />
+        <i class="fas fa-pencil-alt"></i>
       </button>
     {/if}
   </div>

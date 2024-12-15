@@ -1,28 +1,32 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import NumberInput from '../inputs/NumberInput.svelte';
   import Select from '../inputs/Select.svelte';
   import TabFooter from 'src/sheets/classic/actor/TabFooter.svelte';
-  import { MaxPreparedSpellsConfigFormApplication } from 'src/applications/max-prepared-spells-config/MaxPreparedSpellsConfigFormApplication';
+  import { MaxPreparedSpellsConfigFormApplication } from 'src/applications/max-prepared-spells-config/MaxPreparedSpellsConfigFormApplication.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { settingStore } from 'src/settings/settings';
+  import { settings } from 'src/settings/settings.svelte';
   import { rollRawSpellAttack } from 'src/utils/formula';
-  import { TidyFlags } from 'src/api';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
-  export let cssClass: string | null = null;
-  export let includeAttackMod: boolean = true;
-  export let includePreparedSpells: boolean = true;
+  let context = $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
+  interface Props {
+    cssClass?: string | null;
+    includeAttackMod?: boolean;
+    includePreparedSpells?: boolean;
+  }
+
+  let {
+    cssClass = null,
+    includeAttackMod = true,
+    includePreparedSpells = true,
+  }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
-  $: abilities = FoundryAdapter.getAbilitiesAsDropdownOptions(
-    $context.abilities,
+  let abilities = $derived(
+    FoundryAdapter.getAbilitiesAsDropdownOptions(context.abilities),
   );
 </script>
 
@@ -33,95 +37,95 @@
       <div
         class="dc-container"
         data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SPELL_DC}
-        data-tooltip="{FoundryAdapter.localize('DND5E.SpellDC')}: {$context
+        data-tooltip="{FoundryAdapter.localize('DND5E.SpellDC')}: {context
           .spellcastingInfo.calculations.dcTooltip}"
       >
-        {$context.spellcastingInfo.calculations.dc}
+        {context.spellcastingInfo.calculations.dc}
       </div>
 
       {#if includeAttackMod}
         <span>|</span>
         <span>{FoundryAdapter.localize('TIDY5E.AttackMod')}:</span>
 
-        {#if $context.spellcastingInfo.calculations.rangedMod !== $context.spellcastingInfo.calculations.meleeMod}
+        {#if context.spellcastingInfo.calculations.rangedMod !== context.spellcastingInfo.calculations.meleeMod}
           <button
             type="button"
-            on:click={async (ev) =>
+            onclick={async (ev) =>
               await rollRawSpellAttack(
                 ev,
-                $context.actor,
+                context.actor,
                 'rsak',
-                $context.spellcastingInfo.currentFilteredClass?.system
+                context.spellcastingInfo.currentFilteredClass?.system
                   ?.spellcasting?.ability,
               )}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
             data-tooltip="{FoundryAdapter.localize(
               'TIDY5E.RangedSpellAttackMod',
-            )}: {$context.spellcastingInfo.calculations.rangedTooltip}"
+            )}: {context.spellcastingInfo.calculations.rangedTooltip}"
             class="inline-transparent-button spell-attack-mod-button rollable"
           >
             <i class="fa-solid fa-wand-magic-sparkles"></i>
             <span
               class="spell-attack-mod"
-              data-tidy-mod-has-bonus={$context.spellcastingInfo.calculations
+              data-tidy-mod-has-bonus={context.spellcastingInfo.calculations
                 .rangedHasBonus}
               data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
                 .RANGED_SPELL_ATTACK_MOD}
             >
-              {$context.spellcastingInfo.calculations.rangedMod}
+              {context.spellcastingInfo.calculations.rangedMod}
             </span>
           </button>
           <button
             type="button"
-            on:click={async (ev) =>
+            onclick={async (ev) =>
               await rollRawSpellAttack(
                 ev,
-                $context.actor,
+                context.actor,
                 'msak',
-                $context.spellcastingInfo.currentFilteredClass?.system
+                context.spellcastingInfo.currentFilteredClass?.system
                   ?.spellcasting?.ability,
               )}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
             data-tooltip="{FoundryAdapter.localize(
               'TIDY5E.MeleeSpellAttackMod',
-            )}: {$context.spellcastingInfo.calculations.meleeTooltip}"
+            )}: {context.spellcastingInfo.calculations.meleeTooltip}"
             class="inline-transparent-button spell-attack-mod-button rollable"
           >
             <i class="fa-solid fa-hand-sparkles"></i>
             <span
               class="spell-attack-mod"
-              data-tidy-mod-has-bonus={$context.spellcastingInfo.calculations
+              data-tidy-mod-has-bonus={context.spellcastingInfo.calculations
                 .meleeHasBonus}
               data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
                 .MELEE_SPELL_ATTACK_MOD}
             >
-              {$context.spellcastingInfo.calculations.meleeMod}
+              {context.spellcastingInfo.calculations.meleeMod}
             </span>
           </button>
         {:else}
           <button
             type="button"
-            on:click={async (ev) =>
+            onclick={async (ev) =>
               await rollRawSpellAttack(
                 ev,
-                $context.actor,
+                context.actor,
                 undefined,
-                $context.spellcastingInfo.currentFilteredClass?.system
+                context.spellcastingInfo.currentFilteredClass?.system
                   ?.spellcasting?.ability,
               )}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
             data-tooltip="{FoundryAdapter.localize(
               'TIDY5E.SpellAttackMod',
-            )}: {$context.spellcastingInfo.calculations.rangedTooltip}"
+            )}: {context.spellcastingInfo.calculations.rangedTooltip}"
             class="inline-transparent-button spell-attack-mod-button rollable"
           >
             <span
               class="spell-attack-mod"
-              data-tidy-mod-has-bonus={$context.spellcastingInfo.calculations
+              data-tidy-mod-has-bonus={context.spellcastingInfo.calculations
                 .rangedHasBonus}
               data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SPELL_ATTACK_MOD}
             >
-              {$context.spellcastingInfo.calculations.rangedMod}
+              {context.spellcastingInfo.calculations.rangedMod}
             </span>
           </button>
         {/if}
@@ -129,39 +133,39 @@
     </div>
   </h3>
 
-  {#if includePreparedSpells && $context.spellcastingInfo.currentFilteredClass && ($context.spellcastingInfo.prepared?.value || $context.spellcastingInfo.prepared?.max)}
+  {#if includePreparedSpells && context.spellcastingInfo.currentFilteredClass && (context.spellcastingInfo.prepared?.value || context.spellcastingInfo.prepared?.max)}
     <button
       type="button"
       class="transparent-button secondary-footer-field highlight-on-hover"
-      on:click={() =>
+      onclick={() =>
         new MaxPreparedSpellsConfigFormApplication(
-          $context.actor,
-          $context.spellcastingInfo.currentFilteredClass,
+          context.actor,
+          context.spellcastingInfo.currentFilteredClass,
         ).render(true)}
       title={localize('TIDY5E.MaxPreparedSpellsConfig.ButtonTooltip')}
-      disabled={!$context.editable || $context.lockSensitiveFields}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+      disabled={!context.editable || context.lockSensitiveFields}
+      tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <p>{localize('TIDY5E.PreparedSpells')}</p>
       <span class="spells-prepared"
-        >{$context.spellcastingInfo.prepared?.value ?? 0}</span
+        >{context.spellcastingInfo.prepared?.value ?? 0}</span
       >
       /
       <span class="spells-max-prepared"
-        >{$context.spellcastingInfo.prepared?.max ?? 0}</span
+        >{context.spellcastingInfo.prepared?.max ?? 0}</span
       >
     </button>
   {/if}
   <div class="spellcasting-attribute secondary-footer-field">
     <p>{localize('DND5E.SpellAbility')}</p>
     <Select
-      document={$context.actor}
+      document={context.actor}
       field="system.attributes.spellcasting"
-      value={$context.system.attributes.spellcasting}
-      disabled={!$context.editable || $context.lockSensitiveFields}
+      value={context.system.attributes.spellcasting}
+      disabled={!context.editable || context.lockSensitiveFields}
       blankValue=""
     >
-      <option value="" selected={!$context.system.attributes.spellcasting}
+      <option value="" selected={!context.system.attributes.spellcasting}
         >{localize('DND5E.None')}</option
       >
       {#each abilities as ability}
@@ -169,19 +173,19 @@
       {/each}
     </Select>
   </div>
-  {#if $context.isNPC}
+  {#if context.isNPC}
     <div class="spellcasting-level-container secondary-footer-field">
       <p class="truncate">{localize('DND5E.SpellcasterLevel')}</p>
       <NumberInput
         cssClass="spellcasting-level"
-        document={$context.actor}
+        document={context.actor}
         field="system.details.spellLevel"
-        value={$context.system.details.spellLevel}
+        value={context.system.details.spellLevel}
         placeholder="0"
         min="0"
         step="1"
         selectOnFocus={true}
-        disabled={!$context.editable || $context.lockSensitiveFields}
+        disabled={!context.editable || context.lockSensitiveFields}
       />
     </div>
   {/if}

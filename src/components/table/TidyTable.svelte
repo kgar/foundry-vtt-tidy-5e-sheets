@@ -1,16 +1,30 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
-  import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService';
+  import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService.svelte';
   import { declareLocation } from 'src/types/location-awareness.types';
-  import { getContext } from 'svelte';
+  import { getContext, type Snippet } from 'svelte';
   import type { MessageBus } from 'src/types/types';
 
-  export let key: string;
-  export let toggleable: boolean = true;
-  export let gridTemplateColumns: string = '';
+  interface Props {
+    key: string;
+    toggleable?: boolean;
+    gridTemplateColumns?: string;
+    header?: Snippet;
+    body?: Snippet;
+    [key: string]: any;
+  }
 
-  let { class: cssClass, ...attributes } = $$restProps;
+  let {
+    key,
+    toggleable = true,
+    gridTemplateColumns = '',
+    header,
+    body,
+    ...rest
+  }: Props = $props();
+
+  let { class: cssClass, ...attributes } = rest;
 
   const messageBus = getContext<MessageBus>(
     CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS,
@@ -20,22 +34,22 @@
 
   const expandCollapseService = ExpandCollapseService.initService(toggleable);
 
-  $: expandedState = expandCollapseService.state;
+  let expandedState = $derived(expandCollapseService.state);
 
-  $: {
+  $effect(() => {
     if (
-      $messageBus?.tabId === tabId &&
-      $messageBus?.message === CONSTANTS.MESSAGE_BUS_EXPAND_ALL
+      messageBus?.message?.tabId === tabId &&
+      messageBus?.message?.message === CONSTANTS.MESSAGE_BUS_EXPAND_ALL
     ) {
       expandCollapseService.set(true);
     }
     if (
-      $messageBus?.tabId === tabId &&
-      $messageBus?.message === CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL
+      messageBus?.message?.tabId === tabId &&
+      messageBus?.message?.message === CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL
     ) {
       expandCollapseService.set(false);
     }
-  }
+  });
 </script>
 
 <section
@@ -45,10 +59,10 @@
   {...attributes}
   style="--grid-template-columns: {gridTemplateColumns}"
 >
-  <slot name="header" />
-  <ExpandableContainer expanded={$expandedState.expanded}>
+  {@render header?.()}
+  <ExpandableContainer expanded={expandedState?.expanded}>
     <div class="item-table-body">
-      <slot name="body" />
+      {@render body?.()}
     </div>
   </ExpandableContainer>
 </section>

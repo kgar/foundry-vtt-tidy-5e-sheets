@@ -1,19 +1,23 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { RegisteredItemSummaryCommand } from 'src/runtime/types';
-  import { settingStore } from 'src/settings/settings';
+  import { settings } from 'src/settings/settings.svelte';
   import type { Item5e } from 'src/types/item.types';
 
-  export let command: RegisteredItemSummaryCommand;
-  export let item: Item5e;
+  interface Props {
+    command: RegisteredItemSummaryCommand;
+    item: Item5e;
+  }
+
+  let { command, item }: Props = $props();
 </script>
 
 <button
   type="button"
   class="item-summary-command"
   title={command.tooltip ?? null}
-  on:click={() => command.execute?.({ item: item })}
-  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+  onclick={() => command.execute?.({ item: item })}
+  tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
 >
   {#if command.iconClass}
     <i class={command.iconClass}></i>

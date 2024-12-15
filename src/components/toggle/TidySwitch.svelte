@@ -1,24 +1,35 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
+  import type { Snippet } from 'svelte';
+  import type { ChangeEventHandler } from 'svelte/elements';
 
-  export let checked: boolean = false;
-  export let disabled: boolean = false;
-  export let thumbIconClass: string | undefined = undefined;
+  interface Props {
+    checked?: boolean;
+    disabled?: boolean;
+    thumbIconClass?: string | undefined;
+    onChange?: ChangeEventHandler<HTMLInputElement>;
+    children?: Snippet;
+    [key: string]: any;
+  }
+
+  let {
+    checked = $bindable(false),
+    disabled = false,
+    thumbIconClass = undefined,
+    onChange,
+    children,
+    ...rest
+  }: Props = $props();
 
   const switchLabelId = `switch-${foundry.utils.randomID()}-label`;
-
-  const dispatcher = createEventDispatcher<{
-    change: Event & { currentTarget: HTMLInputElement };
-  }>();
 </script>
 
 <label
-  class="tidy-switch {$$props.class ?? ''}"
+  class="tidy-switch {rest.class ?? ''}"
   class:disabled
   id={switchLabelId}
-  title={$$props.title ?? null}
+  title={rest.title ?? null}
 >
-  <slot />
+  {@render children?.()}
   <div role="switch" aria-checked={checked} aria-labelledby={switchLabelId}>
     {#if thumbIconClass}
       <i class="thumb-icon {thumbIconClass}"></i>
@@ -27,7 +38,7 @@
 
   <input
     type="checkbox"
-    on:change={(ev) => dispatcher('change', ev)}
+    onchange={onChange}
     {checked}
     {disabled}
     class="hidden"

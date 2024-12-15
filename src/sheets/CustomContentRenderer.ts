@@ -221,7 +221,7 @@ export class CustomContentRenderer {
     html
       .find(CONSTANTS.CLASS_SELECTOR_TIDY_USE_CORE_LISTENERS)
       .each((_: number, el: HTMLElement) => {
-        superActivateListeners.call(sheet, $(el));
+        superActivateListeners.call(sheet, globalThis.$(el));
       });
   }
 }

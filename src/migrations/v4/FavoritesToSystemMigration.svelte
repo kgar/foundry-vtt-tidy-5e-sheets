@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication';
+  import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication.svelte';
   import type { Actor5e } from 'src/types/types';
   import { migrateFavoritesToSystem } from './favorites-to-system';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
 
-  let migrating = false;
-  let deleteFlags = false;
+  let migrating = $state(false);
+  let deleteFlags = $state(false);
 
   const localize = FoundryAdapter.localize;
 
@@ -80,7 +80,7 @@
   </div>
 
   <footer class="flex-row extra-small-gap">
-    <button type="button" on:click={(ev) => migrate()} disabled={migrating}
+    <button type="button" onclick={(ev) => migrate()} disabled={migrating}
       >{localize('TIDY5E.Settings.Migrations.ButtonMigration.Text')}</button
     >
   </footer>

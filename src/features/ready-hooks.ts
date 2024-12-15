@@ -11,7 +11,7 @@ function assignDroppedSpellsToClassFilter() {
     const parent = item.parent;
     const api = Tidy5eSheetsApi._getApi();
 
-    if (!parent || !api.isTidy5eSheet(parent.sheet)) {
+    if (!parent?.sheet?.element || !api.isTidy5eSheet(parent.sheet)) {
       return;
     }
 

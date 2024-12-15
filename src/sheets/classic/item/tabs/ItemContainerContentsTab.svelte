@@ -1,9 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ContainerSheetClassicContext, Item5e } from 'src/types/item.types';
-  import { getContext, setContext } from 'svelte';
-  import { writable, type Readable } from 'svelte/store';
+  import { getContext } from 'svelte';
   import CapacityBar from 'src/sheets/classic/container/CapacityBar.svelte';
   import Currency from 'src/sheets/classic/actor/Currency.svelte';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
@@ -13,47 +11,69 @@
   import ButtonMenu from 'src/components/button-menu/ButtonMenu.svelte';
   import ButtonMenuCommand from 'src/components/button-menu/ButtonMenuCommand.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
-  import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+  import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
   import ContainerContentsSections from 'src/sheets/classic/container/ContainerContentsSections.svelte';
-  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import {
+    createSearchResultsState,
+    setSearchResultsContext,
+  } from 'src/features/search/search.svelte';
+  import { getContainerSheetClassicContext } from 'src/sheets/sheet-context.svelte';
+  import { TidyFlags } from 'src/api';
+  import { SheetSections } from 'src/features/sections/SheetSections';
+  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 
-  let context = getContext<Readable<ContainerSheetClassicContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = $derived(getContainerSheetClassicContext());
+
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
 
-  let searchCriteria = '';
+  let searchCriteria = $state('');
 
-  $: allItems = $context.containerContents.contents.flatMap((x) => x.items);
+  let allItems = $derived(
+    context.containerContents.contents.flatMap((x) => x.items),
+  );
 
-  const itemIdsToShow = writable<Set<string> | undefined>(undefined);
-  setContext(CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW, itemIdsToShow);
+  const searchResults = createSearchResultsState();
+  setSearchResultsContext(searchResults);
 
-  $: {
-    $itemIdsToShow = ItemVisibility.getItemsToShowAtDepth({
+  $effect(() => {
+    searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
-      itemContext: $context.itemContext,
-      sections: $context.containerContents.contents,
+      itemContext: context.itemContext,
+      sections: context.containerContents.contents,
       tabId: tabId,
     });
-  }
+  });
 
   const localize = FoundryAdapter.localize;
 
-  $: utilityBarCommands =
-    $context.utilities[tabId]?.utilityToolbarCommands ?? [];
+  let utilityBarCommands = $derived(
+    context.utilities[tabId]?.utilityToolbarCommands ?? [],
+  );
 
-  $: menuOpen = false;
+  let menuOpen = $state(false);
+
+  // TODO: Figure out how to avoid duplicating the recursive inline container section config :/
+  let configuredContents = $derived(
+    SheetSections.configureInventory(
+      context.containerContents.contents.filter((i) => i.items.length),
+      tabId,
+      SheetPreferencesService.getByType(context.item.type),
+      TidyFlags.sectionConfig.get(context.item)?.[
+        CONSTANTS.TAB_CONTAINER_CONTENTS
+      ],
+    ),
+  );
 </script>
 
 <div class="container-contents-wrapper">
   <div role="presentation" class="currency-wrapper">
-    <Currency document={$context.item} />
+    <Currency document={context.item} />
   </div>
 
   <UtilityToolbar>
@@ -61,8 +81,8 @@
     <PinnedFilterToggles
       filterGroupName={tabId}
       filters={ItemFilterRuntime.getPinnedFiltersForTab(
-        $context.filterPins,
-        $context.filterData,
+        context.filterPins,
+        context.filterData,
         tabId,
       )}
     />
@@ -73,7 +93,8 @@
         iconClass={command.iconClass}
         text={command.text}
         visible={command.visible ?? true}
-        on:execute={(ev) => command.execute?.(ev.detail)}
+        onExecute={(ev) => command.execute?.(ev)}
+        sections={configuredContents}
       />
     {/each}
 
@@ -90,20 +111,17 @@
       >
         <!-- TODO: identify all items recursively -->
         <ButtonMenuCommand
-          on:click={() => {
-            FoundryAdapter.identifyAllItemsForContainer(
-              $context.item,
-              allItems,
-            );
+          onMenuClick={() => {
+            FoundryAdapter.identifyAllItemsForContainer(context.item, allItems);
           }}
           iconClass="fas fa-magnifying-glass"
         >
           {localize('TIDY5E.Utilities.IdentifyAll')}
         </ButtonMenuCommand>
         <ButtonMenuCommand
-          on:click={() => {
+          onMenuClick={() => {
             FoundryAdapter.markAllItemsAsUnidentifiedForContainer(
-              $context.item,
+              context.item,
               allItems,
             );
           }}
@@ -120,17 +138,17 @@
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEMS_CONTAINER}
   >
     <ContainerContentsSections
-      contents={$context.containerContents.contents}
-      container={$context.item}
-      editable={$context.editable}
-      itemContext={$context.containerContents.itemContext}
+      contents={context.containerContents.contents}
+      container={context.item}
+      editable={context.editable}
+      itemContext={context.containerContents.itemContext}
       {inlineToggleService}
-      lockItemQuantity={$context.lockItemQuantity}
-      sheetDocument={$context.item}
+      lockItemQuantity={context.lockItemQuantity}
+      sheetDocument={context.item}
     />
   </div>
   <footer class="container-contents-footer">
-    <CapacityBar container={$context.item} capacity={$context.capacity} />
+    <CapacityBar container={context.item} capacity={context.capacity} />
   </footer>
 </div>
 

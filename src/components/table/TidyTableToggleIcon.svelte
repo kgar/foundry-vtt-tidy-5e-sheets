@@ -1,8 +1,11 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService';
 
-  export let expanded = true;
+  interface Props {
+    expanded?: boolean;
+  }
+
+  let { expanded = true }: Props = $props();
 </script>
 
 <i

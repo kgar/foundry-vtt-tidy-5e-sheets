@@ -7,8 +7,6 @@
     ContainerSheetClassicContext,
     ItemSheetContext,
   } from 'src/types/item.types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
   import ItemDescriptions from '../parts/ItemDescriptions.svelte';
@@ -16,17 +14,19 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<
-    Readable<ItemSheetContext | ContainerSheetClassicContext>
-  >(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
+  let context =
+    $derived(
+      getSheetContext<ItemSheetContext | ContainerSheetClassicContext>(),
+    );
 
-  $: appId = $context.document.id;
+  let appId = $derived(context.document.id);
 
-  let editing = false;
-  let contentToEdit: string;
-  let enrichedText: string;
-  let fieldToEdit: string;
+  let editing = $state(false);
+  let contentToEdit: string = $state('');
+  let enrichedText: string = $state('');
+  let fieldToEdit: string = $state('');
 
   function stopEditing() {
     editing = false;
@@ -50,62 +50,62 @@
     class="item-properties"
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_SHEET_PROPERTIES}
   >
-    {#if $context.isPhysical}
-      {#if $context.item.type !== CONSTANTS.ITEM_TYPE_CONTAINER}
+    {#if context.isPhysical}
+      {#if context.item.type !== CONSTANTS.ITEM_TYPE_CONTAINER}
         <div class="form-group">
           <label for="{appId}-quantity">{localize('DND5E.Quantity')}</label>
           <NumberInput
             id="{appId}-quantity"
-            value={$context.source.quantity}
+            value={context.source.quantity}
             field="system.quantity"
-            document={$context.item}
+            document={context.item}
             step="1"
-            disabled={!$context.editable || $context.lockItemQuantity}
+            disabled={!context.editable || context.lockItemQuantity}
             selectOnFocus={true}
           />
         </div>
 
-        <HorizontalLineSeparator />
+        <HorizontalLineSeparator borderColor="separator" />
       {/if}
 
       <div class="form-group">
         <label for="{appId}-weight-value">{localize('DND5E.Weight')}</label>
         <NumberInput
           id="{appId}-weight-value"
-          value={$context.source.weight.value}
+          value={context.source.weight.value}
           step="any"
           field="system.weight.value"
-          document={$context.item}
-          disabled={!$context.editable}
+          document={context.item}
+          disabled={!context.editable}
           selectOnFocus={true}
         />
       </div>
 
-      <HorizontalLineSeparator />
+      <HorizontalLineSeparator borderColor="separator" />
 
       <div class="form-group stacked">
         <label for="{appId}-price-value">{localize('DND5E.Price')}</label>
-        {#if $context.concealDetails}
+        {#if context.concealDetails}
           <span>{localize('DND5E.Unidentified.Value')}</span>
         {:else}
           <NumberInput
             id="{appId}-price-value"
-            value={$context.source.price.value}
+            value={context.source.price.value}
             step="any"
             field="system.price.value"
-            document={$context.item}
-            disabled={!$context.editable}
+            document={context.item}
+            disabled={!context.editable}
             selectOnFocus={true}
             cssClass="large-value"
           />
           <Select
-            value={$context.source.price.denomination}
+            value={context.source.price.denomination}
             field="system.price.denomination"
-            document={$context.item}
-            disabled={!$context.editable}
+            document={context.item}
+            disabled={!context.editable}
           >
             <SelectOptions
-              data={$context.config.currencies}
+              data={context.config.currencies}
               labelProp="abbreviation"
             />
           </Select>
@@ -113,25 +113,25 @@
       </div>
     {/if}
 
-    {#if $context.labels.toHit || $context.labels.damages.length}
+    {#if context.labels.toHit || context.labels.damages.length}
       <h4 class="properties-header">
         {localize('DND5E.Attack')}/{localize('DND5E.Damage')}
       </h4>
-      <ol class="properties-list animate-inert" inert={$context.concealDetails}>
-        {#if $context.labels.save}
+      <ol class="properties-list animate-inert" inert={context.concealDetails}>
+        {#if context.labels.save}
           <li>
-            {$context.labels.save}
+            {context.labels.save}
           </li>
         {/if}
 
-        {#if $context.labels.toHit}
+        {#if context.labels.toHit}
           <li>
-            {$context.labels.toHit}
+            {context.labels.toHit}
             {localize('DND5E.ToHit')}
           </li>
         {/if}
 
-        {#each $context.labels.damages ?? [] as damage}
+        {#each context.labels.damages ?? [] as damage}
           {@const label = damage.label}
           <li>
             {label}
@@ -140,11 +140,11 @@
       </ol>
     {/if}
 
-    {#if $context.properties.active.length}
+    {#if context.properties.active.length}
       <section class="inert-animation-container">
         <h4 class="properties-header">{localize('DND5E.Properties')}</h4>
-        <ol class="properties-list" inert={$context.concealDetails}>
-          {#each $context.properties.active as prop}
+        <ol class="properties-list" inert={context.concealDetails}>
+          {#each context.properties.active as prop}
             {#if prop !== null && prop !== undefined}
               <li>{prop}</li>
             {/if}
@@ -160,13 +160,13 @@
         >
         <TextInput
           id="{appId}-tidy-section"
-          document={$context.item}
+          document={context.item}
           field={TidyFlags.section.prop}
           placeholder={localize('TIDY5E.Section.Default')}
-          value={TidyFlags.section.get($context.item) ?? ''}
+          value={TidyFlags.section.get(context.item) ?? ''}
           selectOnFocus={true}
           title={localize('TIDY5E.Section.Tooltip')}
-          disabled={!$context.editable}
+          disabled={!context.editable}
         />
       </div>
       <div class="form-group section">
@@ -175,13 +175,13 @@
         >
         <TextInput
           id="{appId}-tidy-action-section"
-          document={$context.item}
+          document={context.item}
           field={TidyFlags.actionSection.prop}
           placeholder={localize('TIDY5E.Section.Default')}
-          value={TidyFlags.actionSection.get($context.item) ?? ''}
+          value={TidyFlags.actionSection.get(context.item) ?? ''}
           selectOnFocus={true}
           title={localize('TIDY5E.Section.ActionTooltip')}
-          disabled={!$context.editable}
+          disabled={!context.editable}
         />
       </div>
     </div>
@@ -189,28 +189,24 @@
 
   <VerticalLineSeparator />
 
-  {#if FoundryAdapter.userIsGm() || $context.isIdentified}
+  {#if FoundryAdapter.userIsGm() || context.isIdentified}
     <ItemDescriptions
-      on:edit={(ev) =>
-        edit(
-          ev.detail.contentToEdit,
-          ev.detail.enrichedText,
-          ev.detail.fieldToEdit,
-        )}
+      onEdit={(detail) =>
+        edit(detail.contentToEdit, detail.enrichedText, detail.fieldToEdit)}
       renderDescriptions={!editing}
     />
-  {:else if $context.editable || $context.system.unidentified.description}
-    {#key $context.enriched.unidentified}
+  {:else if context.editable || context.system.unidentified.description}
+    {#key context.enriched.unidentified}
       <article class="editor-container">
         <SheetEditorV2
-          content={$context.system.unidentified.description}
-          enriched={$context.enriched.unidentified}
+          content={context.system.unidentified.description}
+          enriched={context.enriched.unidentified}
           field="system.unidentified.description"
           editorOptions={{
-            editable: $context.editable,
+            editable: context.editable,
           }}
-          documentUuid={$context.item.uuid}
-          manageSecrets={$context.document.isOwner}
+          documentUuid={context.item.uuid}
+          manageSecrets={context.document.isOwner}
         />
       </article>
     {/key}
@@ -225,12 +221,12 @@
         content={contentToEdit}
         field={fieldToEdit}
         editorOptions={{
-          editable: $context.editable,
+          editable: context.editable,
           toggled: false,
         }}
-        documentUuid={$context.item.uuid}
-        on:save={() => stopEditing()}
-        manageSecrets={$context.document.isOwner}
+        documentUuid={context.item.uuid}
+        onSave={() => stopEditing()}
+        manageSecrets={context.document.isOwner}
       />
     </article>
   {/key}
@@ -239,6 +235,7 @@
 <style lang="scss">
   .item-properties {
     flex: 0 0 7.5rem;
+    padding-top: 0.0625rem;
   }
 
   .editor-container {

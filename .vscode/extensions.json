@@ -1,7 +1,6 @@
 {
   "recommendations": [
     "svelte.svelte-vscode",
-    "ms-playwright.playwright",
     "esbenp.prettier-vscode"
   ]
 }

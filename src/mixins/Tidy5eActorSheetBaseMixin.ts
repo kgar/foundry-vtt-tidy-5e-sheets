@@ -3,13 +3,10 @@ import { DragAndDropMixin } from './DragAndDropBaseMixin';
 import type { Item5e } from 'src/types/item.types';
 import { firstOfSet } from 'src/utils/set';
 import { CONSTANTS } from 'src/constants';
-import type {
-  ApplicationConfiguration,
-  ApplicationPosition,
-} from 'src/types/application.types';
+import type { ApplicationPosition } from 'src/types/application.types';
 import type { Actor5e } from 'src/types/types';
-import { SettingsProvider } from 'src/settings/settings';
-import TabSelectionFormApplication from 'src/applications/tab-selection/TabSelectionFormApplication';
+import { settings, SettingsProvider } from 'src/settings/settings.svelte';
+import TabSelectionFormApplication from 'src/applications/tab-selection/TabSelectionFormApplication.svelte';
 
 export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
   class Tidy5eActorSheetBase extends DragAndDropMixin(BaseApplication) {
@@ -340,7 +337,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
       ) {
         const options: Record<string, unknown> = {};
 
-        if (SettingsProvider.settings.includeFlagsInSpellScrollCreation.get()) {
+        if (settings.value.includeFlagsInSpellScrollCreation) {
           options.flags = itemData.flags;
         }
 

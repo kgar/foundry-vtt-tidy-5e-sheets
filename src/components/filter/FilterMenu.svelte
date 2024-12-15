@@ -3,27 +3,32 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
-  import type { Readable } from 'svelte/store';
   import FilterToggleButton from './FilterToggleButton.svelte';
-  import type { ItemFilterService } from 'src/features/filtering/ItemFilterService';
+  import type { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
   import ButtonMenuDivider from 'src/components/button-menu/ButtonMenuDivider.svelte';
   import type { ContainerSheetClassicContext } from 'src/types/item.types';
-  import { CONSTANTS } from 'src/constants';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  export let tabId: string;
+  interface Props {
+    tabId: string;
+  }
+
+  let { tabId }: Props = $props();
 
   const localize = FoundryAdapter.localize;
-  const context = getContext<
-    Readable<ActorSheetContextV1 | ContainerSheetClassicContext>
-  >(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
+  const context = $derived(getSheetContext<
+    ActorSheetContextV1 | ContainerSheetClassicContext
+  >());
   const onFilterClearAll =
     getContext<ItemFilterService['onFilterClearAll']>('onFilterClearAll');
-  $: categories = $context.filterData[tabId] ?? {};
-  $: hasActiveFilters = Object.entries(categories).some(([_, filters]) =>
-    filters.some((f) => f.value !== null),
+  let categories = $derived(context.filterData[tabId] ?? {});
+  let hasActiveFilters = $derived(
+    Object.entries(categories).some(([_, filters]) =>
+      filters.some((f) => f.value !== null),
+    ),
   );
 
-  $: menuOpen = false;
+  let menuOpen = $state(false);
 </script>
 
 <div role="presentation" class="filter-menu">
@@ -58,7 +63,7 @@
       <button
         type="button"
         class="clear-all-button pill-button flex-row extra-small-gap align-items-center"
-        on:click={(ev) => {
+        onclick={(ev) => {
           onFilterClearAll(tabId);
           menuOpen = false;
         }}

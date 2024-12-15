@@ -7,32 +7,34 @@
     ActorSheetContextV2,
   } from 'src/types/types';
   import { isNil } from 'src/utils/data';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
-  import FloatingContextMenu from 'src/components/context-menu/FloatingContextMenu.svelte';
   import { debug, error } from 'src/utils/logging';
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import type { ContextMenuEntry } from 'src/foundry/foundry.types';
+  import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  export let actor: Actor5e;
-  export let useHpOverlay: boolean;
+  interface Props {
+    actor: Actor5e;
+    useHpOverlay: boolean;
+  }
 
-  let context = getContext<
-    Readable<ActorSheetContextV1 | ActorSheetContextV2<any>>
-  >(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
+  let { actor, useHpOverlay }: Props = $props();
+
+  let context =
+    $derived(getSheetContext<ActorSheetContextV1 | ActorSheetContextV2<any>>());
 
   const localize = FoundryAdapter.localize;
 
-  $: actorImageTitle = $context.unlocked
-    ? `${localize('TIDY5E.EditSheetImageHint')} / ${localize('TIDY5E.SheetImageOptionsHint')}`
-    : `${localize('TIDY5E.PreviewSheetImageHint')} / ${localize('TIDY5E.SheetImageOptionsHint')}`;
+  let actorImageTitle = $derived(
+    context.unlocked
+      ? `${localize('TIDY5E.EditSheetImageHint')} / ${localize('TIDY5E.SheetImageOptionsHint')}`
+      : `${localize('TIDY5E.PreviewSheetImageHint')} / ${localize('TIDY5E.SheetImageOptionsHint')}`,
+  );
 
   function openPortraitPicker(
     event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
   ) {
-    if (
-      !TidyHooks.tidy5eSheetsPreOpenActorPortraitFilePicker($context, event)
-    ) {
+    if (!TidyHooks.tidy5eSheetsPreOpenActorPortraitFilePicker(context, event)) {
       return;
     }
     const rect = event.currentTarget.getBoundingClientRect();
@@ -54,15 +56,15 @@
   ) {
     switch (event.button) {
       case CONSTANTS.MOUSE_BUTTON_MAIN:
-        if ($context.unlocked) {
+        if (context.unlocked) {
           openPortraitPicker(event);
         } else {
-          FoundryAdapter.renderImagePopout($context.actor.img, {
+          FoundryAdapter.renderImagePopout(context.actor.img, {
             title: FoundryAdapter.localize('TIDY5E.PortraitTitle', {
-              subject: $context.actor.name,
+              subject: context.actor.name,
             }),
             shareable: true,
-            uuid: $context.actor.uuid,
+            uuid: context.actor.uuid,
           });
         }
         break;
@@ -70,43 +72,51 @@
   }
 
   let portraitContainer: HTMLElement;
+
   // TODO: Consider sending context menu options down through document context in the first place.
-  let contextMenuOptions: ContextMenuEntry[] = [];
-  $: {
+  let contextMenuOptions: ContextMenuEntry[] = $derived.by(() => {
     try {
-      contextMenuOptions = $context.actorPortraitCommands.map((c) => ({
+      return context.actorPortraitCommands.map((c) => ({
         name: c.label ?? '',
         icon: !isNil(c.iconClass, '') ? `<i class="${c.iconClass}"></i>` : '',
-        callback: () => c.execute?.({ actor, context: $context }),
+        callback: () => c.execute?.({ actor, context: context }),
       }));
     } catch (e) {
       error('An error occurred while getting context menu options', false, e);
       debug('Context menu option error troubleshooting info', {
         portraitContainer,
-        commands: $context.actorPortraitCommands,
+        commands: context.actorPortraitCommands,
       });
     }
-  }
+
+    return [];
+  });
+
+  $effect(() => {
+    new FloatingContextMenu(
+      FoundryAdapter.getJqueryWrappedElement(portraitContainer),
+      `[data-tidy-sheet-part=${CONSTANTS.SHEET_PARTS.ACTOR_PORTRAIT_CONTAINER}]`,
+      [],
+      {
+        onOpen: () => {
+          ui.context.menuItems = contextMenuOptions;
+        },
+      },
+    );
+  });
 </script>
 
-<FloatingContextMenu
-  containingElement={portraitContainer}
-  targetSelector="[data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
-    .ACTOR_PORTRAIT_CONTAINER}]"
-  options={contextMenuOptions}
-></FloatingContextMenu>
-<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   bind:this={portraitContainer}
   class="portrait"
-  class:round-portrait={$context.useRoundedPortraitStyle}
-  on:mousedown={onPortraitClick}
+  class:round-portrait={context.useRoundedPortraitStyle}
+  onmousedown={onPortraitClick}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTOR_PORTRAIT_CONTAINER}
 >
   <div
     class="actor-image-wrap"
     class:overlay={useHpOverlay}
-    style="--overlay-height: calc(100% - {$context.healthPercentage}%)"
+    style="--overlay-height: calc(100% - {context.healthPercentage}%)"
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTOR_PORTRAIT_HEALTH_OVERLAY}
   >
     <img

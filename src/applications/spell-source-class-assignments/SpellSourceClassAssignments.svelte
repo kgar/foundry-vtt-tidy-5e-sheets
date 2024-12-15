@@ -1,6 +1,5 @@
 <script lang="ts">
-  import type { Readable, Writable } from 'svelte/store';
-  import type { SpellSourceClassAssignmentsContext } from './SpellSourceClassAssignmentsFormApplication';
+  import type { SpellSourceClassAssignmentsContext } from './SpellSourceClassAssignmentsFormApplication.svelte';
   import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
   import Search from 'src/components/utility-bar/Search.svelte';
@@ -13,32 +12,38 @@
   import TidyTableCell from 'src/components/table/TidyTableCell.svelte';
   import TidySwitch from 'src/components/toggle/TidySwitch.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
+  import type { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 
-  let context = getContext<Writable<SpellSourceClassAssignmentsContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  let context = $derived(
+    getContext<CoarseReactivityProvider<SpellSourceClassAssignmentsContext>>(
+      CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+    ).data,
   );
 
-  let searchCriteria: string = '';
+  let searchCriteria: string = $state('');
 
-  $: visibleSelectablesIdSubset = new Set<string>(
-    $context.assignments
-      .filter(
-        (s) =>
-          searchCriteria.trim() === '' ||
-          s.item.name?.toLowerCase().includes(searchCriteria.toLowerCase()),
-      )
-      .map((d) => d.item.id),
+  let visibleSelectablesIdSubset = $derived(
+    new Set<string>(
+      context.assignments
+        .filter(
+          (s) =>
+            searchCriteria.trim() === '' ||
+            s.item.name?.toLowerCase().includes(searchCriteria.toLowerCase()),
+        )
+        .map((d) => d.item.id),
+    ),
   );
 
-  $: classColumns = Object.entries<Item5e>(
-    $context.actor.spellcastingClasses,
-  ).map(([key, value]) => ({
-    key: key,
-    item: value,
-  }));
+  let classColumns = $derived(
+    Object.entries<Item5e>(context.actor.spellcastingClasses).map(
+      ([key, value]) => ({
+        key: key,
+        item: value,
+      }),
+    ),
+  );
 
-  let gridTemplateColumns: string = '';
-  $: {
+  let gridTemplateColumns: string = $derived.by(() => {
     let standardClassColumnWidth = '10rem';
     let columns = '/* Spell Name */ minmax(200px, 1fr)';
 
@@ -47,8 +52,8 @@
     });
 
     columns += ' /* Identifier */ 200px';
-    gridTemplateColumns = columns;
-  }
+    return columns;
+  });
 
   async function setItemSourceClass(item: Item5e, sourceClass: string) {
     await item.update({
@@ -58,7 +63,7 @@
 
   const localize = FoundryAdapter.localize;
 
-  var showUnassignedOnly = false;
+  var showUnassignedOnly = $state(false);
 </script>
 
 <section class="flex-column small-gap full-height">
@@ -75,7 +80,7 @@
       toggleable={false}
       {gridTemplateColumns}
     >
-      <svelte:fragment slot="header">
+      {#snippet header()}
         <TidyTableHeaderRow>
           <TidyTableHeaderCell primary={true} class="p-1 capitalize">
             {localize('DND5E.spell')}
@@ -97,9 +102,9 @@
             ></i>
           </TidyTableHeaderCell>
         </TidyTableHeaderRow>
-      </svelte:fragment>
-      <svelte:fragment slot="body">
-        {#each $context.assignments as assignment (assignment.item.id)}
+      {/snippet}
+      {#snippet body()}
+        {#each context.assignments as assignment (assignment.item.id)}
           {@const sourceClassIsUnassigned =
             (assignment.item.system.sourceClass?.trim() ?? '') === ''}
           {@const hideRow =
@@ -110,7 +115,7 @@
               <button
                 type="button"
                 class="inline-transparent-button highlight-on-hover"
-                on:click={async () =>
+                onclick={async () =>
                   FoundryAdapter.renderSheetFromUuid(assignment.item.uuid)}
               >
                 {assignment.item.name}
@@ -122,10 +127,10 @@
               <TidyTableHeaderCell>
                 <TidySwitch
                   checked={selected}
-                  on:change={(ev) =>
+                  onChange={(ev) =>
                     setItemSourceClass(
                       assignment.item,
-                      ev.detail.currentTarget.checked ? classColumn.key : '',
+                      ev.currentTarget.checked ? classColumn.key : '',
                     )}
                 />
               </TidyTableHeaderCell>
@@ -141,7 +146,7 @@
             </TidyTableCell>
           </TidyTableRow>
         {/each}
-      </svelte:fragment>
+      {/snippet}
     </TidyTable>
   </div>
 </section>

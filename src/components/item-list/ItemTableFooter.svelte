@@ -8,16 +8,26 @@
   import ItemCreateButton from '../item-list/ItemCreateButton.svelte';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
+  import { settings } from 'src/settings/settings.svelte';
 
-  export let section: TSection;
-  export let actor: Actor5e;
-  export let canCreate = true;
-  /**
-   * Override for the underlying create button's `create()` function.
-   */
-  export let create: (() => void) | undefined = undefined;
-  export let isItem: boolean;
+  interface Props {
+    section: TSection;
+    actor: Actor5e;
+    canCreate?: boolean;
+    /**
+     * Override for the underlying create button's `create()` function.
+     */
+    create?: (() => void) | undefined;
+    isItem: boolean;
+  }
+
+  let {
+    section,
+    actor,
+    canCreate = true,
+    create = undefined,
+    isItem,
+  }: Props = $props();
 
   let customCommands = isItem
     ? ActorItemRuntime.getActorItemSectionCommands({ actor, section })
@@ -71,12 +81,12 @@
     <button
       type="button"
       class="item-list-footer-button"
-      on:click={(ev) => command.execute?.({ section, event: ev, actor: actor })}
+      onclick={(ev) => command.execute?.({ section, event: ev, actor: actor })}
       title={localize(command.tooltip ?? '')}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+      tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
     >
       {#if (command.iconClass ?? '') !== ''}
-        <i class={command.iconClass} />
+        <i class={command.iconClass}></i>
       {/if}
       {localize(command.label ?? '')}
     </button>

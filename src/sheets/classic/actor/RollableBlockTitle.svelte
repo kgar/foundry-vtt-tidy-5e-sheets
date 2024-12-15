@@ -1,28 +1,34 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
-  import { createEventDispatcher, getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import type { MouseEventHandler } from 'svelte/elements';
 
-  export let title: string | null = null;
-  export let text: string;
-  export let hideFromTabOrder: boolean = false;
-  export let attributes: Record<string, string> = {};
+  interface Props {
+    title?: string | null;
+    text: string;
+    hideFromTabOrder?: boolean;
+    attributes?: Record<string, string>;
+    onRoll?: MouseEventHandler<HTMLElement>;
+  }
 
-  const dispatcher = createEventDispatcher<{ roll: MouseEvent }>();
+  let {
+    title = null,
+    text,
+    hideFromTabOrder = false,
+    attributes = {},
+    onRoll,
+  }: Props = $props();
 
-  let context = getContext<Readable<ActorSheetContextV1>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = $derived(getSheetContext<ActorSheetContextV1>());
 </script>
 
 <button
   type="button"
-  class:rollable={$context.editable}
+  class:rollable={context.editable}
   class="transparent-button"
   {title}
-  on:click={(ev) => dispatcher('roll', ev)}
-  disabled={!$context.editable}
+  onclick={(ev) => onRoll?.(ev)}
+  disabled={!context.editable}
   tabindex={!hideFromTabOrder ? 0 : -1}
   {...attributes}
 >

@@ -1,6 +1,5 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type CharacterSheetContext } from 'src/types/types';
   import ExhaustionTracker from '../../actor/ExhaustionTracker.svelte';
   import Inspiration from './Inspiration.svelte';
   import DeathSaves from '../../actor/DeathSaves.svelte';
@@ -8,89 +7,89 @@
   import HitDice from './HitDice.svelte';
   import CharacterHitPoints from './CharacterHitPoints.svelte';
   import TempHp from '../../actor/TempHp.svelte';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
   import ActorProfile from 'src/sheets/classic/actor/ActorProfile.svelte';
-  import { settingStore } from 'src/settings/settings';
+  import { settings } from 'src/settings/settings.svelte';
   import ExhaustionInput from 'src/sheets/classic/actor/ExhaustionInput.svelte';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
-  import { CONSTANTS } from 'src/constants';
+  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  let context = $derived(getCharacterSheetContext());
+
+  let incapacitated = $derived(
+    (context.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
+      context.actor?.system?.attributes?.hp?.max !== 0,
   );
 
-  $: incapacitated =
-    ($context.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
-    $context.actor?.system?.attributes?.hp?.max !== 0;
-
-  async function onLevelSelected(event: CustomEvent<{ level: number }>) {
-    await $context.actor.update({
-      'system.attributes.exhaustion': event.detail.level,
+  async function onLevelSelected(level: number) {
+    await context.actor.update({
+      'system.attributes.exhaustion': level,
     });
   }
 </script>
 
-<ActorProfile useHpOverlay={$settingStore.useHpOverlay}>
-  {#if incapacitated && (!$settingStore.hideDeathSavesFromPlayers || FoundryAdapter.userIsGm())}
+<ActorProfile
+  useHpOverlay={settings.value.useHpOverlay &&
+    context.system.attributes.hp.max > 0}
+>
+  {#if incapacitated && (!settings.value.hideDeathSavesFromPlayers || FoundryAdapter.userIsGm())}
     <DeathSaves
-      successes={$context.system.attributes.death.success}
-      failures={$context.system.attributes.death.failure}
+      successes={context.system.attributes.death.success}
+      failures={context.system.attributes.death.failure}
       successesField="system.attributes.death.success"
       failuresField="system.attributes.death.failure"
-      on:rollDeathSave={(event) =>
-        $context.actor.rollDeathSave({
-          event: event.detail.mouseEvent,
+      onRollDeathSave={(event) =>
+        context.actor.rollDeathSave({
+          event: event,
           legacy: false,
         })}
-      hasHpOverlay={$settingStore.useHpOverlay}
+      hasHpOverlay={settings.value.useHpOverlay}
     />
   {/if}
 
-  {#if $settingStore.useExhaustion && $settingStore.exhaustionConfig.type === 'specific'}
+  {#if settings.value.useExhaustion && settings.value.exhaustionConfig.type === 'specific'}
     <ExhaustionTracker
-      level={$context.system.attributes.exhaustion}
-      radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
-      on:levelSelected={onLevelSelected}
-      onlyShowOnHover={$settingStore.showExhaustionOnHover ||
-        ($settingStore.hideIfZero &&
-          $context.system.attributes.exhaustion === 0)}
-      exhaustionConfig={$settingStore.exhaustionConfig}
+      level={context.system.attributes.exhaustion}
+      radiusClass={context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
+      {onLevelSelected}
+      onlyShowOnHover={settings.value.showExhaustionOnHover ||
+        (settings.value.hideIfZero &&
+          context.system.attributes.exhaustion === 0)}
+      exhaustionConfig={settings.value.exhaustionConfig}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
-        $context.actor,
+        context.actor,
         'system.attributes.exhaustion',
       )}
     />
-  {:else if $settingStore.useExhaustion && $settingStore.exhaustionConfig.type === 'open'}
+  {:else if settings.value.useExhaustion && settings.value.exhaustionConfig.type === 'open'}
     <ExhaustionInput
-      level={$context.system.attributes.exhaustion}
-      radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
-      on:levelSelected={onLevelSelected}
-      onlyShowOnHover={$settingStore.showExhaustionOnHover ||
-        ($settingStore.hideIfZero &&
-          $context.system.attributes.exhaustion === 0)}
+      level={context.system.attributes.exhaustion}
+      radiusClass={context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
+      {onLevelSelected}
+      onlyShowOnHover={settings.value.showExhaustionOnHover ||
+        (settings.value.hideIfZero &&
+          context.system.attributes.exhaustion === 0)}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
-        $context.actor,
+        context.actor,
         'system.attributes.exhaustion',
       )}
     />
   {/if}
 
-  {#if $settingStore.useCharacterInspiration}
+  {#if settings.value.useCharacterInspiration}
     <Inspiration
-      inspired={$context.actor.system.attributes.inspiration}
-      radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-right'}
-      onlyShowOnHover={$settingStore.showInspirationOnHover ||
-        ($settingStore.hideIfZero &&
-          !$context.actor.system.attributes.inspiration)}
-      animate={$settingStore.animateInspiration}
+      inspired={context.actor.system.attributes.inspiration}
+      radiusClass={context.useRoundedPortraitStyle ? 'rounded' : 'top-right'}
+      onlyShowOnHover={settings.value.showInspirationOnHover ||
+        (settings.value.hideIfZero &&
+          !context.actor.system.attributes.inspiration)}
+      animate={settings.value.animateInspiration}
     />
   {/if}
 
   <CharacterHitPoints
-    value={$context.system.attributes.hp.value}
-    max={$context.system.attributes.hp.max}
-    actor={$context.actor}
+    value={context.system.attributes.hp.value}
+    max={context.system.attributes.hp.max}
+    actor={context.actor}
     {incapacitated}
   />
 

@@ -1,60 +1,33 @@
 <script lang="ts">
-  import type {
-    ContainerPanelItemContext,
-    ItemCardStore,
-  } from 'src/types/types';
+  import type { ContainerPanelItemContext } from 'src/types/types';
   import CapacityBar from '../container/CapacityBar.svelte';
   import { CONSTANTS } from 'src/constants';
-  import type { Writable } from 'svelte/store';
-  import { getContext } from 'svelte';
   import type { Item5e } from 'src/types/item.types';
-  import { settingStore } from 'src/settings/settings';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { coalesce } from 'src/utils/formatting';
   import { TidyHooks } from 'src/foundry/TidyHooks';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
 
-  export let containerPanelItems: ContainerPanelItemContext[] = [];
-  export let searchCriteria: string = '';
+  interface Props {
+    containerPanelItems?: ContainerPanelItemContext[];
+    searchCriteria?: string;
+  }
 
-  $: visibleContainersIdsSubset = FoundryAdapter.searchItems(
-    searchCriteria,
-    containerPanelItems.map((c) => c.container),
-  );
+  let { containerPanelItems = [] }: Props = $props();
 
-  let card: Writable<ItemCardStore> | undefined = getContext<
-    Writable<ItemCardStore>
-  >(CONSTANTS.SVELTE_CONTEXT.CARD);
+  let searchResults = getSearchResultsContext();
 
   async function onMouseEnter(event: Event, item: Item5e) {
     TidyHooks.tidy5eSheetsItemHoverOn(event, item);
-
-    if (!item?.getChatData || !$settingStore.itemCardsForAllItems) {
-      return;
-    }
-
-    card?.update((card) => {
-      card.item = item;
-      return card;
-    });
   }
 
   async function onMouseLeave(event: Event, item: Item5e) {
     TidyHooks.tidy5eSheetsItemHoverOff(event, item);
-
-    card?.update((card) => {
-      card.item = null;
-      card.itemCardContentTemplate = null;
-      return card;
-    });
   }
 
   function handleDragStart(event: DragEvent, item: Item5e) {
     // Don't show cards while dragging
     onMouseLeave(event, item);
-
-    card?.update((card) => {
-      return card;
-    });
 
     const dragData = item.toDragData();
     event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
@@ -63,13 +36,12 @@
 
 <ul class="containers">
   {#each containerPanelItems as { container, ...capacity } (container.id)}
-    <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
     <li
       draggable="true"
       data-item-id={container.id}
-      on:dragstart={(ev) => handleDragStart(ev, container)}
-      on:mouseenter={(ev) => onMouseEnter(ev, container)}
-      on:mouseleave={(ev) => onMouseLeave(ev, container)}
+      ondragstart={(ev) => handleDragStart(ev, container)}
+      onmouseenter={(ev) => onMouseEnter(ev, container)}
+      onmouseleave={(ev) => onMouseLeave(ev, container)}
       class="container"
       title={container.system.identified === false
         ? coalesce(
@@ -77,16 +49,18 @@
             FoundryAdapter.localize('DND5E.Unidentified.Title'),
           )
         : container.name}
-      class:hidden={!visibleContainersIdsSubset.has(container.id)}
-      aria-hidden={!visibleContainersIdsSubset.has(container.id)}
+      class:hidden={!searchResults.show(container.uuid)}
+      aria-hidden={!searchResults.show(container.uuid)}
+      data-info-card={'item'}
+      data-info-card-entity-uuid={container.uuid}
     >
-      <button
+      <a
         type="button"
-        class="container-image-button transparent-button"
-        on:click={() => container.sheet.render(true)}
+        class="container-image-button"
+        onclick={() =>
+          (FoundryAdapter.userIsGm() || container.isOwner) &&
+          container.sheet.render(true)}
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
-        data-context-menu-document-uuid={container.uuid}
-        disabled={!FoundryAdapter.userIsGm() && !container.isOwner}
       >
         <div
           class="container-image"
@@ -99,10 +73,10 @@
             class="unidentified-glyph"
             class:conceal={container.system.identified === false}
           >
-            <i class="fas fa-question" />
+            <i class="fas fa-question"></i>
           </div>
         </div>
-      </button>
+      </a>
       <CapacityBar
         showLabel={false}
         {container}

@@ -1,25 +1,41 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Listbox from './Listbox.svelte';
+  import type { Snippet } from 'svelte';
+  import { arrayMove } from 'src/utils/array';
 
   type TItem = $$Generic;
 
-  export let items: TItem[];
-  export let selectedItemIndex: number | null = null;
-  export let labelProp: keyof TItem;
-  export let valueProp: keyof TItem;
-  export let listboxCssClass: string | null = null;
+  interface Props {
+    items: TItem[];
+    selectedItemIndex?: number | null;
+    labelProp: keyof TItem;
+    valueProp: keyof TItem;
+    listboxCssClass?: string | null;
+    itemTemplate?: Snippet<[any]>;
+    [key: string]: any;
+  }
+
+  let {
+    items = $bindable(),
+    selectedItemIndex = $bindable(null),
+    labelProp,
+    valueProp,
+    listboxCssClass = null,
+    itemTemplate,
+    ...rest
+  }: Props = $props();
 
   interface $$Slots {
     itemTemplate: { item: TItem };
   }
 
   function handleListboxKeydown(
-    e: CustomEvent<KeyboardEvent & { currentTarget: HTMLElement }>,
+    e: KeyboardEvent & { currentTarget: HTMLElement },
   ): void {
-    if (e.detail.key === 'ArrowUp' && e.detail.altKey) {
+    if (e.key === 'ArrowUp' && e.altKey) {
       moveUp();
-    } else if (e.detail.key === 'ArrowDown' && e.detail.altKey) {
+    } else if (e.key === 'ArrowDown' && e.altKey) {
       moveDown();
     }
   }
@@ -77,24 +93,17 @@
     }
   }
 
-  function onDragStart(
-    ev: CustomEvent<{ item: TItem; index: number; event: DragEvent }>,
-  ) {
-    selectedItemIndex = ev.detail.index;
-    ev.detail.event.dataTransfer?.setData(
-      'text/plain',
-      ev.detail.index.toString(),
-    );
+  function onDragStart(ev: { item: TItem; index: number; event: DragEvent }) {
+    selectedItemIndex = ev.index;
+    ev.event.dataTransfer?.setData('text/plain', ev.index.toString());
   }
 
-  function onDrop(
-    ev: CustomEvent<{ item: TItem; index: number; event: DragEvent }>,
-  ) {
-    ev.detail.event.stopPropagation();
-    ev.detail.event.preventDefault();
+  function onDrop(ev: { item: TItem; index: number; event: DragEvent }) {
+    ev.event.stopPropagation();
+    ev.event.preventDefault();
 
     const draggedIndex = parseInt(
-      ev.detail.event.dataTransfer?.getData('text/plain') ?? '',
+      ev.event.dataTransfer?.getData('text/plain') ?? '',
     );
 
     if (isNaN(draggedIndex)) {
@@ -107,36 +116,15 @@
       return;
     }
 
-    const dropTargetIndex = ev.detail.index;
+    const dropTargetIndex = ev.index;
 
-    items = items.reduce<TItem[]>((acc, item, index) => {
-      // When dropping onto a higher entry, the dragged should come before the target.
-      if (index === dropTargetIndex && draggedIndex > dropTargetIndex) {
-        acc.push(theDragged);
-      }
-
-      // The dragged item is being excluded from its original place in the list, to be placed elsewhere.
-      if (index === draggedIndex) {
-        return acc;
-      }
-
-      acc.push(item);
-
-      // When dropping onto a lower entry, the dragged should come after the target.
-      if (index === dropTargetIndex && draggedIndex < dropTargetIndex) {
-        acc.push(theDragged);
-      }
-
-      return acc;
-    }, []);
+    arrayMove(items, draggedIndex, dropTargetIndex);
 
     selectedItemIndex = items.indexOf(theDragged);
   }
 
-  function onListboxDrop(ev: CustomEvent<{ event: DragEvent }>) {
-    const draggedIndex = parseInt(
-      ev.detail.event.dataTransfer?.getData('text/plain') ?? '',
-    );
+  function onListboxDrop(ev: DragEvent) {
+    const draggedIndex = parseInt(ev.dataTransfer?.getData('text/plain') ?? '');
 
     if (isNaN(draggedIndex)) {
       return;
@@ -149,9 +137,11 @@
   }
 
   const localize = FoundryAdapter.localize;
+
+  const itemTemplate_render = $derived(itemTemplate);
 </script>
 
-<div class="sorting-listbox flex-row small-gap {$$restProps.class ?? ''}">
+<div class="sorting-listbox flex-row small-gap {rest.class ?? ''}">
   <div class="controls">
     <button
       title={localize('TIDY5E.Listbox.MoveUp')}
@@ -159,7 +149,7 @@
       disabled={selectedItemIndex === null || selectedItemIndex === 0}
       aria-keyshortcuts="Alt+ArrowUp"
       data-testid="sorting-listbox-move-up"
-      on:click={() => moveUp()}
+      onclick={() => moveUp()}
     >
       <i class="fas fa-angle-up"></i>
     </button>
@@ -170,7 +160,7 @@
         items === null ||
         selectedItemIndex >= items.length - 1}
       aria-keyshortcuts="Alt+ArrowDown"
-      on:click={() => moveDown()}
+      onclick={() => moveDown()}
       data-testid="sorting-listbox-move-down"
     >
       <i class="fas fa-angle-down"></i>
@@ -181,17 +171,17 @@
     {labelProp}
     {valueProp}
     bind:selectedItemIndex
-    on:keydown={handleListboxKeydown}
+    onkeydown={handleListboxKeydown}
     class="flex-1 {listboxCssClass ?? ''}"
     draggable={true}
-    on:dragstart={(ev) => onDragStart(ev)}
-    on:drop={(ev) => onDrop(ev)}
-    on:listboxDrop={(ev) => onListboxDrop(ev)}
+    ondragstart={(ev) => onDragStart(ev)}
+    ondrop={(ev) => onDrop(ev)}
+    onlistboxDrop={(ev) => onListboxDrop(ev)}
   >
-    <svelte:fragment slot="itemTemplate" let:item>
-      <slot name="itemTemplate" {item}>
+    {#snippet itemTemplate({ item })}
+      {#if itemTemplate_render}{@render itemTemplate_render({ item })}{:else}
         {item[labelProp]}
-      </slot>
-    </svelte:fragment>
+      {/if}
+    {/snippet}
   </Listbox>
 </div>

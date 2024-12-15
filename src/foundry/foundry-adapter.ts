@@ -13,8 +13,8 @@ import type {
 import { CONSTANTS } from '../constants';
 import type { Actor5e } from 'src/types/types';
 import type { Item5e } from 'src/types/item.types';
-import { SettingsProvider } from 'src/settings/settings';
-import { debug, error, warn } from 'src/utils/logging';
+import { settings, type CurrentSettings } from 'src/settings/settings.svelte';
+import { debug, error } from 'src/utils/logging';
 import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
 import { TidyFlags } from './TidyFlags';
 import { TidyHooks } from './TidyHooks';
@@ -34,7 +34,7 @@ export const FoundryAdapter = {
   getTidySetting<T = string>(settingName: string): T {
     return game.settings.get(CONSTANTS.MODULE_ID, settingName) as T;
   },
-  async setTidySetting(key: string, value: unknown): Promise<void> {
+  async setTidySetting(key: keyof CurrentSettings, value: unknown): Promise<void> {
     await game.settings.set(CONSTANTS.MODULE_ID, key, value);
   },
   registerTidySetting(key: string, data: any): void {
@@ -58,11 +58,6 @@ export const FoundryAdapter = {
     value: unknown
   ): Promise<void> {
     await game.settings.set(namespace, key, value);
-  },
-  onActor5eSheetRender(func: (...args: any[]) => void) {
-    Hooks.on('renderActorSheet', (...args: any[]) => {
-      func(args);
-    });
   },
   onGetActiveEffectContextOptions(func: (...args: any[]) => void) {
     Hooks.on('dnd5e.getActiveEffectContextOptions', func);
@@ -110,8 +105,7 @@ export const FoundryAdapter = {
       item.system.preparation?.mode !==
         CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS &&
       item.system.preparation?.mode !== CONSTANTS.SPELL_PREPARATION_MODE_PACT &&
-      (item.system.level !== 0 ||
-        SettingsProvider.settings.allowCantripsToBePrepared.get())
+      (item.system.level !== 0 || settings.value.allowCantripsToBePrepared)
     );
   },
   /**
@@ -348,8 +342,7 @@ export const FoundryAdapter = {
     if (
       spell.system.preparation.mode ===
         CONSTANTS.SPELL_PREPARATION_MODE_PREPARED &&
-      (spell.system.level > 0 ||
-        SettingsProvider.settings.allowCantripsToBePrepared.get())
+      (spell.system.level > 0 || settings.value.allowCantripsToBePrepared)
     ) {
       classes.push('preparable');
     }
@@ -449,7 +442,7 @@ export const FoundryAdapter = {
     context: CharacterSheetContext | NpcSheetContext,
     spell: any
   ): string | undefined {
-    if (!SettingsProvider.settings.useSpellClassFilterIcons.get()) {
+    if (!settings.value.useSpellClassFilterIcons) {
       return spell.img;
     }
 
@@ -466,7 +459,7 @@ export const FoundryAdapter = {
     return new Set(
       actors
         .filter((actor) => FoundryAdapter.searchActor(searchCriteria, actor))
-        .map((actor) => actor.id)
+        .map((actor) => actor.uuid)
     );
   },
   searchActor(searchCriteria: string, actor: Actor5e) {
@@ -479,7 +472,7 @@ export const FoundryAdapter = {
     return new Set(
       items
         .filter((item) => FoundryAdapter.searchItem(item, searchCriteria))
-        .map((item) => item.id)
+        .map((item) => item.uuid)
     );
   },
   searchItem(item: any, searchCriteria: string): boolean {
@@ -705,67 +698,45 @@ export const FoundryAdapter = {
     return (
       (document.isOwner && TidyFlags.allowEdit.get(document)) ||
       (FoundryAdapter.userIsGm() &&
-        SettingsProvider.settings.permanentlyUnlockCharacterSheetForGm.get() &&
+        settings.value.permanentlyUnlockCharacterSheetForGm &&
         document.type === CONSTANTS.SHEET_TYPE_CHARACTER) ||
       (FoundryAdapter.userIsGm() &&
-        SettingsProvider.settings.permanentlyUnlockNpcSheetForGm.get() &&
+        settings.value.permanentlyUnlockNpcSheetForGm &&
         document.type === CONSTANTS.SHEET_TYPE_NPC) ||
       (FoundryAdapter.userIsGm() &&
-        SettingsProvider.settings.permanentlyUnlockVehicleSheetForGm.get() &&
+        settings.value.permanentlyUnlockVehicleSheetForGm &&
         document.type === CONSTANTS.SHEET_TYPE_VEHICLE)
     );
   },
   allowCharacterEffectsManagement(actor: any) {
     return (
-      (SettingsProvider.settings.limitEffectsManagementToGm.get() &&
+      (settings.value.limitEffectsManagementToGm &&
         FoundryAdapter.userIsGm()) ||
-      (!SettingsProvider.settings.limitEffectsManagementToGm.get() &&
-        actor.isOwner)
+      (!settings.value.limitEffectsManagementToGm && actor.isOwner)
     );
   },
   shouldLockMoneyChanges() {
-    return (
-      !FoundryAdapter.userIsGm() &&
-      SettingsProvider.settings.lockMoneyChanges.get()
-    );
+    return !FoundryAdapter.userIsGm() && settings.value.lockMoneyChanges;
   },
   shouldLockExpChanges() {
-    return (
-      !FoundryAdapter.userIsGm() &&
-      SettingsProvider.settings.lockExpChanges.get()
-    );
+    return !FoundryAdapter.userIsGm() && settings.value.lockExpChanges;
   },
   shouldLockHpMaxChanges() {
-    return (
-      !FoundryAdapter.userIsGm() &&
-      SettingsProvider.settings.lockHpMaxChanges.get()
-    );
+    return !FoundryAdapter.userIsGm() && settings.value.lockHpMaxChanges;
   },
   shouldLockLevelSelector() {
-    return (
-      !FoundryAdapter.userIsGm() &&
-      SettingsProvider.settings.lockLevelSelector.get()
-    );
+    return !FoundryAdapter.userIsGm() && settings.value.lockLevelSelector;
   },
   shouldLockConfigureSheet() {
-    return (
-      !FoundryAdapter.userIsGm() &&
-      SettingsProvider.settings.lockConfigureSheet.get()
-    );
+    return !FoundryAdapter.userIsGm() && settings.value.lockConfigureSheet;
   },
   shouldLockItemQuantity() {
-    return (
-      !FoundryAdapter.userIsGm() &&
-      SettingsProvider.settings.lockItemQuantity.get()
-    );
+    return !FoundryAdapter.userIsGm() && settings.value.lockItemQuantity;
   },
   showLimitedSheet(actor: any): boolean {
     const showLimitedSheet = !FoundryAdapter.userIsGm() && actor.limited;
     if (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) {
-      return (
-        showLimitedSheet &&
-        !SettingsProvider.settings.showExpandedLimitedView.get()
-      );
+      return showLimitedSheet && !settings.value.showExpandedLimitedView;
     }
     return showLimitedSheet;
   },
@@ -1167,13 +1138,13 @@ export const FoundryAdapter = {
   useClassicControls(document: any) {
     return (
       (document.type === CONSTANTS.SHEET_TYPE_CHARACTER &&
-        SettingsProvider.settings.useClassicControlsForCharacter.get()) ||
+        settings.value.useClassicControlsForCharacter) ||
       (document.type === CONSTANTS.SHEET_TYPE_NPC &&
-        SettingsProvider.settings.useClassicControlsForNpc.get()) ||
+        settings.value.useClassicControlsForNpc) ||
       (document.type === CONSTANTS.SHEET_TYPE_VEHICLE &&
-        SettingsProvider.settings.useClassicControlsForVehicle.get()) ||
+        settings.value.useClassicControlsForVehicle) ||
       // Temporary stopgap: When we don't recognize a supported document for Classic Controls options, fall back to the character user setting
-      SettingsProvider.settings.useClassicControlsForCharacter.get()
+      settings.value.useClassicControlsForCharacter
     );
   },
   attunementContextApplicable: {
@@ -1231,13 +1202,13 @@ export const FoundryAdapter = {
   canIdentify(item: Item5e) {
     return (
       FoundryAdapter.userIsGm() ||
-      (SettingsProvider.settings.itemIdentificationPermission.get() ===
+      (settings.value.itemIdentificationPermission ===
         CONSTANTS.SHEET_SETTINGS_OPTION_GM_AND_OWNERS &&
         item.isOwner)
     );
   },
   getJqueryWrappedElement(el: HTMLElement) {
-    return $(el);
+    return globalThis.$(el);
   },
   openSpellSlotsConfig(document: any) {
     new dnd5e.applications.actor.SpellSlotsConfig({ document }).render(true);

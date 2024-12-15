@@ -4028,36 +4028,46 @@ export type CONFIG = {
         level: number;
       };
     };
-    spellPreparationModes: {
-      prepared: {
-        label: string;
-        upcast: boolean;
-        prepares: boolean;
-      };
-      pact: {
-        label: string;
-        upcast: boolean;
-        cantrips: boolean;
-        order: number;
-      };
-      always: {
-        label: string;
-        upcast: boolean;
-        prepares: boolean;
-      };
-      atwill: {
-        label: string;
-        order: number;
-      };
-      innate: {
-        label: string;
-        order: number;
-      };
-      ritual: {
-        label: string;
-        order: number;
-      };
-    };
+    spellPreparationModes:
+      | {
+          prepared: {
+            label: string;
+            upcast: boolean;
+            prepares: boolean;
+          };
+          pact: {
+            label: string;
+            upcast: boolean;
+            cantrips: boolean;
+            order: number;
+          };
+          always: {
+            label: string;
+            upcast: boolean;
+            prepares: boolean;
+          };
+          atwill: {
+            label: string;
+            order: number;
+          };
+          innate: {
+            label: string;
+            order: number;
+          };
+          ritual: {
+            label: string;
+            order: number;
+          };
+        } & Record<
+          string,
+          {
+            label: string;
+            order?: number;
+            upcast?: boolean;
+            prepares?: boolean;
+            cantrips?: boolean;
+          }
+        >;
     spellcastingTypes: {
       leveled: {
         label: string;
@@ -5601,4 +5611,4 @@ export type Dnd5eAbility = {
   defaults?: {
     vehicle: number;
   };
-}
+};

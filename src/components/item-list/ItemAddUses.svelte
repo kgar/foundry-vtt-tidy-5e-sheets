@@ -1,7 +1,11 @@
 <script lang="ts">
-  import { settingStore } from 'src/settings/settings';
+  import { settings } from 'src/settings/settings.svelte';
 
-  export let item: any;
+  interface Props {
+    item: any;
+  }
+
+  let { item }: Props = $props();
 
   function onAddUses() {
     let data: Record<string, unknown> = {};
@@ -15,9 +19,9 @@
 <button
   type="button"
   class="item-add-uses item-list-button"
-  on:click={() => onAddUses()}
+  onclick={() => onAddUses()}
   disabled={!item.isOwner}
-  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+  tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
 >
   Add
 </button>

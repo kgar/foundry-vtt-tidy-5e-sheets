@@ -1,15 +1,15 @@
 <script lang="ts">
   import type { Actor5e } from 'src/types/types';
-  import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication';
+  import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication.svelte';
   import { CONSTANTS } from 'src/constants';
   import { migrateBondsIdealsFlawsToSystem } from './bonds-ideals-flaws-to-system';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { CompendiumToMigrate } from '../migration.types';
   import { debug, error } from 'src/utils/logging';
 
-  let migrating = false;
-  let deleteFlags = false;
-  let overwrite = false;
+  let migrating = $state(false);
+  let deleteFlags = $state(false);
+  let overwrite = $state(false);
 
   const localize = FoundryAdapter.localize;
 
@@ -183,11 +183,11 @@
   <footer class="flex-row extra-small-gap">
     <button
       type="button"
-      on:click={(ev) => migrateCompendia()}
+      onclick={(ev) => migrateCompendia()}
       disabled={migrating}
       >{localize('TIDY5E.Settings.Migrations.MigrateCompendia.Title')}</button
     >
-    <button type="button" on:click={(ev) => migrate()} disabled={migrating}
+    <button type="button" onclick={(ev) => migrate()} disabled={migrating}
       >{localize('TIDY5E.Settings.Migrations.ButtonMigration.Text')}</button
     >
   </footer>

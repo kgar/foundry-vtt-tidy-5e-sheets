@@ -1,35 +1,30 @@
 <script lang="ts">
   import HpBar from 'src/components/bar/HpBar.svelte';
   import ResourceWithBar from 'src/components/bar/ResourceWithBar.svelte';
-  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
-  import type { VehicleSheetContext } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { settings } from 'src/settings/settings.svelte';
+  import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<VehicleSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = $derived(getVehicleSheetContext());
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <div class="portrait-hp" title={localize('DND5E.HitPoints')}>
   <ResourceWithBar
-    document={$context.actor}
-    value={$context.system.attributes.hp.value}
+    document={context.actor}
+    value={context.system.attributes.hp.value}
     valueField="system.attributes.hp.value"
     valueTitle={localize('DND5E.HitPointsCurrent')}
-    valueDisabled={!$context.editable}
-    max={$context.system.attributes.hp.max}
+    valueDisabled={!context.editable}
+    max={context.system.attributes.hp.max}
     maxField="system.attributes.hp.max"
     maxTitle={localize('DND5E.HitPointsMax')}
-    maxDisabled={!$context.editable ||
-      $context.lockHpMaxChanges ||
-      $context.lockSensitiveFields}
-    percentage={$context.healthPercentage}
-    Bar={$settingStore.useHpBarVehicle ? HpBar : null}
+    maxDisabled={!context.editable ||
+      context.lockHpMaxChanges ||
+      context.lockSensitiveFields}
+    percentage={context.healthPercentage}
+    Bar={settings.value.useHpBarVehicle ? HpBar : null}
   />
 </div>
 

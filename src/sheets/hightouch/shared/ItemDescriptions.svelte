@@ -3,12 +3,20 @@
   import CollapsibleEditorSection from './CollapsibleEditorSection.svelte';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
 
-  export let itemDescriptions: ItemDescription[];
-  export let editing = false;
-  export let document: any;
+  interface Props {
+    itemDescriptions: ItemDescription[];
+    editing?: boolean;
+    document: any;
+  }
 
-  let sectionItemOpenStates = itemDescriptions.map((_, i) => i === 0);
-  let itemDescriptionToEdit: ItemDescription | undefined;
+  let {
+    itemDescriptions,
+    editing = $bindable(false),
+    document,
+  }: Props = $props();
+
+  let sectionItemOpenStates = $state(itemDescriptions.map((_, i) => i === 0));
+  let itemDescriptionToEdit = $state<ItemDescription>();
 
   function handleEdit(detail: {
     document: any;
@@ -27,7 +35,7 @@
         {document}
         bind:expanded={sectionItemOpenStates[i]}
         {itemDescription}
-        on:edit={(ev) => handleEdit(ev.detail)}
+        onEdit={(detail) => handleEdit(detail)}
       />
     {/each}
   </section>
@@ -39,6 +47,6 @@
     manageSecrets={true}
     field={itemDescriptionToEdit.field}
     enriched={itemDescriptionToEdit.enriched}
-    on:save={() => (editing = false)}
+    onSave={() => (editing = false)}
   ></SheetEditorV2>
 {/if}

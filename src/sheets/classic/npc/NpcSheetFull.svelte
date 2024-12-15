@@ -3,11 +3,8 @@
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import { CONSTANTS } from 'src/constants';
-  import type { NpcSheetContext, DropdownListOption } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import type { DropdownListOption } from 'src/types/types';
   import NpcProfile from './parts/NpcProfile.svelte';
-  import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import InlineTextDropdownList from '../../../components/inputs/InlineTextDropdownList.svelte';
   import { formatAsModifier } from 'src/utils/formatting';
@@ -15,48 +12,54 @@
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import ActorMovement from '../actor/ActorMovement.svelte';
   import ActorHeaderStats from '../actor/ActorHeaderStats.svelte';
-  import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
-  import { settingStore } from 'src/settings/settings';
+  import { settings } from 'src/settings/settings.svelte';
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import InlineSource from '../shared/InlineSource.svelte';
   import InlineCreatureType from '../shared/InlineCreatureType.svelte';
-  import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
+  import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication.svelte';
   import ActorName from '../actor/ActorName.svelte';
   import SpecialSaves from '../actor/SpecialSaves.svelte';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import { isNil } from 'src/utils/data';
   import ActorLinkIndicator from 'src/components/actor-link-indicator/ActorLinkIndicator.svelte';
+  import AttachedInfoCard from 'src/components/item-info-card/AttachedInfoCard.svelte';
+  import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let selectedTabId: string;
+  let selectedTabId: string = $state('');
 
-  let context = getContext<Readable<NpcSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  let context = $derived(getNpcSheetContext());
+
+  let sizes = $derived(
+    Object.entries(context.config.actorSizes).map(
+      ([abbreviation, size]: [string, any]) => ({
+        value: abbreviation,
+        text: size.label,
+      }),
+    ) satisfies DropdownListOption[],
   );
 
-  $: sizes = <DropdownListOption[]>Object.entries(
-    $context.config.actorSizes,
-  ).map(([abbreviation, size]: [string, any]) => ({
-    value: abbreviation,
-    text: size.label,
-  }));
+  let currentSize = $derived({
+    value: context.system.traits.size,
+    text: context.config.actorSizes[context.system.traits.size]?.label,
+  } satisfies DropdownListOption);
 
-  $: currentSize = <DropdownListOption>{
-    value: $context.system.traits.size,
-    text: $context.config.actorSizes[$context.system.traits.size]?.label,
-  };
-
-  $: abilities = Object.entries<any>($context.abilities);
+  let abilities = $derived(Object.entries<any>(context.abilities));
 
   const localize = FoundryAdapter.localize;
 </script>
 
-{#if $settingStore.itemCardsForNpcs}
-  <ItemInfoCard />
+{#if settings.value.itemCardsForNpcs}
+  <AttachedInfoCard
+    sheet={context.actor.sheet}
+    floating={settings.value.itemCardsAreFloating}
+    delay={settings.value.itemCardsDelay}
+    inspectKey={settings.value.itemCardsFixKey}
+  />
 {/if}
 
-{#if $context.viewableWarnings.length}
-  <ActorWarnings warnings={$context.viewableWarnings} />
+{#if context.viewableWarnings.length}
+  <ActorWarnings warnings={context.viewableWarnings} />
 {/if}
 <header>
   <div class="flex-0">
@@ -79,31 +82,33 @@
         <div class="xp">
           <span
             >{localize('DND5E.ExperiencePointsFormat', {
-              value: $context.system.details.xp.value ?? 0,
+              value: context.system.details.xp.value ?? 0,
             })}</span
           >
         </div>
         <div
           class="challenge-rating"
           aria-label={localize('DND5E.CRLabel', {
-            cr: $context.system.details.cr,
+            cr: context.system.details.cr,
           })}
-          title={!$context.unlocked ? localize('DND5E.ChallengeRating') : ''}
+          title={!context.unlocked ? localize('DND5E.ChallengeRating') : ''}
         >
-          {localize('DND5E.AbbreviationCR')}
-          {#if $context.unlocked}
+          <label for="{context.appId}-system-details-cr">
+            {localize('DND5E.AbbreviationCR')}
+          </label>
+          {#if context.unlocked}
             <NumberInput
-              document={$context.actor}
-              value={$context.source.details.cr}
+              document={context.actor}
+              value={context.source.details.cr}
               field="system.details.cr"
               step="any"
               cssClass="challenge-rating-input"
               selectOnFocus={true}
               title={localize('DND5E.ChallengeRating')}
+              id="{context.appId}-system-details-cr"
             />
           {:else}
-            <!-- svelte-ignore missing-declaration -->
-            {dnd5e.utils.formatCR($context.system.details.cr)}
+            {dnd5e.utils.formatCR(context.system.details.cr)}
           {/if}
         </div>
         <SheetMenu defaultSettingsTab={CONSTANTS.TAB_USER_SETTINGS_NPCS} />
@@ -115,13 +120,13 @@
     />
     <div class="origin-summary">
       <div class="flex-row extra-small-gap">
-        {#if $context.editable}
+        {#if context.editable}
           <InlineTextDropdownList
             options={sizes}
             selected={currentSize}
-            on:optionClicked={(event) =>
-              $context.actor.update({
-                'system.traits.size': event.detail.value,
+            onOptionClicked={(option) =>
+              context.actor.update({
+                'system.traits.size': option.value,
               })}
             title={localize('DND5E.Size')}
           />
@@ -129,32 +134,32 @@
           <span title={localize('DND5E.Size')}>{currentSize.text}</span>
         {/if}
         <span>&#8226;</span>
-        {#key $context.lockSensitiveFields}
+        {#key context.lockSensitiveFields}
           <DelimitedTruncatedContent cssClass="flex-grow-1">
             <span class="flex-row extra-small-gap align-items-center">
               <InlineCreatureType />
-              {#if !isNil($context.system.details.environment, '')}
+              {#if !isNil(context.system.details.environment, '')}
                 <span
                   class="environment"
                   title={localize('TIDY5E.EnvironmentTooltip', {
-                    environment: $context.system.details.environment,
+                    environment: context.system.details.environment,
                   })}
                 >
-                  <i class="fas fa-tree" />
+                  <i class="fas fa-tree"></i>
                 </span>
               {/if}
             </span>
 
             <span
               class="origin-summary-text"
-              title={$context.system.details.alignment}
-              >{$context.system.details.alignment}</span
+              title={context.system.details.alignment}
+              >{context.system.details.alignment}</span
             >
 
             <InlineSource
-              document={$context.actor}
+              document={context.actor}
               keyPath="system.source"
-              editable={$context.unlocked}
+              editable={context.unlocked}
             />
           </DelimitedTruncatedContent>
         {/key}
@@ -162,21 +167,21 @@
       <div class="flex-row align-items-center extra-small-gap">
         <b class="proficiency">
           {localize('DND5E.Proficiency')}: {formatAsModifier(
-            $context.system.attributes.prof,
+            context.system.attributes.prof,
           )}
         </b>
-        {#if $context.unlocked}
+        {#if context.unlocked}
           <button
             type="button"
             class="origin-summary-tidy inline-icon-button"
-            on:click={() =>
-              new ActorOriginSummaryConfigFormApplication(
-                $context.actor,
-              ).render(true)}
+            onclick={() =>
+              new ActorOriginSummaryConfigFormApplication(context.actor).render(
+                true,
+              )}
             title={localize('TIDY5E.OriginSummaryConfig')}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
           >
-            <i class="fas fa-cog" />
+            <i class="fas fa-cog"></i>
           </button>
         {/if}
       </div>
@@ -189,7 +194,7 @@
       class="flex-row extra-small-gap justify-content-space-between header-line-margin"
     >
       <ActorMovement class="flex-1" />
-      {#if $context.hasSpecialSaves}
+      {#if context.hasSpecialSaves}
         <SpecialSaves />
       {/if}
     </div>
@@ -199,25 +204,25 @@
     />
     <ActorHeaderStats
       {abilities}
-      ac={$context.system.attributes.ac}
-      init={$context.system.attributes.init}
+      ac={context.system.attributes.ac}
+      init={context.system.attributes.init}
     />
   </div>
 </header>
-<Tabs tabs={$context.tabs} bind:selectedTabId>
-  <svelte:fragment slot="tab-end">
-    {#if $context.editable}
+<Tabs tabs={context.tabs} bind:selectedTabId sheet={context.actor.sheet}>
+  {#snippet tabEnd()}
+    {#if context.editable}
       <SheetEditModeToggle
-        hint={$settingStore.permanentlyUnlockNpcSheetForGm &&
+        hint={settings.value.permanentlyUnlockNpcSheetForGm &&
         FoundryAdapter.userIsGm()
           ? localize('TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM.title')
           : null}
       />
     {/if}
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 <section class="tidy-sheet-body">
-  <TabContents tabs={$context.tabs} {selectedTabId} />
+  <TabContents tabs={context.tabs} {selectedTabId} />
 </section>
 
 <style lang="scss">

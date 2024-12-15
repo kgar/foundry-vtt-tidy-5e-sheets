@@ -3,10 +3,14 @@
   import ItemControl from './ItemControl.svelte';
   import type { Item5e } from 'src/types/item.types';
 
-  export let item: Item5e;
-  export let ctx: any;
+  interface Props {
+    item: Item5e;
+    ctx: any;
+  }
 
-  $: isAttuned = item.system.attuned;
+  let { item, ctx }: Props = $props();
+
+  let isAttuned = $derived(item.system.attuned);
 
   function toggleAttuned() {
     const actor = item.actor;

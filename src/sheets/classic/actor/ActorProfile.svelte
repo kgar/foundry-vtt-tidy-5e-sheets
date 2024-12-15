@@ -1,21 +1,23 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
+  import { type Snippet } from 'svelte';
   import ActorPortrait from './ActorPortrait.svelte';
-  import type { Readable } from 'svelte/store';
   import type { ActorSheetContextV1 } from 'src/types/types';
-  import { CONSTANTS } from 'src/constants';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  export let useHpOverlay: boolean;
-  export let size: 'medium' | 'small' = 'medium';
+  interface Props {
+    useHpOverlay: boolean;
+    size?: 'medium' | 'small';
+    children?: Snippet;
+  }
 
-  let context = getContext<Readable<ActorSheetContextV1>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let { useHpOverlay, size = 'medium', children }: Props = $props();
+
+  let context = $derived(getSheetContext<ActorSheetContextV1>());
 </script>
 
 <div class="actor-profile-wrap" class:small-profile={size === 'small'}>
-  <div class="profile" class:round-portrait={$context.useRoundedPortraitStyle}>
-    <ActorPortrait actor={$context.actor} {useHpOverlay} />
-    <slot />
+  <div class="profile" class:round-portrait={context.useRoundedPortraitStyle}>
+    <ActorPortrait actor={context.actor} {useHpOverlay} />
+    {@render children?.()}
   </div>
 </div>

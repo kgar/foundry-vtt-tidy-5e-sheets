@@ -1,5 +1,5 @@
 import type { SupportedSpellSchoolIcon } from 'src/api/config/spell-school/spell-school.types';
-import { SettingsProvider } from 'src/settings/settings';
+import { settings } from 'src/settings/settings.svelte';
 
 export class SpellSchool {
   protected static _iconsMap: Record<string, SupportedSpellSchoolIcon> = {
@@ -16,7 +16,7 @@ export class SpellSchool {
   static fallbackIcon = 'fas fa-hat-wizard';
 
   static getIcon(schoolKey: string): SupportedSpellSchoolIcon {
-    if (SettingsProvider.settings.useTidySpellSchoolIcons.get()) {
+    if (settings.value.useTidySpellSchoolIcons) {
       return SpellSchool._iconsMap[schoolKey] ?? SpellSchool.fallbackIcon;
     }
 

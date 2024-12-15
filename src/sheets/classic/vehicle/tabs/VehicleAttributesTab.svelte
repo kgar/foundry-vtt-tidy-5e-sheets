@@ -2,11 +2,9 @@
   import { getContext } from 'svelte';
   import Traits from '../../actor/traits/Traits.svelte';
   import VehicleAttributes from '../parts/VehicleAttributes.svelte';
-  import type { Readable } from 'svelte/store';
   import type {
     RenderableClassicControl,
     VehicleFeatureSection,
-    VehicleSheetContext,
   } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ItemTable from 'src/components/item-list/v1/ItemTable.svelte';
@@ -34,12 +32,11 @@
   import ClassicControls from 'src/sheets/classic/shared/ClassicControls.svelte';
   import { ItemUtils } from 'src/utils/ItemUtils';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
-  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
+  import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<VehicleSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = $derived(getVehicleSheetContext());
 
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
@@ -61,54 +58,59 @@
     )}"></i>`,
   };
 
-  $: noFeatures = !$context.features.some(
-    (section: VehicleFeatureSection) => section.items.length,
+  let noFeatures = $derived(
+    !context.features.some(
+      (section: VehicleFeatureSection) => section.items.length,
+    ),
   );
 
   declareLocation('attributes');
 
-  let controls: RenderableClassicControl<{ item: Item5e; ctx: any }>[] = [];
+  let controls: RenderableClassicControl<{ item: Item5e; ctx: any }>[] =
+    $derived.by(() => {
+      let result: RenderableClassicControl<{ item: Item5e; ctx: any }>[] = [];
+      result.push(
+        {
+          component: ItemCrewedControl,
+          props: ({ item, ctx }) => ({
+            item,
+            ctx,
+          }),
+        },
+        {
+          component: ItemEditControl,
+          props: ({ item }) => ({
+            item,
+          }),
+        },
+      );
 
-  $: {
-    controls = [];
-    controls.push(
-      {
-        component: ItemCrewedControl,
-        props: ({ item, ctx }) => ({
-          item,
-          ctx,
-        }),
-      },
-      {
-        component: ItemEditControl,
-        props: ({ item }) => ({
-          item,
-        }),
-      },
-    );
+      if (context.unlocked) {
+        result.push({
+          component: ItemDeleteControl,
+          props: ({ item }) => ({
+            item,
+          }),
+        });
+      }
 
-    if ($context.unlocked) {
-      controls.push({
-        component: ItemDeleteControl,
-        props: ({ item }) => ({
-          item,
-        }),
-      });
-    }
+      if (context.useActionsFeature) {
+        result.push({
+          component: ActionFilterOverrideControl,
+          props: ({ item }) => ({
+            item,
+          }),
+        });
+      }
 
-    if ($context.useActionsFeature) {
-      controls.push({
-        component: ActionFilterOverrideControl,
-        props: ({ item }) => ({
-          item,
-        }),
-      });
-    }
-  }
+      return result;
+    });
 
   let classicControlsIconWidth = 1.25;
 
-  $: classicControlsColumnWidth = `${classicControlsIconWidth * controls.length}rem`;
+  let classicControlsColumnWidth = $derived(
+    `${classicControlsIconWidth * controls.length}rem`,
+  );
 </script>
 
 <div class="attributes-tab-contents" data-tidy-track-scroll-y>
@@ -121,15 +123,20 @@
     />
   </div>
   <div class="main-panel flex-column small-gap">
-    {#if noFeatures && !$context.unlocked}
+    {#if noFeatures && !context.unlocked}
       <Notice>
         {localize('TIDY5E.EmptySection')}
       </Notice>
     {:else}
-      {#each $context.features as section (section.key)}
-        {#if $context.unlocked || section.items.length}
+      {#each context.features as section (section.key)}
+        {#if context.unlocked || section.items.length}
+          {@const itemEntries = section.items.map((item) => ({
+            item,
+            ctx: context.itemContext[item.id],
+          }))}
+
           <ItemTable key={section.key}>
-            <svelte:fragment slot="header">
+            {#snippet header()}
               <ItemTableHeaderRow>
                 <ItemTableColumn primary={true}>
                   {localize(section.label)}
@@ -156,18 +163,16 @@
                     </ItemTableColumn>
                   {/each}
                 {/if}
-                {#if $context.editable && $context.useClassicControls}
+                {#if context.editable && context.useClassicControls}
                   <ItemTableColumn baseWidth={classicControlsColumnWidth} />
                 {/if}
               </ItemTableHeaderRow>
-            </svelte:fragment>
-            <svelte:fragment slot="body">
-              {#each section.items as item (item.id)}
-                {@const ctx = $context.itemContext[item.id]}
+            {/snippet}
+            {#snippet body()}
+              {#each itemEntries as { item, ctx } (item.id)}
                 <ItemTableRow
-                  let:toggleSummary
-                  on:mousedown={(event) =>
-                    FoundryAdapter.editOnMiddleClick(event.detail, item)}
+                  onMouseDown={(event) =>
+                    FoundryAdapter.editOnMiddleClick(event, item)}
                   contextMenu={{
                     type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
                     uuid: item.uuid,
@@ -175,121 +180,124 @@
                   {item}
                   cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
                 >
-                  <ItemTableCell primary={true}>
-                    <ItemUseButton disabled={!$context.editable} {item} />
-                    {#if (ctx.activities?.length ?? 0) > 1}
-                      <InlineToggleControl
-                        entityId={item.id}
-                        {inlineToggleService}
-                      />
-                    {/if}
-                    <ItemName
-                      on:toggle={() => toggleSummary($context.actor)}
-                      cssClass="extra-small-gap"
-                      {item}
-                    >
-                      <span
-                        class="truncate"
-                        data-tidy-item-name={item.name}
-                        data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
-                        >{item.name}</span
-                      >
-                    </ItemName>
-                  </ItemTableCell>
-                  {#if section.hasActions}
-                    <ItemTableCell baseWidth="3.125rem">
-                      {#if item.isOnCooldown}
-                        <RechargeControl {item} />
-                      {:else if item.hasRecharge}
-                        <i
-                          class="fas fa-bolt"
-                          title={localize('DND5E.Charged')}
+                  {#snippet children({ toggleSummary })}
+                    <ItemTableCell primary={true}>
+                      <ItemUseButton disabled={!context.editable} {item} />
+                      {#if (ctx.activities?.length ?? 0) > 1}
+                        <InlineToggleControl
+                          entityId={item.id}
+                          {inlineToggleService}
                         />
-                      {:else if ctx?.hasUses}
-                        <ItemUses {item} />
-                      {:else}
-                        <!-- TODO: Figure out how to make this work in a custom section. -->
-                        <ItemAddUses {item} />
                       {/if}
-                    </ItemTableCell>
-                    <ItemTableCell baseWidth="7.5rem">
-                      {#if ItemUtils.hasActivationType(item)}
-                        <span>{item.labels?.activation ?? ''}</span>
-                      {/if}
-                    </ItemTableCell>
-                  {/if}
-                  {#if section.columns}
-                    {#each section.columns as column}
-                      {#if column.property === 'system.hp.value'}
-                        <!-- TODO: Extract to its own component; formalize this feature of overriding specific columns based on property matching -->
-                        <ItemTableCell baseWidth="4.375rem">
-                          <div
-                            class="item-hp"
-                            title={localize('DND5E.HitPoints')}
-                          >
-                            <ResourceWithBar
-                              document={item}
-                              value={item.system.hp.value}
-                              valueField="system.hp.value"
-                              valueTitle={localize('DND5E.HitPointsCurrent')}
-                              valueDisabled={!$context.editable}
-                              max={item.system.hp.max}
-                              maxField="system.hp.max"
-                              maxTitle={localize('DND5E.HitPointsMax')}
-                              maxDisabled={!$context.editable ||
-                                $context.lockSensitiveFields}
-                              Bar={HpBar}
-                            />
-                          </div>
-                        </ItemTableCell>
-                      {:else}
-                        {@const isNumber = column.editable === 'Number'}
-                        {@const fallback = isNumber ? '0' : ''}
-                        {@const value =
-                          FoundryAdapter.getProperty(
-                            item,
-                            column.property,
-                          )?.toString() ??
-                          FoundryAdapter.getProperty(
-                            ctx,
-                            column.property,
-                          )?.toString() ??
-                          fallback}
-                        <ItemTableCell
-                          baseWidth={baseWidths[column.property] ?? '3.125rem'}
+                      <ItemName
+                        onToggle={() => toggleSummary(context.actor)}
+                        cssClass="extra-small-gap"
+                        {item}
+                      >
+                        <span
+                          class="truncate"
+                          data-tidy-item-name={item.name}
+                          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
+                          >{item.name}</span
                         >
-                          {#if column.editable}
-                            <TextInput
-                              document={item}
-                              field={column.property}
-                              allowDeltaChanges={isNumber}
-                              selectOnFocus={true}
-                              {value}
-                              disabled={!$context.editable}
-                            />
-                          {:else}
-                            {FoundryAdapter.getProperty(
+                      </ItemName>
+                    </ItemTableCell>
+                    {#if section.hasActions}
+                      <ItemTableCell baseWidth="3.125rem">
+                        {#if item.isOnCooldown}
+                          <RechargeControl {item} />
+                        {:else if item.hasRecharge}
+                          <i
+                            class="fas fa-bolt"
+                            title={localize('DND5E.Charged')}
+                          ></i>
+                        {:else if ctx?.hasUses}
+                          <ItemUses {item} />
+                        {:else}
+                          <!-- TODO: Figure out how to make this work in a custom section. -->
+                          <ItemAddUses {item} />
+                        {/if}
+                      </ItemTableCell>
+                      <ItemTableCell baseWidth="7.5rem">
+                        {#if ItemUtils.hasActivationType(item)}
+                          <span>{item.labels?.activation ?? ''}</span>
+                        {/if}
+                      </ItemTableCell>
+                    {/if}
+                    {#if section.columns}
+                      {#each section.columns as column}
+                        {#if column.property === 'system.hp.value'}
+                          <!-- TODO: Extract to its own component; formalize this feature of overriding specific columns based on property matching -->
+                          <ItemTableCell baseWidth="4.375rem">
+                            <div
+                              class="item-hp"
+                              title={localize('DND5E.HitPoints')}
+                            >
+                              <ResourceWithBar
+                                document={item}
+                                value={item.system.hp.value}
+                                valueField="system.hp.value"
+                                valueTitle={localize('DND5E.HitPointsCurrent')}
+                                valueDisabled={!context.editable}
+                                max={item.system.hp.max}
+                                maxField="system.hp.max"
+                                maxTitle={localize('DND5E.HitPointsMax')}
+                                maxDisabled={!context.editable ||
+                                  context.lockSensitiveFields}
+                                Bar={HpBar}
+                              />
+                            </div>
+                          </ItemTableCell>
+                        {:else}
+                          {@const isNumber = column.editable === 'Number'}
+                          {@const fallback = isNumber ? '0' : ''}
+                          {@const value =
+                            FoundryAdapter.getProperty(
                               item,
                               column.property,
-                            ) ??
-                              FoundryAdapter.getProperty(
-                                ctx,
+                            )?.toString() ??
+                            FoundryAdapter.getProperty(
+                              ctx,
+                              column.property,
+                            )?.toString() ??
+                            fallback}
+                          <ItemTableCell
+                            baseWidth={baseWidths[column.property] ??
+                              '3.125rem'}
+                          >
+                            {#if column.editable}
+                              <TextInput
+                                document={item}
+                                field={column.property}
+                                allowDeltaChanges={isNumber}
+                                selectOnFocus={true}
+                                {value}
+                                disabled={!context.editable}
+                              />
+                            {:else}
+                              {FoundryAdapter.getProperty(
+                                item,
                                 column.property,
                               ) ??
-                              fallback}
-                          {/if}
-                        </ItemTableCell>
-                      {/if}
-                    {/each}
-                  {/if}
-                  {#if $context.editable && $context.useClassicControls}
-                    <ItemTableCell baseWidth={classicControlsColumnWidth}>
-                      <ClassicControls
-                        {controls}
-                        params={{ item: item, ctx: ctx }}
-                      />
-                    </ItemTableCell>
-                  {/if}
+                                FoundryAdapter.getProperty(
+                                  ctx,
+                                  column.property,
+                                ) ??
+                                fallback}
+                            {/if}
+                          </ItemTableCell>
+                        {/if}
+                      {/each}
+                    {/if}
+                    {#if context.editable && context.useClassicControls}
+                      <ItemTableCell baseWidth={classicControlsColumnWidth}>
+                        <ClassicControls
+                          {controls}
+                          params={{ item: item, ctx: ctx }}
+                        />
+                      </ItemTableCell>
+                    {/if}
+                  {/snippet}
                 </ItemTableRow>
                 {#if (ctx.activities?.length ?? 0) > 1}
                   <InlineActivitiesList
@@ -299,14 +307,14 @@
                   />
                 {/if}
               {/each}
-              {#if $context.unlocked && section.dataset}
+              {#if context.unlocked && section.dataset}
                 <ItemTableFooter
-                  actor={$context.actor}
+                  actor={context.actor}
                   {section}
                   isItem={true}
                 />
               {/if}
-            </svelte:fragment>
+            {/snippet}
           </ItemTable>
         {/if}
       {/each}

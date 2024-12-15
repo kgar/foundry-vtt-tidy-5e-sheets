@@ -1,18 +1,13 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
-  import type { ItemSheetContext } from 'src/types/item.types';
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { CONSTANTS } from 'src/constants';
+  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<ItemSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = $derived(getItemSheetContext());
 
-  $: appId = $context.document.id;
+  let appId = $derived(context.document.id);
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -22,16 +17,16 @@
   <label for="{appId}-duration-units">{localize('DND5E.Duration')}</label>
   <div class="form-fields">
     <!-- Amount -->
-    {#if $context.system.duration.scalar}
+    {#if context.system.duration.scalar}
       <div class="form-group label-top">
         <label for="{appId}-duration-value">{localize('DND5E.Amount')}</label>
         <TextInput
           id="{appId}-duration-value"
-          document={$context.item}
+          document={context.item}
           field="system.duration.value"
-          value={$context.source.duration.value}
+          value={context.source.duration.value}
           placeholder="—"
-          disabled={!$context.editable}
+          disabled={!context.editable}
         />
       </div>
     {/if}
@@ -43,13 +38,13 @@
       >
       <Select
         id="{appId}-duration-units"
-        document={$context.item}
+        document={context.item}
         field="system.duration.units"
-        value={$context.source.duration.units}
-        disabled={!$context.editable}
+        value={context.source.duration.units}
+        disabled={!context.editable}
       >
         <SelectOptions
-          data={$context.durationUnits}
+          data={context.durationUnits}
           labelProp="label"
           valueProp="value"
         />
@@ -58,15 +53,15 @@
   </div>
 
   <!-- Conditions -->
-  {#if $context.system.duration.units === 'spec'}
+  {#if context.system.duration.units === 'spec'}
     <TextInput
       id="{appId}-duration-special"
-      document={$context.item}
+      document={context.item}
       field="system.duration.special"
-      value={$context.source.duration.special}
+      value={context.source.duration.special}
       placeholder={localize('DND5E.DURATION.FIELDS.duration.special.label')}
       class="full-width"
-      disabled={!$context.editable}
+      disabled={!context.editable}
     />
   {/if}
 </div>

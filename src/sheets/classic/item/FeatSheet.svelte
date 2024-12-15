@@ -1,7 +1,4 @@
 <script lang="ts">
-  import type { ItemSheetContext } from 'src/types/item.types';
-  import type { Readable } from 'svelte/store';
-  import { getContext } from 'svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
@@ -9,17 +6,25 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import Source from '../shared/Source.svelte';
   import { CONSTANTS } from 'src/constants';
+  import AttachedInfoCard from 'src/components/item-info-card/AttachedInfoCard.svelte';
+  import { settings } from 'src/settings/settings.svelte';
+  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<ItemSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = $derived(getItemSheetContext());
 
-  $: appId = $context.document.id;
+  let appId = $derived(context.document.id);
 
-  let selectedTabId: string;
+  let selectedTabId: string = $state('');
 
   const localize = FoundryAdapter.localize;
 </script>
+
+<AttachedInfoCard
+  sheet={context.item.sheet}
+  floating={settings.value.itemCardsAreFloating}
+  delay={settings.value.itemCardsDelay}
+  inspectKey={settings.value.itemCardsFixKey}
+/>
 
 <header class="sheet-header flexrow gap">
   <ItemProfilePicture />
@@ -34,46 +39,46 @@
     >
       <TextInput
         id="{appId}-name"
-        document={$context.item}
+        document={context.item}
         field="name"
         placeholder={localize('DND5E.ItemName')}
-        value={$context.item.name}
-        attributes={{ 'data-tidy-item-name': $context.item.name }}
-        disabled={!$context.editable}
-        title={$context.item.name}
+        value={context.item.name}
+        attributes={{ 'data-tidy-item-name': context.item.name }}
+        disabled={!context.editable}
+        title={context.item.name}
       />
     </h1>
 
     <div class="item-subtitle">
-      <h4 class="item-type">{$context.itemType ?? ''}</h4>
-      <span class="item-status">{$context.itemStatus ?? ''}</span>
+      <h4 class="item-type">{context.itemType ?? ''}</h4>
+      <span class="item-status">{context.itemStatus ?? ''}</span>
     </div>
 
     <ul class="summary flexrow">
       <li>
-        {$context.labels.featType ?? ''}
+        {context.labels.featType ?? ''}
       </li>
       <li>
         <TextInput
           id="{appId}-name"
-          document={$context.item}
+          document={context.item}
           field="system.requirements"
-          value={$context.system.requirements}
+          value={context.system.requirements}
           placeholder={localize('DND5E.Requirements')}
-          disabled={!$context.editable}
+          disabled={!context.editable}
         />
       </li>
       <li class="flex-row">
         <Source
-          document={$context.item}
+          document={context.item}
           keyPath="system.source"
-          editable={$context.editable}
+          editable={context.editable}
         />
       </li>
     </ul>
   </div>
 </header>
-<Tabs bind:selectedTabId tabs={$context.tabs} />
+<Tabs bind:selectedTabId tabs={context.tabs} sheet={context.item.sheet} />
 <section class="tidy-sheet-body">
-  <TabContents tabs={$context.tabs} {selectedTabId} />
+  <TabContents tabs={context.tabs} {selectedTabId} />
 </section>

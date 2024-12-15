@@ -3,7 +3,6 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import {
     type CharacterSheetContext,
-    type ItemCardStore,
     type NpcSheetContext,
     type SpellbookSection,
   } from 'src/types/types';
@@ -12,51 +11,50 @@
   import ItemTableHeaderRow from '../item-list/v1/ItemTableHeaderRow.svelte';
   import type { Item5e } from 'src/types/item.types';
   import GridPaneFavoriteIcon from '../item-grid/GridPaneFavoriteIcon.svelte';
-  import { getContext } from 'svelte';
-  import type { Readable, Writable } from 'svelte/store';
-  import { settingStore } from 'src/settings/settings';
+  import { settings } from 'src/settings/settings.svelte';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import { declareLocation } from 'src/types/location-awareness.types';
   import SpellSlotManagement from './SpellSlotManagement.svelte';
   import ConcentrationOverlayIcon from './ConcentrationOverlayIcon.svelte';
   import { TidyHooks } from 'src/foundry/TidyHooks';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  export let section: SpellbookSection;
-  export let spells: Item5e[];
-  export let cssClass: string | null = null;
+  interface Props {
+    section: SpellbookSection;
+    cssClass?: string | null;
+  }
 
-  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  let { section, cssClass = null }: Props = $props();
+
+  let context =
+    $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
+
+  let searchResultContext = getSearchResultsContext();
+
+  let spellEntries = $derived(
+    section.spells.map((s) => ({
+      spell: s,
+      ctx: context.itemContext[s.id],
+      spellImgUrl: FoundryAdapter.getSpellImageUrl(context, s),
+    })),
   );
-  let card = getContext<Writable<ItemCardStore>>(CONSTANTS.SVELTE_CONTEXT.CARD);
 
-  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
-    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
+  let customCommands = $derived(
+    ActorItemRuntime.getActorItemSectionCommands({
+      actor: context.actor,
+      section,
+    }),
   );
-
-  $: customCommands = ActorItemRuntime.getActorItemSectionCommands({
-    actor: $context.actor,
-    section,
-  });
 
   const localize = FoundryAdapter.localize;
 
   async function onMouseEnter(event: Event, item: Item5e) {
     TidyHooks.tidy5eSheetsItemHoverOn(event, item);
-
-    card.update((card) => {
-      card.item = item;
-      return card;
-    });
   }
 
   async function onMouseLeave(event: Event, item: Item5e) {
     TidyHooks.tidy5eSheetsItemHoverOff(event, item);
-
-    card.update((card) => {
-      card.item = null;
-      return card;
-    });
   }
 
   function handleDragStart(event: DragEvent, item: Item5e) {
@@ -64,12 +62,7 @@
       return;
     }
 
-    // Don't show cards while dragging
     onMouseLeave(event, item);
-
-    card.update((card) => {
-      return card;
-    });
 
     const dragData = item.toDragData();
     event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
@@ -83,7 +76,7 @@
     key={section.key}
     data-custom-section={section.custom ? true : null}
   >
-    <svelte:fragment slot="header">
+    {#snippet header()}
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>
           <span class="spell-primary-column-label">
@@ -94,89 +87,92 @@
           {/if}
         </ItemTableColumn>
       </ItemTableHeaderRow>
-    </svelte:fragment>
-    <div class="spells" slot="body">
-      {#each spells as spell}
-        {@const ctx = $context.itemContext[spell.id]}
-        {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($context, spell)}
-        {@const hidden = !!$itemIdsToShow && !$itemIdsToShow.has(spell.id)}
-        <button
-          type="button"
-          class="spell {FoundryAdapter.getSpellRowClasses(
-            spell,
-          )} transparent-button"
-          class:hidden
-          aria-hidden={hidden}
-          data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
-          data-context-menu-document-uuid={spell.uuid}
-          on:click={(event) => FoundryAdapter.actorTryUseItem(spell, event)}
-          on:contextmenu={(event) =>
-            FoundryAdapter.onActorItemButtonContextMenu(spell, { event })}
-          on:mousedown={(event) =>
-            FoundryAdapter.editOnMiddleClick(event, spell)}
-          on:mouseenter={(ev) => onMouseEnter(ev, spell)}
-          on:mouseleave={(ev) => onMouseLeave(ev, spell)}
-          on:dragstart={(ev) => handleDragStart(ev, spell)}
-          draggable={true}
-          disabled={!$context.editable}
-          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
-          data-item-id={spell.id}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-          data-tidy-grid-item
-        >
-          {#if 'favoriteId' in ctx && !!ctx.favoriteId}
-            <GridPaneFavoriteIcon />
-          {/if}
-          <div class="spell-name">
-            <div
-              class="spell-image"
-              style="background-image: url('{spellImgUrl}');"
-            >
-              {#if !ctx.concentration}
-                <i class="fa fa-dice-d20" />
-              {/if}
-              <ConcentrationOverlayIcon --tidy-icon-font-size="1.25rem" {ctx} />
+    {/snippet}
+    {#snippet body()}
+      <div class="spells">
+        {#each spellEntries as { spell, ctx, spellImgUrl } (spell.id)}
+          {@const hidden = !searchResultContext.show(spell.uuid)}
+          <a
+            class="spell {FoundryAdapter.getSpellRowClasses(spell)}"
+            class:hidden
+            aria-hidden={hidden}
+            data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
+            onclick={(event) => FoundryAdapter.actorTryUseItem(spell, event)}
+            oncontextmenu={(event) =>
+              FoundryAdapter.onActorItemButtonContextMenu(spell, { event })}
+            onmousedown={(event) =>
+              FoundryAdapter.editOnMiddleClick(event, spell)}
+            onmouseenter={(ev) => onMouseEnter(ev, spell)}
+            onmouseleave={(ev) => onMouseLeave(ev, spell)}
+            ondragstart={(ev) => handleDragStart(ev, spell)}
+            draggable={true}
+            data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
+            data-item-id={spell.id}
+            tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
+            data-tidy-grid-item
+            data-info-card={spell ? 'item' : null}
+            data-info-card-entity-uuid={spell?.uuid ?? null}
+          >
+            {#if 'favoriteId' in ctx && !!ctx.favoriteId}
+              <GridPaneFavoriteIcon />
+            {/if}
+            <div class="spell-name">
+              <div
+                class="spell-image"
+                style="background-image: url('{spellImgUrl}');"
+              >
+                {#if !ctx.concentration}
+                  <i class="fa fa-dice-d20"></i>
+                {/if}
+                <ConcentrationOverlayIcon
+                  --tidy-icon-font-size="1.25rem"
+                  {ctx}
+                />
+              </div>
             </div>
+          </a>
+        {/each}
+        {#if context.unlocked}
+          <div class="spells-footer">
+            {#if section.canCreate}
+              <button
+                type="button"
+                class="footer-command icon-button"
+                title={localize('DND5E.SpellCreate')}
+                onclick={(event) => {
+                  event.preventDefault();
+                  event.stopPropagation();
+                  FoundryAdapter.createItem(section.dataset, context.actor);
+                }}
+                data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_CREATE_COMMAND}
+                tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
+              >
+                <i class="fas fa-plus-circle"></i>
+              </button>
+            {/if}
+            {#each customCommands as command}
+              <button
+                type="button"
+                class="footer-command icon-button"
+                onclick={(ev) =>
+                  command.execute?.({
+                    section,
+                    event: ev,
+                    actor: context.actor,
+                  })}
+                title={localize(command.tooltip ?? '')}
+                tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
+              >
+                {#if (command.iconClass ?? '') !== ''}
+                  <i class={command.iconClass}></i>
+                {/if}
+                {localize(command.label ?? '')}
+              </button>
+            {/each}
           </div>
-        </button>
-      {/each}
-      {#if $context.unlocked}
-        <div class="spells-footer">
-          {#if section.canCreate}
-            <button
-              type="button"
-              class="footer-command icon-button"
-              title={localize('DND5E.SpellCreate')}
-              on:click|stopPropagation|preventDefault={() =>
-                FoundryAdapter.createItem(section.dataset, $context.actor)}
-              data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_CREATE_COMMAND}
-              tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-            >
-              <i class="fas fa-plus-circle" />
-            </button>
-          {/if}
-          {#each customCommands as command}
-            <button
-              type="button"
-              class="footer-command icon-button"
-              on:click={(ev) =>
-                command.execute?.({
-                  section,
-                  event: ev,
-                  actor: $context.actor,
-                })}
-              title={localize(command.tooltip ?? '')}
-              tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-            >
-              {#if (command.iconClass ?? '') !== ''}
-                <i class={command.iconClass} />
-              {/if}
-              {localize(command.label ?? '')}
-            </button>
-          {/each}
-        </div>
-      {/if}
-    </div>
+        {/if}
+      </div>
+    {/snippet}
   </ItemTable>
 </section>
 

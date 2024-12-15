@@ -1,24 +1,19 @@
 <script lang="ts">
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
-  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ItemSheetContext } from 'src/types/item.types';
+  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
   import { mapPropertiesToSave } from 'src/utils/system-properties';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
 
-  let context = getContext<Readable<ItemSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = $derived(getItemSheetContext());
 
-  $: appId = $context.document.id;
+  let appId = $derived(context.document.id);
 
   const localize = FoundryAdapter.localize;
 </script>
 
-{#each $context.properties.options as property}
+{#each context.properties.options as property}
   {@const field = `system.properties.${property.value}`}
-  {@const isEnchanted = $context.itemOverrides.has(field)}
+  {@const isEnchanted = context.itemOverrides.has(field)}
   {@const enchantedTooltip = isEnchanted
     ? localize('DND5E.ENCHANTMENT.Warning.Override')
     : null}
@@ -26,11 +21,11 @@
   <Checkbox
     id="{appId}-properties-{property.value?.slugify()}"
     labelCssClass="checkbox"
-    document={$context.item}
+    document={context.item}
     {field}
     checked={property.selected}
-    disabled={!$context.editable || isEnchanted}
-    onDataPreparing={(ev) => mapPropertiesToSave($context, ev, property.value)}
+    disabled={!context.editable || isEnchanted}
+    onDataPreparing={(ev) => mapPropertiesToSave(context, ev, property.value)}
     tooltip={enchantedTooltip}
   >
     {property.label}

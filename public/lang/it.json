@@ -58,7 +58,6 @@
     "TIDY5E.Search": "Cerca",
     "TIDY5E.SearchClear": "Cancella Ricerca",
     "TIDY5E.SearchHint": "Inizia a digitare ciò che stai cercando",
-    "TIDY5E.ItemCardsKeyHint": "Mantieni premuto il tato per interagire con la scheda",
     "TIDY5E.ItemCardsMouseHint": "Tasti centrale del mouse per vedere/modificare oggetti",
     "TIDY5E.AbbrMod": "Mod",
     "TIDY5E.AbbrSavingThrow": "Salva",
@@ -128,10 +127,6 @@
     "TIDY5E.Settings.ItemCardsDelay": {
         "name": "Ritardo scheda oggetto (ms)",
         "hint": "Ritarda la visualizzazione delle schede oggetto per i millisecondi (ms) specificati. 0 significa nessun ritardo. Predefinito: 300."
-    },
-    "TIDY5E.Settings.ItemCardsFixKey": {
-        "name": "Tasto di correzione della scheda oggetto",
-        "hint": "Tieni premuto questo carattere della tastiera (ad esempio, il tasto \"x\") mentre visualizzi la scheda di un oggetto per mantenerlo visibile e consentire l'interazione."
     },
     "TIDY5E.Settings.DefaultTheme": {
         "name": "Colore Tema Predefinito",

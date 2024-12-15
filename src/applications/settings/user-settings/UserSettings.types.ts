@@ -1,5 +1,4 @@
-import type { CurrentSettings } from 'src/settings/settings';
-import type { Writable } from 'svelte/store';
+import type { CurrentSettings } from 'src/settings/settings.svelte';
 
 export type UserSettingsContext = {
   settings: {
@@ -41,5 +40,3 @@ export type UserSettingsFunctions = {
   apply(settings: UserSettingsContext): Promise<unknown>;
   validate(context: UserSettingsContext): boolean;
 };
-
-export type UserSettingsStore = Writable<UserSettingsContext>;

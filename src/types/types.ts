@@ -1,10 +1,5 @@
-import type { ComponentType, SvelteComponent } from 'svelte';
-import type {
-  ContainerContents,
-  Item5e,
-  ItemCardContentComponent,
-  ItemChatData,
-} from './item.types';
+import type { Component } from 'svelte';
+import type { ContainerContents, Item5e, ItemChatData } from './item.types';
 import type {
   OnContentReadyParams,
   OnRenderParams,
@@ -15,20 +10,16 @@ import type {
   RegisteredPortraitMenuCommand,
 } from 'src/runtime/types';
 import type { DocumentFilters } from 'src/runtime/item/item.types';
-import type { Writable } from 'svelte/store';
 import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
 import type { CONSTANTS } from 'src/constants';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
-import type { Group5e } from './group.types';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 
 export type Actor5e = any;
 
-export type SvelteTabContent<
-  T extends SvelteComponent<any, any, any> = SvelteComponent<any, any, any>
-> = {
+export type SvelteTabContent = {
   type: 'svelte';
-  component: ComponentType<T>;
+  component: Component<any>;
   cssClass?: string;
   getProps?: (data: any) => Record<string, any>;
   getContext?: (context: Map<any, any>) => Map<any, any>;
@@ -54,12 +45,10 @@ export interface OnRenderTabParams extends OnRenderParams {
 }
 
 // TODO: Make this generic in such a way that correct props are actually required and that an array of tabs can have hetergeneity of component types without a crazy TS type
-export type Tab<
-  T extends SvelteComponent<any, any, any> = SvelteComponent<any, any, any>
-> = {
+export type Tab<T extends Component = Component> = {
   title: string;
   id: string;
-  content: SvelteTabContent<T> | HtmlTabContent;
+  content: SvelteTabContent | HtmlTabContent;
   onRender?: (params: OnRenderTabParams) => void;
   activateDefaultSheetListeners?: boolean;
   autoHeight?: boolean;
@@ -80,12 +69,6 @@ export type ClassSummary = {
   class?: string;
   subclass?: string;
   level?: string;
-};
-
-export type ItemCardStore = {
-  item: Item5e | null;
-  itemCardContentTemplate: ItemCardContentComponent | null;
-  sheet: HTMLElement;
 };
 
 export type CharacterFeatureSection = {
@@ -241,7 +224,7 @@ export type CharacterItemContext = {
 export type ActivityItemContext = {
   id: string;
   activity: Activity5e;
-}
+};
 
 export type TypedEffectFavoriteSection = EffectFavoriteSection & {
   type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_EFFECT;
@@ -499,7 +482,7 @@ export type SortModeAlphabetical = 'a';
 export type SortModeManual = 'm';
 export type SortMode = SortModeAlphabetical | SortModeManual;
 
-export type MessageBus = Writable<MessageBusMessage | undefined>;
+export type MessageBus = { message: MessageBusMessage | undefined };
 
 export type MessageBusMessage =
   | { tabId: string; message: typeof CONSTANTS.MESSAGE_BUS_EXPAND_ALL }
@@ -668,7 +651,7 @@ export type ContainerCapacityContext = {
 };
 
 export type RenderableClassicControl<TParams> = {
-  component: ComponentType;
+  component: Component<any>;
   props?: (params: TParams) => Record<string, unknown>;
   visible?: (params: TParams) => boolean;
 };

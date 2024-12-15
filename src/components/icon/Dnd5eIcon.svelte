@@ -6,9 +6,14 @@
  -->
 
 <script lang="ts">
-  export let src: string;
+  interface Props {
+    src: string;
+    [key: string]: any;
+  }
+
+  let { ...props }: Props = $props();
 </script>
 
-{#key src}
-  <dnd5e-icon {src} {...$$props} />
+{#key props.src}
+  <dnd5e-icon {...props}></dnd5e-icon>
 {/key}

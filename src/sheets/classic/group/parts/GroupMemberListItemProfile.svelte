@@ -3,12 +3,16 @@
   import ResourceWithBar from 'src/components/bar/ResourceWithBar.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
+  import { settings } from 'src/settings/settings.svelte';
   import type { Actor5e } from 'src/types/types';
   import { getPercentage } from 'src/utils/numbers';
 
-  export let member: Actor5e;
-  export let showHp: boolean;
+  interface Props {
+    member: Actor5e;
+    showHp: boolean;
+  }
+
+  let { member, showHp }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -17,7 +21,7 @@
   <button
     class="transparent-button"
     type="button"
-    on:click={() =>
+    onclick={() =>
       FoundryAdapter.renderImagePopout(member.img, {
         title: FoundryAdapter.localize('TIDY5E.PortraitTitle', {
           subject: member.name,
@@ -25,7 +29,7 @@
         shareable: true,
         uuid: member.uuid,
       })}
-    tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+    tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
   >
     <img
       class="member-list-item-image"

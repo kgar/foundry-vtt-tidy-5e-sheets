@@ -1,11 +1,15 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
+  import { settings } from 'src/settings/settings.svelte';
   import type { LocationToSearchTextMap, OnSearchFn } from 'src/types/types';
   import { getContext, onMount } from 'svelte';
 
-  export let value: string;
+  interface Props {
+    value: string;
+  }
+
+  let { value = $bindable() }: Props = $props();
 
   async function rememberSearch() {
     onSearch?.(location, value);
@@ -40,14 +44,18 @@
     placeholder={localize('TIDY5E.Search')}
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SEARCH_INPUT}
     bind:value
-    on:blur|preventDefault|stopPropagation={() => rememberSearch()}
+    onblur={(event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      rememberSearch();
+    }}
   />
   {#if value?.trim() !== ''}
     <button
       class="inline-icon-button search-close-button"
-      on:click={() => clearSearch()}
+      onclick={() => clearSearch()}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SEARCH_CLEAR}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+      tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fas fa-times"></i>
     </button>

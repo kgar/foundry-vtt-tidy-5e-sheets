@@ -136,8 +136,6 @@
     @import '../../sheets/classic/actor/traits/traits';
   }
 
-  @import './partials/item-card';
-
   &:is(.group) {
     --t5e-classic-tab-contents-padding-bottom: 0;
   }
@@ -258,14 +256,17 @@
   @import '../../applications/section-config/DocumentTabSectionConfig';
 
   // Components
+  @import './components/accordion.scss';
   @import '../../components/button-menu/button-menu.scss';
   @import '../../components/toggle/toggles.scss';
+  @import '../../components/item-list/item-table.scss';
   @import '../../components/table/tidy-table.scss';
   @import '../../components/filter/filter.scss';
   @import '../../components/pips/pips.scss';
   @import '../../components/listbox/listbox.scss';
   @import '../../components/editor/SheetEditorV2.scss';
   @import '../../components/tabs/UnderlinedTabStrip.scss';
+  @import './components/info-card.scss';
   @import './components/tabs.scss';
 
   // TODO: Buttons V2?

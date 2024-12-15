@@ -4,19 +4,20 @@
   import ButtonMenuDivider from 'src/components/button-menu/ButtonMenuDivider.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ThemeSelectorButtonMenuCommand from '../shared/ThemeSelectorButtonMenuCommand.svelte';
-  import TabSelectionFormApplication from 'src/applications/tab-selection/TabSelectionFormApplication';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import TabSelectionFormApplication from 'src/applications/tab-selection/TabSelectionFormApplication.svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
   import { ApplicationsManager } from 'src/applications/ApplicationsManager';
-  import { CONSTANTS } from 'src/constants';
-  export let defaultSettingsTab: string | undefined = undefined;
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+
+  interface Props {
+    defaultSettingsTab?: string | undefined;
+  }
+
+  let { defaultSettingsTab = undefined }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
-  let context = getContext<Readable<ActorSheetContextV1>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = $derived(getSheetContext<ActorSheetContextV1>());
 </script>
 
 <ButtonMenu
@@ -29,23 +30,23 @@
   <ThemeSelectorButtonMenuCommand />
   <ButtonMenuDivider />
   <ButtonMenuCommand
-    on:click={() => ApplicationsManager.openUserSettings(defaultSettingsTab)}
+    onMenuClick={() => ApplicationsManager.openUserSettings(defaultSettingsTab)}
     iconClass="fas fa-cog"
   >
     {localize('TIDY5E.UserSettings.Menu.label')}
   </ButtonMenuCommand>
   <ButtonMenuCommand
-    on:click={() => ApplicationsManager.openThemeSettings()}
+    onMenuClick={() => ApplicationsManager.openThemeSettings()}
     iconClass="fas fa-palette"
   >
     {localize('TIDY5E.ThemeSettings.SheetMenu.buttonLabel')}
   </ButtonMenuCommand>
-  {#if $context.owner}
+  {#if context.owner}
     <ButtonMenuCommand
-      on:click={() =>
-        new TabSelectionFormApplication($context.actor).render(true)}
+      onMenuClick={() =>
+        new TabSelectionFormApplication(context.actor).render(true)}
       iconClass="fas fa-file-invoice"
-      disabled={!$context.editable}
+      disabled={!context.editable}
     >
       {localize('TIDY5E.TabSelection.MenuOptionText')}
     </ButtonMenuCommand>

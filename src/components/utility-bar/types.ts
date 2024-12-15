@@ -1,3 +1,5 @@
+import type { TidySectionBase } from "src/types/types";
+
 export interface UtilityToolbarCommandParams<TContext> {
   title?: string;
   text?: string;
@@ -11,6 +13,7 @@ export interface UtilityToolbarCommandParams<TContext> {
 export interface UtilityToolbarCommandExecuteEvent<TContext = any> {
   event: Event;
   context: TContext;
+  sections: TidySectionBase[];
 }
 
 export interface UtilityItemFilterParams {

@@ -1,19 +1,14 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
-  import type { ItemSheetContext } from 'src/types/item.types';
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { CONSTANTS } from 'src/constants';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
+  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<ItemSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = $derived(getItemSheetContext());
 
-  $: appId = $context.document.id;
+  let appId = $derived(context.document.id);
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -24,19 +19,19 @@
 
   <div class="form-fields">
     <!-- Amount -->
-    {#if $context.system.activation.scalar}
+    {#if context.system.activation.scalar}
       <div class="form-group label-top">
         <label for="{appId}-activation-value">
           {localize('DND5E.Amount')}
         </label>
         <NumberInput
           id="{appId}-activation-value"
-          document={$context.item}
+          document={context.item}
           field="system.activation.value"
-          value={$context.source.activation.value}
+          value={context.source.activation.value}
           placeholder="—"
           min="0"
-          disabled={!$context.editable}
+          disabled={!context.editable}
         />
       </div>
     {/if}
@@ -48,13 +43,13 @@
       </label>
       <Select
         id="{appId}-activation-type"
-        document={$context.item}
+        document={context.item}
         field="system.activation.type"
-        value={$context.source.activation.type}
-        disabled={!$context.editable}
+        value={context.source.activation.type}
+        disabled={!context.editable}
       >
         <SelectOptions
-          data={$context.activationTypes}
+          data={context.activationTypes}
           labelProp="label"
           valueProp="value"
         />
@@ -65,11 +60,11 @@
   <!-- Condition -->
   <TextInput
     id="{appId}-activation-condition"
-    document={$context.item}
+    document={context.item}
     field="system.activation.condition"
-    value={$context.source.activation.condition}
+    value={context.source.activation.condition}
     placeholder={localize('DND5E.ItemActivationCondition')}
     class="full-width"
-    disabled={!$context.editable}
+    disabled={!context.editable}
   />
 </div>

@@ -34,10 +34,11 @@
   i {
     font-size: 0.625rem;
     color: var(--t5e-light-color);
-    
+
     &.expand-indicator {
       font-size: 0.75rem;
       color: var(--t5e-tertiary-color);
+      margin-right: 0.325rem;
     }
   }
 
@@ -158,5 +159,81 @@
 
   .expand-indicator {
     margin-right: 0.325rem;
+  }
+}
+
+/* Item Use Button */
+.tidy-table {
+  .tidy-table-cell {
+    .item-use-button {
+      --img-size: var(--t5e-image-size-override, 1.5rem);
+      position: relative;
+      align-self: center;
+      flex: 0 0 var(--img-size);
+      height: var(--img-size);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.3125rem 0 0 0.3125rem;
+      border-left: 0.0625rem solid transparent;
+
+      .item-image {
+        position: absolute;
+        border-radius: 0.3125rem 0 0 0.3125rem;
+        width: calc(var(--img-size) + 0.125rem);
+        height: calc(var(--img-size) + 0.125rem);
+        transition: opacity 0.2s ease;
+        margin: -0.0625rem 0 -0.0625rem -0.125rem;
+
+        &.conceal {
+          filter: grayscale(100%);
+        }
+      }
+
+      .roll-indicator {
+        color: var(--t5e-tertiary-color);
+        font-size: 1.125rem;
+
+        &.invisible {
+          visibility: hidden;
+        }
+      }
+
+      .roll-indicator {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0;
+        transition: all 0.2s ease;
+      }
+
+      .unidentified-glyph {
+        font-size: calc(var(--t5e-image-size-override, 1.5rem) - 0.75rem);
+      }
+    }
+
+    // Hide the Item Image when hovering on the cell itself, to imply the roll button.
+    &:hover {
+      .item-image {
+        opacity: 0;
+      }
+
+      .unidentified-glyph {
+        opacity: 0;
+      }
+
+      .item-use-button {
+        &:hover {
+          .roll-indicator {
+            color: var(--t5e-primary-font-color);
+          }
+        }
+
+        .roll-indicator {
+          opacity: 1;
+        }
+      }
+    }
   }
 }

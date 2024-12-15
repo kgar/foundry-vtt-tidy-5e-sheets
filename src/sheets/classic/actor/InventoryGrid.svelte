@@ -2,7 +2,6 @@
   import type {
     CharacterSheetContext,
     InventorySection,
-    ItemCardStore,
     NpcSheetContext,
   } from 'src/types/types';
   import type { Item5e } from 'src/types/item.types';
@@ -12,31 +11,39 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
   import GridPaneFavoriteIcon from '../../../components/item-grid/GridPaneFavoriteIcon.svelte';
-  import { getContext } from 'svelte';
-  import type { Readable, Writable } from 'svelte/store';
   import TextInput from '../../../components/inputs/TextInput.svelte';
-  import { settingStore } from 'src/settings/settings';
+  import { settings } from 'src/settings/settings.svelte';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import { declareLocation } from 'src/types/location-awareness.types';
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  export let section: InventorySection;
-  export let items: Item5e[];
+  interface Props {
+    section: InventorySection;
+  }
 
-  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  let { section }: Props = $props();
+
+  let context =
+    $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
+
+  let itemEntries = $derived(
+    section.items.map((item) => ({
+      item: item,
+      ctx: context.itemContext[item.id],
+    })),
   );
-  let card = getContext<Writable<ItemCardStore>>(CONSTANTS.SVELTE_CONTEXT.CARD);
 
-  $: customCommands = ActorItemRuntime.getActorItemSectionCommands({
-    actor: $context.actor,
-    section,
-  });
-
-  let itemIdsToShow = getContext<Readable<Set<string> | undefined>>(
-    CONSTANTS.SVELTE_CONTEXT.ITEM_IDS_TO_SHOW,
+  let customCommands = $derived(
+    ActorItemRuntime.getActorItemSectionCommands({
+      actor: context.actor,
+      section,
+    }),
   );
+
+  const searchResults = getSearchResultsContext();
 
   const localize = FoundryAdapter.localize;
 
@@ -45,7 +52,7 @@
 
     return FoundryAdapter.getInventoryRowClasses(
       item,
-      $context.itemContext[item.id],
+      context.itemContext[item.id],
       extras,
     );
   }
@@ -56,20 +63,10 @@
 
   async function onMouseEnter(event: Event, item: Item5e) {
     TidyHooks.tidy5eSheetsItemHoverOn(event, item);
-
-    card.update((card) => {
-      card.item = item;
-      return card;
-    });
   }
 
   async function onMouseLeave(event: Event, item: Item5e) {
     TidyHooks.tidy5eSheetsItemHoverOff(event, item);
-
-    card.update((card) => {
-      card.item = null;
-      return card;
-    });
   }
 
   function handleDragStart(event: DragEvent, item: Item5e) {
@@ -77,12 +74,7 @@
       return;
     }
 
-    // Don't show cards while dragging
     onMouseLeave(event, item);
-
-    card.update((card) => {
-      return card;
-    });
 
     const dragData = item.toDragData();
     event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
@@ -92,168 +84,175 @@
 </script>
 
 <ItemTable key={section.key} data-custom-section={section.custom ? true : null}>
-  <svelte:fragment slot="header">
+  {#snippet header()}
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>
         <span class="inventory-primary-column-label">
           {localize(section.label)} ({ItemVisibility.countVisibleItems(
-            items,
-            $itemIdsToShow,
+            section.items,
+            searchResults.uuids,
           )})
         </span>
       </ItemTableColumn>
     </ItemTableHeaderRow>
-  </svelte:fragment>
-  <div class="items" slot="body">
-    {#each items as item (item.id)}
-      {@const ctx = $context.itemContext[item.id]}
-      {@const hidden = !!$itemIdsToShow && !$itemIdsToShow.has(item.id)}
-      <button
-        type="button"
-        class="item {getInventoryRowClasses(item)} transparent-button"
-        class:hidden
-        aria-hidden={hidden}
-        data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
-        data-context-menu-document-uuid={item.uuid}
-        on:click={(event) =>
-          $context.editable && FoundryAdapter.actorTryUseItem(item, event)}
-        on:contextmenu={(event) =>
-          FoundryAdapter.onActorItemButtonContextMenu(item, { event })}
-        on:mousedown={(event) => FoundryAdapter.editOnMiddleClick(event, item)}
-        on:mouseenter={(ev) => onMouseEnter(ev, item)}
-        on:mouseleave={(ev) => onMouseLeave(ev, item)}
-        on:dragstart={(ev) => handleDragStart(ev, item)}
-        draggable={true}
-        disabled={!$context.editable}
-        data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
-        data-item-id={item.id}
-        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-        data-tidy-grid-item
-      >
-        <div class="item-name">
-          <div
-            class="item-image"
-            class:conceal={item.system.identified === false}
-            style="background-image: url('{item.img}');"
-          >
-            <i class="fa fa-dice-d20" />
+  {/snippet}
+  {#snippet body()}
+    <div class="items">
+      {#each itemEntries as { item, ctx } (item.id)}
+        {@const hidden = !searchResults.show(item.uuid)}
+        <a
+          class="item {getInventoryRowClasses(item)}"
+          class:hidden
+          aria-hidden={hidden}
+          data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
+          onclick={(event) =>
+            context.editable && FoundryAdapter.actorTryUseItem(item, event)}
+          oncontextmenu={(event) =>
+            FoundryAdapter.onActorItemButtonContextMenu(item, { event })}
+          onmousedown={(event) => FoundryAdapter.editOnMiddleClick(event, item)}
+          onmouseenter={(ev) => onMouseEnter(ev, item)}
+          onmouseleave={(ev) => onMouseLeave(ev, item)}
+          ondragstart={(ev) => handleDragStart(ev, item)}
+          draggable={true}
+          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
+          data-item-id={item.id}
+          tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
+          data-tidy-grid-item
+          data-info-card={item ? 'item' : null}
+          data-info-card-entity-uuid={item?.uuid ?? null}
+        >
+          <div class="item-name">
+            <div
+              class="item-image"
+              class:conceal={item.system.identified === false}
+              style="background-image: url('{item.img}');"
+            >
+              <i class="fa fa-dice-d20"></i>
+            </div>
+            <div
+              role="presentation"
+              aria-hidden="true"
+              class="unidentified-glyph no-transition"
+              class:conceal={item.system.identified === false}
+            >
+              <i class="fas fa-question"></i>
+            </div>
           </div>
-          <div
-            role="presentation"
-            aria-hidden="true"
-            class="unidentified-glyph no-transition"
-            class:conceal={item.system.identified === false}
-          >
-            <i class="fas fa-question" />
-          </div>
-        </div>
 
-        {#if ctx.attunement && !FoundryAdapter.concealDetails(item)}
-          <i
-            class="fas fa-sun icon-attuned {ctx.attunement?.cls ??
-              ''} no-pointer-events"
-            title={localize(ctx.attunement?.title ?? '')}
-          />
-        {/if}
+          {#if ctx.attunement && !FoundryAdapter.concealDetails(item)}
+            <i
+              class="fas fa-sun icon-attuned {ctx.attunement?.cls ??
+                ''} no-pointer-events"
+              title={localize(ctx.attunement?.title ?? '')}
+            ></i>
+          {/if}
 
-        {#if 'favoriteId' in ctx && !!ctx.favoriteId}
-          <GridPaneFavoriteIcon />
-        {/if}
+          {#if 'favoriteId' in ctx && !!ctx.favoriteId}
+            <GridPaneFavoriteIcon />
+          {/if}
 
-        {#if $context.editable}
-          <button
-            type="button"
-            class="item-control item-edit"
-            style="display:none"
-            data-action="itemEdit"
-            title={localize('DND5E.ItemEdit')}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-          >
-            <i class="fas fa-edit fa-fw" />
-          </button>
-        {/if}
+          {#if context.editable}
+            <button
+              type="button"
+              class="item-control item-edit"
+              style="display:none"
+              data-action="itemEdit"
+              title={localize('DND5E.ItemEdit')}
+              tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
+            >
+              <i class="fas fa-edit fa-fw"></i>
+            </button>
+          {/if}
 
-        <div class="item-stats">
-          <div
-            class="item-detail item-uses"
-            title="{localize('DND5E.Uses')}: {item.system.uses?.value}/{item
-              .system.uses?.max} "
-          >
-            {#if ctx?.hasUses}
-              <i class="fas fa-bolt" />
+          <div class="item-stats">
+            <div
+              class="item-detail item-uses"
+              title="{localize('DND5E.Uses')}: {item.system.uses?.value}/{item
+                .system.uses?.max} "
+            >
+              {#if ctx?.hasUses}
+                <i class="fas fa-bolt"></i>
+                <TextInput
+                  document={item}
+                  field="system.uses.value"
+                  value={item.system.uses?.value}
+                  placeholder="0"
+                  maxlength={2}
+                  allowDeltaChanges={true}
+                  selectOnFocus={true}
+                  onclick={preventUseItemEvent}
+                  disabled={!context.editable}
+                  onSaveChange={(ev) =>
+                    FoundryAdapter.handleItemUsesChanged(ev, item) && false}
+                />
+              {/if}
+            </div>
+            <span
+              class="item-quantity"
+              class:isStack={item.isStack}
+              title={localize('DND5E.Quantity')}
+            >
               <TextInput
                 document={item}
-                field="system.uses.value"
-                value={item.system.uses?.value}
-                placeholder="0"
+                field="system.quantity"
+                class="item-count"
+                value={item.system.quantity}
                 maxlength={2}
+                disabled={!context.editable || context.lockItemQuantity}
                 allowDeltaChanges={true}
                 selectOnFocus={true}
-                on:click={preventUseItemEvent}
-                disabled={!$context.editable}
-                onSaveChange={(ev) =>
-                  FoundryAdapter.handleItemUsesChanged(ev, item) && false}
+                onclick={preventUseItemEvent}
               />
-            {/if}
+            </span>
           </div>
-          <span
-            class="item-quantity"
-            class:isStack={item.isStack}
-            title={localize('DND5E.Quantity')}
-          >
-            <TextInput
-              document={item}
-              field="system.quantity"
-              class="item-count"
-              value={item.system.quantity}
-              maxlength={2}
-              disabled={!$context.editable || $context.lockItemQuantity}
-              allowDeltaChanges={true}
-              selectOnFocus={true}
-              on:click={preventUseItemEvent}
-            />
-          </span>
-        </div>
-      </button>
-    {/each}
-    {#if $context.unlocked}
-      <div class="items-footer">
-        <button
-          type="button"
-          class="footer-command icon-button"
-          title={localize('DND5E.ItemCreate')}
-          on:click|stopPropagation|preventDefault={() =>
-            FoundryAdapter.createItem(
-              {
-                ...section.dataset,
-                action: 'itemCreate',
-                tooltip: 'DND5E.ItemCreate',
-              },
-              $context.actor,
-            )}
-          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_CREATE_COMMAND}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-        >
-          <i class="fas fa-plus-circle" />
-        </button>
-        {#each customCommands as command}
+        </a>
+      {/each}
+      {#if context.unlocked}
+        <div class="items-footer">
           <button
             type="button"
             class="footer-command icon-button"
-            on:click={(ev) =>
-              command.execute?.({ section, event: ev, actor: $context.actor })}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-            title={localize(command.tooltip ?? '')}
+            title={localize('DND5E.ItemCreate')}
+            onclick={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              FoundryAdapter.createItem(
+                {
+                  ...section.dataset,
+                  action: 'itemCreate',
+                  tooltip: 'DND5E.ItemCreate',
+                },
+                context.actor,
+              );
+            }}
+            data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_CREATE_COMMAND}
+            tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
           >
-            {#if (command.iconClass ?? '') !== ''}
-              <i class={command.iconClass} />
-            {/if}
-            {localize(command.label ?? '')}
+            <i class="fas fa-plus-circle"></i>
           </button>
-        {/each}
-      </div>
-    {/if}
-  </div>
+          {#each customCommands as command}
+            <button
+              type="button"
+              class="footer-command icon-button"
+              onclick={(ev) =>
+                command.execute?.({
+                  section,
+                  event: ev,
+                  actor: context.actor,
+                })}
+              tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
+              title={localize(command.tooltip ?? '')}
+            >
+              {#if (command.iconClass ?? '') !== ''}
+                <i class={command.iconClass}></i>
+              {/if}
+              {localize(command.label ?? '')}
+            </button>
+          {/each}
+        </div>
+      {/if}
+    </div>
+  {/snippet}
 </ItemTable>
 
 <style lang="scss">

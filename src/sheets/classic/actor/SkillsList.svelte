@@ -2,25 +2,30 @@
   import InlineTextDropdownList from 'src/components/inputs/InlineTextDropdownList.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
+  import { settings } from 'src/settings/settings.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { Actor5e, DropdownListOption } from 'src/types/types';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { formatAsModifier } from 'src/utils/formatting';
   import { warn } from 'src/utils/logging';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
 
-  export let toggleable: boolean = false;
-  export let actor: Actor5e;
-  export let expanded: boolean = true;
-  export let toggleField: string | null = null;
+  interface Props {
+    toggleable?: boolean;
+    actor: Actor5e;
+    expanded?: boolean;
+    toggleField?: string | null;
+  }
 
-  $: showAllSkills = !toggleable || expanded;
+  let {
+    toggleable = false,
+    actor,
+    expanded = true,
+    toggleField = null,
+  }: Props = $props();
 
-  let context = getContext<Readable<CharacterSheetContext | NpcSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context =
+    $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
 
   type SkillRef = {
     key: string;
@@ -29,42 +34,38 @@
     skill: any | null;
   };
 
-  let skillRefs: SkillRef[];
-  $: {
-    skillRefs = Array.from(Object.entries($context.config.skills)).reduce<
-      SkillRef[]
-    >((prev, [key, configSkill]: [string, any]) => {
-      const skill = getSkill(key);
+  let skillRefs: SkillRef[] = $derived(
+    Array.from(Object.entries(context.config.skills)).reduce<SkillRef[]>(
+      (prev, [key, configSkill]: [string, any]) => {
+        const skill = getSkill(key);
 
-      if (!skill) {
-        warn(
-          'Unable to find skill. Ensure custom skills are added at "init" time.',
-          false,
-          { key, configSkill },
-        );
+        if (!skill) {
+          warn(
+            'Unable to find skill. Ensure custom skills are added at "init" time.',
+            false,
+            { key, configSkill },
+          );
+          return prev;
+        }
+
+        prev.push({
+          key: key,
+          label: configSkill.label,
+          ability: skill.ability,
+          skill: skill,
+        });
+
         return prev;
-      }
-
-      prev.push({
-        key: key,
-        label: configSkill.label,
-        ability: skill.ability,
-        skill: skill,
-      });
-
-      return prev;
-    }, []);
-  }
-
-  $: abilities = FoundryAdapter.getAbilitiesAsDropdownOptions(
-    $context.abilities,
+      },
+      [],
+    ),
   );
 
   const localize = FoundryAdapter.localize;
 
   function getSkill(key: string): any | null {
-    if (key in $context.actor.system.skills) {
-      return $context.skills[key];
+    if (key in context.actor.system.skills) {
+      return context.skills[key];
     }
 
     return null;
@@ -79,7 +80,7 @@
   }
 
   function onSkillAbilityChange(
-    ev: CustomEvent<DropdownListOption>,
+    option: DropdownListOption,
     skillRef: {
       key: string;
       label: string;
@@ -87,16 +88,21 @@
       skill: any | null;
     },
   ): void {
-    $context.actor.update({
+    context.actor.update({
       system: {
         skills: {
           [skillRef.key]: {
-            ability: ev.detail.value,
+            ability: option,
           },
         },
       },
     });
   }
+  let showAllSkills = $derived(!toggleable || expanded);
+
+  let abilities = $derived(
+    FoundryAdapter.getAbilitiesAsDropdownOptions(context.abilities),
+  );
 </script>
 
 <div class="skills-list-container">
@@ -106,7 +112,8 @@
   >
     {#each skillRefs as skillRef (skillRef.key)}
       {@const showSkill =
-        skillRef.skill && (showAllSkills || skillRef.skill.prof.hasProficiency > 0)}
+        skillRef.skill &&
+        (showAllSkills || skillRef.skill.prof.hasProficiency > 0)}
 
       {#if showSkill}
         <li
@@ -115,41 +122,41 @@
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_CONTAINER}
           data-key={skillRef.key}
         >
-          {#if $context.editable && $context.unlocked}
+          {#if context.editable && context.unlocked}
             {@const activeEffectApplied =
               ActiveEffectsHelper.isActiveEffectAppliedToField(
-                $context.actor,
+                context.actor,
                 `system.skills.${skillRef.key}.value`,
               )}
             <button
               type="button"
               class="configure-proficiency inline-icon-button"
-              on:click={() =>
+              onclick={() =>
                 FoundryAdapter.renderSkillToolConfig(
-                  $context.actor,
+                  context.actor,
                   'skills',
                   skillRef.key,
                 )}
               title={localize('DND5E.SkillConfigure')}
               data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
                 .SKILL_CONFIGURATION_CONTROL}
-              tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+              tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
             >
-              <i class="fas fa-cog" />
+              <i class="fas fa-cog"></i>
             </button>
             <button
               type="button"
               class="skill-proficiency-toggle inline-icon-button"
-              on:click={() =>
+              onclick={() =>
                 FoundryAdapter.cycleProficiency(
-                  $context.actor,
+                  context.actor,
                   skillRef.key,
                   skillRef.skill?.value,
                   'skills',
                 )}
-              on:contextmenu={() =>
+              oncontextmenu={() =>
                 FoundryAdapter.cycleProficiency(
-                  $context.actor,
+                  context.actor,
                   skillRef.key,
                   skillRef.skill?.value,
                   'skills',
@@ -158,7 +165,7 @@
               title={skillRef.skill.hover}
               data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
                 .SKILL_PROFICIENCY_TOGGLE}
-              tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+              tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
               disabled={activeEffectApplied}
               data-tooltip={activeEffectApplied
                 ? localize('DND5E.ActiveEffectOverrideWarning')
@@ -169,14 +176,14 @@
               >{@html skillRef.skill.icon}</span
             >
           {/if}
-          {#if $context.editable}
+          {#if context.editable}
             <button
               type="button"
               class="tidy5e-skill-name transparent-button rollable"
-              on:click={(event) =>
-                $context.actor.rollSkill({ skill: skillRef.key, event })}
+              onclick={(event) =>
+                context.actor.rollSkill({ skill: skillRef.key, event })}
               data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_ROLLER}
-              tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+              tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
               title={skillRef.skill.label}
             >
               {skillRef.skill.label}
@@ -186,7 +193,7 @@
               {skillRef.skill.label}
             </span>
           {/if}
-          {#if $context.unlocked && $context.editable}
+          {#if context.unlocked && context.editable}
             <InlineTextDropdownList
               options={abilities}
               selected={{
@@ -194,8 +201,9 @@
                 value: skillRef.skill.abbreviation,
               }}
               buttonClass="skill-ability"
-              title={$context.abilities?.[skillRef.ability]?.label}
-              on:optionClicked={(ev) => onSkillAbilityChange(ev, skillRef)}
+              title={context.abilities?.[skillRef.ability]?.label}
+              onOptionClicked={(option) =>
+                onSkillAbilityChange(option, skillRef)}
             />
           {:else}
             <span class="skill-ability">{skillRef.skill.abbreviation}</span>
@@ -212,22 +220,21 @@
       {/if}
     {/each}
   </ul>
-  {#if toggleable}
+  {#if toggleable && context.editable}
     <div style="text-align:center;">
-      <button
-        type="button"
-        class="toggle-proficient inline-transparent-button"
-        on:click={toggleShowAllSkills}
+      <a
+        class="toggle-proficient"
+        onclick={toggleShowAllSkills}
         data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
           .SKILLS_SHOW_PROFICIENT_TOGGLE}
-        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+        tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
       >
         {#if showAllSkills}
           {localize('TIDY5E.HideNotProficientSkills')}
         {:else}
           {localize('TIDY5E.ShowNotProficientSkills')}
-        {/if}</button
-      >
+        {/if}
+      </a>
     </div>
   {/if}
 </div>

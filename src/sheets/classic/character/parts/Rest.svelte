@@ -1,48 +1,43 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { CharacterSheetContext } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
-  import { settingStore } from 'src/settings/settings';
-  import { CONSTANTS } from 'src/constants';
+  import { settings } from 'src/settings/settings.svelte';
+  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = $derived(getCharacterSheetContext());
 
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="rest-container" class:rounded={$context.useRoundedPortraitStyle}>
+<div class="rest-container" class:rounded={context.useRoundedPortraitStyle}>
   <div class="resting">
     <span class="resting-icon" title={localize('TIDY5E.RestHint')}
-      ><i class="rest-icon fas fa-bed" /></span
+      ><i class="rest-icon fas fa-bed"></i></span
     >
     <button
       type="button"
       class="rest icon-button"
       title={localize('TIDY5E.ShortRest')}
-      on:click={(event) => $context.actor.sheet.onShortRest(event)}
-      disabled={!$context.editable}
-      tabindex={!$settingStore.useDefaultSheetHpTabbing &&
-      $settingStore.useAccessibleKeyboardSupport
+      onclick={(event) => context.actor.sheet.onShortRest(event)}
+      disabled={!context.editable}
+      tabindex={!settings.value.useDefaultSheetHpTabbing &&
+      settings.value.useAccessibleKeyboardSupport
         ? 0
         : -1}
     >
-      <i class="fas fa-hourglass-half" />
+      <i class="fas fa-hourglass-half"></i>
     </button>
     <button
       type="button"
       class="rest icon-button"
       title={localize('TIDY5E.LongRest')}
-      on:click={(event) => $context.actor.sheet.onLongRest(event)}
-      disabled={!$context.editable}
-      tabindex={!$settingStore.useDefaultSheetHpTabbing &&
-      $settingStore.useAccessibleKeyboardSupport
+      onclick={(event) => context.actor.sheet.onLongRest(event)}
+      disabled={!context.editable}
+      tabindex={!settings.value.useDefaultSheetHpTabbing &&
+      settings.value.useAccessibleKeyboardSupport
         ? 0
         : -1}
     >
-      <i class="fas fa-hourglass-end" />
+      <i class="fas fa-hourglass-end"></i>
     </button>
   </div>
 </div>
@@ -62,8 +57,8 @@
     }
 
     .resting {
-      &:is(:hover),
-      &:has(button:focus-visible) {
+      &:is(:global(:hover)),
+      &:has(:global(button:focus-visible)) {
         width: 6.875rem;
       }
     }

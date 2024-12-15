@@ -1,16 +1,39 @@
 <script lang="ts">
+  import type { Snippet } from 'svelte';
   import Listbox from './Listbox.svelte';
   import SelectionListboxToolbar from './SelectionListboxToolbar.svelte';
 
   type TItem = $$Generic;
 
-  export let leftItems: TItem[];
-  export let selectedLeftItemIndex: number | null = null;
-  export let rightItems: TItem[];
-  export let selectedRightItemIndex: number | null = null;
-  export let labelProp: keyof TItem;
-  export let valueProp: keyof TItem;
-  export let listboxCssClass: string = '';
+  interface Props {
+    leftItems: TItem[];
+    selectedLeftItemIndex?: number | null;
+    rightItems: TItem[];
+    selectedRightItemIndex?: number | null;
+    labelProp: keyof TItem;
+    valueProp: keyof TItem;
+    listboxCssClass?: string;
+    leftHeader?: Snippet;
+    rightHeader?: Snippet;
+    leftItemTemplate?: Snippet<[any]>;
+    rightItemTemplate?: Snippet<[any]>;
+    [key: string]: any;
+  }
+
+  let {
+    leftItems = $bindable(),
+    selectedLeftItemIndex = $bindable(null),
+    rightItems = $bindable(),
+    selectedRightItemIndex = $bindable(null),
+    labelProp,
+    valueProp,
+    listboxCssClass = '',
+    leftHeader,
+    rightHeader,
+    leftItemTemplate,
+    rightItemTemplate,
+    ...rest
+  }: Props = $props();
 
   interface $$Slots {
     leftHeader: any;
@@ -19,13 +42,17 @@
     rightItemTemplate: { item: TItem };
   }
 
-  $: selectedItemIndex = selectedLeftItemIndex ?? selectedRightItemIndex;
-  $: selectedArray =
+  let selectedItemIndex = $derived(
+    selectedLeftItemIndex ?? selectedRightItemIndex,
+  );
+
+  let selectedArray = $derived(
     selectedLeftItemIndex !== null
       ? leftItems
       : selectedRightItemIndex !== null
         ? rightItems
-        : null;
+        : null,
+  );
 
   function moveAllToTheLeft() {
     leftItems = [...leftItems, ...rightItems];
@@ -140,38 +167,38 @@
   }
 
   function handleLeftListboxKeydown(
-    e: CustomEvent<KeyboardEvent & { currentTarget: HTMLElement }>,
+    e: KeyboardEvent & { currentTarget: HTMLElement },
   ): void {
-    if (e.detail.code === 'Space') {
+    if (e.code === 'Space') {
       moveRight();
-      e.detail.preventDefault();
-    } else if (e.detail.key === 'ArrowUp' && e.detail.altKey) {
+      e.preventDefault();
+    } else if (e.key === 'ArrowUp' && e.altKey) {
       moveUp();
-    } else if (e.detail.key === 'ArrowDown' && e.detail.altKey) {
+    } else if (e.key === 'ArrowDown' && e.altKey) {
       moveDown();
     }
   }
   function handleRightListboxKeydown(
-    e: CustomEvent<KeyboardEvent & { currentTarget: HTMLElement }>,
+    e: KeyboardEvent & { currentTarget: HTMLElement },
   ): void {
-    if (e.detail.code === 'Space') {
+    if (e.code === 'Space') {
       moveLeft();
-      e.detail.preventDefault();
-    } else if (e.detail.key === 'ArrowUp' && e.detail.altKey) {
+      e.preventDefault();
+    } else if (e.key === 'ArrowUp' && e.altKey) {
       moveUp();
-    } else if (e.detail.key === 'ArrowDown' && e.detail.altKey) {
+    } else if (e.key === 'ArrowDown' && e.altKey) {
       moveDown();
     }
   }
 </script>
 
-<div class="selection-listbox {$$props.class ?? ''}">
-  {#if $$slots['leftHeader'] || $$slots['rightHeader']}
+<div class="selection-listbox {rest.class ?? ''}">
+  {#if leftHeader || rightHeader}
     <div class="column-1">
-      <slot name="leftHeader" />
+      {@render leftHeader?.()}
     </div>
     <div class="column-3">
-      <slot name="rightHeader" />
+      {@render rightHeader?.()}
     </div>
   {/if}
   <Listbox
@@ -179,35 +206,35 @@
     {labelProp}
     {valueProp}
     bind:selectedItemIndex={selectedLeftItemIndex}
-    on:select={() => {
+    onselect={() => {
       selectedRightItemIndex = null;
     }}
-    on:keydown={handleLeftListboxKeydown}
+    onkeydown={handleLeftListboxKeydown}
     class="column-1 {listboxCssClass}"
   >
-    <svelte:fragment slot="itemTemplate" let:item>
-      <slot name="leftItemTemplate" {item}>
+    {#snippet itemTemplate({ item })}
+      {#if leftItemTemplate}{@render leftItemTemplate({ item })}{:else}
         {item[labelProp]}
-      </slot>
-    </svelte:fragment>
+      {/if}
+    {/snippet}
   </Listbox>
   <SelectionListboxToolbar
     moveUpDisabled={selectedItemIndex === null || selectedItemIndex === 0}
-    on:moveUp={moveUp}
+    onMoveUp={moveUp}
     moveDownDisabled={selectedItemIndex === null ||
       selectedArray === null ||
       selectedItemIndex >= selectedArray.length - 1}
-    on:moveDown={moveDown}
+    onMoveDown={moveDown}
     moveLeftDisabled={selectedLeftItemIndex !== null ||
       selectedRightItemIndex === null}
-    on:moveLeft={moveLeft}
+    onMoveLeft={moveLeft}
     moveRightDisabled={selectedLeftItemIndex === null ||
       selectedRightItemIndex !== null}
-    on:moveRight={moveRight}
+    onMoveRight={moveRight}
     moveAllToTheLeftDisabled={rightItems.length === 0}
-    on:moveAllToTheLeft={moveAllToTheLeft}
+    onMoveAllToTheLeft={moveAllToTheLeft}
     moveAllToTheRightDisabled={leftItems.length === 0}
-    on:moveAllToTheRight={moveAllToTheRight}
+    onMoveAllToTheRight={moveAllToTheRight}
     class="column-2"
   />
   <Listbox
@@ -215,16 +242,16 @@
     {labelProp}
     {valueProp}
     bind:selectedItemIndex={selectedRightItemIndex}
-    on:select={() => {
+    onselect={() => {
       selectedLeftItemIndex = null;
     }}
-    on:keydown={handleRightListboxKeydown}
+    onkeydown={handleRightListboxKeydown}
     class="column-3 {listboxCssClass}"
   >
-    <svelte:fragment slot="itemTemplate" let:item>
-      <slot name="rightItemTemplate" {item}>
+    {#snippet itemTemplate({ item })}
+      {#if rightItemTemplate}{@render rightItemTemplate({ item })}{:else}
         {item[labelProp]}
-      </slot>
-    </svelte:fragment>
+      {/if}
+    {/snippet}
   </Listbox>
 </div>

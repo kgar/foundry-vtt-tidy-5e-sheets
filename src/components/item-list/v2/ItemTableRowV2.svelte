@@ -1,33 +1,36 @@
 <script lang="ts">
   import TidyTableRow from 'src/components/table/TidyTableRow.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { settingStore } from 'src/settings/settings';
-  import type {
-    Item5e,
-    ItemCardContentComponent,
-    ItemChatData,
-  } from 'src/types/item.types';
+  import type { Item5e, ItemChatData } from 'src/types/item.types';
   import type {
     ExpandedItemData,
     ExpandedItemIdToLocationsMap,
     OnItemToggledFn,
-    ItemCardStore,
   } from 'src/types/types';
   import { warn } from 'src/utils/logging';
-  import { getContext, onMount } from 'svelte';
-  import type { Writable } from 'svelte/store';
+  import { getContext, type Snippet } from 'svelte';
   import ItemSummary from '../ItemSummary.svelte';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { TidyHooks } from 'src/foundry/TidyHooks';
 
-  export let item: Item5e | null = null;
-  export let contextMenu: { type: string; uuid: string } | null = null;
-  export let rowClass: string = '';
-  export let itemCardContentTemplate: ItemCardContentComponent | null = null;
-  export let hidden: boolean = false;
+  interface Props {
+    item?: Item5e | null;
+    contextMenu?: { type: string; uuid: string } | null;
+    rowClass?: string;
+    hidden?: boolean;
+    children?: Snippet<[any]>;
+  }
 
-  $: draggable = item;
+  let {
+    item = null,
+    contextMenu = null,
+    rowClass = '',
+    hidden = false,
+    children,
+  }: Props = $props();
+
+  let draggable = $derived(item);
 
   const emptyChatData: ItemChatData = {
     description: { value: '' },
@@ -38,22 +41,19 @@
   const expandedItemData = getContext<ExpandedItemData>(
     CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA,
   );
-  const context = getContext<Writable<unknown>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+
   const expandedItems = getContext<ExpandedItemIdToLocationsMap>(
     CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEMS,
   );
+
   const onItemToggled = getContext<OnItemToggledFn>(
     CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TOGGLED,
   );
+
   const location = getContext<string>(CONSTANTS.SVELTE_CONTEXT.LOCATION);
 
-  let card: Writable<ItemCardStore> | undefined = getContext<
-    Writable<ItemCardStore>
-  >(CONSTANTS.SVELTE_CONTEXT.CARD);
-  let showSummary = false;
-  let chatData: ItemChatData | undefined;
+  let showSummary = $state(false);
+  let chatData: ItemChatData | undefined = $state();
 
   async function toggleSummary() {
     if (!item) {
@@ -69,26 +69,10 @@
 
   async function onMouseEnter(event: Event) {
     TidyHooks.tidy5eSheetsItemHoverOn(event, item);
-
-    if (!item?.getChatData || !$settingStore.itemCardsForAllItems) {
-      return;
-    }
-
-    card?.update((card) => {
-      card.item = item;
-      card.itemCardContentTemplate = itemCardContentTemplate;
-      return card;
-    });
   }
 
   async function onMouseLeave(event: Event) {
     TidyHooks.tidy5eSheetsItemHoverOff(event, item);
-
-    card?.update((card) => {
-      card.item = null;
-      card.itemCardContentTemplate = null;
-      return card;
-    });
   }
 
   function handleDragStart(event: DragEvent) {
@@ -96,12 +80,7 @@
       return;
     }
 
-    // Don't show cards while dragging
     onMouseLeave(event);
-
-    card?.update((card) => {
-      return card;
-    });
 
     const dragData = draggable.toDragData();
     event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
@@ -120,10 +99,10 @@
     }
   }
 
-  onMount(() => {
+  $effect(() => {
     let first = true;
 
-    const subscription = context?.subscribe(async (c: any) => {
+    (async () => {
       if (first) {
         first = false;
         restoreItemSummaryIfExpanded();
@@ -137,9 +116,7 @@
         // so it rehydrates on next open
         chatData = undefined;
       }
-    });
-
-    return subscription;
+    })();
   });
 </script>
 
@@ -147,27 +124,27 @@
   {hidden}
   rowContainerAttributes={{
     ['data-context-menu']: contextMenu?.type,
-    ['data-context-menu-document-uuid']: contextMenu?.uuid,
     ['data-item-id']: item?.id,
     ['data-tidy-table-row']: '',
     ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.ITEM_TABLE_ROW,
     ['data-tidy-item-type']: item?.type ?? 'unknown',
+    ['data-info-card']: item ? 'item' : null,
+    ['data-info-card-entity-uuid']: item?.uuid ?? null,
   }}
   rowAttributes={{
     draggable: !!draggable,
   }}
   rowClass="tidy-table-row-v2 {rowClass ?? ''}"
-  on:mousedown={(event) =>
-    item && FoundryAdapter.editOnMiddleClick(event, item)}
-  on:mouseenter={onMouseEnter}
-  on:mouseleave={onMouseLeave}
-  on:dragstart={handleDragStart}
+  onmousedown={(event) => item && FoundryAdapter.editOnMiddleClick(event, item)}
+  onmouseenter={onMouseEnter}
+  onmouseleave={onMouseLeave}
+  ondragstart={handleDragStart}
 >
-  <slot {toggleSummary} />
+  {@render children?.({ toggleSummary })}
 
-  <svelte:fragment slot="after-row">
+  {#snippet afterRow()}
     <ExpandableContainer expanded={showSummary}>
       <ItemSummary chatData={chatData ?? emptyChatData} {item} />
     </ExpandableContainer>
-  </svelte:fragment>
+  {/snippet}
 </TidyTableRow>

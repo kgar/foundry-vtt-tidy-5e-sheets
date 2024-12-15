@@ -3,26 +3,21 @@
   import Select from 'src/components/inputs/Select.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import DetailsSpellcasting from '../parts/DetailsSpellcasting.svelte';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
-  import type { ItemSheetContext } from 'src/types/item.types';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ItemStartingEquipment from '../parts/ItemStartingEquipment.svelte';
-  import { CONSTANTS } from 'src/constants';
   import { mapMulticlassingAbilitiesToSave } from 'src/utils/system-properties';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
+  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<ItemSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = $derived(getItemSheetContext());
 
-  $: appId = $context.document.id;
+  let appId = $derived(context.document.id);
 
-  $: abilities = Object.entries<any>($context.config.abilities).map(
-    ([key, value]) => ({
+  let abilities = $derived(
+    Object.entries<any>(context.config.abilities).map(([key, value]) => ({
       key: key,
       label: value.label,
-    }),
+    })),
   );
 
   const localize = FoundryAdapter.localize;
@@ -35,16 +30,16 @@
   <div class="form-fields">
     <TextInput
       id="{appId}-identifier"
-      document={$context.item}
+      document={context.item}
       field="system.identifier"
-      value={$context.source.identifier}
-      placeholder={$context.item.identifier}
-      disabled={!$context.editable}
+      value={context.source.identifier}
+      placeholder={context.item.identifier}
+      disabled={!context.editable}
     />
   </div>
   <p class="hint">
     {@html localize('DND5E.ClassIdentifierHint', {
-      identifier: $context.item.identifier,
+      identifier: context.item.identifier,
     })}
     {localize('DND5E.IdentifierError')}
   </p>
@@ -54,33 +49,29 @@
   <label for="{appId}-hit-dice">{localize('DND5E.HitDice')}</label>
   <div class="form-fields">
     <div class="form-group label-top">
-      <label for="{appId}-hit-dice"
-        >{localize('DND5E.Denomination')}</label
-      >
+      <label for="{appId}-hit-dice">{localize('DND5E.Denomination')}</label>
       <Select
         id="{appId}-hit-dice"
-        document={$context.item}
+        document={context.item}
         field="system.hitDice"
-        value={$context.source.hitDice}
-        disabled={!$context.editable}
+        value={context.source.hitDice}
+        disabled={!context.editable}
       >
-        {#each $context.config.hitDieTypes as type}
+        {#each context.config.hitDieTypes as type}
           <option value={type}>{type}</option>
         {/each}
       </Select>
     </div>
 
     <div class="form-group label-top">
-      <label for="{appId}-hit-dice-spent"
-        >{localize('DND5E.Spent')}</label
-      >
+      <label for="{appId}-hit-dice-spent">{localize('DND5E.Spent')}</label>
       <NumberInput
         id="{appId}-hitDiceUsed"
-        document={$context.item}
+        document={context.item}
         field="system.hitDiceUsed"
-        value={$context.source.hitDiceUsed}
+        value={context.source.hitDiceUsed}
         placeholder="0"
-        disabled={!$context.editable}
+        disabled={!context.editable}
       />
     </div>
   </div>
@@ -96,12 +87,12 @@
     <Checkbox
       id="{appId}-primaryAbility-value-{key?.slugify()}"
       labelCssClass="checkbox"
-      document={$context.item}
+      document={context.item}
       field="system.primaryAbility.value"
-      checked={$context.system.primaryAbility.value.has(key)}
+      checked={context.system.primaryAbility.value.has(key)}
       value={key}
-      disabled={!$context.editable}
-      onDataPreparing={(ev) => mapMulticlassingAbilitiesToSave($context, ev)}
+      disabled={!context.editable}
+      onDataPreparing={(ev) => mapMulticlassingAbilitiesToSave(context, ev)}
     >
       {label}
     </Checkbox>
@@ -109,17 +100,17 @@
   <p class="hint">{localize('DND5E.CLASS.FIELDS.primaryAbility.value.hint')}</p>
 </div>
 
-{#if $context.source.primaryAbility.value.size > 1}
+{#if context.source.primaryAbility.value.size > 1}
   <div class="form-group">
     <label for="{appId}-primaryAbility-fields-all"
       >{localize('DND5E.CLASS.FIELDS.primaryAbility.all.label')}</label
     >
     <Checkbox
       id="{appId}-primaryAbility-fields-all"
-      document={$context.item}
+      document={context.item}
       field="system.primaryAbility.fields.all"
-      checked={$context.source.primaryAbility.all}
-      disabled={!$context.editable}
+      checked={context.source.primaryAbility.all}
+      disabled={!context.editable}
     />
 
     <p class="hint">{localize('DND5E.CLASS.FIELDS.primaryAbility.all.hint')}</p>

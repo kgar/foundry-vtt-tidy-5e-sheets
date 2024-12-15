@@ -4,9 +4,13 @@
   import AcShield from './AcShield.svelte';
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
 
-  export let ac: any;
-  export let init: any;
-  export let abilities: any[];
+  interface Props {
+    ac: { value: string | number };
+    init: any;
+    abilities: any[];
+  }
+
+  let { ac, init, abilities }: Props = $props();
 </script>
 
 <section class="actor-stats">

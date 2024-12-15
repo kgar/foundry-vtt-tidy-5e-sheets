@@ -1,15 +1,15 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
-  import { settingStore } from 'src/settings/settings';
+  import { settings } from 'src/settings/settings.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
 
-  export let warnings: any;
+  interface Props {
+    warnings: any;
+  }
 
-  let context = getContext<Readable<ActorSheetContextV1>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let { warnings }: Props = $props();
+
+  let context = $derived(getSheetContext<ActorSheetContextV1>());
 </script>
 
 <ol class="warnings">
@@ -19,8 +19,8 @@
         <button
           type="button"
           class="inline-transparent-button"
-          on:click={(ev) => $context.actor.sheet._onWarningLink(ev)}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+          onclick={(ev) => context.actor.sheet._onWarningLink(ev)}
+          tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
           data-target={warning.link}>{warning.message}</button
         >
       {:else}

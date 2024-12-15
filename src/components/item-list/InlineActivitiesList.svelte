@@ -8,20 +8,24 @@
   import ActivityUses from './ActivityUses.svelte';
   import ActivityAddUses from './ActivityAddUses.svelte';
   import ExpandableContainer from '../expandable/ExpandableContainer.svelte';
-  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService';
+  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemImage from './ItemImage.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
+  import { settings } from 'src/settings/settings.svelte';
   import { Activities } from 'src/features/activities/activities';
   import type { ActivityItemContext } from 'src/types/types';
 
-  export let item: Item5e;
-  export let activities: ActivityItemContext[] = [];
-  export let inlineToggleService: InlineToggleService;
+  interface Props {
+    item?: Item5e | null;
+    inlineToggleService: InlineToggleService;
+    activities: ActivityItemContext[] | undefined;
+  }
 
-  $: inlineToggleServiceStore = inlineToggleService.store;
+  let { item = null, inlineToggleService, activities = [] }: Props = $props();
+
+  let toggleServiceMap = $derived(inlineToggleService.map);
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
@@ -49,7 +53,7 @@
 </script>
 
 <ExpandableContainer
-  expanded={$inlineToggleServiceStore.get(tabId)?.has(item.id) === true}
+  expanded={toggleServiceMap.get(tabId)?.has(item.id) === true}
 >
   <div class="inline-activities-container" data-item-id={item.id}>
     <TidyTable
@@ -57,24 +61,26 @@
       toggleable={false}
       {gridTemplateColumns}
     >
-      <svelte:fragment slot="body">
+      {#snippet body()}
         {#each activities as { activity } (activity.id)}
           {@const configurable = Activities.isConfigurable(activity)}
           <TidyTableRow
             rowAttributes={{
               'data-activity-id': activity.id,
               'data-configurable': configurable,
+              'data-info-card': 'activity',
+              'data-info-card-entity-uuid': activity.uuid,
             }}
             rowClass="activity"
-            on:mousedown={(event) =>
+            onmousedown={(event) =>
               FoundryAdapter.editOnMiddleClick(event, activity)}
           >
             <TidyTableCell primary={true}>
               <button
                 type="button"
                 class="inline-activity-roll-button highlight-on-hover"
-                on:click={(ev) => rollActivity(activity, ev)}
-                tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+                onclick={(ev) => rollActivity(activity, ev)}
+                tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
               >
                 {#if activity.img?.endsWith('.svg')}
                   <Dnd5eIcon src={activity.img} />
@@ -98,7 +104,7 @@
             </TidyTableCell>
           </TidyTableRow>
         {/each}
-      </svelte:fragment>
+      {/snippet}
     </TidyTable>
   </div>
 </ExpandableContainer>

@@ -1,11 +1,35 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
+  import type { Snippet } from 'svelte';
+  import type { DragEventHandler, MouseEventHandler } from 'svelte/elements';
 
-  export let hidden: boolean = false;
-  export let rowContainerClass: string = '';
-  export let rowClass: string = '';
-  export let rowContainerAttributes: Record<string, unknown> = {};
-  export let rowAttributes: Record<string, unknown> = {};
+  interface Props {
+    hidden?: boolean;
+    rowContainerClass?: string;
+    rowClass?: string;
+    rowContainerAttributes?: Record<string, unknown>;
+    rowAttributes?: Record<string, unknown>;
+    children?: Snippet;
+    afterRow?: Snippet;
+    onmousedown?: MouseEventHandler<HTMLElement>;
+    onmouseenter?: MouseEventHandler<HTMLElement>;
+    onmouseleave?: MouseEventHandler<HTMLElement>;
+    ondragstart?: DragEventHandler<HTMLElement>;
+  }
+
+  let {
+    hidden = false,
+    rowContainerClass = '',
+    rowClass = '',
+    rowContainerAttributes = {},
+    rowAttributes = {},
+    children,
+    afterRow,
+    onmousedown,
+    onmouseenter,
+    onmouseleave,
+    ondragstart,
+  }: Props = $props();
 </script>
 
 <div
@@ -14,20 +38,19 @@
   aria-hidden={hidden}
   {...rowContainerAttributes}
 >
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div
     class="tidy-table-row {rowClass ?? ''}"
     data-tidy-table-row
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TABLE_ROW}
     {...rowAttributes}
-    on:mousedown
-    on:mouseenter
-    on:mouseleave
-    on:dragstart
+    {onmousedown}
+    {onmouseenter}
+    {onmouseleave}
+    {ondragstart}
   >
-    <slot />
+    {@render children?.()}
   </div>
 
   <!-- Consider an alternative: don't require content to be nested within this component in order to be associated visually with the target row. -->
-  <slot name="after-row" />
+  {@render afterRow?.()}
 </div>

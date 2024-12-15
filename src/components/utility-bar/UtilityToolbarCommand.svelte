@@ -1,32 +1,39 @@
 <script lang="ts">
   import { isNil } from 'src/utils/data';
-  import { createEventDispatcher, getContext } from 'svelte';
   import type { UtilityToolbarCommandExecuteEvent } from './types';
-  import { settingStore } from 'src/settings/settings';
-  import type { Readable } from 'svelte/store';
+  import { settings } from 'src/settings/settings.svelte';
   import { CONSTANTS } from 'src/constants';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import type { TidySectionBase } from 'src/types/types';
 
-  export let title: string | undefined = undefined;
-  export let iconClass: string | undefined = undefined;
-  export let text: string | undefined = undefined;
-  export let visible: boolean = true;
+  interface Props {
+    title?: string | undefined;
+    iconClass?: string | undefined;
+    text?: string | undefined;
+    visible?: boolean;
+    sections?: TidySectionBase[];
+    onExecute?: (event: UtilityToolbarCommandExecuteEvent) => void;
+  }
 
-  const context = getContext<Readable<unknown>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let {
+    title = undefined,
+    iconClass = undefined,
+    text = undefined,
+    visible = true,
+    sections = [],
+    onExecute,
+  }: Props = $props();
 
-  const dispatcher = createEventDispatcher<{
-    execute: UtilityToolbarCommandExecuteEvent;
-  }>();
+  const context = $derived(getSheetContext<unknown>());
 </script>
 
 <button
   type="button"
   class="inline-icon-button"
   class:hidden={!visible}
-  on:click={(ev) => dispatcher('execute', { event: ev, context: $context })}
+  onclick={(ev) => onExecute?.({ event: ev, context: context, sections })}
   {title}
-  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+  tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.UTILITY_TOOLBAR_COMMAND}
 >
   {#if !isNil(iconClass, '')}

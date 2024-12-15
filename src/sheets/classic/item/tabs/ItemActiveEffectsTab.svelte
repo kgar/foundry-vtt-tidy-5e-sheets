@@ -2,22 +2,22 @@
   import ContentConcealer from 'src/components/content-concealment/ContentConcealer.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
+  import { settings } from 'src/settings/settings.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemSheetContext } from 'src/types/item.types';
   import type { CharacterSheetContext } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
 
-  let context = getContext<Readable<ItemSheetContext | CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  let context =
+    $derived(getSheetContext<ItemSheetContext | CharacterSheetContext>());
+
+  let effects = $derived(
+    Object.entries(context.effects) as Iterable<[string, any]>,
   );
-
-  $: effects = Object.entries($context.effects) as Iterable<[string, any]>;
 
   const localize = FoundryAdapter.localize;
 
   function onAddClicked(section: any) {
-    const owner = $context.item;
+    const owner = context.item;
     return FoundryAdapter.addEffect(section.type, owner);
   }
 
@@ -37,12 +37,16 @@
   }
 </script>
 
-<ContentConcealer conceal={$context.concealDetails}>
+<ContentConcealer conceal={context.concealDetails}>
   <ol
     class="items-list effects-list"
-    on:drop={(ev) => $context.item.sheet._onDrop(ev)}
+    ondrop={(ev) => context.item.sheet._onDrop(ev)}
   >
     {#each effects as [_, section]}
+      {@const effectEntries = section.effects.map((effect: any) => ({
+        effect,
+      }))}
+
       {#if !section.hidden}
         <li class="items-header flexrow" data-effect-type={section.type}>
           <h3 class="item-name effect-name flexrow">
@@ -53,15 +57,15 @@
           </div>
           <div class="effect-source">{localize('DND5E.Duration')}</div>
           <div class="item-controls active-effect-controls flexrow">
-            {#if $context.editable}
+            {#if context.editable}
               <button
                 type="button"
                 class="active-effect-control inline-icon-button"
                 title={localize('DND5E.EffectCreate')}
-                on:click={(event) => onAddClicked(section)}
-                tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+                onclick={(event) => onAddClicked(section)}
+                tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
               >
-                <i class="fas fa-plus" />
+                <i class="fas fa-plus"></i>
                 {localize('DND5E.Add')}
               </button>
             {/if}
@@ -77,14 +81,13 @@
         {/if}
 
         <ol class="item-list">
-          {#each section.effects as effect}
-            <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+          {#each effectEntries as { effect }}
             <li
               class="item effect flexrow"
               data-effect-id={effect.id}
-              on:mousedown={(event) => handleMiddleClickToEdit(event, effect)}
-              on:dragstart={(ev) => handleDragStart(ev, effect)}
-              draggable={$context.editable}
+              onmousedown={(event) => handleMiddleClickToEdit(event, effect)}
+              ondragstart={(ev) => handleDragStart(ev, effect)}
+              draggable={context.editable}
               data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS}
             >
               <div class="item-name effect-name flexrow">
@@ -110,7 +113,7 @@
                 {effect.duration.label ?? ''}
               </div>
               <div class="item-controls active-effect-controls flexrow">
-                {#if $context.editable}
+                {#if context.editable}
                   {#if section.type !== 'enchantment'}
                     <button
                       type="button"
@@ -118,9 +121,9 @@
                       title={effect.disabled
                         ? 'DND5E.EffectEnable'
                         : 'DND5E.EffectDisable'}
-                      on:click={() =>
+                      onclick={() =>
                         effect.update({ disabled: !effect.disabled })}
-                      tabindex={$settingStore.useAccessibleKeyboardSupport
+                      tabindex={settings.value.useAccessibleKeyboardSupport
                         ? 0
                         : -1}
                     >
@@ -128,30 +131,30 @@
                         class="fas"
                         class:fa-check={effect.disabled}
                         class:fa-times={!effect.disabled}
-                      />
+                      ></i>
                     </button>
                   {/if}
                   <button
                     type="button"
                     class="active-effect-control inline-icon-button"
                     title={localize('DND5E.EffectEdit')}
-                    on:click={() => effect.sheet.render(true)}
-                    tabindex={$settingStore.useAccessibleKeyboardSupport
+                    onclick={() => effect.sheet.render(true)}
+                    tabindex={settings.value.useAccessibleKeyboardSupport
                       ? 0
                       : -1}
                   >
-                    <i class="fas fa-edit" />
+                    <i class="fas fa-edit"></i>
                   </button>
                   <button
                     type="button"
                     class="active-effect-control inline-icon-button"
                     title={localize('DND5E.EffectDelete')}
-                    on:click={() => effect.deleteDialog()}
-                    tabindex={$settingStore.useAccessibleKeyboardSupport
+                    onclick={() => effect.deleteDialog()}
+                    tabindex={settings.value.useAccessibleKeyboardSupport
                       ? 0
                       : -1}
                   >
-                    <i class="fas fa-trash" />
+                    <i class="fas fa-trash"></i>
                   </button>
                 {/if}
               </div>

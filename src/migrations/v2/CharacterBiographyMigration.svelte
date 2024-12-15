@@ -5,11 +5,11 @@
   import { migrateBiographicalFlagsToSystemData } from './biographical-flags-to-system';
   import { CONSTANTS } from 'src/constants';
 
-  import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication';
+  import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication.svelte';
 
-  let migrating = false;
-  let overwrite = false;
-  let deleteFlags = false;
+  let migrating = $state(false);
+  let overwrite = $state(false);
+  let deleteFlags = $state(false);
 
   const localize = FoundryAdapter.localize;
 
@@ -135,7 +135,7 @@
     </label>
   </div>
 
-  <button type="button" on:click={(ev) => migrate()} disabled={migrating}
+  <button type="button" onclick={(ev) => migrate()} disabled={migrating}
     >{localize('TIDY5E.Settings.Migrations.ButtonMigration.Text')}</button
   >
 </section>

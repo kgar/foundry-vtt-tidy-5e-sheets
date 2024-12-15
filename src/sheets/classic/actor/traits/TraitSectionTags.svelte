@@ -1,12 +1,19 @@
 <script lang="ts">
-  export let tags: [key: string, value: string][] = [];
-  export let tagCssClass: string = '';
+  import type { Snippet } from 'svelte';
+
+  interface Props {
+    tags?: [key: string, value: string][];
+    tagCssClass?: string;
+    children?: Snippet<[any]>;
+  }
+
+  let { tags = [], tagCssClass = '', children }: Props = $props();
 </script>
 
 <ul class="trait-list traits">
   {#each tags as [key, value]}
     <li class="trait-tag {key} {tagCssClass}">
-      <slot {key} {value}>{value}</slot>
+      {#if children}{@render children({ key, value })}{:else}{value}{/if}
     </li>
   {/each}
 </ul>

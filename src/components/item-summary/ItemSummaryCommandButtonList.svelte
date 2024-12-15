@@ -3,9 +3,15 @@
   import ItemSummaryCommandButton from './ItemSummaryCommandButton.svelte';
   import type { Item5e } from 'src/types/item.types';
 
-  export let item: Item5e;
+  interface Props {
+    item: Item5e;
+  }
 
-  $: itemSummaryCommands = ItemSummaryRuntime.getItemSummaryCommands(item);
+  let { item }: Props = $props();
+
+  let itemSummaryCommands = $derived(
+    ItemSummaryRuntime.getItemSummaryCommands(item),
+  );
 </script>
 
 {#each itemSummaryCommands as command}

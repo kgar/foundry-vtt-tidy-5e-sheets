@@ -14,8 +14,13 @@
   import SpellClassToSourceClassMigration from './v5/SpellClassToSourceClassMigration.svelte';
   import NpcExhaustionToSystemMigration from './v5/NpcExhaustionToSystemMigration.svelte';
 
-  export let selectedTabId: string =
-    CONSTANTS.TAB_MIGRATIONS_SPELL_CLASS_TO_SOURCE_CLASS;
+  interface Props {
+    selectedTabId?: string;
+  }
+
+  let {
+    selectedTabId = $bindable(CONSTANTS.TAB_MIGRATIONS_NPC_EXHAUSTION),
+  }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
@@ -90,7 +95,7 @@
 <div class="bulk-migrations-container">
   <div role="presentation" class="vertical-tab-container flex-column no-gap">
     <Tabs {tabs} bind:selectedTabId orientation="vertical" />
-    <div role="presentation" class="remaining-vertical-space" />
+    <div role="presentation" class="remaining-vertical-space"></div>
     <Notice>
       {localize('TIDY5E.ReminderToBackUp')}
     </Notice>

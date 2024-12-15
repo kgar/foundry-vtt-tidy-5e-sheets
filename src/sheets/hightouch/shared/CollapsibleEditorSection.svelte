@@ -1,19 +1,27 @@
 <script lang="ts">
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { isNil } from 'src/utils/data';
-  import { createEventDispatcher } from 'svelte';
   import GoldHeaderUnderline from './GoldHeaderUnderline.svelte';
   import type { ItemDescription } from 'src/types/item.types';
 
-  export let expanded: boolean;
-  export let document: any;
-  export let itemDescription: ItemDescription;
+  interface Props {
+    expanded: boolean;
+    document: any;
+    itemDescription: ItemDescription;
+    onEdit?: (detail: {
+      document: any;
+      itemDescription: ItemDescription;
+    }) => void;
+  }
 
-  $: showIndicator = !isNil(itemDescription.enriched, '');
+  let {
+    expanded = $bindable(),
+    document,
+    itemDescription,
+    onEdit,
+  }: Props = $props();
 
-  const dispatcher = createEventDispatcher<{
-    edit: { document: any; itemDescription: ItemDescription };
-  }>();
+  let showIndicator = $derived(!isNil(itemDescription.enriched, ''));
 
   function manageSecrets(node: HTMLElement) {
     if (!document.isOwner) {
@@ -45,7 +53,7 @@
 <section class="collapsible-editor">
   <!-- Header -->
   <header>
-    <a class="title" on:click={() => (expanded = !expanded)}>
+    <a class="title" onclick={() => (expanded = !expanded)}>
       <!-- Title -->
       {itemDescription.label}
       {#if showIndicator}
@@ -56,7 +64,7 @@
     <!-- Journal Edit Button -->
     <a
       class="edit icon-button"
-      on:click={() => dispatcher('edit', { document, itemDescription })}
+      onclick={() => onEdit?.({ document, itemDescription })}
     >
       <i class="fas fa-feather fa-fw"></i>
     </a>

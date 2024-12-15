@@ -1,12 +1,19 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService';
+  import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService.svelte';
   import { isUserInteractable } from 'src/utils/element';
+  import type { Snippet } from 'svelte';
+
+  interface Props {
+    children?: Snippet;
+  }
+
+  let { children }: Props = $props();
 
   const expandCollapseService = ExpandCollapseService.getService();
 
   function handleHeaderRowClick(ev: MouseEvent) {
-    if (!$expandState.toggleable) {
+    if (!expandState?.toggleable) {
       return;
     }
 
@@ -25,25 +32,23 @@
     expandCollapseService.toggle();
   }
 
-  $: expandState = expandCollapseService.state;
+  let expandState = $derived(expandCollapseService.state);
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-no-static-element-interactions -->
 <header
   class="item-table-header-row"
-  class:toggleable={$expandState.toggleable}
-  on:click={handleHeaderRowClick}
+  class:toggleable={expandState?.toggleable}
+  onclick={handleHeaderRowClick}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_TABLE_HEADER_ROW}
 >
-  {#if $expandState.toggleable}
+  {#if expandState?.toggleable}
     <i
       class="expand-indicator fas fa-angle-right"
-      class:expanded={$expandState.expanded}
+      class:expanded={expandState.expanded}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.EXPANSION_TOGGLE}
     ></i>
   {/if}
-  <slot />
+  {@render children?.()}
 </header>
 
 <style lang="scss">

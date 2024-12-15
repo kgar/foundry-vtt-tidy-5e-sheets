@@ -9,18 +9,19 @@
   import ExhaustionWorldSettingsTab from './tabs/ExhaustionWorldSettingsTab.svelte';
   import SheetLockWorldSettingsTab from './tabs/SheetLockWorldSettingsTab.svelte';
   import { getContext } from 'svelte';
-  import type {
-    WorldSettingsContextStore,
-    WorldSettingsFunctions,
-  } from './WorldSettings.types';
+  import type { WorldSettingsContext, WorldSettingsFunctions } from './WorldSettings.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import IconsWorldSettingsTab from './tabs/IconsWorldSettingsTab.svelte';
 
-  let selectedTabId: string;
-  let functions = getContext<WorldSettingsFunctions>(CONSTANTS.SVELTE_CONTEXT.FUNCTIONS);
-  let context = getContext<WorldSettingsContextStore>(CONSTANTS.SVELTE_CONTEXT.CONTEXT);
+  let selectedTabId: string = $state('');
+  let functions = getContext<WorldSettingsFunctions>(
+    CONSTANTS.SVELTE_CONTEXT.FUNCTIONS,
+  );
+  let context = getContext<WorldSettingsContext>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  );
 
   let tabs: Tab[] = [
     {
@@ -91,13 +92,13 @@
 
   selectedTabId ??= tabs[0].id;
 
-  let applyingChanges = false;
+  let applyingChanges = $state(false);
 
   async function save() {
     applyingChanges = true;
 
     try {
-      await functions.save($context);
+      await functions.save();
     } finally {
       applyingChanges = false;
     }
@@ -107,7 +108,7 @@
     applyingChanges = true;
 
     try {
-      await functions.apply($context);
+      await functions.apply();
     } finally {
       applyingChanges = false;
     }
@@ -119,7 +120,7 @@
 <div class="settings-form">
   <div role="presentation" class="vertical-tab-container flex-column no-gap">
     <Tabs {tabs} bind:selectedTabId orientation="vertical" />
-    <div role="presentation" class="remaining-vertical-space" />
+    <div role="presentation" class="remaining-vertical-space"></div>
   </div>
 
   <TabContents {tabs} {selectedTabId} cssClass="tidy-sheet-body" />
@@ -127,19 +128,19 @@
     <button
       type="button"
       class="save-changes-btn"
-      on:click={save}
+      onclick={save}
       disabled={applyingChanges}
     >
-      <i class="fas fa-save" />
+      <i class="fas fa-save"></i>
       {localize('TIDY5E.SaveChanges')}
     </button>
     <button
       type="button"
       class="apply-changes-btn"
-      on:click={apply}
+      onclick={apply}
       disabled={applyingChanges}
     >
-      <i class="fas fa-check" />
+      <i class="fas fa-check"></i>
       {localize('TIDY5E.ApplyChanges')}
     </button>
   </div>

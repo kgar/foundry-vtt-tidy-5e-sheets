@@ -2,45 +2,45 @@
   import { CONSTANTS } from 'src/constants';
   import GroupMemberListItem from './GroupMemberListItem.svelte';
   import { getContext } from 'svelte';
-  import type {
-    GroupMemberSection,
-    GroupSheetClassicContext,
-  } from 'src/types/group.types';
-  import type { Readable } from 'svelte/store';
+  import type { GroupMemberSection } from 'src/types/group.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TidyTable from 'src/components/table/TidyTable.svelte';
   import TidyTableHeaderRow from 'src/components/table/TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from 'src/components/table/TidyTableHeaderCell.svelte';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
+  import { getGroupSheetClassicContext } from 'src/sheets/sheet-context.svelte';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
 
-  export let section: GroupMemberSection;
+  interface Props {
+    section: GroupMemberSection;
+  }
 
-  const memberActorIdsToShow = getContext<Readable<Set<string> | undefined>>(
-    CONSTANTS.SVELTE_CONTEXT.MEMBER_IDS_TO_SHOW,
-  );
+  let { section }: Props = $props();
 
-  const context = getContext<Readable<GroupSheetClassicContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  const searchResults = getSearchResultsContext();
+
+  const context = $derived(getGroupSheetClassicContext());
+
+  const memberEntries = $derived(section.members.map((member) => ({ member })));
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <TidyTable key={section.key} data-custom-section={section.custom ? true : null}>
-  <svelte:fragment slot="header">
+  {#snippet header()}
     <TidyTableHeaderRow>
       <TidyTableHeaderCell primary={true}>
         {localize(section.label)}
       </TidyTableHeaderCell>
     </TidyTableHeaderRow>
-  </svelte:fragment>
-  <svelte:fragment slot="body">
+  {/snippet}
+  {#snippet body()}
     <div class="flex-column small-gap mt-2">
-      {#each section.members as member, index (member.uuid)}
-        {#if $memberActorIdsToShow === undefined || $memberActorIdsToShow.has(member.id)}
+      {#each memberEntries as { member }, index (member.uuid)}
+        {#if searchResults.show(member.uuid)}
           <GroupMemberListItem
             {member}
-            ctx={$context.memberContext[member.id]}
+            ctx={context.memberContext[member.id]}
           />
 
           {#if section.members.length > 1 && index !== section.members.length - 1}
@@ -49,5 +49,5 @@
         {/if}
       {/each}
     </div>
-  </svelte:fragment>
+  {/snippet}
 </TidyTable>

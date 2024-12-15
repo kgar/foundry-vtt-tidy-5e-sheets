@@ -2,7 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
   import type MigrationNotificationFormApplication from './MigrationNotificationFormApplication';
-  import { SettingsProvider } from 'src/settings/settings';
+  import { settings } from 'src/settings/settings.svelte';
   import { BulkMigrationsApplication } from '../BulkMigrationsApplication';
   import { CONSTANTS } from 'src/constants';
 
@@ -12,7 +12,7 @@
     getContext<MigrationNotificationFormApplication['confirm']>('confirm');
 
   const migrationsConfirmedTally =
-    SettingsProvider.settings.migrationsConfirmationTally.get();
+    settings.value.migrationsConfirmationTally;
 
   const migrations = [
     {
@@ -101,12 +101,12 @@
         migrationsConfirmedTally < migration.migrationTallyVersion}
       <li class:new={isNew} class="flex-row small-gap">
         {#if isNew}
-          <i class="new-icon fas fa-star" />
+          <i class="new-icon fas fa-star"></i>
         {/if}
         <button
           type="button"
           class="inline-transparent-button highlight-on-hover"
-          on:click={() => migration.onClick()}
+          onclick={() => migration.onClick()}
         >
           <span>{migration.label}</span>
         </button>
@@ -118,7 +118,7 @@
   </ul>
 
   <div class="button-bar flex-row no-gap">
-    <button type="button" on:click={() => confirm()}
+    <button type="button" onclick={() => confirm()}
       >{localize(
         'TIDY5E.Settings.Migrations.Notification.Button.DoNotShowAgain',
       )}</button

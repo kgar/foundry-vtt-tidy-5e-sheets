@@ -1,8 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import type { GroupSheetClassicContext } from 'src/types/group.types';
-  import { getContext, setContext } from 'svelte';
-  import { writable, type Readable } from 'svelte/store';
+  import { getContext } from 'svelte';
   import GroupMemberList from '../parts/GroupMemberList.svelte';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
@@ -15,31 +13,40 @@
   import GroupSkills from '../parts/GroupSkills.svelte';
   import UnderlinedTabStrip from 'src/components/tabs/UnderlinedTabStrip.svelte';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
+  import { getGroupSheetClassicContext } from 'src/sheets/sheet-context.svelte';
+  import {
+    createSearchResultsState,
+    setSearchResultsContext,
+  } from 'src/features/search/search.svelte';
 
   const tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
-  const context = getContext<Readable<GroupSheetClassicContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  const context = $derived(getGroupSheetClassicContext());
 
   const localize = FoundryAdapter.localize;
 
-  let searchCriteria: string = '';
+  let searchCriteria: string = $state('');
 
-  $: utilityBarCommands =
-    $context.utilities[tabId]?.utilityToolbarCommands ?? [];
-
-  const memberActorIdsToShow = writable<Set<string> | undefined>(undefined);
-  setContext(CONSTANTS.SVELTE_CONTEXT.MEMBER_IDS_TO_SHOW, memberActorIdsToShow);
-  $: $memberActorIdsToShow = FoundryAdapter.searchActors(
-    searchCriteria,
-    $context.system.members.map((m) => m.actor),
+  let utilityBarCommands = $derived(
+    context.utilities[tabId]?.utilityToolbarCommands ?? [],
   );
 
-  $: memberSections = GroupSheetSections.configureMemberSections(
-    $context.memberSections,
-    tabId,
-    SheetPreferencesService.getByType($context.actor.type),
+  let searchResults = createSearchResultsState();
+  setSearchResultsContext(searchResults);
+
+  $effect(() => {
+    searchResults.uuids = FoundryAdapter.searchActors(
+      searchCriteria,
+      context.system.members.map((m) => m.actor),
+    );
+  });
+
+  let memberSections = $derived(
+    GroupSheetSections.configureMemberSections(
+      context.memberSections,
+      tabId,
+      SheetPreferencesService.getByType(context.actor.type),
+    ),
   );
 
   let aggregateTabs = {
@@ -47,7 +54,7 @@
     skills: localize('DND5E.Skills'),
   } as const;
 
-  let selectedAggregateTab = aggregateTabs.languages;
+  let selectedAggregateTab = $state(aggregateTabs.languages);
 </script>
 
 <UtilityToolbar>
@@ -59,7 +66,8 @@
       iconClass={command.iconClass}
       text={command.text}
       visible={command.visible ?? true}
-      on:execute={(ev) => command.execute?.(ev.detail)}
+      onExecute={(ev) => command.execute?.(ev)}
+      sections={memberSections}
     />
   {/each}
 </UtilityToolbar>
@@ -68,9 +76,9 @@
   class="scroll-container flex-column small-gap"
   data-tidy-track-scroll-y
 >
-  {#if $context.memberSections.length > 0}
-    {#if $context.isGM}
-      <ExpandableContainer expanded={$context.showGroupMemberTabInfoPanel}>
+  {#if context.memberSections.length > 0}
+    {#if context.isGM}
+      <ExpandableContainer expanded={context.showGroupMemberTabInfoPanel}>
         <UnderlinedTabStrip
           tabs={Object.values(aggregateTabs)}
           bind:selected={selectedAggregateTab}
@@ -86,8 +94,7 @@
       </ExpandableContainer>
     {/if}
 
-    {#if $context.actor.system.type.value !== CONSTANTS.GROUP_TYPE_ENCOUNTER}
-      <!-- TODO: Svelte 5 - snippets -->
+    {#if context.actor.system.type.value !== CONSTANTS.GROUP_TYPE_ENCOUNTER}
       {#each memberSections as section (section.key)}
         <GroupMemberList {section} />
       {/each}

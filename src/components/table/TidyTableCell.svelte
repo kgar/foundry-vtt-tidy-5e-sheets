@@ -1,32 +1,43 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { writable } from 'svelte/store';
+  import type { Snippet } from 'svelte';
 
-  export let primary: boolean = false;
-  export let title: string | undefined = undefined;
-  export let baseWidth: string | null = null;
+  interface Props {
+    primary?: boolean;
+    title?: string | undefined;
+    baseWidth?: string | null;
+    children?: Snippet<[any]>;
+    [key: string]: any;
+  }
 
-  const isHovering = writable<boolean>(false);
+  let {
+    primary = false,
+    title = undefined,
+    baseWidth = null,
+    children,
+    ...rest
+  }: Props = $props();
+
+  let isHovering = $state(false);
 
   function mouseEnter(ev: MouseEvent) {
-    isHovering.set(true);
+    isHovering = true;
   }
 
   function mouseLeave(ev: MouseEvent) {
-    isHovering.set(false);
+    isHovering = false;
   }
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
-  class="tidy-table-cell {$$restProps.class ?? ''}"
+  class="tidy-table-cell {rest.class ?? ''}"
   class:primary
   {title}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TABLE_CELL}
-  on:mouseenter={mouseEnter}
-  on:mouseleave={mouseLeave}
+  onmouseenter={mouseEnter}
+  onmouseleave={mouseLeave}
   style:flex-basis={baseWidth}
-  {...$$restProps.attributes}
+  {...rest.attributes}
 >
-  <slot {isHovering} />
+  {@render children?.({ isHovering })}
 </div>

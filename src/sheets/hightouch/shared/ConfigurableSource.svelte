@@ -1,11 +1,21 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
-  export let unlocked: boolean;
-  export let sourceText: string;
-  export let document: any;
-  export let keyPath: string;
-  export let buttonClass: string = '';
+  interface Props {
+    unlocked: boolean;
+    sourceText: string;
+    document: any;
+    keyPath: string;
+    buttonClass?: string;
+  }
+
+  let {
+    unlocked,
+    sourceText,
+    document,
+    keyPath,
+    buttonClass = '',
+  }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -18,7 +28,7 @@
     <button
       type="button"
       class="configure-source {buttonClass}"
-      on:click={() => FoundryAdapter.renderSourceConfig(document, keyPath)}
+      onclick={() => FoundryAdapter.renderSourceConfig(document, keyPath)}
       title={localize('DND5E.SOURCE.Action.Configure')}
     >
       <i class="fas fa-cog"></i>

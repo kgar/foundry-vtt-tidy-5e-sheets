@@ -1,14 +1,19 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, type Snippet } from 'svelte';
 
-  export let expanded: boolean = true;
+  interface Props {
+    expanded?: boolean;
+    children?: Snippet;
+    [key: string]: any;
+  }
 
-  let overflowYHidden = !expanded;
+  let { expanded = true, children, ...rest }: Props = $props();
+
+  let overflowYHidden = $state(!expanded);
   let expandableContainer: HTMLElement;
 
   onMount(() => {
     const controller = new AbortController();
-    const signal = controller.signal;
 
     expandableContainer.addEventListener(
       'transitionstart',
@@ -18,7 +23,7 @@
         }
       },
       {
-        signal: signal,
+        signal: controller.signal,
       },
     );
 
@@ -29,9 +34,8 @@
           overflowYHidden = !expanded;
         }
       },
-
       {
-        signal: signal,
+        signal: controller.signal,
       },
     );
 
@@ -43,13 +47,13 @@
 
 <div
   bind:this={expandableContainer}
-  class="expandable {$$restProps.class ?? ''}"
+  class="expandable {rest.class ?? ''}"
   class:expanded
   class:overflow-y-hidden={overflowYHidden}
   role="presentation"
 >
   <div role="presentation" class="expandable-child-animation-wrapper">
-    <slot />
+    {@render children?.()}
   </div>
 </div>
 

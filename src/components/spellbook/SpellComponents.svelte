@@ -1,6 +1,10 @@
 <script lang="ts">
-  export let spell: any;
-  export let spellComponentLabels: Record<string, string>;
+  interface Props {
+    spell: any;
+    spellComponentLabels: Record<string, string>;
+  }
+
+  let { spell, spellComponentLabels }: Props = $props();
 </script>
 
 {#each spell.labels.components.all as component}

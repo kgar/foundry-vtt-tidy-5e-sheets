@@ -2,46 +2,51 @@
   import TidySwitch from './TidySwitch.svelte';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { debug, error } from 'src/utils/logging';
+  import type { Snippet } from 'svelte';
 
-  export let document: any;
-  export let field: string;
-  export let checked: boolean;
-  export let title: string = '';
-  export let disabled: boolean = false;
-  export let iconSrc: string | null = null;
-  export let iconClass: string | null = null;
-
-  let switchOn: boolean = checked;
-
-  $: {
-    switchOn = checked;
+  interface Props {
+    document: any;
+    field: string;
+    checked: boolean;
+    title?: string;
+    disabled?: boolean;
+    iconSrc?: string | null;
+    iconClass?: string | null;
+    children?: Snippet;
   }
+
+  let {
+    document,
+    field,
+    checked = $bindable(false),
+    title = '',
+    disabled = false,
+    iconSrc = null,
+    iconClass = null,
+    children,
+  }: Props = $props();
 
   async function handleChange(newValue: boolean) {
     try {
       const result = await document.update({
         [field]: newValue,
       });
-      if (!result) {
-        switchOn = !newValue;
-      }
     } catch (e) {
       error('An error occurred while toggling a property', false, e);
       debug('Property toggle error troubleshooting info', {
         originalValue: !newValue,
-        state: switchOn,
+        state: checked,
       });
-      switchOn = !newValue;
     }
   }
 </script>
 
 <TidySwitch
-  class="flex-row small-gap tidy-property-toggle {switchOn
+  class="flex-row small-gap tidy-property-toggle {checked
     ? 'active'
     : 'inactive'}"
-  bind:checked={switchOn}
-  on:change={(ev) => handleChange(ev.detail.currentTarget.checked)}
+  bind:checked
+  onChange={(ev) => handleChange(ev.currentTarget.checked)}
   {title}
   {disabled}
 >
@@ -51,5 +56,5 @@
   {#if iconClass}
     <i class={iconClass}></i>
   {/if}
-  <slot />
+  {@render children?.()}
 </TidySwitch>

@@ -1,24 +1,19 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { CharacterSheetContext } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
-  import { settingStore } from 'src/settings/settings';
-  import { CONSTANTS } from 'src/constants';
+  import { settings } from 'src/settings/settings.svelte';
+  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = getContext<Readable<CharacterSheetContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  let context = $derived(getCharacterSheetContext());
 
-  $: hitDice = $context.system.attributes.hd;
-  $: actorLevel = $context.system.details.level;
+  let hitDice = $derived(context.system.attributes.hd);
+  let actorLevel = $derived(context.system.details.level);
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <div
   class="portrait-hd"
-  class:rounded={$context.useRoundedPortraitStyle}
+  class:rounded={context.useRoundedPortraitStyle}
   title="{localize('DND5E.HitDice')}: {hitDice}/{actorLevel}&#10;{localize(
     'DND5E.HitDiceConfig',
   )}"
@@ -26,11 +21,11 @@
   <button
     type="button"
     class="current-hd config-button transparent-button"
-    on:click={$context.editable &&
-      FoundryAdapter.renderHitDiceConfig($context.actor)}
-    disabled={!$context.editable}
-    tabindex={!$settingStore.useDefaultSheetHpTabbing &&
-    $settingStore.useAccessibleKeyboardSupport
+    onclick={context.editable &&
+      FoundryAdapter.renderHitDiceConfig(context.actor)}
+    disabled={!context.editable}
+    tabindex={!settings.value.useDefaultSheetHpTabbing &&
+    settings.value.useAccessibleKeyboardSupport
       ? 0
       : -1}
   >
