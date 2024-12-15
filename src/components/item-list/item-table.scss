@@ -77,15 +77,15 @@
 
   // Hide the Item Image when hovering on the cell itself, to imply the roll button.
   &:hover {
-    .item-image {
-      opacity: 0;
-    }
-
-    .unidentified-glyph {
-      opacity: 0;
-    }
-
     .item-use-button {
+      .item-image {
+        opacity: 0;
+      }
+
+      .unidentified-glyph {
+        opacity: 0;
+      }
+
       &:hover {
         .roll-indicator {
           color: var(--t5e-primary-font-color);
