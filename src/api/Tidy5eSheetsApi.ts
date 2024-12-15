@@ -119,7 +119,7 @@ export class Tidy5eSheetsApi {
    */
   isTidy5eCharacterSheet(app: any) {
     const element = FoundryAdapter.getElementFromAppV1OrV2(app.element);
-    return element.matches(`.tidy5e-sheet.sheet.character`);
+    return !!element?.matches(`.tidy5e-sheet.sheet.character`);
   }
 
   /**
@@ -129,7 +129,7 @@ export class Tidy5eSheetsApi {
    */
   isTidy5eContainerSheet(app: any) {
     const element = FoundryAdapter.getElementFromAppV1OrV2(app.element);
-    return element.matches(`.tidy5e-sheet.sheet.container`);
+    return !!element?.matches(`.tidy5e-sheet.sheet.container`);
   }
 
   /**
@@ -139,7 +139,7 @@ export class Tidy5eSheetsApi {
    */
   isTidy5eGroupSheet(app: any) {
     const element = FoundryAdapter.getElementFromAppV1OrV2(app.element);
-    return element.matches(`.tidy5e-sheet.sheet.group`);
+    return !!element?.matches(`.tidy5e-sheet.sheet.group`);
   }
 
   /**
@@ -149,7 +149,7 @@ export class Tidy5eSheetsApi {
    */
   isTidy5eItemSheet(app: any) {
     const element = FoundryAdapter.getElementFromAppV1OrV2(app.element);
-    return element.matches(`.tidy5e-sheet.sheet.item`);
+    return !!element?.matches(`.tidy5e-sheet.sheet.item`);
   }
 
   /**
@@ -159,7 +159,7 @@ export class Tidy5eSheetsApi {
    */
   isTidy5eNpcSheet(app: any) {
     const element = FoundryAdapter.getElementFromAppV1OrV2(app.element);
-    return element.matches(`.tidy5e-sheet.sheet.npc`);
+    return !!element?.matches(`.tidy5e-sheet.sheet.npc`);
   }
 
   /**
@@ -169,7 +169,7 @@ export class Tidy5eSheetsApi {
    */
   isTidy5eSheet(app: any) {
     const element = FoundryAdapter.getElementFromAppV1OrV2(app.element);
-    return element.matches(`.tidy5e-sheet.sheet`);
+    return !!element?.matches(`.tidy5e-sheet.sheet`);
   }
 
   /**
@@ -179,7 +179,7 @@ export class Tidy5eSheetsApi {
    */
   isTidy5eVehicleSheet(app: any) {
     const element = FoundryAdapter.getElementFromAppV1OrV2(app.element);
-    return element.matches(`.tidy5e-sheet.sheet.vehicle`);
+    return !!element?.matches(`.tidy5e-sheet.sheet.vehicle`);
   }
 
   /**{@inheritDoc ItemSummaryApi} */
