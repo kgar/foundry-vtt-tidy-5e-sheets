@@ -116,10 +116,6 @@
         "name": "Minden elrendezésben mutassa az info kártyákat.",
         "hint": "Kapcsold ki, ha rács elrendezésben is szeretnéd látni az info kártyákat."
     },
-    "TIDY5E.Settings.ItemCardsForNPCs": {
-        "name": "NJK-k/járművek esetében mutassa az info kártyákat.",
-        "hint": "Kapcsold ki, ha NJK-k/járművek esetében is szeretnéd látni az info kátyákat."
-    },
     "TIDY5E.Settings.ItemCardsAreFloating": {
         "name": "Info kártyák a kurzor mellett lebegnek.",
         "hint": "Kapcsold be, hogy leválaszd a lapról és a kurzor mellett lebegjenek az info kártyák. Késleltetéssel ajánlott használni. Hasznos, ha lap nincs rögzítve."

@@ -116,10 +116,6 @@
         "name": "Gegenstand-Infokarten in allen Ansichten anzeigen",
         "hint": "Deaktivieren, um die Infokarten nur in der Rasteransicht anzuzeigen."
     },
-    "TIDY5E.Settings.ItemCardsForNPCs": {
-        "name": "Gegenstand-Infokarten für NSCe/Fahrzeuge anzeigen",
-        "hint": "Aktivieren, um die Infokarten nicht für NSCe/Fahrzeuge anzuzeigen."
-    },
     "TIDY5E.Settings.ItemCardsAreFloating": {
         "name": "Schwebende Gegenstandskarten anzeigen",
         "hint": "Aktivieren, um die Gegenstandsinfokarten neben dem Mauszeiger schweben zu lassen. Empfohlen: Bei Verwendung dieser Funktion Verzögerung einrichten."

@@ -60,14 +60,12 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-{#if settings.value.itemCardsForNpcs}
-  <AttachedInfoCard
-    sheet={context.actor.sheet}
-    floating={settings.value.itemCardsAreFloating}
-    delay={settings.value.itemCardsDelay}
-    inspectKey={settings.value.itemCardsFixKey}
-  />
-{/if}
+<AttachedInfoCard
+  sheet={context.actor.sheet}
+  floating={settings.value.itemCardsAreFloating}
+  delay={settings.value.itemCardsDelay}
+  inspectKey={settings.value.itemCardsFixKey}
+/>
 
 {#if context.viewableWarnings.length}
   <ActorWarnings warnings={context.viewableWarnings} />
@@ -195,7 +193,9 @@
       <SheetEditModeToggle
         hint={settings.value.permanentlyUnlockVehicleSheetForGm &&
         FoundryAdapter.userIsGm()
-          ? localize('TIDY5E.Settings.value.PermanentlyUnlockVehicleSheetForGM.title')
+          ? localize(
+              'TIDY5E.Settings.value.PermanentlyUnlockVehicleSheetForGM.title',
+            )
           : null}
       />
     {/if}

@@ -18,6 +18,7 @@
   import type { Component, ComponentProps } from 'svelte';
   import { isUserInteractable } from 'src/utils/element';
   import { DetachedInfoCardApplication } from 'src/applications/info-card/DetachedInfoCardApplication';
+  import { settings } from 'src/settings/settings.svelte';
 
   interface Props {
     sheet: any;
@@ -92,13 +93,18 @@
 
     const entity = fromUuidSync(uuid);
 
-    if (!uuid || !cardType) {
+    if (!uuid || !cardType || !entity) {
       show = false;
       return;
     }
 
     switch (cardType) {
       case 'effect': {
+        if (!settings.value.useEffectCards) {
+          show = false;
+          return;
+        }
+
         card = {
           component: EffectInfoCard,
           props: { effect: entity },
@@ -117,6 +123,14 @@
       // TODO: Uncomment the above case when it's time to implement it
 
       case 'item': {
+        if (
+          !settings.value.itemCardsForAllItems &&
+          !target.matches('[data-tidy-grid-item]')
+        ) {
+          show = false;
+          return;
+        }
+
         if (Inventory.isInventoryType(entity)) {
           card = {
             ...withProps(InventoryItemCard, { item: entity }),

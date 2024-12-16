@@ -44,8 +44,6 @@
     return result;
   });
 
-  $inspect(pills);
-
   function findMode(mode: number) {
     const entry = Object.entries(CONST.ACTIVE_EFFECT_MODES).find(
       ([_, value]) => value === mode,
