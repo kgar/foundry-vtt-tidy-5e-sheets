@@ -116,6 +116,10 @@
                     uuid: effect.uuid,
                   }}
                   activeEffect={effect}
+                  attributes={{
+                    'data-info-card': 'effect',
+                    'data-info-card-entity-uuid': effect.uuid,
+                  }}
                 >
                   <ItemTableCell
                     primary={true}

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { InfoCardState } from 'src/components/item-info-card/info-card.svelte';
+  import type { InfoCardState } from 'src/components/info-card/info-card.svelte';
   import { warn } from 'src/utils/logging';
 
   interface Props {

@@ -145,6 +145,10 @@
                       parentId: effectContext.parentId,
                     })?.toDragData()}
                   activeEffect={effectContext}
+                  attributes={{
+                    'data-info-card': 'effect',
+                    'data-info-card-entity-uuid': effectContext.uuid
+                  }}
                 >
                   <ItemTableCell
                     primary={true}

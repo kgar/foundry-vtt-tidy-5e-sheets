@@ -6,7 +6,7 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import Source from '../shared/Source.svelte';
   import { CONSTANTS } from 'src/constants';
-  import AttachedInfoCard from 'src/components/item-info-card/AttachedInfoCard.svelte';
+  import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
   import { settings } from 'src/settings/settings.svelte';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 

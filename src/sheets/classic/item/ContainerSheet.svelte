@@ -9,7 +9,7 @@
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import ItemHeaderToggles from './parts/ItemHeaderToggles.svelte';
-  import AttachedInfoCard from 'src/components/item-info-card/AttachedInfoCard.svelte';
+  import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
   import { settings } from 'src/settings/settings.svelte';
   import { getContainerSheetClassicContext } from 'src/sheets/sheet-context.svelte';
 

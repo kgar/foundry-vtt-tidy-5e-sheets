@@ -9,7 +9,7 @@
   import { CONSTANTS } from 'src/constants';
   import ItemIdentifiableName from './parts/ItemIdentifiableName.svelte';
   import ItemHeaderToggles from './parts/ItemHeaderToggles.svelte';
-  import AttachedInfoCard from 'src/components/item-info-card/AttachedInfoCard.svelte';
+  import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
   import { settings } from 'src/settings/settings.svelte';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 

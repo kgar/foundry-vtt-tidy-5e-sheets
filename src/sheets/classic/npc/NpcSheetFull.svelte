@@ -23,7 +23,7 @@
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import { isNil } from 'src/utils/data';
   import ActorLinkIndicator from 'src/components/actor-link-indicator/ActorLinkIndicator.svelte';
-  import AttachedInfoCard from 'src/components/item-info-card/AttachedInfoCard.svelte';
+  import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
   import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
 
   let selectedTabId: string = $state('');

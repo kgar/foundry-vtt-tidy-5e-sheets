@@ -11,7 +11,7 @@
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import GroupHitPoints from './parts/GroupHitPoints.svelte';
-  import AttachedInfoCard from 'src/components/item-info-card/AttachedInfoCard.svelte';
+  import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
   import { getGroupSheetClassicContext } from 'src/sheets/sheet-context.svelte';
   import { onMount } from 'svelte';
 

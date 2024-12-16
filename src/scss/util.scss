@@ -24,6 +24,18 @@
   .ff-title {
     font-family: var(--t5e-title-font-family) !important;
   }
+
+  /* Lists */
+  .unlist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    :where(li) {
+      margin: 0;
+      padding: 0;
+    }
+  }
 }
 
 /* Hightouch utilities */
@@ -93,18 +105,6 @@
 
     .text-disabled {
       color: var(--t5e-color-text-onInverse-disabled);
-    }
-  }
-
-  /* Lists */
-  .unlist {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-
-    :where(li) {
-      margin: 0;
-      padding: 0;
     }
   }
 }

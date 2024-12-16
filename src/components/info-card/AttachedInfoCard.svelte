@@ -12,6 +12,7 @@
   import DefaultItemCard from './Cards/DefaultItemCard.svelte';
   import InventoryItemCard from './Cards/InventoryItemCard.svelte';
   import SpellItemCard from './Cards/SpellItemCard.svelte';
+  import EffectInfoCard from './Cards/EffectInfoCard.svelte';
   import { Inventory } from 'src/features/sections/Inventory';
   import { CONSTANTS } from 'src/constants';
   import type { Component, ComponentProps } from 'svelte';
@@ -33,7 +34,7 @@
   const selector = `[${infoCardAttributeKey}], .tidy-info-card`;
   const uuidAttribute = 'data-info-card-entity-uuid';
   const sheetEl = $derived<HTMLElement>(
-    FoundryAdapter.getElementFromAppV1OrV2(sheet.element)
+    FoundryAdapter.getElementFromAppV1OrV2(sheet.element),
   );
 
   let staticCardPosition = $derived.by<'left' | 'right'>(() => {
@@ -97,6 +98,14 @@
     }
 
     switch (cardType) {
+      case 'effect': {
+        card = {
+          component: EffectInfoCard,
+          props: { effect: entity },
+          title: entity.name,
+        };
+        break;
+      }
       // case 'activity': {
       //   card = {
       //     component: ActivityInfoCard,

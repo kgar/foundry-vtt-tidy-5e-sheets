@@ -24,6 +24,7 @@
     hidden?: boolean;
     getDragData?: (() => any) | null;
     onMouseDown?: MouseEventHandler<HTMLElement>;
+    attributes?: Record<string, any>;
     children?: Snippet<[any]>;
   }
 
@@ -36,6 +37,7 @@
     hidden = false,
     getDragData = null,
     onMouseDown,
+    attributes,
     children,
   }: Props = $props();
 
@@ -150,6 +152,7 @@
   data-favorite-id={favoriteId ?? null}
   data-info-card={item ? 'item' : null}
   data-info-card-entity-uuid={item?.uuid ?? null}
+  {...attributes}
 >
   <div class="item-table-row {cssClass ?? ''}">
     {@render children?.({ toggleSummary })}
