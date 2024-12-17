@@ -24,7 +24,7 @@
 - [x] Stretch: Can you put the import button to the right or left of the menu instead? (I'm sure I can)
 - [x] Refactor: Survey how this import button is currently included and then make it so it's a document-sheet-level concern.
 - [x] Research: What additional dynamic controls are missing for document sheets?
-- [ ] Drag-and-drop from compendia should be supported. This is a common thing when enchanting items a la the DMG module.
+- [x] Drag-and-drop from compendia should be supported. This is a common thing when enchanting items a la the DMG module.
 - [ ] Bonus: Effect Summary? How difficult?
 
 ## Import button scratch
