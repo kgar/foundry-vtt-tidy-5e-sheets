@@ -723,6 +723,31 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
   }
 
   /* -------------------------------------------- */
+  /*  Rendering                                   */
+  /* -------------------------------------------- */
+
+  async _renderFrame(options: ApplicationRenderOptions) {
+    const frame = await super._renderFrame(options);
+
+    if (ImportSheetControl.canImport(this.document)) {
+      const control = ImportSheetControl.getSheetControl();
+      const label = FoundryAdapter.localize(control.label);
+
+      const importFromCompendium = `<button type="button" class="header-control fa-solid fa-download" data-action="${ImportSheetControl.actionName}"
+                            data-tooltip="${label}" aria-label="${label}"></button>`;
+
+      let anchor =
+        frame.querySelector('[data-action="copyUuid"]') ?? this.window.close;
+
+      if (anchor) {
+        anchor.insertAdjacentHTML('beforebegin', importFromCompendium);
+      }
+    }
+
+    return frame;
+  }
+
+  /* -------------------------------------------- */
   /*  Rendering Life-Cycle Methods                */
   /* -------------------------------------------- */
 
