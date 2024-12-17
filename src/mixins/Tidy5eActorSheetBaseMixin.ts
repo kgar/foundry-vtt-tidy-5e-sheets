@@ -5,8 +5,9 @@ import { firstOfSet } from 'src/utils/set';
 import { CONSTANTS } from 'src/constants';
 import type { ApplicationPosition } from 'src/types/application.types';
 import type { Actor5e } from 'src/types/types';
-import { settings, SettingsProvider } from 'src/settings/settings.svelte';
+import { settings } from 'src/settings/settings.svelte';
 import TabSelectionFormApplication from 'src/applications/tab-selection/TabSelectionFormApplication.svelte';
+import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
 
 export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
   class Tidy5eActorSheetBase extends DragAndDropMixin(BaseApplication) {
@@ -72,6 +73,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
      */
     _getHeaderControls() {
       const controls = super._getHeaderControls();
+
       const configureTokenControl = controls.find(
         (c: any) =>
           c.action ===
@@ -84,6 +86,11 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
       } else {
         configureTokenControl.label = 'TOKEN.TitlePrototype';
       }
+
+      if (!ImportSheetControl.canImport(this.document)) {
+        ImportSheetControl.removeImportControl(controls);
+      }
+
       return controls;
     }
 

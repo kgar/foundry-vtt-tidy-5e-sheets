@@ -34,6 +34,7 @@ import { TabManager } from 'src/runtime/tab/TabManager';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { settings } from 'src/settings/settings.svelte';
 import { Inventory } from 'src/features/sections/Inventory';
+import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
 
 export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
   SvelteApplicationMixin<ContainerSheetClassicContext>(
@@ -70,13 +71,17 @@ export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
       frame: true,
       positioned: true,
       resizable: true,
-      controls: [],
+      controls: [ImportSheetControl.getSheetControl()],
     },
     position: {
       width: 560,
       height: 600,
     },
-    actions: {},
+    actions: {
+      [ImportSheetControl.actionName]: async function (this: any) {
+        await ImportSheetControl.importFromCompendium(this, this.document);
+      },
+    },
     dragDrop: [{ dropSelector: 'form' }],
     submitOnClose: false,
   };
@@ -380,6 +385,24 @@ export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
       context,
       !!options.isFirstRender
     );
+  }
+
+  /* -------------------------------------------- */
+  /*  Application Lifecycle Functions             */
+  /* -------------------------------------------- */
+
+  /**
+   * Perform any dynamic behavior on controls which depends on the current state of the sheet.
+   * @returns
+   */
+  _getHeaderControls() {
+    const controls = super._getHeaderControls();
+
+    if (!ImportSheetControl.canImport(this.document)) {
+      ImportSheetControl.removeImportControl(controls);
+    }
+
+    return controls;
   }
 
   /* -------------------------------------------- */

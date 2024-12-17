@@ -50,6 +50,7 @@ import SheetHeaderEditModeToggle from 'src/sheets/classic/shared/SheetHeaderEdit
 import { Activities } from 'src/features/activities/activities';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
+import { ImportSheetControl } from '../../features/sheet-header-controls/ImportSheetControl';
 
 type MemberStats = {
   currentHP: number;
@@ -88,6 +89,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       positioned: true,
       resizable: true,
       controls: [
+        ImportSheetControl.getSheetControl(),
         this.ACTOR_ACTIONS_AND_CONTROLS.configureToken.control,
         this.ACTOR_ACTIONS_AND_CONTROLS.showPortraitArtwork.control,
         this.ACTOR_ACTIONS_AND_CONTROLS.showTokenArtwork.control,
@@ -104,6 +106,9 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       },
     ],
     actions: {
+      [ImportSheetControl.actionName]: async function (this: any) {
+        await ImportSheetControl.importFromCompendium(this, this.document);
+      },
       ...this.ACTOR_ACTIONS_AND_CONTROLS.configureToken.action,
       ...this.ACTOR_ACTIONS_AND_CONTROLS.showPortraitArtwork.action,
       ...this.ACTOR_ACTIONS_AND_CONTROLS.showTokenArtwork.action,
