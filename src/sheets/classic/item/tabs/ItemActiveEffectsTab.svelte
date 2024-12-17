@@ -87,7 +87,7 @@
               data-effect-id={effect.id}
               onmousedown={(event) => handleMiddleClickToEdit(event, effect)}
               ondragstart={(ev) => handleDragStart(ev, effect)}
-              draggable={context.editable}
+              draggable={context.owner}
               data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS}
               data-info-card="effect"
               data-info-card-entity-uuid={effect.uuid}
