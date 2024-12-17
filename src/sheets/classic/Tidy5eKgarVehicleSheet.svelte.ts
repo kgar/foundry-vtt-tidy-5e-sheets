@@ -55,6 +55,7 @@ import { Container } from 'src/features/containers/Container';
 import { Activities } from 'src/features/activities/activities';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
+import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -114,6 +115,7 @@ export class Tidy5eVehicleSheet
   }
 
   component: Record<string, any> | undefined;
+  additionalComponents: Record<string, any>[] = [];
   _effectCleanup?: () => void;
   activateListeners(html: { get: (index: 0) => HTMLElement }) {
     // Document Apps Reactivity
@@ -192,6 +194,18 @@ export class Tidy5eVehicleSheet
         ],
       ]),
     });
+
+    const infoCard = mount(AttachedInfoCard, {
+      target: node,
+      props: {
+        sheet: this,
+        floating: settings.value.itemCardsAreFloating,
+        delay: settings.value.itemCardsDelay,
+        inspectKey: settings.value.itemCardsFixKey,
+      },
+    });
+
+    this.additionalComponents.push(infoCard);
 
     initTidy5eContextMenu(this, html);
 
@@ -754,6 +768,9 @@ export class Tidy5eVehicleSheet
       unmount(this.component);
     }
     this.component = undefined;
+
+    this.additionalComponents.forEach((c) => unmount(c));
+    this.additionalComponents = [];
   }
 
   _saveScrollPositions(html: any) {

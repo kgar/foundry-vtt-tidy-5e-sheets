@@ -57,13 +57,6 @@
   } satisfies DropdownListOption);
 </script>
 
-<AttachedInfoCard
-  sheet={context.actor.sheet}
-  floating={settings.value.itemCardsAreFloating}
-  delay={settings.value.itemCardsDelay}
-  inspectKey={settings.value.itemCardsFixKey}
-/>
-
 {#if context.viewableWarnings.length}
   <ActorWarnings warnings={context.viewableWarnings} />
 {/if}

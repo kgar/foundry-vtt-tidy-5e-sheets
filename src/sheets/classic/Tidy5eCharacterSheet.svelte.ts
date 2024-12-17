@@ -74,6 +74,7 @@ import { ConditionsAndEffects } from 'src/features/conditions-and-effects/Condit
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import { Activities } from 'src/features/activities/activities';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
+import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 
 export class Tidy5eCharacterSheet
   extends BaseSheetCustomSectionMixin(
@@ -145,6 +146,7 @@ export class Tidy5eCharacterSheet
   }
 
   component: Record<string, any> | undefined;
+  additionalComponents: Record<string, any>[] = [];
   _effectCleanup?: () => void;
   activateListeners(html: { get: (index: 0) => HTMLElement }) {
     // Document Apps Reactivity
@@ -224,6 +226,18 @@ export class Tidy5eCharacterSheet
         ],
       ]),
     });
+
+    const infoCard = mount(AttachedInfoCard, {
+      target: node,
+      props: {
+        sheet: this,
+        floating: settings.value.itemCardsAreFloating,
+        delay: settings.value.itemCardsDelay,
+        inspectKey: settings.value.itemCardsFixKey,
+      },
+    });
+
+    this.additionalComponents.push(infoCard);
 
     initTidy5eContextMenu(this, html);
 
@@ -1708,6 +1722,9 @@ export class Tidy5eCharacterSheet
       unmount(this.component);
     }
     this.component = undefined;
+
+    this.additionalComponents.forEach((c) => unmount(c));
+    this.additionalComponents = [];
   }
 
   _saveScrollPositions(html: any) {

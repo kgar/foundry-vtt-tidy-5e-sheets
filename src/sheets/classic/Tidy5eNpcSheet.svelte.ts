@@ -27,7 +27,6 @@ import {
 import { debug } from 'src/utils/logging';
 import { settings } from 'src/settings/settings.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
-import { getPercentage } from 'src/utils/numbers';
 import { mount, unmount } from 'svelte';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
 import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
@@ -59,6 +58,7 @@ import { ItemUtils } from 'src/utils/ItemUtils';
 import { Activities } from 'src/features/activities/activities';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
+import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 
 export class Tidy5eNpcSheet
   extends BaseSheetCustomSectionMixin(
@@ -129,6 +129,7 @@ export class Tidy5eNpcSheet
   }
 
   component: Record<string, any> | undefined;
+  additionalComponents: Record<string, any>[] = [];
   _effectCleanup?: () => void;
   activateListeners(html: { get: (index: 0) => HTMLElement }) {
     // Document Apps Reactivity
@@ -209,6 +210,18 @@ export class Tidy5eNpcSheet
         ],
       ]),
     });
+
+    const infoCard = mount(AttachedInfoCard, {
+      target: node,
+      props: {
+        sheet: this,
+        floating: settings.value.itemCardsAreFloating,
+        delay: settings.value.itemCardsDelay,
+        inspectKey: settings.value.itemCardsFixKey,
+      },
+    });
+
+    this.additionalComponents.push(infoCard);
 
     initTidy5eContextMenu(this, html);
 
@@ -1207,6 +1220,9 @@ export class Tidy5eNpcSheet
       unmount(this.component);
     }
     this.component = undefined;
+
+    this.additionalComponents.forEach((c) => unmount(c));
+    this.additionalComponents = [];
   }
 
   _saveScrollPositions(html: any) {

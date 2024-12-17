@@ -9,8 +9,6 @@
   import { CONSTANTS } from 'src/constants';
   import ItemIdentifiableName from './parts/ItemIdentifiableName.svelte';
   import ItemHeaderToggles from './parts/ItemHeaderToggles.svelte';
-  import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
-  import { settings } from 'src/settings/settings.svelte';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
   let context = $derived(getItemSheetContext());
@@ -20,13 +18,6 @@
   let selectedTabId: string = $state('');
   const localize = FoundryAdapter.localize;
 </script>
-
-<AttachedInfoCard
-  sheet={context.item.sheet}
-  floating={settings.value.itemCardsAreFloating}
-  delay={settings.value.itemCardsDelay}
-  inspectKey={settings.value.itemCardsFixKey}
-/>
 
 <header class="sheet-header flexrow gap">
   <ItemProfilePicture />
