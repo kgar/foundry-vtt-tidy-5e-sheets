@@ -21,13 +21,15 @@
 ## Extras
 
 - [x] Import Button is missing from item sheets in compendia. This must be an App V2 issue. Put it in the extended menu as MVP
-- [ ] Stretch: Can you put the import button to the right or left of the menu instead? (I'm sure I can)
+- [x] Stretch: Can you put the import button to the right or left of the menu instead? (I'm sure I can)
 - [x] Refactor: Survey how this import button is currently included and then make it so it's a document-sheet-level concern.
-- [ ] Research: What additional dynamic controls are missing for document sheets?
+- [x] Research: What additional dynamic controls are missing for document sheets?
 - [ ] Drag-and-drop from compendia should be supported. This is a common thing when enchanting items a la the DMG module.
 - [ ] Bonus: Effect Summary? How difficult?
 
 ## Import button scratch
+
+### App V1
 
 ```js
     // Compendium Import
@@ -43,6 +45,33 @@
         }
       });
     }
+```
+
+### App V2 Header Buttons
+
+```js
+  /** @inheritDoc */
+  async _renderFrame(options) {
+    const frame = await super._renderFrame(options);
+
+    // Add form options
+    if ( this.options.tag === "form" ) frame.autocomplete = "off";
+
+    // Add document ID copy
+    const copyLabel = game.i18n.localize("SHEETS.CopyUuid");
+    const copyId = `<button type="button" class="header-control fa-solid fa-passport" data-action="copyUuid"
+                            data-tooltip="${copyLabel}" aria-label="${copyLabel}"></button>`;
+    this.window.close.insertAdjacentHTML("beforebegin", copyId);
+
+    // Add sheet configuration button
+    if ( this.options.sheetConfig && this.isEditable && !this.document.getFlag("core", "sheetLock") ) {
+      const label = game.i18n.localize("SHEETS.ConfigureSheet");
+      const sheetConfig = `<button type="button" class="header-control fa-solid fa-cog" data-action="configureSheet"
+                                   data-tooltip="${label}" aria-label="${label}"></button>`;
+      this.window.close.insertAdjacentHTML("beforebegin", sheetConfig);
+    }
+    return frame;
+  }
 ```
 
 ## Notes

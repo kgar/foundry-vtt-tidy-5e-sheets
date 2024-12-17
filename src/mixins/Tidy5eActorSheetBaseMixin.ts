@@ -7,7 +7,6 @@ import type { ApplicationPosition } from 'src/types/application.types';
 import type { Actor5e } from 'src/types/types';
 import { settings } from 'src/settings/settings.svelte';
 import TabSelectionFormApplication from 'src/applications/tab-selection/TabSelectionFormApplication.svelte';
-import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
 
 export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
   class Tidy5eActorSheetBase extends DragAndDropMixin(BaseApplication) {
@@ -85,10 +84,6 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
         configureTokenControl.icon = 'far fa-user-circle';
       } else {
         configureTokenControl.label = 'TOKEN.TitlePrototype';
-      }
-
-      if (!ImportSheetControl.canImport(this.document)) {
-        ImportSheetControl.removeImportControl(controls);
       }
 
       return controls;

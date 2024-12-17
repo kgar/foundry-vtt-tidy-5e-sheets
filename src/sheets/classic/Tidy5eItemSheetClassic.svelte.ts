@@ -54,7 +54,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       frame: true,
       positioned: true,
       resizable: true,
-      controls: [ImportSheetControl.getSheetControl()],
+      controls: [],
     },
     position: {
       width: 560,
@@ -729,20 +729,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
   async _renderFrame(options: ApplicationRenderOptions) {
     const frame = await super._renderFrame(options);
 
-    if (ImportSheetControl.canImport(this.document)) {
-      const control = ImportSheetControl.getSheetControl();
-      const label = FoundryAdapter.localize(control.label);
-
-      const importFromCompendium = `<button type="button" class="header-control fa-solid fa-download" data-action="${ImportSheetControl.actionName}"
-                            data-tooltip="${label}" aria-label="${label}"></button>`;
-
-      let anchor =
-        frame.querySelector('[data-action="copyUuid"]') ?? this.window.close;
-
-      if (anchor) {
-        anchor.insertAdjacentHTML('beforebegin', importFromCompendium);
-      }
-    }
+    ImportSheetControl.injectImportButton(this, frame);
 
     return frame;
   }
