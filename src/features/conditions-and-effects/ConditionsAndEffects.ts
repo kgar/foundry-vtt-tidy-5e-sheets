@@ -59,6 +59,7 @@ export class ConditionsAndEffects {
             durationParts: duration.remaining ? duration.label.split(', ') : [],
             hasTooltip: source instanceof dnd5e.documents.Item5e,
             uuid: effect.uuid,
+            effect: effect,
           });
           return arr;
         },

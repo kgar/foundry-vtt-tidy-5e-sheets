@@ -22,6 +22,7 @@
   import InlineFavoriteIcon from 'src/components/item-list/InlineFavoriteIcon.svelte';
   import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import EffectTableRow from 'src/components/item-list/v1/EffectTableRow.svelte';
 
   let context = $derived(getSheetContext<ActorSheetContextV1>());
 
@@ -124,30 +125,11 @@
             {/snippet}
             {#snippet body()}
               {#each section.effects as effectContext}
-                <ItemTableRow
-                  onMouseDown={(event) =>
-                    FoundryAdapter.editOnMiddleClick(
-                      event,
-                      FoundryAdapter.getEffect({
-                        document: context.actor,
-                        effectId: effectContext.id,
-                        parentId: effectContext.parentId,
-                      }),
-                    )}
-                  contextMenu={{
-                    type: CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS,
-                    uuid: effectContext.uuid,
-                  }}
-                  getDragData={() =>
-                    FoundryAdapter.getEffect({
-                      document: context.actor,
-                      effectId: effectContext.id,
-                      parentId: effectContext.parentId,
-                    })?.toDragData()}
+                <EffectTableRow
                   activeEffect={effectContext}
                   attributes={{
                     'data-info-card': 'effect',
-                    'data-info-card-entity-uuid': effectContext.uuid
+                    'data-info-card-entity-uuid': effectContext.uuid,
                   }}
                 >
                   <ItemTableCell
@@ -189,7 +171,7 @@
                       />
                     </ItemTableCell>
                   {/if}
-                </ItemTableRow>
+                </EffectTableRow>
               {/each}
               {#if context.unlocked && context.allowEffectsManagement}
                 <ItemTableFooter

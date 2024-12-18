@@ -26,6 +26,7 @@
 - [x] Research: What additional dynamic controls are missing for document sheets?
 - [x] Drag-and-drop from compendia should be supported. This is a common thing when enchanting items a la the DMG module.
 - [ ] Bonus: Effect Summary? How difficult?
+  - [ ] No problem!
 
 ## Import button scratch
 
