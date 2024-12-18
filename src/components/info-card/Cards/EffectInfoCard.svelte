@@ -91,11 +91,11 @@
         {@const modeLabel = findMode(change.mode)}
         <li>
           <div>
-            <strong>{change.key}</strong>
+            <strong class="break-word">{change.key}</strong>
           </div>
           <div>
             <span>{modeLabel}</span>
-            <span class="text-body-tertiary">|</span>
+            <span class="text-body-tertiary break-word">|</span>
             {change.value}
           </div>
         </li>

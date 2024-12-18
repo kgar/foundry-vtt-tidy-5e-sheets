@@ -36,6 +36,11 @@
       padding: 0;
     }
   }
+
+  /* Text */
+  .break-word {
+    overflow-wrap: break-word;
+  }
 }
 
 /* Hightouch utilities */
