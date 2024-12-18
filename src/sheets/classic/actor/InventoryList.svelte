@@ -230,7 +230,7 @@
                 {item}
               >
                 <span
-                  class="truncate"
+                  class="truncate flex-1"
                   data-tidy-item-name={itemName}
                   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
                   >{itemName}</span
