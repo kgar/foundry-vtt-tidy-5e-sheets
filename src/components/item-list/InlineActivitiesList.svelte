@@ -76,19 +76,22 @@
               FoundryAdapter.editOnMiddleClick(event, activity)}
           >
             <TidyTableCell primary={true}>
-              <button
-                type="button"
+              <a
                 class="inline-activity-roll-button highlight-on-hover"
-                onclick={(ev) => rollActivity(activity, ev)}
+                onclick={(ev) => item.isOwner && rollActivity(activity, ev)}
                 tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
               >
                 {#if activity.img?.endsWith('.svg')}
                   <Dnd5eIcon src={activity.img} />
                 {:else}
-                  <ItemImage src={activity.img} alt={activity.name} />
+                  <ItemImage
+                    classes="always-visible"
+                    src={activity.img}
+                    alt={activity.name}
+                  />
                 {/if}
                 {activity.name}
-              </button>
+              </a>
             </TidyTableCell>
             <TidyTableCell>
               {#if configurable}
@@ -111,7 +114,9 @@
 
 <style lang="scss">
   .inline-activities-container {
-    --icon-size: 1.25rem;
+    --icon-size: 1.5rem;
+    --icon-width: var(--icon-size);
+    --icon-height: var(--icon-size);
     --icon-fill: var(--t5e-primary-font-color);
 
     .inline-activity-roll-button {
@@ -125,6 +130,7 @@
       align-items: center;
       padding: 0;
       margin: 0;
+      width: 100%;
 
       &:hover {
         background: none;

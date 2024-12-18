@@ -689,6 +689,8 @@ export type ActiveEffectContext = {
   parentId: string;
   durationParts: string | string[];
   hasTooltip: boolean;
+  uuid: string;
+  effect: ActiveEffect5e;
 };
 
 export type HTMLElementOrGettable =

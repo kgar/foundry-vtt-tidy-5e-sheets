@@ -20,7 +20,7 @@
   import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication.svelte';
   import ActorName from '../actor/ActorName.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
-  import AttachedInfoCard from 'src/components/item-info-card/AttachedInfoCard.svelte';
+  import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
 
   let selectedTabId: string = $state('');
@@ -56,13 +56,6 @@
     text: context.config.actorSizes[context.system.traits.size]?.label,
   } satisfies DropdownListOption);
 </script>
-
-<AttachedInfoCard
-  sheet={context.actor.sheet}
-  floating={settings.value.itemCardsAreFloating}
-  delay={settings.value.itemCardsDelay}
-  inspectKey={settings.value.itemCardsFixKey}
-/>
 
 {#if context.viewableWarnings.length}
   <ActorWarnings warnings={context.viewableWarnings} />

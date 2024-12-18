@@ -215,7 +215,7 @@
 
     // Hide the Item Image when hovering on the cell itself, to imply the roll button.
     &:hover {
-      .item-image {
+      .item-image:not(.always-visible) {
         opacity: 0;
       }
 

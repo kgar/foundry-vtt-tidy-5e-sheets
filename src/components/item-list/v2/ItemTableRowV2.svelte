@@ -19,6 +19,7 @@
     contextMenu?: { type: string; uuid: string } | null;
     rowClass?: string;
     hidden?: boolean;
+    draggable?: boolean;
     children?: Snippet<[any]>;
   }
 
@@ -27,10 +28,9 @@
     contextMenu = null,
     rowClass = '',
     hidden = false,
+    draggable = true,
     children,
   }: Props = $props();
-
-  let draggable = $derived(item);
 
   const emptyChatData: ItemChatData = {
     description: { value: '' },
@@ -76,13 +76,13 @@
   }
 
   function handleDragStart(event: DragEvent) {
-    if (!draggable) {
+    if (!item) {
       return;
     }
 
     onMouseLeave(event);
 
-    const dragData = draggable.toDragData();
+    const dragData = item.toDragData();
     event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
   }
 
@@ -132,7 +132,7 @@
     ['data-info-card-entity-uuid']: item?.uuid ?? null,
   }}
   rowAttributes={{
-    draggable: !!draggable,
+    draggable: draggable,
   }}
   rowClass="tidy-table-row-v2 {rowClass ?? ''}"
   onmousedown={(event) => item && FoundryAdapter.editOnMiddleClick(event, item)}

@@ -275,9 +275,9 @@
     "name": "Show Item Cards in All Layouts",
     "hint": "When this setting is disabled, item cards only show in the grid."
   },
-  "TIDY5E.Settings.ItemCardsForNPCs": {
-    "name": "Show Item Cards for NPCs/Vehicles",
-    "hint": "Enable to show item info cards for NPCs and vehicles."
+  "TIDY5E.Settings.UseEffectCards": {
+    "name": "Show Active Effect Info Cards",
+    "hint": "Enable to show info cards for active effects on all actors and items with active effects."
   },
   "TIDY5E.Settings.ItemCardsAreFloating": {
     "name": "Show Floating Item Cards",

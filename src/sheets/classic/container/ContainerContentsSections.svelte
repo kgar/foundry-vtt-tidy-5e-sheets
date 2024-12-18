@@ -159,9 +159,10 @@
                 type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
                 uuid: item.uuid,
               }}
+              draggable={editable}
             >
               {#snippet children({ toggleSummary })}
-                <TidyTableCell class="flex-row extra-small-gap">
+                <TidyTableCell class="flex-row extra-small-gap" primary={true}>
                   <ItemUseButton
                     disabled={!FoundryAdapter.canUseItem(item)}
                     {item}
@@ -179,7 +180,7 @@
                     {item}
                   >
                     <span
-                      class="truncate"
+                      class="truncate flex-1"
                       data-tidy-item-name={item.name}
                       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
                       >{item.name}</span

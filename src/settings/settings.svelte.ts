@@ -346,7 +346,7 @@ export function createSettings() {
         },
       },
 
-      // Item Info Cards
+      // Info Cards
       itemCardsForAllItems: {
         options: {
           name: 'TIDY5E.Settings.ItemCardsForAllItems.name',
@@ -361,17 +361,17 @@ export function createSettings() {
         },
       },
 
-      itemCardsForNpcs: {
+      useEffectCards: {
         options: {
-          name: 'TIDY5E.Settings.ItemCardsForNPCs.name',
-          hint: 'TIDY5E.Settings.ItemCardsForNPCs.hint',
-          scope: 'world',
+          name: 'TIDY5E.Settings.UseEffectCards.name',
+          hint: 'TIDY5E.Settings.UseEffectCards.hint',
+          scope: 'client',
           config: true,
           default: true,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('itemCardsForNpcs');
+          return FoundryAdapter.getTidySetting<boolean>('useEffectCards');
         },
       },
 

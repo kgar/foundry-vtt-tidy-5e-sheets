@@ -2,12 +2,13 @@
   interface Props {
     src: string;
     alt?: string;
+    classes?: string;
   }
 
-  let { src, alt = '' }: Props = $props();
+  let { src, alt = '', classes }: Props = $props();
 </script>
 
-<img class="item-image" {src} {alt} />
+<img class="item-image {classes}" {src} {alt} />
 
 <style lang="scss">
   .item-image {

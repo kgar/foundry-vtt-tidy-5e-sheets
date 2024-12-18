@@ -116,10 +116,6 @@
         "name": "Montrer la carte d'information des éléments dans toutes les mise en page",
         "hint": "Désactiver cette option pour afficher la carte d'information uniquement en mode grille."
     },
-    "TIDY5E.Settings.ItemCardsForNPCs": {
-        "name": "Montrer la carte d'information des éléments pour les PNJs / véhicules",
-        "hint": "Désactiver cette option pour masquer la carte d'information pour les PNJs / véhicules."
-    },
     "TIDY5E.Settings.ItemCardsAreFloating": {
         "name": "Carte d'information flottante",
         "hint": "Activer cette option pour détacher la carte d'information et l'afficher près du curseur (fonctionne mieux avec un délai ou quand la fiche est en pop-up)."

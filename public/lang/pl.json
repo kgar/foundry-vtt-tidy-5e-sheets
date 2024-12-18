@@ -530,10 +530,6 @@
         "hint": "Zapobiega zmianom maksymalnego HP przez graczy niebędących MG.",
         "name": "Zablokuj zmiany maksymalnego HP"
     },
-    "TIDY5E.Settings.ItemCardsForNPCs": {
-        "name": "Pokaż karty przedmiotów dla NPC/Pojazdów",
-        "hint": "Włącz, aby wyświetlać karty z informacjami o przedmiotach dla NPC-ów i pojazdów."
-    },
     "TIDY5E.Settings.ItemCardsAreFloating": {
         "hint": "Włącz, aby karty z informacjami o przedmiotach unosiły się obok kursora myszy. Zalecane: użyj opóźnienia z tą funkcją.",
         "name": "Pokaż pływające karty przedmiotów"

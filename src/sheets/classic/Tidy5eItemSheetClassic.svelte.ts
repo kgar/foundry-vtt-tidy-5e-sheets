@@ -24,6 +24,9 @@ import { isNil } from 'src/utils/data';
 import { DragAndDropMixin } from 'src/mixins/DragAndDropBaseMixin';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { Activities } from 'src/features/activities/activities';
+import { settings } from 'src/settings/settings.svelte';
+import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
+import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
 
 export class Tidy5eItemSheetClassic extends DragAndDropMixin(
   SvelteApplicationMixin<ItemSheetClassicContext>(
@@ -57,7 +60,11 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       width: 560,
       height: 600,
     },
-    actions: {},
+    actions: {
+      [ImportSheetControl.actionName]: async function (this: any) {
+        await ImportSheetControl.importFromCompendium(this, this.document);
+      },
+    },
     dragDrop: [{ dropSelector: 'form' }],
     submitOnClose: false,
   };
@@ -106,6 +113,20 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
     initTidy5eContextMenu(this, html);
 
     return component;
+  }
+
+  _createAdditionalComponents(content: HTMLElement) {
+    const infoCard = mount(AttachedInfoCard, {
+      target: content,
+      props: {
+        sheet: this,
+        floating: settings.value.itemCardsAreFloating,
+        delay: settings.value.itemCardsDelay,
+        inspectKey: settings.value.itemCardsFixKey,
+      },
+    });
+
+    return [infoCard];
   }
 
   async _prepareContext(
@@ -702,6 +723,18 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
   }
 
   /* -------------------------------------------- */
+  /*  Rendering                                   */
+  /* -------------------------------------------- */
+
+  async _renderFrame(options: ApplicationRenderOptions) {
+    const frame = await super._renderFrame(options);
+
+    ImportSheetControl.injectImportButton(this, frame);
+
+    return frame;
+  }
+
+  /* -------------------------------------------- */
   /*  Rendering Life-Cycle Methods                */
   /* -------------------------------------------- */
 
@@ -717,6 +750,24 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       context,
       !!options.isFirstRender
     );
+  }
+
+  /* -------------------------------------------- */
+  /*  Application Lifecycle Functions             */
+  /* -------------------------------------------- */
+
+  /**
+   * Perform any dynamic behavior on controls which depends on the current state of the sheet.
+   * @returns
+   */
+  _getHeaderControls() {
+    const controls = super._getHeaderControls();
+
+    if (!ImportSheetControl.canImport(this.document)) {
+      ImportSheetControl.removeImportControl(controls);
+    }
+
+    return controls;
   }
 
   /* -------------------------------------------- */

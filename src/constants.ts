@@ -228,6 +228,9 @@ export const CONSTANTS = {
     /** An input for the number of successful death saves an actor has. */
     DEATH_SAVE_SUCCESSES: 'death-save-successes',
 
+    /** A row in an effect table. */
+    EFFECT_TABLE_ROW: 'effect-table-row',
+    
     /** An interactable element which toggles a view */
     EXPANSION_TOGGLE: 'table-expansion-toggle',
 

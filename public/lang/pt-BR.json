@@ -230,10 +230,6 @@
         "name": "Mostrar Cartões de Item em Todos os Layouts",
         "hint": "Se esta configuração estiver desativada, os cartões de item sserão exibidos apenas na grade."
     },
-    "TIDY5E.Settings.ItemCardsForNPCs": {
-        "name": "Mostrar cartões de itens para PnJs/Veículos",
-        "hint": "Habilite para exibir cartões de informações de itens para PnJs e veículos."
-    },
     "TIDY5E.Settings.ItemCardsAreFloating": {
         "name": "Mostrar Cartões de Item Flutuantes",
         "hint": "Habilite para que os cartões de informações do item flutuem ao lado do cursor do mouse. Recomendado: use o delay com esse recurso."

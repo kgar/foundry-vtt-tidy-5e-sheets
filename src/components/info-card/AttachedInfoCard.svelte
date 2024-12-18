@@ -12,11 +12,13 @@
   import DefaultItemCard from './Cards/DefaultItemCard.svelte';
   import InventoryItemCard from './Cards/InventoryItemCard.svelte';
   import SpellItemCard from './Cards/SpellItemCard.svelte';
+  import EffectInfoCard from './Cards/EffectInfoCard.svelte';
   import { Inventory } from 'src/features/sections/Inventory';
   import { CONSTANTS } from 'src/constants';
   import type { Component, ComponentProps } from 'svelte';
   import { isUserInteractable } from 'src/utils/element';
   import { DetachedInfoCardApplication } from 'src/applications/info-card/DetachedInfoCardApplication';
+  import { settings } from 'src/settings/settings.svelte';
 
   interface Props {
     sheet: any;
@@ -33,7 +35,7 @@
   const selector = `[${infoCardAttributeKey}], .tidy-info-card`;
   const uuidAttribute = 'data-info-card-entity-uuid';
   const sheetEl = $derived<HTMLElement>(
-    FoundryAdapter.getElementFromAppV1OrV2(sheet.element)
+    FoundryAdapter.getElementFromAppV1OrV2(sheet.element),
   );
 
   let staticCardPosition = $derived.by<'left' | 'right'>(() => {
@@ -91,12 +93,25 @@
 
     const entity = fromUuidSync(uuid);
 
-    if (!uuid || !cardType) {
+    if (!uuid || !cardType || !entity) {
       show = false;
       return;
     }
 
     switch (cardType) {
+      case 'effect': {
+        if (!settings.value.useEffectCards) {
+          show = false;
+          return;
+        }
+
+        card = {
+          component: EffectInfoCard,
+          props: { activeEffect: entity },
+          title: entity.name,
+        } satisfies InfoCardState<typeof EffectInfoCard>;
+        break;
+      }
       // case 'activity': {
       //   card = {
       //     component: ActivityInfoCard,
@@ -108,21 +123,29 @@
       // TODO: Uncomment the above case when it's time to implement it
 
       case 'item': {
+        if (
+          !settings.value.itemCardsForAllItems &&
+          !target.matches('[data-tidy-grid-item]')
+        ) {
+          show = false;
+          return;
+        }
+
         if (Inventory.isInventoryType(entity)) {
           card = {
             ...withProps(InventoryItemCard, { item: entity }),
             title: entity.name,
-          };
+          } satisfies InfoCardState<typeof InventoryItemCard>;
         } else if (entity?.type === CONSTANTS.ITEM_TYPE_SPELL) {
           card = {
             ...withProps(SpellItemCard, { item: entity }),
             title: entity.name,
-          };
+          } satisfies InfoCardState<typeof InventoryItemCard>;
         } else {
           card = {
             ...withProps(DefaultItemCard, { item: entity }),
             title: entity.name,
-          };
+          } satisfies InfoCardState<typeof InventoryItemCard>;
         }
 
         break;

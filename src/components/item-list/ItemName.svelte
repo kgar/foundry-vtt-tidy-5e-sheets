@@ -25,18 +25,14 @@
   let hasActiveEffects = $derived(!!item.effects?.size);
 </script>
 
-<!-- TODO: Make this an anchor -->
-<span
-  role="button"
-  tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
+<a
   onclick={(ev) => onToggle?.(ev)}
   class="item-name truncate {cssClass}"
   class:has-children={hasChildren}
-  onkeypress={(ev) => ev.key === 'Enter' && onToggle?.(ev)}
   class:italic={item.system.identified === false}
 >
   {@render children?.()}
-</span>
+</a>
 {#if useActiveEffectsMarker && settings.value.showActiveEffectsMarker && hasActiveEffects}
   <ActiveEffectsMarker />
 {/if}

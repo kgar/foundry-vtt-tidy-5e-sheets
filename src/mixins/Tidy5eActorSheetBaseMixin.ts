@@ -5,7 +5,7 @@ import { firstOfSet } from 'src/utils/set';
 import { CONSTANTS } from 'src/constants';
 import type { ApplicationPosition } from 'src/types/application.types';
 import type { Actor5e } from 'src/types/types';
-import { settings, SettingsProvider } from 'src/settings/settings.svelte';
+import { settings } from 'src/settings/settings.svelte';
 import TabSelectionFormApplication from 'src/applications/tab-selection/TabSelectionFormApplication.svelte';
 
 export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
@@ -72,6 +72,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
      */
     _getHeaderControls() {
       const controls = super._getHeaderControls();
+
       const configureTokenControl = controls.find(
         (c: any) =>
           c.action ===
@@ -84,6 +85,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
       } else {
         configureTokenControl.label = 'TOKEN.TitlePrototype';
       }
+
       return controls;
     }
 

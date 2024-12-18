@@ -116,10 +116,6 @@
         "name": "Mostra le schede oggetto in tutti i layout",
         "hint": "Quando questa impostazione è disabilitata, le schede oggetto vengono visualizzate solo nella griglia."
     },
-    "TIDY5E.Settings.ItemCardsForNPCs": {
-        "name": "Mostra schede oggetto per PNG/Veicoli",
-        "hint": "Abilita per mostrare le schede informative degli oggetti per PNG e veicoli."
-    },
     "TIDY5E.Settings.ItemCardsAreFloating": {
         "name": "Mostra schede oggetto fluttuanti",
         "hint": "Abilita la visualizzazione delle schede informative sugli oggetti accanto al cursore del mouse. Consigliato: utilizzare il ritardo con questa funzione."

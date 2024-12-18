@@ -2,12 +2,10 @@
   import { type Actor5e, type OnItemToggledFn } from 'src/types/types';
   import ItemSummary from '../ItemSummary.svelte';
   import { warn } from 'src/utils/logging';
-  import { getContext, onMount, type Snippet } from 'svelte';
+  import { getContext, type Snippet } from 'svelte';
   import type {
     ExpandedItemData,
     ExpandedItemIdToLocationsMap,
-    ActiveEffect5e,
-    ActiveEffectContext,
   } from 'src/types/types';
   import type { Item5e, ItemChatData } from 'src/types/item.types';
   import { CONSTANTS } from 'src/constants';
@@ -17,29 +15,29 @@
 
   interface Props {
     item?: Item5e | null;
-    activeEffect?: ActiveEffect5e | ActiveEffectContext | null;
     favoriteId?: string | null;
     contextMenu?: { type: string; uuid: string } | null;
     cssClass?: string;
     hidden?: boolean;
     getDragData?: (() => any) | null;
     onMouseDown?: MouseEventHandler<HTMLElement>;
+    attributes?: Record<string, any>;
     children?: Snippet<[any]>;
   }
 
   let {
     item = null,
-    activeEffect = null,
     favoriteId = null,
     contextMenu = null,
     cssClass = '',
     hidden = false,
     getDragData = null,
     onMouseDown,
+    attributes,
     children,
   }: Props = $props();
 
-  let draggable = $derived(item ?? activeEffect);
+  let draggable = $derived(item);
 
   const emptyChatData: ItemChatData = {
     description: { value: '' },
@@ -71,7 +69,7 @@
       return;
     }
 
-    chatData ??= await item.getChatData({ secrets: actor.isOwner });
+    chatData = await item.getChatData({ secrets: actor.isOwner });
     showSummary = !showSummary;
     onItemToggled?.(item.id, showSummary, location);
   }
@@ -122,10 +120,6 @@
 
       if (item && showSummary) {
         chatData = await item.getChatData({ secrets: item.actor.isOwner });
-      } else if (item && !showSummary && chatData) {
-        // Reset chat data for non-expanded, hydrated chatData
-        // so it rehydrates on next open
-        chatData = undefined;
       }
     })();
   });
@@ -136,8 +130,6 @@
   class:hidden
   aria-hidden={hidden}
   data-context-menu={contextMenu?.type}
-  data-effect-id={activeEffect?.id}
-  data-parent-id={activeEffect?.parentId ?? activeEffect?.parent?.id}
   onmousedown={onMouseDown}
   onmouseenter={onMouseEnter}
   onmouseleave={onMouseLeave}
@@ -150,6 +142,7 @@
   data-favorite-id={favoriteId ?? null}
   data-info-card={item ? 'item' : null}
   data-info-card-entity-uuid={item?.uuid ?? null}
+  {...attributes}
 >
   <div class="item-table-row {cssClass ?? ''}">
     {@render children?.({ toggleSummary })}

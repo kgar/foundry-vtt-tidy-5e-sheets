@@ -128,10 +128,6 @@
         "name": "Mostrar las tarjetas de información en todos los diseños",
         "hint": "Desactívalo si quieres que las tarjetas de información del objeto solo salgan en el diseño de cuadrícula."
     },
-    "TIDY5E.Settings.ItemCardsForNPCs": {
-        "name": "Mostrar las tarjetas de información del objeto en PNJs/vehículos",
-        "hint": "Desactívalo si no quieres que las tarjetas de información del objeto salgan en las fichas de PNJs/vehículos."
-    },
     "TIDY5E.Settings.ItemCardsAreFloating": {
         "name": "Las tarjetas de información del objeto flotan junto al cursor",
         "hint": "Actívalo para separar las tarjetas de información del objeto de la ficha y hacer que floten al lado del cursor. Es mejor utilizarlo con retardo. Útil cuando la ficha está en una nueva pestaña."

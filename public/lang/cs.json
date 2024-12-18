@@ -116,10 +116,6 @@
         "name": "Zobrazit karty předmětů ve všech rozvrženích",
         "hint": "Vypni, pokud chceš, aby se karty předmětů ukazovaly pouze v mřížkovém rozvržení."
     },
-    "TIDY5E.Settings.ItemCardsForNPCs": {
-        "name": "Zobrazit karty položek pro NP/dopravní prostředky",
-        "hint": "Umožnit zobrazování informací karet NP/dopravních prostředků."
-    },
     "TIDY5E.Settings.ItemCardsAreFloating": {
         "name": "Karta položky plovoucí vedle kurzoru",
         "hint": "Umožní odepnutí karty z deníku a její zobrazení jako plovoucího rámečku u kurzoru. Je to nejlepší používat s opožděným zobrazením."

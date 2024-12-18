@@ -20,7 +20,7 @@
   import InlineSource from '../shared/InlineSource.svelte';
   import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication.svelte';
   import ActorName from '../actor/ActorName.svelte';
-  import AttachedInfoCard from 'src/components/item-info-card/AttachedInfoCard.svelte';
+  import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
   import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
 
   let selectedTabId: string = $state('');
@@ -59,15 +59,6 @@
 
   const localize = FoundryAdapter.localize;
 </script>
-
-{#if settings.value.itemCardsForNpcs}
-  <AttachedInfoCard
-    sheet={context.actor.sheet}
-    floating={settings.value.itemCardsAreFloating}
-    delay={settings.value.itemCardsDelay}
-    inspectKey={settings.value.itemCardsFixKey}
-  />
-{/if}
 
 {#if context.viewableWarnings.length}
   <ActorWarnings warnings={context.viewableWarnings} />
@@ -195,7 +186,9 @@
       <SheetEditModeToggle
         hint={settings.value.permanentlyUnlockVehicleSheetForGm &&
         FoundryAdapter.userIsGm()
-          ? localize('TIDY5E.Settings.value.PermanentlyUnlockVehicleSheetForGM.title')
+          ? localize(
+              'TIDY5E.Settings.value.PermanentlyUnlockVehicleSheetForGM.title',
+            )
           : null}
       />
     {/if}

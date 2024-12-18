@@ -11,7 +11,6 @@
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import GroupHitPoints from './parts/GroupHitPoints.svelte';
-  import AttachedInfoCard from 'src/components/item-info-card/AttachedInfoCard.svelte';
   import { getGroupSheetClassicContext } from 'src/sheets/sheet-context.svelte';
   import { onMount } from 'svelte';
 
@@ -25,13 +24,6 @@
     selectedTabId = context.tabs[0]?.id ?? '';
   });
 </script>
-
-<AttachedInfoCard
-  sheet={context.actor.sheet}
-  floating={settings.value.itemCardsAreFloating}
-  delay={settings.value.itemCardsDelay}
-  inspectKey={settings.value.itemCardsFixKey}
-/>
 
 <header class="tidy5e-sheet-header flex-row">
   <div class="flex-0">

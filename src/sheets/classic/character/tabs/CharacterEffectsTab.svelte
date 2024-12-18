@@ -6,13 +6,11 @@
   } from 'src/types/types';
   import ItemTable from '../../../../components/item-list/v1/ItemTable.svelte';
   import ItemTableHeaderRow from '../../../../components/item-list/v1/ItemTableHeaderRow.svelte';
-  import ItemTableRow from '../../../../components/item-list/v1/ItemTableRow.svelte';
   import ItemTableColumn from '../../../../components/item-list/v1/ItemTableColumn.svelte';
   import ItemTableFooter from '../../../../components/item-list/ItemTableFooter.svelte';
   import ItemImage from '../../../../components/item-list/ItemImage.svelte';
   import ItemTableCell from '../../../../components/item-list/v1/ItemTableCell.svelte';
   import ItemControl from '../../../../components/item-list/controls/ItemControl.svelte';
-  import { CONSTANTS } from 'src/constants';
   import Notice from 'src/components/notice/Notice.svelte';
   import { declareLocation } from 'src/types/location-awareness.types';
   import ActorConditions from '../../actor/ActorConditions.svelte';
@@ -22,6 +20,7 @@
   import InlineFavoriteIcon from 'src/components/item-list/InlineFavoriteIcon.svelte';
   import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import EffectTableRow from 'src/components/item-list/v1/EffectTableRow.svelte';
 
   let context = $derived(getSheetContext<ActorSheetContextV1>());
 
@@ -124,68 +123,62 @@
             {/snippet}
             {#snippet body()}
               {#each section.effects as effectContext}
-                <ItemTableRow
-                  onMouseDown={(event) =>
-                    FoundryAdapter.editOnMiddleClick(
-                      event,
-                      FoundryAdapter.getEffect({
-                        document: context.actor,
-                        effectId: effectContext.id,
-                        parentId: effectContext.parentId,
-                      }),
-                    )}
-                  contextMenu={{
-                    type: CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS,
-                    uuid: effectContext.uuid,
-                  }}
-                  getDragData={() =>
-                    FoundryAdapter.getEffect({
-                      document: context.actor,
-                      effectId: effectContext.id,
-                      parentId: effectContext.parentId,
-                    })?.toDragData()}
+                <EffectTableRow
                   activeEffect={effectContext}
+                  attributes={{
+                    'data-info-card': 'effect',
+                    'data-info-card-entity-uuid': effectContext.uuid,
+                  }}
                 >
-                  <ItemTableCell
-                    primary={true}
-                    attributes={{
-                      'data-tidy-effect-name-container': true,
-                      'data-effect-id': effectContext.id,
-                    }}
-                  >
-                    <ItemImage src={effectContext.img} />
-                    <span
-                      class="align-self-center truncate"
-                      data-tidy-effect-name={effectContext.name}
-                      title={effectContext.name}>{effectContext.name}</span
+                  {#snippet children({ toggleSummary })}
+                    <ItemTableCell
+                      primary={true}
+                      attributes={{
+                        'data-tidy-effect-name-container': true,
+                        'data-effect-id': effectContext.id,
+                      }}
                     >
-                  </ItemTableCell>
-                  {#if FoundryAdapter.isActiveEffectContextFavorited(effectContext, context.actor) && settings.value.showIconsNextToTheItemName}
-                    <InlineFavoriteIcon />
-                  {/if}
-                  <ItemTableCell baseWidth="12.5rem">
-                    <span
-                      class="truncate"
-                      title={effectContext.source?.name ?? ''}
-                      >{effectContext.source?.name ?? ''}</span
-                    >
-                  </ItemTableCell>
-                  <ItemTableCell baseWidth="7.5rem">
-                    <span
-                      class="truncate"
-                      title={effectContext.duration?.label ?? ''}
-                      >{effectContext.duration?.label ?? ''}</span
-                    >
-                  </ItemTableCell>
-                  {#if context.editable && context.useClassicControls && context.allowEffectsManagement}
-                    <ItemTableCell baseWidth={classicControlsColumnWidth}>
-                      <ClassicControls
-                        {controls}
-                        params={{ effect: effectContext }}
-                      />
+                      <ItemImage src={effectContext.img} />
+                      <a
+                        onclick={(ev) => toggleSummary()}
+                        class="truncate flex-row align-items-center flex-1"
+                      >
+                        <span
+                          class="align-self-center truncate flex-1"
+                          data-tidy-effect-name={effectContext.name}
+                          title={effectContext.name}
+                        >
+                          {effectContext.name}
+                        </span>
+                      </a>
                     </ItemTableCell>
-                  {/if}
-                </ItemTableRow>
+                    {#if FoundryAdapter.isActiveEffectContextFavorited(effectContext, context.actor) && settings.value.showIconsNextToTheItemName}
+                      <InlineFavoriteIcon />
+                    {/if}
+                    <ItemTableCell baseWidth="12.5rem">
+                      <span
+                        class="truncate"
+                        title={effectContext.source?.name ?? ''}
+                        >{effectContext.source?.name ?? ''}</span
+                      >
+                    </ItemTableCell>
+                    <ItemTableCell baseWidth="7.5rem">
+                      <span
+                        class="truncate"
+                        title={effectContext.duration?.label ?? ''}
+                        >{effectContext.duration?.label ?? ''}</span
+                      >
+                    </ItemTableCell>
+                    {#if context.editable && context.useClassicControls && context.allowEffectsManagement}
+                      <ItemTableCell baseWidth={classicControlsColumnWidth}>
+                        <ClassicControls
+                          {controls}
+                          params={{ effect: effectContext }}
+                        />
+                      </ItemTableCell>
+                    {/if}
+                  {/snippet}
+                </EffectTableRow>
               {/each}
               {#if context.unlocked && context.allowEffectsManagement}
                 <ItemTableFooter

@@ -195,7 +195,7 @@
                         {item}
                       >
                         <span
-                          class="truncate"
+                          class="truncate flex-1"
                           data-tidy-item-name={item.name}
                           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
                           >{item.name}</span

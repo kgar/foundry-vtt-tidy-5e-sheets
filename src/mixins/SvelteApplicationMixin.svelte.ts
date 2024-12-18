@@ -492,9 +492,10 @@ export function SvelteApplicationMixin<
 
       try {
         const customControls = this._getCustomHeaderControls(options.document);
+
         /* 
           Rather than update the source object, make a new one and spread the actions across.
-          Otherwise, it has a change of updating DEFAULT_OPTIONS.
+          Otherwise, it has a chance of updating DEFAULT_OPTIONS.
           For controls, that causes the same control to be added each time the constructor fires.
           Assigning a new set of actions and controls will avoid any surprise mutations.
         */
