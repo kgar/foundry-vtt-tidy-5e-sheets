@@ -2,7 +2,7 @@
   import { type Actor5e, type OnItemToggledFn } from 'src/types/types';
   import ItemSummary from '../ItemSummary.svelte';
   import { warn } from 'src/utils/logging';
-  import { getContext, onMount, type Snippet } from 'svelte';
+  import { getContext, type Snippet } from 'svelte';
   import type {
     ExpandedItemData,
     ExpandedItemIdToLocationsMap,
@@ -73,7 +73,7 @@
       return;
     }
 
-    chatData ??= await item.getChatData({ secrets: actor.isOwner });
+    chatData = await item.getChatData({ secrets: actor.isOwner });
     showSummary = !showSummary;
     onItemToggled?.(item.id, showSummary, location);
   }
@@ -124,10 +124,6 @@
 
       if (item && showSummary) {
         chatData = await item.getChatData({ secrets: item.actor.isOwner });
-      } else if (item && !showSummary && chatData) {
-        // Reset chat data for non-expanded, hydrated chatData
-        // so it rehydrates on next open
-        chatData = undefined;
       }
     })();
   });

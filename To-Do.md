@@ -16,7 +16,7 @@
 - [x] Item Cards for All Layouts should apply to any actor; enforce on 
 - [x] Remove NPC/Vehicle Card option
 - [x] Refactor: Include info card outside of the main sheet component as an additional component, ambiently included by the sheet class.
-
+- [x] Fix: When collapsing the item summary, it changes to `[object Object]`. It's the effect causing it in ItemTableRow.
 
 ## Extras
 
@@ -25,8 +25,8 @@
 - [x] Refactor: Survey how this import button is currently included and then make it so it's a document-sheet-level concern.
 - [x] Research: What additional dynamic controls are missing for document sheets?
 - [x] Drag-and-drop from compendia should be supported. This is a common thing when enchanting items a la the DMG module.
-- [ ] Bonus: Effect Summary? How difficult?
-  - [ ] No problem!
+- [x] Bonus: Effect Summary? How difficult?
+  - [x] No problem!
 
 ## Import button scratch
 
