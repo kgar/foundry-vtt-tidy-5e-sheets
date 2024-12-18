@@ -63,7 +63,7 @@
   data-info-card-entity-uuid={activeEffect.uuid}
   {...attributes}
 >
-  <div class="item-table-row {cssClass ?? ''}">
+  <div class="effect-table-row {cssClass ?? ''}">
     {@render children?.({ toggleSummary })}
   </div>
   <ExpandableContainer expanded={showSummary}>
@@ -77,5 +77,12 @@
     border-radius: 0.3125rem;
     margin: 0 0 0.125rem 0.5rem;
     background: var(--t5e-faintest-color);
+
+    .effect-table-row {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      border-radius: 0.3125rem;
+    }
   }
 </style>
