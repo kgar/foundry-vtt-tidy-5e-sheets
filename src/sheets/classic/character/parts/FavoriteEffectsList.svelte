@@ -51,7 +51,6 @@
   {#snippet body()}
     {#each section.effects as effectContext (effectContext.effectId)}
       <ItemTableRow
-        activeEffect={effectContext.effect}
         onMouseDown={(event) =>
           FoundryAdapter.editOnMiddleClick(event, effectContext.effect)}
         contextMenu={{
