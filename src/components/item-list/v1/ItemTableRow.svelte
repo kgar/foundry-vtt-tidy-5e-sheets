@@ -6,8 +6,6 @@
   import type {
     ExpandedItemData,
     ExpandedItemIdToLocationsMap,
-    ActiveEffect5e,
-    ActiveEffectContext,
   } from 'src/types/types';
   import type { Item5e, ItemChatData } from 'src/types/item.types';
   import { CONSTANTS } from 'src/constants';
@@ -17,7 +15,6 @@
 
   interface Props {
     item?: Item5e | null;
-    activeEffect?: ActiveEffect5e | ActiveEffectContext | null;
     favoriteId?: string | null;
     contextMenu?: { type: string; uuid: string } | null;
     cssClass?: string;
@@ -30,7 +27,6 @@
 
   let {
     item = null,
-    activeEffect = null,
     favoriteId = null,
     contextMenu = null,
     cssClass = '',
@@ -41,7 +37,7 @@
     children,
   }: Props = $props();
 
-  let draggable = $derived(item ?? activeEffect);
+  let draggable = $derived(item);
 
   const emptyChatData: ItemChatData = {
     description: { value: '' },
@@ -134,8 +130,6 @@
   class:hidden
   aria-hidden={hidden}
   data-context-menu={contextMenu?.type}
-  data-effect-id={activeEffect?.id}
-  data-parent-id={activeEffect?.parentId ?? activeEffect?.parent?.id}
   onmousedown={onMouseDown}
   onmouseenter={onMouseEnter}
   onmouseleave={onMouseLeave}
