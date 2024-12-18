@@ -754,7 +754,8 @@
             "title": "Configurar Sessão: {tabTitle}",
             "showTooltip": "Exibir esta sessão",
             "hideTooltip": "Esconder esta sessão"
-        }
+        },
+        "LabelPl": "Sessões"
     },
     "TIDY5E.UseDefaultDialog": {
         "title": "Confirmar: Usar Padrão",
@@ -772,5 +773,23 @@
     "TIDY5E.WorldSettings.IncludeTidySectionFieldsInDefaultSheets": {
         "name": "Incluir Campos de Seção do Tidy em Fichas Padrão",
         "hint": "Inclui entradas de Seção do Tidy e Seção de Ação nas fichas padrão de itens."
-    }
+    },
+    "TIDY5E.Facilities.Defenders.Label": "Defensores",
+    "TIDY5E.Facilities.Creatures.Label": "Criaturas",
+    "TIDY5E.Facilities.Hirelings.Label": "Mercenários",
+    "TIDY5E.Facilities.RosterMember.Label": "{actorName} - {facilityName}",
+    "TIDY5E.Facilities.Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}",
+    "TIDY5E.Facilities.ContextMenuActionRemove": "Removido de {facilityName}",
+    "TIDY5E.SortMenu.OptionEquipped": "Equipado",
+    "TIDY5E.Settings.InfoCardsInspectKey": {
+        "name": "Chave de Inspeção do Cartão de Info.",
+        "hint": "Pressione esta tecla (por exemplo, a tecla “t”) enquanto visualiza um cartão de informações para destacá-lo."
+    },
+    "TIDY5E.SortMenu.OptionManual": "Manual",
+    "TIDY5E.InfoCardInspectHint": "Inspecionar {inspectKey}",
+    "TIDY5E.SortMenu.OptionPrepared": "Preparado",
+    "TIDY5E.ExpandCollapseMenu.OptionTitle": "Comportamento de Expansão/Recolhimento",
+    "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "Seções de Nível Superior",
+    "TIDY5E.ExpandCollapseMenu.OptionAllSections": "Todas as Seções",
+    "TIDY5E.SortMenu.OptionAlphabetical": "Alfabético (A-Z)"
 }

@@ -799,5 +799,10 @@
     "TIDY5E.SortMenu.OptionManual": "Manual",
     "TIDY5E.SortMenu.OptionPrepared": "Preparado",
     "TIDY5E.SortMenu.OptionEquipped": "Equipado",
-    "TIDY5E.ExpandCollapseMenu.OptionTitle": "Expandir/contraer"
+    "TIDY5E.ExpandCollapseMenu.OptionTitle": "Expandir/contraer",
+    "TIDY5E.Settings.InfoCardsInspectKey": {
+        "hint": "Presione esta tecla (por ejemplo, la tecla “t”) mientras visualiza una tarjeta de información para resaltarla.",
+        "name": "Clave de inspección de la tarjeta de información"
+    },
+    "TIDY5E.InfoCardInspectHint": "Inspeccionar {inspectKey}"
 }
