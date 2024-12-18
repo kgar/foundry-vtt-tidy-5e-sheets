@@ -67,7 +67,7 @@
     {@render children?.({ toggleSummary })}
   </div>
   <ExpandableContainer expanded={showSummary}>
-    <EffectSummary activeEffect={activeEffect.effect} />
+    <EffectSummary activeEffect={effectDocument} />
   </ExpandableContainer>
 </div>
 

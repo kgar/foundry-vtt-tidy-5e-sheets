@@ -6,18 +6,17 @@
   } from 'src/types/types';
   import ItemTable from '../../../components/item-list/v1/ItemTable.svelte';
   import ItemTableHeaderRow from '../../../components/item-list/v1/ItemTableHeaderRow.svelte';
-  import ItemTableRow from '../../../components/item-list/v1/ItemTableRow.svelte';
   import ItemTableColumn from '../../../components/item-list/v1/ItemTableColumn.svelte';
   import ItemTableFooter from '../../../components/item-list/ItemTableFooter.svelte';
   import ItemImage from '../../../components/item-list/ItemImage.svelte';
   import ItemTableCell from '../../../components/item-list/v1/ItemTableCell.svelte';
   import ItemControl from '../../../components/item-list/controls/ItemControl.svelte';
-  import { CONSTANTS } from 'src/constants';
   import Notice from 'src/components/notice/Notice.svelte';
   import { declareLocation } from 'src/types/location-awareness.types';
   import ClassicControls from '../shared/ClassicControls.svelte';
   import ActorEffectToggleControl from 'src/components/item-list/controls/ActorEffectToggleControl.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import EffectTableRow from 'src/components/item-list/v1/EffectTableRow.svelte';
 
   let context = $derived(getSheetContext<ActorSheetContextV1>());
 
@@ -108,49 +107,54 @@
             {/snippet}
             {#snippet body()}
               {#each effectEntries as { effect } (effect.id)}
-                <ItemTableRow
-                  onMouseDown={(event) =>
-                    FoundryAdapter.editOnMiddleClick(event, effect)}
-                  contextMenu={{
-                    type: CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS,
-                    uuid: effect.uuid,
-                  }}
+                <EffectTableRow
                   activeEffect={effect}
                   attributes={{
                     'data-info-card': 'effect',
                     'data-info-card-entity-uuid': effect.uuid,
                   }}
                 >
-                  <ItemTableCell
-                    primary={true}
-                    attributes={{
-                      'data-tidy-effect-name-container': true,
-                      'data-effect-id': effect.id,
-                    }}
-                  >
-                    <ItemImage src={effect.img ?? effect.icon} />
-                    <span
-                      class="align-self-center truncate"
-                      title={effect.name}
-                      data-tidy-effect-name={effect.name}>{effect.name}</span
+                  {#snippet children({ toggleSummary })}
+                    <ItemTableCell
+                      primary={true}
+                      attributes={{
+                        'data-tidy-effect-name-container': true,
+                        'data-effect-id': effect.id,
+                      }}
                     >
-                  </ItemTableCell>
-                  <ItemTableCell baseWidth="12.5rem">
-                    <span class="truncate" title={effect.sourceName ?? ''}
-                      >{effect.sourceName ?? ''}</span
-                    >
-                  </ItemTableCell>
-                  <ItemTableCell baseWidth="7.5rem">
-                    <span class="truncate" title={effect.duration.label ?? ''}
-                      >{effect.duration.label ?? ''}</span
-                    >
-                  </ItemTableCell>
-                  {#if context.editable && context.useClassicControls && context.allowEffectsManagement}
-                    <ItemTableCell baseWidth={classicControlsColumnWidth}>
-                      <ClassicControls {controls} params={{ effect: effect }} />
+                      <ItemImage src={effect.img ?? effect.icon} />
+                      <a
+                        onclick={() => toggleSummary()}
+                        class="truncate flex-row align-items-center flex-1"
+                      >
+                        <span
+                          class="align-self-center truncate flex-1"
+                          title={effect.name}
+                          data-tidy-effect-name={effect.name}
+                          >{effect.name}</span
+                        >
+                      </a>
                     </ItemTableCell>
-                  {/if}
-                </ItemTableRow>
+                    <ItemTableCell baseWidth="12.5rem">
+                      <span class="truncate" title={effect.sourceName ?? ''}
+                        >{effect.sourceName ?? ''}</span
+                      >
+                    </ItemTableCell>
+                    <ItemTableCell baseWidth="7.5rem">
+                      <span class="truncate" title={effect.duration.label ?? ''}
+                        >{effect.duration.label ?? ''}</span
+                      >
+                    </ItemTableCell>
+                    {#if context.editable && context.useClassicControls && context.allowEffectsManagement}
+                      <ItemTableCell baseWidth={classicControlsColumnWidth}>
+                        <ClassicControls
+                          {controls}
+                          params={{ effect: effect }}
+                        />
+                      </ItemTableCell>
+                    {/if}
+                  {/snippet}
+                </EffectTableRow>
               {/each}
               {#if context.unlocked && context.allowEffectsManagement}
                 <ItemTableFooter
