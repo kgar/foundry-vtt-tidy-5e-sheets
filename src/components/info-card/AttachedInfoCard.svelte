@@ -107,9 +107,9 @@
 
         card = {
           component: EffectInfoCard,
-          props: { effect: entity },
+          props: { activeEffect: entity },
           title: entity.name,
-        };
+        } satisfies InfoCardState<typeof EffectInfoCard>;
         break;
       }
       // case 'activity': {
@@ -135,17 +135,17 @@
           card = {
             ...withProps(InventoryItemCard, { item: entity }),
             title: entity.name,
-          };
+          } satisfies InfoCardState<typeof InventoryItemCard>;
         } else if (entity?.type === CONSTANTS.ITEM_TYPE_SPELL) {
           card = {
             ...withProps(SpellItemCard, { item: entity }),
             title: entity.name,
-          };
+          } satisfies InfoCardState<typeof InventoryItemCard>;
         } else {
           card = {
             ...withProps(DefaultItemCard, { item: entity }),
             title: entity.name,
-          };
+          } satisfies InfoCardState<typeof InventoryItemCard>;
         }
 
         break;
