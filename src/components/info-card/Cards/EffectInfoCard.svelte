@@ -3,6 +3,7 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ActiveEffect5e } from 'src/types/types';
+  import { ActiveEffectsHelper } from 'src/utils/active-effect';
 
   interface Props {
     activeEffect: ActiveEffect5e;
@@ -18,43 +19,9 @@
     }),
   );
 
-  let pills = $derived.by(() => {
-    let result = [];
-
-    if (activeEffect.disabled) {
-      result.push('EFFECT.Disabled');
-    }
-
-    if (activeEffect.transfer) {
-      result.push('EFFECT.Transfer');
-    }
-
-    if (activeEffect.isSuppressed) {
-      result.push('DND5E.Suppressed');
-    }
-
-    Array.from<string>(activeEffect.statuses)
-      .map(
-        (x: string) => CONFIG.statusEffects.find((y) => y.id === x)?.name ?? x,
-      )
-      .forEach((e) => {
-        result.push(e);
-      });
-
-    return result;
-  });
-
-  function findMode(mode: number) {
-    const entry = Object.entries(CONST.ACTIVE_EFFECT_MODES).find(
-      ([_, value]) => value === mode,
-    );
-
-    if (!entry) {
-      return '—';
-    }
-
-    return localize(`EFFECT.MODE_${entry[0]}`);
-  }
+  let pills = $derived.by(() =>
+    ActiveEffectsHelper.getActiveEffectPills(activeEffect),
+  );
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -88,7 +55,7 @@
 
     <ul style="margin-block-start: 1rem;" class="unlist flex-column small-gap">
       {#each activeEffect.changes as change}
-        {@const modeLabel = findMode(change.mode)}
+        {@const modeLabel = ActiveEffectsHelper.findMode(change.mode)}
         <li>
           <div>
             <strong class="break-word">{change.key}</strong>
