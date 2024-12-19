@@ -1,9 +1,10 @@
 <script lang="ts">
   export let src: string;
   export let alt: string = '';
+  export let classes: string = '';
 </script>
 
-<img class="item-image" {src} {alt} />
+<img class="item-image {classes}" {src} {alt} />
 
 <style lang="scss">
   .item-image {
