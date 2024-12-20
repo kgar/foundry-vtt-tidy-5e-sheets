@@ -1,4 +1,7 @@
-import { type Tidy5eSheetsApi } from 'src/api';
+import {
+  type HeaderControlRegistrationParams,
+  type Tidy5eSheetsApi,
+} from 'src/api';
 import { settings } from 'src/settings/settings.svelte';
 
 export class DebugTools {
@@ -21,7 +24,7 @@ export class DebugTools {
         });
       });
 
-      const controlRegistrationParams = {
+      const controlRegistrationParams: HeaderControlRegistrationParams = {
         controls: [
           {
             async onClickAction(this: any, event: PointerEvent) {

@@ -389,7 +389,8 @@ export type EquipmentTypeGroup = {
  *   ownership: CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER,
  *   onClickAction(event, target) {
  *     ui.notifications.info(`Doing cool stuff with ${this.name}.`)
- *   }
+ *   },
+ *   position: 'header'
  * }
  * ```
  */
@@ -427,7 +428,21 @@ export interface CustomHeaderControlsEntry {
    * @returns
    */
   onClickAction?: (event: PointerEvent, target: HTMLElement) => Promise<void>;
+  /**
+   * Denotes whether to put the control in the header menu ('menu') 
+   * or directly on the header ('header'). 
+   * 
+   * Default: 'menu'.
+   */
+  position?: SheetHeaderControlPosition;
 }
+
+/** 
+ * A position for sheet header controls.  
+ * 'menu' - the control is placed inside the header controls menu
+ * 'header' - the control is placed on the header itself, outside of the menu
+ */
+export type SheetHeaderControlPosition = 'menu' | 'header';
 
 /**
  * The parameters needed to register header controls.

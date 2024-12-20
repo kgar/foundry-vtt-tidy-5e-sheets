@@ -25,7 +25,7 @@ function toSignedNumberString(value: number) {
   return value.toLocaleString(FoundryAdapter.getCurrentLang(), { signDisplay: 'always' });
 }
 
-export function coalesce(...values: string[]) {
+export function coalesce(...values: (string | null | undefined)[]) {
   for (let value of values) {
     if (!isNil(value?.trim(), '')) {
       return value;

@@ -21,9 +21,18 @@ import type {
   ApplicationClickAction,
 } from 'src/types/application.types';
 import { HeaderControlsRuntime } from 'src/runtime/header-controls/HeaderControlsRuntime';
-import type { CustomHeaderControlsEntry } from 'src/api';
+import type {
+  CustomHeaderControlsEntry,
+  SheetHeaderControlPosition,
+} from 'src/api/api.types';
 import { unmount } from 'svelte';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
+import { coalesce } from 'src/utils/formatting';
+import {
+  createHeaderButton,
+  insertHeaderButton,
+  removeTidyHeaderButtons,
+} from 'src/features/sheet-header-controls/header-controls';
 
 type RenderResult<TContext> = {
   customContents: RenderedSheetPart[];
@@ -253,6 +262,19 @@ export function SvelteApplicationMixin<
 
     _updateFrame(options: ApplicationRenderOptions) {
       options ??= {};
+
+      // Remove header bar controls
+      removeTidyHeaderButtons(this.window.header);
+
+      // Add header bar controls
+      this._getVisibleHeaderControlsForPosition('header').forEach((x) =>
+        insertHeaderButton(
+          this,
+          this.window.header,
+          createHeaderButton(x.label, x.action ?? '', x.icon)
+        )
+      );
+
       // For whatever reason, application v2 titles don't update themselves on _updateFrame without an implementing class specifiying window settings.
       FoundryAdapter.mergeObject(options, {
         window: {
@@ -261,6 +283,7 @@ export function SvelteApplicationMixin<
           controls: true,
         },
       });
+
       super._updateFrame(options);
     }
 
@@ -566,11 +589,27 @@ export function SvelteApplicationMixin<
      * Configure the array of header control menu options
      */
     _getHeaderControls() {
+      return this._getVisibleHeaderControlsForPosition('menu');
+    }
+
+    _getVisibleHeaderControlsForPosition(
+      position: SheetHeaderControlPosition
+    ): CustomHeaderControlsEntry[] {
       const controls = super._getHeaderControls();
-      return controls.filter(
-        (c: CustomHeaderControlsEntry) =>
-          typeof c.visible !== 'function' || c.visible.call(this)
-      );
+      return controls.filter((c: CustomHeaderControlsEntry) => {
+        try {
+          return (
+            (typeof c.visible !== 'function' || c.visible.call(this)) &&
+            coalesce(c.position, 'menu') === position
+          );
+        } catch (e) {
+          error('Failed to get custom control', false, {
+            control: c,
+            error: e,
+          });
+          return false;
+        }
+      });
     }
   }
 
