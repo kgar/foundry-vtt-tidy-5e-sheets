@@ -9,19 +9,16 @@ export class ImportSheetControl {
       icon: 'fas fa-download',
       label: 'Import',
       visible(this: any) {
-        return ImportSheetControl.canImport(this.document);
+        const document = this.document;
+        return (
+          document.constructor.name !== 'Folder' &&
+          !document.isEmbedded &&
+          document.compendium &&
+          document.constructor.canUserCreate(game.user)
+        );
       },
       position: 'header',
     };
-  }
-
-  static canImport(document: any) {
-    return (
-      document.constructor.name !== 'Folder' &&
-      !document.isEmbedded &&
-      document.compendium &&
-      document.constructor.canUserCreate(game.user)
-    );
   }
 
   static async importFromCompendium(app: any, document: any) {

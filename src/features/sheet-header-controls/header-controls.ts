@@ -1,9 +1,11 @@
+export const tidyHeaderAttribute = 'data-tidy-header-control';
+
 export function createHeaderButton(
   label: string,
   action: string,
   icon: string
 ) {
-  return `<button type="button" class="header-control ${icon}" data-action="${action}" data-tooltip="${label}" aria-label="${label}" data-tidy-header-control></button>`;
+  return `<button type="button" class="header-control ${icon}" data-action="${action}" data-tooltip="${label}" aria-label="${label}" ${tidyHeaderAttribute}></button>`;
 }
 
 export function insertHeaderButton(
@@ -19,4 +21,10 @@ export function insertHeaderButton(
   if (anchor) {
     anchor.insertAdjacentHTML('beforebegin', html);
   }
+}
+
+export function removeTidyHeaderButtons(header: HTMLElement) {
+  header
+    .querySelectorAll<HTMLElement>(`[${tidyHeaderAttribute}]`)
+    .forEach((el: HTMLElement) => el.remove());
 }

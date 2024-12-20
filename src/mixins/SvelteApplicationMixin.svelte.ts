@@ -31,6 +31,7 @@ import { coalesce } from 'src/utils/formatting';
 import {
   createHeaderButton,
   insertHeaderButton,
+  removeTidyHeaderButtons,
 } from 'src/features/sheet-header-controls/header-controls';
 
 type RenderResult<TContext> = {
@@ -263,9 +264,7 @@ export function SvelteApplicationMixin<
       options ??= {};
 
       // Remove header bar controls
-      this.window.header
-        .querySelectorAll('[data-tidy-header-control]')
-        .forEach((el: HTMLElement) => el.remove());
+      removeTidyHeaderButtons(this.window.header);
 
       // Add header bar controls
       this._getVisibleHeaderControlsForPosition('header').forEach((x) =>
