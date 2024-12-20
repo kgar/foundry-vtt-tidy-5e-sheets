@@ -741,24 +741,6 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
   }
 
   /* -------------------------------------------- */
-  /*  Application Lifecycle Functions             */
-  /* -------------------------------------------- */
-
-  /**
-   * Perform any dynamic behavior on controls which depends on the current state of the sheet.
-   * @returns
-   */
-  _getHeaderControls() {
-    const controls = super._getHeaderControls();
-
-    if (!ImportSheetControl.canImport(this.document)) {
-      ImportSheetControl.removeImportControl(controls);
-    }
-
-    return controls;
-  }
-
-  /* -------------------------------------------- */
   /*  Drag and Drop                               */
   /* -------------------------------------------- */
 
