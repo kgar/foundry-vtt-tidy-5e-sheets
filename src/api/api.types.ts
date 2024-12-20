@@ -437,6 +437,11 @@ export interface CustomHeaderControlsEntry {
   position?: SheetHeaderControlPosition;
 }
 
+/** 
+ * A position for sheet header controls.  
+ * 'menu' - the control is placed inside the header controls menu
+ * 'header' - the control is placed on the header itself, outside of the menu
+ */
 export type SheetHeaderControlPosition = 'menu' | 'header';
 
 /**
