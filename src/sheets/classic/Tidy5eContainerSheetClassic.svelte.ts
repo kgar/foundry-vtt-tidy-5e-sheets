@@ -393,7 +393,7 @@ export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
   async _renderFrame(options: ApplicationRenderOptions) {
     const frame = await super._renderFrame(options);
 
-    ImportSheetControl.injectImportButton(this, frame);
+    ImportSheetControl.injectImportButton(this, this.window.header);
 
     return frame;
   }

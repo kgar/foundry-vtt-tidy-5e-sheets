@@ -54,7 +54,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       frame: true,
       positioned: true,
       resizable: true,
-      controls: [],
+      controls: [ImportSheetControl.getSheetControl()],
     },
     position: {
       width: 560,
@@ -720,18 +720,6 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
         callback: (li: any) => this._onAdvancementAction(li[0], 'delete'),
       },
     ];
-  }
-
-  /* -------------------------------------------- */
-  /*  Rendering                                   */
-  /* -------------------------------------------- */
-
-  async _renderFrame(options: ApplicationRenderOptions) {
-    const frame = await super._renderFrame(options);
-
-    ImportSheetControl.injectImportButton(this, frame);
-
-    return frame;
   }
 
   /* -------------------------------------------- */

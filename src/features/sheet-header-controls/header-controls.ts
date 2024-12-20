@@ -3,12 +3,18 @@ export function createHeaderButton(
   action: string,
   icon: string
 ) {
-  return `<button type="button" class="header-control ${icon}" data-action="${action}" data-tooltip="${label}" aria-label="${label}"></button>`;
+  return `<button type="button" class="header-control ${icon}" data-action="${action}" data-tooltip="${label}" aria-label="${label}" data-tidy-header-control></button>`;
 }
 
-export function insertHeaderButton(app: any, frame: HTMLElement, html: string) {
+export function insertHeaderButton(
+  app: any,
+  header: HTMLElement,
+  html: string
+) {
   let anchor =
-    frame.querySelector('[data-action="copyUuid"]') ?? app.window.close;
+    header.querySelector('[data-action="copyUuid"]') ??
+    header.querySelector('[data-action="configureSheet"]') ??
+    app.window.close;
 
   if (anchor) {
     anchor.insertAdjacentHTML('beforebegin', html);

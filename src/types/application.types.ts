@@ -1,3 +1,5 @@
+import type { CustomHeaderControlsEntry } from "src/api/api.types";
+
 export type ApplicationConfiguration = {
   id: string;
   uniqueId: string;
@@ -27,7 +29,7 @@ export interface ApplicationWindowConfiguration {
   positioned?: boolean;
   title?: string;
   icon?: string | false;
-  controls?: ApplicationHeaderControlsEntry[];
+  controls?: (ApplicationHeaderControlsEntry | CustomHeaderControlsEntry)[];
   minimizable?: boolean;
   resizable?: boolean;
   contentTag?: string;

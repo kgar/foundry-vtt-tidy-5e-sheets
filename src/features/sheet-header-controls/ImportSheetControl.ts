@@ -1,15 +1,20 @@
 import type { ApplicationHeaderControlsEntry } from 'src/types/application.types';
 import { createHeaderButton, insertHeaderButton } from './header-controls';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import type { CustomHeaderControlsEntry } from 'src/api/api.types';
 
 export class ImportSheetControl {
   static actionName = 'importFromCompendium';
 
-  static getSheetControl() {
+  static getSheetControl(): CustomHeaderControlsEntry {
     return {
       action: 'importFromCompendium',
       icon: 'fas fa-download',
       label: 'Import',
+      visible(this: any) {
+        return ImportSheetControl.canImport(this.document);
+      },
+      position: 'header',
     };
   }
 
@@ -42,7 +47,7 @@ export class ImportSheetControl {
     );
   }
 
-  static injectImportButton(app: any, frame: HTMLElement) {
+  static injectImportButton(app: any, header: HTMLElement) {
     if (ImportSheetControl.canImport(app.document)) {
       const control = ImportSheetControl.getSheetControl();
       const label = FoundryAdapter.localize(control.label);
@@ -53,7 +58,7 @@ export class ImportSheetControl {
         control.icon
       );
 
-      insertHeaderButton(app, frame, importFromCompendium);
+      insertHeaderButton(app, header, importFromCompendium);
     }
   }
 }
