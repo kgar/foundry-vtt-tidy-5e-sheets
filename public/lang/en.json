@@ -820,6 +820,8 @@
   "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Show Unassigned Only",
   "TIDY5E.Keybindings.ToggleSheetLock.Name": "Toggle Sheet Lock",
   "TIDY5E.Keybindings.ToggleSheetLock.Hint": "If a Tidy sheet is the current active window in the UI, this keybinding toggles the sheet lock.",
+  "TIDY5E.Keybindings.ToggleHeaderMenu.Name": "Toggle Header Menu",
+  "TIDY5E.Keybindings.ToggleHeaderMenu.Hint": "If a Tidy sheet is the current active window in the UI, this keybinding toggles the sheet header menu.",
   "TIDY5E.Facilities.Hirelings.Label": "Hirelings",
   "TIDY5E.Facilities.Defenders.Label": "Defenders",
   "TIDY5E.Facilities.Creatures.Label": "Creatures",
