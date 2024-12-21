@@ -830,5 +830,11 @@
         "name": "Chiave Ispezione Scheda Informativa",
         "hint": "Premi questo carattere della tastiera (ad esempio il tasto \"t\") mentre visualizzi una scheda informativa per farla apparire."
     },
-    "TIDY5E.InfoCardInspectHint": "{inspectKey} Ispeziona"
+    "TIDY5E.InfoCardInspectHint": "{inspectKey} Ispeziona",
+    "TIDY5E.Keybindings.ToggleHeaderMenu.Name": "Attiva/Disattiva Menu Intestazione",
+    "TIDY5E.Keybindings.ToggleHeaderMenu.Hint": "Se una scheda Tidy è la finestra attualmente attiva nell'interfaccia utente, questa combinazione di tasti attiva/disattiva il menu dell'intestazione della scheda.",
+    "TIDY5E.Settings.UseEffectCards": {
+        "name": "Mostra Schede Informative degli effetti attivi",
+        "hint": "Abilita per mostrare le schede informative degli effetti attivi per tutti i personaggi e gli elementi con effetti attivi."
+    }
 }
