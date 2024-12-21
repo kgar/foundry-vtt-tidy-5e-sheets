@@ -191,8 +191,8 @@
           <label for="{appId}-magical-bonus">{localize('DND5E.Bonus')}</label>
           <NumberInput
             id="{appId}-magical-bonus"
-            value={context.source.magicalBonus}
-            field="system.magicalBonus"
+            value={context.source.armor.magicalBonus}
+            field="system.armor.magicalBonus"
             document={context.item}
             disabled={!context.editable}
             min="0"
