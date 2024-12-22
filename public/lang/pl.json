@@ -788,5 +788,14 @@
     "TIDY5E.Facilities.Defenders.Label": "Obrońcy",
     "TIDY5E.Facilities.Creatures.Label": "Stworzenia",
     "TIDY5E.Facilities.RosterMember.Label": "{actorName} - {facilityName}",
-    "TIDY5E.ExpandCollapseMenu.OptionTitle": "Rozwiń/Zwiń"
+    "TIDY5E.ExpandCollapseMenu.OptionTitle": "Rozwiń/Zwiń",
+    "TIDY5E.Settings.UseEffectCards": {
+        "name": "Pokaż karty informacyjne aktywnych efektów",
+        "hint": "Włącz wyświetlanie kart informacyjnych aktywnych efektów dla wszystkich postaci i przedmiotów z aktywnymi efektami."
+    },
+    "TIDY5E.InfoCardInspectHint": "{inspectKey} Sprawdź",
+    "TIDY5E.Settings.InfoCardsInspectKey": {
+        "name": "Przycisk sprawdzania karty informacyjnej",
+        "hint": "Naciśnij ten przycisk (na przykład klawisz „t”) podczas przeglądania karty informacyjnej, aby otworzyć ją w nowym oknie."
+    }
 }
