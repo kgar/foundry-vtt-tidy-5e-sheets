@@ -84,7 +84,7 @@
           })}
           title={!context.unlocked ? localize('DND5E.ChallengeRating') : ''}
         >
-          <label for="{context.appId}-system-details-cr">
+          <label for="{context.appId}-system-details-cr" class="challenge-rating-label">
             {localize('DND5E.AbbreviationCR')}
           </label>
           {#if context.unlocked}
@@ -253,6 +253,11 @@
       display: flex;
       align-items: center;
       gap: 0.25rem;
+
+      .challenge-rating-label {
+        padding-top: 0.0625rem;
+        line-height: normal;
+      }
 
       :global(.challenge-rating-input) {
         max-width: 1.75rem;
