@@ -44,6 +44,16 @@
     }
   }
 
+  &.minimized {
+    .window-title {
+      color: var(--t5e-color-text-onInverse-default);
+    }
+
+    .header-control {
+      color: var(--t5e-color-text-onInverse-default);
+    }
+  }
+
   .header-sheet-edit-mode-toggle {
     margin-right: 0.25rem;
   }
