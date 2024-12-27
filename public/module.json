@@ -31,8 +31,8 @@
       "email": ""
     }
   ],
-  "esmodules": ["./main.js"],
-  "styles": ["./style.css"],
+  "esmodules": ["./tidy5e-sheet.js"],
+  "styles": ["./tidy5e-sheet.css"],
   "languages": [
     {
       "lang": "en",
