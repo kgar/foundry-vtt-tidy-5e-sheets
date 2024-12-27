@@ -11,6 +11,10 @@ export default defineConfig({
   publicDir: path.resolve(__dirname, 'public'),
   esbuild: {
     target: ['es2022'],
+    minifyIdentifiers: false,
+    minifySyntax: true,
+    minifyWhitespace: true,
+    keepNames: true
   },
   server: {
     port: 30001,
@@ -39,7 +43,7 @@ export default defineConfig({
     lib: {
       entry: './main.svelte.ts',
       name: 'Tidy5e-Sheet-Kgar',
-      fileName: 'main',
+      fileName: 'tidy5e-sheet',
       formats: ['es'],
     },
     rollupOptions: {
@@ -50,15 +54,7 @@ export default defineConfig({
       },
     },
     sourcemap: true,
-    minify: 'terser',
-    terserOptions: {
-      mangle: {
-        toplevel: true,
-        keep_classnames: true,
-      },
-      ecma: 2020,
-      module: true,
-    },
+    minify: 'esbuild',
   },
   css: {
     preprocessorOptions: {
