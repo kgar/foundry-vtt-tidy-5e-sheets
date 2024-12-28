@@ -20,7 +20,7 @@ export default defineConfig({
     port: 30001,
     proxy: {
       // Serves static files from main Foundry server.
-      [`^(/${s_PACKAGE_ID}/(assets|lang|packs|style.css))`]:
+      [`^(/${s_PACKAGE_ID}/(assets|lang|packs|tidy5e-sheet.css))`]:
         'http://localhost:30000',
 
       // All other paths besides package ID path are served from main Foundry server.
