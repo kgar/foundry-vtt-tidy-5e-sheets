@@ -25,7 +25,7 @@ import type {
   CustomHeaderControlsEntry,
   SheetHeaderControlPosition,
 } from 'src/api/api.types';
-import { unmount } from 'svelte';
+import { tick, unmount } from 'svelte';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 import { coalesce } from 'src/utils/formatting';
 import {
@@ -150,8 +150,16 @@ export function SvelteApplicationMixin<
     ): Promise<RenderResult<TContext>> {
       this._context.data = context;
 
+      if (options.isFirstRender) {
+        const content = this.hasFrame
+          ? this.element.querySelector('.window-content')
+          : this.element;
+        this.#components.push(this._createComponent(content));
+        this.#components.push(...this._createAdditionalComponents(content));
+      }
+
       // Allow svelte to process its synchronous microtask changes before entertaining custom content.
-      await delay(0);
+      await tick();
 
       let result: RenderResult<TContext> = {
         context: context,
@@ -197,11 +205,6 @@ export function SvelteApplicationMixin<
       content: HTMLElement,
       options: ApplicationRenderOptions
     ) {
-      if (options.isFirstRender) {
-        this.#components.push(this._createComponent(content));
-        this.#components.push(...this._createAdditionalComponents(content));
-      }
-
       try {
         this.#saveScrollPositions(content);
         this.#saveInputFocus(content);
