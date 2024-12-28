@@ -86,14 +86,12 @@
     };
   }
 
-  function hoverOn(event: MouseEvent, target: HTMLElement) {
+  async function hoverOn(_event: MouseEvent, target: HTMLElement) {
     // Get the card state
     const cardType = target.getAttribute('data-info-card');
     const uuid = target.getAttribute(uuidAttribute);
 
-    const entity = fromUuidSync(uuid);
-
-    if (!uuid || !cardType || !entity) {
+    if (!uuid || !cardType) {
       show = false;
       return;
     }
@@ -101,6 +99,13 @@
     switch (cardType) {
       case 'effect': {
         if (!settings.value.useEffectCards) {
+          show = false;
+          return;
+        }
+
+        const entity = await fromUuid(uuid);
+
+        if (!entity) {
           show = false;
           return;
         }
@@ -127,6 +132,13 @@
           !settings.value.itemCardsForAllItems &&
           !target.matches('[data-tidy-grid-item]')
         ) {
+          show = false;
+          return;
+        }
+
+        const entity = await fromUuid(uuid);
+
+        if (!entity) {
           show = false;
           return;
         }

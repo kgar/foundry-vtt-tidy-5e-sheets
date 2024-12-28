@@ -25,7 +25,7 @@ import type {
   CustomHeaderControlsEntry,
   SheetHeaderControlPosition,
 } from 'src/api/api.types';
-import { unmount } from 'svelte';
+import { tick, unmount } from 'svelte';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 import { coalesce } from 'src/utils/formatting';
 import {
@@ -33,6 +33,8 @@ import {
   insertHeaderButton,
   removeTidyHeaderButtons,
 } from 'src/features/sheet-header-controls/header-controls';
+import { processInputChangeDelta } from 'src/utils/form';
+import { isNil } from 'src/utils/data';
 
 type RenderResult<TContext> = {
   customContents: RenderedSheetPart[];
@@ -150,8 +152,16 @@ export function SvelteApplicationMixin<
     ): Promise<RenderResult<TContext>> {
       this._context.data = context;
 
+      if (options.isFirstRender) {
+        const content = this.hasFrame
+          ? this.element.querySelector('.window-content')
+          : this.element;
+        this.#components.push(this._createComponent(content));
+        this.#components.push(...this._createAdditionalComponents(content));
+      }
+
       // Allow svelte to process its synchronous microtask changes before entertaining custom content.
-      await delay(0);
+      await tick();
 
       let result: RenderResult<TContext> = {
         context: context,
@@ -197,11 +207,6 @@ export function SvelteApplicationMixin<
       content: HTMLElement,
       options: ApplicationRenderOptions
     ) {
-      if (options.isFirstRender) {
-        this.#components.push(this._createComponent(content));
-        this.#components.push(...this._createAdditionalComponents(content));
-      }
-
       try {
         this.#saveScrollPositions(content);
         this.#saveInputFocus(content);
@@ -236,11 +241,20 @@ export function SvelteApplicationMixin<
           // Support injected named inputs
           element.addEventListener(
             'change',
-            (ev: InputEvent & { target: HTMLElement }) => {
+            (ev: InputEvent & { target: HTMLInputElement }) => {
               if (
                 ev.target.matches('input[name], textarea[name], select[name]')
               ) {
                 this.submit();
+                return;
+              }
+
+              if (
+                ev.target.matches(
+                  'input[data-name], textarea[data-name], select[data-name]'
+                )
+              ) {
+                this._submitEmbeddedDocumentChange(ev);
               }
             }
           );
@@ -258,6 +272,62 @@ export function SvelteApplicationMixin<
       }
 
       return element;
+    }
+
+    async _submitEmbeddedDocumentChange(
+      event: InputEvent & { target: HTMLInputElement }
+    ) {
+      const itemId =
+        event.target.closest<HTMLElement>('[data-item-id]')?.dataset.itemId;
+      if (itemId) {
+        await this._submitEmbeddedItemChange(event, itemId);
+      }
+    }
+
+    async _submitEmbeddedItemChange(
+      event: InputEvent & { target: HTMLInputElement },
+      itemId: string
+    ) {
+      event.stopImmediatePropagation();
+
+      const item = await this.getItem(itemId);
+      const field = event.target.getAttribute('data-name')!;
+
+      let valueToSave: string | number = event.target.value;
+
+      // For deltas, parse the resulting delta value
+      if (event.target.matches('[inputmode="numeric"]')) {
+        valueToSave = processInputChangeDelta(
+          event.target.value,
+          item,
+          field
+        )?.toString();
+      }
+
+      // For numeric changes, enforce min/max on the value to save
+      if (event.target.matches('[inputmode="numeric"], [type="number"]')) {
+        const minAttribute = event.target.getAttribute('min');
+        const min = !isNil(minAttribute, '') ? Number(minAttribute) : -Infinity;
+
+        const maxAttribute = event.target.getAttribute('max');
+        const max = !isNil(maxAttribute, '') ? Number(maxAttribute) : Infinity;
+
+        const valueAsNumber = Number(valueToSave);
+        valueToSave = Math.clamp(valueAsNumber, min, max);
+
+        if (item && !Number.isNaN(valueToSave)) {
+          event.target.value = valueToSave?.toString();
+        }
+      }
+
+      // Save the value to the document, whatever that value ultimately became
+      item.update({ [field]: valueToSave });
+    }
+
+    getItem(id: string) {
+      if (this.document.type === 'container')
+        return this.document.system.getContainedItem(id);
+      return this.document.items.get(id);
     }
 
     _updateFrame(options: ApplicationRenderOptions) {
