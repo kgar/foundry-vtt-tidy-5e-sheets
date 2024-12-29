@@ -1290,13 +1290,15 @@ export class Tidy5eCharacterSheet
       ? context.system.bastion.name
       : 'TYPES.Item.facilityPl';
 
-    let facilitiesSection: FacilitySection = {
-      dataset: {},
-      items: favorites.facilities,
-      key: 'tidy-favorite-bastion-facilities',
-      label: bastionFacilitiesLabel,
-      show: true,
-    };
+    let favoriteFacilities: FacilitySection[] = [
+      {
+        dataset: {},
+        items: favorites.facilities,
+        key: 'tidy-favorite-bastion-facilities',
+        label: bastionFacilitiesLabel,
+        show: true,
+      },
+    ];
 
     // Apply sections to their section lists
 
@@ -1325,10 +1327,12 @@ export class Tidy5eCharacterSheet
           ...s,
           type: CONSTANTS.FAVORITES_SECTION_TYPE_SPELLBOOK,
         })),
-      {
-        ...facilitiesSection,
-        type: CONSTANTS.FAVORITES_SECTION_TYPE_FACILITY,
-      },
+      ...favoriteFacilities
+        .filter((i) => i.items.length)
+        .map((i) => ({
+          ...i,
+          type: CONSTANTS.FAVORITES_SECTION_TYPE_FACILITY,
+        })),
     ];
   }
 
