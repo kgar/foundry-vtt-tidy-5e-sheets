@@ -6,7 +6,7 @@ import type {
 } from 'src/types/application.types';
 import { mount } from 'svelte';
 import ItemDebugSheet from './item/ItemDebugSheet.svelte';
-import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
+import ItemHeaderStart from './item/parts/ContainerHeaderStart.svelte';
 import type { Tab } from 'src/types/types';
 import type { Item5e, ItemDescription } from 'src/types/item.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';

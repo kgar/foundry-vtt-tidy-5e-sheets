@@ -20,7 +20,8 @@
     top: 0;
     left: 0;
     right: 0;
-    padding-inline-start: calc(var(--sidebar-width) + 0.75rem);
+    // Consider colocating a 0 padding-inline-start override of 0 with the header over sidebar content via a has()
+    // padding-inline-start: calc(var(--sidebar-width) + 0.75rem);
     grid-area: header;
     transition: padding-left 250ms ease;
 
@@ -52,6 +53,37 @@
     .header-control {
       color: var(--t5e-color-text-onInverse-default);
     }
+  }
+
+  &:not(.minimized, .minimizing) {
+    .window-header {
+      padding-inline-start: 0;
+    }
+  }
+
+  .header-over-sidebar {
+    padding-inline-start: 0.75rem;
+    margin-inline-end: 1.25rem;
+    display: inline-flex;
+    gap: 0.5rem;
+    align-items: center;
+    width: var(--sidebar-width);
+    height: var(--header-height);
+
+    .header-item-type-label {
+      flex: 1;
+      color: var(--t5e-color-text-onInverse-lighter);
+      // text-align: center;
+      font-family: 'Modesto Condensed';
+      font-size: var(--font-font-size-18, 1.125rem);
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+
+    // TODO: Handle Minimized?
+
+    // TODO: Handle scroll breakpoints
   }
 
   .header-sheet-edit-mode-toggle {
@@ -99,6 +131,9 @@
     gap: 1rem;
     grid-area: sidebar;
     padding: 1rem;
+
+    // Consider colocating this with the header over sidebar content via a has()
+    padding-block-start: calc(var(--header-height));
 
     h4 {
       color: var(--t5e-color-text-onInverse-gold-light, #f0f0e1);

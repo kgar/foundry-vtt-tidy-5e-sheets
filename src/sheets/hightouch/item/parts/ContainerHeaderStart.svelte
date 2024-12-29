@@ -13,7 +13,13 @@
   );
 </script>
 
-<SheetHeaderEditModeToggle class="header-control" />
+<span class="header-over-sidebar">
+  <SheetHeaderEditModeToggle class="header-control" />
+
+  <span class="header-item-type-label">
+    {context.itemType}
+  </span>
+</span>
 
 <ConfigurableSource
   document={context.document}

@@ -165,9 +165,6 @@
 
   <!-- Header Summary -->
   <div class="item-header-summary">
-    <!-- Item Type -->
-    <div class="item-type text-lighter">{context.itemType ?? ''}</div>
-    <div class="item-header-summary-separator" role="presentation"></div>
     <!-- Value -->
     <div class="item-value">
       <!-- Currency Image -->
