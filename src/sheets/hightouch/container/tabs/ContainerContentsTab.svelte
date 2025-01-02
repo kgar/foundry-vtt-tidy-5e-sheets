@@ -15,6 +15,7 @@
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
   import { getContainerSheetHightouchContext } from 'src/sheets/sheet-context.svelte';
+  import type { ScrollInfo } from '../../Tidy5eContainerSheetHightouch.svelte';
 
   let context = $derived(getContainerSheetHightouchContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
@@ -44,7 +45,30 @@
   );
 
   let menuOpen = $derived(false);
+
+  let scrollInfo = getContext<ScrollInfo>('window-content-scroll-info');
+
+  let footerClientHeight: number = $state(0);
+  let minimizedCapacityBarClientHeight: number = $state(0);
+
+  let showMinimizedFooter = $derived.by(() => {
+    const totalHeight =
+      (footerClientHeight ?? 0) + (minimizedCapacityBarClientHeight ?? 0);
+
+    const isOverflowing = scrollInfo.scrollHeight > scrollInfo.clientHeight;
+
+    const footerIsInView =
+      scrollInfo.scrollHeight -
+        scrollInfo.scrollTop -
+        scrollInfo.clientHeight <=
+      totalHeight;
+
+    return isOverflowing && !footerIsInView;
+  });
 </script>
+
+{showMinimizedFooter}
+{JSON.stringify(scrollInfo)}
 
 <section
   class="action-bar"
@@ -138,7 +162,7 @@
   />
 </div>
 
-<footer class="contents-footer">
+<footer class="contents-footer" bind:clientHeight={footerClientHeight}>
   <!-- Capacity Bar -->
   <CapacityBar container={context.item} capacity={context.capacity} />
 

@@ -47,9 +47,16 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
   inlineToggleService = new InlineToggleService();
   itemFilterService: ItemFilterService;
   messageBus = $state<MessageBus>({ message: undefined });
+  scrollService?: ScrollService;
 
   constructor(...args: any[]) {
     super(...args);
+
+    const originalResize = this.window.onResize;
+    this.window.onResize = (...args: any[]) => {
+      originalResize.call(this, ...args);
+      this.scrollService?.refreshScrollInfo();
+    };
 
     this.itemFilterService = new ItemFilterService({}, this.item);
   }
@@ -100,6 +107,8 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
         this.itemFilterService.onFilterClearAll.bind(this.itemFilterService),
       ],
       [CONSTANTS.SVELTE_CONTEXT.SEARCH_FILTERS, new Map(this.searchFilters)],
+      ['window-content-scroll-info', this.scrollService?.info],
+      [CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED, this.onTabSelected.bind(this)],
     ]);
 
     const component = mount(ContainerSheet, {
@@ -138,6 +147,7 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
       anchor: windowHeader.querySelector('.window-title'),
       context: new Map<string, any>([
         [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
+        ['window-content-scroll-info', this.scrollService?.info],
       ]),
     });
 
@@ -401,6 +411,28 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
       context,
       !!options.isFirstRender
     );
+
+    this.scrollService?.refreshScrollInfo();
+  }
+
+  async _renderFrame(...args: any[]) {
+    const frame = await super._renderFrame(...args);
+
+    this.scrollService = new ScrollService({
+      element: frame.querySelector('.window-content'),
+    });
+
+    return frame;
+  }
+
+  /* -------------------------------------------- */
+  /*  Event Listeners and Handlers                */
+  /* -------------------------------------------- */
+
+  _attachFrameListeners(...args: any[]) {
+    super._attachFrameListeners(...args);
+
+    this.scrollService?.subscribe();
   }
 
   /* -------------------------------------------- */
@@ -585,8 +617,63 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
     });
   }
 
+  onTabSelected(tabId: string) {
+    this.currentTabId = tabId;
+
+    setTimeout(() => {
+      this.scrollService?.refreshScrollInfo();
+    });
+  }
+
   // TODO: Plug in or reimplement
   // - SheetTabCacheable
   // - SheetExpandedItemsCacheable
   // - SearchFilterCacheable
+}
+
+type ScrollServiceProps = {
+  element: HTMLElement;
+};
+
+export type ScrollInfo = {
+  scrollTop: number;
+  scrollHeight: number;
+  clientHeight: number;
+};
+
+class ScrollService {
+  props: ScrollServiceProps;
+  info: ScrollInfo = $state({ scrollTop: 0, scrollHeight: 0, clientHeight: 0 });
+  controller?: AbortController;
+
+  constructor(props: ScrollServiceProps) {
+    this.props = props;
+  }
+
+  subscribe() {
+    this.unsubscribe();
+
+    this.controller = new AbortController();
+
+    this.props.element.addEventListener(
+      'scroll',
+      () => {
+        this.refreshScrollInfo();
+      },
+      {
+        passive: true,
+        signal: this.controller?.signal,
+      }
+    );
+  }
+
+  refreshScrollInfo() {
+    this.info.scrollTop = this.props.element.scrollTop;
+    this.info.scrollHeight = this.props.element.scrollHeight;
+    this.info.clientHeight = this.props.element.clientHeight;
+  }
+
+  unsubscribe() {
+    this.controller?.abort();
+  }
 }

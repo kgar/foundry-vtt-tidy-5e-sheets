@@ -136,6 +136,12 @@
     display: none;
   }
 
+  /* Window Content */
+
+  .window-content {
+    position: relative;
+  }
+
   /* Currencies */
   .currency-tracker {
     display: flex;

@@ -7,6 +7,8 @@
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import PillSwitch from 'src/components/toggle/PillSwitch.svelte';
   import { getContainerSheetHightouchContext } from 'src/sheets/sheet-context.svelte';
+  import { getContext } from 'svelte';
+  import type { ScrollInfo } from '../Tidy5eContainerSheetHightouch.svelte';
 
   let context = $derived(getContainerSheetHightouchContext());
 
@@ -31,7 +33,15 @@
   let itemValueText = $derived(
     FoundryAdapter.formatNumber(context.system.price?.value),
   );
+
+  let scrollInfo = getContext<ScrollInfo>('window-content-scroll-info');
 </script>
+
+<!-- TODO: Eliminate some magic numbers here -->
+<div
+  class="hidden"
+  class:is-scrolled={scrollInfo.scrollTop >= 1}
+></div>
 
 <aside
   class="sidebar"
@@ -208,7 +218,12 @@
   </div>
 
   <!-- Tab Strip -->
-  <Tabs bind:selectedTabId tabs={context.tabs} cssClass="item-tabs" sheet={context.item.sheet} />
+  <Tabs
+    bind:selectedTabId
+    tabs={context.tabs}
+    cssClass="item-tabs"
+    sheet={context.item.sheet}
+  />
 
   <hr class="golden-fade" />
 

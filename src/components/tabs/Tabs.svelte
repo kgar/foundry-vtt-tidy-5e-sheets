@@ -75,9 +75,7 @@
   let mounted = $state(false);
   onMount(() => {
     const initialTab = tabs.find((t) => t.id === currentTabId);
-    if (initialTab) {
-      selectTab(initialTab);
-    }
+    selectTab(initialTab ?? tabs[0]);
     mounted = true;
   });
 
