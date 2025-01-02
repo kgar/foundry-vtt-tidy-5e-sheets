@@ -147,3 +147,11 @@
   <!-- Currency, with Item Add Button -->
   <ContainerCurrency />
 </footer>
+
+<!-- TODO: Minimal capacity footer here -->
+
+<div
+  class="mini-capacity-bar"
+  class:hidden={!showMinimizedFooter}
+  bind:clientHeight={minimizedCapacityBarClientHeight}
+></div>
