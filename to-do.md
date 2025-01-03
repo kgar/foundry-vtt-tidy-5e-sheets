@@ -23,6 +23,10 @@
 
 		observer.observe(observedEl);
 		observer.observe(marker);
+
+		return () => {
+			observer.disconnect();
+		}
 	});
 </script>
 
