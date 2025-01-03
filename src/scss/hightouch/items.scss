@@ -1,15 +1,24 @@
 .tidy5e-sheet.application:where(.hightouch.item) {
   --sidebar-expanded-width: 9rem;
   --sidebar-width: var(--sidebar-expanded-width);
-
-  /* Application Window */
-  border-radius: 0.3125rem;
-  border: 0.0625rem solid var(--t5e-color-gold);
-  background: url(../../modules/tidy5e-sheet/images/texture-gray-1.webp)
+  --sidebar-background-image-height: 510px;
+  $sidebar-bg: linear-gradient(
+      180deg,
+      #31313140 0%,
+      #303236 var(--sidebar-background-image-height)
+    ),
+    url(../../modules/tidy5e-sheet/images/banner-character-dark.webp) lightgray
+      top center / auto no-repeat;
+  $sheet-bg: url(../../modules/tidy5e-sheet/images/texture-gray-1.webp)
       no-repeat top center,
     url(../../modules/tidy5e-sheet/images/texture-gray-2.webp) no-repeat bottom
       center,
     var(--t5e-component-card-onDefault-darker);
+
+  /* Application Window */
+  border-radius: 0.3125rem;
+  border: 0.0625rem solid var(--t5e-color-gold);
+  background: $sheet-bg;
   box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.25),
     0px 0px 12px 0px rgba(0, 0, 0, 0.5);
   background-size: cover;
@@ -39,8 +48,9 @@
       visibility: visible;
     }
 
-    .header-sheet-edit-mode-toggle,
-    .configurable-source {
+    .header-over-sidebar,
+    .configurable-source,
+    .container-header-start-document-name {
       display: none;
     }
   }
@@ -59,9 +69,35 @@
     .window-header {
       padding-inline-start: 0;
     }
+
+    &:has(.is-scrolled) {
+      .window-header {
+        border-bottom: 0.0625rem solid var(--t5e-color-gold);
+        background: $sheet-bg;
+      }
+
+      .header-over-sidebar {
+        background: $sidebar-bg;
+        background-attachment: scroll, local;
+        background-blend-mode: luminosity;
+        border-right: 0.0625rem solid var(--t5e-color-gold, #9f9275);
+      }
+    }
+
+    .container-header-start-document-name {
+      color: var(--t5e-color-text-onDefault-default, #000);
+      text-align: center;
+      font-family: 'Modesto Condensed';
+      font-size: var(--font-font-size-18, 1.125rem);
+    }
+
+    .configurable-source {
+      margin-top: 0.125rem;
+    }
   }
 
   .header-over-sidebar {
+    flex-shrink: 0;
     padding-inline-start: 0.75rem;
     margin-inline-end: 1.25rem;
     display: inline-flex;
@@ -115,14 +151,7 @@
   .sidebar {
     // transform: translateY(var(--header-height) * -1);
     // margin-top: calc(var(--header-height) * -1);
-    --background-image-height: 510px;
-    background: linear-gradient(
-        180deg,
-        #31313140 0%,
-        #303236 var(--background-image-height)
-      ),
-      url(../../modules/tidy5e-sheet/images/banner-character-dark.webp)
-        lightgray top center / auto no-repeat;
+    background: $sidebar-bg;
     background-attachment: scroll, local;
     background-blend-mode: luminosity;
     border-right: 0.0625rem solid var(--t5e-color-gold, #9f9275);
@@ -310,6 +339,15 @@
         gap: 0.5rem;
         flex: 1;
       }
+    }
+
+    .mini-capacity-bar {
+      position: sticky;
+      background: salmon;
+      height: 20px;
+      left: 0;
+      right: 0;
+      bottom: 0;
     }
 
     .contents-footer {

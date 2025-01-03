@@ -369,9 +369,10 @@ export function SvelteApplicationMixin<
         await this.submit({ preventClose: true, preventRender: true });
       }
 
+      await super.close(options);
+
       this.#components.forEach((c) => unmount(c));
       this.#components = [];
-      await super.close(options);
     }
 
     /* -------------------------------------------- */
