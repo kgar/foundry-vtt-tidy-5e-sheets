@@ -150,8 +150,8 @@
 
 <!-- TODO: Minimal capacity footer here -->
 
-<div
+<!-- <div
   class="mini-capacity-bar"
   class:hidden={!showMinimizedFooter}
   bind:clientHeight={minimizedCapacityBarClientHeight}
-></div>
+></div> -->

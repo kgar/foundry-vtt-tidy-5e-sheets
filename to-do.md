@@ -1,5 +1,22 @@
 ## To Do
 
+- [x] Implement intersection observer on header start component
+  - Implemented on sheet itself, actually.
+- [ ] Implement intersection observer on footer component
+
+## Links
+
+Intersection observer pen:
+https://codepen.io/Jeff-Wain/pen/ByBwMMV
+
+My notes:
+Some takeaways from testing:
+- I moved the sticky footer to the bottom of the HTML in the example
+- I added `<div class="marker"></div>` above the big footer
+- I adjusted the observer to observe for the marker and then apply `is-pinned` to the sticky footer
+
+With those things combined, it works pretty good.
+
 ## Scratchpad
 
 ```svelte

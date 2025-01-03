@@ -7,6 +7,7 @@
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import PillSwitch from 'src/components/toggle/PillSwitch.svelte';
   import { getContainerSheetHightouchContext } from 'src/sheets/sheet-context.svelte';
+  import { coalesce } from 'src/utils/formatting';
 
   let context = $derived(getContainerSheetHightouchContext());
 
@@ -31,13 +32,68 @@
   let itemValueText = $derived(
     FoundryAdapter.formatNumber(context.system.price?.value),
   );
+
+  let containerNameEl: HTMLElement;
+  let scrollMarkerEl: HTMLElement;
+
+  $effect(() => {
+    const headerHeight = coalesce(
+      window
+        .getComputedStyle(context.item.sheet.window.header)
+        .getPropertyValue('--header-height'),
+      '36px',
+    );
+
+    const options: IntersectionObserverInit = {
+      root: context.item.sheet.windowContent,
+      rootMargin: '-' + headerHeight,
+    };
+
+    const onObserve: IntersectionObserverCallback = (entries) => {
+      for (var entry of entries) {
+        entry.target.classList.toggle('on-screen', entry.isIntersecting);
+      }
+    };
+
+    const observer = new IntersectionObserver(onObserve, options);
+    observer.observe(containerNameEl);
+
+    const offscreenObserver = new IntersectionObserver(
+      (entries) => {
+        for (var entry of entries) {
+          console.log({
+            entry,
+            target: entry.target,
+            isIntersecting: entry.isIntersecting,
+          });
+          entry.target.classList.toggle('off-screen', !entry.isIntersecting);
+        }
+      },
+      {
+        root: context.item.sheet.windowContent,
+      },
+    );
+
+    offscreenObserver.observe(scrollMarkerEl);
+
+    return () => {
+      observer.disconnect();
+      offscreenObserver.disconnect();
+    };
+  });
 </script>
+
+<div
+  bind:this={scrollMarkerEl}
+  class="container-header-start-scroll-marker"
+  role="presentation"
+></div>
 
 <aside
   class="sidebar"
   style="
-    --t5e-item-rarity-color: var({rarityColorVariable}, var(--t5e-color-gold)); 
-    --filigree-border-color: var({rarityColorVariable}, var(--t5e-color-gold))"
+--t5e-item-rarity-color: var({rarityColorVariable}, var(--t5e-color-gold)); 
+--filigree-border-color: var({rarityColorVariable}, var(--t5e-color-gold))"
 >
   <div class="item-image-rarity-container">
     <div class="item-image-container">
@@ -149,7 +205,10 @@
   {/if}
 </aside>
 <main class="item-content">
-  <div class="flex-row extra-small-gap align-items-center">
+  <div
+    bind:this={containerNameEl}
+    class="container-name-wrapper flex-row extra-small-gap align-items-center"
+  >
     <!-- Name -->
     {#if context.unlocked}
       <TextInput
@@ -208,7 +267,12 @@
   </div>
 
   <!-- Tab Strip -->
-  <Tabs bind:selectedTabId tabs={context.tabs} cssClass="item-tabs" sheet={context.item.sheet} />
+  <Tabs
+    bind:selectedTabId
+    tabs={context.tabs}
+    cssClass="item-tabs"
+    sheet={context.item.sheet}
+  />
 
   <hr class="golden-fade" />
 
