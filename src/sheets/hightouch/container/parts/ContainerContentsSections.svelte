@@ -22,6 +22,7 @@
   import { isNil } from 'src/utils/data';
   import TidyTableToggleIcon from 'src/components/table/TidyTableToggleIcon.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
+  import InlineItemQuantityTracker from 'src/components/trackers/InlineItemQuantityTracker.svelte';
 
   interface Props {
     contents: InventorySection[];
@@ -211,7 +212,7 @@
                 </a>
               </TidyTableCell>
               <TidyTableCell>
-                {item.system.quantity}
+                <InlineItemQuantityTracker {item} disabled={!item.isOwner} />
               </TidyTableCell>
               <TidyTableCell>
                 {weight}
