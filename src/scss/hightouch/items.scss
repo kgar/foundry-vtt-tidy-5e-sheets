@@ -187,7 +187,7 @@
     padding: 1rem;
 
     // Consider colocating this with the header over sidebar content via a has()
-    padding-block-start: calc(var(--header-height));
+    padding-block-start: var(--header-height);
 
     h4 {
       color: var(--t5e-color-text-onInverse-gold-light, #f0f0e1);
