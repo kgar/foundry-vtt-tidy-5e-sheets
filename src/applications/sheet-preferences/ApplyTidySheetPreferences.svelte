@@ -2,7 +2,9 @@
   import { type SheetPreferenceOption } from './ApplyTidySheetPreferencesApplication.svelte';
   import { ApplyTidySheetPreferencesApplication } from './ApplyTidySheetPreferencesApplication.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import TidyTable from 'src/components/table/TidyTable.svelte';
+  import TidyTable, {
+    type TidyTableColumns,
+  } from 'src/components/table/TidyTable.svelte';
   import TidyTableHeaderRow from 'src/components/table/TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from 'src/components/table/TidyTableHeaderCell.svelte';
   import TidyTableRow from 'src/components/table/TidyTableRow.svelte';
@@ -17,13 +19,20 @@
 
   const localize = FoundryAdapter.localize;
 
-  const gridTemplateColumns = `
-    /* Select */ 2.5rem 
-    /* Label */ 1fr`;
+  const gridTemplateColumns: TidyTableColumns = [
+    {
+      name: 'Select',
+      width: '2.5rem',
+    },
+    {
+      name: 'Label',
+      width: '1fr',
+    },
+  ];
 
   let totalSelected = $derived(options.filter((t) => t.selected).length);
   let allSelected = $derived(totalSelected >= options.length);
-  
+
   function toggleAll() {
     const targetState = !allSelected;
     options.forEach((o) => (o.selected = targetState));

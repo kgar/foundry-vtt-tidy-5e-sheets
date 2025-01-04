@@ -1,5 +1,7 @@
 <script lang="ts">
-  import TidyTable from 'src/components/table/TidyTable.svelte';
+  import TidyTable, {
+    type TidyTableColumns,
+  } from 'src/components/table/TidyTable.svelte';
   import TidyTableHeaderCell from 'src/components/table/TidyTableHeaderCell.svelte';
   import TidyTableHeaderRow from 'src/components/table/TidyTableHeaderRow.svelte';
   import { CONSTANTS } from 'src/constants';
@@ -44,19 +46,38 @@
     FoundryAdapter.useClassicControls(context.actor),
   );
 
-  let classicControlsWidth = $derived(
-    useClassicControls
-      ? `/* Controls */ ${classicControlWidthRems * classicControls.length}rem`
-      : '',
-  );
+  let gridTemplateColumns = $derived.by(() => {
+    let result: TidyTableColumns = [
+      {
+        name: 'Image and name',
+        width: '1fr',
+      },
+      {
+        name: 'Quantity',
+        width: '5rem',
+      },
+      {
+        name: 'Formula',
+        width: '7rem',
+      },
+    ];
 
-  const crColumnDef = section.showCrColumn ? '/* CR */ 7rem' : '';
-  let gridTemplateColumns = $derived(`
-    /* Image and name */ 1fr 
-    /* Quantity */ 5rem 
-    /* Formula */ 7rem 
-    ${crColumnDef} 
-    ${classicControlsWidth}`);
+    if (section.showCrColumn) {
+      result.push({
+        name: 'CR',
+        width: '7rem',
+      });
+    }
+
+    if (useClassicControls) {
+      result.push({
+        name: 'Controls',
+        width: `${classicControlWidthRems * classicControls.length}rem`,
+      });
+    }
+
+    return result;
+  });
 
   function saveQuantityChange(
     context: GroupSheetClassicContext,

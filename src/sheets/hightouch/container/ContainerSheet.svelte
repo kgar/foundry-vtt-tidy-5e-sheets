@@ -60,11 +60,6 @@
     const offscreenObserver = new IntersectionObserver(
       (entries) => {
         for (var entry of entries) {
-          console.log({
-            entry,
-            target: entry.target,
-            isIntersecting: entry.isIntersecting,
-          });
           entry.target.classList.toggle('off-screen', !entry.isIntersecting);
         }
       },
@@ -111,11 +106,9 @@
         checkedIconClass="fas fa-hand-fist equip-icon fa-fw"
         uncheckedIconClass="far fa-hand fa-fw"
         onchange={(ev) =>
-          console.log(
-            context.item.update({
-              'system.equipped': ev.currentTarget?.checked,
-            }),
-          )}
+          context.item.update({
+            'system.equipped': ev.currentTarget?.checked,
+          })}
       >
         {localize('DND5E.Equipped')}
       </PillSwitch>
@@ -127,11 +120,9 @@
           checkedIconClass="fas fa-sun equip-icon fa-fw"
           uncheckedIconClass="fas fa-sun equip-icon fa-fw"
           onchange={(ev) =>
-            console.log(
-              context.item.update({
-                'system.attuned': ev.currentTarget?.checked,
-              }),
-            )}
+            context.item.update({
+              'system.attuned': ev.currentTarget?.checked,
+            })}
         >
           {localize('DND5E.Attuned')}
         </PillSwitch>
@@ -144,11 +135,9 @@
           checkedIconClass="fas fa-search fa-fw"
           uncheckedIconClass="fas fa-search fa-fw"
           onchange={(ev) =>
-            console.log(
-              context.item.update({
-                'system.identified': ev.currentTarget?.checked,
-              }),
-            )}
+            context.item.update({
+              'system.identified': ev.currentTarget?.checked,
+            })}
         >
           {localize('DND5E.Identified')}
         </PillSwitch>

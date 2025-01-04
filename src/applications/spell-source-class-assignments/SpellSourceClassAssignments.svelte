@@ -4,7 +4,9 @@
   import { CONSTANTS } from 'src/constants';
   import Search from 'src/components/utility-bar/Search.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import TidyTable from 'src/components/table/TidyTable.svelte';
+  import TidyTable, {
+    type TidyTableColumns,
+  } from 'src/components/table/TidyTable.svelte';
   import type { Item5e } from 'src/types/item.types';
   import TidyTableHeaderCell from 'src/components/table/TidyTableHeaderCell.svelte';
   import TidyTableHeaderRow from 'src/components/table/TidyTableHeaderRow.svelte';
@@ -43,15 +45,18 @@
     ),
   );
 
-  let gridTemplateColumns: string = $derived.by(() => {
-    let standardClassColumnWidth = '10rem';
-    let columns = '/* Spell Name */ minmax(200px, 1fr)';
+  let gridTemplateColumns: TidyTableColumns = $derived.by(() => {
+    let columns: TidyTableColumns = [
+      { name: 'Spell Name', width: 'minmax(12.5rem, 1fr)' },
+    ];
 
+    let standardClassColumnWidth = '10rem';
     classColumns.forEach((column) => {
-      columns += ` /* ${column.item.name} */ ${standardClassColumnWidth}`;
+      columns.push({ name: column.item.name, width: standardClassColumnWidth });
     });
 
-    columns += ' /* Identifier */ 200px';
+    columns.push({ name: 'Identifier', width: '12.5rem' });
+
     return columns;
   });
 

@@ -1,5 +1,7 @@
 <script lang="ts">
-  import TidyTable from 'src/components/table/TidyTable.svelte';
+  import TidyTable, {
+    type TidyTableColumns,
+  } from 'src/components/table/TidyTable.svelte';
   import TidyTableHeaderCell from 'src/components/table/TidyTableHeaderCell.svelte';
   import TidyTableHeaderRow from 'src/components/table/TidyTableHeaderRow.svelte';
   import { CONSTANTS } from 'src/constants';
@@ -89,14 +91,33 @@
     FoundryAdapter.useClassicControls(container),
   );
 
-  // TODO: Figure out how to better scale for custom commands. Maybe they just have to be context menu items...
-  let itemActionsWidth = $derived(
-    useClassicControls ? `/* Actions */ ${1.5 * (unlocked ? 3 : 1)}rem` : '',
-  );
+  // TODO: Allow the user to choose which icons are priority and can be shown in the actions column
 
-  let gridTemplateColumns = $derived(
-    `/* Name */ 1fr /* Quantity */ 4.125rem /* Weight */ 2.25rem ${itemActionsWidth}`,
-  );
+  let gridTemplateColumns: TidyTableColumns = $derived.by(() => {
+    let result: TidyTableColumns = [
+      {
+        name: 'Name',
+        width: '1fr',
+      },
+      {
+        name: 'Quantity',
+        width: '4.125rem',
+      },
+      {
+        name: 'Weight',
+        width: '2.25rem',
+      },
+    ];
+
+    if (useClassicControls) {
+      result.push({
+        name: 'Actions',
+        width: `${1.5 * (unlocked ? 3 : 1)}rem`,
+      });
+    }
+
+    return result;
+  });
 
   let containerToggleMap = $derived(inlineToggleService.map);
 

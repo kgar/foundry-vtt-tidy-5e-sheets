@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Item5e } from 'src/types/item.types';
-  import TidyTable from '../table/TidyTable.svelte';
+  import TidyTable, { type TidyTableColumns } from '../table/TidyTable.svelte';
   import TidyTableRow from '../table/TidyTableRow.svelte';
   import TidyTableCell from '../table/TidyTableCell.svelte';
   import type { Activity5e } from 'src/foundry/dnd5e.types';
@@ -29,14 +29,20 @@
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
-  const gridTemplateColumns = `
-    /* Name */
-    1fr
-    /* Uses */
-    2.5rem
-    /* Usage */
-    5rem
-  `;
+  const gridTemplateColumns: TidyTableColumns = [
+    {
+      name: 'Name',
+      width: '1fr',
+    },
+    {
+      name: 'Uses',
+      width: '2.5rem',
+    },
+    {
+      name: 'Usage',
+      width: '5rem',
+    },
+  ];
 
   function rollActivity(activity: Activity5e, event: MouseEvent) {
     activity.use({ event });

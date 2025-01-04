@@ -52,11 +52,6 @@
     const offscreenObserver = new IntersectionObserver(
       (entries) => {
         for (var entry of entries) {
-          console.log({
-            entry,
-            target: entry.target,
-            isIntersecting: entry.isIntersecting,
-          });
           footerEl.classList.toggle('off-screen', !entry.isIntersecting);
         }
       },

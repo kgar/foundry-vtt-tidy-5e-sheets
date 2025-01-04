@@ -485,11 +485,9 @@
         checkedIconClass="fas fa-hand-fist equip-icon fa-fw"
         uncheckedIconClass="far fa-hand fa-fw"
         onchange={(ev) =>
-          console.log(
-            context.item.update({
-              'system.equipped': ev.currentTarget.checked,
-            }),
-          )}
+          context.item.update({
+            'system.equipped': ev.currentTarget.checked,
+          })}
       >
         Equipped
       </PillSwitch>
@@ -499,11 +497,9 @@
         checkedSvgSrc="systems/dnd5e/icons/svg/statuses/concentrating.svg"
         uncheckedSvgSrc="systems/dnd5e/icons/svg/statuses/concentrating.svg"
         onchange={(ev) =>
-          console.log(
-            context.item.update({
-              'system.attuned': ev.currentTarget.checked,
-            }),
-          )}
+          context.item.update({
+            'system.attuned': ev.currentTarget.checked,
+          })}
       >
         Attuned
       </PillSwitch>

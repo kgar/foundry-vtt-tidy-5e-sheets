@@ -1,5 +1,7 @@
 <script lang="ts">
-  import TidyTable from 'src/components/table/TidyTable.svelte';
+  import TidyTable, {
+    type TidyTableColumns,
+  } from 'src/components/table/TidyTable.svelte';
   import TidyTableHeaderCell from 'src/components/table/TidyTableHeaderCell.svelte';
   import TidyTableHeaderRow from 'src/components/table/TidyTableHeaderRow.svelte';
   import { CONSTANTS } from 'src/constants';
@@ -99,15 +101,35 @@
     FoundryAdapter.useClassicControls(container),
   );
 
-  let classicControlsWidth = $derived(
-    useClassicControls
-      ? `/* Controls */ ${classicControlWidthRems * classicControls.length}rem`
-      : '',
-  );
+  let gridTemplateColumns = $derived.by(() => {
+    let result: TidyTableColumns = [
+      {
+        name: 'Name',
+        width: '1fr',
+      },
+      {
+        name: 'Uses',
+        width: '3.125rem',
+      },
+      {
+        name: 'Weight',
+        width: '3rem',
+      },
+      {
+        name: 'Quantity',
+        width: '3rem',
+      },
+    ];
 
-  let gridTemplateColumns = $derived(
-    `/* Name */ 1fr /* Uses */ 3.125rem /* Weight */ 3rem /* Quantity */ 3rem ${classicControlsWidth}`,
-  );
+    if (useClassicControls) {
+      result.push({
+        name: 'Controls',
+        width: `${classicControlWidthRems * classicControls.length}rem`,
+      });
+    }
+
+    return result;
+  });
 
   const localize = FoundryAdapter.localize;
 </script>
