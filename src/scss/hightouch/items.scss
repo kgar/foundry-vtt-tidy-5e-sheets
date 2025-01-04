@@ -89,7 +89,7 @@
       }
     }
 
-    &:has(.container-name-wrapper.on-screen)
+    &:has(.container-name-wrapper:not(.off-screen))
       .container-header-start-document-name {
       display: none;
     }

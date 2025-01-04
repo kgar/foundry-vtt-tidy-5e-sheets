@@ -15,6 +15,7 @@
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
   import { getContainerSheetHightouchContext } from 'src/sheets/sheet-context.svelte';
+  import TidyVisibilityObserver from 'src/components/utility/TidyVisibilityObserver.svelte';
 
   let context = $derived(getContainerSheetHightouchContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
@@ -45,28 +46,19 @@
 
   let menuOpen = $derived(false);
 
-  let markerEl: HTMLElement;
-  let footerEl: HTMLElement;
-
-  $effect(() => {
-    const offscreenObserver = new IntersectionObserver(
-      (entries) => {
-        for (var entry of entries) {
-          footerEl.classList.toggle('off-screen', !entry.isIntersecting);
-        }
-      },
-      {
-        root: context.item.sheet.windowContent,
-      },
-    );
-
-    offscreenObserver.observe(markerEl);
-
-    return () => {
-      offscreenObserver.disconnect();
-    };
-  });
+  let markerEl: HTMLElement | undefined = $state();
+  let footerEl: HTMLElement | undefined = $state();
 </script>
+
+{#if !!markerEl && !!footerEl}
+  <TidyVisibilityObserver
+    root={context.item.sheet.windowContent}
+    trackWhenOffScreen={true}
+    toObserve={[markerEl]}
+    toAffect={[footerEl]}
+    rootMargin="-12px"
+  />
+{/if}
 
 <section
   class="action-bar"

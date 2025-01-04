@@ -8,6 +8,8 @@
   import PillSwitch from 'src/components/toggle/PillSwitch.svelte';
   import { getContainerSheetHightouchContext } from 'src/sheets/sheet-context.svelte';
   import { coalesce } from 'src/utils/formatting';
+  import { untrack } from 'svelte';
+  import TidyVisibilityObserver from 'src/components/utility/TidyVisibilityObserver.svelte';
 
   let context = $derived(getContainerSheetHightouchContext());
 
@@ -33,49 +35,39 @@
     FoundryAdapter.formatNumber(context.system.price?.value),
   );
 
-  let containerNameEl: HTMLElement;
-  let scrollMarkerEl: HTMLElement;
+  let containerNameEl: HTMLElement | undefined = $state();
+  let scrollMarkerEl: HTMLElement | undefined = $state();
 
-  $effect(() => {
-    const headerHeight = coalesce(
-      window
-        .getComputedStyle(context.item.sheet.window.header)
-        .getPropertyValue('--header-height'),
-      '36px',
-    );
+  const headerOffset = $derived.by(() => {
+    return untrack(() => {
+      const headerHeight = coalesce(
+        window.getComputedStyle(context.item.sheet.window.header).height,
+        '36',
+      );
 
-    const onScreenObserver = new IntersectionObserver(
-      (entries) => {
-        for (var entry of entries) {
-          entry.target.classList.toggle('on-screen', entry.isIntersecting);
-        }
-      },
-      {
-        root: context.item.sheet.windowContent,
-        rootMargin: '-' + headerHeight,
-      },
-    );
-    onScreenObserver.observe(containerNameEl);
-
-    const offscreenObserver = new IntersectionObserver(
-      (entries) => {
-        for (var entry of entries) {
-          entry.target.classList.toggle('off-screen', !entry.isIntersecting);
-        }
-      },
-      {
-        root: context.item.sheet.windowContent,
-      },
-    );
-
-    offscreenObserver.observe(scrollMarkerEl);
-
-    return () => {
-      onScreenObserver.disconnect();
-      offscreenObserver.disconnect();
-    };
+      return `-${headerHeight}px`;
+    });
   });
 </script>
+
+{#if !!containerNameEl}
+  <TidyVisibilityObserver
+    root={context.item.sheet.windowContent}
+    trackWhenOffScreen={true}
+    toObserve={[containerNameEl]}
+    toAffect="self"
+    rootMargin={headerOffset}
+  />
+{/if}
+
+{#if !!scrollMarkerEl}
+  <TidyVisibilityObserver
+    root={context.item.sheet.windowContent}
+    trackWhenOffScreen={true}
+    toObserve={[scrollMarkerEl]}
+    toAffect="self"
+  />
+{/if}
 
 <div
   bind:this={scrollMarkerEl}
