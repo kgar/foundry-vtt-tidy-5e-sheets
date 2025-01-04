@@ -44,6 +44,33 @@
   );
 
   let menuOpen = $derived(false);
+
+  let markerEl: HTMLElement;
+  let footerEl: HTMLElement;
+
+  $effect(() => {
+    const offscreenObserver = new IntersectionObserver(
+      (entries) => {
+        for (var entry of entries) {
+          console.log({
+            entry,
+            target: entry.target,
+            isIntersecting: entry.isIntersecting,
+          });
+          footerEl.classList.toggle('off-screen', !entry.isIntersecting);
+        }
+      },
+      {
+        root: context.item.sheet.windowContent,
+      },
+    );
+
+    offscreenObserver.observe(markerEl);
+
+    return () => {
+      offscreenObserver.disconnect();
+    };
+  });
 </script>
 
 <section
@@ -138,7 +165,8 @@
   />
 </div>
 
-<footer class="contents-footer">
+<div bind:this={markerEl} class="contents-footer-scroll-marker"></div>
+<footer bind:this={footerEl} class="contents-footer">
   <!-- Capacity Bar -->
   <CapacityBar container={context.item} capacity={context.capacity} />
 

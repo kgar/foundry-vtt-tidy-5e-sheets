@@ -44,19 +44,18 @@
       '36px',
     );
 
-    const options: IntersectionObserverInit = {
-      root: context.item.sheet.windowContent,
-      rootMargin: '-' + headerHeight,
-    };
-
-    const onObserve: IntersectionObserverCallback = (entries) => {
-      for (var entry of entries) {
-        entry.target.classList.toggle('on-screen', entry.isIntersecting);
-      }
-    };
-
-    const observer = new IntersectionObserver(onObserve, options);
-    observer.observe(containerNameEl);
+    const onScreenObserver = new IntersectionObserver(
+      (entries) => {
+        for (var entry of entries) {
+          entry.target.classList.toggle('on-screen', entry.isIntersecting);
+        }
+      },
+      {
+        root: context.item.sheet.windowContent,
+        rootMargin: '-' + headerHeight,
+      },
+    );
+    onScreenObserver.observe(containerNameEl);
 
     const offscreenObserver = new IntersectionObserver(
       (entries) => {
@@ -77,7 +76,7 @@
     offscreenObserver.observe(scrollMarkerEl);
 
     return () => {
-      observer.disconnect();
+      onScreenObserver.disconnect();
       offscreenObserver.disconnect();
     };
   });

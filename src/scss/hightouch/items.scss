@@ -104,6 +104,16 @@
     .configurable-source {
       margin-top: 0.125rem;
     }
+
+    .contents-footer.off-screen {
+      position: sticky;
+      bottom: 0;
+      transform: translateY(calc(100% - 0.5rem));
+
+      .meter.progress .label {
+        visibility: hidden;
+      }
+    }
   }
 
   .header-over-sidebar {
