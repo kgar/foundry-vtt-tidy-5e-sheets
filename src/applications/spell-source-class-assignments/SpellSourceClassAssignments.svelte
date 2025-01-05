@@ -12,7 +12,7 @@
   import TidyTableHeaderRow from 'src/components/table/TidyTableHeaderRow.svelte';
   import TidyTableRow from 'src/components/table/TidyTableRow.svelte';
   import TidyTableCell from 'src/components/table/TidyTableCell.svelte';
-  import TidySwitch from 'src/components/toggle/TidySwitch.svelte';
+  import TidySwitch from 'src/components/toggles/TidySwitch.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import type { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 

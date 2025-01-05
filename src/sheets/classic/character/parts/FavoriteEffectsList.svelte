@@ -5,7 +5,7 @@
   import ItemTableColumn from 'src/components/item-list/v1/ItemTableColumn.svelte';
   import ItemTableHeaderRow from 'src/components/item-list/v1/ItemTableHeaderRow.svelte';
   import ItemTableRow from 'src/components/item-list/v1/ItemTableRow.svelte';
-  import TidySwitch from 'src/components/toggle/TidySwitch.svelte';
+  import TidySwitch from 'src/components/toggles/TidySwitch.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {

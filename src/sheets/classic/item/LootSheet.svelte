@@ -8,7 +8,7 @@
   import Source from '../shared/Source.svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemIdentifiableName from './parts/ItemIdentifiableName.svelte';
-  import PropertyToggle from 'src/components/toggle/PropertyToggle.svelte';
+  import PropertyToggle from 'src/components/toggles/PropertyToggle.svelte';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
   let context = $derived(getItemSheetContext());

@@ -5,7 +5,7 @@
   import ItemImageBorder from '../item/parts/ItemImageBorder.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
-  import PillSwitch from 'src/components/toggle/PillSwitch.svelte';
+  import PillSwitch from 'src/components/toggles/PillSwitch.svelte';
   import { getContainerSheetHightouchContext } from 'src/sheets/sheet-context.svelte';
   import { coalesce } from 'src/utils/formatting';
   import { untrack } from 'svelte';
