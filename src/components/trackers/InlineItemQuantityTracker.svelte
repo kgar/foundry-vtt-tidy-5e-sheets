@@ -31,19 +31,22 @@
   }
 </script>
 
-<article class="inline-item-quantity-tracker" class:disabled>
-  <a class="decrementer" onclick={() => !disabled && decrement()}>
+<article class="tidy-inline-item-quantity-tracker" class:disabled>
+  <a class="command decrementer" onclick={() => !disabled && decrement()}>
     <i class="fa-solid fa-minus"></i>
   </a>
-  <TextInput
-    document={item}
-    {field}
-    class="item-quantity-tracker-input"
-    allowDeltaChanges={true}
-    {disabled}
-    value={quantity}
-  ></TextInput>
-  <a class="incrementer" onclick={() => !disabled && increment()}>
+  <span class="item-quantity-tracker-input-wrapper">
+    <TextInput
+      class="item-quantity-tracker-input"
+      document={item}
+      {field}
+      value={quantity}
+      {disabled}
+      allowDeltaChanges={true}
+      selectOnFocus={true}
+    ></TextInput>
+  </span>
+  <a class="command incrementer" onclick={() => !disabled && increment()}>
     <i class="fa-solid fa-plus"></i>
   </a>
 </article>

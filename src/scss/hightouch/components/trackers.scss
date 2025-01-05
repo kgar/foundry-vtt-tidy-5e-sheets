@@ -1,0 +1,48 @@
+.tidy-inline-item-quantity-tracker {
+  display: flex;
+  flex-direction: row;
+
+  .command {
+    align-content: center;
+    text-align: center;
+    flex: 0 0 1.5rem;
+    flex-basis: 1.5rem;
+    width: 1.5rem;
+
+    i {
+      color: var(--t5e-color-text-onDefault-lightest);
+      font-size: 0.6875rem;
+      font-style: normal;
+      font-weight: 900;
+      line-height: normal;
+      text-transform: uppercase;
+      transition: color 0.2s ease;
+    }
+
+    &:hover i {
+      color: var(--t5e-color-text-onDefault-default);
+    }
+  }
+
+  &.disabled {
+    .command {
+      display: none;
+      pointer-events: none;
+    }
+
+    .item-quantity-tracker-input {
+      pointer-events: none;
+    }
+  }
+
+  .item-quantity-tracker-input {
+    text-align: center;
+    border-radius: 0.125rem;
+    border: none;
+    background: none;
+    box-shadow: none;
+    height: 1.5rem;
+    flex-basis: 1.5rem;
+    padding: 0;
+  }
+}
