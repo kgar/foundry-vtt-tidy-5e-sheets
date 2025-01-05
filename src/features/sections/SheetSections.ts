@@ -370,68 +370,74 @@ export class SheetSections {
         new Map<string, CharacterFavorite>()
       );
 
-      (configuredFavorites as FavoriteSection[]).forEach(({ ...section }) => {
-        if ('effects' in section) {
-          let effectContexts = section.effects;
+      return (configuredFavorites as FavoriteSection[]).map(
+        ({ ...section }) => {
+          if ('effects' in section) {
+            let effectContexts = section.effects;
 
-          // Sort Favorite Effects
-          if (sortMode === 'm') {
-            const getSort = (effects: Item5e) =>
-              favoritesIdMap.get(effects.getRelativeUUID(actor))?.sort ??
-              Number.MAX_SAFE_INTEGER;
+            // Sort Favorite Effects
+            if (sortMode === 'm') {
+              const getSort = (effects: Item5e) =>
+                favoritesIdMap.get(effects.getRelativeUUID(actor))?.sort ??
+                Number.MAX_SAFE_INTEGER;
 
-            effectContexts = effectContexts.toSorted(
-              (a, b) => getSort(a.effect) - getSort(b.effect)
-            );
+              effectContexts = effectContexts.toSorted(
+                (a, b) => getSort(a.effect) - getSort(b.effect)
+              );
+            } else {
+              effectContexts = effectContexts.toSorted((a, b) =>
+                a.effect.name.localeCompare(b.effect.name, game.i18n.lang)
+              );
+            }
+
+            // TODO: Filter Favorite Effects ?
+          } else if ('activities' in section) {
+            let activities = section.activities;
+
+            // Sort Favorite Activities
+            if (sortMode === 'm') {
+              const getSort = (activity: Activity5e) =>
+                favoritesIdMap.get(activity.relativeUUID)?.sort ??
+                Number.MAX_SAFE_INTEGER;
+
+              activities = activities.toSorted(
+                (a, b) => getSort(a) - getSort(b)
+              );
+            } else {
+              activities = activities.toSorted((a, b) =>
+                a.name.localeCompare(b.name, game.i18n.lang)
+              );
+            }
+
+            // TODO: Filter Favorite Activities?
           } else {
-            effectContexts = effectContexts.toSorted((a, b) =>
-              a.effect.name.localeCompare(b.effect.name, game.i18n.lang)
-            );
+            let items = 'spells' in section ? section.spells : section.items;
+            // Sort Favorites Items
+            if (sortMode === 'm') {
+              const getSort = (item: Item5e) =>
+                favoritesIdMap.get(item.getRelativeUUID(actor))?.sort ??
+                Number.MAX_SAFE_INTEGER;
+
+              items = items.toSorted((a, b) => getSort(a) - getSort(b));
+            } else {
+              items = ItemUtils.getSortedItems(items, sortMode);
+            }
+
+            // TODO: Collocate Favorite Sub Items
+
+            if ('spells' in section) {
+              section.spells = items;
+            } else {
+              section.items = items;
+            }
           }
 
-          // TODO: Filter Favorite Effects ?
-        } else if ('activities' in section) {
-          let activities = section.activities;
+          // Apply visibility from configuration
+          section.show = sectionConfig?.[section.key]?.show !== false;
 
-          // Sort Favorite Activities
-          if (sortMode === 'm') {
-            const getSort = (activity: Activity5e) =>
-              favoritesIdMap.get(activity.relativeUUID)?.sort ??
-              Number.MAX_SAFE_INTEGER;
-
-            activities = activities.toSorted((a, b) => getSort(a) - getSort(b));
-          } else {
-            activities = activities.toSorted((a, b) =>
-              a.name.localeCompare(b.name, game.i18n.lang)
-            );
-          }
-
-          // TODO: Filter Favorite Activities?
-        } else {
-          let items = 'spells' in section ? section.spells : section.items;
-          // Sort Favorites Items
-          if (sortMode === 'm') {
-            const getSort = (item: Item5e) =>
-              favoritesIdMap.get(item.getRelativeUUID(actor))?.sort ??
-              Number.MAX_SAFE_INTEGER;
-
-            items = items.toSorted((a, b) => getSort(a) - getSort(b));
-          } else {
-            items = ItemUtils.getSortedItems(items, sortMode);
-          }
-
-          // TODO: Collocate Favorite Sub Items
-
-          if ('spells' in section) {
-            section.spells = items;
-          } else {
-            section.items = items;
-          }
+          return section;
         }
-
-        // Apply visibility from configuration
-        section.show = sectionConfig?.[section.key]?.show !== false;
-      });
+      );
     } catch (e) {
       error('An error occurred while configuring favorites', false, e);
     }

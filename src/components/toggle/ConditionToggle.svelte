@@ -16,12 +16,6 @@
 
   let { condition }: Props = $props();
 
-  let switchOn: boolean = $state(!condition.disabled);
-
-  $effect(() => {
-    switchOn &&= !condition.disabled;
-  });
-
   async function handleChange(newValue: boolean) {
     try {
       await FoundryAdapter.toggleCondition(context.actor, condition);
@@ -29,18 +23,17 @@
       error('An error occurred while toggling a condition', false, e);
       debug('Condition toggle error troubleshooting info', {
         condition,
-        state: switchOn,
       });
-      switchOn = !newValue;
+      context.actor.sheet.render();
     }
   }
 </script>
 
 <TidySwitch
-  class="flex-row small-gap tidy-condition-toggle {switchOn
+  class="flex-row small-gap tidy-condition-toggle {!condition.disabled
     ? 'active'
     : 'inactive'}"
-  bind:checked={switchOn}
+  checked={!condition.disabled}
   onChange={(ev) => handleChange(ev.currentTarget.checked)}
   title={condition.name}
   disabled={!context.editable}
