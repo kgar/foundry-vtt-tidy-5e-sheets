@@ -146,13 +146,24 @@
 
   <div>
     <h4>{localize('TIDY5E.Section.LabelPl')}</h4>
-    <ul class="pills inverse flexcol">
-      <li class="pill">
+    <div class="pills inverse flexcol">
+      <div class="pill">
         <span class="lighter">
           {localize('DND5E.Inventory')}
         </span>
-      </li>
-    </ul>
+        <span>
+          {localize('Default')}
+        </span>
+      </div>
+      <div class="pill">
+        <span class="lighter">
+          {localize('TIDY5E.Actions.TabName')}
+        </span>
+        <span>
+          {localize('Default')}
+        </span>
+      </div>
+    </div>
   </div>
 
   {#if !context.concealDetails}
