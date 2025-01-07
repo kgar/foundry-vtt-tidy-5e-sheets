@@ -451,7 +451,11 @@
   },
   "TIDY5E.Settings.HideDeathSavesFromPlayers": {
     "name": "Hide Death Saves From Players",
-    "hint": "Makes death saves and death save results visible only to the GM."
+    "hint": "Makes death save totals visible only to the GM. The death save roll button remains visible."
+  },
+  "TIDY5E.Settings.DefaultDeathSaveRoll": {
+    "name": "Default Death Save Roll",
+    "hint": "Determines the default roll type to use when rolling a death saving throw."
   },
   "TIDY5E.Settings.UseCharacterEncumbranceBar": {
     "name": "Use Character Encumbrance Bar",

@@ -4,43 +4,51 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { CONSTANTS } from 'src/constants';
   import { settings } from 'src/settings/settings.svelte';
-  import type { MouseEventHandler } from 'svelte/elements';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
+  let context =
+    $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
 
   interface Props {
-    successes: number;
-    failures: number;
-    successesField: string;
-    failuresField: string;
     hasHpOverlay: boolean;
-    onRollDeathSave?: MouseEventHandler<HTMLElement>;
   }
 
-  let {
-    successes,
-    failures,
-    successesField,
-    failuresField,
-    hasHpOverlay,
-    onRollDeathSave,
-  }: Props = $props();
+  let { hasHpOverlay }: Props = $props();
+
+  let hideDeathSaves = $derived(
+    settings.value.hideDeathSavesFromPlayers && !FoundryAdapter.userIsGm(),
+  );
+
+  function rollDeathSave(event: MouseEvent) {
+    context.actor.rollDeathSave(
+      {
+        event: event,
+        legacy: false,
+      },
+      {
+        options: {
+          default: {
+            rollMode: settings.value.defaultDeathSaveRoll,
+          },
+        },
+      },
+    );
+  }
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <div class="death-saves" class:rounded={context.useRoundedPortraitStyle}>
   <div class="death-save-counters" class:show-backdrop={!hasHpOverlay}>
-    <i class="fas fa-check"></i>
+    <i class="fas fa-check" class:hidden={hideDeathSaves}></i>
     <TextInput
       document={context.actor}
-      field={successesField}
-      class="death-save-result"
+      field="system.attributes.death.success"
+      class="death-save-result {hideDeathSaves ? 'hidden' : ''}"
       selectOnFocus={true}
       allowDeltaChanges={true}
       placeholder="0"
-      value={successes}
+      value={context.system.attributes.death.success}
       maxlength={1}
       title={localize('DND5E.DeathSaveSuccesses')}
       disabled={!context.editable}
@@ -48,23 +56,25 @@
         ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.DEATH_SAVE_SUCCESSES,
       }}
     />
+
     <button
       type="button"
       class="death-save rollable"
-      onclick={(event) => onRollDeathSave?.(event)}
+      onclick={(event) => rollDeathSave(event)}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DEATH_SAVE_ROLLER}
       tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fas fa-skull"></i>
     </button>
+
     <TextInput
       document={context.actor}
-      field={failuresField}
-      class="death-save-result"
+      field="system.attributes.death.failure"
+      class="death-save-result {hideDeathSaves ? 'hidden' : ''}"
       selectOnFocus={true}
       allowDeltaChanges={true}
       placeholder="0"
-      value={failures}
+      value={context.system.attributes.death.failure}
       maxlength={1}
       disabled={!context.editable}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DEATH_SAVE_FAILURES}
@@ -73,7 +83,7 @@
         ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.DEATH_SAVE_FAILURES,
       }}
     />
-    <i class="fas fa-times"></i>
+    <i class="fas fa-times" class:hidden={hideDeathSaves}></i>
   </div>
 </div>
 
