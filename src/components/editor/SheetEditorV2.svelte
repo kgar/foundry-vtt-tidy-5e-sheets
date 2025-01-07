@@ -49,7 +49,7 @@
     node.addEventListener('click', (ev: MouseEvent) => {
       if (
         ev.target instanceof HTMLElement &&
-        ev.target.matches('[data-action="save"]')
+        ev.target.closest('[data-action="save"]')
       ) {
         handleSave();
       }

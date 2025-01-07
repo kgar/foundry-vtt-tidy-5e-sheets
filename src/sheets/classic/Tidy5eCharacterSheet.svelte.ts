@@ -1587,8 +1587,8 @@ export class Tidy5eCharacterSheet
     return super.close(options);
   }
 
-  submit(): void {
-    super.submit();
+  submit(): Promise<Tidy5eCharacterSheet> {
+    return super.submit();
   }
 
   async _onSubmit(...args: any[]) {
