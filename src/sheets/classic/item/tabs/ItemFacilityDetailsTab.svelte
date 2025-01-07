@@ -385,7 +385,7 @@
             <document-tags
               name="system.craft.item"
               single
-              onchange={() => context.item.sheet.submit()}
+              onchange={async () => await context.item.sheet.submit()}
             ></document-tags>
           {/if}
         </li>

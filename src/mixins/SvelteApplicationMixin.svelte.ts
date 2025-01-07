@@ -245,11 +245,11 @@ export function SvelteApplicationMixin<
           // Support injected named inputs
           element.addEventListener(
             'change',
-            (ev: InputEvent & { target: HTMLInputElement }) => {
+            async (ev: InputEvent & { target: HTMLInputElement }) => {
               if (
                 ev.target.matches('input[name], textarea[name], select[name]')
               ) {
-                this.submit();
+                await this.submit();
                 return;
               }
 
@@ -258,7 +258,7 @@ export function SvelteApplicationMixin<
                   'input[data-name], textarea[data-name], select[data-name]'
                 )
               ) {
-                this._submitEmbeddedDocumentChange(ev);
+                await this._submitEmbeddedDocumentChange(ev);
               }
             }
           );
@@ -325,7 +325,7 @@ export function SvelteApplicationMixin<
       }
 
       // Save the value to the document, whatever that value ultimately became
-      item.update({ [field]: valueToSave });
+      await item.update({ [field]: valueToSave });
     }
 
     getItem(id: string) {

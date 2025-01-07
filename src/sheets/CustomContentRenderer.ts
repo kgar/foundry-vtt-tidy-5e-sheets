@@ -212,10 +212,10 @@ export class CustomContentRenderer {
     html
       .find('input[name], textarea[name], select[name]')
       .off('change.compatiblity-event-listeners')
-      .on('change.compatiblity-event-listeners', function () {
+      .on('change.compatiblity-event-listeners', async function () {
         //@ts-expect-error
         if (!this.closest(CONSTANTS.CLASS_SELECTOR_TIDY_USE_CORE_LISTENERS)) {
-          sheet.submit();
+          await sheet.submit();
         }
       });
 
@@ -230,9 +230,9 @@ export class CustomContentRenderer {
       .off('change.embedded-doc-compatiblity-event-listeners')
       .on(
         'change.embedded-doc-compatiblity-event-listeners',
-        function (event: any) {
+        async function (event: any) {
           // TODO: is jquery giving me the raw event?
-          _submitEmbeddedDocumentChange(sheet.document, event);
+          await _submitEmbeddedDocumentChange(sheet.document, event);
         }
       );
   }
