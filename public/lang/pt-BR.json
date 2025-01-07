@@ -791,5 +791,11 @@
     "TIDY5E.ExpandCollapseMenu.OptionTitle": "Comportamento de Expansão/Recolhimento",
     "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "Seções de Nível Superior",
     "TIDY5E.ExpandCollapseMenu.OptionAllSections": "Todas as Seções",
-    "TIDY5E.SortMenu.OptionAlphabetical": "Alfabético (A-Z)"
+    "TIDY5E.SortMenu.OptionAlphabetical": "Alfabético (A-Z)",
+    "TIDY5E.Settings.UseEffectCards": {
+        "name": "Mostrar Cartões de Info. de Efeitos",
+        "hint": "Ative para mostrar cartões de informações para efeitos ativos em todos os atores e itens com efeitos ativos."
+    },
+    "TIDY5E.Keybindings.ToggleHeaderMenu.Name": "Alternar Menu de Cabeçalho",
+    "TIDY5E.Keybindings.ToggleHeaderMenu.Hint": "Se uma ficha do Tidy for a janela ativa no momento, estas teclas alternam o menu de cabeçalho da ficha."
 }
