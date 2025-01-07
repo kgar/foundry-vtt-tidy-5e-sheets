@@ -28,13 +28,7 @@
 
 <ActorProfile useHpOverlay={settings.value.useHpOverlayNpc}>
   {#if incapacitated && context.owner}
-    <DeathSaves
-      successes={context.system.attributes.death.success}
-      failures={context.system.attributes.death.failure}
-      successesField="system.attributes.death.success"
-      failuresField="system.attributes.death.failure"
-      hasHpOverlay={settings.value.useHpOverlayNpc}
-    />
+    <DeathSaves hasHpOverlay={settings.value.useHpOverlayNpc} />
   {/if}
   {#if settings.value.useExhaustion && settings.value.exhaustionConfig.type === 'specific'}
     <ExhaustionTracker

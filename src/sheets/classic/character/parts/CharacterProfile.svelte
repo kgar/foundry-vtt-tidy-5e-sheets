@@ -32,13 +32,7 @@
     context.system.attributes.hp.max > 0}
 >
   {#if incapacitated && context.owner}
-    <DeathSaves
-      successes={context.system.attributes.death.success}
-      failures={context.system.attributes.death.failure}
-      successesField="system.attributes.death.success"
-      failuresField="system.attributes.death.failure"
-      hasHpOverlay={settings.value.useHpOverlay}
-    />
+    <DeathSaves hasHpOverlay={settings.value.useHpOverlay} />
   {/if}
 
   {#if settings.value.useExhaustion && settings.value.exhaustionConfig.type === 'specific'}

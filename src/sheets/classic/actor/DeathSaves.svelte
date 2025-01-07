@@ -10,20 +10,10 @@
     $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
 
   interface Props {
-    successes: number;
-    failures: number;
-    successesField: string;
-    failuresField: string;
     hasHpOverlay: boolean;
   }
 
-  let {
-    successes,
-    failures,
-    successesField,
-    failuresField,
-    hasHpOverlay,
-  }: Props = $props();
+  let { hasHpOverlay }: Props = $props();
 
   let hideDeathSaves = $derived(
     settings.value.hideDeathSavesFromPlayers && !FoundryAdapter.userIsGm(),
@@ -53,12 +43,12 @@
     <i class="fas fa-check" class:hidden={hideDeathSaves}></i>
     <TextInput
       document={context.actor}
-      field={successesField}
+      field="system.attributes.death.success"
       class="death-save-result {hideDeathSaves ? 'hidden' : ''}"
       selectOnFocus={true}
       allowDeltaChanges={true}
       placeholder="0"
-      value={successes}
+      value={context.system.attributes.death.success}
       maxlength={1}
       title={localize('DND5E.DeathSaveSuccesses')}
       disabled={!context.editable}
@@ -79,12 +69,12 @@
 
     <TextInput
       document={context.actor}
-      field={failuresField}
+      field="system.attributes.death.failure"
       class="death-save-result {hideDeathSaves ? 'hidden' : ''}"
       selectOnFocus={true}
       allowDeltaChanges={true}
       placeholder="0"
-      value={failures}
+      value={context.system.attributes.death.failure}
       maxlength={1}
       disabled={!context.editable}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DEATH_SAVE_FAILURES}
