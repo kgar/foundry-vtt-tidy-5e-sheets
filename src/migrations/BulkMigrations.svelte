@@ -2,7 +2,6 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import NpcDeathSavesMigration from './v3/NpcDeathSavesMigration.svelte';
   import CharacterBiographyMigration from './v2/CharacterBiographyMigration.svelte';
-  import V1OnboardingMigration from './v1/V1OnboardingMigration.svelte';
   import type { Tab } from 'src/types/types';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
@@ -78,14 +77,6 @@
       title: 'TIDY5E.Settings.Migrations.CharacterBiography.sectionTitle',
       content: {
         component: CharacterBiographyMigration,
-        type: 'svelte',
-      },
-    },
-    {
-      id: CONSTANTS.TAB_MIGRATIONS_V1_ONBOARDING,
-      title: 'TIDY5E.Settings.Migrations.v1.sectionTitle',
-      content: {
-        component: V1OnboardingMigration,
         type: 'svelte',
       },
     },

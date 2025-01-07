@@ -52,6 +52,7 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
     return {
       settings: {
         hideDeathSavesFromPlayers: currentSettings.hideDeathSavesFromPlayers,
+        defaultDeathSaveRoll: currentSettings.defaultDeathSaveRoll,
         useCharacterEncumbranceBar: currentSettings.useCharacterEncumbranceBar,
         useNpcEncumbranceBar: currentSettings.useNpcEncumbranceBar,
         useVehicleEncumbranceBar: currentSettings.useVehicleEncumbranceBar,

@@ -4,6 +4,7 @@ import type { CurrentSettings } from 'src/settings/settings.svelte';
 export type WorldSettingsContext = {
   settings: {
     hideDeathSavesFromPlayers: CurrentSettings['hideDeathSavesFromPlayers'];
+    defaultDeathSaveRoll: CurrentSettings['defaultDeathSaveRoll'];
     useCharacterEncumbranceBar: CurrentSettings['useCharacterEncumbranceBar'];
     useNpcEncumbranceBar: CurrentSettings['useNpcEncumbranceBar'];
     useVehicleEncumbranceBar: CurrentSettings['useVehicleEncumbranceBar'];

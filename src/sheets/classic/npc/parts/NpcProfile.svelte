@@ -27,19 +27,8 @@
 </script>
 
 <ActorProfile useHpOverlay={settings.value.useHpOverlayNpc}>
-  {#if incapacitated && (!settings.value.hideDeathSavesFromPlayers || FoundryAdapter.userIsGm())}
-    <DeathSaves
-      successes={context.system.attributes.death.success}
-      failures={context.system.attributes.death.failure}
-      successesField="system.attributes.death.success"
-      failuresField="system.attributes.death.failure"
-      onRollDeathSave={(event) =>
-        context.actor.rollDeathSave({
-          event: event,
-          legacy: false,
-        })}
-      hasHpOverlay={settings.value.useHpOverlayNpc}
-    />
+  {#if incapacitated && context.owner}
+    <DeathSaves hasHpOverlay={settings.value.useHpOverlayNpc} />
   {/if}
   {#if settings.value.useExhaustion && settings.value.exhaustionConfig.type === 'specific'}
     <ExhaustionTracker
