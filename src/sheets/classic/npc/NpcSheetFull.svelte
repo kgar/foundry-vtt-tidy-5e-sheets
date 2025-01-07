@@ -52,7 +52,6 @@
   let formattedCr = $derived(dnd5e.utils.formatCR(context.system.details.cr));
 
   function calculateSaveCr(crValue: string): boolean {
-    // Format NPC Challenge Rating
     const crs: Record<string, number> = {
       '1/8': 0.125,
       '⅛': 0.125,
