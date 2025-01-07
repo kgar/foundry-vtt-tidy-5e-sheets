@@ -50,24 +50,23 @@
 
 <div class="death-saves" class:rounded={context.useRoundedPortraitStyle}>
   <div class="death-save-counters" class:show-backdrop={!hasHpOverlay}>
-    <div class="death-save-counter" class:hidden={hideDeathSaves}>
-      <i class="fas fa-check"></i>
-      <TextInput
-        document={context.actor}
-        field={successesField}
-        class="death-save-result"
-        selectOnFocus={true}
-        allowDeltaChanges={true}
-        placeholder="0"
-        value={successes}
-        maxlength={1}
-        title={localize('DND5E.DeathSaveSuccesses')}
-        disabled={!context.editable}
-        attributes={{
-          ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.DEATH_SAVE_SUCCESSES,
-        }}
-      />
-    </div>
+    <i class="fas fa-check" class:hidden={hideDeathSaves}></i>
+    <TextInput
+      document={context.actor}
+      field={successesField}
+      class="death-save-result {hideDeathSaves ? 'hidden' : ''}"
+      selectOnFocus={true}
+      allowDeltaChanges={true}
+      placeholder="0"
+      value={successes}
+      maxlength={1}
+      title={localize('DND5E.DeathSaveSuccesses')}
+      disabled={!context.editable}
+      attributes={{
+        ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.DEATH_SAVE_SUCCESSES,
+      }}
+    />
+
     <button
       type="button"
       class="death-save rollable"
@@ -77,25 +76,24 @@
     >
       <i class="fas fa-skull"></i>
     </button>
-    <div class="death-save-counter" class:hidden={hideDeathSaves}>
-      <TextInput
-        document={context.actor}
-        field={failuresField}
-        class="death-save-result"
-        selectOnFocus={true}
-        allowDeltaChanges={true}
-        placeholder="0"
-        value={failures}
-        maxlength={1}
-        disabled={!context.editable}
-        data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DEATH_SAVE_FAILURES}
-        title={localize('DND5E.DeathSaveFailures')}
-        attributes={{
-          ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.DEATH_SAVE_FAILURES,
-        }}
-      />
-      <i class="fas fa-times"></i>
-    </div>
+
+    <TextInput
+      document={context.actor}
+      field={failuresField}
+      class="death-save-result {hideDeathSaves ? 'hidden' : ''}"
+      selectOnFocus={true}
+      allowDeltaChanges={true}
+      placeholder="0"
+      value={failures}
+      maxlength={1}
+      disabled={!context.editable}
+      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DEATH_SAVE_FAILURES}
+      title={localize('DND5E.DeathSaveFailures')}
+      attributes={{
+        ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.DEATH_SAVE_FAILURES,
+      }}
+    />
+    <i class="fas fa-times" class:hidden={hideDeathSaves}></i>
   </div>
 </div>
 
@@ -124,20 +122,6 @@
         background: var(--t5e-death-save-backdrop-background);
         padding: 0 0.5rem;
         border-radius: 0.3125rem;
-      }
-
-      .death-save-counter {
-        display: flex;
-        align-items: center;
-        color: var(--t5e-death-save-text-color);
-
-        &:has(:global([data-tidy-sheet-part='death-save-failures'])) {
-          justify-content: flex-end;
-        }
-
-        &:has(:global([data-tidy-sheet-part='death-save-successes'])) {
-          justify-content: flex-start;
-        }
       }
 
       :global(input[type='text'].death-save-result) {
