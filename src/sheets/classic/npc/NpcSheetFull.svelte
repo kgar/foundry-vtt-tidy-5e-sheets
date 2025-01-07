@@ -288,11 +288,17 @@
 
       .challenge-rating-label {
         padding-top: 0.0625rem;
-        line-height: normal;
+        line-height: 1;
+        height: 1.25rem;
       }
 
       :global(.challenge-rating-input) {
-        max-width: 1.75rem;
+        max-width: 1.5rem;
+        text-align: center;
+        line-height: 1;
+        height: 1.25rem;
+        border: none;
+        background: var(--t5e-faint-color);
       }
     }
     :global(.level [contenteditable]) {
