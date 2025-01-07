@@ -25,6 +25,7 @@
   import ActorLinkIndicator from 'src/components/actor-link-indicator/ActorLinkIndicator.svelte';
   import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
   import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
 
   let selectedTabId: string = $state('');
 
@@ -47,6 +48,34 @@
   let abilities = $derived(Object.entries<any>(context.abilities));
 
   const localize = FoundryAdapter.localize;
+
+  let formattedCr = $derived(dnd5e.utils.formatCR(context.system.details.cr));
+
+  function calculateSaveCr(crValue: string): boolean {
+    // Format NPC Challenge Rating
+    const crs: Record<string, number> = {
+      '1/8': 0.125,
+      '⅛': 0.125,
+      '1/4': 0.25,
+      '¼': 0.25,
+      '1/2': 0.5,
+      '½': 0.5,
+    };
+    let cr: string | number | null = crValue;
+    if (cr === '' || cr === '—') cr = null;
+    else {
+      cr = crs[cr] || parseFloat(cr);
+      if (Number.isNaN(cr)) {
+        cr = null;
+      } else {
+        cr = cr < 1 ? cr : parseInt(cr.toString());
+      }
+    }
+
+    context.actor.update({ 'system.details.cr': cr });
+
+    return false;
+  }
 </script>
 
 {#if context.viewableWarnings.length}
@@ -84,22 +113,25 @@
           })}
           title={!context.unlocked ? localize('DND5E.ChallengeRating') : ''}
         >
-          <label for="{context.appId}-system-details-cr" class="challenge-rating-label">
+          <label
+            for="{context.appId}-system-details-cr"
+            class="challenge-rating-label"
+          >
             {localize('DND5E.AbbreviationCR')}
           </label>
           {#if context.unlocked}
-            <NumberInput
+            <TextInput
               document={context.actor}
-              value={context.source.details.cr}
+              value={formattedCr}
               field="system.details.cr"
-              step="any"
-              cssClass="challenge-rating-input"
+              class="challenge-rating-input"
               selectOnFocus={true}
               title={localize('DND5E.ChallengeRating')}
               id="{context.appId}-system-details-cr"
+              onSaveChange={(ev) => calculateSaveCr(ev.currentTarget.value)}
             />
           {:else}
-            {dnd5e.utils.formatCR(context.system.details.cr)}
+            <span class="challenge-rating-label">{formattedCr}</span>
           {/if}
         </div>
         <SheetMenu defaultSettingsTab={CONSTANTS.TAB_USER_SETTINGS_NPCS} />
