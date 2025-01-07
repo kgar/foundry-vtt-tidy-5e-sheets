@@ -108,8 +108,8 @@ let _settings: CurrentSettings = $state()!; // For ergonomics, pretend like this
 export const settings = {
   get value() {
     return _settings;
-  }
-} 
+  },
+};
 
 export function createSettings() {
   return {
@@ -985,6 +985,26 @@ export function createSettings() {
           return FoundryAdapter.getTidySetting<boolean>(
             'hideDeathSavesFromPlayers'
           );
+        },
+      },
+
+      defaultDeathSaveRoll: {
+        options: {
+          name: 'TIDY5E.Settings.DefaultDeathSaveRoll.name',
+          hint: 'TIDY5E.Settings.DefaultDeathSaveRoll.hint',
+          scope: 'world',
+          config: false,
+          default: CONST.DICE_ROLL_MODES.PUBLIC,
+          type: String,
+          choices: {
+            [CONST.DICE_ROLL_MODES.PUBLIC]: 'CHAT.RollPublic',
+            [CONST.DICE_ROLL_MODES.PRIVATE]: 'CHAT.RollPrivate',
+            [CONST.DICE_ROLL_MODES.BLIND]: 'CHAT.RollBlind',
+            [CONST.DICE_ROLL_MODES.SELF]: 'CHAT.RollSelf',
+          },
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<string>('defaultDeathSaveRoll');
         },
       },
 

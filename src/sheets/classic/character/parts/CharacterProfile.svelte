@@ -31,17 +31,12 @@
   useHpOverlay={settings.value.useHpOverlay &&
     context.system.attributes.hp.max > 0}
 >
-  {#if incapacitated && (!settings.value.hideDeathSavesFromPlayers || FoundryAdapter.userIsGm())}
+  {#if incapacitated && context.owner}
     <DeathSaves
       successes={context.system.attributes.death.success}
       failures={context.system.attributes.death.failure}
       successesField="system.attributes.death.success"
       failuresField="system.attributes.death.failure"
-      onRollDeathSave={(event) =>
-        context.actor.rollDeathSave({
-          event: event,
-          legacy: false,
-        })}
       hasHpOverlay={settings.value.useHpOverlay}
     />
   {/if}
