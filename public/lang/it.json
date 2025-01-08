@@ -266,7 +266,7 @@
     },
     "TIDY5E.Settings.HideDeathSavesFromPlayers": {
         "name": "Nascondi ai Giocatori i Tiri Salvezza sulla Morte",
-        "hint": "Rendi visibili Tiri Salvezza su Morte ed i loro risultati solo al DM."
+        "hint": "Rende visibili i totali dei tiri salvezza sulla morte solo al GM. Il pulsante del tiro per il salvataggio su morte rimane visibile."
     },
     "TIDY5E.Settings.UseCharacterEncumbranceBar": {
         "name": "Usa la barra di ingombro del personaggio",
@@ -836,5 +836,9 @@
     "TIDY5E.Settings.UseEffectCards": {
         "name": "Mostra Schede Informative degli effetti attivi",
         "hint": "Abilita per mostrare le schede informative degli effetti attivi per tutti i personaggi e gli elementi con effetti attivi."
+    },
+    "TIDY5E.Settings.DefaultDeathSaveRoll": {
+        "hint": "Determina il tipo di tiro predefinito da utilizzare quando si effettua un tiro salvezza su morte.",
+        "name": "Tiro Salvezza Morte Predefinito"
     }
 }
