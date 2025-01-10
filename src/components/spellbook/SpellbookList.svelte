@@ -136,9 +136,13 @@
   let classicControlsColumnWidth = $derived(`${controls.length * 1.25}rem`);
 
   declareLocation('spellbook-list-view');
+
+  let subtitleStyle = $derived(
+    section.showSubtitle ? '--t5e-image-size-override: 2rem;' : '',
+  );
 </script>
 
-<section class="spellbook-list-section {cssClass}">
+<section class="spellbook-list-section {cssClass}" style={subtitleStyle}>
   <ItemTable
     key={section.key}
     data-custom-section={section.custom ? true : null}
@@ -224,12 +228,22 @@
                 onToggle={() => toggleSummary(context.actor)}
                 item={spell}
               >
-                <span
-                  class="truncate flex-1"
-                  data-tidy-item-name={spell.name}
-                  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
-                  >{spell.name}</span
-                >
+                <div class="truncate flex-1">
+                  <div
+                    data-tidy-item-name={spell.name}
+                    data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
+                  >
+                    {spell.name}
+                  </div>
+                  {#if section.showSubtitle}
+                    <small
+                      class="truncate"
+                      style="color: var(--t5e-tertiary-color);"
+                    >
+                      Hello, world! 👋
+                    </small>
+                  {/if}
+                </div>
               </ItemName>
             </ItemTableCell>
             {#if spell.hasLimitedUses}

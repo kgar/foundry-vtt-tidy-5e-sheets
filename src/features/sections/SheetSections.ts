@@ -143,6 +143,7 @@ export class SheetSections {
         if (curr.order === 'item') {
           key = 'dnd5e-cast-activity-additional-spells';
           curr.canCreate = false;
+          curr.showSubtitle = true;
         }
 
         curr.key = key;

@@ -190,6 +190,7 @@ export type SpellbookSection = {
   slots?: number;
   override?: number;
   prop?: string;
+  showSubtitle?: boolean;
 } & TidySectionBase;
 
 export type AvailableLevel = {
