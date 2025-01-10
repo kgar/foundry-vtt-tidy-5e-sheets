@@ -170,9 +170,6 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       target: content,
       props: {
         sheet: this,
-        floating: settings.value.itemCardsAreFloating,
-        delay: settings.value.itemCardsDelay,
-        inspectKey: settings.value.itemCardsFixKey,
       },
     });
 
