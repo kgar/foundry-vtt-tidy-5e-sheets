@@ -20,7 +20,6 @@
   import InlineSource from '../shared/InlineSource.svelte';
   import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication.svelte';
   import ActorName from '../actor/ActorName.svelte';
-  import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
   import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
 
   let selectedTabId: string = $state('');

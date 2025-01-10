@@ -120,9 +120,6 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       target: content,
       props: {
         sheet: this,
-        floating: settings.value.itemCardsAreFloating,
-        delay: settings.value.itemCardsDelay,
-        inspectKey: settings.value.itemCardsFixKey,
       },
     });
 

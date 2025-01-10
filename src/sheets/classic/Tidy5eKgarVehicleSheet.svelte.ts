@@ -199,9 +199,6 @@ export class Tidy5eVehicleSheet
       target: node,
       props: {
         sheet: this,
-        floating: settings.value.itemCardsAreFloating,
-        delay: settings.value.itemCardsDelay,
-        inspectKey: settings.value.itemCardsFixKey,
       },
     });
 

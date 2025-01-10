@@ -231,9 +231,6 @@ export class Tidy5eCharacterSheet
       target: node,
       props: {
         sheet: this,
-        floating: settings.value.itemCardsAreFloating,
-        delay: settings.value.itemCardsDelay,
-        inspectKey: settings.value.itemCardsFixKey,
       },
     });
 
