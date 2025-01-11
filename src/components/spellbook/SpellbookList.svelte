@@ -203,6 +203,7 @@
           hidden={!searchResults.show(spell.uuid)}
         >
           {#snippet children({ toggleSummary })}
+            {@const linked = spell.system.linkedActivity?.item}
             <ItemTableCell primary={true}>
               <ItemUseButton
                 disabled={!context.editable}
@@ -228,22 +229,35 @@
                   class="truncate flex-1"
                   data-tidy-item-name={spell.name}
                   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
-                  >{spell.name}</span
                 >
+                  {spell.name}
+                  {#if linked}
+                    <i
+                      style="align-content: center; color: var(--t5e-secondary-color)"
+                      class="fa-solid fa-wand-magic fa-fw"
+                      title={localize('TIDY5E.Activities.Cast.SourceHintText', {
+                        itemName: linked.name,
+                      })}
+                    ></i>
+                  {/if}
+                </span>
               </ItemName>
+
+              <div style="display: flex; align-items: center;">
+                {#if spell.hasLimitedUses}
+                  <span style="flex-grow: 0; width: 3rem; flex-basis: 3rem;">
+                    <ItemUses item={spell} />
+                  </span>
+                {:else if (spell.system.linkedActivity?.uses?.max ?? 0) > 0}
+                  <span style="flex-grow: 0; width: 3rem; flex-basis: 3rem;">
+                    <ActivityUses activity={spell.system.linkedActivity} />
+                  </span>
+                {/if}
+                {#if allowFavorites && settings.value.showIconsNextToTheItemName && 'favoriteId' in ctx && !!ctx.favoriteId}
+                  <InlineFavoriteIcon />
+                {/if}
+              </div>
             </ItemTableCell>
-            {#if spell.hasLimitedUses}
-              <ItemTableCell baseWidth="3.125rem">
-                <ItemUses item={spell} />
-              </ItemTableCell>
-            {:else if (spell.system.linkedActivity?.uses?.max ?? 0) > 0}
-              <ItemTableCell baseWidth="3.125rem">
-                <ActivityUses activity={spell.system.linkedActivity} />
-              </ItemTableCell>
-            {/if}
-            {#if allowFavorites && settings.value.showIconsNextToTheItemName && 'favoriteId' in ctx && !!ctx.favoriteId}
-              <InlineFavoriteIcon />
-            {/if}
             <ItemTableCell
               baseWidth={spellComponentsBaseWidth}
               cssClass="no-gap"
