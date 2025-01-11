@@ -5,6 +5,7 @@
   import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
+    import { Enrichers } from 'src/features/enrichers/Enrichers';
 
   interface Props {
     chatData: ItemChatData;
@@ -28,10 +29,8 @@
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_SUMMARY}
 >
   {#if linked}
-    {#await FoundryAdapter.enrichHtml(`@UUID[${linked.uuid}]{${linked.name}}`) then enriched}
-      <div
-        style="margin-block: 0.25rem; font-size: 13px; font-style: italic;"
-      >
+    {#await FoundryAdapter.enrichHtml(Enrichers.reference(linked.uuid, linked.name)) then enriched}
+      <div class="item-summary-linked-source">
         {@html localize('TIDY5E.Activities.Cast.SourceHintText', {
           itemName: enriched,
         })}

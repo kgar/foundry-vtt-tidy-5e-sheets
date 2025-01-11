@@ -6,6 +6,7 @@
   import HorizontalLineSeparator from '../../layout/HorizontalLineSeparator.svelte';
   import { SpellUtils } from 'src/utils/SpellUtils';
   import ItemCardPills from '../Parts/ItemCardPills.svelte';
+  import { Enrichers } from 'src/features/enrichers/Enrichers';
 
   interface Props {
     item: Item5e;
@@ -55,18 +56,6 @@
       </div>
       <HorizontalLineSeparator borderColor="faint" />
     {/if}
-    {#if linked}
-      {#await FoundryAdapter.enrichHtml(`@UUID[${linked.uuid}]{${linked.name}}`) then enriched}
-        <div
-          style="margin-block: 0.25rem; font-size: 0.75rem; font-style: italic; text-align: center;"
-        >
-          {@html localize('TIDY5E.Activities.Cast.SourceHintText', {
-            itemName: enriched,
-          })}
-        </div>
-      {/await}
-      <HorizontalLineSeparator borderColor="faint" />
-    {/if}
     {#if item.hasLimitedUses}
       <div class="info-card-amount">
         <span
@@ -82,5 +71,15 @@
       </div>
     </div>
   </div>
+  {#if linked}
+    <HorizontalLineSeparator borderColor="faint" />
+    {#await FoundryAdapter.enrichHtml(Enrichers.reference(linked.uuid, linked.name)) then enriched}
+      <div class="info-card-linked-source">
+        {@html localize('TIDY5E.Activities.Cast.SourceHintText', {
+          itemName: enriched,
+        })}
+      </div>
+    {/await}
+  {/if}
   <ItemCardPills {item} {chatData} />
 {/await}
