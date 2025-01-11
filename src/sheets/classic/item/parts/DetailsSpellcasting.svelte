@@ -65,6 +65,7 @@
       disabled={!context.editable}
     />
     <a
+      title={localize('TIDY5E.MaxPreparedSpellsConfig.ExamplesHeader')}
       class="spell-preparation-search inline-icon-button"
       onclick={() => {
         new MaxPreparedSpellsConfigFormApplication(
