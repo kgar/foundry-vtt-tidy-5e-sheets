@@ -441,10 +441,6 @@
         "linked": "Podświetl powiązane tokeny"
     },
     "TIDY5E.SpellSourceIdentifierSelectText": "Identyfikator klasy: {identifier}",
-    "TIDY5E.Settings.ShowIconsNextToTheItemName": {
-        "name": "Pokaż ikony obok nazwy przedmiotu",
-        "hint": "Pokazuje pomocnicze ikony obok nazwy przedmiotu (Ulubione, Zestrojenie, itp.)."
-    },
     "TIDY5E.Settings.UseCircularPortraitStyle": {
         "all": "Wszystkie postacie",
         "pc": "Postać gracza",

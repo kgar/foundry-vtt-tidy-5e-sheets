@@ -265,10 +265,6 @@
         "name": "Usar Lista Clássica de Controles",
         "hint": "Mostra os controles na exibição de lista."
     },
-    "TIDY5E.Settings.ShowIconsNextToTheItemName": {
-        "name": "Mostrar Nome dos Ícones de Itens",
-        "hint": "Mostra os ícones de suporte ao lado do nome do item (Favorito, Sintonização, etc.)."
-    },
     "TIDY5E.Settings.ShowTraitLabels": {
         "name": "Mostrar Rótulos de Traços",
         "hint": "Mostra rótulos para características de PJ, PnJ e Veículo. Desative para mostrar somente os ícones."

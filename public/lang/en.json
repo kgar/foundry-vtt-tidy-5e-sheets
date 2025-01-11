@@ -318,10 +318,6 @@
     "name": "Use Classic List Controls",
     "hint": "Shows controls in the list view."
   },
-  "TIDY5E.Settings.ShowIconsNextToTheItemName": {
-    "name": "Show Item Name Icons",
-    "hint": "Shows support icons next to the item name (Favorite, Attunement, etc.)."
-  },
   "TIDY5E.Settings.ShowTraitLabels": {
     "name": "Show Trait Labels",
     "hint": "Shows labels for PC, NPC, and Vehicle traits. Disable to show only icons."

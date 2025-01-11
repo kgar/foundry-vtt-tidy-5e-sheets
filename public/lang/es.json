@@ -151,10 +151,6 @@
         "name": "Utilizar los controles clásicos de los objetos en el diseño de lista",
         "hint": "Muestra siempre los botones de los objetos y desactiva el menú del botón derecho. Sólo se aplica para el inventario de objetos/conjuros del PJ en el listado."
     },
-    "TIDY5E.Settings.ShowIconsNextToTheItemName": {
-        "name": "Mostrar nombre de los iconos de objetos",
-        "hint": "Muestra iconos de soporte junto al nombre del elemento (Favorito, Sintonización, etc.)."
-    },
     "TIDY5E.Settings.ShowTraitLabels": {
         "name": "Mostrar etiquetas de los rasgos",
         "hint": "Por defecto sólo se muestran los iconos de los rasgos. Actívalo para mostrar también las etiquetas."

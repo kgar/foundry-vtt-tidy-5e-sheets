@@ -151,10 +151,12 @@
                           {effectContext.name}
                         </span>
                       </a>
+                      <div class="primary-cell-extras">
+                        {#if FoundryAdapter.isActiveEffectContextFavorited(effectContext, context.actor) && !context.useClassicControls}
+                          <InlineFavoriteIcon />
+                        {/if}
+                      </div>
                     </ItemTableCell>
-                    {#if FoundryAdapter.isActiveEffectContextFavorited(effectContext, context.actor) && settings.value.showIconsNextToTheItemName}
-                      <InlineFavoriteIcon />
-                    {/if}
                     <ItemTableCell baseWidth="12.5rem">
                       <span
                         class="truncate"

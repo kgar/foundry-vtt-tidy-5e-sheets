@@ -139,10 +139,6 @@
         "name": "Utilizza i controlli classici",
         "hint": "Mostra controlli nella visualizzazione elenco."
     },
-    "TIDY5E.Settings.ShowIconsNextToTheItemName": {
-        "name": "Mostra Icona del Nome dell'Oggetto",
-        "hint": "Mostra le icone di supporto accanto al nome dell'oggetto (Preferiti, Sintonizzazione, ecc.)."
-    },
     "TIDY5E.Settings.ShowTraitLabels": {
         "name": "Mostra le etichette relative ai tratti",
         "hint": "Per impostazione predefinita, vengono visualizzate solo le icone relative ai tratti. Seleziona per visualizzare anche le etichette."

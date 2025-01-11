@@ -330,22 +330,6 @@ export function createSettings() {
         },
       },
 
-      showIconsNextToTheItemName: {
-        options: {
-          name: 'TIDY5E.Settings.ShowIconsNextToTheItemName.name',
-          hint: 'TIDY5E.Settings.ShowIconsNextToTheItemName.hint',
-          scope: 'client',
-          config: false,
-          default: true,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>(
-            'showIconsNextToTheItemName'
-          );
-        },
-      },
-
       // Info Cards
       itemCardsForAllItems: {
         options: {

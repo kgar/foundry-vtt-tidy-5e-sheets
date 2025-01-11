@@ -139,10 +139,6 @@
         "name": "Contrôles classiques en mode liste",
         "hint": "Toujours afficher les option de contrôle des éléments et désactive le menu du clic droit. Ne s'applique qu'à l'inventaire des objets / sorts du PJ en mode liste."
     },
-    "TIDY5E.Settings.ShowIconsNextToTheItemName": {
-        "name": "Afficher les icônes des noms d'objets",
-        "hint": "Affiche des icônes de soutien à côté du nom de l'objet (favori, synchronisé, etc.)."
-    },
     "TIDY5E.Settings.ShowTraitLabels": {
         "name": "Afficher les noms de traits",
         "hint": "Par défaut, seules des icones sont affichées pour les traits. Activer cette option pour afficher les noms également."
