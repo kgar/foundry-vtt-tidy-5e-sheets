@@ -9,7 +9,6 @@ import { getMaxPreparedSpellsSampleFormulas } from 'src/utils/formula';
 export type MaxPreparedSpellsConfigContext = {
   maxPreparedSpells: string;
   formulas: MaxPreparedSpellFormula[];
-  actor: Actor5e;
 };
 
 export class MaxPreparedSpellsConfigFormApplication extends SvelteFormApplicationBase {
@@ -17,15 +16,14 @@ export class MaxPreparedSpellsConfigFormApplication extends SvelteFormApplicatio
   actor: Actor5e;
   classToUpdate: Item5e;
 
-  constructor(actor: Actor5e, classToUpdate: Item5e, ...args: any[]) {
+  constructor(documentName: string, classToUpdate: Item5e, ...args: any[]) {
     super(...args);
-    this.actor = actor;
+    this.documentName = documentName;
     this.classToUpdate = classToUpdate;
 
     this.context = {
       maxPreparedSpells: '',
       formulas: getMaxPreparedSpellsSampleFormulas(),
-      actor,
     };
   }
 
@@ -46,7 +44,6 @@ export class MaxPreparedSpellsConfigFormApplication extends SvelteFormApplicatio
       maxPreparedSpells:
         this.classToUpdate?.system?.spellcasting?.preparation?.formula ?? '',
       formulas: getMaxPreparedSpellsSampleFormulas(),
-      actor: this.actor,
     };
   }
 
@@ -61,7 +58,7 @@ export class MaxPreparedSpellsConfigFormApplication extends SvelteFormApplicatio
 
   get title() {
     return FoundryAdapter.localize('TIDY5E.MaxPreparedSpellsConfig.Title', {
-      actorName: this.actor.name,
+      documentName: this.documentName,
     });
   }
 
@@ -70,5 +67,6 @@ export class MaxPreparedSpellsConfigFormApplication extends SvelteFormApplicatio
       'system.spellcasting.preparation.formula':
         this.context?.maxPreparedSpells ?? '',
     });
+    this.close();
   }
 }

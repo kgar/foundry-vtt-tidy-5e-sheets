@@ -559,7 +559,7 @@
     "TIDY5E.MeleeSpellAttackMod": "Modificador de ataque con hechizo cuerpo a cuerpo",
     "TIDY5E.RangedSpellAttackMod": "Modificador de ataque con hechizo a distancia",
     "TIDY5E.MaxPreparedSpellsConfig": {
-        "Title": "Configuración de máximo de hechizos preparados: {actorName}",
+        "Title": "Configuración de máximo de hechizos preparados: {documentName}",
         "ExamplesHeader": "Formulas de ejemplo",
         "ButtonTooltip": "Configurar máximo de hechizos preparados",
         "MoreFormulas": "Más formulas"

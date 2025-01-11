@@ -118,7 +118,7 @@
     "TIDY5E.Class.Wizard": "위저드",
     "TIDY5E.OriginSummaryConfig": "기원 요약 설정: {actorName}",
     "TIDY5E.MaxPreparedSpellsConfig": {
-        "Title": "주문 준비 수 최대값 설정: {actorName}",
+        "Title": "주문 준비 수 최대값 설정: {documentName}",
         "ExamplesHeader": "예시 공식",
         "ButtonTooltip": "주문 준비 수 최대값 설정",
         "MoreFormulas": "추가 공식"

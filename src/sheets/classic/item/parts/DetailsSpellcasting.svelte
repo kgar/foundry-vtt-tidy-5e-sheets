@@ -4,6 +4,7 @@
   import Select from 'src/components/inputs/Select.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { MaxPreparedSpellsConfigFormApplication } from 'src/applications/max-prepared-spells-config/MaxPreparedSpellsConfigFormApplication.svelte';
 
   let context = $derived(getItemSheetContext());
 
@@ -63,5 +64,15 @@
       dataset={{ formulaEditor: true }}
       disabled={!context.editable}
     />
+    <a
+      title={localize('TIDY5E.MaxPreparedSpellsConfig.ExamplesHeader')}
+      class="spell-preparation-search inline-icon-button"
+      onclick={() => {
+        new MaxPreparedSpellsConfigFormApplication(
+          context.item.name,
+          context.item,
+        ).render(true);
+      }}><i class="fa-solid fa-search fa-fw"></i></a
+    >
   </div>
 </div>
