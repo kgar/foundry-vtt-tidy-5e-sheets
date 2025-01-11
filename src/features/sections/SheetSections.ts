@@ -135,12 +135,14 @@ export class SheetSections {
           } satisfies SpellbookSection)
       );
 
+    const showEnhancedTable = app.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER;
+
     const spellbookMap = spellbook.reduce<Record<string, SpellbookSection>>(
       (prev, curr) => {
         let key = curr.prop ?? '';
 
-        curr.showSubtitle = app.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER;
-        
+        curr.showEnhancedTable = showEnhancedTable;
+
         // Handle "Additional Spells" section
         if (curr.order === 'item') {
           key = 'dnd5e-cast-activity-additional-spells';
@@ -165,7 +167,10 @@ export class SheetSections {
     );
 
     customSectionSpells.forEach((spell) => {
-      SheetSections.applySpellToSection(spellbookMap, spell, options);
+      SheetSections.applySpellToSection(spellbookMap, spell, {
+        ...options,
+        showEnhancedTable,
+      });
     });
 
     return Object.values(spellbookMap);

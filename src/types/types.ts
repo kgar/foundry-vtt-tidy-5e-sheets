@@ -190,7 +190,7 @@ export type SpellbookSection = {
   slots?: number;
   override?: number;
   prop?: string;
-  showSubtitle?: boolean;
+  showEnhancedTable?: boolean;
 } & TidySectionBase;
 
 export type AvailableLevel = {
@@ -221,6 +221,8 @@ export type CharacterItemContext = {
   concentration?: boolean;
   parent?: Item5e;
   subtitle?: string;
+  toHit?: any; // TODO: fill this out
+  save?: any; // TODO: fill this out
 };
 
 export type ActivityItemContext = {
@@ -386,6 +388,8 @@ export type NpcItemContext = {
   subtitle?: string;
   toggleTitle?: string;
   totalWeight?: number;
+  toHit?: any; // TODO: fill this out
+  save?: any; // TODO: fill this out
 };
 
 export type NpcSheetContext = {

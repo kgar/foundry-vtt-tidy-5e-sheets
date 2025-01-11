@@ -38,6 +38,8 @@
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { formatAsModifier } from 'src/utils/formatting';
+  import { isNil } from 'src/utils/data';
 
   let context =
     $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
@@ -138,7 +140,7 @@
   declareLocation('spellbook-list-view');
 
   let subtitleStyle = $derived(
-    section.showSubtitle ? '--t5e-image-size-override: 2rem;' : '',
+    section.showEnhancedTable ? '--t5e-image-size-override: 2rem;' : '',
   );
 </script>
 
@@ -157,12 +159,21 @@
             <SpellSlotManagement {section} />
           {/if}
         </ItemTableColumn>
-        <ItemTableColumn
-          baseWidth={spellComponentsBaseWidth}
-          title={localize('DND5E.SpellComponents')}
-        >
-          <i class="fas fa-mortar-pestle"></i>
-        </ItemTableColumn>
+        {#if section.showEnhancedTable}
+          <ItemTableColumn
+            baseWidth={spellComponentsBaseWidth}
+            title={localize('DND5E.SpellHeader.Roll')}
+          >
+            {localize('DND5E.SpellHeader.Roll')}
+          </ItemTableColumn>
+        {:else}
+          <ItemTableColumn
+            baseWidth={spellComponentsBaseWidth}
+            title={localize('DND5E.SpellComponents')}
+          >
+            <i class="fas fa-mortar-pestle"></i>
+          </ItemTableColumn>
+        {/if}
         {#if includeSchool}
           <ItemTableColumn
             baseWidth={spellSchoolBaseWidth}
@@ -235,7 +246,7 @@
                   >
                     {spell.name}
                   </div>
-                  {#if section.showSubtitle}
+                  {#if section.showEnhancedTable}
                     <small
                       class="truncate"
                       style="color: var(--t5e-tertiary-color);"
@@ -258,15 +269,33 @@
             {#if allowFavorites && settings.value.showIconsNextToTheItemName && 'favoriteId' in ctx && !!ctx.favoriteId}
               <InlineFavoriteIcon />
             {/if}
-            <ItemTableCell
-              baseWidth={spellComponentsBaseWidth}
-              cssClass="no-gap"
-            >
-              <SpellComponents
-                {spell}
-                spellComponentLabels={context.spellComponentLabels}
-              />
-            </ItemTableCell>
+            {#if section.showEnhancedTable}
+              <ItemTableCell
+                baseWidth={spellComponentsBaseWidth}
+                cssClass="no-gap"
+              >
+                {#if !isNil(ctx.toHit)}
+                  <span class="value">
+                    {formatAsModifier(ctx.toHit)}
+                  </span>
+                {:else if ctx.save?.ability}
+                  <div class="stacked">
+                    <span class="ability">{ctx.save.ability}</span>
+                    <span class="value">{ctx.save.dc.value}</span>
+                  </div>
+                {/if}
+              </ItemTableCell>
+            {:else}
+              <ItemTableCell
+                baseWidth={spellComponentsBaseWidth}
+                cssClass="no-gap"
+              >
+                <SpellComponents
+                  {spell}
+                  spellComponentLabels={context.spellComponentLabels}
+                />
+              </ItemTableCell>
+            {/if}
             {#if includeSchool}
               {@const icon = SpellSchool.getIcon(spell.system.school)}
               <ItemTableCell
@@ -354,5 +383,21 @@
       margin: 0;
       padding: 0;
     }
+  }
+
+  .stacked {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ability {
+    text-transform: uppercase;
+    font-size: var(--font-size-10);
+    color: var(--t5e-secondary-color);
+  }
+
+  .value {
+    font-size: var(--font-size-13);
   }
 </style>

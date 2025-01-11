@@ -75,6 +75,7 @@ import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import { Activities } from 'src/features/activities/activities';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
+import { formatAsModifier } from 'src/utils/formatting';
 
 export class Tidy5eCharacterSheet
   extends BaseSheetCustomSectionMixin(
@@ -1503,16 +1504,23 @@ export class Tidy5eCharacterSheet
         context.toggleTitle = game.i18n.localize('DND5E.SpellUnprepared');
       }
 
+      const toHit = parseInt(item.labels.modifier);
+      context.toHit = item.hasAttack && !isNaN(toHit) ? toHit : null;
+
+      context.save = { ...item.system.activities?.getByType('save')[0]?.save };
+      context.save.ability = context.save.ability?.size
+        ? context.save.ability.size === 1
+          ? CONFIG.DND5E.abilities[context.save.ability.first()]?.abbreviation
+          : FoundryAdapter.localize('DND5E.AbbreviationDC')
+        : null;
+
       const linked = item.system.linkedActivity?.item;
       const subtitle = [
         linked
           ? linked.name
-          : this.actor.classes[item.system.sourceClass]?.name
+          : this.actor.classes[item.system.sourceClass]?.name,
+        item.labels.components.vsm,
       ];
-
-      if (!linked) {
-        // TODO: Put something useful here
-      }
 
       context.subtitle = subtitle.filterJoin(' &bull; ');
 
