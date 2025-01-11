@@ -6,7 +6,6 @@
   import type { Activity5e } from 'src/foundry/dnd5e.types';
   import Dnd5eIcon from '../icon/Dnd5eIcon.svelte';
   import ActivityUses from './ActivityUses.svelte';
-  import ActivityAddUses from './ActivityAddUses.svelte';
   import ExpandableContainer from '../expandable/ExpandableContainer.svelte';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { getContext } from 'svelte';
@@ -98,7 +97,7 @@
                 {#if !!activity.uses?.max}
                   <ActivityUses {activity} />
                 {:else if activity.uses?.max !== undefined}
-                  <ActivityAddUses {activity} />
+                  <span class="text-body-tertiary">&mdash;</span>
                 {/if}
               {/if}
             </TidyTableCell>
