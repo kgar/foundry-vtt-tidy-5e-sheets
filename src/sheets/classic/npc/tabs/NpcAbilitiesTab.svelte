@@ -54,7 +54,6 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import InlineContainerView from 'src/sheets/classic/container/InlineContainerView.svelte';
   import { ItemUtils } from 'src/utils/ItemUtils';
-  import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import {
     createSearchResultsState,
     setSearchResultsContext,
@@ -348,12 +347,6 @@
                     lockItemQuantity={context.lockItemQuantity}
                     sheetDocument={context.actor}
                     unlocked={context.unlocked}
-                  />
-                {:else if (ctx.activities?.length ?? 0) > 1}
-                  <InlineActivitiesList
-                    {item}
-                    activities={ctx.activities}
-                    {inlineToggleService}
                   />
                 {/if}
               {/each}

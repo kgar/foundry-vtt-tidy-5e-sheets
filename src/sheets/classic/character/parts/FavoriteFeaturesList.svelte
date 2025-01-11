@@ -13,7 +13,6 @@
   import { getContext } from 'svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import { ItemUtils } from 'src/utils/ItemUtils';
-  import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
@@ -69,9 +68,6 @@
         {#snippet children({ toggleSummary })}
           <ItemTableCell primary={true}>
             <ItemUseButton disabled={!context.editable} {item} />
-            {#if (ctx.activities?.length ?? 0) > 1}
-              <InlineToggleControl entityId={item.id} {inlineToggleService} />
-            {/if}
             <ItemName
               onToggle={() => toggleSummary(context.actor)}
               hasChildren={false}
@@ -102,13 +98,6 @@
           </ItemTableCell>
         {/snippet}
       </ItemTableRow>
-      {#if (ctx.activities?.length ?? 0) > 1}
-        <InlineActivitiesList
-          {item}
-          activities={ctx.activities}
-          {inlineToggleService}
-        />
-      {/if}
     {/each}
   {/snippet}
 </ItemTable>

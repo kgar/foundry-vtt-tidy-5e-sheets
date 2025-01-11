@@ -37,7 +37,6 @@
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { ItemUtils } from 'src/utils/ItemUtils';
-  import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import {
@@ -302,13 +301,6 @@
                     {/if}
                   {/snippet}
                 </ItemTableRow>
-                {#if (ctx.activities?.length ?? 0) > 1}
-                  <InlineActivitiesList
-                    {item}
-                    activities={ctx.activities}
-                    {inlineToggleService}
-                  />
-                {/if}
               {/each}
               {#if context.unlocked}
                 <ItemTableFooter

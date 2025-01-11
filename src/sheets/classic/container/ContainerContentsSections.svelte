@@ -21,7 +21,6 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import InlineContainerView from './InlineContainerView.svelte';
-  import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import ItemUses from 'src/components/item-list/ItemUses.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
 
@@ -252,12 +251,6 @@
                 {lockItemQuantity}
                 {sheetDocument}
                 {unlocked}
-              />
-            {:else if (ctx.activities?.length ?? 0) > 1}
-              <InlineActivitiesList
-                {item}
-                activities={ctx.activities}
-                {inlineToggleService}
               />
             {/if}
           {/each}

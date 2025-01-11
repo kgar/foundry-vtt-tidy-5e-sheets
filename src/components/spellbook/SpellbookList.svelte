@@ -22,7 +22,6 @@
   import InlineFavoriteIcon from '../item-list/InlineFavoriteIcon.svelte';
   import ItemFavoriteControl from '../item-list/controls/ItemFavoriteControl.svelte';
   import { getContext } from 'svelte';
-  import { settings } from 'src/settings/settings.svelte';
   import ActionFilterOverrideControl from '../item-list/controls/ActionFilterOverrideControl.svelte';
   import { SpellSchool } from 'src/features/spell-school/SpellSchool';
   import { declareLocation } from 'src/types/location-awareness.types';
@@ -35,7 +34,6 @@
   import ActivityUses from '../item-list/ActivityUses.svelte';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
-  import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
@@ -214,12 +212,6 @@
                   <ConcentrationOverlayIcon {ctx} />
                 {/snippet}
               </ItemUseButton>
-              {#if (ctx.activities?.length ?? 0) > 1}
-                <InlineToggleControl
-                  entityId={spell.id}
-                  {inlineToggleService}
-                />
-              {/if}
               <ItemName
                 onToggle={() => toggleSummary(context.actor)}
                 item={spell}
@@ -317,13 +309,6 @@
             {/if}
           {/snippet}
         </ItemTableRow>
-        {#if (ctx.activities?.length ?? 0) > 1}
-          <InlineActivitiesList
-            item={spell}
-            activities={ctx.activities}
-            {inlineToggleService}
-          />
-        {/if}
       {/each}
       {#if context.unlocked}
         <ItemTableFooter

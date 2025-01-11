@@ -456,12 +456,45 @@
 
   /* Activities */
   .inline-activities-container {
+    --icon-size: 1.5rem;
+    --icon-width: var(--icon-size);
+    --icon-height: var(--icon-size);
+    --icon-fill: var(--t5e-primary-font-color);
     padding: 0.25rem 0.25rem 0.25rem 0.5rem;
-    margin-left: 0.5rem;
-    border-left: 0.0625rem dotted var(--t5e-separator-color);
+
+    .inline-activity-roll-button {
+      background: none;
+      text-align: left;
+      font-size: 0.75rem;
+      border: none;
+      transition: color 0.3s;
+      display: flex;
+      gap: 0.25rem;
+      align-items: center;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+
+      &:hover {
+        background: none;
+      }
+    }
 
     .tidy-table-row-container {
       margin-left: 0;
+    }
+
+    .inline-activity-arrow {
+      padding-inline: 0.25rem;
+
+      i {
+        color: var(--t5e-light-color);
+        transform: rotate(90deg);
+      }
+    }
+
+    button {
+      line-height: unset;
     }
   }
 
@@ -507,13 +540,6 @@
 
   button:has(.expand-indicator):hover i {
     color: var(--t5e-icon-hover-color);
-  }
-
-  /* Inline Activities */
-  .inline-activities-container {
-    button {
-      line-height: unset;
-    }
   }
 
   // Temp holding place for this style until overhaul

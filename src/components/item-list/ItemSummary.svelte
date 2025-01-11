@@ -5,7 +5,10 @@
   import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
-    import { Enrichers } from 'src/features/enrichers/Enrichers';
+  import { Enrichers } from 'src/features/enrichers/Enrichers';
+  import InlineActivitiesList from './InlineActivitiesList.svelte';
+  import { Activities } from 'src/features/activities/activities';
+  import type { ActivityItemContext } from 'src/types/types';
 
   interface Props {
     chatData: ItemChatData;
@@ -22,6 +25,16 @@
   let linked = $derived<Item5e>(item.system.linkedActivity?.item);
 
   const localize = FoundryAdapter.localize;
+
+  let activities = $derived.by(() => {
+    return Activities.getVisibleActivities(
+      item,
+      item.system.activities,
+    ).map<ActivityItemContext>((a) => ({
+      id: a.id,
+      activity: a,
+    }));
+  });
 </script>
 
 <div
@@ -59,3 +72,7 @@
     </div>
   {/if}
 </div>
+{#if activities.length > 0}
+  <HorizontalLineSeparator />
+  <InlineActivitiesList {item} {activities} />
+{/if}

@@ -32,7 +32,6 @@
   import { ItemUtils } from 'src/utils/ItemUtils';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
-  import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
@@ -219,7 +218,7 @@
           {#snippet children({ toggleSummary })}
             <ItemTableCell primary={true}>
               <ItemUseButton disabled={!context.editable} {item} />
-              {#if ('containerContents' in ctx && !!ctx.containerContents) || (ctx.activities?.length ?? 0) > 1}
+              {#if 'containerContents' in ctx && !!ctx.containerContents}
                 <InlineToggleControl entityId={item.id} {inlineToggleService} />
               {/if}
               <ItemName
@@ -310,12 +309,6 @@
             lockItemQuantity={context.lockItemQuantity}
             sheetDocument={context.actor}
             unlocked={context.unlocked}
-          />
-        {:else if (ctx.activities?.length ?? 0) > 1}
-          <InlineActivitiesList
-            {item}
-            activities={ctx.activities}
-            {inlineToggleService}
           />
         {/if}
       {/each}
