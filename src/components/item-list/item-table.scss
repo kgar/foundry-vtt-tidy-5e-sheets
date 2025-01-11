@@ -75,6 +75,21 @@
     }
   }
 
+  .primary-cell-extras {
+    display: flex;
+    align-items: center;
+  }
+
+  .primary-cell-uses {
+    flex-grow: 0;
+    width: 3.125rem;
+  }
+
+  .linked-source-tooltip-icon {
+    align-content: center;
+    color: var(--t5e-tertiary-color);
+  }
+
   // Hide the Item Image when hovering on the cell itself, to imply the roll button.
   &:hover {
     .item-use-button {
