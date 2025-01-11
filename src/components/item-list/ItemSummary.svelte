@@ -17,12 +17,29 @@
     ItemSummaryRuntime.getItemSummaryCommands(item),
   );
   let concealDetails = $derived(FoundryAdapter.concealDetails(item));
+
+  let linked = $derived<Item5e>(item.system.linkedActivity?.item);
+
+  const localize = FoundryAdapter.localize;
 </script>
 
 <div
   class="item-summary"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_SUMMARY}
 >
+  {#if linked}
+    {#await FoundryAdapter.enrichHtml(`@UUID[${linked.uuid}]{${linked.name}}`) then enriched}
+      <div
+        style="margin-block: 0.25rem; font-size: 13px; font-style: italic;"
+      >
+        {@html localize('TIDY5E.Activities.Cast.SourceHintText', {
+          itemName: enriched,
+        })}
+      </div>
+    {/await}
+    <HorizontalLineSeparator />
+  {/if}
+
   {@html chatData.description}
 
   {#if itemSummaryCommands.length}
