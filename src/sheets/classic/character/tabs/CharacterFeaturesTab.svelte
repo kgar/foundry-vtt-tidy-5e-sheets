@@ -16,12 +16,10 @@
   import { CONSTANTS } from 'src/constants';
   import ItemName from '../../../../components/item-list/ItemName.svelte';
   import ItemUses from '../../../../components/item-list/ItemUses.svelte';
-  import ItemAddUses from '../../../../components/item-list/ItemAddUses.svelte';
   import InlineFavoriteIcon from '../../../../components/item-list/InlineFavoriteIcon.svelte';
   import ItemFavoriteControl from '../../../../components/item-list/controls/ItemFavoriteControl.svelte';
   import { getContext } from 'svelte';
   import Notice from '../../../../components/notice/Notice.svelte';
-  import { settings } from 'src/settings/settings.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { declareLocation } from 'src/types/location-awareness.types';
@@ -39,7 +37,6 @@
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { ItemUtils } from 'src/utils/ItemUtils';
-  import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import {
@@ -221,12 +218,6 @@
                   {#snippet children({ toggleSummary })}
                     <ItemTableCell primary={true}>
                       <ItemUseButton disabled={!context.editable} {item} />
-                      {#if (ctx.activities?.length ?? 0) > 1}
-                        <InlineToggleControl
-                          entityId={item.id}
-                          {inlineToggleService}
-                        />
-                      {/if}
                       <ItemName
                         onToggle={() => toggleSummary(context.actor)}
                         hasChildren={false}
@@ -265,7 +256,7 @@
                         {:else if ctx?.hasUses}
                           <ItemUses {item} />
                         {:else}
-                          <ItemAddUses {item} />
+                          <span class="text-body-tertiary">&mdash;</span>
                         {/if}
                       </ItemTableCell>
                     {/if}
@@ -304,13 +295,6 @@
                     {/if}
                   {/snippet}
                 </ItemTableRow>
-                {#if (ctx.activities?.length ?? 0) > 1}
-                  <InlineActivitiesList
-                    {item}
-                    activities={ctx.activities}
-                    {inlineToggleService}
-                  />
-                {/if}
               {/each}
               {#if context.unlocked}
                 <ItemTableFooter

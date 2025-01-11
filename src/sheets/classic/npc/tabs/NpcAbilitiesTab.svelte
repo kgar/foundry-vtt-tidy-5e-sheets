@@ -16,7 +16,6 @@
   import { CONSTANTS } from 'src/constants';
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
   import ItemName from 'src/components/item-list/ItemName.svelte';
-  import ItemAddUses from 'src/components/item-list/ItemAddUses.svelte';
   import ItemDeleteControl from 'src/components/item-list/controls/ItemDeleteControl.svelte';
   import ItemEditControl from 'src/components/item-list/controls/ItemEditControl.svelte';
   import ItemUses from 'src/components/item-list/ItemUses.svelte';
@@ -55,7 +54,6 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import InlineContainerView from 'src/sheets/classic/container/InlineContainerView.svelte';
   import { ItemUtils } from 'src/utils/ItemUtils';
-  import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import {
     createSearchResultsState,
     setSearchResultsContext,
@@ -265,7 +263,7 @@
                   {#snippet children({ toggleSummary })}
                     <ItemTableCell primary={true}>
                       <ItemUseButton disabled={!context.editable} {item} />
-                      {#if ('containerContents' in ctx && !!ctx.containerContents) || (ctx.activities?.length ?? 0) > 1}
+                      {#if ('containerContents' in ctx && !!ctx.containerContents)}
                         <InlineToggleControl
                           entityId={item.id}
                           {inlineToggleService}
@@ -309,7 +307,7 @@
                         {:else if ctx?.hasUses}
                           <ItemUses {item} />
                         {:else}
-                          <ItemAddUses {item} />
+                          <span class="text-body-tertiary">&mdash;</span>
                         {/if}
                       </ItemTableCell>
                       <ItemTableCell baseWidth="7.5rem">
@@ -349,12 +347,6 @@
                     lockItemQuantity={context.lockItemQuantity}
                     sheetDocument={context.actor}
                     unlocked={context.unlocked}
-                  />
-                {:else if (ctx.activities?.length ?? 0) > 1}
-                  <InlineActivitiesList
-                    {item}
-                    activities={ctx.activities}
-                    {inlineToggleService}
                   />
                 {/if}
               {/each}
