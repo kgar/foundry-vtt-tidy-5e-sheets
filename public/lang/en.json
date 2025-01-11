@@ -150,7 +150,7 @@
   "TIDY5E.OriginSummaryConfig": "Origin Summary Configuration: {actorName}",
 
   "TIDY5E.MaxPreparedSpellsConfig": {
-    "Title": "Max Prepared Spells Configuration: {actorName}",
+    "Title": "Max Prepared Spells Configuration: {documentName}",
     "ExamplesHeader": "Sample Formulas",
     "ButtonTooltip": "Configure Max Prepared Spells",
     "MoreFormulas": "More formulas"

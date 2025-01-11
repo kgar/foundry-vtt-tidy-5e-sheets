@@ -116,7 +116,7 @@
     "TIDY5E.Class.Wizard": "Mago",
     "TIDY5E.OriginSummaryConfig": "Configuração Resumida de Origem: {actorName}",
     "TIDY5E.MaxPreparedSpellsConfig": {
-        "Title": "Configuração do Máximo de Magias Preparadas: {actorName}",
+        "Title": "Configuração do Máximo de Magias Preparadas: {documentName}",
         "ExamplesHeader": "Exemplo de Fórmulas",
         "ButtonTooltip": "Configurar Máximo de Magias Preparadas",
         "MoreFormulas": "Mais Fórmulas"

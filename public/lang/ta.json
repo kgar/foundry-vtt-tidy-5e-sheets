@@ -406,7 +406,7 @@
     "TIDY5E.Class.Wizard": "வழிகாட்டி",
     "TIDY5E.OriginSummaryConfig": "தோற்றம் சுருக்கம் உள்ளமைவு: {actorName}",
     "TIDY5E.MaxPreparedSpellsConfig": {
-        "Title": "அதிகபட்சம் தயாரிக்கப்பட்ட எழுத்துப்பிழைகள் உள்ளமைவு: {actorName}",
+        "Title": "அதிகபட்சம் தயாரிக்கப்பட்ட எழுத்துப்பிழைகள் உள்ளமைவு: {documentName}",
         "ExamplesHeader": "மாதிரி சூத்திரங்கள்",
         "ButtonTooltip": "அதிகபட்சம் தயாரிக்கப்பட்ட மந்திரங்களை உள்ளமைக்கவும்",
         "MoreFormulas": "மேலும் சூத்திரங்கள்"

@@ -464,7 +464,7 @@
     "TIDY5E.AttackMod": "Mod Attacco",
     "TIDY5E.MaxPreparedSpellsConfig": {
         "ExamplesHeader": "Formule di Esempio",
-        "Title": "Configurazione Massimi Incantesimi Preparati: {actorName}",
+        "Title": "Configurazione Massimi Incantesimi Preparati: {documentName}",
         "ButtonTooltip": "Configura Massimi Incantesimi Preparati",
         "MoreFormulas": "Più formule"
     },
