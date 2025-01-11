@@ -228,22 +228,34 @@
                   class="truncate flex-1"
                   data-tidy-item-name={spell.name}
                   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
-                  >{spell.name}</span
                 >
+                  {spell.name}
+                  {#if spell.system.linkedActivity?.item}
+                    <i
+                      class="linked-source-tooltip-icon fa-solid fa-circle-info fa-fw"
+                      title={localize('TIDY5E.Activities.Cast.SourceHintText', {
+                        itemName: spell.system.linkedActivity.item.name,
+                      })}
+                    ></i>
+                  {/if}
+                </span>
               </ItemName>
+
+              <div class="primary-cell-extras">
+                {#if spell.hasLimitedUses}
+                  <span class="primary-cell-uses">
+                    <ItemUses item={spell} />
+                  </span>
+                {:else if (spell.system.linkedActivity?.uses?.max ?? 0) > 0}
+                  <span class="primary-cell-uses">
+                    <ActivityUses activity={spell.system.linkedActivity} />
+                  </span>
+                {/if}
+                {#if allowFavorites && settings.value.showIconsNextToTheItemName && 'favoriteId' in ctx && !!ctx.favoriteId}
+                  <InlineFavoriteIcon />
+                {/if}
+              </div>
             </ItemTableCell>
-            {#if spell.hasLimitedUses}
-              <ItemTableCell baseWidth="3.125rem">
-                <ItemUses item={spell} />
-              </ItemTableCell>
-            {:else if (spell.system.linkedActivity?.uses?.max ?? 0) > 0}
-              <ItemTableCell baseWidth="3.125rem">
-                <ActivityUses activity={spell.system.linkedActivity} />
-              </ItemTableCell>
-            {/if}
-            {#if allowFavorites && settings.value.showIconsNextToTheItemName && 'favoriteId' in ctx && !!ctx.favoriteId}
-              <InlineFavoriteIcon />
-            {/if}
             <ItemTableCell
               baseWidth={spellComponentsBaseWidth}
               cssClass="no-gap"
