@@ -839,5 +839,6 @@
   "TIDY5E.SortMenu.OptionAlphabetical": "Alphabetical (A-Z)",
   "TIDY5E.SortMenu.OptionManual": "Manual",
   "TIDY5E.SortMenu.OptionPrepared": "Prepared",
-  "TIDY5E.SortMenu.OptionEquipped": "Equipped"
+  "TIDY5E.SortMenu.OptionEquipped": "Equipped",
+  "TIDY5E.Activities.Cast.SourceHintText": "From {itemName}"
 }
