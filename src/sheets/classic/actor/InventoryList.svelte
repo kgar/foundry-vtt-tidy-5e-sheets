@@ -11,7 +11,6 @@
   import ItemName from '../../../components/item-list/ItemName.svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemUses from '../../../components/item-list/ItemUses.svelte';
-  import ItemAddUses from '../../../components/item-list/ItemAddUses.svelte';
   import ItemDeleteControl from '../../../components/item-list/controls/ItemDeleteControl.svelte';
   import ItemEditControl from '../../../components/item-list/controls/ItemEditControl.svelte';
   import EquipControl from '../../../components/item-list/controls/EquipControl.svelte';
@@ -25,7 +24,6 @@
     NpcSheetContext,
     RenderableClassicControl,
   } from 'src/types/types';
-  import { settings } from 'src/settings/settings.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { coalesce } from 'src/utils/formatting';
   import TextInput from 'src/components/inputs/TextInput.svelte';
@@ -275,7 +273,7 @@
               {#if ctx?.hasUses}
                 <ItemUses {item} />
               {:else}
-                <ItemAddUses {item} />
+                <span class="text-body-tertiary">&mdash;</span>
               {/if}
             </ItemTableCell>
             <ItemTableCell baseWidth="7.5rem" title={localize('DND5E.Usage')}>

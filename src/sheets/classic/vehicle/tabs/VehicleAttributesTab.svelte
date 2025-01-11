@@ -17,7 +17,6 @@
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
   import ItemTableFooter from 'src/components/item-list/ItemTableFooter.svelte';
   import ItemUses from 'src/components/item-list/ItemUses.svelte';
-  import ItemAddUses from 'src/components/item-list/ItemAddUses.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ItemDeleteControl from 'src/components/item-list/controls/ItemDeleteControl.svelte';
   import ItemEditControl from 'src/components/item-list/controls/ItemEditControl.svelte';
@@ -214,8 +213,7 @@
                         {:else if ctx?.hasUses}
                           <ItemUses {item} />
                         {:else}
-                          <!-- TODO: Figure out how to make this work in a custom section. -->
-                          <ItemAddUses {item} />
+                          <span class="text-body-tertiary">&mdash;</span>
                         {/if}
                       </ItemTableCell>
                       <ItemTableCell baseWidth="7.5rem">

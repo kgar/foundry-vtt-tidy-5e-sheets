@@ -16,7 +16,6 @@
   import { CONSTANTS } from 'src/constants';
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
   import ItemName from 'src/components/item-list/ItemName.svelte';
-  import ItemAddUses from 'src/components/item-list/ItemAddUses.svelte';
   import ItemDeleteControl from 'src/components/item-list/controls/ItemDeleteControl.svelte';
   import ItemEditControl from 'src/components/item-list/controls/ItemEditControl.svelte';
   import ItemUses from 'src/components/item-list/ItemUses.svelte';
@@ -309,7 +308,7 @@
                         {:else if ctx?.hasUses}
                           <ItemUses {item} />
                         {:else}
-                          <ItemAddUses {item} />
+                          <span class="text-body-tertiary">&mdash;</span>
                         {/if}
                       </ItemTableCell>
                       <ItemTableCell baseWidth="7.5rem">

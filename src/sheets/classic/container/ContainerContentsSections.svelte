@@ -23,7 +23,6 @@
   import InlineContainerView from './InlineContainerView.svelte';
   import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import ItemUses from 'src/components/item-list/ItemUses.svelte';
-  import ItemAddUses from 'src/components/item-list/ItemAddUses.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
 
   interface Props {
@@ -207,7 +206,7 @@
                   {#if item.hasLimitedUses}
                     <ItemUses {item} />
                   {:else}
-                    <ItemAddUses {item} />
+                    <span class="text-body-tertiary">&mdash;</span>
                   {/if}
                 </TidyTableCell>
                 <TidyTableCell

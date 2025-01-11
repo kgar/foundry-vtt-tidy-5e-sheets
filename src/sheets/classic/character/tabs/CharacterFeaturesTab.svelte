@@ -16,12 +16,10 @@
   import { CONSTANTS } from 'src/constants';
   import ItemName from '../../../../components/item-list/ItemName.svelte';
   import ItemUses from '../../../../components/item-list/ItemUses.svelte';
-  import ItemAddUses from '../../../../components/item-list/ItemAddUses.svelte';
   import InlineFavoriteIcon from '../../../../components/item-list/InlineFavoriteIcon.svelte';
   import ItemFavoriteControl from '../../../../components/item-list/controls/ItemFavoriteControl.svelte';
   import { getContext } from 'svelte';
   import Notice from '../../../../components/notice/Notice.svelte';
-  import { settings } from 'src/settings/settings.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { declareLocation } from 'src/types/location-awareness.types';
@@ -265,7 +263,7 @@
                         {:else if ctx?.hasUses}
                           <ItemUses {item} />
                         {:else}
-                          <ItemAddUses {item} />
+                          <span class="text-body-tertiary">&mdash;</span>
                         {/if}
                       </ItemTableCell>
                     {/if}

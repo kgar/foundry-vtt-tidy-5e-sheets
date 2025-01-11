@@ -7,7 +7,6 @@
   import ItemTableCell from '../../../../components/item-list/v1/ItemTableCell.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
-  import ItemAddUses from '../../../../components/item-list/ItemAddUses.svelte';
   import ItemName from '../../../../components/item-list/ItemName.svelte';
   import ItemUseButton from '../../../../components/item-list/ItemUseButton.svelte';
   import ItemUses from '../../../../components/item-list/ItemUses.svelte';
@@ -81,8 +80,7 @@
               <span
                 data-tidy-item-name={item.name}
                 data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
-                class="truncate flex-1"
-                >{item.name}</span
+                class="truncate flex-1">{item.name}</span
               >
             </ItemName>
           </ItemTableCell>
@@ -94,7 +92,7 @@
             {:else if ctx?.hasUses}
               <ItemUses {item} />
             {:else}
-              <ItemAddUses {item} />
+              <span class="text-body-tertiary">&mdash;</span>
             {/if}
           </ItemTableCell>
           <ItemTableCell baseWidth="7.5rem">
