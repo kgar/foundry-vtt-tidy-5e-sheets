@@ -263,7 +263,7 @@
                   {#snippet children({ toggleSummary })}
                     <ItemTableCell primary={true}>
                       <ItemUseButton disabled={!context.editable} {item} />
-                      {#if ('containerContents' in ctx && !!ctx.containerContents) || (ctx.activities?.length ?? 0) > 1}
+                      {#if ('containerContents' in ctx && !!ctx.containerContents)}
                         <InlineToggleControl
                           entityId={item.id}
                           {inlineToggleService}
