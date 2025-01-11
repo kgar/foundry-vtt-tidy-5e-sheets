@@ -139,11 +139,12 @@ export class SheetSections {
       (prev, curr) => {
         let key = curr.prop ?? '';
 
+        curr.showSubtitle = app.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER;
+        
         // Handle "Additional Spells" section
         if (curr.order === 'item') {
           key = 'dnd5e-cast-activity-additional-spells';
           curr.canCreate = false;
-          curr.showSubtitle = true;
         }
 
         curr.key = key;

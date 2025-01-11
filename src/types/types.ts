@@ -220,6 +220,7 @@ export type CharacterItemContext = {
   totalWeight?: number;
   concentration?: boolean;
   parent?: Item5e;
+  subtitle?: string;
 };
 
 export type ActivityItemContext = {
@@ -382,6 +383,7 @@ export type NpcItemContext = {
   isStack?: boolean;
   needsSubclass?: boolean;
   parent?: Item5e;
+  subtitle?: string;
   toggleTitle?: string;
   totalWeight?: number;
 };

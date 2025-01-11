@@ -1503,6 +1503,19 @@ export class Tidy5eCharacterSheet
         context.toggleTitle = game.i18n.localize('DND5E.SpellUnprepared');
       }
 
+      const linked = item.system.linkedActivity?.item;
+      const subtitle = [
+        linked
+          ? linked.name
+          : this.actor.classes[item.system.sourceClass]?.name
+      ];
+
+      if (!linked) {
+        // TODO: Put something useful here
+      }
+
+      context.subtitle = subtitle.filterJoin(' &bull; ');
+
       if (this._concentration.items.has(item)) {
         context.concentration = true;
       }

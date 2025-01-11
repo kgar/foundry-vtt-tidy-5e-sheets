@@ -240,7 +240,7 @@
                       class="truncate"
                       style="color: var(--t5e-tertiary-color);"
                     >
-                      Hello, world! 👋
+                      {@html ctx.subtitle}
                     </small>
                   {/if}
                 </div>

@@ -965,6 +965,19 @@ export class Tidy5eNpcSheet
           if (this._concentration.items.has(item)) {
             ctx.concentration = true;
           }
+          
+          const linked = item.system.linkedActivity?.item;
+          const subtitle = [
+            linked
+              ? linked.name
+              : this.actor.classes[item.system.sourceClass]?.name,
+          ];
+
+          if (!linked) {
+            // TODO: Put something useful here
+          }
+          context.subtitle = subtitle.filterJoin(' &bull; ');
+
           features.spells.push(item);
         } else if (item.type === CONSTANTS.ITEM_TYPE_CLASS) {
           features.classes.push(item);
