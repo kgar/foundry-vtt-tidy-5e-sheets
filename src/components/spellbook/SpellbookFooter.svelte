@@ -139,7 +139,7 @@
       class="transparent-button secondary-footer-field highlight-on-hover"
       onclick={() =>
         new MaxPreparedSpellsConfigFormApplication(
-          context.actor,
+          context.spellcastingInfo.currentFilteredClass.name,
           context.spellcastingInfo.currentFilteredClass,
         ).render(true)}
       title={localize('TIDY5E.MaxPreparedSpellsConfig.ButtonTooltip')}

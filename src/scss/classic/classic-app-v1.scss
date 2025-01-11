@@ -501,6 +501,12 @@
     .inline-wrapped-elements:last-of-type {
       margin-bottom: 0;
     }
+
+    .item-summary-linked-source {
+      margin-block: 0.325rem 0.25rem;
+      font-size: 12px;
+      font-style: italic;
+    }
   }
 
   // TODO: Extract to shared SCSS file to use with all classic sheets

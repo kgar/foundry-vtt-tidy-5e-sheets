@@ -494,7 +494,7 @@
         "options.open.text": "Entrer un nombre au choix"
     },
     "TIDY5E.MaxPreparedSpellsConfig": {
-        "Title": "Configuration Max de sorts préparer : {actorName}",
+        "Title": "Configuration Max de sorts préparer : {documentName}",
         "ExamplesHeader": "Exemple de formules",
         "ButtonTooltip": "Configuration Max des sorts préparés",
         "MoreFormulas": "Plus de formules"

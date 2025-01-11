@@ -47,7 +47,7 @@
     "TIDY5E.Class.Rogue": "Łotr",
     "TIDY5E.MaxPreparedSpellsConfig": {
         "ButtonTooltip": "Konfiguruj maks. liczbę przygotowanych czarów",
-        "Title": "Konfiguracja maks. liczby przygotowanych czarów dla {actorName}",
+        "Title": "Konfiguracja maks. liczby przygotowanych czarów dla {documentName}",
         "ExamplesHeader": "Przykładowe wzory",
         "MoreFormulas": "Więcej wzorów"
     },

@@ -504,7 +504,7 @@
     "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - Fernkampf-Zauberangriff",
     "TIDY5E.ActorRangedSpellAttackFlavorText": "Fernkampf-Zauberangriff",
     "TIDY5E.MaxPreparedSpellsConfig": {
-        "Title": "Konfiguration maximal vorbereiteter Zaubersprüche: {actorName}",
+        "Title": "Konfiguration maximal vorbereiteter Zaubersprüche: {documentName}",
         "ExamplesHeader": "Beispielformeln",
         "ButtonTooltip": "Maximal vorbereitete Zaubersprüche konfigurieren",
         "MoreFormulas": "Mehr Formeln"
