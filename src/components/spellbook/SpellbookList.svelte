@@ -233,8 +233,8 @@
                   {spell.name}
                   {#if linked}
                     <i
-                      style="align-content: center; color: var(--t5e-secondary-color)"
-                      class="fa-solid fa-wand-magic fa-fw"
+                      style="align-content: center; color: var(--t5e-tertiary-color)"
+                      class="fa-solid fa-circle-info fa-fw"
                       title={localize('TIDY5E.Activities.Cast.SourceHintText', {
                         itemName: linked.name,
                       })}
