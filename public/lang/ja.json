@@ -248,10 +248,6 @@
         "name": "一覧表示で従来のアイテム操作を使用",
         "hint": "常にアイテム操作を表示し、右クリックメニューを無効にします。一覧表示でPCのアイテム/呪文インベントリにのみ適用されます。"
     },
-    "TIDY5E.Settings.ShowIconsNextToTheItemName": {
-        "name": "Show Item Name Icons",
-        "hint": "Shows support icons next to the item name (Favorite, Attunement, etc.)."
-    },
     "TIDY5E.Settings.ShowTraitLabels": {
         "name": "特徴ラベルの表示",
         "hint": "デフォルトでは、特徴アイコンのみが表示されます。ラベルも表示できるようにします。"

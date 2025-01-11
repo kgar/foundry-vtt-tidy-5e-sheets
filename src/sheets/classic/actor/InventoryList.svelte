@@ -236,23 +236,24 @@
                   >{itemName}</span
                 >
               </ItemName>
-            </ItemTableCell>
-            {#if settings.value.showIconsNextToTheItemName}
-              <ItemTableCell cssClass="no-border">
-                {#if ctx?.attunement && !FoundryAdapter.concealDetails(item)}
-                  <div class="item-detail attunement">
-                    <i
-                      class="item-state-icon fas {ctx.attunement.icon} {ctx
-                        .attunement.cls}"
-                      title={localize(ctx.attunement.title)}
-                    ></i>
-                  </div>
+              <div class="primary-cell-extras">
+                {#if !context.useClassicControls}
+                  {#if ctx?.attunement && !FoundryAdapter.concealDetails(item)}
+                    <div class="item-detail attunement">
+                      <i
+                        class="item-state-icon fas {ctx.attunement.icon} {ctx
+                          .attunement.cls}"
+                        title={localize(ctx.attunement.title)}
+                      ></i>
+                    </div>
+                  {/if}
+
+                  {#if 'favoriteId' in ctx && !!ctx.favoriteId && allowFavoriteIconNextToName}
+                    <InlineFavoriteIcon />
+                  {/if}
                 {/if}
-              </ItemTableCell>
-              {#if 'favoriteId' in ctx && !!ctx.favoriteId && allowFavoriteIconNextToName}
-                <InlineFavoriteIcon />
-              {/if}
-            {/if}
+              </div>
+            </ItemTableCell>
             {#if includeWeightColumn}
               {@const weight = ctx?.totalWeight ?? item.system.weight.value}
               <ItemTableCell

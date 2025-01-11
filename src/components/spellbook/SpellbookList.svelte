@@ -251,7 +251,7 @@
                     <ActivityUses activity={spell.system.linkedActivity} />
                   </span>
                 {/if}
-                {#if allowFavorites && settings.value.showIconsNextToTheItemName && 'favoriteId' in ctx && !!ctx.favoriteId}
+                {#if allowFavorites && !context.useClassicControls && 'favoriteId' in ctx && !!ctx.favoriteId}
                   <InlineFavoriteIcon />
                 {/if}
               </div>

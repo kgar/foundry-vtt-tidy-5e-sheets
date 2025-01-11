@@ -240,19 +240,19 @@
                         <span
                           data-tidy-item-name={item.name}
                           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
-                          class="truncate flex-1"
-                          >{item.name}</span
+                          class="truncate flex-1">{item.name}</span
                         >
                         {#if item.isOriginalClass}<i
                             title={localize('DND5E.ClassOriginal')}
                             class="fas fa-crown primary-accent-color"
                           ></i>{/if}
                       </ItemName>
+                      <div class="primary-cell-extras">
+                        {#if !context.useClassicControls && 'favoriteId' in ctx && !!ctx.favoriteId}
+                          <InlineFavoriteIcon />
+                        {/if}
+                      </div>
                     </ItemTableCell>
-                    <!-- TODO: Handle more gracefully; it is sitting outside of any table cell -->
-                    {#if settings.value.showIconsNextToTheItemName && 'favoriteId' in ctx && !!ctx.favoriteId}
-                      <InlineFavoriteIcon />
-                    {/if}
                     {#if section.showUsesColumn}
                       <ItemTableCell baseWidth="3.125rem">
                         {#if item.isOnCooldown}

@@ -15,7 +15,6 @@ export type UserSettingsContext = {
     showClassList: CurrentSettings['showClassList'];
     showEquippedAmmoOnly: CurrentSettings['showEquippedAmmoOnly'];
     showExhaustionOnHover: CurrentSettings['showExhaustionOnHover'];
-    showIconsNextToTheItemName: CurrentSettings['showIconsNextToTheItemName'];
     showInspirationOnHover: CurrentSettings['showInspirationOnHover'];
     showSpellbookTabNpc: CurrentSettings['showSpellbookTabNpc'];
     toggleEmptyCharacterSkills: CurrentSettings['toggleEmptyCharacterSkills'];

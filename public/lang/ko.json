@@ -271,10 +271,6 @@
         "name": "클래식 목록 제어 사용",
         "hint": "목록 보기에 제어를 표시합니다."
     },
-    "TIDY5E.Settings.ShowIconsNextToTheItemName": {
-        "name": "아이템 이름 아이콘 공개",
-        "hint": "아이템 이름 옆에 지원 아이콘을 표시합니다(즐겨찾기, 조율, 기타)"
-    },
     "TIDY5E.Settings.ShowTraitLabels": {
         "name": "특징 레이블 표시",
         "hint": "PC, NPC, 탑승물 특성에 대한 레이블을 표시합니다. 아이콘만 표시하려면 비활성화합니다."
