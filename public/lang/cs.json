@@ -594,7 +594,7 @@
     },
     "TIDY5E.MaxPreparedSpellsConfig": {
         "ButtonTooltip": "Nastavit maximum připravených kouzel",
-        "Title": "Nastavení maxima připravených kouzel: {actorName}",
+        "Title": "Nastavení maxima připravených kouzel: {documentName}",
         "MoreFormulas": "Více formulí",
         "ExamplesHeader": "Ukázkové formule"
     },

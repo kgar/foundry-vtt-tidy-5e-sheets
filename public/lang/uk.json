@@ -109,7 +109,7 @@
     "TIDY5E.Class.Warlock": "Чаклун",
     "TIDY5E.OriginSummaryConfig": "Конфігурація підсумку походження: {actorName}",
     "TIDY5E.MaxPreparedSpellsConfig": {
-        "Title": "Конфігурація макс. к-сті підготовлених чар: {actorName}",
+        "Title": "Конфігурація макс. к-сті підготовлених чар: {documentName}",
         "ExamplesHeader": "Зразки формул",
         "ButtonTooltip": "Конфігурація макс. к-сті підготовлених чар",
         "MoreFormulas": "Більше формул"
