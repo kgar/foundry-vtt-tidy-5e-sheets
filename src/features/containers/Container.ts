@@ -8,6 +8,7 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { CONSTANTS } from 'src/constants';
 import type { CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { Activities } from '../activities/activities';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 
 export class Container {
   static async getContainerContents(item: Item5e): Promise<ContainerContents> {
@@ -56,5 +57,25 @@ export class Container {
     }
 
     return itemContext;
+  }
+
+  static promptCreateInventoryItem(container: Item5e) {
+    const actor = container.actor;
+
+    const createData = {
+      folder: container.folder,
+      'system.container': container.id,
+    };
+
+    if (!TidyHooks.tidy5eSheetsPreCreateItem(actor, createData, game.user.id)) {
+      return;
+    }
+
+    Item.implementation.createDialog(createData, {
+      parent: actor,
+      pack: container.pack,
+      types: Inventory.getDefaultInventoryTypes(),
+      keepId: true,
+    });
   }
 }

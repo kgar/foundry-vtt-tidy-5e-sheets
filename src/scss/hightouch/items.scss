@@ -113,6 +113,10 @@
       .meter.progress .label {
         visibility: hidden;
       }
+
+      .item-create {
+        display: none;
+      }
     }
 
     .contents-footer-scroll-marker {
@@ -415,13 +419,14 @@
 
     .contents-footer {
       display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.25rem;
 
       .meter {
-        flex-grow: 0;
+        flex-grow: 1;
         flex-shrink: 0;
-        flex-basis: var(--meter-height);
+        align-self: center;
       }
     }
   }
