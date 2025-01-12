@@ -96,7 +96,7 @@ export type ItemSheetContext = {
   itemDescriptions: ItemDescription[];
   itemType: string;
   itemStatus: string | null;
-  itemSubtypes: Record<string, string>;
+  itemSubtypes?: Record<string, string>;
   labels: Record<string, string>;
   limited: boolean;
   lockItemQuantity: boolean;

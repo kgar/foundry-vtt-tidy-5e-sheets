@@ -253,7 +253,6 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       // Item Type, Status, and Details
       // @ts-expect-error
       itemType: game.i18n.localize(CONFIG.Item.typeLabels[this.item.type]),
-      itemSubtypes: {},
       itemStatus: this._getItemStatus(),
       baseItems: await this._getItemBaseTypes(),
       isPhysical: this.document.system.hasOwnProperty('quantity'),
