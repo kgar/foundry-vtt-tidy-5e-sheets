@@ -17,7 +17,6 @@
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
   import ItemTableFooter from 'src/components/item-list/ItemTableFooter.svelte';
   import ItemUses from 'src/components/item-list/ItemUses.svelte';
-  import ItemAddUses from 'src/components/item-list/ItemAddUses.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ItemDeleteControl from 'src/components/item-list/controls/ItemDeleteControl.svelte';
   import ItemEditControl from 'src/components/item-list/controls/ItemEditControl.svelte';
@@ -33,7 +32,6 @@
   import { ItemUtils } from 'src/utils/ItemUtils';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
-  import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
 
   let context = $derived(getVehicleSheetContext());
@@ -183,12 +181,6 @@
                   {#snippet children({ toggleSummary })}
                     <ItemTableCell primary={true}>
                       <ItemUseButton disabled={!context.editable} {item} />
-                      {#if (ctx.activities?.length ?? 0) > 1}
-                        <InlineToggleControl
-                          entityId={item.id}
-                          {inlineToggleService}
-                        />
-                      {/if}
                       <ItemName
                         onToggle={() => toggleSummary(context.actor)}
                         cssClass="extra-small-gap"
@@ -205,8 +197,17 @@
                     {#if section.hasActions}
                       <ItemTableCell baseWidth="3.125rem">
                         {#if item.isOnCooldown}
-                          <RechargeControl {item} />
+                          <RechargeControl
+                            document={item}
+                            field={'system.uses.spent'}
+                            uses={item.system.uses}
+                          />
                         {:else if item.hasRecharge}
+                          {@const remaining =
+                            item.system.uses.max - item.system.uses.spent}
+                          {#if remaining > 1}
+                            <span>{remaining}</span>
+                          {/if}
                           <i
                             class="fas fa-bolt"
                             title={localize('DND5E.Charged')}
@@ -214,8 +215,7 @@
                         {:else if ctx?.hasUses}
                           <ItemUses {item} />
                         {:else}
-                          <!-- TODO: Figure out how to make this work in a custom section. -->
-                          <ItemAddUses {item} />
+                          <span class="text-body-tertiary">&mdash;</span>
                         {/if}
                       </ItemTableCell>
                       <ItemTableCell baseWidth="7.5rem">
@@ -299,13 +299,6 @@
                     {/if}
                   {/snippet}
                 </ItemTableRow>
-                {#if (ctx.activities?.length ?? 0) > 1}
-                  <InlineActivitiesList
-                    {item}
-                    activities={ctx.activities}
-                    {inlineToggleService}
-                  />
-                {/if}
               {/each}
               {#if context.unlocked && section.dataset}
                 <ItemTableFooter

@@ -11,7 +11,6 @@
   import ItemName from '../../../components/item-list/ItemName.svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemUses from '../../../components/item-list/ItemUses.svelte';
-  import ItemAddUses from '../../../components/item-list/ItemAddUses.svelte';
   import ItemDeleteControl from '../../../components/item-list/controls/ItemDeleteControl.svelte';
   import ItemEditControl from '../../../components/item-list/controls/ItemEditControl.svelte';
   import EquipControl from '../../../components/item-list/controls/EquipControl.svelte';
@@ -25,7 +24,6 @@
     NpcSheetContext,
     RenderableClassicControl,
   } from 'src/types/types';
-  import { settings } from 'src/settings/settings.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { coalesce } from 'src/utils/formatting';
   import TextInput from 'src/components/inputs/TextInput.svelte';
@@ -34,7 +32,6 @@
   import { ItemUtils } from 'src/utils/ItemUtils';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
-  import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
@@ -221,7 +218,7 @@
           {#snippet children({ toggleSummary })}
             <ItemTableCell primary={true}>
               <ItemUseButton disabled={!context.editable} {item} />
-              {#if ('containerContents' in ctx && !!ctx.containerContents) || (ctx.activities?.length ?? 0) > 1}
+              {#if 'containerContents' in ctx && !!ctx.containerContents}
                 <InlineToggleControl entityId={item.id} {inlineToggleService} />
               {/if}
               <ItemName
@@ -236,23 +233,24 @@
                   >{itemName}</span
                 >
               </ItemName>
-            </ItemTableCell>
-            {#if settings.value.showIconsNextToTheItemName}
-              <ItemTableCell cssClass="no-border">
-                {#if ctx?.attunement && !FoundryAdapter.concealDetails(item)}
-                  <div class="item-detail attunement">
-                    <i
-                      class="item-state-icon fas {ctx.attunement.icon} {ctx
-                        .attunement.cls}"
-                      title={localize(ctx.attunement.title)}
-                    ></i>
-                  </div>
+              <div class="primary-cell-extras">
+                {#if !context.useClassicControls}
+                  {#if ctx?.attunement && !FoundryAdapter.concealDetails(item)}
+                    <div class="item-detail attunement">
+                      <i
+                        class="item-state-icon fas {ctx.attunement.icon} {ctx
+                          .attunement.cls}"
+                        title={localize(ctx.attunement.title)}
+                      ></i>
+                    </div>
+                  {/if}
+
+                  {#if 'favoriteId' in ctx && !!ctx.favoriteId && allowFavoriteIconNextToName}
+                    <InlineFavoriteIcon />
+                  {/if}
                 {/if}
-              </ItemTableCell>
-              {#if 'favoriteId' in ctx && !!ctx.favoriteId && allowFavoriteIconNextToName}
-                <InlineFavoriteIcon />
-              {/if}
-            {/if}
+              </div>
+            </ItemTableCell>
             {#if includeWeightColumn}
               {@const weight = ctx?.totalWeight ?? item.system.weight.value}
               <ItemTableCell
@@ -274,7 +272,7 @@
               {#if ctx?.hasUses}
                 <ItemUses {item} />
               {:else}
-                <ItemAddUses {item} />
+                <span class="text-body-tertiary">&mdash;</span>
               {/if}
             </ItemTableCell>
             <ItemTableCell baseWidth="7.5rem" title={localize('DND5E.Usage')}>
@@ -311,12 +309,6 @@
             lockItemQuantity={context.lockItemQuantity}
             sheetDocument={context.actor}
             unlocked={context.unlocked}
-          />
-        {:else if (ctx.activities?.length ?? 0) > 1}
-          <InlineActivitiesList
-            {item}
-            activities={ctx.activities}
-            {inlineToggleService}
           />
         {/if}
       {/each}

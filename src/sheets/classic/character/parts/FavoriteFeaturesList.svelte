@@ -7,14 +7,12 @@
   import ItemTableCell from '../../../../components/item-list/v1/ItemTableCell.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
-  import ItemAddUses from '../../../../components/item-list/ItemAddUses.svelte';
   import ItemName from '../../../../components/item-list/ItemName.svelte';
   import ItemUseButton from '../../../../components/item-list/ItemUseButton.svelte';
   import ItemUses from '../../../../components/item-list/ItemUses.svelte';
   import { getContext } from 'svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import { ItemUtils } from 'src/utils/ItemUtils';
-  import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
@@ -70,9 +68,6 @@
         {#snippet children({ toggleSummary })}
           <ItemTableCell primary={true}>
             <ItemUseButton disabled={!context.editable} {item} />
-            {#if (ctx.activities?.length ?? 0) > 1}
-              <InlineToggleControl entityId={item.id} {inlineToggleService} />
-            {/if}
             <ItemName
               onToggle={() => toggleSummary(context.actor)}
               hasChildren={false}
@@ -81,20 +76,27 @@
               <span
                 data-tidy-item-name={item.name}
                 data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
-                class="truncate flex-1"
-                >{item.name}</span
+                class="truncate flex-1">{item.name}</span
               >
             </ItemName>
           </ItemTableCell>
           <ItemTableCell baseWidth="3.125rem">
             {#if item.isOnCooldown}
-              <RechargeControl {item} />
+              <RechargeControl
+                document={item}
+                field={'system.uses.spent'}
+                uses={item.system.uses}
+              />
             {:else if item.hasRecharge}
+              {@const remaining = item.system.uses.max - item.system.uses.spent}
+              {#if remaining > 1}
+                <span>{remaining}</span>
+              {/if}
               <i class="fas fa-bolt" title={localize('DND5E.Charged')}></i>
             {:else if ctx?.hasUses}
               <ItemUses {item} />
             {:else}
-              <ItemAddUses {item} />
+              <span class="text-body-tertiary">&mdash;</span>
             {/if}
           </ItemTableCell>
           <ItemTableCell baseWidth="7.5rem">
@@ -104,13 +106,6 @@
           </ItemTableCell>
         {/snippet}
       </ItemTableRow>
-      {#if (ctx.activities?.length ?? 0) > 1}
-        <InlineActivitiesList
-          {item}
-          activities={ctx.activities}
-          {inlineToggleService}
-        />
-      {/if}
     {/each}
   {/snippet}
 </ItemTable>

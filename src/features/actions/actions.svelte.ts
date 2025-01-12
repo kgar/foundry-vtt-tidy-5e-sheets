@@ -223,13 +223,19 @@ async function mapActionItem(item: Item5e): Promise<ActionItem> {
       ? [...item.labels.damages].map(
           ({ formula, label, damageType }: any, i: number) => {
             const damage = getActivityFirstDamage(item);
-            const rawDamagePartFormula = damage.parts?.[0]?.formula;
+            const rawDamagePartFormula = damage.parts?.[0]?.[0];
 
             if (rawDamagePartFormula?.trim() === '') {
               formula = '';
             }
 
+            const formulaBeforeSimplificaton = formula;
+
             formula = simplifyFormula(formula, true);
+
+            if (formula.includes('NaN')) {
+              formula = formulaBeforeSimplificaton;
+            }
 
             const damageHealingTypeLabel =
               FoundryAdapter.lookupDamageType(damageType) ??

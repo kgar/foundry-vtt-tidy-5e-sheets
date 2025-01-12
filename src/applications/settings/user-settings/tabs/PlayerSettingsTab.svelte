@@ -108,13 +108,6 @@
   id="useContextMenu"
 />
 
-<CheckboxSetting
-  bind:value={context.settings.showIconsNextToTheItemName}
-  name={SettingsProvider.settings.showIconsNextToTheItemName.options.name}
-  hint={SettingsProvider.settings.showIconsNextToTheItemName.options.hint}
-  id="showIconsNextToTheItemName"
-/>
-
 <h3>{localize('TIDY5E.Settings.MulticlassSpellbookFilterLabel')}</h3>
 
 <CheckboxSetting

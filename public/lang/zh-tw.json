@@ -139,10 +139,6 @@
         "name": "列表視圖下使用舊版物品操作按鈕。",
         "hint": "始終顯示物品操作按鈕並禁用右鍵菜單。僅適用於 PC 物品和法術的列表視圖。"
     },
-    "TIDY5E.Settings.ShowIconsNextToTheItemName": {
-        "name": "",
-        "hint": ""
-    },
     "TIDY5E.Settings.ShowTraitLabels": {
         "name": "",
         "hint": ""

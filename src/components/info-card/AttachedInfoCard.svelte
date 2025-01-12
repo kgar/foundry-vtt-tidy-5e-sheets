@@ -22,12 +22,13 @@
 
   interface Props {
     sheet: any;
-    floating: boolean;
-    inspectKey: string;
-    delay: number;
   }
 
-  let { sheet, floating, inspectKey, delay }: Props = $props();
+  let { sheet }: Props = $props();
+
+  let floating = $derived(settings.value.itemCardsAreFloating);
+  let inspectKey= $derived(settings.value.itemCardsFixKey);
+  let delay = $derived(settings.value.itemCardsDelay);
 
   const localize = FoundryAdapter.localize;
 

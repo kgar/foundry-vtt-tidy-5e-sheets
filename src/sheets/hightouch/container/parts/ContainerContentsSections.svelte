@@ -8,8 +8,6 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ContainerItemContext, Item5e } from 'src/types/item.types';
   import type { Actor5e, InventorySection } from 'src/types/types';
-  import ItemDeleteControl from 'src/components/item-list/controls/ItemDeleteControl.svelte';
-  import ItemEditControl from 'src/components/item-list/controls/ItemEditControl.svelte';
   import ItemTableRowV2 from 'src/components/item-list/v2/ItemTableRowV2.svelte';
   import TidyTableCell from 'src/components/table/TidyTableCell.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
@@ -17,10 +15,7 @@
   import { getContext } from 'svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-  import InlineActivitiesList from '../../shared/InlineActivitiesList.svelte';
   import InlineContainerView from './InlineContainerView.svelte';
-  import { isNil } from 'src/utils/data';
-  import TidyTableToggleIcon from 'src/components/table/TidyTableToggleIcon.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import InlineItemQuantityTracker from 'src/components/trackers/InlineItemQuantityTracker.svelte';
 
@@ -243,8 +238,6 @@
               {sheetDocument}
               {unlocked}
             />
-          {:else if item.system.activities?.contents.length > 1}
-            <InlineActivitiesList {item} {inlineToggleService} />
           {/if}
 
           <hr class="table-row-divider" />

@@ -10,7 +10,6 @@
   import ItemTableRow from '../../../../components/item-list/v1/ItemTableRow.svelte';
   import ItemUseButton from '../../../../components/item-list/ItemUseButton.svelte';
   import { getContext, tick } from 'svelte';
-  import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import FacilityOrderProgressMeter from './FacilityOrderProgressMeter.svelte';
@@ -142,9 +141,6 @@
                   (!ctx?.chosen?.disabled || FoundryAdapter.userIsGm())}
                 {item}
               ></ItemUseButton>
-              {#if (ctx.activities?.length ?? 0) > 1}
-                <InlineToggleControl entityId={item.id} {inlineToggleService} />
-              {/if}
               <ItemName onToggle={() => toggleSummary(context.actor)} {item}>
                 <span
                   class="truncate flex-1"
@@ -225,13 +221,6 @@
             </ItemTableCell>
           {/snippet}
         </ItemTableRow>
-        {#if (ctx.activities?.length ?? 0) > 1}
-          <InlineActivitiesList
-            {item}
-            activities={ctx.activities}
-            {inlineToggleService}
-          />
-        {/if}
       {/each}
     {/snippet}
   </ItemTable>

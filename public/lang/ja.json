@@ -106,7 +106,7 @@
     "TIDY5E.Class.Wizard": "ウィザード",
     "TIDY5E.OriginSummaryConfig": "Origin Summary Configuration: {actorName}",
     "TIDY5E.MaxPreparedSpellsConfig": {
-        "Title": "Max Prepared Spells Configuration: {actorName}",
+        "Title": "Max Prepared Spells Configuration: {documentName}",
         "ExamplesHeader": "Sample Formulas",
         "ButtonTooltip": "Configure Max Prepared Spells",
         "MoreFormulas": "More formulas"
@@ -247,10 +247,6 @@
     "TIDY5E.Settings.UseClassicControls": {
         "name": "一覧表示で従来のアイテム操作を使用",
         "hint": "常にアイテム操作を表示し、右クリックメニューを無効にします。一覧表示でPCのアイテム/呪文インベントリにのみ適用されます。"
-    },
-    "TIDY5E.Settings.ShowIconsNextToTheItemName": {
-        "name": "Show Item Name Icons",
-        "hint": "Shows support icons next to the item name (Favorite, Attunement, etc.)."
     },
     "TIDY5E.Settings.ShowTraitLabels": {
         "name": "特徴ラベルの表示",
