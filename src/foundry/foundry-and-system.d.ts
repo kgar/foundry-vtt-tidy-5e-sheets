@@ -116,6 +116,7 @@ declare global {
       strict = false,
       lowercase = true,
     } = {}): string;
+    titleCase(): string;
   }
 
   interface Array<T> {

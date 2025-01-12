@@ -11,28 +11,32 @@
   import { untrack } from 'svelte';
   import TidyVisibilityObserver from 'src/components/utility/TidyVisibilityObserver.svelte';
   import Select from 'src/components/inputs/Select.svelte';
-  import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
+  import { RarityColors } from 'src/features/rarity-colors/RarityColors';
 
   let context = $derived(getContainerSheetHightouchContext());
 
   const localize = FoundryAdapter.localize;
 
   let selectedTabId: string = $state(CONSTANTS.TAB_CONTAINER_CONTENTS);
+
   let identifiedText = $derived(
     context.system.identified
       ? localize('DND5E.Identified')
       : localize('DND5E.Unidentified.Title'),
   );
-  let rarityText = $derived(
-    //@ts-expect-error
-    CONFIG.DND5E.itemRarity[context.system.rarity]?.titleCase() ?? '',
-  );
+
   let rarityColorVariable = $derived(
-    `--t5e-color-rarity-${context.system.rarity?.slugify() ?? ''}`,
+    RarityColors.getRarityColorVariableName(context.system.rarity),
   );
-  let denomination =
-    //@ts-expect-error
-    $derived(CONFIG.DND5E.currencies[context.system.price.denomination]);
+
+  let rarityText = $derived(
+    RarityColors.getRarityText(context.system.rarity).titleCase(),
+  );
+
+  let denomination = $derived(
+    CONFIG.DND5E.currencies[context.system.price.denomination],
+  );
+
   let itemValueText = $derived(
     FoundryAdapter.formatNumber(context.system.price?.value),
   );
@@ -50,6 +54,16 @@
       return `-${headerHeight}px`;
     });
   });
+
+  let itemRarities = $derived(
+    Object.entries(context.config.itemRarity).map(([key, value]) => {
+      return {
+        key,
+        label: value,
+        rarityColorVariableName: RarityColors.getRarityColorVariableName(key),
+      };
+    }),
+  );
 </script>
 
 {#if !!containerNameEl}
@@ -88,21 +102,29 @@
       <img class="item-image" src={context.item.img} alt={context.item.name} />
       <ItemImageBorder />
     </div>
-    <div class="item-rarity">
+    <div class="item-rarity-container">
       {#if context.unlocked}
         <Select
           id="rarity-{context.item.sheet.id}"
           document={context.item}
           field="system.rarity"
-          class="item-rarity capitalize"
+          class="item-rarity-selector capitalize"
           value={context.system.rarity}
           disabled={!context.editable}
           blankValue=""
         >
-          <SelectOptions data={context.config.itemRarity} blank="" />
+          <option value=""></option>
+          {#each itemRarities as rarity (rarity.key)}
+            <option
+              value={rarity.key}
+              style="--t5e-item-rarity-color: var({rarity.rarityColorVariableName}, var(--t5e-color-text-onInverse-default));"
+            >
+              {rarity.label}
+            </option>
+          {/each}
         </Select>
       {:else}
-        <div class="rarity-text">{rarityText}</div>
+        <div class="item-rarity-text">{rarityText}</div>
       {/if}
     </div>
   </div>

@@ -280,10 +280,20 @@
       }
     }
 
-    .item-rarity {
-      // Rarity select here
-      
-      .rarity-text {
+    .item-rarity-container {
+      .item-rarity-selector {
+        height: var(--font-size-28);
+        line-height: var(--font-size-28);
+        padding-block: 0;
+        position: relative;
+        color: oklch(from var(--t5e-item-rarity-color) calc(l + 0.125) c h);
+
+        option {
+          color: oklch(from var(--t5e-item-rarity-color) calc(l + 0.125) c h);
+        }
+      }
+
+      .item-rarity-text {
         color: var(--t5e-item-rarity-color);
         font-family: var(--t5e-font-modesto-condensed);
         font-size: var(--font-size-12);

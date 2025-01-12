@@ -1,5 +1,11 @@
 import type { GroupableSelectOption } from 'src/types/types';
 
+type CurrencyItemConfig = {
+  label: string;
+  abbreviation: string;
+  conversion: number;
+};
+
 export type CONFIG = {
   debug: {
     applications: boolean;
@@ -3205,7 +3211,7 @@ export type CONFIG = {
       veryRare: string;
       legendary: string;
       artifact: string;
-    };
+    } & Record<string, string>;
     limitedUsePeriods: {
       lr: {
         label: string;
@@ -3613,32 +3619,12 @@ export type CONFIG = {
       };
     };
     currencies: {
-      pp: {
-        label: string;
-        abbreviation: string;
-        conversion: number;
-      };
-      gp: {
-        label: string;
-        abbreviation: string;
-        conversion: number;
-      };
-      ep: {
-        label: string;
-        abbreviation: string;
-        conversion: number;
-      };
-      sp: {
-        label: string;
-        abbreviation: string;
-        conversion: number;
-      };
-      cp: {
-        label: string;
-        abbreviation: string;
-        conversion: number;
-      };
-    };
+      pp: CurrencyItemConfig;
+      gp: CurrencyItemConfig;
+      ep: CurrencyItemConfig;
+      sp: CurrencyItemConfig;
+      cp: CurrencyItemConfig;
+    } & Record<string, CurrencyItemConfig>;
     dieSteps: Array<number>;
     damageScalingModes: {
       whole: {
