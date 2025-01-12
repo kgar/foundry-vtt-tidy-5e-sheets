@@ -281,11 +281,15 @@
     }
 
     .item-rarity {
-      color: var(--t5e-item-rarity-color);
-      font-family: var(--t5e-font-modesto-condensed);
-      font-size: var(--font-size-12);
-      mix-blend-mode: plus-lighter;
-      text-align: center;
+      // Rarity select here
+      
+      .rarity-text {
+        color: var(--t5e-item-rarity-color);
+        font-family: var(--t5e-font-modesto-condensed);
+        font-size: var(--font-size-12);
+        mix-blend-mode: plus-lighter;
+        text-align: center;
+      }
     }
   }
 

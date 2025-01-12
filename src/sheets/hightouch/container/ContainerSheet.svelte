@@ -10,6 +10,8 @@
   import { coalesce } from 'src/utils/formatting';
   import { untrack } from 'svelte';
   import TidyVisibilityObserver from 'src/components/utility/TidyVisibilityObserver.svelte';
+  import Select from 'src/components/inputs/Select.svelte';
+  import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
 
   let context = $derived(getContainerSheetHightouchContext());
 
@@ -87,7 +89,21 @@
       <ItemImageBorder />
     </div>
     <div class="item-rarity">
-      <span>{rarityText}</span>
+      {#if context.unlocked}
+        <Select
+          id="rarity-{context.item.sheet.id}"
+          document={context.item}
+          field="system.rarity"
+          class="item-rarity capitalize"
+          value={context.system.rarity}
+          disabled={!context.editable}
+          blankValue=""
+        >
+          <SelectOptions data={context.config.itemRarity} blank="" />
+        </Select>
+      {:else}
+        <div class="rarity-text">{rarityText}</div>
+      {/if}
     </div>
   </div>
 
