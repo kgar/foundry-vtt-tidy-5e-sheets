@@ -7,7 +7,6 @@ import {
 import { mount } from 'svelte';
 import GroupSheet from './group/GroupSheet.svelte';
 import type {
-  ActivityItemContext,
   Actor5e,
   ActorInventoryTypes,
   MessageBus,
@@ -801,22 +800,12 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       activities: Activities.getVisibleActivities(
         item,
         item.system.activities
-      )?.map(this._prepareActivity.bind(this)),
+      )?.map(Activities.getActivityItemContext),
       canToggle: false,
       containerContents: undefined,
       hasUses: item.hasLimitedUses,
       isStack: item.system.quantity > 1,
       totalWeight: (await item.system.totalWeight)?.toNearest(0.1) ?? 0,
-    };
-  }
-
-  /**
-   * Prepare activity data.
-   */
-  _prepareActivity(activity: Activity5e): ActivityItemContext {
-    return {
-      id: activity.id,
-      activity: activity,
     };
   }
 

@@ -263,7 +263,7 @@
                   {#snippet children({ toggleSummary })}
                     <ItemTableCell primary={true}>
                       <ItemUseButton disabled={!context.editable} {item} />
-                      {#if ('containerContents' in ctx && !!ctx.containerContents)}
+                      {#if 'containerContents' in ctx && !!ctx.containerContents}
                         <InlineToggleControl
                           entityId={item.id}
                           {inlineToggleService}
@@ -298,8 +298,17 @@
                     {#if section.hasActions}
                       <ItemTableCell baseWidth="3.125rem">
                         {#if item.isOnCooldown}
-                          <RechargeControl {item} />
+                          <RechargeControl
+                            document={item}
+                            field={'system.uses.spent'}
+                            uses={item.system.uses}
+                          />
                         {:else if item.hasRecharge}
+                          {@const remaining =
+                            item.system.uses.max - item.system.uses.spent}
+                          {#if remaining > 1}
+                            <span>{remaining}</span>
+                          {/if}
                           <i
                             class="fas fa-bolt"
                             title={localize('DND5E.Charged')}

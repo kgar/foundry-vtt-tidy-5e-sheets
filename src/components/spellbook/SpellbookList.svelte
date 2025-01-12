@@ -32,7 +32,6 @@
   import ConcentrationOverlayIcon from './ConcentrationOverlayIcon.svelte';
   import DeleteOrOpenActivity from '../item-list/controls/DeleteOrOpenActivity.svelte';
   import ActivityUses from '../item-list/ActivityUses.svelte';
-  import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';

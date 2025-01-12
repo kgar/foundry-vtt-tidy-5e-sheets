@@ -122,7 +122,7 @@
 
 <TidyTableRow
   {hidden}
-  rowContainerAttributes={{
+  rowAttributes={{
     ['data-context-menu']: contextMenu?.type,
     ['data-item-id']: item?.id,
     ['data-tidy-table-row']: '',
@@ -130,8 +130,6 @@
     ['data-tidy-item-type']: item?.type ?? 'unknown',
     ['data-info-card']: item ? 'item' : null,
     ['data-info-card-entity-uuid']: item?.uuid ?? null,
-  }}
-  rowAttributes={{
     draggable: draggable,
   }}
   rowClass="tidy-table-row-v2 {rowClass ?? ''}"

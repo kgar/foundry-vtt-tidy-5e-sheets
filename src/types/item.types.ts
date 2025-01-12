@@ -1,4 +1,3 @@
-import type { Component } from 'svelte';
 import type {
   ActivityItemContext,
   AttunementContext,
@@ -10,12 +9,10 @@ import type {
   TidySectionBase,
   Utilities,
 } from './types';
-import type { DocumentPreparationWarning } from './types';
 import type {
   DocumentFilters,
   RegisteredEquipmentTypeGroup,
 } from 'src/runtime/item/item.types';
-import type { CONFIG } from 'src/foundry/config.types';
 
 export type PropertyContext = {
   active: string[];
