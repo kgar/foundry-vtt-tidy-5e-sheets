@@ -7,9 +7,11 @@
   gap: 0.25rem;
 
   &.stacked {
-    display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+  }
+
+  > * {
+    margin: 0;
   }
 }
 
@@ -153,8 +155,12 @@
 
 .tag {
   border-radius: 0.125rem;
-  border: 0.0625rem solid var(--t5e-components-enricher-border, rgba(159, 146, 117, 0.35));
-  background: var(--t5e-components-enricher-background, rgba(159, 146, 117, 0.15));
+  border: 0.0625rem solid
+    var(--t5e-components-enricher-border, rgba(159, 146, 117, 0.35));
+  background: var(
+    --t5e-components-enricher-background,
+    rgba(159, 146, 117, 0.15)
+  );
 
   display: flex;
   padding: 0.0625rem 0.125rem;

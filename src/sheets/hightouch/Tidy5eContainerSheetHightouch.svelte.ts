@@ -9,6 +9,7 @@ import { DragAndDropMixin } from 'src/mixins/DragAndDropBaseMixin';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type {
   ContainerSheetHightouchContext,
+  CurrencyContext,
   Item5e,
   ItemChatData,
   ItemDescription,
@@ -262,6 +263,18 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
 
     const unlocked = FoundryAdapter.isSheetUnlocked(this.item) && editable;
 
+    const currencies: CurrencyContext[] = [];
+
+    Object.keys(CONFIG.DND5E.currencies).forEach((key) =>
+      currencies.push({
+        key: key,
+        value: this.item.system.currency[key] as number,
+        abbr:
+          CONFIG.DND5E.currencies[key as keyof typeof CONFIG.DND5E.currencies]
+            ?.abbreviation ?? key,
+      })
+    );
+
     const context: ContainerSheetHightouchContext = {
       capacity: await this.item.system.computeCapacity(),
       concealDetails:
@@ -269,6 +282,7 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
       config: CONFIG.DND5E,
       containerContents: await Container.getContainerContents(this.item),
       customContent: [],
+      currencies,
       document: this.document,
       editable: editable,
       enriched: enriched,

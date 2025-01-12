@@ -196,7 +196,54 @@
       font-style: normal;
       font-weight: 500;
       line-height: normal;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .currency-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .currency-conversion {
+        display: flex;
+        width: 1.75rem;
+        height: 1.75rem;
+        justify-content: center;
+        align-items: center;
+        gap: 0.25rem;
+
+        i {
+          color: var(--t5e-color-palette-grey-100);
+        }
+      }
+    }
+
+    .currencies {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+
+      .denomination {
+        text-transform: uppercase;
+      }
+
+      .input-group {
+        gap: 0.25rem;
+        padding-block: 0;
+        height: 1.75rem;
+
+        input {
+          text-align: right;
+        }
+      }
+
+      .button.icon-button {
+        --size: 1.75rem;
+
+        i {
+          font-size: 0.6875rem;
+        }
+      }
     }
   }
 

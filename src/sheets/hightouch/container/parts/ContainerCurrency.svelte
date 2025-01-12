@@ -7,22 +7,7 @@
 
   let context = $derived(getContainerSheetHightouchContext());
 
-  let currencies = $derived(
-    Object.keys(CONFIG.DND5E.currencies).map((key) => ({
-      key: key,
-      value: context.system.currency[key] as number,
-    })),
-  );
-
   const localize = FoundryAdapter.localize;
-
-  function abbreviateCurrency(currencyKey: string) {
-    return (
-      CONFIG.DND5E.currencies[
-        currencyKey as keyof typeof CONFIG.DND5E.currencies
-      ]?.abbreviation ?? currencyKey
-    );
-  }
 
   function promptCreateInventoryItem() {
     const actor = context.item.actor;
@@ -50,7 +35,7 @@
 </script>
 
 <section class="currency-tracker">
-  {#each currencies as currency}
+  {#each context.currencies as currency}
     <label class="input-group">
       <TextInput
         document={context.document}
@@ -64,7 +49,7 @@
         placeholder="0"
       />
       <span class="denomination {currency.key}" data-denom={currency.key}>
-        {abbreviateCurrency(currency.key)}
+        {currency.abbr}
       </span>
     </label>
   {/each}

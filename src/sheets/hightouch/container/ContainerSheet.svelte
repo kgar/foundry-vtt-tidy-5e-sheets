@@ -76,10 +76,10 @@
 ></div>
 
 <aside
-  class="sidebar"
+  class="sidebar inverse"
   style="
---t5e-item-rarity-color: var({rarityColorVariable}, var(--t5e-color-gold)); 
---filigree-border-color: var({rarityColorVariable}, var(--t5e-color-gold))"
+    --t5e-item-rarity-color: var({rarityColorVariable}, var(--t5e-color-gold)); 
+    --filigree-border-color: var({rarityColorVariable}, var(--t5e-color-gold))"
 >
   <div class="item-image-rarity-container">
     <div class="item-image-container">
@@ -91,7 +91,7 @@
     </div>
   </div>
 
-  <ul class="pills inverse stacked">
+  <ul class="pills stacked">
     <li>
       <PillSwitch
         checked={context.system.equipped}
@@ -145,8 +145,44 @@
   </ul>
 
   <div>
+    <h4 class="currency-header">
+      <span>{localize('DND5E.Currency')}</span>
+      <a
+        class="button icon-button currency-conversion"
+        onclick={() =>
+          context.owner &&
+          new dnd5e.applications.CurrencyManager(context.document).render(true)}
+        title={localize('DND5E.CurrencyManager.Title')}
+      >
+        <i class="fas fa-database"></i>
+      </a>
+    </h4>
+    <div class="currencies">
+      {#each context.currencies as currency (currency.key)}
+        <label class="input-group">
+          <i class="currency {currency.key}" aria-label={currency.key}></i>
+          <TextInput
+            document={context.document}
+            field="system.currency.{currency.key}"
+            id="{context.document.id}-system.currency.{currency.key}"
+            value={currency.value}
+            allowDeltaChanges={true}
+            selectOnFocus={true}
+            disabled={!context.editable || context.lockMoneyChanges}
+            class="currency-item currency-{currency.key}"
+            placeholder="0"
+          />
+          <span class="denomination {currency.key}" data-denom={currency.key}>
+            {currency.abbr}
+          </span>
+        </label>
+      {/each}
+    </div>
+  </div>
+
+  <div>
     <h4>{localize('TIDY5E.Section.LabelPl')}</h4>
-    <div class="pills inverse flexcol">
+    <div class="pills flexcol">
       <div class="pill">
         <span class="lighter">
           {localize('DND5E.Inventory')}
@@ -171,7 +207,7 @@
       <h4>
         {localize('DND5E.Attack')}/{localize('DND5E.Damage')}
       </h4>
-      <ul class="pills inverse" inert={context.concealDetails}>
+      <ul class="pills" inert={context.concealDetails}>
         {#if context.labels.save}
           <li class="pill">
             {context.labels.save}
