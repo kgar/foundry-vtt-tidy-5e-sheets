@@ -12,7 +12,7 @@
 
   interface Props {
     chatData: ItemChatData;
-    item: Item5e;
+    item?: Item5e | undefined;
   }
 
   let { chatData, item }: Props = $props();
@@ -22,18 +22,17 @@
   );
   let concealDetails = $derived(FoundryAdapter.concealDetails(item));
 
-  let linked = $derived<Item5e>(item.system.linkedActivity?.item);
+  let linked = $derived<Item5e>(item?.system?.linkedActivity?.item);
 
   const localize = FoundryAdapter.localize;
 
   let activities = $derived.by(() => {
-    return Activities.getVisibleActivities(
-      item,
-      item.system.activities,
-    ).map<ActivityItemContext>((a) => ({
-      id: a.id,
-      activity: a,
-    }));
+    return item
+      ? Activities.getVisibleActivities(
+          item,
+          item.system.activities,
+        ).map<ActivityItemContext>(Activities.getActivityItemContext)
+      : [];
   });
 </script>
 

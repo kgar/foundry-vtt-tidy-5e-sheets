@@ -13,6 +13,7 @@
   import { settings } from 'src/settings/settings.svelte';
   import { Activities } from 'src/features/activities/activities';
   import type { ActivityItemContext } from 'src/types/types';
+  import RechargeControl from './controls/RechargeControl.svelte';
 
   interface Props {
     item?: Item5e | null;
@@ -44,6 +45,8 @@
       ''
     );
   }
+
+  const localize = FoundryAdapter.localize;
 </script>
 
 <div class="inline-activities-container" data-item-id={item.id}>
@@ -53,18 +56,18 @@
     {gridTemplateColumns}
   >
     {#snippet body()}
-      {#each activities as { activity } (activity.id)}
-        {@const configurable = Activities.isConfigurable(activity)}
+      {#each activities as ctx (ctx.activity.id)}
+        {@const configurable = Activities.isConfigurable(ctx.activity)}
         <TidyTableRow
           rowAttributes={{
-            'data-activity-id': activity.id,
+            'data-activity-id': ctx.activity.id,
             'data-configurable': configurable,
             'data-info-card': 'activity',
-            'data-info-card-entity-uuid': activity.uuid,
+            'data-info-card-entity-uuid': ctx.activity.uuid,
           }}
           rowClass="activity"
           onmousedown={(event) =>
-            FoundryAdapter.editOnMiddleClick(event, activity)}
+            FoundryAdapter.editOnMiddleClick(event, ctx.activity)}
         >
           <TidyTableCell primary={true}>
             <span class="inline-activity-arrow">
@@ -72,32 +75,45 @@
             </span>
             <a
               class="inline-activity-roll-button highlight-on-hover"
-              onclick={(ev) => item.isOwner && rollActivity(activity, ev)}
+              onclick={(ev) => item.isOwner && rollActivity(ctx.activity, ev)}
               tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
             >
-              {#if activity.img?.endsWith('.svg')}
-                <Dnd5eIcon src={activity.img} />
+              {#if ctx.activity.img?.endsWith('.svg')}
+                <Dnd5eIcon src={ctx.activity.img} />
               {:else}
                 <ItemImage
                   classes="always-visible"
-                  src={activity.img}
-                  alt={activity.name}
+                  src={ctx.activity.img}
+                  alt={ctx.activity.name}
                 />
               {/if}
-              {activity.name}
+              {ctx.activity.name}
             </a>
           </TidyTableCell>
           <TidyTableCell>
             {#if configurable}
-              {#if !!activity.uses?.max}
-                <ActivityUses {activity} />
+              {#if ctx.isOnCooldown}
+                <RechargeControl
+                  document={ctx.activity}
+                  field={'uses.spent'}
+                  uses={ctx.activity.uses}
+                />
+              {:else if ctx.hasRecharge}
+                {@const remaining =
+                  ctx.activity.uses.max - ctx.activity.uses.spent}
+                {#if remaining > 1}
+                  <span>{remaining}</span>
+                {/if}
+                <i class="fas fa-bolt" title={localize('DND5E.Charged')}></i>
+              {:else if !!ctx.activity.uses?.max}
+                <ActivityUses activity={ctx.activity} />
               {:else}
                 <span class="text-body-tertiary">&mdash;</span>
               {/if}
             {/if}
           </TidyTableCell>
           <TidyTableCell>
-            {getActivityUsageLabel(activity)}
+            {getActivityUsageLabel(ctx.activity)}
           </TidyTableCell>
         </TidyTableRow>
       {/each}
