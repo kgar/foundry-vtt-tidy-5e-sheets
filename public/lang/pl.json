@@ -47,7 +47,7 @@
     "TIDY5E.Class.Rogue": "Łotr",
     "TIDY5E.MaxPreparedSpellsConfig": {
         "ButtonTooltip": "Konfiguruj maks. liczbę przygotowanych czarów",
-        "Title": "Konfiguracja maks. liczby przygotowanych czarów dla {actorName}",
+        "Title": "Konfiguracja maks. liczby przygotowanych czarów dla {documentName}",
         "ExamplesHeader": "Przykładowe wzory",
         "MoreFormulas": "Więcej wzorów"
     },
@@ -441,10 +441,6 @@
         "linked": "Podświetl powiązane tokeny"
     },
     "TIDY5E.SpellSourceIdentifierSelectText": "Identyfikator klasy: {identifier}",
-    "TIDY5E.Settings.ShowIconsNextToTheItemName": {
-        "name": "Pokaż ikony obok nazwy przedmiotu",
-        "hint": "Pokazuje pomocnicze ikony obok nazwy przedmiotu (Ulubione, Zestrojenie, itp.)."
-    },
     "TIDY5E.Settings.UseCircularPortraitStyle": {
         "all": "Wszystkie postacie",
         "pc": "Postać gracza",
@@ -664,7 +660,7 @@
     },
     "TIDY5E.Settings.HideDeathSavesFromPlayers": {
         "name": "Ukryj rzuty przeciw śmierci przed graczami",
-        "hint": "Sprawia, że rzuty przeciw śmierć i ich wyniki są widoczne tylko dla MG."
+        "hint": "Powoduje, że rzut przeciw śmierć jest widoczny tylko dla MG. Przycisk rzutu przeciw śmierć pozostaje widoczny."
     },
     "TIDY5E.Settings.LockItemQuantity": {
         "name": "Zablokuj ilość przedmiotu",
@@ -797,5 +793,11 @@
     "TIDY5E.Settings.InfoCardsInspectKey": {
         "name": "Przycisk sprawdzania karty informacyjnej",
         "hint": "Naciśnij ten przycisk (na przykład klawisz „t”) podczas przeglądania karty informacyjnej, aby otworzyć ją w nowym oknie."
-    }
+    },
+    "TIDY5E.Settings.DefaultDeathSaveRoll": {
+        "name": "Domyślny rzut przeciw śmierć",
+        "hint": "Określa domyślny typ rzutu używany podczas rzutu przeciw śmiercią."
+    },
+    "TIDY5E.Keybindings.ToggleHeaderMenu.Name": "Przełącz menu nagłówka",
+    "TIDY5E.Keybindings.ToggleHeaderMenu.Hint": "Jeśli w interfejsie użytkownika aktywnym oknem jest karta Tidy, to naciśnięcie tego klawisza powoduje przełączenie menu nagłówka."
 }

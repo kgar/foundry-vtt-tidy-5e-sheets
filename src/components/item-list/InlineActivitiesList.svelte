@@ -6,9 +6,6 @@
   import type { Activity5e } from 'src/foundry/dnd5e.types';
   import Dnd5eIcon from '../icon/Dnd5eIcon.svelte';
   import ActivityUses from './ActivityUses.svelte';
-  import ActivityAddUses from './ActivityAddUses.svelte';
-  import ExpandableContainer from '../expandable/ExpandableContainer.svelte';
-  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemImage from './ItemImage.svelte';
@@ -16,16 +13,14 @@
   import { settings } from 'src/settings/settings.svelte';
   import { Activities } from 'src/features/activities/activities';
   import type { ActivityItemContext } from 'src/types/types';
+  import RechargeControl from './controls/RechargeControl.svelte';
 
   interface Props {
     item?: Item5e | null;
-    inlineToggleService: InlineToggleService;
     activities: ActivityItemContext[] | undefined;
   }
 
-  let { item = null, inlineToggleService, activities = [] }: Props = $props();
-
-  let toggleServiceMap = $derived(inlineToggleService.map);
+  let { item = null, activities = [] }: Props = $props();
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
@@ -56,91 +51,78 @@
       ''
     );
   }
+
+  const localize = FoundryAdapter.localize;
 </script>
 
-<ExpandableContainer
-  expanded={toggleServiceMap.get(tabId)?.has(item.id) === true}
->
-  <div class="inline-activities-container" data-item-id={item.id}>
-    <TidyTable
-      key="activities-{item.name}"
-      toggleable={false}
-      {gridTemplateColumns}
-    >
-      {#snippet body()}
-        {#each activities as { activity } (activity.id)}
-          {@const configurable = Activities.isConfigurable(activity)}
-          <TidyTableRow
-            rowAttributes={{
-              'data-activity-id': activity.id,
-              'data-configurable': configurable,
-              'data-info-card': 'activity',
-              'data-info-card-entity-uuid': activity.uuid,
-            }}
-            rowClass="activity"
-            onmousedown={(event) =>
-              FoundryAdapter.editOnMiddleClick(event, activity)}
-          >
-            <TidyTableCell primary={true}>
-              <a
-                class="inline-activity-roll-button highlight-on-hover"
-                onclick={(ev) => item.isOwner && rollActivity(activity, ev)}
-                tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
-              >
-                {#if activity.img?.endsWith('.svg')}
-                  <Dnd5eIcon src={activity.img} />
-                {:else}
-                  <ItemImage
-                    classes="always-visible"
-                    src={activity.img}
-                    alt={activity.name}
-                  />
-                {/if}
-                {activity.name}
-              </a>
-            </TidyTableCell>
-            <TidyTableCell>
-              {#if configurable}
-                {#if !!activity.uses?.max}
-                  <ActivityUses {activity} />
-                {:else if activity.uses?.max !== undefined}
-                  <ActivityAddUses {activity} />
-                {/if}
+<div class="inline-activities-container" data-item-id={item.id}>
+  <TidyTable
+    key="activities-{item.name}"
+    toggleable={false}
+    {gridTemplateColumns}
+  >
+    {#snippet body()}
+      {#each activities as ctx (ctx.activity.id)}
+        {@const configurable = Activities.isConfigurable(ctx.activity)}
+        <TidyTableRow
+          rowAttributes={{
+            'data-activity-id': ctx.activity.id,
+            'data-configurable': configurable,
+            'data-info-card': 'activity',
+            'data-info-card-entity-uuid': ctx.activity.uuid,
+          }}
+          rowClass="activity"
+          onmousedown={(event) =>
+            FoundryAdapter.editOnMiddleClick(event, ctx.activity)}
+        >
+          <TidyTableCell primary={true}>
+            <span class="inline-activity-arrow">
+              <i class="fa-solid fa-turn-up fa-fw"></i>
+            </span>
+            <a
+              class="inline-activity-roll-button highlight-on-hover"
+              onclick={(ev) => item.isOwner && rollActivity(ctx.activity, ev)}
+              tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
+            >
+              {#if ctx.activity.img?.endsWith('.svg')}
+                <Dnd5eIcon src={ctx.activity.img} />
+              {:else}
+                <ItemImage
+                  classes="always-visible"
+                  src={ctx.activity.img}
+                  alt={ctx.activity.name}
+                />
               {/if}
-            </TidyTableCell>
-            <TidyTableCell>
-              {getActivityUsageLabel(activity)}
-            </TidyTableCell>
-          </TidyTableRow>
-        {/each}
-      {/snippet}
-    </TidyTable>
-  </div>
-</ExpandableContainer>
-
-<style lang="scss">
-  .inline-activities-container {
-    --icon-size: 1.5rem;
-    --icon-width: var(--icon-size);
-    --icon-height: var(--icon-size);
-    --icon-fill: var(--t5e-primary-font-color);
-
-    .inline-activity-roll-button {
-      background: none;
-      text-align: left;
-      font-size: 0.75rem;
-      border: none;
-      transition: color 0.3s;
-      display: flex;
-      gap: 0.25rem;
-      align-items: center;
-      padding: 0;
-      margin: 0;
-      width: 100%;
-
-      &:hover {
-        background: none;
-      }
-    }
-  }
-</style>
+              {ctx.activity.name}
+            </a>
+          </TidyTableCell>
+          <TidyTableCell>
+            {#if configurable}
+              {#if ctx.isOnCooldown}
+                <RechargeControl
+                  document={ctx.activity}
+                  field={'uses.spent'}
+                  uses={ctx.activity.uses}
+                />
+              {:else if ctx.hasRecharge}
+                {@const remaining =
+                  ctx.activity.uses.max - ctx.activity.uses.spent}
+                {#if remaining > 1}
+                  <span>{remaining}</span>
+                {/if}
+                <i class="fas fa-bolt" title={localize('DND5E.Charged')}></i>
+              {:else if !!ctx.activity.uses?.max}
+                <ActivityUses activity={ctx.activity} />
+              {:else}
+                <span class="text-body-tertiary">&mdash;</span>
+              {/if}
+            {/if}
+          </TidyTableCell>
+          <TidyTableCell>
+            {getActivityUsageLabel(ctx.activity)}
+          </TidyTableCell>
+        </TidyTableRow>
+      {/each}
+    {/snippet}
+  </TidyTable>
+</div>

@@ -15,7 +15,6 @@ import type {
   VehicleFeatureSection,
   SimpleEditableColumn,
   VehicleItemContext,
-  ActivityItemContext,
 } from 'src/types/types';
 import VehicleSheet from './vehicle/VehicleSheet.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
@@ -28,7 +27,6 @@ import {
 } from 'src/utils/applications.svelte';
 import { mount, unmount } from 'svelte';
 import { debug } from 'src/utils/logging';
-import { getPercentage } from 'src/utils/numbers';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import {
@@ -199,9 +197,6 @@ export class Tidy5eVehicleSheet
       target: node,
       props: {
         sheet: this,
-        floating: settings.value.itemCardsAreFloating,
-        delay: settings.value.itemCardsDelay,
-        inspectKey: settings.value.itemCardsFixKey,
       },
     });
 
@@ -596,18 +591,8 @@ export class Tidy5eVehicleSheet
     ctx.activities = Activities.getVisibleActivities(
       item,
       item.system.activities
-    )?.map(this._prepareActivity.bind(this));
+    )?.map(Activities.getActivityItemContext);
     return ctx;
-  }
-
-  /**
-   * Prepare activity data.
-   */
-  _prepareActivity(activity: Activity5e): ActivityItemContext {
-    return {
-      id: activity.id,
-      activity: activity,
-    };
   }
 
   /**

@@ -20,10 +20,8 @@
   import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication.svelte';
   import ActorName from '../actor/ActorName.svelte';
   import SpecialSaves from '../actor/SpecialSaves.svelte';
-  import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import { isNil } from 'src/utils/data';
   import ActorLinkIndicator from 'src/components/actor-link-indicator/ActorLinkIndicator.svelte';
-  import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
   import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
 

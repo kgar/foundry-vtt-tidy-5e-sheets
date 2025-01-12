@@ -32,7 +32,7 @@
   let nav: HTMLElement;
 
   function selectTab(tab: Tab) {
-    if (sheet && !FoundryAdapter.onTabSelecting(sheet, tab.id)) {
+    if (sheet?.element && !FoundryAdapter.onTabSelecting(sheet, tab.id)) {
       return;
     }
     selectedTabId = tab.id;

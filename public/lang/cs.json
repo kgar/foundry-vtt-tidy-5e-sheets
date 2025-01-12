@@ -139,10 +139,6 @@
         "name": "Použít klasické ovládací prvky seznamu",
         "hint": "Zobrazit ovládací prvky v náhledu seznamu."
     },
-    "TIDY5E.Settings.ShowIconsNextToTheItemName": {
-        "name": "Zobrazit ikony názvu položky",
-        "hint": "Vedle názvu položky se zobrazí podpůrné ikony (Oblíbené, Naladění atd.)."
-    },
     "TIDY5E.Settings.ShowTraitLabels": {
         "name": "Zobrazit popisky rysů",
         "hint": "Zobrazí štítky rysů postav, NP a dopravních prostředků. Po vypnutí se zobrazí pouze ikony."
@@ -594,7 +590,7 @@
     },
     "TIDY5E.MaxPreparedSpellsConfig": {
         "ButtonTooltip": "Nastavit maximum připravených kouzel",
-        "Title": "Nastavení maxima připravených kouzel: {actorName}",
+        "Title": "Nastavení maxima připravených kouzel: {documentName}",
         "MoreFormulas": "Více formulí",
         "ExamplesHeader": "Ukázkové formule"
     },

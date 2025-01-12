@@ -14,7 +14,6 @@
   import { getContext } from 'svelte';
   import SpellSlotManagement from 'src/components/spellbook/SpellSlotManagement.svelte';
   import ConcentrationOverlayIcon from 'src/components/spellbook/ConcentrationOverlayIcon.svelte';
-  import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
@@ -105,12 +104,6 @@
                   <ConcentrationOverlayIcon {ctx} />
                 {/snippet}
               </ItemUseButton>
-              {#if (ctx.activities?.length ?? 0) > 1}
-                <InlineToggleControl
-                  entityId={spell.id}
-                  {inlineToggleService}
-                />
-              {/if}
               <ItemName
                 onToggle={() => toggleSummary(context.actor)}
                 item={spell}
@@ -142,13 +135,6 @@
             </ItemTableCell>
           {/snippet}
         </ItemTableRow>
-        {#if (ctx.activities?.length ?? 0) > 1}
-          <InlineActivitiesList
-            item={spell}
-            activities={ctx.activities}
-            {inlineToggleService}
-          />
-        {/if}
       {/each}
     {/snippet}
   </ItemTable>

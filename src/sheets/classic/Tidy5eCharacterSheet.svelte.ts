@@ -28,7 +28,6 @@ import {
   type FacilitySection,
   type ChosenFacilityContext,
   type TypedActivityFavoriteSection,
-  type ActivityItemContext,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
@@ -61,7 +60,6 @@ import { DocumentTabSectionConfigApplication } from 'src/applications/section-co
 import { BaseSheetCustomSectionMixin } from './mixins/BaseSheetCustomSectionMixin';
 import { Inventory } from 'src/features/sections/Inventory';
 import type {
-  Activity5e,
   CharacterFavorite,
   FacilityOccupants,
   UnsortedCharacterFavorite,
@@ -231,9 +229,6 @@ export class Tidy5eCharacterSheet
       target: node,
       props: {
         sheet: this,
-        floating: settings.value.itemCardsAreFloating,
-        delay: settings.value.itemCardsDelay,
-        inspectKey: settings.value.itemCardsFixKey,
       },
     });
 
@@ -1519,17 +1514,7 @@ export class Tidy5eCharacterSheet
     context.activities = Activities.getVisibleActivities(
       item,
       item.system.activities
-    )?.map(this._prepareActivity.bind(this));
-  }
-
-  /**
-   * Prepare activity data.
-   */
-  _prepareActivity(activity: Activity5e): ActivityItemContext {
-    return {
-      id: activity.id,
-      activity: activity,
-    };
+    )?.map(Activities.getActivityItemContext);
   }
 
   private async setExpandedItemData() {

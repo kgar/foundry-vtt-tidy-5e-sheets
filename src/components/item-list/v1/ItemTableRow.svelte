@@ -4,6 +4,7 @@
   import { warn } from 'src/utils/logging';
   import { getContext, type Snippet } from 'svelte';
   import type {
+    ActivityItemContext,
     ExpandedItemData,
     ExpandedItemIdToLocationsMap,
   } from 'src/types/types';
@@ -12,6 +13,8 @@
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import type { MouseEventHandler } from 'svelte/elements';
+  import InlineActivitiesList from '../InlineActivitiesList.svelte';
+  import { Activities } from 'src/features/activities/activities';
 
   interface Props {
     item?: Item5e | null;
@@ -21,7 +24,8 @@
     hidden?: boolean;
     getDragData?: (() => any) | null;
     onMouseDown?: MouseEventHandler<HTMLElement>;
-    attributes?: Record<string, any>;
+    containerAttributes?: Record<string, any>;
+    rowAttributes?: Record<string, any>;
     children?: Snippet<[any]>;
   }
 
@@ -33,7 +37,8 @@
     hidden = false,
     getDragData = null,
     onMouseDown,
-    attributes,
+    containerAttributes,
+    rowAttributes,
     children,
   }: Props = $props();
 
@@ -123,28 +128,40 @@
       }
     })();
   });
+
+  let activities = $derived.by(() => {
+    return item
+      ? Activities.getVisibleActivities(
+          item,
+          item.system.activities,
+        ).map<ActivityItemContext>(Activities.getActivityItemContext)
+      : [];
+  });
 </script>
 
 <div
   class="item-table-row-container"
   class:hidden
   aria-hidden={hidden}
-  data-context-menu={contextMenu?.type}
-  onmousedown={onMouseDown}
-  onmouseenter={onMouseEnter}
-  onmouseleave={onMouseLeave}
-  ondragstart={handleDragStart}
-  draggable={!!draggable}
-  data-item-id={item?.id}
-  data-tidy-table-row
-  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_TABLE_ROW}
-  data-tidy-item-type={item?.type ?? 'unknown'}
-  data-favorite-id={favoriteId ?? null}
-  data-info-card={item ? 'item' : null}
-  data-info-card-entity-uuid={item?.uuid ?? null}
-  {...attributes}
+  {...containerAttributes}
 >
-  <div class="item-table-row {cssClass ?? ''}">
+  <div
+    class="item-table-row {cssClass ?? ''}"
+    data-context-menu={contextMenu?.type}
+    onmousedown={onMouseDown}
+    onmouseenter={onMouseEnter}
+    onmouseleave={onMouseLeave}
+    ondragstart={handleDragStart}
+    draggable={!!draggable}
+    data-tidy-table-row
+    data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_TABLE_ROW}
+    data-tidy-item-type={item?.type ?? 'unknown'}
+    data-favorite-id={favoriteId ?? null}
+    data-info-card={item ? 'item' : null}
+    data-info-card-entity-uuid={item?.uuid ?? null}
+    data-item-id={item?.id}
+    {...rowAttributes}
+  >
     {@render children?.({ toggleSummary })}
   </div>
   <ExpandableContainer expanded={showSummary}>

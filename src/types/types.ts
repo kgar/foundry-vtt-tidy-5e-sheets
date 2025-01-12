@@ -222,8 +222,15 @@ export type CharacterItemContext = {
 };
 
 export type ActivityItemContext = {
+  activation: string;
+  hasRecharge: boolean;
+  isOnCooldown: boolean;
   id: string;
   activity: Activity5e;
+  save: {
+    ability: string;
+  } | null;
+  toHit: number | null;
 };
 
 export type TypedEffectFavoriteSection = EffectFavoriteSection & {

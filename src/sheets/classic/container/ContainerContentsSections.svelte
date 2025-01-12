@@ -23,9 +23,7 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import InlineContainerView from './InlineContainerView.svelte';
-  import InlineActivitiesList from 'src/components/item-list/InlineActivitiesList.svelte';
   import ItemUses from 'src/components/item-list/ItemUses.svelte';
-  import ItemAddUses from 'src/components/item-list/ItemAddUses.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
 
   interface Props {
@@ -189,7 +187,7 @@
                     disabled={!FoundryAdapter.canUseItem(item)}
                     {item}
                   />
-                  {#if ('containerContents' in ctx && !!ctx.containerContents) || (ctx.activities?.length ?? 0) > 1}
+                  {#if ('containerContents' in ctx && !!ctx.containerContents)}
                     <InlineToggleControl
                       entityId={item.id}
                       {inlineToggleService}
@@ -229,7 +227,7 @@
                   {#if item.hasLimitedUses}
                     <ItemUses {item} />
                   {:else}
-                    <ItemAddUses {item} />
+                    <span class="text-body-tertiary">&mdash;</span>
                   {/if}
                 </TidyTableCell>
                 <TidyTableCell
@@ -275,12 +273,6 @@
                 {lockItemQuantity}
                 {sheetDocument}
                 {unlocked}
-              />
-            {:else if (ctx.activities?.length ?? 0) > 1}
-              <InlineActivitiesList
-                {item}
-                activities={ctx.activities}
-                {inlineToggleService}
               />
             {/if}
           {/each}

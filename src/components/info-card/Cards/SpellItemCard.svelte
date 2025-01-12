@@ -6,7 +6,8 @@
   import HorizontalLineSeparator from '../../layout/HorizontalLineSeparator.svelte';
   import { SpellUtils } from 'src/utils/SpellUtils';
   import ItemCardPills from '../Parts/ItemCardPills.svelte';
-  
+  import { Enrichers } from 'src/features/enrichers/Enrichers';
+
   interface Props {
     item: Item5e;
   }
@@ -26,6 +27,7 @@
   let canPrepare = $derived(FoundryAdapter.canPrepareSpell(item));
   let toggleTitle = $derived(SpellUtils.getToggleTitle(item));
   let owner = $derived<boolean>(item.actor?.isOwner ?? item.isOwner);
+  let linked = $derived<Item5e>(item.system.linkedActivity?.item);
 </script>
 
 {#await item.getChatData({ secrets: owner }) then chatData}
@@ -69,5 +71,15 @@
       </div>
     </div>
   </div>
+  {#if linked}
+    <HorizontalLineSeparator borderColor="faint" />
+    {#await FoundryAdapter.enrichHtml(Enrichers.reference(linked.uuid, linked.name)) then enriched}
+      <div class="info-card-linked-source">
+        {@html localize('TIDY5E.Activities.Cast.SourceHintText', {
+          itemName: enriched,
+        })}
+      </div>
+    {/await}
+  {/if}
   <ItemCardPills {item} {chatData} />
 {/await}

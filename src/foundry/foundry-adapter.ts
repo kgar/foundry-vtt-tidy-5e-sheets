@@ -202,12 +202,13 @@ export const FoundryAdapter = {
     if (event.button !== CONSTANTS.MOUSE_BUTTON_AUXILIARY) {
       return;
     }
-
-    event.preventDefault();
-
+    
     if (!entityWithSheet.sheet.isEditable) {
       return;
     }
+    
+    event.preventDefault();
+    event.stopImmediatePropagation();
 
     entityWithSheet.sheet.render(true);
   },

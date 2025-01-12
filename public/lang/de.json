@@ -139,10 +139,6 @@
         "name": "Klassische Listensteuerungen verwenden",
         "hint": "Zeigt die Steuerelemente in der Listenansicht an."
     },
-    "TIDY5E.Settings.ShowIconsNextToTheItemName": {
-        "name": "Symbole für Gegenstandsnamen anzeigen",
-        "hint": "Zeigt Unterstützungssymbole neben dem Gegenstandsnamen an (Favorit, Einstimmung, usw.)."
-    },
     "TIDY5E.Settings.ShowTraitLabels": {
         "name": "Merkmalsbeschriftungen anzeigen",
         "hint": "Zeigt Beschriftungen für SC-, NSC- und Fahrzeugeigenschaften. Deaktivieren, um nur Symbole anzuzeigen."
@@ -504,7 +500,7 @@
     "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - Fernkampf-Zauberangriff",
     "TIDY5E.ActorRangedSpellAttackFlavorText": "Fernkampf-Zauberangriff",
     "TIDY5E.MaxPreparedSpellsConfig": {
-        "Title": "Konfiguration maximal vorbereiteter Zaubersprüche: {actorName}",
+        "Title": "Konfiguration maximal vorbereiteter Zaubersprüche: {documentName}",
         "ExamplesHeader": "Beispielformeln",
         "ButtonTooltip": "Maximal vorbereitete Zaubersprüche konfigurieren",
         "MoreFormulas": "Mehr Formeln"

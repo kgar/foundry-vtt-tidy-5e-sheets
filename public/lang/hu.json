@@ -139,10 +139,6 @@
         "name": "Klasszikus vezérlőelemek lista nézetben.",
         "hint": "Mindig mutassa a tételek vezérlését és kikapcsolja a jobb klikk menüt. Csak JK tárgy/varázslat készletre vonatkozik lista nézetben."
     },
-    "TIDY5E.Settings.ShowIconsNextToTheItemName": {
-        "name": "",
-        "hint": ""
-    },
     "TIDY5E.Settings.ShowTraitLabels": {
         "name": "Jellemző Címkék Mutatása.",
         "hint": "Kapcsold ki, hogy csak JK/NJK jellemzőkhöz mutasson ikonokat."

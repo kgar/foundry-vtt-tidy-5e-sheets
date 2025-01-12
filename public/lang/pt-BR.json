@@ -116,7 +116,7 @@
     "TIDY5E.Class.Wizard": "Mago",
     "TIDY5E.OriginSummaryConfig": "Configuração Resumida de Origem: {actorName}",
     "TIDY5E.MaxPreparedSpellsConfig": {
-        "Title": "Configuração do Máximo de Magias Preparadas: {actorName}",
+        "Title": "Configuração do Máximo de Magias Preparadas: {documentName}",
         "ExamplesHeader": "Exemplo de Fórmulas",
         "ButtonTooltip": "Configurar Máximo de Magias Preparadas",
         "MoreFormulas": "Mais Fórmulas"
@@ -264,10 +264,6 @@
     "TIDY5E.Settings.UseClassicControls": {
         "name": "Usar Lista Clássica de Controles",
         "hint": "Mostra os controles na exibição de lista."
-    },
-    "TIDY5E.Settings.ShowIconsNextToTheItemName": {
-        "name": "Mostrar Nome dos Ícones de Itens",
-        "hint": "Mostra os ícones de suporte ao lado do nome do item (Favorito, Sintonização, etc.)."
     },
     "TIDY5E.Settings.ShowTraitLabels": {
         "name": "Mostrar Rótulos de Traços",

@@ -13,7 +13,6 @@ import type {
   ActiveEffect5e,
   NpcAbilitySection,
   ActorInventoryTypes,
-  ActivityItemContext,
 } from 'src/types/types';
 import NpcSheet from './npc/NpcSheet.svelte';
 import { CONSTANTS } from 'src/constants';
@@ -215,9 +214,6 @@ export class Tidy5eNpcSheet
       target: node,
       props: {
         sheet: this,
-        floating: settings.value.itemCardsAreFloating,
-        delay: settings.value.itemCardsDelay,
-        inspectKey: settings.value.itemCardsFixKey,
       },
     });
 
@@ -953,7 +949,7 @@ export class Tidy5eNpcSheet
         ctx.activities = Activities.getVisibleActivities(
           item,
           item.system.activities
-        )?.map(this._prepareActivity.bind(this));
+        )?.map(Activities.getActivityItemContext);
 
         ctx.attunement = FoundryAdapter.getAttunementContext(item);
         ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
@@ -1054,16 +1050,6 @@ export class Tidy5eNpcSheet
     context.features = Object.values(features);
     context.spellbook = spellbook;
     context.inventory = Object.values(inventory);
-  }
-
-  /**
-   * Prepare activity data.
-   */
-  _prepareActivity(activity: Activity5e): ActivityItemContext {
-    return {
-      id: activity.id,
-      activity: activity,
-    };
   }
 
   private async setExpandedItemData() {
