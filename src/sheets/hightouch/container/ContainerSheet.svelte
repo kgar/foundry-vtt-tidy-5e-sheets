@@ -12,6 +12,8 @@
   import TidyVisibilityObserver from 'src/components/utility/TidyVisibilityObserver.svelte';
   import Select from 'src/components/inputs/Select.svelte';
   import { RarityColors } from 'src/features/rarity-colors/RarityColors';
+  import { TidyFlags } from 'src/api';
+  import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
 
   let context = $derived(getContainerSheetHightouchContext());
 
@@ -63,6 +65,13 @@
         rarityColorVariableName: RarityColors.getRarityColorVariableName(key),
       };
     }),
+  );
+
+  let section = $derived(
+    TidyFlags.section.get(context.item) ?? localize('Default'),
+  );
+  let actionSection = $derived(
+    TidyFlags.actionSection.get(context.item) ?? localize('Default'),
   );
 </script>
 
@@ -221,22 +230,38 @@
   <div>
     <h4>{localize('TIDY5E.Section.LabelPl')}</h4>
     <div class="pills flexcol">
-      <div class="pill">
+      <a
+        class="pill"
+        onclick={() =>
+          new SectionSelectorApplication(
+            context.item,
+            TidyFlags.section.prop,
+            localize('TIDY5E.Section.Label'),
+          ).render(true)}
+      >
         <span class="lighter">
           {localize('DND5E.Inventory')}
         </span>
         <span>
-          {localize('Default')}
+          {section}
         </span>
-      </div>
-      <div class="pill">
+      </a>
+      <a
+        class="pill"
+        onclick={() =>
+          new SectionSelectorApplication(
+            context.item,
+            TidyFlags.actionSection.prop,
+            localize('TIDY5E.Section.ActionLabel'),
+          ).render(true)}
+      >
         <span class="lighter">
           {localize('TIDY5E.Actions.TabName')}
         </span>
         <span>
-          {localize('Default')}
+          {actionSection}
         </span>
-      </div>
+      </a>
     </div>
   </div>
 
