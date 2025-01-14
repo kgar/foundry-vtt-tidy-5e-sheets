@@ -808,7 +808,8 @@
       "title": "Configure Section: {tabTitle}",
       "showTooltip": "Show this section",
       "hideTooltip": "Hide this section"
-    }
+    },
+    "SectionSelectorTitle": "{sectionType}: {documentName}"
   },
   "TIDY5E.UseDefaultDialog": {
     "title": "Confirm: Use Default",
