@@ -8,8 +8,16 @@ import type {
 import { mount } from 'svelte';
 import SectionSelector from './SectionSelector.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import type { Tab } from 'src/types/types';
+import { SheetSections } from 'src/features/sections/SheetSections';
 
-export class SectionSelectorApplication extends SvelteApplicationMixin<{}>(
+export type SectionSelectorContext = {
+  sections: string[];
+  // TODO: Eliminate the need for this. It's not relevant for this application.
+  tabs: Tab[];
+};
+
+export class SectionSelectorApplication extends SvelteApplicationMixin<SectionSelectorContext>(
   foundry.applications.api.ApplicationV2
 ) {
   _document: any;
@@ -58,6 +66,7 @@ export class SectionSelectorApplication extends SvelteApplicationMixin<{}>(
       target: node,
       props: {
         sheet: this,
+        context: this._context,
       },
     });
 
@@ -71,7 +80,10 @@ export class SectionSelectorApplication extends SvelteApplicationMixin<{}>(
     });
   }
 
-  async _renderHTML(context: {}, options: ApplicationRenderOptions) {
+  async _renderHTML(
+    context: SectionSelectorContext,
+    options: ApplicationRenderOptions
+  ) {
     game.user.apps[this.id] = this;
     this._document.apps[this.id] = this;
 
@@ -86,7 +98,12 @@ export class SectionSelectorApplication extends SvelteApplicationMixin<{}>(
   }
 
   async _prepareContext() {
-    return {};
+    const sections = SheetSections.getKnownCustomSections(this._document);
+
+    return {
+      sections,
+      tabs: [],
+    };
   }
 
   async selectSection(name: string) {

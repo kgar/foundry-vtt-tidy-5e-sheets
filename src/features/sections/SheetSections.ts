@@ -505,4 +505,23 @@ export class SheetSections {
 
     return sections;
   }
+
+  static getKnownCustomSections(document: any) {
+    const useParentCollection =
+      !!document.parent && !document.compendium?.locked;
+
+    const itemCollection = useParentCollection
+      ? document.parent.items
+      : game.items;
+
+    return Array.from<string>(
+      itemCollection.reduce((prev: Item5e, curr: Item5e) => {
+        prev.add(TidyFlags.section.get(curr));
+        prev.add(TidyFlags.actionSection.get(curr));
+        return prev;
+      }, new Set<string>())
+    )
+      .filter((x) => !!x)
+      .toSorted((left, right) => left.localeCompare(right));
+  }
 }

@@ -1,12 +1,17 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { SectionSelectorApplication } from './SectionSelectorApplication.svelte';
+  import type {
+    SectionSelectorApplication,
+    SectionSelectorContext,
+  } from './SectionSelectorApplication.svelte';
+  import type { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 
   interface Props {
     sheet: SectionSelectorApplication;
+    context: CoarseReactivityProvider<SectionSelectorContext | undefined>;
   }
 
-  let { sheet }: Props = $props();
+  let { sheet, context }: Props = $props();
 
   async function onOptionSelected(name: string) {
     await sheet.selectSection(name);
@@ -14,6 +19,8 @@
   }
 
   const localize = FoundryAdapter.localize;
+
+  let sections = $derived(context.data?.sections ?? []);
 </script>
 
 <search>
@@ -25,25 +32,13 @@
 </search>
 
 <ul class="unlist">
-  <li>
-    <button
-      type="button"
-      onclick={() => onOptionSelected('Test 1')}
-      class="button">Test 1</button
-    >
-  </li>
-  <li>
-    <button
-      type="button"
-      onclick={() => onOptionSelected('Test 2')}
-      class="button">Test 2</button
-    >
-  </li>
-  <li>
-    <button
-      type="button"
-      onclick={() => onOptionSelected('Test 3')}
-      class="button">Test 3</button
-    >
-  </li>
+  {#each sections as section (section)}
+    <li>
+      <button
+        type="button"
+        onclick={() => onOptionSelected(section)}
+        class="button">{localize(section)}</button
+      >
+    </li>
+  {/each}
 </ul>
