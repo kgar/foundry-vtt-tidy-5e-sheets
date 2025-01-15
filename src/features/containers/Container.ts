@@ -9,6 +9,7 @@ import { CONSTANTS } from 'src/constants';
 import type { CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { Activities } from '../activities/activities';
 import { TidyHooks } from 'src/foundry/TidyHooks';
+import type { ContainerCapacityContext } from 'src/types/types';
 
 export class Container {
   static async getContainerContents(item: Item5e): Promise<ContainerContents> {
@@ -77,5 +78,17 @@ export class Container {
       types: Inventory.getDefaultInventoryTypes(),
       keepId: true,
     });
+  }
+
+  static async computeCapacity(
+    container: Item5e
+  ): Promise<ContainerCapacityContext> {
+    const context = await container.system.computeCapacity();
+
+    if (container.system.capacity.type === 'weight') {
+      context.units = FoundryAdapter.getWeightUnit();
+    }
+
+    return context;
   }
 }

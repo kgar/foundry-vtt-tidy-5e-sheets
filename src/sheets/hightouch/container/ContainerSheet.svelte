@@ -70,9 +70,23 @@
   let section = $derived(
     TidyFlags.section.get(context.item) ?? localize('Default'),
   );
+
   let actionSection = $derived(
     TidyFlags.actionSection.get(context.item) ?? localize('Default'),
   );
+
+  let holdsMarkup = $derived.by(() => {
+    return localize('TIDY5E.Containers.HoldsNumberUnits', {
+      holdsElementStart: '<span class="text-secondary fw-normal">',
+      holdsElementEnd: '</span>',
+      numberElementStart: '<span>',
+      numberElementEnd: '</span>',
+      number: context.capacity.max,
+      unitsElementStart: '<span class="text-secondary fw-normal">',
+      unitsElementEnd: '</span>',
+      units: context.capacity.units,
+    });
+  });
 </script>
 
 {#if !!containerNameEl}
@@ -189,6 +203,12 @@
         </span>
       </li>
     {/if}
+
+    <li class="pill">
+      <span>
+        {@html holdsMarkup}
+      </span>
+    </li>
   </ul>
 
   <div>

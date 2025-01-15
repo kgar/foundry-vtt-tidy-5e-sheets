@@ -55,8 +55,20 @@ inverse {
   }
 }
 
+.text-secondary {
+  color: var(--t5e-color-text-onDefault-lighter);
+}
+
+.fw-normal {
+  font-weight: 400;
+}
+
 &.inverse,
-inverse {
+.inverse {
+  .text-secondary {
+    color: var(--t5e-color-text-onInverse-lighter);
+  }
+
   .time .subtitle {
     color: var(--t5e-color-text-onInverse-lightest);
   }

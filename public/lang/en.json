@@ -809,7 +809,9 @@
       "showTooltip": "Show this section",
       "hideTooltip": "Hide this section"
     },
-    "SectionSelectorTitle": "{sectionType}: {documentName}"
+    "SectionSelectorTitle": "{sectionType}: {documentName}",
+    "SectionSelectorExistingSections": "Existing Sections",
+    "SectionSelectorNewSection": "New Section"
   },
   "TIDY5E.UseDefaultDialog": {
     "title": "Confirm: Use Default",
@@ -837,5 +839,6 @@
   "TIDY5E.SortMenu.OptionManual": "Manual",
   "TIDY5E.SortMenu.OptionPrepared": "Prepared",
   "TIDY5E.SortMenu.OptionEquipped": "Equipped",
-  "TIDY5E.Activities.Cast.SourceHintText": "From {itemName}"
+  "TIDY5E.Activities.Cast.SourceHintText": "From {itemName}",
+  "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Holds{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}"
 }

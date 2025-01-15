@@ -275,8 +275,10 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
       })
     );
 
+    const capacityContext = await Container.computeCapacity(this.item);
+
     const context: ContainerSheetHightouchContext = {
-      capacity: await this.item.system.computeCapacity(),
+      capacity: capacityContext,
       concealDetails:
         !game.user.isGM && this.document.system.identified === false,
       config: CONFIG.DND5E,

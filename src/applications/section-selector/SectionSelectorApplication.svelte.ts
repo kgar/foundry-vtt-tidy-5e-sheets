@@ -43,6 +43,7 @@ export class SectionSelectorApplication extends SvelteApplicationMixin<SectionSe
       'sheet',
       'dnd5e2',
       'standard-form',
+      'config-sheet',
       'tidy-section-selector-application',
       'app-v2',
     ],
@@ -54,7 +55,7 @@ export class SectionSelectorApplication extends SvelteApplicationMixin<SectionSe
       controls: [],
     },
     position: {
-      width: 400,
+      width: 600,
       height: 600,
     },
     actions: {},
@@ -109,6 +110,12 @@ export class SectionSelectorApplication extends SvelteApplicationMixin<SectionSe
   async selectSection(name: string) {
     await this._document.update({
       [this._prop]: name,
+    });
+  }
+
+  async useDefaultSection() {
+    await this._document.update({
+      [this._prop]: null,
     });
   }
 }
