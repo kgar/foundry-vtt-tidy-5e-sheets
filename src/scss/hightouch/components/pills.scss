@@ -8,6 +8,9 @@
 
   &.stacked {
     flex-direction: column;
+    > * {
+      max-width: 100%;
+    }
   }
 
   > * {
@@ -33,6 +36,14 @@
   padding: 0.125rem 0.5rem;
   color: var(--t5e-color-text-onDefault-default);
   --icon-fill: var(--t5e-color-icon-light-diminished);
+
+  &.wrapped {
+    flex-wrap: wrap;
+  }
+
+  &.no-row-gap {
+    row-gap: 0;
+  }
 
   i {
     color: var(--icon-fill);

@@ -18,7 +18,7 @@
 
 <fieldset>
   <div class="form-group">
-    <label for="{appId}-weight">
+    <label for="{appId}-weight-value">
       {localize('DND5E.Weight')}
     </label>
     <div class="form-fields">

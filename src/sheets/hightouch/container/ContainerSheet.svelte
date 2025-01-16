@@ -282,9 +282,9 @@
 
   <div>
     <h4>{localize('TIDY5E.Section.LabelPl')}</h4>
-    <div class="pills flexcol">
+    <div class="pills stacked">
       <a
-        class="pill"
+        class="pill wrapped no-row-gap"
         class:disabled={!context.editable}
         onclick={() =>
           new SectionSelectorApplication(
@@ -293,15 +293,15 @@
             localize('TIDY5E.Section.Label'),
           ).render(true)}
       >
-        <span class="lighter">
+        <span class="lighter centered">
           {localize('DND5E.Inventory')}
         </span>
-        <span>
+        <span class="hyphens-auto centered">
           {section}
         </span>
       </a>
       <a
-        class="pill"
+        class="pill wrapped no-row-gap"
         class:disabled={!context.editable}
         onclick={() =>
           new SectionSelectorApplication(
@@ -310,10 +310,10 @@
             localize('TIDY5E.Section.ActionLabel'),
           ).render(true)}
       >
-        <span class="lighter">
+        <span class="lighter centered">
           {localize('TIDY5E.Actions.TabName')}
         </span>
-        <span>
+        <span class="hyphens-auto centered">
           {actionSection}
         </span>
       </a>

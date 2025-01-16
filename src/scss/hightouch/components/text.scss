@@ -24,6 +24,14 @@
   }
 }
 
+.centered {
+  text-align: center;
+}
+
+.hyphens-auto {
+  hyphens: auto;
+}
+
 &.inverse,
 inverse {
   .spell-component {
