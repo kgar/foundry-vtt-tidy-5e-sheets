@@ -57,12 +57,15 @@
           )}
         </p>
       </div>
-      <div class="settings-group">
-        <ul>
+      <div class="settings-group flex-column small-gap">
+        <ul class="custom-section-list flex-column extra-small-gap">
           {#each context.settings.defaultCustomSections as section (section)}
-            <li>
-              {section}
+            <li class="flex-row extra-small-gap">
+              <span class="flex-grow-1">
+                {section}
+              </span>
               <a
+                class="delete-section flex-grow-0"
                 onclick={() => removeSection(section)}
                 title={localize('TIDY5E.ContextMenuActionDelete')}
               >
@@ -71,6 +74,7 @@
             </li>
           {/each}
         </ul>
+
         <form
           onsubmit={(ev) => {
             ev.preventDefault();
@@ -86,16 +90,46 @@
             class="flex-grow-1"
             bind:value={newSection}
           />
-          <span>
-            <button
-              class="flex-grow-0"
-              title={localize('TIDY5E.Section.SectionSelectorCreateNewSection')}
-            >
-              <i class="fa-solid fa-plus"></i>
-            </button>
-          </span>
+
+          <a
+            class="add-new-section flex-grow-0"
+            title={localize('TIDY5E.Section.SectionSelectorCreateNewSection')}
+            onclick={() => addSection()}
+          >
+            <i class="fa-solid fa-plus"></i>
+          </a>
         </form>
       </div>
     </section>
   </article>
 </div>
+
+<style lang="scss">
+  .custom-section-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: 1px solid var(--t5e-light-color);
+
+    li:hover {
+      background-color: var(--t5e-faintest-color);
+    }
+
+    li > * {
+      padding: 0.325rem;
+    }
+  }
+
+  .add-new-section,
+  .delete-section {
+    padding-left: 0.325rem;
+    padding-right: 0.325rem;
+    transition: color 0.2s ease;
+
+    color: var(--t5e-icon-font-color);
+
+    &:hover {
+      color: var(--t5e-icon-hover-color);
+    }
+  }
+</style>

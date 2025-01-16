@@ -526,7 +526,7 @@ export class SheetSections {
     );
 
     return Array.from<string>(sectionSet)
-      .filter((x) => !!x)
+      .filter((x) => !isNil(x, ''))
       .toSorted((left, right) => left.localeCompare(right));
   }
 }

@@ -129,7 +129,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="settings-form">
+<div class="settings-form user-select-text">
   <div role="presentation" class="vertical-tab-container flex-column no-gap">
     <Tabs {tabs} bind:selectedTabId orientation="vertical" />
     <div role="presentation" class="remaining-vertical-space"></div>
@@ -179,7 +179,7 @@
     :global(.tidy-sheet-body) {
       grid-area: body;
       overflow-y: scroll;
-      padding-top: 0.5rem;
+      padding-top: 0;
       padding-right: 0.5rem;
       margin-right: -0.25rem;
       flex: 1;
