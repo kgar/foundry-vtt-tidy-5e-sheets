@@ -14,7 +14,9 @@
   let { sheet, context }: Props = $props();
 
   async function onOptionSelected(name: string) {
-    await sheet.selectSection(name);
+    if (name.trim() !== '') {
+      await sheet.selectSection(name);
+    }
     await sheet.close();
   }
 
@@ -81,10 +83,7 @@
     <button type="button" onclick={() => useDefault()}
       >{localize('TIDY5E.UseDefault')}</button
     >
-    <button
-      type="button"
-      disabled={freeText.trim().length === 0}
-      onclick={() => onOptionSelected(freeText)}
+    <button type="button" onclick={() => onOptionSelected(freeText)}
       >{localize('TIDY5E.Section.SectionSelectorSaveNewSection')}</button
     >
   </div>
