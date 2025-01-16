@@ -453,7 +453,7 @@
         "SetOverrideTrue": "Aggiungi alla Lista Azioni",
         "ResetActionDefault": "Ripristina azione predefinita"
     },
-    "TIDY5E.HitDC": "Colpito / CD",
+    "TIDY5E.HitDC": "Colpire / CD",
     "TIDY5E.Inventory.Weight.Tooltip": "Peso: {weight} {weightUnit}",
     "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
     "TIDY5E.EnvironmentTooltip": "Ambiente: {environment}",
@@ -836,5 +836,6 @@
     "TIDY5E.Settings.DefaultDeathSaveRoll": {
         "hint": "Determina il tipo di tiro predefinito da utilizzare quando si effettua un tiro salvezza su morte.",
         "name": "Tiro Salvezza Morte Predefinito"
-    }
+    },
+    "TIDY5E.Activities.Cast.SourceHintText": "Da {itemName}"
 }

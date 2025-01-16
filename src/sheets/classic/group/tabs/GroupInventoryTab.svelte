@@ -95,13 +95,13 @@
   class="tidy-inventory-container scroll-container flex-column small-gap"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEMS_CONTAINER}
 >
+  <Currency document={context.actor} />
+
   {#if noItems && !context.unlocked}
     <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {:else}
     {@const containerPanelExpanded =
       context.showContainerPanel && !!context.containerPanelItems.length}
-
-    <Currency document={context.actor} />
 
     <ExpandableContainer
       expanded={containerPanelExpanded}
