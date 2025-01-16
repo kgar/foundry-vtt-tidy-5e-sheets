@@ -811,7 +811,9 @@
     },
     "SectionSelectorTitle": "{sectionType}: {documentName}",
     "SectionSelectorExistingSections": "Existing Sections",
-    "SectionSelectorNewSection": "New Section"
+    "SectionSelectorCreateNewSection": "Create a new section",
+    "SectionSelectorNewSectionName": "New section name",
+    "SectionSelectorSaveNewSection": "Save new section"
   },
   "TIDY5E.UseDefaultDialog": {
     "title": "Confirm: Use Default",

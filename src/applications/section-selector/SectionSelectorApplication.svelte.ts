@@ -13,6 +13,7 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 
 export type SectionSelectorContext = {
   sections: string[];
+  currentSection: string | undefined;
   // TODO: Eliminate the need for this. It's not relevant for this application.
   tabs: Tab[];
 };
@@ -100,9 +101,14 @@ export class SectionSelectorApplication extends SvelteApplicationMixin<SectionSe
 
   async _prepareContext() {
     const sections = SheetSections.getKnownCustomSections(this._document);
+    const currentSection = FoundryAdapter.getProperty<string>(
+      this._document,
+      this._prop
+    );
 
     return {
       sections,
+      currentSection,
       tabs: [],
     };
   }

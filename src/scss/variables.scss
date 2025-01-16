@@ -1,4 +1,4 @@
-.tidy5e-sheet.hightouch {
+.tidy5e-sheet:is(.hightouch, .dnd5e2) {
   --t5e-font-modesto-condensed: 'Modesto Condensed', 'Palatino Linotype', serif;
   --t5e-font-family-title: var(--t5e-font-modesto-condensed);
   --t5e-font-roboto-condensed: 'Roboto Condensed', sans-serif;
