@@ -26,6 +26,7 @@ import type { Activity5e, CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { error } from 'src/utils/logging';
 import { getSortedActions } from '../actions/actions.svelte';
 import { SpellUtils } from 'src/utils/SpellUtils';
+import { settings } from 'src/settings/settings.svelte';
 
 export class SheetSections {
   static generateCustomSpellbookSections(
@@ -514,13 +515,17 @@ export class SheetSections {
       ? document.parent.items
       : game.items;
 
-    return Array.from<string>(
-      itemCollection.reduce((prev: Item5e, curr: Item5e) => {
-        prev.add(TidyFlags.section.get(curr));
-        prev.add(TidyFlags.actionSection.get(curr));
-        return prev;
-      }, new Set<string>())
-    )
+    const sectionSet = itemCollection.reduce((prev: Item5e, curr: Item5e) => {
+      prev.add(TidyFlags.section.get(curr));
+      prev.add(TidyFlags.actionSection.get(curr));
+      return prev;
+    }, new Set<string>());
+
+    settings.value.defaultCustomSections.forEach((section) =>
+      sectionSet.add(section)
+    );
+
+    return Array.from<string>(sectionSet)
       .filter((x) => !!x)
       .toSorted((left, right) => left.localeCompare(right));
   }

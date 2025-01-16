@@ -9,11 +9,15 @@
   import ExhaustionWorldSettingsTab from './tabs/ExhaustionWorldSettingsTab.svelte';
   import SheetLockWorldSettingsTab from './tabs/SheetLockWorldSettingsTab.svelte';
   import { getContext } from 'svelte';
-  import type { WorldSettingsContext, WorldSettingsFunctions } from './WorldSettings.types';
+  import type {
+    WorldSettingsContext,
+    WorldSettingsFunctions,
+  } from './WorldSettings.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import IconsWorldSettingsTab from './tabs/IconsWorldSettingsTab.svelte';
+  import CustomSectionsWorldSettingsTab from './tabs/CustomSectionsWorldSettingsTab.svelte';
 
   let selectedTabId: string = $state('');
   let functions = getContext<WorldSettingsFunctions>(
@@ -85,6 +89,14 @@
       title: 'TIDY5E.WorldSettings.TabIcons.tabLabel',
       content: {
         component: IconsWorldSettingsTab,
+        type: 'svelte',
+      },
+    },
+    {
+      id: CONSTANTS.TAB_WORLD_SETTINGS_CUSTOM_SECTIONS,
+      title: 'TIDY5E.WorldSettings.TabCustomSections.tabLabel',
+      content: {
+        component: CustomSectionsWorldSettingsTab,
         type: 'svelte',
       },
     },

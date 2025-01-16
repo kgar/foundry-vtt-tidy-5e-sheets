@@ -39,6 +39,7 @@ export type WorldSettingsContext = {
     itemIdentificationPermission: CurrentSettings['itemIdentificationPermission'];
     includeFlagsInSpellScrollCreation: CurrentSettings['includeFlagsInSpellScrollCreation'];
     useTidySpellSchoolIcons: CurrentSettings['useTidySpellSchoolIcons'];
+    defaultCustomSections: CurrentSettings['defaultCustomSections'];
   };
   defaultNpcTabs: DefaultTabSelectionFields;
   defaultCharacterTabs: DefaultTabSelectionFields;

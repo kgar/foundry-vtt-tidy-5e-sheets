@@ -10,6 +10,7 @@ import SectionSelector from './SectionSelector.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Tab } from 'src/types/types';
 import { SheetSections } from 'src/features/sections/SheetSections';
+import { settings } from 'src/settings/settings.svelte';
 
 export type SectionSelectorContext = {
   sections: string[];
@@ -62,6 +63,14 @@ export class SectionSelectorApplication extends SvelteApplicationMixin<SectionSe
     actions: {},
     submitOnClose: false,
   };
+
+  _configureEffects(): void {
+    $effect(() => {
+      settings.value;
+
+      this.render(true);
+    });
+  }
 
   _createComponent(node: HTMLElement): Record<string, any> {
     const component = mount(SectionSelector, {

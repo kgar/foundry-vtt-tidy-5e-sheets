@@ -240,6 +240,9 @@
   "TIDY5E.WorldSettings.TabIcons": {
     "tabLabel": "Icons"
   },
+  "TIDY5E.WorldSettings.TabCustomSections": {
+    "tabLabel": "Custom Sections"
+  },
 
   "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Multiclass Spellbook Filter",
 
@@ -721,6 +724,11 @@
     "BuyMeACoffeeLink": "{urlStart}Buy Me a Coffee{urlEnd}",
     "KoFiLink": "{urlStart}Ko-Fi{urlEnd}",
     "PatreonLink": "{urlStart}Patreon{urlEnd}"
+  },
+  "TIDY5E.Settings.DefaultCustomSections": {
+    "name": "Default Custom Sections",
+    "hint": "A list of custom sections which will always be included in the Section Selector.",
+    "AddSection": "Add Section"
   },
   "TIDY5E.Settings.Debug": {
     "name": "Enable Debugging",

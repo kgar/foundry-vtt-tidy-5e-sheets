@@ -124,6 +124,7 @@ export const CONSTANTS = {
   TAB_WORLD_SETTINGS_ITEM: 'world-settings-item',
   TAB_WORLD_SETTINGS_EXHAUSTION: 'world-settings-exhaustion',
   TAB_WORLD_SETTINGS_SHEETLOCK: 'world-settings-sheet-lock',
+  TAB_WORLD_SETTINGS_CUSTOM_SECTIONS: 'world-settings-custom-sections',
   TAB_WORLD_SETTINGS_MISC: 'world-settings-misc',
   TAB_USER_SETTINGS_PLAYERS: 'user-settings-players',
   TAB_USER_SETTINGS_NPCS: 'user-settings-npcs',
@@ -230,7 +231,7 @@ export const CONSTANTS = {
 
     /** A row in an effect table. */
     EFFECT_TABLE_ROW: 'effect-table-row',
-    
+
     /** An interactable element which toggles a view */
     EXPANSION_TOGGLE: 'table-expansion-toggle',
 

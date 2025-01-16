@@ -1890,6 +1890,22 @@ export function createSettings() {
         },
       },
 
+      // Custom Sections
+      defaultCustomSections: {
+        options: {
+          name: 'TIDY5E.Settings.DefaultCustomSections.name',
+          hint: 'TIDY5E.Settings.DefaultCustomSections.hint',
+          scope: 'world',
+          config: false,
+          type: Array,
+          default: [],
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<string[]>('defaultCustomSections');
+        },
+      },
+
+      // Development and Troubleshooting
       debug: {
         options: {
           name: `TIDY5E.Settings.Debug.name`,
