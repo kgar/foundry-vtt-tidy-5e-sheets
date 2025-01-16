@@ -162,6 +162,7 @@
           context.item.update({
             'system.equipped': ev.currentTarget?.checked,
           })}
+        disabled={!context.editable}
       >
         {localize('DND5E.Equipped')}
       </PillSwitch>
@@ -176,6 +177,7 @@
             context.item.update({
               'system.attuned': ev.currentTarget?.checked,
             })}
+          disabled={!context.editable}
         >
           {localize('DND5E.Attuned')}
         </PillSwitch>
@@ -191,6 +193,7 @@
             context.item.update({
               'system.identified': ev.currentTarget?.checked,
             })}
+          disabled={!context.editable}
         >
           {localize('DND5E.Identified')}
         </PillSwitch>
@@ -216,6 +219,7 @@
       <span>{localize('DND5E.Currency')}</span>
       <a
         class="button icon-button currency-conversion"
+        class:disabled={!context.editable}
         onclick={() =>
           context.owner &&
           new dnd5e.applications.CurrencyManager(context.document).render(true)}
@@ -247,44 +251,6 @@
     </div>
   </div>
 
-  <div>
-    <h4>{localize('TIDY5E.Section.LabelPl')}</h4>
-    <div class="pills flexcol">
-      <a
-        class="pill"
-        onclick={() =>
-          new SectionSelectorApplication(
-            context.item,
-            TidyFlags.section.prop,
-            localize('TIDY5E.Section.Label'),
-          ).render(true)}
-      >
-        <span class="lighter">
-          {localize('DND5E.Inventory')}
-        </span>
-        <span>
-          {section}
-        </span>
-      </a>
-      <a
-        class="pill"
-        onclick={() =>
-          new SectionSelectorApplication(
-            context.item,
-            TidyFlags.actionSection.prop,
-            localize('TIDY5E.Section.ActionLabel'),
-          ).render(true)}
-      >
-        <span class="lighter">
-          {localize('TIDY5E.Actions.TabName')}
-        </span>
-        <span>
-          {actionSection}
-        </span>
-      </a>
-    </div>
-  </div>
-
   {#if !context.concealDetails}
     {#if context.labels.toHit || context.labels.damages.length}
       <h4>
@@ -313,6 +279,46 @@
       </ul>
     {/if}
   {/if}
+
+  <div>
+    <h4>{localize('TIDY5E.Section.LabelPl')}</h4>
+    <div class="pills flexcol">
+      <a
+        class="pill"
+        class:disabled={!context.editable}
+        onclick={() =>
+          new SectionSelectorApplication(
+            context.item,
+            TidyFlags.section.prop,
+            localize('TIDY5E.Section.Label'),
+          ).render(true)}
+      >
+        <span class="lighter">
+          {localize('DND5E.Inventory')}
+        </span>
+        <span>
+          {section}
+        </span>
+      </a>
+      <a
+        class="pill"
+        class:disabled={!context.editable}
+        onclick={() =>
+          new SectionSelectorApplication(
+            context.item,
+            TidyFlags.actionSection.prop,
+            localize('TIDY5E.Section.ActionLabel'),
+          ).render(true)}
+      >
+        <span class="lighter">
+          {localize('TIDY5E.Actions.TabName')}
+        </span>
+        <span>
+          {actionSection}
+        </span>
+      </a>
+    </div>
+  </div>
 </aside>
 <main class="item-content">
   <div

@@ -193,6 +193,10 @@
       fill: #fff;
     }
   }
+
+  &.disabled {
+    cursor: default;
+  }
 }
 
 &.inverse,

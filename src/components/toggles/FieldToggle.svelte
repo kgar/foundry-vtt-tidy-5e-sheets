@@ -3,13 +3,18 @@
 
   interface Props {
     checked?: boolean;
+    disabled?: boolean | undefined;
     onchange?: ChangeEventHandler<HTMLInputElement>;
   }
 
-  let { checked = false, onchange = undefined }: Props = $props();
+  let {
+    checked = false,
+    onchange = undefined,
+    disabled = false,
+  }: Props = $props();
 </script>
 
-<label class="field-toggle">
+<label class="field-toggle" class:disabled>
   <!-- fa-check -->
   <svg
     class="checked-icon"
@@ -34,5 +39,11 @@
       d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"
     /></svg
   >
-  <input type="checkbox" {onchange} {checked} class="toggle hidden" />
+  <input
+    type="checkbox"
+    {onchange}
+    {checked}
+    {disabled}
+    class="toggle hidden"
+  />
 </label>

@@ -82,6 +82,7 @@
   }
 
   &.disabled {
+    cursor: default;
     pointer-events: none;
     background: transparent;
     border: 0.0625rem solid var(--t5e-component-field-default-border);
@@ -238,7 +239,7 @@
       line-height: normal;
     }
 
-    label:has(input[type="radio"]) {
+    label:has(input[type='radio']) {
       display: flex;
       gap: 0.5rem;
     }

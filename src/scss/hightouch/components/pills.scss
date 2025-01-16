@@ -138,6 +138,10 @@
       --icon-fill: var(--t5e-color-text-onDefault-lighter);
     }
   }
+
+  &.disabled {
+    cursor: default;
+  }
 }
 
 &:is(.inverse, .dark) .pill-switch,

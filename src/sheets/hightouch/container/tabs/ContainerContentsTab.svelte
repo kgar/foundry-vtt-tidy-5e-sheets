@@ -129,7 +129,7 @@
     {/snippet}
   </ButtonWithOptionPanel>
 
-  <a class="button icon-button">
+  <a class="button icon-button" class:disabled={!context.editable}>
     <i class="fas fa-gear"></i>
   </a>
 </section>
@@ -161,6 +161,7 @@
   <a
     title={localize('DND5E.ItemCreate')}
     class="button icon-button attention item-create"
+    class:disabled={!context.editable}
     onclick={() => Container.promptCreateInventoryItem(context.item)}
   >
     <i class="fas fa-plus"></i>
