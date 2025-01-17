@@ -8,6 +8,7 @@
   import { CONSTANTS } from 'src/constants';
   import VerticalFiligreeGuideline from '../../shared/VerticalFiligreeGuideline.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
+  import type { MessageBus } from 'src/types/types';
 
   interface Props {
     container: Item5e;
@@ -35,6 +36,8 @@
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
+  let messageBus = getContext<MessageBus>(CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS);
+
   async function onDrop(
     event: DragEvent & { currentTarget: EventTarget & HTMLElement },
   ) {
@@ -43,6 +46,23 @@
     event.preventDefault();
     event.stopImmediatePropagation();
   }
+
+  $effect(() => {
+    if (
+      messageBus?.message?.tabId === tabId &&
+      messageBus?.message?.message === CONSTANTS.MESSAGE_BUS_EXPAND_ALL &&
+      messageBus?.message?.options?.includeInlineToggles
+    ) {
+      inlineToggleService.toggle(tabId, container.id, true);
+    }
+    if (
+      messageBus?.message?.tabId === tabId &&
+      messageBus?.message?.message === CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL &&
+      messageBus?.message?.options?.includeInlineToggles
+    ) {
+      inlineToggleService.toggle(tabId, container.id, false);
+    }
+  });
 </script>
 
 <ExpandableContainer
