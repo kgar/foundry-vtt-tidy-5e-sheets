@@ -177,18 +177,17 @@
           >
             {#snippet children({ toggleSummary })}
               <TidyTableCell primary={true} class="truncate">
-                <div
+                <a
                   class="item-image"
                   style="--item-img: url({item.img}); --item-border-color: {itemBorderColor};"
                   class:special-rarity={showRarityBoxShadow}
-                  role="button"
                   onclick={(ev) => FoundryAdapter.actorTryUseItem(item, ev)}
                 >
                   <span class="roll-prompt">
                     <i class="fa fa-dice-d20"></i>
                   </span>
-                </div>
-                {#if ('containerContents' in ctx && !!ctx.containerContents) || item?.system.activities?.contents.length > 1}
+                </a>
+                {#if ('containerContents' in ctx && !!ctx.containerContents)}
                   <a
                     class="expand-indicator-button"
                     onclick={() => inlineToggleService.toggle(tabId, item.id)}
