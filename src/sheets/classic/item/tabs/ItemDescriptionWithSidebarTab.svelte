@@ -15,6 +15,7 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
 
   let context =
     $derived(
@@ -154,10 +155,28 @@
     {/if}
 
     <div class="flex-column small-gap">
-      <div class="form-group section">
-        <label for="{appId}-tidy-section"
-          >{localize('TIDY5E.Section.Label')}</label
+      <div class="form-group section stretch">
+        <div
+          class="properties-header flex-grow-1 flex-row extra-small-gap justify-content-space-between align-items-center"
         >
+          <label for="{appId}-tidy-section"
+            >{localize('TIDY5E.Section.Label')}
+          </label>
+          <a
+            title={localize(
+              'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
+            )}
+            class="inline-icon-button"
+            onclick={() =>
+              new SectionSelectorApplication(
+                context.item,
+                TidyFlags.section.prop,
+                localize('TIDY5E.Section.Label'),
+              ).render(true)}
+          >
+            <i class="fa-solid fa-search"></i>
+          </a>
+        </div>
         <TextInput
           id="{appId}-tidy-section"
           document={context.item}
@@ -169,10 +188,29 @@
           disabled={!context.editable}
         />
       </div>
-      <div class="form-group section">
-        <label for="{appId}-tidy-action-section"
-          >{localize('TIDY5E.Section.ActionLabel')}</label
+      <div class="form-group section stretch">
+        <div
+          class="properties-header flex-grow-1 flex-row extra-small-gap justify-content-space-between align-items-center"
         >
+          <label for="{appId}-tidy-action-section"
+            >{localize('TIDY5E.Section.ActionLabel')}</label
+          >
+          <a
+            title={localize(
+              'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
+            )}
+            class="inline-icon-button"
+            onclick={() =>
+              new SectionSelectorApplication(
+                context.item,
+                TidyFlags.actionSection.prop,
+                localize('TIDY5E.Section.ActionLabel'),
+              ).render(true)}
+          >
+            <i class="fa-solid fa-search"></i>
+          </a>
+        </div>
+
         <TextInput
           id="{appId}-tidy-action-section"
           document={context.item}

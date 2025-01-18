@@ -283,6 +283,10 @@
           margin-top: 0;
           margin-bottom: 0;
 
+          &.stretch {
+            align-items: stretch;
+          }
+
           label {
             font-weight: 500;
           }
@@ -297,7 +301,7 @@
       }
 
       .properties-header {
-        margin-top: 0.25rem;
+        margin-top: 0.325rem;
         font-size: 0.875rem;
         font-weight: normal;
         font-family: var(--t5e-body-font-family);
