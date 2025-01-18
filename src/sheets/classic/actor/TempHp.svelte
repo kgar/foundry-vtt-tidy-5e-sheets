@@ -5,7 +5,8 @@
   import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
+  let context =
+    $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -16,7 +17,7 @@
     field="system.attributes.hp.temp"
     class="temphp"
     placeholder="+{localize('DND5E.Temp')}"
-    value={context.hp.temp || null}
+    value={context.hp.temp?.toString() ?? ''}
     allowDeltaChanges={true}
     title={localize('DND5E.HitPointsTemp')}
     disabled={!context.editable}
@@ -27,7 +28,7 @@
     field="system.attributes.hp.tempmax"
     class="max-temphp"
     placeholder="+{localize('DND5E.Max')}"
-    value={context.hp.tempmax || null}
+    value={context.hp.tempmax?.toString() ?? ''}
     title={localize('DND5E.HitPointsTempMax')}
     disabled={!context.editable}
     selectOnFocus={true}
