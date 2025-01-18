@@ -14,7 +14,7 @@
     field="system.attributes.hp.dt"
     class="damage-threshold"
     placeholder={localize('DND5E.Threshold')}
-    value={context.system.attributes.hp.dt || null}
+    value={context.system.attributes.hp.dt?.toString() ?? ''}
     allowDeltaChanges={true}
     maxlength={5}
     title={localize('DND5E.DamageThreshold')}
@@ -25,7 +25,7 @@
     field="system.attributes.hp.mt"
     class="mishap-threshold"
     placeholder={localize('DND5E.VehicleMishap')}
-    value={context.system.attributes.hp.mt || null}
+    value={context.system.attributes.hp.mt?.toString() ?? ''}
     allowDeltaChanges={true}
     maxlength={5}
     title={localize('DND5E.VehicleMishapThreshold')}
