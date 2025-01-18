@@ -47,7 +47,7 @@
 </div>
 
 <!-- Auto-Destroy -->
-{#if context.system.uses.autoDestroy}
+{#if context.system.schema.fields.uses?.fields?.autoDestroy}
   <div class="form-group">
     <label for="{appId}-uses-autoDestroy"
       >{localize('DND5E.CONSUMABLE.FIELDS.uses.autoDestroy.label')}</label
