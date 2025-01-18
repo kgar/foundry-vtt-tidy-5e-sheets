@@ -17,6 +17,7 @@ import { BulkMigrationsApplication } from 'src/migrations/BulkMigrationsApplicat
 import { AboutApplication } from 'src/applications/settings/about/AboutApplication';
 import { ApplyTidySheetPreferencesApplication } from 'src/applications/sheet-preferences/ApplyTidySheetPreferencesApplication.svelte';
 import { getDefaultExhaustionConfig } from 'src/features/exhaustion/exhaustion';
+import type { DefaultCustomSectionSetting } from './settings.types';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -1901,7 +1902,9 @@ export function createSettings() {
           default: [],
         },
         get() {
-          return FoundryAdapter.getTidySetting<string[]>('defaultCustomSections');
+          return FoundryAdapter.getTidySetting<DefaultCustomSectionSetting[]>(
+            'defaultCustomSections'
+          );
         },
       },
 

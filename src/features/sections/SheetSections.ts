@@ -521,8 +521,8 @@ export class SheetSections {
       return prev;
     }, new Set<string>());
 
-    settings.value.defaultCustomSections.forEach((section) =>
-      sectionSet.add(section)
+    settings.value.defaultCustomSections.forEach((defaultSectionConfig) =>
+      sectionSet.add(defaultSectionConfig.section)
     );
 
     return Array.from<string>(sectionSet)

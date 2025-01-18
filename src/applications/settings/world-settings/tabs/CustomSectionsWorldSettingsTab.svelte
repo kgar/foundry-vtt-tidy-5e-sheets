@@ -4,6 +4,7 @@
   import { SettingsProvider } from 'src/settings/settings.svelte';
   import type { WorldSettingsContext } from '../WorldSettings.types';
   import { CONSTANTS } from 'src/constants';
+  import type { DefaultCustomSectionSetting } from 'src/settings/settings.types';
 
   const context = getContext<WorldSettingsContext>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -11,31 +12,33 @@
 
   const appId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.APP_ID);
 
-  let newSection = $state('');
+  let newSection = $state<DefaultCustomSectionSetting>(createNewSection());
 
-  function removeSection(section: string) {
+  function createNewSection(): DefaultCustomSectionSetting {
+    return { section: '' };
+  }
+
+  function removeSection(section: DefaultCustomSectionSetting) {
     context.settings.defaultCustomSections =
       context.settings.defaultCustomSections.filter((x) => x !== section);
   }
 
   function addSection() {
     try {
-      const trimmedNewSection = newSection.trim();
+      const trimmedNewSection = newSection.section?.trim() ?? '';
       if (trimmedNewSection === '') {
         return;
       }
 
-      if (context.settings.defaultCustomSections.includes(trimmedNewSection)) {
-        return;
-      }
-
-      context.settings.defaultCustomSections.push(newSection);
+      context.settings.defaultCustomSections.push({
+        section: trimmedNewSection,
+      });
 
       context.settings.defaultCustomSections.sort((left, right) =>
-        left.localeCompare(right),
+        left.section.localeCompare(right.section),
       );
     } finally {
-      newSection = '';
+      newSection = createNewSection();
     }
   }
 
@@ -59,14 +62,14 @@
       </div>
       <div class="settings-group flex-column small-gap">
         <ul class="custom-section-list flex-column extra-small-gap">
-          {#each context.settings.defaultCustomSections as section (section)}
+          {#each context.settings.defaultCustomSections as sectionConfig (sectionConfig)}
             <li class="flex-row extra-small-gap">
               <span class="flex-grow-1">
-                {section}
+                {sectionConfig.section}
               </span>
               <a
                 class="delete-section flex-grow-0"
-                onclick={() => removeSection(section)}
+                onclick={() => removeSection(sectionConfig)}
                 title={localize('TIDY5E.ContextMenuActionDelete')}
               >
                 <i class="fa-solid fa-trash"></i>
@@ -88,7 +91,7 @@
             )}
             type="text"
             class="flex-grow-1"
-            bind:value={newSection}
+            bind:value={newSection.section}
           />
 
           <a
