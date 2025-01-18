@@ -284,6 +284,7 @@
     <h4>{localize('TIDY5E.Section.LabelPl')}</h4>
     <div class="pills stacked">
       <a
+        title={localize('TIDY5E.Section.SectionSelectorChooseSectionTooltip')}
         class="pill wrapped no-row-gap"
         class:disabled={!context.editable}
         onclick={() =>
@@ -303,6 +304,9 @@
       <a
         class="pill wrapped no-row-gap"
         class:disabled={!context.editable}
+        title={localize(
+          'TIDY5E.Section.SectionSelectorChooseActionSectionTooltip',
+        )}
         onclick={() =>
           new SectionSelectorApplication(
             context.item,

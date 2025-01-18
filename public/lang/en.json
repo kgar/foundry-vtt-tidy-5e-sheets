@@ -818,6 +818,7 @@
       "hideTooltip": "Hide this section"
     },
     "SectionSelectorChooseSectionTooltip": "Choose a Section",
+    "SectionSelectorChooseActionSectionTooltip": "Choose an Action Section",
     "SectionSelectorTitle": "{sectionType}: {documentName}",
     "SectionSelectorExistingSections": "Existing Sections",
     "SectionSelectorCreateNewSection": "Create a new section",

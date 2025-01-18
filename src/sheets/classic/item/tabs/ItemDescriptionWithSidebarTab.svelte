@@ -164,7 +164,7 @@
           </label>
           <a
             title={localize(
-              'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
+              'TIDY5E.Section.SectionSelectorChooseActionSectionTooltip',
             )}
             class="inline-icon-button"
             onclick={() =>
