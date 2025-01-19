@@ -136,8 +136,10 @@
         </p>
       </div>
       {#each context.settings.globalCustomSections as sectionConfig}
+      {@const hasAdvancedSettings = sectionConfig.showWhenEmpty}
         <details>
           <summary
+            class:has-advanced-settings={hasAdvancedSettings}
             onkeyup={(ev) =>
               ev.target === ev.currentTarget || ev.preventDefault()}
           >
@@ -305,5 +307,9 @@
     column-gap: 0.75rem;
     row-gap: 0.5rem;
     flex-wrap: wrap;
+  }
+
+  details summary.has-advanced-settings::marker {
+    color: var(--t5e-primary-accent-color);
   }
 </style>
