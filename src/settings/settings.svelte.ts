@@ -17,7 +17,7 @@ import { BulkMigrationsApplication } from 'src/migrations/BulkMigrationsApplicat
 import { AboutApplication } from 'src/applications/settings/about/AboutApplication';
 import { ApplyTidySheetPreferencesApplication } from 'src/applications/sheet-preferences/ApplyTidySheetPreferencesApplication.svelte';
 import { getDefaultExhaustionConfig } from 'src/features/exhaustion/exhaustion';
-import type { DefaultCustomSectionSetting } from './settings.types';
+import type { GlobalCustomSectionsetting } from './settings.types';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -1892,10 +1892,10 @@ export function createSettings() {
       },
 
       // Custom Sections
-      defaultCustomSections: {
+      globalCustomSections: {
         options: {
-          name: 'TIDY5E.Settings.DefaultCustomSections.name',
-          hint: 'TIDY5E.Settings.DefaultCustomSections.hint',
+          name: 'TIDY5E.Settings.GlobalCustomSections.name',
+          hint: 'TIDY5E.Settings.GlobalCustomSections.hint',
           scope: 'world',
           config: false,
           type: Array,
@@ -1903,12 +1903,11 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<
-            Partial<DefaultCustomSectionSetting>[]
-          >('defaultCustomSections').map((c) => ({
-            alwaysShow: false,
-            filterBySheetType: [],
-            filterByTabId: [],
+            Partial<GlobalCustomSectionsetting>[]
+          >('globalCustomSections').map((c) => ({
             section: '',
+            filters: {},
+            alwaysShow: false,
             ...c,
           }));
         },

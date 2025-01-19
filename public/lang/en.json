@@ -241,7 +241,11 @@
     "tabLabel": "Icons"
   },
   "TIDY5E.WorldSettings.TabCustomSections": {
-    "tabLabel": "Custom Sections"
+    "tabLabel": "Custom Sections",
+    "AlwaysShowLabel": "Always Show",
+    "AlwaysShowTooltip": "All tabs with item tables have a set of default sections which are always shown, even when there are no items. This option makes this section always show in the same way.",
+    "LimitToSpecificSheetsLabel": "Limit to Specific Sheets",
+    "LimitToSpecificTabsLabel": "Limit to Specific Tabs"
   },
 
   "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Multiclass Spellbook Filter",
@@ -725,9 +729,9 @@
     "KoFiLink": "{urlStart}Ko-Fi{urlEnd}",
     "PatreonLink": "{urlStart}Patreon{urlEnd}"
   },
-  "TIDY5E.Settings.DefaultCustomSections": {
-    "name": "Default Custom Sections",
-    "hint": "A list of custom sections which will always be included in the Section Selector.",
+  "TIDY5E.Settings.GlobalCustomSections": {
+    "name": "Global Custom Sections",
+    "hint": "World custom sections which can be configured for various purposes.",
     "AddSection": "Add Section"
   },
   "TIDY5E.Settings.Debug": {

@@ -93,7 +93,7 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
         includeFlagsInSpellScrollCreation:
           currentSettings.includeFlagsInSpellScrollCreation,
         useTidySpellSchoolIcons: currentSettings.useTidySpellSchoolIcons,
-        defaultCustomSections: currentSettings.defaultCustomSections,
+        globalCustomSections: currentSettings.globalCustomSections,
       },
       defaultCharacterTabs: this.mapTabSelectionFields(
         CharacterSheetRuntime.getAllRegisteredTabs(),

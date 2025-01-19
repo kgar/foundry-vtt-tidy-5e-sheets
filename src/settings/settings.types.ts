@@ -1,4 +1,8 @@
-export interface DefaultCustomSectionSetting {
+export interface GlobalCustomSectionSheetFilters {
+  [sheetType: string]: string[];
+}
+
+export interface GlobalCustomSectionsetting {
   /** The section name. Localizable keys are also supported. */
   section: string;
 
@@ -6,17 +10,9 @@ export interface DefaultCustomSectionSetting {
   alwaysShow: boolean;
 
   /**
-   * Limits this section to the indicated sheet types when utilizing default custom sections.
-   * If this array is empty, then apply this section to all sheet types.
+   * Limits this section to the indicated sheet types' indicated tab IDs
+   * when utilizing default custom sections.
+   * If this object empty, then apply this section to all sheet types and all tabs.
    */
-  filterBySheetType: string[];
-
-  /**
-   * Limits this section to the indicated tab IDs when utilizing default custom sections.
-   * If this array is empty, then apply this section to all tabs where
-   * default custom sections are considered.
-   */
-  filterByTabId: string[];
-
-  // TODO: Expand the feature with more cool stuff
+  filters: GlobalCustomSectionSheetFilters;
 }

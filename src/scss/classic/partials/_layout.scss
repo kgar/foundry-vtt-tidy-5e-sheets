@@ -10,6 +10,12 @@
   gap: 1rem;
 }
 
+.inline-flex-row {
+  display: inline-flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
 .flex-column {
   display: flex;
   flex-direction: column;
@@ -114,6 +120,10 @@
 
 .align-items-flex-start {
   align-items: flex-start;
+}
+
+.align-items-flex-end {
+  align-items: flex-end;
 }
 
 .align-items-stretch {
