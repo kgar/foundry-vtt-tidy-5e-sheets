@@ -15,7 +15,12 @@
   let newSection = $state<DefaultCustomSectionSetting>(createNewSection());
 
   function createNewSection(): DefaultCustomSectionSetting {
-    return { section: '' };
+    return {
+      section: '',
+      alwaysShow: false,
+      filterBySheetType: [],
+      filterByTabId: [],
+    };
   }
 
   function removeSection(section: DefaultCustomSectionSetting) {
@@ -30,9 +35,7 @@
         return;
       }
 
-      context.settings.defaultCustomSections.push({
-        section: trimmedNewSection,
-      });
+      context.settings.defaultCustomSections.push(newSection);
 
       context.settings.defaultCustomSections.sort((left, right) =>
         left.section.localeCompare(right.section),
@@ -43,6 +46,37 @@
   }
 
   const localize = FoundryAdapter.localize;
+
+  let sheetTypes: { type: string; label: string }[] = [
+    {
+      type: CONSTANTS.SHEET_TYPE_CHARACTER,
+      label: localize('TYPES.Actor.character'),
+    },
+    { type: CONSTANTS.SHEET_TYPE_NPC, label: localize('DND5E.NPC') },
+    {
+      type: CONSTANTS.SHEET_TYPE_VEHICLE,
+      label: localize('TYPES.Actor.vehicle'),
+    },
+    {
+      type: CONSTANTS.SHEET_TYPE_GROUP,
+      label: localize('TYPES.Actor.vehicle'),
+    },
+    {
+      type: CONSTANTS.SHEET_TYPE_CONTAINER,
+      label: localize('TYPES.Actor.group'),
+    },
+  ];
+
+  let tabs: { id: string; label: string }[] = [
+    {
+      id: 'some ID',
+      label: 'test',
+    },
+    {
+      id: 'some ID 2',
+      label: 'TODO: Get these from the runtimes',
+    },
+  ];
 </script>
 
 <div class="settings-form">
@@ -60,49 +94,20 @@
           )}
         </p>
       </div>
-      <div class="settings-group flex-column small-gap">
-        <ul class="custom-section-list flex-column extra-small-gap">
-          {#each context.settings.defaultCustomSections as sectionConfig (sectionConfig)}
-            <li class="flex-row extra-small-gap">
-              <span class="flex-grow-1">
-                {sectionConfig.section}
-              </span>
-              <a
-                class="delete-section flex-grow-0"
-                onclick={() => removeSection(sectionConfig)}
-                title={localize('TIDY5E.ContextMenuActionDelete')}
-              >
-                <i class="fa-solid fa-trash"></i>
-              </a>
-            </li>
-          {/each}
-        </ul>
+      {#each context.settings.defaultCustomSections as sectionConfig}
+        <div class="settings-group flex-column small-gap">
+          <label>{localize('TIDY5E.Section.Label')}</label>
+          <input type="button" bind:value={sectionConfig.section} />
+          <label>{localize('TIDY5E.Section.AlwaysShowLabel')}</label>
 
-        <form
-          onsubmit={(ev) => {
-            ev.preventDefault();
-            addSection();
-          }}
-          class="flex-row no-gap align-items-center"
-        >
-          <input
-            placeholder={localize(
-              'TIDY5E.Section.SectionSelectorNewSectionName',
-            )}
-            type="text"
-            class="flex-grow-1"
-            bind:value={newSection.section}
-          />
-
-          <a
-            class="add-new-section flex-grow-0"
-            title={localize('TIDY5E.Section.SectionSelectorCreateNewSection')}
-            onclick={() => addSection()}
-          >
-            <i class="fa-solid fa-plus"></i>
-          </a>
-        </form>
-      </div>
+          <label>{localize('TIDY5E.Section.FilterBySheetLabel')}</label>
+          <label>{localize('TIDY5E.Section.FilterByTabLabel')}</label>
+        </div>
+      {/each}
+      <button>
+        <i class="fa-solid fa-plus"></i>
+        {localize('TIDY5E.Section.SectionSelectorCreateNewSection')}
+      </button>
     </section>
   </article>
 </div>

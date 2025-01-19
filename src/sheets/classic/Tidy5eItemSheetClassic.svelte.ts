@@ -45,7 +45,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
     classes: [
       CONSTANTS.MODULE_ID,
       'sheet',
-      'item',
+      CONSTANTS.SHEET_TYPE_ITEM,
       'app-v2',
       CONSTANTS.SHEET_LAYOUT_CLASSIC,
     ],

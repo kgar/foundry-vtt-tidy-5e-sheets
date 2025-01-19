@@ -1902,9 +1902,15 @@ export function createSettings() {
           default: [],
         },
         get() {
-          return FoundryAdapter.getTidySetting<DefaultCustomSectionSetting[]>(
-            'defaultCustomSections'
-          );
+          return FoundryAdapter.getTidySetting<
+            Partial<DefaultCustomSectionSetting>[]
+          >('defaultCustomSections').map((c) => ({
+            alwaysShow: false,
+            filterBySheetType: [],
+            filterByTabId: [],
+            section: '',
+            ...c,
+          }));
         },
       },
 
