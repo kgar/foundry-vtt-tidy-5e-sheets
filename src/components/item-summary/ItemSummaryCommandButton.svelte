@@ -15,7 +15,7 @@
 <button
   type="button"
   class="item-summary-command"
-  title={command.tooltip ?? null}
+  title={FoundryAdapter.localize(command.tooltip ?? '')}
   onclick={() => command.execute?.({ item: item })}
   tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
 >

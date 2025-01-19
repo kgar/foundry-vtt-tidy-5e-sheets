@@ -836,5 +836,7 @@
   "TIDY5E.SortMenu.OptionManual": "Manual",
   "TIDY5E.SortMenu.OptionPrepared": "Prepared",
   "TIDY5E.SortMenu.OptionEquipped": "Equipped",
-  "TIDY5E.Activities.Cast.SourceHintText": "From {itemName}"
+  "TIDY5E.Activities.Cast.SourceHintText": "From {itemName}",
+  "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatLabel": "Info",
+  "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatTooltip": "Show description in chat"
 }

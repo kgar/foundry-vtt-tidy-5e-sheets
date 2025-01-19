@@ -3,7 +3,15 @@ import type { RegisteredItemSummaryCommand } from './types';
 import type { Item5e } from 'src/types/item.types';
 
 export class ItemSummaryRuntime {
-  private static _itemSummaryCommands: RegisteredItemSummaryCommand[] = [];
+  private static _itemSummaryCommands: RegisteredItemSummaryCommand[] = [
+    {
+      execute: (params) => params.item.displayCard(),
+      label: 'TIDY5E.ItemSummaryCommands.ShowDescriptionInChatLabel',
+      tooltip: 'TIDY5E.ItemSummaryCommands.ShowDescriptionInChatTooltip',
+      iconClass: 'fa-solid fa-message',
+      enabled: (params) => !!params.item.actor,
+    },
+  ];
 
   static registerItemSummaryCommands(commands: ItemSummaryCommand[]) {
     ItemSummaryRuntime._itemSummaryCommands.push(...commands);
