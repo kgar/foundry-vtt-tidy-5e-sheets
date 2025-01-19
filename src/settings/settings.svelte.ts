@@ -1906,8 +1906,8 @@ export function createSettings() {
             Partial<GlobalCustomSectionsetting>[]
           >('globalCustomSections').map((c) => ({
             section: '',
-            filters: {},
-            alwaysShow: false,
+            showWhenEmptyFilters: {},
+            showWhenEmpty: false,
             ...c,
           }));
         },

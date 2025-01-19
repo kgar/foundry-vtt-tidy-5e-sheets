@@ -242,10 +242,10 @@
   },
   "TIDY5E.WorldSettings.TabCustomSections": {
     "tabLabel": "Custom Sections",
-    "AlwaysShowLabel": "Always Show",
-    "AlwaysShowTooltip": "All tabs with item tables have a set of default sections which are always shown, even when there are no items. This option makes this section always show in the same way.",
-    "LimitToSpecificSheetsLabel": "Limit to Specific Sheets",
-    "LimitToSpecificTabsLabel": "Limit to Specific Tabs"
+    "ShowWhenEmptyLabel": "Show Section When Empty",
+    "ShowWhenEmptyTooltip": "All tabs with item tables have a set of default sections which are always shown even when there are no items in the section. Always show this section, even when empty.",
+    "LimitToSpecificSheetsLabel": "Limit Shown Section to Specific Sheets",
+    "LimitToSpecificTabsLabel": "Limit Shown Section to Specific Tabs"
   },
 
   "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Multiclass Spellbook Filter",
@@ -731,7 +731,7 @@
   },
   "TIDY5E.Settings.GlobalCustomSections": {
     "name": "Global Custom Sections",
-    "hint": "World custom sections which can be configured for various purposes.",
+    "hint": "World custom sections which can be configured for various purposes. Global Custom Sections will always be included in the Section Selector.",
     "AddSection": "Add Section"
   },
   "TIDY5E.Settings.Debug": {

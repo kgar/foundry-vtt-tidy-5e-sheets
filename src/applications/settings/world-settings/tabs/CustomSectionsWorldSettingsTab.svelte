@@ -23,8 +23,8 @@
   function createNewSection(): GlobalCustomSectionSetting {
     return {
       section: '',
-      alwaysShow: false,
-      filters: {},
+      showWhenEmpty: false,
+      showWhenEmptyFilters: {},
     };
   }
 
@@ -97,9 +97,9 @@
     checked: boolean,
   ) {
     if (!checked) {
-      delete sectionConfig.filters[sheetType];
+      delete sectionConfig.showWhenEmptyFilters[sheetType];
     } else {
-      sectionConfig.filters[sheetType] ??= [];
+      sectionConfig.showWhenEmptyFilters[sheetType] ??= [];
     }
   }
 
@@ -110,11 +110,12 @@
     checked: boolean,
   ) {
     if (!checked) {
-      sectionConfig.filters[sheetType] = sectionConfig.filters[
-        sheetType
-      ].filter((x) => x !== tabId);
+      sectionConfig.showWhenEmptyFilters[sheetType] =
+        sectionConfig.showWhenEmptyFilters[sheetType].filter(
+          (x) => x !== tabId,
+        );
     } else {
-      sectionConfig.filters[sheetType].push(tabId);
+      sectionConfig.showWhenEmptyFilters[sheetType].push(tabId);
     }
   }
 </script>
@@ -162,78 +163,82 @@
             <div>
               <label
                 title={localize(
-                  'TIDY5E.WorldSettings.TabCustomSections.AlwaysShowTooltip',
+                  'TIDY5E.WorldSettings.TabCustomSections.ShowWhenEmptyTooltip',
                 )}
                 class="flex-row align-items-center extra-small-gap"
               >
                 <input
                   type="checkbox"
-                  bind:checked={sectionConfig.alwaysShow}
+                  bind:checked={sectionConfig.showWhenEmpty}
                 />
                 <span
                   >{localize(
-                    'TIDY5E.WorldSettings.TabCustomSections.AlwaysShowLabel',
+                    'TIDY5E.WorldSettings.TabCustomSections.ShowWhenEmptyLabel',
                   )}</span
                 >
+                <i class="fa-solid fa-info-circle"></i>
               </label>
             </div>
 
-            <div class="custom-section-sheets">
-              <div class="custom-section-setting-header">
-                {localize(
-                  'TIDY5E.WorldSettings.TabCustomSections.LimitToSpecificSheetsLabel',
-                )}
-              </div>
-              {#each sheetTypes as sheetType}
-                {@const sheetSelected = sheetType.type in sectionConfig.filters}
-                <div class="custom-section-sheet">
-                  <label class="flex-row align-items-center extra-small-gap">
-                    <input
-                      type="checkbox"
-                      checked={sheetSelected}
-                      onchange={(ev) =>
-                        toggleSheetFilter(
-                          sectionConfig,
-                          sheetType.type,
-                          ev.currentTarget.checked,
-                        )}
-                    />
-                    {sheetType.label}
-                  </label>
-                  {#if sheetSelected}
-                    <div class="custom-section-sheet-tabs">
-                      <div class="custom-section-setting-header">
-                        {localize(
-                          'TIDY5E.WorldSettings.TabCustomSections.LimitToSpecificTabsLabel',
-                        )}
-                      </div>
-                      <div class="custom-section-sheet-tab-options">
-                        {#each sheetType.tabs as tab (tab.id)}
-                          <label
-                            class="flex-row align-items-center extra-small-gap"
-                          >
-                            <input
-                              type="checkbox"
-                              checked={!!sectionConfig.filters[
-                                sheetType.type
-                              ]?.includes(tab.id)}
-                              onchange={(ev) =>
-                                toggleTab(
-                                  sectionConfig,
-                                  sheetType.type,
-                                  tab.id,
-                                  ev.currentTarget.checked,
-                                )}
-                            />
-                            {tab.title}
-                          </label>
-                        {/each}
-                      </div>
-                    </div>
-                  {/if}
+            {#if sectionConfig.showWhenEmpty}
+              <div class="custom-section-sheets">
+                <div class="custom-section-setting-header">
+                  {localize(
+                    'TIDY5E.WorldSettings.TabCustomSections.LimitToSpecificSheetsLabel',
+                  )}
                 </div>
-              {/each}
-            </div>
+                {#each sheetTypes as sheetType}
+                  {@const sheetSelected =
+                    sheetType.type in sectionConfig.showWhenEmptyFilters}
+                  <div class="custom-section-sheet">
+                    <label class="flex-row align-items-center extra-small-gap">
+                      <input
+                        type="checkbox"
+                        checked={sheetSelected}
+                        onchange={(ev) =>
+                          toggleSheetFilter(
+                            sectionConfig,
+                            sheetType.type,
+                            ev.currentTarget.checked,
+                          )}
+                      />
+                      {sheetType.label}
+                    </label>
+                    {#if sheetSelected && sheetType.tabs.length > 0}
+                      <div class="custom-section-sheet-tabs">
+                        <div class="custom-section-setting-header">
+                          {localize(
+                            'TIDY5E.WorldSettings.TabCustomSections.LimitToSpecificTabsLabel',
+                          )}
+                        </div>
+                        <div class="custom-section-sheet-tab-options">
+                          {#each sheetType.tabs as tab (tab.id)}
+                            <label
+                              class="flex-row align-items-center extra-small-gap"
+                            >
+                              <input
+                                type="checkbox"
+                                checked={!!sectionConfig.showWhenEmptyFilters[
+                                  sheetType.type
+                                ]?.includes(tab.id)}
+                                onchange={(ev) =>
+                                  toggleTab(
+                                    sectionConfig,
+                                    sheetType.type,
+                                    tab.id,
+                                    ev.currentTarget.checked,
+                                  )}
+                              />
+                              {tab.title}
+                            </label>
+                          {/each}
+                        </div>
+                      </div>
+                    {/if}
+                  </div>
+                {/each}
+              </div>
+            {/if}
           </div>
         </details>
 
@@ -270,6 +275,9 @@
     display: flex;
     flex-direction: column;
     gap: 0.325rem;
+    margin-inline-start: 0.5rem;
+    padding-inline-start: 0.5rem;
+    border-left: 0.125rem solid var(--t5e-separator-color);
   }
 
   .custom-section-setting-header {
@@ -281,6 +289,8 @@
   .custom-section-sheet-tabs {
     padding: 0.25rem 0.5rem 0.5rem 0.5rem;
     margin-block: 0.5rem;
+    margin-inline-start: 0.5rem;
+    padding-inline-start: 0.5rem;
     background-color: var(--t5e-faintest-color);
     border-radius: 0.25rem;
 

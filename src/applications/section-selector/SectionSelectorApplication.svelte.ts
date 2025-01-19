@@ -30,6 +30,7 @@ export class SectionSelectorApplication extends SvelteApplicationMixin<SectionSe
     document: any,
     flag: string,
     sectionType: string,
+
     ...rest: any[]
   ) {
     super(...rest);
@@ -110,6 +111,7 @@ export class SectionSelectorApplication extends SvelteApplicationMixin<SectionSe
 
   async _prepareContext() {
     const sections = SheetSections.getKnownCustomSections(this._document);
+
     const currentSection = FoundryAdapter.getProperty<string>(
       this._document,
       this._prop
