@@ -136,7 +136,7 @@
         </p>
       </div>
       {#each context.settings.globalCustomSections as sectionConfig}
-      {@const hasAdvancedSettings = sectionConfig.showWhenEmpty}
+        {@const hasAdvancedSettings = sectionConfig.showWhenEmpty}
         <details>
           <summary
             class:has-advanced-settings={hasAdvancedSettings}
@@ -144,11 +144,21 @@
               ev.target === ev.currentTarget || ev.preventDefault()}
           >
             <span class="section-summary">
-              <input
-                type="text"
-                bind:value={sectionConfig.section}
-                placeholder={localize('TIDY5E.Section.Label')}
-              />
+              <span class="input-group">
+                <input
+                  type="text"
+                  class="custom-section-name"
+                  bind:value={sectionConfig.section}
+                  placeholder={localize('TIDY5E.Section.Label')}
+                />
+                {#if hasAdvancedSettings}
+                  <span class="customize-indicator">
+                    {localize(
+                      'TIDY5E.WorldSettings.TabCustomSections.CustomizedIndicatorLabel',
+                    )}
+                  </span>
+                {/if}
+              </span>
               <button
                 type="button"
                 title={localize('TIDY5E.ContextMenuActionDelete')}
@@ -247,6 +257,7 @@
         <HorizontalLineSeparator />
       {/each}
       <button
+        type="button"
         onclick={() =>
           context.settings.globalCustomSections.push(createNewSection())}
       >
@@ -309,7 +320,17 @@
     flex-wrap: wrap;
   }
 
-  details summary.has-advanced-settings::marker {
-    color: var(--t5e-primary-accent-color);
+  .custom-section-name {
+    flex: 1;
+  }
+
+  .customize-indicator {
+    font-size: var(--font-size-12);
+    color: var(--t5e-tertiary-color);
+    align-self: center;
+  }
+
+  .input-group {
+    flex: 1;
   }
 </style>

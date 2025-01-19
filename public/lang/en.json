@@ -242,6 +242,7 @@
   },
   "TIDY5E.WorldSettings.TabCustomSections": {
     "tabLabel": "Custom Sections",
+    "CustomizedIndicatorLabel": "Customized",
     "ShowWhenEmptyLabel": "Show Section When Empty",
     "ShowWhenEmptyTooltip": "All tabs with item tables have a set of default sections which are always shown even when there are no items in the section. Always show this section, even when empty.",
     "LimitToSpecificSheetsLabel": "Limit Shown Section to Specific Sheets",
