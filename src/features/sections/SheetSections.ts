@@ -529,4 +529,33 @@ export class SheetSections {
       .filter((x) => !isNil(x, ''))
       .toSorted((left, right) => left.localeCompare(right));
   }
+
+  static getFilteredGlobalSectionsToShowWhenEmpty(
+    document: any,
+    tabId: string
+  ) {
+    const sheetType = document.type;
+    return settings.value.globalCustomSections
+      .filter((x) => {
+        if (!x.showWhenEmpty) {
+          return false;
+        }
+
+        const isUnfiltered =
+          Object.entries(x.showWhenEmptyFilters).length === 0;
+
+        if (isUnfiltered) {
+          return true;
+        }
+
+        const filters = x.showWhenEmptyFilters[sheetType];
+        const sheetTypeIsIncluded = filters !== undefined;
+
+        return (
+          sheetTypeIsIncluded &&
+          (filters.length === 0 || filters.includes(tabId))
+        );
+      })
+      .map((x) => x.section);
+  }
 }
