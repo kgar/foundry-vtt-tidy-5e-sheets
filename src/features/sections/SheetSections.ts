@@ -115,6 +115,7 @@ export class SheetSections {
 
   static prepareTidySpellbook(
     context: CharacterSheetContext | NpcSheetContext,
+    tabId: string,
     spells: Item5e[],
     options: Partial<SpellbookSection> = {},
     app: Tidy5eCharacterSheet | Tidy5eNpcSheet
@@ -166,10 +167,11 @@ export class SheetSections {
 
     SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
       context.actor,
-      CONSTANTS.TAB_ACTOR_SPELLBOOK
+      tabId
     ).forEach((s) => {
       spellbookMap[s] ??= SheetSections.createSpellbookSection(s, {
         canCreate: true,
+        ...options,
       });
     });
 

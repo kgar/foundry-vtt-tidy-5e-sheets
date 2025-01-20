@@ -303,8 +303,7 @@ export class Tidy5eCharacterSheet
     const inventorySortMode =
       characterPreferences.tabs?.[CONSTANTS.TAB_ACTOR_INVENTORY]?.sort ?? 'm';
     const spellbookSortMode =
-      characterPreferences.tabs?.[CONSTANTS.TAB_ACTOR_SPELLBOOK]?.sort ??
-      'm';
+      characterPreferences.tabs?.[CONSTANTS.TAB_ACTOR_SPELLBOOK]?.sort ?? 'm';
     const featureSortMode =
       characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_FEATURES]?.sort ??
       'm';
@@ -1211,6 +1210,7 @@ export class Tidy5eCharacterSheet
     // - set up `key` in the spellbook prep code, just like `prop`
     const spellbook = SheetSections.prepareTidySpellbook(
       context,
+      CONSTANTS.TAB_ACTOR_SPELLBOOK,
       spells,
       {
         canCreate: true,
@@ -1221,6 +1221,7 @@ export class Tidy5eCharacterSheet
     // Section Favorite Spells
     const favoriteSpellbook = SheetSections.prepareTidySpellbook(
       context,
+      CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
       favorites.spells,
       {
         canCreate: false,
@@ -1261,6 +1262,8 @@ export class Tidy5eCharacterSheet
     // Section Features
     const features: Record<string, CharacterFeatureSection> =
       CharacterSheetSections.buildFeaturesSections(
+        this.actor,
+        CONSTANTS.TAB_CHARACTER_FEATURES,
         species,
         backgrounds,
         classes,
@@ -1273,6 +1276,8 @@ export class Tidy5eCharacterSheet
     // Section favorite features
     const favoriteFeatures: Record<string, CharacterFeatureSection> =
       CharacterSheetSections.buildFeaturesSections(
+        this.actor,
+        CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
         favorites.species,
         favorites.backgrounds,
         favorites.classes,

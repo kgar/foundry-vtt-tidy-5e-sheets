@@ -6,15 +6,17 @@ import type {
   CharacterItemPartitions,
   FavoriteSection,
   GenericFavoriteSection,
-  InventorySection,
   TypedActivityFavoriteSection,
   TypedEffectFavoriteSection,
 } from 'src/types/types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { SheetSections } from './SheetSections';
 
 export class CharacterSheetSections {
   static buildFeaturesSections(
+    actor: any,
+    tabId: string,
     races: any[],
     backgrounds: any[],
     classes: any[],
@@ -96,6 +98,16 @@ export class CharacterSheetSections {
       )
     );
 
+    SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
+      actor,
+      tabId
+    ).forEach((s) => {
+      features[s] ??= CharacterSheetSections.createFeatureSection(s, {
+        canCreate: true,
+        ...options,
+      });
+    });
+
     return features;
   }
 
@@ -112,7 +124,19 @@ export class CharacterSheetSections {
 
     const customSection: CharacterFeatureSection = (features[
       customSectionName
-    ] ??= {
+    ] ??= CharacterSheetSections.createFeatureSection(
+      customSectionName,
+      customSectionOptions
+    ));
+
+    customSection.items.push(feat);
+  }
+
+  static createFeatureSection(
+    customSectionName: string,
+    customSectionOptions: Partial<CharacterFeatureSection>
+  ): CharacterFeatureSection {
+    return {
       label: customSectionName,
       items: [],
       hasActions: true,
@@ -131,9 +155,7 @@ export class CharacterSheetSections {
       },
       show: true,
       ...customSectionOptions,
-    });
-
-    customSection.items.push(feat);
+    };
   }
 
   static partitionItem(

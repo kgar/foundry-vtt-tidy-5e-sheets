@@ -26,7 +26,20 @@ export class NpcSheetSections {
       return;
     }
 
-    const customSection: NpcAbilitySection = (abilities[customSectionName] ??= {
+    const customSection: NpcAbilitySection = (abilities[customSectionName] ??=
+      NpcSheetSections.createFeatureSection(
+        customSectionName,
+        customSectionOptions
+      ));
+
+    customSection.items.push(feat);
+  }
+
+  static createFeatureSection(
+    customSectionName: string,
+    customSectionOptions: Partial<NpcAbilitySection>
+  ): NpcAbilitySection {
+    return {
       label: customSectionName,
       items: [],
       hasActions: true,
@@ -41,8 +54,6 @@ export class NpcSheetSections {
       },
       show: true,
       ...customSectionOptions,
-    });
-
-    customSection.items.push(feat);
+    };
   }
 }

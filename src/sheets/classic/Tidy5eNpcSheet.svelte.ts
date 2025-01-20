@@ -1035,11 +1035,21 @@ export class Tidy5eNpcSheet
       } else features.equipment.items.push(item);
     }
 
+    SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
+      this.actor,
+      CONSTANTS.TAB_NPC_ABILITIES
+    ).forEach((s) => {
+      features[s] ??= NpcSheetSections.createFeatureSection(s, {
+        canCreate: true,
+      });
+    });
+
     // Organize Spellbook
     // Section spells
     // TODO: Take over `_prepareSpellbook` and have custom sectioning built right in
     const spellbook = SheetSections.prepareTidySpellbook(
       context,
+      CONSTANTS.TAB_ACTOR_SPELLBOOK,
       spells,
       {
         canCreate: true,
