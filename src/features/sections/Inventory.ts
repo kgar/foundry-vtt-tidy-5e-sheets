@@ -139,19 +139,6 @@ export class Inventory {
       );
     }
 
-    // TODO: Revisit this feature after the overhaul and determine how "Always Show",
-    // if relevant would affect container inventories. It may be more appropriate
-    // to suggest "Always Shown" custom sections for containers in the "Add Item" dialog
-    // from the One Add Button.
-    // SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
-    //   container,
-    //   CONSTANTS.TAB_CONTAINER_CONTENTS
-    // ).forEach((s) => {
-    //   inventory[s] ??= Inventory.createInventorySection(s, inventoryTypes, {
-    //     canCreate: true,
-    //   });
-    // });
-
     return Object.values(inventory);
   }
 }
