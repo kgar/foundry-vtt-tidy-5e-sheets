@@ -58,16 +58,17 @@
       label: localize('TYPES.Actor.group'),
       tabs: mapTabs(GroupSheetRuntime.getAllRegisteredTabs()),
     },
-    {
-      type: CONSTANTS.SHEET_TYPE_CONTAINER,
-      label: localize('TYPES.Item.container'),
-      tabs: [
-        {
-          id: CONSTANTS.TAB_CONTAINER_CONTENTS,
-          title: ItemSheetRuntime.getTabTitle(CONSTANTS.TAB_CONTAINER_CONTENTS),
-        },
-      ],
-    },
+    // This setting will take a great deal more thought. Leave it disabled for now, because the implementation details are hairy.
+    // {
+    //   type: CONSTANTS.SHEET_TYPE_CONTAINER,
+    //   label: localize('TYPES.Item.container'),
+    //   tabs: [
+    //     {
+    //       id: CONSTANTS.TAB_CONTAINER_CONTENTS,
+    //       title: ItemSheetRuntime.getTabTitle(CONSTANTS.TAB_CONTAINER_CONTENTS),
+    //     },
+    //   ],
+    // },
   ];
 
   function mapTabs(tabs: RegisteredTab<any>[]) {

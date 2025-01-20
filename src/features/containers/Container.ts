@@ -12,14 +12,17 @@ import { TidyHooks } from 'src/foundry/TidyHooks';
 import type { ContainerCapacityContext } from 'src/types/types';
 
 export class Container {
-  static async getContainerContents(item: Item5e): Promise<ContainerContents> {
-    const containerItems = (await item.system.contents).values();
+  static async getContainerContents(
+    container: Item5e
+  ): Promise<ContainerContents> {
+    const containerContentsInventory =
+      await Inventory.getContainerContentsInventory(container);
 
     return {
-      capacity: await item.system.computeCapacity(),
-      currency: item.system.currency,
-      contents: Inventory.getInventory(containerItems),
-      itemContext: await Container.getContainerItemContext(item),
+      capacity: await container.system.computeCapacity(),
+      currency: container.system.currency,
+      contents: containerContentsInventory,
+      itemContext: await Container.getContainerItemContext(container),
     };
   }
 

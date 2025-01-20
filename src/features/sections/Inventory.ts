@@ -7,6 +7,7 @@ import type {
   InventorySection,
 } from 'src/types/types';
 import { error } from 'src/utils/logging';
+import { SheetSections } from './SheetSections';
 
 export class Inventory {
   static getDefaultInventoryTypes(): string[] {
@@ -117,17 +118,19 @@ export class Inventory {
     return containerPanelItems;
   }
 
-  static getInventory(
-    items: Item5e[],
+  static async getContainerContentsInventory(
+    container: Item5e,
     options: Partial<InventorySection> = {
       canCreate: false,
     }
-  ): InventorySection[] {
+  ): Promise<InventorySection[]> {
+    const containerItems = (await container.system.contents).values();
+
     const inventory = Inventory.getDefaultInventorySections();
 
     const inventoryTypes = Inventory.getDefaultInventoryTypes();
 
-    for (let item of items) {
+    for (let item of containerItems) {
       Inventory.applyInventoryItemToSection(
         inventory,
         item,
@@ -135,6 +138,19 @@ export class Inventory {
         options
       );
     }
+
+    // TODO: Revisit this feature after the overhaul and determine how "Always Show",
+    // if relevant would affect container inventories. It may be more appropriate
+    // to suggest "Always Shown" custom sections for containers in the "Add Item" dialog
+    // from the One Add Button.
+    // SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
+    //   container,
+    //   CONSTANTS.TAB_CONTAINER_CONTENTS
+    // ).forEach((s) => {
+    //   inventory[s] ??= Inventory.createInventorySection(s, inventoryTypes, {
+    //     canCreate: true,
+    //   });
+    // });
 
     return Object.values(inventory);
   }
