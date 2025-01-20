@@ -998,6 +998,19 @@ export class Tidy5eNpcSheet
     const inventory: ActorInventoryTypes =
       Inventory.getDefaultInventorySections();
 
+    SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
+      context.actor,
+      CONSTANTS.TAB_ACTOR_INVENTORY
+    ).forEach((s) => {
+      inventory[s] ??= Inventory.createInventorySection(
+        s,
+        inventoryTypesArray,
+        {
+          canCreate: true,
+        }
+      );
+    });
+
     // Organize Features
     for (let item of other) {
       if (inventoryTypes.has(item.type)) {

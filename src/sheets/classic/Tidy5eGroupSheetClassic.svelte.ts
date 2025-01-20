@@ -47,9 +47,9 @@ import { formatAsModifier } from 'src/utils/formatting';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import SheetHeaderEditModeToggle from 'src/sheets/classic/shared/SheetHeaderEditModeToggle.svelte';
 import { Activities } from 'src/features/activities/activities';
-import type { Activity5e } from 'src/foundry/dnd5e.types';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { ImportSheetControl } from '../../features/sheet-header-controls/ImportSheetControl';
+import { SheetSections } from 'src/features/sections/SheetSections';
 
 type MemberStats = {
   currentHP: number;
@@ -403,6 +403,19 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
         );
       }
     }
+
+    SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
+      this.actor,
+      CONSTANTS.TAB_ACTOR_INVENTORY
+    ).forEach((s) => {
+      inventory[s] ??= Inventory.createInventorySection(
+        s,
+        inventoryTypesArray,
+        {
+          canCreate: true,
+        }
+      );
+    });
 
     let context: GroupSheetClassicContext = {
       actor: this.actor,

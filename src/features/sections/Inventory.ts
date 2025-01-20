@@ -62,7 +62,22 @@ export class Inventory {
       return;
     }
 
-    const customSection: InventorySection = (inventory[customSectionName] ??= {
+    const customSection: InventorySection = (inventory[customSectionName] ??=
+      Inventory.createInventorySection(
+        customSectionName,
+        defaultInventoryTypes,
+        customSectionOptions
+      ));
+
+    customSection.items.push(item);
+  }
+
+  static createInventorySection(
+    customSectionName: string,
+    defaultInventoryTypes: string[],
+    customSectionOptions: Partial<InventorySection>
+  ): InventorySection {
+    return {
       dataset: { [TidyFlags.section.prop]: customSectionName },
       items: [],
       label: customSectionName,
@@ -74,9 +89,7 @@ export class Inventory {
       },
       show: true,
       ...customSectionOptions,
-    });
-
-    customSection.items.push(item);
+    };
   }
 
   static async getContainerPanelItems(items: Item5e[]) {

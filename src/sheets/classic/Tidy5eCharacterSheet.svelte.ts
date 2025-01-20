@@ -1185,6 +1185,15 @@ export class Tidy5eCharacterSheet
       });
     }
 
+    SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
+      context.actor,
+      CONSTANTS.TAB_ACTOR_INVENTORY
+    ).forEach((s) => {
+      inventory[s] ??= Inventory.createInventorySection(s, inventoryTypes, {
+        canCreate: true,
+      });
+    });
+
     // Section favorite items by type
     for (let item of favorites.items) {
       const ctx = (context.itemContext[item.id] ??= {});
@@ -1198,6 +1207,15 @@ export class Tidy5eCharacterSheet
         }
       );
     }
+
+    SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
+      context.actor,
+      CONSTANTS.TAB_CHARACTER_ATTRIBUTES
+    ).forEach((s) => {
+      inventory[s] ??= Inventory.createInventorySection(s, inventoryTypes, {
+        canCreate: true,
+      });
+    });
 
     context.spellcastingInfo = FoundryAdapter.getSpellcastingInfo(
       this.actor,
