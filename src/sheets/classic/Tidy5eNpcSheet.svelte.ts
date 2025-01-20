@@ -28,7 +28,7 @@ import { settings } from 'src/settings/settings.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { mount, unmount } from 'svelte';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
-import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
+import NpcSheetRuntime from 'src/runtime/NpcSheetRuntime.svelte';
 import {
   actorUsesActionFeature,
   getActorActionSections,
@@ -251,7 +251,7 @@ export class Tidy5eNpcSheet
       npcPreferences.tabs?.[CONSTANTS.TAB_NPC_ABILITIES]?.sort ?? 'm';
 
     const spellbookSortMode =
-      npcPreferences.tabs?.[CONSTANTS.TAB_NPC_SPELLBOOK]?.sort ?? 'm';
+      npcPreferences.tabs?.[CONSTANTS.TAB_ACTOR_SPELLBOOK]?.sort ?? 'm';
 
     const actionListSortMode =
       npcPreferences.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS]?.sort ?? 'm';
@@ -397,7 +397,7 @@ export class Tidy5eNpcSheet
           },
         ],
       },
-      [CONSTANTS.TAB_NPC_SPELLBOOK]: {
+      [CONSTANTS.TAB_ACTOR_SPELLBOOK]: {
         utilityToolbarCommands: [
           {
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
@@ -405,7 +405,7 @@ export class Tidy5eNpcSheet
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
-                CONSTANTS.TAB_NPC_SPELLBOOK,
+                CONSTANTS.TAB_ACTOR_SPELLBOOK,
                 'sort',
                 'm'
               );
@@ -418,7 +418,7 @@ export class Tidy5eNpcSheet
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
-                CONSTANTS.TAB_NPC_SPELLBOOK,
+                CONSTANTS.TAB_ACTOR_SPELLBOOK,
                 'sort',
                 'a'
               );
@@ -460,7 +460,7 @@ export class Tidy5eNpcSheet
             execute: () =>
               // TODO: Use app.messageBus
               (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
+                tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
                 message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
           },
@@ -470,7 +470,7 @@ export class Tidy5eNpcSheet
             execute: () =>
               // TODO: Use app.messageBus
               (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
+                tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
           },
@@ -499,9 +499,9 @@ export class Tidy5eNpcSheet
               new DocumentTabSectionConfigApplication({
                 document: context.actor,
                 sections: sections,
-                tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
+                tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
                 tabTitle: NpcSheetRuntime.getTabTitle(
-                  CONSTANTS.TAB_NPC_SPELLBOOK
+                  CONSTANTS.TAB_ACTOR_SPELLBOOK
                 ),
               }).render(true);
             },
@@ -998,6 +998,19 @@ export class Tidy5eNpcSheet
     const inventory: ActorInventoryTypes =
       Inventory.getDefaultInventorySections();
 
+    SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
+      context.actor,
+      CONSTANTS.TAB_ACTOR_INVENTORY
+    ).forEach((s) => {
+      inventory[s] ??= Inventory.createInventorySection(
+        s,
+        inventoryTypesArray,
+        {
+          canCreate: true,
+        }
+      );
+    });
+
     // Organize Features
     for (let item of other) {
       if (inventoryTypes.has(item.type)) {
@@ -1035,11 +1048,21 @@ export class Tidy5eNpcSheet
       } else features.equipment.items.push(item);
     }
 
+    SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
+      this.actor,
+      CONSTANTS.TAB_NPC_ABILITIES
+    ).forEach((s) => {
+      features[s] ??= NpcSheetSections.createFeatureSection(s, {
+        canCreate: true,
+      });
+    });
+
     // Organize Spellbook
     // Section spells
     // TODO: Take over `_prepareSpellbook` and have custom sectioning built right in
     const spellbook = SheetSections.prepareTidySpellbook(
       context,
+      CONSTANTS.TAB_ACTOR_SPELLBOOK,
       spells,
       {
         canCreate: true,

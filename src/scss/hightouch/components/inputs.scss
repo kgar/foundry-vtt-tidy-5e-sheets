@@ -330,8 +330,6 @@ input[type='checkbox'] {
   }
 }
 
-// To customize the chevron, try the bootstrap approach: https://getbootstrap.com/docs/5.3/forms/select/
-
 select {
   --bg-image-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='fill: %23666' viewBox='0 0 512 512'%3E%3C!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--%3E%3Cpath d='M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z'/%3E%3C/svg%3E");
   --bg-image-backdrop: none;
@@ -349,6 +347,8 @@ select {
 
   appearance: none;
   cursor: pointer;
+
+  font-size: var(--font-size-13);
 
   background-color: var(--t5e-component-card-onDefault-default);
   background-image: var(--bg-image-chevron), var(--bg-image-backdrop);
@@ -381,5 +381,46 @@ select {
     border-color: transparent;
     color: var(--t5e-color-text-onDefault-lightest);
     box-shadow: none;
+  }
+}
+
+&.dark,
+.inverse {
+  input[type='text'] {
+    border-color: var(--t5e-component-field-onInverse-border, #7a7a7a);
+    background: var(--t5e-component-field-onInverse-background, #252830);
+    box-shadow: 0px 0px 4px 0px var(--dnd5e-shadow-15, rgba(0, 0, 0, 0.15)); // TODO: make variable
+    color: var(--t5e-color-text-onInverse-default);
+
+    &::placeholder {
+      color: var(--t5e-color-text-onInverse-disabled);
+    }
+  }
+
+  select {
+    --bg-image-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='fill: %23999' viewBox='0 0 512 512'%3E%3C!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--%3E%3Cpath d='M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z'/%3E%3C/svg%3E");
+    background-color: var(--t5e-component-field-onInverse-background, #252830);
+    border-color: var(--t5e-component-field-onInverse-border, #7a7a7a);
+    color: var(--t5e-color-text-onInverse-default);
+
+    option {
+      background: var(--t5e-component-field-onInverse-background, #252830);
+      color: var(--t5e-color-text-onInverse-default);
+    }
+  }
+
+  .input-group {
+    border-radius: 0.125rem;
+    border-color: var(--t5e-component-field-onInverse-border, #7a7a7a);
+    background: var(--t5e-component-field-onInverse-background, #252830);
+
+    input[type='text'] {
+      background: transparent;
+      border-color: transparent;
+    }
+
+    & > :not(input):not(i) {
+      color: var(--t5e-color-text-onInverse-lightest);
+    }
   }
 }

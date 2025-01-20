@@ -9,11 +9,15 @@
   import ExhaustionWorldSettingsTab from './tabs/ExhaustionWorldSettingsTab.svelte';
   import SheetLockWorldSettingsTab from './tabs/SheetLockWorldSettingsTab.svelte';
   import { getContext } from 'svelte';
-  import type { WorldSettingsContext, WorldSettingsFunctions } from './WorldSettings.types';
+  import type {
+    WorldSettingsContext,
+    WorldSettingsFunctions,
+  } from './WorldSettings.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import IconsWorldSettingsTab from './tabs/IconsWorldSettingsTab.svelte';
+  import CustomSectionsWorldSettingsTab from './tabs/CustomSectionsWorldSettingsTab.svelte';
 
   let selectedTabId: string = $state('');
   let functions = getContext<WorldSettingsFunctions>(
@@ -88,6 +92,14 @@
         type: 'svelte',
       },
     },
+    {
+      id: CONSTANTS.TAB_WORLD_SETTINGS_CUSTOM_SECTIONS,
+      title: 'TIDY5E.WorldSettings.TabCustomSections.tabLabel',
+      content: {
+        component: CustomSectionsWorldSettingsTab,
+        type: 'svelte',
+      },
+    },
   ];
 
   selectedTabId ??= tabs[0].id;
@@ -117,7 +129,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="settings-form">
+<div class="settings-form user-select-text">
   <div role="presentation" class="vertical-tab-container flex-column no-gap">
     <Tabs {tabs} bind:selectedTabId orientation="vertical" />
     <div role="presentation" class="remaining-vertical-space"></div>
@@ -167,7 +179,7 @@
     :global(.tidy-sheet-body) {
       grid-area: body;
       overflow-y: scroll;
-      padding-top: 0.5rem;
+      padding-top: 0;
       padding-right: 0.5rem;
       margin-right: -0.25rem;
       flex: 1;

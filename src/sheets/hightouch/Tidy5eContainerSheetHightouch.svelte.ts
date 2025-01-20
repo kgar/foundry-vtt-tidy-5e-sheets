@@ -9,6 +9,7 @@ import { DragAndDropMixin } from 'src/mixins/DragAndDropBaseMixin';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type {
   ContainerSheetHightouchContext,
+  CurrencyContext,
   Item5e,
   ItemChatData,
   ItemDescription,
@@ -33,7 +34,7 @@ import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { settings, SettingsProvider } from 'src/settings/settings.svelte';
-import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
+import ContainerHeaderStart from './item/parts/ContainerHeaderStart.svelte';
 
 export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
   SvelteApplicationMixin<ContainerSheetHightouchContext>(
@@ -133,7 +134,7 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
   _createAdditionalComponents(node: HTMLElement) {
     const windowHeader = this.element.querySelector('.window-header');
 
-    const sheetLock = mount(ItemHeaderStart, {
+    const headerStart = mount(ContainerHeaderStart, {
       target: windowHeader,
       anchor: windowHeader.querySelector('.window-title'),
       context: new Map<string, any>([
@@ -141,7 +142,7 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
       ]),
     });
 
-    return [sheetLock];
+    return [headerStart];
   }
 
   async _prepareContext(
@@ -262,13 +263,28 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
 
     const unlocked = FoundryAdapter.isSheetUnlocked(this.item) && editable;
 
+    const currencies: CurrencyContext[] = [];
+
+    Object.keys(CONFIG.DND5E.currencies).forEach((key) =>
+      currencies.push({
+        key: key,
+        value: this.item.system.currency[key] as number,
+        abbr:
+          CONFIG.DND5E.currencies[key as keyof typeof CONFIG.DND5E.currencies]
+            ?.abbreviation ?? key,
+      })
+    );
+
+    const capacityContext = await Container.computeCapacity(this.item);
+
     const context: ContainerSheetHightouchContext = {
-      capacity: await this.item.system.computeCapacity(),
+      capacity: capacityContext,
       concealDetails:
         !game.user.isGM && this.document.system.identified === false,
       config: CONFIG.DND5E,
       containerContents: await Container.getContainerContents(this.item),
       customContent: [],
+      currencies,
       document: this.document,
       editable: editable,
       enriched: enriched,

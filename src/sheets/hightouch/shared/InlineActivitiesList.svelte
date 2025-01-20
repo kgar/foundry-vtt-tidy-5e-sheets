@@ -5,6 +5,7 @@
   import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
+  import type { TidyTableColumns } from 'src/components/table/TidyTable.svelte';
 
   interface Props {
     item?: Item5e | null;
@@ -17,14 +18,20 @@
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
-  const gridTemplateColumns = `
-      /* Name */
-      1fr
-      /* Uses */
-      5rem
-      /* Usage */
-      5rem
-    `;
+  const gridTemplateColumns: TidyTableColumns = [
+    {
+      name: 'Name',
+      width: '1fr',
+    },
+    {
+      name: 'Uses',
+      width: '5rem',
+    },
+    {
+      name: 'Usage',
+      width: '5rem',
+    },
+  ];
 
   function rollActivity(activity: Activity5e, event: MouseEvent) {
     activity.use({ event });

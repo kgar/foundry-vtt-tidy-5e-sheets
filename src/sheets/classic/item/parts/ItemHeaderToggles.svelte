@@ -1,5 +1,5 @@
 <script lang="ts">
-  import PropertyToggle from 'src/components/toggle/PropertyToggle.svelte';
+  import PropertyToggle from 'src/components/toggles/PropertyToggle.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     ContainerSheetClassicContext,

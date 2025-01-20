@@ -8,16 +8,21 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { CONSTANTS } from 'src/constants';
 import type { CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { Activities } from '../activities/activities';
+import { TidyHooks } from 'src/foundry/TidyHooks';
+import type { ContainerCapacityContext } from 'src/types/types';
 
 export class Container {
-  static async getContainerContents(item: Item5e): Promise<ContainerContents> {
-    const containerItems = (await item.system.contents).values();
+  static async getContainerContents(
+    container: Item5e
+  ): Promise<ContainerContents> {
+    const containerContentsInventory =
+      await Inventory.getContainerContentsInventory(container);
 
     return {
-      capacity: await item.system.computeCapacity(),
-      currency: item.system.currency,
-      contents: Inventory.getInventory(containerItems),
-      itemContext: await Container.getContainerItemContext(item),
+      capacity: await container.system.computeCapacity(),
+      currency: container.system.currency,
+      contents: containerContentsInventory,
+      itemContext: await Container.getContainerItemContext(container),
     };
   }
 
@@ -56,5 +61,39 @@ export class Container {
     }
 
     return itemContext;
+  }
+
+  static promptCreateInventoryItem(container: Item5e) {
+    const actor = container.actor;
+
+    const folder = !!actor ? undefined : container.folder;
+
+    const createData = {
+      folder: folder,
+      'system.container': container.id,
+    };
+
+    if (!TidyHooks.tidy5eSheetsPreCreateItem(actor, createData, game.user.id)) {
+      return;
+    }
+
+    Item.implementation.createDialog(createData, {
+      parent: actor,
+      pack: container.pack,
+      types: Inventory.getDefaultInventoryTypes(),
+      keepId: true,
+    });
+  }
+
+  static async computeCapacity(
+    container: Item5e
+  ): Promise<ContainerCapacityContext> {
+    const context = await container.system.computeCapacity();
+
+    if (container.system.capacity.type === 'weight') {
+      context.units = FoundryAdapter.getWeightUnit();
+    }
+
+    return context;
   }
 }

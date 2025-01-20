@@ -1,7 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { TidyFlags } from 'src/foundry/TidyFlags';
-  import TidySwitch from 'src/components/toggle/TidySwitch.svelte';
+  import TidySwitch from 'src/components/toggles/TidySwitch.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';

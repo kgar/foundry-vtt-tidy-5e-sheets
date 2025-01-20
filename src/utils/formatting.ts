@@ -25,6 +25,10 @@ function toSignedNumberString(value: number) {
   return value.toLocaleString(FoundryAdapter.getCurrentLang(), { signDisplay: 'always' });
 }
 
+/**
+ * @param values maybe string values that can be coalesced to fallbacks
+ * @returns the first truthy, non-empty string value
+ */
 export function coalesce(...values: (string | null | undefined)[]) {
   for (let value of values) {
     if (!isNil(value?.trim(), '')) {

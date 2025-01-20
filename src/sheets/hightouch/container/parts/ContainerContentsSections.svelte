@@ -1,5 +1,7 @@
 <script lang="ts">
-  import TidyTable from 'src/components/table/TidyTable.svelte';
+  import TidyTable, {
+    type TidyTableColumns,
+  } from 'src/components/table/TidyTable.svelte';
   import TidyTableHeaderCell from 'src/components/table/TidyTableHeaderCell.svelte';
   import TidyTableHeaderRow from 'src/components/table/TidyTableHeaderRow.svelte';
   import { CONSTANTS } from 'src/constants';
@@ -15,6 +17,7 @@
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import InlineContainerView from './InlineContainerView.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
+  import InlineItemQuantityTracker from 'src/components/trackers/InlineItemQuantityTracker.svelte';
 
   interface Props {
     contents: InventorySection[];
@@ -84,14 +87,33 @@
     FoundryAdapter.useClassicControls(container),
   );
 
-  // TODO: Figure out how to better scale for custom commands. Maybe they just have to be context menu items...
-  let itemActionsWidth = $derived(
-    useClassicControls ? `/* Actions */ ${1.5 * (unlocked ? 3 : 1)}rem` : '',
-  );
+  // TODO: Allow the user to choose which icons are priority and can be shown in the actions column
 
-  let gridTemplateColumns = $derived(
-    `/* Name */ 1fr /* Quantity */ 4.125rem /* Weight */ 2.25rem ${itemActionsWidth}`,
-  );
+  let gridTemplateColumns: TidyTableColumns = $derived.by(() => {
+    let result: TidyTableColumns = [
+      {
+        name: 'Name',
+        width: '1fr',
+      },
+      {
+        name: 'Quantity',
+        width: '4.125rem',
+      },
+      {
+        name: 'Weight',
+        width: '2.25rem',
+      },
+    ];
+
+    if (useClassicControls) {
+      result.push({
+        name: 'Actions',
+        width: `${1.5 * (unlocked ? 3 : 1)}rem`,
+      });
+    }
+
+    return result;
+  });
 
   let containerToggleMap = $derived(inlineToggleService.map);
 
@@ -155,18 +177,17 @@
           >
             {#snippet children({ toggleSummary })}
               <TidyTableCell primary={true} class="truncate">
-                <div
+                <a
                   class="item-image"
                   style="--item-img: url({item.img}); --item-border-color: {itemBorderColor};"
                   class:special-rarity={showRarityBoxShadow}
-                  role="button"
                   onclick={(ev) => FoundryAdapter.actorTryUseItem(item, ev)}
                 >
                   <span class="roll-prompt">
                     <i class="fa fa-dice-d20"></i>
                   </span>
-                </div>
-                {#if ('containerContents' in ctx && !!ctx.containerContents) || item?.system.activities?.contents.length > 1}
+                </a>
+                {#if ('containerContents' in ctx && !!ctx.containerContents)}
                   <a
                     class="expand-indicator-button"
                     onclick={() => inlineToggleService.toggle(tabId, item.id)}
@@ -185,7 +206,7 @@
                 </a>
               </TidyTableCell>
               <TidyTableCell>
-                {item.system.quantity}
+                <InlineItemQuantityTracker {item} disabled={!item.isOwner} />
               </TidyTableCell>
               <TidyTableCell>
                 {weight}

@@ -20,9 +20,9 @@ import type { ActorTabRegistrationOptions } from 'src/api/api.types';
 import { CustomContentManager } from './content/CustomContentManager';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
-export class CharacterSheetRuntime {
-  private static _content: RegisteredContent<CharacterSheetContext>[] = [];
-  private static _tabs: RegisteredTab<CharacterSheetContext>[] = [
+class CharacterSheetRuntime {
+  private _content = $state<RegisteredContent<CharacterSheetContext>[]>([]);
+  private _tabs = $state<RegisteredTab<CharacterSheetContext>[]>([
     {
       title: 'TIDY5E.Actions.TabName',
       content: {
@@ -56,7 +56,7 @@ export class CharacterSheetRuntime {
       layout: 'classic',
     },
     {
-      id: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+      id: CONSTANTS.TAB_ACTOR_SPELLBOOK,
       title: 'DND5E.Spellbook',
       content: {
         component: CharacterSpellbookTab,
@@ -122,39 +122,41 @@ export class CharacterSheetRuntime {
       },
       layout: 'classic',
     },
-  ];
+  ]);
+  tabMap = $derived(
+    this._tabs.reduce<Map<string, RegisteredTab<CharacterSheetContext>>>(
+      (map, curr) => {
+        map.set(curr.id, curr);
+        return map;
+      },
+      new Map<string, RegisteredTab<CharacterSheetContext>>()
+    )
+  );
 
-  static async getContent(
-    context: CharacterSheetContext
-  ): Promise<CustomContent[]> {
+  async getContent(context: CharacterSheetContext): Promise<CustomContent[]> {
     return await CustomContentManager.prepareContentForRender(
       context,
-      CharacterSheetRuntime._content
+      this._content
     );
   }
 
-  static async getTabs(context: CharacterSheetContext): Promise<Tab[]> {
-    return await TabManager.prepareTabsForRender(
-      context,
-      CharacterSheetRuntime._tabs
-    );
+  async getTabs(context: CharacterSheetContext): Promise<Tab[]> {
+    return await TabManager.prepareTabsForRender(context, this._tabs);
   }
 
-  static getAllRegisteredTabs(): RegisteredTab<CharacterSheetContext>[] {
-    return [...CharacterSheetRuntime._tabs];
+  getAllRegisteredTabs(): RegisteredTab<CharacterSheetContext>[] {
+    return [...this._tabs];
   }
 
-  static registerContent(
-    registeredContent: RegisteredContent<CharacterSheetContext>
-  ) {
+  registerContent(registeredContent: RegisteredContent<CharacterSheetContext>) {
     this._content.push(registeredContent);
   }
 
-  static registerTab(
+  registerTab(
     tab: RegisteredTab<CharacterSheetContext>,
     options?: ActorTabRegistrationOptions
   ) {
-    const tabExists = CharacterSheetRuntime._tabs.some((t) => t.id === tab.id);
+    const tabExists = this._tabs.some((t) => t.id === tab.id);
 
     if (tabExists && !options?.overrideExisting) {
       warn(`Tab with id ${tab.id} already exists.`);
@@ -162,18 +164,16 @@ export class CharacterSheetRuntime {
     }
 
     if (tabExists && options?.overrideExisting) {
-      const index = CharacterSheetRuntime._tabs.findIndex(
-        (t) => t.id === tab.id
-      );
+      const index = this._tabs.findIndex((t) => t.id === tab.id);
       if (index >= 0) {
-        CharacterSheetRuntime._tabs.splice(index, 1);
+        this._tabs.splice(index, 1);
       }
     }
 
-    CharacterSheetRuntime._tabs.push(tab);
+    this._tabs.push(tab);
   }
 
-  static getTabTitle(tabId: string) {
+  getTabTitle(tabId: string) {
     try {
       let tabTitle = this._tabs.find((t) => t.id === tabId)?.title;
       if (typeof tabTitle === 'function') {
@@ -186,3 +186,7 @@ export class CharacterSheetRuntime {
     }
   }
 }
+
+const singleton = new CharacterSheetRuntime();
+
+export default singleton;

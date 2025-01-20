@@ -95,7 +95,9 @@
   --tidy-switch-unchecked-border-color: var(
     --t5e-component-field-default-border
   );
-  --tidy-switch-unchecked-background-color: rgba(0, 0, 0, 0.15);
+  --tidy-switch-unchecked-background-color: var(
+    --t5e-component-field-inverse-background
+  );
   --tidy-switch-checked-border-color: var(
     --t5e-component-toggle-toggled-border
   );
@@ -190,6 +192,10 @@
       transform: translateX(var(--thumb-checked-translateX));
       fill: #fff;
     }
+  }
+
+  &.disabled {
+    cursor: default;
   }
 }
 

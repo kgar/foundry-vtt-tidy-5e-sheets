@@ -5,36 +5,117 @@
   import ItemImageBorder from '../item/parts/ItemImageBorder.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
-  import PillSwitch from 'src/components/toggle/PillSwitch.svelte';
+  import PillSwitch from 'src/components/toggles/PillSwitch.svelte';
   import { getContainerSheetHightouchContext } from 'src/sheets/sheet-context.svelte';
+  import { coalesce } from 'src/utils/formatting';
+  import { untrack } from 'svelte';
+  import TidyVisibilityObserver from 'src/components/utility/TidyVisibilityObserver.svelte';
+  import Select from 'src/components/inputs/Select.svelte';
+  import { RarityColors } from 'src/features/rarity-colors/RarityColors';
+  import { TidyFlags } from 'src/api';
+  import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
 
   let context = $derived(getContainerSheetHightouchContext());
 
   const localize = FoundryAdapter.localize;
 
   let selectedTabId: string = $state(CONSTANTS.TAB_CONTAINER_CONTENTS);
+
   let identifiedText = $derived(
     context.system.identified
       ? localize('DND5E.Identified')
       : localize('DND5E.Unidentified.Title'),
   );
-  let rarityText = $derived(
-    //@ts-expect-error
-    CONFIG.DND5E.itemRarity[context.system.rarity]?.titleCase() ?? '',
-  );
+
   let rarityColorVariable = $derived(
-    `--t5e-color-rarity-${context.system.rarity?.slugify() ?? ''}`,
+    RarityColors.getRarityColorVariableName(context.system.rarity),
   );
-  let denomination =
-    //@ts-expect-error
-    $derived(CONFIG.DND5E.currencies[context.system.price.denomination]);
+
+  let rarityText = $derived(
+    RarityColors.getRarityText(context.system.rarity).titleCase(),
+  );
+
+  let denomination = $derived(
+    CONFIG.DND5E.currencies[context.system.price.denomination],
+  );
+
   let itemValueText = $derived(
     FoundryAdapter.formatNumber(context.system.price?.value),
   );
+
+  let containerNameEl: HTMLElement | undefined = $state();
+  let scrollMarkerEl: HTMLElement | undefined = $state();
+
+  const headerOffset = $derived.by(() => {
+    return untrack(() => {
+      const headerHeight = coalesce(
+        window.getComputedStyle(context.item.sheet.window.header).height,
+        '36',
+      );
+
+      return `-${headerHeight}px`;
+    });
+  });
+
+  let itemRarities = $derived(
+    Object.entries(context.config.itemRarity).map(([key, value]) => {
+      return {
+        key,
+        label: value,
+        rarityColorVariableName: RarityColors.getRarityColorVariableName(key),
+      };
+    }),
+  );
+
+  let section = $derived(
+    TidyFlags.section.get(context.item) ?? localize('Default'),
+  );
+
+  let actionSection = $derived(
+    TidyFlags.actionSection.get(context.item) ?? localize('Default'),
+  );
+
+  let holdsMarkup = $derived.by(() => {
+    return localize('TIDY5E.Containers.HoldsNumberUnits', {
+      holdsElementStart: '<span class="text-secondary fw-normal">',
+      holdsElementEnd: '</span>',
+      numberElementStart: '<span>',
+      numberElementEnd: '</span>',
+      number: context.capacity.max,
+      unitsElementStart: '<span class="text-secondary fw-normal">',
+      unitsElementEnd: '</span>',
+      units: context.capacity.units,
+    });
+  });
 </script>
 
+{#if !!containerNameEl}
+  <TidyVisibilityObserver
+    root={context.item.sheet.windowContent}
+    trackWhenOffScreen={true}
+    toObserve={[containerNameEl]}
+    toAffect="self"
+    rootMargin={headerOffset}
+  />
+{/if}
+
+{#if !!scrollMarkerEl}
+  <TidyVisibilityObserver
+    root={context.item.sheet.windowContent}
+    trackWhenOffScreen={true}
+    toObserve={[scrollMarkerEl]}
+    toAffect="self"
+  />
+{/if}
+
+<div
+  bind:this={scrollMarkerEl}
+  class="container-header-start-scroll-marker"
+  role="presentation"
+></div>
+
 <aside
-  class="sidebar"
+  class="sidebar inverse"
   style="
     --t5e-item-rarity-color: var({rarityColorVariable}, var(--t5e-color-gold)); 
     --filigree-border-color: var({rarityColorVariable}, var(--t5e-color-gold))"
@@ -44,23 +125,44 @@
       <img class="item-image" src={context.item.img} alt={context.item.name} />
       <ItemImageBorder />
     </div>
-    <div class="item-rarity">
-      <span>{rarityText}</span>
+    <div class="item-rarity-container">
+      {#if context.unlocked}
+        <Select
+          id="rarity-{context.item.sheet.id}"
+          document={context.item}
+          field="system.rarity"
+          class="item-rarity-selector capitalize"
+          value={context.system.rarity}
+          disabled={!context.editable}
+          blankValue=""
+        >
+          <option value=""></option>
+          {#each itemRarities as rarity (rarity.key)}
+            <option
+              value={rarity.key}
+              style="--t5e-item-rarity-color: var({rarity.rarityColorVariableName}, var(--t5e-color-text-onInverse-default));"
+            >
+              {rarity.label}
+            </option>
+          {/each}
+        </Select>
+      {:else}
+        <div class="item-rarity-text">{rarityText}</div>
+      {/if}
     </div>
   </div>
 
-  <ul class="pills inverse stacked">
+  <ul class="pills stacked">
     <li>
       <PillSwitch
         checked={context.system.equipped}
         checkedIconClass="fas fa-hand-fist equip-icon fa-fw"
         uncheckedIconClass="far fa-hand fa-fw"
         onchange={(ev) =>
-          console.log(
-            context.item.update({
-              'system.equipped': ev.currentTarget?.checked,
-            }),
-          )}
+          context.item.update({
+            'system.equipped': ev.currentTarget?.checked,
+          })}
+        disabled={!context.editable}
       >
         {localize('DND5E.Equipped')}
       </PillSwitch>
@@ -72,11 +174,10 @@
           checkedIconClass="fas fa-sun equip-icon fa-fw"
           uncheckedIconClass="fas fa-sun equip-icon fa-fw"
           onchange={(ev) =>
-            console.log(
-              context.item.update({
-                'system.attuned': ev.currentTarget?.checked,
-              }),
-            )}
+            context.item.update({
+              'system.attuned': ev.currentTarget?.checked,
+            })}
+          disabled={!context.editable}
         >
           {localize('DND5E.Attuned')}
         </PillSwitch>
@@ -89,11 +190,10 @@
           checkedIconClass="fas fa-search fa-fw"
           uncheckedIconClass="fas fa-search fa-fw"
           onchange={(ev) =>
-            console.log(
-              context.item.update({
-                'system.identified': ev.currentTarget?.checked,
-              }),
-            )}
+            context.item.update({
+              'system.identified': ev.currentTarget?.checked,
+            })}
+          disabled={!context.editable}
         >
           {localize('DND5E.Identified')}
         </PillSwitch>
@@ -106,17 +206,49 @@
         </span>
       </li>
     {/if}
+
+    <li class="pill">
+      <span>
+        {@html holdsMarkup}
+      </span>
+    </li>
   </ul>
 
   <div>
-    <h4>{localize('TIDY5E.Section.LabelPl')}</h4>
-    <ul class="pills inverse flexcol">
-      <li class="pill">
-        <span class="lighter">
-          {localize('DND5E.Inventory')}
-        </span>
-      </li>
-    </ul>
+    <h4 class="currency-header">
+      <span>{localize('DND5E.Currency')}</span>
+      <a
+        class="button icon-button currency-conversion"
+        class:disabled={!context.editable}
+        onclick={() =>
+          context.owner &&
+          new dnd5e.applications.CurrencyManager(context.document).render(true)}
+        title={localize('DND5E.CurrencyManager.Title')}
+      >
+        <i class="fas fa-database"></i>
+      </a>
+    </h4>
+    <div class="currencies">
+      {#each context.currencies as currency (currency.key)}
+        <label class="input-group">
+          <i class="currency {currency.key}" aria-label={currency.key}></i>
+          <TextInput
+            document={context.document}
+            field="system.currency.{currency.key}"
+            id="{context.document.id}-system.currency.{currency.key}"
+            value={currency.value}
+            allowDeltaChanges={true}
+            selectOnFocus={true}
+            disabled={!context.editable || context.lockMoneyChanges}
+            class="currency-item currency-{currency.key}"
+            placeholder="0"
+          />
+          <span class="denomination {currency.key}" data-denom={currency.key}>
+            {currency.abbr}
+          </span>
+        </label>
+      {/each}
+    </div>
   </div>
 
   {#if !context.concealDetails}
@@ -124,7 +256,7 @@
       <h4>
         {localize('DND5E.Attack')}/{localize('DND5E.Damage')}
       </h4>
-      <ul class="pills inverse" inert={context.concealDetails}>
+      <ul class="pills" inert={context.concealDetails}>
         {#if context.labels.save}
           <li class="pill">
             {context.labels.save}
@@ -147,9 +279,56 @@
       </ul>
     {/if}
   {/if}
+
+  <div>
+    <h4>{localize('TIDY5E.Section.LabelPl')}</h4>
+    <div class="pills stacked">
+      <a
+        title={localize('TIDY5E.Section.SectionSelectorChooseSectionTooltip')}
+        class="pill wrapped no-row-gap"
+        class:disabled={!context.editable}
+        onclick={() =>
+          new SectionSelectorApplication(
+            context.item,
+            TidyFlags.section.prop,
+            localize('TIDY5E.Section.Label'),
+          ).render(true)}
+      >
+        <span class="lighter centered">
+          {localize('DND5E.Inventory')}
+        </span>
+        <span class="hyphens-auto centered">
+          {section}
+        </span>
+      </a>
+      <a
+        class="pill wrapped no-row-gap"
+        class:disabled={!context.editable}
+        title={localize(
+          'TIDY5E.Section.SectionSelectorChooseActionSectionTooltip',
+        )}
+        onclick={() =>
+          new SectionSelectorApplication(
+            context.item,
+            TidyFlags.actionSection.prop,
+            localize('TIDY5E.Section.ActionLabel'),
+          ).render(true)}
+      >
+        <span class="lighter centered">
+          {localize('TIDY5E.Actions.TabName')}
+        </span>
+        <span class="hyphens-auto centered">
+          {actionSection}
+        </span>
+      </a>
+    </div>
+  </div>
 </aside>
 <main class="item-content">
-  <div class="flex-row extra-small-gap align-items-center">
+  <div
+    bind:this={containerNameEl}
+    class="container-name-wrapper flex-row extra-small-gap align-items-center"
+  >
     <!-- Name -->
     {#if context.unlocked}
       <TextInput
@@ -165,9 +344,6 @@
 
   <!-- Header Summary -->
   <div class="item-header-summary">
-    <!-- Item Type -->
-    <div class="item-type text-lighter">{context.itemType ?? ''}</div>
-    <div class="item-header-summary-separator" role="presentation"></div>
     <!-- Value -->
     <div class="item-value">
       <!-- Currency Image -->
@@ -211,7 +387,12 @@
   </div>
 
   <!-- Tab Strip -->
-  <Tabs bind:selectedTabId tabs={context.tabs} cssClass="item-tabs" sheet={context.item.sheet} />
+  <Tabs
+    bind:selectedTabId
+    tabs={context.tabs}
+    cssClass="item-tabs"
+    sheet={context.item.sheet}
+  />
 
   <hr class="golden-fade" />
 

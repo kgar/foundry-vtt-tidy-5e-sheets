@@ -492,8 +492,16 @@ export type SortMode = SortModeAlphabetical | SortModeManual;
 export type MessageBus = { message: MessageBusMessage | undefined };
 
 export type MessageBusMessage =
-  | { tabId: string; message: typeof CONSTANTS.MESSAGE_BUS_EXPAND_ALL }
-  | { tabId: string; message: typeof CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL };
+  | {
+      tabId: string;
+      message: typeof CONSTANTS.MESSAGE_BUS_EXPAND_ALL;
+      options?: { includeInlineToggles?: boolean };
+    }
+  | {
+      tabId: string;
+      message: typeof CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL;
+      options?: { includeInlineToggles?: boolean };
+    };
 
 export type Utilities<TContext> = Record<
   string,

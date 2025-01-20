@@ -21,5 +21,11 @@
 
 <label class="button toggle-button {rest.class ?? ''}" class:disabled>
   {@render children?.()}
-  <input type="checkbox" class="hidden toggle" {checked} {onchange} />
+  <input
+    type="checkbox"
+    class="hidden toggle"
+    {checked}
+    {onchange}
+    {disabled}
+  />
 </label>

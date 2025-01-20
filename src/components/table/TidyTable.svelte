@@ -1,3 +1,10 @@
+<script module>
+  export type TidyTableColumns = {
+    name: string;
+    width: string;
+  }[];
+</script>
+
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
@@ -9,7 +16,7 @@
   interface Props {
     key: string;
     toggleable?: boolean;
-    gridTemplateColumns?: string;
+    gridTemplateColumns?: TidyTableColumns;
     header?: Snippet;
     body?: Snippet;
     [key: string]: any;
@@ -18,11 +25,15 @@
   let {
     key,
     toggleable = true,
-    gridTemplateColumns = '',
+    gridTemplateColumns = [],
     header,
     body,
     ...rest
   }: Props = $props();
+
+  let templateColumnsValue = $derived(
+    gridTemplateColumns.map((c) => `/* ${c.name} */ ${c.width}`).join(' '),
+  );
 
   let { class: cssClass, ...attributes } = rest;
 
@@ -57,7 +68,7 @@
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_TABLE}
   data-tidy-section-key={key}
   {...attributes}
-  style="--grid-template-columns: {gridTemplateColumns}"
+  style="--grid-template-columns: {templateColumnsValue}"
 >
   {@render header?.()}
   <ExpandableContainer expanded={expandedState?.expanded}>

@@ -19,9 +19,9 @@ import { CustomContentManager } from './content/CustomContentManager';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import ActorInventoryTab from 'src/sheets/classic/actor/tabs/ActorInventoryTab.svelte';
 
-export class NpcSheetRuntime {
-  private static _content: RegisteredContent<NpcSheetContext>[] = [];
-  private static _tabs: RegisteredTab<NpcSheetContext>[] = [
+class NpcSheetRuntime {
+  private _content = $state<RegisteredContent<NpcSheetContext>[]>([]);
+  private _tabs = $state<RegisteredTab<NpcSheetContext>[]>([
     {
       title: 'TIDY5E.Actions.TabName',
       content: {
@@ -41,7 +41,7 @@ export class NpcSheetRuntime {
       layout: 'classic',
     },
     {
-      id: CONSTANTS.TAB_NPC_SPELLBOOK,
+      id: CONSTANTS.TAB_ACTOR_SPELLBOOK,
       title: 'DND5E.Spellbook',
       content: {
         component: NpcSpellbookTab,
@@ -94,36 +94,41 @@ export class NpcSheetRuntime {
       enabled: (context) => context.owner,
       layout: 'classic',
     },
-  ];
+  ]);
+  tabMap = $derived(
+    this._tabs.reduce<Map<string, RegisteredTab<NpcSheetContext>>>(
+      (map, curr) => {
+        map.set(curr.id, curr);
+        return map;
+      },
+      new Map<string, RegisteredTab<NpcSheetContext>>()
+    )
+  );
 
-  static async getContent(
-    context: CharacterSheetContext
-  ): Promise<CustomContent[]> {
+  async getContent(context: CharacterSheetContext): Promise<CustomContent[]> {
     return await CustomContentManager.prepareContentForRender(
       context,
-      NpcSheetRuntime._content
+      this._content
     );
   }
 
-  static getTabs(context: NpcSheetContext): Promise<Tab[]> {
-    return TabManager.prepareTabsForRender(context, NpcSheetRuntime._tabs);
+  getTabs(context: NpcSheetContext): Promise<Tab[]> {
+    return TabManager.prepareTabsForRender(context, this._tabs);
   }
 
-  static getAllRegisteredTabs(): RegisteredTab<NpcSheetContext>[] {
-    return [...NpcSheetRuntime._tabs];
+  getAllRegisteredTabs(): RegisteredTab<NpcSheetContext>[] {
+    return [...this._tabs];
   }
 
-  static registerContent(
-    registeredContent: RegisteredContent<NpcSheetContext>
-  ) {
+  registerContent(registeredContent: RegisteredContent<NpcSheetContext>) {
     this._content.push(registeredContent);
   }
 
-  static registerTab(
+  registerTab(
     tab: RegisteredTab<NpcSheetContext>,
     options?: ActorTabRegistrationOptions
   ) {
-    const tabExists = NpcSheetRuntime._tabs.some((t) => t.id === tab.id);
+    const tabExists = this._tabs.some((t) => t.id === tab.id);
 
     if (tabExists) {
       warn(`Tab with id ${tab.id} already exists.`);
@@ -131,16 +136,16 @@ export class NpcSheetRuntime {
     }
 
     if (tabExists && options?.overrideExisting) {
-      const index = NpcSheetRuntime._tabs.findIndex((t) => t.id === tab.id);
+      const index = this._tabs.findIndex((t) => t.id === tab.id);
       if (index >= 0) {
-        NpcSheetRuntime._tabs.splice(index, 1);
+        this._tabs.splice(index, 1);
       }
     }
 
-    NpcSheetRuntime._tabs.push(tab);
+    this._tabs.push(tab);
   }
 
-  static getTabTitle(tabId: string) {
+  getTabTitle(tabId: string) {
     try {
       let tabTitle = this._tabs.find((t) => t.id === tabId)?.title;
       if (typeof tabTitle === 'function') {
@@ -153,3 +158,7 @@ export class NpcSheetRuntime {
     }
   }
 }
+
+const singleton = new NpcSheetRuntime();
+
+export default singleton;

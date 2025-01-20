@@ -6,7 +6,6 @@
   import ContainerContentsSections from 'src/sheets/hightouch/container/parts/ContainerContentsSections.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
-  import ContainerCurrency from '../parts/ContainerCurrency.svelte';
   import ToggleButton from 'src/components/buttons/ToggleButton.svelte';
   import Search from '../../shared/Search.svelte';
   import ButtonWithOptionPanel from 'src/components/buttons/ButtonWithOptionPanel.svelte';
@@ -15,6 +14,9 @@
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
   import { getContainerSheetHightouchContext } from 'src/sheets/sheet-context.svelte';
+  import TidyVisibilityObserver from 'src/components/utility/TidyVisibilityObserver.svelte';
+  import { Container } from 'src/features/containers/Container';
+  import type { MessageBus } from 'src/types/types';
 
   let context = $derived(getContainerSheetHightouchContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
@@ -27,6 +29,10 @@
 
   const searchResults = createSearchResultsState();
   setSearchResultsContext(searchResults);
+
+  const messageBus = getContext<MessageBus>(
+    CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS,
+  );
 
   $effect(() => {
     searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
@@ -44,13 +50,45 @@
   );
 
   let menuOpen = $derived(false);
+
+  let markerEl: HTMLElement | undefined = $state();
+  let footerEl: HTMLElement | undefined = $state();
+
+  let allCollapsed = $state(false);
+  function toggleContents() {
+    if (allCollapsed) {
+      messageBus.message = {
+        message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
+        tabId: CONSTANTS.TAB_CONTAINER_CONTENTS,
+        options: { includeInlineToggles: true },
+      };
+    } else {
+      messageBus.message = {
+        message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
+        tabId: CONSTANTS.TAB_CONTAINER_CONTENTS,
+        options: { includeInlineToggles: true },
+      };
+    }
+
+    allCollapsed = !allCollapsed;
+  }
 </script>
+
+{#if !!markerEl && !!footerEl}
+  <TidyVisibilityObserver
+    root={context.item.sheet.windowContent}
+    trackWhenOffScreen={true}
+    toObserve={[markerEl]}
+    toAffect={[footerEl]}
+    rootMargin="-12px"
+  />
+{/if}
 
 <section
   class="action-bar"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTION_BAR}
 >
-  <ButtonWithOptionPanel class="icon-button">
+  <ButtonWithOptionPanel class="icon-button" onclick={() => toggleContents()}>
     <i class="fas fa-angles-down fa-fw"></i>
     {#snippet options()}
       <h4>{localize('TIDY5E.ExpandCollapseMenu.OptionTitle')}</h4>
@@ -115,7 +153,7 @@
     {/snippet}
   </ButtonWithOptionPanel>
 
-  <a class="button icon-button">
+  <a class="button icon-button" class:disabled={!context.editable}>
     <i class="fas fa-gear"></i>
   </a>
 </section>
@@ -138,12 +176,18 @@
   />
 </div>
 
-<footer class="contents-footer">
+<hr class="golden-fade" />
+
+<div bind:this={markerEl} class="contents-footer-scroll-marker"></div>
+<footer bind:this={footerEl} class="contents-footer">
   <!-- Capacity Bar -->
   <CapacityBar container={context.item} capacity={context.capacity} />
-
-  <hr class="golden-fade" />
-
-  <!-- Currency, with Item Add Button -->
-  <ContainerCurrency />
+  <a
+    title={localize('DND5E.ItemCreate')}
+    class="button icon-button attention item-create"
+    class:disabled={!context.editable}
+    onclick={() => Container.promptCreateInventoryItem(context.item)}
+  >
+    <i class="fas fa-plus"></i>
+  </a>
 </footer>

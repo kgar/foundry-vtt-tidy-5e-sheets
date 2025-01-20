@@ -9,6 +9,7 @@
     checkedSvgSrc?: string | undefined;
     uncheckedIconClass?: string | undefined;
     uncheckedSvgSrc?: string | undefined;
+    disabled?: boolean | undefined;
     onchange?:
       | ((
           event: Event & {
@@ -25,12 +26,13 @@
     checkedSvgSrc = undefined,
     uncheckedIconClass = undefined,
     uncheckedSvgSrc = undefined,
+    disabled = false,
     onchange = undefined,
     children,
   }: Props = $props();
 </script>
 
-<label class="pill pill-switch">
+<label class="pill pill-switch" class:disabled>
   <span>
     <span class="pill-switch-icon-container" class:hidden={!checked}>
       {#if checkedIconClass}
@@ -50,5 +52,5 @@
     </span>
     {@render children?.()}
   </span>
-  <FieldToggle {checked} {onchange} />
+  <FieldToggle {checked} {onchange} {disabled} />
 </label>

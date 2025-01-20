@@ -4,7 +4,9 @@
   import { type ActivitySection } from 'src/types/types';
   import type { Activity5e } from 'src/foundry/dnd5e.types';
   import { Activities } from 'src/features/activities/activities';
-  import TidyTable from 'src/components/table/TidyTable.svelte';
+  import TidyTable, {
+    type TidyTableColumns,
+  } from 'src/components/table/TidyTable.svelte';
   import TidyTableHeaderRow from 'src/components/table/TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from 'src/components/table/TidyTableHeaderCell.svelte';
   import TidyTableRow from 'src/components/table/TidyTableRow.svelte';
@@ -19,18 +21,28 @@
 
   let { section, visibleActivityUuidSubset }: Props = $props();
 
-  const gridTemplateColumns = `
-    /* Name */
-    1fr
-    /* Item Source */
-    10rem
-    /* Uses */
-    2.5rem
-    /* Usage */
-    5rem
-    /* Mod/Save */
-    3.5rem
-  `;
+  const gridTemplateColumns: TidyTableColumns = [
+    {
+      name: 'Name',
+      width: '1fr',
+    },
+    {
+      name: 'Item Source',
+      width: '10rem',
+    },
+    {
+      name: 'Uses',
+      width: '2.5rem',
+    },
+    {
+      name: 'Usage',
+      width: '5rem',
+    },
+    {
+      name: 'Mod/Save',
+      width: '3.5rem',
+    },
+  ];
 
   const localize = FoundryAdapter.localize;
 

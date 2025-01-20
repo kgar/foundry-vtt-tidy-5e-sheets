@@ -1,6 +1,8 @@
 <script lang="ts">
   import type { SelectableMigrationSelectionParams } from './migration-selection.types';
-  import TidyTable from 'src/components/table/TidyTable.svelte';
+  import TidyTable, {
+    type TidyTableColumns,
+  } from 'src/components/table/TidyTable.svelte';
   import TidyTableCell from 'src/components/table/TidyTableCell.svelte';
   import TidyTableHeaderCell from 'src/components/table/TidyTableHeaderCell.svelte';
   import TidyTableHeaderRow from 'src/components/table/TidyTableHeaderRow.svelte';
@@ -30,11 +32,20 @@
     ),
   );
 
-  let gridTemplateColumns: string = $derived.by(() => {
-    let result = `/* Select */ 2.5rem`;
+  let gridTemplateColumns: TidyTableColumns = $derived.by(() => {
+    let result: TidyTableColumns = [
+      {
+        name: 'Select',
+        width: '2.5rem',
+      },
+    ];
+
     params.columns.forEach((c) => {
       const measurement = c.cellWidth === 'primary' ? '1fr' : c.cellWidth;
-      result += ` /* ${c.name} */ ${measurement}`;
+      result.push({
+        name: c.name,
+        width: measurement,
+      });
     });
     return result;
   });

@@ -240,6 +240,14 @@
   "TIDY5E.WorldSettings.TabIcons": {
     "tabLabel": "Icons"
   },
+  "TIDY5E.WorldSettings.TabCustomSections": {
+    "tabLabel": "Custom Sections",
+    "CustomizedIndicatorLabel": "Customized",
+    "ShowWhenEmptyLabel": "Show Section When Empty",
+    "ShowWhenEmptyTooltip": "All tabs with item tables have a set of default sections which are always shown even when there are no items in the section. Always show this section, even when empty.",
+    "LimitToSpecificSheetsLabel": "Limit Shown Section to Specific Sheets",
+    "LimitToSpecificTabsLabel": "Limit Shown Section to Specific Tabs"
+  },
 
   "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Multiclass Spellbook Filter",
 
@@ -722,6 +730,11 @@
     "KoFiLink": "{urlStart}Ko-Fi{urlEnd}",
     "PatreonLink": "{urlStart}Patreon{urlEnd}"
   },
+  "TIDY5E.Settings.GlobalCustomSections": {
+    "name": "Global Custom Sections",
+    "hint": "World custom sections which can be configured for various purposes. Global Custom Sections will always be included in the Section Selector.",
+    "AddSection": "Add Section"
+  },
   "TIDY5E.Settings.Debug": {
     "name": "Enable Debugging",
     "hint": "Prints debug messages to the console."
@@ -808,7 +821,14 @@
       "title": "Configure Section: {tabTitle}",
       "showTooltip": "Show this section",
       "hideTooltip": "Hide this section"
-    }
+    },
+    "SectionSelectorChooseSectionTooltip": "Choose a Section",
+    "SectionSelectorChooseActionSectionTooltip": "Choose an Action Section",
+    "SectionSelectorTitle": "{sectionType}: {documentName}",
+    "SectionSelectorExistingSections": "Existing Sections",
+    "SectionSelectorCreateNewSection": "Create a new section",
+    "SectionSelectorNewSectionName": "New section name",
+    "SectionSelectorSaveNewSection": "Save new section"
   },
   "TIDY5E.UseDefaultDialog": {
     "title": "Confirm: Use Default",
@@ -838,5 +858,6 @@
   "TIDY5E.SortMenu.OptionEquipped": "Equipped",
   "TIDY5E.Activities.Cast.SourceHintText": "From {itemName}",
   "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatLabel": "Info",
-  "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatTooltip": "Show description in chat"
+  "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatTooltip": "Show description in chat",
+  "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Holds{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}"
 }

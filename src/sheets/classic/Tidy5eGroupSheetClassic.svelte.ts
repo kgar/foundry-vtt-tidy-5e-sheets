@@ -37,7 +37,7 @@ import { Container } from 'src/features/containers/Container';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
-import { GroupSheetRuntime } from 'src/runtime/GroupSheetRuntime';
+import GroupSheetRuntime from 'src/runtime/GroupSheetRuntime.svelte';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { debug, warn } from 'src/utils/logging';
@@ -47,9 +47,9 @@ import { formatAsModifier } from 'src/utils/formatting';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import SheetHeaderEditModeToggle from 'src/sheets/classic/shared/SheetHeaderEditModeToggle.svelte';
 import { Activities } from 'src/features/activities/activities';
-import type { Activity5e } from 'src/foundry/dnd5e.types';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { ImportSheetControl } from '../../features/sheet-header-controls/ImportSheetControl';
+import { SheetSections } from 'src/features/sections/SheetSections';
 
 type MemberStats = {
   currentHP: number;
@@ -403,6 +403,19 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
         );
       }
     }
+
+    SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
+      this.actor,
+      CONSTANTS.TAB_ACTOR_INVENTORY
+    ).forEach((s) => {
+      inventory[s] ??= Inventory.createInventorySection(
+        s,
+        inventoryTypesArray,
+        {
+          canCreate: true,
+        }
+      );
+    });
 
     let context: GroupSheetClassicContext = {
       actor: this.actor,

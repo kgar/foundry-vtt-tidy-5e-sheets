@@ -97,6 +97,12 @@ export function SvelteApplicationMixin<
       return this.document;
     }
 
+    get windowContent() {
+      return this.hasFrame
+        ? this.element.querySelector('.window-content')
+        : this.element;
+    }
+
     /* -------------------------------------------- */
     /*  Svelte-specific                             */
     /* -------------------------------------------- */
@@ -153,9 +159,7 @@ export function SvelteApplicationMixin<
       this._context.data = context;
 
       if (options.isFirstRender) {
-        const content = this.hasFrame
-          ? this.element.querySelector('.window-content')
-          : this.element;
+        const content = this.windowContent;
         this.#components.push(this._createComponent(content));
         this.#components.push(...this._createAdditionalComponents(content));
       }
@@ -369,9 +373,10 @@ export function SvelteApplicationMixin<
         await this.submit({ preventClose: true, preventRender: true });
       }
 
+      await super.close(options);
+
       this.#components.forEach((c) => unmount(c));
       this.#components = [];
-      await super.close(options);
     }
 
     /* -------------------------------------------- */

@@ -26,19 +26,9 @@ import type { Activity5e, CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { error } from 'src/utils/logging';
 import { getSortedActions } from '../actions/actions.svelte';
 import { SpellUtils } from 'src/utils/SpellUtils';
+import { settings } from 'src/settings/settings.svelte';
 
 export class SheetSections {
-  static generateCustomSpellbookSections(
-    spells: Item5e[],
-    options: Partial<SpellbookSection>
-  ) {
-    const customSpellbook: Record<string, SpellbookSection> = {};
-    spells.forEach((s) =>
-      SheetSections.applySpellToSection(customSpellbook, s, options)
-    );
-    return Object.values(customSpellbook);
-  }
-
   static applySpellToSection(
     spellbook: Record<string, SpellbookSection>,
     spell: Item5e,
@@ -51,7 +41,17 @@ export class SheetSections {
       return;
     }
 
-    const section: SpellbookSection = (spellbook[customSectionName] ??= {
+    const section: SpellbookSection = (spellbook[customSectionName] ??=
+      SheetSections.createSpellbookSection(customSectionName, options));
+
+    section.spells.push(spell);
+  }
+
+  static createSpellbookSection(
+    customSectionName: string,
+    options: Partial<SpellbookSection>
+  ): SpellbookSection {
+    return {
       dataset: {
         [TidyFlags.section.prop]: customSectionName,
       },
@@ -67,9 +67,7 @@ export class SheetSections {
       },
       show: true,
       ...options,
-    });
-
-    section.spells.push(spell);
+    };
   }
 
   static sortKeyedSections<
@@ -117,6 +115,7 @@ export class SheetSections {
 
   static prepareTidySpellbook(
     context: CharacterSheetContext | NpcSheetContext,
+    tabId: string,
     spells: Item5e[],
     options: Partial<SpellbookSection> = {},
     app: Tidy5eCharacterSheet | Tidy5eNpcSheet
@@ -164,6 +163,16 @@ export class SheetSections {
 
     customSectionSpells.forEach((spell) => {
       SheetSections.applySpellToSection(spellbookMap, spell, options);
+    });
+
+    SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
+      context.actor,
+      tabId
+    ).forEach((s) => {
+      spellbookMap[s] ??= SheetSections.createSpellbookSection(s, {
+        canCreate: true,
+        ...options,
+      });
     });
 
     return Object.values(spellbookMap);
@@ -333,7 +342,7 @@ export class SheetSections {
 
         // Apply visibility from configuration
         section.show =
-          sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.[section.key]
+          sectionConfigs?.[CONSTANTS.TAB_ACTOR_SPELLBOOK]?.[section.key]
             ?.show !== false;
 
         return section;
@@ -504,5 +513,57 @@ export class SheetSections {
     }
 
     return sections;
+  }
+
+  static getKnownCustomSections(document: any) {
+    const useParentCollection =
+      !!document.parent && !document.compendium?.locked;
+
+    const itemCollection = useParentCollection
+      ? document.parent.items
+      : game.items;
+
+    const sectionSet = itemCollection.reduce((prev: Item5e, curr: Item5e) => {
+      prev.add(TidyFlags.section.get(curr));
+      prev.add(TidyFlags.actionSection.get(curr));
+      return prev;
+    }, new Set<string>());
+
+    settings.value.globalCustomSections.forEach((defaultSectionConfig) =>
+      sectionSet.add(defaultSectionConfig.section)
+    );
+
+    return Array.from<string>(sectionSet)
+      .filter((x) => !isNil(x, ''))
+      .toSorted((left, right) => left.localeCompare(right));
+  }
+
+  static getFilteredGlobalSectionsToShowWhenEmpty(
+    document: any,
+    tabId: string
+  ) {
+    const sheetType = document.type;
+    return settings.value.globalCustomSections
+      .filter((x) => {
+        if (!x.showWhenEmpty) {
+          return false;
+        }
+
+        const isUnfiltered =
+          Object.entries(x.showWhenEmptyFilters).length === 0;
+
+        if (isUnfiltered) {
+          return true;
+        }
+
+        const filters = x.showWhenEmptyFilters[sheetType];
+        const sheetTypeIsIncluded = filters !== undefined;
+
+        return (
+          sheetTypeIsIncluded &&
+          (filters.length === 0 || filters.includes(tabId))
+        );
+      })
+      .map((x) => x.section);
   }
 }

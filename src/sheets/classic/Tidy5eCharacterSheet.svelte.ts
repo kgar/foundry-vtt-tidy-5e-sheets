@@ -39,7 +39,7 @@ import {
 import { mount, unmount } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
-import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
+import CharacterSheetRuntime from 'src/runtime/CharacterSheetRuntime.svelte';
 import {
   actorUsesActionFeature,
   getActorActionSections,
@@ -303,8 +303,7 @@ export class Tidy5eCharacterSheet
     const inventorySortMode =
       characterPreferences.tabs?.[CONSTANTS.TAB_ACTOR_INVENTORY]?.sort ?? 'm';
     const spellbookSortMode =
-      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.sort ??
-      'm';
+      characterPreferences.tabs?.[CONSTANTS.TAB_ACTOR_SPELLBOOK]?.sort ?? 'm';
     const featureSortMode =
       characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_FEATURES]?.sort ??
       'm';
@@ -508,7 +507,7 @@ export class Tidy5eCharacterSheet
           },
         ],
       },
-      [CONSTANTS.TAB_CHARACTER_SPELLBOOK]: {
+      [CONSTANTS.TAB_ACTOR_SPELLBOOK]: {
         utilityToolbarCommands: [
           {
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
@@ -516,7 +515,7 @@ export class Tidy5eCharacterSheet
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
-                CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+                CONSTANTS.TAB_ACTOR_SPELLBOOK,
                 'sort',
                 'm'
               );
@@ -529,7 +528,7 @@ export class Tidy5eCharacterSheet
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
-                CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+                CONSTANTS.TAB_ACTOR_SPELLBOOK,
                 'sort',
                 'a'
               );
@@ -571,7 +570,7 @@ export class Tidy5eCharacterSheet
             execute: () =>
               // TODO: Use app.messageBus
               (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+                tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
                 message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
           },
@@ -581,7 +580,7 @@ export class Tidy5eCharacterSheet
             execute: () =>
               // TODO: Use app.messageBus
               (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+                tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
           },
@@ -610,9 +609,9 @@ export class Tidy5eCharacterSheet
               new DocumentTabSectionConfigApplication({
                 document: context.actor,
                 sections: sections,
-                tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+                tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
                 tabTitle: CharacterSheetRuntime.getTabTitle(
-                  CONSTANTS.TAB_CHARACTER_SPELLBOOK
+                  CONSTANTS.TAB_ACTOR_SPELLBOOK
                 ),
               }).render(true);
             },
@@ -1186,6 +1185,15 @@ export class Tidy5eCharacterSheet
       });
     }
 
+    SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
+      context.actor,
+      CONSTANTS.TAB_ACTOR_INVENTORY
+    ).forEach((s) => {
+      inventory[s] ??= Inventory.createInventorySection(s, inventoryTypes, {
+        canCreate: true,
+      });
+    });
+
     // Section favorite items by type
     for (let item of favorites.items) {
       const ctx = (context.itemContext[item.id] ??= {});
@@ -1211,6 +1219,7 @@ export class Tidy5eCharacterSheet
     // - set up `key` in the spellbook prep code, just like `prop`
     const spellbook = SheetSections.prepareTidySpellbook(
       context,
+      CONSTANTS.TAB_ACTOR_SPELLBOOK,
       spells,
       {
         canCreate: true,
@@ -1221,6 +1230,7 @@ export class Tidy5eCharacterSheet
     // Section Favorite Spells
     const favoriteSpellbook = SheetSections.prepareTidySpellbook(
       context,
+      CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
       favorites.spells,
       {
         canCreate: false,
@@ -1261,6 +1271,8 @@ export class Tidy5eCharacterSheet
     // Section Features
     const features: Record<string, CharacterFeatureSection> =
       CharacterSheetSections.buildFeaturesSections(
+        this.actor,
+        CONSTANTS.TAB_CHARACTER_FEATURES,
         species,
         backgrounds,
         classes,
@@ -1273,6 +1285,8 @@ export class Tidy5eCharacterSheet
     // Section favorite features
     const favoriteFeatures: Record<string, CharacterFeatureSection> =
       CharacterSheetSections.buildFeaturesSections(
+        this.actor,
+        CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
         favorites.species,
         favorites.backgrounds,
         favorites.classes,

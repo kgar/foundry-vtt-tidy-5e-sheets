@@ -9,14 +9,15 @@ import { UserSettingsFormApplication } from 'src/applications/settings/user-sett
 import { WorldSettingsFormApplication } from 'src/applications/settings/world-settings/WorldSettingsFormApplication.svelte';
 import { ThemeSettingsFormApplication } from 'src/applications/theme/ThemeSettingsFormApplication.svelte';
 import type { ExhaustionConfig } from '../features/exhaustion/exhaustion.types';
-import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
-import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
+import NpcSheetRuntime from 'src/runtime/NpcSheetRuntime.svelte';
+import CharacterSheetRuntime from 'src/runtime/CharacterSheetRuntime.svelte';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { BulkMigrationsApplication } from 'src/migrations/BulkMigrationsApplication';
 import { AboutApplication } from 'src/applications/settings/about/AboutApplication';
 import { ApplyTidySheetPreferencesApplication } from 'src/applications/sheet-preferences/ApplyTidySheetPreferencesApplication.svelte';
 import { getDefaultExhaustionConfig } from 'src/features/exhaustion/exhaustion';
+import type { GlobalCustomSectionsetting } from './settings.types';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -299,7 +300,7 @@ export function createSettings() {
           default: [
             CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
             CONSTANTS.TAB_ACTOR_INVENTORY,
-            CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+            CONSTANTS.TAB_ACTOR_SPELLBOOK,
             CONSTANTS.TAB_CHARACTER_FEATURES,
             CONSTANTS.TAB_CHARACTER_EFFECTS,
             CONSTANTS.TAB_CHARACTER_BIOGRAPHY,
@@ -655,7 +656,7 @@ export function createSettings() {
           type: Array,
           default: [
             CONSTANTS.TAB_NPC_ABILITIES,
-            CONSTANTS.TAB_NPC_SPELLBOOK,
+            CONSTANTS.TAB_ACTOR_SPELLBOOK,
             CONSTANTS.TAB_NPC_EFFECTS,
             CONSTANTS.TAB_NPC_BIOGRAPHY,
             CONSTANTS.TAB_NPC_JOURNAL,
@@ -1890,6 +1891,29 @@ export function createSettings() {
         },
       },
 
+      // Custom Sections
+      globalCustomSections: {
+        options: {
+          name: 'TIDY5E.Settings.GlobalCustomSections.name',
+          hint: 'TIDY5E.Settings.GlobalCustomSections.hint',
+          scope: 'world',
+          config: false,
+          type: Array,
+          default: [],
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<
+            Partial<GlobalCustomSectionsetting>[]
+          >('globalCustomSections').map((c) => ({
+            section: '',
+            showWhenEmptyFilters: {},
+            showWhenEmpty: false,
+            ...c,
+          }));
+        },
+      },
+
+      // Development and Troubleshooting
       debug: {
         options: {
           name: `TIDY5E.Settings.Debug.name`,

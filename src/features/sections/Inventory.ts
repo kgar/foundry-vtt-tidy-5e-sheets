@@ -7,6 +7,7 @@ import type {
   InventorySection,
 } from 'src/types/types';
 import { error } from 'src/utils/logging';
+import { SheetSections } from './SheetSections';
 
 export class Inventory {
   static getDefaultInventoryTypes(): string[] {
@@ -62,7 +63,22 @@ export class Inventory {
       return;
     }
 
-    const customSection: InventorySection = (inventory[customSectionName] ??= {
+    const customSection: InventorySection = (inventory[customSectionName] ??=
+      Inventory.createInventorySection(
+        customSectionName,
+        defaultInventoryTypes,
+        customSectionOptions
+      ));
+
+    customSection.items.push(item);
+  }
+
+  static createInventorySection(
+    customSectionName: string,
+    defaultInventoryTypes: string[],
+    customSectionOptions: Partial<InventorySection>
+  ): InventorySection {
+    return {
       dataset: { [TidyFlags.section.prop]: customSectionName },
       items: [],
       label: customSectionName,
@@ -74,9 +90,7 @@ export class Inventory {
       },
       show: true,
       ...customSectionOptions,
-    });
-
-    customSection.items.push(item);
+    };
   }
 
   static async getContainerPanelItems(items: Item5e[]) {
@@ -104,17 +118,19 @@ export class Inventory {
     return containerPanelItems;
   }
 
-  static getInventory(
-    items: Item5e[],
+  static async getContainerContentsInventory(
+    container: Item5e,
     options: Partial<InventorySection> = {
       canCreate: false,
     }
-  ): InventorySection[] {
+  ): Promise<InventorySection[]> {
+    const containerItems = (await container.system.contents).values();
+
     const inventory = Inventory.getDefaultInventorySections();
 
     const inventoryTypes = Inventory.getDefaultInventoryTypes();
 
-    for (let item of items) {
+    for (let item of containerItems) {
       Inventory.applyInventoryItemToSection(
         inventory,
         item,

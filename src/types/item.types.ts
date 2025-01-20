@@ -166,11 +166,11 @@ export type ItemChatData = {
 
 export type ContainerItemContext = {
   activities?: ActivityItemContext[];
-  totalWeight?: number;
-  isStack?: boolean;
-  favoriteId?: string;
   attunement?: AttunementContext;
   containerContents?: ContainerContents;
+  favoriteId?: string;
+  isStack?: boolean;
+  totalWeight?: number;
 };
 
 export type ContainerSheetClassicContext = {
@@ -211,11 +211,18 @@ export type ContainerSheetClassicContext = {
   utilities: Utilities<ContainerSheetClassicContext>;
 };
 
+export type CurrencyContext = {
+  key: string;
+  value: number;
+  abbr: string;
+};
+
 export type ContainerSheetHightouchContext = {
   capacity: ContainerCapacityContext;
   config: typeof CONFIG.DND5E;
   concealDetails: boolean;
   containerContents: ContainerContents;
+  currencies: CurrencyContext[];
   document: Item5e;
   editable: boolean;
   enriched: {
