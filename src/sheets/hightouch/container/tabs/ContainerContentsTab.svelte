@@ -55,7 +55,7 @@
   let footerEl: HTMLElement | undefined = $state();
 
   let allCollapsed = $state(false);
-  function toggleFred() {
+  function toggleContents() {
     if (allCollapsed) {
       messageBus.message = {
         message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
@@ -88,7 +88,7 @@
   class="action-bar"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTION_BAR}
 >
-  <ButtonWithOptionPanel class="icon-button" onclick={() => toggleFred()}>
+  <ButtonWithOptionPanel class="icon-button" onclick={() => toggleContents()}>
     <i class="fas fa-angles-down fa-fw"></i>
     {#snippet options()}
       <h4>{localize('TIDY5E.ExpandCollapseMenu.OptionTitle')}</h4>

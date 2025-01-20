@@ -33,9 +33,15 @@
 
   const localize = FoundryAdapter.localize;
 
-  type barney = { id: string; title: string };
-  type fred = { type: string; label: string; tabs: barney[] };
-  let sheetTypes: fred[] = [
+  type TabFilterOption = { id: string; title: string };
+
+  type SheetFilterOption = {
+    type: string;
+    label: string;
+    tabs: TabFilterOption[];
+  };
+
+  let sheetTypes: SheetFilterOption[] = [
     {
       type: CONSTANTS.SHEET_TYPE_CHARACTER,
       label: localize('TYPES.Actor.character'),
@@ -65,7 +71,7 @@
     tabs: Map<string, RegisteredTab<any>>,
     subset: string[] = [],
   ) {
-    let mappedTabs: barney[] = [];
+    let mappedTabs: TabFilterOption[] = [];
     try {
       for (let [_, tab] of tabs) {
         if (subset.length && !subset.includes(tab.id)) {
