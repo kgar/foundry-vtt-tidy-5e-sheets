@@ -13,8 +13,8 @@ import type {
   WorldSettingsFunctions,
 } from './WorldSettings.types';
 import type { RegisteredTab } from 'src/runtime/types';
-import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
-import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
+import CharacterSheetRuntime from 'src/runtime/CharacterSheetRuntime.svelte';
+import NpcSheetRuntime from 'src/runtime/NpcSheetRuntime.svelte';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TabManager } from 'src/runtime/tab/TabManager';

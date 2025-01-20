@@ -28,7 +28,7 @@ import { settings } from 'src/settings/settings.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { mount, unmount } from 'svelte';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
-import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
+import NpcSheetRuntime from 'src/runtime/NpcSheetRuntime.svelte';
 import {
   actorUsesActionFeature,
   getActorActionSections,

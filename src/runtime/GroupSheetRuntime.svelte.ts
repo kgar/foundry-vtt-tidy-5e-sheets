@@ -11,9 +11,9 @@ import GroupInventoryTab from 'src/sheets/classic/group/tabs/GroupInventoryTab.s
 import GroupDescriptionTab from 'src/sheets/classic/group/tabs/GroupDescriptionTab.svelte';
 import type { GroupSheetClassicContext } from 'src/types/group.types';
 
-export class GroupSheetRuntime {
-  private static _content: RegisteredContent<GroupSheetClassicContext>[] = [];
-  private static _tabs: RegisteredTab<GroupSheetClassicContext>[] = [
+class GroupSheetRuntime {
+  private _content = $state<RegisteredContent<GroupSheetClassicContext>[]>([]);
+  private _tabs = $state<RegisteredTab<GroupSheetClassicContext>[]>([
     {
       id: CONSTANTS.TAB_GROUP_MEMBERS,
       title: 'DND5E.Group.Member.other',
@@ -41,34 +41,40 @@ export class GroupSheetRuntime {
       },
       layout: 'classic',
     },
-  ];
+  ]);
+  tabMap = $derived(
+    this._tabs.reduce<Map<string, RegisteredTab<GroupSheetClassicContext>>>(
+      (map, curr) => {
+        map.set(curr.id, curr);
+        return map;
+      },
+      new Map<string, RegisteredTab<GroupSheetClassicContext>>()
+    )
+  );
 
-  static get content(): RegisteredContent<GroupSheetClassicContext>[] {
+  get content(): RegisteredContent<GroupSheetClassicContext>[] {
     return this._content;
   }
 
-  static async getTabs(context: GroupSheetClassicContext): Promise<Tab[]> {
-    return await TabManager.prepareTabsForRender(
-      context,
-      GroupSheetRuntime._tabs
-    );
+  async getTabs(context: GroupSheetClassicContext): Promise<Tab[]> {
+    return await TabManager.prepareTabsForRender(context, this._tabs);
   }
 
-  static getAllRegisteredTabs(): RegisteredTab<GroupSheetClassicContext>[] {
-    return [...GroupSheetRuntime._tabs];
+  getAllRegisteredTabs(): RegisteredTab<GroupSheetClassicContext>[] {
+    return [...this._tabs];
   }
 
-  static registerContent(
+  registerContent(
     registeredContent: RegisteredContent<GroupSheetClassicContext>
   ) {
     this._content.push(registeredContent);
   }
 
-  static registerTab(
+  registerTab(
     tab: RegisteredTab<GroupSheetClassicContext>,
     options?: ActorTabRegistrationOptions
   ) {
-    const tabExists = GroupSheetRuntime._tabs.some((t) => t.id === tab.id);
+    const tabExists = this._tabs.some((t) => t.id === tab.id);
 
     if (tabExists && !options?.overrideExisting) {
       warn(`Tab with id ${tab.id} already exists.`);
@@ -76,16 +82,16 @@ export class GroupSheetRuntime {
     }
 
     if (tabExists && options?.overrideExisting) {
-      const index = GroupSheetRuntime._tabs.findIndex((t) => t.id === tab.id);
+      const index = this._tabs.findIndex((t) => t.id === tab.id);
       if (index >= 0) {
-        GroupSheetRuntime._tabs.splice(index, 1);
+        this._tabs.splice(index, 1);
       }
     }
 
-    GroupSheetRuntime._tabs.push(tab);
+    this._tabs.push(tab);
   }
 
-  static getTabTitle(tabId: string) {
+  getTabTitle(tabId: string) {
     try {
       let tabTitle = this._tabs.find((t) => t.id === tabId)?.title;
       if (typeof tabTitle === 'function') {
@@ -99,7 +105,7 @@ export class GroupSheetRuntime {
   }
 
   // TODO: Move this to a world setting
-  static getDefaultTabs(): string[] {
+  getDefaultTabs(): string[] {
     return [
       CONSTANTS.TAB_GROUP_MEMBERS,
       CONSTANTS.TAB_ACTOR_INVENTORY,
@@ -107,3 +113,7 @@ export class GroupSheetRuntime {
     ];
   }
 }
+
+const singleton = new GroupSheetRuntime();
+
+export default singleton;

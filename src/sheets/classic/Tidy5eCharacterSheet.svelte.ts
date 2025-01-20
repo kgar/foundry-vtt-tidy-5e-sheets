@@ -39,7 +39,7 @@ import {
 import { mount, unmount } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
-import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
+import CharacterSheetRuntime from 'src/runtime/CharacterSheetRuntime.svelte';
 import {
   actorUsesActionFeature,
   getActorActionSections,
@@ -1207,15 +1207,6 @@ export class Tidy5eCharacterSheet
         }
       );
     }
-
-    SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
-      context.actor,
-      CONSTANTS.TAB_CHARACTER_ATTRIBUTES
-    ).forEach((s) => {
-      inventory[s] ??= Inventory.createInventorySection(s, inventoryTypes, {
-        canCreate: true,
-      });
-    });
 
     context.spellcastingInfo = FoundryAdapter.getSpellcastingInfo(
       this.actor,

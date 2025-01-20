@@ -9,8 +9,8 @@ import { UserSettingsFormApplication } from 'src/applications/settings/user-sett
 import { WorldSettingsFormApplication } from 'src/applications/settings/world-settings/WorldSettingsFormApplication.svelte';
 import { ThemeSettingsFormApplication } from 'src/applications/theme/ThemeSettingsFormApplication.svelte';
 import type { ExhaustionConfig } from '../features/exhaustion/exhaustion.types';
-import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
-import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
+import NpcSheetRuntime from 'src/runtime/NpcSheetRuntime.svelte';
+import CharacterSheetRuntime from 'src/runtime/CharacterSheetRuntime.svelte';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { BulkMigrationsApplication } from 'src/migrations/BulkMigrationsApplication';

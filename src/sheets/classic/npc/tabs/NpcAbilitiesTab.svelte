@@ -45,7 +45,7 @@
   import LevelUpDropdown from 'src/sheets/classic/actor/LevelUpDropdown.svelte';
   import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
   import ItemControl from 'src/components/item-list/controls/ItemControl.svelte';
-  import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
+  import NpcSheetRuntime from 'src/runtime/NpcSheetRuntime.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';

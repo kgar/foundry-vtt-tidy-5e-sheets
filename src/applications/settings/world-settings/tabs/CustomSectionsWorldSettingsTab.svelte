@@ -5,13 +5,11 @@
   import type { WorldSettingsContext } from '../WorldSettings.types';
   import { CONSTANTS } from 'src/constants';
   import type { GlobalCustomSectionsetting as GlobalCustomSectionSetting } from 'src/settings/settings.types';
-  import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
+  import CharacterSheetRuntime from 'src/runtime/CharacterSheetRuntime.svelte';
   import { error } from 'src/utils/logging';
   import type { RegisteredTab } from 'src/runtime/types';
-  import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
-  import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
-  import { GroupSheetRuntime } from 'src/runtime/GroupSheetRuntime';
-  import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
+  import NpcSheetRuntime from 'src/runtime/NpcSheetRuntime.svelte';
+  import GroupSheetRuntime from 'src/runtime/GroupSheetRuntime.svelte';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
 
   const context = getContext<WorldSettingsContext>(
@@ -41,40 +39,38 @@
     {
       type: CONSTANTS.SHEET_TYPE_CHARACTER,
       label: localize('TYPES.Actor.character'),
-      tabs: mapTabs(CharacterSheetRuntime.getAllRegisteredTabs()),
+      tabs: mapTabs(CharacterSheetRuntime.tabMap, [
+        CONSTANTS.TAB_ACTOR_INVENTORY,
+        CONSTANTS.TAB_ACTOR_SPELLBOOK,
+        CONSTANTS.TAB_CHARACTER_FEATURES,
+      ]),
     },
     {
       type: CONSTANTS.SHEET_TYPE_NPC,
       label: localize('DND5E.NPC'),
-      tabs: mapTabs(NpcSheetRuntime.getAllRegisteredTabs()),
-    },
-    {
-      type: CONSTANTS.SHEET_TYPE_VEHICLE,
-      label: localize('TYPES.Actor.vehicle'),
-      tabs: mapTabs(VehicleSheetRuntime.getAllRegisteredTabs()),
+      tabs: mapTabs(NpcSheetRuntime.tabMap, [
+        CONSTANTS.TAB_NPC_ABILITIES,
+        CONSTANTS.TAB_ACTOR_INVENTORY,
+        CONSTANTS.TAB_ACTOR_SPELLBOOK,
+      ]),
     },
     {
       type: CONSTANTS.SHEET_TYPE_GROUP,
       label: localize('TYPES.Actor.group'),
-      tabs: mapTabs(GroupSheetRuntime.getAllRegisteredTabs()),
+      tabs: mapTabs(GroupSheetRuntime.tabMap, [CONSTANTS.TAB_ACTOR_INVENTORY]),
     },
-    // This setting will take a great deal more thought. Leave it disabled for now, because the implementation details are hairy.
-    // {
-    //   type: CONSTANTS.SHEET_TYPE_CONTAINER,
-    //   label: localize('TYPES.Item.container'),
-    //   tabs: [
-    //     {
-    //       id: CONSTANTS.TAB_CONTAINER_CONTENTS,
-    //       title: ItemSheetRuntime.getTabTitle(CONSTANTS.TAB_CONTAINER_CONTENTS),
-    //     },
-    //   ],
-    // },
   ];
 
-  function mapTabs(tabs: RegisteredTab<any>[]) {
+  function mapTabs(
+    tabs: Map<string, RegisteredTab<any>>,
+    subset: string[] = [],
+  ) {
     let mappedTabs: barney[] = [];
     try {
-      for (let tab of tabs) {
+      for (let [_, tab] of tabs) {
+        if (subset.length && !subset.includes(tab.id)) {
+          continue;
+        }
         let title = localize(
           typeof tab.title === 'function' ? tab.title() : tab.title,
         );
