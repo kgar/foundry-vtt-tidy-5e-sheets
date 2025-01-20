@@ -66,8 +66,10 @@ export class Container {
   static promptCreateInventoryItem(container: Item5e) {
     const actor = container.actor;
 
+    const folder = !!actor ? undefined : container.folder;
+
     const createData = {
-      folder: container.folder,
+      folder: folder,
       'system.container': container.id,
     };
 
