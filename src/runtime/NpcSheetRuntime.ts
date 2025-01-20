@@ -41,7 +41,7 @@ export class NpcSheetRuntime {
       layout: 'classic',
     },
     {
-      id: CONSTANTS.TAB_NPC_SPELLBOOK,
+      id: CONSTANTS.TAB_ACTOR_SPELLBOOK,
       title: 'DND5E.Spellbook',
       content: {
         component: NpcSpellbookTab,

@@ -300,7 +300,7 @@ export function createSettings() {
           default: [
             CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
             CONSTANTS.TAB_ACTOR_INVENTORY,
-            CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+            CONSTANTS.TAB_ACTOR_SPELLBOOK,
             CONSTANTS.TAB_CHARACTER_FEATURES,
             CONSTANTS.TAB_CHARACTER_EFFECTS,
             CONSTANTS.TAB_CHARACTER_BIOGRAPHY,
@@ -656,7 +656,7 @@ export function createSettings() {
           type: Array,
           default: [
             CONSTANTS.TAB_NPC_ABILITIES,
-            CONSTANTS.TAB_NPC_SPELLBOOK,
+            CONSTANTS.TAB_ACTOR_SPELLBOOK,
             CONSTANTS.TAB_NPC_EFFECTS,
             CONSTANTS.TAB_NPC_BIOGRAPHY,
             CONSTANTS.TAB_NPC_JOURNAL,

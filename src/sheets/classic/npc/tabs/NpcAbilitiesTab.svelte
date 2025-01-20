@@ -404,9 +404,9 @@
                 new DocumentTabSectionConfigApplication({
                   document: context.actor,
                   sections: context.spellbook,
-                  tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
+                  tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
                   tabTitle: NpcSheetRuntime.getTabTitle(
-                    CONSTANTS.TAB_NPC_SPELLBOOK,
+                    CONSTANTS.TAB_ACTOR_SPELLBOOK,
                   ),
                 }).render(true)}
             />

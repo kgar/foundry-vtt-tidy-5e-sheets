@@ -29,17 +29,6 @@ import { SpellUtils } from 'src/utils/SpellUtils';
 import { settings } from 'src/settings/settings.svelte';
 
 export class SheetSections {
-  static generateCustomSpellbookSections(
-    spells: Item5e[],
-    options: Partial<SpellbookSection>
-  ) {
-    const customSpellbook: Record<string, SpellbookSection> = {};
-    spells.forEach((s) =>
-      SheetSections.applySpellToSection(customSpellbook, s, options)
-    );
-    return Object.values(customSpellbook);
-  }
-
   static applySpellToSection(
     spellbook: Record<string, SpellbookSection>,
     spell: Item5e,
@@ -52,7 +41,17 @@ export class SheetSections {
       return;
     }
 
-    const section: SpellbookSection = (spellbook[customSectionName] ??= {
+    const section: SpellbookSection = (spellbook[customSectionName] ??=
+      SheetSections.createSpellbookSection(customSectionName, options));
+
+    section.spells.push(spell);
+  }
+
+  static createSpellbookSection(
+    customSectionName: string,
+    options: Partial<SpellbookSection>
+  ): SpellbookSection {
+    return {
       dataset: {
         [TidyFlags.section.prop]: customSectionName,
       },
@@ -68,9 +67,7 @@ export class SheetSections {
       },
       show: true,
       ...options,
-    });
-
-    section.spells.push(spell);
+    };
   }
 
   static sortKeyedSections<
@@ -165,6 +162,15 @@ export class SheetSections {
 
     customSectionSpells.forEach((spell) => {
       SheetSections.applySpellToSection(spellbookMap, spell, options);
+    });
+
+    SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
+      context.actor,
+      CONSTANTS.TAB_ACTOR_SPELLBOOK
+    ).forEach((s) => {
+      spellbookMap[s] ??= SheetSections.createSpellbookSection(s, {
+        canCreate: true,
+      });
     });
 
     return Object.values(spellbookMap);
@@ -334,7 +340,7 @@ export class SheetSections {
 
         // Apply visibility from configuration
         section.show =
-          sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.[section.key]
+          sectionConfigs?.[CONSTANTS.TAB_ACTOR_SPELLBOOK]?.[section.key]
             ?.show !== false;
 
         return section;

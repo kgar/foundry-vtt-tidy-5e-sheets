@@ -303,7 +303,7 @@ export class Tidy5eCharacterSheet
     const inventorySortMode =
       characterPreferences.tabs?.[CONSTANTS.TAB_ACTOR_INVENTORY]?.sort ?? 'm';
     const spellbookSortMode =
-      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.sort ??
+      characterPreferences.tabs?.[CONSTANTS.TAB_ACTOR_SPELLBOOK]?.sort ??
       'm';
     const featureSortMode =
       characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_FEATURES]?.sort ??
@@ -508,7 +508,7 @@ export class Tidy5eCharacterSheet
           },
         ],
       },
-      [CONSTANTS.TAB_CHARACTER_SPELLBOOK]: {
+      [CONSTANTS.TAB_ACTOR_SPELLBOOK]: {
         utilityToolbarCommands: [
           {
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
@@ -516,7 +516,7 @@ export class Tidy5eCharacterSheet
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
-                CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+                CONSTANTS.TAB_ACTOR_SPELLBOOK,
                 'sort',
                 'm'
               );
@@ -529,7 +529,7 @@ export class Tidy5eCharacterSheet
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
-                CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+                CONSTANTS.TAB_ACTOR_SPELLBOOK,
                 'sort',
                 'a'
               );
@@ -571,7 +571,7 @@ export class Tidy5eCharacterSheet
             execute: () =>
               // TODO: Use app.messageBus
               (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+                tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
                 message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
           },
@@ -581,7 +581,7 @@ export class Tidy5eCharacterSheet
             execute: () =>
               // TODO: Use app.messageBus
               (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+                tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
           },
@@ -610,9 +610,9 @@ export class Tidy5eCharacterSheet
               new DocumentTabSectionConfigApplication({
                 document: context.actor,
                 sections: sections,
-                tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+                tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
                 tabTitle: CharacterSheetRuntime.getTabTitle(
-                  CONSTANTS.TAB_CHARACTER_SPELLBOOK
+                  CONSTANTS.TAB_ACTOR_SPELLBOOK
                 ),
               }).render(true);
             },

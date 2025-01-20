@@ -56,7 +56,7 @@ export class CharacterSheetRuntime {
       layout: 'classic',
     },
     {
-      id: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+      id: CONSTANTS.TAB_ACTOR_SPELLBOOK,
       title: 'DND5E.Spellbook',
       content: {
         component: CharacterSpellbookTab,

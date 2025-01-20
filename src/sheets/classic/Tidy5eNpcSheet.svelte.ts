@@ -251,7 +251,7 @@ export class Tidy5eNpcSheet
       npcPreferences.tabs?.[CONSTANTS.TAB_NPC_ABILITIES]?.sort ?? 'm';
 
     const spellbookSortMode =
-      npcPreferences.tabs?.[CONSTANTS.TAB_NPC_SPELLBOOK]?.sort ?? 'm';
+      npcPreferences.tabs?.[CONSTANTS.TAB_ACTOR_SPELLBOOK]?.sort ?? 'm';
 
     const actionListSortMode =
       npcPreferences.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS]?.sort ?? 'm';
@@ -397,7 +397,7 @@ export class Tidy5eNpcSheet
           },
         ],
       },
-      [CONSTANTS.TAB_NPC_SPELLBOOK]: {
+      [CONSTANTS.TAB_ACTOR_SPELLBOOK]: {
         utilityToolbarCommands: [
           {
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
@@ -405,7 +405,7 @@ export class Tidy5eNpcSheet
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
-                CONSTANTS.TAB_NPC_SPELLBOOK,
+                CONSTANTS.TAB_ACTOR_SPELLBOOK,
                 'sort',
                 'm'
               );
@@ -418,7 +418,7 @@ export class Tidy5eNpcSheet
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
-                CONSTANTS.TAB_NPC_SPELLBOOK,
+                CONSTANTS.TAB_ACTOR_SPELLBOOK,
                 'sort',
                 'a'
               );
@@ -460,7 +460,7 @@ export class Tidy5eNpcSheet
             execute: () =>
               // TODO: Use app.messageBus
               (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
+                tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
                 message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
           },
@@ -470,7 +470,7 @@ export class Tidy5eNpcSheet
             execute: () =>
               // TODO: Use app.messageBus
               (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
+                tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
           },
@@ -499,9 +499,9 @@ export class Tidy5eNpcSheet
               new DocumentTabSectionConfigApplication({
                 document: context.actor,
                 sections: sections,
-                tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
+                tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
                 tabTitle: NpcSheetRuntime.getTabTitle(
-                  CONSTANTS.TAB_NPC_SPELLBOOK
+                  CONSTANTS.TAB_ACTOR_SPELLBOOK
                 ),
               }).render(true);
             },

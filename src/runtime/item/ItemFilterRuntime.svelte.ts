@@ -51,7 +51,7 @@ export class ItemFilterRuntime {
         defaultItemFilters.activationCostReaction.name,
         defaultItemFilters.canUse.name,
       ]),
-      [CONSTANTS.TAB_CHARACTER_SPELLBOOK]: new Set<string>([
+      [CONSTANTS.TAB_ACTOR_SPELLBOOK]: new Set<string>([
         defaultItemFilters.activationCostAction.name,
         defaultItemFilters.activationCostBonus.name,
         defaultItemFilters.activationCostReaction.name,
@@ -71,7 +71,7 @@ export class ItemFilterRuntime {
         defaultItemFilters.activationCostBonus.name,
         defaultItemFilters.activationCostReaction.name,
       ]),
-      [CONSTANTS.TAB_NPC_SPELLBOOK]: new Set<string>([
+      [CONSTANTS.TAB_ACTOR_SPELLBOOK]: new Set<string>([
         defaultItemFilters.activationCostAction.name,
         defaultItemFilters.activationCostBonus.name,
         defaultItemFilters.activationCostReaction.name,
@@ -153,7 +153,7 @@ export class ItemFilterRuntime {
           ...getAttunementFilters(),
         ],
       },
-      [CONSTANTS.TAB_CHARACTER_SPELLBOOK]: {
+      [CONSTANTS.TAB_ACTOR_SPELLBOOK]: {
         'DND5E.ItemActivationCost': [
           defaultItemFilters.activationCostAction,
           defaultItemFilters.activationCostBonus,
@@ -175,7 +175,7 @@ export class ItemFilterRuntime {
       [CONSTANTS.TAB_ACTOR_ACTIONS]: { ...getActionListFilterCategories() },
     },
     [CONSTANTS.SHEET_TYPE_NPC]: {
-      [CONSTANTS.TAB_NPC_SPELLBOOK]: {
+      [CONSTANTS.TAB_ACTOR_SPELLBOOK]: {
         'DND5E.ItemActivationCost': [
           defaultItemFilters.activationCostAction,
           defaultItemFilters.activationCostBonus,

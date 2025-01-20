@@ -212,7 +212,7 @@ export class CharacterSheetSections {
       TypedEffectFavoriteSection | TypedActivityFavoriteSection
     >
   ) {
-    return section.type === CONSTANTS.TAB_CHARACTER_SPELLBOOK
+    return section.type === CONSTANTS.TAB_ACTOR_SPELLBOOK
       ? section.spells
       : section.items;
   }
