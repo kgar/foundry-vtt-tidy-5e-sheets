@@ -16,9 +16,7 @@
   import { getContainerSheetHightouchContext } from 'src/sheets/sheet-context.svelte';
   import TidyVisibilityObserver from 'src/components/utility/TidyVisibilityObserver.svelte';
   import { Container } from 'src/features/containers/Container';
-  import type { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
-  import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
-  import type { ExpandCollapseBehavior } from 'src/features/user-preferences/user-preferences.types';
+  import ExpandCollapseButton from '../../shared/ExpandCollapseButton.svelte';
 
   let context = $derived(getContainerSheetHightouchContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
@@ -51,34 +49,6 @@
 
   let markerEl: HTMLElement | undefined = $state();
   let footerEl: HTMLElement | undefined = $state();
-
-  const sectionExpansionTracker = getContext<ExpansionTracker>(
-    'sectionExpansionTracker',
-  );
-
-  let allExpanded = $derived(
-    // TODO: Account for user preference between top-level only or also sub-sections inside containers
-    sectionExpansionTracker.tabStats[tabId]?.topAllExpanded === true,
-  );
-
-  function toggleContents() {
-    sectionExpansionTracker.setAll(
-      tabId,
-      !allExpanded,
-      context.userPreferences.expandCollapseBehavior === 'top-level'
-        ? 'shallow'
-        : 'deep',
-    );
-  }
-
-  function onExpandCollapseBehaviorChanged(
-    event: Event & { currentTarget: EventTarget & HTMLInputElement },
-  ) {
-    UserPreferencesService.setPreference(
-      'expandCollapseBehavior',
-      event.currentTarget.value as ExpandCollapseBehavior,
-    );
-  }
 </script>
 
 {#if !!markerEl && !!footerEl}
@@ -96,38 +66,7 @@
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTION_BAR}
 >
   <!-- TODO: Extract to component. -->
-  <ButtonWithOptionPanel
-    class="icon-button expand-button {allExpanded ? 'expanded' : 'collapsed'}"
-    onclick={() => toggleContents()}
-  >
-    <i class="expand-button-indicator fas fa-angles-down fa-fw"></i>
-    {#snippet options()}
-      <h4>{localize('TIDY5E.ExpandCollapseMenu.OptionTitle')}</h4>
-      <label
-        for="{context.document.id}-expand-collapse-behavior-top-level-sections"
-      >
-        <input
-          id="{context.document.id}-expand-collapse-behavior-top-level-sections"
-          type="radio"
-          checked={context.userPreferences.expandCollapseBehavior ===
-            'top-level'}
-          value={'top-level' satisfies ExpandCollapseBehavior}
-          onchange={onExpandCollapseBehaviorChanged}
-        />
-        {localize('TIDY5E.ExpandCollapseMenu.OptionTopLevel')}
-      </label>
-      <label for="{context.document.id}-expand-collapse-behavior-all-sections">
-        <input
-          type="radio"
-          id="{context.document.id}-expand-collapse-behavior-all-sections"
-          checked={context.userPreferences.expandCollapseBehavior === 'all'}
-          value={'all' satisfies ExpandCollapseBehavior}
-          onchange={onExpandCollapseBehaviorChanged}
-        />
-        {localize('TIDY5E.ExpandCollapseMenu.OptionAllSections')}
-      </label>
-    {/snippet}
-  </ButtonWithOptionPanel>
+  <ExpandCollapseButton />
 
   <Search bind:searchCriteria />
 
