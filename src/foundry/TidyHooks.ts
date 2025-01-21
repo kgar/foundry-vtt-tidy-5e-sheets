@@ -480,34 +480,6 @@ export class TidyHooks {
   }
 
   /**
-   * The item sheet has rendered all content and registered custom content. Is called on partial and full renders.
-   * @param {any} app The target item sheet application class instance.
-   * @param {HTMLElement} element The item sheet's HTML element.
-   * @param {ContainerSheetClassicContext | ItemSheetContext} data The data context from `getData()`.
-   * @param {boolean} forced `true` when performing a full re-render; `false` when performing a partial re-render.
-   *
-   * @example
-   * ```js
-   * Hooks.on('tidy5e-sheet.renderItemSheet', (app, element, data, forced) => {
-   *   // Your code here
-   * });
-   * ```
-   *
-   * @deprecated This hook is now redundant for App V2 item and container sheets. It will be removed as of Tidy V8.
-   */
-  static tidy5eSheetsRenderItemSheet(
-    app: any,
-    element: HTMLElement,
-    data:
-      | ContainerSheetClassicContext
-      | ItemSheetContext
-      | ContainerSheetHightouchContext,
-    forced: boolean
-  ) {
-    Hooks.callAll('tidy5e-sheet.renderItemSheet', app, element, data, forced);
-  }
-
-  /**
    * A tab has been selected on the sheet.
    * @param {any} app The sheet application instance.
    * @param {HTMLElement} element The sheet's HTML element.

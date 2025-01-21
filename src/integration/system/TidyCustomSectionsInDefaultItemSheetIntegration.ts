@@ -7,7 +7,7 @@ import { settings } from 'src/settings/settings.svelte';
 export class TidyCustomSectionsInDefaultItemSheetIntegration
   implements SystemIntegrationBase
 {
-  init(api: Tidy5eSheetsApi): void {
+  init(_: Tidy5eSheetsApi): void {
     Hooks.on('renderItemSheet5e', (app: any) => {
       const includeSectionFields =
         settings.value.includeTidySectionFieldsInDefaultSheets;

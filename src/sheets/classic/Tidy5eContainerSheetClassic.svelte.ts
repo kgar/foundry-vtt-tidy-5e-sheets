@@ -376,24 +376,6 @@ export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
   }
 
   /* -------------------------------------------- */
-  /*  Rendering Life-Cycle Methods                */
-  /* -------------------------------------------- */
-
-  _onRender(
-    context: ContainerSheetClassicContext,
-    options: ApplicationRenderOptions
-  ) {
-    super._onRender(context, options);
-
-    TidyHooks.tidy5eSheetsRenderItemSheet(
-      this,
-      this.element,
-      context,
-      !!options.isFirstRender
-    );
-  }
-
-  /* -------------------------------------------- */
   /*  Drag and Drop                               */
   /* -------------------------------------------- */
 

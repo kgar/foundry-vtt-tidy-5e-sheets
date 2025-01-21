@@ -1109,7 +1109,8 @@ export class Tidy5eSheetsApi {
    * @returns the original HTML with a transparent element wrapped around which indicates to Tidy that this should be removed and re-rendered.
    *
    * @remarks
-   * The intended use of this function is to accompany the use of the `tidy5e-sheet.renderActorSheet` or `tidy5e-sheet.renderItemSheet` hook.
+   * The intended use of this function is to accompany the use of the `tidy5e-sheet.renderActorSheet` hook in App V1 (PCs, NPCs, Vehicles) 
+   * or the standard sheet render hooks in App V2 (Items, Containers, Groups).
    * Any content injected through those hooks needs to be wrapped in this way so that the old version
    * of the HTML can be removed before adding it back in.
    * Handlebars refreshes content in this way, but for Tidy purposes, the module needs to know when an arbitrary
