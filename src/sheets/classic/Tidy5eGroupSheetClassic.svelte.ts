@@ -50,6 +50,7 @@ import { Activities } from 'src/features/activities/activities';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { ImportSheetControl } from '../../features/sheet-header-controls/ImportSheetControl';
 import { SheetSections } from 'src/features/sections/SheetSections';
+import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 
 type MemberStats = {
   currentHP: number;
@@ -63,6 +64,8 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     foundry.applications.sheets.ActorSheetV2
   )
 ) {
+  sectionExpansionTracker = new ExpansionTracker(true);
+
   constructor(...args: any[]) {
     super(...args);
 
@@ -143,6 +146,10 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
           this.#itemFilterService.onFilterClearAll.bind(
             this.#itemFilterService
           ),
+        ],
+        [
+          CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TRACKER,
+          this.sectionExpansionTracker,
         ],
       ]),
     });

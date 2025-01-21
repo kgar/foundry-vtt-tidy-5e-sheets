@@ -35,6 +35,7 @@ import { TabManager } from 'src/runtime/tab/TabManager';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { settings, SettingsProvider } from 'src/settings/settings.svelte';
 import ContainerHeaderStart from './item/parts/ContainerHeaderStart.svelte';
+import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 
 export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
   SvelteApplicationMixin<ContainerSheetHightouchContext>(
@@ -48,6 +49,7 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
   inlineToggleService = new InlineToggleService();
   itemFilterService: ItemFilterService;
   messageBus = $state<MessageBus>({ message: undefined });
+  sectionExpansionTracker = new ExpansionTracker(true);
 
   constructor(...args: any[]) {
     super(...args);
@@ -101,6 +103,10 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
         this.itemFilterService.onFilterClearAll.bind(this.itemFilterService),
       ],
       [CONSTANTS.SVELTE_CONTEXT.SEARCH_FILTERS, new Map(this.searchFilters)],
+      [
+        CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TRACKER,
+        this.sectionExpansionTracker,
+      ],
     ]);
 
     const component = mount(ContainerSheet, {

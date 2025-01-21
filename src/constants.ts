@@ -418,6 +418,7 @@ export const CONSTANTS = {
     ON_TAB_SELECTED: 'onTabSelected',
     SEARCH_FILTERS: 'searchFilters',
     SEARCH_RESULTS_STATE: 'searchResultsState',
+    SECTION_EXPANSION_TRACKER: 'sectionExpansionTracker',
     STATS: 'stats',
     TAB_ID: 'tabId',
     USE_DEFAULT: 'useDefault',

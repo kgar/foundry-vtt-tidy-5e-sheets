@@ -1,8 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService.svelte';
   import TidyTableToggleIcon from 'src/components/table/TidyTableToggleIcon.svelte';
-  import type { Snippet } from 'svelte';
+  import { getContext, type Snippet } from 'svelte';
 
   interface Props {
     primary?: boolean;
@@ -20,8 +19,8 @@
     ...rest
   }: Props = $props();
 
-  const expandCollapseService = ExpandCollapseService.getService();
-  let expandState = $derived(expandCollapseService.state);
+  let toggleable =
+    getContext<() => { expanded: boolean; toggle: Function }>('sectionToggle');
 </script>
 
 <div
@@ -31,8 +30,8 @@
   style:flex-basis={baseWidth}
   {title}
 >
-  {#if primary && expandState?.toggleable}
-    <TidyTableToggleIcon expanded={expandState.expanded} />
+  {#if primary && !!toggleable}
+    <TidyTableToggleIcon expanded={toggleable().expanded} />
   {/if}
   {@render children?.()}
 </div>

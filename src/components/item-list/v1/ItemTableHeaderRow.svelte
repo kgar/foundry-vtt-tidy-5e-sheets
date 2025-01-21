@@ -1,8 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService.svelte';
   import { isUserInteractable } from 'src/utils/element';
-  import type { Snippet } from 'svelte';
+  import { getContext, type Snippet } from 'svelte';
 
   interface Props {
     children?: Snippet;
@@ -10,10 +9,11 @@
 
   let { children }: Props = $props();
 
-  const expandCollapseService = ExpandCollapseService.getService();
+  let toggleable =
+    getContext<() => { expanded: boolean; toggle: Function }>('sectionToggle');
 
   function handleHeaderRowClick(ev: MouseEvent) {
-    if (!expandState?.toggleable) {
+    if (!toggleable) {
       return;
     }
 
@@ -29,22 +29,20 @@
 
     ev.stopPropagation();
 
-    expandCollapseService.toggle();
+    toggleable().toggle();
   }
-
-  let expandState = $derived(expandCollapseService.state);
 </script>
 
 <header
   class="item-table-header-row"
-  class:toggleable={expandState?.toggleable}
+  class:toggleable={!!toggleable}
   onclick={handleHeaderRowClick}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_TABLE_HEADER_ROW}
 >
-  {#if expandState?.toggleable}
+  {#if !!toggleable}
     <i
       class="expand-indicator fas fa-angle-right"
-      class:expanded={expandState.expanded}
+      class:expanded={toggleable().expanded}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.EXPANSION_TOGGLE}
     ></i>
   {/if}
