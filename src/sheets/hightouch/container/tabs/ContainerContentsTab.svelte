@@ -17,6 +17,8 @@
   import TidyVisibilityObserver from 'src/components/utility/TidyVisibilityObserver.svelte';
   import { Container } from 'src/features/containers/Container';
   import type { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
+  import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
+  import type { ExpandCollapseBehavior } from 'src/features/user-preferences/user-preferences.types';
 
   let context = $derived(getContainerSheetHightouchContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
@@ -62,6 +64,15 @@
   function toggleContents() {
     sectionExpansionTracker.setAll(tabId, !allExpanded);
   }
+
+  function onExpandCollapseBehaviorChanged(
+    event: Event & { currentTarget: EventTarget & HTMLInputElement },
+  ) {
+    UserPreferencesService.setPreference(
+      'expandCollapseBehavior',
+      event.currentTarget.value as ExpandCollapseBehavior,
+    );
+  }
 </script>
 
 {#if !!markerEl && !!footerEl}
@@ -78,6 +89,7 @@
   class="action-bar"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTION_BAR}
 >
+  <!-- TODO: Extract to component. -->
   <ButtonWithOptionPanel
     class="icon-button expand-button {allExpanded ? 'expanded' : 'collapsed'}"
     onclick={() => toggleContents()}
@@ -88,14 +100,23 @@
       <label
         for="{context.document.id}-expand-collapse-behavior-top-level-sections"
       >
-        <input type="radio" checked={true} />
+        <input
+          id="{context.document.id}-expand-collapse-behavior-top-level-sections"
+          type="radio"
+          checked={context.userPreferences.expandCollapseBehavior ===
+            'top-level'}
+          value={'top-level' satisfies ExpandCollapseBehavior}
+          onchange={onExpandCollapseBehaviorChanged}
+        />
         {localize('TIDY5E.ExpandCollapseMenu.OptionTopLevel')}
       </label>
       <label for="{context.document.id}-expand-collapse-behavior-all-sections">
         <input
           type="radio"
           id="{context.document.id}-expand-collapse-behavior-all-sections"
-          checked={false}
+          checked={context.userPreferences.expandCollapseBehavior === 'all'}
+          value={'all' satisfies ExpandCollapseBehavior}
+          onchange={onExpandCollapseBehaviorChanged}
         />
         {localize('TIDY5E.ExpandCollapseMenu.OptionAllSections')}
       </label>
