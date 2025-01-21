@@ -245,3 +245,13 @@
     }
   }
 }
+
+.expand-button {
+  i {
+    transition: transform 0.2s ease;
+  }
+
+  &.collapsed i {
+    transform: rotate(-90deg);
+  }
+}

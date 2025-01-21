@@ -64,11 +64,26 @@ export class ExpansionTracker {
     location: string,
     entityId: string
   ) {
-    const tabMap = (this.#tabs[tabId] ??= { [tabId]: {} });
-    const locationMap = (tabMap[location] ??= {});
-    const expansionState = (locationMap[entityId] ??= {
-      expanded: this.#initialState,
-    });
+    let tabMap = this.#tabs[tabId];
+    if (!tabMap) {
+      this.#tabs[tabId] = {};
+      tabMap = this.#tabs[tabId];
+    }
+
+    let locationMap = tabMap[location];
+    if (!locationMap) {
+      tabMap[location] = {};
+      locationMap = tabMap[location];
+    }
+
+    let expansionState = locationMap[entityId];
+    if (!expansionState) {
+      locationMap[entityId] = {
+        expanded: this.#initialState,
+      };
+      expansionState = locationMap[entityId];
+    }
+
     return expansionState;
   }
 
@@ -91,5 +106,42 @@ export class ExpansionTracker {
         state.expanded = value;
       }
     }
+  }
+
+  f() {
+    // for each tab, sort the locations by length asc
+    // determine if shallow expand
+    // determine if deep expand
+
+    let tabStats: Record<
+      string,
+      { topHasExpansion: boolean; hasExpansion: boolean }
+    > = {};
+
+    for (let [tabId, locations] of Object.entries(this.#tabs)) {
+      let hasExpansionAtIndex: boolean[] = [];
+
+      for (let [location, expansions] of Object.entries(locations)) {
+        if (hasExpansionAtIndex[location.length]) {
+          break;
+        }
+
+        for (let [_, expansion] of Object.entries(expansions)) {
+          hasExpansionAtIndex[location.length] ||= expansion.expanded;
+
+          if (expansion.expanded) {
+            break;
+          }
+        }
+      }
+
+      let expansions = hasExpansionAtIndex.filter((x) => x !== undefined);
+      tabStats[tabId] = {
+        hasExpansion: expansions.some((x) => x),
+        topHasExpansion: !!expansions[0],
+      };
+    }
+
+    return tabStats;
   }
 }

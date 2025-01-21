@@ -370,20 +370,19 @@ export class Tidy5eNpcSheet
             iconClass: 'fas fa-angles-down',
             execute: () =>
               // TODO: Use app.messageBus
-              (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_NPC_ABILITIES,
-                message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
-              }),
+              this.sectionExpansionTracker.setAll(
+                CONSTANTS.TAB_NPC_ABILITIES,
+                true
+              ),
           },
           {
             title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
             iconClass: 'fas fa-angles-up',
             execute: () =>
-              // TODO: Use app.messageBus
-              (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_NPC_ABILITIES,
-                message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
-              }),
+              this.sectionExpansionTracker.setAll(
+                CONSTANTS.TAB_NPC_ABILITIES,
+                false
+              ),
           },
           {
             title: FoundryAdapter.localize(
@@ -464,21 +463,19 @@ export class Tidy5eNpcSheet
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
             iconClass: 'fas fa-angles-down',
             execute: () =>
-              // TODO: Use app.messageBus
-              (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
-                message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
-              }),
+              this.sectionExpansionTracker.setAll(
+                CONSTANTS.TAB_ACTOR_SPELLBOOK,
+                true
+              ),
           },
           {
             title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
             iconClass: 'fas fa-angles-up',
             execute: () =>
-              // TODO: Use app.messageBus
-              (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
-                message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
-              }),
+              this.sectionExpansionTracker.setAll(
+                CONSTANTS.TAB_ACTOR_SPELLBOOK,
+                false
+              ),
           },
           {
             title: FoundryAdapter.localize('TIDY5E.ListLayout'),
@@ -546,21 +543,19 @@ export class Tidy5eNpcSheet
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
             iconClass: 'fas fa-angles-down',
             execute: () =>
-              // TODO: Use app.messageBus
-              (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
-                message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
-              }),
+              this.sectionExpansionTracker.setAll(
+                CONSTANTS.TAB_ACTOR_ACTIONS,
+                true
+              ),
           },
           {
             title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
             iconClass: 'fas fa-angles-up',
             execute: () =>
-              // TODO: Use app.messageBus
-              (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
-                message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
-              }),
+              this.sectionExpansionTracker.setAll(
+                CONSTANTS.TAB_ACTOR_ACTIONS,
+                false
+              ),
           },
           {
             title: FoundryAdapter.localize(
@@ -632,21 +627,20 @@ export class Tidy5eNpcSheet
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
             iconClass: 'fas fa-angles-down',
             execute: () =>
-              // TODO: Use app.messageBus
-              (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
-                message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
-              }),
+              this.sectionExpansionTracker.setAll(
+                CONSTANTS.TAB_ACTOR_INVENTORY,
+                true
+              ),
           },
           {
             title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
             iconClass: 'fas fa-angles-up',
             execute: () =>
               // TODO: Use app.messageBus
-              (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
-                message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
-              }),
+              this.sectionExpansionTracker.setAll(
+                CONSTANTS.TAB_ACTOR_INVENTORY,
+                false
+              ),
           },
           {
             title: FoundryAdapter.localize('TIDY5E.ListLayout'),
