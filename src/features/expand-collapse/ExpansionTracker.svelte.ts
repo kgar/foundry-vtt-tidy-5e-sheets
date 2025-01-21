@@ -197,4 +197,26 @@ export class ExpansionTracker {
 
     return tabStats;
   }
+
+  /**
+   * Initializes to or gets existing Expansion Tracker from Context.
+   * **Important**: Use this only within component initialization.
+   * @param contextKey the context key for getting this tracker
+   * @param initialState denotes whether it should initially be expanded (true) or collapsed (false)
+   * @returns
+   */
+  static getOrInit(
+    contextKey: string,
+    initialState: boolean = true,
+    locationSegment: string = ''
+  ) {
+    let tracker = getContext<ExpansionTracker>(contextKey);
+    
+    if (!tracker) {
+      tracker = new ExpansionTracker(initialState, locationSegment);
+      setContext(contextKey, tracker);
+    }
+
+    return tracker;
+  }
 }

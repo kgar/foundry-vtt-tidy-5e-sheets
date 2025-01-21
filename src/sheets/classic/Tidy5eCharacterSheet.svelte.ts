@@ -387,7 +387,6 @@ export class Tidy5eCharacterSheet
             title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
             iconClass: 'fas fa-angles-up',
             execute: () =>
-              // TODO: Use app.messageBus
               this.sectionExpansionTracker.setAll(
                 CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
                 false
@@ -582,7 +581,6 @@ export class Tidy5eCharacterSheet
             title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
             iconClass: 'fas fa-angles-up',
             execute: () =>
-              // TODO: Use app.messageBus
               this.sectionExpansionTracker.setAll(
                 CONSTANTS.TAB_ACTOR_SPELLBOOK,
                 false

@@ -1,15 +1,15 @@
 <script lang="ts">
   import ButtonWithOptionPanel from 'src/components/buttons/ButtonWithOptionPanel.svelte';
   import { CONSTANTS } from 'src/constants';
-  import type { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
+  import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
   import type { ExpandCollapseBehavior } from 'src/features/user-preferences/user-preferences.types';
   import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContainerSheetHightouchContext } from 'src/sheets/sheet-context.svelte';
   import { getContext } from 'svelte';
 
-  const sectionExpansionTracker = getContext<ExpansionTracker>(
-    'sectionExpansionTracker',
+  const sectionExpansionTracker = ExpansionTracker.getOrInit(
+    CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TRACKER,
   );
 
   const localize = FoundryAdapter.localize;

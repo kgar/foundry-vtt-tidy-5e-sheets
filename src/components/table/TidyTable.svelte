@@ -38,29 +38,31 @@
 
   declareLocation(CONSTANTS.LOCATION_SECTION, key);
 
-  const sectionExpansionTracker = getContext<ExpansionTracker>(
-    'sectionExpansionTracker',
+  const sectionExpansionTracker = ExpansionTracker.getOrInit(
+    CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TRACKER,
   );
-
   const { tabId, location } = sectionExpansionTracker.getContextKeys();
-  sectionExpansionTracker.register(key, tabId, location);
+
+  if (toggleable) {
+    sectionExpansionTracker.register(key, tabId, location);
+
+    setContext('sectionToggle', () => {
+      return {
+        expanded,
+        toggle: () => sectionExpansionTracker.toggle(key, tabId, location),
+      };
+    });
+
+    $effect(() => {
+      return () => {
+        sectionExpansionTracker.unregister(key, tabId, location);
+      };
+    });
+  }
 
   let expanded = $derived(
-    sectionExpansionTracker.isExpanded(key, tabId, location),
+    !toggleable || sectionExpansionTracker.isExpanded(key, tabId, location),
   );
-
-  setContext('sectionToggle', () => {
-    return {
-      expanded,
-      toggle: () => sectionExpansionTracker.toggle(key, tabId, location),
-    };
-  });
-
-  $effect(() => {
-    return () => {
-      sectionExpansionTracker.unregister(key, tabId, location);
-    };
-  });
 </script>
 
 <section

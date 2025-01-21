@@ -84,7 +84,10 @@ export class Tidy5eNpcSheet
   itemTableTogglesCache: ItemTableToggleCacheService;
   itemFilterService: ItemFilterService;
   messageBus = $state<MessageBus>({ message: undefined });
-  sectionExpansionTracker = new ExpansionTracker(true, CONSTANTS.LOCATION_SECTION);
+  sectionExpansionTracker = new ExpansionTracker(
+    true,
+    CONSTANTS.LOCATION_SECTION
+  );
 
   /**
    * The cached concentration information for the character.
@@ -369,7 +372,6 @@ export class Tidy5eNpcSheet
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
             iconClass: 'fas fa-angles-down',
             execute: () =>
-              // TODO: Use app.messageBus
               this.sectionExpansionTracker.setAll(
                 CONSTANTS.TAB_NPC_ABILITIES,
                 true
@@ -636,7 +638,6 @@ export class Tidy5eNpcSheet
             title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
             iconClass: 'fas fa-angles-up',
             execute: () =>
-              // TODO: Use app.messageBus
               this.sectionExpansionTracker.setAll(
                 CONSTANTS.TAB_ACTOR_INVENTORY,
                 false

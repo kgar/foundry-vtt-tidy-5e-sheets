@@ -76,7 +76,10 @@ export class Tidy5eVehicleSheet
   itemTableTogglesCache: ItemTableToggleCacheService;
   itemFilterService: ItemFilterService;
   messageBus = $state<MessageBus>({ message: undefined });
-  sectionExpansionTracker = new ExpansionTracker(true, CONSTANTS.LOCATION_SECTION);
+  sectionExpansionTracker = new ExpansionTracker(
+    true,
+    CONSTANTS.LOCATION_SECTION
+  );
 
   constructor(...args: any[]) {
     super(...args);
@@ -276,21 +279,19 @@ export class Tidy5eVehicleSheet
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
             iconClass: 'fas fa-angles-down',
             execute: () =>
-              // TODO: Use app.messageBus
-              (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
-                message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
-              }),
+              this.sectionExpansionTracker.setAll(
+                CONSTANTS.TAB_ACTOR_ACTIONS,
+                true
+              ),
           },
           {
             title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
             iconClass: 'fas fa-angles-up',
             execute: () =>
-              // TODO: Use app.messageBus
-              (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
-                message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
-              }),
+              this.sectionExpansionTracker.setAll(
+                CONSTANTS.TAB_ACTOR_ACTIONS,
+                false
+              ),
           },
           {
             title: FoundryAdapter.localize(
