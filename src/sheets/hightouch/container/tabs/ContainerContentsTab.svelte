@@ -54,12 +54,13 @@
     'sectionExpansionTracker',
   );
 
-  let allCollapsed = $derived(
-    sectionExpansionTracker.tabStats[tabId]?.topHasExpansion === false,
+  let allExpanded = $derived(
+    // TODO: Account for user preference between top-level only or also sub-sections inside containers
+    sectionExpansionTracker.tabStats[tabId]?.topAllExpanded === true,
   );
 
   function toggleContents() {
-    sectionExpansionTracker.setAll(tabId, allCollapsed);
+    sectionExpansionTracker.setAll(tabId, !allExpanded);
   }
 </script>
 
@@ -78,7 +79,7 @@
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTION_BAR}
 >
   <ButtonWithOptionPanel
-    class="icon-button expand-button {allCollapsed ? 'collapsed' : 'expanded'}"
+    class="icon-button expand-button {allExpanded ? 'expanded' : 'collapsed'}"
     onclick={() => toggleContents()}
   >
     <i class="expand-button-indicator fas fa-angles-down fa-fw"></i>
