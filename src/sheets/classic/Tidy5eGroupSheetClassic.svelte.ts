@@ -50,6 +50,7 @@ import { Activities } from 'src/features/activities/activities';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { ImportSheetControl } from '../../features/sheet-header-controls/ImportSheetControl';
 import { SheetSections } from 'src/features/sections/SheetSections';
+import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 
 type MemberStats = {
   currentHP: number;
@@ -63,6 +64,11 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     foundry.applications.sheets.ActorSheetV2
   )
 ) {
+  sectionExpansionTracker = new ExpansionTracker(
+    true,
+    CONSTANTS.LOCATION_SECTION
+  );
+
   constructor(...args: any[]) {
     super(...args);
 
@@ -143,6 +149,10 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
           this.#itemFilterService.onFilterClearAll.bind(
             this.#itemFilterService
           ),
+        ],
+        [
+          CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TRACKER,
+          this.sectionExpansionTracker,
         ],
       ]),
     });
@@ -330,21 +340,19 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
             iconClass: 'fas fa-angles-down',
             execute: () =>
-              // TODO: Use app.messageBus
-              (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
-                message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
-              }),
+              this.sectionExpansionTracker.setAll(
+                CONSTANTS.TAB_ACTOR_INVENTORY,
+                true
+              ),
           },
           {
             title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
             iconClass: 'fas fa-angles-up',
             execute: () =>
-              // TODO: Use app.messageBus
-              (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
-                message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
-              }),
+              this.sectionExpansionTracker.setAll(
+                CONSTANTS.TAB_ACTOR_INVENTORY,
+                false
+              ),
           },
           {
             title: FoundryAdapter.localize('TIDY5E.ListLayout'),

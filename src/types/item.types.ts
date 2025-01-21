@@ -1,3 +1,4 @@
+import type { UserPreferences } from 'src/features/user-preferences/user-preferences.types';
 import type {
   ActivityItemContext,
   AttunementContext,
@@ -254,6 +255,7 @@ export type ContainerSheetHightouchContext = {
   system: any;
   tabs: Tab[];
   unlocked: boolean;
+  userPreferences: UserPreferences;
   utilities: Utilities<ContainerSheetHightouchContext>;
 };
 

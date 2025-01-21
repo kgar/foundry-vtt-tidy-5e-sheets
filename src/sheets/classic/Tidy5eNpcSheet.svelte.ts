@@ -58,6 +58,7 @@ import { Activities } from 'src/features/activities/activities';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
+import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 
 export class Tidy5eNpcSheet
   extends BaseSheetCustomSectionMixin(
@@ -83,6 +84,10 @@ export class Tidy5eNpcSheet
   itemTableTogglesCache: ItemTableToggleCacheService;
   itemFilterService: ItemFilterService;
   messageBus = $state<MessageBus>({ message: undefined });
+  sectionExpansionTracker = new ExpansionTracker(
+    true,
+    CONSTANTS.LOCATION_SECTION
+  );
 
   /**
    * The cached concentration information for the character.
@@ -206,6 +211,10 @@ export class Tidy5eNpcSheet
           this.itemTableTogglesCache.onItemTableToggle.bind(
             this.itemTableTogglesCache
           ),
+        ],
+        [
+          CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TRACKER,
+          this.sectionExpansionTracker,
         ],
       ]),
     });
@@ -363,21 +372,19 @@ export class Tidy5eNpcSheet
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
             iconClass: 'fas fa-angles-down',
             execute: () =>
-              // TODO: Use app.messageBus
-              (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_NPC_ABILITIES,
-                message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
-              }),
+              this.sectionExpansionTracker.setAll(
+                CONSTANTS.TAB_NPC_ABILITIES,
+                true
+              ),
           },
           {
             title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
             iconClass: 'fas fa-angles-up',
             execute: () =>
-              // TODO: Use app.messageBus
-              (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_NPC_ABILITIES,
-                message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
-              }),
+              this.sectionExpansionTracker.setAll(
+                CONSTANTS.TAB_NPC_ABILITIES,
+                false
+              ),
           },
           {
             title: FoundryAdapter.localize(
@@ -458,21 +465,19 @@ export class Tidy5eNpcSheet
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
             iconClass: 'fas fa-angles-down',
             execute: () =>
-              // TODO: Use app.messageBus
-              (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
-                message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
-              }),
+              this.sectionExpansionTracker.setAll(
+                CONSTANTS.TAB_ACTOR_SPELLBOOK,
+                true
+              ),
           },
           {
             title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
             iconClass: 'fas fa-angles-up',
             execute: () =>
-              // TODO: Use app.messageBus
-              (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
-                message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
-              }),
+              this.sectionExpansionTracker.setAll(
+                CONSTANTS.TAB_ACTOR_SPELLBOOK,
+                false
+              ),
           },
           {
             title: FoundryAdapter.localize('TIDY5E.ListLayout'),
@@ -540,21 +545,19 @@ export class Tidy5eNpcSheet
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
             iconClass: 'fas fa-angles-down',
             execute: () =>
-              // TODO: Use app.messageBus
-              (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
-                message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
-              }),
+              this.sectionExpansionTracker.setAll(
+                CONSTANTS.TAB_ACTOR_ACTIONS,
+                true
+              ),
           },
           {
             title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
             iconClass: 'fas fa-angles-up',
             execute: () =>
-              // TODO: Use app.messageBus
-              (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
-                message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
-              }),
+              this.sectionExpansionTracker.setAll(
+                CONSTANTS.TAB_ACTOR_ACTIONS,
+                false
+              ),
           },
           {
             title: FoundryAdapter.localize(
@@ -626,21 +629,19 @@ export class Tidy5eNpcSheet
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
             iconClass: 'fas fa-angles-down',
             execute: () =>
-              // TODO: Use app.messageBus
-              (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
-                message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
-              }),
+              this.sectionExpansionTracker.setAll(
+                CONSTANTS.TAB_ACTOR_INVENTORY,
+                true
+              ),
           },
           {
             title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
             iconClass: 'fas fa-angles-up',
             execute: () =>
-              // TODO: Use app.messageBus
-              (this.messageBus.message = {
-                tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
-                message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
-              }),
+              this.sectionExpansionTracker.setAll(
+                CONSTANTS.TAB_ACTOR_INVENTORY,
+                false
+              ),
           },
           {
             title: FoundryAdapter.localize('TIDY5E.ListLayout'),

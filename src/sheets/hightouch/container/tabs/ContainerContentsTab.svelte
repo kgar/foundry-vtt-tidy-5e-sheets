@@ -16,7 +16,7 @@
   import { getContainerSheetHightouchContext } from 'src/sheets/sheet-context.svelte';
   import TidyVisibilityObserver from 'src/components/utility/TidyVisibilityObserver.svelte';
   import { Container } from 'src/features/containers/Container';
-  import type { MessageBus } from 'src/types/types';
+  import ExpandCollapseButton from '../../shared/ExpandCollapseButton.svelte';
 
   let context = $derived(getContainerSheetHightouchContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
@@ -29,10 +29,6 @@
 
   const searchResults = createSearchResultsState();
   setSearchResultsContext(searchResults);
-
-  const messageBus = getContext<MessageBus>(
-    CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS,
-  );
 
   $effect(() => {
     searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
@@ -53,25 +49,6 @@
 
   let markerEl: HTMLElement | undefined = $state();
   let footerEl: HTMLElement | undefined = $state();
-
-  let allCollapsed = $state(false);
-  function toggleContents() {
-    if (allCollapsed) {
-      messageBus.message = {
-        message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
-        tabId: CONSTANTS.TAB_CONTAINER_CONTENTS,
-        options: { includeInlineToggles: true },
-      };
-    } else {
-      messageBus.message = {
-        message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
-        tabId: CONSTANTS.TAB_CONTAINER_CONTENTS,
-        options: { includeInlineToggles: true },
-      };
-    }
-
-    allCollapsed = !allCollapsed;
-  }
 </script>
 
 {#if !!markerEl && !!footerEl}
@@ -88,26 +65,8 @@
   class="action-bar"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTION_BAR}
 >
-  <ButtonWithOptionPanel class="icon-button" onclick={() => toggleContents()}>
-    <i class="fas fa-angles-down fa-fw"></i>
-    {#snippet options()}
-      <h4>{localize('TIDY5E.ExpandCollapseMenu.OptionTitle')}</h4>
-      <label
-        for="{context.document.id}-expand-collapse-behavior-top-level-sections"
-      >
-        <input type="radio" checked={true} />
-        {localize('TIDY5E.ExpandCollapseMenu.OptionTopLevel')}
-      </label>
-      <label for="{context.document.id}-expand-collapse-behavior-all-sections">
-        <input
-          type="radio"
-          id="{context.document.id}-expand-collapse-behavior-all-sections"
-          checked={false}
-        />
-        {localize('TIDY5E.ExpandCollapseMenu.OptionAllSections')}
-      </label>
-    {/snippet}
-  </ButtonWithOptionPanel>
+  <!-- TODO: Extract to component. -->
+  <ExpandCollapseButton />
 
   <Search bind:searchCriteria />
 

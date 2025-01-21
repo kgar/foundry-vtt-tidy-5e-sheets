@@ -27,6 +27,7 @@ import { Activities } from 'src/features/activities/activities';
 import { settings } from 'src/settings/settings.svelte';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
+import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 
 export class Tidy5eItemSheetClassic extends DragAndDropMixin(
   SvelteApplicationMixin<ItemSheetClassicContext>(
@@ -34,6 +35,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
   )
 ) {
   currentTabId: string | undefined = undefined;
+  sectionExpansionTracker = new ExpansionTracker(true, CONSTANTS.LOCATION_SECTION);
 
   constructor(...args: any[]) {
     super(...args);
@@ -75,6 +77,10 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
     const context = new Map<any, any>([
       [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
       [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
+      [
+        CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TRACKER,
+        this.sectionExpansionTracker,
+      ],
     ]);
 
     const component = sheetComponent

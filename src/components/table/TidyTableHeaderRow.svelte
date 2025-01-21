@@ -1,8 +1,8 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService.svelte';
+  import type { ExpansionTrackerToggleProvider } from 'src/features/expand-collapse/ExpansionTracker.svelte';
   import { isUserInteractable } from 'src/utils/element';
-  import type { Snippet } from 'svelte';
+  import { getContext, type Snippet } from 'svelte';
 
   interface Props {
     children?: Snippet;
@@ -10,10 +10,12 @@
 
   let { children }: Props = $props();
 
-  const expandCollapseService = ExpandCollapseService.getService();
+  let toggleable = getContext<ExpansionTrackerToggleProvider>(
+    CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TOGGLE_PROVIDER,
+  );
 
   function handleHeaderRowClick(ev: MouseEvent) {
-    if (!expandState?.toggleable) {
+    if (!toggleable) {
       return;
     }
 
@@ -29,15 +31,13 @@
 
     ev.stopPropagation();
 
-    expandCollapseService.toggle();
+    toggleable().toggle();
   }
-
-  let expandState = $derived(expandCollapseService.state);
 </script>
 
 <header
   class="tidy-table-header-row"
-  class:toggleable={expandState?.toggleable}
+  class:toggleable={!!toggleable}
   onclick={handleHeaderRowClick}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TABLE_HEADER_ROW}
 >

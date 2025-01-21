@@ -2,6 +2,7 @@ import { mount } from 'svelte';
 import { CONSTANTS } from 'src/constants';
 import ContainerSheet from './container/ContainerSheet.svelte';
 import type {
+  ApplicationClosingOptions,
   ApplicationConfiguration,
   ApplicationRenderOptions,
 } from 'src/types/application.types';
@@ -35,6 +36,8 @@ import { TabManager } from 'src/runtime/tab/TabManager';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { settings, SettingsProvider } from 'src/settings/settings.svelte';
 import ContainerHeaderStart from './item/parts/ContainerHeaderStart.svelte';
+import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
+import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 
 export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
   SvelteApplicationMixin<ContainerSheetHightouchContext>(
@@ -48,6 +51,10 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
   inlineToggleService = new InlineToggleService();
   itemFilterService: ItemFilterService;
   messageBus = $state<MessageBus>({ message: undefined });
+  sectionExpansionTracker = new ExpansionTracker(
+    true,
+    CONSTANTS.LOCATION_SECTION
+  );
 
   constructor(...args: any[]) {
     super(...args);
@@ -101,6 +108,10 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
         this.itemFilterService.onFilterClearAll.bind(this.itemFilterService),
       ],
       [CONSTANTS.SVELTE_CONTEXT.SEARCH_FILTERS, new Map(this.searchFilters)],
+      [
+        CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TRACKER,
+        this.sectionExpansionTracker,
+      ],
     ]);
 
     const component = mount(ContainerSheet, {
@@ -315,8 +326,9 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
       source: this.document.toObject().system,
       system: this.document.system,
       tabs: [],
-      utilities: utilities,
       unlocked: unlocked,
+      userPreferences: UserPreferencesService.get(),
+      utilities: utilities,
     };
 
     // Properties
@@ -417,6 +429,21 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
       context,
       !!options.isFirstRender
     );
+  }
+
+  async _renderHTML(
+    context: ContainerSheetHightouchContext,
+    options: ApplicationRenderOptions
+  ) {
+    game.user.apps[this.id] = this;
+
+    return await super._renderHTML(context, options);
+  }
+
+  async close(options: ApplicationClosingOptions = {}) {
+    delete game.user.apps[this.id];
+
+    return await super.close(options);
   }
 
   /* -------------------------------------------- */

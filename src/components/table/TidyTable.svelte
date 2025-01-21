@@ -8,10 +8,12 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
-  import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService.svelte';
   import { declareLocation } from 'src/types/location-awareness.types';
-  import { getContext, type Snippet } from 'svelte';
-  import type { MessageBus } from 'src/types/types';
+  import { getContext, setContext, type Snippet } from 'svelte';
+  import {
+    ExpansionTracker,
+    type ExpansionTrackerToggleProvider,
+  } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 
   interface Props {
     key: string;
@@ -37,30 +39,36 @@
 
   let { class: cssClass, ...attributes } = rest;
 
-  const messageBus = getContext<MessageBus>(
-    CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS,
+  declareLocation(CONSTANTS.LOCATION_SECTION, key);
+
+  const sectionExpansionTracker = ExpansionTracker.getOrInit(
+    CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TRACKER,
   );
-  const tabId = getContext<string | undefined>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
-  declareLocation('item-table', key);
+  const { tabId, location } = sectionExpansionTracker.getContextKeys();
 
-  const expandCollapseService = ExpandCollapseService.initService(toggleable);
+  if (toggleable) {
+    sectionExpansionTracker.register(key, tabId, location);
 
-  let expandedState = $derived(expandCollapseService.state);
+    setContext<ExpansionTrackerToggleProvider>(
+      CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TOGGLE_PROVIDER,
+      () => {
+        return {
+          expanded,
+          toggle: () => sectionExpansionTracker.toggle(key, tabId, location),
+        };
+      },
+    );
 
-  $effect(() => {
-    if (
-      messageBus?.message?.tabId === tabId &&
-      messageBus?.message?.message === CONSTANTS.MESSAGE_BUS_EXPAND_ALL
-    ) {
-      expandCollapseService.set(true);
-    }
-    if (
-      messageBus?.message?.tabId === tabId &&
-      messageBus?.message?.message === CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL
-    ) {
-      expandCollapseService.set(false);
-    }
-  });
+    $effect(() => {
+      return () => {
+        sectionExpansionTracker.unregister(key, tabId, location);
+      };
+    });
+  }
+
+  let expanded = $derived(
+    !toggleable || sectionExpansionTracker.isExpanded(key, tabId, location),
+  );
 </script>
 
 <section
@@ -71,7 +79,7 @@
   style="--grid-template-columns: {templateColumnsValue}"
 >
   {@render header?.()}
-  <ExpandableContainer expanded={expandedState?.expanded}>
+  <ExpandableContainer {expanded}>
     <div class="item-table-body">
       {@render body?.()}
     </div>

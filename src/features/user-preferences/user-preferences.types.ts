@@ -19,3 +19,9 @@ export type SheetPreference = {
 export type SheetPreferences = {
   [sheetType: string]: SheetPreference;
 };
+
+export type ExpandCollapseBehavior = 'top-level' | 'all';
+
+export type UserPreferences = {
+  expandCollapseBehavior: ExpandCollapseBehavior;
+};
