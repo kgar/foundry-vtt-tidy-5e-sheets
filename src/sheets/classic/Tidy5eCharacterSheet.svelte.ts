@@ -99,7 +99,10 @@ export class Tidy5eCharacterSheet
   itemTableTogglesCache: ItemTableToggleCacheService;
   itemFilterService: ItemFilterService;
   messageBus = $state<MessageBus>({ message: undefined });
-  sectionExpansionTracker = new ExpansionTracker(true);
+  sectionExpansionTracker = new ExpansionTracker(
+    true,
+    CONSTANTS.LOCATION_SECTION
+  );
 
   /**
    * The cached concentration information for the character.

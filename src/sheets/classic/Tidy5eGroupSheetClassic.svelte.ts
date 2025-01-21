@@ -64,7 +64,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     foundry.applications.sheets.ActorSheetV2
   )
 ) {
-  sectionExpansionTracker = new ExpansionTracker(true);
+  sectionExpansionTracker = new ExpansionTracker(true, CONSTANTS.LOCATION_SECTION);
 
   constructor(...args: any[]) {
     super(...args);

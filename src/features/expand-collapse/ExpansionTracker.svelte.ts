@@ -14,12 +14,26 @@ interface TrackedTabs {
   };
 }
 
+interface TabStats {
+  topHasExpansion: boolean;
+  topAllExpanded: boolean;
+  hasExpansion: boolean;
+  allExpanded: boolean;
+}
+
 export class ExpansionTracker {
   #tabs = $state<TrackedTabs>({});
   #initialState: boolean;
+  #locationSegment: string;
 
-  constructor(initialState: boolean) {
+  tabStats = $derived.by(() => {
+    this.#tabs;
+    return this.getTabStats();
+  });
+
+  constructor(initialState: boolean, locationSegment: string = '') {
     this.#initialState = initialState;
+    this.#locationSegment = locationSegment;
   }
 
   toggle(entityId: string, tabId: string, location: string, value?: boolean) {
@@ -108,39 +122,51 @@ export class ExpansionTracker {
     }
   }
 
-  f() {
-    // for each tab, sort the locations by length asc
-    // determine if shallow expand
-    // determine if deep expand
-
-    let tabStats: Record<
-      string,
-      { topHasExpansion: boolean; hasExpansion: boolean }
-    > = {};
+  getTabStats() {
+    let tabStats: Record<string, TabStats> = {};
 
     for (let [tabId, locations] of Object.entries(this.#tabs)) {
-      let hasExpansionAtIndex: boolean[] = [];
+      let expansionStatesAtIndex: { expanded: number; collapsed: number }[] =
+        [];
 
       for (let [location, expansions] of Object.entries(locations)) {
-        if (hasExpansionAtIndex[location.length]) {
-          break;
+        const lastTargetLocationSegmentIndex = location.lastIndexOf(
+          this.#locationSegment
+        );
+
+        let targetLocationSegment =
+          lastTargetLocationSegmentIndex >= 0
+            ? location.slice(0, lastTargetLocationSegmentIndex)
+            : null;
+
+        if (targetLocationSegment === null) {
+          continue;
         }
 
         for (let [_, expansion] of Object.entries(expansions)) {
-          hasExpansionAtIndex[location.length] ||= expansion.expanded;
+          expansionStatesAtIndex[targetLocationSegment.length] ??= {
+            collapsed: 0,
+            expanded: 0,
+          };
 
           if (expansion.expanded) {
-            break;
+            expansionStatesAtIndex[targetLocationSegment.length].expanded++;
+          } else {
+            expansionStatesAtIndex[targetLocationSegment.length].collapsed++;
           }
         }
       }
 
-      let expansions = hasExpansionAtIndex.filter((x) => x !== undefined);
+      let expansions = expansionStatesAtIndex.filter((x) => x !== undefined);
       tabStats[tabId] = {
         hasExpansion: expansions.some((x) => x),
+        topAllExpanded: expansions[0]?.collapsed === 0,
         topHasExpansion: !!expansions[0],
+        allExpanded: expansions.every((e) => e.collapsed === 0),
       };
     }
+
+    debug('ExpansionTracker: Recalculated tab stats.');
 
     return tabStats;
   }

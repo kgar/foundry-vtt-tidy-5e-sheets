@@ -36,7 +36,7 @@
 
   let { class: cssClass, ...attributes } = rest;
 
-  declareLocation('item-table', key);
+  declareLocation(CONSTANTS.LOCATION_SECTION, key);
 
   const sectionExpansionTracker = getContext<ExpansionTracker>(
     'sectionExpansionTracker',

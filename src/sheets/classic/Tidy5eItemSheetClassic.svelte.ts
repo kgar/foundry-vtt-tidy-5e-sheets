@@ -35,7 +35,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
   )
 ) {
   currentTabId: string | undefined = undefined;
-  sectionExpansionTracker = new ExpansionTracker(true);
+  sectionExpansionTracker = new ExpansionTracker(true, CONSTANTS.LOCATION_SECTION);
 
   constructor(...args: any[]) {
     super(...args);

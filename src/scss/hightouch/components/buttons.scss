@@ -247,11 +247,11 @@
 }
 
 .expand-button {
-  i {
+  .expand-button-indicator {
     transition: transform 0.2s ease;
   }
 
-  &.collapsed i {
+  &.collapsed .expand-button-indicator {
     transform: rotate(-90deg);
   }
 }

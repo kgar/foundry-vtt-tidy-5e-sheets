@@ -49,7 +49,7 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
   inlineToggleService = new InlineToggleService();
   itemFilterService: ItemFilterService;
   messageBus = $state<MessageBus>({ message: undefined });
-  sectionExpansionTracker = new ExpansionTracker(true);
+  sectionExpansionTracker = new ExpansionTracker(true, CONSTANTS.LOCATION_SECTION);
 
   constructor(...args: any[]) {
     super(...args);

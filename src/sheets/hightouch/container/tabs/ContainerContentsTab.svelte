@@ -54,10 +54,12 @@
     'sectionExpansionTracker',
   );
 
-  let allCollapsed = $state(false);
+  let allCollapsed = $derived(
+    sectionExpansionTracker.tabStats[tabId]?.topHasExpansion === false,
+  );
+
   function toggleContents() {
     sectionExpansionTracker.setAll(tabId, allCollapsed);
-    allCollapsed = !allCollapsed;
   }
 </script>
 
@@ -79,7 +81,7 @@
     class="icon-button expand-button {allCollapsed ? 'collapsed' : 'expanded'}"
     onclick={() => toggleContents()}
   >
-    <i class="fas fa-angles-down fa-fw"></i>
+    <i class="expand-button-indicator fas fa-angles-down fa-fw"></i>
     {#snippet options()}
       <h4>{localize('TIDY5E.ExpandCollapseMenu.OptionTitle')}</h4>
       <label
