@@ -62,7 +62,13 @@
   );
 
   function toggleContents() {
-    sectionExpansionTracker.setAll(tabId, !allExpanded);
+    sectionExpansionTracker.setAll(
+      tabId,
+      !allExpanded,
+      context.userPreferences.expandCollapseBehavior === 'top-level'
+        ? 'shallow'
+        : 'deep',
+    );
   }
 
   function onExpandCollapseBehaviorChanged(

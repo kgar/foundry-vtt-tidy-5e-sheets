@@ -19,6 +19,7 @@ interface TabStats {
   topAllExpanded: boolean;
   hasExpansion: boolean;
   allExpanded: boolean;
+  topLevelLocation: string;
 }
 
 export class ExpansionTracker {
@@ -27,7 +28,6 @@ export class ExpansionTracker {
   #locationSegment: string;
 
   tabStats = $derived.by(() => {
-    this.#tabs;
     return this.getTabStats();
   });
 
@@ -113,21 +113,46 @@ export class ExpansionTracker {
     );
   }
 
-  setAll(tabId: string, value: boolean) {
+  setAll(tabId: string, value: boolean, mode: 'shallow' | 'deep' = 'shallow') {
+    let locationSegmentFilter: string | undefined = undefined;
+
+    if (mode === 'shallow') {
+      locationSegmentFilter = this.tabStats[tabId]?.topLevelLocation;
+    }
+
     const tabMap = this.#tabs[tabId] ?? {};
-    for (let locationMap of Object.values(tabMap)) {
-      for (let state of Object.values(locationMap)) {
+    for (let [location, entities] of Object.entries(tabMap)) {
+      for (let state of Object.values(entities)) {
+        if (
+          locationSegmentFilter !== undefined &&
+          !this.locationSegmentsMatch(location, locationSegmentFilter)
+        ) {
+          continue;
+        }
         state.expanded = value;
       }
     }
+  }
+
+  locationSegmentsMatch(left: string, right: string) {
+    return this.getLocationSegment(left) === this.getLocationSegment(right);
+  }
+
+  getLocationSegment(value?: string) {
+    return value !== undefined
+      ? value.slice(0, value.lastIndexOf(this.#locationSegment))
+      : value;
   }
 
   getTabStats() {
     let tabStats: Record<string, TabStats> = {};
 
     for (let [tabId, locations] of Object.entries(this.#tabs)) {
-      let expansionStatesAtIndex: { expanded: number; collapsed: number }[] =
-        [];
+      let expansionStatesAtIndex: {
+        expanded: number;
+        collapsed: number;
+        location: string;
+      }[] = [];
 
       for (let [location, expansions] of Object.entries(locations)) {
         const lastTargetLocationSegmentIndex = location.lastIndexOf(
@@ -147,6 +172,7 @@ export class ExpansionTracker {
           expansionStatesAtIndex[targetLocationSegment.length] ??= {
             collapsed: 0,
             expanded: 0,
+            location: location,
           };
 
           if (expansion.expanded) {
@@ -163,6 +189,7 @@ export class ExpansionTracker {
         topAllExpanded: expansions[0]?.collapsed === 0,
         topHasExpansion: !!expansions[0],
         allExpanded: expansions.every((e) => e.collapsed === 0),
+        topLevelLocation: expansions[0].location,
       };
     }
 
