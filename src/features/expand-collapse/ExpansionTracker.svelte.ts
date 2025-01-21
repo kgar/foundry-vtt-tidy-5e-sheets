@@ -22,6 +22,11 @@ interface TabStats {
   topLevelLocation: string;
 }
 
+export type ExpansionTrackerToggleProvider = () => {
+  expanded: boolean;
+  toggle: Function;
+};
+
 export class ExpansionTracker {
   #tabs = $state<TrackedTabs>({});
   #initialState: boolean;
@@ -211,7 +216,7 @@ export class ExpansionTracker {
     locationSegment: string = ''
   ) {
     let tracker = getContext<ExpansionTracker>(contextKey);
-    
+
     if (!tracker) {
       tracker = new ExpansionTracker(initialState, locationSegment);
       setContext(contextKey, tracker);

@@ -420,6 +420,7 @@ export const CONSTANTS = {
     SEARCH_FILTERS: 'searchFilters',
     SEARCH_RESULTS_STATE: 'searchResultsState',
     SECTION_EXPANSION_TRACKER: 'sectionExpansionTracker',
+    SECTION_EXPANSION_TOGGLE_PROVIDER: 'expansionTrackerSectionToggleProvider',
     STATS: 'stats',
     TAB_ID: 'tabId',
     USE_DEFAULT: 'useDefault',

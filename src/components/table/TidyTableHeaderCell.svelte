@@ -2,6 +2,7 @@
   import { CONSTANTS } from 'src/constants';
   import TidyTableToggleIcon from 'src/components/table/TidyTableToggleIcon.svelte';
   import { getContext, type Snippet } from 'svelte';
+  import type { ExpansionTrackerToggleProvider } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 
   interface Props {
     primary?: boolean;
@@ -19,8 +20,9 @@
     ...rest
   }: Props = $props();
 
-  let toggleable =
-    getContext<() => { expanded: boolean; toggle: Function }>('sectionToggle');
+  let toggleable = getContext<ExpansionTrackerToggleProvider>(
+    CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TOGGLE_PROVIDER,
+  );
 </script>
 
 <div

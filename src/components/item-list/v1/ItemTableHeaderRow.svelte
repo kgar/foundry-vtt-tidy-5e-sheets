@@ -9,8 +9,9 @@
 
   let { children }: Props = $props();
 
-  let toggleable =
-    getContext<() => { expanded: boolean; toggle: Function }>('sectionToggle');
+  let toggleable = getContext<() => { expanded: boolean; toggle: Function }>(
+    CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TOGGLE_PROVIDER,
+  );
 
   function handleHeaderRowClick(ev: MouseEvent) {
     if (!toggleable) {

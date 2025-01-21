@@ -10,7 +10,10 @@
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { declareLocation } from 'src/types/location-awareness.types';
   import { getContext, setContext, type Snippet } from 'svelte';
-  import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
+  import {
+    ExpansionTracker,
+    type ExpansionTrackerToggleProvider,
+  } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 
   interface Props {
     key: string;
@@ -46,12 +49,15 @@
   if (toggleable) {
     sectionExpansionTracker.register(key, tabId, location);
 
-    setContext('sectionToggle', () => {
-      return {
-        expanded,
-        toggle: () => sectionExpansionTracker.toggle(key, tabId, location),
-      };
-    });
+    setContext<ExpansionTrackerToggleProvider>(
+      CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TOGGLE_PROVIDER,
+      () => {
+        return {
+          expanded,
+          toggle: () => sectionExpansionTracker.toggle(key, tabId, location),
+        };
+      },
+    );
 
     $effect(() => {
       return () => {

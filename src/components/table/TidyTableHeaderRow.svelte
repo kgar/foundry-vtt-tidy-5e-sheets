@@ -1,5 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
+  import type { ExpansionTrackerToggleProvider } from 'src/features/expand-collapse/ExpansionTracker.svelte';
   import { isUserInteractable } from 'src/utils/element';
   import { getContext, type Snippet } from 'svelte';
 
@@ -9,8 +10,9 @@
 
   let { children }: Props = $props();
 
-  let toggleable =
-    getContext<() => { expanded: boolean; toggle: Function }>('sectionToggle');
+  let toggleable = getContext<ExpansionTrackerToggleProvider>(
+    CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TOGGLE_PROVIDER,
+  );
 
   function handleHeaderRowClick(ev: MouseEvent) {
     if (!toggleable) {
