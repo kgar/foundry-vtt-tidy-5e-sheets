@@ -12,7 +12,7 @@
 
 <div class="counters">
   <div class="counter legendary">
-    <h4>{localize('DND5E.LegAct')}</h4>
+    <h4>{localize('DND5E.LegendaryAction.Label')}</h4>
     <div class="counter-value">
       <NumberInput
         document={context.actor}
@@ -20,7 +20,7 @@
         value={context.system.resources.legact.value}
         step="any"
         placeholder="0"
-        title={localize('DND5E.LegActRemaining')}
+        title={localize('DND5E.LegendaryAction.Remaining')}
         selectOnFocus={true}
         disabled={!context.editable}
       />
@@ -38,7 +38,7 @@
     </div>
   </div>
   <div class="counter legendary">
-    <h4>{localize('DND5E.LegRes')}</h4>
+    <h4>{localize('DND5E.LegendaryResistance.Label')}</h4>
     <div class="counter-value">
       <NumberInput
         document={context.actor}
@@ -46,7 +46,7 @@
         value={context.system.resources.legres.value}
         step="any"
         placeholder="0"
-        title={localize('DND5E.LegResRemaining')}
+        title={localize('DND5E.LegendaryResistance.Remaining')}
         selectOnFocus={true}
       />
       <span class="sep">/</span>
@@ -63,7 +63,7 @@
     </div>
   </div>
   <div class="counter lair">
-    <h4>{localize('DND5E.LairAct')}</h4>
+    <h4>{localize('DND5E.LAIR.Action.Label')}</h4>
     <div class="counter-value">
       <Checkbox
         document={context.actor}
@@ -80,6 +80,7 @@
         selectOnFocus={true}
         saveEmptyAsNull={true}
         disabled={!context.editable || context.lockSensitiveFields}
+        title={localize('DND5E.LAIR.Action.Initiative')}
       />
     </div>
   </div>
