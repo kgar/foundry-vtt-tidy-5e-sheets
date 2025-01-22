@@ -35,7 +35,10 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
   )
 ) {
   currentTabId: string | undefined = undefined;
-  sectionExpansionTracker = new ExpansionTracker(true, CONSTANTS.LOCATION_SECTION);
+  sectionExpansionTracker = new ExpansionTracker(
+    true,
+    CONSTANTS.LOCATION_SECTION
+  );
 
   constructor(...args: any[]) {
     super(...args);
@@ -289,8 +292,8 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
           value,
           label,
         })),
-        ...Object.entries(CONFIG.DND5E.movementUnits).map(([value, label]) => {
-          return { value, label, group: 'DND5E.RangeDistance' };
+        ...Object.entries(CONFIG.DND5E.movementUnits).map(([value, config]) => {
+          return { value, label: config.label, group: 'DND5E.RangeDistance' };
         }),
       ],
 

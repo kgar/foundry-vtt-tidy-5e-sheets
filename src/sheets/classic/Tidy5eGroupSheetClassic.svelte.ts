@@ -661,7 +661,8 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
           const v = senses[k] ?? 0;
           if (v === 0) continue;
           tags[k] = `${game.i18n.localize(label)} ${v} ${
-            senses.units ?? Object.keys(CONFIG.DND5E.movementUnits)[0]
+            senses.units ??
+            Object.values(CONFIG.DND5E.movementUnits)[0].abbreviation
           }`;
         }
         if (senses.special)

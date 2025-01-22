@@ -6,6 +6,20 @@ type CurrencyItemConfig = {
   conversion: number;
 };
 
+interface MovementUnitConfig {
+  label: string;
+  abbreviation: string;
+  conversion: number;
+  formattingUnit: string;
+  type: string;
+}
+
+interface IndividualTargetTypesConfig {
+  label: string;
+  scalar?: boolean;
+  counted: string;
+}
+
 export type CONFIG = {
   debug: {
     applications: boolean;
@@ -3738,10 +3752,10 @@ export type CONFIG = {
       walk: string;
     };
     movementUnits: {
-      ft: string;
-      mi: string;
-      m: string;
-      km: string;
+      ft: MovementUnitConfig;
+      mi: MovementUnitConfig;
+      m: MovementUnitConfig;
+      km: MovementUnitConfig;
     };
     rangeTypes: {
       self: string;
@@ -3844,15 +3858,15 @@ export type CONFIG = {
       };
     };
     individualTargetTypes: {
-      self: string;
-      ally: string;
-      enemy: string;
-      creature: string;
-      object: string;
-      space: string;
-      creatureOrObject: string;
-      any: string;
-      willing: string;
+      self: IndividualTargetTypesConfig;
+      ally: IndividualTargetTypesConfig;
+      enemy: IndividualTargetTypesConfig;
+      creature: IndividualTargetTypesConfig;
+      object: IndividualTargetTypesConfig;
+      space: IndividualTargetTypesConfig;
+      creatureOrObject: IndividualTargetTypesConfig;
+      any: IndividualTargetTypesConfig;
+      willing: IndividualTargetTypesConfig;
     };
     areaTargetTypes: {
       circle: {

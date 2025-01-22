@@ -249,7 +249,11 @@
         blankValue=""
         disabled={!context.editable}
       >
-        <SelectOptions data={context.config.movementUnits} blank="" />
+        <SelectOptions
+          data={context.config.movementUnits}
+          labelProp="label"
+          blank=""
+        />
       </Select>
     </div>
   {:else}
@@ -285,7 +289,10 @@
             value={context.source.range.units}
             disabled={!context.editable}
           >
-            <SelectOptions data={context.config.movementUnits} />
+            <SelectOptions
+              data={context.config.movementUnits}
+              labelProp="label"
+            />
           </Select>
         </div>
       </div>
