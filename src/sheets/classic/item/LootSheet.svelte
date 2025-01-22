@@ -57,7 +57,10 @@
             disabled={!context.editable}
             blankValue=""
           >
-            <SelectOptions data={context.config.itemRarity} blank="" />
+            <SelectOptions
+              data={context.config.itemRarity}
+              blank={localize('DND5E.Rarity')}
+            />
           </Select>
         {/if}
       </li>

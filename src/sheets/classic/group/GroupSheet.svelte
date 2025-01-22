@@ -106,7 +106,7 @@
           </div>
         {:else}
           <strong class="fs-sm semibold">
-            {localize('DND5E.ExperiencePointsFormat', {
+            {localize('DND5E.ExperiencePoints.Format', {
               value:
                 context.system.details.xp.value ??
                 context.system.details.xp.derived ??

@@ -917,7 +917,7 @@ export class Tidy5eCharacterSheet
       const pluralRules = new Intl.PluralRules(game.i18n.lang);
 
       context.epicBoonsEarned = FoundryAdapter.localize(
-        `DND5E.ExperiencePointsBoons.${pluralRules.select(
+        `DND5E.ExperiencePoints.Boons.${pluralRules.select(
           this.actor.system.details.xp.boonsEarned ?? 0
         )}`,
         {
