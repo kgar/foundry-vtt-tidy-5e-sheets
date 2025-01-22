@@ -65,11 +65,11 @@
 
 <fieldset>
   <legend>
-    {localize('DND5E.ItemContainerDetails')}
+    {localize('DND5E.CONTAINER.Details')}
   </legend>
 
   <div class="form-group stacked container-properties">
-    <label for="">{localize('DND5E.ItemContainerProperties')}</label>
+    <label for="">{localize('DND5E.CONTAINER.FIELDS.properties.label')}</label>
     <ItemProperties />
   </div>
 

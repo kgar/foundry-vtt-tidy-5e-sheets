@@ -26,6 +26,14 @@ interface RecoveryOption {
   group?: string;
 }
 
+interface VolumeUnitConfig {
+  label: string;
+  abbreviation: string;
+  counted?: string;
+  conversion: number;
+  type: string;
+}
+
 export type CONFIG = {
   debug: {
     applications: boolean;
@@ -5592,6 +5600,10 @@ export type CONFIG = {
         woodcarver: string;
       };
     };
+    volumeUnits: {
+      cubicFoot: VolumeUnitConfig;
+      liter: VolumeUnitConfig;
+    } & Record<string, VolumeUnitConfig>;
   };
 };
 
