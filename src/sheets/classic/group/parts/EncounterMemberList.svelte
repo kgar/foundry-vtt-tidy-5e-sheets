@@ -223,7 +223,7 @@
                             (ctx.quantity?.value ?? 1),
                         )}
                       </span>&nbsp;
-                      <abbr>{localize('DND5E.ExperiencePointsAbbr')}</abbr>
+                      <abbr>{localize('DND5E.ExperiencePoints.Abbreviation')}</abbr>
                     {/if}
                   {/if}
                 </TidyTableCell>

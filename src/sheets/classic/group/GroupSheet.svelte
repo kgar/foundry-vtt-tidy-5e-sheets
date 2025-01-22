@@ -101,7 +101,7 @@
               saveEmptyAsNull={true}
             />
             <span class="fs-sm semibold"
-              >{localize('DND5E.ExperiencePointsAbbr')}</span
+              >{localize('DND5E.ExperiencePoints.Abbreviation')}</span
             >
           </div>
         {:else}
