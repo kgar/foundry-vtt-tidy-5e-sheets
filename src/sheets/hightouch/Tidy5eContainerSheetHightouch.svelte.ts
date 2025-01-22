@@ -316,6 +316,7 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
       labels: this.document.labels,
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
+      modernRules: FoundryAdapter.checkIfModernRules(this.item),
       owner: this.item.isOwner,
       properties: {
         active: [],

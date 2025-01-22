@@ -837,6 +837,7 @@ export class Tidy5eCharacterSheet
       lockSensitiveFields:
         (!unlocked && settings.value.useTotalSheetLock) ||
         !defaultDocumentContext.editable,
+      modernRules: FoundryAdapter.checkIfModernRules(this.actor),
       notes1EnrichedHtml: await FoundryAdapter.enrichHtml(
         TidyFlags.notes1.members.value.get(this.actor) ?? '',
         {

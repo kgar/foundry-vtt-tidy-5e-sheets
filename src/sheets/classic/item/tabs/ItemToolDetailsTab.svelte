@@ -32,7 +32,7 @@
   </div>
 
   <!-- Base Tool -->
-  {#if Object.keys(context.baseItems ?? {}).length}
+  {#if Object.keys(context.baseItems).length}
     <div class="form-group">
       <label for="{appId}-type-baseItem">{localize('DND5E.ItemToolBase')}</label
       >

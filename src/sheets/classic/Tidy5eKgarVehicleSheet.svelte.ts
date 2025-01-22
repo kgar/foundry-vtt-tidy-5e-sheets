@@ -342,6 +342,7 @@ export class Tidy5eVehicleSheet
       lockSensitiveFields:
         (!unlocked && settings.value.useTotalSheetLock) ||
         !defaultDocumentContext.editable,
+      modernRules: FoundryAdapter.checkIfModernRules(this.actor),
       owner: this.actor.isOwner,
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
       tabs: [],

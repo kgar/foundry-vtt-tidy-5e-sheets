@@ -34,7 +34,10 @@ export const FoundryAdapter = {
   getTidySetting<T = string>(settingName: string): T {
     return game.settings.get(CONSTANTS.MODULE_ID, settingName) as T;
   },
-  async setTidySetting(key: keyof CurrentSettings, value: unknown): Promise<void> {
+  async setTidySetting(
+    key: keyof CurrentSettings,
+    value: unknown
+  ): Promise<void> {
     await game.settings.set(CONSTANTS.MODULE_ID, key, value);
   },
   registerTidySetting(key: string, data: any): void {
@@ -202,11 +205,11 @@ export const FoundryAdapter = {
     if (event.button !== CONSTANTS.MOUSE_BUTTON_AUXILIARY) {
       return;
     }
-    
+
     if (!entityWithSheet.sheet.isEditable) {
       return;
     }
-    
+
     event.preventDefault();
     event.stopImmediatePropagation();
 
@@ -836,16 +839,8 @@ export const FoundryAdapter = {
     );
   },
   deleteAdvancement(advancementItemId: string, item: Item5e) {
-    if (item.isEmbedded && !game.settings.get('dnd5e', 'disableAdvancements')) {
-      let manager =
-        dnd5e.applications.advancement.AdvancementManager.forDeletedAdvancement(
-          item.actor,
-          item.id,
-          advancementItemId
-        );
-      if (manager.steps.length) return manager.render(true);
-    }
-    return item.deleteAdvancement(advancementItemId);
+    const advancement = item.advancement.byId[advancementItemId];
+    return advancement?.deleteDialog();
   },
   modifyAdvancementChoices(advancementLevel: string, item: Item5e) {
     let manager =
@@ -1446,5 +1441,10 @@ export const FoundryAdapter = {
         ? CONFIG.DND5E.abilities[save.ability.first()]?.abbreviation
         : FoundryAdapter.localize('DND5E.AbbreviationDC')
       : null;
+  },
+  checkIfModernRules(document: any) {
+    return document.system.source?.rules
+      ? document.system.source?.rules === '2024'
+      : game.settings.get('dnd5e', 'rulesVersion') === 'modern';
   },
 };

@@ -563,6 +563,7 @@ export type ActorSheetContextV1 = {
   lockLevelSelector: boolean;
   lockMoneyChanges: boolean;
   lockSensitiveFields: boolean;
+  modernRules: boolean;
   originalContext: unknown;
   /**
    * The current user owns the actor.
@@ -724,6 +725,7 @@ export type ActorSheetContextV2<TActor = ActorV2> = {
   actorPortraitCommands: RegisteredPortraitMenuCommand[];
   editable: boolean;
   healthPercentage: number;
+  modernRules: boolean;
   lockSensitiveFields: boolean;
   unlocked: boolean;
   useRoundedPortraitStyle: boolean;

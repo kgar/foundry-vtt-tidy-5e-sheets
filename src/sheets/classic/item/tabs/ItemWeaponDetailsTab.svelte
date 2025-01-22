@@ -37,7 +37,7 @@
   </div>
 
   <!-- Weapon Base -->
-  {#if Object.keys(context.baseItems ?? {}).length}
+  {#if Object.keys(context.baseItems).length}
     <div class="form-group">
       <label for="{appId}-type-baseItem"
         >{localize('DND5E.ItemWeaponBase')}</label
