@@ -31,6 +31,16 @@
         disabled={!context.editable}
         selectOnFocus={true}
       />
+      <Select
+        document={context.item}
+        field="system.weight.units"
+        value={context.source.weight.units}
+      >
+        <SelectOptions
+          data={context.config.weightUnits}
+          labelProp="abbreviation"
+        />
+      </Select>
     </div>
   </div>
   <div class="form-group">
