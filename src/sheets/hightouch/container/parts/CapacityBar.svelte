@@ -34,6 +34,10 @@
         ? `medium`
         : `low`,
   );
+
+  let capacityMaxText = $derived(
+    capacity.max === Infinity ? '∞' : capacity.max,
+  );
 </script>
 
 <div
@@ -51,6 +55,6 @@
     <i class="fas fa-weight-hanging"></i>
     <span class="value">{readableValue}</span>
     <span class="separator">/</span>
-    <span class="max">{capacity.max}</span>
+    <span class="max">{capacityMaxText}</span>
   </div>
 </div>

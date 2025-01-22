@@ -27,28 +27,30 @@
   {#if context.properties.object.mgc}
     <div class="form-group">
       <label for="{appId}-attunement">{localize('DND5E.Attunement')}</label>
-      <Checkbox
-        id="{appId}-attuned"
-        document={context.item}
-        field="system.attuned"
-        checked={context.source.attuned}
-        disabled={!context.editable ||
-          // @ts-expect-error
-          !context.config.attunementTypes[context.system.attunement]}
-        title={localize('DND5E.AttunementAttuned')}
-      />
-      <Select
-        id="{appId}-attunement"
-        document={context.item}
-        field="system.attunement"
-        value={context.source.attunement}
-        disabled={!context.editable}
-      >
-        <SelectOptions
-          data={context.config.attunementTypes}
-          blank={localize('DND5E.AttunementNone')}
+      <div class="form-fields">
+        <Checkbox
+          id="{appId}-attuned"
+          document={context.item}
+          field="system.attuned"
+          checked={context.source.attuned}
+          disabled={!context.editable ||
+            // @ts-expect-error
+            !context.config.attunementTypes[context.system.attunement]}
+          title={localize('DND5E.AttunementAttuned')}
         />
-      </Select>
+        <Select
+          id="{appId}-attunement"
+          document={context.item}
+          field="system.attunement"
+          value={context.source.attunement}
+          disabled={!context.editable}
+        >
+          <SelectOptions
+            data={context.config.attunementTypes}
+            blank={localize('DND5E.AttunementNone')}
+          />
+        </Select>
+      </div>
     </div>
   {/if}
 
