@@ -47,6 +47,20 @@
   class="traits"
   class:expanded={TidyFlags.traitsExpanded.get(context.actor)}
 >
+  {#if context.actor.system.traits.important}
+    <TraitSection
+      title={localize('DND5E.HitDice')}
+      iconCssClass="fa-solid fa-dice-d{context.system.attributes.hd
+        .denomination}"
+      show={true}
+      useConfigureButton={false}
+      traitCssClass="counter"
+    >
+      <span class="hit-dice-counter">
+        {context.system.attributes.hd.value}/{context.system.attributes.hd.max}
+      </span>
+    </TraitSection>
+  {/if}
   {#if useSenses && context.senses}
     {@const senses = getTags(context.senses)}
     <TraitSection
@@ -56,6 +70,7 @@
       onConfigureClicked={() =>
         FoundryAdapter.renderMovementSensesConfig(context.actor, 'senses')}
       show={traitsExpanded || !!senses.length}
+      useConfigureButton={true}
     >
       <TraitSectionTags tags={senses} />
     </TraitSection>
@@ -73,6 +88,7 @@
       onConfigureClicked={() =>
         FoundryAdapter.renderTraitsConfig(context.actor, 'languages')}
       show={traitsExpanded || !!languages.length}
+      useConfigureButton={true}
     >
       <TraitSectionTags tags={languages} />
     </TraitSection>
@@ -90,6 +106,7 @@
       onConfigureClicked={() =>
         FoundryAdapter.openDamagesConfig(context.actor, 'di')}
       show={traitsExpanded || !!damageImmunities.length}
+      useConfigureButton={true}
     >
       <TraitSectionTags tags={damageImmunities} />
     </TraitSection>
@@ -107,6 +124,7 @@
       onConfigureClicked={() =>
         FoundryAdapter.openDamagesConfig(context.actor, 'dr')}
       show={traitsExpanded || !!damageResistances.length}
+      useConfigureButton={true}
     >
       <TraitSectionTags tags={damageResistances} />
     </TraitSection>
@@ -124,6 +142,7 @@
       onConfigureClicked={() =>
         FoundryAdapter.openDamagesConfig(context.actor, 'dv')}
       show={traitsExpanded || !!vulnerabilities.length}
+      useConfigureButton={true}
     >
       <TraitSectionTags tags={vulnerabilities} />
     </TraitSection>
@@ -139,6 +158,7 @@
       onConfigureClicked={() =>
         FoundryAdapter.openDamagesConfig(context.actor, 'dm')}
       show={traitsExpanded || !!context.traits.traits.dm.length}
+      useConfigureButton={true}
     >
       <TraitSectionModifications modifications={context.traits.traits?.dm} />
     </TraitSection>
@@ -156,6 +176,7 @@
       onConfigureClicked={() =>
         FoundryAdapter.renderTraitsConfig(context.actor, 'ci')}
       show={traitsExpanded || !!conditionImmunities.length}
+      useConfigureButton={true}
     >
       <TraitSectionTags tags={conditionImmunities} />
     </TraitSection>
@@ -172,6 +193,7 @@
       onConfigureClicked={() =>
         FoundryAdapter.renderWeaponsConfig(context.actor)}
       show={traitsExpanded || !!weaponProfs.length}
+      useConfigureButton={true}
     >
       {#snippet customIcon()}
         <svg x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve">
@@ -211,6 +233,7 @@
       onConfigureClicked={() =>
         FoundryAdapter.renderTraitsConfig(context.actor, 'armor')}
       show={traitsExpanded || !!armorProfs.length}
+      useConfigureButton={false}
     >
       {#snippet customIcon()}
         <svg x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve">
@@ -239,6 +262,7 @@
       })}
       onConfigureClicked={() => FoundryAdapter.renderToolsConfig(context.actor)}
       show={traitsExpanded || !!tools.length}
+      useConfigureButton={true}
     >
       {#if tools.length}
         <TraitSectionTools {tools} />
@@ -271,6 +295,7 @@
           }
         }}
         show={trait.alwaysShow || traitsExpanded}
+        useConfigureButton={!!trait.openConfiguration}
       />
     {/each}
   {/if}
@@ -369,6 +394,22 @@
     .configure-special-traits i.fas {
       line-height: 0.625rem;
       vertical-align: baseline;
+    }
+
+    :global(.counter .trait-label-and-list) {
+      display: flex;
+      align-items: end;
+    }
+
+    :global(.counter .trait-label) {
+      flex: 1;
+    }
+
+    :global(.counter .hit-dice-counter) {
+      flex: 0;
+      margin-inline-start: auto;
+      margin-inline-end: 0.25rem;
+      font-size: 0.75rem;
     }
   }
 </style>

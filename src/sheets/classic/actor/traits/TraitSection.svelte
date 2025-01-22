@@ -10,7 +10,8 @@
 
   interface Props {
     title: string;
-    configureButtonTitle: string;
+    configureButtonTitle?: string;
+    useConfigureButton: boolean;
     iconCssClass?: string | undefined;
     traitCssClass?: string | undefined;
     show: boolean;
@@ -22,6 +23,7 @@
   let {
     title,
     configureButtonTitle,
+    useConfigureButton,
     iconCssClass = undefined,
     traitCssClass = '',
     show,
@@ -51,7 +53,7 @@
       {/if}
       {@render children?.()}
     </div>
-    {#if context.unlocked}
+    {#if context.unlocked && useConfigureButton}
       <button
         type="button"
         class="trait-editor inline-icon-button flex-row align-items-flex-start justify-content-center"
