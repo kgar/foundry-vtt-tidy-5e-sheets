@@ -55,6 +55,7 @@ export type ItemSheetContext = {
   canCraft?: boolean;
   concealDetails: boolean;
   config: typeof CONFIG.DND5E;
+  coverOptions: {value: string, label: string}[];
   craft?: {
     img: string;
     name: string;

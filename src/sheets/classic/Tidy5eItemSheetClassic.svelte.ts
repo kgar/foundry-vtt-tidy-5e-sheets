@@ -213,6 +213,9 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
         (this.advancementConfigurationMode || !this.document.isEmbedded) &&
         editable,
       config: CONFIG.DND5E,
+      coverOptions: Object.entries(CONFIG.DND5E.cover).map(
+        ([value, label]) => ({ value, label })
+      ),
       customContent: [],
       customEquipmentTypeGroups:
         ItemSheetRuntime.getCustomEquipmentTypeGroups(),
@@ -251,7 +254,10 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       limited: this.document.limited,
       options: this.options,
       owner: this.document.isOwner,
-      scalarTarget: !['', 'self', 'any'].includes(target?.affects?.type),
+      scalarTarget:
+        target?.affects?.type &&
+        CONFIG.DND5E.individualTargetTypes[target.affects.type]?.scalar !==
+          false,
       source: sourceSystem,
       system: this.document.system,
       tabs: [],
@@ -336,17 +342,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
         }, []),
       ],
 
-      recoveryPeriods: [
-        ...Object.entries(CONFIG.DND5E.limitedUsePeriods)
-          //@ts-ignore
-          .filter(([, { deprecated }]) => !deprecated)
-          .map(([value, { label }]) => ({
-            value,
-            label,
-            group: 'DND5E.DurationTime',
-          })),
-        { value: 'recharge', label: 'DND5E.USES.Recovery.Recharge.Label' },
-      ],
+      recoveryPeriods: CONFIG.DND5E.limitedUsePeriods.recoveryOptions,
 
       recoveryTypes: [
         { value: 'recoverAll', label: 'DND5E.USES.Recovery.Type.RecoverAll' },

@@ -20,6 +20,12 @@ interface IndividualTargetTypesConfig {
   counted: string;
 }
 
+interface RecoveryOption {
+  value: string;
+  label: string;
+  group?: string;
+}
+
 export type CONFIG = {
   debug: {
     applications: boolean;
@@ -3255,6 +3261,7 @@ export type CONFIG = {
         abbreviation: string;
         formula: boolean;
       };
+      recoveryOptions: RecoveryOption[];
     };
     enchantmentPeriods: {
       sr: {
@@ -3867,7 +3874,7 @@ export type CONFIG = {
       creatureOrObject: IndividualTargetTypesConfig;
       any: IndividualTargetTypesConfig;
       willing: IndividualTargetTypesConfig;
-    };
+    } & Record<string, IndividualTargetTypesConfig>;
     areaTargetTypes: {
       circle: {
         label: string;
