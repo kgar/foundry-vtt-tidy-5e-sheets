@@ -18,8 +18,12 @@
       : Math.ceil(capacity.value ?? 0),
   );
 
+  let capacityMaxLabel = $derived(
+    capacity.max === Infinity ? '∞' : capacity.max,
+  );
+
   let capacityLabel = $derived(
-    `${readableValue}/${capacity.max} ${capacity.units}`,
+    `${readableValue}/${capacityMaxLabel} ${capacity.units ?? ''}`,
   );
 
   let percentage = $derived(Math.round(capacity.pct));
@@ -40,7 +44,12 @@
 >
   {#if showLabel}
     <span class="capacity-label">
-      {capacityLabel}
+      <span>{readableValue}</span>
+      <span>/</span>
+      <span>{capacityMaxLabel}</span>
+      {#if capacity.units}
+        <span>{capacity.units}</span>
+      {/if}
     </span>
   {/if}
 </div>
@@ -48,7 +57,7 @@
 <style lang="scss">
   .tidy-capacity {
     position: relative;
-    height: var(--capacity-bar-height, 1rem);
+    height: var(--capacity-bar-height, 1.25rem);
     border-radius: var(--capacity-bar-container-border-radius, 0.1875rem);
     background: var(--t5e-light-color);
     border: 0.0625rem solid var(--t5e-separator-color);
@@ -67,8 +76,13 @@
     }
 
     .capacity-label {
-      font-size: 0.75rem;
-      display: block;
+      font-size: 0.8125rem;
+      display: flex;
+      gap: 0.25rem;
+      align-items: center;
+      justify-content: center;
+      line-height: normal;
+      
       position: relative;
       width: 100%;
       text-align: center;
