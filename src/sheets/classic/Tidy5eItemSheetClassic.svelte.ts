@@ -204,7 +204,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
         }))
         .sort((a: any, b: any) => a.sort - b.sort),
       affectsPlaceholder: game.i18n.localize(
-        `DND5E.Target${target?.template?.type ? 'Every' : 'Any'}`
+        `DND5E.TARGET.Count.${target?.template?.type ? 'Every' : 'Any'}`
       ),
       advancementEditable:
         (this.advancementConfigurationMode || !this.document.isEmbedded) &&

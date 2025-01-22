@@ -53,7 +53,7 @@
     },
     {
       type: CONSTANTS.SHEET_TYPE_NPC,
-      label: localize('DND5E.NPC'),
+      label: localize('DND5E.NPC.Label'),
       tabs: mapTabs(NpcSheetRuntime.tabMap, [
         CONSTANTS.TAB_NPC_ABILITIES,
         CONSTANTS.TAB_ACTOR_INVENTORY,

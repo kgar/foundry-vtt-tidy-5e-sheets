@@ -116,7 +116,7 @@
     >
       <SelectOptions
         data={context.config.enchantmentPeriods}
-        blank={localize('DND5E.UsesPeriods.Never')}
+        blank={localize('DND5E.USES.Recovery.Never')}
         labelProp="label"
         valueProp="value"
       />

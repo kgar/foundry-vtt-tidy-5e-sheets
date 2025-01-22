@@ -35,7 +35,7 @@ export const defaultItemFilters = {
       !!item.system.activities?.some(
         (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_LEGENDARY
       ),
-    text: 'DND5E.LegendaryActionLabel',
+    text: 'DND5E.LegendaryAction.Label',
   },
   activationCostMythic: {
     name: 'activationCostMythic',
@@ -51,7 +51,7 @@ export const defaultItemFilters = {
       !!item.system.activities?.some(
         (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_LAIR
       ),
-    text: 'DND5E.LairActionLabel',
+    text: 'DND5E.LAIR.Action.Label',
   },
   activationCostCrew: {
     name: 'activationCostCrew',

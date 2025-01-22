@@ -92,7 +92,7 @@
         class="checkbox"
         title={localize('TIDY5E.ShortRest')}
       >
-        {localize('DND5E.RestS')}
+        {localize('DND5E.REST.Short.LabelShort')}
       </label>
       <input
         id="{appId}-{resource.name}-lr"
@@ -113,7 +113,7 @@
         class="checkbox"
         title={localize('TIDY5E.LongRest')}
       >
-        {localize('DND5E.RestL')}
+        {localize('DND5E.REST.Long.LabelShort')}
       </label>
     </div>
     {#if context.editable && !context.lockSensitiveFields}
