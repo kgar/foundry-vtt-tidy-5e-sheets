@@ -29,7 +29,7 @@
 <div
   class="tidy-capacity"
   role="meter"
-  aria-label={localize('DND5E.ItemContainerCapacity')}
+  aria-label={localize('DND5E.CONTAINER.FIELDS.capacity.label')}
   title={capacityLabel}
   aria-valuetext={capacityLabel}
   aria-valuemin="0"

@@ -75,7 +75,7 @@
 
   <div class="form-group">
     <label for="{appId}-capacity-value"
-      >{localize('DND5E.ItemContainerCapacity')}</label
+      >{localize('DND5E.CONTAINER.FIELDS.capacity.label')}</label
     >
     <div class="form-fields">
       <NumberInput
@@ -91,7 +91,7 @@
 
   <div class="form-group">
     <label for="{appId}-capacity-type"
-      >{localize('DND5E.ItemContainerCapacityType')}</label
+      >{localize('DND5E.CONTAINER.FIELDS.capacity.labelType')}</label
     >
     <div class="form-fields">
       <Select

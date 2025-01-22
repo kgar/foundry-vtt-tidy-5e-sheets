@@ -461,6 +461,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       maxHP: stats.maxHP,
       memberContext: memberContext,
       memberSections: memberSections,
+      modernRules: FoundryAdapter.checkIfModernRules(this.actor),
       movement: movement,
       owner: this.actor.isOwner,
       showContainerPanel:
