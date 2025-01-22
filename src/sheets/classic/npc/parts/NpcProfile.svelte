@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import DeathSaves from 'src/sheets/classic/actor/DeathSaves.svelte';
   import ExhaustionTracker from 'src/sheets/classic/actor/ExhaustionTracker.svelte';
   import NpcHitPoints from './NpcHitPoints.svelte';
@@ -11,12 +10,22 @@
   import ExhaustionInput from 'src/sheets/classic/actor/ExhaustionInput.svelte';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
+  import NpcLoyaltyTracker from './NpcLoyaltyTracker.svelte';
+  import type { PortraitCharmRadiusClass } from 'src/types/types';
 
   let context = $derived(getNpcSheetContext());
 
   let incapacitated = $derived(
     (context.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
       context.actor?.system?.attributes?.hp?.max !== 0,
+  );
+
+  let exhaustionRadiusClass: PortraitCharmRadiusClass = $derived(
+    context.useRoundedPortraitStyle ? 'rounded' : 'top-left',
+  );
+
+  let loyaltyRadiusClass: PortraitCharmRadiusClass = $derived(
+    context.useRoundedPortraitStyle ? 'rounded' : 'top-right',
   );
 
   async function onLevelSelected(level: number) {
@@ -33,7 +42,7 @@
   {#if settings.value.useExhaustion && settings.value.exhaustionConfig.type === 'specific'}
     <ExhaustionTracker
       level={context.system.attributes.exhaustion}
-      radiusClass={context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
+      radiusClass={exhaustionRadiusClass}
       {onLevelSelected}
       exhaustionConfig={settings.value.exhaustionConfig}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
@@ -44,13 +53,17 @@
   {:else if settings.value.useExhaustion && settings.value.exhaustionConfig.type === 'open'}
     <ExhaustionInput
       level={context.system.attributes.exhaustion}
-      radiusClass={context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
+      radiusClass={exhaustionRadiusClass}
       {onLevelSelected}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
         context.actor,
         'system.attributes.exhaustion',
       )}
     />
+  {/if}
+
+  {#if context.showLoyalty}
+    <NpcLoyaltyTracker radiusClass={loyaltyRadiusClass} />
   {/if}
 
   <NpcHitPoints />

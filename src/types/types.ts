@@ -413,6 +413,7 @@ export type NpcSheetContext = {
   shortRest: (event: Event) => Promise<void>;
   showContainerPanel: boolean;
   showLegendaryToolbar: boolean;
+  showLoyalty: boolean;
   showSpellbookTab: boolean;
   spellComponentLabels: Record<string, string>;
   spellbook: SpellbookSection[];

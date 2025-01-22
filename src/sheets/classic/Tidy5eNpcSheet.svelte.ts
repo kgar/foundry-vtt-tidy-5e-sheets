@@ -764,6 +764,10 @@ export class Tidy5eNpcSheet
           (i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER
         ),
       showLegendaryToolbar: showLegendaryToolbar,
+      showLoyalty:
+        this.actor.system.traits.important &&
+        game.settings.get('dnd5e', 'loyaltyScore') &&
+        game.user.isGM,
       spellcastingInfo: FoundryAdapter.getSpellcastingInfo(
         this.actor,
         this.actor.itemTypes.spell

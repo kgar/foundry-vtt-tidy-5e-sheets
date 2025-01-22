@@ -594,4 +594,25 @@
       margin-bottom: 0;
     }
   }
+
+    /* Reset button & input styles */
+    input.uninput, button.unbutton {
+      --border: none;
+      border: var(--border);
+      box-shadow: none;
+      outline: none;
+  
+      &:hover, &:focus {
+        box-shadow: none;
+        border: var(--border);
+        outline: none;
+      }
+    }
+  
+    input.uninput {
+      color: inherit;
+      font-weight: inherit;
+      height: unset;
+    }
+  
 }
