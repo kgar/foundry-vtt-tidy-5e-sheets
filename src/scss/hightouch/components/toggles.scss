@@ -122,10 +122,10 @@
 /* Field Toggle  */
 
 .field-toggle {
-  --field-toggle-background: var(--t5e-component-card-onDefault-default);
-  --field-toggle-border-color: var(--t5e-color-gold);
-  --field-toggle-checked-color: var(--t5e-color-text-onInverse-default);
-  --field-toggle-unchecked-color: var(--t5e-color-text-onDefault-lightest);
+  --field-toggle-background: var(--t5e-component-field-ondefault-background);
+  --field-toggle-border-color: var(--t5e-component-field-ondefault-border);
+  --field-toggle-checked-color: var(--t5e-color-icon-oninverse-default);
+  --field-toggle-unchecked-color: var(--t5e-color-toggle-toggled-text);
   --field-toggle-thumb-color: var(--t5e-color-gold);
   --width: 2rem;
   --height: 1rem;
