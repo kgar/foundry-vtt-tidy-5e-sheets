@@ -32,7 +32,7 @@
   }: Props = $props();
 </script>
 
-<label class="pill pill-switch" class:disabled>
+<label class="pill pill-switch interactive" class:disabled>
   <span>
     <span class="pill-switch-icon-container" class:hidden={!checked}>
       {#if checkedIconClass}
