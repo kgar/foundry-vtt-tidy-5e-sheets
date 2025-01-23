@@ -276,41 +276,9 @@ export class Tidy5eNpcSheet
       (!unlocked && settings.value.useTotalSheetLock) ||
       !defaultDocumentContext.editable;
 
-    const showLegendaryToolbarFlagValue = TidyFlags.showLegendaryToolbar.get(
-      this.actor
-    );
-    const res = this.actor.system.resources;
-    const showLegendaryToolbar =
-      showLegendaryToolbarFlagValue === true ||
-      (showLegendaryToolbarFlagValue === undefined &&
-        ((res.legact?.max ?? 0) > 0 ||
-          (res.legres?.max ?? 0) > 0 ||
-          res.lair?.value === true ||
-          res.lair?.initiative !== null));
-
     let utilities: Utilities<NpcSheetContext> = {
       [CONSTANTS.TAB_NPC_ABILITIES]: {
         utilityToolbarCommands: [
-          {
-            title: FoundryAdapter.localize(
-              'TIDY5E.Commands.ShowLegendaryToolbar'
-            ),
-            iconClass: 'ra ra-player',
-            execute: async () => {
-              await TidyFlags.showLegendaryToolbar.set(this.actor, true);
-            },
-            visible: !showLegendaryToolbar,
-          },
-          {
-            title: FoundryAdapter.localize(
-              'TIDY5E.Commands.HideLegendaryToolbar'
-            ),
-            iconClass: 'ra ra-monster-skull',
-            execute: async () => {
-              await TidyFlags.showLegendaryToolbar.set(this.actor, false);
-            },
-            visible: showLegendaryToolbar,
-          },
           {
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
             iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
@@ -763,7 +731,6 @@ export class Tidy5eNpcSheet
         Array.from(defaultDocumentContext.items).some(
           (i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER
         ),
-      showLegendaryToolbar: showLegendaryToolbar,
       showLoyalty:
         this.actor.system.traits.important &&
         game.settings.get('dnd5e', 'loyaltyScore') &&

@@ -198,14 +198,9 @@
     class="main-panel"
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NPC_ABILITIES_CONTAINER}
   >
-    <ExpandableContainer
-      expanded={context.showLegendaryToolbar}
-      class="legendary-wrapper {context.showLegendaryToolbar
-        ? 'legendary-expanded'
-        : ''}"
-    >
+    {#if context.hasLegendaries || context.unlocked}
       <NpcLegendaryActions />
-    </ExpandableContainer>
+    {/if}
     {#if settings.value.moveTraitsBelowNpcResources}
       <Traits toggleable={!settings.value.alwaysShowNpcTraits} />
     {/if}

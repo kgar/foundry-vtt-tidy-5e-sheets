@@ -2,6 +2,7 @@
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
+  import TidySwitch from 'src/components/toggles/TidySwitch.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
 
@@ -33,7 +34,7 @@
         step="1"
         placeholder="0"
         selectOnFocus={true}
-        disabled={!context.editable || context.lockSensitiveFields}
+        disabled={!context.unlocked}
       />
     </div>
   </div>
@@ -48,6 +49,7 @@
         placeholder="0"
         title={localize('DND5E.LegendaryResistance.Remaining')}
         selectOnFocus={true}
+        disabled={!context.editable}
       />
       <span class="sep">/</span>
       <NumberInput
@@ -58,32 +60,55 @@
         step="1"
         placeholder="0"
         selectOnFocus={true}
-        disabled={!context.editable || context.lockSensitiveFields}
+        disabled={!context.unlocked}
       />
     </div>
   </div>
-  <div class="counter lair">
-    <h4>{localize('DND5E.LAIR.Action.Label')}</h4>
-    <div class="counter-value">
-      <Checkbox
-        document={context.actor}
-        field="system.resources.lair.value"
-        checked={context.system.resources.lair.value}
-        disabled={!context.editable || context.lockSensitiveFields}
-      />
-      <TextInput
-        document={context.actor}
-        field="system.resources.lair.initiative"
-        value={context.system.resources.lair.initiative}
-        placeholder="Init."
-        allowDeltaChanges={true}
-        selectOnFocus={true}
-        saveEmptyAsNull={true}
-        disabled={!context.editable || context.lockSensitiveFields}
-        title={localize('DND5E.LAIR.Action.Initiative')}
-      />
+  {#if context.modernRules && context.unlocked}
+    <div class="counter lair">
+      <h4>{localize('DND5E.LAIR.HasLair')}</h4>
+      <div class="counter-value">
+        <Checkbox
+          document={context.actor}
+          field="system.resources.lair.value"
+          checked={context.system.resources.lair.value}
+          disabled={!context.editable}
+        />
+      </div>
     </div>
-  </div>
+  {:else if context.modernRules && !context.unlocked && context.system.resources.lair.value}
+    <div class="counter lair">
+      <h4>{localize('DND5E.LAIR.Inside')}</h4>
+      <div class="counter-value">
+        <TidySwitch
+          class="flex-row small-gap inside-lair-toggle"
+          checked={context.system.resources.lair.inside}
+          onChange={(ev) =>
+            context.actor.update({
+              ['system.resources.lair.inside']: ev.currentTarget.checked,
+            })}
+          disabled={!context.editable}
+        />
+      </div>
+    </div>
+  {:else if !context.modernRules}
+    <div class="counter lair">
+      <h4>{localize('DND5E.LAIR.Action.Label')}</h4>
+      <div class="counter-value">
+        <TextInput
+          document={context.actor}
+          field="system.resources.lair.initiative"
+          value={context.system.resources.lair.initiative ?? ''}
+          placeholder="Init."
+          allowDeltaChanges={true}
+          selectOnFocus={true}
+          saveEmptyAsNull={true}
+          disabled={!context.unlocked}
+          title={localize('DND5E.LAIR.Action.Initiative')}
+        />
+      </div>
+    </div>
+  {/if}
 </div>
 
 <style lang="scss">
@@ -127,6 +152,10 @@
       :global(input[type='number']) {
         height: 1.5625rem;
         max-width: 1.25rem;
+      }
+
+      :global(input[type='text'][disabled]) {
+        border-width: 0;
       }
 
       :global(input[type='checkbox']) {

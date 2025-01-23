@@ -413,7 +413,6 @@ export type NpcSheetContext = {
   notesEnrichedHtml: string;
   shortRest: (event: Event) => Promise<void>;
   showContainerPanel: boolean;
-  showLegendaryToolbar: boolean;
   showLoyalty: boolean;
   showSpellbookTab: boolean;
   spellComponentLabels: Record<string, string>;

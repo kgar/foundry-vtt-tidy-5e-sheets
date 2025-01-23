@@ -927,35 +927,6 @@ export class TidyFlags {
   };
 
   /**
-   * Indicates whether the legendary toolbar should be shown for a given NPC.
-   */
-  static showLegendaryToolbar = {
-    key: 'showLegendaryToolbar' as const,
-    prop: TidyFlags.getFlagPropertyPath('showLegendaryToolbar'),
-    /** Gets whether the legendary toolbar should be shown for an NPC. */
-    get(actor: Actor5e): boolean | undefined {
-      return (
-        TidyFlags.tryGetFlag<boolean>(
-          actor,
-          TidyFlags.showLegendaryToolbar.key
-        ) ?? undefined
-      );
-    },
-    /** Sets whether the legendary toolbar should be shown for an NPC. */
-    set(actor: Actor5e, value: boolean): Promise<void> {
-      return TidyFlags.setFlag(
-        actor,
-        TidyFlags.showLegendaryToolbar.key,
-        value
-      );
-    },
-    /** Clears whether the legendary toolbar should be shown for an NPC. */
-    unset(actor: Actor5e) {
-      return TidyFlags.unsetFlag(actor, TidyFlags.showLegendaryToolbar.key);
-    },
-  };
-
-  /**
    * Indicates whether the additional personality info should be shown
    * for a given NPC on the biography tab.
    */
