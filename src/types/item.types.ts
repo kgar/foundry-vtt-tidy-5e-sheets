@@ -55,6 +55,7 @@ export type ItemSheetContext = {
   canCraft?: boolean;
   concealDetails: boolean;
   config: typeof CONFIG.DND5E;
+  coverOptions: { value: string; label: string }[];
   craft?: {
     img: string;
     name: string;
@@ -101,6 +102,7 @@ export type ItemSheetContext = {
   labels: Record<string, string>;
   limited: boolean;
   lockItemQuantity: boolean;
+  modernRules: boolean;
   options: any;
   orders?: ItemFacilityOrdersContext;
   owner: boolean;
@@ -202,6 +204,7 @@ export type ContainerSheetClassicContext = {
   labels: Record<string, any>;
   lockItemQuantity: boolean;
   lockMoneyChanges: boolean;
+  modernRules: boolean;
   customContent: CustomContent[];
   owner: boolean;
   properties: PropertyContext;
@@ -247,6 +250,7 @@ export type ContainerSheetHightouchContext = {
   labels: Record<string, any>;
   lockItemQuantity: boolean;
   lockMoneyChanges: boolean;
+  modernRules: boolean;
   customContent: CustomContent[];
   owner: boolean;
   properties: PropertyContext;

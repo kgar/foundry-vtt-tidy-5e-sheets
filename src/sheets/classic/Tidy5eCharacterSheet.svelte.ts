@@ -837,6 +837,7 @@ export class Tidy5eCharacterSheet
       lockSensitiveFields:
         (!unlocked && settings.value.useTotalSheetLock) ||
         !defaultDocumentContext.editable,
+      modernRules: FoundryAdapter.checkIfModernRules(this.actor),
       notes1EnrichedHtml: await FoundryAdapter.enrichHtml(
         TidyFlags.notes1.members.value.get(this.actor) ?? '',
         {
@@ -917,7 +918,7 @@ export class Tidy5eCharacterSheet
       const pluralRules = new Intl.PluralRules(game.i18n.lang);
 
       context.epicBoonsEarned = FoundryAdapter.localize(
-        `DND5E.ExperiencePointsBoons.${pluralRules.select(
+        `DND5E.ExperiencePoints.Boons.${pluralRules.select(
           this.actor.system.details.xp.boonsEarned ?? 0
         )}`,
         {
@@ -1784,6 +1785,8 @@ export class Tidy5eCharacterSheet
           dnd5e.documents.Trait.keyLabel(key, { trait: 'weapon' }) ?? key;
       }
     }
+
+    FoundryAdapter.prepareLanguageTrait(this.actor, traits);
 
     return traits;
   }

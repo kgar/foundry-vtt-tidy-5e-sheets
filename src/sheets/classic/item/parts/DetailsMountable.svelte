@@ -85,7 +85,7 @@
     document={context.item}
     field="system.hp.conditions"
     value={context.item.system.hp.conditions}
-    placeholder={localize('DND5E.HealthConditions')}
+    placeholder={localize('DND5E.VEHICLE.MOUNTABLE.FIELDS.hp.conditions.label')}
     class="full-width"
     disabled={!context.editable}
   />
@@ -118,7 +118,7 @@
       document={context.item}
       field="system.speed.conditions"
       value={context.item.system.speed.conditions}
-      placeholder={localize('DND5E.SpeedConditions')}
+      placeholder={localize('DND5E.VEHICLE.MOUNTABLE.FIELDS.speed.conditions.label')}
       class="full-width"
       disabled={!context.editable}
     />

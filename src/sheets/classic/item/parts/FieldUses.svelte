@@ -198,6 +198,6 @@
       </div>
     </div>
   {:else}
-    <div class="empty">{localize('DND5E.UsesPeriods.Never')}</div>
+    <div class="empty">{localize('DND5E.USES.Recovery.Never')}</div>
   {/each}
 {/if}

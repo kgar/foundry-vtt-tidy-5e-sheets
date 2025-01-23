@@ -6,6 +6,42 @@ type CurrencyItemConfig = {
   conversion: number;
 };
 
+interface MovementUnitConfig {
+  label: string;
+  abbreviation: string;
+  conversion: number;
+  formattingUnit: string;
+  type: string;
+}
+
+interface IndividualTargetTypesConfig {
+  label: string;
+  scalar?: boolean;
+  counted: string;
+}
+
+interface RecoveryOption {
+  value: string;
+  label: string;
+  group?: string;
+}
+
+interface VolumeUnitConfig {
+  label: string;
+  abbreviation: string;
+  counted?: string;
+  conversion: number;
+  type: string;
+}
+
+interface TreasureConfig {
+  label: string;
+}
+
+interface CommunicationTypeConfig {
+  label: string;
+}
+
 export type CONFIG = {
   debug: {
     applications: boolean;
@@ -2493,6 +2529,9 @@ export type CONFIG = {
       cha: Dnd5eAbility;
     } & Record<string, Dnd5eAbility>;
     areaTargetOptions: GroupableSelectOption[];
+    communicationTypes: {
+      telepathy: CommunicationTypeConfig;
+    } & Record<string, CommunicationTypeConfig>;
     defaultAbilities: {
       meleeAttack: string;
       rangedAttack: string;
@@ -3241,6 +3280,7 @@ export type CONFIG = {
         abbreviation: string;
         formula: boolean;
       };
+      recoveryOptions: RecoveryOption[];
     };
     enchantmentPeriods: {
       sr: {
@@ -3738,10 +3778,10 @@ export type CONFIG = {
       walk: string;
     };
     movementUnits: {
-      ft: string;
-      mi: string;
-      m: string;
-      km: string;
+      ft: MovementUnitConfig;
+      mi: MovementUnitConfig;
+      m: MovementUnitConfig;
+      km: MovementUnitConfig;
     };
     rangeTypes: {
       self: string;
@@ -3844,16 +3884,16 @@ export type CONFIG = {
       };
     };
     individualTargetTypes: {
-      self: string;
-      ally: string;
-      enemy: string;
-      creature: string;
-      object: string;
-      space: string;
-      creatureOrObject: string;
-      any: string;
-      willing: string;
-    };
+      self: IndividualTargetTypesConfig;
+      ally: IndividualTargetTypesConfig;
+      enemy: IndividualTargetTypesConfig;
+      creature: IndividualTargetTypesConfig;
+      object: IndividualTargetTypesConfig;
+      space: IndividualTargetTypesConfig;
+      creatureOrObject: IndividualTargetTypesConfig;
+      any: IndividualTargetTypesConfig;
+      willing: IndividualTargetTypesConfig;
+    } & Record<string, IndividualTargetTypesConfig>;
     areaTargetTypes: {
       circle: {
         label: string;
@@ -5571,6 +5611,18 @@ export type CONFIG = {
         woodcarver: string;
       };
     };
+    treasure: {
+      any: TreasureConfig;
+      arcana: TreasureConfig;
+      armaments: TreasureConfig;
+      implements: TreasureConfig;
+      individual: TreasureConfig;
+      relics: TreasureConfig;
+    } & Record<string, TreasureConfig>;
+    volumeUnits: {
+      cubicFoot: VolumeUnitConfig;
+      liter: VolumeUnitConfig;
+    } & Record<string, VolumeUnitConfig>;
   };
 };
 

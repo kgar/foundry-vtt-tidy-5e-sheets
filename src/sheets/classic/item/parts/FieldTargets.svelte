@@ -49,7 +49,11 @@
         blankValue=""
         disabled={!context.editable}
       >
-        <SelectOptions data={context.config.individualTargetTypes} blank="" />
+        <SelectOptions
+          data={context.config.individualTargetTypes}
+          labelProp="label"
+          blank=""
+        />
       </Select>
     </div>
   </div>
@@ -173,7 +177,10 @@
           value={context.source.target.template.units}
           disabled={!context.editable}
         >
-          <SelectOptions data={context.config.movementUnits} />
+          <SelectOptions
+            data={context.config.movementUnits}
+            labelProp="label"
+          />
         </Select>
       </div>
     </div>

@@ -46,15 +46,15 @@
 </div>
 
 <div class="form-group split-group">
-  <label for="{appId}-hit-dice">{localize('DND5E.HitDice')}</label>
+  <label for="{appId}-hit-dice">{localize('DND5E.CLASS.FIELDS.hd.label')}</label>
   <div class="form-fields">
     <div class="form-group label-top">
       <label for="{appId}-hit-dice">{localize('DND5E.Denomination')}</label>
       <Select
         id="{appId}-hit-dice"
         document={context.item}
-        field="system.hitDice"
-        value={context.source.hitDice}
+        field="system.hd.denomination"
+        value={context.source.hd.denomination}
         disabled={!context.editable}
       >
         {#each context.config.hitDieTypes as type}
@@ -64,12 +64,14 @@
     </div>
 
     <div class="form-group label-top">
-      <label for="{appId}-hit-dice-spent">{localize('DND5E.Spent')}</label>
+      <label for="{appId}-hit-dice-spent"
+        >{localize('DND5E.CLASS.FIELDS.hd.spent.label')}</label
+      >
       <NumberInput
         id="{appId}-hitDiceUsed"
         document={context.item}
-        field="system.hitDiceUsed"
-        value={context.source.hitDiceUsed}
+        field="system.hd.spent"
+        value={context.source.hd.spent}
         placeholder="0"
         disabled={!context.editable}
       />

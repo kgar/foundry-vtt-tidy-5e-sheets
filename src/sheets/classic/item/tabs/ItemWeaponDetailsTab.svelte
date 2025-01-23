@@ -37,7 +37,7 @@
   </div>
 
   <!-- Weapon Base -->
-  {#if Object.keys(context.baseItems ?? {}).length}
+  {#if Object.keys(context.baseItems).length}
     <div class="form-group">
       <label for="{appId}-type-baseItem"
         >{localize('DND5E.ItemWeaponBase')}</label
@@ -249,7 +249,11 @@
         blankValue=""
         disabled={!context.editable}
       >
-        <SelectOptions data={context.config.movementUnits} blank="" />
+        <SelectOptions
+          data={context.config.movementUnits}
+          labelProp="label"
+          blank=""
+        />
       </Select>
     </div>
   {:else}
@@ -285,7 +289,10 @@
             value={context.source.range.units}
             disabled={!context.editable}
           >
-            <SelectOptions data={context.config.movementUnits} />
+            <SelectOptions
+              data={context.config.movementUnits}
+              labelProp="label"
+            />
           </Select>
         </div>
       </div>

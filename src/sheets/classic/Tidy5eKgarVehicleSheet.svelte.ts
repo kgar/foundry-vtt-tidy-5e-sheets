@@ -342,6 +342,7 @@ export class Tidy5eVehicleSheet
       lockSensitiveFields:
         (!unlocked && settings.value.useTotalSheetLock) ||
         !defaultDocumentContext.editable,
+      modernRules: FoundryAdapter.checkIfModernRules(this.actor),
       owner: this.actor.isOwner,
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
       tabs: [],
@@ -617,20 +618,21 @@ export class Tidy5eVehicleSheet
     );
 
     // Handle crew actions
-    const firstActivityActivationType =
-      item.system.activities?.contents[0]?.activation?.type;
-    if (item.type === 'feat' && firstActivityActivationType === 'crew') {
-      context.cover = game.i18n.localize(
-        `DND5E.${item.system.cover ? 'CoverTotal' : 'None'}`
-      );
-      if (item.system.cover === 0.5) context.cover = '½';
-      else if (item.system.cover === 0.75) context.cover = '¾';
-      else if (item.system.cover === null) context.cover = '—';
+    if (item.type === 'feat' && item.system.activation.type === 'crew') {
+      if (item.system.cover === 1) {
+        context.cover = game.i18n.localize('DND5E.CoverTotal');
+      } else if (item.system.cover === 0.5) {
+        context.cover = '½';
+      } else if (item.system.cover === 0.75) {
+        context.cover = '¾';
+      } else {
+        context.cover = '—';
+      }
     }
 
     // Prepare vehicle weapons
     if (item.type === 'equipment' || item.type === 'weapon') {
-      context.threshold = item.system.hp.dt ? item.system.hp.dt : '—';
+      context.threshold = item.system.hp?.dt ? item.system.hp.dt : '—';
     }
   }
 

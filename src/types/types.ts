@@ -272,6 +272,11 @@ export type FavoriteSection =
       type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_GENERIC;
     });
 
+export type LanguageTraitContext = {
+  label: string;
+  value?: unknown;
+};
+
 export type CharacterSheetContext = {
   actorClassesToImages: Record<string, string>;
   allowMaxHpOverride: boolean;
@@ -314,6 +319,7 @@ export type CharacterSheetContext = {
   idealEnrichedHtml: string;
   inventory: InventorySection[];
   itemContext: Record<string, CharacterItemContext>;
+  languages: LanguageTraitContext[];
   maxPreparedSpellsTotal: number;
   notes1EnrichedHtml: string;
   notes2EnrichedHtml: string;
@@ -401,10 +407,12 @@ export type NpcSheetContext = {
   encumbrance: any;
   features: NpcAbilitySection[];
   flawEnrichedHtml: string;
+  hasLegendaries: boolean;
   hideEmptySpellbook: boolean;
   idealEnrichedHtml: string;
   inventory: InventorySection[];
   itemContext: Record<string, NpcItemContext>;
+  languages: LanguageTraitContext[];
   notes1EnrichedHtml: string;
   notes2EnrichedHtml: string;
   notes3EnrichedHtml: string;
@@ -412,7 +420,7 @@ export type NpcSheetContext = {
   notesEnrichedHtml: string;
   shortRest: (event: Event) => Promise<void>;
   showContainerPanel: boolean;
-  showLegendaryToolbar: boolean;
+  showLoyalty: boolean;
   showSpellbookTab: boolean;
   spellComponentLabels: Record<string, string>;
   spellbook: SpellbookSection[];
@@ -421,6 +429,7 @@ export type NpcSheetContext = {
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
   traitEnrichedHtml: string;
+  treasure?: { label: string }[];
   utilities: Utilities<NpcSheetContext>;
 } & ActorSheetContextV1;
 
@@ -563,6 +572,7 @@ export type ActorSheetContextV1 = {
   lockLevelSelector: boolean;
   lockMoneyChanges: boolean;
   lockSensitiveFields: boolean;
+  modernRules: boolean;
   originalContext: unknown;
   /**
    * The current user owns the actor.
@@ -724,6 +734,7 @@ export type ActorSheetContextV2<TActor = ActorV2> = {
   actorPortraitCommands: RegisteredPortraitMenuCommand[];
   editable: boolean;
   healthPercentage: number;
+  modernRules: boolean;
   lockSensitiveFields: boolean;
   unlocked: boolean;
   useRoundedPortraitStyle: boolean;

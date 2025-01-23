@@ -136,7 +136,11 @@
           disabled={!context.editable}
           blankValue=""
         >
-          <option value=""></option>
+          <option
+            value=""
+            style="--t5e-item-rarity-color: var(--t5e-color-gold);"
+            >{localize('DND5E.Rarity')}</option
+          >
           {#each itemRarities as rarity (rarity.key)}
             <option
               value={rarity.key}

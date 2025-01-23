@@ -35,7 +35,10 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
   )
 ) {
   currentTabId: string | undefined = undefined;
-  sectionExpansionTracker = new ExpansionTracker(true, CONSTANTS.LOCATION_SECTION);
+  sectionExpansionTracker = new ExpansionTracker(
+    true,
+    CONSTANTS.LOCATION_SECTION
+  );
 
   constructor(...args: any[]) {
     super(...args);
@@ -204,12 +207,15 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
         }))
         .sort((a: any, b: any) => a.sort - b.sort),
       affectsPlaceholder: game.i18n.localize(
-        `DND5E.Target${target?.template?.type ? 'Every' : 'Any'}`
+        `DND5E.TARGET.Count.${target?.template?.type ? 'Every' : 'Any'}`
       ),
       advancementEditable:
         (this.advancementConfigurationMode || !this.document.isEmbedded) &&
         editable,
       config: CONFIG.DND5E,
+      coverOptions: Object.entries(CONFIG.DND5E.cover).map(
+        ([value, label]) => ({ value, label })
+      ),
       customContent: [],
       customEquipmentTypeGroups:
         ItemSheetRuntime.getCustomEquipmentTypeGroups(),
@@ -246,9 +252,13 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       labels: this.document.labels,
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       limited: this.document.limited,
+      modernRules: FoundryAdapter.checkIfModernRules(this.item),
       options: this.options,
       owner: this.document.isOwner,
-      scalarTarget: !['', 'self', 'any'].includes(target?.affects?.type),
+      scalarTarget:
+        target?.affects?.type &&
+        CONFIG.DND5E.individualTargetTypes[target.affects.type]?.scalar !==
+          false,
       source: sourceSystem,
       system: this.document.system,
       tabs: [],
@@ -260,7 +270,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       // @ts-expect-error
       itemType: game.i18n.localize(CONFIG.Item.typeLabels[this.item.type]),
       itemStatus: this._getItemStatus(),
-      baseItems: await this._getItemBaseTypes(),
+      baseItems: {},
       isPhysical: this.document.system.hasOwnProperty('quantity'),
 
       // Identified state
@@ -289,8 +299,8 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
           value,
           label,
         })),
-        ...Object.entries(CONFIG.DND5E.movementUnits).map(([value, label]) => {
-          return { value, label, group: 'DND5E.RangeDistance' };
+        ...Object.entries(CONFIG.DND5E.movementUnits).map(([value, config]) => {
+          return { value, label: config.label, group: 'DND5E.RangeDistance' };
         }),
       ],
 
@@ -333,17 +343,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
         }, []),
       ],
 
-      recoveryPeriods: [
-        ...Object.entries(CONFIG.DND5E.limitedUsePeriods)
-          //@ts-ignore
-          .filter(([, { deprecated }]) => !deprecated)
-          .map(([value, { label }]) => ({
-            value,
-            label,
-            group: 'DND5E.DurationTime',
-          })),
-        { value: 'recharge', label: 'DND5E.USES.Recovery.Recharge.Label' },
-      ],
+      recoveryPeriods: CONFIG.DND5E.limitedUsePeriods.recoveryOptions,
 
       recoveryTypes: [
         { value: 'recoverAll', label: 'DND5E.USES.Recovery.Type.RecoverAll' },
@@ -363,6 +363,13 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       denominationOptions: [],
     };
 
+    if (!context.editable) {
+      context.source = context.system;
+    }
+
+    // Physical items
+    context.baseItems = await this._getItemBaseTypes(context);
+
     // Properties
     context.properties = {
       active: [],
@@ -376,7 +383,9 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
           arr.push({
             label,
             value: k,
-            selected: this.item._source.system.properties?.includes(k),
+            selected:
+              context.source.properties?.includes?.(k) ??
+              context.source.properties?.has?.(k),
           });
           return arr;
         },
@@ -586,10 +595,13 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
 
   /**
    * Get the base weapons and tools based on the selected type.
-   * @returns {Promise<object>}  Object with base items for this type formatted for selectOptions.
+   * @param context        Sheet preparation context.
+   * @returns             Object with base items for this type formatted for selectOptions.
    * @protected
    */
-  async _getItemBaseTypes() {
+  async _getItemBaseTypes(
+    context: ItemSheetClassicContext
+  ): Promise<Record<string, any>> {
     const baseIds =
       this.item.type === 'equipment'
         ? {
@@ -600,14 +612,15 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
           CONFIG.DND5E[`${this.item.type}Ids`];
     if (baseIds === undefined) return {};
 
-    const baseType = this.item.system.type.value;
+    const baseType = context?.source.type.value ?? this.item.system.type.value;
 
-    const items: Record<string, string> = {};
+    const items: Record<string, any> = {};
     for (const [name, id] of Object.entries(baseIds)) {
       const baseItem = await dnd5e.documents.Trait.getBaseItem(id);
       if (baseType !== baseItem?.system?.type?.value) continue;
       items[name] = baseItem.name;
     }
+    if (foundry.utils.isEmpty(items)) return {};
     return Object.fromEntries(
       Object.entries(items).sort((lhs, rhs) =>
         lhs[1].localeCompare(rhs[1], game.i18n.lang)
@@ -722,24 +735,6 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
         callback: (li: any) => this._onAdvancementAction(li[0], 'delete'),
       },
     ];
-  }
-
-  /* -------------------------------------------- */
-  /*  Rendering Life-Cycle Methods                */
-  /* -------------------------------------------- */
-
-  _onRender(
-    context: ItemSheetClassicContext,
-    options: ApplicationRenderOptions
-  ) {
-    super._onRender(context, options);
-
-    TidyHooks.tidy5eSheetsRenderItemSheet(
-      this,
-      this.element,
-      context,
-      !!options.isFirstRender
-    );
   }
 
   /* -------------------------------------------- */

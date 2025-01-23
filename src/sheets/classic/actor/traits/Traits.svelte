@@ -9,6 +9,7 @@
   import TraitSectionModifications from './TraitSectionModifications.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { isNil } from 'src/utils/data';
 
   let context = $derived(getSheetContext<ActorSheetContextV1>());
   interface Props {
@@ -47,6 +48,20 @@
   class="traits"
   class:expanded={TidyFlags.traitsExpanded.get(context.actor)}
 >
+  {#if context.actor.system.traits.important}
+    <TraitSection
+      title={localize('DND5E.HitDice')}
+      iconCssClass="fa-solid fa-dice-d{context.system.attributes.hd
+        .denomination}"
+      show={true}
+      useConfigureButton={false}
+      traitCssClass="counter"
+    >
+      <span class="hit-dice-counter">
+        {context.system.attributes.hd.value}/{context.system.attributes.hd.max}
+      </span>
+    </TraitSection>
+  {/if}
   {#if useSenses && context.senses}
     {@const senses = getTags(context.senses)}
     <TraitSection
@@ -56,25 +71,38 @@
       onConfigureClicked={() =>
         FoundryAdapter.renderMovementSensesConfig(context.actor, 'senses')}
       show={traitsExpanded || !!senses.length}
+      useConfigureButton={true}
     >
       <TraitSectionTags tags={senses} />
     </TraitSection>
   {/if}
 
-  {#if context.traits?.traits?.languages}
-    {@const languages = getTags(context.traits?.traits?.languages?.selected)}
+  {#if context.traits?.languages}
     <TraitSection
-      traitCssClass={context.traits?.traits?.languages?.cssClass ?? ''}
+      traitCssClass={context.traits?.languages?.cssClass ?? ''}
       title={localize('DND5E.Languages')}
       iconCssClass="fas fa-comment"
       configureButtonTitle={localize('DND5e.TraitConfig', {
         trait: localize('DND5E.Languages'),
       })}
       onConfigureClicked={() =>
-        FoundryAdapter.renderTraitsConfig(context.actor, 'languages')}
-      show={traitsExpanded || !!languages.length}
+        new dnd5e.applications.actor.LanguagesConfig({
+          document: context.actor,
+        }).render({ force: true })}
+      show={traitsExpanded || !!context.traits.languages.length}
+      useConfigureButton={true}
     >
-      <TraitSectionTags tags={languages} />
+      <ul class="trait-list">
+        {#each context.traits.languages as { label, value }}
+          <li class="trait-tag">
+            {label}
+            {#if !isNil(value)}
+              <span class="text-secondary">|</span>
+              {value}
+            {/if}
+          </li>
+        {/each}
+      </ul>
     </TraitSection>
   {/if}
 
@@ -90,6 +118,7 @@
       onConfigureClicked={() =>
         FoundryAdapter.openDamagesConfig(context.actor, 'di')}
       show={traitsExpanded || !!damageImmunities.length}
+      useConfigureButton={true}
     >
       <TraitSectionTags tags={damageImmunities} />
     </TraitSection>
@@ -107,6 +136,7 @@
       onConfigureClicked={() =>
         FoundryAdapter.openDamagesConfig(context.actor, 'dr')}
       show={traitsExpanded || !!damageResistances.length}
+      useConfigureButton={true}
     >
       <TraitSectionTags tags={damageResistances} />
     </TraitSection>
@@ -124,6 +154,7 @@
       onConfigureClicked={() =>
         FoundryAdapter.openDamagesConfig(context.actor, 'dv')}
       show={traitsExpanded || !!vulnerabilities.length}
+      useConfigureButton={true}
     >
       <TraitSectionTags tags={vulnerabilities} />
     </TraitSection>
@@ -139,6 +170,7 @@
       onConfigureClicked={() =>
         FoundryAdapter.openDamagesConfig(context.actor, 'dm')}
       show={traitsExpanded || !!context.traits.traits.dm.length}
+      useConfigureButton={true}
     >
       <TraitSectionModifications modifications={context.traits.traits?.dm} />
     </TraitSection>
@@ -156,6 +188,7 @@
       onConfigureClicked={() =>
         FoundryAdapter.renderTraitsConfig(context.actor, 'ci')}
       show={traitsExpanded || !!conditionImmunities.length}
+      useConfigureButton={true}
     >
       <TraitSectionTags tags={conditionImmunities} />
     </TraitSection>
@@ -172,6 +205,7 @@
       onConfigureClicked={() =>
         FoundryAdapter.renderWeaponsConfig(context.actor)}
       show={traitsExpanded || !!weaponProfs.length}
+      useConfigureButton={true}
     >
       {#snippet customIcon()}
         <svg x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve">
@@ -211,6 +245,7 @@
       onConfigureClicked={() =>
         FoundryAdapter.renderTraitsConfig(context.actor, 'armor')}
       show={traitsExpanded || !!armorProfs.length}
+      useConfigureButton={false}
     >
       {#snippet customIcon()}
         <svg x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve">
@@ -239,10 +274,33 @@
       })}
       onConfigureClicked={() => FoundryAdapter.renderToolsConfig(context.actor)}
       show={traitsExpanded || !!tools.length}
+      useConfigureButton={true}
     >
       {#if tools.length}
         <TraitSectionTools {tools} />
       {/if}
+    </TraitSection>
+  {/if}
+
+  {#if context.isNPC}
+    <TraitSection
+      title={localize('DND5E.Treasure.Configuration.Label')}
+      iconCssClass="fa-solid fa-gem"
+      configureButtonTitle={localize('DND5E.Treasure.Configuration.Title')}
+      onConfigureClicked={() =>
+        new dnd5e.applications.actor.TreasureConfig({
+          document: context.actor,
+        }).render({ force: true })}
+      show={traitsExpanded || !!context.treasure}
+      useConfigureButton={true}
+    >
+      <ul class="trait-list">
+        {#each context.treasure as { label }}
+          <li class="trait-tag">
+            {label}
+          </li>
+        {/each}
+      </ul>
     </TraitSection>
   {/if}
 
@@ -271,6 +329,7 @@
           }
         }}
         show={trait.alwaysShow || traitsExpanded}
+        useConfigureButton={!!trait.openConfiguration}
       />
     {/each}
   {/if}
@@ -369,6 +428,26 @@
     .configure-special-traits i.fas {
       line-height: 0.625rem;
       vertical-align: baseline;
+    }
+
+    :global(.counter .trait-label-and-list) {
+      display: flex;
+      align-items: end;
+    }
+
+    :global(.counter .trait-label) {
+      flex: 1;
+    }
+
+    :global(.counter .hit-dice-counter) {
+      flex: 0;
+      margin-inline-start: auto;
+      margin-inline-end: 0.25rem;
+      font-size: 0.75rem;
+    }
+
+    .text-secondary {
+      color: var(--t5e-tertiary-color);
     }
   }
 </style>

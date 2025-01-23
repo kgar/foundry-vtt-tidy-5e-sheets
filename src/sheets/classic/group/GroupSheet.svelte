@@ -101,12 +101,12 @@
               saveEmptyAsNull={true}
             />
             <span class="fs-sm semibold"
-              >{localize('DND5E.ExperiencePointsAbbr')}</span
+              >{localize('DND5E.ExperiencePoints.Abbreviation')}</span
             >
           </div>
         {:else}
           <strong class="fs-sm semibold">
-            {localize('DND5E.ExperiencePointsFormat', {
+            {localize('DND5E.ExperiencePoints.Format', {
               value:
                 context.system.details.xp.value ??
                 context.system.details.xp.derived ??
@@ -144,7 +144,7 @@
           tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fa-solid fa-utensils"></i>
-          {localize('DND5E.ShortRest')}
+          {localize('DND5E.REST.Short.Label')}
         </button>
         <button
           type="button"
@@ -153,7 +153,7 @@
           tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fa-solid fa-campground"></i>
-          {localize('DND5E.LongRest')}
+          {localize('DND5E.REST.Long.Label')}
         </button>
       </div>
     {/if}
