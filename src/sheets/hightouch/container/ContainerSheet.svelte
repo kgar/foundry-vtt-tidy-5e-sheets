@@ -289,7 +289,7 @@
     <div class="pills stacked">
       <a
         title={localize('TIDY5E.Section.SectionSelectorChooseSectionTooltip')}
-        class="pill wrapped no-row-gap"
+        class="pill interactive wrapped no-row-gap"
         class:disabled={!context.editable}
         onclick={() =>
           new SectionSelectorApplication(
@@ -306,7 +306,7 @@
         </span>
       </a>
       <a
-        class="pill wrapped no-row-gap"
+        class="pill interactive wrapped no-row-gap"
         class:disabled={!context.editable}
         title={localize(
           'TIDY5E.Section.SectionSelectorChooseActionSectionTooltip',
