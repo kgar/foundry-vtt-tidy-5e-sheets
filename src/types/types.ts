@@ -422,6 +422,7 @@ export type NpcSheetContext = {
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
   traitEnrichedHtml: string;
+  treasure?: { label: string }[];
   utilities: Utilities<NpcSheetContext>;
 } & ActorSheetContextV1;
 

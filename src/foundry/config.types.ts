@@ -34,6 +34,10 @@ interface VolumeUnitConfig {
   type: string;
 }
 
+interface TreasureConfig {
+  label: string;
+}
+
 export type CONFIG = {
   debug: {
     applications: boolean;
@@ -5600,6 +5604,14 @@ export type CONFIG = {
         woodcarver: string;
       };
     };
+    treasure: {
+      any: TreasureConfig;
+      arcana: TreasureConfig;
+      armaments: TreasureConfig;
+      implements: TreasureConfig;
+      individual: TreasureConfig;
+      relics: TreasureConfig;
+    } & Record<string, TreasureConfig>;
     volumeUnits: {
       cubicFoot: VolumeUnitConfig;
       liter: VolumeUnitConfig;

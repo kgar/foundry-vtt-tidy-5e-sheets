@@ -816,17 +816,35 @@ export class Tidy5eNpcSheet
         ) ?? [],
     };
 
+    // Legendary Panel
     context.hasLegendaries =
       this.actor.system.resources.legact.max ||
       this.actor.system.resources.legres.max ||
       (context.modernRules && this.actor.system.resources.lair.value) ||
       (!context.modernRules && this.actor.system.resources.lair.initiative);
 
+    // Container Contents Panel
     for (const panelItem of context.containerPanelItems) {
       const ctx = context.itemContext[panelItem.container.id];
       ctx.containerContents = await Container.getContainerContents(
         panelItem.container
       );
+    }
+
+    // Treasure
+    let details = this.actor.system.details;
+    if (details?.treasure?.value.size) {
+      const any = details.treasure.value.has(CONSTANTS.TREASURE_ANY);
+      context.treasure = details.treasure.value
+        .reduce((arr: { label: string }[], id: string) => {
+          const { label } = CONFIG.DND5E.treasure[id] ?? {};
+          if (label && (!any || id === CONSTANTS.TREASURE_ANY))
+            arr.push({ label });
+          return arr;
+        }, [])
+        .toSorted((a: { label: string }, b: { label: string }) =>
+          a.label.localeCompare(b.label, game.i18n.lang)
+        );
     }
 
     let tabs = await NpcSheetRuntime.getTabs(context);

@@ -270,6 +270,28 @@
     </TraitSection>
   {/if}
 
+  {#if context.isNPC}
+    <TraitSection
+      title={localize('DND5E.Treasure.Configuration.Label')}
+      iconCssClass="fa-solid fa-gem"
+      configureButtonTitle={localize('DND5E.Treasure.Configuration.Title')}
+      onConfigureClicked={() =>
+        new dnd5e.applications.actor.TreasureConfig({
+          document: context.actor,
+        }).render(true)}
+      show={traitsExpanded || !!context.treasure}
+      useConfigureButton={true}
+    >
+      <ul class="trait-list">
+        {#each context.treasure as { label }}
+          <li class="trait-tag">
+            {label}
+          </li>
+        {/each}
+      </ul>
+    </TraitSection>
+  {/if}
+
   {#if context.customActorTraits?.length}
     {#each context.customActorTraits as trait}
       <TraitSection

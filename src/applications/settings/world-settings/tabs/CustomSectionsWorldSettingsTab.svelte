@@ -90,7 +90,7 @@
     }
 
     return mappedTabs.sort((left, right) =>
-      left.title.localeCompare(right.title),
+      left.title.localeCompare(right.title, game.i18n.lang),
     );
   }
 

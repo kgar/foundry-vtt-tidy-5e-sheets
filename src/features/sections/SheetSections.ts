@@ -535,7 +535,7 @@ export class SheetSections {
 
     return Array.from<string>(sectionSet)
       .filter((x) => !isNil(x, ''))
-      .toSorted((left, right) => left.localeCompare(right));
+      .toSorted((left, right) => left.localeCompare(right, game.i18n.lang));
   }
 
   static getFilteredGlobalSectionsToShowWhenEmpty(
