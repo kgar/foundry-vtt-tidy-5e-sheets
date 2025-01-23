@@ -38,6 +38,10 @@ interface TreasureConfig {
   label: string;
 }
 
+interface CommunicationTypeConfig {
+  label: string;
+}
+
 export type CONFIG = {
   debug: {
     applications: boolean;
@@ -2525,6 +2529,9 @@ export type CONFIG = {
       cha: Dnd5eAbility;
     } & Record<string, Dnd5eAbility>;
     areaTargetOptions: GroupableSelectOption[];
+    communicationTypes: {
+      telepathy: CommunicationTypeConfig;
+    } & Record<string, CommunicationTypeConfig>;
     defaultAbilities: {
       meleeAttack: string;
       rangedAttack: string;

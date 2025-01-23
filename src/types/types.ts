@@ -272,6 +272,11 @@ export type FavoriteSection =
       type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_GENERIC;
     });
 
+export type LanguageTraitContext = {
+  label: string;
+  value?: unknown;
+};
+
 export type CharacterSheetContext = {
   actorClassesToImages: Record<string, string>;
   allowMaxHpOverride: boolean;
@@ -314,6 +319,7 @@ export type CharacterSheetContext = {
   idealEnrichedHtml: string;
   inventory: InventorySection[];
   itemContext: Record<string, CharacterItemContext>;
+  languages: LanguageTraitContext[];
   maxPreparedSpellsTotal: number;
   notes1EnrichedHtml: string;
   notes2EnrichedHtml: string;
@@ -406,6 +412,7 @@ export type NpcSheetContext = {
   idealEnrichedHtml: string;
   inventory: InventorySection[];
   itemContext: Record<string, NpcItemContext>;
+  languages: LanguageTraitContext[];
   notes1EnrichedHtml: string;
   notes2EnrichedHtml: string;
   notes3EnrichedHtml: string;

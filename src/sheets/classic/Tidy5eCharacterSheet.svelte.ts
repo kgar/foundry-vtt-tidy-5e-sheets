@@ -1786,6 +1786,8 @@ export class Tidy5eCharacterSheet
       }
     }
 
+    FoundryAdapter.prepareLanguageTrait(this.actor, traits);
+
     return traits;
   }
 

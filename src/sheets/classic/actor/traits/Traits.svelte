@@ -9,6 +9,7 @@
   import TraitSectionModifications from './TraitSectionModifications.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { isNil } from 'src/utils/data';
 
   let context = $derived(getSheetContext<ActorSheetContextV1>());
   interface Props {
@@ -76,21 +77,32 @@
     </TraitSection>
   {/if}
 
-  {#if context.traits?.traits?.languages}
-    {@const languages = getTags(context.traits?.traits?.languages?.selected)}
+  {#if context.traits?.languages}
     <TraitSection
-      traitCssClass={context.traits?.traits?.languages?.cssClass ?? ''}
+      traitCssClass={context.traits?.languages?.cssClass ?? ''}
       title={localize('DND5E.Languages')}
       iconCssClass="fas fa-comment"
       configureButtonTitle={localize('DND5e.TraitConfig', {
         trait: localize('DND5E.Languages'),
       })}
       onConfigureClicked={() =>
-        FoundryAdapter.renderTraitsConfig(context.actor, 'languages')}
-      show={traitsExpanded || !!languages.length}
+        new dnd5e.applications.actor.LanguagesConfig({
+          document: context.actor,
+        }).render({ force: true })}
+      show={traitsExpanded || !!context.traits.languages.length}
       useConfigureButton={true}
     >
-      <TraitSectionTags tags={languages} />
+      <ul class="trait-list">
+        {#each context.traits.languages as { label, value }}
+          <li class="trait-tag">
+            {label}
+            {#if !isNil(value)}
+              <span class="text-secondary">|</span>
+              {value}
+            {/if}
+          </li>
+        {/each}
+      </ul>
     </TraitSection>
   {/if}
 
@@ -278,7 +290,7 @@
       onConfigureClicked={() =>
         new dnd5e.applications.actor.TreasureConfig({
           document: context.actor,
-        }).render(true)}
+        }).render({ force: true })}
       show={traitsExpanded || !!context.treasure}
       useConfigureButton={true}
     >
@@ -432,6 +444,10 @@
       margin-inline-start: auto;
       margin-inline-end: 0.25rem;
       font-size: 0.75rem;
+    }
+
+    .text-secondary {
+      color: var(--t5e-tertiary-color);
     }
   }
 </style>

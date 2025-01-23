@@ -1447,4 +1447,23 @@ export const FoundryAdapter = {
       ? document.system.source?.rules === '2024'
       : game.settings.get('dnd5e', 'rulesVersion') === 'modern';
   },
+  prepareLanguageTrait(actor: any, traits: any) {
+    const languages = actor.system.traits?.languages?.labels;
+    if (languages?.languages?.length)
+      traits.languages = languages.languages.map((label: string) => ({
+        label,
+      }));
+    for (const [key, { label }] of Object.entries(
+      CONFIG.DND5E.communicationTypes
+    )) {
+      const data = actor.system.traits?.languages?.communication?.[key];
+      if (!data?.value) continue;
+      let value = data.value;
+      if (data.units) {
+        value += ` ${data.units}`;
+      }
+      traits.languages ??= [];
+      traits.languages.push({ label, value: value });
+    }
+  },
 };

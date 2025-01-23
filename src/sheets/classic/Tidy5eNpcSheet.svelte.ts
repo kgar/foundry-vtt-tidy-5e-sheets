@@ -1085,6 +1085,12 @@ export class Tidy5eNpcSheet
     }
   }
 
+  _prepareTraits(systemData: any) {
+    const traits = super._prepareTraits(systemData);
+    FoundryAdapter.prepareLanguageTrait(this.actor, traits);
+    return traits;
+  }
+
   onToggleAbilityProficiency(event: Event) {
     return this._onToggleAbilityProficiency(event);
   }
