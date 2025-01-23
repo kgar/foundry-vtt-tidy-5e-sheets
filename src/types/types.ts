@@ -401,6 +401,7 @@ export type NpcSheetContext = {
   encumbrance: any;
   features: NpcAbilitySection[];
   flawEnrichedHtml: string;
+  hasLegendaries: boolean;
   hideEmptySpellbook: boolean;
   idealEnrichedHtml: string;
   inventory: InventorySection[];

@@ -849,6 +849,12 @@ export class Tidy5eNpcSheet
         ) ?? [],
     };
 
+    context.hasLegendaries =
+      this.actor.system.resources.legact.max ||
+      this.actor.system.resources.legres.max ||
+      (context.modernRules && this.actor.system.resources.lair.value) ||
+      (!context.modernRules && this.actor.system.resources.lair.initiative);
+
     for (const panelItem of context.containerPanelItems) {
       const ctx = context.itemContext[panelItem.container.id];
       ctx.containerContents = await Container.getContainerContents(
