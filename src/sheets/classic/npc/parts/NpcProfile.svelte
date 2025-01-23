@@ -36,7 +36,7 @@
 </script>
 
 <ActorProfile useHpOverlay={settings.value.useHpOverlayNpc}>
-  {#if incapacitated && context.owner}
+  {#if incapacitated && context.owner && context.system.traits.important}
     <DeathSaves hasHpOverlay={settings.value.useHpOverlayNpc} />
   {/if}
   {#if settings.value.useExhaustion && settings.value.exhaustionConfig.type === 'specific'}
