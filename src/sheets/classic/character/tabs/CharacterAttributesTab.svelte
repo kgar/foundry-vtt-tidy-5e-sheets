@@ -79,7 +79,7 @@
         toggleField={TidyFlags.skillsExpanded.prop}
       />
       {#if !settings.value.moveTraitsBelowCharacterResources}
-        <Traits toggleable={settings.value.toggleEmptyCharacterTraits} />
+        <Traits />
       {/if}
     </section>
     <section class="main-panel">
@@ -87,7 +87,7 @@
         <Resources />
       {/if}
       {#if settings.value.moveTraitsBelowCharacterResources}
-        <Traits toggleable={settings.value.toggleEmptyCharacterTraits} />
+        <Traits />
       {/if}
       <Favorites {favorites} {searchCriteria} />
     </section>

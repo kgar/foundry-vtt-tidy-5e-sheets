@@ -51,8 +51,6 @@
     "TIDY5E.RemoveFavorite": "從收藏中移除",
     "TIDY5E.ShowNotProficientSkills": "",
     "TIDY5E.HideNotProficientSkills": "",
-    "TIDY5E.ShowEmptyTraits": "",
-    "TIDY5E.HideEmptyTraits": "",
     "TIDY5E.Abilities": "屬性",
     "TIDY5E.Environment": "環境",
     "TIDY5E.Search": "",
@@ -175,19 +173,11 @@
         "name": "",
         "hint": ""
     },
-    "TIDY5E.Settings.ToggleEmptyCharacterTraits": {
-        "name": "",
-        "hint": ""
-    },
     "TIDY5E.Settings.MoveTraitsBelowResources": {
         "name": "",
         "hint": ""
     },
     "TIDY5E.Settings.ShowEquippedAmmoOnly": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.AlwaysShowTraits": {
         "name": "",
         "hint": ""
     },

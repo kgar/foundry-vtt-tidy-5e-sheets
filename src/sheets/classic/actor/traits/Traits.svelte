@@ -3,38 +3,19 @@
   import type { ActorSheetContextV1 } from 'src/types/types';
   import TraitSection from './TraitSection.svelte';
   import TraitSectionTools from './TraitSectionTools.svelte';
-  import { settings } from 'src/settings/settings.svelte';
   import { error } from 'src/utils/logging';
   import TraitSectionTags from './TraitSectionTags.svelte';
   import TraitSectionModifications from './TraitSectionModifications.svelte';
-  import { TidyFlags } from 'src/foundry/TidyFlags';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import { isNil } from 'src/utils/data';
 
   let context = $derived(getSheetContext<ActorSheetContextV1>());
   interface Props {
-    toggleable: boolean;
     useSenses?: boolean;
     enableSpecialTraitsConfiguration?: boolean;
   }
 
-  let {
-    toggleable,
-    useSenses = true,
-    enableSpecialTraitsConfiguration = true,
-  }: Props = $props();
-
-  let traitsExpanded = $derived(
-    !toggleable || TidyFlags.traitsExpanded.get(context.actor) === true,
-  );
-
-  function toggleTraitsExpanded() {
-    if (traitsExpanded) {
-      TidyFlags.traitsExpanded.unset(context.actor);
-    } else {
-      TidyFlags.traitsExpanded.set(context.actor, true);
-    }
-  }
+  let { useSenses = true }: Props = $props();
 
   // TODO: When Tidy takes over all data prep, give typings to tags
   function getTags(obj: any): [key: string, value: string][] {
@@ -44,10 +25,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div
-  class="traits"
-  class:expanded={TidyFlags.traitsExpanded.get(context.actor)}
->
+<div class="traits">
   {#if context.actor.system.traits.important}
     <TraitSection
       title={localize('DND5E.HitDice')}
@@ -81,8 +59,8 @@
       configureButtonTitle={localize('DND5E.SensesConfig')}
       onConfigureClicked={() =>
         FoundryAdapter.renderMovementSensesConfig(context.actor, 'senses')}
-      show={traitsExpanded || !!senses.length}
-      useConfigureButton={true}
+      show={context.unlocked || !!senses.length}
+      useConfigureButton={context.editable}
     >
       <TraitSectionTags tags={senses} />
     </TraitSection>
@@ -100,8 +78,8 @@
         new dnd5e.applications.actor.LanguagesConfig({
           document: context.actor,
         }).render({ force: true })}
-      show={traitsExpanded || !!context.traits.languages.length}
-      useConfigureButton={true}
+      show={context.unlocked || !!context.traits.languages.length}
+      useConfigureButton={context.editable}
     >
       <ul class="trait-list">
         {#each context.traits.languages as { label, value }}
@@ -128,8 +106,8 @@
       })}
       onConfigureClicked={() =>
         FoundryAdapter.openDamagesConfig(context.actor, 'di')}
-      show={traitsExpanded || !!damageImmunities.length}
-      useConfigureButton={true}
+      show={context.unlocked || !!damageImmunities.length}
+      useConfigureButton={context.editable}
     >
       <TraitSectionTags tags={damageImmunities} />
     </TraitSection>
@@ -146,8 +124,8 @@
       })}
       onConfigureClicked={() =>
         FoundryAdapter.openDamagesConfig(context.actor, 'dr')}
-      show={traitsExpanded || !!damageResistances.length}
-      useConfigureButton={true}
+      show={context.unlocked || !!damageResistances.length}
+      useConfigureButton={context.editable}
     >
       <TraitSectionTags tags={damageResistances} />
     </TraitSection>
@@ -164,8 +142,8 @@
       })}
       onConfigureClicked={() =>
         FoundryAdapter.openDamagesConfig(context.actor, 'dv')}
-      show={traitsExpanded || !!vulnerabilities.length}
-      useConfigureButton={true}
+      show={context.unlocked || !!vulnerabilities.length}
+      useConfigureButton={context.editable}
     >
       <TraitSectionTags tags={vulnerabilities} />
     </TraitSection>
@@ -180,8 +158,8 @@
       })}
       onConfigureClicked={() =>
         FoundryAdapter.openDamagesConfig(context.actor, 'dm')}
-      show={traitsExpanded || !!context.traits.traits.dm.length}
-      useConfigureButton={true}
+      show={context.unlocked || !!context.traits.traits.dm.length}
+      useConfigureButton={context.editable}
     >
       <TraitSectionModifications modifications={context.traits.traits?.dm} />
     </TraitSection>
@@ -198,8 +176,8 @@
       })}
       onConfigureClicked={() =>
         FoundryAdapter.renderTraitsConfig(context.actor, 'ci')}
-      show={traitsExpanded || !!conditionImmunities.length}
-      useConfigureButton={true}
+      show={context.unlocked || !!conditionImmunities.length}
+      useConfigureButton={context.editable}
     >
       <TraitSectionTags tags={conditionImmunities} />
     </TraitSection>
@@ -215,8 +193,8 @@
       })}
       onConfigureClicked={() =>
         FoundryAdapter.renderWeaponsConfig(context.actor)}
-      show={traitsExpanded || !!weaponProfs.length}
-      useConfigureButton={true}
+      show={context.unlocked || !!weaponProfs.length}
+      useConfigureButton={context.editable}
     >
       {#snippet customIcon()}
         <svg x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve">
@@ -255,8 +233,8 @@
       })}
       onConfigureClicked={() =>
         FoundryAdapter.renderTraitsConfig(context.actor, 'armor')}
-      show={traitsExpanded || !!armorProfs.length}
-      useConfigureButton={false}
+      show={context.unlocked || !!armorProfs.length}
+      useConfigureButton={context.editable}
     >
       {#snippet customIcon()}
         <svg x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve">
@@ -284,8 +262,8 @@
         trait: localize('DND5E.TraitToolProf'),
       })}
       onConfigureClicked={() => FoundryAdapter.renderToolsConfig(context.actor)}
-      show={traitsExpanded || !!tools.length}
-      useConfigureButton={true}
+      show={context.unlocked || !!tools.length}
+      useConfigureButton={context.editable}
     >
       {#if tools.length}
         <TraitSectionTools {tools} />
@@ -302,8 +280,8 @@
         new dnd5e.applications.actor.TreasureConfig({
           document: context.actor,
         }).render({ force: true })}
-      show={traitsExpanded || !!context.treasure}
-      useConfigureButton={true}
+      show={context.unlocked || !!context.treasure}
+      useConfigureButton={context.editable}
     >
       <ul class="trait-list">
         {#each context.treasure as { label }}
@@ -339,45 +317,10 @@
             );
           }
         }}
-        show={trait.alwaysShow || traitsExpanded}
+        show={trait.alwaysShow || context.unlocked}
         useConfigureButton={!!trait.openConfiguration}
       />
     {/each}
-  {/if}
-
-  {#if toggleable}
-    <a
-      class="toggle-traits"
-      class:no-pointer-events={!context.editable}
-      onclick={(event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        toggleTraitsExpanded();
-      }}
-    >
-      {#if traitsExpanded}
-        {localize('TIDY5E.HideEmptyTraits')}
-      {:else}
-        {localize('TIDY5E.ShowEmptyTraits')}
-      {/if}
-    </a>
-  {/if}
-  {#if enableSpecialTraitsConfiguration && !context.lockSensitiveFields}
-    <a
-      class="configure-special-traits"
-      class:no-pointer-events={!context.editable}
-      title={localize('DND5E.TraitConfig', {
-        trait: localize('DND5E.SpecialTraits'),
-      })}
-      onclick={(event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        FoundryAdapter.renderActorSheetFlags(context.actor);
-      }}
-      tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
-    >
-      <i class="fas fa-star"></i>
-    </a>
   {/if}
 </div>
 

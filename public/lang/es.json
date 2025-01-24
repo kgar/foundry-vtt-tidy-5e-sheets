@@ -47,8 +47,6 @@
     "TIDY5E.RemoveFavorite": "Eliminar Favorito",
     "TIDY5E.ShowNotProficientSkills": "Mostrar no competente",
     "TIDY5E.HideNotProficientSkills": "Ocultar no competente",
-    "TIDY5E.ShowEmptyTraits": "Mostrar/editar elementos vacíos",
-    "TIDY5E.HideEmptyTraits": "Ocultar elementos vacíos",
     "TIDY5E.Abilities": "Características",
     "TIDY5E.Environment": "Entorno",
     "TIDY5E.Search": "Buscar",
@@ -187,10 +185,6 @@
         "name": "Utilizar superposición de salud",
         "hint": "Muestra una superposición de PS de colores."
     },
-    "TIDY5E.Settings.ToggleEmptyCharacterTraits": {
-        "name": "Alternar rasgos de personaje vacíos",
-        "hint": "Por defecto los rasgos vacíos siempre están visibles. Actívalo para añadir un botón de activación."
-    },
     "TIDY5E.Settings.MoveTraitsBelowResources": {
         "name": "Mover los rasgos debajo de los recursos",
         "hint": "Permite mover los rasgos de la parte izquierda debajo de los recursos."
@@ -198,10 +192,6 @@
     "TIDY5E.Settings.ShowEquippedAmmoOnly": {
         "name": "Mostrar solo munición equipada",
         "hint": "Muestra solo la munición equipada actualmente en el selector de munición del arma."
-    },
-    "TIDY5E.Settings.AlwaysShowTraits": {
-        "name": "Mostrar siempre los rasgos",
-        "hint": "Por defecto, los rasgos vacíos se ocultan mediante un botón de activación. Actívalo para no ocultarlos nunca."
     },
     "TIDY5E.Settings.AlwaysShowSkills": {
         "name": "Mostrar siempre las habilidades",

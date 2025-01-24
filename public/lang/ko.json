@@ -76,8 +76,6 @@
     "TIDY5E.RemoveFavorite": "줄겨찾기에서 삭제",
     "TIDY5E.ShowNotProficientSkills": "비숙련 항목 표시",
     "TIDY5E.HideNotProficientSkills": "비숙련 항목 숨기기",
-    "TIDY5E.ShowEmptyTraits": "빈 특징 표시/편집",
-    "TIDY5E.HideEmptyTraits": "빈 특징 숨기기",
     "TIDY5E.Abilities": "능력치",
     "TIDY5E.Environment": "환경",
     "TIDY5E.EnvironmentTooltip": "환경: {environment}",
@@ -311,10 +309,6 @@
         "name": "빈 캐릭터 기술 전환 버튼",
         "hint": "비어있는 기술을 표시/숨기기 하는 전환 버튼을 추가합니다."
     },
-    "TIDY5E.Settings.ToggleEmptyCharacterTraits": {
-        "name": "캐릭터 특성 전환 버튼 보이기",
-        "hint": "기본적으로 빈 특성이 항상 표시되며, 전환 버튼을 추가할 수 있습니다."
-    },
     "TIDY5E.Settings.MoveTraitsBelowResources": {
         "name": "특징을 자원 아래로 이동.",
         "hint": "캐릭터 자원 아래에 특징을 표시합니다."
@@ -322,10 +316,6 @@
     "TIDY5E.Settings.ShowEquippedAmmoOnly": {
         "name": "장비된 탄약만 표시.",
         "hint": "무기 탄약 선택기에서 현재 장비된 탄약만이 표시됩니다."
-    },
-    "TIDY5E.Settings.AlwaysShowTraits": {
-        "name": "항상 특징 보이기.",
-        "hint": "빈 특징에 대한 표시 여부 전환 버튼을 제거하고 모두 표시합니다."
     },
     "TIDY5E.Settings.AlwaysShowSkills": {
         "name": "항상 기술 보이기.",

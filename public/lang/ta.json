@@ -371,12 +371,10 @@
     "TIDY5E.LayoutNotSupported": "தளவமைப்பு பயன்முறை ஆதரிக்கப்படவில்லை",
     "TIDY5E.Encumbrance": "இடையூறு",
     "TIDY5E.AddFavorite": "பிடித்ததைச் சேர்க்கவும்",
-    "TIDY5E.ShowEmptyTraits": "வெற்று பண்புகளைக் காட்டவும்/திருத்தவும்",
     "TIDY5E.Favorite": "பிடித்த",
     "TIDY5E.RemoveFavorite": "பிடித்ததை அகற்று",
     "TIDY5E.ShowNotProficientSkills": "திறமையானதைக் காட்டு",
     "TIDY5E.HideNotProficientSkills": "திறமையானவர் அல்ல",
-    "TIDY5E.HideEmptyTraits": "வெற்று பண்புகளை மறைக்கவும்",
     "TIDY5E.Environment": "சூழல்",
     "TIDY5E.EnvironmentTooltip": "சூழல்: {environment}",
     "TIDY5E.Search": "தேடல்",
@@ -523,10 +521,6 @@
         "name": "சுகாதார மேலடுக்கைப் பயன்படுத்துங்கள்",
         "hint": "வண்ண எச்பி மேலடுக்கைக் காட்டுகிறது."
     },
-    "TIDY5E.Settings.ToggleEmptyCharacterTraits": {
-        "name": "வெற்று தன்மை பண்புகளை மாற்றவும்",
-        "hint": "வெற்று பண்புகளைக் காட்ட/மறைக்க ஒரு மாற்று பொத்தானைச் சேர்க்கிறது."
-    },
     "TIDY5E.Settings.MoveTraitsBelowResources": {
         "name": "வளங்களுக்குக் கீழே பண்புகளை நகர்த்தவும்",
         "hint": "எழுத்து வளங்களுக்குக் கீழே உள்ள பண்புகளை நிலைநிறுத்துகிறது."
@@ -534,10 +528,6 @@
     "TIDY5E.Settings.ShowEquippedAmmoOnly": {
         "name": "பொருத்தப்பட்ட வெடிமருந்துகளை மட்டுமே காட்டு",
         "hint": "தற்போது ஆயுத அம்மோ தேர்வாளரில் வெடிமருந்துகளை மட்டுமே காட்டுகிறது."
-    },
-    "TIDY5E.Settings.AlwaysShowTraits": {
-        "name": "எப்போதும் பண்புகளைக் காட்டுங்கள்",
-        "hint": "வெற்று பண்புகளுக்கான தெரிவுநிலை மாற்று பொத்தானை அகற்றி அனைத்தையும் காட்டுகிறது."
     },
     "TIDY5E.Settings.AlwaysShowSkills": {
         "name": "எப்போதும் திறன்களைக் காட்டுங்கள்",

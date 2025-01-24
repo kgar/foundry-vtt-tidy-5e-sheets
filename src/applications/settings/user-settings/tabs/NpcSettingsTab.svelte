@@ -37,13 +37,6 @@
 />
 
 <CheckboxSetting
-  bind:value={context.settings.alwaysShowNpcTraits}
-  name={SettingsProvider.settings.alwaysShowNpcTraits.options.name}
-  hint={SettingsProvider.settings.alwaysShowNpcTraits.options.hint}
-  id="alwaysShowNpcTraits"
-/>
-
-<CheckboxSetting
   bind:value={context.settings.moveTraitsBelowNpcResources}
   name={SettingsProvider.settings.moveTraitsBelowNpcResources.options.name}
   hint={SettingsProvider.settings.moveTraitsBelowNpcResources.options.hint}

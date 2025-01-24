@@ -96,8 +96,6 @@
 
   "TIDY5E.ShowNotProficientSkills": "Show Not Proficient",
   "TIDY5E.HideNotProficientSkills": "Hide Not Proficient",
-  "TIDY5E.ShowEmptyTraits": "Show/Edit Empty Traits",
-  "TIDY5E.HideEmptyTraits": "Hide Empty Traits",
 
   "TIDY5E.Abilities": "Abilities",
 
@@ -366,10 +364,6 @@
     "name": "Toggle Empty Character Skills",
     "hint": "Adds a toggle button for showing/hiding empty skills."
   },
-  "TIDY5E.Settings.ToggleEmptyCharacterTraits": {
-    "name": "Toggle Empty Character Traits",
-    "hint": "Adds a toggle button for showing/hiding empty traits."
-  },
   "TIDY5E.Settings.MoveTraitsBelowResources": {
     "name": "Move Traits Below Resources",
     "hint": "Positions traits below character resources."
@@ -377,10 +371,6 @@
   "TIDY5E.Settings.ShowEquippedAmmoOnly": {
     "name": "Show Equipped Ammunition Only",
     "hint": "Shows only currently equipped ammunition in the weapon ammo selector."
-  },
-  "TIDY5E.Settings.AlwaysShowTraits": {
-    "name": "Always Show Traits",
-    "hint": "Removes the visibility toggle button for empty traits and shows all."
   },
   "TIDY5E.Settings.AlwaysShowSkills": {
     "name": "Always Show Skills",

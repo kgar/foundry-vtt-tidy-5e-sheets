@@ -11,6 +11,7 @@
   interface Props {
     title: string;
     configureButtonTitle?: string;
+    configureButtonAction?: string;
     useConfigureButton: boolean;
     iconCssClass?: string | undefined;
     traitCssClass?: string | undefined;
@@ -23,6 +24,7 @@
   let {
     title,
     configureButtonTitle,
+    configureButtonAction,
     useConfigureButton,
     iconCssClass = undefined,
     traitCssClass = '',
@@ -58,6 +60,7 @@
         type="button"
         class="trait-editor inline-icon-button flex-row align-items-flex-start justify-content-center"
         title={configureButtonTitle}
+        data-action={configureButtonAction}
         onclick={(event) => {
           event.preventDefault();
           event.stopPropagation();

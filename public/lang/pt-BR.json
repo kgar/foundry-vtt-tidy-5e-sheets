@@ -74,8 +74,6 @@
     "TIDY5E.RemoveFavorite": "Remover dos Favoritos",
     "TIDY5E.ShowNotProficientSkills": "Mostrar Não-Proficiente",
     "TIDY5E.HideNotProficientSkills": "Ocultar Não-Proficiente",
-    "TIDY5E.ShowEmptyTraits": "Mostrar/Editar Traços Vazios",
-    "TIDY5E.HideEmptyTraits": "Ocultar Traços Vazios",
     "TIDY5E.Abilities": "Atributos",
     "TIDY5E.Environment": "Ambiente",
     "TIDY5E.EnvironmentTooltip": "Ambiente: {environment}",
@@ -305,10 +303,6 @@
         "name": "Alternar Perícias Vazias de Personagem",
         "hint": "Adiciona um botão de alternância para mostrar/ocultar perícias vazias."
     },
-    "TIDY5E.Settings.ToggleEmptyCharacterTraits": {
-        "name": "Alternar Traços Vazios de Personagem",
-        "hint": "Adiciona um botão de alternância para mostrar/ocultar traços vazios."
-    },
     "TIDY5E.Settings.MoveTraitsBelowResources": {
         "name": "Mover Traços Abaixo de Recursos",
         "hint": "Posiciona os traços abaixo dos recursos de personagem."
@@ -316,10 +310,6 @@
     "TIDY5E.Settings.ShowEquippedAmmoOnly": {
         "name": "Mostrar Apenas Munição Equipada",
         "hint": "Mostra apenas a munição equipada no seletor de munição da arma."
-    },
-    "TIDY5E.Settings.AlwaysShowTraits": {
-        "name": "Sempre Mostrar Traços",
-        "hint": "Remove o botão de alternância de traços vazios e exibe todos."
     },
     "TIDY5E.Settings.AlwaysShowSkills": {
         "name": "Sempre Mostrar Perícias",

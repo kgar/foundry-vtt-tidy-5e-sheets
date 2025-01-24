@@ -191,7 +191,7 @@
       toggleField={TidyFlags.skillsExpanded.prop}
     />
     {#if !settings.value.moveTraitsBelowNpcResources}
-      <Traits toggleable={!settings.value.alwaysShowNpcTraits} />
+      <Traits />
     {/if}
   </div>
   <div
@@ -202,7 +202,7 @@
       <NpcLegendaryActions />
     {/if}
     {#if settings.value.moveTraitsBelowNpcResources}
-      <Traits toggleable={!settings.value.alwaysShowNpcTraits} />
+      <Traits />
     {/if}
     {#each features as section (section.key)}
       {#if section.show}
