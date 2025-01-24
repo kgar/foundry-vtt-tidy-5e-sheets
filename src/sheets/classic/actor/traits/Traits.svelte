@@ -62,6 +62,17 @@
       </span>
     </TraitSection>
   {/if}
+  {#if context.system.attributes?.death && (context.isCharacter || context.actor.system.traits.important)}
+    <TraitSection
+      title={localize('DND5E.DeathSave')}
+      iconCssClass="fa-solid fa-skull"
+      show={context.unlocked}
+      useConfigureButton={context.editable}
+      configureButtonAction="death"
+      configureButtonTitle={localize('DND5E.DeathSaveConfigure')}
+      onConfigureClicked={(event) => context.actor.sheet._onConfigMenu(event)}
+    />
+  {/if}
   {#if useSenses && context.senses}
     {@const senses = getTags(context.senses)}
     <TraitSection
