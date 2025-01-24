@@ -62,7 +62,7 @@
       >{localize('DND5E.FEATURE.FIELDS.cover.label')}</label
     >
     <Select
-      id="{appId}-type-subtype"
+      id="{appId}-cover"
       document={context.item}
       field="system.cover"
       value={context.source.cover}
