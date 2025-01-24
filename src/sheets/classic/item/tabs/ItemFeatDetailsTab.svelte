@@ -8,6 +8,7 @@
   import FieldUses from '../parts/FieldUses.svelte';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
   import { CONSTANTS } from 'src/constants';
+  import Checkbox from 'src/components/inputs/Checkbox.svelte';
 
   let context = $derived(getItemSheetContext());
 
@@ -96,6 +97,23 @@
 
   <p class="hint">
     {localize('DND5E.Prerequisites.FIELDS.prerequisites.level.hint')}
+  </p>
+</div>
+
+<div class="form-group">
+  <label id="prerequisites-repeatable-{appId}">
+    {localize('DND5E.Prerequisites.FIELDS.prerequisites.repeatable.label')}
+  </label>
+  <div class="form-fields">
+    <Checkbox
+      id="prerequisites-repeatable-{appId}"
+      document={context.item}
+      field="system.prerequisites.repeatable"
+      checked={context.source.prerequisites.repeatable}
+    />
+  </div>
+  <p class="hint">
+    {localize('DND5E.Prerequisites.FIELDS.prerequisites.repeatable.hint')}
   </p>
 </div>
 
