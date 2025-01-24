@@ -7,6 +7,7 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import FieldUses from '../parts/FieldUses.svelte';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { CONSTANTS } from 'src/constants';
 
   let context = $derived(getItemSheetContext());
 
@@ -52,6 +53,31 @@
     >
       <SelectOptions data={context.itemSubtypes} blank="" />
     </Select>
+  </div>
+{/if}
+
+{#if context.system.type.value === CONSTANTS.FEAT_TYPE_VEHICLE}
+  <div class="form-group">
+    <label for="{appId}-cover"
+      >{localize('DND5E.FEATURE.FIELDS.cover.label')}</label
+    >
+    <Select
+      id="{appId}-type-subtype"
+      document={context.item}
+      field="system.cover"
+      value={context.source.cover}
+      disabled={!context.editable}
+    >
+      <SelectOptions
+        data={context.coverOptions}
+        labelProp="label"
+        valueProp="value"
+        blank=""
+      />
+    </Select>
+    <p class="hint">
+      {localize('DND5E.FEATURE.FIELDS.cover.hint')}
+    </p>
   </div>
 {/if}
 
