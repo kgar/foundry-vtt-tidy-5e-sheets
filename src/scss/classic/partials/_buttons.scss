@@ -146,3 +146,21 @@
 .pill-button {
   @include pill-button-base();
 }
+
+.sheet-header-button {
+  background: var(--t5e-faint-color);
+  align-self: stretch;
+  align-content: center;
+  min-width: 1.25rem;
+  line-height: initial;
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.1875rem;
+
+  color: var(--t5e-secondary-color);
+
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: var(--t5e-icon-hover-color);
+  }
+}
