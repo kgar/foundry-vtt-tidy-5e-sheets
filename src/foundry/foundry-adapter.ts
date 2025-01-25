@@ -1449,6 +1449,8 @@ export const FoundryAdapter = {
   },
   prepareLanguageTrait(actor: any, traits: any) {
     const languages = actor.system.traits?.languages?.labels;
+    traits.languages ??= [];
+
     if (languages?.languages?.length)
       traits.languages = languages.languages.map((label: string) => ({
         label,
@@ -1462,7 +1464,6 @@ export const FoundryAdapter = {
       if (data.units) {
         value += ` ${data.units}`;
       }
-      traits.languages ??= [];
       traits.languages.push({ label, value: value });
     }
   },

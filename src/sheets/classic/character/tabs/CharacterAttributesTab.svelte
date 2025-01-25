@@ -17,6 +17,7 @@
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   let context = $derived(getCharacterSheetContext());
 
@@ -44,6 +45,8 @@
       TidyFlags.sectionConfig.get(context.actor)?.[tabId],
     ),
   );
+
+  let localize = FoundryAdapter.localize;
 </script>
 
 <UtilityToolbar>
@@ -56,7 +59,26 @@
       tabId,
     )}
   />
-  <FilterMenu {tabId} />
+  <FilterMenu {tabId}>
+    {#snippet beforeClearButton()}
+      <div class="filter-option-group">
+        <label class="filter-option flex-row no-gap align-items-center">
+          <input
+            type="checkbox"
+            checked={TidyFlags.includeRitualsInCanCast.get(context.actor)}
+            onchange={(ev) =>
+              TidyFlags.includeRitualsInCanCast.set(
+                context.actor,
+                ev.currentTarget.checked,
+              )}
+          />
+          <span
+            >{localize('TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast')}</span
+          >
+        </label>
+      </div>
+    {/snippet}
+  </FilterMenu>
   {#each utilityBarCommands as command (command.title)}
     <UtilityToolbarCommand
       title={command.title}

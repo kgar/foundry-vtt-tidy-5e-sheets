@@ -372,8 +372,10 @@ export type ChosenFacilityContext = {
 };
 
 export type FacilityOccupantContext = {
+  /** If present, the occupant's source actor was found. If undefined, then this is a broken link. */
   actor?: Actor5e;
-  empty?: boolean;
+  /** If present, this indicates there is an occupant configured to be here. */
+  uuid?: string;
 };
 
 export type NpcAbilitySection = {

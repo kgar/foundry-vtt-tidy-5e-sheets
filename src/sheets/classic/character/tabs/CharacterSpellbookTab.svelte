@@ -89,7 +89,28 @@
       tabId,
     )}
   />
-  <FilterMenu {tabId} />
+  <FilterMenu {tabId}>
+    {#snippet beforeClearButton()}
+      <div class="filter-option-group">
+        <label
+          class="filter-option flex-row no-gap align-items-center"
+        >
+          <input
+            type="checkbox"
+            checked={TidyFlags.includeRitualsInCanCast.get(context.actor)}
+            onchange={(ev) =>
+              TidyFlags.includeRitualsInCanCast.set(
+                context.actor,
+                ev.currentTarget.checked,
+              )}
+          />
+          <span
+            >{localize('TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast')}</span
+          >
+        </label>
+      </div>
+    {/snippet}
+  </FilterMenu>
   <ButtonMenu
     iconClass="ra ra-fairy-wand"
     buttonStyle="transparent-inline-icon"

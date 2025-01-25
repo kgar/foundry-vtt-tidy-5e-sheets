@@ -39,19 +39,19 @@
 
   let hasDefenders = $derived(
     context.facilities.special.chosen.some((c: ChosenFacilityContext) =>
-      c.defenders.some((d) => !d.empty),
+      c.defenders.some((d) => !!d.uuid),
     ),
   );
 
   let hasHirelings = $derived(
     context.facilities.special.chosen.some((c: ChosenFacilityContext) =>
-      c.hirelings.some((d) => !d.empty),
+      c.hirelings.some((d) => !!d.uuid),
     ),
   );
 
   let hasCreatures = $derived(
     context.facilities.special.chosen.some((c: ChosenFacilityContext) =>
-      c.creatures.some((d) => !d.empty),
+      c.creatures.some((d) => !!d.uuid),
     ),
   );
 
@@ -195,7 +195,7 @@
                   {localize('DND5E.FACILITY.FIELDS.hirelings.max.label')}
                 </div>
                 <ul class="slots hirelings">
-                  {#each chosen.hirelings as { actor, empty }, index}
+                  {#each chosen.hirelings as { actor, uuid }, index}
                     <FacilityOccupant
                       occupant={actor}
                       {index}
@@ -204,6 +204,7 @@
                       facilityId={chosen.id}
                       facilityName={chosen.name}
                       prop="system.hirelings"
+                      {uuid}
                     ></FacilityOccupant>
                   {/each}
                 </ul>
@@ -219,7 +220,7 @@
                   {localize('DND5E.FACILITY.FIELDS.defenders.max.label')}
                 </div>
                 <ul class="slots facility-occupants defenders">
-                  {#each chosen.defenders as { actor, empty }, index}
+                  {#each chosen.defenders as { actor, uuid }, index}
                     <FacilityOccupant
                       occupant={actor}
                       {index}
@@ -228,6 +229,7 @@
                       facilityId={chosen.id}
                       facilityName={chosen.name}
                       prop="system.defenders"
+                      {uuid}
                     ></FacilityOccupant>
                   {/each}
                 </ul>
@@ -243,7 +245,7 @@
                   {localize('TIDY5E.Facilities.Creatures.Label')}
                 </div>
                 <ul class="slots creatures">
-                  {#each chosen.creatures as { actor, empty }, index}
+                  {#each chosen.creatures as { actor, uuid }, index}
                     <FacilityOccupant
                       occupant={actor}
                       {index}
@@ -252,6 +254,7 @@
                       facilityId={chosen.id}
                       facilityName={chosen.name}
                       prop="system.trade.creatures"
+                      {uuid}
                     ></FacilityOccupant>
                   {/each}
                 </ul>
@@ -373,8 +376,8 @@
       </h3>
       <ul class="roster-list">
         {#each context.facilities.special.chosen as chosen}
-          {#each chosen.defenders as { actor, empty }, index}
-            {#if !empty}
+          {#each chosen.defenders as { actor, uuid }, index}
+            {#if uuid}
               <FacilityRosterOccupant
                 occupant={actor}
                 type="defender"
@@ -382,6 +385,7 @@
                 prop="system.defenders"
                 facilityId={chosen.id}
                 facilityName={chosen.name}
+                {uuid}
               />
             {/if}
           {/each}
@@ -400,8 +404,8 @@
       </h3>
       <ul class="roster-list">
         {#each context.facilities.special.chosen as chosen}
-          {#each chosen.hirelings as { actor, empty }, index}
-            {#if !empty}
+          {#each chosen.hirelings as { actor, uuid }, index}
+            {#if uuid}
               <FacilityRosterOccupant
                 occupant={actor}
                 type="hireling"
@@ -409,6 +413,7 @@
                 prop="system.hirelings"
                 facilityId={chosen.id}
                 facilityName={chosen.name}
+                {uuid}
               />
             {/if}
           {/each}
@@ -427,8 +432,8 @@
       </h3>
       <ul class="roster-list">
         {#each context.facilities.special.chosen as chosen}
-          {#each chosen.creatures as { actor, empty }, index}
-            {#if !empty}
+          {#each chosen.creatures as { actor, uuid }, index}
+            {#if uuid}
               <FacilityRosterOccupant
                 occupant={actor}
                 type="creature"
@@ -436,6 +441,7 @@
                 prop="system.trade.creatures"
                 facilityId={chosen.id}
                 facilityName={chosen.name}
+                {uuid}
               />
             {/if}
           {/each}

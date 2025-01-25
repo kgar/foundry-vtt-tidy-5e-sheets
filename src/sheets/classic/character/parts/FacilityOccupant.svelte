@@ -6,9 +6,11 @@
   import { getContext } from 'svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ContextPrimitive } from 'src/features/reactivity/reactivity.types';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   interface Props {
     occupant: Actor5e | undefined;
+    uuid: string | undefined;
     index: number;
     type: string;
     iconClass: string;
@@ -25,6 +27,7 @@
     facilityId,
     facilityName,
     prop,
+    uuid,
   }: Props = $props();
 
   let context = $derived(getCharacterSheetContext());
@@ -72,30 +75,38 @@
   let hoveredFacilityOccupant = getContext<ContextPrimitive<string>>(
     CONSTANTS.SVELTE_CONTEXT.HOVERED_FACILITY_OCCUPANT,
   );
+
+  let localize = FoundryAdapter.localize;
 </script>
 
-{#if occupant}
-  {@const imageTypeClassName = occupant.token ? 'token' : 'portrait'}
+{#if uuid}
+  {@const imageTypeClassName = occupant?.token ? 'token' : 'portrait'}
   {@const imageSrc =
-    imageTypeClassName == 'token' ? occupant.token.img : occupant.img}
+    imageTypeClassName == 'token' ? occupant?.token.img : occupant?.img}
+  {@const name = occupant ? occupant.name : localize('TIDY5E.BrokenLink')}
+
   <li
     class:highlight={hoveredFacilityOccupant.value ===
-      `${facilityId}-${index}-${occupant.uuid}`}
+      `${facilityId}-${index}-${uuid}`}
     class:unlocked={context.unlocked}
     class="slot occupant-slot {type} {imageTypeClassName} occupant-with-menu"
-    data-actor-uuid={occupant.uuid}
-    data-tooltip={occupant.name}
+    data-actor-uuid={uuid}
+    data-tooltip={name}
     data-facility-id={facilityId}
     data-facility-name={facilityName}
     data-prop={prop}
     data-index={index}
     data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_FACILITY_OCCUPANTS}
     onmouseenter={() =>
-      (hoveredFacilityOccupant.value = `${facilityId}-${index}-${occupant.uuid}`)}
+      (hoveredFacilityOccupant.value = `${facilityId}-${index}-${uuid}`)}
     onmouseleave={() => (hoveredFacilityOccupant.value = '')}
   >
     <a onclick={(ev) => context.editable && onOccupantClick(ev)}>
-      <img src={imageSrc} alt={occupant.name} />
+      {#if occupant}
+        <img src={imageSrc} alt={name} />
+      {:else}
+        <i class="fa-solid fa-link-slash broken-link-icon"></i>
+      {/if}
 
       {#if context.unlocked}
         <i class="fa-solid fa-cog occupant-menu-icon"></i>

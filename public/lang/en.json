@@ -751,6 +751,7 @@
   "TIDY5E.Commands.ShowContainerPanel": "Show Container Panel",
   "TIDY5E.Commands.HideContainerPanel": "Hide Container Panel",
   "TIDY5E.ItemFilters.CanCast": "Can Cast",
+  "TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast": "Include Rituals in \"Can Cast\"",
   "TIDY5E.ItemFilters.CanUse": "Can Use",
   "TIDY5E.ItemFilters.ClearAll": "Clear All",
   "TIDY5E.ItemFilters.Category.Miscellaneous": "Miscellaneous",
@@ -813,5 +814,6 @@
   "TIDY5E.Activities.Cast.SourceHintText": "From {itemName}",
   "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatLabel": "Info",
   "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatTooltip": "Show description in chat",
-  "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Holds{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}"
+  "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Holds{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}",
+  "TIDY5E.BrokenLink": "Broken Link"
 }

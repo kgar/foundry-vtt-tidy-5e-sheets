@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
 
@@ -10,40 +9,38 @@
   let { warnings }: Props = $props();
 
   let context = $derived(getSheetContext<ActorSheetContextV1>());
-</script>
 
-<ol class="warnings">
-  {#each warnings as warning}
-    <li class="notification {warning.type}">
-      {#if warning.link}
-        <button
-          type="button"
-          class="inline-transparent-button"
-          onclick={(ev) => context.actor.sheet._onWarningLink(ev)}
-          tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
-          data-target={warning.link}>{warning.message}</button
-        >
-      {:else}
-        {warning.message}
-      {/if}
-    </li>
-  {/each}
-</ol>
-
-<style lang="scss">
-  .warnings {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-
-    .notification {
-      margin: 0;
-      border-radius: 0;
-      box-shadow: none;
+  function onCloseWarnings(
+    event: MouseEvent & {
+      currentTarget: EventTarget & HTMLDialogElement;
+    },
+  ) {
+    if (event.target instanceof HTMLDialogElement) {
+      event.target.close();
     }
 
-    button {
-      color: inherit;
+    if (event.target instanceof HTMLAnchorElement) {
+      event.target.closest('dialog')?.close();
     }
   }
-</style>
+</script>
+
+<dialog class="warnings active" onclick={(event) => onCloseWarnings(event)}>
+  <ol class="unlist">
+    {#each warnings as warning, index}
+      <li class={warning.type}>
+        {#if warning.link}
+          <a
+            class="inline-transparent-button"
+            onclick={(ev) => context.actor.sheet._onWarningLink(ev)}
+            data-target={warning.link}
+          >
+            {warning.message}
+          </a>
+        {:else}
+          {warning.message}
+        {/if}
+      </li>
+    {/each}
+  </ol>
+</dialog>
