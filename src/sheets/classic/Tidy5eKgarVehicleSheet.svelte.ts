@@ -649,6 +649,43 @@ export class Tidy5eVehicleSheet
     }
   }
 
+  async _renderOuter() {
+    const html = await super._renderOuter();
+    if (!game.user.isGM && this.actor.limited) return html;
+    const header = html[0].querySelector('.window-header');
+
+    // Preparation warnings.
+    const warnings = document.createElement('a');
+    warnings.classList.add('preparation-warnings');
+    warnings.dataset.tooltip = 'Warnings';
+    warnings.setAttribute('aria-label', game.i18n.localize('Warnings'));
+    warnings.innerHTML = '<i class="fas fa-triangle-exclamation"></i>';
+    warnings.addEventListener('click', this._onOpenWarnings.bind(this));
+    header
+      .querySelector('.window-title')
+      .insertAdjacentElement('afterend', warnings);
+
+    return html;
+  }
+
+  /**
+   * Handle opening the warnings dialog.
+   * @param {PointerEvent} event  The triggering event.
+   * @protected
+   */
+  _onOpenWarnings(event: MouseEvent) {
+    event.stopImmediatePropagation();
+    // @ts-expect-error
+    const { top, left, height } = event.currentTarget!.getBoundingClientRect();
+    const { clientWidth } = document.documentElement;
+    const dialog = this.form.querySelector('dialog.warnings');
+    Object.assign(dialog.style, {
+      top: `${top + height}px`,
+      left: `${Math.min(left - 16, clientWidth - 300)}px`,
+    });
+    dialog.showModal();
+  }
+
   /**
    * A boolean which gates double-rendering and prevents a second
    * colliding render from triggering an infamous
@@ -660,6 +697,14 @@ export class Tidy5eVehicleSheet
     debug('Sheet render begin');
     this.tidyRendering = true;
     super.render(...args);
+
+    const [warnings] = this.element.find(
+      '.window-header .preparation-warnings'
+    );
+    warnings?.toggleAttribute(
+      'hidden',
+      !this.actor._preparationWarnings?.length
+    );
   }
 
   private _renderMutex = new AsyncMutex();

@@ -33,15 +33,8 @@ export function applyMutableSettingAttributesToWindow(
     return;
   }
 
-  let themeId = currentSettings.colorScheme;
+  const theme = getCurrentTheme(currentSettings);
 
-  themeId =
-    themeId === CONSTANTS.THEME_ID_DEFAULT
-      ? settings.value.defaultTheme
-      : themeId;
-
-  const themes = getThemes();
-  const theme = themes[themeId];
   if (theme) {
     debug(`Applying theme type ${theme.type} to window`);
     element.setAttribute('data-tidy-theme-type', theme.type);
@@ -52,6 +45,19 @@ export function applyMutableSettingAttributesToWindow(
   } else {
     element.removeAttribute('data-tidy-lock-configure-sheet');
   }
+}
+
+export function getCurrentTheme(currentSettings: CurrentSettings) {
+  let themeId = currentSettings.colorScheme;
+
+  themeId =
+    themeId === CONSTANTS.THEME_ID_DEFAULT
+      ? settings.value.defaultTheme
+      : themeId;
+
+  const themes = getThemes();
+  const theme = themes[themeId];
+  return theme;
 }
 
 export function applySheetAttributesToWindow(
