@@ -60,17 +60,17 @@
   // TODO: Determine if lighter text can be moved to its own scope and stylesheet and used generically
   .lighter {
     font-weight: 400;
-    color: var(--t5e-color-text-onDefault-lighter);
-    --icon-fill: var(--t5e-color-text-onDefault-lighter);
+    color: var(--t5e-color-text-ondefault-lighter);
+    --icon-fill: var(--t5e-color-text-ondefault-lighter);
   }
 
   &.negative {
     border-color: var(--t5e-color-palette-red-27);
     background: var(--t5e-color-palette-red-31);
-    color: var(--t5e-color-text-onInverse-default);
+    color: var(--t5e-color-text-oninverse-default);
 
     .lighter {
-      color: var(--t5e-color-text-onInverse-lighter);
+      color: var(--t5e-color-text-oninverse-lighter);
     }
   }
 
@@ -81,10 +81,10 @@
 
   &.positive,
   &.negative {
-    color: var(--t5e-color-text-onInverse-default);
+    color: var(--t5e-color-text-oninverse-default);
 
     .lighter {
-      color: var(--t5e-color-text-onInverse-lighter);
+      color: var(--t5e-color-text-oninverse-lighter);
     }
   }
 }
@@ -133,7 +133,7 @@
     color: var(--t5e-color-text-oninverse-default);
 
     .lighter {
-      color: var(--t5e-color-text-onInverse-lighter);
+      color: var(--t5e-color-text-oninverse-lighter);
     }
   }
 }
@@ -177,7 +177,7 @@
 
   &:has(.toggle:checked) {
     & > :first-child {
-      // --icon-fill: var(--t5e-color-text-onInverse-lighter);
+      // --icon-fill: var(--t5e-color-text-oninverse-lighter);
     }
   }
 }
@@ -197,7 +197,7 @@
   align-items: center;
   gap: 0.125rem;
 
-  color: var(--t5e-color-text-onDefault-lighter);
+  color: var(--t5e-color-text-ondefault-lighter);
   font-size: 0.75rem;
   font-weight: 500;
   line-height: normal;

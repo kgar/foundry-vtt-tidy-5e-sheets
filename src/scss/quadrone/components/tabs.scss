@@ -16,7 +16,7 @@
     width: auto;
     background: none;
     border-radius: 0;
-    color: var(--t5e-color-text-onDefault-lighter);
+    color: var(--t5e-color-text-ondefault-lighter);
     border-bottom-width: 0.125rem;
     border-bottom-style: solid;
     border-bottom-color: transparent;
@@ -24,7 +24,7 @@
 
     &.active,
     &:hover {
-      color: var(--t5e-color-text-onDefault-default);
+      color: var(--t5e-color-text-ondefault-default);
       outline: none;
       box-shadow: none;
       border-bottom-color: var(--t5e-color-gradient-red-light, #741b2b);

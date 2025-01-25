@@ -13,7 +13,7 @@
       no-repeat top center,
     url(../../modules/tidy5e-sheet/images/texture-gray-2.webp) no-repeat bottom
       center,
-    var(--t5e-component-card-onDefault-darker);
+    var(--t5e-component-card-ondefault-darker);
 
   /* Application Window */
   border-radius: 0.3125rem;
@@ -57,11 +57,11 @@
 
   &.minimized {
     .window-title {
-      color: var(--t5e-color-text-onInverse-default);
+      color: var(--t5e-color-text-oninverse-default);
     }
 
     .header-control {
-      color: var(--t5e-color-text-onInverse-default);
+      color: var(--t5e-color-text-oninverse-default);
     }
   }
 
@@ -95,7 +95,7 @@
     }
 
     .container-header-start-document-name {
-      color: var(--t5e-color-text-onDefault-default, #000);
+      color: var(--t5e-color-text-ondefault-default, #000);
       text-align: center;
       font-family: 'Modesto Condensed';
       font-size: var(--font-font-size-18, 1.125rem);
@@ -136,7 +136,7 @@
 
     .header-item-type-label {
       flex: 1;
-      color: var(--t5e-color-text-onInverse-lighter);
+      color: var(--t5e-color-text-oninverse-lighter);
       // text-align: center;
       font-family: 'Modesto Condensed';
       font-size: var(--font-font-size-18, 1.125rem);
@@ -159,7 +159,7 @@
   }
 
   .header-control {
-    color: var(--t5e-color-text-onDefault-lighter);
+    color: var(--t5e-color-text-ondefault-lighter);
     font-size: 0.8125rem;
     font-weight: 900;
   }
@@ -194,7 +194,7 @@
     padding-block-start: var(--header-height);
 
     h4 {
-      color: var(--t5e-color-text-onInverse-gold-light, #f0f0e1);
+      color: var(--t5e-color-text-oninverse-gold-light, #f0f0e1);
       font-family: var(--t5e-font-roboto-condensed);
       font-size: 0.8125rem;
       font-style: normal;
@@ -364,7 +364,7 @@
   }
 
   .document-name {
-    color: var(--t5e-color-text-onDefault-default);
+    color: var(--t5e-color-text-ondefault-default);
 
     // Typography
     font-family: var(--t5e-font-modesto-condensed);
@@ -382,10 +382,10 @@
           rgba(255, 255, 255, 0.5) 0%,
           rgba(255, 255, 255, 0.5) 100%
         ),
-        var(--t5e-component-card-onDefault-default, #f8f4f1);
+        var(--t5e-component-card-ondefault-default, #f8f4f1);
 
       // Typography
-      color: var(--t5e-color-text-onDefault-lighter, #4b4a44);
+      color: var(--t5e-color-text-ondefault-lighter, #4b4a44);
       font-family: var(--t5e-font-modesto-condensed);
       font-size: var(--font-size-24);
       font-style: normal;

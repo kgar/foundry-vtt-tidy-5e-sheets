@@ -15,14 +15,7 @@
   .tidy-table-header-row {
     height: var(--table-header-row-height);
     border-radius: 0.125rem 0.125rem 0rem 0rem;
-    background: var(
-      --gradient-red,
-      linear-gradient(
-        90deg,
-        var(--t5e-color-gradient-red-dark) 20%,
-        var(--t5e-color-gradient-red-light) 100%
-      )
-    );
+    background: var(--t5e-table-header-background-default);
     cursor: pointer;
 
     &:has(+ .expandable:not(.expanded)) {
@@ -31,7 +24,7 @@
   }
 
   .tidy-table-header-cell {
-    color: var(--t5e-color-text-onInverse-gold-light);
+    color: var(--t5e-color-text-oninverse-gold-light);
     font-size: 0.875rem;
     font-style: normal;
     font-weight: 700;
@@ -39,7 +32,7 @@
     letter-spacing: 0.0088rem;
 
     .count {
-      color: var(--t5e-color-text-onInverse-gold-emphasis);
+      color: var(--t5e-color-text-oninverse-gold-emphasis);
     }
 
     &.primary {
@@ -48,7 +41,7 @@
     }
 
     &:not(.primary) {
-      color: var(--t5e-color-text-onInverse-default);
+      color: var(--t5e-color-text-oninverse-default);
       text-align: center;
       font-size: 0.75rem;
       font-weight: 500;
@@ -71,7 +64,7 @@
     align-items: center;
     justify-content: center;
 
-    color: var(--t5e-color-text-onInverse-gold-emphasis);
+    color: var(--t5e-color-text-oninverse-gold-emphasis);
     font-size: 0.6875rem;
     font-weight: 900;
 
@@ -95,18 +88,18 @@
       font-size: 0.6875rem;
       font-weight: 900;
       margin: 0;
-      color: var(--t5e-color-text-onDefault-lightest);
+      color: var(--t5e-color-text-ondefault-lightest);
 
       &.expanded {
-        color: var(--t5e-color-text-onDefault-lighter);
+        color: var(--t5e-color-text-ondefault-lighter);
       }
     }
 
     &:hover i {
-      color: var(--t5e-color-text-onDefault-gold);
+      color: var(--t5e-color-text-ondefault-gold);
 
       &.expanded {
-        color: var(--t5e-color-text-onDefault-gold-emphasis);
+        color: var(--t5e-color-text-ondefault-gold-emphasis);
       }
     }
   }
@@ -140,7 +133,7 @@
       align-items: center;
       justify-content: center;
       border-radius: 0.0625rem;
-      background: var(--t5e-component-card-onDefault-default);
+      background: var(--t5e-component-card-ondefault-default);
       border: 1.5px solid var(--item-border-color, transparent);
 
       align-items: center;
@@ -152,7 +145,7 @@
       height: var(--item-img-size);
 
       i {
-        color: var(--t5e-color-text-onInverse-gold);
+        color: var(--t5e-color-text-oninverse-gold);
         text-shadow: 0px 0px 8px rgba(255, 255, 255, 0.25);
         font-size: 1.25rem;
         font-style: normal;
@@ -192,7 +185,7 @@
     padding: 0;
     margin: 0;
 
-    color: var(--t5e-color-text-onDefault-default);
+    color: var(--t5e-color-text-ondefault-default);
     font-family: var(--t5e-font-roboto-condensed);
     font-size: 0.8125rem;
     font-weight: 500;
@@ -206,7 +199,7 @@
 
   hr.table-row-divider {
     background-image: none;
-    background-color: var(--t5e-color-table-divider);
+    background-color: var(--t5e-table-row-divider);
     margin: 0;
     height: 0.0625rem;
   }
@@ -270,10 +263,10 @@
   }
 
   .tidy-table-header-cell {
-    color: var(--t5e-color-text-onDefault-default);
+    color: var(--t5e-color-text-ondefault-default);
 
     .count {
-      color: var(--t5e-color-text-onDefault-lighter);
+      color: var(--t5e-color-text-ondefault-lighter);
     }
 
     &.primary {
@@ -282,11 +275,11 @@
     }
 
     &:not(.primary) {
-      color: var(--t5e-color-text-onDefault-default);
+      color: var(--t5e-color-text-ondefault-default);
     }
 
     .expand-indicator {
-      color: var(--t5e-color-text-onDefault-lighter);
+      color: var(--t5e-color-text-ondefault-lighter);
     }
   }
 }

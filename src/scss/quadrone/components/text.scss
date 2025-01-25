@@ -19,8 +19,8 @@
     line-height: 0.75rem;
     padding: 0rem 0.03125rem;
     border-radius: 0.0625rem;
-    background: var(--t5e-color-text-onDefault-gold-emphasis);
-    color: var(--t5e-color-text-onInverse-default);
+    background: var(--t5e-color-text-ondefault-gold-emphasis);
+    color: var(--t5e-color-text-oninverse-default);
   }
 }
 
@@ -35,12 +35,12 @@
 &.inverse,
 inverse {
   .spell-component {
-    color: var(--t5e-color-text-onInverse-lighter);
+    color: var(--t5e-color-text-oninverse-lighter);
   }
 
   .spell-component-special {
-    color: var(--t5e-color-text-onDefault-default);
-    background-color: var(--t5e-color-text-onInverse-gold);
+    color: var(--t5e-color-text-ondefault-default);
+    background-color: var(--t5e-color-text-oninverse-gold);
   }
 }
 
@@ -54,7 +54,7 @@ inverse {
     line-height: 0.75rem;
   }
   .subtitle {
-    color: var(--t5e-color-text-onDefault-lightest);
+    color: var(--t5e-color-text-ondefault-lightest);
     font-family: Roboto;
     font-size: 0.6875rem;
     // font-style: normal;
@@ -64,7 +64,7 @@ inverse {
 }
 
 .text-secondary {
-  color: var(--t5e-color-text-onDefault-lighter);
+  color: var(--t5e-color-text-ondefault-lighter);
 }
 
 .fw-normal {
@@ -74,10 +74,10 @@ inverse {
 &.inverse,
 .inverse {
   .text-secondary {
-    color: var(--t5e-color-text-onInverse-lighter);
+    color: var(--t5e-color-text-oninverse-lighter);
   }
 
   .time .subtitle {
-    color: var(--t5e-color-text-onInverse-lightest);
+    color: var(--t5e-color-text-oninverse-lightest);
   }
 }

@@ -21,9 +21,9 @@ textarea {
   }
 
   align-items: center;
-  background: var(--t5e-component-card-onDefault-default);
+  background: var(--t5e-component-card-ondefault-default);
   border-radius: 0.125rem;
-  border: 1px solid var(--t5e-component-field-default-border);
+  border: 1px solid var(--t5e-component-field-ondefault-border);
   box-shadow: 0px 0px 4px 0px var(--dnd5e-shadow-15);
   display: flex;
   font-size: var(--font-size-13, 0.8125rem);
@@ -37,18 +37,18 @@ textarea {
         rgba(255, 255, 255, 0.5) 0%,
         rgba(255, 255, 255, 0.5) 100%
       ),
-      var(--t5e-component-card-onDefault-default);
+      var(--t5e-component-card-ondefault-default);
   }
 
   &:focus {
     border-radius: 0.125rem;
-    border: 1px solid var(--t5e-component-field-default-border);
+    border: 1px solid var(--t5e-component-field-ondefault-border);
     background: linear-gradient(
         0deg,
         rgba(255, 255, 255, 0.5) 0%,
         rgba(255, 255, 255, 0.5) 100%
       ),
-      var(--t5e-component-card-onDefault-default);
+      var(--t5e-component-card-ondefault-default);
 
     /* focus/field */
     box-shadow: 0px 0px 0px 2px #9a2a30;
@@ -56,17 +56,17 @@ textarea {
 
   &:has(input[type='text']:disabled) {
     background: rgba(159, 146, 117, 0.2);
-    color: var(--t5e-color-text-onDefault-lightest);
+    color: var(--t5e-color-text-ondefault-lightest);
   }
 
   &::placeholder {
-    color: var(--t5e-color-text-onDefault-disabled);
+    color: var(--t5e-color-text-ondefault-disabled);
   }
 
   &:disabled {
     background: rgba(159, 146, 117, 0.2);
     border-color: transparent;
-    color: var(--t5e-color-text-onDefault-lightest);
+    color: var(--t5e-color-text-ondefault-lightest);
     box-shadow: none;
   }
 }
@@ -75,9 +75,9 @@ textarea {
   --icon-size: 0.75rem;
 
   align-items: center;
-  background: var(--t5e-component-card-onDefault-default);
+  background: var(--t5e-component-card-ondefault-default);
   border-radius: 0.125rem;
-  border: 1px solid var(--t5e-component-field-default-border);
+  border: 1px solid var(--t5e-component-field-ondefault-border);
   box-shadow: 0px 0px 4px 0px var(--dnd5e-shadow-15);
   display: flex;
   height: 2rem;
@@ -95,7 +95,7 @@ textarea {
         rgba(255, 255, 255, 0.5) 0%,
         rgba(255, 255, 255, 0.5) 100%
       ),
-      var(--t5e-component-card-onDefault-default);
+      var(--t5e-component-card-ondefault-default);
   }
 
   input[type='text'] {
@@ -103,7 +103,7 @@ textarea {
     border-radius: 0;
     border: none;
     box-shadow: none;
-    color: var(--t5e-color-text-onDefault-default);
+    color: var(--t5e-color-text-ondefault-default);
     flex: 1 0 0;
     font-size: var(--font-size-13);
     height: auto;
@@ -119,7 +119,7 @@ textarea {
     }
 
     &::placeholder {
-      color: var(--t5e-color-text-onDefault-disabled);
+      color: var(--t5e-color-text-ondefault-disabled);
     }
 
     &:disabled {
@@ -132,7 +132,7 @@ textarea {
   }
 
   &:has(input[type='text']:disabled) {
-    color: var(--t5e-color-text-onDefault-lightest);
+    color: var(--t5e-color-text-ondefault-lightest);
     border-color: transparent;
     border-radius: 0.125rem;
     background: rgba(159, 146, 117, 0.2);
@@ -142,7 +142,7 @@ textarea {
   & > :not(input):not(i) {
     font-weight: 500;
     font-size: 0.8125rem;
-    color: var(--t5e-color-text-onDefault-lightest);
+    color: var(--t5e-color-text-ondefault-lightest);
   }
 
   i {
@@ -152,9 +152,9 @@ textarea {
 
 :where(search) {
   align-items: center;
-  background: var(--t5e-component-card-onDefault-default);
+  background: var(--t5e-component-card-ondefault-default);
   border-radius: 0.125rem;
-  border: 1px solid var(--t5e-component-field-default-border);
+  border: 1px solid var(--t5e-component-field-ondefault-border);
   box-shadow: 0px 0px 4px 0px var(--dnd5e-shadow-15);
   display: flex;
   height: 2rem;
@@ -170,7 +170,7 @@ textarea {
         rgba(255, 255, 255, 0.5) 0%,
         rgba(255, 255, 255, 0.5) 100%
       ),
-      var(--t5e-component-card-onDefault-default);
+      var(--t5e-component-card-ondefault-default);
   }
 
   // TODO: Consider how to generalize this particular style, since other inputs use the same technique
@@ -186,7 +186,7 @@ textarea {
     border-radius: 0;
     border: none;
     box-shadow: none;
-    color: var(--t5e-color-text-onDefault-default);
+    color: var(--t5e-color-text-ondefault-default);
     flex: 1 0 0;
     font-size: var(--font-size-13);
     height: auto;
@@ -202,7 +202,7 @@ textarea {
     }
 
     &::placeholder {
-      color: var(--t5e-color-text-onDefault-disabled);
+      color: var(--t5e-color-text-ondefault-disabled);
     }
 
     &:disabled {
@@ -217,7 +217,7 @@ textarea {
   .cancel-search {
     width: 2rem;
     height: 2rem;
-    color: var(--t5e-color-text-onDefault-lighter);
+    color: var(--t5e-color-text-ondefault-lighter);
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -232,7 +232,7 @@ textarea {
   }
 
   &:has(input[type='text']:disabled) {
-    color: var(--t5e-color-text-onDefault-lightest);
+    color: var(--t5e-color-text-ondefault-lightest);
     border-color: transparent;
     border-radius: 0.125rem;
     background: rgba(159, 146, 117, 0.2);
@@ -248,8 +248,8 @@ input[type='radio'] {
   color: currentColor;
   width: var(--input-size);
   height: var(--input-size);
-  background: var(--t5e-component-field-default-background);
-  border: 0.0625rem solid var(--t5e-component-field-default-border);
+  background: var(--t5e-component-field-ondefault-background);
+  border: 0.0625rem solid var(--t5e-component-field-ondefault-border);
   border-radius: 50%;
   box-shadow: 0px 0px 4px 0px var(--dnd5e-shadow-15);
 
@@ -264,7 +264,7 @@ input[type='radio'] {
     height: 100%;
     border-radius: 50%;
     transform: scale(0.5);
-    background-color: var(--t5e-color-text-onDefault-gold-light);
+    background-color: var(--t5e-color-text-ondefault-gold-light);
   }
 
   &:checked {
@@ -273,7 +273,7 @@ input[type='radio'] {
   }
 
   &:disabled {
-    border: 1px solid var(--t5e-component-field-default-border);
+    border: 1px solid var(--t5e-component-field-ondefault-border);
     // TODO: CSS Variable
     background: rgba(159, 146, 117, 0.2);
   }
@@ -281,7 +281,7 @@ input[type='radio'] {
 
 input[type='checkbox'] {
   --checkbox-checked-color: var(--t5e-component-toggle-toggled-background);
-  --checkbox-checkmark-color: var(--t5e-color-text-onDefault-gold-light);
+  --checkbox-checkmark-color: var(--t5e-color-text-ondefault-gold-light);
   --checkbox-size: 1rem;
   width: var(--checkbox-size);
   height: var(--checkbox-size);
@@ -298,8 +298,8 @@ input[type='checkbox'] {
   }
 
   border-radius: 0.125rem;
-  border: 0.0625rem solid var(--t5e-component-field-default-border);
-  background: var(--t5e-component-field-default-background);
+  border: 0.0625rem solid var(--t5e-component-field-ondefault-border);
+  background: var(--t5e-component-field-ondefault-background);
   box-shadow: 0px 0px 4px 0px var(--dnd5e-shadow-15);
 
   &:checked {
@@ -311,7 +311,7 @@ input[type='checkbox'] {
   &:checked::before {
     content: '\f00c';
     font-size: 0.6875rem;
-    color: var(--t5e-color-text-onDefault-gold-light);
+    color: var(--t5e-color-text-ondefault-gold-light);
   }
 
   &:checked {
@@ -320,7 +320,7 @@ input[type='checkbox'] {
   }
 
   &:disabled {
-    border: 0.0625rem solid var(--t5e-component-field-default-border);
+    border: 0.0625rem solid var(--t5e-component-field-ondefault-border);
     // TODO: CSS Variable
     background: rgba(159, 146, 117, 0.2);
 
@@ -335,7 +335,7 @@ select {
   --bg-image-backdrop: none;
 
   border-radius: 0.125rem;
-  border: 1px solid var(--t5e-component-field-default-border);
+  border: 1px solid var(--t5e-component-field-ondefault-border);
   box-shadow: 0px 0px 4px 0px var(--dnd5e-shadow-15);
   padding: 0 1.75rem 0 0.5rem;
 
@@ -350,7 +350,7 @@ select {
 
   font-size: var(--font-size-13);
 
-  background-color: var(--t5e-component-card-onDefault-default);
+  background-color: var(--t5e-component-card-ondefault-default);
   background-image: var(--bg-image-chevron), var(--bg-image-backdrop);
   background-repeat: no-repeat, repeat repeat;
   background-position: right 0.5rem center, left top;
@@ -379,7 +379,7 @@ select {
     --bg-image-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='fill: %23999999' viewBox='0 0 512 512'%3E%3C!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--%3E%3Cpath d='M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z'/%3E%3C/svg%3E");
     background-color: rgba(159, 146, 117, 0.2);
     border-color: transparent;
-    color: var(--t5e-color-text-onDefault-lightest);
+    color: var(--t5e-color-text-ondefault-lightest);
     box-shadow: none;
   }
 }
@@ -387,32 +387,32 @@ select {
 &.dark,
 .inverse {
   input[type='text'] {
-    border-color: var(--t5e-component-field-onInverse-border, #7a7a7a);
-    background: var(--t5e-component-field-onInverse-background, #252830);
+    border-color: var(--t5e-component-field-oninverse-border, #7a7a7a);
+    background: var(--t5e-component-field-oninverse-background, #252830);
     box-shadow: 0px 0px 4px 0px var(--dnd5e-shadow-15, rgba(0, 0, 0, 0.15)); // TODO: make variable
-    color: var(--t5e-color-text-onInverse-default);
+    color: var(--t5e-color-text-oninverse-default);
 
     &::placeholder {
-      color: var(--t5e-color-text-onInverse-disabled);
+      color: var(--t5e-color-text-oninverse-disabled);
     }
   }
 
   select {
     --bg-image-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='fill: %23999' viewBox='0 0 512 512'%3E%3C!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--%3E%3Cpath d='M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z'/%3E%3C/svg%3E");
-    background-color: var(--t5e-component-field-onInverse-background, #252830);
-    border-color: var(--t5e-component-field-onInverse-border, #7a7a7a);
-    color: var(--t5e-color-text-onInverse-default);
+    background-color: var(--t5e-component-field-oninverse-background, #252830);
+    border-color: var(--t5e-component-field-oninverse-border, #7a7a7a);
+    color: var(--t5e-color-text-oninverse-default);
 
     option {
-      background: var(--t5e-component-field-onInverse-background, #252830);
-      color: var(--t5e-color-text-onInverse-default);
+      background: var(--t5e-component-field-oninverse-background, #252830);
+      color: var(--t5e-color-text-oninverse-default);
     }
   }
 
   .input-group {
     border-radius: 0.125rem;
-    border-color: var(--t5e-component-field-onInverse-border, #7a7a7a);
-    background: var(--t5e-component-field-onInverse-background, #252830);
+    border-color: var(--t5e-component-field-oninverse-border, #7a7a7a);
+    background: var(--t5e-component-field-oninverse-background, #252830);
 
     input[type='text'] {
       background: transparent;
@@ -420,7 +420,7 @@ select {
     }
 
     & > :not(input):not(i) {
-      color: var(--t5e-color-text-onInverse-lightest);
+      color: var(--t5e-color-text-oninverse-lightest);
     }
   }
 }

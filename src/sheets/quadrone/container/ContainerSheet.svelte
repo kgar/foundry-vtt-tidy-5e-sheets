@@ -144,7 +144,7 @@
           {#each itemRarities as rarity (rarity.key)}
             <option
               value={rarity.key}
-              style="--t5e-item-rarity-color: var({rarity.rarityColorVariableName}, var(--t5e-color-text-onInverse-default));"
+              style="--t5e-item-rarity-color: var({rarity.rarityColorVariableName}, var(--t5e-color-text-oninverse-default));"
             >
               {rarity.label}
             </option>

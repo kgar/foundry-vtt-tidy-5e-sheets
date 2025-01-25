@@ -56,60 +56,60 @@
   /* Text Color */
 
   .text-default {
-    color: var(--t5e-color-text-onDefault-default);
+    color: var(--t5e-color-text-ondefault-default);
   }
 
   .text-gold {
-    color: var(--t5e-color-text-onDefault-gold);
+    color: var(--t5e-color-text-onDdfault-gold);
   }
 
   .text-gold-light {
-    color: var(--t5e-color-text-onDefault-gold-light);
+    color: var(--t5e-color-text-ondefault-gold-light);
   }
 
   .text-lighter {
-    color: var(--t5e-color-text-onDefault-lighter);
+    color: var(--t5e-color-text-ondefault-lighter);
   }
 
   .text-lightest {
-    color: var(--t5e-color-text-onDefault-lightest);
+    color: var(--t5e-color-text-ondefault-lightest);
   }
 
   .text-gold-emphasis {
-    color: var(--t5e-color-text-onDefault-gold-emphasis);
+    color: var(--t5e-color-text-ondefault-gold-emphasis);
   }
 
   .text-disabled {
-    color: var(--t5e-color-text-onDefault-disabled);
+    color: var(--t5e-color-text-ondefault-disabled);
   }
 
   .inverse {
     .text-default {
-      color: var(--t5e-color-text-onInverse-default);
+      color: var(--t5e-color-text-oninverse-default);
     }
 
     .text-gold {
-      color: var(--t5e-color-text-onInverse-gold);
+      color: var(--t5e-color-text-oninverse-gold);
     }
 
     .text-gold-light {
-      color: var(--t5e-color-text-onInverse-gold-light);
+      color: var(--t5e-color-text-oninverse-gold-light);
     }
 
     .text-lighter {
-      color: var(--t5e-color-text-onInverse-lighter);
+      color: var(--t5e-color-text-oninverse-lighter);
     }
 
     .text-lightest {
-      color: var(--t5e-color-text-onInverse-lightest);
+      color: var(--t5e-color-text-oninverse-lightest);
     }
 
     .text-gold-emphasis {
-      color: var(--t5e-color-text-onInverse-gold-emphasis);
+      color: var(--t5e-color-text-oninverse-gold-emphasis);
     }
 
     .text-disabled {
-      color: var(--t5e-color-text-onInverse-disabled);
+      color: var(--t5e-color-text-oninverse-disabled);
     }
   }
 }

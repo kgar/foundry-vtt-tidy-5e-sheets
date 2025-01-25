@@ -118,7 +118,7 @@
   --t5e-theme-color-lighter: color-mix(in srgb, var(--t5e-theme-color-default), #fff 15%);
   --t5e-theme-color-lightest: color-mix(in srgb, color-adjust(var(--t5e-theme-color-default) saturation 30%), #fff 30%);
   --t5e-theme-color-highlight: color-mix(in srgb, color-adjust(var(--t5e-theme-color-default) saturation 100%), #fff 100%);
-  --t5e-theme-gradient: var(--t5e-theme-color-default), linear-gradient(90deg, var(--t5e-theme-color-darker), var(--t5e-theme-color-default));
+  --t5e-theme-gradient: linear-gradient(90deg, var(--t5e-theme-color-darker), var(--t5e-theme-color-default));
 
 
   /* Special ------------ */
@@ -169,6 +169,9 @@
   --t5e-drop-shadow-field: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
   --t5e-drop-shadow-field-focus: 0 0 0 2px var(--t5e-drop-shadow-field-focus);
 
+  /* Transitions */
+  --t5e-transition-default: 150ms ease-in-out;
+
 
   /* Components ------------ */
   /* Cards */
@@ -182,6 +185,7 @@
 
   /* Toggles */
   --t5e-component-toggle-toggled-background: var(--t5e-theme-color-default);
+  --t5e-component-toggle-toggled-background-hover: var(--t5e-theme-color-lighter);
   --t5e-component-toggle-toggled-border: var(--t5e-theme-color-darker);
   --t5e-component-toggle-toggled-text: var(--t5e-color-text-oninverse-default);
 
@@ -201,7 +205,7 @@
   --t5e-component-pill-oninverse-border: var(--t5e-color-palette-grey-0);
   --t5e-component-pill-oninverse-border-interactive: var(--t5e-component-field-oninverse-border);
   --t5e-component-pill-ondefault-background: var(--t5e-component-card-ondefault-default);
-  --t5e-component-pill-ondefault-border: var(--t5e-component-field-default-border);
+  --t5e-component-pill-ondefault-border: var(--t5e-component-field-ondefault-border);
 
   /* Enrichers */
   --t5e-component-enricher-icon:var(--t5e-color-palette-gold-56);
@@ -218,6 +222,7 @@
 
   /* Table */
   --t5e-table-header-background-default: var(--t5e-theme-gradient);
+  --t5e-table-header-box-shadow: inset 0px 0px 0px 0.0625rem rgba(0, 0, 0, 0.15);
   --t5e-table-header-background-container: opacity(var(--t5e-color-palette-black), 12%);
   --t5e-table-row-divider: rgba(224, 216, 212, 1);
   --t5e-table-row-background-default: var(--t5e-component-card-ondefault-default);
@@ -310,7 +315,7 @@
     /* Pill colors inherit from field colors. */
 
     /* Toggles */
-    --t5e-component-toggle-toggled-border: var(--t5e-component-field-default-border);
+    --t5e-component-toggle-toggled-border: var(--t5e-component-field-ondefault-border);
 
     /* Table */
     --t5e-table-header-background-container: var(--t5e-color-palette-grey-34);

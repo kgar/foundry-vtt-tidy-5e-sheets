@@ -6,7 +6,7 @@
   --button-padding-block-end: 0.5rem;
   --button-padding-inline-start: 0.75rem;
   --button-padding-inline-end: 0.75rem;
-  --icon-fill: var(--t5e-color-text-onDefault-default);
+  --icon-fill: var(--t5e-color-text-ondefault-default);
 
   display: inline-flex;
   width: unset;
@@ -15,9 +15,9 @@
   gap: 0.25rem;
   flex-shrink: 0;
   border-radius: 0.125rem;
-  border: 1px solid var(--t5e-component-field-default-border);
-  background: var(--t5e-component-field-default-background);
-  color: var(--t5e-color-text-onDefault-default);
+  border: 1px solid var(--t5e-component-field-ondefault-border);
+  background: var(--t5e-component-field-ondefault-background);
+  color: var(--t5e-color-text-ondefault-default);
   cursor: pointer;
 
   font-family: var(--t5e-font-roboto-condensed);
@@ -33,15 +33,15 @@
     var(--button-padding-block-end) var(--button-padding-inline-start);
 
   :where(i) {
-    color: var(--t5e-color-text-onDefault-default);
+    color: var(--t5e-color-text-ondefault-default);
     margin: 0;
     font-size: 0.6875rem;
   }
 
   &:hover {
-    background: var(--t5e-component-field-default-background);
-    color: var(--t5e-color-text-onDefault-default);
-    border: 1px solid var(--t5e-component-field-default-border);
+    background: var(--t5e-component-field-ondefault-background);
+    color: var(--t5e-color-text-ondefault-default);
+    border: 1px solid var(--t5e-component-field-ondefault-border);
 
     box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.25);
   }
@@ -50,13 +50,13 @@
     background: linear-gradient(
         0deg,
         var(
-            --t5e-component-field-default-hover-overlay,
+            --t5e-component-field-ondefault-hover-overlay,
             rgba(255, 255, 255, 0.5)
           )
           0%,
-        var(--t5e-component-field-default-hover-overlay) 100%
+        var(--t5e-component-field-ondefault-hover-overlay) 100%
       ),
-      var(--t5e-component-field-default-background);
+      var(--t5e-component-field-ondefault-background);
     box-shadow: 0px 0px 0px 2px #9a2a30;
   }
 
@@ -85,7 +85,7 @@
     cursor: default;
     pointer-events: none;
     background: transparent;
-    border: 0.0625rem solid var(--t5e-component-field-default-border);
+    border: 0.0625rem solid var(--t5e-component-field-ondefault-border);
 
     &,
     i {
@@ -99,7 +99,7 @@
 
   /* Toggle Buttons */
   &.toggle-button {
-    border: 0.0625rem solid var(--t5e-component-field-default-border);
+    border: 0.0625rem solid var(--t5e-component-field-ondefault-border);
 
     &:has(.toggle:checked) {
       --icon-fill: var(--t5e-component-toggle-toggled-text);
@@ -112,21 +112,21 @@
     }
 
     &.disabled {
-      --icon-fill: var(--t5e-color-text-onDefault-lightest);
+      --icon-fill: var(--t5e-color-text-ondefault-lightest);
       font-style: italic;
-      color: var(--t5e-color-text-onDefault-lightest);
+      color: var(--t5e-color-text-ondefault-lightest);
     }
   }
 }
 
 &:where(.inverse) :is(button, .button),
 :where(.inverse) :is(button, .button) {
-  border: 1px solid var(--t5e-component-field-inverse-border);
-  background: var(--t5e-component-field-inverse-background);
+  border: 1px solid var(--t5e-component-field-oninverse-border);
+  background: var(--t5e-component-field-oninverse-background);
 
   &,
   i {
-    color: var(--t5e-color-text-onDefault-gold-emphasis);
+    color: var(--t5e-color-text-ondefault-gold-emphasis);
   }
 }
 
@@ -195,11 +195,11 @@
       position: absolute;
       right: 0.125rem;
       bottom: 0.0625rem;
-      color: var(--t5e-color-text-onDefault-gold);
+      color: var(--t5e-color-text-ondefault-gold);
     }
 
     &:is(.active, :active, .attention):not(.disabled) .expand-indicator {
-      color: var(--t5e-color-text-onInverse-default);
+      color: var(--t5e-color-text-oninverse-default);
     }
   }
 
@@ -213,7 +213,7 @@
     display: none;
     flex-direction: column;
     gap: 0.5rem;
-    background: var(--t5e-component-card-onDefault-default);
+    background: var(--t5e-component-card-ondefault-default);
     border-radius: 0.25rem;
     z-index: 2;
     white-space: nowrap;
@@ -233,7 +233,7 @@
     }
 
     h4 {
-      color: var(--t5e-color-text-onDefault-lighter);
+      color: var(--t5e-color-text-ondefault-lighter);
       font-size: 0.8125rem;
       font-weight: 500;
       line-height: normal;

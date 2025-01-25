@@ -31,8 +31,8 @@
     &::before {
       content: '';
       position: absolute;
-      width: calc(1.125rem * var(--tidy-switch-scale-internal));
-      height: calc(1.125rem * var(--tidy-switch-scale-internal));
+      width: calc(1.25rem * var(--tidy-switch-scale-internal));
+      height: calc(1.25rem * var(--tidy-switch-scale-internal));
       background: var(--t5e-switch-slider-color);
       top: calc(
         0.125rem * var(--tidy-switch-scale-internal) - var(--tidy-border-width)
@@ -45,12 +45,11 @@
     }
 
     .thumb-icon {
+      background-color: var(--t5e-color-icon-oninverse-default);
+      border-radius: 100%;
       font-size: calc(0.75rem * var(--tidy-switch-scale-internal));
       position: absolute;
-      color: var(
-        --t5e-thumb-icon-color,
-        rgba(0, 0, 0, 0.9)
-      ); // TODO: Theme color? Or at least top-level variable that can be customized?
+      color: var(--t5e-color-icon-ondefault-default); // TODO: Theme color? Or at least top-level variable that can be customized?
       display: flex;
       justify-content: center;
       align-items: center;
@@ -63,6 +62,8 @@
         1.375rem * var(--tidy-switch-scale-internal) - var(--tidy-border-width)
       );
       transition: transform var(--tidy-switch-thumb-transform-duration-internal);
+      transition: background-color var(--t5e-transition-default);
+      transition: color var(--t5e-transition-default);
     }
 
     &[aria-checked='true'] {
@@ -83,6 +84,11 @@
         transition: transform
           var(--tidy-switch-thumb-transform-duration-internal);
       }
+
+      .thumb-icon {
+        background-color: var(--t5e-color-icon-ondefault-default);
+        color: var(--t5e-color-icon-oninverse-default);
+      }
     }
 
     &:focus-visible {
@@ -93,10 +99,10 @@
 
 .header-sheet-edit-mode-toggle {
   --tidy-switch-unchecked-border-color: var(
-    --t5e-component-field-default-border
+    --t5e-component-field-ondefault-border
   );
   --tidy-switch-unchecked-background-color: var(
-    --t5e-component-field-inverse-background
+    --t5e-component-field-oninverse-background
   );
   --tidy-switch-checked-border-color: var(
     --t5e-component-toggle-toggled-border
@@ -105,7 +111,7 @@
     --t5e-component-toggle-toggled-background
   );
   --t5e-switch-slider-color: var(
-    --t5e-component-field-default-hover-overlay-emphasis
+    --t5e-component-field-ondefault-hover-overlay-emphasis
   );
   --t5e-thumb-icon-color: var(--t5e-color-icon-light-default);
 
@@ -126,7 +132,7 @@
   --field-toggle-border-color: var(--t5e-component-field-ondefault-border);
   --field-toggle-checked-color: var(--t5e-color-icon-oninverse-default);
   --field-toggle-unchecked-color: var(--t5e-color-toggle-toggled-text);
-  --field-toggle-thumb-color: var(--t5e-color-gold);
+  --field-toggle-thumb-color: var(--t5e-color-icon-oninverse-default);
   --width: 2rem;
   --height: 1rem;
   --padding: 0.125rem;
@@ -145,13 +151,14 @@
   box-shadow: 0px 0px 4px 0px var(--dnd5e-shadow-15);
   border: var(--border-width) solid var(--field-toggle-border-color);
   position: relative;
-  transition: all 250ms ease;
+  transition: all 150ms ease;
 
   .unchecked-icon {
     position: absolute;
     width: var(--check-indicator-size);
     height: var(--check-indicator-size);
     fill: var(--field-toggle-unchecked-color);
+    transition: all 150ms ease;
     top: var(--padding);
     right: calc(var(--padding) + var(--border-width));
   }
@@ -161,6 +168,7 @@
     width: var(--check-indicator-size);
     height: var(--check-indicator-size);
     fill: var(--field-toggle-checked-color);
+    transition: all 150ms ease;
     opacity: 0;
     top: var(--padding);
     left: calc(var(--padding) + var(--border-width));
@@ -171,7 +179,7 @@
     width: var(--thumb-size);
     height: var(--thumb-size);
     fill: var(--field-toggle-thumb-color);
-    transition: all 250ms ease;
+    transition: all 150ms ease;
     top: var(--padding);
     left: var(--padding);
   }
@@ -192,6 +200,18 @@
       transform: translateX(var(--thumb-checked-translateX));
       fill: #fff;
     }
+    
+    &:hover {
+      background-color: var(--t5e-component-toggle-toggled-background-hover);
+    }
+  }
+
+  &:hover {
+    background-color: var(--t5e-component-field-ondefault-background-hover);
+
+    .unchecked-icon {
+      fill: var(--t5e-color-icon-oninverse-default);
+    }
   }
 
   &.disabled {
@@ -202,10 +222,10 @@
 &.inverse,
 .inverse {
   .field-toggle {
-    --field-toggle-background: var(--t5e-component-field-inverse-background);
-    --field-toggle-border-color: var(--t5e-component-field-inverse-border);
-    --field-toggle-unchecked-color: var(--t5e-color-text-onInverse-lightest);
-    --field-toggle-thumb-color: var(--t5e-color-icon-dark-default);
+    --field-toggle-background: var(--t5e-component-field-oninverse-background);
+    --field-toggle-border-color: var(--t5e-component-field-oninverse-border);
+    --field-toggle-unchecked-color: var(--t5e-color-text-oninverse-lightest);
+    // --field-toggle-thumb-color: var(--t5e-color-icon-dark-default);
 
     &:not(:has(.toggle:checked)) {
       --field-toggle-checked-color: transparent;

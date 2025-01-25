@@ -106,7 +106,7 @@ Hooks.once('init', () => {
   initRuntime();
   initKeybindings();
 
-  const thisIsKGarsVisualOverhaulBranch = false; // When the first draft of the container overhaul sheet is done, remove this extra layer and let it depend on the debug setting alone.
+  const thisIsKGarsVisualOverhaulBranch = true; // When the first draft of the container overhaul sheet is done, remove this extra layer and let it depend on the debug setting alone.
 
   if (settings.value.debug && thisIsKGarsVisualOverhaulBranch) {
     DocumentSheetConfig.registerSheet(
@@ -115,7 +115,7 @@ Hooks.once('init', () => {
       Tidy5eContainerSheetQuadrone,
       {
         types: [CONSTANTS.SHEET_TYPE_CONTAINER],
-        label: 'Tidy 5e Container Sheet - Under Development',
+        label: 'Tidy 5e Container Sheet - Quadrone',
       }
     );
 

@@ -37,7 +37,7 @@
   align-self: stretch;
 
   border-radius: var(--radius-card, 0.1875rem);
-  border: 0.0625rem solid var(--t5e-component-pill-onDefault-border, #9f9275);
+  border: 0.0625rem solid var(--t5e-component-pill-ondefault-border, #9f9275);
   background: var(--dnd5e-color-light-gray, #3d3d3d);
 
   /* pill-shadow */
@@ -49,7 +49,7 @@
     align-items: center;
     gap: 0.25rem;
     position: relative;
-    color: var(--t5e-color-text-onInverse-default);
+    color: var(--t5e-color-text-oninverse-default);
     font-size: 0.75rem;
     font-weight: 500;
     line-height: normal;

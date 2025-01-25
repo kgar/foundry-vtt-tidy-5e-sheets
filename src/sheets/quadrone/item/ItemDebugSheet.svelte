@@ -899,7 +899,7 @@
     }
 
     &.inverse {
-      background: var(--t5e-component-card-onInverse-default);
+      background: var(--t5e-component-card-oninverse-default);
     }
   }
 

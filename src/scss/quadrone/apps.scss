@@ -14,10 +14,10 @@
 
   /* Font Color */
   &:not(.minimized) {
-    --color-light-text-heading: var(--t5e-color-text-onDefault-lighter);
+    --color-light-text-heading: var(--t5e-color-text-ondefault-lighter);
   }
 
-  color: var(--t5e-color-text-onDefault-default);
+  color: var(--t5e-color-text-ondefault-default);
 
   /* Sheet Body Typography */
   font-family: var(--font-family-default, var(--t5e-font-roboto-condensed));
@@ -32,7 +32,7 @@
   h4,
   h5,
   h6 {
-    color: var(--t5e-color-text-onDefault-default);
+    color: var(--t5e-color-text-ondefault-default);
     text-shadow: none;
     border: none;
     margin: 0;
@@ -110,7 +110,7 @@
   }
 
   .controls-dropdown {
-    background: var(--t5e-component-card-onDefault-default);
+    background: var(--t5e-component-card-ondefault-default);
     border-radius: 0.3125rem;
     transition: none;
 
@@ -121,11 +121,11 @@
     .header-control > button {
       justify-content: flex-start;
       gap: 0.5rem;
-      --button-text-color: var(--t5e-color-text-onDefault-default);
-      --button-hover-text-color: var(--t5e-color-text-onDefault-default);
+      --button-text-color: var(--t5e-color-text-ondefault-default);
+      --button-hover-text-color: var(--t5e-color-text-ondefault-default);
 
       &:hover {
-        background: var(--t5e-component-card-onDefault-darker);
+        background: var(--t5e-component-card-ondefault-darker);
       }
     }
   }
@@ -188,7 +188,7 @@
   }
 
   .inverse {
-    color: var(--t5e-color-text-onInverse-default);
+    color: var(--t5e-color-text-oninverse-default);
   }
 
   /* Prose Mirror Editor Customizations */
@@ -196,8 +196,8 @@
   .editor {
     .secret {
       border-radius: var(--t5e-component-card-radius);
-      border: 0.0625rem solid var(--t5e-color-table-divider);
-      background: var(--t5e-component-card-onDefault-darker);
+      border: 0.0625rem solid var(--t5e-table-row-divider);
+      background: var(--t5e-component-card-ondefault-darker);
       mix-blend-mode: multiply;
     }
   }
@@ -218,8 +218,8 @@
     }
 
     &:hover {
-      --icon-fill: var(--t5e-color-text-onDefault-gold-emphasis);
-      text-shadow: 0px 0px 6px var(--t5e-color-text-onInverse-gold-emphasis);
+      --icon-fill: var(--t5e-color-text-oninverse-gold-emphasis);
+      text-shadow: 0px 0px 6px var(--t5e-color-text-oninverse-gold-emphasis);
     }
   }
 

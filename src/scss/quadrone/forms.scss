@@ -17,7 +17,7 @@
     margin: 0;
 
     > legend {
-      color: var(--t5e-color-text-onDefault-lighter, #4b4a44);
+      color: var(--t5e-color-text-ondefault-lighter, #4b4a44);
       /* title/small */
       font-family: var(--font-family-title, 'Modesto Condensed');
       font-size: var(--font-size-16);
@@ -43,7 +43,7 @@
       padding: 0.375rem;
       font-style: italic;
       text-align: center;
-      color: var(--t5e-color-text-onDefault-lighter);
+      color: var(--t5e-color-text-ondefault-lighter);
     }
 
     // TODO: Need example of card fieldset  legends
@@ -67,7 +67,7 @@
     &:disabled {
       .form-group label,
       .hint {
-        color: var(--t5e-color-text-onDefault-lightest);
+        color: var(--t5e-color-text-ondefault-lightest);
       }
     }
   }
@@ -91,7 +91,7 @@
     > label {
       line-height: var(--form-field-height);
       font-weight: 500;
-      color: var(--t5e-color-text-onDefault-lighter);
+      color: var(--t5e-color-text-ondefault-lighter);
     }
 
     &.label-top {
@@ -110,7 +110,7 @@
         font-weight: 600;
         line-height: var(--label-height);
         height: var(--label-height);
-        color: var(--t5e-color-text-onDefault-lightest);
+        color: var(--t5e-color-text-ondefault-lightest);
         margin-top: 0.25rem;
 
         > p.hint {
@@ -269,7 +269,7 @@
 
   :is(.form-group, fieldset) .hint {
     font-size: var(--font-size-11);
-    color: var(--t5e-color-text-onDefault-lighter);
+    color: var(--t5e-color-text-ondefault-lighter);
     margin: 0.25rem 0 0 0;
   }
 
