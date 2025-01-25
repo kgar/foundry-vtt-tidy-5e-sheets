@@ -394,7 +394,7 @@ select {
   appearance: none;
   cursor: pointer;
 
-  font-size: var(--font-size-13);
+  // font-size: var(--font-size-13);
   color: var(--t5e-color-text-ondefault-default);
 
   background-color: var(--t5e-component-card-ondefault-default);
@@ -402,6 +402,11 @@ select {
   background-repeat: no-repeat, repeat repeat;
   background-position: right 0.5rem center, left top;
   background-size: 0.6875rem 0.6875rem, auto;
+
+  // TODO: Select panel font family doens't work.
+  // option {
+  //   font-family: 'Roboto Condensed', sans-serif;
+  // }
 
   &:hover,
   &:focus {

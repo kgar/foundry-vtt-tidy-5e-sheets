@@ -54,7 +54,7 @@
   }
 
   i {
-    color: var(--icon-fill);
+    color: var(--t5e-color-icon-ondefault-default);
   }
 
   // TODO: Determine if lighter text can be moved to its own scope and stylesheet and used generically
@@ -154,13 +154,21 @@
     display: flex;
     align-items: center;
     gap: 0.25rem;
-    --icon-fill: var(--t5e-color-icon-oninverse-disabled);
+    --icon-fill: var(--t5e-color-icon-ondefault-diminished);
+
+    & i {
+      color: var(--t5e-color-icon-ondefault-diminished);
+    }
   }
 
   &:has(.toggle:checked) {
     & > :first-child {
-      --icon-fill: var(--t5e-color-icon-oninverse-default);
+      --icon-fill: var(--t5e-color-icon-ondefault-default);
       transition: --icon-fill 0.15s ease-in-out;
+    }
+    
+    & i {
+      color: var(--t5e-color-icon-ondefault-default);
     }
   }
 
