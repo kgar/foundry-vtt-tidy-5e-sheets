@@ -1,5 +1,15 @@
 /* App V2 Reset */
 
+input,
+textarea,
+select
+.radio,
+.checkbox {
+  font-size: var(--font-size-default, 0.8666666667rem);
+  font-weight: var(--font-weight-default, 400);
+  line-height: var(--t5e-lineheight-default, 0.875rem);
+}
+
 input {
   box-shadow: none;
   outline: none;
@@ -238,6 +248,13 @@ textarea {
     background: rgba(159, 146, 117, 0.2);
     box-shadow: none;
   }
+}
+
+.radio {
+  display: flex;
+  flex-grow:unset;
+  align-items: top;
+  gap: 0.25rem;
 }
 
 input[type='radio'] {

@@ -1,24 +1,31 @@
+
 .capitalize {
   text-transform: capitalize;
 }
 
 .spell-components {
   display: flex;
-  gap: 0.0625rem;
+  gap: 0.03125rem;
   align-items: flex-start;
 
+  & li {
+    font-size: var(--font-size-default);
+    line-height: var(--t5e-lineheight-small);
+    padding-top: 0.0625rem;
+    padding-bottom: 0.0625rem;
+    cursor: help;
+  }
+
   .spell-component {
-    font-size: 0.75rem;
-    font-weight: 500;
-    line-height: 0.75rem;
+    font-weight: var(--font-weight-default);
   }
 
   .spell-component-special {
-    font-size: 0.75rem;
-    font-weight: 500;
-    line-height: 0.75rem;
-    padding: 0rem 0.03125rem;
-    border-radius: 0.0625rem;
+    font-weight: var(--font-weight-label);
+    padding-left: 0.03125rem;
+    padding-right: 0.03125rem;
+    margin: 0 0.03125rem;
+    border-radius: 0.09375rem;
     background: var(--t5e-color-text-ondefault-gold-emphasis);
     color: var(--t5e-color-text-oninverse-default);
   }

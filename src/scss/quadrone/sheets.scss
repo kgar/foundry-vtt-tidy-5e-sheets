@@ -1,4 +1,7 @@
 /* Styles common to Document sheets */
+.tidy5e-sheet:where(.quadrone) {
+  font-smooth: always;
+}
 
 .tidy5e-sheet:where(.quadrone:is(.item, .actor)) {
   & > header {

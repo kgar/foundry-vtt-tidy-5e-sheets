@@ -289,11 +289,11 @@
     <fieldset>
       <legend> Data / Spell Components </legend>
       <ul class="unlist spell-components">
-        <li class="spell-component">V</li>
-        <li class="spell-component">S</li>
-        <li class="spell-component">M</li>
-        <li class="spell-component-special">R</li>
-        <li class="spell-component-special">C</li>
+        <li class="spell-component" title="Verbal">V</li>
+        <li class="spell-component" title="Somatic">S</li>
+        <li class="spell-component" title="Material">M</li>
+        <li class="spell-component-special" title="Ritual">R</li>
+        <li class="spell-component-special" title="Concentration">C</li>
       </ul>
     </fieldset>
     <fieldset>
@@ -345,20 +345,18 @@
         - https://github.com/shadcn-ui/ui/pull/2758 - another example of top/left at 50% and translate X/Y at -50%
     
       -->
-      <ul class="unlist">
-        <li>
-          <input type="radio" name="test" id="test-1" checked={true} />
-          <label for="test-1">Property</label>
-        </li>
-        <li>
-          <input type="radio" name="test" id="test-2" />
-          <label for="test-2">Property</label>
-        </li>
-        <li>
-          <input type="radio" name="test" id="test-2" disabled />
-          <label for="test-3">Property <br />with line breaks</label>
-        </li>
-      </ul>
+      <label class="radio" for="test-1">
+        <input type="radio" name="test" id="test-1" checked={true} />
+        <span class="radio-label">Property</span>
+      </label>
+      <label class="radio" for="test-2">
+        <input type="radio" name="test" id="test-2" />
+        <span class="radio-label">Property</span>
+      </label>
+      <label class="radio" for="test-3">
+        <input type="radio" name="test" id="test-3" disabled />
+        <span class="radio-label">Property <br />with line breaks</span>
+      </label>
     </fieldset>
     <fieldset class="vertical-gallery">
       <legend> Input / Search </legend>

@@ -1,4 +1,5 @@
 .tidy5e-sheet.application:where(.quadrone) {
+  
   input.full-width {
     flex: 0 0 100%;
     margin-top: 0.25rem;
@@ -28,10 +29,14 @@
       border-bottom: 0.0938rem solid var(--t5e-color-gold);
       width: 100%;
 
+      > label.checkbox,
+      > label.radio {
+        min-height: var(--t5e-field-size-small);
+      }
+
       > label.checkbox {
         --checkbox-size: 0.875rem;
         font-weight: 600;
-        height: calc(var(--checkbox-size) - 0.0625rem);
 
         input[type='checkbox'] {
           margin-bottom: 0.0625rem;
@@ -73,15 +78,10 @@
   }
 
   /* Form Groups */
-  .form-group.checkbox {
+  .form-group .checkbox, .form-group.radio {
     // justify-content: space-evenly;
     justify-content: center;
     gap: 0.5rem;
-  }
-
-  .form-group.checkbox > label, label.checkbox {
-    font-weight: normal;
-    font-size: var(--font-size-12);
   }
 
   .form-group {
