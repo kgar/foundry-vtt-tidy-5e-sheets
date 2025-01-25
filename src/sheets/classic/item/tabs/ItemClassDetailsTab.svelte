@@ -46,7 +46,8 @@
 </div>
 
 <div class="form-group split-group">
-  <label for="{appId}-hit-dice">{localize('DND5E.CLASS.FIELDS.hd.label')}</label>
+  <label for="{appId}-hit-dice">{localize('DND5E.CLASS.FIELDS.hd.label')}</label
+  >
   <div class="form-fields">
     <div class="form-group label-top">
       <label for="{appId}-hit-dice">{localize('DND5E.Denomination')}</label>
@@ -77,6 +78,20 @@
       />
     </div>
   </div>
+</div>
+
+<div class="form-group">
+  <label>{localize('DND5E.CLASS.FIELDS.hd.additional.label')}</label>
+  <div class="form-fields">
+    <TextInput
+      document={context.item}
+      field="system.hd.additional"
+      value={context.source.hd.additional}
+    />
+  </div>
+  <p class="hint">
+    {localize('DND5E.CLASS.FIELDS.hd.additional.hint')}
+  </p>
 </div>
 
 <h3 class="form-header">{localize('DND5E.ItemClassDetails')}</h3>
