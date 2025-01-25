@@ -1,7 +1,7 @@
 <script lang="ts">
   import ButtonMenu from '../button-menu/ButtonMenu.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getContext } from 'svelte';
+  import { getContext, type Snippet } from 'svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
   import FilterToggleButton from './FilterToggleButton.svelte';
   import type { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
@@ -11,14 +11,16 @@
 
   interface Props {
     tabId: string;
+    beforeClearButton?: Snippet;
   }
 
-  let { tabId }: Props = $props();
+  let { tabId, beforeClearButton }: Props = $props();
 
   const localize = FoundryAdapter.localize;
-  const context = $derived(getSheetContext<
-    ActorSheetContextV1 | ContainerSheetClassicContext
-  >());
+  const context =
+    $derived(
+      getSheetContext<ActorSheetContextV1 | ContainerSheetClassicContext>(),
+    );
   const onFilterClearAll =
     getContext<ItemFilterService['onFilterClearAll']>('onFilterClearAll');
   let categories = $derived(context.filterData[tabId] ?? {});
@@ -58,6 +60,12 @@
         </div>
       </section>
     {/each}
+
+    {#if beforeClearButton}
+      <ButtonMenuDivider />
+      {@render beforeClearButton()}
+    {/if}
+
     <ButtonMenuDivider />
     <section class="filter-footer flex-row justify-content-center">
       <button

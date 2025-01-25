@@ -1,7 +1,8 @@
-import { settings, SettingsProvider } from 'src/settings/settings.svelte';
+import { settings } from 'src/settings/settings.svelte';
 import type { Item5e } from 'src/types/item.types';
 import { ItemUtils } from './ItemUtils';
 import { CONSTANTS } from 'src/constants';
+import { TidyFlags } from 'src/api';
 
 export class SpellUtils {
   /** Is a cantrip. */
@@ -37,7 +38,16 @@ export class SpellUtils {
         SpellUtils.isUnlimitedAtWill(item) ||
         SpellUtils.isUnlimitedInnate(item) ||
         ItemUtils.hasSufficientLimitedUses(item) ||
-        SpellUtils.isPactMagic(item))
+        SpellUtils.isPactMagic(item) ||
+        SpellUtils.isRitualSpellForRitualCaster(item))
+    );
+  }
+
+  static isRitualSpellForRitualCaster(item: any) {
+    return (
+      item.system.properties.has(CONSTANTS.SPELL_PROPERTY_RITUAL) &&
+      item.parent &&
+      TidyFlags.includeRitualsInCanCast.get(item.parent)
     );
   }
 
@@ -124,7 +134,7 @@ export class SpellUtils {
 
     return spells.filter(
       (spell) =>
-        spell.system.sourceClass?.trim() === selectedClassFilter?.trim(),
+        spell.system.sourceClass?.trim() === selectedClassFilter?.trim()
     );
   }
 }

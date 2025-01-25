@@ -310,6 +310,38 @@ export class TidyFlags {
   };
 
   /**
+   * Denotes whether to include all ritual spells in the "Can Cast" filter.
+   */
+  static includeRitualsInCanCast = {
+    key: 'includeRitualsInCanCast',
+    prop: TidyFlags.getFlagPropertyPath('includeRitualsInCanCast'),
+    /** Gets whether to include rituals in the "Can Cast" spell filter. */
+    get(document: any): boolean {
+      return (
+        TidyFlags.tryGetFlag<boolean>(
+          document,
+          TidyFlags.includeRitualsInCanCast.key
+        ) === true
+      );
+    },
+    /** Sets whether to include rituals in the "Can Cast" spell filter. */
+    set(document: any, value: boolean = true) {
+      return TidyFlags.setFlag(
+        document,
+        TidyFlags.includeRitualsInCanCast.key,
+        value
+      );
+    },
+    /** Clears whether to include rituals in the "Can Cast" spell filter. */
+    unset(document: any) {
+      return TidyFlags.unsetFlag(
+        document,
+        TidyFlags.includeRitualsInCanCast.key
+      );
+    },
+  };
+
+  /**
    * Denotes whether to show a grid for a given inventory screen.
    */
   static inventoryGrid = {
