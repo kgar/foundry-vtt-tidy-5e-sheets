@@ -83,7 +83,7 @@
               )}
           />
           <span
-            >{localize('TIDY5E.ItemFilters.Flag.IncludeRitualsInCanCast')}</span
+            >{localize('TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast')}</span
           >
         </label>
       </div>
