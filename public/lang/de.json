@@ -51,8 +51,6 @@
     "TIDY5E.RemoveFavorite": "Favorit löschen",
     "TIDY5E.ShowNotProficientSkills": "Nicht-fachkundige anzeigen",
     "TIDY5E.HideNotProficientSkills": "Nicht-fachkundige verbergen",
-    "TIDY5E.ShowEmptyTraits": "leere Merkmale anzeigen/bearbeiten",
-    "TIDY5E.HideEmptyTraits": "leere Merkmale ausblenden",
     "TIDY5E.Abilities": "Fähigkeiten",
     "TIDY5E.Environment": "Umgebung",
     "TIDY5E.Search": "Suche",
@@ -175,10 +173,6 @@
         "name": "Nutze Gesundheitsüberblende",
         "hint": "Zeigt eine farbige TP-Überblende."
     },
-    "TIDY5E.Settings.ToggleEmptyCharacterTraits": {
-        "name": "Leere Charaktermerkmale umschalten",
-        "hint": "Fügt eine Schaltfläche zum Ein- und Ausblenden von leeren Merkmalen hinzu."
-    },
     "TIDY5E.Settings.MoveTraitsBelowResources": {
         "name": "Verschiebe Merkmale unter Ressourcen",
         "hint": "Positioniert die Merkmale unter den Charakterressourcen."
@@ -186,10 +180,6 @@
     "TIDY5E.Settings.ShowEquippedAmmoOnly": {
         "name": "Zeige nur ausgerüstete Munition",
         "hint": "Zeigt nur die aktuell ausgerüstete Munition in der Munitionsauswahl der Waffe an."
-    },
-    "TIDY5E.Settings.AlwaysShowTraits": {
-        "name": "Zeige Merkmale immer an",
-        "hint": "Entfernt den Sichtbarkeitsschalter für leere Merkmale und zeigt alle an."
     },
     "TIDY5E.Settings.AlwaysShowSkills": {
         "name": "Zeige Fähigkeiten immer an",

@@ -40,11 +40,15 @@ export class ConditionsAndEffects {
           const { id, name, img, disabled, duration } = effect;
           let source = (await effect.getSource()) ?? actor;
           // If the source is an ActiveEffect from another Actor, note the source as that Actor instead.
-          if (
-            source instanceof dnd5e.documents.ActiveEffect5e &&
-            source.target !== object
-          ) {
+          if (source instanceof ActiveEffect) {
             source = source.target;
+            if (
+              source instanceof Item &&
+              source.parent &&
+              source.parent !== object
+            ) {
+              source = source.parent;
+            }
           }
 
           arr = await arr;

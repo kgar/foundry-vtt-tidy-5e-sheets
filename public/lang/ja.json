@@ -65,8 +65,6 @@
     "TIDY5E.RemoveFavorite": "お気に入りから削除",
     "TIDY5E.ShowNotProficientSkills": "未習熟を表示",
     "TIDY5E.HideNotProficientSkills": "未習熟を隠す",
-    "TIDY5E.ShowEmptyTraits": "特性を編集",
-    "TIDY5E.HideEmptyTraits": "空の特性を隠す",
     "TIDY5E.Abilities": "能力",
     "TIDY5E.Environment": "環境",
     "TIDY5E.EnvironmentTooltip": "環境: {environment}",
@@ -288,10 +286,6 @@
         "name": "Toggle Empty Character Skills",
         "hint": "Adds a toggle button for showing/hiding empty skills."
     },
-    "TIDY5E.Settings.ToggleEmptyCharacterTraits": {
-        "name": "空のｷｬﾗｸﾀｰ特徴の切替",
-        "hint": "デフォルトでは、空の特徴は常に表示されます。"
-    },
     "TIDY5E.Settings.MoveTraitsBelowResources": {
         "name": "特徴をﾘｿｰｽの下に移動",
         "hint": "特徴を、技能の下 (左段)から、リソース下 (右段)に移動する場合に有効にします。"
@@ -299,10 +293,6 @@
     "TIDY5E.Settings.ShowEquippedAmmoOnly": {
         "name": "装備済の矢弾のみ表示",
         "hint": "武器ごとに現在装備されている矢弾のみ表示するようにします。"
-    },
-    "TIDY5E.Settings.AlwaysShowTraits": {
-        "name": "常に特徴を表示",
-        "hint": "デフォルトでは、空の特徴はトグルボタンで非表示になります。"
     },
     "TIDY5E.Settings.AlwaysShowSkills": {
         "name": "常に技能を表示",

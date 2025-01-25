@@ -51,4 +51,16 @@
       {localize('TIDY5E.TabSelection.MenuOptionText')}
     </ButtonMenuCommand>
   {/if}
+  {#if context.isCharacter || context.isNPC}
+    <ButtonMenuCommand
+      onMenuClick={() =>
+        new dnd5e.applications.actor.ActorSheetFlags(context.actor).render(
+          true,
+        )}
+      iconClass="fa-solid fa-star"
+      disabled={!context.editable}
+    >
+      {localize('DND5E.SpecialTraits')}
+    </ButtonMenuCommand>
+  {/if}
 </ButtonMenu>

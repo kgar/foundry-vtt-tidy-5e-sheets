@@ -34,12 +34,16 @@
         ? `medium`
         : `low`,
   );
+
+  let capacityMaxText = $derived(
+    capacity.max === Infinity ? '∞' : capacity.max,
+  );
 </script>
 
 <div
   class="meter progress"
   role="meter"
-  aria-label={localize('DND5E.ItemContainerCapacity')}
+  aria-label={localize('DND5E.CONTAINER.FIELDS.capacity.label')}
   aria-valuemin="0"
   aria-valuenow={capacity.pct}
   aria-valuetext={readableValue}
@@ -51,6 +55,6 @@
     <i class="fas fa-weight-hanging"></i>
     <span class="value">{readableValue}</span>
     <span class="separator">/</span>
-    <span class="max">{capacity.max}</span>
+    <span class="max">{capacityMaxText}</span>
   </div>
 </div>

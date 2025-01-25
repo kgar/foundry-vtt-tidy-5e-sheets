@@ -49,7 +49,10 @@ export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
   inlineToggleService = new InlineToggleService();
   itemFilterService: ItemFilterService;
   messageBus = $state<MessageBus>({ message: undefined });
-  sectionExpansionTracker = new ExpansionTracker(true, CONSTANTS.LOCATION_SECTION);
+  sectionExpansionTracker = new ExpansionTracker(
+    true,
+    CONSTANTS.LOCATION_SECTION
+  );
 
   constructor(...args: any[]) {
     super(...args);
@@ -282,6 +285,7 @@ export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
       labels: this.document.labels,
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
+      modernRules: FoundryAdapter.checkIfModernRules(this.item),
       owner: this.item.isOwner,
       properties: {
         active: [],
@@ -373,24 +377,6 @@ export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
       );
     }
     return overrides;
-  }
-
-  /* -------------------------------------------- */
-  /*  Rendering Life-Cycle Methods                */
-  /* -------------------------------------------- */
-
-  _onRender(
-    context: ContainerSheetClassicContext,
-    options: ApplicationRenderOptions
-  ) {
-    super._onRender(context, options);
-
-    TidyHooks.tidy5eSheetsRenderItemSheet(
-      this,
-      this.element,
-      context,
-      !!options.isFirstRender
-    );
   }
 
   /* -------------------------------------------- */

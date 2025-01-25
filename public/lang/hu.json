@@ -51,8 +51,6 @@
     "TIDY5E.RemoveFavorite": "Törlés a Kedvencek közül",
     "TIDY5E.ShowNotProficientSkills": "",
     "TIDY5E.HideNotProficientSkills": "",
-    "TIDY5E.ShowEmptyTraits": "",
-    "TIDY5E.HideEmptyTraits": "",
     "TIDY5E.Abilities": "Tulajdonságok",
     "TIDY5E.Environment": "Környezet",
     "TIDY5E.Search": "",
@@ -175,10 +173,6 @@
         "name": "",
         "hint": ""
     },
-    "TIDY5E.Settings.ToggleEmptyCharacterTraits": {
-        "name": "Üres karakterjellemzők ki/be.",
-        "hint": "Alapértelmezetten az üres jellemzők láthatók. Kapcsold be, hogy egy ki/be gomb megjelenjen."
-    },
     "TIDY5E.Settings.MoveTraitsBelowResources": {
         "name": "Jellemzők az erőforrások alá.",
         "hint": "Kapcsold be, hogy a jellemzőket a bal oldalról átmozgasd az erőforrások alá."
@@ -186,10 +180,6 @@
     "TIDY5E.Settings.ShowEquippedAmmoOnly": {
         "name": "Csak felszerelt lőszer mutatása.",
         "hint": "Kapcsold be, hogy csak a felszerelt lőszert mutassa a fegyver lőszer választóban."
-    },
-    "TIDY5E.Settings.AlwaysShowTraits": {
-        "name": "Mindig mutassa a jellemzőket.",
-        "hint": "Alapértelmezetten az üres jellemzőket elrejti egy ki/be gomb. Kapcsold be, hogy sose legyenek elrejtve."
     },
     "TIDY5E.Settings.AlwaysShowSkills": {
         "name": "Mindig mutassa a képzettségeket.",

@@ -124,6 +124,7 @@ export class ItemSheetRuntime {
         itemSheetTabs.featDetails,
         itemSheetTabs.activities,
         itemSheetTabs.effects,
+        itemSheetTabs.advancement
       ],
     },
     [CONSTANTS.ITEM_TYPE_LOOT]: {

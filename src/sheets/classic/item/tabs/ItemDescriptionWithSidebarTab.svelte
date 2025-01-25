@@ -69,7 +69,7 @@
         <HorizontalLineSeparator borderColor="separator" />
       {/if}
 
-      <div class="form-group">
+      <div class="form-group stacked">
         <label for="{appId}-weight-value">{localize('DND5E.Weight')}</label>
         <NumberInput
           id="{appId}-weight-value"
@@ -79,7 +79,18 @@
           document={context.item}
           disabled={!context.editable}
           selectOnFocus={true}
+          cssClass="large-value"
         />
+        <Select
+          document={context.item}
+          field="system.weight.units"
+          value={context.source.weight.units}
+        >
+          <SelectOptions
+            data={context.config.weightUnits}
+            labelProp="abbreviation"
+          />
+        </Select>
       </div>
 
       <HorizontalLineSeparator borderColor="separator" />

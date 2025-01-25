@@ -583,22 +583,6 @@ export function createSettings() {
         },
       },
 
-      toggleEmptyCharacterTraits: {
-        options: {
-          name: 'TIDY5E.Settings.ToggleEmptyCharacterTraits.name',
-          hint: 'TIDY5E.Settings.ToggleEmptyCharacterTraits.hint',
-          scope: 'client',
-          config: false,
-          default: false,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>(
-            'toggleEmptyCharacterTraits'
-          );
-        },
-      },
-
       moveTraitsBelowCharacterResources: {
         options: {
           name: 'TIDY5E.Settings.MoveTraitsBelowResources.name',
@@ -724,20 +708,6 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>('useHpOverlayNpc');
-        },
-      },
-
-      alwaysShowNpcTraits: {
-        options: {
-          name: 'TIDY5E.Settings.AlwaysShowTraits.name',
-          hint: 'TIDY5E.Settings.AlwaysShowTraits.hint',
-          scope: 'client',
-          config: false,
-          default: false,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>('alwaysShowNpcTraits');
         },
       },
 

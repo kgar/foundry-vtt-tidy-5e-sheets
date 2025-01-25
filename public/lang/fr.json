@@ -51,8 +51,6 @@
     "TIDY5E.Favorite": "Favori",
     "TIDY5E.ShowNotProficientSkills": "Indiquer comme non compétent",
     "TIDY5E.HideNotProficientSkills": "cacher comme non compétent",
-    "TIDY5E.ShowEmptyTraits": "afficher/modifier les caractéristiques vides",
-    "TIDY5E.HideEmptyTraits": "cacher les caractéristiques vides",
     "TIDY5E.Abilities": "Caractéristiques",
     "TIDY5E.Environment": "Environnement",
     "TIDY5E.Search": "Chercher",
@@ -175,10 +173,6 @@
         "name": "Utiliser la superposition de santé",
         "hint": "Affiche une superposition PV colorée."
     },
-    "TIDY5E.Settings.ToggleEmptyCharacterTraits": {
-        "name": "Afficher un bouton de bascule de l'affichage des traits",
-        "hint": "Activer cette option pour afficher un bouton de bascule de l'affichage des traits."
-    },
     "TIDY5E.Settings.MoveTraitsBelowResources": {
         "name": "Déplacer les traits sous les ressources",
         "hint": "Activer cette option pour afficher les traits sous les ressources."
@@ -186,10 +180,6 @@
     "TIDY5E.Settings.ShowEquippedAmmoOnly": {
         "name": "Montrer les munitions équipées uniquement",
         "hint": "N'affiche que les munitions actuellement équipées dans le sélecteur de munitions de l'arme."
-    },
-    "TIDY5E.Settings.AlwaysShowTraits": {
-        "name": "Toujours montrer les traits",
-        "hint": "Par défaut, les traits vides sont masqués et affichables vie un bouton. Activer cette option pour ne jamais les masquer."
     },
     "TIDY5E.Settings.AlwaysShowSkills": {
         "name": "Toujours montrer les caractéristiques",

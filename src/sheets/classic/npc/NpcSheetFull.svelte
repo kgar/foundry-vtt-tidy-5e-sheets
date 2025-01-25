@@ -98,8 +98,10 @@
       <div class="level-information">
         <div class="xp">
           <span
-            >{localize('DND5E.ExperiencePointsFormat', {
-              value: context.system.details.xp.value ?? 0,
+            >{localize('DND5E.ExperiencePoints.Format', {
+              value: FoundryAdapter.formatNumber(
+                context.system.details.xp.value ?? 0,
+              ),
             })}</span
           >
         </div>

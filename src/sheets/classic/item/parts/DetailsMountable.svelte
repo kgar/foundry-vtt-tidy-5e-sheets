@@ -4,6 +4,8 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { CONSTANTS } from 'src/constants';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import Select from 'src/components/inputs/Select.svelte';
+  import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
 
   let context = $derived(getItemSheetContext());
 
@@ -31,6 +33,30 @@
     disabled={!context.editable}
     step="1"
   />
+</div>
+
+<!-- Cover -->
+<div class="form-group">
+  <label for="{appId}-cover"
+    >{localize('DND5E.FEATURE.FIELDS.cover.label')}</label
+  >
+  <Select
+    id="{appId}-cover"
+    document={context.item}
+    field="system.cover"
+    value={context.source.cover}
+    disabled={!context.editable}
+  >
+    <SelectOptions
+      data={context.coverOptions}
+      labelProp="label"
+      valueProp="value"
+      blank=""
+    />
+  </Select>
+  <p class="hint">
+    {localize('DND5E.FEATURE.FIELDS.cover.hint')}
+  </p>
 </div>
 
 <!-- Hit Points -->
@@ -85,7 +111,7 @@
     document={context.item}
     field="system.hp.conditions"
     value={context.item.system.hp.conditions}
-    placeholder={localize('DND5E.HealthConditions')}
+    placeholder={localize('DND5E.VEHICLE.MOUNTABLE.FIELDS.hp.conditions.label')}
     class="full-width"
     disabled={!context.editable}
   />
@@ -118,7 +144,9 @@
       document={context.item}
       field="system.speed.conditions"
       value={context.item.system.speed.conditions}
-      placeholder={localize('DND5E.SpeedConditions')}
+      placeholder={localize(
+        'DND5E.VEHICLE.MOUNTABLE.FIELDS.speed.conditions.label',
+      )}
       class="full-width"
       disabled={!context.editable}
     />

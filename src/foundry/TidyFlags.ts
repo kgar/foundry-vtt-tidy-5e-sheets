@@ -927,35 +927,6 @@ export class TidyFlags {
   };
 
   /**
-   * Indicates whether the legendary toolbar should be shown for a given NPC.
-   */
-  static showLegendaryToolbar = {
-    key: 'showLegendaryToolbar' as const,
-    prop: TidyFlags.getFlagPropertyPath('showLegendaryToolbar'),
-    /** Gets whether the legendary toolbar should be shown for an NPC. */
-    get(actor: Actor5e): boolean | undefined {
-      return (
-        TidyFlags.tryGetFlag<boolean>(
-          actor,
-          TidyFlags.showLegendaryToolbar.key
-        ) ?? undefined
-      );
-    },
-    /** Sets whether the legendary toolbar should be shown for an NPC. */
-    set(actor: Actor5e, value: boolean): Promise<void> {
-      return TidyFlags.setFlag(
-        actor,
-        TidyFlags.showLegendaryToolbar.key,
-        value
-      );
-    },
-    /** Clears whether the legendary toolbar should be shown for an NPC. */
-    unset(actor: Actor5e) {
-      return TidyFlags.unsetFlag(actor, TidyFlags.showLegendaryToolbar.key);
-    },
-  };
-
-  /**
    * Indicates whether the additional personality info should be shown
    * for a given NPC on the biography tab.
    */
@@ -1099,32 +1070,6 @@ export class TidyFlags {
     /** Clears the weight of an actor. */
     unset(actor: Actor5e) {
       return TidyFlags.unsetFlag(actor, TidyFlags.weight.key);
-    },
-  };
-
-  /**
-   * Indicates whether the traits section should be expanded for a given actor.
-   * If this is set to `true`, all traits are shown.
-   * If this is set to `false`, empty traits sections are hidden and the rest are shown.
-   * This does not apply to custom traits which are added through the Tidy API.
-   */
-  static traitsExpanded = {
-    key: 'traitsExpanded' as const,
-    prop: TidyFlags.getFlagPropertyPath('traitsExpanded'),
-    /** Gets whether the traits section should be expanded for an actor. */
-    get(actor: Actor5e): boolean | undefined {
-      return (
-        TidyFlags.tryGetFlag<boolean>(actor, TidyFlags.traitsExpanded.key) ??
-        undefined
-      );
-    },
-    /** Sets whether the traits section should be expanded for an actor. */
-    set(actor: Actor5e, value: boolean): Promise<void> {
-      return TidyFlags.setFlag(actor, TidyFlags.traitsExpanded.key, value);
-    },
-    /** Clears whether the traits section should be expanded for an actor. */
-    unset(actor: Actor5e) {
-      return TidyFlags.unsetFlag(actor, TidyFlags.traitsExpanded.key);
     },
   };
 

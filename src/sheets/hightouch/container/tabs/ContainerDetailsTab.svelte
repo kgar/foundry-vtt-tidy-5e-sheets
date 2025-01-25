@@ -31,6 +31,16 @@
         disabled={!context.editable}
         selectOnFocus={true}
       />
+      <Select
+        document={context.item}
+        field="system.weight.units"
+        value={context.source.weight.units}
+      >
+        <SelectOptions
+          data={context.config.weightUnits}
+          labelProp="abbreviation"
+        />
+      </Select>
     </div>
   </div>
   <div class="form-group">
@@ -65,72 +75,138 @@
 
 <fieldset>
   <legend>
-    {localize('DND5E.ItemContainerDetails')}
+    {localize('DND5E.CONTAINER.Details')}
   </legend>
 
   <div class="form-group stacked container-properties">
-    <label for="">{localize('DND5E.ItemContainerProperties')}</label>
+    <label for="">{localize('DND5E.CONTAINER.FIELDS.properties.label')}</label>
     <ItemProperties />
   </div>
 
-  <div class="form-group">
-    <label for="{appId}-capacity-value"
-      >{localize('DND5E.ItemContainerCapacity')}</label
-    >
-    <div class="form-fields">
-      <NumberInput
-        id="{appId}-capacity-value"
-        document={context.item}
-        field="system.capacity.value"
-        value={context.source.capacity.value}
-        disabled={!context.editable}
-        placeholder="—"
-      />
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="{appId}-capacity-type"
-      >{localize('DND5E.ItemContainerCapacityType')}</label
-    >
-    <div class="form-fields">
-      <Select
-        id="{appId}-capacity-type"
-        document={context.item}
-        field="system.capacity.type"
-        value={context.source.capacity.type}
-        disabled={!context.editable}
-      >
-        <SelectOptions data={context.config.itemCapacityTypes} />
-      </Select>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="{appId}-attunement">{localize('DND5E.Attunement')}</label>
-    <div class="form-fields">
-      <Checkbox
-        id="{appId}-attuned"
-        document={context.item}
-        field="system.attuned"
-        checked={context.source.attuned}
-        disabled={!context.editable ||
-          // @ts-expect-error
-          !context.config.attunementTypes[context.system.attunement]}
-        title={localize('DND5E.AttunementAttuned')}
-      />
-      <Select
-        id="{appId}-attunement"
-        document={context.item}
-        field="system.attunement"
-        value={context.source.attunement}
-        disabled={!context.editable}
-      >
-        <SelectOptions
-          data={context.config.attunementTypes}
-          blank={localize('DND5E.AttunementNone')}
+  {#if context.properties.object.mgc}
+    <div class="form-group">
+      <label for="{appId}-attunement">{localize('DND5E.Attunement')}</label>
+      <div class="form-fields">
+        <Checkbox
+          id="{appId}-attuned"
+          document={context.item}
+          field="system.attuned"
+          checked={context.source.attuned}
+          disabled={!context.editable ||
+            // @ts-expect-error
+            !context.config.attunementTypes[context.system.attunement]}
+          title={localize('DND5E.AttunementAttuned')}
         />
-      </Select>
+        <Select
+          id="{appId}-attunement"
+          document={context.item}
+          field="system.attunement"
+          value={context.source.attunement}
+          disabled={!context.editable}
+        >
+          <SelectOptions
+            data={context.config.attunementTypes}
+            blank={localize('DND5E.AttunementNone')}
+          />
+        </Select>
+      </div>
+    </div>
+  {/if}
+</fieldset>
+
+<fieldset>
+  <legend>
+    {localize('DND5E.CONTAINER.FIELDS.capacity.label')}
+  </legend>
+
+  <div class="form-group">
+    <div class="form-group">
+      <label>{localize('DND5E.CONTAINER.FIELDS.capacity.count.label')}</label>
+      <div class="form-fields">
+        <NumberInput
+          document={context.item}
+          field="system.capacity.count"
+          value={context.source.capacity.count}
+          step="1"
+          min="0"
+          placeholder="—"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Volume Capacity -->
+
+  <div class="form-group split-group">
+    <label>{localize('DND5E.CONTAINER.FIELDS.capacity.volume.label')}</label>
+    <div class="form-fields">
+      <div class="form-group label-top">
+        <label>{localize('DND5E.Amount')}</label>
+        <div class="form-fields">
+          <NumberInput
+            document={context.item}
+            field="system.capacity.volume.value"
+            value={context.source.capacity.volume.value}
+            step="any"
+            min="0"
+            placeholder="—"
+          />
+        </div>
+      </div>
+
+      <div class="form-group label-top">
+        <label>{localize('DND5E.Unit')}</label>
+        <div class="form-fields">
+          <Select
+            document={context.item}
+            field="system.capacity.volume.units"
+            value={context.source.capacity.volume.units}
+            blankValue=""
+          >
+            <SelectOptions
+              data={context.config.volumeUnits}
+              labelProp="label"
+            />
+          </Select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Weight Capacity -->
+  <div class="form-group split-group">
+    <label>{localize('DND5E.CONTAINER.FIELDS.capacity.weight.label')}</label>
+    <div class="form-fields">
+      <div class="form-group label-top">
+        <label>{localize('DND5E.Amount')}</label>
+        <div class="form-fields">
+          <NumberInput
+            document={context.item}
+            field="system.capacity.weight.value"
+            value={context.source.capacity.weight.value}
+            step="any"
+            min="0"
+            placeholder="—"
+          />
+        </div>
+      </div>
+
+      <div class="form-group label-top">
+        <label>{localize('DND5E.Unit')}</label>
+        <div class="form-fields">
+          <Select
+            document={context.item}
+            field="system.capacity.weight.units"
+            value={context.source.capacity.weight.units}
+            blankValue=""
+          >
+            <SelectOptions
+              data={context.config.weightUnits}
+              labelProp="label"
+            />
+          </Select>
+        </div>
+      </div>
     </div>
   </div>
 </fieldset>

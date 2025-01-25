@@ -316,6 +316,7 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
       labels: this.document.labels,
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
+      modernRules: FoundryAdapter.checkIfModernRules(this.item),
       owner: this.item.isOwner,
       properties: {
         active: [],
@@ -416,20 +417,6 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
   /* -------------------------------------------- */
   /*  Rendering Life-Cycle Methods                */
   /* -------------------------------------------- */
-
-  _onRender(
-    context: ContainerSheetHightouchContext,
-    options: ApplicationRenderOptions
-  ) {
-    super._onRender(context, options);
-
-    TidyHooks.tidy5eSheetsRenderItemSheet(
-      this,
-      this.element,
-      context,
-      !!options.isFirstRender
-    );
-  }
 
   async _renderHTML(
     context: ContainerSheetHightouchContext,

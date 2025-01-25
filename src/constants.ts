@@ -75,6 +75,7 @@ export const CONSTANTS = {
   CHARACTER_FEAT_SECTION_RACE: 'race',
   FACILITY_TYPE_BASIC: 'basic',
   FACILITY_TYPE_SPECIAL: 'special',
+  FEAT_TYPE_VEHICLE: 'vehicle',
   GROUP_TYPE_GROUP: '',
   GROUP_TYPE_ENCOUNTER: 'encounter',
   GROUP_TYPE_PARTY: 'party',
@@ -392,6 +393,7 @@ export const CONSTANTS = {
   SHEET_SETTINGS_OPTION_GM_AND_OWNERS: 'gm-and-owners',
   TEXT_EDITOR_ACTIVATION_ELEMENT_SELECTOR: '.editor-content[data-edit]',
   SKILL_KEY_PERCEPTION: 'prc',
+  TREASURE_ANY: 'any',
   SVELTE_CONTEXT: {
     ACCORDION_CONTEXT: 'accordionContext',
     APP_ID: 'appId',

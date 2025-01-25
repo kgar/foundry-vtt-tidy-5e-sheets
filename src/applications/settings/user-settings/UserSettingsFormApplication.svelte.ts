@@ -63,7 +63,6 @@ export class UserSettingsFormApplication extends SvelteFormApplicationBase {
         actionListLimitActionsToCantrips:
           currentSettings.actionListLimitActionsToCantrips,
         alwaysShowNpcSkills: currentSettings.alwaysShowNpcSkills,
-        alwaysShowNpcTraits: currentSettings.alwaysShowNpcTraits,
         animateInspiration: currentSettings.animateInspiration,
         hideIfZero: currentSettings.hideIfZero,
         moveTraitsBelowCharacterResources:
@@ -76,7 +75,6 @@ export class UserSettingsFormApplication extends SvelteFormApplicationBase {
         showInspirationOnHover: currentSettings.showInspirationOnHover,
         showSpellbookTabNpc: currentSettings.showSpellbookTabNpc,
         toggleEmptyCharacterSkills: currentSettings.toggleEmptyCharacterSkills,
-        toggleEmptyCharacterTraits: currentSettings.toggleEmptyCharacterTraits,
         useClassicControlsForCharacter:
           currentSettings.useClassicControlsForCharacter,
         useClassicControlsForNpc: currentSettings.useClassicControlsForNpc,

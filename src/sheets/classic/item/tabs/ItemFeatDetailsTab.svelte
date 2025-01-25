@@ -7,6 +7,8 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import FieldUses from '../parts/FieldUses.svelte';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { CONSTANTS } from 'src/constants';
+  import Checkbox from 'src/components/inputs/Checkbox.svelte';
 
   let context = $derived(getItemSheetContext());
 
@@ -55,6 +57,31 @@
   </div>
 {/if}
 
+{#if context.system.type.value === CONSTANTS.FEAT_TYPE_VEHICLE}
+  <div class="form-group">
+    <label for="{appId}-cover"
+      >{localize('DND5E.FEATURE.FIELDS.cover.label')}</label
+    >
+    <Select
+      id="{appId}-cover"
+      document={context.item}
+      field="system.cover"
+      value={context.source.cover}
+      disabled={!context.editable}
+    >
+      <SelectOptions
+        data={context.coverOptions}
+        labelProp="label"
+        valueProp="value"
+        blank=""
+      />
+    </Select>
+    <p class="hint">
+      {localize('DND5E.FEATURE.FIELDS.cover.hint')}
+    </p>
+  </div>
+{/if}
+
 <div class="form-group">
   <label for="{appId}-prerequisites-level"
     >{localize('DND5E.Prerequisites.FIELDS.prerequisites.level.label')}</label
@@ -70,6 +97,23 @@
 
   <p class="hint">
     {localize('DND5E.Prerequisites.FIELDS.prerequisites.level.hint')}
+  </p>
+</div>
+
+<div class="form-group">
+  <label id="prerequisites-repeatable-{appId}">
+    {localize('DND5E.Prerequisites.FIELDS.prerequisites.repeatable.label')}
+  </label>
+  <div class="form-fields">
+    <Checkbox
+      id="prerequisites-repeatable-{appId}"
+      document={context.item}
+      field="system.prerequisites.repeatable"
+      checked={context.source.prerequisites.repeatable}
+    />
+  </div>
+  <p class="hint">
+    {localize('DND5E.Prerequisites.FIELDS.prerequisites.repeatable.hint')}
   </p>
 </div>
 
@@ -116,7 +160,7 @@
     >
       <SelectOptions
         data={context.config.enchantmentPeriods}
-        blank={localize('DND5E.UsesPeriods.Never')}
+        blank={localize('DND5E.USES.Recovery.Never')}
         labelProp="label"
         valueProp="value"
       />

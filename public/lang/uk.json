@@ -13,7 +13,6 @@
         "SetOverrideTrue": "Додати до списку дій",
         "OverriddenSetOverrideFalse": "Прибрати зі списку дій (Shift+Клік, щоб очистити перевизначення)"
     },
-    "TIDY5E.HideEmptyTraits": "Приховати порожні риси",
     "TIDY5E.ShowNotProficientSkills": "Показувати відсутні володіння",
     "TIDY5E.HideNotProficientSkills": "Ховати відсутні володіння",
     "TIDY5E.Tidy5eNpcSheetClassic": "Класичний Аркуш НІП Tidy 5e",
@@ -280,10 +279,6 @@
         "name": "Використовувати оверлей здоров'я",
         "hint": "Показує кольоровий оверлей здоров'я поверх портрета персонажа."
     },
-    "TIDY5E.Settings.ToggleEmptyCharacterTraits": {
-        "name": "Перемкнути пусті риси персонажа",
-        "hint": "Додає кнопку показати/сховати пусті риси персонажа."
-    },
     "TIDY5E.Settings.MoveTraitsBelowResources": {
         "name": "Перемістити риси під навички",
         "hint": "Розміщує панель особливостей під панеллю навичок."
@@ -291,10 +286,6 @@
     "TIDY5E.Settings.ShowEquippedAmmoOnly": {
         "name": "Показувати лише споряджені боєприпаси",
         "hint": "Показує лише на цю мить споряджені боєприпаси в меню вибору боєприпасу на зброї."
-    },
-    "TIDY5E.Settings.AlwaysShowTraits": {
-        "name": "Завжди показувати особливості",
-        "hint": "Прибирає перемикач видимості для особливостей і завжди показує їх."
     },
     "TIDY5E.Settings.AlwaysShowSkills": {
         "name": "Завжди показувати навички",
@@ -370,7 +361,6 @@
     "TIDY5E.StandardVehicleExhaustion4": "Макс. к-сть Пунктів Здоров'я зменшена вдвічі",
     "TIDY5E.StandardVehicleExhaustion3": "Перешкода для Кидків Атаки та Рятівних Кидків",
     "TIDY5E.StandardVehicleExhaustion5": "Швидкість зменшена до 0",
-    "TIDY5E.ShowEmptyTraits": "Показати/редагувати порожні риси",
     "TIDY5E.EnvironmentTooltip": "Середовище: {environment}",
     "TIDY5E.Search": "Пошук",
     "TIDY5E.SearchClear": "Очистити пошук",

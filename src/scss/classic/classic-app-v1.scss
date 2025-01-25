@@ -63,6 +63,7 @@
   }
 
   a.entity-link,
+  a.roll-link-group,
   a.roll-link,
   a.enricher-action,
   a:is(.content-link, .inline-roll),
@@ -247,7 +248,7 @@
   }
 
   /* Unidentified Item Concealment */
-  [inert] {
+  [inert]:not(i) {
     filter: blur(0.375rem) grayscale(100%) contrast(0%) opacity(50%);
     padding: 0.375rem;
   }
@@ -535,5 +536,27 @@
     }
   }
 
+    /* Reset button & input styles */
+    input.uninput, button.unbutton {
+      --border: none;
+      border: var(--border);
+      box-shadow: none;
+      outline: none;
+  
+      &:hover, &:focus {
+        box-shadow: none;
+        border: var(--border);
+        outline: none;
+      }
+    }
+  
+    input.uninput {
+      color: inherit;
+      font-weight: inherit;
+      height: unset;
+    }
+
+    
   // TODO: Extract to shared SCSS file to use with all classic sheets
+  
 }
