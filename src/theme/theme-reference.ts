@@ -528,7 +528,7 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5e-table-header-background-default': {
+  '--t5e-table-header-row-color': {
     type: 'todo',
     group: 'todo',
   },

@@ -134,7 +134,7 @@ export const defaultLightTheme: Tidy5eTheme = {
     '--t5e-button-hover-background': 'var(--t5e-faintest-color)',
     '--t5e-button-disabled-color': 'var(--t5e-light-color)',
     '--t5e-separator-color': 'var(--t5e-light-color)',
-    '--t5e-table-header-background-default': 'var(--t5e-faint-color)',
+    '--t5e-table-header-row-color': 'var(--t5e-faint-color)',
     '--t5e-table-header-row-border-color': 'var(--t5e-light-color)',
     '--t5e-component-tab-border': 'rgba(0, 0, 0, 0.25)',
     '--t5e-active-tab-background': 'transparent',
