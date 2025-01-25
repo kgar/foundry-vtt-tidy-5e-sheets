@@ -136,7 +136,7 @@ export const defaultLightTheme: Tidy5eTheme = {
     '--t5e-separator-color': 'var(--t5e-light-color)',
     '--t5e-table-header-background-default': 'var(--t5e-faint-color)',
     '--t5e-table-header-row-border-color': 'var(--t5e-light-color)',
-    '--t5e-tab-strip-border-color': 'rgba(0, 0, 0, 0.25)',
+    '--t5e-component-tab-border': 'rgba(0, 0, 0, 0.25)',
     '--t5e-active-tab-background': 'transparent',
     '--t5e-tab-background': 'var(--t5e-header-background)',
     '--t5e-scrollbar-thumb-color': '#782e22',

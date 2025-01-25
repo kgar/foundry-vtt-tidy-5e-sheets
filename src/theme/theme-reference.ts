@@ -536,7 +536,7 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5e-tab-strip-border-color': {
+  '--t5e-component-tab-border': {
     type: 'todo',
     group: 'todo',
   },

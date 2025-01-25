@@ -139,7 +139,7 @@ export const defaultDarkTheme: Tidy5eTheme = {
     '--t5e-separator-color': 'rgba(120, 120, 120, 0.1)',
     '--t5e-table-header-background-default': '#111111',
     '--t5e-table-header-row-border-color': '#111111',
-    '--t5e-tab-strip-border-color': 'transparent',
+    '--t5e-component-tab-border': 'transparent',
     '--t5e-tabs-background': 'var(--t5e-header-background)',
     '--t5e-active-tab-background': 'var(--t5e-sheet-background)',
     '--t5e-tab-background': 'transparent',

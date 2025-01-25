@@ -13,10 +13,7 @@
     width: calc(2.625rem * var(--tidy-switch-scale-internal));
     height: calc(1.375rem * var(--tidy-switch-scale-internal));
     position: relative;
-    background-color: var(
-      --tidy-switch-unchecked-background-color,
-      var(--t5e-faint-color)
-    );
+    background-color: var(--tidy-switch-unchecked-background-color);
     border: none;
     transition: background-color 0.5s ease, border-color 0.5s ease;
     border-radius: calc(1.375rem * var(--tidy-switch-scale-internal));
@@ -61,19 +58,15 @@
       right: calc(
         1.375rem * var(--tidy-switch-scale-internal) - var(--tidy-border-width)
       );
-      transition: transform var(--tidy-switch-thumb-transform-duration-internal);
-      transition: background-color var(--t5e-transition-default);
-      transition: color var(--t5e-transition-default);
+      transition: all var(--tidy-switch-thumb-transform-duration-internal);
     }
 
     &[aria-checked='true'] {
       border-color: var(--tidy-switch-checked-border-color, transparent);
+      background-color: var(--t5e-theme-color-highlight);
 
       &:not([disabled]) {
-        background-color: var(
-          --tidy-switch-checked-background-color,
-          var(--t5e-primary-accent-color)
-        );
+
       }
 
       &::before,
@@ -88,6 +81,23 @@
       .thumb-icon {
         background-color: var(--t5e-color-icon-ondefault-default);
         color: var(--t5e-color-icon-oninverse-default);
+      }
+      
+      &:hover {
+        filter: brightness(0.85);
+        background-color: var(--t5e-theme-color-highlight);
+        .thumb-icon {
+          color: var(--t5e-color-icon-oninverse-default);
+        }
+      }
+    }
+
+    
+    &:hover {
+      cursor: pointer;
+      background-color: var(--t5e-component-field-ondefault-background-hover);
+      .thumb-icon {
+        color: var(--t5e-color-icon-ondefault-default);
       }
     }
 
@@ -111,7 +121,7 @@
     --t5e-component-toggle-toggled-background
   );
   --t5e-switch-slider-color: var(
-    --t5e-component-field-ondefault-hover-overlay-emphasis
+    --t5e-component-field-oninverse-background
   );
   --t5e-thumb-icon-color: var(--t5e-color-icon-light-default);
 

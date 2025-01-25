@@ -21,6 +21,7 @@
     border-bottom-style: solid;
     border-bottom-color: transparent;
     box-shadow: none;
+    transition: all var(--t5e-transition-default);
 
     &.active,
     &:hover {

@@ -15,7 +15,12 @@
   .tidy-table-header-row {
     height: var(--table-header-row-height);
     border-radius: 0.125rem 0.125rem 0rem 0rem;
-    background: var(--t5e-table-header-background-default);
+    background: 
+      linear-gradient(
+        90deg,
+        var(--t5e-theme-color-darker) 0%,
+        var(--t5e-theme-color-default) 100%
+      );
     cursor: pointer;
 
     &:has(+ .expandable:not(.expanded)) {

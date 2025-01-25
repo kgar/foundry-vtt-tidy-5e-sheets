@@ -3,6 +3,7 @@
 input {
   box-shadow: none;
   outline: none;
+  color: var(--t5e-color-text-ondefault-default);
 
   &:hover,
   &:focus {
@@ -103,7 +104,6 @@ textarea {
     border-radius: 0;
     border: none;
     box-shadow: none;
-    color: var(--t5e-color-text-ondefault-default);
     flex: 1 0 0;
     font-size: var(--font-size-13);
     height: auto;
@@ -349,6 +349,7 @@ select {
   cursor: pointer;
 
   font-size: var(--font-size-13);
+  color: var(--t5e-color-text-ondefault-default);
 
   background-color: var(--t5e-component-card-ondefault-default);
   background-image: var(--bg-image-chevron), var(--bg-image-backdrop);
