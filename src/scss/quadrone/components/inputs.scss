@@ -10,7 +10,6 @@ select
 .checkbox {
   font-size: var(--font-size-default, 0.8666666667rem);
   font-weight: var(--font-weight-default, 400);
-  line-height: var(--t5e-lineheight-default, 0.875rem);
 }
 
 input[type='text'],
@@ -32,6 +31,9 @@ textarea,
 select,
 :where(search) {
   transition: all var(--t5e-transition-default);
+  line-height: 0.875rem;
+  box-shadow: var(--t5e-drop-shadow-field);
+  
   &:hover, &:focus {
     background-color: var(--t5e-component-field-ondefault-background-hover);
     border-color: var(--t5e-component-field-ondefault-border-hover);
@@ -67,9 +69,6 @@ textarea {
   border: 1px solid var(--t5e-component-field-ondefault-border);
   box-shadow: 0px 0px 4px 0px var(--dnd5e-shadow-15);
   display: flex;
-  font-size: var(--font-size-13, 0.8125rem);
-  font-weight: 400;
-  line-height: normal;
   padding: 0.5rem;
 
   &:hover {
@@ -280,6 +279,8 @@ textarea {
   padding-block-start: 0.3125rem;
 }
 .radio, .checkbox {
+  justify-content: flex-start;
+
   &:hover {
     input:not(:disabled) {  
       &:not(:checked) {
@@ -321,11 +322,7 @@ input[type='checkbox'] {
 input[type='radio'] {
   appearance: none;
   border-radius: 50%;
-  // margin-block-start: 0.0625rem;
-
   display: inline-flex;
-  // align-items: center;
-  // justify-content: center;
   transform: translateY(-0.125rem);
 
   &:checked::before {
