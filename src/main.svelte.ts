@@ -13,7 +13,6 @@ import { CONSTANTS } from './constants';
 import { Tidy5eSheetsApi } from './api/Tidy5eSheetsApi';
 import '../public/rpg-awesome/style/rpg-awesome.min.css';
 import { initRuntime } from './runtime/runtime-init';
-import MigrationNotificationFormApplication from 'src/migrations/notification/MigrationNotificationFormApplication';
 import { MigrationTally } from 'src/migrations/MigrationTally';
 import { setupIntegrations } from './integration/integration';
 import { TidyHooks } from './foundry/TidyHooks';
@@ -25,6 +24,7 @@ import { Tidy5eContainerSheetHightouch } from './sheets/hightouch/Tidy5eContaine
 import { Tidy5eItemDebugSheetHightouch } from './sheets/hightouch/Tidy5eItemDebugSheetHightouch.svelte';
 import { initReadyHooks } from './features/ready-hooks';
 import '@melloware/coloris/dist/coloris.css';
+import { debug } from './utils/logging';
 
 Hooks.once('init', () => {
   DocumentSheetConfig.registerSheet(
@@ -140,14 +140,40 @@ Hooks.once('ready', async () => {
 
   setupIntegrations(api);
 
-  if (
-    FoundryAdapter.userIsGm() &&
-    SettingsProvider.settings.migrationsConfirmationTally.get() < MigrationTally
-  ) {
-    new MigrationNotificationFormApplication().render(true);
-  }
+  handleMigrationNotification();
 
   initReadyHooks();
 
   DebugTools.onReady(api);
 });
+
+function handleMigrationNotification() {
+  let tally = SettingsProvider.settings.migrationsConfirmationTally.get();
+
+  if (FoundryAdapter.userIsGm() && tally === 0) {
+    debug(
+      'Skipping migration notification because this appears to be a new Tidy installation.'
+    );
+    tally = MigrationTally;
+  }
+
+  if (FoundryAdapter.userIsGm() && tally < MigrationTally) {
+    let migrationNotification = {
+      user: game.user._id,
+      whisper: game.users.filter((u: any) => u.isGM).map((u: any) => u._id),
+      content: `
+      <h2>${game.i18n.localize('TIDY5E.ModuleName')}</h2>
+      <p>
+        ${game.i18n.localize('TIDY5E.Settings.Migrations.chatNotification')}
+      </p>
+      `,
+    };
+
+    ChatMessage.create(migrationNotification, {});
+
+    FoundryAdapter.setTidySetting(
+      'migrationsConfirmationTally',
+      MigrationTally
+    );
+  }
+}

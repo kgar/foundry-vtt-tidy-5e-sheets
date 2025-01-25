@@ -7,7 +7,6 @@ export type UserSettingsContext = {
     actionListIncludeSpellsWithActiveEffects: CurrentSettings['actionListIncludeSpellsWithActiveEffects'];
     actionListLimitActionsToCantrips: CurrentSettings['actionListLimitActionsToCantrips'];
     alwaysShowNpcSkills: CurrentSettings['alwaysShowNpcSkills'];
-    alwaysShowNpcTraits: CurrentSettings['alwaysShowNpcTraits'];
     animateInspiration: CurrentSettings['animateInspiration'];
     hideIfZero: CurrentSettings['hideIfZero'];
     moveTraitsBelowCharacterResources: CurrentSettings['moveTraitsBelowCharacterResources'];
@@ -18,7 +17,6 @@ export type UserSettingsContext = {
     showInspirationOnHover: CurrentSettings['showInspirationOnHover'];
     showSpellbookTabNpc: CurrentSettings['showSpellbookTabNpc'];
     toggleEmptyCharacterSkills: CurrentSettings['toggleEmptyCharacterSkills'];
-    toggleEmptyCharacterTraits: CurrentSettings['toggleEmptyCharacterTraits'];
     useClassicControlsForCharacter: CurrentSettings['useClassicControlsForCharacter'];
     useClassicControlsForNpc: CurrentSettings['useClassicControlsForNpc'];
     useClassicControlsForVehicle: CurrentSettings['useClassicControlsForVehicle'];

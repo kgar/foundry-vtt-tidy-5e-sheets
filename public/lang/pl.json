@@ -97,8 +97,6 @@
     "TIDY5E.RemoveFavorite": "Usuń z ulubionych",
     "TIDY5E.ShowNotProficientSkills": "Pokaż niebiegłe",
     "TIDY5E.HideNotProficientSkills": "Ukryj niebiegłe",
-    "TIDY5E.ShowEmptyTraits": "Pokaż/edytuj puste atrybuty",
-    "TIDY5E.HideEmptyTraits": "Ukryj puste atrybuty",
     "TIDY5E.Abilities": "Umiejętności",
     "TIDY5E.Environment": "Środowisko",
     "TIDY5E.EnvironmentTooltip": "Środowisko: {environment}",
@@ -538,10 +536,6 @@
         "hint": "Umieszcza atrybuty poniżej zasobów postaci.",
         "name": "Przenieś atrybuty poniżej zasobów"
     },
-    "TIDY5E.Settings.AlwaysShowTraits": {
-        "hint": "Usuwa przycisk przełączający widoczność pustych atrybutów (Zmysły, Języki, Odporności, itp.) i pokazuje wszystkie.",
-        "name": "Zawsze pokazuj atrybuty"
-    },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
         "hint": "Pokazuje zakładkę księgi czarów dla NPC-ów. Wyłącz, aby przenieść sekcję księgi czarów do zakładki Atrybuty.",
         "name": "Pokaż zakładkę Księgi Czarów"
@@ -721,10 +715,6 @@
     "TIDY5E.Settings.ShowClassList": {
         "name": "Pokaż listę klas",
         "hint": "Pokazuje listę klas pod nazwą postaci."
-    },
-    "TIDY5E.Settings.ToggleEmptyCharacterTraits": {
-        "name": "Przełącznik pustych atrybutów",
-        "hint": "Dodaje przycisk przełączający wyświetlanie/ukrywanie pustych atrybutów (Zmysły, Języki, Odporności, itp.)."
     },
     "TIDY5E.Settings.ShowTraitLabels": {
         "name": "Pokaż etykiety atrybutów",

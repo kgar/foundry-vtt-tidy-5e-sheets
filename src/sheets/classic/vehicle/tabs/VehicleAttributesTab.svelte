@@ -115,7 +115,6 @@
   <div class="side-panel">
     <VehicleAttributes />
     <Traits
-      toggleable={true}
       useSenses={false}
       enableSpecialTraitsConfiguration={false}
     />

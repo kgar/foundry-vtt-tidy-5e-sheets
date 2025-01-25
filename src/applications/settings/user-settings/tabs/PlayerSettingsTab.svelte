@@ -79,13 +79,6 @@
 />
 
 <CheckboxSetting
-  bind:value={context.settings.toggleEmptyCharacterTraits}
-  name={SettingsProvider.settings.toggleEmptyCharacterTraits.options.name}
-  hint={SettingsProvider.settings.toggleEmptyCharacterTraits.options.hint}
-  id="toggleEmptyCharacterTraits"
-/>
-
-<CheckboxSetting
   bind:value={context.settings.moveTraitsBelowCharacterResources}
   name={SettingsProvider.settings.moveTraitsBelowCharacterResources.options
     .name}

@@ -75,6 +75,7 @@ export const CONSTANTS = {
   CHARACTER_FEAT_SECTION_RACE: 'race',
   FACILITY_TYPE_BASIC: 'basic',
   FACILITY_TYPE_SPECIAL: 'special',
+  FEAT_TYPE_VEHICLE: 'vehicle',
   GROUP_TYPE_GROUP: '',
   GROUP_TYPE_ENCOUNTER: 'encounter',
   GROUP_TYPE_PARTY: 'party',
