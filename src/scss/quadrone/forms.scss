@@ -17,6 +17,12 @@
     gap: 0.25rem;
     margin: 0;
 
+    > label.checkbox,
+    > label.radio {
+      flex-grow: unset;
+      min-height: var(--t5e-field-size-small);
+    }
+
     > legend {
       color: var(--t5e-color-text-ondefault-lighter, #4b4a44);
       /* title/small */
@@ -28,11 +34,6 @@
 
       border-bottom: 0.0938rem solid var(--t5e-color-gold);
       width: 100%;
-
-      > label.checkbox,
-      > label.radio {
-        min-height: var(--t5e-field-size-small);
-      }
 
       > label.checkbox {
         --checkbox-size: 0.875rem;

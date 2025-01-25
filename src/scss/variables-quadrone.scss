@@ -178,6 +178,7 @@
   --t5e-drop-shadow-card: 0px 0px 6px 0px rgba(0, 0, 0, 0.45);
   --t5e-drop-shadow-pill: 0px 0px 12px 0px rgba(0, 0, 0, 0.15);
   --t5e-drop-shadow-field: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
+  --t5e-drop-shadow-field-hover: 0px 0px 6px 0px rgba(0, 0, 0, 0.25);
   --t5e-drop-shadow-field-focus: 0 0 0 2px var(--t5e-drop-shadow-field-focus);
 
   /* Transitions */
@@ -202,13 +203,14 @@
 
   /* Fields */
   --t5e-component-field-ondefault-border: var(--t5e-color-gold);
+  --t5e-component-field-ondefault-border-hover: var(--t5e-theme-color-default);
   --t5e-component-field-ondefault-background: var(--t5e-component-card-ondefault-default);
-  --t5e-component-field-ondefault-background-hover: var(--t5e-color-palette-black);
-  --t5e-component-field-ondefault-background-hover-emphasis: var(--t5e-color-palette-black);
+  --t5e-component-field-ondefault-background-hover: var(--t5e-color-palette-white);
+  --t5e-component-field-ondefault-background-hover-emphasis: var(--t5e-color-palette-white);
   --t5e-component-field-oninverse-background: var(--t5e-component-card-oninverse-default);
   --t5e-component-field-oninverse-border: rgba(122, 122, 122, 1);
-  --t5e-component-field-oninverse-background-hover: var(--t5e-color-palette-white);
-  --t5e-component-field-oninverse-background-hover-emphasis: var(--t5e-color-palette-white);
+  --t5e-component-field-oninverse-background-hover: var(--t5e-color-palette-black);
+  --t5e-component-field-oninverse-background-hover-emphasis: var(--t5e-color-palette-black);
   --t5e-component-field-focus: var(--t5e-theme-colors-lighter);
   --t5e-field-size-default: 1.75rem;
   --t5e-field-size-small: 1.625rem;
@@ -224,7 +226,8 @@
   --t5e-component-enricher-icon:var(--t5e-color-palette-gold-56);
   --t5e-component-enricher-icon-hover: darken(--t5e-color-palette-gold-56, 10%);
   --t5e-component-enricher-background: rgba(159, 146, 117, 0.15);
-  --t5e-component-enricher-border: rgba(159, 146, 117, 0.34);
+  --t5e-component-enricher-background-hover: rgba(159, 146, 117, 0.25);;
+  --t5e-component-enricher-border: rgba(159, 146, 117, 0.35);
   --t5e-component-enricher-text-hover-shadow: 0px 0px 6px var(--t5e-color-text-oninverse-gold-emphasis);
 
   /* Abilities */
@@ -245,6 +248,7 @@
 
   /* Icons ------------ */
   --t5e-color-icon-ondefault-default: var(--t5e-color-palette-black);
+  --t5e-color-icon-ondefault-button: var(--t5e-color-palette-grey-21);
   --t5e-color-icon-ondefault-diminished: var(--t5e-color-palette-grey-40);
   --t5e-color-icon-ondefault-disabled: rgba(0, 0, 0, 0.4);
   --t5e-color-icon-oninverse-default: var(--t5e-color-palette-white);

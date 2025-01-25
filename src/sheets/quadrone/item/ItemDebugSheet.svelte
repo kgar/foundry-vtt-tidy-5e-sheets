@@ -289,11 +289,11 @@
     <fieldset>
       <legend> Data / Spell Components </legend>
       <ul class="unlist spell-components">
-        <li class="spell-component" title="Verbal">V</li>
-        <li class="spell-component" title="Somatic">S</li>
-        <li class="spell-component" title="Material">M</li>
-        <li class="spell-component-special" title="Ritual">R</li>
-        <li class="spell-component-special" title="Concentration">C</li>
+        <li class="spell-component" data-tooltip="Verbal">V</li>
+        <li class="spell-component" data-tooltip="Somatic">S</li>
+        <li class="spell-component" data-tooltip="Material">M</li>
+        <li class="spell-component-special" data-tooltip="Ritual">R</li>
+        <li class="spell-component-special" data-tooltip="Concentration">C</li>
       </ul>
     </fieldset>
     <fieldset>
@@ -321,18 +321,18 @@
     </fieldset>
     <fieldset>
       <legend> Input / Checkbox </legend>
-      <label for="checkbox-test-1" class="checkbox"
-        ><input type="checkbox" /> Property</label
-      >
-      <label for="checkbox-test-2" class="checkbox"
-        ><input type="checkbox" checked /> Property</label
-      >
-      <label for="checkbox-test-3" class="checkbox"
-        ><input type="checkbox" disabled /> Property</label
-      >
-      <label for="checkbox-test-4" class="checkbox"
-        ><input type="checkbox" checked disabled /> Property</label
-      >
+      <label for="checkbox-test-1" class="checkbox">
+        <input type="checkbox" id="checkbox-test-1" /> Property
+      </label>
+      <label for="checkbox-test-2" class="checkbox">
+        <input type="checkbox" id="checkbox-test-2" checked /> Property
+      </label>
+      <label for="checkbox-test-3" class="checkbox">
+        <input type="checkbox" id="checkbox-test-3" disabled /> Property
+      </label>
+      <label for="checkbox-test-4" class="checkbox">
+        <input type="checkbox" id="checkbox-test-4" checked disabled /> Property
+      </label>
     </fieldset>
     <fieldset class="vertical-gallery">
       <legend>Input / Radio</legend>
