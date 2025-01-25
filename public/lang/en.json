@@ -751,6 +751,7 @@
   "TIDY5E.Commands.ShowContainerPanel": "Show Container Panel",
   "TIDY5E.Commands.HideContainerPanel": "Hide Container Panel",
   "TIDY5E.ItemFilters.CanCast": "Can Cast",
+  "TIDY5E.ItemFilters.Flag.IncludeRitualsInCanCast": "Include Rituals in \"Can Cast\"",
   "TIDY5E.ItemFilters.CanUse": "Can Use",
   "TIDY5E.ItemFilters.ClearAll": "Clear All",
   "TIDY5E.ItemFilters.Category.Miscellaneous": "Miscellaneous",

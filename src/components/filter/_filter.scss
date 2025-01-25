@@ -63,10 +63,20 @@
   }
 
   .filter-group,
+  .filter-option-group,
   .filter-footer {
     padding: 0.25rem 0.5rem;
     min-width: 18.75rem;
     max-width: 31.25rem;
+  }
+
+  .filter-option {
+    font-size: 0.75rem;
+
+    input[type='checkbox'] {
+      width: auto;
+      height: 0.875rem;
+    }
   }
 
   .filters {
