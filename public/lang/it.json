@@ -751,7 +751,14 @@
         "Tooltip": "Specifica una sezione personalizzata per questo elemento quando viene inserito in un foglio attore o lascialo vuoto per il comportamento predefinito.",
         "ActionLabel": "Sezione Azioni",
         "ActionTooltip": "Specifica una sezione personalizzata per questo elemento quando viene inserito nella scheda Azioni oppure lasciala vuota per il comportamento predefinito.",
-        "LabelPl": "Sezioni"
+        "LabelPl": "Sezioni",
+        "SectionSelectorTitle": "{sectionType}: {documentName}",
+        "SectionSelectorChooseSectionTooltip": "Scegli una Sezione",
+        "SectionSelectorChooseActionSectionTooltip": "Scegli una Sezione di Azione",
+        "SectionSelectorExistingSections": "Sezioni Esistenti",
+        "SectionSelectorCreateNewSection": "Crea nuova sezione",
+        "SectionSelectorNewSectionName": "Nome nuova sezione",
+        "SectionSelectorSaveNewSection": "Salva nuova sezione"
     },
     "TIDY5E.LocalizationTestKey": "Tasto Prova Localizzazione",
     "TIDY5E.UseDefaultDialog": {
@@ -827,5 +834,21 @@
         "hint": "Determina il tipo di tiro predefinito da utilizzare quando si effettua un tiro salvezza su morte.",
         "name": "Tiro Salvezza Morte Predefinito"
     },
-    "TIDY5E.Activities.Cast.SourceHintText": "Da {itemName}"
+    "TIDY5E.Activities.Cast.SourceHintText": "Da {itemName}",
+    "TIDY5E.WorldSettings.TabCustomSections": {
+        "tabLabel": "Sezioni Personalizzate",
+        "CustomizedIndicatorLabel": "Personalizzati",
+        "ShowWhenEmptyTooltip": "Tutte le schede con le tabelle degli elementi hanno un set di sezioni predefinite che sono sempre mostrate anche quando non ci sono elementi nella sezione. Mostra sempre questa sezione, anche quando vuoto.",
+        "LimitToSpecificSheetsLabel": "Limita Sezioni Mostrate per Fogli Specifici",
+        "LimitToSpecificTabsLabel": "Limita Sezioni Mostrate per Schede Specifiche",
+        "ShowWhenEmptyLabel": "Mostra sezione quando vuoto"
+    },
+    "TIDY5E.Settings.GlobalCustomSections": {
+        "name": "Sezioni personalizzate globali",
+        "hint": "Sezioni personalizzate del mondo che possono essere configurate per vari scopi. Le sezioni personalizzate globali saranno sempre incluse nel selettore di sezione.",
+        "AddSection": "Aggiungi Sezione"
+    },
+    "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatLabel": "Info",
+    "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatTooltip": "Mostra descrizione in chat",
+    "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Tiene{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}"
 }
