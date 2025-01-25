@@ -1474,8 +1474,17 @@ export class Tidy5eCharacterSheet
     return Promise.all(
       Array.fromRange(max).map(async (i) => {
         const uuid = value[i];
-        if (uuid) return { actor: await fromUuid(uuid) };
-        return { empty: true };
+        if (uuid) {
+          const actor = await fromUuid(uuid);
+          return {
+            actor,
+            uuid,
+          }; // an actor can be removed from the system and still be associated here
+        }
+        return {
+          actor: undefined,
+          uuid: undefined,
+        };
       })
     );
   }
