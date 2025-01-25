@@ -542,6 +542,11 @@ select:hover {
         border-radius: 0.25rem;
         width: var(--roster-member-size, 3rem);
         height: var(--roster-member-size, 3rem);
+        a {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
       }
     }
 
@@ -550,6 +555,14 @@ select:hover {
       height: var(--roster-member-size, 3rem);
       border-radius: 0.25rem;
       object-fit: cover;
+    }
+
+    .broken-link-icon {
+      font-size: calc(var(--roster-member-size, 3rem) * 0.5);
+      color: var(--t5e-warning-accent-color);
+      display: inline-flex;
+      align-self: center;
+      justify-content: center;
     }
   }
 
@@ -614,10 +627,24 @@ select:hover {
     display: inline-flex;
     position: relative;
 
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     img {
       object-fit: cover;
       width: var(--img-size);
       height: var(--img-size);
+    }
+
+    .broken-link-icon {
+      font-size: calc(var(--img-size) * 0.75);
+      color: var(--t5e-warning-accent-color);
+      display: inline-flex;
+      align-self: center;
+      justify-content: center;
     }
 
     li {
@@ -892,4 +919,3 @@ select:hover {
     }
   }
 }
-

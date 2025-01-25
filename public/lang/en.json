@@ -813,5 +813,6 @@
   "TIDY5E.Activities.Cast.SourceHintText": "From {itemName}",
   "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatLabel": "Info",
   "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatTooltip": "Show description in chat",
-  "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Holds{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}"
+  "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Holds{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}",
+  "TIDY5E.BrokenLink": "Broken Link"
 }

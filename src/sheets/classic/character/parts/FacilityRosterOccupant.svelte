@@ -8,16 +8,24 @@
   import { getContext } from 'svelte';
 
   interface Props {
-    occupant: Actor5e;
+    occupant: Actor5e | undefined;
     type: string;
     index: number;
     prop: string;
     facilityId: string;
     facilityName: string;
+    uuid: string;
   }
 
-  let { occupant, type, index, prop, facilityId, facilityName }: Props =
-    $props();
+  let {
+    occupant,
+    type,
+    index,
+    prop,
+    facilityId,
+    facilityName,
+    uuid,
+  }: Props = $props();
 
   let context = $derived(getCharacterSheetContext());
 
@@ -36,16 +44,18 @@
   }
 
   const localize = FoundryAdapter.localize;
+
+  let name = $derived(occupant ? occupant.name : localize('TIDY5E.BrokenLink'));
 </script>
 
 <li
   class="roster-member {type} occupant-with-menu"
   class:highlight={hoveredFacilityOccupant.value ===
-    `${facilityId}-${index}-${occupant.uuid}`}
+    `${facilityId}-${index}-${uuid}`}
   class:unlocked={context.unlocked}
-  data-actor-uuid={occupant.uuid}
+  data-actor-uuid={uuid}
   data-tooltip={localize('TIDY5E.Facilities.RosterMember.Label', {
-    actorName: occupant.name,
+    actorName: name,
     facilityName: facilityName,
   })}
   data-facility-id={facilityId}
@@ -54,11 +64,15 @@
   data-index={index}
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_FACILITY_OCCUPANTS}
   onmouseenter={() =>
-    (hoveredFacilityOccupant.value = `${facilityId}-${index}-${occupant.uuid}`)}
+    (hoveredFacilityOccupant.value = `${facilityId}-${index}-${uuid}`)}
   onmouseleave={() => (hoveredFacilityOccupant.value = '')}
 >
   <a onclick={(ev) => context.editable && onRosterMemberClicked(ev)}>
-    <img src={occupant.img} alt={occupant.name} />
+    {#if occupant}
+      <img src={occupant.img} alt={name} />
+    {:else}
+      <i class="fa-solid fa-link-slash broken-link-icon"></i>
+    {/if}
     {#if context.unlocked}
       <i class="fa-solid fa-cog occupant-menu-icon"></i>
     {/if}
