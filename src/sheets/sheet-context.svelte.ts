@@ -3,7 +3,7 @@ import type { CoarseReactivityProvider } from 'src/features/reactivity/CoarseRea
 import type { GroupSheetClassicContext } from 'src/types/group.types';
 import type {
   ContainerSheetClassicContext,
-  ContainerSheetHightouchContext,
+  ContainerSheetQuadroneContext,
   ItemSheetContext,
 } from 'src/types/item.types';
 import type {
@@ -43,6 +43,6 @@ export function getContainerSheetClassicContext(): ContainerSheetClassicContext 
   return getSheetContext<ContainerSheetClassicContext>();
 }
 
-export function getContainerSheetHightouchContext(): ContainerSheetHightouchContext {
-  return getSheetContext<ContainerSheetHightouchContext>();
+export function getContainerSheetQuadroneContext(): ContainerSheetQuadroneContext {
+  return getSheetContext<ContainerSheetQuadroneContext>();
 }

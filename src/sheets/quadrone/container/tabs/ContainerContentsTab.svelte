@@ -2,8 +2,8 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
-  import CapacityBar from 'src/sheets/hightouch/container/parts/CapacityBar.svelte';
-  import ContainerContentsSections from 'src/sheets/hightouch/container/parts/ContainerContentsSections.svelte';
+  import CapacityBar from 'src/sheets/quadrone/container/parts/CapacityBar.svelte';
+  import ContainerContentsSections from 'src/sheets/quadrone/container/parts/ContainerContentsSections.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import ToggleButton from 'src/components/buttons/ToggleButton.svelte';
@@ -13,12 +13,12 @@
     createSearchResultsState,
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
-  import { getContainerSheetHightouchContext } from 'src/sheets/sheet-context.svelte';
+  import { getContainerSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import TidyVisibilityObserver from 'src/components/utility/TidyVisibilityObserver.svelte';
   import { Container } from 'src/features/containers/Container';
   import ExpandCollapseButton from '../../shared/ExpandCollapseButton.svelte';
 
-  let context = $derived(getContainerSheetHightouchContext());
+  let context = $derived(getContainerSheetQuadroneContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
   let inlineToggleService = getContext<InlineToggleService>(

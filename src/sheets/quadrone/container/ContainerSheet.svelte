@@ -6,7 +6,7 @@
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import PillSwitch from 'src/components/toggles/PillSwitch.svelte';
-  import { getContainerSheetHightouchContext } from 'src/sheets/sheet-context.svelte';
+  import { getContainerSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { coalesce } from 'src/utils/formatting';
   import { untrack } from 'svelte';
   import TidyVisibilityObserver from 'src/components/utility/TidyVisibilityObserver.svelte';
@@ -15,7 +15,7 @@
   import { TidyFlags } from 'src/api';
   import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
 
-  let context = $derived(getContainerSheetHightouchContext());
+  let context = $derived(getContainerSheetQuadroneContext());
 
   const localize = FoundryAdapter.localize;
 

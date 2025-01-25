@@ -1,9 +1,9 @@
 <script lang="ts">
   import ConfigurableSource from '../../shared/ConfigurableSource.svelte';
   import SheetHeaderEditModeToggle from 'src/sheets/classic/shared/SheetHeaderEditModeToggle.svelte';
-  import { getContainerSheetHightouchContext } from 'src/sheets/sheet-context.svelte';
+  import { getContainerSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
 
-  const context = $derived(getContainerSheetHightouchContext());
+  const context = $derived(getContainerSheetQuadroneContext());
 
   let sourceText = $derived(
     context.editable

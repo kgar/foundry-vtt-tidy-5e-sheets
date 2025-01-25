@@ -2,7 +2,7 @@
   import { CONSTANTS } from 'src/constants';
   import { settings } from 'src/settings/settings.svelte';
   import { getThemeOrDefault } from 'src/theme/theme';
-  import type { ItemDebugSheetHightouchContext } from '../Tidy5eItemDebugSheetHightouch.svelte';
+  import type { ItemDebugSheetQuadroneContext } from '../Tidy5eItemDebugSheetQuadrone.svelte';
   import ButtonWithOptionPanel from 'src/components/buttons/ButtonWithOptionPanel.svelte';
   import ToggleButton from 'src/components/buttons/ToggleButton.svelte';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
@@ -16,7 +16,7 @@
   import ItemDescriptions from '../shared/ItemDescriptions.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = $derived(getSheetContext<ItemDebugSheetHightouchContext>());
+  let context = $derived(getSheetContext<ItemDebugSheetQuadroneContext>());
 
   let theme = $derived(getThemeOrDefault(settings.value.colorScheme));
 

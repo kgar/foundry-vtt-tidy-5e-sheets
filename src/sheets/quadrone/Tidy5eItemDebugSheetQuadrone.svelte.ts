@@ -11,7 +11,7 @@ import type { Tab } from 'src/types/types';
 import type { Item5e, ItemDescription } from 'src/types/item.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
-export type ItemDebugSheetHightouchContext = {
+export type ItemDebugSheetQuadroneContext = {
   document: any;
   editable: boolean;
   item: Item5e;
@@ -21,7 +21,7 @@ export type ItemDebugSheetHightouchContext = {
   unlocked: boolean;
 };
 
-export class Tidy5eItemDebugSheetHightouch extends SvelteApplicationMixin<ItemDebugSheetHightouchContext>(
+export class Tidy5eItemDebugSheetQuadrone extends SvelteApplicationMixin<ItemDebugSheetQuadroneContext>(
   foundry.applications.sheets.ItemSheetV2
 ) {
   static DEFAULT_OPTIONS: Partial<
@@ -33,7 +33,7 @@ export class Tidy5eItemDebugSheetHightouch extends SvelteApplicationMixin<ItemDe
       'item',
       CONSTANTS.ITEM_TYPE_CONTAINER,
       'app-v2',
-      'hightouch',
+      'quadrone',
     ],
     tag: 'form',
     window: {
@@ -76,7 +76,7 @@ export class Tidy5eItemDebugSheetHightouch extends SvelteApplicationMixin<ItemDe
 
   async _prepareContext(
     options: ApplicationRenderOptions
-  ): Promise<ItemDebugSheetHightouchContext> {
+  ): Promise<ItemDebugSheetQuadroneContext> {
     const rollData = this.document.getRollData();
 
     // Enrich HTML description

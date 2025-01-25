@@ -17,7 +17,7 @@ import SpeciesSheet from 'src/sheets/classic/item/SpeciesSheet.svelte';
 import type { RegisteredContent, RegisteredTab } from '../types';
 import type {
   ContainerSheetClassicContext,
-  ContainerSheetHightouchContext,
+  ContainerSheetQuadroneContext,
   ItemSheetContext,
 } from 'src/types/item.types';
 import { CustomContentManager } from '../content/CustomContentManager';
@@ -36,7 +36,7 @@ export class ItemSheetRuntime {
     context:
       | ItemSheetContext
       | ContainerSheetClassicContext
-      | ContainerSheetHightouchContext
+      | ContainerSheetQuadroneContext
   ): Promise<CustomContent[]> {
     return await CustomContentManager.prepareContentForRender(
       context,
@@ -93,11 +93,11 @@ export class ItemSheetRuntime {
         itemSheetTabs.descriptionWithSidebar,
         itemSheetTabs.containerDetails,
       ],
-      tempHightouchTabs: () => [
-        itemSheetTabs.hightouchContainerContents,
-        itemSheetTabs.hightouchDescription,
+      tempQuadroneTabs: () => [
+        itemSheetTabs.quadroneContainerContents,
+        itemSheetTabs.quadroneDescription,
         // TODO: Only show to GMs and users when identified
-        itemSheetTabs.hightouchContainerDetails,
+        itemSheetTabs.quadroneContainerDetails,
       ],
     },
     [CONSTANTS.ITEM_TYPE_EQUIPMENT]: {
@@ -206,5 +206,5 @@ type ItemSheetInfo = {
   Sheet: Component;
   defaultTabs(): Tab[];
   // TODO: Remove after replacing item sheets
-  tempHightouchTabs?: () => Tab[];
+  tempQuadroneTabs?: () => Tab[];
 };

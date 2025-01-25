@@ -5,7 +5,7 @@
   import type { ExpandCollapseBehavior } from 'src/features/user-preferences/user-preferences.types';
   import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getContainerSheetHightouchContext } from 'src/sheets/sheet-context.svelte';
+  import { getContainerSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { getContext } from 'svelte';
 
   const sectionExpansionTracker = ExpansionTracker.getOrInit(
@@ -14,7 +14,7 @@
 
   const localize = FoundryAdapter.localize;
 
-  let context = $derived(getContainerSheetHightouchContext());
+  let context = $derived(getContainerSheetQuadroneContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
   let allExpanded = $derived(

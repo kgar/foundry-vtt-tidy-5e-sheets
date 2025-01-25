@@ -43,9 +43,9 @@
   }
 }
 
-/* Hightouch utilities */
+/* Quadrone utilities */
 
-.tidy5e-sheet.application:where(.hightouch) {
+.tidy5e-sheet.application:where(.quadrone) {
   /* Text Management */
   .truncate {
     white-space: nowrap;
@@ -115,7 +115,7 @@
 }
 
 /* Container Queries */
-.tidy5e-sheet.application.hightouch {
+.tidy5e-sheet.application.quadrone {
   @container (width < 3.125rem) {
     .hide-under-50 {
       display: none;

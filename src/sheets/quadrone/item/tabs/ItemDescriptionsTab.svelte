@@ -1,8 +1,8 @@
 <script lang="ts">
   import ItemDescriptions from '../../shared/ItemDescriptions.svelte';
-  import { getContainerSheetHightouchContext } from 'src/sheets/sheet-context.svelte';
+  import { getContainerSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = $derived(getContainerSheetHightouchContext());
+  let context = $derived(getContainerSheetQuadroneContext());
 </script>
 
 <ItemDescriptions

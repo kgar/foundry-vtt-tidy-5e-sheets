@@ -9,7 +9,7 @@ import type {
 import { DragAndDropMixin } from 'src/mixins/DragAndDropBaseMixin';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type {
-  ContainerSheetHightouchContext,
+  ContainerSheetQuadroneContext,
   CurrencyContext,
   Item5e,
   ItemChatData,
@@ -39,8 +39,8 @@ import ContainerHeaderStart from './item/parts/ContainerHeaderStart.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 
-export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
-  SvelteApplicationMixin<ContainerSheetHightouchContext>(
+export class Tidy5eContainerSheetQuadrone extends DragAndDropMixin(
+  SvelteApplicationMixin<ContainerSheetQuadroneContext>(
     foundry.applications.sheets.ItemSheetV2
   )
 ) {
@@ -71,7 +71,7 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
       'item',
       CONSTANTS.ITEM_TYPE_CONTAINER,
       'app-v2',
-      'hightouch',
+      'quadrone',
     ],
     tag: 'form',
     window: {
@@ -158,7 +158,7 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
 
   async _prepareContext(
     options: ApplicationRenderOptions
-  ): Promise<ContainerSheetHightouchContext> {
+  ): Promise<ContainerSheetQuadroneContext> {
     const rollData = this.item.getRollData();
 
     const enrichmentOptions = {
@@ -218,7 +218,7 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
       'm';
 
     // Utilities
-    let utilities: Utilities<ContainerSheetHightouchContext> = {
+    let utilities: Utilities<ContainerSheetQuadroneContext> = {
       [CONSTANTS.TAB_CONTAINER_CONTENTS]: {
         utilityToolbarCommands: [
           {
@@ -288,7 +288,7 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
 
     const capacityContext = await Container.computeCapacity(this.item);
 
-    const context: ContainerSheetHightouchContext = {
+    const context: ContainerSheetQuadroneContext = {
       capacity: capacityContext,
       concealDetails:
         !game.user.isGM && this.document.system.identified === false,
@@ -341,7 +341,7 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
       options: (this.document.system.validProperties ?? [])
         .reduce(
           (
-            arr: ContainerSheetHightouchContext['properties']['options'],
+            arr: ContainerSheetQuadroneContext['properties']['options'],
             k: any
           ) => {
             // @ts-ignore
@@ -357,8 +357,8 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
         )
         .sort(
           (
-            a: ContainerSheetHightouchContext['properties']['options'][0],
-            b: ContainerSheetHightouchContext['properties']['options'][0]
+            a: ContainerSheetQuadroneContext['properties']['options'][0],
+            b: ContainerSheetQuadroneContext['properties']['options'][0]
           ) => a.label.localeCompare(b.label, game.i18n.lang)
         ),
     };
@@ -375,7 +375,7 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
 
     context.tabs =
       // TODO: Eliminate null forgiving operator and temp field when items are fully converted.
-      ItemSheetRuntime.sheets[this.item.type]?.tempHightouchTabs!() ?? [];
+      ItemSheetRuntime.sheets[this.item.type]?.tempQuadroneTabs!() ?? [];
     context.tabs.push(...customTabs);
 
     TidyHooks.tidy5eSheetsPreConfigureSections(this, this.element, context);
@@ -419,7 +419,7 @@ export class Tidy5eContainerSheetHightouch extends DragAndDropMixin(
   /* -------------------------------------------- */
 
   async _renderHTML(
-    context: ContainerSheetHightouchContext,
+    context: ContainerSheetQuadroneContext,
     options: ApplicationRenderOptions
   ) {
     game.user.apps[this.id] = this;

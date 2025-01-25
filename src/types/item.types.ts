@@ -221,7 +221,7 @@ export type CurrencyContext = {
   abbr: string;
 };
 
-export type ContainerSheetHightouchContext = {
+export type ContainerSheetQuadroneContext = {
   capacity: ContainerCapacityContext;
   config: typeof CONFIG.DND5E;
   concealDetails: boolean;
@@ -260,7 +260,7 @@ export type ContainerSheetHightouchContext = {
   tabs: Tab[];
   unlocked: boolean;
   userPreferences: UserPreferences;
-  utilities: Utilities<ContainerSheetHightouchContext>;
+  utilities: Utilities<ContainerSheetQuadroneContext>;
 };
 
 export type ContainerSection = { items: Item5e[] } & TidySectionBase;

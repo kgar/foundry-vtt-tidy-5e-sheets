@@ -1,4 +1,4 @@
-.tidy5e-sheet:is(.hightouch, .dnd5e2) {
+.tidy5e-sheet:is(.quadrone, .dnd5e2) {
   --t5e-font-modesto-condensed: 'Modesto Condensed', 'Palatino Linotype', serif;
   --t5e-font-family-title: var(--t5e-font-modesto-condensed);
   --t5e-font-roboto-condensed: 'Roboto Condensed', sans-serif;
@@ -139,7 +139,7 @@
   --t5e-color-palette-red-100: rgba(255, 0, 0, 1);
 }
 
-.tidy5e-sheet.hightouch.dark {
+.tidy5e-sheet.quadrone.dark {
   /* Dark Mode Colors */
 
   --t5e-color-text-onInverse-default: var(--t5e-color-palette-black);
