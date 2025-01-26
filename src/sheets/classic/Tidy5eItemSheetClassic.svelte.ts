@@ -958,7 +958,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
 
   async toggleAdvancementLock() {
     this.advancementConfigurationMode = !this.advancementConfigurationMode;
-    this.context.set(await this.getData());
+    this.render();
   }
 
   /* -------------------------------------------- */
