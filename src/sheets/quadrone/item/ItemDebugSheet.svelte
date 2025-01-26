@@ -115,6 +115,34 @@
         itemDescriptions={context.itemDescriptions}
       />
     </div>
+    <fieldset>
+      <legend> Colors </legend>
+      <div style="background-color: var(--t5e-color-palette-red-45); padding: 0.5rem; color:white;">
+        Brand red
+      </div>
+      <div style="background-color: var(--t5e-theme-color-default); padding: 0.5rem; color:white;">
+        Default theme color
+      </div>
+      <div style="background-color: var(--t5e-theme-color-darkest); padding: 0.5rem; color:white;">
+        Darkest theme color
+      </div>
+      <div style="background-color: var(--t5e-theme-color-darker); padding: 0.5rem; color:white;">
+        Darker theme color
+      </div>
+      <div style="background-color: var(--t5e-theme-color-lighter); padding: 0.5rem; color:white;">
+        Lighter theme color
+      </div>
+      <div style="background-color: var(--t5e-theme-color-lightest); padding: 0.5rem; color:white;">
+        Lightest theme color
+      </div>
+      <div style="background-color: var(--t5e-theme-color-highlight); padding: 0.5rem; color:white;">
+        Highlight theme color
+      </div>
+      <div style="background: linear-gradient(90deg, var(--t5e-theme-color-darkest), var(--t5e-theme-color-default)); padding: 0.5rem; color:white;">
+        Theme gradient
+      </div>
+      <!-- TODO -->
+    </fieldset>
     <fieldset class="vertical-gallery">
       <legend> Button / Attention </legend>
       Anchor

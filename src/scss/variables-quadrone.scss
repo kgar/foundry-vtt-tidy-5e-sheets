@@ -70,6 +70,7 @@
   --t5e-color-palette-gold-56: rgba(143, 123, 78, 1);
 
   /* Red */
+  --t5e-color-red: rgba(116, 27, 43, 1);
   --t5e-color-palette-red-100: rgba(255, 0, 0, 1);
   --t5e-color-palette-red-60: rgba(154, 42, 48, 1);
   --t5e-color-palette-red-45: rgba(116, 27, 43, 1);
@@ -78,6 +79,7 @@
   --t5e-gradient-red: var(--t5e-color-palette-red-45), linear-gradient(90deg, var(--t5e-color-palette-red-27), var(--t5e-color-palette-red-45));
 
   /* Orange */
+  --t5e-color-orange: rgba(179, 99, 25, 1);
   --t5e-color-palette-orange-100: rgba(255, 100, 0, 1);
   --t5e-color-palette-orange-97: rgba(248, 117, 88, 1);
   --t5e-color-palette-orange-70: rgba(179, 99, 25, 1);
@@ -88,6 +90,7 @@
   --t5e-color-palette-yellow-100: rgba(255, 182, 42, 1);
 
   /* Green */
+  --t5e-color-green: rgba(55, 109, 71, 1);
   --t5e-color-palette-green-68: rgba(114, 173, 17, 1);
   --t5e-color-palette-green-65: rgba(59, 165, 93, 1);
   --t5e-color-palette-green-43: rgba(55, 109, 71, 1);
@@ -96,39 +99,40 @@
   --t5e-gradient-green: var(--t5e-color-palette-green-43), linear-gradient(90deg, var(--t5e-color-palette-green-21), var(--t5e-color-palette-green-43));
 
   /* Blue */
+  --t5e-color-blue: rgba(31, 76, 145, 1);
   --t5e-color-palette-blue-70: rgba(36, 124, 178, 1);
   --t5e-color-palette-blue-57: rgba(31, 76, 145, 1);
   --t5e-color-palette-blue-33: rgba(18, 44, 84, 1);
 
   /* Blue-green */
+  --t5e-color-blue-green: rgba(2, 90, 128, 1);
   --t5e-color-palette-blue-green-50: rgba(2, 90, 128, 1);
   --t5e-color-palette-blue-green-30: rgba(1, 54, 77, 1);
 
   /* Purple */
+  --t5e-color-purple: rgba(100, 64, 128, 1);
   --t5e-color-palette-purple-92: rgba(184, 117, 235, 1);
   --t5e-color-palette-purple-91: rgba(195, 100, 231, 1);
   --t5e-color-palette-purple-59: rgba(100, 64, 128, 1);
   --t5e-color-palette-purple-34: rgba(68, 43, 87, 1);
 
   /* Pink */
+  --t5e-color-pink: rgba(117, 53, 88, 1);
   --t5e-color-palette-pink-55: rgba(117, 53, 88, 1);
   --t5e-color-palette-pink-31: rgba(77, 34, 57, 1);
   --t5e-gradient-pink: var(--t5e-color-palette-pink-55), linear-gradient(90deg, var(--t5e-color-palette-pink-31), var(--t5e-color-palette-pink-55));
 
   /* Theme ------------ */
   --t5e-theme-color-default: var(--t5e-color-palette-red-45);
+  //--t5e-theme-color-default: oklch(from #ff74c5 40% 35% h);
+  // TODO: When a custom theme color is set, use the formula above.
   --t5e-primary-accent-color: var(--t5e-theme-color-default);
-  // --t5e-theme-color-darker: darken(var(--t5e-theme-color-default), 15%);
-  // --t5e-theme-color-lighter: lighten(var(--t5e-theme-color-default), 15%);
-  // --t5e-theme-color-lightest: lighten(saturate(var(--t5e-theme-color-default), 30%), 30%);
-  // --t5e-theme-color-highlight: lighten(saturate(var(--t5e-theme-color-default), 100%), 100%);
-  --t5e-theme-color-darker: color-mix(in srgb, var(--t5e-theme-color-default), #000 15%);
-  --t5e-theme-color-lighter: color-mix(in srgb, var(--t5e-theme-color-default), #fff 15%);
-  --t5e-theme-color-lightest: color-mix(in srgb, color-adjust(var(--t5e-theme-color-default) saturation 30%), #fff 30%);
-  --t5e-theme-color-highlight: color-mix(in srgb, color-adjust(var(--t5e-theme-color-default) saturation 100%), #fff 100%);
-  --t5e-theme-color-highlight: #FF6400; // TODO: Going to have to generate these in code.
+  --t5e-theme-color-darkest: oklch(from var(--t5e-theme-color-default) calc(l * 0.75) calc(c * 1.2) h);
+  --t5e-theme-color-darker: oklch(from var(--t5e-theme-color-default) calc(l * 0.85) calc(c * 1.2) h);
+  --t5e-theme-color-lighter: oklch(from var(--t5e-theme-color-default) calc(l * 1.2) calc(c * 1.15) h);
+  --t5e-theme-color-lightest: oklch(from var(--t5e-theme-color-default) calc(l * 1.4) calc(c * 1.3) h);
+  --t5e-theme-color-highlight: oklch(from var(--t5e-theme-color-default) calc(l * 1.4) 60% h);
   --t5e-theme-gradient: linear-gradient(90deg, var(--t5e-theme-color-darker), var(--t5e-theme-color-default));
-  // TODO: Gradients can't be passed in CSS variables.
 
 
   /* Special ------------ */
@@ -366,25 +370,5 @@
 
     /* Drop shadows */
     --t5e-drop-shadow-card: 0px 0px 9px 0px #000;
-  }
-
-
-  &.theme-green {
-    /* Example theme for testing */
-    --t5e-theme-color-default: var(--t5e-color-palette-green-43);
-    --t5e-theme-color-darker: darken(var(--t5e-theme-color-default), 15%);
-    --t5e-theme-color-lighter: lighten(var(--t5e-theme-color-default), 15%);
-    --t5e-theme-color-lightest: lighten(saturate(var(--t5e-theme-color-default), 30%), 30%);
-    --t5e-theme-color-highlight: lighten(saturate(var(--t5e-theme-color-default), 100%), 100%);
-    --t5e-theme-gradient: var(--t5e-theme-color-default), linear-gradient(90deg, var(--t5e-theme-color-darker), var(--t5e-theme-color-default));
-  }
-  &.theme-purple {
-    /* Example theme for testing */
-    --t5e-theme-color-default: var(--t5e-color-palette-purple-59);
-    --t5e-theme-color-darker: darken(var(--t5e-theme-color-default), 15%);
-    --t5e-theme-color-lighter: lighten(var(--t5e-theme-color-default), 15%);
-    --t5e-theme-color-lightest: lighten(saturate(var(--t5e-theme-color-default), 30%), 30%);
-    --t5e-theme-color-highlight: lighten(saturate(var(--t5e-theme-color-default), 100%), 100%);
-    --t5e-theme-gradient: var(--t5e-theme-color-default), linear-gradient(90deg, var(--t5e-theme-color-darker), var(--t5e-theme-color-default));
   }
 }
