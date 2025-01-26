@@ -14,6 +14,8 @@ import type {
   BasicRollProcessConfiguration,
 } from 'src/foundry/foundry.types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
+import { coalesce } from './formatting';
+import { CONSTANTS } from 'src/constants';
 
 export function scaleCantripDamageFormula(spell: Item5e, formula: string) {
   try {
@@ -119,11 +121,14 @@ export function calculateSpellAttackAndDc(
     const rollData = actor.getRollData();
 
     const prof = actor.system.attributes.prof ?? 0;
-    const spellAbility =
-      spellClass?.system?.spellcasting?.ability ??
-      actor.system.attributes.spellcasting;
+    const spellAbility = coalesce(
+      spellClass?.system?.spellcasting?.ability,
+      actor.system.attributes.spellcasting
+    );
     const abilityMod =
-      (spellAbility != '' ? actor.system.abilities[spellAbility].mod : 0) ?? 0;
+      (spellAbility != ''
+        ? actor.system.abilities[spellAbility].mod
+        : actor.system.attributes.spellmod) ?? 0;
     const spellAttackMod = prof + abilityMod;
 
     const rawRsak = Roll.replaceFormulaData(
@@ -161,7 +166,10 @@ export function calculateSpellAttackAndDc(
 
     return {
       dc:
-        spellClass?.system.spellcasting.save ?? actor.system.attributes.spelldc,
+        spellClass?.system.spellcasting.progression !==
+        CONSTANTS.SPELLCASTING_PROGRESSION_NONE
+          ? spellClass?.system.spellcasting.save
+          : actor.system.attributes.spelldc,
       dcTooltip: getDcTooltip(actor, spellAbility),
       meleeMod: msakTotal,
       meleeTooltip: buildAttackModTooltip(
