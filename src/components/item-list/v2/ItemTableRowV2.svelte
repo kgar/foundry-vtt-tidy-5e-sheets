@@ -122,9 +122,11 @@
 
 <TidyTableRow
   {hidden}
+  rowContainerAttributes={{
+    ['data-item-id']: item?.id,
+  }}
   rowAttributes={{
     ['data-context-menu']: contextMenu?.type,
-    ['data-item-id']: item?.id,
     ['data-tidy-table-row']: '',
     ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.ITEM_TABLE_ROW,
     ['data-tidy-item-type']: item?.type ?? 'unknown',
