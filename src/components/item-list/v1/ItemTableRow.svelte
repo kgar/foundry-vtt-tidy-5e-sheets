@@ -141,6 +141,7 @@
 
 <div
   class="item-table-row-container"
+  data-item-id={item?.id}
   class:hidden
   aria-hidden={hidden}
   {...containerAttributes}
@@ -159,7 +160,6 @@
     data-favorite-id={favoriteId ?? null}
     data-info-card={item ? 'item' : null}
     data-info-card-entity-uuid={item?.uuid ?? null}
-    data-item-id={item?.id}
     {...rowAttributes}
   >
     {@render children?.({ toggleSummary })}

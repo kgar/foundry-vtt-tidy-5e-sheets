@@ -34,7 +34,7 @@ export function BaseSheetCustomSectionMixin<
 
       // Handle moving out of container & item sorting
       if (this.actor.uuid === item.parent?.uuid) {
-        const removingFromContainer = item.system.container !== null;
+        const removingFromContainer = !isNil(item.system.container);
         if (removingFromContainer) {
           await item.update({ 'system.container': null });
         }
