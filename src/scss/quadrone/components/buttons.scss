@@ -131,7 +131,7 @@
 }
 
 &:where(.inverse) :is(button, .button),
-:where(.inverse) :is(button, .button)
+:where(.inverse) :is(button, .button),
 &:where(.dark) :is(button, .button) {
   border: 1px solid var(--t5e-component-field-oninverse-border);
   background: var(--t5e-component-field-oninverse-background);
