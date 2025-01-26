@@ -10,8 +10,11 @@
   let { conceal, children }: Props = $props();
 </script>
 
-<div role="presentation" class="concealing-parent inert-animation-container">
-  <div role="presentation" inert={conceal}>
+<div
+  role="presentation"
+  class="concealing-parent concealed-content-animation-container"
+>
+  <div role="presentation" class:conceal-content={conceal} inert={conceal}>
     {@render children?.()}
   </div>
   {#if conceal}

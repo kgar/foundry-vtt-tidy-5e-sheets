@@ -11,27 +11,3 @@
     <p>{localize('DND5E.Unidentified.Notice')}</p>
   </div>
 </div>
-
-<style lang="scss">
-  .unidentified-notice {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-content: start center;
-
-    div {
-      margin-block-start: 4rem;
-      margin-inline: auto;
-      padding: 2rem;
-      border: 0.0625rem solid var(--t5e-separator-color);
-      border-radius: 0.25rem;
-      box-shadow: 0 0 0.75rem rgb(0 0 0 / 45%);
-      background: var(--t5e-background);
-      text-align: center;
-
-      strong {
-        font-size: 1.5rem;
-      }
-    }
-  }
-</style>

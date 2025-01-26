@@ -129,7 +129,10 @@
       <h4 class="properties-header">
         {localize('DND5E.Attack')}/{localize('DND5E.Damage')}
       </h4>
-      <ol class="properties-list animate-inert" inert={context.concealDetails}>
+      <ol
+        class="properties-list animate-concealed-content"
+        class:conceal-content={context.concealDetails}
+      >
         {#if context.labels.save}
           <li>
             {context.labels.save}
@@ -153,9 +156,12 @@
     {/if}
 
     {#if context.properties.active.length}
-      <section class="inert-animation-container">
+      <section class="concealed-content-animation-container">
         <h4 class="properties-header">{localize('DND5E.Properties')}</h4>
-        <ol class="properties-list" inert={context.concealDetails}>
+        <ol
+          class="properties-list"
+          class:conceal-details={context.concealDetails}
+        >
           {#each context.properties.active as prop}
             {#if prop !== null && prop !== undefined}
               <li>{prop}</li>
