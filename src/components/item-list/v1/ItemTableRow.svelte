@@ -13,7 +13,6 @@
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import type { MouseEventHandler } from 'svelte/elements';
-  import InlineActivitiesList from '../InlineActivitiesList.svelte';
   import { Activities } from 'src/features/activities/activities';
 
   interface Props {

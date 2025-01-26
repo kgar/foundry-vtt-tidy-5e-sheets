@@ -9,6 +9,7 @@ export type UserSettingsContext = {
     alwaysShowNpcSkills: CurrentSettings['alwaysShowNpcSkills'];
     animateInspiration: CurrentSettings['animateInspiration'];
     hideIfZero: CurrentSettings['hideIfZero'];
+    inlineActivitiesPosition: CurrentSettings['inlineActivitiesPosition'];
     moveTraitsBelowCharacterResources: CurrentSettings['moveTraitsBelowCharacterResources'];
     moveTraitsBelowNpcResources: CurrentSettings['moveTraitsBelowNpcResources'];
     showClassList: CurrentSettings['showClassList'];

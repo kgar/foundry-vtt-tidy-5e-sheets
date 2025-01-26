@@ -278,6 +278,9 @@
   "TIDY5E.UserSettings.TabActionsList": {
     "tabLabel": "Actions List"
   },
+  "TIDY5E.UserSettings.TabActivities": {
+    "tabLabel": "Activities"
+  },
   "TIDY5E.Settings.ItemCardsForAllItems": {
     "name": "Show Item Cards in All Layouts",
     "hint": "When this setting is disabled, item cards only show in the grid."
@@ -606,6 +609,12 @@
   "TIDY5E.Settings.UseTidySpellSchoolIcons": {
     "name": "Use Tidy Spell School Icons",
     "hint": "Use Tidy's handpicked icons for spell schools. To customize spell school icons through CONFIG.DND5E or through other modules, disable this option. To extend Tidy's custom spell school icons, refer to the Tidy API documentation."
+  },
+  "TIDY5E.Settings.InlineActivitiesPosition": {
+    "name": "Inline Activities Position",
+    "hint": "When expanding an item, activities for that item are shown. Use this setting to determine if activities are put at the top, before the item description, or bottom, below the item description, buttons, and tags.",
+    "top": "Top",
+    "bottom": "Bottom"
   },
   "TIDY5E.Settings.Reset": {
     "name": "Reset Settings to Default",

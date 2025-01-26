@@ -9,6 +9,7 @@
   import InlineActivitiesList from './InlineActivitiesList.svelte';
   import { Activities } from 'src/features/activities/activities';
   import type { ActivityItemContext } from 'src/types/types';
+  import { settings, SettingsProvider } from 'src/settings/settings.svelte';
 
   interface Props {
     chatData: ItemChatData;
@@ -36,6 +37,10 @@
   });
 </script>
 
+{#if activities.length > 0 && settings.value.inlineActivitiesPosition === CONSTANTS.INLINE_ACTIVITIES_POSITION_TOP}
+  <InlineActivitiesList {item} {activities} />
+  <HorizontalLineSeparator />
+{/if}
 <div
   class="item-summary"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_SUMMARY}
@@ -71,7 +76,7 @@
     </div>
   {/if}
 </div>
-{#if activities.length > 0}
+{#if activities.length > 0 && settings.value.inlineActivitiesPosition === CONSTANTS.INLINE_ACTIVITIES_POSITION_BOTTOM}
   <HorizontalLineSeparator />
   <InlineActivitiesList {item} {activities} />
 {/if}

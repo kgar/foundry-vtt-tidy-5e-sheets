@@ -1883,6 +1883,29 @@ export function createSettings() {
         },
       },
 
+      // Activities
+      inlineActivitiesPosition: {
+        options: {
+          name: 'TIDY5E.Settings.InlineActivitiesPosition.name',
+          hint: 'TIDY5E.Settings.InlineActivitiesPosition.hint',
+          scope: 'client',
+          config: false,
+          default: CONSTANTS.INLINE_ACTIVITIES_POSITION_TOP,
+          type: String,
+          choices: {
+            [CONSTANTS.INLINE_ACTIVITIES_POSITION_TOP]:
+              'TIDY5E.Settings.InlineActivitiesPosition.top',
+            [CONSTANTS.INLINE_ACTIVITIES_POSITION_BOTTOM]:
+              'TIDY5E.Settings.InlineActivitiesPosition.bottom',
+          },
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<string>(
+            'inlineActivitiesPosition'
+          );
+        },
+      },
+
       // Development and Troubleshooting
       debug: {
         options: {

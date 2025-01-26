@@ -13,6 +13,7 @@
     UserSettingsContext,
     UserSettingsFunctions,
   } from './UserSettings.types';
+  import ActivitiesSettingsTab from './tabs/ActivitiesSettingsTabs.svelte';
 
   let selectedTabId = $state(
     getContext<string>(CONSTANTS.SVELTE_CONTEXT.INITIAL_TAB_ID),
@@ -61,12 +62,21 @@
       },
     });
 
+    result.push({
+      id: CONSTANTS.TAB_USER_SETTINGS_ACTIVITIES,
+      title: 'TIDY5E.UserSettings.TabActivities.tabLabel',
+      content: {
+        component: ActivitiesSettingsTab,
+        type: 'svelte',
+      },
+    });
+
     return result;
   });
 
   $effect(() => {
     selectedTabId ??= tabs[0].id;
-  })
+  });
 
   let applyingChanges = $state(false);
 
