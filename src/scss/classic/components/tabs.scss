@@ -59,7 +59,7 @@
     .tab-option {
       height: 1.625rem;
       padding: 0.3125rem 0.5rem 0 0.5rem;
-      border-bottom: 0.0625rem solid var(--t5e-component-tab-border);
+      border-bottom: 0.0625rem solid var(--t5e-tab-strip-border-color);
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
 
@@ -78,7 +78,7 @@
       }
 
       &.active {
-        border: 0.0625rem solid var(--t5e-component-tab-border);
+        border: 0.0625rem solid var(--t5e-tab-strip-border-color);
         border-bottom-color: transparent;
       }
     }
@@ -98,7 +98,7 @@
       border-top: none;
       border-left: none;
       border-bottom: none;
-      border-right: 0.0625rem solid var(--t5e-component-tab-border);
+      border-right: 0.0625rem solid var(--t5e-tab-strip-border-color);
       transition: border-left-width 0.125s;
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
@@ -108,7 +108,7 @@
       }
 
       &.active {
-        border: 0.0625rem solid var(--t5e-component-tab-border);
+        border: 0.0625rem solid var(--t5e-tab-strip-border-color);
         border-right-color: transparent;
         border-left-width: 0.25rem;
         border-left-color: var(--t5e-primary-accent-color);
