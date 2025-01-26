@@ -21,6 +21,7 @@ select,
 label input {
   &:disabled {
     box-shadow: none;
+    color: var(--t5e-color-text-ondefault-lightest);
   }
 }
 
@@ -30,22 +31,25 @@ input[type='number'],
 textarea,
 select,
 :where(search) {
+  color: var(--t5e-color-text-ondefault-default);
+  line-height: 0.875rem;
+  display: flex;
+  align-items: center;
   outline: none;
   transition: all var(--t5e-transition-default);
-  line-height: 0.875rem;
   box-shadow: var(--t5e-drop-shadow-field);
   background: var(--t5e-component-card-ondefault-default);
   border-radius: 0.125rem;
   border: 0.0625rem solid var(--t5e-component-field-ondefault-border);
-  display: flex;
-  align-items: center;
-  min-height: var(--t5e-component-field-height);
-  
+
   &:hover, &:focus {
     outline: none;
     background-color: var(--t5e-component-field-ondefault-background-hover);
-    border-color: var(--t5e-component-field-ondefault-border-hover);
     box-shadow: var(--t5e-drop-shadow-field-hover);
+  }
+  
+  &:not(:has(:disabled)):hover, &:not(:has(:disabled)):focus {
+    border-color: var(--t5e-component-field-ondefault-border-hover);
   }
 
   &:focus {
@@ -83,16 +87,16 @@ textarea {
 
   &:disabled {
     background: rgba(159, 146, 117, 0.2);
-    border-color: transparent;
-    color: var(--t5e-color-text-ondefault-lightest);
     box-shadow: none;
   }
 }
 
 .input-group {
   --icon-size: 0.75rem;
-  padding: 0.5rem;
+  padding-inline-start: 0.375rem;
+  padding-inline-end: 0.5rem;
   gap: 0.375rem;
+  min-height: var(--t5e-field-size-default);
 
   &:focus-within {
     box-shadow: 0px 0px 0px 2px #9a2a30;
@@ -141,10 +145,11 @@ textarea {
 
   &:has(input[type='text']:disabled) {
     color: var(--t5e-color-text-ondefault-lightest);
-    border-color: transparent;
-    border-radius: 0.125rem;
     background: rgba(159, 146, 117, 0.2);
     box-shadow: none;
+    i {
+      color: var(--t5e-color-icon-ondefault-disabled);
+    }
   }
 
   & > :not(input):not(i) {
@@ -161,9 +166,11 @@ textarea {
 :where(search) {
   padding-inline-start: 0.375rem;
   padding-inline-end: 0.5rem;
+  min-height: var(--t5e-field-size-default);
 
   &:focus-within {
     box-shadow: 0px 0px 0px 2px #9a2a30;
+    background-color: var(--t5e-component-field-ondefault-background-hover);
   }
   // TODO: Consider how to generalize this particular style, since other inputs use the same technique
   .icon-and-input {
@@ -171,9 +178,9 @@ textarea {
     display: flex;
     flex: 1;
     gap: 0.375rem;
+    padding-block-end: 0.0625rem;
     
     input[type='text'] {
-      // TODO: Figure out how to hide shadow
       box-shadow: none;
     }
   }
@@ -211,9 +218,10 @@ textarea {
     font-size: 0.6875rem;
   }
 
+  // TODO: Figure out positioning and style
   .cancel-search {
-    width: 2rem;
-    height: 2rem;
+    width: var(--t5e-field-size-default);
+    height: var(--t5e-field-size-default);
     color: var(--t5e-color-text-ondefault-lighter);
     display: inline-flex;
     justify-content: center;
@@ -229,11 +237,11 @@ textarea {
   }
 
   &:has(input[type='text']:disabled) {
-    color: var(--t5e-color-text-ondefault-lightest);
-    border-color: transparent;
-    border-radius: 0.125rem;
     background: rgba(159, 146, 117, 0.2);
     box-shadow: none;
+    i {
+      color: var(--t5e-color-icon-ondefault-disabled);
+    }
   }
 }
 
@@ -268,6 +276,9 @@ textarea {
     input {
       box-shadow: var(--t5e-drop-shadow-field-focus);
     }
+  }
+  &:has(input:disabled) {
+    color: var(--t5e-color-text-ondefault-lightest);
   }
 }
 
@@ -387,9 +398,6 @@ select {
   &:disabled {
     --bg-image-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='fill: %23999999' viewBox='0 0 512 512'%3E%3C!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--%3E%3Cpath d='M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z'/%3E%3C/svg%3E");
     background-color: rgba(159, 146, 117, 0.2);
-    border-color: transparent;
-    color: var(--t5e-color-text-ondefault-lightest);
-    box-shadow: none;
   }
 }
 
