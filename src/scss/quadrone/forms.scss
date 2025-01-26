@@ -1,0 +1,287 @@
+.tidy5e-sheet.application:where(.quadrone) {
+  
+  input.full-width {
+    flex: 0 0 100%;
+    margin-top: 0.25rem;
+  }
+
+  /* Fieldset */
+  fieldset {
+    // TODO: Do we want the fieldset border?
+    border: none;
+    //border-radius: 0.25rem;
+    //border: 1px solid var(--color-fieldset-border);
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin: 0;
+
+    > label.checkbox,
+    > label.radio {
+      flex-grow: unset;
+      min-height: var(--t5e-field-size-small);
+    }
+
+    > legend {
+      color: var(--t5e-color-text-ondefault-lighter, #4b4a44);
+      /* title/small */
+      font-family: var(--font-family-title, 'Modesto Condensed');
+      font-size: var(--font-size-16);
+      letter-spacing: 0.01rem;
+      padding: 0 0 0.125rem 0;
+      margin-bottom: 0.25rem;
+
+      border-bottom: 0.0938rem solid var(--t5e-color-gold);
+      width: 100%;
+
+      > label.checkbox {
+        --checkbox-size: 0.875rem;
+        font-weight: 600;
+
+        input[type='checkbox'] {
+          margin-bottom: 0.0625rem;
+        }
+      }
+    }
+
+    > .empty {
+      padding: 0.375rem;
+      font-style: italic;
+      text-align: center;
+      color: var(--t5e-color-text-ondefault-lighter);
+    }
+
+    // TODO: Need example of card fieldset  legends
+    &.card > legend {
+      background: var(--t5e-background-card);
+      position: relative;
+      border-radius: 2px;
+      padding: 0.125rem 0.375rem 0 0.375rem;
+
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 0.125rem;
+        outline: var(--t5e-color-gold);
+        z-index: -1;
+      }
+    }
+
+    // TODO: Need example of disabled fieldset.
+    &:disabled {
+      .form-group label,
+      .hint {
+        color: var(--t5e-color-text-ondefault-lightest);
+      }
+    }
+  }
+
+  /* Form Groups */
+  .form-group {
+    --form-field-height: 26px;
+    margin: 0;
+
+    > label {
+      line-height: var(--form-field-height);
+      font-weight: 500;
+      color: var(--t5e-color-text-ondefault-lighter);
+    }
+
+    &.label-top {
+      --label-height: 0.6875rem;
+      --label-font-size: 0.6875rem;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.125rem;
+
+      > * {
+        flex: unset;
+      }
+
+      > label {
+        font-size: var(--label-font-size);
+        font-weight: 600;
+        line-height: var(--label-height);
+        height: var(--label-height);
+        color: var(--t5e-color-text-ondefault-lightest);
+        margin-top: 0.25rem;
+
+        > p.hint {
+          cursor: help;
+          font-size: var(--label-font-size);
+          font-weight: 600;
+          display: inline-block;
+          margin: 0.1875rem 0 0 0;
+          line-height: var(--label-height);
+          height: var(--label-height);
+
+          &:empty {
+            min-height: unset;
+          }
+
+          /*
+
+            &:hover {
+              text-shadow: 0 0 6px var(--color-shadow-primary);
+            }
+
+            &::before {
+              content: "\f059";
+              font-family: var(--font-awesome);
+              font-weight: normal;
+              color: var(--color-text-dark-5);
+            }
+
+          */
+        }
+      }
+
+      + .form-group {
+        align-self: end;
+      }
+
+      &.checkbox-top {
+        flex: 0;
+        min-width: max-content;
+        align-items: center;
+      }
+
+      /*
+          &.multi-select {
+      position: relative;
+
+      multi-select .tags.input-element-tags {
+        min-height: 10px;
+        padding-left: 40%;
+      }
+
+      > label {
+        position: absolute;
+        inset: auto auto calc(var(--form-field-height) + 2px) 0;
+      }
+    } 
+      */
+    }
+
+    label.label-icon {
+      position: relative;
+
+      &::after {
+        content: '';
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        background: transparent no-repeat center / contain;
+        margin-left: 0.1875rem;
+        position: absolute;
+      }
+
+      &.currency {
+        &.cp::after {
+          background-image: url('../../systems/dnd5e/icons/currency/copper.webp');
+        }
+        &.sp::after {
+          background-image: url('../../systems/dnd5e/icons/currency/silver.webp');
+        }
+        &.ep::after {
+          background-image: url('../../systems/dnd5e/icons/currency/electrum.webp');
+        }
+        &.gp::after {
+          background-image: url('../../systems/dnd5e/icons/currency/gold.webp');
+        }
+        &.pp::after {
+          background-image: url('../../systems/dnd5e/icons/currency/platinum.webp');
+        }
+      }
+    }
+
+    /* Split Groups */
+    &.split-group > .form-fields {
+      // TODO: Need sample in debug sheet
+      &.field-groups {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .field-group {
+        display: flex;
+        gap: 0.25rem;
+        > .form-group {
+          flex: 1;
+        }
+      }
+
+      .form-group {
+        flex-wrap: nowrap;
+        &:not(.label-top):not(.checkbox) {
+          gap: 0.25rem;
+        }
+        > * {
+          flex: unset;
+        }
+      }
+
+      // TODO: Need example of control button
+      > .control-button,
+      .field-group > .control-button {
+        position: absolute;
+        inset: auto 0 0 auto;
+      }
+
+      // TODO: Need example of singleton
+      .singleton {
+        align-self: center;
+        margin: 0 0.375rem;
+      }
+
+      /* 
+          multi-select .tags.input-element-tags .tag {
+      background: var(--dnd5e-background-parchment);
+    }
+      */
+    }
+
+    &.split-group.full-width > .form-fields {
+      position: relative;
+      padding-right: 1.25rem;
+    }
+
+    /* Full-Width Groups */
+    &.full-width {
+      padding: 0.375rem;
+
+      & + .full-width {
+        margin-top: 0.125rem;
+      }
+    }
+
+    label.checkbox {
+      gap: 0.5rem;
+    }
+  }
+
+  :is(.form-group, fieldset) .hint {
+    font-size: var(--font-size-11);
+    color: var(--t5e-color-text-ondefault-lighter);
+    margin: 0.25rem 0 0 0;
+  }
+
+  .checkbox-grid {
+    --num-cols: 4;
+
+    &.checkbox-grid-3 {
+      --num-cols: 3;
+    }
+
+    > .form-fields {
+      display: grid;
+      grid-template-columns: repeat(var(--num-cols), 1fr);
+
+      > label {
+        text-align: unset;
+      }
+    }
+  }
+}

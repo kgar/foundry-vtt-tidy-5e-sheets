@@ -1,5 +1,5 @@
 import { CONSTANTS } from 'src/constants';
-import ContainerDetailsTab from 'src/sheets/hightouch/container/tabs/ContainerDetailsTab.svelte';
+import ContainerDetailsTab from 'src/sheets/quadrone/container/tabs/ContainerDetailsTab.svelte';
 import ItemActiveEffectsTab from '../../sheets/classic/item/tabs/ItemActiveEffectsTab.svelte';
 import ItemAdvancementTab from '../../sheets/classic/item/tabs/ItemAdvancementTab.svelte';
 import ItemBackgroundDetailsTab from '../../sheets/classic/item/tabs/ItemBackgroundDetailsTab.svelte';
@@ -10,7 +10,7 @@ import ItemContainerDetailsTab from '../../sheets/classic/item/tabs/ItemContaine
 import ItemDescriptionTab from '../../sheets/classic/item/tabs/ItemDescriptionTab.svelte';
 import ItemSpeciesDetailsTab from '../../sheets/classic/item/tabs/ItemSpeciesDetailsTab.svelte';
 import ItemDescriptionWithSidebarTab from '../../sheets/classic/item/tabs/ItemDescriptionWithSidebarTab.svelte';
-import HightouchItemDescriptionsTab from '../../sheets/hightouch/item/tabs/ItemDescriptionsTab.svelte';
+import QuadroneItemDescriptionsTab from '../../sheets/quadrone/item/tabs/ItemDescriptionsTab.svelte';
 import ItemEquipmentDetailsTab from '../../sheets/classic/item/tabs/ItemEquipmentDetailsTab.svelte';
 import ItemFeatDetailsTab from '../../sheets/classic/item/tabs/ItemFeatDetailsTab.svelte';
 import ItemLootDetailsTab from '../../sheets/classic/item/tabs/ItemLootDetailsTab.svelte';
@@ -22,7 +22,7 @@ import ItemWeaponDetailsTab from '../../sheets/classic/item/tabs/ItemWeaponDetai
 import ItemActivitiesTab from '../../sheets/classic/item/tabs/ItemActivitiesTab.svelte';
 import type { Tab } from 'src/types/types';
 import ItemFacilityDetailsTab from 'src/sheets/classic/item/tabs/ItemFacilityDetailsTab.svelte';
-import ContainerContentsTab from 'src/sheets/hightouch/container/tabs/ContainerContentsTab.svelte';
+import ContainerContentsTab from 'src/sheets/quadrone/container/tabs/ContainerContentsTab.svelte';
 
 const itemSheetTabs = {
   /**
@@ -177,7 +177,7 @@ const itemSheetTabs = {
     },
     autoHeight: true,
   },
-  hightouchContainerContents: {
+  quadroneContainerContents: {
     id: CONSTANTS.TAB_CONTAINER_CONTENTS,
     title: 'DND5E.Contents',
     content: {
@@ -188,7 +188,7 @@ const itemSheetTabs = {
   /**
    * Details form for containers.
    */
-  hightouchContainerDetails: {
+  quadroneContainerDetails: {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
     title: 'DND5E.Details',
     content: {
@@ -199,11 +199,11 @@ const itemSheetTabs = {
   /**
    * Three-descriptions interface for items
    */
-  hightouchDescription: {
+  quadroneDescription: {
     id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
     title: 'DND5E.Description',
     content: {
-      component: HightouchItemDescriptionsTab,
+      component: QuadroneItemDescriptionsTab,
       type: 'svelte',
     },
   },

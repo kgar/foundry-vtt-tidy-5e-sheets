@@ -20,8 +20,8 @@ import { initKeybindings } from './keybindings/keybind-init';
 import { Tidy5eGroupSheetClassic } from './sheets/classic/Tidy5eGroupSheetClassic.svelte';
 import { DebugTools } from './utils/DebugTools';
 import { Tidy5eContainerSheetClassic } from './sheets/classic/Tidy5eContainerSheetClassic.svelte';
-import { Tidy5eContainerSheetHightouch } from './sheets/hightouch/Tidy5eContainerSheetHightouch.svelte';
-import { Tidy5eItemDebugSheetHightouch } from './sheets/hightouch/Tidy5eItemDebugSheetHightouch.svelte';
+import { Tidy5eContainerSheetQuadrone } from './sheets/quadrone/Tidy5eContainerSheetQuadrone.svelte';
+import { Tidy5eItemDebugSheetQuadrone } from './sheets/quadrone/Tidy5eItemDebugSheetQuadrone.svelte';
 import { initReadyHooks } from './features/ready-hooks';
 import '@melloware/coloris/dist/coloris.css';
 import { debug } from './utils/logging';
@@ -112,17 +112,17 @@ Hooks.once('init', () => {
     DocumentSheetConfig.registerSheet(
       Item,
       CONSTANTS.DND5E_SYSTEM_ID,
-      Tidy5eContainerSheetHightouch,
+      Tidy5eContainerSheetQuadrone,
       {
         types: [CONSTANTS.SHEET_TYPE_CONTAINER],
-        label: 'Tidy 5e Container Sheet - Under Development',
+        label: 'Tidy 5e Container Sheet - Quadrone',
       }
     );
 
     DocumentSheetConfig.registerSheet(
       Item,
       CONSTANTS.DND5E_SYSTEM_ID,
-      Tidy5eItemDebugSheetHightouch,
+      Tidy5eItemDebugSheetQuadrone,
       {
         types: supportedItemTypes,
         label: 'Tidy 5e Debug Item Sheet (Visual Overhaul)',

@@ -1,0 +1,252 @@
+.tidy-switch {
+  display: flex;
+  align-items: center;
+
+  --tidy-switch-scale-internal: var(--tidy-switch-scale, 1);
+  --tidy-switch-thumb-transform-duration-internal: var(
+    --tidy-switch-thumb-transform-duration,
+    0.3s
+  );
+  --tidy-border-width: 0.0625rem;
+
+  [role='switch'] {
+    width: calc(2.625rem * var(--tidy-switch-scale-internal));
+    height: calc(1.375rem * var(--tidy-switch-scale-internal));
+    position: relative;
+    background-color: var(--tidy-switch-unchecked-background-color);
+    border: none;
+    transition: background-color 0.5s ease, border-color 0.5s ease;
+    border-radius: calc(1.375rem * var(--tidy-switch-scale-internal));
+    border-width: var(--tidy-border-width);
+    border-style: solid;
+    border-color: var(--tidy-switch-unchecked-border-color, transparent);
+
+    i {
+      margin: 0;
+    }
+
+    // &::before {
+    //   content: '';
+    //   position: absolute;
+    //   width: calc(1.25rem * var(--tidy-switch-scale-internal));
+    //   height: calc(1.25rem * var(--tidy-switch-scale-internal));
+    //   background: var(--t5e-switch-slider-color);
+    //   top: calc(
+    //     0.125rem * var(--tidy-switch-scale-internal) - var(--tidy-border-width)
+    //   );
+    //   right: calc(
+    //     1.375rem * var(--tidy-switch-scale-internal) - var(--tidy-border-width)
+    //   );
+    //   transition: transform var(--tidy-switch-thumb-transform-duration-internal);
+    //   border-radius: 100%;
+    // }
+
+    .thumb-icon {
+      background-color: var(--t5e-color-icon-oninverse-default);
+      border-radius: 100%;
+      font-size: calc(0.75rem * var(--tidy-switch-scale-internal));
+      position: absolute;
+      color: var(--t5e-color-icon-ondefault-default); // TODO: Theme color? Or at least top-level variable that can be customized?
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: calc(1.125rem * var(--tidy-switch-scale-internal));
+      height: calc(1.125rem * var(--tidy-switch-scale-internal));
+      top: 0;
+      bottom: 0;
+      align-self: center;
+      right: calc(
+        1.375rem * var(--tidy-switch-scale-internal) - var(--tidy-border-width)
+      );
+      transition: all var(--tidy-switch-thumb-transform-duration-internal);
+    }
+
+    &[aria-checked='true'] {
+      border-color: var(--tidy-switch-checked-border-color, transparent);
+      background-color: var(--t5e-theme-color-highlight);
+
+      &::before,
+      .thumb-icon {
+        transform: translateX(
+          calc(1.25rem * var(--tidy-switch-scale-internal))
+        );
+        transition: transform
+          var(--tidy-switch-thumb-transform-duration-internal);
+      }
+
+      .thumb-icon {
+        background-color: var(--t5e-color-icon-ondefault-default);
+        color: var(--t5e-color-icon-oninverse-default);
+      }
+      
+      &:hover {
+        filter: brightness(0.85);
+        background-color: var(--t5e-theme-color-highlight);
+        .thumb-icon {
+          color: var(--t5e-color-icon-oninverse-default);
+        }
+      }
+    }
+
+    
+    &:hover {
+      cursor: pointer;
+      background-color: var(--t5e-component-field-oninverse-background-hover);
+
+      .thumb-icon {
+        color: var(--t5e-color-icon-ondefault-default);
+      }
+    }
+
+    &:focus-visible {
+      outline: 0.0625rem solid var(--t5e-primary-accent-color);
+    }
+  }
+}
+
+.header-sheet-edit-mode-toggle {
+  --tidy-switch-unchecked-border-color: var(
+    --t5e-component-field-ondefault-border
+  );
+  --tidy-switch-unchecked-background-color: var(
+    --t5e-component-field-oninverse-background
+  );
+  --tidy-switch-checked-border-color: var(
+    --t5e-component-toggle-toggled-border
+  );
+  --tidy-switch-checked-background-color: var(
+    --t5e-component-toggle-toggled-background
+  );
+  --t5e-switch-slider-color: var(
+    --t5e-component-field-oninverse-background
+  );
+  --t5e-thumb-icon-color: var(--t5e-color-icon-light-default);
+
+  button {
+    margin: 0;
+    padding: 0;
+  }
+
+  .tidy-switch {
+    --tidy-switch-scale: 0.825;
+  }
+}
+
+/* Field Toggle  */
+
+.field-toggle {
+  --field-toggle-background: var(--t5e-component-field-ondefault-background);
+  --field-toggle-border-color: var(--t5e-component-field-ondefault-border);
+  --field-toggle-checked-color: var(--t5e-color-icon-oninverse-default);
+  --field-toggle-unchecked-color: var(--t5e-color-text-ondefault-lightest);
+  --field-toggle-unchecked-thumb-color: var(--t5e-color-text-ondefault-lighter);
+  --field-toggle-checked-thumb-color: var(--t5e-color-text-oninverse-default);
+  --width: 2rem;
+  --height: 1rem;
+  --padding: 0.125rem;
+  --check-indicator-size: 0.6875rem;
+  --thumb-size: 0.625rem;
+  --thumb-checked-translateX: 1rem;
+  --border-width: 0.0625rem;
+
+  display: inline-flex;
+  width: var(--width);
+  height: var(--height);
+  cursor: pointer;
+  align-items: center;
+  border-radius: 6.25rem;
+  background: var(--field-toggle-background);
+  box-shadow: var(--t5e-drop-shadow-field);
+  border: var(--border-width) solid var(--field-toggle-border-color);
+  position: relative;
+  transition: all var(--t5e-transition-default);
+  & * {
+    transition: all var(--t5e-transition-default);
+  }
+
+  .unchecked-icon {
+    position: absolute;
+    width: var(--check-indicator-size);
+    height: var(--check-indicator-size);
+    fill: var(--field-toggle-unchecked-color);
+    top: var(--padding);
+    right: calc(var(--padding) + var(--border-width));
+  }
+
+  .checked-icon {
+    position: absolute;
+    width: var(--check-indicator-size);
+    height: var(--check-indicator-size);
+    fill: var(--field-toggle-checked-color);
+    opacity: 0;
+    top: var(--padding);
+    left: calc(var(--padding) + var(--border-width));
+  }
+
+  .thumb {
+    position: absolute;
+    width: var(--thumb-size);
+    height: var(--thumb-size);
+    fill: var(--field-toggle-unchecked-thumb-color);
+    top: var(--padding);
+    left: var(--padding);
+  }
+
+  &:has(.toggle:checked) {
+    background: var(--t5e-component-toggle-toggled-background);
+    border-color: var(--t5e-component-toggle-toggled-border);
+
+    .unchecked-icon {
+      opacity: 0;
+    }
+
+    .checked-icon {
+      opacity: 1;
+    }
+
+    .thumb {
+      transform: translateX(var(--thumb-checked-translateX));
+      fill: var(--field-toggle-checked-thumb-color);
+    }
+    
+    &:hover {
+      background-color: var(--t5e-component-toggle-toggled-background-hover);
+    }
+  }
+
+  &:hover {
+    background-color: var(--t5e-component-field-ondefault-background-hover);
+    border-color: var(--t5e-component-field-ondefault-border-hover);
+
+    .unchecked-icon, .thumb {
+      fill: var(--t5e-color-text-ondefault-default);
+    }
+  }
+
+  &.disabled {
+    cursor: default;
+  }
+}
+
+.inverse {
+  .field-toggle {
+    background-color: var(--t5e-component-field-oninverse-background);
+    border-color: var(--t5e-component-field-oninverse-border);
+
+    .unchecked-icon {
+      fill: var(--t5e-color-text-oninverse-lighter);
+    }
+
+    .checked-icon {
+      fill: var(--t5e-color-icon-oninverse-default);
+    }
+
+    .thumb {
+      fill: var(--t5e-color-icon-oninverse-default);
+    }
+
+    &:not(:has(.toggle:checked)) {
+      --field-toggle-checked-color: transparent;
+    }
+  }
+}

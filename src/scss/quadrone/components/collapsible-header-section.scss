@@ -1,0 +1,64 @@
+.collapsible-editor {
+  header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .title {
+    color: var(--t5e-color-text-ondefault-lighter);
+
+    font-family: var(--t5e-font-family-title);
+    font-size: var(--font-size-16);
+    letter-spacing: 0.01rem;
+    line-height: normal;
+
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+
+    .expand-indicator {
+      color: var(--t5e-color-icon-ondefault-disabled);
+      transition: all var(--t5e-transition-default);
+      font-size: 0.6875rem;
+
+      &.expanded {
+        transform: rotate(90deg);
+        color: var(--t5e-color-icon-ondefault-disabled);
+      }
+    }
+  }
+
+  .edit {
+    display: flex;
+    width: var(--font-font-size-24, 1.5rem);
+    height: var(--font-font-size-24, 1.5rem);
+    padding: 0.25rem 0.25rem 0.3125rem 0.3125rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+
+    i {
+      color: var(--t5e-color-text-oninverse-disabled);
+      font-size: 0.6875rem;
+      transition: color var(--t5e-transition-default);
+    }
+
+    &:hover i {
+      color: var(--t5e-color-text-ondefault-default);
+    }
+  }
+
+  .editor:has(.user-select-text) {
+    overflow: hidden;
+  }
+
+  .title:hover {
+     .expand-indicator {
+      color: var(--t5e-color-text-ondefault-default);
+    }
+  }
+}
