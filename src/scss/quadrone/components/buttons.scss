@@ -34,7 +34,7 @@
   min-height: var(--t5e-field-size-default);
   transition: all var(--t5e-transition-default);
 
-  // TODO: Find a way to shrink left padding if icon is present
+  // TODO: Find a way to shrink left padding by 2px if icon is present
   // :has(i) {
   //   padding-inline-start: calc(var(--button-padding-inline-start) - 0.125rem);
   // }
@@ -58,16 +58,6 @@
   }
 
   &:focus-within {
-    background: linear-gradient(
-        0deg,
-        var(
-            --t5e-component-field-ondefault-hover-overlay,
-            rgba(255, 255, 255, 0.5)
-          )
-          0%,
-        var(--t5e-component-field-ondefault-hover-overlay) 100%
-      ),
-      var(--t5e-component-field-ondefault-background);
     box-shadow: 0px 0px 0px 2px #9a2a30;
   }
 
