@@ -47,9 +47,9 @@
   }
 
   &:hover {
-    background: var(--t5e-component-field-ondefault-background);
+    background: var(--t5e-component-field-ondefault-background-hover);
     color: var(--t5e-color-text-ondefault-default);
-    border: 1px solid var(--t5e-component-field-ondefault-border);
+    border: 1px solid var(--t5e-component-field-ondefault-border-hover);
     box-shadow: var(--t5e-drop-shadow-field-hover);
 
     :where(i) {
@@ -87,7 +87,7 @@
 
   &.icon-button {
     --size: var(--t5e-field-size-default);
-    padding: 0.5rem;
+    padding: 0.46875rem 0.5rem 0.53125rem;
     width: var(--size);
     height: var(--size);
   }
@@ -131,7 +131,8 @@
 }
 
 &:where(.inverse) :is(button, .button),
-:where(.inverse) :is(button, .button) {
+:where(.inverse) :is(button, .button)
+&:where(.dark) :is(button, .button) {
   border: 1px solid var(--t5e-component-field-oninverse-border);
   background: var(--t5e-component-field-oninverse-background);
 
@@ -146,7 +147,12 @@
 .button-group {
   display: flex;
   flex-direction: row;
+  box-shadow: var(--t5e-drop-shadow-field);
   gap: 0;
+  
+  &:hover {
+    box-shadow: var(--t5e-drop-shadow-field-hover);
+  }
 
   :is(button, .button) {
     box-shadow: none;

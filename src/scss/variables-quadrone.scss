@@ -56,7 +56,7 @@
   --t5e-color-palette-grey-29: rgba(75, 74, 68, 1);
   --t5e-color-palette-grey-34: rgba(68, 72, 86, 1);
   --t5e-color-palette-grey-40: rgba(102, 102, 102, 1);
-  --t5e-color-palette-grey-47: rgba(119, 119, 119, 1);
+  --t5e-color-palette-grey-48: rgba(122, 122, 122, 1);
   --t5e-color-palette-grey-60: rgba(153, 153, 153, 1);
   --t5e-color-palette-grey-85: rgba(207, 210, 218, 1);
   --t5e-color-palette-grey-100: rgba(255, 255, 255, 1); 
@@ -79,7 +79,7 @@
 
   /* Orange */
   --t5e-color-palette-orange-100: rgba(255, 100, 0, 1);
-  --t5e-color-palette-orange-97: rgba(247, 117, 88, 1);
+  --t5e-color-palette-orange-97: rgba(248, 117, 88, 1);
   --t5e-color-palette-orange-70: rgba(179, 99, 25, 1);
   --t5e-color-palette-orange-40: rgba(101, 56, 14, 1);
   --t5e-gradient-orange: var(--t5e-color-palette-orange-70), linear-gradient(90deg, var(--t5e-color-palette-orange-40), var(--t5e-color-palette-orange-70));
@@ -153,7 +153,7 @@
   --t5e-color-text-oninverse-gold-light: var(--t5e-color-palette-gold-94);
   --t5e-color-text-oninverse-lighter: var(--t5e-color-palette-grey-85);
   --t5e-color-text-oninverse-lightest: var(--t5e-color-palette-grey-60);
-  --t5e-color-text-oninverse-disabled: var(--t5e-color-palette-grey-47);
+  --t5e-color-text-oninverse-disabled: var(--t5e-color-palette-grey-48);
   
   /* Other */
   --input-text-color: var(--t5e-color-text-ondefault-default);
@@ -208,8 +208,9 @@
   --t5e-component-field-ondefault-background-hover: var(--t5e-color-palette-white);
   --t5e-component-field-ondefault-background-hover-emphasis: var(--t5e-color-palette-white);
   --t5e-component-field-oninverse-background: var(--t5e-component-card-oninverse-default);
-  --t5e-component-field-oninverse-border: rgba(122, 122, 122, 1);
-  --t5e-component-field-oninverse-background-hover: var(--t5e-color-palette-black);
+  --t5e-component-field-oninverse-border: var(--t5e-color-palette-grey-48);
+  --t5e-component-field-oninverse-border-hover: var(--t5e-color-palette-grey-85);
+  --t5e-component-field-oninverse-background-hover: var(--t5e-color-palette-grey-11);
   --t5e-component-field-oninverse-background-hover-emphasis: var(--t5e-color-palette-black);
   --t5e-component-field-focus: var(--t5e-theme-colors-lighter);
   --t5e-field-size-default: 1.75rem;
@@ -305,7 +306,7 @@
     --t5e-color-text-ondefault-gold-light: var(--t5e-color-palette-gold-94);
     --t5e-color-text-ondefault-lighter: var(--t5e-color-palette-grey-85);
     --t5e-color-text-ondefault-lightest: var(--t5e-color-palette-grey-60);
-    --t5e-color-text-ondefault-disabled: var(--t5e-color-palette-grey-47);
+    --t5e-color-text-ondefault-disabled: var(--t5e-color-palette-grey-48);
 
     /* ondark */
     --t5e-color-text-oninverse-default: var(--t5e-color-palette-grey-0);
@@ -320,10 +321,12 @@
     /* Field backgrounds and borders inverted in dark mode. */
     /* Fields */
     --t5e-component-field-ondefault-background: var(--t5e-component-card-oninverse-default);
-    --t5e-component-field-ondefault-border: rgba(122, 122, 122, 1);
+    --t5e-component-field-ondefault-border: var(--t5e-color-palette-grey-48);
+    --t5e-component-field-ondefault-border-hover: var(--t5e-color-palette-grey-85);
     --t5e-component-field-ondefault-background-hover: var(--t5e-color-palette-white);
     --t5e-component-field-ondefault-background-hover-emphasis: var(--t5e-color-palette-white);
     --t5e-component-field-oninverse-border: var(--t5e-color-gold);
+    --t5e-component-field-oninverse-border-hover: var(--t5e-color-palette-grey-11);
     --t5e-component-field-oninverse-background: var(--t5e-component-card-ondefault-default);
     --t5e-component-field-oninverse-background-hover: var(--t5e-color-palette-black);
     --t5e-component-field-oninverse-background-hover-emphasis: var(--t5e-color-palette-black);

@@ -75,6 +75,7 @@
   align-items: center;
   flex-basis: 100%;
   --line-color: var(--t5e-color-gold);
+  margin-top: -0.125rem;
 
   svg {
     flex: 0 0 auto; /* Prevents SVG parts from stretching */

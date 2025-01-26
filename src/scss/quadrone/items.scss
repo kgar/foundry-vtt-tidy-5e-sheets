@@ -282,9 +282,8 @@
 
     .item-rarity-container {
       .item-rarity-selector {
-        height: var(--font-size-28);
-        line-height: var(--font-size-28);
-        padding-block: 0;
+        height: var(--t5e-field-size-default);
+        padding-block-end: 0.0625rem;
         position: relative;
         color: oklch(from var(--t5e-item-rarity-color) calc(l + 0.125) c h);
 

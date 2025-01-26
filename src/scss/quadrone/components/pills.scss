@@ -103,7 +103,7 @@
     );
     box-shadow: var(--t5e-drop-shadow-pill);
     &:hover {
-      background: var(--t5e-component-field-ondefault-background-hover);
+      background: var(--t5e-component-field-oninverse-background-hover);
       transition: background 0.15s ease-in-out;
     }
   }
@@ -111,6 +111,10 @@
   .lighter {
     color: var(--t5e-color-text-oninverse-lighter);
     --icon-fill: var(--t5e-color-text-oninverse-lighter);
+  }
+
+  i {
+    color: var(--t5e-color-icon-oninverse-default);
   }
 
   &.negative {
@@ -171,6 +175,9 @@
       color: var(--t5e-color-icon-ondefault-default);
     }
   }
+  &:not(:has(.toggle:checked)) i {
+    font-weight: normal;
+  }
 
   &.disabled {
     cursor: default;
@@ -179,13 +186,18 @@
 
 &:is(.inverse, .dark) .pill-switch,
 .inverse .pill-switch {
-  & > :first-child {
-    // --icon-fill: var(--t5e-color-icon-dark-disabled);
+  &:hover {
+    background: var(--t5e-component-field-oninverse-background-hover);
+    border-color: var(--t5e-component-field-oninverse-border-hover);
+  }
+  
+  i {
+    color: var(--t5e-color-icon-oninverse-disabled);
   }
 
   &:has(.toggle:checked) {
-    & > :first-child {
-      // --icon-fill: var(--t5e-color-text-oninverse-lighter);
+    i {
+      color: var(--t5e-color-icon-oninverse-default);
     }
   }
 }

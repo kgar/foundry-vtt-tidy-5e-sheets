@@ -25,21 +25,21 @@
       margin: 0;
     }
 
-    &::before {
-      content: '';
-      position: absolute;
-      width: calc(1.25rem * var(--tidy-switch-scale-internal));
-      height: calc(1.25rem * var(--tidy-switch-scale-internal));
-      background: var(--t5e-switch-slider-color);
-      top: calc(
-        0.125rem * var(--tidy-switch-scale-internal) - var(--tidy-border-width)
-      );
-      right: calc(
-        1.375rem * var(--tidy-switch-scale-internal) - var(--tidy-border-width)
-      );
-      transition: transform var(--tidy-switch-thumb-transform-duration-internal);
-      border-radius: 100%;
-    }
+    // &::before {
+    //   content: '';
+    //   position: absolute;
+    //   width: calc(1.25rem * var(--tidy-switch-scale-internal));
+    //   height: calc(1.25rem * var(--tidy-switch-scale-internal));
+    //   background: var(--t5e-switch-slider-color);
+    //   top: calc(
+    //     0.125rem * var(--tidy-switch-scale-internal) - var(--tidy-border-width)
+    //   );
+    //   right: calc(
+    //     1.375rem * var(--tidy-switch-scale-internal) - var(--tidy-border-width)
+    //   );
+    //   transition: transform var(--tidy-switch-thumb-transform-duration-internal);
+    //   border-radius: 100%;
+    // }
 
     .thumb-icon {
       background-color: var(--t5e-color-icon-oninverse-default);
@@ -64,10 +64,6 @@
     &[aria-checked='true'] {
       border-color: var(--tidy-switch-checked-border-color, transparent);
       background-color: var(--t5e-theme-color-highlight);
-
-      &:not([disabled]) {
-
-      }
 
       &::before,
       .thumb-icon {
@@ -95,7 +91,8 @@
     
     &:hover {
       cursor: pointer;
-      background-color: var(--t5e-component-field-ondefault-background-hover);
+      background-color: var(--t5e-component-field-oninverse-background-hover);
+
       .thumb-icon {
         color: var(--t5e-color-icon-ondefault-default);
       }
@@ -233,10 +230,20 @@
 
 .inverse {
   .field-toggle {
-    --field-toggle-background: var(--t5e-component-field-oninverse-background);
-    --field-toggle-border-color: var(--t5e-component-field-oninverse-border);
-    --field-toggle-unchecked-color: var(--t5e-color-text-oninverse-lightest);
-    // --field-toggle-thumb-color: var(--t5e-color-icon-dark-default);
+    background-color: var(--t5e-component-field-oninverse-background);
+    border-color: var(--t5e-component-field-oninverse-border);
+
+    .unchecked-icon {
+      fill: var(--t5e-color-text-oninverse-lighter);
+    }
+
+    .checked-icon {
+      fill: var(--t5e-color-icon-oninverse-default);
+    }
+
+    .thumb {
+      fill: var(--t5e-color-icon-oninverse-default);
+    }
 
     &:not(:has(.toggle:checked)) {
       --field-toggle-checked-color: transparent;
