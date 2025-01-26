@@ -64,7 +64,7 @@
     <HorizontalLineSeparator />
     <div
       class="inline-wrapped-elements"
-      inert={concealDetails}
+      class:conceal-content={concealDetails}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_PROPERTY_LIST}
     >
       {#each chatData.properties as prop}<span class="tag">{prop}</span>{/each}

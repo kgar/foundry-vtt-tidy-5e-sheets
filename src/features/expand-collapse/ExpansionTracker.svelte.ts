@@ -189,12 +189,13 @@ export class ExpansionTracker {
       }
 
       let expansions = expansionStatesAtIndex.filter((x) => x !== undefined);
+
       tabStats[tabId] = {
         hasExpansion: expansions.some((x) => x),
         topAllExpanded: expansions[0]?.collapsed === 0,
         topHasExpansion: !!expansions[0],
         allExpanded: expansions.every((e) => e.collapsed === 0),
-        topLevelLocation: expansions[0].location,
+        topLevelLocation: expansions[0]?.location,
       };
     }
 
