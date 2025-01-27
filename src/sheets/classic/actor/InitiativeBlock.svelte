@@ -3,10 +3,10 @@
   import { formatAsModifier } from 'src/utils/formatting';
   import BlockTitle from './RollableBlockTitle.svelte';
   import BlockScore from './BlockScore.svelte';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
   import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import D20Icon from '../shared/D20Icon.svelte';
 
   interface Props {
     initiative: { total: number; bonus: number };
@@ -21,88 +21,69 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="wrapper">
-  <BlockTitle
-    title={localize('DND5E.Initiative')}
-    text={localize('TIDY5E.AbbrInitiative')}
-    onRoll={(event) => context.actor.rollInitiativeDialog({ event: event })}
-  />
-  <BlockScore>
-    <span>{formatAsModifier(initiative.total)}</span>
-  </BlockScore>
-  <label class="ini-bonus" for="{appId}-initiative-mod">
-    <span>{localize('TIDY5E.AbbrMod')}</span>
-    <TextInput
-      document={context.actor}
-      field="system.attributes.init.bonus"
-      class="ini-mod"
-      placeholder="0"
-      selectOnFocus={true}
-      allowDeltaChanges={true}
-      value={initiative.bonus}
-      disabled={!context.editable || !context.unlocked}
-      id="{appId}-initiative-mod"
+<div class="initiative-container">
+  <div class="d20-icon-container">
+    <D20Icon />
+  </div>
+  <div class="block-score-wrapper">
+    <BlockTitle
+      title={localize('DND5E.Initiative')}
+      text={localize('TIDY5E.AbbrInitiative')}
+      onRoll={(event) => context.actor.rollInitiativeDialog({ event: event })}
     />
-  </label>
+    <BlockScore>
+      <span class="ini-score"
+        >{formatAsModifier(initiative.total)}
 
-  {#if context.editable && context.unlocked}
-    <button
-      type="button"
-      class="config-button icon-button"
-      title={localize('DND5E.InitiativeConfig')}
-      onclick={() => FoundryAdapter.renderInitiativeConfig(context.actor)}
-      tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
-    >
-      <i class="fas fa-cog"></i>
-    </button>
-  {:else}
-    <span
-      class="config-button invisible"
-      title={localize('DND5E.InitiativeConfig')}
-      role="presentation"
-    >
-      <i class="fas fa-cog"></i>
-    </span>
-  {/if}
+        {#if context.editable && context.unlocked}
+          <a
+            class="config-button icon-button"
+            title={localize('DND5E.InitiativeConfig')}
+            onclick={() => FoundryAdapter.renderInitiativeConfig(context.actor)}
+            tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
+          >
+            <i class="fas fa-cog"></i>
+          </a>
+        {/if}
+      </span>
+    </BlockScore>
+  </div>
 </div>
 
 <style lang="scss">
-  .wrapper {
+  .initiative-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .d20-icon-container {
+    --icon-d20-outline-fill: var(--t5e-light-color);
+    --icon-d20-face-fill: transparent;
+    --icon-size: 4.125rem;
+  }
+
+  .block-score-wrapper {
+    position: absolute;
+    inset: 0;
     text-align: center;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    padding-block-start: 0.125rem;
 
-    :global(.block-score) {
-      margin-top: 0.0625rem;
-      margin-bottom: 0.1875rem;
-    }
-
-    .ini-bonus {
+    .ini-score {
       display: flex;
-      justify-content: center;
       align-items: center;
-      font-size: 0.75rem;
-      line-height: 0.875rem;
-
-      :global(.ini-mod) {
-        flex: 0 1 0.0625rem;
-        line-height: 0.875rem;
-        height: 0.875rem;
-        padding: 0.0625rem 0;
-      }
-    }
-
-    .config-button {
-      font-size: 0.625rem;
-      color: var(--t5e-tertiary-color);
-      display: flex;
       justify-content: center;
-      align-items: flex-end;
-      min-height: 0.75rem;
-    }
+      gap: 0.25rem;
 
-    .invisible {
-      visibility: hidden;
+      .config-button {
+        font-size: 0.625rem;
+        color: var(--t5e-tertiary-color);
+        min-height: 0.75rem;
+      }
     }
   }
 </style>
