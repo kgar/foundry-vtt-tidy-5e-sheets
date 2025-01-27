@@ -173,7 +173,7 @@
         "name": "Nutze Gesundheitsüberblende",
         "hint": "Zeigt eine farbige TP-Überblende."
     },
-    "TIDY5E.Settings.MoveTraitsBelowResources": {
+    "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
         "name": "Verschiebe Merkmale unter Ressourcen",
         "hint": "Positioniert die Merkmale unter den Charakterressourcen."
     },

@@ -190,7 +190,7 @@
       expanded={!!TidyFlags.skillsExpanded.get(context.actor)}
       toggleField={TidyFlags.skillsExpanded.prop}
     />
-    {#if !settings.value.moveTraitsBelowNpcResources}
+    {#if !settings.value.moveNpcTraitsToRightOfSkills}
       <Traits />
     {/if}
   </div>
@@ -201,7 +201,7 @@
     {#if context.hasLegendaries || context.unlocked}
       <NpcLegendaryActions />
     {/if}
-    {#if settings.value.moveTraitsBelowNpcResources}
+    {#if settings.value.moveNpcTraitsToRightOfSkills}
       <Traits />
     {/if}
     {#each features as section (section.key)}

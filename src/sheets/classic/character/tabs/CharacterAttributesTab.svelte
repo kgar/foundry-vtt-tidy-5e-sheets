@@ -2,7 +2,6 @@
   import SkillsList from '../../actor/SkillsList.svelte';
   import Traits from '../../actor/traits/Traits.svelte';
   import Favorites from '../parts/Favorites.svelte';
-  import Resources from '../parts/Resources.svelte';
   import { isNil } from 'src/utils/data';
   import { getContext } from 'svelte';
   import { settings } from 'src/settings/settings.svelte';
@@ -22,13 +21,6 @@
   let context = $derived(getCharacterSheetContext());
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
-
-  let showResources = $derived(
-    context.unlocked ||
-      context.resources.some(
-        (x: any) => !isNil(x.value) || !isNil(x.value, '') || !isNil(x.max),
-      ),
-  );
 
   let searchCriteria: string = $state('');
 
@@ -100,15 +92,12 @@
         expanded={!!TidyFlags.skillsExpanded.get(context.actor)}
         toggleField={TidyFlags.skillsExpanded.prop}
       />
-      {#if !settings.value.moveTraitsBelowCharacterResources}
+      {#if !settings.value.moveCharacterTraitsToRightOfSkills}
         <Traits />
       {/if}
     </section>
     <section class="main-panel">
-      {#if showResources}
-        <Resources />
-      {/if}
-      {#if settings.value.moveTraitsBelowCharacterResources}
+      {#if settings.value.moveCharacterTraitsToRightOfSkills}
         <Traits />
       {/if}
       <Favorites {favorites} {searchCriteria} />

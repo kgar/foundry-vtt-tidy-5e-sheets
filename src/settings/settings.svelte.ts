@@ -583,10 +583,10 @@ export function createSettings() {
         },
       },
 
-      moveTraitsBelowCharacterResources: {
+      moveCharacterTraitsToRightOfSkills: {
         options: {
-          name: 'TIDY5E.Settings.MoveTraitsBelowResources.name',
-          hint: 'TIDY5E.Settings.MoveTraitsBelowResources.hint',
+          name: 'TIDY5E.Settings.MoveTraitsToRightOfSkills.name',
+          hint: 'TIDY5E.Settings.MoveTraitsToRightOfSkills.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -594,7 +594,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'moveTraitsBelowCharacterResources'
+            'moveCharacterTraitsToRightOfSkills'
           );
         },
       },
@@ -667,10 +667,10 @@ export function createSettings() {
         },
       },
 
-      moveTraitsBelowNpcResources: {
+      moveNpcTraitsToRightOfSkills: {
         options: {
-          name: 'TIDY5E.Settings.MoveTraitsBelowResources.name',
-          hint: 'TIDY5E.Settings.MoveTraitsBelowResources.hint',
+          name: 'TIDY5E.Settings.MoveTraitsToRightOfSkills.name',
+          hint: 'TIDY5E.Settings.MoveTraitsToRightOfSkills.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -678,7 +678,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'moveTraitsBelowNpcResources'
+            'moveNpcTraitsToRightOfSkills'
           );
         },
       },

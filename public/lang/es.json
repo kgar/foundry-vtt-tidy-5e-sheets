@@ -185,7 +185,7 @@
         "name": "Utilizar superposición de salud",
         "hint": "Muestra una superposición de PS de colores."
     },
-    "TIDY5E.Settings.MoveTraitsBelowResources": {
+    "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
         "name": "Mover los rasgos debajo de los recursos",
         "hint": "Permite mover los rasgos de la parte izquierda debajo de los recursos."
     },

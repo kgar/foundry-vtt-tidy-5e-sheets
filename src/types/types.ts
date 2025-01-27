@@ -476,21 +476,6 @@ export type ActionSection = {
   actions: ActionItem[];
 } & TidySectionBase;
 
-export type TidyResource = {
-  name: string;
-  label: string;
-  labelName: string;
-  placeholder: string;
-  value: number | null;
-  valueName: string;
-  max: number | null;
-  maxName: string;
-  sr: boolean;
-  srName: string;
-  lr: boolean;
-  lrName: string;
-} & ExtensibleComponent;
-
 export type ExtensibleComponent = {
   cssClasses: string[];
   dataset: Record<string, string>;
@@ -583,7 +568,6 @@ export type ActorSheetContextV1 = {
   saves: ActorSaves;
   showLimitedSheet: boolean;
   tabs: Tab[];
-  tidyResources: TidyResource[];
   /**
    * Tells whether the sheet is unlocked via the Sheet Lock feature. When the sheet lock feature is disabled and the sheet is generally editable, this is always `true`.
    */

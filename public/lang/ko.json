@@ -309,7 +309,7 @@
         "name": "빈 캐릭터 기술 전환 버튼",
         "hint": "비어있는 기술을 표시/숨기기 하는 전환 버튼을 추가합니다."
     },
-    "TIDY5E.Settings.MoveTraitsBelowResources": {
+    "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
         "name": "특징을 자원 아래로 이동.",
         "hint": "캐릭터 자원 아래에 특징을 표시합니다."
     },

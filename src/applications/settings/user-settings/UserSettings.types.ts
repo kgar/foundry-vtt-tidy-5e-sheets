@@ -10,8 +10,8 @@ export type UserSettingsContext = {
     animateInspiration: CurrentSettings['animateInspiration'];
     hideIfZero: CurrentSettings['hideIfZero'];
     inlineActivitiesPosition: CurrentSettings['inlineActivitiesPosition'];
-    moveTraitsBelowCharacterResources: CurrentSettings['moveTraitsBelowCharacterResources'];
-    moveTraitsBelowNpcResources: CurrentSettings['moveTraitsBelowNpcResources'];
+    moveCharacterTraitsToRightOfSkills: CurrentSettings['moveCharacterTraitsToRightOfSkills'];
+    moveNpcTraitsToRightOfSkills: CurrentSettings['moveNpcTraitsToRightOfSkills'];
     showClassList: CurrentSettings['showClassList'];
     showEquippedAmmoOnly: CurrentSettings['showEquippedAmmoOnly'];
     showExhaustionOnHover: CurrentSettings['showExhaustionOnHover'];

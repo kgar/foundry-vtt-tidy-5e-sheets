@@ -66,10 +66,10 @@ export class UserSettingsFormApplication extends SvelteFormApplicationBase {
         animateInspiration: currentSettings.animateInspiration,
         hideIfZero: currentSettings.hideIfZero,
         inlineActivitiesPosition: currentSettings.inlineActivitiesPosition,
-        moveTraitsBelowCharacterResources:
-          currentSettings.moveTraitsBelowCharacterResources,
-        moveTraitsBelowNpcResources:
-          currentSettings.moveTraitsBelowNpcResources,
+        moveCharacterTraitsToRightOfSkills:
+          currentSettings.moveCharacterTraitsToRightOfSkills,
+        moveNpcTraitsToRightOfSkills:
+          currentSettings.moveNpcTraitsToRightOfSkills,
         showClassList: currentSettings.showClassList,
         showEquippedAmmoOnly: currentSettings.showEquippedAmmoOnly,
         showExhaustionOnHover: currentSettings.showExhaustionOnHover,

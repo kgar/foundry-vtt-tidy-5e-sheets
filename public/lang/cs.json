@@ -173,7 +173,7 @@
         "name": "Použít překryv výdrže",
         "hint": "Zobrazí barevný překryv BV."
     },
-    "TIDY5E.Settings.MoveTraitsBelowResources": {
+    "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
         "name": "Přesunout rysy pod zdroje",
         "hint": "Zaškrtni pro přesunutí rysů z levé strany pod zdroje."
     },

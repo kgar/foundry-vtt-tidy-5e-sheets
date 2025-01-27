@@ -303,7 +303,7 @@
         "name": "Alternar Perícias Vazias de Personagem",
         "hint": "Adiciona um botão de alternância para mostrar/ocultar perícias vazias."
     },
-    "TIDY5E.Settings.MoveTraitsBelowResources": {
+    "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
         "name": "Mover Traços Abaixo de Recursos",
         "hint": "Posiciona os traços abaixo dos recursos de personagem."
     },

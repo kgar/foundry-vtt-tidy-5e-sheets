@@ -79,12 +79,12 @@
 />
 
 <CheckboxSetting
-  bind:value={context.settings.moveTraitsBelowCharacterResources}
-  name={SettingsProvider.settings.moveTraitsBelowCharacterResources.options
+  bind:value={context.settings.moveCharacterTraitsToRightOfSkills}
+  name={SettingsProvider.settings.moveCharacterTraitsToRightOfSkills.options
     .name}
-  hint={SettingsProvider.settings.moveTraitsBelowCharacterResources.options
+  hint={SettingsProvider.settings.moveCharacterTraitsToRightOfSkills.options
     .hint}
-  id="moveTraitsBelowCharacterResources"
+  id="moveCharacterTraitsToRightOfSkills"
 />
 
 <CheckboxSetting

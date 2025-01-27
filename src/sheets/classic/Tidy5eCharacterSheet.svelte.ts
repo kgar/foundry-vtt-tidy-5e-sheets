@@ -14,7 +14,6 @@ import {
   type LocationToSearchTextMap,
   type ExpandedItemIdToLocationsMap,
   type ExpandedItemData,
-  type TidyResource,
   type MessageBus,
   type Utilities,
   type ActiveEffect5e,
@@ -321,27 +320,6 @@ export class Tidy5eCharacterSheet
     const unlocked =
       FoundryAdapter.isSheetUnlocked(this.actor) &&
       defaultDocumentContext.editable;
-
-    const tidyResources: TidyResource[] = defaultDocumentContext.resources.map(
-      (r: any) => ({
-        name: r.name,
-        label: r.label,
-        labelName: `system.resources.${r.name}.label`,
-        placeholder: r.placeholder,
-        value: r.value,
-        valueName: `system.resources.${r.name}.value`,
-        max: r.max,
-        maxName: `system.resources.${r.name}.max`,
-        sr: r.sr,
-        srName: `system.resources.${r.name}.sr`,
-        lr: r.lr,
-        lrName: `system.resources.${r.name}.lr`,
-        cssClasses: [],
-        dataSet: {},
-      })
-    );
-
-    TidyHooks.tidy5eSheetsPrepareResources(tidyResources, this.actor);
 
     // TODO: Make a builder for this
     // TODO: Extract to runtime?
@@ -891,7 +869,6 @@ export class Tidy5eCharacterSheet
         characterPreferences.spellSlotTrackerMode ??
         CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS,
       tabs: [],
-      tidyResources: tidyResources,
       traitEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.trait,
         {

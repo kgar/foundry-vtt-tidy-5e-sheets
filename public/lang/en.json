@@ -368,9 +368,9 @@
     "name": "Toggle Empty Character Skills",
     "hint": "Adds a toggle button for showing/hiding empty skills."
   },
-  "TIDY5E.Settings.MoveTraitsBelowResources": {
-    "name": "Move Traits Below Resources",
-    "hint": "Positions traits below character resources."
+  "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
+    "name": "Move Traits to Right of Skills",
+    "hint": "Positions traits to the right of the skill list, above most other UIs on the right side (e.g. Favorites, NPC Abilities)."
   },
   "TIDY5E.Settings.ShowEquippedAmmoOnly": {
     "name": "Show Equipped Ammunition Only",
