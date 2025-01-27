@@ -38,7 +38,6 @@
 
 {#if context.itemSubtypes}
   {@const category =
-    // @ts-expect-error
     context.config.featureTypes[context.system.type.value]?.label}
 
   <div class="form-group">
