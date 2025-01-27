@@ -36,27 +36,3 @@
     {text}
   </h4>
 </button>
-
-<style lang="scss">
-  .block-title {
-    position: relative;
-    font-family: var(--t5e-title-font-family);
-    font-size: 1.25rem;
-    line-height: 1;
-    margin: 0;
-    text-transform: capitalize;
-    text-align: center;
-
-    &::after {
-      display: block;
-      content: '';
-      height: 0;
-      width: 60%;
-      border-bottom: 0.0625rem solid var(--t5e-separator-color);
-      position: absolute;
-      left: 50%;
-      bottom: -0.0625rem;
-      transform: translate(-50%, 0);
-    }
-  }
-</style>

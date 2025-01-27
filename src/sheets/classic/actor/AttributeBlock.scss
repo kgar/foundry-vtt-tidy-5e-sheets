@@ -123,3 +123,71 @@
     }
   }
 }
+
+.initiative-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .d20-icon-container {
+    --icon-d20-outline-fill: var(--t5e-light-color);
+    --icon-d20-face-fill: transparent;
+    --icon-size: 4.125rem;
+  }
+
+  .block-score-wrapper {
+    position: absolute;
+    inset: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-block-start: 0.125rem;
+
+    .ini-score {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+
+      .config-button {
+        font-size: 0.625rem;
+        color: var(--t5e-tertiary-color);
+        min-height: 0.75rem;
+      }
+    }
+  }
+}
+
+.block-title {
+  position: relative;
+  font-family: var(--t5e-title-font-family);
+  font-size: 1.25rem;
+  line-height: 1;
+  margin: 0;
+  text-transform: capitalize;
+  text-align: center;
+
+  &::after {
+    display: block;
+    content: '';
+    height: 0;
+    width: 60%;
+    border-bottom: 0.0625rem solid var(--t5e-separator-color);
+    position: absolute;
+    left: 50%;
+    bottom: -0.0625rem;
+    transform: translate(-50%, 0);
+  }
+}
+
+.block-score > * {
+  font-size: 1.5rem;
+  margin: 0.125rem 0 0.1875rem 0;
+  padding: 0.125rem 0 0 0;
+  text-align: center;
+  font-family: var(--t5e-title-font-family);
+  font-weight: 700;
+  height: 1.4375rem;
+}

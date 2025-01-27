@@ -15,10 +15,6 @@
 
 <section class="actor-stats">
   <AcShield ac={ac.value} />
-  <VerticalLineSeparator />
-  <div>
-    <InitiativeBlock initiative={init} />
-  </div>
   {#each abilities as [id, ability]}
     <VerticalLineSeparator />
     <div>
@@ -30,4 +26,8 @@
       />
     </div>
   {/each}
+  <VerticalLineSeparator />
+  <div>
+    <InitiativeBlock initiative={init} />
+  </div>
 </section>
