@@ -782,5 +782,7 @@
     "TIDY5E.UseDefaultDialog": {
         "text": "Ви впевнені, що хочете використовувати усталені значення?",
         "title": "Підтвердження: використовувати усталені значення"
-    }
+    },
+    "TIDY5E.InfoCardInspectHint": "{inspectKey} Оглянути",
+    "TIDY5E.ModuleName": "Аркуші Tidy 5e"
 }
