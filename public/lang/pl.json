@@ -305,7 +305,8 @@
         "MigrateCompendia.TotalEntriesLabel": "Łączna liczba wpisów",
         "MigrateCompendia.SelectionDialogTitle": "Wybierz kompendia do migracji",
         "MigrateCompendia.CompendiumLabel": "Kompendium",
-        "MigrateCompendia.Title": "Przeprowadź migrację kompendium"
+        "MigrateCompendia.Title": "Przeprowadź migrację kompendium",
+        "chatNotification": "Nowa migracja dla Tidy 5e Sheets jest dostępna. Zobacz Ustawienia dla Tidy 5e Sheets, żeby zobaczyć dostępne migracje."
     },
     "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
         "name": "Karta postaci: Zawsze odblokowane dla MG",
@@ -684,7 +685,14 @@
         },
         "ActionLabel": "Sekcja akcji",
         "Tooltip": "Określ własną sekcję dla tego przedmiotu po umieszczeniu go na karcie postaci lub pozostaw ją pustą, aby zachować domyślne zachowanie.",
-        "LabelPl": "Sekcje"
+        "LabelPl": "Sekcje",
+        "SectionSelectorChooseSectionTooltip": "Wybierz sekcję",
+        "SectionSelectorChooseActionSectionTooltip": "Wybierz Sekcję akcji",
+        "SectionSelectorTitle": "{sectionType}: {documentName}",
+        "SectionSelectorExistingSections": "Istniejące sekcje",
+        "SectionSelectorCreateNewSection": "Stwórz nową sekcję",
+        "SectionSelectorNewSectionName": "Nazwa nowej sekcji",
+        "SectionSelectorSaveNewSection": "Zapisz nową sekcję"
     },
     "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+kliknij, aby pominąć rzut i natychmiast odnowić) ",
     "TIDY5E.UseDefaultDialog": {
@@ -789,5 +797,31 @@
         "hint": "Określa domyślny typ rzutu używany podczas rzutu przeciw śmiercią."
     },
     "TIDY5E.Keybindings.ToggleHeaderMenu.Name": "Przełącz menu nagłówka",
-    "TIDY5E.Keybindings.ToggleHeaderMenu.Hint": "Jeśli w interfejsie użytkownika aktywnym oknem jest karta Tidy, to naciśnięcie tego klawisza powoduje przełączenie menu nagłówka."
+    "TIDY5E.Keybindings.ToggleHeaderMenu.Hint": "Jeśli w interfejsie użytkownika aktywnym oknem jest karta Tidy, to naciśnięcie tego klawisza powoduje przełączenie menu nagłówka.",
+    "TIDY5E.WorldSettings.TabCustomSections": {
+        "ShowWhenEmptyTooltip": "Wszystkie zakładki z tablicą przedmiotów posiadają zestaw domyślnych sekcji, które zawsze się pokazują, nawet gdy nie ma przedmiotów w sekcji. Pokaż tę sekcję, nawet kiedy jest ona pusta.",
+        "tabLabel": "Niestandardowe Sekcje",
+        "LimitToSpecificSheetsLabel": "Ogranicz pokazywanie sekcji do wybranych Kart",
+        "CustomizedIndicatorLabel": "Niestandardowe",
+        "ShowWhenEmptyLabel": "Pokaż sekcję kiedy pusta",
+        "LimitToSpecificTabsLabel": "Ogranicz pokazywanie Sekcji do wybranych Zakładek"
+    },
+    "TIDY5E.BrokenLink": "Uszkodzone połączenie",
+    "TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast": "Dodaj Rytuały w \"Może Rzucić\"",
+    "TIDY5E.ModuleName": "Tidy 5e Sheets",
+    "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "Najwyższe sekcje",
+    "TIDY5E.Settings.GlobalCustomSections": {
+        "hint": "Własne sekcje dla Świata, mogące zostać skonfigurowane do różnych celów. Globalne Własne sekcje zawsze będą dołączane do wyboru sekcji.",
+        "name": "Globalne sekcje niestandardowe",
+        "AddSection": "Dodaj Sekcję"
+    },
+    "TIDY5E.ExpandCollapseMenu.OptionAllSections": "Wszystkie sekcje",
+    "TIDY5E.SortMenu.OptionAlphabetical": "Alfabetycznie (A-Z)",
+    "TIDY5E.SortMenu.OptionManual": "Ręcznie",
+    "TIDY5E.SortMenu.OptionPrepared": "Przygotowane",
+    "TIDY5E.SortMenu.OptionEquipped": "Wyposażone",
+    "TIDY5E.Activities.Cast.SourceHintText": "Z {itemName}",
+    "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Posiada{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}",
+    "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatLabel": "Info",
+    "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatTooltip": "Pokaż opis w czacie"
 }
