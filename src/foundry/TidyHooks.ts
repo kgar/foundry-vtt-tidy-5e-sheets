@@ -7,7 +7,6 @@ import type {
   ActorSheetContextV2,
   CharacterSheetContext,
   NpcSheetContext,
-  TidyResource,
   VehicleSheetContext,
 } from 'src/types/types';
 import type { ContextMenuEntry } from './foundry.types';
@@ -398,25 +397,6 @@ export class TidyHooks {
       'tidy5e-sheet.prepareFloatingContextMenuPosition',
       positionInfo
     );
-  }
-
-  /**
-   * Resources have been prepared. Use this hook to adjust them and/or add new resources.
-   * @param {TidyResource[]} tidyResources The resources that have been prepared for the sheet.
-   * @param {Actor5e} actor The affected actor.
-   *
-   * @example
-   * ```js
-   * Hooks.on('tidy5e-sheet.prepareResources', (tidyResources, actor) => {
-   *   // Your code here
-   * });
-   * ```
-   */
-  static tidy5eSheetsPrepareResources(
-    tidyResources: TidyResource[],
-    actor: Actor5e
-  ) {
-    Hooks.callAll('tidy5e-sheet.prepareResources', tidyResources, actor);
   }
 
   /**

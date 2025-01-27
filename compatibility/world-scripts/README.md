@@ -1,0 +1,1 @@
+There are no sample world scripts at this time. At a later date/time, some may be added for various Tidy-related purposes. If you have world scripts you think would be useful to others, feel free to submit them to the [Tidy 5e Sheets github repo](<https://github.com/kgar/foundry-vtt-tidy-5e-sheets>).

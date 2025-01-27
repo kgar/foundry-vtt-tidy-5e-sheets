@@ -286,7 +286,7 @@
         "name": "Toggle Empty Character Skills",
         "hint": "Adds a toggle button for showing/hiding empty skills."
     },
-    "TIDY5E.Settings.MoveTraitsBelowResources": {
+    "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
         "name": "特徴をﾘｿｰｽの下に移動",
         "hint": "特徴を、技能の下 (左段)から、リソース下 (右段)に移動する場合に有効にします。"
     },

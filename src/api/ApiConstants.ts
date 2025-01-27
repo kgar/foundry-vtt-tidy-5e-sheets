@@ -29,7 +29,7 @@ const ApiConstants = {
    *
    * @example an element which is tagged with a sheet part value
    * ```html
-   * <div class="resources" data-tidy-sheet-part="resources-container">...</div>
+   * <div class="actor-name" data-tidy-sheet-part="name-container">...</div>
    * ```
    *
    * @example targeting a sheet part for content injection during Tidy render
@@ -38,19 +38,19 @@ const ApiConstants = {
    * Hooks.on("tidy5e-sheet.renderActorSheet", (sheet, element, data) => {
    *   const api = game.modules.get('tidy5e-sheet').api;
    *   const selector = api.getSheetPartSelector(
-   *     api.constants.SHEET_PARTS.RESOURCES_CONTAINER
+   *     api.constants.SHEET_PARTS.NAME_CONTAINER
    *   );
-   *   // get the resources container of the target actor sheet
+   *   // get the name container of the target actor sheet
    *   element
    *     .querySelector(selector)
    *     // inject some HTML
    *     ?.insertAdjacentHTML(
-   *       // put it as the first element inside the resources container; see https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML#afterbegin
+   *       // put it as the first element inside the name container; see https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML#afterbegin
    *       "afterbegin",
    *       // here's my content
    *       // pro tip: `data-tidy-render-scheme="handlebars"` causes this content to re-render on every Tidy render, full or partial
    *       `<div style="display: contents;" data-tidy-render-scheme="handlebars">
-   *           <h2 type="button" style="width: 100%;">Resources for ${data.actor.name}</h2>
+   *           <h2 type="button" style="width: 100%;"><i class="fa-solid fa-star"></i></h2>
    *         </div>`
    *     );
    * });

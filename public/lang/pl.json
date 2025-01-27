@@ -532,7 +532,7 @@
         "name": "Użyj domyślnego przejścia klawiszem Tab dla atrybutów karty",
         "hint": "Domyślna karta 5e umożliwia przechodzenie za pomocą klawiatury z jednego atrybutu do następnego, ukrywając elementy sterujące przed kolejności tabulacji. Włączenie tej opcji powiela to zachowanie. To ustawienie jest ignorowane, jeśli opcja „Użyj przystępnego wsparcia dla klawiatury” jest wyłączona."
     },
-    "TIDY5E.Settings.MoveTraitsBelowResources": {
+    "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
         "hint": "Umieszcza atrybuty poniżej zasobów postaci.",
         "name": "Przenieś atrybuty poniżej zasobów"
     },

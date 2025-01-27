@@ -303,9 +303,6 @@ export const CONSTANTS = {
     /** A container for a single resource (first, second, third, etc.). */
     RESOURCE: 'resource',
 
-    /** The container where all known resources (first, second, third, etc.) are kept. */
-    RESOURCES_CONTAINER: 'resources-container',
-
     /** An interactable element that can clear the search input it is associated with. */
     SEARCH_CLEAR: 'search-clear',
 

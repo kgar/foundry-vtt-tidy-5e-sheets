@@ -37,10 +37,10 @@
 />
 
 <CheckboxSetting
-  bind:value={context.settings.moveTraitsBelowNpcResources}
-  name={SettingsProvider.settings.moveTraitsBelowNpcResources.options.name}
-  hint={SettingsProvider.settings.moveTraitsBelowNpcResources.options.hint}
-  id="moveTraitsBelowNpcResources"
+  bind:value={context.settings.moveNpcTraitsToRightOfSkills}
+  name={SettingsProvider.settings.moveNpcTraitsToRightOfSkills.options.name}
+  hint={SettingsProvider.settings.moveNpcTraitsToRightOfSkills.options.hint}
+  id="moveNpcTraitsToRightOfSkills"
 />
 
 <CheckboxSetting

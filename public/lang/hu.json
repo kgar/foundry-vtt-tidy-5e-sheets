@@ -173,7 +173,7 @@
         "name": "",
         "hint": ""
     },
-    "TIDY5E.Settings.MoveTraitsBelowResources": {
+    "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
         "name": "Jellemzők az erőforrások alá.",
         "hint": "Kapcsold be, hogy a jellemzőket a bal oldalról átmozgasd az erőforrások alá."
     },

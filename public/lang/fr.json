@@ -173,7 +173,7 @@
         "name": "Utiliser la superposition de santé",
         "hint": "Affiche une superposition PV colorée."
     },
-    "TIDY5E.Settings.MoveTraitsBelowResources": {
+    "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
         "name": "Déplacer les traits sous les ressources",
         "hint": "Activer cette option pour afficher les traits sous les ressources."
     },
