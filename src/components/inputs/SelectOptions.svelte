@@ -1,5 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { coalesce } from 'src/utils/formatting';
 
   interface Props {
     data: Record<string, unknown> | Record<string, unknown>[];
@@ -18,13 +19,16 @@
   let entries = $derived(Object.entries<any>(data));
 
   function getLabel(value: unknown): string {
+    // Fallback to the convention of CONFIG.DND5E progressively changing referential data to use the "label" prop.
+    const effectiveLabelProp = coalesce(labelProp, 'label');
     if (
-      labelProp !== null &&
       value !== null &&
       typeof value === 'object' &&
-      labelProp in value
+      effectiveLabelProp in value
     ) {
-      return (value as Record<string, unknown>)[labelProp]?.toString() ?? '';
+      return (
+        (value as Record<string, unknown>)[effectiveLabelProp]?.toString() ?? ''
+      );
     }
 
     return value?.toString() ?? '';
