@@ -23,7 +23,7 @@
   }
 </script>
 
-<div class="item-uses">
+<div class="inline-item-uses">
   <input
     class="uses-value"
     type="text"
@@ -52,29 +52,3 @@
     data-tidy-field="system.uses.max"
   />
 </div>
-
-<style lang="scss">
-  .item-uses {
-    justify-self: center;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    input {
-      width: 50%;
-      padding: 0 0.125rem 0 0;
-      color: var(--t5e-secondary-color);
-      line-height: 1;
-      height: 100%;
-
-      &.uses-value {
-        text-align: right;
-      }
-
-      &.uses-max {
-        text-align: left;
-      }
-    }
-  }
-</style>

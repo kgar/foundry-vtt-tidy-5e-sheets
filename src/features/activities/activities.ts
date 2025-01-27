@@ -1,7 +1,12 @@
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import type { Item5e } from 'src/types/item.types';
-import type { ActivityItemContext } from 'src/types/types';
+import type {
+  ActivityItemContext,
+  Actor5e,
+  CharacterItemContext,
+  NpcItemContext,
+} from 'src/types/types';
 
 export class Activities {
   static isConfigurable(activity: Activity5e) {
@@ -70,5 +75,24 @@ export class Activities {
         : null,
       toHit: isNaN(toHit) ? null : toHit,
     };
+  }
+
+  static applyLinkedUses(
+    item: Item5e,
+    actor: Actor5e,
+    context: CharacterItemContext | NpcItemContext
+  ) {
+    const cachedFor = fromUuidSync(item.flags.dnd5e?.cachedFor, {
+      relative: actor,
+      strict: false,
+    });
+    if (cachedFor)
+      context.linkedUses = cachedFor.consumption?.targets.find(
+        (t: any) => t.type === 'activityUses'
+      )
+        ? cachedFor.uses
+        : cachedFor.consumption?.targets.find((t: any) => t.type === 'itemUses')
+        ? cachedFor.item.system.uses
+        : null;
   }
 }

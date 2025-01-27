@@ -102,6 +102,8 @@ export type SpellCalculations = {
   meleeHasBonus: boolean;
 };
 
+export type Uses = { value: number; max: number };
+
 export type ActorInventoryTypes = Record<string, InventorySection>;
 
 export type CustomSectionOptions = {
@@ -214,6 +216,7 @@ export type CharacterItemContext = {
   hasRecharge?: boolean;
   hasUses?: boolean;
   isStack?: boolean;
+  linkedUses?: Uses;
   needsSubclass?: boolean;
   toggleClass?: string;
   toggleTitle?: string;
@@ -395,6 +398,7 @@ export type NpcItemContext = {
   hasRecharge?: boolean;
   hasUses?: boolean;
   isStack?: boolean;
+  linkedUses?: Uses;
   needsSubclass?: boolean;
   parent?: Item5e;
   toggleTitle?: string;
