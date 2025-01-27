@@ -3532,7 +3532,7 @@ export type CONFIG = {
           epicBoon: string;
         };
       };
-    };
+    } & Record<string, { label: string }>;
     itemProperties: {
       ada: {
         label: string;

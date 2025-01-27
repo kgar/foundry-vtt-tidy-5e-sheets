@@ -76,6 +76,7 @@ export type CharacterFeatureSection = {
   showUsesColumn?: boolean;
   showUsagesColumn?: boolean;
   showLevelColumn?: boolean;
+  showFeatureTypeColumn?: boolean;
   showRequirementsColumn?: boolean;
   canCreate: boolean;
   custom?: CustomSectionOptions;

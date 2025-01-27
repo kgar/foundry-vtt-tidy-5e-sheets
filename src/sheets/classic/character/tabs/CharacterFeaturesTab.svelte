@@ -193,6 +193,11 @@
                     {localize('DND5E.Level')}
                   </ItemTableColumn>
                 {/if}
+                {#if section.showFeatureTypeColumn}
+                  <ItemTableColumn baseWidth="7.5rem">
+                    {localize('DND5E.Type')}
+                  </ItemTableColumn>
+                {/if}
                 {#if section.showRequirementsColumn}
                   <ItemTableColumn baseWidth="7.5rem">
                     {localize('DND5E.Requirements')}
@@ -286,6 +291,16 @@
                               context.lockLevelSelector}
                           />
                         {/if}
+                      </ItemTableCell>
+                    {/if}
+                    {#if section.showFeatureTypeColumn}
+                      {@const label =
+                        CONFIG.DND5E.featureTypes[item.system.type.value]
+                          ?.label ?? item.system.type.value}
+                      <ItemTableCell baseWidth="7.5rem">
+                        <span class="truncate" title={item.system.type ?? ''}
+                          >{label ?? ''}</span
+                        >
                       </ItemTableCell>
                     {/if}
                     {#if section.showRequirementsColumn}

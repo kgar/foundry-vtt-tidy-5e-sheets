@@ -68,6 +68,7 @@ export class CharacterSheetSections {
         dataset: {
           type: CONSTANTS.ITEM_TYPE_FEAT,
         },
+        showFeatureTypeColumn: true,
         showRequirementsColumn: true,
         showUsagesColumn: true,
         showUsesColumn: true,
@@ -81,6 +82,7 @@ export class CharacterSheetSections {
         items: feats.filter((feat) => !feat.system.activities?.size),
         hasActions: false,
         dataset: { type: CONSTANTS.ITEM_TYPE_FEAT },
+        showFeatureTypeColumn: true,
         showRequirementsColumn: true,
         showUsesColumn: true,
         canCreate: true,
@@ -147,6 +149,7 @@ export class CharacterSheetSections {
       canCreate: true,
       showUsesColumn: true,
       showUsagesColumn: true,
+      showFeatureTypeColumn: true,
       showRequirementsColumn: true,
       key: customSectionName,
       custom: {
