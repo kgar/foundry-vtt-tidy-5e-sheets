@@ -21,9 +21,9 @@
     "TIDY5E.SheetImageOptionsHint": "Права клавіша миші: Показати опції зображення",
     "TIDY5E.ShowPortraitArt": "Показати Портрет",
     "TIDY5E.PortraitTitle": "Портрет: {subject}",
-    "TIDY5E.ItemImageTitle": "Предмет: {subject}",
+    "TIDY5E.ItemImageTitle": "Елемент: {subject}",
     "TIDY5E.ShowTokenArt": "Показати Токен",
-    "TIDY5E.ShowItemImage": "Права клавіша миші: Показати зображення предмета",
+    "TIDY5E.ShowItemImage": "Права клавіша миші: Показати зображення елемента",
     "TIDY5E.ShowItemArt": "Показати Зображення",
     "TIDY5E.StandardExhaustion2": "Швидкість зменшена вдвічі",
     "TIDY5E.StandardExhaustion3": "Перешкода для Кидків Атаки та Рятівних Кидків",
@@ -165,7 +165,7 @@
         "AtLeastOneLevelRequiredErrorMessage": "Необхідний принаймні один рівень виснаження транспорту."
     },
     "TIDY5E.WorldSettings.TabItem": {
-        "tabLabel": "Предмет"
+        "tabLabel": "Елемент"
     },
     "TIDY5E.WorldSettings.ItemIdentificationPermission": {
         "name": "Дозвіл на ідентифікацію предмета",
@@ -217,16 +217,16 @@
         "tabLabel": "Дії"
     },
     "TIDY5E.Settings.ItemCardsForAllItems": {
-        "name": "Показувати картки предметів у всіх відображеннях",
-        "hint": "Якщо цей параметр вимкнено, картки предметів відображаються лише у відображенні сіткою."
+        "name": "Показувати картки елементів у всіх відображеннях",
+        "hint": "Якщо цей параметр вимкнено, картки елементів відображаються лише у відображенні сіткою."
     },
     "TIDY5E.Settings.ItemCardsAreFloating": {
-        "name": "Показувати картки предметів що виринають",
-        "hint": "Увімкніть, щоб інформаційні картки предметів виринали поруч із курсором миші. Рекомендовано: використовуйте затримку з цією функцією."
+        "name": "Показувати картки елементів що виринають",
+        "hint": "Увімкніть, щоб інформаційні картки елементів виринали поруч із курсором миші. Рекомендовано: використовуйте затримку з цією функцією."
     },
     "TIDY5E.Settings.ItemCardsDelay": {
         "name": "Затримка картки що виринає (мс)",
-        "hint": "Затримує показ карток предметів на вказані мілісекунди (мс). 0 означає відсутність затримки. Усталене значення: 300."
+        "hint": "Затримує показ карток елементів на вказані мілісекунди (мс). 0 означає відсутність затримки. Усталене значення: 300."
     },
     "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
         "name": "Використовувати підтримку клавіатури з підвищеною доступністю",
@@ -301,7 +301,7 @@
     },
     "TIDY5E.Settings.UseContextMenu": {
         "name": "Використовувати контекстне меню",
-        "hint": "Вмикає контекстне меню при натисканні Правою Кнопкою Миші по предмету."
+        "hint": "Вмикає контекстне меню при натисканні Правою Кнопкою Миші по елементу."
     },
     "TIDY5E.Settings.ShowExpandedLimitedView": {
         "name": "Показувати розширений аркуш в обмеженому режимі",
@@ -348,7 +348,7 @@
     "TIDY5E.ContextMenuActionDelete": "Видалити",
     "TIDY5E.EmptySection": "Цей розділ порожній. Розблокуйте аркуш для редагування.",
     "TIDY5E.Tidy5eCharacterSheetClassic": "Класичний Аркуш Персонажа Tidy 5e",
-    "TIDY5E.Tidy5eItemSheetClassic": "Класичний Аркуш Предмета Tidy 5e",
+    "TIDY5E.Tidy5eItemSheetClassic": "Класичний Аркуш Елементу Tidy 5e",
     "TIDY5E.Tidy5eVehicleSheetClassic": "Класичний Аркуш Транспорту Tidy 5e",
     "TIDY5E.Tidy5eGroupSheetClassic": "Класичний Аркуш Групи Tidy 5e",
     "TIDY5E.PreviewSheetImageHint": "Ліва клавіша миші: Переглянути зображення",
@@ -412,7 +412,7 @@
     },
     "TIDY5E.Settings.HideDeathSavesFromPlayers": {
         "name": "Ховати рятунки від смерті від гравців",
-        "hint": "Робить рятівні кидки від смерті та їх результати видимими лише для ГМа."
+        "hint": "Робить результат кидка смерті видимим лише для ГМа. Кнопка кидка рятунку смерті залишається видимою."
     },
     "TIDY5E.Settings.LockMoneyChanges": {
         "name": "Блокування валюти",
@@ -660,7 +660,8 @@
         "FavoritesToSystem": {
             "sectionTitle": "Вибране персонажа",
             "selectionDialogTitle": "Перенесення: вибране персонажа до системи"
-        }
+        },
+        "chatNotification": "Доступна нове перенесення Tidy 5e Sheets. Дивіться налаштування Tidy 5e Sheets, щоб переглянути доступні перенесення."
     },
     "TIDY5E.Settings.About": {
         "buttonLabel": "Про Tidy 5e Sheets",
@@ -738,7 +739,7 @@
     "TIDY5E.GMOnly.Message": "Тільки для ГМа: {message}",
     "TIDY5E.ReminderToBackUp": "Завжди пам'ятайте про резервне копіювання вашого світу.",
     "TIDY5E.Section": {
-        "Tooltip": "Вкажіть власний розділ для цього предмета при розміщенні на аркуші актора або залиште його порожнім для поведінки за замовчуванням.",
+        "Tooltip": "Вкажіть власний розділ для цього елемента при розміщенні на аркуші актора або залиште його порожнім для поведінки за замовчуванням.",
         "Default": "Усталений розділ",
         "Label": "Розділ",
         "ConfigDialog": {
@@ -747,7 +748,15 @@
             "title": "Налаштування розділу: {tabTitle}"
         },
         "ActionLabel": "Розділ дій",
-        "ActionTooltip": "Вкажіть власний розділ для цього предмета при розміщенні на вкладці дій або залиште його порожнім для поведінки за замовчуванням."
+        "ActionTooltip": "Вкажіть власний розділ для цього елемента при розміщенні на вкладці дій або залиште його порожнім для поведінки за замовчуванням.",
+        "LabelPl": "Розділи",
+        "SectionSelectorTitle": "{sectionType}: {documentName}",
+        "SectionSelectorChooseSectionTooltip": "Оберіть розділ",
+        "SectionSelectorChooseActionSectionTooltip": "Оберіть розід дії",
+        "SectionSelectorCreateNewSection": "Створити новий розділ",
+        "SectionSelectorExistingSections": "Існуючі розділи",
+        "SectionSelectorSaveNewSection": "Зберегти новий розділ",
+        "SectionSelectorNewSectionName": "Назва нового розілу"
     },
     "TIDY5E.Tidy5eSettings": "Налаштування аркушівTidy 5e",
     "TIDY5E.Settings.Debug": {
@@ -762,7 +771,7 @@
     "TIDY5E.VehicleMotionless": "Транспорт не рухається",
     "TIDY5E.Commands.CollapseAll": "Згорнути всі",
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Фільтри",
-    "TIDY5E.ActiveEffectsMarkerTitle": "Цей предмет має активні ефекти",
+    "TIDY5E.ActiveEffectsMarkerTitle": "Цей елементів має активні ефекти",
     "TIDY5E.SortMode.ActionListDefault": "Сортування списку дій за замовчуванням",
     "TIDY5E.Commands.ExpandAll": "Розгорнути всі",
     "TIDY5E.Commands.ShowLegendaryToolbar": "Показати панель легендарних дій",
@@ -784,5 +793,64 @@
         "title": "Підтвердження: використовувати усталені значення"
     },
     "TIDY5E.InfoCardInspectHint": "{inspectKey} Оглянути",
-    "TIDY5E.ModuleName": "Аркуші Tidy 5e"
+    "TIDY5E.ModuleName": "Аркуші Tidy 5e",
+    "TIDY5E.UserSettings.TabActivities": {
+        "tabLabel": "Активності"
+    },
+    "TIDY5E.Settings.InlineActivitiesPosition": {
+        "name": "Активності в один рядок",
+        "top": "Згори",
+        "hint": "При розгортанні елемента показуються активності для цього елемента. Використовуйте цей параметр, щоб визначити, чи будуть активності відображатися вгорі, перед описом елемента, чи внизу, під описом елемента, кнопками і тегами.",
+        "bottom": "Знизу"
+    },
+    "TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast": "Включати ритуали до \"Можна створити\"",
+    "TIDY5E.Settings.UseEffectCards": {
+        "hint": "Увімкніть, щоб показувати інформаційні картки активних ефектів для всіх акторів та елементів з активними ефектами.",
+        "name": "Показувати картки інформації активних ефектів"
+    },
+    "TIDY5E.WorldSettings.TabCustomSections": {
+        "tabLabel": "Користувацькі розділи",
+        "LimitToSpecificTabsLabel": "Обмежити показаний розділ обраними вкладками",
+        "ShowWhenEmptyTooltip": "Всі вкладки з таблицями елементів мають набір розділів за замовчуванням, які завжди показуються, навіть якщо в розділі немає жодного елемента. Завжди показувати цей розділ, навіть якщо він порожня.",
+        "CustomizedIndicatorLabel": "Користувацький",
+        "ShowWhenEmptyLabel": "Показувати порожні розділи",
+        "LimitToSpecificSheetsLabel": "Обмежити показаний розділ обраними аркушами"
+    },
+    "TIDY5E.Settings.DefaultDeathSaveRoll": {
+        "hint": "Задає усталений тип кидку, який використовується при кидках рятунку смерті.",
+        "name": "Усталений кидок рятунку смерті"
+    },
+    "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Holds{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}",
+    "TIDY5E.Facilities.Hirelings.Label": "Найманці",
+    "TIDY5E.Facilities.Defenders.Label": "Охоронці",
+    "TIDY5E.Activities.Cast.SourceHintText": "З {itemName}",
+    "TIDY5E.Facilities.RosterMember.Label": "{actorName} - {facilityName}",
+    "TIDY5E.Facilities.ContextMenuActionRemove": "Прибрати з {facilityName}",
+    "TIDY5E.Facilities.Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}",
+    "TIDY5E.ExpandCollapseMenu.OptionTitle": "Розгорнути/Згорнути",
+    "TIDY5E.SortMenu.OptionAlphabetical": "За алфавітом (А-Я)",
+    "TIDY5E.ExpandCollapseMenu.OptionAllSections": "Всі розділи",
+    "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "Розділи верхнього рівня",
+    "TIDY5E.SortMenu.OptionManual": "Вручну",
+    "TIDY5E.SortMenu.OptionPrepared": "Підготовлено",
+    "TIDY5E.SortMenu.OptionEquipped": "Споряджено",
+    "TIDY5E.Keybindings.ToggleHeaderMenu.Hint": "Якщо аркуш Tidy є поточним активним вікном інтерфейсу, ця комбінація клавіш перемикає меню заголовка аркуша.",
+    "TIDY5E.Facilities.Creatures.Label": "Істоти",
+    "TIDY5E.Settings.GlobalCustomSections": {
+        "hint": "Глобальні користувацькі розділи, які можна налаштувати для різних цілей. Глобальні користувацькі розділи завжди будуть включені до селектора розділів.",
+        "AddSection": "Додати розділ",
+        "name": "Глобальні користувацькі розділи"
+    },
+    "TIDY5E.Keybindings.ToggleHeaderMenu.Name": "Перемкнути меню заголовка",
+    "TIDY5E.Settings.InfoCardsInspectKey": {
+        "name": "Клавіша огляду інформаційної картки",
+        "hint": "Натисніть цю клавішу (наприклад, клавішу «t») під час перегляду інформаційної картки, щоб вивести її на екран."
+    },
+    "TIDY5E.BrokenLink": "Непрацююче посилання",
+    "TIDY5E.WorldSettings.IncludeTidySectionFieldsInDefaultSheets": {
+        "name": "Включати поля розділів Tidy до аркушів за замовчуванням",
+        "hint": "Включає дані розділів Tidy та розділи дій до аркуша елемента за замовчуванням."
+    },
+    "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatLabel": "Інформація",
+    "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatTooltip": "Показати опис у чаті"
 }
