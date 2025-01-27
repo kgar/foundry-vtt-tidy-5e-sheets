@@ -948,6 +948,8 @@ export class Tidy5eNpcSheet
           item.system.activities
         )?.map(Activities.getActivityItemContext);
 
+        Activities.applyLinkedUses(item, this.actor, ctx);
+
         ctx.attunement = FoundryAdapter.getAttunementContext(item);
         ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
         ctx.hasUses = uses && uses.max > 0;

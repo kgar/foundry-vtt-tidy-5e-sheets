@@ -83,6 +83,8 @@
   .primary-cell-uses {
     flex-grow: 0;
     width: 3.125rem;
+    display: flex;
+    align-items: center;
   }
 
   .linked-source-tooltip-icon {
@@ -109,6 +111,31 @@
 
       .roll-indicator {
         opacity: 1;
+      }
+    }
+  }
+
+  .inline-item-uses {
+    justify-self: center;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    :is(.uses-value, .uses-max) {
+      width: 50%;
+      padding: 0 0.125rem 0 0;
+      color: var(--t5e-secondary-color);
+      line-height: 1;
+      height: 100%;
+      min-width: 1.25rem;
+
+      &.uses-value {
+        text-align: right;
+      }
+
+      &.uses-max {
+        text-align: left;
       }
     }
   }

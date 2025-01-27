@@ -233,9 +233,21 @@
               </ItemName>
 
               <div class="primary-cell-extras">
-                {#if spell.hasLimitedUses}
+                {#if ctx.hasUses}
                   <span class="primary-cell-uses">
                     <ItemUses item={spell} />
+                  </span>
+                {:else if ctx.linkedUses}
+                  <span class="primary-cell-uses">
+                    <span class="inline-item-uses">
+                      <span class="uses-value">
+                        {ctx.linkedUses.value}
+                      </span>
+                      /
+                      <span class="uses-max">
+                        {ctx.linkedUses.max}
+                      </span>
+                    </span>
                   </span>
                 {:else if (spell.system.linkedActivity?.uses?.max ?? 0) > 0}
                   <span class="primary-cell-uses">

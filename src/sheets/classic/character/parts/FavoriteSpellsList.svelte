@@ -14,10 +14,10 @@
   import { getContext } from 'svelte';
   import SpellSlotManagement from 'src/components/spellbook/SpellSlotManagement.svelte';
   import ConcentrationOverlayIcon from 'src/components/spellbook/ConcentrationOverlayIcon.svelte';
-  import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
+  import ActivityUses from 'src/components/item-list/ActivityUses.svelte';
 
   interface Props {
     section: SpellbookSection;
@@ -115,12 +115,28 @@
                   >{spell.name}</span
                 >
               </ItemName>
+              {#if ctx.hasUses}
+                <div class="primary-cell-uses">
+                  <ItemUses item={spell} />
+                </div>
+              {:else if ctx.linkedUses}
+                <div class="primary-cell-uses">
+                  <div class="inline-item-uses">
+                    <span class="uses-value">
+                      {ctx.linkedUses.value}
+                    </span>
+                    /
+                    <span class="uses-max">
+                      {ctx.linkedUses.max}
+                    </span>
+                  </div>
+                </div>
+              {:else if (spell.system.linkedActivity?.uses?.max ?? 0) > 0}
+                <span class="primary-cell-uses">
+                  <ActivityUses activity={spell.system.linkedActivity} />
+                </span>
+              {/if}
             </ItemTableCell>
-            {#if spell.system.uses.per}
-              <ItemTableCell baseWidth="3.125rem">
-                <ItemUses item={spell} />
-              </ItemTableCell>
-            {/if}
             <ItemTableCell baseWidth="4.375rem" cssClass="no-gap">
               <SpellComponents
                 {spell}
