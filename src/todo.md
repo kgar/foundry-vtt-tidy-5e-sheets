@@ -2,6 +2,12 @@
 - [x] Pull attribute pins from flag, and sort by sort
 - [x] Add context menu options for pin/unpin
 - [ ] Style the pins
+  - [ ] spacing and grid work
+  - [ ] unidentified support
+  - [ ] roll indicator
+  - [ ] concentration support?
+- [ ] Ensure falsy values on the counters default to 0
+- [ ] All input fields: focus on select true
 - [ ] Implement drag-and-drop pin sort
 
 ## Stretch
