@@ -919,3 +919,103 @@ select:hover {
     }
   }
 }
+
+.attribute-pins {
+  font-family: var(--t5e-table-header-row-color);
+  
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.125rem;
+  
+  .attribute-pin {
+    background-color: rebeccapurple;
+    border-radius: 0.375rem;
+    padding: 0.3125rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+
+    .attribute-item-image {
+      display: flex;
+
+      .item-use-button {
+        --img-size: var(--t5e-image-size-override, 2.25rem);
+        position: relative;
+        align-self: center;
+        flex: 0 0 var(--img-size);
+        height: var(--img-size);
+        width: var(--img-size);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+
+        .item-image {
+          position: absolute;
+          border-radius: 5px;
+          width: calc(var(--img-size) + 0.125rem);
+          height: calc(var(--img-size) + 0.125rem);
+          transition: opacity 0.2s ease;
+          // margin: -0.0625rem 0 -0.0625rem -0.125rem;
+
+          &.conceal {
+            filter: grayscale(100%);
+          }
+        }
+
+        .roll-indicator {
+          color: var(--t5e-tertiary-color);
+          font-size: 1.125rem;
+
+          &.invisible {
+            visibility: hidden;
+          }
+        }
+
+        .roll-indicator {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          opacity: 0;
+          transition: all 0.2s ease;
+        }
+
+        .unidentified-glyph {
+          font-size: calc(var(--t5e-image-size-override, 1.5rem) - 0.75rem);
+        }
+      }
+    }
+
+    .attribute-pin-details {
+      flex: 1;
+
+      .attribute-pin-name-container {
+        font-size: var(--font-size-13);
+
+        .attribute-pin-name {
+          text-align: center;
+        }
+      }
+      .attribute-counter {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        input,
+        span {
+          width: 1.5rem;
+          font-size: var(--font-size-14);
+          line-height: normal;
+          height: auto;
+          &:first-child {
+            text-align: right;
+          }
+          &:last-child {
+            text-align: left;
+          }
+        }
+      }
+    }
+  }
+}

@@ -55,22 +55,20 @@
           value={item.name}
         />
       {:else}
-        <span class="attribute-pin-name">{item.name}</span>
+        <div class="attribute-pin-name truncate">{item.name}</div>
       {/if}
     </div>
     <div class="attribute-counter">
+      <TextInput
+        document={usesDocument}
+        field={spentProp}
+        {value}
+        onSaveChange={(ev) => saveValueChange(ev)}
+      />
+      /
       {#if context.unlocked}
-        <TextInput
-          document={usesDocument}
-          field={spentProp}
-          {value}
-          onSaveChange={(ev) => saveValueChange(ev)}
-        />
-        /
         <TextInput document={usesDocument} field={maxProp} value={max} />
       {:else}
-        <span>{value}</span>
-        /
         <span>{max}</span>
       {/if}
     </div>
