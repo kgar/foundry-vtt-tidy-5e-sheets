@@ -4,7 +4,7 @@ import {
 } from 'src/features/actions/actions.svelte';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { settings, SettingsProvider } from 'src/settings/settings.svelte';
+import { settings } from 'src/settings/settings.svelte';
 import type { Item5e } from 'src/types/item.types';
 import { warn } from 'src/utils/logging';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -12,6 +12,7 @@ import { TidyHooks } from 'src/foundry/TidyHooks';
 import type { Actor5e } from 'src/types/types';
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import type { Group5eMember } from 'src/types/group.types';
+import { AttributePins } from 'src/features/attribute-pins/AttributePins';
 
 export function initTidy5eContextMenu(
   sheet: any,
@@ -376,6 +377,24 @@ function getItemContextOptions(item: Item5e) {
         !!itemParent &&
         'favorites' in itemParent.system &&
         !item.compendium?.locked,
+    });
+
+    options.push({
+      name: 'TIDY5E.ContextMenuActionPinToAttributes',
+      icon: `<i class="fa-solid fa-thumbtack"></i>`,
+      callback: () => AttributePins.pin(item),
+      condition: () =>
+        !AttributePins.isPinned(item) && AttributePins.isPinnable(item),
+      group: 'pins',
+    });
+
+    options.push({
+      name: 'TIDY5E.ContextMenuActionUnpinFromAttributes',
+      icon: `<i class="fa-solid fa-thumbtack-slash"></i>`,
+      callback: () => AttributePins.unpin(item),
+      condition: () =>
+        AttributePins.isPinned(item) && AttributePins.isPinnable(item),
+      group: 'pins',
     });
   }
 

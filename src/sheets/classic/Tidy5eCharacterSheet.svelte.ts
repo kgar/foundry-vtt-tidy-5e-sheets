@@ -1469,21 +1469,22 @@ export class Tidy5eCharacterSheet
   }
 
   _prepareAttributeItemPins(context: CharacterSheetContext) {
-    // TODO: Do other item types
-    let pinnableItemTypes = [CONSTANTS.ITEM_TYPE_FEAT];
-    const itemTypes = this.actor.itemTypes;
+    let flagPins = TidyFlags.attributePins
+      .get(this.actor)
+      .toSorted((a, b) => (a.sort || 0) - (b.sort || 0));
 
     let pins: Item5e[] = [];
 
-    for (let type of pinnableItemTypes) {
-      for (let item of (itemTypes[type] ?? [])) {
-        // TODO: Try/catch/log
-        if (TidyFlags.pinToAttributes.get(item)) {
-          pins.push(item)
-        }
+    for (let pin of flagPins) {
+      let item = fromUuidSync(pin.id, { relative: this.actor });
+
+      if (item) {
+        pins.push(item);
+      } else {
+        warn(`Attribute pin item with ID ${pin.id} not found.`);
       }
     }
-   
+
     context.attributeItemPins = pins;
   }
 

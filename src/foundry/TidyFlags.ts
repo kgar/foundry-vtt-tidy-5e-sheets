@@ -4,6 +4,7 @@ import { CONSTANTS } from 'src/constants';
 import { isNil } from 'src/utils/data';
 import type { Actor5e } from 'src/types/types';
 import type {
+  AttributeItemPin,
   TidyFlagNamedNotes,
   TidyFlagUnnamedNotes,
 } from './TidyFlags.types';
@@ -141,6 +142,27 @@ export class TidyFlags {
     /** Clears the actor's appearance. */
     unset(actor: Actor5e) {
       return TidyFlags.unsetFlag(actor, TidyFlags.appearance.key);
+    },
+  };
+
+  /**
+   * TODO
+   */
+  static attributePins = {
+    key: 'attributePins' as const,
+    prop: TidyFlags.getFlagPropertyPath('attributePins'),
+    /** TODO */
+    get(actor: Actor5e): AttributeItemPin[] {
+      return (
+        TidyFlags.tryGetFlag<AttributeItemPin[]>(
+          actor,
+          TidyFlags.attributePins.key
+        ) ?? []
+      );
+    },
+    /** TODO */
+    set(actor: Actor5e, value: AttributeItemPin[]): Promise<void> {
+      return TidyFlags.setFlag(actor, TidyFlags.attributePins.key, value);
     },
   };
 
