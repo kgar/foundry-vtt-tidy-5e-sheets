@@ -2,7 +2,6 @@
   import SkillsList from '../../actor/SkillsList.svelte';
   import Traits from '../../actor/traits/Traits.svelte';
   import Favorites from '../parts/Favorites.svelte';
-  import { isNil } from 'src/utils/data';
   import { getContext } from 'svelte';
   import { settings } from 'src/settings/settings.svelte';
   import { CONSTANTS } from 'src/constants';
@@ -17,6 +16,7 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import AttributeItemPin from '../parts/AttributeItemPin.svelte';
 
   let context = $derived(getCharacterSheetContext());
 
@@ -65,7 +65,9 @@
               )}
           />
           <span
-            >{localize('TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast')}</span
+            >{localize(
+              'TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast',
+            )}</span
           >
         </label>
       </div>
@@ -97,6 +99,13 @@
       {/if}
     </section>
     <section class="main-panel">
+      {#if context.attributeItemPins.length}
+        <div class="attribute-pins">
+          {#each context.attributeItemPins as item (item.uuid)}
+            <AttributeItemPin {item} />
+          {/each}
+        </div>
+      {/if}
       {#if settings.value.moveCharacterTraitsToRightOfSkills}
         <Traits />
       {/if}

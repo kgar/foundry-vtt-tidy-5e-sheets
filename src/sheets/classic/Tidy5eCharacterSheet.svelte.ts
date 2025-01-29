@@ -927,6 +927,8 @@ export class Tidy5eCharacterSheet
 
     await this._prepareFacilities(context);
 
+    this._prepareAttributeItemPins(context);
+
     let tabs = await CharacterSheetRuntime.getTabs(context);
 
     const selectedTabs = TidyFlags.selectedTabs.get(context.actor);
@@ -1464,6 +1466,25 @@ export class Tidy5eCharacterSheet
         };
       })
     );
+  }
+
+  _prepareAttributeItemPins(context: CharacterSheetContext) {
+    // TODO: Do other item types
+    let pinnableItemTypes = [CONSTANTS.ITEM_TYPE_FEAT];
+    const itemTypes = this.actor.itemTypes;
+
+    let pins: Item5e[] = [];
+
+    for (let type of pinnableItemTypes) {
+      for (let item of (itemTypes[type] ?? [])) {
+        // TODO: Try/catch/log
+        if (TidyFlags.pinToAttributes.get(item)) {
+          pins.push(item)
+        }
+      }
+    }
+   
+    context.attributeItemPins = pins;
   }
 
   private _getFavoritesIdMap(): Map<string, CharacterFavorite> {

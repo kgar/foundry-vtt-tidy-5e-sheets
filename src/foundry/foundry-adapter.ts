@@ -1369,18 +1369,24 @@ export const FoundryAdapter = {
     event: Event & {
       currentTarget: EventTarget & HTMLInputElement;
     },
-    item: any
+    documentWithUses: any,
+    valueProp: string = 'system.uses.value',
+    spentProp: string = 'system.uses.spent',
+    maxProp: string = 'system.uses.max'
   ) {
     const value = processInputChangeDelta(
       event.currentTarget.value,
-      item,
-      'system.uses.value'
+      documentWithUses,
+      valueProp
     );
 
-    const uses = clamp(0, value, item.system.uses.max);
+    const max =
+      FoundryAdapter.getProperty<number>(documentWithUses, maxProp) ?? 0;
+
+    const uses = clamp(0, value, max);
     event.currentTarget.value = uses.toString();
 
-    return item.update({ 'system.uses.spent': item.system.uses.max - uses });
+    return documentWithUses.update({ [spentProp]: max - uses });
   },
   handleActivityUsesChanged(
     event: Event & {

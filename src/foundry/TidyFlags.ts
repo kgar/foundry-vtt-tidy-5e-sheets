@@ -783,6 +783,27 @@ export class TidyFlags {
   };
 
   /**
+   * Indicates that an item should be pinned to the attributes tab,
+   * above favorites and optional right-side traits.
+   */
+  static pinToAttributes = {
+    key: 'pinToAttributes' as const,
+    prop: TidyFlags.getFlagPropertyPath('pinToAttributes'),
+    /** Gets whether an item should be pinned to the attributes tab. */
+    get(item: Item5e): boolean | undefined {
+      const pinToAttributes =
+        TidyFlags.tryGetFlag<boolean>(item, TidyFlags.pinToAttributes.key) ===
+        true;
+
+      return !isNil(pinToAttributes, '') ? pinToAttributes : undefined;
+    },
+    /** Sets whether an item should be pinned to the attributes tab. */
+    set(item: Item5e, value: boolean) {
+      return TidyFlags.setFlag(item, TidyFlags.pinToAttributes.key, value);
+    },
+  };
+
+  /**
    * Indicates a custom section name for a given item
    * which determines the item's section placement
    * in the item's default tab, as well as any other locations

@@ -285,6 +285,7 @@ export type CharacterSheetContext = {
   actorClassesToImages: Record<string, string>;
   allowMaxHpOverride: boolean;
   appearanceEnrichedHtml: string;
+  attributeItemPins: Item5e[];
   bastion: {
     description: string;
   };
