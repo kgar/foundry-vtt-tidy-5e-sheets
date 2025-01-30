@@ -27,6 +27,7 @@ import {
   type FacilitySection,
   type ChosenFacilityContext,
   type TypedActivityFavoriteSection,
+  type AttributePinContext,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
@@ -1473,19 +1474,29 @@ export class Tidy5eCharacterSheet
       .get(this.actor)
       .toSorted((a, b) => (a.sort || 0) - (b.sort || 0));
 
-    let pins: Item5e[] = [];
+    let pins: AttributePinContext[] = [];
 
     for (let pin of flagPins) {
-      let item = fromUuidSync(pin.id, { relative: this.actor });
+      let document = fromUuidSync(pin.id, { relative: this.actor });
 
-      if (item) {
-        pins.push(item);
+      if (document) {
+        if (pin.type === 'item') {
+          pins.push({
+            ...pin,
+            item: document,
+          });
+        } else {
+          pins.push({
+            ...pin,
+            activity: document,
+          });
+        }
       } else {
         warn(`Attribute pin item with ID ${pin.id} not found.`);
       }
     }
 
-    context.attributeItemPins = pins;
+    context.attributePins = pins;
   }
 
   private _getFavoritesIdMap(): Map<string, CharacterFavorite> {

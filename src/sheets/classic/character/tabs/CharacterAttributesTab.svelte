@@ -16,7 +16,7 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import AttributeItemPin from '../parts/AttributeItemPin.svelte';
+  import AttributeItemPin from '../parts/AttributePinEntry.svelte';
 
   let context = $derived(getCharacterSheetContext());
 
@@ -99,10 +99,10 @@
       {/if}
     </section>
     <section class="main-panel">
-      {#if context.attributeItemPins.length}
+      {#if context.attributePins.length}
         <div class="attribute-pins">
-          {#each context.attributeItemPins as item (item.uuid)}
-            <AttributeItemPin {item} />
+          {#each context.attributePins as ctx (ctx.id + ctx.sort)}
+            <AttributeItemPin {ctx} />
           {/each}
         </div>
       {/if}

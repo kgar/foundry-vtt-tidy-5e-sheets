@@ -4,7 +4,7 @@ import { CONSTANTS } from 'src/constants';
 import { isNil } from 'src/utils/data';
 import type { Actor5e } from 'src/types/types';
 import type {
-  AttributeItemPin,
+  AttributePin,
   TidyFlagNamedNotes,
   TidyFlagUnnamedNotes,
 } from './TidyFlags.types';
@@ -152,16 +152,16 @@ export class TidyFlags {
     key: 'attributePins' as const,
     prop: TidyFlags.getFlagPropertyPath('attributePins'),
     /** TODO */
-    get(actor: Actor5e): AttributeItemPin[] {
+    get(actor: Actor5e): AttributePin[] {
       return (
-        TidyFlags.tryGetFlag<AttributeItemPin[]>(
+        TidyFlags.tryGetFlag<AttributePin[]>(
           actor,
           TidyFlags.attributePins.key
         ) ?? []
       );
     },
     /** TODO */
-    set(actor: Actor5e, value: AttributeItemPin[]): Promise<void> {
+    set(actor: Actor5e, value: AttributePin[]): Promise<void> {
       return TidyFlags.setFlag(actor, TidyFlags.attributePins.key, value);
     },
   };
@@ -801,27 +801,6 @@ export class TidyFlags {
     /** Clears the name of the player who owns the actor. */
     unset(actor: Actor5e) {
       return TidyFlags.unsetFlag(actor, TidyFlags.playerName.key);
-    },
-  };
-
-  /**
-   * Indicates that an item should be pinned to the attributes tab,
-   * above favorites and optional right-side traits.
-   */
-  static pinToAttributes = {
-    key: 'pinToAttributes' as const,
-    prop: TidyFlags.getFlagPropertyPath('pinToAttributes'),
-    /** Gets whether an item should be pinned to the attributes tab. */
-    get(item: Item5e): boolean | undefined {
-      const pinToAttributes =
-        TidyFlags.tryGetFlag<boolean>(item, TidyFlags.pinToAttributes.key) ===
-        true;
-
-      return !isNil(pinToAttributes, '') ? pinToAttributes : undefined;
-    },
-    /** Sets whether an item should be pinned to the attributes tab. */
-    set(item: Item5e, value: boolean) {
-      return TidyFlags.setFlag(item, TidyFlags.pinToAttributes.key, value);
     },
   };
 

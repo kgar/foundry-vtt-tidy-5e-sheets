@@ -65,7 +65,7 @@ function onItemContext(this: any, element: HTMLElement) {
 
     if (!item) return;
 
-    ui.context.menuItems = getItemContextOptions(item);
+    ui.context.menuItems = getItemContextOptions(item, element);
     TidyHooks.dnd5eGetItemContextOptions(item, ui.context.menuItems);
   }
   // Group Members
@@ -233,7 +233,7 @@ function canEditEffect(effect: any) {
  * @returns {ContextMenuEntry[]}          An array of context menu options offered for the Item
  * @returns                               Context menu options.
  */
-function getItemContextOptions(item: Item5e) {
+function getItemContextOptions(item: Item5e, element: HTMLElement) {
   if (!item?.isOwner || !settings.value.useContextMenu) {
     return [];
   }
@@ -382,18 +382,22 @@ function getItemContextOptions(item: Item5e) {
     options.push({
       name: 'TIDY5E.ContextMenuActionPinToAttributes',
       icon: `<i class="fa-solid fa-thumbtack"></i>`,
-      callback: () => AttributePins.pin(item),
+      callback: () => AttributePins.pin(item, 'item'),
       condition: () =>
-        !AttributePins.isPinned(item) && AttributePins.isPinnable(item),
+        AttributePins.isPinnable(item, 'item') && !AttributePins.isPinned(item),
       group: 'pins',
     });
 
     options.push({
       name: 'TIDY5E.ContextMenuActionUnpinFromAttributes',
       icon: `<i class="fa-solid fa-thumbtack-slash"></i>`,
-      callback: () => AttributePins.unpin(item),
+      callback: () =>
+        AttributePins.unpin(
+          item,
+          element.closest('[data-sort]')?.getAttribute('data-sort') ?? ''
+        ),
       condition: () =>
-        AttributePins.isPinned(item) && AttributePins.isPinnable(item),
+        AttributePins.isPinnable(item, 'item') && AttributePins.isPinned(item),
       group: 'pins',
     });
   }

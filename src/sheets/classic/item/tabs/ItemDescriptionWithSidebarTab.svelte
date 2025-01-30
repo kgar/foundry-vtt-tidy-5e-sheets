@@ -240,24 +240,6 @@
           disabled={!context.editable}
         />
       </div>
-      <!-- TODO: Limit to whitelist of pinnable items: ...? -->
-      <div
-        class="form-group pin-to-attributes"
-        title={localize('TIDY5E.PinToAttributes.Tooltip')}
-      >
-        <label class="flex-row small-gap">
-          <TidySwitch
-            checked={TidyFlags.pinToAttributes.get(context.item)}
-            disabled={!context.editable}
-            onChange={(ev) =>
-              TidyFlags.pinToAttributes.set(
-                context.item,
-                ev.currentTarget.checked,
-              )}
-          ></TidySwitch>
-          <span>{localize('TIDY5E.PinToAttributes.Label')}</span>
-        </label>
-      </div>
     </div>
   </div>
 
