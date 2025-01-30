@@ -4,6 +4,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { AttributePinContext } from 'src/types/types';
+  import { coalesce } from 'src/utils/formatting';
 
   interface Props {
     ctx: AttributePinContext;
@@ -15,8 +16,14 @@
     () => {
       if (ctx.type === 'item') {
         // TODO: Order of precedence: Item limited uses, else primary Activity
+        
+        // If 'limited-uses' and item has limited uses, use item
+        // If 'limited-uses' and item doesn't have limited uses, and activity has limited uses, use that
+        // If 'quantity', use that
+        // Else, edit icon
+
         return {
-          usesDocument: ctx,
+          usesDocument: ctx.item,
           value: ctx.item.system.uses.max - ctx.item.system.uses.spent,
           max: ctx.item.system.uses.max,
           valueProp: 'system.uses.value',
@@ -25,9 +32,9 @@
         };
       } else {
         return {
-          usesDocument: ctx,
-          value: ctx.activity.uses.max - ctx.activity.uses.spent,
-          max: ctx.activity.uses.max,
+          usesDocument: ctx.activity,
+          value: ctx.activity.system.uses.max - ctx.activity.uses.spent,
+          max: ctx.activity.system.uses.max,
           valueProp: 'uses.value',
           spentProp: 'uses.spent',
           maxProp: 'uses.max',
@@ -66,6 +73,8 @@
             document={item}
             field="name"
             value={item.name}
+            placeholder="0"
+            selectOnFocus={true}
           />
         {:else}
           <div class="attribute-pin-name truncate">{item.name}</div>
@@ -75,15 +84,14 @@
         <TextInput
           document={usesDocument}
           field={spentProp}
-          {value}
+          value={value.toString()}
           onSaveChange={(ev) => saveValueChange(ev)}
+          placeholder="0"
+          selectOnFocus={true}
         />
         /
-        {#if context.unlocked}
-          <TextInput document={usesDocument} field={maxProp} value={max} />
-        {:else}
-          <span>{max}</span>
-        {/if}
+
+        <span>{coalesce(max?.toString(), '0')}</span>
       </div>
     </div>
   </div>

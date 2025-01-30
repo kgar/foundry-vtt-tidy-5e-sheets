@@ -66,7 +66,7 @@ export class AttributePins {
     return TidyFlags.attributePins.set(doc.actor, newPins);
   }
 
-  static unpin(doc: Item5e, sort: number | string) {
+  static unpin(doc: Item5e | Activity5e) {
     if (!doc.actor || !this.isPinned(doc)) {
       return;
     }
@@ -75,9 +75,7 @@ export class AttributePins {
 
     const relativeUuid = this.getRelativeUUID(doc);
 
-    const newPins = flagPins.filter(
-      (x) => x.id !== relativeUuid && x.sort !== sort
-    );
+    const newPins = flagPins.filter((x) => x.id !== relativeUuid);
 
     return TidyFlags.attributePins.set(doc.actor, newPins);
   }

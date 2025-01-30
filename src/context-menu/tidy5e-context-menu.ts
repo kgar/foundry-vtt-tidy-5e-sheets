@@ -65,7 +65,7 @@ function onItemContext(this: any, element: HTMLElement) {
 
     if (!item) return;
 
-    ui.context.menuItems = getItemContextOptions(item, element);
+    ui.context.menuItems = getItemContextOptions(item);
     TidyHooks.dnd5eGetItemContextOptions(item, ui.context.menuItems);
   }
   // Group Members
@@ -233,7 +233,7 @@ function canEditEffect(effect: any) {
  * @returns {ContextMenuEntry[]}          An array of context menu options offered for the Item
  * @returns                               Context menu options.
  */
-function getItemContextOptions(item: Item5e, element: HTMLElement) {
+function getItemContextOptions(item: Item5e) {
   if (!item?.isOwner || !settings.value.useContextMenu) {
     return [];
   }
@@ -391,11 +391,7 @@ function getItemContextOptions(item: Item5e, element: HTMLElement) {
     options.push({
       name: 'TIDY5E.ContextMenuActionUnpinFromAttributes',
       icon: `<i class="fa-solid fa-thumbtack-slash"></i>`,
-      callback: () =>
-        AttributePins.unpin(
-          item,
-          element.closest('[data-sort]')?.getAttribute('data-sort') ?? ''
-        ),
+      callback: () => AttributePins.unpin(item),
       condition: () =>
         AttributePins.isPinnable(item, 'item') && AttributePins.isPinned(item),
       group: 'pins',

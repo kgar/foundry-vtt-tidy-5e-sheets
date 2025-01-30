@@ -927,6 +927,10 @@ select:hover {
   grid-template-columns: repeat(auto-fit, minmax(11.625rem, 1fr));
   gap: 0.125rem;
 
+  input {
+    border: 0;
+  }
+
   .attribute-pin {
     background-color: rebeccapurple;
     border-radius: 0.375rem;
