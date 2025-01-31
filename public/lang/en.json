@@ -78,6 +78,8 @@
   "TIDY5E.ContextMenuActionDelete": "Delete",
   "TIDY5E.ContextMenuActionPinToAttributes": "Pin to Attributes",
   "TIDY5E.ContextMenuActionUnpinFromAttributes": "Unpin from Attributes",
+  "TIDY5E.ContextMenuActionShowLimitedUses": "Show Limited Uses",
+  "TIDY5E.ContextMenuActionShowQuantity": "Show Quantity",
 
   "TIDY5E.EmptyContainer": "This container is empty.",
   "TIDY5E.EmptySection": "This section is empty. Unlock the sheet to edit.",

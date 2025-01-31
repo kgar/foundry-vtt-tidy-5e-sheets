@@ -16,7 +16,7 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import AttributeItemPin from '../parts/AttributePinEntry.svelte';
+  import AttributeItemPin from '../parts/AttributeItemPin.svelte';
 
   let context = $derived(getCharacterSheetContext());
 
@@ -101,8 +101,12 @@
     <section class="main-panel">
       {#if context.attributePins.length}
         <div class="attribute-pins">
-          {#each context.attributePins as ctx (ctx.id + ctx.sort)}
-            <AttributeItemPin {ctx} />
+          {#each context.attributePins as ctx (ctx.id)}
+            {#if ctx.type === 'item'}
+              <AttributeItemPin {ctx} />
+            {:else if ctx.type === 'activity'}
+              TODO: Implemente Activity Pin
+            {/if}
           {/each}
         </div>
       {/if}

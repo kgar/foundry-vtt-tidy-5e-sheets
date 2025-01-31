@@ -14,14 +14,14 @@ type AttributePinBase = {
   sort: number;
 };
 
-export type ItemAttributePin = AttributePinBase & {
+export type AttributeItemPinFlag = AttributePinBase & {
   type: 'item';
   resource: 'limited-uses' | 'quantity';
 };
 
-export type ActivityAttributePin = AttributePinBase & {
+export type AttributeActivityPinFlag = AttributePinBase & {
   type: 'activity';
   resource: 'limited-uses';
 };
 
-export type AttributePin = ItemAttributePin | ActivityAttributePin;
+export type AttributePinFlag = AttributeItemPinFlag | AttributeActivityPinFlag;

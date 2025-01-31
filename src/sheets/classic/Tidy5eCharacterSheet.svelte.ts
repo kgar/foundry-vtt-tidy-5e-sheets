@@ -1483,12 +1483,12 @@ export class Tidy5eCharacterSheet
         if (pin.type === 'item') {
           pins.push({
             ...pin,
-            item: document,
+            document,
           });
-        } else {
+        } else if (pin.type === 'activity') {
           pins.push({
             ...pin,
-            activity: document,
+            document,
           });
         }
       } else {

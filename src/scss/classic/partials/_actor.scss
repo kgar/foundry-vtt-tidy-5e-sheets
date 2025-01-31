@@ -921,41 +921,19 @@ select:hover {
 }
 
 .attribute-pins {
-  font-family: var(--t5e-table-header-row-color);
-
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(11.625rem, 1fr));
   gap: 0.125rem;
 
   .attribute-pin {
-    background-color: rebeccapurple;
+    background-color: var(--t5e-faintest-color);
+    box-shadow: 0 0 0.125rem var(--t5e-context-shadow-color);
     border-radius: 0.375rem;
     padding: 0.25rem;
+    margin: 0.125rem;
     display: flex;
     align-items: center;
     gap: 0.25rem;
-
-    &:hover {
-      .item-use-button {
-        .item-image:not(.always-visible) {
-          opacity: 0;
-        }
-
-        .unidentified-glyph {
-          opacity: 0;
-        }
-
-        &:hover {
-          .roll-indicator {
-            color: var(--t5e-primary-font-color);
-          }
-        }
-
-        .roll-indicator {
-          opacity: 1;
-        }
-      }
-    }
 
     .attribute-item-image {
       display: flex;
@@ -986,7 +964,7 @@ select:hover {
 
         .roll-indicator {
           color: var(--t5e-tertiary-color);
-          font-size: 1.125rem;
+          font-size: 1.5rem;
 
           &.invisible {
             visibility: hidden;
@@ -1003,6 +981,26 @@ select:hover {
 
         .unidentified-glyph {
           font-size: calc(var(--t5e-image-size-override, 1.5rem) - 0.75rem);
+        }
+      }
+    }
+
+    &:hover .attribute-item-image {
+      .item-use-button {
+        .item-image:not(.always-visible) {
+          opacity: 0;
+        }
+
+        .unidentified-glyph {
+          opacity: 0;
+        }
+
+        .roll-indicator {
+          opacity: 1;
+        }
+
+        &:hover .roll-indicator {
+          color: var(--t5e-primary-font-color);
         }
       }
     }
@@ -1031,14 +1029,33 @@ select:hover {
           font-size: var(--font-size-14);
           line-height: normal;
           height: auto;
-          &:first-child {
-            text-align: right;
+          flex: 1;
+        }
+
+        &.quantity {
+          input {
+            text-align: center;
           }
-          &:last-child {
-            text-align: left;
+        }
+
+        &.limited-uses {
+          input,
+          span {
+            &:first-child {
+              text-align: right;
+            }
+            &:last-child {
+              text-align: left;
+            }
           }
         }
       }
+    }
+
+    .attribute-pins-menu {
+      padding: 0.25rem;
+      align-self: stretch;
+      align-content: center;
     }
   }
 }

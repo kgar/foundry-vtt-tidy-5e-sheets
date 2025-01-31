@@ -1,14 +1,23 @@
 ## Goals
 - [x] Pull attribute pins from flag, and sort by sort
 - [x] Add context menu options for pin/unpin
-- [ ] Style the pins
-  - [ ] spacing and grid work
+- [x] Add option menu for selecting resource when unlocked. It is 3-dots
+- [x] Detect missing items and cull them from pins whenever pinning / unpinning occurs.
+- [ ] Account for Primary Activity uses for items.
+- [ ] Swap Item Name with Item Alias, and store that as a string on the pin
+- [x] Style the pins
+  - [x] spacing and grid work
   - [ ] unidentified support
-  - [ ] roll indicator
-  - [ ] concentration support?
-- [ ] Ensure falsy values on the counters default to 0
+  - [x] roll indicator
+  - [x] items
+    - [x] limited use
+    - [x] charges / charge recovery roll
+    - [x] quantity
+  - [ ] activities
+- [x] Ensure null/undefined/empty string on the counters default to emdash
 - [ ] All input fields: focus on select true
 - [ ] Implement drag-and-drop pin sort
+- [ ] Implement Activity pinning
 
 ## Stretch
 - [ ] Consider the difficulty of handling auto-pin on item drop create

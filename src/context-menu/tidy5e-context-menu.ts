@@ -390,16 +390,32 @@ function getItemContextOptions(item: Item5e, element: HTMLElement) {
 
     options.push({
       name: 'TIDY5E.ContextMenuActionUnpinFromAttributes',
-      icon: `<i class="fa-solid fa-thumbtack-slash"></i>`,
-      callback: () =>
-        AttributePins.unpin(
-          item,
-          element.closest('[data-sort]')?.getAttribute('data-sort') ?? ''
-        ),
+      icon: `<i class="fa-solid fa-xmark" style='color: var(--t5e-warning-accent-color)'></i>`,
+      callback: () => AttributePins.unpin(item),
       condition: () =>
         AttributePins.isPinnable(item, 'item') && AttributePins.isPinned(item),
       group: 'pins',
     });
+
+    const isAttributeItemPin = !!element.closest('[data-attribute-item-pin]');
+
+    if (isAttributeItemPin) {
+      options.push({
+        name: 'TIDY5E.ContextMenuActionShowLimitedUses',
+        icon: '<i class="fa-solid fa-fw"></i>',
+        callback: () =>
+          AttributePins.selectItemResourceType(item, 'limited-uses'),
+        condition: () => AttributePins.getResourceType(item) !== 'limited-uses',
+        group: 'pins',
+      });
+      options.push({
+        name: 'TIDY5E.ContextMenuActionShowQuantity',
+        icon: '<i class="fa-solid fa-fw"></i>',
+        callback: () => AttributePins.selectItemResourceType(item, 'quantity'),
+        condition: () => AttributePins.getResourceType(item) !== 'quantity',
+        group: 'pins',
+      });
+    }
   }
 
   options.push({

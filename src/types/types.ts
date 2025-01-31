@@ -14,7 +14,7 @@ import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/typ
 import type { CONSTANTS } from 'src/constants';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
-import type { AttributePin } from 'src/foundry/TidyFlags.types';
+import type { AttributePinFlag } from 'src/foundry/TidyFlags.types';
 
 export type Actor5e = any;
 
@@ -283,16 +283,16 @@ export type LanguageTraitContext = {
 };
 
 export type AttributeItemPinContext = {
-  document: Item5e | Activity5e;
-} & AttributePin & { type: 'item' };
+  document: Item5e;
+} & AttributePinFlag & { type: 'item' };
 
 export type AttributeActivityPinContext = {
   document: Activity5e;
-  pin: AttributePin;
-} & { type: '' };
+} & AttributePinFlag & { type: 'activity' };
 
-export type AttributePinContext = AttributePin &
-  ({ type: 'item'; item: Item5e } | { type: 'activity'; activity: Activity5e });
+export type AttributePinContext =
+  | AttributeItemPinContext
+  | AttributeActivityPinContext;
 
 export type CharacterSheetContext = {
   actorClassesToImages: Record<string, string>;
