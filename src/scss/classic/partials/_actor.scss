@@ -925,6 +925,10 @@ select:hover {
   grid-template-columns: repeat(auto-fit, minmax(11.625rem, 1fr));
   gap: 0.125rem;
 
+  input {
+    border: 0;
+  }
+
   .attribute-pin {
     background-color: var(--t5e-faintest-color);
     box-shadow: 0 0 0.125rem var(--t5e-context-shadow-color);

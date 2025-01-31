@@ -76,7 +76,7 @@ export class AttributePins {
     return TidyFlags.attributePins.set(doc.actor, newPins);
   }
 
-  static unpin(doc: Item5e) {
+  static unpin(doc: Item5e | Activity5e) {
     if (!doc.actor || !this.isPinned(doc)) {
       return;
     }
