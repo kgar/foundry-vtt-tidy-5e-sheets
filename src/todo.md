@@ -3,7 +3,7 @@
 - [x] Add context menu options for pin/unpin
 - [x] Add option menu for selecting resource when unlocked. It is 3-dots
 - [x] Detect missing items and cull them from pins whenever pinning / unpinning occurs.
-- [ ] Account for Primary Activity uses for items.
+- [x] Account for Primary Activity uses for items.
 - [ ] Swap Item Name with Item Alias, and store that as a string on the pin
 - [x] Style the pins
   - [x] spacing and grid work

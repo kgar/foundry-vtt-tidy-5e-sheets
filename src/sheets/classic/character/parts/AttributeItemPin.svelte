@@ -1,14 +1,12 @@
 <script lang="ts">
-  import ButtonMenu from 'src/components/button-menu/ButtonMenu.svelte';
-  import ButtonMenuCommand from 'src/components/button-menu/ButtonMenuCommand.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
-    import { CONSTANTS } from 'src/constants';
-  import { AttributePins } from 'src/features/attribute-pins/AttributePins';
+  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { AttributeItemPinContext } from 'src/types/types';
+  import { isNil } from 'src/utils/data';
   import { EventHelper } from 'src/utils/events';
 
   interface Props {
@@ -19,15 +17,26 @@
 
   let { usesDocument, valueProp, spentProp, maxProp, value, maxText, uses } =
     $derived.by(() => {
-      const uses = ctx.document.system.uses;
+      const primaryActivity = ctx.document.system.activities?.contents[0];
+      const usePrimaryActivity =
+        ctx.document.system.uses.max === '' &&
+        !isNil(primaryActivity?.uses?.max, '');
+      const uses = usePrimaryActivity
+        ? primaryActivity.uses
+        : ctx.document.system.uses;
+
+      console.log({
+        primaryActivity,
+        ctx,
+      });
       return {
-        usesDocument: ctx.document,
+        usesDocument: usePrimaryActivity ? primaryActivity : ctx.document,
         uses: uses,
         value: uses.max - uses.spent,
         maxText: uses.max === '' ? '—' : uses.max.toString(),
-        valueProp: 'system.uses.value',
-        spentProp: 'system.uses.spent',
-        maxProp: 'system.uses.max',
+        valueProp: usePrimaryActivity ? 'uses.value' : 'system.uses.value',
+        spentProp: usePrimaryActivity ? 'uses.spent' : 'system.uses.spent',
+        maxProp: usePrimaryActivity ? 'uses.max' : 'system.uses.max',
       };
     });
 
