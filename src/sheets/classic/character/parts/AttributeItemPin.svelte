@@ -57,7 +57,7 @@
 
   function onDragStart(event: DragEvent) {
     const dragData = ctx.document.toDragData?.();
-    
+
     if (dragData) {
       event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
     }
@@ -74,7 +74,7 @@
   data-info-card={'item'}
   data-info-card-entity-uuid={ctx.document.uuid}
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
-  data-attribute-pin
+  data-pin-id={ctx.id}
   onmousedown={(ev) => FoundryAdapter.editOnMiddleClick(ev, ctx.document)}
   draggable={true}
   ondragstart={onDragStart}

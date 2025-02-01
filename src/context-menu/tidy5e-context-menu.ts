@@ -398,7 +398,7 @@ function getItemContextOptions(item: Item5e, element: HTMLElement) {
       group: 'pins',
     });
 
-    const isAttributeItemPin = !!element.closest('[data-attribute-pin]');
+    const isAttributeItemPin = !!element.closest('[data-pin-id]');
 
     if (isAttributeItemPin) {
       options.push({

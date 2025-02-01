@@ -73,6 +73,8 @@ import { Activities } from 'src/features/activities/activities';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
+import { AttributePins } from 'src/features/attribute-pins/AttributePins';
+import type { AttributePinFlag } from 'src/foundry/TidyFlags.types';
 
 export class Tidy5eCharacterSheet
   extends BaseSheetCustomSectionMixin(
@@ -1823,7 +1825,7 @@ export class Tidy5eCharacterSheet
   }
 
   async _onDrop(event: DragEvent & { target: HTMLElement }) {
-    if (!event.target.closest('[data-tidy-favorites], [data-attribute-pin]')) {
+    if (!event.target.closest('[data-tidy-favorites], [data-pin-id]')) {
       return super._onDrop(event);
     }
 
@@ -1841,10 +1843,11 @@ export class Tidy5eCharacterSheet
       return;
     }
 
-    let relativeUuid = (await fromUuid(data.uuid)).getRelativeUUID(this.actor);
+    const doc = await fromUuid(data.uuid);
+    let relativeUuid = doc.getRelativeUUID(this.actor);
 
-    if (event.target.closest('[data-attribute-pin]')) {
-      return this._onDropPin(event, { id: relativeUuid });
+    if (event.target.closest('[data-pin-id]')) {
+      return this._onDropPin(event, { id: relativeUuid, doc });
     }
 
     let type = 'item' as const;
@@ -1913,10 +1916,74 @@ export class Tidy5eCharacterSheet
 
   async _onDropPin(
     event: DragEvent & { target: HTMLElement },
-    data: { id: string }
+    data: { id: string; doc: any }
   ) {
     // If not pinned, then pin it
-    // If pinned, then sort it
+    const currentPins = TidyFlags.attributePins.get(this.actor);
+
+    const pinType: AttributePinFlag['type'] | undefined =
+      data.doc.documentName === CONSTANTS.DOCUMENT_NAME_ITEM
+        ? 'item'
+        : data.doc.documentName === CONSTANTS.DOCUMENT_NAME_ACTIVITY
+        ? 'activity'
+        : undefined;
+
+    if (!pinType) {
+      return;
+    }
+
+    if (!currentPins.find((x) => x.id === data.id)) {
+      AttributePins.pin(this.actor, pinType);
+      return;
+    }
+
+    return await this._onSortPins(event, data.id);
+  }
+
+  async _onSortPins(event: DragEvent & { target: HTMLElement }, srcId: string) {
+    const targetId = event.target
+      ?.closest('[data-pin-id]')
+      ?.getAttribute('data-pin-id');
+
+    if (!targetId || srcId === targetId) {
+      return;
+    }
+
+    let source;
+    let target;
+
+    const siblings = TidyFlags.attributePins
+      .get(this.actor)
+      .filter((f: AttributePinFlag) => {
+        if (f.id === targetId) target = f;
+        else if (f.id === srcId) source = f;
+        return f.id !== srcId;
+      });
+
+    const updates = SortingHelpers.performIntegerSort(source, {
+      target,
+      siblings,
+    });
+
+    const pins = TidyFlags.attributePins
+      .get(this.actor)
+      .reduce(
+        (map: Map<string, AttributePinFlag>, f: AttributePinFlag) =>
+          map.set(f.id, { ...f }),
+        new Map<string, AttributePinFlag>()
+      );
+
+    for (const { target, update } of updates) {
+      const pin = pins.get(target.id);
+      if (pin && update) {
+        foundry.utils.mergeObject(pin, update);
+      }
+    }
+
+    return await TidyFlags.attributePins.set(
+      this.actor,
+      Array.from(pins.values())
+    );
   }
 
   /* -------------------------------------------- */
