@@ -7,7 +7,7 @@
 - [x] Swap Item Name with Item Alias, and store that as a string on the pin
 - [x] Style the pins
   - [x] spacing and grid work
-  - [ ] unidentified support
+  - [x] unidentified support
   - [x] roll indicator
   - [x] items
     - [x] limited use
@@ -17,7 +17,14 @@
 - [x] Ensure null/undefined/empty string on the counters default to emdash
 - [x] All input fields: focus on select true
 - [ ] Implement drag-and-drop pin sort
+  - [x] Make items draggable and able to create proper drag data
+  - [ ] Implement the handler on the sheet
+- [ ] Implement name truncation on locked
 - [ ] Implement Activity pinning
+  - [ ] ensure drag and drop
+  - [ ] reuse/generalize item use button if possible
+  - [ ] somehow visualize what item it belongs to
+- [ ] Implement cachedFor/linkedUses for this UI / staff of the magi spell, for example
 
 ## Stretch
 - [ ] Consider the difficulty of handling auto-pin on item drop create

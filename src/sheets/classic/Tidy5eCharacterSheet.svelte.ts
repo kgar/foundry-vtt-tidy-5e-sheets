@@ -1823,10 +1823,16 @@ export class Tidy5eCharacterSheet
   }
 
   async _onDrop(event: DragEvent & { target: HTMLElement }) {
-    if (!event.target.closest('[data-tidy-favorites]'))
+    if (!event.target.closest('[data-tidy-favorites], [data-attribute-pin]')) {
       return super._onDrop(event);
+    }
+
     const dragData = event.dataTransfer?.getData('text/plain');
-    if (!dragData) return super._onDrop(event);
+
+    if (!dragData) {
+      return super._onDrop(event);
+    }
+
     let data;
     try {
       data = JSON.parse(dragData);
@@ -1835,10 +1841,15 @@ export class Tidy5eCharacterSheet
       return;
     }
 
-    let type = 'item' as const;
-    let id = (await fromUuid(data.uuid)).getRelativeUUID(this.actor);
+    let relativeUuid = (await fromUuid(data.uuid)).getRelativeUUID(this.actor);
 
-    return this._onDropFavorite(event, { type, id });
+    if (event.target.closest('[data-attribute-pin]')) {
+      return this._onDropPin(event, { id: relativeUuid });
+    }
+
+    let type = 'item' as const;
+
+    return this._onDropFavorite(event, { type, id: relativeUuid });
   }
 
   _prepareTraits(systemData: any) {
@@ -1894,6 +1905,18 @@ export class Tidy5eCharacterSheet
     }
 
     return facility.update({ [`${prop}.value`]: [...value, actorUuid] });
+  }
+
+  /* -------------------------------------------- */
+  /* Pins
+  /* -------------------------------------------- */
+
+  async _onDropPin(
+    event: DragEvent & { target: HTMLElement },
+    data: { id: string }
+  ) {
+    // If not pinned, then pin it
+    // If pinned, then sort it
   }
 
   /* -------------------------------------------- */

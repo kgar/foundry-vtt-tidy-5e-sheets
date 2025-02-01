@@ -55,6 +55,14 @@
     return false;
   }
 
+  function onDragStart(event: DragEvent) {
+    const dragData = ctx.document.toDragData?.();
+    
+    if (dragData) {
+      event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
+    }
+  }
+
   let context = $derived(getCharacterSheetContext());
 
   let localize = FoundryAdapter.localize;
@@ -66,8 +74,10 @@
   data-info-card={'item'}
   data-info-card-entity-uuid={ctx.document.uuid}
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
-  data-attribute-item-pin
+  data-attribute-pin
   onmousedown={(ev) => FoundryAdapter.editOnMiddleClick(ev, ctx.document)}
+  draggable={true}
+  ondragstart={onDragStart}
 >
   <div class="attribute-item-image">
     <ItemUseButton item={ctx.document} />
@@ -103,7 +113,7 @@
       {:else if ctx.resource === 'limited-uses' && ctx.document.hasRecharge}
         <span class="charged-text">
           {#if value > 1}
-          <span>{value}</span>
+            <span>{value}</span>
           {/if}
           <i class="fas fa-bolt" title={localize('DND5E.Charged')}></i>
         </span>
