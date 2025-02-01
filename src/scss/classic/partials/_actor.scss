@@ -1015,11 +1015,21 @@ select:hover {
       .attribute-pin-name-container {
         font-size: var(--font-size-12);
 
+        display: flex;
+        gap: 0.125rem;
+
+        i {
+          font-size: var(--font-size-10);
+          align-self: center;
+          color: var(--t5e-tertiary-color);
+        }
+
         .attribute-pin-name {
           font-weight: 500;
           text-align: center;
           line-height: normal;
           height: auto;
+          flex: 1;
         }
       }
       .attribute-counter {
@@ -1052,6 +1062,23 @@ select:hover {
               text-align: left;
             }
           }
+        }
+
+        .max,
+        .charged-text {
+          color: var(--t5e-tertiary-color);
+        }
+
+        .divider {
+          margin-inline: 0.125rem;
+          color: var(--t5e-light-color);
+          flex: 0;
+        }
+
+        .charged-text {
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
       }
     }

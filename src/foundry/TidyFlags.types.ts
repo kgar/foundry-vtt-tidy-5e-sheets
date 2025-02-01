@@ -12,6 +12,7 @@ type AttributePinBase = {
   id: string;
   /** The sort value */
   sort: number;
+  alias?: string;
 };
 
 export type AttributeItemPinFlag = AttributePinBase & {

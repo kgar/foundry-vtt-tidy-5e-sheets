@@ -3,11 +3,13 @@
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
   import { CONSTANTS } from 'src/constants';
+  import { AttributePins } from 'src/features/attribute-pins/AttributePins';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { AttributeItemPinContext } from 'src/types/types';
   import { isNil } from 'src/utils/data';
   import { EventHelper } from 'src/utils/events';
+  import { coalesce } from 'src/utils/formatting';
 
   interface Props {
     ctx: AttributeItemPinContext;
@@ -65,6 +67,7 @@
   data-info-card-entity-uuid={ctx.document.uuid}
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
   data-attribute-item-pin
+  onmousedown={(ev) => FoundryAdapter.editOnMiddleClick(ev, ctx.document)}
 >
   <div class="attribute-item-image">
     <ItemUseButton item={ctx.document} />
@@ -76,21 +79,34 @@
           class="attribute-pin-name"
           document={ctx.document}
           field="name"
-          value={ctx.document.name}
+          value={ctx.alias}
           selectOnFocus={true}
+          placeholder={ctx.document.name}
+          onSaveChange={(ev) => {
+            AttributePins.setAlias(ctx.document, ev.currentTarget.value);
+            return false;
+          }}
+          title={ctx.document.name}
         />
+        {#if !isNil(ctx.alias?.trim(), '')}
+          <i class="fa-solid fa-pencil"></i>
+        {/if}
       {:else}
-        <div class="attribute-pin-name truncate">{ctx.document.name}</div>
+        <div class="attribute-pin-name truncate" title={ctx.document.name}>
+          {coalesce(ctx.alias, ctx.document.name)}
+        </div>
       {/if}
     </div>
     <div class="attribute-counter {ctx.resource}">
       {#if ctx.resource === 'limited-uses' && ctx.document.isOnCooldown}
         <RechargeControl document={ctx.document} field={spentProp} {uses} />
       {:else if ctx.resource === 'limited-uses' && ctx.document.hasRecharge}
-        {#if value > 1}
+        <span class="charged-text">
+          {#if value > 1}
           <span>{value}</span>
-        {/if}
-        <i class="fas fa-bolt" title={localize('DND5E.Charged')}></i>
+          {/if}
+          <i class="fas fa-bolt" title={localize('DND5E.Charged')}></i>
+        </span>
       {:else if ctx.resource === 'limited-uses'}
         <TextInput
           document={usesDocument}
@@ -99,8 +115,8 @@
           onSaveChange={(ev) => saveValueChange(ev)}
           selectOnFocus={true}
         />
-        /
-        <span>{maxText}</span>
+        <span class="divider">/</span>
+        <span class="max">{maxText}</span>
       {:else if ctx.resource === 'quantity'}
         <TextInput
           document={ctx.document}

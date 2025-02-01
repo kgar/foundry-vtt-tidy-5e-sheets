@@ -96,7 +96,7 @@ export class AttributePins {
     return doc.getRelativeUUID?.(doc.actor) ?? doc.relativeUUID;
   }
 
-  static selectItemResourceType(
+  static setItemResourceType(
     item: Item5e,
     resourceType: AttributeItemPinFlag['resource']
   ) {
@@ -113,6 +113,22 @@ export class AttributePins {
     pins = this.preparePinsForForSaving(item, pins);
 
     return TidyFlags.attributePins.set(item.actor, pins);
+  }
+
+  static setAlias(doc: Item5e, alias: string) {
+    let pins = TidyFlags.attributePins.get(doc.actor);
+
+    const relativeUuid = this.getRelativeUUID(doc);
+
+    const pinToUpdate = pins.find((x) => x.id === relativeUuid);
+
+    if (pinToUpdate) {
+      pinToUpdate.alias = alias;
+    }
+
+    pins = this.preparePinsForForSaving(doc, pins);
+
+    return TidyFlags.attributePins.set(doc.actor, pins);
   }
 
   static preparePinsForForSaving(pinnedDoc: any, pins: AttributePinFlag[]) {

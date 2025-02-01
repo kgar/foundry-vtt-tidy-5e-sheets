@@ -13,6 +13,7 @@ import type { Actor5e } from 'src/types/types';
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import type { Group5eMember } from 'src/types/group.types';
 import { AttributePins } from 'src/features/attribute-pins/AttributePins';
+import { isNil } from 'src/utils/data';
 
 export function initTidy5eContextMenu(
   sheet: any,
@@ -403,16 +404,19 @@ function getItemContextOptions(item: Item5e, element: HTMLElement) {
       options.push({
         name: 'TIDY5E.ContextMenuActionShowLimitedUses',
         icon: '<i class="fa-solid fa-fw"></i>',
-        callback: () =>
-          AttributePins.selectItemResourceType(item, 'limited-uses'),
-        condition: () => AttributePins.getResourceType(item) !== 'limited-uses',
+        callback: () => AttributePins.setItemResourceType(item, 'limited-uses'),
+        condition: () =>
+          !isNil(item.system.quantity) &&
+          AttributePins.getResourceType(item) !== 'limited-uses',
         group: 'pins',
       });
       options.push({
         name: 'TIDY5E.ContextMenuActionShowQuantity',
         icon: '<i class="fa-solid fa-fw"></i>',
-        callback: () => AttributePins.selectItemResourceType(item, 'quantity'),
-        condition: () => AttributePins.getResourceType(item) !== 'quantity',
+        callback: () => AttributePins.setItemResourceType(item, 'quantity'),
+        condition: () =>
+          !isNil(item.system.quantity) &&
+          AttributePins.getResourceType(item) !== 'quantity',
         group: 'pins',
       });
     }

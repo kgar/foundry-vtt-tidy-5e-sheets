@@ -4,7 +4,7 @@
 - [x] Add option menu for selecting resource when unlocked. It is 3-dots
 - [x] Detect missing items and cull them from pins whenever pinning / unpinning occurs.
 - [x] Account for Primary Activity uses for items.
-- [ ] Swap Item Name with Item Alias, and store that as a string on the pin
+- [x] Swap Item Name with Item Alias, and store that as a string on the pin
 - [x] Style the pins
   - [x] spacing and grid work
   - [ ] unidentified support
@@ -15,7 +15,7 @@
     - [x] quantity
   - [ ] activities
 - [x] Ensure null/undefined/empty string on the counters default to emdash
-- [ ] All input fields: focus on select true
+- [x] All input fields: focus on select true
 - [ ] Implement drag-and-drop pin sort
 - [ ] Implement Activity pinning
 
