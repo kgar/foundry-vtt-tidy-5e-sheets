@@ -939,7 +939,7 @@ select:hover {
     align-items: center;
     gap: 0.25rem;
 
-    .attribute-item-image {
+    .attribute-document-image {
       display: flex;
 
       .item-use-button {
@@ -989,7 +989,7 @@ select:hover {
       }
     }
 
-    &:hover .attribute-item-image {
+    &:hover .attribute-document-image {
       .item-use-button {
         .item-image:not(.always-visible) {
           opacity: 0;
@@ -1011,6 +1011,7 @@ select:hover {
 
     .attribute-pin-details {
       flex: 1;
+      min-width: 0; // For proper truncation.
 
       .attribute-pin-name-container {
         font-size: var(--font-size-12);

@@ -2,39 +2,32 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
-  import { CONSTANTS } from 'src/constants';
   import { AttributePins } from 'src/features/attribute-pins/AttributePins';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
-  import type { AttributeItemPinContext } from 'src/types/types';
+  import type { AttributeActivityPinContext } from 'src/types/types';
   import { isNil } from 'src/utils/data';
   import { EventHelper } from 'src/utils/events';
   import { coalesce } from 'src/utils/formatting';
 
   interface Props {
-    ctx: AttributeItemPinContext;
+    ctx: AttributeActivityPinContext;
   }
 
   let { ctx }: Props = $props();
 
   let { usesDocument, valueProp, spentProp, maxProp, value, maxText, uses } =
     $derived.by(() => {
-      const primaryActivity = ctx.document.system.activities?.contents[0];
-      const usePrimaryActivity =
-        ctx.document.system.uses.max === '' &&
-        !isNil(primaryActivity?.uses?.max, '');
-      const uses = usePrimaryActivity
-        ? primaryActivity.uses
-        : ctx.document.system.uses;
+      const uses = ctx.document.uses;
 
       return {
-        usesDocument: usePrimaryActivity ? primaryActivity : ctx.document,
+        usesDocument: ctx.document,
         uses: uses,
         value: uses.max - uses.spent,
         maxText: uses.max === '' ? '—' : uses.max.toString(),
-        valueProp: usePrimaryActivity ? 'uses.value' : 'system.uses.value',
-        spentProp: usePrimaryActivity ? 'uses.spent' : 'system.uses.spent',
-        maxProp: usePrimaryActivity ? 'uses.max' : 'system.uses.max',
+        valueProp: 'uses.value',
+        spentProp: 'uses.spent',
+        maxProp: 'uses.max',
       };
     });
 
@@ -66,10 +59,10 @@
 
 <div
   class="attribute-pin"
-  data-item-id={ctx.document.id}
-  data-info-card={'item'}
+  data-activity-id={ctx.document.id}
+  data-info-card={'activity'}
   data-info-card-entity-uuid={ctx.document.uuid}
-  data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
+  data-configurable="true"
   data-pin-id={ctx.id}
   onmousedown={(ev) => FoundryAdapter.editOnMiddleClick(ev, ctx.document)}
   draggable={true}
@@ -135,7 +128,7 @@
   {#if context.unlocked}
     <a
       class="attribute-pins-menu highlight-on-hover"
-      onclick={(ev) => EventHelper.triggerContextMenu(ev, '[data-item-id]')}
+      onclick={(ev) => EventHelper.triggerContextMenu(ev, '[data-activity-id]')}
     >
       <i class="fas fa-ellipsis-vertical"></i>
     </a>

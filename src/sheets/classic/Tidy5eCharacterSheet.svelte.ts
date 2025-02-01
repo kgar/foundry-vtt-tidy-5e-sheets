@@ -263,6 +263,8 @@ export class Tidy5eCharacterSheet
           element.closest<HTMLElement>('[data-activity-id]');
 
         if (activityElement?.matches('[data-configurable="true"]')) {
+          // TODO: Add options to pin/unpin
+          // TODO: Consider even taking over the menu now.
           dnd5e.documents.activity.UtilityActivity.onContextMenu(item, element);
         } else if (activityElement) {
           const activityId = activityElement.getAttribute('data-activity-id');

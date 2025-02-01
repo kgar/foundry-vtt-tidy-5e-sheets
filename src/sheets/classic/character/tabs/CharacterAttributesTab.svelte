@@ -17,6 +17,7 @@
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import AttributeItemPin from '../parts/AttributeItemPin.svelte';
+  import AttributeActivityPin from '../parts/AttributeActivityPin.svelte';
 
   let context = $derived(getCharacterSheetContext());
 
@@ -105,7 +106,7 @@
             {#if ctx.type === 'item'}
               <AttributeItemPin {ctx} />
             {:else if ctx.type === 'activity'}
-              TODO: Implemente Activity Pin
+              <AttributeActivityPin {ctx} />
             {/if}
           {/each}
         </div>

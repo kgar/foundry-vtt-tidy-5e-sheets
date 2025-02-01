@@ -16,10 +16,10 @@
   - [ ] activities
 - [x] Ensure null/undefined/empty string on the counters default to emdash
 - [x] All input fields: focus on select true
-- [ ] Implement drag-and-drop pin sort
+- [x] Implement drag-and-drop pin sort
   - [x] Make items draggable and able to create proper drag data
-  - [ ] Implement the handler on the sheet
-- [ ] Implement name truncation on locked
+  - [x] Implement the handler on the sheet
+- [x] Implement name truncation on locked
 - [ ] Implement Activity pinning
   - [ ] ensure drag and drop
   - [ ] reuse/generalize item use button if possible
