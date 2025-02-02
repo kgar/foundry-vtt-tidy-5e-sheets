@@ -832,5 +832,10 @@
         "bottom": "Na dole",
         "name": "Pozycja wiersza działań",
         "hint": "Podczas rozwijania elementu wyświetlane są działania tego elementu. Użyj tego ustawienia, aby określić, czy działania są umieszczane na górze, przed opisem elementu, czy na dole, pod opisem elementu, przyciskami i tagami."
-    }
+    },
+    "TIDY5E.ContextMenuActionShowLimitedUses": "Pokaż ograniczone użycia",
+    "TIDY5E.ContextMenuActionPinToAttributes": "Przypnij do atrybutów",
+    "TIDY5E.ContextMenuActionUnpinFromAttributes": "Odepnij od atrybutów",
+    "TIDY5E.ContextMenuActionShowQuantity": "Pokaż ilość",
+    "TIDY5E.ContextMenuActionView": "Podgląd"
 }
