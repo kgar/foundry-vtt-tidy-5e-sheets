@@ -146,12 +146,12 @@ export class TidyFlags {
   };
 
   /**
-   * TODO
+   * Denotes the items and activities which have been pinned to the attributes tab.
    */
   static attributePins = {
     key: 'attributePins' as const,
     prop: TidyFlags.getFlagPropertyPath('attributePins'),
-    /** TODO */
+    /** Gets the actor's Attribute tab pins. */
     get(actor: Actor5e): AttributePinFlag[] {
       return (
         TidyFlags.tryGetFlag<AttributePinFlag[]>(
@@ -160,7 +160,7 @@ export class TidyFlags {
         ) ?? []
       );
     },
-    /** TODO */
+    /** Sets the actor's Attribute tab pins. */
     set(actor: Actor5e, value: AttributePinFlag[]): Promise<void> {
       return TidyFlags.setFlag(actor, TidyFlags.attributePins.key, value);
     },
