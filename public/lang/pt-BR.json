@@ -60,8 +60,8 @@
     "TIDY5E.ContextMenuActionEdit": "Editar",
     "TIDY5E.ContextMenuActionDelete": "Apagar",
     "TIDY5E.EmptyContainer": "Este recipiente está vazio.",
-    "TIDY5E.EmptySection": "Essa sessão está vazia. Desbloqueie a ficha para editar.",
-    "TIDY5E.GMOnlyEdit": "Somente o MJ consegue editar esta sessão.",
+    "TIDY5E.EmptySection": "Essa seção está vazia. Desbloqueie a ficha para editar.",
+    "TIDY5E.GMOnlyEdit": "Somente o Mestre consegue editar esta seção.",
     "TIDY5E.AttunementWarning": "Sintonização: Não é possível se sintonizar com mais de {number} itens.",
     "TIDY5E.AttunementItems": "Itens Sintonizados",
     "TIDY5E.AttunementMax": "Máximo de Sintonização",
@@ -174,8 +174,8 @@
     "TIDY5E.WorldSettings.ItemIdentificationPermission": {
         "name": "Permissão de Identificação de Item",
         "hint": "Determina qual tipo de usuário consegue acessar a os controles de UI para identificar itens.",
-        "options.GmOnly": "Apenas MJ",
-        "options.GmAndOwners": "MJ and Donos do Item"
+        "options.GmOnly": "Apenas Mestre",
+        "options.GmAndOwners": "Mestre e Donos do Item"
     },
     "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
         "name": "Incluir Flags na Criação de Pergaminhos de Magia",
@@ -191,7 +191,7 @@
         "labelFeaturesLocks": "Bloqueios de Recursos"
     },
     "TIDY5E.WorldSettings.TabMisc": {
-        "tabLabel": "Opções de MJ"
+        "tabLabel": "Opções de Mestre"
     },
     "TIDY5E.WorldSettings.TabIcons": {
         "tabLabel": "Ícones"
@@ -201,7 +201,7 @@
         "name": "Configurações do Mundo",
         "hint": "Ajuste as configurações de mundo para personalizar a experiência do Tidy 5e Sheets. Essas configurações são salvas nesse mundo do Foundry e se aplicam a todo o conteúdo relevante ao Tidy 5e Sheets.",
         "label": "Configurações do Mundo",
-        "title": "Configurações do Mundo (Apenas MJ)"
+        "title": "Configurações do Mundo (Apenas Mestre)"
     },
     "TIDY5E.UserSettings.Menu": {
         "name": "Configurações de Usuário",
@@ -344,8 +344,8 @@
         "hint": "Bloqueia campos alterados com pouca frequência (nome, proficiência, etc) e oculta botões de configuração quando a ficha estiver bloqueada."
     },
     "TIDY5E.Settings.LimitEffectsManagementToGM": {
-        "name": "Limitar Gerenciamento de Efeitos Ativos ao MJ",
-        "hint": "Limita a permissão de edição ou alternância de efeitos ativos apenas para MJs."
+        "name": "Limitar Gerenciamento de Efeitos Ativos ao Mestre",
+        "hint": "Limita a permissão de edição ou alternância de efeitos ativos apenas para Mestres."
     },
     "TIDY5E.Settings.UseInspiration": {
         "name": "Usar Rastreador de Inspiração",
@@ -384,7 +384,7 @@
     },
     "TIDY5E.Settings.HideDeathSavesFromPlayers": {
         "name": "Esconder Salvaguardas Contra Morte dos Jogadores",
-        "hint": "Faz com que as rolagens e resultados de Salvaguardas Contra Morte sejam mostradas apenas para o MJ."
+        "hint": "Faz as marcações de Salvaguarda Contra Morte serem visíveis apenas para o Mestre. O botão de rolagem de Salvaguarda Contra Morte continua visível."
     },
     "TIDY5E.Settings.UseCharacterEncumbranceBar": {
         "name": "Usar Barra de Carga para PJ",
@@ -412,27 +412,27 @@
     },
     "TIDY5E.Settings.LockMoneyChanges": {
         "name": "Bloquear Riqueza",
-        "hint": "Impede que não-MJs alterem a riqueza."
+        "hint": "Impede que não-Mestres alterem a riqueza."
     },
     "TIDY5E.Settings.LockExpChanges": {
         "name": "Bloquear Experiência",
-        "hint": "Impede que não-MJs alterem a experiência."
+        "hint": "Impede que não-Mestres alterem a experiência."
     },
     "TIDY5E.Settings.LockHpMaxChanges": {
         "name": "Bloquear PV Máximo",
-        "hint": "Impede que não-MJs alterem o PV máximo."
+        "hint": "Impede que não-Mestres alterem o PV máximo."
     },
     "TIDY5E.Settings.LockLevelSelector": {
         "name": "Bloquear Nível",
-        "hint": "Impede que não-MJs alterem os níveis dos jogadores com o seletor de nível de classe."
+        "hint": "Impede que não-Mestres alterem os níveis dos jogadores com o seletor de nível de classe."
     },
     "TIDY5E.Settings.LockConfigureSheet": {
         "name": "Bloquear Seleção de Ficha",
-        "hint": "Impede que os não-MJs selecionem outro layout de ficha."
+        "hint": "Impede que os não-Mestres selecionem outro layout de ficha."
     },
     "TIDY5E.Settings.LockItemQuantity": {
         "name": "Bloquear Quantidade de Item",
-        "hint": "Impede que não-MJs alterem a quantidade do item."
+        "hint": "Impede que não-Mestres alterem a quantidade do item."
     },
     "TIDY5E.Settings.ActionList.Header": "Lista de Ações",
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
@@ -543,7 +543,7 @@
     },
     "TIDY5E.Settings.Reset": {
         "name": "Redefinir Configurações para Padrão",
-        "hint": "Isso redefinirá todas as configurações de volta para o padrão do sistema de jogo ativo. Isso afeta apenas as configurações de escopo \"mundo\", como opções do MJ.",
+        "hint": "Isso redefinirá todas as configurações de volta para o padrão do sistema de jogo ativo. Isso afeta apenas as configurações de escopo \"mundo\", como opções do Mestre.",
         "dialogs": {
             "title": "Redefinir Configurações do Módulo",
             "content": "Tem certeza que deseja redefinir todas as configurações do módulo para os padrões do sistema atual? <strong>Isso não pode ser desfeito.</strong>",
@@ -555,7 +555,7 @@
         "name": "Migrações",
         "buttonLabel": "Migrar dados Tidy",
         "dialogTitle": "Migrar dados Tidy",
-        "hint": "Se você era um usuário do módulo Tidy5e Sheet original, opcionalmente use este menu Migrações para migrar suas configurações de MJ e dados da ficha Tidy.",
+        "hint": "Se você era um usuário do módulo Tidy5e Sheet original, opcionalmente use este menu Migrações para migrar suas configurações de Mestre e dados da ficha Tidy.",
         "migrationBeginningMessage": "Migrando dados. Por favor, não atualize a página até que esteja concluído.",
         "migrationErrorMessage": "Ocorreu um erro. Mais detalhes estão no console de desenvolvimento.",
         "migrationCompleteMessage": "Migração concluída.",
@@ -602,12 +602,12 @@
             "sectionTitle": "CCSS para Tidy 5e",
             "selectionDialogTitle": "Migração: CCSS para Tidy 5e",
             "ccss": "CCSS",
-            "section": "Sessão",
-            "explanation1": "O Tidy 5e agora suporta nativamente sessões personalizadas e providencia características opcionais para sessões personalizadas. Essa migração irá copiar os nomes das sessões do Custom Character Sheet Sections (CCSS) para as configurações de sessão do Tidy.",
+            "section": "Seção",
+            "explanation1": "O Tidy 5e agora suporta nativamente seções personalizadas e providencia características opcionais para seções personalizadas. Essa migração irá copiar os nomes das seções do Custom Character Sheet Sections (CCSS) para as configurações de seção do Tidy.",
             "overwrite": "Substituir",
             "overwriteTooltip": "Habilite para substituir flags existentes do Tidy. Se desmarcado, apenas flags vazias do Tidy irão receber os dados de migração do CCSS.",
             "deleteFlags": "Deletar Flags Afetadas do CCSS",
-            "deleteFlagsTooltip": "Ao migrar as sessões personalizadas do CCSS para o Tidy, as flags do CCSS permanecem no lugar, por padrão. Marque esta opção para remover estas flags."
+            "deleteFlagsTooltip": "Ao migrar as seções personalizadas do CCSS para o Tidy, as flags do CCSS permanecem no lugar, por padrão. Marque esta opção para remover estas flags."
         },
         "UnlinkedExplanation": "Esta migração oferece a opção de migrar documentos token desvinculados no cenário atual. Você pode executar a migração em cenas adicionais conforme necessário.",
         "Selection": {
@@ -631,7 +631,8 @@
             "sectionTitle": "Exaustão de PnJ",
             "selectionDialogTitle": "Migração: Exaustão de PnJ para o sistema"
         },
-        "Parent": "Pai"
+        "Parent": "Pai",
+        "chatNotification": "Uma nova migração do Tidy 5e Sheets está disponível. Consulte as Configurações de Jogo do Tidy 5e Sheets para ver as migrações disponíveis."
     },
     "TIDY5E.Settings.SheetPreferences": {
         "name": "Definir Tidy como Ficha Padrão",
@@ -660,19 +661,19 @@
         "hint": "Imprime mensagens de depuração no console."
     },
     "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
-        "name": "Ficha de Personagem: Sempre Desbloqueado para MJ",
-        "hint": "Trate a ficha do personagem como se ela estivesse sempre desbloqueada, independente da configuração de bloqueio. O MJ sempre pode editar o personagem, mas também pode alternar o bloqueio/desbloqueio para um jogador que também possua o personagem.",
-        "title": "Essa ficha está sempre desbloqueada para o MJ, independente da configuração de bloqueio."
+        "name": "Ficha de Personagem: Sempre Desbloqueado para Mestre",
+        "hint": "Trate a ficha do personagem como se ela estivesse sempre desbloqueada, independente da configuração de bloqueio. O Mestre sempre pode editar o personagem, mas também pode alternar o bloqueio/desbloqueio para um jogador que também possua o personagem.",
+        "title": "Essa ficha está sempre desbloqueada para o Mestre, independente da configuração de bloqueio."
     },
     "TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM": {
-        "name": "Ficha de PNJ: Sempre Desbloqueada para o MJ",
-        "hint": "Trate a ficha do PnJ como se ela estivesse sempre desbloqueada, independente da configuração de bloqueio. O MJ sempre pode editar o PnJ, mas também pode alternar o bloqueio/desbloqueio para um jogador que também possua o PnJ.",
-        "title": "Essa planilha está sempre desbloqueada para o MJ, independente da configuração de bloqueio."
+        "name": "Ficha de PNJ: Sempre Desbloqueada para o Mestre",
+        "hint": "Trate a ficha do PNJ como se ela estivesse sempre desbloqueada, independente da configuração de bloqueio. O Mestre sempre pode editar o PNJ, mas também pode alternar o bloqueio/desbloqueio para um jogador que também possua o PNJ.",
+        "title": "Esta ficha está sempre desbloqueada para o Mestre, independente da configuração de bloqueio."
     },
     "TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM": {
-        "name": "Ficha do Veículo: Sempre Desbloqueado para o MJ",
-        "hint": "Trate a ficha do veículo como se ele estivesse sempre desbloqueado, independente da configuração de bloqueio. O MJ sempre pode editar o veículo, mas também pode alternar o bloqueio/desbloqueio para um jogador que também seja proprietário do veículo.",
-        "title": "Essa ficha está sempre desbloqueada para o MJ, independente da configuração de bloqueio."
+        "name": "Ficha do Veículo: Sempre Desbloqueado para o Mestre",
+        "hint": "Trate a ficha do veículo como se ele estivesse sempre desbloqueado, independente da configuração de bloqueio. O Mestre sempre pode editar o veículo, mas também pode alternar o bloqueio/desbloqueio para um jogador que também seja proprietário do veículo.",
+        "title": "Esta ficha está sempre desbloqueada para o Mestre, independente da configuração de bloqueio."
     },
     "TIDY5E.ThemeSettings": {
         "SheetMenu": {
@@ -721,27 +722,34 @@
     "TIDY5E.ItemFilters.ClearAll": "Limpar Tudo",
     "TIDY5E.ItemFilters.Category.Miscellaneous": "Diversos",
     "TIDY5E.ItemFilters.Filter.Other": "Outro",
-    "TIDY5E.GMOnly.Message": "Apenas MJ: {message}",
+    "TIDY5E.GMOnly.Message": "Apenas Mestre: {message}",
     "TIDY5E.ReminderToBackUp": "Lembre-se sempre de fazer backup do seu mundo.",
     "TIDY5E.Utilities.Tools": "Ferramentas",
-    "TIDY5E.Utilities.GMTools": "Ferramentas de MJ",
+    "TIDY5E.Utilities.GMTools": "Ferramentas de Mestre",
     "TIDY5E.Utilities.IdentifyAll": "Identifique Todos os Itens",
     "TIDY5E.Utilities.AssignSpellsToClasses": "Atribuir Magias às Classes",
     "TIDY5E.Utilities.MarkAllAsUnidentified": "Marcar Todos os Itens como Não Identificados",
     "TIDY5E.GenericErrorNotification": "Ocorreu um erro ao executar esta ação. Veja o console do devtools para mais detalhes.",
-    "TIDY5E.Utilities.ConfigureSections": "Configurar Sessões",
+    "TIDY5E.Utilities.ConfigureSections": "Configurar Seções",
     "TIDY5E.Section": {
-        "Default": "Sessão Padrão",
-        "Label": "Sessão",
-        "Tooltip": "Especifique uma sessão personalizada para este item quando colocado na ficha de um ator, ou deixe vazio para comportamento padrão.",
-        "ActionLabel": "Sessão de Ação",
-        "ActionTooltip": "Especifique uma sessão personalizada para este item quando colocado na aba Ação, ou deixe vazio para comportamento padrão.",
+        "Default": "Seção Padrão",
+        "Label": "Seção",
+        "Tooltip": "Especifique uma seção personalizada para este item quando colocado na ficha de um ator, ou deixe vazio para comportamento padrão.",
+        "ActionLabel": "Seção de Ação",
+        "ActionTooltip": "Especifique uma seção personalizada para este item quando colocado na aba Ação, ou deixe vazio para comportamento padrão.",
         "ConfigDialog": {
-            "title": "Configurar Sessão: {tabTitle}",
-            "showTooltip": "Exibir esta sessão",
-            "hideTooltip": "Esconder esta sessão"
+            "title": "Configurar Seção: {tabTitle}",
+            "showTooltip": "Exibir esta seção",
+            "hideTooltip": "Esconder esta seção"
         },
-        "LabelPl": "Sessões"
+        "LabelPl": "Seções",
+        "SectionSelectorChooseSectionTooltip": "Escolha uma Seção",
+        "SectionSelectorExistingSections": "Seções Existentes",
+        "SectionSelectorChooseActionSectionTooltip": "Escolha uma Seção de Ação",
+        "SectionSelectorCreateNewSection": "Criar nova seção",
+        "SectionSelectorNewSectionName": "Nome da nova seção",
+        "SectionSelectorSaveNewSection": "Salvar nova seção",
+        "SectionSelectorTitle": "{sectionType}: {documentName}"
     },
     "TIDY5E.UseDefaultDialog": {
         "title": "Confirmar: Usar Padrão",
@@ -783,5 +791,43 @@
         "hint": "Ative para mostrar cartões de informações para efeitos ativos em todos os atores e itens com efeitos ativos."
     },
     "TIDY5E.Keybindings.ToggleHeaderMenu.Name": "Alternar Menu de Cabeçalho",
-    "TIDY5E.Keybindings.ToggleHeaderMenu.Hint": "Se uma ficha do Tidy for a janela ativa no momento, estas teclas alternam o menu de cabeçalho da ficha."
+    "TIDY5E.Keybindings.ToggleHeaderMenu.Hint": "Se uma ficha do Tidy for a janela ativa no momento, estas teclas alternam o menu de cabeçalho da ficha.",
+    "TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast": "Incluir Rituais em \"Pode Conjurar\"",
+    "TIDY5E.BrokenLink": "Link Quebrado",
+    "TIDY5E.Settings.GlobalCustomSections": {
+        "hint": "Seções personalizadas para todos, que podem ser configuradas para diversos fins. As Seções Personalizadas Globais sempre serão incluídas no Seletor de Seção.",
+        "name": "Seções Personalizadas Globais",
+        "AddSection": "Adicionar Seção"
+    },
+    "TIDY5E.ModuleName": "Tidy 5e Sheets",
+    "TIDY5E.UserSettings.TabActivities": {
+        "tabLabel": "Atividades"
+    },
+    "TIDY5E.Settings.InlineActivitiesPosition": {
+        "bottom": "Inferior",
+        "hint": "Ao expandir um item, Atividades desse item são mostradas. Use esta configuração para determinar se as Atividades são colocadas na parte superior, antes da descrição do item, ou na parte inferior, abaixo da descrição, dos botões e das tags do item.",
+        "top": "Superior",
+        "name": "Posição de Atividades Inline"
+    },
+    "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Holds{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}",
+    "TIDY5E.ContextMenuActionPinToAttributes": "Fixar em Atributos",
+    "TIDY5E.ContextMenuActionUnpinFromAttributes": "Desfixar de Atributos",
+    "TIDY5E.ContextMenuActionShowLimitedUses": "Mostrar Usos Limitados",
+    "TIDY5E.ContextMenuActionShowQuantity": "Mostrar Quantidade",
+    "TIDY5E.WorldSettings.TabCustomSections": {
+        "CustomizedIndicatorLabel": "Personalizado",
+        "ShowWhenEmptyLabel": "Mostrar Seção Se Vazia",
+        "ShowWhenEmptyTooltip": "Todas as abas com tabelas de itens possuem um conjunto de seções padrão que são sempre mostradas mesmo quando não há itens na seção. Sempre mostre esta seção, mesmo quando vazia.",
+        "LimitToSpecificTabsLabel": "Limitar Seção Mostrada p/ Abas Específicas",
+        "tabLabel": "Seções Personalizadas",
+        "LimitToSpecificSheetsLabel": "Limitar Seção Mostrada p/ Fichas Específicas"
+    },
+    "TIDY5E.Settings.DefaultDeathSaveRoll": {
+        "hint": "Determina o tipo de rolagem padrão a ser usada ao realizar uma Salvaguarda Contra Morte.",
+        "name": "Rolagem Padrão de Salvaguarda Contra Morte"
+    },
+    "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatTooltip": "Mostrar descrição no chat",
+    "TIDY5E.Activities.Cast.SourceHintText": "De {itemName}",
+    "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatLabel": "Info",
+    "TIDY5E.ContextMenuActionView": "Visualizar"
 }
