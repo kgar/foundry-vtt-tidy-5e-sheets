@@ -38,7 +38,6 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { ItemUtils } from 'src/utils/ItemUtils';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
-  import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import {
     createSearchResultsState,
     setSearchResultsContext,
@@ -294,14 +293,22 @@
                       </ItemTableCell>
                     {/if}
                     {#if section.showFeatureTypeColumn}
-                      {@const label =
-                        CONFIG.DND5E.featureTypes[item.system.type.value]
-                          ?.label ?? item.system.type.value}
-                      <ItemTableCell baseWidth="7.5rem">
-                        <span class="truncate" title={item.system.type ?? ''}
-                          >{label ?? ''}</span
-                        >
-                      </ItemTableCell>
+                      {#if item.system.type}
+                        <!-- For now, unlinked subclasses fall into the Passive Features table, and this code causes the tab to crash because item.sytem.type.value triggers an error. -->
+                        {@const label =
+                          CONFIG.DND5E.featureTypes[item.system.type.value]
+                            ?.label ?? item.system.type.value}
+                        <ItemTableCell baseWidth="7.5rem">
+                          <span
+                            class="truncate"
+                            title={item.system.type.value ?? ''}
+                            >{label ?? ''}</span
+                          >
+                        </ItemTableCell>
+                      {:else}
+                        <!-- For broken/unlinked subclasses -->
+                        <ItemTableCell baseWidth="7.5rem">—</ItemTableCell>
+                      {/if}
                     {/if}
                     {#if section.showRequirementsColumn}
                       <ItemTableCell baseWidth="7.5rem">
