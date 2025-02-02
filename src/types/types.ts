@@ -14,6 +14,7 @@ import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/typ
 import type { CONSTANTS } from 'src/constants';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
+import type { AttributePinFlag } from 'src/foundry/TidyFlags.types';
 
 export type Actor5e = any;
 
@@ -102,7 +103,14 @@ export type SpellCalculations = {
   meleeHasBonus: boolean;
 };
 
-export type Uses = { value: number; max: number };
+export type LinkedUses = {
+  value: number;
+  max: number;
+  valueProp: string;
+  spentProp: string;
+  maxProp: string;
+  doc: any;
+};
 
 export type ActorInventoryTypes = Record<string, InventorySection>;
 
@@ -216,7 +224,7 @@ export type CharacterItemContext = {
   hasRecharge?: boolean;
   hasUses?: boolean;
   isStack?: boolean;
-  linkedUses?: Uses;
+  linkedUses?: LinkedUses;
   needsSubclass?: boolean;
   toggleClass?: string;
   toggleTitle?: string;
@@ -281,10 +289,24 @@ export type LanguageTraitContext = {
   value?: unknown;
 };
 
+export type AttributeItemPinContext = {
+  document: Item5e;
+  linkedUses?: LinkedUses;
+} & AttributePinFlag & { type: 'item' };
+
+export type AttributeActivityPinContext = {
+  document: Activity5e;
+} & AttributePinFlag & { type: 'activity' };
+
+export type AttributePinContext =
+  | AttributeItemPinContext
+  | AttributeActivityPinContext;
+
 export type CharacterSheetContext = {
   actorClassesToImages: Record<string, string>;
   allowMaxHpOverride: boolean;
   appearanceEnrichedHtml: string;
+  attributePins: AttributePinContext[];
   bastion: {
     description: string;
   };
@@ -398,7 +420,7 @@ export type NpcItemContext = {
   hasRecharge?: boolean;
   hasUses?: boolean;
   isStack?: boolean;
-  linkedUses?: Uses;
+  linkedUses?: LinkedUses;
   needsSubclass?: boolean;
   parent?: Item5e;
   toggleTitle?: string;

@@ -27,6 +27,7 @@ import {
   type FacilitySection,
   type ChosenFacilityContext,
   type TypedActivityFavoriteSection,
+  type AttributePinContext,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
@@ -72,6 +73,8 @@ import { Activities } from 'src/features/activities/activities';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
+import { AttributePins } from 'src/features/attribute-pins/AttributePins';
+import type { AttributePinFlag } from 'src/foundry/TidyFlags.types';
 
 export class Tidy5eCharacterSheet
   extends BaseSheetCustomSectionMixin(
@@ -242,55 +245,6 @@ export class Tidy5eCharacterSheet
     this.additionalComponents.push(infoCard);
 
     initTidy5eContextMenu(this, html);
-
-    FoundryAdapter.createContextMenu(html, '.activity[data-activity-id]', [], {
-      onOpen: (element: HTMLElement) => {
-        const itemId =
-          element.closest<HTMLElement>('[data-item-id]')?.dataset.itemId;
-        const item =
-          this.document.type === 'container'
-            ? this.document.system.getContainedItem(itemId)
-            : this.document.items.get(itemId);
-        // Parts of ContextMenu doesn't play well with promises, so don't show menus for containers in packs
-        if (!item || item instanceof Promise) {
-          return;
-        }
-
-        const activityElement =
-          element.closest<HTMLElement>('[data-activity-id]');
-
-        if (activityElement?.matches('[data-configurable="true"]')) {
-          dnd5e.documents.activity.UtilityActivity.onContextMenu(item, element);
-        } else if (activityElement) {
-          const activityId = activityElement.getAttribute('data-activity-id');
-          const activity = item.system.activities.get(activityId);
-          if (!activity) {
-            return;
-          }
-
-          const isFav = this.actor.system.hasFavorite(activity.relativeUUID);
-          const favoriteIcon = 'fa-bookmark';
-
-          const contextMenuItems: ContextMenuEntry[] = [
-            {
-              name: isFav ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
-              icon: isFav
-                ? `<i class='fas ${favoriteIcon} fa-fw' style='color: var(--t5e-warning-accent-color)'></i>`
-                : `<i class='fas ${favoriteIcon} fa-fw inactive'></i>`,
-              callback: () => {
-                if (!item) {
-                  warn(`tidy5e-context-menu | Item Not Found`);
-                  return;
-                }
-                FoundryAdapter.toggleFavoriteActivity(activity);
-              },
-              condition: () => !item.compendium?.locked,
-            },
-          ];
-          ui.context.menuItems = contextMenuItems;
-        }
-      },
-    });
   }
 
   async getData(options = {}) {
@@ -927,6 +881,8 @@ export class Tidy5eCharacterSheet
 
     await this._prepareFacilities(context);
 
+    this._prepareAttributePins(context);
+
     let tabs = await CharacterSheetRuntime.getTabs(context);
 
     const selectedTabs = TidyFlags.selectedTabs.get(context.actor);
@@ -1466,6 +1422,37 @@ export class Tidy5eCharacterSheet
     );
   }
 
+  _prepareAttributePins(context: CharacterSheetContext) {
+    let flagPins = TidyFlags.attributePins
+      .get(this.actor)
+      .toSorted((a, b) => (a.sort || 0) - (b.sort || 0));
+
+    let pins: AttributePinContext[] = [];
+
+    for (let pin of flagPins) {
+      let document = fromUuidSync(pin.id, { relative: this.actor });
+
+      if (document) {
+        if (pin.type === 'item') {
+          pins.push({
+            ...pin,
+            linkedUses: context.itemContext[document.id]?.linkedUses,
+            document,
+          });
+        } else if (pin.type === 'activity') {
+          pins.push({
+            ...pin,
+            document,
+          });
+        }
+      } else {
+        warn(`Attribute pin item with ID ${pin.id} not found.`);
+      }
+    }
+
+    context.attributePins = pins;
+  }
+
   private _getFavoritesIdMap(): Map<string, CharacterFavorite> {
     return this.actor.system.favorites.reduce(
       (map: Map<string, CharacterFavorite>, f: CharacterFavorite) => {
@@ -1790,10 +1777,16 @@ export class Tidy5eCharacterSheet
   }
 
   async _onDrop(event: DragEvent & { target: HTMLElement }) {
-    if (!event.target.closest('[data-tidy-favorites]'))
+    if (!event.target.closest('[data-tidy-favorites], [data-pin-id]')) {
       return super._onDrop(event);
+    }
+
     const dragData = event.dataTransfer?.getData('text/plain');
-    if (!dragData) return super._onDrop(event);
+
+    if (!dragData) {
+      return super._onDrop(event);
+    }
+
     let data;
     try {
       data = JSON.parse(dragData);
@@ -1802,10 +1795,16 @@ export class Tidy5eCharacterSheet
       return;
     }
 
-    let type = 'item' as const;
-    let id = (await fromUuid(data.uuid)).getRelativeUUID(this.actor);
+    const doc = await fromUuid(data.uuid);
+    let relativeUuid = AttributePins.getRelativeUUID(doc);
 
-    return this._onDropFavorite(event, { type, id });
+    if (event.target.closest('[data-pin-id]')) {
+      return this._onDropPin(event, { id: relativeUuid, doc });
+    }
+
+    let type = 'item' as const;
+
+    return this._onDropFavorite(event, { type, id: relativeUuid });
   }
 
   _prepareTraits(systemData: any) {
@@ -1861,6 +1860,82 @@ export class Tidy5eCharacterSheet
     }
 
     return facility.update({ [`${prop}.value`]: [...value, actorUuid] });
+  }
+
+  /* -------------------------------------------- */
+  /* Pins
+  /* -------------------------------------------- */
+
+  async _onDropPin(
+    event: DragEvent & { target: HTMLElement },
+    data: { id: string; doc: any }
+  ) {
+    // If not pinned, then pin it
+    const currentPins = TidyFlags.attributePins.get(this.actor);
+
+    const pinType: AttributePinFlag['type'] | undefined =
+      data.doc.documentName === CONSTANTS.DOCUMENT_NAME_ITEM
+        ? 'item'
+        : data.doc.documentName === CONSTANTS.DOCUMENT_NAME_ACTIVITY
+        ? 'activity'
+        : undefined;
+
+    if (!pinType) {
+      return;
+    }
+
+    if (!currentPins.find((x) => x.id === data.id)) {
+      AttributePins.pin(this.actor, pinType);
+      return;
+    }
+
+    return await this._onSortPins(event, data.id);
+  }
+
+  async _onSortPins(event: DragEvent & { target: HTMLElement }, srcId: string) {
+    const targetId = event.target
+      ?.closest('[data-pin-id]')
+      ?.getAttribute('data-pin-id');
+
+    if (!targetId || srcId === targetId) {
+      return;
+    }
+
+    let source;
+    let target;
+
+    const siblings = TidyFlags.attributePins
+      .get(this.actor)
+      .filter((f: AttributePinFlag) => {
+        if (f.id === targetId) target = f;
+        else if (f.id === srcId) source = f;
+        return f.id !== srcId;
+      });
+
+    const updates = SortingHelpers.performIntegerSort(source, {
+      target,
+      siblings,
+    });
+
+    const pins = TidyFlags.attributePins
+      .get(this.actor)
+      .reduce(
+        (map: Map<string, AttributePinFlag>, f: AttributePinFlag) =>
+          map.set(f.id, { ...f }),
+        new Map<string, AttributePinFlag>()
+      );
+
+    for (const { target, update } of updates) {
+      const pin = pins.get(target.id);
+      if (pin && update) {
+        foundry.utils.mergeObject(pin, update);
+      }
+    }
+
+    return await TidyFlags.attributePins.set(
+      this.actor,
+      Array.from(pins.values())
+    );
   }
 
   /* -------------------------------------------- */

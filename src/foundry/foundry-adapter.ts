@@ -1369,18 +1369,24 @@ export const FoundryAdapter = {
     event: Event & {
       currentTarget: EventTarget & HTMLInputElement;
     },
-    item: any
+    documentWithUses: any,
+    valueProp: string = 'system.uses.value',
+    spentProp: string = 'system.uses.spent',
+    maxProp: string = 'system.uses.max'
   ) {
     const value = processInputChangeDelta(
       event.currentTarget.value,
-      item,
-      'system.uses.value'
+      documentWithUses,
+      valueProp
     );
 
-    const uses = clamp(0, value, item.system.uses.max);
+    const max =
+      FoundryAdapter.getProperty<number>(documentWithUses, maxProp) ?? 0;
+
+    const uses = clamp(0, value, max);
     event.currentTarget.value = uses.toString();
 
-    return item.update({ 'system.uses.spent': item.system.uses.max - uses });
+    return documentWithUses.update({ [spentProp]: max - uses });
   },
   handleActivityUsesChanged(
     event: Event & {
@@ -1465,6 +1471,23 @@ export const FoundryAdapter = {
         value += ` ${data.units}`;
       }
       traits.languages.push({ label, value: value });
+    }
+  },
+  /**
+   * Forwards the current mode of the actor sheet
+   * to the default item sheet.
+   * Works only for toggling default item sheets as present.
+   */
+  getItemSheetMode(sheet: any) {
+    try {
+      const mode = FoundryAdapter.isSheetUnlocked(sheet)
+        ? dnd5e.applications.item.ItemSheet5e2.MODES.EDIT
+        : dnd5e.applications.item.ItemSheet5e2.MODES.PLAY;
+
+      return { mode };
+    } catch (e) {
+      error('Failed to get item sheet mode', false, e);
+      return {};
     }
   },
 };

@@ -86,13 +86,26 @@ export class Activities {
       relative: actor,
       strict: false,
     });
-    if (cachedFor)
+    if (cachedFor) {
       context.linkedUses = cachedFor.consumption?.targets.find(
         (t: any) => t.type === 'activityUses'
       )
-        ? cachedFor.uses
+        ? {
+            ...cachedFor.uses,
+            valueProp: 'uses.value',
+            spentProp: 'uses.spent',
+            maxProp: 'uses.max',
+            doc: cachedFor,
+          }
         : cachedFor.consumption?.targets.find((t: any) => t.type === 'itemUses')
-        ? cachedFor.item.system.uses
+        ? {
+            ...cachedFor.item.system.uses,
+            valueProp: 'system.uses.value',
+            spentProp: 'system.uses.spent',
+            maxProp: 'system.uses.max',
+            doc: cachedFor.item,
+          }
         : null;
+    }
   }
 }

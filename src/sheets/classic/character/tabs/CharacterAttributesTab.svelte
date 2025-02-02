@@ -2,7 +2,6 @@
   import SkillsList from '../../actor/SkillsList.svelte';
   import Traits from '../../actor/traits/Traits.svelte';
   import Favorites from '../parts/Favorites.svelte';
-  import { isNil } from 'src/utils/data';
   import { getContext } from 'svelte';
   import { settings } from 'src/settings/settings.svelte';
   import { CONSTANTS } from 'src/constants';
@@ -17,6 +16,9 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import AttributeItemPin from '../parts/AttributeItemPin.svelte';
+  import AttributeActivityPin from '../parts/AttributeActivityPin.svelte';
+  import { error } from 'src/utils/logging';
 
   let context = $derived(getCharacterSheetContext());
 
@@ -65,7 +67,9 @@
               )}
           />
           <span
-            >{localize('TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast')}</span
+            >{localize(
+              'TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast',
+            )}</span
           >
         </label>
       </div>
@@ -97,6 +101,26 @@
       {/if}
     </section>
     <section class="main-panel">
+      {#if context.attributePins.length}
+        <div class="attribute-pins">
+          {#each context.attributePins as ctx (ctx.id)}
+            <svelte:boundary
+              onerror={(e) =>
+                error(
+                  'An error occurred while rendering an attribute pin',
+                  false,
+                  e,
+                )}
+            >
+              {#if ctx.type === 'item'}
+                <AttributeItemPin {ctx} />
+              {:else if ctx.type === 'activity'}
+                <AttributeActivityPin {ctx} />
+              {/if}
+            </svelte:boundary>
+          {/each}
+        </div>
+      {/if}
       {#if settings.value.moveCharacterTraitsToRightOfSkills}
         <Traits />
       {/if}

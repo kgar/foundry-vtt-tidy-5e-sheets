@@ -70,6 +70,7 @@
             'data-configurable': configurable,
             'data-info-card': 'activity',
             'data-info-card-entity-uuid': ctx.activity.uuid,
+            'data-context-menu': CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES,
           }}
           rowClass="activity"
           onmousedown={(event) =>

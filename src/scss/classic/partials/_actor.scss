@@ -919,3 +919,175 @@ select:hover {
     }
   }
 }
+
+.attribute-pins {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11.625rem, 1fr));
+  gap: 0.125rem;
+
+  input {
+    border: 0;
+  }
+
+  .attribute-pin {
+    background-color: var(--t5e-faintest-color);
+    box-shadow: 0 0 0.125rem var(--t5e-context-shadow-color);
+    border-radius: 0.375rem;
+    padding: 0.25rem;
+    margin: 0.125rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+
+    .attribute-document-image {
+      display: flex;
+
+      .item-use-button {
+        --img-size: var(--t5e-image-size-override, 2.25rem);
+        position: relative;
+        align-self: center;
+        height: var(--img-size);
+        width: var(--img-size);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.25rem;
+
+        .item-image {
+          position: absolute;
+          border-radius: 0.25rem;
+          width: var(--img-size);
+          height: var(--img-size);
+          transition: opacity 0.2s ease;
+
+          &.conceal {
+            filter: grayscale(100%);
+          }
+        }
+
+        .roll-indicator {
+          color: var(--t5e-tertiary-color);
+          font-size: 1.5rem;
+
+          &.invisible {
+            visibility: hidden;
+          }
+        }
+
+        .roll-indicator {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          opacity: 0;
+          transition: all 0.2s ease;
+        }
+
+        .unidentified-glyph {
+          font-size: calc(var(--t5e-image-size-override, 1.5rem) - 0.75rem);
+        }
+      }
+    }
+
+    &:hover .attribute-document-image {
+      .item-use-button {
+        .item-image:not(.always-visible) {
+          opacity: 0;
+        }
+
+        .unidentified-glyph {
+          opacity: 0;
+        }
+
+        .roll-indicator {
+          opacity: 1;
+        }
+
+        &:hover .roll-indicator {
+          color: var(--t5e-primary-font-color);
+        }
+      }
+    }
+
+    .attribute-pin-details {
+      flex: 1;
+      min-width: 0; // For proper truncation.
+
+      .attribute-pin-name-container {
+        font-size: var(--font-size-12);
+
+        display: flex;
+        gap: 0.125rem;
+
+        i {
+          font-size: var(--font-size-10);
+          align-self: center;
+          color: var(--t5e-tertiary-color);
+        }
+
+        .attribute-pin-name {
+          font-weight: 500;
+          text-align: center;
+          line-height: normal;
+          height: auto;
+          flex: 1;
+        }
+      }
+      .attribute-counter {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        input,
+        span {
+          width: 1.5rem;
+          font-size: var(--font-size-14);
+          line-height: normal;
+          height: auto;
+          flex: 1;
+        }
+
+        &.quantity {
+          input {
+            text-align: center;
+          }
+        }
+
+        &.limited-uses {
+          input,
+          span {
+            &:first-child {
+              text-align: right;
+            }
+            &:last-child {
+              text-align: left;
+            }
+          }
+        }
+
+        .max,
+        .charged-text {
+          color: var(--t5e-tertiary-color);
+        }
+
+        .divider {
+          margin-inline: 0.125rem;
+          color: var(--t5e-light-color);
+          flex: 0;
+        }
+
+        .charged-text {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
+
+    .attribute-pins-menu {
+      padding: 0.25rem;
+      align-self: stretch;
+      align-content: center;
+    }
+  }
+}

@@ -8,6 +8,7 @@ export const CONSTANTS = {
   SYSTEM_SETTING_LEVELING_MODE_XP_BOONS: 'xpBoons',
   DOCUMENT_NAME_ACTOR: 'Actor',
   DOCUMENT_NAME_ITEM: 'Item',
+  DOCUMENT_NAME_ACTIVITY: 'Activity',
   ATTUNEMENT_OPTIONAL: 'optional',
   ATTUNEMENT_REQUIRED: 'required',
   FAVORITES_SECTION_TYPE_ACTIVITY: 'activity',
@@ -47,6 +48,7 @@ export const CONSTANTS = {
    * Secondary button pressed, usually the right button
    */
   MOUSE_BUTTON_SECONDARY: 2,
+  CONTEXT_MENU_TYPE_ACTIVITIES: 'activities',
   CONTEXT_MENU_TYPE_EFFECTS: 'effects',
   CONTEXT_MENU_TYPE_FACILITY_OCCUPANTS: 'facility-occupants',
   CONTEXT_MENU_TYPE_GROUP_MEMBER: 'group-member',
