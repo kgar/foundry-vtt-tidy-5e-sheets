@@ -573,7 +573,8 @@
         "NpcExhaustion": {
             "sectionTitle": "Indebolimento PNG",
             "selectionDialogTitle": "Migrazione: Indebolimento PNG a System"
-        }
+        },
+        "chatNotification": "È disponibile una nuova migrazione di Tidy 5e Sheets. Vedi le impostazioni di gioco di Tidy 5e Sheets per visualizzare le migrazioni disponibili."
     },
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtri",
     "TIDY5E.Settings.ColorPickerMagicAccent": {
@@ -850,5 +851,17 @@
     },
     "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatLabel": "Info",
     "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatTooltip": "Mostra descrizione in chat",
-    "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Tiene{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}"
+    "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Tiene{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}",
+    "TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast": "Includi rituali in \"Può Lanciare\"",
+    "TIDY5E.ModuleName": "Schede Tidy 5e",
+    "TIDY5E.UserSettings.TabActivities": {
+        "tabLabel": "Attività"
+    },
+    "TIDY5E.Settings.InlineActivitiesPosition": {
+        "name": "Posizione Attività Inline",
+        "hint": "Quando si espande un oggetto, ne vengono mostrate le attività. Utilizzare questa impostazione per determinare se le attività sono messe in alto, prima della descrizione dell'articolo o in basso, sotto la descrizione dell'articolo, i pulsanti e le etichette.",
+        "top": "In alto",
+        "bottom": "In basso"
+    },
+    "TIDY5E.BrokenLink": "Link non funzionante"
 }
