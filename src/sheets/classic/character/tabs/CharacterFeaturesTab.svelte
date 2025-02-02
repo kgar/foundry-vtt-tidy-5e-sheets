@@ -43,7 +43,6 @@
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
-  import { SystemIntegrationBase } from 'src/integration/integration-classes';
 
   let context = $derived(getCharacterSheetContext());
 
