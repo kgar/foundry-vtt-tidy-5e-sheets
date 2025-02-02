@@ -4,6 +4,7 @@
   import { settings } from 'src/settings/settings.svelte';
   import { Activities } from 'src/features/activities/activities';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { CONSTANTS } from 'src/constants';
 
   let context = $derived(getItemSheetContext());
 
@@ -41,6 +42,7 @@
         class="activity card"
         data-activity-id={activity.id}
         data-configurable={Activities.isConfigurable(activity)}
+        data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
         draggable="true"
         ondragstart={(ev) => handleDragStart(ev, activity.id)}
         data-info-card="activity"

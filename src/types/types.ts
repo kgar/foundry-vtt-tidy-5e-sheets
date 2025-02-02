@@ -103,7 +103,14 @@ export type SpellCalculations = {
   meleeHasBonus: boolean;
 };
 
-export type Uses = { value: number; max: number };
+export type LinkedUses = {
+  value: number;
+  max: number;
+  valueProp: string;
+  spentProp: string;
+  maxProp: string;
+  doc: any;
+};
 
 export type ActorInventoryTypes = Record<string, InventorySection>;
 
@@ -217,7 +224,7 @@ export type CharacterItemContext = {
   hasRecharge?: boolean;
   hasUses?: boolean;
   isStack?: boolean;
-  linkedUses?: Uses;
+  linkedUses?: LinkedUses;
   needsSubclass?: boolean;
   toggleClass?: string;
   toggleTitle?: string;
@@ -284,6 +291,7 @@ export type LanguageTraitContext = {
 
 export type AttributeItemPinContext = {
   document: Item5e;
+  linkedUses?: LinkedUses;
 } & AttributePinFlag & { type: 'item' };
 
 export type AttributeActivityPinContext = {
@@ -412,7 +420,7 @@ export type NpcItemContext = {
   hasRecharge?: boolean;
   hasUses?: boolean;
   isStack?: boolean;
-  linkedUses?: Uses;
+  linkedUses?: LinkedUses;
   needsSubclass?: boolean;
   parent?: Item5e;
   toggleTitle?: string;

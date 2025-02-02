@@ -18,6 +18,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import AttributeItemPin from '../parts/AttributeItemPin.svelte';
   import AttributeActivityPin from '../parts/AttributeActivityPin.svelte';
+  import { error } from 'src/utils/logging';
 
   let context = $derived(getCharacterSheetContext());
 
@@ -103,11 +104,20 @@
       {#if context.attributePins.length}
         <div class="attribute-pins">
           {#each context.attributePins as ctx (ctx.id)}
-            {#if ctx.type === 'item'}
-              <AttributeItemPin {ctx} />
-            {:else if ctx.type === 'activity'}
-              <AttributeActivityPin {ctx} />
-            {/if}
+            <svelte:boundary
+              onerror={(e) =>
+                error(
+                  'An error occurred while rendering an attribute pin',
+                  false,
+                  e,
+                )}
+            >
+              {#if ctx.type === 'item'}
+                <AttributeItemPin {ctx} />
+              {:else if ctx.type === 'activity'}
+                <AttributeActivityPin {ctx} />
+              {/if}
+            </svelte:boundary>
           {/each}
         </div>
       {/if}

@@ -1,12 +1,11 @@
 <script lang="ts">
   import ItemImage from 'src/components/item-list/ItemImage.svelte';
+  import EffectTableRow from 'src/components/item-list/v1/EffectTableRow.svelte';
   import ItemTable from 'src/components/item-list/v1/ItemTable.svelte';
   import ItemTableCell from 'src/components/item-list/v1/ItemTableCell.svelte';
   import ItemTableColumn from 'src/components/item-list/v1/ItemTableColumn.svelte';
   import ItemTableHeaderRow from 'src/components/item-list/v1/ItemTableHeaderRow.svelte';
-  import ItemTableRow from 'src/components/item-list/v1/ItemTableRow.svelte';
   import TidySwitch from 'src/components/toggles/TidySwitch.svelte';
-  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     EffectFavoriteSection,
@@ -50,17 +49,16 @@
   {/snippet}
   {#snippet body()}
     {#each section.effects as effectContext (effectContext.effectId)}
-      <ItemTableRow
-        onMouseDown={(event) =>
-          FoundryAdapter.editOnMiddleClick(event, effectContext.effect)}
-        contextMenu={{
-          type: CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS,
-          uuid: effectContext.effect.uuid,
-        }}
+      <EffectTableRow
         hidden={visibleEffectIdSubset !== null &&
           !visibleEffectIdSubset.has(effectContext.effect.id)}
-        favoriteId={effectContext.id}
         cssClass={effectContext.suppressed ? 'suppressed' : ''}
+        attributes={{
+          'data-favorite-id': effectContext.id,
+          'data-info-card': 'effect',
+          'data-info-card-entity-uuid': effectContext.effect.uuid,
+        }}
+        activeEffect={effectContext.effect}
       >
         <ItemTableCell
           primary={true}
@@ -86,7 +84,7 @@
             onChange={() => toggleEffect(effectContext)}
           />
         </ItemTableCell>
-      </ItemTableRow>
+      </EffectTableRow>
     {/each}
   {/snippet}
 </ItemTable>

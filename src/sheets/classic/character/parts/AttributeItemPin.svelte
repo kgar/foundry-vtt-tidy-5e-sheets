@@ -19,6 +19,20 @@
 
   let { usesDocument, valueProp, spentProp, maxProp, value, maxText, uses } =
     $derived.by(() => {
+      if (ctx.linkedUses) {
+        return {
+          usesDocument: ctx.linkedUses.doc,
+          maxProp: ctx.linkedUses.maxProp,
+          maxText: isNil(ctx.linkedUses.max, '')
+            ? '—'
+            : ctx.linkedUses.max.toString(),
+          spentProp: ctx.linkedUses.spentProp,
+          uses: ctx.linkedUses,
+          value: ctx.linkedUses.value,
+          valueProp: ctx.linkedUses.valueProp,
+        };
+      }
+
       const primaryActivity = ctx.document.system.activities?.contents[0];
       const usePrimaryActivity =
         ctx.document.system.uses.max === '' &&
@@ -30,8 +44,8 @@
       return {
         usesDocument: usePrimaryActivity ? primaryActivity : ctx.document,
         uses: uses,
-        value: uses.max - uses.spent,
-        maxText: uses.max === '' ? '—' : uses.max.toString(),
+        value: (uses.max ?? 0) - uses.spent,
+        maxText: isNil(uses.max, '') ? '—' : uses.max.toString(),
         valueProp: usePrimaryActivity ? 'uses.value' : 'system.uses.value',
         spentProp: usePrimaryActivity ? 'uses.spent' : 'system.uses.spent',
         maxProp: usePrimaryActivity ? 'uses.max' : 'system.uses.max',

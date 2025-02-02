@@ -1473,4 +1473,21 @@ export const FoundryAdapter = {
       traits.languages.push({ label, value: value });
     }
   },
+  /**
+   * Forwards the current mode of the actor sheet
+   * to the default item sheet.
+   * Works only for toggling default item sheets as present.
+   */
+  getItemSheetMode(sheet: any) {
+    try {
+      const mode = FoundryAdapter.isSheetUnlocked(sheet)
+        ? dnd5e.applications.item.ItemSheet5e2.MODES.EDIT
+        : dnd5e.applications.item.ItemSheet5e2.MODES.PLAY;
+
+      return { mode };
+    } catch (e) {
+      error('Failed to get item sheet mode', false, e);
+      return {};
+    }
+  },
 };

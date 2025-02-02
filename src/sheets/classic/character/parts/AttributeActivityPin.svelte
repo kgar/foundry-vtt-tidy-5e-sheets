@@ -1,7 +1,8 @@
 <script lang="ts">
   import TextInput from 'src/components/inputs/TextInput.svelte';
+  import ActivityUseButton from 'src/components/item-list/ActivityUseButton.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
-  import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
+  import { CONSTANTS } from 'src/constants';
   import { AttributePins } from 'src/features/attribute-pins/AttributePins';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
@@ -23,8 +24,8 @@
       return {
         usesDocument: ctx.document,
         uses: uses,
-        value: uses.max - uses.spent,
-        maxText: uses.max === '' ? '—' : uses.max.toString(),
+        value: (uses.max ?? 0) - uses.spent,
+        maxText: isNil(uses.max, '') ? '—' : uses.max.toString(),
         valueProp: 'uses.value',
         spentProp: 'uses.spent',
         maxProp: 'uses.max',
@@ -59,7 +60,9 @@
 
 <div
   class="attribute-pin"
+  data-item-id={ctx.document.item.id}
   data-activity-id={ctx.document.id}
+  data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
   data-info-card={'activity'}
   data-info-card-entity-uuid={ctx.document.uuid}
   data-configurable="true"
@@ -69,10 +72,13 @@
   ondragstart={onDragStart}
 >
   <div class="attribute-document-image">
-    <ItemUseButton item={ctx.document} />
+    <ActivityUseButton activity={ctx.document} />
   </div>
   <div class="attribute-pin-details">
-    <div class="attribute-pin-name-container" title={ctx.document.name}>
+    <div
+      class="attribute-pin-name-container"
+      title="{ctx.document.name} | {ctx.document.item.name}"
+    >
       {#if context.unlocked}
         <TextInput
           class="attribute-pin-name"
@@ -90,7 +96,7 @@
           <i class="fa-solid fa-pencil"></i>
         {/if}
       {:else}
-        <div class="attribute-pin-name truncate" title={ctx.document.name}>
+        <div class="attribute-pin-name truncate">
           {coalesce(ctx.alias, ctx.document.name)}
         </div>
       {/if}

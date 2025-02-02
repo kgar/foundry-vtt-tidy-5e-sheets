@@ -75,6 +75,7 @@
   "TIDY5E.ContextMenuActionPrepare": "Prepare",
   "TIDY5E.ContextMenuActionUnprepare": "Unprepare",
   "TIDY5E.ContextMenuActionEdit": "Edit",
+  "TIDY5E.ContextMenuActionView": "View",
   "TIDY5E.ContextMenuActionDelete": "Delete",
   "TIDY5E.ContextMenuActionPinToAttributes": "Pin to Attributes",
   "TIDY5E.ContextMenuActionUnpinFromAttributes": "Unpin from Attributes",

@@ -92,6 +92,7 @@
           'data-item-id': activity.item.id,
           'data-info-card': 'activity',
           'data-info-card-entity-uuid': activity.uuid,
+          'data-context-menu': CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES,
         }}
         onmousedown={(ev) => FoundryAdapter.editOnMiddleClick(ev, activity)}
         hidden={visibleActivityUuidSubset !== null &&

@@ -92,7 +92,7 @@ export class AttributePins {
     return TidyFlags.attributePins.set(doc.actor, newPins);
   }
 
-  private static getRelativeUUID(doc: any) {
+  static getRelativeUUID(doc: any) {
     return doc.getRelativeUUID?.(doc.actor) ?? doc.relativeUUID;
   }
 

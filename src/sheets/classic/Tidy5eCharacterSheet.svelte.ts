@@ -245,57 +245,6 @@ export class Tidy5eCharacterSheet
     this.additionalComponents.push(infoCard);
 
     initTidy5eContextMenu(this, html);
-
-    FoundryAdapter.createContextMenu(html, '.activity[data-activity-id]', [], {
-      onOpen: (element: HTMLElement) => {
-        const itemId =
-          element.closest<HTMLElement>('[data-item-id]')?.dataset.itemId;
-        const item =
-          this.document.type === 'container'
-            ? this.document.system.getContainedItem(itemId)
-            : this.document.items.get(itemId);
-        // Parts of ContextMenu doesn't play well with promises, so don't show menus for containers in packs
-        if (!item || item instanceof Promise) {
-          return;
-        }
-
-        const activityElement =
-          element.closest<HTMLElement>('[data-activity-id]');
-
-        if (activityElement?.matches('[data-configurable="true"]')) {
-          // TODO: Add options to pin/unpin
-          // TODO: Consider even taking over the menu now.
-          dnd5e.documents.activity.UtilityActivity.onContextMenu(item, element);
-        } else if (activityElement) {
-          const activityId = activityElement.getAttribute('data-activity-id');
-          const activity = item.system.activities.get(activityId);
-          if (!activity) {
-            return;
-          }
-
-          const isFav = this.actor.system.hasFavorite(activity.relativeUUID);
-          const favoriteIcon = 'fa-bookmark';
-
-          const contextMenuItems: ContextMenuEntry[] = [
-            {
-              name: isFav ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
-              icon: isFav
-                ? `<i class='fas ${favoriteIcon} fa-fw' style='color: var(--t5e-warning-accent-color)'></i>`
-                : `<i class='fas ${favoriteIcon} fa-fw inactive'></i>`,
-              callback: () => {
-                if (!item) {
-                  warn(`tidy5e-context-menu | Item Not Found`);
-                  return;
-                }
-                FoundryAdapter.toggleFavoriteActivity(activity);
-              },
-              condition: () => !item.compendium?.locked,
-            },
-          ];
-          ui.context.menuItems = contextMenuItems;
-        }
-      },
-    });
   }
 
   async getData(options = {}) {
@@ -932,7 +881,7 @@ export class Tidy5eCharacterSheet
 
     await this._prepareFacilities(context);
 
-    this._prepareAttributeItemPins(context);
+    this._prepareAttributePins(context);
 
     let tabs = await CharacterSheetRuntime.getTabs(context);
 
@@ -1473,7 +1422,7 @@ export class Tidy5eCharacterSheet
     );
   }
 
-  _prepareAttributeItemPins(context: CharacterSheetContext) {
+  _prepareAttributePins(context: CharacterSheetContext) {
     let flagPins = TidyFlags.attributePins
       .get(this.actor)
       .toSorted((a, b) => (a.sort || 0) - (b.sort || 0));
@@ -1487,6 +1436,7 @@ export class Tidy5eCharacterSheet
         if (pin.type === 'item') {
           pins.push({
             ...pin,
+            linkedUses: context.itemContext[document.id]?.linkedUses,
             document,
           });
         } else if (pin.type === 'activity') {
@@ -1846,7 +1796,7 @@ export class Tidy5eCharacterSheet
     }
 
     const doc = await fromUuid(data.uuid);
-    let relativeUuid = doc.getRelativeUUID(this.actor);
+    let relativeUuid = AttributePins.getRelativeUUID(doc);
 
     if (event.target.closest('[data-pin-id]')) {
       return this._onDropPin(event, { id: relativeUuid, doc });
