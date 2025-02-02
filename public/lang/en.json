@@ -799,8 +799,6 @@
     "SectionSelectorNewSectionName": "New section name",
     "SectionSelectorSaveNewSection": "Save new section"
   },
-  "TIDY5E.PinToAttributes.Label": "Pin to Attributes",
-  "TIDY5E.PinToAttributes.Unpin.Label": "Unpin from Attributes",
   "TIDY5E.UseDefaultDialog": {
     "title": "Confirm: Use Default",
     "text": "Are you sure you wish to use default?"
