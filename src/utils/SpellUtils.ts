@@ -137,4 +137,8 @@ export class SpellUtils {
         spell.system.sourceClass?.trim() === selectedClassFilter?.trim()
     );
   }
+
+  static getSpellPreparationIconColorVariableName(preparationMode: string) {
+    return `--t5e-color-icon-spellcasting-${preparationMode.slugify()}`;
+  }
 }

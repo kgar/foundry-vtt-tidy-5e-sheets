@@ -81,7 +81,7 @@ export class Tidy5eContainerSheetQuadrone extends DragAndDropMixin(
       controls: [],
     },
     position: {
-      width: 600,
+      width: 620,
       height: 580,
     },
     actions: {},
