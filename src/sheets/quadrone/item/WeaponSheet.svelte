@@ -43,7 +43,7 @@
     FoundryAdapter.formatNumber(context.system.price?.value),
   );
 
-  let containerNameEl: HTMLElement | undefined = $state();
+  let itemNameEl: HTMLElement | undefined = $state();
   let scrollMarkerEl: HTMLElement | undefined = $state();
 
   const headerOffset = $derived.by(() => {
@@ -74,26 +74,13 @@
   let actionSection = $derived(
     TidyFlags.actionSection.get(context.item) ?? localize('Default'),
   );
-
-  let holdsMarkup = $derived.by(() => {
-    return localize('TIDY5E.Containers.HoldsNumberUnits', {
-      holdsElementStart: '<span class="text-secondary fw-normal">',
-      holdsElementEnd: '</span>',
-      numberElementStart: '<span>',
-      numberElementEnd: '</span>',
-      number: context.capacity.max,
-      unitsElementStart: '<span class="text-secondary fw-normal">',
-      unitsElementEnd: '</span>',
-      units: context.capacity.units,
-    });
-  });
 </script>
 
-{#if !!containerNameEl}
+{#if !!itemNameEl}
   <TidyVisibilityObserver
     root={context.item.sheet.windowContent}
     trackWhenOffScreen={true}
-    toObserve={[containerNameEl]}
+    toObserve={[itemNameEl]}
     toAffect="self"
     rootMargin={headerOffset}
   />
@@ -210,57 +197,14 @@
         </span>
       </li>
     {/if}
-
-    <li class="pill">
-      <span>
-        {@html holdsMarkup}
-      </span>
-    </li>
   </ul>
-
-  <div>
-    <h4 class="currency-header">
-      <span>{localize('DND5E.Currency')}</span>
-      <a
-        class="button icon-button currency-conversion"
-        class:disabled={!context.editable}
-        onclick={() =>
-          context.owner &&
-          new dnd5e.applications.CurrencyManager(context.document).render(true)}
-        title={localize('DND5E.CurrencyManager.Title')}
-      >
-        <i class="fas fa-database"></i>
-      </a>
-    </h4>
-    <div class="currencies">
-      {#each context.currencies as currency (currency.key)}
-        <label class="input-group">
-          <i class="currency {currency.key}" aria-label={currency.key}></i>
-          <TextInput
-            document={context.document}
-            field="system.currency.{currency.key}"
-            id="{context.document.id}-system.currency.{currency.key}"
-            value={currency.value}
-            allowDeltaChanges={true}
-            selectOnFocus={true}
-            disabled={!context.editable || context.lockMoneyChanges}
-            class="currency-item currency-{currency.key}"
-            placeholder="0"
-          />
-          <span class="denomination {currency.key}" data-denom={currency.key}>
-            {currency.abbr}
-          </span>
-        </label>
-      {/each}
-    </div>
-  </div>
 
   {#if !context.concealDetails}
     {#if context.labels.toHit || context.labels.damages.length}
       <h4>
         {localize('DND5E.Attack')}/{localize('DND5E.Damage')}
       </h4>
-      <ul class="pills" inert={context.concealDetails}>
+      <ul class="pills stacked" inert={context.concealDetails}>
         {#if context.labels.save}
           <li class="pill">
             {context.labels.save}
@@ -330,7 +274,7 @@
 </aside>
 <main class="item-content">
   <div
-    bind:this={containerNameEl}
+    bind:this={itemNameEl}
     class="item-name-wrapper flex-row extra-small-gap align-items-center"
   >
     <!-- Name -->

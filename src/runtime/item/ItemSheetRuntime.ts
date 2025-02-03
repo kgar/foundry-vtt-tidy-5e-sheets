@@ -14,6 +14,19 @@ import SubclassSheet from 'src/sheets/classic/item/SubclassSheet.svelte';
 import ToolSheet from 'src/sheets/classic/item/ToolSheet.svelte';
 import WeaponSheet from 'src/sheets/classic/item/WeaponSheet.svelte';
 import SpeciesSheet from 'src/sheets/classic/item/SpeciesSheet.svelte';
+import BackgroundSheetQuadrone from 'src/sheets/quadrone/item/BackgroundSheet.svelte';
+import ClassSheetQuadrone from 'src/sheets/quadrone/item/ClassSheet.svelte';
+import ConsumableSheetQuadrone from 'src/sheets/quadrone/item/ConsumableSheet.svelte';
+import ContainerSheetQuadrone from 'src/sheets/quadrone/container/ContainerSheet.svelte';
+import EquipmentSheetQuadrone from 'src/sheets/quadrone/item/EquipmentSheet.svelte';
+import FacilitySheetQuadrone from 'src/sheets/quadrone/item/FacilitySheet.svelte';
+import FeatSheetQuadrone from 'src/sheets/quadrone/item/FeatSheet.svelte';
+import LootSheetQuadrone from 'src/sheets/quadrone/item/LootSheet.svelte';
+import SpellSheetQuadrone from 'src/sheets/quadrone/item/SpellSheet.svelte';
+import SubclassSheetQuadrone from 'src/sheets/quadrone/item/SubclassSheet.svelte';
+import ToolSheetQuadrone from 'src/sheets/quadrone/item/ToolSheet.svelte';
+import WeaponSheetQuadrone from 'src/sheets/quadrone/item/WeaponSheet.svelte';
+import SpeciesSheetQuadrone from 'src/sheets/quadrone/item/SpeciesSheet.svelte';
 import type { RegisteredContent, RegisteredTab } from '../types';
 import type {
   ContainerSheetClassicContext,
@@ -60,7 +73,7 @@ export class ItemSheetRuntime {
     );
   }
 
-  static sheets: Record<string, ItemSheetInfo> = {
+  static classicSheets: Record<string, ItemSheetInfo> = {
     [CONSTANTS.ITEM_TYPE_BACKGROUND]: {
       Sheet: BackgroundSheet,
       defaultTabs: () => [
@@ -93,12 +106,6 @@ export class ItemSheetRuntime {
         itemSheetTabs.descriptionWithSidebar,
         itemSheetTabs.containerDetails,
       ],
-      tempQuadroneTabs: () => [
-        itemSheetTabs.quadroneContainerContents,
-        itemSheetTabs.quadroneDescription,
-        // TODO: Only show to GMs and users when identified
-        itemSheetTabs.quadroneContainerDetails,
-      ],
     },
     [CONSTANTS.ITEM_TYPE_EQUIPMENT]: {
       Sheet: EquipmentSheet,
@@ -124,7 +131,7 @@ export class ItemSheetRuntime {
         itemSheetTabs.featDetails,
         itemSheetTabs.activities,
         itemSheetTabs.effects,
-        itemSheetTabs.advancement
+        itemSheetTabs.advancement,
       ],
     },
     [CONSTANTS.ITEM_TYPE_LOOT]: {
@@ -179,6 +186,120 @@ export class ItemSheetRuntime {
     },
   };
 
+  static quadroneSheets: Record<string, ItemSheetInfo> = {
+    [CONSTANTS.ITEM_TYPE_CONTAINER]: {
+      Sheet: ContainerSheetQuadrone,
+      defaultTabs: () => [
+        itemSheetTabs.quadroneContainerContents,
+        itemSheetTabs.quadroneDescriptions,
+        // TODO: Only show to GMs and users when identified
+        itemSheetTabs.quadroneContainerDetails,
+      ],
+    },
+    [CONSTANTS.ITEM_TYPE_BACKGROUND]: {
+      Sheet: BackgroundSheetQuadrone,
+      defaultTabs: () => [
+        itemSheetTabs.quadroneSingleDescription,
+        itemSheetTabs.quadroneBackgroundDetails,
+        itemSheetTabs.quadroneAdvancement,
+      ],
+    },
+    [CONSTANTS.ITEM_TYPE_CLASS]: {
+      Sheet: ClassSheetQuadrone,
+      defaultTabs: () => [
+        itemSheetTabs.quadroneSingleDescription,
+        itemSheetTabs.quadroneClassDetails,
+        itemSheetTabs.quadroneAdvancement,
+      ],
+    },
+    [CONSTANTS.ITEM_TYPE_CONSUMABLE]: {
+      Sheet: ConsumableSheetQuadrone,
+      defaultTabs: () => [
+        itemSheetTabs.quadroneDescriptions,
+        itemSheetTabs.quadroneConsumableDetails,
+        itemSheetTabs.quadroneActivities,
+        itemSheetTabs.quadroneEffects,
+      ],
+    },
+    [CONSTANTS.ITEM_TYPE_EQUIPMENT]: {
+      Sheet: EquipmentSheetQuadrone,
+      defaultTabs: () => [
+        itemSheetTabs.quadroneDescriptions,
+        itemSheetTabs.quadroneEquipmentDetails,
+        itemSheetTabs.quadroneActivities,
+        itemSheetTabs.quadroneEffects,
+      ],
+    },
+    [CONSTANTS.ITEM_TYPE_FACILITY]: {
+      Sheet: FacilitySheetQuadrone,
+      defaultTabs: () => [
+        itemSheetTabs.quadroneSingleDescription,
+        itemSheetTabs.quadroneFacilityDetails,
+        itemSheetTabs.quadroneActivities,
+      ],
+    },
+    [CONSTANTS.ITEM_TYPE_FEAT]: {
+      Sheet: FeatSheetQuadrone,
+      defaultTabs: () => [
+        itemSheetTabs.quadroneDescriptions,
+        itemSheetTabs.quadroneFeatDetails,
+        itemSheetTabs.quadroneActivities,
+        itemSheetTabs.quadroneEffects,
+        itemSheetTabs.quadroneAdvancement,
+      ],
+    },
+    [CONSTANTS.ITEM_TYPE_LOOT]: {
+      Sheet: LootSheetQuadrone,
+      defaultTabs: () => [
+        itemSheetTabs.quadroneDescriptions,
+        itemSheetTabs.quadroneLootDetails,
+      ],
+    },
+    [CONSTANTS.ITEM_TYPE_SPELL]: {
+      Sheet: SpellSheetQuadrone,
+      defaultTabs: () => [
+        itemSheetTabs.quadroneDescriptions,
+        itemSheetTabs.quadroneSpellDetails,
+        itemSheetTabs.quadroneActivities,
+        itemSheetTabs.quadroneEffects,
+      ],
+    },
+    [CONSTANTS.ITEM_TYPE_SUBCLASS]: {
+      Sheet: SubclassSheetQuadrone,
+      defaultTabs: () => [
+        itemSheetTabs.quadroneSingleDescription,
+        itemSheetTabs.quadroneSubclassDetails,
+        itemSheetTabs.quadroneAdvancement,
+      ],
+    },
+    [CONSTANTS.ITEM_TYPE_TOOL]: {
+      Sheet: ToolSheetQuadrone,
+      defaultTabs: () => [
+        itemSheetTabs.quadroneDescriptions,
+        itemSheetTabs.quadroneToolDetails,
+        itemSheetTabs.quadroneActivities,
+        itemSheetTabs.quadroneEffects,
+      ],
+    },
+    [CONSTANTS.ITEM_TYPE_WEAPON]: {
+      Sheet: WeaponSheetQuadrone,
+      defaultTabs: () => [
+        itemSheetTabs.quadroneDescriptions,
+        itemSheetTabs.quadroneWeaponDetails,
+        itemSheetTabs.quadroneActivities,
+        itemSheetTabs.quadroneEffects,
+      ],
+    },
+    [CONSTANTS.ITEM_TYPE_RACE]: {
+      Sheet: SpeciesSheetQuadrone,
+      defaultTabs: () => [
+        itemSheetTabs.quadroneSingleDescription,
+        itemSheetTabs.quadroneSpeciesDetails,
+        itemSheetTabs.quadroneAdvancement,
+      ],
+    },
+  };
+
   static registerCustomEquipmentTypeGroup(group: RegisteredEquipmentTypeGroup) {
     this._customItemEquipmentTypeGroups.push(group);
   }
@@ -205,6 +326,4 @@ export class ItemSheetRuntime {
 type ItemSheetInfo = {
   Sheet: Component;
   defaultTabs(): Tab[];
-  // TODO: Remove after replacing item sheets
-  tempQuadroneTabs?: () => Tab[];
 };

@@ -25,6 +25,7 @@ import { Tidy5eItemDebugSheetQuadrone } from './sheets/quadrone/Tidy5eItemDebugS
 import { initReadyHooks } from './features/ready-hooks';
 import '@melloware/coloris/dist/coloris.css';
 import { debug } from './utils/logging';
+import { Tidy5eItemSheetQuadrone } from './sheets/quadrone/Tidy5eItemSheetQuadrone.svelte';
 
 Hooks.once('init', () => {
   DocumentSheetConfig.registerSheet(
@@ -106,9 +107,7 @@ Hooks.once('init', () => {
   initRuntime();
   initKeybindings();
 
-  const thisIsKGarsVisualOverhaulBranch = false; // When the first draft of the container overhaul sheet is done, remove this extra layer and let it depend on the debug setting alone.
-
-  if (settings.value.debug && thisIsKGarsVisualOverhaulBranch) {
+  if (settings.value.truesight) {
     DocumentSheetConfig.registerSheet(
       Item,
       CONSTANTS.DND5E_SYSTEM_ID,
@@ -126,6 +125,16 @@ Hooks.once('init', () => {
       {
         types: supportedItemTypes,
         label: 'Tidy 5e Debug Item Sheet (Visual Overhaul)',
+      }
+    );
+
+    DocumentSheetConfig.registerSheet(
+      Item,
+      CONSTANTS.DND5E_SYSTEM_ID,
+      Tidy5eItemSheetQuadrone,
+      {
+        types: supportedItemTypes,
+        label: 'Tidy 5e Item Sheet - Quadrone',
       }
     );
   }

@@ -1,0 +1,1 @@
+WEapon details tab here

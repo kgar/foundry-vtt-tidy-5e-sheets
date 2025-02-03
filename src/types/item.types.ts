@@ -128,6 +128,99 @@ export type ItemSheetContext = {
   tabs: Tab[];
 };
 
+export type ItemSheetQuadroneContext = {
+  activities: {
+    id: string;
+    uuid: string;
+    name: string;
+    sort: number;
+    img: {
+      src: string;
+      svg: boolean;
+    };
+  }[];
+  activationTypes: GroupableSelectOption[];
+  advancement: any;
+  advancementEditable: boolean;
+  affectsPlaceholder: string;
+  baseItems: Record<string, string>;
+  canCraft?: boolean;
+  concealDetails: boolean;
+  config: typeof CONFIG.DND5E;
+  coverOptions: { value: string; label: string }[];
+  craft?: {
+    img: string;
+    name: string;
+    contentLink: string;
+  };
+  customContent: CustomContent[];
+  customEquipmentTypeGroups: RegisteredEquipmentTypeGroup[];
+  data: any;
+  damageTypes:
+    | { label: string; value: string; selected: boolean }[]
+    | undefined;
+  defaultAbility: string;
+  denominationOptions: any;
+  dimensions:
+    | { size: string; width: string | false; height: string | false }
+    | undefined;
+  document: any;
+  durationUnits: GroupableSelectOption[];
+  editable: boolean;
+  effects: any;
+  enriched: {
+    description: string;
+    unidentified: string;
+    chat: string;
+  };
+  equipmentTypes: GroupableSelectOption[];
+  facilitySubtypes?: Record<string, string>;
+  hasDexModifier: boolean;
+  /**
+   * Represents remaining health as a percentage within the range of `0` to `100`.
+   */
+  healthPercentage: number;
+  identifiedName: string;
+  isEmbedded: boolean;
+  isHarvesting?: boolean;
+  isIdentifiable: boolean;
+  isIdentified: boolean;
+  isPhysical: boolean;
+  item: Item5e;
+  itemDescriptions: ItemDescription[];
+  itemType: string;
+  itemStatus: string | null;
+  itemSubtypes?: Record<string, string>;
+  labels: Record<string, string>;
+  limited: boolean;
+  lockItemQuantity: boolean;
+  modernRules: boolean;
+  options: any;
+  orders?: ItemFacilityOrdersContext;
+  owner: boolean;
+  properties: PropertyContext;
+  rangeTypes: GroupableSelectOption[];
+  recoveryPeriods: GroupableSelectOption[];
+  recoveryTypes: {
+    value: string;
+    label: string;
+  }[];
+  rollData: Record<string, any>;
+  scalarTarget: boolean;
+  source: any;
+  system: any;
+  title: string;
+  toggleAdvancementLock: () => Promise<void>;
+  unlocked: boolean;
+  user: any;
+  usesRecovery: {
+    data: UsesRecoveryData;
+    formulaOptions: { label: string; value: string }[] | null;
+  }[];
+  itemOverrides: Set<string>;
+  tabs: Tab[];
+};
+
 /**
  * Data for a recovery profile for an activity's uses.
  */

@@ -1,5 +1,4 @@
 import { CONSTANTS } from 'src/constants';
-import ContainerDetailsTab from 'src/sheets/quadrone/container/tabs/ContainerDetailsTab.svelte';
 import ItemActiveEffectsTab from '../../sheets/classic/item/tabs/ItemActiveEffectsTab.svelte';
 import ItemAdvancementTab from '../../sheets/classic/item/tabs/ItemAdvancementTab.svelte';
 import ItemBackgroundDetailsTab from '../../sheets/classic/item/tabs/ItemBackgroundDetailsTab.svelte';
@@ -10,7 +9,6 @@ import ItemContainerDetailsTab from '../../sheets/classic/item/tabs/ItemContaine
 import ItemDescriptionTab from '../../sheets/classic/item/tabs/ItemDescriptionTab.svelte';
 import ItemSpeciesDetailsTab from '../../sheets/classic/item/tabs/ItemSpeciesDetailsTab.svelte';
 import ItemDescriptionWithSidebarTab from '../../sheets/classic/item/tabs/ItemDescriptionWithSidebarTab.svelte';
-import QuadroneItemDescriptionsTab from '../../sheets/quadrone/item/tabs/ItemDescriptionsTab.svelte';
 import ItemEquipmentDetailsTab from '../../sheets/classic/item/tabs/ItemEquipmentDetailsTab.svelte';
 import ItemFeatDetailsTab from '../../sheets/classic/item/tabs/ItemFeatDetailsTab.svelte';
 import ItemLootDetailsTab from '../../sheets/classic/item/tabs/ItemLootDetailsTab.svelte';
@@ -21,8 +19,26 @@ import ItemToolDetailsTab from '../../sheets/classic/item/tabs/ItemToolDetailsTa
 import ItemWeaponDetailsTab from '../../sheets/classic/item/tabs/ItemWeaponDetailsTab.svelte';
 import ItemActivitiesTab from '../../sheets/classic/item/tabs/ItemActivitiesTab.svelte';
 import type { Tab } from 'src/types/types';
+import ItemActivitiesQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemActivitiesTab.svelte';
+import ItemAdvancementQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemAdvancementTab.svelte';
+import ItemBackgroundDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemBackgroundDetailsTab.svelte';
+import ItemClassDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemClassDetailsTab.svelte';
+import ItemConsumableDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemConsumableDetailsTab.svelte';
+import ItemContainerContentsQuadroneTab from 'src/sheets/quadrone/container/tabs/ContainerContentsTab.svelte';
+import ItemContainerDetailsQuadronTab from 'src/sheets/quadrone/container/tabs/ContainerDetailsTab.svelte';
+import ItemDescriptionQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemDescriptionTab.svelte';
+import ItemDescriptionsQuadroneTab from '../../sheets/quadrone/item/tabs/ItemDescriptionsTab.svelte';
+import ItemEffectsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemEffectsTab.svelte';
+import ItemEquipmentDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemEquipmentDetailsTab.svelte';
+import ItemFacilityDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemFacilityDetailsTab.svelte';
 import ItemFacilityDetailsTab from 'src/sheets/classic/item/tabs/ItemFacilityDetailsTab.svelte';
-import ContainerContentsTab from 'src/sheets/quadrone/container/tabs/ContainerContentsTab.svelte';
+import ItemFeatDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemFeatDetailsTab.svelte';
+import ItemLootDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemLootDetailsTab.svelte';
+import ItemSpeciesDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemSpeciesDetailsTab.svelte';
+import ItemSpellDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemSpellDetailsTab.svelte';
+import ItemSubclassDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemSubclassDetailsTab.svelte';
+import ItemToolDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemToolDetailsTab.svelte';
+import ItemWeaponDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemWeaponDetailsTab.svelte';
 
 const itemSheetTabs = {
   /**
@@ -177,36 +193,6 @@ const itemSheetTabs = {
     },
     autoHeight: true,
   },
-  quadroneContainerContents: {
-    id: CONSTANTS.TAB_CONTAINER_CONTENTS,
-    title: 'DND5E.Contents',
-    content: {
-      component: ContainerContentsTab,
-      type: 'svelte',
-    },
-  },
-  /**
-   * Details form for containers.
-   */
-  quadroneContainerDetails: {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    title: 'DND5E.Details',
-    content: {
-      component: ContainerDetailsTab,
-      type: 'svelte',
-    },
-  },
-  /**
-   * Three-descriptions interface for items
-   */
-  quadroneDescription: {
-    id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
-    title: 'DND5E.Description',
-    content: {
-      component: QuadroneItemDescriptionsTab,
-      type: 'svelte',
-    },
-  },
   /**
    * Details form for loot.
    */
@@ -295,6 +281,166 @@ const itemSheetTabs = {
       type: 'svelte',
     },
     autoHeight: true,
+  },
+
+  quadroneActivities: {
+    id: CONSTANTS.TAB_ITEM_ACTIVITIES_ID,
+    title: 'DND5E.ACTIVITY.Title.other',
+    content: {
+      component: ItemActivitiesQuadroneTab,
+      type: 'svelte',
+    },
+  },
+  quadroneAdvancement: {
+    id: CONSTANTS.TAB_ITEM_ADVANCEMENT_ID,
+    title: 'DND5E.AdvancementTitle',
+    content: {
+      component: ItemAdvancementQuadroneTab,
+      type: 'svelte',
+    },
+  },
+  quadroneClassDetails: {
+    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    title: 'DND5E.Details',
+    content: {
+      component: ItemClassDetailsQuadroneTab,
+      type: 'svelte',
+    },
+  },
+  quadroneConsumableDetails: {
+    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    title: 'DND5E.Details',
+    content: {
+      component: ItemConsumableDetailsQuadroneTab,
+      type: 'svelte',
+    },
+  },
+  quadroneContainerContents: {
+    id: CONSTANTS.TAB_CONTAINER_CONTENTS,
+    title: 'DND5E.Contents',
+    content: {
+      component: ItemContainerContentsQuadroneTab,
+      type: 'svelte',
+    },
+  },
+  quadroneBackgroundDetails: {
+    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    title: 'DND5E.Details',
+    content: {
+      component: ItemBackgroundDetailsQuadroneTab,
+      type: 'svelte',
+    },
+  },
+  /**
+   * Details form for containers.
+   */
+  quadroneContainerDetails: {
+    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    title: 'DND5E.Details',
+    content: {
+      component: ItemContainerDetailsQuadronTab,
+      type: 'svelte',
+    },
+  },
+  quadroneEquipmentDetails: {
+    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    title: 'DND5E.Details',
+    content: {
+      component: ItemEquipmentDetailsQuadroneTab,
+      type: 'svelte',
+    },
+  },
+  quadroneFacilityDetails: {
+    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    title: 'DND5E.Details',
+    content: {
+      component: ItemFacilityDetailsQuadroneTab,
+      type: 'svelte',
+    },
+  },
+  quadroneFeatDetails: {
+    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    title: 'DND5E.Details',
+    content: {
+      component: ItemFeatDetailsQuadroneTab,
+      type: 'svelte',
+    },
+  },
+  quadroneLootDetails: {
+    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    title: 'DND5E.Details',
+    content: {
+      component: ItemLootDetailsQuadroneTab,
+      type: 'svelte',
+    },
+  },
+  quadroneSpellDetails: {
+    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    title: 'DND5E.Details',
+    content: {
+      component: ItemSpellDetailsQuadroneTab,
+      type: 'svelte',
+    },
+  },
+  quadroneSubclassDetails: {
+    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    title: 'DND5E.Details',
+    content: {
+      component: ItemSubclassDetailsQuadroneTab,
+      type: 'svelte',
+    },
+  },
+  quadroneToolDetails: {
+    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    title: 'DND5E.Details',
+    content: {
+      component: ItemToolDetailsQuadroneTab,
+      type: 'svelte',
+    },
+  },
+  quadroneWeaponDetails: {
+    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    title: 'DND5E.Details',
+    content: {
+      component: ItemWeaponDetailsQuadroneTab,
+      type: 'svelte',
+    },
+  },
+  quadroneSpeciesDetails: {
+    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    title: 'DND5E.Details',
+    content: {
+      component: ItemSpeciesDetailsQuadroneTab,
+      type: 'svelte',
+    },
+  },
+  quadroneSingleDescription: {
+    id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
+    title: 'DND5E.Details',
+    content: {
+      component: ItemDescriptionQuadroneTab,
+      type: 'svelte',
+    },
+  },
+
+  /**
+   * Three-descriptions interface for items
+   */
+  quadroneDescriptions: {
+    id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
+    title: 'DND5E.Description',
+    content: {
+      component: ItemDescriptionsQuadroneTab,
+      type: 'svelte',
+    },
+  },
+  quadroneEffects: {
+    id: CONSTANTS.TAB_ITEM_EFFECTS_ID,
+    title: 'DND5E.Effects',
+    content: {
+      component: ItemEffectsQuadroneTab,
+      type: 'svelte',
+    },
   },
 } satisfies Record<string, Tab>;
 

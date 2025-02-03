@@ -1,0 +1,1 @@
+Spell details tab here

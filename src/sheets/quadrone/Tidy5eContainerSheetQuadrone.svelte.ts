@@ -35,7 +35,7 @@ import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { settings, SettingsProvider } from 'src/settings/settings.svelte';
-import ContainerHeaderStart from './item/parts/ContainerHeaderStart.svelte';
+import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 
@@ -81,8 +81,8 @@ export class Tidy5eContainerSheetQuadrone extends DragAndDropMixin(
       controls: [],
     },
     position: {
-      width: 560,
-      height: 560,
+      width: 600,
+      height: 580,
     },
     actions: {},
     dragDrop: [{ dropSelector: 'form' }],
@@ -129,7 +129,7 @@ export class Tidy5eContainerSheetQuadrone extends DragAndDropMixin(
   _createAdditionalComponents(node: HTMLElement) {
     const windowHeader = this.element.querySelector('.window-header');
 
-    const headerStart = mount(ContainerHeaderStart, {
+    const headerStart = mount(ItemHeaderStart, {
       target: windowHeader,
       anchor: windowHeader.querySelector('.window-title'),
       context: new Map<string, any>([
@@ -359,7 +359,7 @@ export class Tidy5eContainerSheetQuadrone extends DragAndDropMixin(
 
     context.tabs =
       // TODO: Eliminate null forgiving operator and temp field when items are fully converted.
-      ItemSheetRuntime.sheets[this.item.type]?.tempQuadroneTabs!() ?? [];
+      ItemSheetRuntime.quadroneSheets[this.item.type]?.defaultTabs() ?? [];
     context.tabs.push(...customTabs);
 
     TidyHooks.tidy5eSheetsPreConfigureSections(this, this.element, context);

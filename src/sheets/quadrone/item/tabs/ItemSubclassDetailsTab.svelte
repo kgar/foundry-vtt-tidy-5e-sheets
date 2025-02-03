@@ -1,0 +1,1 @@
+Subclass details tab here
