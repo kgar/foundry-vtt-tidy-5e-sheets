@@ -94,7 +94,7 @@
 </script>
 
 <aside
-  class="sidebar inverse"
+  class="sidebar dark"
   style=" 
     --filigree-border-color: var({filigreeColorVariable}, var(--t5e-color-gold))"
 >

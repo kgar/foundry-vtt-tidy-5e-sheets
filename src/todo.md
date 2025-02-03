@@ -3,6 +3,16 @@
 ### Bootstrapping all item sheets
 
 - [ ] Propagate initial scaffolding for tabs to all new sheets
+  - [ ] Weapon details
+  - [ ] Equipment details
+  - [ ] Consumable details
+  - [ ] Loot details
+  - [ ] Class details
+  - [ ] Subclass details
+  - [ ] Background details
+  - [ ] Species details
+  - [ ] Facility details
+  - [ ] Tool details
 - [ ] Copy over details content for all new sheets
 - [ ] Finish implementing container contents tab
 - [ ] Implement single description tab
@@ -19,16 +29,18 @@
   - [x] detect `hasSpellPreparation`, mutually exclusive with rarity, with rarity taking precedence
     - When true, use spell coloration for the item image filigree, and show spell prep label
 - [x] Propagate sidebar to all new sheets
-- [ ] Switch sidebar to just specify `.theme-dark` and not `.inverse` / convert stylesheet to use `.theme-dark` instead of `.dark`
+- [x] Switch sidebar to just specify `.dark` and not `.inverse`
 - [ ] Pump sidebar with item-subtype-specific information
-  - [ ] Delineate between pills and label/value pairs
+  - [ ] Spells: custom label-value pair content
+  - [ ] Pills
 - [ ] Ensure sidebar has all relevant sections configured
   - [ ] States - availability provided by sheet context
-    - [ ] Equipped
-    - [ ] Attuned
-    - [ ] Identified (editable on unlocked only unless GM?)
+    - [x] Equipped
+    - [x] Attuned
+    - [x] Identified (editable on unlocked only unless GM?)
   - [ ] Label/Value pairs
     - [ ] Provided dynamically by sheet context
   - [ ] Pill groups
     - [ ] Provided dynamically by sheet context
   - [ ] Custom Sections
+- [ ] Takeaway: Jeff to fill out remaining dark variables
