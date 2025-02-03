@@ -301,10 +301,11 @@
   }
 
   .spell-preparation-text {
-    color: oklch(
-      from var(--t5e-image-label-spell-preparation-text-color) calc(l + 0.125) c
-        h
-    );
+    color: var(--t5e-image-label-spell-preparation-text-color);
+    font-family: var(--t5e-font-modesto-condensed);
+    font-size: var(--font-size-12);
+    mix-blend-mode: plus-lighter;
+    text-align: center;
   }
 
   /* Item Main Content Area */

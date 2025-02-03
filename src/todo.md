@@ -18,7 +18,7 @@
     - When true, use rarity coloation for the item image filigree, and show rarity label on locked and rarity dropdown on unlocked
   - [x] detect `hasSpellPreparation`, mutually exclusive with rarity, with rarity taking precedence
     - When true, use spell coloration for the item image filigree, and show spell prep label
-- [ ] Propagate sidebar to all new sheets
+- [x] Propagate sidebar to all new sheets
 - [ ] Switch sidebar to just specify `.theme-dark` and not `.inverse` / convert stylesheet to use `.theme-dark` instead of `.dark`
 - [ ] Pump sidebar with item-subtype-specific information
   - [ ] Delineate between pills and label/value pairs

@@ -182,27 +182,29 @@
       </li>
     {/if}
     {#if 'identified' in context.system && context.unlocked}
-      <li>
-        <PillSwitch
-          checked={context.system.identified}
-          checkedIconClass="fas fa-search fa-fw"
-          uncheckedIconClass="fas fa-search fa-fw"
-          onchange={(ev) =>
-            context.item.update({
-              'system.identified': ev.currentTarget?.checked,
-            })}
-          disabled={!context.editable}
-        >
-          {localize('DND5E.Identified')}
-        </PillSwitch>
-      </li>
-    {:else}
-      <li class="pill">
-        <i class="fas fa-search"></i>
-        <span class="label">
-          {identifiedText}
-        </span>
-      </li>
+      {#if context.system.identified}
+        <li>
+          <PillSwitch
+            checked={context.system.identified}
+            checkedIconClass="fas fa-search fa-fw"
+            uncheckedIconClass="fas fa-search fa-fw"
+            onchange={(ev) =>
+              context.item.update({
+                'system.identified': ev.currentTarget?.checked,
+              })}
+            disabled={!context.editable}
+          >
+            {localize('DND5E.Identified')}
+          </PillSwitch>
+        </li>
+      {:else}
+        <li class="pill">
+          <i class="fas fa-search"></i>
+          <span class="label">
+            {identifiedText}
+          </span>
+        </li>
+      {/if}
     {/if}
   </ul>
 
@@ -218,30 +220,30 @@
 
   {#if !context.concealDetails}
     {#if context.labels.toHit || context.labels.damages.length}
-      <h4>
-        {localize('DND5E.Attack')}/{localize('DND5E.Damage')}
-      </h4>
-      <ul class="pills stacked" inert={context.concealDetails}>
-        {#if context.labels.save}
-          <li class="pill">
-            {context.labels.save}
-          </li>
-        {/if}
-
-        {#if context.labels.toHit}
-          <li class="pill">
-            {context.labels.toHit}
-            {localize('DND5E.ToHit')}
-          </li>
-        {/if}
-
-        {#each context.labels.damages ?? [] as damage}
-          {@const label = damage.label}
-          <li class="pill">
-            {label}
-          </li>
-        {/each}
-      </ul>
+      <div>
+        <h4>
+          {localize('DND5E.Attack')}/{localize('DND5E.Damage')}
+        </h4>
+        <ul class="pills stacked" inert={context.concealDetails}>
+          {#if context.labels.save}
+            <li class="pill">
+              {context.labels.save}
+            </li>
+          {/if}
+          {#if context.labels.toHit}
+            <li class="pill">
+              {context.labels.toHit}
+              {localize('DND5E.ToHit')}
+            </li>
+          {/if}
+          {#each context.labels.damages ?? [] as damage}
+            {@const label = damage.label}
+            <li class="pill">
+              {label}
+            </li>
+          {/each}
+        </ul>
+      </div>
     {/if}
   {/if}
 
