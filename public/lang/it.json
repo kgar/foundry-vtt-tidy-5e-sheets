@@ -594,7 +594,7 @@
         "PatreonLink": "{urlStart}Patreon{urlEnd}",
         "FinancialSupportParagraph": "Se ti piace Tidy 5e Sheets e vuoi sostenerlo finanziariamente, ecco alcuni modi per farlo:",
         "LocalizationParagraph": "{urlStart}Weblate{urlEnd}: Traduci contenuto web? Tidy 5e Sheets può usare il tuo aiuto! Vai al sito web Weblate per vedere i nostri progressi nella localizzazione in varie lingue. Questo modulo accetta traduzioni in nuove lingue e modifiche alle traduzioni esistenti.",
-        "name": "Info"
+        "name": "Su"
     },
     "TIDY5E.UseDefault": "Usa Predefinito",
     "TIDY5E.Reset": "Ripristina",
@@ -863,5 +863,10 @@
         "top": "In alto",
         "bottom": "In basso"
     },
-    "TIDY5E.BrokenLink": "Link non funzionante"
+    "TIDY5E.BrokenLink": "Link non funzionante",
+    "TIDY5E.ContextMenuActionView": "Visualizza",
+    "TIDY5E.ContextMenuActionPinToAttributes": "Fissa su Attributi",
+    "TIDY5E.ContextMenuActionUnpinFromAttributes": "Rimuovi da Attributi",
+    "TIDY5E.ContextMenuActionShowLimitedUses": "Mostra Usi Limitati",
+    "TIDY5E.ContextMenuActionShowQuantity": "Mostra Quantità"
 }
