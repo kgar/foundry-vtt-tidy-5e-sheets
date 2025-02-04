@@ -1,11 +1,14 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { coalesce } from 'src/utils/formatting';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
   import { settings } from 'src/settings/settings.svelte';
-  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import {
+    getItemSheetContext,
+    getItemSheetContextQuadrone,
+  } from 'src/sheets/sheet-context.svelte';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
 
-  let context = $derived(getItemSheetContext());
+  let context = $derived(getItemSheetContextQuadrone());
 
   let appId = $derived(context.document.id);
 
@@ -44,12 +47,13 @@
       >{localize('DND5E.StartingEquipment.Wealth.Label')}</label
     >
     <div class="form-fields">
-      <TextInput
+      <TextInputQuadrone
         id="{appId}-wealth"
         document={context.item}
         field="system.wealth"
         value={context.source.wealth}
-        disabled={!context.editable}
+        disabledValue={context.system.wealth}
+        disabled={!context.unlocked}
       />
     </div>
     <p class="hint">{localize('DND5E.StartingEquipment.Wealth.Hint')}</p>

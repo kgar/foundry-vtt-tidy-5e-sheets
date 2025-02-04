@@ -1,16 +1,17 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import NumberInput from 'src/components/inputs/NumberInput.svelte';
-  import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
-  import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import { mapSystemDamageTypesToSave } from 'src/utils/system-properties';
   import type { GroupableSelectOption } from 'src/types/types';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
+  import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
+  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
+  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
 
   interface Props {
     source: any;
+    system: any;
     prefix: string;
     denominationOptions: GroupableSelectOption[];
     numberPlaceholder?: string;
@@ -19,6 +20,7 @@
 
   let {
     source,
+    system,
     prefix,
     denominationOptions,
     numberPlaceholder = '',
@@ -37,21 +39,23 @@
 <div class="form-group split-group">
   <label for="{idPrefix}custom-enabled">Formula</label>
   <div class="form-fields">
-    <Checkbox
+    <CheckboxQuadrone
       id="{idPrefix}custom-enabled"
       document={context.item}
       field="{prefix}custom.enabled"
       checked={source.custom.enabled}
-      disabled={!context.editable}
+      disabledChecked={system.custom.enabled}
+      disabled={!context.unlocked}
     />
 
     {#if source.custom.enabled}
-      <TextInput
+      <TextInputQuadrone
         id="{idPrefix}custom-formula"
         document={context.item}
         field="{prefix}custom.formula"
         value={source.custom.formula}
-        disabled={!context.editable}
+        disabledValue={system.custom.formula}
+        disabled={!context.unlocked}
       />
     {/if}
   </div>
@@ -70,15 +74,16 @@
         <label for="{idPrefix}number">{localize('DND5E.Number')}</label>
         <div class="form-fields">
           <!-- Number -->
-          <NumberInput
+          <NumberInputQuadrone
             id="{idPrefix}number"
             document={context.item}
             field="{prefix}number"
             value={source.number}
+            disabledValue={system.number}
             placeholder={numberPlaceholder}
             min="0"
             step="1"
-            disabled={!context.editable}
+            disabled={!context.unlocked}
           />
         </div>
       </div>
@@ -87,20 +92,21 @@
       <div class="form-group label-top">
         <label for="{idPrefix}denomination">{localize('DND5E.Die')}</label>
         <div class="form-fields">
-          <Select
+          <SelectQuadrone
             id="{idPrefix}denomination"
             document={context.item}
             field="{prefix}denomination"
             value={source.denomination}
+            disabledValue={system.denomination}
             blankValue=""
-            disabled={!context.editable}
+            disabled={!context.unlocked}
           >
             <SelectOptions
               data={denominationOptions}
               labelProp="label"
               valueProp="value"
             />
-          </Select>
+          </SelectQuadrone>
         </div>
       </div>
 
@@ -110,12 +116,13 @@
           {localize('DND5E.Bonus')}
         </label>
         <div class="form-fields">
-          <TextInput
+          <TextInputQuadrone
             id="{idPrefix}bonus"
             document={context.item}
             field="{prefix}bonus"
             value={source.bonus}
-            disabled={!context.editable}
+            disabledValue={system.bonus}
+            disabled={!context.unlocked}
           />
         </div>
       </div>
@@ -129,19 +136,20 @@
     <label for="">{localize('DND5E.Type')}</label>
     <div class="form-fields">
       {#each types as { value, label, selected } (value)}
-        <Checkbox
-          id="{idPrefix}types-{value?.slugify()}"
-          labelCssClass="checkbox"
-          document={context.item}
-          field="{prefix}types"
-          checked={selected}
-          {value}
-          disabled={!context.editable}
-          onDataPreparing={(ev) =>
-            mapSystemDamageTypesToSave(context, prefix, source, ev)}
-        >
+        <label for="" class="checkbox">
+          <!-- TODO: Figure this out; where is the system vs. source value? -->
+          <CheckboxQuadrone
+            id="{idPrefix}types-{value?.slugify()}"
+            document={context.item}
+            field="{prefix}types"
+            checked={selected}
+            {value}
+            disabled={!context.unlocked}
+            onDataPreparing={(ev) =>
+              mapSystemDamageTypesToSave(context, prefix, source, ev)}
+          />
           {label}
-        </Checkbox>
+        </label>
       {/each}
     </div>
   </div>

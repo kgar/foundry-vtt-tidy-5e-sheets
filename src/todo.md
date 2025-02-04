@@ -16,12 +16,20 @@
   - [x] Tool details
   - [x] Weapon details
 - [x] Copy over details content for all new sheets
-- [ ] Implement single description tab
+- [x] Implement single description tab
+- [x] Convert inputs to the quadrone variety, 
+- [x] Create quadrone edition of ItemProperties
+- [x] Update inputs to ensure that a lockedValue can be fed into each type, so that we can show the system value on disabled and the source value on not disabled ♥
+- [x] Ensure all standard form fields are locked on sheet lock
+- [ ] <!-- TODO: Figure this out; where is the system vs. source value? -->
+- [ ] Add currency and weight to relevant item sheets at the top
 - [ ] Implement Activities tab
 - [ ] Implement Effects tab
 - [ ] Finish implementing container contents tab
 - [ ] Implement Advancement tab
 - [ ] Ensure Activities and Effects tabs include item counters in the title
+- [ ] https://discord.com/channels/@me/1243307347682529423/1336210686392668220
+- [ ] Add context-dependent Tab visible / enabled predicate option to Tidy tabs, so that concealed content can entirely hide a tab, if needed
 
 ### Sidebar
 

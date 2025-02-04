@@ -1,16 +1,16 @@
 <script lang="ts">
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-  import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import Select from 'src/components/inputs/Select.svelte';
   import ItemProperties from '../parts/ItemProperties.svelte';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
   import FieldUses from '../parts/FieldUses.svelte';
-  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import { CONSTANTS } from 'src/constants';
-  import Checkbox from 'src/components/inputs/Checkbox.svelte';
+  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
+  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
+  import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
 
-  let context = $derived(getItemSheetContext());
+  let context = $derived(getItemSheetContextQuadrone());
 
   let appId = $derived(context.document.id);
 
@@ -25,19 +25,20 @@
   <div class="form-group">
     <label for="{appId}-type-value">{localize('DND5E.Type')}</label>
     <div class="form-fields">
-      <Select
+      <SelectQuadrone
         id="{appId}-type-value"
         document={context.item}
         field="system.type.value"
         value={context.source.type.value}
-        disabled={!context.editable}
+        disabledValue={context.system.type.value}
+        disabled={!context.unlocked}
       >
         <SelectOptions
           data={context.config.featureTypes}
           labelProp="label"
           blank=""
         />
-      </Select>
+      </SelectQuadrone>
     </div>
   </div>
 
@@ -50,15 +51,16 @@
         >{localize('DND5E.ItemFeatureSubtype', { category })}</label
       >
       <div class="form-fields">
-        <Select
+        <SelectQuadrone
           id="{appId}-type-subtype"
           document={context.item}
           field="system.type.subtype"
           value={context.source.type.subtype}
-          disabled={!context.editable}
+          disabledValue={context.system.type.subtype}
+          disabled={!context.unlocked}
         >
           <SelectOptions data={context.itemSubtypes} blank="" />
-        </Select>
+        </SelectQuadrone>
       </div>
     </div>
   {/if}
@@ -69,12 +71,13 @@
         >{localize('DND5E.FEATURE.FIELDS.cover.label')}</label
       >
       <div class="form-fields">
-        <Select
+        <SelectQuadrone
           id="{appId}-cover"
           document={context.item}
           field="system.cover"
           value={context.source.cover}
-          disabled={!context.editable}
+          disabledValue={context.system.cover}
+          disabled={!context.unlocked}
         >
           <SelectOptions
             data={context.coverOptions}
@@ -82,7 +85,7 @@
             valueProp="value"
             blank=""
           />
-        </Select>
+        </SelectQuadrone>
       </div>
       <p class="hint">
         {localize('DND5E.FEATURE.FIELDS.cover.hint')}
@@ -95,12 +98,13 @@
       >{localize('DND5E.Prerequisites.FIELDS.prerequisites.level.label')}</label
     >
     <div class="form-fields">
-      <NumberInput
+      <NumberInputQuadrone
         id="{appId}-prerequisites-level"
         document={context.item}
         field="system.prerequisites.level"
         value={context.source.prerequisites.level}
-        disabled={!context.editable}
+        disabledValue={context.system.prerequisites.level}
+        disabled={!context.unlocked}
         step="1"
       />
     </div>
@@ -115,11 +119,13 @@
       {localize('DND5E.Prerequisites.FIELDS.prerequisites.repeatable.label')}
     </label>
     <div class="form-fields">
-      <Checkbox
+      <CheckboxQuadrone
         id="prerequisites-repeatable-{appId}"
         document={context.item}
         field="system.prerequisites.repeatable"
         checked={context.source.prerequisites.repeatable}
+        disabledChecked={context.system.prerequisites.repeatable}
+        disabled={!context.unlocked}
       />
     </div>
     <p class="hint">
@@ -149,12 +155,13 @@
         )}</label
       >
       <div class="form-fields">
-        <TextInput
+        <TextInputQuadrone
           id="{appId}-enchant-max"
           document={context.item}
           field="system.enchant.max"
           value={context.source.enchant.max}
-          disabled={!context.editable}
+          disabledValue={context.system.enchant.max}
+          disabled={!context.unlocked}
         />
       </div>
 
@@ -171,13 +178,14 @@
         )}</label
       >
       <div class="form-fields">
-        <Select
+        <SelectQuadrone
           id="{appId}-enchant-period"
           document={context.item}
           field="system.enchant.period"
           value={context.source.enchant.period}
+          disabledValue={context.system.enchant.period}
           blankValue=""
-          disabled={!context.editable}
+          disabled={!context.unlocked}
         >
           <SelectOptions
             data={context.config.enchantmentPeriods}
@@ -185,7 +193,7 @@
             labelProp="label"
             valueProp="value"
           />
-        </Select>
+        </SelectQuadrone>
       </div>
 
       <p class="hint">

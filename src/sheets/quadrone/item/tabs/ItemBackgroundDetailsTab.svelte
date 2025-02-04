@@ -1,10 +1,10 @@
 <script lang="ts">
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import ItemStartingEquipment from '../parts/ItemStartingEquipment.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
-  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
 
-  let context = $derived(getItemSheetContext());
+  let context = $derived(getItemSheetContextQuadrone());
 
   let appId = $derived(context.document.id);
 
@@ -14,13 +14,14 @@
 <div class="form-group">
   <label for="{appId}-identifier">{localize('DND5E.Identifier')}</label>
   <div class="form-fields">
-    <TextInput
+    <TextInputQuadrone
       id="{appId}-identifier"
       document={context.item}
       field="system.identifier"
       value={context.source.identifier}
+      disabledValue={context.system.identifier}
       placeholder={context.item.identifier}
-      disabled={!context.editable}
+      disabled={!context.unlocked}
     />
   </div>
   <p class="hint">{localize('DND5E.IdentifierError')}</p>

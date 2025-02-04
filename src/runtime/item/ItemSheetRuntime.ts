@@ -199,7 +199,7 @@ export class ItemSheetRuntime {
     [CONSTANTS.ITEM_TYPE_BACKGROUND]: {
       Sheet: BackgroundSheetQuadrone,
       defaultTabs: () => [
-        itemSheetTabs.quadroneSingleDescription,
+        itemSheetTabs.quadroneDescriptions,
         itemSheetTabs.quadroneBackgroundDetails,
         itemSheetTabs.quadroneAdvancement,
       ],
@@ -207,7 +207,7 @@ export class ItemSheetRuntime {
     [CONSTANTS.ITEM_TYPE_CLASS]: {
       Sheet: ClassSheetQuadrone,
       defaultTabs: () => [
-        itemSheetTabs.quadroneSingleDescription,
+        itemSheetTabs.quadroneDescriptions,
         itemSheetTabs.quadroneClassDetails,
         itemSheetTabs.quadroneAdvancement,
       ],
@@ -233,7 +233,7 @@ export class ItemSheetRuntime {
     [CONSTANTS.ITEM_TYPE_FACILITY]: {
       Sheet: FacilitySheetQuadrone,
       defaultTabs: () => [
-        itemSheetTabs.quadroneSingleDescription,
+        itemSheetTabs.quadroneDescriptions,
         itemSheetTabs.quadroneFacilityDetails,
         itemSheetTabs.quadroneActivities,
       ],
@@ -267,7 +267,7 @@ export class ItemSheetRuntime {
     [CONSTANTS.ITEM_TYPE_SUBCLASS]: {
       Sheet: SubclassSheetQuadrone,
       defaultTabs: () => [
-        itemSheetTabs.quadroneSingleDescription,
+        itemSheetTabs.quadroneDescriptions,
         itemSheetTabs.quadroneSubclassDetails,
         itemSheetTabs.quadroneAdvancement,
       ],
@@ -293,7 +293,7 @@ export class ItemSheetRuntime {
     [CONSTANTS.ITEM_TYPE_RACE]: {
       Sheet: SpeciesSheetQuadrone,
       defaultTabs: () => [
-        itemSheetTabs.quadroneSingleDescription,
+        itemSheetTabs.quadroneDescriptions,
         itemSheetTabs.quadroneSpeciesDetails,
         itemSheetTabs.quadroneAdvancement,
       ],

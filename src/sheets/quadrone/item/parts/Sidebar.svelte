@@ -2,7 +2,6 @@
   import { RarityColors } from 'src/features/rarity-colors/RarityColors';
   import { getContainerOrItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import ItemImageBorder from './ItemImageBorder.svelte';
-  import Select from 'src/components/inputs/Select.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import PillSwitch from 'src/components/toggles/PillSwitch.svelte';
@@ -11,6 +10,7 @@
   import { SpellUtils } from 'src/utils/SpellUtils';
   import { coalesce } from 'src/utils/formatting';
   import type { Snippet } from 'svelte';
+  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
 
   let context = $derived(getContainerOrItemSheetContextQuadrone());
 
@@ -109,12 +109,12 @@
         style="--t5e-item-rarity-color: var({imageLabelColorVariable}, var(--t5e-color-gold));"
       >
         {#if context.unlocked}
-          <Select
+          <SelectQuadrone
             id="rarity-{context.item.sheet.id}"
             document={context.item}
             field="system.rarity"
             class="item-rarity-selector capitalize"
-            value={context.system.rarity}
+            value={context.source.rarity}
             disabled={!context.editable}
             blankValue=""
           >
@@ -131,7 +131,7 @@
                 {rarity.label}
               </option>
             {/each}
-          </Select>
+          </SelectQuadrone>
         {:else}
           <div class="item-rarity-text">{rarityText}</div>
         {/if}

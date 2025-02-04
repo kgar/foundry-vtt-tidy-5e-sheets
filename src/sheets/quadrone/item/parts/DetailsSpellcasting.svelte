@@ -1,12 +1,14 @@
 <script lang="ts">
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import Select from 'src/components/inputs/Select.svelte';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
-  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import {
+    getItemSheetContextQuadrone,
+  } from 'src/sheets/sheet-context.svelte';
   import { MaxPreparedSpellsConfigFormApplication } from 'src/applications/max-prepared-spells-config/MaxPreparedSpellsConfigFormApplication.svelte';
+  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
 
-  let context = $derived(getItemSheetContext());
+  let context = $derived(getItemSheetContextQuadrone());
 
   let appId = $derived(context.document.id);
 
@@ -18,15 +20,16 @@
     >{localize('DND5E.SpellProgression')}</label
   >
   <div class="form-fields">
-    <Select
+    <SelectQuadrone
       id="{appId}-spellcasting-progression"
       document={context.item}
       field="system.spellcasting.progression"
-      value={context.system.spellcasting.progression}
-      disabled={!context.editable}
+      value={context.source.spellcasting.progression}
+      disabledValue={context.system.spellcasting.progression}
+      disabled={!context.unlocked}
     >
       <SelectOptions data={context.config.spellProgression} />
-    </Select>
+    </SelectQuadrone>
   </div>
 </div>
 
@@ -35,19 +38,20 @@
     >{localize('DND5E.SpellAbility')}</label
   >
   <div class="form-fields">
-    <Select
+    <SelectQuadrone
       id="{appId}-spellcasting-ability"
       document={context.item}
       field="system.spellcasting.ability"
-      value={context.system.spellcasting.ability}
-      disabled={!context.editable}
+      value={context.source.spellcasting.ability}
+      disabledValue={context.system.spellcasting.ability}
+      disabled={!context.unlocked}
     >
       <SelectOptions
         data={context.config.abilities}
         labelProp="label"
         blank=""
       />
-    </Select>
+    </SelectQuadrone>
   </div>
 </div>
 
@@ -56,13 +60,14 @@
     >{localize('DND5E.SpellPreparation.Formula')}</label
   >
   <div class="form-fields">
-    <TextInput
+    <TextInputQuadrone
       id="{appId}-spellcasting-preparation-formula"
       document={context.item}
       field="system.spellcasting.preparation.formula"
-      value={context.system.spellcasting.preparation.formula}
-      dataset={{ formulaEditor: true }}
-      disabled={!context.editable}
+      value={context.source.spellcasting.preparation.formula}
+      disabledValue={context.system.spellcasting.preparation.formula}
+      data-formula-editor="true"
+      disabled={!context.unlocked}
     />
     <a
       title={localize('TIDY5E.MaxPreparedSpellsConfig.ExamplesHeader')}

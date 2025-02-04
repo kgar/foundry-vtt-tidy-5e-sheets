@@ -1,9 +1,9 @@
 <script lang="ts">
+  import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
+  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import NumberInput from 'src/components/inputs/NumberInput.svelte';
-  import Checkbox from 'src/components/inputs/Checkbox.svelte';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
   import { settings } from 'src/settings/settings.svelte';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
 
@@ -24,12 +24,13 @@
       <!-- Spent  -->
       <div class="form-group label-top">
         <label for="{appId}-uses-spent">{localize('DND5E.Spent')}</label>
-        <NumberInput
+        <NumberInputQuadrone
           id="{appId}-uses-spent"
           document={context.item}
           field="system.uses.spent"
           value={context.source.uses.spent}
-          disabled={!context.editable}
+          disabledValue={context.system.uses.spent}
+          disabled={!context.unlocked}
         />
       </div>
 
@@ -37,12 +38,13 @@
       <div class="form-group label-top">
         <label for="{appId}-uses-max">{localize('DND5E.Max')}</label>
         <div class="form-fields">
-          <TextInput
+          <TextInputQuadrone
             id="{appId}-uses-max"
             document={context.item}
             field="system.uses.max"
             value={context.source.uses.max}
-            disabled={!context.editable}
+            disabledValue={context.system.uses.max}
+            disabled={!context.unlocked}
           />
         </div>
       </div>
@@ -56,12 +58,13 @@
         >{localize('DND5E.CONSUMABLE.FIELDS.uses.autoDestroy.label')}</label
       >
       <div class="form-fields">
-        <Checkbox
+        <CheckboxQuadrone
           id="{appId}-uses-autoDestroy"
           document={context.item}
           field="system.uses.autoDestroy"
           checked={context.source.uses.autoDestroy}
-          disabled={!context.editable}
+          disabledChecked={context.system.uses.autoDestroy}
+          disabled={!context.unlocked}
         />
       </div>
       <p class="hint">
@@ -99,6 +102,7 @@
             <label for="{appId}-uses-recovery-{index}-period">
               {localize('DND5E.USES.FIELDS.uses.recovery.FIELDS.period.label')}
             </label>
+            <!-- TODO: Figure this out; where is the system vs. source value? -->
             <select
               id="{appId}-uses-recovery-{index}-period"
               data-tidy-field="system.uses.recovery.{index}.period"
@@ -109,7 +113,7 @@
                   'period',
                   ev.currentTarget.value,
                 )}
-              disabled={!context.editable}
+              disabled={!context.unlocked}
             >
               <SelectOptions
                 data={context.recoveryPeriods}
@@ -125,6 +129,7 @@
               <label for="{appId}-uses-recovery-{index}-type">
                 {localize('DND5E.USES.FIELDS.uses.recovery.FIELDS.type.label')}
               </label>
+            <!-- TODO: Figure this out; where is the system vs. source value? -->
               <select
                 id="{appId}-uses-recovery-{index}-type"
                 data-tidy-field="system.uses.recovery.{index}.type"
@@ -135,7 +140,7 @@
                     'type',
                     ev.currentTarget.value,
                   )}
-                disabled={!context.editable}
+                disabled={!context.unlocked}
               >
                 <SelectOptions
                   data={context.recoveryTypes}
@@ -155,6 +160,7 @@
                 )}
               </label>
               {#if recovery.formulaOptions}
+            <!-- TODO: Figure this out; where is the system vs. source value? -->
                 <select
                   id="{appId}-uses-recovery-{index}-formula"
                   data-tidy-field="system.uses.recovery.{index}.formula"
@@ -165,7 +171,7 @@
                       ev.currentTarget.value,
                     )}
                   value={recovery.data.formula}
-                  disabled={!context.editable}
+                  disabled={!context.unlocked}
                 >
                   <SelectOptions
                     data={recovery.formulaOptions}
@@ -174,6 +180,7 @@
                   />
                 </select>
               {:else if recovery.data.type === 'formula'}
+            <!-- TODO: Figure this out; where is the system vs. source value? -->
                 <input
                   type="text"
                   id="{appId}-uses-recovery-{index}-formula"
@@ -184,7 +191,7 @@
                       'formula',
                       ev.currentTarget.value,
                     )}
-                  disabled={!context.editable}
+                  disabled={!context.unlocked}
                   value={recovery.data.formula ?? ''}
                 />
               {/if}

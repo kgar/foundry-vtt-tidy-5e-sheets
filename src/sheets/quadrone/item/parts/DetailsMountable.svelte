@@ -1,14 +1,14 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import NumberInput from 'src/components/inputs/NumberInput.svelte';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
   import { CONSTANTS } from 'src/constants';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
-  import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
+  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
+  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
-  
+
   let appId = $derived(context.document.id);
 
   const localize = FoundryAdapter.localize;
@@ -27,12 +27,13 @@
   <div class="form-group">
     <label for="{appId}-armor-value">{localize('DND5E.ArmorClass')}</label>
     <div class="form-fields">
-      <NumberInput
+      <NumberInputQuadrone
         id="{appId}-armor-value"
         document={context.item}
         field="system.armor.value"
         value={context.source.armor.value}
-        disabled={!context.editable}
+        disabledValue={context.system.armor.value}
+        disabled={!context.unlocked}
         step="1"
       />
     </div>
@@ -44,12 +45,13 @@
       >{localize('DND5E.FEATURE.FIELDS.cover.label')}</label
     >
     <div class="form-fields">
-      <Select
+      <SelectQuadrone
         id="{appId}-cover"
         document={context.item}
         field="system.cover"
         value={context.source.cover}
-        disabled={!context.editable}
+        disabledValue={context.system.cover}
+        disabled={!context.unlocked}
       >
         <SelectOptions
           data={context.coverOptions}
@@ -57,7 +59,7 @@
           valueProp="value"
           blank=""
         />
-      </Select>
+      </SelectQuadrone>
     </div>
     <p class="hint">
       {localize('DND5E.FEATURE.FIELDS.cover.hint')}
@@ -71,12 +73,13 @@
       <!-- Current -->
       <div class="form-group label-top">
         <label for="{appId}-hp-value">{localize('DND5E.Current')}</label>
-        <NumberInput
+        <NumberInputQuadrone
           id="{appId}-hp-value"
           document={context.item}
           field="system.hp.value"
           value={context.source.hp.value}
-          disabled={!context.editable}
+          disabledValue={context.system.hp.value}
+          disabled={!context.unlocked}
           placeholder="0"
           min="0"
         />
@@ -86,15 +89,16 @@
       <div class="form-group label-top">
         <label for="{appId}-hp-max">{localize('DND5E.Max')}</label>
         <div class="form-fields">
-            <NumberInput
-              id="{appId}-hp-max"
-              document={context.item}
-              field="system.hp.max"
-              value={context.source.hp.max}
-              disabled={!context.editable}
-              placeholder="0"
-              min="0"
-            />
+          <NumberInputQuadrone
+            id="{appId}-hp-max"
+            document={context.item}
+            field="system.hp.max"
+            value={context.source.hp.max}
+            disabledValue={context.system.hp.max}
+            disabled={!context.unlocked}
+            placeholder="0"
+            min="0"
+          />
         </div>
       </div>
 
@@ -102,29 +106,31 @@
       <div class="form-group label-top">
         <label for="{appId}-hp-dt">{localize('DND5E.Threshold')}</label>
         <div class="form-fields">
-            <NumberInput
-              id="{appId}-hp-dt"
-              document={context.item}
-              field="system.hp.dt"
-              value={context.source.hp.dt}
-              disabled={!context.editable}
-              placeholder="—"
-              min="0"
-            />
+          <NumberInputQuadrone
+            id="{appId}-hp-dt"
+            document={context.item}
+            field="system.hp.dt"
+            value={context.source.hp.dt}
+            disabledValue={context.system.hp.dt}
+            disabled={!context.unlocked}
+            placeholder="—"
+            min="0"
+          />
         </div>
       </div>
     </div>
     <!-- Conditions -->
-    <TextInput
+    <TextInputQuadrone
       id="{appId}-hp-conditions"
       document={context.item}
       field="system.hp.conditions"
-      value={context.item.system.hp.conditions}
+      value={context.source.hp.conditions}
+      disabledValue={context.system.hp.conditions}
       placeholder={localize(
         'DND5E.VEHICLE.MOUNTABLE.FIELDS.hp.conditions.label',
       )}
       class="full-width"
-      disabled={!context.editable}
+      disabled={!context.unlocked}
     />
   </div>
 
@@ -139,29 +145,31 @@
             {localize('DND5E.Value')}
           </label>
           <div class="form-fields">
-              <NumberInput
-                id="{appId}-speed-value"
-                document={context.item}
-                field="system.speed.value"
-                value={context.item.system.speed.value}
-                min="0"
-                placeholder="0"
-                disabled={!context.editable}
-              />
+            <NumberInputQuadrone
+              id="{appId}-speed-value"
+              document={context.item}
+              field="system.speed.value"
+              value={context.source.system.speed.value}
+              disabledValue={context.system.speed.value}
+              min="0"
+              placeholder="0"
+              disabled={!context.unlocked}
+            />
           </div>
         </div>
       </div>
       <!-- Conditions -->
-      <TextInput
+      <TextInputQuadrone
         id="{appId}-speed-conditions"
         document={context.item}
         field="system.speed.conditions"
-        value={context.item.system.speed.conditions}
+        value={context.source.speed.conditions}
+        disabledValue={context.system.speed.conditions}
         placeholder={localize(
           'DND5E.VEHICLE.MOUNTABLE.FIELDS.speed.conditions.label',
         )}
         class="full-width"
-        disabled={!context.editable}
+        disabled={!context.unlocked}
       />
     </div>
   {/if}

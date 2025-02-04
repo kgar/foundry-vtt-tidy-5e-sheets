@@ -1,17 +1,15 @@
 <script lang="ts">
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-  import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import Select from 'src/components/inputs/Select.svelte';
-  import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
+  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
+  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
+  import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
 
-  let context = $derived(getItemSheetContext());
+  let context = $derived(getItemSheetContextQuadrone());
 
   let appId = $derived(context.document.id);
-
-  let source = $derived(context.source);
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -27,19 +25,21 @@
       {localize('DND5E.FACILITY.FIELDS.type.value.label')}
     </label>
     <div class="form-fields">
-      <Select
+      <SelectQuadrone
         document={context.document}
         field="system.type.value"
-        value={source.type.value}
+        value={context.source.type.value}
+        disabledValue={context.system.type.value}
         id="{appId}-system-type-value"
         blankValue={null}
+        disabled={!context.unlocked}
       >
         <SelectOptions
           data={context.config.facilities.types}
           labelProp="label"
           valueProp="value"
         ></SelectOptions>
-      </Select>
+      </SelectQuadrone>
     </div>
   </div>
 
@@ -49,11 +49,13 @@
       {localize('DND5E.FACILITY.FIELDS.type.subtype.label')}
     </label>
     <div class="form-fields">
-      <Select
+      <SelectQuadrone
         document={context.document}
         field="system.type.subtype"
-        value={source.type.subtype}
+        value={context.source.type.subtype}
+        disabledValue={context.system.type.subtype}
         id="{appId}-system-type-subtype"
+        disabled={!context.unlocked}
       >
         <SelectOptions
           data={context.facilitySubtypes ?? {}}
@@ -61,7 +63,7 @@
           valueProp="value"
           blank=""
         ></SelectOptions>
-      </Select>
+      </SelectQuadrone>
     </div>
   </div>
 
@@ -71,39 +73,43 @@
       {localize('DND5E.FACILITY.FIELDS.size.label')}
     </label>
     <div class="form-fields">
-      <Select
+      <SelectQuadrone
         document={context.document}
         field="system.size"
-        value={source.size}
+        value={context.source.size}
+        disabledValue={context.system.size}
         id="{appId}-system-size"
+        disabled={!context.unlocked}
       >
         <SelectOptions data={context.config.facilities.sizes} labelProp="label"
         ></SelectOptions>
-      </Select>
+      </SelectQuadrone>
     </div>
   </div>
 
   <!-- Level -->
-  {#if source.type.value === CONSTANTS.FACILITY_TYPE_BASIC}
+  {#if context.source.type.value === CONSTANTS.FACILITY_TYPE_BASIC}
     <div class="form-group">
       <label for="{appId}-system-level">
         {localize('DND5E.FACILITY.FIELDS.level.label')}
       </label>
       <div class="form-fields">
-        <NumberInput
+        <NumberInputQuadrone
           id="{appId}-system-level"
           document={context.document}
           field="system.level"
-          value={source.level}
+          value={context.source.level}
+          disabledValue={context.system.level}
           selectOnFocus={true}
           min="1"
           step="1"
-        ></NumberInput>
+          disabled={!context.unlocked}
+        />
       </div>
     </div>
   {/if}
 
-  {#if source.type.value === CONSTANTS.FACILITY_TYPE_SPECIAL}
+  {#if context.source.type.value === CONSTANTS.FACILITY_TYPE_SPECIAL}
     <!-- Properties -->
     <div class="form-group split-group">
       <label for="{appId}-system-level">
@@ -116,15 +122,17 @@
             {localize('DND5E.FACILITY.FIELDS.level.label')}
           </label>
           <div class="form-fields">
-            <NumberInput
+            <NumberInputQuadrone
               id="{appId}-system-level"
               document={context.document}
               field="system.level"
-              value={source.level}
+              value={context.source.level}
+              disabledValue={context.system.level}
               selectOnFocus={true}
               min="1"
               step="1"
-            ></NumberInput>
+              disabled={!context.unlocked}
+            />
           </div>
         </div>
 
@@ -134,11 +142,13 @@
             {localize('DND5E.FACILITY.FIELDS.order.label')}
           </label>
           <div class="form-fields">
-            <Select
+            <SelectQuadrone
               document={context.document}
               field="system.order"
-              value={source.order}
+              value={context.source.order}
+              disabledValue={context.system.order}
               id="{appId}-system-order"
+              disabled={!context.unlocked}
             >
               <SelectOptions
                 data={context.orders?.available ?? []}
@@ -146,7 +156,7 @@
                 labelProp="label"
                 valueProp="value"
               ></SelectOptions>
-            </Select>
+            </SelectQuadrone>
           </div>
         </div>
       </div>
@@ -164,16 +174,18 @@
             {localize('DND5E.FACILITY.FIELDS.hirelings.max.label')}
           </label>
           <div class="form-fields">
-            <NumberInput
+            <NumberInputQuadrone
               id="{appId}-system-hirelings-max"
               document={context.document}
               field="system.hirelings.max"
-              value={source.hirelings.max}
+              value={context.source.hirelings.max}
+              disabledValue={context.system.hirelings.max}
               selectOnFocus={true}
               min="1"
               step="1"
               placeholder="—"
-            ></NumberInput>
+              disabled={!context.unlocked}
+            />
           </div>
         </div>
 
@@ -184,16 +196,18 @@
           </label>
           <div class="form-fields">
             <div class="form-fields">
-              <NumberInput
+              <NumberInputQuadrone
                 id="{appId}-system-defenders-max"
                 document={context.document}
                 field="system.defenders.max"
-                value={source.defenders.max}
+                value={context.source.defenders.max}
+                disabledValue={context.system.defenders.max}
                 selectOnFocus={true}
                 min="1"
                 step="1"
                 placeholder="—"
-              ></NumberInput>
+                disabled={!context.unlocked}
+              />
             </div>
           </div>
         </div>
@@ -206,12 +220,14 @@
         {localize('DND5E.FACILITY.FIELDS.free.label')}
       </label>
       <div class="form-fields">
-        <Checkbox
+        <CheckboxQuadrone
           id="{appId}-system-free"
           document={context.document}
           field="system.free"
-          checked={source.free}
-        ></Checkbox>
+          checked={context.source.free}
+          disabledChecked={context.system.free}
+          disabled={!context.unlocked}
+        />
       </div>
       <p class="hint">
         {localize('DND5E.FACILITY.FIELDS.free.hint')}
@@ -224,12 +240,14 @@
         {localize('DND5E.FACILITY.FIELDS.enlargeable.label')}
       </label>
       <div class="form-fields">
-        <Checkbox
+        <CheckboxQuadrone
           id="{appId}-system-enlargeable"
           document={context.document}
           field="system.enlargeable"
-          checked={source.enlargeable}
-        ></Checkbox>
+          checked={context.source.enlargeable}
+          disabledChecked={context.system.enlargeable}
+          disabled={!context.unlocked}
+        />
       </div>
       <p class="hint">
         {localize('DND5E.FACILITY.FIELDS.enlargeable.hint')}
@@ -242,12 +260,14 @@
         {localize('DND5E.FACILITY.FIELDS.disabled.label')}
       </label>
       <div class="form-fields">
-        <Checkbox
+        <CheckboxQuadrone
           id="{appId}-system-disabled"
           document={context.document}
           field="system.disabled"
-          checked={source.disabled}
-        ></Checkbox>
+          checked={context.source.disabled}
+          disabledChecked={context.system.disabled}
+          disabled={!context.unlocked}
+        />
       </div>
       <p class="hint">
         {localize('DND5E.FACILITY.FIELDS.disabled.hint')}
@@ -260,12 +280,14 @@
         {localize('DND5E.FACILITY.FIELDS.building.built.label')}
       </label>
       <div class="form-fields">
-        <Checkbox
+        <CheckboxQuadrone
           id="{appId}-system-building-built"
           document={context.document}
           field="system.building.built"
-          checked={source.building.built}
-        ></Checkbox>
+          checked={context.source.building.built}
+          disabledChecked={context.system.building.built}
+          disabled={!context.unlocked}
+        />
       </div>
       <p class="hint">
         {localize('DND5E.FACILITY.FIELDS.building.built.hint')}
@@ -285,10 +307,12 @@
       {localize('DND5E.FACILITY.FIELDS.progress.order.label')}
     </label>
     <div class="form-fields">
-      <Select
+      <SelectQuadrone
         document={context.document}
         field="system.progress.order"
-        value={source.progress.order}
+        value={context.source.progress.order}
+        disabledValue={context.system.progress.order}
+        disabled={!context.unlocked}
         id="{appId}-system-progress-order"
       >
         <SelectOptions
@@ -297,7 +321,7 @@
           labelProp="label"
           valueProp="value"
         ></SelectOptions>
-      </Select>
+      </SelectQuadrone>
     </div>
   </div>
 
@@ -314,16 +338,18 @@
         </label>
         <div class="form-fields">
           <div class="form-fields">
-            <NumberInput
+            <NumberInputQuadrone
               id="{appId}-system-progress-value"
               document={context.document}
               field="system.progress.value"
-              value={source.progress.value}
+              value={context.source.progress.value}
+              disabledValue={context.system.progress.value}
               selectOnFocus={true}
               min="0"
               step="0"
               placeholder="—"
-            ></NumberInput>
+              disabled={!context.unlocked}
+            />
           </div>
         </div>
       </div>
@@ -334,16 +360,18 @@
           {localize('DND5E.FACILITY.FIELDS.progress.max.label')}
         </label>
         <div class="form-fields">
-          <NumberInput
+          <NumberInputQuadrone
             id="{appId}-system-progress-max"
             document={context.document}
             field="system.progress.max"
-            value={source.progress.max}
+            value={context.source.progress.max}
+            disabledValue={context.system.progress.max}
             selectOnFocus={true}
             min="1"
             step="1"
             placeholder="—"
-          ></NumberInput>
+            disabled={!context.unlocked}
+          />
         </div>
       </div>
     </div>
@@ -353,7 +381,7 @@
 {#if context.canCraft}
   <fieldset>
     <legend>
-      {localize(`DND5E.FACILITY.Orders.${source.order}.present`)}
+      {localize(`DND5E.FACILITY.Orders.${context.source.order}.present`)}
     </legend>
 
     <p class="hint">
@@ -394,20 +422,22 @@
       {#if context.isHarvesting}
         <div class="quantity">
           <span class="separator">&times;</span>
-          <NumberInput
+          <NumberInputQuadrone
             id="{appId}-system-craft-quantity"
             document={context.document}
             field="system.craft.quantity"
-            value={source.craft.quantity}
+            value={context.source.craft.quantity}
+            disabledValue={context.system.craft.quantity}
             selectOnFocus={true}
-          ></NumberInput>
+            disabled={!context.unlocked}
+          />
         </div>
       {/if}
     </div>
   </fieldset>
 {/if}
 
-{#if source.type.value === CONSTANTS.FACILITY_TYPE_SPECIAL && source.order === 'trade'}
+{#if context.source.type.value === CONSTANTS.FACILITY_TYPE_SPECIAL && context.source.order === 'trade'}
   <fieldset>
     <legend>
       {localize('DND5E.FACILITY.Orders.trade.present')}
@@ -419,12 +449,14 @@
         {localize('DND5E.FACILITY.FIELDS.trade.stock.stocked.label')}
       </label>
       <div class="form-fields">
-        <Checkbox
+        <CheckboxQuadrone
           id="{appId}-system-trade-stock-stocked"
           document={context.document}
           field="system.trade.stock.stocked"
-          checked={source.trade.stock.stocked}
-        ></Checkbox>
+          checked={context.source.trade.stock.stocked}
+          disabledChecked={context.system.trade.stock.stocked}
+          disabled={!context.unlocked}
+        />
       </div>
     </div>
 
@@ -440,16 +472,18 @@
             {localize('DND5E.FACILITY.FIELDS.trade.stock.value.label')}
           </label>
           <div class="form-fields">
-            <NumberInput
+            <NumberInputQuadrone
               id="{appId}-system-trade-stock-value"
               document={context.document}
               field="system.trade.stock.value"
-              value={source.trade.stock.value}
+              value={context.source.trade.stock.value}
+              disabledValue={context.system.trade.stock.value}
               selectOnFocus={true}
               min="0"
               step="0"
               placeholder="—"
-            ></NumberInput>
+              disabled={!context.unlocked}
+            />
           </div>
         </div>
 
@@ -459,16 +493,18 @@
             {localize('DND5E.FACILITY.FIELDS.trade.stock.max.label')}
           </label>
           <div class="form-fields">
-            <NumberInput
+            <NumberInputQuadrone
               id="{appId}-system-trade-stock-max"
               document={context.document}
               field="system.trade.stock.max"
-              value={source.trade.stock.max}
+              value={context.source.trade.stock.max}
+              disabledValue={context.system.trade.stock.max}
               selectOnFocus={true}
               min="1"
               step="1"
               placeholder="—"
-            ></NumberInput>
+              disabled={!context.unlocked}
+            />
           </div>
         </div>
       </div>
@@ -480,16 +516,18 @@
         {localize('DND5E.FACILITY.FIELDS.trade.creatures.max.label')}
       </label>
       <div class="form-fields">
-        <NumberInput
+        <NumberInputQuadrone
           id="{appId}-system-trade-creatures-max"
           document={context.document}
           field="system.trade.creatures.max"
-          value={source.trade.creatures.max}
+          value={context.source.trade.creatures.max}
+          disabledValue={context.system.trade.creatures.max}
           selectOnFocus={true}
           min="1"
           step="1"
           placeholder="—"
-        ></NumberInput>
+          disabled={!context.unlocked}
+        />
       </div>
     </div>
 
@@ -499,16 +537,18 @@
         {localize('DND5E.FACILITY.FIELDS.trade.profit.label')}
       </label>
       <div class="form-fields">
-        <NumberInput
+        <NumberInputQuadrone
           id="{appId}-system-trade-profit"
           document={context.document}
           field="system.trade.profit"
-          value={source.trade.profit}
+          value={context.source.trade.profit}
+          disabledValue={context.system.trade.profit}
           selectOnFocus={true}
           min="0"
           step="0"
           placeholder="—"
-        ></NumberInput>
+          disabled={!context.unlocked}
+        />
         <span class="sep unit">&percnt;</span>
       </div>
     </div>

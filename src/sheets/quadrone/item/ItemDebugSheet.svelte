@@ -6,7 +6,6 @@
   import ButtonWithOptionPanel from 'src/components/buttons/ButtonWithOptionPanel.svelte';
   import ToggleButton from 'src/components/buttons/ToggleButton.svelte';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
   import FieldToggle from 'src/components/toggles/FieldToggle.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
@@ -15,6 +14,7 @@
   import { preventNewlines } from 'src/actions/prevent-newlines';
   import ItemDescriptions from '../shared/ItemDescriptions.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
 
   let context = $derived(getSheetContext<ItemDebugSheetQuadroneContext>());
 
@@ -88,7 +88,7 @@
     <div class="span-all">
       <!-- Name -->
       {#if context.unlocked}
-        <TextInput
+        <TextInputQuadrone
           field="name"
           document={context.item}
           value={context.item.name}

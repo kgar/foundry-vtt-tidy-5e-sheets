@@ -128,6 +128,12 @@ export type ItemSheetContext = {
   tabs: Tab[];
 };
 
+export type ItemNameContext = {
+  value: string;
+  editable: string;
+  field: unknown;
+};
+
 export type ItemSheetQuadroneContext = {
   activities: {
     id: string;
@@ -196,6 +202,7 @@ export type ItemSheetQuadroneContext = {
   lockItemQuantity: boolean;
   modernRules: boolean;
   options: any;
+  name: ItemNameContext;
   orders?: ItemFacilityOrdersContext;
   owner: boolean;
   properties: PropertyContext;
@@ -344,6 +351,7 @@ export type ContainerSheetQuadroneContext = {
   lockItemQuantity: boolean;
   lockMoneyChanges: boolean;
   modernRules: boolean;
+  name: ItemNameContext;
   customContent: CustomContent[];
   owner: boolean;
   properties: PropertyContext;

@@ -1,12 +1,12 @@
 <script lang="ts">
-  import Select from 'src/components/inputs/Select.svelte';
+  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
+  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import NumberInput from 'src/components/inputs/NumberInput.svelte';
-  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
 
-  let context = $derived(getItemSheetContext());
+  let context = $derived(getItemSheetContextQuadrone());
 
   let appId = $derived(context.document.id);
 
@@ -25,14 +25,15 @@
           {localize('DND5E.Amount')}
         </label>
         <div class="form-fields">
-          <NumberInput
+          <NumberInputQuadrone
             id="{appId}-activation-value"
             document={context.item}
             field="system.activation.value"
             value={context.source.activation.value}
+            disabledValue={context.system.activation.value}
             placeholder="—"
             min="0"
-            disabled={!context.editable}
+            disabled={!context.unlocked}
           />
         </div>
       </div>
@@ -44,31 +45,33 @@
         {localize('DND5E.Cost')}
       </label>
       <div class="form-fields">
-        <Select
+        <SelectQuadrone
           id="{appId}-activation-type"
           document={context.item}
           field="system.activation.type"
           value={context.source.activation.type}
-          disabled={!context.editable}
+          disabledValue={context.system.activation.type}
+          disabled={!context.unlocked}
         >
           <SelectOptions
             data={context.activationTypes}
             labelProp="label"
             valueProp="value"
           />
-        </Select>
+        </SelectQuadrone>
       </div>
     </div>
   </div>
 
   <!-- Condition -->
-  <TextInput
+  <TextInputQuadrone
     id="{appId}-activation-condition"
     document={context.item}
     field="system.activation.condition"
     value={context.source.activation.condition}
+    disabledValue={context.system.activation.condition}
     placeholder={localize('DND5E.ItemActivationCondition')}
     class="full-width"
-    disabled={!context.editable}
+    disabled={!context.unlocked}
   />
 </div>

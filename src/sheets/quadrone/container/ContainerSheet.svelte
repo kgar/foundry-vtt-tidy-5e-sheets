@@ -7,6 +7,7 @@
   import { getContainerSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import Sidebar from '../item/parts/Sidebar.svelte';
   import ItemNameHeaderOrchestrator from '../item/parts/ItemNameHeaderOrchestrator.svelte';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
 
   let context = $derived(getContainerSheetQuadroneContext());
 
@@ -101,14 +102,14 @@
   >
     <!-- Name -->
     {#if context.unlocked}
-      <TextInput
+      <TextInputQuadrone
         field="name"
         document={context.item}
-        value={context.item.name}
+        value={context.name.editable}
         class="document-name"
       />
     {:else}
-      <div class="document-name">{context.item.name ?? ''}</div>
+      <div class="document-name">{context.item.name}</div>
     {/if}
   </div>
 
