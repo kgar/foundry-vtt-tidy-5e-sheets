@@ -2,22 +2,24 @@
 
 ### Bootstrapping all item sheets
 
-- [ ] Propagate initial scaffolding for tabs to all new sheets
-  - [ ] Weapon details
-  - [ ] Equipment details
-  - [ ] Consumable details
-  - [ ] Loot details
-  - [ ] Class details
-  - [ ] Subclass details
-  - [ ] Background details
-  - [ ] Species details
-  - [ ] Facility details
-  - [ ] Tool details
-- [ ] Copy over details content for all new sheets
-- [ ] Finish implementing container contents tab
+- [x] Propagate initial scaffolding for tabs to all new sheets
+  - [x] Background details
+  - [x] Class details
+  - [x] Consumable details
+  - [x] Equipment details
+  - [x] Facility details
+  - [x] Feat details
+  - [x] Loot details
+  - [x] Species details
+  - [x] Spell details
+  - [x] Subclass details
+  - [x] Tool details
+  - [x] Weapon details
+- [x] Copy over details content for all new sheets
 - [ ] Implement single description tab
 - [ ] Implement Activities tab
 - [ ] Implement Effects tab
+- [ ] Finish implementing container contents tab
 - [ ] Implement Advancement tab
 - [ ] Ensure Activities and Effects tabs include item counters in the title
 

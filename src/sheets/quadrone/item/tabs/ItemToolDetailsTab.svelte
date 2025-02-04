@@ -18,37 +18,43 @@
 <!-- Tool Type -->
 <div class="form-group">
   <label for="{appId}-type-value">{localize('DND5E.ItemToolType')}</label>
-  <Select
-    id="{appId}-type-value"
-    document={context.item}
-    field="system.type.value"
-    value={context.source.type.value}
-    disabled={!context.editable}
-  >
-    <SelectOptions data={context.config.toolTypes} blank="" />
-  </Select>
+  <div class="form-fields">
+    <Select
+      id="{appId}-type-value"
+      document={context.item}
+      field="system.type.value"
+      value={context.source.type.value}
+      disabled={!context.editable}
+    >
+      <SelectOptions data={context.config.toolTypes} blank="" />
+    </Select>
+  </div>
 </div>
 
 <!-- Base Tool -->
 {#if Object.keys(context.baseItems).length}
   <div class="form-group">
     <label for="{appId}-type-baseItem">{localize('DND5E.ItemToolBase')}</label>
-    <Select
-      id="{appId}-type-baseItem"
-      document={context.item}
-      field="system.type.baseItem"
-      value={context.source.type.baseItem}
-      disabled={!context.editable}
-    >
-      <SelectOptions data={context.baseItems} blank="" />
-    </Select>
+    <div class="form-fields">
+      <Select
+        id="{appId}-type-baseItem"
+        document={context.item}
+        field="system.type.baseItem"
+        value={context.source.type.baseItem}
+        disabled={!context.editable}
+      >
+        <SelectOptions data={context.baseItems} blank="" />
+      </Select>
+    </div>
   </div>
 {/if}
 
 <!-- Tool Properties -->
-<div class="form-group stacked tool-properties">
+<div class="form-group stacked tool-properties checkbox-grid">
   <label for="">{localize('DND5E.ItemToolProperties')}</label>
-  <ItemProperties />
+  <div class="form-fields">
+    <ItemProperties />
+  </div>
 </div>
 
 <!-- Ability Check -->
@@ -58,36 +64,40 @@
     <!-- Proficiency -->
     <div class="form-group label-top">
       <label for="">{localize('DND5E.Proficiency')}</label>
-      <Select
-        id="{appId}-proficient"
-        document={context.item}
-        field="system.proficient"
-        value={context.source.proficient}
-        disabled={!context.editable}
-      >
-        <SelectOptions
-          data={context.config.proficiencyLevels}
-          blank={localize('DND5E.Automatic')}
-        />
-      </Select>
+      <div class="form-fields">
+        <Select
+          id="{appId}-proficient"
+          document={context.item}
+          field="system.proficient"
+          value={context.source.proficient}
+          disabled={!context.editable}
+        >
+          <SelectOptions
+            data={context.config.proficiencyLevels}
+            blank={localize('DND5E.Automatic')}
+          />
+        </Select>
+      </div>
     </div>
 
     <!-- Ability -->
     <div class="form-group label-top">
       <label for="{appId}-ability">{localize('DND5E.Ability')}</label>
-      <Select
-        id="{appId}-ability"
-        document={context.item}
-        field="system.ability"
-        value={context.source.ability}
-        disabled={!context.editable}
-      >
-        <SelectOptions
-          data={context.config.abilities}
-          labelProp="label"
-          blank={localize('DND5E.Default')}
-        />
-      </Select>
+      <div class="form-fields">
+        <Select
+          id="{appId}-ability"
+          document={context.item}
+          field="system.ability"
+          value={context.source.ability}
+          disabled={!context.editable}
+        >
+          <SelectOptions
+            data={context.config.abilities}
+            labelProp="label"
+            blank={localize('DND5E.Default')}
+          />
+        </Select>
+      </div>
     </div>
   </div>
 </div>
@@ -95,20 +105,22 @@
 <!-- Tool Bonus -->
 <div class="form-group">
   <label for="{appId}-bonus">{localize('DND5E.ItemToolBonus')}</label>
-  <TextInput
-    id={`${appId}-system-bonus`}
-    document={context.item}
-    field="system.bonus"
-    value={context.source.bonus}
-    disabled={!context.editable}
-  />
+  <div class="form-fields">
+    <TextInput
+      id={`${appId}-system-bonus`}
+      document={context.item}
+      field="system.bonus"
+      value={context.source.bonus}
+      disabled={!context.editable}
+    />
+  </div>
 </div>
 
 <!-- Attunement -->
 {#if context.properties.object.mgc}
   <div class="form-group">
     <label for="{appId}-attunement">{localize('DND5E.Attunement')}</label>
-    <div class="form-fields no-gap">
+    <div class="form-fields">
       <!-- Attuned -->
       <Checkbox
         id={`${appId}-system-attuned`}
