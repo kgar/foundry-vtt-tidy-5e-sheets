@@ -6,7 +6,7 @@
 .spell-components {
   display: flex;
   gap: 0.03125rem;
-  align-items: flex-start;
+  // align-items: flex-start;
 
   & li {
     font-size: var(--font-size-default);
