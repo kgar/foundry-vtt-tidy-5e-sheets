@@ -1,0 +1,48 @@
+<script lang="ts">
+  import { type Snippet } from 'svelte';
+  import type { HTMLSelectAttributes } from 'svelte/elements';
+
+  type Props = {
+    value: unknown;
+    field: string;
+    document: any;
+    blankValue?: any;
+    children?: Snippet;
+  } & HTMLSelectAttributes;
+
+  let {
+    value,
+    field,
+    document,
+    blankValue = null,
+    children,
+    ...rest
+  }: Props = $props();
+
+  let draftValue = $state('');
+
+  $effect(() => {
+    draftValue = value?.toString() ?? '';
+  });
+
+  async function saveChange(
+    event: Event & {
+      currentTarget: EventTarget & HTMLSelectElement;
+    },
+  ) {
+    const targetValue = event.currentTarget.value;
+
+    await document.update({
+      [field]: targetValue !== '' ? targetValue : blankValue,
+    });
+  }
+</script>
+
+<select
+  bind:value={draftValue}
+  onchange={document && saveChange}
+  {...rest}
+  data-tidy-field={field}
+>
+  {@render children?.()}
+</select>
