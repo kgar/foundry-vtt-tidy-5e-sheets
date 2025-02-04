@@ -4,7 +4,6 @@
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settings } from 'src/settings/settings.svelte';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
@@ -87,7 +86,7 @@
           data-tooltip="DND5E.USES.Recovery.Action.Create"
           aria-label={localize('DND5E.USES.Recovery.Action.Create')}
           onclick={() => context.item.sheet.addRecovery()}
-          tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
+          disabled={!context.unlocked}
         >
           <i class="fas fa-plus"></i>
         </button>
@@ -95,6 +94,8 @@
     </legend>
 
     {#each context.usesRecovery as recovery, index}
+      {@const systemRecovery = context.system.uses.recovery}
+      {@const disabled = !context.unlocked}
       <div class="form-group split-group full-width card" data-index={index}>
         <div class="form-fields">
           <!-- Period -->
@@ -102,18 +103,19 @@
             <label for="{appId}-uses-recovery-{index}-period">
               {localize('DND5E.USES.FIELDS.uses.recovery.FIELDS.period.label')}
             </label>
-            <!-- TODO: Figure this out; where is the system vs. source value? -->
             <select
               id="{appId}-uses-recovery-{index}-period"
               data-tidy-field="system.uses.recovery.{index}.period"
-              value={recovery.data.period}
+              value={!disabled
+                ? recovery.data.period
+                : systemRecovery[index].period}
               onchange={(ev) =>
                 context.item.sheet.updateRecovery(
                   index,
                   'period',
                   ev.currentTarget.value,
                 )}
-              disabled={!context.unlocked}
+              {disabled}
             >
               <SelectOptions
                 data={context.recoveryPeriods}
@@ -129,18 +131,19 @@
               <label for="{appId}-uses-recovery-{index}-type">
                 {localize('DND5E.USES.FIELDS.uses.recovery.FIELDS.type.label')}
               </label>
-            <!-- TODO: Figure this out; where is the system vs. source value? -->
               <select
                 id="{appId}-uses-recovery-{index}-type"
                 data-tidy-field="system.uses.recovery.{index}.type"
-                value={recovery.data.type}
+                value={!disabled
+                  ? recovery.data.type
+                  : systemRecovery[index].type}
                 onchange={(ev) =>
                   context.item.sheet.updateRecovery(
                     index,
                     'type',
                     ev.currentTarget.value,
                   )}
-                disabled={!context.unlocked}
+                {disabled}
               >
                 <SelectOptions
                   data={context.recoveryTypes}
@@ -160,7 +163,6 @@
                 )}
               </label>
               {#if recovery.formulaOptions}
-            <!-- TODO: Figure this out; where is the system vs. source value? -->
                 <select
                   id="{appId}-uses-recovery-{index}-formula"
                   data-tidy-field="system.uses.recovery.{index}.formula"
@@ -170,8 +172,10 @@
                       'formula',
                       ev.currentTarget.value,
                     )}
-                  value={recovery.data.formula}
-                  disabled={!context.unlocked}
+                  value={!disabled
+                    ? recovery.data.formula
+                    : systemRecovery[index].formula}
+                  {disabled}
                 >
                   <SelectOptions
                     data={recovery.formulaOptions}
@@ -180,7 +184,6 @@
                   />
                 </select>
               {:else if recovery.data.type === 'formula'}
-            <!-- TODO: Figure this out; where is the system vs. source value? -->
                 <input
                   type="text"
                   id="{appId}-uses-recovery-{index}-formula"
@@ -191,14 +194,16 @@
                       'formula',
                       ev.currentTarget.value,
                     )}
-                  disabled={!context.unlocked}
-                  value={recovery.data.formula ?? ''}
+                  {disabled}
+                  value={(!disabled
+                    ? recovery.data.formula
+                    : systemRecovery[index].formula) ?? ''}
                 />
               {/if}
             </div>
           {/if}
 
-          {#if context.editable}
+          {#if context.unlocked}
             <button
               type="button"
               class="inline-icon-button align-self-stretch"
@@ -206,7 +211,6 @@
               title={localize('DND5E.USES.Recovery.Action.Delete')}
               aria-label={localize('DND5E.USES.Recovery.Action.Delete')}
               onclick={() => context.item.sheet.deleteRecovery(index)}
-              tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
             >
               <i class="fas fa-minus"></i>
             </button>

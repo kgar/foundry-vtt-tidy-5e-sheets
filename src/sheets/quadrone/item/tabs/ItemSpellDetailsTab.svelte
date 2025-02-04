@@ -61,11 +61,13 @@
   </div>
 
   <!-- Spell Components -->
-  <div class="form-group spell-components stacked">
+  <div class="form-group spell-components stacked checkbox-grid">
     <label for="">
       {localize('DND5E.SpellComponents')}
     </label>
-    <ItemProperties />
+    <div class="form-fields">
+      <ItemProperties />
+    </div>
   </div>
 
   <!-- Material Components -->

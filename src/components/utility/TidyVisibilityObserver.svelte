@@ -45,8 +45,6 @@
       },
     );
 
-    console.log(toObserve);
-
     toObserve?.forEach((el) => !!el && observer.observe(el));
 
     return () => {

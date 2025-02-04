@@ -205,6 +205,7 @@ export type ItemSheetQuadroneContext = {
   name: ItemNameContext;
   orders?: ItemFacilityOrdersContext;
   owner: boolean;
+  primaryAbilities?: { value: string; label: string; selected: boolean }[];
   properties: PropertyContext;
   rangeTypes: GroupableSelectOption[];
   recoveryPeriods: GroupableSelectOption[];

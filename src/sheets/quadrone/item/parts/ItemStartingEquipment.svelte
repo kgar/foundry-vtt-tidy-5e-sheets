@@ -2,10 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { coalesce } from 'src/utils/formatting';
   import { settings } from 'src/settings/settings.svelte';
-  import {
-    getItemSheetContext,
-    getItemSheetContextQuadrone,
-  } from 'src/sheets/sheet-context.svelte';
+  import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
@@ -18,7 +15,7 @@
 <fieldset>
   <legend>
     {localize('DND5E.StartingEquipment.Title')}
-    {#if context.editable}
+    {#if context.unlocked}
       <span>
         <button
           type="button"
