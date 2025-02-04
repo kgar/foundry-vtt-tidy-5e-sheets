@@ -393,7 +393,7 @@
     font-size: var(--font-size-28);
     font-style: normal;
     font-weight: 400;
-    line-height: normal;
+    line-height: 2rem;
     letter-spacing: 0.0175rem;
 
     &:is(input) {
@@ -412,8 +412,11 @@
       font-size: var(--font-size-24);
       font-style: normal;
       font-weight: 400;
+      height: 2rem;
       line-height: normal;
       letter-spacing: 0.015rem;
+      margin: 0 -0.5rem;
+      width: calc(100% + 1rem);
 
       &:focus {
         box-shadow: 0 0 0 0.125rem rgba(154, 42, 48, 0.95);
@@ -427,10 +430,11 @@
   }
 
   .tidy-tab {
-    padding-top: 0.75rem;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    padding-bottom: 2rem;
+    padding-top: 0.75rem;
 
     &.description {
       flex: 1;

@@ -80,9 +80,10 @@
     margin: 0;
 
     > label {
-      line-height: var(--form-field-height);
-      font-weight: 500;
       color: var(--t5e-color-text-ondefault-lighter);
+      font-size: var(--font-size-default);
+      font-weight: 500;
+      line-height: var(--form-field-height);
     }
     
     &:has(.label-top) > label {
