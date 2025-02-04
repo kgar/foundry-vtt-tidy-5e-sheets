@@ -283,6 +283,7 @@
     > .form-fields {
       display: grid;
       grid-template-columns: repeat(var(--num-cols), 1fr);
+      gap: 0;
 
       > label {
         text-align: unset;

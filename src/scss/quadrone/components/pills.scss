@@ -67,7 +67,6 @@
   &.negative {
     border-color: var(--t5e-color-palette-red-27);
     background: var(--t5e-color-palette-red-31);
-    color: var(--t5e-color-text-ondefault-default);
 
     .lighter {
       color: var(--t5e-color-text-ondefault-lighter);
@@ -81,18 +80,16 @@
 
   &.positive,
   &.negative {
-    color: var(--t5e-color-text-ondefault-default);
+    color: var(--t5e-color-text-oninverse-default);
 
     .lighter {
-      color: var(--t5e-color-text-ondefault-lighter);
+      color: var(--t5e-color-text-oninverse-lighter);
     }
   }
 }
 
 &.dark .pill,
 .dark .pill {
-  background: var(--t5e-component-pill-oninverse-background);
-  border-color: var(--t5e-component-pill-oninverse-border);
   color: var(--t5e-color-text-ondefault-default);
   --icon-fill: var(--t5e-color-icon-oninverse-diminished);
 
@@ -120,7 +117,6 @@
   &.negative {
     border-color: var(--t5e-color-palette-red-27);
     background: var(--t5e-color-palette-red-31);
-    color: var(--t5e-color-text-ondefault-default);
 
     .lighter {
       color: var(--t5e-color-text-ondefault-lighter);
@@ -147,6 +143,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   padding: 0.125rem 0.125rem 0.125rem 0.5rem;
 
   .pill-switch-icon-container {
@@ -184,11 +181,11 @@
   }
 }
 
-&:is(.inverse, .dark) .pill-switch,
-.inverse .pill-switch {
+&:is(.dark) .pill-switch,
+.dark .pill-switch {
   &:hover {
-    background: var(--t5e-component-field-oninverse-background-hover);
-    border-color: var(--t5e-component-field-oninverse-border-hover);
+    background: var(--t5e-component-field-background-hover);
+    border-color: var(--t5e-component-field-border-hover);
   }
   
   i {
