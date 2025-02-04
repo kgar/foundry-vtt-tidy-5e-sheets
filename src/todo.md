@@ -22,6 +22,7 @@
 - [x] Update inputs to ensure that a lockedValue can be fed into each type, so that we can show the system value on disabled and the source value on not disabled ♥
 - [x] Ensure all standard form fields are locked on sheet lock
 - [ ] <!-- TODO: Figure this out; where is the system vs. source value? -->
+- [ ] Ensure interactibles like buttons are also disabled on lock, where relevant
 - [ ] Add currency and weight to relevant item sheets at the top
 - [ ] Implement Activities tab
 - [ ] Implement Effects tab
