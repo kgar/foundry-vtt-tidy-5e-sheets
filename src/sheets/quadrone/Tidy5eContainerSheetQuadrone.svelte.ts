@@ -301,6 +301,11 @@ export class Tidy5eContainerSheetQuadrone extends DragAndDropMixin(
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
       modernRules: FoundryAdapter.checkIfModernRules(this.item),
+      name: {
+        value: this.item.name,
+        editable: this.item._source.name,
+        field: this.item.schema.getField('name'),
+      },
       owner: this.item.isOwner,
       properties: {
         active: [],

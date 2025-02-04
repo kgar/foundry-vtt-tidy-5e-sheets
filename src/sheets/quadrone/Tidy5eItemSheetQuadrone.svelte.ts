@@ -258,6 +258,11 @@ export class Tidy5eItemSheetQuadrone extends DragAndDropMixin(
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       limited: this.document.limited,
       modernRules: FoundryAdapter.checkIfModernRules(this.item),
+      name: {
+        value: this.item.name,
+        editable: this.item._source.name,
+        field: this.item.schema.getField("name")
+      },
       options: this.options,
       owner: this.document.isOwner,
       scalarTarget:
