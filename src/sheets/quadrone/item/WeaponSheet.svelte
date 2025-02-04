@@ -4,11 +4,11 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
-  import { getContainerSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
+  import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import Sidebar from './parts/Sidebar.svelte';
   import ItemNameHeaderOrchestrator from './parts/ItemNameHeaderOrchestrator.svelte';
 
-  let context = $derived(getContainerSheetQuadroneContext());
+  let context = $derived(getItemSheetContextQuadrone());
 
   const localize = FoundryAdapter.localize;
 

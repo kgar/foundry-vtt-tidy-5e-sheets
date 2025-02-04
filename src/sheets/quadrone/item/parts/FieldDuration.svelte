@@ -3,7 +3,6 @@
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
   let context = $derived(getItemSheetContext());
@@ -13,46 +12,42 @@
   const localize = FoundryAdapter.localize;
 </script>
 
+<!-- Duration -->
 <div class="form-group split-group">
-  <label for="{appId}-activation-value">{localize('DND5E.SpellCastTime')}</label
-  >
-
+  <label for="{appId}-duration-units">{localize('DND5E.Duration')}</label>
   <div class="form-fields">
     <!-- Amount -->
-    {#if context.system.activation.scalar}
+    {#if context.system.duration.scalar}
       <div class="form-group label-top">
-        <label for="{appId}-activation-value">
-          {localize('DND5E.Amount')}
-        </label>
+        <label for="{appId}-duration-value">{localize('DND5E.Amount')}</label>
         <div class="form-fields">
-          <NumberInput
-            id="{appId}-activation-value"
+          <TextInput
+            id="{appId}-duration-value"
             document={context.item}
-            field="system.activation.value"
-            value={context.source.activation.value}
+            field="system.duration.value"
+            value={context.source.duration.value}
             placeholder="—"
-            min="0"
             disabled={!context.editable}
           />
         </div>
       </div>
     {/if}
 
-    <!-- Type -->
+    <!-- Time -->
     <div class="form-group label-top">
-      <label for="{appId}-activation-type">
-        {localize('DND5E.Cost')}
-      </label>
+      <label for="{appId}-duration-units"
+        >{localize('DND5E.DurationTime')}</label
+      >
       <div class="form-fields">
         <Select
-          id="{appId}-activation-type"
+          id="{appId}-duration-units"
           document={context.item}
-          field="system.activation.type"
-          value={context.source.activation.type}
+          field="system.duration.units"
+          value={context.source.duration.units}
           disabled={!context.editable}
         >
           <SelectOptions
-            data={context.activationTypes}
+            data={context.durationUnits}
             labelProp="label"
             valueProp="value"
           />
@@ -61,14 +56,16 @@
     </div>
   </div>
 
-  <!-- Condition -->
-  <TextInput
-    id="{appId}-activation-condition"
-    document={context.item}
-    field="system.activation.condition"
-    value={context.source.activation.condition}
-    placeholder={localize('DND5E.ItemActivationCondition')}
-    class="full-width"
-    disabled={!context.editable}
-  />
+  <!-- Conditions -->
+  {#if context.system.duration.units === 'spec'}
+    <TextInput
+      id="{appId}-duration-special"
+      document={context.item}
+      field="system.duration.special"
+      value={context.source.duration.special}
+      placeholder={localize('DND5E.DURATION.FIELDS.duration.special.label')}
+      class="full-width"
+      disabled={!context.editable}
+    />
+  {/if}
 </div>
