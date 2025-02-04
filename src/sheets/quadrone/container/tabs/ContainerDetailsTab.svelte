@@ -78,9 +78,11 @@
     {localize('DND5E.CONTAINER.Details')}
   </legend>
 
-  <div class="form-group stacked container-properties">
+  <div class="form-group stacked container-properties checkbox-grid">
     <label for="">{localize('DND5E.CONTAINER.FIELDS.properties.label')}</label>
-    <ItemProperties />
+    <div class="form-fields">
+      <ItemProperties />
+    </div>
   </div>
 
   {#if context.properties.object.mgc}

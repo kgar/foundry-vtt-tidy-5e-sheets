@@ -1,5 +1,4 @@
 .tidy5e-sheet.application:where(.quadrone) {
-  
   input.full-width {
     flex: 0 0 100%;
     margin-top: 0.25rem;
@@ -281,6 +280,27 @@
 
       > label {
         text-align: unset;
+      }
+    }
+  }
+
+  /* Checkbox Grid */
+  .checkbox-grid {
+    --num-cols: 4;
+
+    &.checkbox-grid-3 {
+      --num-cols: 3;
+    }
+
+    > .form-fields {
+      display: grid;
+      grid-template-columns: repeat(var(--num-cols), 1fr);
+
+      > label {
+        text-align: unset;
+        > span {
+          line-height: normal;
+        }
       }
     }
   }

@@ -55,3 +55,7 @@ export function getContainerOrItemSheetContextQuadrone():
     ContainerSheetQuadroneContext | ItemSheetQuadroneContext
   >();
 }
+
+export function getItemSheetContextQuadrone(): ItemSheetQuadroneContext {
+  return getSheetContext<ItemSheetQuadroneContext>();
+}
