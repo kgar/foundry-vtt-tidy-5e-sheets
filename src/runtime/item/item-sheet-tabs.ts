@@ -416,7 +416,7 @@ const itemSheetTabs = {
   },
   quadroneSingleDescription: {
     id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
-    title: 'DND5E.Details',
+    title: 'DND5E.Description',
     content: {
       component: ItemDescriptionQuadroneTab,
       type: 'svelte',
