@@ -164,13 +164,15 @@ export function calculateSpellAttackAndDc(
         spellAbility as keyof typeof CONFIG.DND5E.abilities
       ]?.label ?? FoundryAdapter.localize('DND5E.None');
 
+    const hasSpellcastingProgression =
+      !isNil(spellClass?.system.spellcasting.progression) &&
+      spellClass?.system.spellcasting.progression !==
+        CONSTANTS.SPELLCASTING_PROGRESSION_NONE;
+
     return {
-      dc:
-        spellClass?.system.spellcasting.progression !==
-          CONSTANTS.SPELLCASTING_PROGRESSION_NONE &&
-        !isNil(spellClass?.system.spellcasting.progression)
-          ? spellClass?.system.spellcasting.save
-          : actor.system.attributes.spelldc,
+      dc: hasSpellcastingProgression
+        ? spellClass?.system.spellcasting.save
+        : actor.system.attributes.spelldc,
       dcTooltip: getDcTooltip(actor, spellAbility),
       meleeMod: msakTotal,
       meleeTooltip: buildAttackModTooltip(
