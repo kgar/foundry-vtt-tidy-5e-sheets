@@ -1,12 +1,12 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import Sidebar from './parts/Sidebar.svelte';
   import ItemNameHeaderOrchestrator from './parts/ItemNameHeaderOrchestrator.svelte';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -36,14 +36,14 @@
   >
     <!-- Name -->
     {#if context.unlocked}
-      <TextInput
+      <TextInputQuadrone
         field="name"
         document={context.item}
-        value={context.item.name}
+        value={context.name.editable}
         class="document-name"
       />
     {:else}
-      <div class="document-name">{context.item.name ?? ''}</div>
+      <div class="document-name">{context.item.name}</div>
     {/if}
   </div>
 
