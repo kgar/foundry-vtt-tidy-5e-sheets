@@ -4,9 +4,9 @@
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
 
-  let context = $derived(getItemSheetContext());
+  let context = $derived(getItemSheetContextQuadrone());
 
   let appId = $derived(context.document.id);
 
@@ -34,8 +34,9 @@
               document={context.item}
               field="system.target.affects.count"
               value={context.source.target.affects.count}
+              disabledValue={context.system.target.affects.count}
               placeholder={context.affectsPlaceholder}
-              disabled={!context.editable}
+              disabled={!context.unlocked}
             />
           </div>
         </div>
@@ -51,8 +52,9 @@
             document={context.item}
             field="system.target.affects.type"
             value={context.source.target.affects.type}
+            disabledValue={context.system.target.affects.type}
             blankValue=""
-            disabled={!context.editable}
+            disabled={!context.unlocked}
           >
             <SelectOptions
               data={context.config.individualTargetTypes}
@@ -71,11 +73,12 @@
         document={context.item}
         field="system.target.affects.special"
         value={context.source.target.affects.special}
+        disabledValue={context.system.target.affects.special}
         class="full-width"
         placeholder={localize(
           'DND5E.TARGET.FIELDS.target.affects.special.label',
         )}
-        disabled={!context.editable}
+        disabled={!context.unlocked}
       />
     {/if}
   </div>
@@ -92,7 +95,8 @@
           document={context.item}
           field="system.target.affects.choice"
           checked={context.source.target.affects.choice}
-          disabled={!context.editable}
+          disabledChecked={context.system.target.affects.choice}
+          disabled={!context.unlocked}
         />
       </div>
 
@@ -117,7 +121,8 @@
         document={context.item}
         field="system.target.template.type"
         value={context.source.target.template.type}
-        disabled={!context.editable}
+        disabledValue={context.system.target.template.type}
+        disabled={!context.unlocked}
       >
         <SelectOptions
           data={context.config.areaTargetOptions}
@@ -144,7 +149,8 @@
               document={context.item}
               field="system.target.template.size"
               value={context.source.target.template.size}
-              disabled={!context.editable}
+              disabledValue={context.system.target.template.size}
+              disabled={!context.unlocked}
             />
           </div>
         </div>
@@ -161,7 +167,8 @@
                 document={context.item}
                 field="system.target.template.width"
                 value={context.source.target.template.width}
-                disabled={!context.editable}
+                disabledValue={context.system.target.template.width}
+                disabled={!context.unlocked}
               />
             </div>
           </div>
@@ -179,7 +186,8 @@
                 document={context.item}
                 field="system.target.template.height"
                 value={context.source.target.template.height}
-                disabled={!context.editable}
+                disabledValue={context.system.target.template.height}
+                disabled={!context.unlocked}
               />
             </div>
           </div>
@@ -196,7 +204,8 @@
               document={context.item}
               field="system.target.template.units"
               value={context.source.target.template.units}
-              disabled={!context.editable}
+              disabledValue={context.system.target.template.units}
+              disabled={!context.unlocked}
             >
               <SelectOptions
                 data={context.config.movementUnits}
@@ -225,8 +234,9 @@
               document={context.item}
               field="system.target.template.count"
               value={context.source.target.template.count}
+              disabledValue={context.system.target.template.count}
               placeholder="1"
-              disabled={!context.editable}
+              disabled={!context.unlocked}
             />
           </div>
         </div>
@@ -243,7 +253,8 @@
                 document={context.item}
                 field="system.target.template.contiguous"
                 checked={context.source.target.template.contiguous}
-                disabled={!context.editable}
+                disabledChecked={context.system.target.template.contiguous}
+                disabled={!context.unlocked}
               />
             </div>
           </div>

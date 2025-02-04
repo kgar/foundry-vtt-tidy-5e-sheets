@@ -24,7 +24,8 @@
       document={context.item}
       field="system.type.value"
       value={context.source.type.value}
-      disabled={!context.editable}
+      disabledValue={context.system.type.value}
+      disabled={!context.unlocked}
     >
       <SelectOptions data={context.config.toolTypes} blank="" />
     </SelectQuadrone>
@@ -41,7 +42,8 @@
         document={context.item}
         field="system.type.baseItem"
         value={context.source.type.baseItem}
-        disabled={!context.editable}
+        disabledValue={context.system.type.baseItem}
+        disabled={!context.unlocked}
       >
         <SelectOptions data={context.baseItems} blank="" />
       </SelectQuadrone>
@@ -70,7 +72,8 @@
           document={context.item}
           field="system.proficient"
           value={context.source.proficient}
-          disabled={!context.editable}
+          disabledValue={context.system.proficient}
+          disabled={!context.unlocked}
         >
           <SelectOptions
             data={context.config.proficiencyLevels}
@@ -89,7 +92,8 @@
           document={context.item}
           field="system.ability"
           value={context.source.ability}
-          disabled={!context.editable}
+          disabledValue={context.system.ability}
+          disabled={!context.unlocked}
         >
           <SelectOptions
             data={context.config.abilities}
@@ -111,7 +115,8 @@
       document={context.item}
       field="system.bonus"
       value={context.source.bonus}
-      disabled={!context.editable}
+      disabledValue={context.system.bonus}
+      disabled={!context.unlocked}
     />
   </div>
 </div>
@@ -127,7 +132,8 @@
         document={context.item}
         field="system.attuned"
         checked={context.source.attuned}
-        disabled={!context.editable ||
+        disabledChecked={context.system.attuned}
+        disabled={!context.unlocked ||
           // @ts-expect-error
           !context.config.attunementTypes[context.source.attunement]}
         title={localize('DND5E.Attuned')}
@@ -139,7 +145,8 @@
         document={context.item}
         field="system.attunement"
         value={context.source.attunement}
-        disabled={!context.editable}
+        disabledValue={context.system.attunement}
+        disabled={!context.unlocked}
       >
         <SelectOptions
           data={context.config.attunementTypes}

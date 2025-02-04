@@ -3,9 +3,9 @@
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
 
-  let context = $derived(getItemSheetContext());
+  let context = $derived(getItemSheetContextQuadrone());
 
   let appId = $derived(context.document.id);
 
@@ -26,7 +26,8 @@
             document={context.item}
             field="system.range.value"
             value={context.source.range.value}
-            disabled={!context.editable}
+            disabledValue={context.system.range.value}
+            disabled={!context.unlocked}
           />
         </div>
       </div>
@@ -41,7 +42,8 @@
           document={context.item}
           field="system.range.units"
           value={context.source.range.units}
-          disabled={!context.editable}
+          disabledValue={context.system.range.units}
+          disabled={!context.unlocked}
         >
           <SelectOptions
             data={context.rangeTypes}
@@ -59,8 +61,9 @@
     document={context.item}
     field="system.range.special"
     value={context.source.range.special}
+    disabledValue={context.system.range.special}
     class="full-width"
     placeholder={localize('DND5E.RANGE.FIELDS.range.special.label')}
-    disabled={!context.editable}
+    disabled={!context.unlocked}
   />
 </div>

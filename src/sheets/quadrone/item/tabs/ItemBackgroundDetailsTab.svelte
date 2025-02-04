@@ -2,9 +2,9 @@
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import ItemStartingEquipment from '../parts/ItemStartingEquipment.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
 
-  let context = $derived(getItemSheetContext());
+  let context = $derived(getItemSheetContextQuadrone());
 
   let appId = $derived(context.document.id);
 
@@ -19,8 +19,9 @@
       document={context.item}
       field="system.identifier"
       value={context.source.identifier}
+      disabledValue={context.system.identifier}
       placeholder={context.item.identifier}
-      disabled={!context.editable}
+      disabled={!context.unlocked}
     />
   </div>
   <p class="hint">{localize('DND5E.IdentifierError')}</p>

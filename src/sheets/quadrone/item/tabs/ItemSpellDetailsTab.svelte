@@ -8,13 +8,13 @@
   import FieldActivation from '../parts/FieldActivation.svelte';
   import FieldRange from '../parts/FieldRange.svelte';
   import FieldDuration from '../parts/FieldDuration.svelte';
-  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
 
-  let context = $derived(getItemSheetContext());
+  let context = $derived(getItemSheetContextQuadrone());
 
   let appId = $derived(context.document.id);
 
@@ -34,7 +34,8 @@
       document={context.item}
       field="system.level"
       value={context.source.level}
-      disabled={!context.editable}
+      disabledValue={context.system.level}
+      disabled={!context.unlocked}
     >
       <SelectOptions data={context.config.spellLevels} />
     </SelectQuadrone>
@@ -48,7 +49,8 @@
       document={context.item}
       field="system.school"
       value={context.source.school}
-      disabled={!context.editable}
+      disabledValue={context.system.school}
+      disabled={!context.unlocked}
     >
       <SelectOptions
         data={context.config.spellSchools}
@@ -82,8 +84,9 @@
             document={context.item}
             field="system.materials.supply"
             value={context.source.materials.supply}
+            disabledValue={context.system.materials.supply}
             min="0"
-            disabled={!context.editable}
+            disabled={!context.unlocked}
           />
         </div>
 
@@ -103,9 +106,10 @@
               document={context.item}
               field="system.materials.cost"
               value={context.source.materials.cost}
+              disabledValue={context.system.materials.cost}
               min="0"
               placeholder="—"
-              disabled={!context.editable}
+              disabled={!context.unlocked}
             />
           </div>
         </div>
@@ -121,7 +125,8 @@
               document={context.item}
               field="system.materials.consumed"
               checked={context.source.materials.consumed}
-              disabled={!context.editable}
+              disabledChecked={context.system.materials.consumed}
+              disabled={!context.unlocked}
             />
           </div>
         </div>
@@ -133,8 +138,9 @@
         document={context.item}
         field="system.materials.value"
         value={context.source.materials.value}
+        disabledValue={context.system.materials.value}
         class="full-width"
-        disabled={!context.editable}
+        disabled={!context.unlocked}
       />
     </div>
   {/if}
@@ -152,9 +158,10 @@
           document={context.item}
           field="system.preparation.prepared"
           checked={context.source.preparation.prepared}
+          disabledChecked={context.system.preparation.prepared}
           title={localize('DND5E.Prepared')}
           aria-label={localize('DND5E.Prepared')}
-          disabled={!context.editable}
+          disabled={!context.unlocked}
         />
       {/if}
 
@@ -164,7 +171,8 @@
         document={context.item}
         field="system.preparation.mode"
         value={context.source.preparation.mode}
-        disabled={!context.editable}
+        disabledValue={context.system.preparation.mode}
+        disabled={!context.unlocked}
       >
         <SelectOptions
           data={context.config.spellPreparationModes}
@@ -186,7 +194,8 @@
           document={context.item}
           field="system.sourceClass"
           value={context.source.sourceClass}
-          disabled={!context.editable}
+          disabledValue={context.system.sourceClass}
+          disabled={!context.unlocked}
           blankValue=""
         >
           <SelectOptions
@@ -203,7 +212,8 @@
       document={context.item}
       field="system.ability"
       value={context.source.ability}
-      disabled={!context.editable}
+      disabledValue={context.system.ability}
+      disabled={!context.unlocked}
       blankValue=""
     >
       <SelectOptions
@@ -223,7 +233,8 @@
           document={context.item}
           field="system.sourceClass"
           value={context.source.sourceClass}
-          disabled={!context.editable}
+          disabledValue={context.system.sourceClass}
+          disabled={!context.unlocked}
         />
       </div>
     </div>

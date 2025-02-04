@@ -3,13 +3,13 @@
   import DetailsSpellcasting from '../parts/DetailsSpellcasting.svelte';
   import ItemStartingEquipment from '../parts/ItemStartingEquipment.svelte';
   import { mapMulticlassingAbilitiesToSave } from 'src/utils/system-properties';
-  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
   import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
 
-  let context = $derived(getItemSheetContext());
+  let context = $derived(getItemSheetContextQuadrone());
 
   let appId = $derived(context.document.id);
 
@@ -36,8 +36,9 @@
         document={context.item}
         field="system.identifier"
         value={context.source.identifier}
+        disabledValue={context.system.identifier}
         placeholder={context.item.identifier}
-        disabled={!context.editable}
+        disabled={!context.unlocked}
       />
     </div>
     <p class="hint">
@@ -61,7 +62,8 @@
             document={context.item}
             field="system.hd.denomination"
             value={context.source.hd.denomination}
-            disabled={!context.editable}
+            disabledValue={context.system.hd.denomination}
+            disabled={!context.unlocked}
           >
             {#each context.config.hitDieTypes as type}
               <option value={type}>{type}</option>
@@ -80,8 +82,9 @@
             document={context.item}
             field="system.hd.spent"
             value={context.source.hd.spent}
+            disabledValue={context.system.hd.spent}
             placeholder="0"
-            disabled={!context.editable}
+            disabled={!context.unlocked}
           />
         </div>
       </div>
@@ -95,6 +98,7 @@
         document={context.item}
         field="system.hd.additional"
         value={context.source.hd.additional}
+        disabledValue={context.system.hd.additional}
       />
     </div>
     <p class="hint">
@@ -119,9 +123,10 @@
             id="{appId}-primaryAbility-value-{key?.slugify()}"
             document={context.item}
             field="system.primaryAbility.value"
-            checked={context.system.primaryAbility.value.has(key)}
+            checked={context.source.primaryAbility.value.has(key)}
+            disabledChecked={context.system.primaryAbility.value.has(key)}
             value={key}
-            disabled={!context.editable}
+            disabled={!context.unlocked}
             onDataPreparing={(ev) =>
               mapMulticlassingAbilitiesToSave(context, ev)}
           />
@@ -145,7 +150,8 @@
           document={context.item}
           field="system.primaryAbility.fields.all"
           checked={context.source.primaryAbility.all}
-          disabled={!context.editable}
+          disabledChecked={context.system.primaryAbility.all}
+          disabled={!context.unlocked}
         />
       </div>
 

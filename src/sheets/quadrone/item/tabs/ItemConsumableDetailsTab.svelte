@@ -5,12 +5,12 @@
   import { CONSTANTS } from 'src/constants';
   import FieldDamage from '../parts/FieldDamage.svelte';
   import FieldUses from '../parts/FieldUses.svelte';
-  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
   import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
 
-  let context = $derived(getItemSheetContext());
+  let context = $derived(getItemSheetContextQuadrone());
 
   let appId = $derived(context.document.id);
 
@@ -31,8 +31,9 @@
         id="{appId}-type-value"
         document={context.item}
         field="system.type.value"
-        value={context.system.type.value}
-        disabled={!context.editable}
+        value={context.source.type.value}
+        disabledValue={context.system.type.value}
+        disabled={!context.unlocked}
         blankValue=""
       >
         <SelectOptions
@@ -57,8 +58,9 @@
           id="{appId}-type-subtype"
           document={context.item}
           field="system.type.subtype"
-          value={context.system.type.subtype}
-          disabled={!context.editable}
+          value={context.source.type.subtype}
+          disabledValue={context.system.type.subtype}
+          disabled={!context.unlocked}
         >
           <SelectOptions data={context.itemSubtypes} blank="" />
         </SelectQuadrone>
@@ -95,7 +97,8 @@
               document={context.item}
               field="system.attuned"
               checked={context.source.attuned}
-              disabled={!context.editable ||
+              disabledChecked={context.system.attuned}
+              disabled={!context.unlocked ||
                 // @ts-expect-error
                 !context.config.attunementTypes[context.system.attunement]}
               title={localize('DND5E.AttunementAttuned')}
@@ -105,8 +108,9 @@
               id="${appId}-system-attunement"
               document={context.item}
               field="system.attunement"
-              value={context.system.attunement}
-              disabled={!context.editable}
+              value={context.source.attunement}
+              disabledValue={context.system.attunement}
+              disabled={!context.unlocked}
               class="flex-1"
             >
               <SelectOptions
@@ -123,10 +127,11 @@
             <div class="form-fields">
               <NumberInputQuadrone
                 id="{appId}-magical-bonus"
-                value={context.system.magicalBonus}
+                value={context.source.magicalBonus}
+                disabledValue={context.system.magicalBonus}
                 field="system.magicalBonus"
                 document={context.item}
-                disabled={!context.editable}
+                disabled={!context.unlocked}
                 min="0"
                 step="1"
                 placeholder="0"
@@ -154,7 +159,8 @@
         document={context.item}
         field="system.damage.replace"
         checked={context.source.damage.replace}
-        disabled={!context.editable}
+        disabledChecked={context.system.damage.replace}
+        disabled={!context.unlocked}
       />
     </div>
     <p class="hint">
@@ -166,6 +172,7 @@
     <FieldDamage
       prefix="system.damage.base."
       source={context.source.damage.base}
+      system={context.system.damage.base}
       denominationOptions={context.denominationOptions}
       types={context.damageTypes}
     />

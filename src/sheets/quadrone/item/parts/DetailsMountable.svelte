@@ -32,7 +32,8 @@
         document={context.item}
         field="system.armor.value"
         value={context.source.armor.value}
-        disabled={!context.editable}
+        disabledValue={context.system.armor.value}
+        disabled={!context.unlocked}
         step="1"
       />
     </div>
@@ -49,7 +50,8 @@
         document={context.item}
         field="system.cover"
         value={context.source.cover}
-        disabled={!context.editable}
+        disabledValue={context.system.cover}
+        disabled={!context.unlocked}
       >
         <SelectOptions
           data={context.coverOptions}
@@ -76,7 +78,8 @@
           document={context.item}
           field="system.hp.value"
           value={context.source.hp.value}
-          disabled={!context.editable}
+          disabledValue={context.system.hp.value}
+          disabled={!context.unlocked}
           placeholder="0"
           min="0"
         />
@@ -91,7 +94,8 @@
             document={context.item}
             field="system.hp.max"
             value={context.source.hp.max}
-            disabled={!context.editable}
+            disabledValue={context.system.hp.max}
+            disabled={!context.unlocked}
             placeholder="0"
             min="0"
           />
@@ -107,7 +111,8 @@
             document={context.item}
             field="system.hp.dt"
             value={context.source.hp.dt}
-            disabled={!context.editable}
+            disabledValue={context.system.hp.dt}
+            disabled={!context.unlocked}
             placeholder="—"
             min="0"
           />
@@ -119,12 +124,13 @@
       id="{appId}-hp-conditions"
       document={context.item}
       field="system.hp.conditions"
-      value={context.item.system.hp.conditions}
+      value={context.source.hp.conditions}
+      disabledValue={context.system.hp.conditions}
       placeholder={localize(
         'DND5E.VEHICLE.MOUNTABLE.FIELDS.hp.conditions.label',
       )}
       class="full-width"
-      disabled={!context.editable}
+      disabled={!context.unlocked}
     />
   </div>
 
@@ -143,10 +149,11 @@
               id="{appId}-speed-value"
               document={context.item}
               field="system.speed.value"
-              value={context.item.system.speed.value}
+              value={context.source.system.speed.value}
+              disabledValue={context.system.speed.value}
               min="0"
               placeholder="0"
-              disabled={!context.editable}
+              disabled={!context.unlocked}
             />
           </div>
         </div>
@@ -156,12 +163,13 @@
         id="{appId}-speed-conditions"
         document={context.item}
         field="system.speed.conditions"
-        value={context.item.system.speed.conditions}
+        value={context.source.speed.conditions}
+        disabledValue={context.system.speed.conditions}
         placeholder={localize(
           'DND5E.VEHICLE.MOUNTABLE.FIELDS.speed.conditions.label',
         )}
         class="full-width"
-        disabled={!context.editable}
+        disabled={!context.unlocked}
       />
     </div>
   {/if}

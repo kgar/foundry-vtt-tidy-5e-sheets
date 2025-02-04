@@ -2,16 +2,14 @@
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
-  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
   import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
 
-  let context = $derived(getItemSheetContext());
+  let context = $derived(getItemSheetContextQuadrone());
 
   let appId = $derived(context.document.id);
-
-  let source = $derived(context.source);
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -30,9 +28,11 @@
       <SelectQuadrone
         document={context.document}
         field="system.type.value"
-        value={source.type.value}
+        value={context.source.type.value}
+        disabledValue={context.system.type.value}
         id="{appId}-system-type-value"
         blankValue={null}
+        disabled={!context.unlocked}
       >
         <SelectOptions
           data={context.config.facilities.types}
@@ -52,8 +52,10 @@
       <SelectQuadrone
         document={context.document}
         field="system.type.subtype"
-        value={source.type.subtype}
+        value={context.source.type.subtype}
+        disabledValue={context.system.type.subtype}
         id="{appId}-system-type-subtype"
+        disabled={!context.unlocked}
       >
         <SelectOptions
           data={context.facilitySubtypes ?? {}}
@@ -74,8 +76,10 @@
       <SelectQuadrone
         document={context.document}
         field="system.size"
-        value={source.size}
+        value={context.source.size}
+        disabledValue={context.system.size}
         id="{appId}-system-size"
+        disabled={!context.unlocked}
       >
         <SelectOptions data={context.config.facilities.sizes} labelProp="label"
         ></SelectOptions>
@@ -84,7 +88,7 @@
   </div>
 
   <!-- Level -->
-  {#if source.type.value === CONSTANTS.FACILITY_TYPE_BASIC}
+  {#if context.source.type.value === CONSTANTS.FACILITY_TYPE_BASIC}
     <div class="form-group">
       <label for="{appId}-system-level">
         {localize('DND5E.FACILITY.FIELDS.level.label')}
@@ -94,16 +98,18 @@
           id="{appId}-system-level"
           document={context.document}
           field="system.level"
-          value={source.level}
+          value={context.source.level}
+          disabledValue={context.system.level}
           selectOnFocus={true}
           min="1"
           step="1"
+          disabled={!context.unlocked}
         />
       </div>
     </div>
   {/if}
 
-  {#if source.type.value === CONSTANTS.FACILITY_TYPE_SPECIAL}
+  {#if context.source.type.value === CONSTANTS.FACILITY_TYPE_SPECIAL}
     <!-- Properties -->
     <div class="form-group split-group">
       <label for="{appId}-system-level">
@@ -120,10 +126,12 @@
               id="{appId}-system-level"
               document={context.document}
               field="system.level"
-              value={source.level}
+              value={context.source.level}
+              disabledValue={context.system.level}
               selectOnFocus={true}
               min="1"
               step="1"
+              disabled={!context.unlocked}
             />
           </div>
         </div>
@@ -137,8 +145,10 @@
             <SelectQuadrone
               document={context.document}
               field="system.order"
-              value={source.order}
+              value={context.source.order}
+              disabledValue={context.system.order}
               id="{appId}-system-order"
+              disabled={!context.unlocked}
             >
               <SelectOptions
                 data={context.orders?.available ?? []}
@@ -168,11 +178,13 @@
               id="{appId}-system-hirelings-max"
               document={context.document}
               field="system.hirelings.max"
-              value={source.hirelings.max}
+              value={context.source.hirelings.max}
+              disabledValue={context.system.hirelings.max}
               selectOnFocus={true}
               min="1"
               step="1"
               placeholder="—"
+              disabled={!context.unlocked}
             />
           </div>
         </div>
@@ -188,11 +200,13 @@
                 id="{appId}-system-defenders-max"
                 document={context.document}
                 field="system.defenders.max"
-                value={source.defenders.max}
+                value={context.source.defenders.max}
+                disabledValue={context.system.defenders.max}
                 selectOnFocus={true}
                 min="1"
                 step="1"
                 placeholder="—"
+                disabled={!context.unlocked}
               />
             </div>
           </div>
@@ -210,7 +224,9 @@
           id="{appId}-system-free"
           document={context.document}
           field="system.free"
-          checked={source.free}
+          checked={context.source.free}
+          disabledChecked={context.system.free}
+          disabled={!context.unlocked}
         />
       </div>
       <p class="hint">
@@ -228,7 +244,9 @@
           id="{appId}-system-enlargeable"
           document={context.document}
           field="system.enlargeable"
-          checked={source.enlargeable}
+          checked={context.source.enlargeable}
+          disabledChecked={context.system.enlargeable}
+          disabled={!context.unlocked}
         />
       </div>
       <p class="hint">
@@ -246,7 +264,9 @@
           id="{appId}-system-disabled"
           document={context.document}
           field="system.disabled"
-          checked={source.disabled}
+          checked={context.source.disabled}
+          disabledChecked={context.system.disabled}
+          disabled={!context.unlocked}
         />
       </div>
       <p class="hint">
@@ -264,7 +284,9 @@
           id="{appId}-system-building-built"
           document={context.document}
           field="system.building.built"
-          checked={source.building.built}
+          checked={context.source.building.built}
+          disabledChecked={context.system.building.built}
+          disabled={!context.unlocked}
         />
       </div>
       <p class="hint">
@@ -288,7 +310,9 @@
       <SelectQuadrone
         document={context.document}
         field="system.progress.order"
-        value={source.progress.order}
+        value={context.source.progress.order}
+        disabledValue={context.system.progress.order}
+        disabled={!context.unlocked}
         id="{appId}-system-progress-order"
       >
         <SelectOptions
@@ -318,11 +342,13 @@
               id="{appId}-system-progress-value"
               document={context.document}
               field="system.progress.value"
-              value={source.progress.value}
+              value={context.source.progress.value}
+              disabledValue={context.system.progress.value}
               selectOnFocus={true}
               min="0"
               step="0"
               placeholder="—"
+              disabled={!context.unlocked}
             />
           </div>
         </div>
@@ -338,11 +364,13 @@
             id="{appId}-system-progress-max"
             document={context.document}
             field="system.progress.max"
-            value={source.progress.max}
+            value={context.source.progress.max}
+            disabledValue={context.system.progress.max}
             selectOnFocus={true}
             min="1"
             step="1"
             placeholder="—"
+            disabled={!context.unlocked}
           />
         </div>
       </div>
@@ -353,7 +381,7 @@
 {#if context.canCraft}
   <fieldset>
     <legend>
-      {localize(`DND5E.FACILITY.Orders.${source.order}.present`)}
+      {localize(`DND5E.FACILITY.Orders.${context.source.order}.present`)}
     </legend>
 
     <p class="hint">
@@ -398,8 +426,10 @@
             id="{appId}-system-craft-quantity"
             document={context.document}
             field="system.craft.quantity"
-            value={source.craft.quantity}
+            value={context.source.craft.quantity}
+            disabledValue={context.system.craft.quantity}
             selectOnFocus={true}
+            disabled={!context.unlocked}
           />
         </div>
       {/if}
@@ -407,7 +437,7 @@
   </fieldset>
 {/if}
 
-{#if source.type.value === CONSTANTS.FACILITY_TYPE_SPECIAL && source.order === 'trade'}
+{#if context.source.type.value === CONSTANTS.FACILITY_TYPE_SPECIAL && context.source.order === 'trade'}
   <fieldset>
     <legend>
       {localize('DND5E.FACILITY.Orders.trade.present')}
@@ -423,7 +453,9 @@
           id="{appId}-system-trade-stock-stocked"
           document={context.document}
           field="system.trade.stock.stocked"
-          checked={source.trade.stock.stocked}
+          checked={context.source.trade.stock.stocked}
+          disabledChecked={context.system.trade.stock.stocked}
+          disabled={!context.unlocked}
         />
       </div>
     </div>
@@ -444,11 +476,13 @@
               id="{appId}-system-trade-stock-value"
               document={context.document}
               field="system.trade.stock.value"
-              value={source.trade.stock.value}
+              value={context.source.trade.stock.value}
+              disabledValue={context.system.trade.stock.value}
               selectOnFocus={true}
               min="0"
               step="0"
               placeholder="—"
+              disabled={!context.unlocked}
             />
           </div>
         </div>
@@ -463,11 +497,13 @@
               id="{appId}-system-trade-stock-max"
               document={context.document}
               field="system.trade.stock.max"
-              value={source.trade.stock.max}
+              value={context.source.trade.stock.max}
+              disabledValue={context.system.trade.stock.max}
               selectOnFocus={true}
               min="1"
               step="1"
               placeholder="—"
+              disabled={!context.unlocked}
             />
           </div>
         </div>
@@ -484,11 +520,13 @@
           id="{appId}-system-trade-creatures-max"
           document={context.document}
           field="system.trade.creatures.max"
-          value={source.trade.creatures.max}
+          value={context.source.trade.creatures.max}
+          disabledValue={context.system.trade.creatures.max}
           selectOnFocus={true}
           min="1"
           step="1"
           placeholder="—"
+          disabled={!context.unlocked}
         />
       </div>
     </div>
@@ -503,11 +541,13 @@
           id="{appId}-system-trade-profit"
           document={context.document}
           field="system.trade.profit"
-          value={source.trade.profit}
+          value={context.source.trade.profit}
+          disabledValue={context.system.trade.profit}
           selectOnFocus={true}
           min="0"
           step="0"
           placeholder="—"
+          disabled={!context.unlocked}
         />
         <span class="sep unit">&percnt;</span>
       </div>

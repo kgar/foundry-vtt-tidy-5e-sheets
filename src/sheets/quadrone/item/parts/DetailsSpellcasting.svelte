@@ -1,12 +1,14 @@
 <script lang="ts">
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import {
+    getItemSheetContextQuadrone,
+  } from 'src/sheets/sheet-context.svelte';
   import { MaxPreparedSpellsConfigFormApplication } from 'src/applications/max-prepared-spells-config/MaxPreparedSpellsConfigFormApplication.svelte';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
 
-  let context = $derived(getItemSheetContext());
+  let context = $derived(getItemSheetContextQuadrone());
 
   let appId = $derived(context.document.id);
 
@@ -22,8 +24,9 @@
       id="{appId}-spellcasting-progression"
       document={context.item}
       field="system.spellcasting.progression"
-      value={context.system.spellcasting.progression}
-      disabled={!context.editable}
+      value={context.source.spellcasting.progression}
+      disabledValue={context.system.spellcasting.progression}
+      disabled={!context.unlocked}
     >
       <SelectOptions data={context.config.spellProgression} />
     </SelectQuadrone>
@@ -39,8 +42,9 @@
       id="{appId}-spellcasting-ability"
       document={context.item}
       field="system.spellcasting.ability"
-      value={context.system.spellcasting.ability}
-      disabled={!context.editable}
+      value={context.source.spellcasting.ability}
+      disabledValue={context.system.spellcasting.ability}
+      disabled={!context.unlocked}
     >
       <SelectOptions
         data={context.config.abilities}
@@ -60,9 +64,10 @@
       id="{appId}-spellcasting-preparation-formula"
       document={context.item}
       field="system.spellcasting.preparation.formula"
-      value={context.system.spellcasting.preparation.formula}
+      value={context.source.spellcasting.preparation.formula}
+      disabledValue={context.system.spellcasting.preparation.formula}
       data-formula-editor="true"
-      disabled={!context.editable}
+      disabled={!context.unlocked}
     />
     <a
       title={localize('TIDY5E.MaxPreparedSpellsConfig.ExamplesHeader')}

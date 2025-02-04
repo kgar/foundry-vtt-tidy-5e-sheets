@@ -4,12 +4,12 @@
   import ItemProperties from '../parts/ItemProperties.svelte';
   import DetailsMountable from '../parts/DetailsMountable.svelte';
   import FieldUses from '../parts/FieldUses.svelte';
-  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
   import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
 
-  let context = $derived(getItemSheetContext());
+  let context = $derived(getItemSheetContextQuadrone());
 
   let appId = $derived(context.document.id);
 
@@ -31,8 +31,9 @@
         document={context.item}
         field="system.type.value"
         value={context.source.type.value}
+        disabledValue={context.system.type.value}
         blankValue=""
-        disabled={!context.editable}
+        disabled={!context.unlocked}
       >
         <SelectOptions
           data={context.equipmentTypes}
@@ -56,8 +57,9 @@
           document={context.item}
           field="system.type.baseItem"
           value={context.source.type.baseItem}
+          disabledValue={context.system.type.baseItem}
           blankValue=""
-          disabled={!context.editable}
+          disabled={!context.unlocked}
         >
           <SelectOptions
             data={context.baseItems}
@@ -79,8 +81,9 @@
         document={context.item}
         field="system.proficient"
         value={context.source.proficient}
+        disabledValue={context.system.proficient}
         blankValue=""
-        disabled={!context.editable}
+        disabled={!context.unlocked}
       >
         <SelectOptions
           data={context.config.weaponAndArmorProficiencyLevels}
@@ -106,8 +109,9 @@
               document={context.item}
               field="system.armor.value"
               value={context.source.armor.value}
+              disabledValue={context.system.armor.value}
               step="1"
-              disabled={!context.editable}
+              disabled={!context.unlocked}
             />
           </div>
         </div>
@@ -123,9 +127,10 @@
                 document={context.item}
                 field="system.armor.dex"
                 value={context.source.armor.dex}
+                disabledValue={context.system.armor.dex}
                 step="1"
                 placeholder="∞"
-                disabled={!context.editable}
+                disabled={!context.unlocked}
               />
             </div>
           </div>
@@ -141,9 +146,10 @@
               document={context.item}
               field="system.strength"
               value={context.source.strength}
+              disabledValue={context.system.strength}
               step="1"
               placeholder="—"
-              disabled={!context.editable}
+              disabled={!context.unlocked}
             />
           </div>
         </div>
@@ -176,7 +182,8 @@
                 document={context.item}
                 field="system.attuned"
                 checked={context.source.attuned}
-                disabled={!context.editable ||
+                disabledChecked={context.system.attuned}
+                disabled={!context.unlocked ||
                   // @ts-expect-error
                   !context.config.attunementTypes[context.system.attunement]}
                 title={localize('DND5E.AttunementAttuned')}
@@ -187,7 +194,8 @@
                 document={context.item}
                 field="system.attunement"
                 value={context.source.attunement}
-                disabled={!context.editable}
+                disabledValue={context.system.attunement}
+                disabled={!context.unlocked}
                 class="flex-1"
               >
                 <SelectOptions
@@ -204,9 +212,10 @@
             <NumberInputQuadrone
               id="{appId}-magical-bonus"
               value={context.source.armor.magicalBonus}
+              disabledValue={context.system.armor.magicalBonus}
               field="system.armor.magicalBonus"
               document={context.item}
-              disabled={!context.editable}
+              disabled={!context.unlocked}
               min="0"
               step="1"
               placeholder="0"

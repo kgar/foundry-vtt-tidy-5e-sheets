@@ -3,14 +3,14 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ItemProperties from '../parts/ItemProperties.svelte';
   import FieldUses from '../parts/FieldUses.svelte';
-  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import { CONSTANTS } from 'src/constants';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
   import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
 
-  let context = $derived(getItemSheetContext());
+  let context = $derived(getItemSheetContextQuadrone());
 
   let appId = $derived(context.document.id);
 
@@ -30,7 +30,8 @@
         document={context.item}
         field="system.type.value"
         value={context.source.type.value}
-        disabled={!context.editable}
+        disabledValue={context.system.type.value}
+        disabled={!context.unlocked}
       >
         <SelectOptions
           data={context.config.featureTypes}
@@ -55,7 +56,8 @@
           document={context.item}
           field="system.type.subtype"
           value={context.source.type.subtype}
-          disabled={!context.editable}
+          disabledValue={context.system.type.subtype}
+          disabled={!context.unlocked}
         >
           <SelectOptions data={context.itemSubtypes} blank="" />
         </SelectQuadrone>
@@ -74,7 +76,8 @@
           document={context.item}
           field="system.cover"
           value={context.source.cover}
-          disabled={!context.editable}
+          disabledValue={context.system.cover}
+          disabled={!context.unlocked}
         >
           <SelectOptions
             data={context.coverOptions}
@@ -100,7 +103,8 @@
         document={context.item}
         field="system.prerequisites.level"
         value={context.source.prerequisites.level}
-        disabled={!context.editable}
+        disabledValue={context.system.prerequisites.level}
+        disabled={!context.unlocked}
         step="1"
       />
     </div>
@@ -120,6 +124,8 @@
         document={context.item}
         field="system.prerequisites.repeatable"
         checked={context.source.prerequisites.repeatable}
+        disabledChecked={context.system.prerequisites.repeatable}
+        disabled={!context.unlocked}
       />
     </div>
     <p class="hint">
@@ -154,7 +160,8 @@
           document={context.item}
           field="system.enchant.max"
           value={context.source.enchant.max}
-          disabled={!context.editable}
+          disabledValue={context.system.enchant.max}
+          disabled={!context.unlocked}
         />
       </div>
 
@@ -176,8 +183,9 @@
           document={context.item}
           field="system.enchant.period"
           value={context.source.enchant.period}
+          disabledValue={context.system.enchant.period}
           blankValue=""
-          disabled={!context.editable}
+          disabled={!context.unlocked}
         >
           <SelectOptions
             data={context.config.enchantmentPeriods}

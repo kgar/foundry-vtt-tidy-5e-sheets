@@ -29,7 +29,8 @@
           document={context.item}
           field="system.uses.spent"
           value={context.source.uses.spent}
-          disabled={!context.editable}
+          disabledValue={context.system.uses.spent}
+          disabled={!context.unlocked}
         />
       </div>
 
@@ -42,7 +43,8 @@
             document={context.item}
             field="system.uses.max"
             value={context.source.uses.max}
-            disabled={!context.editable}
+            disabledValue={context.system.uses.max}
+            disabled={!context.unlocked}
           />
         </div>
       </div>
@@ -61,7 +63,8 @@
           document={context.item}
           field="system.uses.autoDestroy"
           checked={context.source.uses.autoDestroy}
-          disabled={!context.editable}
+          disabledChecked={context.system.uses.autoDestroy}
+          disabled={!context.unlocked}
         />
       </div>
       <p class="hint">
@@ -99,6 +102,7 @@
             <label for="{appId}-uses-recovery-{index}-period">
               {localize('DND5E.USES.FIELDS.uses.recovery.FIELDS.period.label')}
             </label>
+            <!-- TODO: Figure this out; where is the system vs. source value? -->
             <select
               id="{appId}-uses-recovery-{index}-period"
               data-tidy-field="system.uses.recovery.{index}.period"
@@ -109,7 +113,7 @@
                   'period',
                   ev.currentTarget.value,
                 )}
-              disabled={!context.editable}
+              disabled={!context.unlocked}
             >
               <SelectOptions
                 data={context.recoveryPeriods}
@@ -125,6 +129,7 @@
               <label for="{appId}-uses-recovery-{index}-type">
                 {localize('DND5E.USES.FIELDS.uses.recovery.FIELDS.type.label')}
               </label>
+            <!-- TODO: Figure this out; where is the system vs. source value? -->
               <select
                 id="{appId}-uses-recovery-{index}-type"
                 data-tidy-field="system.uses.recovery.{index}.type"
@@ -135,7 +140,7 @@
                     'type',
                     ev.currentTarget.value,
                   )}
-                disabled={!context.editable}
+                disabled={!context.unlocked}
               >
                 <SelectOptions
                   data={context.recoveryTypes}
@@ -155,6 +160,7 @@
                 )}
               </label>
               {#if recovery.formulaOptions}
+            <!-- TODO: Figure this out; where is the system vs. source value? -->
                 <select
                   id="{appId}-uses-recovery-{index}-formula"
                   data-tidy-field="system.uses.recovery.{index}.formula"
@@ -165,7 +171,7 @@
                       ev.currentTarget.value,
                     )}
                   value={recovery.data.formula}
-                  disabled={!context.editable}
+                  disabled={!context.unlocked}
                 >
                   <SelectOptions
                     data={recovery.formulaOptions}
@@ -174,6 +180,7 @@
                   />
                 </select>
               {:else if recovery.data.type === 'formula'}
+            <!-- TODO: Figure this out; where is the system vs. source value? -->
                 <input
                   type="text"
                   id="{appId}-uses-recovery-{index}-formula"
@@ -184,7 +191,7 @@
                       'formula',
                       ev.currentTarget.value,
                     )}
-                  disabled={!context.editable}
+                  disabled={!context.unlocked}
                   value={recovery.data.formula ?? ''}
                 />
               {/if}

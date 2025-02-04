@@ -3,9 +3,9 @@
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
 
-  let context = $derived(getItemSheetContext());
+  let context = $derived(getItemSheetContextQuadrone());
 
   let appId = $derived(context.document.id);
 
@@ -26,8 +26,9 @@
             document={context.item}
             field="system.duration.value"
             value={context.source.duration.value}
+            disabledValue={context.system.duration.value}
             placeholder="—"
-            disabled={!context.editable}
+            disabled={!context.unlocked}
           />
         </div>
       </div>
@@ -44,7 +45,8 @@
           document={context.item}
           field="system.duration.units"
           value={context.source.duration.units}
-          disabled={!context.editable}
+          disabledValue={context.system.duration.units}
+          disabled={!context.unlocked}
         >
           <SelectOptions
             data={context.durationUnits}
@@ -63,9 +65,10 @@
       document={context.item}
       field="system.duration.special"
       value={context.source.duration.special}
+      disabledValue={context.system.duration.special}
       placeholder={localize('DND5E.DURATION.FIELDS.duration.special.label')}
       class="full-width"
-      disabled={!context.editable}
+      disabled={!context.unlocked}
     />
   {/if}
 </div>

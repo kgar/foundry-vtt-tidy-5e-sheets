@@ -4,9 +4,9 @@
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
 
-  let context = $derived(getItemSheetContext());
+  let context = $derived(getItemSheetContextQuadrone());
 
   let appId = $derived(context.document.id);
 
@@ -30,9 +30,10 @@
             document={context.item}
             field="system.activation.value"
             value={context.source.activation.value}
+            disabledValue={context.system.activation.value}
             placeholder="—"
             min="0"
-            disabled={!context.editable}
+            disabled={!context.unlocked}
           />
         </div>
       </div>
@@ -49,7 +50,8 @@
           document={context.item}
           field="system.activation.type"
           value={context.source.activation.type}
-          disabled={!context.editable}
+          disabledValue={context.system.activation.type}
+          disabled={!context.unlocked}
         >
           <SelectOptions
             data={context.activationTypes}
@@ -67,8 +69,9 @@
     document={context.item}
     field="system.activation.condition"
     value={context.source.activation.condition}
+    disabledValue={context.system.activation.condition}
     placeholder={localize('DND5E.ItemActivationCondition')}
     class="full-width"
-    disabled={!context.editable}
+    disabled={!context.unlocked}
   />
 </div>

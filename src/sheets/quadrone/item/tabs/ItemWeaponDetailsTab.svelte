@@ -31,7 +31,8 @@
         document={context.item}
         field="system.type.value"
         value={context.source.type.value}
-        disabled={!context.editable}
+        disabledValue={context.system.type.value}
+        disabled={!context.unlocked}
         blankValue=""
       >
         <SelectOptions data={context.config.weaponTypes} blank="" />
@@ -51,7 +52,8 @@
           document={context.item}
           field="system.type.baseItem"
           value={context.source.type.baseItem}
-          disabled={!context.editable}
+          disabledValue={context.system.type.baseItem}
+          disabled={!context.unlocked}
         >
           <SelectOptions data={context.baseItems} blank="" />
         </SelectQuadrone>
@@ -71,7 +73,8 @@
           document={context.item}
           field="system.proficient"
           value={context.source.proficient}
-          disabled={!context.editable}
+          disabledValue={context.system.proficient}
+          disabled={!context.unlocked}
         >
           <SelectOptions
             data={context.config.weaponAndArmorProficiencyLevels}
@@ -93,8 +96,9 @@
         document={context.item}
         field="system.mastery"
         value={context.source.mastery}
+        disabledValue={context.system.mastery}
         blankValue=""
-        disabled={!context.editable}
+        disabled={!context.unlocked}
       >
         <SelectOptions
           data={context.config.weaponMasteries}
@@ -135,7 +139,8 @@
                 document={context.item}
                 field="system.attuned"
                 checked={context.source.attuned}
-                disabled={!context.editable ||
+                disabledChecked={context.source.attuned}
+                disabled={!context.unlocked ||
                   // @ts-expect-error
                   !context.config.attunementTypes[context.system.attunement]}
                 title={localize('DND5E.AttunementAttuned')}
@@ -145,8 +150,9 @@
                 id="{appId}-attunement"
                 document={context.item}
                 field="system.attunement"
-                value={context.system.attunement}
-                disabled={!context.editable}
+                value={context.source.attunement}
+                disabledValue={context.system.attunement}
+                disabled={!context.unlocked}
                 class="flex-1"
               >
                 <SelectOptions
@@ -163,10 +169,11 @@
           <div class="form-fields">
             <NumberInputQuadrone
               id="{appId}-magical-bonus"
-              value={context.system.magicalBonus}
+              value={context.source.magicalBonus}
+              disabledValue={context.system.magicalBonus}
               field="system.magicalBonus"
               document={context.item}
-              disabled={!context.editable}
+              disabled={!context.unlocked}
               min="0"
               step="1"
               placeholder="0"
@@ -188,8 +195,9 @@
           document={context.item}
           field="system.ammunition.type"
           value={context.source.ammunition.type}
+          disabledValue={context.system.ammunition.type}
           blankValue=""
-          disabled={!context.editable}
+          disabled={!context.unlocked}
         >
           <SelectOptions
             data={context.config.consumableTypes.ammo.subtypes}
@@ -219,8 +227,9 @@
               document={context.item}
               field="system.range.value"
               value={context.source.range.value}
+              disabledValue={context.system.range.value}
               min="0"
-              disabled={!context.editable}
+              disabled={!context.unlocked}
             />
           </div>
         </div>
@@ -234,8 +243,9 @@
               document={context.item}
               field="system.range.long"
               value={context.source.range.long}
+              disabledValue={context.system.range.long}
               min="0"
-              disabled={!context.editable}
+              disabled={!context.unlocked}
             />
           </div>
         </div>
@@ -252,11 +262,12 @@
                 document={context.item}
                 field="system.range.reach"
                 value={context.source.range.reach}
+                disabledValue={context.system.range.reach}
                 min="0"
                 placeholder={context.system.range.reach === null
                   ? '—'
                   : context.system.range.reach}
-                disabled={!context.editable}
+                disabled={!context.unlocked}
               />
             </div>
           </div>
@@ -272,8 +283,9 @@
           document={context.item}
           field="system.range.units"
           value={context.source.range.units}
+          disabledValue={context.system.range.units}
           blankValue=""
-          disabled={!context.editable}
+          disabled={!context.unlocked}
         >
           <SelectOptions
             data={context.config.movementUnits}
@@ -299,11 +311,12 @@
                 document={context.item}
                 field="system.range.reach"
                 value={context.source.range.reach}
+                disabledValue={context.system.range.reach}
                 min="0"
                 placeholder={context.system.range.reach === null
                   ? '—'
                   : context.system.range.reach}
-                disabled={!context.editable}
+                disabled={!context.unlocked}
               />
             </div>
           </div>
@@ -317,7 +330,8 @@
               document={context.item}
               field="system.range.units"
               value={context.source.range.units}
-              disabled={!context.editable}
+              disabledValue={context.system.range.units}
+              disabled={!context.unlocked}
             >
               <SelectOptions
                 data={context.config.movementUnits}
@@ -347,6 +361,7 @@
   <FieldDamage
     prefix="system.damage.base."
     source={context.source.damage.base}
+    system={context.system.damage.base}
     denominationOptions={context.denominationOptions.base}
     types={context.damageTypes}
   />
@@ -361,6 +376,7 @@
     <FieldDamage
       denominationOptions={context.denominationOptions.base}
       source={context.source.damage.versatile}
+      system={context.system.damage.versatile}
       prefix="system.damage.versatile."
       numberPlaceholder={context.source.damage.base.number}
     />

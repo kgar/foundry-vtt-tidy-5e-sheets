@@ -11,6 +11,7 @@
 
   interface Props {
     source: any;
+    system: any;
     prefix: string;
     denominationOptions: GroupableSelectOption[];
     numberPlaceholder?: string;
@@ -19,6 +20,7 @@
 
   let {
     source,
+    system,
     prefix,
     denominationOptions,
     numberPlaceholder = '',
@@ -42,7 +44,8 @@
       document={context.item}
       field="{prefix}custom.enabled"
       checked={source.custom.enabled}
-      disabled={!context.editable}
+      disabledChecked={system.custom.enabled}
+      disabled={!context.unlocked}
     />
 
     {#if source.custom.enabled}
@@ -51,7 +54,8 @@
         document={context.item}
         field="{prefix}custom.formula"
         value={source.custom.formula}
-        disabled={!context.editable}
+        disabledValue={system.custom.formula}
+        disabled={!context.unlocked}
       />
     {/if}
   </div>
@@ -75,10 +79,11 @@
             document={context.item}
             field="{prefix}number"
             value={source.number}
+            disabledValue={system.number}
             placeholder={numberPlaceholder}
             min="0"
             step="1"
-            disabled={!context.editable}
+            disabled={!context.unlocked}
           />
         </div>
       </div>
@@ -92,8 +97,9 @@
             document={context.item}
             field="{prefix}denomination"
             value={source.denomination}
+            disabledValue={system.denomination}
             blankValue=""
-            disabled={!context.editable}
+            disabled={!context.unlocked}
           >
             <SelectOptions
               data={denominationOptions}
@@ -115,7 +121,8 @@
             document={context.item}
             field="{prefix}bonus"
             value={source.bonus}
-            disabled={!context.editable}
+            disabledValue={system.bonus}
+            disabled={!context.unlocked}
           />
         </div>
       </div>
@@ -130,16 +137,17 @@
     <div class="form-fields">
       {#each types as { value, label, selected } (value)}
         <label for="" class="checkbox">
+          <!-- TODO: Figure this out; where is the system vs. source value? -->
           <CheckboxQuadrone
             id="{idPrefix}types-{value?.slugify()}"
             document={context.item}
             field="{prefix}types"
             checked={selected}
             {value}
-            disabled={!context.editable}
+            disabled={!context.unlocked}
             onDataPreparing={(ev) =>
               mapSystemDamageTypesToSave(context, prefix, source, ev)}
-          ></CheckboxQuadrone>
+          />
           {label}
         </label>
       {/each}
