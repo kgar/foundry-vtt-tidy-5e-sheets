@@ -91,7 +91,7 @@
     
     &:hover {
       cursor: pointer;
-      background-color: var(--t5e-component-field-oninverse-background-hover);
+      background-color: var(--tidy-switch-unchecked-background-color-hover);
 
       .thumb-icon {
         color: var(--t5e-color-icon-ondefault-default);
@@ -106,11 +106,13 @@
 
 .header-sheet-edit-mode-toggle {
   --tidy-switch-unchecked-border-color: var(
-    --t5e-component-field-ondefault-border
+    --t5e-component-field-border
   );
   --tidy-switch-unchecked-background-color: var(
-    --t5e-component-field-oninverse-background
+    --t5e-color-icon-ondefault-disabled
   );
+  --tidy-switch-unchecked-background-color-hover:
+    rgba(0, 0, 0, 0.75);;
   --tidy-switch-checked-border-color: var(
     --t5e-component-toggle-toggled-border
   );
@@ -118,7 +120,7 @@
     --t5e-component-toggle-toggled-background
   );
   --t5e-switch-slider-color: var(
-    --t5e-component-field-oninverse-background
+    --t5e-component-field-background
   );
   --t5e-thumb-icon-color: var(--t5e-color-icon-light-default);
 
@@ -135,11 +137,12 @@
 /* Field Toggle  */
 
 .field-toggle {
-  --field-toggle-background: var(--t5e-component-field-ondefault-background);
-  --field-toggle-border-color: var(--t5e-component-field-ondefault-border);
+  --field-toggle-background: var(--t5e-component-field-background);
+  --field-toggle-background-hover: var(--t5e-component-field-background-hover);
+  --field-toggle-border-color: var(--t5e-component-field-border);
   --field-toggle-checked-color: var(--t5e-color-icon-oninverse-default);
   --field-toggle-unchecked-color: var(--t5e-color-text-ondefault-lightest);
-  --field-toggle-unchecked-thumb-color: var(--t5e-color-text-ondefault-lighter);
+  --field-toggle-unchecked-thumb-color: var(--t5e-color-text-lighter);
   --field-toggle-checked-thumb-color: var(--t5e-color-text-oninverse-default);
   --width: 2rem;
   --height: 1rem;
@@ -215,8 +218,8 @@
   }
 
   &:hover {
-    background-color: var(--t5e-component-field-ondefault-background-hover);
-    border-color: var(--t5e-component-field-ondefault-border-hover);
+    background-color: var(--field-toggle-background-hover);
+    border-color: var(--t5e-component-field-border-hover);
 
     .unchecked-icon, .thumb {
       fill: var(--t5e-color-text-ondefault-default);
@@ -228,21 +231,21 @@
   }
 }
 
-.inverse {
+.dark {
   .field-toggle {
-    background-color: var(--t5e-component-field-oninverse-background);
-    border-color: var(--t5e-component-field-oninverse-border);
+    background-color: var(--t5e-component-field-background);
+    border-color: var(--t5e-component-field-border);
 
     .unchecked-icon {
-      fill: var(--t5e-color-text-oninverse-lighter);
+      fill: var(--t5e-color-text-ondefault-lighter);
     }
 
     .checked-icon {
-      fill: var(--t5e-color-icon-oninverse-default);
+      fill: var(--t5e-color-icon-ondefault-default);
     }
 
     .thumb {
-      fill: var(--t5e-color-icon-oninverse-default);
+      fill: var(--t5e-color-icon-ondefault-default);
     }
 
     &:not(:has(.toggle:checked)) {

@@ -15,8 +15,8 @@
   gap: 0.25rem;
   flex-shrink: 0;
   border-radius: 0.125rem;
-  border: 1px solid var(--t5e-component-field-ondefault-border);
-  background: var(--t5e-component-field-ondefault-background);
+  border: 1px solid var(--t5e-component-field-border);
+  background: var(--t5e-component-field-background);
   color: var(--t5e-color-text-ondefault-default);
   cursor: pointer;
 
@@ -47,9 +47,9 @@
   }
 
   &:hover {
-    background: var(--t5e-component-field-ondefault-background-hover);
+    background: var(--t5e-component-field-background-hover);
     color: var(--t5e-color-text-ondefault-default);
-    border: 1px solid var(--t5e-component-field-ondefault-border-hover);
+    border: 1px solid var(--t5e-component-field-border-hover);
     box-shadow: var(--t5e-drop-shadow-field-hover);
 
     :where(i) {
@@ -91,7 +91,7 @@
     cursor: default;
     pointer-events: none;
     background: transparent;
-    border: 0.0625rem solid var(--t5e-component-field-ondefault-border);
+    border: 0.0625rem solid var(--t5e-component-field-border);
 
     &,
     i {
@@ -105,7 +105,7 @@
 
   /* Toggle Buttons */
   &.toggle-button {
-    border: 0.0625rem solid var(--t5e-component-field-ondefault-border);
+    border: 0.0625rem solid var(--t5e-component-field-border);
 
     &:has(.toggle:checked) {
       --icon-fill: var(--t5e-component-toggle-toggled-text);
@@ -132,8 +132,8 @@
 &:where(.inverse) :is(button, .button),
 :where(.inverse) :is(button, .button),
 &:where(.dark) :is(button, .button) {
-  border: 1px solid var(--t5e-component-field-oninverse-border);
-  background: var(--t5e-component-field-oninverse-background);
+  border: 1px solid var(--t5e-component-field-border);
+  background: var(--t5e-component-field-background);
 
   &,
   i {

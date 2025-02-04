@@ -20,9 +20,9 @@
 
 .pill {
   align-items: center;
-  background: var(--t5e-component-pill-ondefault-background);
+  background: var(--t5e-component-pill-background);
   border-radius: var(--radius-card, 0.1875rem);
-  border: 0.0625rem solid var(--t5e-component-pill-ondefault-border);
+  border: 0.0625rem solid var(--t5e-component-pill-border);
   display: flex;
   font-size: var(--font-size-11, 0.6875rem);
   font-style: normal;
@@ -40,7 +40,7 @@
   &.interactive {
     box-shadow: var(--t5e-drop-shadow-pill);
     &:hover {
-      background: var(--t5e-component-field-ondefault-background-hover);
+      background: var(--t5e-component-field-background-hover);
       transition: background 0.15s ease-in-out;
     }
   }
@@ -67,10 +67,9 @@
   &.negative {
     border-color: var(--t5e-color-palette-red-27);
     background: var(--t5e-color-palette-red-31);
-    color: var(--t5e-color-text-oninverse-default);
 
     .lighter {
-      color: var(--t5e-color-text-oninverse-lighter);
+      color: var(--t5e-color-text-ondefault-lighter);
     }
   }
 
@@ -89,11 +88,9 @@
   }
 }
 
-&.inverse .pill,
-.inverse .pill {
-  background: var(--t5e-component-pill-oninverse-background);
-  border-color: var(--t5e-component-pill-oninverse-border);
-  color: var(--t5e-color-text-oninverse-default);
+&.dark .pill,
+.dark .pill {
+  color: var(--t5e-color-text-ondefault-default);
   --icon-fill: var(--t5e-color-icon-oninverse-diminished);
 
   &.interactive {
@@ -109,21 +106,20 @@
   }
 
   .lighter {
-    color: var(--t5e-color-text-oninverse-lighter);
-    --icon-fill: var(--t5e-color-text-oninverse-lighter);
+    color: var(--t5e-color-text-ondefault-lighter);
+    --icon-fill: var(--t5e-color-text-ondefault-lighter);
   }
 
   i {
-    color: var(--t5e-color-icon-oninverse-default);
+    color: var(--t5e-color-icon-ondefault-default);
   }
 
   &.negative {
     border-color: var(--t5e-color-palette-red-27);
     background: var(--t5e-color-palette-red-31);
-    color: var(--t5e-color-text-oninverse-default);
 
     .lighter {
-      color: var(--t5e-color-text-oninverse-lighter);
+      color: var(--t5e-color-text-ondefault-lighter);
     }
   }
 
@@ -134,10 +130,10 @@
 
   &.positive,
   &.negative {
-    color: var(--t5e-color-text-oninverse-default);
+    color: var(--t5e-color-text-ondefault-default);
 
     .lighter {
-      color: var(--t5e-color-text-oninverse-lighter);
+      color: var(--t5e-color-text-ondefault-lighter);
     }
   }
 }
@@ -147,6 +143,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   padding: 0.125rem 0.125rem 0.125rem 0.5rem;
 
   .pill-switch-icon-container {
@@ -184,11 +181,11 @@
   }
 }
 
-&:is(.inverse, .dark) .pill-switch,
-.inverse .pill-switch {
+&:is(.dark) .pill-switch,
+.dark .pill-switch {
   &:hover {
-    background: var(--t5e-component-field-oninverse-background-hover);
-    border-color: var(--t5e-component-field-oninverse-border-hover);
+    background: var(--t5e-component-field-background-hover);
+    border-color: var(--t5e-component-field-border-hover);
   }
   
   i {
