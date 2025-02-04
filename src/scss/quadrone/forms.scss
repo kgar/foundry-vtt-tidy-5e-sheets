@@ -79,7 +79,7 @@
 
   /* Form Groups */
   .form-group {
-    --form-field-height: 26px;
+    --form-field-height: var(--t5e-field-size-default);
     margin: 0;
 
     > label {
@@ -87,10 +87,15 @@
       font-weight: 500;
       color: var(--t5e-color-text-ondefault-lighter);
     }
+    
+    &:has(.label-top) > label {
+      margin-top: calc(var(--font-size-small) + 0.25rem);
+    }
+
 
     &.label-top {
-      --label-height: 0.6875rem;
-      --label-font-size: 0.6875rem;
+      --label-height: var(--font-size-small);
+      --label-font-size: var(--font-size-small);
       flex-direction: column;
       align-items: stretch;
       gap: 0.125rem;
@@ -257,14 +262,15 @@
     }
 
     label.checkbox {
-      gap: 0.5rem;
+      min-height: var(--t5e-field-size-default);
+      padding-inline-start: 0.5rem;
     }
   }
 
   :is(.form-group, fieldset) .hint {
-    font-size: var(--font-size-11);
+    font-size: var(--font-size-12);
     color: var(--t5e-color-text-ondefault-lighter);
-    margin: 0.25rem 0 0 0;
+    margin: 0.125rem 0 0.25rem 0;
   }
 
   .checkbox-grid {
