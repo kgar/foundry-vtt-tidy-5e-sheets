@@ -4,6 +4,7 @@
   import type { HTMLInputAttributes } from 'svelte/elements';
 
   type Props = {
+    disabledChecked?: HTMLInputElement['checked'];
     field: string;
     document: any;
     onDataPreparing?: SvelteInputEvent | null;
@@ -11,6 +12,7 @@
   } & HTMLInputAttributes;
 
   let {
+    disabledChecked,
     field,
     document,
     onDataPreparing = null,
@@ -29,6 +31,10 @@
 
     await document.update(data);
   }
+
+  let checked = $derived(
+    rest.disabled ? (disabledChecked ?? rest.checked) : rest.checked,
+  );
 </script>
 
 <input
@@ -36,6 +42,7 @@
   onchange={saveChange}
   data-tidy-field={field}
   {...rest}
+  {checked}
 />
 
 <style lang="scss">

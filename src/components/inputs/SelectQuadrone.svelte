@@ -4,6 +4,7 @@
 
   type Props = {
     value: unknown;
+    disabledValue?: unknown;
     field: string;
     document: any;
     blankValue?: any;
@@ -12,6 +13,7 @@
 
   let {
     value,
+    disabledValue,
     field,
     document,
     blankValue = null,
@@ -22,7 +24,9 @@
   let draftValue = $state('');
 
   $effect(() => {
-    draftValue = value?.toString() ?? '';
+    draftValue = rest.disabled
+      ? (disabledValue ?? value?.toString() ?? '')
+      : (value?.toString() ?? '');
   });
 
   async function saveChange(

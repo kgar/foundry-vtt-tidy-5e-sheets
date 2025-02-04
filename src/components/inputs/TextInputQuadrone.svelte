@@ -9,6 +9,7 @@
   ) => boolean;
 
   type Props = {
+    disabledValue?: string;
     field: string;
     document: any;
     selectOnFocus?: boolean;
@@ -31,6 +32,7 @@
   } & HTMLInputAttributes;
 
   let {
+    disabledValue,
     field,
     document,
     selectOnFocus = false,
@@ -75,6 +77,10 @@
       }
     });
   }
+
+  let value = $derived(
+    rest.disabled ? (disabledValue ?? rest.value) : rest.value,
+  );
 </script>
 
 <input
@@ -84,4 +90,5 @@
   onfocus={(ev) => selectOnFocus && ev.currentTarget.select()}
   data-tidy-field={field}
   {...rest}
+  {value}
 />

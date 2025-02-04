@@ -2,6 +2,7 @@
   import { type HTMLInputAttributes } from 'svelte/elements';
 
   type Props = {
+    disabledValue?: HTMLInputElement['value'];
     field: string;
     document: any;
     selectOnFocus?: boolean;
@@ -9,7 +10,7 @@
   } & HTMLInputAttributes;
 
   let {
-    placeholder = null,
+    disabledValue,
     field,
     document,
     selectOnFocus = false,
@@ -38,15 +39,19 @@
       theInput.select();
     }
   }
+
+  let value = $derived(
+    rest.disabled ? (disabledValue ?? rest.value) : rest.value,
+  );
 </script>
 
 <input
   bind:this={theInput}
   type="number"
-  {placeholder}
   onchange={saveChange}
   onfocus={(ev) => selectOnFocus && ev.currentTarget.select()}
   onclick={(ev) => stopClickPropagation && ev.stopPropagation()}
   data-tidy-field={field}
   {...rest}
+  {value}
 />
