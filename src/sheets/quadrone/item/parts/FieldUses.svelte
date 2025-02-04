@@ -8,7 +8,7 @@
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
-  
+
   let appId = $derived(context.document.id);
 
   const localize = FoundryAdapter.localize;
