@@ -79,7 +79,7 @@
 
   /* Form Groups */
   .form-group {
-    --form-field-height: 26px;
+    --form-field-height: var(--t5e-field-size-default);
     margin: 0;
 
     > label {

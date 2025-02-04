@@ -30,7 +30,7 @@
 
   padding-inline-start: var(--button-padding-inline-start);
   padding-inline-end: var(--button-padding-inline-end);
-  padding-bottom: 0.0625rem;
+  padding-block-end: 0.03125rem;
   min-height: var(--t5e-field-size-default);
   transition: all var(--t5e-transition-default);
 
@@ -72,12 +72,17 @@
 
     i {
       color: var(--t5e-component-toggle-toggled-text);
+      padding-block-end: 0.0625rem;
+    }
+
+    &:hover {
+      background-color: var(--t5e-component-toggle-toggled-background-hover);
     }
   }
 
   &.icon-button {
     --size: var(--t5e-field-size-default);
-    padding: 0.46875rem 0.5rem 0.53125rem;
+    padding: 0.484375rem 0.5rem 0.515625rem;
     width: var(--size);
     height: var(--size);
   }
@@ -109,6 +114,10 @@
 
       i {
         color: var(--t5e-component-toggle-toggled-text);
+      }
+
+      &:hover {
+        background-color: var(--t5e-component-toggle-toggled-background-hover);
       }
     }
 
@@ -255,7 +264,7 @@
 
 .expand-button {
   .expand-button-indicator {
-    transition: transform 0.2s ease;
+    transition: transform var(--t5e-transition-default);
   }
 
   &.collapsed .expand-button-indicator {
