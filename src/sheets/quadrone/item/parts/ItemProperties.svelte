@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Checkbox from 'src/components/inputs/Checkbox.svelte';
+  import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import { mapPropertiesToSave } from 'src/utils/system-properties';
@@ -18,16 +18,16 @@
     ? localize('DND5E.ENCHANTMENT.Warning.Override')
     : null}
 
-  <Checkbox
-    id="{appId}-properties-{property.value?.slugify()}"
-    labelCssClass="checkbox"
-    document={context.item}
-    {field}
-    checked={property.selected}
-    disabled={!context.editable || isEnchanted}
-    onDataPreparing={(ev) => mapPropertiesToSave(context, ev, property.value)}
-    tooltip={enchantedTooltip}
-  >
+  <label for="" class="checkbox">
+    <CheckboxQuadrone
+      id="{appId}-properties-{property.value?.slugify()}"
+      document={context.item}
+      {field}
+      checked={property.selected}
+      disabled={!context.editable || isEnchanted}
+      onDataPreparing={(ev) => mapPropertiesToSave(context, ev, property.value)}
+      data-tooltip={enchantedTooltip}
+    />
     {property.label}
-  </Checkbox>
+  </label>
 {/each}

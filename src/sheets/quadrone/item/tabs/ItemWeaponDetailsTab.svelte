@@ -1,8 +1,8 @@
 <script lang="ts">
-  import Checkbox from 'src/components/inputs/Checkbox.svelte';
-  import NumberInput from 'src/components/inputs/NumberInput.svelte';
-  import Select from 'src/components/inputs/Select.svelte';
+  import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
+  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
+  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import DetailsMountable from 'src/sheets/quadrone/item/parts/DetailsMountable.svelte';
   import FieldDamage from 'src/sheets/quadrone/item/parts/FieldDamage.svelte';
@@ -26,7 +26,7 @@
   <div class="form-group">
     <label for="{appId}-type-value">{localize('DND5E.ItemWeaponType')}</label>
     <div class="form-fields">
-      <Select
+      <SelectQuadrone
         id="{appId}-type-value"
         document={context.item}
         field="system.type.value"
@@ -35,7 +35,7 @@
         blankValue=""
       >
         <SelectOptions data={context.config.weaponTypes} blank="" />
-      </Select>
+      </SelectQuadrone>
     </div>
   </div>
 
@@ -46,7 +46,7 @@
         >{localize('DND5E.ItemWeaponBase')}</label
       >
       <div class="form-fields">
-        <Select
+        <SelectQuadrone
           id="{appId}-type-baseItem"
           document={context.item}
           field="system.type.baseItem"
@@ -54,7 +54,7 @@
           disabled={!context.editable}
         >
           <SelectOptions data={context.baseItems} blank="" />
-        </Select>
+        </SelectQuadrone>
       </div>
     </div>
   {/if}
@@ -66,7 +66,7 @@
         >{localize('DND5E.ProficiencyLevel')}</label
       >
       <div class="form-fields">
-        <Select
+        <SelectQuadrone
           id="{appId}-proficient"
           document={context.item}
           field="system.proficient"
@@ -77,7 +77,7 @@
             data={context.config.weaponAndArmorProficiencyLevels}
             blank={localize('DND5E.Automatic')}
           />
-        </Select>
+        </SelectQuadrone>
       </div>
     </div>
   {/if}
@@ -88,7 +88,7 @@
       {localize('DND5E.WEAPON.FIELDS.mastery.label')}
     </label>
     <div class="form-fields">
-      <Select
+      <SelectQuadrone
         id="{appId}-weapon-mastery"
         document={context.item}
         field="system.mastery"
@@ -101,7 +101,7 @@
           labelProp="label"
           blank=""
         />
-      </Select>
+      </SelectQuadrone>
     </div>
     <p class="hint">{localize('DND5E.WEAPON.FIELDS.mastery.hint')}</p>
   </div>
@@ -130,7 +130,7 @@
             </label>
             <div class="form-fields">
               <!-- Attuned -->
-              <Checkbox
+              <CheckboxQuadrone
                 id="{appId}-attuned"
                 document={context.item}
                 field="system.attuned"
@@ -141,7 +141,7 @@
                 title={localize('DND5E.AttunementAttuned')}
               />
               <!-- Attunement -->
-              <Select
+              <SelectQuadrone
                 id="{appId}-attunement"
                 document={context.item}
                 field="system.attunement"
@@ -153,7 +153,7 @@
                   data={context.config.attunementTypes}
                   blank={localize('DND5E.AttunementNone')}
                 />
-              </Select>
+              </SelectQuadrone>
             </div>
           </div>
         {/if}
@@ -161,7 +161,7 @@
         <div class="form-group label-top">
           <label for="{appId}-magical-bonus">{localize('DND5E.Bonus')}</label>
           <div class="form-fields">
-            <NumberInput
+            <NumberInputQuadrone
               id="{appId}-magical-bonus"
               value={context.system.magicalBonus}
               field="system.magicalBonus"
@@ -184,7 +184,7 @@
         >{localize('DND5E.WEAPON.FIELDS.ammunition.type.label')}</label
       >
       <div class="form-fields">
-        <Select
+        <SelectQuadrone
           document={context.item}
           field="system.ammunition.type"
           value={context.source.ammunition.type}
@@ -195,7 +195,7 @@
             data={context.config.consumableTypes.ammo.subtypes}
             blank=""
           />
-        </Select>
+        </SelectQuadrone>
       </div>
     </div>
   {/if}
@@ -214,7 +214,7 @@
         <div class="form-group label-top">
           <label for="{appId}-range-value">{localize('DND5E.Normal')}</label>
           <div class="form-fields">
-            <NumberInput
+            <NumberInputQuadrone
               id="{appId}-range-value"
               document={context.item}
               field="system.range.value"
@@ -229,7 +229,7 @@
         <div class="form-group label-top">
           <label for="{appId}-range-long">{localize('DND5E.Long')}</label>
           <div class="form-fields">
-            <NumberInput
+            <NumberInputQuadrone
               id="{appId}-range-long"
               document={context.item}
               field="system.range.long"
@@ -247,7 +247,7 @@
               >{localize('DND5E.RANGE.FIELDS.range.reach.label')}</label
             >
             <div class="form-fields">
-              <NumberInput
+              <NumberInputQuadrone
                 id="{appId}-range-reach"
                 document={context.item}
                 field="system.range.reach"
@@ -268,7 +268,7 @@
     <div class="form-group">
       <label for="">{localize('DND5E.MovementUnits')}</label>
       <div class="form-fields">
-        <Select
+        <SelectQuadrone
           document={context.item}
           field="system.range.units"
           value={context.source.range.units}
@@ -280,7 +280,7 @@
             labelProp="label"
             blank=""
           />
-        </Select>
+        </SelectQuadrone>
       </div>
     </div>
   {:else}
@@ -294,7 +294,7 @@
               >{localize('DND5E.RANGE.FIELDS.range.reach.label')}</label
             >
             <div class="form-fields">
-              <NumberInput
+              <NumberInputQuadrone
                 id="{appId}-range-reach"
                 document={context.item}
                 field="system.range.reach"
@@ -313,7 +313,7 @@
         <div class="form-group label-top">
           <label for="">{localize('DND5E.MovementUnits')}</label>
           <div class="form-fields">
-            <Select
+            <SelectQuadrone
               document={context.item}
               field="system.range.units"
               value={context.source.range.units}
@@ -323,13 +323,12 @@
                 data={context.config.movementUnits}
                 labelProp="label"
               />
-            </Select>
+            </SelectQuadrone>
           </div>
         </div>
       </div>
     </div>
   {/if}
-
 </fieldset>
 
 {#if context.system.isMountable}

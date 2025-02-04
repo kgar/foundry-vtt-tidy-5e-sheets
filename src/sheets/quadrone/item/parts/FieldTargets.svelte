@@ -1,8 +1,8 @@
 <script lang="ts">
-  import Select from 'src/components/inputs/Select.svelte';
-  import Checkbox from 'src/components/inputs/Checkbox.svelte';
+  import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
+  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
@@ -29,7 +29,7 @@
             >{localize('DND5E.Amount')}</label
           >
           <div class="form-fields">
-            <TextInput
+            <TextInputQuadrone
               id="{appId}-target-affects-count"
               document={context.item}
               field="system.target.affects.count"
@@ -46,7 +46,7 @@
         <label for="{appId}-target-affects-type">{localize('DND5E.Type')}</label
         >
         <div class="form-fields">
-          <Select
+          <SelectQuadrone
             id="{appId}-target-affects-type"
             document={context.item}
             field="system.target.affects.type"
@@ -59,14 +59,14 @@
               labelProp="label"
               blank=""
             />
-          </Select>
+          </SelectQuadrone>
         </div>
       </div>
     </div>
 
     <!-- Special -->
     {#if context.source.target.affects.type}
-      <TextInput
+      <TextInputQuadrone
         id="{appId}-target-affects-special"
         document={context.item}
         field="system.target.affects.special"
@@ -87,7 +87,7 @@
         >{localize('DND5E.TARGET.FIELDS.target.affects.choice.label')}</label
       >
       <div class="form-fields">
-        <Checkbox
+        <CheckboxQuadrone
           id="{appId}-target-affects-choice"
           document={context.item}
           field="system.target.affects.choice"
@@ -112,7 +112,7 @@
   <div class="form-group">
     <label for="{appId}-target-template-type">{localize('DND5E.Shape')}</label>
     <div class="form-fields">
-      <Select
+      <SelectQuadrone
         id="{appId}-target-template-type"
         document={context.item}
         field="system.target.template.type"
@@ -124,7 +124,7 @@
           labelProp="label"
           valueProp="value"
         />
-      </Select>
+      </SelectQuadrone>
     </div>
   </div>
 
@@ -139,7 +139,7 @@
             >{localize(context.dimensions.size)}</label
           >
           <div class="form-fields">
-            <TextInput
+            <TextInputQuadrone
               id="{appId}-target-template-size"
               document={context.item}
               field="system.target.template.size"
@@ -156,7 +156,7 @@
               >{localize(context.dimensions.width)}</label
             >
             <div class="form-fields">
-              <TextInput
+              <TextInputQuadrone
                 id="{appId}-target-template-width"
                 document={context.item}
                 field="system.target.template.width"
@@ -174,7 +174,7 @@
               >{localize(context.dimensions.height)}</label
             >
             <div class="form-fields">
-              <TextInput
+              <TextInputQuadrone
                 id="{appId}-target-template-height"
                 document={context.item}
                 field="system.target.template.height"
@@ -191,7 +191,7 @@
             >{localize('DND5E.MovementUnits')}</label
           >
           <div class="form-fields">
-            <Select
+            <SelectQuadrone
               id="{appId}-target-template-units"
               document={context.item}
               field="system.target.template.units"
@@ -202,7 +202,7 @@
                 data={context.config.movementUnits}
                 labelProp="label"
               />
-            </Select>
+            </SelectQuadrone>
           </div>
         </div>
       </div>
@@ -220,7 +220,7 @@
             >{localize('DND5E.Amount')}</label
           >
           <div class="form-fields">
-            <TextInput
+            <TextInputQuadrone
               id="{appId}-target-template-count"
               document={context.item}
               field="system.target.template.count"
@@ -238,7 +238,7 @@
               >{localize('DND5E.Contiguous')}</label
             >
             <div class="form-fields">
-              <Checkbox
+              <CheckboxQuadrone
                 id="{appId}-target-template-contiguous"
                 document={context.item}
                 field="system.target.template.contiguous"

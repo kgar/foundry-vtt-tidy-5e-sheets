@@ -1,13 +1,13 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import NumberInput from 'src/components/inputs/NumberInput.svelte';
-  import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
-  import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import { mapSystemDamageTypesToSave } from 'src/utils/system-properties';
   import type { GroupableSelectOption } from 'src/types/types';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
+  import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
+  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
+  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
 
   interface Props {
     source: any;
@@ -37,7 +37,7 @@
 <div class="form-group split-group">
   <label for="{idPrefix}custom-enabled">Formula</label>
   <div class="form-fields">
-    <Checkbox
+    <CheckboxQuadrone
       id="{idPrefix}custom-enabled"
       document={context.item}
       field="{prefix}custom.enabled"
@@ -46,7 +46,7 @@
     />
 
     {#if source.custom.enabled}
-      <TextInput
+      <TextInputQuadrone
         id="{idPrefix}custom-formula"
         document={context.item}
         field="{prefix}custom.formula"
@@ -70,7 +70,7 @@
         <label for="{idPrefix}number">{localize('DND5E.Number')}</label>
         <div class="form-fields">
           <!-- Number -->
-          <NumberInput
+          <NumberInputQuadrone
             id="{idPrefix}number"
             document={context.item}
             field="{prefix}number"
@@ -87,7 +87,7 @@
       <div class="form-group label-top">
         <label for="{idPrefix}denomination">{localize('DND5E.Die')}</label>
         <div class="form-fields">
-          <Select
+          <SelectQuadrone
             id="{idPrefix}denomination"
             document={context.item}
             field="{prefix}denomination"
@@ -100,7 +100,7 @@
               labelProp="label"
               valueProp="value"
             />
-          </Select>
+          </SelectQuadrone>
         </div>
       </div>
 
@@ -110,7 +110,7 @@
           {localize('DND5E.Bonus')}
         </label>
         <div class="form-fields">
-          <TextInput
+          <TextInputQuadrone
             id="{idPrefix}bonus"
             document={context.item}
             field="{prefix}bonus"
@@ -129,19 +129,19 @@
     <label for="">{localize('DND5E.Type')}</label>
     <div class="form-fields">
       {#each types as { value, label, selected } (value)}
-        <Checkbox
-          id="{idPrefix}types-{value?.slugify()}"
-          labelCssClass="checkbox"
-          document={context.item}
-          field="{prefix}types"
-          checked={selected}
-          {value}
-          disabled={!context.editable}
-          onDataPreparing={(ev) =>
-            mapSystemDamageTypesToSave(context, prefix, source, ev)}
-        >
+        <label for="" class="checkbox">
+          <CheckboxQuadrone
+            id="{idPrefix}types-{value?.slugify()}"
+            document={context.item}
+            field="{prefix}types"
+            checked={selected}
+            {value}
+            disabled={!context.editable}
+            onDataPreparing={(ev) =>
+              mapSystemDamageTypesToSave(context, prefix, source, ev)}
+          ></CheckboxQuadrone>
           {label}
-        </Checkbox>
+        </label>
       {/each}
     </div>
   </div>

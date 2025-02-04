@@ -1,14 +1,14 @@
 <script lang="ts">
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-  import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import Select from 'src/components/inputs/Select.svelte';
   import ItemProperties from '../parts/ItemProperties.svelte';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
   import FieldUses from '../parts/FieldUses.svelte';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
   import { CONSTANTS } from 'src/constants';
-  import Checkbox from 'src/components/inputs/Checkbox.svelte';
+  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
+  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
+  import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
 
   let context = $derived(getItemSheetContext());
 
@@ -25,7 +25,7 @@
   <div class="form-group">
     <label for="{appId}-type-value">{localize('DND5E.Type')}</label>
     <div class="form-fields">
-      <Select
+      <SelectQuadrone
         id="{appId}-type-value"
         document={context.item}
         field="system.type.value"
@@ -37,7 +37,7 @@
           labelProp="label"
           blank=""
         />
-      </Select>
+      </SelectQuadrone>
     </div>
   </div>
 
@@ -50,7 +50,7 @@
         >{localize('DND5E.ItemFeatureSubtype', { category })}</label
       >
       <div class="form-fields">
-        <Select
+        <SelectQuadrone
           id="{appId}-type-subtype"
           document={context.item}
           field="system.type.subtype"
@@ -58,7 +58,7 @@
           disabled={!context.editable}
         >
           <SelectOptions data={context.itemSubtypes} blank="" />
-        </Select>
+        </SelectQuadrone>
       </div>
     </div>
   {/if}
@@ -69,7 +69,7 @@
         >{localize('DND5E.FEATURE.FIELDS.cover.label')}</label
       >
       <div class="form-fields">
-        <Select
+        <SelectQuadrone
           id="{appId}-cover"
           document={context.item}
           field="system.cover"
@@ -82,7 +82,7 @@
             valueProp="value"
             blank=""
           />
-        </Select>
+        </SelectQuadrone>
       </div>
       <p class="hint">
         {localize('DND5E.FEATURE.FIELDS.cover.hint')}
@@ -95,7 +95,7 @@
       >{localize('DND5E.Prerequisites.FIELDS.prerequisites.level.label')}</label
     >
     <div class="form-fields">
-      <NumberInput
+      <NumberInputQuadrone
         id="{appId}-prerequisites-level"
         document={context.item}
         field="system.prerequisites.level"
@@ -115,7 +115,7 @@
       {localize('DND5E.Prerequisites.FIELDS.prerequisites.repeatable.label')}
     </label>
     <div class="form-fields">
-      <Checkbox
+      <CheckboxQuadrone
         id="prerequisites-repeatable-{appId}"
         document={context.item}
         field="system.prerequisites.repeatable"
@@ -149,7 +149,7 @@
         )}</label
       >
       <div class="form-fields">
-        <TextInput
+        <TextInputQuadrone
           id="{appId}-enchant-max"
           document={context.item}
           field="system.enchant.max"
@@ -171,7 +171,7 @@
         )}</label
       >
       <div class="form-fields">
-        <Select
+        <SelectQuadrone
           id="{appId}-enchant-period"
           document={context.item}
           field="system.enchant.period"
@@ -185,7 +185,7 @@
             labelProp="label"
             valueProp="value"
           />
-        </Select>
+        </SelectQuadrone>
       </div>
 
       <p class="hint">

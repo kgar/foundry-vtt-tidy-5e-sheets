@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
+  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
@@ -21,7 +21,7 @@
       <div class="form-group label-top">
         <label for="{appId}-range-value">{localize('DND5E.Value')}</label>
         <div class="form-fields">
-          <TextInput
+          <TextInputQuadrone
             id="{appId}-range-value"
             document={context.item}
             field="system.range.value"
@@ -36,7 +36,7 @@
     <div class="form-group label-top">
       <label for="{appId}-range-units">{localize('DND5E.MovementUnits')}</label>
       <div class="form-fields">
-        <Select
+        <SelectQuadrone
           id="{appId}-range-units"
           document={context.item}
           field="system.range.units"
@@ -48,13 +48,13 @@
             labelProp="label"
             valueProp="value"
           />
-        </Select>
+        </SelectQuadrone>
       </div>
     </div>
   </div>
 
   <!-- Condition -->
-  <TextInput
+  <TextInputQuadrone
     id="{appId}-range-special"
     document={context.item}
     field="system.range.special"

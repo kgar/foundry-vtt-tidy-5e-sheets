@@ -1,9 +1,5 @@
 <script lang="ts">
-  import Select from 'src/components/inputs/Select.svelte';
-  import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
-  import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
   import ItemProperties from '../parts/ItemProperties.svelte';
@@ -13,6 +9,10 @@
   import FieldRange from '../parts/FieldRange.svelte';
   import FieldDuration from '../parts/FieldDuration.svelte';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
+  import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
+  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
 
   let context = $derived(getItemSheetContext());
 
@@ -29,7 +29,7 @@
   <!-- Spell Level -->
   <div class="form-group">
     <label for="{appId}-level">{localize('DND5E.SpellLevel')}</label>
-    <Select
+    <SelectQuadrone
       id="{appId}-level"
       document={context.item}
       field="system.level"
@@ -37,13 +37,13 @@
       disabled={!context.editable}
     >
       <SelectOptions data={context.config.spellLevels} />
-    </Select>
+    </SelectQuadrone>
   </div>
 
   <!-- Spell School -->
   <div class="form-group">
     <label for="{appId}-school">{localize('DND5E.SpellSchool')}</label>
-    <Select
+    <SelectQuadrone
       id="{appId}-school"
       document={context.item}
       field="system.school"
@@ -55,7 +55,7 @@
         labelProp="label"
         blank=""
       />
-    </Select>
+    </SelectQuadrone>
   </div>
 
   <!-- Spell Components -->
@@ -77,7 +77,7 @@
           <label for="{appId}-materials-supply"
             >{localize('DND5E.Supply')}</label
           >
-          <NumberInput
+          <NumberInputQuadrone
             id="{appId}-materials-supply"
             document={context.item}
             field="system.materials.supply"
@@ -98,7 +98,7 @@
           </label>
 
           <div class="form-fields">
-            <NumberInput
+            <NumberInputQuadrone
               id="{appId}-materials-cost"
               document={context.item}
               field="system.materials.cost"
@@ -116,7 +116,7 @@
             >{localize('DND5E.Consumed')}</label
           >
           <div class="form-fields">
-            <Checkbox
+            <CheckboxQuadrone
               id="{appId}-materials-consumed"
               document={context.item}
               field="system.materials.consumed"
@@ -128,7 +128,7 @@
       </div>
 
       <!-- Material Description -->
-      <TextInput
+      <TextInputQuadrone
         id="{appId}-materials-value"
         document={context.item}
         field="system.materials.value"
@@ -147,21 +147,19 @@
     <div class="form-fields">
       <!-- Prepared -->
       {#if context.source.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED}
-        <Checkbox
+        <CheckboxQuadrone
           id="{appId}-preparation-prepared"
           document={context.item}
           field="system.preparation.prepared"
           checked={context.source.preparation.prepared}
           title={localize('DND5E.Prepared')}
-          attributes={{
-            ['aria-label']: localize('DND5E.Prepared'),
-          }}
+          aria-label={localize('DND5E.Prepared')}
           disabled={!context.editable}
         />
       {/if}
 
       <!-- Mode -->
-      <Select
+      <SelectQuadrone
         id="{appId}-preparation-mode"
         document={context.item}
         field="system.preparation.mode"
@@ -172,7 +170,7 @@
           data={context.config.spellPreparationModes}
           labelProp="label"
         />
-      </Select>
+      </SelectQuadrone>
     </div>
   </div>
 
@@ -183,7 +181,7 @@
         >{localize('DND5E.SpellSourceClass')}</label
       >
       <div class="form-fields">
-        <Select
+        <SelectQuadrone
           id="{appId}-sourceClass"
           document={context.item}
           field="system.sourceClass"
@@ -196,11 +194,11 @@
             labelProp="name"
             blank=""
           />
-        </Select>
+        </SelectQuadrone>
       </div>
     </div>
 
-    <Select
+    <SelectQuadrone
       id="{appId}-ability"
       document={context.item}
       field="system.ability"
@@ -213,14 +211,14 @@
         labelProp="label"
         blank={context.defaultAbility}
       />
-    </Select>
+    </SelectQuadrone>
   {:else}
     <div class="form-group">
       <label for="{appId}-sourceClass"
         >{localize('DND5E.SpellSourceClass')}</label
       >
       <div class="form-fields">
-        <TextInput
+        <TextInputQuadrone
           id="{appId}-sourceClass"
           document={context.item}
           field="system.sourceClass"
@@ -238,11 +236,10 @@
   </legend>
 
   <FieldActivation />
-
   <FieldRange />
-
   <FieldDuration />
 </fieldset>
+
 <FieldTargets />
 
 <FieldUses />

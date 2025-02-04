@@ -773,3 +773,11 @@ export type GroupableSelectOption = {
   label: string;
   group?: string;
 };
+
+/* Misc - Svelte */
+
+export type SvelteInputEvent = (
+  event: Event & {
+    currentTarget: EventTarget & HTMLInputElement;
+  }
+) => any;

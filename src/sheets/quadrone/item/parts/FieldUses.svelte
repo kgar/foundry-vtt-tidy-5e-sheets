@@ -1,9 +1,9 @@
 <script lang="ts">
+  import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
+  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import NumberInput from 'src/components/inputs/NumberInput.svelte';
-  import Checkbox from 'src/components/inputs/Checkbox.svelte';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
   import { settings } from 'src/settings/settings.svelte';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
 
@@ -24,7 +24,7 @@
       <!-- Spent  -->
       <div class="form-group label-top">
         <label for="{appId}-uses-spent">{localize('DND5E.Spent')}</label>
-        <NumberInput
+        <NumberInputQuadrone
           id="{appId}-uses-spent"
           document={context.item}
           field="system.uses.spent"
@@ -37,7 +37,7 @@
       <div class="form-group label-top">
         <label for="{appId}-uses-max">{localize('DND5E.Max')}</label>
         <div class="form-fields">
-          <TextInput
+          <TextInputQuadrone
             id="{appId}-uses-max"
             document={context.item}
             field="system.uses.max"
@@ -56,7 +56,7 @@
         >{localize('DND5E.CONSUMABLE.FIELDS.uses.autoDestroy.label')}</label
       >
       <div class="form-fields">
-        <Checkbox
+        <CheckboxQuadrone
           id="{appId}-uses-autoDestroy"
           document={context.item}
           field="system.uses.autoDestroy"

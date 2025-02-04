@@ -1,9 +1,9 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import ItemProperties from '../parts/ItemProperties.svelte';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
 
   let context = $derived(getItemSheetContext());
 
@@ -21,7 +21,7 @@
   <div class="form-group">
     <label for="{appId}-type-value">{localize('DND5E.ItemLootType')}</label>
     <div class="form-fields">
-      <Select
+      <SelectQuadrone
         id="{appId}-type-value"
         document={context.item}
         field="system.type.value"
@@ -33,7 +33,7 @@
           labelProp="label"
           blank=""
         />
-      </Select>
+      </SelectQuadrone>
     </div>
   </div>
 
@@ -47,7 +47,7 @@
     <div class="form-group">
       <label for="{appId}-type-subtype">{subtypeLabel}</label>
       <div class="form-fields">
-        <Select
+        <SelectQuadrone
           id="{appId}-type-subtype"
           document={context.item}
           field="system.type.subtype"
@@ -56,7 +56,7 @@
           blankValue=""
         >
           <SelectOptions data={context.itemSubtypes} blank="" />
-        </Select>
+        </SelectQuadrone>
       </div>
     </div>
   {/if}

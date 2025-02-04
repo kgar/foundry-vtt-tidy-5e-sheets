@@ -17,7 +17,10 @@
   - [x] Weapon details
 - [x] Copy over details content for all new sheets
 - [x] Implement single description tab
-- [ ] Convert inputs to the quadrone variety, and ensure that a lockedValue can be fed into each type, so that we can show the system value on disabled and the source value on not disabled ♥
+- [x] Convert inputs to the quadrone variety, 
+- [x] Create quadrone edition of ItemProperties
+- [ ] Update inputs to ensure that a lockedValue can be fed into each type, so that we can show the system value on disabled and the source value on not disabled ♥
+- [ ] Ensure all standard form fields are locked on sheet lock
 - [ ] Add currency and weight to relevant item sheets at the top
 - [ ] Implement Activities tab
 - [ ] Implement Effects tab

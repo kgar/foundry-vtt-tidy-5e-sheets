@@ -1,13 +1,13 @@
 <script lang="ts">
-  import NumberInput from 'src/components/inputs/NumberInput.svelte';
-  import Select from 'src/components/inputs/Select.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import DetailsSpellcasting from '../parts/DetailsSpellcasting.svelte';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
   import ItemStartingEquipment from '../parts/ItemStartingEquipment.svelte';
   import { mapMulticlassingAbilitiesToSave } from 'src/utils/system-properties';
-  import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
+  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
+  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
+  import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
 
   let context = $derived(getItemSheetContext());
 
@@ -31,7 +31,7 @@
   <div class="form-group">
     <label for="{appId}-identifier">{localize('DND5E.Identifier')}</label>
     <div class="form-fields">
-      <TextInput
+      <TextInputQuadrone
         id="{appId}-identifier"
         document={context.item}
         field="system.identifier"
@@ -56,7 +56,7 @@
       <div class="form-group label-top">
         <label for="{appId}-hit-dice">{localize('DND5E.Denomination')}</label>
         <div class="form-fields">
-          <Select
+          <SelectQuadrone
             id="{appId}-hit-dice"
             document={context.item}
             field="system.hd.denomination"
@@ -66,7 +66,7 @@
             {#each context.config.hitDieTypes as type}
               <option value={type}>{type}</option>
             {/each}
-          </Select>
+          </SelectQuadrone>
         </div>
       </div>
 
@@ -75,7 +75,7 @@
           >{localize('DND5E.CLASS.FIELDS.hd.spent.label')}</label
         >
         <div class="form-fields">
-          <NumberInput
+          <NumberInputQuadrone
             id="{appId}-hitDiceUsed"
             document={context.item}
             field="system.hd.spent"
@@ -91,7 +91,7 @@
   <div class="form-group">
     <label>{localize('DND5E.CLASS.FIELDS.hd.additional.label')}</label>
     <div class="form-fields">
-      <TextInput
+      <TextInputQuadrone
         document={context.item}
         field="system.hd.additional"
         value={context.source.hd.additional}
@@ -114,18 +114,19 @@
     >
     <div class="form-fields">
       {#each abilities as { key, label } (key)}
-        <Checkbox
-          id="{appId}-primaryAbility-value-{key?.slugify()}"
-          labelCssClass="checkbox"
-          document={context.item}
-          field="system.primaryAbility.value"
-          checked={context.system.primaryAbility.value.has(key)}
-          value={key}
-          disabled={!context.editable}
-          onDataPreparing={(ev) => mapMulticlassingAbilitiesToSave(context, ev)}
-        >
+        <label for="" class="checkbox">
+          <CheckboxQuadrone
+            id="{appId}-primaryAbility-value-{key?.slugify()}"
+            document={context.item}
+            field="system.primaryAbility.value"
+            checked={context.system.primaryAbility.value.has(key)}
+            value={key}
+            disabled={!context.editable}
+            onDataPreparing={(ev) =>
+              mapMulticlassingAbilitiesToSave(context, ev)}
+          />
           {label}
-        </Checkbox>
+        </label>
       {/each}
     </div>
     <p class="hint">
@@ -139,7 +140,7 @@
         >{localize('DND5E.CLASS.FIELDS.primaryAbility.all.label')}</label
       >
       <div class="form-fields">
-        <Checkbox
+        <CheckboxQuadrone
           id="{appId}-primaryAbility-fields-all"
           document={context.item}
           field="system.primaryAbility.fields.all"

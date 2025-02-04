@@ -8,7 +8,11 @@ import { mount } from 'svelte';
 import ItemDebugSheet from './item/ItemDebugSheet.svelte';
 import ItemHeaderStart from './item/parts/ContainerHeaderStart.svelte';
 import type { Tab } from 'src/types/types';
-import type { Item5e, ItemDescription } from 'src/types/item.types';
+import type {
+  Item5e,
+  ItemDescription,
+  ItemNameContext,
+} from 'src/types/item.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export type ItemDebugSheetQuadroneContext = {
@@ -16,6 +20,7 @@ export type ItemDebugSheetQuadroneContext = {
   editable: boolean;
   item: Item5e;
   itemDescriptions: ItemDescription[];
+  name: ItemNameContext;
   system: any;
   tabs: Tab[];
   unlocked: boolean;
@@ -131,6 +136,11 @@ export class Tidy5eItemDebugSheetQuadrone extends SvelteApplicationMixin<ItemDeb
       editable: this.isEditable,
       item: this.document,
       itemDescriptions,
+      name: {
+        value: this.item.name,
+        editable: this.item._source.name,
+        field: this.item.schema.getField('name'),
+      },
       system: this.document.system,
       tabs: [
         {

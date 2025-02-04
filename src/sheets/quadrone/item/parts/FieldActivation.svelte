@@ -1,9 +1,9 @@
 <script lang="ts">
-  import Select from 'src/components/inputs/Select.svelte';
+  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
+  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
   let context = $derived(getItemSheetContext());
@@ -25,7 +25,7 @@
           {localize('DND5E.Amount')}
         </label>
         <div class="form-fields">
-          <NumberInput
+          <NumberInputQuadrone
             id="{appId}-activation-value"
             document={context.item}
             field="system.activation.value"
@@ -44,7 +44,7 @@
         {localize('DND5E.Cost')}
       </label>
       <div class="form-fields">
-        <Select
+        <SelectQuadrone
           id="{appId}-activation-type"
           document={context.item}
           field="system.activation.type"
@@ -56,13 +56,13 @@
             labelProp="label"
             valueProp="value"
           />
-        </Select>
+        </SelectQuadrone>
       </div>
     </div>
   </div>
 
   <!-- Condition -->
-  <TextInput
+  <TextInputQuadrone
     id="{appId}-activation-condition"
     document={context.item}
     field="system.activation.condition"

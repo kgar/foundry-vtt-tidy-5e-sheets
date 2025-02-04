@@ -1,8 +1,8 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
   import DetailsSpellcasting from '../parts/DetailsSpellcasting.svelte';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
 
   let context = $derived(getItemSheetContext());
 
@@ -18,7 +18,7 @@
   <div class="form-group">
     <label for="{appId}-identifier">{localize('DND5E.Identifier')}</label>
     <div class="form-fields">
-      <TextInput
+      <TextInputQuadrone
         id="{appId}-identifier"
         document={context.item}
         field="system.identifier"
@@ -35,7 +35,7 @@
       >{localize('DND5E.ClassIdentifier')}</label
     >
     <div class="form-fields">
-      <TextInput
+      <TextInputQuadrone
         id="{appId}-classIdentifier"
         document={context.item}
         field="system.classIdentifier"

@@ -26,7 +26,6 @@ import ItemClassDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemClass
 import ItemConsumableDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemConsumableDetailsTab.svelte';
 import ItemContainerContentsQuadroneTab from 'src/sheets/quadrone/container/tabs/ContainerContentsTab.svelte';
 import ItemContainerDetailsQuadronTab from 'src/sheets/quadrone/container/tabs/ContainerDetailsTab.svelte';
-import ItemDescriptionQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemDescriptionTab.svelte';
 import ItemDescriptionsQuadroneTab from '../../sheets/quadrone/item/tabs/ItemDescriptionsTab.svelte';
 import ItemEffectsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemEffectsTab.svelte';
 import ItemEquipmentDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemEquipmentDetailsTab.svelte';
@@ -411,14 +410,6 @@ const itemSheetTabs = {
     title: 'DND5E.Details',
     content: {
       component: ItemSpeciesDetailsQuadroneTab,
-      type: 'svelte',
-    },
-  },
-  quadroneSingleDescription: {
-    id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
-    title: 'DND5E.Description',
-    content: {
-      component: ItemDescriptionQuadroneTab,
       type: 'svelte',
     },
   },

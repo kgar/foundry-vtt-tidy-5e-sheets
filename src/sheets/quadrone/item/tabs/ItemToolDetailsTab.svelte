@@ -1,12 +1,12 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-  import Select from 'src/components/inputs/Select.svelte';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
   import ItemProperties from '../parts/ItemProperties.svelte';
-  import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import FieldUses from '../parts/FieldUses.svelte';
-  import { getItemSheetContext, getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
+  import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
+  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
+  import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -19,7 +19,7 @@
 <div class="form-group">
   <label for="{appId}-type-value">{localize('DND5E.ItemToolType')}</label>
   <div class="form-fields">
-    <Select
+    <SelectQuadrone
       id="{appId}-type-value"
       document={context.item}
       field="system.type.value"
@@ -27,7 +27,7 @@
       disabled={!context.editable}
     >
       <SelectOptions data={context.config.toolTypes} blank="" />
-    </Select>
+    </SelectQuadrone>
   </div>
 </div>
 
@@ -36,7 +36,7 @@
   <div class="form-group">
     <label for="{appId}-type-baseItem">{localize('DND5E.ItemToolBase')}</label>
     <div class="form-fields">
-      <Select
+      <SelectQuadrone
         id="{appId}-type-baseItem"
         document={context.item}
         field="system.type.baseItem"
@@ -44,7 +44,7 @@
         disabled={!context.editable}
       >
         <SelectOptions data={context.baseItems} blank="" />
-      </Select>
+      </SelectQuadrone>
     </div>
   </div>
 {/if}
@@ -65,7 +65,7 @@
     <div class="form-group label-top">
       <label for="">{localize('DND5E.Proficiency')}</label>
       <div class="form-fields">
-        <Select
+        <SelectQuadrone
           id="{appId}-proficient"
           document={context.item}
           field="system.proficient"
@@ -76,7 +76,7 @@
             data={context.config.proficiencyLevels}
             blank={localize('DND5E.Automatic')}
           />
-        </Select>
+        </SelectQuadrone>
       </div>
     </div>
 
@@ -84,7 +84,7 @@
     <div class="form-group label-top">
       <label for="{appId}-ability">{localize('DND5E.Ability')}</label>
       <div class="form-fields">
-        <Select
+        <SelectQuadrone
           id="{appId}-ability"
           document={context.item}
           field="system.ability"
@@ -96,7 +96,7 @@
             labelProp="label"
             blank={localize('DND5E.Default')}
           />
-        </Select>
+        </SelectQuadrone>
       </div>
     </div>
   </div>
@@ -106,7 +106,7 @@
 <div class="form-group">
   <label for="{appId}-bonus">{localize('DND5E.ItemToolBonus')}</label>
   <div class="form-fields">
-    <TextInput
+    <TextInputQuadrone
       id={`${appId}-system-bonus`}
       document={context.item}
       field="system.bonus"
@@ -122,7 +122,7 @@
     <label for="{appId}-attunement">{localize('DND5E.Attunement')}</label>
     <div class="form-fields">
       <!-- Attuned -->
-      <Checkbox
+      <CheckboxQuadrone
         id={`${appId}-system-attuned`}
         document={context.item}
         field="system.attuned"
@@ -134,7 +134,7 @@
       />
 
       <!-- Attunement -->
-      <Select
+      <SelectQuadrone
         id="{appId}-attunement"
         document={context.item}
         field="system.attunement"
@@ -145,7 +145,7 @@
           data={context.config.attunementTypes}
           blank={localize('DND5E.AttunementNone')}
         />
-      </Select>
+      </SelectQuadrone>
     </div>
   </div>
 {/if}

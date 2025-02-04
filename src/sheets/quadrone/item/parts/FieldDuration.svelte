@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
+  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
@@ -21,7 +21,7 @@
       <div class="form-group label-top">
         <label for="{appId}-duration-value">{localize('DND5E.Amount')}</label>
         <div class="form-fields">
-          <TextInput
+          <TextInputQuadrone
             id="{appId}-duration-value"
             document={context.item}
             field="system.duration.value"
@@ -39,7 +39,7 @@
         >{localize('DND5E.DurationTime')}</label
       >
       <div class="form-fields">
-        <Select
+        <SelectQuadrone
           id="{appId}-duration-units"
           document={context.item}
           field="system.duration.units"
@@ -51,14 +51,14 @@
             labelProp="label"
             valueProp="value"
           />
-        </Select>
+        </SelectQuadrone>
       </div>
     </div>
   </div>
 
   <!-- Conditions -->
   {#if context.system.duration.units === 'spec'}
-    <TextInput
+    <TextInputQuadrone
       id="{appId}-duration-special"
       document={context.item}
       field="system.duration.special"

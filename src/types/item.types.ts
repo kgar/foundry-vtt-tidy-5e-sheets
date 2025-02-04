@@ -128,7 +128,7 @@ export type ItemSheetContext = {
   tabs: Tab[];
 };
 
-type ItemNameContext = {
+export type ItemNameContext = {
   value: string;
   editable: string;
   field: unknown;
