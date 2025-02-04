@@ -29,7 +29,7 @@
   }
 </script>
 
-<aside class="sidebar inverse">
+<aside class="sidebar dark">
   <div class="sidebar-contents">
     <h4>Theme</h4>
     <div style="display: flex; flex-direction: column; gap: 0.25rem">
@@ -83,7 +83,7 @@
     </div>
   </div>
 </aside>
-<div class="item-content" class:inverse>
+<div class="item-content dark" class:inverse>
   <div class="controls-gallery">
     <div class="span-all">
       <!-- Name -->

@@ -59,6 +59,7 @@ import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
+import { ItemContext } from 'src/features/item/ItemContext';
 
 export class Tidy5eNpcSheet
   extends BaseSheetCustomSectionMixin(
@@ -938,6 +939,12 @@ export class Tidy5eNpcSheet
         ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
         ctx.hasUses = uses && uses.max > 0;
         ctx.canToggle = 'equipped' in item.system;
+
+        // Save
+        ctx.save = ItemContext.getItemSaveContext(item);
+
+        // To Hit
+        ctx.toHit = ItemContext.getToHit(item);
 
         ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
         if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {

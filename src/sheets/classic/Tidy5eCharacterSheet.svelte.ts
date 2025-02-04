@@ -75,6 +75,7 @@ import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { AttributePins } from 'src/features/attribute-pins/AttributePins';
 import type { AttributePinFlag } from 'src/foundry/TidyFlags.types';
+import { ItemContext } from 'src/features/item/ItemContext';
 
 export class Tidy5eCharacterSheet
   extends BaseSheetCustomSectionMixin(
@@ -1495,6 +1496,12 @@ export class Tidy5eCharacterSheet
       );
       context.canToggle = 'equipped' in item.system;
     }
+
+    // Save
+    context.save = ItemContext.getItemSaveContext(item);
+
+    // To Hit
+    context.toHit = ItemContext.getToHit(item);
 
     // Activities
     context.activities = Activities.getVisibleActivities(
