@@ -1,0 +1,87 @@
+<script lang="ts">
+  import { processInputChangeDelta } from 'src/utils/form';
+  import type { HTMLInputAttributes } from 'svelte/elements';
+
+  type OnSaveChangeFn = (
+    event: Event & {
+      currentTarget: EventTarget & HTMLInputElement;
+    },
+  ) => boolean;
+
+  type Props = {
+    field: string;
+    document: any;
+    selectOnFocus?: boolean;
+    saveEmptyAsNull?: boolean;
+    enableDeltaChanges?: boolean;
+    onSaveChange?: OnSaveChangeFn;
+    /**
+     * There are cases where related data must be updated together,
+     * else odd behaviors will result.
+     */
+    additionalDataToSave?: Record<string, any>;
+    /**
+     * Stop propagation on input change event.
+     * Useful for cases when outside listeners like
+     * the FormApplication are clearing an input
+     * during a change event, since these inputs
+     * do not use the `[name]` attribute.
+     */
+    stopChangePropagation?: boolean;
+  } & HTMLInputAttributes;
+
+  let {
+    field,
+    document,
+    selectOnFocus = false,
+    saveEmptyAsNull = false,
+    enableDeltaChanges = false,
+    onSaveChange = () => true,
+    additionalDataToSave = {},
+    stopChangePropagation = false,
+    ...rest
+  }: Props = $props();
+
+  let theInput: HTMLInputElement | undefined = $state();
+
+  async function saveChange(
+    event: Event & {
+      currentTarget: EventTarget & HTMLInputElement;
+    },
+  ) {
+    if (!theInput) {
+      return;
+    }
+
+    stopChangePropagation && event.stopPropagation();
+
+    const targetValue = event.currentTarget.value;
+
+    let valueToSave =
+      saveEmptyAsNull && targetValue === ''
+        ? null
+        : !isNaN(parseInt(targetValue)) && enableDeltaChanges
+          ? processInputChangeDelta(targetValue, document, field)
+          : targetValue;
+
+    await document.update({
+      ...additionalDataToSave,
+      [field]: valueToSave,
+    });
+
+    setTimeout(() => {
+      if (selectOnFocus && theInput === window.document.activeElement) {
+        theInput.select();
+      }
+    });
+  }
+</script>
+
+<input
+  bind:this={theInput}
+  type="text"
+  onchange={(ev) => onSaveChange(ev) && saveChange(ev)}
+  onfocus={(ev) => selectOnFocus && ev.currentTarget.select()}
+  data-tidy-field={field}
+  {...rest}
+/>
