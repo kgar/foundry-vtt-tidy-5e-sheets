@@ -28,9 +28,16 @@
   color: var(--t5e-color-text-ondefault-default);
   border-radius: 0.125rem;
 
+  .item-table-cell {
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    min-height: 0;
+  }
+
 
   .expand-button {
     width: 1.75rem;
+
     height: 1.5rem;
     background: none;
     border: none;
@@ -56,26 +63,29 @@
 
   .header-label-cell {
     justify-content: flex-start;
+    margin: 0;
     padding-inline-start: 0;
+    padding-block-end: 0.09375rem;
     > * {
       font-family: var(--t5e-font-family-title);
       font-size: var(--font-size-18);
       line-height: 1rem;
     }
+
     h3 {
       color: var(--t5e-color-text-ondefault-default);
     }
-
     .table-header-count {
       color: var(--t5e-color-text-ondefault-gold-emphasis);
       margin-inline-start: 0.25rem;
     }
-
   }
 
-
-
-
+  .header-cell-actions {
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
+  }
 
 
   &.prepared {
@@ -105,7 +115,6 @@
 
 
 .item-table-row {
-  padding: 0.125rem 0 0.125rem 0.125rem;
   border-radius: 0.125rem;
   border-width: 0 0 1px 0;
   border-style: solid;
@@ -195,10 +204,13 @@
 
 /* Cell styles */
 .item-table-cell {
-  padding: 0 .5rem;
-  min-width: 80px; /* TODO: FIX */
   align-items: center;
+  display: flex;
   justify-content: center;
+  padding: 0 .5rem;
+  min-height: var(--t5e-field-size-default);
+  min-width: 80px; /* TODO: FIX */
+  height: 100%;
 
   &:not(:last-child) {
     border-right: 1px solid var(--t5e-table-row-divider);
@@ -216,7 +228,7 @@
   &.text-cell {
     flex-direction: column;
     justify-content: center;
-    max-height: 1.5rem;
+    max-height: none;
   }
 
   .cell-label {
@@ -274,15 +286,19 @@
 .item-actions {
   padding-inline-start: 0.125rem;
   padding-inline-end: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .item-table-button {
   align-items: center;
   display: flex;
+  font-size: 0.8125rem;
   height: 100%;
   justify-content: center;
+  min-height: var(--t5e-field-size-default);
   width: 1.5rem;
-  font-size: 0.8125rem;
 
   &.toggle-button {
     &.toggled {
@@ -294,7 +310,6 @@
 
 
 .item-use-button {
-
   align-items: center;
   border-radius: 0.125rem;
   border: 1px solid var(--t5e-color-gold);
@@ -303,6 +318,7 @@
   grid-template-columns: 1fr;
   height: 1.75rem;
   justify-content: center;
+  margin: 0.0625rem 0 0.0625rem 0.0625rem;
   position: relative;
   transition: all var(--t5e-transition-default);
   width: 1.75rem;

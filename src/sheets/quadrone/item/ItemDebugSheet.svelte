@@ -123,7 +123,7 @@
             <div class="button expand-button">
               <i class="fas fa-chevron-down"></i>
             </div>
-            <div class="header-label-cell item-table-cell item-label fill">
+            <div class="header-label-cell item-table-cell fill">
               <h3>Innate</h3>
               <span class="table-header-count">3</span>
             </div>
@@ -142,6 +142,11 @@
             </div>
             <div class="item-table-cell">
               <div class="cell-name">Hit</div>
+            </div>
+            <div class="item-table-cell header-cell-actions">
+              <div class="item-table-button add-item">
+                <i class="fas fa-plus"></i>
+              </div>
             </div>
           </div>
           <div class="item-table-row spell">
@@ -307,7 +312,7 @@
             <div class="button expand-button">
               <i class="fas fa-chevron-down"></i>
             </div>
-            <div class="header-label-cell item-table-cell item-label fill">
+            <div class="header-label-cell item-table-cell fill">
               <h3>Items</h3>
               <span class="table-header-count">3</span>
             </div>
@@ -920,11 +925,11 @@
           </div>
           <div class="form-group checkbox">
             <div class="form-fields">
-              <input type="checkbox" />
+            <label for="consumed" class="checkbox"><input type="checkbox" id="consumed" /><span>Consumed</span></label>
             </div>
-            <label>Consumed</label>
           </div>
         </div>
+
       </div>
       <div class="form-group">
         <label role="presentation"></label>

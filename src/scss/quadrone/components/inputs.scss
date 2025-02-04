@@ -243,13 +243,13 @@ textarea {
   --checkbox-size: 1rem;
   display: flex;
   align-items: top;
-  gap: 0.25rem;
   padding-block-start: 0.3125rem;
 }
 .radio, .checkbox {
   font-size: var(--font-size-default, 0.8666666667rem);
   font-weight: var(--font-weight-default, 400);
   justify-content: flex-start;
+  gap: 0.5rem;
 
   &:hover {
     input:not(:disabled) {  
