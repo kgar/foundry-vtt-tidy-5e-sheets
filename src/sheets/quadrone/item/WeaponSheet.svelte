@@ -5,8 +5,8 @@
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import { getContainerSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import Sidebar from '../item/parts/Sidebar.svelte';
-  import ItemNameHeaderOrchestrator from '../item/parts/ItemNameHeaderOrchestrator.svelte';
+  import Sidebar from './parts/Sidebar.svelte';
+  import ItemNameHeaderOrchestrator from './parts/ItemNameHeaderOrchestrator.svelte';
 
   let context = $derived(getContainerSheetQuadroneContext());
 
@@ -23,76 +23,11 @@
   );
 
   let itemNameEl: HTMLElement | undefined = $state();
-
-  let holdsMarkup = $derived.by(() => {
-    return localize('TIDY5E.Containers.HoldsNumberUnits', {
-      holdsElementStart: '<span class="text-secondary fw-normal">',
-      holdsElementEnd: '</span>',
-      numberElementStart: '<span>',
-      numberElementEnd: '</span>',
-      number: context.capacity.max,
-      unitsElementStart: '<span class="text-secondary fw-normal">',
-      unitsElementEnd: '</span>',
-      units: context.capacity.units,
-    });
-  });
 </script>
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
 
-<Sidebar>
-  {#snippet itemSpecificSnippet()}
-    <div>
-      <h4>{localize('TYPES.Item.container')}</h4>
-      <div class="pills stacked">
-        <li class="pill">
-          <span>
-            {@html holdsMarkup}
-          </span>
-        </li>
-      </div>
-    </div>
-
-    <div>
-      <h4 class="currency-header">
-        <span>{localize('DND5E.Currency')}</span>
-        <a
-          class="button icon-button currency-conversion"
-          class:disabled={!context.editable}
-          onclick={() =>
-            context.owner &&
-            new dnd5e.applications.CurrencyManager(context.document).render(
-              true,
-            )}
-          title={localize('DND5E.CurrencyManager.Title')}
-        >
-          <i class="fas fa-database"></i>
-        </a>
-      </h4>
-      <div class="currencies">
-        {#each context.currencies as currency (currency.key)}
-          <label class="input-group">
-            <i class="currency {currency.key}" aria-label={currency.key}></i>
-            <TextInput
-              document={context.document}
-              field="system.currency.{currency.key}"
-              id="{context.document.id}-system.currency.{currency.key}"
-              value={currency.value}
-              allowDeltaChanges={true}
-              selectOnFocus={true}
-              disabled={!context.editable || context.lockMoneyChanges}
-              class="currency-item currency-{currency.key}"
-              placeholder="0"
-            />
-            <span class="denomination {currency.key}" data-denom={currency.key}>
-              {currency.abbr}
-            </span>
-          </label>
-        {/each}
-      </div>
-    </div>
-  {/snippet}
-</Sidebar>
+<Sidebar />
 
 <main class="item-content">
   <div
@@ -146,14 +81,14 @@
     <!-- <div class="item-header-summary-separator" role="presentation"></div> -->
 
     <!-- Quantity -->
-    <!-- <div class="item-quantity">
+    <div class="item-quantity">
       <span class="item-quantity-label text-lighter">
         {localize('DND5E.Quantity')}
       </span>
       <span class="item-quantity-value">
         {context.system.quantity}
       </span>
-    </div> -->
+    </div>
   </div>
 
   <!-- Tab Strip -->

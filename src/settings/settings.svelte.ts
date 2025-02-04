@@ -1921,6 +1921,21 @@ export function createSettings() {
           return FoundryAdapter.getTidySetting<boolean>('debug');
         },
       },
+
+      truesight: {
+        options: {
+          name: 'Tidy 5e Truesight',
+          hint: 'Grants the world the ability to see things which are still in development and not ready for the general public.',
+          scope: 'world',
+          config: false,
+          default: false,
+          type: Boolean,
+          requiresReload: true,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>('truesight');
+        },
+      },
     } satisfies Tidy5eSettings,
   } as const;
 }

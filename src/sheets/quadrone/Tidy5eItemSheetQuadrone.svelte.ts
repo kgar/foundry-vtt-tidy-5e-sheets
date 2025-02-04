@@ -1,4 +1,7 @@
 import { CONSTANTS } from 'src/constants';
+import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
+import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
+import { DragAndDropMixin } from 'src/mixins/DragAndDropBaseMixin';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import type {
@@ -9,28 +12,25 @@ import type {
   Item5e,
   ItemDescription,
   ItemFacilityOrdersContext,
-  ItemSheetContext as ItemSheetClassicContext,
   ItemSheetContext,
+  ItemSheetQuadroneContext,
   UsesRecoveryData,
 } from 'src/types/item.types';
-import TypeNotFoundSheet from './item/TypeNotFoundSheet.svelte';
 import { mount } from 'svelte';
+import TypeNotFoundSheet from '../classic/item/TypeNotFoundSheet.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { TabManager } from 'src/runtime/tab/TabManager';
-import type { GroupableSelectOption, Tab } from 'src/types/types';
-import { getPercentage } from 'src/utils/numbers';
-import { isNil } from 'src/utils/data';
-import { DragAndDropMixin } from 'src/mixins/DragAndDropBaseMixin';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
-import { Activities } from 'src/features/activities/activities';
-import { settings } from 'src/settings/settings.svelte';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
-import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
-import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
+import { Activities } from 'src/features/activities/activities';
+import { getPercentage } from 'src/utils/numbers';
+import type { GroupableSelectOption, Tab } from 'src/types/types';
+import { TabManager } from 'src/runtime/tab/TabManager';
+import { isNil } from 'src/utils/data';
+import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 
-export class Tidy5eItemSheetClassic extends DragAndDropMixin(
-  SvelteApplicationMixin<ItemSheetClassicContext>(
+export class Tidy5eItemSheetQuadrone extends DragAndDropMixin(
+  SvelteApplicationMixin<ItemSheetQuadroneContext>(
     foundry.applications.sheets.ItemSheetV2
   )
 ) {
@@ -52,7 +52,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       'sheet',
       CONSTANTS.SHEET_TYPE_ITEM,
       'app-v2',
-      CONSTANTS.SHEET_LAYOUT_CLASSIC,
+      'quadrone',
     ],
     tag: 'form',
     window: {
@@ -75,7 +75,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
   };
 
   _createComponent(node: HTMLElement): Record<string, any> {
-    const sheetComponent = ItemSheetRuntime.classicSheets[this.item.type];
+    const sheetComponent = ItemSheetRuntime.quadroneSheets[this.item.type];
 
     const context = new Map<any, any>([
       [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
@@ -124,20 +124,23 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
     return component;
   }
 
-  _createAdditionalComponents(content: HTMLElement) {
-    const infoCard = mount(AttachedInfoCard, {
-      target: content,
-      props: {
-        sheet: this,
-      },
+  _createAdditionalComponents(node: HTMLElement) {
+    const windowHeader = this.element.querySelector('.window-header');
+
+    const headerStart = mount(ItemHeaderStart, {
+      target: windowHeader,
+      anchor: windowHeader.querySelector('.window-title'),
+      context: new Map<string, any>([
+        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
+      ]),
     });
 
-    return [infoCard];
+    return [headerStart];
   }
 
   async _prepareContext(
     options: ApplicationRenderOptions
-  ): Promise<ItemSheetClassicContext> {
+  ): Promise<ItemSheetQuadroneContext> {
     const rollData = this.document.getRollData();
 
     // Enrich HTML description
@@ -191,9 +194,11 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
 
     const editable = this.isEditable;
 
+    const unlocked = FoundryAdapter.isSheetUnlocked(this.item) && editable;
+
     const target = this.item.type === 'spell' ? this.item.system.target : null;
 
-    const context: ItemSheetContext = {
+    const context: ItemSheetQuadroneContext = {
       activities: (this.document.system.activities ?? [])
         .filter((a: any) => {
           return Activities.isConfigurable(a);
@@ -264,6 +269,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       tabs: [],
       title: this.title,
       rollData: rollData,
+      unlocked,
       user: game.user,
 
       // Item Type, Status, and Details
@@ -471,7 +477,8 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       eligibleCustomTabs
     );
 
-    const tabs = ItemSheetRuntime.classicSheets[this.item.type]?.defaultTabs() ?? [];
+    const tabs =
+      ItemSheetRuntime.quadroneSheets[this.item.type]?.defaultTabs() ?? [];
 
     tabs.push(...customTabs);
 
@@ -600,7 +607,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
    * @protected
    */
   async _getItemBaseTypes(
-    context: ItemSheetClassicContext
+    context: ItemSheetQuadroneContext
   ): Promise<Record<string, any>> {
     const baseIds =
       this.item.type === 'equipment'

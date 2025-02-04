@@ -324,7 +324,7 @@ export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
       eligibleCustomTabs
     );
 
-    context.tabs = ItemSheetRuntime.sheets[this.item.type]?.defaultTabs() ?? [];
+    context.tabs = ItemSheetRuntime.classicSheets[this.item.type]?.defaultTabs() ?? [];
     context.tabs.push(...customTabs);
 
     TidyHooks.tidy5eSheetsPreConfigureSections(this, this.element, context);

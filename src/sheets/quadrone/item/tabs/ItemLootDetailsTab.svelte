@@ -1,0 +1,1 @@
+Loot details tab here

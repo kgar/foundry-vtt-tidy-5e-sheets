@@ -5,6 +5,7 @@ import type {
   ContainerSheetClassicContext,
   ContainerSheetQuadroneContext,
   ItemSheetContext,
+  ItemSheetQuadroneContext,
 } from 'src/types/item.types';
 import type {
   CharacterSheetContext,
@@ -45,4 +46,16 @@ export function getContainerSheetClassicContext(): ContainerSheetClassicContext 
 
 export function getContainerSheetQuadroneContext(): ContainerSheetQuadroneContext {
   return getSheetContext<ContainerSheetQuadroneContext>();
+}
+
+export function getContainerOrItemSheetContextQuadrone():
+  | ContainerSheetQuadroneContext
+  | ItemSheetQuadroneContext {
+  return getSheetContext<
+    ContainerSheetQuadroneContext | ItemSheetQuadroneContext
+  >();
+}
+
+export function getItemSheetContextQuadrone(): ItemSheetQuadroneContext {
+  return getSheetContext<ItemSheetQuadroneContext>();
 }

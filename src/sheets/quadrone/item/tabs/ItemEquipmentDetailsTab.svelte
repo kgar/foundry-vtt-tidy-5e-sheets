@@ -1,0 +1,1 @@
+Equipment details tab here

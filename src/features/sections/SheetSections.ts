@@ -29,6 +29,18 @@ import { SpellUtils } from 'src/utils/SpellUtils';
 import { settings } from 'src/settings/settings.svelte';
 
 export class SheetSections {
+  // TODO: To item sheet runtime with API support?
+  static _itemCustomSectionBlacklist = new Set<string>([
+    CONSTANTS.ITEM_TYPE_BACKGROUND,
+    CONSTANTS.ITEM_TYPE_CLASS,
+    CONSTANTS.ITEM_TYPE_FACILITY,
+    CONSTANTS.ITEM_TYPE_SUBCLASS,
+  ]);
+
+  static itemSupportsCustomSections(itemType: string) {
+    return !this._itemCustomSectionBlacklist.has(itemType);
+  }
+
   static applySpellToSection(
     spellbook: Record<string, SpellbookSection>,
     spell: Item5e,
