@@ -23,6 +23,7 @@
 - [x] Ensure all standard form fields are locked on sheet lock
 - [ ] <!-- TODO: Figure this out; where is the system vs. source value? -->
 - [ ] Ensure interactibles like buttons are also disabled on lock, where relevant
+- [ ] Item Descriptions for enchanted items are multiplying the enchanted text. Stahp
 - [ ] Add currency and weight to relevant item sheets at the top
 - [ ] Implement Activities tab
 - [ ] Implement Effects tab
