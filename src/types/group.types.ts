@@ -57,6 +57,7 @@ export interface GroupItemContext {
   hasUses?: boolean;
   isStack?: boolean;
   save?: ItemSaveContext;
+  toHit?: number | null;
   totalWeight?: number;
 }
 

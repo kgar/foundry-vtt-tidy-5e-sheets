@@ -1499,7 +1499,10 @@ export class Tidy5eCharacterSheet
 
     // Save
     context.save = ItemContext.getItemSaveContext(item);
-    
+
+    // To Hit
+    context.toHit = ItemContext.getToHit(item);
+
     // Activities
     context.activities = Activities.getVisibleActivities(
       item,

@@ -236,6 +236,7 @@ export type CharacterItemContext = {
   linkedUses?: LinkedUses;
   needsSubclass?: boolean;
   save?: ItemSaveContext;
+  toHit?: number | null;
   toggleClass?: string;
   toggleTitle?: string;
   totalWeight?: number;
@@ -434,6 +435,7 @@ export type NpcItemContext = {
   needsSubclass?: boolean;
   parent?: Item5e;
   save?: ItemSaveContext;
+  toHit?: number | null;
   toggleTitle?: string;
   totalWeight?: number;
 };
@@ -480,6 +482,7 @@ export type VehicleItemContext = {
   cover?: string;
   hasUses?: boolean;
   save?: ItemSaveContext;
+  toHit?: number | null;
   threshold?: number | string;
   toggleClass?: string;
   toggleTitle?: string;

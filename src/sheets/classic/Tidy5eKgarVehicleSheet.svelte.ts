@@ -583,6 +583,9 @@ export class Tidy5eVehicleSheet
     // Save
     ctx.save = ItemContext.getItemSaveContext(item);
 
+    // To Hit
+    ctx.toHit = ItemContext.getToHit(item);
+
     // Activities
     ctx.activities = Activities.getVisibleActivities(
       item,

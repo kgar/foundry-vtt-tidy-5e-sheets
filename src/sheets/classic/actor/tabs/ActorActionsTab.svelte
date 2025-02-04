@@ -38,6 +38,7 @@
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { formatAsModifier } from 'src/utils/formatting';
 
   let context =
     $derived(
@@ -260,7 +261,7 @@
                 <ItemTableCell baseWidth="5rem" cssClass="flex-column no-gap">
                   <!-- HIT / DC -->
                   {@const save = ctx?.save}
-                  {#if save?.dc || actionItem.item.labels?.toHit}
+                  {#if save?.dc || ctx?.toHit}
                     {#if save?.dc}
                       <span
                         title={actionItem.item.labels?.save ?? ''}
@@ -276,9 +277,10 @@
                         {save.ability}
                       </small>
                     {:else}
-                      <span title={actionItem.item.labels?.toHit ?? ''}
-                        >{actionItem.item.labels?.toHit ?? ''}</span
-                      >
+                      {@const toHit = formatAsModifier(
+                        ctx.toHit?.toString() ?? '',
+                      )}
+                      <span>{toHit}</span>
                     {/if}
                   {/if}
                 </ItemTableCell>

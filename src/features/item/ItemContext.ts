@@ -20,4 +20,9 @@ export class ItemContext {
       };
     }
   }
+
+  static getToHit(item: Item5e): number | null {
+    const toHit = parseInt(item.labels.modifier);
+    return item.hasAttack && !isNaN(toHit) ? toHit : null;
+  }
 }

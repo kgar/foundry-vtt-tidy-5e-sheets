@@ -943,6 +943,9 @@ export class Tidy5eNpcSheet
         // Save
         ctx.save = ItemContext.getItemSaveContext(item);
 
+        // To Hit
+        ctx.toHit = ItemContext.getToHit(item);
+
         ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
         if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {
           if (this._concentration.items.has(item)) {
