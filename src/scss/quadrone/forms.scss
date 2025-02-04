@@ -6,15 +6,12 @@
 
   /* Fieldset */
   fieldset {
-    // TODO: Do we want the fieldset border?
     border: none;
-    //border-radius: 0.25rem;
-    //border: 1px solid var(--color-fieldset-border);
-
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
     margin: 0;
+    padding: 0;
 
     > label.checkbox,
     > label.radio {
@@ -83,9 +80,10 @@
     margin: 0;
 
     > label {
-      line-height: var(--form-field-height);
-      font-weight: 500;
       color: var(--t5e-color-text-ondefault-lighter);
+      font-size: var(--font-size-default);
+      font-weight: 500;
+      line-height: var(--form-field-height);
     }
     
     &:has(.label-top) > label {
@@ -263,7 +261,6 @@
 
     label.checkbox {
       min-height: var(--t5e-field-size-default);
-      padding-inline-start: 0.5rem;
     }
   }
 
@@ -282,26 +279,17 @@
 
     > .form-fields {
       display: grid;
-      grid-template-columns: repeat(var(--num-cols), 1fr);
-      gap: 0;
+      grid-template-columns: repeat(var(--num-cols), minmax(0, 1fr));
+      row-gap: 0;
+      column-gap: 0.625rem;
 
-      > label {
-        text-align: unset;
+      .checkbox {
+        font-size: var(--font-size-12);
+        line-height: var(--t5e-line-height-small);
+        gap: 0.25rem;
+        min-height: var(--t5e-field-size-small);
       }
-    }
-  }
 
-  /* Checkbox Grid */
-  .checkbox-grid {
-    --num-cols: 4;
-
-    &.checkbox-grid-3 {
-      --num-cols: 3;
-    }
-
-    > .form-fields {
-      display: grid;
-      grid-template-columns: repeat(var(--num-cols), 1fr);
 
       > label {
         text-align: unset;
