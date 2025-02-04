@@ -7,6 +7,7 @@ import type {
   ActorV2,
   ContainerPanelItemContext,
   InventorySection,
+  ItemSaveContext,
   Tab,
   TidySectionBase,
   Utilities,
@@ -55,6 +56,7 @@ export interface GroupItemContext {
   containerContents?: ContainerContents;
   hasUses?: boolean;
   isStack?: boolean;
+  save?: ItemSaveContext;
   totalWeight?: number;
 }
 

@@ -5,7 +5,11 @@
   import ItemTableRow from 'src/components/item-list/v1/ItemTableRow.svelte';
   import ItemTableCell from 'src/components/item-list/v1/ItemTableCell.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ActorSheetContextV1 } from 'src/types/types';
+  import type {
+    CharacterSheetContext,
+    NpcSheetContext,
+    VehicleSheetContext,
+  } from 'src/types/types';
   import { getContext } from 'svelte';
   import ItemName from 'src/components/item-list/ItemName.svelte';
   import { CONSTANTS } from 'src/constants';
@@ -35,7 +39,12 @@
   } from 'src/features/search/search.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = $derived(getSheetContext<ActorSheetContextV1>());
+  let context =
+    $derived(
+      getSheetContext<
+        CharacterSheetContext | NpcSheetContext | VehicleSheetContext
+      >(),
+    );
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
@@ -127,6 +136,8 @@
         {/snippet}
         {#snippet body()}
           {#each section.actions as actionItem (actionItem.item.id)}
+            {@const ctx = context.itemContext[actionItem.item.id]}
+
             <ItemTableRow
               item={actionItem.item}
               onMouseDown={(event) =>
@@ -248,23 +259,19 @@
                 </ItemTableCell>
                 <ItemTableCell baseWidth="5rem" cssClass="flex-column no-gap">
                   <!-- HIT / DC -->
-                  {#if actionItem.item.labels?.save || actionItem.item.labels?.toHit}
-                    {#if actionItem.item.labels?.save !== '' && actionItem.item.labels?.save !== undefined}
-                      {@const saveAbilityLabel =
-                        FoundryAdapter.lookupAbility(
-                          actionItem.item.system.save.ability,
-                        )?.label ?? ''}
+                  {@const save = ctx?.save}
+                  {#if save?.dc || actionItem.item.labels?.toHit}
+                    {#if save?.dc}
                       <span
                         title={actionItem.item.labels?.save ?? ''}
                         class="flex-column-truncate"
                       >
                         {localize('DND5E.AbbreviationDC')}
-                        {actionItem.item.system.save.dc ?? ''}
+                        {save.dc.value}
                       </span>
-                      <small
-                        title={saveAbilityLabel}
-                        class="flex-column-truncate">{saveAbilityLabel}</small
-                      >
+                      <small title={save.ability} class="flex-column-truncate">
+                        {save.ability}
+                      </small>
                     {:else}
                       <span title={actionItem.item.labels?.toHit ?? ''}
                         >{actionItem.item.labels?.toHit ?? ''}</span

@@ -51,6 +51,7 @@ import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { ImportSheetControl } from '../../features/sheet-header-controls/ImportSheetControl';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
+import { ItemContext } from 'src/features/item/ItemContext';
 
 type MemberStats = {
   currentHP: number;
@@ -828,6 +829,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       containerContents: undefined,
       hasUses: item.hasLimitedUses,
       isStack: item.system.quantity > 1,
+      save: ItemContext.getItemSaveContext(item),
       totalWeight: (await item.system.totalWeight)?.toNearest(0.1) ?? 0,
     };
   }
