@@ -22,6 +22,7 @@
 - [ ] Finish implementing container contents tab
 - [ ] Implement Advancement tab
 - [ ] Ensure Activities and Effects tabs include item counters in the title
+- [ ] https://discord.com/channels/@me/1243307347682529423/1336210686392668220
 
 ### Sidebar
 
