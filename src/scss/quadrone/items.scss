@@ -9,19 +9,36 @@
     ),
     url(../../modules/tidy5e-sheet/images/banner-character-dark.webp) lightgray
       top center / auto no-repeat;
-  $sheet-bg: url(../../modules/tidy5e-sheet/images/texture-gray-1.webp)
-      no-repeat top center,
-    url(../../modules/tidy5e-sheet/images/texture-gray-2.webp) no-repeat bottom
-      center,
-    var(--t5e-component-card-ondefault-darker);
 
   /* Application Window */
   border-radius: 0.3125rem;
   border: 0.0625rem solid var(--t5e-color-gold);
-  background: $sheet-bg;
+  background: var(--t5e-component-card-ondefault-darker);
   box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.25),
     0px 0px 12px 0px rgba(0, 0, 0, 0.5);
   background-size: cover;
+
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: -1;
+  }
+  &::before {
+    background: url(../../modules/tidy5e-sheet/images/texture-gray-1.webp)
+      no-repeat top center;
+    background-size: cover;
+  }
+  &::after {
+    background: url(../../modules/tidy5e-sheet/images/texture-gray-2.webp)
+      no-repeat bottom center;
+    background-size: cover;
+  }
 
   // Items and Containers feature a sidebar that extends to the top of the sheet, inside the header area.
   .window-header {
@@ -78,7 +95,7 @@
     &:has(.item-header-start-scroll-marker.off-screen) {
       .window-header {
         border-bottom: 0.0625rem solid var(--t5e-color-gold);
-        background: $sheet-bg;
+        background: var(--t5e-component-card-ondefault-darker);
       }
 
       .header-over-sidebar {
