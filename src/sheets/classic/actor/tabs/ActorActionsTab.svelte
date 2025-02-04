@@ -269,7 +269,10 @@
                         {localize('DND5E.AbbreviationDC')}
                         {save.dc.value}
                       </span>
-                      <small title={save.ability} class="flex-column-truncate">
+                      <small
+                        title={save.ability}
+                        class="flex-column-truncate dc-ability-text"
+                      >
                         {save.ability}
                       </small>
                     {:else}
@@ -353,5 +356,9 @@
 
   small {
     color: var(--t5e-tertiary-color);
+  }
+
+  .dc-ability-text {
+    text-transform: uppercase;
   }
 </style>
