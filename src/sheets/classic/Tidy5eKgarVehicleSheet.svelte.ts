@@ -51,10 +51,10 @@ import { TidyHooks } from 'src/foundry/TidyHooks';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { Container } from 'src/features/containers/Container';
 import { Activities } from 'src/features/activities/activities';
-import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
+import { ItemContext } from 'src/features/item/ItemContext';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -579,6 +579,13 @@ export class Tidy5eVehicleSheet
     const ctx: VehicleItemContext = {};
     ctx.canToggle = false;
     ctx.hasUses = uses && uses.max > 0;
+
+    // Save
+    ctx.save = ItemContext.getItemSaveContext(item);
+
+    // To Hit
+    ctx.toHit = ItemContext.getToHit(item);
+
     // Activities
     ctx.activities = Activities.getVisibleActivities(
       item,

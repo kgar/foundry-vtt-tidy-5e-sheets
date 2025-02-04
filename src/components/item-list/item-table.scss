@@ -11,6 +11,10 @@
   align-items: center;
   justify-content: center;
 
+  &.flex-column {
+    flex-direction: column;
+  }
+
   &:not(.no-gap) {
     gap: 0.25rem;
   }

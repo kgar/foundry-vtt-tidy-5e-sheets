@@ -211,6 +211,15 @@ export type AvailableLevel = {
 
 export type AttunementContext = { icon: string; cls: string; title: string };
 
+export type ItemSaveContext = {
+  ability: string;
+  dc: {
+    calculation: string;
+    formula: string;
+    value: number;
+  };
+};
+
 export type CharacterItemContext = {
   activities?: ActivityItemContext[];
   attunement?: AttunementContext;
@@ -226,6 +235,8 @@ export type CharacterItemContext = {
   isStack?: boolean;
   linkedUses?: LinkedUses;
   needsSubclass?: boolean;
+  save?: ItemSaveContext;
+  toHit?: number | null;
   toggleClass?: string;
   toggleTitle?: string;
   totalWeight?: number;
@@ -423,6 +434,8 @@ export type NpcItemContext = {
   linkedUses?: LinkedUses;
   needsSubclass?: boolean;
   parent?: Item5e;
+  save?: ItemSaveContext;
+  toHit?: number | null;
   toggleTitle?: string;
   totalWeight?: number;
 };
@@ -468,6 +481,8 @@ export type VehicleItemContext = {
   containerContents?: ContainerContents;
   cover?: string;
   hasUses?: boolean;
+  save?: ItemSaveContext;
+  toHit?: number | null;
   threshold?: number | string;
   toggleClass?: string;
   toggleTitle?: string;
