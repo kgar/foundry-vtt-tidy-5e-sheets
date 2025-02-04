@@ -167,7 +167,8 @@ export function calculateSpellAttackAndDc(
     return {
       dc:
         spellClass?.system.spellcasting.progression !==
-        CONSTANTS.SPELLCASTING_PROGRESSION_NONE
+          CONSTANTS.SPELLCASTING_PROGRESSION_NONE &&
+        !isNil(spellClass?.system.spellcasting.progression)
           ? spellClass?.system.spellcasting.save
           : actor.system.attributes.spelldc,
       dcTooltip: getDcTooltip(actor, spellAbility),
