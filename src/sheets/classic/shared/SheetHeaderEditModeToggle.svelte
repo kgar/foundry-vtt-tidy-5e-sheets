@@ -53,7 +53,7 @@
   <div
     class="header-sheet-edit-mode-toggle {rest.class ?? ''}"
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SHEET_LOCK_TOGGLE}
-    ondblclick={(event) => {
+    ondblclickcapture={(event) => {
       event.stopPropagation();
       ondblclick?.(event);
     }}
