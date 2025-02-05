@@ -47,8 +47,17 @@
     {/if}
   </div>
 
+  <div class="subtitle">
+    {context.subtitle}
+  </div>
+
   <!-- Header Summary -->
   <div class="item-header-summary">
+    <!-- Charges -->
+    <!-- TODO: Ensure the limited uses code is centrally shared, and let all the consumers pull from that central location, using the item itself to derive the limited uses. -->
+    <!-- TODO: Support Recharge UI -->
+    <!-- TODO: CachedFor/LinkedUses support -->
+
     <!-- Value -->
     <div class="item-value">
       <!-- Currency Image -->

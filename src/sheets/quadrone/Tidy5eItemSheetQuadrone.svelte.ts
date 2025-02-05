@@ -21,13 +21,14 @@ import TypeNotFoundSheet from '../classic/item/TypeNotFoundSheet.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
-import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { Activities } from 'src/features/activities/activities';
 import { getPercentage } from 'src/utils/numbers';
 import type { GroupableSelectOption, Tab } from 'src/types/types';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { isNil } from 'src/utils/data';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
+import { ItemContext } from 'src/features/item/ItemContext';
+import { formatAsModifier } from 'src/utils/formatting';
 
 export class Tidy5eItemSheetQuadrone extends DragAndDropMixin(
   SvelteApplicationMixin<ItemSheetQuadroneContext>(
@@ -276,6 +277,7 @@ export class Tidy5eItemSheetQuadrone extends DragAndDropMixin(
         CONFIG.DND5E.individualTargetTypes[target.affects.type]?.scalar !==
           false,
       source: systemSource,
+      subtitle: this._getItemSubtitle(),
       system: this.document.system,
       tabs: [],
       title: this.title,
@@ -753,6 +755,31 @@ export class Tidy5eItemSheetQuadrone extends DragAndDropMixin(
         callback: (li: any) => this._onAdvancementAction(li[0], 'delete'),
       },
     ];
+  }
+
+  _getItemSubtitle(): string | undefined {
+    switch (this.item.type) {
+      case CONSTANTS.ITEM_TYPE_WEAPON:
+        let segments = [FoundryAdapter.localize(CONFIG.Item.typeLabels.weapon)];
+
+        if (this.item.system.type?.label) {
+          segments.push(this.item.system.type.label);
+        }
+
+        const toHit = formatAsModifier(ItemContext.getToHit(this.item) ?? '0');
+
+        segments.push(
+          FoundryAdapter.localize('EDITOR.DND5E.Inline.AttackLong', {
+            formula: toHit,
+          })
+        );
+
+        return segments.join(', ');
+
+      // Ok, now do the rest!
+    }
+
+    return undefined;
   }
 
   /* -------------------------------------------- */

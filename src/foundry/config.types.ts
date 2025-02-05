@@ -2796,7 +2796,7 @@ export type CONFIG = {
       natural: string;
       improv: string;
       siege: string;
-    };
+    } & Record<string, string>;
     weaponProficiencies: {
       sim: string;
       mar: string;
