@@ -24,7 +24,7 @@
 - [x] <!-- TODO: Figure this out; where is the system vs. source value? -->
 - [x] Ensure interactibles like buttons are also disabled on lock, where relevant
 - [x] Do all this again for Containers 🤦‍♂️
-- [ ] Item Descriptions for enchanted items are multiplying the enchanted text. Stahp
+- [x] Item Descriptions for enchanted items are multiplying the enchanted text. Stahp
 - [ ] Add currency and weight to relevant item sheets in the header area
   - [ ] Now add it to their details tabs 
 - [ ] Implement Activities tab
