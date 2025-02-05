@@ -94,6 +94,7 @@
         field="system.hd.additional"
         value={context.source.hd.additional}
         disabledValue={context.system.hd.additional}
+        disabled={!context.unlocked}
       />
     </div>
     <p class="hint">

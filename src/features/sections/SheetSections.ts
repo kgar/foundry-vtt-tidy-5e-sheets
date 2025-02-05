@@ -35,6 +35,7 @@ export class SheetSections {
     CONSTANTS.ITEM_TYPE_CLASS,
     CONSTANTS.ITEM_TYPE_FACILITY,
     CONSTANTS.ITEM_TYPE_SUBCLASS,
+    CONSTANTS.ITEM_TYPE_RACE,
   ]);
 
   static itemSupportsCustomSections(itemType: string) {

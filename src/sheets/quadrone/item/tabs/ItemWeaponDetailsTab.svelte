@@ -9,6 +9,7 @@
   import FieldUses from 'src/sheets/quadrone/item/parts/FieldUses.svelte';
   import ItemProperties from 'src/sheets/quadrone/item/parts/ItemProperties.svelte';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
+  import SectionsFormGroup from '../parts/SectionsFormGroup.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -384,3 +385,5 @@
 {/if}
 
 <FieldUses />
+
+<SectionsFormGroup />

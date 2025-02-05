@@ -23,37 +23,30 @@
 - [x] Ensure all standard form fields are locked on sheet lock
 - [x] <!-- TODO: Figure this out; where is the system vs. source value? -->
 - [x] Ensure interactibles like buttons are also disabled on lock, where relevant
-- [ ] Do all this again for Containers 🤦‍♂️
+- [x] Do all this again for Containers 🤦‍♂️
 - [ ] Item Descriptions for enchanted items are multiplying the enchanted text. Stahp
-- [ ] Add currency and weight to relevant item sheets at the top
+- [ ] Add currency and weight to relevant item sheets in the header area
+  - [ ] Now add it to their details tabs 
 - [ ] Implement Activities tab
 - [ ] Implement Effects tab
 - [ ] Finish implementing container contents tab
 - [ ] Implement Advancement tab
+- [ ] Implement sidebar contents - prefer context data for pill groups with pill arrays of string and object (label / value)
+  - [ ] Background
+  - [ ] Class
+  - [ ] Consumable
+  - [ ] Container
+  - [ ] Equipment
+  - [ ] Facility
+  - [ ] Feat
+  - [ ] Loot
+  - [ ] Species
+  - [ ] Spell
+    - Use the children snippet for spell-specific label-value pair info
+  - [ ] Subclass
+  - [ ] Tool
+  - [ ] Weapon
 - [ ] Ensure Activities and Effects tabs include item counters in the title
+  - [ ] This will need context-dependent tab titles, if they don't already exist
 - [ ] https://discord.com/channels/@me/1243307347682529423/1336210686392668220
 - [ ] Add context-dependent Tab visible / enabled predicate option to Tidy tabs, so that concealed content can entirely hide a tab, if needed
-
-### Sidebar
-
-- [x] ❗ Make the sidebar shared
-  - [x] detect `hasRarity`
-    - When true, use rarity coloation for the item image filigree, and show rarity label on locked and rarity dropdown on unlocked
-  - [x] detect `hasSpellPreparation`, mutually exclusive with rarity, with rarity taking precedence
-    - When true, use spell coloration for the item image filigree, and show spell prep label
-- [x] Propagate sidebar to all new sheets
-- [x] Switch sidebar to just specify `.dark` and not `.inverse`
-- [ ] Pump sidebar with item-subtype-specific information
-  - [ ] Spells: custom label-value pair content
-  - [ ] Pills
-- [ ] Ensure sidebar has all relevant sections configured
-  - [ ] States - availability provided by sheet context
-    - [x] Equipped
-    - [x] Attuned
-    - [x] Identified (editable on unlocked only unless GM?)
-  - [ ] Label/Value pairs
-    - [ ] Provided dynamically by sheet context
-  - [ ] Pill groups
-    - [ ] Provided dynamically by sheet context
-  - [ ] Custom Sections
-- [ ] Takeaway: Jeff to fill out remaining dark variables

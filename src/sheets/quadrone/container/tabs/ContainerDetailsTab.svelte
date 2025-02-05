@@ -1,15 +1,14 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-  import Select from 'src/components/inputs/Select.svelte';
-  import NumberInput from 'src/components/inputs/NumberInput.svelte';
-  import Checkbox from 'src/components/inputs/Checkbox.svelte';
-  import ItemProperties from 'src/sheets/classic/item/parts/ItemProperties.svelte';
-  import { TidyFlags } from 'src/foundry/TidyFlags';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
-  import { getContainerSheetClassicContext } from 'src/sheets/sheet-context.svelte';
+  import ItemProperties from 'src/sheets/quadrone/item/parts/ItemProperties.svelte';
+  import { getContainerSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
+  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
+  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
+  import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
+  import SectionsFormGroup from '../../item/parts/SectionsFormGroup.svelte';
 
-  let context = $derived(getContainerSheetClassicContext());
+  let context = $derived(getContainerSheetQuadroneContext());
 
   let appId = $derived(context.document.id);
 
@@ -22,25 +21,28 @@
       {localize('DND5E.Weight')}
     </label>
     <div class="form-fields">
-      <NumberInput
+      <NumberInputQuadrone
         id="{appId}-weight-value"
         value={context.source.weight.value}
+        disabledValue={context.system.weight.value}
         step="any"
         field="system.weight.value"
         document={context.item}
-        disabled={!context.editable}
+        disabled={!context.unlocked}
         selectOnFocus={true}
       />
-      <Select
+      <SelectQuadrone
         document={context.item}
         field="system.weight.units"
         value={context.source.weight.units}
+        disabledValue={context.system.weight.units}
+        disabled={!context.unlocked}
       >
         <SelectOptions
           data={context.config.weightUnits}
           labelProp="abbreviation"
         />
-      </Select>
+      </SelectQuadrone>
     </div>
   </div>
   <div class="form-group">
@@ -48,27 +50,29 @@
       {localize('DND5E.Price')}
     </label>
     <div class="form-fields">
-      <NumberInput
+      <NumberInputQuadrone
         id="{appId}-price-value"
         value={context.source.price.value}
+        disabledValue={context.system.price.value}
         step="any"
         field="system.price.value"
         document={context.item}
-        disabled={!context.editable}
+        disabled={!context.unlocked}
         selectOnFocus={true}
-        cssClass="large-value"
+        class="large-value"
       />
-      <Select
+      <SelectQuadrone
         value={context.source.price.denomination}
+        disabledValue={context.system.price.denomination}
         field="system.price.denomination"
         document={context.item}
-        disabled={!context.editable}
+        disabled={!context.unlocked}
       >
         <SelectOptions
           data={context.config.currencies}
           labelProp="abbreviation"
         />
-      </Select>
+      </SelectQuadrone>
     </div>
   </div>
 </fieldset>
@@ -79,7 +83,7 @@
   </legend>
 
   <div class="form-group stacked container-properties checkbox-grid">
-    <label for="">{localize('DND5E.CONTAINER.FIELDS.properties.label')}</label>
+    <label>{localize('DND5E.CONTAINER.FIELDS.properties.label')}</label>
     <div class="form-fields">
       <ItemProperties />
     </div>
@@ -89,28 +93,30 @@
     <div class="form-group">
       <label for="{appId}-attunement">{localize('DND5E.Attunement')}</label>
       <div class="form-fields">
-        <Checkbox
+        <CheckboxQuadrone
           id="{appId}-attuned"
           document={context.item}
           field="system.attuned"
           checked={context.source.attuned}
-          disabled={!context.editable ||
+          disabledChecked={context.system.attuned}
+          disabled={!context.unlocked ||
             // @ts-expect-error
             !context.config.attunementTypes[context.system.attunement]}
           title={localize('DND5E.AttunementAttuned')}
         />
-        <Select
+        <SelectQuadrone
           id="{appId}-attunement"
           document={context.item}
           field="system.attunement"
           value={context.source.attunement}
-          disabled={!context.editable}
+          disabledValue={context.system.attunement}
+          disabled={!context.unlocked}
         >
           <SelectOptions
             data={context.config.attunementTypes}
             blank={localize('DND5E.AttunementNone')}
           />
-        </Select>
+        </SelectQuadrone>
       </div>
     </div>
   {/if}
@@ -125,13 +131,15 @@
     <div class="form-group">
       <label>{localize('DND5E.CONTAINER.FIELDS.capacity.count.label')}</label>
       <div class="form-fields">
-        <NumberInput
+        <NumberInputQuadrone
           document={context.item}
           field="system.capacity.count"
           value={context.source.capacity.count}
+          disabledValue={context.system.capacity.count}
           step="1"
           min="0"
           placeholder="—"
+          disabled={!context.unlocked}
         />
       </div>
     </div>
@@ -145,13 +153,15 @@
       <div class="form-group label-top">
         <label>{localize('DND5E.Amount')}</label>
         <div class="form-fields">
-          <NumberInput
+          <NumberInputQuadrone
             document={context.item}
             field="system.capacity.volume.value"
             value={context.source.capacity.volume.value}
+            disabledValue={context.system.capacity.volume.value}
             step="any"
             min="0"
             placeholder="—"
+            disabled={!context.unlocked}
           />
         </div>
       </div>
@@ -159,17 +169,19 @@
       <div class="form-group label-top">
         <label>{localize('DND5E.Unit')}</label>
         <div class="form-fields">
-          <Select
+          <SelectQuadrone
             document={context.item}
             field="system.capacity.volume.units"
             value={context.source.capacity.volume.units}
+            disabledValue={context.system.capacity.volume.units}
             blankValue=""
+            disabled={!context.unlocked}
           >
             <SelectOptions
               data={context.config.volumeUnits}
               labelProp="label"
             />
-          </Select>
+          </SelectQuadrone>
         </div>
       </div>
     </div>
@@ -182,13 +194,15 @@
       <div class="form-group label-top">
         <label>{localize('DND5E.Amount')}</label>
         <div class="form-fields">
-          <NumberInput
+          <NumberInputQuadrone
             document={context.item}
             field="system.capacity.weight.value"
             value={context.source.capacity.weight.value}
+            disabledValue={context.system.capacity.weight.value}
             step="any"
             min="0"
             placeholder="—"
+            disabled={!context.unlocked}
           />
         </div>
       </div>
@@ -196,54 +210,23 @@
       <div class="form-group label-top">
         <label>{localize('DND5E.Unit')}</label>
         <div class="form-fields">
-          <Select
+          <SelectQuadrone
             document={context.item}
             field="system.capacity.weight.units"
             value={context.source.capacity.weight.units}
+            disabledValue={context.system.capacity.weight.units}
             blankValue=""
+            disabled={!context.unlocked}
           >
             <SelectOptions
               data={context.config.weightUnits}
               labelProp="label"
             />
-          </Select>
+          </SelectQuadrone>
         </div>
       </div>
     </div>
   </div>
 </fieldset>
 
-<!-- TODO: Extract to shared component -->
-<fieldset>
-  <legend>{FoundryAdapter.localize('TIDY5E.Tidy5eSettings')}</legend>
-  <div class="form-group custom-section">
-    <label for="{appId}-custom-section">
-      {FoundryAdapter.localize('TIDY5E.Section.Label')}
-    </label>
-    <div class="form-fields">
-      <TextInput
-        document={context.item}
-        field={TidyFlags.section.prop}
-        value={TidyFlags.section.get(context.item)}
-        selectOnFocus={true}
-        disabled={!context.editable}
-        id="{appId}-custom-section"
-      />
-    </div>
-  </div>
-  <div class="form-group custom-action-section">
-    <label for="{appId}-custom-action-section">
-      {FoundryAdapter.localize('TIDY5E.Section.ActionLabel')}
-    </label>
-    <div class="form-fields">
-      <TextInput
-        document={context.item}
-        field={TidyFlags.actionSection.prop}
-        value={TidyFlags.actionSection.get(context.item)}
-        selectOnFocus={true}
-        disabled={!context.editable}
-        id="{appId}-custom-action-section"
-      />
-    </div>
-  </div>
-</fieldset>
+<SectionsFormGroup />

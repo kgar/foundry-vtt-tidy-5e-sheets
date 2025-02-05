@@ -4,6 +4,7 @@
   import ItemProperties from '../parts/ItemProperties.svelte';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
+  import SectionsFormGroup from '../parts/SectionsFormGroup.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -64,8 +65,12 @@
   {/if}
 
   <!-- Loot Properties -->
-  <div class="form-group stacked loot-properties">
+  <div class="form-group stacked loot-properties checkbox-grid">
     <label for="">{localize('DND5E.ItemLootProperties')}</label>
-    <ItemProperties />
+    <div class="form-fields">
+      <ItemProperties />
+    </div>
   </div>
 </fieldset>
+
+<SectionsFormGroup />

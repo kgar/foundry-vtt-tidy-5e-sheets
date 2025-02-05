@@ -8,6 +8,7 @@
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
   import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
+  import SectionsFormGroup from '../parts/SectionsFormGroup.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -158,9 +159,11 @@
   {/if}
 
   <!-- Properties -->
-  <div class="form-group stacked equipment-properties">
+  <div class="form-group stacked equipment-properties checkbox-grid">
     <label for="">{localize('DND5E.ItemEquipmentProperties')}</label>
-    <ItemProperties />
+    <div class="form-fields">
+      <ItemProperties />
+    </div>
   </div>
 
   <!-- Magical Properties -->
@@ -232,3 +235,5 @@
 {/if}
 
 <FieldUses />
+
+<SectionsFormGroup />
