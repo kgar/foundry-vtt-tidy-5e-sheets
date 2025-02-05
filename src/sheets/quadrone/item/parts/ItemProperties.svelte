@@ -10,7 +10,7 @@
 
 {#each context.properties.options as property}
   {@const field = `system.properties.${property.value}`}
-  <label for="" class="checkbox">
+  <label class="checkbox">
     <CheckboxQuadrone
       id="{appId}-properties-{property.value?.slugify()}"
       document={context.item}

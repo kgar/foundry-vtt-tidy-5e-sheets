@@ -1,9 +1,7 @@
 <script lang="ts">
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import {
-    getItemSheetContextQuadrone,
-  } from 'src/sheets/sheet-context.svelte';
+  import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import { MaxPreparedSpellsConfigFormApplication } from 'src/applications/max-prepared-spells-config/MaxPreparedSpellsConfigFormApplication.svelte';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
@@ -69,15 +67,19 @@
       data-formula-editor="true"
       disabled={!context.unlocked}
     />
-    <a
-      title={localize('TIDY5E.MaxPreparedSpellsConfig.ExamplesHeader')}
-      class="spell-preparation-search inline-icon-button"
-      onclick={() => {
-        new MaxPreparedSpellsConfigFormApplication(
-          context.item.name,
-          context.item,
-        ).render(true);
-      }}><i class="fa-solid fa-search fa-fw"></i></a
-    >
+    {#if context.unlocked}
+      <button
+        type="button"
+        title={localize('TIDY5E.MaxPreparedSpellsConfig.ExamplesHeader')}
+        class="spell-preparation-search button"
+        onclick={() => {
+          new MaxPreparedSpellsConfigFormApplication(
+            context.item.name,
+            context.item,
+          ).render(true);
+        }}
+        ><i class="fa-solid fa-search fa-fw"></i>
+      </button>
+    {/if}
   </div>
 </div>

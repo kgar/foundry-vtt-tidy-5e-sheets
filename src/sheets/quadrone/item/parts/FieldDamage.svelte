@@ -137,13 +137,13 @@
     <div class="form-fields">
       {#each types as { value, label, selected } (value)}
         <label for="" class="checkbox">
-          <!-- TODO: Figure this out; where is the system vs. source value? -->
           <CheckboxQuadrone
             id="{idPrefix}types-{value?.slugify()}"
             document={context.item}
             field="{prefix}types"
             checked={selected}
             {value}
+            disabledChecked={system.types.has(value)}
             disabled={!context.unlocked}
             onDataPreparing={(ev) =>
               mapSystemDamageTypesToSave(context, prefix, source, ev)}

@@ -415,6 +415,7 @@
               name="system.craft.item"
               single
               onchange={async () => await context.item.sheet.submit()}
+              disabled={!context.unlocked}
             ></document-tags>
           {/if}
         </li>

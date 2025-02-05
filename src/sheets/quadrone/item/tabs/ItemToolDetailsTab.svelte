@@ -7,6 +7,7 @@
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
+  import SectionsFormGroup from '../parts/SectionsFormGroup.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -158,3 +159,5 @@
 {/if}
 
 <FieldUses />
+
+<SectionsFormGroup />

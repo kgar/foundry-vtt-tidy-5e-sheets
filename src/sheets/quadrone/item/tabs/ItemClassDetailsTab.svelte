@@ -13,14 +13,9 @@
 
   let appId = $derived(context.document.id);
 
-  let abilities = $derived(
-    Object.entries<any>(context.config.abilities).map(([key, value]) => ({
-      key: key,
-      label: value.label,
-    })),
-  );
-
   const localize = FoundryAdapter.localize;
+
+  let abilities = $derived(context.primaryAbilities ?? []);
 </script>
 
 <fieldset>
@@ -99,6 +94,7 @@
         field="system.hd.additional"
         value={context.source.hd.additional}
         disabledValue={context.system.hd.additional}
+        disabled={!context.unlocked}
       />
     </div>
     <p class="hint">
@@ -117,15 +113,15 @@
       >{localize('DND5E.CLASS.FIELDS.primaryAbility.value.label')}</label
     >
     <div class="form-fields">
-      {#each abilities as { key, label } (key)}
-        <label for="" class="checkbox">
+      {#each abilities as { value, label, selected } (value)}
+        <label class="checkbox">
           <CheckboxQuadrone
-            id="{appId}-primaryAbility-value-{key?.slugify()}"
+            id="{appId}-primaryAbility-value-{value?.slugify()}"
             document={context.item}
             field="system.primaryAbility.value"
-            checked={context.source.primaryAbility.value.has(key)}
-            disabledChecked={context.system.primaryAbility.value.has(key)}
-            value={key}
+            checked={selected}
+            disabledChecked={context.system.primaryAbility.value.has(value)}
+            {value}
             disabled={!context.unlocked}
             onDataPreparing={(ev) =>
               mapMulticlassingAbilitiesToSave(context, ev)}

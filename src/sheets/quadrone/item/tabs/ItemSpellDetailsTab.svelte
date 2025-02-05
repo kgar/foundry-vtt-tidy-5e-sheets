@@ -13,6 +13,7 @@
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
+  import SectionsFormGroup from '../parts/SectionsFormGroup.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -61,11 +62,13 @@
   </div>
 
   <!-- Spell Components -->
-  <div class="form-group spell-components stacked">
+  <div class="form-group spell-components stacked checkbox-grid">
     <label for="">
       {localize('DND5E.SpellComponents')}
     </label>
-    <ItemProperties />
+    <div class="form-fields">
+      <ItemProperties />
+    </div>
   </div>
 
   <!-- Material Components -->
@@ -254,3 +257,5 @@
 <FieldTargets />
 
 <FieldUses />
+
+<SectionsFormGroup />
