@@ -18,6 +18,68 @@
 </script>
 
 <fieldset>
+  <div class="form-group">
+    <label for="{appId}-weight-value">
+      {localize('DND5E.Weight')}
+    </label>
+    <div class="form-fields">
+      <NumberInputQuadrone
+        id="{appId}-weight-value"
+        value={context.source.weight.value}
+        disabledValue={context.system.weight.value}
+        step="any"
+        field="system.weight.value"
+        document={context.item}
+        disabled={!context.unlocked}
+        selectOnFocus={true}
+      />
+      <SelectQuadrone
+        document={context.item}
+        field="system.weight.units"
+        value={context.source.weight.units}
+        disabledValue={context.system.weight.units}
+        disabled={!context.unlocked}
+      >
+        <SelectOptions
+          data={context.config.weightUnits}
+          labelProp="abbreviation"
+        />
+      </SelectQuadrone>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="{appId}-price-value">
+      {localize('DND5E.Price')}
+    </label>
+    <div class="form-fields">
+      <NumberInputQuadrone
+        id="{appId}-price-value"
+        value={context.source.price.value}
+        disabledValue={context.system.price.value}
+        step="any"
+        field="system.price.value"
+        document={context.item}
+        disabled={!context.unlocked}
+        selectOnFocus={true}
+        class="large-value"
+      />
+      <SelectQuadrone
+        value={context.source.price.denomination}
+        disabledValue={context.system.price.denomination}
+        field="system.price.denomination"
+        document={context.item}
+        disabled={!context.unlocked}
+      >
+        <SelectOptions
+          data={context.config.currencies}
+          labelProp="abbreviation"
+        />
+      </SelectQuadrone>
+    </div>
+  </div>
+</fieldset>
+
+<fieldset>
   <legend>
     {localize('DND5E.ItemEquipmentDetails')}
   </legend>

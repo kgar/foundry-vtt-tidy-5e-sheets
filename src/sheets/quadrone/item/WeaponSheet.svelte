@@ -78,7 +78,7 @@
       </span>
     </div>
 
-    <!-- <div class="item-header-summary-separator" role="presentation"></div> -->
+    <div class="item-header-summary-separator" role="presentation"></div>
 
     <!-- Quantity -->
     <div class="item-quantity">

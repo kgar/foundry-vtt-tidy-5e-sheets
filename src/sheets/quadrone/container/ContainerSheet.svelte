@@ -115,6 +115,19 @@
 
   <!-- Header Summary -->
   <div class="item-header-summary">
+    <!-- Item Capacity -->
+    <div class="item-capacity">
+      <i class="fa-solid fa-scale-unbalanced item-capacity-icon text-lightest"
+      ></i>
+      <div class="item-capacity-counter">
+        <span class="capacity-value">{context.capacity.value}</span>
+        <div class="text-lighter">/</div>
+        <span class="capacity-max">{context.capacity.max}</span>
+      </div>
+    </div>
+
+    <div class="item-header-summary-separator" role="presentation"></div>
+
     <!-- Value -->
     <div class="item-value">
       <!-- Currency Image -->

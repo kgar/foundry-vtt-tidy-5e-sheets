@@ -18,7 +18,8 @@
     0px 0px 12px 0px rgba(0, 0, 0, 0.5);
   background-size: cover;
 
-  &::before, &::after {
+  &::before,
+  &::after {
     content: '';
     position: absolute;
     top: 0;
@@ -347,6 +348,18 @@
       font-style: normal;
       font-weight: 400;
       line-height: normal;
+    }
+
+    .item-capacity {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .item-capacity-counter {
+      display: flex;
+      align-items: center;
+      gap: 0.1875rem;
     }
 
     .item-value {

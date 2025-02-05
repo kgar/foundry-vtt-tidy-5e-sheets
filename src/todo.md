@@ -25,8 +25,23 @@
 - [x] Ensure interactibles like buttons are also disabled on lock, where relevant
 - [x] Do all this again for Containers 🤦‍♂️
 - [x] Item Descriptions for enchanted items are multiplying the enchanted text. Stahp
-- [ ] Add currency and weight to relevant item sheets in the header area
-  - [ ] Now add it to their details tabs 
+- [x] Add currency and weight to relevant item sheets in the header area
+  - [x] Now add it to their details tabs 
+- [ ] Implement sheet header contents
+  - [ ] Background
+  - [ ] Class
+  - [ ] Consumable
+  - [x] Container
+  - [ ] Equipment
+  - [ ] Facility
+  - [ ] Feat
+  - [ ] Loot
+  - [ ] Species
+  - [ ] Spell
+    - Use the children snippet for spell-specific label-value pair info
+  - [ ] Subclass
+  - [ ] Tool
+  - [ ] Weapon
 - [ ] Implement Activities tab
 - [ ] Implement Effects tab
 - [ ] Finish implementing container contents tab
