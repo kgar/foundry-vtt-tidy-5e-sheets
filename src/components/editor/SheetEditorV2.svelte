@@ -100,6 +100,16 @@
 
     proseMirrorContainerEl.innerHTML = element.outerHTML;
 
+    proseMirrorContainerEl.firstChild?.addEventListener(
+      'plugins',
+      (event: any) => {
+        event.detail['highlightDocumentMatches'] =
+          ProseMirror.ProseMirrorHighlightMatchesPlugin.build(
+            ProseMirror.defaultSchema,
+          );
+      },
+    );
+
     bindSecretUi();
   });
 </script>
