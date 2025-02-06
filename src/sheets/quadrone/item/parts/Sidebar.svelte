@@ -23,16 +23,17 @@
   let { itemSpecificSnippet }: Props = $props();
 
   // Rarity
+  let rarity = $derived(
+    context.unlocked ? context.source.rarity : context.system.rarity,
+  );
 
   let rarityColorVariable = $derived(
     'rarity' in context.system
-      ? RarityColors.getRarityColorVariableName(context.system.rarity)
+      ? RarityColors.getRarityColorVariableName(rarity)
       : '',
   );
 
-  let rarityText = $derived(
-    RarityColors.getRarityText(context.system.rarity).titleCase(),
-  );
+  let rarityText = $derived(RarityColors.getRarityText(rarity).titleCase());
 
   let itemRarities = $derived(
     Object.entries(context.config.itemRarity).map(([key, value]) => {
@@ -121,7 +122,7 @@
             <option
               value=""
               style="--t5e-item-rarity-color: var(--t5e-color-gold);"
-              >{localize('DND5E.Rarity')}</option
+              >{localize('DND5E.None')}</option
             >
             {#each itemRarities as rarity (rarity.key)}
               <option

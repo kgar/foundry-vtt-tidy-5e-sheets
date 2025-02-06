@@ -216,6 +216,7 @@ export type ItemSheetQuadroneContext = {
   rollData: Record<string, any>;
   scalarTarget: boolean;
   source: any;
+  subtitle?: string;
   system: any;
   title: string;
   toggleAdvancementLock: () => Promise<void>;

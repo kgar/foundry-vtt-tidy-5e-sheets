@@ -7,6 +7,7 @@
   import Sidebar from './parts/Sidebar.svelte';
   import ItemNameHeaderOrchestrator from './parts/ItemNameHeaderOrchestrator.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
+  import { itemCharges } from './parts/header/HeaderSnippets.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -47,8 +48,19 @@
     {/if}
   </div>
 
+  <div class="subtitle">
+    {context.subtitle}
+  </div>
+
   <!-- Header Summary -->
   <div class="item-header-summary">
+    {@render itemCharges(context)}
+
+    {#if context.item.isOnCooldown}
+      TODO: Cooldown UI (and put in shared snippet)
+      <div class="item-header-summary-separator" role="presentation"></div>
+    {/if}
+
     <!-- Value -->
     <div class="item-value">
       <!-- Currency Image -->
@@ -78,7 +90,7 @@
       </span>
     </div>
 
-    <!-- <div class="item-header-summary-separator" role="presentation"></div> -->
+    <div class="item-header-summary-separator" role="presentation"></div>
 
     <!-- Quantity -->
     <div class="item-quantity">

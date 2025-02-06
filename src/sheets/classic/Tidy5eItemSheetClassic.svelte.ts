@@ -162,12 +162,14 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       ),
     };
 
+    const systemSource = this.item.system.toObject();
+
     const isIdentifiable = 'identified' in this.document.system;
 
     const itemDescriptions: ItemDescription[] = [];
     itemDescriptions.push({
       enriched: enriched.description,
-      content: this.document.system.description.value,
+      content: systemSource.description.value,
       field: 'system.description.value',
       label: FoundryAdapter.localize('DND5E.Description'),
     });
@@ -175,19 +177,17 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
     if (isIdentifiable && FoundryAdapter.userIsGm()) {
       itemDescriptions.push({
         enriched: enriched.unidentified,
-        content: this.document.system.unidentified.description,
+        content: systemSource.unidentified.description,
         field: 'system.unidentified.description',
         label: FoundryAdapter.localize('DND5E.DescriptionUnidentified'),
       });
     }
     itemDescriptions.push({
       enriched: enriched.chat,
-      content: this.document.system.description.chat,
+      content: systemSource.description.chat,
       field: 'system.description.chat',
       label: FoundryAdapter.localize('DND5E.DescriptionChat'),
     });
-
-    const sourceSystem = this.item.system.toObject();
 
     const editable = this.isEditable;
 
@@ -259,7 +259,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
         target?.affects?.type &&
         CONFIG.DND5E.individualTargetTypes[target.affects.type]?.scalar !==
           false,
-      source: sourceSystem,
+      source: systemSource,
       system: this.document.system,
       tabs: [],
       title: this.title,

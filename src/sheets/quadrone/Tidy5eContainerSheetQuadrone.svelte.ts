@@ -168,11 +168,13 @@ export class Tidy5eContainerSheetQuadrone extends DragAndDropMixin(
 
     const isIdentifiable = 'identified' in this.item.system;
 
+    const systemSource = this.document.toObject().system;
+    
     const itemDescriptions: ItemDescription[] = [];
 
     itemDescriptions.push({
       enriched: enriched.description,
-      content: this.document.system.description.value,
+      content: systemSource.description.value,
       field: 'system.description.value',
       label: FoundryAdapter.localize('DND5E.Description'),
     });
@@ -180,7 +182,7 @@ export class Tidy5eContainerSheetQuadrone extends DragAndDropMixin(
     if (isIdentifiable && FoundryAdapter.userIsGm()) {
       itemDescriptions.push({
         enriched: enriched.unidentified,
-        content: this.document.system.unidentified.description,
+        content: systemSource.unidentified.description,
         field: 'system.unidentified.description',
         label: FoundryAdapter.localize('DND5E.DescriptionUnidentified'),
       });
@@ -188,7 +190,7 @@ export class Tidy5eContainerSheetQuadrone extends DragAndDropMixin(
 
     itemDescriptions.push({
       enriched: enriched.chat,
-      content: this.document.system.description.chat,
+      content: systemSource.description.chat,
       field: 'system.description.chat',
       label: FoundryAdapter.localize('DND5E.DescriptionChat'),
     });
@@ -254,12 +256,13 @@ export class Tidy5eContainerSheetQuadrone extends DragAndDropMixin(
       },
     };
 
+    
     const editable = this.isEditable;
 
     const unlocked = FoundryAdapter.isSheetUnlocked(this.item) && editable;
-
+    
     const currencies: CurrencyContext[] = [];
-
+    
     Object.keys(CONFIG.DND5E.currencies).forEach((key) =>
       currencies.push({
         key: key,
@@ -313,7 +316,7 @@ export class Tidy5eContainerSheetQuadrone extends DragAndDropMixin(
         options: [],
       },
       rollData: rollData,
-      source: this.document.toObject().system,
+      source: systemSource,
       system: this.document.system,
       tabs: [],
       unlocked: unlocked,

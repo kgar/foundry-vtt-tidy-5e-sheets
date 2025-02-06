@@ -17,16 +17,85 @@
   - [x] Weapon details
 - [x] Copy over details content for all new sheets
 - [x] Implement single description tab
-- [x] Convert inputs to the quadrone variety, 
+- [x] Convert inputs to the quadrone variety,
 - [x] Create quadrone edition of ItemProperties
 - [x] Update inputs to ensure that a lockedValue can be fed into each type, so that we can show the system value on disabled and the source value on not disabled ♥
 - [x] Ensure all standard form fields are locked on sheet lock
 - [x] <!-- TODO: Figure this out; where is the system vs. source value? -->
 - [x] Ensure interactibles like buttons are also disabled on lock, where relevant
 - [x] Do all this again for Containers 🤦‍♂️
-- [ ] Item Descriptions for enchanted items are multiplying the enchanted text. Stahp
-- [ ] Add currency and weight to relevant item sheets in the header area
-  - [ ] Now add it to their details tabs 
+- [x] Item Descriptions for enchanted items are multiplying the enchanted text. Stahp
+- [x] Add currency and weight to relevant item sheets in the header area
+  - [x] Now add it to their details tabs
+- [ ] Implement sheet header contents
+  - [ ] Background
+    - [ ] subtitle
+  - [ ] Class
+    - [ ] subtitle
+  - [ ] Consumable
+    - [ ] subtitle
+      - [ ] Item Type
+      - [ ] Item Subtype
+    - [ ] summary
+      - [ ] Charges
+      - [ ] Price
+      - [ ] Weight
+      - [ ] Quantity
+  - [x] Container
+  - [ ] Equipment
+    - [ ] subtitle
+      - [ ] Type (Light Armor)
+      - [ ] ## AC
+    - [ ] summary
+      - [ ] (when available) Charges
+      - [ ] Price
+      - [ ] Weight
+      - [ ] Quantity
+  - [ ] Facility
+    - [ ] subtitle?
+    - [ ] summary
+      - [ ] Category
+      - [ ] Type
+      - [ ] Size
+  - [ ] Feat
+    - [ ] subtitle
+      - [ ] (When active) Activation Type (Action)
+      - [ ] (When Active) Requirements (Paladin 2)
+      - [ ] (When Passive) 
+  - [ ] Loot
+    - [ ] Subtitle
+      - [ ] Loot type
+      - [ ] (if available) Loot subtype
+    - [ ] summary
+      - [ ] Price
+      - [ ] Weight
+      - [ ] Quantity
+  - [ ] Species
+  - [ ] Spell
+    - [ ] subtitle
+      - [ ] Level (1st Level)
+      - [ ] School
+    - [ ] summary
+      - [ ] charges
+      - [ ] linked item (Necklace of Fireballs)
+    - [ ] School Image across from title / subtitle
+  - [ ] Subclass
+    - [ ] subtitle
+  - [ ] Tool
+    - [ ] subtitle
+    - [ ] summary
+      - [ ] Charges
+      - [ ] Price
+      - [ ] Weight
+      - [ ] Quantity
+  - [ ] Weapon
+    - [x] subtitle
+    - [ ] Summary
+      - [x] (when available) Charges
+      - [ ] (when relevant) Cooldown
+      - [x] Price
+      - [x] Weight
+      - [x] Quantity
 - [ ] Implement Activities tab
 - [ ] Implement Effects tab
 - [ ] Finish implementing container contents tab
@@ -50,3 +119,10 @@
   - [ ] This will need context-dependent tab titles, if they don't already exist
 - [ ] https://discord.com/channels/@me/1243307347682529423/1336210686392668220
 - [ ] Add context-dependent Tab visible / enabled predicate option to Tidy tabs, so that concealed content can entirely hide a tab, if needed
+- [ ] Handle unidentified feature set
+  - [ ] Portrait becomes washed over
+  - [ ] Non-description tabs become disabled (preferably, hide them?)
+
+### Stretch
+
+- [ ] Hightouch: If it's super simple (and only if it's super simple) it could be nice to hard link some of the currency/weight/item type directly to the fields (e.g. click it, opens the tab, focuses the input). But if it's not out-of-the-box it's not worth it. Just wasn't sure if it was actually possible
