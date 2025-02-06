@@ -45,7 +45,7 @@
 /* Quadrone utilities */
 /* TODO: Move to layout file and figure out where backgrounds go */
 
-.tidy5e-sheet.application:where(.quadrone) {  
+.tidy5e-sheet.application:where(.quadrone) {
   /* Background color ------------------ */
   .background-default-light {
     background-color: var(--t5e-component-card-ondefault-default);
@@ -64,6 +64,11 @@
   }
   .background-darker-lighter {
     background-color: var(--t5e-component-card-oninverse-lighter);
+  }
+
+  /* Selectable Text */
+  .user-select-text * {
+    user-select: text;
   }
 }
 

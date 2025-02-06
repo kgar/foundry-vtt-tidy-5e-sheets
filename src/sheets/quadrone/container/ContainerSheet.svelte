@@ -8,20 +8,14 @@
   import Sidebar from '../item/parts/Sidebar.svelte';
   import ItemNameHeaderOrchestrator from '../item/parts/ItemNameHeaderOrchestrator.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
+  import ItemPriceSummary from '../item/parts/header/ItemPriceSummary.svelte';
+  import ItemWeightSummary from '../item/parts/header/ItemWeightSummary.svelte';
 
   let context = $derived(getContainerSheetQuadroneContext());
 
   const localize = FoundryAdapter.localize;
 
   let selectedTabId: string = $state(CONSTANTS.TAB_CONTAINER_CONTENTS);
-
-  let denomination = $derived(
-    CONFIG.DND5E.currencies[context.system.price.denomination],
-  );
-
-  let itemValueText = $derived(
-    FoundryAdapter.formatNumber(context.system.price?.value),
-  );
 
   let itemNameEl: HTMLElement | undefined = $state();
 
@@ -126,48 +120,9 @@
       </div>
     </div>
 
-    <div class="item-header-summary-separator" role="presentation"></div>
+    <ItemPriceSummary />
 
-    <!-- Value -->
-    <div class="item-value">
-      <!-- Currency Image -->
-      <i
-        class="currency {context.system?.price?.denomination ?? ''}"
-        aria-label={denomination?.label ?? ''}
-      ></i>
-      <span class="item-value-number">
-        <!-- Value Text -->
-        <span class="text-default">
-          {itemValueText}
-        </span>
-        <!-- Denom -->
-        <span class="item-value-denomination text-lighter">
-          {denomination?.abbreviation ?? ''}
-        </span>
-      </span>
-    </div>
-
-    <div class="item-header-summary-separator" role="presentation"></div>
-
-    <!-- Weight -->
-    <div class="item-weight">
-      <i class="fas fa-weight-hanging item-weight-icon text-lightest"></i>
-      <span class="item-weight-value">
-        {context.system.weight?.value}
-      </span>
-    </div>
-
-    <!-- <div class="item-header-summary-separator" role="presentation"></div> -->
-
-    <!-- Quantity -->
-    <!-- <div class="item-quantity">
-      <span class="item-quantity-label text-lighter">
-        {localize('DND5E.Quantity')}
-      </span>
-      <span class="item-quantity-value">
-        {context.system.quantity}
-      </span>
-    </div> -->
+    <ItemWeightSummary />
   </div>
 
   <!-- Tab Strip -->

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
@@ -7,21 +6,15 @@
   import Sidebar from './parts/Sidebar.svelte';
   import ItemNameHeaderOrchestrator from './parts/ItemNameHeaderOrchestrator.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
-  import { itemCharges } from './parts/header/HeaderSnippets.svelte';
+  import ItemChargesSummary from './parts/header/ItemChargesSummary.svelte';
+  import ItemRechargeSummary from './parts/header/ItemRechargeSummary.svelte';
+  import ItemPriceSummary from './parts/header/ItemPriceSummary.svelte';
+  import ItemWeightSummary from './parts/header/ItemWeightSummary.svelte';
+  import ItemQuantitySummary from './parts/header/ItemQuantitySummary.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
-  const localize = FoundryAdapter.localize;
-
   let selectedTabId: string = $state(CONSTANTS.TAB_CONTAINER_CONTENTS);
-
-  let denomination = $derived(
-    CONFIG.DND5E.currencies[context.system.price.denomination],
-  );
-
-  let itemValueText = $derived(
-    FoundryAdapter.formatNumber(context.system.price?.value),
-  );
 
   let itemNameEl: HTMLElement | undefined = $state();
 </script>
@@ -54,53 +47,19 @@
 
   <!-- Header Summary -->
   <div class="item-header-summary">
-    {@render itemCharges(context)}
-
-    {#if context.item.isOnCooldown}
-      TODO: Cooldown UI (and put in shared snippet)
-      <div class="item-header-summary-separator" role="presentation"></div>
+    {#if context.item.hasLimitedUses}
+      <ItemChargesSummary />
     {/if}
 
-    <!-- Value -->
-    <div class="item-value">
-      <!-- Currency Image -->
-      <i
-        class="currency {context.system?.price?.denomination ?? ''}"
-        aria-label={denomination?.label ?? ''}
-      ></i>
-      <span class="item-value-number">
-        <!-- Value Text -->
-        <span class="text-default">
-          {itemValueText}
-        </span>
-        <!-- Denom -->
-        <span class="item-value-denomination text-lighter">
-          {denomination?.abbreviation ?? ''}
-        </span>
-      </span>
-    </div>
+    {#if context.item.hasRecharge}
+      <ItemRechargeSummary />
+    {/if}
 
-    <div class="item-header-summary-separator" role="presentation"></div>
+    <ItemPriceSummary />
 
-    <!-- Weight -->
-    <div class="item-weight">
-      <i class="fas fa-weight-hanging item-weight-icon text-lightest"></i>
-      <span class="item-weight-value">
-        {context.system.weight?.value}
-      </span>
-    </div>
+    <ItemWeightSummary />
 
-    <div class="item-header-summary-separator" role="presentation"></div>
-
-    <!-- Quantity -->
-    <div class="item-quantity">
-      <span class="item-quantity-label text-lighter">
-        {localize('DND5E.Quantity')}
-      </span>
-      <span class="item-quantity-value">
-        {context.system.quantity}
-      </span>
-    </div>
+    <ItemQuantitySummary />
   </div>
 
   <!-- Tab Strip -->
