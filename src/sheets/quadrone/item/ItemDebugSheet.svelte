@@ -32,7 +32,7 @@
 <aside class="sidebar dark">
   <div class="sidebar-contents">
     <h4>Theme</h4>
-    <div style="display: flex; flex-direction: column; gap: 0.25rem">
+    <div style="display: flex; flex-direction: column; gap: var(--t5e-spacing-1x)">
       <label for="light-mode-toggle">
         <input
           id="light-mode-toggle"
@@ -57,7 +57,7 @@
       </label>
     </div>
     <h4>Inversion</h4>
-    <div style="display: flex; flex-direction: column; gap: 0.25rem">
+    <div style="display: flex; flex-direction: column; gap: var(--t5e-spacing-1x)">
       <label for="default-mode-toggle">
         <input
           id="default-mode-toggle"
@@ -83,7 +83,7 @@
     </div>
   </div>
 </aside>
-<div class="item-content dark" class:inverse>
+<div class="item-content">
   <div class="controls-gallery">
     <div class="span-all">
       <!-- Name -->
@@ -1227,7 +1227,7 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    gap: 0.25rem;
+    gap: var(--t5e-spacing-1x);
   }
 
   .wrapped-gallery {
@@ -1236,7 +1236,7 @@
     align-items: flex-start;
     justify-content: flex-start;
     flex-wrap: wrap;
-    gap: 0.25rem;
+    gap: var(--t5e-spacing-1x);
   }
 
   .show-before-850 {

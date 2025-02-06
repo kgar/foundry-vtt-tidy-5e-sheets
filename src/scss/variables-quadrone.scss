@@ -8,8 +8,6 @@
   --t5e-font-family-title: var(--t5e-font-modesto-condensed);
   --t5e-font-roboto-condensed: 'Roboto Condensed', Roboto, Arial, sans-serif;
   --t5e-font-family-default: var(--t5e-font-roboto-condensed);
-  --t5e-font-roboto-slab: 'Roboto Slab', serif;
-  --t5e-font-signika: 'Signika', sans-serif;
 
   /* Font sizes */
   --font-size-56: 3.5rem;
@@ -33,6 +31,7 @@
 
   /* Fonts */
   --t5e-font-default-medium: 400 var(--font-size-13)/var(--t5e-lineheight-default) var(--t5e-font-family-default);
+  --t5e-font-default-longform: 400 var(--font-size-13)/var(--t5e-lineheight-longform) var(--t5e-font-family-default);
   --t5e-font-default-small: 400 var(--font-size-11)/var(--t5e-lineheight-small) var(--t5e-font-family-default);
 
   --t5e-font-label-medium: 500 var(--font-size-13)/var(--t5e-lineheight-default) var(--t5e-font-family-default);
@@ -59,6 +58,7 @@
   --t5e-color-palette-grey-48: rgba(122, 122, 122, 1);
   --t5e-color-palette-grey-60: rgba(153, 153, 153, 1);
   --t5e-color-palette-grey-85: rgba(207, 210, 218, 1);
+  --t5e-color-palette-grey-92: rgba(223, 226, 235, 1)
   --t5e-color-palette-grey-100: rgba(255, 255, 255, 1); 
 
   /* Gold */
@@ -262,6 +262,7 @@
   --t5e-color-icon-ondefault-diminished: var(--t5e-color-palette-grey-40);
   --t5e-color-icon-ondefault-disabled: rgba(0, 0, 0, 0.4);
   --t5e-color-icon-oninverse-default: var(--t5e-color-palette-white);
+  --t5e-color-icon-ondefault-button: var(--t5e-color-palette-grey-92);
   --t5e-color-icon-oninverse-diminished: var(--t5e-color-palette-grey-85);
   --t5e-color-icon-oninverse-disabled: rgba(255, 255, 255, 0.5);
 
@@ -302,6 +303,23 @@
   --t5e-spellcasting-innate-darker: oklch(from var(--t5e-color-palette-purple-59) calc(l * 0.70) calc(c * 1.2) h);
   --t5e-spellcasting-ritual: var(--t5e-color-palette-blue-green-50);
   --t5e-spellcasting-ritual-darker: oklch(from var(--t5e-color-palette-blue-green-50) calc(l * 0.70) calc(c * 1.2) h);
+
+
+  /* Spacing ------------ */
+  --t5e-spacing-1: 0.0625rem;
+  --t5e-spacing-halfx: 0.125rem;
+  --t5e-spacing-1x: 0.25rem;
+  --t5e-spacing-2x: 0.5rem;
+  --t5e-spacing-3x: 0.75rem;
+  --t5e-spacing-4x: 1rem;
+  --t5e-spacing-5x: 1.25rem;
+  --t5e-spacing-6x: 1.5rem;
+  --t5e-spacing-8x: 2rem;
+  --t5e-spacing-10x: 2.5rem;
+  --t5e-spacing-12x: 3rem;
+  --t5e-spacing-16x: 4rem;
+  --t5e-spacing-20x: 5rem;
+  --t5e-spacing-24x: 6rem;
 }
 
 
