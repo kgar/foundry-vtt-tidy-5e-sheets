@@ -303,6 +303,23 @@
   --t5e-spellcasting-innate-darker: oklch(from var(--t5e-color-palette-purple-59) calc(l * 0.70) calc(c * 1.2) h);
   --t5e-spellcasting-ritual: var(--t5e-color-palette-blue-green-50);
   --t5e-spellcasting-ritual-darker: oklch(from var(--t5e-color-palette-blue-green-50) calc(l * 0.70) calc(c * 1.2) h);
+
+
+  /* Spacing ------------ */
+  --t5e-spacing-1: 0.0625rem;
+  --t5e-spacing-halfx: 0.125rem;
+  --t5e-spacing-1x: 0.25rem;
+  --t5e-spacing-2x: 0.5rem;
+  --t5e-spacing-3x: 0.75rem;
+  --t5e-spacing-4x: 1rem;
+  --t5e-spacing-5x: 1.25rem;
+  --t5e-spacing-6x: 1.5rem;
+  --t5e-spacing-8x: 2rem;
+  --t5e-spacing-10x: 2.5rem;
+  --t5e-spacing-12x: 3rem;
+  --t5e-spacing-16x: 4rem;
+  --t5e-spacing-20x: 5rem;
+  --t5e-spacing-24x: 6rem;
 }
 
 
