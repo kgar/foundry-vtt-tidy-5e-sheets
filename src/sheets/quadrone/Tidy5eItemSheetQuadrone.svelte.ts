@@ -63,7 +63,7 @@ export class Tidy5eItemSheetQuadrone extends DragAndDropMixin(
       controls: [ImportSheetControl.getSheetControl()],
     },
     position: {
-      width: 560,
+      width: 580,
       height: 600,
     },
     actions: {

@@ -232,7 +232,7 @@
         height: 1.75rem;
         justify-content: center;
         align-items: center;
-        gap: 0.25rem;
+        gap: var(--t5e-spacing-1x);
 
         i {
           color: var(--t5e-color-palette-grey-100);
@@ -243,14 +243,14 @@
     .currencies {
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
+      gap: var(--t5e-spacing-1x);
 
       .denomination {
         text-transform: uppercase;
       }
 
       .input-group {
-        gap: 0.25rem;
+        gap: var(--t5e-spacing-1x);
         padding-block: 0;
         height: 1.75rem;
 
@@ -351,9 +351,27 @@
   .item-header-summary {
     margin-top: 0.5rem;
     display: flex;
-    gap: 1rem;
+    row-gap: var(--t5e-spacing-1x);
+    flex-wrap: wrap;
+
+    > * {
+      text-wrap-mode: nowrap;
+      display: flex;
+      align-items: center;
+      gap: var(--t5e-spacing-1x);
+    }
+
+    > * + *::before {
+      content: '';
+      width: 0.0625rem;
+      height: 1rem;
+      opacity: 0.5;
+      background: var(--t5e-color-gold, #9f9275);
+      margin-inline: 0.5rem;
+    }
 
     .item-type {
+      // TODO: eliminate most of this with util classes
       font-family: var(--t5e-font-modesto-condensed);
       font-size: 1rem;
       font-style: normal;
@@ -364,7 +382,7 @@
     .item-capacity {
       display: flex;
       align-items: center;
-      gap: 0.25rem;
+      gap: var(--t5e-spacing-1x);
     }
 
     .item-capacity-counter {
@@ -375,43 +393,28 @@
 
     .item-charges {
       display: flex;
-      gap: 0.25rem;
+      gap: var(--t5e-spacing-1x);
 
       .counter {
         display: flex;
-        gap: 0.125rem;
-
-        .value {
-          font-weight: 600;
-        }
-
-        .charges-slash {
-          color: var(--t5e-color-text-lightest);
-        }
-
-        .max {
-          font-weight: 500;
-        }
-      }
-
-      .charges-text {
-        color: var(--t5e-color-text-lighter);
-        font-weight: 500;
+        gap: var(--t5e-spacing-halfx);
       }
     }
 
-    .item-value {
+    .item-recharge {
+      display: flex;
+      align-items: center;
+      gap: var(--t5e-spacing-1x);
+    }
+
+    .item-price {
       font-size: 0.8125rem;
-      font-style: normal;
-      font-weight: 600;
-      line-height: normal;
 
       display: flex;
       align-items: center;
-      gap: 0.25rem;
+      gap: var(--t5e-spacing-1x);
 
-      .item-value-denomination {
-        font-weight: 500;
+      .item-price-denomination {
         text-transform: uppercase;
       }
     }
@@ -427,13 +430,6 @@
     .item-weight-value {
       font-weight: 600;
     }
-  }
-
-  .item-header-summary-separator {
-    width: 0.0625rem;
-    height: 1rem;
-    opacity: 0.5;
-    background: var(--t5e-color-gold, #9f9275);
   }
 
   .document-name {
@@ -512,7 +508,7 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      gap: 0.25rem;
+      gap: var(--t5e-spacing-1x);
 
       .meter {
         flex-grow: 1;

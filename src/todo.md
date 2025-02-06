@@ -27,6 +27,11 @@
 - [x] Item Descriptions for enchanted items are multiplying the enchanted text. Stahp
 - [x] Add currency and weight to relevant item sheets in the header area
   - [x] Now add it to their details tabs
+- [x] Item Summary 
+  - [x] chip internals: no wrap
+  - [x] chips: wrap to newline
+  - [x] replace manual divider with simple sibling combinator setup
+- [ ] Replace rote individual span styles with util styles where able
 - [ ] Implement sheet header contents
   - [ ] Background
     - [ ] subtitle
@@ -37,7 +42,8 @@
       - [ ] Item Type
       - [ ] Item Subtype
     - [ ] summary
-      - [ ] Charges
+      - [ ] (when available) Charges
+      - [ ] (when relevant) Cooldown
       - [ ] Price
       - [ ] Weight
       - [ ] Quantity
@@ -48,6 +54,7 @@
       - [ ] ## AC
     - [ ] summary
       - [ ] (when available) Charges
+      - [ ] (when relevant) Cooldown
       - [ ] Price
       - [ ] Weight
       - [ ] Quantity
@@ -61,7 +68,10 @@
     - [ ] subtitle
       - [ ] (When active) Activation Type (Action)
       - [ ] (When Active) Requirements (Paladin 2)
-      - [ ] (When Passive) 
+      - [ ] (When Passive)
+    - [ ] summary 
+      - [ ] (when available) Charges
+      - [ ] (when relevant) Cooldown
   - [ ] Loot
     - [ ] Subtitle
       - [ ] Loot type
@@ -76,6 +86,8 @@
       - [ ] Level (1st Level)
       - [ ] School
     - [ ] summary
+      - [ ] (when available) Charges
+      - [ ] (when relevant) Cooldown
       - [ ] charges
       - [ ] linked item (Necklace of Fireballs)
     - [ ] School Image across from title / subtitle
@@ -84,6 +96,8 @@
   - [ ] Tool
     - [ ] subtitle
     - [ ] summary
+      - [ ] (when available) Charges
+      - [ ] (when relevant) Cooldown
       - [ ] Charges
       - [ ] Price
       - [ ] Weight
@@ -92,7 +106,7 @@
     - [x] subtitle
     - [ ] Summary
       - [x] (when available) Charges
-      - [ ] (when relevant) Cooldown
+      - [x] (when relevant) Cooldown
       - [x] Price
       - [x] Weight
       - [x] Quantity
@@ -122,6 +136,7 @@
 - [ ] Handle unidentified feature set
   - [ ] Portrait becomes washed over
   - [ ] Non-description tabs become disabled (preferably, hide them?)
+- [ ] Wire up item-sheet-specific user sheet preferences for width and height. Look for other opportunities, also, like container toolbar.
 
 ### Stretch
 
