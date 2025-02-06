@@ -12,7 +12,6 @@
   }
 
   /* Font-size */
-
   .fs-lg {
     font-size: 1.25rem !important;
   }
@@ -44,73 +43,27 @@
 }
 
 /* Quadrone utilities */
+/* TODO: Move to layout file and figure out where backgrounds go */
 
-.tidy5e-sheet.application:where(.quadrone) {
-  /* Text Management */
-  .truncate {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.tidy5e-sheet.application:where(.quadrone) {  
+  /* Background color ------------------ */
+  .background-default-light {
+    background-color: var(--t5e-component-card-ondefault-default);
   }
-
-  /* Text Color */
-
-  .text-default {
-    color: var(--t5e-color-text-onDefault-default);
+  .background-default-darker {
+    background-color: var(--t5e-component-card-ondefault-darker);
   }
-
-  .text-gold {
-    color: var(--t5e-color-text-onDefault-gold);
+  .background-default-lighter {
+    background-color: var(--t5e-component-card-ondefault-lighter);
   }
-
-  .text-gold-light {
-    color: var(--t5e-color-text-onDefault-gold-light);
+  .background-darker-default {
+    background-color: var(--t5e-component-card-oninverse-default);
   }
-
-  .text-lighter {
-    color: var(--t5e-color-text-onDefault-lighter);
+  .background-darker-darker {
+    background-color: var(--t5e-component-card-oninverse-darker);
   }
-
-  .text-lightest {
-    color: var(--t5e-color-text-onDefault-lightest);
-  }
-
-  .text-gold-emphasis {
-    color: var(--t5e-color-text-onDefault-gold-emphasis);
-  }
-
-  .text-disabled {
-    color: var(--t5e-color-text-onDefault-disabled);
-  }
-
-  .inverse {
-    .text-default {
-      color: var(--t5e-color-text-onInverse-default);
-    }
-
-    .text-gold {
-      color: var(--t5e-color-text-onInverse-gold);
-    }
-
-    .text-gold-light {
-      color: var(--t5e-color-text-onInverse-gold-light);
-    }
-
-    .text-lighter {
-      color: var(--t5e-color-text-onInverse-lighter);
-    }
-
-    .text-lightest {
-      color: var(--t5e-color-text-onInverse-lightest);
-    }
-
-    .text-gold-emphasis {
-      color: var(--t5e-color-text-onInverse-gold-emphasis);
-    }
-
-    .text-disabled {
-      color: var(--t5e-color-text-onInverse-disabled);
-    }
+  .background-darker-lighter {
+    background-color: var(--t5e-component-card-oninverse-lighter);
   }
 }
 
