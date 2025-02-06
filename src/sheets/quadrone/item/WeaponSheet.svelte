@@ -7,6 +7,7 @@
   import Sidebar from './parts/Sidebar.svelte';
   import ItemNameHeaderOrchestrator from './parts/ItemNameHeaderOrchestrator.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
+  import { itemCharges } from './parts/header/HeaderSnippets.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -53,10 +54,12 @@
 
   <!-- Header Summary -->
   <div class="item-header-summary">
-    <!-- Charges -->
-    <!-- TODO: Ensure the limited uses code is centrally shared, and let all the consumers pull from that central location, using the item itself to derive the limited uses. -->
-    <!-- TODO: Support Recharge UI -->
-    <!-- TODO: CachedFor/LinkedUses support -->
+    {@render itemCharges(context)}
+
+    {#if context.item.isOnCooldown}
+      TODO: Cooldown UI (and put in shared snippet)
+      <div class="item-header-summary-separator" role="presentation"></div>
+    {/if}
 
     <!-- Value -->
     <div class="item-value">

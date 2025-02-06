@@ -91,10 +91,11 @@
   - [ ] Weapon
     - [x] subtitle
     - [ ] Summary
-      - [ ] (when available) Charges
-      - [ ] Price
-      - [ ] Weight
-      - [ ] Quantity
+      - [x] (when available) Charges
+      - [ ] (when relevant) Cooldown
+      - [x] Price
+      - [x] Weight
+      - [x] Quantity
 - [ ] Implement Activities tab
 - [ ] Implement Effects tab
 - [ ] Finish implementing container contents tab

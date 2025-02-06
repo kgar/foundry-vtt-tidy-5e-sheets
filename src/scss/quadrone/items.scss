@@ -373,6 +373,33 @@
       gap: 0.1875rem;
     }
 
+    .item-charges {
+      display: flex;
+      gap: 0.25rem;
+
+      .counter {
+        display: flex;
+        gap: 0.125rem;
+
+        .value {
+          font-weight: 600;
+        }
+
+        .charges-slash {
+          color: var(--t5e-color-text-lightest);
+        }
+
+        .max {
+          font-weight: 500;
+        }
+      }
+
+      .charges-text {
+        color: var(--t5e-color-text-lighter);
+        font-weight: 500;
+      }
+    }
+
     .item-value {
       font-size: 0.8125rem;
       font-style: normal;
