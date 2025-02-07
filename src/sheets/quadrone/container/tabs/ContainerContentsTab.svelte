@@ -122,7 +122,7 @@
 <!-- Column specification needs to have options for spanning -->
 <!-- These options should be conditional accepted here, since this will also be reused for actor inventories -->
 <!-- ? DO we have to reuse the same components, or can we make curated versions for container and actor? -->
-<div class="container-contents-wrapper">
+<div class="tidy-table-container">
   <ContainerContentsSections
     contents={context.containerContents.contents}
     container={context.item}
