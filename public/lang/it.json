@@ -868,5 +868,6 @@
     "TIDY5E.ContextMenuActionPinToAttributes": "Fissa su Attributi",
     "TIDY5E.ContextMenuActionUnpinFromAttributes": "Rimuovi da Attributi",
     "TIDY5E.ContextMenuActionShowLimitedUses": "Mostra Usi Limitati",
-    "TIDY5E.ContextMenuActionShowQuantity": "Mostra Quantità"
+    "TIDY5E.ContextMenuActionShowQuantity": "Mostra Quantità",
+    "TIDY5E.RollRecharge.Label": "Ricarica"
 }
