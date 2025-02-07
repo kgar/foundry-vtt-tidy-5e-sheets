@@ -31,6 +31,7 @@
   - [x] chip internals: no wrap
   - [x] chips: wrap to newline
   - [x] replace manual divider with simple sibling combinator setup
+- [x] Identify any quadrone content that is still using the `text-colorhere` classes and replace with official classes
 - [ ] Replace rote individual span styles with util styles where able
 - [ ] Implement sheet header contents
   - [ ] Background
