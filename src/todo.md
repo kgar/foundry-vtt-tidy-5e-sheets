@@ -2,36 +2,10 @@
 
 ### Bootstrapping all item sheets
 
-- [x] Propagate initial scaffolding for tabs to all new sheets
-  - [x] Background details
-  - [x] Class details
-  - [x] Consumable details
-  - [x] Equipment details
-  - [x] Facility details
-  - [x] Feat details
-  - [x] Loot details
-  - [x] Species details
-  - [x] Spell details
-  - [x] Subclass details
-  - [x] Tool details
-  - [x] Weapon details
-- [x] Copy over details content for all new sheets
-- [x] Implement single description tab
-- [x] Convert inputs to the quadrone variety,
-- [x] Create quadrone edition of ItemProperties
-- [x] Update inputs to ensure that a lockedValue can be fed into each type, so that we can show the system value on disabled and the source value on not disabled ♥
-- [x] Ensure all standard form fields are locked on sheet lock
-- [x] <!-- TODO: Figure this out; where is the system vs. source value? -->
-- [x] Ensure interactibles like buttons are also disabled on lock, where relevant
-- [x] Do all this again for Containers 🤦‍♂️
-- [x] Item Descriptions for enchanted items are multiplying the enchanted text. Stahp
-- [x] Add currency and weight to relevant item sheets in the header area
-  - [x] Now add it to their details tabs
-- [x] Item Summary 
-  - [x] chip internals: no wrap
-  - [x] chips: wrap to newline
-  - [x] replace manual divider with simple sibling combinator setup
-- [x] Identify any quadrone content that is still using the `text-colorhere` classes and replace with official classes
+- [ ] Get Tidy tables working properly and looking nice with the latest styles
+  - [ ] New quantity control is wider than its 80px parent
+  - [ ] The table styles do not account for varying column widths and do not constrain child contents
+  - [ ] ItemTableRowV2 and InlineActivitiesList are currently fairly off-track with the new classes. Consider just making a new round of tables dedicated to quadrone...
 - [ ] Replace rote individual span styles with util styles where able
 - [ ] Implement sheet header contents
   - [ ] Background

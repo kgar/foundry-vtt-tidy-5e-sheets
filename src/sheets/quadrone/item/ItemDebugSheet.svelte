@@ -117,57 +117,57 @@
     </div>
     <fieldset class="vertical-gallery">
       <legend> Spellcasting Table </legend>
-      <div class="item-table-container spellcasting" style="min-width: 720px;">
-        <div class="item-table">
-          <div class="item-table-header dark innate">
+      <div class="tidy-table-container spellcasting" style="min-width: 720px;">
+        <div class="tidy-table">
+          <div class="tidy-table-header-row dark innate">
             <div class="button expand-button">
               <i class="fas fa-chevron-down"></i>
             </div>
-            <div class="header-label-cell item-table-cell fill">
+            <div class="header-label-cell tidy-table-cell primary">
               <h3>Innate</h3>
               <span class="table-header-count">3</span>
             </div>
 
-            <div class="item-table-cell">
+            <div class="tidy-table-cell">
               <div class="cell-name">Components</div>
             </div>
-            <div class="item-table-cell">
+            <div class="tidy-table-cell">
               <div class="cell-name">Time</div>
             </div>
-            <div class="item-table-cell">
+            <div class="tidy-table-cell">
               <div class="cell-name">Uses</div>
             </div>
-            <div class="item-table-cell">
+            <div class="tidy-table-cell">
               <div class="cell-name">Range</div>
             </div>
-            <div class="item-table-cell">
+            <div class="tidy-table-cell">
               <div class="cell-name">Hit</div>
             </div>
-            <div class="item-table-cell header-cell-actions">
-              <div class="item-table-button add-item">
+            <div class="tidy-table-cell header-cell-actions">
+              <div class="tidy-table-button add-item">
                 <i class="fas fa-plus"></i>
               </div>
             </div>
           </div>
-          <div class="item-table-row spell">
-            <div class="item-table-button item-use-button">
+          <div class="tidy-table-row spell">
+            <div class="tidy-table-button item-use-button">
               <img class="item-image" alt="Spell Name" src="icons/magic/fire/projectile-fireball-smoke-orange.webp" />
               <i class="fas fa-dice-d20"></i>
             </div>
-            <div class="item-table-cell item-label text-cell fill">
+            <div class="tidy-table-cell item-label text-cell primary">
               <div class="cell-name">Fire Bolt</div>
               <div class="cell-context">V, S, M</div>
             </div>
-            <div class="item-table-cell spell-components">
+            <div class="tidy-table-cell spell-components">
               <ul class="unlist spell-components">
                 <li class="spell-component" data-tooltip="Verbal">V</li>
                 <li class="spell-component" data-tooltip="Somatic">S</li>
               </ul>
             </div>
-            <div class="item-table-cell text-cell">
+            <div class="tidy-table-cell text-cell">
               <div class="item-name" data-tooltip="Action">A</div>
             </div>
-            <div class="item-table-cell">
+            <div class="tidy-table-cell">
               <div class="uses">
                 <span class="value">1</span>
                 <span class="divider">/</span>
@@ -175,26 +175,26 @@
               </div>
             </div>
           </div>
-          <div class="item-table-row spell rarity rare">
-            <div class="item-table-button item-use-button">
+          <div class="tidy-table-row spell rarity rare">
+            <div class="tidy-table-button item-use-button">
               <img class="item-image" alt="Spell Name" src="icons/magic/fire/projectile-fireball-smoke-orange.webp" />
               <i class="fas fa-dice-d20"></i>
             </div>
-            <div class="item-table-cell item-label text-cell fill">
+            <div class="tidy-table-cell item-label text-cell primary">
               <div class="cell-name">Fire Bolt</div>
               <div class="cell-context">Rare</div>
             </div>
-            <div class="item-table-cell spell-components">
+            <div class="tidy-table-cell spell-components">
               <ul class="unlist spell-components">
                 <li class="spell-component" data-tooltip="Somatic">S</li>
                 <li class="spell-component" data-tooltip="Material">M</li>
                 <li class="spell-component-special" data-tooltip="Concentration">C</li>
               </ul>
             </div>
-            <div class="item-table-cell text-cell">
+            <div class="tidy-table-cell text-cell">
               <div class="item-name" data-tooltip="Action">A</div>
             </div>
-            <div class="item-table-cell">
+            <div class="tidy-table-cell">
               <div class="uses">
                 <span class="value">1</span>
                 <span class="divider">/</span>
@@ -202,25 +202,25 @@
               </div>
             </div>
           </div>
-          <div class="item-table-row spell equipped">
-            <div class="item-table-button item-use-button">
+          <div class="tidy-table-row spell equipped">
+            <div class="tidy-table-button item-use-button">
               <img class="item-image" alt="Spell Name" src="icons/magic/fire/projectile-fireball-smoke-orange.webp" />
               <i class="fas fa-dice-d20"></i>
             </div>
-            <div class="item-table-cell item-label text-cell fill">
+            <div class="tidy-table-cell item-label text-cell primary">
               <div class="cell-name">Fire Bolt</div>
               <div class="cell-context">Prepared</div>
             </div>
-            <div class="item-table-cell spell-components">
+            <div class="tidy-table-cell spell-components">
               <ul class="unlist spell-components">
                 <li class="spell-component" data-tooltip="Verbal">V</li>
                 <li class="spell-component" data-tooltip="Somatic">S</li>
               </ul>
             </div>
-            <div class="item-table-cell text-cell">
+            <div class="tidy-table-cell text-cell">
               <div class="item-name" data-tooltip="Action">A</div>
             </div>
-            <div class="item-table-cell">
+            <div class="tidy-table-cell">
               <div class="uses">
                 <span class="value">1</span>
                 <span class="divider">/</span>
@@ -228,15 +228,15 @@
               </div>
             </div>
           </div>
-          <div class="item-table-row spell equipped">
-            <div class="item-table-button item-use-button">
+          <div class="tidy-table-row spell equipped">
+            <div class="tidy-table-button item-use-button">
               <img class="item-image" alt="Spell Name" src="icons/magic/fire/projectile-fireball-smoke-orange.webp" />
               <i class="fas fa-dice-d20"></i>
             </div>
-            <div class="item-table-cell item-label text-cell fill">
+            <div class="tidy-table-cell item-label text-cell primary">
               <div class="item-name">Fire Bolt</div>
             </div>
-            <div class="item-table-cell spell-components">
+            <div class="tidy-table-cell spell-components">
               <ul class="unlist spell-components">
                 <li class="spell-component" data-tooltip="Verbal">V</li>
                 <li class="spell-component" data-tooltip="Somatic">S</li>
@@ -244,19 +244,19 @@
                 <li class="spell-component-special" data-tooltip="Ritual">R</li>
               </ul>
             </div>
-            <div class="item-table-cell text-cell">
+            <div class="tidy-table-cell text-cell">
               <div class="item-name" data-tooltip="Action">A</div>
             </div>
-            <div class="item-table-cell">
+            <div class="tidy-table-cell">
               <div class="uses">
                 <i class="fas fa-bolt"></i>
               </div>
             </div>
-            <div class="item-table-cell text-cell">
+            <div class="tidy-table-cell text-cell">
               <div class="cell-name">120 ft.</div>
               <div class="cell-context">1 creature</div>
             </div>
-            <div class="item-table-cell text-cell">
+            <div class="tidy-table-cell text-cell">
               <div class="hit-save">
                 <span class="ability">WIS</span>
                 <span class="value">15</span>
@@ -265,16 +265,16 @@
 
           </div>
 
-          <div class="item-table-row spell equipped">
+          <div class="tidy-table-row spell equipped">
 
-            <div class="item-table-button item-use-button">
+            <div class="tidy-table-button item-use-button">
               <img class="item-image" alt="Spell Name" src="icons/magic/fire/projectile-fireball-smoke-orange.webp" />
               <i class="fas fa-dice-d20"></i>
             </div>
-            <div class="item-table-cell item-label text-cell fill">
+            <div class="tidy-table-cell item-label text-cell primary">
               <div class="cell-name">Lightning Breath</div>
             </div>
-            <div class="item-table-cell spell-components">
+            <div class="tidy-table-cell spell-components">
               <ul class="unlist spell-components">
                 <li class="spell-component" data-tooltip="Verbal">V</li>
                 <li class="spell-component" data-tooltip="Somatic">S</li>
@@ -282,21 +282,21 @@
                 <li class="spell-component-special" data-tooltip="Ritual">R</li>
               </ul>
             </div>
-            <div class="item-table-cell text-cell">
+            <div class="tidy-table-cell text-cell">
               <div class="cell-name">A</div>
             </div>
-            <div class="item-table-cell">
+            <div class="tidy-table-cell">
               <div class="uses recharge">
                 <i class="fas fa-dice-five"></i>
                 <span class="value">5</span>
                 <span class="modifier">+</span>
               </div>
             </div>
-            <div class="item-table-cell text-cell">
+            <div class="tidy-table-cell text-cell">
               <div class="cell-name">30 ft.</div>
               <div class="cell-context">Cone</div>
             </div>
-            <div class="item-table-cell text-cell">
+            <div class="tidy-table-cell text-cell">
               <div class="hit-save">
                 <span class="modifier">+</span>
                 <span class="value">8</span>
@@ -307,93 +307,93 @@
 
 
         </div>
-        <div class="item-table">
-          <div class="item-table-header dark">
+        <div class="tidy-table">
+          <div class="tidy-table-header-row dark">
             <div class="button expand-button">
               <i class="fas fa-chevron-down"></i>
             </div>
-            <div class="header-label-cell item-table-cell fill">
+            <div class="header-label-cell tidy-table-cell primary">
               <h3>Items</h3>
               <span class="table-header-count">3</span>
             </div>
 
-            <div class="item-table-cell">
+            <div class="tidy-table-cell">
               <div class="cell-name">Time</div>
             </div>
-            <div class="item-table-cell">
+            <div class="tidy-table-cell">
               <div class="cell-name">Uses</div>
             </div>
-            <div class="item-table-cell">
+            <div class="tidy-table-cell">
               <div class="cell-name">Range</div>
             </div>
-            <div class="item-table-cell">
+            <div class="tidy-table-cell">
               <div class="cell-name">Hit</div>
             </div>
-            <div class="item-table-cell" style="width: calc(1.5rem * 4 + 0.125rem);">
+            <div class="tidy-table-cell" style="width: calc(1.5rem * 4 + 0.125rem);">
               <div class="cell-name">Actions</div>
             </div>
           </div>
-          <div class="item-table-row spell rarity rare">
-            <div class="item-table-button item-use-button">
+          <div class="tidy-table-row spell rarity rare">
+            <div class="tidy-table-button item-use-button">
               <img class="item-image" alt="Spell Name" src="icons/magic/fire/projectile-fireball-smoke-orange.webp" />
               <i class="fas fa-dice-d20"></i>
             </div>
-            <div class="item-table-cell item-label text-cell fill">
+            <div class="tidy-table-cell item-label text-cell primary">
               <div class="cell-name">Fire Bolt</div>
               <div class="cell-context">Rare</div>
             </div>
-            <div class="item-table-cell spell-components">
+            <div class="tidy-table-cell spell-components">
               <ul class="unlist spell-components">
                 <li class="spell-component" data-tooltip="Somatic">S</li>
                 <li class="spell-component" data-tooltip="Material">M</li>
                 <li class="spell-component-special" data-tooltip="Concentration">C</li>
               </ul>
             </div>
-            <div class="item-table-cell text-cell">
+            <div class="tidy-table-cell text-cell">
               <div class="item-name" data-tooltip="Action">A</div>
             </div>
-            <div class="item-table-cell">
+            <div class="tidy-table-cell">
               <div class="uses">
                 <span class="value">1</span>
                 <span class="divider">/</span>
                 <span class="max">10</span>
               </div>
             </div>
-            <div class="item-table-cell item-actions">
-              <div class="item-table-button">
+            <div class="tidy-table-cell item-actions">
+              <div class="tidy-table-button">
                 <i class="fas fa-hand"></i>
               </div>
-              <div class="item-table-button toggle-button toggled">
+              <div class="tidy-table-button toggle-button toggled">
                 <i class="far fa-regular fa-sun"></i>
               </div>
-              <div class="item-table-button">
+              <div class="tidy-table-button">
                 <i class="fas fa-bookmark"></i>
               </div>
-              <div class="item-table-button">
+              <div class="tidy-table-button">
                 <i class="fas fa-ellipsis-vertical"></i>
               </div>
             </div>
           </div>
-          <div class="item-table-row spell equipped">
-            <div class="item-table-button item-use-button">
+          <div class="tidy-table-row spell equipped">
+            <div class="tidy-table-button item-use-button">
 
               <img class="item-image" alt="Spell Name" src="icons/magic/fire/projectile-fireball-smoke-orange.webp" />
               <i class="fas fa-dice-d20"></i>
             </div>
-            <div class="item-table-cell item-label text-cell fill">
+            <div class="tidy-table-cell item-label text-cell primary">
               <div class="cell-name">Fire Bolt</div>
               <div class="cell-context">Prepared</div>
             </div>
-            <div class="item-table-cell spell-components">
+            <div class="tidy-table-cell spell-components">
               <ul class="unlist spell-components">
                 <li class="spell-component" data-tooltip="Verbal">V</li>
                 <li class="spell-component" data-tooltip="Somatic">S</li>
               </ul>
             </div>
-            <div class="item-table-cell text-cell">
+            <div class="tidy-table-cell text-cell">
               <div class="item-name" data-tooltip="Action">A</div>
             </div>
-            <div class="item-table-cell">
+            <div class="tidy-table-cell">
               <div class="uses">
                 <span class="value">1</span>
                 <span class="divider">/</span>

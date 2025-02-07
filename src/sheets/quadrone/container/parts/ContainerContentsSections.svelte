@@ -1,15 +1,15 @@
 <script lang="ts">
   import TidyTable, {
     type TidyTableColumns,
-  } from 'src/components/table/TidyTable.svelte';
-  import TidyTableHeaderCell from 'src/components/table/TidyTableHeaderCell.svelte';
-  import TidyTableHeaderRow from 'src/components/table/TidyTableHeaderRow.svelte';
+  } from 'src/components/table-quadrone/TidyTable.svelte';
+  import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
+  import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ContainerItemContext, Item5e } from 'src/types/item.types';
   import type { Actor5e, InventorySection } from 'src/types/types';
   import ItemTableRowV2 from 'src/components/item-list/v2/ItemTableRowV2.svelte';
-  import TidyTableCell from 'src/components/table/TidyTableCell.svelte';
+  import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { getContext } from 'svelte';
@@ -18,6 +18,9 @@
   import InlineContainerView from './InlineContainerView.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import InlineItemQuantityTracker from 'src/components/trackers/InlineItemQuantityTracker.svelte';
+  import EditButton from 'src/components/table-quadrone/table-buttons/EditButton.svelte';
+  import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButton.svelte';
+  import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
 
   interface Props {
     contents: InventorySection[];
@@ -130,21 +133,26 @@
     <TidyTable
       key={section.key}
       data-custom-section={section.custom ? true : null}
-      {gridTemplateColumns}
     >
       {#snippet header()}
-        <TidyTableHeaderRow>
-          <TidyTableHeaderCell primary={true}>
-            {localize(section.label)}
-            <span class="count">{section.items.length}</span>
+        <TidyTableHeaderRow class="dark">
+          <TidyTableHeaderCell primary={true} class="header-label-cell">
+            <h3>
+              {localize(section.label)}
+            </h3>
+            <span class="table-header-count">{section.items.length}</span>
           </TidyTableHeaderCell>
           <TidyTableHeaderCell>
-            {localize('DND5E.Quantity')}
+            <div class="cell-name">
+              {localize('DND5E.Quantity')}
+            </div>
           </TidyTableHeaderCell>
           <TidyTableHeaderCell>
-            {localize('DND5E.Weight')}
+            <div class="cell-name">
+              {localize('DND5E.Weight')}
+            </div>
           </TidyTableHeaderCell>
-          <TidyTableHeaderCell class="item-actions">
+          <TidyTableHeaderCell class="header-cell-actions">
             <!-- Actions -->
           </TidyTableHeaderCell>
         </TidyTableHeaderRow>
@@ -161,8 +169,6 @@
             'artifact',
           ].includes(item.system.rarity)}
 
-          <!-- TODO: Put 1px margin top on first row -->
-
           <ItemTableRowV2
             {item}
             hidden={!searchResults.show(item.uuid)}
@@ -176,18 +182,19 @@
             }}
           >
             {#snippet children({ toggleSummary })}
-              <TidyTableCell primary={true} class="truncate">
-                <a
-                  class="item-image"
-                  style="--item-img: url({item.img}); --item-border-color: {itemBorderColor};"
-                  class:special-rarity={showRarityBoxShadow}
-                  onclick={(ev) => FoundryAdapter.actorTryUseItem(item, ev)}
-                >
-                  <span class="roll-prompt">
-                    <i class="fa fa-dice-d20"></i>
-                  </span>
-                </a>
-                {#if ('containerContents' in ctx && !!ctx.containerContents)}
+              <a
+                class="tidy-table-button item-use-button"
+                style="--item-border-color: {itemBorderColor};"
+                class:special-rarity={showRarityBoxShadow}
+                onclick={(ev) => FoundryAdapter.actorTryUseItem(item, ev)}
+              >
+                <img class="item-image" alt="" src={item.img} />
+                <span class="roll-prompt">
+                  <i class="fa fa-dice-d20"></i>
+                </span>
+              </a>
+              <TidyTableCell primary={true} class="item-label text-cell">
+                {#if 'containerContents' in ctx && !!ctx.containerContents}
                   <a
                     class="expand-indicator-button"
                     onclick={() => inlineToggleService.toggle(tabId, item.id)}
@@ -202,7 +209,7 @@
                   </a>
                 {/if}
                 <a class="item-name truncate" onclick={(ev) => toggleSummary()}>
-                  <span class="truncate">{item.name}</span>
+                  <span class="cell-name">{item.name}</span>
                 </a>
               </TidyTableCell>
               <TidyTableCell>
@@ -213,16 +220,13 @@
               </TidyTableCell>
               <TidyTableCell class="item-actions">
                 {#if unlocked}
-                  <a class="item-action">
-                    <i class="fas fa-edit"></i>
-                  </a>
-                  <a class="item-action">
-                    <i class="fas fa-trash"></i>
-                  </a>
+                  <EditButton doc={item} />
+                  <DeleteButton
+                    doc={item}
+                    deleteFn={() => item.deleteDialog()}
+                  />
                 {/if}
-                <a class="item-action">
-                  <i class="fas fa-ellipsis-vertical"></i>
-                </a>
+                <MenuButton targetSelector="[data-item-id]" />
               </TidyTableCell>
             {/snippet}
           </ItemTableRowV2>
@@ -238,8 +242,6 @@
               {unlocked}
             />
           {/if}
-
-          <hr class="table-row-divider" />
         {/each}
       {/snippet}
     </TidyTable>
