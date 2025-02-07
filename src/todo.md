@@ -5,7 +5,7 @@
 - [ ] Get Tidy tables working properly and looking nice with the latest styles
   - [ ] New quantity control is wider than its 80px parent
   - [ ] The table styles do not account for varying column widths and do not constrain child contents
-  - [ ] ItemTableRowV2 and InlineActivitiesList are currently fairly off-track with the new classes. Consider just making a new round of tables dedicated to quadrone...
+  - [ ] Finish creating quadrone-specific table components so that inline activities and item (document) summary can be owned by quadrone and classed accordingly.
 - [ ] Replace rote individual span styles with util styles where able
 - [ ] Implement sheet header contents
   - [ ] Background
