@@ -52,70 +52,69 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="inline-activities-container" data-item-id={item.id}>
-  <TidyTable
-    key="activities-{item.name}"
-    toggleable={false}
-    {gridTemplateColumns}
-  >
-    {#snippet body()}
-      {#each activities as ctx (ctx.activity.id)}
-        {@const configurable = Activities.isConfigurable(ctx.activity)}
-        <TidyTableRow
-          rowAttributes={{
-            'data-activity-id': ctx.activity.id,
-            'data-configurable': configurable,
-            'data-info-card': 'activity',
-            'data-info-card-entity-uuid': ctx.activity.uuid,
-            'data-context-menu': CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES,
-          }}
-          rowClass="activity"
-          onmousedown={(event) =>
-            FoundryAdapter.editOnMiddleClick(event, ctx.activity)}
+<TidyTable
+  key="activities-{item.name}"
+  toggleable={false}
+  {gridTemplateColumns}
+  class="inline-activities-table"
+>
+  {#snippet body()}
+    {#each activities as ctx (ctx.activity.id)}
+      {@const configurable = Activities.isConfigurable(ctx.activity)}
+      <TidyTableRow
+        rowAttributes={{
+          'data-activity-id': ctx.activity.id,
+          'data-configurable': configurable,
+          'data-info-card': 'activity',
+          'data-info-card-entity-uuid': ctx.activity.uuid,
+          'data-context-menu': CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES,
+        }}
+        rowClass="activity"
+        onmousedown={(event) =>
+          FoundryAdapter.editOnMiddleClick(event, ctx.activity)}
+      >
+        <a
+          class="tidy-table-button item-use-button"
+          onclick={(ev) => item.isOwner && rollActivity(ctx.activity, ev)}
         >
-          <a
-            class="tidy-table-button item-use-button"
-            onclick={(ev) => item.isOwner && rollActivity(ctx.activity, ev)}
-          >
-            {#if ctx.activity.img?.endsWith('.svg')}
-              <Dnd5eIcon class="item-image" src={ctx.activity.img} />
-            {:else}
-              <img class="item-image" alt="" src={item.img} />
-            {/if}
-            <span class="roll-prompt">
-              <i class="fa fa-dice-d20"></i>
-            </span>
-          </a>
-          <TidyTableCell primary={true} class="item-label text-cell">
-            {ctx.activity.name}
-          </TidyTableCell>
-          <TidyTableCell>
-            {#if configurable}
-              {#if ctx.isOnCooldown}
-                <!-- <RechargeControl
+          {#if ctx.activity.img?.endsWith('.svg')}
+            <Dnd5eIcon class="item-image" src={ctx.activity.img} />
+          {:else}
+            <img class="item-image" alt="" src={ctx.activity.img} />
+          {/if}
+          <span class="roll-prompt">
+            <i class="fa fa-dice-d20"></i>
+          </span>
+        </a>
+        <TidyTableCell primary={true} class="item-label text-cell">
+          {ctx.activity.name}
+        </TidyTableCell>
+        <TidyTableCell>
+          {#if configurable}
+            {#if ctx.isOnCooldown}
+              <!-- <RechargeControl
                   document={ctx.activity}
                   field={'uses.spent'}
                   uses={ctx.activity.uses}
                 /> -->
-              {:else if ctx.hasRecharge}
-                {@const remaining =
-                  ctx.activity.uses.max - ctx.activity.uses.spent}
-                {#if remaining > 1}
-                  <span>{remaining}</span>
-                {/if}
-                <i class="fas fa-bolt" title={localize('DND5E.Charged')}></i>
-              {:else if !!ctx.activity.uses?.max}
-                <!-- <ActivityUses activity={ctx.activity} /> -->
-              {:else}
-                <span class="text-body-tertiary">&mdash;</span>
+            {:else if ctx.hasRecharge}
+              {@const remaining =
+                ctx.activity.uses.max - ctx.activity.uses.spent}
+              {#if remaining > 1}
+                <span>{remaining}</span>
               {/if}
+              <i class="fas fa-bolt" title={localize('DND5E.Charged')}></i>
+            {:else if !!ctx.activity.uses?.max}
+              <!-- <ActivityUses activity={ctx.activity} /> -->
+            {:else}
+              <span class="text-body-tertiary">&mdash;</span>
             {/if}
-          </TidyTableCell>
-          <TidyTableCell>
-            {getActivityUsageLabel(ctx.activity)}
-          </TidyTableCell>
-        </TidyTableRow>
-      {/each}
-    {/snippet}
-  </TidyTable>
-</div>
+          {/if}
+        </TidyTableCell>
+        <TidyTableCell>
+          {getActivityUsageLabel(ctx.activity)}
+        </TidyTableCell>
+      </TidyTableRow>
+    {/each}
+  {/snippet}
+</TidyTable>

@@ -9,8 +9,8 @@
     gap: 0.75rem;
 
     /* Example code only */
-    padding: 1rem;
-    border-radius: 1rem;
+    // padding: 1rem;
+    // border-radius: 1rem;
     background-color: var(--t5e-component-card-ondefault-darker);
   }
 
@@ -403,6 +403,13 @@
       opacity: 0;
       transition: all var(--t5e-transition-default);
     }
+
+    // TODO: Hightouch, please review this. kgar put this here to support svg images
+    dnd5e-icon {
+      --icon-size: calc(1.75rem - 0.125rem);
+      --icon-fill: var(--t5e-color-text-lighter);
+    }
+
     img {
       border-radius: 0.0625rem;
       grid-column: 1;
@@ -412,6 +419,10 @@
     &:hover {
       img {
         opacity: 0;
+      }
+      // TODO: Hightouch, this was one of the few ways to make an SVG icon go hidden. It doesn't animate, well (or possibly at all).
+      dnd5e-icon {
+        --icon-fill: transparent;
       }
       i {
         display: flex;
@@ -435,4 +446,13 @@
       --t5e-item-table-row-background: transparent;
     }
   }
+
+  /* Inline Activities */
+
+  .tidy-table.inline-activities-table {
+    margin-inline-start: 1.75rem;
+  }
+
+  /* Inline Containers */
+  // TODO
 }

@@ -21,6 +21,7 @@
   import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButton.svelte';
   import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
   import TidyItemTableRow from 'src/components/table-quadrone/TidyItemTableRow.svelte';
+  import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
 
   interface Props {
     contents: InventorySection[];
@@ -184,7 +185,11 @@
                 class:special-rarity={showRarityBoxShadow}
                 onclick={(ev) => FoundryAdapter.actorTryUseItem(item, ev)}
               >
-                <img class="item-image" alt="" src={item.img} />
+                {#if item.img?.endsWith('.svg')}
+                  <Dnd5eIcon class="item-image" src={item.img} />
+                {:else}
+                  <img class="item-image" alt="" src={item.img} />
+                {/if}
                 <span class="roll-prompt">
                   <i class="fa fa-dice-d20"></i>
                 </span>
