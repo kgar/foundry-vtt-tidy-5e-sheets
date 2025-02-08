@@ -8,7 +8,6 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ContainerItemContext, Item5e } from 'src/types/item.types';
   import type { Actor5e, InventorySection } from 'src/types/types';
-  import ItemTableRowV2 from 'src/components/item-list/v2/ItemTableRowV2.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
@@ -21,6 +20,8 @@
   import EditButton from 'src/components/table-quadrone/table-buttons/EditButton.svelte';
   import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButton.svelte';
   import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
+  import TidyItemTableRow from 'src/components/table-quadrone/TidyItemTableRow.svelte';
+  import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
 
   interface Props {
     contents: InventorySection[];
@@ -143,14 +144,10 @@
             <span class="table-header-count">{section.items.length}</span>
           </TidyTableHeaderCell>
           <TidyTableHeaderCell>
-            <div class="cell-name">
-              {localize('DND5E.Quantity')}
-            </div>
+            {localize('DND5E.Quantity')}
           </TidyTableHeaderCell>
           <TidyTableHeaderCell>
-            <div class="cell-name">
-              {localize('DND5E.Weight')}
-            </div>
+            {localize('DND5E.Weight')}
           </TidyTableHeaderCell>
           <TidyTableHeaderCell class="header-cell-actions">
             <!-- Actions -->
@@ -169,7 +166,7 @@
             'artifact',
           ].includes(item.system.rarity)}
 
-          <ItemTableRowV2
+          <TidyItemTableRow
             {item}
             hidden={!searchResults.show(item.uuid)}
             rowClass={FoundryAdapter.getInventoryRowClasses(
@@ -188,7 +185,11 @@
                 class:special-rarity={showRarityBoxShadow}
                 onclick={(ev) => FoundryAdapter.actorTryUseItem(item, ev)}
               >
-                <img class="item-image" alt="" src={item.img} />
+                {#if item.img?.endsWith('.svg')}
+                  <Dnd5eIcon class="item-image" src={item.img} />
+                {:else}
+                  <img class="item-image" alt="" src={item.img} />
+                {/if}
                 <span class="roll-prompt">
                   <i class="fa fa-dice-d20"></i>
                 </span>
@@ -229,7 +230,7 @@
                 <MenuButton targetSelector="[data-item-id]" />
               </TidyTableCell>
             {/snippet}
-          </ItemTableRowV2>
+          </TidyItemTableRow>
 
           {#if 'containerContents' in ctx && !!ctx.containerContents}
             <InlineContainerView

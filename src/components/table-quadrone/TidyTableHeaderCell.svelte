@@ -1,6 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import TidyTableToggleIcon from 'src/components/table/TidyTableToggleIcon.svelte';
+  import TidyTableToggleIcon from 'src/components/table-quadrone/TidyTableToggleIcon.svelte';
   import { getContext, type Snippet } from 'svelte';
   import type { ExpansionTrackerToggleProvider } from 'src/features/expand-collapse/ExpansionTracker.svelte';
   import type { HTMLAttributes } from 'svelte/elements';
