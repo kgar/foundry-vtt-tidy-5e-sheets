@@ -248,20 +248,6 @@ export class Tidy5eVehicleSheet
             visible: actionListSortMode === 'a',
           },
           {
-            id: 'sort-mode-manual',
-            title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
-            iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
-            execute: async () => {
-              await SheetPreferencesService.setDocumentTypeTabPreference(
-                this.actor.type,
-                CONSTANTS.TAB_ACTOR_ACTIONS,
-                'sort',
-                'a'
-              );
-            },
-            visible: actionListSortMode === 'm',
-          },
-          {
             id: 'action-list-default',
             title: FoundryAdapter.localize('TIDY5E.SortMode.ActionListDefault'),
             iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
