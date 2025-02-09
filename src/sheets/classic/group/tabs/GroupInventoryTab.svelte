@@ -79,7 +79,7 @@
     )}
   />
   <FilterMenu {tabId} />
-  {#each utilityBarCommands as command (command.title)}
+  {#each utilityBarCommands as command (command.id)}
     <UtilityToolbarCommand
       title={command.title}
       iconClass={command.iconClass}

@@ -1,6 +1,7 @@
 import type { TidySectionBase } from "src/types/types";
 
 export interface UtilityToolbarCommandParams<TContext> {
+  id: string;
   title?: string;
   text?: string;
   iconClass?: string;

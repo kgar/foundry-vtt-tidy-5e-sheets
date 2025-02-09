@@ -234,6 +234,7 @@ export class Tidy5eVehicleSheet
       [CONSTANTS.TAB_ACTOR_ACTIONS]: {
         utilityToolbarCommands: [
           {
+            id: 'sort-mode-alpha',
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
             iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
             execute: async () => {
@@ -247,6 +248,7 @@ export class Tidy5eVehicleSheet
             visible: actionListSortMode === 'a',
           },
           {
+            id: 'action-list-default',
             title: FoundryAdapter.localize('TIDY5E.SortMode.ActionListDefault'),
             iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
             execute: async () => {
@@ -260,6 +262,7 @@ export class Tidy5eVehicleSheet
             visible: actionListSortMode === 'm',
           },
           {
+            id: 'expand-all',
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
             iconClass: 'fas fa-angles-down',
             execute: () =>
@@ -269,6 +272,7 @@ export class Tidy5eVehicleSheet
               ),
           },
           {
+            id: 'collapse-all',
             title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
             iconClass: 'fas fa-angles-up',
             execute: () =>
@@ -278,6 +282,7 @@ export class Tidy5eVehicleSheet
               ),
           },
           {
+            id: 'configure-sections',
             title: FoundryAdapter.localize(
               'TIDY5E.Utilities.ConfigureSections'
             ),

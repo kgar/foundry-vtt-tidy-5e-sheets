@@ -60,7 +60,7 @@
 <UtilityToolbar>
   <Search bind:value={searchCriteria} />
   <!-- Filters? Pinned Filters? Perhaps filters related to senses, immunities, etc. -->
-  {#each utilityBarCommands as command (command.title)}
+  {#each utilityBarCommands as command (command.id)}
     <UtilityToolbarCommand
       title={command.title}
       iconClass={command.iconClass}

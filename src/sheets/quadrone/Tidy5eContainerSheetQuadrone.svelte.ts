@@ -208,6 +208,7 @@ export class Tidy5eContainerSheetQuadrone extends DragAndDropMixin(
       [CONSTANTS.TAB_CONTAINER_CONTENTS]: {
         utilityToolbarCommands: [
           {
+            id: 'sort-mode-alpha',
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
             iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
             execute: async () => {
@@ -222,6 +223,7 @@ export class Tidy5eContainerSheetQuadrone extends DragAndDropMixin(
             visible: contentsSortMode === 'a',
           },
           {
+            id: 'sort-mode-manual',
             title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
             iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
             execute: async () => {
@@ -236,6 +238,7 @@ export class Tidy5eContainerSheetQuadrone extends DragAndDropMixin(
             visible: contentsSortMode === 'm',
           },
           {
+            id: 'configure-sections',
             title: FoundryAdapter.localize(
               'TIDY5E.Utilities.ConfigureSections'
             ),
