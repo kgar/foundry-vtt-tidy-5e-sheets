@@ -265,6 +265,7 @@ export class Tidy5eNpcSheet
       [CONSTANTS.TAB_NPC_ABILITIES]: {
         utilityToolbarCommands: [
           {
+            id: 'sort-mode-alpha',
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
             iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
             execute: async () => {
@@ -278,6 +279,7 @@ export class Tidy5eNpcSheet
             visible: abilitiesSortMode === 'a',
           },
           {
+            id: 'sort-mode-manual',
             title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
             iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
             execute: async () => {
@@ -291,7 +293,8 @@ export class Tidy5eNpcSheet
             visible: abilitiesSortMode === 'm',
           },
           {
-            title: 'Spell Pips',
+            id: 'spell-pips',
+            title: FoundryAdapter.localize("TIDY5E.Utilities.SpellPips"),
             iconClass: 'fa-regular fa-circle-dot fa-fw',
             execute: async () => {
               await SheetPreferencesService.setDocumentTypePreference(
@@ -307,7 +310,8 @@ export class Tidy5eNpcSheet
                 CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS,
           },
           {
-            title: 'Spell Value/Max',
+            id: 'spell-value-max',
+            title: FoundryAdapter.localize('TIDY5E.Utilities.SpellValueMax'),
             iconClass: 'fa-regular fa-square fa-fw',
             execute: async () => {
               await SheetPreferencesService.setDocumentTypePreference(
@@ -322,6 +326,7 @@ export class Tidy5eNpcSheet
                 CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX,
           },
           {
+            id: 'expand-all',
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
             iconClass: 'fas fa-angles-down',
             execute: () =>
@@ -331,6 +336,7 @@ export class Tidy5eNpcSheet
               ),
           },
           {
+            id: 'collapse-all',
             title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
             iconClass: 'fas fa-angles-up',
             execute: () =>
@@ -340,6 +346,7 @@ export class Tidy5eNpcSheet
               ),
           },
           {
+            id: 'configure-sections',
             title: FoundryAdapter.localize(
               'TIDY5E.Utilities.ConfigureSections'
             ),
@@ -359,7 +366,7 @@ export class Tidy5eNpcSheet
       },
       [CONSTANTS.TAB_ACTOR_SPELLBOOK]: {
         utilityToolbarCommands: [
-          {
+          {id: 'sort-mode-alpha',
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
             iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
             execute: async () => {
@@ -373,6 +380,7 @@ export class Tidy5eNpcSheet
             visible: spellbookSortMode === 'a',
           },
           {
+            id: 'sort-mode-manual',
             title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
             iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
             execute: async () => {
@@ -386,7 +394,8 @@ export class Tidy5eNpcSheet
             visible: spellbookSortMode === 'm',
           },
           {
-            title: 'Spell Pips',
+            id: 'spell-pips',
+            title: FoundryAdapter.localize("TIDY5E.Utilities.SpellPips"),
             iconClass: 'fa-regular fa-circle-dot fa-fw',
             execute: async () => {
               await SheetPreferencesService.setDocumentTypePreference(
@@ -401,7 +410,8 @@ export class Tidy5eNpcSheet
               CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS,
           },
           {
-            title: 'Spell Value/Max',
+            id: 'spell-value-max',
+            title: FoundryAdapter.localize('TIDY5E.Utilities.SpellValueMax'),
             iconClass: 'fa-regular fa-square fa-fw',
             execute: async () => {
               await SheetPreferencesService.setDocumentTypePreference(
@@ -415,6 +425,7 @@ export class Tidy5eNpcSheet
               CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX,
           },
           {
+            id: 'expand-all',
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
             iconClass: 'fas fa-angles-down',
             execute: () =>
@@ -424,6 +435,7 @@ export class Tidy5eNpcSheet
               ),
           },
           {
+            id: 'collapse-all',
             title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
             iconClass: 'fas fa-angles-up',
             execute: () =>
@@ -433,6 +445,7 @@ export class Tidy5eNpcSheet
               ),
           },
           {
+            id: 'list-layout',
             title: FoundryAdapter.localize('TIDY5E.ListLayout'),
             iconClass: 'fas fa-th-list fa-fw toggle-list',
             visible: !TidyFlags.spellbookGrid.get(this.actor),
@@ -441,6 +454,7 @@ export class Tidy5eNpcSheet
             },
           },
           {
+            id: 'grid-layout',
             title: FoundryAdapter.localize('TIDY5E.GridLayout'),
             iconClass: 'fas fa-th-large fa-fw toggle-grid',
             visible: !!TidyFlags.spellbookGrid.get(this.actor),
@@ -449,6 +463,7 @@ export class Tidy5eNpcSheet
             },
           },
           {
+            id: 'configure-sections',
             title: FoundryAdapter.localize(
               'TIDY5E.Utilities.ConfigureSections'
             ),
@@ -468,7 +483,7 @@ export class Tidy5eNpcSheet
       },
       [CONSTANTS.TAB_ACTOR_ACTIONS]: {
         utilityToolbarCommands: [
-          {
+          {id: 'sort-mode-alpha',
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
             iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
             execute: async () => {
@@ -482,6 +497,7 @@ export class Tidy5eNpcSheet
             visible: actionListSortMode === 'a',
           },
           {
+            id: 'action-list-default',
             title: FoundryAdapter.localize('TIDY5E.SortMode.ActionListDefault'),
             iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
             execute: async () => {
@@ -495,6 +511,7 @@ export class Tidy5eNpcSheet
             visible: actionListSortMode === 'm',
           },
           {
+            id: 'expand-all',
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
             iconClass: 'fas fa-angles-down',
             execute: () =>
@@ -504,6 +521,7 @@ export class Tidy5eNpcSheet
               ),
           },
           {
+            id: 'collapse-all',
             title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
             iconClass: 'fas fa-angles-up',
             execute: () =>
@@ -513,6 +531,7 @@ export class Tidy5eNpcSheet
               ),
           },
           {
+            id: 'configure-sections',
             title: FoundryAdapter.localize(
               'TIDY5E.Utilities.ConfigureSections'
             ),
@@ -532,7 +551,7 @@ export class Tidy5eNpcSheet
       },
       [CONSTANTS.TAB_ACTOR_INVENTORY]: {
         utilityToolbarCommands: [
-          {
+          {id: 'sort-mode-alpha',
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
             iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
             execute: async () => {
@@ -546,6 +565,7 @@ export class Tidy5eNpcSheet
             visible: inventorySortMode === 'a',
           },
           {
+            id: 'sort-mode-manual',
             title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
             iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
             execute: async () => {
@@ -559,6 +579,7 @@ export class Tidy5eNpcSheet
             visible: inventorySortMode === 'm',
           },
           {
+            id: 'hide-container-panel',
             title: FoundryAdapter.localize(
               'TIDY5E.Commands.HideContainerPanel'
             ),
@@ -569,6 +590,7 @@ export class Tidy5eNpcSheet
             visible: !!TidyFlags.showContainerPanel.get(this.actor),
           },
           {
+            id: 'show-container-panel',
             title: FoundryAdapter.localize(
               'TIDY5E.Commands.ShowContainerPanel'
             ),
@@ -579,6 +601,7 @@ export class Tidy5eNpcSheet
             visible: !TidyFlags.showContainerPanel.get(this.actor),
           },
           {
+            id: 'expand-all',
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
             iconClass: 'fas fa-angles-down',
             execute: () =>
@@ -588,6 +611,7 @@ export class Tidy5eNpcSheet
               ),
           },
           {
+            id: 'collapse-all',
             title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
             iconClass: 'fas fa-angles-up',
             execute: () =>
@@ -597,6 +621,7 @@ export class Tidy5eNpcSheet
               ),
           },
           {
+            id: 'list-layout',
             title: FoundryAdapter.localize('TIDY5E.ListLayout'),
             iconClass: 'fas fa-th-list fa-fw toggle-list',
             visible: !TidyFlags.inventoryGrid.get(this.actor),
@@ -605,6 +630,7 @@ export class Tidy5eNpcSheet
             },
           },
           {
+            id: 'grid-layout',
             title: FoundryAdapter.localize('TIDY5E.GridLayout'),
             iconClass: 'fas fa-th-large fa-fw toggle-grid',
             visible: !!TidyFlags.inventoryGrid.get(this.actor),
@@ -613,6 +639,7 @@ export class Tidy5eNpcSheet
             },
           },
           {
+            id: 'configure-sections',
             title: FoundryAdapter.localize(
               'TIDY5E.Utilities.ConfigureSections'
             ),

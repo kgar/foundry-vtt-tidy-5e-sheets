@@ -238,6 +238,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       [CONSTANTS.TAB_GROUP_MEMBERS]: {
         utilityToolbarCommands: [
           {
+            id: 'sort-mode-alpha',
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
             iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
             execute: async () => {
@@ -251,6 +252,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
             visible: membersSortMode === 'a',
           },
           {
+            id: 'sort-mode-manual',
             title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
             iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
             execute: async () => {
@@ -264,6 +266,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
             visible: membersSortMode === 'm',
           },
           {
+            id: 'show-member-tab-info-panel',
             title: FoundryAdapter.localize(
               'TIDY5E.Group.ShowMemberTabInfoPanel'
             ),
@@ -276,6 +279,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
               !TidyFlags.showGroupMemberTabInfoPanel.get(this.actor),
           },
           {
+            id: 'hide-member-tab-info-panel',
             title: FoundryAdapter.localize(
               'TIDY5E.Group.HideMemberTabInfoPanel'
             ),
@@ -292,6 +296,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       [CONSTANTS.TAB_ACTOR_INVENTORY]: {
         utilityToolbarCommands: [
           {
+            id: 'sort-mode-alpha',
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
             iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
             execute: async () => {
@@ -305,6 +310,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
             visible: inventorySortMode === 'a',
           },
           {
+            id: 'sort-mode-manual',
             title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
             iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
             execute: async () => {
@@ -318,6 +324,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
             visible: inventorySortMode === 'm',
           },
           {
+            id: 'hide-container-panel',
             title: FoundryAdapter.localize(
               'TIDY5E.Commands.HideContainerPanel'
             ),
@@ -328,6 +335,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
             visible: !!TidyFlags.showContainerPanel.get(this.actor),
           },
           {
+            id: 'show-container-panel',
             title: FoundryAdapter.localize(
               'TIDY5E.Commands.ShowContainerPanel'
             ),
@@ -338,6 +346,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
             visible: !TidyFlags.showContainerPanel.get(this.actor),
           },
           {
+            id: 'expand-all',
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
             iconClass: 'fas fa-angles-down',
             execute: () =>
@@ -347,6 +356,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
               ),
           },
           {
+            id: 'collapse-all',
             title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
             iconClass: 'fas fa-angles-up',
             execute: () =>
@@ -356,6 +366,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
               ),
           },
           {
+            id: 'list-layout',
             title: FoundryAdapter.localize('TIDY5E.ListLayout'),
             iconClass: 'fas fa-th-list fa-fw toggle-list',
             visible: !TidyFlags.inventoryGrid.get(this.actor),
@@ -364,6 +375,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
             },
           },
           {
+            id: 'grid-layout',
             title: FoundryAdapter.localize('TIDY5E.GridLayout'),
             iconClass: 'fas fa-th-large fa-fw toggle-grid',
             visible: !!TidyFlags.inventoryGrid.get(this.actor),
@@ -372,6 +384,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
             },
           },
           {
+            id: 'configure-sections',
             title: FoundryAdapter.localize(
               'TIDY5E.Utilities.ConfigureSections'
             ),
