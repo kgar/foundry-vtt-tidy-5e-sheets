@@ -16,9 +16,10 @@
 
   let { document }: Props = $props();
 
-  let context = $derived(getSheetContext<
-    ActorSheetContextV1 | ContainerSheetClassicContext
-  >());
+  let context =
+    $derived(
+      getSheetContext<ActorSheetContextV1 | ContainerSheetClassicContext>(),
+    );
 
   let currencies = $derived(
     Object.keys(CONFIG.DND5E.currencies).map((key) => ({
@@ -28,7 +29,7 @@
   );
 
   function confirmConvertCurrency() {
-    new dnd5e.applications.CurrencyManager(document).render(true);
+    new dnd5e.applications.CurrencyManager({ document }).render(true);
   }
 
   function abbreviateCurrency(currencyKey: string) {

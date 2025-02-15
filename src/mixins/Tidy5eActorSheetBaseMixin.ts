@@ -482,7 +482,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
           prep.mode = 'prepared';
         } else if (!preparationMode) {
           const isCaster =
-            this.document.system.details.spellLevel || progs.size;
+            this.document.system.attributes.spell.level || progs.size;
           prep.mode = isCaster ? 'prepared' : 'innate';
         } else {
           prep.mode = preparationMode;
@@ -496,7 +496,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
       // Case 2: Drop a leveled spell in a section without a mode.
       else if (level === '0' || !preparationMode) {
         if (this.document.type === 'npc') {
-          prep.mode = this.document.system.details.spellLevel
+          prep.mode = this.document.system.attributes.spell.level
             ? 'prepared'
             : 'innate';
         } else {

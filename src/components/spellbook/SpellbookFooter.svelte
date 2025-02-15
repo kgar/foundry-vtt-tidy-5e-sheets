@@ -179,8 +179,8 @@
       <NumberInput
         cssClass="spellcasting-level"
         document={context.actor}
-        field="system.details.spellLevel"
-        value={context.system.details.spellLevel}
+        field="system.attributes.spell.level"
+        value={context.system.attributes.spell.level}
         placeholder="0"
         min="0"
         step="1"

@@ -3013,6 +3013,31 @@ export type CONFIG = {
         group: string;
         scalar: boolean;
       };
+      longRest: {
+        label: string;
+        group: string;
+        passive: boolean;
+      };
+      shortRest: {
+        label: string;
+        group: string;
+        passive: boolean;
+      };
+      encounter: {
+        label: string;
+        group: string;
+        passive: boolean;
+      };
+      turnStart: {
+        label: string;
+        group: string;
+        passive: boolean;
+      };
+      turnEnd: {
+        label: string;
+        group: string;
+        passive: boolean;
+      };
       legendary: {
         label: string;
         group: string;
@@ -3669,9 +3694,11 @@ export type CONFIG = {
     damageScalingModes: {
       whole: {
         label: string;
+        labelCantrip: string;
       };
       half: {
         label: string;
+        labelCantrip: string;
       };
     };
     damageTypes: {
@@ -5609,6 +5636,48 @@ export type CONFIG = {
         viol: string;
         weaver: string;
         woodcarver: string;
+      };
+    };
+    habitats: {
+      any: {
+        label: string;
+      };
+      arctic: {
+        label: string;
+      };
+      coastal: {
+        label: string;
+      };
+      desert: {
+        label: string;
+      };
+      forest: {
+        label: string;
+      };
+      grassland: {
+        label: string;
+      };
+      hill: {
+        label: string;
+      };
+      mountain: {
+        label: string;
+      };
+      planar: {
+        label: string;
+        subtypes: boolean;
+      };
+      swamp: {
+        label: string;
+      };
+      underdark: {
+        label: string;
+      };
+      underwater: {
+        label: string;
+      };
+      urban: {
+        label: string;
       };
     };
     treasure: {
