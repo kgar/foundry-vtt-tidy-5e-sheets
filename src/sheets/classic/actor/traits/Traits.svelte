@@ -48,7 +48,7 @@
       useConfigureButton={context.editable}
       configureButtonAction="death"
       configureButtonTitle={localize('DND5E.DeathSaveConfigure')}
-      onConfigureClicked={(event) => context.actor.sheet._onConfigMenu(event)}
+      onConfigureClicked={() => FoundryAdapter.renderDeathConfig(context.actor)}
     />
   {/if}
   {#if useSenses && context.senses}

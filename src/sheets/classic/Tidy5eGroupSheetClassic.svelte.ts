@@ -1019,8 +1019,11 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
   // ---------------------------------------------
 
   award() {
-    const award = new dnd5e.applications.Award(this.actor, {
-      savedDestinations: this.actor.getFlag('dnd5e', 'awardDestinations'),
+    const award = new dnd5e.applications.Award({
+      award: {
+        savedDestinations: this.actor.getFlag('dnd5e', 'awardDestinations'),
+      },
+      origin: this.actor,
     });
     award.render(true);
   }

@@ -886,6 +886,9 @@ export const FoundryAdapter = {
       key,
     }).render(true);
   },
+  renderDeathConfig(document: any) {
+    return new dnd5e.applications.actor.DeathConfig({ document }).render(true);
+  },
   renderMovementSensesConfig(document: any, type: 'movement' | 'senses') {
     return new dnd5e.applications.shared.MovementSensesConfig({
       document,
@@ -1223,7 +1226,9 @@ export const FoundryAdapter = {
     }).render(true);
   },
   openStartingEquipmentConfig(item: Item5e) {
-    new dnd5e.applications.item.StartingEquipmentConfig(item).render(true);
+    new dnd5e.applications.item.StartingEquipmentConfig({
+      document: item,
+    }).render(true);
   },
   isConcentrationEffect(effect: ActiveEffect5e, app: any) {
     return (
