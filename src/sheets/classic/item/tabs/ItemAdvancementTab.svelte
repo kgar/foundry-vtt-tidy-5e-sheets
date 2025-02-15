@@ -65,8 +65,8 @@
           <button
             type="button"
             class="inline-icon-button"
-            title={localize('DND5E.AdvancementControlCreate')}
-            aria-label={localize('DND5E.AdvancementControlCreate')}
+            title={localize('DND5E.ADVANCEMENT.Action.Create')}
+            aria-label={localize('DND5E.ADVANCEMENT.Action.Create')}
             onclick={() =>
               FoundryAdapter.createAdvancementSelectionDialog(context.item)}
             tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
@@ -158,8 +158,8 @@
               <button
                 type="button"
                 class="inline-icon-button"
-                title={localize('DND5E.AdvancementControlEdit')}
-                aria-label={localize('DND5E.AdvancementControlEdit')}
+                title={localize('DND5E.ADVANCEMENT.Action.Edit')}
+                aria-label={localize('DND5E.ADVANCEMENT.Action.Edit')}
                 onclick={() =>
                   FoundryAdapter.editAdvancement(advancement.id, context.item)}
                 tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
@@ -169,8 +169,8 @@
               <button
                 type="button"
                 class="inline-icon-button"
-                title={localize('DND5E.AdvancementControlDelete')}
-                aria-label={localize('DND5E.AdvancementControlDelete')}
+                title={localize('DND5E.ADVANCEMENT.Action.Delete')}
+                aria-label={localize('DND5E.ADVANCEMENT.Action.Delete')}
                 onclick={() =>
                   FoundryAdapter.deleteAdvancement(
                     advancement.id,
