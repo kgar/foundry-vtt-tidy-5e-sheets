@@ -15,9 +15,9 @@ Completely rewritten from the ground up, based on the [Tidy5e Sheet](https://git
 - [Tidy 5e Sheets API](https://kgar.github.io/foundry-vtt-tidy-5e-sheets/)
 
 > [!IMPORTANT]
-> **Tidy 5e Sheets version 8 (dnd5e 4.2.x) is here!**
+> **Tidy 5e Sheets version 9 (dnd5e 4.3.x) is here!**
 >
-> Tidy 5e Sheets is now compatible with dnd5e 4.2.x. All development efforts will continue in step with the current version of the default sheets.
+> Tidy 5e Sheets is now compatible with dnd5e 4.3.x. All development efforts will continue in step with the current version of the default sheets.
 
 ---
 
