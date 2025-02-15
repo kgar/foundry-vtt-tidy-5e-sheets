@@ -710,13 +710,13 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       this.isEditable;
     return [
       {
-        name: 'DND5E.AdvancementControlEdit',
+        name: 'DND5E.ADVANCEMENT.Action.Edit',
         icon: "<i class='fas fa-edit fa-fw'></i>",
         condition,
         callback: (li: any) => this._onAdvancementAction(li[0], 'edit'),
       },
       {
-        name: 'DND5E.AdvancementControlDuplicate',
+        name: 'DND5E.ADVANCEMENT.Action.Duplicate',
         icon: "<i class='fas fa-copy fa-fw'></i>",
         condition: (li: any) => {
           const id = li[0].closest('.advancement-item')?.dataset.id;
@@ -729,7 +729,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
         callback: (li: any) => this._onAdvancementAction(li[0], 'duplicate'),
       },
       {
-        name: 'DND5E.AdvancementControlDelete',
+        name: 'DND5E.ADVANCEMENT.Action.Delete',
         icon: "<i class='fas fa-trash fa-fw' style='color: rgb(255, 65, 65);'></i>",
         condition,
         callback: (li: any) => this._onAdvancementAction(li[0], 'delete'),

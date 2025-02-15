@@ -26,7 +26,7 @@ export function scaleCantripDamageFormula(spell: Item5e, formula: string) {
         ? spell.actor.system.details.level ?? 0
         : spell.system.preparation.mode === 'innate'
         ? Math.ceil(spell.actor.system.details.cr ?? 0)
-        : spell.actor.system.details.spellLevel ?? 0,
+        : spell.actor.system.attributes.spell.level ?? 0,
       spell.getRollData()
     );
 
@@ -128,7 +128,7 @@ export function calculateSpellAttackAndDc(
     const abilityMod =
       (spellAbility != ''
         ? actor.system.abilities[spellAbility].mod
-        : actor.system.attributes.spellmod) ?? 0;
+        : actor.system.attributes.spell.mod) ?? 0;
     const spellAttackMod = prof + abilityMod;
 
     const rawRsak = Roll.replaceFormulaData(
@@ -172,7 +172,7 @@ export function calculateSpellAttackAndDc(
     return {
       dc: hasSpellcastingProgression
         ? spellClass?.system.spellcasting.save
-        : actor.system.attributes.spelldc,
+        : actor.system.attributes.spell.dc,
       dcTooltip: getDcTooltip(actor, spellAbility),
       meleeMod: msakTotal,
       meleeTooltip: buildAttackModTooltip(
@@ -199,7 +199,7 @@ export function calculateSpellAttackAndDc(
     });
 
     return {
-      dc: actor.system.attributes.spelldc,
+      dc: actor.system.attributes.spell.dc,
       dcTooltip: '',
       meleeMod: '',
       meleeTooltip: '',

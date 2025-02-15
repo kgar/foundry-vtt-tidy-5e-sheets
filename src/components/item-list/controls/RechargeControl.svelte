@@ -27,7 +27,9 @@
   let disabled = $derived(!context.owner);
 
   function onRechargeClicked(ev: MouseEvent) {
-    ev.shiftKey ? document.update({ [field]: 0 }) : uses.rollRecharge();
+    ev.shiftKey
+      ? document.update({ [field]: 0 })
+      : uses.rollRecharge({ apply: true, event: ev });
   }
 </script>
 

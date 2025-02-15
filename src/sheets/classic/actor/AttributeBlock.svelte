@@ -100,7 +100,7 @@
       disabled={!context.editable}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ABILITY_SAVE_ROLLER}
     >
-      {formatAsModifier(ability.save)}
+      {formatAsModifier(ability.save.value)}
     </button>
     {#if useSavingThrowProficiency}
       {#if context.unlocked}
