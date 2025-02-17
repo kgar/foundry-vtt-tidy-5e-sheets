@@ -28,7 +28,7 @@ export class AttributePins {
     return flagPins.some((x) => x.id === relativeUuid);
   }
 
-  static pin(doc: any, type: AttributePinFlag['type']) {
+  static async pin(doc: any, type: AttributePinFlag['type']) {
     if (!doc.actor || this.isPinned(doc)) {
       return;
     }
@@ -37,7 +37,7 @@ export class AttributePins {
 
     if (
       relativeUuid.startsWith('.') &&
-      fromUuidSync(relativeUuid, { relative: doc.actor }) === null
+      (await fromUuid(relativeUuid, { relative: doc.actor })) === null
     ) {
       // Assume that an ID starting with a "." is a relative ID.
       error(`The item with id ${doc.id} is not owned by actor ${doc.actor.id}`);
@@ -71,12 +71,12 @@ export class AttributePins {
       });
     }
 
-    newPins = this.preparePinsForForSaving(doc, newPins);
+    newPins = await this.preparePinsForForSaving(doc, newPins);
 
     return TidyFlags.attributePins.set(doc.actor, newPins);
   }
 
-  static unpin(doc: Item5e | Activity5e) {
+  static async unpin(doc: Item5e | Activity5e) {
     if (!doc.actor || !this.isPinned(doc)) {
       return;
     }
@@ -87,7 +87,7 @@ export class AttributePins {
 
     let newPins = flagPins.filter((x) => x.id !== relativeUuid);
 
-    newPins = this.preparePinsForForSaving(doc, newPins);
+    newPins = await this.preparePinsForForSaving(doc, newPins);
 
     return TidyFlags.attributePins.set(doc.actor, newPins);
   }
@@ -96,7 +96,7 @@ export class AttributePins {
     return doc.getRelativeUUID?.(doc.actor) ?? doc.relativeUUID;
   }
 
-  static setItemResourceType(
+  static async setItemResourceType(
     item: Item5e,
     resourceType: AttributeItemPinFlag['resource']
   ) {
@@ -110,12 +110,12 @@ export class AttributePins {
       pinToUpdate.resource = resourceType;
     }
 
-    pins = this.preparePinsForForSaving(item, pins);
+    pins = await this.preparePinsForForSaving(item, pins);
 
     return TidyFlags.attributePins.set(item.actor, pins);
   }
 
-  static setAlias(doc: Item5e, alias: string) {
+  static async setAlias(doc: Item5e, alias: string) {
     let pins = TidyFlags.attributePins.get(doc.actor);
 
     const relativeUuid = this.getRelativeUUID(doc);
@@ -126,15 +126,24 @@ export class AttributePins {
       pinToUpdate.alias = alias;
     }
 
-    pins = this.preparePinsForForSaving(doc, pins);
+    pins = await this.preparePinsForForSaving(doc, pins);
 
     return TidyFlags.attributePins.set(doc.actor, pins);
   }
 
-  static preparePinsForForSaving(pinnedDoc: any, pins: AttributePinFlag[]) {
-    return pins.filter(
-      (x) => !!fromUuidSync(x.id, { relative: pinnedDoc.actor })
-    );
+  static async preparePinsForForSaving(
+    pinnedDoc: any,
+    pins: AttributePinFlag[]
+  ) {
+    let pinsToSave = [];
+
+    for (let pin of pins) {
+      if (await fromUuid(pin.id, { relative: pinnedDoc.actor })) {
+        pinsToSave.push(pin);
+      }
+    }
+
+    return pinsToSave;
   }
 
   static getResourceType(doc: any): string | undefined {

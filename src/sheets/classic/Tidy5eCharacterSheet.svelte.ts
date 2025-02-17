@@ -915,7 +915,7 @@ export class Tidy5eCharacterSheet
 
     await this._prepareFacilities(context);
 
-    this._prepareAttributePins(context);
+    await this._prepareAttributePins(context);
 
     let tabs = await CharacterSheetRuntime.getTabs(context);
 
@@ -1456,7 +1456,7 @@ export class Tidy5eCharacterSheet
     );
   }
 
-  _prepareAttributePins(context: CharacterSheetContext) {
+  async _prepareAttributePins(context: CharacterSheetContext) {
     let flagPins = TidyFlags.attributePins
       .get(this.actor)
       .toSorted((a, b) => (a.sort || 0) - (b.sort || 0));
@@ -1464,7 +1464,7 @@ export class Tidy5eCharacterSheet
     let pins: AttributePinContext[] = [];
 
     for (let pin of flagPins) {
-      let document = fromUuidSync(pin.id, { relative: this.actor });
+      let document = await fromUuid(pin.id, { relative: this.actor });
 
       if (document) {
         if (pin.type === 'item') {
