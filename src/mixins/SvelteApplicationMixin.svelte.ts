@@ -493,7 +493,7 @@ export function SvelteApplicationMixin<
      * Augments the base toggleControls with handling for closing menu when focus is lost.
      */
     toggleControls(expanded: boolean | undefined) {
-      super.toggleControls(expanded);
+      super.toggleControls(expanded, { animate: false });
 
       const controlsDropdown = this.element.querySelector(
         HEADER_CONTROLS_DROPDOWN_SELECTOR

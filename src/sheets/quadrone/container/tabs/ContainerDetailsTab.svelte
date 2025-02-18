@@ -128,20 +128,18 @@
   </legend>
 
   <div class="form-group">
-    <div class="form-group">
-      <label>{localize('DND5E.CONTAINER.FIELDS.capacity.count.label')}</label>
-      <div class="form-fields">
-        <NumberInputQuadrone
-          document={context.item}
-          field="system.capacity.count"
-          value={context.source.capacity.count}
-          disabledValue={context.system.capacity.count}
-          step="1"
-          min="0"
-          placeholder="—"
-          disabled={!context.unlocked}
-        />
-      </div>
+    <label>{localize('DND5E.CONTAINER.FIELDS.capacity.count.label')}</label>
+    <div class="form-fields">
+      <NumberInputQuadrone
+        document={context.item}
+        field="system.capacity.count"
+        value={context.source.capacity.count}
+        disabledValue={context.system.capacity.count}
+        step="1"
+        min="0"
+        placeholder="—"
+        disabled={!context.unlocked}
+      />
     </div>
   </div>
 

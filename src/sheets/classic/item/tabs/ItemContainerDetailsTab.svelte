@@ -7,7 +7,6 @@
   import ContentConcealer from 'src/components/content-concealment/ContentConcealer.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import { getContainerSheetClassicContext } from 'src/sheets/sheet-context.svelte';
-  import NumberInputSetting from 'src/applications/settings/parts/NumberInputSetting.svelte';
 
   let context = $derived(getContainerSheetClassicContext());
 
@@ -59,18 +58,16 @@
   </h3>
 
   <div class="form-group">
-    <div class="form-group">
-      <label>{localize('DND5E.CONTAINER.FIELDS.capacity.count.label')}</label>
-      <div class="form-fields">
-        <NumberInput
-          document={context.item}
-          field="system.capacity.count"
-          value={context.source.capacity.count}
-          step="1"
-          min="0"
-          placeholder="—"
-        />
-      </div>
+    <label>{localize('DND5E.CONTAINER.FIELDS.capacity.count.label')}</label>
+    <div class="form-fields">
+      <NumberInput
+        document={context.item}
+        field="system.capacity.count"
+        value={context.source.capacity.count}
+        step="1"
+        min="0"
+        placeholder="—"
+      />
     </div>
   </div>
 

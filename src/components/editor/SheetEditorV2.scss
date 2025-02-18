@@ -64,6 +64,10 @@ prose-mirror.prosemirror {
   display: flex;
   flex-direction: column;
 
+  &.editor {
+    overflow: auto;
+  }
+
   button.toggle {
     padding: 0;
     border: none;
