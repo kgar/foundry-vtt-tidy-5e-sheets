@@ -28,7 +28,8 @@ type ContextMenuOptionsV13 = {
  * A specialized subclass of ContextMenu that places the menu in a fixed position.
  * @extends {ContextMenu}
  */
-export default class FloatingContextMenu extends ContextMenu {
+export default class FloatingContextMenu extends (foundry.applications.ui
+  ?.ContextMenu ?? /* game.release.generation < 13 */ ContextMenu) {
   constructor(
     container: any,
     selector: string,
@@ -44,6 +45,7 @@ export default class FloatingContextMenu extends ContextMenu {
       html.classList.add('tidy5e-sheet');
       return this._setFixedPosition(html, target, options);
     } else {
+      /* game.release.generation < 13 */
       html = html[0];
       target = target[0];
     }

@@ -1,5 +1,4 @@
 import { CONSTANTS } from 'src/constants';
-import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { warn } from 'src/utils/logging';
 import { configureItemContextMenu } from './tidy5e-item-context-menu';
 import { configureActiveEffectsContextMenu } from './tidy5e-active-effect-context-menu';
@@ -18,7 +17,7 @@ export function initTidy5eContextMenu(
   }
 
   new FloatingContextMenu(html, contextMenuSelector, [], {
-    onOpen: onItemContext.bind(sheet),
+    onOpen: onDocumentContext.bind(sheet),
     jQuery: true,
   });
 }
@@ -29,7 +28,7 @@ export function initTidy5eContextMenu(
  * @param {HTMLElement} element       The HTML element for which the context menu is activated
  * @protected
  */
-function onItemContext(this: any, element: HTMLElement) {
+function onDocumentContext(this: any, element: HTMLElement) {
   const contextMenuType = element.getAttribute('data-context-menu');
 
   const app = this;
