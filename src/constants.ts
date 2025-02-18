@@ -9,6 +9,7 @@ export const CONSTANTS = {
   DOCUMENT_NAME_ACTOR: 'Actor',
   DOCUMENT_NAME_ITEM: 'Item',
   DOCUMENT_NAME_ACTIVITY: 'Activity',
+  ACTIVITY_TYPE_CAST: 'cast',
   ACTIVITY_TYPE_SAVE: 'save',
   ATTUNEMENT_OPTIONAL: 'optional',
   ATTUNEMENT_REQUIRED: 'required',
