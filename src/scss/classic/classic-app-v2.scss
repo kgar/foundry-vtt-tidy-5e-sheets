@@ -633,6 +633,18 @@
     }
   }
 
+  button.unbutton {
+    height: unset;
+    background: none;
+    border-radius: 0;
+    width: unset;
+    padding: 0;
+
+    &:hover {
+      background: none;
+    }
+  }
+
   input.uninput {
     color: inherit;
     font-weight: inherit;
