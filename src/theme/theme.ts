@@ -14,7 +14,7 @@ import type { Item5e } from 'src/types/item.types';
 
 export function applyTheme(
   theme: Tidy5eTheme,
-  colorPickerEnabledOverride: boolean | null = null
+  colorPickerEnabledOverride: object | null = null
 ) {
   try {
     const styleTagId = 'tidy5e-sheet-theme';
@@ -24,11 +24,14 @@ export function applyTheme(
       existingThemeStyle.remove();
     }
 
+    colorPickerEnabledOverride ||= {};
+
+    const hasOverrides = Object.entries(colorPickerEnabledOverride).length > 0;
+
     // Temporary measure for applying color overrides. Larger theme overhaul coming later.
     const overrideBaseTheme =
-      (colorPickerEnabledOverride === null &&
-        SettingsProvider.settings.colorPickerEnabled.get()) ||
-      colorPickerEnabledOverride;
+      (!hasOverrides && SettingsProvider.settings.colorPickerEnabled.get()) ||
+      hasOverrides;
 
     if (overrideBaseTheme) {
       theme = overrideColorPickerSettings(theme);
