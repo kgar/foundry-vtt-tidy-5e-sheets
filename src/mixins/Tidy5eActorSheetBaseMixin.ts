@@ -83,7 +83,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
             .action
       );
 
-      if (configureTokenControl && this.token) {
+      if (configureTokenControl && this.actor.isToken) {
         configureTokenControl.label = 'Token';
         configureTokenControl.icon = 'far fa-user-circle';
       } else if (configureTokenControl) {
