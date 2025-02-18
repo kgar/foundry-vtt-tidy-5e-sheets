@@ -1,21 +1,17 @@
 body #context-menu.tidy5e-sheet.floating {
   --icon-width: 2rem;
-  display: none;
-  width: 100%;
-  height: max-content;
-  min-width: 11.25rem;
-  max-width: 11.25rem;
-  left: 0;
-  color: var(--t5e-primary-font-color);
-  max-height: 12.6875rem;
-  background: var(--t5e-background);
-  border: 0.0625rem solid var(--t5e-context-outline-color);
-  position: absolute;
   z-index: var(--z-index-tooltip);
+  background: var(--t5e-background);
   border-radius: 0.3125rem;
-  padding: 0.0625rem 0.125rem;
-  overflow-y: auto;
   box-shadow: 0 0 0.3125rem var(--t5e-context-shadow-color);
+  font-size: var(--font-size-13);
+  border: none;
+  color: var(--t5e-primary-font-color);
+  width: max-content;
+  min-width: 11.25rem;
+  padding: 0.0625rem 0.125rem;
+  position: absolute;
+  overflow-y: auto;
 
   [data-group-id]:has(li)::before {
     inset-inline: 0.5rem;
