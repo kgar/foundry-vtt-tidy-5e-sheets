@@ -440,6 +440,11 @@ export type NpcItemContext = {
   totalWeight?: number;
 };
 
+export type NpcHabitat = {
+  type: string;
+  subtype?: string;
+}
+
 export type NpcSheetContext = {
   appearanceEnrichedHtml: string;
   biographyEnrichedHtml: string;
@@ -450,6 +455,7 @@ export type NpcSheetContext = {
   features: NpcAbilitySection[];
   flawEnrichedHtml: string;
   hasLegendaries: boolean;
+  habitat: { label: string }[];
   hideEmptySpellbook: boolean;
   idealEnrichedHtml: string;
   inventory: InventorySection[];
