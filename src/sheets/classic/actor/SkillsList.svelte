@@ -92,7 +92,7 @@
       system: {
         skills: {
           [skillRef.key]: {
-            ability: option,
+            ability: option.value,
           },
         },
       },
@@ -318,8 +318,8 @@
       }
 
       :global(.skill-ability) {
-        flex: 0 0 1.5rem;
-        width: 1.5rem;
+        flex: 0 0 1.875rem;
+        font-size: 0.75rem;
         text-transform: capitalize;
         text-align: left;
       }
