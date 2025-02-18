@@ -28,6 +28,7 @@ import { settings } from 'src/settings/settings.svelte';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
+import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
 
 export class Tidy5eItemSheetClassic extends DragAndDropMixin(
   SvelteApplicationMixin<ItemSheetClassicContext>(
@@ -96,27 +97,24 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
           context: context,
         });
 
-    // Advancement context menu
-    const contextOptions = this._getAdvancementContextMenuOptions();
-
     const html = globalThis.$(this.element);
 
-    TidyHooks.dnd5eGetItemAdvancementContext(html, contextOptions);
+    new FloatingContextMenu(this.element, '.advancement-item', [], {
+      onOpen: (target) =>
+        dnd5e.documents.advancement.Advancement.onContextMenu(
+          this.item,
+          target
+        ),
+      jQuery: false,
+    });
 
-    if (contextOptions) {
-      FoundryAdapter.createContextMenu(
-        html,
-        '.advancement-item',
-        contextOptions
-      );
-    }
-
-    FoundryAdapter.createContextMenu(html, '.activity[data-activity-id]', [], {
+    new FloatingContextMenu(this.element, '.activity[data-activity-id]', [], {
       onOpen: (target: HTMLElement) =>
         dnd5e.documents.activity.UtilityActivity.onContextMenu(
           this.item,
           target
         ),
+      jQuery: false,
     });
 
     initTidy5eContextMenu(this, html);
@@ -471,7 +469,8 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       eligibleCustomTabs
     );
 
-    const tabs = ItemSheetRuntime.classicSheets[this.item.type]?.defaultTabs() ?? [];
+    const tabs =
+      ItemSheetRuntime.classicSheets[this.item.type]?.defaultTabs() ?? [];
 
     tabs.push(...customTabs);
 
@@ -695,46 +694,6 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       );
     }
     return overrides;
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Get the set of ContextMenu options which should be applied for advancement entries.
-   * @returns {ContextMenuEntry[]}  Context menu entries.
-   * @protected
-   */
-  _getAdvancementContextMenuOptions() {
-    const condition = (li: any) =>
-      (this.advancementConfigurationMode || !this.isEmbedded) &&
-      this.isEditable;
-    return [
-      {
-        name: 'DND5E.ADVANCEMENT.Action.Edit',
-        icon: "<i class='fas fa-edit fa-fw'></i>",
-        condition,
-        callback: (li: any) => this._onAdvancementAction(li[0], 'edit'),
-      },
-      {
-        name: 'DND5E.ADVANCEMENT.Action.Duplicate',
-        icon: "<i class='fas fa-copy fa-fw'></i>",
-        condition: (li: any) => {
-          const id = li[0].closest('.advancement-item')?.dataset.id;
-          const advancement = this.item.advancement.byId[id];
-          return (
-            condition(li) &&
-            advancement?.constructor.availableForItem(this.item)
-          );
-        },
-        callback: (li: any) => this._onAdvancementAction(li[0], 'duplicate'),
-      },
-      {
-        name: 'DND5E.ADVANCEMENT.Action.Delete',
-        icon: "<i class='fas fa-trash fa-fw' style='color: rgb(255, 65, 65);'></i>",
-        condition,
-        callback: (li: any) => this._onAdvancementAction(li[0], 'delete'),
-      },
-    ];
   }
 
   /* -------------------------------------------- */

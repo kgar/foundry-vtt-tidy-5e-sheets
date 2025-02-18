@@ -45,13 +45,14 @@
 
   $effect(() => {
     new FloatingContextMenu(
-      FoundryAdapter.getJqueryWrappedElement(itemImageContainer),
+      itemImageContainer,
       `[data-tidy-sheet-part=${CONSTANTS.SHEET_PARTS.ITEM_IMAGE_CONTAINER}]`,
       [],
       {
         onOpen: () => {
           ui.context.menuItems = contextMenuOptions;
         },
+        jQuery: false,
       },
     );
   });

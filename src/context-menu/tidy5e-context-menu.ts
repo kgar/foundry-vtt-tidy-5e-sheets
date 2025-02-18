@@ -6,14 +6,20 @@ import { configureActiveEffectsContextMenu } from './tidy5e-active-effect-contex
 import { configureGroupContextMenu } from './tidy5e-group-context-menu';
 import { configureFacilityContextMenu } from './tidy5e-facility-context-menu';
 import { configureActivitiesContextMenu } from './tidy5e-activities-context-menu';
+import FloatingContextMenu from './FloatingContextMenu';
 
 export function initTidy5eContextMenu(
   sheet: any,
   html: any,
   contextMenuSelector: string = '[data-context-menu]'
 ) {
-  FoundryAdapter.createContextMenu(html, contextMenuSelector, [], {
+  if ('get' in html) {
+    html = html[0];
+  }
+
+  new FloatingContextMenu(html, contextMenuSelector, [], {
     onOpen: onItemContext.bind(sheet),
+    jQuery: true,
   });
 }
 

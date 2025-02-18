@@ -830,9 +830,6 @@ export const FoundryAdapter = {
   enrichHtml(value: string, options?: any): Promise<string> {
     return TextEditor.enrichHTML(value, options);
   },
-  createContextMenu(...args: any[]): any {
-    return new FloatingContextMenu(...args);
-  },
   createAdvancementSelectionDialog(item: any) {
     return game.dnd5e.applications.advancement.AdvancementSelection.createDialog(
       item
@@ -1014,6 +1011,10 @@ export const FoundryAdapter = {
     app: { currentTabId: string; element: HTMLElementOrGettable },
     newTabId: string
   ) {
+    if (!app.element) {
+      return false;
+    }
+
     const canProceed = TidyHooks.tidy5eSheetsPreSelectTab(
       app,
       FoundryAdapter.getElementFromAppV1OrV2(app.element),
@@ -1028,6 +1029,10 @@ export const FoundryAdapter = {
     }
 
     setTimeout(() => {
+      if (!app.element) {
+        return;
+      }
+
       TidyHooks.tidy5eSheetsSelectTab(
         app,
         FoundryAdapter.getElementFromAppV1OrV2(app.element),
@@ -1494,5 +1499,10 @@ export const FoundryAdapter = {
       error('Failed to get item sheet mode', false, e);
       return {};
     }
+  },
+  isLockedInCompendium(doc: any) {
+    return game.release.generation < 13
+      ? doc.compendium?.locked
+      : game.packs.get(doc.pack)?.locked;
   },
 };

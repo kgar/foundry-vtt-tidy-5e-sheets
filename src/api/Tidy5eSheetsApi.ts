@@ -858,7 +858,7 @@ export class Tidy5eSheetsApi {
    *         icon: 'fas fa-broom',
    *         label: 'Debug Button',
    *         visible() {
-   *           return !this.document.compendium?.locked;
+   *           return !this.document[game.release.generation < 13 ? 'compendium' : 'collection']?.locked;
    *         },
    *         async onClickAction(event) {
    *           ui.notifications.info(
@@ -898,7 +898,7 @@ export class Tidy5eSheetsApi {
    *         icon: 'fas fa-broom',
    *         label: 'Debug Button',
    *         visible() {
-   *           return !this.document.compendium?.locked;
+   *           return !this.document[game.release.generation < 13 ? 'compendium' : 'collection']?.locked;
    *         },
    *         async onClickAction(event) {
    *           ui.notifications.info(
@@ -939,7 +939,7 @@ export class Tidy5eSheetsApi {
    *         icon: 'fas fa-broom',
    *         label: 'Debug Button',
    *         visible() {
-   *           return !this.document.compendium?.locked;
+   *           return !this.document[game.release.generation < 13 ? 'compendium' : 'collection']?.locked;
    *         },
    *         async onClickAction(event) {
    *           ui.notifications.info(
@@ -1036,7 +1036,7 @@ export class Tidy5eSheetsApi {
    *         icon: 'fas fa-broom',
    *         label: 'Debug Button',
    *         visible() {
-   *           return !this.document.compendium?.locked;
+   *           return !this.document[game.release.generation < 13 ? 'compendium' : 'collection']?.locked;
    *         },
    *         async onClickAction(event) {
    *           ui.notifications.info(
@@ -1077,7 +1077,7 @@ export class Tidy5eSheetsApi {
    *         icon: 'fas fa-broom',
    *         label: 'Debug Button',
    *         visible() {
-   *           return !this.document.compendium?.locked;
+   *           return !this.document[game.release.generation < 13 ? 'compendium' : 'collection']?.locked;
    *         },
    *         async onClickAction(event) {
    *           ui.notifications.info(
@@ -1109,7 +1109,7 @@ export class Tidy5eSheetsApi {
    * @returns the original HTML with a transparent element wrapped around which indicates to Tidy that this should be removed and re-rendered.
    *
    * @remarks
-   * The intended use of this function is to accompany the use of the `tidy5e-sheet.renderActorSheet` hook in App V1 (PCs, NPCs, Vehicles) 
+   * The intended use of this function is to accompany the use of the `tidy5e-sheet.renderActorSheet` hook in App V1 (PCs, NPCs, Vehicles)
    * or the standard sheet render hooks in App V2 (Items, Containers, Groups).
    * Any content injected through those hooks needs to be wrapped in this way so that the old version
    * of the HTML can be removed before adding it back in.

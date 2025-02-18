@@ -10,10 +10,15 @@ export class ImportSheetControl {
       label: 'Import',
       visible(this: any) {
         const document = this.document;
+        const inCompendium =
+          game.release.generation < 13
+            ? document.compendium
+            : document.inCompendium;
+
         return (
           document.constructor.name !== 'Folder' &&
           !document.isEmbedded &&
-          document.compendium &&
+          inCompendium &&
           document.constructor.canUserCreate(game.user)
         );
       },
@@ -23,9 +28,8 @@ export class ImportSheetControl {
 
   static async importFromCompendium(app: any, document: any) {
     await app.close();
-    return document.collection.importFromCompendium(
-      document.compendium,
-      document.id
-    );
+    const pack = game.packs.get(document.pack);
+    const collection = game.collections.get(document.documentName);
+    return collection.importFromCompendium(pack, document.id);
   }
 }

@@ -94,13 +94,14 @@
 
   $effect(() => {
     new FloatingContextMenu(
-      FoundryAdapter.getJqueryWrappedElement(portraitContainer),
+      portraitContainer,
       `[data-tidy-sheet-part=${CONSTANTS.SHEET_PARTS.ACTOR_PORTRAIT_CONTAINER}]`,
       [],
       {
         onOpen: () => {
           ui.context.menuItems = contextMenuOptions;
         },
+        jQuery: false
       },
     );
   });

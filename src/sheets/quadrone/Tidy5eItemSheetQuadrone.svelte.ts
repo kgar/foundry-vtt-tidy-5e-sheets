@@ -29,6 +29,7 @@ import { isNil } from 'src/utils/data';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
 import { formatAsModifier } from 'src/utils/formatting';
+import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
 
 export class Tidy5eItemSheetQuadrone extends DragAndDropMixin(
   SvelteApplicationMixin<ItemSheetQuadroneContext>(
@@ -97,27 +98,24 @@ export class Tidy5eItemSheetQuadrone extends DragAndDropMixin(
           context: context,
         });
 
-    // Advancement context menu
-    const contextOptions = this._getAdvancementContextMenuOptions();
-
     const html = globalThis.$(this.element);
 
-    TidyHooks.dnd5eGetItemAdvancementContext(html, contextOptions);
+    new FloatingContextMenu(html, '.advancement-item', [], {
+      onOpen: (target) =>
+        dnd5e.documents.advancement.Advancement.onContextMenu(
+          this.item,
+          target
+        ),
+      jQuery: false,
+    });
 
-    if (contextOptions) {
-      FoundryAdapter.createContextMenu(
-        html,
-        '.advancement-item',
-        contextOptions
-      );
-    }
-
-    FoundryAdapter.createContextMenu(html, '.activity[data-activity-id]', [], {
+    new FloatingContextMenu(html, '.activity[data-activity-id]', [], {
       onOpen: (target: HTMLElement) =>
         dnd5e.documents.activity.UtilityActivity.onContextMenu(
           this.item,
           target
         ),
+      jQuery: true,
     });
 
     initTidy5eContextMenu(this, html);
@@ -718,44 +716,6 @@ export class Tidy5eItemSheetQuadrone extends DragAndDropMixin(
   }
 
   /* -------------------------------------------- */
-
-  /**
-   * Get the set of ContextMenu options which should be applied for advancement entries.
-   * @returns {ContextMenuEntry[]}  Context menu entries.
-   * @protected
-   */
-  _getAdvancementContextMenuOptions() {
-    const condition = (li: any) =>
-      (this.advancementConfigurationMode || !this.isEmbedded) &&
-      this.isEditable;
-    return [
-      {
-        name: 'DND5E.ADVANCEMENT.Action.Edit',
-        icon: "<i class='fas fa-edit fa-fw'></i>",
-        condition,
-        callback: (li: any) => this._onAdvancementAction(li[0], 'edit'),
-      },
-      {
-        name: 'DND5E.ADVANCEMENT.Action.Duplicate',
-        icon: "<i class='fas fa-copy fa-fw'></i>",
-        condition: (li: any) => {
-          const id = li[0].closest('.advancement-item')?.dataset.id;
-          const advancement = this.item.advancement.byId[id];
-          return (
-            condition(li) &&
-            advancement?.constructor.availableForItem(this.item)
-          );
-        },
-        callback: (li: any) => this._onAdvancementAction(li[0], 'duplicate'),
-      },
-      {
-        name: 'DND5E.ADVANCEMENT.Action.Delete',
-        icon: "<i class='fas fa-trash fa-fw' style='color: rgb(255, 65, 65);'></i>",
-        condition,
-        callback: (li: any) => this._onAdvancementAction(li[0], 'delete'),
-      },
-    ];
-  }
 
   _getItemSubtitle(): string | undefined {
     switch (this.item.type) {
