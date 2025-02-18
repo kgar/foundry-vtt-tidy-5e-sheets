@@ -13,6 +13,7 @@ import type {
   ActiveEffect5e,
   NpcAbilitySection,
   ActorInventoryTypes,
+  NpcHabitat,
 } from 'src/types/types';
 import NpcSheet from './npc/NpcSheet.svelte';
 import { CONSTANTS } from 'src/constants';
@@ -55,11 +56,11 @@ import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleSe
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 import { ItemUtils } from 'src/utils/ItemUtils';
 import { Activities } from 'src/features/activities/activities';
-import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
+import { splitSemicolons } from 'src/utils/array';
 
 export class Tidy5eNpcSheet
   extends BaseSheetCustomSectionMixin(
@@ -294,7 +295,7 @@ export class Tidy5eNpcSheet
           },
           {
             id: 'spell-pips',
-            title: FoundryAdapter.localize("TIDY5E.Utilities.SpellPips"),
+            title: FoundryAdapter.localize('TIDY5E.Utilities.SpellPips'),
             iconClass: 'fa-regular fa-circle-dot fa-fw',
             execute: async () => {
               await SheetPreferencesService.setDocumentTypePreference(
@@ -366,7 +367,8 @@ export class Tidy5eNpcSheet
       },
       [CONSTANTS.TAB_ACTOR_SPELLBOOK]: {
         utilityToolbarCommands: [
-          {id: 'sort-mode-alpha',
+          {
+            id: 'sort-mode-alpha',
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
             iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
             execute: async () => {
@@ -395,7 +397,7 @@ export class Tidy5eNpcSheet
           },
           {
             id: 'spell-pips',
-            title: FoundryAdapter.localize("TIDY5E.Utilities.SpellPips"),
+            title: FoundryAdapter.localize('TIDY5E.Utilities.SpellPips'),
             iconClass: 'fa-regular fa-circle-dot fa-fw',
             execute: async () => {
               await SheetPreferencesService.setDocumentTypePreference(
@@ -483,7 +485,8 @@ export class Tidy5eNpcSheet
       },
       [CONSTANTS.TAB_ACTOR_ACTIONS]: {
         utilityToolbarCommands: [
-          {id: 'sort-mode-alpha',
+          {
+            id: 'sort-mode-alpha',
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
             iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
             execute: async () => {
@@ -551,7 +554,8 @@ export class Tidy5eNpcSheet
       },
       [CONSTANTS.TAB_ACTOR_INVENTORY]: {
         utilityToolbarCommands: [
-          {id: 'sort-mode-alpha',
+          {
+            id: 'sort-mode-alpha',
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
             iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
             execute: async () => {
@@ -726,6 +730,7 @@ export class Tidy5eNpcSheet
           relativeTo: this.actor,
         }
       ),
+      habitat: [],
       hideEmptySpellbook:
         lockSensitiveFields && defaultDocumentContext.spellbook.length === 0,
       healthPercentage: this.actor.system.attributes.hp.pct.toNearest(0.1),
@@ -843,8 +848,34 @@ export class Tidy5eNpcSheet
       );
     }
 
-    // Treasure
     let details = this.actor.system.details;
+
+    // Habitat
+    if (details?.habitat?.value.length || details?.habitat?.custom) {
+      const { habitat } = details;
+      const any = details.habitat.value.find(
+        ({ type }: NpcHabitat) => type === CONSTANTS.HABITAT_TYPE_ANY
+      );
+      context.habitat = habitat.value
+        .reduce((arr: { label: string }[], { type, subtype }: NpcHabitat) => {
+          let { label } = CONFIG.DND5E.habitats[type] ?? {};
+          if (label && (!any || type === CONSTANTS.HABITAT_TYPE_ANY)) {
+            if (subtype)
+              label = game.i18n.format('DND5E.Habitat.Subtype', {
+                type: label,
+                subtype,
+              });
+            arr.push({ label });
+          }
+          return arr;
+        }, [])
+        .concat(splitSemicolons(habitat.custom).map((label) => ({ label })))
+        .sort((a: { label: string }, b: { label: string }) =>
+          a.label.localeCompare(b.label, game.i18n.lang)
+        );
+    }
+
+    // Treasure
     if (details?.treasure?.value.size) {
       const any = details.treasure.value.has(CONSTANTS.TREASURE_ANY);
       context.treasure = details.treasure.value

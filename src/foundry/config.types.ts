@@ -5679,7 +5679,7 @@ export type CONFIG = {
       urban: {
         label: string;
       };
-    };
+    } & Record<string, { label: string; subtypes?: boolean }>;
     treasure: {
       any: TreasureConfig;
       arcana: TreasureConfig;
