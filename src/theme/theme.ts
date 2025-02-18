@@ -14,7 +14,7 @@ import type { Item5e } from 'src/types/item.types';
 
 export function applyTheme(
   theme: Tidy5eTheme,
-  colorPickerEnabledOverride: object | null = null
+  colorPickerEnabledOverride: boolean | null = null
 ) {
   try {
     const styleTagId = 'tidy5e-sheet-theme';
@@ -24,14 +24,11 @@ export function applyTheme(
       existingThemeStyle.remove();
     }
 
-    colorPickerEnabledOverride ||= {};
-
-    const hasOverrides = Object.entries(colorPickerEnabledOverride).length > 0;
-
     // Temporary measure for applying color overrides. Larger theme overhaul coming later.
     const overrideBaseTheme =
-      (!hasOverrides && SettingsProvider.settings.colorPickerEnabled.get()) ||
-      hasOverrides;
+      (colorPickerEnabledOverride == null &&
+        SettingsProvider.settings.colorPickerEnabled.get()) ||
+      colorPickerEnabledOverride === true;
 
     if (overrideBaseTheme) {
       theme = overrideColorPickerSettings(theme);
@@ -83,10 +80,8 @@ export function applyCurrentTheme(
   colorPickerEnabledOverride: boolean | null = null
 ) {
   const currentTheme = SettingsProvider.settings.colorScheme.get();
-  SettingsProvider.settings.colorScheme.options.onChange(
-    currentTheme,
-    colorPickerEnabledOverride
-  );
+  const theme = getThemeOrDefault(currentTheme);
+  applyTheme(theme, colorPickerEnabledOverride);
 }
 
 export function getThemeableColors(): ThemeColorSetting[] {

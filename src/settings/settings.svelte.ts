@@ -240,12 +240,9 @@ export function createSettings() {
             initial: CONSTANTS.THEME_ID_DEFAULT,
             choices: () => getCoreThemes(true),
           }),
-          onChange: (
-            data: string,
-            colorPickerEnabledOverride: boolean | null = null
-          ) => {
+          onChange: (data: string) => {
             const theme = getThemeOrDefault(data);
-            applyTheme(theme, colorPickerEnabledOverride);
+            applyTheme(theme);
           },
         },
         get() {
