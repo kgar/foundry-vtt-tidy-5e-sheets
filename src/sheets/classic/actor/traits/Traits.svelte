@@ -273,6 +273,26 @@
 
   {#if context.isNPC}
     <TraitSection
+      title={localize('DND5E.Habitat.Configuration.Label')}
+      iconCssClass="fa-solid fa-mountain-sun"
+      configureButtonTitle={localize('DND5E.Habitat.Configuration.Title')}
+      onConfigureClicked={(ev) =>
+        new dnd5e.applications.actor.HabitatConfig({
+          document: context.actor,
+        }).render({ force: true })}
+      show={context.unlocked || !!context.habitat.length}
+      useConfigureButton={context.editable}
+    >
+      <ul class="trait-list">
+        {#each context.habitat as { label }}
+          <li class="trait-tag">
+            {label}
+          </li>
+        {/each}
+      </ul>
+    </TraitSection>
+
+    <TraitSection
       title={localize('DND5E.Treasure.Configuration.Label')}
       iconCssClass="fa-solid fa-gem"
       configureButtonTitle={localize('DND5E.Treasure.Configuration.Title')}

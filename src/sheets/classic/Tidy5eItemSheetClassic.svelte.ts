@@ -762,7 +762,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
         return this._onDropActivity(event, data);
       case 'Advancement':
       case 'Item':
-        return this._onDropAdvancement(event, data);
+        return this._onDropItem(event, data);
     }
   }
 
@@ -848,6 +848,31 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
   }
 
   /* -------------------------------------------- */
+
+  /**
+   * Handle dropping another item onto this item.
+   * @param {DragEvent} event  The drag event.
+   * @param {object} data      The dropped data.
+   */
+  async _onDropItem(event: DragEvent, data: object) {
+    const item = await Item.implementation.fromDropData(data);
+    if (item?.type === 'spell' && this.item.system.activities) {
+      this._onDropSpell(event, item);
+    } else {
+      this._onDropAdvancement(event, data);
+    }
+  }
+
+  /**
+   * Handle creating a "Cast" activity when dropping a spell.
+   * @param {DragEvent} event  The drag event.
+   * @param {Item5e} item      The dropped item.
+   */
+  _onDropSpell(event: DragEvent, item: Item5e) {
+    this.item.createActivity(CONSTANTS.ACTIVITY_TYPE_CAST, {
+      spell: { uuid: item.uuid },
+    });
+  }
 
   /**
    * Handle the dropping of an advancement or item with advancements onto the advancements tab.
