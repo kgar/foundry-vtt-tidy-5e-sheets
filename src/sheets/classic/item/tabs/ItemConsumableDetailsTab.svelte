@@ -72,7 +72,7 @@
 
   {#if context.properties.object.mgc}
     <!-- Attunement -->
-    <div class="form-group">
+    <div class="form-group split-group">
       <label for="${appId}-system-attunement"
         >{localize('DND5E.Item.Property.Magical')}</label
       >
@@ -82,17 +82,19 @@
             {localize('DND5E.Attunement')}
           </label>
           <div class="form-fields">
-            <!-- Attuned -->
-            <Checkbox
-              id="${appId}-system-attuned"
-              document={context.item}
-              field="system.attuned"
-              checked={context.source.attuned}
-              disabled={!context.editable ||
-                // @ts-expect-error
-                !context.config.attunementTypes[context.system.attunement]}
-              title={localize('DND5E.AttunementAttuned')}
-            />
+            {#if context.source.attunement}
+              <!-- Attuned -->
+              <Checkbox
+                id="${appId}-system-attuned"
+                document={context.item}
+                field="system.attuned"
+                checked={context.source.attuned}
+                disabled={!context.editable ||
+                  // @ts-expect-error
+                  !context.config.attunementTypes[context.system.attunement]}
+                title={localize('DND5E.AttunementAttuned')}
+              />
+            {/if}
             <!-- Attunement -->
             <Select
               id="${appId}-system-attunement"

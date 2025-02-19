@@ -24,7 +24,6 @@ import { isNil } from 'src/utils/data';
 import { DragAndDropMixin } from 'src/mixins/DragAndDropBaseMixin';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { Activities } from 'src/features/activities/activities';
-import { settings } from 'src/settings/settings.svelte';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
@@ -54,6 +53,7 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
       CONSTANTS.SHEET_TYPE_ITEM,
       'app-v2',
       CONSTANTS.SHEET_LAYOUT_CLASSIC,
+      'tidy-form',
     ],
     tag: 'form',
     window: {

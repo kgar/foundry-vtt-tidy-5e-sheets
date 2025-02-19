@@ -27,16 +27,18 @@
     <div class="form-group">
       <label for="{appId}-attunement">{localize('DND5E.Attunement')}</label>
       <div class="form-fields">
-        <Checkbox
-          id="{appId}-attuned"
-          document={context.item}
-          field="system.attuned"
-          checked={context.source.attuned}
-          disabled={!context.editable ||
-            // @ts-expect-error
-            !context.config.attunementTypes[context.system.attunement]}
-          title={localize('DND5E.AttunementAttuned')}
-        />
+        {#if context.source.attunement}
+          <Checkbox
+            id="{appId}-attuned"
+            document={context.item}
+            field="system.attuned"
+            checked={context.source.attuned}
+            disabled={!context.editable ||
+              // @ts-expect-error
+              !context.config.attunementTypes[context.system.attunement]}
+            title={localize('DND5E.AttunementAttuned')}
+          />
+        {/if}
         <Select
           id="{appId}-attunement"
           document={context.item}

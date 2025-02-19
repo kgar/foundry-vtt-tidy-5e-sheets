@@ -144,7 +144,7 @@
 
   {#if context.properties.object.mgc}
     <!-- Attunement -->
-    <div class="form-group">
+    <div class="form-group split-group">
       <label for="${appId}-system-attunement"
         >{localize('DND5E.Item.Property.Magical')}</label
       >

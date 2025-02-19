@@ -90,7 +90,7 @@
   </div>
 
   {#if context.properties.object.mgc}
-    <div class="form-group">
+    <div class="form-group split-group">
       <label for="{appId}-attunement">{localize('DND5E.Attunement')}</label>
       <div class="form-fields">
         <CheckboxQuadrone

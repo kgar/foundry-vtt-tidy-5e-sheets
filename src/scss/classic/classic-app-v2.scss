@@ -164,6 +164,8 @@
     }
   }
 
+  @import './partials/forms';
+
   &.item {
     @import './partials/items';
   }
