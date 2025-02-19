@@ -80,7 +80,7 @@ export const FoundryAdapter = {
     const isActor = owner instanceof Actor;
 
     const effectData = {
-      label: isActor ? game.i18n.localize('DND5E.EffectNew') : owner.name,
+      name: isActor ? game.i18n.localize('DND5E.EffectNew') : owner.name,
       icon: isActor ? 'icons/svg/aura.svg' : owner.img,
       origin: owner.uuid,
       'duration.rounds': effectType === 'temporary' ? 1 : undefined,
@@ -97,7 +97,10 @@ export const FoundryAdapter = {
       return;
     }
 
-    return owner.createEmbeddedDocuments('ActiveEffect', [effectData]);
+    return ActiveEffect.implementation.create(effectData, {
+      parent: owner,
+      renderSheet: true,
+    });
   },
   canPrepareSpell(item: Item5e) {
     return (
