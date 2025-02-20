@@ -70,6 +70,7 @@ export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
       CONSTANTS.ITEM_TYPE_CONTAINER,
       'app-v2',
       CONSTANTS.SHEET_LAYOUT_CLASSIC,
+      'tidy-form',
     ],
     tag: 'form',
     window: {
