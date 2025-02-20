@@ -389,6 +389,19 @@ export function SvelteApplicationMixin<
       }
     }
 
+    // Render shim to prevent option bleed-over from dnd5e's physical-item.mjs handling
+    async render(options = {}, _options = {}) {
+      try {
+        return super.render(
+          structuredClone(options),
+          structuredClone(_options)
+        );
+      } catch (e) {
+        error('An error occurred while rendering a Tidy application', false, e);
+        return super.render(options, _options);
+      }
+    }
+
     /* -------------------------------------------- */
     /*  Rendering Life-Cycle Methods                */
     /* -------------------------------------------- */
