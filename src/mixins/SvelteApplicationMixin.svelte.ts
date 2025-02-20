@@ -375,8 +375,18 @@ export function SvelteApplicationMixin<
 
       await super.close(options);
 
+      if (game.release.generation < 13) {
+        this._tearDown(options);
+      }
+    }
+
+    _tearDown(options: ApplicationClosingOptions = {}) {
       this.#components.forEach((c) => unmount(c));
       this.#components = [];
+
+      if (game.release.generation >= 13) {
+        super._tearDown(options);
+      }
     }
 
     /* -------------------------------------------- */
