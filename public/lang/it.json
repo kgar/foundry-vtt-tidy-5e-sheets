@@ -869,5 +869,7 @@
     "TIDY5E.ContextMenuActionUnpinFromAttributes": "Rimuovi da Attributi",
     "TIDY5E.ContextMenuActionShowLimitedUses": "Mostra Usi Limitati",
     "TIDY5E.ContextMenuActionShowQuantity": "Mostra Quantità",
-    "TIDY5E.RollRecharge.Label": "Ricarica"
+    "TIDY5E.RollRecharge.Label": "Ricarica",
+    "TIDY5E.Utilities.SpellPips": "Pallini Incantesimo",
+    "TIDY5E.Utilities.SpellValueMax": "Valore/Max Incantesimo"
 }
