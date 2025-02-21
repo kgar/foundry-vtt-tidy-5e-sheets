@@ -52,6 +52,7 @@
     .editor-content {
       margin: 0;
       padding: 0 0.75rem 0 0;
+      overflow-y: auto;
     }
   }
 }
@@ -122,10 +123,12 @@ prose-mirror.prosemirror {
   .editor-container {
     display: flex;
     flex-direction: column;
+    margin: 0;
+    flex: 1;
 
     .editor-content {
       padding: 0.5rem;
-      position: static;
+      position: absolute;
       margin: 0;
 
       &:not(:focus-visible) {
