@@ -16,7 +16,6 @@
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
-  import TidySwitch from 'src/components/toggles/TidySwitch.svelte';
 
   let context =
     $derived(

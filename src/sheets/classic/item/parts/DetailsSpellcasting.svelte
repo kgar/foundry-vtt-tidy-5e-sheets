@@ -63,6 +63,7 @@
       value={context.system.spellcasting.preparation.formula}
       dataset={{ formulaEditor: true }}
       disabled={!context.editable}
+      placeholder="—"
     />
     <a
       title={localize('TIDY5E.MaxPreparedSpellsConfig.ExamplesHeader')}

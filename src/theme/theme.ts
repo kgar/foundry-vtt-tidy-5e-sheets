@@ -28,7 +28,7 @@ export function applyTheme(
     const overrideBaseTheme =
       (colorPickerEnabledOverride === null &&
         SettingsProvider.settings.colorPickerEnabled.get()) ||
-      colorPickerEnabledOverride;
+      colorPickerEnabledOverride === true;
 
     if (overrideBaseTheme) {
       theme = overrideColorPickerSettings(theme);
@@ -80,10 +80,8 @@ export function applyCurrentTheme(
   colorPickerEnabledOverride: boolean | null = null
 ) {
   const currentTheme = SettingsProvider.settings.colorScheme.get();
-  SettingsProvider.settings.colorScheme.options.onChange(
-    currentTheme,
-    colorPickerEnabledOverride
-  );
+  const theme = getThemeOrDefault(currentTheme);
+  applyTheme(theme, colorPickerEnabledOverride);
 }
 
 export function getThemeableColors(): ThemeColorSetting[] {

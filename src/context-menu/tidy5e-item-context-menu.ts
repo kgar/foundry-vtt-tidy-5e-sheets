@@ -18,10 +18,11 @@ export function configureItemContextMenu(element: HTMLElement, app: any) {
 
   let item =
     app.document.type === CONSTANTS.ITEM_TYPE_CONTAINER
-      ? app.document.system.contents.get(id)
+      ? app.document.system.getContainedItem(id)
       : app.document.items.get(id);
 
-  if (!item) return;
+  // Parts of ContextMenu doesn't play well with promises, so don't show menus for containers in packs
+  if (!item || item instanceof Promise) return;
 
   ui.context.menuItems = getItemContextOptions(app, item, element);
   TidyHooks.dnd5eGetItemContextOptions(item, ui.context.menuItems);
@@ -92,7 +93,8 @@ export function getItemContextOptions(
         item.update({
           'system.attuned': !item.system.attuned,
         }),
-      condition: () => item.isOwner && !item.compendium?.locked,
+      condition: () =>
+        item.isOwner && !FoundryAdapter.isLockedInCompendium(item),
     });
   }
 
@@ -108,7 +110,9 @@ export function getItemContextOptions(
         'system.uses.spent': !item.isOnCooldown ? item.system.uses.max : 0,
       }),
     condition: () =>
-      item.hasRecharge && item.isOwner && !item.compendium?.locked,
+      item.hasRecharge &&
+      item.isOwner &&
+      !FoundryAdapter.isLockedInCompendium(item),
     group: 'state',
   });
 
@@ -123,7 +127,8 @@ export function getItemContextOptions(
         ? "<i class='fas fa-user-alt fa-fw' style='color: var(--t5e-warning-accent-color);'></i> "
         : "<i class='fas fa-user-alt fa-fw'></i> ",
       callback: () => item.update({ 'system.equipped': !isEquipped }),
-      condition: () => item.isOwner && !item.compendium?.locked,
+      condition: () =>
+        item.isOwner && !FoundryAdapter.isLockedInCompendium(item),
     });
   }
 
@@ -143,7 +148,8 @@ export function getItemContextOptions(
         : "<i class='fas fa-book fa-fw'></i>",
       callback: () =>
         item.update({ 'system.preparation.prepared': !isPrepared }),
-      condition: () => item.isOwner && !item.compendium?.locked,
+      condition: () =>
+        item.isOwner && !FoundryAdapter.isLockedInCompendium(item),
     });
   }
 
@@ -154,7 +160,7 @@ export function getItemContextOptions(
     condition: () =>
       item.system.identified === false &&
       FoundryAdapter.canIdentify(item) &&
-      !item.compendium?.locked,
+      !FoundryAdapter.isLockedInCompendium(item),
   });
 
   const isCharacter =
@@ -180,7 +186,7 @@ export function getItemContextOptions(
       condition: () =>
         !!itemParent &&
         'favorites' in itemParent.system &&
-        !item.compendium?.locked,
+        !FoundryAdapter.isLockedInCompendium(item),
     });
 
     options.push({
@@ -189,7 +195,7 @@ export function getItemContextOptions(
       callback: () => AttributePins.pin(item, 'item'),
       condition: () =>
         item.isOwner &&
-        !item.compendium?.locked &&
+        !FoundryAdapter.isLockedInCompendium(item) &&
         AttributePins.isPinnable(item, 'item') &&
         !AttributePins.isPinned(item),
       group: 'pins',
@@ -201,7 +207,7 @@ export function getItemContextOptions(
       callback: () => AttributePins.unpin(item),
       condition: () =>
         item.isOwner &&
-        !item.compendium?.locked &&
+        !FoundryAdapter.isLockedInCompendium(item) &&
         AttributePins.isPinnable(item, 'item') &&
         AttributePins.isPinned(item),
       group: 'pins',
@@ -216,7 +222,7 @@ export function getItemContextOptions(
         callback: () => AttributePins.setItemResourceType(item, 'limited-uses'),
         condition: () =>
           item.isOwner &&
-          !item.compendium?.locked &&
+          !FoundryAdapter.isLockedInCompendium(item) &&
           !isNil(item.system.quantity) &&
           AttributePins.getResourceType(item) !== 'limited-uses',
         group: 'pins',
@@ -227,7 +233,7 @@ export function getItemContextOptions(
         callback: () => AttributePins.setItemResourceType(item, 'quantity'),
         condition: () =>
           item.isOwner &&
-          !item.compendium?.locked &&
+          !FoundryAdapter.isLockedInCompendium(item) &&
           !isNil(item.system.quantity) &&
           AttributePins.getResourceType(item) !== 'quantity',
         group: 'pins',
@@ -240,7 +246,7 @@ export function getItemContextOptions(
     icon: '<i class="fas fa-pencil-alt fa-fw"></i>',
     callback: () =>
       item.sheet.render(true, FoundryAdapter.getItemSheetMode(app)),
-    condition: () => item.isOwner && !item.compendium?.locked,
+    condition: () => item.isOwner && !FoundryAdapter.isLockedInCompendium(item),
   });
 
   options.push({
@@ -248,14 +254,16 @@ export function getItemContextOptions(
     icon: '<i class="fas fa-eye fa-fw"></i>',
     callback: () =>
       item.sheet.render(true, FoundryAdapter.getItemSheetMode(app)),
-    condition: () => !item.isOwner || item.compendium?.locked,
+    condition: () => !item.isOwner || FoundryAdapter.isLockedInCompendium(item),
   });
 
   options.push({
     name: 'DND5E.ContextMenuActionDuplicate',
     icon: "<i class='fas fa-copy fa-fw'></i>",
     condition: () =>
-      item.canDuplicate && item.isOwner && !item.compendium?.locked,
+      item.canDuplicate &&
+      item.isOwner &&
+      !FoundryAdapter.isLockedInCompendium(item),
 
     callback: () =>
       item.clone(
@@ -274,7 +282,9 @@ export function getItemContextOptions(
       icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5e-warning-accent-color);'></i>",
       callback: () => FoundryAdapter.onActorItemDelete(itemParent, item),
       condition: () =>
-        item.canDelete && item.isOwner && !item.compendium?.locked,
+        item.canDelete &&
+        item.isOwner &&
+        !FoundryAdapter.isLockedInCompendium(item),
     });
     options.push({
       name: 'DOCUMENT.DND5E.Activity',
@@ -284,7 +294,7 @@ export function getItemContextOptions(
         !item.canDelete &&
         item.system.linkedActivity &&
         item.isOwner &&
-        !item.compendium?.locked,
+        !FoundryAdapter.isLockedInCompendium(item),
     });
   } else {
     options.push({
@@ -295,7 +305,8 @@ export function getItemContextOptions(
           ? FoundryAdapter.onActorItemDelete(itemParent, item)
           : item.deleteDialog();
       },
-      condition: () => item.isOwner && !item.compendium?.locked,
+      condition: () =>
+        item.isOwner && !FoundryAdapter.isLockedInCompendium(item),
     });
   }
 
@@ -321,7 +332,7 @@ export function getItemContextOptions(
       item.type === 'spell' &&
       !item.getFlag('dnd5e', 'cachedFor') &&
       itemParent?.isOwner &&
-      !itemParent?.compendium?.locked,
+      !FoundryAdapter.isLockedInCompendium(itemParent),
     group: 'action',
   });
 

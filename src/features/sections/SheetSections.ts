@@ -27,6 +27,7 @@ import { error } from 'src/utils/logging';
 import { getSortedActions } from '../actions/actions.svelte';
 import { SpellUtils } from 'src/utils/SpellUtils';
 import { settings } from 'src/settings/settings.svelte';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export class SheetSections {
   // TODO: To item sheet runtime with API support?
@@ -530,7 +531,7 @@ export class SheetSections {
 
   static getKnownCustomSections(document: any) {
     const useParentCollection =
-      !!document.parent && !document.compendium?.locked;
+      !!document.parent && !FoundryAdapter.isLockedInCompendium(document);
 
     const itemCollection = useParentCollection
       ? document.parent.items

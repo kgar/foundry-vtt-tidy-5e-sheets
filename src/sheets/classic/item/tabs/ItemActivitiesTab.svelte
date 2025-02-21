@@ -27,7 +27,7 @@
     {#if context.editable}
       <button
         type="button"
-        class="add-activity-button"
+        class="add-activity-button w-100"
         onclick={() => context.item.sheet.addActivity()}
         tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
       >

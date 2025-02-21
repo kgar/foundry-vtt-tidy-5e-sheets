@@ -1,5 +1,6 @@
 import { AttributePins } from 'src/features/attribute-pins/AttributePins';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export function configureActivitiesContextMenu(element: HTMLElement, app: any) {
   const itemId = element.closest<HTMLElement>('[data-item-id]')?.dataset.itemId;
@@ -49,7 +50,10 @@ function getContextMenuOptions(
 ) {
   const entries = [];
 
-  if (activity.item.isOwner && !activity.item.compendium?.locked) {
+  if (
+    activity.item.isOwner &&
+    !FoundryAdapter.isLockedInCompendium(activity.item)
+  ) {
     entries.push(
       {
         name: 'DND5E.ContextMenuActionEdit',
@@ -91,7 +95,7 @@ function getContextMenuOptions(
     callback: () => AttributePins.pin(activity, 'activity'),
     condition: () =>
       activity.item.isOwner &&
-      !activity.item.compendium?.locked &&
+      !FoundryAdapter.isLockedInCompendium(activity.item) &&
       AttributePins.isPinnable(activity, 'activity') &&
       !AttributePins.isPinned(activity),
     group: 'pins',
@@ -103,7 +107,7 @@ function getContextMenuOptions(
     callback: () => AttributePins.unpin(activity),
     condition: () =>
       activity.item.isOwner &&
-      !activity.item.compendium?.locked &&
+      !FoundryAdapter.isLockedInCompendium(activity.item) &&
       AttributePins.isPinnable(activity, 'activity') &&
       AttributePins.isPinned(activity),
     group: 'pins',
@@ -118,7 +122,8 @@ function getContextMenuOptions(
       name: isFavorited ? 'DND5E.FavoriteRemove' : 'DND5E.Favorite',
       icon: '<i class="fas fa-bookmark fa-fw"></i>',
       condition: () =>
-        activity.item.isOwner && !activity.item.compendium?.locked,
+        activity.item.isOwner &&
+        !FoundryAdapter.isLockedInCompendium(activity.item),
       callback: () => {
         if (isFavorited) app.actor.system.removeFavorite(uuid);
         else app.actor.system.addFavorite({ type: 'activity', id: uuid });

@@ -375,8 +375,31 @@ export function SvelteApplicationMixin<
 
       await super.close(options);
 
+      if (game.release.generation < 13) {
+        this._tearDown(options);
+      }
+    }
+
+    _tearDown(options: ApplicationClosingOptions = {}) {
       this.#components.forEach((c) => unmount(c));
       this.#components = [];
+
+      if (game.release.generation >= 13) {
+        super._tearDown(options);
+      }
+    }
+
+    // Render shim to prevent option bleed-over from dnd5e's physical-item.mjs handling
+    async render(options = {}, _options = {}) {
+      try {
+        return super.render(
+          structuredClone(options),
+          structuredClone(_options)
+        );
+      } catch (e) {
+        error('An error occurred while rendering a Tidy application', false, e);
+        return super.render(options, _options);
+      }
     }
 
     /* -------------------------------------------- */
@@ -493,7 +516,7 @@ export function SvelteApplicationMixin<
      * Augments the base toggleControls with handling for closing menu when focus is lost.
      */
     toggleControls(expanded: boolean | undefined) {
-      super.toggleControls(expanded);
+      super.toggleControls(expanded, { animate: false });
 
       const controlsDropdown = this.element.querySelector(
         HEADER_CONTROLS_DROPDOWN_SELECTOR

@@ -2,10 +2,7 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 
-export function configureFacilityContextMenu(
-  element: HTMLElement,
-  app: any
-) {
+export function configureFacilityContextMenu(element: HTMLElement, app: any) {
   const occupantUuid = element.getAttribute('data-actor-uuid');
   const index = element.getAttribute('data-index');
   const facilityId = element.getAttribute('data-facility-id');
@@ -20,7 +17,8 @@ export function configureFacilityContextMenu(
         const actor = await fromUuid(occupantUuid);
         actor?.sheet.render(true);
       },
-      condition: () => app.actor.isOwner && !app.actor.compendium?.locked,
+      condition: () =>
+        app.actor.isOwner && !FoundryAdapter.isLockedInCompendium(app.actor),
     },
     {
       name: FoundryAdapter.localize(
@@ -31,7 +29,8 @@ export function configureFacilityContextMenu(
       callback: async () => {
         await app.actor.sheet.deleteOccupant(facilityId, prop, Number(index));
       },
-      condition: () => app.actor.isOwner && !app.actor.compendium?.locked,
+      condition: () =>
+        app.actor.isOwner && !FoundryAdapter.isLockedInCompendium(app.actor),
     },
   ];
 

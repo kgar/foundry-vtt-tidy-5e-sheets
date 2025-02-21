@@ -17,7 +17,6 @@
   <h2 class="accordion-item-header" class:open>
     <a
       class="accordion-item-toggle"
-      type="button"
       onclick={() => (open = !open)}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.EXPANSION_TOGGLE}
     >

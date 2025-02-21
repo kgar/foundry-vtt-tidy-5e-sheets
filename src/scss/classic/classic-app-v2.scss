@@ -11,6 +11,13 @@
   // Document V2 sheets need more width to be readable.
   --minimized-width: 18.75rem;
 
+  .window-header {
+    .header-control.icon {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+
   .window-header:has(+ .controls-dropdown.expanded)
     [data-action='toggleControls'] {
     background: var(--t5e-faint-color);
@@ -27,10 +34,15 @@
     }
 
     .header-control > button {
+      display: flex;
       justify-content: flex-start;
       gap: 0.5rem;
-      --button-text-color: var(--t5e-primary-font-color);
-      --button-hover-text-color: var(--t5e-primary-font-color);
+      padding: 0.5rem;
+      color: var(--t5e-primary-font-color);
+
+      &:hover {
+        color: var(--t5e-primary-font-color);
+      }
     }
   }
 
@@ -151,6 +163,8 @@
       overflow: hidden;
     }
   }
+
+  @import './partials/forms';
 
   &.item {
     @import './partials/items';
@@ -630,6 +644,18 @@
       box-shadow: none;
       border: var(--border);
       outline: none;
+    }
+  }
+
+  button.unbutton {
+    height: unset;
+    background: none;
+    border-radius: 0;
+    width: unset;
+    padding: 0;
+
+    &:hover {
+      background: none;
     }
   }
 

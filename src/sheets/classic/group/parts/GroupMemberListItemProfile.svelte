@@ -19,7 +19,7 @@
 
 <div role="presentation" class="member-list-item-image-wrapper">
   <button
-    class="transparent-button"
+    class="unbutton"
     type="button"
     onclick={() =>
       FoundryAdapter.renderImagePopout(member.img, {

@@ -21,6 +21,9 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
           label:
             'This Actions Title Changes Based on an Actor-specific piece of data',
           ownership: 'OWNER',
+          visible(this: any) {
+            return game.release.generation < 13 || !!this.token;
+          },
         },
         action: {
           configureToken: Tidy5eActorSheetBase.#onConfigureToken,
@@ -79,10 +82,11 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
           Tidy5eActorSheetBase.ACTOR_ACTIONS_AND_CONTROLS.configureToken.control
             .action
       );
-      if (configureTokenControl && this.token) {
+
+      if (configureTokenControl && this.actor.isToken) {
         configureTokenControl.label = 'Token';
         configureTokenControl.icon = 'far fa-user-circle';
-      } else {
+      } else if (configureTokenControl) {
         configureTokenControl.label = 'TOKEN.TitlePrototype';
       }
 

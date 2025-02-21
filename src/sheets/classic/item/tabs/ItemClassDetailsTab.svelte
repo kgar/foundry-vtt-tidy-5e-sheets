@@ -81,9 +81,12 @@
 </div>
 
 <div class="form-group">
-  <label>{localize('DND5E.CLASS.FIELDS.hd.additional.label')}</label>
+  <label for="{appId}-additional-hit-dice">
+    {localize('DND5E.CLASS.FIELDS.hd.additional.label')}
+  </label>
   <div class="form-fields">
     <TextInput
+      id="{appId}-additional-hit-dice"
       document={context.item}
       field="system.hd.additional"
       value={context.source.hd.additional}

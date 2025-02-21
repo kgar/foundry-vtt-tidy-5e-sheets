@@ -80,7 +80,7 @@ export const FoundryAdapter = {
     const isActor = owner instanceof Actor;
 
     const effectData = {
-      label: isActor ? game.i18n.localize('DND5E.EffectNew') : owner.name,
+      name: isActor ? game.i18n.localize('DND5E.EffectNew') : owner.name,
       icon: isActor ? 'icons/svg/aura.svg' : owner.img,
       origin: owner.uuid,
       'duration.rounds': effectType === 'temporary' ? 1 : undefined,
@@ -97,7 +97,10 @@ export const FoundryAdapter = {
       return;
     }
 
-    return owner.createEmbeddedDocuments('ActiveEffect', [effectData]);
+    return ActiveEffect.implementation.create(effectData, {
+      parent: owner,
+      renderSheet: true,
+    });
   },
   canPrepareSpell(item: Item5e) {
     return (
@@ -830,9 +833,6 @@ export const FoundryAdapter = {
   enrichHtml(value: string, options?: any): Promise<string> {
     return TextEditor.enrichHTML(value, options);
   },
-  createContextMenu(...args: any[]): any {
-    return new FloatingContextMenu(...args);
-  },
   createAdvancementSelectionDialog(item: any) {
     return game.dnd5e.applications.advancement.AdvancementSelection.createDialog(
       item
@@ -1014,6 +1014,10 @@ export const FoundryAdapter = {
     app: { currentTabId: string; element: HTMLElementOrGettable },
     newTabId: string
   ) {
+    if (!app.element) {
+      return false;
+    }
+
     const canProceed = TidyHooks.tidy5eSheetsPreSelectTab(
       app,
       FoundryAdapter.getElementFromAppV1OrV2(app.element),
@@ -1028,6 +1032,10 @@ export const FoundryAdapter = {
     }
 
     setTimeout(() => {
+      if (!app.element) {
+        return;
+      }
+
       TidyHooks.tidy5eSheetsSelectTab(
         app,
         FoundryAdapter.getElementFromAppV1OrV2(app.element),
@@ -1494,5 +1502,10 @@ export const FoundryAdapter = {
       error('Failed to get item sheet mode', false, e);
       return {};
     }
+  },
+  isLockedInCompendium(doc: any) {
+    return game.release.generation < 13
+      ? doc.compendium?.locked
+      : game.packs.get(doc.pack)?.locked;
   },
 };

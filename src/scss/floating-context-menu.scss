@@ -1,4 +1,4 @@
-body #context-menu.tidy5e-sheet.floating {
+body #context-menu.tidy5e-sheet {
   --icon-width: 2rem;
   z-index: var(--z-index-tooltip);
   background: var(--t5e-background);
@@ -14,9 +14,9 @@ body #context-menu.tidy5e-sheet.floating {
   overflow-y: auto;
 
   [data-group-id]:has(li)::before {
-    inset-inline: 0.5rem;
+    inset-inline: 0;
   }
-  
+
   a,
   li.context-item {
     cursor: pointer;
@@ -31,6 +31,7 @@ body #context-menu.tidy5e-sheet.floating {
     line-height: 1;
     font-weight: 400;
     font-size: 0.75rem;
+    border: none;
 
     &:first-child {
       border-radius: 0.1875rem 0.1875rem 0 0;
@@ -45,7 +46,7 @@ body #context-menu.tidy5e-sheet.floating {
 
       &:hover {
         background: var(--t5e-warning-accent-color);
-        color: var(--t5e-warning-accent-contrast-color);
+        color: var(--t5e-primary-font-color);
       }
     }
 
@@ -60,8 +61,9 @@ body #context-menu.tidy5e-sheet.floating {
     }
 
     &:hover {
+      border: none;
       background: var(--t5e-faint-color);
-      color: var(--t5e-primary-accent-color);
+      color: var(--t5e-primary-font-color);
       text-shadow: none;
     }
 

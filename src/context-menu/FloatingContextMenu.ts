@@ -2,17 +2,54 @@ import { CONSTANTS } from 'src/constants';
 import type { ContextMenuPositionInfo } from './context-menu.types';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 
+interface ContextMenuEntry {
+  name: string;
+  icon?: string;
+  classes?: string;
+  group?: string;
+  callback: (target: any) => void;
+  condition?: (html: any) => boolean | boolean;
+}
+
+type ContextMenuOptionsV13 = {
+  /** Optionally override the triggering event which can spawn the menu. If the menu is using a fixed position, this event must be a MouseEvent. */
+  eventName?: string;
+  /** A function to call when the context menu is opened. */
+  onOpen?: (target: any) => void;
+  /** A function to call when the context menu is closed. */
+  onClose?: (target: any) => void;
+  /** If true, callbacks will be passed jQuery objects instead of HTMLElement instances. */
+  jQuery?: boolean;
+  /** If true, the context menu is given a fixed position rather than being injected into the target. */
+  fixed?: boolean;
+};
+
 /**
  * A specialized subclass of ContextMenu that places the menu in a fixed position.
  * @extends {ContextMenu}
  */
-export default class FloatingContextMenu extends ContextMenu {
-  constructor(...args: any[]) {
-    super(...args);
+export default class FloatingContextMenu extends (foundry.applications.ui
+  ?.ContextMenu ?? /* game.release.generation < 13 */ ContextMenu) {
+  constructor(
+    container: any,
+    selector: string,
+    menuItems: ContextMenuEntry[] = [],
+    options: ContextMenuOptionsV13 = {}
+  ) {
+    super(container, selector, menuItems, options);
   }
 
-  /** @override */
-  _setPosition([html]: [html: HTMLElement], [target]: [target: HTMLElement]) {
+  /** TODO: When Foundry V13 only, remove typing for jQuery */
+  _setPosition(html: any, target: any, options: any) {
+    if ('classList' in html && 'classList' in target) {
+      html.classList.add('tidy5e-sheet');
+      return this._setFixedPosition(html, target, options);
+    } else {
+      /* game.release.generation < 13 */
+      html = html[0];
+      target = target[0];
+    }
+
     const positionInfo: ContextMenuPositionInfo = {
       insertTarget: document.body,
       html: html,

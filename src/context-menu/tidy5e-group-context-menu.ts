@@ -2,6 +2,7 @@ import type { Actor5e } from 'src/types/types';
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import type { Group5eMember } from 'src/types/group.types';
 import { TidyHooks } from 'src/foundry/TidyHooks';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export function configureGroupContextMenu(element: HTMLElement, app: any) {
   const memberId = element.getAttribute('data-member-id');
@@ -31,7 +32,7 @@ function getGroupMemberContextOptions(group: Actor5e, actor: Actor5e) {
       name: 'TIDY5E.Group.RemoveMemberFromGroup',
       icon: `<i class="fas fa-trash fa-fw t5e-warning-color"></i>`,
       callback: () => group.removeMember(actor.id),
-      condition: () => !group.compendium?.locked,
+      condition: () => !FoundryAdapter.isLockedInCompendium(group),
     },
   ];
 
