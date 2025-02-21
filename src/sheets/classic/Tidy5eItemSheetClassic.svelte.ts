@@ -180,12 +180,18 @@ export class Tidy5eItemSheetClassic extends DragAndDropMixin(
         label: FoundryAdapter.localize('DND5E.DescriptionUnidentified'),
       });
     }
-    itemDescriptions.push({
-      enriched: enriched.chat,
-      content: systemSource.description.chat,
-      field: 'system.description.chat',
-      label: FoundryAdapter.localize('DND5E.DescriptionChat'),
-    });
+
+    // kgar: I am knowingly repurposing the Identifiable trait,
+    // because for items where identification is irrelevant,
+    // they are likely not to have a need for Unidentified or Chat descriptions.
+    if (isIdentifiable) {
+      itemDescriptions.push({
+        enriched: enriched.chat,
+        content: systemSource.description.chat,
+        field: 'system.description.chat',
+        label: FoundryAdapter.localize('DND5E.DescriptionChat'),
+      });
+    }
 
     const editable = this.isEditable;
 
