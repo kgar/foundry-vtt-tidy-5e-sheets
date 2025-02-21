@@ -26,7 +26,7 @@ export function applyTheme(
 
     // Temporary measure for applying color overrides. Larger theme overhaul coming later.
     const overrideBaseTheme =
-      (colorPickerEnabledOverride == null &&
+      (colorPickerEnabledOverride === null &&
         SettingsProvider.settings.colorPickerEnabled.get()) ||
       colorPickerEnabledOverride === true;
 
