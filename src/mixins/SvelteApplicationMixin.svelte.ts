@@ -389,13 +389,12 @@ export function SvelteApplicationMixin<
       }
     }
 
-    // Render shim to prevent option bleed-over from dnd5e's physical-item.mjs handling
     async render(options = {}, _options = {}) {
       try {
-        return super.render(
-          structuredClone(options),
-          structuredClone(_options)
-        );
+        // TODO: remove these shallow copies when either Foundry or dnd5e releases the fix. Reference: https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues/997
+        options = typeof options === 'object' ? { ...options } : options;
+        _options = { ..._options };
+        return super.render(options, _options);
       } catch (e) {
         error('An error occurred while rendering a Tidy application', false, e);
         return super.render(options, _options);
