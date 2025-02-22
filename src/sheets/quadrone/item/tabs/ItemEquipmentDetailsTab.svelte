@@ -82,6 +82,7 @@
 <fieldset>
   <legend>
     {localize('DND5E.ItemEquipmentDetails')}
+    <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
   <!-- Equipment Type -->

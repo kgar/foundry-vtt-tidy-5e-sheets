@@ -1,3 +1,8 @@
+<svelte:options customElement={{
+  tag: "tidy-gold-header-underline",
+  shadow: 'none'
+}} />
+
 <div role="presentation" class="gold-header-underline">
   <!-- Left Part -->
   <svg

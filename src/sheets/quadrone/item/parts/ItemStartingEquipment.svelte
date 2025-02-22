@@ -30,6 +30,7 @@
         </button>
       </span>
     {/if}
+    <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
   <div class="starting-equipment-text">

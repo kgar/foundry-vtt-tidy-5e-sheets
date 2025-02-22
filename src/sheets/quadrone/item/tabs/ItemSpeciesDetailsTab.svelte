@@ -13,6 +13,7 @@
 <fieldset>
   <legend>
     {localize('DND5E.ItemSpeciesDetails')}
+    <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
   <div class="form-group">
     <div class="form-group">

@@ -14,6 +14,7 @@
 <fieldset>
   <legend>
     {localize('DND5E.ItemSubclassDetails')}
+    <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
   <div class="form-group">
     <label for="{appId}-identifier">{localize('DND5E.Identifier')}</label>

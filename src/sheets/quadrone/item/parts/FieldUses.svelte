@@ -14,7 +14,10 @@
 </script>
 
 <fieldset>
-  <legend>{localize('DND5E.Usage')}</legend>
+  <legend
+    >{localize('DND5E.Usage')}
+    <tidy-gold-header-underline></tidy-gold-header-underline>
+  </legend>
 
   <!-- Uses -->
   <div class="form-group split-group">
@@ -91,6 +94,7 @@
           <i class="fas fa-plus"></i>
         </button>
       {/if}
+      <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 
     {#each context.usesRecovery as recovery, index}

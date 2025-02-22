@@ -21,6 +21,7 @@
     {:else if context.item.type === CONSTANTS.ITEM_TYPE_EQUIPMENT}
       {localize('DND5E.ItemVehicleProperties')}
     {/if}
+    <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
   <!-- Armor Class -->

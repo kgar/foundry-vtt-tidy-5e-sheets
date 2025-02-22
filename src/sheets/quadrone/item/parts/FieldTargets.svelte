@@ -16,6 +16,7 @@
 <fieldset>
   <legend>
     {localize('DND5E.TargetPl')}
+    <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
   <!-- Target Type -->
@@ -110,6 +111,7 @@
 <fieldset>
   <legend>
     {localize('DND5E.TargetTypeArea')}
+    <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
   <!-- Template Type -->
