@@ -17,6 +17,10 @@ body #context-menu.tidy5e-sheet {
     inset-inline: 0;
   }
 
+  .context-group {
+    border: none;
+  }
+
   a,
   li.context-item {
     cursor: pointer;

@@ -12,6 +12,7 @@ import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import { AttributePins } from 'src/features/attribute-pins/AttributePins';
 import { isNil } from 'src/utils/data';
 import { TidyHooks } from 'src/foundry/TidyHooks';
+import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
 
 export function configureItemContextMenu(element: HTMLElement, app: any) {
   const id = element.closest('[data-item-id]')?.getAttribute('data-item-id');
@@ -38,7 +39,7 @@ export function getItemContextOptions(
   app: any,
   item: Item5e,
   element: HTMLElement
-) {
+): ContextMenuEntry[] {
   if (!item?.isOwner || !settings.value.useContextMenu) {
     return [];
   }
@@ -363,6 +364,32 @@ export function getItemContextOptions(
     },
     condition: () =>
       overridden && itemParentIsActor && actorUsesActionFeature(itemParent),
+  });
+
+  options.push({
+    name: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
+    icon: '<i class="fa-fw"></i>',
+    callback: () =>
+      new SectionSelectorApplication(
+        item,
+        TidyFlags.section.prop,
+        FoundryAdapter.localize('TIDY5E.Section.Label')
+      ).render(true),
+    condition: () => app.currentTabId !== CONSTANTS.TAB_ACTOR_ACTIONS,
+    group: 'sections',
+  });
+
+  options.push({
+    name: 'TIDY5E.Section.SectionSelectorChooseActionSectionTooltip',
+    icon: '<i class="fa-fw"></i>',
+    callback: () =>
+      new SectionSelectorApplication(
+        item,
+        TidyFlags.section.prop,
+        FoundryAdapter.localize('TIDY5E.Section.ActionLabel')
+      ).render(true),
+    condition: () => app.currentTabId === CONSTANTS.TAB_ACTOR_ACTIONS,
+    group: 'sections',
   });
 
   return options;
