@@ -375,7 +375,10 @@ export function getItemContextOptions(
         TidyFlags.section.prop,
         FoundryAdapter.localize('TIDY5E.Section.Label')
       ).render(true),
-    condition: () => app.currentTabId !== CONSTANTS.TAB_ACTOR_ACTIONS,
+    condition: () =>
+      item.isOwner &&
+      app.currentTabId !== CONSTANTS.TAB_ACTOR_ACTIONS &&
+      !FoundryAdapter.isLockedInCompendium(item),
     group: 'sections',
   });
 
@@ -388,7 +391,10 @@ export function getItemContextOptions(
         TidyFlags.section.prop,
         FoundryAdapter.localize('TIDY5E.Section.ActionLabel')
       ).render(true),
-    condition: () => app.currentTabId === CONSTANTS.TAB_ACTOR_ACTIONS,
+    condition: () =>
+      item.isOwner &&
+      app.currentTabId === CONSTANTS.TAB_ACTOR_ACTIONS &&
+      !FoundryAdapter.isLockedInCompendium(item),
     group: 'sections',
   });
 
