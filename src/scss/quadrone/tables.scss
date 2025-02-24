@@ -290,6 +290,10 @@
       flex-grow: 1;
     }
 
+    &:not(.primary) {
+      flex-basis: var(--tidy-table-cell-width, 5rem);
+    }
+
     &.text-cell {
       flex-direction: column;
       justify-content: center;

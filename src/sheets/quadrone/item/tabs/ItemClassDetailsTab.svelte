@@ -106,7 +106,7 @@
 
 <fieldset>
   <legend>
-    {localize('DND5E.ItemClassDetails')}
+    {localize('DND5E.CLASS.Multiclass.Title')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 

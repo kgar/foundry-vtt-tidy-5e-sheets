@@ -97,7 +97,7 @@
   </p>
 </div>
 
-<h3 class="form-header">{localize('DND5E.ItemClassDetails')}</h3>
+<h3 class="form-header">{localize('DND5E.CLASS.Multiclass.Title')}</h3>
 
 <div class="form-group stacked primary-abilities">
   <label for=""
