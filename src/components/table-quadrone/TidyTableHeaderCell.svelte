@@ -7,7 +7,7 @@
 
   type Props = {
     primary?: boolean;
-    baseWidth?: string | null;
+    columnWidth?: string | null;
     title?: string | null;
     children?: Snippet;
     class?: string;
@@ -15,7 +15,7 @@
 
   let {
     primary = false,
-    baseWidth = null,
+    columnWidth = null,
     title = null,
     children,
     class: cssClass,
@@ -31,7 +31,7 @@
   class="tidy-table-header-cell {cssClass}"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TABLE_HEADER_CELL}
   class:primary
-  style:flex-basis={baseWidth}
+  style:--tidy-table-column-width={columnWidth}
   {title}
   {...rest}
 >

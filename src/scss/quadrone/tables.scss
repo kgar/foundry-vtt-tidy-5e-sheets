@@ -291,7 +291,7 @@
     }
 
     &:not(.primary) {
-      flex-basis: var(--tidy-table-cell-width, 5rem);
+      flex-basis: var(--tidy-table-column-width, 5rem);
     }
 
     &.text-cell {
