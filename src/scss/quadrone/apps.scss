@@ -66,6 +66,18 @@
         background: var(--t5e-component-card-ondefault-darker);
       }
     }
+
+    .header-control {
+      .control-icon {
+        color: var(--t5e-color-icon-ondefault-default);
+      }
+      .control-label {
+        color: var(--t5e-color-text-ondefault-default);
+        font-weight: var(--font-weight-default);
+        font-family: var(--t5e-font-family-default);
+        font-size: var(--font-size-13);
+      }
+    }
   }
 
   &[data-tidy-lock-configure-sheet='true']
@@ -85,7 +97,8 @@
       display: none;
     }
 
-    [data-action="copyUuid"], [data-action="configureSheet"] {
+    [data-action='copyUuid'],
+    [data-action='configureSheet'] {
       display: grid;
     }
 
