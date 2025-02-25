@@ -130,27 +130,27 @@
             <div class="button expand-button">
               <i class="fas fa-chevron-down"></i>
             </div>
-            <div class="header-label-cell tidy-table-cell primary">
+            <div class="header-label-cell tidy-table-header-cell primary">
               <h3>Innate</h3>
               <span class="table-header-count">3</span>
             </div>
 
-            <div class="tidy-table-cell">
+            <div class="tidy-table-header-cell">
               <div class="cell-name">Components</div>
             </div>
-            <div class="tidy-table-cell">
+            <div class="tidy-table-header-cell">
               <div class="cell-name">Time</div>
             </div>
-            <div class="tidy-table-cell">
+            <div class="tidy-table-header-cell">
               <div class="cell-name">Uses</div>
             </div>
-            <div class="tidy-table-cell">
+            <div class="tidy-table-header-cell">
               <div class="cell-name">Range</div>
             </div>
-            <div class="tidy-table-cell">
+            <div class="tidy-table-header-cell">
               <div class="cell-name">Hit</div>
             </div>
-            <div class="tidy-table-cell header-cell-actions">
+            <div class="tidy-table-header-cell header-cell-actions">
               <div class="tidy-table-button add-item">
                 <i class="fas fa-plus"></i>
               </div>
@@ -339,25 +339,25 @@
             <div class="button expand-button">
               <i class="fas fa-chevron-down"></i>
             </div>
-            <div class="header-label-cell tidy-table-cell primary">
+            <div class="header-label-cell tidy-table-header-cell primary">
               <h3>Items</h3>
               <span class="table-header-count">3</span>
             </div>
 
-            <div class="tidy-table-cell">
+            <div class="tidy-table-header-cell">
               <div class="cell-name">Time</div>
             </div>
-            <div class="tidy-table-cell">
+            <div class="tidy-table-header-cell">
               <div class="cell-name">Uses</div>
             </div>
-            <div class="tidy-table-cell">
+            <div class="tidy-table-header-cell">
               <div class="cell-name">Range</div>
             </div>
-            <div class="tidy-table-cell">
+            <div class="tidy-table-header-cell">
               <div class="cell-name">Hit</div>
             </div>
             <div
-              class="tidy-table-cell"
+              class="tidy-table-header-cell"
               style="width: calc(1.5rem * 4 + 0.125rem);"
             >
               <div class="cell-name">Actions</div>
