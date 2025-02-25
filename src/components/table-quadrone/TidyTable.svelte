@@ -16,13 +16,7 @@
     [key: string]: any;
   }
 
-  let {
-    key,
-    toggleable = true,
-    header,
-    body,
-    ...rest
-  }: Props = $props();
+  let { key, toggleable = true, header, body, ...rest }: Props = $props();
 
   let { class: cssClass, ...attributes } = rest;
 
