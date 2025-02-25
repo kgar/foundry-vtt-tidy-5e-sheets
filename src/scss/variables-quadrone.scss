@@ -253,6 +253,8 @@
   --t5e-table-row-divider: rgba(224, 216, 212, 1);
   --t5e-table-row-background-default: var(--t5e-component-card-ondefault-default);
   --t5e-table-row-background-expanded: var(--t5e-table-row-background-default), linear-gradient(90deg, var(--t5e-color-palette-white) 0.59%, var(--t5e-table-row-background-default) 44%);
+  // TODO: Have hightouch review this variable and its usages
+  --t5e-table-button-width: 1.5rem;
 
   /* Sheet */
 

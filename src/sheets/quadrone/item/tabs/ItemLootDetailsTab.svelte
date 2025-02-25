@@ -79,6 +79,7 @@
 <fieldset>
   <legend>
     {localize('DND5E.ItemLootDetails')}
+    <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
   <!-- Loot Type -->

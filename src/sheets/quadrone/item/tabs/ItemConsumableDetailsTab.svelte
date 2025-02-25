@@ -83,6 +83,7 @@
 <fieldset>
   <legend>
     {localize('DND5E.ItemConsumableDetails')}
+    <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
   <div class="form-group">
@@ -210,6 +211,7 @@
 <fieldset>
   <legend>
     {localize('DND5E.CONSUMABLE.FIELDS.damage.label')}
+    <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
   <div class="form-group">

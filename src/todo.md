@@ -3,9 +3,19 @@
 ### Bootstrapping all item sheets
 
 - [ ] Get Tidy tables working properly and looking nice with the latest styles
-  - [ ] New quantity control is wider than its 80px parent
-  - [ ] The table styles do not account for varying column widths and do not constrain child contents
+  - [x] New quantity control is wider than its 80px parent
+  - [x] The table styles do not account for varying column widths and do not constrain child contents
+  - [x] Item Name should truncate when too small
+  - [x] Section header name should truncate when too small
+  - [x] Tighten up actions column scaling for icons
+  - [ ] Add breakpoints for showing/hiding content, and add columns
+    - [ ] Uses : order to hide - 4
+    - [ ] Cost : order to hide - 1
+    - [ ] Time : order to hide - 2
+    - [ ] Quantity : order to hide - 5
+    - [ ] Weight : order to hide - 3
   - [ ] Finish creating quadrone-specific table components so that inline activities and item (document) summary can be owned by quadrone and classed accordingly.
+  - [ ] Apply styles to inline activities
 - [ ] Replace rote individual span styles with util styles where able
 - [ ] Implement sheet header contents
   - [ ] Background

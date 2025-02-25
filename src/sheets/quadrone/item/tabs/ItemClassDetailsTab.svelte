@@ -21,6 +21,7 @@
 <fieldset>
   <legend>
     {localize('DND5E.ItemClassDetails')}
+    <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
   <div class="form-group">
@@ -105,7 +106,8 @@
 
 <fieldset>
   <legend>
-    {localize('DND5E.ItemClassDetails')}
+    {localize('DND5E.CLASS.Multiclass.Title')}
+    <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
   <div class="form-group stacked primary-abilities checkbox-grid">
@@ -161,6 +163,7 @@
 <fieldset>
   <legend>
     {localize('DND5E.Spellcasting')}
+    <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
   <DetailsSpellcasting />

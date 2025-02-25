@@ -11,7 +11,7 @@
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import { getContext } from 'svelte';
+  import { getContext, type Component, type ComponentProps } from 'svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import InlineContainerView from './InlineContainerView.svelte';
@@ -61,62 +61,37 @@
 
   const searchResults = getSearchResultsContext();
 
-  // let itemActions: {
-  //   component: Component;
-  //   getProps: (item: Item5e) => any;
-  // }[] = [];
+  // TODO: File away
+  type TidyTableAction<T extends Component<any>> = {
+    component: T;
+    props: (doc: any) => ComponentProps<T>;
+  };
 
-  // $: {
-  //   itemActions = [];
+  let itemActions: TidyTableAction<any>[] = $derived.by(() => {
+    let result: TidyTableAction<any>[] = [];
 
-  //   if (unlocked) {
-  //     itemActions.push({
-  //       component: ItemEditControl,
-  //       getProps: (item: Item5e) => ({ item }),
-  //     });
-
-  //     itemActions.push({
-  //       component: ItemDeleteControl,
-  //       getProps: (item: Item5e) => ({
-  //         item,
-  //         deleteFn: () => item.deleteDialog(),
-  //       }),
-  //     });
-  //   }
-  // }
-
-  const weightUnit = FoundryAdapter.getWeightUnit();
-
-  let useClassicControls = $derived(
-    FoundryAdapter.useClassicControls(container),
-  );
-
-  // TODO: Allow the user to choose which icons are priority and can be shown in the actions column
-
-  let gridTemplateColumns: TidyTableColumns = $derived.by(() => {
-    let result: TidyTableColumns = [
-      {
-        name: 'Name',
-        width: '1fr',
-      },
-      {
-        name: 'Quantity',
-        width: '4.125rem',
-      },
-      {
-        name: 'Weight',
-        width: '2.25rem',
-      },
-    ];
-
-    if (useClassicControls) {
+    if (unlocked) {
       result.push({
-        name: 'Actions',
-        width: `${1.5 * (unlocked ? 3 : 1)}rem`,
-      });
+        component: EditButton,
+        props: (doc: any) => ({ doc }),
+      } satisfies TidyTableAction<typeof EditButton>);
+
+      result.push({
+        component: DeleteButton,
+        props: (doc: any) => ({
+          doc,
+          deleteFn: () => doc.deleteDialog(),
+        }),
+      } satisfies TidyTableAction<typeof DeleteButton>);
     }
 
     return result;
+  });
+
+  let columnWidths = $derived({
+    quantity: '5rem',
+    weight: '5rem',
+    actions: `calc(var(--t5e-table-button-width) * ${1 + itemActions.length})`,
   });
 
   let containerToggleMap = $derived(inlineToggleService.map);
@@ -143,13 +118,16 @@
             </h3>
             <span class="table-header-count">{section.items.length}</span>
           </TidyTableHeaderCell>
-          <TidyTableHeaderCell>
+          <TidyTableHeaderCell columnWidth={columnWidths.quantity}>
             {localize('DND5E.Quantity')}
           </TidyTableHeaderCell>
-          <TidyTableHeaderCell>
+          <TidyTableHeaderCell columnWidth={columnWidths.weight}>
             {localize('DND5E.Weight')}
           </TidyTableHeaderCell>
-          <TidyTableHeaderCell class="header-cell-actions">
+          <TidyTableHeaderCell
+            class="header-cell-actions"
+            columnWidth={columnWidths.actions}
+          >
             <!-- Actions -->
           </TidyTableHeaderCell>
         </TidyTableHeaderRow>
@@ -209,23 +187,25 @@
                     </i>
                   </a>
                 {/if}
-                <a class="item-name truncate" onclick={(ev) => toggleSummary()}>
+                <a class="item-name" onclick={(ev) => toggleSummary()}>
                   <span class="cell-name">{item.name}</span>
                 </a>
               </TidyTableCell>
-              <TidyTableCell>
+              <TidyTableCell columnWidth={columnWidths.quantity}>
                 <InlineItemQuantityTracker {item} disabled={!item.isOwner} />
               </TidyTableCell>
-              <TidyTableCell>
+              <TidyTableCell columnWidth={columnWidths.weight}>
                 {weight}
               </TidyTableCell>
-              <TidyTableCell class="item-actions">
+              <TidyTableCell
+                class="tidy-table-actions"
+                columnWidth={columnWidths.actions}
+              >
                 {#if unlocked}
-                  <EditButton doc={item} />
-                  <DeleteButton
-                    doc={item}
-                    deleteFn={() => item.deleteDialog()}
-                  />
+                  {#each itemActions as action}
+                    {@const props = action.props(item)}
+                    <action.component {...props} />
+                  {/each}
                 {/if}
                 <MenuButton targetSelector="[data-item-id]" />
               </TidyTableCell>

@@ -5,7 +5,7 @@
   interface Props {
     primary?: boolean;
     title?: string | undefined;
-    baseWidth?: string | null;
+    columnWidth?: string | null;
     children?: Snippet<[any]>;
     [key: string]: any;
   }
@@ -13,7 +13,7 @@
   let {
     primary = false,
     title = undefined,
-    baseWidth = null,
+    columnWidth = null,
     children,
     ...rest
   }: Props = $props();
@@ -36,7 +36,7 @@
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TABLE_CELL}
   onmouseenter={mouseEnter}
   onmouseleave={mouseLeave}
-  style:flex-basis={baseWidth}
+  style:--tidy-table-column-width={columnWidth}
   {...rest.attributes}
 >
   {@render children?.({ isHovering })}

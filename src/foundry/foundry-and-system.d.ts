@@ -26,7 +26,7 @@ declare global {
   var Dialog: any;
   var dnd5e: any;
   var DocumentSheet: any;
-  var DocumentSheetConfig: any;
+  var DocumentSheetConfig: any; // game.release.generation < 13 // remove when Foundry 13+ only
   var FilePicker: any;
   var Folder: any;
   var FormApplication: any;

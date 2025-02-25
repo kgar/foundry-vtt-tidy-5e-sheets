@@ -28,7 +28,12 @@ import { debug } from './utils/logging';
 import { Tidy5eItemSheetQuadrone } from './sheets/quadrone/Tidy5eItemSheetQuadrone.svelte';
 
 Hooks.once('init', () => {
-  DocumentSheetConfig.registerSheet(
+  const documentSheetConfig =
+    game.release.generation < 13
+      ? DocumentSheetConfig
+      : foundry.applications.apps.DocumentSheetConfig;
+
+      documentSheetConfig.registerSheet(
     Actor,
     CONSTANTS.DND5E_SYSTEM_ID,
     Tidy5eCharacterSheet,
@@ -38,7 +43,7 @@ Hooks.once('init', () => {
     }
   );
 
-  DocumentSheetConfig.registerSheet(
+  documentSheetConfig.registerSheet(
     Actor,
     CONSTANTS.DND5E_SYSTEM_ID,
     Tidy5eNpcSheet,
@@ -48,7 +53,7 @@ Hooks.once('init', () => {
     }
   );
 
-  DocumentSheetConfig.registerSheet(
+  documentSheetConfig.registerSheet(
     Actor,
     CONSTANTS.DND5E_SYSTEM_ID,
     Tidy5eVehicleSheet,
@@ -73,7 +78,7 @@ Hooks.once('init', () => {
     CONSTANTS.ITEM_TYPE_WEAPON,
   ];
 
-  DocumentSheetConfig.registerSheet(
+  documentSheetConfig.registerSheet(
     Item,
     CONSTANTS.DND5E_SYSTEM_ID,
     Tidy5eItemSheetClassic,
@@ -83,7 +88,7 @@ Hooks.once('init', () => {
     }
   );
 
-  DocumentSheetConfig.registerSheet(
+  documentSheetConfig.registerSheet(
     Item,
     CONSTANTS.DND5E_SYSTEM_ID,
     Tidy5eContainerSheetClassic,
@@ -93,7 +98,7 @@ Hooks.once('init', () => {
     }
   );
 
-  DocumentSheetConfig.registerSheet(
+  documentSheetConfig.registerSheet(
     Actor,
     CONSTANTS.DND5E_SYSTEM_ID,
     Tidy5eGroupSheetClassic,
@@ -108,7 +113,7 @@ Hooks.once('init', () => {
   initKeybindings();
 
   if (settings.value.truesight) {
-    DocumentSheetConfig.registerSheet(
+    documentSheetConfig.registerSheet(
       Item,
       CONSTANTS.DND5E_SYSTEM_ID,
       Tidy5eContainerSheetQuadrone,
@@ -118,7 +123,7 @@ Hooks.once('init', () => {
       }
     );
 
-    DocumentSheetConfig.registerSheet(
+    documentSheetConfig.registerSheet(
       Item,
       CONSTANTS.DND5E_SYSTEM_ID,
       Tidy5eItemDebugSheetQuadrone,
@@ -128,7 +133,7 @@ Hooks.once('init', () => {
       }
     );
 
-    DocumentSheetConfig.registerSheet(
+    documentSheetConfig.registerSheet(
       Item,
       CONSTANTS.DND5E_SYSTEM_ID,
       Tidy5eItemSheetQuadrone,

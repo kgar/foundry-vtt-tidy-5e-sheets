@@ -25,6 +25,7 @@
 <fieldset>
   <legend>
     {localize('DND5E.SpellDetails')}
+    <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
   <!-- Spell Level -->
@@ -247,6 +248,7 @@
 <fieldset>
   <legend>
     {localize('DND5E.Casting')}
+    <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
   <FieldActivation />

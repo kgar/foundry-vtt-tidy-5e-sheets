@@ -17,6 +17,7 @@
 <fieldset>
   <legend>
     {localize('DND5E.ItemFacilityDetails')}
+    <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
   <!-- Type -->
@@ -299,6 +300,7 @@
 <fieldset>
   <legend>
     {localize('DND5E.FACILITY.Orders.Label')}
+    <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
   <!-- Executing -->
@@ -382,6 +384,7 @@
   <fieldset>
     <legend>
       {localize(`DND5E.FACILITY.Orders.${context.source.order}.present`)}
+      <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 
     <p class="hint">
@@ -442,6 +445,7 @@
   <fieldset>
     <legend>
       {localize('DND5E.FACILITY.Orders.trade.present')}
+      <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 
     <!-- Stocked -->

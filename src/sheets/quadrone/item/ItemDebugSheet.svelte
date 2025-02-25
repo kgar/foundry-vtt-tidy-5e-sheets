@@ -32,7 +32,9 @@
 <aside class="sidebar dark">
   <div class="sidebar-contents">
     <h4>Theme</h4>
-    <div style="display: flex; flex-direction: column; gap: var(--t5e-spacing-1x)">
+    <div
+      style="display: flex; flex-direction: column; gap: var(--t5e-spacing-1x)"
+    >
       <label for="light-mode-toggle">
         <input
           id="light-mode-toggle"
@@ -57,7 +59,9 @@
       </label>
     </div>
     <h4>Inversion</h4>
-    <div style="display: flex; flex-direction: column; gap: var(--t5e-spacing-1x)">
+    <div
+      style="display: flex; flex-direction: column; gap: var(--t5e-spacing-1x)"
+    >
       <label for="default-mode-toggle">
         <input
           id="default-mode-toggle"
@@ -116,7 +120,10 @@
       />
     </div>
     <fieldset class="vertical-gallery">
-      <legend> Spellcasting Table </legend>
+      <legend>
+        Spellcasting Table
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
       <div class="tidy-table-container spellcasting" style="min-width: 720px;">
         <div class="tidy-table">
           <div class="tidy-table-header-row dark innate">
@@ -151,7 +158,11 @@
           </div>
           <div class="tidy-table-row spell">
             <div class="tidy-table-button item-use-button">
-              <img class="item-image" alt="Spell Name" src="icons/magic/fire/projectile-fireball-smoke-orange.webp" />
+              <img
+                class="item-image"
+                alt="Spell Name"
+                src="icons/magic/fire/projectile-fireball-smoke-orange.webp"
+              />
               <i class="fas fa-dice-d20"></i>
             </div>
             <div class="tidy-table-cell item-label text-cell primary">
@@ -177,7 +188,11 @@
           </div>
           <div class="tidy-table-row spell rarity rare">
             <div class="tidy-table-button item-use-button">
-              <img class="item-image" alt="Spell Name" src="icons/magic/fire/projectile-fireball-smoke-orange.webp" />
+              <img
+                class="item-image"
+                alt="Spell Name"
+                src="icons/magic/fire/projectile-fireball-smoke-orange.webp"
+              />
               <i class="fas fa-dice-d20"></i>
             </div>
             <div class="tidy-table-cell item-label text-cell primary">
@@ -188,7 +203,12 @@
               <ul class="unlist spell-components">
                 <li class="spell-component" data-tooltip="Somatic">S</li>
                 <li class="spell-component" data-tooltip="Material">M</li>
-                <li class="spell-component-special" data-tooltip="Concentration">C</li>
+                <li
+                  class="spell-component-special"
+                  data-tooltip="Concentration"
+                >
+                  C
+                </li>
               </ul>
             </div>
             <div class="tidy-table-cell text-cell">
@@ -204,7 +224,11 @@
           </div>
           <div class="tidy-table-row spell equipped">
             <div class="tidy-table-button item-use-button">
-              <img class="item-image" alt="Spell Name" src="icons/magic/fire/projectile-fireball-smoke-orange.webp" />
+              <img
+                class="item-image"
+                alt="Spell Name"
+                src="icons/magic/fire/projectile-fireball-smoke-orange.webp"
+              />
               <i class="fas fa-dice-d20"></i>
             </div>
             <div class="tidy-table-cell item-label text-cell primary">
@@ -230,7 +254,11 @@
           </div>
           <div class="tidy-table-row spell equipped">
             <div class="tidy-table-button item-use-button">
-              <img class="item-image" alt="Spell Name" src="icons/magic/fire/projectile-fireball-smoke-orange.webp" />
+              <img
+                class="item-image"
+                alt="Spell Name"
+                src="icons/magic/fire/projectile-fireball-smoke-orange.webp"
+              />
               <i class="fas fa-dice-d20"></i>
             </div>
             <div class="tidy-table-cell item-label text-cell primary">
@@ -262,13 +290,15 @@
                 <span class="value">15</span>
               </div>
             </div>
-
           </div>
 
           <div class="tidy-table-row spell equipped">
-
             <div class="tidy-table-button item-use-button">
-              <img class="item-image" alt="Spell Name" src="icons/magic/fire/projectile-fireball-smoke-orange.webp" />
+              <img
+                class="item-image"
+                alt="Spell Name"
+                src="icons/magic/fire/projectile-fireball-smoke-orange.webp"
+              />
               <i class="fas fa-dice-d20"></i>
             </div>
             <div class="tidy-table-cell item-label text-cell primary">
@@ -302,10 +332,7 @@
                 <span class="value">8</span>
               </div>
             </div>
-
           </div>
-
-
         </div>
         <div class="tidy-table">
           <div class="tidy-table-header-row dark">
@@ -329,13 +356,20 @@
             <div class="tidy-table-cell">
               <div class="cell-name">Hit</div>
             </div>
-            <div class="tidy-table-cell" style="width: calc(1.5rem * 4 + 0.125rem);">
+            <div
+              class="tidy-table-cell"
+              style="width: calc(1.5rem * 4 + 0.125rem);"
+            >
               <div class="cell-name">Actions</div>
             </div>
           </div>
           <div class="tidy-table-row spell rarity rare">
             <div class="tidy-table-button item-use-button">
-              <img class="item-image" alt="Spell Name" src="icons/magic/fire/projectile-fireball-smoke-orange.webp" />
+              <img
+                class="item-image"
+                alt="Spell Name"
+                src="icons/magic/fire/projectile-fireball-smoke-orange.webp"
+              />
               <i class="fas fa-dice-d20"></i>
             </div>
             <div class="tidy-table-cell item-label text-cell primary">
@@ -346,7 +380,12 @@
               <ul class="unlist spell-components">
                 <li class="spell-component" data-tooltip="Somatic">S</li>
                 <li class="spell-component" data-tooltip="Material">M</li>
-                <li class="spell-component-special" data-tooltip="Concentration">C</li>
+                <li
+                  class="spell-component-special"
+                  data-tooltip="Concentration"
+                >
+                  C
+                </li>
               </ul>
             </div>
             <div class="tidy-table-cell text-cell">
@@ -359,7 +398,7 @@
                 <span class="max">10</span>
               </div>
             </div>
-            <div class="tidy-table-cell item-actions">
+            <div class="tidy-table-cell tidy-table-actions">
               <div class="tidy-table-button">
                 <i class="fas fa-hand"></i>
               </div>
@@ -376,8 +415,11 @@
           </div>
           <div class="tidy-table-row spell equipped">
             <div class="tidy-table-button item-use-button">
-
-              <img class="item-image" alt="Spell Name" src="icons/magic/fire/projectile-fireball-smoke-orange.webp" />
+              <img
+                class="item-image"
+                alt="Spell Name"
+                src="icons/magic/fire/projectile-fireball-smoke-orange.webp"
+              />
               <i class="fas fa-dice-d20"></i>
             </div>
             <div class="tidy-table-cell item-label text-cell primary">
@@ -405,35 +447,57 @@
       </div>
     </fieldset>
     <fieldset>
-      <legend> Colors </legend>
-      <div style="background-color: var(--t5e-color-palette-red-45); padding: 0.5rem; color:white;">
+      <legend>
+        Colors
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
+      <div
+        style="background-color: var(--t5e-color-palette-red-45); padding: 0.5rem; color:white;"
+      >
         Brand red
       </div>
-      <div style="background-color: var(--t5e-theme-color-default); padding: 0.5rem; color:white;">
+      <div
+        style="background-color: var(--t5e-theme-color-default); padding: 0.5rem; color:white;"
+      >
         Default theme color
       </div>
-      <div style="background-color: var(--t5e-theme-color-darkest); padding: 0.5rem; color:white;">
+      <div
+        style="background-color: var(--t5e-theme-color-darkest); padding: 0.5rem; color:white;"
+      >
         Darkest theme color
       </div>
-      <div style="background-color: var(--t5e-theme-color-darker); padding: 0.5rem; color:white;">
+      <div
+        style="background-color: var(--t5e-theme-color-darker); padding: 0.5rem; color:white;"
+      >
         Darker theme color
       </div>
-      <div style="background-color: var(--t5e-theme-color-lighter); padding: 0.5rem; color:white;">
+      <div
+        style="background-color: var(--t5e-theme-color-lighter); padding: 0.5rem; color:white;"
+      >
         Lighter theme color
       </div>
-      <div style="background-color: var(--t5e-theme-color-lightest); padding: 0.5rem; color:white;">
+      <div
+        style="background-color: var(--t5e-theme-color-lightest); padding: 0.5rem; color:white;"
+      >
         Lightest theme color
       </div>
-      <div style="background-color: var(--t5e-theme-color-highlight); padding: 0.5rem; color:white;">
+      <div
+        style="background-color: var(--t5e-theme-color-highlight); padding: 0.5rem; color:white;"
+      >
         Highlight theme color
       </div>
-      <div style="background: linear-gradient(90deg, var(--t5e-theme-color-darkest), var(--t5e-theme-color-default)); padding: 0.5rem; color:white;">
+      <div
+        style="background: linear-gradient(90deg, var(--t5e-theme-color-darkest), var(--t5e-theme-color-default)); padding: 0.5rem; color:white;"
+      >
         Theme gradient
       </div>
       <!-- TODO -->
     </fieldset>
     <fieldset class="vertical-gallery">
-      <legend> Button / Attention </legend>
+      <legend>
+        Button / Attention
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
       Anchor
       <a class="button active">
         <i class="fas fa-edit"></i>
@@ -446,7 +510,10 @@
       </button>
     </fieldset>
     <fieldset class="vertical-gallery">
-      <legend> Button / Default </legend>
+      <legend>
+        Button / Default
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
       Anchor
       <a class="button">
         <i class="fas fa-edit"></i>
@@ -459,7 +526,10 @@
       </button>
     </fieldset>
     <fieldset style="display: flex; gap: 0.5rem;">
-      <legend> Button / Icon Only </legend>
+      <legend>
+        Button / Icon Only
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
       <div class="vertical-gallery">
         Anchors
         <a class="button icon-button">
@@ -492,7 +562,10 @@
       </div>
     </fieldset>
     <fieldset>
-      <legend> Button / Icon Only Menu </legend>
+      <legend>
+        Button / Icon Only Menu
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
       <div class="wrapped-gallery">
         <ButtonWithOptionPanel class="icon-button">
           <i class="fas fa-hand"></i>
@@ -532,7 +605,10 @@
       </div>
     </fieldset>
     <fieldset>
-      <legend> Button / Edit Description </legend>
+      <legend>
+        Button / Edit Description
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
       <a class="button icon-button">
         <i class="fa-solid fa-feather"></i>
       </a>
@@ -541,7 +617,10 @@
       </a>
     </fieldset>
     <fieldset class="span-all">
-      <legend> Button / Group </legend>
+      <legend>
+        Button / Group
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
       <div>
         <span>
           Change the sheet size to see the options show/hide dynamically.
@@ -559,7 +638,10 @@
       </div>
     </fieldset>
     <fieldset class="wrapped-gallery">
-      <legend> Button / Toggle </legend>
+      <legend>
+        Button / Toggle
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
       <div class="vertical-gallery">
         <ToggleButton checked={false}>Tidy</ToggleButton>
         <ToggleButton checked={true}>Tidy</ToggleButton>
@@ -600,11 +682,17 @@
       </div>
     </fieldset>
     <fieldset>
-      <legend> Category / Spell context icon </legend>
+      <legend>
+        Category / Spell context icon
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
       <!-- TODO -->
     </fieldset>
     <fieldset>
-      <legend> Data / Spell Components </legend>
+      <legend>
+        Data / Spell Components
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
       <ul class="unlist spell-components">
         <li class="spell-component" data-tooltip="Verbal">V</li>
         <li class="spell-component" data-tooltip="Somatic">S</li>
@@ -614,30 +702,48 @@
       </ul>
     </fieldset>
     <fieldset>
-      <legend> Data / Time </legend>
+      <legend>
+        Data / Time
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
       <div class="time">
         <div class="title">Action</div>
         <div class="subtitle">Ritual</div>
       </div>
     </fieldset>
     <fieldset>
-      <legend> Data / Uses </legend>
+      <legend>
+        Data / Uses
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
       <!-- TODO -->
     </fieldset>
     <fieldset>
-      <legend> Enricher </legend>
+      <legend>
+        Enricher
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
       <!-- TODO -->
     </fieldset>
     <fieldset>
-      <legend> Field </legend>
+      <legend>
+        Field
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
       <!-- TODO -->
     </fieldset>
     <fieldset>
-      <legend> Filigree box </legend>
+      <legend>
+        Filigree box
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
       <!-- TODO -->
     </fieldset>
     <fieldset>
-      <legend> Input / Checkbox </legend>
+      <legend>
+        Input / Checkbox
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
       <label for="checkbox-test-1" class="checkbox">
         <input type="checkbox" id="checkbox-test-1" /> Property
       </label>
@@ -652,7 +758,10 @@
       </label>
     </fieldset>
     <fieldset class="vertical-gallery">
-      <legend>Input / Radio</legend>
+      <legend
+        >Input / Radio
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
       <!--
         Radio button checkmarks aren't quite centering. Let's try to fix that:
         - https://codepen.io/isaacabrahamson/pen/qVXOWW?editors=1100
@@ -676,12 +785,18 @@
       </label>
     </fieldset>
     <fieldset class="vertical-gallery">
-      <legend> Input / Search </legend>
+      <legend>
+        Input / Search
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
       <Search />
       <Search disabled={true} />
     </fieldset>
     <fieldset class="vertical-gallery">
-      <legend> Input / Select </legend>
+      <legend>
+        Input / Select
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
       <select>
         <option value=""></option>
         <option value="1">Attunement Required</option>
@@ -712,13 +827,19 @@
       </select>
     </fieldset>
     <fieldset>
-      <legend>Input / Switch - Field Toggle</legend>
+      <legend
+        >Input / Switch - Field Toggle
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
       <!-- TODO -->
       <FieldToggle></FieldToggle>
       <FieldToggle checked={true}></FieldToggle>
     </fieldset>
     <fieldset class="vertical-gallery">
-      <legend> Input / Text </legend>
+      <legend>
+        Input / Text
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
       <input
         type="text"
         value="Value"
@@ -734,7 +855,10 @@
       <input type="text" placeholder="A placeholder here" disabled />
     </fieldset>
     <fieldset class="vertical-gallery">
-      <legend> Input / Text with Icon </legend>
+      <legend>
+        Input / Text with Icon
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
       <div class="input-group">
         <i class="fa-solid fa-cube"></i>
         <input type="text" value="Value" />
@@ -745,7 +869,10 @@
       </div>
     </fieldset>
     <fieldset class="vertical-gallery">
-      <legend> Input / Text with Label </legend>
+      <legend>
+        Input / Text with Label
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
       <div class="input-group">
         <i class="currency gp" aria-label="gp"></i>
         <input type="text" value="Value" />
@@ -768,7 +895,10 @@
       </div>
     </fieldset>
     <fieldset>
-      <legend> Pill </legend>
+      <legend>
+        Pill
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
       <ul class="pills unlist">
         <li class="pill">Label</li>
         <li class="pill negative">
@@ -780,7 +910,10 @@
       </ul>
     </fieldset>
     <fieldset>
-      <legend> Pill / Readonly </legend>
+      <legend>
+        Pill / Readonly
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
       <ul class="pills">
         <li class="pill">
           Panache <span><span class="lighter">+</span>10</span>
@@ -793,7 +926,10 @@
       </ul>
     </fieldset>
     <fieldset>
-      <legend> Pill / Switch </legend>
+      <legend>
+        Pill / Switch
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
       Fontawesome
       <PillSwitch
         checked={context.system.equipped}
@@ -820,7 +956,10 @@
       </PillSwitch>
     </fieldset>
     <fieldset style="max-width: 75rem;">
-      <legend>Form Example</legend>
+      <legend
+        >Form Example
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
       <div class="form-group">
         <label>Spell Level</label>
         <div class="form-fields">
@@ -925,11 +1064,13 @@
           </div>
           <div class="form-group checkbox">
             <div class="form-fields">
-            <label for="consumed" class="checkbox"><input type="checkbox" id="consumed" /><span>Consumed</span></label>
+              <label for="consumed" class="checkbox"
+                ><input type="checkbox" id="consumed" /><span>Consumed</span
+                ></label
+              >
             </div>
           </div>
         </div>
-
       </div>
       <div class="form-group">
         <label role="presentation"></label>

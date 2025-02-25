@@ -80,6 +80,7 @@
 <fieldset>
   <legend>
     {localize('DND5E.CONTAINER.Details')}
+    <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
   <div class="form-group stacked container-properties checkbox-grid">
@@ -125,6 +126,7 @@
 <fieldset>
   <legend>
     {localize('DND5E.CONTAINER.FIELDS.capacity.label')}
+    <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
   <div class="form-group">

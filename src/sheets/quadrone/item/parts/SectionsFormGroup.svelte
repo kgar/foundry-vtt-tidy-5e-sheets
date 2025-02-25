@@ -12,7 +12,10 @@
 </script>
 
 <fieldset>
-  <legend>{localize('TIDY5E.Tidy5eSettings')}</legend>
+  <legend
+    >{localize('TIDY5E.Tidy5eSettings')}
+    <tidy-gold-header-underline></tidy-gold-header-underline>
+  </legend>
   <div class="form-group custom-section">
     <label for="{appId}-custom-section">
       {localize('TIDY5E.Section.Label')}

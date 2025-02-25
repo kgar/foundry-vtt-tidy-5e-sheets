@@ -21,6 +21,7 @@
 <fieldset>
   <legend>
     {localize('DND5E.ItemFeatureDetails')}
+    <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
   <div class="form-group">
@@ -146,6 +147,7 @@
   <fieldset>
     <legend>
       {localize('DND5E.ENCHANTMENT.Label')}
+      <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 
     <!-- Max Enchantments -->

@@ -6,7 +6,7 @@ export function createHeaderButton(
   icon: string
 ) {
   // TODO: Inline when V12 is no longer supported.
-  const iconMarkerClass = game.releases.generation < 13 ? '' : 'icon';
+  const iconMarkerClass = game.release.generation < 13 ? '' : 'icon';
   return `<button type="button" class="header-control ${iconMarkerClass} ${icon}" data-action="${action}" data-tooltip="${label}" aria-label="${label}" ${tidyHeaderAttribute}></button>`;
 }
 

@@ -83,6 +83,7 @@
 <fieldset>
   <legend>
     {localize('DND5E.ItemWeaponDetails')}
+    <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
   <!-- Weapon Type -->
@@ -275,6 +276,7 @@
 <fieldset>
   <legend>
     {localize('DND5E.Range')}
+    <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
   {#if context.system.hasRange || !context.system.attackType}
@@ -415,6 +417,7 @@
 <fieldset>
   <legend>
     {localize('DND5E.DAMAGE.Title')}
+    <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
   <div class="form-fields">
@@ -434,6 +437,7 @@
   <fieldset>
     <legend>
       {localize('DND5E.Versatile')}
+      <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 
     <FieldDamage

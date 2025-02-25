@@ -16,6 +16,10 @@
       width: 1.5rem;
       height: 1.5rem;
     }
+
+    button.header-control {
+      color: var(--t5e-secondary-color);
+    }
   }
 
   .window-header:has(+ .controls-dropdown.expanded)
