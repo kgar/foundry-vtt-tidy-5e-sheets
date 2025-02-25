@@ -86,10 +86,25 @@
     return result;
   });
 
-  let columnWidths = $derived({
-    quantity: '5rem',
-    weight: '5rem',
-    actions: `calc(var(--t5e-table-button-width) * ${1 + itemActions.length})`,
+  let columnSpecs = $derived({
+    charges: {
+      columnWidth: '5rem',
+    },
+    price: {
+      columnWidth: '5rem',
+      hideUnder: 550,
+    },
+    quantity: {
+      columnWidth: '5rem',
+      hideUnder: 400,
+    },
+    weight: {
+      columnWidth: '5rem',
+      hideUnder: 500,
+    },
+    actions: {
+      columnWidth: `calc(var(--t5e-table-button-width) * ${1 + itemActions.length})`,
+    },
   });
 
   let containerToggleMap = $derived(inlineToggleService.map);
@@ -116,15 +131,21 @@
             </h3>
             <span class="table-header-count">{section.items.length}</span>
           </TidyTableHeaderCell>
-          <TidyTableHeaderCell columnWidth={columnWidths.quantity}>
+          <TidyTableHeaderCell {...columnSpecs.charges}>
+            {localize('DND5E.Charges')}
+          </TidyTableHeaderCell>
+          <TidyTableHeaderCell {...columnSpecs.price}>
+            {localize('DND5E.Price')}
+          </TidyTableHeaderCell>
+          <TidyTableHeaderCell {...columnSpecs.quantity}>
             {localize('DND5E.Quantity')}
           </TidyTableHeaderCell>
-          <TidyTableHeaderCell columnWidth={columnWidths.weight}>
+          <TidyTableHeaderCell {...columnSpecs.weight}>
             {localize('DND5E.Weight')}
           </TidyTableHeaderCell>
           <TidyTableHeaderCell
             class="header-cell-actions"
-            columnWidth={columnWidths.actions}
+            {...columnSpecs.actions}
           >
             <!-- Actions -->
           </TidyTableHeaderCell>
@@ -189,15 +210,19 @@
                   <span class="cell-name">{item.name}</span>
                 </a>
               </TidyTableCell>
-              <TidyTableCell columnWidth={columnWidths.quantity}>
+              <TidyTableCell {...columnSpecs.charges}
+                >Charges here</TidyTableCell
+              >
+              <TidyTableCell {...columnSpecs.price}>Price here</TidyTableCell>
+              <TidyTableCell {...columnSpecs.quantity}>
                 <InlineItemQuantityTracker {item} disabled={!item.isOwner} />
               </TidyTableCell>
-              <TidyTableCell columnWidth={columnWidths.weight}>
+              <TidyTableCell {...columnSpecs.weight}>
                 {weight}
               </TidyTableCell>
               <TidyTableCell
                 class="tidy-table-actions"
-                columnWidth={columnWidths.actions}
+                {...columnSpecs.actions}
               >
                 {#if unlocked}
                   {#each itemActions as action}

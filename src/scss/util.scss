@@ -79,111 +79,112 @@
 
 /* Container Queries */
 .tidy5e-sheet.application.quadrone {
+  // TODO: Discuss with Hightouch the best way to deal with these low-specificity utility classes.
   @container (width < 3.125rem) {
     .hide-under-50 {
-      display: none;
+      display: none !important;
     }
   }
 
   @container (width < 6.25rem) {
     .hide-under-100 {
-      display: none;
+      display: none !important;
     }
   }
 
   @container (width < 9.375rem) {
     .hide-under-150 {
-      display: none;
+      display: none !important;
     }
   }
 
   @container (width < 12.5rem) {
     .hide-under-200 {
-      display: none;
+      display: none !important;
     }
   }
 
   @container (width < 15.625rem) {
     .hide-under-250 {
-      display: none;
+      display: none !important;
     }
   }
 
   @container (width < 18.75rem) {
     .hide-under-300 {
-      display: none;
+      display: none !important;
     }
   }
 
   @container (width < 21.875rem) {
     .hide-under-350 {
-      display: none;
+      display: none !important;
     }
   }
 
   @container (width < 25rem) {
     .hide-under-400 {
-      display: none;
+      display: none !important;
     }
   }
 
   @container (width < 28.125rem) {
     .hide-under-450 {
-      display: none;
+      display: none !important;
     }
   }
 
   @container (width < 31.25rem) {
     .hide-under-500 {
-      display: none;
+      display: none !important;
     }
   }
 
   @container (width < 34.375rem) {
     .hide-under-550 {
-      display: none;
+      display: none !important;
     }
   }
 
   @container (width < 37.5rem) {
     .hide-under-600 {
-      display: none;
+      display: none !important;
     }
   }
 
   @container (width < 40.625rem) {
     .hide-under-650 {
-      display: none;
+      display: none !important;
     }
   }
 
   @container (width < 43.75rem) {
     .hide-under-700 {
-      display: none;
+      display: none !important;
     }
   }
 
   @container (width < 46.875rem) {
     .hide-under-750 {
-      display: none;
+      display: none !important;
     }
   }
 
   @container (width < 50rem) {
     .hide-under-800 {
-      display: none;
+      display: none !important;
     }
   }
 
   @container (width < 53.125rem) {
     .hide-under-850 {
-      display: none;
+      display: none !important;
     }
   }
 
   @container (width < 56.25rem) {
     .hide-under-900 {
-      display: none;
+      display: none !important;
     }
   }
 }

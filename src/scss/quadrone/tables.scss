@@ -4,10 +4,12 @@
     flex-direction: column;
     flex-grow: 1;
     gap: 0.75rem;
+  }
+
+  .tidy-table {
+    container-type: inline-size;
 
     /* Example code only */
-    // padding: 1rem;
-    // border-radius: 1rem;
     background-color: var(--t5e-component-card-ondefault-darker);
   }
 
@@ -274,6 +276,10 @@
 
     &:not(:last-child) {
       border-right: 1px solid var(--t5e-table-row-divider);
+
+      &.tidy-table-header-cell {
+        border-right-color: transparent;
+      }
     }
 
     &.item-label {
@@ -468,7 +474,7 @@
   }
 
   .tidy-table-row-container {
-    &:global(.context) {
+    &.context {
       box-shadow: 0 0 0.1875rem 0.0625rem var(--t5e-primary-accent-color) inset;
     }
 
