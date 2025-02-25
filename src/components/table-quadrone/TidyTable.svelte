@@ -1,10 +1,3 @@
-<script module>
-  export type TidyTableColumns = {
-    name: string;
-    width: string;
-  }[];
-</script>
-
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';

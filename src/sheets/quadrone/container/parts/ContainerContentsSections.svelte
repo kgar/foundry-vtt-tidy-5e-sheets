@@ -1,7 +1,5 @@
 <script lang="ts">
-  import TidyTable, {
-    type TidyTableColumns,
-  } from 'src/components/table-quadrone/TidyTable.svelte';
+  import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import { CONSTANTS } from 'src/constants';
