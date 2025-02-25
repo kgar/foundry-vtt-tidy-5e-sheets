@@ -88,10 +88,10 @@
     return result;
   });
 
-  // TODO: Allow the user to choose which icons are priority and can be shown in the actions column
   let columnWidths = $derived({
-    quantity: '4.125rem',
-    weight: '2.25rem',
+    quantity: '5rem',
+    weight: '5rem',
+    actions: `calc(var(--t5e-table-button-width) * ${1 + itemActions.length})`,
   });
 
   let containerToggleMap = $derived(inlineToggleService.map);
@@ -124,7 +124,10 @@
           <TidyTableHeaderCell columnWidth={columnWidths.weight}>
             {localize('DND5E.Weight')}
           </TidyTableHeaderCell>
-          <TidyTableHeaderCell class="header-cell-actions">
+          <TidyTableHeaderCell
+            class="header-cell-actions"
+            columnWidth={columnWidths.actions}
+          >
             <!-- Actions -->
           </TidyTableHeaderCell>
         </TidyTableHeaderRow>
@@ -184,7 +187,7 @@
                     </i>
                   </a>
                 {/if}
-                <a class="item-name truncate" onclick={(ev) => toggleSummary()}>
+                <a class="item-name" onclick={(ev) => toggleSummary()}>
                   <span class="cell-name">{item.name}</span>
                 </a>
               </TidyTableCell>
@@ -194,7 +197,10 @@
               <TidyTableCell columnWidth={columnWidths.weight}>
                 {weight}
               </TidyTableCell>
-              <TidyTableCell class="item-actions">
+              <TidyTableCell
+                class="tidy-table-actions"
+                columnWidth={columnWidths.actions}
+              >
                 {#if unlocked}
                   {#each itemActions as action}
                     {@const props = action.props(item)}

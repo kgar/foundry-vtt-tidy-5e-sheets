@@ -398,7 +398,7 @@
                 <span class="max">10</span>
               </div>
             </div>
-            <div class="tidy-table-cell item-actions">
+            <div class="tidy-table-cell tidy-table-actions">
               <div class="tidy-table-button">
                 <i class="fas fa-hand"></i>
               </div>
