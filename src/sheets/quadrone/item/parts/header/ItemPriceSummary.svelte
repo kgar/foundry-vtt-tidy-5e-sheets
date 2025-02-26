@@ -1,25 +1,48 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
+  import type { Item5e } from 'src/types/item.types';
+  import type { HTMLAttributes } from 'svelte/elements';
 
-  let context = $derived(getItemSheetContextQuadrone());
+  type Props = {
+    item: Item5e;
+    icon?: boolean;
+    truncate?: boolean;
+    showTitle?: boolean;
+  } & HTMLAttributes<HTMLElement>;
+
+  let {
+    item,
+    icon = true,
+    truncate = false,
+    class: cssClass,
+    showTitle = false,
+    ...rest
+  }: Props = $props();
 
   let denomination = $derived(
-    CONFIG.DND5E.currencies[context.system.price.denomination],
+    CONFIG.DND5E.currencies[item.system.price.denomination],
   );
 
   let itemValueText = $derived(
-    FoundryAdapter.formatNumber(context.system.price?.value),
+    FoundryAdapter.formatNumber(item.system.price?.value),
+  );
+
+  let title = $derived(
+    showTitle
+      ? `${itemValueText} ${denomination?.abbreviation?.toLocaleUpperCase()}`
+      : '',
   );
 </script>
 
-<div class="item-price font-weight-label">
+<div {title} class="item-price font-weight-label {cssClass}" {...rest}>
   <!-- Currency Image -->
-  <i
-    class="currency {context.system?.price?.denomination ?? ''}"
-    aria-label={denomination?.label ?? ''}
-  ></i>
-  <span class="item-price-number">
+  {#if icon}
+    <i
+      class="currency {item.system?.price?.denomination ?? ''}"
+      aria-label={denomination?.label ?? ''}
+    ></i>
+  {/if}
+  <span class="item-price-number" class:truncate>
     <!-- Value Text -->
     <span class="color-text-default">
       {itemValueText}

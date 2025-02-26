@@ -120,7 +120,7 @@
       </div>
     </div>
 
-    <ItemPriceSummary />
+    <ItemPriceSummary item={context.item} />
 
     <ItemWeightSummary />
   </div>

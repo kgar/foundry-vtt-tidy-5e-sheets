@@ -1,0 +1,29 @@
+.tidy5e-sheet:is(.quadrone) .tidy-table {
+  // Charges / Item Uses
+  .inline-uses {
+    display: flex;
+
+    > .uses-value {
+      color: var(--t5e-color-text-default);
+      text-align: right;
+      flex: 1;
+    }
+
+    > .uses-max {
+      color: var(--t5e-color-text-lighter);
+      flex: 1;
+    }
+  }
+
+  .item-price {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .item-price-denomination {
+        text-transform: uppercase;
+    }
+  }
+}

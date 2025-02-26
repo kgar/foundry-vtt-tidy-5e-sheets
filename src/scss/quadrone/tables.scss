@@ -25,8 +25,8 @@
   .tidy-table-header-row {
     background: linear-gradient(
       to right,
-      var(--t5e-theme-color-default),
-      var(--t5e-theme-color-darker)
+      var(--t5e-theme-color-darkest),
+      var(--t5e-theme-color-default)
     );
     color: var(--t5e-color-text-ondefault-default);
     border-radius: 0.125rem;

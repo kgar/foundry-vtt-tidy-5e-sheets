@@ -29,8 +29,6 @@
     type="text"
     value={item.system.uses.value}
     onchange={(event) => {
-      event.preventDefault();
-      event.stopPropagation();
       FoundryAdapter.handleItemUsesChanged(event, item);
     }}
     disabled={!item.isOwner}

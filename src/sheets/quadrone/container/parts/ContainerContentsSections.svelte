@@ -20,6 +20,8 @@
   import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
   import TidyItemTableRow from 'src/components/table-quadrone/TidyItemTableRow.svelte';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
+  import ItemUses from 'src/components/item-list/ItemUses.svelte';
+  import ItemPriceSummary from '../../item/parts/header/ItemPriceSummary.svelte';
 
   interface Props {
     contents: InventorySection[];
@@ -89,14 +91,14 @@
   let columnSpecs = $derived({
     charges: {
       columnWidth: '5rem',
+      hideUnder: 400,
     },
     price: {
-      columnWidth: '5rem',
+      columnWidth: '5.5rem',
       hideUnder: 550,
     },
     quantity: {
       columnWidth: '5rem',
-      hideUnder: 400,
     },
     weight: {
       columnWidth: '5rem',
@@ -210,10 +212,32 @@
                   <span class="cell-name">{item.name}</span>
                 </a>
               </TidyTableCell>
-              <TidyTableCell {...columnSpecs.charges}
-                >Charges here</TidyTableCell
-              >
-              <TidyTableCell {...columnSpecs.price}>Price here</TidyTableCell>
+              <TidyTableCell class="inline-uses" {...columnSpecs.charges}>
+                {#if item.hasLimitedUses}
+                  <input
+                    type="text"
+                    value={item.system.uses.value}
+                    onfocus={(event) => event.currentTarget.select()}
+                    onchange={(event) =>
+                      FoundryAdapter.handleItemUsesChanged(event, item)}
+                    class="uninput uses-value color-text-default"
+                  />
+                  <span class="color-text-gold">/</span>
+                  <span class="uses-max color-text-lighter"
+                    >{item.system.uses.max}</span
+                  >
+                {:else}
+                  <span class="color-text-disabled">&mdash;</span>
+                {/if}
+              </TidyTableCell>
+              <TidyTableCell {...columnSpecs.price}>
+                <ItemPriceSummary
+                  {item}
+                  icon={false}
+                  truncate={true}
+                  showTitle={true}
+                />
+              </TidyTableCell>
               <TidyTableCell {...columnSpecs.quantity}>
                 <InlineItemQuantityTracker {item} disabled={!item.isOwner} />
               </TidyTableCell>

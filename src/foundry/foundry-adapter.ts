@@ -1387,6 +1387,9 @@ export const FoundryAdapter = {
     spentProp: string = 'system.uses.spent',
     maxProp: string = 'system.uses.max'
   ) {
+    event.preventDefault();
+    event.stopPropagation();
+
     const value = processInputChangeDelta(
       event.currentTarget.value,
       documentWithUses,

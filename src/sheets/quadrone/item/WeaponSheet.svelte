@@ -55,7 +55,7 @@
       <ItemRechargeSummary />
     {/if}
 
-    <ItemPriceSummary />
+    <ItemPriceSummary item={context.item} />
 
     <ItemWeightSummary />
 
