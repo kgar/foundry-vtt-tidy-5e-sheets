@@ -194,6 +194,9 @@
                 </span>
               </a>
               <TidyTableCell primary={true} class="item-label text-cell">
+                <a class="item-name" onclick={(ev) => toggleSummary()}>
+                  <span class="cell-name">{item.name}</span>
+                </a>
                 {#if 'containerContents' in ctx && !!ctx.containerContents}
                   <a
                     class="expand-indicator-button"
@@ -208,9 +211,6 @@
                     </i>
                   </a>
                 {/if}
-                <a class="item-name" onclick={(ev) => toggleSummary()}>
-                  <span class="cell-name">{item.name}</span>
-                </a>
               </TidyTableCell>
               <TidyTableCell class="inline-uses" {...columnSpecs.charges}>
                 {#if item.hasLimitedUses}

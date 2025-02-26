@@ -266,7 +266,7 @@
     align-items: center;
     display: flex;
     justify-content: center;
-    padding: 0 0.5rem;
+    padding: 0 0.0625rem;
     min-height: var(--t5e-field-size-default);
     height: 100%;
 
@@ -289,10 +289,6 @@
 
       > * {
         align-content: center;
-      }
-
-      .item-name {
-        flex: 1;
       }
     }
 
@@ -386,7 +382,60 @@
 
   .tidy-table-cell {
     &.primary {
-      padding-inline-end: 0.0625rem;
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+
+      .item-name {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .expand-indicator-button {
+        flex: 1 0 auto;
+        opacity: 0;
+        transition: opacity var(--t5e-transition-default);
+
+        i {
+          color: var(--t5e-color-icon-ondefault-disabled);
+          transition: all var(--t5e-transition-default);
+          width: var(--t5e-table-button-width);
+          height: var(--t5e-table-button-width);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          &.expanded {
+            transform: rotate(90deg);
+            color: var(--t5e-color-icon-ondefault-diminished);
+          }
+        }
+
+        // Hovering on the button itself
+        &:hover {
+          i {
+            color: var(--t5e-color-text-default);
+          }
+        }
+
+        &:has(.expanded) {
+          opacity: 1;
+        }
+      }
+
+      // Hover on the cell
+      &:hover {
+        .expand-indicator-button {
+          opacity: 1;
+        }
+      }
+
+      &:has(.expand-indicator-button) {
+        .item-name {
+          flex-grow: 0;
+          flex-basis: auto;
+        }
+      }
     }
   }
 

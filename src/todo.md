@@ -15,9 +15,13 @@
     - [x] Quantity : order to hide - 5
     - [x] Weight : order to hide - 3
   - [x] Finish creating quadrone-specific table components so that inline activities and item (document) summary can be owned by quadrone and classed accordingly.
-  - [ ] Add special button to primary column for toggling activities / container contents; show on hover, should take up all the space it can
-    - item name will need to be flex: max-content 1 0%.
-  - [ ] Apply styles to inline activities
+- [ ] Add user preference sheet width memoization
+- [ ] Iterate on container tables
+  - [ ] Add expand indicator to primary column for toggling activities / container contents; show on hover, should take up all the space it can
+    - [x] Inline container contents
+    - [ ] Activities
+  - [ ] Add rarity colors to images
+  - [ ] Set up inline activities as a secondary expander with the expand indicator.
 - [ ] Replace rote individual span styles with util styles where able
 - [ ] Implement sheet header contents
   - [ ] Background
