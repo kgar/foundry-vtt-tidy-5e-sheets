@@ -1,7 +1,5 @@
 <script lang="ts">
-  import TidyTable, {
-    type TidyTableColumns,
-  } from 'src/components/table-quadrone/TidyTable.svelte';
+  import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import { CONSTANTS } from 'src/constants';
@@ -22,6 +20,8 @@
   import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
   import TidyItemTableRow from 'src/components/table-quadrone/TidyItemTableRow.svelte';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
+  import ItemUses from 'src/components/item-list/ItemUses.svelte';
+  import ItemPriceSummary from '../../item/parts/header/ItemPriceSummary.svelte';
 
   interface Props {
     contents: InventorySection[];
@@ -88,10 +88,25 @@
     return result;
   });
 
-  let columnWidths = $derived({
-    quantity: '5rem',
-    weight: '5rem',
-    actions: `calc(var(--t5e-table-button-width) * ${1 + itemActions.length})`,
+  let columnSpecs = $derived({
+    charges: {
+      columnWidth: '5rem',
+      hideUnder: 400,
+    },
+    price: {
+      columnWidth: '5.5rem',
+      hideUnder: 550,
+    },
+    quantity: {
+      columnWidth: '5rem',
+    },
+    weight: {
+      columnWidth: '5rem',
+      hideUnder: 500,
+    },
+    actions: {
+      columnWidth: `calc(var(--t5e-table-button-width) * ${1 + itemActions.length})`,
+    },
   });
 
   let containerToggleMap = $derived(inlineToggleService.map);
@@ -118,15 +133,21 @@
             </h3>
             <span class="table-header-count">{section.items.length}</span>
           </TidyTableHeaderCell>
-          <TidyTableHeaderCell columnWidth={columnWidths.quantity}>
+          <TidyTableHeaderCell {...columnSpecs.charges}>
+            {localize('DND5E.Charges')}
+          </TidyTableHeaderCell>
+          <TidyTableHeaderCell {...columnSpecs.price}>
+            {localize('DND5E.Price')}
+          </TidyTableHeaderCell>
+          <TidyTableHeaderCell {...columnSpecs.quantity}>
             {localize('DND5E.Quantity')}
           </TidyTableHeaderCell>
-          <TidyTableHeaderCell columnWidth={columnWidths.weight}>
+          <TidyTableHeaderCell {...columnSpecs.weight}>
             {localize('DND5E.Weight')}
           </TidyTableHeaderCell>
           <TidyTableHeaderCell
             class="header-cell-actions"
-            columnWidth={columnWidths.actions}
+            {...columnSpecs.actions}
           >
             <!-- Actions -->
           </TidyTableHeaderCell>
@@ -173,6 +194,9 @@
                 </span>
               </a>
               <TidyTableCell primary={true} class="item-label text-cell">
+                <a class="item-name" onclick={(ev) => toggleSummary()}>
+                  <span class="cell-name">{item.name}</span>
+                </a>
                 {#if 'containerContents' in ctx && !!ctx.containerContents}
                   <a
                     class="expand-indicator-button"
@@ -187,19 +211,42 @@
                     </i>
                   </a>
                 {/if}
-                <a class="item-name" onclick={(ev) => toggleSummary()}>
-                  <span class="cell-name">{item.name}</span>
-                </a>
               </TidyTableCell>
-              <TidyTableCell columnWidth={columnWidths.quantity}>
+              <TidyTableCell class="inline-uses" {...columnSpecs.charges}>
+                {#if item.hasLimitedUses}
+                  <input
+                    type="text"
+                    value={item.system.uses.value}
+                    onfocus={(event) => event.currentTarget.select()}
+                    onchange={(event) =>
+                      FoundryAdapter.handleItemUsesChanged(event, item)}
+                    class="uninput uses-value color-text-default"
+                  />
+                  <span class="color-text-gold">/</span>
+                  <span class="uses-max color-text-lighter"
+                    >{item.system.uses.max}</span
+                  >
+                {:else}
+                  <span class="color-text-disabled">&mdash;</span>
+                {/if}
+              </TidyTableCell>
+              <TidyTableCell {...columnSpecs.price}>
+                <ItemPriceSummary
+                  {item}
+                  icon={false}
+                  truncate={true}
+                  showTitle={true}
+                />
+              </TidyTableCell>
+              <TidyTableCell {...columnSpecs.quantity}>
                 <InlineItemQuantityTracker {item} disabled={!item.isOwner} />
               </TidyTableCell>
-              <TidyTableCell columnWidth={columnWidths.weight}>
+              <TidyTableCell {...columnSpecs.weight}>
                 {weight}
               </TidyTableCell>
               <TidyTableCell
                 class="tidy-table-actions"
-                columnWidth={columnWidths.actions}
+                {...columnSpecs.actions}
               >
                 {#if unlocked}
                   {#each itemActions as action}

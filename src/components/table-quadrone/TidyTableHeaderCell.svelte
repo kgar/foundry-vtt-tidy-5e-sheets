@@ -8,6 +8,7 @@
   type Props = {
     primary?: boolean;
     columnWidth?: string | null;
+    hideUnder?: number;
     title?: string | null;
     children?: Snippet;
     class?: string;
@@ -17,10 +18,13 @@
     primary = false,
     columnWidth = null,
     title = null,
+    hideUnder,
     children,
     class: cssClass,
     ...rest
   }: Props = $props();
+
+  let hideUnderClass = $derived(!!hideUnder ? `hide-under-${hideUnder}` : '');
 
   let toggleable = getContext<ExpansionTrackerToggleProvider>(
     CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TOGGLE_PROVIDER,
@@ -28,7 +32,7 @@
 </script>
 
 <div
-  class="tidy-table-header-cell {cssClass}"
+  class="tidy-table-header-cell {cssClass} {hideUnderClass}"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TABLE_HEADER_CELL}
   class:primary
   style:--tidy-table-column-width={columnWidth}

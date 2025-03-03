@@ -42,7 +42,7 @@
 
   <!-- Header Summary -->
   <div class="item-header-summary">
-    <ItemPriceSummary />
+    <ItemPriceSummary item={context.item} />
 
     <ItemWeightSummary />
 

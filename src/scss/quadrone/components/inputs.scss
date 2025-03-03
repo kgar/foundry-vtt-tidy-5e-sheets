@@ -18,13 +18,23 @@ select,
   border-radius: 0.125rem;
   border: 0.0625rem solid var(--t5e-component-field-border);
 
-  &:hover, &:focus {
+  &.uninput {
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &:hover,
+  &:focus {
     outline: none;
     background-color: var(--t5e-component-field-background-hover);
     box-shadow: var(--t5e-drop-shadow-field-hover);
   }
-  
-  &:not(:has(:disabled)):hover, &:not(:has(:disabled)):focus {
+
+  &:not(:has(:disabled)):hover,
+  &:not(:has(:disabled)):focus {
     border-color: var(--t5e-component-field-border-hover);
   }
 
@@ -38,7 +48,8 @@ select,
 }
 
 input {
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     outline: none; // For flash of loss of focus.
   }
 }
@@ -168,7 +179,7 @@ textarea {
     flex: 1;
     gap: 0.375rem;
     padding-block-end: 0.0625rem;
-    
+
     input[type='text'] {
       box-shadow: none;
     }
@@ -245,19 +256,20 @@ textarea {
   align-items: top;
   padding-block-start: 0.3125rem;
 }
-.radio, .checkbox {
+.radio,
+.checkbox {
   font-size: var(--font-size-default, 0.8666666667rem);
   font-weight: var(--font-weight-default, 400);
   justify-content: flex-start;
   gap: 0.5rem;
 
   &:hover {
-    input:not(:disabled) {  
+    input:not(:disabled) {
       &:not(:checked) {
         border-color: var(--t5e-component-field-border-hover);
         background: var(--t5e-component-field-background-hover);
       }
-      &:checked  {
+      &:checked {
         border-color: var(--t5e-theme-color-darker);
         background-color: var(--t5e-theme-color-darker);
         box-shadow: var(--t5e-drop-shadow-field-hover);
@@ -396,7 +408,8 @@ select {
   }
 }
 
-&.dark, .dark {
+&.dark,
+.dark {
   select,
   .input-group,
   input[type='text'],
@@ -410,7 +423,7 @@ select {
     &::placeholder {
       color: var(--t5e-color-text-ondefault-disabled);
     }
-    
+
     &:hover {
       background-color: var(--t5e-component-field-background-hover);
       border-color: var(--t5e-component-field-border-hover);

@@ -4,10 +4,12 @@
     flex-direction: column;
     flex-grow: 1;
     gap: 0.75rem;
+  }
+
+  .tidy-table {
+    container-type: inline-size;
 
     /* Example code only */
-    // padding: 1rem;
-    // border-radius: 1rem;
     background-color: var(--t5e-component-card-ondefault-darker);
   }
 
@@ -23,8 +25,8 @@
   .tidy-table-header-row {
     background: linear-gradient(
       to right,
-      var(--t5e-theme-color-default),
-      var(--t5e-theme-color-darker)
+      var(--t5e-theme-color-darkest),
+      var(--t5e-theme-color-default)
     );
     color: var(--t5e-color-text-ondefault-default);
     border-radius: 0.125rem;
@@ -264,7 +266,7 @@
     align-items: center;
     display: flex;
     justify-content: center;
-    padding: 0 0.5rem;
+    padding: 0 0.0625rem;
     min-height: var(--t5e-field-size-default);
     height: 100%;
 
@@ -274,6 +276,10 @@
 
     &:not(:last-child) {
       border-right: 1px solid var(--t5e-table-row-divider);
+
+      &.tidy-table-header-cell {
+        border-right-color: transparent;
+      }
     }
 
     &.item-label {
@@ -283,10 +289,6 @@
 
       > * {
         align-content: center;
-      }
-
-      .item-name {
-        flex: 1;
       }
     }
 
@@ -380,7 +382,60 @@
 
   .tidy-table-cell {
     &.primary {
-      padding-inline-end: 0.0625rem;
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+
+      .item-name {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .expand-indicator-button {
+        flex: 1 0 auto;
+        opacity: 0;
+        transition: opacity var(--t5e-transition-default);
+
+        i {
+          color: var(--t5e-color-icon-ondefault-disabled);
+          transition: all var(--t5e-transition-default);
+          width: var(--t5e-table-button-width);
+          height: var(--t5e-table-button-width);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          &.expanded {
+            transform: rotate(90deg);
+            color: var(--t5e-color-icon-ondefault-diminished);
+          }
+        }
+
+        // Hovering on the button itself
+        &:hover {
+          i {
+            color: var(--t5e-color-text-default);
+          }
+        }
+
+        &:has(.expanded) {
+          opacity: 1;
+        }
+      }
+
+      // Hover on the cell
+      &:hover {
+        .expand-indicator-button {
+          opacity: 1;
+        }
+      }
+
+      &:has(.expand-indicator-button) {
+        .item-name {
+          flex-grow: 0;
+          flex-basis: auto;
+        }
+      }
     }
   }
 
@@ -468,7 +523,7 @@
   }
 
   .tidy-table-row-container {
-    &:global(.context) {
+    &.context {
       box-shadow: 0 0 0.1875rem 0.0625rem var(--t5e-primary-accent-color) inset;
     }
 

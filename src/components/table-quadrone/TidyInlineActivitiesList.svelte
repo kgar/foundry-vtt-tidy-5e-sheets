@@ -1,14 +1,12 @@
 <script lang="ts">
   import type { Item5e } from 'src/types/item.types';
-  import TidyTable, { type TidyTableColumns } from './TidyTable.svelte';
+  import TidyTable from './TidyTable.svelte';
   import TidyTableRow from './TidyTableRow.svelte';
   import TidyTableCell from './TidyTableCell.svelte';
   import type { Activity5e } from 'src/foundry/dnd5e.types';
   import Dnd5eIcon from '../icon/Dnd5eIcon.svelte';
-  import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settings } from 'src/settings/settings.svelte';
   import { Activities } from 'src/features/activities/activities';
   import type { ActivityItemContext } from 'src/types/types';
 
@@ -19,22 +17,14 @@
 
   let { item = null, activities = [] }: Props = $props();
 
-  let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
-
-  const gridTemplateColumns: TidyTableColumns = [
-    {
-      name: 'Name',
-      width: '1fr',
+  const columns = $derived({
+    uses: {
+      columnWidth: '5rem',
     },
-    {
-      name: 'Uses',
-      width: '2.5rem',
+    usage: {
+      columnWidth: '5rem',
     },
-    {
-      name: 'Usage',
-      width: '5rem',
-    },
-  ];
+  });
 
   function rollActivity(activity: Activity5e, event: MouseEvent) {
     activity.use({ event });
@@ -55,7 +45,6 @@
 <TidyTable
   key="activities-{item.name}"
   toggleable={false}
-  {gridTemplateColumns}
   class="inline-activities-table"
 >
   {#snippet body()}
@@ -87,9 +76,11 @@
           </span>
         </a>
         <TidyTableCell primary={true} class="item-label text-cell">
-          {ctx.activity.name}
+          <span class="item-name">
+            <span class="cell-name">{item.name}</span>
+          </span>
         </TidyTableCell>
-        <TidyTableCell>
+        <TidyTableCell {...columns.uses}>
           {#if configurable}
             {#if ctx.isOnCooldown}
               <!-- <RechargeControl
@@ -111,7 +102,7 @@
             {/if}
           {/if}
         </TidyTableCell>
-        <TidyTableCell>
+        <TidyTableCell {...columns.usage}>
           {getActivityUsageLabel(ctx.activity)}
         </TidyTableCell>
       </TidyTableRow>

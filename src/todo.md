@@ -8,14 +8,20 @@
   - [x] Item Name should truncate when too small
   - [x] Section header name should truncate when too small
   - [x] Tighten up actions column scaling for icons
-  - [ ] Add breakpoints for showing/hiding content, and add columns
-    - [ ] Uses : order to hide - 4
-    - [ ] Cost : order to hide - 1
-    - [ ] Time : order to hide - 2
-    - [ ] Quantity : order to hide - 5
-    - [ ] Weight : order to hide - 3
-  - [ ] Finish creating quadrone-specific table components so that inline activities and item (document) summary can be owned by quadrone and classed accordingly.
-  - [ ] Apply styles to inline activities
+  - [x] Add breakpoints for showing/hiding content, and add columns
+    - [x] Charges : order to hide - 4
+    - [x] Price : order to hide - 1
+    ~~- [ ] Time : order to hide - 2~~
+    - [x] Quantity : order to hide - 5
+    - [x] Weight : order to hide - 3
+  - [x] Finish creating quadrone-specific table components so that inline activities and item (document) summary can be owned by quadrone and classed accordingly.
+- [ ] Add user preference sheet width memoization
+- [ ] Iterate on container tables
+  - [ ] Add expand indicator to primary column for toggling activities / container contents; show on hover, should take up all the space it can
+    - [x] Inline container contents
+    - [ ] Activities
+  - [ ] Add rarity colors to images
+  - [ ] Set up inline activities as a secondary expander with the expand indicator.
 - [ ] Replace rote individual span styles with util styles where able
 - [ ] Implement sheet header contents
   - [ ] Background

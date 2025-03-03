@@ -6,6 +6,7 @@
     primary?: boolean;
     title?: string | undefined;
     columnWidth?: string | null;
+    hideUnder?: number;
     children?: Snippet<[any]>;
     [key: string]: any;
   }
@@ -14,9 +15,12 @@
     primary = false,
     title = undefined,
     columnWidth = null,
+    hideUnder,
     children,
     ...rest
   }: Props = $props();
+
+  let hideUnderClass = $derived(!!hideUnder ? `hide-under-${hideUnder}` : '');
 
   let isHovering = $state(false);
 
@@ -30,7 +34,7 @@
 </script>
 
 <div
-  class="tidy-table-cell {rest.class ?? ''}"
+  class="tidy-table-cell {rest.class ?? ''} {hideUnderClass}"
   class:primary
   {title}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TABLE_CELL}
