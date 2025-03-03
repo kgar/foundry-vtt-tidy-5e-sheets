@@ -20,7 +20,7 @@
     rowClass?: string;
     hidden?: boolean;
     draggable?: boolean;
-    children?: Snippet<[any]>;
+    children?: Snippet<[{ toggleSummary: () => void, expanded: boolean}]>;
   }
 
   let {
@@ -140,7 +140,7 @@
   onmouseleave={onMouseLeave}
   ondragstart={handleDragStart}
 >
-  {@render children?.({ toggleSummary })}
+  {@render children?.({ toggleSummary, expanded: showSummary })}
 
   {#snippet afterRow()}
     <ExpandableContainer expanded={showSummary}>

@@ -380,6 +380,40 @@
     }
   }
 
+  .row-detail-expand-indicator,
+  .container-expander {
+    flex: 0;
+    width: var(--t5e-table-button-width);
+    transition: opacity var(--t5e-transition-default);
+    transition-property: opacity, max-width;
+
+    i {
+      color: var(--t5e-color-icon-ondefault-disabled);
+      transition: all var(--t5e-transition-default);
+      width: var(--t5e-table-button-width);
+      height: var(--t5e-table-button-width);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &.expanded {
+        transform: rotate(90deg);
+        color: var(--t5e-color-icon-ondefault-diminished);
+      }
+    }
+
+    // Hovering on the button itself
+    &:hover {
+      i {
+        color: var(--t5e-color-text-default);
+      }
+    }
+
+    &:has(.expanded) {
+      opacity: 1;
+    }
+  }
+
   .tidy-table-cell {
     &.primary {
       display: flex;
@@ -389,51 +423,24 @@
       .item-name {
         flex: 1;
         min-width: 0;
+        display: flex;
+        align-items: stretch;
+
+        > * {
+          align-content: center;
+        }
       }
 
-      .expand-indicator-button {
-        flex: 1 0 auto;
+      .row-detail-expand-indicator:not(:has(.expanded)) {
+        max-width: 0;
         opacity: 0;
-        transition: opacity var(--t5e-transition-default);
-
-        i {
-          color: var(--t5e-color-icon-ondefault-disabled);
-          transition: all var(--t5e-transition-default);
-          width: var(--t5e-table-button-width);
-          height: var(--t5e-table-button-width);
-          display: flex;
-          justify-content: center;
-          align-items: center;
-
-          &.expanded {
-            transform: rotate(90deg);
-            color: var(--t5e-color-icon-ondefault-diminished);
-          }
-        }
-
-        // Hovering on the button itself
-        &:hover {
-          i {
-            color: var(--t5e-color-text-default);
-          }
-        }
-
-        &:has(.expanded) {
-          opacity: 1;
-        }
       }
 
       // Hover on the cell
       &:hover {
-        .expand-indicator-button {
+        .row-detail-expand-indicator {
+          max-width: var(--t5e-table-button-width);
           opacity: 1;
-        }
-      }
-
-      &:has(.expand-indicator-button) {
-        .item-name {
-          flex-grow: 0;
-          flex-basis: auto;
         }
       }
     }
@@ -534,6 +541,12 @@
       border-radius: 0.3125rem;
 
       --t5e-item-table-row-background: transparent;
+
+      &:not(:has(.container-expander)) {
+        .item-name {
+          margin-inline-start: 0.5rem;
+        }
+      }
     }
   }
 
