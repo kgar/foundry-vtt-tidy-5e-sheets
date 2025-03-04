@@ -6,6 +6,7 @@ export type ItemFilter = {
   text: string;
   /** Used for scenarios where space is limited and an abbreviation is available. */
   abbreviation?: string;
+  pinnedFilterClass?: string;
 };
 
 type Category = string;
