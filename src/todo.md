@@ -1,8 +1,6 @@
 ## To Do
 
-- [x] Add user preference sheet width memoization
-- [ ] Expand/collapse All Sections is not working; fix it so container toggles work with it
-- [ ] Replace rote individual span styles with util styles where able
+- [ ] Finish Container Contents toolbar
 - [ ] Implement sheet header contents
   - [ ] Background
     - [ ] subtitle
@@ -108,6 +106,7 @@
   - [ ] Portrait becomes washed over
   - [ ] Non-description tabs become disabled (preferably, hide them?)
 - [ ] Wire up item-sheet-specific user sheet preferences for width and height. Look for other opportunities, also, like container toolbar.
+- [ ] Replace rote individual span styles with util styles where able
 
 ### Stretch
 
@@ -133,3 +132,6 @@
     - [x] Inline container contents
     - [x] Item Desc / Activities
   - [x] Add rarity colors to images
+- [x] Add user preference sheet width memoization
+~~- [ ] Expand/collapse All Sections is not working; fix it so container toggles work with it~~
+- [x] Bug: On drop to container sheet, new item is counted but cannot appear until full refresh. Fix: Svelte update.
