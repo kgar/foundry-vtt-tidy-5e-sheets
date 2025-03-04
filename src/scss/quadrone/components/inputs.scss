@@ -318,6 +318,9 @@ input[type='radio'] {
     transform: scale(0.5);
     background-color: var(--t5e-color-text-ondefault-gold-light);
   }
+  &:checked::after {
+    color: var(--t5e-theme-color-darker);
+  }
   &:checked:disabled::before {
     background-color: var(--t5e-color-text-ondefault-disabled);
   }
