@@ -116,6 +116,21 @@ export class ItemFilterRuntime {
     },
   };
 
+  static defaultFilterPinsQuadrone: Record<
+    string,
+    Record<string, Set<string>>
+  > = {
+    [CONSTANTS.SHEET_TYPE_CONTAINER]: {
+      [CONSTANTS.TAB_CONTAINER_CONTENTS]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+        defaultItemFilters.canUse.name,
+        defaultItemFilters.magical.name,
+      ]),
+    },
+  };
+
   static _documentTabFilters: DocumentTypesToFilterTabs = {
     [CONSTANTS.SHEET_TYPE_CHARACTER]: {
       [CONSTANTS.TAB_CHARACTER_ATTRIBUTES]: {
@@ -244,12 +259,44 @@ export class ItemFilterRuntime {
     },
   };
 
+  static _documentTabFiltersQuadrone: DocumentTypesToFilterTabs = {
+    [CONSTANTS.SHEET_TYPE_CONTAINER]: {
+      [CONSTANTS.TAB_CONTAINER_CONTENTS]: {
+        'DND5E.ItemActivationCost': [
+          {
+            ...defaultItemFilters.activationCostAction,
+            pinnedFilterClass: 'hide-under-450',
+          },
+          {
+            ...defaultItemFilters.activationCostBonus,
+            pinnedFilterClass: 'hide-under-550',
+          },
+          {
+            ...defaultItemFilters.activationCostReaction,
+            pinnedFilterClass: 'hide-under-600',
+          },
+          { ...defaultItemFilters.canUse, pinnedFilterClass: 'hide-under-400' },
+          defaultItemFilters.magical,
+        ],
+        'DND5E.Rarity': () => getItemRarityFilters(),
+        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+          defaultItemFilters.equipped,
+          ...getAttunementFilters(),
+        ],
+      },
+    },
+  };
+
   static getFilter(filterName: ItemFilter['name']): ItemFilter | undefined {
     return ItemFilterRuntime._registeredItemFilters[filterName];
   }
 
   static getDocumentFilters(document: any): FilterTabsToCategories {
     return ItemFilterRuntime._documentTabFilters[document.type] ?? {};
+  }
+
+  static getDocumentFiltersQuadrone(document: any): FilterTabsToCategories {
+    return ItemFilterRuntime._documentTabFiltersQuadrone[document.type] ?? {};
   }
 
   static getPinnedFiltersForTab(
