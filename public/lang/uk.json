@@ -852,5 +852,13 @@
         "hint": "Включає дані розділів Tidy та розділи дій до аркуша елемента за замовчуванням."
     },
     "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatLabel": "Інформація",
-    "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatTooltip": "Показати опис у чаті"
+    "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatTooltip": "Показати опис у чаті",
+    "TIDY5E.ContextMenuActionView": "Переглянути",
+    "TIDY5E.ContextMenuActionPinToAttributes": "Закріпити на атрибутах",
+    "TIDY5E.ContextMenuActionUnpinFromAttributes": "Відкріпити від атрибутів",
+    "TIDY5E.ContextMenuActionShowLimitedUses": "Показати обмежене використання",
+    "TIDY5E.ContextMenuActionShowQuantity": "Показати кількість",
+    "TIDY5E.Utilities.SpellPips": "Спель Піпс",
+    "TIDY5E.Utilities.SpellValueMax": "Значення заклинання/макс",
+    "TIDY5E.RollRecharge.Label": "Перезарядка"
 }
