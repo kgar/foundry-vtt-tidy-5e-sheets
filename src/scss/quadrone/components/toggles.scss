@@ -151,6 +151,9 @@
   --thumb-size: 0.625rem;
   --thumb-checked-translateX: 1rem;
   --border-width: 0.0625rem;
+  
+  flex-grow: 0;
+  flex-shrink: 0;
 
   display: inline-flex;
   width: var(--width);

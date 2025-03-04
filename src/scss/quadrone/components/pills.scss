@@ -146,6 +146,10 @@
 
   padding: 0.125rem 0.125rem 0.125rem 0.5rem;
 
+  .icon-and-label-container {
+    min-width: 0;
+  }
+
   .pill-switch-icon-container {
     display: flex;
     justify-content: center;

@@ -182,8 +182,8 @@
         </PillSwitch>
       </li>
     {/if}
-    {#if 'identified' in context.system && context.unlocked}
-      {#if context.system.identified}
+    {#if 'identified' in context.system}
+      {#if context.unlocked}
         <li>
           <PillSwitch
             checked={context.system.identified}
@@ -195,7 +195,7 @@
               })}
             disabled={!context.editable}
           >
-            {localize('DND5E.Identified')}
+            {identifiedText}
           </PillSwitch>
         </li>
       {:else}

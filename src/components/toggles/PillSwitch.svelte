@@ -33,7 +33,7 @@
 </script>
 
 <label class="pill pill-switch interactive" class:disabled>
-  <span>
+  <span class="icon-and-label-container">
     <span class="pill-switch-icon-container" class:hidden={!checked}>
       {#if checkedIconClass}
         <i class={checkedIconClass}></i>
@@ -50,7 +50,9 @@
         <Dnd5eIcon class="fa-fw" src={uncheckedSvgSrc} />
       {/if}
     </span>
-    {@render children?.()}
+    <span class="truncate">
+      {@render children?.()}
+    </span>
   </span>
   <FieldToggle {checked} {onchange} {disabled} />
 </label>
