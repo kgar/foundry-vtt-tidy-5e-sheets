@@ -29,13 +29,21 @@ type ItemFilterData = Record<ItemFilterGroupName, ItemFilters>;
 
 export class ItemFilterService {
   private _filterData = $state<ItemFilterData>()!;
-
   private _document: any;
+  private documentFilterProvider = ItemFilterRuntime.getDocumentFilters;
 
   // TODO: Have sheets send in what they have in session storage upon construction
-  constructor(filterData: ItemFilterData = {}, document: any) {
+  constructor(
+    filterData: ItemFilterData = {},
+    document: any,
+    documentFilterProvider?: typeof ItemFilterRuntime.getDocumentFilters
+  ) {
     this._filterData = filterData;
     this._document = document;
+
+    if (documentFilterProvider) {
+      this.documentFilterProvider = documentFilterProvider;
+    }
   }
 
   // TODO: Better yet, have composed store ready to use, and have it update whenever the filters update
@@ -113,9 +121,7 @@ export class ItemFilterService {
   }
 
   getDocumentItemFilterData(): DocumentFilters {
-    const documentFilters = ItemFilterRuntime.getDocumentFilters(
-      this._document
-    );
+    const documentFilters = this.documentFilterProvider(this._document);
     const documentItemFilterData: DocumentFilters = {};
 
     for (let [tab, categories] of Object.entries(documentFilters)) {
