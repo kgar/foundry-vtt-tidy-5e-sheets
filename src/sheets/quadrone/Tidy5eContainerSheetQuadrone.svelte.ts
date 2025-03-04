@@ -63,7 +63,11 @@ export class Tidy5eContainerSheetQuadrone extends TidyDocumentSheetMixin(
   constructor(...args: any[]) {
     super(...args);
 
-    this.itemFilterService = new ItemFilterService({}, this.item);
+    this.itemFilterService = new ItemFilterService(
+      {},
+      this.item,
+      ItemFilterRuntime.getDocumentFiltersQuadrone
+    );
   }
 
   static DEFAULT_OPTIONS: Partial<
@@ -293,7 +297,7 @@ export class Tidy5eContainerSheetQuadrone extends TidyDocumentSheetMixin(
       editable: editable,
       enriched: enriched,
       filterData: this.itemFilterService.getDocumentItemFilterData(),
-      filterPins: ItemFilterRuntime.defaultFilterPins[this.item.type],
+      filterPins: ItemFilterRuntime.defaultFilterPinsQuadrone[this.item.type],
       identifiedName: FoundryAdapter.getIdentifiedName(this.item),
       isContainer: true,
       isIdentifiable: isIdentifiable,
