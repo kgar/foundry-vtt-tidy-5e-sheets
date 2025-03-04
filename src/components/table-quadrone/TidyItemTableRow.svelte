@@ -13,6 +13,7 @@
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { TidyHooks } from 'src/foundry/TidyHooks';
+  import { RarityColors } from 'src/features/rarity-colors/RarityColors';
 
   interface Props {
     item?: Item5e | null;
@@ -20,7 +21,7 @@
     rowClass?: string;
     hidden?: boolean;
     draggable?: boolean;
-    children?: Snippet<[{ toggleSummary: () => void, expanded: boolean}]>;
+    children?: Snippet<[{ toggleSummary: () => void; expanded: boolean }]>;
   }
 
   let {
@@ -99,6 +100,14 @@
     }
   }
 
+  const itemAccentColor = $derived(
+    item.system.rarity
+      ? `var(${RarityColors.getRarityColorVariableName(item.system.rarity)})`
+      : '',
+  );
+
+  const rarityClass = $derived(item.system.rarity ? 'rarity' : '');
+
   $effect(() => {
     let first = true;
 
@@ -132,9 +141,10 @@
     ['data-tidy-item-type']: item?.type ?? 'unknown',
     ['data-info-card']: item ? 'item' : null,
     ['data-info-card-entity-uuid']: item?.uuid ?? null,
+    ['style']: `--t5e-item-use-button-border-color: ${itemAccentColor}; --t5e-item-row-color: ${itemAccentColor}`,
     draggable: draggable,
   }}
-  rowClass="tidy-table-row-v2 {rowClass ?? ''}"
+  rowClass="tidy-table-row-v2 {rowClass ?? ''} {rarityClass}"
   onmousedown={(event) => item && FoundryAdapter.editOnMiddleClick(event, item)}
   onmouseenter={onMouseEnter}
   onmouseleave={onMouseLeave}

@@ -173,89 +173,20 @@
         color: var(--t5e-color-text-ondefault-lightest);
       }
     }
-    &.rarity .item-use-button {
-      outline: 1px solid var(--t5e-color-gold);
-    }
 
-    /* TODO: Move color assignments to component */
-    &.rarity.common {
+    &.rarity {
       background: linear-gradient(
         to right,
-        oklch(from var(--t5e-color-rarity-common) l c h / 0.3) 10%,
+        oklch(from var(--t5e-item-row-color) l c h / 0.3) 10%,
         transparent 50%
       );
+
       .item-use-button {
-        border-color: var(--t5e-color-rarity-common);
-        outline-color: var(--t5e-color-rarity-common);
-      }
-    }
-    &.rarity.rare {
-      background: linear-gradient(
-        to right,
-        oklch(from var(--t5e-color-rarity-rare) l c h / 0.3) 10%,
-        transparent 50%
-      );
-      .item-use-button {
-        border-color: var(--t5e-color-rarity-rare);
-        outline-color: var(--t5e-color-rarity-rare);
+        outline: 1px solid var(--t5e-item-use-button-border-color);
+        border: 1px solid var(--t5e-item-use-button-border-color);
+
         i {
-          color: var(--t5e-color-rarity-rare);
-        }
-      }
-    }
-    &.rarity.uncommon {
-      background: linear-gradient(
-        to right,
-        oklch(from var(--t5e-color-rarity-uncommon) l c h / 0.3) 10%,
-        transparent 50%
-      );
-      .item-use-button {
-        border-color: var(--t5e-color-rarity-uncommon);
-        outline-color: var(--t5e-color-rarity-uncommon);
-        i {
-          color: var(--t5e-color-rarity-uncommon);
-        }
-      }
-    }
-    &.rarity.very-rare {
-      background: linear-gradient(
-        to right,
-        oklch(from var(--t5e-color-rarity-very-rare) l c h / 0.3) 10%,
-        transparent 50%
-      );
-      .item-use-button {
-        border-color: var(--t5e-color-rarity-very-rare);
-        outline-color: var(--t5e-color-rarity-very-rare);
-        i {
-          color: var(--t5e-color-rarity-very-rare);
-        }
-      }
-    }
-    &.rarity.legendary {
-      background: linear-gradient(
-        to right,
-        oklch(from var(--t5e-color-rarity-legendary) l c h / 0.3) 10%,
-        transparent 50%
-      );
-      .item-use-button {
-        border-color: var(--t5e-color-rarity-legendary);
-        outline-color: var(--t5e-color-rarity-legendary);
-        i {
-          color: var(--t5e-color-rarity-legendary);
-        }
-      }
-    }
-    &.rarity.artifact {
-      background: linear-gradient(
-        to right,
-        oklch(from var(--t5e-color-rarity-artifact) l c h / 0.3) 10%,
-        transparent 50%
-      );
-      .item-use-button {
-        border-color: var(--t5e-color-rarity-artifact);
-        outline-color: var(--t5e-color-rarity-artifact);
-        i {
-          color: var(--t5e-color-rarity-artifact);
+          color: var(--t5e-item-use-button-border-color);
         }
       }
     }
