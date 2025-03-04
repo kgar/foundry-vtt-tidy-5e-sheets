@@ -52,6 +52,7 @@ import { ImportSheetControl } from '../../features/sheet-header-controls/ImportS
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
+import { TidyDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 
 type MemberStats = {
   currentHP: number;
@@ -61,8 +62,11 @@ type MemberStats = {
 };
 
 export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
-  SvelteApplicationMixin<GroupSheetClassicContext>(
-    foundry.applications.sheets.ActorSheetV2
+  TidyDocumentSheetMixin(
+    CONSTANTS.SHEET_TYPE_GROUP,
+    SvelteApplicationMixin<GroupSheetClassicContext>(
+      foundry.applications.sheets.ActorSheetV2
+    )
   )
 ) {
   sectionExpansionTracker = new ExpansionTracker(

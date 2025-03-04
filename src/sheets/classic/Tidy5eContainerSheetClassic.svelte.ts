@@ -36,10 +36,14 @@ import { settings } from 'src/settings/settings.svelte';
 import { Inventory } from 'src/features/sections/Inventory';
 import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
+import { TidyDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 
-export class Tidy5eContainerSheetClassic extends DragAndDropMixin(
-  SvelteApplicationMixin<ContainerSheetClassicContext>(
-    foundry.applications.sheets.ItemSheetV2
+export class Tidy5eContainerSheetClassic extends TidyDocumentSheetMixin(
+  CONSTANTS.SHEET_TYPE_CONTAINER,
+  DragAndDropMixin(
+    SvelteApplicationMixin<ContainerSheetClassicContext>(
+      foundry.applications.sheets.ItemSheetV2
+    )
   )
 ) {
   currentTabId: string | undefined = undefined;

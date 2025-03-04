@@ -1,6 +1,6 @@
 ## To Do
 
-- [ ] Add user preference sheet width memoization
+- [x] Add user preference sheet width memoization
 - [ ] Expand/collapse All Sections is not working; fix it so container toggles work with it
 - [ ] Replace rote individual span styles with util styles where able
 - [ ] Implement sheet header contents
