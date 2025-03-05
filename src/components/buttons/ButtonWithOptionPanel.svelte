@@ -82,7 +82,7 @@
         toggleMenu(false);
       }
     }}
-    oncontextmenu={() => toggleMenu(true)}
+    oncontextmenu={() => !expanded && toggleMenu(true)}
     onfocusout={handleFocusOut}
     tabindex={expanded ? 0 : null}
     bind:this={menuOpenerEl}
