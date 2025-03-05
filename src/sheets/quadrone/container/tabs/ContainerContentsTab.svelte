@@ -42,12 +42,6 @@
 
   const localize = FoundryAdapter.localize;
 
-  let utilityBarCommands = $derived(
-    context.utilities[tabId]?.utilityToolbarCommands ?? [],
-  );
-
-  let menuOpen = $derived(false);
-
   let markerEl: HTMLElement | undefined = $state();
   let footerEl: HTMLElement | undefined = $state();
 
@@ -74,7 +68,6 @@
   class="action-bar"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTION_BAR}
 >
-  <!-- TODO: Extract to component. -->
   <ExpandCollapseButton />
 
   <Search bind:searchCriteria />
