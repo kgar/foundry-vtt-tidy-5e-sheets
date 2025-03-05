@@ -17,7 +17,7 @@
   import { Container } from 'src/features/containers/Container';
   import ExpandCollapseButton from '../../shared/ExpandCollapseButton.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
-  import PinnedFilterToggle from 'src/components/buttons/PinnedFilterToggle.svelte';
+  import FilterToggle from 'src/components/buttons/FilterToggle.svelte';
 
   let context = $derived(getContainerSheetQuadroneContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
@@ -81,13 +81,13 @@
 
   <div class="button-group">
     {#each pinnedFilters as pinnedFilter (pinnedFilter.name)}
-      <PinnedFilterToggle
+      <FilterToggle
         filter={pinnedFilter}
         filterGroupName={tabId}
         class={pinnedFilter.pinnedFilterClass}
       >
         {localize(pinnedFilter.text)}
-      </PinnedFilterToggle>
+      </FilterToggle>
     {/each}
   </div>
 
