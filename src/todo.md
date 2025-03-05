@@ -1,6 +1,11 @@
 ## To Do
 
 - [ ] Finish Container Contents toolbar
+- [ ] Review Container sheet to ensure it has everything
+- [ ] Complete dark mode for the container
+- [ ] Set up default/light/dark menu toggle and add to container
+- [ ] Update sheet lock to work like the default sheets, including the additional render options and intuitive default state
+- [ ] Item cards?
 - [ ] Implement sheet header contents
   - [ ] Background
     - [ ] subtitle
