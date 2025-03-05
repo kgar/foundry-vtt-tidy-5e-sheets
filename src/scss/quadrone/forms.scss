@@ -72,7 +72,7 @@
     &:disabled {
       .form-group label,
       .hint {
-        color: var(--t5e-color-text-ondefault-lightest);
+        // color: var(--t5e-color-text-ondefault-lightest);
       }
     }
   }
@@ -200,7 +200,7 @@
 
     &:not(.label-top) {
       label {
-        margin-inline-start: 0.25rem;
+        // margin-inline-start: 0.25rem;
       }
     }
 
