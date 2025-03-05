@@ -106,8 +106,9 @@
   /* Toggle Buttons */
   &.toggle-button {
     border: 0.0625rem solid var(--t5e-component-field-border);
+    --input-height: auto;
 
-    &:has(.toggle:checked) {
+    &:has(.toggle:checked), &.include {
       --icon-fill: var(--t5e-component-toggle-toggled-text);
       color: var(--t5e-component-toggle-toggled-text);
       background: var(--t5e-component-toggle-toggled-background);
@@ -121,7 +122,7 @@
       }
     }
 
-    &.disabled {
+    &.disabled, &.exclude {
       --icon-fill: var(--t5e-color-text-ondefault-lightest);
       font-style: italic;
       color: var(--t5e-color-text-ondefault-lightest);

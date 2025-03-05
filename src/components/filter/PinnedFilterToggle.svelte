@@ -16,6 +16,7 @@
   }
 
   let { filter, filterGroupName, children }: Props = $props();
+
   const onFilter = getContext<ItemFilterService['onFilter']>('onFilter');
 
   function cycleFilterForward(name: string, currentValue: boolean | null) {

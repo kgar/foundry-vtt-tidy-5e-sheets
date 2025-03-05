@@ -6,7 +6,6 @@
   import ContainerContentsSections from 'src/sheets/quadrone/container/parts/ContainerContentsSections.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
-  import ToggleButton from 'src/components/buttons/ToggleButton.svelte';
   import Search from '../../shared/Search.svelte';
   import ButtonWithOptionPanel from 'src/components/buttons/ButtonWithOptionPanel.svelte';
   import {
@@ -17,6 +16,8 @@
   import TidyVisibilityObserver from 'src/components/utility/TidyVisibilityObserver.svelte';
   import { Container } from 'src/features/containers/Container';
   import ExpandCollapseButton from '../../shared/ExpandCollapseButton.svelte';
+  import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
+  import PinnedFilterToggle from 'src/components/buttons/PinnedFilterToggle.svelte';
 
   let context = $derived(getContainerSheetQuadroneContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
@@ -49,6 +50,14 @@
 
   let markerEl: HTMLElement | undefined = $state();
   let footerEl: HTMLElement | undefined = $state();
+
+  let pinnedFilters = $derived(
+    ItemFilterRuntime.getPinnedFiltersForTab(
+      context.filterPins,
+      context.filterData,
+      tabId,
+    ),
+  );
 </script>
 
 {#if !!markerEl && !!footerEl}
@@ -71,11 +80,15 @@
   <Search bind:searchCriteria />
 
   <div class="button-group">
-    <ToggleButton class="hide-under-450">Action</ToggleButton>
-    <ToggleButton class="hide-under-550">Bonus Action</ToggleButton>
-    <ToggleButton class="hide-under-600">Reaction</ToggleButton>
-    <ToggleButton class="hide-under-400">Can Use</ToggleButton>
-    <ToggleButton>Magical</ToggleButton>
+    {#each pinnedFilters as pinnedFilter (pinnedFilter.name)}
+      <PinnedFilterToggle
+        filter={pinnedFilter}
+        filterGroupName={tabId}
+        class={pinnedFilter.pinnedFilterClass}
+      >
+        {localize(pinnedFilter.text)}
+      </PinnedFilterToggle>
+    {/each}
   </div>
 
   <a class="button icon-button">
