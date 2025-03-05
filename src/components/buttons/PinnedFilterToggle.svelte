@@ -1,10 +1,7 @@
 <script lang="ts">
   import type { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
   import type { ConfiguredItemFilter } from 'src/runtime/item/item.types';
-  import {
-    cycleNullTrueFalseBackward,
-    cycleNullTrueFalseForward,
-  } from 'src/utils/value-cycling';
+  import { isNil } from 'src/utils/data';
   import { getContext, type Snippet } from 'svelte';
 
   interface Props {
@@ -29,20 +26,40 @@
 
   const onFilter = getContext<ItemFilterService['onFilter']>('onFilter');
 
-  function cycleFilterForward(name: string, currentValue: boolean | null) {
-    onFilter(filterGroupName, name, cycleNullTrueFalseForward(currentValue));
+  function onLeftClick() {
+    var state = filter.value;
+
+    if (isNil(filter.value)) {
+      state = true;
+    } else if (filter.value === true) {
+      state = null;
+    } else {
+      state = true;
+    }
+
+    onFilter(filterGroupName, filter.name, state);
   }
 
-  function cycleFilterBackward(name: string, currentValue: boolean | null) {
-    onFilter(filterGroupName, name, cycleNullTrueFalseBackward(currentValue));
+  function onRightClick() {
+    var state = filter.value;
+
+    if (isNil(filter.value)) {
+      state = false;
+    } else if (filter.value === true) {
+      state = false;
+    } else {
+      state = null;
+    }
+
+    onFilter(filterGroupName, filter.name, state);
   }
 </script>
 
 <button
   class="button toggle-button {filterStateClass} {cssClass ?? ''}"
   class:disabled
-  onclick={() => cycleFilterForward(filter.name, filter.value)}
-  oncontextmenu={() => cycleFilterBackward(filter.name, filter.value)}
+  onclick={onLeftClick}
+  oncontextmenu={onRightClick}
 >
   {@render children?.()}
 </button>
