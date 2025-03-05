@@ -1,21 +1,31 @@
 <script lang="ts">
   import type { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ConfiguredItemFilter } from 'src/runtime/item/item.types';
-  import { settings } from 'src/settings/settings.svelte';
   import {
-    cycleNullTrueFalseForward,
     cycleNullTrueFalseBackward,
+    cycleNullTrueFalseForward,
   } from 'src/utils/value-cycling';
   import { getContext, type Snippet } from 'svelte';
 
   interface Props {
     filter: ConfiguredItemFilter;
     filterGroupName: string;
+    disabled?: boolean;
     children?: Snippet;
+    class?: string;
   }
 
-  let { filter, filterGroupName, children }: Props = $props();
+  let {
+    filter,
+    filterGroupName,
+    disabled,
+    children,
+    class: cssClass,
+  }: Props = $props();
+
+  let filterStateClass = $derived(
+    filter.value === true ? 'include' : filter.value === false ? 'exclude' : '',
+  );
 
   const onFilter = getContext<ItemFilterService['onFilter']>('onFilter');
 
@@ -26,19 +36,13 @@
   function cycleFilterBackward(name: string, currentValue: boolean | null) {
     onFilter(filterGroupName, name, cycleNullTrueFalseBackward(currentValue));
   }
-
-  const localize = FoundryAdapter.localize;
 </script>
 
 <button
-  type="button"
-  class="pinned-filter-toggle truncate"
-  class:include={filter.value === true}
-  class:exclude={filter.value === false}
+  class="button toggle-button {filterStateClass} {cssClass ?? ''}"
+  class:disabled
   onclick={() => cycleFilterForward(filter.name, filter.value)}
   oncontextmenu={() => cycleFilterBackward(filter.name, filter.value)}
-  tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
-  title={localize(filter.text)}
 >
   {@render children?.()}
 </button>
