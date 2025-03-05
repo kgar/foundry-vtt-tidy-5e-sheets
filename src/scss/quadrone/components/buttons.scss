@@ -82,7 +82,9 @@
 
   &.icon-button {
     --size: var(--t5e-field-size-default);
-    padding: 0.484375rem 0.5rem 0.515625rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
     width: var(--size);
     height: var(--size);
   }
@@ -91,7 +93,7 @@
     cursor: default;
     pointer-events: none;
     background: transparent;
-    border: 0.0625rem solid var(--t5e-component-field-border);
+    border: 1px solid var(--t5e-component-field-border);
 
     &,
     i {
@@ -105,7 +107,7 @@
 
   /* Toggle Buttons */
   &.toggle-button {
-    border: 0.0625rem solid var(--t5e-component-field-border);
+    border: 1px solid var(--t5e-component-field-border);
 
     &:has(.toggle:checked) {
       --icon-fill: var(--t5e-component-toggle-toggled-text);
@@ -129,15 +131,14 @@
   }
 }
 
-&:where(.inverse) :is(button, .button),
-:where(.inverse) :is(button, .button),
-&:where(.dark) :is(button, .button) {
+&.dark, &.theme-dark 
+:is(button, .button) {
   border: 1px solid var(--t5e-component-field-border);
   background: var(--t5e-component-field-background);
 
   &,
   i {
-    color: var(--t5e-color-text-ondefault-gold-emphasis);
+    color: var(--t5e-color-icon-ondefault-diminished);
   }
 }
 

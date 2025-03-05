@@ -1,3 +1,4 @@
+
 .tidy-switch {
   display: flex;
   align-items: center;
@@ -7,19 +8,16 @@
     --tidy-switch-thumb-transform-duration,
     0.3s
   );
-  --tidy-border-width: 0.0625rem;
 
   [role='switch'] {
     width: calc(2.625rem * var(--tidy-switch-scale-internal));
     height: calc(1.375rem * var(--tidy-switch-scale-internal));
     position: relative;
-    background-color: var(--tidy-switch-unchecked-background-color);
+    background-color: rgba(0, 0, 0, 0.50);
     border: none;
     transition: background-color 0.5s ease, border-color 0.5s ease;
     border-radius: calc(1.375rem * var(--tidy-switch-scale-internal));
-    border-width: var(--tidy-border-width);
-    border-style: solid;
-    border-color: var(--tidy-switch-unchecked-border-color, transparent);
+    border: 1px solid var(--t5e-component-field-border);
 
     i {
       margin: 0;
@@ -42,11 +40,11 @@
     // }
 
     .thumb-icon {
-      background-color: var(--t5e-color-icon-oninverse-default);
+      background-color: var(--t5e-color-palette-white);
       border-radius: 100%;
       font-size: calc(0.75rem * var(--tidy-switch-scale-internal));
       position: absolute;
-      color: var(--t5e-color-icon-ondefault-default); // TODO: Theme color? Or at least top-level variable that can be customized?
+      color: var(--t5e-color-palette-black);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -58,32 +56,25 @@
       right: calc(
         1.375rem * var(--tidy-switch-scale-internal) - var(--tidy-border-width)
       );
-      transition: all var(--tidy-switch-thumb-transform-duration-internal);
+      transition: all var(--t5e-transition-default);
     }
 
     &[aria-checked='true'] {
-      border-color: var(--tidy-switch-checked-border-color, transparent);
-      background-color: var(--t5e-theme-color-highlight);
+      border-color: var(--t5e-component-toggle-toggled-border, transparent);
+      background-color: var(--t5e-theme-color-default);
 
       &::before,
       .thumb-icon {
         transform: translateX(
           calc(1.25rem * var(--tidy-switch-scale-internal))
         );
-        transition: transform
-          var(--tidy-switch-thumb-transform-duration-internal);
-      }
-
-      .thumb-icon {
-        background-color: var(--t5e-color-icon-ondefault-default);
-        color: var(--t5e-color-icon-oninverse-default);
+        transition: transform var(--t5e-transition-default);
       }
       
       &:hover {
-        filter: brightness(0.85);
         background-color: var(--t5e-theme-color-highlight);
         .thumb-icon {
-          color: var(--t5e-color-icon-oninverse-default);
+          color: var(--t5e-color-palette-black);
         }
       }
     }
@@ -91,10 +82,11 @@
     
     &:hover {
       cursor: pointer;
-      background-color: var(--tidy-switch-unchecked-background-color-hover);
+      background-color: rgba(0, 0, 0, 0.75);
 
       .thumb-icon {
-        color: var(--t5e-color-icon-ondefault-default);
+        background-color: var(--t5e-color-palette-white);
+        color: var(--t5e-color-palette-black);
       }
     }
 
@@ -105,25 +97,6 @@
 }
 
 .header-sheet-edit-mode-toggle {
-  --tidy-switch-unchecked-border-color: var(
-    --t5e-component-field-border
-  );
-  --tidy-switch-unchecked-background-color: var(
-    --t5e-color-icon-ondefault-disabled
-  );
-  --tidy-switch-unchecked-background-color-hover:
-    rgba(0, 0, 0, 0.75);;
-  --tidy-switch-checked-border-color: var(
-    --t5e-component-toggle-toggled-border
-  );
-  --tidy-switch-checked-background-color: var(
-    --t5e-component-toggle-toggled-background
-  );
-  --t5e-switch-slider-color: var(
-    --t5e-component-field-background
-  );
-  --t5e-thumb-icon-color: var(--t5e-color-icon-light-default);
-
   button {
     margin: 0;
     padding: 0;
@@ -234,7 +207,7 @@
   }
 }
 
-.dark {
+&.dark, &.theme-dark, .dark, .theme-dark {
   .field-toggle {
     background-color: var(--t5e-component-field-background);
     border-color: var(--t5e-component-field-border);

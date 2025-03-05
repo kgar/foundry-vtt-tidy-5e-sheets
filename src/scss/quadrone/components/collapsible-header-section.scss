@@ -9,7 +9,7 @@
     color: var(--t5e-color-text-ondefault-lighter);
 
     font-family: var(--t5e-font-family-title);
-    font-size: var(--font-size-16);
+    font-size: var(--font-size-18);
     letter-spacing: 0.01rem;
     line-height: normal;
 
@@ -22,10 +22,12 @@
       color: var(--t5e-color-icon-ondefault-disabled);
       transition: all var(--t5e-transition-default);
       font-size: 0.6875rem;
+      padding: 0.125rem 0 0 0;
 
       &.expanded {
         transform: rotate(90deg);
         color: var(--t5e-color-icon-ondefault-disabled);
+        padding: 0 0 0.125rem 0.25rem;
       }
     }
   }
@@ -34,7 +36,7 @@
     display: flex;
     width: var(--font-font-size-24, 1.5rem);
     height: var(--font-font-size-24, 1.5rem);
-    padding: 0.25rem 0.25rem 0.3125rem 0.3125rem;
+    padding: 0.25rem 0.25rem 0 0.3125rem;
     flex-direction: column;
     justify-content: center;
     align-items: center;
