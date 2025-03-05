@@ -13,7 +13,7 @@
   );
 </script>
 
-<div class="header-over-sidebar theme-light">
+<div class="header-over-sidebar">
   <SheetHeaderEditModeToggle class="header-control" />
 
   <span class="header-item-type-label">

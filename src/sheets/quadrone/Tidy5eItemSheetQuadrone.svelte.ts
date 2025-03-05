@@ -59,8 +59,6 @@ export class Tidy5eItemSheetQuadrone extends TidyDocumentSheetMixin(
       CONSTANTS.SHEET_TYPE_ITEM,
       'app-v2',
       'quadrone',
-      `themed`,
-      `theme-dark`,
     ],
     tag: 'form',
     window: {
