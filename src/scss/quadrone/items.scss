@@ -7,15 +7,14 @@
       #31313140 0%,
       #303236 var(--sidebar-background-image-height)
     ),
-    url(../../modules/tidy5e-sheet/images/banner-character-dark.webp) lightgray
+    url(../../systems/dnd5e/ui/official/banner-character-dark.webp) lightgray
       top center / auto no-repeat;
 
   /* Application Window */
   border-radius: 0.3125rem;
-  border: 0.0625rem solid var(--t5e-color-gold);
+  border: 1px solid var(--t5e-color-gold);
   background: var(--t5e-component-card-ondefault-darker);
-  box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.25),
-    0px 0px 12px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--t5e-drop-shadow-sheet);
   background-size: cover;
 
   &::before,
@@ -30,15 +29,29 @@
     pointer-events: none;
     z-index: -1;
   }
-  &::before {
-    background: url(../../modules/tidy5e-sheet/images/texture-gray-1.webp)
-      no-repeat top center;
-    background-size: cover;
+
+  &:where(.theme-light) {
+    background: var(--t5e-component-card-ondefault-default);
+    &::before {
+      background: url(../../modules/tidy5e-sheet/images/texture-gray-1.webp)
+        no-repeat top center;
+      background-size: cover;
+    }
+
+    &::after {
+      background: url(../../modules/tidy5e-sheet/images/texture-gray-2.webp)
+        no-repeat bottom center;
+      background-size: cover;
+    }
   }
-  &::after {
-    background: url(../../modules/tidy5e-sheet/images/texture-gray-2.webp)
-      no-repeat bottom center;
-    background-size: cover;
+
+  &:where(.theme-dark) {
+    background: var(--t5e-component-card-oninverse-darker);
+    &::before {
+      background: url(../../modules/tidy5e-sheet/images/denim065.png)
+        no-repeat top center;
+      background-size: cover;
+    }
   }
 
   // Items and Containers feature a sidebar that extends to the top of the sheet, inside the header area.
@@ -98,12 +111,18 @@
         border-bottom: 0.0625rem solid var(--t5e-color-gold);
         background: var(--t5e-component-card-ondefault-darker);
       }
+      
+      &.dark, &.theme-dark, .dark, .theme-dark {
+        .window-header {
+          background: var(--t5e-component-card-oninverse-darker);
+        }
+      }
 
       .header-over-sidebar {
         background: $sidebar-bg;
         background-attachment: scroll, local;
         background-blend-mode: luminosity;
-        border-right: 0.0625rem solid var(--t5e-color-gold, #9f9275);
+        border-right: 1px solid var(--t5e-color-gold, #9f9275);
       }
     }
 
@@ -201,12 +220,12 @@
     background: $sidebar-bg;
     background-attachment: scroll, local;
     background-blend-mode: luminosity;
-    border-right: 0.0625rem solid var(--t5e-color-gold, #9f9275);
+    border-right: 1px solid var(--t5e-color-gold, #9f9275);
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--t5e-spacing-4x);
     grid-area: sidebar;
-    padding: 1rem;
+    padding: var(--t5e-spacing-3x);
 
     // Consider colocating this with the header over sidebar content via a has()
     padding-block-start: var(--header-height);
@@ -281,10 +300,10 @@
     }
 
     .item-image {
-      margin-block: 0.125rem;
-      margin-inline: 0.125rem;
+      margin-block: var(--t5e-spacing-halfx);
+      margin-inline: var(--t5e-spacing-halfx);
       display: inline-block;
-      width: calc(100% - 0.25rem);
+      width: calc(100% - var(--t5e-spacing-1x));
       border-radius: 0.75rem;
       object-fit: cover;
       border: 0;
@@ -300,7 +319,7 @@
   .item-rarity-container {
     .item-rarity-selector {
       height: var(--t5e-field-size-default);
-      padding-block-end: 0.0625rem;
+      padding-block-end: var(--t5e-spacing-1);
       position: relative;
       color: oklch(from var(--t5e-item-rarity-color) calc(l + 0.125) c h);
 
@@ -311,8 +330,7 @@
 
     .item-rarity-text {
       color: var(--t5e-item-rarity-color);
-      font-family: var(--t5e-font-modesto-condensed);
-      font-size: var(--font-size-12);
+      font: var(--t5e-font-title-small);
       mix-blend-mode: plus-lighter;
       text-align: center;
     }
@@ -320,8 +338,7 @@
 
   .spell-preparation-text {
     color: var(--t5e-image-label-spell-preparation-text-color);
-    font-family: var(--t5e-font-modesto-condensed);
-    font-size: var(--font-size-12);
+    font: var(--t5e-font-title-small);
     mix-blend-mode: plus-lighter;
     text-align: center;
   }
@@ -331,8 +348,8 @@
   .item-content {
     grid-area: content;
     margin-block-start: var(--header-height);
-    padding-inline: 1.5rem;
-    margin-block-end: 0.75rem;
+    padding-inline: var(--t5e-spacing-6x);
+    margin-block-end: var(--t5e-spacing-3x);
     display: flex;
     flex-direction: column;
     min-width: 0;
@@ -341,16 +358,12 @@
       color: var(--t5e-color-text-ondefault-lighter);
 
       /* title/small */
-      font-family: var(--t5e-font-family-title);
-      font-size: var(--font-size-16);
-      font-weight: 400;
-      line-height: normal;
-      letter-spacing: 0.01rem;
+      font: var(--t5e-font-title-small);
     }
   }
 
   .item-header-summary {
-    margin-top: 0.5rem;
+    margin-top: var(--t5e-spacing-2x);
     display: flex;
     row-gap: var(--t5e-spacing-1x);
     flex-wrap: wrap;
@@ -365,7 +378,7 @@
     > * + *::before {
       content: '';
       width: 0.0625rem;
-      height: 1rem;
+      height: var(--t5e-spacing-4x);
       opacity: 0.5;
       background: var(--t5e-color-gold, #9f9275);
       margin-inline: 0.5rem;
@@ -373,11 +386,7 @@
 
     .item-type {
       // TODO: eliminate most of this with util classes
-      font-family: var(--t5e-font-modesto-condensed);
-      font-size: 1rem;
-      font-style: normal;
-      font-weight: 400;
-      line-height: normal;
+      font: var(--t5e-font-title-small);
     }
 
     .item-capacity {
@@ -409,7 +418,7 @@
     }
 
     .item-price {
-      font-size: 0.8125rem;
+      font-size: var(--font-size-default);
 
       display: flex;
       align-items: center;
@@ -421,15 +430,15 @@
     }
 
     .item-quantity-label {
-      font-weight: 500;
+      font-weight: var(--font-weight-label);
     }
 
     .item-quantity-value {
-      font-weight: 600;
+      font-weight: var(--font-weight-bold);
     }
 
     .item-weight-value {
-      font-weight: 600;
+      font-weight: var(--font-weight-bold);
     }
   }
 
@@ -437,12 +446,7 @@
     color: var(--t5e-color-text-ondefault-default);
 
     // Typography
-    font-family: var(--t5e-font-modesto-condensed);
-    font-size: var(--font-size-28);
-    font-style: normal;
-    font-weight: 400;
-    line-height: 2rem;
-    letter-spacing: 0.0175rem;
+    font: var(--t5e-font-title-medium);
 
     &:is(input) {
       border-radius: 0.125rem;
@@ -463,18 +467,19 @@
       height: 2rem;
       line-height: normal;
       letter-spacing: 0.015rem;
-      margin: 0 -0.5rem;
+      margin: 0 -0.5rem -0.0625rem;
       width: calc(100% + 1rem);
 
       &:focus {
-        box-shadow: 0 0 0 0.125rem rgba(154, 42, 48, 0.95);
+        transition: box-shadow none;
+        box-shadow: var(--t5e-drop-shadow-field-focus);
         outline: none;
       }
     }
   }
 
   .tidy-tabs.item-tabs {
-    margin-top: 1rem;
+    margin-top: var(--t5e-spacing-3x);
   }
 
   .tidy-tab {
@@ -520,6 +525,66 @@
         flex-shrink: 0;
         align-self: center;
       }
+    }
+  }
+
+  // TODO: Move editor to its own file and layer.
+  .editor {
+    h1, h2, h3, h4 {
+      font-family: var(--t5e-font-modesto-condensed);
+      font-weight: 400;
+      line-height: 100%;
+    }
+    h1 {
+      font-size: var(--font-size-28);
+      margin-top: var(--t5e-spacing-6x);
+      margin-bottom: var(--t5e-spacing-3x);
+    }
+    h2 {
+      font-size: var(--font-size-24);
+      margin-top: var(--t5e-spacing-4x);
+      margin-bottom: var(--t5e-spacing-3x);
+    }
+    h3 {
+      font-size: var(--font-size-20);
+      margin-top: var(--t5e-spacing-4x);
+      margin-bottom: var(--t5e-spacing-2x);
+    }
+    h4 {
+      font-size: var(--font-size-16);
+      margin-top: var(--t5e-spacing-4x);
+      margin-bottom: var(--t5e-spacing-2x);
+    }
+    p {
+      font: var(--t5e-font-default-longform);
+    }
+    table {
+      margin: 0;
+      border: none;
+      border-collapse: collapse;
+      border-radius: var(--t5e-spacing-1x);
+
+      thead {
+        font: var(--t5e-font-label-medium);
+        border: none;
+      }
+
+      th, td {
+        border: none;
+        border-collapse: collapse;
+      }
+      td {
+        border-right: 1px solid var(--t5e-component-card-oninverse-darker);
+        padding: var(--t5e-spacing-1x) var(--t5e-spacing-2x);
+      }
+    }
+  }
+
+  &.dark, &.theme-dark, .dark, .theme-dark {
+    .document-name:is(input) {
+      border-color: var(--t5e-component-field-border);
+      background: var(--t5e-component-field-background);
+      box-shadow: var(--t5e-drop-shadow-field);
     }
   }
 }

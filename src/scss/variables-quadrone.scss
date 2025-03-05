@@ -13,6 +13,7 @@
   --font-size-56: 3.5rem;
   --font-size-46: 2.875rem;
   --font-size-28: 1.75rem;
+  --font-size-18: 1.125rem;
   --font-size-14: 0.875rem;
   --font-size-13: 0.8125rem;
   --font-size-11: 0.6875rem;
@@ -42,6 +43,7 @@
 
   --t5e-font-description: 400 var(--font-size-14)/var(--t5e-lineheight-longform) var(--t5e-font-family-default);
 
+  --t5e-font-title-small: 400 var(--font-size-18) var(--t5e-font-family-title);
   --t5e-font-title-medium: 400 var(--font-size-28) var(--t5e-font-family-title);
   --t5e-font-title-large: 400 var(--font-size-46) var(--t5e-font-family-title);
 
@@ -184,11 +186,14 @@
   --t5e-drop-shadow-modal: 0px 4px 24px 0px rgba(0, 0, 0, 0.25), 0px 0px 12px 0px rgba(0, 0, 0, 0.50);
   --t5e-drop-shadow-card: 0px 0px 6px 0px rgba(0, 0, 0, 0.45);
   --t5e-drop-shadow-pill: 0px 0px 12px 0px rgba(0, 0, 0, 0.15);
-  --t5e-drop-shadow-field: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
-  --t5e-drop-shadow-field-hover: 0px 0px 6px 0px rgba(0, 0, 0, 0.25);
-  --t5e-drop-shadow-field-focus: 0 0 0 2px var(--t5e-drop-shadow-field-focus);
+  --t5e-drop-shadow-field: 0px 0px 3px 0px rgba(0, 0, 0, 0.08);
+  --t5e-drop-shadow-field-hover: 0px 0px 6px 0px rgba(0, 0, 0, 0.20);
+  --t5e-drop-shadow-field-focus: 0 0 0 2px var(--t5e-theme-color-default);
+  --t5e-outline-field-focus: 2px solid var(--t5e-theme-color-default);
 
   /* Transitions */
+  --t5e-transition-speed: 150ms;
+  --t5e-transition-animation: ease-in-out;
   --t5e-transition-default: 150ms ease-in-out;
 
 
@@ -326,7 +331,7 @@
 
 
 .tidy5e-sheet.quadrone{
-  &.dark, .dark {
+  &.dark, .dark, &.theme-dark, .theme-dark {
     /* Text ------------ */
     /* All text colors inverted in dark mode. */
     /* ondefault */
@@ -346,13 +351,13 @@
     --t5e-color-text-ondefault-disabled: var(--t5e-color-palette-grey-48);
 
     /* ondark */
-    --t5e-color-text-oninverse-default: var(--t5e-color-palette-grey-0);
-    --t5e-color-text-oninverse-gold: var(--t5e-color-palette-gold-62);
-    --t5e-color-text-oninverse-gold-emphasis: var(--t5e-color-palette-gold-56);
-    --t5e-color-text-oninverse-gold-light: var(--t5e-color-palette-gold-94);
-    --t5e-color-text-oninverse-lighter: var(--t5e-color-palette-grey-29);
-    --t5e-color-text-oninverse-lightest: var(--t5e-color-palette-grey-40);
-    --t5e-color-text-oninverse-disabled: var(--t5e-color-palette-grey-60);
+    // --t5e-color-text-oninverse-default: var(--t5e-color-palette-grey-0);
+    // --t5e-color-text-oninverse-gold: var(--t5e-color-palette-gold-62);
+    // --t5e-color-text-oninverse-gold-emphasis: var(--t5e-color-palette-gold-56);
+    // --t5e-color-text-oninverse-gold-light: var(--t5e-color-palette-gold-94);
+    // --t5e-color-text-oninverse-lighter: var(--t5e-color-palette-grey-29);
+    // --t5e-color-text-oninverse-lightest: var(--t5e-color-palette-grey-40);
+    // --t5e-color-text-oninverse-disabled: var(--t5e-color-palette-grey-60);
 
     /* Components ------------ */
     /* Field backgrounds and borders inverted in dark mode. */
@@ -362,7 +367,8 @@
     --t5e-component-field-background: var(--t5e-component-card-oninverse-default);
     --t5e-component-field-background-hover: var(--t5e-color-palette-grey-11);
     --t5e-component-field-background-hover-emphasis: var(--t5e-color-palette-black);
-    --t5e-component-field-background-disabled: var(--t5e-color-palette-black);
+    --t5e-component-field-background-disabled: rgba(0,0,0, 0.3);
+    --t5e-component-field-focus: var(--t5e-theme-color-default);
 
     /* Card colors are not inverted in dark mode. */
     /* Pill colors inherit from field colors. */

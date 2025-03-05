@@ -7,16 +7,16 @@ input[type='number'],
 textarea,
 select,
 :where(search) {
-  color: var(--t5e-color-text-ondefault-default);
+  color: var(--t5e-color-text-default);
   line-height: 1rem;
   display: flex;
   align-items: center;
-  outline: none;
   transition: all var(--t5e-transition-default);
   box-shadow: var(--t5e-drop-shadow-field);
-  background: var(--t5e-component-card-ondefault-default);
+  background: var(--t5e-component-field-background);
   border-radius: 0.125rem;
-  border: 0.0625rem solid var(--t5e-component-field-border);
+  border: 1px solid var(--t5e-component-field-border);
+  outline: 0 solid var(--t5e-theme-color-default);
 
   &.uninput {
     border: none;
@@ -28,18 +28,13 @@ select,
 
   &:hover,
   &:focus {
-    outline: none;
     background-color: var(--t5e-component-field-background-hover);
+    border-color: var(--t5e-component-field-border-hover);
     box-shadow: var(--t5e-drop-shadow-field-hover);
   }
 
-  &:not(:has(:disabled)):hover,
-  &:not(:has(:disabled)):focus {
-    border-color: var(--t5e-component-field-border-hover);
-  }
-
   &:focus {
-    box-shadow: var(--t5e-drop-shadow-field-focus);
+    outline: var(--t5e-outline-field-focus);
   }
 
   &::placeholder {
@@ -47,12 +42,6 @@ select,
   }
 }
 
-input {
-  &:hover,
-  &:focus {
-    outline: none; // For flash of loss of focus.
-  }
-}
 
 /* Normalize field sizes */
 input[type='text'],
@@ -75,14 +64,14 @@ textarea {
   }
 
   &:has(input[type='text']:disabled) {
-    background: rgba(159, 146, 117, 0.2);
+    background: var(--t5e-component-field-background-disabled);
     color: var(--t5e-color-text-ondefault-lightest);
   }
 
   &:disabled {
-    background: rgba(159, 146, 117, 0.2);
+    background: var(--t5e-component-field-background-disabled);
     box-shadow: none;
-    color: var(--t5e-color-text-ondefault-lightest);
+    border-color: transparent;
   }
 }
 
@@ -96,16 +85,11 @@ textarea {
   padding-inline-end: 0.5rem;
 
   &:focus-within {
-    box-shadow: 0px 0px 0px 2px #9a2a30;
+    box-shadow: 0px 0px 0px 2px var(--t5e-color-text-ondefault-gold-light);
   }
 
   &:hover {
-    background: linear-gradient(
-        0deg,
-        rgba(255, 255, 255, 0.5) 0%,
-        rgba(255, 255, 255, 0.5) 100%
-      ),
-      var(--t5e-component-card-ondefault-default);
+    background-color: var(--t5e-component-field-background-hover);
   }
 
   input[type='text'] {
@@ -136,18 +120,18 @@ textarea {
       background: none;
     }
   }
+  span {
+    padding-block-end: 0.0625rem;
+  }
 
   &.right input[type='text'] {
     text-align: right;
   }
 
   &:has(input[type='text']:disabled) {
-    color: var(--t5e-color-text-ondefault-lightest);
-    background: rgba(159, 146, 117, 0.2);
+    background: var(--t5e-component-field-background-disabled);
+    border: none;
     box-shadow: none;
-    i {
-      color: var(--t5e-color-icon-ondefault-disabled);
-    }
   }
 
   & > :not(input):not(i) {
@@ -169,7 +153,7 @@ textarea {
   padding-inline-end: 0.5rem;
 
   &:focus-within {
-    box-shadow: 0px 0px 0px 2px #9a2a30;
+    box-shadow: var(--t5e-drop-shadow-field-focus);
     background-color: var(--t5e-component-field-background-hover);
   }
   // TODO: Consider how to generalize this particular style, since other inputs use the same technique
@@ -237,12 +221,9 @@ textarea {
   }
 
   &:has(input[type='text']:disabled) {
-    background: rgba(159, 146, 117, 0.2);
+    background: var(--t5e-component-field-background-disabled);
+    border-color: transparent;
     box-shadow: none;
-    color: var(--t5e-color-text-ondefault-lightest);
-    i {
-      color: var(--t5e-color-icon-ondefault-disabled);
-    }
   }
 }
 
@@ -263,7 +244,7 @@ textarea {
   justify-content: flex-start;
   gap: 0.5rem;
 
-  &:hover {
+  &:hover, &:focus {
     input:not(:disabled) {
       &:not(:checked) {
         border-color: var(--t5e-component-field-border-hover);
@@ -278,11 +259,8 @@ textarea {
   }
   &:focus {
     input {
-      box-shadow: var(--t5e-drop-shadow-field-focus);
+      outline: var(--t5e-outline-field-focus);
     }
-  }
-  &:has(input:disabled) {
-    color: var(--t5e-color-text-ondefault-lightest);
   }
 }
 
@@ -293,7 +271,7 @@ input[type='checkbox'] {
   width: var(--checkbox-size);
   height: var(--checkbox-size);
   background: var(--t5e-component-field-background);
-  border: 0.0625rem solid var(--t5e-component-field-border);
+  border: 1px solid var(--t5e-component-field-border);
   box-shadow: var(--t5e-drop-shadow-field);
   transition: all var(--t5e-transition-default);
 
@@ -301,6 +279,23 @@ input[type='checkbox'] {
     background-color: var(--t5e-component-toggle-toggled-background);
     border-color: var(--t5e-component-toggle-toggled-border);
     filter: none; // Overwrite the application filter.
+  }
+  &:disabled {
+    background: var(--t5e-component-field-background-disabled);
+    border-color: transparent;
+    box-shadow: none;
+  }
+  &:focus:not(:disabled) {
+    outline: var(--t5e-outline-field-focus);
+    &:not(:checked) {
+      border-color: var(--t5e-component-field-border-hover);
+      background: var(--t5e-component-field-background-hover);
+    }
+    &:checked { 
+      border-color: var(--t5e-theme-color-darker);
+      background-color: var(--t5e-theme-color-darker);
+      box-shadow: var(--t5e-drop-shadow-field-hover);
+    }
   }
 }
 
@@ -323,11 +318,6 @@ input[type='radio'] {
   }
   &:checked:disabled::before {
     background-color: var(--t5e-color-text-ondefault-disabled);
-  }
-
-  &:disabled {
-    // TODO: CSS Variable
-    background: rgba(159, 146, 117, 0.2);
   }
 }
 
@@ -354,11 +344,9 @@ input[type='checkbox'] {
   }
 
   &:disabled {
-    border: 0.0625rem solid var(--t5e-component-field-border);
-    background: var(--t5e-component-field-background-disabled);
 
     &::before {
-      color: var(--t5e-color-icon-light-diminished);
+      color: var(--t5e-color-icon-ondefault-default);
     }
   }
 }
@@ -370,13 +358,13 @@ select {
 
   border-radius: 0.125rem;
   border: 1px solid var(--t5e-component-field-border);
-  box-shadow: 0px 0px 4px 0px var(--dnd5e-shadow-15);
+  box-shadow: var(--t5e-drop-shadow-field);
   height: var(--t5e-field-size-default);
-  padding: 0 1.75rem 0 0.5rem;
+  padding: 0 1.75rem 0 var(--t5e-spacing-2x);
 
   display: flex;
   align-items: center;
-  gap: 0.375rem;
+  gap: var(--t5e-spacing-1x);
   flex-shrink: 0;
 
   appearance: none;
@@ -405,14 +393,14 @@ select {
 
   &:disabled {
     --bg-image-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='fill: %23999999' viewBox='0 0 512 512'%3E%3C!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--%3E%3Cpath d='M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z'/%3E%3C/svg%3E");
-    background-color: rgba(159, 146, 117, 0.2);
+    background-color: var(--t5e-component-field-background-disabled);
     box-shadow: none;
-    color: var(--t5e-color-text-ondefault-lightest);
+    border-color: transparent;
   }
 }
 
-&.dark,
-.dark {
+&.dark, &.theme-dark,
+.dark, .theme-dark {
   select,
   .input-group,
   input[type='text'],
@@ -427,19 +415,26 @@ select {
       color: var(--t5e-color-text-ondefault-disabled);
     }
 
-    &:hover {
-      background-color: var(--t5e-component-field-background-hover);
-      border-color: var(--t5e-component-field-border-hover);
+    &:not(:disabled) {
+      &:hover, &:focus {
+        background-color: var(--t5e-component-field-background-hover);
+        border-color: var(--t5e-component-field-border-hover);
+      }
+      &:focus {
+        outline-color: var(--t5e-component-field-focus);
+      }
+    }
+    
+    
+    &:disabled {
+      background-color: var(--t5e-component-field-background-disabled);
+      border-color: transparent;
+      box-shadow: none;
     }
   }
 
   select {
     --bg-image-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='fill: %23999' viewBox='0 0 512 512'%3E%3C!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--%3E%3Cpath d='M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z'/%3E%3C/svg%3E");
-
-    option {
-      background: var(--t5e-component-field-background, #252830);
-      color: var(--t5e-color-text-ondefault-default);
-    }
 
     &:hover {
       --bg-image-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='fill: %23CFD2DA' viewBox='0 0 512 512'%3E%3C!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--%3E%3Cpath d='M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z'/%3E%3C/svg%3E");
@@ -458,6 +453,27 @@ select {
 
     & > :not(input):not(i) {
       color: var(--t5e-color-text-ondefault-lightest);
+    }
+  }
+  
+  .radio input[type='radio'],
+  .checkbox input[type='checkbox'],
+  input[type='radio'],
+  input[type='checkbox'] {
+    &:checked:hover:not(:disabled) {
+      border-color: var(--t5e-component-field-border-hover);
+    }
+    &:focus:not(:disabled) {
+      border-color: var(--t5e-component-field-border-hover);
+      &:not(:checked) {
+        border-color: var(--t5e-component-field-border-hover);
+        background: var(--t5e-component-field-background-hover);
+      }
+      &:checked { 
+        border-color: var(--t5e-component-field-border-hover);
+        background-color: var(--t5e-theme-color-darker);
+        box-shadow: var(--t5e-drop-shadow-field-hover);
+      }
     }
   }
 }

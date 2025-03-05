@@ -23,7 +23,7 @@
       color: var(--t5e-color-text-ondefault-lighter, #4b4a44);
       /* title/small */
       font-family: var(--font-family-title, 'Modesto Condensed');
-      font-size: var(--font-size-16);
+      font-size: var(--font-size-18);
       letter-spacing: 0.01rem;
       padding: 0 0 0.125rem 0;
       margin-bottom: 0.25rem;
@@ -72,7 +72,7 @@
     &:disabled {
       .form-group label,
       .hint {
-        color: var(--t5e-color-text-ondefault-lightest);
+        // color: var(--t5e-color-text-ondefault-lightest);
       }
     }
   }
@@ -200,7 +200,7 @@
 
     &:not(.label-top) {
       label {
-        margin-inline-start: 0.25rem;
+        // margin-inline-start: 0.25rem;
       }
     }
 
