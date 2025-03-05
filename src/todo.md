@@ -1,28 +1,11 @@
 ## To Do
 
-### Bootstrapping all item sheets
-
-- [ ] Get Tidy tables working properly and looking nice with the latest styles
-  - [x] New quantity control is wider than its 80px parent
-  - [x] The table styles do not account for varying column widths and do not constrain child contents
-  - [x] Item Name should truncate when too small
-  - [x] Section header name should truncate when too small
-  - [x] Tighten up actions column scaling for icons
-  - [x] Add breakpoints for showing/hiding content, and add columns
-    - [x] Charges : order to hide - 4
-    - [x] Price : order to hide - 1
-    ~~- [ ] Time : order to hide - 2~~
-    - [x] Quantity : order to hide - 5
-    - [x] Weight : order to hide - 3
-  - [x] Finish creating quadrone-specific table components so that inline activities and item (document) summary can be owned by quadrone and classed accordingly.
-- [ ] Add user preference sheet width memoization
-- [ ] Iterate on container tables
-  - [ ] Add expand indicator to primary column for toggling activities / container contents; show on hover, should take up all the space it can
-    - [x] Inline container contents
-    - [ ] Activities
-  - [ ] Add rarity colors to images
-  - [ ] Set up inline activities as a secondary expander with the expand indicator.
-- [ ] Replace rote individual span styles with util styles where able
+- [ ] Finish Container Contents toolbar
+- [ ] Review Container sheet to ensure it has everything
+- [ ] Complete dark mode for the container
+- [ ] Set up default/light/dark menu toggle and add to container
+- [ ] Update sheet lock to work like the default sheets, including the additional render options and intuitive default state
+- [ ] Item cards?
 - [ ] Implement sheet header contents
   - [ ] Background
     - [ ] subtitle
@@ -128,7 +111,32 @@
   - [ ] Portrait becomes washed over
   - [ ] Non-description tabs become disabled (preferably, hide them?)
 - [ ] Wire up item-sheet-specific user sheet preferences for width and height. Look for other opportunities, also, like container toolbar.
+- [ ] Replace rote individual span styles with util styles where able
 
 ### Stretch
 
 - [ ] Hightouch: If it's super simple (and only if it's super simple) it could be nice to hard link some of the currency/weight/item type directly to the fields (e.g. click it, opens the tab, focuses the input). But if it's not out-of-the-box it's not worth it. Just wasn't sure if it was actually possible
+
+### To Do Graveyard
+
+- [x] Get Tidy tables working properly and looking nice with the latest styles
+  - [x] New quantity control is wider than its 80px parent
+  - [x] The table styles do not account for varying column widths and do not constrain child contents
+  - [x] Item Name should truncate when too small
+  - [x] Section header name should truncate when too small
+  - [x] Tighten up actions column scaling for icons
+  - [x] Add breakpoints for showing/hiding content, and add columns
+    - [x] Charges : order to hide - 4
+    - [x] Price : order to hide - 1
+    ~~- [ ] Time : order to hide - 2~~
+    - [x] Quantity : order to hide - 5
+    - [x] Weight : order to hide - 3
+  - [x] Finish creating quadrone-specific table components so that inline activities and item (document) summary can be owned by quadrone and classed accordingly.
+- [x] Iterate on container tables
+  - [x] Container expander to left, always visible. Item Desc / Activity expander on right, hidden until hovered, merely a visual indicator and not a separate clickable area, but always visible when expanded.
+    - [x] Inline container contents
+    - [x] Item Desc / Activities
+  - [x] Add rarity colors to images
+- [x] Add user preference sheet width memoization
+~~- [ ] Expand/collapse All Sections is not working; fix it so container toggles work with it~~
+- [x] Bug: On drop to container sheet, new item is counted but cannot appear until full refresh. Fix: Svelte update.

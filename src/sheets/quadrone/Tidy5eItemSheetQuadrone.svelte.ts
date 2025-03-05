@@ -30,10 +30,14 @@ import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
 import { formatAsModifier } from 'src/utils/formatting';
 import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
+import { TidyDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 
-export class Tidy5eItemSheetQuadrone extends DragAndDropMixin(
-  SvelteApplicationMixin<ItemSheetQuadroneContext>(
-    foundry.applications.sheets.ItemSheetV2
+export class Tidy5eItemSheetQuadrone extends TidyDocumentSheetMixin(
+  CONSTANTS.SHEET_TYPE_ITEM,
+  DragAndDropMixin(
+    SvelteApplicationMixin<ItemSheetQuadroneContext>(
+      foundry.applications.sheets.ItemSheetV2
+    )
   )
 ) {
   currentTabId: string | undefined = undefined;

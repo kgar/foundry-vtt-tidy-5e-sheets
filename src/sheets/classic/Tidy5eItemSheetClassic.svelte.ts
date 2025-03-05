@@ -28,10 +28,14 @@ import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
+import { TidyDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 
-export class Tidy5eItemSheetClassic extends DragAndDropMixin(
-  SvelteApplicationMixin<ItemSheetClassicContext>(
-    foundry.applications.sheets.ItemSheetV2
+export class Tidy5eItemSheetClassic extends TidyDocumentSheetMixin(
+  CONSTANTS.SHEET_TYPE_ITEM,
+  DragAndDropMixin(
+    SvelteApplicationMixin<ItemSheetClassicContext>(
+      foundry.applications.sheets.ItemSheetV2
+    )
   )
 ) {
   currentTabId: string | undefined = undefined;

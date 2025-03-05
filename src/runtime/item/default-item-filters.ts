@@ -4,7 +4,7 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SpellUtils } from 'src/utils/SpellUtils';
 import { ItemUtils } from 'src/utils/ItemUtils';
 
-export const defaultItemFilters = {
+export const defaultItemFilters: Record<string, ItemFilter> = {
   activationCostAction: {
     name: 'activationCostAction',
     predicate: (item) =>
@@ -81,6 +81,11 @@ export const defaultItemFilters = {
           ].includes(a.activation?.type)
       ),
     text: 'TIDY5E.ItemFilters.Filter.Other',
+  },
+  magical: {
+    name: 'itemIsMagical',
+    predicate: (item) => !!item.system?.properties?.has('mgc'),
+    text: 'DND5E.Item.Property.Magical',
   },
   ritual: {
     name: 'ritual',

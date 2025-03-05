@@ -9,8 +9,8 @@ export type SheetPreference = {
   tabs?: {
     [tabId: string]: SheetTypeTabPreferences;
   };
-  width?: number;
-  height?: number;
+  width?: number | 'auto';
+  height?: number | 'auto';
   [CONSTANTS.SPELL_SLOT_TRACKER_MODE_PREFERENCE]?:
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
