@@ -83,7 +83,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
     text: 'TIDY5E.ItemFilters.Filter.Other',
   },
   magical: {
-    name: 'itemIsMagical',
+    name: 'magical',
     predicate: (item) => !!item.system?.properties?.has('mgc'),
     text: 'DND5E.Item.Property.Magical',
   },
