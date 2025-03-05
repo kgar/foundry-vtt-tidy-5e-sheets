@@ -11,6 +11,7 @@
     children?: Snippet;
     options?: Snippet;
     onclick?: MouseEventHandler<HTMLElement>;
+    longpressDelay?: number;
     [key: string]: any;
   }
 
@@ -22,11 +23,13 @@
     children,
     options,
     onclick,
+    longpressDelay,
     ...rest
   }: Props = $props();
 
   let menuEl: HTMLElement;
   let menuOpenerEl: HTMLElement;
+  let longpressed = $state(false);
 
   function handleFocusOut(
     event: FocusEvent & { currentTarget: EventTarget & HTMLElement },
@@ -46,10 +49,12 @@
 
     menuEl.blur();
     expanded = false;
+    longpressed = false;
   }
 
-  async function toggleMenu(expand?: boolean): Promise<void> {
-    expanded = expand ?? !expanded;
+  async function toggleMenu(isLongpress: boolean): Promise<void> {
+    expanded = !expanded;
+    longpressed = isLongpress;
 
     if (expanded) {
       await tick();
@@ -64,8 +69,19 @@
     class:expanded
     class:active
     class:disabled
-    use:longpress={{ callback: () => toggleMenu() }}
-    onclick={(ev) => !expanded && onclick?.(ev)}
+    use:longpress={{
+      callback: () => toggleMenu(true),
+      threshold: longpressDelay,
+    }}
+    onclick={(ev) => {
+      if (!expanded) {
+        onclick?.(ev);
+      } else if (expanded && longpressed) {
+        longpressed = false;
+      } else {
+        toggleMenu(false);
+      }
+    }}
     oncontextmenu={() => toggleMenu(true)}
     onfocusout={handleFocusOut}
     tabindex={expanded ? 0 : null}
