@@ -65,7 +65,7 @@
     class:active
     class:disabled
     use:longpress={{ callback: () => toggleMenu() }}
-    {onclick}
+    onclick={(ev) => !expanded && onclick?.(ev)}
     oncontextmenu={() => toggleMenu(true)}
     onfocusout={handleFocusOut}
     tabindex={expanded ? 0 : null}

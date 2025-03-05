@@ -39,6 +39,7 @@ export function longpress(
     });
     node.addEventListener('touchstart', handleMouseDown, {
       signal: controller.signal,
+      passive: true,
     });
 
     return () => {

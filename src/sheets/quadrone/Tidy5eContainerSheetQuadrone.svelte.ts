@@ -34,14 +34,18 @@ import { Container } from 'src/features/containers/Container';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import { settings, SettingsProvider } from 'src/settings/settings.svelte';
+import { settings } from 'src/settings/settings.svelte';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
+import { TidyDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 
-export class Tidy5eContainerSheetQuadrone extends DragAndDropMixin(
-  SvelteApplicationMixin<ContainerSheetQuadroneContext>(
-    foundry.applications.sheets.ItemSheetV2
+export class Tidy5eContainerSheetQuadrone extends TidyDocumentSheetMixin(
+  CONSTANTS.SHEET_TYPE_CONTAINER,
+  DragAndDropMixin(
+    SvelteApplicationMixin<ContainerSheetQuadroneContext>(
+      foundry.applications.sheets.ItemSheetV2
+    )
   )
 ) {
   currentTabId: string | undefined = undefined;
@@ -59,7 +63,11 @@ export class Tidy5eContainerSheetQuadrone extends DragAndDropMixin(
   constructor(...args: any[]) {
     super(...args);
 
-    this.itemFilterService = new ItemFilterService({}, this.item);
+    this.itemFilterService = new ItemFilterService(
+      {},
+      this.item,
+      ItemFilterRuntime.getDocumentFiltersQuadrone
+    );
   }
 
   static DEFAULT_OPTIONS: Partial<
@@ -169,7 +177,7 @@ export class Tidy5eContainerSheetQuadrone extends DragAndDropMixin(
     const isIdentifiable = 'identified' in this.item.system;
 
     const systemSource = this.document.toObject().system;
-    
+
     const itemDescriptions: ItemDescription[] = [];
 
     itemDescriptions.push({
@@ -259,13 +267,12 @@ export class Tidy5eContainerSheetQuadrone extends DragAndDropMixin(
       },
     };
 
-    
     const editable = this.isEditable;
 
     const unlocked = FoundryAdapter.isSheetUnlocked(this.item) && editable;
-    
+
     const currencies: CurrencyContext[] = [];
-    
+
     Object.keys(CONFIG.DND5E.currencies).forEach((key) =>
       currencies.push({
         key: key,
@@ -290,7 +297,7 @@ export class Tidy5eContainerSheetQuadrone extends DragAndDropMixin(
       editable: editable,
       enriched: enriched,
       filterData: this.itemFilterService.getDocumentItemFilterData(),
-      filterPins: ItemFilterRuntime.defaultFilterPins[this.item.type],
+      filterPins: ItemFilterRuntime.defaultFilterPinsQuadrone[this.item.type],
       identifiedName: FoundryAdapter.getIdentifiedName(this.item),
       isContainer: true,
       isIdentifiable: isIdentifiable,

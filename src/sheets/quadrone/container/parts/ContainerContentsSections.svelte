@@ -177,7 +177,7 @@
               uuid: item.uuid,
             }}
           >
-            {#snippet children({ toggleSummary })}
+            {#snippet children({ toggleSummary, expanded })}
               <a
                 class="tidy-table-button item-use-button"
                 style="--item-border-color: {itemBorderColor};"
@@ -193,24 +193,29 @@
                   <i class="fa fa-dice-d20"></i>
                 </span>
               </a>
+              {#if 'containerContents' in ctx && !!ctx.containerContents}
+                <a
+                  class="container-expander"
+                  onclick={() => inlineToggleService.toggle(tabId, item.id)}
+                >
+                  <i
+                    class="fa-solid fa-angle-right expand-indicator"
+                    class:expanded={containerToggleMap.get(tabId)?.has(item.id)}
+                  >
+                  </i>
+                </a>
+              {/if}
               <TidyTableCell primary={true} class="item-label text-cell">
                 <a class="item-name" onclick={(ev) => toggleSummary()}>
                   <span class="cell-name">{item.name}</span>
-                </a>
-                {#if 'containerContents' in ctx && !!ctx.containerContents}
-                  <a
-                    class="expand-indicator-button"
-                    onclick={() => inlineToggleService.toggle(tabId, item.id)}
-                  >
+                  <span class="row-detail-expand-indicator">
                     <i
                       class="fa-solid fa-angle-right expand-indicator"
-                      class:expanded={containerToggleMap
-                        .get(tabId)
-                        ?.has(item.id)}
+                      class:expanded={expanded}
                     >
                     </i>
-                  </a>
-                {/if}
+                  </span>
+                </a>
               </TidyTableCell>
               <TidyTableCell class="inline-uses" {...columnSpecs.charges}>
                 {#if item.hasLimitedUses}
