@@ -30,7 +30,7 @@ type ItemFilterData = Record<ItemFilterGroupName, ItemFilters>;
 export class ItemFilterService {
   private _filterData = $state<ItemFilterData>()!;
   private _document: any;
-  private documentFilterProvider = ItemFilterRuntime.getDocumentFilters;
+  private _documentFilterProvider = ItemFilterRuntime.getDocumentFilters;
 
   // TODO: Have sheets send in what they have in session storage upon construction
   constructor(
@@ -42,7 +42,7 @@ export class ItemFilterService {
     this._document = document;
 
     if (documentFilterProvider) {
-      this.documentFilterProvider = documentFilterProvider;
+      this._documentFilterProvider = documentFilterProvider;
     }
   }
 
@@ -121,7 +121,7 @@ export class ItemFilterService {
   }
 
   getDocumentItemFilterData(): DocumentFilters {
-    const documentFilters = this.documentFilterProvider(this._document);
+    const documentFilters = this._documentFilterProvider(this._document);
     const documentItemFilterData: DocumentFilters = {};
 
     for (let [tab, categories] of Object.entries(documentFilters)) {
