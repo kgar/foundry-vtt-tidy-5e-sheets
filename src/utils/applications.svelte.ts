@@ -38,6 +38,10 @@ export function applyMutableSettingAttributesToWindow(
   if (theme) {
     debug(`Applying theme type ${theme.type} to window`);
     element.setAttribute('data-tidy-theme-type', theme.type);
+    if (game.release.generation < 13) {
+      element.classList.remove('theme-light', 'theme-dark');
+      element.classList.add(`theme-${theme.type}`);
+    }
   }
 
   if (currentSettings.lockConfigureSheet && !FoundryAdapter.userIsGm()) {
