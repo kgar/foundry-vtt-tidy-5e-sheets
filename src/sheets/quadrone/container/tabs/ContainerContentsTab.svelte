@@ -17,7 +17,8 @@
   import { Container } from 'src/features/containers/Container';
   import ExpandCollapseButton from '../../shared/ExpandCollapseButton.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
-  import PinnedFilterToggle from 'src/components/buttons/PinnedFilterToggle.svelte';
+  import FilterToggle from 'src/components/buttons/FilterToggle.svelte';
+  import FilterMenuQuadrone from 'src/components/filter/FilterMenuQuadrone.svelte';
 
   let context = $derived(getContainerSheetQuadroneContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
@@ -41,12 +42,6 @@
   });
 
   const localize = FoundryAdapter.localize;
-
-  let utilityBarCommands = $derived(
-    context.utilities[tabId]?.utilityToolbarCommands ?? [],
-  );
-
-  let menuOpen = $derived(false);
 
   let markerEl: HTMLElement | undefined = $state();
   let footerEl: HTMLElement | undefined = $state();
@@ -74,30 +69,27 @@
   class="action-bar"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTION_BAR}
 >
-  <!-- TODO: Extract to component. -->
   <ExpandCollapseButton />
 
   <Search bind:searchCriteria />
 
   <div class="button-group">
     {#each pinnedFilters as pinnedFilter (pinnedFilter.name)}
-      <PinnedFilterToggle
+      <FilterToggle
         filter={pinnedFilter}
         filterGroupName={tabId}
         class={pinnedFilter.pinnedFilterClass}
       >
         {localize(pinnedFilter.text)}
-      </PinnedFilterToggle>
+      </FilterToggle>
     {/each}
   </div>
 
-  <a class="button icon-button">
-    <i class="fas fa-filter"></i>
-  </a>
+  <FilterMenuQuadrone filterData={context.filterData} {tabId} />
 
   <ButtonWithOptionPanel class="icon-button" anchor="right">
     <i class="fas fa-arrow-down-a-z fa-fw"></i>
-    {#snippet options()}
+    {#snippet menu()}
       <label for="{context.document.id}-sort-option-alphabetical">
         <input
           type="radio"
@@ -131,10 +123,6 @@
 </section>
 
 <!-- Tables -->
-<!-- New Container Contents Sections > New Inline Container View (requires options for column specification, classic controls)  -->
-<!-- Column specification needs to have options for spanning -->
-<!-- These options should be conditional accepted here, since this will also be reused for actor inventories -->
-<!-- ? DO we have to reuse the same components, or can we make curated versions for container and actor? -->
 <div class="tidy-table-container">
   <ContainerContentsSections
     contents={context.containerContents.contents}

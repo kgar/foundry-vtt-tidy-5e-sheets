@@ -1,0 +1,71 @@
+<script lang="ts">
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { getContext, type Snippet } from 'svelte';
+  import ButtonWithOptionPanel from '../buttons/ButtonWithOptionPanel.svelte';
+  import type { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
+  import type { DocumentFilters } from 'src/runtime/item/item.types';
+  import FilterToggle from '../buttons/FilterToggle.svelte';
+
+  const localize = FoundryAdapter.localize;
+
+  interface Props {
+    tabId: string;
+    filterData: DocumentFilters;
+    beforeClearButton?: Snippet;
+  }
+
+  const { tabId, filterData, beforeClearButton }: Props = $props();
+
+  const onFilterClearAll =
+    getContext<ItemFilterService['onFilterClearAll']>('onFilterClearAll');
+
+  let categories = $derived(filterData[tabId] ?? {});
+  // let hasActiveFilters = $derived(
+  //   Object.entries(categories).some(([_, filters]) =>
+  //     filters.some((f) => f.value !== null),
+  //   ),
+  // );
+  let filterMenuExpanded = $state(false);
+</script>
+
+<ButtonWithOptionPanel
+  class="icon-button"
+  anchor="right"
+  bind:expanded={filterMenuExpanded}
+  onclick={() => (filterMenuExpanded = !filterMenuExpanded)}
+  containerClasses="filter-menu"
+>
+  <i class="fas fa-filter"></i>
+  {#snippet menu()}
+    {#each Object.entries(categories) as [category, filters] (category)}
+      <section class="filter-group">
+        <h4 class="filter-group-header">
+          {localize(category)}
+        </h4>
+        <div class="filters">
+          {#each filters as filter (filter.text)}
+            <FilterToggle filterGroupName={tabId} {filter}>
+              {localize(filter.text)}
+            </FilterToggle>
+          {/each}
+        </div>
+      </section>
+    {/each}
+
+    {#if beforeClearButton}
+      {@render beforeClearButton()}
+    {/if}
+
+    <button
+      type="button"
+      class="button clear-all-filters"
+      onclick={(ev) => {
+        onFilterClearAll(tabId);
+        filterMenuExpanded = false;
+      }}
+    >
+      <i class="fa-solid fa-xmark"></i>
+      {localize('TIDY5E.ItemFilters.ClearAll')}
+    </button>
+  {/snippet}
+</ButtonWithOptionPanel>

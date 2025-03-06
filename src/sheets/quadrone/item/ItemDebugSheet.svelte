@@ -569,7 +569,7 @@
       <div class="wrapped-gallery">
         <ButtonWithOptionPanel class="icon-button">
           <i class="fas fa-hand"></i>
-          {#snippet options()}
+          {#snippet menu()}
             <label>
               <input type="radio" name="icon-menu-test" value="1" /> Test Option
               1
@@ -582,13 +582,13 @@
         </ButtonWithOptionPanel>
         <ButtonWithOptionPanel class="icon-button" active={true}>
           <i class="fas fa-hand"></i>
-          {#snippet options()}
+          {#snippet menu()}
             O hai 🙋‍♀️
           {/snippet}
         </ButtonWithOptionPanel>
         <ButtonWithOptionPanel class="icon-button" disabled={true}>
           <i class="fas fa-hand"></i>
-          {#snippet options()}
+          {#snippet menu()}
             O hai 🙋‍♀️
           {/snippet}
         </ButtonWithOptionPanel>
@@ -598,7 +598,7 @@
           active={true}
         >
           <i class="fas fa-hand"></i>
-          {#snippet options()}
+          {#snippet menu()}
             O hai 🙋‍♀️
           {/snippet}
         </ButtonWithOptionPanel>

@@ -9,8 +9,10 @@
     disabled?: boolean;
     anchor?: 'left' | 'right';
     children?: Snippet;
-    options?: Snippet;
+    menu?: Snippet;
     onclick?: MouseEventHandler<HTMLElement>;
+    longpressDelay?: number;
+    containerClasses?: string;
     [key: string]: any;
   }
 
@@ -20,13 +22,16 @@
     disabled = false,
     anchor = 'left',
     children,
-    options,
+    menu: options,
     onclick,
+    longpressDelay,
+    containerClasses,
     ...rest
   }: Props = $props();
 
   let menuEl: HTMLElement;
   let menuOpenerEl: HTMLElement;
+  let longpressed = $state(false);
 
   function handleFocusOut(
     event: FocusEvent & { currentTarget: EventTarget & HTMLElement },
@@ -46,10 +51,12 @@
 
     menuEl.blur();
     expanded = false;
+    longpressed = false;
   }
 
-  async function toggleMenu(expand?: boolean): Promise<void> {
-    expanded = expand ?? !expanded;
+  async function toggleMenu(isLongpress: boolean): Promise<void> {
+    expanded = !expanded;
+    longpressed = isLongpress;
 
     if (expanded) {
       await tick();
@@ -58,15 +65,28 @@
   }
 </script>
 
-<div class="button-with-options-wrapper">
-  <a
+<div class="button-with-options-wrapper {containerClasses}">
+  <button
+    type="button"
     class="button with-options {rest.class ?? ''}"
     class:expanded
     class:active
     class:disabled
-    use:longpress={{ callback: () => toggleMenu() }}
-    onclick={(ev) => !expanded && onclick?.(ev)}
-    oncontextmenu={() => toggleMenu(true)}
+    {disabled}
+    use:longpress={{
+      callback: () => toggleMenu(true),
+      threshold: longpressDelay,
+    }}
+    onclick={(ev) => {
+      if (!expanded) {
+        onclick?.(ev);
+      } else if (expanded && longpressed) {
+        longpressed = false;
+      } else {
+        toggleMenu(false);
+      }
+    }}
+    oncontextmenu={() => !expanded && toggleMenu(true)}
     onfocusout={handleFocusOut}
     tabindex={expanded ? 0 : null}
     bind:this={menuOpenerEl}
@@ -77,7 +97,7 @@
     {:else}
       <i class="expand-indicator fas fa-caret-down"></i>
     {/if}
-  </a>
+  </button>
 
   <menu
     class:expanded

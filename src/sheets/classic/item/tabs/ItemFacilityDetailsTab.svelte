@@ -180,7 +180,7 @@
 
         <!-- Defenders -->
         <div class="form-group label-top">
-          <label for="">
+          <label for="{appId}-system-defenders-max">
             {localize('DND5E.FACILITY.FIELDS.defenders.max.label')}
           </label>
           <div class="form-fields">

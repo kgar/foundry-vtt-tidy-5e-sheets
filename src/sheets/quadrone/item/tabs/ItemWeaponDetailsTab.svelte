@@ -193,7 +193,7 @@
         <!-- Attunement -->
         {#if !context.item.isMountable}
           <div class="form-group label-top no-gap">
-            <label for="">
+            <label for="{appId}-attunement">
               {localize('DND5E.Attunement')}
             </label>
             <div class="form-fields">
@@ -251,11 +251,12 @@
   <!-- Ammunition Type -->
   {#if context.properties.object.amm}
     <div class="form-group">
-      <label for=""
+      <label for="{appId}-ammunition-type"
         >{localize('DND5E.WEAPON.FIELDS.ammunition.type.label')}</label
       >
       <div class="form-fields">
         <SelectQuadrone
+          id="{appId}-ammunition-type"
           document={context.item}
           field="system.ammunition.type"
           value={context.source.ammunition.type}
@@ -342,9 +343,10 @@
 
     <!-- Units -->
     <div class="form-group">
-      <label for="">{localize('DND5E.MovementUnits')}</label>
+      <label for="{appId}-range-units">{localize('DND5E.MovementUnits')}</label>
       <div class="form-fields">
         <SelectQuadrone
+          id="{appId}-range-units"
           document={context.item}
           field="system.range.units"
           value={context.source.range.units}
@@ -389,9 +391,12 @@
 
         <!-- Units -->
         <div class="form-group label-top">
-          <label for="">{localize('DND5E.MovementUnits')}</label>
+          <label for="{appId}-range-units"
+            >{localize('DND5E.MovementUnits')}</label
+          >
           <div class="form-fields">
             <SelectQuadrone
+              id="{appId}-range-units"
               document={context.item}
               field="system.range.units"
               value={context.source.range.units}
