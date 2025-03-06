@@ -129,7 +129,7 @@
   <div class="form-fields">
     <!-- Proficiency -->
     <div class="form-group label-top">
-      <label for="">{localize('DND5E.Proficiency')}</label>
+      <label for="{appId}-proficient">{localize('DND5E.Proficiency')}</label>
       <div class="form-fields">
         <SelectQuadrone
           id="{appId}-proficient"

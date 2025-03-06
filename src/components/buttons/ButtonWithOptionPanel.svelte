@@ -12,6 +12,7 @@
     menu?: Snippet;
     onclick?: MouseEventHandler<HTMLElement>;
     longpressDelay?: number;
+    containerClasses?: string;
     [key: string]: any;
   }
 
@@ -24,6 +25,7 @@
     menu: options,
     onclick,
     longpressDelay,
+    containerClasses,
     ...rest
   }: Props = $props();
 
@@ -63,12 +65,14 @@
   }
 </script>
 
-<div class="button-with-options-wrapper">
-  <a
+<div class="button-with-options-wrapper {containerClasses}">
+  <button
+    type="button"
     class="button with-options {rest.class ?? ''}"
     class:expanded
     class:active
     class:disabled
+    {disabled}
     use:longpress={{
       callback: () => toggleMenu(true),
       threshold: longpressDelay,
@@ -93,7 +97,7 @@
     {:else}
       <i class="expand-indicator fas fa-caret-down"></i>
     {/if}
-  </a>
+  </button>
 
   <menu
     class:expanded

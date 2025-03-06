@@ -111,7 +111,8 @@
     border: 0.0625rem solid var(--t5e-component-field-border);
     --input-height: auto;
 
-    &:has(.toggle:checked), &.include {
+    &:has(.toggle:checked),
+    &.include {
       --icon-fill: var(--t5e-component-toggle-toggled-text);
       color: var(--t5e-component-toggle-toggled-text);
       background: var(--t5e-component-toggle-toggled-background);
@@ -125,7 +126,8 @@
       }
     }
 
-    &.disabled, &.exclude {
+    &.disabled,
+    &.exclude {
       --icon-fill: var(--t5e-color-text-ondefault-lightest);
       font-style: italic;
       color: var(--t5e-color-text-ondefault-lightest);
@@ -133,8 +135,8 @@
   }
 }
 
-&.dark, &.theme-dark 
-:is(button, .button) {
+&.dark,
+&.theme-dark :is(button, .button) {
   border: 1px solid var(--t5e-component-field-border);
   background: var(--t5e-component-field-background);
 
@@ -151,7 +153,7 @@
   flex-direction: row;
   box-shadow: var(--t5e-drop-shadow-field);
   gap: 0;
-  
+
   &:hover {
     box-shadow: var(--t5e-drop-shadow-field-hover);
   }
@@ -262,6 +264,41 @@
       display: flex;
       gap: 0.5rem;
     }
+  }
+}
+
+// Filter Button Menu - TODO: Discuss with Hightouch where this should go and if any of this can be eliminated by existing or more appropriate classes / styles
+.button-with-options-wrapper.filter-menu {
+  // Question for Hightouch: where should we put styles for filter menus?
+
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .filters {
+    display: flex;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+
+    .toggle-button {
+      text-transform: capitalize;
+    }
+  }
+
+  menu.expanded {
+    width: 20rem;
+    background: var(--t5e-component-card-ondefault-default);
+    display: flex;
+    flex-direction: column;
+    gap: 1.125rem;
+    // TODO: Parchment background for light / ??? background for dark
+    // Can we do some kind of special class that means "Use the textured background, whatever the theme?"
+  }
+
+  .clear-all-filters {
+    margin-block-start: 0.625rem;
   }
 }
 

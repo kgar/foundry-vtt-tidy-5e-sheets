@@ -18,6 +18,7 @@
   import ExpandCollapseButton from '../../shared/ExpandCollapseButton.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
   import FilterToggle from 'src/components/buttons/FilterToggle.svelte';
+  import FilterMenuQuadrone from 'src/components/filter/FilterMenuQuadrone.svelte';
 
   let context = $derived(getContainerSheetQuadroneContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
@@ -84,15 +85,7 @@
     {/each}
   </div>
 
-  <a class="button icon-button">
-    <i class="fas fa-filter"></i>
-  </a>
-
-  <ButtonWithOptionPanel class="icon-button" anchor="right">
-    {#snippet menu()}
-    
-    {/snippet}
-  </ButtonWithOptionPanel>
+  <FilterMenuQuadrone filterData={context.filterData} {tabId} />
 
   <ButtonWithOptionPanel class="icon-button" anchor="right">
     <i class="fas fa-arrow-down-a-z fa-fw"></i>
@@ -130,10 +123,6 @@
 </section>
 
 <!-- Tables -->
-<!-- New Container Contents Sections > New Inline Container View (requires options for column specification, classic controls)  -->
-<!-- Column specification needs to have options for spanning -->
-<!-- These options should be conditional accepted here, since this will also be reused for actor inventories -->
-<!-- ? DO we have to reuse the same components, or can we make curated versions for container and actor? -->
 <div class="tidy-table-container">
   <ContainerContentsSections
     contents={context.containerContents.contents}

@@ -136,7 +136,7 @@
     <label for="">{localize('DND5E.Type')}</label>
     <div class="form-fields">
       {#each types as { value, label, selected } (value)}
-        <label for="" class="checkbox">
+        <label class="checkbox">
           <CheckboxQuadrone
             id="{idPrefix}types-{value?.slugify()}"
             document={context.item}
