@@ -89,8 +89,14 @@
   </a>
 
   <ButtonWithOptionPanel class="icon-button" anchor="right">
+    {#snippet menu()}
+    
+    {/snippet}
+  </ButtonWithOptionPanel>
+
+  <ButtonWithOptionPanel class="icon-button" anchor="right">
     <i class="fas fa-arrow-down-a-z fa-fw"></i>
-    {#snippet options()}
+    {#snippet menu()}
       <label for="{context.document.id}-sort-option-alphabetical">
         <input
           type="radio"

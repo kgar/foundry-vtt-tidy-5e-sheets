@@ -48,7 +48,7 @@
   onclick={() => toggleContents()}
 >
   <i class="expand-button-indicator fas fa-angles-down fa-fw"></i>
-  {#snippet options()}
+  {#snippet menu()}
     <h4>{localize('TIDY5E.ExpandCollapseMenu.OptionTitle')}</h4>
     <label
       for="{context.document.id}-expand-collapse-behavior-top-level-sections"

@@ -9,7 +9,7 @@
     disabled?: boolean;
     anchor?: 'left' | 'right';
     children?: Snippet;
-    options?: Snippet;
+    menu?: Snippet;
     onclick?: MouseEventHandler<HTMLElement>;
     longpressDelay?: number;
     [key: string]: any;
@@ -21,7 +21,7 @@
     disabled = false,
     anchor = 'left',
     children,
-    options,
+    menu: options,
     onclick,
     longpressDelay,
     ...rest
