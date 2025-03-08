@@ -44,7 +44,9 @@
 </script>
 
 <ButtonWithOptionPanel
-  class="icon-button expand-button {allExpanded ? 'expanded' : 'collapsed'}"
+  buttonClasses="icon-button expand-button {allExpanded
+    ? 'expanded'
+    : 'collapsed'}"
   onclick={() => toggleContents()}
 >
   <i class="expand-button-indicator fas fa-angles-down fa-fw"></i>

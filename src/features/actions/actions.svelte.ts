@@ -3,12 +3,8 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ActionListRuntime } from 'src/runtime/action-list/ActionListRuntime';
 import { settings } from 'src/settings/settings.svelte';
 import type { ContainerContents, Item5e } from 'src/types/item.types';
-import type {
-  ActionItem,
-  ActionSection,
-  Actor5e,
-  SortMode,
-} from 'src/types/types';
+import type { ActionItem, ActionSection, Actor5e } from 'src/types/types';
+import type { SortMethodKeyQuadrone } from 'src/types/sort.types';
 import { isNil } from 'src/utils/data';
 import { simplifyFormula } from 'src/utils/formula';
 import { debug, error } from 'src/utils/logging';
@@ -61,7 +57,10 @@ export async function getActorActionSections(
   }
 }
 
-export function getSortedActions(section: ActionSection, sortMode: SortMode) {
+export function getSortedActions(
+  section: ActionSection,
+  sortMode: SortMethodKeyQuadrone
+) {
   return section.actions.toSorted(({ item: a }, { item: b }) => {
     if (sortMode === 'a') {
       return a.name.localeCompare(b.name, game.i18n.lang);

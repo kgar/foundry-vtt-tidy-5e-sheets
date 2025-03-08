@@ -39,6 +39,12 @@ import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import { TidyDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import type {
+  SortGroup,
+  SortGroupKeyQuadrone,
+  SortMethodKeyQuadrone,
+  SortMethodOption,
+} from 'src/types/sort.types';
 
 export class Tidy5eContainerSheetQuadrone extends TidyDocumentSheetMixin(
   CONSTANTS.SHEET_TYPE_CONTAINER,
@@ -207,65 +213,138 @@ export class Tidy5eContainerSheetQuadrone extends TidyDocumentSheetMixin(
       this.item.type
     );
 
-    const contentsSortMode =
+    const contentsSortMethod =
       containerPreferences.tabs?.[CONSTANTS.TAB_CONTAINER_CONTENTS]?.sort ??
       'm';
 
-    // Utilities
-    let utilities: Utilities<ContainerSheetQuadroneContext> = {
-      [CONSTANTS.TAB_CONTAINER_CONTENTS]: {
-        utilityToolbarCommands: [
-          {
-            id: 'sort-mode-alpha',
-            title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
-            iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
-            execute: async () => {
-              await SheetPreferencesService.setDocumentTypeTabPreference(
-                this.item.type,
-                CONSTANTS.TAB_CONTAINER_CONTENTS,
-                'sort',
-                'm'
-              );
-              this.render();
-            },
-            visible: contentsSortMode === 'a',
-          },
-          {
-            id: 'sort-mode-manual',
-            title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
-            iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
-            execute: async () => {
-              await SheetPreferencesService.setDocumentTypeTabPreference(
-                this.item.type,
-                CONSTANTS.TAB_CONTAINER_CONTENTS,
-                'sort',
-                'a'
-              );
-              this.render();
-            },
-            visible: contentsSortMode === 'm',
-          },
-          {
-            id: 'configure-sections',
-            title: FoundryAdapter.localize(
-              'TIDY5E.Utilities.ConfigureSections'
-            ),
-            iconClass: 'fas fa-cog',
-            execute: ({ context, sections }) => {
-              new DocumentTabSectionConfigApplication({
-                document: context.item,
-                // Provide a way to build the necessary config, perhaps within the application constructor. We've got all the info we need in order to perform the operation.
-                sections: sections,
-                tabId: CONSTANTS.TAB_CONTAINER_CONTENTS,
-                tabTitle: ItemSheetRuntime.getTabTitle(
-                  CONSTANTS.TAB_CONTAINER_CONTENTS
-                ),
-              }).render(true);
-            },
-          },
-        ],
+    const alphaGroupMembers: SortMethodKeyQuadrone[] = ['a', 'd'];
+
+    const contentsSortGroup: SortGroupKeyQuadrone =
+      // priority is not supported on container sheets; but this logic should be consolidated generically to a centralized location for sorting
+      contentsSortMethod === 'priority'
+        ? 'priority'
+        : alphaGroupMembers.includes(contentsSortMethod)
+        ? 'a'
+        : contentsSortMethod === 'equipped'
+        ? 'equipped'
+        : 'm';
+
+    const methods: SortMethodOption[] = [
+      {
+        key: 'a',
+        icon: 'fa-solid fa-arrow-down-a-z',
+        name: 'alpha-ascending',
+        onClick: async (_, doc) => {
+          await SheetPreferencesService.setDocumentTypeTabPreference(
+            doc.type,
+            CONSTANTS.TAB_CONTAINER_CONTENTS,
+            'sort',
+            'd'
+          );
+        },
+        tooltip: 'TIDY5E.SortMethod.AlphabeticalAscending',
       },
-    };
+      {
+        key: 'd',
+        icon: 'fa-solid fa-arrow-up-z-a',
+        name: 'alpha-descending',
+        onClick: async (_, doc) => {
+          await SheetPreferencesService.setDocumentTypeTabPreference(
+            doc.type,
+            CONSTANTS.TAB_CONTAINER_CONTENTS,
+            'sort',
+            'a'
+          );
+        },
+        tooltip: 'TIDY5E.SortMethod.AlphabeticalDescending',
+      },
+      {
+        key: 'm',
+        icon: 'fa-solid fa-arrow-down-short-wide',
+        name: 'manual',
+        onClick: 'menu',
+        tooltip: 'SIDEBAR.SortModeManual',
+      },
+      {
+        key: 'priority',
+        icon: 'fa-solid fa-arrow-down-1-9',
+        name: 'priority',
+        onClick: 'menu',
+        tooltip: 'SIDEBAR.SortModePriority',
+      },
+      {
+        key: 'equipped',
+        icon: 'fa-solid fa-hand-fist equip-icon',
+        name: 'priority',
+        onClick: 'menu',
+        tooltip: 'SIDEBAR.SortModePriority',
+      },
+    ];
+
+    const groups: SortGroup[] = [
+      {
+        key: 'a',
+        label: 'TIDY5E.SortMenu.OptionAlphabetical',
+        onSelect: async (doc, group) => {
+          const newSortMethod: SortMethodKeyQuadrone | undefined =
+            group.key === 'a'
+              ? 'a'
+              : group.key === 'm'
+              ? 'm'
+              : group.key === 'priority'
+              ? 'priority'
+              : undefined;
+
+          if (!newSortMethod) {
+            return;
+          }
+
+          await SheetPreferencesService.setDocumentTypeTabPreference(
+            doc.type,
+            CONSTANTS.TAB_CONTAINER_CONTENTS,
+            'sort',
+            newSortMethod
+          );
+        },
+      },
+      {
+        key: 'm',
+        label: 'TIDY5E.SortMenu.OptionManual',
+        onSelect: async (doc) => {
+          await SheetPreferencesService.setDocumentTypeTabPreference(
+            doc.type,
+            CONSTANTS.TAB_CONTAINER_CONTENTS,
+            'sort',
+            'm'
+          );
+        },
+      },
+      // TODO: find a centralized home for these sort methods so they can be shared module-wide. Consolidate related content like comparators.
+      // {
+      //   key: 'priority',
+      //   label: 'TIDY5E.SortMenu.OptionPriority',
+      //   onSelect: async (doc) => {
+      //     await SheetPreferencesService.setDocumentTypeTabPreference(
+      //       doc.type,
+      //       CONSTANTS.TAB_CONTAINER_CONTENTS,
+      //       'sort',
+      //       'priority'
+      //     );
+      //   },
+      // },
+      {
+        key: 'equipped',
+        label: 'DND5E.Equipped',
+        onSelect: async (doc) => {
+          await SheetPreferencesService.setDocumentTypeTabPreference(
+            doc.type,
+            CONSTANTS.TAB_CONTAINER_CONTENTS,
+            'sort',
+            'equipped'
+          );
+        },
+      },
+    ];
 
     const editable = this.isEditable;
 
@@ -291,6 +370,12 @@ export class Tidy5eContainerSheetQuadrone extends TidyDocumentSheetMixin(
         !game.user.isGM && this.document.system.identified === false,
       config: CONFIG.DND5E,
       containerContents: await Container.getContainerContents(this.item),
+      contentsSort: {
+        group: contentsSortGroup,
+        groups: groups,
+        method: contentsSortMethod,
+        methods: methods,
+      },
       customContent: [],
       currencies,
       document: this.document,
@@ -331,7 +416,6 @@ export class Tidy5eContainerSheetQuadrone extends TidyDocumentSheetMixin(
       tabs: [],
       unlocked: unlocked,
       userPreferences: UserPreferencesService.get(),
-      utilities: utilities,
     };
 
     // Properties

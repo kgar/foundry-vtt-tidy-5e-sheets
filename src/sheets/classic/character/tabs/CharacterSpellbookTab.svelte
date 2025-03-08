@@ -13,7 +13,7 @@
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
-  import FilterMenu from 'src/components/filter/FilterMenu.svelte';
+  import FilterMenu from 'src/components/filter/FilterButton.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';

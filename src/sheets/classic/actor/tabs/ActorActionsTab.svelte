@@ -20,7 +20,7 @@
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
-  import FilterMenu from 'src/components/filter/FilterMenu.svelte';
+  import FilterMenu from 'src/components/filter/FilterButton.svelte';
   import { Actions } from 'src/features/actions/actions.svelte';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
