@@ -2,28 +2,15 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ButtonWithOptionPanel from '../buttons/ButtonWithOptionPanel.svelte';
   import type {
+    SortGroup,
     SortGroupKeyQuadrone,
     SortMethodKeyQuadrone,
-  } from 'src/types/types';
+    SortMethodOption,
+  } from 'src/types/sort.types';
   import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
 
   // TODO: Move and consolidate sort types to their own types file
-  type SortGroup = {
-    key: SortGroupKeyQuadrone;
-    label: string;
-    onSelect: (doc: any, group: SortGroup) => Promise<any>;
-  };
-
-  type SortMethodOption = {
-    key: SortMethodKeyQuadrone;
-    name: string;
-    onClick:
-      | 'menu'
-      | ((ev: MouseEvent, doc: any, mode: SortMethodOption) => Promise<any>);
-    icon: string;
-    tooltip: string;
-  };
 
   interface Props {
     method: SortMethodKeyQuadrone;

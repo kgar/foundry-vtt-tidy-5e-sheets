@@ -1,5 +1,5 @@
 import type { Item5e } from 'src/types/item.types';
-import type { SortMethodKeyClassic } from 'src/types/types';
+import type { SortMethodKeyClassic } from 'src/types/sort.types';
 import { isNil } from './data';
 
 export class ItemUtils {

@@ -2,6 +2,9 @@
 
 - [x] Implement filter menu / active button support
 - [ ] Implement sort button functionality and menu
+  - [x] component
+  - [ ] context data for container
+  - [ ] sort logic for inventory items
 - [ ] Implement section config
 - [ ] Finish Container Contents toolbar
 - [ ] Inventory: subtables have a different set of styles for their header

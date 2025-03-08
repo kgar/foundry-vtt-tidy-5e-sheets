@@ -1,5 +1,5 @@
 import type { CONSTANTS } from 'src/constants';
-import type { SortMethodKeyClassic } from 'src/types/types';
+import type { SortMethodKeyClassic } from 'src/types/sort.types';
 
 export type SheetTypeTabPreferences = {
   sort?: SortMethodKeyClassic;
