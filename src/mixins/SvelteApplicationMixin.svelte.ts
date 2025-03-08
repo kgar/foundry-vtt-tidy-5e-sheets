@@ -242,12 +242,15 @@ export function SvelteApplicationMixin<
             element
           );
 
+          // TODO: Ensure this is moved to the Document Sheet mixin.
           // Support injected named inputs
           element.addEventListener(
             'change',
             async (ev: InputEvent & { target: HTMLInputElement }) => {
               if (
-                ev.target.matches('input[name], textarea[name], select[name]')
+                ev.target.matches('input[name], textarea[name], select[name]') &&
+                // Supports radio button group opt-out of this feature
+                !ev.target.hasAttribute('data-skip-submit')
               ) {
                 await this.submit();
                 return;

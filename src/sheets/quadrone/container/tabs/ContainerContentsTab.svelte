@@ -18,7 +18,8 @@
   import ExpandCollapseButton from '../../shared/ExpandCollapseButton.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
   import FilterToggle from 'src/components/buttons/FilterToggle.svelte';
-  import FilterMenuQuadrone from 'src/components/filter/FilterMenuQuadrone.svelte';
+  import FilterMenuQuadrone from 'src/components/action-bar/FilterButtonMenuQuadrone.svelte';
+  import SortButtonWithMenuQuadrone from 'src/components/action-bar/SortButtonWithMenuQuadrone.svelte';
 
   let context = $derived(getContainerSheetQuadroneContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
@@ -87,35 +88,7 @@
 
   <FilterMenuQuadrone filterData={context.filterData} {tabId} />
 
-  <ButtonWithOptionPanel class="icon-button" anchor="right">
-    <i class="fas fa-arrow-down-a-z fa-fw"></i>
-    {#snippet menu()}
-      <label for="{context.document.id}-sort-option-alphabetical">
-        <input
-          type="radio"
-          id="{context.document.id}-sort-option-alphabetical"
-          checked={true}
-        />
-        {localize('TIDY5E.SortMenu.OptionAlphabetical')}
-      </label>
-      <label for="{context.document.id}-sort-option-manual">
-        <input
-          type="radio"
-          id="{context.document.id}-sort-option-manual"
-          checked={false}
-        />
-        {localize('TIDY5E.SortMenu.OptionManual')}
-      </label>
-      <label for="{context.document.id}-sort-option-equipped">
-        <input
-          type="radio"
-          id="{context.document.id}-sort-option-equipped"
-          checked={false}
-        />
-        {localize('TIDY5E.SortMenu.OptionEquipped')}
-      </label>
-    {/snippet}
-  </ButtonWithOptionPanel>
+  <SortButtonWithMenuQuadrone doc={context.item} />
 
   <a class="button icon-button" class:disabled={!context.editable}>
     <i class="fas fa-gear"></i>

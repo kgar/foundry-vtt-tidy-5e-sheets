@@ -7,7 +7,7 @@ import type {
   ActionItem,
   ActionSection,
   Actor5e,
-  SortMode,
+  SortMethodKeyClassic,
 } from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import { simplifyFormula } from 'src/utils/formula';
@@ -61,7 +61,7 @@ export async function getActorActionSections(
   }
 }
 
-export function getSortedActions(section: ActionSection, sortMode: SortMode) {
+export function getSortedActions(section: ActionSection, sortMode: SortMethodKeyClassic) {
   return section.actions.toSorted(({ item: a }, { item: b }) => {
     if (sortMode === 'a') {
       return a.name.localeCompare(b.name, game.i18n.lang);

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { longpress } from 'src/actions/longpress.svelte';
   import { tick, type Snippet } from 'svelte';
-  import type { MouseEventHandler } from 'svelte/elements';
+  import type { HTMLAttributes, MouseEventHandler } from 'svelte/elements';
 
   interface Props {
     expanded?: boolean;
@@ -12,8 +12,9 @@
     menu?: Snippet;
     onclick?: MouseEventHandler<HTMLElement>;
     longpressDelay?: number;
+    buttonAttributes?: HTMLAttributes<HTMLButtonElement>;
+    buttonClasses?: string;
     containerClasses?: string;
-    [key: string]: any;
   }
 
   let {
@@ -25,6 +26,8 @@
     menu: options,
     onclick,
     longpressDelay,
+    buttonAttributes,
+    buttonClasses,
     containerClasses,
     ...rest
   }: Props = $props();
@@ -68,7 +71,7 @@
 <div class="button-with-options-wrapper {containerClasses}">
   <button
     type="button"
-    class="button with-options {rest.class ?? ''}"
+    class="button with-options {buttonClasses ?? ''}"
     class:expanded
     class:active
     class:disabled
@@ -90,6 +93,7 @@
     onfocusout={handleFocusOut}
     tabindex={expanded ? 0 : null}
     bind:this={menuOpenerEl}
+    {...buttonAttributes}
   >
     {@render children?.()}
     {#if expanded}

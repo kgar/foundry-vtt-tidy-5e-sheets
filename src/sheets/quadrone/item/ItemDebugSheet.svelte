@@ -567,7 +567,7 @@
         <tidy-gold-header-underline></tidy-gold-header-underline>
       </legend>
       <div class="wrapped-gallery">
-        <ButtonWithOptionPanel class="icon-button">
+        <ButtonWithOptionPanel buttonClasses="icon-button">
           <i class="fas fa-hand"></i>
           {#snippet menu()}
             <label>
@@ -580,20 +580,20 @@
             </label>
           {/snippet}
         </ButtonWithOptionPanel>
-        <ButtonWithOptionPanel class="icon-button" active={true}>
+        <ButtonWithOptionPanel buttonClasses="icon-button" active={true}>
           <i class="fas fa-hand"></i>
           {#snippet menu()}
             O hai 🙋‍♀️
           {/snippet}
         </ButtonWithOptionPanel>
-        <ButtonWithOptionPanel class="icon-button" disabled={true}>
+        <ButtonWithOptionPanel buttonClasses="icon-button" disabled={true}>
           <i class="fas fa-hand"></i>
           {#snippet menu()}
             O hai 🙋‍♀️
           {/snippet}
         </ButtonWithOptionPanel>
         <ButtonWithOptionPanel
-          class="icon-button active"
+          buttonClasses="icon-button active"
           disabled={true}
           active={true}
         >
@@ -762,15 +762,6 @@
         >Input / Radio
         <tidy-gold-header-underline></tidy-gold-header-underline>
       </legend>
-      <!--
-        Radio button checkmarks aren't quite centering. Let's try to fix that:
-        - https://codepen.io/isaacabrahamson/pen/qVXOWW?editors=1100
-        - https://forum.freecodecamp.org/t/css-center-radio-buttons/158932/3
-        - https://github.com/carbon-design-system/carbon/pull/6097/files
-        - Working version, though using divs and not a radio button: https://js.devexpress.com/Angular/Demos/WidgetsGallery/Demo/RadioGroup/Overview/MaterialBlueDark/
-        - https://github.com/shadcn-ui/ui/pull/2758 - another example of top/left at 50% and translate X/Y at -50%
-    
-      -->
       <label class="radio" for="test-1">
         <input type="radio" name="test" id="test-1" checked={true} />
         <span class="radio-label">Property</span>

@@ -1,8 +1,17 @@
 ## To Do
 
+- [x] Implement filter menu / active button support
+- [ ] Implement sort button functionality and menu
+- [ ] Implement section config
 - [ ] Finish Container Contents toolbar
+- [ ] Inventory: subtables have a different set of styles for their header
+- [ ] Inventory: Container inline capacity UI
+- [ ] Inventory: Inline container Empty styles
+- [ ] Container: Image click behaviors
+  - [ ] Locked
+  - [ ] Unlocked
 - [ ] Review Container sheet to ensure it has everything
-- [ ] Complete dark mode for the container
+- [ ] (Hightouch) Complete dark mode for the container
 - [ ] Set up default/light/dark menu toggle and add to container
 - [ ] Update sheet lock to work like the default sheets, including the additional render options and intuitive default state
 - [ ] Item cards?
@@ -115,6 +124,7 @@
 
 ### Stretch
 
+- [ ] ButtonWithOptionsPanel - can the menu be outside the hidden window content and still anchor to the position of the menu? Very possible with a Portal. See https://svelte.dev/playground/8364bc976f0c4ff9b83adf6e7a3c19fd?version=5.22.5#H4sIAAAAAAAACp1V34-jNhD-V7zu6gJSBOqu1AcCOV3vpS-V-l6qrgNDcOPYlj1kN0L875VtCOQ2e7vaFwQzH9_8numpZEegGf1LGWSCrmnDBVia_d1TPGuncQK6nnDftE7sCQQ62Y5ZuCWvlESQaGlGc1sZrnFbyhL5USuDpCeVAYYQTJKBNEYdSUmTlFXIlbQl3Szg39VRKwkSZ9xFNJocfxCA5Kg6iVCTgjRMWNiUMk9nF2Ru8SzAe5MwrUnv3krcseqwN6qTdUYsAoid6GATdJrVNZf7jPz6m37xssE92ofp5yMzey5_1Cc6hDeCKiWUychzy_Ft4mtHdGe0gJlx1yEq-TOreXoJT-Y1P5FKMGuLkjKtS-qjztuH7Tet87R9CN8O1lnIljUp-lWj1Gq4_B9iGSkcyeM2IPO0fQw8ac1P3vDbnDtmPseJ_S-8mUo7jPi5L9KASXnjdfmYKCWzSvDqUPRRTIotiebeuBtf42FL-kn8law66T9WJCMr_zZ332ogeRqYty7TwTW6pggvSDM0HQzrN4Zm7OvkP3s9NFfyxdBcBgV5dZgHZNnsslLSIglJ_PfINCmIhGfyJ9NRvCklvHiKppPextXIRVLVsCbcZaKkNTSsE1jSOLRWID7AmRTk6f4-WEjue14PT2EuGxLNdpOW2egA5zgm2Br1TJ7qTgteMYTRO89VUs9Q0sABwsLC-cQCOpI1ca7FHmIAOyNJT2qwaNQ5W-JrEICQ7LisF76snamYDJtSDqW8xO4rOQbtAf0Uxt3P4ujkQapnOUVx3x_gPKYg5KhVFkmxdGsfwggBOHXCpQWDv0OjDIwuyE6IqxCjuNh6sGsBxqX1wJh8-eJNJAaO6gTfWy7qaMrP8LrE-gPFdStyzOfmw8W-maUwha5BozjBFmQUpmxcTyWOZkjxKv_jrhviuRXeAb_uhWBs_PyaRJeqf2wif7wg13N5Q_veSdPvHDOX-BMTHfiy_AFCqAC92Lr71BVzq7b_2D0RfN9ipQwTb92L8UI8bi9Ozbt4Ut9cxoudr68uyLb3QQ_zKl8s6hJzLnWHxI1xFrKTTufg80s8jIvf4cGZ1bDY3PNZub3D_xn-BxsHJbcUCQAA or obsidian dev vault
 - [ ] Hightouch: If it's super simple (and only if it's super simple) it could be nice to hard link some of the currency/weight/item type directly to the fields (e.g. click it, opens the tab, focuses the input). But if it's not out-of-the-box it's not worth it. Just wasn't sure if it was actually possible
 
 ### To Do Graveyard

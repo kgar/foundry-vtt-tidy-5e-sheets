@@ -443,7 +443,7 @@ export type NpcItemContext = {
 export type NpcHabitat = {
   type: string;
   subtype?: string;
-}
+};
 
 export type NpcSheetContext = {
   appearanceEnrichedHtml: string;
@@ -529,9 +529,32 @@ export type ExtensibleComponent = {
   dataset: Record<string, string>;
 };
 
-export type SortModeAlphabetical = 'a';
-export type SortModeManual = 'm';
-export type SortMode = SortModeAlphabetical | SortModeManual;
+export type SortMethodKeyManual = 'm';
+export type SortMethodKeyAlphaAscending = 'a';
+export type SortMethodKeyAlphaDescending = 'd';
+export type SortMethodKeyPriority = 'p';
+
+/** The supported methods of sorting for Classic sheets. */
+export type SortMethodKeyClassic =
+  | SortMethodKeyAlphaAscending
+  | SortMethodKeyManual;
+
+/** The supported methods of sorting for Quadrone sheets. */
+export type SortMethodKeyQuadrone =
+  | SortMethodKeyAlphaAscending
+  | SortMethodKeyAlphaDescending
+  | SortMethodKeyManual
+  | SortMethodKeyPriority;
+
+export type SortGroupKeyAlpha = 'a';
+export type SortGroupKeyPriority = 'p';
+export type SortGroupKeyManual = 'm';
+
+/** The supported groups of sort methods for Quadrone sheets. */
+export type SortGroupKeyQuadrone =
+  | SortGroupKeyAlpha
+  | SortGroupKeyManual
+  | SortGroupKeyPriority;
 
 export type MessageBus = { message: MessageBusMessage | undefined };
 

@@ -1,5 +1,5 @@
 import type { Item5e } from 'src/types/item.types';
-import type { SortMode } from 'src/types/types';
+import type { SortMethodKeyClassic } from 'src/types/types';
 import { isNil } from './data';
 
 export class ItemUtils {
@@ -52,7 +52,7 @@ export class ItemUtils {
     return item.system.uses?.max;
   }
 
-  static sortItems(items: Item5e[], sortMode: SortMode) {
+  static sortItems(items: Item5e[], sortMode: SortMethodKeyClassic) {
     if (sortMode === 'a') {
       items.sort((a, b) => a.name.localeCompare(b.name, game.i18n.lang));
     } else if (sortMode === 'm') {
@@ -60,7 +60,7 @@ export class ItemUtils {
     }
   }
 
-  static getSortedItems(items: Item5e[], sortMode: SortMode) {
+  static getSortedItems(items: Item5e[], sortMode: SortMethodKeyClassic) {
     if (sortMode === 'a') {
       return items.toSorted((a, b) =>
         a.name.localeCompare(b.name, game.i18n.lang)
