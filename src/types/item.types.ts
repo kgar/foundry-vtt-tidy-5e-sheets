@@ -14,6 +14,7 @@ import type {
   DocumentFilters,
   RegisteredEquipmentTypeGroup,
 } from 'src/runtime/item/item.types';
+import type { SortParametersQuadrone } from './sort.types';
 
 export type PropertyContext = {
   active: string[];
@@ -358,12 +359,12 @@ export type ContainerSheetQuadroneContext = {
   owner: boolean;
   properties: PropertyContext;
   rollData: Record<string, any>;
+  contentsSort: SortParametersQuadrone;
   source: any;
   system: any;
   tabs: Tab[];
   unlocked: boolean;
   userPreferences: UserPreferences;
-  utilities: Utilities<ContainerSheetQuadroneContext>;
 };
 
 export type ContainerSection = { items: Item5e[] } & TidySectionBase;

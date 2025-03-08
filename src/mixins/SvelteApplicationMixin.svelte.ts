@@ -248,7 +248,9 @@ export function SvelteApplicationMixin<
             'change',
             async (ev: InputEvent & { target: HTMLInputElement }) => {
               if (
-                ev.target.matches('input[name], textarea[name], select[name]') &&
+                ev.target.matches(
+                  'input[name], textarea[name], select[name]'
+                ) &&
                 // Supports radio button group opt-out of this feature
                 !ev.target.hasAttribute('data-skip-submit')
               ) {
@@ -585,11 +587,17 @@ export function SvelteApplicationMixin<
         HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
       >(':is(input, select, textarea):focus');
 
-      this.#focusedInputSelector = focusedElement?.name
-        ? `${focusedElement.tagName}[name="${focusedElement.name}"]`
-        : focusedElement?.id
-        ? `[id="${focusedElement.id}"]`
-        : undefined;
+      let selector = '';
+
+      if (focusedElement?.name) {
+        selector += `${focusedElement.tagName}[name="${focusedElement.name}"]`;
+      }
+
+      if (focusedElement?.id) {
+        selector += `[id="${focusedElement.id}"]`;
+      }
+
+      this.#focusedInputSelector = selector !== '' ? selector : undefined;
     }
 
     /**

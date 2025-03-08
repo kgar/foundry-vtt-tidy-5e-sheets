@@ -4,7 +4,7 @@ import { ActionListRuntime } from 'src/runtime/action-list/ActionListRuntime';
 import { settings } from 'src/settings/settings.svelte';
 import type { ContainerContents, Item5e } from 'src/types/item.types';
 import type { ActionItem, ActionSection, Actor5e } from 'src/types/types';
-import type { SortMethodKeyClassic } from 'src/types/sort.types';
+import type { SortMethodKeyQuadrone } from 'src/types/sort.types';
 import { isNil } from 'src/utils/data';
 import { simplifyFormula } from 'src/utils/formula';
 import { debug, error } from 'src/utils/logging';
@@ -59,7 +59,7 @@ export async function getActorActionSections(
 
 export function getSortedActions(
   section: ActionSection,
-  sortMode: SortMethodKeyClassic
+  sortMode: SortMethodKeyQuadrone
 ) {
   return section.actions.toSorted(({ item: a }, { item: b }) => {
     if (sortMode === 'a') {

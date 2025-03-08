@@ -3,8 +3,10 @@
 - [x] Implement filter menu / active button support
 - [ ] Implement sort button functionality and menu
   - [x] component
-  - [ ] context data for container
-  - [ ] sort logic for inventory items
+  - [x] context data for container
+  - [x] sort logic for inventory items
+  - [ ] consolidate: put all sort-related content in a centralized location for sorting, similar to item filters (the runtime, the default filters, etc.)
+  - [ ] priority subtitle (include on model as `subtitle` and generically include, instead of using special treatment)
 - [ ] Implement section config
 - [ ] Finish Container Contents toolbar
 - [ ] Inventory: subtables have a different set of styles for their header

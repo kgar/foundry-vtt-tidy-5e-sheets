@@ -1,7 +1,9 @@
 export type SortMethodKeyManual = 'm';
 export type SortMethodKeyAlphaAscending = 'a';
 export type SortMethodKeyAlphaDescending = 'd';
-export type SortMethodKeyPriority = 'p';
+export type SortMethodKeyPriority = 'priority';
+export type SortMethodKeyEquipped = 'equipped';
+export type SortMethodKeyPrepared = 'prepared';
 
 /** The supported methods of sorting for Classic sheets. */
 export type SortMethodKeyClassic =
@@ -13,17 +15,22 @@ export type SortMethodKeyQuadrone =
   | SortMethodKeyAlphaAscending
   | SortMethodKeyAlphaDescending
   | SortMethodKeyManual
-  | SortMethodKeyPriority;
+  | SortMethodKeyPriority
+  | SortMethodKeyEquipped
+  | SortMethodKeyPrepared
+  | (string & {});
 
 export type SortGroupKeyAlpha = 'a';
-export type SortGroupKeyPriority = 'p';
+export type SortGroupKeyPriority = 'priority';
 export type SortGroupKeyManual = 'm';
+export type SortGroupKeyEquipped = 'equipped';
 
 /** The supported groups of sort methods for Quadrone sheets. */
 export type SortGroupKeyQuadrone =
   | SortGroupKeyAlpha
   | SortGroupKeyManual
-  | SortGroupKeyPriority;
+  | SortGroupKeyPriority
+  | SortGroupKeyEquipped;
 
 /** A grouping of sort methods. E.g., 'a' (Alpha) encompasses sort methods alpha ascending and alpha descending */
 export type SortGroup = {
@@ -41,4 +48,11 @@ export type SortMethodOption = {
     | ((ev: MouseEvent, doc: any, mode: SortMethodOption) => Promise<any>);
   icon: string;
   tooltip: string;
+};
+
+export type SortParametersQuadrone = {
+  method: SortMethodKeyQuadrone;
+  group: SortGroupKeyQuadrone;
+  methods: SortMethodOption[];
+  groups: SortGroup[];
 };

@@ -7,7 +7,6 @@
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import Search from '../../shared/Search.svelte';
-  import ButtonWithOptionPanel from 'src/components/buttons/ButtonWithOptionPanel.svelte';
   import {
     createSearchResultsState,
     setSearchResultsContext,
@@ -88,7 +87,7 @@
 
   <FilterMenuQuadrone filterData={context.filterData} {tabId} />
 
-  <SortButtonWithMenuQuadrone doc={context.item} />
+  <SortButtonWithMenuQuadrone doc={context.item} {...context.contentsSort} />
 
   <a class="button icon-button" class:disabled={!context.editable}>
     <i class="fas fa-gear"></i>
