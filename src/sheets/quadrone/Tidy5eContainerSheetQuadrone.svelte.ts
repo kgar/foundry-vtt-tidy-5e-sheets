@@ -45,6 +45,7 @@ import type {
   SortMethodKeyQuadrone,
   SortMethodOption,
 } from 'src/types/sort.types';
+import { ItemSortRuntime } from 'src/runtime/item/ItemSortRuntime.svelte';
 
 export class Tidy5eContainerSheetQuadrone extends TidyDocumentSheetMixin(
   CONSTANTS.SHEET_TYPE_CONTAINER,
@@ -219,6 +220,7 @@ export class Tidy5eContainerSheetQuadrone extends TidyDocumentSheetMixin(
 
     const alphaGroupMembers: SortMethodKeyQuadrone[] = ['a', 'd'];
 
+    // TODO: This needs to be part of the sort group model, relating sort methods to specific groups.
     const contentsSortGroup: SortGroupKeyQuadrone =
       // priority is not supported on container sheets; but this logic should be consolidated generically to a centralized location for sorting
       contentsSortMethod === 'priority'
@@ -228,123 +230,6 @@ export class Tidy5eContainerSheetQuadrone extends TidyDocumentSheetMixin(
         : contentsSortMethod === 'equipped'
         ? 'equipped'
         : 'm';
-
-    const methods: SortMethodOption[] = [
-      {
-        key: 'a',
-        icon: 'fa-solid fa-arrow-down-a-z',
-        name: 'alpha-ascending',
-        onClick: async (_, doc) => {
-          await SheetPreferencesService.setDocumentTypeTabPreference(
-            doc.type,
-            CONSTANTS.TAB_CONTAINER_CONTENTS,
-            'sort',
-            'd'
-          );
-        },
-        tooltip: 'TIDY5E.SortMethod.AlphabeticalAscending',
-      },
-      {
-        key: 'd',
-        icon: 'fa-solid fa-arrow-up-z-a',
-        name: 'alpha-descending',
-        onClick: async (_, doc) => {
-          await SheetPreferencesService.setDocumentTypeTabPreference(
-            doc.type,
-            CONSTANTS.TAB_CONTAINER_CONTENTS,
-            'sort',
-            'a'
-          );
-        },
-        tooltip: 'TIDY5E.SortMethod.AlphabeticalDescending',
-      },
-      {
-        key: 'm',
-        icon: 'fa-solid fa-arrow-down-short-wide',
-        name: 'manual',
-        onClick: 'menu',
-        tooltip: 'SIDEBAR.SortModeManual',
-      },
-      {
-        key: 'priority',
-        icon: 'fa-solid fa-arrow-down-1-9',
-        name: 'priority',
-        onClick: 'menu',
-        tooltip: 'SIDEBAR.SortModePriority',
-      },
-      {
-        key: 'equipped',
-        icon: 'fa-solid fa-hand-fist equip-icon',
-        name: 'priority',
-        onClick: 'menu',
-        tooltip: 'SIDEBAR.SortModePriority',
-      },
-    ];
-
-    const groups: SortGroup[] = [
-      {
-        key: 'a',
-        label: 'TIDY5E.SortMenu.OptionAlphabetical',
-        onSelect: async (doc, group) => {
-          const newSortMethod: SortMethodKeyQuadrone | undefined =
-            group.key === 'a'
-              ? 'a'
-              : group.key === 'm'
-              ? 'm'
-              : group.key === 'priority'
-              ? 'priority'
-              : undefined;
-
-          if (!newSortMethod) {
-            return;
-          }
-
-          await SheetPreferencesService.setDocumentTypeTabPreference(
-            doc.type,
-            CONSTANTS.TAB_CONTAINER_CONTENTS,
-            'sort',
-            newSortMethod
-          );
-        },
-      },
-      {
-        key: 'm',
-        label: 'TIDY5E.SortMenu.OptionManual',
-        onSelect: async (doc) => {
-          await SheetPreferencesService.setDocumentTypeTabPreference(
-            doc.type,
-            CONSTANTS.TAB_CONTAINER_CONTENTS,
-            'sort',
-            'm'
-          );
-        },
-      },
-      // TODO: find a centralized home for these sort methods so they can be shared module-wide. Consolidate related content like comparators.
-      // {
-      //   key: 'priority',
-      //   label: 'TIDY5E.SortMenu.OptionPriority',
-      //   onSelect: async (doc) => {
-      //     await SheetPreferencesService.setDocumentTypeTabPreference(
-      //       doc.type,
-      //       CONSTANTS.TAB_CONTAINER_CONTENTS,
-      //       'sort',
-      //       'priority'
-      //     );
-      //   },
-      // },
-      {
-        key: 'equipped',
-        label: 'DND5E.Equipped',
-        onSelect: async (doc) => {
-          await SheetPreferencesService.setDocumentTypeTabPreference(
-            doc.type,
-            CONSTANTS.TAB_CONTAINER_CONTENTS,
-            'sort',
-            'equipped'
-          );
-        },
-      },
-    ];
 
     const editable = this.isEditable;
 
@@ -372,9 +257,15 @@ export class Tidy5eContainerSheetQuadrone extends TidyDocumentSheetMixin(
       containerContents: await Container.getContainerContents(this.item),
       contentsSort: {
         group: contentsSortGroup,
-        groups: groups,
+        groups:
+          ItemSortRuntime.getDocumentSortGroupsQuadrone(this.document)[
+            CONSTANTS.TAB_CONTAINER_CONTENTS
+          ] ?? [],
         method: contentsSortMethod,
-        methods: methods,
+        methods:
+          ItemSortRuntime.getDocumentSortMethodsQuadrone(this.document)[
+            CONSTANTS.TAB_CONTAINER_CONTENTS
+          ] ?? [],
       },
       customContent: [],
       currencies,

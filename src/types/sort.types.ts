@@ -1,3 +1,5 @@
+import type { Item5e } from './item.types';
+
 export type SortMethodKeyManual = 'm';
 export type SortMethodKeyAlphaAscending = 'a';
 export type SortMethodKeyAlphaDescending = 'd';
@@ -24,13 +26,15 @@ export type SortGroupKeyAlpha = 'a';
 export type SortGroupKeyPriority = 'priority';
 export type SortGroupKeyManual = 'm';
 export type SortGroupKeyEquipped = 'equipped';
+export type SortGroupKeyPrepared = 'prepared';
 
 /** The supported groups of sort methods for Quadrone sheets. */
 export type SortGroupKeyQuadrone =
   | SortGroupKeyAlpha
   | SortGroupKeyManual
   | SortGroupKeyPriority
-  | SortGroupKeyEquipped;
+  | SortGroupKeyEquipped
+  | SortGroupKeyPrepared;
 
 /** A grouping of sort methods. E.g., 'a' (Alpha) encompasses sort methods alpha ascending and alpha descending */
 export type SortGroup = {
@@ -48,6 +52,12 @@ export type SortMethodOption = {
     | ((ev: MouseEvent, doc: any, mode: SortMethodOption) => Promise<any>);
   icon: string;
   tooltip: string;
+};
+
+export type ItemSortComparator = (a: Item5e, b: Item5e) => number;
+
+export type SortMethodScheme = SortMethodOption & {
+  comparator: ItemSortComparator;
 };
 
 export type SortParametersQuadrone = {

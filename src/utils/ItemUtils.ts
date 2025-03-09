@@ -2,6 +2,7 @@ import type { Item5e } from 'src/types/item.types';
 import type { SortMethodKeyQuadrone } from 'src/types/sort.types';
 import { isNil } from './data';
 import { warn } from './logging';
+import { ItemSortRuntime } from 'src/runtime/item/ItemSortRuntime.svelte';
 
 export class ItemUtils {
   static canUse(item: any): boolean {
@@ -66,45 +67,15 @@ export class ItemUtils {
     items: Item5e[],
     sortMode: SortMethodKeyQuadrone
   ): ReturnType<SortImplementation> {
-    switch (sortMode) {
-      case 'a':
-        return sortMethod((a, b) =>
-          a.name.localeCompare(b.name, game.i18n.lang)
-        );
-      case 'd':
-        return sortMethod((a, b) =>
-          b.name.localeCompare(a.name, game.i18n.lang)
-        );
-      case 'm':
-        return sortMethod((a, b) => (a.sort || 0) - (b.sort || 0));
-      case 'priority':
-        return sortMethod(this.#prioritySortComparator);
-      case 'equipped':
-        return sortMethod(
-          (a, b) =>
-            b.system.equipped - a.system.equipped ||
-            a.name.localeCompare(b.name, game.i18n.lang)
-        );
-      case 'prepared':
-        return sortMethod(
-          (a, b) =>
-            b.system.preparation?.prepared - a.system.preparation?.prepared ||
-            a.name.localeCompare(b.name, game.i18n.lang)
-        );
+    const comparator =
+      ItemSortRuntime._registeredItemSorts[sortMode]?.comparator;
+
+    if (comparator) {
+      return sortMethod(comparator);
     }
 
     warn(`Sort method with key ${sortMode} not found. Returning items as is.`);
     return items;
-  }
-
-  static #prioritySortComparator(a: Item5e, b: Item5e): number {
-    return (
-      a.linkedName?.localeCompare(b.linkedName, game.i18n.lang) ||
-      a.level - b.level ||
-      a.preparationMode - b.preparationMode ||
-      a.prepared - b.prepared ||
-      a.name.localeCompare(b.name, game.i18n.lang)
-    );
   }
 }
 type SortImplementation =

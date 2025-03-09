@@ -1,5 +1,7 @@
 import type { Item5e } from 'src/types/item.types';
+import type { SortGroup, SortMethodScheme } from 'src/types/sort.types';
 
+// Filtering
 export type ItemFilter = {
   name: string;
   predicate: (item: Item5e) => boolean;
@@ -18,7 +20,10 @@ export type FilterCategoriesToFilters = Record<
 >;
 
 export type FilterTabsToCategories = Record<TabId, FilterCategoriesToFilters>;
-export type DocumentTypesToFilterTabs = Record<DocumentType, FilterTabsToCategories>;
+export type DocumentTypesToFilterTabs = Record<
+  DocumentType,
+  FilterTabsToCategories
+>;
 
 // TODO: Find a better name for this
 export type ConfiguredItemFilter = ItemFilter & {
@@ -31,3 +36,17 @@ export type RegisteredEquipmentTypeGroup = {
   label: string;
   types: Record<string, string>;
 };
+
+// Sorting
+export type SortTabsToSortSchemes = Record<TabId, SortMethodScheme[]>;
+
+export type DocumentTypesToSortMethodTabs = Record<
+DocumentType,
+SortTabsToSortSchemes
+>;
+
+export type SortTabsToSortGroups = Record<TabId, SortGroup[]>;
+export type DocumentTypesToSortGroupTabs = Record<
+  DocumentType,
+  SortTabsToSortGroups
+>;
