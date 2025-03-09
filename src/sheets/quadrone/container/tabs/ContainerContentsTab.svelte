@@ -19,6 +19,7 @@
   import FilterToggle from 'src/components/buttons/FilterToggle.svelte';
   import FilterMenuQuadrone from 'src/components/action-bar/FilterButtonMenuQuadrone.svelte';
   import SortButtonWithMenuQuadrone from 'src/components/action-bar/SortButtonWithMenuQuadrone.svelte';
+  import { ConfigureSectionsApplication } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
 
   let context = $derived(getContainerSheetQuadroneContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
@@ -89,7 +90,13 @@
 
   <SortButtonWithMenuQuadrone doc={context.item} {...context.contentsSort} />
 
-  <a class="button icon-button" class:disabled={!context.editable}>
+  <a
+    class="button icon-button"
+    class:disabled={!context.editable}
+    onclick={() =>
+      context.editable &&
+      new ConfigureSectionsApplication().render({ force: true })}
+  >
     <i class="fas fa-gear"></i>
   </a>
 </section>
