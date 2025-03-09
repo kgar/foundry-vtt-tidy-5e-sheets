@@ -860,5 +860,8 @@
     "TIDY5E.ContextMenuActionShowQuantity": "Показати кількість",
     "TIDY5E.Utilities.SpellPips": "Спель Піпс",
     "TIDY5E.Utilities.SpellValueMax": "Значення заклинання/макс",
-    "TIDY5E.RollRecharge.Label": "Перезарядка"
+    "TIDY5E.RollRecharge.Label": "Перезарядка",
+    "TIDY5E.SortMethod.AlphabeticalAscending": "Сортувати за алфавітом за зростанням",
+    "TIDY5E.SortMethod.AlphabeticalDescending": "Сортувати за алфавітом спадання",
+    "TIDY5E.SortMenu.OptionPriority": "Пріоритет"
 }
