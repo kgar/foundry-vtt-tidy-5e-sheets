@@ -41,6 +41,7 @@ export type SortGroup = {
   key: SortGroupKeyQuadrone;
   label: string;
   onSelect: (doc: any, currentTabId: string, group: SortGroup) => Promise<any>;
+  subtitle?: string;
 };
 
 /** The content needed to manage interactions with a sort method. */

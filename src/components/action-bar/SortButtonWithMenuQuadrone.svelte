@@ -77,6 +77,11 @@
         />
         <span class="radio-label">
           {localize(sortGroup.label)}
+          {#if sortGroup.subtitle}
+            <span class="radio-label-subtitle"
+              >{localize(sortGroup.subtitle)}</span
+            >
+          {/if}
         </span>
       </label>
     {/each}

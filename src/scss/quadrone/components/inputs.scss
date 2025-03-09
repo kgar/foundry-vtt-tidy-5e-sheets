@@ -42,7 +42,6 @@ select,
   }
 }
 
-
 /* Normalize field sizes */
 input[type='text'],
 input[type='number'] {
@@ -234,7 +233,7 @@ textarea {
 .radio {
   --checkbox-size: 1rem;
   display: flex;
-  align-items: top;
+  align-items: flex-start;
   padding-block-start: 0.3125rem;
 }
 .radio,
@@ -244,7 +243,8 @@ textarea {
   justify-content: flex-start;
   gap: 0.5rem;
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     input:not(:disabled) {
       &:not(:checked) {
         border-color: var(--t5e-component-field-border-hover);
@@ -261,6 +261,17 @@ textarea {
     input {
       outline: var(--t5e-outline-field-focus);
     }
+  }
+}
+
+.radio-label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--t5e-spacing-halfx);
+
+  .radio-label-subtitle {
+    color: var(--t5e-color-text-lighter);
+    font-size: var(--font-size-small);
   }
 }
 
@@ -291,7 +302,7 @@ input[type='checkbox'] {
       border-color: var(--t5e-component-field-border-hover);
       background: var(--t5e-component-field-background-hover);
     }
-    &:checked { 
+    &:checked {
       border-color: var(--t5e-theme-color-darker);
       background-color: var(--t5e-theme-color-darker);
       box-shadow: var(--t5e-drop-shadow-field-hover);
@@ -344,7 +355,6 @@ input[type='checkbox'] {
   }
 
   &:disabled {
-
     &::before {
       color: var(--t5e-color-icon-ondefault-default);
     }
@@ -399,8 +409,10 @@ select {
   }
 }
 
-&.dark, &.theme-dark,
-.dark, .theme-dark {
+&.dark,
+&.theme-dark,
+.dark,
+.theme-dark {
   select,
   .input-group,
   input[type='text'],
@@ -416,7 +428,8 @@ select {
     }
 
     &:not(:disabled) {
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         background-color: var(--t5e-component-field-background-hover);
         border-color: var(--t5e-component-field-border-hover);
       }
@@ -424,8 +437,7 @@ select {
         outline-color: var(--t5e-component-field-focus);
       }
     }
-    
-    
+
     &:disabled {
       background-color: var(--t5e-component-field-background-disabled);
       border-color: transparent;
@@ -455,7 +467,7 @@ select {
       color: var(--t5e-color-text-ondefault-lightest);
     }
   }
-  
+
   .radio input[type='radio'],
   .checkbox input[type='checkbox'],
   input[type='radio'],
@@ -469,7 +481,7 @@ select {
         border-color: var(--t5e-component-field-border-hover);
         background: var(--t5e-component-field-background-hover);
       }
-      &:checked { 
+      &:checked {
         border-color: var(--t5e-component-field-border-hover);
         background-color: var(--t5e-theme-color-darker);
         box-shadow: var(--t5e-drop-shadow-field-hover);

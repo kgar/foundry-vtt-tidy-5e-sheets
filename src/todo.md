@@ -1,20 +1,12 @@
 ## To Do
 
-- [x] Implement filter menu / active button support
-- [ ] Implement sort button functionality and menu
-  - [x] component
-  - [x] context data for container
-  - [x] sort logic for inventory items
-  - [ ] consolidate: put all sort-related content in a centralized location for sorting, similar to item filters (the runtime, the default filters, etc.)
-  - [ ] priority subtitle (include on model as `subtitle` and generically include, instead of using special treatment)
-- [ ] Implement section config
-- [ ] Finish Container Contents toolbar
+- [ ] Implement section config / https://www.figma.com/design/seCsgsf8Uh82uxfPXIwFAg/Tidy5e-Sheet-Refresh?node-id=2182-75324&m=dev
 - [ ] Inventory: subtables have a different set of styles for their header
 - [ ] Inventory: Container inline capacity UI
 - [ ] Inventory: Inline container Empty styles
 - [ ] Container: Image click behaviors
-  - [ ] Locked
-  - [ ] Unlocked
+  - [ ] Locked - Show preview
+  - [ ] Unlocked - File Picker
 - [ ] Review Container sheet to ensure it has everything
 - [ ] (Hightouch) Complete dark mode for the container
 - [ ] Set up default/light/dark menu toggle and add to container
@@ -155,3 +147,10 @@
 - [x] Add user preference sheet width memoization
 ~~- [ ] Expand/collapse All Sections is not working; fix it so container toggles work with it~~
 - [x] Bug: On drop to container sheet, new item is counted but cannot appear until full refresh. Fix: Svelte update.
+- [x] Implement filter menu / active button support
+- [x] Implement sort button functionality and menu
+  - [x] component
+  - [x] context data for container
+  - [x] sort logic for inventory items
+  - [x] consolidate: put all sort-related content in a centralized location for sorting, similar to item filters (the runtime, the default filters, etc.)
+  - [x] priority subtitle (include on model as `subtitle` and generically include, instead of using special treatment)
