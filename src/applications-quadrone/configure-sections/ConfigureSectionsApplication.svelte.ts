@@ -12,12 +12,13 @@ import type { ConfigurableSection } from './configure-sections.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export type ConfigureSectionsApplicationConstructorArgs = {
-  document: Actor5e | Item5e;
-  sections: TidySectionBase[];
-  tabId: string;
-  tabTitle: string;
-  theme: string;
-};
+  settings: {
+    document: Actor5e | Item5e;
+    sections: TidySectionBase[];
+    tabId: string;
+    theme: string;
+  };
+} & Partial<ApplicationConfiguration>;
 
 export class ConfigureSectionsApplication extends SvelteApplicationMixin<any>(
   foundry.applications.api.ApplicationV2
@@ -25,17 +26,13 @@ export class ConfigureSectionsApplication extends SvelteApplicationMixin<any>(
   document: Actor5e | Item5e;
   sections = $state<ConfigurableSection[]>()!;
   tabId: string;
-  tabTitle: string;
   theme: string = $state<string>('');
 
   constructor({
-    document,
-    sections,
-    tabId,
-    tabTitle,
-    theme,
+    settings: { document, sections, tabId, theme },
+    ...rest
   }: ConfigureSectionsApplicationConstructorArgs) {
-    super();
+    super(rest);
     this.document = document;
     this.sections = sections.map((section) => ({
       key: section.key,
@@ -43,7 +40,6 @@ export class ConfigureSectionsApplication extends SvelteApplicationMixin<any>(
       show: section.show !== false,
     }));
     this.tabId = tabId;
-    this.tabTitle = tabTitle;
     this.theme = theme;
   }
 

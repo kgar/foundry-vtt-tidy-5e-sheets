@@ -96,12 +96,16 @@
     onclick={() =>
       context.editable &&
       new ConfigureSectionsApplication({
-        document: context.item,
-        tabId,
-        tabTitle: 'THIS IS A TEST',
-        sections: [],
-        // TODO: Need a way to grab the current or fallback to global theme
-        theme: 'light',
+        settings: {
+          document: context.item,
+          tabId,
+          sections: [],
+          // TODO: Need a way to grab the current or fallback to global theme
+          theme: 'light',
+        },
+        window: {
+          title: 'THIS IS A TEST',
+        },
       }).render({ force: true })}
   >
     <i class="fas fa-gear"></i>
