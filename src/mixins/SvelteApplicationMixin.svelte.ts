@@ -134,6 +134,7 @@ export function SvelteApplicationMixin<
     /*  Rendering                                   */
     /* -------------------------------------------- */
 
+    // TODO: context is not always needed or desired, since svelte can pass its own props to the component. Eliminate the need for this, or rope it off to tidy document sheets only, since they rely heavily on context.
     /** Prepares context data which matches the request data type. */
     async _prepareContext(
       options: ApplicationRenderOptions
