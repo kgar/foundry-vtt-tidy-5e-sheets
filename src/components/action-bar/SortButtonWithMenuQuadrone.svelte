@@ -10,8 +10,6 @@
   import { getContext, tick } from 'svelte';
   import { CONSTANTS } from 'src/constants';
 
-  // TODO: Move and consolidate sort types to their own types file
-
   interface Props {
     method: SortMethodKeyQuadrone;
     group: SortGroupKeyQuadrone;
