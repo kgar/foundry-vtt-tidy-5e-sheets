@@ -22,13 +22,12 @@ import type {
   ExpandedItemIdToLocationsMap,
   ExpandedItemData,
   MessageBus,
-  Utilities,
   Tab,
+  SheetTabCacheable,
 } from 'src/types/types';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import { Container } from 'src/features/containers/Container';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
@@ -47,14 +46,17 @@ import type {
 } from 'src/types/sort.types';
 import { ItemSortRuntime } from 'src/runtime/item/ItemSortRuntime.svelte';
 
-export class Tidy5eContainerSheetQuadrone extends TidyDocumentSheetMixin(
-  CONSTANTS.SHEET_TYPE_CONTAINER,
-  DragAndDropMixin(
-    SvelteApplicationMixin<ContainerSheetQuadroneContext>(
-      foundry.applications.sheets.ItemSheetV2
+export class Tidy5eContainerSheetQuadrone
+  extends TidyDocumentSheetMixin(
+    CONSTANTS.SHEET_TYPE_CONTAINER,
+    DragAndDropMixin(
+      SvelteApplicationMixin<ContainerSheetQuadroneContext>(
+        foundry.applications.sheets.ItemSheetV2
+      )
     )
   )
-) {
+  implements SheetTabCacheable
+{
   currentTabId: string | undefined = undefined;
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
@@ -75,6 +77,8 @@ export class Tidy5eContainerSheetQuadrone extends TidyDocumentSheetMixin(
       this.item,
       ItemFilterRuntime.getDocumentFiltersQuadrone
     );
+
+    this.currentTabId = CONSTANTS.TAB_CONTAINER_CONTENTS;
   }
 
   static DEFAULT_OPTIONS: Partial<
@@ -127,6 +131,7 @@ export class Tidy5eContainerSheetQuadrone extends TidyDocumentSheetMixin(
         CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TRACKER,
         this.sectionExpansionTracker,
       ],
+      [CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED, this.onTabSelected.bind(this)],
     ]);
 
     const component = mount(ContainerSheet, {
@@ -592,8 +597,15 @@ export class Tidy5eContainerSheetQuadrone extends TidyDocumentSheetMixin(
     });
   }
 
+  /* -------------------------------------------- */
+  /* SheetTabCacheable
+  /* -------------------------------------------- */
+
+  onTabSelected(tabId: string) {
+    this.currentTabId = tabId;
+  }
+
   // TODO: Plug in or reimplement
-  // - SheetTabCacheable
   // - SheetExpandedItemsCacheable
   // - SearchFilterCacheable
 }

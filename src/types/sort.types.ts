@@ -40,7 +40,7 @@ export type SortGroupKeyQuadrone =
 export type SortGroup = {
   key: SortGroupKeyQuadrone;
   label: string;
-  onSelect: (doc: any, group: SortGroup) => Promise<any>;
+  onSelect: (doc: any, currentTabId: string, group: SortGroup) => Promise<any>;
 };
 
 /** The content needed to manage interactions with a sort method. */
@@ -49,7 +49,12 @@ export type SortMethodOption = {
   name: string;
   onClick:
     | 'menu'
-    | ((ev: MouseEvent, doc: any, mode: SortMethodOption) => Promise<any>);
+    | ((
+        ev: MouseEvent,
+        doc: any,
+        currentTabId: string,
+        mode: SortMethodOption
+      ) => Promise<any>);
   icon: string;
   tooltip: string;
 };

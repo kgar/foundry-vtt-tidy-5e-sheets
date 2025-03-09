@@ -38,13 +38,13 @@
 
     await tick();
 
-    selected.onClick(ev, doc, selected);
+    selected.onClick(ev, doc, tabId, selected);
   }
 
   async function onGroupSelected(sortGroup: SortGroup) {
     expanded = false;
     await tick();
-    await sortGroup.onSelect(doc, sortGroup);
+    await sortGroup.onSelect(doc, tabId, sortGroup);
   }
 
   const localize = FoundryAdapter.localize;

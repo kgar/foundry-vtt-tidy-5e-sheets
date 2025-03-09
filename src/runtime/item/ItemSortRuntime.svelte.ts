@@ -27,10 +27,14 @@ export class ItemSortRuntime {
   static _documentTabSortSchemesQuadrone: DocumentTypesToSortMethodTabs = {
     [CONSTANTS.SHEET_TYPE_CONTAINER]: {
       [CONSTANTS.TAB_CONTAINER_CONTENTS]: [
-        defaultItemSortSchemes.alphaAscending,
-        defaultItemSortSchemes.alphaDescending,
-        defaultItemSortSchemes.manual,
-        defaultItemSortSchemes.equipped,
+        defaultItemSortSchemes[
+          CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_ASCENDING
+        ],
+        defaultItemSortSchemes[
+          CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_DESCENDING
+        ],
+        defaultItemSortSchemes[CONSTANTS.ITEM_SORT_METHOD_KEY_MANUAL],
+        defaultItemSortSchemes[CONSTANTS.ITEM_SORT_METHOD_KEY_EQUIPPED],
       ],
     },
   };
