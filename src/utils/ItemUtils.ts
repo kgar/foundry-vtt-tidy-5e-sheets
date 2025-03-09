@@ -1,6 +1,8 @@
 import type { Item5e } from 'src/types/item.types';
-import type { SortMode } from 'src/types/types';
+import type { SortMethodKeyQuadrone } from 'src/types/sort.types';
 import { isNil } from './data';
+import { warn } from './logging';
+import { ItemSortRuntime } from 'src/runtime/item/ItemSortRuntime.svelte';
 
 export class ItemUtils {
   static canUse(item: any): boolean {
@@ -52,22 +54,30 @@ export class ItemUtils {
     return item.system.uses?.max;
   }
 
-  static sortItems(items: Item5e[], sortMode: SortMode) {
-    if (sortMode === 'a') {
-      items.sort((a, b) => a.name.localeCompare(b.name, game.i18n.lang));
-    } else if (sortMode === 'm') {
-      items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
-    }
+  static sortItems(items: Item5e[], sortMode: SortMethodKeyQuadrone) {
+    this.#sortImpl(items.sort.bind(items), items, sortMode);
   }
 
-  static getSortedItems(items: Item5e[], sortMode: SortMode) {
-    if (sortMode === 'a') {
-      return items.toSorted((a, b) =>
-        a.name.localeCompare(b.name, game.i18n.lang)
-      );
-    } else if (sortMode === 'm') {
-      return items.toSorted((a, b) => (a.sort || 0) - (b.sort || 0));
+  static getSortedItems(items: Item5e[], sortMode: SortMethodKeyQuadrone) {
+    return this.#sortImpl(items.toSorted.bind(items), items, sortMode);
+  }
+
+  static #sortImpl(
+    sortMethod: SortImplementation,
+    items: Item5e[],
+    sortMode: SortMethodKeyQuadrone
+  ): ReturnType<SortImplementation> {
+    const comparator =
+      ItemSortRuntime._registeredItemSorts[sortMode]?.comparator;
+
+    if (comparator) {
+      return sortMethod(comparator);
     }
+
+    warn(`Sort method with key ${sortMode} not found. Returning items as is.`);
     return items;
   }
 }
+type SortImplementation =
+  | typeof Array.prototype.sort
+  | typeof Array.prototype.toSorted;

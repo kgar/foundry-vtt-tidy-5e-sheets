@@ -17,7 +17,7 @@
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
-  import FilterMenu from 'src/components/filter/FilterMenu.svelte';
+  import FilterMenu from 'src/components/filter/FilterButton.svelte';
   import ContainerPanel from 'src/sheets/classic/shared/ContainerPanel.svelte';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';

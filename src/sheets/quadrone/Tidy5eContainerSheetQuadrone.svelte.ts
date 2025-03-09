@@ -22,13 +22,12 @@ import type {
   ExpandedItemIdToLocationsMap,
   ExpandedItemData,
   MessageBus,
-  Utilities,
   Tab,
+  SheetTabCacheable,
 } from 'src/types/types';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import { Container } from 'src/features/containers/Container';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
@@ -39,15 +38,25 @@ import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import { TidyDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import type {
+  SortGroup,
+  SortGroupKeyQuadrone,
+  SortMethodKeyQuadrone,
+  SortMethodOption,
+} from 'src/types/sort.types';
+import { ItemSortRuntime } from 'src/runtime/item/ItemSortRuntime.svelte';
 
-export class Tidy5eContainerSheetQuadrone extends TidyDocumentSheetMixin(
-  CONSTANTS.SHEET_TYPE_CONTAINER,
-  DragAndDropMixin(
-    SvelteApplicationMixin<ContainerSheetQuadroneContext>(
-      foundry.applications.sheets.ItemSheetV2
+export class Tidy5eContainerSheetQuadrone
+  extends TidyDocumentSheetMixin(
+    CONSTANTS.SHEET_TYPE_CONTAINER,
+    DragAndDropMixin(
+      SvelteApplicationMixin<ContainerSheetQuadroneContext>(
+        foundry.applications.sheets.ItemSheetV2
+      )
     )
   )
-) {
+  implements SheetTabCacheable
+{
   currentTabId: string | undefined = undefined;
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
@@ -68,6 +77,8 @@ export class Tidy5eContainerSheetQuadrone extends TidyDocumentSheetMixin(
       this.item,
       ItemFilterRuntime.getDocumentFiltersQuadrone
     );
+
+    this.currentTabId = CONSTANTS.TAB_CONTAINER_CONTENTS;
   }
 
   static DEFAULT_OPTIONS: Partial<
@@ -120,6 +131,7 @@ export class Tidy5eContainerSheetQuadrone extends TidyDocumentSheetMixin(
         CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TRACKER,
         this.sectionExpansionTracker,
       ],
+      [CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED, this.onTabSelected.bind(this)],
     ]);
 
     const component = mount(ContainerSheet, {
@@ -207,65 +219,22 @@ export class Tidy5eContainerSheetQuadrone extends TidyDocumentSheetMixin(
       this.item.type
     );
 
-    const contentsSortMode =
+    const contentsSortMethod =
       containerPreferences.tabs?.[CONSTANTS.TAB_CONTAINER_CONTENTS]?.sort ??
       'm';
 
-    // Utilities
-    let utilities: Utilities<ContainerSheetQuadroneContext> = {
-      [CONSTANTS.TAB_CONTAINER_CONTENTS]: {
-        utilityToolbarCommands: [
-          {
-            id: 'sort-mode-alpha',
-            title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
-            iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
-            execute: async () => {
-              await SheetPreferencesService.setDocumentTypeTabPreference(
-                this.item.type,
-                CONSTANTS.TAB_CONTAINER_CONTENTS,
-                'sort',
-                'm'
-              );
-              this.render();
-            },
-            visible: contentsSortMode === 'a',
-          },
-          {
-            id: 'sort-mode-manual',
-            title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
-            iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
-            execute: async () => {
-              await SheetPreferencesService.setDocumentTypeTabPreference(
-                this.item.type,
-                CONSTANTS.TAB_CONTAINER_CONTENTS,
-                'sort',
-                'a'
-              );
-              this.render();
-            },
-            visible: contentsSortMode === 'm',
-          },
-          {
-            id: 'configure-sections',
-            title: FoundryAdapter.localize(
-              'TIDY5E.Utilities.ConfigureSections'
-            ),
-            iconClass: 'fas fa-cog',
-            execute: ({ context, sections }) => {
-              new DocumentTabSectionConfigApplication({
-                document: context.item,
-                // Provide a way to build the necessary config, perhaps within the application constructor. We've got all the info we need in order to perform the operation.
-                sections: sections,
-                tabId: CONSTANTS.TAB_CONTAINER_CONTENTS,
-                tabTitle: ItemSheetRuntime.getTabTitle(
-                  CONSTANTS.TAB_CONTAINER_CONTENTS
-                ),
-              }).render(true);
-            },
-          },
-        ],
-      },
-    };
+    const alphaGroupMembers: SortMethodKeyQuadrone[] = ['a', 'd'];
+
+    // TODO: This needs to be part of the sort group model, relating sort methods to specific groups.
+    const contentsSortGroup: SortGroupKeyQuadrone =
+      // priority is not supported on container sheets; but this logic should be consolidated generically to a centralized location for sorting
+      contentsSortMethod === 'priority'
+        ? 'priority'
+        : alphaGroupMembers.includes(contentsSortMethod)
+        ? 'a'
+        : contentsSortMethod === 'equipped'
+        ? 'equipped'
+        : 'm';
 
     const editable = this.isEditable;
 
@@ -291,6 +260,18 @@ export class Tidy5eContainerSheetQuadrone extends TidyDocumentSheetMixin(
         !game.user.isGM && this.document.system.identified === false,
       config: CONFIG.DND5E,
       containerContents: await Container.getContainerContents(this.item),
+      contentsSort: {
+        group: contentsSortGroup,
+        groups:
+          ItemSortRuntime.getDocumentSortGroupsQuadrone(this.document)[
+            CONSTANTS.TAB_CONTAINER_CONTENTS
+          ] ?? [],
+        method: contentsSortMethod,
+        methods:
+          ItemSortRuntime.getDocumentSortMethodsQuadrone(this.document)[
+            CONSTANTS.TAB_CONTAINER_CONTENTS
+          ] ?? [],
+      },
       customContent: [],
       currencies,
       document: this.document,
@@ -331,7 +312,6 @@ export class Tidy5eContainerSheetQuadrone extends TidyDocumentSheetMixin(
       tabs: [],
       unlocked: unlocked,
       userPreferences: UserPreferencesService.get(),
-      utilities: utilities,
     };
 
     // Properties
@@ -617,8 +597,15 @@ export class Tidy5eContainerSheetQuadrone extends TidyDocumentSheetMixin(
     });
   }
 
+  /* -------------------------------------------- */
+  /* SheetTabCacheable
+  /* -------------------------------------------- */
+
+  onTabSelected(tabId: string) {
+    this.currentTabId = tabId;
+  }
+
   // TODO: Plug in or reimplement
-  // - SheetTabCacheable
   // - SheetExpandedItemsCacheable
   // - SearchFilterCacheable
 }

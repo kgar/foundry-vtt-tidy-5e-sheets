@@ -1,6 +1,6 @@
 <script lang="ts">
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
-  import FilterMenu from 'src/components/filter/FilterMenu.svelte';
+  import FilterMenu from 'src/components/filter/FilterButton.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import Notice from 'src/components/notice/Notice.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';

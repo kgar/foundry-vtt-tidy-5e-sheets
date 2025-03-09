@@ -44,7 +44,7 @@
 </script>
 
 <div class="sheet-preferences-container">
-  <div class="p">
+  <div>
     {localize('TIDY5E.Settings.SheetPreferences.explanation')}
   </div>
   <div class="scroll-container">

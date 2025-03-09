@@ -20,19 +20,20 @@
     getContext<ItemFilterService['onFilterClearAll']>('onFilterClearAll');
 
   let categories = $derived(filterData[tabId] ?? {});
-  // let hasActiveFilters = $derived(
-  //   Object.entries(categories).some(([_, filters]) =>
-  //     filters.some((f) => f.value !== null),
-  //   ),
-  // );
+  let filterButtonActive = $derived(
+    Object.entries(categories).some(([_, filters]) =>
+      filters.some((f) => f.value !== null),
+    ),
+  );
   let filterMenuExpanded = $state(false);
 </script>
 
 <ButtonWithOptionPanel
-  class="icon-button"
+  active={filterButtonActive}
   anchor="right"
   bind:expanded={filterMenuExpanded}
   onclick={() => (filterMenuExpanded = !filterMenuExpanded)}
+  buttonClasses="icon-button"
   containerClasses="filter-menu"
 >
   <i class="fas fa-filter"></i>

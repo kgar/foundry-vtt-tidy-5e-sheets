@@ -1,8 +1,8 @@
 import type { CONSTANTS } from 'src/constants';
-import type { SortMode } from 'src/types/types';
+import type { SortMethodKeyQuadrone } from 'src/types/sort.types';
 
 export type SheetTypeTabPreferences = {
-  sort?: SortMode;
+  sort?: SortMethodKeyQuadrone;
 };
 
 export type SheetPreference = {

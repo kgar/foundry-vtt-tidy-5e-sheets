@@ -443,7 +443,7 @@ export type NpcItemContext = {
 export type NpcHabitat = {
   type: string;
   subtype?: string;
-}
+};
 
 export type NpcSheetContext = {
   appearanceEnrichedHtml: string;
@@ -528,10 +528,6 @@ export type ExtensibleComponent = {
   cssClasses: string[];
   dataset: Record<string, string>;
 };
-
-export type SortModeAlphabetical = 'a';
-export type SortModeManual = 'm';
-export type SortMode = SortModeAlphabetical | SortModeManual;
 
 export type MessageBus = { message: MessageBusMessage | undefined };
 

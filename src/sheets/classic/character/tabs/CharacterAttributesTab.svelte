@@ -10,7 +10,7 @@
   import Search from 'src/components/utility-bar/Search.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
-  import FilterMenu from 'src/components/filter/FilterMenu.svelte';
+  import FilterMenu from 'src/components/filter/FilterButton.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
