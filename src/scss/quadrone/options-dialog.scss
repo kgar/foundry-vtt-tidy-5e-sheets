@@ -1,0 +1,35 @@
+// TODO: make dedicated styles for options dialogs
+// TODO: promote the most universal styles to apps.scss
+
+.tidy5e-sheet.application:where(.quadrone.options-dialog) {
+  /* Application Window */
+  border-radius: 0.3125rem;
+  border: 1px solid var(--t5e-color-gold);
+  background: var(--t5e-component-card-ondefault-darker);
+  box-shadow: var(--t5e-drop-shadow-sheet);
+  background-size: cover;
+
+  &:where(.theme-light) {
+    background: var(--t5e-component-card-ondefault-default);
+    &::before {
+      background: url(../../modules/tidy5e-sheet/images/texture-gray-1.webp)
+        no-repeat top center;
+      background-size: cover;
+    }
+
+    &::after {
+      background: url(../../modules/tidy5e-sheet/images/texture-gray-2.webp)
+        no-repeat bottom center;
+      background-size: cover;
+    }
+  }
+
+  &:where(.theme-dark) {
+    background: var(--t5e-component-card-oninverse-darker);
+    &::before {
+      background: url(../../modules/tidy5e-sheet/images/denim065.png) no-repeat
+        top center;
+      background-size: cover;
+    }
+  }
+}

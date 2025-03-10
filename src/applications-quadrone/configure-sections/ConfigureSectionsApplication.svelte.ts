@@ -6,14 +6,47 @@ import type {
 } from 'src/types/application.types';
 import { mount } from 'svelte';
 import ConfigureSections from './ConfigureSections.svelte';
+import type { Actor5e, TidySectionBase } from 'src/types/types';
+import type { Item5e } from 'src/types/item.types';
+import type { ConfigurableSection } from './configure-sections.types';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+
+export type ConfigureSectionsApplicationConstructorArgs = {
+  settings: {
+    document: Actor5e | Item5e;
+    sections: TidySectionBase[];
+    tabId: string;
+    theme: string;
+  };
+} & Partial<ApplicationConfiguration>;
 
 export class ConfigureSectionsApplication extends SvelteApplicationMixin<any>(
   foundry.applications.api.ApplicationV2
 ) {
+  document: Actor5e | Item5e;
+  sections = $state<ConfigurableSection[]>()!;
+  tabId: string;
+  theme: string = $state<string>('');
+
+  constructor({
+    settings: { document, sections, tabId, theme },
+    ...rest
+  }: ConfigureSectionsApplicationConstructorArgs) {
+    super(rest);
+    this.document = document;
+    this.sections = sections.map((section) => ({
+      key: section.key,
+      label: FoundryAdapter.localize(section.label),
+      show: section.show !== false,
+    }));
+    this.tabId = tabId;
+    this.theme = theme;
+  }
+
   static DEFAULT_OPTIONS: Partial<
     ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
   > = {
-    classes: [CONSTANTS.MODULE_ID, 'app-v2', 'quadrone'],
+    classes: [CONSTANTS.MODULE_ID, 'app-v2', 'quadrone', 'options-dialog'],
     tag: 'div',
     window: {
       frame: true,
@@ -35,11 +68,31 @@ export class ConfigureSectionsApplication extends SvelteApplicationMixin<any>(
     const component = mount(ConfigureSections, {
       target: node,
       context: context,
+      props: {
+        sections: this.sections,
+        application: this,
+      },
     });
 
-    const html = globalThis.$(this.element);
-
     return component;
+  }
+
+  _configureEffects(): void {
+    $effect(() => {
+      // remove all other theme-{name} classes
+      const element = this.element as HTMLElement;
+      // TODO: Use a fixed list of known themes, possibly from Foundry itself?
+      const toRemove = Array.from(element.classList).filter((value: string) =>
+        value.startsWith('theme-')
+      );
+      toRemove.forEach((classToRemove) =>
+        element.classList.remove(classToRemove)
+      );
+
+      // add my theme-{name} class to element
+      element.classList.toggle('themed', true);
+      element.classList.toggle(`theme-${this.theme}`, true);
+    });
   }
 
   async _prepareContext(options: ApplicationRenderOptions): Promise<any> {

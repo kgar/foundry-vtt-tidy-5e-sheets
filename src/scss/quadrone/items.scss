@@ -31,12 +31,12 @@
     background: var(--t5e-component-card-ondefault-default);
 
     &::before {
-      background: url(../../modules/tidy5e-sheet/public/images/texture-gray-1.webp) no-repeat top center;
+      background: url(../../modules/tidy5e-sheet/images/texture-gray-1.webp) no-repeat top center;
       background-size: cover;
     }
 
     &::after {
-      background: url(../../modules/tidy5e-sheet/public/images/texture-gray-2.webp) no-repeat bottom center;
+      background: url(../../modules/tidy5e-sheet/images/texture-gray-2.webp) no-repeat bottom center;
       background-size: cover;
     }
   }
@@ -45,7 +45,7 @@
     background: var(--t5e-component-card-oninverse-darker);
 
     &::before {
-      background: url(../../modules/tidy5e-sheet/public/images/denim065.png) no-repeat top center;
+      background: url(../../modules/tidy5e-sheet/images/denim065.png) no-repeat top center;
       background-size: cover;
     }
   }

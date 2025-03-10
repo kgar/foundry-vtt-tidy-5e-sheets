@@ -95,7 +95,18 @@
     class:disabled={!context.editable}
     onclick={() =>
       context.editable &&
-      new ConfigureSectionsApplication().render({ force: true })}
+      new ConfigureSectionsApplication({
+        settings: {
+          document: context.item,
+          tabId,
+          sections: [],
+          // TODO: Need a way to grab the current or fallback to global theme
+          theme: 'light',
+        },
+        window: {
+          title: 'THIS IS A TEST',
+        },
+      }).render({ force: true })}
   >
     <i class="fas fa-gear"></i>
   </a>
