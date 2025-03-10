@@ -1,6 +1,11 @@
 ## To Do
 
 - [ ] Implement section config / https://www.figma.com/design/seCsgsf8Uh82uxfPXIwFAg/Tidy5e-Sheet-Refresh?node-id=2182-75324&m=dev
+  - [ ] Migrate universal quadrone styles from items.scss to apps.scss so that items and options dialogs just work, given the right classes.
+  - [ ] Code up the section selection form and provide a means for passing in custom options.Depeneding on complexity of available options, consider making it data-driven.
+  - [ ] Apply styles and polish
+  - [ ] Do DocumentSheet / prepareContext revisions to the core Svelte mixin so that it's more plug and play for all Tidy applications
+  - [ ] Fix: Weightless container (Bag of Devouring) shows undefined in the Holds text
 - [ ] Sorting: Resolve todo - // TODO: This needs to be part of the sort group model, relating sort methods to specific groups.
 - [ ] Inventory: subtables have a different set of styles for their header
 - [ ] Inventory: Container inline capacity UI
