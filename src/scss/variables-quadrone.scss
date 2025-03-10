@@ -1,7 +1,7 @@
 /* tidy5e - onlight */
 .tidy5e-sheet:is(.quadrone, .dnd5e2) {
   /* Default theme color is var(--t5e-theme-color-default) */
-  
+
   /* Typography ------------ */
   /* Font families */
   --t5e-font-modesto-condensed: 'Modesto Condensed', 'Palatino Linotype', serif;
@@ -21,7 +21,7 @@
   --font-weight-default: 400;
   --font-weight-label: 500;
   --font-weight-bold: 700;
-  
+
   --font-size-default: var(--font-size-13);
   --font-size-small: var(--font-size-11);
 
@@ -60,8 +60,8 @@
   --t5e-color-palette-grey-48: rgba(122, 122, 122, 1);
   --t5e-color-palette-grey-60: rgba(153, 153, 153, 1);
   --t5e-color-palette-grey-85: rgba(207, 210, 218, 1);
-  --t5e-color-palette-grey-92: rgba(223, 226, 235, 1)
-  --t5e-color-palette-grey-100: rgba(255, 255, 255, 1); 
+  --t5e-color-palette-grey-92: rgba(223, 226, 235, 1);
+  --t5e-color-palette-grey-100: rgba(255, 255, 255, 1);
 
   /* Gold */
   --t5e-color-gold: var(--t5e-color-palette-gold-62);
@@ -136,7 +136,7 @@
   /* Special ------------ */
   --t5e-color-palette-white: var(--t5e-color-palette-grey-100);
   --t5e-color-palette-black: var(--t5e-color-palette-grey-0);
-  
+
 
   /* Text ------------ */
   /* ondefault */
@@ -163,11 +163,11 @@
   --t5e-color-text-oninverse-lighter: var(--t5e-color-palette-grey-85);
   --t5e-color-text-oninverse-lightest: var(--t5e-color-palette-grey-60);
   --t5e-color-text-oninverse-disabled: var(--t5e-color-palette-grey-48);
-  
+
   /* Other */
   --input-text-color: var(--t5e-color-text-ondefault-default);
   --t5e-color-selected-text: var(--t5e-color-palette-blue-70);
-  
+
 
   /* Decorative ------------ */
   /* Filigree */
@@ -186,7 +186,7 @@
   --t5e-drop-shadow-modal: 0px 4px 24px 0px rgba(0, 0, 0, 0.25), 0px 0px 12px 0px rgba(0, 0, 0, 0.50);
   --t5e-drop-shadow-card: 0px 0px 6px 0px rgba(0, 0, 0, 0.45);
   --t5e-drop-shadow-pill: 0px 0px 12px 0px rgba(0, 0, 0, 0.15);
-  --t5e-drop-shadow-field: 0px 0px 3px 0px rgba(0, 0, 0, 0.08);
+  --t5e-drop-shadow-field: 0px 0px 3px 0px rgba(0, 0, 0, 0.1);
   --t5e-drop-shadow-field-hover: 0px 0px 6px 0px rgba(0, 0, 0, 0.20);
   --t5e-drop-shadow-field-focus: 0 0 0 2px var(--t5e-theme-color-default);
   --t5e-outline-field-focus: 2px solid var(--t5e-theme-color-default);
@@ -228,6 +228,10 @@
   --t5e-component-field-focus: var(--t5e-theme-colors-lighter);
   --t5e-field-size-default: 1.75rem;
   --t5e-field-size-small: 1.625rem;
+  --t5e-tag-size-default: 1.5625rem;
+  --t5e-tag-size-small: 1.1875rem;
+  --t5e-checkbox-size: 0.875rem;
+  --t5e-radio-size: 1rem;
 
   /* Pills */
   --t5e-component-pill-oninverse-background: var(--t5e-component-field-oninverse-background);
@@ -238,10 +242,11 @@
   --t5e-component-pill-border-interactive: var(--t5e-component-field-border);
 
   /* Enrichers */
-  --t5e-component-enricher-icon:var(--t5e-color-palette-gold-56);
+  --t5e-component-enricher-icon: var(--t5e-color-palette-gold-56);
   --t5e-component-enricher-icon-hover: darken(--t5e-color-palette-gold-56, 10%);
   --t5e-component-enricher-background: rgba(159, 146, 117, 0.15);
-  --t5e-component-enricher-background-hover: rgba(159, 146, 117, 0.25);;
+  --t5e-component-enricher-background-hover: rgba(159, 146, 117, 0.25);
+  ;
   --t5e-component-enricher-border: rgba(159, 146, 117, 0.35);
   --t5e-component-enricher-text-hover-shadow: 0px 0px 6px var(--t5e-color-text-oninverse-gold-emphasis);
 
@@ -330,8 +335,12 @@
 }
 
 
-.tidy5e-sheet.quadrone{
-  &.dark, .dark, &.theme-dark, .theme-dark {
+.tidy5e-sheet.quadrone {
+
+  &.dark,
+  .dark,
+  &.theme-dark,
+  .theme-dark {
     /* Text ------------ */
     /* All text colors inverted in dark mode. */
     /* ondefault */
@@ -367,7 +376,7 @@
     --t5e-component-field-background: var(--t5e-component-card-oninverse-default);
     --t5e-component-field-background-hover: var(--t5e-color-palette-grey-11);
     --t5e-component-field-background-hover-emphasis: var(--t5e-color-palette-black);
-    --t5e-component-field-background-disabled: rgba(0,0,0, 0.3);
+    --t5e-component-field-background-disabled: rgba(0, 0, 0, 0.3);
     --t5e-component-field-focus: var(--t5e-theme-color-default);
 
     /* Card colors are not inverted in dark mode. */
@@ -398,7 +407,7 @@
     /* Filigree */
     --t5e-color-filigree: var(--t5e-color-palette-grey-34);
 
-    /* Spellcasting */  
+    /* Spellcasting */
     --t5e-color-icon-spellcasting-prepared: var(--t5e-theme-color-lightest);
     --t5e-color-icon-spellcasting-atwill: lighten(saturate(var(--t5e-color-palette-red-45), 30%), 30%);
     --t5e-color-icon-spellcasting-always: lighten(saturate(var(--t5e-color-palette-green-43), 30%), 30%);

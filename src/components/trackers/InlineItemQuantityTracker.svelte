@@ -35,7 +35,7 @@
   <a class="command decrementer" onclick={() => !disabled && decrement()}>
     <i class="fa-solid fa-minus"></i>
   </a>
-  <span class="item-quantity-tracker-input-wrapper">
+  <span class="item-quantity-tracker-input-wrapper uninput">
     <TextInput
       class="item-quantity-tracker-input"
       document={item}

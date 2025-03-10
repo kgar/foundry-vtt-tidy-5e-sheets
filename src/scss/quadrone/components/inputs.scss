@@ -19,7 +19,7 @@ select,
   outline: 0 solid var(--t5e-theme-color-default);
 
   &.uninput {
-    border: none;
+    border-color: transparent;
     background: transparent;
     box-shadow: none;
     padding: 0;
@@ -74,6 +74,10 @@ textarea {
   }
 }
 
+input.uninput:hover {
+  border: 1px solid var(--t5e-component-field-border-hover);
+}
+
 .input-group {
   --icon-size: 0.75rem;
   font-size: var(--font-size-default, 0.8666666667rem);
@@ -119,6 +123,7 @@ textarea {
       background: none;
     }
   }
+
   span {
     padding-block-end: 0.0625rem;
   }
@@ -133,7 +138,7 @@ textarea {
     box-shadow: none;
   }
 
-  & > :not(input):not(i) {
+  &> :not(input):not(i) {
     font-weight: 500;
     font-size: 0.8125rem;
     color: var(--t5e-color-text-ondefault-lightest);
@@ -151,10 +156,15 @@ textarea {
   padding-inline-start: 0.375rem;
   padding-inline-end: 0.5rem;
 
+  &:hover input {
+    background: none;
+  }
+
   &:focus-within {
     box-shadow: var(--t5e-drop-shadow-field-focus);
     background-color: var(--t5e-component-field-background-hover);
   }
+
   // TODO: Consider how to generalize this particular style, since other inputs use the same technique
   .icon-and-input {
     align-items: center;
@@ -163,8 +173,14 @@ textarea {
     gap: 0.375rem;
     padding-block-end: 0.0625rem;
 
+    &:hover .icon-and-input {
+      background-color: var(--t5e-component-field-background-hover);
+    }
+
     input[type='text'] {
+      background: none;
       box-shadow: none;
+      outline: none;
     }
   }
 
@@ -182,6 +198,7 @@ textarea {
     &:focus {
       box-shadow: none;
       border: none;
+      outline: none;
     }
 
     &:hover {
@@ -227,15 +244,12 @@ textarea {
 }
 
 /* Parent radio and checkbox elements */
-.checkbox {
-  --checkbox-size: calc(1rem - 0.125rem);
-}
 .radio {
-  --checkbox-size: 1rem;
   display: flex;
   align-items: flex-start;
   padding-block-start: 0.3125rem;
 }
+
 .radio,
 .checkbox {
   font-size: var(--font-size-default, 0.8666666667rem);
@@ -250,6 +264,7 @@ textarea {
         border-color: var(--t5e-component-field-border-hover);
         background: var(--t5e-component-field-background-hover);
       }
+
       &:checked {
         border-color: var(--t5e-theme-color-darker);
         background-color: var(--t5e-theme-color-darker);
@@ -257,6 +272,7 @@ textarea {
       }
     }
   }
+
   &:focus {
     input {
       outline: var(--t5e-outline-field-focus);
@@ -279,8 +295,6 @@ textarea {
 input[type='radio'],
 input[type='checkbox'] {
   box-sizing: content-box;
-  width: var(--checkbox-size);
-  height: var(--checkbox-size);
   background: var(--t5e-component-field-background);
   border: 1px solid var(--t5e-component-field-border);
   box-shadow: var(--t5e-drop-shadow-field);
@@ -291,17 +305,21 @@ input[type='checkbox'] {
     border-color: var(--t5e-component-toggle-toggled-border);
     filter: none; // Overwrite the application filter.
   }
+
   &:disabled {
     background: var(--t5e-component-field-background-disabled);
     border-color: transparent;
     box-shadow: none;
   }
+
   &:focus:not(:disabled) {
     outline: var(--t5e-outline-field-focus);
+
     &:not(:checked) {
       border-color: var(--t5e-component-field-border-hover);
       background: var(--t5e-component-field-background-hover);
     }
+
     &:checked {
       border-color: var(--t5e-theme-color-darker);
       background-color: var(--t5e-theme-color-darker);
@@ -311,6 +329,8 @@ input[type='checkbox'] {
 }
 
 input[type='radio'] {
+  width: var(--t5e-radio-size);
+  height: var(--t5e-radio-size);
   appearance: none;
   border-radius: 50%;
   display: inline-flex;
@@ -324,15 +344,19 @@ input[type='radio'] {
     transform: scale(0.5);
     background-color: var(--t5e-color-text-ondefault-gold-light);
   }
+
   &:checked::after {
     color: var(--t5e-theme-color-darker);
   }
+
   &:checked:disabled::before {
     background-color: var(--t5e-color-text-ondefault-disabled);
   }
 }
 
 input[type='checkbox'] {
+  width: var(--t5e-checkbox-size);
+  height: var(--t5e-checkbox-size);
   flex-basis: var(--checkbox-size);
   margin: 0;
   text-align: center;
@@ -384,16 +408,17 @@ select {
   font-weight: var(--font-weight-default, 400);
   color: var(--t5e-color-text-ondefault-default);
 
-  background-color: var(--t5e-component-card-ondefault-default);
+  background-color: var(--t5e-component-field-background);
   background-image: var(--bg-image-chevron);
   background-repeat: no-repeat, repeat repeat;
   background-position: right 0.5rem center, left top;
   background-size: 0.6875rem 0.6875rem, auto;
 
   // TODO: Select panel font family doens't work.
-  // option {
-  //   font-family: 'Roboto Condensed', sans-serif;
-  // }
+  option {
+    background-color: var(--t5e-component-field-background-hover);
+    font-family: 'Roboto Condensed', sans-serif;
+  }
 
   &:hover,
   &:focus {
@@ -413,26 +438,29 @@ select {
 &.theme-dark,
 .dark,
 .theme-dark {
+
   select,
   .input-group,
   input[type='text'],
   input[type='number'] {
-    border-color: var(--t5e-component-field-border);
-    background-color: var(--t5e-component-field-background);
-    box-shadow: var(--t5e-drop-shadow-field);
-    color: var(--t5e-color-text-ondefault-default);
-    transition: all var(--t5e-transition-default);
+    // border-color: var(--t5e-component-field-border);
+    // background-color: var(--t5e-component-field-background);
+    // box-shadow: var(--t5e-drop-shadow-field);
+    // color: var(--t5e-color-text-ondefault-default);
+    // transition: all var(--t5e-transition-default);
 
     &::placeholder {
       color: var(--t5e-color-text-ondefault-disabled);
     }
 
     &:not(:disabled) {
+
       &:hover,
       &:focus {
         background-color: var(--t5e-component-field-background-hover);
         border-color: var(--t5e-component-field-border-hover);
       }
+
       &:focus {
         outline-color: var(--t5e-component-field-focus);
       }
@@ -463,7 +491,7 @@ select {
       border-color: transparent;
     }
 
-    & > :not(input):not(i) {
+    &> :not(input):not(i) {
       color: var(--t5e-color-text-ondefault-lightest);
     }
   }
@@ -475,12 +503,15 @@ select {
     &:checked:hover:not(:disabled) {
       border-color: var(--t5e-component-field-border-hover);
     }
+
     &:focus:not(:disabled) {
       border-color: var(--t5e-component-field-border-hover);
+
       &:not(:checked) {
         border-color: var(--t5e-component-field-border-hover);
         background: var(--t5e-component-field-background-hover);
       }
+
       &:checked {
         border-color: var(--t5e-component-field-border-hover);
         background-color: var(--t5e-theme-color-darker);

@@ -29,7 +29,7 @@
   }
 </script>
 
-<aside class="sidebar dark">
+<aside class="sidebar theme-dark">
   <div class="sidebar-contents">
     <h4>Theme</h4>
     <div
