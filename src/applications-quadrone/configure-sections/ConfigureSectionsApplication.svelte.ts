@@ -6,41 +6,37 @@ import type {
 } from 'src/types/application.types';
 import { mount } from 'svelte';
 import ConfigureSections from './ConfigureSections.svelte';
-import type { Actor5e, TidySectionBase } from 'src/types/types';
-import type { Item5e } from 'src/types/item.types';
+import type { TidySectionBase } from 'src/types/types';
 import type { ConfigurableSection } from './configure-sections.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { getDocumentTheme } from 'src/theme/theme';
 
 export type ConfigureSectionsApplicationConstructorArgs = {
   settings: {
-    document: Actor5e | Item5e;
     sections: TidySectionBase[];
     tabId: string;
-    theme: string;
   };
 } & Partial<ApplicationConfiguration>;
 
 export class ConfigureSectionsApplication extends SvelteApplicationMixin<any>(
-  foundry.applications.api.ApplicationV2
+  foundry.applications.api.DocumentSheetV2
 ) {
-  document: Actor5e | Item5e;
   sections = $state<ConfigurableSection[]>()!;
   tabId: string;
   theme: string = $state<string>('');
 
   constructor({
-    settings: { document, sections, tabId, theme },
+    settings: { sections, tabId },
     ...rest
   }: ConfigureSectionsApplicationConstructorArgs) {
     super(rest);
-    this.document = document;
     this.sections = sections.map((section) => ({
       key: section.key,
       label: FoundryAdapter.localize(section.label),
       show: section.show !== false,
     }));
     this.tabId = tabId;
-    this.theme = theme;
+    this.theme = getDocumentTheme(rest.document);
   }
 
   static DEFAULT_OPTIONS: Partial<
@@ -48,6 +44,7 @@ export class ConfigureSectionsApplication extends SvelteApplicationMixin<any>(
   > = {
     classes: [CONSTANTS.MODULE_ID, 'app-v2', 'quadrone', 'options-dialog'],
     tag: 'div',
+    sheetConfig: false,
     window: {
       frame: true,
       positioned: true,
@@ -98,4 +95,16 @@ export class ConfigureSectionsApplication extends SvelteApplicationMixin<any>(
   async _prepareContext(options: ApplicationRenderOptions): Promise<any> {
     return {};
   }
+
+  /* -------------------------------------------- */
+
+  /** @override */
+  _onClose(..._: any[]) {}
+
+  /* -------------------------------------------- */
+
+  /** @override */
+  _onFirstRender(..._: any[]) {}
+
+  /* -------------------------------------------- */
 }

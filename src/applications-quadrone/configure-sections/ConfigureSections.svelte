@@ -41,7 +41,7 @@
           }}
         >
           <i class="far fa-eye fa-fw"></i>
-          {localize('')}
+          {localize('TIDY5E.Visible')}
         </button>
       {:else}
         <button
@@ -55,6 +55,7 @@
           }}
         >
           <i class="far fa-eye-slash fa-fw"></i>
+          {localize('TIDY5E.Hidden')}
         </button>
       {/if}
     {/snippet}

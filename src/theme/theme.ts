@@ -12,6 +12,29 @@ import { Colord } from 'colord';
 import { CONSTANTS } from 'src/constants';
 import type { Item5e } from 'src/types/item.types';
 
+export function getDocumentTheme(doc: any) {
+  // try V13
+  let theme: string | undefined = undefined;
+  if (game.release.generation >= 13) {
+    theme =
+      foundry.applications.apps.DocumentSheetConfig.getSheetThemeForDocument(
+        doc
+      ) ?? CONSTANTS.THEME_ID_DEFAULT_LIGHT;
+  }
+
+  if (!theme && game.release.generation >= 13) {
+    const { colorScheme } = game.settings.get('core', 'uiConfig');
+    theme = colorScheme.application;
+  }
+
+  if (!theme) {
+    const currentTheme = SettingsProvider.settings.colorScheme.get();
+    theme = getThemeOrDefault(currentTheme).id;
+  }
+
+  return theme;
+}
+
 export function applyTheme(
   theme: Tidy5eTheme,
   colorPickerEnabledOverride: boolean | null = null

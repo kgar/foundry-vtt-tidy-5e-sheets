@@ -340,7 +340,8 @@
   &.dark,
   .dark,
   &.theme-dark,
-  .theme-dark {
+  .theme-dark,
+  &.minimized {
     /* Text ------------ */
     /* All text colors inverted in dark mode. */
     /* ondefault */

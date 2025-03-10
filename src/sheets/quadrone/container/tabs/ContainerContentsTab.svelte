@@ -96,12 +96,10 @@
     onclick={() =>
       context.editable &&
       new ConfigureSectionsApplication({
+        document: context.item,
         settings: {
-          document: context.item,
           tabId,
-          sections: [],
-          // TODO: Need a way to grab the current or fallback to global theme
-          theme: 'light',
+          sections: context.containerContents.contents,
         },
         window: {
           title: 'THIS IS A TEST',
