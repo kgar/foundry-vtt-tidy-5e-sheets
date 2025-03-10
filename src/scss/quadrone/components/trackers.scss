@@ -1,12 +1,14 @@
 .tidy-inline-item-quantity-tracker {
   display: flex;
   flex-direction: row;
+  align-items: stretch;
 
   .command {
     align-content: center;
     text-align: center;
     flex: 0 0 1.5rem;
     flex-basis: 1.5rem;
+    min-height: var(--t5e-field-size-default);
     width: 1.5rem;
 
     i {
@@ -38,10 +40,10 @@
   .item-quantity-tracker-input {
     text-align: center;
     border-radius: 0.125rem;
-    border: none;
+    border-color: transparent;
     background: none;
     box-shadow: none;
-    height: 1.5rem;
+    min-height: var(--t5e-field-size-default);
     flex-basis: 1.5rem;
     padding: 0;
   }

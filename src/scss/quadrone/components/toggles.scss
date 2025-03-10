@@ -1,13 +1,10 @@
-
 .tidy-switch {
   display: flex;
   align-items: center;
 
   --tidy-switch-scale-internal: var(--tidy-switch-scale, 1);
-  --tidy-switch-thumb-transform-duration-internal: var(
-    --tidy-switch-thumb-transform-duration,
-    0.3s
-  );
+  --tidy-switch-thumb-transform-duration-internal: var(--tidy-switch-thumb-transform-duration,
+      0.3s);
 
   [role='switch'] {
     width: calc(2.625rem * var(--tidy-switch-scale-internal));
@@ -53,9 +50,7 @@
       top: 0;
       bottom: 0;
       align-self: center;
-      right: calc(
-        1.375rem * var(--tidy-switch-scale-internal) - var(--tidy-border-width)
-      );
+      right: calc(1.375rem * var(--tidy-switch-scale-internal) - var(--tidy-border-width));
       transition: all var(--t5e-transition-default);
     }
 
@@ -65,21 +60,20 @@
 
       &::before,
       .thumb-icon {
-        transform: translateX(
-          calc(1.25rem * var(--tidy-switch-scale-internal))
-        );
+        transform: translateX(calc(1.25rem * var(--tidy-switch-scale-internal)));
         transition: transform var(--t5e-transition-default);
       }
-      
+
       &:hover {
         background-color: var(--t5e-theme-color-highlight);
+
         .thumb-icon {
           color: var(--t5e-color-palette-black);
         }
       }
     }
 
-    
+
     &:hover {
       cursor: pointer;
       background-color: rgba(0, 0, 0, 0.75);
@@ -118,13 +112,13 @@
   --field-toggle-unchecked-thumb-color: var(--t5e-color-text-lighter);
   --field-toggle-checked-thumb-color: var(--t5e-color-text-default);
   --width: 2rem;
-  --height: 1rem;
+  --height: 1.0625rem;
   --padding: 0.125rem;
-  --check-indicator-size: 0.6875rem;
-  --thumb-size: 0.625rem;
-  --thumb-checked-translateX: 1rem;
+  --check-indicator-size: 0.75rem;
+  --thumb-size: 0.75rem;
+  --thumb-checked-translateX: 0.9375rem;
   --border-width: 0.0625rem;
-  
+
   flex-grow: 0;
   flex-shrink: 0;
 
@@ -139,6 +133,7 @@
   border: var(--border-width) solid var(--field-toggle-border-color);
   position: relative;
   transition: all var(--t5e-transition-default);
+
   & * {
     transition: all var(--t5e-transition-default);
   }
@@ -187,7 +182,7 @@
       transform: translateX(var(--thumb-checked-translateX));
       fill: var(--field-toggle-checked-thumb-color);
     }
-    
+
     &:hover {
       background-color: var(--t5e-component-toggle-toggled-background-hover);
     }
@@ -197,7 +192,8 @@
     background-color: var(--field-toggle-background-hover);
     border-color: var(--t5e-component-field-border-hover);
 
-    .unchecked-icon, .thumb {
+    .unchecked-icon,
+    .thumb {
       fill: var(--t5e-color-text-ondefault-default);
     }
   }
@@ -207,7 +203,10 @@
   }
 }
 
-&.dark, &.theme-dark, .dark, .theme-dark {
+&.dark,
+&.theme-dark,
+.dark,
+.theme-dark {
   .field-toggle {
     background-color: var(--t5e-component-field-background);
     border-color: var(--t5e-component-field-border);

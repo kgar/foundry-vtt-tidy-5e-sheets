@@ -105,7 +105,7 @@
       hideUnder: 500,
     },
     actions: {
-      columnWidth: `calc(var(--t5e-table-button-width) * ${1 + itemActions.length})`,
+      columnWidth: `calc((var(--t5e-table-button-width) * ${1 + itemActions.length}) + var(--t5e-spacing-halfx))`,
     },
   });
 
