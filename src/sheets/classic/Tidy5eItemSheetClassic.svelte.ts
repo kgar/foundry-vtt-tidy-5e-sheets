@@ -29,6 +29,7 @@ import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportShe
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
 import { TidyDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import { debug } from 'src/utils/logging';
 
 export class Tidy5eItemSheetClassic extends TidyDocumentSheetMixin(
   CONSTANTS.SHEET_TYPE_ITEM,
@@ -402,6 +403,9 @@ export class Tidy5eItemSheetClassic extends TidyDocumentSheetMixin(
     };
 
     if (this.item.type !== 'spell') {
+      debug('context.properties', {
+        ['context.properties']: context.properties,
+      });
       context.properties.options.sort((a, b) =>
         a.label.localeCompare(b.label, game.i18n.lang)
       );

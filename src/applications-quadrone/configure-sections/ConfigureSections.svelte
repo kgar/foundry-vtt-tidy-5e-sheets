@@ -11,32 +11,41 @@
     optionGroups?: SectionOptionGroup[];
     sections: ConfigurableSection[];
     application: ConfigureSectionsApplication;
+    title: string;
   }
 
-  let { optionGroups, sections = $bindable(), application }: Props = $props();
+  let {
+    optionGroups,
+    sections = $bindable(),
+    application,
+    title,
+  }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <section class="tab-configuration">
-  {#if optionGroups?.length}
-    <h2>
-      {localize('TIDY5E.Options.Title')}
-    </h2>
-    {#each optionGroups as group}
-      <h3>
-        {localize(group.title)}
-      </h3>
-      {#each group.settings as setting}
-        {#if setting.type === 'boolean'}
-          <label class="checkbox">
-            <input type="checkbox" bind:checked={setting.checked} />
-            {localize(setting.label)}
-          </label>
-        {/if}
+  <h1>{title}</h1>
+  <div>
+    {#if optionGroups?.length}
+      <h2>
+        {localize('TIDY5E.Options.Title')}
+      </h2>
+      {#each optionGroups as group}
+        <h3>
+          {localize(group.title)}
+        </h3>
+        {#each group.settings as setting}
+          {#if setting.type === 'boolean'}
+            <label class="checkbox">
+              <input type="checkbox" bind:checked={setting.checked} />
+              {localize(setting.label)}
+            </label>
+          {/if}
+        {/each}
       {/each}
-    {/each}
-  {/if}
+    {/if}
+  </div>
   <h2>
     {localize('TIDY5E.Section.LabelPl')}
   </h2>
@@ -45,21 +54,20 @@
     labelProp="label"
     valueProp="key"
     listboxCssClass="scroll-container"
-    class="flex-1 overflow-y-hidden"
   >
     {#snippet itemTemplate({ item })}
       <span
         data-section-key={item['key']}
         data-testid="section-config-item-label"
-        class="flex-1"
+        class="section-config-item-label"
         class:marked-as-hidden={item.show === false}>{item.label}</span
       >
       {#if item.show !== false}
         <button
           type="button"
-          class="inline-icon-button"
-          title={localize('TIDY5E.Section.ConfigDialog.hideTooltip')}
-          data-testid="section-config-hide"
+          class="listbox-option-button option-show"
+          title={localize('TIDY5E.Section.ConfigDialog.showTooltip')}
+          data-testid="section-config-show"
           onclick={() => {
             item.show = false;
             sections = sections;
@@ -71,9 +79,9 @@
       {:else}
         <button
           type="button"
-          class="inline-icon-button"
-          title={localize('TIDY5E.Section.ConfigDialog.showTooltip')}
-          data-testid="section-config-show"
+          class="listbox-option-button option-hide"
+          title={localize('TIDY5E.Section.ConfigDialog.hideTooltip')}
+          data-testid="section-config-hide"
           onclick={() => {
             item.show = true;
             sections = sections;
@@ -86,14 +94,13 @@
     {/snippet}
   </SortingListbox>
 
-  <div class="flex-row small-gap">
+  <div class="button-bar">
     <button
       type="button"
       data-testid="section-config-save-changes"
       onclick={(ev) => application.saveChanges()}
-      class="save-changes-btn"
+      class="active save-changes-btn"
     >
-      <i class="fas fa-save"></i>
       {localize('TIDY5E.SaveChanges')}
     </button>
     <button

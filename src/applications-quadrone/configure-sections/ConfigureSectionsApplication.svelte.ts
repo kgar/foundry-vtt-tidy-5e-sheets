@@ -93,6 +93,8 @@ export class ConfigureSectionsApplication extends SvelteApplicationMixin<any>(
         sections: this.sections,
         application: this,
         optionGroups: this.optionsGroups,
+        // TODO: require from the outside.
+        title: "Configure Contents"
       },
     });
 

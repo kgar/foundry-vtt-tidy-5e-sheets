@@ -12,6 +12,7 @@
     valueProp: keyof TItem;
     selectedItemIndex?: number | null;
     draggable?: boolean;
+    listItemClasses?: string;
     itemTemplate?: Snippet<[any]>;
     onselect?: (selectedIndex: number) => void;
     onkeydown?: (event: KeyboardEvent & { currentTarget: HTMLElement }) => void;
@@ -49,6 +50,7 @@
     items = $bindable([]),
     labelProp,
     valueProp,
+    listItemClasses,
     selectedItemIndex = $bindable(null),
     draggable = false,
     itemTemplate,
@@ -123,7 +125,7 @@
       role="option"
       aria-selected={selectedItemIndex === i}
       class:focused={selectedItemIndex === i}
-      class="flex-row small-gap align-items-center"
+      class="flex-row small-gap align-items-center listbox-item {listItemClasses}"
       onclick={() => selectItemAt(i)}
       onkeydown={(ev) => handleListboxKeyDown(ev)}
       {draggable}
