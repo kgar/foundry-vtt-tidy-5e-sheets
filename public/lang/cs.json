@@ -8,9 +8,9 @@
     "TIDY5E.SheetImageOptionsHint": "Pravé tlačítko myši: Ukázat obrázek postavy",
     "TIDY5E.ShowPortraitArt": "Zobrazit portrét",
     "TIDY5E.ShowTokenArt": "Zobrazit token",
-    "TIDY5E.ShowItemImage": "Pravé tlačítko: Zobrazit grafiku položky",
+    "TIDY5E.ShowItemImage": "Pravé tlačítko: Zobrazit ilustraci položky",
     "TIDY5E.ShowItemArt": "Zobrazit obrázek",
-    "TIDY5E.AbbrInitiative": "Iniciativa",
+    "TIDY5E.AbbrInitiative": "Inic.",
     "TIDY5E.RestHint": "Odpočinek",
     "TIDY5E.ShortRest": "Krátký odpočinek",
     "TIDY5E.LongRest": "Důkladný odpočinek",
@@ -25,7 +25,7 @@
     "TIDY5E.TogglePersonalityInfo": "Přepnout na osobní informace",
     "TIDY5E.SheetEdit.Enable.Hint": "Povolit úpravy - {description}",
     "TIDY5E.SheetEdit.Disable.Hint": "Zakázat úpravy - {description}",
-    "TIDY5E.SheetEdit.Description": "Přepnout viditelnost tlačítek přidat/smazat a prázdné sekce",
+    "TIDY5E.SheetEdit.Description": "Přepnout viditelnost tlačítek přidat/odstranit a prázdné sekce",
     "TIDY5E.SheetLock.Unlock.Hint": "Odemknout - {description}",
     "TIDY5E.SheetLock.Lock.Hint": "Zamknout - {description}",
     "TIDY5E.SheetLock.Description": "Přepínání zámku citlivých polí, která by se neměla často měnit",
@@ -34,16 +34,16 @@
     "TIDY5E.ContextMenuActionAttune": "Sladění",
     "TIDY5E.ContextMenuActionUnattune": "Ukončit sladění",
     "TIDY5E.ContextMenuActionPrepare": "Připravit",
-    "TIDY5E.ContextMenuActionUnprepare": "Odstranit připravené",
+    "TIDY5E.ContextMenuActionUnprepare": "Odebrat z připravených",
     "TIDY5E.ContextMenuActionEdit": "Upravit",
-    "TIDY5E.ContextMenuActionDelete": "Smazat",
+    "TIDY5E.ContextMenuActionDelete": "Odstranit",
     "TIDY5E.EmptySection": "Tato sekce je prázdná. Pro úpravy odemkni deník.",
     "TIDY5E.GMOnlyEdit": "Tuto sekci může upravovat pouze PJ.",
     "TIDY5E.AttunementWarning": "Sladění: Nemůžeš se sladit s více než s {number} předměty.",
     "TIDY5E.AttunementItems": "Sladěné předměty",
     "TIDY5E.AttunementMax": "Maximum sladění",
     "TIDY5E.GridLayout": "Mřížkové rozvržení",
-    "TIDY5E.ListLayout": "Rozvržení seznamu",
+    "TIDY5E.ListLayout": "Seznamové rozvržení",
     "TIDY5E.LayoutNotSupported": "Režim rozvržení není podporován",
     "TIDY5E.Encumbrance": "Zatížení",
     "TIDY5E.AddFavorite": "Přidat do oblíbených",
@@ -111,7 +111,7 @@
         "labelFeaturesLocks": "Zámek schopností"
     },
     "TIDY5E.Settings.ItemCardsForAllItems": {
-        "name": "Zobrazit karty položek ve všech rozvrženích",
+        "name": "Zobrazení karet položek ve všech rozvrženích",
         "hint": "Vypni, pokud chceš, aby se karty položek ukazovaly pouze v mřížkovém rozvržení."
     },
     "TIDY5E.Settings.ItemCardsAreFloating": {
@@ -385,7 +385,7 @@
         }
     },
     "TIDY5E.Settings.Debug": {
-        "name": "Povolit ladění",
+        "name": "Povolení ladění",
         "hint": "Vypíše zprávy z ladění do konzole."
     },
     "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
@@ -440,14 +440,14 @@
     "TIDY5E.WorldSettings.ItemIdentificationPermission": {
         "options.GmAndOwners": "PJ a vlastníci položky",
         "name": "Povolení k identifikaci položky",
-        "hint": "Určuje, který typ uživatele má přístup k ovládacím prvkům uživatelského rozhraní pro identifikaci položek.",
+        "hint": "Určuje, který typ uživatele má přístup k ovládacím prvkům uživatelského rozhraní identifikace položek.",
         "options.GmOnly": "Pouze PJ"
     },
     "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
     "TIDY5E.ItemFilters.Filter.Other": "Další",
     "TIDY5E.TabSelection": {
         "SelectedHeader": "Vybrané karty",
-        "Explanation": "Jakékoli karty, které uživatel nebo deník nastavili tak, aby se nezobrazovaly (např. zakázáním deníku v nastavení), se na deníku nezobrazí, i když jsou vybrány.",
+        "Explanation": "Jakékoli karty, které uživatel či deník nastavili tak, aby se nezobrazovaly (např. zakázáním deníku v nastavení), se na deníku nezobrazí, i když jsou vybrány.",
         "UnsupportedDocumentErrorMessage": "Typ dokumentu {documentType} není aktuálně nastaven pro výběr karty.",
         "Title": "Výběr karty: {documentName}",
         "MenuOptionText": "Výběr karty",
@@ -590,8 +590,8 @@
     "TIDY5E.MaxPreparedSpellsConfig": {
         "ButtonTooltip": "Nastavit maximum připravených kouzel",
         "Title": "Nastavení maxima připravených kouzel: {documentName}",
-        "MoreFormulas": "Více formulí",
-        "ExamplesHeader": "Ukázkové formule"
+        "MoreFormulas": "Více vzorců",
+        "ExamplesHeader": "Ukázkové vzorce"
     },
     "TIDY5E.Utilities.AssignSpellsToClasses": "Přiřadit kouzla povoláním",
     "TIDY5E.ItemImageTitle": "Položka: {subject}",
@@ -608,7 +608,7 @@
         "MoveAllLeft": "Přesunout vše doleva"
     },
     "TIDY5E.ItemFilters.CanUse": "Může použít",
-    "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - útok kouzlem nablízko",
+    "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - útok kouzlem na blízko",
     "TIDY5E.EmptyContainer": "Tento kontejner je prázdný.",
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": "Položka"
@@ -625,20 +625,20 @@
     "TIDY5E.LocalizationTestKey": "Testovací klíč lokalizace",
     "TIDY5E.Actions": {
         "OverriddenSetOverrideTrue": "Přidat do seznamu akcí (Shift+klik pro vymazání přepisu)",
-        "SetOverrideFalse": "Odstranit ze seznamu akcí",
+        "SetOverrideFalse": "Odebrat ze seznamu akcí",
         "TabName": "Akce",
-        "OverriddenSetOverrideFalse": "Odstranit ze seznamu akcí (Shift+klik pro vymazání přepisu)",
+        "OverriddenSetOverrideFalse": "Odebrat ze seznamu akcí (Shift+klik pro vymazání přepisu)",
         "SetOverrideTrue": "Přidat do seznamu akcí",
         "ResetActionDefault": "Výchozí nastavení akcí"
     },
-    "TIDY5E.MeleeSpellAttackMod": "Oprava útoku kouzlem nablízko",
+    "TIDY5E.MeleeSpellAttackMod": "Oprava útoku kouzlem na blízko",
     "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
-        "name": "Používat podporu přístupnosti klávesnicí",
-        "hint": "Umožňuje uživatelům procházet na kartě většinu tlačítek/příkazů v denících Tidy 5e a spouštět je pomocí běžných klávesových zkratek. Poznámka: když se použije klávesová zkratka používaná samotným Foundry, pak zkratky z „Konfigurace ovládacích prvků“ nefungují. Pokud modul používá tuto funkci Foundry pro ovládací prvky na denících, například pro alternativní používání položek při přidržení speciální klávesy, pak zapnutí této volby deníků Tidy 5e bude s těmito nastaveními interferovat."
+        "name": "Používání klávesových zkratek",
+        "hint": "Umožní uživatelům procházet na kartě většinu tlačítek/příkazů v denících Tidy 5e a spouštět je pomocí běžných klávesových zkratek. Poznámka: když se použije klávesová zkratka používaná samotným Foundry, pak zkratky z „Konfigurace ovládacích prvků“ nefungují. Pokud modul používá tuto funkci Foundry pro ovládací prvky na denících, například pro alternativní používání položek při přidržení speciální klávesy, pak zapnutí této volby deníků Tidy 5e bude s těmito nastaveními interferovat."
     },
     "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
         "name": "Použití výchozích rysů na deníku pomocí tabulátoru na klávesnici",
-        "hint": "Výchozí deník 5e umožňuje přecházet z jednoho vstupu rysů na druhý pomocí klávesnice tak, že se ovládací prvky kolem nich skryjí z pořadí tabulátoru. Povolením této funkce se toto chování napodobuje. Toto nastavení je ignorováno, pokud je vypnuta volba „Používat podporu přístupu klávesnicí“."
+        "hint": "Výchozí deník 5e umožňuje přecházet z jednoho vstupu rysů na druhý pomocí klávesnice tak, že se ovládací prvky kolem nich skryjí z pořadí tabulátoru. Povolením této funkce se toto chování napodobuje. Toto nastavení je ignorováno, pokud je vypnuta volba „Používání klávesových zkratek“."
     },
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
         "hint": "Místo toho, aby se na kartě/panelu akce ve výchozím nastavení zobrazovala všechna kouzla způsobující zranění, omezuje se pouze na triky. Je to výchozí nastavení D&DBeyond.",
@@ -742,7 +742,7 @@
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - útok kouzlem",
     "TIDY5E.ActorSpellAttackFlavorText": "Útok kouzlem",
     "TIDY5E.ActorRangedSpellAttackFlavorText": "Útok kouzlem na dálku",
-    "TIDY5E.ActorMeleeSpellAttackFlavorText": "Útok kouzlem nablízko",
+    "TIDY5E.ActorMeleeSpellAttackFlavorText": "Útok kouzlem na blízko",
     "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
         "hint": "Přidává přepínací tlačítko pro zobrazení/skrytí prázdných dovedností.",
         "name": "Přepnutí prázdných dovedností postavy"
@@ -781,7 +781,7 @@
     "TIDY5E.ModuleName": "Deníky Tidy 5E",
     "TIDY5E.WorldSettings.TabCustomSections": {
         "LimitToSpecificSheetsLabel": "Omezení zobrazených sekcí v konkrétním deníku",
-        "ShowWhenEmptyTooltip": "Všechny karty s tabulkovými položkami mají sadu výchozích sekcí, které jsou vždy zobrazeny, i když v sekci nejsou žádné položky. Vždy zobrazit tuto sekci, i když je prázdná.",
+        "ShowWhenEmptyTooltip": "Všechny karty s tabulkovými položkami mají sadu výchozích sekcí, které jsou vždy zobrazeny, i když v sekci nejsou žádné položky. Sekce se vždy zobrazí, i když je prázdná.",
         "LimitToSpecificTabsLabel": "Omezení zobrazené sekce na konkrétní karty",
         "tabLabel": "Vlastní sekce",
         "CustomizedIndicatorLabel": "Přizpůsobené",
@@ -793,8 +793,8 @@
     },
     "TIDY5E.BrokenLink": "Přerušený odkaz",
     "TIDY5E.Settings.UseEffectCards": {
-        "name": "Zobrazit informační karty aktivních efektů",
-        "hint": "Umožňuje zobrazit informační karty aktivních efektů u všech aktérů a položek s aktivními efekty."
+        "name": "Zobrazení informačních karet aktivních efektů",
+        "hint": "Umožňuje zobrazení informační karty aktivních efektů u všech aktérů a položek s aktivními efekty."
     },
     "TIDY5E.ContextMenuActionView": "Náhled",
     "TIDY5E.ContextMenuActionPinToAttributes": "Připnout k rysům",
@@ -840,5 +840,10 @@
     "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Podržet{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}",
     "TIDY5E.InfoCardInspectHint": "Kontrola",
     "TIDY5E.Keybindings.ToggleHeaderMenu.Name": "Přepínání záhlaví nabídky",
-    "TIDY5E.ContextMenuActionShowQuantity": "Zobrazit množství"
+    "TIDY5E.ContextMenuActionShowQuantity": "Zobrazit množství",
+    "TIDY5E.SortMethod.AlphabeticalAscending": "Řadit abecedně vzestupně",
+    "TIDY5E.SortMethod.AlphabeticalDescending": "Řadit abecedně sestupně",
+    "TIDY5E.SortMenu.OptionPriority": "Priorita",
+    "TIDY5E.Utilities.SpellPips": "Označení kouzel",
+    "TIDY5E.Utilities.SpellValueMax": "Hodnota kouzla/Max"
 }
