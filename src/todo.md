@@ -2,7 +2,8 @@
 
 - [ ] Implement section config / https://www.figma.com/design/seCsgsf8Uh82uxfPXIwFAg/Tidy5e-Sheet-Refresh?node-id=2182-75324&m=dev
   - [x] Migrate universal quadrone styles from items.scss to apps.scss so that items and options dialogs just work, given the right classes.
-  - [ ] Code up the section selection form and provide a means for passing in custom options.Depeneding on complexity of available options, consider making it data-driven.
+  - [x] Code up the section selection form and provide a means for passing in custom options.Depeneding on complexity of available options, consider making it data-driven.
+    - [x] Display Options: Show container row (or equivalent preexisting loc key)
   - [ ] Apply styles and polish
   - [ ] Do DocumentSheet / prepareContext revisions to the core Svelte mixin so that it's more plug and play for all Tidy applications
   - [ ] Fix: Weightless container (Bag of Devouring) shows undefined in the Holds text
@@ -14,7 +15,7 @@
   - [ ] Locked - Show preview
   - [ ] Unlocked - File Picker
 - [ ] Review Container sheet to ensure it has everything
-- [ ] (Hightouch) Complete dark mode for the container
+- [x] (Hightouch) Complete dark mode for the container
 - [ ] Set up default/light/dark menu toggle and add to container
 - [ ] Update sheet lock to work like the default sheets, including the additional render options and intuitive default state
 - [ ] Item cards?
@@ -124,6 +125,8 @@
   - [ ] Non-description tabs become disabled (preferably, hide them?)
 - [ ] Wire up item-sheet-specific user sheet preferences for width and height. Look for other opportunities, also, like container toolbar.
 - [ ] Replace rote individual span styles with util styles where able
+- [ ] All section configs: pass in callback for preparing sections to view, so that we're not processing this during non-option-sheet renders. It should only render on option sheet prerender.
+- [ ] Configure {TabId}: include a hook that allows people to pass in their own settings.
 
 ### Stretch
 

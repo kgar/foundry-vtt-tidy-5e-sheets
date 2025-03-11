@@ -2,19 +2,44 @@
   import SortingListbox from 'src/components/listbox/SortingListbox.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ConfigurableSection } from './configure-sections.types';
-  import type { ConfigureSectionsApplication } from './ConfigureSectionsApplication.svelte';
+  import type {
+    ConfigureSectionsApplication,
+    SectionOptionGroup,
+  } from './ConfigureSectionsApplication.svelte';
 
   interface Props {
+    optionGroups?: SectionOptionGroup[];
     sections: ConfigurableSection[];
     application: ConfigureSectionsApplication;
   }
 
-  let { sections = $bindable(), application }: Props = $props();
+  let { optionGroups, sections = $bindable(), application }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <section class="tab-configuration">
+  {#if optionGroups?.length}
+    <h2>
+      {localize('TIDY5E.Options.Title')}
+    </h2>
+    {#each optionGroups as group}
+      <h3>
+        {localize(group.title)}
+      </h3>
+      {#each group.settings as setting}
+        {#if setting.type === 'boolean'}
+          <label class="checkbox">
+            <input type="checkbox" bind:checked={setting.checked} />
+            {localize(setting.label)}
+          </label>
+        {/if}
+      {/each}
+    {/each}
+  {/if}
+  <h2>
+    {localize('TIDY5E.Section.LabelPl')}
+  </h2>
   <SortingListbox
     bind:items={sections}
     labelProp="label"
@@ -65,7 +90,7 @@
     <button
       type="button"
       data-testid="section-config-save-changes"
-      onclick={(ev) => application.saveChanges(sections)}
+      onclick={(ev) => application.saveChanges()}
       class="save-changes-btn"
     >
       <i class="fas fa-save"></i>
