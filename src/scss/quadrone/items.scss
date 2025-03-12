@@ -542,32 +542,45 @@
     h2,
     h3,
     h4 {
-      font-family: var(--t5e-font-modesto-condensed);
+      // font-family: var(--t5e-font-modesto-condensed);
       font-weight: 400;
       line-height: 100%;
     }
 
     h1 {
       font-size: var(--font-size-28);
-      margin-top: var(--t5e-spacing-6x);
-      margin-bottom: var(--t5e-spacing-3x);
+      margin-top: var(--t5e-spacing-5x);
+      margin-bottom: var(--t5e-spacing-2x);
     }
 
     h2 {
       font-size: var(--font-size-24);
-      margin-top: var(--t5e-spacing-4x);
-      margin-bottom: var(--t5e-spacing-3x);
+      margin-top: var(--t5e-spacing-3x);
+      margin-bottom: var(--t5e-spacing-2x);
     }
 
     h3 {
       font-size: var(--font-size-20);
-      margin-top: var(--t5e-spacing-4x);
+      margin-top: var(--t5e-spacing-3x);
       margin-bottom: var(--t5e-spacing-2x);
     }
 
     h4 {
-      font-size: var(--font-size-16);
+      font-size: var(--font-size-15);
+      font-weight: 600;
       margin-top: var(--t5e-spacing-4x);
+      margin-bottom: var(--t5e-spacing-2x);
+    }
+
+    h5 {
+      font-size: var(--font-size-14);
+      margin-top: var(--t5e-spacing-3x);
+      margin-bottom: var(--t5e-spacing-2x);
+    }
+
+    h6 {
+      font-size: var(--font-size-12);
+      margin-top: var(--t5e-spacing-3x);
       margin-bottom: var(--t5e-spacing-2x);
     }
 
