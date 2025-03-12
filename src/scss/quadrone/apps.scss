@@ -354,8 +354,7 @@
     display: inline;
   }
 
-  ul li,
-  ol li {
+  li {
     margin: none;
 
     > :first-child {
@@ -364,6 +363,27 @@
 
     > :last-child {
       margin-bottom: var(--t5e-spacing-1x);
+    }
+
+    > :only-child {
+      margin-top: var(--t5e-spacing-1x);
+      margin-bottom: var(--t5e-spacing-1x);
+    }
+
+    /* Reset margins for nested lists */
+    >ul,
+    >ol {
+      margin-top: 0;
+      margin-bottom: 0;
+
+      /* But maintain the spacing pattern for their list items */
+      >li:first-child {
+        margin-top: var(--t5e-spacing-1x);
+      }
+
+      >li:last-child {
+        margin-bottom: var(--t5e-spacing-1x);
+      }
     }
   }
 
