@@ -131,6 +131,9 @@
               ],
             },
           ],
+          formTitle: localize('TIDY5E.ConfigureTab.Title', {
+            tabName: ItemSheetRuntime.getTabTitle(tabId),
+          }),
         },
         window: {
           title: localize('TIDY5E.ConfigureTab.Title', { tabName: tabTitle }),
