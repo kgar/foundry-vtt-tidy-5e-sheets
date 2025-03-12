@@ -31,6 +31,7 @@ export type ConfigureSectionsApplicationConstructorArgs = {
     optionsGroups?: SectionOptionGroup[];
     sections: TidySectionBase[];
     tabId: string;
+    formTitle: string;
   };
 } & Partial<ApplicationConfiguration>;
 
@@ -47,9 +48,10 @@ export class ConfigureSectionsApplication extends SvelteApplicationMixin<any>(
   optionsGroups = $state<SectionOptionGroup[]>([]);
   tabId: string;
   theme: string = $state<string>('');
+  formTitle: string;
 
   constructor({
-    settings: { sections, tabId, optionsGroups },
+    settings: { sections, tabId, optionsGroups, formTitle },
     ...rest
   }: ConfigureSectionsApplicationConstructorArgs) {
     super(rest);
@@ -61,6 +63,7 @@ export class ConfigureSectionsApplication extends SvelteApplicationMixin<any>(
     this.optionsGroups = [...(optionsGroups ?? [])];
     this.tabId = tabId;
     this.theme = getDocumentTheme(rest.document);
+    this.formTitle = formTitle;
   }
 
   static DEFAULT_OPTIONS: Partial<
@@ -94,7 +97,7 @@ export class ConfigureSectionsApplication extends SvelteApplicationMixin<any>(
         application: this,
         optionGroups: this.optionsGroups,
         // TODO: require from the outside.
-        title: 'Configure Contents',
+        title: this.formTitle,
       },
     });
 

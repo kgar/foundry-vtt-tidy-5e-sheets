@@ -4,9 +4,12 @@
   - [x] Migrate universal quadrone styles from items.scss to apps.scss so that items and options dialogs just work, given the right classes.
   - [x] Code up the section selection form and provide a means for passing in custom options.Depeneding on complexity of available options, consider making it data-driven.
     - [x] Display Options: Show container row (or equivalent preexisting loc key)
-  - [ ] Apply styles and polish
-  - [ ] Do DocumentSheet / prepareContext revisions to the core Svelte mixin so that it's more plug and play for all Tidy applications
-  - [ ] Fix: Weightless container (Bag of Devouring) shows undefined in the Holds text
+  - [x] Apply styles
+  - [ ] Clean up styles and organize
+    - [ ] Isolate listbox to its own component
+    - [ ] Make the options dialog styles specific to tab configuration with a TODO to share styles with other dialogs
+- [ ] Do DocumentSheet / prepareContext revisions to the core Svelte mixin so that it's more plug and play for all Tidy applications
+- [ ] Fix: Weightless container (Bag of Devouring) shows undefined in the Holds text
 - [ ] Sorting: Resolve todo - // TODO: This needs to be part of the sort group model, relating sort methods to specific groups.
 - [ ] Inventory: subtables have a different set of styles for their header
 - [ ] Inventory: Container inline capacity UI
@@ -127,6 +130,7 @@
 - [ ] Replace rote individual span styles with util styles where able
 - [ ] All section configs: pass in callback for preparing sections to view, so that we're not processing this during non-option-sheet renders. It should only render on option sheet prerender.
 - [ ] Configure {TabId}: include a hook that allows people to pass in their own settings.
+- [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
 
 ### Stretch
 
