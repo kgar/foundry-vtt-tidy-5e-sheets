@@ -1,8 +1,6 @@
 ## To Do
 
 
-- [x] Fix: Weightless container (Bag of Devouring) shows undefined in the Holds text
-- [x] Sorting: Resolve todo - // TODO: This needs to be part of the sort group model, relating sort methods to specific groups.
 - [ ] Inventory: subtables have a different set of styles for their header
 - [ ] Inventory: Container inline capacity UI
 - [ ] Inventory: Inline container Empty styles
@@ -168,3 +166,5 @@
     - [x] Isolate listbox to its own component
     - [x] Make the options dialog styles specific to tab configuration with a TODO to share styles with other dialogs
 - [x] Do DocumentSheet / prepareContext revisions to the core Svelte mixin so that it's more plug and play for all Tidy applications
+- [x] Fix: Weightless container (Bag of Devouring) shows undefined in the Holds text
+- [x] Sorting: Resolve todo - // TODO: This needs to be part of the sort group model, relating sort methods to specific groups.
