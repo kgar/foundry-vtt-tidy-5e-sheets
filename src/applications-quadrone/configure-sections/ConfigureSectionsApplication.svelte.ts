@@ -69,7 +69,7 @@ export class ConfigureSectionsApplication extends SvelteApplicationMixin<any>(
   static DEFAULT_OPTIONS: Partial<
     ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
   > = {
-    classes: [CONSTANTS.MODULE_ID, 'app-v2', 'quadrone', 'options-dialog'],
+    classes: [CONSTANTS.MODULE_ID, 'app-v2', 'quadrone', 'tab-configuration'],
     tag: 'div',
     sheetConfig: false,
     window: {
