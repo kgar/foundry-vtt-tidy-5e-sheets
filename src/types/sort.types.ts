@@ -1,44 +1,8 @@
 import type { Item5e } from './item.types';
 
-export type SortMethodKeyManual = 'm';
-export type SortMethodKeyAlphaAscending = 'a';
-export type SortMethodKeyAlphaDescending = 'd';
-export type SortMethodKeyPriority = 'priority';
-export type SortMethodKeyEquipped = 'equipped';
-export type SortMethodKeyPrepared = 'prepared';
-
-/** The supported methods of sorting for Classic sheets. */
-export type SortMethodKeyClassic =
-  | SortMethodKeyAlphaAscending
-  | SortMethodKeyManual;
-
-/** The supported methods of sorting for Quadrone sheets. */
-export type SortMethodKeyQuadrone =
-  | SortMethodKeyAlphaAscending
-  | SortMethodKeyAlphaDescending
-  | SortMethodKeyManual
-  | SortMethodKeyPriority
-  | SortMethodKeyEquipped
-  | SortMethodKeyPrepared
-  | (string & {});
-
-export type SortGroupKeyAlpha = 'a';
-export type SortGroupKeyPriority = 'priority';
-export type SortGroupKeyManual = 'm';
-export type SortGroupKeyEquipped = 'equipped';
-export type SortGroupKeyPrepared = 'prepared';
-
-/** The supported groups of sort methods for Quadrone sheets. */
-export type SortGroupKeyQuadrone =
-  | SortGroupKeyAlpha
-  | SortGroupKeyManual
-  | SortGroupKeyPriority
-  | SortGroupKeyEquipped
-  | SortGroupKeyPrepared;
-
 /** A grouping of sort methods. E.g., 'a' (Alpha) encompasses sort methods alpha ascending and alpha descending */
 export type SortGroup = {
-  key: SortGroupKeyQuadrone;
+  key: string;
   label: string;
   onSelect: (doc: any, currentTabId: string, group: SortGroup) => Promise<any>;
   subtitle?: string;
@@ -46,7 +10,7 @@ export type SortGroup = {
 
 /** The content needed to manage interactions with a sort method. */
 export type SortMethodOption = {
-  key: SortMethodKeyQuadrone;
+  key: string;
   name: string;
   onClick:
     | 'menu'
@@ -64,11 +28,12 @@ export type ItemSortComparator = (a: Item5e, b: Item5e) => number;
 
 export type SortMethodScheme = SortMethodOption & {
   comparator: ItemSortComparator;
+  group: string;
 };
 
 export type SortParametersQuadrone = {
-  method: SortMethodKeyQuadrone;
-  group: SortGroupKeyQuadrone;
+  method: string;
+  group?: string;
   methods: SortMethodOption[];
   groups: SortGroup[];
 };

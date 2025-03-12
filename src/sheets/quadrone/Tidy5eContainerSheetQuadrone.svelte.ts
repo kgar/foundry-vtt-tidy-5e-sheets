@@ -38,12 +38,6 @@ import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
-import type {
-  SortGroup,
-  SortGroupKeyQuadrone,
-  SortMethodKeyQuadrone,
-  SortMethodOption,
-} from 'src/types/sort.types';
 import { ItemSortRuntime } from 'src/runtime/item/ItemSortRuntime.svelte';
 
 export class Tidy5eContainerSheetQuadrone
@@ -224,19 +218,6 @@ export class Tidy5eContainerSheetQuadrone
       containerPreferences.tabs?.[CONSTANTS.TAB_CONTAINER_CONTENTS]?.sort ??
       'm';
 
-    const alphaGroupMembers: SortMethodKeyQuadrone[] = ['a', 'd'];
-
-    // TODO: This needs to be part of the sort group model, relating sort methods to specific groups.
-    const contentsSortGroup: SortGroupKeyQuadrone =
-      // priority is not supported on container sheets; but this logic should be consolidated generically to a centralized location for sorting
-      contentsSortMethod === 'priority'
-        ? 'priority'
-        : alphaGroupMembers.includes(contentsSortMethod)
-        ? 'a'
-        : contentsSortMethod === 'equipped'
-        ? 'equipped'
-        : 'm';
-
     const editable = this.isEditable;
 
     const unlocked = FoundryAdapter.isSheetUnlocked(this.item) && editable;
@@ -262,7 +243,7 @@ export class Tidy5eContainerSheetQuadrone
       config: CONFIG.DND5E,
       containerContents: await Container.getContainerContents(this.item),
       contentsSort: {
-        group: contentsSortGroup,
+        group: ItemSortRuntime.getGroupFromMethod(contentsSortMethod)?.key,
         groups:
           ItemSortRuntime.getDocumentSortGroupsQuadrone(this.document)[
             CONSTANTS.TAB_CONTAINER_CONTENTS

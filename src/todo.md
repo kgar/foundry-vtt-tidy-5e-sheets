@@ -2,7 +2,7 @@
 
 
 - [x] Fix: Weightless container (Bag of Devouring) shows undefined in the Holds text
-- [ ] Sorting: Resolve todo - // TODO: This needs to be part of the sort group model, relating sort methods to specific groups.
+- [x] Sorting: Resolve todo - // TODO: This needs to be part of the sort group model, relating sort methods to specific groups.
 - [ ] Inventory: subtables have a different set of styles for their header
 - [ ] Inventory: Container inline capacity UI
 - [ ] Inventory: Inline container Empty styles

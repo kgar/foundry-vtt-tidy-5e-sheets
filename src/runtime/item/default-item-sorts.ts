@@ -2,13 +2,12 @@ import { CONSTANTS } from 'src/constants';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import type {
   SortGroup,
-  SortMethodKeyQuadrone,
   SortMethodScheme,
 } from 'src/types/sort.types';
 
 export const defaultItemSortSchemes = {
   [CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_ASCENDING]: {
-    key: 'a',
+    key: CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_ASCENDING,
     icon: 'fa-solid fa-arrow-down-a-z',
     name: 'alpha-ascending',
     onClick: async (_, doc, currentTabId) => {
@@ -16,14 +15,15 @@ export const defaultItemSortSchemes = {
         doc.type,
         currentTabId,
         'sort',
-        'd'
+        CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_DESCENDING
       );
     },
     tooltip: 'TIDY5E.SortMethod.AlphabeticalAscending',
     comparator: (a, b) => a.name.localeCompare(b.name, game.i18n.lang),
+    group: CONSTANTS.ITEM_SORT_GROUP_KEY_ALPHABETICAL,
   },
   [CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_DESCENDING]: {
-    key: 'd',
+    key: CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_DESCENDING,
     icon: 'fa-solid fa-arrow-up-z-a',
     name: 'alpha-descending',
     onClick: async (_, doc, currentTabId) => {
@@ -31,22 +31,24 @@ export const defaultItemSortSchemes = {
         doc.type,
         currentTabId,
         'sort',
-        'a'
+        CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_ASCENDING
       );
     },
     tooltip: 'TIDY5E.SortMethod.AlphabeticalDescending',
     comparator: (a, b) => b.name.localeCompare(a.name, game.i18n.lang),
+    group: CONSTANTS.ITEM_SORT_GROUP_KEY_ALPHABETICAL,
   },
   [CONSTANTS.ITEM_SORT_METHOD_KEY_MANUAL]: {
-    key: 'm',
+    key: CONSTANTS.ITEM_SORT_METHOD_KEY_MANUAL,
     icon: 'fa-solid fa-arrow-down-short-wide',
     name: 'manual',
     onClick: 'menu',
     tooltip: 'SIDEBAR.SortModeManual',
     comparator: (a, b) => (a.sort || 0) - (b.sort || 0),
+    group: CONSTANTS.ITEM_SORT_GROUP_KEY_MANUAL,
   },
   [CONSTANTS.ITEM_SORT_METHOD_KEY_PRIORITY]: {
-    key: 'priority',
+    key: CONSTANTS.ITEM_SORT_METHOD_KEY_PRIORITY,
     icon: 'fa-solid fa-arrow-down-1-9',
     name: 'priority',
     onClick: 'menu',
@@ -57,19 +59,21 @@ export const defaultItemSortSchemes = {
       a.preparationMode - b.preparationMode ||
       a.prepared - b.prepared ||
       a.name.localeCompare(b.name, game.i18n.lang),
+    group: CONSTANTS.ITEM_SORT_GROUP_KEY_PRIORITY,
   },
   [CONSTANTS.ITEM_SORT_METHOD_KEY_EQUIPPED]: {
-    key: 'equipped',
+    key: CONSTANTS.ITEM_SORT_METHOD_KEY_EQUIPPED,
     icon: 'fa-solid fa-hand-fist equip-icon',
     name: 'priority',
     onClick: 'menu',
-    tooltip: 'SIDEBAR.SortModePriority',
+    tooltip: 'DND5E.Equipped',
     comparator: (a, b) =>
       b.system.equipped - a.system.equipped ||
       a.name.localeCompare(b.name, game.i18n.lang),
+    group: CONSTANTS.ITEM_SORT_GROUP_KEY_EQUIPPED,
   },
   [CONSTANTS.ITEM_SORT_METHOD_KEY_PREPARED]: {
-    key: 'prepared',
+    key: CONSTANTS.ITEM_SORT_METHOD_KEY_PREPARED,
     icon: 'fa-solid fa-book',
     name: 'prepared',
     onClick: 'menu',
@@ -77,67 +81,68 @@ export const defaultItemSortSchemes = {
     comparator: (a, b) =>
       b.system.preparation?.prepared - a.system.preparation?.prepared ||
       a.name.localeCompare(b.name, game.i18n.lang),
+    group: CONSTANTS.ITEM_SORT_GROUP_KEY_EQUIPPED,
   },
-} satisfies Record<SortMethodKeyQuadrone, SortMethodScheme>;
+} satisfies Record<string, SortMethodScheme>;
 
 export const defaultItemSortGroups = {
-  alphabetical: {
-    key: 'a',
+  [CONSTANTS.ITEM_SORT_GROUP_KEY_ALPHABETICAL]: {
+    key: CONSTANTS.ITEM_SORT_GROUP_KEY_ALPHABETICAL,
     label: 'TIDY5E.SortMenu.OptionAlphabetical',
     onSelect: async (doc, currentTabId) => {
       await SheetPreferencesService.setDocumentTypeTabPreference(
         doc.type,
         currentTabId,
         'sort',
-        'a'
+        CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_ASCENDING
       );
     },
   },
-  manual: {
-    key: 'm',
+  [CONSTANTS.ITEM_SORT_GROUP_KEY_MANUAL]: {
+    key: CONSTANTS.ITEM_SORT_GROUP_KEY_MANUAL,
     label: 'TIDY5E.SortMenu.OptionManual',
     onSelect: async (doc, currentTabId) => {
       await SheetPreferencesService.setDocumentTypeTabPreference(
         doc.type,
         currentTabId,
         'sort',
-        'm'
+        CONSTANTS.ITEM_SORT_METHOD_KEY_MANUAL
       );
     },
   },
-  priority: {
-    key: 'priority',
+  [CONSTANTS.ITEM_SORT_GROUP_KEY_PRIORITY]: {
+    key: CONSTANTS.ITEM_SORT_GROUP_KEY_PRIORITY,
     label: 'TIDY5E.SortMenu.OptionPriority',
     onSelect: async (doc, currentTabId) => {
       await SheetPreferencesService.setDocumentTypeTabPreference(
         doc.type,
         currentTabId,
         'sort',
-        'priority'
+        CONSTANTS.ITEM_SORT_METHOD_KEY_PRIORITY
       );
     },
   },
-  equipped: {
-    key: 'equipped',
+  [CONSTANTS.ITEM_SORT_GROUP_KEY_EQUIPPED]: {
+    key: CONSTANTS.ITEM_SORT_GROUP_KEY_EQUIPPED,
     label: 'DND5E.Equipped',
     onSelect: async (doc) => {
       await SheetPreferencesService.setDocumentTypeTabPreference(
         doc.type,
         CONSTANTS.TAB_CONTAINER_CONTENTS,
         'sort',
-        'equipped'
+        CONSTANTS.ITEM_SORT_METHOD_KEY_EQUIPPED
       );
     },
   },
-  prepared: {
-    key: 'prepared',
+  [CONSTANTS.ITEM_SORT_GROUP_KEY_PREPARED]: {
+    key: CONSTANTS.ITEM_SORT_GROUP_KEY_PREPARED,
     label: 'DND5E.Prepared',
     onSelect: async (doc) => {
       await SheetPreferencesService.setDocumentTypeTabPreference(
         doc.type,
         CONSTANTS.TAB_CONTAINER_CONTENTS,
         'sort',
-        'prepared'
+        CONSTANTS.ITEM_SORT_METHOD_KEY_PREPARED
       );
     },
   },

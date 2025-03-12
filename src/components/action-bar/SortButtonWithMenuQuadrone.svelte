@@ -1,18 +1,13 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ButtonWithOptionPanel from '../buttons/ButtonWithOptionPanel.svelte';
-  import type {
-    SortGroup,
-    SortGroupKeyQuadrone,
-    SortMethodKeyQuadrone,
-    SortMethodOption,
-  } from 'src/types/sort.types';
+  import type { SortGroup, SortMethodOption } from 'src/types/sort.types';
   import { getContext, tick } from 'svelte';
   import { CONSTANTS } from 'src/constants';
 
   interface Props {
-    method: SortMethodKeyQuadrone;
-    group: SortGroupKeyQuadrone;
+    method: string;
+    group?: string;
     methods: SortMethodOption[];
     groups: SortGroup[];
     doc: any;
