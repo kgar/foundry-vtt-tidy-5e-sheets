@@ -28,7 +28,7 @@
       number: context.capacity.max,
       unitsElementStart: '<span class="color-text-lighter fw-normal">',
       unitsElementEnd: '</span>',
-      units: context.capacity.units,
+      units: context.capacity.units ?? '',
     });
   });
 </script>
@@ -111,7 +111,8 @@
   <div class="item-header-summary">
     <!-- Item Capacity -->
     <div class="item-capacity">
-      <i class="fa-solid fa-scale-unbalanced item-capacity-icon color-text-lightest"
+      <i
+        class="fa-solid fa-scale-unbalanced item-capacity-icon color-text-lightest"
       ></i>
       <div class="item-capacity-counter">
         <span class="capacity-value">{context.capacity.value}</span>
