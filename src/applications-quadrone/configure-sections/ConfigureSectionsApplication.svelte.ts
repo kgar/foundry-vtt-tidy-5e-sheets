@@ -94,7 +94,7 @@ export class ConfigureSectionsApplication extends SvelteApplicationMixin<any>(
         application: this,
         optionGroups: this.optionsGroups,
         // TODO: require from the outside.
-        title: "Configure Contents"
+        title: 'Configure Contents',
       },
     });
 
@@ -190,7 +190,9 @@ export class ConfigureSectionsApplication extends SvelteApplicationMixin<any>(
       yes: () => {
         const sectionConfig = TidyFlags.sectionConfig.get(this.document) ?? {};
         delete sectionConfig[this.tabId];
-        sectionConfig[`-=${this.tabId}`] = {};
+        // TODO: Figure out how to do this in a less suppressing way.
+        //@ts-expect-error
+        sectionConfig[`-=${this.tabId}`] = null;
         TidyFlags.sectionConfig.set(this.document, sectionConfig);
         this.close();
       },
