@@ -1,14 +1,6 @@
 ## To Do
 
-- [ ] Implement section config / https://www.figma.com/design/seCsgsf8Uh82uxfPXIwFAg/Tidy5e-Sheet-Refresh?node-id=2182-75324&m=dev
-  - [x] Migrate universal quadrone styles from items.scss to apps.scss so that items and options dialogs just work, given the right classes.
-  - [x] Code up the section selection form and provide a means for passing in custom options.Depeneding on complexity of available options, consider making it data-driven.
-    - [x] Display Options: Show container row (or equivalent preexisting loc key)
-  - [x] Apply styles
-  - [ ] Clean up styles and organize
-    - [ ] Isolate listbox to its own component
-    - [ ] Make the options dialog styles specific to tab configuration with a TODO to share styles with other dialogs
-- [ ] Do DocumentSheet / prepareContext revisions to the core Svelte mixin so that it's more plug and play for all Tidy applications
+
 - [ ] Fix: Weightless container (Bag of Devouring) shows undefined in the Holds text
 - [ ] Sorting: Resolve todo - // TODO: This needs to be part of the sort group model, relating sort methods to specific groups.
 - [ ] Inventory: subtables have a different set of styles for their header
@@ -167,3 +159,12 @@
   - [x] sort logic for inventory items
   - [x] consolidate: put all sort-related content in a centralized location for sorting, similar to item filters (the runtime, the default filters, etc.)
   - [x] priority subtitle (include on model as `subtitle` and generically include, instead of using special treatment)
+- [x] Implement section config / https://www.figma.com/design/seCsgsf8Uh82uxfPXIwFAg/Tidy5e-Sheet-Refresh?node-id=2182-75324&m=dev
+  - [x] Migrate universal quadrone styles from items.scss to apps.scss so that items and options dialogs just work, given the right classes.
+  - [x] Code up the section selection form and provide a means for passing in custom options.Depeneding on complexity of available options, consider making it data-driven.
+    - [x] Display Options: Show container row (or equivalent preexisting loc key)
+  - [x] Apply styles
+  - [x] Clean up styles and organize
+    - [x] Isolate listbox to its own component
+    - [x] Make the options dialog styles specific to tab configuration with a TODO to share styles with other dialogs
+- [x] Do DocumentSheet / prepareContext revisions to the core Svelte mixin so that it's more plug and play for all Tidy applications

@@ -2,7 +2,6 @@ import { CONSTANTS } from 'src/constants';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type {
   ApplicationConfiguration,
-  ApplicationRenderOptions,
 } from 'src/types/application.types';
 import { mount } from 'svelte';
 import ConfigureSections from './ConfigureSections.svelte';
@@ -41,7 +40,7 @@ export type SectionConfigItem = {
   show: boolean;
 };
 
-export class ConfigureSectionsApplication extends SvelteApplicationMixin<any>(
+export class ConfigureSectionsApplication extends SvelteApplicationMixin(
   foundry.applications.api.DocumentSheetV2
 ) {
   sections = $state<SectionConfigItem[]>([]);
@@ -135,10 +134,6 @@ export class ConfigureSectionsApplication extends SvelteApplicationMixin<any>(
       element.classList.toggle('themed', true);
       element.classList.toggle(`theme-${this.theme}`, true);
     });
-  }
-
-  async _prepareContext(options: ApplicationRenderOptions): Promise<any> {
-    return {};
   }
 
   /* -------------------------------------------- */

@@ -19,9 +19,10 @@ export type SectionSelectorContext = {
   tabs: Tab[];
 };
 
-export class SectionSelectorApplication extends SvelteApplicationMixin<SectionSelectorContext>(
-  foundry.applications.api.ApplicationV2
-) {
+export class SectionSelectorApplication extends SvelteApplicationMixin<
+  ApplicationConfiguration | undefined,
+  SectionSelectorContext
+>(foundry.applications.api.ApplicationV2) {
   _document: any;
   _prop: string;
   _sectionType: string;
@@ -30,10 +31,9 @@ export class SectionSelectorApplication extends SvelteApplicationMixin<SectionSe
     document: any,
     flag: string,
     sectionType: string,
-
-    ...rest: any[]
+    options?: ApplicationConfiguration
   ) {
-    super(...rest);
+    super(options);
     this._document = document;
     this._prop = flag;
     this._sectionType = sectionType;

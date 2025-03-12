@@ -28,15 +28,16 @@ import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
-import { TidyDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { debug } from 'src/utils/logging';
 
-export class Tidy5eItemSheetClassic extends TidyDocumentSheetMixin(
+export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
   CONSTANTS.SHEET_TYPE_ITEM,
   DragAndDropMixin(
-    SvelteApplicationMixin<ItemSheetClassicContext>(
-      foundry.applications.sheets.ItemSheetV2
-    )
+    SvelteApplicationMixin<
+      ApplicationConfiguration | undefined,
+      ItemSheetClassicContext
+    >(foundry.applications.sheets.ItemSheetV2)
   )
 ) {
   currentTabId: string | undefined = undefined;
@@ -45,8 +46,8 @@ export class Tidy5eItemSheetClassic extends TidyDocumentSheetMixin(
     CONSTANTS.LOCATION_SECTION
   );
 
-  constructor(...args: any[]) {
-    super(...args);
+  constructor(options?: Partial<ApplicationConfiguration> | undefined) {
+    super(options);
   }
 
   static DEFAULT_OPTIONS: Partial<

@@ -36,14 +36,15 @@ import { settings } from 'src/settings/settings.svelte';
 import { Inventory } from 'src/features/sections/Inventory';
 import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
-import { TidyDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 
-export class Tidy5eContainerSheetClassic extends TidyDocumentSheetMixin(
+export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixin(
   CONSTANTS.SHEET_TYPE_CONTAINER,
   DragAndDropMixin(
-    SvelteApplicationMixin<ContainerSheetClassicContext>(
-      foundry.applications.sheets.ItemSheetV2
-    )
+    SvelteApplicationMixin<
+      ApplicationConfiguration | undefined,
+      ContainerSheetClassicContext
+    >(foundry.applications.sheets.ItemSheetV2)
   )
 ) {
   currentTabId: string | undefined = undefined;
@@ -58,8 +59,8 @@ export class Tidy5eContainerSheetClassic extends TidyDocumentSheetMixin(
     CONSTANTS.LOCATION_SECTION
   );
 
-  constructor(...args: any[]) {
-    super(...args);
+  constructor(options?: Partial<ApplicationConfiguration> | undefined) {
+    super(options);
 
     this.itemFilterService = new ItemFilterService({}, this.item);
   }

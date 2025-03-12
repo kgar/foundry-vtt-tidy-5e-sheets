@@ -37,7 +37,7 @@ import { settings } from 'src/settings/settings.svelte';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
-import { TidyDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import type {
   SortGroup,
   SortGroupKeyQuadrone,
@@ -47,12 +47,13 @@ import type {
 import { ItemSortRuntime } from 'src/runtime/item/ItemSortRuntime.svelte';
 
 export class Tidy5eContainerSheetQuadrone
-  extends TidyDocumentSheetMixin(
+  extends TidyExtensibleDocumentSheetMixin(
     CONSTANTS.SHEET_TYPE_CONTAINER,
     DragAndDropMixin(
-      SvelteApplicationMixin<ContainerSheetQuadroneContext>(
-        foundry.applications.sheets.ItemSheetV2
-      )
+      SvelteApplicationMixin<
+        ApplicationConfiguration | undefined,
+        ContainerSheetQuadroneContext
+      >(foundry.applications.sheets.ItemSheetV2)
     )
   )
   implements SheetTabCacheable
@@ -69,8 +70,8 @@ export class Tidy5eContainerSheetQuadrone
     CONSTANTS.LOCATION_SECTION
   );
 
-  constructor(...args: any[]) {
-    super(...args);
+  constructor(options?: ApplicationConfiguration | undefined) {
+    super(options);
 
     this.itemFilterService = new ItemFilterService(
       {},

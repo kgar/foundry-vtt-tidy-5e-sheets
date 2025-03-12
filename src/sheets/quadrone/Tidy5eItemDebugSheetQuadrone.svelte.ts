@@ -26,9 +26,10 @@ export type ItemDebugSheetQuadroneContext = {
   unlocked: boolean;
 };
 
-export class Tidy5eItemDebugSheetQuadrone extends SvelteApplicationMixin<ItemDebugSheetQuadroneContext>(
-  foundry.applications.sheets.ItemSheetV2
-) {
+export class Tidy5eItemDebugSheetQuadrone extends SvelteApplicationMixin<
+  ApplicationConfiguration | undefined,
+  ItemDebugSheetQuadroneContext
+>(foundry.applications.sheets.ItemSheetV2) {
   static DEFAULT_OPTIONS: Partial<
     ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
   > = {
