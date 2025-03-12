@@ -1,5 +1,9 @@
 .item-descriptions {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.user-select-text> :first-child {
+  margin-top: .5rem;
 }

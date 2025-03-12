@@ -318,89 +318,70 @@
     }
   }
 
+  a[href] {
+    /* : has([class='']) */
+    color: var(--t5e-theme-color-default);
+    transition: all var(--t5e-transition-default);
+
+    &:hover {
+      color: var(--t5e-theme-color-darkest);
+      text-shadow: 0px 0px 6px var(--t5e-color-text-gold);
+    }
+  }
+
+  code {
+    background-color: rgba(0, 0, 0, 0.08);
+    color: var(--t5e-color-text-ondefault);
+    border: none;
+    font-size: var(--font-size-12);
+    // padding: 0.25rem 0.5rem;
+    margin: -1px 0;
+  }
+
   .inline-roll,
   .content-link,
   .enricher-action,
-  a.roll-link-group,
-  .roll-link-group,
-  .roll-link a {
+  .roll-link {
     // TODO: Cleanup this section.
     --icon-fill: var(--t5e-color-text-ondefault-gold-emphasis);
 
     border: none;
     background: none;
     font-weight: 500;
+    color: var(--t5e-color-default);
+    background: rgba(0, 0, 0, 0.04);
+    padding-top: 1px;
+    padding-bottom: 2px;
 
     i {
       color: var(--icon-fill);
+      transition: all var(--t5e-transition-default);
     }
 
     &:hover {
-      --icon-fill: var(--t5e-color-text-oninverse-gold-emphasis);
+      // color: var(--t5e-color-text-lighter);
+      --icon-fill: var(--t5e-color-text-gold-emphasis);
+      text-shadow: 0px 0px 6px var(--t5e-color-text-gold);
 
       i {
-        color: var(--t5e-color-palette-gold-56);
+        color: var(--t5e-color-text-lighter);
       }
     }
   }
 
-  /* New enricher test style 1 */
-  .roll-link-group {
-    a {
-      * {
-        transition: all var(--t5e-transition-default);
-      }
-
-      &.roll-link,
-      &.enricher-action {
-        border: 1px solid var(--t5e-component-enricher-border);
-        background: var(--t5e-component-enricher-background);
-
-        &:hover {
-          background: var(--t5e-component-enricher-background-hover);
-          transition: box-shadow var(--t5e-transition-default);
-          box-shadow: 0px 0px 3px var(--t5e-color-text-ondefault-gold-light);
-
-          i {
-            // filter: brightness(1.1);
-            color: var(--t5e-color-text-ondefault-lighter);
-          }
-        }
-      }
-
-      &.roll-link {
-        padding-left: 0.1875rem;
-        padding-right: 0.1875rem;
-      }
-
-      &.enricher-action {
-        display: inline-block;
-        padding-left: 0.125rem;
-        padding-right: 0.125rem;
-      }
-    }
-  }
-
-  /* New enricher test style 2 */
-  // .roll-link-group a {
-  //   border: none;
-  //   background: none;
-
-  //   &:hover {
-  //     text-shadow: 0px 0px 6px var(--t5e-color-gold);
-  //     font-weight: var(--font-weight-bold);
-  //     letter-spacing: -0.006rem;
-  //     background: rgba(var(--t5e-color-gold-rgb), 0.1);
-  //   }
-  // }
 
   .enricher-action {
-    margin-inline: 0.0625rem;
-    padding-inline-start: 0;
+    margin-inline: var(--t5e-spacing-1);
+    padding-left: var(--t5e-spacing-1x);
+    padding-right: var(--t5e-spacing-1x);
 
     i {
       margin: 0;
     }
+  }
+
+  .roll-link {
+    padding-left: 2px;
   }
 
   .secret {
@@ -441,5 +422,80 @@
   .statblock p {
     margin: 0;
     display: inline;
+  }
+
+  li {
+    margin: none;
+
+    > :first-child {
+      margin-top: var(--t5e-spacing-1x);
+    }
+
+    > :last-child {
+      margin-bottom: var(--t5e-spacing-1x);
+    }
+
+    > :only-child {
+      margin-top: var(--t5e-spacing-1x);
+      margin-bottom: var(--t5e-spacing-1x);
+    }
+
+    /* Reset margins for nested lists */
+    >ul,
+    >ol {
+      margin-top: 0;
+      margin-bottom: 0;
+
+      /* But maintain the spacing pattern for their list items */
+      >li:first-child {
+        margin-top: var(--t5e-spacing-1x);
+      }
+
+      >li:last-child {
+        margin-bottom: var(--t5e-spacing-1x);
+      }
+    }
+  }
+
+  ul li::marker {
+    color: var(--t5e-theme-color-default);
+  }
+
+  ul ul li::marker {
+    color: var(--t5e-theme-color-darkest);
+  }
+
+  ul ul ul li::marker {
+    color: var(--t5e-theme-color-lighter);
+  }
+
+  ol li::marker {
+    color: var(--t5e-color-text-lighter);
+  }
+
+  blockquote {
+    border-color: var(--t5e-theme-color-lightest);
+    padding-top: var(--t5e-spacing-1x);
+    padding-bottom: var(--t5e-spacing-1x);
+    padding-left: var(--t5e-spacing-3x);
+    padding-right: var(--t5e-spacing-3x);
+  }
+
+  hr {
+    background-image: linear-gradient(to right,
+        transparent 5%,
+        var(--t5e-theme-color-lightest) 40%,
+        var(--t5e-theme-color-darker) 49.75%,
+        transparent 49.75%,
+        transparent 50.25%,
+        var(--t5e-theme-color-darker) 50.25%,
+        var(--t5e-theme-color-lightest) 60%,
+        transparent 95%);
+    // margin: var(--t5e-spacing-5x) 0;
+  }
+
+  sup,
+  sub {
+    font-size: var(--font-size-10);
   }
 }
