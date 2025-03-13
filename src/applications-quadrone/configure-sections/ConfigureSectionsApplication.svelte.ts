@@ -1,8 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
-import type {
-  ApplicationConfiguration,
-} from 'src/types/application.types';
+import type { ApplicationConfiguration } from 'src/types/application.types';
 import { mount } from 'svelte';
 import ConfigureSections from './ConfigureSections.svelte';
 import type { TidySectionBase } from 'src/types/types';
@@ -95,7 +93,6 @@ export class ConfigureSectionsApplication extends SvelteApplicationMixin(
         sections: this.sections,
         application: this,
         optionGroups: this.optionsGroups,
-        // TODO: require from the outside.
         title: this.formTitle,
       },
     });
@@ -179,23 +176,29 @@ export class ConfigureSectionsApplication extends SvelteApplicationMixin(
     this.close();
   }
 
-  useDefault() {
-    Dialog.confirm({
-      title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
+  async useDefault() {
+    const proceed = await foundry.applications.api.DialogV2.confirm({
+      window: {
+        title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
+      },
       content: `<p>${FoundryAdapter.localize(
         'TIDY5E.UseDefaultDialog.text'
       )}</p>`,
-      yes: () => {
-        const sectionConfig = TidyFlags.sectionConfig.get(this.document) ?? {};
-        delete sectionConfig[this.tabId];
-        // TODO: Figure out how to do this in a less suppressing way.
-        //@ts-expect-error
-        sectionConfig[`-=${this.tabId}`] = null;
-        TidyFlags.sectionConfig.set(this.document, sectionConfig);
-        this.close();
-      },
-      no: () => {},
       defaultYes: false,
     });
+
+    if (!proceed) {
+      return;
+    }
+
+    const sectionConfig = TidyFlags.sectionConfig.get(this.document) ?? {};
+    delete sectionConfig[this.tabId];
+    // TODO: Figure out how to do this in a less suppressing way.
+    //@ts-expect-error
+    sectionConfig[`-=${this.tabId}`] = null;
+    await this.document.update({
+      [TidyFlags.sectionConfig.prop]: sectionConfig,
+    });
+    await this.close();
   }
 }

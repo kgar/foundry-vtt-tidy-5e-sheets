@@ -86,21 +86,29 @@ export class DocumentTabSectionConfigApplication extends SvelteFormApplicationBa
     await TidyFlags.sectionConfig.set(this.document, sectionConfig);
   }
 
-  private _useDefault() {
-    Dialog.confirm({
-      title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
+  private async _useDefault() {
+    const proceed = await foundry.applications.api.DialogV2.confirm({
+      window: {
+        title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
+      },
       content: `<p>${FoundryAdapter.localize(
         'TIDY5E.UseDefaultDialog.text'
       )}</p>`,
-      yes: () => {
-        const sectionConfig = TidyFlags.sectionConfig.get(this.document) ?? {};
-        delete sectionConfig[this.tabId];
-        sectionConfig[`-=${this.tabId}`] = {};
-        TidyFlags.sectionConfig.set(this.document, sectionConfig);
-        this.close();
-      },
-      no: () => {},
       defaultYes: false,
     });
+
+    if (!proceed) {
+      return;
+    }
+
+    const sectionConfig = TidyFlags.sectionConfig.get(this.document) ?? {};
+    delete sectionConfig[this.tabId];
+    // TODO: Figure out how to do this in a less suppressing way.
+    //@ts-expect-error
+    sectionConfig[`-=${this.tabId}`] = null;
+    await this.document.update({
+      [TidyFlags.sectionConfig.prop]: sectionConfig,
+    });
+    await this.close();
   }
 }
