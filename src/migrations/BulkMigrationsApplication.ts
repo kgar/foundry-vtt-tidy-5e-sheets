@@ -61,14 +61,12 @@ export class BulkMigrationsApplication
           'TIDY5E.Settings.Migrations.migrateConfirmButtonYes'
         ),
         default: true,
-        callback: () => true,
       },
-      cancel: {
+      no: {
         icon: '<i class="fas fa-times"></i>',
         label: FoundryAdapter.localize(
           'TIDY5E.Settings.Migrations.migrateConfirmButtonNo'
         ),
-        callback: () => false,
       },
       close: () => {},
     });
