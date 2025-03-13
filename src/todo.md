@@ -1,6 +1,8 @@
 ## To Do
 
 - [ ] Inventory: Container inline capacity UI
+  - Default Sheet style: only Weight column, and the rest of the room is saved for containers
+  - For custom sections, let the columns be what they are, but let the container still do its same thing
 - [ ] (Hightouch investigating) Inventory: subtables have a different set of styles for their header
 - [ ] Inventory: Inline container Empty styles
 - [ ] Container: Image click behaviors
