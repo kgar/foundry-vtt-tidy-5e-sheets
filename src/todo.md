@@ -1,13 +1,13 @@
 ## To Do
 
-- [ ] Inventory: subtables have a different set of styles for their header
 - [ ] Inventory: Container inline capacity UI
+- [ ] (Hightouch investigating) Inventory: subtables have a different set of styles for their header
 - [ ] Inventory: Inline container Empty styles
 - [ ] Container: Image click behaviors
   - [ ] Locked - Show preview
   - [ ] Unlocked - File Picker
+- [ ] Implement container row
 - [ ] Review Container sheet to ensure it has everything
-- [x] (Hightouch) Complete dark mode for the container
 - [ ] Set up default/light/dark menu toggle and add to container
 - [ ] Update sheet lock to work like the default sheets, including the additional render options and intuitive default state
 - [ ] Item cards?
@@ -167,3 +167,4 @@
 - [x] Do DocumentSheet / prepareContext revisions to the core Svelte mixin so that it's more plug and play for all Tidy applications
 - [x] Fix: Weightless container (Bag of Devouring) shows undefined in the Holds text
 - [x] Sorting: Resolve todo - // TODO: This needs to be part of the sort group model, relating sort methods to specific groups.
+- [x] (Hightouch) Complete dark mode for the container
