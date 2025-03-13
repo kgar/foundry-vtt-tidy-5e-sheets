@@ -843,5 +843,11 @@
     "TIDY5E.SortMethod.AlphabeticalDescending": "Sortuj alfabetycznie malejąco",
     "TIDY5E.Utilities.SpellPips": "Kropki zaklęć",
     "TIDY5E.Utilities.SpellValueMax": "Wartość zaklęć/max",
-    "TIDY5E.RollRecharge.Label": "Odnowienie"
+    "TIDY5E.RollRecharge.Label": "Odnowienie",
+    "TIDY5E.Visible": "Widoczne",
+    "TIDY5E.Hidden": "Ukryte",
+    "TIDY5E.Options.Title": "Opcje",
+    "TIDY5E.ConfigureTab.Title": "Konfiguruj {tabName}",
+    "TIDY5E.DisplayOptions.Title": "Opcje wyświetlania",
+    "TIDY5E.DisplayOptions.ShowContainerRow.Label": "Pokarz wiersz pojemnika"
 }
