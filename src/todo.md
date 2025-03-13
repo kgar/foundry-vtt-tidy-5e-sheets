@@ -120,6 +120,7 @@
 - [ ] All section configs: pass in callback for preparing sections to view, so that we're not processing this during non-option-sheet renders. It should only render on option sheet prerender.
 - [ ] Configure {TabId}: include a hook that allows people to pass in their own settings.
 - [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
+- [ ] Resolve TODO -  // TODO: Make this a callback to send through to the component for preparing sections properly
 
 ### Stretch
 

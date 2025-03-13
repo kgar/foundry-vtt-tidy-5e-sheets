@@ -13,7 +13,6 @@ import { CONSTANTS } from 'src/constants';
 import type { Item5e } from 'src/types/item.types';
 
 export function getDocumentTheme(doc: any) {
-  // try V13
   let theme: string | undefined = undefined;
   if (game.release.generation >= 13) {
     theme =
