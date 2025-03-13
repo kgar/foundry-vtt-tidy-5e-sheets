@@ -1,6 +1,5 @@
 ## To Do
 
-
 - [ ] Inventory: subtables have a different set of styles for their header
 - [ ] Inventory: Container inline capacity UI
 - [ ] Inventory: Inline container Empty styles
