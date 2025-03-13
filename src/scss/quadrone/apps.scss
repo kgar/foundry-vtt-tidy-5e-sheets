@@ -8,9 +8,76 @@
 
   /* Application window */
   border-radius: 0.3125rem;
-  border: 0.0625rem solid var(--t5e-color-gold);
-  box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.25),
-    0px 0px 12px 0px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--t5e-color-gold);
+  background: var(--t5e-component-card-ondefault-darker);
+  box-shadow: var(--t5e-drop-shadow-sheet);
+  background-size: cover;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  &:where(.theme-light) {
+    background: var(--t5e-component-card-ondefault-default);
+
+    &::before {
+      background: url(../../modules/tidy5e-sheet/images/texture-gray-1.webp)
+        no-repeat top center;
+      background-size: cover;
+    }
+
+    &::after {
+      background: url(../../modules/tidy5e-sheet/images/texture-gray-2.webp)
+        no-repeat bottom center;
+      background-size: cover;
+    }
+  }
+
+  &:where(.theme-dark) {
+    background: var(--t5e-component-card-oninverse-darker);
+
+    &::before {
+      background: url(../../modules/tidy5e-sheet/images/denim065.png) no-repeat
+        top center;
+      background-size: cover;
+    }
+  }
+
+  &.minimized {
+    .window-title {
+      color: var(--t5e-color-text-oninverse-default);
+    }
+
+    .header-control {
+      color: var(--t5e-color-text-oninverse-default);
+    }
+  }
+
+  .window-header {
+    .window-title {
+      color: var(--t5e-color-text-default);
+    }
+
+    button.header-control {
+      color: var(--t5e-color-text-ondefault-lighter);
+      transition: all var(--t5e-transition-default);
+
+      &:hover {
+        color: var(--t5e-color-text-ondefault-default);
+        border-radius: 100%;
+        background: rgba(0, 0, 0, 0.12);
+      }
+    }
+  }
 
   /* Font Color */
   &:not(.minimized) {
@@ -30,8 +97,9 @@
   .window-header {
     border: none;
     align-items: center;
+    padding-inline-start: 0.75rem;
 
-    >* {
+    > * {
       max-block-size: 100%;
     }
 
@@ -56,7 +124,7 @@
       box-shadow: 0 0 0.375rem var(--dnd5e-shadow-45);
     }
 
-    .header-control>button {
+    .header-control > button {
       color: var(--t5e-color-text-ondefault-lighter);
       justify-content: flex-start;
       gap: 0.5rem;
@@ -83,7 +151,9 @@
     }
   }
 
-  &[data-tidy-lock-configure-sheet='true'] .window-header [data-action='configureSheet'] {
+  &[data-tidy-lock-configure-sheet='true']
+    .window-header
+    [data-action='configureSheet'] {
     display: none;
   }
 
@@ -93,7 +163,6 @@
   }
 
   &.minimized {
-
     &::before,
     &::after {
       display: none;
@@ -109,6 +178,7 @@
   }
 
   .window-content {
+    padding-block-start: 0;
 
     h1,
     h2,

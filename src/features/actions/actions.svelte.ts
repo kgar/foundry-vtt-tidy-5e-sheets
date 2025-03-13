@@ -4,7 +4,6 @@ import { ActionListRuntime } from 'src/runtime/action-list/ActionListRuntime';
 import { settings } from 'src/settings/settings.svelte';
 import type { ContainerContents, Item5e } from 'src/types/item.types';
 import type { ActionItem, ActionSection, Actor5e } from 'src/types/types';
-import type { SortMethodKeyQuadrone } from 'src/types/sort.types';
 import { isNil } from 'src/utils/data';
 import { simplifyFormula } from 'src/utils/formula';
 import { debug, error } from 'src/utils/logging';
@@ -57,12 +56,9 @@ export async function getActorActionSections(
   }
 }
 
-export function getSortedActions(
-  section: ActionSection,
-  sortMode: SortMethodKeyQuadrone
-) {
+export function getSortedActions(section: ActionSection, sortMode: string) {
   return section.actions.toSorted(({ item: a }, { item: b }) => {
-    if (sortMode === 'a') {
+    if (sortMode === CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_ASCENDING) {
       return a.name.localeCompare(b.name, game.i18n.lang);
     }
 

@@ -1,7 +1,4 @@
-import type {
-  SortMethodKeyQuadrone,
-  SortMethodScheme,
-} from 'src/types/sort.types';
+import type { SortGroup, SortMethodScheme } from 'src/types/sort.types';
 import {
   defaultItemSortGroups,
   defaultItemSortSchemes,
@@ -16,10 +13,15 @@ import type {
 
 export class ItemSortRuntime {
   static _registeredItemSorts: Record<string, SortMethodScheme> = {};
+  static _registeredItemSortGroups: Record<string, SortGroup> = {};
 
   static init() {
     ItemSortRuntime._registeredItemSorts = {
       ...defaultItemSortSchemes,
+      // Add more later; include ability to add them through the API when I'm able to clean up the design
+    };
+    ItemSortRuntime._registeredItemSortGroups = {
+      ...defaultItemSortGroups,
       // Add more later; include ability to add them through the API when I'm able to clean up the design
     };
   }
@@ -42,9 +44,9 @@ export class ItemSortRuntime {
   static _documentTabSortGroupsQuadrone: DocumentTypesToSortGroupTabs = {
     [CONSTANTS.SHEET_TYPE_CONTAINER]: {
       [CONSTANTS.TAB_CONTAINER_CONTENTS]: [
-        defaultItemSortGroups.alphabetical,
-        defaultItemSortGroups.manual,
-        defaultItemSortGroups.equipped,
+        defaultItemSortGroups[CONSTANTS.ITEM_SORT_GROUP_KEY_ALPHABETICAL],
+        defaultItemSortGroups[CONSTANTS.ITEM_SORT_GROUP_KEY_MANUAL],
+        defaultItemSortGroups[CONSTANTS.ITEM_SORT_GROUP_KEY_EQUIPPED],
       ],
     },
   };
@@ -55,5 +57,11 @@ export class ItemSortRuntime {
 
   static getDocumentSortMethodsQuadrone(document: any): SortTabsToSortSchemes {
     return ItemSortRuntime._documentTabSortSchemesQuadrone[document.type] ?? {};
+  }
+
+  static getGroupFromMethod(method: string): SortGroup | undefined {
+    return ItemSortRuntime._registeredItemSortGroups[
+      this._registeredItemSorts[method]?.key
+    ];
   }
 }

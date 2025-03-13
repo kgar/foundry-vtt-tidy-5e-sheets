@@ -5,13 +5,16 @@ import type { ApplicationConfiguration } from 'src/types/application.types';
 import { mount } from 'svelte';
 import DetachedInfoCard from './DetachedInfoCard.svelte';
 
-export class DetachedInfoCardApplication extends SvelteApplicationMixin<{}>(
+export class DetachedInfoCardApplication extends SvelteApplicationMixin(
   foundry.applications.api.ApplicationV2
 ) {
   #cardState: InfoCardState<any>;
 
-  constructor(cardState: InfoCardState<any>, ...rest: any[]) {
-    super(...rest);
+  constructor(
+    cardState: InfoCardState<any>,
+    options?: Partial<ApplicationConfiguration>
+  ) {
+    super(options);
 
     this.#cardState = cardState;
   }

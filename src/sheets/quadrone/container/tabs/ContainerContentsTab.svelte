@@ -20,6 +20,10 @@
   import FilterMenuQuadrone from 'src/components/action-bar/FilterButtonMenuQuadrone.svelte';
   import SortButtonWithMenuQuadrone from 'src/components/action-bar/SortButtonWithMenuQuadrone.svelte';
   import { ConfigureSectionsApplication } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
+  import { TidyFlags } from 'src/api';
+  import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
+  import { SheetSections } from 'src/features/sections/SheetSections';
+  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 
   let context = $derived(getContainerSheetQuadroneContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
@@ -52,6 +56,20 @@
       context.filterPins,
       context.filterData,
       tabId,
+    ),
+  );
+
+  let tabTitle = $derived(ItemSheetRuntime.getTabTitle(tabId));
+
+  // TODO: Make this a callback to send through to the component for preparing sections properly
+  let configuredContents = $derived(
+    SheetSections.configureInventory(
+      context.containerContents.contents.filter((i) => i.items.length),
+      tabId,
+      SheetPreferencesService.getByType(context.item.type),
+      TidyFlags.sectionConfig.get(context.item)?.[
+        CONSTANTS.TAB_CONTAINER_CONTENTS
+      ],
     ),
   );
 </script>
@@ -96,15 +114,29 @@
     onclick={() =>
       context.editable &&
       new ConfigureSectionsApplication({
+        document: context.item,
         settings: {
-          document: context.item,
           tabId,
-          sections: [],
-          // TODO: Need a way to grab the current or fallback to global theme
-          theme: 'light',
+          sections: configuredContents,
+          optionsGroups: [
+            {
+              title: 'TIDY5E.DisplayOptions.Title',
+              settings: [
+                {
+                  type: 'boolean',
+                  checked: false,
+                  label: 'TIDY5E.DisplayOptions.ShowContainerRow.Label',
+                  prop: TidyFlags.showContainerPanel.prop,
+                },
+              ],
+            },
+          ],
+          formTitle: localize('TIDY5E.ConfigureTab.Title', {
+            tabName: ItemSheetRuntime.getTabTitle(tabId),
+          }),
         },
         window: {
-          title: 'THIS IS A TEST',
+          title: localize('TIDY5E.ConfigureTab.Title', { tabName: tabTitle }),
         },
       }).render({ force: true })}
   >

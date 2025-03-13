@@ -169,13 +169,17 @@ export class ApplyTidySheetPreferencesApplication extends SvelteFormApplicationB
 
       this.close();
 
-      Dialog.confirm({
-        title: FoundryAdapter.localize('SETTINGS.ReloadPromptTitle'),
+      const proceed = await foundry.applications.api.DialogV2.confirm({
+        window: {
+          title: FoundryAdapter.localize('SETTINGS.ReloadPromptTitle'),
+        },
         content: FoundryAdapter.localize('SETTINGS.ReloadPromptBody'),
-        yes: () => foundry.utils.debouncedReload(),
-        no: () => {},
-        defaultYes: true,
+        yes: { default: true },
       });
+
+      if (proceed) {
+        foundry.utils.debouncedReload();
+      }
     } catch (e) {
       error(FoundryAdapter.localize('TIDY5E.GenericErrorNotification'), true, {
         error: e,

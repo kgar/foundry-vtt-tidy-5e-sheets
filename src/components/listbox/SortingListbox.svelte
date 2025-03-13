@@ -12,6 +12,7 @@
     labelProp: keyof TItem;
     valueProp: keyof TItem;
     listboxCssClass?: string | null;
+    listItemClasses?: string;
     itemTemplate?: Snippet<[any]>;
     [key: string]: any;
   }
@@ -22,6 +23,7 @@
     labelProp,
     valueProp,
     listboxCssClass = null,
+    listItemClasses,
     itemTemplate,
     ...rest
   }: Props = $props();
@@ -144,6 +146,7 @@
 <div class="sorting-listbox flex-row small-gap {rest.class ?? ''}">
   <div class="controls">
     <button
+      class="control"
       title={localize('TIDY5E.Listbox.MoveUp')}
       type="button"
       disabled={selectedItemIndex === null || selectedItemIndex === 0}
@@ -151,9 +154,10 @@
       data-testid="sorting-listbox-move-up"
       onclick={() => moveUp()}
     >
-      <i class="fas fa-angle-up"></i>
+      <i class="fas fa-arrow-up"></i>
     </button>
     <button
+      class="control"
       title={localize('TIDY5E.Listbox.MoveDown')}
       type="button"
       disabled={selectedItemIndex === null ||
@@ -163,7 +167,7 @@
       onclick={() => moveDown()}
       data-testid="sorting-listbox-move-down"
     >
-      <i class="fas fa-angle-down"></i>
+      <i class="fas fa-arrow-down"></i>
     </button>
   </div>
   <Listbox
@@ -173,6 +177,7 @@
     bind:selectedItemIndex
     onkeydown={handleListboxKeydown}
     class="flex-1 {listboxCssClass ?? ''}"
+    {listItemClasses}
     draggable={true}
     ondragstart={(ev) => onDragStart(ev)}
     ondrop={(ev) => onDrop(ev)}

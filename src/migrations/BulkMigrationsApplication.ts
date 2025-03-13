@@ -41,8 +41,8 @@ export class BulkMigrationsApplication
     });
   }
 
-  confirm(onYes: () => void) {
-    const dlg = new Dialog({
+  async confirm(onYes: () => void) {
+    const proceed = await foundry.applications.api.DialogV2.confirm({
       title: FoundryAdapter.localize(
         'TIDY5E.Settings.Migrations.migrateConfirmTitle'
       ),
@@ -55,26 +55,24 @@ export class BulkMigrationsApplication
           { boldStart: '<strong>', boldEnd: '</strong>' }
         )}</em></p>
       `,
-      buttons: {
-        yes: {
-          icon: '<i class="fas fa-right-left"></i>',
-          label: FoundryAdapter.localize(
-            'TIDY5E.Settings.Migrations.migrateConfirmButtonYes'
-          ),
-          callback: () => {
-            onYes();
-          },
-        },
-        cancel: {
-          icon: '<i class="fas fa-times"></i>',
-          label: FoundryAdapter.localize(
-            'TIDY5E.Settings.Migrations.migrateConfirmButtonNo'
-          ),
-        },
+      yes: {
+        icon: '<i class="fas fa-right-left"></i>',
+        label: FoundryAdapter.localize(
+          'TIDY5E.Settings.Migrations.migrateConfirmButtonYes'
+        ),
+        default: true,
       },
-      default: 'yes',
+      no: {
+        icon: '<i class="fas fa-times"></i>',
+        label: FoundryAdapter.localize(
+          'TIDY5E.Settings.Migrations.migrateConfirmButtonNo'
+        ),
+      },
       close: () => {},
     });
-    dlg.render(true);
+
+    if (proceed) {
+      onYes();
+    }
   }
 }

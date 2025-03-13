@@ -1,35 +1,72 @@
 // TODO: make dedicated styles for options dialogs
 // TODO: promote the most universal styles to apps.scss
 
-.tidy5e-sheet.application:where(.quadrone.options-dialog) {
-  /* Application Window */
-  border-radius: 0.3125rem;
-  border: 1px solid var(--t5e-color-gold);
-  background: var(--t5e-component-card-ondefault-darker);
-  box-shadow: var(--t5e-drop-shadow-sheet);
-  background-size: cover;
+.tidy5e-sheet.application:where(.quadrone) {
+  // Tab Configuration Dialog (Section Config, tab-specific options, etc.)
+  &.tab-configuration {
+    .window-content {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
 
-  &:where(.theme-light) {
-    background: var(--t5e-component-card-ondefault-default);
-    &::before {
-      background: url(../../modules/tidy5e-sheet/images/texture-gray-1.webp)
-        no-repeat top center;
-      background-size: cover;
+      h1 {
+        font-size: var(--font-size-24);
+        padding: 0;
+        margin: 0;
+        line-height: normal;
+        margin: 0 0 0.375rem 0;
+      }
+
+      h2 {
+        font-size: var(--font-size-18);
+        border-bottom: 1px solid var(--t5e-color-gold);
+        margin-block-end: var(--t5e-spacing-2x);
+
+        &:not(:first-child) {
+          margin-block-start: var(--t5e-spacing-2x);
+        }
+      }
+
+      h3 {
+        margin-block-end: var(--t5e-spacing-1x);
+        font-size: var(--font-size-13);
+        font-family: var(--t5e-font-roboto-condensed);
+        font-weight: 500;
+      }
+
+      label.checkbox {
+        min-height: 1.5rem;
+      }
     }
 
-    &::after {
-      background: url(../../modules/tidy5e-sheet/images/texture-gray-2.webp)
-        no-repeat bottom center;
-      background-size: cover;
-    }
-  }
+    .sorting-listbox {
+      .listbox-item {
+        .section-config-item-label {
+          flex: 1;
+          padding-block: 0.25rem;
 
-  &:where(.theme-dark) {
-    background: var(--t5e-component-card-oninverse-darker);
-    &::before {
-      background: url(../../modules/tidy5e-sheet/images/denim065.png) no-repeat
-        top center;
-      background-size: cover;
+          &.marked-as-hidden {
+            color: var(--t5e-color-text-ondefault-lightest);
+          }
+        }
+
+        &:has(.marked-as-hidden) .drag-grip {
+          color: var(--t5e-color-text-ondefault-lighter);
+        }
+      }
+    }
+
+    .button-bar {
+      display: flex;
+      gap: 0.25rem;
+      flex-wrap: wrap;
+      white-space: nowrap;
+
+      > * {
+        flex: 1;
+        text-wrap: none;
+      }
     }
   }
 }

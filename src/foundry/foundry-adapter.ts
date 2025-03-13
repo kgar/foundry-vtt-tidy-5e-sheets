@@ -905,9 +905,6 @@ export const FoundryAdapter = {
       true
     );
   },
-  dialogConfirm(...args: any[]) {
-    return Dialog.confirm(...args);
-  },
   renderActorSheetFlags(actor: any) {
     return new dnd5e.applications.actor.ActorSheetFlags(actor).render(true);
   },

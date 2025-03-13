@@ -1,4 +1,12 @@
-import type { CustomHeaderControlsEntry } from "src/api/api.types";
+import type { CustomHeaderControlsEntry } from 'src/api/api.types';
+
+export type DocumentSheetConfiguration = {
+  document: any;
+  viewPermission: number;
+  editPermission: number;
+  canCreate: boolean;
+  sheetConfig: boolean;
+};
 
 export type ApplicationConfiguration = {
   id: string;
