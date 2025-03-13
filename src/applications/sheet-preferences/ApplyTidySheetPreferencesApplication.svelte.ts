@@ -174,7 +174,7 @@ export class ApplyTidySheetPreferencesApplication extends SvelteFormApplicationB
           title: FoundryAdapter.localize('SETTINGS.ReloadPromptTitle'),
         },
         content: FoundryAdapter.localize('SETTINGS.ReloadPromptBody'),
-        defaultYes: true,
+        yes: { default: true },
       });
 
       if (proceed) {

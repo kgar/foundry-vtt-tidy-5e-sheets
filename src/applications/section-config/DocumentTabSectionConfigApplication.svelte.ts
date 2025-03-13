@@ -94,7 +94,6 @@ export class DocumentTabSectionConfigApplication extends SvelteFormApplicationBa
       content: `<p>${FoundryAdapter.localize(
         'TIDY5E.UseDefaultDialog.text'
       )}</p>`,
-      defaultYes: false,
     });
 
     if (!proceed) {

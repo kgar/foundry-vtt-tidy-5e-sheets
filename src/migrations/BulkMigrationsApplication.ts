@@ -60,6 +60,7 @@ export class BulkMigrationsApplication
         label: FoundryAdapter.localize(
           'TIDY5E.Settings.Migrations.migrateConfirmButtonYes'
         ),
+        default: true,
         callback: () => true,
       },
       cancel: {
@@ -69,7 +70,6 @@ export class BulkMigrationsApplication
         ),
         callback: () => false,
       },
-      defaultYes: true,
       close: () => {},
     });
 

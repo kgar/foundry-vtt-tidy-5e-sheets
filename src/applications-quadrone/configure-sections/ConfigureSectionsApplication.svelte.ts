@@ -184,7 +184,6 @@ export class ConfigureSectionsApplication extends SvelteApplicationMixin(
       content: `<p>${FoundryAdapter.localize(
         'TIDY5E.UseDefaultDialog.text'
       )}</p>`,
-      defaultYes: false,
     });
 
     if (!proceed) {
