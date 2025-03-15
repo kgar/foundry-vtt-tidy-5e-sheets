@@ -7,7 +7,6 @@ import type {
   InventorySection,
 } from 'src/types/types';
 import { error } from 'src/utils/logging';
-import { SheetSections } from './SheetSections';
 
 export class Inventory {
   static getDefaultInventoryTypes(): string[] {
@@ -43,6 +42,7 @@ export class Inventory {
         show: true,
         custom: undefined,
         isExternal: false,
+        isContainerSection: type === CONSTANTS.ITEM_TYPE_CONTAINER,
         ...options,
       };
     }

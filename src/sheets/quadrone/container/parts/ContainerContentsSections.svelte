@@ -5,7 +5,11 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ContainerItemContext, Item5e } from 'src/types/item.types';
-  import type { Actor5e, InventorySection } from 'src/types/types';
+  import type {
+    Actor5e,
+    ColumnSpecification,
+    InventorySection,
+  } from 'src/types/types';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
@@ -14,14 +18,17 @@
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import InlineContainerView from './InlineContainerView.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
-  import InlineItemQuantityTracker from 'src/components/trackers/InlineItemQuantityTracker.svelte';
   import EditButton from 'src/components/table-quadrone/table-buttons/EditButton.svelte';
   import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButton.svelte';
   import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
   import TidyItemTableRow from 'src/components/table-quadrone/TidyItemTableRow.svelte';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
-  import ItemUses from 'src/components/item-list/ItemUses.svelte';
-  import ItemPriceSummary from '../../item/parts/header/ItemPriceSummary.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import ItemQuantityColumn from 'src/sheets/quadrone/item/columns/ItemQuantityColumn.svelte';
+  import InlineCapacityColumn from 'src/sheets/quadrone/item/columns/InlineCapacityColumn.svelte';
+  import ItemPriceColumn from 'src/sheets/quadrone/item/columns/ItemPriceColumn.svelte';
+  import ItemChargesColumn from 'src/sheets/quadrone/item/columns/ItemChargesColumn.svelte';
+  import ItemWeightColumn from 'src/sheets/quadrone/item/columns/ItemWeightColumn.svelte';
 
   interface Props {
     contents: InventorySection[];
@@ -89,21 +96,6 @@
   });
 
   let columnSpecs = $derived({
-    charges: {
-      columnWidth: '5rem',
-      hideUnder: 400,
-    },
-    price: {
-      columnWidth: '5.5rem',
-      hideUnder: 550,
-    },
-    quantity: {
-      columnWidth: '5rem',
-    },
-    weight: {
-      columnWidth: '5rem',
-      hideUnder: 500,
-    },
     actions: {
       columnWidth: `calc((var(--t5e-table-button-width) * ${1 + itemActions.length}) + var(--t5e-spacing-halfx))`,
     },
@@ -111,16 +103,89 @@
 
   let containerToggleMap = $derived(inlineToggleService.map);
 
+  let context = $derived(getSheetContext());
+
   const localize = FoundryAdapter.localize;
+
+  let inventoryColumns: ColumnSpecification[] = [
+    // Charges
+    {
+      headerContent: {
+        type: 'html',
+        html: FoundryAdapter.localize('DND5E.Charges'),
+      },
+      cellContent: {
+        type: 'component',
+        component: ItemChargesColumn,
+      },
+      hideUnder: 400,
+      width: '5rem',
+      cellClasses: 'inline-uses',
+    },
+    // Price
+    {
+      headerContent: {
+        type: 'html',
+        html: FoundryAdapter.localize('DND5E.Price'),
+      },
+      cellContent: {
+        type: 'component',
+        component: ItemPriceColumn,
+      },
+      hideUnder: 550,
+      width: '5.5rem',
+    },
+    // Quantity
+    {
+      headerContent: {
+        type: 'html',
+        html: FoundryAdapter.localize('DND5E.Quantity'),
+      },
+      cellContent: {
+        type: 'component',
+        component: ItemQuantityColumn,
+      },
+      width: '5rem',
+    },
+    // Weight
+    {
+      headerContent: {
+        type: 'html',
+        html: FoundryAdapter.localize('DND5E.Weight'),
+      },
+      cellContent: {
+        type: 'component',
+        component: ItemWeightColumn,
+      },
+      hideUnder: 500,
+      width: '5rem',
+    },
+  ];
+
+  let containerColumns: ColumnSpecification[] = [
+    // Inline Container Capacity
+    {
+      headerContent: {
+        type: 'callback',
+        callback: () =>
+          FoundryAdapter.localize('DND5E.CONTAINER.FIELDS.capacity.label'),
+      },
+      cellContent: {
+        type: 'component',
+        component: InlineCapacityColumn,
+      },
+      width: '10rem',
+      cellClasses: 'item-label text-cell',
+      hideUnder: 400,
+    },
+  ];
 </script>
 
 {#each configuredContents as section (section.key)}
-  {@const itemEntries = section.items.map((item) => ({
-    item,
-    ctx: itemContext[item.id],
-  }))}
-
   {#if section.show}
+    {@const columns = section.isContainerSection
+      ? containerColumns
+      : inventoryColumns}
     <TidyTable
       key={section.key}
       data-custom-section={section.custom ? true : null}
@@ -133,18 +198,27 @@
             </h3>
             <span class="table-header-count">{section.items.length}</span>
           </TidyTableHeaderCell>
-          <TidyTableHeaderCell {...columnSpecs.charges}>
-            {localize('DND5E.Charges')}
-          </TidyTableHeaderCell>
-          <TidyTableHeaderCell {...columnSpecs.price}>
-            {localize('DND5E.Price')}
-          </TidyTableHeaderCell>
-          <TidyTableHeaderCell {...columnSpecs.quantity}>
-            {localize('DND5E.Quantity')}
-          </TidyTableHeaderCell>
-          <TidyTableHeaderCell {...columnSpecs.weight}>
-            {localize('DND5E.Weight')}
-          </TidyTableHeaderCell>
+          {#each columns as column}
+            <TidyTableHeaderCell
+              class={column.headerClasses ?? ''}
+              columnWidth={column.width}
+              hideUnder={column.hideUnder}
+            >
+              {#if column.headerContent.type === 'callback'}
+                {@html column.headerContent.callback?.(
+                  context.document,
+                  context,
+                )}
+              {:else if column.headerContent.type === 'component'}
+                <column.headerContent.component
+                  sheetContext={context}
+                  sheetDocument={context.document}
+                />
+              {:else if column.headerContent.type === 'html'}
+                {@html column.headerContent.html}
+              {/if}
+            </TidyTableHeaderCell>
+          {/each}
           <TidyTableHeaderCell
             class="header-cell-actions"
             {...columnSpecs.actions}
@@ -153,9 +227,13 @@
           </TidyTableHeaderCell>
         </TidyTableHeaderRow>
       {/snippet}
+
       {#snippet body()}
+        {@const itemEntries = section.items.map((item) => ({
+          item,
+          ctx: itemContext[item.id],
+        }))}
         {#each itemEntries as { item, ctx }, i (item.id)}
-          {@const weight = ctx?.totalWeight ?? item.system.weight.value}
           {@const itemBorderColor = item.system.rarity
             ? `var(--t5e-color-rarity-${item.system.rarity.slugify()})`
             : 'var(--t5e-color-gold)'}
@@ -164,7 +242,6 @@
             'legendary',
             'artifact',
           ].includes(item.system.rarity)}
-
           <TidyItemTableRow
             {item}
             hidden={!searchResults.show(item.uuid)}
@@ -205,50 +282,38 @@
                   </i>
                 </a>
               {/if}
+
               <TidyTableCell primary={true} class="item-label text-cell">
                 <a class="item-name" onclick={(ev) => toggleSummary()}>
                   <span class="cell-name">{item.name}</span>
                   <span class="row-detail-expand-indicator">
                     <i
                       class="fa-solid fa-angle-right expand-indicator"
-                      class:expanded={expanded}
+                      class:expanded
                     >
                     </i>
                   </span>
                 </a>
               </TidyTableCell>
-              <TidyTableCell class="inline-uses" {...columnSpecs.charges}>
-                {#if item.hasLimitedUses}
-                  <input
-                    type="text"
-                    value={item.system.uses.value}
-                    onfocus={(event) => event.currentTarget.select()}
-                    onchange={(event) =>
-                      FoundryAdapter.handleItemUsesChanged(event, item)}
-                    class="uninput uses-value color-text-default"
-                  />
-                  <span class="color-text-gold">/</span>
-                  <span class="uses-max color-text-lighter"
-                    >{item.system.uses.max}</span
-                  >
-                {:else}
-                  <span class="color-text-disabled">&mdash;</span>
-                {/if}
-              </TidyTableCell>
-              <TidyTableCell {...columnSpecs.price}>
-                <ItemPriceSummary
-                  {item}
-                  icon={false}
-                  truncate={true}
-                  showTitle={true}
-                />
-              </TidyTableCell>
-              <TidyTableCell {...columnSpecs.quantity}>
-                <InlineItemQuantityTracker {item} disabled={!item.isOwner} />
-              </TidyTableCell>
-              <TidyTableCell {...columnSpecs.weight}>
-                {weight}
-              </TidyTableCell>
+              {#each columns as column}
+                <TidyTableCell
+                  columnWidth={column.width}
+                  hideUnder={column.hideUnder}
+                  class={column.cellClasses}
+                >
+                  {#if column.cellContent.type === 'callback'}
+                    {@html column.cellContent.callback?.(
+                      context.document,
+                      context,
+                    )}
+                  {:else if column.cellContent.type === 'component'}
+                    <column.cellContent.component
+                      rowContext={ctx}
+                      rowDocument={item}
+                    />
+                  {/if}
+                </TidyTableCell>
+              {/each}
               <TidyTableCell
                 class="tidy-table-actions"
                 {...columnSpecs.actions}

@@ -1,8 +1,13 @@
 ## To Do
 
 - [ ] Inventory: Container inline capacity UI
-  - Default Sheet style: only Weight column, and the rest of the room is saved for containers
+  - Capacity column
   - For custom sections, let the columns be what they are, but let the container still do its same thing
+  - [ ] It's time to roll out per-section column specification
+    - [x] Draft the proof of concept with Container Contents.
+    - [ ] Decide: Column spec in runtime, or in context prep? 
+      - Leaning toward runtime, with the columns being pulled for use in the component where they are needed, to defer their processing to when their tab is pulled in. Propagating the columns through context is burdensome and far too distributed. Consolidating to a runtime file also makes it easier to manage settings, API callers, import/export, etc.
+    - [ ] Explore: Can we toggle between Container columns and non-container columns, using a `condition` callback?
 - [ ] (Hightouch investigating) Inventory: subtables have a different set of styles for their header
 - [ ] Inventory: Inline container Empty styles
 - [ ] Container: Image click behaviors

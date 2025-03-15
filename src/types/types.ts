@@ -114,6 +114,56 @@ export type LinkedUses = {
 
 export type ActorInventoryTypes = Record<string, InventorySection>;
 
+// COLUMNS
+// TODO: Move to ItemColumnsRuntime; support per-section customization (with $state) with fallback to tab-specific
+export type ColumnSpecification = {
+  headerContent:
+    | {
+        type: 'component';
+        component: Component<ColumnHeaderProps>;
+      }
+    | {
+        type: 'callback';
+        callback: (sheetDocument: any, sheetContext: any) => string;
+      }
+    | {
+        type: 'html';
+        html: string;
+      };
+  cellContent:
+    | {
+        type: 'component';
+        component: Component<ColumnCellProps>;
+      }
+    | {
+        type: 'callback';
+        callback: (rowDocument: any, rowContext: any) => string;
+      };
+  width: string; // default: "5rem"
+  hideUnder?: number;
+  headerClasses?: string;
+  cellClasses?: string;
+  condition?: (data: ColumnSpecificationConditionArgs) => boolean;
+};
+
+export type ColumnHeaderProps<TDocument = any, TContext = any> = {
+  sheetDocument: TDocument;
+  sheetContext: TContext;
+};
+
+export type ColumnCellProps<TDocument = any, TContext = any> = {
+  rowDocument: TDocument;
+  rowContext: TContext;
+};
+
+export type ColumnSpecificationConditionArgs<
+  TDocument = any,
+  TContext = any
+> = {
+  sheetDocument: TDocument;
+  sheetContext: TContext;
+};
+
 export type CustomSectionOptions = {
   section: string;
   creationItemTypes: string[];
@@ -152,6 +202,8 @@ export type TidySectionBase = {
   key: string;
   show: boolean; // default: true
   isExternal?: boolean;
+  // Temporary measure until section-specific custom columns are implemented
+  isContainerSection?: boolean;
 };
 
 export type FeatureSection = {
