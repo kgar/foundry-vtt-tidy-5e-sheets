@@ -22,6 +22,7 @@
     hidden?: boolean;
     draggable?: boolean;
     children?: Snippet<[{ toggleSummary: () => void; expanded: boolean }]>;
+    expanded?: boolean;
   }
 
   let {
@@ -31,6 +32,7 @@
     hidden = false,
     draggable = true,
     children,
+    expanded = $bindable(false),
   }: Props = $props();
 
   const emptyChatData: ItemChatData = {
@@ -53,19 +55,18 @@
 
   const location = getContext<string>(CONSTANTS.SVELTE_CONTEXT.LOCATION);
 
-  let showSummary = $state(false);
   let chatData: ItemChatData | undefined = $state();
 
   async function toggleSummary() {
     if (!item) {
       warn('Unable to show summary. No item was provided.');
-      showSummary = false;
+      expanded = false;
       return;
     }
 
     chatData ??= await item.getChatData({ secrets: item.isOwner });
-    showSummary = !showSummary;
-    onItemToggled?.(item.id, showSummary, location);
+    expanded = !expanded;
+    onItemToggled?.(item.id, expanded, location);
   }
 
   async function onMouseEnter(event: Event) {
@@ -96,7 +97,7 @@
 
     if (isExpandedAtThisLocation) {
       chatData = expandedItemData.get(item.id);
-      showSummary = true;
+      expanded = true;
     }
   }
 
@@ -118,9 +119,9 @@
         return;
       }
 
-      if (item && showSummary) {
+      if (item && expanded) {
         chatData = await item.getChatData({ secrets: item.actor.isOwner });
-      } else if (item && !showSummary && chatData) {
+      } else if (item && !expanded && chatData) {
         // Reset chat data for non-expanded, hydrated chatData
         // so it rehydrates on next open
         chatData = undefined;
@@ -144,16 +145,18 @@
     ['style']: `--t5e-item-use-button-border-color: ${itemAccentColor}; --t5e-item-row-color: ${itemAccentColor}`,
     draggable: draggable,
   }}
-  rowClass="tidy-table-row-v2 {rowClass ?? ''} {rarityClass}"
+  rowClass="tidy-table-row-v2 {rowClass ?? ''} {rarityClass} {expanded
+    ? 'expanded'
+    : ''}"
   onmousedown={(event) => item && FoundryAdapter.editOnMiddleClick(event, item)}
   onmouseenter={onMouseEnter}
   onmouseleave={onMouseLeave}
   ondragstart={handleDragStart}
 >
-  {@render children?.({ toggleSummary, expanded: showSummary })}
+  {@render children?.({ toggleSummary, expanded })}
 
   {#snippet afterRow()}
-    <ExpandableContainer expanded={showSummary}>
+    <ExpandableContainer {expanded}>
       <TidyItemSummary chatData={chatData ?? emptyChatData} {item} />
     </ExpandableContainer>
   {/snippet}

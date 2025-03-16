@@ -32,6 +32,8 @@
     /** The sheet which is rendering this recursive set of container contents. */
     sheetDocument: Actor5e | Item5e;
     unlocked?: boolean;
+    /** Denotes whether this layer of nested tables is the root (top) layer. This affects what styles go into effect. */
+    root?: boolean;
   }
 
   let {
@@ -43,6 +45,7 @@
     lockItemQuantity,
     sheetDocument,
     unlocked = true,
+    root,
   }: Props = $props();
 
   const tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
@@ -113,7 +116,7 @@
     >
       {#snippet header()}
         <!-- TODO: Remove .dark for nested table header rows -->
-        <TidyTableHeaderRow class="dark">
+        <TidyTableHeaderRow class={root ? 'dark' : ''}>
           <TidyTableHeaderCell primary={true} class="header-label-cell">
             <h3>
               {localize(section.label)}
@@ -164,6 +167,10 @@
             'legendary',
             'artifact',
           ].includes(item.system.rarity)}
+          {@const hasExpandedInlineToggle = !!inlineToggleService.map
+            .get(tabId)
+            ?.has(item.id)}
+
           <!-- TODO: Add .expanded class to the row when the item is expanded -->
           <TidyItemTableRow
             {item}
@@ -171,7 +178,9 @@
             rowClass={FoundryAdapter.getInventoryRowClasses(
               item,
               itemContext[item.id]?.attunement,
-            )}
+            ) + hasExpandedInlineToggle
+              ? ' expanded'
+              : ''}
             contextMenu={{
               type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
               uuid: item.uuid,
