@@ -7,7 +7,6 @@ import type {
   InventorySection,
 } from 'src/types/types';
 import { error } from 'src/utils/logging';
-import { SheetSections } from './SheetSections';
 
 export class Inventory {
   static getDefaultInventoryTypes(): string[] {

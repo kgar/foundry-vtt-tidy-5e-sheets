@@ -23,7 +23,33 @@
     justify-content: center;
 
     .item-price-denomination {
-        text-transform: uppercase;
+      text-transform: uppercase;
+    }
+  }
+
+  .inline-container-capacity {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-inline: 0.375rem;
+
+    .label {
+      display: flex;
+      gap: 0.125rem;
+
+      .separator {
+        color: var(--t5e-color-text-oninverse-gold);
+      }
+    }
+
+    .meter.progress {
+      --meter-height: 0.75rem;
+      flex: 1 0 0;
+      border-radius: 0.0625rem;
+      border: 1px solid #191813;
+      background: #7a7971;
+      align-self: center;
     }
   }
 }

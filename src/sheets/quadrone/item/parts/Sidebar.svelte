@@ -11,6 +11,7 @@
   import { coalesce } from 'src/utils/formatting';
   import type { Snippet } from 'svelte';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
+  import type { Item5e } from 'src/types/item.types';
 
   let context = $derived(getContainerOrItemSheetContextQuadrone());
 
@@ -92,6 +93,30 @@
   let imageLabelColorVariable = $derived(
     coalesce(rarityColorVariable, spellPreparationColor),
   );
+
+  function openItemImagePicker(target: HTMLElement, item: Item5e) {
+    const rect = target.getBoundingClientRect();
+    const current = item.img;
+    return FoundryAdapter.browseFilePicker({
+      type: 'image',
+      current,
+      callback: (path: string) => {
+        item.update({ img: path });
+      },
+      top: rect.top + 40,
+      left: rect.left + 10,
+    });
+  }
+
+  function showItemArt(item: Item5e) {
+    FoundryAdapter.renderImagePopout(item.img, {
+      title: FoundryAdapter.localize('TIDY5E.ItemImageTitle', {
+        subject: item.name,
+      }),
+      shareable: true,
+      uuid: item.uuid,
+    });
+  }
 </script>
 
 <aside
@@ -101,7 +126,18 @@
 >
   <div>
     <div class="item-image-container">
-      <img class="item-image" src={context.item.img} alt={context.item.name} />
+      <a
+        onclick={(ev) =>
+          context.unlocked
+            ? openItemImagePicker(ev.currentTarget, context.item)
+            : showItemArt(context.item)}
+      >
+        <img
+          class="item-image"
+          src={context.item.img}
+          alt={context.item.name}
+        />
+      </a>
       <ItemImageBorder />
     </div>
     {#if 'rarity' in context.system}

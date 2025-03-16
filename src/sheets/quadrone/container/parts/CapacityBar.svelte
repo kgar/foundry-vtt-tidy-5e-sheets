@@ -13,9 +13,18 @@
   interface Props {
     container: Item5e;
     capacity: ContainerCapacityContext;
+    trackerPosition?: 'inside' | 'left';
+    showUnits?: boolean;
+    showIcon?: boolean;
   }
 
-  let { container, capacity }: Props = $props();
+  let {
+    container,
+    capacity,
+    trackerPosition: trackerPosition = 'inside',
+    showUnits = false,
+    showIcon = true,
+  }: Props = $props();
 
   let readableValue = $derived(
     container.system.capacity.type === CONSTANTS.ITEM_CAPACITY_TYPE_WEIGHT
@@ -24,6 +33,8 @@
   );
 
   let percentage = $derived(Math.round(capacity.pct));
+
+  let unitsAbbreviation = $derived(container.system.weight.units);
 
   const localize = FoundryAdapter.localize;
 
@@ -40,6 +51,10 @@
   );
 </script>
 
+{#if trackerPosition === 'left'}
+  {@render tracker()}
+{/if}
+
 <div
   class="meter progress"
   role="meter"
@@ -51,10 +66,21 @@
   style="--bar-percentage: {percentage}%;"
   data-bar-severity={barSeverity}
 >
+  {#if trackerPosition === 'inside'}
+    {@render tracker()}
+  {/if}
+</div>
+
+{#snippet tracker()}
   <div class="label">
-    <i class="fas fa-weight-hanging"></i>
+    {#if showIcon}
+      <i class="fas fa-weight-hanging"></i>
+    {/if}
     <span class="value">{readableValue}</span>
     <span class="separator">/</span>
     <span class="max">{capacityMaxText}</span>
+    {#if showUnits}
+      <span class="units">{unitsAbbreviation}</span>
+    {/if}
   </div>
-</div>
+{/snippet}

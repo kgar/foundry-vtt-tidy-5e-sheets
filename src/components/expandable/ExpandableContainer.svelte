@@ -66,6 +66,8 @@
     &.expanded {
       grid-template-rows: 1fr;
     }
+
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .overflow-y-hidden :global(> *) {

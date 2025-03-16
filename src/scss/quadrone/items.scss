@@ -2,10 +2,13 @@
   --sidebar-expanded-width: 9rem;
   --sidebar-width: var(--sidebar-expanded-width);
   --sidebar-background-image-height: 510px;
-  $sidebar-bg: linear-gradient(180deg,
+  $sidebar-bg: linear-gradient(
+      180deg,
       #31313140 0%,
-      #303236 var(--sidebar-background-image-height)),
-    url(../../systems/dnd5e/ui/official/banner-character-dark.webp) lightgray top center / auto no-repeat;
+      #303236 var(--sidebar-background-image-height)
+    ),
+    url(../../systems/dnd5e/ui/official/banner-character-dark.webp) lightgray
+      top center / auto no-repeat;
 
   // Items and Containers feature a sidebar that extends to the top of the sheet, inside the header area.
   .window-header {
@@ -70,7 +73,8 @@
       }
     }
 
-    &:has(.item-name-wrapper:not(.off-screen)) .item-header-start-document-name {
+    &:has(.item-name-wrapper:not(.off-screen))
+      .item-header-start-document-name {
       display: none;
     }
 
@@ -238,7 +242,8 @@
     width: 100%;
 
     &,
-    &>* {
+    & > *,
+    & img {
       aspect-ratio: 112 / 107;
     }
 
@@ -311,14 +316,14 @@
     row-gap: var(--t5e-spacing-1x);
     flex-wrap: wrap;
 
-    >* {
+    > * {
       text-wrap-mode: nowrap;
       display: flex;
       align-items: center;
       gap: var(--t5e-spacing-1x);
     }
 
-    >*+*::before {
+    > * + *::before {
       content: '';
       width: 0.0625rem;
       height: var(--t5e-spacing-4x);
@@ -394,9 +399,11 @@
     &:is(input) {
       border-radius: 0.125rem;
       border: 1px solid var(--t5e-color-gold, #9f9275);
-      background: linear-gradient(0deg,
+      background: linear-gradient(
+          0deg,
           rgba(255, 255, 255, 0.5) 0%,
-          rgba(255, 255, 255, 0.5) 100%),
+          rgba(255, 255, 255, 0.5) 100%
+        ),
         var(--t5e-component-card-ondefault-default, #f8f4f1);
 
       // Typography
@@ -471,7 +478,6 @@
 
   // TODO: Move editor to its own file and layer.
   .editor {
-
     h1,
     h2,
     h3,
