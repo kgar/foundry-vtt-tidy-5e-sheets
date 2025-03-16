@@ -1,23 +1,5 @@
 ## To Do
 
-- [ ] Implement three dots onclick for container contents item rows
-- [ ] Inventory: Container inline capacity UI
-  - Capacity column
-  - For custom sections, let the columns be what they are, but let the container still do its same thing
-  - [x] It's time to roll out per-section column specification
-    - [x] Draft the proof of concept with Container Contents.
-    - [x] Decide: Column spec in runtime, or in context prep? 
-      - Leaning toward runtime, with the columns being pulled for use in the component where they are needed, to defer their processing to when their tab is pulled in. Propagating the columns through context is burdensome and far too distributed. Consolidating to a runtime file also makes it easier to manage settings, API callers, import/export, etc.
-    - [x] ~~Explore: Can we toggle between Container columns and non-container columns, using a `condition` callback?~~ Using an override system with a fallback to the default column setup. API / World / Client / Sheet-flag settings will progressively override this.
-  - [x] Properly pull column specs for each section in container contents
-  - [ ] Separate capacity bar and values into their own columns, favoring showing the bar when in small view.
-    - [ ] Both columns have no header content.
-  - [ ] Polish and finish capacity bar
-- [x] Container: Image click behaviors
-  - [x] Locked - Show preview
-  - [x] Unlocked - File Picker
-- [ ] (Hightouch investigating) Inventory: subtables have a different set of styles for their header
-- [ ] Inventory: Inline container Empty styles
 - [ ] Review Container sheet to ensure it has everything
 - [ ] Set up default/light/dark menu toggle and add to container
 - [ ] Update sheet lock to work like the default sheets, including the additional render options and intuitive default state
@@ -180,3 +162,21 @@
 - [x] Fix: Weightless container (Bag of Devouring) shows undefined in the Holds text
 - [x] Sorting: Resolve todo - // TODO: This needs to be part of the sort group model, relating sort methods to specific groups.
 - [x] (Hightouch) Complete dark mode for the container
+- [x] Implement three dots onclick for container contents item rows
+- [x] Inventory: Container inline capacity UI
+  - Capacity column
+  - For custom sections, let the columns be what they are, but let the container still do its same thing
+  - [x] It's time to roll out per-section column specification
+    - [x] Draft the proof of concept with Container Contents.
+    - [x] Decide: Column spec in runtime, or in context prep? 
+      - Leaning toward runtime, with the columns being pulled for use in the component where they are needed, to defer their processing to when their tab is pulled in. Propagating the columns through context is burdensome and far too distributed. Consolidating to a runtime file also makes it easier to manage settings, API callers, import/export, etc.
+    - [x] ~~Explore: Can we toggle between Container columns and non-container columns, using a `condition` callback?~~ Using an override system with a fallback to the default column setup. API / World / Client / Sheet-flag settings will progressively override this.
+  - [x] Properly pull column specs for each section in container contents
+  - [x] Separate capacity bar and values into their own columns, favoring showing the bar when in small view.
+    - [x] Both columns have no header content.
+  - [x] Polish and finish capacity bar
+- [x] Container: Image click behaviors
+  - [x] Locked - Show preview
+  - [x] Unlocked - File Picker
+- [x] (Hightouch made first pass) Inventory: subtables have a different set of styles for their header
+- [x] (Hightouch made first pass) Inventory: Inline container Empty styles

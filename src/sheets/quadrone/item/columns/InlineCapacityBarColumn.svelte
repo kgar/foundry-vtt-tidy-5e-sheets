@@ -7,14 +7,12 @@
     $props();
 </script>
 
-<div class="inline-container-capacity">
+<div class="inline-container-capacity-bar">
   {#if rowContext.containerContents}
     <CapacityBar
       container={rowDocument}
       capacity={rowContext.containerContents.capacity}
-      trackerPosition="left"
-      showIcon={false}
-      showUnits={true}
+      showTracker={false}
     />
   {/if}
 </div>

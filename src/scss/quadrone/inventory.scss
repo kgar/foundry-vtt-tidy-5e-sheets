@@ -27,12 +27,8 @@
     }
   }
 
-  .inline-container-capacity {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding-inline: 0.375rem;
+  .inline-container-capacity-tracker {
+    align-self: flex-end;
 
     .label {
       display: flex;
@@ -42,6 +38,14 @@
         color: var(--t5e-color-text-oninverse-gold);
       }
     }
+  }
+
+  .inline-container-capacity-bar {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-inline: 0.375rem;
 
     .meter.progress {
       --meter-height: 0.75rem;

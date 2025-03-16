@@ -129,18 +129,20 @@
               columnWidth={column.width}
               hideUnder={column.hideUnder}
             >
-              {#if column.headerContent.type === 'callback'}
-                {@html column.headerContent.callback?.(
-                  context.document,
-                  context,
-                )}
-              {:else if column.headerContent.type === 'component'}
-                <column.headerContent.component
-                  sheetContext={context}
-                  sheetDocument={context.document}
-                />
-              {:else if column.headerContent.type === 'html'}
-                {@html column.headerContent.html}
+              {#if !!column.headerContent}
+                {#if column.headerContent.type === 'callback'}
+                  {@html column.headerContent.callback?.(
+                    context.document,
+                    context,
+                  )}
+                {:else if column.headerContent.type === 'component'}
+                  <column.headerContent.component
+                    sheetContext={context}
+                    sheetDocument={context.document}
+                  />
+                {:else if column.headerContent.type === 'html'}
+                  {@html column.headerContent.html}
+                {/if}
               {/if}
             </TidyTableHeaderCell>
           {/each}
@@ -256,7 +258,7 @@
                     <action.component {...props} />
                   {/each}
                 {/if}
-                <MenuButton targetSelector="[data-item-id]" />
+                <MenuButton targetSelector="[data-context-menu]" />
               </TidyTableCell>
             {/snippet}
           </TidyItemTableRow>
