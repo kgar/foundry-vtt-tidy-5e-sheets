@@ -863,5 +863,11 @@
     "TIDY5E.RollRecharge.Label": "Перезарядка",
     "TIDY5E.SortMethod.AlphabeticalAscending": "Сортувати за алфавітом за зростанням",
     "TIDY5E.SortMethod.AlphabeticalDescending": "Сортувати за алфавітом спадання",
-    "TIDY5E.SortMenu.OptionPriority": "Пріоритет"
+    "TIDY5E.SortMenu.OptionPriority": "Пріоритет",
+    "TIDY5E.ConfigureTab.Title": "Налаштувати {tabName}",
+    "TIDY5E.DisplayOptions.Title": "Параметри відображення",
+    "TIDY5E.DisplayOptions.ShowContainerRow.Label": "Показати рядок контейнера",
+    "TIDY5E.Hidden": "Прихований",
+    "TIDY5E.Options.Title": "Опції",
+    "TIDY5E.Visible": "Видно"
 }

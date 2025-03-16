@@ -871,5 +871,14 @@
     "TIDY5E.ContextMenuActionShowQuantity": "Mostra Quantità",
     "TIDY5E.RollRecharge.Label": "Ricarica",
     "TIDY5E.Utilities.SpellPips": "Pallini Incantesimo",
-    "TIDY5E.Utilities.SpellValueMax": "Valore/Max Incantesimo"
+    "TIDY5E.Utilities.SpellValueMax": "Valore/Max Incantesimo",
+    "TIDY5E.SortMethod.AlphabeticalDescending": "Ordine Alfabetico Decrescente",
+    "TIDY5E.SortMethod.AlphabeticalAscending": "Ordine Alfabetico Crescente",
+    "TIDY5E.SortMenu.OptionPriority": "Priorità",
+    "TIDY5E.Visible": "Visibile",
+    "TIDY5E.Hidden": "Nascosto",
+    "TIDY5E.Options.Title": "Opzioni",
+    "TIDY5E.ConfigureTab.Title": "Configura {tabName}",
+    "TIDY5E.DisplayOptions.Title": "Opzioni Visualizzazione",
+    "TIDY5E.DisplayOptions.ShowContainerRow.Label": "Mostra riga contenitore"
 }
