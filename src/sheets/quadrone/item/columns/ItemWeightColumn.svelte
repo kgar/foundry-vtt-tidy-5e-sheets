@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ColumnCellProps } from 'src/types/types';
+  import type { ColumnCellProps } from 'src/runtime/item/item.types';
 
   let { rowDocument: item, rowContext }: ColumnCellProps = $props();
 

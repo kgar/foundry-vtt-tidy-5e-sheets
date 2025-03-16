@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ColumnCellProps } from 'src/types/types';
+  import type { ColumnCellProps } from 'src/runtime/item/item.types';
   import CapacityBar from 'src/sheets/quadrone/container/parts/CapacityBar.svelte';
   import type { ContainerItemContext } from 'src/types/item.types';
 

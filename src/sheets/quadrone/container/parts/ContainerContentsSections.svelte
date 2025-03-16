@@ -5,11 +5,7 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ContainerItemContext, Item5e } from 'src/types/item.types';
-  import type {
-    Actor5e,
-    ColumnSpecification,
-    InventorySection,
-  } from 'src/types/types';
+  import type { Actor5e, InventorySection } from 'src/types/types';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
