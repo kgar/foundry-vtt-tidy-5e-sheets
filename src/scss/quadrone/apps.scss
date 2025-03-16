@@ -13,6 +13,8 @@
   box-shadow: var(--t5e-drop-shadow-sheet);
   background-size: cover;
 
+
+  // TODO: This isn't working and is being overridden by a blur effect on the container that can't be removed.
   &::before,
   &::after {
     content: '';
@@ -30,14 +32,12 @@
     background: var(--t5e-component-card-ondefault-default);
 
     &::before {
-      background: url(../../modules/tidy5e-sheet/images/texture-gray-1.webp)
-        no-repeat top center;
+      background: url(../../modules/tidy5e-sheet/images/texture-gray-1.webp) no-repeat top center;
       background-size: cover;
     }
 
     &::after {
-      background: url(../../modules/tidy5e-sheet/images/texture-gray-2.webp)
-        no-repeat bottom center;
+      background: url(../../modules/tidy5e-sheet/images/texture-gray-2.webp) no-repeat bottom center;
       background-size: cover;
     }
   }
@@ -46,8 +46,7 @@
     background: var(--t5e-component-card-oninverse-darker);
 
     &::before {
-      background: url(../../modules/tidy5e-sheet/images/denim065.png) no-repeat
-        top center;
+      background: url(../../modules/tidy5e-sheet/images/denim065.png) repeat top center;
       background-size: cover;
     }
   }
@@ -99,7 +98,7 @@
     align-items: center;
     padding-inline-start: 0.75rem;
 
-    > * {
+    >* {
       max-block-size: 100%;
     }
 
@@ -124,7 +123,7 @@
       box-shadow: 0 0 0.375rem var(--dnd5e-shadow-45);
     }
 
-    .header-control > button {
+    .header-control>button {
       color: var(--t5e-color-text-ondefault-lighter);
       justify-content: flex-start;
       gap: 0.5rem;
@@ -151,9 +150,7 @@
     }
   }
 
-  &[data-tidy-lock-configure-sheet='true']
-    .window-header
-    [data-action='configureSheet'] {
+  &[data-tidy-lock-configure-sheet='true'] .window-header [data-action='configureSheet'] {
     display: none;
   }
 
@@ -163,6 +160,7 @@
   }
 
   &.minimized {
+
     &::before,
     &::after {
       display: none;

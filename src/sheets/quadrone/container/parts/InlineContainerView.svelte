@@ -70,7 +70,6 @@
   class={!searchResults.show(container.uuid) ? 'hidden' : ''}
 >
   <div class="inline-content-view filigree-guideline-and-contents full-height">
-    <VerticalFiligreeGuideline />
     <div
       class="flex-column extra-small-gap flex-1 inline-container-view"
       data-tidy-container-id={container.id}

@@ -112,6 +112,7 @@
       data-custom-section={section.custom ? true : null}
     >
       {#snippet header()}
+        <!-- TODO: Remove .dark for nested table header rows -->
         <TidyTableHeaderRow class="dark">
           <TidyTableHeaderCell primary={true} class="header-label-cell">
             <h3>
@@ -163,6 +164,7 @@
             'legendary',
             'artifact',
           ].includes(item.system.rarity)}
+          <!-- TODO: Add .expanded class to the row when the item is expanded -->
           <TidyItemTableRow
             {item}
             hidden={!searchResults.show(item.uuid)}
