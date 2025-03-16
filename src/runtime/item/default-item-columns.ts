@@ -1,4 +1,4 @@
-import type { ColumnSpecification } from 'src/types/types';
+import type { ColumnSpecification } from './item.types';
 import ItemQuantityColumn from 'src/sheets/quadrone/item/columns/ItemQuantityColumn.svelte';
 import InlineCapacityColumn from 'src/sheets/quadrone/item/columns/InlineCapacityColumn.svelte';
 import ItemPriceColumn from 'src/sheets/quadrone/item/columns/ItemPriceColumn.svelte';

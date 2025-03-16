@@ -106,7 +106,7 @@
 
 {#each configuredContents as section (section.key)}
   {#if section.show}
-    {@const columns = ItemColumnRuntime.getDocumentColumnsQuadrone(
+    {@const columns = ItemColumnRuntime.getSheetTabSectionColumnsQuadrone(
       container,
       tabId,
       section,

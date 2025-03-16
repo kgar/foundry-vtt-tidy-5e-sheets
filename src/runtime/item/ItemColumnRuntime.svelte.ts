@@ -1,11 +1,10 @@
-import type { ColumnSpecification, TidySectionBase } from 'src/types/types';
+import type { TidySectionBase } from 'src/types/types';
 import type {
   ColumnSpecDocumentTypesToTabs,
-  ColumnSpecTabIdsToSectionKeys,
-  DefeaultColumnSpecDocumentTypesToTabs,
+  ColumnSpecification,
 } from './item.types';
 import { CONSTANTS } from 'src/constants';
-import { defaultItemColumns } from './dault-item-columns';
+import { defaultItemColumns } from './default-item-columns';
 
 export class ItemColumnRuntime {
   static _registeredItemColumns: Record<string, ColumnSpecification> = {};
@@ -40,7 +39,7 @@ export class ItemColumnRuntime {
     },
   };
 
-  static getDocumentColumnsQuadrone(
+  static getSheetTabSectionColumnsQuadrone(
     document: any,
     tabId: string,
     section: TidySectionBase

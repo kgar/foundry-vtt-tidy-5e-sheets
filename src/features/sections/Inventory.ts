@@ -42,7 +42,6 @@ export class Inventory {
         show: true,
         custom: undefined,
         isExternal: false,
-        isContainerSection: type === CONSTANTS.ITEM_TYPE_CONTAINER,
         ...options,
       };
     }

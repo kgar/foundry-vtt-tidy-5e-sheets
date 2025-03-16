@@ -114,59 +114,6 @@ export type LinkedUses = {
 
 export type ActorInventoryTypes = Record<string, InventorySection>;
 
-// COLUMNS
-// TODO: Move to ItemColumnsRuntime; support per-section customization (with $state) with fallback to tab-specific
-export type ColumnSpecification = {
-  key: string;
-  headerContent:
-    | {
-        type: 'component';
-        component: Component<ColumnHeaderProps>;
-      }
-    | {
-        type: 'callback';
-        callback: (sheetDocument: any, sheetContext: any) => string;
-      }
-    | {
-        type: 'html';
-        html: string;
-      };
-  cellContent:
-    | {
-        type: 'component';
-        component: Component<ColumnCellProps>;
-      }
-    | {
-        type: 'callback';
-        callback: (rowDocument: any, rowContext: any) => string;
-      };
-  width: string; // default: "5rem"
-  hideUnder?: number;
-  headerClasses?: string;
-  cellClasses?: string;
-  condition?: <TSection extends TidySectionBase>(
-    data: ColumnSpecificationConditionArgs<any, TSection>
-  ) => boolean;
-};
-
-export type ColumnHeaderProps<TDocument = any, TContext = any> = {
-  sheetDocument: TDocument;
-  sheetContext: TContext;
-};
-
-export type ColumnCellProps<TDocument = any, TContext = any> = {
-  rowDocument: TDocument;
-  rowContext: TContext;
-};
-
-export type ColumnSpecificationConditionArgs<
-  TDocument = any,
-  TSection = TidySectionBase
-> = {
-  sheetDocument: TDocument;
-  section: TSection;
-};
-
 export type CustomSectionOptions = {
   section: string;
   creationItemTypes: string[];
@@ -175,7 +122,6 @@ export type CustomSectionOptions = {
 export type InventorySection = {
   items: Item5e[];
   canCreate: boolean;
-  isContainerSection?: boolean;
 } & TidySectionBase;
 
 export type GenericFavoriteSection = {
