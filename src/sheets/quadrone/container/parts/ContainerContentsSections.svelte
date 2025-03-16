@@ -24,11 +24,7 @@
   import TidyItemTableRow from 'src/components/table-quadrone/TidyItemTableRow.svelte';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import ItemQuantityColumn from 'src/sheets/quadrone/item/columns/ItemQuantityColumn.svelte';
-  import InlineCapacityColumn from 'src/sheets/quadrone/item/columns/InlineCapacityColumn.svelte';
-  import ItemPriceColumn from 'src/sheets/quadrone/item/columns/ItemPriceColumn.svelte';
-  import ItemChargesColumn from 'src/sheets/quadrone/item/columns/ItemChargesColumn.svelte';
-  import ItemWeightColumn from 'src/sheets/quadrone/item/columns/ItemWeightColumn.svelte';
+  import { ItemColumnRuntime } from 'src/runtime/item/ItemColumnRuntime.svelte';
 
   interface Props {
     contents: InventorySection[];
@@ -106,86 +102,15 @@
   let context = $derived(getSheetContext());
 
   const localize = FoundryAdapter.localize;
-
-  let inventoryColumns: ColumnSpecification[] = [
-    // Charges
-    {
-      headerContent: {
-        type: 'html',
-        html: FoundryAdapter.localize('DND5E.Charges'),
-      },
-      cellContent: {
-        type: 'component',
-        component: ItemChargesColumn,
-      },
-      hideUnder: 400,
-      width: '5rem',
-      cellClasses: 'inline-uses',
-    },
-    // Price
-    {
-      headerContent: {
-        type: 'html',
-        html: FoundryAdapter.localize('DND5E.Price'),
-      },
-      cellContent: {
-        type: 'component',
-        component: ItemPriceColumn,
-      },
-      hideUnder: 550,
-      width: '5.5rem',
-    },
-    // Quantity
-    {
-      headerContent: {
-        type: 'html',
-        html: FoundryAdapter.localize('DND5E.Quantity'),
-      },
-      cellContent: {
-        type: 'component',
-        component: ItemQuantityColumn,
-      },
-      width: '5rem',
-    },
-    // Weight
-    {
-      headerContent: {
-        type: 'html',
-        html: FoundryAdapter.localize('DND5E.Weight'),
-      },
-      cellContent: {
-        type: 'component',
-        component: ItemWeightColumn,
-      },
-      hideUnder: 500,
-      width: '5rem',
-    },
-  ];
-
-  let containerColumns: ColumnSpecification[] = [
-    // Inline Container Capacity
-    {
-      headerContent: {
-        type: 'callback',
-        callback: () =>
-          FoundryAdapter.localize('DND5E.CONTAINER.FIELDS.capacity.label'),
-      },
-      cellContent: {
-        type: 'component',
-        component: InlineCapacityColumn,
-      },
-      width: '10rem',
-      cellClasses: 'item-label text-cell',
-      hideUnder: 400,
-    },
-  ];
 </script>
 
 {#each configuredContents as section (section.key)}
   {#if section.show}
-    {@const columns = section.isContainerSection
-      ? containerColumns
-      : inventoryColumns}
+    {@const columns = ItemColumnRuntime.getDocumentColumnsQuadrone(
+      container,
+      tabId,
+      section,
+    )}
     <TidyTable
       key={section.key}
       data-custom-section={section.custom ? true : null}

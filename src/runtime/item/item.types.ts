@@ -1,5 +1,6 @@
 import type { Item5e } from 'src/types/item.types';
 import type { SortGroup, SortMethodScheme } from 'src/types/sort.types';
+import type { ColumnSpecification } from 'src/types/types';
 
 // Filtering
 export type ItemFilter = {
@@ -50,3 +51,14 @@ export type DocumentTypesToSortGroupTabs = Record<
   DocumentType,
   SortTabsToSortGroups
 >;
+
+// Columns
+export type ColumnSpecSectionKeysToColumns = Record<string, ColumnSpecification[]>;
+
+export type ColumnSpecTabIdsToSectionKeys = Record<string, ColumnSpecSectionKeysToColumns>;
+
+export type ColumnSpecDocumentTypesToTabs = Record<string, ColumnSpecTabIdsToSectionKeys>;
+
+export type DefaultColumnSpecTabsToColumns = Record<string, ColumnSpecification[]>;
+
+export type DefeaultColumnSpecDocumentTypesToTabs = Record<string, DefaultColumnSpecTabsToColumns>;

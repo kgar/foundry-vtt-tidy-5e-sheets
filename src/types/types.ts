@@ -117,6 +117,7 @@ export type ActorInventoryTypes = Record<string, InventorySection>;
 // COLUMNS
 // TODO: Move to ItemColumnsRuntime; support per-section customization (with $state) with fallback to tab-specific
 export type ColumnSpecification = {
+  key: string;
   headerContent:
     | {
         type: 'component';
@@ -143,7 +144,9 @@ export type ColumnSpecification = {
   hideUnder?: number;
   headerClasses?: string;
   cellClasses?: string;
-  condition?: (data: ColumnSpecificationConditionArgs) => boolean;
+  condition?: <TSection extends TidySectionBase>(
+    data: ColumnSpecificationConditionArgs<any, TSection>
+  ) => boolean;
 };
 
 export type ColumnHeaderProps<TDocument = any, TContext = any> = {
@@ -158,10 +161,10 @@ export type ColumnCellProps<TDocument = any, TContext = any> = {
 
 export type ColumnSpecificationConditionArgs<
   TDocument = any,
-  TContext = any
+  TSection = TidySectionBase
 > = {
   sheetDocument: TDocument;
-  sheetContext: TContext;
+  section: TSection;
 };
 
 export type CustomSectionOptions = {
@@ -172,6 +175,7 @@ export type CustomSectionOptions = {
 export type InventorySection = {
   items: Item5e[];
   canCreate: boolean;
+  isContainerSection?: boolean;
 } & TidySectionBase;
 
 export type GenericFavoriteSection = {
@@ -202,8 +206,6 @@ export type TidySectionBase = {
   key: string;
   show: boolean; // default: true
   isExternal?: boolean;
-  // Temporary measure until section-specific custom columns are implemented
-  isContainerSection?: boolean;
 };
 
 export type FeatureSection = {
