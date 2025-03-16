@@ -12,9 +12,9 @@
   - [ ] Separate capacity bar and values into their own columns, favoring showing the bar when in small view.
     - [ ] Both columns have no header content.
   - [ ] Polish and finish capacity bar
-- [ ] Container: Image click behaviors
-  - [ ] Locked - Show preview
-  - [ ] Unlocked - File Picker
+- [x] Container: Image click behaviors
+  - [x] Locked - Show preview
+  - [x] Unlocked - File Picker
 - [ ] (Hightouch investigating) Inventory: subtables have a different set of styles for their header
 - [ ] Inventory: Inline container Empty styles
 - [ ] Review Container sheet to ensure it has everything
