@@ -41,6 +41,12 @@
   input[type='radio'] {
     margin: 0;
   }
+
+  // TODO: when game.release.generation > 13, lower the specificity of this rule to bare minimum
+  .themed.theme-dark & .window-content, .themed.theme-dark:is(&) .window-content {
+    backdrop-filter: unset;
+    -webkit-backdrop-filter: unset;
+  }
 }
 
 /* Form Resets */

@@ -56,7 +56,7 @@ export type DocumentTypesToSortGroupTabs = Record<
 // Columns
 export type ColumnSpecification = {
   key: string;
-  headerContent:
+  headerContent?:
     | {
         type: 'component';
         component: Component<ColumnHeaderProps>;

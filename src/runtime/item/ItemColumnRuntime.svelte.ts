@@ -27,7 +27,8 @@ export class ItemColumnRuntime {
     [CONSTANTS.ITEM_TYPE_CONTAINER]: {
       [CONSTANTS.TAB_CONTAINER_CONTENTS]: {
         [CONSTANTS.ITEM_TYPE_CONTAINER]: [
-          defaultItemColumns.inventoryContainerCapacity,
+          defaultItemColumns.inventoryContainerCapacityTracker,
+          defaultItemColumns.inventoryContainerCapacityBar,
         ],
         [CONSTANTS.COLUMN_SPEC_SECTION_KEY_FALLBACK]: [
           defaultItemColumns.inventoryCharges,

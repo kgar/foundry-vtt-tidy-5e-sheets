@@ -1,10 +1,11 @@
 import type { ColumnSpecification } from './item.types';
 import ItemQuantityColumn from 'src/sheets/quadrone/item/columns/ItemQuantityColumn.svelte';
-import InlineCapacityColumn from 'src/sheets/quadrone/item/columns/InlineCapacityColumn.svelte';
+import InlineCapacityBarColumn from 'src/sheets/quadrone/item/columns/InlineCapacityBarColumn.svelte';
 import ItemPriceColumn from 'src/sheets/quadrone/item/columns/ItemPriceColumn.svelte';
 import ItemChargesColumn from 'src/sheets/quadrone/item/columns/ItemChargesColumn.svelte';
 import ItemWeightColumn from 'src/sheets/quadrone/item/columns/ItemWeightColumn.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import InlineCapacityTrackerColumn from 'src/sheets/quadrone/item/columns/InlineCapacityTrackerColumn.svelte';
 
 export const defaultItemColumns = {
   // Charges
@@ -63,19 +64,25 @@ export const defaultItemColumns = {
     hideUnder: 500,
     width: '5rem',
   },
-  // Inline Container Capacity
-  inventoryContainerCapacity: {
-    key: 'inventoryContainerCapacity',
-    headerContent: {
-      type: 'callback',
-      callback: () =>
-        FoundryAdapter.localize('DND5E.CONTAINER.FIELDS.capacity.label'),
-    },
+  // Inline Container Capacity Tracker
+  inventoryContainerCapacityTracker: {
+    key: 'inventoryContainerCapacityTracker',
     cellContent: {
       type: 'component',
-      component: InlineCapacityColumn,
+      component: InlineCapacityTrackerColumn,
     },
-    width: '10rem',
+    width: '7rem',
+    cellClasses: 'item-label text-cell',
+    hideUnder: 450,
+  },
+  // Inline Container Capacity Bar
+  inventoryContainerCapacityBar: {
+    key: 'inventoryContainerCapacityBar',
+    cellContent: {
+      type: 'component',
+      component: InlineCapacityBarColumn,
+    },
+    width: '7rem',
     cellClasses: 'item-label text-cell',
     hideUnder: 400,
   },

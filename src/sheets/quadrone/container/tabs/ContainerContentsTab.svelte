@@ -155,6 +155,7 @@
     lockItemQuantity={context.lockItemQuantity}
     sheetDocument={context.item}
     unlocked={context.unlocked}
+    root={true}
   />
 </div>
 
