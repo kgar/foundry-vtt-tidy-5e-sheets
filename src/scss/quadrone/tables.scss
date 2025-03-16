@@ -23,11 +23,9 @@
   }
 
   .tidy-table-header-row {
-    background: linear-gradient(
-      to right,
-      var(--t5e-theme-color-darkest),
-      var(--t5e-theme-color-default)
-    );
+    background: linear-gradient(to right,
+        var(--t5e-theme-color-darkest),
+        var(--t5e-theme-color-default));
     border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 0.125rem;
     color: var(--t5e-color-text-ondefault-default);
@@ -83,7 +81,7 @@
       padding-inline-start: 0;
       padding-block-end: 0.09375rem;
 
-      > * {
+      >* {
         font-family: var(--t5e-font-family-title);
         font-size: var(--font-size-16);
         line-height: 1rem;
@@ -109,51 +107,39 @@
     }
 
     &.prepared {
-      background: linear-gradient(
-        to right,
-        var(--t5e-spellcasting-default-darker),
-        var(--t5e-spellcasting-default)
-      );
+      background: linear-gradient(to right,
+          var(--t5e-spellcasting-default-darker),
+          var(--t5e-spellcasting-default));
     }
 
     &.always-prepared {
-      background: linear-gradient(
-        to right,
-        var(--t5e-spellcasting-always-darker),
-        var(--t5e-spellcasting-always)
-      );
+      background: linear-gradient(to right,
+          var(--t5e-spellcasting-always-darker),
+          var(--t5e-spellcasting-always));
     }
 
     &.pact {
-      background: linear-gradient(
-        to right,
-        var(--t5e-spellcasting-pact-darker),
-        var(--t5e-spellcasting-pact)
-      );
+      background: linear-gradient(to right,
+          var(--t5e-spellcasting-pact-darker),
+          var(--t5e-spellcasting-pact));
     }
 
     &.at-will {
-      background: linear-gradient(
-        to right,
-        var(--t5e-spellcasting-atwill-darker),
-        var(--t5e-spellcasting-atwill)
-      );
+      background: linear-gradient(to right,
+          var(--t5e-spellcasting-atwill-darker),
+          var(--t5e-spellcasting-atwill));
     }
 
     &.ritual {
-      background: linear-gradient(
-        to right,
-        var(--t5e-spellcasting-ritual-darker),
-        var(--t5e-spellcasting-ritual)
-      );
+      background: linear-gradient(to right,
+          var(--t5e-spellcasting-ritual-darker),
+          var(--t5e-spellcasting-ritual));
     }
 
     &.innate {
-      background: linear-gradient(
-        to right,
-        var(--t5e-spellcasting-innate-darker),
-        var(--t5e-spellcasting-innate)
-      );
+      background: linear-gradient(to right,
+          var(--t5e-spellcasting-innate-darker),
+          var(--t5e-spellcasting-innate));
     }
   }
 
@@ -161,14 +147,11 @@
     border-radius: 0.125rem;
     border-width: 0 0 1px 0;
     border-style: solid;
-    border-image: linear-gradient(
-        to right,
+    border-image: linear-gradient(to right,
         rgba(143, 123, 78, 0) 0%,
         rgba(143, 123, 78, 0.25) 20%,
         rgba(143, 123, 78, 0.25) 80%,
-        rgba(143, 123, 78, 0) 100%
-      )
-      0 0 1 0;
+        rgba(143, 123, 78, 0) 100%) 0 0 1 0;
 
     &.equipped {
       background-color: var(--t5e-component-card-ondefault-default);
@@ -179,6 +162,7 @@
     }
 
     &.spell:not(.equipped) {
+
       .item-label,
       .item-context {
         font-style: italic;
@@ -187,11 +171,9 @@
     }
 
     &.rarity {
-      background: linear-gradient(
-        to right,
-        oklch(from var(--t5e-item-row-color) l c h / 0.3) 10%,
-        transparent 50%
-      );
+      background: linear-gradient(to right,
+          oklch(from var(--t5e-item-row-color) l c h / 0.3) 10%,
+          transparent 50%);
 
       .item-use-button {
         outline: 1px solid var(--t5e-item-use-button-border-color);
@@ -219,14 +201,11 @@
 
     &:not(:last-child) {
       border-right: 1px solid var(--t5e-table-row-divider);
-      border-image: linear-gradient(
-          to bottom,
+      border-image: linear-gradient(to bottom,
           transparent 10%,
           var(--t5e-table-row-divider) 10%,
           var(--t5e-table-row-divider) 90%,
-          transparent 90%
-        )
-        1;
+          transparent 90%) 1;
 
       &.tidy-table-header-cell {
         border-right-color: transparent;
@@ -239,7 +218,7 @@
       justify-content: stretch;
       border-right: none;
 
-      > * {
+      >* {
         align-content: center;
       }
     }
@@ -386,7 +365,7 @@
         display: flex;
         align-items: stretch;
 
-        > * {
+        >* {
           align-content: center;
         }
       }
@@ -529,4 +508,60 @@
 
   /* Inline Containers */
   // TODO
+  .expandable-expanded {
+    // background: linear-gradient(90deg, var(--t5e-component-card-onDefault-darker, #1B1D23) 0.59%, var(--t5e-component-card-onDefault-default, #252830) 44%);
+  }
+
+  .empty-container {
+    min-height: var(--t5e-spacing-8x);
+    align-content: center;
+    background-color: var(--t5e-component-card-default);
+    color: var(--t5e-color-text-ondefault-lightest);
+  }
+
+  .inline-content-view {
+    border-radius: 0 0 0.125rem 0.125rem;
+    background-color: red;
+    background: linear-gradient(90deg,
+        var(--t5e-color-palette-white) 0.59%,
+        var(--t5e-component-card-ondefault-default) 44%);
+    padding: var(--t5e-spacing-1x) 0 var(--t5e-spacing-2x) var(--t5e-spacing-4x);
+    border-width: 0 0 1px 0;
+    border-style: solid;
+    border-image: linear-gradient(to right,
+        rgba(143, 123, 78, 0) 0%,
+        rgba(143, 123, 78, 0.25) 20%,
+        rgba(143, 123, 78, 0.25) 80%,
+        rgba(143, 123, 78, 0) 100%) 0 0 1 0;
+
+    .tidy-table-header-row {
+      background: rgba(0, 0, 0, 0.12);
+    }
+
+    .tidy-table-row-container {
+      background: var(--t5e-component-card-ondefault-default);
+    }
+  }
+
+  &:where(.theme-light) {
+    .inline-content-view {
+      .tidy-table-header-row .tidy-table-header-cell {}
+    }
+
+    &:where(.theme-dark) {
+      .inline-content-view {
+        background: linear-gradient(90deg,
+            var(--t5e-component-card-oninverse-darker, #1B1D23) 0.59%,
+            var(--t5e-component-card-oninverse-default, #252830) 44%);
+
+        .tidy-table-header-row {
+          background: rgba(255, 255, 255, 0.12);
+        }
+
+        .tidy-table-row-container {
+          background: var(--t5e-component-card-oninverse-default);
+        }
+      }
+    }
+  }
 }
