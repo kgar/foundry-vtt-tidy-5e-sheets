@@ -1,5 +1,6 @@
 ## To Do
 
+- [ ] Implement three dots onclick for container contents item rows
 - [ ] Inventory: Container inline capacity UI
   - Capacity column
   - For custom sections, let the columns be what they are, but let the container still do its same thing
