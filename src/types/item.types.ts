@@ -100,7 +100,8 @@ export type ItemSheetContext = {
   itemType: string;
   itemStatus: string | null;
   itemSubtypes?: Record<string, string>;
-  labels: Record<string, string>;
+  // TODO: Possibly apply typings here. If it's not feasible, we're better off not wasting time trying to chase after every item's specific labels in TS typings.
+  labels: Record<string, any>;
   limited: boolean;
   lockItemQuantity: boolean;
   modernRules: boolean;

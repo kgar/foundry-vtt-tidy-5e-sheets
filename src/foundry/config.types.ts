@@ -42,6 +42,13 @@ interface CommunicationTypeConfig {
   label: string;
 }
 
+type SpellSchool = {
+  label: string;
+  icon: string;
+  fullKey: string;
+  reference: string;
+};
+
 export type CONFIG = {
   debug: {
     applications: boolean;
@@ -4178,55 +4185,15 @@ export type CONFIG = {
       level: string;
     };
     spellSchools: {
-      abj: {
-        label: string;
-        icon: string;
-        fullKey: string;
-        reference: string;
-      };
-      con: {
-        label: string;
-        icon: string;
-        fullKey: string;
-        reference: string;
-      };
-      div: {
-        label: string;
-        icon: string;
-        fullKey: string;
-        reference: string;
-      };
-      enc: {
-        label: string;
-        icon: string;
-        fullKey: string;
-        reference: string;
-      };
-      evo: {
-        label: string;
-        icon: string;
-        fullKey: string;
-        reference: string;
-      };
-      ill: {
-        label: string;
-        icon: string;
-        fullKey: string;
-        reference: string;
-      };
-      nec: {
-        label: string;
-        icon: string;
-        fullKey: string;
-        reference: string;
-      };
-      trs: {
-        label: string;
-        icon: string;
-        fullKey: string;
-        reference: string;
-      };
-    };
+      abj: SpellSchool;
+      con: SpellSchool;
+      div: SpellSchool;
+      enc: SpellSchool;
+      evo: SpellSchool;
+      ill: SpellSchool;
+      nec: SpellSchool;
+      trs: SpellSchool;
+    } & Record<string, SpellSchool>;
     spellListTypes: {
       class: string;
       subclass: string;

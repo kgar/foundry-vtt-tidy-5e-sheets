@@ -1,9 +1,11 @@
 ## To Do
 
+- [ ] Implement Item Effects tab
+- [ ] Implement Item Activities tab
+- [ ] Notify Hightouch that spell sheet is ready for final review / polishing
+- [ ] Port spell block to classic sheets and info cards
+- [ ] Propagate `sheet-header` class setup to all item sheets
 - [ ] Review Container sheet to ensure it has everything
-- [ ] Set up default/light/dark menu toggle and add to container
-- [ ] Update sheet lock to work like the default sheets, including the additional render options and intuitive default state
-- [ ] Item cards?
 - [ ] Implement sheet header contents
   - [ ] Background
     - [ ] subtitle
@@ -53,16 +55,6 @@
       - [ ] Weight
       - [ ] Quantity
   - [ ] Species
-  - [ ] Spell
-    - [ ] subtitle
-      - [ ] Level (1st Level)
-      - [ ] School
-    - [ ] summary
-      - [ ] (when available) Charges
-      - [ ] (when relevant) Cooldown
-      - [ ] charges
-      - [ ] linked item (Necklace of Fireballs)
-    - [ ] School Image across from title / subtitle
   - [ ] Subclass
     - [ ] subtitle
   - [ ] Tool
@@ -74,9 +66,9 @@
       - [ ] Price
       - [ ] Weight
       - [ ] Quantity
-  - [ ] Weapon
+  - [x] Weapon
     - [x] subtitle
-    - [ ] Summary
+    - [x] Summary
       - [x] (when available) Charges
       - [x] (when relevant) Cooldown
       - [x] Price
@@ -114,6 +106,9 @@
 - [ ] Configure {TabId}: include a hook that allows people to pass in their own settings.
 - [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
 - [ ] Resolve TODO -  // TODO: Make this a callback to send through to the component for preparing sections properly
+- [ ] Set up default/light/dark menu toggle and add to container
+- [ ] Update sheet lock to work like the default sheets, including the additional render options and intuitive default state
+- [ ] Item cards?
 
 ### Stretch
 
@@ -180,3 +175,13 @@
   - [x] Unlocked - File Picker
 - [x] (Hightouch made first pass) Inventory: subtables have a different set of styles for their header
 - [x] (Hightouch made first pass) Inventory: Inline container Empty styles
+- [x] Implement spell sheet spell block in sidebar
+- [x] Implement spell sheet header contents
+  - [x] subtitle
+    - [x] Level (1st Level)
+    - [x] School
+  - [x] summary
+    - [x] (when available) Charges
+    - [x] (when relevant) Cooldown
+    - [x] linked item (Necklace of Fireballs)
+  - [x] School Image across from title / subtitle
