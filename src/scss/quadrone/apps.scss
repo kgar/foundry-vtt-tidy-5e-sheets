@@ -13,7 +13,6 @@
   box-shadow: var(--t5e-drop-shadow-sheet);
   background-size: cover;
 
-
   // TODO: This isn't working and is being overridden by a blur effect on the container that can't be removed.
   &::before,
   &::after {
@@ -32,12 +31,14 @@
     background: var(--t5e-component-card-ondefault-default);
 
     &::before {
-      background: url(../../modules/tidy5e-sheet/images/texture-gray-1.webp) no-repeat top center;
+      background: url(../../modules/tidy5e-sheet/images/texture-gray-1.webp)
+        no-repeat top center;
       background-size: cover;
     }
 
     &::after {
-      background: url(../../modules/tidy5e-sheet/images/texture-gray-2.webp) no-repeat bottom center;
+      background: url(../../modules/tidy5e-sheet/images/texture-gray-2.webp)
+        no-repeat bottom center;
       background-size: cover;
     }
   }
@@ -46,7 +47,8 @@
     background: var(--t5e-component-card-oninverse-darker);
 
     &::before {
-      background: url(../../modules/tidy5e-sheet/images/denim065.png) repeat top center;
+      background: url(../../modules/tidy5e-sheet/images/denim065.png) repeat top
+        center;
       background-size: cover;
     }
   }
@@ -98,7 +100,7 @@
     align-items: center;
     padding-inline-start: 0.75rem;
 
-    >* {
+    > * {
       max-block-size: 100%;
     }
 
@@ -123,7 +125,7 @@
       box-shadow: 0 0 0.375rem var(--dnd5e-shadow-45);
     }
 
-    .header-control>button {
+    .header-control > button {
       color: var(--t5e-color-text-ondefault-lighter);
       justify-content: flex-start;
       gap: 0.5rem;
@@ -150,7 +152,9 @@
     }
   }
 
-  &[data-tidy-lock-configure-sheet='true'] .window-header [data-action='configureSheet'] {
+  &[data-tidy-lock-configure-sheet='true']
+    .window-header
+    [data-action='configureSheet'] {
     display: none;
   }
 
@@ -160,7 +164,6 @@
   }
 
   &.minimized {
-
     &::before,
     &::after {
       display: none;
@@ -307,15 +310,6 @@
 
   /* Prose Mirror Editor Customizations */
 
-  .editor {
-    .secret {
-      border-radius: var(--t5e-component-card-radius);
-      border: 0.0625rem solid var(--t5e-table-row-divider);
-      background: var(--t5e-component-card-ondefault-darker);
-      mix-blend-mode: multiply;
-    }
-  }
-
   a[href] {
     /* : has([class='']) */
     color: var(--t5e-theme-color-default);
@@ -366,7 +360,6 @@
       }
     }
   }
-
 
   .enricher-action {
     margin-inline: var(--t5e-spacing-1);
@@ -439,17 +432,17 @@
     }
 
     /* Reset margins for nested lists */
-    >ul,
-    >ol {
+    > ul,
+    > ol {
       margin-top: 0;
       margin-bottom: 0;
 
       /* But maintain the spacing pattern for their list items */
-      >li:first-child {
+      > li:first-child {
         margin-top: var(--t5e-spacing-1x);
       }
 
-      >li:last-child {
+      > li:last-child {
         margin-bottom: var(--t5e-spacing-1x);
       }
     }
@@ -480,20 +473,43 @@
   }
 
   hr {
-    background-image: linear-gradient(to right,
-        transparent 5%,
-        var(--t5e-theme-color-lightest) 40%,
-        var(--t5e-theme-color-darker) 49.75%,
-        transparent 49.75%,
-        transparent 50.25%,
-        var(--t5e-theme-color-darker) 50.25%,
-        var(--t5e-theme-color-lightest) 60%,
-        transparent 95%);
+    background-image: linear-gradient(
+      to right,
+      transparent 5%,
+      var(--t5e-theme-color-lightest) 40%,
+      var(--t5e-theme-color-darker) 49.75%,
+      transparent 49.75%,
+      transparent 50.25%,
+      var(--t5e-theme-color-darker) 50.25%,
+      var(--t5e-theme-color-lightest) 60%,
+      transparent 95%
+    );
     // margin: var(--t5e-spacing-5x) 0;
   }
 
   sup,
   sub {
     font-size: var(--font-size-10);
+  }
+
+  /* Spell Block */
+  .spell-block {
+    label {
+      font: var(--t5e-font-label-small);
+      font-weight: var(--font-weight-default);
+      color: var(--t5e-color-text-lighter);
+    }
+    .value {
+      font: var(--t5e-font-default-small);
+      font-weight: var(--font-weight-label);
+      color: var(--t5e-color-text-default);
+
+      .condition,
+      .materials {
+        font-weight: var(--font-weight-default);
+        color: var(--t5e-color-text-lighter);
+        font-style: italic;
+      }
+    }
   }
 }

@@ -2,10 +2,13 @@
   --sidebar-expanded-width: 9rem;
   --sidebar-width: var(--sidebar-expanded-width);
   --sidebar-background-image-height: 510px;
-  $sidebar-bg: linear-gradient(180deg,
+  $sidebar-bg: linear-gradient(
+      180deg,
       #31313140 0%,
-      #303236 var(--sidebar-background-image-height)),
-    url(../../systems/dnd5e/ui/official/banner-character-dark.webp) lightgray top center / auto no-repeat;
+      #303236 var(--sidebar-background-image-height)
+    ),
+    url(../../systems/dnd5e/ui/official/banner-character-dark.webp) lightgray
+      top center / auto no-repeat;
 
   // Items and Containers feature a sidebar that extends to the top of the sheet, inside the header area.
   .window-header {
@@ -70,7 +73,8 @@
       }
     }
 
-    &:has(.item-name-wrapper:not(.off-screen)) .item-header-start-document-name {
+    &:has(.item-name-wrapper:not(.off-screen))
+      .item-header-start-document-name {
       display: none;
     }
 
@@ -229,6 +233,10 @@
         }
       }
     }
+
+    .pills:not(:has(.pill)) {
+      display: none;
+    }
   }
 
   .item-image-container {
@@ -238,7 +246,7 @@
     width: 100%;
 
     &,
-    &>*,
+    & > *,
     & img {
       aspect-ratio: 112 / 107;
     }
@@ -298,6 +306,23 @@
     flex-direction: column;
     min-width: 0;
 
+    .sheet-header {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+
+      .identity-info {
+        flex: 1;
+      }
+
+      .school {
+        --icon-width: 2.5rem;
+        --icon-height: 2.5rem;
+        --icon-fill: var(--t5e-color-gold);
+        padding-inline-start: 0.25rem;
+      }
+    }
+
     .subtitle {
       color: var(--t5e-color-text-ondefault-lighter);
 
@@ -309,12 +334,14 @@
       background: var(--t5e-component-card-ondefault-default);
 
       &::before {
-        background: url(../../modules/tidy5e-sheet/images/texture-gray-1.webp) no-repeat top center;
+        background: url(../../modules/tidy5e-sheet/images/texture-gray-1.webp)
+          no-repeat top center;
         background-size: cover;
       }
 
       &::after {
-        background: url(../../modules/tidy5e-sheet/images/texture-gray-2.webp) no-repeat bottom center;
+        background: url(../../modules/tidy5e-sheet/images/texture-gray-2.webp)
+          no-repeat bottom center;
         background-size: cover;
       }
     }
@@ -323,28 +350,28 @@
       background: var(--t5e-component-card-oninverse-darker);
 
       &::before {
-        background: url(../../modules/tidy5e-sheet/images/denim065.png) repeat top center;
+        background: url(../../modules/tidy5e-sheet/images/denim065.png) repeat
+          top center;
         background-size: cover;
       }
     }
   }
 
-
-
   .item-header-summary {
+    width: 100%;
     margin-top: var(--t5e-spacing-2x);
     display: flex;
     row-gap: var(--t5e-spacing-1x);
     flex-wrap: wrap;
 
-    >* {
+    > * {
       text-wrap-mode: nowrap;
       display: flex;
       align-items: center;
       gap: var(--t5e-spacing-1x);
     }
 
-    >*+*::before {
+    > * + *::before {
       content: '';
       width: 0.0625rem;
       height: var(--t5e-spacing-4x);
@@ -420,9 +447,11 @@
     &:is(input) {
       border-radius: 0.125rem;
       border: 1px solid var(--t5e-color-gold, #9f9275);
-      background: linear-gradient(0deg,
+      background: linear-gradient(
+          0deg,
           rgba(255, 255, 255, 0.5) 0%,
-          rgba(255, 255, 255, 0.5) 100%),
+          rgba(255, 255, 255, 0.5) 100%
+        ),
         var(--t5e-component-card-ondefault-default, #f8f4f1);
 
       // Typography

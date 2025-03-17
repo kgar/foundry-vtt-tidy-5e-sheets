@@ -12,6 +12,7 @@
   import type { Snippet } from 'svelte';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import type { Item5e } from 'src/types/item.types';
+  import { CONSTANTS } from 'src/constants';
 
   let context = $derived(getContainerOrItemSheetContextQuadrone());
 
@@ -49,7 +50,9 @@
   // Spell Preparation
 
   let spellPreparationText = $derived(
-    'preparation' in context.system
+    'preparation' in context.system &&
+      context.system.preparation.mode !==
+        CONSTANTS.SPELL_PREPARATION_MODE_PREPARED
       ? (CONFIG.DND5E.spellPreparationModes[context.system.preparation.mode]
           ?.label ?? context.system.preparation.mode)
       : '',
@@ -62,6 +65,11 @@
         )
       : '',
   );
+
+  // Item Properties
+
+  // TODO: Remove activeProperties if we end up completely eliminating the need for it.
+  // let activeProperties = $derived(context.properties.active.filter((x) => !!x));
 
   // Custom Sections
 
@@ -243,6 +251,22 @@
         </li>
       {/if}
     {/if}
+    {#if context.system.preparation?.mode === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED}
+      <li>
+        <PillSwitch
+          checked={context.system.identified}
+          checkedIconClass="fas fa-book fa-fw"
+          uncheckedIconClass="fas fa-book fa-fw"
+          onchange={(ev) =>
+            context.item.update({
+              'system.preparation.prepared': ev.currentTarget?.checked,
+            })}
+          disabled={!context.editable}
+        >
+          {localize('DND5E.Prepared')}
+        </PillSwitch>
+      </li>
+    {/if}
   </ul>
 
   <!-- Item Info: Longform -->
@@ -251,9 +275,6 @@
   {#if itemSpecificSnippet}
     {@render itemSpecificSnippet()}
   {/if}
-
-  <!-- Item Info: Pills -->
-  <!-- TODO: Turn into array of pill objects in array of group header names; implement for each item type -->
 
   {#if !context.concealDetails}
     {#if context.labels.toHit || context.labels.damages.length}
@@ -283,6 +304,22 @@
       </div>
     {/if}
   {/if}
+
+  <!-- Item Info active property pills -->
+  <!-- {#if activeProperties}
+    <div>
+      <h4>
+        {localize('DND5E.Properties')}
+      </h4>
+      <ul class="pills stacked">
+        {#each activeProperties as prop}
+          <li class="pill">
+            {prop}
+          </li>
+        {/each}
+      </ul>
+    </div>
+  {/if} -->
 
   <!-- Custom Sections -->
 

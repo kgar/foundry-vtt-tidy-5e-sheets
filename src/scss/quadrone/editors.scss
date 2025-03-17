@@ -72,5 +72,12 @@
         padding: var(--t5e-spacing-1x) var(--t5e-spacing-2x);
       }
     }
+
+    .secret {
+      border-radius: var(--t5e-component-card-radius);
+      border: 0.0625rem solid var(--t5e-table-row-divider);
+      background: var(--t5e-component-card-ondefault-darker);
+      mix-blend-mode: multiply;
+    }
   }
 }
