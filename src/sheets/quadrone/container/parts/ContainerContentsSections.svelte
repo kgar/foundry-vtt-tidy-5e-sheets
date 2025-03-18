@@ -170,7 +170,7 @@
             'artifact',
           ].includes(item.system.rarity)}
           {@const expandedClass = !!containerToggleMap.get(tabId)?.has(item.id)
-            ? 'expanded'
+            ? ' expanded'
             : ''}
 
           <!-- TODO: Add .expanded class to the row when the item is expanded -->
