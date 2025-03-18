@@ -4,7 +4,6 @@
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
-  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
@@ -21,21 +20,6 @@
   function onAddClicked(section: any) {
     const owner = context.item;
     return FoundryAdapter.addEffect(section.type, owner);
-  }
-
-  function handleMiddleClickToEdit(event: MouseEvent, effect: any) {
-    if (event.button === CONSTANTS.MOUSE_BUTTON_AUXILIARY) {
-      effect.sheet.render(true);
-    }
-  }
-
-  function handleDragStart(event: DragEvent, effect: any) {
-    if (!effect) {
-      return;
-    }
-
-    const dragData = effect.toDragData();
-    event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
   }
 </script>
 
@@ -56,18 +40,17 @@
           <TidyTableHeaderCell>
             {localize('DND5E.Duration')}
           </TidyTableHeaderCell>
-          <TidyTableHeaderCell>
+          <TidyTableHeaderCell class="header-actions">
             {#if context.editable}
-              <a
+              <button
                 type="button"
-                class="active-effect-control inline-icon-button"
+                class="header-action"
                 title={localize('DND5E.EffectCreate')}
                 onclick={(event) => onAddClicked(section)}
                 tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
               >
                 <i class="fas fa-plus"></i>
-                {localize('DND5E.Add')}
-              </a>
+              </button>
             {/if}
           </TidyTableHeaderCell>
         </TidyTableHeaderRow>
