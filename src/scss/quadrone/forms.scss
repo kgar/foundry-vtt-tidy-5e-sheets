@@ -78,60 +78,39 @@
     }
   }
 
-  /* Form Groups */
-  .form-group {
-    --form-field-height: var(--t5e-field-size-default);
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    margin: 0;
-    gap: 0.5rem;
+  &.label-top {
+    --label-height: var(--font-size-small);
+    --label-font-size: var(--font-size-small);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.125rem;
+
+    >* {
+      flex: unset;
+    }
 
     >label {
-      color: var(--t5e-color-text-ondefault-lighter);
-      font-size: var(--font-size-default);
-      font-weight: 500;
-      line-height: var(--t5e-line-height-default);
-    }
+      font-size: var(--label-font-size);
+      font-weight: 600;
+      line-height: var(--label-height);
+      height: var(--label-height);
+      color: var(--t5e-color-text-ondefault-lightest);
+      margin-top: 0.25rem;
 
-    &:has(.label-top)>label {
-      margin-top: calc(var(--font-size-small) + 0.25rem);
-    }
-
-    &.label-top {
-      --label-height: var(--font-size-small);
-      --label-font-size: var(--font-size-small);
-      flex-direction: column;
-      align-items: stretch;
-      gap: 0.125rem;
-
-      >* {
-        flex: unset;
-      }
-
-      >label {
+      >p.hint {
+        cursor: help;
         font-size: var(--label-font-size);
         font-weight: 600;
+        display: inline-block;
+        margin: 0.1875rem 0 0 0;
         line-height: var(--label-height);
         height: var(--label-height);
-        color: var(--t5e-color-text-ondefault-lightest);
-        margin-top: 0.25rem;
 
-        >p.hint {
-          cursor: help;
-          font-size: var(--label-font-size);
-          font-weight: 600;
-          display: inline-block;
-          margin: 0.1875rem 0 0 0;
-          line-height: var(--label-height);
-          height: var(--label-height);
+        &:empty {
+          min-height: unset;
+        }
 
-          &:empty {
-            min-height: unset;
-          }
-
-          /*
+        /*
 
             &:hover {
               text-shadow: 0 0 6px var(--color-shadow-primary);
@@ -145,20 +124,20 @@
             }
 
           */
-        }
       }
+    }
 
-      +.form-group {
-        align-self: end;
-      }
+    +.form-group {
+      align-self: end;
+    }
 
-      &.checkbox-top {
-        flex: 0;
-        min-width: max-content;
-        align-items: center;
-      }
+    &.checkbox-top {
+      flex: 0;
+      min-width: max-content;
+      align-items: center;
+    }
 
-      /*
+    /*
           &.multi-select {
       position: relative;
 
@@ -173,6 +152,105 @@
       }
     } 
       */
+  }
+
+
+  .form-group.label-top,
+  .form-field.label-top {
+    --label-height: var(--font-size-small);
+    --label-font-size: var(--font-size-small);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.125rem;
+
+    >* {
+      flex: unset;
+    }
+
+    >label {
+      font-size: var(--label-font-size);
+      font-weight: 600;
+      line-height: var(--label-height);
+      height: var(--label-height);
+      color: var(--t5e-color-text-ondefault-lightest);
+      margin-top: 0.25rem;
+
+      >p.hint {
+        cursor: help;
+        font-size: var(--label-font-size);
+        font-weight: 600;
+        display: inline-block;
+        margin: 0.1875rem 0 0 0;
+        line-height: var(--label-height);
+        height: var(--label-height);
+
+        &:empty {
+          min-height: unset;
+        }
+
+        /*
+
+          &:hover {
+            text-shadow: 0 0 6px var(--color-shadow-primary);
+          }
+
+          &::before {
+            content: "\f059";
+            font-family: var(--font-awesome);
+            font-weight: normal;
+            color: var(--color-text-dark-5);
+          }
+
+        */
+      }
+    }
+
+    +.form-group {
+      align-self: end;
+    }
+
+    &.checkbox-top {
+      flex: 0;
+      min-width: max-content;
+      align-items: center;
+    }
+
+    /*
+        &.multi-select {
+    position: relative;
+
+    multi-select .tags.input-element-tags {
+      min-height: 10px;
+      padding-left: 40%;
+    }
+
+    > label {
+      position: absolute;
+      inset: auto auto calc(var(--form-field-height) + 2px) 0;
+    }
+  } 
+    */
+  }
+
+  /* Form Groups */
+  .form-group {
+    --form-field-height: var(--t5e-field-size-default);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0;
+    gap: 0.25rem;
+
+    >label {
+      color: var(--t5e-color-text-ondefault-lighter);
+      font-size: var(--font-size-default);
+      font-weight: 500;
+      line-height: var(--t5e-line-height-default);
+    }
+
+    &:has(.label-top)>label {
+      margin-top: calc(var(--font-size-small) + 0.25rem);
     }
 
     // Flex form inputs
