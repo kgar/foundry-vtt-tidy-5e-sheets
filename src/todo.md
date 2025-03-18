@@ -123,6 +123,7 @@
 - [ ] Set up default/light/dark menu toggle and add to container
 - [ ] Update sheet lock to work like the default sheets, including the additional render options and intuitive default state
 - [ ] Item cards?
+- [ ] add a class to section headers when there are no search results `.search-no-results`
 
 ### Stretch
 
