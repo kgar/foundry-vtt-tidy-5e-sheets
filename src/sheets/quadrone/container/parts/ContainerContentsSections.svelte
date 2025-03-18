@@ -188,7 +188,7 @@
           >
             {#snippet children({ toggleSummary, expanded })}
               <a
-                class="tidy-table-button item-use-button"
+                class="tidy-table-button tidy-table-row-use-button"
                 style="--item-border-color: {itemBorderColor};"
                 class:special-rarity={showRarityBoxShadow}
                 onclick={(ev) => FoundryAdapter.actorTryUseItem(item, ev)}

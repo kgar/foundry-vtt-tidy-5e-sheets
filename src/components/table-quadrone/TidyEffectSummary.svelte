@@ -83,18 +83,3 @@
     {/if}
   {/await}
 </div>
-
-<style lang="scss">
-  .effect-summary-changes-table {
-    table-layout: fixed;
-
-    th {
-      text-align: left;
-    }
-
-    th,
-    td {
-      padding: 0.25rem;
-    }
-  }
-</style>

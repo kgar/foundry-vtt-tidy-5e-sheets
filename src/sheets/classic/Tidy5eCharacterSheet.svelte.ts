@@ -718,7 +718,7 @@ export class Tidy5eCharacterSheet
 
     // Effects & Conditions
     let { conditions, effects: enhancedEffectSections } =
-      await ConditionsAndEffects.getConditionsAndEffects(
+      await ConditionsAndEffects.getConditionsAndEffectsForActor(
         this.actor,
         this.object,
         defaultDocumentContext.effects

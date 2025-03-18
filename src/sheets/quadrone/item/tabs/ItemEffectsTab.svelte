@@ -7,13 +7,12 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import type { ItemSheetContext } from 'src/types/item.types';
+  import type { ItemSheetQuadroneContext } from 'src/types/item.types';
+  import type { ActiveEffectContext } from 'src/types/types';
 
-  let context = $derived(getSheetContext<ItemSheetContext>());
+  let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
 
-  let effects = $derived(
-    Object.entries(context.effects) as Iterable<[string, any]>,
-  );
+  let effects = $derived(Object.entries(context.effects));
 
   const localize = FoundryAdapter.localize;
 
@@ -56,17 +55,19 @@
         </TidyTableHeaderRow>
       {/snippet}
       {#snippet body()}
-        {@const effectEntries = section.effects.map((effect: any) => ({
-          effect,
-        }))}
+        {@const effectEntries = section.effects.map(
+          (effect: ActiveEffectContext) => ({
+            effect,
+          }),
+        )}
 
         {#each effectEntries as { effect } (effect.id)}
           <TidyEffectTableRow activeEffect={effect}>
             {#snippet children({ toggleSummary, expanded })}
-              <span class="item-use-button">
+              <span class="item-use-button tidy-table-row-use-button disabled">
                 <img
                   class="item-image"
-                  src={effect.img ?? effect.icon}
+                  src={effect.img ?? effect.effect.icon}
                   alt={effect.name ?? ''}
                 />
               </span>
@@ -83,10 +84,18 @@
                 </a>
               </TidyTableCell>
               <TidyTableCell>
-                {effect.sourceName ?? ''}
+                <!-- TODO: this is a stopgap; use dnd5e's more sophisticated action handler for this -->
+                <a
+                  onclick={async () =>
+                    (await fromUuid(effect.source.name))?.sheet.render({
+                      force: true,
+                    })}
+                >
+                  {effect.source.name ?? ''}
+                </a>
               </TidyTableCell>
               <TidyTableCell>
-                {effect.duration.label ?? ''}
+                {effect.effect.duration.label ?? ''}
               </TidyTableCell>
               <TidyTableCell>Buttons here</TidyTableCell>
             {/snippet}

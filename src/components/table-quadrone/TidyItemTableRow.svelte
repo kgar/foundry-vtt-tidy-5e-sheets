@@ -142,7 +142,7 @@
     ['data-tidy-item-type']: item?.type ?? 'unknown',
     ['data-info-card']: item ? 'item' : null,
     ['data-info-card-entity-uuid']: item?.uuid ?? null,
-    ['style']: `--t5e-item-use-button-border-color: ${itemAccentColor}; --t5e-item-row-color: ${itemAccentColor}`,
+    ['style']: `--t5e-use-button-border-color: ${itemAccentColor}; --t5e-item-row-color: ${itemAccentColor}`,
     draggable: draggable,
   }}
   rowClass="tidy-table-row-v2 {rowClass ?? ''} {rarityClass} {expanded

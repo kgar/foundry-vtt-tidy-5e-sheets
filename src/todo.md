@@ -1,13 +1,15 @@
 ## To Do
 
 - [ ] Implement Item Effects tab
-  - [ ] Populate with content and functionality
+  - [x] Populate with content and functionality
+  - [x] Header create button
   - [ ] Action buttons
   - [ ] Ctx menu
-  - [ ] Middle click to edit
+  - [x] Middle click to edit
   - [ ] Make source label a hoverable item link
   - [ ] Purge all svelte-located SCSS in favor of global
   - [ ] Polish and finalize
+- [ ] Description changes are not reactive
 - [ ] Implement Item Activities tab
   - [ ] Actually include the description, whatever it is, and render as HTML
   - [ ] Populate with content and functionality

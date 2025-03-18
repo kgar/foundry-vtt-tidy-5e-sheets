@@ -15,7 +15,7 @@
     hidden?: boolean;
     attributes?: Record<string, any>;
     draggable?: boolean;
-    children?: Snippet<[any]>;
+    children?: Snippet<[{ toggleSummary: () => void; expanded: boolean }]>;
   }
 
   let {
@@ -71,9 +71,8 @@
   ondragstart={handleDragStart}
   {...attributes}
 >
-  <div class="effect-table-row {cssClass ?? ''}">
-    {@render children?.({ toggleSummary })}
-  </div>
+  {@render children?.({ toggleSummary, expanded: showSummary })}
+
   <ExpandableContainer expanded={showSummary}>
     <TidyEffectSummary activeEffect={effectDocument} />
   </ExpandableContainer>

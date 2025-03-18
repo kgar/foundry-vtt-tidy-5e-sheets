@@ -157,7 +157,7 @@
             </div>
           </div>
           <div class="tidy-table-row spell">
-            <div class="tidy-table-button item-use-button">
+            <div class="tidy-table-button tidy-table-row-use-button">
               <img
                 class="item-image"
                 alt="Spell Name"
@@ -187,7 +187,7 @@
             </div>
           </div>
           <div class="tidy-table-row spell rarity rare">
-            <div class="tidy-table-button item-use-button">
+            <div class="tidy-table-button tidy-table-row-use-button">
               <img
                 class="item-image"
                 alt="Spell Name"
@@ -223,7 +223,7 @@
             </div>
           </div>
           <div class="tidy-table-row spell equipped">
-            <div class="tidy-table-button item-use-button">
+            <div class="tidy-table-button tidy-table-row-use-button">
               <img
                 class="item-image"
                 alt="Spell Name"
@@ -253,7 +253,7 @@
             </div>
           </div>
           <div class="tidy-table-row spell equipped">
-            <div class="tidy-table-button item-use-button">
+            <div class="tidy-table-button tidy-table-row-use-button">
               <img
                 class="item-image"
                 alt="Spell Name"
@@ -293,7 +293,7 @@
           </div>
 
           <div class="tidy-table-row spell equipped">
-            <div class="tidy-table-button item-use-button">
+            <div class="tidy-table-button tidy-table-row-use-button">
               <img
                 class="item-image"
                 alt="Spell Name"
@@ -364,7 +364,7 @@
             </div>
           </div>
           <div class="tidy-table-row spell rarity rare">
-            <div class="tidy-table-button item-use-button">
+            <div class="tidy-table-button tidy-table-row-use-button">
               <img
                 class="item-image"
                 alt="Spell Name"
@@ -414,7 +414,7 @@
             </div>
           </div>
           <div class="tidy-table-row spell equipped">
-            <div class="tidy-table-button item-use-button">
+            <div class="tidy-table-button tidy-table-row-use-button">
               <img
                 class="item-image"
                 alt="Spell Name"
