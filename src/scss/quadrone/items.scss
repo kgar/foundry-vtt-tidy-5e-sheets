@@ -277,17 +277,15 @@
     }
 
     .item-rarity-text {
-      color: var(--t5e-item-rarity-color);
+      color: oklch(from var(--t5e-item-rarity-color) calc(l + 0.2) calc(c - 0.08) h);
       font: var(--t5e-font-title-small);
-      mix-blend-mode: plus-lighter;
       text-align: center;
     }
   }
 
   .spell-preparation-text {
-    color: var(--t5e-image-label-spell-preparation-text-color);
+    color: oklch(from var(--t5e-image-label-spell-preparation-text-color) calc(l + 0.25) calc(c - 0.05) h);
     font: var(--t5e-font-title-small);
-    mix-blend-mode: plus-lighter;
     text-align: center;
   }
 
