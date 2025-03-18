@@ -510,6 +510,18 @@
 
   .tidy-table.inline-activities-table {
     margin: var(--t5e-spacing-1x) 0 var(--t5e-spacing-3x) 1.75rem;
+    
+    .activity-indent-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: var(--t5e-icon-size-7x);
+      height: var(--t5e-icon-size-7x);
+
+      i {
+        color: var(--t5e-color-icon-ondefault-disabled);
+      }
+    }
   }
 
   /* Inline Containers */
