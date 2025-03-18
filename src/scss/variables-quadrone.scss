@@ -238,7 +238,7 @@
   --t5e-component-pill-oninverse-border: var(--t5e-color-palette-grey-0);
   --t5e-component-pill-oninverse-border-interactive: var(--t5e-component-field-oninverse-border);
   --t5e-component-pill-background: var(--t5e-component-card-ondefault-default);
-  --t5e-component-pill-border: var(--t5e-component-field-border);
+  --t5e-component-pill-border: var(--t5e-color-palette-grey-29);
   --t5e-component-pill-border-interactive: var(--t5e-component-field-border);
 
   /* Enrichers */
@@ -274,7 +274,7 @@
   --t5e-color-icon-ondefault-diminished: var(--t5e-color-palette-grey-40);
   --t5e-color-icon-ondefault-disabled: rgba(0, 0, 0, 0.4);
   --t5e-color-icon-oninverse-default: var(--t5e-color-palette-white);
-  --t5e-color-icon-oninverse-default: var(--t5e-color-palette-grey-92);
+  --t5e-color-icon-oninverse-button: var(--t5e-color-palette-grey-92);
   --t5e-color-icon-oninverse-diminished: var(--t5e-color-palette-grey-85);
   --t5e-color-icon-oninverse-disabled: rgba(255, 255, 255, 0.5);
 
@@ -383,7 +383,7 @@
     /* Card colors are not inverted in dark mode. */
     /* Pill colors inherit from field colors. */
     --t5e-component-pill-background: var(--t5e-component-field-background);
-    --t5e-component-pill-border: var(--t5e-color-palette-grey-0);
+    --t5e-component-pill-border: var(--t5e-color-palette-grey-29);
     --t5e-component-pill-border-interactive: var(--t5e-component-field-border);
 
     /* Toggles */
