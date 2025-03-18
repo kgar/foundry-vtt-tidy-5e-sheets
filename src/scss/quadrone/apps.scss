@@ -305,14 +305,100 @@
   }
 
   /* Prose Mirror Editor Customizations */
+  .editor.prosemirror menu {
+    background: rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
+    padding: 0.125rem;
+    // box-shadow: var(--t5e-drop-shadow-field);
+
+    li {
+      .pm-dropdown {
+        i {
+          margin-left: 0.25rem;
+        }
+
+        >span {
+          align-self: center;
+          width: auto;
+        }
+      }
+
+      button {
+        min-width: var(--t5e-field-size-small);
+        width: unset;
+        min-height: var(--t5e-field-size-small);
+        height: var(--t5e-field-size-small);
+        margin: 0;
+        background: none;
+        border: 1px solid transparent;
+        box-sizing: border-box;
+        padding: 0 5px;
+
+        &.active i {
+          color: var(--t5e-color-icon-ondefault-button);
+        }
+
+        &:active,
+        &:focus {
+          background-color: var(--t5e-component-field-background-active);
+
+          i {
+            color: var(--t5e-color-icon-ondefault-button);
+          }
+        }
+
+        &:hover {
+          background-color: var(--t5e-component-field-background-hover);
+          border: 1px solid var(--t5e-component-field-border);
+        }
+      }
+
+      &.active {
+        button {
+          background-color: var(--t5e-component-field-background-active);
+        }
+      }
+    }
+  }
+
+  &.theme-light {
+    .editor.prosemirror menu {
+
+      li button {
+        box-shadow: none;
+      }
+    }
+  }
+
+  &.theme-dark {
+    .editor.prosemirror menu {
+      background: var(--t5e-component-card-oninverse-default);
+
+      li button {
+        &.active i {
+          color: var(--t5e-color-icon-oninverse-button);
+        }
+
+        &:active,
+        &:focus {
+          background-color: var(--t5e-component-field-background-active);
+
+          i {
+            color: var(--t5e-color-icon-ondefault-button);
+          }
+        }
+      }
+    }
+  }
 
   a[href] {
     /* : has([class='']) */
-    color: var(--t5e-theme-color-default);
+    color: var(--t5e-color-link-default);
     transition: all var(--t5e-transition-default);
 
     &:hover {
-      color: var(--t5e-theme-color-darkest);
+      color: var(--t5e-color-link-hover);
       text-shadow: 0px 0px 6px var(--t5e-color-text-gold);
     }
   }
@@ -460,27 +546,6 @@
     display: inline;
   }
 
-  blockquote {
-    border-color: var(--t5e-theme-color-lightest);
-    padding-top: var(--t5e-spacing-1x);
-    padding-bottom: var(--t5e-spacing-1x);
-    padding-left: var(--t5e-spacing-3x);
-    padding-right: var(--t5e-spacing-3x);
-  }
-
-  hr {
-    background-image: linear-gradient(to right,
-        transparent 5%,
-        var(--t5e-theme-color-lightest) 40%,
-        var(--t5e-theme-color-darker) 49.75%,
-        transparent 49.75%,
-        transparent 50.25%,
-        var(--t5e-theme-color-darker) 50.25%,
-        var(--t5e-theme-color-lightest) 60%,
-        transparent 95%);
-    // margin: var(--t5e-spacing-5x) 0;
-  }
-
   sup,
   sub {
     font-size: var(--font-size-10);
@@ -504,6 +569,63 @@
         font-weight: var(--font-weight-default);
         color: var(--t5e-color-text-lighter);
         font-style: italic;
+      }
+    }
+  }
+}
+
+
+#prosemirror-dropdown {
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.45);
+
+  &.theme-light {
+    ul {
+      background-color: rgba(248, 244, 241, 1);
+      border-color: rgba(159, 146, 117, 1);
+
+      li {
+        color: rgba(22, 24, 29, 1);
+
+        i {
+          margin-left: 0.5rem;
+          color: rgba(102, 102, 102, 1);
+          font-size: var(--font-size-12);
+        }
+
+        &:hover {
+          background-color: rgb(231, 223, 219);
+
+          span,
+          i {
+            color: rgba(0, 0, 0, 1);
+          }
+        }
+      }
+    }
+  }
+
+  &.theme-dark {
+    ul {
+      background-color: rgba(22, 24, 29, 1);
+      border-color: rgba(122, 122, 122, 1);
+
+      li {
+        color: rgba(223, 226, 235, 1);
+
+        i {
+          margin-left: 0.5rem;
+          color: rgba(102, 102, 102, 1);
+          font-size: var(--font-size-12);
+        }
+
+        &:hover {
+          background-color: rgba(37, 40, 48, 1);
+
+          span,
+          i {
+            color: white;
+          }
+        }
       }
     }
   }

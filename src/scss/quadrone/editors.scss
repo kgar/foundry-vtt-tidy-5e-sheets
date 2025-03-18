@@ -1,5 +1,6 @@
 .tidy5e-sheet.application:where(.quadrone) {
   .editor {
+
     h1,
     h2,
     h3,
@@ -78,6 +79,59 @@
       border: 0.0625rem solid var(--t5e-table-row-divider);
       background: var(--t5e-component-card-ondefault-darker);
       mix-blend-mode: multiply;
+    }
+
+    blockquote {
+      border-color: var(--t5e-theme-color-lightest);
+      padding-top: var(--t5e-spacing-1x);
+      padding-bottom: var(--t5e-spacing-1x);
+      padding-left: var(--t5e-spacing-3x);
+      padding-right: var(--t5e-spacing-3x);
+    }
+
+    hr {
+      background-image: linear-gradient(to right,
+          transparent 5%,
+          var(--t5e-theme-color-lightest) 40%,
+          var(--t5e-theme-color-darker) 49.75%,
+          transparent 49.75%,
+          transparent 50.25%,
+          var(--t5e-theme-color-darker) 50.25%,
+          var(--t5e-theme-color-lightest) 60%,
+          transparent 95%);
+    }
+  }
+
+  &.theme-dark {
+    .editor {
+      a[href] {
+
+        &:hover,
+        &:focus {
+          // color: white;
+          text-shadow: 0px 0px 6px 0px var(--t5e-color-text-gold-emphasis);
+        }
+      }
+
+      .roll-link {
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      blockquote {
+        border-color: var(--t5e-theme-color-default);
+      }
+
+      hr {
+        background-image: linear-gradient(to right,
+            transparent 5%,
+            var(--t5e-theme-color-default) 40%,
+            var(--t5e-theme-color-darkest) 49.75%,
+            transparent 49.75%,
+            transparent 50.25%,
+            var(--t5e-theme-color-darkest) 50.25%,
+            var(--t5e-theme-color-default) 60%,
+            transparent 95%);
+      }
     }
   }
 }

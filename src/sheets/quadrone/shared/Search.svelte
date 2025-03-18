@@ -24,7 +24,7 @@
   </span>
   {#if !isNil(searchCriteria, '')}
     <a class="cancel-search" onclick={() => (searchCriteria = '')}>
-      <i class="fas fa-x fa-fw"></i>
+      <i class="fas fa-xmark-large fa-fw"></i>
     </a>
   {/if}
 </search>
