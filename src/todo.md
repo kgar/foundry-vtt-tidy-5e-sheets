@@ -3,14 +3,21 @@
 - [ ] Implement Item Effects tab
   - [ ] Populate with content and functionality
   - [ ] Action buttons
+  - [ ] Ctx menu
+  - [ ] Middle click to edit
   - [ ] Make source label a hoverable item link
   - [ ] Purge all svelte-located SCSS in favor of global
   - [ ] Polish and finalize
 - [ ] Implement Item Activities tab
-  - [ ] Purge all svelte-located SCSS in favor of global
   - [ ] Actually include the description, whatever it is, and render as HTML
+  - [ ] Populate with content and functionality
+  - [ ] Action buttons
+  - [ ] Ctx menu
+  - [ ] Middle click to edit
+  - [ ] Polish and finalize
 - [ ] Notify Hightouch that spell sheet is ready for final review / polishing
 - [ ] Port spell block to classic sheets and info cards
+- [ ] Begin thinking about how to extract common functionality across each table type (item, effects, activities)
 - [ ] Propagate `sheet-header` class setup to all item sheets
 - [ ] Review Container sheet to ensure it has everything
 - [ ] Implement sheet header contents
