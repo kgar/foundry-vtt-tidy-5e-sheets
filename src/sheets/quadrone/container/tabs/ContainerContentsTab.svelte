@@ -119,17 +119,18 @@
           tabId,
           sections: configuredContents,
           optionsGroups: [
-            {
-              title: 'TIDY5E.DisplayOptions.Title',
-              settings: [
-                {
-                  type: 'boolean',
-                  checked: false,
-                  label: 'TIDY5E.DisplayOptions.ShowContainerRow.Label',
-                  prop: TidyFlags.showContainerPanel.prop,
-                },
-              ],
-            },
+            // TODO: Restore this option when we've implemented the container panel row for inventories
+            // {
+            //   title: 'TIDY5E.DisplayOptions.Title',
+            //   settings: [
+            //     {
+            //       type: 'boolean',
+            //       checked: false,
+            //       label: 'TIDY5E.DisplayOptions.ShowContainerRow.Label',
+            //       prop: TidyFlags.showContainerPanel.prop,
+            //     },
+            //   ],
+            // },
           ],
           formTitle: localize('TIDY5E.ConfigureTab.Title', {
             tabName: ItemSheetRuntime.getTabTitle(tabId),

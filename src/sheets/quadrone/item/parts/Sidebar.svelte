@@ -254,7 +254,7 @@
     {#if context.system.preparation?.mode === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED}
       <li>
         <PillSwitch
-          checked={context.system.identified}
+          checked={context.system.preparation.prepared}
           checkedIconClass="fas fa-book fa-fw"
           uncheckedIconClass="fas fa-book fa-fw"
           onchange={(ev) =>

@@ -1,7 +1,9 @@
 <script lang="ts">
+  import TidyEffectTableRow from 'src/components/table-quadrone/TidyEffectTableRow.svelte';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
+  import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settings } from 'src/settings/settings.svelte';
@@ -38,9 +40,6 @@
 </script>
 
 {#each effects as [key, section] (key)}
-  {@const effectEntries = section.effects.map((effect: any) => ({
-    effect,
-  }))}
   {#if !section.hidden}
     <TidyTable {key}>
       {#snippet header()}
@@ -49,7 +48,7 @@
             <h3>
               {localize(section.label)}
             </h3>
-            <span class="table-header-count">{effectEntries.length}</span>
+            <span class="table-header-count">{section.effects.length}</span>
           </TidyTableHeaderCell>
           <TidyTableHeaderCell>
             {localize('DND5E.SOURCE.FIELDS.source.label')}
@@ -72,6 +71,44 @@
             {/if}
           </TidyTableHeaderCell>
         </TidyTableHeaderRow>
+      {/snippet}
+      {#snippet body()}
+        {@const effectEntries = section.effects.map((effect: any) => ({
+          effect,
+        }))}
+
+        {#each effectEntries as { effect } (effect.id)}
+          <TidyEffectTableRow activeEffect={effect}>
+            {#snippet children({ toggleSummary, expanded })}
+              <span class="item-use-button">
+                <img
+                  class="item-image"
+                  src={effect.img ?? effect.icon}
+                  alt={effect.name ?? ''}
+                />
+              </span>
+              <TidyTableCell primary={true}>
+                <a class="item-name" onclick={(ev) => toggleSummary()}>
+                  <span class="cell-name">{effect.name}</span>
+                  <span class="row-detail-expand-indicator">
+                    <i
+                      class="fa-solid fa-angle-right expand-indicator"
+                      class:expanded
+                    >
+                    </i>
+                  </span>
+                </a>
+              </TidyTableCell>
+              <TidyTableCell>
+                {effect.sourceName ?? ''}
+              </TidyTableCell>
+              <TidyTableCell>
+                {effect.duration.label ?? ''}
+              </TidyTableCell>
+              <TidyTableCell>Buttons here</TidyTableCell>
+            {/snippet}
+          </TidyEffectTableRow>
+        {/each}
       {/snippet}
     </TidyTable>
   {/if}

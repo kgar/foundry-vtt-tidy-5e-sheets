@@ -1,5 +1,5 @@
 <script lang="ts">
-  import TidyTableRow from 'src/components/table/TidyTableRow.svelte';
+  import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
   import { CONSTANTS } from 'src/constants';
   import type { Item5e, ItemChatData } from 'src/types/item.types';
   import type {
