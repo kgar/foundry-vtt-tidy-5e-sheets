@@ -169,9 +169,9 @@
             'legendary',
             'artifact',
           ].includes(item.system.rarity)}
-          {@const hasExpandedInlineToggle = !!inlineToggleService.map
-            .get(tabId)
-            ?.has(item.id)}
+          {@const expandedClass = !!containerToggleMap.get(tabId)?.has(item.id)
+            ? 'expanded'
+            : ''}
 
           <!-- TODO: Add .expanded class to the row when the item is expanded -->
           <TidyItemTableRow
@@ -180,9 +180,7 @@
             rowClass={FoundryAdapter.getInventoryRowClasses(
               item,
               itemContext[item.id]?.attunement,
-            ) + hasExpandedInlineToggle
-              ? ' expanded'
-              : ''}
+            ) + expandedClass}
             contextMenu={{
               type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
               uuid: item.uuid,

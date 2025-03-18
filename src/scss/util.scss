@@ -5,6 +5,10 @@
     transform: rotate(-90deg) scaleX(-1);
   }
 
+  .flip-y {
+    transform: scaleY(-1);
+  }
+
   /* Height */
 
   .full-height {
