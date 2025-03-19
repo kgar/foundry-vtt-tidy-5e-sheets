@@ -13,7 +13,6 @@
   box-shadow: var(--t5e-drop-shadow-sheet);
   background-size: cover;
 
-  // TODO: This isn't working and is being overridden by a blur effect on the container that can't be removed.
   &::before,
   &::after {
     content: '';
@@ -337,7 +336,7 @@
   }
 
   &:where(.theme-light) {
-    background: var(--t5e-component-card-ondefault-default);
+    background: var(--t5e-component-card-ondefault-darker);
 
     &::before {
       background: url(../../modules/tidy5e-sheet/images/texture-gray-1.webp) no-repeat top center;
@@ -543,12 +542,27 @@
     }
   }
 
-  &:where(.theme-dark) {
-    background: var(--t5e-component-card-oninverse-darker);
+  input[type="text"]:disabled,
+  input[type="number"]:disabled,
+  input[type="password"]:disabled,
+  input[type="date"]:disabled,
+  input[type="time"]:disabled,
+  input[type="search"]:disabled,
+  input[type="file"]:disabled,
+  select:disabled,
+  textarea:disabled {
+    pointer-events: default;
+    cursor: text;
+  }
 
-    &::before {
-      background: url(../../modules/tidy5e-sheet/images/denim065.png) repeat top center;
-      background-size: auto;
+
+
+  &:where(.theme-dark) {
+    background: var(--t5e-component-card-oninverse-darker) url(../../modules/tidy5e-sheet/images/denim065.png);
+
+    &::before,
+    &::after {
+      content: none;
     }
 
     &.minimized .window-header {

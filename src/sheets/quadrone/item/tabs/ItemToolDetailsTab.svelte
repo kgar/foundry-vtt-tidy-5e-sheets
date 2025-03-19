@@ -191,17 +191,19 @@
     <label for="{appId}-attunement">{localize('DND5E.Attunement')}</label>
     <div class="form-fields">
       <!-- Attuned -->
-      <CheckboxQuadrone
-        id={`${appId}-system-attuned`}
-        document={context.item}
-        field="system.attuned"
-        checked={context.source.attuned}
-        disabledChecked={context.system.attuned}
-        disabled={!context.unlocked ||
-          // @ts-expect-error
-          !context.config.attunementTypes[context.source.attunement]}
-        title={localize('DND5E.Attuned')}
-      />
+      <label class="checkbox" for="{appId}-attuned">
+        <CheckboxQuadrone
+          id={`${appId}-system-attuned`}
+          document={context.item}
+          field="system.attuned"
+          checked={context.source.attuned}
+          disabledChecked={context.system.attuned}
+          disabled={!context.unlocked ||
+            // @ts-expect-error
+            !context.config.attunementTypes[context.source.attunement]}
+          title={localize('DND5E.Attuned')}
+        />
+      </label>
 
       <!-- Attunement -->
       <SelectQuadrone

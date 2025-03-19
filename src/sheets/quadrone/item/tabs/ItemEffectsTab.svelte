@@ -93,7 +93,7 @@
           <TidyTableHeaderCell {...columnSpecs.duration}>
             {localize('DND5E.Duration')}
           </TidyTableHeaderCell>
-          <TidyTableHeaderCell class="header-actions" {...columnSpecs.actions}>
+          <TidyTableHeaderCell class="header-cell-actions" {...columnSpecs.actions}>
             {#if context.editable}
               <button
                 type="button"
