@@ -109,6 +109,7 @@ input.uninput:hover {
     &:focus {
       box-shadow: none;
       border: none;
+      outline: none;
     }
 
     &:hover {
@@ -154,7 +155,7 @@ input.uninput:hover {
   font-weight: var(--font-weight-default, 400);
   height: var(--t5e-field-size-default);
   padding-inline-start: 0.375rem;
-  padding-inline-end: 0.5rem;
+  padding-inline-end: 0;
 
   &:hover input {
     background: none;

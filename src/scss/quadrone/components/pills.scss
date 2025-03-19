@@ -144,12 +144,11 @@
 
 .tag {
   border-radius: 0.125rem;
-  border: 1px solid var(--t5e-component-enricher-border, rgba(159, 146, 117, 0.35));
-  background: var(--t5e-component-enricher-background,
-      rgba(159, 146, 117, 0.15));
+  border: 1px solid var(--t5e-component-pill-border);
+  background: var(--t5e-component-pill-background);
 
   display: flex;
-  padding: 0.0625rem 0.125rem;
+  padding: 0.0625rem 0.25rem;
   justify-content: center;
   align-items: center;
   gap: 0.125rem;
