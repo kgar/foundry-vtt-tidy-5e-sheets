@@ -3,10 +3,10 @@
   import type { ExpansionTrackerToggleProvider } from 'src/features/expand-collapse/ExpansionTracker.svelte';
   import { isUserInteractable } from 'src/utils/element';
   import { getContext, type Snippet } from 'svelte';
-  import type { HTMLAttributes } from 'svelte/elements';
+  import type { ClassValue, HTMLAttributes } from 'svelte/elements';
 
   type Props = {
-    class?: string;
+    class?: ClassValue;
     children?: Snippet;
   } & HTMLAttributes<HTMLElement>;
 
@@ -38,8 +38,7 @@
 </script>
 
 <header
-  class="tidy-table-header-row {cssClass}"
-  class:toggleable={!!toggleable}
+  class={['tidy-table-header-row', cssClass, { toggleable: !!toggleable }]}
   onclick={handleHeaderRowClick}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TABLE_HEADER_ROW}
   {...rest}

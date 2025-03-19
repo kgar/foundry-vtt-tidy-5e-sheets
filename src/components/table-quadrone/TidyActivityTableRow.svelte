@@ -1,15 +1,16 @@
 <script lang="ts">
   import { type OnItemToggledFn } from 'src/types/types';
   import { getContext, type Snippet } from 'svelte';
-  import type { ActiveEffect5e, ActiveEffectContext } from 'src/types/types';
   import { CONSTANTS } from 'src/constants';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
-  import TidyEffectSummary from './TidyEffectSummary.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TidyTableRow from '../table-quadrone/TidyTableRow.svelte';
+  import TidyActivitySummary from './TidyActivitySummary.svelte';
+  import type { ActivityQuadroneContext } from 'src/types/item.types';
+  import { Activities } from 'src/features/activities/activities';
 
   interface Props {
-    activeEffect?: ActiveEffect5e | ActiveEffectContext | null;
+    activity: ActivityQuadroneContext;
     rowClass?: string;
     hidden?: boolean;
     attributes?: Record<string, any>;
@@ -19,7 +20,7 @@
   }
 
   let {
-    activeEffect = null,
+    activity,
     rowClass = '',
     draggable = true,
     hidden = false,
@@ -28,9 +29,7 @@
     expanded = $bindable(false),
   }: Props = $props();
 
-  let effectDocument = $derived(activeEffect?.effect ?? activeEffect);
-
-  const onEffectToggled = getContext<OnItemToggledFn>(
+  const onActivityToggled = getContext<OnItemToggledFn>(
     CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TOGGLED,
   );
 
@@ -38,34 +37,38 @@
 
   async function toggleSummary() {
     expanded = !expanded;
-    onEffectToggled?.(effectDocument.id, expanded, location);
+    onActivityToggled?.(activity.id, expanded, location);
   }
 
   function handleDragStart(event: DragEvent) {
-    const dragData = effectDocument.toDragData?.();
+    const dragData = activity.doc.toDragData?.();
     if (dragData) {
       event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
     }
   }
+
+  let configurable = $derived(Activities.isConfigurable(activity.doc));
 </script>
 
 <TidyTableRow
   rowContainerAttributes={{
-    ['data-effect-id']: effectDocument?.id,
+    ['data-activity-id']: activity?.id,
   }}
+  rowContainerClass="activity"
   rowClass="tidy-table-row-v2 {rowClass} {expanded ? 'expanded' : ''}"
   rowAttributes={{
-    ['data-context-menu']: CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS,
+    ['data-activity-id']: activity?.id,
     ['data-tidy-table-row']: '',
-    ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.EFFECT_TABLE_ROW,
-    ['data-info-card']: 'effect',
-    ['data-info-card-entity-uuid']: activeEffect.uuid,
-    ['data-parent-id']: activeEffect?.parentId ?? activeEffect?.parent?.id,
+    ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.ACTIVITY_TABLE_ROW,
+    ['data-configurable']: configurable,
+    ['data-info-card']: 'activity',
+    ['data-info-card-entity-uuid']: activity.uuid,
+    ['data-context-menu']: CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES,
     draggable: draggable,
   }}
   {hidden}
   ondblclick={(event) =>
-    effectDocument && FoundryAdapter.editOnMouseEvent(event, effectDocument)}
+    activity && FoundryAdapter.editOnMouseEvent(event, activity.doc)}
   ondragstart={handleDragStart}
   {...attributes}
 >
@@ -73,7 +76,7 @@
 
   {#snippet afterRow()}
     <ExpandableContainer {expanded}>
-      <TidyEffectSummary activeEffect={effectDocument} />
+      <TidyActivitySummary {activity} />
     </ExpandableContainer>
   {/snippet}
 </TidyTableRow>

@@ -4,6 +4,7 @@
   import { CONSTANTS } from 'src/constants';
   import ItemSummaryCommandButtonList from '../../item-summary/ItemSummaryCommandButtonList.svelte';
   import { ItemSummaryRuntime } from 'src/runtime/ItemSummaryRuntime';
+  import { ItemProperties } from 'src/features/properties/ItemProperties.svelte';
 
   interface Props {
     item: Item5e;
@@ -13,6 +14,9 @@
   let { item, chatData }: Props = $props();
 
   let specialProps = $derived(getSpecialProperties(item));
+  let additionalItemProps = $derived(
+    ItemProperties.getAdditionalItemProperties(item),
+  );
   let itemProps = $derived(chatData?.properties ?? []);
   let itemSummaryCommands = $derived(
     ItemSummaryRuntime.getItemSummaryCommands(item),
@@ -48,14 +52,27 @@
     {/each}
   </div>
 {/if}
-{#if itemProps.length}
+{#if itemProps.length || additionalItemProps.length}
   <HorizontalLineSeparator />
   <div
     class="inline-wrapped-elements"
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_PROPERTY_LIST}
   >
     {#each itemProps as prop}
-      <span class="tag">{prop}</span>
+      <span class="tag">
+        <span class="value">{prop}</span>
+      </span>
+    {/each}
+    {#each additionalItemProps as prop}
+      <span class="tag">
+        <!-- {#if prop.label}
+          <span class="label">{prop.label}</span>
+        {/if}  -->
+        <span class="value">{prop.value}</span>
+        {#if prop.parenthetical}
+          <span class="parenthetical">({prop.parenthetical})</span>
+        {/if}
+      </span>
     {/each}
   </div>
 {/if}

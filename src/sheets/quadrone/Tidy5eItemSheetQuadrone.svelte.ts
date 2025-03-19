@@ -223,13 +223,17 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
         .filter((a: any) => {
           return Activities.isConfigurable(a);
         })
-        .map(({ _id: id, name, img, sort, uuid }: any) => ({
-          id,
-          name,
-          sort,
-          uuid,
-          img: { src: img, svg: img?.endsWith('.svg') },
-        }))
+        .map((activity: any) => {
+          let { _id: id, name, img, sort, uuid } = activity;
+          return {
+            id,
+            name,
+            sort,
+            uuid,
+            img: { src: img, svg: img?.endsWith('.svg') },
+            doc: activity,
+          };
+        })
         .sort((a: any, b: any) => a.sort - b.sort),
       affectsPlaceholder: game.i18n.localize(
         `DND5E.TARGET.Count.${target?.template?.type ? 'Every' : 'Any'}`

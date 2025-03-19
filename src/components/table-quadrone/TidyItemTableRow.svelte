@@ -14,11 +14,12 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import { RarityColors } from 'src/features/rarity-colors/RarityColors';
+  import type { ClassValue } from 'svelte/elements';
 
   interface Props {
     item?: Item5e | null;
     contextMenu?: { type: string; uuid: string } | null;
-    rowClass?: string;
+    rowClass?: ClassValue;
     hidden?: boolean;
     draggable?: boolean;
     children?: Snippet<[{ toggleSummary: () => void; expanded: boolean }]>;
@@ -145,10 +146,8 @@
     ['style']: `--t5e-use-button-border-color: ${itemAccentColor}; --t5e-item-row-color: ${itemAccentColor}`,
     draggable: draggable,
   }}
-  rowClass="tidy-table-row-v2 {rowClass ?? ''} {rarityClass} {expanded
-    ? 'expanded'
-    : ''}"
-  onmousedown={(event) => item && FoundryAdapter.editOnMiddleClick(event, item)}
+  rowClass={['tidy-table-row-v2', rowClass, rarityClass, { expanded }]}
+  ondblclick={(event) => item && FoundryAdapter.editOnMouseEvent(event, item)}
   onmouseenter={onMouseEnter}
   onmouseleave={onMouseLeave}
   ondragstart={handleDragStart}

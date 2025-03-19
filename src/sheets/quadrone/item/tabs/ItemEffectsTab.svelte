@@ -8,10 +8,7 @@
   import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemSheetQuadroneContext } from 'src/types/item.types';
-  import type {
-    ActiveEffectContext,
-    EffectCategory,
-  } from 'src/types/types';
+  import type { ActiveEffectContext, EffectCategory } from 'src/types/types';
   import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
   import EffectToggleButton from 'src/components/table-quadrone/table-buttons/EffectToggleButton.svelte';
   import type { Component } from 'svelte';
@@ -93,14 +90,16 @@
           <TidyTableHeaderCell {...columnSpecs.duration}>
             {localize('DND5E.Duration')}
           </TidyTableHeaderCell>
-          <TidyTableHeaderCell class="header-cell-actions" {...columnSpecs.actions}>
+          <TidyTableHeaderCell
+            class="header-cell-actions"
+            {...columnSpecs.actions}
+          >
             {#if context.editable}
               <button
                 type="button"
                 class="header-action borderless-button icon-button"
                 title={localize('DND5E.EffectCreate')}
                 onclick={(event) => onAddClicked(section)}
-                tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
               >
                 <i class="fas fa-plus"></i>
               </button>
@@ -118,7 +117,7 @@
         {#each effectEntries as { effect } (effect.id)}
           <TidyEffectTableRow activeEffect={effect}>
             {#snippet children({ toggleSummary, expanded })}
-              <span class="item-use-button tidy-table-row-use-button disabled">
+              <span class="tidy-table-button tidy-table-row-use-button disabled">
                 <img
                   class="item-image"
                   src={effect.img ?? effect.effect.icon}
@@ -138,20 +137,27 @@
                 </a>
               </TidyTableCell>
               <TidyTableCell {...columnSpecs.source}>
-                <!-- TODO: this is a stopgap; use dnd5e's more sophisticated action handler for this -->
-                <a
-                  onclick={async () =>
-                    (await fromUuid(effect.source.name))?.sheet.render({
-                      force: true,
-                    })}
-                >
-                  {effect.source.name ?? ''}
-                </a>
+                {#if effect.source}
+                  <!-- TODO: this is a stopgap; use dnd5e's more sophisticated action handler for this -->
+                  <a
+                    onclick={async () =>
+                      (await fromUuid(effect.source.name))?.sheet.render({
+                        force: true,
+                      })}
+                  >
+                    {effect.source.name ?? ''}
+                  </a>
+                {:else}
+                  <span class="color-text-disabled"> &mdash; </span>
+                {/if}
               </TidyTableCell>
               <TidyTableCell {...columnSpecs.duration}>
                 {effect.effect.duration.label ?? ''}
               </TidyTableCell>
-              <TidyTableCell {...columnSpecs.actions} class="tidy-table-actions">
+              <TidyTableCell
+                {...columnSpecs.actions}
+                class="tidy-table-actions"
+              >
                 {#each tableActions as action}
                   {@const args = { data: effect, section }}
 

@@ -3,16 +3,16 @@
 - [ ] (Hightouch) Style Effects tab header buttons
 - [ ] (Hightouch) Rarity colors review
 - [ ] (Hightouch) Review Effects tab and apply any polish
-- [ ] Description changes are not reactive
-- [ ] Implement Item Activities tab
-  - [ ] Actually include the description, whatever it is, and render as HTML
-  - [ ] Populate with content and functionality
-  - [ ] Action buttons
-  - [ ] Ctx menu
-  - [ ] Middle click to edit
-  - [ ] Polish and finalize
-- [ ] Notify Hightouch that spell sheet is ready for final review / polishing
-- [ ] Port spell block to classic sheets and info cards
+- [ ] Refactor: make tag component reusable
+- [ ] Container contained item description changes are not reactive on the container
+  - Of note: the container is re-rendering. It's probably the item summary itself.
+- [ ] Effect description changes are not reactive on the target item container
+- [ ] Determine how unidentified should work
+  - [ ] Container sheet
+  - [ ] Spell sheet
+  - [ ] Other item sheets
+- [ ] Notify Hightouch that spell sheet is ready for final review
+- [ ] Test spell info on item summary and cards
 - [ ] Begin thinking about how to extract common functionality across each table type (item, effects, activities)
 - [ ] Propagate `sheet-header` class setup to all item sheets
 - [ ] Review Container sheet to ensure it has everything
@@ -213,3 +213,15 @@
     - [x] edit, delete - unlocked
     - [x] three dots menu
   - [x] Purge all svelte-located SCSS in favor of global
+- [x] Implement drag and drop activities
+- [x] Implement drag and drop effects
+- [x] Unidentified: add `unidentified` class to item table rows that are unidentified.
+- [x] Experiment: ondblclick to edit a table row, instead of middle click
+- [x] Port spell block to classic sheets and info cards
+- [x] Implement Item Activities tab
+  - [x] Populate with content and functionality
+    - [x] Columns: (image) name, actions?
+  - [x] Action buttons
+  - [x] Ctx menu
+  - [x] dbl click to edit
+  - [x] Determine if there's any activity summary that can be shared. If so, shared it. Else, disable until dnd5e 5 / Foundry 13.

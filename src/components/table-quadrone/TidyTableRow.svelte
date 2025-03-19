@@ -1,16 +1,21 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import type { Snippet } from 'svelte';
-  import type { DragEventHandler, MouseEventHandler } from 'svelte/elements';
+  import type {
+    ClassValue,
+    DragEventHandler,
+    MouseEventHandler,
+  } from 'svelte/elements';
 
   interface Props {
     hidden?: boolean;
-    rowContainerClass?: string;
-    rowClass?: string;
+    rowContainerClass?: ClassValue;
+    rowClass?: ClassValue;
     rowContainerAttributes?: Record<string, unknown>;
     rowAttributes?: Record<string, unknown>;
     children?: Snippet;
     afterRow?: Snippet;
+    ondblclick?: MouseEventHandler<HTMLElement>;
     onmousedown?: MouseEventHandler<HTMLElement>;
     onmouseenter?: MouseEventHandler<HTMLElement>;
     onmouseleave?: MouseEventHandler<HTMLElement>;
@@ -19,12 +24,13 @@
 
   let {
     hidden = false,
-    rowContainerClass = '',
+    rowContainerClass,
     rowClass = '',
     rowContainerAttributes = {},
     rowAttributes = {},
     children,
     afterRow,
+    ondblclick,
     onmousedown,
     onmouseenter,
     onmouseleave,
@@ -33,16 +39,16 @@
 </script>
 
 <div
-  class="tidy-table-row-container {rowContainerClass ?? ''}"
-  class:hidden
+  class={['tidy-table-row-container', rowContainerClass, { hidden }]}
   aria-hidden={hidden}
   {...rowContainerAttributes}
 >
   <div
-    class="tidy-table-row {rowClass ?? ''}"
+    class={['tidy-table-row', rowClass]}
     data-tidy-table-row
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TABLE_ROW}
     {...rowAttributes}
+    {ondblclick}
     {onmousedown}
     {onmouseenter}
     {onmouseleave}
