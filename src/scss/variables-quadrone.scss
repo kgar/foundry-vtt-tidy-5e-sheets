@@ -269,6 +269,7 @@
   // TODO: Have hightouch review this variable and its usages
   --t5e-table-button-width: 1.5rem;
 
+
   /* Sheet */
 
   /* Icons ------------ */
@@ -384,13 +385,13 @@
     --t5e-color-link-hover: oklch(from var(--t5e-theme-color-default) calc(l * 1.75) calc(c * 1.5) h);
 
     /* ondark */
-    // --t5e-color-text-oninverse-default: var(--t5e-color-palette-grey-0);
-    // --t5e-color-text-oninverse-gold: var(--t5e-color-palette-gold-62);
-    // --t5e-color-text-oninverse-gold-emphasis: var(--t5e-color-palette-gold-56);
-    // --t5e-color-text-oninverse-gold-light: var(--t5e-color-palette-gold-94);
-    // --t5e-color-text-oninverse-lighter: var(--t5e-color-palette-grey-29);
-    // --t5e-color-text-oninverse-lightest: var(--t5e-color-palette-grey-40);
-    // --t5e-color-text-oninverse-disabled: var(--t5e-color-palette-grey-60);
+    --t5e-color-text-oninverse-default: var(--t5e-color-palette-grey-0);
+    --t5e-color-text-oninverse-gold: var(--t5e-color-palette-gold-62);
+    --t5e-color-text-oninverse-gold-emphasis: var(--t5e-color-palette-gold-56);
+    --t5e-color-text-oninverse-gold-light: var(--t5e-color-palette-gold-94);
+    --t5e-color-text-oninverse-lighter: var(--t5e-color-palette-grey-29);
+    --t5e-color-text-oninverse-lightest: var(--t5e-color-palette-grey-40);
+    --t5e-color-text-oninverse-disabled: var(--t5e-color-palette-grey-60);
 
     /* Components ------------ */
     /* Field backgrounds and borders inverted in dark mode. */
@@ -422,9 +423,11 @@
     /* Icons ------------ */
     /* All icon colors inverted in dark mode. */
     --t5e-color-icon-ondefault-default: var(--t5e-color-palette-white);
+    --t5e-color-icon-ondefault-button: var(--t5e-color-palette-grey-92);
     --t5e-color-icon-ondefault-diminished: var(--t5e-color-palette-grey-85);
     --t5e-color-icon-ondefault-disabled: rgba(255, 255, 255, 0.5);
     --t5e-color-icon-oninverse-default: var(--t5e-color-palette-grey-0);
+    --t5e-color-icon-oninverse-button: var(--t5e-color-palette-grey-21);
     --t5e-color-icon-oninverse-diminished: var(--t5e-color-palette-grey-40);
     --t5e-color-icon-oninverse-disabled: rgba(0, 0, 0, 0.4);
 
