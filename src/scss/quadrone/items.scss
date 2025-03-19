@@ -116,7 +116,7 @@
 
     .header-item-type-label {
       flex: 1;
-      color: var(--t5e-color-text-oninverse-lighter);
+      color: var(--t5e-color-text-lighter);
       // text-align: center;
       font-family: 'Modesto Condensed';
       font-size: var(--font-font-size-18, 1.125rem);
@@ -329,8 +329,6 @@
     }
 
     &:where(.theme-light) {
-      background: var(--t5e-component-card-ondefault-default);
-
       &::before {
         background: url(../../modules/tidy5e-sheet/images/texture-gray-1.webp) no-repeat top center;
         background-size: cover;
@@ -343,10 +341,8 @@
     }
 
     &:where(.theme-dark) {
-      background: var(--t5e-component-card-oninverse-darker);
-
       &::before {
-        background: url(../../modules/tidy5e-sheet/images/denim065.png) repeat top center;
+        background: url(../../modules/tidy5e-sheet/images/denim075.png) repeat top center;
         background-size: auto;
       }
     }
@@ -520,9 +516,7 @@
   }
 
 
-  &.dark,
   &.theme-dark,
-  .dark,
   .theme-dark {
     .document-name:is(input) {
       border-color: var(--t5e-component-field-border);

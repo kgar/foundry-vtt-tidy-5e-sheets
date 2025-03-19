@@ -311,6 +311,10 @@ input[type='checkbox'] {
     background: var(--t5e-component-field-background-disabled);
     border-color: transparent;
     box-shadow: none;
+
+    &:checked {
+      background-color: var(--t5e-component-toggle-toggled-background);
+    }
   }
 
   &:focus:not(:disabled) {

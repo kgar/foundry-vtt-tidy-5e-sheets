@@ -1,5 +1,7 @@
 .tidy5e-sheet.application:where(.quadrone) {
-  .editor {
+
+  .editor,
+  .editor-rendered-content {
 
     h1,
     h2,
@@ -107,8 +109,16 @@
       border-radius: var(--t5e-spacing-1x);
 
       thead {
+        background: linear-gradient(to right,
+            var(--t5e-theme-color-darkest) 0%,
+            var(--t5e-theme-color-default) 100%);
         font: var(--t5e-font-label-medium);
+        text-shadow: none;
         border: none;
+
+        th {
+          padding: var(--t5e-spacing-halfx) var(--t5e-spacing-2x);
+        }
       }
 
       th,
@@ -118,8 +128,32 @@
       }
 
       td {
-        border-right: 1px solid var(--t5e-component-card-oninverse-darker);
         padding: var(--t5e-spacing-1x) var(--t5e-spacing-2x);
+
+        &:not(:last-child) {
+          border-right: 1px solid var(--t5e-color-gold);
+        }
+
+        >*:first-child {
+          margin-top: 0;
+        }
+
+        >*:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      tbody {
+        tr {
+
+          &:nth-child(odd) {
+            background: var(--t5e-component-card-ondefault-lighter);
+          }
+
+          &:nth-child(even) {
+            background: var(--t5e-component-card-ondefault-darker);
+          }
+        }
       }
     }
 
@@ -151,8 +185,108 @@
     }
   }
 
+  .editor-rendered-content {
+    flex: 0 0 100%;
+    margin-top: var(--t5e-spacing-2x);
+    padding-right: var(--t5e-spacing-2x);
+    margin-bottom: var(--t5e-spacing-halfx);
+    padding-left: var(--t5e-spacing-2x);
+    border-width: 0 0 1px 0;
+    border-style: solid;
+    border-image: linear-gradient(to right,
+        rgba(143, 123, 78, 0) 0%,
+        rgba(143, 123, 78, 0.25) 20%,
+        rgba(143, 123, 78, 0.25) 80%,
+        rgba(143, 123, 78, 0) 100%) 0 0 1 0;
+
+
+    >*:first-child {
+      margin-top: 0;
+    }
+
+    >*:last-child {
+      margin-bottom: 0;
+    }
+
+    p:not(:first-child) {
+      margin-top: 0.5em;
+    }
+
+    // TODO: Remove the line separator and this style when App V1 is eliminated
+    .horizontal-line-separator {
+      display: none;
+    }
+
+    .inline-wrapped-elements {
+      margin-top: var(--t5e-spacing-3x);
+      margin-bottom: calc(var(--t5e-spacing-1x) + var(--t5e-spacing-halfx));
+    }
+
+    .left-aligned-elements {
+      display: flex;
+      flex-grow: 1;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+    }
+
+    .right-aligned-elements {
+      display: flex;
+      flex-grow: 0;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+    }
+
+
+    button.item-summary-command {
+      width: auto;
+      line-height: 1rem;
+      padding: 0.25rem 0;
+      background: none; //var(--t5e-component-field-background);
+      color: var(--t5e-color-text-lighter);
+      border: none; // 0.0625rem solid var(--t5e-component-field-border);
+      font-size: 0.75rem;
+      margin: -0.25rem 0;
+
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      height: var(--t5e-tag-size-default);
+      min-height: var(--t5e-tag-size-default);
+
+      i {
+        color: var(--t5e-color-icon-ondefault-diminished);
+      }
+
+      &:hover {
+        color: var(--t5e-color-text-default);
+        background: var(--t5e-component-field-background-hover);
+        border-color: var(--t5e-component-field-border-hover);
+
+        i {
+          color: var(--t5e-color-icon-default);
+        }
+      }
+    }
+  }
+
+  &.theme-light {
+    button.item-summary-command {
+      box-shadow: none;
+      text-shadow: var(--t5e-drop-shadow-field);
+
+      &:hover {
+        background: none;
+        border-color: var(--t5e-component-field-border-hover);
+      }
+    }
+  }
+
   &.theme-dark {
-    .editor {
+
+    .editor,
+    .editor-rendered-content {
       a[href] {
 
         &:hover,
@@ -180,6 +314,19 @@
             var(--t5e-theme-color-darkest) 50.25%,
             var(--t5e-theme-color-default) 60%,
             transparent 95%);
+      }
+
+      tbody {
+        tr {
+
+          &:nth-child(odd) {
+            background: var(--t5e-component-card-oninverse-lighter);
+          }
+
+          &:nth-child(even) {
+            background: var(--t5e-component-card-oninverse-darker);
+          }
+        }
       }
     }
   }

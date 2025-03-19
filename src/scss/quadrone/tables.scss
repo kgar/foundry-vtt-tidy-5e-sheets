@@ -1,4 +1,12 @@
 .tidy5e-sheet:is(.quadrone, .dnd5e2) {
+  --t5e-table-row-border-image: linear-gradient(to right,
+      rgba(143, 123, 78, 0) 0%,
+      rgba(143, 123, 78, 0.25) 20%,
+      rgba(143, 123, 78, 0.25) 80%,
+      rgba(143, 123, 78, 0) 100%) 0 0 1 0;
+
+  --t5e-table-header-row-height: var(--t5e-spacing-6x);
+
   .tidy-table-container {
     display: flex;
     flex-direction: column;
@@ -29,7 +37,7 @@
     border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 0.125rem;
     color: var(--t5e-color-text-ondefault-default);
-    max-height: var(--t5e-spacing-6x);
+    max-height: var(--t5e-table-header-row-height);
 
     :is(.tidy-table-cell, .tidy-table-header-cell) {
       margin-top: 0.25rem;
@@ -42,8 +50,8 @@
     }
 
     .button.expand-button {
-      width: var(--t5e-spacing-6x);
-      height: var(--t5e-spacing-6x);
+      width: var(--t5e-table-header-row-height);
+      height: var(--t5e-table-header-row-height);
       background: none;
       border: none;
       padding: var(--t5e-spacing-halfx) 0 0;
@@ -147,21 +155,48 @@
     border-radius: 0.125rem;
     border-width: 0 0 1px 0;
     border-style: solid;
-    border-image: linear-gradient(to right,
-        rgba(143, 123, 78, 0) 0%,
-        rgba(143, 123, 78, 0.25) 20%,
-        rgba(143, 123, 78, 0.25) 80%,
-        rgba(143, 123, 78, 0) 100%) 0 0 1 0;
+    border-image: var(--t5e-table-row-border-image);
+
+    --t5e-item-row-color: transparent;
+    position: relative;
+
 
     &.equipped {
-      background-color: var(--t5e-component-card-ondefault-default);
+      --t5e-item-row-color: var(--t5e-color-gold);
+      background: var(--t5e-component-card-ondefault-default);
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to right, oklch(from var(--t5e-item-row-color) l c h / 0.25) 10%, transparent 40%);
+        pointer-events: none;
+      }
     }
 
+    // TODO: Finish other unidentified styles. Classes aren't applied yet.
     &.unidentified {
-      /* TODO: Add color */
+      color: var(--t5e-color-text-ondefault-lighter);
+      background: transparent;
+
+      .item-image {
+        filter: grayscale(100%) opacity(75%);
+      }
+
+      .item-name .cell-name {
+        font-style: italic;
+      }
+
+      &::before {
+        content: none;
+      }
     }
 
     &.spell:not(.equipped) {
+
       .item-label,
       .item-context {
         font-style: italic;
@@ -170,9 +205,18 @@
     }
 
     &.rarity {
-      background: linear-gradient(to right,
-          oklch(from var(--t5e-item-row-color) l c h / 0.3) 10%,
-          transparent 50%);
+      --t5e-item-row-color: var(--t5e-color-gold);
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to right, oklch(from var(--t5e-item-row-color) l c h / 0.25) 10%, transparent 40%);
+        pointer-events: none;
+      }
 
       .tidy-table-row-use-button {
         outline: 1px solid var(--t5e-use-button-border-color);
@@ -561,11 +605,7 @@
     padding: var(--t5e-spacing-1x) 0 var(--t5e-spacing-2x) var(--t5e-spacing-4x);
     border-width: 0 0 1px 0;
     border-style: solid;
-    border-image: linear-gradient(to right,
-        rgba(143, 123, 78, 0) 0%,
-        rgba(143, 123, 78, 0.25) 20%,
-        rgba(143, 123, 78, 0.25) 80%,
-        rgba(143, 123, 78, 0) 100%) 0 0 1 0;
+    border-image: var(--t5e-table-row-border-image);
 
     .tidy-table-header-row {
       background: var(--t5e-component-card-ondefault-darker);
@@ -580,17 +620,29 @@
     }
   }
 
-  .header-actions {
+  .header-cell-actions {
     justify-content: flex-end;
-    padding-inline: var(--t5e-spacing-1x);
+
+    .header-action {
+      color: var(--t5e-color-icon-ondefault-button);
+    }
   }
 
   &:where(.theme-dark) {
-    .tidy-table-row.expanded {
-      background: linear-gradient(0deg,
-          rgba(255, 255, 255, 0.10) 0%,
-          rgba(255, 255, 255, 0.10) 100%),
-        var(--t5e-component-card-oninverse-default);
+    .tidy-table-row {
+      &.equipped {
+        background: linear-gradient(to right,
+            rgba(159, 146, 117, .25) 0%,
+            rgba(159, 146, 117, 0) 30%),
+          var(--t5e-component-card-oninverse-default);
+      }
+
+      &.expanded {
+        background: linear-gradient(0deg,
+            rgba(255, 255, 255, 0.10) 0%,
+            rgba(255, 255, 255, 0.10) 100%),
+          var(--t5e-component-card-oninverse-default);
+      }
     }
 
     .expandable .expandable {

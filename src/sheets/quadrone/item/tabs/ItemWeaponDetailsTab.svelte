@@ -198,17 +198,19 @@
             </label>
             <div class="form-fields">
               <!-- Attuned -->
-              <CheckboxQuadrone
-                id="{appId}-attuned"
-                document={context.item}
-                field="system.attuned"
-                checked={context.source.attuned}
-                disabledChecked={context.source.attuned}
-                disabled={!context.unlocked ||
-                  // @ts-expect-error
-                  !context.config.attunementTypes[context.system.attunement]}
-                title={localize('DND5E.AttunementAttuned')}
-              />
+              <label class="checkbox" for="{appId}-attuned">
+                <CheckboxQuadrone
+                  id="{appId}-attuned"
+                  document={context.item}
+                  field="system.attuned"
+                  checked={context.source.attuned}
+                  disabledChecked={context.source.attuned}
+                  disabled={!context.unlocked ||
+                    // @ts-expect-error
+                    !context.config.attunementTypes[context.system.attunement]}
+                  title={localize('DND5E.AttunementAttuned')}
+                  />
+              </label>
               <!-- Attunement -->
               <SelectQuadrone
                 id="{appId}-attunement"

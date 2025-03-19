@@ -13,7 +13,6 @@
   box-shadow: var(--t5e-drop-shadow-sheet);
   background-size: cover;
 
-  // TODO: This isn't working and is being overridden by a blur effect on the container that can't be removed.
   &::before,
   &::after {
     content: '';
@@ -27,36 +26,13 @@
     z-index: -1;
   }
 
-  &:where(.theme-light) {
-    background: var(--t5e-component-card-ondefault-default);
-
-    &::before {
-      background: url(../../modules/tidy5e-sheet/images/texture-gray-1.webp) no-repeat top center;
-      background-size: cover;
-    }
-
-    &::after {
-      background: url(../../modules/tidy5e-sheet/images/texture-gray-2.webp) no-repeat bottom center;
-      background-size: cover;
-    }
-  }
-
-  &:where(.theme-dark) {
-    background: var(--t5e-component-card-oninverse-darker);
-
-    &::before {
-      background: url(../../modules/tidy5e-sheet/images/denim065.png) repeat top center;
-      background-size: auto;
-    }
-  }
-
   &.minimized {
     .window-title {
-      color: var(--t5e-color-text-oninverse-default);
+      color: var(--t5e-color-text-default);
     }
 
     .header-control {
-      color: var(--t5e-color-text-oninverse-default);
+      color: var(--t5e-color-text-default);
     }
   }
 
@@ -66,11 +42,11 @@
     }
 
     button.header-control {
-      color: var(--t5e-color-text-ondefault-lighter);
+      color: var(--t5e-color-icon-ondefault-button);
       transition: all var(--t5e-transition-default);
 
       &:hover {
-        color: var(--t5e-color-text-ondefault-default);
+        color: var(--t5e-color-icon-ondefault-default);
         border-radius: 100%;
         background: rgba(0, 0, 0, 0.12);
       }
@@ -169,9 +145,6 @@
     [data-action='configureSheet'] {
       display: grid;
     }
-
-    // TODO: Hightouch, I put a color in to get by for now
-    background: var(--t5e-color-palette-grey-11);
   }
 
   .window-content {
@@ -362,32 +335,23 @@
     }
   }
 
-  &.theme-light {
+  &:where(.theme-light) {
+    background: var(--t5e-component-card-ondefault-darker);
+
+    &::before {
+      background: url(../../modules/tidy5e-sheet/images/texture-gray-1.webp) no-repeat top center;
+      background-size: cover;
+    }
+
+    &::after {
+      background: url(../../modules/tidy5e-sheet/images/texture-gray-2.webp) no-repeat bottom center;
+      background-size: cover;
+    }
+
     .editor.prosemirror menu {
 
       li button {
         box-shadow: none;
-      }
-    }
-  }
-
-  &.theme-dark {
-    .editor.prosemirror menu {
-      background: var(--t5e-component-card-oninverse-default);
-
-      li button {
-        &.active i {
-          color: var(--t5e-color-icon-oninverse-button);
-        }
-
-        &:active,
-        &:focus {
-          background-color: var(--t5e-component-field-background-active);
-
-          i {
-            color: var(--t5e-color-icon-ondefault-button);
-          }
-        }
       }
     }
   }
@@ -464,6 +428,7 @@
   }
 
   /* Item Summary */
+  // TODO: Remove this if not used. Moved to .editor-rendered-content in editors.scss
   .item-summary {
     flex: 0 0 100%;
     padding-top: var(--item-summary-padding-top, 0);
@@ -553,7 +518,7 @@
 
   /* Spell Block */
   .spell-block {
-    li + li {
+    li+li {
       margin-block-start: var(--t5e-spacing-1x);
     }
 
@@ -573,6 +538,71 @@
         font-weight: var(--font-weight-default);
         color: var(--t5e-color-text-lighter);
         font-style: italic;
+      }
+    }
+  }
+
+  input[type="text"]:disabled,
+  input[type="number"]:disabled,
+  input[type="password"]:disabled,
+  input[type="date"]:disabled,
+  input[type="time"]:disabled,
+  input[type="search"]:disabled,
+  input[type="file"]:disabled,
+  select:disabled,
+  textarea:disabled {
+    pointer-events: default;
+    cursor: text;
+  }
+
+
+
+  &:where(.theme-dark) {
+    background: var(--t5e-component-card-oninverse-darker) url(../../modules/tidy5e-sheet/images/denim065.png);
+
+    &::before,
+    &::after {
+      content: none;
+    }
+
+    &.minimized .window-header {
+      background: var(--t5e-component-card-oninverse-darker);
+    }
+  }
+
+  &.theme-light {
+    .editor.prosemirror menu {
+      background: var(--t5e-component-card-ondefault-lighter);
+
+      li button {
+        &.active i {
+          color: var(--t5e-color-icon-oninverse-button);
+        }
+
+        &:active,
+        &:focus {
+          background-color: var(--t5e-component-field-background-active);
+
+          i {
+            color: var(--t5e-color-icon-ondefault-button);
+          }
+        }
+      }
+    }
+
+    &.minimized .window-header {
+      background: var(--t5e-component-card-ondefault-default);
+
+      .window-title {
+        color: var(--t5e-color-text-ondefault-default);
+      }
+
+      button.header-control {
+        color: var(--t5e-color-icon-ondefault-button);
+
+        &:hover {
+          color: var(--t5e-color-icon-ondefault-default);
+        }
       }
     }
   }

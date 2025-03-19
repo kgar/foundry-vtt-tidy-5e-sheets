@@ -88,9 +88,24 @@
     height: var(--size);
   }
 
+  &.borderless-button {
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background: transparent;
+      border-color: transparent;
+      box-shadow: none;
+      text-shadow: var(--t5e-drop-shadow-field);
+    }
+  }
+
   &.disabled {
     cursor: default;
-    pointer-events: none;
+    // pointer-events: none;
     background: transparent;
     border: 1px solid var(--t5e-component-field-border);
 
@@ -134,7 +149,6 @@
   }
 }
 
-&.dark,
 &.theme-dark :is(button, .button) {
   // border: 1px solid var(--t5e-component-field-border);
   // background: var(--t5e-component-field-background);
