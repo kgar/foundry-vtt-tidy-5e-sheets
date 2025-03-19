@@ -154,6 +154,8 @@
   --t5e-color-text-ondefault-lighter: var(--t5e-color-palette-grey-29);
   --t5e-color-text-ondefault-lightest: var(--t5e-color-palette-grey-40);
   --t5e-color-text-ondefault-disabled: var(--t5e-color-palette-grey-60);
+  --t5e-color-link-default: var(--t5e-theme-color-default);
+  --t5e-color-link-hover: var(--t5e-theme-color-darkest);
 
   /* ondark */
   --t5e-color-text-oninverse-default: var(--t5e-color-palette-grey-100);
@@ -218,6 +220,7 @@
   --t5e-component-field-border-hover: var(--t5e-theme-color-default);
   --t5e-component-field-background: var(--t5e-component-card-ondefault-default);
   --t5e-component-field-background-hover: var(--t5e-color-palette-white);
+  --t5e-component-field-background-active: var(--t5e-color-palette-white);
   --t5e-component-field-background-hover-emphasis: var(--t5e-color-palette-white);
   --t5e-component-field-background-disabled: rgba(159, 146, 117, 0.2);
   --t5e-component-field-oninverse-background: var(--t5e-component-card-oninverse-default);
@@ -238,7 +241,7 @@
   --t5e-component-pill-oninverse-border: var(--t5e-color-palette-grey-0);
   --t5e-component-pill-oninverse-border-interactive: var(--t5e-component-field-oninverse-border);
   --t5e-component-pill-background: var(--t5e-component-card-ondefault-default);
-  --t5e-component-pill-border: var(--t5e-component-field-border);
+  --t5e-component-pill-border: var(--t5e-color-palette-grey-29);
   --t5e-component-pill-border-interactive: var(--t5e-component-field-border);
 
   /* Enrichers */
@@ -274,7 +277,7 @@
   --t5e-color-icon-ondefault-diminished: var(--t5e-color-palette-grey-40);
   --t5e-color-icon-ondefault-disabled: rgba(0, 0, 0, 0.4);
   --t5e-color-icon-oninverse-default: var(--t5e-color-palette-white);
-  --t5e-color-icon-oninverse-default: var(--t5e-color-palette-grey-92);
+  --t5e-color-icon-oninverse-button: var(--t5e-color-palette-grey-92);
   --t5e-color-icon-oninverse-diminished: var(--t5e-color-palette-grey-85);
   --t5e-color-icon-oninverse-disabled: rgba(255, 255, 255, 0.5);
 
@@ -334,7 +337,7 @@
   --t5e-spacing-20x: 5rem;
   --t5e-spacing-24x: 6rem;
 
-/* Icon Size ------------ */
+  /* Icon Size ------------ */
   --t5e-icon-size-1: 0.0625rem;
   --t5e-icon-size-halfx: 0.125rem;
   --t5e-icon-size-1x: 0.25rem;
@@ -377,6 +380,8 @@
     --t5e-color-text-ondefault-lighter: var(--t5e-color-palette-grey-85);
     --t5e-color-text-ondefault-lightest: var(--t5e-color-palette-grey-60);
     --t5e-color-text-ondefault-disabled: var(--t5e-color-palette-grey-48);
+    --t5e-color-link-default: oklch(from var(--t5e-theme-color-default) calc(l * 2.25) calc(c * 1.5) h);
+    --t5e-color-link-hover: oklch(from var(--t5e-theme-color-default) calc(l * 1.75) calc(c * 1.5) h);
 
     /* ondark */
     // --t5e-color-text-oninverse-default: var(--t5e-color-palette-grey-0);
@@ -394,6 +399,7 @@
     --t5e-component-field-border-hover: var(--t5e-color-palette-grey-85);
     --t5e-component-field-background: var(--t5e-component-card-oninverse-default);
     --t5e-component-field-background-hover: var(--t5e-color-palette-grey-11);
+    --t5e-component-field-background-active: var(--t5e-color-palette-grey-11);
     --t5e-component-field-background-hover-emphasis: var(--t5e-color-palette-black);
     --t5e-component-field-background-disabled: rgba(0, 0, 0, 0.3);
     --t5e-component-field-focus: var(--t5e-theme-color-default);
@@ -401,7 +407,7 @@
     /* Card colors are not inverted in dark mode. */
     /* Pill colors inherit from field colors. */
     --t5e-component-pill-background: var(--t5e-component-field-background);
-    --t5e-component-pill-border: var(--t5e-color-palette-grey-0);
+    --t5e-component-pill-border: var(--t5e-color-palette-grey-29);
     --t5e-component-pill-border-interactive: var(--t5e-component-field-border);
 
     /* Toggles */

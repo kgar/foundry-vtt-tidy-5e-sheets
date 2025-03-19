@@ -3,10 +3,17 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+
+    &:hover {
+      .edit i {
+        color: var(--t5e-color-icon-default);
+        text-shadow: 0px 0px 6px var(--t5e-color-text-gold);
+      }
+    }
   }
 
   .title {
-    color: var(--t5e-color-text-ondefault-lighter);
+    color: var(--t5e-color-text-ondefault-lightest);
 
     font-family: var(--t5e-font-family-title);
     font-size: var(--font-size-18);
@@ -17,6 +24,15 @@
     display: flex;
     align-items: center;
     gap: 0.25rem;
+    transition: color var(--t5e-transition-default);
+
+    &:has(.expand-indicator) {
+      color: var(--t5e-color-text-ondefault-lighter);
+
+      &:hover {
+        color: var(--t5e-color-text-ondefault-default);
+      }
+    }
 
     .expand-indicator {
       color: var(--t5e-color-icon-ondefault-disabled);
@@ -44,7 +60,7 @@
     flex-shrink: 0;
 
     i {
-      color: var(--t5e-color-text-oninverse-disabled);
+      color: var(--t5e-color-icon-ondefault-button);
       font-size: 0.6875rem;
       transition: color var(--t5e-transition-default);
     }
@@ -59,7 +75,7 @@
   }
 
   .title:hover {
-     .expand-indicator {
+    .expand-indicator {
       color: var(--t5e-color-text-ondefault-default);
     }
   }

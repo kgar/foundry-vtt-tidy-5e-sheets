@@ -8,7 +8,7 @@ export class ItemSummaryRuntime {
       execute: (params) => params.item.displayCard(),
       label: 'TIDY5E.ItemSummaryCommands.ShowDescriptionInChatLabel',
       tooltip: 'TIDY5E.ItemSummaryCommands.ShowDescriptionInChatTooltip',
-      iconClass: 'fa-solid fa-message',
+      iconClass: 'fa-solid fa-message-arrow-up-right',
       enabled: (params) => !!params.item.actor,
     },
   ];

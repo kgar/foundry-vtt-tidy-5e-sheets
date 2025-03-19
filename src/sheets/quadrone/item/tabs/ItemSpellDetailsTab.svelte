@@ -157,16 +157,18 @@
     <div class="form-fields">
       <!-- Prepared -->
       {#if context.source.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED}
-        <CheckboxQuadrone
-          id="{appId}-preparation-prepared"
-          document={context.item}
-          field="system.preparation.prepared"
-          checked={context.source.preparation.prepared}
-          disabledChecked={context.system.preparation.prepared}
-          title={localize('DND5E.Prepared')}
-          aria-label={localize('DND5E.Prepared')}
-          disabled={!context.unlocked}
-        />
+        <label class="checkbox" for="{appId}-preparation-prepared">
+          <CheckboxQuadrone
+            id="{appId}-preparation-prepared"
+            document={context.item}
+            field="system.preparation.prepared"
+            checked={context.source.preparation.prepared}
+            disabledChecked={context.system.preparation.prepared}
+            title={localize('DND5E.Prepared')}
+            aria-label={localize('DND5E.Prepared')}
+            disabled={!context.unlocked}
+          />
+        </label>
       {/if}
 
       <!-- Mode -->

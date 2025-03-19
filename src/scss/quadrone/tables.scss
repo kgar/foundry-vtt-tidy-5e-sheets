@@ -455,6 +455,10 @@
       transition: all var(--t5e-transition-default);
     }
 
+    .roll-prompt i {
+      bottom: 0;
+    }
+
     // TODO: Hightouch, please review this. kgar put this here to support svg images
     dnd5e-icon {
       --icon-size: calc(1.75rem - 0.125rem);
@@ -495,7 +499,6 @@
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
-      border-radius: 0.3125rem;
 
       --t5e-item-table-row-background: transparent;
 
@@ -510,10 +513,24 @@
   /* Inline Activities */
 
   .tidy-table.inline-activities-table {
+    margin: var(--t5e-spacing-halfx) 0 var(--t5e-spacing-3x) 0;
+
+    .item-use-button {
+      height: var(--t5e-spacing-6x);
+      width: var(--t5e-spacing-6x);
+      min-height: unset;
+      min-width: unset;
+
+      .item-image {
+        --icon-size: calc(var(--t5e-spacing-6x) - 0.125rem);
+      }
+    }
+
     .activity-indent-icon {
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: var(--font-size-12);
       width: var(--t5e-icon-size-7x);
       height: var(--t5e-icon-size-7x);
 
@@ -552,11 +569,7 @@
         rgba(143, 123, 78, 0) 100%) 0 0 1 0;
 
     .tidy-table-header-row {
-      background: rgba(0, 0, 0, 0.12);
-    }
-
-    .tidy-table-row-container {
-      background: var(--t5e-component-card-ondefault-default);
+      background: var(--t5e-component-card-ondefault-darker);
     }
   }
 
@@ -576,13 +589,19 @@
         var(--t5e-component-card-oninverse-default);
     }
 
+    .expandable .expandable {
+      .tidy-table-row.expanded {
+        background: rgba(255, 255, 255, 0.05);
+      }
+    }
+
     .inline-content-view {
       background: linear-gradient(90deg,
           var(--t5e-component-card-oninverse-darker, #1B1D23) 0.59%,
           var(--t5e-component-card-oninverse-default, #252830) 44%);
 
       .tidy-table-header-row {
-        background: rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.08);
       }
 
       .tidy-table-row-container {

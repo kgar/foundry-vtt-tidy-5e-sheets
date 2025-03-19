@@ -39,7 +39,7 @@
 
 {#if activities.length > 0 && settings.value.inlineActivitiesPosition === CONSTANTS.INLINE_ACTIVITIES_POSITION_TOP}
   <TidyInlineActivitiesList {item} {activities} />
-  <HorizontalLineSeparator />
+  <!-- <HorizontalLineSeparator /> -->
 {/if}
 <div
   class="item-summary"
@@ -53,30 +53,29 @@
         })}
       </div>
     {/await}
-    <HorizontalLineSeparator />
+    <!-- <HorizontalLineSeparator /> -->
   {/if}
 
   {@html chatData.description}
 
-  {#if itemSummaryCommands.length}
-    <HorizontalLineSeparator />
-    <div class="inline-wrapped-elements">
-      <ItemSummaryCommandButtonList {item} />
-    </div>
-  {/if}
-
-  {#if chatData.properties}
-    <HorizontalLineSeparator />
     <div
       class="inline-wrapped-elements"
       class:conceal-content={concealDetails}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_PROPERTY_LIST}
     >
-      {#each chatData.properties as prop}<span class="tag">{prop}</span>{/each}
+      <div class="left-aligned-elements">
+        {#if chatData.properties}
+          {#each chatData.properties as prop}<span class="tag">{prop}</span>{/each} 
+        {/if}
+      </div>
+      <div class="right-aligned-elements">
+        {#if itemSummaryCommands.length}
+        <ItemSummaryCommandButtonList {item} />
+        {/if}
+      </div>
     </div>
-  {/if}
 </div>
 {#if activities.length > 0 && settings.value.inlineActivitiesPosition === CONSTANTS.INLINE_ACTIVITIES_POSITION_BOTTOM}
-  <HorizontalLineSeparator />
+  <!-- <HorizontalLineSeparator /> -->
   <TidyInlineActivitiesList {item} {activities} />
 {/if}
