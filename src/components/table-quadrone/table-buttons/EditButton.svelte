@@ -14,7 +14,7 @@
 <a
   class="tidy-table-button"
   title={localize('DND5E.ItemEdit')}
-  onclick={() => !disabled && doc.sheet.render(true)}
+  onclick={() => !disabled && doc.sheet.render({ force: true })}
 >
   <i class="fas fa-edit fa-fw"></i>
 </a>

@@ -8,13 +8,67 @@
   import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemSheetQuadroneContext } from 'src/types/item.types';
-  import type { ActiveEffectContext } from 'src/types/types';
+  import type {
+    ActiveEffectContext,
+    EffectCategory,
+  } from 'src/types/types';
+  import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
+  import EffectToggleButton from 'src/components/table-quadrone/table-buttons/EffectToggleButton.svelte';
+  import type { Component } from 'svelte';
+  import EditButton from 'src/components/table-quadrone/table-buttons/EditButton.svelte';
+  import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButton.svelte';
+  import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
 
   let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
 
   let effects = $derived(Object.entries(context.effects));
 
   const localize = FoundryAdapter.localize;
+
+  type TableAction<TComponent extends Component<any>> = TidyTableAction<
+    TComponent,
+    ActiveEffectContext,
+    EffectCategory<ActiveEffectContext>
+  >;
+
+  let tableActions: TableAction<any>[] = $derived.by(() => {
+    let result: TableAction<any>[] = [];
+
+    result.push({
+      component: EffectToggleButton,
+      props: (args) => ({ effect: args.data.effect }),
+      condition: (args) => !args.section.isEnchantment,
+    } satisfies TableAction<typeof EffectToggleButton>);
+
+    if (context.unlocked) {
+      result.push({
+        component: EditButton,
+        props: (args) => ({ doc: args.data.effect }),
+      } satisfies TableAction<typeof EditButton>);
+
+      result.push({
+        component: DeleteButton,
+        props: (args) => ({
+          doc: args.data.effect,
+          deleteFn: () => args.data.effect.deleteDialog(),
+        }),
+      } satisfies TableAction<typeof DeleteButton>);
+    }
+
+    return result;
+  });
+
+  let columnSpecs = $derived({
+    source: {
+      columnWidth: '8rem',
+    },
+    duration: {
+      columnWidth: '6rem',
+    },
+    actions: {
+      columnWidth: `calc((var(--t5e-table-button-width) * ${1 + tableActions.length}) + var(--t5e-spacing-halfx))`,
+    },
+  });
 
   function onAddClicked(section: any) {
     const owner = context.item;
@@ -33,13 +87,13 @@
             </h3>
             <span class="table-header-count">{section.effects.length}</span>
           </TidyTableHeaderCell>
-          <TidyTableHeaderCell>
+          <TidyTableHeaderCell {...columnSpecs.source}>
             {localize('DND5E.SOURCE.FIELDS.source.label')}
           </TidyTableHeaderCell>
-          <TidyTableHeaderCell>
+          <TidyTableHeaderCell {...columnSpecs.duration}>
             {localize('DND5E.Duration')}
           </TidyTableHeaderCell>
-          <TidyTableHeaderCell class="header-actions">
+          <TidyTableHeaderCell class="header-actions" {...columnSpecs.actions}>
             {#if context.editable}
               <button
                 type="button"
@@ -83,7 +137,7 @@
                   </span>
                 </a>
               </TidyTableCell>
-              <TidyTableCell>
+              <TidyTableCell {...columnSpecs.source}>
                 <!-- TODO: this is a stopgap; use dnd5e's more sophisticated action handler for this -->
                 <a
                   onclick={async () =>
@@ -94,10 +148,20 @@
                   {effect.source.name ?? ''}
                 </a>
               </TidyTableCell>
-              <TidyTableCell>
+              <TidyTableCell {...columnSpecs.duration}>
                 {effect.effect.duration.label ?? ''}
               </TidyTableCell>
-              <TidyTableCell>Buttons here</TidyTableCell>
+              <TidyTableCell {...columnSpecs.actions}>
+                {#each tableActions as action}
+                  {@const args = { data: effect, section }}
+
+                  {#if action.condition?.(args) ?? true}
+                    {@const props = action.props(args)}
+                    <action.component {...props} />
+                  {/if}
+                {/each}
+                <MenuButton targetSelector="[data-context-menu]" />
+              </TidyTableCell>
             {/snippet}
           </TidyEffectTableRow>
         {/each}

@@ -10,22 +10,24 @@
 
   interface Props {
     activeEffect?: ActiveEffect5e | ActiveEffectContext | null;
-    cssClass?: string;
     contextMenu?: { type: string; uuid: string } | null;
+    rowClass?: string;
     hidden?: boolean;
     attributes?: Record<string, any>;
     draggable?: boolean;
     children?: Snippet<[{ toggleSummary: () => void; expanded: boolean }]>;
+    expanded?: boolean;
   }
 
   let {
     activeEffect = null,
     contextMenu = null,
-    cssClass = '',
+    rowClass = '',
     draggable = true,
     hidden = false,
     attributes,
     children,
+    expanded = $bindable(false),
   }: Props = $props();
 
   let effectDocument = $derived(activeEffect?.effect ?? activeEffect);
@@ -36,11 +38,9 @@
 
   const location = getContext<string>(CONSTANTS.SVELTE_CONTEXT.LOCATION);
 
-  let showSummary = $state(false);
-
   async function toggleSummary() {
-    showSummary = !showSummary;
-    onEffectToggled?.(effectDocument.id, showSummary, location);
+    expanded = !expanded;
+    onEffectToggled?.(effectDocument.id, expanded, location);
   }
 
   function handleDragStart(event: DragEvent) {
@@ -55,9 +55,9 @@
   rowContainerAttributes={{
     ['data-effect-id']: effectDocument?.id,
   }}
-  rowClass="tidy-table-row-v2"
+  rowClass="tidy-table-row-v2 {rowClass} {expanded ? 'expanded' : ''}"
   rowAttributes={{
-    ['data-context-menu']: contextMenu?.type,
+    ['data-context-menu']: CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS,
     ['data-tidy-table-row']: '',
     ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.EFFECT_TABLE_ROW,
     ['data-info-card']: 'effect',
@@ -71,9 +71,11 @@
   ondragstart={handleDragStart}
   {...attributes}
 >
-  {@render children?.({ toggleSummary, expanded: showSummary })}
+  {@render children?.({ toggleSummary, expanded: expanded })}
 
-  <ExpandableContainer expanded={showSummary}>
-    <TidyEffectSummary activeEffect={effectDocument} />
-  </ExpandableContainer>
+  {#snippet afterRow()}
+    <ExpandableContainer {expanded}>
+      <TidyEffectSummary activeEffect={effectDocument} />
+    </ExpandableContainer>
+  {/snippet}
 </TidyTableRow>

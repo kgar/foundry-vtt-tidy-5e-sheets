@@ -1,14 +1,8 @@
 ## To Do
 
-- [ ] Implement Item Effects tab
-  - [x] Populate with content and functionality
-  - [x] Header create button
-  - [ ] Action buttons
-  - [ ] Ctx menu
-  - [x] Middle click to edit
-  - [ ] Make source label a hoverable item link
-  - [ ] Purge all svelte-located SCSS in favor of global
-  - [ ] Polish and finalize
+- [ ] (Hightouch) Style Effects tab header buttons
+- [ ] (Hightouch) Rarity colors review
+- [ ] (Hightouch) Review Effects tab and apply any polish
 - [ ] Description changes are not reactive
 - [ ] Implement Item Activities tab
   - [ ] Actually include the description, whatever it is, and render as HTML
@@ -127,6 +121,12 @@
 - [ ] Item cards?
 - [ ] add a class to section headers when there are no search results `.search-no-results`
 
+### To Include on Actor Phase
+
+- [ ] Effects tab
+  - [ ] Info / Suppression UI https://discord.com/channels/@me/1243307347682529423/1351751313515479131
+  - Repro: Put on a ring of protection but don't equip/attune to it.
+
 ### Stretch
 
 - [ ] ButtonWithOptionsPanel - can the menu be outside the hidden window content and still anchor to the position of the menu? Very possible with a Portal. See https://svelte.dev/playground/8364bc976f0c4ff9b83adf6e7a3c19fd?version=5.22.5#H4sIAAAAAAAACp1V34-jNhD-V7zu6gJSBOqu1AcCOV3vpS-V-l6qrgNDcOPYlj1kN0L875VtCOQ2e7vaFwQzH9_8numpZEegGf1LGWSCrmnDBVia_d1TPGuncQK6nnDftE7sCQQ62Y5ZuCWvlESQaGlGc1sZrnFbyhL5USuDpCeVAYYQTJKBNEYdSUmTlFXIlbQl3Szg39VRKwkSZ9xFNJocfxCA5Kg6iVCTgjRMWNiUMk9nF2Ru8SzAe5MwrUnv3krcseqwN6qTdUYsAoid6GATdJrVNZf7jPz6m37xssE92ofp5yMzey5_1Cc6hDeCKiWUychzy_Ft4mtHdGe0gJlx1yEq-TOreXoJT-Y1P5FKMGuLkjKtS-qjztuH7Tet87R9CN8O1lnIljUp-lWj1Gq4_B9iGSkcyeM2IPO0fQw8ac1P3vDbnDtmPseJ_S-8mUo7jPi5L9KASXnjdfmYKCWzSvDqUPRRTIotiebeuBtf42FL-kn8law66T9WJCMr_zZ332ogeRqYty7TwTW6pggvSDM0HQzrN4Zm7OvkP3s9NFfyxdBcBgV5dZgHZNnsslLSIglJ_PfINCmIhGfyJ9NRvCklvHiKppPextXIRVLVsCbcZaKkNTSsE1jSOLRWID7AmRTk6f4-WEjue14PT2EuGxLNdpOW2egA5zgm2Br1TJ7qTgteMYTRO89VUs9Q0sABwsLC-cQCOpI1ca7FHmIAOyNJT2qwaNQ5W-JrEICQ7LisF76snamYDJtSDqW8xO4rOQbtAf0Uxt3P4ujkQapnOUVx3x_gPKYg5KhVFkmxdGsfwggBOHXCpQWDv0OjDIwuyE6IqxCjuNh6sGsBxqX1wJh8-eJNJAaO6gTfWy7qaMrP8LrE-gPFdStyzOfmw8W-maUwha5BozjBFmQUpmxcTyWOZkjxKv_jrhviuRXeAb_uhWBs_PyaRJeqf2wif7wg13N5Q_veSdPvHDOX-BMTHfiy_AFCqAC92Lr71BVzq7b_2D0RfN9ipQwTb92L8UI8bi9Ozbt4Ut9cxoudr68uyLb3QQ_zKl8s6hJzLnWHxI1xFrKTTufg80s8jIvf4cGZ1bDY3PNZub3D_xn-BxsHJbcUCQAA or obsidian dev vault
@@ -202,3 +202,14 @@
     - [x] (when relevant) Cooldown
     - [x] linked item (Necklace of Fireballs)
   - [x] School Image across from title / subtitle
+- [x] Implement Item Effects tab
+  - [x] Populate with content and functionality
+  - [x] Header create button
+  - [x] Ctx menu
+  - [x] Middle click to edit
+  - [x] Make source label a hoverable item link
+  - [x] Action buttons
+    - [x] enable/disable - editable and not an enchantment
+    - [x] edit, delete - unlocked
+    - [x] three dots menu
+  - [x] Purge all svelte-located SCSS in favor of global
