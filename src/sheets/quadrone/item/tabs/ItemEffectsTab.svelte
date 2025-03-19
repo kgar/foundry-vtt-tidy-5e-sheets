@@ -80,7 +80,7 @@
   {#if !section.hidden}
     <TidyTable {key}>
       {#snippet header()}
-        <TidyTableHeaderRow class="dark">
+        <TidyTableHeaderRow class="theme-dark">
           <TidyTableHeaderCell primary={true} class="header-label-cell">
             <h3>
               {localize(section.label)}
@@ -97,7 +97,7 @@
             {#if context.editable}
               <button
                 type="button"
-                class="header-action"
+                class="header-action borderless-button icon-button"
                 title={localize('DND5E.EffectCreate')}
                 onclick={(event) => onAddClicked(section)}
                 tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
@@ -151,7 +151,7 @@
               <TidyTableCell {...columnSpecs.duration}>
                 {effect.effect.duration.label ?? ''}
               </TidyTableCell>
-              <TidyTableCell {...columnSpecs.actions}>
+              <TidyTableCell {...columnSpecs.actions} class="tidy-table-actions">
                 {#each tableActions as action}
                   {@const args = { data: effect, section }}
 

@@ -518,7 +518,7 @@
 
   /* Spell Block */
   .spell-block {
-    li + li {
+    li+li {
       margin-block-start: var(--t5e-spacing-1x);
     }
 
@@ -557,7 +557,7 @@
 
   &.theme-light {
     .editor.prosemirror menu {
-      background: var(--t5e-component-card-oninverse-default);
+      background: var(--t5e-component-card-ondefault-lighter);
 
       li button {
         &.active i {
@@ -579,14 +579,14 @@
       background: var(--t5e-component-card-ondefault-default);
 
       .window-title {
-        color: var(--t5e-color-text-oninverse-default);
+        color: var(--t5e-color-text-ondefault-default);
       }
 
       button.header-control {
-        color: var(--t5e-color-icon-oninverse-button);
+        color: var(--t5e-color-icon-ondefault-button);
 
         &:hover {
-          color: var(--t5e-color-icon-oninverse-default);
+          color: var(--t5e-color-icon-ondefault-default);
         }
       }
     }

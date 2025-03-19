@@ -42,7 +42,7 @@
   <!-- <HorizontalLineSeparator /> -->
 {/if}
 <div
-  class="item-summary"
+  class="editor-rendered-content"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_SUMMARY}
 >
   {#if linked}
