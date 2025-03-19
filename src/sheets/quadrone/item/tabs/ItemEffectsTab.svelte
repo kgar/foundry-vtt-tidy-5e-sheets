@@ -8,10 +8,7 @@
   import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemSheetQuadroneContext } from 'src/types/item.types';
-  import type {
-    ActiveEffectContext,
-    EffectCategory,
-  } from 'src/types/types';
+  import type { ActiveEffectContext, EffectCategory } from 'src/types/types';
   import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
   import EffectToggleButton from 'src/components/table-quadrone/table-buttons/EffectToggleButton.svelte';
   import type { Component } from 'svelte';
@@ -138,15 +135,19 @@
                 </a>
               </TidyTableCell>
               <TidyTableCell {...columnSpecs.source}>
-                <!-- TODO: this is a stopgap; use dnd5e's more sophisticated action handler for this -->
-                <a
-                  onclick={async () =>
-                    (await fromUuid(effect.source.name))?.sheet.render({
-                      force: true,
-                    })}
-                >
-                  {effect.source.name ?? ''}
-                </a>
+                {#if effect.source}
+                  <!-- TODO: this is a stopgap; use dnd5e's more sophisticated action handler for this -->
+                  <a
+                    onclick={async () =>
+                      (await fromUuid(effect.source.name))?.sheet.render({
+                        force: true,
+                      })}
+                  >
+                    {effect.source.name ?? ''}
+                  </a>
+                {:else}
+                  <span class="color-text-disabled"> &mdash; </span>
+                {/if}
               </TidyTableCell>
               <TidyTableCell {...columnSpecs.duration}>
                 {effect.effect.duration.label ?? ''}
