@@ -21,7 +21,6 @@ function getSpellItemProperties(item: Item5e): PropertyEntry[] {
   entries.push({
     label: FoundryAdapter.localize('DND5E.SpellCastTime'),
     value: labels.activation,
-    parenthetical: item.system.activation.condition,
   });
 
   entries.push({
@@ -40,13 +39,6 @@ function getSpellItemProperties(item: Item5e): PropertyEntry[] {
     label: FoundryAdapter.localize('DND5E.Duration'),
     value: labels.concentrationDuration,
   });
-
-  if (labels.materials) {
-    entries.push({
-      label: FoundryAdapter.localize('DND5E.Materials'),
-      value: labels.materials,
-    });
-  }
 
   return entries;
 }

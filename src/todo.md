@@ -3,6 +3,7 @@
 - [ ] (Hightouch) Style Effects tab header buttons
 - [ ] (Hightouch) Rarity colors review
 - [ ] (Hightouch) Review Effects tab and apply any polish
+- [ ] Refactor: make tag component reusable
 - [x] Unidentified: add `unidentified` class to item table rows that are unidentified.
 - [x] Experiment: ondblclick to edit a table row, instead of middle click
 - [ ] Implement Item Activities tab

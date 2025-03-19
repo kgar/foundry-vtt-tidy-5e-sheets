@@ -89,14 +89,14 @@
           {/if} -->
           <span class="value">{prop.value}</span>
           {#if prop.parenthetical}
-            <span class="parenthetical">{prop.parenthetical}</span>
+            <span class="parenthetical">({prop.parenthetical})</span>
           {/if}
         </span>
       {/each}
     </div>
   {/if}
 </div>
-{#if activities.length > 0 && settings.value.inlineActivitiesPosition === CONSTANTS.INLINE_ACTIVITIES_POSITION_BOTTOM}
+{#if activities.length && settings.value.inlineActivitiesPosition === CONSTANTS.INLINE_ACTIVITIES_POSITION_BOTTOM}
   <HorizontalLineSeparator />
   <InlineActivitiesList {item} {activities} />
 {/if}

@@ -82,7 +82,7 @@
           {/if} -->
             <span class="value">{prop.value}</span>
             {#if prop.parenthetical}
-              <span class="parenthetical">{prop.parenthetical}</span>
+              <span class="parenthetical">({prop.parenthetical})</span>
             {/if}
           </span>
         {/each}
