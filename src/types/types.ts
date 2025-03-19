@@ -326,6 +326,7 @@ export type CharacterSheetContext = {
   conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
   defenders: Actor5e[];
+  effects: Record<string, EffectCategory<ActiveEffectContext>>;
   epicBoonsEarned: string | undefined;
   facilities: {
     basic: {
@@ -730,6 +731,19 @@ export type DamageModificationContextEntry = {
   icons?: string[];
 };
 
+export type EffectCategory<TEffectContext> = {
+  type: string;
+  label: string;
+  effects: TEffectContext[];
+  hidden?: boolean;
+  // For enchantment/enchantmentActive/enchantmentInactive
+  isEnchantment?: boolean;
+  // For suppressed effects
+  disabled?: boolean;
+  // For suppressed effects
+  info?: string[];
+};
+
 // TODO: Get the real typings for this
 export type ActiveEffect5e = any;
 
@@ -741,6 +755,7 @@ export type ActiveEffectContext = {
   disabled: boolean;
   duration: number;
   source: any;
+  parent: any;
   parentId: string;
   durationParts: string | string[];
   hasTooltip: boolean;

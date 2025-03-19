@@ -553,6 +553,10 @@
 
   /* Spell Block */
   .spell-block {
+    li + li {
+      margin-block-start: var(--t5e-spacing-1x);
+    }
+
     label {
       font: var(--t5e-font-label-small);
       font-weight: var(--font-weight-default);

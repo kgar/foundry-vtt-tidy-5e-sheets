@@ -9,8 +9,10 @@ export function configureActiveEffectsContextMenu(
   element: HTMLElement,
   app: any
 ) {
-  const effectId = element.getAttribute('data-effect-id') ?? '';
-  const parentId = element.getAttribute('data-parent-id') ?? '';
+  const effectId =
+    element.closest('[data-effect-id]')?.getAttribute('data-effect-id') ?? '';
+  const parentId =
+    element.closest('[data-parent-id]')?.getAttribute('data-parent-id') ?? '';
 
   const effect = FoundryAdapter.getEffect({
     document: app.document,
@@ -118,5 +120,5 @@ export function getActiveEffectContextOptions(effect: any, app: any) {
 
 function canEditEffect(effect: any) {
   const actor = effect.actor ? effect.actor : effect.parent;
-  return FoundryAdapter.isSheetUnlocked(actor);
+  return actor?.isOwner === true;
 }

@@ -1,9 +1,11 @@
 import type { UserPreferences } from 'src/features/user-preferences/user-preferences.types';
 import type {
+  ActiveEffectContext,
   ActivityItemContext,
   AttunementContext,
   ContainerCapacityContext,
   CustomContent,
+  EffectCategory,
   GroupableSelectOption,
   InventorySection,
   Tab,
@@ -175,7 +177,7 @@ export type ItemSheetQuadroneContext = {
   document: any;
   durationUnits: GroupableSelectOption[];
   editable: boolean;
-  effects: any;
+  effects: Record<string, EffectCategory<ActiveEffectContext>>;
   enriched: {
     description: string;
     unidentified: string;

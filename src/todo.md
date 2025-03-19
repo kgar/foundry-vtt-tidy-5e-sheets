@@ -1,9 +1,19 @@
 ## To Do
 
-- [ ] Implement Item Effects tab
+- [ ] (Hightouch) Style Effects tab header buttons
+- [ ] (Hightouch) Rarity colors review
+- [ ] (Hightouch) Review Effects tab and apply any polish
+- [ ] Description changes are not reactive
 - [ ] Implement Item Activities tab
+  - [ ] Actually include the description, whatever it is, and render as HTML
+  - [ ] Populate with content and functionality
+  - [ ] Action buttons
+  - [ ] Ctx menu
+  - [ ] Middle click to edit
+  - [ ] Polish and finalize
 - [ ] Notify Hightouch that spell sheet is ready for final review / polishing
 - [ ] Port spell block to classic sheets and info cards
+- [ ] Begin thinking about how to extract common functionality across each table type (item, effects, activities)
 - [ ] Propagate `sheet-header` class setup to all item sheets
 - [ ] Review Container sheet to ensure it has everything
 - [ ] Implement sheet header contents
@@ -109,6 +119,13 @@
 - [ ] Set up default/light/dark menu toggle and add to container
 - [ ] Update sheet lock to work like the default sheets, including the additional render options and intuitive default state
 - [ ] Item cards?
+- [ ] add a class to section headers when there are no search results `.search-no-results`
+
+### To Include on Actor Phase
+
+- [ ] Effects tab
+  - [ ] Info / Suppression UI https://discord.com/channels/@me/1243307347682529423/1351751313515479131
+  - Repro: Put on a ring of protection but don't equip/attune to it.
 
 ### Stretch
 
@@ -185,3 +202,14 @@
     - [x] (when relevant) Cooldown
     - [x] linked item (Necklace of Fireballs)
   - [x] School Image across from title / subtitle
+- [x] Implement Item Effects tab
+  - [x] Populate with content and functionality
+  - [x] Header create button
+  - [x] Ctx menu
+  - [x] Middle click to edit
+  - [x] Make source label a hoverable item link
+  - [x] Action buttons
+    - [x] enable/disable - editable and not an enchantment
+    - [x] edit, delete - unlocked
+    - [x] three dots menu
+  - [x] Purge all svelte-located SCSS in favor of global

@@ -13,6 +13,7 @@
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import type { Item5e } from 'src/types/item.types';
   import { CONSTANTS } from 'src/constants';
+  import { isNil } from 'src/utils/data';
 
   let context = $derived(getContainerOrItemSheetContextQuadrone());
 
@@ -59,7 +60,9 @@
   );
 
   let spellPreparationColor = $derived(
-    'preparation' in context.system
+    'preparation' in context.system &&
+      context.system.preparation.mode !==
+        CONSTANTS.SPELL_PREPARATION_MODE_PREPARED
       ? SpellUtils.getSpellPreparationIconColorVariableName(
           context.system.preparation?.mode,
         )
@@ -125,12 +128,18 @@
       uuid: item.uuid,
     });
   }
+
+  let borderColor = $derived(
+    !isNil(filigreeColorVariable)
+      ? `var(${filigreeColorVariable}, var(--t5e-color-gold))`
+      : 'var(--t5e-color-gold)',
+  );
 </script>
 
 <aside
   class="sidebar dark"
   style=" 
-    --filigree-border-color: var({filigreeColorVariable}, var(--t5e-color-gold))"
+    --filigree-border-color: {borderColor}"
 >
   <div>
     <div class="item-image-container">
@@ -254,7 +263,7 @@
     {#if context.system.preparation?.mode === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED}
       <li>
         <PillSwitch
-          checked={context.system.identified}
+          checked={context.system.preparation.prepared}
           checkedIconClass="fas fa-book fa-fw"
           uncheckedIconClass="fas fa-book fa-fw"
           onchange={(ev) =>

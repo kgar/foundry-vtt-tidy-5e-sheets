@@ -4,7 +4,11 @@
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ContainerItemContext, Item5e } from 'src/types/item.types';
+  import type {
+    ContainerItemContext,
+    ContainerSection,
+    Item5e,
+  } from 'src/types/item.types';
   import type { Actor5e, InventorySection } from 'src/types/types';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
@@ -21,6 +25,7 @@
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import { ItemColumnRuntime } from 'src/runtime/item/ItemColumnRuntime.svelte';
+  import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 
   interface Props {
     contents: InventorySection[];
@@ -63,20 +68,17 @@
 
   const searchResults = getSearchResultsContext();
 
-  // TODO: File away
-  type TidyTableAction<T extends Component<any>> = {
-    component: T;
-    props: (doc: any) => ComponentProps<T>;
-  };
+  type TableAction<TComponent extends Component<any>> =
+    TidyTableAction<TComponent, Item5e, ContainerSection>;
 
-  let itemActions: TidyTableAction<any>[] = $derived.by(() => {
-    let result: TidyTableAction<any>[] = [];
+  let tableActions: TableAction<any>[] = $derived.by(() => {
+    let result: TableAction<any>[] = [];
 
     if (unlocked) {
       result.push({
         component: EditButton,
         props: (doc: any) => ({ doc }),
-      } satisfies TidyTableAction<typeof EditButton>);
+      } satisfies TableAction<typeof EditButton>);
 
       result.push({
         component: DeleteButton,
@@ -84,7 +86,7 @@
           doc,
           deleteFn: () => doc.deleteDialog(),
         }),
-      } satisfies TidyTableAction<typeof DeleteButton>);
+      } satisfies TableAction<typeof DeleteButton>);
     }
 
     return result;
@@ -92,7 +94,7 @@
 
   let columnSpecs = $derived({
     actions: {
-      columnWidth: `calc((var(--t5e-table-button-width) * ${1 + itemActions.length}) + var(--t5e-spacing-halfx))`,
+      columnWidth: `calc((var(--t5e-table-button-width) * ${1 + tableActions.length}) + var(--t5e-spacing-halfx))`,
     },
   });
 
@@ -161,14 +163,6 @@
           ctx: itemContext[item.id],
         }))}
         {#each itemEntries as { item, ctx }, i (item.id)}
-          {@const itemBorderColor = item.system.rarity
-            ? `var(--t5e-color-rarity-${item.system.rarity.slugify()})`
-            : 'var(--t5e-color-gold)'}
-          {@const showRarityBoxShadow = [
-            'veryRare',
-            'legendary',
-            'artifact',
-          ].includes(item.system.rarity)}
           {@const expandedClass = !!containerToggleMap.get(tabId)?.has(item.id)
             ? ' expanded'
             : ''}
@@ -188,9 +182,7 @@
           >
             {#snippet children({ toggleSummary, expanded })}
               <a
-                class="tidy-table-button item-use-button"
-                style="--item-border-color: {itemBorderColor};"
-                class:special-rarity={showRarityBoxShadow}
+                class="tidy-table-button tidy-table-row-use-button {item.system.rarity?.slugify()}"
                 onclick={(ev) => FoundryAdapter.actorTryUseItem(item, ev)}
               >
                 {#if item.img?.endsWith('.svg')}
@@ -251,7 +243,7 @@
                 {...columnSpecs.actions}
               >
                 {#if unlocked}
-                  {#each itemActions as action}
+                  {#each tableActions as action}
                     {@const props = action.props(item)}
                     <action.component {...props} />
                   {/each}

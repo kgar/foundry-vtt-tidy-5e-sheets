@@ -31,6 +31,7 @@ import { ItemContext } from 'src/features/item/ItemContext';
 import { formatAsModifier } from 'src/utils/formatting';
 import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
 import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 
 export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
   CONSTANTS.SHEET_TYPE_ITEM,
@@ -208,6 +209,15 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
 
     const target = this.item.type === 'spell' ? this.item.system.target : null;
 
+    const defaultEffectCategories =
+      dnd5e.applications.components.EffectsElement.prepareCategories(
+        this.document.effects,
+        { parent: this.item }
+      );
+
+    const enhancedEffectsCategories =
+      await ConditionsAndEffects.getEffectsForItem(defaultEffectCategories);
+
     const context: ItemSheetQuadroneContext = {
       activities: (this.document.system.activities ?? [])
         .filter((a: any) => {
@@ -306,10 +316,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       // Advancement
       advancement: this._getItemAdvancement(this.document),
 
-      effects: dnd5e.applications.components.EffectsElement.prepareCategories(
-        this.document.effects,
-        { parent: this.item }
-      ),
+      effects: enhancedEffectsCategories,
 
       concealDetails:
         !game.user.isGM && this.document.system.identified === false,
