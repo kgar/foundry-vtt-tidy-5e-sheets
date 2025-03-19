@@ -92,19 +92,23 @@
 
   {#if context.properties.object.mgc}
     <div class="form-group split-group">
-      <label for="{appId}-attunement">{localize('DND5E.Attunement')}</label>
+      <label for="{appId}-attunement">
+        {localize('DND5E.Attunement')}
+      </label>
       <div class="form-fields">
-        <CheckboxQuadrone
-          id="{appId}-attuned"
-          document={context.item}
-          field="system.attuned"
-          checked={context.source.attuned}
-          disabledChecked={context.system.attuned}
-          disabled={!context.unlocked ||
-            // @ts-expect-error
-            !context.config.attunementTypes[context.system.attunement]}
-          title={localize('DND5E.AttunementAttuned')}
-        />
+        <label class="checkbox" for="{appId}-attuned">
+          <CheckboxQuadrone
+            id="{appId}-attuned"
+            document={context.item}
+            field="system.attuned"
+            checked={context.source.attuned}
+            disabledChecked={context.system.attuned}
+            disabled={!context.unlocked ||
+              // @ts-expect-error
+              !context.config.attunementTypes[context.system.attunement]}
+            title={localize('DND5E.AttunementAttuned')}
+          />
+        </label>
         <SelectQuadrone
           id="{appId}-attunement"
           document={context.item}

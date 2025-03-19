@@ -105,7 +105,7 @@
 
   &.disabled {
     cursor: default;
-    pointer-events: none;
+    // pointer-events: none;
     background: transparent;
     border: 1px solid var(--t5e-component-field-border);
 

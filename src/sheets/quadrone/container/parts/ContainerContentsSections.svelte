@@ -117,8 +117,7 @@
       data-custom-section={section.custom ? true : null}
     >
       {#snippet header()}
-        <!-- TODO: Remove .dark for nested table header rows -->
-        <TidyTableHeaderRow class={root ? 'dark' : ''}>
+        <TidyTableHeaderRow class={root ? 'theme-dark' : ''}>
           <TidyTableHeaderCell primary={true} class="header-label-cell">
             <h3>
               {localize(section.label)}

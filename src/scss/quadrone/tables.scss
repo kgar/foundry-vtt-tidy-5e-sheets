@@ -157,15 +157,42 @@
     border-style: solid;
     border-image: var(--t5e-table-row-border-image);
 
+    --t5e-item-row-color: transparent;
+    position: relative;
+
+
     &.equipped {
-      background: linear-gradient(to right,
-          rgba(159, 146, 117, .25) 0%,
-          rgba(159, 146, 117, 0) 30%),
-        var(--t5e-component-card-ondefault-default);
+      --t5e-item-row-color: var(--t5e-color-gold);
+      background: var(--t5e-component-card-ondefault-default);
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to right, oklch(from var(--t5e-item-row-color) l c h / 0.25) 10%, transparent 40%);
+        pointer-events: none;
+      }
     }
 
+    // TODO: Finish other unidentified styles. Classes aren't applied yet.
     &.unidentified {
-      /* TODO: Add color */
+      color: var(--t5e-color-text-ondefault-lighter);
+      background: transparent;
+
+      .item-image {
+        filter: grayscale(100%) opacity(75%);
+      }
+
+      .item-name .cell-name {
+        font-style: italic;
+      }
+
+      &::before {
+        content: none;
+      }
     }
 
     &.spell:not(.equipped) {
@@ -178,9 +205,18 @@
     }
 
     &.rarity {
-      background: linear-gradient(to right,
-          oklch(from var(--t5e-item-row-color) l c h / 0.3) 10%,
-          transparent 50%);
+      --t5e-item-row-color: var(--t5e-color-gold);
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to right, oklch(from var(--t5e-item-row-color) l c h / 0.25) 10%, transparent 40%);
+        pointer-events: none;
+      }
 
       .tidy-table-row-use-button {
         outline: 1px solid var(--t5e-use-button-border-color);
@@ -209,7 +245,7 @@
     min-height: var(--t5e-field-size-default);
     height: 100%;
 
-    &:not(.tidy-table-actions):not(.header-actions) {
+    &:not(.tidy-table-actions):not(.header-cell-actions) {
       min-width: 5rem;
     }
 
@@ -584,7 +620,7 @@
     }
   }
 
-  .header-actions {
+  .header-cell-actions {
     justify-content: flex-end;
 
     .header-action {
