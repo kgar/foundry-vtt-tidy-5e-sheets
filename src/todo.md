@@ -4,22 +4,14 @@
 - [ ] (Hightouch) Rarity colors review
 - [ ] (Hightouch) Review Effects tab and apply any polish
 - [ ] Refactor: make tag component reusable
-- [x] Unidentified: add `unidentified` class to item table rows that are unidentified.
-- [x] Experiment: ondblclick to edit a table row, instead of middle click
-- [ ] Implement Item Activities tab
-  - [x] Populate with content and functionality
-    - [x] Columns: (image) name, actions?
-  - [x] Action buttons
-  - [x] Ctx menu
-  - [x] dbl click to edit
-  - [ ] Determine if there's any activity summary that can be shared. If so, shared it. Else, disable until dnd5e 5 / Foundry 13.
-- [ ] Item/Effect/Activity description changes are not reactive
+- [ ] Container contained item description changes are not reactive on the container
+  - Of note: the container is re-rendering. It's probably the item summary itself.
+- [ ] Effect description changes are not reactive on the target item container
 - [ ] Determine how unidentified should work
   - [ ] Container sheet
   - [ ] Spell sheet
   - [ ] Other item sheets
 - [ ] Notify Hightouch that spell sheet is ready for final review
-- [x] Port spell block to classic sheets and info cards
 - [ ] Test spell info on item summary and cards
 - [ ] Begin thinking about how to extract common functionality across each table type (item, effects, activities)
 - [ ] Propagate `sheet-header` class setup to all item sheets
@@ -221,3 +213,15 @@
     - [x] edit, delete - unlocked
     - [x] three dots menu
   - [x] Purge all svelte-located SCSS in favor of global
+- [x] Implement drag and drop activities
+- [x] Implement drag and drop effects
+- [x] Unidentified: add `unidentified` class to item table rows that are unidentified.
+- [x] Experiment: ondblclick to edit a table row, instead of middle click
+- [x] Port spell block to classic sheets and info cards
+- [x] Implement Item Activities tab
+  - [x] Populate with content and functionality
+    - [x] Columns: (image) name, actions?
+  - [x] Action buttons
+  - [x] Ctx menu
+  - [x] dbl click to edit
+  - [x] Determine if there's any activity summary that can be shared. If so, shared it. Else, disable until dnd5e 5 / Foundry 13.

@@ -1,11 +1,15 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import type { Snippet } from 'svelte';
-  import type { ClassValue, DragEventHandler, MouseEventHandler } from 'svelte/elements';
+  import type {
+    ClassValue,
+    DragEventHandler,
+    MouseEventHandler,
+  } from 'svelte/elements';
 
   interface Props {
     hidden?: boolean;
-    rowContainerClass?: string;
+    rowContainerClass?: ClassValue;
     rowClass?: ClassValue;
     rowContainerAttributes?: Record<string, unknown>;
     rowAttributes?: Record<string, unknown>;
@@ -20,7 +24,7 @@
 
   let {
     hidden = false,
-    rowContainerClass = '',
+    rowContainerClass,
     rowClass = '',
     rowContainerAttributes = {},
     rowAttributes = {},
@@ -35,8 +39,7 @@
 </script>
 
 <div
-  class="tidy-table-row-container {rowContainerClass ?? ''}"
-  class:hidden
+  class={['tidy-table-row-container', rowContainerClass, { hidden }]}
   aria-hidden={hidden}
   {...rowContainerAttributes}
 >

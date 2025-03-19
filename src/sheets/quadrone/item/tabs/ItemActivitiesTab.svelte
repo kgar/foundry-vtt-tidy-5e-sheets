@@ -92,16 +92,17 @@
             </span>
           </a>
           <TidyTableCell primary={true}>
-            <a class="item-name" onclick={(ev) => toggleSummary()}>
+            <span class="item-name">
               <span class="cell-name">{activity.name}</span>
-              <span class="row-detail-expand-indicator">
+              <!-- TODO: Uncomment when we have activity descriptions -->
+              <!-- <span class="row-detail-expand-indicator">
                 <i
                   class="fa-solid fa-angle-right expand-indicator"
                   class:expanded
                 >
                 </i>
-              </span>
-            </a>
+              </span> -->
+            </span>
           </TidyTableCell>
           <TidyTableCell {...columnSpecs.actions} class="tidy-table-actions">
             {#each tableActions as action}

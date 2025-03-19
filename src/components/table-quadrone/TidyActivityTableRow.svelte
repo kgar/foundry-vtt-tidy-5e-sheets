@@ -7,7 +7,7 @@
   import TidyTableRow from '../table-quadrone/TidyTableRow.svelte';
   import TidyActivitySummary from './TidyActivitySummary.svelte';
   import type { ActivityQuadroneContext } from 'src/types/item.types';
-    import { Activities } from 'src/features/activities/activities';
+  import { Activities } from 'src/features/activities/activities';
 
   interface Props {
     activity: ActivityQuadroneContext;
@@ -52,8 +52,9 @@
 
 <TidyTableRow
   rowContainerAttributes={{
-    ['data-item-id']: activity?.doc.item.id,
+    ['data-activity-id']: activity?.id,
   }}
+  rowContainerClass="activity"
   rowClass="tidy-table-row-v2 {rowClass} {expanded ? 'expanded' : ''}"
   rowAttributes={{
     ['data-activity-id']: activity?.id,
