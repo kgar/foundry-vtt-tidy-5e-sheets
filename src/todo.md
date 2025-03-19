@@ -3,15 +3,15 @@
 - [ ] (Hightouch) Style Effects tab header buttons
 - [ ] (Hightouch) Rarity colors review
 - [ ] (Hightouch) Review Effects tab and apply any polish
-- [ ] Description changes are not reactive
 - [ ] Implement Item Activities tab
   - [ ] Actually include the description, whatever it is, and render as HTML
   - [ ] Populate with content and functionality
+    - [ ] Columns: (image) name, actions?
   - [ ] Action buttons
   - [ ] Ctx menu
   - [ ] Middle click to edit
-  - [ ] Polish and finalize
-- [ ] Notify Hightouch that spell sheet is ready for final review / polishing
+- [ ] Item/Effect/Activity description changes are not reactive
+- [ ] Notify Hightouch that spell sheet is ready for final review
 - [ ] Port spell block to classic sheets and info cards
 - [ ] Begin thinking about how to extract common functionality across each table type (item, effects, activities)
 - [ ] Propagate `sheet-header` class setup to all item sheets
