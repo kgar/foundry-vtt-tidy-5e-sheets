@@ -68,8 +68,11 @@
 
   const searchResults = getSearchResultsContext();
 
-  type TableAction<TComponent extends Component<any>> =
-    TidyTableAction<TComponent, Item5e, ContainerSection>;
+  type TableAction<TComponent extends Component<any>> = TidyTableAction<
+    TComponent,
+    Item5e,
+    ContainerSection
+  >;
 
   let tableActions: TableAction<any>[] = $derived.by(() => {
     let result: TableAction<any>[] = [];
@@ -117,7 +120,7 @@
       data-custom-section={section.custom ? true : null}
     >
       {#snippet header()}
-        <TidyTableHeaderRow class={root ? 'theme-dark' : ''}>
+        <TidyTableHeaderRow class={{ 'theme-dark': root }}>
           <TidyTableHeaderCell primary={true} class="header-label-cell">
             <h3>
               {localize(section.label)}
@@ -126,7 +129,7 @@
           </TidyTableHeaderCell>
           {#each columns as column}
             <TidyTableHeaderCell
-              class={column.headerClasses ?? ''}
+              class={[column.headerClasses]}
               columnWidth={column.width}
               hideUnder={column.hideUnder}
             >
@@ -162,18 +165,19 @@
           ctx: itemContext[item.id],
         }))}
         {#each itemEntries as { item, ctx }, i (item.id)}
-          {@const expandedClass = !!containerToggleMap.get(tabId)?.has(item.id)
-            ? ' expanded'
-            : ''}
+          {@const expanded = !!containerToggleMap.get(tabId)?.has(item.id)}
+          {@const unidentified = item.system.identified === false}
 
-          <!-- TODO: Add .expanded class to the row when the item is expanded -->
           <TidyItemTableRow
             {item}
             hidden={!searchResults.show(item.uuid)}
-            rowClass={FoundryAdapter.getInventoryRowClasses(
-              item,
-              itemContext[item.id]?.attunement,
-            ) + expandedClass}
+            rowClass={[
+              FoundryAdapter.getInventoryRowClasses(
+                item,
+                itemContext[item.id]?.attunement,
+              ),
+              { expanded, unidentified },
+            ]}
             contextMenu={{
               type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
               uuid: item.uuid,

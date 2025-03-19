@@ -1,12 +1,12 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import type { Snippet } from 'svelte';
-  import type { DragEventHandler, MouseEventHandler } from 'svelte/elements';
+  import type { ClassValue, DragEventHandler, MouseEventHandler } from 'svelte/elements';
 
   interface Props {
     hidden?: boolean;
     rowContainerClass?: string;
-    rowClass?: string;
+    rowClass?: ClassValue;
     rowContainerAttributes?: Record<string, unknown>;
     rowAttributes?: Record<string, unknown>;
     children?: Snippet;
@@ -39,7 +39,7 @@
   {...rowContainerAttributes}
 >
   <div
-    class="tidy-table-row {rowClass ?? ''}"
+    class={['tidy-table-row', rowClass]}
     data-tidy-table-row
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TABLE_ROW}
     {...rowAttributes}
