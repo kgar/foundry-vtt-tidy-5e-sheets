@@ -4,20 +4,22 @@
 - [ ] (Hightouch) Rarity colors review
 - [ ] (Hightouch) Review Effects tab and apply any polish
 - [x] Unidentified: add `unidentified` class to item table rows that are unidentified.
+- [x] Experiment: ondblclick to edit a table row, instead of middle click
+- [ ] Implement Item Activities tab
+  - [x] Populate with content and functionality
+    - [x] Columns: (image) name, actions?
+  - [x] Action buttons
+  - [x] Ctx menu
+  - [x] dbl click to edit
+  - [ ] Determine if there's any activity summary that can be shared. If so, shared it. Else, disable until dnd5e 5 / Foundry 13.
+- [ ] Item/Effect/Activity description changes are not reactive
 - [ ] Determine how unidentified should work
   - [ ] Container sheet
+  - [ ] Spell sheet
   - [ ] Other item sheets
-- [ ] Experiment: ondblclick to edit a table row, instead of middle click
-- [ ] Implement Item Activities tab
-  - [ ] Actually include the description, whatever it is, and render as HTML
-  - [ ] Populate with content and functionality
-    - [ ] Columns: (image) name, actions?
-  - [ ] Action buttons
-  - [ ] Ctx menu
-  - [ ] Middle click to edit
-- [ ] Item/Effect/Activity description changes are not reactive
 - [ ] Notify Hightouch that spell sheet is ready for final review
-- [ ] Port spell block to classic sheets and info cards
+- [x] Port spell block to classic sheets and info cards
+- [ ] Test spell info on item summary and cards
 - [ ] Begin thinking about how to extract common functionality across each table type (item, effects, activities)
 - [ ] Propagate `sheet-header` class setup to all item sheets
 - [ ] Review Container sheet to ensure it has everything

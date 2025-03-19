@@ -209,6 +209,14 @@ export const FoundryAdapter = {
       return;
     }
 
+    FoundryAdapter.editOnMouseEvent(event, entityWithSheet);
+  },
+  editOnMouseEvent(
+    event: MouseEvent,
+    entityWithSheet: {
+      sheet: { render: (force: boolean) => void; isEditable: boolean };
+    }
+  ) {
     if (!entityWithSheet.sheet.isEditable) {
       return;
     }

@@ -212,6 +212,9 @@ export const CONSTANTS = {
     /** A toolbar with available actions for affeting the contents of a tab, usually item table contents (e.g., filter, sort, config). */
     ACTION_BAR: 'action-bar',
 
+    /** A row in an activity table. */
+    ACTIVITY_TABLE_ROW: 'effect-table-row',
+
     /** A container which houses an actor portrait and other parts related to actor portrait features. */
     ACTOR_PORTRAIT_CONTAINER: 'actor-portrait-container',
 

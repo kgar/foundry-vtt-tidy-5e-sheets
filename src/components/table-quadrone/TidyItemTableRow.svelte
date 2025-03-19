@@ -147,7 +147,7 @@
     draggable: draggable,
   }}
   rowClass={['tidy-table-row-v2', rowClass, rarityClass, { expanded }]}
-  onmousedown={(event) => item && FoundryAdapter.editOnMiddleClick(event, item)}
+  ondblclick={(event) => item && FoundryAdapter.editOnMouseEvent(event, item)}
   onmouseenter={onMouseEnter}
   onmouseleave={onMouseLeave}
   ondragstart={handleDragStart}

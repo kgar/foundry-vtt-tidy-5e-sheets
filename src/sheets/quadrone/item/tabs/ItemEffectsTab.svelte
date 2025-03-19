@@ -90,14 +90,16 @@
           <TidyTableHeaderCell {...columnSpecs.duration}>
             {localize('DND5E.Duration')}
           </TidyTableHeaderCell>
-          <TidyTableHeaderCell class="header-cell-actions" {...columnSpecs.actions}>
+          <TidyTableHeaderCell
+            class="header-cell-actions"
+            {...columnSpecs.actions}
+          >
             {#if context.editable}
               <button
                 type="button"
                 class="header-action borderless-button icon-button"
                 title={localize('DND5E.EffectCreate')}
                 onclick={(event) => onAddClicked(section)}
-                tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
               >
                 <i class="fas fa-plus"></i>
               </button>
@@ -115,7 +117,7 @@
         {#each effectEntries as { effect } (effect.id)}
           <TidyEffectTableRow activeEffect={effect}>
             {#snippet children({ toggleSummary, expanded })}
-              <span class="item-use-button tidy-table-row-use-button disabled">
+              <span class="tidy-table-button tidy-table-row-use-button disabled">
                 <img
                   class="item-image"
                   src={effect.img ?? effect.effect.icon}
@@ -152,7 +154,10 @@
               <TidyTableCell {...columnSpecs.duration}>
                 {effect.effect.duration.label ?? ''}
               </TidyTableCell>
-              <TidyTableCell {...columnSpecs.actions} class="tidy-table-actions">
+              <TidyTableCell
+                {...columnSpecs.actions}
+                class="tidy-table-actions"
+              >
                 {#each tableActions as action}
                   {@const args = { data: effect, section }}
 

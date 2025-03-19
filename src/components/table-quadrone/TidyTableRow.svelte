@@ -11,6 +11,7 @@
     rowAttributes?: Record<string, unknown>;
     children?: Snippet;
     afterRow?: Snippet;
+    ondblclick?: MouseEventHandler<HTMLElement>;
     onmousedown?: MouseEventHandler<HTMLElement>;
     onmouseenter?: MouseEventHandler<HTMLElement>;
     onmouseleave?: MouseEventHandler<HTMLElement>;
@@ -25,6 +26,7 @@
     rowAttributes = {},
     children,
     afterRow,
+    ondblclick,
     onmousedown,
     onmouseenter,
     onmouseleave,
@@ -43,6 +45,7 @@
     data-tidy-table-row
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TABLE_ROW}
     {...rowAttributes}
+    {ondblclick}
     {onmousedown}
     {onmouseenter}
     {onmouseleave}

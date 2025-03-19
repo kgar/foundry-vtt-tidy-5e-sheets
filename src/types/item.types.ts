@@ -138,17 +138,20 @@ export type ItemNameContext = {
   field: unknown;
 };
 
+export type ActivityQuadroneContext = {
+  id: string;
+  uuid: string;
+  name: string;
+  sort: number;
+  img: {
+    src: string;
+    svg: boolean;
+  };
+  doc: any;
+};
+
 export type ItemSheetQuadroneContext = {
-  activities: {
-    id: string;
-    uuid: string;
-    name: string;
-    sort: number;
-    img: {
-      src: string;
-      svg: boolean;
-    };
-  }[];
+  activities: ActivityQuadroneContext[];
   activationTypes: GroupableSelectOption[];
   advancement: any;
   advancementEditable: boolean;

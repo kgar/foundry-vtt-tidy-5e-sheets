@@ -1,3 +1,4 @@
+import { CONSTANTS } from 'src/constants';
 import { AttributePins } from 'src/features/attribute-pins/AttributePins';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -7,6 +8,8 @@ export function configureActivitiesContextMenu(element: HTMLElement, app: any) {
   const item =
     app.document.type === 'container'
       ? app.document.system.getContainedItem(itemId)
+      : app.document.documentName === CONSTANTS.DOCUMENT_NAME_ITEM
+      ? app.document
       : app.document.items.get(itemId);
 
   // Parts of ContextMenu doesn't play well with promises, so don't show menus for containers in packs
@@ -94,6 +97,7 @@ function getContextMenuOptions(
     icon: `<i class="fa-solid fa-thumbtack"></i>`,
     callback: () => AttributePins.pin(activity, 'activity'),
     condition: () =>
+      app.actor &&
       activity.item.isOwner &&
       !FoundryAdapter.isLockedInCompendium(activity.item) &&
       AttributePins.isPinnable(activity, 'activity') &&
