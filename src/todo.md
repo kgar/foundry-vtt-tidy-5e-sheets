@@ -3,6 +3,7 @@
 - [ ] (Hightouch) Style Effects tab header buttons
 - [ ] (Hightouch) Rarity colors review
 - [ ] (Hightouch) Review Effects tab and apply any polish
+- [ ] Experiment: ondblclick to edit a table row, instead of middle click
 - [ ] Implement Item Activities tab
   - [ ] Actually include the description, whatever it is, and render as HTML
   - [ ] Populate with content and functionality
