@@ -15,6 +15,7 @@
     actor: Actor5e;
     expanded?: boolean;
     toggleField?: string | null;
+    defaultSkills?: Set<string>;
   }
 
   let {
@@ -22,6 +23,7 @@
     actor,
     expanded = true,
     toggleField = null,
+    defaultSkills = new Set<string>(),
   }: Props = $props();
 
   let context =
@@ -113,7 +115,9 @@
     {#each skillRefs as skillRef (skillRef.key)}
       {@const showSkill =
         skillRef.skill &&
-        (showAllSkills || skillRef.skill.prof.hasProficiency > 0)}
+        (defaultSkills.has(skillRef.key) ||
+          showAllSkills ||
+          skillRef.skill.prof.hasProficiency > 0)}
 
       {#if showSkill}
         <li

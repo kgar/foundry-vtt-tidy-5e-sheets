@@ -452,6 +452,7 @@ export type NpcSheetContext = {
   bondEnrichedHtml: string;
   conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
+  defaultSkills: Set<string>;
   encumbrance: any;
   features: NpcAbilitySection[];
   flawEnrichedHtml: string;
