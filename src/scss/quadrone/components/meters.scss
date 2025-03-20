@@ -37,8 +37,8 @@
   align-self: stretch;
 
   border-radius: var(--radius-card, 0.1875rem);
-  border: 0.0625rem solid var(--t5e-component-pill-ondefault-border, #9f9275);
-  background: var(--dnd5e-color-light-gray, #3d3d3d);
+  border: 1px solid var(--t5e-component-field-border);
+  background: var(--t5e-color-palette-grey-34);
 
   /* pill-shadow */
   box-shadow: 0px 0px 12px 0px var(--dnd5e-shadow-15, rgba(0, 0, 0, 0.15));
@@ -49,7 +49,7 @@
     align-items: center;
     gap: 0.25rem;
     position: relative;
-    color: var(--t5e-color-text-oninverse-default);
+    color: var(--t5e-color-text-ondefault-default);
     font-size: 0.75rem;
     font-weight: 500;
     line-height: normal;
@@ -57,6 +57,7 @@
     padding-inline-end: 0.75rem;
 
     i {
+      color: var(--t5e-color-text-ondefault-lighter);
       font-size: 0.6875rem;
     }
 
@@ -93,9 +94,7 @@
       content: '';
       position: absolute;
       block-size: 100%;
-      inline-size: calc(
-        var(--bar-percentage, 0%)
-      );
+      inline-size: calc(var(--bar-percentage, 0%));
       transition: all 0.5s ease;
 
       border-radius: var(--t5e-radius-card);

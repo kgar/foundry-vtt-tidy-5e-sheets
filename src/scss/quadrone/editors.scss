@@ -271,6 +271,13 @@
     }
   }
 
+  fieldset .editor-rendered-content {
+    flex: auto;
+    margin-top: var(--t5e-spacing-1x);
+    margin-bottom: var(--t5e-spacing-1x);
+    border: none;
+  }
+
   &.theme-light {
     button.item-summary-command {
       box-shadow: none;

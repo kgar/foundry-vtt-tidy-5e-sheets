@@ -1,16 +1,31 @@
 ## To Do
 
-- [ ] (Hightouch) Style Effects tab header buttons
-- [ ] (Hightouch) Rarity colors review
-- [ ] (Hightouch) Review Effects tab and apply any polish
 - [x] Refactor: make tag component reusable
 - [ ] Container contained item description changes are not reactive on the container
   - Of note: the container is re-rendering. It's probably the item summary itself.
 - [ ] Effect description changes are not reactive on the target item container
 - [ ] Determine how unidentified should work
-  - [ ] Container sheet
-  - [ ] Spell sheet
-  - [ ] Other item sheets
+  - [ ] Item row
+    - [ ] Item row text italicized, light grey, no background color
+    - [ ] Item row image greyscale, opacity 75%
+    - [ ] Item description uses unidentified description only
+    - [ ] Charges hidden (emdash)
+    - [ ] Price hidden (emdash)
+  - [ ] All sheets
+    - [ ] Image greyscale
+    - [ ] Rarity color set to grey 40, rarity label readonly and set to "Unidentified" (all modes)
+    - [ ] Cost label set to "?"
+    - [ ] Charges hidden (emdash)
+    - [ ] Use button greyed out, cannot be used
+    - [ ] Details tab hidden until identified (all modes)
+    - [ ] Activities tab hidden until identified (all modes)
+    - [ ] Effects tab hidden until identified (all modes)
+    - [ ] Name readonly "Unidentified <type>" (all modes)
+    - [ ] Unidentified description expanded and editable
+    - [ ] Description section hidden, Chat description section hidden
+    - [ ] (Non-container sheets only) Sidebar sections all hidden except Sections section and pill switches
+    - [ ] Header source label set to "?" if filled out, edit button hidden (all modes)
+  - [ ] Non-container
 - [ ] Notify Hightouch that spell sheet is ready for final review
 - [ ] Test spell info on item summary and cards
 - [ ] Begin thinking about how to extract common functionality across each table type (item, effects, activities)
@@ -18,9 +33,13 @@
 - [ ] Review Container sheet to ensure it has everything
 - [ ] Implement sheet header contents
   - [ ] Background
-    - [ ] subtitle
   - [ ] Class
+    - [ ] header
+      - [ ] Current level badge
+    - [ ] Description tab
+      - [ ] Description section header hidden, contents displayed
     - [ ] subtitle
+      - [ ] Actor class level
   - [ ] Consumable
     - [ ] subtitle
       - [ ] Item Type
@@ -43,11 +62,13 @@
       - [ ] Weight
       - [ ] Quantity
   - [ ] Facility
-    - [ ] subtitle?
-    - [ ] summary
-      - [ ] Category
+    - [ ] subtitle
       - [ ] Type
+      - [ ] Order
+    - [ ] summary
+      - [ ] Progress (x / y)
       - [ ] Size
+      - [ ] Cost (if not assigned)
   - [ ] Feat
     - [ ] subtitle
       - [ ] (When active) Activation Type (Action)
@@ -84,6 +105,11 @@
       - [x] Price
       - [x] Weight
       - [x] Quantity
+- [ ] Finalize Description tab behavior for "text-based" sheets
+  - [ ] Class / Subclass / Background / Species
+    - [ ] Description tab
+      - [ ] Description section header hidden, contents displayed
+      - [ ] Edit mode always shows prosemirror visible in edit mode (like default sheets)
 - [ ] Implement Activities tab
 - [ ] Implement Effects tab
 - [ ] Finish implementing container contents tab
@@ -95,6 +121,11 @@
   - [ ] Container
   - [ ] Equipment
   - [ ] Facility
+    - [ ] Category
+    - [ ] Prerequisite
+    - [ ] Y Hirelings
+    - [ ] Y Defenders
+    - [ ] Order
   - [ ] Feat
   - [ ] Loot
   - [ ] Species
@@ -103,6 +134,7 @@
   - [ ] Subclass
   - [ ] Tool
   - [ ] Weapon
+  - [ ] Make sure Section section visible for all sheets
 - [ ] Ensure Activities and Effects tabs include item counters in the title
   - [ ] This will need context-dependent tab titles, if they don't already exist
 - [ ] https://discord.com/channels/@me/1243307347682529423/1336210686392668220
@@ -134,6 +166,9 @@
 
 ### To Do Graveyard
 
+- [x] (Hightouch) Style Effects tab header buttons
+- [x] (Hightouch) Rarity colors review
+- [x] (Hightouch) Review Effects tab and apply any polish
 - [x] Get Tidy tables working properly and looking nice with the latest styles
   - [x] New quantity control is wider than its 80px parent
   - [x] The table styles do not account for varying column widths and do not constrain child contents

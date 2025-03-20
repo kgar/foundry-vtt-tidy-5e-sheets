@@ -34,7 +34,7 @@
   );
 </script>
 
-<div {title} class="item-price font-weight-label {cssClass}" {...rest}>
+<div {title} class="item-price {cssClass}" {...rest}>
   <!-- Currency Image -->
   {#if icon}
     <i
@@ -44,11 +44,11 @@
   {/if}
   <span class="item-price-number" class:truncate>
     <!-- Value Text -->
-    <span class="color-text-default">
+    <span class="color-text-default text-data">
       {itemValueText}
     </span>
     <!-- Denom -->
-    <span class="item-price-denomination color-text-lighter">
+    <span class="item-price-denomination text-label">
       {denomination?.abbreviation ?? ''}
     </span>
   </span>

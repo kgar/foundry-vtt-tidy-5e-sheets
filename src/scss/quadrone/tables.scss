@@ -182,6 +182,10 @@
       color: var(--t5e-color-text-ondefault-lighter);
       background: transparent;
 
+      .tidy-table-row-use-button {
+        border: 1px solid var(--t5e-color-palette-grey-40);
+      }
+
       .item-image {
         filter: grayscale(100%) opacity(75%);
       }
@@ -241,12 +245,13 @@
     align-items: center;
     display: flex;
     justify-content: center;
-    padding: 0 0.0625rem;
+    // padding: 0 0.0625rem;
     min-height: var(--t5e-field-size-default);
     height: 100%;
 
     &:not(.tidy-table-actions):not(.header-cell-actions) {
       min-width: 5rem;
+      padding: var(--t5e-spacing-halfx) var(--t5e-spacing-1x) calc(var(--t5e-spacing-halfx) + var(--t5e-spacing-1));
     }
 
     &:not(:last-child) {

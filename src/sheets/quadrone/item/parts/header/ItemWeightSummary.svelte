@@ -5,8 +5,8 @@
 </script>
 
 <div class="item-weight">
-  <i class="fas fa-weight-hanging item-weight-icon color-text-lightest"></i>
-  <span class="item-weight-value">
+  <i class="fas fa-weight-hanging item-weight-icon text-label-icon"></i>
+  <span class="item-weight-value text-data">
     {context.system.weight?.value}
   </span>
 </div>
