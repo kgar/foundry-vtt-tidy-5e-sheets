@@ -40,11 +40,14 @@
         ).map<ActivityItemContext>(Activities.getActivityItemContext)
       : [];
   });
+
+  let identified = $derived(item.system.identified !== false);
+
+  let showGmOnlyUi = $derived(!identified && FoundryAdapter.userIsGm());
 </script>
 
 {#if activities.length > 0 && settings.value.inlineActivitiesPosition === CONSTANTS.INLINE_ACTIVITIES_POSITION_TOP}
   <TidyInlineActivitiesList {item} {activities} />
-  <!-- <HorizontalLineSeparator /> -->
 {/if}
 <div
   class="editor-rendered-content"
@@ -58,10 +61,18 @@
         })}
       </div>
     {/await}
-    <!-- <HorizontalLineSeparator /> -->
   {/if}
 
-  {@html chatData.description}
+  <div class={{ callout: showGmOnlyUi }}>
+    {#if showGmOnlyUi}
+      <div class="gm-only color-text-lighter">
+        {localize(
+          'TIDY5E.WorldSettings.ItemIdentificationPermission.options.GmOnly',
+        )}
+      </div>
+    {/if}
+    {@html chatData.description}
+  </div>
 
   <div
     class="inline-wrapped-elements"
@@ -69,7 +80,7 @@
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_PROPERTY_LIST}
   >
     <div class="left-aligned-elements">
-      {#if chatData.properties}
+      {#if FoundryAdapter.userIsGm() || (identified && chatData.properties)}
         {#each chatData.properties as prop}<span class="tag">
             <span class="value">
               {prop}

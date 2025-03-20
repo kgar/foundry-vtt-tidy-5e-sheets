@@ -39,7 +39,6 @@
   const emptyChatData: ItemChatData = {
     description: { value: '' },
     properties: [],
-    unidentified: { description: '' },
   };
 
   const expandedItemData = getContext<ExpandedItemData>(
@@ -110,9 +109,9 @@
 
   const rarityClass = $derived(item.system.rarity ? 'rarity' : '');
 
-  $effect(() => {
-    let first = true;
+  let first = true;
 
+  $effect(() => {
     (async () => {
       if (first) {
         first = false;
@@ -121,7 +120,7 @@
       }
 
       if (item && expanded) {
-        chatData = await item.getChatData({ secrets: item.actor.isOwner });
+        chatData = await item.getChatData({ secrets: item.isOwner });
       } else if (item && !expanded && chatData) {
         // Reset chat data for non-expanded, hydrated chatData
         // so it rehydrates on next open

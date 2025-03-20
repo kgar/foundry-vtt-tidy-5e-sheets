@@ -691,6 +691,12 @@ export type ExpandedItemIdToLocationsMap = Map<string, Set<string>>;
  */
 export type ExpandedItemData = Map<string, ItemChatData>;
 
+export type EffectSummaryData = {
+  description: {
+    value: string;
+  };
+};
+
 export type MaxPreparedSpellFormula = {
   label: string;
   value: string;

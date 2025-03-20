@@ -507,7 +507,7 @@
       bottom: 0;
     }
 
-    // TODO: Hightouch, please review this. kgar put this here to support svg images
+    // TODO: hightouch, please review this. kgar put this here to support svg images
     dnd5e-icon {
       --icon-size: calc(1.75rem - 0.125rem);
       --icon-fill: var(--t5e-color-text-lighter);
@@ -524,7 +524,7 @@
         opacity: 0;
       }
 
-      // TODO: Hightouch, this was one of the few ways to make an SVG icon go hidden. It doesn't animate, well (or possibly at all).
+      // TODO: hightouch, this was one of the few ways to make an SVG icon go hidden. It doesn't animate, well (or possibly at all).
       dnd5e-icon {
         --icon-fill: transparent;
       }
