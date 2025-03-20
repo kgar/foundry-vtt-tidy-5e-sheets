@@ -851,8 +851,6 @@
         "name": "Включати поля розділів Tidy до аркушів за замовчуванням",
         "hint": "Включає дані розділів Tidy та розділи дій до аркуша елемента за замовчуванням."
     },
-    "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatLabel": "Інформація",
-    "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatTooltip": "Показати опис у чаті",
     "TIDY5E.ContextMenuActionView": "Переглянути",
     "TIDY5E.ContextMenuActionPinToAttributes": "Закріпити на атрибутах",
     "TIDY5E.ContextMenuActionUnpinFromAttributes": "Відкріпити від атрибутів",

@@ -3,11 +3,11 @@
 - [x] Effect description changes are not reactive on the target item container
 - [ ] Determine how unidentified should work
   - [ ] Item row
-    - [ ] Item row text italicized, light grey, no background color
-    - [ ] Item row image greyscale, opacity 75%
+    - [ ] (maybe done already?) Item row text italicized, light grey, no background color
+    - [x] (maybe done already?) Item row image greyscale, opacity 75%
     - [x] Item description uses unidentified description only
-    - [ ] Charges hidden (emdash)
-    - [ ] Price hidden (emdash)
+    - [x] Charges hidden (emdash)
+    - [x] Price hidden (emdash)
   - [ ] All sheets
     - [ ] Image greyscale
     - [ ] Rarity color set to grey 40, rarity label readonly and set to "Unidentified" (all modes)

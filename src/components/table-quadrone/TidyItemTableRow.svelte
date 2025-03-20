@@ -102,7 +102,8 @@
   }
 
   const itemAccentColor = $derived(
-    item.system.rarity
+    item.system.rarity &&
+      (FoundryAdapter.userIsGm() || item.system.identified === true)
       ? `var(${RarityColors.getRarityColorVariableName(item.system.rarity)})`
       : '',
   );
