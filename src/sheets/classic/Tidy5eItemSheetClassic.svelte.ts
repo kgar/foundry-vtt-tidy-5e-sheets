@@ -373,6 +373,8 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
       denominationOptions: [],
     };
 
+    await this.item.system.getSheetData?.(context);
+
     if (!context.editable) {
       context.source = context.system;
     }
@@ -506,8 +508,6 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
         context.itemSubtypes = itemTypes.subtypes;
       }
     }
-
-    await this.item.system.getSheetData?.(context);
 
     return context;
   }

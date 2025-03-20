@@ -3,10 +3,7 @@
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type {
-    ContainerSheetClassicContext,
-    ItemSheetContext,
-  } from 'src/types/item.types';
+  import type { ItemSheetContext } from 'src/types/item.types';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
   import ItemDescriptions from '../parts/ItemDescriptions.svelte';
@@ -17,11 +14,9 @@
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
   import PropertyTag from 'src/components/properties/PropertyTag.svelte';
+  import SpellBlock from 'src/sheets/quadrone/item/parts/SpellBlock.svelte';
 
-  let context =
-    $derived(
-      getSheetContext<ItemSheetContext | ContainerSheetClassicContext>(),
-    );
+  let context = $derived(getSheetContext<ItemSheetContext>());
 
   let appId = $derived(context.document.id);
 
@@ -124,6 +119,10 @@
           </Select>
         {/if}
       </div>
+    {/if}
+
+    {#if context.item.type === CONSTANTS.ITEM_TYPE_SPELL}
+      <SpellBlock {context} />
     {/if}
 
     {#if context.labels.toHit || context.labels.damages.length}
