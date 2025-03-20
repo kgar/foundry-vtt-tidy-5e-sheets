@@ -189,6 +189,7 @@
       toggleable={!settings.value.alwaysShowNpcSkills}
       expanded={!!TidyFlags.skillsExpanded.get(context.actor)}
       toggleField={TidyFlags.skillsExpanded.prop}
+      defaultSkills={context.defaultSkills}
     />
     {#if !settings.value.moveNpcTraitsToRightOfSkills}
       <Traits />
