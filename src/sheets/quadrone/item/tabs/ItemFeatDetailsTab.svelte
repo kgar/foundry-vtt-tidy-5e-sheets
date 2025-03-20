@@ -121,14 +121,16 @@
       {localize('DND5E.Prerequisites.FIELDS.prerequisites.repeatable.label')}
     </label>
     <div class="form-fields">
-      <CheckboxQuadrone
-        id="prerequisites-repeatable-{appId}"
-        document={context.item}
-        field="system.prerequisites.repeatable"
-        checked={context.source.prerequisites.repeatable}
-        disabledChecked={context.system.prerequisites.repeatable}
-        disabled={!context.unlocked}
-      />
+      <label class="checkbox" for="prerequisites-repeatable-{appId}">
+        <CheckboxQuadrone
+          id="prerequisites-repeatable-{appId}"
+          document={context.item}
+          field="system.prerequisites.repeatable"
+          checked={context.source.prerequisites.repeatable}
+          disabledChecked={context.system.prerequisites.repeatable}
+          disabled={!context.unlocked}
+        />
+      </label>
     </div>
     <p class="hint">
       {localize('DND5E.Prerequisites.FIELDS.prerequisites.repeatable.hint')}

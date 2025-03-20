@@ -250,14 +250,16 @@
               >{localize('DND5E.Contiguous')}</label
             >
             <div class="form-fields">
-              <CheckboxQuadrone
-                id="{appId}-target-template-contiguous"
-                document={context.item}
-                field="system.target.template.contiguous"
-                checked={context.source.target.template.contiguous}
-                disabledChecked={context.system.target.template.contiguous}
-                disabled={!context.unlocked}
-              />
+              <label class="checkbox" for="{appId}-target-template-contiguous">
+                <CheckboxQuadrone
+                  id="{appId}-target-template-contiguous"
+                  document={context.item}
+                  field="system.target.template.contiguous"
+                  checked={context.source.target.template.contiguous}
+                  disabledChecked={context.system.target.template.contiguous}
+                  disabled={!context.unlocked}
+                />
+              </label>
             </div>
           </div>
         {/if}

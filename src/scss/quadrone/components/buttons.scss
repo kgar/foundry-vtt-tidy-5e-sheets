@@ -4,7 +4,7 @@
   --button-padding-block-end: 0.5rem;
   --button-padding-inline-start: 0.75rem;
   --button-padding-inline-end: 0.75rem;
-  --icon-fill: var(--t5e-color-text-ondefault-default);
+  --icon-fill: var(--t5e-color-icon-ondefault-button);
 
   display: inline-flex;
   width: unset;
@@ -38,7 +38,7 @@
   // }
 
   :where(i) {
-    color: var(--t5e-color-icon-ondefault-button);
+    color: var(--icon-fill);
     transition: color var(--t5e-transition-default);
     margin: 0;
     font-size: var(--font-size-12);
@@ -63,15 +63,14 @@
   &.active,
   &:active,
   &.attention {
-    --icon-fill: var(--t5e-component-toggle-toggled-text);
+    --icon-fill: var(--t5e-color-icon-ondefault-default);
 
     color: var(--t5e-component-toggle-toggled-text);
     border: 1px solid var(--t5e-component-toggle-toggled-border);
     background: var(--t5e-component-toggle-toggled-background);
 
-    i {
-      color: var(--t5e-component-toggle-toggled-text);
-
+    :where(i) {
+      --icon-fill: var(--t5e-color-icon-light);
     }
 
     &:hover {
@@ -95,7 +94,8 @@
 
     &:hover,
     &:focus,
-    &:active {
+    &:active,
+    &:focus-within {
       background: transparent;
       border-color: transparent;
       box-shadow: none;

@@ -201,6 +201,12 @@
 
   /* Components ------------ */
   /* Cards */
+  --t5e-component-card-light-default: rgba(248, 244, 241, 1);
+  --t5e-component-card-light-darker: rgba(241, 235, 232, 1);
+  --t5e-component-card-light-lighter: rgba(253, 252, 252, 1);
+  --t5e-component-card-dark-default: rgba(37, 40, 48, 1);
+  --t5e-component-card-dark-darker: rgba(22, 24, 29, 1);
+  --t5e-component-card-dark-lighter: rgba(48, 50, 54, 1);
   --t5e-component-card-ondefault-default: rgba(248, 244, 241, 1);
   --t5e-component-card-ondefault-darker: rgba(241, 235, 232, 1);
   --t5e-component-card-ondefault-lighter: rgba(253, 252, 252, 1);
@@ -273,6 +279,8 @@
   /* Sheet */
 
   /* Icons ------------ */
+  --t5e-color-icon-light: var(--t5e-color-palette-white);
+  --t5e-color-icon-dark: var(--t5e-color-palette-black);
   --t5e-color-icon-ondefault-default: var(--t5e-color-palette-black);
   --t5e-color-icon-ondefault-button: var(--t5e-color-palette-grey-21);
   --t5e-color-icon-ondefault-diminished: var(--t5e-color-palette-grey-40);
@@ -429,6 +437,14 @@
     --t5e-color-icon-oninverse-button: var(--t5e-color-palette-grey-21);
     --t5e-color-icon-oninverse-diminished: var(--t5e-color-palette-grey-40);
     --t5e-color-icon-oninverse-disabled: rgba(0, 0, 0, 0.4);
+
+    // TODO: Update card colors to dynamically invert in theme-dark
+    // --t5e-component-card-oninverse-default: rgba(248, 244, 241, 1);
+    // --t5e-component-card-oninverse-darker: rgba(241, 235, 232, 1);
+    // --t5e-component-card-oninverse-lighter: rgba(253, 252, 252, 1);
+    // --t5e-component-card-ondefault-default: rgba(37, 40, 48, 1);
+    // --t5e-component-card-ondefault-darker: rgba(22, 24, 29, 1);
+    // --t5e-component-card-ondefault-lighter: rgba(48, 50, 54, 1);
 
     /* Decorative ------------ */
     /* Filigree */

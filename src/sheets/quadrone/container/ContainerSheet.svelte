@@ -112,12 +112,12 @@
     <!-- Item Capacity -->
     <div class="item-capacity">
       <i
-        class="fa-solid fa-scale-unbalanced item-capacity-icon color-text-lightest"
+        class="fa-solid fa-scale-unbalanced item-capacity-icon text-label-icon"
       ></i>
       <div class="item-capacity-counter">
-        <span class="capacity-value">{context.capacity.value}</span>
-        <div class="color-text-lighter">/</div>
-        <span class="capacity-max">{context.capacity.max}</span>
+        <span class="capacity-value text-data">{context.capacity.value}</span>
+        <div class="separator ">/</div>
+        <span class="capacity-max text-data">{context.capacity.max}</span>
       </div>
     </div>
 

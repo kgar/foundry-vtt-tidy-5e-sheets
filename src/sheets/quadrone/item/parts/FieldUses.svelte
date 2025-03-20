@@ -60,14 +60,16 @@
         >{localize('DND5E.CONSUMABLE.FIELDS.uses.autoDestroy.label')}</label
       >
       <div class="form-fields">
-        <CheckboxQuadrone
-          id="{appId}-uses-autoDestroy"
-          document={context.item}
-          field="system.uses.autoDestroy"
-          checked={context.source.uses.autoDestroy}
-          disabledChecked={context.system.uses.autoDestroy}
-          disabled={!context.unlocked}
-        />
+        <label class="checkbox" for="{appId}-uses-autoDestroy">
+          <CheckboxQuadrone
+            id="{appId}-uses-autoDestroy"
+            document={context.item}
+            field="system.uses.autoDestroy"
+            checked={context.source.uses.autoDestroy}
+            disabledChecked={context.system.uses.autoDestroy}
+            disabled={!context.unlocked}
+          />
+        </label>
       </div>
       <p class="hint">
         {localize('DND5E.CONSUMABLE.FIELDS.uses.autoDestroy.hint')}
@@ -210,7 +212,7 @@
           {#if context.unlocked}
             <button
               type="button"
-              class="inline-icon-button align-self-stretch"
+              class="inline-icon-button align-self-stretch icon-button borderless-button"
               data-action="deleteRecovery"
               title={localize('DND5E.USES.Recovery.Action.Delete')}
               aria-label={localize('DND5E.USES.Recovery.Action.Delete')}

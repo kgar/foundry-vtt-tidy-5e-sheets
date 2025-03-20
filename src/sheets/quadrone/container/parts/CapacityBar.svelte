@@ -32,7 +32,7 @@
 </script>
 
 <div
-  class="meter progress"
+  class="meter progress theme-dark"
   role="meter"
   aria-label={localize('DND5E.CONTAINER.FIELDS.capacity.label')}
   aria-valuemin="0"
