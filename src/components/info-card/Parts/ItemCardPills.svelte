@@ -5,6 +5,7 @@
   import ItemSummaryCommandButtonList from '../../item-summary/ItemSummaryCommandButtonList.svelte';
   import { ItemSummaryRuntime } from 'src/runtime/ItemSummaryRuntime';
   import { ItemProperties } from 'src/features/properties/ItemProperties.svelte';
+  import PropertyTag from 'src/components/properties/PropertyTag.svelte';
 
   interface Props {
     item: Item5e;
@@ -64,15 +65,7 @@
       </span>
     {/each}
     {#each additionalItemProps as prop}
-      <span class="tag">
-        <!-- {#if prop.label}
-          <span class="label">{prop.label}</span>
-        {/if}  -->
-        <span class="value">{prop.value}</span>
-        {#if prop.parenthetical}
-          <span class="parenthetical">({prop.parenthetical})</span>
-        {/if}
-      </span>
+      <PropertyTag {prop} showParenthetical={true} />
     {/each}
   </div>
 {/if}

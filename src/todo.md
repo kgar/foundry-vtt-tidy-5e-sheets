@@ -3,7 +3,7 @@
 - [ ] (Hightouch) Style Effects tab header buttons
 - [ ] (Hightouch) Rarity colors review
 - [ ] (Hightouch) Review Effects tab and apply any polish
-- [ ] Refactor: make tag component reusable
+- [x] Refactor: make tag component reusable
 - [ ] Container contained item description changes are not reactive on the container
   - Of note: the container is re-rendering. It's probably the item summary itself.
 - [ ] Effect description changes are not reactive on the target item container

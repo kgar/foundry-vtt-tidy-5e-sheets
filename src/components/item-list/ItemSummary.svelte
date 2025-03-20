@@ -9,8 +9,9 @@
   import InlineActivitiesList from './InlineActivitiesList.svelte';
   import { Activities } from 'src/features/activities/activities';
   import type { ActivityItemContext } from 'src/types/types';
-  import { settings, SettingsProvider } from 'src/settings/settings.svelte';
+  import { settings } from 'src/settings/settings.svelte';
   import { ItemProperties } from 'src/features/properties/ItemProperties.svelte';
+  import PropertyTag from '../properties/PropertyTag.svelte';
 
   interface Props {
     chatData: ItemChatData;
@@ -83,15 +84,7 @@
         </span>
       {/each}
       {#each additionalItemProps as prop}
-        <span class="tag">
-          <!-- {#if prop.label}
-            <span class="label">{prop.label}</span>
-          {/if} -->
-          <span class="value">{prop.value}</span>
-          {#if prop.parenthetical}
-            <span class="parenthetical">({prop.parenthetical})</span>
-          {/if}
-        </span>
+        <PropertyTag {prop} showParenthetical={true} />
       {/each}
     </div>
   {/if}

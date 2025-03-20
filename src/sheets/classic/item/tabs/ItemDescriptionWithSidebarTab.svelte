@@ -16,6 +16,7 @@
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
+  import PropertyTag from 'src/components/properties/PropertyTag.svelte';
 
   let context =
     $derived(
@@ -164,7 +165,9 @@
         >
           {#each context.properties.active as prop}
             {#if prop !== null && prop !== undefined}
-              <li>{prop}</li>
+              <li>
+                <PropertyTag {prop} showParenthetical={true} class="property" />
+              </li>
             {/if}
           {/each}
         </ol>
