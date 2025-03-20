@@ -90,37 +90,36 @@
   }
 
   .controls-dropdown {
-    background: var(--t5e-component-card-ondefault-default);
+    background: var(--t5e-component-field-background);
     border-radius: 0.3125rem;
     transition: none;
 
     &.expanded {
+      border: 1px solid var(--t5e-component-field-border);
       box-shadow: 0 0 0.375rem var(--dnd5e-shadow-45);
     }
 
     .header-control>button {
+      min-height: var(--t5e-field-size-default);
       color: var(--t5e-color-text-ondefault-lighter);
       justify-content: flex-start;
       gap: 0.5rem;
       --button-text-color: var(--t5e-color-text-ondefault-default);
       --button-hover-text-color: var(--t5e-color-text-ondefault-default);
 
+      i {
+        color: var(--t5e-color-icon-ondefault-button);
+      }
+
       &:hover {
-        color: var(--t5e-color-text-ondefault-lighter);
-        background: var(--t5e-component-card-ondefault-darker);
+        background: var(--t5e-component-field-background-hover);
       }
     }
 
     .header-control {
-      .control-icon {
-        color: var(--t5e-color-icon-ondefault-default);
-      }
-
       .control-label {
         color: var(--t5e-color-text-ondefault-default);
-        font-weight: var(--font-weight-default);
-        font-family: var(--t5e-font-family-default);
-        font-size: var(--font-size-13);
+        font: var(--t5e-font-label-medium);
       }
     }
   }
@@ -216,6 +215,25 @@
       font-size: var(--font-size-11);
       line-height: var(--font-size-14);
     }
+  }
+
+  .text-data {
+    font-weight: var(--font-weight-bold);
+    color: var(--t5e-color-text-ondefault-default);
+  }
+
+  .text-label {
+    font-weight: var(--font-weight-label);
+    color: var(--t5e-color-text-ondefault-lighter);
+  }
+
+  .text-label-icon {
+    color: var(--t5e-color-text-ondefault-lightest);
+  }
+
+  .separator {
+    font-weight: var(--font-weight-default);
+    color: var(--t5e-color-text-ondefault-lightest);
   }
 
   /* Currencies */
@@ -575,6 +593,12 @@
 
     &.minimized .window-header {
       background: var(--t5e-component-card-oninverse-darker);
+    }
+
+    .window-header {
+      button.header-control:hover {
+        background: rgba(0, 0, 0, 1);
+      }
     }
   }
 

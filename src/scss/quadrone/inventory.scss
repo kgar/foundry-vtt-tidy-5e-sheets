@@ -1,15 +1,16 @@
 .tidy5e-sheet:is(.quadrone) .tidy-table {
+
   // Charges / Item Uses
   .inline-uses {
     display: flex;
 
-    > .uses-value {
+    >.uses-value {
       color: var(--t5e-color-text-default);
       text-align: right;
       flex: 1;
     }
 
-    > .uses-max {
+    >.uses-max {
       color: var(--t5e-color-text-lighter);
       flex: 1;
     }

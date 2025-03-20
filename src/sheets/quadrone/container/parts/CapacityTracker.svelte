@@ -26,10 +26,10 @@
 
 <div class="label">
   {#if showIcon}
-    <i class="fas fa-weight-hanging"></i>
+    <i class="fas fa-weight-hanging text-label-icon"></i>
   {/if}
-  <span class="value">{readableValue}</span>
+  <span class="value text-data">{readableValue}</span>
   <span class="separator">/</span>
-  <span class="max">{capacityMaxText}</span>
-  <span class="units">{unitsAbbreviation}</span>
+  <span class="max text-data">{capacityMaxText}</span>
+  <span class="units text-label">{unitsAbbreviation}</span>
 </div>

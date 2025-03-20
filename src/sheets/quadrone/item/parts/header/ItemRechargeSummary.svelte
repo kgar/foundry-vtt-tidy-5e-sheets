@@ -23,11 +23,11 @@
 </script>
 
 <div class="item-recharge">
-  <span class="color-text-lighter font-weight-label">
+  <span class="color-text-lighter text-data">
     {localize('TIDY5E.RollRecharge.Label')}
   </span>
-  <i class="{diceIconClass} color-text-lighter font-weight-label"></i>
-  <span class="recharge-range-text font-weight-bold">
+  <i class="{diceIconClass} color-text-lighter text-label-icon"></i>
+  <span class="recharge-range-text text-data">
     {recharge}
   </span>
 </div>
