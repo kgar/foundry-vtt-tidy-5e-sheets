@@ -19,7 +19,7 @@
       <span>
         <button
           type="button"
-          class="configure-starting-equipment inline-icon-button"
+          class="configure-starting-equipment inline-icon-button icon-button borderless-button"
           title={localize('DND5E.StartingEquipment.Action.Configure')}
           aria-label={localize('DND5E.StartingEquipment.Action.Configure')}
           onclick={() =>
@@ -33,7 +33,7 @@
     <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
-  <div class="starting-equipment-text">
+  <div class="editor-rendered-content">
     {@html coalesce(
       context.system.startingEquipmentDescription,
       localize('None'),

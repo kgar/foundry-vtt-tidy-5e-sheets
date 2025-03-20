@@ -25,7 +25,7 @@
       font-family: var(--font-family-title, 'Modesto Condensed');
       font-size: var(--font-size-18);
       letter-spacing: 0.01rem;
-      padding: 0 0 0.125rem 0;
+      padding: var(--t5e-spacing-halfx) 0;
       margin-bottom: 0.25rem;
 
       width: 100%;
@@ -45,10 +45,10 @@
     }
 
     >.empty {
-      padding: 0.375rem;
+      padding: var(--t5e-spacing-1x) 0 var(--t5e-spacing-2x);
       font-style: italic;
-      text-align: center;
-      color: var(--t5e-color-text-ondefault-lighter);
+      text-align: left;
+      color: var(--t5e-color-text-ondefault-lightest);
     }
 
     // TODO: Need example of card fieldset  legends
@@ -95,7 +95,7 @@
       line-height: var(--label-height);
       height: var(--label-height);
       color: var(--t5e-color-text-ondefault-lightest);
-      margin-top: 0.25rem;
+      margin: var(--t5e-spacing-halfx) 0;
 
       >p.hint {
         cursor: help;
@@ -173,7 +173,7 @@
       line-height: var(--label-height);
       height: var(--label-height);
       color: var(--t5e-color-text-ondefault-lightest);
-      margin-top: 0.25rem;
+      margin: var(--t5e-spacing-halfx) 0;
 
       >p.hint {
         cursor: help;
@@ -425,7 +425,7 @@
 
     /* Full-Width Groups */
     &.full-width {
-      padding: 0.375rem;
+      padding: 0.375rem 0;
 
       &+.full-width {
         margin-top: 0.125rem;
@@ -442,7 +442,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: flex-end;
+    justify-content: flex-start;
     align-items: center;
     gap: 0.25rem;
 
@@ -460,6 +460,10 @@
 
     &.flexcol {
       flex-direction: column;
+    }
+
+    &:has(.label-top) {
+      align-items: end;
     }
   }
 

@@ -39,14 +39,16 @@
 <div class="form-group split-group">
   <label for="{idPrefix}custom-enabled">Formula</label>
   <div class="form-fields">
-    <CheckboxQuadrone
-      id="{idPrefix}custom-enabled"
-      document={context.item}
-      field="{prefix}custom.enabled"
-      checked={source.custom.enabled}
-      disabledChecked={system.custom.enabled}
-      disabled={!context.unlocked}
-    />
+    <label class="checkbox" for="{idPrefix}custom-enabled">
+      <CheckboxQuadrone
+        id="{idPrefix}custom-enabled"
+        document={context.item}
+        field="{prefix}custom.enabled"
+        checked={source.custom.enabled}
+        disabledChecked={system.custom.enabled}
+        disabled={!context.unlocked}
+      />
+    </label>
 
     {#if source.custom.enabled}
       <TextInputQuadrone
@@ -136,7 +138,7 @@
     <label for="">{localize('DND5E.Type')}</label>
     <div class="form-fields">
       {#each types as { value, label, selected } (value)}
-        <label class="checkbox">
+        <label class="checkbox" for="{idPrefix}types-{value?.slugify()}">
           <CheckboxQuadrone
             id="{idPrefix}types-{value?.slugify()}"
             document={context.item}

@@ -95,7 +95,8 @@
 
     &:hover,
     &:focus,
-    &:active {
+    &:active,
+    &:focus-within {
       background: transparent;
       border-color: transparent;
       box-shadow: none;

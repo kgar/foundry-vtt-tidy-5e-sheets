@@ -279,10 +279,18 @@
 
   /* Prose Mirror Editor Customizations */
   .editor.prosemirror menu {
-    background: rgba(0, 0, 0, 0.08);
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: var(--t5e-component-card-oninverse-default);
     box-sizing: border-box;
     padding: 0.125rem;
+
+    .pm-dropdown {
+      justify-content: space-between;
+
+      &.format {
+        min-width: 96px;
+      }
+    }
+
     // box-shadow: var(--t5e-drop-shadow-field);
 
     li {
@@ -573,10 +581,16 @@
   &.theme-light {
     .editor.prosemirror menu {
       background: var(--t5e-component-card-ondefault-lighter);
+      border: 1px solid var(--t5e-color-palette-gold-89);
 
       li button {
-        &.active i {
-          color: var(--t5e-color-icon-oninverse-button);
+        &.active {
+          background-color: var(--t5e-component-card-ondefault-darker);
+          border-color: var(--t5e-color-gold);
+
+          i {
+            color: var(--t5e-color-icon-ondefault-button);
+          }
         }
 
         &:active,

@@ -221,14 +221,16 @@
       >{localize('DND5E.CONSUMABLE.FIELDS.damage.replace.label')}</label
     >
     <div class="form-fields">
-      <CheckboxQuadrone
-        id="{appId}-damage-replace"
-        document={context.item}
-        field="system.damage.replace"
-        checked={context.source.damage.replace}
-        disabledChecked={context.system.damage.replace}
-        disabled={!context.unlocked}
-      />
+      <label class="checkbox" for="{appId}-damage-replace">
+        <CheckboxQuadrone
+          id="{appId}-damage-replace"
+          document={context.item}
+          field="system.damage.replace"
+          checked={context.source.damage.replace}
+          disabledChecked={context.system.damage.replace}
+          disabled={!context.unlocked}
+        />
+      </label>
     </div>
     <p class="hint">
       {localize('DND5E.CONSUMABLE.FIELDS.damage.replace.hint')}

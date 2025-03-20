@@ -116,7 +116,7 @@
     >
     <div class="form-fields">
       {#each abilities as { value, label, selected } (value)}
-        <label class="checkbox">
+        <label class="checkbox" for="{appId}-primaryAbility-value-{value?.slugify()}">
           <CheckboxQuadrone
             id="{appId}-primaryAbility-value-{value?.slugify()}"
             document={context.item}
