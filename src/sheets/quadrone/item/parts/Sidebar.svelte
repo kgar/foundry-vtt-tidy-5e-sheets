@@ -7,13 +7,12 @@
   import PillSwitch from 'src/components/toggles/PillSwitch.svelte';
   import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import { SpellUtils } from 'src/utils/SpellUtils';
-  import { coalesce } from 'src/utils/formatting';
   import type { Snippet } from 'svelte';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import type { Item5e } from 'src/types/item.types';
   import { CONSTANTS } from 'src/constants';
   import { isNil } from 'src/utils/data';
+  import type { ClassValue } from 'svelte/elements';
 
   let context = $derived(getContainerOrItemSheetContextQuadrone());
 
@@ -28,12 +27,6 @@
   // Rarity
   let rarity = $derived(
     context.unlocked ? context.source.rarity : context.system.rarity,
-  );
-
-  let rarityColorVariable = $derived(
-    'rarity' in context.system
-      ? RarityColors.getRarityColorVariableName(rarity)
-      : '',
   );
 
   let rarityText = $derived(RarityColors.getRarityText(rarity).titleCase());
@@ -59,21 +52,6 @@
       : '',
   );
 
-  let spellPreparationColor = $derived(
-    'preparation' in context.system &&
-      context.system.preparation.mode !==
-        CONSTANTS.SPELL_PREPARATION_MODE_PREPARED
-      ? SpellUtils.getSpellPreparationIconColorVariableName(
-          context.system.preparation?.mode,
-        )
-      : '',
-  );
-
-  // Item Properties
-
-  // TODO: Remove activeProperties if we end up completely eliminating the need for it.
-  // let activeProperties = $derived(context.properties.active.filter((x) => !!x));
-
   // Custom Sections
 
   let section = $derived(
@@ -97,13 +75,6 @@
   );
 
   // Combined
-
-  let filigreeColorVariable = $derived(
-    coalesce(rarityColorVariable, spellPreparationColor),
-  );
-  let imageLabelColorVariable = $derived(
-    coalesce(rarityColorVariable, spellPreparationColor),
-  );
 
   function openItemImagePicker(target: HTMLElement, item: Item5e) {
     const rect = target.getBoundingClientRect();
@@ -129,20 +100,18 @@
     });
   }
 
-  let borderColor = $derived(
-    !isNil(filigreeColorVariable)
-      ? `var(${filigreeColorVariable}, var(--t5e-color-gold))`
-      : 'var(--t5e-color-gold)',
-  );
+  // TODO: Consider a reusable function and also feeding it through item context for item sheets.
+  let itemColorClasses = $derived<ClassValue>([
+    !isNil(rarity, '') ? 'rarity' : undefined,
+    rarity?.slugify(),
+    !isNil(context.system.preparation?.mode) ? 'spell-preparation' : undefined,
+    context.system.preparation?.mode?.slugify(),
+  ]);
 </script>
 
-<aside
-  class="sidebar dark"
-  style=" 
-    --filigree-border-color: {borderColor}"
->
+<aside class={['sidebar', 'dark']}>
   <div>
-    <div class="item-image-container">
+    <div class={['item-image-container', itemColorClasses]}>
       <a
         onclick={(ev) =>
           context.unlocked
@@ -158,43 +127,33 @@
       <ItemImageBorder />
     </div>
     {#if 'rarity' in context.system}
-      <div
-        class="item-rarity-container"
-        style="--t5e-item-rarity-color: var({imageLabelColorVariable}, var(--t5e-color-gold));"
-      >
+      <div class="item-rarity-container">
         {#if context.unlocked}
           <SelectQuadrone
             id="rarity-{context.item.sheet.id}"
             document={context.item}
             field="system.rarity"
-            class="item-rarity-selector capitalize"
+            class={['item-rarity-selector', 'capitalize', itemColorClasses]}
             value={context.source.rarity}
             disabled={!context.editable}
             blankValue=""
           >
-            <option
-              value=""
-              style="--t5e-item-rarity-color: var(--t5e-color-gold);"
-              >{localize('DND5E.None')}</option
-            >
+            <option class="none" value="">{localize('DND5E.None')}</option>
             {#each itemRarities as rarity (rarity.key)}
               <option
                 value={rarity.key}
-                style="--t5e-item-rarity-color: var({rarity.rarityColorVariableName}, var(--t5e-color-text-oninverse-default));"
+                class={['rarity', rarity.key.slugify()]}
               >
                 {rarity.label}
               </option>
             {/each}
           </SelectQuadrone>
         {:else}
-          <div class="item-rarity-text">{rarityText}</div>
+          <div class={['item-rarity-text', itemColorClasses]}>{rarityText}</div>
         {/if}
       </div>
     {:else if 'preparation' in context.system}
-      <div
-        class="spell-preparation-text"
-        style="--t5e-image-label-spell-preparation-text-color: var({imageLabelColorVariable}, var(--t5e-color-gold));"
-      >
+      <div class={['spell-preparation-text', itemColorClasses]}>
         {spellPreparationText}
       </div>
     {/if}
@@ -248,7 +207,7 @@
               })}
             disabled={!context.editable}
           >
-            {identifiedText}
+            {localize('DND5E.Identified')}
           </PillSwitch>
         </li>
       {:else}

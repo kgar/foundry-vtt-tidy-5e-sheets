@@ -2,26 +2,26 @@
 
 - [x] Effect description changes are not reactive on the target item container
 - [ ] Determine how unidentified should work
-  - [ ] Item row
-    - [ ] (maybe done already?) Item row text italicized, light grey, no background color
-    - [x] (maybe done already?) Item row image greyscale, opacity 75%
+  - [x] Item row
+    - [x] (kgar says: "we should match system behavior for this one: the button is enabled and usable on the default sheets") Use button greyed out, cannot be used
+    - [x] Item row text italicized, light grey, no background color
+    - [x] Item row image greyscale, opacity 75%
     - [x] Item description uses unidentified description only
     - [x] Charges hidden (emdash)
     - [x] Price hidden (emdash)
   - [ ] All sheets
     - [ ] Image greyscale
     - [ ] Rarity color set to grey 40, rarity label readonly and set to "Unidentified" (all modes)
-    - [ ] Cost label set to "?"
-    - [ ] Charges hidden (emdash)
-    - [ ] Use button greyed out, cannot be used
-    - [ ] Details tab hidden until identified (all modes)
-    - [ ] Activities tab hidden until identified (all modes)
-    - [ ] Effects tab hidden until identified (all modes)
-    - [ ] Name readonly "Unidentified <type>" (all modes)
+    - [ ] Cost label set to "?" unless in GM Edit Mode
+    - [ ] Charges hidden (emdash) unless in GM Edit Mode
+    - [ ] Details tab hidden until identified (all modes) or in GM Edit Mode
+    - [ ] Activities tab hidden until identified (all modes) or in GM Edit Mode
+    - [ ] Effects tab hidden until identified (all modes) or in GM Edit Mode
+    - [x] Name readonly "Unidentified <type>" (all modes) (enforced by system)
     - [ ] Unidentified description expanded and editable
     - [ ] Description section hidden, Chat description section hidden
     - [ ] (Non-container sheets only) Sidebar sections all hidden except Sections section and pill switches
-    - [ ] Header source label set to "?" if filled out, edit button hidden (all modes)
+    - [ ] Header source label set to "?" if filled out, edit button hidden (all modes) unless in GM Edit Mode
   - [ ] Non-container
 - [ ] Notify hightouch that spell sheet is ready for final review
 - [ ] Test spell info on item summary and cards

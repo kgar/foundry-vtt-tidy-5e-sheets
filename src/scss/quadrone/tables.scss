@@ -114,41 +114,6 @@
       margin: 0;
     }
 
-    &.prepared {
-      background: linear-gradient(to right,
-          var(--t5e-spellcasting-default-darker),
-          var(--t5e-spellcasting-default));
-    }
-
-    &.always-prepared {
-      background: linear-gradient(to right,
-          var(--t5e-spellcasting-always-darker),
-          var(--t5e-spellcasting-always));
-    }
-
-    &.pact {
-      background: linear-gradient(to right,
-          var(--t5e-spellcasting-pact-darker),
-          var(--t5e-spellcasting-pact));
-    }
-
-    &.at-will {
-      background: linear-gradient(to right,
-          var(--t5e-spellcasting-atwill-darker),
-          var(--t5e-spellcasting-atwill));
-    }
-
-    &.ritual {
-      background: linear-gradient(to right,
-          var(--t5e-spellcasting-ritual-darker),
-          var(--t5e-spellcasting-ritual));
-    }
-
-    &.innate {
-      background: linear-gradient(to right,
-          var(--t5e-spellcasting-innate-darker),
-          var(--t5e-spellcasting-innate));
-    }
   }
 
   .tidy-table-row {
@@ -208,8 +173,9 @@
       }
     }
 
-    &.rarity {
-      --t5e-item-row-color: var(--t5e-color-gold);
+    &.rarity, &.spell-preparation {
+      --t5e-item-row-color: var(--t5e-item-color);
+      --t5e-use-button-border-color: var(--t5e-item-color);
 
       &::before {
         content: '';

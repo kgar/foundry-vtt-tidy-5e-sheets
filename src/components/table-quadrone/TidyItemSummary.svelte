@@ -22,7 +22,6 @@
   let itemSummaryCommands = $derived(
     ItemSummaryRuntime.getItemSummaryCommands(item),
   );
-  let concealDetails = $derived(FoundryAdapter.concealDetails(item));
 
   let linked = $derived<Item5e>(item?.system?.linkedActivity?.item);
 
@@ -43,7 +42,11 @@
 
   let identified = $derived(item.system.identified !== false);
 
-  let showGmOnlyUi = $derived(!identified && FoundryAdapter.userIsGm());
+  let gmEditMode = $derived(
+    FoundryAdapter.userIsGm() && FoundryAdapter.isSheetUnlocked(item),
+  );
+
+  let showGmOnlyUi = $derived(!identified && gmEditMode);
 </script>
 
 {#if activities.length > 0 && settings.value.inlineActivitiesPosition === CONSTANTS.INLINE_ACTIVITIES_POSITION_TOP}
@@ -76,11 +79,10 @@
 
   <div
     class="inline-wrapped-elements"
-    class:conceal-content={concealDetails}
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_PROPERTY_LIST}
   >
     <div class="left-aligned-elements">
-      {#if FoundryAdapter.userIsGm() || (identified && chatData.properties)}
+      {#if chatData.properties && (gmEditMode || identified)}
         {#each chatData.properties as prop}<span class="tag">
             <span class="value">
               {prop}

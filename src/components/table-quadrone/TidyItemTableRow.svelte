@@ -13,8 +13,8 @@
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { TidyHooks } from 'src/foundry/TidyHooks';
-  import { RarityColors } from 'src/features/rarity-colors/RarityColors';
   import type { ClassValue } from 'svelte/elements';
+  import { isNil } from 'src/utils/data';
 
   interface Props {
     item?: Item5e | null;
@@ -101,14 +101,12 @@
     }
   }
 
-  const itemAccentColor = $derived(
-    item.system.rarity &&
-      (FoundryAdapter.userIsGm() || item.system.identified === true)
-      ? `var(${RarityColors.getRarityColorVariableName(item.system.rarity)})`
-      : '',
-  );
-
-  const rarityClass = $derived(item.system.rarity ? 'rarity' : '');
+  const itemColorClasses = $derived<ClassValue>([
+    !isNil(item.system.rarity, '') ? 'rarity' : undefined,
+    item.system.rarity?.slugify(),
+    !isNil(item.system.preparation?.mode) ? 'spell-preparation' : undefined,
+    item.system.preparation?.mode?.slugify(),
+  ]);
 
   let first = true;
 
@@ -143,10 +141,9 @@
     ['data-tidy-item-type']: item?.type ?? 'unknown',
     ['data-info-card']: item ? 'item' : null,
     ['data-info-card-entity-uuid']: item?.uuid ?? null,
-    ['style']: `--t5e-use-button-border-color: ${itemAccentColor}; --t5e-item-row-color: ${itemAccentColor}`,
     draggable: draggable,
   }}
-  rowClass={['tidy-table-row-v2', rowClass, rarityClass, { expanded }]}
+  rowClass={['tidy-table-row-v2', rowClass, itemColorClasses, { expanded }]}
   ondblclick={(event) => item && FoundryAdapter.editOnMouseEvent(event, item)}
   onmouseenter={onMouseEnter}
   onmouseleave={onMouseLeave}

@@ -5,9 +5,11 @@
 
   let { rowDocument: item }: ColumnCellProps = $props();
 
-  let conceal = $derived(
-    !FoundryAdapter.userIsGm() && item.system.identified === false,
+  let gmEditMode = $derived(
+    FoundryAdapter.userIsGm() && FoundryAdapter.isSheetUnlocked(item),
   );
+
+  let conceal = $derived(item.system.identified === false && !gmEditMode);
 </script>
 
 {#if !conceal}
