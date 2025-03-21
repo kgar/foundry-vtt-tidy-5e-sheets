@@ -822,8 +822,6 @@
     "TIDY5E.SortMenu.OptionEquipped": "Wyposażone",
     "TIDY5E.Activities.Cast.SourceHintText": "Z {itemName}",
     "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Posiada{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}",
-    "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatLabel": "Info",
-    "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatTooltip": "Pokaż opis w czacie",
     "TIDY5E.UserSettings.TabActivities": {
         "tabLabel": "Działania"
     },

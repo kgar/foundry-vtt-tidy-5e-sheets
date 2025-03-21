@@ -53,6 +53,7 @@ export type Tab<T extends Component = Component> = {
   onRender?: (params: OnRenderTabParams) => void;
   activateDefaultSheetListeners?: boolean;
   autoHeight?: boolean;
+  condition?: (document: any) => boolean;
 };
 
 export type CustomContent = {
@@ -690,6 +691,12 @@ export type ExpandedItemIdToLocationsMap = Map<string, Set<string>>;
  * A map from key Item ID to pre-fetched chat data.
  */
 export type ExpandedItemData = Map<string, ItemChatData>;
+
+export type EffectSummaryData = {
+  description: {
+    value: string;
+  };
+};
 
 export type MaxPreparedSpellFormula = {
   label: string;

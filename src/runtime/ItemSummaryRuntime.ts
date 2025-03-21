@@ -6,10 +6,8 @@ export class ItemSummaryRuntime {
   private static _itemSummaryCommands: RegisteredItemSummaryCommand[] = [
     {
       execute: (params) => params.item.displayCard(),
-      label: 'TIDY5E.ItemSummaryCommands.ShowDescriptionInChatLabel',
-      tooltip: 'TIDY5E.ItemSummaryCommands.ShowDescriptionInChatTooltip',
+      label: 'DND5E.DisplayCard',
       iconClass: 'fa-solid fa-message-arrow-up-right',
-      enabled: (params) => !!params.item.actor,
     },
   ];
 

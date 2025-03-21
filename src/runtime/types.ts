@@ -5,6 +5,7 @@ import type {
   RenderScheme,
 } from 'src/api/api.types';
 import type { CustomTabTitle } from 'src/api/tab/CustomTabBase';
+import type { CONSTANTS } from 'src/constants';
 import type { HandlebarsTemplateRenderer } from 'src/runtime/HandlebarsTemplateRenderer';
 import type { Item5e } from 'src/types/item.types';
 import type {
@@ -47,7 +48,10 @@ export type RegisteredTab<TContext> = {
  * One of the supported layouts of Tidy 5e sheets.
  */
 /** @category Shared */
-export type SheetLayout = 'all' | 'classic';
+export type SheetLayout =
+  | typeof CONSTANTS.SHEET_LAYOUT_ALL
+  | typeof CONSTANTS.SHEET_LAYOUT_CLASSIC
+  | typeof CONSTANTS.SHEET_LAYOUT_QUADRONE;
 
 export type RegisteredItemSummaryCommand = {
   label?: string;

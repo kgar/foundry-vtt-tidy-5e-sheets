@@ -5,12 +5,12 @@
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import Sidebar from './parts/Sidebar.svelte';
   import ItemNameHeaderOrchestrator from './parts/ItemNameHeaderOrchestrator.svelte';
-  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import ItemChargesSummary from './parts/header/ItemChargesSummary.svelte';
   import ItemRechargeSummary from './parts/header/ItemRechargeSummary.svelte';
   import ItemPriceSummary from './parts/header/ItemPriceSummary.svelte';
   import ItemWeightSummary from './parts/header/ItemWeightSummary.svelte';
   import ItemQuantitySummary from './parts/header/ItemQuantitySummary.svelte';
+  import ItemName from './parts/header/ItemName.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -28,17 +28,7 @@
     bind:this={itemNameEl}
     class="item-name-wrapper flex-row extra-small-gap align-items-center"
   >
-    <!-- Name -->
-    {#if context.unlocked}
-      <TextInputQuadrone
-        field="name"
-        document={context.item}
-        value={context.name.editable}
-        class="document-name"
-      />
-    {:else}
-      <div class="document-name">{context.item.name}</div>
-    {/if}
+    <ItemName />
   </div>
 
   <div class="subtitle">

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { type OnItemToggledFn } from 'src/types/types';
   import { getContext, type Snippet } from 'svelte';
-  import type { ActiveEffect5e, ActiveEffectContext } from 'src/types/types';
+  import type { ActiveEffectContext, EffectSummaryData } from 'src/types/types';
   import { CONSTANTS } from 'src/constants';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import TidyEffectSummary from './TidyEffectSummary.svelte';
@@ -9,7 +9,7 @@
   import TidyTableRow from '../table-quadrone/TidyTableRow.svelte';
 
   interface Props {
-    activeEffect?: ActiveEffect5e | ActiveEffectContext | null;
+    effectContext: ActiveEffectContext;
     rowClass?: string;
     hidden?: boolean;
     attributes?: Record<string, any>;
@@ -19,7 +19,7 @@
   }
 
   let {
-    activeEffect = null,
+    effectContext,
     rowClass = '',
     draggable = true,
     hidden = false,
@@ -27,8 +27,6 @@
     children,
     expanded = $bindable(false),
   }: Props = $props();
-
-  let effectDocument = $derived(activeEffect?.effect ?? activeEffect);
 
   const onEffectToggled = getContext<OnItemToggledFn>(
     CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TOGGLED,
@@ -38,20 +36,52 @@
 
   async function toggleSummary() {
     expanded = !expanded;
-    onEffectToggled?.(effectDocument.id, expanded, location);
+    onEffectToggled?.(effectContext.effect.id, expanded, location);
   }
 
   function handleDragStart(event: DragEvent) {
-    const dragData = effectDocument.toDragData?.();
+    const dragData = effectContext.effect.toDragData?.();
     if (dragData) {
       event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
     }
   }
+
+  let emptySummaryData: EffectSummaryData = {
+    description: {
+      value: '',
+    },
+  };
+
+  let summaryData = $state<EffectSummaryData | undefined>();
+
+  $effect(() => {
+    (async () => {
+      console.warn('determining if should refresh effect summary data');
+      if (effectContext.effect && expanded) {
+        console.warn('refreshing effect summary data');
+        summaryData = {
+          description: {
+            value: await FoundryAdapter.enrichHtml(
+              effectContext.effect.description ?? '',
+            ),
+          },
+        };
+      } else if (
+        effectContext.effect &&
+        !expanded &&
+        summaryData !== undefined
+      ) {
+        // Reset chat data for non-expanded, hydrated chatData
+        // so it rehydrates on next open
+        summaryData = undefined;
+      }
+    })();
+  });
 </script>
 
 <TidyTableRow
   rowContainerAttributes={{
-    ['data-effect-id']: effectDocument?.id,
+    ['data-effect-id']: effectContext.id,
   }}
   rowClass="tidy-table-row-v2 {rowClass} {expanded ? 'expanded' : ''}"
   rowAttributes={{
@@ -59,13 +89,16 @@
     ['data-tidy-table-row']: '',
     ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.EFFECT_TABLE_ROW,
     ['data-info-card']: 'effect',
-    ['data-info-card-entity-uuid']: activeEffect.uuid,
-    ['data-parent-id']: activeEffect?.parentId ?? activeEffect?.parent?.id,
+    ['data-info-card-entity-uuid']: effectContext.uuid,
+    ['data-parent-id']: effectContext?.parentId ?? effectContext?.parent?.id,
     draggable: draggable,
   }}
   {hidden}
   ondblclick={(event) =>
-    effectDocument && FoundryAdapter.editOnMouseEvent(event, effectDocument)}
+    effectContext.effect &&
+    FoundryAdapter.editOnMouseEvent(event, effectContext.effect)}
+  onmousedown={(event) =>
+    FoundryAdapter.editOnMiddleClick(event, effectContext.effect)}
   ondragstart={handleDragStart}
   {...attributes}
 >
@@ -73,7 +106,10 @@
 
   {#snippet afterRow()}
     <ExpandableContainer {expanded}>
-      <TidyEffectSummary activeEffect={effectDocument} />
+      <TidyEffectSummary
+        activeEffect={effectContext.effect}
+        summaryData={summaryData ?? emptySummaryData}
+      />
     </ExpandableContainer>
   {/snippet}
 </TidyTableRow>

@@ -13,8 +13,8 @@
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { TidyHooks } from 'src/foundry/TidyHooks';
-  import { RarityColors } from 'src/features/rarity-colors/RarityColors';
   import type { ClassValue } from 'svelte/elements';
+  import { isNil } from 'src/utils/data';
 
   interface Props {
     item?: Item5e | null;
@@ -39,7 +39,6 @@
   const emptyChatData: ItemChatData = {
     description: { value: '' },
     properties: [],
-    unidentified: { description: '' },
   };
 
   const expandedItemData = getContext<ExpandedItemData>(
@@ -102,17 +101,16 @@
     }
   }
 
-  const itemAccentColor = $derived(
-    item.system.rarity
-      ? `var(${RarityColors.getRarityColorVariableName(item.system.rarity)})`
-      : '',
-  );
+  const itemColorClasses = $derived<ClassValue>([
+    !isNil(item.system.rarity, '') ? 'rarity' : undefined,
+    item.system.rarity?.slugify(),
+    !isNil(item.system.preparation?.mode) ? 'spell-preparation' : undefined,
+    item.system.preparation?.mode?.slugify(),
+  ]);
 
-  const rarityClass = $derived(item.system.rarity ? 'rarity' : '');
+  let first = true;
 
   $effect(() => {
-    let first = true;
-
     (async () => {
       if (first) {
         first = false;
@@ -121,7 +119,7 @@
       }
 
       if (item && expanded) {
-        chatData = await item.getChatData({ secrets: item.actor.isOwner });
+        chatData = await item.getChatData({ secrets: item.isOwner });
       } else if (item && !expanded && chatData) {
         // Reset chat data for non-expanded, hydrated chatData
         // so it rehydrates on next open
@@ -143,11 +141,11 @@
     ['data-tidy-item-type']: item?.type ?? 'unknown',
     ['data-info-card']: item ? 'item' : null,
     ['data-info-card-entity-uuid']: item?.uuid ?? null,
-    ['style']: `--t5e-use-button-border-color: ${itemAccentColor}; --t5e-item-row-color: ${itemAccentColor}`,
     draggable: draggable,
   }}
-  rowClass={['tidy-table-row-v2', rowClass, rarityClass, { expanded }]}
+  rowClass={['tidy-table-row-v2', rowClass, itemColorClasses, { expanded }]}
   ondblclick={(event) => item && FoundryAdapter.editOnMouseEvent(event, item)}
+  onmousedown={(event) => FoundryAdapter.editOnMiddleClick(event, item)}
   onmouseenter={onMouseEnter}
   onmouseleave={onMouseLeave}
   ondragstart={handleDragStart}

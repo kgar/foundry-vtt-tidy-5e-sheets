@@ -83,7 +83,7 @@
 
 /* Container Queries */
 .tidy5e-sheet.application.quadrone {
-  // TODO: Discuss with Hightouch the best way to deal with these low-specificity utility classes.
+  // TODO: Discuss with hightouch the best way to deal with these low-specificity utility classes.
   @container (width < 3.125rem) {
     .hide-under-50 {
       display: none !important;

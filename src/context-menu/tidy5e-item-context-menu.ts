@@ -40,7 +40,7 @@ export function getItemContextOptions(
   item: Item5e,
   element: HTMLElement
 ): ContextMenuEntry[] {
-  if (!item?.isOwner || !settings.value.useContextMenu) {
+  if (!settings.value.useContextMenu) {
     return [];
   }
 
@@ -396,6 +396,12 @@ export function getItemContextOptions(
       app.currentTabId === CONSTANTS.TAB_ACTOR_ACTIONS &&
       !FoundryAdapter.isLockedInCompendium(item),
     group: 'sections',
+  });
+
+  options.push({
+    name: 'DND5E.DisplayCard',
+    icon: '<i class="fas fa-message-arrow-up-right"></i>',
+    callback: () => item.displayCard(),
   });
 
   return options;

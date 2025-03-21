@@ -173,16 +173,22 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     const systemSource = this.item.system.toObject();
 
     const isIdentifiable = 'identified' in this.document.system;
+    const unidentified = this.item.system.identified === false;
+    const limitDescriptions =
+      unidentified && !FoundryAdapter.isInGmEditMode(this.item);
 
     const itemDescriptions: ItemDescription[] = [];
-    itemDescriptions.push({
-      enriched: enriched.description,
-      content: systemSource.description.value,
-      field: 'system.description.value',
-      label: FoundryAdapter.localize('DND5E.Description'),
-    });
 
-    if (isIdentifiable && FoundryAdapter.userIsGm()) {
+    if (!limitDescriptions) {
+      itemDescriptions.push({
+        enriched: enriched.description,
+        content: systemSource.description.value,
+        field: 'system.description.value',
+        label: FoundryAdapter.localize('DND5E.Description'),
+      });
+    }
+
+    if (isIdentifiable) {
       itemDescriptions.push({
         enriched: enriched.unidentified,
         content: systemSource.unidentified.description,
@@ -194,7 +200,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     // kgar: I am knowingly repurposing the Identifiable trait,
     // because for items where identification is irrelevant,
     // they are likely not to have a need for Unidentified or Chat descriptions.
-    if (isIdentifiable) {
+    if (isIdentifiable && !limitDescriptions) {
       itemDescriptions.push({
         enriched: enriched.chat,
         content: systemSource.description.chat,
@@ -504,10 +510,12 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       eligibleCustomTabs
     );
 
-    const tabs =
+    let tabs =
       ItemSheetRuntime.quadroneSheets[this.item.type]?.defaultTabs() ?? [];
 
     tabs.push(...customTabs);
+
+    tabs = tabs.filter((t) => !t.condition || t.condition(this.document));
 
     context.tabs = tabs;
 

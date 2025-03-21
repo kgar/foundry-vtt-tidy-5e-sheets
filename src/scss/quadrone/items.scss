@@ -251,6 +251,10 @@
       aspect-ratio: 112 / 107;
     }
 
+    &.unidentified .item-image {
+      filter: grayscale(100%);
+    }
+    
     .item-image {
       margin-block: var(--t5e-spacing-halfx);
       margin-inline: var(--t5e-spacing-halfx);
@@ -266,6 +270,12 @@
       inset: 0;
       pointer-events: none;
     }
+
+    &.spell-preparation.prepared {
+      --t5e-item-color: var(--t5e-color-gold);
+    }
+
+    --filigree-border-color: var(--t5e-item-color);
   }
 
   .item-rarity-container {
@@ -273,22 +283,35 @@
       height: var(--t5e-field-size-default);
       padding-block-end: var(--t5e-spacing-1);
       position: relative;
-      color: oklch(from var(--t5e-item-rarity-color) calc(l + 0.125) c h);
-
-      option {
-        color: oklch(from var(--t5e-item-rarity-color) calc(l + 0.125) c h);
+      
+      &,
+      option:not(.none) {
+        color: oklch(from var(--t5e-item-color) calc(l + 0.125) c h);
+      }
+  
+      option.none {
+        color: var(--t5e-color-text-default);
       }
     }
 
+    .item-rarity-text.unidentified {
+      --t5e-item-color: var(--t5e-color-text-default);
+    }
+
     .item-rarity-text {
-      color: oklch(from var(--t5e-item-rarity-color) calc(l + 0.2) calc(c - 0.08) h);
+      color: oklch(
+        from var(--t5e-item-color) calc(l + 0.2) calc(c - 0.08) h
+      );
       font: var(--t5e-font-title-small);
       text-align: center;
     }
   }
 
   .spell-preparation-text {
-    color: oklch(from var(--t5e-image-label-spell-preparation-text-color) calc(l + 0.25) calc(c - 0.05) h);
+    color: oklch(
+      from var(--t5e-item-color) calc(l + 0.25)
+        calc(c - 0.05) h
+    );
     font: var(--t5e-font-title-small);
     text-align: center;
   }

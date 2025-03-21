@@ -181,20 +181,25 @@ export class Tidy5eContainerSheetQuadrone
       ),
     };
 
-    const isIdentifiable = 'identified' in this.item.system;
+    const isIdentifiable = 'identified' in this.document.system;
+    const unidentified = this.item.system.identified === false;
+    const limitDescriptions =
+      unidentified && !FoundryAdapter.isInGmEditMode(this.item);
 
     const systemSource = this.document.toObject().system;
 
     const itemDescriptions: ItemDescription[] = [];
 
-    itemDescriptions.push({
-      enriched: enriched.description,
-      content: systemSource.description.value,
-      field: 'system.description.value',
-      label: FoundryAdapter.localize('DND5E.Description'),
-    });
+    if (!limitDescriptions) {
+      itemDescriptions.push({
+        enriched: enriched.description,
+        content: systemSource.description.value,
+        field: 'system.description.value',
+        label: FoundryAdapter.localize('DND5E.Description'),
+      });
+    }
 
-    if (isIdentifiable && FoundryAdapter.userIsGm()) {
+    if (isIdentifiable) {
       itemDescriptions.push({
         enriched: enriched.unidentified,
         content: systemSource.unidentified.description,
@@ -203,12 +208,14 @@ export class Tidy5eContainerSheetQuadrone
       });
     }
 
-    itemDescriptions.push({
-      enriched: enriched.chat,
-      content: systemSource.description.chat,
-      field: 'system.description.chat',
-      label: FoundryAdapter.localize('DND5E.DescriptionChat'),
-    });
+    if (!limitDescriptions) {
+      itemDescriptions.push({
+        enriched: enriched.chat,
+        content: systemSource.description.chat,
+        field: 'system.description.chat',
+        label: FoundryAdapter.localize('DND5E.DescriptionChat'),
+      });
+    }
 
     const containerPreferences = SheetPreferencesService.getByType(
       this.item.type
@@ -341,6 +348,10 @@ export class Tidy5eContainerSheetQuadrone
       // TODO: Eliminate null forgiving operator and temp field when items are fully converted.
       ItemSheetRuntime.quadroneSheets[this.item.type]?.defaultTabs() ?? [];
     context.tabs.push(...customTabs);
+
+    context.tabs = context.tabs.filter(
+      (t) => !t.condition || t.condition(this.document)
+    );
 
     TidyHooks.tidy5eSheetsPreConfigureSections(this, this.element, context);
 
