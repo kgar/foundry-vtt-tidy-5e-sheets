@@ -34,8 +34,8 @@
   margin: 0;
   min-height: 1.5625rem;
   padding: 0.125rem 0.5rem;
-  color: var(--t5e-color-text-ondefault-default);
-  --icon-fill: var(--t5e-color-icon-ondefault-diminished);
+  color: var(--t5e-color-text-default);
+  --icon-fill: var(--t5e-color-icon-diminished);
 
   .label {
     padding-top: 0.0625rem;
@@ -60,14 +60,14 @@
   }
 
   i {
-    color: var(--t5e-color-icon-ondefault-default);
+    color: var(--t5e-color-icon-default);
   }
 
   // TODO: Determine if lighter text can be moved to its own scope and stylesheet and used generically
   .lighter {
     font-weight: 400;
-    color: var(--t5e-color-text-ondefault-lighter);
-    --icon-fill: var(--t5e-color-text-ondefault-lighter);
+    color: var(--t5e-color-text-lighter);
+    --icon-fill: var(--t5e-color-text-lighter);
   }
 
   &.negative {
@@ -75,7 +75,7 @@
     background: var(--t5e-color-palette-red-31);
 
     .lighter {
-      color: var(--t5e-color-text-ondefault-lighter);
+      color: var(--t5e-color-text-lighter);
     }
   }
 
@@ -115,21 +115,21 @@
     display: flex;
     align-items: center;
     gap: 0.25rem;
-    --icon-fill: var(--t5e-color-icon-ondefault-diminished);
+    --icon-fill: var(--t5e-color-icon-diminished);
 
     & i {
-      color: var(--t5e-color-icon-ondefault-diminished);
+      color: var(--t5e-color-icon-diminished);
     }
   }
 
   &:has(.toggle:checked) {
     &> :first-child {
-      --icon-fill: var(--t5e-color-icon-ondefault-default);
+      --icon-fill: var(--t5e-color-icon-default);
       transition: --icon-fill 0.15s ease-in-out;
     }
 
     & i {
-      color: var(--t5e-color-icon-ondefault-default);
+      color: var(--t5e-color-icon-default);
     }
   }
 
@@ -153,7 +153,7 @@
   align-items: center;
   gap: 0.125rem;
 
-  color: var(--t5e-color-text-ondefault-lighter);
+  color: var(--t5e-color-text-lighter);
   font-size: 0.75rem;
   font-weight: 500;
   line-height: normal;
@@ -167,7 +167,7 @@
 .dark,
 .theme-dark {
   .pill {
-    color: var(--t5e-color-text-ondefault-default);
+    color: var(--t5e-color-text-default);
     --icon-fill: var(--t5e-color-icon-oninverse-diminished);
 
     &.interactive {
@@ -182,12 +182,12 @@
     }
 
     .lighter {
-      color: var(--t5e-color-text-ondefault-lighter);
-      --icon-fill: var(--t5e-color-text-ondefault-lighter);
+      color: var(--t5e-color-text-lighter);
+      --icon-fill: var(--t5e-color-text-lighter);
     }
 
     i {
-      color: var(--t5e-color-icon-ondefault-default);
+      color: var(--t5e-color-icon-default);
     }
 
     &.negative {
@@ -195,7 +195,7 @@
       background: var(--t5e-color-palette-red-31);
 
       .lighter {
-        color: var(--t5e-color-text-ondefault-lighter);
+        color: var(--t5e-color-text-lighter);
       }
     }
 
@@ -206,10 +206,10 @@
 
     &.positive,
     &.negative {
-      color: var(--t5e-color-text-ondefault-default);
+      color: var(--t5e-color-text-default);
 
       .lighter {
-        color: var(--t5e-color-text-ondefault-lighter);
+        color: var(--t5e-color-text-lighter);
       }
     }
   }
@@ -221,12 +221,12 @@
     }
 
     i {
-      color: var(--t5e-color-icon-ondefault-disabled);
+      color: var(--t5e-color-icon-disabled);
     }
 
     &:has(.toggle:checked) {
       i {
-        color: var(--t5e-color-icon-ondefault-default);
+        color: var(--t5e-color-icon-default);
       }
     }
   }

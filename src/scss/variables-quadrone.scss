@@ -147,13 +147,6 @@
   --t5e-color-text-lighter: var(--t5e-color-palette-grey-29);
   --t5e-color-text-lightest: var(--t5e-color-palette-grey-40);
   --t5e-color-text-disabled: var(--t5e-color-palette-grey-60);
-  --t5e-color-text-ondefault-default: var(--t5e-color-palette-grey-0);
-  --t5e-color-text-ondefault-gold: var(--t5e-color-palette-gold-62);
-  --t5e-color-text-ondefault-gold-emphasis: var(--t5e-color-palette-gold-56);
-  --t5e-color-text-ondefault-gold-light: var(--t5e-color-palette-gold-94);
-  --t5e-color-text-ondefault-lighter: var(--t5e-color-palette-grey-29);
-  --t5e-color-text-ondefault-lightest: var(--t5e-color-palette-grey-40);
-  --t5e-color-text-ondefault-disabled: var(--t5e-color-palette-grey-60);
   --t5e-color-link-default: var(--t5e-theme-color-default);
   --t5e-color-link-hover: var(--t5e-theme-color-darkest);
 
@@ -192,6 +185,7 @@
   --t5e-drop-shadow-field-hover: 0px 0px 6px 0px rgba(0, 0, 0, 0.20);
   --t5e-drop-shadow-field-focus: 0 0 0 2px var(--t5e-theme-color-default);
   --t5e-outline-field-focus: 2px solid var(--t5e-theme-color-default);
+  --t5e-enricher-background: rgba(0, 0, 0, 0.05);
 
   /* Transitions */
   --t5e-transition-speed: 150ms;
@@ -201,30 +195,27 @@
 
   /* Components ------------ */
   /* Cards */
+  --t5e-component-card-default: rgba(248, 244, 241, 1);
+  --t5e-component-card-darker: rgba(241, 235, 232, 1);
+  --t5e-component-card-lighter: rgba(253, 252, 252, 1);
   --t5e-component-card-light-default: rgba(248, 244, 241, 1);
   --t5e-component-card-light-darker: rgba(241, 235, 232, 1);
   --t5e-component-card-light-lighter: rgba(253, 252, 252, 1);
   --t5e-component-card-dark-default: rgba(37, 40, 48, 1);
   --t5e-component-card-dark-darker: rgba(22, 24, 29, 1);
   --t5e-component-card-dark-lighter: rgba(48, 50, 54, 1);
-  --t5e-component-card-ondefault-default: rgba(248, 244, 241, 1);
-  --t5e-component-card-ondefault-darker: rgba(241, 235, 232, 1);
-  --t5e-component-card-ondefault-lighter: rgba(253, 252, 252, 1);
-  --t5e-component-card-oninverse-default: rgba(37, 40, 48, 1);
-  --t5e-component-card-oninverse-darker: rgba(22, 24, 29, 1);
-  --t5e-component-card-oninverse-lighter: rgba(48, 50, 54, 1);
   --t5e-component-card-radius: 0.1875rem;
 
   /* Toggles */
   --t5e-component-toggle-toggled-background: var(--t5e-theme-color-default);
   --t5e-component-toggle-toggled-background-hover: var(--t5e-theme-color-lighter);
   --t5e-component-toggle-toggled-border: var(--t5e-theme-color-darker);
-  --t5e-component-toggle-toggled-text: var(--t5e-color-text-oninverse-default);
+  --t5e-component-toggle-toggled-text: var(--t5e-color-text-default);
 
   /* Fields */
   --t5e-component-field-border: var(--t5e-color-gold);
   --t5e-component-field-border-hover: var(--t5e-theme-color-default);
-  --t5e-component-field-background: var(--t5e-component-card-ondefault-default);
+  --t5e-component-field-background: var(--t5e-component-card-default);
   --t5e-component-field-background-hover: var(--t5e-color-palette-white);
   --t5e-component-field-background-active: var(--t5e-color-palette-white);
   --t5e-component-field-background-hover-emphasis: var(--t5e-color-palette-white);
@@ -281,6 +272,10 @@
   /* Icons ------------ */
   --t5e-color-icon-light: var(--t5e-color-palette-white);
   --t5e-color-icon-dark: var(--t5e-color-palette-black);
+  --t5e-color-icon-default: var(--t5e-color-palette-black);
+  --t5e-color-icon-button: var(--t5e-color-palette-grey-21);
+  --t5e-color-icon-diminished: var(--t5e-color-palette-grey-40);
+  --t5e-color-icon-disabled: rgba(0, 0, 0, 0.4);
   --t5e-color-icon-ondefault-default: var(--t5e-color-palette-black);
   --t5e-color-icon-ondefault-button: var(--t5e-color-palette-grey-21);
   --t5e-color-icon-ondefault-diminished: var(--t5e-color-palette-grey-40);
@@ -330,38 +325,28 @@
 
 
   /* Spacing ------------ */
-  --t5e-spacing-1: 0.0625rem;
-  --t5e-spacing-halfx: 0.125rem;
-  --t5e-spacing-1x: 0.25rem;
-  --t5e-spacing-2x: 0.5rem;
-  --t5e-spacing-3x: 0.75rem;
-  --t5e-spacing-4x: 1rem;
-  --t5e-spacing-5x: 1.25rem;
-  --t5e-spacing-6x: 1.5rem;
-  --t5e-spacing-7x: 1.75rem;
-  --t5e-spacing-8x: 2rem;
-  --t5e-spacing-10x: 2.5rem;
-  --t5e-spacing-12x: 3rem;
-  --t5e-spacing-16x: 4rem;
-  --t5e-spacing-20x: 5rem;
-  --t5e-spacing-24x: 6rem;
+  --t5e-size-1: 0.0625rem;
+  --t5e-size-halfx: 0.125rem;
+  --t5e-size-1x: 0.25rem;
+  --t5e-size-2x: 0.5rem;
+  --t5e-size-3x: 0.75rem;
+  --t5e-size-4x: 1rem;
+  --t5e-size-5x: 1.25rem;
+  --t5e-size-6x: 1.5rem;
+  --t5e-size-7x: 1.75rem;
+  --t5e-size-8x: 2rem;
+  --t5e-size-10x: 2.5rem;
+  --t5e-size-12x: 3rem;
+  --t5e-size-16x: 4rem;
+  --t5e-size-20x: 5rem;
+  --t5e-size-24x: 6rem;
 
   /* Icon Size ------------ */
-  --t5e-icon-size-1: 0.0625rem;
-  --t5e-icon-size-halfx: 0.125rem;
-  --t5e-icon-size-1x: 0.25rem;
-  --t5e-icon-size-2x: 0.5rem;
-  --t5e-icon-size-3x: 0.75rem;
   --t5e-icon-size-4x: 1rem;
-  --t5e-icon-size-5x: 1.25rem;
   --t5e-icon-size-6x: 1.5rem;
   --t5e-icon-size-7x: 1.75rem;
   --t5e-icon-size-8x: 2rem;
   --t5e-icon-size-10x: 2.5rem;
-  --t5e-icon-size-12x: 3rem;
-  --t5e-icon-size-16x: 4rem;
-  --t5e-icon-size-20x: 5rem;
-  --t5e-icon-size-24x: 6rem;
 }
 
 
@@ -381,13 +366,6 @@
     --t5e-color-text-lighter: var(--t5e-color-palette-grey-85);
     --t5e-color-text-lightest: var(--t5e-color-palette-grey-60);
     --t5e-color-text-disabled: var(--t5e-color-palette-grey-48);
-    --t5e-color-text-ondefault-default: var(--t5e-color-palette-grey-100);
-    --t5e-color-text-ondefault-gold: var(--t5e-color-palette-gold-75);
-    --t5e-color-text-ondefault-gold-emphasis: var(--t5e-color-palette-gold-75);
-    --t5e-color-text-ondefault-gold-light: var(--t5e-color-palette-gold-94);
-    --t5e-color-text-ondefault-lighter: var(--t5e-color-palette-grey-85);
-    --t5e-color-text-ondefault-lightest: var(--t5e-color-palette-grey-60);
-    --t5e-color-text-ondefault-disabled: var(--t5e-color-palette-grey-48);
     --t5e-color-link-default: oklch(from var(--t5e-theme-color-default) calc(l * 2.25) calc(c * 1.5) h);
     --t5e-color-link-hover: oklch(from var(--t5e-theme-color-default) calc(l * 1.75) calc(c * 1.5) h);
 
@@ -405,7 +383,7 @@
     /* Fields */
     --t5e-component-field-border: var(--t5e-color-palette-grey-48);
     --t5e-component-field-border-hover: var(--t5e-color-palette-grey-85);
-    --t5e-component-field-background: var(--t5e-component-card-oninverse-default);
+    --t5e-component-field-background: var(--t5e-component-card-dark-default);
     --t5e-component-field-background-hover: var(--t5e-color-palette-grey-11);
     --t5e-component-field-background-active: var(--t5e-color-palette-grey-11);
     --t5e-component-field-background-hover-emphasis: var(--t5e-color-palette-black);
@@ -417,6 +395,7 @@
     --t5e-component-pill-background: var(--t5e-component-field-background);
     --t5e-component-pill-border: var(--t5e-color-palette-grey-29);
     --t5e-component-pill-border-interactive: var(--t5e-component-field-border);
+    --t5e-enricher-background: rgba(255, 255, 255, 0.05);
 
     /* Toggles */
     --t5e-component-toggle-toggled-border: var(--t5e-component-field-border);
@@ -424,27 +403,27 @@
     /* Table */
     --t5e-table-header-background-container: var(--t5e-color-palette-grey-34);
     --t5e-table-row-divider: rgba(224, 216, 212, 0.25);
-    --t5e-table-row-background-default: var(--t5e-component-card-ondefault-default);
+    --t5e-table-row-background-default: var(--t5e-component-card-default);
     --t5e-table-row-background-expanded: var(--t5e-table-row-background-default), linear-gradient(90deg, var(--t5e-color-palette-black) 0.59%, var(--t5e-table-row-background-default) 44%);
 
     /* Icons ------------ */
     /* All icon colors inverted in dark mode. */
-    --t5e-color-icon-ondefault-default: var(--t5e-color-palette-white);
-    --t5e-color-icon-ondefault-button: var(--t5e-color-palette-grey-92);
-    --t5e-color-icon-ondefault-diminished: var(--t5e-color-palette-grey-85);
-    --t5e-color-icon-ondefault-disabled: rgba(255, 255, 255, 0.5);
+    --t5e-color-icon-default: var(--t5e-color-palette-white);
+    --t5e-color-icon-button: var(--t5e-color-palette-grey-92);
+    --t5e-color-icon-diminished: var(--t5e-color-palette-grey-85);
+    --t5e-color-icon-disabled: rgba(255, 255, 255, 0.5);
     --t5e-color-icon-oninverse-default: var(--t5e-color-palette-grey-0);
     --t5e-color-icon-oninverse-button: var(--t5e-color-palette-grey-21);
     --t5e-color-icon-oninverse-diminished: var(--t5e-color-palette-grey-40);
     --t5e-color-icon-oninverse-disabled: rgba(0, 0, 0, 0.4);
 
     // TODO: Update card colors to dynamically invert in theme-dark
-    // --t5e-component-card-oninverse-default: rgba(248, 244, 241, 1);
-    // --t5e-component-card-oninverse-darker: rgba(241, 235, 232, 1);
-    // --t5e-component-card-oninverse-lighter: rgba(253, 252, 252, 1);
-    // --t5e-component-card-ondefault-default: rgba(37, 40, 48, 1);
-    // --t5e-component-card-ondefault-darker: rgba(22, 24, 29, 1);
-    // --t5e-component-card-ondefault-lighter: rgba(48, 50, 54, 1);
+    --t5e-component-card-default: rgba(37, 40, 48, 1);
+    --t5e-component-card-darker: rgba(22, 24, 29, 1);
+    --t5e-component-card-lighter: rgba(48, 50, 54, 1);
+    --t5e-component-card-oninverse-default: rgba(248, 244, 241, 1);
+    --t5e-component-card-oninverse-darker: rgba(241, 235, 232, 1);
+    --t5e-component-card-oninverse-lighter: rgba(253, 252, 252, 1);
 
     /* Decorative ------------ */
     /* Filigree */

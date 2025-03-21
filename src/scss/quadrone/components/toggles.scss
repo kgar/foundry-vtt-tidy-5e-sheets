@@ -194,7 +194,7 @@
 
     .unchecked-icon,
     .thumb {
-      fill: var(--t5e-color-text-ondefault-default);
+      fill: var(--t5e-color-text-default);
     }
   }
 
@@ -212,15 +212,15 @@
     border-color: var(--t5e-component-field-border);
 
     .unchecked-icon {
-      fill: var(--t5e-color-text-ondefault-lighter);
+      fill: var(--t5e-color-text-lighter);
     }
 
     .checked-icon {
-      fill: var(--t5e-color-icon-ondefault-default);
+      fill: var(--t5e-color-icon-default);
     }
 
     .thumb {
-      fill: var(--t5e-color-icon-ondefault-default);
+      fill: var(--t5e-color-icon-default);
     }
 
     &:not(:has(.toggle:checked)) {

@@ -1,4 +1,3 @@
-
 .capitalize {
   text-transform: capitalize;
 }
@@ -26,7 +25,7 @@
     padding-right: 0.03125rem;
     margin: 0 0.03125rem;
     border-radius: 0.09375rem;
-    background: var(--t5e-color-text-ondefault-gold-emphasis);
+    background: var(--t5e-color-text-gold-emphasis);
     color: var(--t5e-color-text-oninverse-default);
   }
 }
@@ -46,7 +45,7 @@ inverse {
   }
 
   .spell-component-special {
-    color: var(--t5e-color-text-ondefault-default);
+    color: var(--t5e-color-text-default);
     background-color: var(--t5e-color-text-oninverse-gold);
   }
 }
@@ -60,8 +59,9 @@ inverse {
     // font-weight: 400;
     line-height: 0.75rem;
   }
+
   .subtitle {
-    color: var(--t5e-color-text-ondefault-lightest);
+    color: var(--t5e-color-text-lightest);
     font-family: Roboto;
     font-size: 0.6875rem;
     // font-style: normal;
@@ -71,7 +71,7 @@ inverse {
 }
 
 .text-secondary {
-  color: var(--t5e-color-text-ondefault-lighter);
+  color: var(--t5e-color-text-lighter);
 }
 
 .fw-normal {

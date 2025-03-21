@@ -33,7 +33,7 @@
   <div class="sidebar-contents">
     <h4>Theme</h4>
     <div
-      style="display: flex; flex-direction: column; gap: var(--t5e-spacing-1x)"
+      style="display: flex; flex-direction: column; gap: var(--t5e-size-1x)"
     >
       <label for="light-mode-toggle">
         <input
@@ -60,7 +60,7 @@
     </div>
     <h4>Inversion</h4>
     <div
-      style="display: flex; flex-direction: column; gap: var(--t5e-spacing-1x)"
+      style="display: flex; flex-direction: column; gap: var(--t5e-size-1x)"
     >
       <label for="default-mode-toggle">
         <input
@@ -1346,7 +1346,7 @@
     }
 
     &.inverse {
-      background: var(--t5e-component-card-oninverse-default);
+      background: var(--t5e-component-card-default);
     }
   }
 
@@ -1359,7 +1359,7 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    gap: var(--t5e-spacing-1x);
+    gap: var(--t5e-size-1x);
   }
 
   .wrapped-gallery {
@@ -1368,7 +1368,7 @@
     align-items: flex-start;
     justify-content: flex-start;
     flex-wrap: wrap;
-    gap: var(--t5e-spacing-1x);
+    gap: var(--t5e-size-1x);
   }
 
   .show-before-850 {

@@ -97,7 +97,7 @@
 
   let columnSpecs = $derived({
     actions: {
-      columnWidth: `calc((var(--t5e-table-button-width) * ${1 + tableActions.length}) + var(--t5e-spacing-halfx))`,
+      columnWidth: `calc((var(--t5e-table-button-width) * ${1 + tableActions.length}) + var(--t5e-size-halfx))`,
     },
   });
 
