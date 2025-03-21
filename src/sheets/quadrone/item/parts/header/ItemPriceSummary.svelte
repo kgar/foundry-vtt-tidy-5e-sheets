@@ -36,10 +36,7 @@
 
   let context = $derived(getSheetContext());
 
-  let gmEditMode = $derived(
-    FoundryAdapter.userIsGm() &&
-      FoundryAdapter.isSheetUnlocked(context.document),
-  );
+  let gmEditMode = $derived(FoundryAdapter.isInGmEditMode(context.document));
 
   let conceal = $derived(item.system.identified === false && !gmEditMode);
 </script>

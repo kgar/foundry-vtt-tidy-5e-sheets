@@ -45,10 +45,7 @@
 
   let context = $derived(getSheetContext());
 
-  let gmEditMode = $derived(
-    FoundryAdapter.userIsGm() &&
-      FoundryAdapter.isSheetUnlocked(context.document),
-  );
+  let gmEditMode = $derived(FoundryAdapter.isInGmEditMode(context.document));
 
   let showGmOnlyUi = $derived(!identified && gmEditMode);
 </script>

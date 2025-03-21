@@ -53,6 +53,7 @@ export type Tab<T extends Component = Component> = {
   onRender?: (params: OnRenderTabParams) => void;
   activateDefaultSheetListeners?: boolean;
   autoHeight?: boolean;
+  condition?: (document: any) => boolean;
 };
 
 export type CustomContent = {

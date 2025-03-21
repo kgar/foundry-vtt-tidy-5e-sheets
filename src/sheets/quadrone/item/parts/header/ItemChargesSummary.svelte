@@ -6,10 +6,7 @@
 
   const localize = FoundryAdapter.localize;
 
-  let gmEditMode = $derived(
-    FoundryAdapter.userIsGm() &&
-      FoundryAdapter.isSheetUnlocked(context.document),
-  );
+  let gmEditMode = $derived(FoundryAdapter.isInGmEditMode(context.document));
 
   let conceal = $derived(
     context.item.system.identified === false && !gmEditMode,

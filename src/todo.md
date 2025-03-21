@@ -14,20 +14,20 @@
     - [x] Rarity color set to grey 40, rarity label readonly and set to "Unidentified" (all modes)
     - [x] Cost label set to "?" unless in GM Edit Mode
     - [x] Charges hidden (emdash) unless in GM Edit Mode
-    - [ ] Details tab hidden until identified (all modes) or in GM Edit Mode
-    - [ ] Activities tab hidden until identified (all modes) or in GM Edit Mode
-    - [ ] Effects tab hidden until identified (all modes) or in GM Edit Mode
+    - [x] Details tab hidden until identified (all modes) or in GM Edit Mode
+    - [x] Activities tab hidden until identified (all modes) or in GM Edit Mode
+    - [x] Effects tab hidden until identified (all modes) or in GM Edit Mode
     - [x] Name readonly "Unidentified <type>" (all modes) (enforced by system)
-    - [ ] Unidentified description expanded and editable
-    - [ ] Description section hidden, Chat description section hidden
-    - [ ] (Non-container sheets only) Sidebar sections all hidden except Sections section and pill switches
+    - [x] Unidentified description expanded and editable
+    - [x] Description section hidden, Chat description section hidden
     - [ ] Header source label set to "?" if filled out, edit button hidden (all modes) unless in GM Edit Mode
-  - [ ] Non-container
+- [ ] Review Container sheet to ensure it has everything; add TODOs as needed
+- [ ] Localize Container sheet name and move it out of the Truesight filter
+- [ ] Go beta!
 - [ ] Notify hightouch that spell sheet is ready for final review
 - [ ] Test spell info on item summary and cards
 - [ ] Begin thinking about how to extract common functionality across each table type (item, effects, activities)
 - [ ] Propagate `sheet-header` class setup to all item sheets
-- [ ] Review Container sheet to ensure it has everything
 - [ ] Implement sheet header contents
   - [ ] Background
   - [ ] Class
@@ -151,6 +151,8 @@
 - [ ] add a class to section headers when there are no search results `.search-no-results`
 - [ ] Effect Summary eagerly refreshes. Add suppression to HTML enrichment to only when the effect summary is shown.
 - [ ] Additional Document header option: Context Menu Options (literally show the context menu options)
+- [ ] Ensure all item sheets enforce this Unidentified UI feature:
+    - [ ] (Non-container sheets only) Sidebar sections all hidden except Sections section and pill switches
 
 ### To Include on Actor Phase
 
