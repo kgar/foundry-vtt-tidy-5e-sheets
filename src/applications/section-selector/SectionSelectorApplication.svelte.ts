@@ -44,7 +44,7 @@ export class SectionSelectorApplication extends SvelteApplicationMixin<
       CONSTANTS.MODULE_ID,
       'application',
       'sheet',
-      'dnd5e2',
+      'quadrone',
       'standard-form',
       'config-sheet',
       'tidy-section-selector-application',

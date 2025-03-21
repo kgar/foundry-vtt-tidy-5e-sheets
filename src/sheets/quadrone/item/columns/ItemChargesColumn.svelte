@@ -1,15 +1,10 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ColumnCellProps } from 'src/runtime/item/item.types';
-  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
   let { rowDocument: item }: ColumnCellProps = $props();
 
-  let context = $derived(getSheetContext());
-
-  let gmEditMode = $derived(FoundryAdapter.isInGmEditMode(context.document));
-
-  let conceal = $derived(item.system.identified === false && !gmEditMode);
+  let conceal = $derived(item.system.identified === false);
 </script>
 
 {#if item.hasLimitedUses && !conceal}

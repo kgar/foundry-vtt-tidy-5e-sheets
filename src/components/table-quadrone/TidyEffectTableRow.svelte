@@ -56,9 +56,7 @@
 
   $effect(() => {
     (async () => {
-      console.warn('determining if should refresh effect summary data');
       if (effectContext.effect && expanded) {
-        console.warn('refreshing effect summary data');
         summaryData = {
           description: {
             value: await FoundryAdapter.enrichHtml(
@@ -66,14 +64,6 @@
             ),
           },
         };
-      } else if (
-        effectContext.effect &&
-        !expanded &&
-        summaryData !== undefined
-      ) {
-        // Reset chat data for non-expanded, hydrated chatData
-        // so it rehydrates on next open
-        summaryData = undefined;
       }
     })();
   });

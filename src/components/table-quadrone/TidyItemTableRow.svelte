@@ -120,10 +120,6 @@
 
       if (item && expanded) {
         chatData = await item.getChatData({ secrets: item.isOwner });
-      } else if (item && !expanded && chatData) {
-        // Reset chat data for non-expanded, hydrated chatData
-        // so it rehydrates on next open
-        chatData = undefined;
       }
     })();
   });

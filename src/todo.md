@@ -1,12 +1,15 @@
 ## To Do
 
 - [ ] Feedback
-  - [ ] Price and Charge columns - always follow Identified instead of GM Edit Mode
-  - [ ] Activity Edit ctx menu doesn't work
-  - [ ] Add legacy item card
-  - [ ] Price column and summary: one question mark
-  - [ ] Adjust the suppressed effect's toggle icon, since it can't be adjusted anyhow
+  - [x] Price and Charge columns - always follow Identified instead of GM Edit Mode
+  - [x] Price column and summary: one question mark
+  - [ ] (unable to repro) Activity Edit ctx menu doesn't work
+  - [ ] (awaiting hightouch design) Adjust the suppressed effect's toggle icon, since it can't be adjusted anyhow
 - [ ] (hightouch) Time to do variable cleanup
+- [ ] Quadronify all Tidy's dnd5e2 forms.
+  - [ ] Literally just section selector.
+- [ ] Implement Container Limited View
+- [ ] Test Container Observer View
 - [ ] Review Container sheet to ensure it has everything; add TODOs as needed
 - [ ] Localize Container sheet name and move it out of the Truesight filter
 - [ ] Go beta!
@@ -133,7 +136,10 @@
 - [ ] Resolve TODO -  // TODO: Make this a callback to send through to the component for preparing sections properly
 - [ ] Set up default/light/dark menu toggle and add to container
 - [ ] Update sheet lock to work like the default sheets, including the additional render options and intuitive default state
-- [ ] Item cards?
+- [ ] Item cards
+  - [ ] Implement a shared portal for item cards. All attached item cards will use the one portal anchor. This is so the card can live outside the sheet's overflow hiding window content, so we don't have to worry about compromising design.
+  - [ ] Have item cards be targeted via `.tidy5e-sheet.classic....` etc.
+  - [ ] For fun, test with PopOut!
 - [ ] add a class to section headers when there are no search results `.search-no-results`
 - [ ] Effect Summary eagerly refreshes. Add suppression to HTML enrichment to only when the effect summary is shown.
 - [ ] Additional Document header option: Context Menu Options (literally show the context menu options)

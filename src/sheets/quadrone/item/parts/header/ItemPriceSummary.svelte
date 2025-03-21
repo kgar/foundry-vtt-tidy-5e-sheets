@@ -50,18 +50,14 @@
     ></i>
   {/if}
   <span class="item-price-number" class:truncate>
-    {#if !conceal || gmEditMode}
-      <!-- Value Text -->
-      <span class="color-text-default text-data">
+    <!-- Value Text -->
+    <span class="color-text-default text-data">
+      {#if !conceal || gmEditMode}
         {itemValueText}
-      </span>
-    {:else}
-      {@const itemValueTextQuestionMarks = ''.padStart(
-        itemValueText.length,
-        '?',
-      )}
-      {itemValueTextQuestionMarks}
-    {/if}
+      {:else}
+        ?
+      {/if}
+    </span>
     <!-- Denom -->
     <span class="item-price-denomination text-label">
       {denomination?.abbreviation ?? ''}
