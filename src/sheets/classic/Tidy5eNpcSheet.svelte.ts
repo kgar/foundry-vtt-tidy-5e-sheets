@@ -715,7 +715,9 @@ export class Tidy5eNpcSheet
         defaultDocumentContext
       ),
       customContent: await NpcSheetRuntime.getContent(defaultDocumentContext),
-      defaultSkills: FoundryAdapter.getSystemSetting(CONSTANTS.SYSTEM_SETTING_DEFAULT_SKILLS),
+      defaultSkills: new Set<string>(
+        FoundryAdapter.getSystemSetting(CONSTANTS.SYSTEM_SETTING_DEFAULT_SKILLS)
+      ),
       document: this.document,
       useClassicControls: settings.value.useClassicControlsForNpc,
       effects: enhancedEffectSections,
