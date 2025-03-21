@@ -1,26 +1,14 @@
 ## To Do
 
-- [x] Effect description changes are not reactive on the target item container
-- [ ] Determine how unidentified should work
-  - [x] Item row
-    - [x] (kgar says: "we should match system behavior for this one: the button is enabled and usable on the default sheets") Use button greyed out, cannot be used
-    - [x] Item row text italicized, light grey, no background color
-    - [x] Item row image greyscale, opacity 75%
-    - [x] Item description uses unidentified description only
-    - [x] Charges hidden (emdash)
-    - [x] Price hidden (emdash)
-  - [ ] All sheets
-    - [x] Image greyscale
-    - [x] Rarity color set to grey 40, rarity label readonly and set to "Unidentified" (all modes)
-    - [x] Cost label set to "?" unless in GM Edit Mode
-    - [x] Charges hidden (emdash) unless in GM Edit Mode
-    - [x] Details tab hidden until identified (all modes) or in GM Edit Mode
-    - [x] Activities tab hidden until identified (all modes) or in GM Edit Mode
-    - [x] Effects tab hidden until identified (all modes) or in GM Edit Mode
-    - [x] Name readonly "Unidentified <type>" (all modes) (enforced by system)
-    - [x] Unidentified description expanded and editable
-    - [x] Description section hidden, Chat description section hidden
-    - [ ] Header source label set to "?" if filled out, edit button hidden (all modes) unless in GM Edit Mode
+- [ ] Feedback
+  - [x] Price and Charge columns - always follow Identified instead of GM Edit Mode
+  - [x] Price column and summary: one question mark
+  - [ ] (unable to repro) Activity Edit ctx menu doesn't work
+  - [ ] (awaiting hightouch design) Adjust the suppressed effect's toggle icon, since it can't be adjusted anyhow
+- [ ] (hightouch) Time to do variable cleanup
+- [ ] (hightouch) Quadronify src\applications\section-selector\SectionSelector.svelte?
+- [ ] Implement Container Limited View
+- [ ] Test Container Observer View
 - [ ] Review Container sheet to ensure it has everything; add TODOs as needed
 - [ ] Localize Container sheet name and move it out of the Truesight filter
 - [ ] Go beta!
@@ -147,7 +135,10 @@
 - [ ] Resolve TODO -  // TODO: Make this a callback to send through to the component for preparing sections properly
 - [ ] Set up default/light/dark menu toggle and add to container
 - [ ] Update sheet lock to work like the default sheets, including the additional render options and intuitive default state
-- [ ] Item cards?
+- [ ] Item cards
+  - [ ] Implement a shared portal for item cards. All attached item cards will use the one portal anchor. This is so the card can live outside the sheet's overflow hiding window content, so we don't have to worry about compromising design.
+  - [ ] Have item cards be targeted via `.tidy5e-sheet.classic....` etc.
+  - [ ] For fun, test with PopOut!
 - [ ] add a class to section headers when there are no search results `.search-no-results`
 - [ ] Effect Summary eagerly refreshes. Add suppression to HTML enrichment to only when the effect summary is shown.
 - [ ] Additional Document header option: Context Menu Options (literally show the context menu options)
@@ -264,3 +255,24 @@
 - [x] Refactor: make tag component reusable
 - [x] Container contained item description changes are not reactive on the container
   - Of note: the container is re-rendering. It's probably the item summary itself.
+- [x] Effect description changes are not reactive on the target item container
+- [x] Determine how unidentified should work
+  - [x] Item row
+    - [x] (kgar says: "we should match system behavior for this one: the button is enabled and usable on the default sheets") Use button greyed out, cannot be used
+    - [x] Item row text italicized, light grey, no background color
+    - [x] Item row image greyscale, opacity 75%
+    - [x] Item description uses unidentified description only
+    - [x] Charges hidden (emdash)
+    - [x] Price hidden (emdash)
+  - [x] All sheets
+    - [x] Image greyscale
+    - [x] Rarity color set to grey 40, rarity label readonly and set to "Unidentified" (all modes)
+    - [x] Cost label set to "?" unless in GM Edit Mode
+    - [x] Charges hidden (emdash) unless in GM Edit Mode
+    - [x] Details tab hidden until identified (all modes) or in GM Edit Mode
+    - [x] Activities tab hidden until identified (all modes) or in GM Edit Mode
+    - [x] Effects tab hidden until identified (all modes) or in GM Edit Mode
+    - [x] Name readonly "Unidentified <type>" (all modes) (enforced by system)
+    - [x] Unidentified description expanded and editable
+    - [x] Description section hidden, Chat description section hidden
+    - [x] Header source label set to "?" if filled out, edit button hidden (all modes) unless in GM Edit Mode

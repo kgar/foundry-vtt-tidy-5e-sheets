@@ -20,14 +20,24 @@
   let formula = $derived(context.system.uses.recovery[0]?.formula ?? '');
   let recharge = $derived(formula === '6' ? formula : `${formula}-6`);
   let diceIconClass = $derived(faces[formula] ?? unknownFace);
+
+  let gmEditMode = $derived(FoundryAdapter.isInGmEditMode(context.document));
+
+  let conceal = $derived(
+    context.item.system.identified === false && !gmEditMode,
+  );
 </script>
 
 <div class="item-recharge">
   <span class="color-text-lighter text-data">
     {localize('TIDY5E.RollRecharge.Label')}
   </span>
-  <i class="{diceIconClass} color-text-lighter text-label-icon"></i>
-  <span class="recharge-range-text text-data">
-    {recharge}
-  </span>
+  {#if !conceal}
+    <i class="{diceIconClass} color-text-lighter text-label-icon"></i>
+    <span class="recharge-range-text text-data">
+      {recharge}
+    </span>
+  {:else}
+    <span class="recharge-range-text text-data"> ? </span>
+  {/if}
 </div>
