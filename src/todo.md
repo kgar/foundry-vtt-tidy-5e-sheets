@@ -1,26 +1,5 @@
 ## To Do
 
-- [x] Effect description changes are not reactive on the target item container
-- [ ] Determine how unidentified should work
-  - [x] Item row
-    - [x] (kgar says: "we should match system behavior for this one: the button is enabled and usable on the default sheets") Use button greyed out, cannot be used
-    - [x] Item row text italicized, light grey, no background color
-    - [x] Item row image greyscale, opacity 75%
-    - [x] Item description uses unidentified description only
-    - [x] Charges hidden (emdash)
-    - [x] Price hidden (emdash)
-  - [ ] All sheets
-    - [x] Image greyscale
-    - [x] Rarity color set to grey 40, rarity label readonly and set to "Unidentified" (all modes)
-    - [x] Cost label set to "?" unless in GM Edit Mode
-    - [x] Charges hidden (emdash) unless in GM Edit Mode
-    - [x] Details tab hidden until identified (all modes) or in GM Edit Mode
-    - [x] Activities tab hidden until identified (all modes) or in GM Edit Mode
-    - [x] Effects tab hidden until identified (all modes) or in GM Edit Mode
-    - [x] Name readonly "Unidentified <type>" (all modes) (enforced by system)
-    - [x] Unidentified description expanded and editable
-    - [x] Description section hidden, Chat description section hidden
-    - [ ] Header source label set to "?" if filled out, edit button hidden (all modes) unless in GM Edit Mode
 - [ ] Review Container sheet to ensure it has everything; add TODOs as needed
 - [ ] Localize Container sheet name and move it out of the Truesight filter
 - [ ] Go beta!
@@ -264,3 +243,24 @@
 - [x] Refactor: make tag component reusable
 - [x] Container contained item description changes are not reactive on the container
   - Of note: the container is re-rendering. It's probably the item summary itself.
+- [x] Effect description changes are not reactive on the target item container
+- [x] Determine how unidentified should work
+  - [x] Item row
+    - [x] (kgar says: "we should match system behavior for this one: the button is enabled and usable on the default sheets") Use button greyed out, cannot be used
+    - [x] Item row text italicized, light grey, no background color
+    - [x] Item row image greyscale, opacity 75%
+    - [x] Item description uses unidentified description only
+    - [x] Charges hidden (emdash)
+    - [x] Price hidden (emdash)
+  - [x] All sheets
+    - [x] Image greyscale
+    - [x] Rarity color set to grey 40, rarity label readonly and set to "Unidentified" (all modes)
+    - [x] Cost label set to "?" unless in GM Edit Mode
+    - [x] Charges hidden (emdash) unless in GM Edit Mode
+    - [x] Details tab hidden until identified (all modes) or in GM Edit Mode
+    - [x] Activities tab hidden until identified (all modes) or in GM Edit Mode
+    - [x] Effects tab hidden until identified (all modes) or in GM Edit Mode
+    - [x] Name readonly "Unidentified <type>" (all modes) (enforced by system)
+    - [x] Unidentified description expanded and editable
+    - [x] Description section hidden, Chat description section hidden
+    - [x] Header source label set to "?" if filled out, edit button hidden (all modes) unless in GM Edit Mode
