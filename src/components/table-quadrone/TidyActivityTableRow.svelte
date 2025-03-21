@@ -69,6 +69,7 @@
   {hidden}
   ondblclick={(event) =>
     activity && FoundryAdapter.editOnMouseEvent(event, activity.doc)}
+  onmousedown={(event) => FoundryAdapter.editOnMiddleClick(event, activity.doc)}
   ondragstart={handleDragStart}
   {...attributes}
 >

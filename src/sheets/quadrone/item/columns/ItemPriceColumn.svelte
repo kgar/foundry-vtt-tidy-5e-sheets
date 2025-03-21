@@ -2,11 +2,15 @@
   import type { ColumnCellProps } from 'src/runtime/item/item.types';
   import ItemPriceSummary from '../parts/header/ItemPriceSummary.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
   let { rowDocument: item }: ColumnCellProps = $props();
 
+  let context = $derived(getSheetContext());
+
   let gmEditMode = $derived(
-    FoundryAdapter.userIsGm() && FoundryAdapter.isSheetUnlocked(item),
+    FoundryAdapter.userIsGm() &&
+      FoundryAdapter.isSheetUnlocked(context.document),
   );
 
   let conceal = $derived(item.system.identified === false && !gmEditMode);

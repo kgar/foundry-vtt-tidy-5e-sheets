@@ -11,6 +11,7 @@
   import { settings } from 'src/settings/settings.svelte';
   import { ItemProperties } from 'src/features/properties/ItemProperties.svelte';
   import PropertyTag from '../properties/PropertyTag.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     chatData: ItemChatData;
@@ -42,8 +43,11 @@
 
   let identified = $derived(item.system.identified !== false);
 
+  let context = $derived(getSheetContext());
+
   let gmEditMode = $derived(
-    FoundryAdapter.userIsGm() && FoundryAdapter.isSheetUnlocked(item),
+    FoundryAdapter.userIsGm() &&
+      FoundryAdapter.isSheetUnlocked(context.document),
   );
 
   let showGmOnlyUi = $derived(!identified && gmEditMode);

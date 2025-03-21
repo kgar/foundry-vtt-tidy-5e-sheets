@@ -7,9 +7,9 @@
   import { getContainerSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import Sidebar from '../item/parts/Sidebar.svelte';
   import ItemNameHeaderOrchestrator from '../item/parts/ItemNameHeaderOrchestrator.svelte';
-  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import ItemPriceSummary from '../item/parts/header/ItemPriceSummary.svelte';
   import ItemWeightSummary from '../item/parts/header/ItemWeightSummary.svelte';
+  import ItemName from '../item/parts/header/ItemName.svelte';
 
   let context = $derived(getContainerSheetQuadroneContext());
 
@@ -94,29 +94,18 @@
     bind:this={itemNameEl}
     class="item-name-wrapper flex-row extra-small-gap align-items-center"
   >
-    <!-- Name -->
-    {#if context.unlocked}
-      <TextInputQuadrone
-        field="name"
-        document={context.item}
-        value={context.name.editable}
-        class="document-name"
-      />
-    {:else}
-      <div class="document-name">{context.item.name}</div>
-    {/if}
+    <ItemName />
   </div>
 
   <!-- Header Summary -->
   <div class="item-header-summary">
     <!-- Item Capacity -->
     <div class="item-capacity">
-      <i
-        class="fa-solid fa-scale-unbalanced item-capacity-icon text-label-icon"
+      <i class="fa-solid fa-scale-unbalanced item-capacity-icon text-label-icon"
       ></i>
       <div class="item-capacity-counter">
         <span class="capacity-value text-data">{context.capacity.value}</span>
-        <div class="separator ">/</div>
+        <div class="separator">/</div>
         <span class="capacity-max text-data">{context.capacity.max}</span>
       </div>
     </div>

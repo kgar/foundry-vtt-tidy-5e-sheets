@@ -97,6 +97,8 @@
   ondblclick={(event) =>
     effectContext.effect &&
     FoundryAdapter.editOnMouseEvent(event, effectContext.effect)}
+  onmousedown={(event) =>
+    FoundryAdapter.editOnMiddleClick(event, effectContext.effect)}
   ondragstart={handleDragStart}
   {...attributes}
 >

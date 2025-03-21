@@ -10,10 +10,10 @@
     - [x] Charges hidden (emdash)
     - [x] Price hidden (emdash)
   - [ ] All sheets
-    - [ ] Image greyscale
-    - [ ] Rarity color set to grey 40, rarity label readonly and set to "Unidentified" (all modes)
-    - [ ] Cost label set to "?" unless in GM Edit Mode
-    - [ ] Charges hidden (emdash) unless in GM Edit Mode
+    - [x] Image greyscale
+    - [x] Rarity color set to grey 40, rarity label readonly and set to "Unidentified" (all modes)
+    - [x] Cost label set to "?" unless in GM Edit Mode
+    - [x] Charges hidden (emdash) unless in GM Edit Mode
     - [ ] Details tab hidden until identified (all modes) or in GM Edit Mode
     - [ ] Activities tab hidden until identified (all modes) or in GM Edit Mode
     - [ ] Effects tab hidden until identified (all modes) or in GM Edit Mode

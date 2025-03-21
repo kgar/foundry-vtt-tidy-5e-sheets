@@ -145,6 +145,7 @@
   }}
   rowClass={['tidy-table-row-v2', rowClass, itemColorClasses, { expanded }]}
   ondblclick={(event) => item && FoundryAdapter.editOnMouseEvent(event, item)}
+  onmousedown={(event) => FoundryAdapter.editOnMiddleClick(event, item)}
   onmouseenter={onMouseEnter}
   onmouseleave={onMouseLeave}
   ondragstart={handleDragStart}

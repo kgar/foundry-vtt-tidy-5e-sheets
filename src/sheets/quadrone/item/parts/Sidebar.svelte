@@ -29,7 +29,11 @@
     context.unlocked ? context.source.rarity : context.system.rarity,
   );
 
-  let rarityText = $derived(RarityColors.getRarityText(rarity).titleCase());
+  let rarityText = $derived(
+    context.system.identified === false
+      ? localize('DND5E.Unidentified.Title')
+      : RarityColors.getRarityText(rarity).titleCase(),
+  );
 
   let itemRarities = $derived(
     Object.entries(context.config.itemRarity).map(([key, value]) => {
@@ -102,6 +106,7 @@
 
   // TODO: Consider a reusable function and also feeding it through item context for item sheets.
   let itemColorClasses = $derived<ClassValue>([
+    context.system.identified === false ? 'unidentified' : undefined,
     !isNil(rarity, '') ? 'rarity' : undefined,
     rarity?.slugify(),
     !isNil(context.system.preparation?.mode) ? 'spell-preparation' : undefined,
