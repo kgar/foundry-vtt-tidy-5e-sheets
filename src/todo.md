@@ -6,8 +6,7 @@
   - [ ] (unable to repro) Activity Edit ctx menu doesn't work
   - [ ] (awaiting hightouch design) Adjust the suppressed effect's toggle icon, since it can't be adjusted anyhow
 - [ ] (hightouch) Time to do variable cleanup
-- [ ] Quadronify all Tidy's dnd5e2 forms.
-  - [ ] Literally just section selector.
+- [ ] (hightouch) Quadronify src\applications\section-selector\SectionSelector.svelte?
 - [ ] Implement Container Limited View
 - [ ] Test Container Observer View
 - [ ] Review Container sheet to ensure it has everything; add TODOs as needed
