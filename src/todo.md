@@ -1,5 +1,12 @@
 ## To Do
 
+- [ ] Feedback
+  - [ ] Price and Charge columns - always follow Identified instead of GM Edit Mode
+  - [ ] Activity Edit ctx menu doesn't work
+  - [ ] Add legacy item card
+  - [ ] Price column and summary: one question mark
+  - [ ] Adjust the suppressed effect's toggle icon, since it can't be adjusted anyhow
+- [ ] (hightouch) Time to do variable cleanup
 - [ ] Review Container sheet to ensure it has everything; add TODOs as needed
 - [ ] Localize Container sheet name and move it out of the Truesight filter
 - [ ] Go beta!
