@@ -448,7 +448,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       context.properties.active.push(
         ...(this.item.system.cardProperties ?? []),
         // @ts-expect-error
-        ...Object.values(this.item.labels.activations[0] ?? {}),
+        ...Object.values(this.item.labels.activations?.[0] ?? {}),
         ...(this.item.system.equippableItemCardProperties ?? [])
       );
     }
