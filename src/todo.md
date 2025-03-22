@@ -1,6 +1,6 @@
 ## To Do
 
-- [ ] Section Selector - swap in the Search component, if possible.
+- [x] Section Selector - swap in the Search component, if possible.
 - [ ] Localize Container sheet name
 - [ ] Review Container sheet to ensure it has everything; add TODOs as needed
 - [ ] Move Container Quadrone out of the Truesight filter Go beta!

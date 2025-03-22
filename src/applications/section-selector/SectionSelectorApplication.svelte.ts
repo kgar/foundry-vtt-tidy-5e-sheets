@@ -45,8 +45,6 @@ export class SectionSelectorApplication extends SvelteApplicationMixin<
       'application',
       'sheet',
       'quadrone',
-      'standard-form',
-      'config-sheet',
       'tidy-section-selector-application',
       'app-v2',
     ],

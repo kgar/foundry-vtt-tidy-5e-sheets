@@ -6,6 +6,7 @@
   } from './SectionSelectorApplication.svelte';
   import type { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
   import { isNil } from 'src/utils/data';
+  import Search from 'src/sheets/quadrone/shared/Search.svelte';
 
   interface Props {
     sheet: SectionSelectorApplication;
@@ -49,22 +50,7 @@
     <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
-  <search>
-    <span class="icon-and-input">
-      <i class="fas fa-magnifying-glass fa-fw"></i>
-      <input
-        type="text"
-        class="interface-only"
-        placeholder={localize('TIDY5E.Search')}
-        bind:value={searchCriteria}
-      />
-    </span>
-    {#if !isNil(searchCriteria, '')}
-      <a class="cancel-search" onclick={() => (searchCriteria = '')}>
-        <i class="fas fa-xmark-large fa-fw"></i>
-      </a>
-    {/if}
-  </search>
+  <Search bind:searchCriteria />
 
   <section class="existing-sections">
     {#each filteredResults as section (section)}
@@ -110,21 +96,3 @@
     >
   </div>
 </fieldset>
-
-<style>
-  .existing-sections {
-    flex: 1 1 auto;
-    padding: 1px;
-    overflow: auto;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .new-section {
-    display: flex;
-    flex-direction: column;
-    gap: 0.125rem;
-  }
-</style>
