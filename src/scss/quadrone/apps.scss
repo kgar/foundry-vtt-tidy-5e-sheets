@@ -220,6 +220,11 @@
     }
   }
 
+  .text-normal {
+    font-weight: var(--font-weight-default);
+    color: var(--t5e-color-text-lighter);
+  }
+
   .text-data {
     font-weight: var(--font-weight-bold);
     color: var(--t5e-color-text-default);
