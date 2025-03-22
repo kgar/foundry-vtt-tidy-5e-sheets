@@ -107,7 +107,7 @@
   --field-toggle-background: var(--t5e-component-field-background);
   --field-toggle-background-hover: var(--t5e-component-field-background-hover);
   --field-toggle-border-color: var(--t5e-component-field-border);
-  --field-toggle-checked-color: var(--t5e-color-icon-oninverse-default);
+  --field-toggle-checked-color: var(--t5e-color-icon-default);
   --field-toggle-unchecked-color: var(--t5e-color-text-lightest);
   --field-toggle-unchecked-thumb-color: var(--t5e-color-text-lighter);
   --field-toggle-checked-thumb-color: var(--t5e-color-text-default);
@@ -194,7 +194,7 @@
 
     .unchecked-icon,
     .thumb {
-      fill: var(--t5e-color-text-default);
+      fill: var(--t5e-color-text-ondefault-default);
     }
   }
 

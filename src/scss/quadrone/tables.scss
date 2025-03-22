@@ -555,8 +555,8 @@
 
   /* Inline Containers */
   // TODO
-  .expandable-expanded {
-    // background: linear-gradient(90deg, var(--t5e-component-card-onDefault-darker, #1B1D23) 0.59%, var(--t5e-component-card-onDefault-default, #252830) 44%);
+  .tidy-table-row~.expandable.expanded {
+    background: linear-gradient(120deg, var(--t5e-component-card-darker) 10%, var(--t5e-component-card-default) 120%);
   }
 
   .empty-container {

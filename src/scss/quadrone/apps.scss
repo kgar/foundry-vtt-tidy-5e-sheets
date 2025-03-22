@@ -7,6 +7,7 @@
   --color-scrollbar: rgba(0, 0, 0, 0.35);
   --app-background: var(--t5e-component-card-darker);
 
+
   /* Application window */
   border-radius: 0.3125rem;
   border: 1px solid var(--t5e-color-gold);
@@ -38,24 +39,6 @@
     }
   }
 
-  .window-header {
-
-    .window-title,
-    button.header-control {
-      padding-bottom: var(--t5e-size-halfx);
-    }
-
-    button.header-control {
-      color: var(--t5e-color-icon-button);
-      transition: all var(--t5e-transition-default);
-
-      &:hover {
-        color: var(--t5e-color-icon-default);
-        border-radius: 100%;
-        background: rgba(0, 0, 0, 0.12);
-      }
-    }
-  }
 
   /* Font Color */
   &:not(.minimized) {
@@ -75,7 +58,7 @@
   .window-header {
     border: none;
     align-items: center;
-    padding-inline-start: 0.75rem;
+    padding-inline-start: var(--t5e-size-3x);
 
     >* {
       max-block-size: 100%;
@@ -83,6 +66,17 @@
 
     .window-title {
       font-size: inherit;
+    }
+
+    button.header-control {
+      color: var(--t5e-color-icon-button);
+      transition: all var(--t5e-transition-default);
+
+      &:hover {
+        color: var(--t5e-color-icon-default);
+        border-radius: 100%;
+        background: rgba(0, 0, 0, 0.12);
+      }
     }
   }
 
@@ -295,10 +289,6 @@
     }
   }
 
-  .inverse {
-    color: var(--t5e-color-text-oninverse-default);
-  }
-
   /* Prose Mirror Editor Customizations */
   .editor.prosemirror menu {
     background: var(--t5e-component-card-lighter);
@@ -445,12 +435,6 @@
     padding-left: 2px;
   }
 
-  .secret {
-    .reveal {
-      padding: 0.25rem 0.5rem;
-    }
-  }
-
   /* Item Summary */
   // TODO: Remove this if not used. Moved to .editor-rendered-content in editors.scss
   .item-summary {
@@ -515,7 +499,7 @@
       min-height: var(--t5e-tag-size-default);
 
       i {
-        color: var(--t5e-color-icon-oninverse-diminished);
+        color: var(--t5e-color-icon-diminished);
       }
 
       &:hover {
@@ -648,45 +632,55 @@
 
   :where(.rarity) {
     --t5e-item-color: var(--t5e-color-gold);
-    
+
     &:where(.common) {
       --t5e-item-color: var(--t5e-color-rarity-common);
     }
+
     &:where(.uncommon) {
       --t5e-item-color: var(--t5e-color-rarity-uncommon);
     }
+
     &:where(.rare) {
       --t5e-item-color: var(--t5e-color-rarity-rare);
     }
+
     &:where(.veryrare) {
       --t5e-item-color: var(--t5e-color-rarity-very-rare);
     }
+
     &:where(.legendary) {
       --t5e-item-color: var(--t5e-color-rarity-legendary);
     }
+
     &:where(.artifact) {
       --t5e-item-color: var(--t5e-color-rarity-artifact);
     }
   }
-  
+
   :where(.spell-preparation) {
     --t5e-item-color: var(--t5e-color-gold);
-    
+
     &:where(.prepared) {
       --t5e-item-color: var(--t5e-color-icon-spellcasting-prepared);
     }
+
     &:where(.atwill) {
       --t5e-item-color: var(--t5e-color-icon-spellcasting-atwill);
     }
+
     &:where(.always) {
       --t5e-item-color: var(--t5e-color-icon-spellcasting-always);
     }
+
     &:where(.pact) {
       --t5e-item-color: var(--t5e-color-icon-spellcasting-pact);
     }
+
     &:where(.innate) {
       --t5e-item-color: var(--t5e-color-icon-spellcasting-innate);
     }
+
     &:where(.ritual) {
       --t5e-item-color: var(--t5e-color-icon-spellcasting-ritual);
     }

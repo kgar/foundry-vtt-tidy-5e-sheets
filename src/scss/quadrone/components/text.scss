@@ -26,7 +26,7 @@
     margin: 0 0.03125rem;
     border-radius: 0.09375rem;
     background: var(--t5e-color-text-gold-emphasis);
-    color: var(--t5e-color-text-oninverse-default);
+    color: var(--t5e-color-text-default);
   }
 }
 
@@ -41,12 +41,12 @@
 &.inverse,
 inverse {
   .spell-component {
-    color: var(--t5e-color-text-oninverse-lighter);
+    color: var(--t5e-color-text-lighter);
   }
 
   .spell-component-special {
     color: var(--t5e-color-text-default);
-    background-color: var(--t5e-color-text-oninverse-gold);
+    background-color: var(--t5e-color-text-gold);
   }
 }
 

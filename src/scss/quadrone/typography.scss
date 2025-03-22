@@ -81,36 +81,20 @@
 }
 
 .color-icon {
-  &-dark-default {
+  &-default {
     color: var(--t5e-color-icon-default);
   }
 
-  &-dark-button {
+  &-button {
     color: var(--t5e-color-icon-button);
   }
 
-  &-dark-diminished {
+  &-diminished {
     color: var(--t5e-color-icon-diminished);
   }
 
-  &-dark-disabled {
+  &-disabled {
     color: var(--t5e-color-icon-disabled);
-  }
-
-  &-light-default {
-    color: var(--t5e-color-icon-oninverse-default);
-  }
-
-  &-light-button {
-    color: var(--t5e-color-icon-oninverse-button);
-  }
-
-  &-light-diminished {
-    color: var(--t5e-color-icon-oninverse-diminished);
-  }
-
-  &-light-disabled {
-    color: var(--t5e-color-icon-oninverse-disabled);
   }
 
 }

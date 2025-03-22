@@ -161,22 +161,19 @@
 
 
 
-
-&.dark,
 &.theme-dark,
-.dark,
 .theme-dark {
   .pill {
     color: var(--t5e-color-text-default);
-    --icon-fill: var(--t5e-color-icon-oninverse-diminished);
+    --icon-fill: var(--t5e-color-icon-diminished);
 
     &.interactive {
-      border-color: var(--t5e-component-field-oninverse-border,
+      border-color: var(--t5e-component-field-border,
           rgba(122, 122, 122, 1));
       box-shadow: var(--t5e-drop-shadow-pill);
 
       &:hover {
-        background: var(--t5e-component-field-oninverse-background-hover);
+        background: var(--t5e-component-field-background-hover);
         transition: background 0.15s ease-in-out;
       }
     }

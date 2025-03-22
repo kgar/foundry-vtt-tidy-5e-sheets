@@ -220,11 +220,6 @@
   --t5e-component-field-background-active: var(--t5e-color-palette-white);
   --t5e-component-field-background-hover-emphasis: var(--t5e-color-palette-white);
   --t5e-component-field-background-disabled: rgba(159, 146, 117, 0.2);
-  --t5e-component-field-oninverse-background: var(--t5e-component-card-oninverse-default);
-  --t5e-component-field-oninverse-border: var(--t5e-color-palette-grey-48);
-  --t5e-component-field-oninverse-border-hover: var(--t5e-color-palette-grey-85);
-  --t5e-component-field-oninverse-background-hover: var(--t5e-color-palette-grey-11);
-  --t5e-component-field-oninverse-background-hover-emphasis: var(--t5e-color-palette-black);
   --t5e-component-field-focus: var(--t5e-theme-colors-lighter);
   --t5e-field-size-default: 1.75rem;
   --t5e-field-size-small: 1.625rem;
@@ -352,8 +347,6 @@
 
 .tidy5e-sheet.quadrone {
 
-  &.dark,
-  .dark,
   &.theme-dark,
   .theme-dark {
     /* Text ------------ */
@@ -390,7 +383,6 @@
     --t5e-component-field-background-disabled: rgba(0, 0, 0, 0.3);
     --t5e-component-field-focus: var(--t5e-theme-color-default);
 
-    /* Card colors are not inverted in dark mode. */
     /* Pill colors inherit from field colors. */
     --t5e-component-pill-background: var(--t5e-component-field-background);
     --t5e-component-pill-border: var(--t5e-color-palette-grey-29);

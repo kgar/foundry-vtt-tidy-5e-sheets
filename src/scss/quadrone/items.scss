@@ -166,7 +166,7 @@
     padding-block-start: var(--header-height);
 
     h4 {
-      color: var(--t5e-color-text-oninverse-gold-light, #f0f0e1);
+      color: var(--t5e-color-text-gold-light, #f0f0e1);
       font-family: var(--t5e-font-roboto-condensed);
       font-size: var(--font-font-size-14, 0.875rem);
       font-style: normal;
@@ -238,7 +238,7 @@
     &.unidentified .item-image {
       filter: grayscale(100%);
     }
-    
+
     .item-image {
       margin-block: var(--t5e-size-halfx);
       margin-inline: var(--t5e-size-halfx);
@@ -267,12 +267,12 @@
       height: var(--t5e-field-size-default);
       padding-block-end: var(--t5e-size-1);
       position: relative;
-      
+
       &,
       option:not(.none) {
         color: oklch(from var(--t5e-item-color) calc(l + 0.125) c h);
       }
-  
+
       option.none {
         color: var(--t5e-color-text-default);
       }
@@ -283,19 +283,14 @@
     }
 
     .item-rarity-text {
-      color: oklch(
-        from var(--t5e-item-color) calc(l + 0.2) calc(c - 0.08) h
-      );
+      color: oklch(from var(--t5e-item-color) calc(l + 0.2) calc(c - 0.08) h);
       font: var(--t5e-font-title-small);
       text-align: center;
     }
   }
 
   .spell-preparation-text {
-    color: oklch(
-      from var(--t5e-item-color) calc(l + 0.25)
-        calc(c - 0.05) h
-    );
+    color: oklch(from var(--t5e-item-color) calc(l + 0.25) calc(c - 0.05) h);
     font: var(--t5e-font-title-small);
     text-align: center;
   }

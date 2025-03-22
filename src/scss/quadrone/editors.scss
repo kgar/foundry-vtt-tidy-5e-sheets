@@ -160,10 +160,25 @@
     }
 
     .secret {
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: var(--t5e-size-2x);
       border-radius: var(--t5e-component-card-radius);
-      border: 0.0625rem solid var(--t5e-table-row-divider);
-      background: var(--t5e-component-card-darker);
-      mix-blend-mode: multiply;
+      border: 1px solid var(--t5e-theme-color-darker);
+      color: var(--t5e-color-text-lighter);
+      transition: all var(--t5e-transition-default);
+
+      &.revealed {
+        border-radius: 0;
+        padding: var(--t5e-size-3x) 0 var(--t5e-size-2x);
+        background: none;
+        border-width: 1px 0;
+
+      }
+
+      .reveal {
+        padding: 0.25rem 0.5rem;
+        margin: 0;
+      }
     }
 
     blockquote {
@@ -244,11 +259,11 @@
     button.item-summary-command {
       width: auto;
       line-height: 1rem;
-      padding: 0.25rem 0;
+      padding: var(--t5e-size-1x);
       background: none; //var(--t5e-component-field-background);
       color: var(--t5e-color-text-lighter);
       border: none; // 0.0625rem solid var(--t5e-component-field-border);
-      font-size: 0.75rem;
+      font-size: var(--font-size-12);
       margin: -0.25rem 0;
 
       display: inline-flex;
