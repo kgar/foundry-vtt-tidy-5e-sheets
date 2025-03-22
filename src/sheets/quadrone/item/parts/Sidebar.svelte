@@ -114,7 +114,7 @@
   ]);
 </script>
 
-<aside class={['sidebar', 'dark']}>
+<aside class={['sidebar', 'theme-dark']}>
   <div>
     <div class={['item-image-container', itemColorClasses]}>
       <a

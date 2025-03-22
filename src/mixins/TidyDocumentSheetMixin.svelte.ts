@@ -167,6 +167,10 @@ export function TidyExtensibleDocumentSheetMixin<
       return result;
     }
 
+    _toggleDisabled(disabled: boolean) {
+      // Ignored. Svelte/Tidy handles this.
+    }
+
     async _renderFrame(options: ApplicationRenderOptions) {
       const element = await super._renderFrame(options);
 
