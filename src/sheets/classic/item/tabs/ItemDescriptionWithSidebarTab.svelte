@@ -188,9 +188,9 @@
             class="inline-icon-button"
             onclick={() =>
               new SectionSelectorApplication(
-                context.item,
                 TidyFlags.section.prop,
                 localize('TIDY5E.Section.Label'),
+                { document: context.item },
               ).render(true)}
           >
             <i class="fa-solid fa-search"></i>
@@ -221,9 +221,9 @@
             class="inline-icon-button"
             onclick={() =>
               new SectionSelectorApplication(
-                context.item,
                 TidyFlags.actionSection.prop,
                 localize('TIDY5E.Section.ActionLabel'),
+                { document: context.item },
               ).render(true)}
           >
             <i class="fa-solid fa-search"></i>

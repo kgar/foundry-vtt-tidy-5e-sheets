@@ -1,7 +1,6 @@
 ## To Do
 
-- [x] Section Selector - swap in the Search component, if possible.
-- [ ] Localize Container sheet name
+- [ ] The "Import" menu option is being shown on a Sidebar item. 🪓
 - [ ] Review Container sheet to ensure it has everything; add TODOs as needed
 - [ ] Move Container Quadrone out of the Truesight filter Go beta!
   - [ ] Readme / screenshots
@@ -300,3 +299,6 @@ Limited:
 - [x] Implement Container Limited View
 - [x] Test Container Observer View
 - [x] (hightouch) Quadronify src\applications\section-selector\SectionSelector.svelte?
+- [x] Section Selector - swap in the Search component, if possible.
+- [x] Localize Container sheet name
+- [x] Update section selector to adopt its parent sheet's theme. Solution: make it a DocumentSheet. (Solved: only works for Quadrone sheets, though.)

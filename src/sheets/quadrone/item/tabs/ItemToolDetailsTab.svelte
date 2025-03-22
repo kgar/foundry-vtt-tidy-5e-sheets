@@ -199,7 +199,6 @@
           checked={context.source.attuned}
           disabledChecked={context.system.attuned}
           disabled={!context.unlocked ||
-            // @ts-expect-error
             !context.config.attunementTypes[context.source.attunement]}
           title={localize('DND5E.Attuned')}
         />

@@ -313,9 +313,9 @@
           class:disabled={!context.editable}
           onclick={() =>
             new SectionSelectorApplication(
-              context.item,
               TidyFlags.section.prop,
               localize('TIDY5E.Section.Label'),
+              { document: context.item },
             ).render(true)}
         >
           <span class="lighter centered">
@@ -333,9 +333,9 @@
           )}
           onclick={() =>
             new SectionSelectorApplication(
-              context.item,
               TidyFlags.actionSection.prop,
               localize('TIDY5E.Section.ActionLabel'),
+              { document: context.item },
             ).render(true)}
         >
           <span class="lighter centered">

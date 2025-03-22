@@ -162,10 +162,9 @@
                 document={context.item}
                 field="system.attuned"
                 checked={context.source.attuned}
-              disabledChecked={context.system.attuned}
-              disabled={!context.unlocked ||
-                // @ts-expect-error
-                !context.config.attunementTypes[context.system.attunement]}
+                disabledChecked={context.system.attuned}
+                disabled={!context.unlocked ||
+                  !context.config.attunementTypes[context.system.attunement]}
                 title={localize('DND5E.AttunementAttuned')}
               />
             </label>

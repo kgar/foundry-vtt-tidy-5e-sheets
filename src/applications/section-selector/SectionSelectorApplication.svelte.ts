@@ -19,22 +19,23 @@ export type SectionSelectorContext = {
   tabs: Tab[];
 };
 
+export type DocumentSheetApplicationConfiguration =
+  Partial<ApplicationConfiguration> & { document: any };
+
 export class SectionSelectorApplication extends SvelteApplicationMixin<
-  ApplicationConfiguration | undefined,
+  Partial<ApplicationConfiguration> | undefined,
   SectionSelectorContext
->(foundry.applications.api.ApplicationV2) {
-  _document: any;
+>(foundry.applications.api.DocumentSheetV2) {
   _prop: string;
   _sectionType: string;
 
   constructor(
-    document: any,
     flag: string,
     sectionType: string,
-    options?: ApplicationConfiguration
+    options: DocumentSheetApplicationConfiguration
   ) {
     super(options);
-    this._document = document;
+
     this._prop = flag;
     this._sectionType = sectionType;
   }
@@ -86,7 +87,7 @@ export class SectionSelectorApplication extends SvelteApplicationMixin<
   get title() {
     return FoundryAdapter.localize('TIDY5E.Section.SectionSelectorTitle', {
       sectionType: this._sectionType,
-      documentName: this._document.name,
+      documentName: this.document.name,
     });
   }
 
@@ -95,23 +96,23 @@ export class SectionSelectorApplication extends SvelteApplicationMixin<
     options: ApplicationRenderOptions
   ) {
     game.user.apps[this.id] = this;
-    this._document.apps[this.id] = this;
+    this.document.apps[this.id] = this;
 
     return await super._renderHTML(context, options);
   }
 
   async close(options: ApplicationClosingOptions = {}) {
     delete game.user.apps[this.id];
-    delete this._document.apps[this.id];
+    delete this.document.apps[this.id];
 
     return await super.close(options);
   }
 
   async _prepareContext() {
-    const sections = SheetSections.getKnownCustomSections(this._document);
+    const sections = SheetSections.getKnownCustomSections(this.document);
 
     const currentSection = FoundryAdapter.getProperty<string>(
-      this._document,
+      this.document,
       this._prop
     );
 
@@ -123,13 +124,13 @@ export class SectionSelectorApplication extends SvelteApplicationMixin<
   }
 
   async selectSection(name: string) {
-    await this._document.update({
+    await this.document.update({
       [this._prop]: name,
     });
   }
 
   async useDefaultSection() {
-    await this._document.update({
+    await this.document.update({
       [this._prop]: null,
     });
   }
