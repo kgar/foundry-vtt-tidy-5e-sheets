@@ -23,6 +23,7 @@
       color: var(--t5e-tertiary-color);
     }
   }
+
   :where([role='option'].focused) {
     background-color: var(--t5e-faint-color);
   }

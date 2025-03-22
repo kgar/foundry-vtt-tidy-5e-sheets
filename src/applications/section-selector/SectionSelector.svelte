@@ -43,7 +43,7 @@
 
   let isDefault = $derived(isNil(context.data?.currentSection?.trim(), ''));
 </script>
-
+<h2>{localize('TIDY5E.Section.LabelPl')}</h2>
 <fieldset>
   <legend>
     {localize('TIDY5E.Section.SectionSelectorExistingSections')}
@@ -58,7 +58,7 @@
       <button
         type="button"
         onclick={() => onOptionSelected(section)}
-        class="button toggle-button"
+        class="button button-toggle"
         class:active={isSelected}
       >
         {#if isSelected}
@@ -69,7 +69,7 @@
     {/each}
     <button
       type="button"
-      class="toggle-button {isDefault ? 'primary-button' : ''}"
+      class="button button-toggle {isDefault ? 'button-primary' : ''}"
       onclick={() => useDefault()}
     >
       {#if isDefault}
@@ -85,13 +85,14 @@
     {localize('TIDY5E.Section.SectionSelectorCreateNewSection')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
-  <input
-    type="text"
-    bind:value={freeText}
-    placeholder={localize('TIDY5E.Section.SectionSelectorNewSectionName')}
-  />
-  <div class="button-bar flexrow">
-    <button type="button" onclick={() => onOptionSelected(freeText)}
+  <div class="flexrow button-bar">
+    <input
+      type="text"
+      bind:value={freeText}
+      placeholder={localize('TIDY5E.Section.SectionSelectorNewSectionName')}
+      class="flex2"
+    />
+    <button type="button" class="button flex1" onclick={() => onOptionSelected(freeText)}
       >{localize('TIDY5E.Section.SectionSelectorSaveNewSection')}</button
     >
   </div>

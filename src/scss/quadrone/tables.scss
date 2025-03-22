@@ -425,7 +425,7 @@
     transition: all var(--t5e-transition-default);
     width: var(--t5e-table-button-width);
 
-    &.toggle-button {
+    &.button-toggle {
       &.toggled {
         color: var(--t5e-color-icon-diminished);
         font-weight: 400;

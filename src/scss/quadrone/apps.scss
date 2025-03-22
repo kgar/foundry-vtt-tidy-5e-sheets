@@ -220,6 +220,11 @@
     }
   }
 
+  .text-normal {
+    font-weight: var(--font-weight-default);
+    color: var(--t5e-color-text-lighter);
+  }
+
   .text-data {
     font-weight: var(--font-weight-bold);
     color: var(--t5e-color-text-default);
@@ -403,26 +408,58 @@
   .inline-roll,
   .content-link,
   .enricher-action,
-  .roll-link {
+  .roll-link,
+  .reference-link {
     // TODO: Cleanup this section.
     --icon-fill: var(--t5e-color-text-gold-emphasis);
 
     border: none;
-    background: none;
     font-weight: 500;
     color: var(--t5e-color-default);
     background: var(--t5e-enricher-background);
-    padding-top: 1px;
-    padding-bottom: 2px;
+    padding-left: var(--t5e-size-halfx);
+    padding: 1px 2px 2px;
+
+    a {
+      background: none;
+      border: none;
+    }
 
     i {
       color: var(--icon-fill);
       transition: all var(--t5e-transition-default);
+      margin-right: var(--t5e-size-1x);
     }
 
     &:hover {
       --icon-fill: var(--t5e-color-text-default);
       text-shadow: 0px 0px 6px var(--t5e-color-text-gold);
+    }
+  }
+
+  .roll-link-group {
+    border: none;
+    background: var(--t5e-enricher-background);
+    padding-top: 1px;
+    padding-right: 2px;
+    padding-left: 2px;
+
+    &:has(.enricher-action) {
+      padding-right: 0;
+    }
+
+    &:hover {
+      --icon-fill: var(--t5e-color-icon-default);
+      text-shadow: 0px 0px 6px var(--t5e-color-text-gold);
+
+      i {
+        --icon-fill: var(--t5e-color-icon-default);
+      }
+    }
+
+    .roll-link,
+    .enricher-action {
+      background: none;
     }
   }
 
@@ -566,6 +603,12 @@
   textarea:disabled {
     pointer-events: default;
     cursor: text;
+  }
+
+  #context-menu.tidy5e-sheet {
+    background: var(--t5e-component-field-background);
+    border: 1px solid var(--t5e-component-field-border);
+    box-shadow: var(--t5e-drop-shadow-card);
   }
 
 

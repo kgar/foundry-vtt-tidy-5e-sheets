@@ -392,7 +392,7 @@
               <div class="tidy-table-button">
                 <i class="fas fa-hand"></i>
               </div>
-              <div class="tidy-table-button toggle-button toggled">
+              <div class="tidy-table-button button-toggle toggled">
                 <i class="far fa-regular fa-sun"></i>
               </div>
               <div class="tidy-table-button">
@@ -485,7 +485,7 @@
     </fieldset>
     <fieldset class="vertical-gallery">
       <legend>
-        Button / Attention
+        Button / Primary
         <tidy-gold-header-underline></tidy-gold-header-underline>
       </legend>
       Anchor
@@ -522,31 +522,31 @@
       </legend>
       <div class="vertical-gallery">
         Anchors
-        <a class="button icon-button">
+        <a class="button button-icon-only">
           <i class="fas fa-hand"></i>
         </a>
-        <a class="button icon-button active">
+        <a class="button button-icon-only active">
           <i class="fas fa-hand"></i>
         </a>
-        <a class="button icon-button disabled">
+        <a class="button button-icon-only disabled">
           <i class="fas fa-hand"></i>
         </a>
-        <a class="button icon-button active disabled">
+        <a class="button button-icon-only active disabled">
           <i class="fas fa-hand"></i>
         </a>
       </div>
       <div class="vertical-gallery">
         Buttons
-        <button class="icon-button">
+        <button class="button-icon-only">
           <i class="fas fa-hand"></i>
         </button>
-        <button class="icon-button active">
+        <button class="button-icon-only active">
           <i class="fas fa-hand"></i>
         </button>
-        <button class="icon-button disabled">
+        <button class="button-icon-only disabled">
           <i class="fas fa-hand"></i>
         </button>
-        <button class="icon-button active disabled">
+        <button class="button-icon-only active disabled">
           <i class="fas fa-hand"></i>
         </button>
       </div>
@@ -557,7 +557,7 @@
         <tidy-gold-header-underline></tidy-gold-header-underline>
       </legend>
       <div class="wrapped-gallery">
-        <ButtonWithOptionPanel buttonClasses="icon-button">
+        <ButtonWithOptionPanel buttonClasses="button-icon-only">
           <i class="fas fa-hand"></i>
           {#snippet menu()}
             <label>
@@ -570,20 +570,20 @@
             </label>
           {/snippet}
         </ButtonWithOptionPanel>
-        <ButtonWithOptionPanel buttonClasses="icon-button" active={true}>
+        <ButtonWithOptionPanel buttonClasses="button-icon-only" active={true}>
           <i class="fas fa-hand"></i>
           {#snippet menu()}
             O hai 🙋‍♀️
           {/snippet}
         </ButtonWithOptionPanel>
-        <ButtonWithOptionPanel buttonClasses="icon-button" disabled={true}>
+        <ButtonWithOptionPanel buttonClasses="button-icon-only" disabled={true}>
           <i class="fas fa-hand"></i>
           {#snippet menu()}
             O hai 🙋‍♀️
           {/snippet}
         </ButtonWithOptionPanel>
         <ButtonWithOptionPanel
-          buttonClasses="icon-button active"
+          buttonClasses="button-icon-only active"
           disabled={true}
           active={true}
         >
@@ -599,10 +599,10 @@
         Button / Edit Description
         <tidy-gold-header-underline></tidy-gold-header-underline>
       </legend>
-      <a class="button icon-button">
+      <a class="button button-icon-only">
         <i class="fa-solid fa-feather"></i>
       </a>
-      <a class="button icon-button disabled">
+      <a class="button button-icon-only disabled">
         <i class="fa-solid fa-feather"></i>
       </a>
     </fieldset>

@@ -56,7 +56,7 @@
 </script>
 
 <button
-  class="button toggle-button {filterStateClass} {cssClass ?? ''}"
+  class="button button-toggle button-secondary {filterStateClass} {cssClass ?? ''}"
   class:disabled
   onclick={onLeftClick}
   oncontextmenu={onRightClick}

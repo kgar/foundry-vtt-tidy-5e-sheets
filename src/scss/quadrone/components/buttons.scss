@@ -6,6 +6,19 @@
   --button-padding-inline-end: 0.75rem;
   --icon-fill: var(--t5e-color-icon-button);
 
+  /* Default button styles */
+  --button-background: var(--t5e-component-field-background);
+  --button-background-hover: var(--t5e-component-field-background-hover);
+  --button-background-active: var(--t5e-component-field-background-active);
+  --button-border: var(--t5e-component-field-border);
+  --button-border-hover: var(--t5e-component-field-border-hover);
+  --button-text: var(--t5e-color-text-default);
+  --button-icon: var(--t5e-color-icon-button);
+  --button-icon-hover: var(--t5e-color-icon-default);
+  --button-shadow: var(--t5e-drop-shadow-field);
+  --button-focus: 0px 0px 0px 2px var(--t5e-theme-color-default);
+
+
   display: inline-flex;
   width: unset;
   justify-content: center;
@@ -13,18 +26,15 @@
   gap: 0.25rem;
   flex-shrink: 0;
   border-radius: 0.125rem;
-  border: 1px solid var(--t5e-component-field-border);
-  background: var(--t5e-component-field-background);
-  color: var(--t5e-color-text-default);
+  border: none;
+  background: transparent;
+  color: var(--button-text);
   cursor: pointer;
 
-  font-family: var(--t5e-font-roboto-condensed);
-  font-size: var(--font-font-size-13);
-  font-style: normal;
-  font-weight: 500;
+  font: var(--t5e-font-label-medium);
   line-height: 0.875rem;
 
-  box-shadow: var(--t5e-drop-shadow-field);
+  box-shadow: var(--button-shadow);
 
   padding-inline-start: var(--button-padding-inline-start);
   padding-inline-end: var(--button-padding-inline-end);
@@ -32,10 +42,10 @@
   min-height: var(--t5e-field-size-default);
   transition: all var(--t5e-transition-default);
 
-  // TODO: Find a way to shrink left padding by 2px if icon is present
+  // TODO: Find a way to shrink left padding by 2px if icon is presen t
   // :has(i) {
   //   padding-inline-start: calc(var(--button-padding-inline-start) - 0.125rem);
-  // }
+  // }  
 
   :where(i) {
     color: var(--icon-fill);
@@ -46,28 +56,22 @@
   }
 
   &:hover {
-    background: var(--t5e-component-field-background-hover);
-    color: var(--t5e-color-text-default);
-    border: 1px solid var(--t5e-component-field-border-hover);
-    box-shadow: var(--t5e-drop-shadow-field-hover);
-
     :where(i) {
-      color: var(--t5e-color-icon-default);
+      color: var(--button-icon);
     }
   }
 
   &:focus-within {
-    box-shadow: 0px 0px 0px 2px #9a2a30;
+    box-shadow: var(--button-focus);
   }
 
   &.active,
-  &:active,
-  &.attention {
-    --icon-fill: var(--t5e-color-icon-default);
+  &:active {
+    --icon-fill: var(--button-icon);
 
-    color: var(--t5e-component-toggle-toggled-text);
-    border: 1px solid var(--t5e-component-toggle-toggled-border);
-    background: var(--t5e-component-toggle-toggled-background);
+    color: var(--button-text);
+    border: 1px solid var(--button-border);
+    background: var(--button-background);
 
     :where(i) {
       --icon-fill: var(--t5e-color-icon-light);
@@ -78,7 +82,108 @@
     }
   }
 
-  &.icon-button {
+  &.button-secondary {
+    border: 1px solid var(--button-border);
+    background: var(--button-background);
+    color: var(--button-text);
+
+    &:hover {
+      background: var(--button-background-hover);
+      color: var(--button-text);
+      border: 1px solid var(--button-border-hover);
+      box-shadow: var(--button-shadow-hover);
+    }
+  }
+
+  &:has(i, dnd5e-icon) {
+    padding-inline-start: calc(var(--button-padding-inline-start) - 0.125rem);
+  }
+
+  &.button {
+    background: var(--button-background);
+    border: 1px solid var(--button-border);
+    color: var(--button-text);
+    --icon-color: var(--button-icon);
+
+    &:hover {
+      background: var(--button-background-hover);
+      border: 1px solid var(--button-border-hover);
+
+      :where(i) {
+        color: var(--button-icon-hover);
+      }
+    }
+  }
+
+  /* Toggle Buttons */
+  &.button-toggle {
+    --input-height: auto;
+
+    &:has(.toggle:checked),
+    &.active,
+    &:active,
+    &.include {
+      --button-text: var(--t5e-color-palette-white);
+      --button-icon: var(--t5e-color-icon-button);
+      --button-icon-hover: var(--t5e-color-icon-default);
+      --button-background: var(--t5e-theme-color-default);
+      --button-background-hover: var(--t5e-theme-color-lighter);
+      --button-border: var(--t5e-theme-color-darker);
+      --button-border-hover: var(--t5e-theme-color-darker);
+      --icon-fill: var(--t5e-color-icon-oninverse-default);
+      color: var(--t5e-component-toggle-toggled-text);
+      background: var(--t5e-component-toggle-toggled-background);
+
+      :where(i) {
+        --icon-fill: var(--t5e-color-icon-lighter);
+        color: var(--icon-fill);
+      }
+
+      &:hover {
+        background-color: var(--t5e-component-toggle-toggled-background-hover);
+
+        :where(i) {
+          --icon-fill: var(--t5e-color-icon-light);
+        }
+      }
+    }
+
+    &.disabled,
+    &.exclude {
+      --icon-fill: var(--t5e-color-text-lightest);
+      font-style: italic;
+      color: var(--t5e-color-text-lightest);
+      box-shadow: none;
+    }
+  }
+
+  /* Primary button */
+  &.button-primary {
+    --button-background: var(--t5e-theme-color-default);
+    --button-background-hover: var(--t5e-theme-color-lighter);
+    --button-border: var(--t5e-theme-color-darker);
+    --button-text: var(--t5e-color-palette-white);
+    --button-icon: var(--t5e-color-palette-white);
+
+    --icon-fill: var(--t5e-color-palette-white);
+
+    :where(i) {
+      --icon-fill: var(--t5e-color-palette-white);
+      // color: var(--icon-fill);
+    }
+
+    &:hover {
+      background-color: var(--button-background-hover);
+
+      :where(i) {
+        --icon-fill: var(--t5e-color-icon-oninverse-default);
+        color: var(--t5e-color-icon-oninverse-default);
+      }
+    }
+  }
+
+  /* Icon-only button */
+  &.button-icon-only {
     --size: var(--t5e-field-size-default);
     align-items: center;
     justify-content: center;
@@ -87,7 +192,8 @@
     height: var(--size);
   }
 
-  &.borderless-button {
+  /* Borderless button */
+  &.button-borderless {
     border-color: transparent;
     background: transparent;
     box-shadow: none;
@@ -103,76 +209,15 @@
     }
   }
 
-  &.disabled {
+  &.disabled,
+  &:disabled {
     cursor: default;
-    // pointer-events: none;
-    background: transparent;
-    border: 1px solid var(--t5e-component-field-border);
+    background-color: transparent;
+    border-color: transparent;
 
     &,
     i {
       color: var(--t5e-color-icon-disabled);
-    }
-  }
-
-  &:has(i, dnd5e-icon) {
-    padding-inline-start: calc(var(--button-padding-inline-start) - 0.125rem);
-  }
-
-  /* Toggle Buttons */
-  &.toggle-button {
-    border: 1px solid var(--t5e-component-field-border);
-    --input-height: auto;
-
-    &:has(.toggle:checked),
-    &.active,
-    &:active,
-    &.include {
-      --icon-fill: var(--t5e-color-icon-oninverse-default);
-      color: var(--t5e-component-toggle-toggled-text);
-      background: var(--t5e-component-toggle-toggled-background);
-
-      :where(i) {
-        --icon-fill: var(--t5e-color-icon-oninverse-default);
-        color: var(--t5e-color-icon-oninverse-default);
-      }
-
-      &:hover {
-        background-color: var(--t5e-component-toggle-toggled-background-hover);
-
-        :where(i) {
-          --icon-fill: var(--t5e-color-icon-oninverse-default);
-          color: var(--t5e-color-icon-oninverse-default);
-        }
-      }
-    }
-
-    &.disabled,
-    &.exclude {
-      --icon-fill: var(--t5e-color-text-lightest);
-      font-style: italic;
-      color: var(--t5e-color-text-lightest);
-      box-shadow: none;
-    }
-  }
-
-  &.primary-button {
-    --icon-fill: var(--t5e-color-icon-oninverse-default);
-    color: var(--t5e-component-toggle-toggled-text);
-    background: var(--t5e-component-toggle-toggled-background);
-
-    :where(i) {
-      --icon-fill: var(--t5e-color-icon-oninverse-default);
-      color: var(--t5e-color-icon-oninverse-default);
-    }
-
-    &:hover {
-      background-color: var(--t5e-component-toggle-toggled-background-hover);
-
-      :where(i) {
-        --icon-fill: var(--t5e-color-icon-oninverse-default);
-        color: var(--t5e-color-icon-oninverse-default);
-      }
     }
   }
 
@@ -182,37 +227,6 @@
     font-style: italic;
     color: var(--t5e-color-text-lightest);
     box-shadow: none;
-  }
-}
-
-&.theme-dark :is(button, .button) {
-  // border: 1px solid var(--t5e-component-field-border);
-  // background: var(--t5e-component-field-background);
-
-  i {
-    color: var(--t5e-color-icon-diminished);
-  }
-
-  &.exclude {
-    background: transparent;
-  }
-
-  &:hover {
-    i {
-      color: var(--t5e-color-icon-default);
-    }
-  }
-
-  &:focus-within:not(.toggle-button) {
-    border-color: var(--t5e-component-field-border-hover);
-    background: var(--t5e-component-field-background-hover);
-  }
-
-  &:focus-within:is(.toggle-button) {
-    &:has(.toggle:checked) {
-      border-color: var(--t5e-component-toggle-toggled-border);
-      background: var(--t5e-theme-color-darker);
-    }
   }
 }
 
@@ -232,13 +246,16 @@
     box-shadow: var(--t5e-drop-shadow-field-hover);
   }
 
-  button,
-  .button {
+  :is(button, .button) {
     --button-padding-inline-start: 0.625rem;
     --button-padding-inline-end: 0.625rem;
     border-width: 0 1px 0 0;
     box-shadow: none;
     min-height: calc(var(--t5e-field-size-default) - 0.125rem);
+
+    &:hover {
+      border-width: 0 1px 0 0;
+    }
   }
 
   :is(button, .button):last-child {
@@ -304,11 +321,11 @@
       position: absolute;
       right: 0.125rem;
       bottom: 0.0625rem;
-      color: var(--t5e-color-text-gold);
+      color: var(--t5e-color-gold);
     }
 
     &:is(.active, :active, .attention):not(.disabled) .expand-indicator {
-      color: var(--t5e-color-icon-oninverse-default);
+      color: var(--t5e-color-icon-light);
     }
   }
 
@@ -323,6 +340,7 @@
     flex-direction: column;
     gap: 0.5rem;
     background: var(--t5e-component-card-default);
+    border: 1px solid var(--t5e-component-field-border);
     border-radius: 0.25rem;
     z-index: 2;
     white-space: nowrap;
@@ -370,7 +388,7 @@
     gap: 0.25rem;
     flex-wrap: wrap;
 
-    .toggle-button {
+    .button-toggle {
       text-transform: capitalize;
     }
   }
@@ -403,4 +421,63 @@
 .button-bar {
   display: flex;
   gap: var(--t5e-size-2x);
+}
+
+
+
+&.theme-dark {
+  .button-with-options-wrapper menu {
+    background: var(--t5e-component-card-darker);
+  }
+
+  :is(button, .button) {
+    i {
+      --icon-fill: var(--t5e-color-icon-button);
+    }
+
+    &.exclude {
+      background: transparent;
+    }
+
+    &:hover {
+      i {
+        color: var(--t5e-color-icon-default);
+      }
+    }
+
+
+    &.button-toggle,
+    &.button-primary {
+      --button-border: var(--t5e-component-field-border);
+
+      i {
+        --icon-fill: var(--t5e-color-icon-light);
+      }
+
+      &:hover {
+        --button-border-hover: var(--t5e-component-field-border-hover);
+      }
+    }
+
+    &.disabled,
+    &:disabled {
+      --icon-fill: var(--t5e-color-icon-disabled);
+    }
+
+    &:focus-within:not(.button-toggle) {
+      --button-border: var(--t5e-component-field-border-hover);
+      --button-background: var(--t5e-component-field-background-hover);
+    }
+
+    &:focus-within:is(.button-toggle) {
+      &:has(.toggle:checked) {
+        --button-border: var(--t5e-component-toggle-toggled-border);
+        --button-background: var(--t5e-theme-color-darker);
+      }
+    }
+
+    &:focus-within:is(.button-primary) {
+      --button-background: var(--t5e-theme-color-darker);
+    }
+  }
 }

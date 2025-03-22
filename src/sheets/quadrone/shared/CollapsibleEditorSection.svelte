@@ -66,7 +66,7 @@
     {#if !disabled}
       <!-- Journal Edit Button -->
       <a
-        class={['edit', 'icon-button']}
+        class={['edit', 'button-icon-only']}
         onclick={() => onEdit?.({ document, itemDescription })}
       >
         <i class="fas fa-feather fa-fw"></i>
