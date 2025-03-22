@@ -25,6 +25,7 @@
   import InlineContainerView from './InlineContainerView.svelte';
   import ItemUses from 'src/components/item-list/ItemUses.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
+    import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   interface Props {
     contents: InventorySection[];
@@ -146,9 +147,14 @@
         {gridTemplateColumns}
       >
         {#snippet header()}
+          {@const visibleItemCount = ItemVisibility.countVisibleItems(
+            section.items,
+            searchResults.uuids,
+          )}
           <TidyTableHeaderRow>
             <TidyTableHeaderCell primary={true}>
-              {localize(section.label)} ({itemEntries.length})
+              {localize(section.label)}
+              <span class="item-table-count">{visibleItemCount}</span>
             </TidyTableHeaderCell>
             <TidyTableHeaderCell title={localize('DND5E.Charges')}>
               <i class="fas fa-bolt"></i>
@@ -187,7 +193,7 @@
                     disabled={!FoundryAdapter.canUseItem(item)}
                     {item}
                   />
-                  {#if ('containerContents' in ctx && !!ctx.containerContents)}
+                  {#if 'containerContents' in ctx && !!ctx.containerContents}
                     <InlineToggleControl
                       entityId={item.id}
                       {inlineToggleService}

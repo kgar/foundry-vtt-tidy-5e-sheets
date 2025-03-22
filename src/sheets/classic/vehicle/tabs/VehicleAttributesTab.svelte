@@ -114,10 +114,7 @@
 <div class="attributes-tab-contents" data-tidy-track-scroll-y>
   <div class="side-panel">
     <VehicleAttributes />
-    <Traits
-      useSenses={false}
-      enableSpecialTraitsConfiguration={false}
-    />
+    <Traits useSenses={false} enableSpecialTraitsConfiguration={false} />
   </div>
   <div class="main-panel flex-column small-gap">
     {#if noFeatures && !context.unlocked}
@@ -137,6 +134,7 @@
               <ItemTableHeaderRow>
                 <ItemTableColumn primary={true}>
                   {localize(section.label)}
+                  <span class="item-table-count">{section.items.length}</span>
                 </ItemTableColumn>
                 {#if section.hasActions}
                   <ItemTableColumn baseWidth="3.125rem">

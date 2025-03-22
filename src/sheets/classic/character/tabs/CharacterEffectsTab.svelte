@@ -109,6 +109,7 @@
               <ItemTableHeaderRow>
                 <ItemTableColumn primary={true}>
                   {localize(section.label)}
+                  <span class="item-table-count">{section.effects.length}</span>
                 </ItemTableColumn>
                 <ItemTableColumn baseWidth="12.5rem">
                   {localize('DND5E.SOURCE.FIELDS.source.label')}

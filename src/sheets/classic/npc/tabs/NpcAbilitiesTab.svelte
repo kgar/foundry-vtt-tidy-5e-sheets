@@ -224,6 +224,7 @@
               <ItemTableHeaderRow>
                 <ItemTableColumn primary={true}>
                   {localize(section.label)}
+                  <span class="item-table-count">{section.items.length}</span>
                 </ItemTableColumn>
                 {#if section.hasActions}
                   <ItemTableColumn baseWidth="3.125rem">
