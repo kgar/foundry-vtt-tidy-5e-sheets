@@ -12,6 +12,7 @@
       document: any;
       itemDescription: ItemDescription;
     }) => void;
+    disabled?: boolean;
   }
 
   let {
@@ -19,6 +20,7 @@
     document,
     itemDescription,
     onEdit,
+    disabled,
   }: Props = $props();
 
   let showIndicator = $derived(!isNil(itemDescription.enriched, ''));
@@ -61,13 +63,15 @@
         <i class="fas fa-angle-right fa-fw expand-indicator" class:expanded></i>
       {/if}
     </a>
-    <!-- Journal Edit Button -->
-    <a
-      class="edit icon-button"
-      onclick={() => onEdit?.({ document, itemDescription })}
-    >
-      <i class="fas fa-feather fa-fw"></i>
-    </a>
+    {#if !disabled}
+      <!-- Journal Edit Button -->
+      <a
+        class={['edit', 'icon-button']}
+        onclick={() => onEdit?.({ document, itemDescription })}
+      >
+        <i class="fas fa-feather fa-fw"></i>
+      </a>
+    {/if}
     <GoldHeaderUnderline />
   </header>
 

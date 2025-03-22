@@ -174,12 +174,12 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
 
     const isIdentifiable = 'identified' in this.document.system;
     const unidentified = this.item.system.identified === false;
-    const limitDescriptions =
+    const showOnlyUnidentified =
       unidentified && !FoundryAdapter.isInGmEditMode(this.item);
 
-    const itemDescriptions: ItemDescription[] = [];
+    let itemDescriptions: ItemDescription[] = [];
 
-    if (!limitDescriptions) {
+    if (!showOnlyUnidentified) {
       itemDescriptions.push({
         enriched: enriched.description,
         content: systemSource.description.value,
@@ -197,10 +197,14 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       });
     }
 
+    if (!this.item.isOwner) {
+      itemDescriptions = itemDescriptions.slice(0, 1);
+    }
+
     // kgar: I am knowingly repurposing the Identifiable trait,
     // because for items where identification is irrelevant,
     // they are likely not to have a need for Unidentified or Chat descriptions.
-    if (isIdentifiable && !limitDescriptions) {
+    if (isIdentifiable && !showOnlyUnidentified) {
       itemDescriptions.push({
         enriched: enriched.chat,
         content: systemSource.description.chat,

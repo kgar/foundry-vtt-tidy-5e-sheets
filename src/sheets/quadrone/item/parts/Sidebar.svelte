@@ -70,14 +70,6 @@
     SheetSections.itemSupportsCustomSections(context.item.type),
   );
 
-  // Identification
-
-  let identifiedText = $derived(
-    context.system.identified
-      ? localize('DND5E.Identified')
-      : localize('DND5E.Unidentified.Title'),
-  );
-
   // Combined
 
   function openItemImagePicker(target: HTMLElement, item: Item5e) {
@@ -168,25 +160,33 @@
 
   <ul class="pills stacked">
     {#if 'equipped' in context.system}
+      {@const checkedIconClass = 'fas fa-hand-fist equip-icon fa-fw'}
+      {@const uncheckedIconClass = 'far fa-hand fa-fw'}
+      {@const equipped = context.system.equipped}
       <li>
         <PillSwitch
-          checked={context.system.equipped}
-          checkedIconClass="fas fa-hand-fist equip-icon fa-fw"
-          uncheckedIconClass="far fa-hand fa-fw"
+          checked={equipped}
+          {checkedIconClass}
+          {uncheckedIconClass}
           onchange={(ev) =>
             context.item.update({
               'system.equipped': ev.currentTarget?.checked,
             })}
           disabled={!context.editable}
         >
-          {localize('DND5E.Equipped')}
+          {#if !context.editable && !equipped}
+            {localize('DND5E.Unequipped')}
+          {:else}
+            {localize('DND5E.Equipped')}
+          {/if}
         </PillSwitch>
       </li>
     {/if}
     {#if FoundryAdapter.isAttunementApplicable(context.item)}
+      {@const attuned = context.system.attuned}
       <li>
         <PillSwitch
-          checked={context.system.attuned}
+          checked={attuned}
           checkedIconClass="fas fa-sun equip-icon fa-fw"
           uncheckedIconClass="fas fa-sun equip-icon fa-fw"
           onchange={(ev) =>
@@ -195,39 +195,42 @@
             })}
           disabled={!context.editable}
         >
-          {localize('DND5E.Attuned')}
+          {#if !attuned && !context.editable}
+            {CONFIG.DND5E.attunementTypes[context.system.attunement] ??
+              context.system.attunement}
+          {:else}
+            {localize('DND5E.Attuned')}
+          {/if}
         </PillSwitch>
       </li>
     {/if}
     {#if 'identified' in context.system}
-      {#if context.unlocked}
-        <li>
-          <PillSwitch
-            checked={context.system.identified}
-            checkedIconClass="fas fa-search fa-fw"
-            uncheckedIconClass="fas fa-search fa-fw"
-            onchange={(ev) =>
-              context.item.update({
-                'system.identified': ev.currentTarget?.checked,
-              })}
-            disabled={!context.editable}
-          >
-            {localize('DND5E.Identified')}
-          </PillSwitch>
-        </li>
-      {:else}
-        <li class="pill">
-          <i class="fas fa-search"></i>
-          <span class="label">
-            {identifiedText}
-          </span>
-        </li>
-      {/if}
-    {/if}
-    {#if context.system.preparation?.mode === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED}
+      {@const unidentified = context.system.identified === false}
+
       <li>
         <PillSwitch
-          checked={context.system.preparation.prepared}
+          checked={context.system.identified}
+          checkedIconClass="fas fa-search fa-fw"
+          uncheckedIconClass="fas fa-search fa-fw"
+          onchange={(ev) =>
+            context.item.update({
+              'system.identified': ev.currentTarget?.checked,
+            })}
+          disabled={!context.editable}
+        >
+          {#if !context.editable && unidentified}
+            {localize('DND5E.Unidentified.Title')}
+          {:else}
+            {localize('DND5E.Identified')}
+          {/if}
+        </PillSwitch>
+      </li>
+    {/if}
+    {#if context.system.preparation?.mode === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED}
+      {@const prepared = context.system.preparation.prepared}
+      <li>
+        <PillSwitch
+          checked={prepared}
           checkedIconClass="fas fa-book fa-fw"
           uncheckedIconClass="fas fa-book fa-fw"
           onchange={(ev) =>
@@ -236,7 +239,11 @@
             })}
           disabled={!context.editable}
         >
-          {localize('DND5E.Prepared')}
+          {#if !context.editable && !prepared}
+            {localize('DND5E.SpellUnprepared')}
+          {:else}
+            {localize('DND5E.Prepared')}
+          {/if}
         </PillSwitch>
       </li>
     {/if}

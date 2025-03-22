@@ -22,37 +22,50 @@
 
   let {
     checked = $bindable(false),
-    checkedIconClass = undefined,
-    checkedSvgSrc = undefined,
-    uncheckedIconClass = undefined,
-    uncheckedSvgSrc = undefined,
+    checkedIconClass,
+    checkedSvgSrc,
+    uncheckedIconClass,
+    uncheckedSvgSrc,
     disabled = false,
-    onchange = undefined,
+    onchange,
     children,
   }: Props = $props();
 </script>
 
-<label class="pill pill-switch interactive" class:disabled>
-  <span class="icon-and-label-container">
-    <span class="pill-switch-icon-container" class:hidden={!checked}>
-      {#if checkedIconClass}
-        <i class={checkedIconClass}></i>
-      {/if}
-      {#if checkedSvgSrc}
-        <Dnd5eIcon class="fa-fw" src={checkedSvgSrc} />
-      {/if}
+{#if !disabled}
+  <label class="pill pill-switch interactive" class:disabled>
+    <span class="icon-and-label-container">
+      <span class="pill-switch-icon-container" class:hidden={!checked}>
+        {#if checkedIconClass}
+          <i class={checkedIconClass}></i>
+        {/if}
+        {#if checkedSvgSrc}
+          <Dnd5eIcon class="fa-fw" src={checkedSvgSrc} />
+        {/if}
+      </span>
+      <span class="pill-switch-icon-container" class:hidden={checked}>
+        {#if uncheckedIconClass}
+          <i class={uncheckedIconClass}></i>
+        {/if}
+        {#if uncheckedSvgSrc}
+          <Dnd5eIcon class="fa-fw" src={uncheckedSvgSrc} />
+        {/if}
+      </span>
+      <span class="truncate">
+        {@render children?.()}
+      </span>
     </span>
-    <span class="pill-switch-icon-container" class:hidden={checked}>
-      {#if uncheckedIconClass}
-        <i class={uncheckedIconClass}></i>
-      {/if}
-      {#if uncheckedSvgSrc}
-        <Dnd5eIcon class="fa-fw" src={uncheckedSvgSrc} />
-      {/if}
-    </span>
-    <span class="truncate">
-      {@render children?.()}
-    </span>
+    <FieldToggle {checked} {onchange} {disabled} />
+  </label>
+{:else}
+  <span class={['pill', { lighter: !checked }]}>
+    {#if checked && checkedIconClass}
+      <i class={checkedIconClass}></i>
+    {/if}
+    {#if !checked && uncheckedIconClass}
+      <i class={uncheckedIconClass}></i>
+    {/if}
+
+    {@render children?.()}
   </span>
-  <FieldToggle {checked} {onchange} {disabled} />
-</label>
+{/if}
