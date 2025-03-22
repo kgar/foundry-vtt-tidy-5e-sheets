@@ -197,10 +197,6 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       });
     }
 
-    if (!this.item.isOwner) {
-      itemDescriptions = itemDescriptions.slice(0, 1);
-    }
-
     // kgar: I am knowingly repurposing the Identifiable trait,
     // because for items where identification is irrelevant,
     // they are likely not to have a need for Unidentified or Chat descriptions.
@@ -211,6 +207,10 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
         field: 'system.description.chat',
         label: FoundryAdapter.localize('DND5E.DescriptionChat'),
       });
+    }
+
+    if (!this.item.isOwner) {
+      itemDescriptions = itemDescriptions.slice(0, 1);
     }
 
     const editable = this.isEditable;
