@@ -17,7 +17,7 @@
   import AttuneControl from '../../../components/item-list/controls/AttuneControl.svelte';
   import InlineFavoriteIcon from '../../../components/item-list/InlineFavoriteIcon.svelte';
   import ItemFavoriteControl from '../../../components/item-list/controls/ItemFavoriteControl.svelte';
-  import { getContext } from 'svelte';
+  import { getContext, type Snippet } from 'svelte';
   import type {
     CharacterSheetContext,
     InventorySection,
@@ -36,7 +36,8 @@
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
-    primaryColumnName: string;
+    primaryColumnName?: string;
+    primaryColumn?: Snippet;
     section: InventorySection;
     extraInventoryRowClasses?: string;
     lockControls?: boolean;
@@ -48,6 +49,7 @@
 
   let {
     primaryColumnName,
+    primaryColumn,
     section,
     extraInventoryRowClasses = '',
     lockControls = false,
@@ -179,6 +181,9 @@
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>
           {primaryColumnName}
+          {#if primaryColumn}
+            {@render primaryColumn()}
+          {/if}
         </ItemTableColumn>
         {#if includeWeightColumn}
           <ItemTableColumn

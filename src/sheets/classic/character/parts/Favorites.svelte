@@ -53,13 +53,21 @@
   {#each favorites as section}
     {#if section.show}
       {#if section.type === CONSTANTS.TAB_ACTOR_INVENTORY}
+        {@const visibleItemCount = ItemVisibility.countVisibleItems(
+          section.items,
+          searchResults.uuids,
+        )}
         <InventoryList
           {section}
-          primaryColumnName={localize(section.label)}
           lockControls={true}
           allowFavoriteIconNextToName={false}
           includeWeightColumn={false}
-        />
+        >
+          {#snippet primaryColumn()}
+            {localize(section.label)}
+            <span class="item-table-count">{visibleItemCount}</span>
+          {/snippet}
+        </InventoryList>
       {/if}
       <!-- TODO: Cut a copy of the Favorite Features component and custom tailor it for the generic section -->
       {#if section.type === CONSTANTS.FAVORITES_SECTION_TYPE_FEATURE || section.type === CONSTANTS.FAVORITES_SECTION_TYPE_GENERIC}

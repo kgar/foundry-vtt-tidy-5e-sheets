@@ -168,6 +168,11 @@
         )}
 
         {#if (searchCriteria.trim() === '' && context.unlocked) || visibleItemCount > 0}
+          {@const visibleItemCount = ItemVisibility.countVisibleItems(
+            section.items,
+            searchResults.uuids,
+          )}
+
           <ItemTable
             key={section.key}
             data-custom-section={section.custom ? true : null}
@@ -176,6 +181,7 @@
               <ItemTableHeaderRow>
                 <ItemTableColumn primary={true}>
                   {localize(section.label)}
+                  <span class="item-table-count">{visibleItemCount}</span>
                 </ItemTableColumn>
                 {#if section.showUsesColumn}
                   <ItemTableColumn baseWidth="3.125rem">

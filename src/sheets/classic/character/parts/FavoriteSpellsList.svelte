@@ -18,6 +18,7 @@
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
   import ActivityUses from 'src/components/item-list/ActivityUses.svelte';
+  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   interface Props {
     section: SpellbookSection;
@@ -50,6 +51,10 @@
     data-custom-section={section.custom ? true : null}
   >
     {#snippet header()}
+      {@const visibleItemCount = ItemVisibility.countVisibleItems(
+        section.spells,
+        searchResults.uuids,
+      )}
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>
           {#if section.dataset['preparation.mode'] === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED && section.dataset.level > 0}
@@ -61,6 +66,7 @@
               {localize(section.label)}
             </span>
           {/if}
+          <span class="item-table-count">{visibleItemCount}</span>
           {#if section.usesSlots}
             <SpellSlotManagement {section} />
           {/if}
@@ -160,7 +166,7 @@
   .spell-primary-column-label {
     font-size: 0.75rem;
     line-height: 0.75rem;
-    flex: 0 0 3.75rem;
+    flex: 0 0 auto;
     white-space: nowrap;
   }
 </style>

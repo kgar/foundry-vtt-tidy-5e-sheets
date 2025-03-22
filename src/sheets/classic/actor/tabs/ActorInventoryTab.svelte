@@ -129,10 +129,12 @@
       {#if section.show}
         {#if (searchCriteria.trim() === '' && context.unlocked) || visibleItemCount > 0}
           {#if layoutMode === 'list'}
-            <InventoryList
-              primaryColumnName="{localize(section.label)} ({visibleItemCount})"
-              {section}
-            />
+            <InventoryList {section}>
+              {#snippet primaryColumn()}
+                {localize(section.label)}
+                <span class="item-table-count">{visibleItemCount}</span>
+              {/snippet}
+            </InventoryList>
           {:else}
             <InventoryGrid {section} />
           {/if}

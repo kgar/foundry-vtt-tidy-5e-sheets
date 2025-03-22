@@ -113,6 +113,7 @@
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>
           {localize(section.label)}
+          <span class="item-table-count">{section.items.length}</span>
         </ItemTableColumn>
         {#each section.columns as column}
           <ItemTableColumn

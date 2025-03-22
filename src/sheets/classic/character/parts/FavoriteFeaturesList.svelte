@@ -17,6 +17,7 @@
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   interface Props {
     section: CharacterFeatureSection;
@@ -41,9 +42,14 @@
 
 <ItemTable key={section.key} data-custom-section={section.custom ? true : null}>
   {#snippet header()}
+    {@const visibleItemCount = ItemVisibility.countVisibleItems(
+      section.items,
+      searchResults.uuids,
+    )}
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>
         {localize(section.label ?? 'DND5E.Features')}
+        <span class="item-table-count">{visibleItemCount}</span>
       </ItemTableColumn>
       <ItemTableColumn baseWidth="3.125rem">
         {localize('DND5E.Uses')}

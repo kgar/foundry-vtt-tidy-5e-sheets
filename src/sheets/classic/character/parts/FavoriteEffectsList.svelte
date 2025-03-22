@@ -38,6 +38,7 @@
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>
         {localize(section.label ?? 'DND5E.Effect')}
+        <span class="item-table-count">{section.effects.length}</span>
       </ItemTableColumn>
       <ItemTableColumn baseWidth={subtitleColumnWidth}>
         <!-- Subtitle -->

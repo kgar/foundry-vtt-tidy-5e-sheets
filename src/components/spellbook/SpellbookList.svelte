@@ -35,6 +35,7 @@
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   let context =
     $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
@@ -141,10 +142,15 @@
     data-custom-section={section.custom ? true : null}
   >
     {#snippet header()}
+      {@const visibleItemCount = ItemVisibility.countVisibleItems(
+        section.spells,
+        searchResults.uuids,
+      )}
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>
           <span class="spell-primary-column-label">
             {localize(section.label)}
+            <span class="item-table-count">{visibleItemCount}</span>
           </span>
           {#if section.usesSlots}
             <SpellSlotManagement {section} />
@@ -337,7 +343,7 @@
   .spell-primary-column-label {
     font-size: 0.75rem;
     line-height: 0.75rem;
-    flex: 0 0 3.75rem;
+    flex: 0 0 auto;
     white-space: nowrap;
   }
 
