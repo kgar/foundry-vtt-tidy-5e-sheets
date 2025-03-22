@@ -125,13 +125,16 @@
     --input-height: auto;
 
     &:has(.toggle:checked),
+    &.active,
+    &:active,
     &.include {
-      --icon-fill: var(--t5e-component-toggle-toggled-text);
+      --icon-fill: var(--t5e-color-icon-oninverse-default);
       color: var(--t5e-component-toggle-toggled-text);
       background: var(--t5e-component-toggle-toggled-background);
 
-      i {
-        color: var(--t5e-component-toggle-toggled-text);
+      :where(i) {
+        --icon-fill: var(--t5e-color-icon-oninverse-default);
+        color: var(--t5e-color-icon-oninverse-default);
       }
 
       &:hover {
@@ -259,6 +262,10 @@
     gap: 0.25rem;
     position: relative;
 
+    &:hover .expand-indicator {
+      color: var(--t5e-color-icon-default);
+    }
+
     .expand-indicator {
       font-size: 0.5rem;
       position: absolute;
@@ -268,7 +275,7 @@
     }
 
     &:is(.active, :active, .attention):not(.disabled) .expand-indicator {
-      color: var(--t5e-color-text-default);
+      color: var(--t5e-color-icon-oninverse-default);
     }
   }
 
