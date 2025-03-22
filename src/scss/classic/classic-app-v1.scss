@@ -123,10 +123,6 @@
 
   @import './partials/layout';
 
-  &.sheet {
-    @import './partials/context-menu';
-  }
-
   .top-left,
   .bottom-right {
     border-radius: 0.3125rem 0 0.3125rem 0;

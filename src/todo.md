@@ -1,10 +1,10 @@
 ## To Do
 
-- [ ] The "Import" menu option is being shown on a Sidebar item. 🪓
 - [ ] Review Container sheet to ensure it has everything; add TODOs as needed
 - [ ] Move Container Quadrone out of the Truesight filter Go beta!
   - [ ] Readme / screenshots
   - [ ] Release Notes
+- [ ] The "Import" menu option is being shown on a Sidebar item. 🪓
 - [ ] (awaiting hightouch design) Effects Tables: Adjust the suppressed effect's toggle icon, since it can't be adjusted anyhow
 - [ ] Notify hightouch that spell sheet is ready for final review
 - [ ] Test spell info on item summary and cards

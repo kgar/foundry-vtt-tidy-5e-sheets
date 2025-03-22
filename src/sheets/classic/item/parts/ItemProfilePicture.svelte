@@ -53,6 +53,7 @@
           ui.context.menuItems = contextMenuOptions;
         },
         jQuery: false,
+        layout: CONSTANTS.SHEET_LAYOUT_CLASSIC,
       },
     );
   });

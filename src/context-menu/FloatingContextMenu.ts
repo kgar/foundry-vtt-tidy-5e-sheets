@@ -1,6 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import type { ContextMenuPositionInfo } from './context-menu.types';
 import { TidyHooks } from 'src/foundry/TidyHooks';
+import type { SheetLayout } from 'src/api';
 
 interface ContextMenuEntry {
   name: string;
@@ -22,6 +23,10 @@ type ContextMenuOptionsV13 = {
   jQuery?: boolean;
   /** If true, the context menu is given a fixed position rather than being injected into the target. */
   fixed?: boolean;
+} & {
+  layout:
+    | typeof CONSTANTS.SHEET_LAYOUT_CLASSIC
+    | typeof CONSTANTS.SHEET_LAYOUT_QUADRONE;
 };
 
 /**
@@ -30,19 +35,24 @@ type ContextMenuOptionsV13 = {
  */
 export default class FloatingContextMenu extends (foundry.applications.ui
   ?.ContextMenu ?? /* game.release.generation < 13 */ ContextMenu) {
+  #layout: string;
+
   constructor(
     container: any,
     selector: string,
-    menuItems: ContextMenuEntry[] = [],
-    options: ContextMenuOptionsV13 = {}
+    menuItems: ContextMenuEntry[],
+    options: ContextMenuOptionsV13
   ) {
     super(container, selector, menuItems, options);
+
+    this.#layout = options.layout;
   }
 
   /** TODO: When Foundry V13 only, remove typing for jQuery */
   _setPosition(html: any, target: any, options: any) {
     if ('classList' in html && 'classList' in target) {
       html.classList.add('tidy5e-sheet');
+
       return this._setFixedPosition(html, target, options);
     } else {
       /* game.release.generation < 13 */
@@ -71,6 +81,7 @@ export default class FloatingContextMenu extends (foundry.applications.ui
     this._expandUp = clientY + height > clientHeight;
     html.classList.add('floating');
     html.classList.add('tidy5e-sheet');
+    html.classList.add(this.#layout);
     html.classList.toggle('expand-up', this._expandUp);
     html.classList.toggle('expand-down', !this._expandUp);
     html.style.visibility = '';

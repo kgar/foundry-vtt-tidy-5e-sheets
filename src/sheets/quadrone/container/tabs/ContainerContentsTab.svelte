@@ -59,7 +59,7 @@
     ),
   );
 
-  let tabTitle = $derived(ItemSheetRuntime.getTabTitle(tabId));
+  let tabName = $derived(ItemSheetRuntime.getTabTitle(tabId));
 
   // TODO: Make this a callback to send through to the component for preparing sections properly
   let configuredContents = $derived(
@@ -111,7 +111,7 @@
   <a
     class="button button-icon-only"
     class:disabled={!context.editable}
-    title={localize('TIDY5E.ConfigureTab.Title')}
+    title={localize('TIDY5E.ConfigureTab.Title', { tabName: tabName })}
     onclick={() =>
       context.editable &&
       new ConfigureSectionsApplication({
@@ -134,11 +134,11 @@
             // },
           ],
           formTitle: localize('TIDY5E.ConfigureTab.Title', {
-            tabName: ItemSheetRuntime.getTabTitle(tabId),
+            tabName: tabName,
           }),
         },
         window: {
-          title: localize('TIDY5E.ConfigureTab.Title', { tabName: tabTitle }),
+          title: localize('TIDY5E.ConfigureTab.Title', { tabName: tabName }),
         },
       }).render({ force: true })}
   >

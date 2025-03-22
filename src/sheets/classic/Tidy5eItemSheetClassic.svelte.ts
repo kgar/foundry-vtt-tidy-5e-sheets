@@ -112,6 +112,7 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
           target
         ),
       jQuery: false,
+      layout: CONSTANTS.SHEET_LAYOUT_CLASSIC,
     });
 
     new FloatingContextMenu(this.element, '.activity[data-activity-id]', [], {
@@ -121,9 +122,10 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
           target
         ),
       jQuery: false,
+      layout: CONSTANTS.SHEET_LAYOUT_CLASSIC,
     });
 
-    initTidy5eContextMenu(this, html);
+    initTidy5eContextMenu(this, html, CONSTANTS.SHEET_LAYOUT_CLASSIC);
 
     return component;
   }

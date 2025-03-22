@@ -136,7 +136,7 @@ export class Tidy5eContainerSheetQuadrone
 
     const html = globalThis.$(this.element);
 
-    initTidy5eContextMenu(this, html);
+    initTidy5eContextMenu(this, html, CONSTANTS.SHEET_LAYOUT_QUADRONE);
 
     return component;
   }

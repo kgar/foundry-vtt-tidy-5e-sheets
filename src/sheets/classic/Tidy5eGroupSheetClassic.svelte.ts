@@ -163,7 +163,11 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       ]),
     });
 
-    initTidy5eContextMenu(this, globalThis.$(this.element));
+    initTidy5eContextMenu(
+      this,
+      globalThis.$(this.element),
+      CONSTANTS.SHEET_LAYOUT_CLASSIC
+    );
 
     return component;
   }

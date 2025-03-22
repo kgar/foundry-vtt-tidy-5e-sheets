@@ -101,7 +101,8 @@
         onOpen: () => {
           ui.context.menuItems = contextMenuOptions;
         },
-        jQuery: false
+        jQuery: false,
+        layout: CONSTANTS.SHEET_LAYOUT_CLASSIC,
       },
     );
   });

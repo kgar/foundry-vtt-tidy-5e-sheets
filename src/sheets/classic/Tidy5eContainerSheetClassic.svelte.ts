@@ -129,7 +129,7 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
 
     const html = globalThis.$(this.element);
 
-    initTidy5eContextMenu(this, html);
+    initTidy5eContextMenu(this, html, CONSTANTS.SHEET_LAYOUT_CLASSIC);
 
     return component;
   }
