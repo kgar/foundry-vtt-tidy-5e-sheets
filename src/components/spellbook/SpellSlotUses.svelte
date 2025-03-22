@@ -13,14 +13,19 @@
 
   let { section }: Props = $props();
 
-  let context = $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
+  let context =
+    $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
+
+  let uses = $derived(section.uses ?? 0);
+  let slots = $derived(section.slots ?? 0);
+  let hasTempSlots = $derived(uses > slots);
 </script>
 
 <div class="spell-slots-detail">
   <TextInput
     document={context.actor}
     field="system.spells.{section.prop}.value"
-    class="spell-slot-uses"
+    class={['spell-slot-uses', { ['has-temp-slots']: hasTempSlots }]}
     value={section.uses}
     placeholder="0"
     selectOnFocus={true}
@@ -48,6 +53,10 @@
       height: 0.8125rem;
       margin-top: -0.0625rem;
       min-width: 1rem;
+    }
+
+    :global(input.has-temp-slots) {
+      font-weight: 700;
     }
 
     .spell-max {

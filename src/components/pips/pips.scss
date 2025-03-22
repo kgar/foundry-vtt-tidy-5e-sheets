@@ -12,6 +12,7 @@
   --pip-size: 1rem;
   --pip-bg-inactive: red;
   --pip-bg-active: green;
+  --pip-bg-active-temp: rebeccapurple;
   --pip-bg-to-activate: ;
   --pip-bg-to-deactivate: ;
 
@@ -21,6 +22,10 @@
 
   &:where(.active) {
     background: var(--pip-bg-active);
+  }
+
+  &:where(.temp) {
+    background: var(--pip-bg-active-temp);
   }
 }
 
@@ -47,10 +52,15 @@
     --pip-size: 0.75rem;
     --pip-bg-inactive: var(--t5e-spell-pip-empty-background);
     --pip-bg-active: var(--t5e-spell-pip-active-background);
+    --pip-bg-active-temp: var(--t5e-spell-pip-temp-background);
     --pip-bg-to-activate: var(--t5e-prepared-background);
     --pip-bg-to-deactivate: var(--t5e-warning-accent-color);
 
     border: 0.0625rem solid var(--t5e-spell-pip-border-color);
+
+    &.temp {
+      border-color: var(--t5e-spell-pip-temp-border-color);
+    }
 
     &.active:hover {
       background: var(--pip-bg-to-deactivate);
