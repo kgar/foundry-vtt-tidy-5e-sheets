@@ -49,7 +49,7 @@
     align-items: center;
     gap: 0.25rem;
     position: relative;
-    color: var(--t5e-color-text-ondefault-default);
+    color: var(--t5e-color-text-default);
     font-size: 0.75rem;
     font-weight: 500;
     line-height: normal;
@@ -57,7 +57,7 @@
     padding-inline-end: 0.75rem;
 
     i {
-      color: var(--t5e-color-text-ondefault-lighter);
+      color: var(--t5e-color-text-lighter);
       font-size: 0.6875rem;
     }
 
@@ -69,9 +69,6 @@
     .value,
     .max {
       text-shadow: 0 0 4px var(--dnd5e-color-gold);
-    }
-    .separator {
-      color: var(--dnd5e-color-gold);
     }
     .bonus {
       margin-inline-start: auto;

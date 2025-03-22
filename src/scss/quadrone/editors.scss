@@ -14,39 +14,39 @@
 
     h1 {
       font-size: var(--font-size-28);
-      margin-top: var(--t5e-spacing-5x);
-      margin-bottom: var(--t5e-spacing-2x);
+      margin-top: var(--t5e-size-5x);
+      margin-bottom: var(--t5e-size-2x);
     }
 
     h2 {
       font-size: var(--font-size-24);
-      margin-top: var(--t5e-spacing-3x);
-      margin-bottom: var(--t5e-spacing-2x);
+      margin-top: var(--t5e-size-3x);
+      margin-bottom: var(--t5e-size-2x);
     }
 
     h3 {
       font-size: var(--font-size-20);
-      margin-top: var(--t5e-spacing-3x);
-      margin-bottom: var(--t5e-spacing-2x);
+      margin-top: var(--t5e-size-3x);
+      margin-bottom: var(--t5e-size-2x);
     }
 
     h4 {
       font-size: var(--font-size-15);
       font-weight: 600;
-      margin-top: var(--t5e-spacing-4x);
-      margin-bottom: var(--t5e-spacing-2x);
+      margin-top: var(--t5e-size-4x);
+      margin-bottom: var(--t5e-size-2x);
     }
 
     h5 {
       font-size: var(--font-size-14);
-      margin-top: var(--t5e-spacing-3x);
-      margin-bottom: var(--t5e-spacing-2x);
+      margin-top: var(--t5e-size-3x);
+      margin-bottom: var(--t5e-size-2x);
     }
 
     h6 {
       font-size: var(--font-size-12);
-      margin-top: var(--t5e-spacing-3x);
-      margin-bottom: var(--t5e-spacing-2x);
+      margin-top: var(--t5e-size-3x);
+      margin-bottom: var(--t5e-size-2x);
     }
 
     p {
@@ -57,16 +57,16 @@
       margin: none;
 
       > :first-child {
-        margin-top: var(--t5e-spacing-1x);
+        margin-top: var(--t5e-size-1x);
       }
 
       > :last-child {
-        margin-bottom: var(--t5e-spacing-1x);
+        margin-bottom: var(--t5e-size-1x);
       }
 
       > :only-child {
-        margin-top: var(--t5e-spacing-1x);
-        margin-bottom: var(--t5e-spacing-1x);
+        margin-top: var(--t5e-size-1x);
+        margin-bottom: var(--t5e-size-1x);
       }
 
       /* Reset margins for nested lists */
@@ -77,11 +77,11 @@
 
         /* But maintain the spacing pattern for their list items */
         >li:first-child {
-          margin-top: var(--t5e-spacing-1x);
+          margin-top: var(--t5e-size-1x);
         }
 
         >li:last-child {
-          margin-bottom: var(--t5e-spacing-1x);
+          margin-bottom: var(--t5e-size-1x);
         }
       }
     }
@@ -106,7 +106,7 @@
       margin: 0;
       border: none;
       border-collapse: collapse;
-      border-radius: var(--t5e-spacing-1x);
+      border-radius: var(--t5e-size-1x);
 
       thead {
         --table-header-text-color: var(--t5e-color-palette-grey-100);
@@ -119,7 +119,7 @@
         border: none;
 
         th {
-          padding: var(--t5e-spacing-halfx) var(--t5e-spacing-2x);
+          padding: var(--t5e-size-halfx) var(--t5e-size-2x);
         }
       }
 
@@ -130,7 +130,7 @@
       }
 
       td {
-        padding: var(--t5e-spacing-1x) var(--t5e-spacing-2x);
+        padding: var(--t5e-size-1x) var(--t5e-size-2x);
 
         &:not(:last-child) {
           border-right: 1px solid var(--t5e-color-gold);
@@ -149,29 +149,44 @@
         tr {
 
           &:nth-child(odd) {
-            background: var(--t5e-component-card-ondefault-lighter);
+            background: var(--t5e-component-card-lighter);
           }
 
           &:nth-child(even) {
-            background: var(--t5e-component-card-ondefault-darker);
+            background: var(--t5e-component-card-darker);
           }
         }
       }
     }
 
     .secret {
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: var(--t5e-size-2x);
       border-radius: var(--t5e-component-card-radius);
-      border: 0.0625rem solid var(--t5e-table-row-divider);
-      background: var(--t5e-component-card-ondefault-darker);
-      mix-blend-mode: multiply;
+      border: 1px solid var(--t5e-theme-color-darker);
+      color: var(--t5e-color-text-lighter);
+      transition: all var(--t5e-transition-default);
+
+      &.revealed {
+        border-radius: 0;
+        padding: var(--t5e-size-3x) 0 var(--t5e-size-2x);
+        background: none;
+        border-width: 1px 0;
+
+      }
+
+      .reveal {
+        padding: 0.25rem 0.5rem;
+        margin: 0;
+      }
     }
 
     blockquote {
       border-color: var(--t5e-theme-color-lightest);
-      padding-top: var(--t5e-spacing-1x);
-      padding-bottom: var(--t5e-spacing-1x);
-      padding-left: var(--t5e-spacing-3x);
-      padding-right: var(--t5e-spacing-3x);
+      padding-top: var(--t5e-size-1x);
+      padding-bottom: var(--t5e-size-1x);
+      padding-left: var(--t5e-size-3x);
+      padding-right: var(--t5e-size-3x);
     }
 
     hr {
@@ -189,10 +204,10 @@
 
   .editor-rendered-content {
     flex: 0 0 100%;
-    margin-top: var(--t5e-spacing-2x);
-    padding-right: var(--t5e-spacing-2x);
-    margin-bottom: var(--t5e-spacing-halfx);
-    padding-left: var(--t5e-spacing-2x);
+    margin-top: var(--t5e-size-2x);
+    padding-right: var(--t5e-size-2x);
+    margin-bottom: var(--t5e-size-halfx);
+    padding-left: var(--t5e-size-2x);
     border-width: 0 0 1px 0;
     border-style: solid;
     border-image: linear-gradient(to right,
@@ -220,8 +235,8 @@
     }
 
     .inline-wrapped-elements {
-      margin-top: var(--t5e-spacing-3x);
-      margin-bottom: calc(var(--t5e-spacing-1x) + var(--t5e-spacing-halfx));
+      margin-top: var(--t5e-size-3x);
+      margin-bottom: calc(var(--t5e-size-1x) + var(--t5e-size-halfx));
     }
 
     .left-aligned-elements {
@@ -244,11 +259,11 @@
     button.item-summary-command {
       width: auto;
       line-height: 1rem;
-      padding: 0.25rem 0;
+      padding: var(--t5e-size-1x);
       background: none; //var(--t5e-component-field-background);
       color: var(--t5e-color-text-lighter);
       border: none; // 0.0625rem solid var(--t5e-component-field-border);
-      font-size: 0.75rem;
+      font-size: var(--font-size-12);
       margin: -0.25rem 0;
 
       display: inline-flex;
@@ -258,7 +273,7 @@
       min-height: var(--t5e-tag-size-default);
 
       i {
-        color: var(--t5e-color-icon-ondefault-diminished);
+        color: var(--t5e-color-icon-diminished);
       }
 
       &:hover {
@@ -275,8 +290,8 @@
 
   fieldset .editor-rendered-content {
     flex: auto;
-    margin-top: var(--t5e-spacing-1x);
-    margin-bottom: var(--t5e-spacing-1x);
+    margin-top: var(--t5e-size-1x);
+    margin-bottom: var(--t5e-size-1x);
     border: none;
   }
 
@@ -305,10 +320,6 @@
         }
       }
 
-      .roll-link {
-        background: rgba(255, 255, 255, 0.04);
-      }
-
       blockquote {
         border-color: var(--t5e-theme-color-default);
       }
@@ -323,19 +334,6 @@
             var(--t5e-theme-color-darkest) 50.25%,
             var(--t5e-theme-color-default) 60%,
             transparent 95%);
-      }
-
-      tbody {
-        tr {
-
-          &:nth-child(odd) {
-            background: var(--t5e-component-card-oninverse-lighter);
-          }
-
-          &:nth-child(even) {
-            background: var(--t5e-component-card-oninverse-darker);
-          }
-        }
       }
 
       .callout {

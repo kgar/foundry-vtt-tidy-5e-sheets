@@ -5,7 +5,7 @@
       rgba(143, 123, 78, 0.25) 80%,
       rgba(143, 123, 78, 0) 100%) 0 0 1 0;
 
-  --t5e-table-header-row-height: var(--t5e-spacing-6x);
+  --t5e-table-header-row-height: var(--t5e-size-6x);
 
   .tidy-table-container {
     display: flex;
@@ -16,9 +16,6 @@
 
   .tidy-table {
     container-type: inline-size;
-
-    /* Example code only */
-    // background-color: var(--t5e-component-card-ondefault-darker);
   }
 
   /* Table row styles */
@@ -36,7 +33,7 @@
         var(--t5e-theme-color-default));
     border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 0.125rem;
-    color: var(--t5e-color-text-ondefault-default);
+    color: var(--t5e-color-text-default);
     max-height: var(--t5e-table-header-row-height);
 
     :is(.tidy-table-cell, .tidy-table-header-cell) {
@@ -58,14 +55,14 @@
       box-shadow: none;
 
       i {
-        color: var(--t5e-color-icon-ondefault-disabled);
+        color: var(--t5e-color-icon-disabled);
         transition: transform var(--t5e-transition-default);
       }
 
       &.expanded i {
-        color: var(--t5e-color-icon-ondefault-diminished);
+        color: var(--t5e-color-icon-diminished);
         transform: rotate(90deg);
-        padding: 0 0 var(--t5e-spacing-halfx);
+        padding: 0 0 var(--t5e-size-halfx);
       }
 
       &:hover {
@@ -73,14 +70,14 @@
         border: none;
 
         i {
-          color: var(--t5e-color-text-ondefault-default);
+          color: var(--t5e-color-text-default);
         }
       }
     }
 
     &:hover .button.expand-button {
       i {
-        color: var(--t5e-color-icon-ondefault-default);
+        color: var(--t5e-color-icon-default);
       }
     }
 
@@ -101,7 +98,7 @@
       }
 
       h3 {
-        color: var(--t5e-color-text-ondefault-default);
+        color: var(--t5e-color-text-default);
       }
 
       .table-header-count {
@@ -129,7 +126,7 @@
 
     &.equipped {
       --t5e-item-row-color: var(--t5e-color-gold);
-      background: var(--t5e-component-card-ondefault-default);
+      background: var(--t5e-component-card-default);
 
       &::before {
         content: '';
@@ -145,7 +142,7 @@
 
     // TODO: Finish other unidentified styles. Classes aren't applied yet.
     &.unidentified {
-      color: var(--t5e-color-text-ondefault-lighter);
+      color: var(--t5e-color-text-lighter);
       background: transparent;
 
       .tidy-table-row-use-button {
@@ -170,11 +167,12 @@
       .item-label,
       .item-context {
         font-style: italic;
-        color: var(--t5e-color-text-ondefault-lightest);
+        color: var(--t5e-color-text-lightest);
       }
     }
 
-    &.rarity, &.spell-preparation {
+    &.rarity,
+    &.spell-preparation {
       --t5e-item-row-color: var(--t5e-item-color);
       --t5e-use-button-border-color: var(--t5e-item-color);
 
@@ -203,7 +201,7 @@
       background: linear-gradient(0deg,
           rgba(255, 255, 255, 0.10) 0%,
           rgba(255, 255, 255, 0.10) 100%),
-        var(--t5e-component-card-ondefault-default);
+        var(--t5e-component-card-default);
     }
   }
 
@@ -216,9 +214,9 @@
     min-height: var(--t5e-field-size-default);
     height: 100%;
 
-    &:not(.tidy-table-actions):not(.header-cell-actions) {
+    &:not(.tidy-table-actions):not(.header-cell-actions):not(.primary) {
       min-width: 5rem;
-      padding: var(--t5e-spacing-halfx) var(--t5e-spacing-1x) calc(var(--t5e-spacing-halfx) + var(--t5e-spacing-1));
+      padding: var(--t5e-size-halfx) var(--t5e-size-1x) calc(var(--t5e-size-halfx) + var(--t5e-size-1));
     }
 
     &:not(:last-child) {
@@ -275,7 +273,7 @@
     .cell-context {
       margin-top: -0.125rem;
       font-size: var(--font-size-small);
-      color: var(--t5e-color-text-ondefault-lightest);
+      color: var(--t5e-color-text-lightest);
     }
 
     .spell-components {
@@ -291,18 +289,18 @@
 
       .divider {
         font-weight: var(--font-weight-default);
-        color: var(--t5e-color-text-ondefault-gold);
+        color: var(--t5e-color-text-gold);
         margin: 0 0.125rem;
       }
 
       .max,
       .modifier {
         font-weight: var(--font-weight-label);
-        color: var(--t5e-color-text-ondefault-lightest);
+        color: var(--t5e-color-text-lightest);
       }
 
       i {
-        color: var(--t5e-color-text-ondefault-lighter);
+        color: var(--t5e-color-text-lighter);
       }
 
       &.recharge i {
@@ -319,12 +317,12 @@
 
       .modifier {
         font-weight: var(--font-weight-label);
-        color: var(--t5e-color-text-ondefault-lightest);
+        color: var(--t5e-color-text-lightest);
       }
 
       .ability {
         font-weight: var(--font-weight-label);
-        color: var(--t5e-color-text-ondefault-gold-emphasis);
+        color: var(--t5e-color-text-gold-emphasis);
         margin-inline-end: 0.125rem;
       }
     }
@@ -349,7 +347,7 @@
     transition-property: opacity, max-width;
 
     i {
-      color: var(--t5e-color-icon-ondefault-disabled);
+      color: var(--t5e-color-icon-disabled);
       transition: all var(--t5e-transition-default);
       width: var(--t5e-table-button-width);
       height: var(--t5e-table-button-width);
@@ -359,7 +357,7 @@
 
       &.expanded {
         transform: rotate(90deg);
-        color: var(--t5e-color-icon-ondefault-diminished);
+        color: var(--t5e-color-icon-diminished);
       }
     }
 
@@ -409,7 +407,7 @@
   }
 
   .tidy-table-actions {
-    padding-inline-start: var(--t5e-spacing-halfx);
+    padding-inline-start: var(--t5e-size-halfx);
     padding-inline-end: 0;
     height: 100%;
     display: flex;
@@ -418,7 +416,7 @@
 
   .tidy-table-button {
     align-items: center;
-    color: var(--t5e-color-icon-ondefault-diminished);
+    color: var(--t5e-color-icon-diminished);
     display: flex;
     font-size: 0.8125rem;
     height: 100%;
@@ -429,13 +427,13 @@
 
     &.toggle-button {
       &.toggled {
-        color: var(--t5e-color-icon-ondefault-diminished);
+        color: var(--t5e-color-icon-diminished);
         font-weight: 400;
       }
     }
 
     &:hover {
-      color: var(--t5e-color-icon-ondefault-default);
+      color: var(--t5e-color-icon-default);
     }
   }
 
@@ -465,7 +463,7 @@
       /* Fix for font awesome ::before icon alignment */
       align-items: center;
       justify-content: center;
-      color: var(--t5e-color-text-ondefault-gold-emphasis);
+      color: var(--t5e-color-text-gold-emphasis);
       opacity: 0;
       transition: all var(--t5e-transition-default);
     }
@@ -528,16 +526,16 @@
   /* Inline Activities */
 
   .tidy-table.inline-activities-table {
-    margin: var(--t5e-spacing-halfx) 0 var(--t5e-spacing-3x) 0;
+    margin: var(--t5e-size-halfx) 0 var(--t5e-size-3x) 0;
 
     .item-use-button {
-      height: var(--t5e-spacing-6x);
-      width: var(--t5e-spacing-6x);
+      height: var(--t5e-size-6x);
+      width: var(--t5e-size-6x);
       min-height: unset;
       min-width: unset;
 
       .item-image {
-        --icon-size: calc(var(--t5e-spacing-6x) - 0.125rem);
+        --icon-size: calc(var(--t5e-size-6x) - 0.125rem);
       }
     }
 
@@ -550,22 +548,22 @@
       height: var(--t5e-icon-size-7x);
 
       i {
-        color: var(--t5e-color-icon-ondefault-disabled);
+        color: var(--t5e-color-icon-disabled);
       }
     }
   }
 
   /* Inline Containers */
   // TODO
-  .expandable-expanded {
-    // background: linear-gradient(90deg, var(--t5e-component-card-onDefault-darker, #1B1D23) 0.59%, var(--t5e-component-card-onDefault-default, #252830) 44%);
+  .tidy-table-row~.expandable.expanded {
+    background: linear-gradient(120deg, var(--t5e-component-card-darker) 10%, var(--t5e-component-card-default) 120%);
   }
 
   .empty-container {
-    min-height: var(--t5e-spacing-8x);
+    min-height: var(--t5e-size-8x);
     align-content: center;
     background-color: var(--t5e-component-card-default);
-    color: var(--t5e-color-text-ondefault-lightest);
+    color: var(--t5e-color-text-lightest);
   }
 
   .inline-content-view {
@@ -573,14 +571,14 @@
     background-color: red;
     background: linear-gradient(90deg,
         var(--t5e-color-palette-white) 0.59%,
-        var(--t5e-component-card-ondefault-default) 44%);
-    padding: var(--t5e-spacing-1x) 0 var(--t5e-spacing-2x) var(--t5e-spacing-4x);
+        var(--t5e-component-card-default) 44%);
+    padding: var(--t5e-size-1x) 0 var(--t5e-size-2x) var(--t5e-size-4x);
     border-width: 0 0 1px 0;
     border-style: solid;
     border-image: var(--t5e-table-row-border-image);
 
     .tidy-table-header-row {
-      background: var(--t5e-component-card-ondefault-darker);
+      background: var(--t5e-component-card-darker);
     }
   }
 
@@ -596,7 +594,7 @@
     justify-content: flex-end;
 
     .header-action {
-      color: var(--t5e-color-icon-ondefault-button);
+      color: var(--t5e-color-icon-button);
     }
   }
 
@@ -606,14 +604,14 @@
         background: linear-gradient(to right,
             rgba(159, 146, 117, .25) 0%,
             rgba(159, 146, 117, 0) 30%),
-          var(--t5e-component-card-oninverse-default);
+          var(--t5e-component-card-default);
       }
 
       &.expanded {
         background: linear-gradient(0deg,
             rgba(255, 255, 255, 0.10) 0%,
             rgba(255, 255, 255, 0.10) 100%),
-          var(--t5e-component-card-oninverse-default);
+          var(--t5e-component-card-default);
       }
     }
 
@@ -625,15 +623,15 @@
 
     .inline-content-view {
       background: linear-gradient(90deg,
-          var(--t5e-component-card-oninverse-darker, #1B1D23) 0.59%,
-          var(--t5e-component-card-oninverse-default, #252830) 44%);
+          var(--t5e-component-card-darker, #1B1D23) 0.59%,
+          var(--t5e-component-card-default, #252830) 44%);
 
       .tidy-table-header-row {
         background: rgba(255, 255, 255, 0.08);
       }
 
       .tidy-table-row-container {
-        background: var(--t5e-component-card-oninverse-default);
+        background: var(--t5e-component-card-default);
       }
     }
   }

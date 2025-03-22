@@ -2,6 +2,7 @@
 // TODO: promote the most universal styles to apps.scss
 
 .tidy5e-sheet.application:where(.quadrone) {
+
   // Tab Configuration Dialog (Section Config, tab-specific options, etc.)
   &.tab-configuration {
     .window-content {
@@ -21,15 +22,15 @@
       h2 {
         font-size: var(--font-size-18);
         border-bottom: 1px solid var(--t5e-color-gold);
-        margin-block-end: var(--t5e-spacing-2x);
+        margin-block-end: var(--t5e-size-2x);
 
         &:not(:first-child) {
-          margin-block-start: var(--t5e-spacing-2x);
+          margin-block-start: var(--t5e-size-2x);
         }
       }
 
       h3 {
-        margin-block-end: var(--t5e-spacing-1x);
+        margin-block-end: var(--t5e-size-1x);
         font-size: var(--font-size-13);
         font-family: var(--t5e-font-roboto-condensed);
         font-weight: 500;
@@ -47,12 +48,12 @@
           padding-block: 0.25rem;
 
           &.marked-as-hidden {
-            color: var(--t5e-color-text-ondefault-lightest);
+            color: var(--t5e-color-text-lightest);
           }
         }
 
         &:has(.marked-as-hidden) .drag-grip {
-          color: var(--t5e-color-text-ondefault-lighter);
+          color: var(--t5e-color-text-lighter);
         }
       }
     }
@@ -63,7 +64,7 @@
       flex-wrap: wrap;
       white-space: nowrap;
 
-      > * {
+      >* {
         flex: 1;
         text-wrap: none;
       }

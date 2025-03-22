@@ -3,56 +3,49 @@
   font-family: 'Modesto Condensed';
   font-style: normal;
   font-weight: 400;
-  src: url('../../fonts/modesto-condensed/modesto-condensed.woff2')
-    format('woff2');
+  src: url('../../fonts/modesto-condensed/modesto-condensed.woff2') format('woff2');
 }
 
 @font-face {
   font-family: 'Modesto Condensed';
   font-style: normal;
   font-weight: 700;
-  src: url('../../fonts/modesto-condensed/modesto-condensed-bold.woff2')
-    format('woff2');
+  src: url('../../fonts/modesto-condensed/modesto-condensed-bold.woff2') format('woff2');
 }
 
 @font-face {
   font-family: 'Roboto Condensed';
   font-style: normal;
   font-weight: 400;
-  src: url('../../modules/tidy5e-sheet/fonts/roboto-condensed/RobotoCondensed-VariableFont_wght.ttf')
-    format('truetype');
+  src: url('../../modules/tidy5e-sheet/fonts/roboto-condensed/RobotoCondensed-VariableFont_wght.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Roboto Condensed';
   font-style: italic;
   font-weight: 400;
-  src: url('../../modules/tidy5e-sheet/fonts/roboto-condensed/RobotoCondensed-Italic-VariableFont_wght.ttf')
-    format('truetype');
+  src: url('../../modules/tidy5e-sheet/fonts/roboto-condensed/RobotoCondensed-Italic-VariableFont_wght.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Roboto Condensed';
   font-style: normal;
   font-weight: 500;
-  src: url('../../modules/tidy5e-sheet/fonts/roboto-condensed/RobotoCondensed-VariableFont_wght.ttf')
-    format('truetype');
+  src: url('../../modules/tidy5e-sheet/fonts/roboto-condensed/RobotoCondensed-VariableFont_wght.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Roboto Condensed';
   font-style: italic;
   font-weight: 500;
-  src: url('../../modules/tidy5e-sheet/fonts/roboto-condensed/RobotoCondensed-Italic-VariableFont_wght.ttf')
-    format('truetype');
+  src: url('../../modules/tidy5e-sheet/fonts/roboto-condensed/RobotoCondensed-Italic-VariableFont_wght.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Roboto Condensed';
   font-style: normal;
   font-weight: 700;
-  src: url('../../modules/tidy5e-sheet/fonts/roboto-condensed/RobotoCondensed-VariableFont_wght.ttf')
-    format('truetype');
+  src: url('../../modules/tidy5e-sheet/fonts/roboto-condensed/RobotoCondensed-VariableFont_wght.ttf') format('truetype');
 }
 
 
@@ -61,83 +54,90 @@
   &-default {
     color: var(--t5e-color-text-default);
   }
+
   &-gold {
     color: var(--t5e-color-text-gold);
   }
+
   &-gold-emphasis {
     color: var(--t5e-color-text-gold-emphasis);
   }
+
   &-gold-light {
     color: var(--t5e-color-text-gold-light);
   }
+
   &-lighter {
     color: var(--t5e-color-text-lighter);
   }
+
   &-lightest {
     color: var(--t5e-color-text-lightest);
   }
+
   &-disabled {
     color: var(--t5e-color-text-disabled);
   }
 }
+
 .color-icon {
-  &-dark-default {
-    color: var(--t5e-color-icon-ondefault-default);
+  &-default {
+    color: var(--t5e-color-icon-default);
   }
-  &-dark-button {
-    color: var(--t5e-color-icon-ondefault-button);
+
+  &-button {
+    color: var(--t5e-color-icon-button);
   }
-  &-dark-diminished {
-    color: var(--t5e-color-icon-ondefault-diminished);
+
+  &-diminished {
+    color: var(--t5e-color-icon-diminished);
   }
-  &-dark-disabled {
-    color: var(--t5e-color-icon-ondefault-disabled);
-  }
-  &-light-default {
-    color: var(--t5e-color-icon-oninverse-default);
-  }
-  &-light-button {
-    color: var(--t5e-color-icon-oninverse-button);
-  }
-  &-light-diminished {
-    color: var(--t5e-color-icon-oninverse-diminished);
-  }
-  &-light-disabled {
-    color: var(--t5e-color-icon-oninverse-disabled);
+
+  &-disabled {
+    color: var(--t5e-color-icon-disabled);
   }
 
 }
 
 .font {
+
   /* Font declarations ------------------ */
   /* Body text */
   &-default-medium {
     font: var(--t5e-font-default-medium);
   }
+
   &-default-small {
     font: var(--t5e-font-default-small);
   }
+
   &-default-longform {
     font: var(--t5e-font-default-longform);
   }
+
   /* Labels */
   &-label-medium {
     font: var(--t5e-font-label-medium);
   }
+
   &-label-small {
     font: var(--t5e-font-label-small);
   }
+
   /* Data (bold) */
-  &-data-medium { 
+  &-data-medium {
     font: var(--t5e-font-data-medium);
   }
+
   &-data-small {
     font: var(--t5e-font-data-small);
   }
+
   /* Titles */
   &-title-medium {
     font: var(--t5e-font-title-medium);
   }
+
   &-title-large {
     font: var(--t5e-font-title-large);
   }
@@ -147,6 +147,7 @@
   &-family-title {
     font-family: var(--t5e-font-family-title);
   }
+
   &-family-default {
     font-family: var(--t5e-font-family-default);
   }
@@ -155,9 +156,11 @@
   &-weight-label {
     font-weight: var(--font-weight-label);
   }
+
   &-weight-bold {
     font-weight: var(--font-weight-bold);
-  } 
+  }
+
   &-weight-default {
     font-weight: var(--font-weight-default);
   }
