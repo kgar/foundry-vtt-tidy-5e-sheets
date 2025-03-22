@@ -2,12 +2,13 @@
   import type { ColumnCellProps } from 'src/runtime/item/item.types';
   import ItemPriceSummary from '../parts/header/ItemPriceSummary.svelte';
 
-  let { rowDocument }: ColumnCellProps = $props();
+  let { rowDocument: item }: ColumnCellProps = $props();
+
+let conceal = $derived(item.system.identified === false);
 </script>
 
-<ItemPriceSummary
-  item={rowDocument}
-  icon={false}
-  truncate={true}
-  showTitle={true}
-/>
+{#if !conceal}
+  <ItemPriceSummary {item} icon={false} truncate={true} showTitle={true} />
+{:else}
+  <span class="color-text-disabled">&mdash;</span>
+{/if}

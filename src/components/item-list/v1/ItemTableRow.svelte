@@ -46,7 +46,6 @@
   const emptyChatData: ItemChatData = {
     description: { value: '' },
     properties: [],
-    unidentified: { description: '' },
   };
 
   const expandedItemData = getContext<ExpandedItemData>(
@@ -123,7 +122,7 @@
       }
 
       if (item && showSummary) {
-        chatData = await item.getChatData({ secrets: item.actor.isOwner });
+        chatData = await item.getChatData({ secrets: item.isOwner });
       }
     })();
   });

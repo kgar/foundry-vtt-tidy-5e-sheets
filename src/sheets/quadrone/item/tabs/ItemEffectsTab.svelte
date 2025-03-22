@@ -115,7 +115,7 @@
         )}
 
         {#each effectEntries as { effect } (effect.id)}
-          <TidyEffectTableRow activeEffect={effect}>
+          <TidyEffectTableRow effectContext={effect}>
             {#snippet children({ toggleSummary, expanded })}
               <span class="tidy-table-button tidy-table-row-use-button disabled">
                 <img

@@ -827,8 +827,6 @@
         "name": "Rolagem Padrão de Salvaguarda Contra Morte"
     },
     "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatTooltip": "Mostrar descrição no chat",
-    "TIDY5E.Activities.Cast.SourceHintText": "De {itemName}",
-    "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatLabel": "Info",
     "TIDY5E.ContextMenuActionView": "Visualizar",
     "TIDY5E.Utilities.SpellPips": "Magias",
     "TIDY5E.Utilities.SpellValueMax": "Valor da Magia/Máx",

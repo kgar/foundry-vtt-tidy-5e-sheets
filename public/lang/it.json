@@ -849,8 +849,6 @@
         "hint": "Sezioni personalizzate del mondo che possono essere configurate per vari scopi. Le sezioni personalizzate globali saranno sempre incluse nel selettore di sezione.",
         "AddSection": "Aggiungi Sezione"
     },
-    "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatLabel": "Info",
-    "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatTooltip": "Mostra descrizione in chat",
     "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Tiene{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}",
     "TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast": "Includi rituali in \"Può Lanciare\"",
     "TIDY5E.ModuleName": "Schede Tidy 5e",

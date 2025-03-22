@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ItemSheetContext } from 'src/types/item.types';
 
@@ -10,6 +11,17 @@
   let { context, fullWidth }: Props = $props();
 
   let localize = FoundryAdapter.localize;
+
+  let spellCastTimeText = $derived(
+    [
+      context.labels.activation,
+      context.item.system.properties.has(CONSTANTS.SPELL_PROPERTY_RITUAL)
+        ? FoundryAdapter.localize('DND5E.Item.Property.Ritual')
+        : undefined,
+    ]
+      .filter((x) => x)
+      .join(', '),
+  );
 </script>
 
 <ul class="spell-block unlist" class:full-width={fullWidth}>
@@ -18,7 +30,7 @@
       {localize('DND5E.SpellCastTime')}:
     </label>
     <span class="value">
-      {context.labels.activation}
+      {spellCastTimeText}
       {#if !fullWidth && context.system.activation?.condition}
         <span class="condition">
           ({context.system.activation.condition})

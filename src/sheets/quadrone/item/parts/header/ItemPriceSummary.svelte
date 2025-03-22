@@ -1,5 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { Item5e } from 'src/types/item.types';
   import type { HTMLAttributes } from 'svelte/elements';
 
@@ -32,6 +33,12 @@
       ? `${itemValueText} ${denomination?.abbreviation?.toLocaleUpperCase()}`
       : '',
   );
+
+  let context = $derived(getSheetContext());
+
+  let gmEditMode = $derived(FoundryAdapter.isInGmEditMode(context.document));
+
+  let conceal = $derived(item.system.identified === false && !gmEditMode);
 </script>
 
 <div {title} class="item-price {cssClass}" {...rest}>
@@ -45,7 +52,11 @@
   <span class="item-price-number" class:truncate>
     <!-- Value Text -->
     <span class="color-text-default text-data">
-      {itemValueText}
+      {#if !conceal || gmEditMode}
+        {itemValueText}
+      {:else}
+        ?
+      {/if}
     </span>
     <!-- Denom -->
     <span class="item-price-denomination text-label">

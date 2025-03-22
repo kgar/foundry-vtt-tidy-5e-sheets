@@ -6,13 +6,13 @@
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
-  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import SpellBlock from './parts/SpellBlock.svelte';
   import { isNil } from 'src/utils/data';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import ItemChargesSummary from './parts/header/ItemChargesSummary.svelte';
   import ItemRechargeSummary from './parts/header/ItemRechargeSummary.svelte';
   import ItemLinkedItemSummary from './parts/header/ItemLinkedItemSummary.svelte';
+  import ItemName from './parts/header/ItemName.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -51,17 +51,7 @@
         bind:this={itemNameEl}
         class="item-name-wrapper flex-row extra-small-gap align-items-center"
       >
-        <!-- Name -->
-        {#if context.unlocked}
-          <TextInputQuadrone
-            field="name"
-            document={context.item}
-            value={context.name.editable}
-            class="document-name"
-          />
-        {:else}
-          <div class="document-name">{context.item.name}</div>
-        {/if}
+        <ItemName />
       </div>
       <!-- Header Summary -->
       <div class="subtitle">{subtitle}</div>

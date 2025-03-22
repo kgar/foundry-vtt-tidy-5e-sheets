@@ -3,9 +3,11 @@
   import type { ColumnCellProps } from 'src/runtime/item/item.types';
 
   let { rowDocument: item }: ColumnCellProps = $props();
+
+  let conceal = $derived(item.system.identified === false);
 </script>
 
-{#if item.hasLimitedUses}
+{#if item.hasLimitedUses && !conceal}
   <input
     type="text"
     value={item.system.uses.value}

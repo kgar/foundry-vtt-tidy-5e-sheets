@@ -709,6 +709,11 @@ export const FoundryAdapter = {
       });
     }
   },
+  isInGmEditMode(document: any): boolean {
+    return (
+      FoundryAdapter.isSheetUnlocked(document) && FoundryAdapter.userIsGm()
+    );
+  },
   isSheetUnlocked(document: any): boolean {
     return (
       (document.isOwner && TidyFlags.allowEdit.get(document)) ||

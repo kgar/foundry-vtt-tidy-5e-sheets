@@ -185,11 +185,7 @@
           >
             {#snippet children({ toggleSummary, expanded })}
               <a
-                class={[
-                  'tidy-table-button',
-                  'tidy-table-row-use-button',
-                  item.system.rarity?.slugify(),
-                ]}
+                class={['tidy-table-button', 'tidy-table-row-use-button']}
                 onclick={(ev) => FoundryAdapter.actorTryUseItem(item, ev)}
               >
                 {#if item.img?.endsWith('.svg')}

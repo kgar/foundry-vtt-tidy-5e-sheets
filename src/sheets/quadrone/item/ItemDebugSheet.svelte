@@ -14,7 +14,7 @@
   import { preventNewlines } from 'src/actions/prevent-newlines';
   import ItemDescriptions from '../shared/ItemDescriptions.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
+  import ItemName from './parts/header/ItemName.svelte';
 
   let context = $derived(getSheetContext<ItemDebugSheetQuadroneContext>());
 
@@ -90,17 +90,7 @@
 <div class="item-content">
   <div class="controls-gallery">
     <div class="span-all">
-      <!-- Name -->
-      {#if context.unlocked}
-        <TextInputQuadrone
-          field="name"
-          document={context.item}
-          value={context.item.name}
-          class="document-name"
-        />
-      {:else}
-        <div class="document-name">{context.item.name ?? ''}</div>
-      {/if}
+      <ItemName />
     </div>
     <div class="span-all">
       <Tabs

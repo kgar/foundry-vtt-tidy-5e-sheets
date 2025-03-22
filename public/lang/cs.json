@@ -823,8 +823,6 @@
     },
     "TIDY5E.Activities.Cast.SourceHintText": "Z {itemName}",
     "TIDY5E.RollRecharge.Label": "Dobití",
-    "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatLabel": "Informace",
-    "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatTooltip": "Zobrazit popis v chatu",
     "TIDY5E.Facilities.Defenders.Label": "Obránci",
     "TIDY5E.Facilities.RosterMember.Label": "{actorName} - {facilityName}",
     "TIDY5E.SortMenu.OptionAlphabetical": "Abecedně (A-Z)",

@@ -10,6 +10,8 @@
   import type { ActivityItemContext } from 'src/types/types';
   import { settings } from 'src/settings/settings.svelte';
   import { ItemProperties } from 'src/features/properties/ItemProperties.svelte';
+  import PropertyTag from '../properties/PropertyTag.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     chatData: ItemChatData;
@@ -21,7 +23,6 @@
   let itemSummaryCommands = $derived(
     ItemSummaryRuntime.getItemSummaryCommands(item),
   );
-  let concealDetails = $derived(FoundryAdapter.concealDetails(item));
 
   let linked = $derived<Item5e>(item?.system?.linkedActivity?.item);
 
@@ -39,11 +40,18 @@
         ).map<ActivityItemContext>(Activities.getActivityItemContext)
       : [];
   });
+
+  let identified = $derived(item.system.identified !== false);
+
+  let context = $derived(getSheetContext());
+
+  let gmEditMode = $derived(FoundryAdapter.isInGmEditMode(context.document));
+
+  let showGmOnlyUi = $derived(!identified && gmEditMode);
 </script>
 
 {#if activities.length > 0 && settings.value.inlineActivitiesPosition === CONSTANTS.INLINE_ACTIVITIES_POSITION_TOP}
   <TidyInlineActivitiesList {item} {activities} />
-  <!-- <HorizontalLineSeparator /> -->
 {/if}
 <div
   class="editor-rendered-content"
@@ -57,18 +65,25 @@
         })}
       </div>
     {/await}
-    <!-- <HorizontalLineSeparator /> -->
   {/if}
 
-  {@html chatData.description}
+  <div class={{ callout: showGmOnlyUi }}>
+    {#if showGmOnlyUi}
+      <div class="gm-only color-text-lighter">
+        {localize(
+          'TIDY5E.WorldSettings.ItemIdentificationPermission.options.GmOnly',
+        )}
+      </div>
+    {/if}
+    {@html chatData.description}
+  </div>
 
   <div
     class="inline-wrapped-elements"
-    class:conceal-content={concealDetails}
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_PROPERTY_LIST}
   >
     <div class="left-aligned-elements">
-      {#if chatData.properties}
+      {#if chatData.properties && (gmEditMode || identified)}
         {#each chatData.properties as prop}<span class="tag">
             <span class="value">
               {prop}
@@ -76,15 +91,7 @@
           </span>
         {/each}
         {#each additionalItemProps as prop}
-          <span class="tag">
-            <!-- {#if prop.label}
-            <span class="label">{prop.label}</span>
-          {/if} -->
-            <span class="value">{prop.value}</span>
-            {#if prop.parenthetical}
-              <span class="parenthetical">({prop.parenthetical})</span>
-            {/if}
-          </span>
+          <PropertyTag {prop} showParenthetical={true} />
         {/each}
       {/if}
     </div>

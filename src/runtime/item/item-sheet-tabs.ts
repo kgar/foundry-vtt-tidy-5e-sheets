@@ -38,6 +38,7 @@ import ItemSpellDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemSpell
 import ItemSubclassDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemSubclassDetailsTab.svelte';
 import ItemToolDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemToolDetailsTab.svelte';
 import ItemWeaponDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemWeaponDetailsTab.svelte';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 const itemSheetTabs = {
   /**
@@ -289,6 +290,9 @@ const itemSheetTabs = {
       component: ItemActivitiesQuadroneTab,
       type: 'svelte',
     },
+    condition: (document) =>
+      document.system.identified !== false ||
+      FoundryAdapter.isInGmEditMode(document),
   },
   quadroneAdvancement: {
     id: CONSTANTS.TAB_ITEM_ADVANCEMENT_ID,
@@ -313,6 +317,9 @@ const itemSheetTabs = {
       component: ItemConsumableDetailsQuadroneTab,
       type: 'svelte',
     },
+    condition: (document) =>
+      document.system.identified !== false ||
+      FoundryAdapter.isInGmEditMode(document),
   },
   quadroneContainerContents: {
     id: CONSTANTS.TAB_CONTAINER_CONTENTS,
@@ -340,6 +347,9 @@ const itemSheetTabs = {
       component: ItemContainerDetailsQuadronTab,
       type: 'svelte',
     },
+    condition: (document) =>
+      document.system.identified !== false ||
+      FoundryAdapter.isInGmEditMode(document),
   },
   quadroneEquipmentDetails: {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
@@ -348,6 +358,9 @@ const itemSheetTabs = {
       component: ItemEquipmentDetailsQuadroneTab,
       type: 'svelte',
     },
+    condition: (document) =>
+      document.system.identified !== false ||
+      FoundryAdapter.isInGmEditMode(document),
   },
   quadroneFacilityDetails: {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
@@ -372,6 +385,9 @@ const itemSheetTabs = {
       component: ItemLootDetailsQuadroneTab,
       type: 'svelte',
     },
+    condition: (document) =>
+      document.system.identified !== false ||
+      FoundryAdapter.isInGmEditMode(document),
   },
   quadroneSpellDetails: {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
@@ -396,6 +412,9 @@ const itemSheetTabs = {
       component: ItemToolDetailsQuadroneTab,
       type: 'svelte',
     },
+    condition: (document) =>
+      document.system.identified !== false ||
+      FoundryAdapter.isInGmEditMode(document),
   },
   quadroneWeaponDetails: {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
@@ -404,6 +423,9 @@ const itemSheetTabs = {
       component: ItemWeaponDetailsQuadroneTab,
       type: 'svelte',
     },
+    condition: (document) =>
+      document.system.identified !== false ||
+      FoundryAdapter.isInGmEditMode(document),
   },
   quadroneSpeciesDetails: {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
@@ -432,6 +454,9 @@ const itemSheetTabs = {
       component: ItemEffectsQuadroneTab,
       type: 'svelte',
     },
+    condition: (document) =>
+      document.system.identified !== false ||
+      FoundryAdapter.isInGmEditMode(document),
   },
 } satisfies Record<string, Tab>;
 

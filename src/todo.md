@@ -1,36 +1,21 @@
 ## To Do
 
-- [ ] Refactor: make tag component reusable
-- [ ] Container contained item description changes are not reactive on the container
-  - Of note: the container is re-rendering. It's probably the item summary itself.
-- [ ] Effect description changes are not reactive on the target item container
-- [ ] Determine how unidentified should work
-  - [ ] Item row
-    - [ ] Item row text italicized, light grey, no background color
-    - [ ] Item row image greyscale, opacity 75%
-    - [ ] Item description uses unidentified description only
-    - [ ] Charges hidden (emdash)
-    - [ ] Price hidden (emdash)
-  - [ ] All sheets
-    - [ ] Image greyscale
-    - [ ] Rarity color set to grey 40, rarity label readonly and set to "Unidentified" (all modes)
-    - [ ] Cost label set to "?"
-    - [ ] Charges hidden (emdash)
-    - [ ] Use button greyed out, cannot be used
-    - [ ] Details tab hidden until identified (all modes)
-    - [ ] Activities tab hidden until identified (all modes)
-    - [ ] Effects tab hidden until identified (all modes)
-    - [ ] Name readonly "Unidentified <type>" (all modes)
-    - [ ] Unidentified description expanded and editable
-    - [ ] Description section hidden, Chat description section hidden
-    - [ ] (Non-container sheets only) Sidebar sections all hidden except Sections section and pill switches
-    - [ ] Header source label set to "?" if filled out, edit button hidden (all modes)
-  - [ ] Non-container
-- [ ] Notify Hightouch that spell sheet is ready for final review
+- [ ] Feedback
+  - [x] Price and Charge columns - always follow Identified instead of GM Edit Mode
+  - [x] Price column and summary: one question mark
+  - [ ] (unable to repro) Activity Edit ctx menu doesn't work
+  - [ ] (awaiting hightouch design) Adjust the suppressed effect's toggle icon, since it can't be adjusted anyhow
+- [ ] (hightouch) Time to do variable cleanup
+- [ ] (hightouch) Quadronify src\applications\section-selector\SectionSelector.svelte?
+- [ ] Implement Container Limited View
+- [ ] Test Container Observer View
+- [ ] Review Container sheet to ensure it has everything; add TODOs as needed
+- [ ] Localize Container sheet name and move it out of the Truesight filter
+- [ ] Go beta!
+- [ ] Notify hightouch that spell sheet is ready for final review
 - [ ] Test spell info on item summary and cards
 - [ ] Begin thinking about how to extract common functionality across each table type (item, effects, activities)
 - [ ] Propagate `sheet-header` class setup to all item sheets
-- [ ] Review Container sheet to ensure it has everything
 - [ ] Implement sheet header contents
   - [ ] Background
   - [ ] Class
@@ -150,8 +135,15 @@
 - [ ] Resolve TODO -  // TODO: Make this a callback to send through to the component for preparing sections properly
 - [ ] Set up default/light/dark menu toggle and add to container
 - [ ] Update sheet lock to work like the default sheets, including the additional render options and intuitive default state
-- [ ] Item cards?
+- [ ] Item cards
+  - [ ] Implement a shared portal for item cards. All attached item cards will use the one portal anchor. This is so the card can live outside the sheet's overflow hiding window content, so we don't have to worry about compromising design.
+  - [ ] Have item cards be targeted via `.tidy5e-sheet.classic....` etc.
+  - [ ] For fun, test with PopOut!
 - [ ] add a class to section headers when there are no search results `.search-no-results`
+- [ ] Effect Summary eagerly refreshes. Add suppression to HTML enrichment to only when the effect summary is shown.
+- [ ] Additional Document header option: Context Menu Options (literally show the context menu options)
+- [ ] Ensure all item sheets enforce this Unidentified UI feature:
+    - [ ] (Non-container sheets only) Sidebar sections all hidden except Sections section and pill switches
 
 ### To Include on Actor Phase
 
@@ -162,13 +154,13 @@
 ### Stretch
 
 - [ ] ButtonWithOptionsPanel - can the menu be outside the hidden window content and still anchor to the position of the menu? Very possible with a Portal. See https://svelte.dev/playground/8364bc976f0c4ff9b83adf6e7a3c19fd?version=5.22.5#H4sIAAAAAAAACp1V34-jNhD-V7zu6gJSBOqu1AcCOV3vpS-V-l6qrgNDcOPYlj1kN0L875VtCOQ2e7vaFwQzH9_8numpZEegGf1LGWSCrmnDBVia_d1TPGuncQK6nnDftE7sCQQ62Y5ZuCWvlESQaGlGc1sZrnFbyhL5USuDpCeVAYYQTJKBNEYdSUmTlFXIlbQl3Szg39VRKwkSZ9xFNJocfxCA5Kg6iVCTgjRMWNiUMk9nF2Ru8SzAe5MwrUnv3krcseqwN6qTdUYsAoid6GATdJrVNZf7jPz6m37xssE92ofp5yMzey5_1Cc6hDeCKiWUychzy_Ft4mtHdGe0gJlx1yEq-TOreXoJT-Y1P5FKMGuLkjKtS-qjztuH7Tet87R9CN8O1lnIljUp-lWj1Gq4_B9iGSkcyeM2IPO0fQw8ac1P3vDbnDtmPseJ_S-8mUo7jPi5L9KASXnjdfmYKCWzSvDqUPRRTIotiebeuBtf42FL-kn8law66T9WJCMr_zZ332ogeRqYty7TwTW6pggvSDM0HQzrN4Zm7OvkP3s9NFfyxdBcBgV5dZgHZNnsslLSIglJ_PfINCmIhGfyJ9NRvCklvHiKppPextXIRVLVsCbcZaKkNTSsE1jSOLRWID7AmRTk6f4-WEjue14PT2EuGxLNdpOW2egA5zgm2Br1TJ7qTgteMYTRO89VUs9Q0sABwsLC-cQCOpI1ca7FHmIAOyNJT2qwaNQ5W-JrEICQ7LisF76snamYDJtSDqW8xO4rOQbtAf0Uxt3P4ujkQapnOUVx3x_gPKYg5KhVFkmxdGsfwggBOHXCpQWDv0OjDIwuyE6IqxCjuNh6sGsBxqX1wJh8-eJNJAaO6gTfWy7qaMrP8LrE-gPFdStyzOfmw8W-maUwha5BozjBFmQUpmxcTyWOZkjxKv_jrhviuRXeAb_uhWBs_PyaRJeqf2wif7wg13N5Q_veSdPvHDOX-BMTHfiy_AFCqAC92Lr71BVzq7b_2D0RfN9ipQwTb92L8UI8bi9Ozbt4Ut9cxoudr68uyLb3QQ_zKl8s6hJzLnWHxI1xFrKTTufg80s8jIvf4cGZ1bDY3PNZub3D_xn-BxsHJbcUCQAA or obsidian dev vault
-- [ ] Hightouch: If it's super simple (and only if it's super simple) it could be nice to hard link some of the currency/weight/item type directly to the fields (e.g. click it, opens the tab, focuses the input). But if it's not out-of-the-box it's not worth it. Just wasn't sure if it was actually possible
+- [ ] hightouch: If it's super simple (and only if it's super simple) it could be nice to hard link some of the currency/weight/item type directly to the fields (e.g. click it, opens the tab, focuses the input). But if it's not out-of-the-box it's not worth it. Just wasn't sure if it was actually possible
 
 ### To Do Graveyard
 
-- [x] (Hightouch) Style Effects tab header buttons
-- [x] (Hightouch) Rarity colors review
-- [x] (Hightouch) Review Effects tab and apply any polish
+- [x] (hightouch) Style Effects tab header buttons
+- [x] (hightouch) Rarity colors review
+- [x] (hightouch) Review Effects tab and apply any polish
 - [x] Get Tidy tables working properly and looking nice with the latest styles
   - [x] New quantity control is wider than its 80px parent
   - [x] The table styles do not account for varying column widths and do not constrain child contents
@@ -208,7 +200,7 @@
 - [x] Do DocumentSheet / prepareContext revisions to the core Svelte mixin so that it's more plug and play for all Tidy applications
 - [x] Fix: Weightless container (Bag of Devouring) shows undefined in the Holds text
 - [x] Sorting: Resolve todo - // TODO: This needs to be part of the sort group model, relating sort methods to specific groups.
-- [x] (Hightouch) Complete dark mode for the container
+- [x] (hightouch) Complete dark mode for the container
 - [x] Implement three dots onclick for container contents item rows
 - [x] Inventory: Container inline capacity UI
   - Capacity column
@@ -225,8 +217,8 @@
 - [x] Container: Image click behaviors
   - [x] Locked - Show preview
   - [x] Unlocked - File Picker
-- [x] (Hightouch made first pass) Inventory: subtables have a different set of styles for their header
-- [x] (Hightouch made first pass) Inventory: Inline container Empty styles
+- [x] (hightouch made first pass) Inventory: subtables have a different set of styles for their header
+- [x] (hightouch made first pass) Inventory: Inline container Empty styles
 - [x] Implement spell sheet spell block in sidebar
 - [x] Implement spell sheet header contents
   - [x] subtitle
@@ -260,3 +252,27 @@
   - [x] Ctx menu
   - [x] dbl click to edit
   - [x] Determine if there's any activity summary that can be shared. If so, shared it. Else, disable until dnd5e 5 / Foundry 13.
+- [x] Refactor: make tag component reusable
+- [x] Container contained item description changes are not reactive on the container
+  - Of note: the container is re-rendering. It's probably the item summary itself.
+- [x] Effect description changes are not reactive on the target item container
+- [x] Determine how unidentified should work
+  - [x] Item row
+    - [x] (kgar says: "we should match system behavior for this one: the button is enabled and usable on the default sheets") Use button greyed out, cannot be used
+    - [x] Item row text italicized, light grey, no background color
+    - [x] Item row image greyscale, opacity 75%
+    - [x] Item description uses unidentified description only
+    - [x] Charges hidden (emdash)
+    - [x] Price hidden (emdash)
+  - [x] All sheets
+    - [x] Image greyscale
+    - [x] Rarity color set to grey 40, rarity label readonly and set to "Unidentified" (all modes)
+    - [x] Cost label set to "?" unless in GM Edit Mode
+    - [x] Charges hidden (emdash) unless in GM Edit Mode
+    - [x] Details tab hidden until identified (all modes) or in GM Edit Mode
+    - [x] Activities tab hidden until identified (all modes) or in GM Edit Mode
+    - [x] Effects tab hidden until identified (all modes) or in GM Edit Mode
+    - [x] Name readonly "Unidentified <type>" (all modes) (enforced by system)
+    - [x] Unidentified description expanded and editable
+    - [x] Description section hidden, Chat description section hidden
+    - [x] Header source label set to "?" if filled out, edit button hidden (all modes) unless in GM Edit Mode

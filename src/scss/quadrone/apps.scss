@@ -645,4 +645,54 @@
       }
     }
   }
+
+  :where(.rarity) {
+    --t5e-item-color: var(--t5e-color-gold);
+    
+    &:where(.common) {
+      --t5e-item-color: var(--t5e-color-rarity-common);
+    }
+    &:where(.uncommon) {
+      --t5e-item-color: var(--t5e-color-rarity-uncommon);
+    }
+    &:where(.rare) {
+      --t5e-item-color: var(--t5e-color-rarity-rare);
+    }
+    &:where(.veryrare) {
+      --t5e-item-color: var(--t5e-color-rarity-very-rare);
+    }
+    &:where(.legendary) {
+      --t5e-item-color: var(--t5e-color-rarity-legendary);
+    }
+    &:where(.artifact) {
+      --t5e-item-color: var(--t5e-color-rarity-artifact);
+    }
+  }
+  
+  :where(.spell-preparation) {
+    --t5e-item-color: var(--t5e-color-gold);
+    
+    &:where(.prepared) {
+      --t5e-item-color: var(--t5e-color-icon-spellcasting-prepared);
+    }
+    &:where(.atwill) {
+      --t5e-item-color: var(--t5e-color-icon-spellcasting-atwill);
+    }
+    &:where(.always) {
+      --t5e-item-color: var(--t5e-color-icon-spellcasting-always);
+    }
+    &:where(.pact) {
+      --t5e-item-color: var(--t5e-color-icon-spellcasting-pact);
+    }
+    &:where(.innate) {
+      --t5e-item-color: var(--t5e-color-icon-spellcasting-innate);
+    }
+    &:where(.ritual) {
+      --t5e-item-color: var(--t5e-color-icon-spellcasting-ritual);
+    }
+  }
+
+  :where(.unidentified) {
+    --t5e-item-color: var(--t5e-color-palette-grey-40);
+  }
 }
