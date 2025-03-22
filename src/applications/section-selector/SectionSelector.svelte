@@ -85,13 +85,14 @@
     {localize('TIDY5E.Section.SectionSelectorCreateNewSection')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
-  <input
-    type="text"
-    bind:value={freeText}
-    placeholder={localize('TIDY5E.Section.SectionSelectorNewSectionName')}
-  />
-  <div class="button-bar flexrow">
-    <button type="button" class="button" onclick={() => onOptionSelected(freeText)}
+  <div class="flexrow button-bar">
+    <input
+      type="text"
+      bind:value={freeText}
+      placeholder={localize('TIDY5E.Section.SectionSelectorNewSectionName')}
+      class="flex2"
+    />
+    <button type="button" class="button flex1" onclick={() => onOptionSelected(freeText)}
       >{localize('TIDY5E.Section.SectionSelectorSaveNewSection')}</button
     >
   </div>
