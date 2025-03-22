@@ -230,7 +230,7 @@ export class Tidy5eNpcSheet
 
     this.additionalComponents.push(infoCard);
 
-    initTidy5eContextMenu(this, html);
+    initTidy5eContextMenu(this, html, CONSTANTS.SHEET_LAYOUT_CLASSIC);
   }
 
   async getData(options = {}) {

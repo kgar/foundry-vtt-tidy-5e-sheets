@@ -113,6 +113,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
           target
         ),
       jQuery: false,
+      layout: CONSTANTS.SHEET_LAYOUT_QUADRONE,
     });
 
     new FloatingContextMenu(html, '.activity[data-activity-id]', [], {
@@ -122,9 +123,10 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
           target
         ),
       jQuery: true,
+      layout: CONSTANTS.SHEET_LAYOUT_QUADRONE,
     });
 
-    initTidy5eContextMenu(this, html);
+    initTidy5eContextMenu(this, html, CONSTANTS.SHEET_LAYOUT_CLASSIC);
 
     return component;
   }

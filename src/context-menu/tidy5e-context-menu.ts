@@ -10,7 +10,10 @@ import FloatingContextMenu from './FloatingContextMenu';
 export function initTidy5eContextMenu(
   sheet: any,
   html: any,
-  contextMenuSelector: string = '[data-context-menu]'
+  layout:
+    | typeof CONSTANTS.SHEET_LAYOUT_CLASSIC
+    | typeof CONSTANTS.SHEET_LAYOUT_QUADRONE,
+  contextMenuSelector: string = '[data-context-menu]',
 ) {
   if ('get' in html) {
     html = html[0];
@@ -19,6 +22,7 @@ export function initTidy5eContextMenu(
   new FloatingContextMenu(html, contextMenuSelector, [], {
     onOpen: onDocumentContext.bind(sheet),
     jQuery: true,
+    layout,
   });
 }
 
