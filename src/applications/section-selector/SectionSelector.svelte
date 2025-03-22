@@ -40,8 +40,7 @@
         ),
   );
 
-  // TODO: Check for is default
-  let isDefault = true;
+  let isDefault = $derived(isNil(context.data?.currentSection?.trim(), ''));
 </script>
 
 <fieldset>
@@ -60,34 +59,38 @@
         bind:value={searchCriteria}
       />
     </span>
-  {#if !isNil(searchCriteria, '')}
-    <a class="cancel-search" onclick={() => (searchCriteria = '')}>
-      <i class="fas fa-xmark-large fa-fw"></i>
-    </a>
-  {/if}
-</search>
+    {#if !isNil(searchCriteria, '')}
+      <a class="cancel-search" onclick={() => (searchCriteria = '')}>
+        <i class="fas fa-xmark-large fa-fw"></i>
+      </a>
+    {/if}
+  </search>
 
   <section class="existing-sections">
     {#each filteredResults as section (section)}
       {@const isSelected = context.data?.currentSection === section}
-        <button
-          type="button"
-          onclick={() => onOptionSelected(section)}
-          class="button toggle-button"
-          class:active={isSelected}
-        >
-          {#if isSelected}
-            <i class="fa-solid fa-check"></i>
-          {/if}
-          {localize(section)}
-        </button>
-      {/each}
-      <button type="button" class="toggle-button {isDefault ? 'primary-button' : ''}" onclick={() => useDefault()}>
-          {#if isDefault}
-            <i class="fa-solid fa-check"></i>
-          {/if}
-          {localize('TIDY5E.UseDefault')}
+      <button
+        type="button"
+        onclick={() => onOptionSelected(section)}
+        class="button toggle-button"
+        class:active={isSelected}
+      >
+        {#if isSelected}
+          <i class="fa-solid fa-check"></i>
+        {/if}
+        {localize(section)}
       </button>
+    {/each}
+    <button
+      type="button"
+      class="toggle-button {isDefault ? 'primary-button' : ''}"
+      onclick={() => useDefault()}
+    >
+      {#if isDefault}
+        <i class="fa-solid fa-check"></i>
+      {/if}
+      {localize('TIDY5E.UseDefault')}
+    </button>
   </section>
 </fieldset>
 
@@ -109,7 +112,6 @@
 </fieldset>
 
 <style>
-
   .existing-sections {
     flex: 1 1 auto;
     padding: 1px;
