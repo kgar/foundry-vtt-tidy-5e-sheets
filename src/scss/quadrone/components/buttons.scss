@@ -169,8 +169,8 @@
     --icon-fill: var(--t5e-color-palette-white);
 
     :where(i) {
-      --icon-fill: var(--t5e-color-icon-oninverse-default);
-      color: var(--t5e-color-icon-oninverse-default);
+      --icon-fill: var(--t5e-color-icon-light);
+      // color: var(--icon-fill);
     }
 
     &:hover {
