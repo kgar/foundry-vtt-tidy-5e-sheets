@@ -168,7 +168,7 @@
   <CapacityBar container={context.item} capacity={context.capacity} />
   <a
     title={localize('DND5E.ItemCreate')}
-    class="button button-icon-only attention item-create"
+    class="button button-icon-only button-primary item-create"
     class:disabled={!context.editable}
     onclick={() => Container.promptCreateInventoryItem(context.item)}
   >

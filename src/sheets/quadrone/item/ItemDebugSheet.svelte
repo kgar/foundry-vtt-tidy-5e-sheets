@@ -485,7 +485,7 @@
     </fieldset>
     <fieldset class="vertical-gallery">
       <legend>
-        Button / Attention
+        Button / Primary
         <tidy-gold-header-underline></tidy-gold-header-underline>
       </legend>
       Anchor

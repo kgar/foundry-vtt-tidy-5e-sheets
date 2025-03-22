@@ -66,8 +66,7 @@
   }
 
   &.active,
-  &:active,
-  &.attention {
+  &:active {
     --icon-fill: var(--button-icon);
 
     color: var(--button-text);
@@ -169,7 +168,7 @@
     --icon-fill: var(--t5e-color-palette-white);
 
     :where(i) {
-      --icon-fill: var(--t5e-color-icon-light);
+      --icon-fill: var(--t5e-color-palette-white);
       // color: var(--icon-fill);
     }
 
@@ -427,7 +426,7 @@
 
 &.theme-dark :is(button, .button) {
   i {
-    --icon-fill: var(--t5e-color-icon-diminished);
+    --icon-fill: var(--t5e-color-icon-button);
   }
 
   &.exclude {
@@ -444,6 +443,10 @@
   &.button-toggle,
   &.button-primary {
     --button-border: var(--t5e-component-field-border);
+
+    i {
+      --icon-fill: var(--t5e-color-icon-light);
+    }
 
     &:hover {
       --button-border-hover: var(--t5e-component-field-border-hover);
