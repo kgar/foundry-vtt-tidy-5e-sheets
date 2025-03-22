@@ -371,9 +371,9 @@ export function getItemContextOptions(
     icon: '<i class="fa-fw"></i>',
     callback: () =>
       new SectionSelectorApplication(
-        item,
         TidyFlags.section.prop,
-        FoundryAdapter.localize('TIDY5E.Section.Label')
+        FoundryAdapter.localize('TIDY5E.Section.Label'),
+        { document: item }
       ).render(true),
     condition: () =>
       item.isOwner &&
@@ -387,9 +387,9 @@ export function getItemContextOptions(
     icon: '<i class="fa-fw"></i>',
     callback: () =>
       new SectionSelectorApplication(
-        item,
         TidyFlags.section.prop,
-        FoundryAdapter.localize('TIDY5E.Section.ActionLabel')
+        FoundryAdapter.localize('TIDY5E.Section.ActionLabel'),
+        { document: item }
       ).render(true),
     condition: () =>
       item.isOwner &&

@@ -51,18 +51,20 @@
     <div>
       <h4 class="currency-header">
         <span>{localize('DND5E.Currency')}</span>
-        <a
-          class="button icon-button currency-conversion"
-          class:disabled={!context.editable}
-          onclick={() =>
-            context.owner &&
-            new dnd5e.applications.CurrencyManager(context.document).render(
-              true,
-            )}
-          title={localize('DND5E.CurrencyManager.Title')}
-        >
-          <i class="fas fa-database"></i>
-        </a>
+        {#if context.editable}
+          <a
+            class="button icon-button currency-conversion"
+            class:disabled={!context.editable}
+            onclick={() =>
+              context.owner &&
+              new dnd5e.applications.CurrencyManager(context.document).render(
+                true,
+              )}
+            title={localize('DND5E.CurrencyManager.Title')}
+          >
+            <i class="fas fa-database"></i>
+          </a>
+        {/if}
       </h4>
       <div class="currencies">
         {#each context.currencies as currency (currency.key)}

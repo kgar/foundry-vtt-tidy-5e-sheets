@@ -6,6 +6,7 @@
   } from './SectionSelectorApplication.svelte';
   import type { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
   import { isNil } from 'src/utils/data';
+  import Search from 'src/sheets/quadrone/shared/Search.svelte';
 
   interface Props {
     sheet: SectionSelectorApplication;
@@ -40,8 +41,7 @@
         ),
   );
 
-  // TODO: Check for is default
-  let isDefault = true;
+  let isDefault = $derived(isNil(context.data?.currentSection?.trim(), ''));
 </script>
 
 <fieldset>
@@ -50,44 +50,33 @@
     <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
-  <search>
-    <span class="icon-and-input">
-      <i class="fas fa-magnifying-glass fa-fw"></i>
-      <input
-        type="text"
-        class="interface-only"
-        placeholder={localize('TIDY5E.Search')}
-        bind:value={searchCriteria}
-      />
-    </span>
-  {#if !isNil(searchCriteria, '')}
-    <a class="cancel-search" onclick={() => (searchCriteria = '')}>
-      <i class="fas fa-xmark-large fa-fw"></i>
-    </a>
-  {/if}
-</search>
+  <Search bind:searchCriteria />
 
   <section class="existing-sections">
     {#each filteredResults as section (section)}
       {@const isSelected = context.data?.currentSection === section}
-        <button
-          type="button"
-          onclick={() => onOptionSelected(section)}
-          class="button toggle-button"
-          class:active={isSelected}
-        >
-          {#if isSelected}
-            <i class="fa-solid fa-check"></i>
-          {/if}
-          {localize(section)}
-        </button>
-      {/each}
-      <button type="button" class="toggle-button {isDefault ? 'primary-button' : ''}" onclick={() => useDefault()}>
-          {#if isDefault}
-            <i class="fa-solid fa-check"></i>
-          {/if}
-          {localize('TIDY5E.UseDefault')}
+      <button
+        type="button"
+        onclick={() => onOptionSelected(section)}
+        class="button toggle-button"
+        class:active={isSelected}
+      >
+        {#if isSelected}
+          <i class="fa-solid fa-check"></i>
+        {/if}
+        {localize(section)}
       </button>
+    {/each}
+    <button
+      type="button"
+      class="toggle-button {isDefault ? 'primary-button' : ''}"
+      onclick={() => useDefault()}
+    >
+      {#if isDefault}
+        <i class="fa-solid fa-check"></i>
+      {/if}
+      {localize('TIDY5E.UseDefault')}
+    </button>
   </section>
 </fieldset>
 
@@ -107,22 +96,3 @@
     >
   </div>
 </fieldset>
-
-<style>
-
-  .existing-sections {
-    flex: 1 1 auto;
-    padding: 1px;
-    overflow: auto;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .new-section {
-    display: flex;
-    flex-direction: column;
-    gap: 0.125rem;
-  }
-</style>

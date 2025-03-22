@@ -206,10 +206,9 @@
                   checked={context.source.attuned}
                   disabledChecked={context.source.attuned}
                   disabled={!context.unlocked ||
-                    // @ts-expect-error
                     !context.config.attunementTypes[context.system.attunement]}
                   title={localize('DND5E.AttunementAttuned')}
-                  />
+                />
               </label>
               <!-- Attunement -->
               <SelectQuadrone

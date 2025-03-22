@@ -2688,7 +2688,7 @@ export type CONFIG = {
     attunementTypes: {
       required: string;
       optional: string;
-    };
+    } & Record<string, string>;
     attunements: {
       '0': string;
       '1': string;
