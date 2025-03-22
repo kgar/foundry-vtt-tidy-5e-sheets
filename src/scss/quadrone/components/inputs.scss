@@ -38,7 +38,7 @@ select,
   }
 
   &::placeholder {
-    color: var(--t5e-color-text-ondefault-disabled);
+    color: var(--t5e-color-text-disabled);
   }
 }
 
@@ -64,7 +64,7 @@ textarea {
 
   &:has(input[type='text']:disabled) {
     background: var(--t5e-component-field-background-disabled);
-    color: var(--t5e-color-text-ondefault-lightest);
+    color: var(--t5e-color-text-lightest);
   }
 
   &:disabled {
@@ -88,7 +88,7 @@ input.uninput:hover {
   padding-inline-end: 0.5rem;
 
   &:focus-within {
-    box-shadow: 0px 0px 0px 2px var(--t5e-color-text-ondefault-gold-light);
+    box-shadow: 0px 0px 0px 2px var(--t5e-color-text-gold-light);
   }
 
   &:hover {
@@ -117,7 +117,7 @@ input.uninput:hover {
     }
 
     &::placeholder {
-      color: var(--t5e-color-text-ondefault-disabled);
+      color: var(--t5e-color-text-disabled);
     }
 
     &:disabled {
@@ -142,7 +142,7 @@ input.uninput:hover {
   &> :not(input):not(i) {
     font-weight: 500;
     font-size: 0.8125rem;
-    color: var(--t5e-color-text-ondefault-lightest);
+    color: var(--t5e-color-text-lightest);
   }
 
   i {
@@ -190,7 +190,7 @@ input.uninput:hover {
     border-radius: 0;
     border: none;
     box-shadow: none;
-    color: var(--t5e-color-text-ondefault-default);
+    color: var(--t5e-color-text-default);
     flex: 1 0 0;
     font-size: var(--font-size-13);
     height: auto;
@@ -207,7 +207,7 @@ input.uninput:hover {
     }
 
     &::placeholder {
-      color: var(--t5e-color-text-ondefault-disabled);
+      color: var(--t5e-color-text-disabled);
     }
 
     &:disabled {
@@ -223,7 +223,7 @@ input.uninput:hover {
   .cancel-search {
     width: var(--t5e-field-size-default);
     height: var(--t5e-field-size-default);
-    color: var(--t5e-color-text-ondefault-lighter);
+    color: var(--t5e-color-text-lighter);
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -284,7 +284,7 @@ input.uninput:hover {
 .radio-label {
   display: flex;
   flex-direction: column;
-  gap: var(--t5e-spacing-halfx);
+  gap: var(--t5e-size-halfx);
 
   .radio-label-subtitle {
     color: var(--t5e-color-text-lighter);
@@ -347,7 +347,7 @@ input[type='radio'] {
     height: 100%;
     border-radius: 50%;
     transform: scale(0.5);
-    background-color: var(--t5e-color-text-ondefault-gold-light);
+    background-color: var(--t5e-color-text-gold-light);
   }
 
   &:checked::after {
@@ -355,7 +355,7 @@ input[type='radio'] {
   }
 
   &:checked:disabled::before {
-    background-color: var(--t5e-color-text-ondefault-disabled);
+    background-color: var(--t5e-color-text-disabled);
   }
 }
 
@@ -380,13 +380,7 @@ input[type='checkbox'] {
   &:checked::before {
     content: '\f00c';
     font-size: 0.6875rem;
-    color: var(--t5e-color-text-ondefault-gold-light);
-  }
-
-  &:disabled {
-    &::before {
-      color: var(--t5e-color-icon-ondefault-default);
-    }
+    color: var(--t5e-component-toggle-toggled-text);
   }
 }
 
@@ -399,11 +393,11 @@ select {
   border: 1px solid var(--t5e-component-field-border);
   box-shadow: var(--t5e-drop-shadow-field);
   height: var(--t5e-field-size-default);
-  padding: 0 1.75rem 0 var(--t5e-spacing-2x);
+  padding: 0 1.75rem 0 var(--t5e-size-2x);
 
   display: flex;
   align-items: center;
-  gap: var(--t5e-spacing-1x);
+  gap: var(--t5e-size-1x);
   flex-shrink: 0;
 
   appearance: none;
@@ -411,7 +405,7 @@ select {
 
   font-size: var(--font-size-default, 0.8666666667rem);
   font-weight: var(--font-weight-default, 400);
-  color: var(--t5e-color-text-ondefault-default);
+  color: var(--t5e-color-text-default);
 
   background-color: var(--t5e-component-field-background);
   background-image: var(--bg-image-chevron);
@@ -428,7 +422,7 @@ select {
   &:hover,
   &:focus {
     --bg-image-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='fill: %23000' viewBox='0 0 512 512'%3E%3C!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--%3E%3Cpath d='M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z'/%3E%3C/svg%3E");
-    fill: var(--t5e-color-icon-ondefault-default);
+    fill: var(--t5e-color-icon-default);
   }
 
   &:disabled {
@@ -451,11 +445,11 @@ select {
     // border-color: var(--t5e-component-field-border);
     // background-color: var(--t5e-component-field-background);
     // box-shadow: var(--t5e-drop-shadow-field);
-    // color: var(--t5e-color-text-ondefault-default);
+    // color: var(--t5e-color-text-default);
     // transition: all var(--t5e-transition-default);
 
     &::placeholder {
-      color: var(--t5e-color-text-ondefault-disabled);
+      color: var(--t5e-color-text-disabled);
     }
 
     &:not(:disabled) {
@@ -497,7 +491,7 @@ select {
     }
 
     &> :not(input):not(i) {
-      color: var(--t5e-color-text-ondefault-lightest);
+      color: var(--t5e-color-text-lightest);
     }
   }
 

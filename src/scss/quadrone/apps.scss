@@ -5,11 +5,13 @@
 .tidy5e-sheet.application:where(.quadrone) {
   --minimized-width: 18.75rem;
   --color-scrollbar: rgba(0, 0, 0, 0.35);
+  --app-background: var(--t5e-component-card-darker);
+
 
   /* Application window */
   border-radius: 0.3125rem;
   border: 1px solid var(--t5e-color-gold);
-  background: var(--t5e-component-card-ondefault-darker);
+  background: var(--app-background);
   box-shadow: var(--t5e-drop-shadow-sheet);
   background-size: cover;
 
@@ -29,6 +31,7 @@
   &.minimized {
     .window-title {
       color: var(--t5e-color-text-default);
+      font: var(--t5e-font-label-medium);
     }
 
     .header-control {
@@ -36,29 +39,13 @@
     }
   }
 
-  .window-header {
-    .window-title {
-      color: var(--t5e-color-text-default);
-    }
-
-    button.header-control {
-      color: var(--t5e-color-icon-ondefault-button);
-      transition: all var(--t5e-transition-default);
-
-      &:hover {
-        color: var(--t5e-color-icon-ondefault-default);
-        border-radius: 100%;
-        background: rgba(0, 0, 0, 0.12);
-      }
-    }
-  }
 
   /* Font Color */
   &:not(.minimized) {
-    --color-light-text-heading: var(--t5e-color-text-ondefault-lighter);
+    --color-light-text-heading: var(--t5e-color-text-lighter);
   }
 
-  color: var(--t5e-color-text-ondefault-default);
+  color: var(--t5e-color-text-default);
 
   /* Sheet Body Typography */
   font-family: var(--font-family-default, var(--t5e-font-roboto-condensed));
@@ -71,7 +58,7 @@
   .window-header {
     border: none;
     align-items: center;
-    padding-inline-start: 0.75rem;
+    padding-inline-start: var(--t5e-size-3x);
 
     >* {
       max-block-size: 100%;
@@ -79,6 +66,17 @@
 
     .window-title {
       font-size: inherit;
+    }
+
+    button.header-control {
+      color: var(--t5e-color-icon-button);
+      transition: all var(--t5e-transition-default);
+
+      &:hover {
+        color: var(--t5e-color-icon-default);
+        border-radius: 100%;
+        background: rgba(0, 0, 0, 0.12);
+      }
     }
   }
 
@@ -101,14 +99,14 @@
 
     .header-control>button {
       min-height: var(--t5e-field-size-default);
-      color: var(--t5e-color-text-ondefault-lighter);
+      color: var(--t5e-color-text-lighter);
       justify-content: flex-start;
       gap: 0.5rem;
-      --button-text-color: var(--t5e-color-text-ondefault-default);
-      --button-hover-text-color: var(--t5e-color-text-ondefault-default);
+      --button-text-color: var(--t5e-color-text-default);
+      --button-hover-text-color: var(--t5e-color-text-default);
 
       i {
-        color: var(--t5e-color-icon-ondefault-button);
+        color: var(--t5e-color-icon-button);
       }
 
       &:hover {
@@ -118,7 +116,7 @@
 
     .header-control {
       .control-label {
-        color: var(--t5e-color-text-ondefault-default);
+        color: var(--t5e-color-text-default);
         font: var(--t5e-font-label-medium);
       }
     }
@@ -155,7 +153,7 @@
     h4,
     h5,
     h6 {
-      color: var(--t5e-color-text-ondefault-default);
+      color: var(--t5e-color-text-default);
       text-shadow: none;
       border: none;
       margin: 0;
@@ -219,21 +217,21 @@
 
   .text-data {
     font-weight: var(--font-weight-bold);
-    color: var(--t5e-color-text-ondefault-default);
+    color: var(--t5e-color-text-default);
   }
 
   .text-label {
     font-weight: var(--font-weight-label);
-    color: var(--t5e-color-text-ondefault-lighter);
+    color: var(--t5e-color-text-lighter);
   }
 
   .text-label-icon {
-    color: var(--t5e-color-text-ondefault-lightest);
+    color: var(--t5e-color-text-lightest);
   }
 
   .separator {
     font-weight: var(--font-weight-default);
-    color: var(--t5e-color-text-ondefault-lightest);
+    color: var(--t5e-color-text-lightest);
   }
 
   /* Currencies */
@@ -291,13 +289,9 @@
     }
   }
 
-  .inverse {
-    color: var(--t5e-color-text-oninverse-default);
-  }
-
   /* Prose Mirror Editor Customizations */
   .editor.prosemirror menu {
-    background: var(--t5e-component-card-oninverse-default);
+    background: var(--t5e-component-card-lighter);
     box-sizing: border-box;
     padding: 0.125rem;
 
@@ -335,7 +329,7 @@
         padding: 0 5px;
 
         &.active i {
-          color: var(--t5e-color-icon-ondefault-button);
+          color: var(--t5e-color-icon-button);
         }
 
         &:active,
@@ -343,7 +337,7 @@
           background-color: var(--t5e-component-field-background-active);
 
           i {
-            color: var(--t5e-color-icon-ondefault-button);
+            color: var(--t5e-color-icon-button);
           }
         }
 
@@ -362,7 +356,6 @@
   }
 
   &:where(.theme-light) {
-    background: var(--t5e-component-card-ondefault-darker);
 
     &::before {
       background: url(../../modules/tidy5e-sheet/images/texture-gray-1.webp) no-repeat top center;
@@ -395,7 +388,7 @@
 
   code {
     background-color: rgba(0, 0, 0, 0.08);
-    color: var(--t5e-color-text-ondefault);
+    color: var(--t5e-color-text);
     border: none;
     font-size: var(--font-size-12);
     // padding: 0.25rem 0.5rem;
@@ -407,13 +400,13 @@
   .enricher-action,
   .roll-link {
     // TODO: Cleanup this section.
-    --icon-fill: var(--t5e-color-text-ondefault-gold-emphasis);
+    --icon-fill: var(--t5e-color-text-gold-emphasis);
 
     border: none;
     background: none;
     font-weight: 500;
     color: var(--t5e-color-default);
-    background: rgba(0, 0, 0, 0.04);
+    background: var(--t5e-enricher-background);
     padding-top: 1px;
     padding-bottom: 2px;
 
@@ -423,20 +416,15 @@
     }
 
     &:hover {
-      // color: var(--t5e-color-text-lighter);
-      --icon-fill: var(--t5e-color-text-gold-emphasis);
+      --icon-fill: var(--t5e-color-text-default);
       text-shadow: 0px 0px 6px var(--t5e-color-text-gold);
-
-      i {
-        color: var(--t5e-color-text-lighter);
-      }
     }
   }
 
   .enricher-action {
-    margin-inline: var(--t5e-spacing-1);
-    padding-left: var(--t5e-spacing-1x);
-    padding-right: var(--t5e-spacing-1x);
+    margin-inline: var(--t5e-size-1);
+    padding-left: var(--t5e-size-1x);
+    padding-right: var(--t5e-size-1x);
 
     i {
       margin: 0;
@@ -445,12 +433,6 @@
 
   .roll-link {
     padding-left: 2px;
-  }
-
-  .secret {
-    .reveal {
-      padding: 0.25rem 0.5rem;
-    }
   }
 
   /* Item Summary */
@@ -479,8 +461,8 @@
     }
 
     .inline-wrapped-elements {
-      margin-top: var(--t5e-spacing-3x);
-      margin-bottom: var(--t5e-spacing-1x);
+      margin-top: var(--t5e-size-3x);
+      margin-bottom: var(--t5e-size-1x);
     }
 
     .left-aligned-elements {
@@ -517,7 +499,7 @@
       min-height: var(--t5e-tag-size-default);
 
       i {
-        color: var(--t5e-color-icon-oninverse-diminished);
+        color: var(--t5e-color-icon-diminished);
       }
 
       &:hover {
@@ -545,7 +527,7 @@
   /* Spell Block */
   .spell-block {
     li+li {
-      margin-block-start: var(--t5e-spacing-1x);
+      margin-block-start: var(--t5e-size-1x);
     }
 
     label {
@@ -584,7 +566,11 @@
 
 
   &:where(.theme-dark) {
-    background: var(--t5e-component-card-oninverse-darker) url(../../modules/tidy5e-sheet/images/denim065.png);
+    background: var(--app-background) url(../../modules/tidy5e-sheet/images/denim065.png);
+
+    code {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
 
     &::before,
     &::after {
@@ -592,7 +578,7 @@
     }
 
     &.minimized .window-header {
-      background: var(--t5e-component-card-oninverse-darker);
+      background: var(--t5e-component-card-darker);
     }
 
     .window-header {
@@ -604,16 +590,15 @@
 
   &.theme-light {
     .editor.prosemirror menu {
-      background: var(--t5e-component-card-ondefault-lighter);
       border: 1px solid var(--t5e-color-palette-gold-89);
 
       li button {
         &.active {
-          background-color: var(--t5e-component-card-ondefault-darker);
+          background-color: var(--t5e-component-card-darker);
           border-color: var(--t5e-color-gold);
 
           i {
-            color: var(--t5e-color-icon-ondefault-button);
+            color: var(--t5e-color-icon-button);
           }
         }
 
@@ -622,24 +607,24 @@
           background-color: var(--t5e-component-field-background-active);
 
           i {
-            color: var(--t5e-color-icon-ondefault-button);
+            color: var(--t5e-color-icon-button);
           }
         }
       }
     }
 
     &.minimized .window-header {
-      background: var(--t5e-component-card-ondefault-default);
+      background: var(--t5e-component-card-darker);
 
       .window-title {
-        color: var(--t5e-color-text-ondefault-default);
+        color: var(--t5e-color-text-default);
       }
 
       button.header-control {
-        color: var(--t5e-color-icon-ondefault-button);
+        color: var(--t5e-color-icon-button);
 
         &:hover {
-          color: var(--t5e-color-icon-ondefault-default);
+          color: var(--t5e-color-icon-default);
         }
       }
     }
@@ -647,45 +632,55 @@
 
   :where(.rarity) {
     --t5e-item-color: var(--t5e-color-gold);
-    
+
     &:where(.common) {
       --t5e-item-color: var(--t5e-color-rarity-common);
     }
+
     &:where(.uncommon) {
       --t5e-item-color: var(--t5e-color-rarity-uncommon);
     }
+
     &:where(.rare) {
       --t5e-item-color: var(--t5e-color-rarity-rare);
     }
+
     &:where(.veryrare) {
       --t5e-item-color: var(--t5e-color-rarity-very-rare);
     }
+
     &:where(.legendary) {
       --t5e-item-color: var(--t5e-color-rarity-legendary);
     }
+
     &:where(.artifact) {
       --t5e-item-color: var(--t5e-color-rarity-artifact);
     }
   }
-  
+
   :where(.spell-preparation) {
     --t5e-item-color: var(--t5e-color-gold);
-    
+
     &:where(.prepared) {
       --t5e-item-color: var(--t5e-color-icon-spellcasting-prepared);
     }
+
     &:where(.atwill) {
       --t5e-item-color: var(--t5e-color-icon-spellcasting-atwill);
     }
+
     &:where(.always) {
       --t5e-item-color: var(--t5e-color-icon-spellcasting-always);
     }
+
     &:where(.pact) {
       --t5e-item-color: var(--t5e-color-icon-spellcasting-pact);
     }
+
     &:where(.innate) {
       --t5e-item-color: var(--t5e-color-icon-spellcasting-innate);
     }
+
     &:where(.ritual) {
       --t5e-item-color: var(--t5e-color-icon-spellcasting-ritual);
     }

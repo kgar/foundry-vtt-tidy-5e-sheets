@@ -12,7 +12,7 @@
 
     svg path {
       stroke-width: 1px;
-      stroke: var(--t5e-color-text-oninverse-gold);
+      stroke: var(--t5e-color-text-gold);
     }
   }
 
@@ -22,7 +22,7 @@
   }
 
   .guideline-border-left {
-    background: var(--t5e-color-text-oninverse-gold);
+    background: var(--t5e-color-text-gold);
     width: 0.0625rem;
     position: absolute;
     top: 0;
@@ -31,7 +31,7 @@
   }
 
   .guideline-border-right {
-    background: var(--t5e-color-text-oninverse-gold);
+    background: var(--t5e-color-text-gold);
     width: 0.0625rem;
     position: absolute;
     top: 0;
@@ -39,14 +39,14 @@
     right: 0;
   }
 
-  .guideline-header > svg {
+  .guideline-header>svg {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
   }
 
-  .guideline-footer > svg {
+  .guideline-footer>svg {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -61,11 +61,11 @@
   justify-content: stretch;
   gap: 0.5rem;
 
-  > * {
+  >* {
     flex: 1;
   }
 
-  > .vertical-filigree-guideline {
+  >.vertical-filigree-guideline {
     flex: 0 0 auto;
   }
 }
@@ -78,11 +78,13 @@
   margin-top: -0.125rem;
 
   svg {
-    flex: 0 0 auto; /* Prevents SVG parts from stretching */
+    flex: 0 0 auto;
+    /* Prevents SVG parts from stretching */
     stroke: var(--line-color);
   }
 
   .middle {
-    flex-grow: 1; /* Allows the middle section to stretch */
+    flex-grow: 1;
+    /* Allows the middle section to stretch */
   }
 }

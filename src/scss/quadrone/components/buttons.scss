@@ -4,7 +4,7 @@
   --button-padding-block-end: 0.5rem;
   --button-padding-inline-start: 0.75rem;
   --button-padding-inline-end: 0.75rem;
-  --icon-fill: var(--t5e-color-icon-ondefault-button);
+  --icon-fill: var(--t5e-color-icon-button);
 
   display: inline-flex;
   width: unset;
@@ -15,7 +15,7 @@
   border-radius: 0.125rem;
   border: 1px solid var(--t5e-component-field-border);
   background: var(--t5e-component-field-background);
-  color: var(--t5e-color-text-ondefault-default);
+  color: var(--t5e-color-text-default);
   cursor: pointer;
 
   font-family: var(--t5e-font-roboto-condensed);
@@ -47,12 +47,12 @@
 
   &:hover {
     background: var(--t5e-component-field-background-hover);
-    color: var(--t5e-color-text-ondefault-default);
+    color: var(--t5e-color-text-default);
     border: 1px solid var(--t5e-component-field-border-hover);
     box-shadow: var(--t5e-drop-shadow-field-hover);
 
     :where(i) {
-      color: var(--t5e-color-icon-ondefault-default);
+      color: var(--t5e-color-icon-default);
     }
   }
 
@@ -63,7 +63,7 @@
   &.active,
   &:active,
   &.attention {
-    --icon-fill: var(--t5e-color-icon-ondefault-default);
+    --icon-fill: var(--t5e-color-icon-default);
 
     color: var(--t5e-component-toggle-toggled-text);
     border: 1px solid var(--t5e-component-toggle-toggled-border);
@@ -111,7 +111,7 @@
 
     &,
     i {
-      color: var(--t5e-color-icon-ondefault-disabled);
+      color: var(--t5e-color-icon-disabled);
     }
   }
 
@@ -141,9 +141,9 @@
 
     &.disabled,
     &.exclude {
-      --icon-fill: var(--t5e-color-text-ondefault-lightest);
+      --icon-fill: var(--t5e-color-text-lightest);
       font-style: italic;
-      color: var(--t5e-color-text-ondefault-lightest);
+      color: var(--t5e-color-text-lightest);
       box-shadow: none;
     }
   }
@@ -154,7 +154,7 @@
   // background: var(--t5e-component-field-background);
 
   i {
-    color: var(--t5e-color-icon-ondefault-diminished);
+    color: var(--t5e-color-icon-diminished);
   }
 
   &.exclude {
@@ -163,7 +163,7 @@
 
   &:hover {
     i {
-      color: var(--t5e-color-icon-ondefault-default);
+      color: var(--t5e-color-icon-default);
     }
   }
 
@@ -264,11 +264,11 @@
       position: absolute;
       right: 0.125rem;
       bottom: 0.0625rem;
-      color: var(--t5e-color-text-ondefault-gold);
+      color: var(--t5e-color-text-gold);
     }
 
     &:is(.active, :active, .attention):not(.disabled) .expand-indicator {
-      color: var(--t5e-color-text-oninverse-default);
+      color: var(--t5e-color-text-default);
     }
   }
 
@@ -282,7 +282,7 @@
     display: none;
     flex-direction: column;
     gap: 0.5rem;
-    background: var(--t5e-component-card-ondefault-default);
+    background: var(--t5e-component-card-default);
     border-radius: 0.25rem;
     z-index: 2;
     white-space: nowrap;
@@ -302,7 +302,7 @@
     }
 
     h4 {
-      color: var(--t5e-color-text-ondefault-lighter);
+      color: var(--t5e-color-text-lighter);
       font-size: 0.8125rem;
       font-weight: 500;
       line-height: normal;
@@ -338,7 +338,6 @@
   menu.expanded {
     width: 20rem;
     border: 1px solid var(--t5e-component-field-border);
-    // background: var(--t5e-component-card-ondefault-default);
     display: flex;
     flex-direction: column;
     gap: 1.125rem;
@@ -358,13 +357,5 @@
 
   &.collapsed .expand-button-indicator {
     transform: rotate(-90deg);
-  }
-}
-
-
-&.dark,
-&.theme-dark {
-  .button-with-options-wrapper menu {
-    background: var(--t5e-component-card-oninverse-darker);
   }
 }

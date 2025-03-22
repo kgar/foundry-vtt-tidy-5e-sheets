@@ -20,12 +20,12 @@
     }
 
     >legend {
-      color: var(--t5e-color-text-ondefault-lighter, #4b4a44);
+      color: var(--t5e-color-text-lighter, #4b4a44);
       /* title/small */
       font-family: var(--font-family-title, 'Modesto Condensed');
       font-size: var(--font-size-18);
       letter-spacing: 0.01rem;
-      padding: var(--t5e-spacing-halfx) 0;
+      padding: var(--t5e-size-halfx) 0;
       margin-bottom: 0.25rem;
 
       width: 100%;
@@ -45,10 +45,10 @@
     }
 
     >.empty {
-      padding: var(--t5e-spacing-1x) 0 var(--t5e-spacing-2x);
+      padding: var(--t5e-size-1x) 0 var(--t5e-size-2x);
       font-style: italic;
       text-align: left;
-      color: var(--t5e-color-text-ondefault-lightest);
+      color: var(--t5e-color-text-lightest);
     }
 
     // TODO: Need example of card fieldset  legends
@@ -73,7 +73,7 @@
 
       .form-group label,
       .hint {
-        // color: var(--t5e-color-text-ondefault-lightest);
+        // color: var(--t5e-color-text-lightest);
       }
     }
   }
@@ -94,8 +94,8 @@
       font-weight: 600;
       line-height: var(--label-height);
       height: var(--label-height);
-      color: var(--t5e-color-text-ondefault-lightest);
-      margin: var(--t5e-spacing-halfx) 0;
+      color: var(--t5e-color-text-lightest);
+      margin: var(--t5e-size-halfx) 0;
 
       >p.hint {
         cursor: help;
@@ -172,8 +172,8 @@
       font-weight: 600;
       line-height: var(--label-height);
       height: var(--label-height);
-      color: var(--t5e-color-text-ondefault-lightest);
-      margin: var(--t5e-spacing-halfx) 0;
+      color: var(--t5e-color-text-lightest);
+      margin: var(--t5e-size-halfx) 0;
 
       >p.hint {
         cursor: help;
@@ -243,7 +243,7 @@
     gap: 0.25rem;
 
     >label {
-      color: var(--t5e-color-text-ondefault-lighter);
+      color: var(--t5e-color-text-lighter);
       font-size: var(--font-size-default);
       font-weight: 500;
       line-height: var(--t5e-line-height-default);
@@ -501,7 +501,7 @@
 
   :is(.form-group, fieldset) .hint {
     font-size: var(--font-size-12);
-    color: var(--t5e-color-text-ondefault-lighter);
+    color: var(--t5e-color-text-lighter);
     margin: 0.125rem 0 0.25rem 0;
   }
 
