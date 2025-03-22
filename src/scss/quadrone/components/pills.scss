@@ -64,23 +64,25 @@
   }
 
   // TODO: Determine if lighter text can be moved to its own scope and stylesheet and used generically
-  .lighter {
+  &.lighter {
     font-weight: 400;
-    color: var(--t5e-color-text-lighter);
+
+    span,
+    i {
+      font-weight: 400;
+      color: var(--t5e-color-text-lighter);
+    }
+
     --icon-fill: var(--t5e-color-text-lighter);
   }
 
   &.negative {
     border-color: var(--t5e-color-palette-red-27);
     background: var(--t5e-color-palette-red-31);
-
-    .lighter {
-      color: var(--t5e-color-text-lighter);
-    }
   }
 
   &.positive {
-    border-color: var(--t5e-color-palette-green-25);
+    border-color: var(--t5e-color-palette-green-29);
     background: var(--t5e-color-palette-green-43);
   }
 
@@ -88,7 +90,7 @@
   &.negative {
     color: var(--t5e-color-text-oninverse-default);
 
-    .lighter {
+    &.lighter {
       color: var(--t5e-color-text-oninverse-lighter);
     }
   }
@@ -178,36 +180,15 @@
       }
     }
 
-    .lighter {
-      color: var(--t5e-color-text-lighter);
-      --icon-fill: var(--t5e-color-text-lighter);
-    }
-
-    i {
-      color: var(--t5e-color-icon-default);
-    }
 
     &.negative {
       border-color: var(--t5e-color-palette-red-27);
       background: var(--t5e-color-palette-red-31);
-
-      .lighter {
-        color: var(--t5e-color-text-lighter);
-      }
     }
 
     &.positive {
       border-color: var(--t5e-color-palette-green-25);
       background: var(--t5e-color-palette-green-43);
-    }
-
-    &.positive,
-    &.negative {
-      color: var(--t5e-color-text-default);
-
-      .lighter {
-        color: var(--t5e-color-text-lighter);
-      }
     }
   }
 

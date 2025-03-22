@@ -60,6 +60,11 @@
     align-items: center;
     padding-inline-start: var(--t5e-size-3x);
 
+    h1 {
+      color: var(--t5e-color-text-default);
+      font: var(--t5e-font-label-medium);
+    }
+
     >* {
       max-block-size: 100%;
     }
