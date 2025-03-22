@@ -31,7 +31,7 @@
       width: 100%;
 
       &:not(:has(tidy-gold-header-underline)) {
-        border-bottom: 0.0938rem solid var(--t5e-color-gold);
+        border-bottom: 1px solid var(--t5e-color-gold);
       }
 
       >label.checkbox {
@@ -51,30 +51,8 @@
       color: var(--t5e-color-text-lightest);
     }
 
-    // TODO: Need example of card fieldset  legends
-    &.card>legend {
-      background: var(--t5e-background-card);
-      position: relative;
-      border-radius: 2px;
-      padding: 0.125rem 0.375rem 0 0.375rem;
-
-      &::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border-radius: 0.125rem;
-        outline: var(--t5e-color-gold);
-        z-index: -1;
-      }
-    }
-
-    // TODO: Need example of disabled fieldset.
-    &:disabled {
-
-      .form-group label,
-      .hint {
-        // color: var(--t5e-color-text-lightest);
-      }
+    &.card {
+      margin-top: var(--t5e-size-8x);
     }
   }
 
@@ -109,21 +87,6 @@
         &:empty {
           min-height: unset;
         }
-
-        /*
-
-            &:hover {
-              text-shadow: 0 0 6px var(--color-shadow-primary);
-            }
-
-            &::before {
-              content: "\f059";
-              font-family: var(--font-awesome);
-              font-weight: normal;
-              color: var(--color-text-dark-5);
-            }
-
-          */
       }
     }
 
