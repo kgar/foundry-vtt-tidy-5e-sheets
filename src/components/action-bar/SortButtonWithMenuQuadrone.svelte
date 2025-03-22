@@ -58,6 +58,7 @@
   {/if}
 
   {#snippet menu()}
+    <h4>{localize('TIDY5E.ExpandCollapseMenu.OptionTitle')}</h4>
     {#each groups as sortGroup}
       <label class="radio">
         <input

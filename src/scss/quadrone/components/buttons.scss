@@ -340,6 +340,7 @@
     flex-direction: column;
     gap: 0.5rem;
     background: var(--t5e-component-card-default);
+    border: 1px solid var(--t5e-component-field-border);
     border-radius: 0.25rem;
     z-index: 2;
     white-space: nowrap;
@@ -424,53 +425,59 @@
 
 
 
-&.theme-dark :is(button, .button) {
-  i {
-    --icon-fill: var(--t5e-color-icon-button);
+&.theme-dark {
+  .button-with-options-wrapper menu {
+    background: var(--t5e-component-card-darker);
   }
 
-  &.exclude {
-    background: transparent;
-  }
-
-  &:hover {
+  :is(button, .button) {
     i {
-      color: var(--t5e-color-icon-default);
+      --icon-fill: var(--t5e-color-icon-button);
     }
-  }
 
-
-  &.button-toggle,
-  &.button-primary {
-    --button-border: var(--t5e-component-field-border);
-
-    i {
-      --icon-fill: var(--t5e-color-icon-light);
+    &.exclude {
+      background: transparent;
     }
 
     &:hover {
-      --button-border-hover: var(--t5e-component-field-border-hover);
+      i {
+        color: var(--t5e-color-icon-default);
+      }
     }
-  }
 
-  &.disabled,
-  &:disabled {
-    --icon-fill: var(--t5e-color-icon-disabled);
-  }
 
-  &:focus-within:not(.button-toggle) {
-    --button-border: var(--t5e-component-field-border-hover);
-    --button-background: var(--t5e-component-field-background-hover);
-  }
+    &.button-toggle,
+    &.button-primary {
+      --button-border: var(--t5e-component-field-border);
 
-  &:focus-within:is(.button-toggle) {
-    &:has(.toggle:checked) {
-      --button-border: var(--t5e-component-toggle-toggled-border);
+      i {
+        --icon-fill: var(--t5e-color-icon-light);
+      }
+
+      &:hover {
+        --button-border-hover: var(--t5e-component-field-border-hover);
+      }
+    }
+
+    &.disabled,
+    &:disabled {
+      --icon-fill: var(--t5e-color-icon-disabled);
+    }
+
+    &:focus-within:not(.button-toggle) {
+      --button-border: var(--t5e-component-field-border-hover);
+      --button-background: var(--t5e-component-field-background-hover);
+    }
+
+    &:focus-within:is(.button-toggle) {
+      &:has(.toggle:checked) {
+        --button-border: var(--t5e-component-toggle-toggled-border);
+        --button-background: var(--t5e-theme-color-darker);
+      }
+    }
+
+    &:focus-within:is(.button-primary) {
       --button-background: var(--t5e-theme-color-darker);
     }
-  }
-
-  &:focus-within:is(.button-primary) {
-    --button-background: var(--t5e-theme-color-darker);
   }
 }

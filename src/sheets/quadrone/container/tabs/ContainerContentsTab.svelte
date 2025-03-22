@@ -111,6 +111,7 @@
   <a
     class="button button-icon-only"
     class:disabled={!context.editable}
+    title={localize('TIDY5E.ConfigureTab.Title')}
     onclick={() =>
       context.editable &&
       new ConfigureSectionsApplication({
