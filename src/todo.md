@@ -1,17 +1,12 @@
 ## To Do
 
-- [ ] Feedback
-  - [x] Price and Charge columns - always follow Identified instead of GM Edit Mode
-  - [x] Price column and summary: one question mark
-  - [ ] (unable to repro) Activity Edit ctx menu doesn't work
-  - [ ] (awaiting hightouch design) Adjust the suppressed effect's toggle icon, since it can't be adjusted anyhow
-- [x] (hightouch) Time to do variable cleanup
-- [ ] (hightouch) Quadronify src\applications\section-selector\SectionSelector.svelte?
-- [ ] Implement Container Limited View
-- [ ] Test Container Observer View
+- [ ] Section Selector - swap in the Search component, if possible.
+- [ ] Localize Container sheet name
 - [ ] Review Container sheet to ensure it has everything; add TODOs as needed
-- [ ] Localize Container sheet name and move it out of the Truesight filter
-- [ ] Go beta!
+- [ ] Move Container Quadrone out of the Truesight filter Go beta!
+  - [ ] Readme / screenshots
+  - [ ] Release Notes
+- [ ] (awaiting hightouch design) Effects Tables: Adjust the suppressed effect's toggle icon, since it can't be adjusted anyhow
 - [ ] Notify hightouch that spell sheet is ready for final review
 - [ ] Test spell info on item summary and cards
 - [ ] Begin thinking about how to extract common functionality across each table type (item, effects, activities)
@@ -297,3 +292,11 @@ Limited:
     - [x] Unidentified description expanded and editable
     - [x] Description section hidden, Chat description section hidden
     - [x] Header source label set to "?" if filled out, edit button hidden (all modes) unless in GM Edit Mode
+- [x] Feedback
+  - [x] Price and Charge columns - always follow Identified instead of GM Edit Mode
+  - [x] Price column and summary: one question mark
+  - [ ] ~~(unable to repro) Activity Edit ctx menu doesn't work~~
+- [x] (hightouch) Time to do variable cleanup
+- [x] Implement Container Limited View
+- [x] Test Container Observer View
+- [x] (hightouch) Quadronify src\applications\section-selector\SectionSelector.svelte?
