@@ -380,7 +380,7 @@ input[type='checkbox'] {
   &:checked::before {
     content: '\f00c';
     font-size: 0.6875rem;
-    color: var(--t5e-component-toggle-toggled-text);
+    color: var(--t5e-color-icon-oninverse-default);
   }
 }
 
