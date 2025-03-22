@@ -20,15 +20,22 @@
       [`system.spells.${section.prop}.value`]: value,
     });
   }
+
+  let uses = $derived(section.uses ?? 0);
+  let slots = $derived(section.slots ?? 0);
+
+  let totalPips = $derived(Math.max(uses, slots));
 </script>
 
 <div class="pips spell-pips">
-  {#each { length: section.slots ?? 0 }, index}
+  {#each { length: totalPips }, index}
     <SpellPip
-      uses={section.uses ?? 0}
+      uses={uses ?? 0}
       {index}
+      temp={index >= slots}
       onclick={() => context.editable && onPipClick(index)}
     />
   {/each}
+
   <span class="pip-end"></span>
 </div>

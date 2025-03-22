@@ -564,11 +564,19 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
+  '--t5e-spell-pip-temp-background': {
+    type: 'todo',
+    group: 'todo',
+  },
   '--t5e-spell-pip-empty-background': {
     type: 'todo',
     group: 'todo',
   },
   '--t5e-spell-pip-border-color': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5e-spell-pip-temp-border-color': {
     type: 'todo',
     group: 'todo',
   },

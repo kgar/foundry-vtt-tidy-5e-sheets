@@ -4,18 +4,14 @@
   interface Props {
     uses: number;
     index: number;
+    temp?: boolean;
     onclick?: MouseEventHandler<HTMLAnchorElement>;
     onmouseenter?: MouseEventHandler<HTMLAnchorElement>;
     onmouseleave?: MouseEventHandler<HTMLAnchorElement>;
   }
 
-  let {
-    uses,
-    index,
-    onclick,
-    onmouseenter,
-    onmouseleave,
-  }: Props = $props();
+  let { uses, index, temp, onclick, onmouseenter, onmouseleave }: Props =
+    $props();
 
   let isEmpty = $derived(index >= uses);
   let previousIsEmpty = $state<boolean | null>(null);
@@ -51,7 +47,7 @@
 
 <a
   bind:this={pipEl}
-  class="pip spell-pip"
+  class={['pip', 'spell-pip', { temp }]}
   class:inactive={isEmpty}
   class:active={!isEmpty}
   {onclick}
