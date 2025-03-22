@@ -5,7 +5,7 @@
   - [x] Price column and summary: one question mark
   - [ ] (unable to repro) Activity Edit ctx menu doesn't work
   - [ ] (awaiting hightouch design) Adjust the suppressed effect's toggle icon, since it can't be adjusted anyhow
-- [ ] (hightouch) Time to do variable cleanup
+- [x] (hightouch) Time to do variable cleanup
 - [ ] (hightouch) Quadronify src\applications\section-selector\SectionSelector.svelte?
 - [ ] Implement Container Limited View
 - [ ] Test Container Observer View
