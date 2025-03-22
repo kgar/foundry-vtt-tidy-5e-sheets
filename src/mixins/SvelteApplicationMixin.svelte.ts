@@ -119,11 +119,11 @@ export function SvelteApplicationMixin<
     }
 
     _replaceHTML(
-      result: RenderResult<TContext>,
-      content: HTMLElement,
-      options: ApplicationRenderOptions
+      _result: RenderResult<TContext>,
+      _content: HTMLElement,
+      _options: ApplicationRenderOptions
     ) {
-      super._replaceHTML(result, content, options);
+      // Stop it here so the underlying App V2 code doesn't insert `result` "beforeend"
     }
 
     /* -------------------------------------------- */
