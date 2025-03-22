@@ -568,6 +568,12 @@
     cursor: text;
   }
 
+  #context-menu.tidy5e-sheet {
+    background: var(--t5e-component-field-background);
+    border: 1px solid var(--t5e-component-field-border);
+    box-shadow: var(--t5e-drop-shadow-card);
+  }
+
 
 
   &:where(.theme-dark) {

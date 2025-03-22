@@ -87,8 +87,7 @@
       {#if context.editable}
         <button
           type="button"
-          class="inline-icon-button create-recovery-button borderless-button icon-button"
-          data-tooltip="DND5E.USES.Recovery.Action.Create"
+          class="inline-icon-button create-recovery-button button-borderless button-icon-only"tooltip-borderless="DND5E.USES.Recovery.Action.Create"
           aria-label={localize('DND5E.USES.Recovery.Action.Create')}
           onclick={() => context.item.sheet.addRecovery()}
           disabled={!context.unlocked}
@@ -212,7 +211,7 @@
           {#if context.unlocked}
             <button
               type="button"
-              class="inline-icon-button align-self-stretch icon-button borderless-button"
+              class="inline-icon-button align-self-stretch button-icon-only button-borderless"
               data-action="deleteRecovery"
               title={localize('DND5E.USES.Recovery.Action.Delete')}
               aria-label={localize('DND5E.USES.Recovery.Action.Delete')}

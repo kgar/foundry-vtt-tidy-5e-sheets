@@ -146,7 +146,7 @@
 <div class="sorting-listbox flex-row small-gap {rest.class ?? ''}">
   <div class="controls">
     <button
-      class="control"
+      class="button button-icon-only"
       title={localize('TIDY5E.Listbox.MoveUp')}
       type="button"
       disabled={selectedItemIndex === null || selectedItemIndex === 0}
@@ -157,7 +157,7 @@
       <i class="fas fa-arrow-up"></i>
     </button>
     <button
-      class="control"
+      class="button button-icon-only"
       title={localize('TIDY5E.Listbox.MoveDown')}
       type="button"
       disabled={selectedItemIndex === null ||

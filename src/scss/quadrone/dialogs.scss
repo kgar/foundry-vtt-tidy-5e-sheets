@@ -1,6 +1,6 @@
 /* The place for all dialogs and their specific layout styles. */
-
 .tidy5e-sheet.application:where(.quadrone) {
+
   // Section Selector Dialog
   &.tidy-section-selector-application {
     .existing-sections {
@@ -29,7 +29,7 @@
       min-height: 0;
 
       h1 {
-        font-size: var(--font-size-24);
+        font: var(--t5e-font-title-medium);
         padding: 0;
         margin: 0;
         line-height: normal;
@@ -37,8 +37,7 @@
       }
 
       h2 {
-        font-size: var(--font-size-18);
-        border-bottom: 1px solid var(--t5e-color-gold);
+        font: var(--t5e-font-title-small);
         margin-block-end: var(--t5e-size-2x);
 
         &:not(:first-child) {
@@ -58,30 +57,13 @@
       }
     }
 
-    .sorting-listbox {
-      .listbox-item {
-        .section-config-item-label {
-          flex: 1;
-          padding-block: 0.25rem;
-
-          &.marked-as-hidden {
-            color: var(--t5e-color-text-lightest);
-          }
-        }
-
-        &:has(.marked-as-hidden) .drag-grip {
-          color: var(--t5e-color-text-lighter);
-        }
-      }
-    }
-
     .button-bar {
       display: flex;
       gap: 0.25rem;
       flex-wrap: wrap;
       white-space: nowrap;
 
-      > * {
+      >* {
         flex: 1;
         text-wrap: none;
       }

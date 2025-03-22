@@ -44,7 +44,7 @@
 </script>
 
 <ButtonWithOptionPanel
-  buttonClasses="icon-button toggle-button"
+  buttonClasses="button-secondary button-icon-only button-toggle"
   anchor="right"
   onclick={(ev) => selected && onSortClicked(ev, selected)}
   buttonAttributes={{

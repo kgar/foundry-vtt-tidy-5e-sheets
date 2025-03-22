@@ -44,7 +44,7 @@
 </script>
 
 <ButtonWithOptionPanel
-  buttonClasses="icon-button expand-button toggle-button {allExpanded
+  buttonClasses="button-secondary button-icon-only expand-button button-toggle {allExpanded
     ? 'expanded'
     : 'collapsed'}"
   onclick={() => toggleContents()}

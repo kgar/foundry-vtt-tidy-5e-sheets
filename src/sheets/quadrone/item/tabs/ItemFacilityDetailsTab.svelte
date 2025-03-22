@@ -399,7 +399,7 @@
               <div class="list-controls flexrow">
                 <button
                   type="button"
-                  class="icon-button"
+                  class="button-icon-only"
                   onclick={() =>
                     context.item.sheet.submit({
                       updateData: { 'system.craft': null },

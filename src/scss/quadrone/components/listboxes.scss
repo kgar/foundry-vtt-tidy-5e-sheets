@@ -1,4 +1,8 @@
 .sorting-listbox {
+  .listbox-item {}
+}
+
+.sorting-listbox {
   display: flex;
   flex: 1;
   gap: 0.5rem;
@@ -49,10 +53,33 @@
       border-radius: 0.125rem;
       border: 1px solid var(--t5e-component-field-border);
 
+      .section-config-item-label {
+        flex: 1;
+        padding-block: 0.25rem;
+
+        &.marked-as-hidden {
+          color: var(--t5e-color-text-lighter);
+          font-style: italic;
+        }
+      }
+
+      &:has(.marked-as-hidden) {
+        background-color: var(--t5e-card-color-darker);
+
+        .drag-grip {
+          color: var(--t5e-color-text-lighter);
+        }
+      }
+
       &.focused {
         border-color: var(--t5e-component-field-border-hover);
         box-shadow: var(--t5e-drop-shadow-field-hover);
         outline: var(--t5e-outline-field-focus);
+        background: var(--t5e-theme-color-darker);
+
+        &:has(.marked-as-hidden) {
+          background-color: var(--t5e-theme-color-darkest);
+        }
       }
 
       .listbox-option-button {
@@ -68,10 +95,10 @@
       .option-hide {
         font-style: italic;
         border-color: var(--t5e-color-text-disabled);
-        color: var(--t5e-color-text-lightest);
+        color: var(--t5e-color-text-lighter);
 
         i {
-          color: var(--t5e-color-text-disabled);
+          color: var(--t5e-color-icon-disabled);
         }
       }
     }

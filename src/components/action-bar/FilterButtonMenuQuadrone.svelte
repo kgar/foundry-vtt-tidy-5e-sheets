@@ -33,7 +33,7 @@
   anchor="right"
   bind:expanded={filterMenuExpanded}
   onclick={() => (filterMenuExpanded = !filterMenuExpanded)}
-  buttonClasses="icon-button toggle-button"
+  buttonClasses="button-icon-only button-toggle"
   containerClasses="filter-menu"
 >
   <i class="fas fa-filter"></i>

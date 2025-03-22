@@ -97,7 +97,7 @@
             {#if context.editable}
               <button
                 type="button"
-                class="header-action borderless-button icon-button"
+                class="header-action button-borderless button-icon-only"
                 title={localize('DND5E.EffectCreate')}
                 onclick={(event) => onAddClicked(section)}
               >

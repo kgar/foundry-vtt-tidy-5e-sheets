@@ -109,7 +109,7 @@
   <SortButtonWithMenuQuadrone doc={context.item} {...context.contentsSort} />
 
   <a
-    class="button icon-button"
+    class="button button-icon-only"
     class:disabled={!context.editable}
     onclick={() =>
       context.editable &&
@@ -168,7 +168,7 @@
   <CapacityBar container={context.item} capacity={context.capacity} />
   <a
     title={localize('DND5E.ItemCreate')}
-    class="button icon-button attention item-create"
+    class="button button-icon-only attention item-create"
     class:disabled={!context.editable}
     onclick={() => Container.promptCreateInventoryItem(context.item)}
   >

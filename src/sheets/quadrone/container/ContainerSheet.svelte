@@ -53,7 +53,7 @@
         <span>{localize('DND5E.Currency')}</span>
         {#if context.editable}
           <a
-            class="button icon-button currency-conversion"
+            class="button button-icon-only currency-conversion"
             class:disabled={!context.editable}
             onclick={() =>
               context.owner &&
