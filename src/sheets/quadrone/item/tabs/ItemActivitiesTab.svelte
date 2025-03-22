@@ -65,7 +65,7 @@
       <TidyTableHeaderCell {...columnSpecs.actions} class="header-cell-actions">
         <button
           type="button"
-          class="header-action borderless-button icon-button"
+          class="header-action button-borderless button-icon-only"
           title={localize('DND5E.ACTIVITY.Action.Create')}
           onclick={() => context.item.sheet.addActivity()}
         >

@@ -109,8 +109,9 @@
   <SortButtonWithMenuQuadrone doc={context.item} {...context.contentsSort} />
 
   <a
-    class="button icon-button"
+    class="button button-icon-only"
     class:disabled={!context.editable}
+    title={localize('TIDY5E.ConfigureTab.Title')}
     onclick={() =>
       context.editable &&
       new ConfigureSectionsApplication({
@@ -168,7 +169,7 @@
   <CapacityBar container={context.item} capacity={context.capacity} />
   <a
     title={localize('DND5E.ItemCreate')}
-    class="button icon-button attention item-create"
+    class="button button-icon-only button-primary item-create"
     class:disabled={!context.editable}
     onclick={() => Container.promptCreateInventoryItem(context.item)}
   >

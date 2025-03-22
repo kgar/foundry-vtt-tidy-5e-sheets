@@ -19,7 +19,7 @@
       <span>
         <button
           type="button"
-          class="configure-starting-equipment inline-icon-button icon-button borderless-button"
+          class="configure-starting-equipment inline-icon-button button-icon-only button-borderless"
           title={localize('DND5E.StartingEquipment.Action.Configure')}
           aria-label={localize('DND5E.StartingEquipment.Action.Configure')}
           onclick={() =>

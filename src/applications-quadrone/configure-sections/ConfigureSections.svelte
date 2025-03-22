@@ -47,6 +47,7 @@
 </div>
 <h2>
   {localize('TIDY5E.Section.LabelPl')}
+  <tidy-gold-header-underline></tidy-gold-header-underline>
 </h2>
 <SortingListbox
   bind:items={sections}
@@ -64,7 +65,7 @@
     {#if item.show !== false}
       <button
         type="button"
-        class="listbox-option-button option-show"
+        class="button listbox-option-button option-show"
         title={localize('TIDY5E.Section.ConfigDialog.showTooltip')}
         data-testid="section-config-show"
         onclick={() => {
@@ -78,7 +79,7 @@
     {:else}
       <button
         type="button"
-        class="listbox-option-button option-hide"
+        class="button listbox-option-button option-hide"
         title={localize('TIDY5E.Section.ConfigDialog.hideTooltip')}
         data-testid="section-config-hide"
         onclick={() => {
@@ -98,13 +99,13 @@
     type="button"
     data-testid="section-config-save-changes"
     onclick={(ev) => application.saveChanges()}
-    class="active save-changes-btn"
+    class="button button-primary save-changes-btn"
   >
     {localize('TIDY5E.SaveChanges')}
   </button>
   <button
     type="button"
-    class="use-default-btn"
+    class="button button-secondary use-default-btn"
     data-testid="section-config-use-default"
     onclick={(ev) => application.useDefault()}
   >
@@ -113,7 +114,7 @@
   </button>
   <button
     type="button"
-    class="apply-changes-btn"
+    class="button button-secondary apply-changes-btn"
     data-testid="section-config-apply-changes"
     onclick={() => application.close()}
   >

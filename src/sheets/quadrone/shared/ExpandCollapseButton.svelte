@@ -44,15 +44,19 @@
 </script>
 
 <ButtonWithOptionPanel
-  buttonClasses="icon-button expand-button toggle-button {allExpanded
+  buttonClasses="button-secondary button-icon-only expand-button button-toggle {allExpanded
     ? 'expanded'
     : 'collapsed'}"
+  buttonAttributes={{
+    title: localize(allExpanded ? "TIDY5E.Commands.CollapseAll" : "TIDY5E.Commands.ExpandAll")
+  }}
   onclick={() => toggleContents()}
 >
   <i class="expand-button-indicator fas fa-angles-down fa-fw"></i>
   {#snippet menu()}
     <h4>{localize('TIDY5E.ExpandCollapseMenu.OptionTitle')}</h4>
     <label
+      class="radio"
       for="{context.document.id}-expand-collapse-behavior-top-level-sections"
     >
       <input
@@ -64,7 +68,10 @@
       />
       {localize('TIDY5E.ExpandCollapseMenu.OptionTopLevel')}
     </label>
-    <label for="{context.document.id}-expand-collapse-behavior-all-sections">
+    <label
+      class="radio"
+      for="{context.document.id}-expand-collapse-behavior-all-sections"
+    >
       <input
         type="radio"
         id="{context.document.id}-expand-collapse-behavior-all-sections"

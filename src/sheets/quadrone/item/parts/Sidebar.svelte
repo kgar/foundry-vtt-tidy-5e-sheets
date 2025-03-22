@@ -318,7 +318,7 @@
               { document: context.item },
             ).render(true)}
         >
-          <span class="lighter centered">
+          <span class="centered text-normal">
             {localize('DND5E.Inventory')}
           </span>
           <span class="hyphens-auto centered">
@@ -338,7 +338,7 @@
               { document: context.item },
             ).render(true)}
         >
-          <span class="lighter centered">
+          <span class="centered text-normal">
             {localize('TIDY5E.Actions.TabName')}
           </span>
           <span class="hyphens-auto centered">

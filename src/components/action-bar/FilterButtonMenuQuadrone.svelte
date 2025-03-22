@@ -33,8 +33,11 @@
   anchor="right"
   bind:expanded={filterMenuExpanded}
   onclick={() => (filterMenuExpanded = !filterMenuExpanded)}
-  buttonClasses="icon-button toggle-button"
+  buttonClasses="button-icon-only button-toggle"
   containerClasses="filter-menu"
+  buttonAttributes={{
+    title: localize("TIDY5E.ItemFilters.MenuTooltip.Filters")
+  }}
 >
   <i class="fas fa-filter"></i>
   {#snippet menu()}
