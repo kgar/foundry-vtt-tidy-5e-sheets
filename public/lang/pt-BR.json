@@ -830,5 +830,15 @@
     "TIDY5E.ContextMenuActionView": "Visualizar",
     "TIDY5E.Utilities.SpellPips": "Magias",
     "TIDY5E.Utilities.SpellValueMax": "Valor da Magia/Máx",
-    "TIDY5E.RollRecharge.Label": "Recarregar"
+    "TIDY5E.RollRecharge.Label": "Recarregar",
+    "TIDY5E.ConfigureTab.Title": "Configurar {tabName}",
+    "TIDY5E.Hidden": "Oculto",
+    "TIDY5E.DisplayOptions.Title": "Opções de Exibição",
+    "TIDY5E.Options.Title": "Opções",
+    "TIDY5E.DisplayOptions.ShowContainerRow.Label": "Mostrar linha do recipiente",
+    "TIDY5E.SortMethod.AlphabeticalAscending": "Classificar de A à Z",
+    "TIDY5E.SortMethod.AlphabeticalDescending": "Classificar de Z à A",
+    "TIDY5E.SortMenu.OptionPriority": "Prioridade",
+    "TIDY5E.Activities.Cast.SourceHintText": "De {itemName}",
+    "TIDY5E.Visible": "Visível"
 }

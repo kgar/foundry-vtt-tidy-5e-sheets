@@ -867,5 +867,11 @@
     "TIDY5E.DisplayOptions.ShowContainerRow.Label": "Показати рядок контейнера",
     "TIDY5E.Hidden": "Прихований",
     "TIDY5E.Options.Title": "Опції",
-    "TIDY5E.Visible": "Видно"
+    "TIDY5E.Visible": "Видно",
+    "TIDY5E.Tidy5eNpcSheetQuadrone": "Охайний аркуш NPC 5e",
+    "TIDY5E.Tidy5eGroupSheetQuadrone": "Охайний аркуш групи 5e",
+    "TIDY5E.Tidy5eCharacterSheetQuadrone": "Охайна таблиця персонажів 5e",
+    "TIDY5E.Tidy5eItemSheetQuadrone": "Охайний аркуш 5e",
+    "TIDY5E.Tidy5eVehicleSheetQuadrone": "Паспорт транспортного засобу Tidy 5e",
+    "TIDY5E.Tidy5eContainerSheetQuadrone": "Контейнерний лист Tidy 5e"
 }
