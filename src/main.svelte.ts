@@ -118,7 +118,7 @@ Hooks.once('init', () => {
     Tidy5eContainerSheetQuadrone,
     {
       types: [CONSTANTS.SHEET_TYPE_CONTAINER],
-      label: 'TIDY5E.Tidy5eContainerSheet',
+      label: 'TIDY5E.Tidy5eContainerSheetQuadrone',
     }
   );
 
@@ -139,7 +139,7 @@ Hooks.once('init', () => {
       Tidy5eItemSheetQuadrone,
       {
         types: supportedItemTypes,
-        label: 'Tidy 5e Item Sheet - Quadrone',
+        label: 'TIDY5E.Tidy5eItemSheetQuadrone',
       }
     );
   }
