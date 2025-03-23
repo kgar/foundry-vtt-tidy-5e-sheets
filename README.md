@@ -15,16 +15,20 @@ Completely rewritten from the ground up, based on the [Tidy5e Sheet](https://git
 - [Tidy 5e Sheets API](https://kgar.github.io/foundry-vtt-tidy-5e-sheets/)
 
 > [!IMPORTANT]
-> **Tidy 5e Sheets version 9 (dnd5e 4.3.x) is here!**
->
-> Tidy 5e Sheets is now compatible with dnd5e 4.3.x. All development efforts will continue in step with the current version of the default sheets.
+> The [UI Overhaul Open Beta](<#tidy-5e-sheets-ui-overhaul-beta>) has begun!
 
 ---
 
 ## How to Support
 
+### kgar - development, some design
+
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/iamkgar) [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/kgar)
 [!["Patreon](/readme-assets/patreon-logo.svg)](https://www.patreon.com/iamkgar)
+
+### hightouch - design, some development
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/hightouch)
 
 ## Community Discord
 
@@ -49,6 +53,10 @@ Manual installation instructions:
    - Tidy 5e NPC Sheet
    - Tidy 5e Vehicle Sheet
    - Tidy 5e Item Sheet
+
+## Tidy 5e Sheets UI Overhaul Beta
+
+TBD
 
 ## Behold, D&D 5e Sheets for Foundry VTT!
 
