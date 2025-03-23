@@ -216,7 +216,7 @@
             context.item.update({
               'system.identified': ev.currentTarget?.checked,
             })}
-          disabled={!context.editable}
+          disabled={!context.unlocked}
         >
           {#if !context.editable && unidentified}
             {localize('DND5E.Unidentified.Title')}

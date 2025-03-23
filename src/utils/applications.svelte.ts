@@ -40,6 +40,7 @@ export function applyMutableSettingAttributesToWindow(
     element.setAttribute('data-tidy-theme-type', theme.type);
     if (game.release.generation < 13) {
       element.classList.remove('theme-light', 'theme-dark');
+      element.classList.add(`themed`);
       element.classList.add(`theme-${theme.type}`);
     }
   }
