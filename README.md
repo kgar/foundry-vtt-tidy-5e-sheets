@@ -14,19 +14,20 @@ Completely rewritten from the ground up, based on the [Tidy5e Sheet](https://git
 - [Foundry Package](<https://foundryvtt.com/packages/tidy5e-sheet/>)
 - [Tidy 5e Sheets API](https://kgar.github.io/foundry-vtt-tidy-5e-sheets/)
 
-> [!IMPORTANT]
+> [!CAUTION]
+> ⚙️ ***A Quadrone has gone rogue!*** 🤖  
 > The [UI Overhaul Open Beta](<#tidy-5e-sheets-ui-overhaul-beta>) has begun!
 
 ---
 
-## How to Support
+## How to Support the Team
 
-### kgar - development, some design
+### _**kgar**_ - 📜 Keeper of Sheets, 👨‍💻 development, ✨ some design
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/iamkgar) [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/kgar)
 [!["Patreon](/readme-assets/patreon-logo.svg)](https://www.patreon.com/iamkgar)
 
-### hightouch - design, some development
+### _**hightouch**_ - ✨ design, 👨‍💻 some development
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/hightouch)
 
@@ -56,7 +57,32 @@ Manual installation instructions:
 
 ## Tidy 5e Sheets UI Overhaul Beta
 
-TBD
+> [!IMPORTANT]
+> From **kgar**:
+> Do you like what you see? Please consider thanking hightouch for giving us his time and expertise in graphic design by visiting his [ko-fi](<https://ko-fi.com/hightouch>). This is all volunteer work, but saying thanks with a cup of coffee is a gesture that goes a long way.
+> 
+> The community has been generous to me for my efforts with this module. With that said, this next chapter in Tidy's history is, in a large part, thanks to hightouch's willingness to give of himself and work with the community and me to give Tidy an amazing new look while preserving all the functional things that users have come to rely upon.
+
+The new Tidy 5e Sheets graphical overhaul, codenamed Quadrone, begins now, and we are starting with the new Container sheet.
+
+_**Behold**_:
+
+![image](https://github.com/user-attachments/assets/b0e3751a-a4f6-4cef-b887-c53faef7aa9b)
+
+![image](https://github.com/user-attachments/assets/c22ff929-9112-42f6-9060-975e6e89e397)
+
+To make this sheet your own, select "Tidy 5e Container Sheet" on the Sheet Config dialog:
+
+![image](https://github.com/user-attachments/assets/68b553b2-0113-40ff-89f0-83e13f457f95)
+
+### We're Just Getting Started
+
+As soon as the Container Sheet is in your hands, we are working on the rest of the item sheets and will release them gradually. Then, we'll be working on the Character sheet, followed by the rest of the actor sheets.
+
+> [!NOTE]
+> We want your feedback. Tell us how we did on the Tidy 5e community discord, or put in a github issue if you find something amiss.
+
+---
 
 ## Behold, D&D 5e Sheets for Foundry VTT!
 
