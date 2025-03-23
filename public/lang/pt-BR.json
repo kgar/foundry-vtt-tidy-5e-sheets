@@ -840,5 +840,11 @@
     "TIDY5E.SortMethod.AlphabeticalDescending": "Classificar de Z à A",
     "TIDY5E.SortMenu.OptionPriority": "Prioridade",
     "TIDY5E.Activities.Cast.SourceHintText": "De {itemName}",
-    "TIDY5E.Visible": "Visível"
+    "TIDY5E.Visible": "Visível",
+    "TIDY5E.Tidy5eContainerSheetQuadrone": "Ficha de Recipiente Tidy 5e",
+    "TIDY5E.Tidy5eVehicleSheetQuadrone": "Ficha de Veículo Tidy 5e",
+    "TIDY5E.Tidy5eGroupSheetQuadrone": "Ficha de Grupo Tidy 5e",
+    "TIDY5E.Tidy5eCharacterSheetQuadrone": "Ficha de Personagem Tidy 5e",
+    "TIDY5E.Tidy5eNpcSheetQuadrone": "Ficha de PNJ Tidy 5e",
+    "TIDY5E.Tidy5eItemSheetQuadrone": "Ficha de Item Tidy 5e"
 }
