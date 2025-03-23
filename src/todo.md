@@ -1,5 +1,11 @@
 ## To Do
 
+- [ ] Activity Edit ctx menu doesn't work from Classic or Q item sheet :/ | the context menu is unable to find the appropriate list item in order to run its handler.
+- [ ] Spell TODOs
+  - [ ] Pact magic upcast in header subtitle after; e.g., "3rd Level (Cast at 4th), Evocation"
+  - [ ] For spells from items, include in properties section 
+    - [ ] a pill for "Item", which lists the name of the ite
+    - [ ] a pill for "Ability", which lists ???
 - [ ] Review Container sheet to ensure it has everything; add TODOs as needed
 - [ ] Move Container Quadrone out of the Truesight filter Go beta!
   - [ ] Readme / screenshots
@@ -138,6 +144,31 @@
 - [ ] Additional Document header option: Context Menu Options (literally show the context menu options)
 - [ ] Ensure all item sheets enforce this Unidentified UI feature:
     - [ ] (Non-container sheets only) Sidebar sections all hidden except Sections section and pill switches
+- [ ] Context Menu items rework
+
+### Context Menu items rework
+
+https://discord.com/channels/@me/1243307347682529423/1353196795378929754
+
+Here's my recommendation for action order following menu order best practices:
+- Most commonly used on the top
+- Destructive actions sunk to the bottom
+- Related content grouped
+
+```
+Edit
+Equip
+Add favorite
+Identify
+Display in chat
+Duplicate
+---
+Pin to attributes
+Choose a section
+---
+Give to character
+Delete
+```
 
 ### To Include on Actor Phase
 
@@ -294,7 +325,6 @@ Limited:
 - [x] Feedback
   - [x] Price and Charge columns - always follow Identified instead of GM Edit Mode
   - [x] Price column and summary: one question mark
-  - [ ] ~~(unable to repro) Activity Edit ctx menu doesn't work~~
 - [x] (hightouch) Time to do variable cleanup
 - [x] Implement Container Limited View
 - [x] Test Container Observer View

@@ -120,10 +120,8 @@
 
         <!-- Material Consumption -->
         <div class="form-group checkbox">
-          <label for="{appId}-materials-consumed"
-            >{localize('DND5E.Consumed')}</label
-          >
-          <div class="form-fields">
+          <label for="{appId}-materials-consumed" class="checkbox"
+            >{localize('DND5E.Consumed')}
             <CheckboxQuadrone
               id="{appId}-materials-consumed"
               document={context.item}
@@ -132,7 +130,7 @@
               disabledChecked={context.system.materials.consumed}
               disabled={!context.unlocked}
             />
-          </div>
+          </label>
         </div>
       </div>
 

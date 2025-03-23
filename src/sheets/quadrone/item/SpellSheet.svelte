@@ -41,6 +41,31 @@
       </h4>
       <SpellBlock fullWidth={false} {context} />
     </div>
+
+    <div>
+      <h4>
+        {localize('DND5E.Properties')}
+      </h4>
+      <ul class="pills stacked">
+        <li class="pill">
+          <span class="centered text-normal">
+            {localize('TYPES.Item.class')}
+          </span>
+          <span class="hyphens-auto centered">
+            <!-- TODO: when embedded on an actor, try to map the identifier to a display name and show the display name here. -->
+            {context.system.sourceClass}
+          </span>
+        </li>
+        <li class="pill">
+          <span class="centered text-normal">
+            {localize('DND5E.Ability')}
+          </span>
+          <span class="hyphens-auto centered"> 
+            Intelligence (TODO)  
+          </span>
+        </li>
+      </ul>
+    </div>
   {/snippet}
 </Sidebar>
 
@@ -64,20 +89,26 @@
       </div>
     {/if}
 
-    <div class="item-header-summary">
-      {#if context.item.hasLimitedUses}
-        <ItemChargesSummary />
-      {/if}
+    <!-- TODO: Consider a better way to do this, without needing to check every field. -->
+    {#if context.item.hasLimitedUses || context.item.hasRecharge || context.system.linkedActivity?.item}
+      <div class="item-header-summary">
+        {#if context.item.hasLimitedUses}
+          <ItemChargesSummary />
+        {/if}
 
-      {#if context.item.hasRecharge}
-        <ItemRechargeSummary />
-      {/if}
+        {#if context.item.hasRecharge}
+          <ItemRechargeSummary />
+        {/if}
 
-      {#if context.system.linkedActivity?.item}
-        <ItemLinkedItemSummary linked={context.system.linkedActivity?.item} />
-      {/if}
-    </div>
+        {#if context.system.linkedActivity?.item}
+          <ItemLinkedItemSummary linked={context.system.linkedActivity?.item} />
+        {/if}
+      </div>
+    {/if}
   </div>
+  {#if context.labels?.classes}
+    <div class="spell-classes">{context.labels?.classes ?? ''}</div>
+  {/if}
 
   <!-- Tab Strip -->
   <Tabs

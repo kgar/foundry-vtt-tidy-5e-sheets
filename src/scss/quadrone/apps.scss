@@ -568,6 +568,11 @@
 
   /* Spell Block */
   .spell-block {
+    &,
+    * {
+      user-select: text;
+    }
+
     li+li {
       margin-block-start: var(--t5e-size-1x);
     }
