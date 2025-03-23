@@ -562,13 +562,12 @@
   .empty-container {
     min-height: var(--t5e-size-8x);
     align-content: center;
-    background-color: var(--t5e-component-card-default);
+    // background-color: var(--t5e-component-card-default);
     color: var(--t5e-color-text-lightest);
   }
 
   .inline-content-view {
     border-radius: 0 0 0.125rem 0.125rem;
-    background-color: red;
     background: linear-gradient(90deg,
         var(--t5e-color-palette-white) 0.59%,
         var(--t5e-component-card-default) 44%);
