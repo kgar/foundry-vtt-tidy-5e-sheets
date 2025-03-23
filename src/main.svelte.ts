@@ -33,7 +33,7 @@ Hooks.once('init', () => {
       ? DocumentSheetConfig
       : foundry.applications.apps.DocumentSheetConfig;
 
-      documentSheetConfig.registerSheet(
+  documentSheetConfig.registerSheet(
     Actor,
     CONSTANTS.DND5E_SYSTEM_ID,
     Tidy5eCharacterSheet,
@@ -112,17 +112,17 @@ Hooks.once('init', () => {
   initRuntime();
   initKeybindings();
 
-  if (settings.value.truesight) {
-    documentSheetConfig.registerSheet(
-      Item,
-      CONSTANTS.DND5E_SYSTEM_ID,
-      Tidy5eContainerSheetQuadrone,
-      {
-        types: [CONSTANTS.SHEET_TYPE_CONTAINER],
-        label: 'Tidy 5e Container Sheet - Quadrone',
-      }
-    );
+  documentSheetConfig.registerSheet(
+    Item,
+    CONSTANTS.DND5E_SYSTEM_ID,
+    Tidy5eContainerSheetQuadrone,
+    {
+      types: [CONSTANTS.SHEET_TYPE_CONTAINER],
+      label: 'TIDY5E.Tidy5eContainerSheet',
+    }
+  );
 
+  if (settings.value.truesight) {
     documentSheetConfig.registerSheet(
       Item,
       CONSTANTS.DND5E_SYSTEM_ID,

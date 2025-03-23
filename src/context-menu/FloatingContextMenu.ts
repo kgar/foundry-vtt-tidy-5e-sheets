@@ -1,7 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import type { ContextMenuPositionInfo } from './context-menu.types';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import type { SheetLayout } from 'src/api';
 
 interface ContextMenuEntry {
   name: string;
@@ -52,6 +51,7 @@ export default class FloatingContextMenu extends (foundry.applications.ui
   _setPosition(html: any, target: any, options: any) {
     if ('classList' in html && 'classList' in target) {
       html.classList.add('tidy5e-sheet');
+      html.classList.add(this.#layout);
 
       return this._setFixedPosition(html, target, options);
     } else {
@@ -89,5 +89,13 @@ export default class FloatingContextMenu extends (foundry.applications.ui
     if (this._expandUp) html.style.bottom = `${clientHeight - clientY}px`;
     else html.style.top = `${clientY}px`;
     target.classList.add('context');
+
+    // game.release.generation < 13
+    const nearestThemed = target.closest('.themed') ?? document.body;
+    const [, theme] =
+      nearestThemed.className.match(/(?:^|\s)(theme-\w+)/) ?? [];
+    if (theme) {
+      html.classList.add('themed', theme);
+    }
   }
 }
