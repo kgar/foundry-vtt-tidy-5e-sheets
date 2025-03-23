@@ -125,6 +125,7 @@
       role="option"
       aria-selected={selectedItemIndex === i}
       class:focused={selectedItemIndex === i}
+      class:theme-dark={selectedItemIndex === i}
       class="flex-row small-gap align-items-center listbox-item {listItemClasses}"
       onclick={() => selectItemAt(i)}
       onkeydown={(ev) => handleListboxKeyDown(ev)}
