@@ -116,16 +116,6 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       layout: CONSTANTS.SHEET_LAYOUT_QUADRONE,
     });
 
-    new FloatingContextMenu(html, '.activity[data-activity-id]', [], {
-      onOpen: (target: HTMLElement) =>
-        dnd5e.documents.activity.UtilityActivity.onContextMenu(
-          this.item,
-          target
-        ),
-      jQuery: true,
-      layout: CONSTANTS.SHEET_LAYOUT_QUADRONE,
-    });
-
     initTidy5eContextMenu(this, html, CONSTANTS.SHEET_LAYOUT_CLASSIC);
 
     return component;

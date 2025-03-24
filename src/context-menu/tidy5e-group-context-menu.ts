@@ -26,13 +26,17 @@ export function configureGroupContextMenu(element: HTMLElement, app: any) {
  * @param actor    The actor for whom the context menu is activate.
  * @returns        Context menu options.
  */
-function getGroupMemberContextOptions(group: Actor5e, actor: Actor5e) {
+function getGroupMemberContextOptions(
+  group: Actor5e,
+  actor: Actor5e
+): ContextMenuEntry[] {
   let options: ContextMenuEntry[] = [
     {
       name: 'TIDY5E.Group.RemoveMemberFromGroup',
       icon: `<i class="fas fa-trash fa-fw t5e-warning-color"></i>`,
-      callback: () => group.removeMember(actor.id),
-      condition: () => !FoundryAdapter.isLockedInCompendium(group),
+      callback: async () => await group.system.removeMember(actor.id),
+      condition: () =>
+        group.isOwner && !FoundryAdapter.isLockedInCompendium(group),
     },
   ];
 
