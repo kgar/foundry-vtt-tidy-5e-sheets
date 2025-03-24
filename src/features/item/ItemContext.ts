@@ -10,12 +10,17 @@ export class ItemContext {
     };
 
     if (activitySave) {
+      const ability = activitySave.ability?.size
+        ? activitySave.ability.size === 1
+          ? CONFIG.DND5E.abilities[activitySave.ability.first()]?.abbreviation
+          : game.i18n.localize('DND5E.AbbreviationDC')
+        : null;
+
+      const abilityTitle = CONFIG.DND5E.abilities[ability]?.label;
+
       return {
-        ability: activitySave.ability?.size
-          ? activitySave.ability.size === 1
-            ? CONFIG.DND5E.abilities[activitySave.ability.first()]?.abbreviation
-            : game.i18n.localize('DND5E.AbbreviationDC')
-          : null,
+        ability,
+        abilityTitle,
         dc: activitySave.dc,
       };
     }

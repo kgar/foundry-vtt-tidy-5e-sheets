@@ -13,6 +13,7 @@
   import ItemRechargeSummary from './parts/header/ItemRechargeSummary.svelte';
   import ItemLinkedItemSummary from './parts/header/ItemLinkedItemSummary.svelte';
   import ItemName from './parts/header/ItemName.svelte';
+  import type { Snippet } from 'svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -29,45 +30,69 @@
   );
 
   let icon = $derived(context.config.spellSchools[context.system.school]);
+
+  let linkedItem = $derived(context.item.system.linkedActivity?.item);
+
+  let properties: Snippet[] = $derived.by(() => {
+    let result: Snippet[] = [];
+
+    if (linkedItem) {
+      result.push(linkedItemPill);
+    } else if (context.item.actor) {
+      result.push(sourceClassPill);
+    }
+
+    return result;
+  });
 </script>
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
 
 <Sidebar>
-  {#snippet itemSpecificSnippet()}
+  {#snippet belowStateSwitches()}
     <div>
       <h4>
         {localize('TYPES.Item.spell')}
       </h4>
       <SpellBlock fullWidth={false} {context} />
     </div>
+  {/snippet}
 
-    <div>
-      <h4>
-        {localize('DND5E.Properties')}
-      </h4>
-      <ul class="pills stacked">
-        <li class="pill">
-          <span class="centered text-normal">
-            {localize('TYPES.Item.class')}
-          </span>
-          <span class="hyphens-auto centered">
-            <!-- TODO: when embedded on an actor, try to map the identifier to a display name and show the display name here. -->
-            {context.system.sourceClass}
-          </span>
-        </li>
-        <li class="pill">
-          <span class="centered text-normal">
-            {localize('DND5E.Ability')}
-          </span>
-          <span class="hyphens-auto centered"> 
-            Intelligence (TODO)  
-          </span>
-        </li>
-      </ul>
-    </div>
+  {#snippet aboveCustomSections()}
+    {#if properties.length}
+      <div>
+        <h4>
+          {localize('DND5E.Properties')}
+        </h4>
+        <ul class="pills stacked">
+          {#each properties as property}
+            {@render property()}
+          {/each}
+        </ul>
+      </div>
+    {/if}
   {/snippet}
 </Sidebar>
+
+{#snippet linkedItemPill()}
+  <li class="pill">
+    <span class="centered text-normal">
+      {localize('DOCUMENT.Item')}
+    </span>
+    <span class="hyphens-auto centered"> {linkedItem.name} </span>
+  </li>
+{/snippet}
+
+{#snippet sourceClassPill()}
+  <li class="pill">
+    <span class="centered text-normal">
+      {localize('TYPES.Item.class')}
+    </span>
+    <span class="hyphens-auto centered">
+      {context.item.actor?.classes?.[context.item.system.sourceClass]?.name}
+    </span>
+  </li>
+{/snippet}
 
 <main class="item-content">
   <div class="sheet-header">
