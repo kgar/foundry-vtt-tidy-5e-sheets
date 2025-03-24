@@ -1,6 +1,6 @@
 ## To Do
 
-- [ ] Activity Edit ctx menu doesn't work from Classic or Q item sheet :/ | the context menu is unable to find the appropriate list item in order to run its handler.
+- [x] Activity Edit ctx menu doesn't work from Classic or Q item sheet :/ | the context menu is unable to find the appropriate list item in order to run its handler.
 - [ ] Spell TODOs
   - [ ] Pact magic upcast in header subtitle after; e.g., "3rd Level (Cast at 4th), Evocation"
   - [ ] For spells from items, include in properties section 
