@@ -1,20 +1,20 @@
 {
-    "TIDY5E.Tidy5eCharacterSheetClassic": "Tidy 5e Feuille de personnage",
+    "TIDY5E.Tidy5eCharacterSheetClassic": "Tidy 5e Feuille de personnage classique",
     "TIDY5E.Tidy5eNpcSheetClassic": "Tidy 5e feuille de PNJ",
     "TIDY5E.Tidy5eItemSheetClassic": "Tidy 5e feuille d'objet",
-    "TIDY5E.Tidy5eVehicleSheetClassic": "Tidy 5e Vechicle Sheet",
+    "TIDY5E.Tidy5eVehicleSheetClassic": "Tidy 5e feuille de véhicule",
     "TIDY5E.PlayerName": "Nom du joueur",
-    "TIDY5E.EditSheetImageHint": "Clic gauche : éditer l'image",
-    "TIDY5E.SheetImageOptionsHint": "Clic droit : voir l'image du personnage",
+    "TIDY5E.EditSheetImageHint": "Clic gauche : éditer l'image",
+    "TIDY5E.SheetImageOptionsHint": "Clic droit : voir les options de l'image",
     "TIDY5E.ShowPortraitArt": "Voir le portrait",
     "TIDY5E.ShowTokenArt": "Voir le token",
-    "TIDY5E.ShowItemImage": "clic droit : afficher l'image de l'article",
+    "TIDY5E.ShowItemImage": "clic droit : afficher l'image de l'article",
     "TIDY5E.ShowItemArt": "Montrer l'image",
     "TIDY5E.AbbrInitiative": "Ini",
     "TIDY5E.RestHint": "Se reposer",
     "TIDY5E.ShortRest": "Repos Court",
     "TIDY5E.LongRest": "Repos Long",
-    "TIDY5E.HitDiceRollAverage": "Clic droit : Moyenne",
+    "TIDY5E.HitDiceRollAverage": "Clic droit : Appliquer la moyenne",
     "TIDY5E.JournalTabName": "Journal",
     "TIDY5E.RestoreOnRest": "Restaurer lors d'un repos",
     "TIDY5E.JournalPersonsOfInterest": "Personnages importants",
@@ -29,8 +29,8 @@
     "TIDY5E.SheetLock.Unlock.Hint": "Déverrouiller - {description}",
     "TIDY5E.SheetLock.Lock.Hint": "Vérrouiller - {description}",
     "TIDY5E.SheetLock.Description": "Basculer le verrouillage des champs sensibles qui ne doivent pas être modifiés souvent",
-    "TIDY5E.ContextMenuActionEquip": "Équiper objet",
-    "TIDY5E.ContextMenuActionUnequip": "Déséquiper objet",
+    "TIDY5E.ContextMenuActionEquip": "Équiper l'objet",
+    "TIDY5E.ContextMenuActionUnequip": "Déséquiper l'objet",
     "TIDY5E.ContextMenuActionAttune": "Se lier à l'objet",
     "TIDY5E.ContextMenuActionUnattune": "Briser le lien",
     "TIDY5E.ContextMenuActionPrepare": "Préparer le sort",
@@ -39,7 +39,7 @@
     "TIDY5E.ContextMenuActionDelete": "Effacer",
     "TIDY5E.EmptySection": "Cette section est vide. Déverrouiller la feuille pour la modifier.",
     "TIDY5E.GMOnlyEdit": "Seul votre MJ peut modifier cette section.",
-    "TIDY5E.AttunementWarning": "Attention : Vous ne pouvez pas vous lier à plus de {number} objets !.",
+    "TIDY5E.AttunementWarning": "Attention : Vous ne pouvez pas vous lier à plus de {number} objets !.",
     "TIDY5E.AttunementItems": "Objets liés",
     "TIDY5E.AttunementMax": "Liens maximum",
     "TIDY5E.GridLayout": "Affichage grille",
@@ -252,7 +252,7 @@
     },
     "TIDY5E.Settings.HideDeathSavesFromPlayers": {
         "name": "Cacher les jets de sauvegardes de mort aux joueurs",
-        "hint": "Rend les jets de sauvegardes de mort et les résultats des jets de sauvegardes de mort visibles uniquement par le MJ."
+        "hint": "Rend les jets de sauvegardes de mort et les résultats des jets de sauvegardes de mort visibles uniquement par le MJ. Le bouton de jet de sauvegarde reste visible."
     },
     "TIDY5E.Settings.UseCharacterEncumbranceBar": {
         "name": "Utiliser la barre d'encombrement des personnages",
@@ -443,7 +443,7 @@
         "SetOverrideTrue": "Ajouter à la liste des actions",
         "ResetActionDefault": "Réinitialisation action par défaut"
     },
-    "TIDY5E.Inventory.Weight.Tooltip": "Poids : {weight} {weightUnit}",
+    "TIDY5E.Inventory.Weight.Tooltip": "Poids : {weight} {weightUnit}",
     "TIDY5E.EnvironmentTooltip": "Environnement : {environnement}",
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "Attaque de sort au contact",
     "TIDY5E.ActorRangedSpellAttackFlavorText": "Attaque de sort à distance",
@@ -632,7 +632,8 @@
         "FavoritesToSystem": {
             "selectionDialogTitle": "Migration : Personnages favoris vers le système",
             "sectionTitle": "Personnages préférés"
-        }
+        },
+        "chatNotification": "Une nouvelle migration des feuilles Tidy 5e est disponible. Voir Paramètres du jeu Tidy 5e Sheets pour voir les migrations disponibles."
     },
     "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
         "name": "Inclure des sorts d'une durée d'une minute dans les actions",
@@ -724,10 +725,10 @@
     "TIDY5E.Utilities.GMTools": "Outils du MJ",
     "TIDY5E.Utilities.IdentifyAll": "Identifier tous les éléments",
     "TIDY5E.Utilities.MarkAllAsUnidentified": "Marquer tous les éléments comme non identifiés",
-    "TIDY5E.ItemImageTitle": "Objet : {subject}",
+    "TIDY5E.ItemImageTitle": "Objet : {subject}",
     "TIDY5E.ItemFilters.CanCast": "Peu incanter",
     "TIDY5E.ItemFilters.CanUse": "Peu utiliser",
-    "TIDY5E.PortraitTitle": "Portrait : {subject}",
+    "TIDY5E.PortraitTitle": "Portrait : {subject}",
     "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
         "name": "Inclure les indicateurs dans la création des parchemins de sorts",
         "hint": "Les sorts peuvent parfois contenir des données spéciales provenant d'autres modules, qu'il peut être utile de transférer dans un parchemin de sort. Activer pour copier toutes les données basées sur les indicateurs dans le parchemin de sort lors de sa création."
@@ -791,5 +792,60 @@
     "TIDY5E.Group.ShowMemberTabInfoPanel": "Afficher le panneau d'information",
     "TIDY5E.NoSpecialSenses": "Pas de perceptions spéciales",
     "TIDY5E.Group.EmptyMembersTabHint": "Ce groupe est vide. Cliquez sur un acteur dans la barre latérale pour ajouter un membre.",
-    "TIDY5E.PreviewSheetImageHint": "Clic gauche : Aperçu de l'image"
+    "TIDY5E.PreviewSheetImageHint": "Clic gauche : Aperçu de l'image",
+    "TIDY5E.ModuleName": "Feuilles Tidy 5e",
+    "TIDY5E.WorldSettings.TabCustomSections": {
+        "CustomizedIndicatorLabel": "personnalisée",
+        "tabLabel": "Sections personnalisées",
+        "LimitToSpecificSheetsLabel": "Limiter la section montrée à des feuilles spécifiques",
+        "ShowWhenEmptyTooltip": "Tous les onglets comportant des tableaux d'éléments disposent d'un ensemble de sections par défaut qui sont toujours affichées, même lorsqu'il n'y a pas d'éléments dans la section. Toujours afficher cette section, même si elle est vide.",
+        "LimitToSpecificTabsLabel": "Limiter la section affichée à des onglets spécifiques",
+        "ShowWhenEmptyLabel": "Afficher la section lorsqu'elle est vide"
+    },
+    "TIDY5E.Settings.InfoCardsInspectKey": {
+        "name": "Clé de la Carte d'information",
+        "hint": "Appuyez sur ce caractère du clavier (par exemple, la touche \"t\") lorsque vous visualisez une carte d'information pour la détacher."
+    },
+    "TIDY5E.ContextMenuActionView": "Voir",
+    "TIDY5E.ContextMenuActionShowLimitedUses": "Afficher les utilisations limitées",
+    "TIDY5E.ContextMenuActionShowQuantity": "Afficher la quantité",
+    "TIDY5E.ContextMenuActionUnpinFromAttributes": "décrocher des attributs",
+    "TIDY5E.UserSettings.TabActivities": {
+        "tabLabel": "Activités"
+    },
+    "TIDY5E.Settings.UseEffectCards": {
+        "hint": "Permet d'afficher les fiches d'information sur les effets actifs pour tous les acteurs et éléments ayant des effets actifs.",
+        "name": "Afficher les fiches d'information sur les effets actifs"
+    },
+    "TIDY5E.Settings.InlineActivitiesPosition": {
+        "bottom": "Bas",
+        "name": "Position des Activités en ligne",
+        "top": "Haut",
+        "hint": "Lorsqu'un élément est développé, les activités relatives à cet élément sont affichées. Ce paramètre permet de déterminer si les activités sont placées en haut, avant la description de l'élément, ou en bas, sous la description de l'élément, les boutons et les étiquettes."
+    },
+    "TIDY5E.Settings.GlobalCustomSections": {
+        "AddSection": "Ajouter une section",
+        "name": "Sections personnalisées globale",
+        "hint": "Des sections personnalisées dans ce monde qui peuvent être configurées à des fins diverses. Les sections personnalisées du monde seront toujours incluses dans le sélecteur de section."
+    },
+    "TIDY5E.Tidy5eNpcSheetQuadrone": "Feuille de PNJ Tidy 5e",
+    "TIDY5E.Tidy5eContainerSheetQuadrone": "Feuille de conteneur Tidy 5e",
+    "TIDY5E.Tidy5eItemSheetQuadrone": "Feuille d'objet Tidy 5e",
+    "TIDY5E.Tidy5eCharacterSheetQuadrone": "Feuille de personnage Tidy5e",
+    "TIDY5E.ContextMenuActionPinToAttributes": "Accrocher des Attributs",
+    "TIDY5E.Tidy5eVehicleSheetQuadrone": "Feuille de véhicule Tidy 5e",
+    "TIDY5E.Settings.DefaultDeathSaveRoll": {
+        "hint": "Détermine le type de jet par défaut à utiliser lors d'un jet de sauvegarde contre la mort.",
+        "name": "Jet de sauvegarde de la mort par défaut"
+    },
+    "TIDY5E.Tidy5eSettings": "Paramètre de la feuille Tidy 5e",
+    "TIDY5E.Utilities.SpellPips": "Souci d'incantation",
+    "TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast": "Inclure les rituels dans la catégorie \"peut lancer\"",
+    "TIDY5E.Tidy5eGroupSheetQuadrone": "Feuille de groupe Tidy 5e",
+    "TIDY5E.InfoCardInspectHint": "{inspectKey} Contrôler",
+    "TIDY5E.WorldSettings.IncludeTidySectionFieldsInDefaultSheets": {
+        "name": "Inclure des champs de section dans les feuilles Tidy par défaut",
+        "hint": "Inclut les entrées Tidy Section et section Action dans les feuilles d'articles par défaut."
+    },
+    "TIDY5E.ExhaustionLevelTooltip": "Niveau d'épuisement {level}"
 }
