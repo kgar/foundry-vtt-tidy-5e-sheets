@@ -17,6 +17,14 @@
 
   let { ctx }: Props = $props();
 
+  let img = $derived(
+    ctx.document.img ===
+      ctx.document.documentConfig?.[ctx.document.type]?.documentClass?.metadata
+        ?.img
+      ? ctx.document.item.img
+      : ctx.document.img,
+  );
+
   let { usesDocument, valueProp, spentProp, maxProp, value, maxText, uses } =
     $derived.by(() => {
       const uses = ctx.document.uses;
@@ -72,7 +80,7 @@
   ondragstart={onDragStart}
 >
   <div class="attribute-document-image">
-    <ActivityUseButton activity={ctx.document} />
+    <ActivityUseButton activity={ctx.document} {img} />
   </div>
   <div class="attribute-pin-details">
     <div

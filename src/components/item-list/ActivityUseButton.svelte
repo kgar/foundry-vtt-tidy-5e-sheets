@@ -5,12 +5,14 @@
     activity: any;
     disabled?: boolean;
     showDiceIconOnHover?: boolean;
+    img?: string;
   }
 
   let {
     activity,
     disabled = false,
     showDiceIconOnHover = true,
+    img,
   }: Props = $props();
 </script>
 
@@ -21,7 +23,7 @@
   <img
     class="item-image"
     alt={activity.name}
-    src={activity.img}
+    src={img ?? activity.img}
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.GROUP_MEMBER_PORTRAIT}
   />
 
