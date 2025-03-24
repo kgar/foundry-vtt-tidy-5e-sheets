@@ -31,7 +31,7 @@ function getGroupMemberContextOptions(group: Actor5e, actor: Actor5e) {
     {
       name: 'TIDY5E.Group.RemoveMemberFromGroup',
       icon: `<i class="fas fa-trash fa-fw t5e-warning-color"></i>`,
-      callback: () => group.removeMember(actor.id),
+      callback: async () => await group.system.removeMember(actor.id),
       condition: () => !FoundryAdapter.isLockedInCompendium(group),
     },
   ];
