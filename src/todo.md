@@ -1,16 +1,17 @@
 ## To Do
 
-- [ ] Spell TODOs
-  - [x] Pact magic upcast in header subtitle after; e.g., "3rd Level (Cast at 4th), Evocation"
-  - [x] Include DC in Attack/Damage section
-  - [x] For spells from items, include in properties section 
-    - [x] a pill for "Item", which lists the name of the item
-    - [x] ~~a pill for "Ability", which lists ???~~
-  - [ ] Try a few different configurations for Class List.
-- [x] Review Container sheet to ensure it has everything; add TODOs as needed
-- [x] Move Container Quadrone out of the Truesight filter Go beta!
-  - [x] Readme / screenshots
-  - [x] Release Notes
+- [ ] Populate weapon sidebar pills.
+  - [ ] Action - 
+    - [ ] "Ranged Weapon Attack"
+    - [ ] 10' / 20' Range
+    - [ ] 1 Creature
+    - [ ] etc.?
+  - [ ] Attack / Damage
+    - [ ] Hit
+    - [ ] Save
+    - [ ] Damages
+  - [ ] Properties
+    - [ ] The item props (ask hightouch about the badge on Proficient)
 - [ ] (awaiting hightouch design) Effects Tables: Adjust the suppressed effect's toggle icon, since it can't be adjusted anyhow
 - [ ] Notify hightouch that spell sheet is ready for final review
 - [ ] Test spell info on item summary and cards
@@ -95,9 +96,7 @@
     - [ ] Description tab
       - [ ] Description section header hidden, contents displayed
       - [ ] Edit mode always shows prosemirror visible in edit mode (like default sheets)
-- [ ] Implement Activities tab
-- [ ] Implement Effects tab
-- [ ] Finish implementing container contents tab
+- [ ] Spell Sheet: Try a few different configurations for Class List.
 - [ ] Implement Advancement tab
 - [ ] Implement sidebar contents - prefer context data for pill groups with pill arrays of string and object (label / value)
   - [ ] Background
@@ -334,3 +333,16 @@ Limited:
 - [x] Localize Container sheet name
 - [x] Update section selector to adopt its parent sheet's theme. Solution: make it a DocumentSheet. (Solved: only works for Quadrone sheets, though.)
 - [x] Activity Edit ctx menu doesn't work from Classic or Q item sheet :/ | the context menu is unable to find the appropriate list item in order to run its handler.
+- [x] Implement Activities tab
+- [x] Implement Effects tab
+- [x] Finish implementing container contents tab
+- [x] Spell TODOs
+  - [x] Pact magic upcast in header subtitle after; e.g., "3rd Level (Cast at 4th), Evocation"
+  - [x] Include DC in Attack/Damage section
+  - [x] For spells from items, include in properties section 
+    - [x] a pill for "Item", which lists the name of the item
+    - [x] ~~a pill for "Ability", which lists ???~~
+- [x] Review Container sheet to ensure it has everything; add TODOs as needed
+- [x] Move Container Quadrone out of the Truesight filter Go beta!
+  - [x] Readme / screenshots
+  - [x] Release Notes
