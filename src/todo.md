@@ -1,16 +1,15 @@
 ## To Do
 
-- [x] Activity Edit ctx menu doesn't work from Classic or Q item sheet :/ | the context menu is unable to find the appropriate list item in order to run its handler.
 - [ ] Spell TODOs
   - [ ] Pact magic upcast in header subtitle after; e.g., "3rd Level (Cast at 4th), Evocation"
-  - [ ] For spells from items, include in properties section 
-    - [ ] a pill for "Item", which lists the name of the ite
-    - [ ] a pill for "Ability", which lists ???
-- [ ] Review Container sheet to ensure it has everything; add TODOs as needed
-- [ ] Move Container Quadrone out of the Truesight filter Go beta!
-  - [ ] Readme / screenshots
-  - [ ] Release Notes
-- [ ] The "Import" menu option is being shown on a Sidebar item. 🪓
+  - [x] Include DC in Attack/Damage section
+  - [x] For spells from items, include in properties section 
+    - [x] a pill for "Item", which lists the name of the item
+    - [x] ~~a pill for "Ability", which lists ???~~
+- [x] Review Container sheet to ensure it has everything; add TODOs as needed
+- [x] Move Container Quadrone out of the Truesight filter Go beta!
+  - [x] Readme / screenshots
+  - [x] Release Notes
 - [ ] (awaiting hightouch design) Effects Tables: Adjust the suppressed effect's toggle icon, since it can't be adjusted anyhow
 - [ ] Notify hightouch that spell sheet is ready for final review
 - [ ] Test spell info on item summary and cards
@@ -145,6 +144,7 @@
 - [ ] Ensure all item sheets enforce this Unidentified UI feature:
     - [ ] (Non-container sheets only) Sidebar sections all hidden except Sections section and pill switches
 - [ ] Context Menu items rework
+- [ ] (someone reported this to the Foundry devs; it ain't just me; awaiting possible fix) The "Import" menu option is being shown on a Sidebar item. 🪓
 
 ### Context Menu items rework
 
@@ -332,3 +332,4 @@ Limited:
 - [x] Section Selector - swap in the Search component, if possible.
 - [x] Localize Container sheet name
 - [x] Update section selector to adopt its parent sheet's theme. Solution: make it a DocumentSheet. (Solved: only works for Quadrone sheets, though.)
+- [x] Activity Edit ctx menu doesn't work from Classic or Q item sheet :/ | the context menu is unable to find the appropriate list item in order to run its handler.
