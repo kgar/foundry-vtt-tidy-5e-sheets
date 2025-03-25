@@ -716,7 +716,7 @@
         "options.GmOnly": "Solo DM",
         "options.GmAndOwners": "DM e Proprietari Oggetti"
     },
-    "TIDY5E.Tidy5eContainerSheetClassic": "Scheda Contenitore Tidy 5e",
+    "TIDY5E.Tidy5eContainerSheetClassic": "Scheda Contenitore Tidy 5e Classic",
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": "Oggetto"
     },
@@ -878,5 +878,11 @@
     "TIDY5E.Options.Title": "Opzioni",
     "TIDY5E.ConfigureTab.Title": "Configura {tabName}",
     "TIDY5E.DisplayOptions.Title": "Opzioni Visualizzazione",
-    "TIDY5E.DisplayOptions.ShowContainerRow.Label": "Mostra riga contenitore"
+    "TIDY5E.DisplayOptions.ShowContainerRow.Label": "Mostra riga contenitore",
+    "TIDY5E.Tidy5eItemSheetQuadrone": "Scheda Inventario Tidy 5e",
+    "TIDY5E.Tidy5eGroupSheetQuadrone": "Scheda Gruppo Tidy 5e",
+    "TIDY5E.Tidy5eVehicleSheetQuadrone": "Scheda Veicolo Tidy 5e",
+    "TIDY5E.Tidy5eNpcSheetQuadrone": "Scheda PNG Tidy 5e",
+    "TIDY5E.Tidy5eContainerSheetQuadrone": "Scheda Contenitore Tidy 5e",
+    "TIDY5E.Tidy5eCharacterSheetQuadrone": "Scheda Personaggio Tidy 5e"
 }

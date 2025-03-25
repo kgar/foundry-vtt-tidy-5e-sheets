@@ -750,7 +750,15 @@
             "showTooltip": "Afficher cette section"
         },
         "ActionTooltip": "Spécifiez une section personnalisée pour cet élément lorsqu'il est placé dans l'onglet Actions, ou laissez-la vide pour un comportement par défaut.",
-        "Tooltip": "Spécifiez une section personnalisée pour cet élément lorsqu'il est placé dans une fiche d'acteur, ou laissez-la vide pour un comportement par défaut."
+        "Tooltip": "Spécifiez une section personnalisée pour cet élément lorsqu'il est placé dans une fiche d'acteur, ou laissez-la vide pour un comportement par défaut.",
+        "LabelPl": "Sections",
+        "SectionSelectorChooseActionSectionTooltip": "Choisir une section d'action",
+        "SectionSelectorChooseSectionTooltip": "Choisir une section",
+        "SectionSelectorTitle": "{sectionType}: {documentName}",
+        "SectionSelectorExistingSections": "Sections existantes",
+        "SectionSelectorCreateNewSection": "Créer une nouvelle section",
+        "SectionSelectorNewSectionName": "Nouveau nom de section",
+        "SectionSelectorSaveNewSection": "Sauvegarder la nouvelle section"
     },
     "TIDY5E.Utilities.ConfigureSections": "Configurer les sections",
     "TIDY5E.WorldSettings.TabIcons": {
@@ -847,5 +855,32 @@
         "name": "Inclure des champs de section dans les feuilles Tidy par défaut",
         "hint": "Inclut les entrées Tidy Section et section Action dans les feuilles d'articles par défaut."
     },
-    "TIDY5E.ExhaustionLevelTooltip": "Niveau d'épuisement {level}"
+    "TIDY5E.ExhaustionLevelTooltip": "Niveau d'épuisement {level}",
+    "TIDY5E.ExpandCollapseMenu.OptionTitle": "Comportement d'expansion/réduction",
+    "TIDY5E.Keybindings.ToggleHeaderMenu.Name": "Basculer sur le menu d'en-tête",
+    "TIDY5E.ExpandCollapseMenu.OptionAllSections": "Toutes les sections",
+    "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "Sections de niveau supérieure",
+    "TIDY5E.Facilities.Hirelings.Label": "Les mercenaires",
+    "TIDY5E.Utilities.SpellValueMax": "Valeur du sort/Max",
+    "TIDY5E.Facilities.Defenders.Label": "Défenseurs",
+    "TIDY5E.Facilities.ContextMenuActionRemove": "Supprimer de {facilityName}",
+    "TIDY5E.SortMenu.OptionManual": "Manuel",
+    "TIDY5E.Facilities.RosterMember.Label": "{actorName} - {facilityName}",
+    "TIDY5E.SortMethod.AlphabeticalAscending": "Trier par ordre alphabétique croissant",
+    "TIDY5E.SortMethod.AlphabeticalDescending": "Trier par ordre alphabétique décroissant",
+    "TIDY5E.SortMenu.OptionPriority": "Priorité",
+    "TIDY5E.Keybindings.ToggleHeaderMenu.Hint": "Si une feuille Tidy est la fenêtre active dans l'interface utilisateur, ce raccourci clavier permet d'activer le menu d'en-tête de la feuille.",
+    "TIDY5E.Facilities.Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}",
+    "TIDY5E.SortMenu.OptionAlphabetical": "Alphabétique (A-Z)",
+    "TIDY5E.DisplayOptions.ShowContainerRow.Label": "Afficher la rangée du conteneur",
+    "TIDY5E.RollRecharge.Label": "Recharge",
+    "TIDY5E.Activities.Cast.SourceHintText": "De {itemName}",
+    "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Holds{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}",
+    "TIDY5E.BrokenLink": "Lien brisé",
+    "TIDY5E.Facilities.Creatures.Label": "Créatures",
+    "TIDY5E.Visible": "Visible",
+    "TIDY5E.Hidden": "Caché",
+    "TIDY5E.Options.Title": "Options",
+    "TIDY5E.ConfigureTab.Title": "Configurer {tabName}",
+    "TIDY5E.DisplayOptions.Title": "Options d'affichage"
 }
