@@ -1,11 +1,12 @@
 ## To Do
 
 - [ ] Spell TODOs
-  - [ ] Pact magic upcast in header subtitle after; e.g., "3rd Level (Cast at 4th), Evocation"
+  - [x] Pact magic upcast in header subtitle after; e.g., "3rd Level (Cast at 4th), Evocation"
   - [x] Include DC in Attack/Damage section
   - [x] For spells from items, include in properties section 
     - [x] a pill for "Item", which lists the name of the item
     - [x] ~~a pill for "Ability", which lists ???~~
+  - [ ] Try a few different configurations for Class List.
 - [x] Review Container sheet to ensure it has everything; add TODOs as needed
 - [x] Move Container Quadrone out of the Truesight filter Go beta!
   - [x] Readme / screenshots

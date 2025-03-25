@@ -23,8 +23,21 @@
 
   let itemNameEl: HTMLElement | undefined = $state();
 
+  const actorPactLevelOrdinal = $derived(
+    context.item.actor?.system.spells.pact?.level?.ordinalString(),
+  );
+  const isPactSpell = $derived(
+    context.item.system.preparation.mode ===
+      CONSTANTS.SPELL_PREPARATION_MODE_PACT,
+  );
+  const pactCastableLevelText = $derived(
+    isPactSpell && !isNil(actorPactLevelOrdinal)
+      ? ` (${localize('TIDY5E.ItemSheet.PactLevelCastLabel', { ordinal: actorPactLevelOrdinal })})`
+      : '',
+  );
+
   let subtitle = $derived(
-    [context.labels.level, context.labels.school]
+    [context.labels.level + pactCastableLevelText, context.labels.school]
       .filter((x) => !isNil(x))
       .join(', '),
   );

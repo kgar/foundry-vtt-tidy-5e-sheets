@@ -843,5 +843,6 @@
   "TIDY5E.Options.Title": "Options",
   "TIDY5E.ConfigureTab.Title": "Configure {tabName}",
   "TIDY5E.DisplayOptions.Title": "Display Options",
-  "TIDY5E.DisplayOptions.ShowContainerRow.Label": "Show container row"
+  "TIDY5E.DisplayOptions.ShowContainerRow.Label": "Show container row",
+  "TIDY5E.ItemSheet.PactLevelCastLabel": "Cast at {ordinal}"
 }

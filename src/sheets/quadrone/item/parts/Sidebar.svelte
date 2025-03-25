@@ -116,12 +116,12 @@
       result.push(toHitPill);
     }
 
-    if (context.labels.damages.length) {
-      result.push(damagePills);
-    }
-
     if (saveContext?.dc) {
       result.push(savePill);
+    }
+
+    if (context.labels.damages.length) {
+      result.push(damagePills);
     }
 
     return result;
