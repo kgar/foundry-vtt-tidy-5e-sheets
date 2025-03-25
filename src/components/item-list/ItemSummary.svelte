@@ -15,13 +15,13 @@
 
   interface Props {
     chatData: ItemChatData;
-    item?: Item5e | undefined;
+    item: Item5e;
   }
 
   let { chatData, item }: Props = $props();
 
   let additionalItemProps = $derived(
-    item ? ItemProperties.getAdditionalItemProperties(item) : [],
+    ItemProperties.getAdditionalItemProperties(item),
   );
 
   let itemSummaryCommands = $derived(
