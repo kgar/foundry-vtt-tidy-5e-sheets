@@ -36,7 +36,7 @@
 <ItemNameHeaderOrchestrator {itemNameEl} />
 
 <Sidebar>
-  {#snippet itemSpecificSnippet()}
+  {#snippet belowStateSwitches()}
     <div>
       <h4>{localize('TYPES.Item.container')}</h4>
       <div class="pills stacked">
