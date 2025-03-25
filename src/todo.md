@@ -1,5 +1,6 @@
 ## To Do
 
+- [ ] `align-content` doesn't work with some machines. Replace with basic flex styles where able.
 - [ ] Populate weapon sidebar pills.
   - [ ] Action - 
     - [ ] "Ranged Weapon Attack"

@@ -1087,7 +1087,8 @@ select:hover {
     .attribute-pins-menu {
       padding: 0.25rem;
       align-self: stretch;
-      align-content: center;
+      display: flex;
+      align-items: center;
     }
   }
 }
