@@ -21,7 +21,7 @@
   let { chatData, item }: Props = $props();
 
   let additionalItemProps = $derived(
-    ItemProperties.getAdditionalItemProperties(item),
+    item ? ItemProperties.getAdditionalItemProperties(item) : [],
   );
 
   let itemSummaryCommands = $derived(
