@@ -120,8 +120,6 @@
       data-custom-section={section.custom ? true : null}
     >
       {#snippet header(expanded)}
-        {@const dataColumnClassValue = { hidden: !expanded && !root }}
-
         <TidyTableHeaderRow class={{ 'theme-dark': root }}>
           <TidyTableHeaderCell primary={true} class="header-label-cell">
             <h3>
@@ -131,7 +129,7 @@
           </TidyTableHeaderCell>
           {#each columns as column}
             <TidyTableHeaderCell
-              class={[column.headerClasses, dataColumnClassValue]}
+              class={[column.headerClasses, { hidden: !expanded && !root }]}
               columnWidth={column.width}
               hideUnder={column.hideUnder}
             >
