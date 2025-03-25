@@ -742,4 +742,17 @@
   :where(.unidentified) {
     --t5e-item-color: var(--t5e-color-palette-grey-40);
   }
+
+  &.theme-light .window-resize-handle {
+    filter: unset;
+  }
+
+  &.theme-dark .window-resize-handle {
+    filter: invert(1);
+  }
+
+  .window-resize-handle {
+    right: 0;
+    bottom: 0;
+  }
 }

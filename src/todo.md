@@ -346,3 +346,10 @@ Limited:
 - [x] Move Container Quadrone out of the Truesight filter Go beta!
   - [x] Readme / screenshots
   - [x] Release Notes
+- [x] apps.scss: `.window-resize-handle` set filter to unset, set right/bottom to 0
+- [x] Effects tab
+  - [x] Hide Source column when under 450px
+  - [x] Hide Duration column when under 350px
+  - [x] Change out the icons for effect enable/disable to 
+    - enabled: fa-toggle-large-on
+    - disabled: fa-toggle-on

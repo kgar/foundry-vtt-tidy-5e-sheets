@@ -58,9 +58,11 @@
   let columnSpecs = $derived({
     source: {
       columnWidth: '8rem',
+      hideUnder: 450,
     },
     duration: {
       columnWidth: '6rem',
+      hideUnder: 350,
     },
     actions: {
       columnWidth: `calc((var(--t5e-table-button-width) * ${1 + tableActions.length}) + var(--t5e-size-halfx))`,
@@ -117,7 +119,9 @@
         {#each effectEntries as { effect } (effect.id)}
           <TidyEffectTableRow effectContext={effect}>
             {#snippet children({ toggleSummary, expanded })}
-              <span class="tidy-table-button tidy-table-row-use-button disabled">
+              <span
+                class="tidy-table-button tidy-table-row-use-button disabled"
+              >
                 <img
                   class="item-image"
                   src={effect.img ?? effect.effect.icon}
