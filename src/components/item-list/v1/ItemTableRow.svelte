@@ -162,9 +162,11 @@
   >
     {@render children?.({ toggleSummary })}
   </div>
-  <ExpandableContainer expanded={showSummary}>
-    <ItemSummary chatData={chatData ?? emptyChatData} {item} />
-  </ExpandableContainer>
+  {#if item}
+    <ExpandableContainer expanded={showSummary}>
+      <ItemSummary chatData={chatData ?? emptyChatData} {item} />
+    </ExpandableContainer>
+  {/if}
 </div>
 
 <style lang="scss">
