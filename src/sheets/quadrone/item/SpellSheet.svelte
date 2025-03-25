@@ -57,6 +57,23 @@
 
     return result;
   });
+
+  let itemHeaderSummaries = $derived.by(() => {
+    let result = [];
+    if (context.item.hasLimitedUses) {
+      result.push(chargesSummaryItem);
+    }
+
+    if (context.item.hasRecharge) {
+      result.push(rechargeSummaryItem);
+    }
+
+    if (context.system.linkedActivity?.item) {
+      result.push(linkedItemSummaryItem);
+    }
+
+    return result;
+  });
 </script>
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
@@ -127,20 +144,11 @@
       </div>
     {/if}
 
-    <!-- TODO: Consider a better way to do this, without needing to check every field. -->
-    {#if context.item.hasLimitedUses || context.item.hasRecharge || context.system.linkedActivity?.item}
+    {#if itemHeaderSummaries.length}
       <div class="item-header-summary">
-        {#if context.item.hasLimitedUses}
-          <ItemChargesSummary />
-        {/if}
-
-        {#if context.item.hasRecharge}
-          <ItemRechargeSummary />
-        {/if}
-
-        {#if context.system.linkedActivity?.item}
-          <ItemLinkedItemSummary linked={context.system.linkedActivity?.item} />
-        {/if}
+        {#each itemHeaderSummaries as summaryItem}
+          {@render summaryItem()}
+        {/each}
       </div>
     {/if}
   </div>
@@ -161,3 +169,13 @@
   <!-- Tab Contents -->
   <TabContents tabs={context.tabs} {selectedTabId} />
 </main>
+
+{#snippet chargesSummaryItem()}
+  <ItemChargesSummary />
+{/snippet}
+{#snippet rechargeSummaryItem()}
+  <ItemRechargeSummary />
+{/snippet}
+{#snippet linkedItemSummaryItem()}
+  <ItemLinkedItemSummary linked={context.system.linkedActivity?.item} />
+{/snippet}
