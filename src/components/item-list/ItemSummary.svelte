@@ -15,7 +15,7 @@
 
   interface Props {
     chatData: ItemChatData;
-    item?: Item5e | undefined;
+    item: Item5e;
   }
 
   let { chatData, item }: Props = $props();
