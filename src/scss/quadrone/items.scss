@@ -268,7 +268,7 @@
       padding-block-end: var(--t5e-size-1);
       position: relative;
 
-      &,
+      &:not(.none),
       option:not(.none) {
         color: oklch(from var(--t5e-item-color) calc(l + 0.125) c h);
       }

@@ -102,7 +102,7 @@
   let itemColorClasses = $derived<ClassValue>([
     context.system.identified === false ? 'unidentified' : undefined,
     !isNil(rarity, '') ? 'rarity' : undefined,
-    rarity?.slugify(),
+    coalesce(rarity?.slugify(), 'none'),
     !isNil(context.system.preparation?.mode) ? 'spell-preparation' : undefined,
     context.system.preparation?.mode?.slugify(),
   ]);
