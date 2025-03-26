@@ -152,11 +152,13 @@
 .sheet-header-button {
   background: var(--t5e-faint-color);
   align-self: stretch;
-  align-content: center;
   min-width: 1.25rem;
   line-height: initial;
   padding: 0.125rem 0.25rem;
   border-radius: 0.1875rem;
+
+  display: flex;
+  align-items: center;
 
   color: var(--t5e-secondary-color);
 

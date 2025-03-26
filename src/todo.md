@@ -1,6 +1,6 @@
 ## To Do
 
-- [ ] `align-content` doesn't work with some machines. Replace with basic flex styles where able.
+
 - [ ] Populate weapon sidebar pills.
   - [ ] Action - 
     - [ ] "Ranged Weapon Attack"
@@ -146,6 +146,10 @@
     - [ ] (Non-container sheets only) Sidebar sections all hidden except Sections section and pill switches
 - [ ] Context Menu items rework
 - [ ] (someone reported this to the Foundry devs; it ain't just me; awaiting possible fix) The "Import" menu option is being shown on a Sidebar item. 🪓
+
+### Electron Client Issues
+
+- [ ] The button panel menu is appearing behind tables in the Container Sheet.
 
 ### Context Menu items rework
 
@@ -354,3 +358,5 @@ Limited:
   - [x] Change out the icons for effect enable/disable to 
     - enabled: fa-toggle-large-on
     - disabled: fa-toggle-on
+- [x] `align-content` doesn't work with some machines. Replace with basic flex styles where able.
+  - It was the damned Electron client. This problem may resolve itself in Foundry 13, but it has implications for dnd5e 3.3.1 port.
