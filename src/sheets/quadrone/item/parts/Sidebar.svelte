@@ -179,7 +179,7 @@
   </div>
 
   <!-- Item States -->
-  <!-- TODO: Make into snippets, stack into array, and don't render if there are no state pills. -->
+  <!-- TODO: Possibly extract component, make into snippets, stack into array, and don't render if there are no state pills. -->
   <ul class="pills stacked">
     {#if 'equipped' in context.system}
       {@const checkedIconClass = 'fas fa-hand-fist equip-icon fa-fw'}
@@ -394,3 +394,4 @@
     </li>
   {/each}
 {/snippet}
+
