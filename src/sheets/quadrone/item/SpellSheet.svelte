@@ -13,6 +13,7 @@
   import ItemRechargeSummary from './parts/header/ItemRechargeSummary.svelte';
   import ItemLinkedItemSummary from './parts/header/ItemLinkedItemSummary.svelte';
   import ItemName from './parts/header/ItemName.svelte';
+  import type { Snippet } from 'svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -22,19 +23,63 @@
 
   let itemNameEl: HTMLElement | undefined = $state();
 
+  const actorPactLevelOrdinal = $derived(
+    context.item.actor?.system.spells.pact?.level?.ordinalString(),
+  );
+  const isPactSpell = $derived(
+    context.item.system.preparation.mode ===
+      CONSTANTS.SPELL_PREPARATION_MODE_PACT,
+  );
+  const pactCastableLevelText = $derived(
+    isPactSpell && !isNil(actorPactLevelOrdinal)
+      ? ` (${localize('TIDY5E.ItemSheet.PactLevelCastLabel', { ordinal: actorPactLevelOrdinal })})`
+      : '',
+  );
+
   let subtitle = $derived(
-    [context.labels.level, context.labels.school]
+    [context.labels.level + pactCastableLevelText, context.labels.school]
       .filter((x) => !isNil(x))
       .join(', '),
   );
 
   let icon = $derived(context.config.spellSchools[context.system.school]);
+
+  let linkedItem = $derived(context.item.system.linkedActivity?.item);
+
+  let properties: Snippet[] = $derived.by(() => {
+    let result: Snippet[] = [];
+
+    if (linkedItem) {
+      result.push(linkedItemPill);
+    } else if (context.item.actor) {
+      result.push(sourceClassPill);
+    }
+
+    return result;
+  });
+
+  let itemHeaderSummaries = $derived.by(() => {
+    let result = [];
+    if (context.item.hasLimitedUses) {
+      result.push(chargesSummaryItem);
+    }
+
+    if (context.item.hasRecharge) {
+      result.push(rechargeSummaryItem);
+    }
+
+    if (context.system.linkedActivity?.item) {
+      result.push(linkedItemSummaryItem);
+    }
+
+    return result;
+  });
 </script>
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
 
 <Sidebar>
-  {#snippet itemSpecificSnippet()}
+  {#snippet belowStateSwitches()}
     <div>
       <h4>
         {localize('TYPES.Item.spell')}
@@ -42,7 +87,42 @@
       <SpellBlock fullWidth={false} {context} />
     </div>
   {/snippet}
+
+  {#snippet aboveCustomSections()}
+    {#if properties.length}
+      <div>
+        <h4>
+          {localize('DND5E.Properties')}
+        </h4>
+        <ul class="pills stacked">
+          {#each properties as property}
+            {@render property()}
+          {/each}
+        </ul>
+      </div>
+    {/if}
+  {/snippet}
 </Sidebar>
+
+{#snippet linkedItemPill()}
+  <li class="pill">
+    <span class="centered text-normal">
+      {localize('DOCUMENT.Item')}
+    </span>
+    <span class="hyphens-auto centered"> {linkedItem.name} </span>
+  </li>
+{/snippet}
+
+{#snippet sourceClassPill()}
+  <li class="pill">
+    <span class="centered text-normal">
+      {localize('TYPES.Item.class')}
+    </span>
+    <span class="hyphens-auto centered">
+      {context.item.actor?.classes?.[context.item.system.sourceClass]?.name}
+    </span>
+  </li>
+{/snippet}
 
 <main class="item-content">
   <div class="sheet-header">
@@ -64,20 +144,17 @@
       </div>
     {/if}
 
-    <div class="item-header-summary">
-      {#if context.item.hasLimitedUses}
-        <ItemChargesSummary />
-      {/if}
-
-      {#if context.item.hasRecharge}
-        <ItemRechargeSummary />
-      {/if}
-
-      {#if context.system.linkedActivity?.item}
-        <ItemLinkedItemSummary linked={context.system.linkedActivity?.item} />
-      {/if}
-    </div>
+    {#if itemHeaderSummaries.length}
+      <div class="item-header-summary">
+        {#each itemHeaderSummaries as summaryItem}
+          {@render summaryItem()}
+        {/each}
+      </div>
+    {/if}
   </div>
+  {#if context.labels?.classes}
+    <div class="spell-classes">{context.labels?.classes ?? ''}</div>
+  {/if}
 
   <!-- Tab Strip -->
   <Tabs
@@ -92,3 +169,13 @@
   <!-- Tab Contents -->
   <TabContents tabs={context.tabs} {selectedTabId} />
 </main>
+
+{#snippet chargesSummaryItem()}
+  <ItemChargesSummary />
+{/snippet}
+{#snippet rechargeSummaryItem()}
+  <ItemRechargeSummary />
+{/snippet}
+{#snippet linkedItemSummaryItem()}
+  <ItemLinkedItemSummary linked={context.system.linkedActivity?.item} />
+{/snippet}

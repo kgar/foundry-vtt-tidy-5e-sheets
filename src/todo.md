@@ -1,10 +1,18 @@
 ## To Do
 
-- [ ] Review Container sheet to ensure it has everything; add TODOs as needed
-- [ ] Move Container Quadrone out of the Truesight filter Go beta!
-  - [ ] Readme / screenshots
-  - [ ] Release Notes
-- [ ] The "Import" menu option is being shown on a Sidebar item. 🪓
+
+- [ ] Populate weapon sidebar pills.
+  - [ ] Action - 
+    - [ ] "Ranged Weapon Attack"
+    - [ ] 10' / 20' Range
+    - [ ] 1 Creature
+    - [ ] etc.?
+  - [ ] Attack / Damage
+    - [ ] Hit
+    - [ ] Save
+    - [ ] Damages
+  - [ ] Properties
+    - [ ] The item props (ask hightouch about the badge on Proficient)
 - [ ] (awaiting hightouch design) Effects Tables: Adjust the suppressed effect's toggle icon, since it can't be adjusted anyhow
 - [ ] Notify hightouch that spell sheet is ready for final review
 - [ ] Test spell info on item summary and cards
@@ -89,9 +97,7 @@
     - [ ] Description tab
       - [ ] Description section header hidden, contents displayed
       - [ ] Edit mode always shows prosemirror visible in edit mode (like default sheets)
-- [ ] Implement Activities tab
-- [ ] Implement Effects tab
-- [ ] Finish implementing container contents tab
+- [ ] Spell Sheet: Try a few different configurations for Class List.
 - [ ] Implement Advancement tab
 - [ ] Implement sidebar contents - prefer context data for pill groups with pill arrays of string and object (label / value)
   - [ ] Background
@@ -138,6 +144,36 @@
 - [ ] Additional Document header option: Context Menu Options (literally show the context menu options)
 - [ ] Ensure all item sheets enforce this Unidentified UI feature:
     - [ ] (Non-container sheets only) Sidebar sections all hidden except Sections section and pill switches
+- [ ] Context Menu items rework
+- [ ] (someone reported this to the Foundry devs; it ain't just me; awaiting possible fix) The "Import" menu option is being shown on a Sidebar item. 🪓
+
+### Electron Client Issues
+
+- [ ] The button panel menu is appearing behind tables in the Container Sheet.
+
+### Context Menu items rework
+
+https://discord.com/channels/@me/1243307347682529423/1353196795378929754
+
+Here's my recommendation for action order following menu order best practices:
+- Most commonly used on the top
+- Destructive actions sunk to the bottom
+- Related content grouped
+
+```
+Edit
+Equip
+Add favorite
+Identify
+Display in chat
+Duplicate
+---
+Pin to attributes
+Choose a section
+---
+Give to character
+Delete
+```
 
 ### To Include on Actor Phase
 
@@ -294,7 +330,6 @@ Limited:
 - [x] Feedback
   - [x] Price and Charge columns - always follow Identified instead of GM Edit Mode
   - [x] Price column and summary: one question mark
-  - [ ] ~~(unable to repro) Activity Edit ctx menu doesn't work~~
 - [x] (hightouch) Time to do variable cleanup
 - [x] Implement Container Limited View
 - [x] Test Container Observer View
@@ -302,3 +337,26 @@ Limited:
 - [x] Section Selector - swap in the Search component, if possible.
 - [x] Localize Container sheet name
 - [x] Update section selector to adopt its parent sheet's theme. Solution: make it a DocumentSheet. (Solved: only works for Quadrone sheets, though.)
+- [x] Activity Edit ctx menu doesn't work from Classic or Q item sheet :/ | the context menu is unable to find the appropriate list item in order to run its handler.
+- [x] Implement Activities tab
+- [x] Implement Effects tab
+- [x] Finish implementing container contents tab
+- [x] Spell TODOs
+  - [x] Pact magic upcast in header subtitle after; e.g., "3rd Level (Cast at 4th), Evocation"
+  - [x] Include DC in Attack/Damage section
+  - [x] For spells from items, include in properties section 
+    - [x] a pill for "Item", which lists the name of the item
+    - [x] ~~a pill for "Ability", which lists ???~~
+- [x] Review Container sheet to ensure it has everything; add TODOs as needed
+- [x] Move Container Quadrone out of the Truesight filter Go beta!
+  - [x] Readme / screenshots
+  - [x] Release Notes
+- [x] apps.scss: `.window-resize-handle` set filter to unset, set right/bottom to 0
+- [x] Effects tab
+  - [x] Hide Source column when under 450px
+  - [x] Hide Duration column when under 350px
+  - [x] Change out the icons for effect enable/disable to 
+    - enabled: fa-toggle-large-on
+    - disabled: fa-toggle-on
+- [x] `align-content` doesn't work with some machines. Replace with basic flex styles where able.
+  - It was the damned Electron client. This problem may resolve itself in Foundry 13, but it has implications for dnd5e 3.3.1 port.

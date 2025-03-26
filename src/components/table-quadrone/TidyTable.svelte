@@ -11,7 +11,7 @@
   interface Props {
     key: string;
     toggleable?: boolean;
-    header?: Snippet;
+    header?: Snippet<[boolean]>;
     body?: Snippet;
     [key: string]: any;
   }
@@ -58,7 +58,7 @@
   data-tidy-section-key={key}
   {...attributes}
 >
-  {@render header?.()}
+  {@render header?.(expanded)}
   <ExpandableContainer {expanded}>
     <div class="item-table-body">
       {@render body?.()}

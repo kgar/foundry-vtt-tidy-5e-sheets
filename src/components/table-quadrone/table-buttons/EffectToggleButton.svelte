@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ActiveEffect5e } from 'src/types/types';
 
   interface Props {
@@ -6,16 +7,22 @@
   }
 
   let { effect }: Props = $props();
+
+  let title = $derived(
+    FoundryAdapter.localize(
+      effect.disabled ? 'DND5E.EffectEnable' : 'DND5E.EffectDisable',
+    ),
+  );
 </script>
 
 <a
   class="tidy-table-button"
-  title={effect.disabled ? 'DND5E.EffectEnable' : 'DND5E.EffectDisable'}
+  {title}
   onclick={() => effect.update({ disabled: !effect.disabled })}
 >
   <i
     class="fas"
-    class:fa-check={effect.disabled}
-    class:fa-times={!effect.disabled}
+    class:fa-toggle-off={effect.disabled}
+    class:fa-toggle-large-on={!effect.disabled}
   ></i>
 </a>

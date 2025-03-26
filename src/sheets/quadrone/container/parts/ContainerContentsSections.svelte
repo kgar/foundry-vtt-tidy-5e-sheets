@@ -119,7 +119,7 @@
       key={section.key}
       data-custom-section={section.custom ? true : null}
     >
-      {#snippet header()}
+      {#snippet header(expanded)}
         <TidyTableHeaderRow class={{ 'theme-dark': root }}>
           <TidyTableHeaderCell primary={true} class="header-label-cell">
             <h3>
@@ -129,7 +129,7 @@
           </TidyTableHeaderCell>
           {#each columns as column}
             <TidyTableHeaderCell
-              class={[column.headerClasses]}
+              class={[column.headerClasses, { hidden: !expanded && !root }]}
               columnWidth={column.width}
               hideUnder={column.hideUnder}
             >

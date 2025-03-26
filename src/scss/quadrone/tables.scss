@@ -24,7 +24,6 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    align-content: center;
   }
 
   .tidy-table-header-row {
@@ -234,12 +233,15 @@
     }
 
     &.item-label {
-      align-items: stretch;
       justify-content: stretch;
       border-right: none;
-
+      // game.release.generation < 13
+      // align-items: stretch;
+      align-items: center;
+      
       >* {
-        align-content: center;
+        // game.release.generation < 13
+        // align-content: center;
       }
     }
 
@@ -383,10 +385,13 @@
         flex: 1;
         min-width: 0;
         display: flex;
-        align-items: stretch;
-
+        // game.release.generation < 13
+        // align-items: stretch;
+        align-items: center;
+        
         >* {
-          align-content: center;
+          // game.release.generation < 13
+          // align-content: center;
         }
       }
 
@@ -561,7 +566,8 @@
 
   .empty-container {
     min-height: var(--t5e-size-8x);
-    align-content: center;
+    display: flex;
+    align-items: center;
     // background-color: var(--t5e-component-card-default);
     color: var(--t5e-color-text-lightest);
   }

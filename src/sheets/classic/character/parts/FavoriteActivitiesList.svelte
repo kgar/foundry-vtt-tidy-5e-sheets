@@ -117,7 +117,7 @@
         </TidyTableCell>
         <TidyTableCell>
           <a
-            class="activity-item-link truncate align-self-stretch align-content-center flex-1"
+            class="activity-item-link truncate align-self-stretch flex-1 flex-row align-items-center justify-content-center"
             class:highlight-on-hover={context.editable}
             onclick={(ev) =>
               context.editable && activity.item.sheet.render(true)}

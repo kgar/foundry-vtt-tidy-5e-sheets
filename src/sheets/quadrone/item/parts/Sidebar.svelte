@@ -13,16 +13,18 @@
   import { CONSTANTS } from 'src/constants';
   import { isNil } from 'src/utils/data';
   import type { ClassValue } from 'svelte/elements';
+  import { ItemContext } from 'src/features/item/ItemContext';
 
   let context = $derived(getContainerOrItemSheetContextQuadrone());
 
   const localize = FoundryAdapter.localize;
 
   interface Props {
-    itemSpecificSnippet?: Snippet;
+    belowStateSwitches?: Snippet;
+    aboveCustomSections?: Snippet;
   }
 
-  let { itemSpecificSnippet }: Props = $props();
+  let { belowStateSwitches, aboveCustomSections }: Props = $props();
 
   // Rarity
   let rarity = $derived(
@@ -104,6 +106,26 @@
     !isNil(context.system.preparation?.mode) ? 'spell-preparation' : undefined,
     context.system.preparation?.mode?.slugify(),
   ]);
+
+  let saveContext = $derived(ItemContext.getItemSaveContext(context.item));
+
+  let offensePills: Snippet[] = $derived.by(() => {
+    let result: Snippet[] = [];
+
+    if (context.labels.toHit) {
+      result.push(toHitPill);
+    }
+
+    if (saveContext?.dc) {
+      result.push(savePill);
+    }
+
+    if (context.labels.damages.length) {
+      result.push(damagePills);
+    }
+
+    return result;
+  });
 </script>
 
 <aside class={['sidebar', 'theme-dark']}>
@@ -157,7 +179,7 @@
   </div>
 
   <!-- Item States -->
-
+  <!-- TODO: Possibly extract component, make into snippets, stack into array, and don't render if there are no state pills. -->
   <ul class="pills stacked">
     {#if 'equipped' in context.system}
       {@const checkedIconClass = 'fas fa-hand-fist equip-icon fa-fw'}
@@ -252,33 +274,19 @@
   <!-- Item Info: Longform -->
   <!-- TODO: Implement -->
 
-  {#if itemSpecificSnippet}
-    {@render itemSpecificSnippet()}
+  {#if belowStateSwitches}
+    {@render belowStateSwitches()}
   {/if}
 
   {#if !context.concealDetails}
-    {#if context.labels.toHit || context.labels.damages.length}
+    {#if offensePills.length}
       <div>
         <h4>
           {localize('DND5E.Attack')}/{localize('DND5E.Damage')}
         </h4>
-        <ul class="pills stacked" inert={context.concealDetails}>
-          {#if context.labels.save}
-            <li class="pill">
-              {context.labels.save}
-            </li>
-          {/if}
-          {#if context.labels.toHit}
-            <li class="pill">
-              {context.labels.toHit}
-              {localize('DND5E.ToHit')}
-            </li>
-          {/if}
-          {#each context.labels.damages ?? [] as damage}
-            {@const label = damage.label}
-            <li class="pill">
-              {label}
-            </li>
+        <ul class="pills stacked">
+          {#each offensePills as pill}
+            {@render pill()}
           {/each}
         </ul>
       </div>
@@ -300,6 +308,10 @@
       </ul>
     </div>
   {/if} -->
+
+  {#if aboveCustomSections}
+    {@render aboveCustomSections()}
+  {/if}
 
   <!-- Custom Sections -->
 
@@ -349,3 +361,37 @@
     </div>
   {/if}
 </aside>
+
+{#snippet savePill()}
+  <li class="pill">
+    <span class="centered">
+      {localize('DND5E.AbbreviationDC')}
+    </span>
+    <span class="centered hyphen-auto">
+      {saveContext?.dc.value}
+      {#if saveContext?.ability}
+        <span class="text-normal">
+          {saveContext.abilityTitle ?? saveContext.ability}
+        </span>
+      {/if}
+    </span>
+  </li>
+{/snippet}
+
+{#snippet toHitPill()}
+  <li class="pill">
+    {context.labels.toHit}
+    <span class="text-normal">
+      {localize('DND5E.ToHit')}
+    </span>
+  </li>
+{/snippet}
+
+{#snippet damagePills()}
+  {#each context.labels.damages ?? [] as damage}
+    <li class="pill">
+      {damage.label}
+    </li>
+  {/each}
+{/snippet}
+

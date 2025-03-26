@@ -4,8 +4,9 @@
   align-items: stretch;
 
   .command {
-    align-content: center;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     flex: 0 0 1.5rem;
     flex-basis: 1.5rem;
     min-height: var(--t5e-field-size-default);

@@ -568,6 +568,11 @@
 
   /* Spell Block */
   .spell-block {
+    &,
+    * {
+      user-select: text;
+    }
+
     li+li {
       margin-block-start: var(--t5e-size-1x);
     }
@@ -736,5 +741,18 @@
 
   :where(.unidentified) {
     --t5e-item-color: var(--t5e-color-palette-grey-40);
+  }
+
+  &.theme-light .window-resize-handle {
+    filter: unset;
+  }
+
+  &.theme-dark .window-resize-handle {
+    filter: invert(1);
+  }
+
+  .window-resize-handle {
+    right: 0;
+    bottom: 0;
   }
 }
