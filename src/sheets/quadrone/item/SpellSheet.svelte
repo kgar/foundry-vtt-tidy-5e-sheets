@@ -78,7 +78,7 @@
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
 
-<Sidebar>
+<Sidebar includeSidebarProperties={false}>
   {#snippet belowStateSwitches()}
     <div>
       <h4>

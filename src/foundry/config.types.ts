@@ -4314,11 +4314,11 @@ export type CONFIG = {
       '1': string;
       '2': string;
       '0.5': string;
-    };
+    } & Record<string, string>;
     weaponAndArmorProficiencyLevels: {
       '0': string;
       '1': string;
-    };
+    } & Record<string, string>;
     cover: {
       '0': string;
       '1': string;

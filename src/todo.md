@@ -1,20 +1,26 @@
 ## To Do
 
 
-- [ ] Populate weapon sidebar pills.
-  - [ ] Action - 
-    - [ ] "Ranged Weapon Attack"
-    - [ ] 10' / 20' Range
-    - [ ] 1 Creature
-    - [ ] etc.?
-  - [ ] Attack / Damage
-    - [ ] Hit
-    - [ ] Save
-    - [ ] Damages
-  - [ ] Properties
-    - [ ] The item props (ask hightouch about the badge on Proficient)
-- [ ] (awaiting hightouch design) Effects Tables: Adjust the suppressed effect's toggle icon, since it can't be adjusted anyhow
+- [ ] Equipment sidebar pills
+  - [ ] Armor section
+    - [ ] {AC} AC (text-normal or whatev)
+  - [ ] Action section
+    - [ ] (check what's already there)
+  - [ ] Properties section
+    - [ ] (check what's already there)
+- [ ] Equipment header content
+  - [ ] Subtitle
+    - [ ] Equipment subtype (Heavy Armor)
+    - [ ] , {AC} AC
+  - [ ] Summary
+    - [ ] Charges
+    - [ ] Recharge
+    - [ ] price
+    - [ ] weight
+    - [ ] quantity
+- [ ] Rarity "None" is currently using default light text color
 - [ ] Notify hightouch that spell sheet is ready for final review
+- [ ] Notify hightouch that weapon sheet is ready for final review
 - [ ] Test spell info on item summary and cards
 - [ ] Begin thinking about how to extract common functionality across each table type (item, effects, activities)
 - [ ] Propagate `sheet-header` class setup to all item sheets
@@ -146,6 +152,12 @@
     - [ ] (Non-container sheets only) Sidebar sections all hidden except Sections section and pill switches
 - [ ] Context Menu items rework
 - [ ] (someone reported this to the Foundry devs; it ain't just me; awaiting possible fix) The "Import" menu option is being shown on a Sidebar item. 🪓
+
+### Bonus
+
+- [ ] Activity card / summary: Activities can be summarized via activity.activationLabels
+  - all: activation, duration, range, reach, target
+  - item is weapon with no overrides: attack: range, reach
 
 ### Electron Client Issues
 
@@ -360,3 +372,17 @@ Limited:
     - disabled: fa-toggle-on
 - [x] `align-content` doesn't work with some machines. Replace with basic flex styles where able.
   - It was the damned Electron client. This problem may resolve itself in Foundry 13, but it has implications for dnd5e 3.3.1 port.
+- [x] Populate weapon sidebar pills.
+  - [x] Action - Object.values(labels.activations[0]).filter(x => x) 
+    - [ ] ~~"Ranged Weapon Attack"~~
+    - [x] 10' / 20' Range
+    - [x] 1 Creature
+    - [x] etc.?
+  - [x] Attack / Damage
+    - [x] Hit
+    - [x] Save
+    - [x] Damages
+  - [x] Properties - proficiency pill, then all item properties
+    - [x] Proficient - `("proficient" in this) ? CONFIG.DND5E.proficiencyLevels[this.prof?.multiplier || 0] : null`
+    - [x] The item props (ask hightouch about the badge on Proficient)
+- [x] Effects Tables: Adjust the suppressed effect's toggle icon, since it can't be adjusted anyhow
