@@ -21,6 +21,7 @@ export class ItemContext {
       return {
         ability,
         abilityTitle,
+        multipleAbilities: activitySave.ability?.size > 1,
         dc: activitySave.dc,
       };
     }

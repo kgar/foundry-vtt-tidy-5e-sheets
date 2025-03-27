@@ -352,7 +352,7 @@
         </h4>
         <ul class="pills stacked">
           {#each sidebarProperties as prop}
-            <li class="pill">
+            <li class="pill centered">
               {prop}
             </li>
           {/each}
@@ -373,7 +373,7 @@
       <div class="pills stacked">
         <a
           title={localize('TIDY5E.Section.SectionSelectorChooseSectionTooltip')}
-          class="pill interactive wrapped no-row-gap"
+          class="pill interactive wrapped no-row-gap centered"
           class:disabled={!context.editable}
           onclick={() =>
             new SectionSelectorApplication(
@@ -382,10 +382,10 @@
               { document: context.item },
             ).render(true)}
         >
-          <span class="centered text-normal">
+          <span class="text-normal">
             {localize('DND5E.Inventory')}
           </span>
-          <span class="hyphens-auto centered">
+          <span class="hyphens-auto">
             {section}
           </span>
         </a>
@@ -421,7 +421,7 @@
     </span>
     <span class="centered hyphen-auto">
       {saveContext?.dc.value}
-      {#if saveContext?.ability}
+      {#if !saveContext?.multipleAbilities && saveContext?.ability}
         <span class="text-normal">
           {saveContext.abilityTitle ?? saveContext.ability}
         </span>

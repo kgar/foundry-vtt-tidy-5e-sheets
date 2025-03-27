@@ -133,7 +133,6 @@
       >
         <ItemName />
       </div>
-      <!-- Header Summary -->
       <div class="subtitle">{subtitle}</div>
     </div>
     {#if !context.unlocked}

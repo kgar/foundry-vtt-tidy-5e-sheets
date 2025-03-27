@@ -215,6 +215,7 @@ export type AttunementContext = { icon: string; cls: string; title: string };
 export type ItemSaveContext = {
   ability: string;
   abilityTitle: string;
+  multipleAbilities: boolean;
   dc: {
     calculation: string;
     formula: string;

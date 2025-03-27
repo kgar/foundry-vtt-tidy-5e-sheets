@@ -1,24 +1,5 @@
 ## To Do
 
-
-- [ ] Equipment sidebar pills
-  - [ ] Armor section
-    - [ ] {AC} AC (text-normal or whatev)
-  - [ ] Action section
-    - [ ] (check what's already there)
-  - [ ] Properties section
-    - [ ] (check what's already there)
-- [ ] Equipment header content
-  - [ ] Subtitle
-    - [ ] Equipment subtype (Heavy Armor)
-    - [ ] , {AC} AC
-  - [ ] Summary
-    - [ ] Charges
-    - [ ] Recharge
-    - [ ] price
-    - [ ] weight
-    - [ ] quantity
-- [ ] Rarity "None" is currently using default light text color
 - [ ] Notify hightouch that spell sheet is ready for final review
 - [ ] Notify hightouch that weapon sheet is ready for final review
 - [ ] Test spell info on item summary and cards
@@ -386,3 +367,19 @@ Limited:
     - [x] Proficient - `("proficient" in this) ? CONFIG.DND5E.proficiencyLevels[this.prof?.multiplier || 0] : null`
     - [x] The item props (ask hightouch about the badge on Proficient)
 - [x] Effects Tables: Adjust the suppressed effect's toggle icon, since it can't be adjusted anyhow
+- [x] Equipment sidebar pills
+  - [x] Action section
+    - [x] (check what's already there)
+  - [x] Properties section
+    - [x] (check what's already there)
+- [x] Equipment header content
+  - [x] Subtitle
+    - [x] Equipment subtype (Heavy Armor)
+    - [x] , {AC} AC / the final AC?
+  - [x] Summary
+    - [x] Charges
+    - [x] Recharge
+    - [x] price
+    - [x] weight
+    - [x] quantity
+- [x] Rarity "None" is currently using default light text color
