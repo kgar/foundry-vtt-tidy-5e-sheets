@@ -8,8 +8,8 @@
   import ItemPriceSummary from './parts/header/ItemPriceSummary.svelte';
   import ItemWeightSummary from './parts/header/ItemWeightSummary.svelte';
   import ItemQuantitySummary from './parts/header/ItemQuantitySummary.svelte';
-  import ItemName from './parts/header/ItemName.svelte';
   import ItemChargesSummary from './parts/header/ItemChargesSummary.svelte';
+  import ItemName from './parts/header/ItemName.svelte';
   import ItemRechargeSummary from './parts/header/ItemRechargeSummary.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
@@ -27,7 +27,7 @@
 
 <main class="item-content">
   <div class="sheet-header">
-    <div class="identify-info">
+    <div class="identity-info">
       <div
         bind:this={itemNameEl}
         class="item-name-wrapper flex-row extra-small-gap align-items-center"
@@ -36,7 +36,6 @@
       </div>
       <div class="subtitle">{subtitle}</div>
     </div>
-
     <!-- Header Summary -->
     <div class="item-header-summary">
       {#if context.item.hasLimitedUses}

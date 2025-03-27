@@ -2,6 +2,7 @@
 
 - [ ] Notify hightouch that spell sheet is ready for final review
 - [ ] Notify hightouch that weapon sheet is ready for final review
+- [ ] Notify hightouch that equipment sheet is ready for final review
 - [ ] Test spell info on item summary and cards
 - [ ] Begin thinking about how to extract common functionality across each table type (item, effects, activities)
 - [ ] Propagate `sheet-header` class setup to all item sheets
@@ -25,16 +26,16 @@
       - [ ] Weight
       - [ ] Quantity
   - [x] Container
-  - [ ] Equipment
-    - [ ] subtitle
-      - [ ] Type (Light Armor)
-      - [ ] ## AC
-    - [ ] summary
-      - [ ] (when available) Charges
-      - [ ] (when relevant) Cooldown
-      - [ ] Price
-      - [ ] Weight
-      - [ ] Quantity
+  - [x] Equipment
+    - [x] subtitle
+      - [x] Type (Light Armor)
+      - [x] ## AC
+    - [x] summary
+      - [x] (when available) Charges
+      - [x] (when relevant) Cooldown
+      - [x] Price
+      - [x] Weight
+      - [x] Quantity
   - [ ] Facility
     - [ ] subtitle
       - [ ] Type
@@ -79,6 +80,10 @@
       - [x] Price
       - [x] Weight
       - [x] Quantity
+  - [ ] Tattoo
+    - [ ] Subtitle
+      - [ ] ...?
+    - [x] Summary
 - [ ] Finalize Description tab behavior for "text-based" sheets
   - [ ] Class / Subclass / Background / Species
     - [ ] Description tab

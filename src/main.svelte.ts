@@ -112,6 +112,22 @@ Hooks.once('init', () => {
   initRuntime();
   initKeybindings();
 
+  // TODO: When rolling out the first of the item sheets, activate this gem.
+  // const betaQuadroneItemTypes = [
+  // CONSTANTS.ITEM_TYPE_SPELL,
+  // CONSTANTS.ITEM_TYPE_WEAPON,
+  // ];
+
+  // documentSheetConfig.registerSheet(
+  //   Item,
+  //   CONSTANTS.DND5E_SYSTEM_ID,
+  //   Tidy5eItemSheetQuadrone,
+  //   {
+  //     types: betaQuadroneItemTypes,
+  //     label: 'TIDY5E.Tidy5eItemSheetQuadrone',
+  //   }
+  // );
+
   documentSheetConfig.registerSheet(
     Item,
     CONSTANTS.DND5E_SYSTEM_ID,
@@ -133,12 +149,28 @@ Hooks.once('init', () => {
       }
     );
 
+    const preBetaQuadroneItemTypes = [
+      CONSTANTS.ITEM_TYPE_BACKGROUND,
+      CONSTANTS.ITEM_TYPE_CLASS,
+      CONSTANTS.ITEM_TYPE_CONSUMABLE,
+      CONSTANTS.ITEM_TYPE_EQUIPMENT,
+      CONSTANTS.ITEM_TYPE_FACILITY,
+      CONSTANTS.ITEM_TYPE_FEAT,
+      CONSTANTS.ITEM_TYPE_LOOT,
+      CONSTANTS.ITEM_TYPE_RACE,
+      CONSTANTS.ITEM_TYPE_SPELL,
+      CONSTANTS.ITEM_TYPE_SUBCLASS,
+      CONSTANTS.ITEM_TYPE_TATTOO,
+      CONSTANTS.ITEM_TYPE_TOOL,
+      CONSTANTS.ITEM_TYPE_WEAPON,
+    ];
+
     documentSheetConfig.registerSheet(
       Item,
       CONSTANTS.DND5E_SYSTEM_ID,
       Tidy5eItemSheetQuadrone,
       {
-        types: supportedItemTypes,
+        types: preBetaQuadroneItemTypes,
         label: 'TIDY5E.Tidy5eItemSheetQuadrone',
       }
     );
