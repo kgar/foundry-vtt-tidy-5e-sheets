@@ -19,7 +19,7 @@
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
 
-<Sidebar />
+<Sidebar sectionLabel={'DND5E.Inventory'} />
 
 <main class="item-content">
   <div

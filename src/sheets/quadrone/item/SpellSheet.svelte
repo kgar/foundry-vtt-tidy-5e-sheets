@@ -78,7 +78,7 @@
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
 
-<Sidebar includeSidebarProperties={false}>
+<Sidebar includeSidebarProperties={false} sectionLabel={'DND5E.Spellbook'}>
   {#snippet belowStateSwitches()}
     <div>
       <h4>

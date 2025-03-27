@@ -35,7 +35,7 @@
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
 
-<Sidebar>
+<Sidebar sectionLabel={'DND5E.Inventory'}>
   {#snippet belowStateSwitches()}
     <div>
       <h4>{localize('TYPES.Item.container')}</h4>
