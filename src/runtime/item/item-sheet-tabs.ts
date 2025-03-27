@@ -41,7 +41,7 @@ import ItemWeaponDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemWeap
 import ItemTattooDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemTattooDetailsQuadroneTab.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
-const itemSheetTabs = {
+const itemSheetTabs: Record<string, Tab> = {
   /**
    * Interface for managing activities for an item.
    */
@@ -286,7 +286,18 @@ const itemSheetTabs = {
 
   quadroneActivities: {
     id: CONSTANTS.TAB_ITEM_ACTIVITIES_ID,
-    title: 'DND5E.ACTIVITY.Title.other',
+    title: (tabContext) => {
+      let title = FoundryAdapter.localize('DND5E.ACTIVITY.Title.other');
+
+      if (tabContext?.item) {
+        let count = Array.from(tabContext.item.system.activities).length;
+        if (count > 0) {
+          title += getTabCountSpan(count);
+        }
+      }
+
+      return title;
+    },
     content: {
       component: ItemActivitiesQuadroneTab,
       type: 'svelte',
@@ -441,13 +452,9 @@ const itemSheetTabs = {
     title: 'DND5E.Details',
     content: {
       component: ItemTattooDetailsQuadroneTab,
-      type: 'svelte'
-    }
+      type: 'svelte',
+    },
   },
-
-  /**
-   * Three-descriptions interface for items
-   */
   quadroneDescriptions: {
     id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
     title: 'DND5E.Description',
@@ -458,7 +465,18 @@ const itemSheetTabs = {
   },
   quadroneEffects: {
     id: CONSTANTS.TAB_ITEM_EFFECTS_ID,
-    title: 'DND5E.Effects',
+    title: (tabContext) => {
+      let title = FoundryAdapter.localize('DND5E.Effects');
+
+      if (tabContext?.item) {
+        let count = Array.from(tabContext.item.effects).length;
+        if (count > 0) {
+          title += getTabCountSpan(count);
+        }
+      }
+
+      return title;
+    },
     content: {
       component: ItemEffectsQuadroneTab,
       type: 'svelte',
@@ -470,3 +488,7 @@ const itemSheetTabs = {
 } satisfies Record<string, Tab>;
 
 export default itemSheetTabs;
+
+function getTabCountSpan(count: number) {
+  return ` <span class="tab-title-count">${count}</span>`;
+}

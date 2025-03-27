@@ -388,3 +388,7 @@ Limited:
     - [x] weight
     - [x] quantity
 - [x] Rarity "None" is currently using default light text color
+- [x] Consumable
+  - [x] subtitle
+  - [x] sidebar
+- [x] Effect / Activity tab titles: use callback to feed in custom HTML, given a document

@@ -59,7 +59,7 @@
     ),
   );
 
-  let tabName = $derived(ItemSheetRuntime.getTabTitle(tabId));
+  let tabName = $derived(ItemSheetRuntime.getTabTitle(tabId, {}));
 
   // TODO: Make this a callback to send through to the component for preparing sections properly
   let configuredContents = $derived(

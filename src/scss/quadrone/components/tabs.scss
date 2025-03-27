@@ -39,6 +39,10 @@
       background: linear-gradient(oklch(from var(--t5e-theme-color-default) l c h / 0.4), oklch(from var(--t5e-theme-color-darker) l c h / 0.4)) bottom no-repeat;
       background-size: 100% 2px;
     }
+
+    .tab-title-count {
+      color: var(--t5e-color-text-default);
+    }
   }
 }
 

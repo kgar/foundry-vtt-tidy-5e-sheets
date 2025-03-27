@@ -11,6 +11,7 @@
   import ItemName from './parts/header/ItemName.svelte';
   import ItemChargesSummary from './parts/header/ItemChargesSummary.svelte';
   import ItemRechargeSummary from './parts/header/ItemRechargeSummary.svelte';
+  import { isNil } from 'src/utils/data';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -18,7 +19,22 @@
 
   let itemNameEl: HTMLElement | undefined = $state();
 
-  let subtitle = $derived('TODO');
+  let consumableTypeConfig = $derived(
+    CONFIG.DND5E.consumableTypes[context.system.type.value],
+  );
+
+  let typeLabel = $derived(
+    consumableTypeConfig?.label ?? context.system.type.value,
+  );
+
+  let subtypeLabel = $derived(
+    consumableTypeConfig?.subtypes?.[context.system.type.subtype] ??
+      context.system.type.subtype,
+  );
+
+  let subtitle = $derived(
+    [typeLabel, subtypeLabel].filter((x) => !isNil(x, '')).join(', '),
+  );
 </script>
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
@@ -27,7 +43,7 @@
 
 <main class="item-content">
   <div class="sheet-header">
-    <div class="identify-info">
+    <div class="identity-info">
       <div
         bind:this={itemNameEl}
         class="item-name-wrapper flex-row extra-small-gap align-items-center"
@@ -59,6 +75,7 @@
     tabs={context.tabs}
     cssClass="item-tabs"
     sheet={context.item.sheet}
+    tabContext={{ context, item: context.item }}
   />
 
   <hr class="golden-fade" />

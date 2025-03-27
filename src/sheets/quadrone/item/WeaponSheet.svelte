@@ -58,6 +58,7 @@
     tabs={context.tabs}
     cssClass="item-tabs"
     sheet={context.item.sheet}
+    tabContext={{ context, item: context.item }}
   />
 
   <hr class="golden-fade" />

@@ -3459,7 +3459,7 @@ export type CONFIG = {
       wand: {
         label: string;
       };
-    };
+    } & Record<string, { label: string; subtypes?: Record<string, string> }>;
     containerTypes: {
       backpack: string;
       barrel: string;

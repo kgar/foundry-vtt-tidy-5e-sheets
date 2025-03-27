@@ -318,17 +318,22 @@ export class ItemSheetRuntime {
     return [...this._customItemEquipmentTypeGroups];
   }
 
-  static getTabTitle(tabId: string) {
+  static getTabTitle(tabId: string, tabContext: any) {
     try {
       let tabs = [...this._customTabs, ...Object.values(itemSheetTabs)];
       let tabTitle = tabs.find((t) => t.id === tabId)?.title;
       if (typeof tabTitle === 'function') {
-        tabTitle = tabTitle();
+        tabTitle = tabTitle(tabContext);
       }
       return tabTitle ? FoundryAdapter.localize(tabTitle) : tabId;
     } catch (e) {
-      error('An error occurred while searching for a tab title.', false, e);
-      debug('Tab title error troubleshooting information', { tabId });
+      let errorId = foundry.utils.randomID();
+      error('An error occurred while searching for a tab title.', false, {
+        error: e,
+        errorId,
+        tabId,
+        tabContext,
+      });
     }
   }
 }

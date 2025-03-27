@@ -32,9 +32,7 @@
 <aside class="sidebar theme-dark">
   <div class="sidebar-contents">
     <h4>Theme</h4>
-    <div
-      style="display: flex; flex-direction: column; gap: var(--t5e-size-1x)"
-    >
+    <div style="display: flex; flex-direction: column; gap: var(--t5e-size-1x)">
       <label for="light-mode-toggle">
         <input
           id="light-mode-toggle"
@@ -59,9 +57,7 @@
       </label>
     </div>
     <h4>Inversion</h4>
-    <div
-      style="display: flex; flex-direction: column; gap: var(--t5e-size-1x)"
-    >
+    <div style="display: flex; flex-direction: column; gap: var(--t5e-size-1x)">
       <label for="default-mode-toggle">
         <input
           id="default-mode-toggle"
@@ -98,6 +94,7 @@
         bind:selectedTabId
         cssClass="item-tabs"
         sheet={context.item.sheet}
+        tabContext={{ context, item: context.item }}
       />
     </div>
     <div class="span-all">
