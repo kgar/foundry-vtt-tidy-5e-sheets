@@ -78,7 +78,7 @@
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
 
-<Sidebar>
+<Sidebar includeSidebarProperties={false}>
   {#snippet belowStateSwitches()}
     <div>
       <h4>
@@ -133,7 +133,6 @@
       >
         <ItemName />
       </div>
-      <!-- Header Summary -->
       <div class="subtitle">{subtitle}</div>
     </div>
     {#if !context.unlocked}

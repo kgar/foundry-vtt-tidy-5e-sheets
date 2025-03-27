@@ -10,12 +10,20 @@
   import ItemQuantitySummary from './parts/header/ItemQuantitySummary.svelte';
   import ItemChargesSummary from './parts/header/ItemChargesSummary.svelte';
   import ItemName from './parts/header/ItemName.svelte';
+  import { isNil } from 'src/utils/data';
+  import ItemRechargeSummary from './parts/header/ItemRechargeSummary.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
   let selectedTabId: string = $state(CONSTANTS.TAB_CONTAINER_CONTENTS);
 
   let itemNameEl: HTMLElement | undefined = $state();
+
+  let subtitle = $derived(
+    [context.item.system.type?.label, context.labels.armor]
+      .filter((x) => !isNil(x))
+      .join(', '),
+  );
 </script>
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
@@ -23,22 +31,30 @@
 <Sidebar />
 
 <main class="item-content">
-  <div
-    bind:this={itemNameEl}
-    class="item-name-wrapper flex-row extra-small-gap align-items-center"
-  >
-    <ItemName />
-  </div>
+  <div class="sheet-header">
+    <div class="identity-info">
+      <div
+        bind:this={itemNameEl}
+        class="item-name-wrapper flex-row extra-small-gap align-items-center"
+      >
+        <ItemName />
+      </div>
+      <div class="subtitle">{subtitle}</div>
+    </div>
+    <!-- Header Summary -->
+    <div class="item-header-summary">
+      {#if context.item.hasLimitedUses}
+        <ItemChargesSummary />
+      {/if}
 
-  <!-- Header Summary -->
-  <div class="item-header-summary">
-    <ItemChargesSummary />
+      {#if context.item.hasRecharge}
+        <ItemRechargeSummary />
+      {/if}
 
-    <ItemPriceSummary item={context.item} />
-
-    <ItemWeightSummary />
-
-    <ItemQuantitySummary />
+      <ItemPriceSummary item={context.item} />
+      <ItemWeightSummary />
+      <ItemQuantitySummary />
+    </div>
   </div>
 
   <!-- Tab Strip -->

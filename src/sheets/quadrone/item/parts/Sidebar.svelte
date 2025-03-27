@@ -14,6 +14,7 @@
   import { isNil } from 'src/utils/data';
   import type { ClassValue } from 'svelte/elements';
   import { ItemContext } from 'src/features/item/ItemContext';
+  import { coalesce } from 'src/utils/formatting';
 
   let context = $derived(getContainerOrItemSheetContextQuadrone());
 
@@ -22,9 +23,15 @@
   interface Props {
     belowStateSwitches?: Snippet;
     aboveCustomSections?: Snippet;
+    /** Include the item properties list above the custom sections controls. Default: true */
+    includeSidebarProperties?: boolean;
   }
 
-  let { belowStateSwitches, aboveCustomSections }: Props = $props();
+  let {
+    belowStateSwitches,
+    aboveCustomSections,
+    includeSidebarProperties = true,
+  }: Props = $props();
 
   // Rarity
   let rarity = $derived(
@@ -102,7 +109,7 @@
   let itemColorClasses = $derived<ClassValue>([
     context.system.identified === false ? 'unidentified' : undefined,
     !isNil(rarity, '') ? 'rarity' : undefined,
-    rarity?.slugify(),
+    coalesce(rarity?.slugify(), 'none'),
     !isNil(context.system.preparation?.mode) ? 'spell-preparation' : undefined,
     context.system.preparation?.mode?.slugify(),
   ]);
@@ -123,6 +130,39 @@
     if (context.labels.damages.length) {
       result.push(damagePills);
     }
+
+    return result;
+  });
+
+  let sidebarActivations = $derived(
+    Object.values(context.item.labels.activations[0] ?? []).filter((x) => x),
+  );
+
+  let proficiencyPill = $derived(
+    'proficient' in context.item.system
+      ? CONFIG.DND5E.proficiencyLevels[
+          context.item.system.prof?.multiplier || 0
+        ]
+      : null,
+  );
+
+  let sidebarProperties = $derived.by<string[]>(() => {
+    if (!includeSidebarProperties) {
+      return [];
+    }
+
+    let result: string[] = [];
+
+    if (!isNil(proficiencyPill)) {
+      result.push(proficiencyPill);
+    }
+
+    let props =
+      context.labels.properties
+        ?.map((p: { label: string }) => p.label)
+        .toSorted() ?? [];
+
+    result.push(...props);
 
     return result;
   });
@@ -279,6 +319,19 @@
   {/if}
 
   {#if !context.concealDetails}
+    {#if sidebarActivations.length}
+      <div>
+        <h4>{localize('DND5E.Action')}</h4>
+        <ul class="pills stacked">
+          {#each sidebarActivations as activation}
+            <li class="pill">
+              {activation}
+            </li>
+          {/each}
+        </ul>
+      </div>
+    {/if}
+
     {#if offensePills.length}
       <div>
         <h4>
@@ -291,23 +344,22 @@
         </ul>
       </div>
     {/if}
-  {/if}
 
-  <!-- Item Info active property pills -->
-  <!-- {#if activeProperties}
-    <div>
-      <h4>
-        {localize('DND5E.Properties')}
-      </h4>
-      <ul class="pills stacked">
-        {#each activeProperties as prop}
-          <li class="pill">
-            {prop}
-          </li>
-        {/each}
-      </ul>
-    </div>
-  {/if} -->
+    {#if sidebarProperties.length}
+      <div>
+        <h4>
+          {localize('DND5E.Properties')}
+        </h4>
+        <ul class="pills stacked">
+          {#each sidebarProperties as prop}
+            <li class="pill centered">
+              {prop}
+            </li>
+          {/each}
+        </ul>
+      </div>
+    {/if}
+  {/if}
 
   {#if aboveCustomSections}
     {@render aboveCustomSections()}
@@ -321,7 +373,7 @@
       <div class="pills stacked">
         <a
           title={localize('TIDY5E.Section.SectionSelectorChooseSectionTooltip')}
-          class="pill interactive wrapped no-row-gap"
+          class="pill interactive wrapped no-row-gap centered"
           class:disabled={!context.editable}
           onclick={() =>
             new SectionSelectorApplication(
@@ -330,10 +382,10 @@
               { document: context.item },
             ).render(true)}
         >
-          <span class="centered text-normal">
+          <span class="text-normal">
             {localize('DND5E.Inventory')}
           </span>
-          <span class="hyphens-auto centered">
+          <span class="hyphens-auto">
             {section}
           </span>
         </a>
@@ -369,7 +421,7 @@
     </span>
     <span class="centered hyphen-auto">
       {saveContext?.dc.value}
-      {#if saveContext?.ability}
+      {#if !saveContext?.multipleAbilities && saveContext?.ability}
         <span class="text-normal">
           {saveContext.abilityTitle ?? saveContext.ability}
         </span>
@@ -394,4 +446,3 @@
     </li>
   {/each}
 {/snippet}
-

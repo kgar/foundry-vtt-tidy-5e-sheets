@@ -660,7 +660,6 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
           this.item.system.preparation.mode
         ]?.label;
       case 'tool':
-        // @ts-expect-error
         return CONFIG.DND5E.proficiencyLevels[
           this.item.system.prof?.multiplier || 0
         ];
