@@ -1480,7 +1480,10 @@ export class Tidy5eCharacterSheet
           });
         }
       } else {
-        warn(`Attribute pin item with ID ${pin.id} not found.`);
+        // Orphaned pins may exist until the next pin/unpin action, when the pins will be reset to valid pins only.
+        debug(
+          `Attribute pin item with ID ${pin.id} not found. Excluding from final render.`
+        );
       }
     }
 
