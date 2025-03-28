@@ -2897,7 +2897,7 @@ export type CONFIG = {
       art: string;
       game: string;
       music: string;
-    };
+    } & Record<string, string>;
     toolProficiencies: {
       art: string;
       game: string;
@@ -3689,7 +3689,7 @@ export type CONFIG = {
       treasure: {
         label: string;
       };
-    };
+    } & Record<string, { label: string; subtypes: Record<string, string> }>;
     currencies: {
       pp: CurrencyItemConfig;
       gp: CurrencyItemConfig;

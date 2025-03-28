@@ -9,33 +9,82 @@
   import ItemWeightSummary from './parts/header/ItemWeightSummary.svelte';
   import ItemQuantitySummary from './parts/header/ItemQuantitySummary.svelte';
   import ItemName from './parts/header/ItemName.svelte';
+  import { isNil } from 'src/utils/data';
+  import ItemChargesSummary from './parts/header/ItemChargesSummary.svelte';
+  import ItemRechargeSummary from './parts/header/ItemRechargeSummary.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   let context = $derived(getItemSheetContextQuadrone());
 
   let selectedTabId: string = $state(CONSTANTS.TAB_CONTAINER_CONTENTS);
 
   let itemNameEl: HTMLElement | undefined = $state();
+
+  let localize = FoundryAdapter.localize;
+
+  let subtitle = $derived(
+    [CONFIG.DND5E.toolTypes[context.item.system.type.value]]
+      .filter((x) => !isNil(x))
+      .join(', '),
+  );
+
+  let toolAbilityLabel = $derived(
+    CONFIG.DND5E.abilities[context.item.system.ability]?.label,
+  );
+
+  let toolPillValue = $derived(
+    !isNil(toolAbilityLabel, '')
+      ? toolAbilityLabel
+      : FoundryAdapter.localize('DND5E.Default'),
+  );
 </script>
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
 
-<Sidebar sectionLabel={'DND5E.Inventory'} />
+<Sidebar sectionLabel={'DND5E.Inventory'}>
+  {#snippet belowStateSwitches()}
+    <div>
+      <h4>{localize('TYPES.Item.tool')}</h4>
+      <ul class="pills stacked">
+        <li class="pill centered">
+          <span class="text-normal">
+            {localize('DND5E.Ability')}
+          </span>
+          <span>
+            {toolPillValue}
+          </span>
+        </li>
+      </ul>
+    </div>
+  {/snippet}
+</Sidebar>
 
 <main class="item-content">
-  <div
-    bind:this={itemNameEl}
-    class="item-name-wrapper flex-row extra-small-gap align-items-center"
-  >
-    <ItemName />
-  </div>
+  <div class="sheet-header">
+    <div class="identity-info">
+      <div
+        bind:this={itemNameEl}
+        class="item-name-wrapper flex-row extra-small-gap align-items-center"
+      >
+        <ItemName />
+      </div>
+      <div class="subtitle">
+        {subtitle}
+      </div>
+    </div>
+    <!-- Header Summary -->
+    <div class="item-header-summary">
+      {#if context.item.hasLimitedUses}
+        <ItemChargesSummary />
+      {/if}
 
-  <!-- Header Summary -->
-  <div class="item-header-summary">
-    <ItemPriceSummary item={context.item} />
-
-    <ItemWeightSummary />
-
-    <ItemQuantitySummary />
+      {#if context.item.hasRecharge}
+        <ItemRechargeSummary />
+      {/if}
+      <ItemPriceSummary item={context.item} />
+      <ItemWeightSummary />
+      <ItemQuantitySummary />
+    </div>
   </div>
 
   <!-- Tab Strip -->

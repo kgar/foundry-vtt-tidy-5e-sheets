@@ -56,26 +56,26 @@
     - [ ] summary 
       - [ ] (when available) Charges
       - [ ] (when relevant) Cooldown
-  - [ ] Loot
-    - [ ] Subtitle
-      - [ ] Loot type
-      - [ ] (if available) Loot subtype
-    - [ ] summary
-      - [ ] Price
-      - [ ] Weight
-      - [ ] Quantity
+  - [x] Loot
+    - [x] Subtitle
+      - [x] Loot type
+      - [x] (if available) Loot subtype
+    - [x] summary
+      - [x] Price
+      - [x] Weight
+      - [x] Quantity
   - [ ] Species
   - [ ] Subclass
     - [ ] subtitle
-  - [ ] Tool
-    - [ ] subtitle
-    - [ ] summary
-      - [ ] (when available) Charges
-      - [ ] (when relevant) Cooldown
-      - [ ] Charges
-      - [ ] Price
-      - [ ] Weight
-      - [ ] Quantity
+  - [x] Tool
+    - [x] subtitle
+    - [x] summary
+      - [x] (when available) Charges
+      - [x] (when relevant) Cooldown
+      - [x] Charges
+      - [x] Price
+      - [x] Weight
+      - [x] Quantity
   - [x] Weapon
     - [x] subtitle
     - [x] Summary
