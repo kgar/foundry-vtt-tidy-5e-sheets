@@ -9,6 +9,7 @@ import type {
   ApplicationRenderOptions,
 } from 'src/types/application.types';
 import type {
+  AdvancementsContext,
   Item5e,
   ItemDescription,
   ItemFacilityOrdersContext,
@@ -551,7 +552,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
    */
   _getItemAdvancement(item: Item5e) {
     if (!item.system.advancement) return {};
-    const advancement: Record<string, any> = {};
+    const advancement: AdvancementsContext = {};
     const configMode = !item.parent || this.advancementConfigurationMode;
     const legacyDisplay = this.options.legacyDisplay;
     const maxLevel = !configMode

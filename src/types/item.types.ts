@@ -153,7 +153,7 @@ export type ActivityQuadroneContext = {
 export type ItemSheetQuadroneContext = {
   activities: ActivityQuadroneContext[];
   activationTypes: GroupableSelectOption[];
-  advancement: any;
+  advancement: AdvancementsContext;
   advancementEditable: boolean;
   affectsPlaceholder: string;
   baseItems: Record<string, string>;
@@ -379,4 +379,29 @@ export type ContainerContents = {
   contents: InventorySection[];
   currency: Record<string, number>;
   itemContext: Record<string, ContainerItemContext>;
+};
+
+export type AdvancementsContext = {
+  [level: string]: AdvancementSectionContext;
+};
+
+export type AdvancementSectionContext = {
+  items: AdvancementItemContext[];
+  configured: 'partial' | 'full' | false;
+};
+
+export type AdvancementItemContext = {
+  id: string;
+  order: string;
+  title: string;
+  icon: string;
+  summary: string;
+  classRestriction: string;
+  configured: boolean;
+  tags: {
+    label: string;
+    icon: string;
+  }[];
+  value: { toString(): string } /* extends ScaleValueType */;
+  classes: string;
 };

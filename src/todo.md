@@ -1,9 +1,12 @@
 ## To Do
 
+- [ ] Implement Advancement tab
 - [ ] Notify hightouch that spell sheet is ready for final review
 - [ ] Notify hightouch that weapon sheet is ready for final review
 - [ ] Notify hightouch that equipment sheet is ready for final review
 - [ ] Notify hightouch that consumable sheet is ready for final review
+- [ ] Notify hightouch that loot sheet is ready for final review
+- [ ] Notify hightouch that tool sheet is ready for final review
 - [ ] Test spell info on item summary and cards
 - [ ] Begin thinking about how to extract common functionality across each table type (item, effects, activities)
   - [ ] Ditto for item summary
@@ -94,7 +97,6 @@
       - [ ] Description section header hidden, contents displayed
       - [ ] Edit mode always shows prosemirror visible in edit mode (like default sheets)
 - [x] Spell Sheet: Try a few different configurations for Class List.
-- [ ] Implement Advancement tab
 - [ ] Implement sidebar contents - prefer context data for pill groups with pill arrays of string and object (label / value)
   - [ ] Background
   - [ ] Class
