@@ -24,7 +24,7 @@
 
   let subtitle = $derived(
     [CONFIG.DND5E.toolTypes[context.item.system.type.value]]
-      .filter((x) => !isNil(x))
+      .filter((x) => !isNil(x, ''))
       .join(', '),
   );
 
