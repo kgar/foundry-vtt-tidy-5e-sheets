@@ -22,11 +22,15 @@
 <Sidebar />
 
 <main class="item-content">
-  <div
-    bind:this={itemNameEl}
-    class="item-name-wrapper flex-row extra-small-gap align-items-center"
-  >
-    <ItemName />
+  <div class="sheet-header">
+    <div class="identity-info">
+      <div
+        bind:this={itemNameEl}
+        class="item-name-wrapper flex-row extra-small-gap align-items-center"
+      >
+        <ItemName />
+      </div>
+    </div>
   </div>
 
   <!-- Header Summary -->

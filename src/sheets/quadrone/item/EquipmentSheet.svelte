@@ -21,7 +21,7 @@
 
   let subtitle = $derived(
     [context.item.system.type?.label, context.labels.armor]
-      .filter((x) => !isNil(x))
+      .filter((x) => !isNil(x, ''))
       .join(', '),
   );
 </script>
