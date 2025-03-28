@@ -16,7 +16,7 @@
 <div class="header-over-sidebar theme-dark">
   <SheetHeaderEditModeToggle class="header-control" />
 
-  <span class="header-item-type-label">
+  <span title={context.itemType} class="header-item-type-label truncate">
     {context.itemType}
   </span>
 </div>

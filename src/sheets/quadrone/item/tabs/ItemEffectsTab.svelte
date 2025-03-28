@@ -5,7 +5,6 @@
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemSheetQuadroneContext } from 'src/types/item.types';
   import type { ActiveEffectContext, EffectCategory } from 'src/types/types';

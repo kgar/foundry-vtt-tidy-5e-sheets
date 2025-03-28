@@ -444,7 +444,12 @@ export function TidyExtensibleDocumentSheetMixin<
       ) as ApplicationConfiguration;
 
       try {
-        if (game.release.generation < 13) {
+        if (
+          game.release.generation < 13 &&
+          !updatedOptions.window.controls?.some(
+            (x) => x.action === 'importFromCompendium'
+          )
+        ) {
           updatedOptions.window.controls?.unshift(
             ImportSheetControl.getSheetControl()
           );

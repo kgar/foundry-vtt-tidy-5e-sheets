@@ -290,7 +290,7 @@
         </PillSwitch>
       </li>
     {/if}
-    {#if context.system.preparation?.mode === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED}
+    {#if context.item.actor && context.system.preparation?.mode === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED}
       {@const prepared = context.system.preparation.prepared}
       <li>
         <PillSwitch
