@@ -43,7 +43,6 @@
   {#if context.itemSubtypes}
     {@const consumableSubTypeLabel = localize('DND5E.ItemConsumableSubtype', {
       category:
-        // @ts-expect-error
         context.config.consumableTypes[context.system.type.value]?.label,
     })}
 

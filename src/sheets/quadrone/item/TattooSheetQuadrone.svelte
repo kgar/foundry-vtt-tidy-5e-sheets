@@ -8,8 +8,9 @@
   import ItemPriceSummary from './parts/header/ItemPriceSummary.svelte';
   import ItemWeightSummary from './parts/header/ItemWeightSummary.svelte';
   import ItemQuantitySummary from './parts/header/ItemQuantitySummary.svelte';
+  import ItemChargesSummary from './parts/header/ItemChargesSummary.svelte';
   import ItemName from './parts/header/ItemName.svelte';
-  import { isNil } from 'src/utils/data';
+  import ItemRechargeSummary from './parts/header/ItemRechargeSummary.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -17,20 +18,7 @@
 
   let itemNameEl: HTMLElement | undefined = $state();
 
-  let lootTypeConfig = $derived(
-    CONFIG.DND5E.lootTypes[context.system.type.value],
-  );
-
-  let typeLabel = $derived(lootTypeConfig?.label ?? context.system.type.value);
-
-  let subtypeLabel = $derived(
-    lootTypeConfig?.subtypes?.[context.system.type.subtype] ??
-      context.system.type.subtype,
-  );
-
-  let subtitle = $derived(
-    [typeLabel, subtypeLabel].filter((x) => !isNil(x, '')).join(', '),
-  );
+  let subtitle = $derived('TODO');
 </script>
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
@@ -48,13 +36,18 @@
       </div>
       <div class="subtitle">{subtitle}</div>
     </div>
-
     <!-- Header Summary -->
     <div class="item-header-summary">
+      {#if context.item.hasLimitedUses}
+        <ItemChargesSummary />
+      {/if}
+
+      {#if context.item.hasRecharge}
+        <ItemRechargeSummary />
+      {/if}
+
       <ItemPriceSummary item={context.item} />
-
       <ItemWeightSummary />
-
       <ItemQuantitySummary />
     </div>
   </div>

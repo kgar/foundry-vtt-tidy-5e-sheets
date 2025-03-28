@@ -107,7 +107,6 @@
   {#if context.itemSubtypes}
     {@const subtypeLabel = localize('DND5E.ItemLootSubtype', {
       category:
-        // @ts-expect-error
         context.config.lootTypes[context.system.type.value]?.label ?? '',
     })}
     <div class="form-group">

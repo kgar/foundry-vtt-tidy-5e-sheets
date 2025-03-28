@@ -1,8 +1,8 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { Tab, OnTabSelectedFn } from 'src/types/types';
+  import { error } from 'src/utils/logging';
   import { getContext, onMount, type Snippet } from 'svelte';
 
   interface Props {
@@ -13,6 +13,7 @@
     onTabSelected?: (selectedTab: Tab) => void;
     tabEnd?: Snippet;
     sheet?: any;
+    tabContext?: Record<string, any>;
   }
 
   let {
@@ -23,6 +24,7 @@
     onTabSelected,
     tabEnd,
     sheet,
+    tabContext = {},
   }: Props = $props();
 
   const onTabSelectedContextFn = getContext<OnTabSelectedFn>(
@@ -86,6 +88,23 @@
       selectTab(tabs[0]);
     }
   });
+
+  function resolveTabTitle(tab: Tab) {
+    try {
+      if (typeof tab.title === 'function') {
+        return tab.title(tabContext);
+      }
+      return localize(tab.title);
+    } catch (e) {
+      let errorId = foundry.utils.randomID();
+      error('An error occurred while determining tab title', false, {
+        error: e,
+        tab,
+        errorId,
+      });
+      return `⚠ error ${errorId}`;
+    }
+  }
 </script>
 
 <nav
@@ -95,6 +114,7 @@
 >
   {#if tabs.length > 1}
     {#each tabs as tab, i (tab.id)}
+      {@const tabTitle = resolveTabTitle(tab)}
       <a
         class={CONSTANTS.TAB_OPTION_CLASS}
         class:active={tab.id === selectedTabId}
@@ -104,8 +124,9 @@
         role="tab"
         onclick={() => selectTab(tab)}
         onkeydown={(ev) => onKeyDown(ev, i)}
+        tabindex={i}
       >
-        {localize(tab.title)}
+        {@html localize(tabTitle)}
       </a>
     {/each}
   {/if}

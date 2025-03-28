@@ -24,6 +24,7 @@ import FeatSheetQuadrone from 'src/sheets/quadrone/item/FeatSheet.svelte';
 import LootSheetQuadrone from 'src/sheets/quadrone/item/LootSheet.svelte';
 import SpellSheetQuadrone from 'src/sheets/quadrone/item/SpellSheet.svelte';
 import SubclassSheetQuadrone from 'src/sheets/quadrone/item/SubclassSheet.svelte';
+import TattooSheetQuadrone from 'src/sheets/quadrone/item/TattooSheetQuadrone.svelte';
 import ToolSheetQuadrone from 'src/sheets/quadrone/item/ToolSheet.svelte';
 import WeaponSheetQuadrone from 'src/sheets/quadrone/item/WeaponSheet.svelte';
 import SpeciesSheetQuadrone from 'src/sheets/quadrone/item/SpeciesSheet.svelte';
@@ -298,6 +299,15 @@ export class ItemSheetRuntime {
         itemSheetTabs.quadroneAdvancement,
       ],
     },
+    [CONSTANTS.ITEM_TYPE_TATTOO]: {
+      Sheet: TattooSheetQuadrone,
+      defaultTabs: () => [
+        itemSheetTabs.quadroneDescriptions,
+        itemSheetTabs.quadroneTattooDetails,
+        itemSheetTabs.quadroneActivities,
+        itemSheetTabs.quadroneEffects,
+      ],
+    },
   };
 
   static registerCustomEquipmentTypeGroup(group: RegisteredEquipmentTypeGroup) {
@@ -308,17 +318,22 @@ export class ItemSheetRuntime {
     return [...this._customItemEquipmentTypeGroups];
   }
 
-  static getTabTitle(tabId: string) {
+  static getTabTitle(tabId: string, tabContext: any) {
     try {
       let tabs = [...this._customTabs, ...Object.values(itemSheetTabs)];
       let tabTitle = tabs.find((t) => t.id === tabId)?.title;
       if (typeof tabTitle === 'function') {
-        tabTitle = tabTitle();
+        tabTitle = tabTitle(tabContext);
       }
       return tabTitle ? FoundryAdapter.localize(tabTitle) : tabId;
     } catch (e) {
-      error('An error occurred while searching for a tab title.', false, e);
-      debug('Tab title error troubleshooting information', { tabId });
+      let errorId = foundry.utils.randomID();
+      error('An error occurred while searching for a tab title.', false, {
+        error: e,
+        errorId,
+        tabId,
+        tabContext,
+      });
     }
   }
 }

@@ -9,33 +9,64 @@
   import ItemWeightSummary from './parts/header/ItemWeightSummary.svelte';
   import ItemQuantitySummary from './parts/header/ItemQuantitySummary.svelte';
   import ItemName from './parts/header/ItemName.svelte';
+  import ItemChargesSummary from './parts/header/ItemChargesSummary.svelte';
+  import ItemRechargeSummary from './parts/header/ItemRechargeSummary.svelte';
+  import { isNil } from 'src/utils/data';
 
   let context = $derived(getItemSheetContextQuadrone());
 
   let selectedTabId: string = $state(CONSTANTS.TAB_CONTAINER_CONTENTS);
 
   let itemNameEl: HTMLElement | undefined = $state();
+
+  let consumableTypeConfig = $derived(
+    CONFIG.DND5E.consumableTypes[context.system.type.value],
+  );
+
+  let typeLabel = $derived(
+    consumableTypeConfig?.label ?? context.system.type.value,
+  );
+
+  let subtypeLabel = $derived(
+    consumableTypeConfig?.subtypes?.[context.system.type.subtype] ??
+      context.system.type.subtype,
+  );
+
+  let subtitle = $derived(
+    [typeLabel, subtypeLabel].filter((x) => !isNil(x, '')).join(', '),
+  );
 </script>
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
 
-<Sidebar />
+<Sidebar sectionLabel={'DND5E.Inventory'} />
 
 <main class="item-content">
-  <div
-    bind:this={itemNameEl}
-    class="item-name-wrapper flex-row extra-small-gap align-items-center"
-  >
-    <ItemName />
-  </div>
+  <div class="sheet-header">
+    <div class="identity-info">
+      <div
+        bind:this={itemNameEl}
+        class="item-name-wrapper flex-row extra-small-gap align-items-center"
+      >
+        <ItemName />
+      </div>
+      <div class="subtitle">{subtitle}</div>
+    </div>
 
-  <!-- Header Summary -->
-  <div class="item-header-summary">
-    <ItemPriceSummary item={context.item} />
+    <!-- Header Summary -->
+    <div class="item-header-summary">
+      {#if context.item.hasLimitedUses}
+        <ItemChargesSummary />
+      {/if}
 
-    <ItemWeightSummary />
+      {#if context.item.hasRecharge}
+        <ItemRechargeSummary />
+      {/if}
 
-    <ItemQuantitySummary />
+      <ItemPriceSummary item={context.item} />
+      <ItemWeightSummary />
+      <ItemQuantitySummary />
+    </div>
   </div>
 
   <!-- Tab Strip -->
@@ -44,6 +75,7 @@
     tabs={context.tabs}
     cssClass="item-tabs"
     sheet={context.item.sheet}
+    tabContext={{ context, item: context.item }}
   />
 
   <hr class="golden-fade" />

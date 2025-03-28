@@ -1,9 +1,15 @@
 ## To Do
 
+- [ ] Implement Advancement tab
 - [ ] Notify hightouch that spell sheet is ready for final review
 - [ ] Notify hightouch that weapon sheet is ready for final review
+- [ ] Notify hightouch that equipment sheet is ready for final review
+- [ ] Notify hightouch that consumable sheet is ready for final review
+- [ ] Notify hightouch that loot sheet is ready for final review
+- [ ] Notify hightouch that tool sheet is ready for final review
 - [ ] Test spell info on item summary and cards
 - [ ] Begin thinking about how to extract common functionality across each table type (item, effects, activities)
+  - [ ] Ditto for item summary
 - [ ] Propagate `sheet-header` class setup to all item sheets
 - [ ] Implement sheet header contents
   - [ ] Background
@@ -14,27 +20,27 @@
       - [ ] Description section header hidden, contents displayed
     - [ ] subtitle
       - [ ] Actor class level
-  - [ ] Consumable
-    - [ ] subtitle
-      - [ ] Item Type
-      - [ ] Item Subtype
-    - [ ] summary
-      - [ ] (when available) Charges
-      - [ ] (when relevant) Cooldown
-      - [ ] Price
-      - [ ] Weight
-      - [ ] Quantity
+  - [x] Consumable
+    - [x] subtitle
+      - [x] Item Type
+      - [x] Item Subtype
+    - [x] summary
+      - [x] (when available) Charges
+      - [x] (when relevant) Cooldown
+      - [x] Price
+      - [x] Weight
+      - [x] Quantity
   - [x] Container
-  - [ ] Equipment
-    - [ ] subtitle
-      - [ ] Type (Light Armor)
-      - [ ] ## AC
-    - [ ] summary
-      - [ ] (when available) Charges
-      - [ ] (when relevant) Cooldown
-      - [ ] Price
-      - [ ] Weight
-      - [ ] Quantity
+  - [x] Equipment
+    - [x] subtitle
+      - [x] Type (Light Armor)
+      - [x] ## AC
+    - [x] summary
+      - [x] (when available) Charges
+      - [x] (when relevant) Cooldown
+      - [x] Price
+      - [x] Weight
+      - [x] Quantity
   - [ ] Facility
     - [ ] subtitle
       - [ ] Type
@@ -45,32 +51,34 @@
       - [ ] Cost (if not assigned)
   - [ ] Feat
     - [ ] subtitle
-      - [ ] (When active) Activation Type (Action)
+      - [ ] Feat Type
+      - [ ] Feat Subtype
+      - [ ] ~~(When active) Activation Type (Action)~~ (already in sidebar)
       - [ ] (When Active) Requirements (Paladin 2)
       - [ ] (When Passive)
     - [ ] summary 
       - [ ] (when available) Charges
       - [ ] (when relevant) Cooldown
-  - [ ] Loot
-    - [ ] Subtitle
-      - [ ] Loot type
-      - [ ] (if available) Loot subtype
-    - [ ] summary
-      - [ ] Price
-      - [ ] Weight
-      - [ ] Quantity
+  - [x] Loot
+    - [x] Subtitle
+      - [x] Loot type
+      - [x] (if available) Loot subtype
+    - [x] summary
+      - [x] Price
+      - [x] Weight
+      - [x] Quantity
   - [ ] Species
   - [ ] Subclass
     - [ ] subtitle
-  - [ ] Tool
-    - [ ] subtitle
-    - [ ] summary
-      - [ ] (when available) Charges
-      - [ ] (when relevant) Cooldown
-      - [ ] Charges
-      - [ ] Price
-      - [ ] Weight
-      - [ ] Quantity
+  - [x] Tool
+    - [x] subtitle
+    - [x] summary
+      - [x] (when available) Charges
+      - [x] (when relevant) Cooldown
+      - [x] Charges
+      - [x] Price
+      - [x] Weight
+      - [x] Quantity
   - [x] Weapon
     - [x] subtitle
     - [x] Summary
@@ -79,19 +87,22 @@
       - [x] Price
       - [x] Weight
       - [x] Quantity
+  - [ ] Tattoo
+    - [ ] Subtitle
+      - [ ] ...?
+    - [x] Summary
 - [ ] Finalize Description tab behavior for "text-based" sheets
   - [ ] Class / Subclass / Background / Species
     - [ ] Description tab
       - [ ] Description section header hidden, contents displayed
       - [ ] Edit mode always shows prosemirror visible in edit mode (like default sheets)
-- [ ] Spell Sheet: Try a few different configurations for Class List.
-- [ ] Implement Advancement tab
+- [x] Spell Sheet: Try a few different configurations for Class List.
 - [ ] Implement sidebar contents - prefer context data for pill groups with pill arrays of string and object (label / value)
   - [ ] Background
   - [ ] Class
-  - [ ] Consumable
-  - [ ] Container
-  - [ ] Equipment
+  - [x] Consumable
+  - [x] Container
+  - [x] Equipment
   - [ ] Facility
     - [ ] Category
     - [ ] Prerequisite
@@ -101,26 +112,25 @@
   - [ ] Feat
   - [ ] Loot
   - [ ] Species
-  - [ ] Spell
+  - [x] Spell
     - Use the children snippet for spell-specific label-value pair info
   - [ ] Subclass
   - [ ] Tool
-  - [ ] Weapon
+  - [x] Weapon
   - [ ] Make sure Section section visible for all sheets
-- [ ] Ensure Activities and Effects tabs include item counters in the title
-  - [ ] This will need context-dependent tab titles, if they don't already exist
-- [ ] https://discord.com/channels/@me/1243307347682529423/1336210686392668220
-- [ ] Add context-dependent Tab visible / enabled predicate option to Tidy tabs, so that concealed content can entirely hide a tab, if needed
-- [ ] Handle unidentified feature set
-  - [ ] Portrait becomes washed over
-  - [ ] Non-description tabs become disabled (preferably, hide them?)
-- [ ] Wire up item-sheet-specific user sheet preferences for width and height. Look for other opportunities, also, like container toolbar.
-- [ ] Replace rote individual span styles with util styles where able
+- [x] Ensure Activities and Effects tabs include item counters in the title
+  - [x] This will need context-dependent tab titles, if they don't already exist
+- [x] https://discord.com/channels/@me/1243307347682529423/1336210686392668220
+- [x] Add context-dependent Tab visible / enabled predicate option to Tidy tabs, so that concealed content can entirely hide a tab, if needed
+- [x] Handle unidentified feature set
+  - [x] Portrait becomes washed over
+  - [x] Non-description tabs become disabled (preferably, hide them?)
+- [x] Wire up item-sheet-specific user sheet preferences for width and height. Look for other opportunities, also, like container toolbar.
+- [x] Replace rote individual span styles with util styles where able
 - [ ] All section configs: pass in callback for preparing sections to view, so that we're not processing this during non-option-sheet renders. It should only render on option sheet prerender.
 - [ ] Configure {TabId}: include a hook that allows people to pass in their own settings.
 - [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
 - [ ] Resolve TODO -  // TODO: Make this a callback to send through to the component for preparing sections properly
-- [ ] Set up default/light/dark menu toggle and add to container
 - [ ] Update sheet lock to work like the default sheets, including the additional render options and intuitive default state
 - [ ] Item cards
   - [ ] Implement a shared portal for item cards. All attached item cards will use the one portal anchor. This is so the card can live outside the sheet's overflow hiding window content, so we don't have to worry about compromising design.
@@ -383,3 +393,7 @@ Limited:
     - [x] weight
     - [x] quantity
 - [x] Rarity "None" is currently using default light text color
+- [x] Consumable
+  - [x] subtitle
+  - [x] sidebar
+- [x] Effect / Activity tab titles: use callback to feed in custom HTML, given a document

@@ -47,6 +47,7 @@ export const CONSTANTS = {
   ITEM_TYPE_RACE: 'race',
   ITEM_TYPE_SPELL: 'spell',
   ITEM_TYPE_SUBCLASS: 'subclass',
+  ITEM_TYPE_TATTOO: 'dnd-tashas-cauldron.tattoo',
   ITEM_TYPE_TOOL: 'tool',
   ITEM_TYPE_WEAPON: 'weapon',
   ITEM_SYSTEM_TYPE_AMMO: 'ammo',

@@ -25,12 +25,14 @@
     aboveCustomSections?: Snippet;
     /** Include the item properties list above the custom sections controls. Default: true */
     includeSidebarProperties?: boolean;
+    sectionLabel?: string;
   }
 
   let {
     belowStateSwitches,
     aboveCustomSections,
     includeSidebarProperties = true,
+    sectionLabel = 'TIDY5E.Section.Label',
   }: Props = $props();
 
   // Rarity
@@ -383,7 +385,7 @@
             ).render(true)}
         >
           <span class="text-normal">
-            {localize('DND5E.Inventory')}
+            {localize(sectionLabel)}
           </span>
           <span class="hyphens-auto">
             {section}

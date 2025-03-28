@@ -35,7 +35,7 @@
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
 
-<Sidebar>
+<Sidebar sectionLabel={'DND5E.Inventory'}>
   {#snippet belowStateSwitches()}
     <div>
       <h4>{localize('TYPES.Item.container')}</h4>
@@ -123,6 +123,7 @@
     tabs={context.tabs}
     cssClass="item-tabs"
     sheet={context.item.sheet}
+    tabContext={{ context, item: context.item }}
   />
 
   <hr class="golden-fade" />

@@ -100,7 +100,6 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       positioned: true,
       resizable: true,
       controls: [
-        ImportSheetControl.getSheetControl(),
         this.ACTOR_ACTIONS_AND_CONTROLS.configureToken.control,
         this.ACTOR_ACTIONS_AND_CONTROLS.showPortraitArtwork.control,
         this.ACTOR_ACTIONS_AND_CONTROLS.showTokenArtwork.control,

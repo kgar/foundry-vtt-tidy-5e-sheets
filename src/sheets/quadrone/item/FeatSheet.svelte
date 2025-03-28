@@ -19,7 +19,7 @@
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
 
-<Sidebar />
+<Sidebar sectionLabel={'DND5E.Features'} />
 
 <main class="item-content">
   <div
@@ -38,6 +38,7 @@
     tabs={context.tabs}
     cssClass="item-tabs"
     sheet={context.item.sheet}
+    tabContext={{ context, item: context.item }}
   />
 
   <hr class="golden-fade" />
