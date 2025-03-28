@@ -25,7 +25,6 @@ import { DragAndDropMixin } from 'src/mixins/DragAndDropBaseMixin';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { Activities } from 'src/features/activities/activities';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
-import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
 import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
@@ -66,17 +65,13 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
       frame: true,
       positioned: true,
       resizable: true,
-      controls: [ImportSheetControl.getSheetControl()],
+      controls: [],
     },
     position: {
       width: 560,
       height: 600,
     },
-    actions: {
-      [ImportSheetControl.actionName]: async function (this: any) {
-        await ImportSheetControl.importFromCompendium(this, this.document);
-      },
-    },
+    actions: {},
     dragDrop: [{ dropSelector: 'form' }],
     submitOnClose: false,
   };

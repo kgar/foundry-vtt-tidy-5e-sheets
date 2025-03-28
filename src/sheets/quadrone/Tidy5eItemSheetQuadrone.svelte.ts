@@ -67,7 +67,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       frame: true,
       positioned: true,
       resizable: true,
-      controls: [ImportSheetControl.getSheetControl()],
+      controls: [],
     },
     position: {
       width: 580,

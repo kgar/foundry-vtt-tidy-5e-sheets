@@ -34,7 +34,6 @@ import { TabManager } from 'src/runtime/tab/TabManager';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { settings } from 'src/settings/settings.svelte';
 import { Inventory } from 'src/features/sections/Inventory';
-import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 
@@ -82,17 +81,13 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
       frame: true,
       positioned: true,
       resizable: true,
-      controls: [ImportSheetControl.getSheetControl()],
+      controls: [],
     },
     position: {
       width: 560,
       height: 600,
     },
-    actions: {
-      [ImportSheetControl.actionName]: async function (this: any) {
-        await ImportSheetControl.importFromCompendium(this, this.document);
-      },
-    },
+    actions: {},
     dragDrop: [{ dropSelector: 'form' }],
     submitOnClose: false,
   };

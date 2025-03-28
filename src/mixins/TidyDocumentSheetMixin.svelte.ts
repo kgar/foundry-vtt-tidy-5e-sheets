@@ -28,6 +28,7 @@ import {
   insertHeaderButton,
   removeTidyHeaderButtons,
 } from 'src/features/sheet-header-controls/header-controls';
+import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
 
 /**
  * A mixin which fills in the extensibility and common functionality
@@ -443,6 +444,19 @@ export function TidyExtensibleDocumentSheetMixin<
       ) as ApplicationConfiguration;
 
       try {
+        if (game.release.generation < 13) {
+          updatedOptions.window.controls?.unshift(
+            ImportSheetControl.getSheetControl()
+          );
+          updatedOptions.actions[ImportSheetControl.actionName] =
+            async function (this: any) {
+              await ImportSheetControl.importFromCompendium(
+                this,
+                this.document
+              );
+            };
+        }
+
         const { width, height } = SheetPreferencesService.getByType(sheetType);
 
         const position = (updatedOptions.position ??= {});
