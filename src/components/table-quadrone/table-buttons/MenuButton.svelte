@@ -6,7 +6,7 @@
       | '[data-context-menu]'
       | '[data-item-id]'
       | '[data-activity-id]'
-      | '.advancement-item';
+      | (string & {});
   }
 
   let { targetSelector }: Props = $props();
