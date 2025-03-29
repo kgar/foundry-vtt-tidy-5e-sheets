@@ -391,17 +391,41 @@ export type AdvancementSectionContext = {
 };
 
 export type AdvancementItemContext = {
+  /** The ID of the advancement. */
   id: string;
+  /** An string-based ordering property. Used with a localized sort. */
   order: string;
+  /** HTML: the name / label of the advancement. */
   title: string;
+  /** The path to an image or SVG. */
   icon: string;
+  /** HTML to include on a summary line below the advancement name. */
   summary: string;
+  /** Denotes a class restriction. Unused here. */
   classRestriction: string;
+  /**
+   * Denotes whether this advancement has been configured
+   * for the level with which it is associated.
+   */
   configured: boolean;
+  /**
+   * Extra contextual information, presented often as an icon
+   * with a tooltip; e.g., "Multiclass Only" with multiple helmets icon
+   */
   tags: {
+    /** Explains the icon; often used as a tooltip. */
     label: string;
+    /** The path to the icon SVG or image. */
     icon: string;
   }[];
-  value: { toString(): string } /* extends ScaleValueType */;
+  /**
+   * A subclass of ScaleValueType.
+   * For our purposes, this is a means to call `.toString()`.
+   */
+  value: { toString(): string };
+  /**
+   * Any CSS classes that should be added to a given row.
+   * In svelte, we would do this in the component.
+   */
   classes: string;
 };

@@ -33,9 +33,6 @@
     </div>
   </div>
 
-  <!-- Header Summary -->
-  <div class="item-header-summary">TODO</div>
-
   <!-- Tab Strip -->
   <Tabs
     bind:selectedTabId

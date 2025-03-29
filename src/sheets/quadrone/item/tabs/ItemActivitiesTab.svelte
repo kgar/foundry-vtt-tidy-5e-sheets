@@ -77,7 +77,7 @@
   {#snippet body()}
     {#each context.activities as activity (activity.id)}
       <TidyActivityTableRow {activity}>
-        {#snippet children({ toggleSummary, expanded })}
+        {#snippet children()}
           <a
             class={['tidy-table-button', 'tidy-table-row-use-button']}
             onclick={(ev) => activity.doc.use({ ev })}
@@ -93,7 +93,9 @@
           </a>
           <TidyTableCell primary={true}>
             <span class="item-name">
-              <span class="cell-name">{activity.name}</span>
+              <span class="cell-text">
+                <span class="cell-name">{activity.name}</span>
+              </span>
               <!-- TODO: Uncomment when we have activity descriptions -->
               <!-- <span class="row-detail-expand-indicator">
                 <i

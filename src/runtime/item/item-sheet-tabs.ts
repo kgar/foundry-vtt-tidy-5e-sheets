@@ -308,7 +308,18 @@ const itemSheetTabs: Record<string, Tab> = {
   },
   quadroneAdvancement: {
     id: CONSTANTS.TAB_ITEM_ADVANCEMENT_ID,
-    title: 'DND5E.AdvancementTitle',
+    title: (tabContext) => {
+      let title = FoundryAdapter.localize('DND5E.AdvancementTitle');
+
+      if (tabContext?.item) {
+        let count = Array.from(tabContext.item.system.advancement).length;
+        if (count > 0) {
+          title += getTabCountSpan(count);
+        }
+      }
+
+      return title;
+    },
     content: {
       component: ItemAdvancementQuadroneTab,
       type: 'svelte',

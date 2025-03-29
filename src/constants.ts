@@ -215,7 +215,7 @@ export const CONSTANTS = {
     ACTION_BAR: 'action-bar',
 
     /** A row in an activity table. */
-    ACTIVITY_TABLE_ROW: 'effect-table-row',
+    ACTIVITY_TABLE_ROW: 'activity-table-row',
 
     /** A container which houses an actor portrait and other parts related to actor portrait features. */
     ACTOR_PORTRAIT_CONTAINER: 'actor-portrait-container',
@@ -231,6 +231,9 @@ export const CONSTANTS = {
 
     /** The specific details of an actor trait container, such as Senses, Languages, or Tools. */
     ACTOR_TRAIT_DETAILS: 'actor-trait-details',
+
+    /** A row in an advancement table. */
+    ADVANCEMENT_TABLE_ROW: 'advancement-table-row',
 
     /** A control for toggling a condition */
     CONDITION_TOGGLE: 'condition-toggle',

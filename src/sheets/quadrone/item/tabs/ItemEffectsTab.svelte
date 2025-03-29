@@ -129,7 +129,9 @@
               </span>
               <TidyTableCell primary={true}>
                 <a class="item-name" onclick={(ev) => toggleSummary()}>
-                  <span class="cell-name">{effect.name}</span>
+                  <span class="cell-text">
+                    <span class="cell-name">{effect.name}</span>
+                  </span>
                   <span class="row-detail-expand-indicator">
                     <i
                       class="fa-solid fa-angle-right expand-indicator"

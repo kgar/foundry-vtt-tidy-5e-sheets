@@ -122,6 +122,7 @@
               <span class="table-header-count">3</span>
             </div>
 
+            <!-- TODO: Redo these tables with the updated classes after implementing the tidy tables -->
             <div class="tidy-table-header-cell">
               <div class="cell-name">Components</div>
             </div>
