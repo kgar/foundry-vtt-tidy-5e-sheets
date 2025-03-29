@@ -112,21 +112,20 @@ Hooks.once('init', () => {
   initRuntime();
   initKeybindings();
 
-  // TODO: When rolling out the first of the item sheets, activate this gem.
-  // const betaQuadroneItemTypes = [
-  // CONSTANTS.ITEM_TYPE_SPELL,
-  // CONSTANTS.ITEM_TYPE_WEAPON,
-  // ];
+  const betaQuadroneItemTypes = [
+    CONSTANTS.ITEM_TYPE_SPELL,
+    CONSTANTS.ITEM_TYPE_WEAPON,
+  ];
 
-  // documentSheetConfig.registerSheet(
-  //   Item,
-  //   CONSTANTS.DND5E_SYSTEM_ID,
-  //   Tidy5eItemSheetQuadrone,
-  //   {
-  //     types: betaQuadroneItemTypes,
-  //     label: 'TIDY5E.Tidy5eItemSheetQuadrone',
-  //   }
-  // );
+  documentSheetConfig.registerSheet(
+    Item,
+    CONSTANTS.DND5E_SYSTEM_ID,
+    Tidy5eItemSheetQuadrone,
+    {
+      types: betaQuadroneItemTypes,
+      label: 'TIDY5E.Tidy5eItemSheetQuadrone',
+    }
+  );
 
   documentSheetConfig.registerSheet(
     Item,
@@ -158,11 +157,9 @@ Hooks.once('init', () => {
       CONSTANTS.ITEM_TYPE_FEAT,
       CONSTANTS.ITEM_TYPE_LOOT,
       CONSTANTS.ITEM_TYPE_RACE,
-      CONSTANTS.ITEM_TYPE_SPELL,
       CONSTANTS.ITEM_TYPE_SUBCLASS,
       CONSTANTS.ITEM_TYPE_TATTOO,
       CONSTANTS.ITEM_TYPE_TOOL,
-      CONSTANTS.ITEM_TYPE_WEAPON,
     ];
 
     documentSheetConfig.registerSheet(
