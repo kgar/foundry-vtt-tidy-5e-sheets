@@ -117,6 +117,13 @@ export function getItemContextOptions(
     group: 'state',
   });
 
+
+  /* 
+  // TODO: New equip icons. Right now the sheet doesn't check for quadrone.
+        ? "<i class='fas fa-hand-fist equip-icon fa-fw' style='color: var(--t5e-warning-accent-color);'></i> "
+        : "<i class='fa-regular fa-hand fa-fw'></i> ",
+  */
+
   // Toggle Equipped State
   if ('equipped' in item.system) {
     const isEquipped = item.system.equipped;
@@ -368,7 +375,7 @@ export function getItemContextOptions(
 
   options.push({
     name: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
-    icon: '<i class="fa-fw"></i>',
+    icon: '<i class="fas fa-diagram-cells"></i>',
     callback: () =>
       new SectionSelectorApplication(
         TidyFlags.section.prop,
@@ -384,7 +391,7 @@ export function getItemContextOptions(
 
   options.push({
     name: 'TIDY5E.Section.SectionSelectorChooseActionSectionTooltip',
-    icon: '<i class="fa-fw"></i>',
+    icon: '<i class="fas fa-diagram-cells"></i>',
     callback: () =>
       new SectionSelectorApplication(
         TidyFlags.section.prop,
