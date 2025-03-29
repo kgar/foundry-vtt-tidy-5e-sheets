@@ -93,13 +93,13 @@
   }
 
   .controls-dropdown {
-    background: var(--t5e-component-field-background);
+    background: var(--t5e-component-card-darker);
     border-radius: 0.3125rem;
     transition: none;
 
     &.expanded {
       border: 1px solid var(--t5e-component-field-border);
-      box-shadow: 0 0 0.375rem var(--dnd5e-shadow-45);
+      box-shadow: var(--t5e-drop-shadow-card);
     }
 
     .header-control>button {
@@ -116,6 +116,10 @@
 
       &:hover {
         background: var(--t5e-component-field-background-hover);
+
+        i {
+          color: var(--t5e-color-icon-default);
+        }
       }
     }
 
@@ -126,6 +130,7 @@
       }
     }
   }
+
 
   &[data-tidy-lock-configure-sheet='true'] .window-header [data-action='configureSheet'] {
     display: none;
@@ -568,6 +573,7 @@
 
   /* Spell Block */
   .spell-block {
+
     &,
     * {
       user-select: text;
@@ -611,7 +617,7 @@
   }
 
   #context-menu.tidy5e-sheet {
-    background: var(--t5e-component-field-background);
+    background: var(--t5e-component-card-darker);
     border: 1px solid var(--t5e-component-field-border);
     box-shadow: var(--t5e-drop-shadow-card);
   }
@@ -637,6 +643,14 @@
     .window-header {
       button.header-control:hover {
         background: rgba(0, 0, 0, 1);
+      }
+    }
+
+    .controls-dropdown {
+      .header-control>button {
+        &:hover {
+          background: rgba(0, 0, 0, 1);
+        }
       }
     }
   }
