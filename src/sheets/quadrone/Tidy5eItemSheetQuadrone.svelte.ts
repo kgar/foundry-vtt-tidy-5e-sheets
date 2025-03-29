@@ -9,6 +9,7 @@ import type {
   ApplicationRenderOptions,
 } from 'src/types/application.types';
 import type {
+  AdvancementItemContext,
   AdvancementsContext,
   Item5e,
   ItemDescription,
@@ -585,32 +586,38 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     )) {
       if (!configMode)
         advancements = advancements.filter((a: any) => a.appliesToClass);
-      const items = advancements.map((advancement: any) => ({
-        id: advancement.id,
-        order: advancement.sortingValueForLevel(level),
-        title: advancement.titleForLevel(level, { configMode, legacyDisplay }),
-        icon: advancement.icon,
-        classRestriction: advancement.classRestriction,
-        summary: advancement.summaryForLevel(level, {
-          configMode,
-          legacyDisplay,
-        }),
-        configured: advancement.configuredForLevel(level),
-        tags: this._getItemAdvancementTags(advancement),
-        value: advancement.valueForLevel?.(level),
-        classes: [advancement.icon?.endsWith('.svg') ? 'svg' : ''].filterJoin(
-          ' '
-        ),
-      }));
+      const items: AdvancementItemContext[] = advancements.map(
+        (advancement: any) => ({
+          id: advancement.id,
+          order: advancement.sortingValueForLevel(level),
+          title: advancement.titleForLevel(level, {
+            configMode,
+            legacyDisplay,
+          }),
+          icon: advancement.icon,
+          classRestriction: advancement.classRestriction,
+          summary: advancement.summaryForLevel(level, {
+            configMode,
+            legacyDisplay,
+          }),
+          configured: advancement.configuredForLevel(level),
+          tags: this._getItemAdvancementTags(advancement),
+          value: advancement.valueForLevel?.(level),
+          classes: [advancement.icon?.endsWith('.svg') ? 'svg' : ''].filterJoin(
+            ' '
+          ),
+        })
+      );
       if (!items.length) continue;
       advancement[level] = {
-        items: items.sort((a: any, b: any) =>
-          a.order.localeCompare(b.order, game.i18n.lang)
+        items: items.sort(
+          (a: AdvancementItemContext, b: AdvancementItemContext) =>
+            a.order.localeCompare(b.order, game.i18n.lang)
         ),
         configured:
           level > maxLevel
             ? false
-            : items.some((a: any) => !a.configured)
+            : items.some((a: AdvancementItemContext) => !a.configured)
             ? 'partial'
             : 'full',
       };
@@ -1028,69 +1035,5 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     const recovery = this.item.system.toObject().uses.recovery;
     recovery[index][prop] = value;
     return this.submit({ updateData: { 'system.uses.recovery': recovery } });
-  }
-
-  /**
-   * Handle one of the advancement actions from the buttons or context menu.
-   * @param {Element} target  Button or context menu entry that triggered this action.
-   * @param {string} action   Action being triggered.
-   * @returns {Promise|void}
-   */
-  _onAdvancementAction(target: HTMLElement, action: string) {
-    const id = target.closest<HTMLElement>('.advancement-item')?.dataset.id;
-
-    if (!id) {
-      return;
-    }
-
-    const advancement = this.item.advancement.byId[id];
-    let manager;
-    if (['edit', 'delete', 'duplicate'].includes(action) && !advancement)
-      return;
-    switch (action) {
-      case 'add':
-        return game.dnd5e.applications.advancement.AdvancementSelection.createDialog(
-          this.item
-        );
-      case 'edit':
-        return new advancement.constructor.metadata.apps.config(
-          advancement
-        ).render(true);
-      case 'delete':
-        if (
-          this.item.actor?.system.metadata?.supportsAdvancement &&
-          !game.settings.get('dnd5e', 'disableAdvancements')
-        ) {
-          manager =
-            dnd5e.applications.advancement.AdvancementManager.forDeletedAdvancement(
-              this.item.actor,
-              this.item.id,
-              id
-            );
-          if (manager.steps.length) return manager.render(true);
-        }
-        return this.item.deleteAdvancement(id);
-      case 'duplicate':
-        return this.item.duplicateAdvancement(id);
-      case 'modify-choices':
-        const level =
-          target.closest<HTMLElement>('[data-level]')?.dataset.level;
-
-        if (!level) {
-          return;
-        }
-
-        manager =
-          dnd5e.applications.advancement.AdvancementManager.forModifyChoices(
-            this.item.actor,
-            this.item.id,
-            Number(level)
-          );
-        if (manager.steps.length) manager.render(true);
-        return;
-      case 'toggle-configuration':
-        this.advancementConfigurationMode = !this.advancementConfigurationMode;
-        return this.render();
-    }
   }
 }

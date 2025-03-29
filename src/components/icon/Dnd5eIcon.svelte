@@ -6,14 +6,15 @@
  -->
 
 <script lang="ts">
-  interface Props {
+  import type { HTMLAttributes } from 'svelte/elements';
+
+  interface Props extends HTMLAttributes<HTMLElement> {
     src: string;
-    [key: string]: any;
   }
 
-  let { ...props }: Props = $props();
+  let { src, ...props }: Props = $props();
 </script>
 
-{#key props.src}
-  <dnd5e-icon {...props}></dnd5e-icon>
+{#key src}
+  <dnd5e-icon {src} {...props}></dnd5e-icon>
 {/key}

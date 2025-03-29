@@ -226,10 +226,12 @@
                   {localize(section.label)}
                   <span class="item-table-count">{section.items.length}</span>
                 </ItemTableColumn>
-                {#if section.hasActions}
+                {#if section.hasActions || section.hasUses}
                   <ItemTableColumn baseWidth="3.125rem">
                     {localize('DND5E.Uses')}
                   </ItemTableColumn>
+                {/if}
+                {#if section.hasActions}
                   <ItemTableColumn baseWidth="7.5rem">
                     {localize('DND5E.Usage')}
                   </ItemTableColumn>
@@ -292,7 +294,7 @@
                         />
                       {/if}
                     </ItemTableCell>
-                    {#if section.hasActions}
+                    {#if section.hasActions || section.hasUses}
                       <ItemTableCell baseWidth="3.125rem">
                         {#if item.isOnCooldown}
                           <RechargeControl
@@ -316,6 +318,8 @@
                           <span class="text-body-tertiary">&mdash;</span>
                         {/if}
                       </ItemTableCell>
+                    {/if}
+                    {#if section.hasActions}
                       <ItemTableCell baseWidth="7.5rem">
                         {#if ItemUtils.hasActivationType(item)}
                           {item.labels?.activation ?? ''}

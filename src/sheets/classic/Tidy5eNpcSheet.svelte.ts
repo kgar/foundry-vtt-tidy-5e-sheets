@@ -957,6 +957,7 @@ export class Tidy5eNpcSheet
         canCreate: true,
         key: 'passive',
         show: true,
+        hasUses: true,
       },
       [CONSTANTS.NPC_ABILITY_SECTION_EQUIPMENT]: {
         label: game.i18n.localize('DND5E.Inventory'),

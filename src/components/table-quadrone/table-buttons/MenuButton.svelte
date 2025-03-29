@@ -2,7 +2,11 @@
   import { EventHelper } from 'src/utils/events';
 
   interface Props {
-    targetSelector: '[data-context-menu]' | '[data-item-id]' | '[data-activity-id]';
+    targetSelector:
+      | '[data-context-menu]'
+      | '[data-item-id]'
+      | '[data-activity-id]'
+      | (string & {});
   }
 
   let { targetSelector }: Props = $props();
