@@ -160,20 +160,23 @@
     }
 
     .secret {
-      background-color: rgba(0, 0, 0, 0.2);
+      background-color: rgba(0, 0, 0, 0.12);
       padding: var(--t5e-size-2x);
       border-radius: var(--t5e-component-card-radius);
       border: 1px solid var(--t5e-theme-color-darker);
-      color: var(--t5e-color-text-lighter);
       transition: all var(--t5e-transition-default);
 
       // TODO: Use primary button style to "Reveal" and secondary for "Hide"
       // Need to inject button classes, but we're not able to yet.
       &.revealed {
         border-radius: 0;
-        padding: var(--t5e-size-3x) 0 var(--t5e-size-2x);
+        padding: var(--t5e-size-2x) 0;
         background: none;
         border-width: 1px 0;
+      }
+
+      &:not(.revealed) {
+        color: var(--t5e-color-text-lighter);
       }
 
       .reveal {
@@ -187,6 +190,15 @@
           border-color: var(--t5e-component-field-border-hover);
         }
       }
+
+      > :first-child {
+        margin-top: 0;
+      }
+
+      > :last-child {
+        margin-bottom: 0;
+      }
+
     }
 
     blockquote {
@@ -350,6 +362,10 @@
 
       .secret {
         background-color: rgba(0, 0, 0, 0.5);
+
+        &.revealed {
+          background: none;
+        }
       }
 
       .gm-only {
