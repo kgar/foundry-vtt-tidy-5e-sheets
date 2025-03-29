@@ -77,7 +77,7 @@
   {#snippet body()}
     {#each context.activities as activity (activity.id)}
       <TidyActivityTableRow {activity}>
-        {#snippet children({ toggleSummary, expanded })}
+        {#snippet children()}
           <a
             class={['tidy-table-button', 'tidy-table-row-use-button']}
             onclick={(ev) => activity.doc.use({ ev })}

@@ -72,7 +72,7 @@ export const defaultItemColumns = {
       component: InlineCapacityTrackerColumn,
     },
     width: '7rem',
-    cellClasses: 'item-label text-cell',
+    cellClasses: 'text-cell',
     hideUnder: 450,
   },
   // Inline Container Capacity Bar
@@ -83,7 +83,7 @@ export const defaultItemColumns = {
       component: InlineCapacityBarColumn,
     },
     width: '7rem',
-    cellClasses: 'item-label text-cell',
+    cellClasses: 'text-cell',
     hideUnder: 400,
   },
 } satisfies Record<string, ColumnSpecification>;

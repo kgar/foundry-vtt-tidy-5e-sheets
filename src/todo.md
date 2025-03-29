@@ -1,6 +1,10 @@
 ## To Do
 
+- [ ] Restructure item-name HTML https://discord.com/channels/@me/1243307347682529423/1355382160915169533
 - [ ] Implement Advancement tab
+  - [ ] Recreate all basic functionality
+  - [ ] Include useful Value column for scale values
+  - [ ] Include UI for Original / Multiclass Only indicator
 - [ ] Not sure how feasible it would be but I'm noticing when we open a sheet that Tab still swaps between tokens on the canvas. Is it possible to steal tab focus when a sheet opens and give it to the first open tab? Then you could hit Tab to switch between sheet tabs on open https://discord.com/channels/@me/1243307347682529423/1355184980623491172
 - [ ] Notify hightouch that spell sheet is ready for final review
 - [ ] Notify hightouch that weapon sheet is ready for final review

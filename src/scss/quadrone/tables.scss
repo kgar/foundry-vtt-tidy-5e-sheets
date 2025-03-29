@@ -272,11 +272,23 @@
       text-overflow: ellipsis;
     }
 
-    .cell-context {
+    .cell-context,
+    .advancement-cell-context {
       margin-top: -0.125rem;
       font-size: var(--font-size-small);
       color: var(--t5e-color-text-lightest);
     }
+
+    .advancement-cell-context {
+      :first-child() {
+        margin-block-start: 0;
+      }
+    }
+
+    .advancement-class-indicator {
+      color: var(--t5e-color-text-lighter);
+      margin-inline-start: var(--t5e-spacing-2x)
+    } 
 
     .spell-components {
       align-items: center;
@@ -385,12 +397,13 @@
         flex: 1;
         min-width: 0;
         display: flex;
-        // game.release.generation < 13
+        // game.release.generation >= 13
         // align-items: stretch;
-        align-items: center;
-        
-        >* {
-          // game.release.generation < 13
+        justify-content: center;
+        flex-direction: column;
+
+        > * {
+          // game.release.generation >= 13
           // align-content: center;
         }
       }
@@ -399,6 +412,7 @@
         max-width: 0;
         opacity: 0;
         pointer-events: none;
+        align-self: center;
       }
 
       // Hover on the cell
