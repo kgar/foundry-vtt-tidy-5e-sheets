@@ -80,19 +80,19 @@
       font-size: var(--font-font-size-18, 1.125rem);
     }
 
-    .contents-footer.off-screen {
-      position: sticky;
-      bottom: 0;
-      transform: translateY(calc(100% - 0.5rem));
+    // .contents-footer.off-screen {
+    //   // position: sticky;
+    //   // bottom: 0;
+    //   // transform: translateY(calc(100% - 2.5rem));
 
-      .meter.progress .label {
-        visibility: hidden;
-      }
+    //   // .meter.progress .label {
+    //   //   visibility: hidden;
+    //   // }
 
-      .item-create {
-        display: none;
-      }
-    }
+    //   // .item-create {
+    //   //   display: none;
+    //   // }
+    // }
 
     .contents-footer-scroll-marker {
       margin-block: -0.25rem;

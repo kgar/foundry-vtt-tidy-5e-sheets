@@ -28,8 +28,8 @@
   {#if showIcon}
     <i class="fas fa-weight-hanging text-label-icon"></i>
   {/if}
-  <span class="value text-data">{readableValue}</span>
+  <span class="value font-weight-label">{readableValue}</span>
   <span class="separator">/</span>
-  <span class="max text-data">{capacityMaxText}</span>
-  <span class="units text-label">{unitsAbbreviation}</span>
+  <span class="max color-text-default">{capacityMaxText}</span>
+  <span class="units color-text-lightest">{unitsAbbreviation}</span>
 </div>

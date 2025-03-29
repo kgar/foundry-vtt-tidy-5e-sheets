@@ -51,7 +51,7 @@
   {/if}
   <span class="item-price-number" class:truncate>
     <!-- Value Text -->
-    <span class="color-text-default text-data">
+    <span class="color-text-default font-weight-label">
       {#if !conceal || gmEditMode}
         {itemValueText}
       {:else}
@@ -59,7 +59,7 @@
       {/if}
     </span>
     <!-- Denom -->
-    <span class="item-price-denomination text-label">
+    <span class="item-price-denomination color-text-lighter">
       {denomination?.abbreviation ?? ''}
     </span>
   </span>

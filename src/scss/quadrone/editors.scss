@@ -357,6 +357,23 @@
         font-weight: var(--font-weight-label);
         font-style: italic;
       }
+
+
+      ul li::marker {
+        color: var(--t5e-color-text-gold);
+      }
+
+      ul ul li::marker {
+        color: var(--t5e-color-text-gold-emphasis);
+      }
+
+      ul ul ul li::marker {
+        color: var(--t5e-color-text-lighter);
+      }
+
+      ol li::marker {
+        color: var(--t5e-color-text-lighter);
+      }
     }
   }
 }
