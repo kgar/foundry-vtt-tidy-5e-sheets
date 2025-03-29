@@ -158,6 +158,7 @@ export type TidySectionBase = {
 export type FeatureSection = {
   items: Item5e[];
   hasActions?: boolean;
+  hasUses?: boolean;
 } & TidySectionBase;
 
 export type FacilitySection = {
