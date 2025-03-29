@@ -93,7 +93,9 @@
           </a>
           <TidyTableCell primary={true}>
             <span class="item-name">
-              <span class="cell-name">{activity.name}</span>
+              <span class="cell-text">
+                <span class="cell-name">{activity.name}</span>
+              </span>
               <!-- TODO: Uncomment when we have activity descriptions -->
               <!-- <span class="row-detail-expand-indicator">
                 <i

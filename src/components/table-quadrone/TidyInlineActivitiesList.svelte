@@ -80,7 +80,9 @@
         </a>
         <TidyTableCell primary={true} class="item-label text-cell">
           <span class="item-name">
-            <span class="cell-name">{ctx.activity.name}</span>
+            <span class="cell-text">
+              <span class="cell-name">{ctx.activity.name}</span>
+            </span>
           </span>
         </TidyTableCell>
         <TidyTableCell {...columns.uses}>

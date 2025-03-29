@@ -16,5 +16,5 @@
 </script>
 
 {#key src}
-  <dnd5e-icon {...props}></dnd5e-icon>
+  <dnd5e-icon {src} {...props}></dnd5e-icon>
 {/key}

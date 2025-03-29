@@ -120,27 +120,28 @@
             </span>
             <TidyTableCell primary={true}>
               <div class="item-name">
-                <div class="cell-name">
-                  {@html advancement.title}
-
-                  {#if advancement.classRestriction === 'primary'}
-                    <i
-                      title={localize(
-                        'DND5E.AdvancementClassRestrictionPrimary',
-                      )}
-                      class="fa-solid fa-chess-queen advancement-class-indicator"
-                    ></i>
-                  {:else if advancement.classRestriction === 'secondary'}
-                    <i
-                      title={localize(
-                        'DND5E.AdvancementClassRestrictionSecondary',
-                      )}
-                      class="fa-solid fa-chess advancement-class-indicator"
-                    ></i>
-                  {/if}
-                </div>
-                <div class="advancement-cell-context">
-                  {@html advancement.summary}
+                <div class="cell-text">
+                  <div class="cell-name">
+                    {@html advancement.title}
+                    {#if advancement.classRestriction === 'primary'}
+                      <i
+                        title={localize(
+                          'DND5E.AdvancementClassRestrictionPrimary',
+                        )}
+                        class="fa-solid fa-chess-queen advancement-class-indicator"
+                      ></i>
+                    {:else if advancement.classRestriction === 'secondary'}
+                      <i
+                        title={localize(
+                          'DND5E.AdvancementClassRestrictionSecondary',
+                        )}
+                        class="fa-solid fa-chess advancement-class-indicator"
+                      ></i>
+                    {/if}
+                    <div class="advancement-cell-context">
+                      {@html advancement.summary}
+                    </div>
+                  </div>
                 </div>
               </div>
             </TidyTableCell>

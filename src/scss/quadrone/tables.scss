@@ -264,6 +264,7 @@
       font-size: var(--font-size-default);
     }
 
+    .cell-text,
     .cell-name,
     .cell-context {
       display: block;
@@ -287,8 +288,8 @@
 
     .advancement-class-indicator {
       color: var(--t5e-color-text-lighter);
-      margin-inline-start: var(--t5e-spacing-2x)
-    } 
+      margin-inline-start: var(--t5e-spacing-2x);
+    }
 
     .spell-components {
       align-items: center;
@@ -397,14 +398,12 @@
         flex: 1;
         min-width: 0;
         display: flex;
-        // game.release.generation >= 13
-        // align-items: stretch;
-        justify-content: center;
-        flex-direction: column;
+        align-items: center;
 
-        > * {
-          // game.release.generation >= 13
-          // align-content: center;
+        .cell-text {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
         }
       }
 
