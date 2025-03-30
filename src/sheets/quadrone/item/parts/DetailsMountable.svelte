@@ -78,8 +78,8 @@
           id="{appId}-hp-value"
           document={context.item}
           field="system.hp.value"
-          value={context.source.hp.value}
-          disabledValue={context.system.hp.value}
+          value={context.source.hp?.value}
+          disabledValue={context.system.hp?.value ?? 0}
           disabled={!context.unlocked}
           placeholder="0"
           min="0"
@@ -94,8 +94,8 @@
             id="{appId}-hp-max"
             document={context.item}
             field="system.hp.max"
-            value={context.source.hp.max}
-            disabledValue={context.system.hp.max}
+            value={context.source.hp?.max}
+            disabledValue={context.system.hp?.max ?? 0}
             disabled={!context.unlocked}
             placeholder="0"
             min="0"
@@ -111,8 +111,8 @@
             id="{appId}-hp-dt"
             document={context.item}
             field="system.hp.dt"
-            value={context.source.hp.dt}
-            disabledValue={context.system.hp.dt}
+            value={context.source.hp?.dt}
+            disabledValue={context.system.hp?.dt ?? 0}
             disabled={!context.unlocked}
             placeholder="—"
             min="0"
@@ -125,8 +125,8 @@
       id="{appId}-hp-conditions"
       document={context.item}
       field="system.hp.conditions"
-      value={context.source.hp.conditions}
-      disabledValue={context.system.hp.conditions}
+      value={context.source.hp?.conditions}
+      disabledValue={context.system.hp?.conditions ?? 0}
       placeholder={localize(
         'DND5E.VEHICLE.MOUNTABLE.FIELDS.hp.conditions.label',
       )}

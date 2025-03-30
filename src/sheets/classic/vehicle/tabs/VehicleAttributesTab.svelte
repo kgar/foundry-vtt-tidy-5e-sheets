@@ -232,11 +232,11 @@
                             >
                               <ResourceWithBar
                                 document={item}
-                                value={item.system.hp.value}
+                                value={item.system.hp?.value}
                                 valueField="system.hp.value"
                                 valueTitle={localize('DND5E.HitPointsCurrent')}
                                 valueDisabled={!context.editable}
-                                max={item.system.hp.max}
+                                max={item.system.hp?.max}
                                 maxField="system.hp.max"
                                 maxTitle={localize('DND5E.HitPointsMax')}
                                 maxDisabled={!context.editable ||
