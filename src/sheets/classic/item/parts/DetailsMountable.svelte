@@ -70,7 +70,7 @@
         id="{appId}-hp-value"
         document={context.item}
         field="system.hp.value"
-        value={context.source.hp.value}
+        value={context.source.hp?.value}
         disabled={!context.editable}
         placeholder="0"
         min="0"
@@ -84,7 +84,7 @@
         id="{appId}-hp-max"
         document={context.item}
         field="system.hp.max"
-        value={context.source.hp.max}
+        value={context.source.hp?.max}
         disabled={!context.editable}
         placeholder="0"
         min="0"
@@ -98,7 +98,7 @@
         id="{appId}-hp-dt"
         document={context.item}
         field="system.hp.dt"
-        value={context.source.hp.dt}
+        value={context.source.hp?.dt}
         disabled={!context.editable}
         placeholder="—"
         min="0"
@@ -110,7 +110,7 @@
     id="{appId}-hp-conditions"
     document={context.item}
     field="system.hp.conditions"
-    value={context.item.system.hp.conditions}
+    value={context.item.system.hp?.conditions}
     placeholder={localize('DND5E.VEHICLE.MOUNTABLE.FIELDS.hp.conditions.label')}
     class="full-width"
     disabled={!context.editable}
