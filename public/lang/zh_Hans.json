@@ -147,6 +147,60 @@
         "MoveUp": "上移（Alt + 上箭头）",
         "MoveLeft": "左移（空格键）",
         "MoveDown": "下移（Alt + 下箭头）",
-        "MoveRight": "右移（空格键）"
+        "MoveRight": "右移（空格键）",
+        "MoveAllLeft": "全部左移",
+        "MoveAllRight": "全部右移"
+    },
+    "TIDY5E.WorldSettings.Exhaustion": {
+        "options.specific.levels.tooltip.name": "力竭等级 {level} 提示信息",
+        "AtLeastOneLevelRequiredErrorMessage": "至少需要 1 级力竭等级。",
+        "Header": "角色/NPC 力竭",
+        "name": "力竭配置",
+        "hint": "确定角色卡和NPC卡上，有关非载具的力竭情况是如何配置和展示。",
+        "options.specific.text": "具体等级",
+        "options.specific.levels.name": "共计等级",
+        "options.specific.levels.hint": "确定最大力竭等级数。",
+        "options.specific.levels.tooltip.hint": "该力竭等级的提示。本地化键同样适用。",
+        "options.open.text": "开放数字输入",
+        "options.open.explanation": "向用户显示一个数字输入框，用于输入力竭等级。"
+    },
+    "TIDY5E.WorldSettings.TabCharacter": {
+        "tabLabel": "角色"
+    },
+    "TIDY5E.WorldSettings.ItemIdentificationPermission": {
+        "hint": "确定能够有权进行鉴定物品的 UI 控件的用户类型。",
+        "name": "物品鉴定权限",
+        "options.GmOnly": "仅 GM",
+        "options.GmAndOwners": "GM 和物品拥有者"
+    },
+    "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
+        "hint": "法术有时会包含来自其他模块的特殊数据，这些数据在制作法术卷轴时可能会很有用。启用此选项后，在创建法术卷轴时将复制所有基于标记的数据。",
+        "name": "在法术卷轴制作中加入标识符"
+    },
+    "TIDY5E.WorldSettings.TabNpc": {
+        "tabLabel": "NPC"
+    },
+    "TIDY5E.WorldSettings.TabVehicle": {
+        "tabLabel": "载具"
+    },
+    "TIDY5E.WorldSettings.TabExhaustion": {
+        "tabLabel": "力竭"
+    },
+    "TIDY5E.WorldSettings.VehicleExhaustion": {
+        "Header": "载具力竭",
+        "name": "载具力竭配置",
+        "hint": "确定载具力竭在载具卡上的配置和展示方式。",
+        "AtLeastOneLevelRequiredErrorMessage": "至少需要 1 级力竭等级。"
+    },
+    "TIDY5E.WorldSettings.TabItem": {
+        "tabLabel": "物品"
+    },
+    "TIDY5E.WorldSettings.IncludeTidySectionFieldsInDefaultSheets": {
+        "name": "在默认卡中包含 Tidy 分区字段",
+        "hint": "在默认的物品卡中包含 Tidy 部分和动作部分的输入内容。"
+    },
+    "TIDY5E.WorldSettings.TabSheetLock": {
+        "tabLabel": "锁定卡",
+        "header": "锁定选项"
     }
 }

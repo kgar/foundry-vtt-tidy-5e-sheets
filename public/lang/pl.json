@@ -1,13 +1,13 @@
 {
-    "TIDY5E.Tidy5eVehicleSheetClassic": "Karta Pojazdu Tidy 5e",
+    "TIDY5E.Tidy5eVehicleSheetClassic": "Klasyczna Karta Pojazdu Tidy 5e",
     "TIDY5E.EditSheetImageHint": "Lewy przycisk myszy: edytuj obraz",
     "TIDY5E.ShowTokenArt": "Pokaż token",
     "TIDY5E.SheetImageOptionsHint": "Prawy przycisk myszy: pokaż opcje obrazu",
     "TIDY5E.ShowItemImage": "Prawy przycisk myszy: pokaż grafikę przedmiotu",
     "TIDY5E.ShowItemArt": "Pokaż obraz",
-    "TIDY5E.Tidy5eCharacterSheetClassic": "Karta Postaci Tidy 5e",
-    "TIDY5E.Tidy5eNpcSheetClassic": "Karta NPC Tidy 5e",
-    "TIDY5E.Tidy5eItemSheetClassic": "Karta Przedmiotu Tidy 5e",
+    "TIDY5E.Tidy5eCharacterSheetClassic": "Klasyczna Karta Postaci Tidy 5e",
+    "TIDY5E.Tidy5eNpcSheetClassic": "Klasyczna Karta NPC Tidy 5e",
+    "TIDY5E.Tidy5eItemSheetClassic": "Klasyczna Karta Przedmiotu Tidy 5e",
     "TIDY5E.PlayerName": "Nazwa gracza",
     "TIDY5E.ShowPortraitArt": "Pokaż portret",
     "TIDY5E.TabSelection": {
@@ -29,7 +29,7 @@
     "TIDY5E.WorldSettings.TabSheetLock": {
         "tabLabel": "Blokady",
         "header": "Ustawienia blokad",
-        "hint2": "Ważne: funkcje blokowania mają na celu kierowanie kartą postaci gracza i zapobieganie błędom, takim jak przypadkowe dodanie/usunięcie biegłości w rzucie obronnym. Ustawienia te nie zapewniają bezpiecznej blokady przeciw graczom o złośliwych zamiarach.",
+        "hint2": "Ważne: funkcje blokowania mają na celu kierowanie kartą postaci gracza i zapobieganie błędom, takim jak przypadkowe dodanie/usunięcie biegłości w rzucie obronnym. Ustawienia te nie zapewniają bezpiecznej blokady przed graczami o złośliwych zamiarach.",
         "labelFeaturesLocks": "Blokady zdolności",
         "hint": "Zapobiegaj wprowadzaniu przez graczy zmian w aspektach ich kart postaci, które powinny zmieniać się rzadko. Opcjonalnie ukryj niektóre elementy, których w ogóle nie chcesz używać.",
         "labelGeneralLocks": "Blokady ogólne",
@@ -415,7 +415,7 @@
     "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
         "name": "Zawsze przygotowane - akcent"
     },
-    "TIDY5E.Tidy5eContainerSheetClassic": "Karta Pojemnika Tidy 5e",
+    "TIDY5E.Tidy5eContainerSheetClassic": "Klasyczna Karta Pojemnika Tidy 5e",
     "TIDY5E.Settings.UseHpOverlay": {
         "hint": "Pokazuje kolorową nakładkę HP na portrecie postaci.",
         "name": "Użyj nakładki zdrowia"
@@ -487,7 +487,7 @@
         "hint": "Określa, jaki typ użytkownika może uzyskać dostęp do elementów interfejsu umożliwiających identyfikację przedmiotów.",
         "options.GmOnly": "Tylko MG",
         "options.GmAndOwners": "MG i właściciel przedmiotu",
-        "name": "Uprawnienia do identyfikacji przedmiotu"
+        "name": "Pozwolenie na identyfikację przedmiotu"
     },
     "TIDY5E.Settings.ShowExhaustionOnHover": {
         "hint": "Pokazuje wskaźnik wyczerpania tylko po najechaniu kursorem na portret.",
@@ -762,12 +762,12 @@
     },
     "TIDY5E.PreviewSheetImageHint": "Lewy przycisk myszy: podgląd obrazu",
     "TIDY5E.Tidy5eSettings": "Ustawienia Tidy 5e Sheets",
-    "TIDY5E.ExhaustionLevelTooltip": "Poziom wyczerpania {level}",
+    "TIDY5E.ExhaustionLevelTooltip": "Poziom Wyczerpania {level}",
     "TIDY5E.Group.NamePlaceholder": "Nazwa grupy",
     "TIDY5E.Group.RemoveMemberFromGroup": "Usuń członka grupy",
     "TIDY5E.Group.HideMemberTabInfoPanel": "Schowaj panel informacyjny",
     "TIDY5E.Group.EmptyMembersTabHint": "Ta grupa jest pusta. Upuść postać z paska bocznego, żeby dodać członka.",
-    "TIDY5E.Tidy5eGroupSheetClassic": "Karta Grupy Tidy 5e",
+    "TIDY5E.Tidy5eGroupSheetClassic": "Klasyczna Karta Grupy Tidy 5e",
     "TIDY5E.Group.ShowMemberTabInfoPanel": "Pokaż panel informacyjny",
     "TIDY5E.Keybindings.ToggleSheetLock.Name": "Przełącz blokadę karty",
     "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Jeśli w interfejsie użytkownika aktywnym oknem jest karta Tidy, to naciśnięcie tego klawisza powoduje przełączenie blokady karty.",
@@ -808,7 +808,7 @@
     },
     "TIDY5E.BrokenLink": "Uszkodzone połączenie",
     "TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast": "Dodaj Rytuały w \"Może Rzucić\"",
-    "TIDY5E.ModuleName": "Tidy 5e Sheets",
+    "TIDY5E.ModuleName": "Karty Tidy 5e",
     "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "Najwyższe sekcje",
     "TIDY5E.Settings.GlobalCustomSections": {
         "hint": "Własne sekcje dla Świata, mogące zostać skonfigurowane do różnych celów. Globalne Własne sekcje zawsze będą dołączane do wyboru sekcji.",
@@ -847,5 +847,12 @@
     "TIDY5E.Options.Title": "Opcje",
     "TIDY5E.ConfigureTab.Title": "Konfiguruj {tabName}",
     "TIDY5E.DisplayOptions.Title": "Opcje wyświetlania",
-    "TIDY5E.DisplayOptions.ShowContainerRow.Label": "Pokarz wiersz pojemnika"
+    "TIDY5E.DisplayOptions.ShowContainerRow.Label": "Pokarz wiersz pojemnika",
+    "TIDY5E.Tidy5eNpcSheetQuadrone": "Karta postaci NPC Tidy 5e",
+    "TIDY5E.Tidy5eContainerSheetQuadrone": "Karta Pojemnika Tidy 5e",
+    "TIDY5E.Tidy5eItemSheetQuadrone": "Karta Przedmiotu Tidy 5e",
+    "TIDY5E.Tidy5eVehicleSheetQuadrone": "Karta Pojazdu Tidy 5e",
+    "TIDY5E.Tidy5eGroupSheetQuadrone": "Karta Grupy Tidy 5e",
+    "TIDY5E.Tidy5eCharacterSheetQuadrone": "Karta postaci Tidy 5e",
+    "TIDY5E.ItemSheet.PactLevelCastLabel": "Rzut na {ordinal}"
 }
