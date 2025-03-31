@@ -106,6 +106,7 @@ export class Tidy5eCharacterSheet
     true,
     CONSTANTS.LOCATION_SECTION
   );
+  classSpellbookFilter: string = '';
 
   /**
    * The cached concentration information for the character.
@@ -1174,10 +1175,7 @@ export class Tidy5eCharacterSheet
       );
     }
 
-    context.spellcastingInfo = FoundryAdapter.getSpellcastingInfo(
-      this.actor,
-      spells
-    );
+    context.spellcastingInfo = FoundryAdapter.getSpellcastingInfo(this.actor);
 
     // Section spells
     // TODO: Take over `_prepareSpellbook` and
@@ -2083,6 +2081,15 @@ export class Tidy5eCharacterSheet
       text,
     });
     this.searchFilters.set(location, text);
+  }
+
+  /* -------------------------------------------- */
+  /* Class Spellbook Filter
+  /* -------------------------------------------- */
+
+  setClassSpellbookFilter(value: string) {
+    this.classSpellbookFilter = value;
+    this.render();
   }
 }
 

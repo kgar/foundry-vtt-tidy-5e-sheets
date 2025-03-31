@@ -20,7 +20,7 @@
   const localize = FoundryAdapter.localize;
 
   let selectedClassFilter = $derived(
-    TidyFlags.classFilter.get(context.actor) ?? '',
+    context.actor.sheet.classSpellbookFilter ?? '',
   );
 </script>
 
@@ -29,12 +29,9 @@
   onchange={(event) => {
     event.preventDefault();
     event.stopPropagation();
-    context.actor.update({
-      [TidyFlags.classFilter.prop]: event.currentTarget.value,
-    });
+    context.actor.sheet.setClassSpellbookFilter(event.currentTarget.value);
   }}
   disabled={!context.editable}
-  data-tidy-field={TidyFlags.classFilter.prop}
 >
   {#each allClasses as option}
     <option

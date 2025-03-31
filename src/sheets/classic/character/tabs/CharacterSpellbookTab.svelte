@@ -48,7 +48,7 @@
       context.actor,
       tabId,
       context.spellbook,
-      TidyFlags.classFilter.get(context.actor) ?? '',
+      context.actor.sheet.classSpellbookFilter ?? '',
     ),
   );
 
@@ -72,11 +72,13 @@
   let utilityBarCommands = $derived(
     context.utilities[tabId]?.utilityToolbarCommands ?? [],
   );
+
+  let classCount = $derived(Object.keys(context.actor.classes ?? {}).length);
 </script>
 
 <UtilityToolbar>
   <Search bind:value={searchCriteria} />
-  {#if settings.value.useMulticlassSpellbookFilter}
+  {#if classCount > 1}
     <div class="spellbook-class-filter">
       <SpellbookClassFilter />
     </div>
@@ -92,9 +94,7 @@
   <FilterMenu {tabId}>
     {#snippet beforeClearButton()}
       <div class="filter-option-group">
-        <label
-          class="filter-option flex-row no-gap align-items-center"
-        >
+        <label class="filter-option flex-row no-gap align-items-center">
           <input
             type="checkbox"
             checked={TidyFlags.includeRitualsInCanCast.get(context.actor)}
@@ -105,7 +105,9 @@
               )}
           />
           <span
-            >{localize('TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast')}</span
+            >{localize(
+              'TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast',
+            )}</span
           >
         </label>
       </div>

@@ -90,6 +90,7 @@ export class Tidy5eNpcSheet
     true,
     CONSTANTS.LOCATION_SECTION
   );
+  classSpellbookFilter: string = '';
 
   /**
    * The cached concentration information for the character.
@@ -755,10 +756,7 @@ export class Tidy5eNpcSheet
         this.actor.system.traits.important &&
         game.settings.get('dnd5e', 'loyaltyScore') &&
         game.user.isGM,
-      spellcastingInfo: FoundryAdapter.getSpellcastingInfo(
-        this.actor,
-        this.actor.itemTypes.spell
-      ),
+      spellcastingInfo: FoundryAdapter.getSpellcastingInfo(this.actor),
       lockSensitiveFields: lockSensitiveFields,
       longRest: this._onLongRest.bind(this),
       lockExpChanges: FoundryAdapter.shouldLockExpChanges(),
@@ -1440,5 +1438,14 @@ export class Tidy5eNpcSheet
       text,
     });
     this.searchFilters.set(location, text);
+  }
+
+  /* -------------------------------------------- */
+  /* Class Spellbook Filter
+  /* -------------------------------------------- */
+
+  setClassSpellbookFilter(value: string) {
+    this.classSpellbookFilter = value;
+    this.render();
   }
 }

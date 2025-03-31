@@ -28,7 +28,6 @@ export type UserSettingsContext = {
     useHpOverlay: CurrentSettings['useHpOverlay'];
     useHpOverlayNpc: CurrentSettings['useHpOverlayNpc'];
     useHpOverlayVehicle: CurrentSettings['useHpOverlayVehicle'];
-    useMulticlassSpellbookFilter: CurrentSettings['useMulticlassSpellbookFilter'];
     useSpellClassFilterIcons: CurrentSettings['useSpellClassFilterIcons'];
   };
 };
