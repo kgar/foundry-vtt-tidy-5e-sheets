@@ -1,7 +1,19 @@
 ## To Do
 
 - [ ] Implement Advancement tab
-  - [ ] Recreate all basic functionality
+  - [ ] Implement embedded functionality
+    - [ ] When locked, (double-check this in the template and code)
+      - [ ] Only menu button visible
+      - [ ] When fully configured, then circle check on action column, "Fully Configured"
+      - [ ] When partially configured, then triangle exclamation on action column, "Not Configured"
+      - [ ] When not configured at all, no icon
+    - [ ] When unlocked, 
+      - [ ] When of the appropriate level, show cog icon with "Modify Choices"
+      - [ ] else, no icon
+  - [ ] Implement sidebar/compendium functionality
+    - [ ] When locked,
+    - [ ] When unlocked,
+  - [ ] Note: Don't show Tag indicators when embedded. It's for standalone / sidebar / compendium only.
   - [x] Include useful Value column for scale values
   - [x] Include UI for Original / Multiclass Only indicator
 - [ ] Not sure how feasible it would be but I'm noticing when we open a sheet that Tab still swaps between tokens on the canvas. Is it possible to steal tab focus when a sheet opens and give it to the first open tab? Then you could hit Tab to switch between sheet tabs on open https://discord.com/channels/@me/1243307347682529423/1355184980623491172
