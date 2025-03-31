@@ -211,21 +211,26 @@
       </div>
     </div>
 
-    <SelectQuadrone
-      id="{appId}-ability"
-      document={context.item}
-      field="system.ability"
-      value={context.source.ability}
-      disabledValue={context.system.ability}
-      disabled={!context.unlocked}
-      blankValue=""
-    >
-      <SelectOptions
-        data={context.config.abilities}
-        labelProp="label"
-        blank={context.defaultAbility}
-      />
-    </SelectQuadrone>
+    <div class="form-group">
+      <label for="{appId}-ability">{localize('DND5E.SpellAbility')}</label>
+      <div class="form-fields">
+        <SelectQuadrone
+          id="{appId}-ability"
+          document={context.item}
+          field="system.ability"
+          value={context.source.ability}
+          disabledValue={context.system.ability}
+          disabled={!context.unlocked}
+          blankValue=""
+        >
+          <SelectOptions
+            data={context.config.abilities}
+            labelProp="label"
+            blank={context.defaultAbility}
+          />
+        </SelectQuadrone>
+      </div>
+    </div>
   {:else}
     <div class="form-group">
       <label for="{appId}-sourceClass"
