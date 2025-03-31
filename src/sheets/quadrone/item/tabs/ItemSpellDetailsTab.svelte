@@ -31,33 +31,37 @@
   <!-- Spell Level -->
   <div class="form-group">
     <label for="{appId}-level">{localize('DND5E.SpellLevel')}</label>
-    <SelectQuadrone
-      id="{appId}-level"
-      document={context.item}
-      field="system.level"
-      value={context.source.level}
-      disabled={!context.unlocked}
-    >
-      <SelectOptions data={context.config.spellLevels} />
-    </SelectQuadrone>
+    <div class="form-fields">
+      <SelectQuadrone
+        id="{appId}-level"
+        document={context.item}
+        field="system.level"
+        value={context.source.level}
+        disabled={!context.unlocked}
+      >
+        <SelectOptions data={context.config.spellLevels} />
+      </SelectQuadrone>
+    </div>
   </div>
 
   <!-- Spell School -->
   <div class="form-group">
     <label for="{appId}-school">{localize('DND5E.SpellSchool')}</label>
-    <SelectQuadrone
-      id="{appId}-school"
-      document={context.item}
-      field="system.school"
-      value={context.source.school}
-      disabled={!context.unlocked}
-    >
-      <SelectOptions
-        data={context.config.spellSchools}
-        labelProp="label"
-        blank=""
-      />
-    </SelectQuadrone>
+    <div class="form-fields">
+      <SelectQuadrone
+        id="{appId}-school"
+        document={context.item}
+        field="system.school"
+        value={context.source.school}
+        disabled={!context.unlocked}
+      >
+        <SelectOptions
+          data={context.config.spellSchools}
+          labelProp="label"
+          blank=""
+        />
+      </SelectQuadrone>
+    </div>
   </div>
 
   <!-- Spell Components -->
@@ -81,14 +85,16 @@
           <label for="{appId}-materials-supply"
             >{localize('DND5E.Supply')}</label
           >
-          <NumberInputQuadrone
-            id="{appId}-materials-supply"
-            document={context.item}
-            field="system.materials.supply"
-            value={context.source.materials.supply}
-            min="0"
-            disabled={!context.unlocked}
-          />
+          <div class="form-fields">
+            <NumberInputQuadrone
+              id="{appId}-materials-supply"
+              document={context.item}
+              field="system.materials.supply"
+              value={context.source.materials.supply}
+              min="0"
+              disabled={!context.unlocked}
+            />
+          </div>
         </div>
 
         <!-- Material Cost -->
@@ -118,14 +124,16 @@
         <div class="form-group checkbox">
           <label for="{appId}-materials-consumed" class="checkbox"
             >{localize('DND5E.Consumed')}
-            <CheckboxQuadrone
-              id="{appId}-materials-consumed"
-              document={context.item}
-              field="system.materials.consumed"
-              checked={context.source.materials.consumed}
-              disabledChecked={context.system.materials.consumed}
-              disabled={!context.unlocked}
-            />
+            <div class="form-fields">
+              <CheckboxQuadrone
+                id="{appId}-materials-consumed"
+                document={context.item}
+                field="system.materials.consumed"
+                checked={context.source.materials.consumed}
+                disabledChecked={context.system.materials.consumed}
+                disabled={!context.unlocked}
+              />
+            </div>
           </label>
         </div>
       </div>
