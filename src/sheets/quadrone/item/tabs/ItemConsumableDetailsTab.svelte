@@ -27,7 +27,6 @@
       <NumberInputQuadrone
         id="{appId}-weight-value"
         value={context.source.weight.value}
-        disabledValue={context.system.weight.value}
         step="any"
         field="system.weight.value"
         document={context.item}
@@ -38,7 +37,6 @@
         document={context.item}
         field="system.weight.units"
         value={context.source.weight.units}
-        disabledValue={context.system.weight.units}
         disabled={!context.unlocked}
       >
         <SelectOptions
@@ -56,7 +54,6 @@
       <NumberInputQuadrone
         id="{appId}-price-value"
         value={context.source.price.value}
-        disabledValue={context.system.price.value}
         step="any"
         field="system.price.value"
         document={context.item}
@@ -66,7 +63,6 @@
       />
       <SelectQuadrone
         value={context.source.price.denomination}
-        disabledValue={context.system.price.denomination}
         field="system.price.denomination"
         document={context.item}
         disabled={!context.unlocked}
@@ -96,7 +92,6 @@
         document={context.item}
         field="system.type.value"
         value={context.source.type.value}
-        disabledValue={context.system.type.value}
         disabled={!context.unlocked}
         blankValue=""
       >
@@ -122,7 +117,6 @@
           document={context.item}
           field="system.type.subtype"
           value={context.source.type.subtype}
-          disabledValue={context.system.type.subtype}
           disabled={!context.unlocked}
         >
           <SelectOptions data={context.itemSubtypes} blank="" />
@@ -173,7 +167,6 @@
               document={context.item}
               field="system.attunement"
               value={context.source.attunement}
-              disabledValue={context.system.attunement}
               disabled={!context.unlocked}
               class="flex-1"
             >
@@ -192,7 +185,6 @@
               <NumberInputQuadrone
                 id="{appId}-magical-bonus"
                 value={context.source.magicalBonus}
-                disabledValue={context.system.magicalBonus}
                 field="system.magicalBonus"
                 document={context.item}
                 disabled={!context.unlocked}

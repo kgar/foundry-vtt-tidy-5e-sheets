@@ -24,7 +24,6 @@
         document={context.item}
         field="system.identifier"
         value={context.source.identifier}
-        disabledValue={context.system.identifier}
         placeholder={context.item.identifier}
         disabled={!context.unlocked}
       />
@@ -42,7 +41,6 @@
         document={context.item}
         field="system.classIdentifier"
         value={context.source.classIdentifier}
-        disabledValue={context.system.classIdentifier}
         disabled={!context.unlocked}
       />
     </div>

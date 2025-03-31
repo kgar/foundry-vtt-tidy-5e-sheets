@@ -26,7 +26,6 @@
             document={context.item}
             field="system.range.value"
             value={context.source.range.value}
-            disabledValue={context.system.range.value}
             disabled={!context.unlocked}
           />
         </div>
@@ -42,7 +41,6 @@
           document={context.item}
           field="system.range.units"
           value={context.source.range.units}
-          disabledValue={context.system.range.units}
           disabled={!context.unlocked}
         >
           <SelectOptions
@@ -61,7 +59,6 @@
     document={context.item}
     field="system.range.special"
     value={context.source.range.special}
-    disabledValue={context.system.range.special}
     class="full-width"
     placeholder={localize('DND5E.RANGE.FIELDS.range.special.label')}
     disabled={!context.unlocked}

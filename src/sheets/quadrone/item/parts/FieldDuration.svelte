@@ -26,7 +26,6 @@
             document={context.item}
             field="system.duration.value"
             value={context.source.duration.value}
-            disabledValue={context.system.duration.value}
             placeholder="—"
             disabled={!context.unlocked}
           />
@@ -45,7 +44,6 @@
           document={context.item}
           field="system.duration.units"
           value={context.source.duration.units}
-          disabledValue={context.system.duration.units}
           disabled={!context.unlocked}
         >
           <SelectOptions
@@ -65,7 +63,6 @@
       document={context.item}
       field="system.duration.special"
       value={context.source.duration.special}
-      disabledValue={context.system.duration.special}
       placeholder={localize('DND5E.DURATION.FIELDS.duration.special.label')}
       class="full-width"
       disabled={!context.unlocked}

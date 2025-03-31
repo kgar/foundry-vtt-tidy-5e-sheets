@@ -31,35 +31,37 @@
   <!-- Spell Level -->
   <div class="form-group">
     <label for="{appId}-level">{localize('DND5E.SpellLevel')}</label>
-    <SelectQuadrone
-      id="{appId}-level"
-      document={context.item}
-      field="system.level"
-      value={context.source.level}
-      disabledValue={context.system.level}
-      disabled={!context.unlocked}
-    >
-      <SelectOptions data={context.config.spellLevels} />
-    </SelectQuadrone>
+    <div class="form-fields">
+      <SelectQuadrone
+        id="{appId}-level"
+        document={context.item}
+        field="system.level"
+        value={context.source.level}
+        disabled={!context.unlocked}
+      >
+        <SelectOptions data={context.config.spellLevels} />
+      </SelectQuadrone>
+    </div>
   </div>
 
   <!-- Spell School -->
   <div class="form-group">
     <label for="{appId}-school">{localize('DND5E.SpellSchool')}</label>
-    <SelectQuadrone
-      id="{appId}-school"
-      document={context.item}
-      field="system.school"
-      value={context.source.school}
-      disabledValue={context.system.school}
-      disabled={!context.unlocked}
-    >
-      <SelectOptions
-        data={context.config.spellSchools}
-        labelProp="label"
-        blank=""
-      />
-    </SelectQuadrone>
+    <div class="form-fields">
+      <SelectQuadrone
+        id="{appId}-school"
+        document={context.item}
+        field="system.school"
+        value={context.source.school}
+        disabled={!context.unlocked}
+      >
+        <SelectOptions
+          data={context.config.spellSchools}
+          labelProp="label"
+          blank=""
+        />
+      </SelectQuadrone>
+    </div>
   </div>
 
   <!-- Spell Components -->
@@ -83,15 +85,16 @@
           <label for="{appId}-materials-supply"
             >{localize('DND5E.Supply')}</label
           >
-          <NumberInputQuadrone
-            id="{appId}-materials-supply"
-            document={context.item}
-            field="system.materials.supply"
-            value={context.source.materials.supply}
-            disabledValue={context.system.materials.supply}
-            min="0"
-            disabled={!context.unlocked}
-          />
+          <div class="form-fields">
+            <NumberInputQuadrone
+              id="{appId}-materials-supply"
+              document={context.item}
+              field="system.materials.supply"
+              value={context.source.materials.supply}
+              min="0"
+              disabled={!context.unlocked}
+            />
+          </div>
         </div>
 
         <!-- Material Cost -->
@@ -110,7 +113,6 @@
               document={context.item}
               field="system.materials.cost"
               value={context.source.materials.cost}
-              disabledValue={context.system.materials.cost}
               min="0"
               placeholder="—"
               disabled={!context.unlocked}
@@ -122,14 +124,16 @@
         <div class="form-group checkbox">
           <label for="{appId}-materials-consumed" class="checkbox"
             >{localize('DND5E.Consumed')}
-            <CheckboxQuadrone
-              id="{appId}-materials-consumed"
-              document={context.item}
-              field="system.materials.consumed"
-              checked={context.source.materials.consumed}
-              disabledChecked={context.system.materials.consumed}
-              disabled={!context.unlocked}
-            />
+            <div class="form-fields">
+              <CheckboxQuadrone
+                id="{appId}-materials-consumed"
+                document={context.item}
+                field="system.materials.consumed"
+                checked={context.source.materials.consumed}
+                disabledChecked={context.system.materials.consumed}
+                disabled={!context.unlocked}
+              />
+            </div>
           </label>
         </div>
       </div>
@@ -140,7 +144,6 @@
         document={context.item}
         field="system.materials.value"
         value={context.source.materials.value}
-        disabledValue={context.system.materials.value}
         class="full-width"
         disabled={!context.unlocked}
       />
@@ -175,7 +178,6 @@
         document={context.item}
         field="system.preparation.mode"
         value={context.source.preparation.mode}
-        disabledValue={context.system.preparation.mode}
         disabled={!context.unlocked}
       >
         <SelectOptions
@@ -198,7 +200,6 @@
           document={context.item}
           field="system.sourceClass"
           value={context.source.sourceClass}
-          disabledValue={context.system.sourceClass}
           disabled={!context.unlocked}
           blankValue=""
         >
@@ -211,21 +212,25 @@
       </div>
     </div>
 
-    <SelectQuadrone
-      id="{appId}-ability"
-      document={context.item}
-      field="system.ability"
-      value={context.source.ability}
-      disabledValue={context.system.ability}
-      disabled={!context.unlocked}
-      blankValue=""
-    >
-      <SelectOptions
-        data={context.config.abilities}
-        labelProp="label"
-        blank={context.defaultAbility}
-      />
-    </SelectQuadrone>
+    <div class="form-group">
+      <label for="{appId}-ability">{localize('DND5E.SpellAbility')}</label>
+      <div class="form-fields">
+        <SelectQuadrone
+          id="{appId}-ability"
+          document={context.item}
+          field="system.ability"
+          value={context.source.ability}
+          disabled={!context.unlocked}
+          blankValue=""
+        >
+          <SelectOptions
+            data={context.config.abilities}
+            labelProp="label"
+            blank={context.defaultAbility}
+          />
+        </SelectQuadrone>
+      </div>
+    </div>
   {:else}
     <div class="form-group">
       <label for="{appId}-sourceClass"
@@ -237,7 +242,6 @@
           document={context.item}
           field="system.sourceClass"
           value={context.source.sourceClass}
-          disabledValue={context.system.sourceClass}
           disabled={!context.unlocked}
         />
       </div>

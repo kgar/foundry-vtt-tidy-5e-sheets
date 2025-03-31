@@ -23,7 +23,6 @@
       document={context.item}
       field="system.spellcasting.progression"
       value={context.source.spellcasting.progression}
-      disabledValue={context.system.spellcasting.progression}
       disabled={!context.unlocked}
     >
       <SelectOptions data={context.config.spellProgression} />
@@ -41,7 +40,6 @@
       document={context.item}
       field="system.spellcasting.ability"
       value={context.source.spellcasting.ability}
-      disabledValue={context.system.spellcasting.ability}
       disabled={!context.unlocked}
     >
       <SelectOptions
@@ -63,7 +61,6 @@
       document={context.item}
       field="system.spellcasting.preparation.formula"
       value={context.source.spellcasting.preparation.formula}
-      disabledValue={context.system.spellcasting.preparation.formula}
       data-formula-editor="true"
       disabled={!context.unlocked}
     />

@@ -31,7 +31,6 @@
           document={context.item}
           field="system.uses.spent"
           value={context.source.uses.spent}
-          disabledValue={context.system.uses.spent}
           disabled={!context.unlocked}
         />
       </div>
@@ -45,7 +44,6 @@
             document={context.item}
             field="system.uses.max"
             value={context.source.uses.max}
-            disabledValue={context.system.uses.max}
             disabled={!context.unlocked}
           />
         </div>

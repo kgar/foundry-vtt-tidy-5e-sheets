@@ -30,7 +30,6 @@
         document={context.document}
         field="system.type.value"
         value={context.source.type.value}
-        disabledValue={context.system.type.value}
         id="{appId}-system-type-value"
         blankValue={null}
         disabled={!context.unlocked}
@@ -54,7 +53,6 @@
         document={context.document}
         field="system.type.subtype"
         value={context.source.type.subtype}
-        disabledValue={context.system.type.subtype}
         id="{appId}-system-type-subtype"
         disabled={!context.unlocked}
       >
@@ -78,7 +76,6 @@
         document={context.document}
         field="system.size"
         value={context.source.size}
-        disabledValue={context.system.size}
         id="{appId}-system-size"
         disabled={!context.unlocked}
       >
@@ -100,7 +97,6 @@
           document={context.document}
           field="system.level"
           value={context.source.level}
-          disabledValue={context.system.level}
           selectOnFocus={true}
           min="1"
           step="1"
@@ -128,7 +124,6 @@
               document={context.document}
               field="system.level"
               value={context.source.level}
-              disabledValue={context.system.level}
               selectOnFocus={true}
               min="1"
               step="1"
@@ -147,7 +142,6 @@
               document={context.document}
               field="system.order"
               value={context.source.order}
-              disabledValue={context.system.order}
               id="{appId}-system-order"
               disabled={!context.unlocked}
             >
@@ -180,7 +174,6 @@
               document={context.document}
               field="system.hirelings.max"
               value={context.source.hirelings.max}
-              disabledValue={context.system.hirelings.max}
               selectOnFocus={true}
               min="1"
               step="1"
@@ -201,7 +194,6 @@
               document={context.document}
               field="system.defenders.max"
               value={context.source.defenders.max}
-              disabledValue={context.system.defenders.max}
               selectOnFocus={true}
               min="1"
               step="1"
@@ -311,7 +303,6 @@
         document={context.document}
         field="system.progress.order"
         value={context.source.progress.order}
-        disabledValue={context.system.progress.order}
         disabled={!context.unlocked}
         id="{appId}-system-progress-order"
       >
@@ -343,7 +334,6 @@
               document={context.document}
               field="system.progress.value"
               value={context.source.progress.value}
-              disabledValue={context.system.progress.value}
               selectOnFocus={true}
               min="0"
               step="0"
@@ -365,7 +355,6 @@
             document={context.document}
             field="system.progress.max"
             value={context.source.progress.max}
-            disabledValue={context.system.progress.max}
             selectOnFocus={true}
             min="1"
             step="1"
@@ -429,7 +418,6 @@
             document={context.document}
             field="system.craft.quantity"
             value={context.source.craft.quantity}
-            disabledValue={context.system.craft.quantity}
             selectOnFocus={true}
             disabled={!context.unlocked}
           />
@@ -480,7 +468,6 @@
               document={context.document}
               field="system.trade.stock.value"
               value={context.source.trade.stock.value}
-              disabledValue={context.system.trade.stock.value}
               selectOnFocus={true}
               min="0"
               step="0"
@@ -501,7 +488,6 @@
               document={context.document}
               field="system.trade.stock.max"
               value={context.source.trade.stock.max}
-              disabledValue={context.system.trade.stock.max}
               selectOnFocus={true}
               min="1"
               step="1"
@@ -524,7 +510,6 @@
           document={context.document}
           field="system.trade.creatures.max"
           value={context.source.trade.creatures.max}
-          disabledValue={context.system.trade.creatures.max}
           selectOnFocus={true}
           min="1"
           step="1"
@@ -545,7 +530,6 @@
           document={context.document}
           field="system.trade.profit"
           value={context.source.trade.profit}
-          disabledValue={context.system.trade.profit}
           selectOnFocus={true}
           min="0"
           step="0"

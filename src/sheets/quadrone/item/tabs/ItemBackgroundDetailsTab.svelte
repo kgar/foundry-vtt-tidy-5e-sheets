@@ -19,7 +19,6 @@
       document={context.item}
       field="system.identifier"
       value={context.source.identifier}
-      disabledValue={context.system.identifier}
       placeholder={context.item.identifier}
       disabled={!context.unlocked}
     />

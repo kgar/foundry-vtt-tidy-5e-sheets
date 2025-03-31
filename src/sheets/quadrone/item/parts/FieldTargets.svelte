@@ -35,7 +35,6 @@
               document={context.item}
               field="system.target.affects.count"
               value={context.source.target.affects.count}
-              disabledValue={context.system.target.affects.count}
               placeholder={context.affectsPlaceholder}
               disabled={!context.unlocked}
             />
@@ -53,7 +52,6 @@
             document={context.item}
             field="system.target.affects.type"
             value={context.source.target.affects.type}
-            disabledValue={context.system.target.affects.type}
             blankValue=""
             disabled={!context.unlocked}
           >
@@ -74,7 +72,6 @@
         document={context.item}
         field="system.target.affects.special"
         value={context.source.target.affects.special}
-        disabledValue={context.system.target.affects.special}
         class="full-width"
         placeholder={localize(
           'DND5E.TARGET.FIELDS.target.affects.special.label',
@@ -123,7 +120,6 @@
         document={context.item}
         field="system.target.template.type"
         value={context.source.target.template.type}
-        disabledValue={context.system.target.template.type}
         disabled={!context.unlocked}
       >
         <SelectOptions
@@ -151,7 +147,6 @@
               document={context.item}
               field="system.target.template.size"
               value={context.source.target.template.size}
-              disabledValue={context.system.target.template.size}
               disabled={!context.unlocked}
             />
           </div>
@@ -169,7 +164,6 @@
                 document={context.item}
                 field="system.target.template.width"
                 value={context.source.target.template.width}
-                disabledValue={context.system.target.template.width}
                 disabled={!context.unlocked}
               />
             </div>
@@ -188,7 +182,6 @@
                 document={context.item}
                 field="system.target.template.height"
                 value={context.source.target.template.height}
-                disabledValue={context.system.target.template.height}
                 disabled={!context.unlocked}
               />
             </div>
@@ -206,7 +199,6 @@
               document={context.item}
               field="system.target.template.units"
               value={context.source.target.template.units}
-              disabledValue={context.system.target.template.units}
               disabled={!context.unlocked}
             >
               <SelectOptions
@@ -236,7 +228,6 @@
               document={context.item}
               field="system.target.template.count"
               value={context.source.target.template.count}
-              disabledValue={context.system.target.template.count}
               placeholder="1"
               disabled={!context.unlocked}
             />

@@ -26,7 +26,6 @@
       <NumberInputQuadrone
         id="{appId}-weight-value"
         value={context.source.weight.value}
-        disabledValue={context.system.weight.value}
         step="any"
         field="system.weight.value"
         document={context.item}
@@ -37,7 +36,6 @@
         document={context.item}
         field="system.weight.units"
         value={context.source.weight.units}
-        disabledValue={context.system.weight.units}
         disabled={!context.unlocked}
       >
         <SelectOptions
@@ -55,7 +53,6 @@
       <NumberInputQuadrone
         id="{appId}-price-value"
         value={context.source.price.value}
-        disabledValue={context.system.price.value}
         step="any"
         field="system.price.value"
         document={context.item}
@@ -65,7 +62,6 @@
       />
       <SelectQuadrone
         value={context.source.price.denomination}
-        disabledValue={context.system.price.denomination}
         field="system.price.denomination"
         document={context.item}
         disabled={!context.unlocked}
@@ -88,7 +84,6 @@
       document={context.item}
       field="system.type.value"
       value={context.source.type.value}
-      disabledValue={context.system.type.value}
       disabled={!context.unlocked}
     >
       <SelectOptions data={context.config.toolTypes} blank="" />
@@ -106,7 +101,6 @@
         document={context.item}
         field="system.type.baseItem"
         value={context.source.type.baseItem}
-        disabledValue={context.system.type.baseItem}
         disabled={!context.unlocked}
       >
         <SelectOptions data={context.baseItems} blank="" />
@@ -136,7 +130,6 @@
           document={context.item}
           field="system.proficient"
           value={context.source.proficient}
-          disabledValue={context.system.proficient}
           disabled={!context.unlocked}
         >
           <SelectOptions
@@ -156,7 +149,6 @@
           document={context.item}
           field="system.ability"
           value={context.source.ability}
-          disabledValue={context.system.ability}
           disabled={!context.unlocked}
         >
           <SelectOptions
@@ -179,7 +171,6 @@
       document={context.item}
       field="system.bonus"
       value={context.source.bonus}
-      disabledValue={context.system.bonus}
       disabled={!context.unlocked}
     />
   </div>
@@ -210,7 +201,6 @@
         document={context.item}
         field="system.attunement"
         value={context.source.attunement}
-        disabledValue={context.system.attunement}
         disabled={!context.unlocked}
       >
         <SelectOptions

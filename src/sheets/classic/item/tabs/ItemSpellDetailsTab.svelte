@@ -174,47 +174,56 @@
   <div class="form-group">
     <label for="{appId}-sourceClass">{localize('DND5E.SpellSourceClass')}</label
     >
-    <Select
-      id="{appId}-sourceClass"
-      document={context.item}
-      field="system.sourceClass"
-      value={context.source.sourceClass}
-      disabled={!context.editable}
-      blankValue=""
-    >
-      <SelectOptions
-        data={context.document.parent.spellcastingClasses}
-        labelProp="name"
-        blank=""
-      />
-    </Select>
+    <div class="form-fields">
+      <Select
+        id="{appId}-sourceClass"
+        document={context.item}
+        field="system.sourceClass"
+        value={context.source.sourceClass}
+        disabled={!context.editable}
+        blankValue=""
+      >
+        <SelectOptions
+          data={context.document.parent.spellcastingClasses}
+          labelProp="name"
+          blank=""
+        />
+      </Select>
+    </div>
   </div>
 
-  <Select
-    id="{appId}-ability"
-    document={context.item}
-    field="system.ability"
-    value={context.source.ability}
-    disabled={!context.editable}
-    blankValue=""
-  >
-    <SelectOptions
-      data={context.config.abilities}
-      labelProp="label"
-      blank={context.defaultAbility}
-    />
-  </Select>
+  <div class="form-group">
+    <label for="{appId}-ability">{localize('DND5E.SpellAbility')}</label>
+    <div class="form-fields">
+      <Select
+        id="{appId}-ability"
+        document={context.item}
+        field="system.ability"
+        value={context.source.ability}
+        disabled={!context.editable}
+        blankValue=""
+      >
+        <SelectOptions
+          data={context.config.abilities}
+          labelProp="label"
+          blank={context.defaultAbility}
+        />
+      </Select>
+    </div>
+  </div>
 {:else}
   <div class="form-group">
     <label for="{appId}-sourceClass">{localize('DND5E.SpellSourceClass')}</label
     >
-    <TextInput
-      id="{appId}-sourceClass"
-      document={context.item}
-      field="system.sourceClass"
-      value={context.source.sourceClass}
-      disabled={!context.editable}
-    />
+    <div class="form-fields">
+      <TextInput
+        id="{appId}-sourceClass"
+        document={context.item}
+        field="system.sourceClass"
+        value={context.source.sourceClass}
+        disabled={!context.editable}
+      />
+    </div>
   </div>
 {/if}
 

@@ -50,7 +50,6 @@
         document={context.item}
         field="system.wealth"
         value={context.source.wealth}
-        disabledValue={context.system.wealth}
         disabled={!context.unlocked}
       />
     </div>
