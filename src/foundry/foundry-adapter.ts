@@ -1443,17 +1443,16 @@ export const FoundryAdapter = {
   },
   getFilteredClassOrOriginal(actor: Actor5e): Item5e | undefined | null {
     return (
-      FoundryAdapter.getFilteredClassOrNull(actor) ??
+      FoundryAdapter.getFilteredClass(actor) ??
       actor.items.get(actor.system.details.originalClass) ??
       actor.itemTypes.class[0]
     );
   },
-  getFilteredClassOrNull(actor: Actor5e): Item5e | undefined | null {
-    return actor.itemTypes.class.find(
-      (c: any) => c.system.identifier === TidyFlags.classFilter.get(actor)
-    );
+  getFilteredClass(actor: Actor5e): Item5e | undefined {
+    const classSpellbookFilter = actor.sheet.classSpellbookFilter;
+    return actor.classes?.[classSpellbookFilter];
   },
-  getSpellcastingInfo(actor: Actor5e, spells: Item5e[]): SpellcastingInfo {
+  getSpellcastingInfo(actor: Actor5e): SpellcastingInfo {
     const currentFilteredClass =
       FoundryAdapter.getFilteredClassOrOriginal(actor);
 

@@ -1233,22 +1233,6 @@ export function createSettings() {
         },
       },
 
-      useMulticlassSpellbookFilter: {
-        options: {
-          name: 'TIDY5E.Settings.UseMulticlassSpellbookFilter.name',
-          hint: 'TIDY5E.Settings.UseMulticlassSpellbookFilter.hint',
-          scope: 'client',
-          config: false,
-          default: false,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>(
-            'useMulticlassSpellbookFilter'
-          );
-        },
-      },
-
       useSpellClassFilterIcons: {
         options: {
           name: 'TIDY5E.Settings.UseSpellClassIcons.name',

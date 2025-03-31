@@ -88,8 +88,6 @@ export class UserSettingsFormApplication extends SvelteFormApplicationBase {
         useHpOverlay: currentSettings.useHpOverlay,
         useHpOverlayNpc: currentSettings.useHpOverlayNpc,
         useHpOverlayVehicle: currentSettings.useHpOverlayVehicle,
-        useMulticlassSpellbookFilter:
-          currentSettings.useMulticlassSpellbookFilter,
         useSpellClassFilterIcons: currentSettings.useSpellClassFilterIcons,
       },
     };

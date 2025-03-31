@@ -167,31 +167,6 @@ export class TidyFlags {
   };
 
   /**
-   * A field used to filter spells based on an indicated class,
-   * showing only spells whose `system.sourceClass` property matches
-   * this `classFilter` selection.
-   */
-  static classFilter = {
-    key: 'classFilter' as const,
-    prop: TidyFlags.getFlagPropertyPath('classFilter'),
-    /** Gets the actor's class filter. */
-    get(actor: Actor5e): string | undefined {
-      return (
-        TidyFlags.tryGetFlag<string>(actor, TidyFlags.classFilter.key) ??
-        undefined
-      );
-    },
-    /** Sets the actor's class filter. */
-    set(actor: Actor5e, value: string): Promise<void> {
-      return TidyFlags.setFlag(actor, TidyFlags.classFilter.key, value);
-    },
-    /** Clears the actor's class filter. */
-    unset(actor: Actor5e) {
-      return TidyFlags.unsetFlag(actor, TidyFlags.classFilter.key);
-    },
-  };
-
-  /**
    * The level exhaustion for a given actor.
    * This flag applies to actors which don't yet possess
    * standard exhaustion schema from the dnd5e system.

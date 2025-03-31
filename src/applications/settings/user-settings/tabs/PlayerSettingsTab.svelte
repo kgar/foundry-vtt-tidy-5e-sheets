@@ -104,13 +104,6 @@
 <h3>{localize('TIDY5E.Settings.MulticlassSpellbookFilterLabel')}</h3>
 
 <CheckboxSetting
-  bind:value={context.settings.useMulticlassSpellbookFilter}
-  name={SettingsProvider.settings.useMulticlassSpellbookFilter.options.name}
-  hint={SettingsProvider.settings.useMulticlassSpellbookFilter.options.hint}
-  id="useMulticlassSpellbookFilter"
-/>
-
-<CheckboxSetting
   bind:value={context.settings.useSpellClassFilterIcons}
   name={SettingsProvider.settings.useSpellClassFilterIcons.options.name}
   hint={SettingsProvider.settings.useSpellClassFilterIcons.options.hint}

@@ -345,6 +345,7 @@ export class SheetSections {
       return sections.map(({ ...section }) => {
         // Filter Spellbook by Class Filter, if needed
         section.spells = SpellUtils.tryFilterByClass(
+          document,
           section.spells,
           spellClassFilter
         );

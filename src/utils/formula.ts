@@ -396,11 +396,10 @@ function getSpellAttackRoll(
   const parts: string[] = [];
 
   // Ability score modifier
-  const filteredClass = TidyFlags.classFilter.get(actor);
+  const filteredClass = actor.sheet.classSpellbookFilter;
 
-  spellcastingAbility ??= actor.itemTypes.class.find(
-    (x: Item5e) => x.system.identifier === filteredClass
-  )?.system.spellcasting?.ability;
+  spellcastingAbility ??=
+    actor.classes?.[filteredClass]?.system.spellcasting?.ability;
 
   const spellcastingMod = actor.system.abilities[spellcastingAbility!]?.mod;
 

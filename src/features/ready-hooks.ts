@@ -1,6 +1,6 @@
 import { Tidy5eSheetsApi } from 'src/api/Tidy5eSheetsApi';
 import { CONSTANTS } from 'src/constants';
-import { TidyFlags } from 'src/foundry/TidyFlags';
+import { isNil } from 'src/utils/data';
 
 export function initReadyHooks() {
   assignDroppedSpellsToClassFilter();
@@ -19,11 +19,9 @@ function assignDroppedSpellsToClassFilter() {
       return;
     }
 
-    const classFilter = TidyFlags.classFilter.get(parent);
-
-    if (classFilter) {
+    if (!isNil(parent.sheet?.classSpellbookFilter, '')) {
       item.update({
-        [`system.sourceClass`]: classFilter,
+        [`system.sourceClass`]: parent.sheet.classSpellbookFilter,
       });
     }
   });
