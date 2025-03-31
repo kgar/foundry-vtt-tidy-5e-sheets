@@ -4,6 +4,7 @@ import { ItemUtils } from './ItemUtils';
 import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/api';
 import type { Actor5e } from 'src/types/types';
+import { isNil } from './data';
 
 export class SpellUtils {
   /** Is a cantrip. */
@@ -132,7 +133,7 @@ export class SpellUtils {
   ) {
     const classesCount = Object.keys(actor.classes ?? {}).length;
 
-    if (classesCount < 2 || selectedClassFilter === '') {
+    if (classesCount < 2 || isNil(selectedClassFilter, '')) {
       return spells;
     }
 
