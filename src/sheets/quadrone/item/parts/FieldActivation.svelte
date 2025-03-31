@@ -30,7 +30,6 @@
             document={context.item}
             field="system.activation.value"
             value={context.source.activation.value}
-            disabledValue={context.system.activation.value}
             placeholder="—"
             min="0"
             disabled={!context.unlocked}
@@ -50,7 +49,6 @@
           document={context.item}
           field="system.activation.type"
           value={context.source.activation.type}
-          disabledValue={context.system.activation.type}
           disabled={!context.unlocked}
         >
           <SelectOptions
@@ -69,7 +67,6 @@
     document={context.item}
     field="system.activation.condition"
     value={context.source.activation.condition}
-    disabledValue={context.system.activation.condition}
     placeholder={localize('DND5E.ItemActivationCondition')}
     class="full-width"
     disabled={!context.unlocked}

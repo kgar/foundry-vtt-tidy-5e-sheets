@@ -56,7 +56,6 @@
         document={context.item}
         field="{prefix}custom.formula"
         value={source.custom.formula}
-        disabledValue={system.custom.formula}
         disabled={!context.unlocked}
       />
     {/if}
@@ -81,7 +80,6 @@
             document={context.item}
             field="{prefix}number"
             value={source.number}
-            disabledValue={system.number}
             placeholder={numberPlaceholder}
             min="0"
             step="1"
@@ -99,7 +97,6 @@
             document={context.item}
             field="{prefix}denomination"
             value={source.denomination}
-            disabledValue={system.denomination}
             blankValue=""
             disabled={!context.unlocked}
           >
@@ -123,7 +120,6 @@
             document={context.item}
             field="{prefix}bonus"
             value={source.bonus}
-            disabledValue={system.bonus}
             disabled={!context.unlocked}
           />
         </div>

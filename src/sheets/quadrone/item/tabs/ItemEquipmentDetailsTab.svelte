@@ -26,7 +26,6 @@
       <NumberInputQuadrone
         id="{appId}-weight-value"
         value={context.source.weight.value}
-        disabledValue={context.system.weight.value}
         step="any"
         field="system.weight.value"
         document={context.item}
@@ -37,7 +36,6 @@
         document={context.item}
         field="system.weight.units"
         value={context.source.weight.units}
-        disabledValue={context.system.weight.units}
         disabled={!context.unlocked}
       >
         <SelectOptions
@@ -55,7 +53,6 @@
       <NumberInputQuadrone
         id="{appId}-price-value"
         value={context.source.price.value}
-        disabledValue={context.system.price.value}
         step="any"
         field="system.price.value"
         document={context.item}
@@ -65,7 +62,6 @@
       />
       <SelectQuadrone
         value={context.source.price.denomination}
-        disabledValue={context.system.price.denomination}
         field="system.price.denomination"
         document={context.item}
         disabled={!context.unlocked}
@@ -95,7 +91,6 @@
         document={context.item}
         field="system.type.value"
         value={context.source.type.value}
-        disabledValue={context.system.type.value}
         blankValue=""
         disabled={!context.unlocked}
       >
@@ -121,7 +116,6 @@
           document={context.item}
           field="system.type.baseItem"
           value={context.source.type.baseItem}
-          disabledValue={context.system.type.baseItem}
           blankValue=""
           disabled={!context.unlocked}
         >
@@ -145,7 +139,6 @@
         document={context.item}
         field="system.proficient"
         value={context.source.proficient}
-        disabledValue={context.system.proficient}
         blankValue=""
         disabled={!context.unlocked}
       >
@@ -173,7 +166,6 @@
               document={context.item}
               field="system.armor.value"
               value={context.source.armor.value}
-              disabledValue={context.system.armor.value}
               step="1"
               disabled={!context.unlocked}
             />
@@ -191,7 +183,6 @@
                 document={context.item}
                 field="system.armor.dex"
                 value={context.source.armor.dex}
-                disabledValue={context.system.armor.dex}
                 step="1"
                 placeholder="∞"
                 disabled={!context.unlocked}
@@ -210,7 +201,6 @@
               document={context.item}
               field="system.strength"
               value={context.source.strength}
-              disabledValue={context.system.strength}
               step="1"
               placeholder="—"
               disabled={!context.unlocked}
@@ -261,7 +251,6 @@
                 document={context.item}
                 field="system.attunement"
                 value={context.source.attunement}
-                disabledValue={context.system.attunement}
                 disabled={!context.unlocked}
                 class="flex-1"
               >
@@ -279,7 +268,6 @@
             <NumberInputQuadrone
               id="{appId}-magical-bonus"
               value={context.source.armor.magicalBonus}
-              disabledValue={context.system.armor.magicalBonus}
               field="system.armor.magicalBonus"
               document={context.item}
               disabled={!context.unlocked}

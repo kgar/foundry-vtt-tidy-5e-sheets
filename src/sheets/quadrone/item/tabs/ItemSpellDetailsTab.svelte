@@ -36,7 +36,6 @@
       document={context.item}
       field="system.level"
       value={context.source.level}
-      disabledValue={context.system.level}
       disabled={!context.unlocked}
     >
       <SelectOptions data={context.config.spellLevels} />
@@ -51,7 +50,6 @@
       document={context.item}
       field="system.school"
       value={context.source.school}
-      disabledValue={context.system.school}
       disabled={!context.unlocked}
     >
       <SelectOptions
@@ -88,7 +86,6 @@
             document={context.item}
             field="system.materials.supply"
             value={context.source.materials.supply}
-            disabledValue={context.system.materials.supply}
             min="0"
             disabled={!context.unlocked}
           />
@@ -110,7 +107,6 @@
               document={context.item}
               field="system.materials.cost"
               value={context.source.materials.cost}
-              disabledValue={context.system.materials.cost}
               min="0"
               placeholder="—"
               disabled={!context.unlocked}
@@ -140,7 +136,6 @@
         document={context.item}
         field="system.materials.value"
         value={context.source.materials.value}
-        disabledValue={context.system.materials.value}
         class="full-width"
         disabled={!context.unlocked}
       />
@@ -175,7 +170,6 @@
         document={context.item}
         field="system.preparation.mode"
         value={context.source.preparation.mode}
-        disabledValue={context.system.preparation.mode}
         disabled={!context.unlocked}
       >
         <SelectOptions
@@ -198,7 +192,6 @@
           document={context.item}
           field="system.sourceClass"
           value={context.source.sourceClass}
-          disabledValue={context.system.sourceClass}
           disabled={!context.unlocked}
           blankValue=""
         >
@@ -219,7 +212,6 @@
           document={context.item}
           field="system.ability"
           value={context.source.ability}
-          disabledValue={context.system.ability}
           disabled={!context.unlocked}
           blankValue=""
         >
@@ -242,7 +234,6 @@
           document={context.item}
           field="system.sourceClass"
           value={context.source.sourceClass}
-          disabledValue={context.system.sourceClass}
           disabled={!context.unlocked}
         />
       </div>

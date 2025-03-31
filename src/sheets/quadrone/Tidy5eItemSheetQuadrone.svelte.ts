@@ -164,7 +164,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       ),
     };
 
-    const systemSource = this.item.system.toObject();
+    let systemObject = this.item.system.toObject();
 
     const isIdentifiable = 'identified' in this.document.system;
     const unidentified = this.item.system.identified === false;
@@ -176,7 +176,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     if (!showOnlyUnidentified) {
       itemDescriptions.push({
         enriched: enriched.description,
-        content: systemSource.description.value,
+        content: systemObject.description.value,
         field: 'system.description.value',
         label: FoundryAdapter.localize('DND5E.Description'),
       });
@@ -185,7 +185,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     if (isIdentifiable) {
       itemDescriptions.push({
         enriched: enriched.unidentified,
-        content: systemSource.unidentified.description,
+        content: systemObject.unidentified.description,
         field: 'system.unidentified.description',
         label: FoundryAdapter.localize('DND5E.DescriptionUnidentified'),
       });
@@ -197,7 +197,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     if (isIdentifiable && !showOnlyUnidentified) {
       itemDescriptions.push({
         enriched: enriched.chat,
-        content: systemSource.description.chat,
+        content: systemObject.description.chat,
         field: 'system.description.chat',
         label: FoundryAdapter.localize('DND5E.DescriptionChat'),
       });
@@ -210,6 +210,8 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     const editable = this.isEditable;
 
     const unlocked = FoundryAdapter.isSheetUnlocked(this.item) && editable;
+
+    const systemSource = !unlocked ? this.item.system : systemObject;
 
     const target = this.item.type === 'spell' ? this.item.system.target : null;
 
@@ -399,10 +401,6 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       damageTypes: [],
       denominationOptions: [],
     };
-
-    if (!context.editable) {
-      context.source = context.system;
-    }
 
     // Physical items
     context.baseItems = await this._getItemBaseTypes(context);

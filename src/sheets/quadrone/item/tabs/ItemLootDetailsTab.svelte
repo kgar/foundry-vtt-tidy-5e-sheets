@@ -23,7 +23,6 @@
       <NumberInputQuadrone
         id="{appId}-weight-value"
         value={context.source.weight.value}
-        disabledValue={context.system.weight.value}
         step="any"
         field="system.weight.value"
         document={context.item}
@@ -34,7 +33,6 @@
         document={context.item}
         field="system.weight.units"
         value={context.source.weight.units}
-        disabledValue={context.system.weight.units}
         disabled={!context.unlocked}
       >
         <SelectOptions
@@ -52,7 +50,6 @@
       <NumberInputQuadrone
         id="{appId}-price-value"
         value={context.source.price.value}
-        disabledValue={context.system.price.value}
         step="any"
         field="system.price.value"
         document={context.item}
@@ -62,7 +59,6 @@
       />
       <SelectQuadrone
         value={context.source.price.denomination}
-        disabledValue={context.system.price.denomination}
         field="system.price.denomination"
         document={context.item}
         disabled={!context.unlocked}
@@ -91,7 +87,6 @@
         document={context.item}
         field="system.type.value"
         value={context.source.type.value}
-        disabledValue={context.system.type.value}
         disabled={!context.unlocked}
       >
         <SelectOptions
@@ -117,7 +112,6 @@
           document={context.item}
           field="system.type.subtype"
           value={context.source.type.subtype}
-          disabledValue={context.system.type.subtype}
           disabled={!context.unlocked}
           blankValue=""
         >

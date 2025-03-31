@@ -33,7 +33,6 @@
         document={context.item}
         field="system.armor.value"
         value={context.source.armor.value}
-        disabledValue={context.system.armor.value}
         disabled={!context.unlocked}
         step="1"
       />
@@ -51,7 +50,6 @@
         document={context.item}
         field="system.cover"
         value={context.source.cover}
-        disabledValue={context.system.cover}
         disabled={!context.unlocked}
       >
         <SelectOptions
@@ -79,7 +77,6 @@
           document={context.item}
           field="system.hp.value"
           value={context.source.hp?.value}
-          disabledValue={context.system.hp?.value ?? 0}
           disabled={!context.unlocked}
           placeholder="0"
           min="0"
@@ -95,7 +92,6 @@
             document={context.item}
             field="system.hp.max"
             value={context.source.hp?.max}
-            disabledValue={context.system.hp?.max ?? 0}
             disabled={!context.unlocked}
             placeholder="0"
             min="0"
@@ -112,7 +108,6 @@
             document={context.item}
             field="system.hp.dt"
             value={context.source.hp?.dt}
-            disabledValue={context.system.hp?.dt ?? 0}
             disabled={!context.unlocked}
             placeholder="—"
             min="0"
@@ -126,7 +121,6 @@
       document={context.item}
       field="system.hp.conditions"
       value={context.source.hp?.conditions}
-      disabledValue={context.system.hp?.conditions ?? 0}
       placeholder={localize(
         'DND5E.VEHICLE.MOUNTABLE.FIELDS.hp.conditions.label',
       )}
@@ -151,7 +145,6 @@
               document={context.item}
               field="system.speed.value"
               value={context.source.system.speed.value}
-              disabledValue={context.system.speed.value}
               min="0"
               placeholder="0"
               disabled={!context.unlocked}
@@ -165,7 +158,6 @@
         document={context.item}
         field="system.speed.conditions"
         value={context.source.speed.conditions}
-        disabledValue={context.system.speed.conditions}
         placeholder={localize(
           'DND5E.VEHICLE.MOUNTABLE.FIELDS.speed.conditions.label',
         )}

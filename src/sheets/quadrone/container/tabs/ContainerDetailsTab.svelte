@@ -24,7 +24,6 @@
       <NumberInputQuadrone
         id="{appId}-weight-value"
         value={context.source.weight.value}
-        disabledValue={context.system.weight.value}
         step="any"
         field="system.weight.value"
         document={context.item}
@@ -35,7 +34,6 @@
         document={context.item}
         field="system.weight.units"
         value={context.source.weight.units}
-        disabledValue={context.system.weight.units}
         disabled={!context.unlocked}
       >
         <SelectOptions
@@ -53,7 +51,6 @@
       <NumberInputQuadrone
         id="{appId}-price-value"
         value={context.source.price.value}
-        disabledValue={context.system.price.value}
         step="any"
         field="system.price.value"
         document={context.item}
@@ -63,7 +60,6 @@
       />
       <SelectQuadrone
         value={context.source.price.denomination}
-        disabledValue={context.system.price.denomination}
         field="system.price.denomination"
         document={context.item}
         disabled={!context.unlocked}
@@ -113,7 +109,6 @@
           document={context.item}
           field="system.attunement"
           value={context.source.attunement}
-          disabledValue={context.system.attunement}
           disabled={!context.unlocked}
         >
           <SelectOptions
@@ -139,7 +134,6 @@
         document={context.item}
         field="system.capacity.count"
         value={context.source.capacity.count}
-        disabledValue={context.system.capacity.count}
         step="1"
         min="0"
         placeholder="—"
@@ -160,7 +154,6 @@
             document={context.item}
             field="system.capacity.volume.value"
             value={context.source.capacity.volume.value}
-            disabledValue={context.system.capacity.volume.value}
             step="any"
             min="0"
             placeholder="—"
@@ -176,7 +169,6 @@
             document={context.item}
             field="system.capacity.volume.units"
             value={context.source.capacity.volume.units}
-            disabledValue={context.system.capacity.volume.units}
             blankValue=""
             disabled={!context.unlocked}
           >
@@ -201,7 +193,6 @@
             document={context.item}
             field="system.capacity.weight.value"
             value={context.source.capacity.weight.value}
-            disabledValue={context.system.capacity.weight.value}
             step="any"
             min="0"
             placeholder="—"
@@ -217,7 +208,6 @@
             document={context.item}
             field="system.capacity.weight.units"
             value={context.source.capacity.weight.units}
-            disabledValue={context.system.capacity.weight.units}
             blankValue=""
             disabled={!context.unlocked}
           >

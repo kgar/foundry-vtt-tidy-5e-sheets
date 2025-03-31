@@ -32,7 +32,6 @@
         document={context.item}
         field="system.identifier"
         value={context.source.identifier}
-        disabledValue={context.system.identifier}
         placeholder={context.item.identifier}
         disabled={!context.unlocked}
       />
@@ -58,7 +57,6 @@
             document={context.item}
             field="system.hd.denomination"
             value={context.source.hd.denomination}
-            disabledValue={context.system.hd.denomination}
             disabled={!context.unlocked}
           >
             {#each context.config.hitDieTypes as type}
@@ -78,7 +76,6 @@
             document={context.item}
             field="system.hd.spent"
             value={context.source.hd.spent}
-            disabledValue={context.system.hd.spent}
             placeholder="0"
             disabled={!context.unlocked}
           />
@@ -94,7 +91,6 @@
         document={context.item}
         field="system.hd.additional"
         value={context.source.hd.additional}
-        disabledValue={context.system.hd.additional}
         disabled={!context.unlocked}
       />
     </div>

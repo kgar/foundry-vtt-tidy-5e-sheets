@@ -32,7 +32,6 @@
         document={context.item}
         field="system.type.value"
         value={context.source.type.value}
-        disabledValue={context.system.type.value}
         disabled={!context.unlocked}
       >
         <SelectOptions
@@ -58,7 +57,6 @@
           document={context.item}
           field="system.type.subtype"
           value={context.source.type.subtype}
-          disabledValue={context.system.type.subtype}
           disabled={!context.unlocked}
         >
           <SelectOptions data={context.itemSubtypes} blank="" />
@@ -78,7 +76,6 @@
           document={context.item}
           field="system.cover"
           value={context.source.cover}
-          disabledValue={context.system.cover}
           disabled={!context.unlocked}
         >
           <SelectOptions
@@ -105,7 +102,6 @@
         document={context.item}
         field="system.prerequisites.level"
         value={context.source.prerequisites.level}
-        disabledValue={context.system.prerequisites.level}
         disabled={!context.unlocked}
         step="1"
       />
@@ -165,7 +161,6 @@
           document={context.item}
           field="system.enchant.max"
           value={context.source.enchant.max}
-          disabledValue={context.system.enchant.max}
           disabled={!context.unlocked}
         />
       </div>
@@ -188,7 +183,6 @@
           document={context.item}
           field="system.enchant.period"
           value={context.source.enchant.period}
-          disabledValue={context.system.enchant.period}
           blankValue=""
           disabled={!context.unlocked}
         >

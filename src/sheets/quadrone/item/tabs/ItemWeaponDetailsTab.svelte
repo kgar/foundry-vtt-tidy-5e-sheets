@@ -27,7 +27,6 @@
       <NumberInputQuadrone
         id="{appId}-weight-value"
         value={context.source.weight.value}
-        disabledValue={context.system.weight.value}
         step="any"
         field="system.weight.value"
         document={context.item}
@@ -38,7 +37,6 @@
         document={context.item}
         field="system.weight.units"
         value={context.source.weight.units}
-        disabledValue={context.system.weight.units}
         disabled={!context.unlocked}
       >
         <SelectOptions
@@ -56,7 +54,6 @@
       <NumberInputQuadrone
         id="{appId}-price-value"
         value={context.source.price.value}
-        disabledValue={context.system.price.value}
         step="any"
         field="system.price.value"
         document={context.item}
@@ -66,7 +63,6 @@
       />
       <SelectQuadrone
         value={context.source.price.denomination}
-        disabledValue={context.system.price.denomination}
         field="system.price.denomination"
         document={context.item}
         disabled={!context.unlocked}
@@ -95,7 +91,6 @@
         document={context.item}
         field="system.type.value"
         value={context.source.type.value}
-        disabledValue={context.system.type.value}
         disabled={!context.unlocked}
         blankValue=""
       >
@@ -116,7 +111,6 @@
           document={context.item}
           field="system.type.baseItem"
           value={context.source.type.baseItem}
-          disabledValue={context.system.type.baseItem}
           disabled={!context.unlocked}
         >
           <SelectOptions data={context.baseItems} blank="" />
@@ -137,7 +131,6 @@
           document={context.item}
           field="system.proficient"
           value={context.source.proficient}
-          disabledValue={context.system.proficient}
           disabled={!context.unlocked}
         >
           <SelectOptions
@@ -160,7 +153,6 @@
         document={context.item}
         field="system.mastery"
         value={context.source.mastery}
-        disabledValue={context.system.mastery}
         blankValue=""
         disabled={!context.unlocked}
       >
@@ -216,7 +208,6 @@
                 document={context.item}
                 field="system.attunement"
                 value={context.source.attunement}
-                disabledValue={context.system.attunement}
                 disabled={!context.unlocked}
                 class="flex-1"
               >
@@ -235,7 +226,6 @@
             <NumberInputQuadrone
               id="{appId}-magical-bonus"
               value={context.source.magicalBonus}
-              disabledValue={context.system.magicalBonus}
               field="system.magicalBonus"
               document={context.item}
               disabled={!context.unlocked}
@@ -261,7 +251,6 @@
           document={context.item}
           field="system.ammunition.type"
           value={context.source.ammunition.type}
-          disabledValue={context.system.ammunition.type}
           blankValue=""
           disabled={!context.unlocked}
         >
@@ -294,7 +283,6 @@
               document={context.item}
               field="system.range.value"
               value={context.source.range.value}
-              disabledValue={context.system.range.value}
               min="0"
               disabled={!context.unlocked}
             />
@@ -310,7 +298,6 @@
               document={context.item}
               field="system.range.long"
               value={context.source.range.long}
-              disabledValue={context.system.range.long}
               min="0"
               disabled={!context.unlocked}
             />
@@ -329,7 +316,6 @@
                 document={context.item}
                 field="system.range.reach"
                 value={context.source.range.reach}
-                disabledValue={context.system.range.reach}
                 min="0"
                 placeholder={context.system.range.reach === null
                   ? '—'
@@ -351,7 +337,6 @@
           document={context.item}
           field="system.range.units"
           value={context.source.range.units}
-          disabledValue={context.system.range.units}
           blankValue=""
           disabled={!context.unlocked}
         >
@@ -379,7 +364,6 @@
                 document={context.item}
                 field="system.range.reach"
                 value={context.source.range.reach}
-                disabledValue={context.system.range.reach}
                 min="0"
                 placeholder={context.system.range.reach === null
                   ? '—'
@@ -401,7 +385,6 @@
               document={context.item}
               field="system.range.units"
               value={context.source.range.units}
-              disabledValue={context.system.range.units}
               disabled={!context.unlocked}
             >
               <SelectOptions
