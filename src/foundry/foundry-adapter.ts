@@ -29,7 +29,7 @@ export const FoundryAdapter = {
     return foundry.utils.deepClone(obj);
   },
   userIsGm() {
-    return game.user.isGM;
+    return game.user.isGM === true;
   },
   getTidySetting<T = string>(settingName: string): T {
     return game.settings.get(CONSTANTS.MODULE_ID, settingName) as T;

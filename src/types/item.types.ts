@@ -414,8 +414,8 @@ export type AdvancementItemContext = {
   tags: {
     /** Explains the icon; often used as a tooltip. */
     label: string;
-    /** The path to the icon SVG or image. */
-    icon: string;
+    /** The path to the font icon class. */
+    iconClass: string;
   }[];
   /**
    * A subclass of ScaleValueType.

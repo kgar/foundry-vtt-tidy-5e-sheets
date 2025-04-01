@@ -281,14 +281,13 @@
     }
 
     .advancement-cell-context {
-      :first-child() {
-        margin-block-start: 0;
-      }
+      white-space: normal;
+      padding-inline-end: var(--t5e-size-halfx);
     }
 
     .advancement-class-indicator {
       color: var(--t5e-color-text-lighter);
-      margin-inline-start: var(--t5e-spacing-2x);
+      margin-inline-start: var(--t5e-size-1x);
     }
 
     .spell-components {

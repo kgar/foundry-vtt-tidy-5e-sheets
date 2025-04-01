@@ -1,5 +1,4 @@
 <script lang="ts">
-  import TidyEffectTableRow from 'src/components/table-quadrone/TidyEffectTableRow.svelte';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
@@ -123,21 +122,9 @@
                 <div class="cell-text">
                   <div class="cell-name">
                     {@html advancement.title}
-                    {#if advancement.classRestriction === 'primary'}
-                      <i
-                        title={localize(
-                          'DND5E.AdvancementClassRestrictionPrimary',
-                        )}
-                        class="fa-solid fa-chess-queen advancement-class-indicator"
-                      ></i>
-                    {:else if advancement.classRestriction === 'secondary'}
-                      <i
-                        title={localize(
-                          'DND5E.AdvancementClassRestrictionSecondary',
-                        )}
-                        class="fa-solid fa-chess advancement-class-indicator"
-                      ></i>
-                    {/if}
+                    {#each advancement.tags as tag}
+                      <i class={tag.iconClass} title={localize(tag.label)}></i>
+                    {/each}
                     <div class="advancement-cell-context">
                       {@html advancement.summary}
                     </div>

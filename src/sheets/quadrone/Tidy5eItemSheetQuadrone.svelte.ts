@@ -207,7 +207,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       itemDescriptions = itemDescriptions.slice(0, 1);
     }
 
-    const editable = this.isEditable;
+    const editable = this.isEditable === true;
 
     const unlocked = FoundryAdapter.isSheetUnlocked(this.item) && editable;
 
@@ -244,7 +244,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       affectsPlaceholder: game.i18n.localize(
         `DND5E.TARGET.Count.${target?.template?.type ? 'Every' : 'Any'}`
       ),
-      // TODO: should it be editable, or unlocked? 
+      // TODO: should it be editable, or unlocked?
       advancementEditable: !this.document.isEmbedded && editable,
       config: CONFIG.DND5E,
       coverOptions: Object.entries(CONFIG.DND5E.cover).map(
@@ -323,7 +323,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
         this.document.isArmor && this.document.system.type.value !== 'shield',
 
       // Advancement
-      advancement: this._getItemAdvancement(this.document),
+      advancement: this._getItemAdvancement(this.document, unlocked),
 
       effects: enhancedEffectsCategories,
 
@@ -540,7 +540,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
    * @param {Item5e} item  The item for which the advancement is being prepared.
    * @returns {object}     Object with advancement data grouped by levels.
    */
-  _getItemAdvancement(item: Item5e) {
+  _getItemAdvancement(item: Item5e, unlocked: boolean) {
     if (!item.system.advancement) return {};
     const advancement: AdvancementsContext = {};
     const configMode = !item.parent;
@@ -562,7 +562,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
           icon: a.icon,
           classRestriction: a.classRestriction,
           configured: false,
-          tags: this._getItemAdvancementTags(a),
+          tags: this._getItemAdvancementTags(a, unlocked),
           classes: [a.icon?.endsWith('.svg') ? 'svg' : ''].filterJoin(' '),
         })),
         configured: 'partial',
@@ -590,7 +590,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
             legacyDisplay,
           }),
           configured: advancement.configuredForLevel(level),
-          tags: this._getItemAdvancementTags(advancement),
+          tags: this._getItemAdvancementTags(advancement, unlocked),
           value: advancement.valueForLevel?.(level),
           classes: [advancement.icon?.endsWith('.svg') ? 'svg' : ''].filterJoin(
             ' '
@@ -619,9 +619,28 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
   /**
    * Prepare tags for an Advancement.
    */
-  _getItemAdvancementTags(advancement: any) {
-    // TODO: use this instead of the inline approach.
-    return [];
+  _getItemAdvancementTags(
+    advancement: any,
+    unlocked: boolean
+  ): AdvancementItemContext['tags'] {
+    if (this.item.isEmbedded && !unlocked) {
+      return [];
+    }
+
+    const tags: AdvancementItemContext['tags'] = [];
+
+    if (advancement.classRestriction === 'primary') {
+      tags.push({
+        label: 'DND5E.AdvancementClassRestrictionPrimary',
+        iconClass: 'fa-solid fa-chess-queen advancement-class-indicator',
+      });
+    } else if (advancement.classRestriction === 'secondary') {
+      tags.push({
+        label: 'DND5E.AdvancementClassRestrictionSecondary',
+        iconClass: 'fa-solid fa-chess advancement-class-indicator',
+      });
+    }
+    return tags;
   }
 
   /* -------------------------------------------- */
