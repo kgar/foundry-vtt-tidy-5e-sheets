@@ -154,7 +154,6 @@ export type ItemSheetQuadroneContext = {
   activities: ActivityQuadroneContext[];
   activationTypes: GroupableSelectOption[];
   advancement: AdvancementsContext;
-  advancementEditable: boolean;
   affectsPlaceholder: string;
   baseItems: Record<string, string>;
   canCraft?: boolean;

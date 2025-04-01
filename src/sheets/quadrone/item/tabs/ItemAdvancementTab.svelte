@@ -16,6 +16,7 @@
   import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
   import TidyAdvancementTableRow from 'src/components/table-quadrone/TidyAdvancementTableRow.svelte';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
+  import { isNil } from 'src/utils/data';
 
   let localize = FoundryAdapter.localize;
 
@@ -82,7 +83,7 @@
             {:else if key === 'unconfigured'}
               {localize('DND5E.AdvancementLevelNoneHeader')}
             {:else}
-              {localize('DND5E.AdvancementLevelHeader', { key })}
+              {localize('DND5E.AdvancementLevelHeader', { level: key })}
             {/if}
           </h3>
         </TidyTableHeaderCell>
@@ -93,7 +94,33 @@
           class="header-cell-actions"
           {...columnSpecs.actions}
         >
-          <!-- TODO: Completeness state -->
+          {#if context.unlocked && section.configured && key !== 'unconfigured'}
+            <a
+              class="item-control config-button"
+              title={localize('DND5E.AdvancementModifyChoices')}
+              aria-label={localize('DND5E.AdvancementModifyChoices')}
+              onclick={() =>
+                FoundryAdapter.modifyAdvancementChoices(key, context.item)}
+            >
+              <i class="fas fa-cog"></i>
+            </a>
+          {:else if section.configured === 'full'}
+            <span
+              class="info-control"
+              title={localize('DND5E.AdvancementConfiguredComplete')}
+              aria-label={localize('DND5E.AdvancementConfiguredComplete')}
+            >
+              <i class="fas fa-check-circle"></i>
+            </span>
+          {:else if section.configured === 'partial'}
+            <span
+              class="info-control"
+              title={localize('DND5E.AdvancementConfiguredIncomplete')}
+              aria-label={localize('DND5E.AdvancementConfiguredIncomplete')}
+            >
+              <i class="fas fa-exclamation-triangle"></i>
+            </span>
+          {/if}
         </TidyTableHeaderCell>
       </TidyTableHeaderRow>
     {/snippet}
@@ -133,7 +160,7 @@
               </div>
             </TidyTableCell>
             <TidyTableCell {...columnSpecs.value}>
-              {#if advancement.value}
+              {#if !isNil(advancement.value)}
                 {@const value = advancement.value?.toString()}
                 <span>
                   {value}

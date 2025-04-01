@@ -244,8 +244,6 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       affectsPlaceholder: game.i18n.localize(
         `DND5E.TARGET.Count.${target?.template?.type ? 'Every' : 'Any'}`
       ),
-      // TODO: should it be editable, or unlocked?
-      advancementEditable: !this.document.isEmbedded && editable,
       config: CONFIG.DND5E,
       coverOptions: Object.entries(CONFIG.DND5E.cover).map(
         ([value, label]) => ({ value, label })
