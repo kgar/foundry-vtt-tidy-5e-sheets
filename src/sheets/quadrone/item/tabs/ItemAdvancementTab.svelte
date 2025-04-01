@@ -64,14 +64,6 @@
   });
 </script>
 
-<ol>
-  <li>✅ Make tidy tables for advancements</li>
-  <li>Add the actor-owned view - tie to locked/unlocked</li>
-  <li>Add partial config UI</li>
-  <li>Add false config UI</li>
-  <li>Ensure all interactibles are included</li>
-</ol>
-
 {#each advancements as [key, section]}
   <TidyTable {key}>
     {#snippet header()}

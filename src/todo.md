@@ -10,9 +10,9 @@
     - [ ] When unlocked, 
       - [ ] When of the appropriate level, show cog icon with "Modify Choices"
       - [ ] else, no icon
-  - [ ] Implement sidebar/compendium functionality (configMode = true)
-    - [ ] When locked,
-    - [ ] When unlocked,
+  - [x] Implement sidebar/compendium functionality (configMode = true)
+    - [x] When locked, compare to v2 sheet
+    - [x] When unlocked, compare to v2 sheet
   - [ ] Note: Don't show Tag indicators when embedded. It's for standalone / sidebar / compendium only.
   - [x] Include useful Value column for scale values
   - [x] Include UI for Original / Multiclass Only indicator

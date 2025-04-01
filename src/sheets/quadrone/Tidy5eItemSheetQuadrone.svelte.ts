@@ -571,8 +571,10 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     for (let [level, advancements] of Object.entries<any>(
       item.advancement.byLevel
     )) {
-      if (!configMode)
+      if (!configMode) {
         advancements = advancements.filter((a: any) => a.appliesToClass);
+      }
+
       const items: AdvancementItemContext[] = advancements.map(
         (advancement: any) => ({
           id: advancement.id,
