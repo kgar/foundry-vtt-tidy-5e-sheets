@@ -33,6 +33,7 @@ import type {
   ContainerSheetClassicContext,
   ContainerSheetQuadroneContext,
   ItemSheetContext,
+  ItemSheetQuadroneContext,
 } from 'src/types/item.types';
 import { CustomContentManager } from '../content/CustomContentManager';
 import type { RegisteredEquipmentTypeGroup } from './item.types';
@@ -51,6 +52,7 @@ export class ItemSheetRuntime {
       | ItemSheetContext
       | ContainerSheetClassicContext
       | ContainerSheetQuadroneContext
+      | ItemSheetQuadroneContext
   ): Promise<CustomContent[]> {
     return await CustomContentManager.prepareContentForRender(
       context,

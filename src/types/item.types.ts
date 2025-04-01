@@ -226,7 +226,6 @@ export type ItemSheetQuadroneContext = {
   subtitle?: string;
   system: any;
   title: string;
-  toggleAdvancementLock: () => Promise<void>;
   unlocked: boolean;
   user: any;
   usesRecovery: {

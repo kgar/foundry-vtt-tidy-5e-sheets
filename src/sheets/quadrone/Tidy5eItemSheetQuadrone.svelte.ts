@@ -330,8 +330,6 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       concealDetails:
         !game.user.isGM && this.document.system.identified === false,
 
-      toggleAdvancementLock: this.toggleAdvancementLock.bind(this),
-
       rangeTypes: [
         ...Object.entries(CONFIG.DND5E.rangeTypes).map(([value, label]) => ({
           value,
