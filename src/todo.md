@@ -1,28 +1,17 @@
 ## To Do
 
-- [ ] Implement Advancement tab
-  - [ ] Implement embedded functionality (configMode = false)
-    - [ ] When locked, (double-check this in the template and code)
-      - [ ] Only menu button visible
-      - [ ] When fully configured, then circle check on action column, "Fully Configured"
-      - [ ] When partially configured, then triangle exclamation on action column, "Not Configured"
-      - [ ] When not configured at all, no icon
-    - [ ] When unlocked, 
-      - [ ] When of the appropriate level, show cog icon with "Modify Choices"
-      - [ ] else, no icon
-  - [x] Implement sidebar/compendium functionality (configMode = true)
-    - [x] When locked, compare to v2 sheet
-    - [x] When unlocked, compare to v2 sheet
-  - [ ] Note: Don't show Tag indicators when embedded. It's for standalone / sidebar / compendium only.
-  - [x] Include useful Value column for scale values
-  - [x] Include UI for Original / Multiclass Only indicator
+- [ ] (hightouch) Review / refine Advancement table styles. Need handling for tags, enrichers, etc.
+- [ ] Foundry 13 theming: Ensure a set of theme classes are always being applied to Tidy sheets; see scratch notes for how to progressively check higher and higher.
+  - [ ] Note: need to set up some kind of signal for changes 
+- [ ] Work on Class Header
+- [ ] Work on Subclass Header
+- [ ] Advancement sidebar stuff; Scale Values (and any like them), Copy Formula, what else? Research and task out
 - [ ] Not sure how feasible it would be but I'm noticing when we open a sheet that Tab still swaps between tokens on the canvas. Is it possible to steal tab focus when a sheet opens and give it to the first open tab? Then you could hit Tab to switch between sheet tabs on open https://discord.com/channels/@me/1243307347682529423/1355184980623491172
-- [ ] Notify hightouch that spell sheet is ready for final review
-- [ ] Notify hightouch that weapon sheet is ready for final review
 - [ ] Notify hightouch that equipment sheet is ready for final review
 - [ ] Notify hightouch that consumable sheet is ready for final review
 - [ ] Notify hightouch that loot sheet is ready for final review
 - [ ] Notify hightouch that tool sheet is ready for final review
+- [ ] Notify hightouch that background sheet is ready for final review
 - [ ] Test spell info on item summary and cards
 - [ ] Begin thinking about how to extract common functionality across each table type (item, effects, activities)
   - [ ] Ditto for item summary
@@ -160,123 +149,23 @@
 - [ ] Context Menu items rework
 - [ ] (someone reported this to the Foundry devs; it ain't just me; awaiting possible fix) The "Import" menu option is being shown on a Sidebar item. 🪓
 
-### Scratch - Advancement template
+### Scratch - Finding the effective theme for a sheet
 
-```hbs
-<div class="tab advancement" data-group="primary" data-tab="advancement">
-    <section class="items-list">
-        {{#each advancement}}
+```js
+// Get document sheet config theme
+const theme = foundry.applications.apps.DocumentSheetConfig.getSheetThemeForDocument(options.document);
+theme // 'light' | 'dark' | '' | ???
 
-        <div class="items-section card" data-level="{{ @key }}">
+// Getting top-level application default theme
+const { colorScheme } = game.settings.get("core", "uiConfig");
+colorScheme.applications // 'light' | 'dark' | '' | ????
 
-            <div class="items-header header">
-
-                <h3 class="item-name">
-                    {{#if (eq @key "0")}}
-                    {{ localize "DND5E.AdvancementLevelAnyHeader" }}
-                    {{else if (eq @key "unconfigured")}}
-                    {{ localize "DND5E.AdvancementLevelNoneHeader" }}
-                    {{else}}
-                    {{ localize "DND5E.AdvancementLevelHeader" level=@key }}
-                    {{/if}}
-                </h3>
-
-                <div class="item-header advancement-value">{{ localize "DND5E.Value" }}</div>
-
-                <div class="item-header item-controls">
-                    {{#if (and @root.editable configured (ne @key "unconfigured"))}}
-                    <a class="item-control config-button" data-action="modify-choices"
-                       data-tooltip="DND5E.AdvancementModifyChoices"
-                       aria-label="{{ localize "DND5E.AdvancementModifyChoices" }}">
-                        <i class="fas fa-cog"></i>
-                    </a>
-                    {{else}}
-
-                    {{#if (eq configured "full")}}
-                    <a class="info-control" data-tooltip="DND5E.AdvancementConfiguredComplete"
-                       aria-label="{{ localize "DND5E.AdvancementConfiguredComplete" }}">
-                        <i class="fas fa-check-circle"></i>
-                    </a>
-                    {{else if (eq configured "partial")}}
-                    <a class="info-control" data-tooltip="DND5E.AdvancementConfiguredIncomplete"
-                       aria-label="{{ localize "DND5E.AdvancementConfiguredIncomplete" }}">
-                        <i class="fas fa-exclamation-triangle"></i>
-                    </a>
-                    {{/if}}
-
-                    {{/if}}
-                </div>
-
-            </div>
-
-            <ol class="item-list unlist">
-                {{#each items}}
-
-                <li class="advancement-item item {{ classes }}" data-id="{{ id }}">
-                    <div class="item-row">
-
-                        <div class="item-name">
-                            <img class="item-image gold-icon" src="{{ icon }}">
-                            <div class="name">
-                                <div class="title">{{{ title }}}</div>
-                                {{#if summary}}
-                                <div class="summary">{{{ summary }}}</div>
-                                {{/if}}
-                            </div>
-                            <div class="tags">
-                                {{#each tags}}
-                                <span data-tooltip="{{ label }}" aria-label="{{ localize label }}">
-                                    <dnd5e-icon src="{{ icon }}"></dnd5e-icon>
-                                </span>
-                                {{/each}}
-                            </div>
-                        </div>
-
-                        <div class="item-detail advancement-value {{#unless value}}empty{{/unless}}">
-                            {{#if value includeZero=true}}
-                            {{ value }}
-                            {{/if}}
-                        </div>
-
-                        <div class="item-detail item-controls">
-
-                            {{#if @root.editable}}
-                            {{!-- Editing --}}
-                            <a class="item-control item-action" data-action="edit"
-                               data-tooltip="DND5E.ADVANCEMENT.Action.Edit"
-                               aria-label="{{ localize "DND5E.DND5E.ADVANCEMENT.Action.Edit" }}">
-                                <i class="fas fa-pen-to-square" inert></i>
-                            </a>
-
-                            {{!-- Deleting --}}
-                            <a class="item-control item-action" data-action="delete"
-                               data-tooltip="DND5E.ADVANCEMENT.Action.Delete"
-                               aria-label="{{ localize "DND5E.ADVANCEMENT.Action.Delete" }}">
-                                <i class="fas fa-trash" inert></i>
-                            </a>
-                            {{/if}}
-
-                            {{!-- Context Menu --}}
-                            <a class="item-control interface-only" data-context-menu
-                               aria-label="{{ localize "DND5E.AdditionalControls" }}">
-                                <i class="fas fa-ellipsis-vertical" inert></i>
-                            </a>
-
-                        </div>
-
-                    </div>
-                </li>
-
-                {{/each}}
-            </ol>
-
-        </div>
-
-        {{/each}}
-    </section>
-</div>
-
+// Getting browser default
+    let browserDefault;
+    if ( matchMedia("(prefers-color-scheme: dark)").matches ) browserDefault = "theme-dark";
+    else if ( matchMedia("(prefers-color-scheme: light)").matches ) browserDefault = "theme-light";
 ```
+
 
 ### Bonus
 
@@ -534,3 +423,23 @@ Limited:
 - [x] fix: Viewing multiple spells in the compendium keeps appending Import buttons
 - [x] update: Hide prepared/unprepared pill unless spell has actor
 - [x] Restructure item-name HTML https://discord.com/channels/@me/1243307347682529423/1355382160915169533
+- [x] Implement Advancement tab
+  - [x] Implement embedded functionality (configMode = false)
+    - [x] When locked, (double-check this in the template and code)
+      - [x] Only menu button visible
+      - [x] When fully configured, then circle check on action column, "Fully Configured"
+      - [x] When partially configured, then triangle exclamation on action column, "Not Configured"
+      - [x] When not configured at all, no icon
+    - [x] When unlocked, 
+      - [x] When of the appropriate level, show cog icon with "Modify Choices"
+      - [x] else, no icon
+  - [x] Implement sidebar/compendium functionality (configMode = true)
+    - [x] When locked, compare to v2 sheet
+    - [x] When unlocked, compare to v2 sheet
+  - [x] Note: Don't show Tag indicators when embedded and locked.
+  - [x] Include useful Value column for scale values
+  - [x] Include UI for Original / Multiclass Only indicator
+- [x] CONSTANTify any advancement magic strings
+- [x] Finalize Background base version
+- [x] Notify hightouch that spell sheet is ready for final review
+- [x] Notify hightouch that weapon sheet is ready for final review

@@ -535,11 +535,12 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
 
   /**
    * Get the display object used to show the advancement tab.
-   * @param {Item5e} item  The item for which the advancement is being prepared.
-   * @returns {object}     Object with advancement data grouped by levels.
    */
-  _getItemAdvancement(item: Item5e, unlocked: boolean) {
-    if (!item.system.advancement) return {};
+  _getItemAdvancement(item: Item5e, unlocked: boolean): AdvancementsContext {
+    if (!item.system.advancement) {
+      return {};
+    }
+
     const advancement: AdvancementsContext = {};
     const configMode = !item.parent;
     const legacyDisplay = this.options.legacyDisplay;
@@ -552,7 +553,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
 
     // Improperly configured advancements
     if (item.advancement.needingConfiguration.length) {
-      advancement.unconfigured = {
+      advancement[CONSTANTS.ADVANCEMENT_LEVEL_UNCONFIGURED] = {
         items: item.advancement.needingConfiguration.map((a: any) => ({
           id: a.id,
           order: a.constructor.order,
@@ -563,7 +564,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
           tags: this._getItemAdvancementTags(a, unlocked),
           classes: [a.icon?.endsWith('.svg') ? 'svg' : ''].filterJoin(' '),
         })),
-        configured: 'partial',
+        configured: CONSTANTS.ADVANCEMENT_CONFIGURATION_PARTIAL,
       };
     }
 
@@ -607,8 +608,8 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
           level > maxLevel
             ? false
             : items.some((a: AdvancementItemContext) => !a.configured)
-            ? 'partial'
-            : 'full',
+            ? CONSTANTS.ADVANCEMENT_CONFIGURATION_PARTIAL
+            : CONSTANTS.ADVANCEMENT_CONFIGURATION_FULL,
       };
     }
     return advancement;
@@ -629,12 +630,18 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
 
     const tags: AdvancementItemContext['tags'] = [];
 
-    if (advancement.classRestriction === 'primary') {
+    if (
+      advancement.classRestriction ===
+      CONSTANTS.ADVANCEMENT_CLASS_RESTRICTION_PRIMARY
+    ) {
       tags.push({
         label: 'DND5E.AdvancementClassRestrictionPrimary',
         iconClass: 'fa-solid fa-chess-queen advancement-class-indicator',
       });
-    } else if (advancement.classRestriction === 'secondary') {
+    } else if (
+      advancement.classRestriction ===
+      CONSTANTS.ADVANCEMENT_CLASS_RESTRICTION_SECONDARY
+    ) {
       tags.push({
         label: 'DND5E.AdvancementClassRestrictionSecondary',
         iconClass: 'fa-solid fa-chess advancement-class-indicator',
@@ -655,7 +662,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     context: ItemSheetQuadroneContext
   ): Promise<Record<string, any>> {
     const baseIds =
-      this.item.type === 'equipment'
+      this.item.type === CONSTANTS.ITEM_TYPE_EQUIPMENT
         ? {
             ...CONFIG.DND5E.armorIds,
             ...CONFIG.DND5E.shieldIds,
