@@ -939,7 +939,7 @@ export const FoundryAdapter = {
       trait: 'weapon',
     }).render({ force: true });
   },
-  renderSkillToolConfig(document: any, trait: 'skills' | 'tools', key: string) {
+  renderSkillToolConfig(document: any, trait: 'skills' | 'tool', key: string) {
     return new dnd5e.applications.actor.SkillToolConfig({
       document,
       trait,

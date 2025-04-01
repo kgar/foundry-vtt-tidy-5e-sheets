@@ -97,7 +97,7 @@
           onclick={(event) => {
             event.preventDefault();
             event.stopPropagation();
-            FoundryAdapter.renderSkillToolConfig(context.actor, 'tools', key);
+            FoundryAdapter.renderSkillToolConfig(context.actor, 'tool', key);
           }}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
             .TOOL_CONFIGURATION_CONTROL}
