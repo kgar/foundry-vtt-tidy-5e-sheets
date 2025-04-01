@@ -244,9 +244,8 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       affectsPlaceholder: game.i18n.localize(
         `DND5E.TARGET.Count.${target?.template?.type ? 'Every' : 'Any'}`
       ),
-      advancementEditable:
-        (this.advancementConfigurationMode || !this.document.isEmbedded) &&
-        editable,
+      // TODO: should it be editable, or unlocked? 
+      advancementEditable: !this.document.isEmbedded && editable,
       config: CONFIG.DND5E,
       coverOptions: Object.entries(CONFIG.DND5E.cover).map(
         ([value, label]) => ({ value, label })
@@ -536,12 +535,6 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     return context;
   }
 
-  /**
-   * Whether advancements on embedded items should be configurable.
-   * @type {boolean}
-   */
-  advancementConfigurationMode = false;
-
   /* -------------------------------------------- */
 
   /**
@@ -552,7 +545,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
   _getItemAdvancement(item: Item5e) {
     if (!item.system.advancement) return {};
     const advancement: AdvancementsContext = {};
-    const configMode = !item.parent || this.advancementConfigurationMode;
+    const configMode = !item.parent;
     const legacyDisplay = this.options.legacyDisplay;
     const maxLevel = !configMode
       ? item.system.levels ??
@@ -627,11 +620,9 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
 
   /**
    * Prepare tags for an Advancement.
-   * @param {Advancement} advancement  The Advancement.
-   * @returns {{label: string, icon: string}[]}
-   * @protected
    */
   _getItemAdvancementTags(advancement: any) {
+    // TODO: use this instead of the inline approach.
     return [];
   }
 
@@ -984,11 +975,6 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     const advancementArray = this.item.system.toObject().advancement;
     advancementArray.push(...advancements.map((a: any) => a.toObject()));
     this.item.update({ 'system.advancement': advancementArray });
-  }
-
-  async toggleAdvancementLock() {
-    this.advancementConfigurationMode = !this.advancementConfigurationMode;
-    this.render();
   }
 
   /* -------------------------------------------- */

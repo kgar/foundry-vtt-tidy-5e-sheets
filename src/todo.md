@@ -1,7 +1,7 @@
 ## To Do
 
 - [ ] Implement Advancement tab
-  - [ ] Implement embedded functionality
+  - [ ] Implement embedded functionality (configMode = false)
     - [ ] When locked, (double-check this in the template and code)
       - [ ] Only menu button visible
       - [ ] When fully configured, then circle check on action column, "Fully Configured"
@@ -10,7 +10,7 @@
     - [ ] When unlocked, 
       - [ ] When of the appropriate level, show cog icon with "Modify Choices"
       - [ ] else, no icon
-  - [ ] Implement sidebar/compendium functionality
+  - [ ] Implement sidebar/compendium functionality (configMode = true)
     - [ ] When locked,
     - [ ] When unlocked,
   - [ ] Note: Don't show Tag indicators when embedded. It's for standalone / sidebar / compendium only.
@@ -159,6 +159,124 @@
     - [ ] (Non-container sheets only) Sidebar sections all hidden except Sections section and pill switches
 - [ ] Context Menu items rework
 - [ ] (someone reported this to the Foundry devs; it ain't just me; awaiting possible fix) The "Import" menu option is being shown on a Sidebar item. 🪓
+
+### Scratch - Advancement template
+
+```hbs
+<div class="tab advancement" data-group="primary" data-tab="advancement">
+    <section class="items-list">
+        {{#each advancement}}
+
+        <div class="items-section card" data-level="{{ @key }}">
+
+            <div class="items-header header">
+
+                <h3 class="item-name">
+                    {{#if (eq @key "0")}}
+                    {{ localize "DND5E.AdvancementLevelAnyHeader" }}
+                    {{else if (eq @key "unconfigured")}}
+                    {{ localize "DND5E.AdvancementLevelNoneHeader" }}
+                    {{else}}
+                    {{ localize "DND5E.AdvancementLevelHeader" level=@key }}
+                    {{/if}}
+                </h3>
+
+                <div class="item-header advancement-value">{{ localize "DND5E.Value" }}</div>
+
+                <div class="item-header item-controls">
+                    {{#if (and @root.editable configured (ne @key "unconfigured"))}}
+                    <a class="item-control config-button" data-action="modify-choices"
+                       data-tooltip="DND5E.AdvancementModifyChoices"
+                       aria-label="{{ localize "DND5E.AdvancementModifyChoices" }}">
+                        <i class="fas fa-cog"></i>
+                    </a>
+                    {{else}}
+
+                    {{#if (eq configured "full")}}
+                    <a class="info-control" data-tooltip="DND5E.AdvancementConfiguredComplete"
+                       aria-label="{{ localize "DND5E.AdvancementConfiguredComplete" }}">
+                        <i class="fas fa-check-circle"></i>
+                    </a>
+                    {{else if (eq configured "partial")}}
+                    <a class="info-control" data-tooltip="DND5E.AdvancementConfiguredIncomplete"
+                       aria-label="{{ localize "DND5E.AdvancementConfiguredIncomplete" }}">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </a>
+                    {{/if}}
+
+                    {{/if}}
+                </div>
+
+            </div>
+
+            <ol class="item-list unlist">
+                {{#each items}}
+
+                <li class="advancement-item item {{ classes }}" data-id="{{ id }}">
+                    <div class="item-row">
+
+                        <div class="item-name">
+                            <img class="item-image gold-icon" src="{{ icon }}">
+                            <div class="name">
+                                <div class="title">{{{ title }}}</div>
+                                {{#if summary}}
+                                <div class="summary">{{{ summary }}}</div>
+                                {{/if}}
+                            </div>
+                            <div class="tags">
+                                {{#each tags}}
+                                <span data-tooltip="{{ label }}" aria-label="{{ localize label }}">
+                                    <dnd5e-icon src="{{ icon }}"></dnd5e-icon>
+                                </span>
+                                {{/each}}
+                            </div>
+                        </div>
+
+                        <div class="item-detail advancement-value {{#unless value}}empty{{/unless}}">
+                            {{#if value includeZero=true}}
+                            {{ value }}
+                            {{/if}}
+                        </div>
+
+                        <div class="item-detail item-controls">
+
+                            {{#if @root.editable}}
+                            {{!-- Editing --}}
+                            <a class="item-control item-action" data-action="edit"
+                               data-tooltip="DND5E.ADVANCEMENT.Action.Edit"
+                               aria-label="{{ localize "DND5E.DND5E.ADVANCEMENT.Action.Edit" }}">
+                                <i class="fas fa-pen-to-square" inert></i>
+                            </a>
+
+                            {{!-- Deleting --}}
+                            <a class="item-control item-action" data-action="delete"
+                               data-tooltip="DND5E.ADVANCEMENT.Action.Delete"
+                               aria-label="{{ localize "DND5E.ADVANCEMENT.Action.Delete" }}">
+                                <i class="fas fa-trash" inert></i>
+                            </a>
+                            {{/if}}
+
+                            {{!-- Context Menu --}}
+                            <a class="item-control interface-only" data-context-menu
+                               aria-label="{{ localize "DND5E.AdditionalControls" }}">
+                                <i class="fas fa-ellipsis-vertical" inert></i>
+                            </a>
+
+                        </div>
+
+                    </div>
+                </li>
+
+                {{/each}}
+            </ol>
+
+        </div>
+
+        {{/each}}
+    </section>
+</div>
+
+```
 
 ### Bonus
 
