@@ -1,11 +1,5 @@
 ## To Do
 
-- [ ] Work on Class Header
-  - [ ] Add badge; fix stolen CSS
-  - [ ] Swap in badge image from figma
-  - [ ] Subtitle
-    - [ ] Level Ordinal string
-    - [ ] Original Class stamp
 - [ ] Class sidebar
   - [ ] Unique stuff
     - [ ] Class Identifier pill button; click to copy identifier
@@ -458,3 +452,9 @@ Limited:
 - [x] Finalize Background base version
 - [x] Notify hightouch that spell sheet is ready for final review
 - [x] Notify hightouch that weapon sheet is ready for final review
+- [x] Work on Class Header
+  - [x] Add badge; fix stolen CSS
+  - [x] Swap in badge image from figma
+  - [x] Subtitle
+    - [x] Level Ordinal string
+    - [x] Original Class stamp

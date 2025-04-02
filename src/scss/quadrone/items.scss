@@ -326,6 +326,10 @@
         flex: 1;
       }
 
+      .common-fields .level-badge {
+        margin-inline-end: calc(var(--t5e-size-2x) * -1);
+      }
+
       .school {
         --icon-width: var(--t5e-icon-size-10x);
         --icon-height: var(--t5e-icon-size-10x);

@@ -15,6 +15,24 @@
   let selectedTabId: string = $state(CONSTANTS.TAB_CONTAINER_CONTENTS);
 
   let itemNameEl: HTMLElement | undefined = $state();
+
+  let subtitle = $derived.by(() => {
+    if (!context.item.parent) {
+      return undefined;
+    }
+
+    let result: string[] = [
+      localize('DND5E.LevelCount', {
+        ordinal: context.item.system.levels.ordinalString(),
+      }),
+    ];
+
+    if (context.item.isOriginalClass) {
+      result.push(localize('DND5E.ClassOriginal'));
+    }
+
+    return result.join(', ');
+  });
 </script>
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
@@ -30,18 +48,22 @@
       >
         <ItemName />
       </div>
-      <div class="subtitle">TODO</div>
+      {#if subtitle}
+        <div class="subtitle">{subtitle}</div>
+      {/if}
     </div>
-    <div class="common-fields">
-      <div
-        class="level-badge badge theme-dark"
-        aria-label={localize('DND5E.LevelNumber', {
-          level: context.system.levels,
-        })}
-      >
-        {context.system.levels}
+    {#if !context.unlocked}
+      <div class="common-fields">
+        <div
+          class="level-badge badge theme-dark"
+          aria-label={localize('DND5E.LevelNumber', {
+            level: context.system.levels,
+          })}
+        >
+          {context.system.levels}
+        </div>
       </div>
-    </div>
+    {/if}
   </div>
 
   <!-- Tab Strip -->

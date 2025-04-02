@@ -39,9 +39,11 @@
 
   /* Level */
   .level-badge {
+    font-size: var(--font-size-32);
     width: 4.875rem;
     height: 4.875rem;
-    background-image: url("../../systems/dnd5e/ui/level-badge.webp");
+    background-image: url("../../modules/tidy5e-sheet/images/badge_level_dark.webp");
+    text-align: center;
   }
 
 }
