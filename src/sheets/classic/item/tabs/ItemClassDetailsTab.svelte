@@ -120,7 +120,7 @@
   <p class="hint">{localize('DND5E.CLASS.FIELDS.primaryAbility.value.hint')}</p>
 </div>
 
-{#if context.source.primaryAbility.value.size > 1}
+{#if Array.from(context.source.primaryAbility.value).length > 1}
   <div class="form-group">
     <label for="{appId}-primaryAbility-fields-all"
       >{localize('DND5E.CLASS.FIELDS.primaryAbility.all.label')}</label

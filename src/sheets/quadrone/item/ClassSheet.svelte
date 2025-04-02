@@ -7,6 +7,7 @@
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import ItemName from './parts/header/ItemName.svelte';
+  import { isNil } from 'src/utils/data';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -33,11 +34,95 @@
 
     return result.join(', ');
   });
+
+  let primaryAbilities = $derived(
+    Array.from<string>(context.item.system.primaryAbility.value)
+      .map((x: string) => CONFIG.DND5E.abilities[x]?.label ?? x)
+      .join(', '),
+  );
 </script>
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
 
-<Sidebar />
+<Sidebar>
+  {#snippet belowStateSwitches()}
+    <div>
+      <h4>{localize('TYPES.Item.class')}</h4>
+      <ul class="pills stacked">
+        <li>
+          <a
+            class="pill interactive centered wrapped"
+            onclick={() => {
+              const value = context.item.system.identifier;
+              game.clipboard.copyPlainText(value);
+              ui.notifications.info(
+                game.i18n.format('DND5E.Copied', { value }),
+                { console: false },
+              );
+            }}
+          >
+            <span class="text-normal">
+              {localize('DND5E.Identifier')}
+            </span>
+            <span class="hyphens-auto">
+              {context.item.system.identifier}
+            </span>
+          </a>
+        </li>
+        <li>
+          <span class="pill centered wrapped">
+            <span class="text-normal">
+              {localize('DND5E.CLASS.FIELDS.hd.label')}
+            </span>
+            <span class="hyphens-auto">
+              {context.item.system.hd?.denomination}
+            </span>
+          </span>
+        </li>
+        {#if !isNil(context.item.system.spellcasting?.progression, '', 'none')}
+          <li>
+            <span class="pill centered wrapped">
+              <span class="text-normal">
+                {localize('DND5E.SpellProgression')}
+              </span>
+              <span class="hyphens-auto">
+                {CONFIG.DND5E.spellProgression[
+                  context.item.system.spellcasting.progression
+                ] ?? context.item.system.spellcasting.progression}
+              </span>
+            </span>
+          </li>
+        {/if}
+        {#if !isNil(context.system.spellcasting?.ability)}
+          <li>
+            <span class="pill centered wrapped">
+              <span class="text-normal">
+                {localize('DND5E.SpellAbility')}
+              </span>
+              <span class="hyphens-auto">
+                {CONFIG.DND5E.abilities[
+                  context.item.system.spellcasting.ability
+                ]?.label ?? context.item.system.spellcasting.ability}
+              </span>
+            </span>
+          </li>
+        {/if}
+        {#if !isNil(primaryAbilities, '')}
+          <li>
+            <span class="pill centered wrapped">
+              <span class="text-normal">
+                {localize('DND5E.CLASS.FIELDS.primaryAbility.value.label')}
+              </span>
+              <span>
+                {primaryAbilities}
+              </span>
+            </span>
+          </li>
+        {/if}
+      </ul>
+    </div>
+  {/snippet}
+</Sidebar>
 
 <main class="item-content">
   <div class="sheet-header">

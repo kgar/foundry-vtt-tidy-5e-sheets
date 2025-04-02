@@ -112,7 +112,10 @@
     >
     <div class="form-fields">
       {#each abilities as { value, label, selected } (value)}
-        <label class="checkbox" for="{appId}-primaryAbility-value-{value?.slugify()}">
+        <label
+          class="checkbox"
+          for="{appId}-primaryAbility-value-{value?.slugify()}"
+        >
           <CheckboxQuadrone
             id="{appId}-primaryAbility-value-{value?.slugify()}"
             document={context.item}
@@ -133,7 +136,7 @@
     </p>
   </div>
 
-  {#if context.source.primaryAbility.value.size > 1}
+  {#if Array.from(context.source.primaryAbility.value).length > 1}
     <div class="form-group">
       <label for="{appId}-primaryAbility-fields-all"
         >{localize('DND5E.CLASS.FIELDS.primaryAbility.all.label')}</label

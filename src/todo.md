@@ -1,14 +1,5 @@
 ## To Do
 
-- [ ] Class sidebar
-  - [ ] Unique stuff
-    - [ ] Class Identifier pill button; click to copy identifier
-    - [ ] primary attribute
-    - [ ] hit die
-    - [ ] spell progression
-  - [ ] Sidebar standard stuff for items with advancements
-    - [ ] Scale Values section
-      - [ ] Click to copy formula
 - [ ] Work on Subclass Header
 - [ ] Work on Species Header
 - [ ] Work on Species Sidebar
@@ -20,41 +11,11 @@
 - [ ] Notify hightouch that loot sheet is ready for final review
 - [ ] Notify hightouch that tool sheet is ready for final review
 - [ ] Notify hightouch that background sheet is ready for final review
+- [ ] Notify hightouch that class sheet is ready for final review
 - [ ] Foundry 13 theming: Ensure a set of theme classes are always being applied to Tidy sheets; see scratch notes for how to progressively check higher and higher. Have this wrapped up in the effect which applies mutable fields to the window.
 - [ ] Test spell info on item summary and cards
-- [ ] Begin thinking about how to extract common functionality across each table type (item, effects, activities)
-  - [ ] Ditto for item summary
 - [ ] Propagate `sheet-header` class setup to all item sheets
 - [ ] Implement sheet header contents
-  - [ ] Background
-  - [ ] Class
-    - [ ] header
-      - [ ] Current level badge
-    - [ ] Description tab
-      - [ ] Description section header hidden, contents displayed
-    - [ ] subtitle
-      - [ ] Actor class level
-  - [x] Consumable
-    - [x] subtitle
-      - [x] Item Type
-      - [x] Item Subtype
-    - [x] summary
-      - [x] (when available) Charges
-      - [x] (when relevant) Cooldown
-      - [x] Price
-      - [x] Weight
-      - [x] Quantity
-  - [x] Container
-  - [x] Equipment
-    - [x] subtitle
-      - [x] Type (Light Armor)
-      - [x] ## AC
-    - [x] summary
-      - [x] (when available) Charges
-      - [x] (when relevant) Cooldown
-      - [x] Price
-      - [x] Weight
-      - [x] Quantity
   - [ ] Facility
     - [ ] subtitle
       - [ ] Type
@@ -73,34 +34,9 @@
     - [ ] summary 
       - [ ] (when available) Charges
       - [ ] (when relevant) Cooldown
-  - [x] Loot
-    - [x] Subtitle
-      - [x] Loot type
-      - [x] (if available) Loot subtype
-    - [x] summary
-      - [x] Price
-      - [x] Weight
-      - [x] Quantity
   - [ ] Species
   - [ ] Subclass
     - [ ] subtitle
-  - [x] Tool
-    - [x] subtitle
-    - [x] summary
-      - [x] (when available) Charges
-      - [x] (when relevant) Cooldown
-      - [x] Charges
-      - [x] Price
-      - [x] Weight
-      - [x] Quantity
-  - [x] Weapon
-    - [x] subtitle
-    - [x] Summary
-      - [x] (when available) Charges
-      - [x] (when relevant) Cooldown
-      - [x] Price
-      - [x] Weight
-      - [x] Quantity
   - [ ] Tattoo
     - [ ] Subtitle
       - [ ] ...?
@@ -157,6 +93,9 @@
     - [ ] (Non-container sheets only) Sidebar sections all hidden except Sections section and pill switches
 - [ ] Context Menu items rework
 - [ ] (someone reported this to the Foundry devs; it ain't just me; awaiting possible fix) The "Import" menu option is being shown on a Sidebar item. 🪓
+- [ ] Class, Subclass, Background, Species, Facility sheets
+  - [ ] Description tab
+    - [ ] Description section header hidden, contents displayed, editable when unlocked, saves when locked again, saves when save button clicked and is refreshed.
 
 ### Scratch - Finding the effective theme for a sheet
 
@@ -458,3 +397,68 @@ Limited:
   - [x] Subtitle
     - [x] Level Ordinal string
     - [x] Original Class stamp
+- [x] Class sidebar
+  - [x] Unique stuff
+    - [x] Class Identifier pill button; click to copy identifier
+    - [x] primary class attribute(s)
+    - [x] spell progression (if present)
+    - [x] spellcasting ability (if present)
+    - [x] hit die
+  - [x] Sidebar standard stuff for items with advancements
+    - [x] Scale Values section
+      - [x] Click to copy formula
+      - [x] When embedded, show actual scale value for level 
+- [x] Implement sheet header contents
+  - [x] Background
+  - [x] Class
+    - [x] header
+      - [x] Current level badge
+    - [x] subtitle
+      - [x] Actor class level
+      - [x] Original Class
+  - [x] Consumable
+    - [x] subtitle
+      - [x] Item Type
+      - [x] Item Subtype
+    - [x] summary
+      - [x] (when available) Charges
+      - [x] (when relevant) Cooldown
+      - [x] Price
+      - [x] Weight
+      - [x] Quantity
+  - [x] Container
+  - [x] Equipment
+    - [x] subtitle
+      - [x] Type (Light Armor)
+      - [x] ## AC
+    - [x] summary
+      - [x] (when available) Charges
+      - [x] (when relevant) Cooldown
+      - [x] Price
+      - [x] Weight
+      - [x] Quantity
+  - [x] Tool
+    - [x] subtitle
+    - [x] summary
+      - [x] (when available) Charges
+      - [x] (when relevant) Cooldown
+      - [x] Charges
+      - [x] Price
+      - [x] Weight
+      - [x] Quantity
+  - [x] Weapon
+    - [x] subtitle
+    - [x] Summary
+      - [x] (when available) Charges
+      - [x] (when relevant) Cooldown
+      - [x] Price
+      - [x] Weight
+      - [x] Quantity
+  - [x] Loot
+    - [x] Subtitle
+      - [x] Loot type
+      - [x] (if available) Loot subtype
+    - [x] summary
+      - [x] Price
+      - [x] Weight
+      - [x] Quantity

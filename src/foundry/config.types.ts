@@ -4166,7 +4166,7 @@ export type CONFIG = {
       third: string;
       pact: string;
       artificer: string;
-    };
+    } & Record<string, string>;
     spellLevels: {
       '0': string;
       '1': string;
