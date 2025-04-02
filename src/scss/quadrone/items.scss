@@ -86,23 +86,23 @@
     }
 
     .contents-footer.off-screen {
-      position: sticky;
-      bottom: 0;
-      transform: translateY(calc(100% - var(--t5e-size-6x)));
+      // position: sticky;
+      // bottom: 0;
+      // transform: translateY(calc(100% - var(--t5e-size-6x)));
 
-      .meter.progress {
-        border-bottom: 0;
-        border-bottom-right-radius: 0;
-        border-bottom-left-radius: 0;
-      }
-
-      // .meter.progress .label {
-      //   visibility: hidden;
+      // .meter.progress {
+      //   border-bottom: 0;
+      //   border-bottom-right-radius: 0;
+      //   border-bottom-left-radius: 0;
       // }
 
-      .item-create {
-        display: none;
-      }
+      // // .meter.progress .label {
+      // //   visibility: hidden;
+      // // }
+
+      // .item-create {
+      //   display: none;
+      // }
     }
 
     .contents-footer-scroll-marker {
@@ -326,6 +326,12 @@
         flex: 1;
       }
 
+      .common-fields {
+        .level-badge {
+          // margin-inline-start: 1rem;
+        }
+      }
+
       .school {
         --icon-width: var(--t5e-icon-size-10x);
         --icon-height: var(--t5e-icon-size-10x);
@@ -481,6 +487,9 @@
 
     &.contents {
       padding-bottom: 0;
+
+      display: grid;
+      grid-template-rows: min-content auto min-content min-content min-content;
     }
 
     &.description {
@@ -509,6 +518,9 @@
       flex-direction: row;
       align-items: center;
       gap: var(--t5e-size-1x);
+      position: sticky;
+      // align-self: end;
+      bottom: 0;
 
       .meter {
         flex-grow: 1;
