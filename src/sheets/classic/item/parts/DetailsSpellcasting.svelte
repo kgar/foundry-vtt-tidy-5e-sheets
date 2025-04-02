@@ -41,6 +41,7 @@
       field="system.spellcasting.ability"
       value={context.system.spellcasting.ability}
       disabled={!context.editable}
+      blankValue=""
     >
       <SelectOptions
         data={context.config.abilities}
