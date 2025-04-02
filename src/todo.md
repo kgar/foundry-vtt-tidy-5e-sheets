@@ -6,6 +6,15 @@
   - [ ] Subtitle
     - [ ] Level Ordinal string
     - [ ] Original Class stamp
+- [ ] Class sidebar
+  - [ ] Unique stuff
+    - [ ] Class Identifier pill button; click to copy identifier
+    - [ ] primary attribute
+    - [ ] hit die
+    - [ ] spell progression
+  - [ ] Sidebar standard stuff for items with advancements
+    - [ ] Scale Values section
+      - [ ] Click to copy formula
 - [ ] Work on Subclass Header
 - [ ] Work on Species Header
 - [ ] Work on Species Sidebar
