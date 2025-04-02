@@ -8,6 +8,7 @@
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import ItemName from './parts/header/ItemName.svelte';
   import { isNil } from 'src/utils/data';
+  import SpellcastingSidebarPills from './parts/SpellcastingSidebarPills.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -79,34 +80,7 @@
             </span>
           </span>
         </li>
-        {#if !isNil(context.item.system.spellcasting?.progression, '', 'none')}
-          <li>
-            <span class="pill centered wrapped">
-              <span class="text-normal">
-                {localize('DND5E.SpellProgression')}
-              </span>
-              <span class="hyphens-auto">
-                {CONFIG.DND5E.spellProgression[
-                  context.item.system.spellcasting.progression
-                ] ?? context.item.system.spellcasting.progression}
-              </span>
-            </span>
-          </li>
-        {/if}
-        {#if !isNil(context.system.spellcasting?.ability)}
-          <li>
-            <span class="pill centered wrapped">
-              <span class="text-normal">
-                {localize('DND5E.SpellAbility')}
-              </span>
-              <span class="hyphens-auto">
-                {CONFIG.DND5E.abilities[
-                  context.item.system.spellcasting.ability
-                ]?.label ?? context.item.system.spellcasting.ability}
-              </span>
-            </span>
-          </li>
-        {/if}
+        <SpellcastingSidebarPills />
         {#if !isNil(primaryAbilities, '')}
           <li>
             <span class="pill centered wrapped">

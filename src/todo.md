@@ -1,9 +1,9 @@
 ## To Do
 
-- [ ] Work on Subclass Header
 - [ ] Work on Species Header
 - [ ] Work on Species Sidebar
 - [ ] (hightouch) Review / refine Advancement table styles. Need handling for tags, enrichers, etc.
+- [ ] (hightouch) in our editor styles, can we do something more with the blockquote element? For example, check how the default sheets do blockquotes: italicize, with a left gray border (2-4px, or so), to make it really stand out as a quote.
 - [ ] Advancement sidebar stuff; Scale Values (and any like them), Copy Formula, what else? Research and task out
 - [ ] Not sure how feasible it would be but I'm noticing when we open a sheet that Tab still swaps between tokens on the canvas. Is it possible to steal tab focus when a sheet opens and give it to the first open tab? Then you could hit Tab to switch between sheet tabs on open https://discord.com/channels/@me/1243307347682529423/1355184980623491172
 - [ ] Notify hightouch that equipment sheet is ready for final review
@@ -12,6 +12,7 @@
 - [ ] Notify hightouch that tool sheet is ready for final review
 - [ ] Notify hightouch that background sheet is ready for final review
 - [ ] Notify hightouch that class sheet is ready for final review
+- [ ] Notify hightouch that subclass sheet is ready for final review
 - [ ] Foundry 13 theming: Ensure a set of theme classes are always being applied to Tidy sheets; see scratch notes for how to progressively check higher and higher. Have this wrapped up in the effect which applies mutable fields to the window.
 - [ ] Test spell info on item summary and cards
 - [ ] Propagate `sheet-header` class setup to all item sheets
@@ -35,8 +36,6 @@
       - [ ] (when available) Charges
       - [ ] (when relevant) Cooldown
   - [ ] Species
-  - [ ] Subclass
-    - [ ] subtitle
   - [ ] Tattoo
     - [ ] Subtitle
       - [ ] ...?
@@ -48,8 +47,8 @@
       - [ ] Edit mode always shows prosemirror visible in edit mode (like default sheets)
 - [x] Spell Sheet: Try a few different configurations for Class List.
 - [ ] Implement sidebar contents - prefer context data for pill groups with pill arrays of string and object (label / value)
-  - [ ] Background
-  - [ ] Class
+  - [x] Background
+  - [x] Class
   - [x] Consumable
   - [x] Container
   - [x] Equipment
@@ -60,14 +59,14 @@
     - [ ] Y Defenders
     - [ ] Order
   - [ ] Feat
-  - [ ] Loot
+  - [x] Loot
   - [ ] Species
   - [x] Spell
     - Use the children snippet for spell-specific label-value pair info
-  - [ ] Subclass
-  - [ ] Tool
+  - [x] Subclass
+  - [x] Tool
   - [x] Weapon
-  - [ ] Make sure Section section visible for all sheets
+  - [x] Make sure Section section visible for all sheets
 - [x] Ensure Activities and Effects tabs include item counters in the title
   - [x] This will need context-dependent tab titles, if they don't already exist
 - [x] https://discord.com/channels/@me/1243307347682529423/1336210686392668220
@@ -462,3 +461,6 @@ Limited:
       - [x] Price
       - [x] Weight
       - [x] Quantity
+  - [x] Subclass
+    - [x] ~~subtitle~~
+- [x] Work on Subclass Header
