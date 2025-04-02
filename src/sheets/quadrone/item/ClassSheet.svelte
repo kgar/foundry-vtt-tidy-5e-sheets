@@ -22,15 +22,27 @@
 <Sidebar />
 
 <main class="item-content">
-  <div
-    bind:this={itemNameEl}
-    class="item-name-wrapper flex-row extra-small-gap align-items-center"
-  >
-    <ItemName />
+  <div class="sheet-header">
+    <div class="identity-info">
+      <div
+        bind:this={itemNameEl}
+        class="item-name-wrapper flex-row extra-small-gap align-items-center"
+      >
+        <ItemName />
+      </div>
+      <div class="subtitle">TODO</div>
+    </div>
+    <div class="common-fields">
+      <div
+        class="level-badge badge theme-dark"
+        aria-label={localize('DND5E.LevelNumber', {
+          level: context.system.levels,
+        })}
+      >
+        {context.system.levels}
+      </div>
+    </div>
   </div>
-
-  <!-- Header Summary -->
-  <div class="item-header-summary">TODO</div>
 
   <!-- Tab Strip -->
   <Tabs

@@ -1,6 +1,49 @@
 /* Styles common to Document sheets */
 .tidy5e-sheet:where(.quadrone) {
   font-smooth: always;
+
+
+  /* ---------------------------------- */
+  /*  Badges                            */
+  /* ---------------------------------- */
+
+  .badge {
+    background: transparent no-repeat center / contain;
+    font-family: var(--t5e-font-roboto-condensed);
+    font-weight: bold;
+    color: var(--t5e-color-text-default);
+    display: grid;
+    place-content: center;
+    font-size: var(--font-size-30);
+
+    .config-button {
+      color: inherit;
+      font-size: inherit;
+    }
+  }
+
+  /* AC */
+  .ac-badge {
+    width: 4.25rem;
+    height: 4.25rem;
+    min-width: 4.25rem;
+    text-align: center;
+    line-height: 3.875rem;
+    background-image: url("../../systems/dnd5e/ui/ac-badge.webp");
+    display: block;
+    place-content: unset;
+    font-size: var(--font-size-23);
+    margin-top: -21px;
+    filter: drop-shadow(0 0 6px var(--color-shadow-dark));
+  }
+
+  /* Level */
+  .level-badge {
+    width: 4.875rem;
+    height: 4.875rem;
+    background-image: url("../../systems/dnd5e/ui/level-badge.webp");
+  }
+
 }
 
 .tidy5e-sheet:where(.quadrone:is(.item, .actor)) {
@@ -8,3 +51,4 @@
     /* Edit Mode Toggle */
   }
 }
+

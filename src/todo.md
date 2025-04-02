@@ -1,10 +1,15 @@
 ## To Do
 
-- [ ] (hightouch) Review / refine Advancement table styles. Need handling for tags, enrichers, etc.
-- [ ] Foundry 13 theming: Ensure a set of theme classes are always being applied to Tidy sheets; see scratch notes for how to progressively check higher and higher.
-  - [ ] Note: need to set up some kind of signal for changes 
 - [ ] Work on Class Header
+  - [ ] Add badge; fix stolen CSS
+  - [ ] Swap in badge image from figma
+  - [ ] Subtitle
+    - [ ] Level Ordinal string
+    - [ ] Original Class stamp
 - [ ] Work on Subclass Header
+- [ ] Work on Species Header
+- [ ] Work on Species Sidebar
+- [ ] (hightouch) Review / refine Advancement table styles. Need handling for tags, enrichers, etc.
 - [ ] Advancement sidebar stuff; Scale Values (and any like them), Copy Formula, what else? Research and task out
 - [ ] Not sure how feasible it would be but I'm noticing when we open a sheet that Tab still swaps between tokens on the canvas. Is it possible to steal tab focus when a sheet opens and give it to the first open tab? Then you could hit Tab to switch between sheet tabs on open https://discord.com/channels/@me/1243307347682529423/1355184980623491172
 - [ ] Notify hightouch that equipment sheet is ready for final review
@@ -12,6 +17,7 @@
 - [ ] Notify hightouch that loot sheet is ready for final review
 - [ ] Notify hightouch that tool sheet is ready for final review
 - [ ] Notify hightouch that background sheet is ready for final review
+- [ ] Foundry 13 theming: Ensure a set of theme classes are always being applied to Tidy sheets; see scratch notes for how to progressively check higher and higher. Have this wrapped up in the effect which applies mutable fields to the window.
 - [ ] Test spell info on item summary and cards
 - [ ] Begin thinking about how to extract common functionality across each table type (item, effects, activities)
   - [ ] Ditto for item summary

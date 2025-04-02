@@ -203,7 +203,13 @@ export type ItemSheetQuadroneContext = {
   itemType: string;
   itemStatus: string | null;
   itemSubtypes?: Record<string, string>;
-  labels: Record<string, string>;
+  labels: Record<string, string> & {
+    components: {
+      all: { abbr: string }[];
+      vsm: string;
+      tags: unknown[];
+    };
+  };
   limited: boolean;
   lockItemQuantity: boolean;
   modernRules: boolean;
