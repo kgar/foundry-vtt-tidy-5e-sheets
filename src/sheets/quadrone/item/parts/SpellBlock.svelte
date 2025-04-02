@@ -5,7 +5,7 @@
 
   interface Props {
     fullWidth?: boolean;
-    context: ItemSheetQuadroneContext;
+    context: ItemSheetContext | ItemSheetQuadroneContext;
   }
 
   let { context, fullWidth }: Props = $props();

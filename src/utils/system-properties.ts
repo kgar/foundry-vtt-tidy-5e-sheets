@@ -1,20 +1,18 @@
-import type { ItemSheetContext } from 'src/types/item.types';
+import type {
+  ItemSheetContext,
+  ItemSheetQuadroneContext,
+} from 'src/types/item.types';
 
 // TODO: Eliminate these specific mappers for more generalized versions, as needed.
 export function mapPropertiesToSave(
-  context: ItemSheetContext,
+  context: ItemSheetContext | ItemSheetQuadroneContext,
   ev: Event & { currentTarget: HTMLInputElement },
   keyToSave: string
 ) {
   const allProperties = context.properties;
 
   const propertiesToSave = allProperties.options
-    .filter(
-      (property) =>
-        property.value !== keyToSave &&
-        property.selected &&
-        !context.itemOverrides.has(`system.properties.${property.value}`)
-    )
+    .filter((property) => property.value !== keyToSave && property.selected)
     .map((property) => property.value);
 
   if (ev.currentTarget.checked) {
@@ -28,7 +26,7 @@ export function mapPropertiesToSave(
 
 // TODO: Eliminate these specific mappers for more generalized versions, as needed.
 export function mapMulticlassingAbilitiesToSave(
-  context: ItemSheetContext,
+  context: ItemSheetContext | ItemSheetQuadroneContext,
   ev: Event & { currentTarget: HTMLInputElement }
 ) {
   const selectedAbilities: Set<string> = new Set<string>(
@@ -48,14 +46,11 @@ export function mapMulticlassingAbilitiesToSave(
 
 // TODO: Eliminate these specific mappers for more generalized versions, as needed.
 export function mapSystemDamageTypesToSave(
-  context: ItemSheetContext,
   prefix: string,
   source: any,
   ev: Event & { currentTarget: HTMLInputElement }
 ) {
-  const selectedAbilities: Set<string> = new Set<string>(
-    source.types
-  );
+  const selectedAbilities: Set<string> = new Set<string>(source.types);
 
   if (ev.currentTarget.checked) {
     selectedAbilities.add(ev.currentTarget.value);
