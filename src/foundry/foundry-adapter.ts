@@ -12,10 +12,9 @@ import type {
 } from 'src/types/types';
 import { CONSTANTS } from '../constants';
 import type { Actor5e } from 'src/types/types';
-import type { Item5e } from 'src/types/item.types';
+import type { Item5e, MovementInfo, SenseInfo } from 'src/types/item.types';
 import { settings, type CurrentSettings } from 'src/settings/settings.svelte';
 import { debug, error } from 'src/utils/logging';
-import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
 import { TidyFlags } from './TidyFlags';
 import { TidyHooks } from './TidyHooks';
 import { isNil } from 'src/utils/data';
@@ -29,7 +28,7 @@ export const FoundryAdapter = {
     return foundry.utils.deepClone(obj);
   },
   userIsGm() {
-    return game.user.isGM;
+    return game.user.isGM === true;
   },
   getTidySetting<T = string>(settingName: string): T {
     return game.settings.get(CONSTANTS.MODULE_ID, settingName) as T;
@@ -1519,5 +1518,32 @@ export const FoundryAdapter = {
     return game.release.generation < 13
       ? doc.compendium?.locked
       : game.packs.get(doc.pack)?.locked;
+  },
+
+  getMovementInfo(movement: any): Record<string, MovementInfo> {
+    const units =
+      CONFIG.DND5E.movementUnits[
+        movement.units || Object.keys(CONFIG.DND5E.movementUnits)[0]
+      ];
+    return Object.entries(CONFIG.DND5E.movementTypes).reduce<
+      Record<string, MovementInfo>
+    >((obj, [k, label]) => {
+      const value = movement[k];
+      if (value) obj[k] = { label, value, unit: units.abbreviation };
+      return obj;
+    }, {} satisfies Record<string, MovementInfo>);
+  },
+  getSensesInfo(senses: any): Record<string, SenseInfo> {
+    const units =
+      CONFIG.DND5E.movementUnits[
+        senses.units || Object.keys(CONFIG.DND5E.movementUnits)[0]
+      ];
+    return Object.entries(CONFIG.DND5E.senses).reduce<
+      Record<string, SenseInfo>
+    >((obj, [k, label]) => {
+      const value = senses[k];
+      if (value) obj[k] = { label, value, unit: units.abbreviation };
+      return obj;
+    }, {} satisfies Record<string, SenseInfo>);
   },
 };

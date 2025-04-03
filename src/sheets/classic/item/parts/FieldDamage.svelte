@@ -130,8 +130,7 @@
         checked={selected}
         {value}
         disabled={!context.editable}
-        onDataPreparing={(ev) =>
-          mapSystemDamageTypesToSave(context, prefix, source, ev)}
+        onDataPreparing={(ev) => mapSystemDamageTypesToSave(prefix, source, ev)}
       >
         {label}
       </Checkbox>

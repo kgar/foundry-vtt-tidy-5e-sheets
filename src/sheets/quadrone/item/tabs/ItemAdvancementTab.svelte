@@ -1,5 +1,4 @@
 <script lang="ts">
-  import TidyEffectTableRow from 'src/components/table-quadrone/TidyEffectTableRow.svelte';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
@@ -8,15 +7,19 @@
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     AdvancementItemContext,
+    AdvancementSectionContext,
     ItemSheetQuadroneContext,
   } from 'src/types/item.types';
   import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
   import type { Component } from 'svelte';
+  import TableHeaderButton from 'src/components/table-quadrone/table-buttons/TableHeaderButton.svelte';
   import EditButton from 'src/components/table-quadrone/table-buttons/EditButton.svelte';
   import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButton.svelte';
   import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
   import TidyAdvancementTableRow from 'src/components/table-quadrone/TidyAdvancementTableRow.svelte';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
+  import { isNil } from 'src/utils/data';
+  import { CONSTANTS } from 'src/constants';
 
   let localize = FoundryAdapter.localize;
 
@@ -30,7 +33,7 @@
     {}
   >;
 
-  let tableActions: TableAction<any>[] = $derived.by(() => {
+  let tableRowActions: TableAction<any>[] = $derived.by(() => {
     let result: TableAction<any>[] = [];
 
     if (context.unlocked) {
@@ -54,23 +57,79 @@
     return result;
   });
 
+  type TableHeaderAction<TComponent extends Component<any>> = TidyTableAction<
+    TComponent,
+    { key: string },
+    AdvancementSectionContext
+  >;
+
+  let tableHeaderActions: TableHeaderAction<any>[] = $derived.by(() => {
+    let result: TableHeaderAction<any>[] = [];
+
+    result.push({
+      component: TableHeaderButton,
+      condition: (args) =>
+        context.unlocked &&
+        args.data.key !== CONSTANTS.ADVANCEMENT_LEVEL_UNCONFIGURED &&
+        !!args.section.configured,
+      props: (args) => ({
+        title: 'DND5E.AdvancementModifyChoices',
+        onControlClick: (ev, args) =>
+          FoundryAdapter.modifyAdvancementChoices(args.data.key, context.item),
+        iconClass: 'fa-solid fa-cog',
+        controlContext: args,
+      }),
+    } satisfies TableHeaderAction<typeof TableHeaderButton>);
+
+    result.push({
+      component: TableHeaderButton,
+      condition: (args) =>
+        !context.unlocked &&
+        args.section.configured === CONSTANTS.ADVANCEMENT_CONFIGURATION_FULL,
+      props: () => ({
+        title: 'DND5E.AdvancementConfiguredComplete',
+        iconClass: 'fa-solid fa-check-circle',
+      }),
+    } satisfies TableHeaderAction<typeof TableHeaderButton>);
+
+    result.push({
+      component: TableHeaderButton,
+      condition: (args) =>
+        !context.unlocked &&
+        args.section.configured === CONSTANTS.ADVANCEMENT_CONFIGURATION_PARTIAL,
+      props: () => ({
+        title: 'DND5E.AdvancementConfiguredIncomplete',
+        iconClass: 'fas fa-exclamation-triangle',
+      }),
+    } satisfies TableHeaderAction<typeof TableHeaderButton>);
+
+    return result;
+  });
+
+  let actionColumnButtonCount = $derived.by(() => {
+    let length = 0;
+
+    for (let [key, section] of advancements) {
+      length = Math.max(
+        length,
+        tableHeaderActions.filter(
+          (a) => a.condition?.({ data: { key }, section }) ?? 0,
+        ).length,
+      );
+    }
+
+    return Math.max(length, tableRowActions.length);
+  });
+
   let columnSpecs = $derived({
     value: {
-      columnWidth: '3.125rem',
+      columnWidth: '3.75rem',
     },
     actions: {
-      columnWidth: `calc((var(--t5e-table-button-width) * ${1 + tableActions.length}) + var(--t5e-size-halfx))`,
+      columnWidth: `calc((var(--t5e-table-button-width) * ${1 + actionColumnButtonCount}) + var(--t5e-size-halfx))`,
     },
   });
 </script>
-
-<ol>
-  <li>✅ Make tidy tables for advancements</li>
-  <li>Add the actor-owned view - tie to locked/unlocked</li>
-  <li>Add partial config UI</li>
-  <li>Add false config UI</li>
-  <li>Ensure all interactibles are included</li>
-</ol>
 
 {#each advancements as [key, section]}
   <TidyTable {key}>
@@ -78,24 +137,42 @@
       <TidyTableHeaderRow class="theme-dark">
         <TidyTableHeaderCell primary={true} class="header-label-cell">
           <h3>
-            {#if key === '0'}
+            {#if key === CONSTANTS.ADVANCEMENT_LEVEL_ZERO}
               {localize('DND5E.AdvancementLevelAnyHeader')}
-            {:else if key === 'unconfigured'}
+            {:else if key === CONSTANTS.ADVANCEMENT_LEVEL_UNCONFIGURED}
               {localize('DND5E.AdvancementLevelNoneHeader')}
             {:else}
-              {localize('DND5E.AdvancementLevelHeader', { key })}
+              {localize('DND5E.AdvancementLevelHeader', { level: key })}
             {/if}
           </h3>
         </TidyTableHeaderCell>
         <TidyTableHeaderCell {...columnSpecs.value}>
           {localize('DND5E.Value')}
         </TidyTableHeaderCell>
-        <TidyTableHeaderCell
-          class="header-cell-actions"
-          {...columnSpecs.actions}
-        >
-          <!-- TODO: Completeness state -->
-        </TidyTableHeaderCell>
+        {#if context.editable}
+          <TidyTableHeaderCell
+            class="header-cell-actions"
+            {...columnSpecs.actions}
+          >
+            {#each tableHeaderActions as headerAction}
+              {#if headerAction.condition?.( { data: { key }, section: section }, ) ?? true}
+                <headerAction.component
+                  {...headerAction.props({ data: { key }, section })}
+                />
+              {/if}
+            {/each}
+
+            <a
+              class="tidy-table-button"
+              title={localize('DND5E.ADVANCEMENT.Action.Create')}
+              aria-label={localize('DND5E.ADVANCEMENT.Action.Create')}
+              onclick={() =>
+                FoundryAdapter.createAdvancementSelectionDialog(context.item)}
+            >
+              <i class="fas fa-plus"></i>
+            </a>
+          </TidyTableHeaderCell>
+        {/if}
       </TidyTableHeaderRow>
     {/snippet}
     {#snippet body()}
@@ -123,21 +200,9 @@
                 <div class="cell-text">
                   <div class="cell-name">
                     {@html advancement.title}
-                    {#if advancement.classRestriction === 'primary'}
-                      <i
-                        title={localize(
-                          'DND5E.AdvancementClassRestrictionPrimary',
-                        )}
-                        class="fa-solid fa-chess-queen advancement-class-indicator"
-                      ></i>
-                    {:else if advancement.classRestriction === 'secondary'}
-                      <i
-                        title={localize(
-                          'DND5E.AdvancementClassRestrictionSecondary',
-                        )}
-                        class="fa-solid fa-chess advancement-class-indicator"
-                      ></i>
-                    {/if}
+                    {#each advancement.tags as tag}
+                      <i class={tag.iconClass} title={localize(tag.label)}></i>
+                    {/each}
                     <div class="advancement-cell-context">
                       {@html advancement.summary}
                     </div>
@@ -146,7 +211,7 @@
               </div>
             </TidyTableCell>
             <TidyTableCell {...columnSpecs.value}>
-              {#if advancement.value}
+              {#if !isNil(advancement.value)}
                 {@const value = advancement.value?.toString()}
                 <span>
                   {value}
@@ -155,15 +220,23 @@
                 <span class="color-text-disabled">&mdash;</span>
               {/if}
             </TidyTableCell>
-            <TidyTableCell class="tidy-table-actions" {...columnSpecs.actions}>
-              {#if context.unlocked}
-                {#each tableActions as action}
-                  {@const props = action.props({ data: advancement, section })}
-                  <action.component {...props} />
-                {/each}
-              {/if}
-              <MenuButton targetSelector=".advancement-item" />
-            </TidyTableCell>
+            {#if context.editable}
+              <TidyTableCell
+                class="tidy-table-actions"
+                {...columnSpecs.actions}
+              >
+                {#if context.unlocked}
+                  {#each tableRowActions as action}
+                    {@const props = action.props({
+                      data: advancement,
+                      section,
+                    })}
+                    <action.component {...props} />
+                  {/each}
+                {/if}
+                <MenuButton targetSelector=".advancement-item" />
+              </TidyTableCell>
+            {/if}
           {/snippet}
         </TidyAdvancementTableRow>
       {/each}

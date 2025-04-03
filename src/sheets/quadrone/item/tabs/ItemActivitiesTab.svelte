@@ -63,14 +63,13 @@
         {localize('DND5E.ACTIVITY.Title.other')}
       </TidyTableHeaderCell>
       <TidyTableHeaderCell {...columnSpecs.actions} class="header-cell-actions">
-        <button
-          type="button"
-          class="header-action button-borderless button-icon-only"
+        <a
+          class="tidy-table-button"
           title={localize('DND5E.ACTIVITY.Action.Create')}
           onclick={() => context.item.sheet.addActivity()}
         >
           <i class="fas fa-plus"></i>
-        </button>
+        </a>
       </TidyTableHeaderCell>
     </TidyTableHeaderRow>
   {/snippet}

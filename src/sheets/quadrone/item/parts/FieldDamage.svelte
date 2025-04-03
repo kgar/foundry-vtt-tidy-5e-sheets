@@ -144,7 +144,7 @@
             disabledChecked={system.types.has(value)}
             disabled={!context.unlocked}
             onDataPreparing={(ev) =>
-              mapSystemDamageTypesToSave(context, prefix, source, ev)}
+              mapSystemDamageTypesToSave(prefix, source, ev)}
           />
           {label}
         </label>

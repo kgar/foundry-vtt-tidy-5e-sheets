@@ -41,6 +41,7 @@
       field="system.spellcasting.ability"
       value={context.source.spellcasting.ability}
       disabled={!context.unlocked}
+      blankValue=""
     >
       <SelectOptions
         data={context.config.abilities}

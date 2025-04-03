@@ -1,50 +1,23 @@
 ## To Do
 
-- [ ] Implement Advancement tab
-  - [ ] Recreate all basic functionality
-  - [x] Include useful Value column for scale values
-  - [x] Include UI for Original / Multiclass Only indicator
+- [ ] Work on Feat header
+- [ ] Work on Feat sidebar
+- [ ] (hightouch) Review / refine Advancement table styles. Need handling for tags, enrichers, etc.
+- [ ] (hightouch) in our editor styles, can we do something more with the blockquote element? For example, check how the default sheets do blockquotes: italicize, with a left gray border (2-4px, or so), to make it really stand out as a quote.
+- [ ] Advancement sidebar stuff; Scale Values (and any like them), Copy Formula, what else? Research and task out
 - [ ] Not sure how feasible it would be but I'm noticing when we open a sheet that Tab still swaps between tokens on the canvas. Is it possible to steal tab focus when a sheet opens and give it to the first open tab? Then you could hit Tab to switch between sheet tabs on open https://discord.com/channels/@me/1243307347682529423/1355184980623491172
-- [ ] Notify hightouch that spell sheet is ready for final review
-- [ ] Notify hightouch that weapon sheet is ready for final review
 - [ ] Notify hightouch that equipment sheet is ready for final review
 - [ ] Notify hightouch that consumable sheet is ready for final review
 - [ ] Notify hightouch that loot sheet is ready for final review
 - [ ] Notify hightouch that tool sheet is ready for final review
+- [ ] Notify hightouch that background sheet is ready for final review
+- [ ] Notify hightouch that class sheet is ready for final review
+- [ ] Notify hightouch that subclass sheet is ready for final review
+- [ ] Notify hightouch that species sheet is ready for final review
+- [ ] Foundry 13 theming: Ensure a set of theme classes are always being applied to Tidy sheets; see scratch notes for how to progressively check higher and higher. Have this wrapped up in the effect which applies mutable fields to the window.
 - [ ] Test spell info on item summary and cards
-- [ ] Begin thinking about how to extract common functionality across each table type (item, effects, activities)
-  - [ ] Ditto for item summary
 - [ ] Propagate `sheet-header` class setup to all item sheets
 - [ ] Implement sheet header contents
-  - [ ] Background
-  - [ ] Class
-    - [ ] header
-      - [ ] Current level badge
-    - [ ] Description tab
-      - [ ] Description section header hidden, contents displayed
-    - [ ] subtitle
-      - [ ] Actor class level
-  - [x] Consumable
-    - [x] subtitle
-      - [x] Item Type
-      - [x] Item Subtype
-    - [x] summary
-      - [x] (when available) Charges
-      - [x] (when relevant) Cooldown
-      - [x] Price
-      - [x] Weight
-      - [x] Quantity
-  - [x] Container
-  - [x] Equipment
-    - [x] subtitle
-      - [x] Type (Light Armor)
-      - [x] ## AC
-    - [x] summary
-      - [x] (when available) Charges
-      - [x] (when relevant) Cooldown
-      - [x] Price
-      - [x] Weight
-      - [x] Quantity
   - [ ] Facility
     - [ ] subtitle
       - [ ] Type
@@ -63,34 +36,7 @@
     - [ ] summary 
       - [ ] (when available) Charges
       - [ ] (when relevant) Cooldown
-  - [x] Loot
-    - [x] Subtitle
-      - [x] Loot type
-      - [x] (if available) Loot subtype
-    - [x] summary
-      - [x] Price
-      - [x] Weight
-      - [x] Quantity
-  - [ ] Species
-  - [ ] Subclass
-    - [ ] subtitle
-  - [x] Tool
-    - [x] subtitle
-    - [x] summary
-      - [x] (when available) Charges
-      - [x] (when relevant) Cooldown
-      - [x] Charges
-      - [x] Price
-      - [x] Weight
-      - [x] Quantity
-  - [x] Weapon
-    - [x] subtitle
-    - [x] Summary
-      - [x] (when available) Charges
-      - [x] (when relevant) Cooldown
-      - [x] Price
-      - [x] Weight
-      - [x] Quantity
+  - [x] Species
   - [ ] Tattoo
     - [ ] Subtitle
       - [ ] ...?
@@ -102,8 +48,8 @@
       - [ ] Edit mode always shows prosemirror visible in edit mode (like default sheets)
 - [x] Spell Sheet: Try a few different configurations for Class List.
 - [ ] Implement sidebar contents - prefer context data for pill groups with pill arrays of string and object (label / value)
-  - [ ] Background
-  - [ ] Class
+  - [x] Background
+  - [x] Class
   - [x] Consumable
   - [x] Container
   - [x] Equipment
@@ -114,14 +60,15 @@
     - [ ] Y Defenders
     - [ ] Order
   - [ ] Feat
-  - [ ] Loot
-  - [ ] Species
+  - [x] Loot
+  - [x] Species
   - [x] Spell
     - Use the children snippet for spell-specific label-value pair info
-  - [ ] Subclass
-  - [ ] Tool
+  - [x] Subclass
+  - [ ] Tattoo
+  - [x] Tool
   - [x] Weapon
-  - [ ] Make sure Section section visible for all sheets
+  - [x] Make sure Section section visible for all sheets
 - [x] Ensure Activities and Effects tabs include item counters in the title
   - [x] This will need context-dependent tab titles, if they don't already exist
 - [x] https://discord.com/channels/@me/1243307347682529423/1336210686392668220
@@ -147,6 +94,27 @@
     - [ ] (Non-container sheets only) Sidebar sections all hidden except Sections section and pill switches
 - [ ] Context Menu items rework
 - [ ] (someone reported this to the Foundry devs; it ain't just me; awaiting possible fix) The "Import" menu option is being shown on a Sidebar item. 🪓
+- [ ] Class, Subclass, Background, Species, Facility sheets
+  - [ ] Description tab
+    - [ ] Description section header hidden, contents displayed, editable when unlocked, saves when locked again, saves when save button clicked and is refreshed.
+
+### Scratch - Finding the effective theme for a sheet
+
+```js
+// Get document sheet config theme
+const theme = foundry.applications.apps.DocumentSheetConfig.getSheetThemeForDocument(options.document);
+theme // 'light' | 'dark' | '' | ???
+
+// Getting top-level application default theme
+const { colorScheme } = game.settings.get("core", "uiConfig");
+colorScheme.applications // 'light' | 'dark' | '' | ????
+
+// Getting browser default
+    let browserDefault;
+    if ( matchMedia("(prefers-color-scheme: dark)").matches ) browserDefault = "theme-dark";
+    else if ( matchMedia("(prefers-color-scheme: light)").matches ) browserDefault = "theme-light";
+```
+
 
 ### Bonus
 
@@ -404,3 +372,109 @@ Limited:
 - [x] fix: Viewing multiple spells in the compendium keeps appending Import buttons
 - [x] update: Hide prepared/unprepared pill unless spell has actor
 - [x] Restructure item-name HTML https://discord.com/channels/@me/1243307347682529423/1355382160915169533
+- [x] Implement Advancement tab
+  - [x] Implement embedded functionality (configMode = false)
+    - [x] When locked, (double-check this in the template and code)
+      - [x] Only menu button visible
+      - [x] When fully configured, then circle check on action column, "Fully Configured"
+      - [x] When partially configured, then triangle exclamation on action column, "Not Configured"
+      - [x] When not configured at all, no icon
+    - [x] When unlocked, 
+      - [x] When of the appropriate level, show cog icon with "Modify Choices"
+      - [x] else, no icon
+  - [x] Implement sidebar/compendium functionality (configMode = true)
+    - [x] When locked, compare to v2 sheet
+    - [x] When unlocked, compare to v2 sheet
+  - [x] Note: Don't show Tag indicators when embedded and locked.
+  - [x] Include useful Value column for scale values
+  - [x] Include UI for Original / Multiclass Only indicator
+- [x] CONSTANTify any advancement magic strings
+- [x] Finalize Background base version
+- [x] Notify hightouch that spell sheet is ready for final review
+- [x] Notify hightouch that weapon sheet is ready for final review
+- [x] Work on Class Header
+  - [x] Add badge; fix stolen CSS
+  - [x] Swap in badge image from figma
+  - [x] Subtitle
+    - [x] Level Ordinal string
+    - [x] Original Class stamp
+- [x] Class sidebar
+  - [x] Unique stuff
+    - [x] Class Identifier pill button; click to copy identifier
+    - [x] primary class attribute(s)
+    - [x] spell progression (if present)
+    - [x] spellcasting ability (if present)
+    - [x] hit die
+  - [x] Sidebar standard stuff for items with advancements
+    - [x] Scale Values section
+      - [x] Click to copy formula
+      - [x] When embedded, show actual scale value for level 
+- [x] Implement sheet header contents
+  - [x] Background
+  - [x] Class
+    - [x] header
+      - [x] Current level badge
+    - [x] subtitle
+      - [x] Actor class level
+      - [x] Original Class
+  - [x] Consumable
+    - [x] subtitle
+      - [x] Item Type
+      - [x] Item Subtype
+    - [x] summary
+      - [x] (when available) Charges
+      - [x] (when relevant) Cooldown
+      - [x] Price
+      - [x] Weight
+      - [x] Quantity
+  - [x] Container
+  - [x] Equipment
+    - [x] subtitle
+      - [x] Type (Light Armor)
+      - [x] ## AC
+    - [x] summary
+      - [x] (when available) Charges
+      - [x] (when relevant) Cooldown
+      - [x] Price
+      - [x] Weight
+      - [x] Quantity
+  - [x] Tool
+    - [x] subtitle
+    - [x] summary
+      - [x] (when available) Charges
+      - [x] (when relevant) Cooldown
+      - [x] Charges
+      - [x] Price
+      - [x] Weight
+      - [x] Quantity
+  - [x] Weapon
+    - [x] subtitle
+    - [x] Summary
+      - [x] (when available) Charges
+      - [x] (when relevant) Cooldown
+      - [x] Price
+      - [x] Weight
+      - [x] Quantity
+  - [x] Loot
+    - [x] Subtitle
+      - [x] Loot type
+      - [x] (if available) Loot subtype
+    - [x] summary
+      - [x] Price
+      - [x] Weight
+      - [x] Quantity
+  - [x] Subclass
+    - [x] ~~subtitle~~
+- [x] Work on Subclass Header
+- [x] Work on Species Header
+  - [x] No subtitle, no summary, add standard identity info scaffolding
+- [x] Work on Species Sidebar
+  - [x] Creature type section, pills
+    - [x] Include cog icon button on header, far right, when unlocked
+    - [x] If subtype, then type is `text-normal`
+    - [x] If no subtype, then type is prominent
+  - [x] Movement section, pills
+    - [x] Include cog icon button on header, far right, when unlocked
+  - [x] Senses section, pills
+    - [x] Include cog icon button on header, far right, when unlocked
+  - [x] Advancements / Scale Values

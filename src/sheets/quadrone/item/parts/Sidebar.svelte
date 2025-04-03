@@ -148,6 +148,45 @@
       : null,
   );
 
+  // Advancement Pills
+  
+  type ScaleValuePill = {
+    title: string;
+    value?: string;
+    toCopy: string;
+  };
+
+  let scaleValues = $derived.by<ScaleValuePill[]>(() => {
+    let actorRollData = context.item.actor?.getRollData();
+    let scaleValues = context.item.advancement?.byType?.ScaleValue;
+
+    if (scaleValues?.length) {
+      return context.item.advancement.byType.ScaleValue.map((x: any) => {
+        let formula = `@scale.${context.item.identifier}.${x.identifier}`;
+        let value = actorRollData
+          ? Roll.defaultImplementation.replaceFormulaData(
+              formula,
+              actorRollData,
+            )
+          : undefined;
+
+        if (value === formula) {
+          value = undefined;
+        }
+
+        return {
+          title: x.title,
+          value,
+          toCopy: formula,
+        } satisfies ScaleValuePill;
+      });
+    }
+
+    return [];
+  });
+
+  // General Properties
+
   let sidebarProperties = $derived.by<string[]>(() => {
     if (!includeSidebarProperties) {
       return [];
@@ -313,14 +352,12 @@
     {/if}
   </ul>
 
-  <!-- Item Info: Longform -->
-  <!-- TODO: Implement -->
-
   {#if belowStateSwitches}
     {@render belowStateSwitches()}
   {/if}
 
   {#if !context.concealDetails}
+    <!-- Activations -->
     {#if sidebarActivations.length}
       <div>
         <h4>{localize('DND5E.Action')}</h4>
@@ -334,6 +371,7 @@
       </div>
     {/if}
 
+    <!-- Attack / Damage / Saves (Offense Pills) -->
     {#if offensePills.length}
       <div>
         <h4>
@@ -347,6 +385,52 @@
       </div>
     {/if}
 
+    <!-- Scale Values -->
+    {#if scaleValues.length}
+      <div>
+        <h4>
+          {localize('DND5E.ADVANCEMENT.ScaleValue.Title')}
+        </h4>
+
+        <ul class="pills stacked">
+          {#each scaleValues as scaleValue}
+            <li>
+              <a
+                class="pill interactive centered wrapped"
+                onclick={() => {
+                  game.clipboard.copyPlainText(scaleValue.toCopy);
+                  ui.notifications.info(
+                    game.i18n.format('DND5E.Copied', {
+                      value: scaleValue.toCopy,
+                    }),
+                    { console: false },
+                  );
+                }}
+              >
+                {#if !context.item.actor}
+                  {scaleValue.title}
+                {:else}
+                  <span class="centered text-normal">
+                    {scaleValue.title}
+                  </span>
+                  {#if scaleValue.value !== undefined}
+                    <span class="centered">
+                      {scaleValue.value}
+                    </span>
+                  {:else}
+                    <span class="centered text-normal color-text-disabled">
+                      &mdash;
+                    </span>
+                  {/if}
+                {/if}
+              </a>
+            </li>
+          {/each}
+        </ul>
+      </div>
+    {/if}
+
+    <!-- General Properties -->
     {#if sidebarProperties.length}
       <div>
         <h4>

@@ -207,7 +207,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       itemDescriptions = itemDescriptions.slice(0, 1);
     }
 
-    const editable = this.isEditable;
+    const editable = this.isEditable === true;
 
     const unlocked = FoundryAdapter.isSheetUnlocked(this.item) && editable;
 
@@ -244,9 +244,6 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       affectsPlaceholder: game.i18n.localize(
         `DND5E.TARGET.Count.${target?.template?.type ? 'Every' : 'Any'}`
       ),
-      advancementEditable:
-        (this.advancementConfigurationMode || !this.document.isEmbedded) &&
-        editable,
       config: CONFIG.DND5E,
       coverOptions: Object.entries(CONFIG.DND5E.cover).map(
         ([value, label]) => ({ value, label })
@@ -324,14 +321,12 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
         this.document.isArmor && this.document.system.type.value !== 'shield',
 
       // Advancement
-      advancement: this._getItemAdvancement(this.document),
+      advancement: this._getItemAdvancement(this.document, unlocked),
 
       effects: enhancedEffectsCategories,
 
       concealDetails:
         !game.user.isGM && this.document.system.identified === false,
-
-      toggleAdvancementLock: this.toggleAdvancementLock.bind(this),
 
       rangeTypes: [
         ...Object.entries(CONFIG.DND5E.rangeTypes).map(([value, label]) => ({
@@ -536,23 +531,18 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     return context;
   }
 
-  /**
-   * Whether advancements on embedded items should be configurable.
-   * @type {boolean}
-   */
-  advancementConfigurationMode = false;
-
   /* -------------------------------------------- */
 
   /**
    * Get the display object used to show the advancement tab.
-   * @param {Item5e} item  The item for which the advancement is being prepared.
-   * @returns {object}     Object with advancement data grouped by levels.
    */
-  _getItemAdvancement(item: Item5e) {
-    if (!item.system.advancement) return {};
+  _getItemAdvancement(item: Item5e, unlocked: boolean): AdvancementsContext {
+    if (!item.system.advancement) {
+      return {};
+    }
+
     const advancement: AdvancementsContext = {};
-    const configMode = !item.parent || this.advancementConfigurationMode;
+    const configMode = !item.parent;
     const legacyDisplay = this.options.legacyDisplay;
     const maxLevel = !configMode
       ? item.system.levels ??
@@ -563,7 +553,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
 
     // Improperly configured advancements
     if (item.advancement.needingConfiguration.length) {
-      advancement.unconfigured = {
+      advancement[CONSTANTS.ADVANCEMENT_LEVEL_UNCONFIGURED] = {
         items: item.advancement.needingConfiguration.map((a: any) => ({
           id: a.id,
           order: a.constructor.order,
@@ -571,10 +561,10 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
           icon: a.icon,
           classRestriction: a.classRestriction,
           configured: false,
-          tags: this._getItemAdvancementTags(a),
+          tags: this._getItemAdvancementTags(a, unlocked),
           classes: [a.icon?.endsWith('.svg') ? 'svg' : ''].filterJoin(' '),
         })),
-        configured: 'partial',
+        configured: CONSTANTS.ADVANCEMENT_CONFIGURATION_PARTIAL,
       };
     }
 
@@ -582,8 +572,10 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     for (let [level, advancements] of Object.entries<any>(
       item.advancement.byLevel
     )) {
-      if (!configMode)
+      if (!configMode) {
         advancements = advancements.filter((a: any) => a.appliesToClass);
+      }
+
       const items: AdvancementItemContext[] = advancements.map(
         (advancement: any) => ({
           id: advancement.id,
@@ -599,7 +591,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
             legacyDisplay,
           }),
           configured: advancement.configuredForLevel(level),
-          tags: this._getItemAdvancementTags(advancement),
+          tags: this._getItemAdvancementTags(advancement, unlocked),
           value: advancement.valueForLevel?.(level),
           classes: [advancement.icon?.endsWith('.svg') ? 'svg' : ''].filterJoin(
             ' '
@@ -616,8 +608,8 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
           level > maxLevel
             ? false
             : items.some((a: AdvancementItemContext) => !a.configured)
-            ? 'partial'
-            : 'full',
+            ? CONSTANTS.ADVANCEMENT_CONFIGURATION_PARTIAL
+            : CONSTANTS.ADVANCEMENT_CONFIGURATION_FULL,
       };
     }
     return advancement;
@@ -627,12 +619,35 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
 
   /**
    * Prepare tags for an Advancement.
-   * @param {Advancement} advancement  The Advancement.
-   * @returns {{label: string, icon: string}[]}
-   * @protected
    */
-  _getItemAdvancementTags(advancement: any) {
-    return [];
+  _getItemAdvancementTags(
+    advancement: any,
+    unlocked: boolean
+  ): AdvancementItemContext['tags'] {
+    if (this.item.isEmbedded && !unlocked) {
+      return [];
+    }
+
+    const tags: AdvancementItemContext['tags'] = [];
+
+    if (
+      advancement.classRestriction ===
+      CONSTANTS.ADVANCEMENT_CLASS_RESTRICTION_PRIMARY
+    ) {
+      tags.push({
+        label: 'DND5E.AdvancementClassRestrictionPrimary',
+        iconClass: 'fa-solid fa-chess-queen advancement-class-indicator',
+      });
+    } else if (
+      advancement.classRestriction ===
+      CONSTANTS.ADVANCEMENT_CLASS_RESTRICTION_SECONDARY
+    ) {
+      tags.push({
+        label: 'DND5E.AdvancementClassRestrictionSecondary',
+        iconClass: 'fa-solid fa-chess advancement-class-indicator',
+      });
+    }
+    return tags;
   }
 
   /* -------------------------------------------- */
@@ -647,7 +662,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     context: ItemSheetQuadroneContext
   ): Promise<Record<string, any>> {
     const baseIds =
-      this.item.type === 'equipment'
+      this.item.type === CONSTANTS.ITEM_TYPE_EQUIPMENT
         ? {
             ...CONFIG.DND5E.armorIds,
             ...CONFIG.DND5E.shieldIds,
@@ -984,11 +999,6 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     const advancementArray = this.item.system.toObject().advancement;
     advancementArray.push(...advancements.map((a: any) => a.toObject()));
     this.item.update({ 'system.advancement': advancementArray });
-  }
-
-  async toggleAdvancementLock() {
-    this.advancementConfigurationMode = !this.advancementConfigurationMode;
-    this.render();
   }
 
   /* -------------------------------------------- */

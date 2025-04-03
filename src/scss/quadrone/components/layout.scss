@@ -5,3 +5,10 @@
   border: none;
   gap: 0.125rem;
 }
+
+.flex-row-space-between {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}

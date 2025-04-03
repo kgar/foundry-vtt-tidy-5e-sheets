@@ -19,7 +19,35 @@
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
 
-<Sidebar />
+<Sidebar>
+  {#snippet belowStateSwitches()}
+    <div>
+      <h4>{localize('TYPES.Item.background')}</h4>
+      <ul class="pills stacked">
+        <li>
+          <a
+            class="pill interactive"
+            onclick={() => {
+              const value = context.item.system.identifier;
+              game.clipboard.copyPlainText(value);
+              ui.notifications.info(
+                game.i18n.format('DND5E.Copied', { value }),
+                { console: false },
+              );
+            }}
+          >
+            <span class="centered text-normal">
+              {localize('DND5E.Identifier')}
+            </span>
+            <span class="hyphens-auto centered">
+              {context.item.system.identifier}
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  {/snippet}
+</Sidebar>
 
 <main class="item-content">
   <div class="sheet-header">

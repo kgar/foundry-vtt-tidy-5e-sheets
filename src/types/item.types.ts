@@ -154,7 +154,6 @@ export type ItemSheetQuadroneContext = {
   activities: ActivityQuadroneContext[];
   activationTypes: GroupableSelectOption[];
   advancement: AdvancementsContext;
-  advancementEditable: boolean;
   affectsPlaceholder: string;
   baseItems: Record<string, string>;
   canCraft?: boolean;
@@ -204,7 +203,13 @@ export type ItemSheetQuadroneContext = {
   itemType: string;
   itemStatus: string | null;
   itemSubtypes?: Record<string, string>;
-  labels: Record<string, string>;
+  labels: Record<string, string> & {
+    components: {
+      all: { abbr: string }[];
+      vsm: string;
+      tags: unknown[];
+    };
+  };
   limited: boolean;
   lockItemQuantity: boolean;
   modernRules: boolean;
@@ -226,7 +231,6 @@ export type ItemSheetQuadroneContext = {
   subtitle?: string;
   system: any;
   title: string;
-  toggleAdvancementLock: () => Promise<void>;
   unlocked: boolean;
   user: any;
   usesRecovery: {
@@ -415,8 +419,8 @@ export type AdvancementItemContext = {
   tags: {
     /** Explains the icon; often used as a tooltip. */
     label: string;
-    /** The path to the icon SVG or image. */
-    icon: string;
+    /** The path to the font icon class. */
+    iconClass: string;
   }[];
   /**
    * A subclass of ScaleValueType.
@@ -429,3 +433,6 @@ export type AdvancementItemContext = {
    */
   classes: string;
 };
+
+export type MovementInfo = { label: string; value: number | string; unit: string };
+export type SenseInfo = { label: string; value: number | string; unit: string };
