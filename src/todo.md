@@ -1,7 +1,17 @@
 ## To Do
 
 - [ ] Work on Species Header
+  - [ ] No subtitle, no summary, add standard identity info scaffolding
 - [ ] Work on Species Sidebar
+  - [ ] Creature type section, pills
+    - [ ] Include cog icon button on header, far right, when unlocked
+    - [ ] If subtype, then type is `text-normal`
+    - [ ] If no subtype, then type is prominent
+  - [ ] Movement section, pills
+    - [ ] Include cog icon button on header, far right, when unlocked
+  - [ ] Senses section, pills
+    - [ ] Include cog icon button on header, far right, when unlocked
+  - [x] Advancements / Scale Values
 - [ ] (hightouch) Review / refine Advancement table styles. Need handling for tags, enrichers, etc.
 - [ ] (hightouch) in our editor styles, can we do something more with the blockquote element? For example, check how the default sheets do blockquotes: italicize, with a left gray border (2-4px, or so), to make it really stand out as a quote.
 - [ ] Advancement sidebar stuff; Scale Values (and any like them), Copy Formula, what else? Research and task out

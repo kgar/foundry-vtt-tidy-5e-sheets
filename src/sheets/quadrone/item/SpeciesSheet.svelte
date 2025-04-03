@@ -7,6 +7,7 @@
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import ItemName from './parts/header/ItemName.svelte';
+  import { isNil } from 'src/utils/data';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -15,22 +16,56 @@
   let selectedTabId: string = $state(CONSTANTS.TAB_CONTAINER_CONTENTS);
 
   let itemNameEl: HTMLElement | undefined = $state();
+
+  let showSubtype = $derived(!isNil(context.system.subType, ''));
 </script>
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
 
-<Sidebar />
+<Sidebar>
+  {#snippet belowStateSwitches()}
+    <div>
+      <h4>
+        {localize('DND5E.CreatureType')}
+        {#if context.unlocked}
+          <a
+            class="button-borderless button-icon-only"
+            onclick={() =>
+              FoundryAdapter.renderCreatureTypeConfig(context.item)}
+          >
+            <i class="fa-solid fa-cog"></i>
+          </a>
+        {/if}
+      </h4>
+      <ul class="pills stacked">
+        <li>
+          <span class="pill stacked">
+            {#if showSubtype}
+              <span>
+                {context.system.subType}
+              </span>
+            {/if}
+            <span class={{ ['text-normal']: showSubtype }}>
+              {context.system.type.value}
+            </span>
+          </span>
+        </li>
+      </ul>
+    </div>
+  {/snippet}
+</Sidebar>
 
 <main class="item-content">
-  <div
-    bind:this={itemNameEl}
-    class="item-name-wrapper flex-row extra-small-gap align-items-center"
-  >
-    <ItemName />
+  <div class="sheet-header">
+    <div class="identity-info">
+      <div
+        bind:this={itemNameEl}
+        class="item-name-wrapper flex-row extra-small-gap align-items-center"
+      >
+        <ItemName />
+      </div>
+    </div>
   </div>
-
-  <!-- Header Summary -->
-  <div class="item-header-summary">TODO</div>
 
   <!-- Tab Strip -->
   <Tabs
