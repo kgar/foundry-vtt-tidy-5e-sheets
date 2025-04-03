@@ -5,7 +5,7 @@
   import DetailsSpellcasting from '../parts/DetailsSpellcasting.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ItemStartingEquipment from '../parts/ItemStartingEquipment.svelte';
-  import { mapMulticlassingAbilitiesToSave } from 'src/utils/system-properties';
+  import { mapMulticlassingAbilitiesToSave } from 'src/utils/system-properties-classic';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 

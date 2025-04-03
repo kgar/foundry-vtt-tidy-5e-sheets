@@ -1,7 +1,7 @@
 <script lang="ts">
   import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
-  import { mapPropertiesToSave } from 'src/utils/system-properties';
+  import { mapPropertiesToSave } from 'src/utils/system-properties-quadrone';
 
   let context = $derived(getItemSheetContextQuadrone());
 

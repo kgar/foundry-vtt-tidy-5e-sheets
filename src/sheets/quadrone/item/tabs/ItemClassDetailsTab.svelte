@@ -2,7 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import DetailsSpellcasting from '../parts/DetailsSpellcasting.svelte';
   import ItemStartingEquipment from '../parts/ItemStartingEquipment.svelte';
-  import { mapMulticlassingAbilitiesToSave } from 'src/utils/system-properties';
+  import { mapMulticlassingAbilitiesToSave } from 'src/utils/system-properties-quadrone';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
