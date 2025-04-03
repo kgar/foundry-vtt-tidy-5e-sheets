@@ -433,3 +433,6 @@ export type AdvancementItemContext = {
    */
   classes: string;
 };
+
+export type MovementInfo = { label: string; value: number | string; unit: string };
+export type SenseInfo = { label: string; value: number | string; unit: string };

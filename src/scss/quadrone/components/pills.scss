@@ -6,7 +6,8 @@
   flex-wrap: wrap;
   gap: 0.25rem;
 
-  &.stacked {
+  &.stacked,
+  .pill.stacked {
     flex-direction: column;
 
     >* {

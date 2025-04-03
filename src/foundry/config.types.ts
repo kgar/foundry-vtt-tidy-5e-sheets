@@ -49,6 +49,14 @@ type SpellSchool = {
   reference: string;
 };
 
+interface CreatureTypeConfig {
+  label: string;
+  plural: string;
+  icon: string;
+  reference: string;
+  detectAlignment?: boolean;
+}
+
 export type CONFIG = {
   debug: {
     applications: boolean;
@@ -3167,97 +3175,21 @@ export type CONFIG = {
       };
     };
     creatureTypes: {
-      aberration: {
-        label: string;
-        plural: string;
-        icon: string;
-        reference: string;
-        detectAlignment: boolean;
-      };
-      beast: {
-        label: string;
-        plural: string;
-        icon: string;
-        reference: string;
-      };
-      celestial: {
-        label: string;
-        plural: string;
-        icon: string;
-        reference: string;
-        detectAlignment: boolean;
-      };
-      construct: {
-        label: string;
-        plural: string;
-        icon: string;
-        reference: string;
-      };
-      dragon: {
-        label: string;
-        plural: string;
-        icon: string;
-        reference: string;
-      };
-      elemental: {
-        label: string;
-        plural: string;
-        icon: string;
-        reference: string;
-        detectAlignment: boolean;
-      };
-      fey: {
-        label: string;
-        plural: string;
-        icon: string;
-        reference: string;
-        detectAlignment: boolean;
-      };
-      fiend: {
-        label: string;
-        plural: string;
-        icon: string;
-        reference: string;
-        detectAlignment: boolean;
-      };
-      giant: {
-        label: string;
-        plural: string;
-        icon: string;
-        reference: string;
-      };
-      humanoid: {
-        label: string;
-        plural: string;
-        icon: string;
-        reference: string;
-      };
-      monstrosity: {
-        label: string;
-        plural: string;
-        icon: string;
-        reference: string;
-      };
-      ooze: {
-        label: string;
-        plural: string;
-        icon: string;
-        reference: string;
-      };
-      plant: {
-        label: string;
-        plural: string;
-        icon: string;
-        reference: string;
-      };
-      undead: {
-        label: string;
-        plural: string;
-        icon: string;
-        reference: string;
-        detectAlignment: boolean;
-      };
-    };
+      aberration: CreatureTypeConfig;
+      beast: CreatureTypeConfig;
+      celestial: CreatureTypeConfig;
+      construct: CreatureTypeConfig;
+      dragon: CreatureTypeConfig;
+      elemental: CreatureTypeConfig;
+      fey: CreatureTypeConfig;
+      fiend: CreatureTypeConfig;
+      giant: CreatureTypeConfig;
+      humanoid: CreatureTypeConfig;
+      monstrosity: CreatureTypeConfig;
+      ooze: CreatureTypeConfig;
+      plant: CreatureTypeConfig;
+      undead: CreatureTypeConfig;
+    } & Record<string, CreatureTypeConfig>;
     itemActionTypes: {
       mwak: string;
       rwak: string;
@@ -3810,13 +3742,13 @@ export type CONFIG = {
       fly: string;
       swim: string;
       walk: string;
-    };
+    } & Record<string, string>;
     movementUnits: {
       ft: MovementUnitConfig;
       mi: MovementUnitConfig;
       m: MovementUnitConfig;
       km: MovementUnitConfig;
-    };
+    } & Record<string, MovementUnitConfig>;
     rangeTypes: {
       self: string;
       touch: string;
@@ -4033,7 +3965,7 @@ export type CONFIG = {
       darkvision: string;
       tremorsense: string;
       truesight: string;
-    };
+    } & Record<string, string>;
     attackClassifications: {
       weapon: {
         label: string;
