@@ -1,17 +1,7 @@
 ## To Do
 
-- [ ] Work on Species Header
-  - [ ] No subtitle, no summary, add standard identity info scaffolding
-- [ ] Work on Species Sidebar
-  - [ ] Creature type section, pills
-    - [ ] Include cog icon button on header, far right, when unlocked
-    - [ ] If subtype, then type is `text-normal`
-    - [ ] If no subtype, then type is prominent
-  - [ ] Movement section, pills
-    - [ ] Include cog icon button on header, far right, when unlocked
-  - [ ] Senses section, pills
-    - [ ] Include cog icon button on header, far right, when unlocked
-  - [x] Advancements / Scale Values
+- [ ] Work on Feat header
+- [ ] Work on Feat sidebar
 - [ ] (hightouch) Review / refine Advancement table styles. Need handling for tags, enrichers, etc.
 - [ ] (hightouch) in our editor styles, can we do something more with the blockquote element? For example, check how the default sheets do blockquotes: italicize, with a left gray border (2-4px, or so), to make it really stand out as a quote.
 - [ ] Advancement sidebar stuff; Scale Values (and any like them), Copy Formula, what else? Research and task out
@@ -23,6 +13,7 @@
 - [ ] Notify hightouch that background sheet is ready for final review
 - [ ] Notify hightouch that class sheet is ready for final review
 - [ ] Notify hightouch that subclass sheet is ready for final review
+- [ ] Notify hightouch that species sheet is ready for final review
 - [ ] Foundry 13 theming: Ensure a set of theme classes are always being applied to Tidy sheets; see scratch notes for how to progressively check higher and higher. Have this wrapped up in the effect which applies mutable fields to the window.
 - [ ] Test spell info on item summary and cards
 - [ ] Propagate `sheet-header` class setup to all item sheets
@@ -45,7 +36,7 @@
     - [ ] summary 
       - [ ] (when available) Charges
       - [ ] (when relevant) Cooldown
-  - [ ] Species
+  - [x] Species
   - [ ] Tattoo
     - [ ] Subtitle
       - [ ] ...?
@@ -70,10 +61,11 @@
     - [ ] Order
   - [ ] Feat
   - [x] Loot
-  - [ ] Species
+  - [x] Species
   - [x] Spell
     - Use the children snippet for spell-specific label-value pair info
   - [x] Subclass
+  - [ ] Tattoo
   - [x] Tool
   - [x] Weapon
   - [x] Make sure Section section visible for all sheets
@@ -474,3 +466,15 @@ Limited:
   - [x] Subclass
     - [x] ~~subtitle~~
 - [x] Work on Subclass Header
+- [x] Work on Species Header
+  - [x] No subtitle, no summary, add standard identity info scaffolding
+- [x] Work on Species Sidebar
+  - [x] Creature type section, pills
+    - [x] Include cog icon button on header, far right, when unlocked
+    - [x] If subtype, then type is `text-normal`
+    - [x] If no subtype, then type is prominent
+  - [x] Movement section, pills
+    - [x] Include cog icon button on header, far right, when unlocked
+  - [x] Senses section, pills
+    - [x] Include cog icon button on header, far right, when unlocked
+  - [x] Advancements / Scale Values
