@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-  import { mapSystemDamageTypesToSave } from 'src/utils/system-properties';
+  import { mapSystemDamageTypesToSave } from 'src/utils/system-properties-quadrone';
   import type { GroupableSelectOption } from 'src/types/types';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
