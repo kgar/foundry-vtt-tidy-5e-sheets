@@ -109,6 +109,8 @@
       </div>
       {#if subtitle}
         <div class="subtitle">{subtitle}</div>
+      {:else}
+        <div class="subtitle">{@html '&nbsp;'}</div>
       {/if}
     </div>
     {#if !context.unlocked}
