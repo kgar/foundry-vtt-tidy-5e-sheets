@@ -2,7 +2,7 @@
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
-  import { mapPropertiesToSave } from 'src/utils/system-properties';
+  import { mapPropertiesToSave } from 'src/utils/system-properties-classic';
 
   let context = $derived(getItemSheetContext());
 

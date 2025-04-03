@@ -5,7 +5,7 @@
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
-  import { mapSystemDamageTypesToSave } from 'src/utils/system-properties';
+  import { mapSystemDamageTypesToSave } from 'src/utils/system-properties-classic';
   import type { GroupableSelectOption } from 'src/types/types';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
 
@@ -130,7 +130,7 @@
         checked={selected}
         {value}
         disabled={!context.editable}
-        onDataPreparing={(ev) => mapSystemDamageTypesToSave(prefix, source, ev)}
+        onDataPreparing={(ev) => mapSystemDamageTypesToSave(context, prefix, source, ev)}
       >
         {label}
       </Checkbox>
