@@ -121,6 +121,7 @@
         field="system.target.template.type"
         value={context.source.target.template.type}
         disabled={!context.unlocked}
+        blankValue=""
       >
         <SelectOptions
           data={context.config.areaTargetOptions}
