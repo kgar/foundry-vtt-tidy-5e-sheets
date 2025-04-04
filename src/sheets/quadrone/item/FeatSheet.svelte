@@ -39,20 +39,12 @@
 
   let subtitle = $derived.by(() => {
     let segments: string[] = [
-      CONFIG.DND5E.featureTypes.feat.subtypes[
-        context.item.system.type.subtype
-      ] ?? context.item.system.type.subtype,
+      context.system.type.label,
+      context.labels.featType,
+      context.system.requirements,
     ];
 
-    if (!isNil(context.system.prerequisites?.level)) {
-      segments.push(
-        localize('DND5E.LevelNumber', {
-          level: context.system.prerequisites.level,
-        }),
-      );
-    }
-
-    return segments.join(', ');
+    return segments.filter((x) => !isNil(x, '')).join(', ');
   });
 </script>
 

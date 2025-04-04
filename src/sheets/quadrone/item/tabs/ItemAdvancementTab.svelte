@@ -242,4 +242,16 @@
       {/each}
     {/snippet}
   </TidyTable>
+{:else}
+  <button
+    type="button"
+    class="button button-primary"
+    title={localize('DND5E.ADVANCEMENT.Action.Create')}
+    aria-label={localize('DND5E.ADVANCEMENT.Action.Create')}
+    onclick={() =>
+      FoundryAdapter.createAdvancementSelectionDialog(context.item)}
+  >
+    <i class="fas fa-plus"></i>
+    {localize('DND5E.ADVANCEMENT.Action.Create')}
+  </button>
 {/each}

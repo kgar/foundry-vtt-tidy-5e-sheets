@@ -5,7 +5,7 @@
 - [ ] Item with HP / HP Bar
 - [ ] (hightouch) Review / refine Advancement table styles. Need handling for tags, enrichers, etc.
 - [ ] (hightouch) in our editor styles, can we do something more with the blockquote element? For example, check how the default sheets do blockquotes: italicize, with a left gray border (2-4px, or so), to make it really stand out as a quote.
-- [ ] Advancement sidebar stuff; Scale Values (and any like them), Copy Formula, what else? Research and task out
+- [x] Advancement sidebar stuff; Scale Values (and any like them), Copy Formula, what else? Research and task out
 - [ ] Not sure how feasible it would be but I'm noticing when we open a sheet that Tab still swaps between tokens on the canvas. Is it possible to steal tab focus when a sheet opens and give it to the first open tab? Then you could hit Tab to switch between sheet tabs on open https://discord.com/channels/@me/1243307347682529423/1355184980623491172
 - [ ] Notify hightouch that equipment sheet is ready for final review
 - [ ] Notify hightouch that consumable sheet is ready for final review
@@ -34,9 +34,9 @@
       - [ ] ~~(When active) Activation Type (Action)~~ (already in sidebar)
       - [ ] (When Active) Requirements (Paladin 2)
       - [ ] (When Passive)
-    - [ ] summary 
-      - [ ] (when available) Charges
-      - [ ] (when relevant) Cooldown
+    - [x] summary 
+      - [x] (when available) Charges
+      - [x] (when relevant) Cooldown
   - [x] Species
   - [ ] Tattoo
     - [ ] Subtitle

@@ -3496,7 +3496,7 @@ export type CONFIG = {
           epicBoon: string;
         } & Record<string, string>;
       };
-    } & Record<string, { label: string }>;
+    } & Record<string, { label: string, subtypes?: Record<string, string> }>;
     itemProperties: {
       ada: {
         label: string;
