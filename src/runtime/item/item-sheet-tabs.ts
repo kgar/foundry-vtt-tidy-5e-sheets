@@ -40,6 +40,7 @@ import ItemToolDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemToolDe
 import ItemWeaponDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemWeaponDetailsTab.svelte';
 import ItemTattooDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemTattooDetailsQuadroneTab.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { Activities } from 'src/features/activities/activities';
 
 const itemSheetTabs: Record<string, Tab> = {
   /**
@@ -290,7 +291,9 @@ const itemSheetTabs: Record<string, Tab> = {
       let title = FoundryAdapter.localize('DND5E.ACTIVITY.Title.other');
 
       if (tabContext?.item) {
-        let count = Array.from(tabContext.item.system.activities).length;
+        let count = Array.from(tabContext.item.system.activities).filter((x) =>
+          Activities.isConfigurable(x)
+        ).length;
         if (count > 0) {
           title += getTabCountSpan(count);
         }
