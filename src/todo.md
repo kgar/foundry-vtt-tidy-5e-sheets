@@ -1,10 +1,18 @@
 ## To Do
 
-- [ ] Work on Feat header
-- [ ] Work on Feat sidebar
+- [x] Work on Facility Header
+- [ ] Work on Facility Sidebar
+  - [x] Progress
+  - [x] Harvesting
+  - [x] Crafting (a sword, for example)
+  - [x] Hide Facility section on sidebar when there are no pills to show; this implies also extracting those pills into snippets. No problem!
+  - [x] Limit craft content to harvest and craft orders
+  - [ ] Add conditionally available tooltip for hireling / defender list to sidebar pills
+- [ ] Item with HP / HP Bar
 - [ ] (hightouch) Review / refine Advancement table styles. Need handling for tags, enrichers, etc.
-- [ ] (hightouch) in our editor styles, can we do something more with the blockquote element? For example, check how the default sheets do blockquotes: italicize, with a left gray border (2-4px, or so), to make it really stand out as a quote.
-- [ ] Advancement sidebar stuff; Scale Values (and any like them), Copy Formula, what else? Research and task out
+- [ ] (hightouch) Editor / longform style requests
+  - [ ] in our editor styles, can we do something more with the blockquote element? For example, check how the default sheets do blockquotes: italicize, with a left gray border (2-4px, or so), to make it really stand out as a quote.
+  - [ ] A user requested we don't use a gap in our `<hr>` elements in the Editor / rendered styles. https://discord.com/channels/1167985253072257115/1170003836556017755/1357755740391215357
 - [ ] Not sure how feasible it would be but I'm noticing when we open a sheet that Tab still swaps between tokens on the canvas. Is it possible to steal tab focus when a sheet opens and give it to the first open tab? Then you could hit Tab to switch between sheet tabs on open https://discord.com/channels/@me/1243307347682529423/1355184980623491172
 - [ ] Notify hightouch that equipment sheet is ready for final review
 - [ ] Notify hightouch that consumable sheet is ready for final review
@@ -26,16 +34,16 @@
       - [ ] Progress (x / y)
       - [ ] Size
       - [ ] Cost (if not assigned)
-  - [ ] Feat
-    - [ ] subtitle
-      - [ ] Feat Type
-      - [ ] Feat Subtype
-      - [ ] ~~(When active) Activation Type (Action)~~ (already in sidebar)
-      - [ ] (When Active) Requirements (Paladin 2)
-      - [ ] (When Passive)
-    - [ ] summary 
-      - [ ] (when available) Charges
-      - [ ] (when relevant) Cooldown
+  - [x] Feat
+    - [x] subtitle
+      - [x] Feat Type
+      - [x] Feat Subtype
+      - [x] ~~(When active) Activation Type (Action)~~ (already in sidebar)
+      - [x] (When Active) Requirements (Paladin 2)
+      - [x] (When Passive)
+    - [x] summary 
+      - [x] (when available) Charges
+      - [x] (when relevant) Cooldown
   - [x] Species
   - [ ] Tattoo
     - [ ] Subtitle
@@ -478,3 +486,6 @@ Limited:
   - [x] Senses section, pills
     - [x] Include cog icon button on header, far right, when unlocked
   - [x] Advancements / Scale Values
+- [x] Work on Feat header
+- [x] Work on Feat sidebar
+- [x] Advancement sidebar stuff; Scale Values (and any like them), Copy Formula, what else? Research and task out

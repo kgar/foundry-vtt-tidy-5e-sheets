@@ -32,7 +32,7 @@
 </script>
 
 <div
-  class="meter progress theme-dark"
+  class={['meter progress theme-dark', { empty: (capacity.value ?? 0) === 0 }]}
   role="meter"
   aria-label={localize('DND5E.CONTAINER.FIELDS.capacity.label')}
   aria-valuemin="0"

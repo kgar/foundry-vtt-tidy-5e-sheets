@@ -96,14 +96,13 @@
             {...columnSpecs.actions}
           >
             {#if context.editable}
-              <button
-                type="button"
-                class="header-action button-borderless button-icon-only"
+              <a
+                class="tidy-table-button"
                 title={localize('DND5E.EffectCreate')}
                 onclick={(event) => onAddClicked(section)}
               >
                 <i class="fas fa-plus"></i>
-              </button>
+              </a>
             {/if}
           </TidyTableHeaderCell>
         </TidyTableHeaderRow>

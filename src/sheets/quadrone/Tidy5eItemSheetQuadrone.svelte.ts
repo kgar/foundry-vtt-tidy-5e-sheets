@@ -34,6 +34,7 @@ import { formatAsModifier } from 'src/utils/formatting';
 import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
 import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
+import { SheetSections } from 'src/features/sections/SheetSections';
 
 export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
   CONSTANTS.SHEET_TYPE_ITEM,
@@ -191,10 +192,10 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       });
     }
 
-    // kgar: I am knowingly repurposing the Identifiable trait,
-    // because for items where identification is irrelevant,
-    // they are likely not to have a need for Unidentified or Chat descriptions.
-    if (isIdentifiable && !showOnlyUnidentified) {
+    // kgar: I am knowingly repurposing the Custom Section blacklist,
+    // because for items where custom sections are irrelevant,
+    // they are likely not to have a need for a Chat descriptions.
+    if (SheetSections.itemSupportsCustomSections(this.item.type) && !showOnlyUnidentified) {
       itemDescriptions.push({
         enriched: enriched.chat,
         content: systemObject.description.chat,

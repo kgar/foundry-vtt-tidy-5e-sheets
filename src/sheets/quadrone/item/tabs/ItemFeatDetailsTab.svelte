@@ -25,6 +25,23 @@
   </legend>
 
   <div class="form-group">
+    <label for="{appId}-requirements"
+      >{localize(
+        'DND5E.Requirements',
+      )}</label
+    >
+    <div class="form-fields">
+      <TextInputQuadrone
+        id="{appId}-requirements"
+        document={context.item}
+        field="system.requirements"
+        value={context.source.requirements}
+        disabled={!context.unlocked}
+      />
+    </div>
+  </div>
+
+  <div class="form-group">
     <label for="{appId}-type-value">{localize('DND5E.Type')}</label>
     <div class="form-fields">
       <SelectQuadrone

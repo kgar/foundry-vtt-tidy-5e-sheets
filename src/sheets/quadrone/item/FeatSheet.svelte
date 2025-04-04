@@ -7,6 +7,13 @@
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import ItemName from './parts/header/ItemName.svelte';
+  import {
+    componentWithProps,
+    type ComponentWithProps,
+  } from 'src/utils/component';
+  import ItemChargesSummary from './parts/header/ItemChargesSummary.svelte';
+  import ItemRechargeSummary from './parts/header/ItemRechargeSummary.svelte';
+  import { isNil } from 'src/utils/data';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -15,6 +22,30 @@
   let selectedTabId: string = $state(CONSTANTS.TAB_CONTAINER_CONTENTS);
 
   let itemNameEl: HTMLElement | undefined = $state();
+
+  let summarySections = $derived.by(() => {
+    let result: ComponentWithProps<any>[] = [];
+
+    if (context.item.hasLimitedUses) {
+      result.push(componentWithProps(ItemChargesSummary, {}));
+    }
+
+    if (context.item.hasRecharge) {
+      result.push(componentWithProps(ItemRechargeSummary, {}));
+    }
+
+    return result;
+  });
+
+  let subtitle = $derived.by(() => {
+    let segments: string[] = [
+      context.system.type.label,
+      context.labels.featType,
+      context.system.requirements,
+    ];
+
+    return segments.filter((x) => !isNil(x, '')).join(', ');
+  });
 </script>
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
@@ -22,15 +53,28 @@
 <Sidebar sectionLabel={'DND5E.Features'} />
 
 <main class="item-content">
-  <div
-    bind:this={itemNameEl}
-    class="item-name-wrapper flex-row extra-small-gap align-items-center"
-  >
-    <ItemName />
+  <div class="sheet-header">
+    <div class="identity-info">
+      <div
+        bind:this={itemNameEl}
+        class="item-name-wrapper flex-row extra-small-gap align-items-center"
+      >
+        <ItemName />
+      </div>
+      <div class="subtitle">
+        {subtitle}
+      </div>
+    </div>
   </div>
 
   <!-- Header Summary -->
-  <div class="item-header-summary">TODO</div>
+  {#if summarySections.length}
+    <div class="item-header-summary">
+      {#each summarySections as summarySection}
+        <summarySection.component {...summarySection.props} />
+      {/each}
+    </div>
+  {/if}
 
   <!-- Tab Strip -->
   <Tabs
