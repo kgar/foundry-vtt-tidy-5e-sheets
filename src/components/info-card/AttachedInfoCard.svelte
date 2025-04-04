@@ -15,10 +15,10 @@
   import EffectInfoCard from './Cards/EffectInfoCard.svelte';
   import { Inventory } from 'src/features/sections/Inventory';
   import { CONSTANTS } from 'src/constants';
-  import type { Component, ComponentProps } from 'svelte';
   import { isUserInteractable } from 'src/utils/element';
   import { DetachedInfoCardApplication } from 'src/applications/info-card/DetachedInfoCardApplication';
   import { settings } from 'src/settings/settings.svelte';
+  import { componentWithProps } from 'src/utils/component';
 
   interface Props {
     sheet: any;
@@ -27,7 +27,7 @@
   let { sheet }: Props = $props();
 
   let floating = $derived(settings.value.itemCardsAreFloating);
-  let inspectKey= $derived(settings.value.itemCardsFixKey);
+  let inspectKey = $derived(settings.value.itemCardsFixKey);
   let delay = $derived(settings.value.itemCardsDelay);
 
   const localize = FoundryAdapter.localize;
@@ -75,17 +75,6 @@
   let floatingLeft = $state<string | undefined>();
   let floatingTop = $state<string | undefined>();
   let dimensions = $state<InfoCardDimensions>(getInfoCardDimensions());
-
-  // TODO: Find much better home
-  function withProps<TComponent extends Component<any>>(
-    component: TComponent,
-    props: ComponentProps<TComponent>,
-  ) {
-    return {
-      component: component,
-      props: props,
-    };
-  }
 
   async function hoverOn(_event: MouseEvent, target: HTMLElement) {
     // Get the card state
@@ -146,17 +135,17 @@
 
         if (Inventory.isInventoryType(entity)) {
           card = {
-            ...withProps(InventoryItemCard, { item: entity }),
+            ...componentWithProps(InventoryItemCard, { item: entity }),
             title: entity.name,
           } satisfies InfoCardState<typeof InventoryItemCard>;
         } else if (entity?.type === CONSTANTS.ITEM_TYPE_SPELL) {
           card = {
-            ...withProps(SpellItemCard, { item: entity }),
+            ...componentWithProps(SpellItemCard, { item: entity }),
             title: entity.name,
           } satisfies InfoCardState<typeof InventoryItemCard>;
         } else {
           card = {
-            ...withProps(DefaultItemCard, { item: entity }),
+            ...componentWithProps(DefaultItemCard, { item: entity }),
             title: entity.name,
           } satisfies InfoCardState<typeof InventoryItemCard>;
         }

@@ -3486,7 +3486,7 @@ export type CONFIG = {
           fightingStyle: string;
           general: string;
           origin: string;
-        };
+        } & Record<string, string>;
       };
       supernaturalGift: {
         label: string;
@@ -3494,7 +3494,7 @@ export type CONFIG = {
           blessing: string;
           charm: string;
           epicBoon: string;
-        };
+        } & Record<string, string>;
       };
     } & Record<string, { label: string }>;
     itemProperties: {
