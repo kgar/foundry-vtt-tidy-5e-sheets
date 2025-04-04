@@ -16,6 +16,7 @@
   } from 'src/utils/component';
   import { getTidyFacilityIcon } from 'src/features/facility/facility';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
+  import type { Snippet } from 'svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -51,6 +52,20 @@
     return result;
   });
 
+  let facilitySidebarPills = $derived.by(() => {
+    let result: Snippet[] = [];
+
+    if (!isNil(context.system.hirelings.max)) {
+      result.push(hirelingsPill);
+    }
+
+    if (!isNil(context.system.defenders.max)) {
+      result.push(defendersPill);
+    }
+
+    return result;
+  });
+
   let effectiveOrderValue = $derived(context.system.progress.value ?? 0);
   let effectiveOrderMax = $derived(context.system.progress.max ?? 0);
   let icon = $derived(getTidyFacilityIcon(context.system.progress.order));
@@ -60,7 +75,7 @@
 
 <Sidebar>
   {#snippet belowStateSwitches()}
-    {#if !isNil(context.system.progress.order, '') && effectiveOrderMax > 0}
+    {#if !isNil(context.system.progress?.order, '') && effectiveOrderMax > 0}
       {@const pct = (effectiveOrderValue / effectiveOrderMax) * 100}
       <div>
         <h4>
@@ -101,7 +116,7 @@
               </span>
             </span>
           </li>
-          {#if !!context.system.craft}
+          {#if !!context.system.craft && ['craft', 'harvest'].includes(context.system.progress.order)}
             <li>
               <a
                 class="pill interactive wrapped"
@@ -125,39 +140,45 @@
         </ul>
       </div>
     {/if}
-    <div>
-      <h4>
-        {localize('TYPES.Item.facility')}
-      </h4>
-      <ul class="pills stacked">
-        {#if !isNil(context.system.hirelings.max)}
-          <li>
-            <span class="pill centered">
-              <span class="text-normal">
-                {localize('DND5E.FACILITY.FIELDS.hirelings.max.label')}
-              </span>
-              <span>
-                {context.system.hirelings.max}
-              </span>
-            </span>
-          </li>
-        {/if}
-        {#if !isNil(context.system.defenders.max)}
-          <li>
-            <span class="pill centered">
-              <span class="text-normal">
-                {localize('DND5E.FACILITY.FIELDS.defenders.max.label')}
-              </span>
-              <span>
-                {context.system.defenders.max}
-              </span>
-            </span>
-          </li>
-        {/if}
-      </ul>
-    </div>
+    {#if facilitySidebarPills.length}
+      <div>
+        <h4>
+          {localize('TYPES.Item.facility')}
+        </h4>
+        <ul class="pills stacked">
+          {#each facilitySidebarPills as pill}
+            {@render pill()}
+          {/each}
+        </ul>
+      </div>
+    {/if}
   {/snippet}
 </Sidebar>
+
+{#snippet hirelingsPill()}
+  <li>
+    <span class="pill centered">
+      <span class="text-normal">
+        {localize('DND5E.FACILITY.FIELDS.hirelings.max.label')}
+      </span>
+      <span>
+        {context.system.hirelings.max}
+      </span>
+    </span>
+  </li>
+{/snippet}
+{#snippet defendersPill()}
+  <li>
+    <span class="pill centered">
+      <span class="text-normal">
+        {localize('DND5E.FACILITY.FIELDS.defenders.max.label')}
+      </span>
+      <span>
+        {context.system.defenders.max}
+      </span>
+    </span>
+  </li>
+{/snippet}
 
 <main class="item-content">
   <div class="sheet-header">

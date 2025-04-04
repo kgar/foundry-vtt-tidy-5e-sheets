@@ -5,7 +5,8 @@
   - [x] Progress
   - [x] Harvesting
   - [x] Crafting (a sword, for example)
-  - [ ] Hide Facility section on sidebar when there are no pills to show; this implies also extracting those pills into snippets. No problem!
+  - [x] Hide Facility section on sidebar when there are no pills to show; this implies also extracting those pills into snippets. No problem!
+  - [x] Limit craft content to harvest and craft orders
   - [ ] Add conditionally available tooltip for hireling / defender list to sidebar pills
 - [ ] Item with HP / HP Bar
 - [ ] (hightouch) Review / refine Advancement table styles. Need handling for tags, enrichers, etc.
