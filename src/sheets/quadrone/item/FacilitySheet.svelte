@@ -93,7 +93,7 @@
           <li>
             <span
               class={[
-                'pill meter progress bastion theme-dark',
+                'pill meter progress theme-dark',
                 { empty: effectiveOrderValue === 0 },
               ]}
               role="meter"
