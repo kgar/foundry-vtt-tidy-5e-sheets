@@ -29,7 +29,7 @@
   font-size: var(--font-size-12);
   font-style: normal;
   font-weight: 500;
-  gap: 0.25rem;
+  gap: var(--t5e-size-1x);
   justify-content: center;
   line-height: normal;
   margin: 0;
@@ -38,8 +38,15 @@
   color: var(--t5e-color-text-default);
   --icon-fill: var(--t5e-color-icon-diminished);
 
+  word-break: break-word;
+  flex-wrap: wrap;
+
   .label {
     padding-top: 0.0625rem;
+  }
+
+  span {
+    gap: var(--t5e-size-halfx);
   }
 
 
@@ -53,6 +60,7 @@
   }
 
   &.wrapped {
+    text-align: center;
     flex-wrap: wrap;
   }
 
@@ -62,6 +70,10 @@
 
   i {
     color: var(--t5e-color-icon-default);
+
+    &.separator {
+      color: var(--t5e-color-icon-diminished);
+    }
   }
 
   // TODO: Determine if lighter text can be moved to its own scope and stylesheet and used generically

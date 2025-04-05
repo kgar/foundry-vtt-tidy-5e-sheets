@@ -93,7 +93,7 @@
           <li>
             <span
               class={[
-                'pill meter progress theme-dark',
+                'pill meter progress bastion theme-dark',
                 { empty: effectiveOrderValue === 0 },
               ]}
               role="meter"
@@ -103,7 +103,7 @@
               aria-valuetext={effectiveOrderValue.toString()}
               aria-valuemax={effectiveOrderMax}
               style="--bar-percentage: {pct.toFixed(0)}%;"
-              data-bar-severity="low"
+              data-bar-severity="static"
             >
               <span class="label">
                 <span class="value font-weight-label"
@@ -127,13 +127,13 @@
               >
                 {#if !isNil(context.system.craft.item, '')}
                   {#await fromUuid(context.system.craft.item) then item}
-                    {item?.name}
+                    <span class="font-weight-label">{item?.name}</span>
                   {/await}
                 {/if}
-                <span
-                  ><i class="fa-solid fa-xmark text-normal"></i>{context.system
-                    .craft.quantity}</span
-                >
+                <span>
+                  <i class="fa-solid fa-xmark text-normal separator"></i>
+                  <span class="font-weight-label">{context.system.craft.quantity}</span>
+                </span>
               </a>
             </li>
           {/if}

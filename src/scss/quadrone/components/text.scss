@@ -38,18 +38,6 @@
   hyphens: auto;
 }
 
-&.inverse,
-inverse {
-  .spell-component {
-    color: var(--t5e-color-text-lighter);
-  }
-
-  .spell-component-special {
-    color: var(--t5e-color-text-default);
-    background-color: var(--t5e-color-text-gold);
-  }
-}
-
 .time {
   text-align: center;
 
@@ -78,13 +66,22 @@ inverse {
   font-weight: 400;
 }
 
-&.inverse,
-.inverse {
+&.theme-dark,
+.theme-dark {
+  .spell-component {
+    color: var(--t5e-color-text-lighter);
+  }
+
+  .spell-component-special {
+    color: var(--t5e-color-text-default);
+    background-color: var(--t5e-color-text-gold);
+  }
+
   .text-secondary {
-    color: var(--t5e-color-text-oninverse-lighter);
+    color: var(--t5e-color-text-lighter);
   }
 
   .time .subtitle {
-    color: var(--t5e-color-text-oninverse-lightest);
+    color: var(--t5e-color-text-lightest);
   }
 }

@@ -379,8 +379,11 @@ input[type='checkbox'] {
 
   &:checked::before {
     content: '\f00c';
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     color: var(--t5e-component-toggle-toggled-text);
+    height: var(--t5e-checkbox-size);
+    line-height: var(--t5e-checkbox-size);
+    width: var(--t5e-checkbox-size);
   }
 }
 
