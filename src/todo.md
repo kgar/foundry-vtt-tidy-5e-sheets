@@ -107,6 +107,7 @@
 - [ ] Class, Subclass, Background, Species, Facility sheets
   - [ ] Description tab
     - [ ] Description section header hidden, contents displayed, editable when unlocked, saves when locked again, saves when save button clicked and is refreshed.
+- [ ] Fix weird minimize/maximize header text behavior. reference: https://discord.com/channels/@me/1243307347682529423/1357922036454002890
 
 ### Scratch - Finding the effective theme for a sheet
 
