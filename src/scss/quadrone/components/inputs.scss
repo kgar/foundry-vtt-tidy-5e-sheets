@@ -360,9 +360,9 @@ input[type='radio'] {
 }
 
 input[type='checkbox'] {
-  width: var(--t5e-checkbox-size);
-  height: var(--t5e-checkbox-size);
-  flex-basis: var(--checkbox-size);
+  // width: var(--t5e-checkbox-size);
+  // height: var(--t5e-checkbox-size);
+  // flex-basis: var(--t5e-checkbox-size);
   margin: 0;
   text-align: center;
   border-radius: 0.125rem;
@@ -379,11 +379,11 @@ input[type='checkbox'] {
 
   &:checked::before {
     content: '\f00c';
-    font-size: 0.75rem;
+    font-size: 0.825rem;
     color: var(--t5e-component-toggle-toggled-text);
-    height: var(--t5e-checkbox-size);
-    line-height: var(--t5e-checkbox-size);
-    width: var(--t5e-checkbox-size);
+    // height: var(--t5e-checkbox-size);
+    // line-height: var(--t5e-checkbox-size);
+    // width: var(--t5e-checkbox-size);
   }
 }
 
