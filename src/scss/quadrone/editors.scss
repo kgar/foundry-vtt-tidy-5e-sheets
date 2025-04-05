@@ -210,10 +210,10 @@
     }
 
     hr {
+      margin-top: calc(var(--t5e-size-1x) + var(--t5e-size-halfx));
       background-image: linear-gradient(to right,
           transparent 5%,
           var(--t5e-color-palette-gold-62) 30%,
-          var(--t5e-color-palette-gold-56) 50%,
           var(--t5e-color-palette-gold-62) 70%,
           transparent 95%);
     }
@@ -343,6 +343,14 @@
 
       .callout {
         // TODO: make cool callout UI here
+      }
+
+      hr {
+        background-image: linear-gradient(to right,
+            transparent 5%,
+            var(--t5e-color-palette-gold-56) 30%,
+            var(--t5e-color-palette-gold-56) 70%,
+            transparent 95%);
       }
 
       .secret {
