@@ -24,6 +24,16 @@
     --bar-border-color: var(--bar-high-border-color);
   }
 
+  &[data-bar-severity='static'] {
+    --bar-low-background: linear-gradient(to right, var(--t5e-color-palette-blue-green-30) 0%, var(--t5e-color-palette-blue-green-50) 100%);
+    --bar-low-border-color: var(--t5e-color-palette-blue-green-30);
+  }
+
+  &[data-bar-severity='disabled'] {
+    --bar-low-background: linear-gradient(to right, var(--t5e-color-palette-grey-29) 0%, var(--t5e-color-palette-grey-40) 100%);
+    --bar-low-border-color: var(--t5e-color-palette-grey-29);
+  }
+
   --meter-height: 1.5rem;
 
   height: var(--meter-height);
