@@ -1,5 +1,6 @@
 ## To Do
 
+- [ ] Item with HP / HP Bar
 - [x] Work on Facility Header
 - [ ] Work on Facility Sidebar
   - [x] Progress
@@ -7,8 +8,9 @@
   - [x] Crafting (a sword, for example)
   - [x] Hide Facility section on sidebar when there are no pills to show; this implies also extracting those pills into snippets. No problem!
   - [x] Limit craft content to harvest and craft orders
-  - [ ] Add conditionally available tooltip for hireling / defender list to sidebar pills
-- [ ] Item with HP / HP Bar
+  - [ ] When the facility is embedded
+    - [ ] Add conditionally available tooltip for hireling / defender list to sidebar pills
+    - [ ] Add `{Value} /` to the hireling / defender pill.
 - [ ] (hightouch) Review / refine Advancement table styles. Need handling for tags, enrichers, etc.
 - [ ] (hightouch) Editor / longform style requests
   - [ ] in our editor styles, can we do something more with the blockquote element? For example, check how the default sheets do blockquotes: italicize, with a left gray border (2-4px, or so), to make it really stand out as a quote.
