@@ -360,9 +360,9 @@ input[type='radio'] {
 }
 
 input[type='checkbox'] {
-  // width: var(--t5e-checkbox-size);
-  // height: var(--t5e-checkbox-size);
-  // flex-basis: var(--t5e-checkbox-size);
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  flex-basis: var(--checkbox-size);
   margin: 0;
   text-align: center;
   border-radius: 0.125rem;
