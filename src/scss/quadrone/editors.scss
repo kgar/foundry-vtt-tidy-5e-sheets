@@ -212,12 +212,9 @@
     hr {
       background-image: linear-gradient(to right,
           transparent 5%,
-          var(--t5e-theme-color-lightest) 40%,
-          var(--t5e-theme-color-darker) 49.75%,
-          transparent 49.75%,
-          transparent 50.25%,
-          var(--t5e-theme-color-darker) 50.25%,
-          var(--t5e-theme-color-lightest) 60%,
+          var(--t5e-color-palette-gold-62) 30%,
+          var(--t5e-color-palette-gold-56) 50%,
+          var(--t5e-color-palette-gold-62) 70%,
           transparent 95%);
     }
   }
@@ -342,18 +339,6 @@
 
       blockquote {
         border-color: var(--t5e-theme-color-default);
-      }
-
-      hr {
-        background-image: linear-gradient(to right,
-            transparent 5%,
-            var(--t5e-theme-color-default) 40%,
-            var(--t5e-theme-color-darkest) 49.75%,
-            transparent 49.75%,
-            transparent 50.25%,
-            var(--t5e-theme-color-darkest) 50.25%,
-            var(--t5e-theme-color-default) 60%,
-            transparent 95%);
       }
 
       .callout {
