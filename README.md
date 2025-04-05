@@ -69,6 +69,7 @@ Item Sheets Progress:
 ⬜ Background  
 ⬜ Class  
 ✅ Consumable  
+✅ Container  
 ✅ Equipment  
 ⬜ Facility  
 ⬜ Feat  
