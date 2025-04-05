@@ -1333,7 +1333,7 @@
       white-space: nowrap;
     }
 
-    &.inverse {
+    &.theme-dark {
       background: var(--t5e-component-card-default);
     }
   }
