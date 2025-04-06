@@ -114,10 +114,10 @@
           {/if}
         </div>
       {:else}
-        <div class="subtitle">{@html '&nbsp;'}</div>
+        <!-- <div class="subtitle">{@html '&nbsp;'}</div> -->
       {/if}
     </div>
-    {#if !context.unlocked}
+    {#if !context.unlocked && context.item.parent}
       <div class="common-fields">
         <div
           class="level-badge badge theme-dark"
