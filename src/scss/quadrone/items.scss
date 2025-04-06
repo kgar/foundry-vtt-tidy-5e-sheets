@@ -351,6 +351,15 @@
 
       /* title/small */
       font: var(--t5e-font-title-small);
+
+      .advancement-class-indicator {
+        font-size: var(--font-size-14);
+      }
+    }
+
+    .advancement-class-indicator {
+      color: var(--t5e-color-text-gold-emphasis);
+      margin-inline-start: var(--t5e-size-1x);
     }
 
     &:where(.theme-light) {
