@@ -334,7 +334,7 @@
 
       .common-fields .level-badge {
         margin-inline-end: calc(var(--t5e-size-2x) * -1);
-        margin-block-end: calc(var(--t5e-size-2x) * -1);
+        margin-block-end: calc(var(--t5e-size-4x) * -1);
       }
 
       .school {
@@ -499,6 +499,17 @@
 
       prose-mirror {
         flex: 1;
+      }
+    }
+
+    &.details {
+      >fieldset:first-child {
+        margin-top: var(--t5e-size-halfx);
+
+        :first-child {
+          margin-top: 0;
+          padding-top: 0;
+        }
       }
     }
   }
