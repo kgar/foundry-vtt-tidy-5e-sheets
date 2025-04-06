@@ -161,6 +161,10 @@
       }
     }
 
+    &.advancement-item {
+      min-height: 2.25rem;
+    }
+
     &.spell:not(.equipped) {
 
       .item-label,
@@ -272,15 +276,22 @@
       text-overflow: ellipsis;
     }
 
-    .cell-context,
-    .advancement-cell-context {
+    .cell-context {
       margin-top: -0.125rem;
-      font-size: var(--font-size-small);
       color: var(--t5e-color-text-lightest);
     }
 
+    .cell-context,
     .advancement-cell-context {
+      font-size: var(--font-size-small);
+    }
+
+    .cell-name {
       margin: var(--t5e-size-1x) 0;
+    }
+
+    .advancement-cell-context {
+      margin: -0.125rem 0 var(--t5e-size-1x) 0;
       display: flex;
       flex-direction: row;
       gap: var(--t5e-size-1x);
@@ -434,6 +445,17 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+
+    .tidy-table-button:hover::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.12);
+      border-radius: 100%;
+    }
   }
 
   .tidy-table-button {
@@ -444,6 +466,7 @@
     height: 100%;
     justify-content: center;
     min-height: var(--t5e-field-size-default);
+    position: relative;
     transition: all var(--t5e-transition-default);
     width: var(--t5e-table-button-width);
 
@@ -635,6 +658,10 @@
             rgba(255, 255, 255, 0.10) 100%),
           var(--t5e-component-card-default);
       }
+    }
+
+    .tidy-table-actions .tidy-table-button:hover::before {
+      color: rgba(0, 0, 0, 1);
     }
 
     .expandable .expandable {
