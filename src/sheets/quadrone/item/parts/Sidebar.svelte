@@ -115,7 +115,7 @@
 
   // TODO: Consider a reusable function and also feeding it through item context for item sheets.
   let itemColorClasses = $derived<ClassValue>([
-    context.system.identified === false ? 'unidentified' : undefined,
+    context.system.identified === false ? 'disabled' : undefined,
     !isNil(rarity, '') ? 'rarity' : undefined,
     coalesce(rarity?.slugify(), 'none'),
     !isNil(context.system.preparation?.mode) ? 'spell-preparation' : undefined,
@@ -267,6 +267,10 @@
     {:else if 'preparation' in context.system}
       <div class={['spell-preparation-text', itemColorClasses]}>
         {spellPreparationText}
+      </div>
+    {:else if facilityIsDisabled}
+      <div class="image-subtitle disabled">
+        {localize('DND5E.FACILITY.FIELDS.disabled.label')}
       </div>
     {/if}
   </div>

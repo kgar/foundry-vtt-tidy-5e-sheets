@@ -1,17 +1,17 @@
 ## To Do
 
-- [ ] Item with HP / HP Bar
 - [ ] Work on Facility Sidebar
   - [x] Progress
   - [x] Harvesting
   - [x] Crafting (a sword, for example)
   - [x] Hide Facility section on sidebar when there are no pills to show; this implies also extracting those pills into snippets. No problem!
   - [x] Limit craft content to harvest and craft orders
-  - [ ] Apply disabled class to all facility progress / crafting pills when the facility is disabled
-  - [ ] When the facility is embedded
-    - [ ] Add conditionally available tooltip for hireling / defender list to sidebar pills
-    - [ ] Add `{Value} /` to the hireling / defender pill.
-- [ ] (hightouch) Review / refine Advancement table styles. Need handling for tags, enrichers, etc.
+  - [x] Apply disabled class to all facility progress / crafting pills when the facility is disabled
+  - [x] ~~When the facility is embedded~~ Just do it.
+    - [ ] Add tooltip for hireling / defender list to sidebar pills
+    - [x] Add `{Value} /` to the hireling / defender pill.
+- [x] Tangential: Foundry 13 doesn't like how we do HTML-rich tooltips. See Attunement summary tooltip as an example.
+- [x] (hightouch) Review / refine Advancement table styles. Need handling for tags, enrichers, etc.
 - [x] (hightouch) Editor / longform style requests
   - [x] in our editor styles, can we do something more with the blockquote element? For example, check how the default sheets do blockquotes: italicize, with a left gray border (2-4px, or so), to make it really stand out as a quote.
   - [x] A user requested we don't use a gap in our `<hr>` elements in the Editor / rendered styles. https://discord.com/channels/1167985253072257115/1170003836556017755/1357755740391215357
@@ -493,3 +493,4 @@ Limited:
 - [x] Notify hightouch that consumable sheet is ready for final review
 - [x] Notify hightouch that loot sheet is ready for final review
 - [x] Notify hightouch that tool sheet is ready for final review
+- [x] Item with HP / HP Bar

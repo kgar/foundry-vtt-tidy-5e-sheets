@@ -69,6 +69,8 @@
   let effectiveOrderValue = $derived(context.system.progress.value ?? 0);
   let effectiveOrderMax = $derived(context.system.progress.max ?? 0);
   let icon = $derived(getTidyFacilityIcon(context.system.progress.order));
+
+  let facilityIsDisabled = $derived(context.system.disabled === true);
 </script>
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
@@ -94,7 +96,10 @@
             <span
               class={[
                 'pill meter progress theme-dark',
-                { empty: effectiveOrderValue === 0 },
+                {
+                  empty: effectiveOrderValue === 0,
+                  disabled: facilityIsDisabled,
+                },
               ]}
               role="meter"
               aria-label={localize('DND5E.CONTAINER.FIELDS.capacity.label')}
@@ -103,7 +108,7 @@
               aria-valuetext={effectiveOrderValue.toString()}
               aria-valuemax={effectiveOrderMax}
               style="--bar-percentage: {pct.toFixed(0)}%;"
-              data-bar-severity="static"
+              data-bar-severity={facilityIsDisabled ? 'disabled' : 'static'}
             >
               <span class="label">
                 <span class="value font-weight-label"
@@ -119,7 +124,10 @@
           {#if !!context.system.craft && ['craft', 'harvest'].includes(context.system.progress.order)}
             <li>
               <a
-                class="pill interactive wrapped"
+                class={[
+                  'pill interactive wrapped',
+                  { disabled: facilityIsDisabled },
+                ]}
                 onclick={async () =>
                   (await fromUuid(context.system.craft.item))?.sheet.render({
                     force: true,
@@ -132,7 +140,9 @@
                 {/if}
                 <span>
                   <i class="fa-solid fa-xmark text-normal separator"></i>
-                  <span class="font-weight-label">{context.system.craft.quantity}</span>
+                  <span class="font-weight-label"
+                    >{context.system.craft.quantity}</span
+                  >
                 </span>
               </a>
             </li>
@@ -162,7 +172,13 @@
         {localize('DND5E.FACILITY.FIELDS.hirelings.max.label')}
       </span>
       <span>
-        {context.system.hirelings.max}
+        <span>
+          {context.system.hirelings.value?.length ?? 0}
+        </span>
+        <span class="separator">/</span>
+        <span>
+          {context.system.hirelings.max}
+        </span>
       </span>
     </span>
   </li>
@@ -174,7 +190,13 @@
         {localize('DND5E.FACILITY.FIELDS.defenders.max.label')}
       </span>
       <span>
-        {context.system.defenders.max}
+        <span>
+          {context.system.defenders.value?.length ?? 0}
+        </span>
+        <span class="separator">/</span>
+        <span>
+          {context.system.defenders.max}
+        </span>
       </span>
     </span>
   </li>
