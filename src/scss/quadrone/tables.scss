@@ -116,6 +116,16 @@
 
 
     .tidy-table-button {
+      i {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color var(--t5e-transition-default);
+        border-radius: 100%;
+        height: var(--t5e-size-5x);
+        width: var(--t5e-size-5x);
+      }
+
       i.emphasis {
         color: var(--t5e-color-text-gold-emphasis);
       }
@@ -125,13 +135,7 @@
       }
 
       &:hover i {
-        display: flex;
-        align-items: center;
-        justify-content: center;
         background: var(--t5e-theme-color-darkest);
-        border-radius: 100%;
-        height: var(--t5e-size-5x);
-        width: var(--t5e-size-5x);
       }
     }
 
@@ -473,14 +477,18 @@
     align-items: center;
     justify-content: flex-end;
 
-    .tidy-table-button:hover i {
+    i {
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(0, 0, 0, 0.12);
       border-radius: 100%;
       height: var(--t5e-size-6x);
+      transition: background-color var(--t5e-transition-default);
       width: var(--t5e-size-6x);
+    }
+
+    .tidy-table-button:hover i {
+      background: rgba(0, 0, 0, 0.12);
 
     }
   }
