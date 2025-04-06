@@ -57,6 +57,10 @@
       background: var(--t5e-component-field-background-hover);
       transition: background 0.15s ease-in-out;
     }
+
+    &.copy-to-clipboard {
+      cursor: copy;
+    }
   }
 
   &.wrapped {

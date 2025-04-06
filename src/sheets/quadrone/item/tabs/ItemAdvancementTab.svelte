@@ -203,9 +203,9 @@
                     {#each advancement.tags as tag}
                       <i class={tag.iconClass} title={localize(tag.label)}></i>
                     {/each}
-                    <div class="advancement-cell-context">
-                      {@html advancement.summary}
-                    </div>
+                  </div>
+                  <div class="advancement-cell-context">
+                    {@html advancement.summary}
                   </div>
                 </div>
               </div>

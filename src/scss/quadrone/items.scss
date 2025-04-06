@@ -182,8 +182,14 @@
       font-size: var(--font-font-size-14, 0.875rem);
       font-style: normal;
       font-weight: 500;
-      line-height: normal;
+      line-height: var(--t5e-lineheight-longform);
       margin-bottom: var(--t5e-size-1x);
+
+      a.button {
+        margin-top: -0.3125rem;
+        margin-bottom: -0.3125rem;
+      }
+
     }
 
     .currency-header {
@@ -328,7 +334,7 @@
 
       .common-fields .level-badge {
         margin-inline-end: calc(var(--t5e-size-2x) * -1);
-        margin-block-end: calc(var(--t5e-size-2x) * -1);
+        margin-block-end: calc(var(--t5e-size-4x) * -1);
       }
 
       .school {
@@ -493,6 +499,13 @@
 
       prose-mirror {
         flex: 1;
+      }
+    }
+
+    &.details {
+      >fieldset:first-child>legend {
+        margin-top: var(--t5e-size-halfx);
+        padding-top: 0;
       }
     }
   }

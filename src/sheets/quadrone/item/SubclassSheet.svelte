@@ -27,7 +27,7 @@
       <ul class="pills stacked">
         <li>
           <a
-            class="pill interactive centered wrapped"
+            class="pill interactive centered wrapped copy-to-clipboard"
             onclick={() => {
               const value = context.item.system.identifier;
               game.clipboard.copyPlainText(value);
@@ -49,7 +49,7 @@
         </li>
         <li>
           <a
-            class="pill interactive centered wrapped"
+            class="pill interactive centered wrapped copy-to-clipboard"
             onclick={() => {
               const value = context.item.system.identifier;
               game.clipboard.copyPlainText(value);

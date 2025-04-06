@@ -51,26 +51,6 @@
       <h4>{localize('TYPES.Item.class')}</h4>
       <ul class="pills stacked">
         <li>
-          <a
-            class="pill interactive centered wrapped"
-            onclick={() => {
-              const value = context.item.system.identifier;
-              game.clipboard.copyPlainText(value);
-              ui.notifications.info(
-                game.i18n.format('DND5E.Copied', { value }),
-                { console: false },
-              );
-            }}
-          >
-            <span class="text-normal">
-              {localize('DND5E.Identifier')}
-            </span>
-            <span class="hyphens-auto">
-              {context.item.system.identifier}
-            </span>
-          </a>
-        </li>
-        <li>
           <span class="pill centered wrapped">
             <span class="text-normal">
               {localize('DND5E.CLASS.FIELDS.hd.label')}
@@ -93,6 +73,26 @@
             </span>
           </li>
         {/if}
+        <li>
+          <a
+            class="pill interactive centered wrapped copy-to-clipboard"
+            onclick={() => {
+              const value = context.item.system.identifier;
+              game.clipboard.copyPlainText(value);
+              ui.notifications.info(
+                game.i18n.format('DND5E.Copied', { value }),
+                { console: false },
+              );
+            }}
+          >
+            <span class="text-normal">
+              {localize('DND5E.Identifier')}
+            </span>
+            <span class="hyphens-auto">
+              {context.item.system.identifier}
+            </span>
+          </a>
+        </li>
       </ul>
     </div>
   {/snippet}

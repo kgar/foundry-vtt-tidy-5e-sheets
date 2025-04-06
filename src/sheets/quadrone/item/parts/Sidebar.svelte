@@ -399,7 +399,7 @@
           {#each scaleValues as scaleValue}
             <li>
               <a
-                class="pill interactive centered wrapped"
+                class="pill interactive centered wrapped copy-to-clipboard"
                 onclick={() => {
                   game.clipboard.copyPlainText(scaleValue.toCopy);
                   ui.notifications.info(
