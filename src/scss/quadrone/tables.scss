@@ -279,25 +279,28 @@
     .cell-context {
       margin-top: -0.125rem;
       color: var(--t5e-color-text-lightest);
-    }
-
-    .cell-context,
-    .advancement-cell-context {
       font-size: var(--font-size-small);
     }
+
+    // TODO: Look back at sizing to see if it needs to match other context areas.
+    // .cell-context,
+    // .advancement-cell-context {
+    //   // font-size: var(--font-size-small);
+    // }
 
     .cell-name {
       margin: var(--t5e-size-1x) 0;
     }
 
     .advancement-cell-context {
-      margin: -0.125rem 0 var(--t5e-size-1x) 0;
+      align-items: flex-start;
       display: flex;
       flex-direction: row;
-      gap: var(--t5e-size-1x);
-      align-items: flex-start;
-      white-space: normal;
+      flex-wrap: wrap;
+      gap: var(--t5e-size-halfx);
+      margin: -0.125rem 0 var(--t5e-size-1x) 0;
       padding-inline-end: var(--t5e-size-halfx);
+      white-space: normal;
     }
 
     .advancement-class-indicator {
