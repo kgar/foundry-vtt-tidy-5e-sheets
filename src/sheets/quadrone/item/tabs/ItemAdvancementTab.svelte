@@ -88,7 +88,7 @@
         args.section.configured === CONSTANTS.ADVANCEMENT_CONFIGURATION_FULL,
       props: () => ({
         title: 'DND5E.AdvancementConfiguredComplete',
-        iconClass: 'fa-solid fa-check-circle',
+        iconClass: 'fa-solid fa-badge-check emphasis',
       }),
     } satisfies TableHeaderAction<typeof TableHeaderButton>);
 
@@ -99,7 +99,7 @@
         args.section.configured === CONSTANTS.ADVANCEMENT_CONFIGURATION_PARTIAL,
       props: () => ({
         title: 'DND5E.AdvancementConfiguredIncomplete',
-        iconClass: 'fas fa-exclamation-triangle',
+        iconClass: 'fas fa-exclamation-triangle warning',
       }),
     } satisfies TableHeaderAction<typeof TableHeaderButton>);
 

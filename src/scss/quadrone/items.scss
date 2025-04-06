@@ -2,6 +2,7 @@
   --sidebar-expanded-width: 9rem;
   --sidebar-width: var(--sidebar-expanded-width);
   --sidebar-background-image-height: 510px;
+  --window-border-color: var(--t5e-color-gold);
   $sidebar-bg: url(../../modules/tidy5e-sheet/images/sidebar-item-sheet.webp) top center / auto no-repeat,
     var(--t5e-component-card-dark-darker);
 
@@ -48,7 +49,7 @@
 
     &:has(.item-header-start-scroll-marker.off-screen) {
       .window-header {
-        border-bottom: 1px solid var(--t5e-color-gold);
+        border-bottom: 1px solid var(--window-border-color);
         background: var(--t5e-component-card-darker);
       }
 
@@ -62,7 +63,7 @@
       .header-over-sidebar {
         background: $sidebar-bg;
         background-attachment: scroll, local;
-        border-right: 1px solid var(--t5e-color-gold, #9f9275);
+        border-right: 1px solid var(--window-border-color, #9f9275);
       }
     }
 
@@ -166,7 +167,7 @@
     background: $sidebar-bg;
     background-attachment: scroll, local;
     background-blend-mode: luminosity;
-    border-right: 1px solid var(--t5e-color-gold, #9f9275);
+    border-right: 1px solid var(--window-border-color, #9f9275);
     display: flex;
     flex-direction: column;
     gap: var(--t5e-size-4x);
@@ -539,6 +540,8 @@
 
   &.theme-dark,
   .theme-dark {
+    --window-border-color: var(--t5e-color-palette-gold-45);
+
     .document-name:is(input) {
       border-color: var(--t5e-component-field-border);
       background: var(--t5e-component-field-background);
