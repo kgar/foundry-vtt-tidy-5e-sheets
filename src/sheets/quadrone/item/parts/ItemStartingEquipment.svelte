@@ -19,7 +19,7 @@
   </legend>
 
   <div class="form-group">
-    <label for="{appId}-starting-equipment-configure"
+    <label for="{appId}-starting-equipment-configure" class="{!context.unlocked ? 'no-hover' : ''}"
       >{localize('DND5E.StartingEquipment.Title')}</label
     >
     <div class="form-fields">
@@ -40,9 +40,7 @@
     </div>
   </div>
   <div class="form-group">
-    <label for="{appId}-starting-equipment"
-      ></label
-    >
+    <label for="{appId}-starting-equipment" class="{!context.unlocked ? 'no-hover' : ''}"></label>
     <div class="form-fields">
       <div class="editor-rendered-content starting-equipment-list" id="{appId}-starting-equipment">
         {@html coalesce(
@@ -72,6 +70,9 @@
 
 <!-- TODO: Put in global styles -->
 <style lang="scss">
+  label.no-hover {
+    pointer-events: none;
+  }
 
   fieldset .form-group .form-fields .starting-equipment-list {
     margin-bottom: var(--t5e-size-3x);
