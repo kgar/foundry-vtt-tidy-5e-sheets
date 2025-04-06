@@ -503,13 +503,9 @@
     }
 
     &.details {
-      >fieldset:first-child {
+      >fieldset:first-child>legend {
         margin-top: var(--t5e-size-halfx);
-
-        :first-child {
-          margin-top: 0;
-          padding-top: 0;
-        }
+        padding-top: 0;
       }
     }
   }
