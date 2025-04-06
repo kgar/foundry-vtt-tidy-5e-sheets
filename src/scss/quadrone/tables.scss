@@ -237,7 +237,7 @@
       // game.release.generation < 13
       // align-items: stretch;
       align-items: center;
-      
+
       >* {
         // game.release.generation < 13
         // align-content: center;
@@ -280,6 +280,11 @@
     }
 
     .advancement-cell-context {
+      margin: var(--t5e-size-1x) 0;
+      display: flex;
+      flex-direction: row;
+      gap: var(--t5e-size-1x);
+      align-items: flex-start;
       white-space: normal;
       padding-inline-end: var(--t5e-size-halfx);
     }
