@@ -113,8 +113,6 @@
               <i class="fas fa-chess-queen advancement-class-indicator"></i>
           {/if}
         </div>
-      {:else}
-        <!-- <div class="subtitle">{@html '&nbsp;'}</div> -->
       {/if}
     </div>
     {#if !context.unlocked && context.item.parent}
