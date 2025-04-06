@@ -108,7 +108,11 @@
         <ItemName />
       </div>
       {#if subtitle}
-        <div class="subtitle">{subtitle}</div>
+        <div class="subtitle">{subtitle}
+          {#if context.item.isOriginalClass}
+              <i class="fas fa-chess-queen advancement-class-indicator"></i>
+          {/if}
+        </div>
       {:else}
         <div class="subtitle">{@html '&nbsp;'}</div>
       {/if}

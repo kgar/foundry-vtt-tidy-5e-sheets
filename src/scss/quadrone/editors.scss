@@ -207,6 +207,10 @@
       padding-bottom: var(--t5e-size-1x);
       padding-left: var(--t5e-size-3x);
       padding-right: var(--t5e-size-3x);
+
+      em {
+        font-style: italic;
+      }
     }
 
     hr {
