@@ -329,6 +329,15 @@
       margin: -0.125rem 0 var(--t5e-size-1x) 0;
       padding-inline-end: var(--t5e-size-halfx);
       white-space: normal;
+
+      p {
+        color: var(--t5e-color-text-lighter);
+        margin: 0 0 var(--t5e-size-1x);
+
+        &:first-child {
+          margin-bottom: 0;
+        }
+      }
     }
 
     .spell-components {
