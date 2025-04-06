@@ -628,6 +628,7 @@
 
   &:where(.theme-dark) {
     background: var(--app-background) url(../../modules/tidy5e-sheet/images/denim065.png);
+    border-color: var(--t5e-color-palette-gold-45);
 
     code {
       background-color: rgba(0, 0, 0, 0.5);
