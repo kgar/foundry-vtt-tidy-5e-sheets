@@ -56,6 +56,10 @@
     }),
   );
 
+  // Facility Disrepair
+
+  let facilityIsDisabled = $derived(context.system.disabled === true);
+
   // Spell Preparation
 
   let spellPreparationText = $derived(
@@ -149,7 +153,7 @@
   );
 
   // Advancement Pills
-  
+
   type ScaleValuePill = {
     title: string;
     value?: string;
@@ -211,7 +215,13 @@
 
 <aside class={['sidebar', 'theme-dark']}>
   <div>
-    <div class={['item-image-container', itemColorClasses]}>
+    <div
+      class={[
+        'item-image-container',
+        itemColorClasses,
+        { disabled: facilityIsDisabled },
+      ]}
+    >
       <a
         onclick={(ev) =>
           context.unlocked
@@ -262,7 +272,7 @@
   <!-- Item States -->
   <!-- TODO: Possibly extract component, make into snippets, stack into array, and don't render if there are no state pills. -->
   <ul class="pills stacked">
-    {#if 'equipped' in context.system}
+    {#if 'equipped' in context.system && context.editable}
       {@const checkedIconClass = 'fas fa-hand-fist equip-icon fa-fw'}
       {@const uncheckedIconClass = 'far fa-hand fa-fw'}
       {@const equipped = context.system.equipped}
@@ -307,9 +317,7 @@
         </PillSwitch>
       </li>
     {/if}
-    {#if 'identified' in context.system}
-      {@const unidentified = context.system.identified === false}
-
+    {#if 'identified' in context.system && context.unlocked}
       <li>
         <PillSwitch
           checked={context.system.identified}
@@ -319,13 +327,8 @@
             context.item.update({
               'system.identified': ev.currentTarget?.checked,
             })}
-          disabled={!context.unlocked}
         >
-          {#if !context.editable && unidentified}
-            {localize('DND5E.Unidentified.Title')}
-          {:else}
-            {localize('DND5E.Identified')}
-          {/if}
+          {localize('DND5E.Identified')}
         </PillSwitch>
       </li>
     {/if}

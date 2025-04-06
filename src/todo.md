@@ -1,23 +1,21 @@
 ## To Do
 
-- [x] Work on Facility Header
+- [ ] Item with HP / HP Bar
 - [ ] Work on Facility Sidebar
   - [x] Progress
   - [x] Harvesting
   - [x] Crafting (a sword, for example)
   - [x] Hide Facility section on sidebar when there are no pills to show; this implies also extracting those pills into snippets. No problem!
   - [x] Limit craft content to harvest and craft orders
-  - [ ] Add conditionally available tooltip for hireling / defender list to sidebar pills
-- [ ] Item with HP / HP Bar
+  - [ ] Apply disabled class to all facility progress / crafting pills when the facility is disabled
+  - [ ] When the facility is embedded
+    - [ ] Add conditionally available tooltip for hireling / defender list to sidebar pills
+    - [ ] Add `{Value} /` to the hireling / defender pill.
 - [ ] (hightouch) Review / refine Advancement table styles. Need handling for tags, enrichers, etc.
-- [ ] (hightouch) Editor / longform style requests
-  - [ ] in our editor styles, can we do something more with the blockquote element? For example, check how the default sheets do blockquotes: italicize, with a left gray border (2-4px, or so), to make it really stand out as a quote.
-  - [ ] A user requested we don't use a gap in our `<hr>` elements in the Editor / rendered styles. https://discord.com/channels/1167985253072257115/1170003836556017755/1357755740391215357
+- [x] (hightouch) Editor / longform style requests
+  - [x] in our editor styles, can we do something more with the blockquote element? For example, check how the default sheets do blockquotes: italicize, with a left gray border (2-4px, or so), to make it really stand out as a quote.
+  - [x] A user requested we don't use a gap in our `<hr>` elements in the Editor / rendered styles. https://discord.com/channels/1167985253072257115/1170003836556017755/1357755740391215357
 - [ ] Not sure how feasible it would be but I'm noticing when we open a sheet that Tab still swaps between tokens on the canvas. Is it possible to steal tab focus when a sheet opens and give it to the first open tab? Then you could hit Tab to switch between sheet tabs on open https://discord.com/channels/@me/1243307347682529423/1355184980623491172
-- [ ] Notify hightouch that equipment sheet is ready for final review
-- [ ] Notify hightouch that consumable sheet is ready for final review
-- [ ] Notify hightouch that loot sheet is ready for final review
-- [ ] Notify hightouch that tool sheet is ready for final review
 - [ ] Notify hightouch that background sheet is ready for final review
 - [ ] Notify hightouch that class sheet is ready for final review
 - [ ] Notify hightouch that subclass sheet is ready for final review
@@ -61,13 +59,13 @@
   - [x] Consumable
   - [x] Container
   - [x] Equipment
-  - [ ] Facility
-    - [ ] Category
-    - [ ] Prerequisite
-    - [ ] Y Hirelings
-    - [ ] Y Defenders
-    - [ ] Order
-  - [ ] Feat
+  - [X] Facility
+    - [x] Category
+    - [x] Prerequisite
+    - [x] Y Hirelings
+    - [x] Y Defenders
+    - [x] Order
+  - [x] Feat
   - [x] Loot
   - [x] Species
   - [x] Spell
@@ -105,6 +103,7 @@
 - [ ] Class, Subclass, Background, Species, Facility sheets
   - [ ] Description tab
     - [ ] Description section header hidden, contents displayed, editable when unlocked, saves when locked again, saves when save button clicked and is refreshed.
+- [ ] Fix weird minimize/maximize header text behavior. reference: https://discord.com/channels/@me/1243307347682529423/1357922036454002890
 
 ### Scratch - Finding the effective theme for a sheet
 
@@ -489,3 +488,8 @@ Limited:
 - [x] Work on Feat header
 - [x] Work on Feat sidebar
 - [x] Advancement sidebar stuff; Scale Values (and any like them), Copy Formula, what else? Research and task out
+- [x] Work on Facility Header
+- [x] Notify hightouch that equipment sheet is ready for final review
+- [x] Notify hightouch that consumable sheet is ready for final review
+- [x] Notify hightouch that loot sheet is ready for final review
+- [x] Notify hightouch that tool sheet is ready for final review

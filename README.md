@@ -63,21 +63,47 @@ Manual installation instructions:
 > 
 > The community has been generous to me for my efforts with this module. With that said, this next chapter in Tidy's history is, in a large part, thanks to hightouch's willingness to give of himself and work with the community and me to give Tidy an amazing new look while preserving all the functional things that users have come to rely upon.
 
-The new Tidy 5e Sheets graphical overhaul, codenamed Quadrone, begins now, and we are starting with the new Container sheet.
+The new Tidy 5e Sheets graphical overhaul, codenamed Quadrone, has begun, and we are gradually releasing new sheets into the beta.
+
+Item Sheets Progress:  
+⬜ Background  
+⬜ Class  
+✅ Consumable  
+✅ Container  
+✅ Equipment  
+⬜ Facility  
+⬜ Feat  
+✅ Loot  
+⬜ Race  
+✅ Spell  
+⬜ Subclass  
+⬜ Tattoo  
+✅ Tool  
+✅ Weapon  
+
+Actor Sheets Progress:  
+⬜ Character  
+⬜ Group  
+⬜ NPC  
+⬜ Vehicle  
 
 _**Behold**_:
 
-![image](https://github.com/user-attachments/assets/b0e3751a-a4f6-4cef-b887-c53faef7aa9b)
+![Container and Spell Sheets](readme-assets/quadrone-container-and-spell-sheets.png)
 
-![image](https://github.com/user-attachments/assets/c22ff929-9112-42f6-9060-975e6e89e397)
+![Equipment Sheet](readme-assets/quadrone-equipment-sheet.png)
 
-To make this sheet your own, select "Tidy 5e Container Sheet" on the Sheet Config dialog:
+![Loot Sheet](readme-assets/quadrone-loot-sheet.png)
+
+![Spell Sheets](readme-assets/quadrone-spell-sheets.png)
+
+![Tool and Consumable Sheets](readme-assets/quadrone-tool-and-consumable-sheets.png)
+
+![Weapon Sheets](readme-assets/quadrone-weapon-sheets.png)
+
+To make these sheets your own, select "Tidy 5e Container Sheet" / "Tidy 5e Item Sheet" on the Sheet Config dialog:
 
 ![image](https://github.com/user-attachments/assets/68b553b2-0113-40ff-89f0-83e13f457f95)
-
-### We're Just Getting Started
-
-As soon as the Container Sheet is in your hands, we are working on the rest of the item sheets and will release them gradually. Then, we'll be working on the Character sheet, followed by the rest of the actor sheets.
 
 > [!NOTE]
 > We want your feedback. Tell us how we did on the Tidy 5e community discord, or put in a github issue if you find something amiss.

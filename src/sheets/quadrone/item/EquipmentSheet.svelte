@@ -12,8 +12,12 @@
   import ItemName from './parts/header/ItemName.svelte';
   import { isNil } from 'src/utils/data';
   import ItemRechargeSummary from './parts/header/ItemRechargeSummary.svelte';
+  import type { Snippet } from 'svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   let context = $derived(getItemSheetContextQuadrone());
+
+  let localize = FoundryAdapter.localize;
 
   let selectedTabId: string = $state(CONSTANTS.TAB_CONTAINER_CONTENTS);
 
@@ -24,11 +28,73 @@
       .filter((x) => !isNil(x, ''))
       .join(', '),
   );
+
+  let armorPills = $derived.by(() => {
+    if (!context.system.isArmor) {
+      return [];
+    }
+
+    let result: Snippet[] = [];
+
+    result.push(acPill);
+
+    result.push(dexModPill);
+
+    if (!isNil(context.source.strength, '')) {
+      result.push(strengthRequirementPill);
+    }
+
+    return result;
+  });
 </script>
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
 
-<Sidebar sectionLabel={'DND5E.Inventory'} />
+<Sidebar sectionLabel={'DND5E.Inventory'}>
+  {#snippet belowStateSwitches()}
+    {#if armorPills.length}
+      <div>
+        <h4>{localize('DND5E.Armor')}</h4>
+        <ul class="pills stacked">
+          {#each armorPills as pill}
+            {@render pill()}
+          {/each}
+        </ul>
+      </div>
+    {/if}
+  {/snippet}
+</Sidebar>
+
+{#snippet acPill()}
+  <li class="pill centered">
+    <span class="text-normal">
+      {localize('DND5E.AC')}
+    </span>
+    <span>
+      {context.source.armor.value}
+    </span>
+  </li>
+{/snippet}
+{#snippet dexModPill()}
+  <li class="pill centered">
+    <span class="text-normal">
+      {localize('DND5E.ItemEquipmentDexModAbbr')}
+    </span>
+    <span>
+      {context.source.armor.dex ?? '∞'}
+    </span>
+  </li>
+{/snippet}
+{#snippet strengthRequirementPill()}
+  <li class="pill centered">
+    <span class="text-normal">
+      {localize('DND5E.AbilityStr')}
+    </span>
+    <span>
+      {context.source.strength}
+    </span>
+  </li>
+{/snippet}
 
 <main class="item-content">
   <div class="sheet-header">
