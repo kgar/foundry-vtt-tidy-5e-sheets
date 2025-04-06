@@ -15,6 +15,8 @@
   import type { ClassValue } from 'svelte/elements';
   import { ItemContext } from 'src/features/item/ItemContext';
   import { coalesce } from 'src/utils/formatting';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
+  import { settings } from 'src/settings/settings.svelte';
 
   let context = $derived(getContainerOrItemSheetContextQuadrone());
 
@@ -272,6 +274,50 @@
   <!-- Item States -->
   <!-- TODO: Possibly extract component, make into snippets, stack into array, and don't render if there are no state pills. -->
   <ul class="pills stacked">
+    {#if /* hightouch, please make this nice, lol */ settings.value.truesight && !isNil(context.system.hp?.max, 0)}
+      {@const effectiveHpValue = context.system.hp.value ?? 0}
+      {@const effectiveHpMax = context.system.hp.max ?? 0}
+      {@const pct =
+        effectiveHpMax > 0 ? (effectiveHpValue / effectiveHpMax) * 100 : 0}
+      <li>
+        <span
+          class={[
+            'pill meter progress theme-dark',
+            { empty: effectiveHpValue === 0 },
+          ]}
+          role="meter"
+          aria-label={localize('DND5E.HitPoints')}
+          aria-valuemin="0"
+          aria-valuenow={pct}
+          aria-valuetext={effectiveHpValue.toString()}
+          aria-valuemax={effectiveHpMax}
+          style="--bar-percentage: {pct.toFixed(0)}%;"
+          data-bar-severity="health"
+        >
+          <span class="label">
+            <TextInputQuadrone
+              document={context.item}
+              field="system.hp.value"
+              value={effectiveHpValue}
+              class="value font-weight-label uninput"
+              selectOnFocus={true}
+              enableDeltaChanges={true}
+            />
+            <!-- <span class="value font-weight-label">{effectiveHpValue ?? 0}</span> -->
+            <span class="separator">/</span>
+            <TextInputQuadrone
+              document={context.item}
+              field="system.hp.max"
+              value={effectiveHpMax}
+              class="max color-text-default uninput"
+              selectOnFocus={true}
+              enableDeltaChanges={true}
+            />
+            <!-- <span class="max color-text-default">{effectiveHpMax ?? 0}</span> -->
+          </span>
+        </span>
+      </li>
+    {/if}
     {#if 'equipped' in context.system && context.editable}
       {@const checkedIconClass = 'fas fa-hand-fist equip-icon fa-fw'}
       {@const uncheckedIconClass = 'far fa-hand fa-fw'}
