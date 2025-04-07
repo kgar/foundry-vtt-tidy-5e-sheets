@@ -141,7 +141,6 @@
           onclick={() => selectTab(tab)}
           onkeydown={(ev) => onKeyDown(ev, i)}
           {tabindex}
-          autofocus
         >
           {@html localize(tabTitle)}
         </a>
