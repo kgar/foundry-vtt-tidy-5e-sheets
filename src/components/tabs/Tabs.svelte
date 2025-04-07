@@ -45,7 +45,8 @@
   function onKeyDown(ev: KeyboardEvent, i: number) {
     switch (ev.key) {
       case 'ArrowRight':
-      case 'ArrowDown':
+      case 'ArrowDown': {
+        ev.preventDefault();
         const nextTab = tabs[(i + 1) % tabs.length];
         selectTab(nextTab);
         setTimeout(() => {
@@ -54,8 +55,10 @@
             ?.focus();
         });
         break;
+      }
       case 'ArrowLeft':
-      case 'ArrowUp':
+      case 'ArrowUp': {
+        ev.preventDefault();
         const previousTab = tabs.at(i - 1);
         if (previousTab) {
           selectTab(previousTab);
@@ -66,6 +69,7 @@
           });
         }
         break;
+      }
     }
   }
 
@@ -114,20 +118,32 @@
 >
   {#if tabs.length > 1}
     {#each tabs as tab, i (tab.id)}
-      {@const tabTitle = resolveTabTitle(tab)}
-      <a
-        class={CONSTANTS.TAB_OPTION_CLASS}
-        class:active={tab.id === selectedTabId}
-        class:first-tab={i === 0}
-        class:no-border-on-last-tab={!tabEnd && i === tabs.length - 1}
-        data-tab-id={tab.id}
-        role="tab"
-        onclick={() => selectTab(tab)}
-        onkeydown={(ev) => onKeyDown(ev, i)}
-        tabindex={i}
+      <svelte:boundary
+        onerror={(e) => {
+          error('An error occurred while rendering a tab', false, {
+            tab,
+            error: e,
+          });
+        }}
       >
-        {@html localize(tabTitle)}
-      </a>
+        {@const tabTitle = resolveTabTitle(tab)}
+        {@const tabIsSelected = tab.id === selectedTabId}
+        {@const tabindex = tabIsSelected ? 0 : -1}
+        <a
+          class={CONSTANTS.TAB_OPTION_CLASS}
+          class:active={tabIsSelected}
+          class:first-tab={i === 0}
+          class:no-border-on-last-tab={!tabEnd && i === tabs.length - 1}
+          data-tab-id={tab.id}
+          role="tab"
+          onclick={() => selectTab(tab)}
+          onkeydown={(ev) => onKeyDown(ev, i)}
+          {tabindex}
+          autofocus
+        >
+          {@html localize(tabTitle)}
+        </a>
+      </svelte:boundary>
     {/each}
   {/if}
   {@render tabEnd?.()}

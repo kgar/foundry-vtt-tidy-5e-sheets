@@ -1,25 +1,6 @@
 ## To Do
 
-- [ ] Work on Facility Sidebar
-  - [x] Progress
-  - [x] Harvesting
-  - [x] Crafting (a sword, for example)
-  - [x] Hide Facility section on sidebar when there are no pills to show; this implies also extracting those pills into snippets. No problem!
-  - [x] Limit craft content to harvest and craft orders
-  - [x] Apply disabled class to all facility progress / crafting pills when the facility is disabled
-  - [x] ~~When the facility is embedded~~ Just do it.
-    - [ ] Add tooltip for hireling / defender list to sidebar pills
-    - [x] Add `{Value} /` to the hireling / defender pill.
-- [x] Tangential: Foundry 13 doesn't like how we do HTML-rich tooltips. See Attunement summary tooltip as an example.
-- [x] (hightouch) Review / refine Advancement table styles. Need handling for tags, enrichers, etc.
-- [x] (hightouch) Editor / longform style requests
-  - [x] in our editor styles, can we do something more with the blockquote element? For example, check how the default sheets do blockquotes: italicize, with a left gray border (2-4px, or so), to make it really stand out as a quote.
-  - [x] A user requested we don't use a gap in our `<hr>` elements in the Editor / rendered styles. https://discord.com/channels/1167985253072257115/1170003836556017755/1357755740391215357
-- [ ] Not sure how feasible it would be but I'm noticing when we open a sheet that Tab still swaps between tokens on the canvas. Is it possible to steal tab focus when a sheet opens and give it to the first open tab? Then you could hit Tab to switch between sheet tabs on open https://discord.com/channels/@me/1243307347682529423/1355184980623491172
-- [ ] Notify hightouch that background sheet is ready for final review
-- [ ] Notify hightouch that class sheet is ready for final review
-- [ ] Notify hightouch that subclass sheet is ready for final review
-- [ ] Notify hightouch that species sheet is ready for final review
+
 - [ ] Foundry 13 theming: Ensure a set of theme classes are always being applied to Tidy sheets; see scratch notes for how to progressively check higher and higher. Have this wrapped up in the effect which applies mutable fields to the window.
 - [ ] Test spell info on item summary and cards
 - [ ] Propagate `sheet-header` class setup to all item sheets
@@ -495,3 +476,23 @@ Limited:
 - [x] Notify hightouch that loot sheet is ready for final review
 - [x] Notify hightouch that tool sheet is ready for final review
 - [x] Item with HP / HP Bar
+- [x] Work on Facility Sidebar
+  - [x] Progress
+  - [x] Harvesting
+  - [x] Crafting (a sword, for example)
+  - [x] Hide Facility section on sidebar when there are no pills to show; this implies also extracting those pills into snippets. No problem!
+  - [x] Limit craft content to harvest and craft orders
+  - [x] Apply disabled class to all facility progress / crafting pills when the facility is disabled
+  - [x] ~~When the facility is embedded~~ Just do it.
+    - [x] Add tooltip for hireling / defender list to sidebar pills
+    - [x] Add `{Value} /` to the hireling / defender pill.
+- [x] Tangential: Foundry 13 doesn't like how we do HTML-rich tooltips. See Attunement summary tooltip as an example.
+- [x] (hightouch) Review / refine Advancement table styles. Need handling for tags, enrichers, etc.
+- [x] (hightouch) Editor / longform style requests
+  - [x] in our editor styles, can we do something more with the blockquote element? For example, check how the default sheets do blockquotes: italicize, with a left gray border (2-4px, or so), to make it really stand out as a quote.
+  - [x] A user requested we don't use a gap in our `<hr>` elements in the Editor / rendered styles. https://discord.com/channels/1167985253072257115/1170003836556017755/1357755740391215357
+- [x] Not sure how feasible it would be but I'm noticing when we open a sheet that Tab still swaps between tokens on the canvas. Is it possible to steal tab focus when a sheet opens and give it to the first open tab? Then you could hit Tab to switch between sheet tabs on open https://discord.com/channels/@me/1243307347682529423/1355184980623491172
+- [x] Notify hightouch that background sheet is ready for final review
+- [x] Notify hightouch that class sheet is ready for final review
+- [x] Notify hightouch that subclass sheet is ready for final review
+- [x] Notify hightouch that species sheet is ready for final review
