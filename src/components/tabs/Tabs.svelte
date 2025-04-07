@@ -111,7 +111,8 @@
   }
 </script>
 
-<nav
+<div
+  role="tablist"
   class="tidy-tabs {cssClass}"
   class:vertical={orientation === 'vertical'}
   bind:this={nav}
@@ -136,6 +137,7 @@
           class:no-border-on-last-tab={!tabEnd && i === tabs.length - 1}
           data-tab-id={tab.id}
           role="tab"
+          aria-selected={tabIsSelected}
           onclick={() => selectTab(tab)}
           onkeydown={(ev) => onKeyDown(ev, i)}
           {tabindex}
@@ -147,4 +149,4 @@
     {/each}
   {/if}
   {@render tabEnd?.()}
-</nav>
+</div>
