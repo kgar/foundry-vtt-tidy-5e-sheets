@@ -1,38 +1,13 @@
 ## To Do
 
-
-
-- [ ] Propagate `sheet-header` class setup to all item sheets
-- [ ] Implement sheet header contents
-  - [ ] Facility
-    - [ ] subtitle
-      - [ ] Type
-      - [ ] Order
-    - [ ] summary
-      - [ ] Progress (x / y)
-      - [ ] Size
-      - [ ] Cost (if not assigned)
-  - [x] Feat
-    - [x] subtitle
-      - [x] Feat Type
-      - [x] Feat Subtype
-      - [x] ~~(When active) Activation Type (Action)~~ (already in sidebar)
-      - [x] (When Active) Requirements (Paladin 2)
-      - [x] (When Passive)
-    - [x] summary 
-      - [x] (when available) Charges
-      - [x] (when relevant) Cooldown
-  - [x] Species
-  - [ ] Tattoo
-    - [ ] Subtitle
-      - [ ] ...?
-    - [x] Summary
+- [ ] Implement Tattoo sheet details
+- [ ] Review and finalize Tattoo sheet sidebar
+- [ ] Implement Play/Edit mode
 - [ ] Finalize Description tab behavior for "text-based" sheets
   - [ ] Class / Subclass / Background / Species
     - [ ] Description tab
       - [ ] Description section header hidden, contents displayed
       - [ ] Edit mode always shows prosemirror visible in edit mode (like default sheets)
-- [x] Spell Sheet: Try a few different configurations for Class List.
 - [ ] Implement sidebar contents - prefer context data for pill groups with pill arrays of string and object (label / value)
   - [x] Background
   - [x] Class
@@ -55,15 +30,6 @@
   - [x] Tool
   - [x] Weapon
   - [x] Make sure Section section visible for all sheets
-- [x] Ensure Activities and Effects tabs include item counters in the title
-  - [x] This will need context-dependent tab titles, if they don't already exist
-- [x] https://discord.com/channels/@me/1243307347682529423/1336210686392668220
-- [x] Add context-dependent Tab visible / enabled predicate option to Tidy tabs, so that concealed content can entirely hide a tab, if needed
-- [x] Handle unidentified feature set
-  - [x] Portrait becomes washed over
-  - [x] Non-description tabs become disabled (preferably, hide them?)
-- [x] Wire up item-sheet-specific user sheet preferences for width and height. Look for other opportunities, also, like container toolbar.
-- [x] Replace rote individual span styles with util styles where able
 - [ ] All section configs: pass in callback for preparing sections to view, so that we're not processing this during non-option-sheet renders. It should only render on option sheet prerender.
 - [ ] Configure {TabId}: include a hook that allows people to pass in their own settings.
 - [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
@@ -454,6 +420,25 @@ Limited:
       - [x] Quantity
   - [x] Subclass
     - [x] ~~subtitle~~
+- [x] Facility
+    - [x] subtitle
+      - [x] Type
+      - [x] Order
+    - [x] summary
+      - [x] Progress (x / y)
+      - [x] Size
+      - [x] Cost (if not assigned)
+  - [x] Feat
+    - [x] subtitle
+      - [x] Feat Type
+      - [x] Feat Subtype
+      - [x] ~~(When active) Activation Type (Action)~~ (already in sidebar)
+      - [x] (When Active) Requirements (Paladin 2)
+      - [x] (When Passive)
+    - [x] summary 
+      - [x] (when available) Charges
+      - [x] (when relevant) Cooldown
+  - [x] Species
 - [x] Work on Subclass Header
 - [x] Work on Species Header
   - [x] No subtitle, no summary, add standard identity info scaffolding
@@ -497,3 +482,19 @@ Limited:
 - [x] Notify hightouch that subclass sheet is ready for final review
 - [x] Notify hightouch that species sheet is ready for final review
 - [x] Foundry 13 theming: Ensure a set of theme classes are always being applied to Tidy sheets; see scratch notes for how to progressively check higher and higher. Have this wrapped up in the effect which applies mutable fields to the window.
+- [x] Ensure Activities and Effects tabs include item counters in the title
+  - [x] This will need context-dependent tab titles, if they don't already exist
+- [x] https://discord.com/channels/@me/1243307347682529423/1336210686392668220
+- [x] Add context-dependent Tab visible / enabled predicate option to Tidy tabs, so that concealed content can entirely hide a tab, if needed
+- [x] Handle unidentified feature set
+  - [x] Portrait becomes washed over
+  - [x] Non-description tabs become disabled (preferably, hide them?)
+- [x] Wire up item-sheet-specific user sheet preferences for width and height. Look for other opportunities, also, like container toolbar.
+- [x] Replace rote individual span styles with util styles where able
+- [x] Propagate `sheet-header` class setup to all item sheets
+- [x] Implement sheet header contents
+  - [x] Tattoo
+    - [x] Subtitle
+      - [x] ...?
+    - [x] Summary
+- [x] Spell Sheet: Try a few different configurations for Class List.
