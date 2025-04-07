@@ -31,10 +31,11 @@ import {
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
-  applyMutableSettingAttributesToWindow,
   applyTitleToWindow,
   blurUntabbableButtonsOnClick,
   maintainCustomContentInputFocus,
+  applySheetConfigLockAttributeToApplication,
+  applyThemeToApplication,
 } from 'src/utils/applications.svelte';
 import { mount, unmount } from 'svelte';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
@@ -163,9 +164,15 @@ export class Tidy5eCharacterSheet
     this._effectCleanup = $effect.root(() => {
       $effect(() => {
         if (first) return;
-        applyMutableSettingAttributesToWindow(
+
+        applySheetConfigLockAttributeToApplication(
           settings.value,
           this.element.get(0)
+        );
+        applyThemeToApplication(
+          settings.value,
+          this.element.get(0),
+          this.actor
         );
         this.render();
       });

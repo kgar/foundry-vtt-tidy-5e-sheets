@@ -5,7 +5,7 @@ import { mount } from 'svelte';
 import ConfigureSections from './ConfigureSections.svelte';
 import type { TidySectionBase } from 'src/types/types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { getDocumentTheme } from 'src/theme/theme';
+import { getThemeV1, getThemeV2 } from 'src/theme/theme';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { SectionConfig } from 'src/features/sections/sections.types';
 
@@ -59,7 +59,8 @@ export class ConfigureSectionsApplication extends SvelteApplicationMixin(
     }));
     this.optionsGroups = [...(optionsGroups ?? [])];
     this.tabId = tabId;
-    this.theme = getDocumentTheme(rest.document);
+    this.theme =
+      game.release.generation < 13 ? getThemeV1() : getThemeV2(rest.document);
     this.formTitle = formTitle;
   }
 

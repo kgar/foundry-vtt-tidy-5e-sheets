@@ -11,30 +11,45 @@ import { defaultLightTheme } from './default-light-theme';
 import { Colord } from 'colord';
 import { CONSTANTS } from 'src/constants';
 import type { Item5e } from 'src/types/item.types';
+import { coalesce } from 'src/utils/formatting';
 
-export function getDocumentTheme(doc: any) {
+export function getThemeV1() {
   let theme: string | undefined = undefined;
-  if (game.release.generation >= 13) {
+
+  if (!theme) {
+    const currentTheme = SettingsProvider.settings.colorScheme.get();
+    theme = getThemeOrDefaultV1(currentTheme).id;
+  }
+
+  return coalesce(theme, CONSTANTS.THEME_ID_DEFAULT_LIGHT);
+}
+
+export function getThemeV2(doc?: any) {
+  let theme: string | undefined = undefined;
+  if (game.release.generation >= 13 && doc) {
     theme =
       foundry.applications.apps.DocumentSheetConfig.getSheetThemeForDocument(
         doc
-      ) ?? CONSTANTS.THEME_ID_DEFAULT_LIGHT;
+      );
   }
 
-  if (!theme && game.release.generation >= 13) {
+  if (game.release.generation >= 13) {
     const { colorScheme } = game.settings.get('core', 'uiConfig');
     theme = colorScheme.application;
   }
 
-  if (!theme) {
-    const currentTheme = SettingsProvider.settings.colorScheme.get();
-    theme = getThemeOrDefault(currentTheme).id;
+  if (!theme && game.release.generation >= 13) {
+    if (matchMedia('(prefers-color-scheme: dark)').matches) {
+      theme = 'dark';
+    } else if (matchMedia('(prefers-color-scheme: light)').matches) {
+      theme = 'light';
+    }
   }
 
-  return theme;
+  return coalesce(theme, CONSTANTS.THEME_ID_DEFAULT_LIGHT);
 }
 
-export function applyTheme(
+export function applyThemeColorsToHead(
   theme: Tidy5eTheme,
   colorPickerEnabledOverride: boolean | null = null
 ) {
@@ -98,12 +113,12 @@ function overrideColorPickerSettings(theme: Tidy5eTheme) {
   return overriddenTheme;
 }
 
-export function applyCurrentTheme(
+export function applyCurrentThemeV1(
   colorPickerEnabledOverride: boolean | null = null
 ) {
   const currentTheme = SettingsProvider.settings.colorScheme.get();
-  const theme = getThemeOrDefault(currentTheme);
-  applyTheme(theme, colorPickerEnabledOverride);
+  const theme = getThemeOrDefaultV1(currentTheme);
+  applyThemeColorsToHead(theme, colorPickerEnabledOverride);
 }
 
 export function getThemeableColors(): ThemeColorSetting[] {
@@ -118,7 +133,7 @@ export function getThemeableColors(): ThemeColorSetting[] {
     }));
 }
 
-export function getThemeOrDefault(themeId: string): Tidy5eTheme {
+export function getThemeOrDefaultV1(themeId: string): Tidy5eTheme {
   if (themeId === CONSTANTS.THEME_ID_DEFAULT) {
     const defaultThemeId = SettingsProvider.settings.defaultTheme.get();
     themeId = defaultThemeId;

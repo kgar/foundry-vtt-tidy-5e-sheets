@@ -10,11 +10,14 @@ import type {
   ApplicationRenderOptions,
 } from 'src/types/application.types';
 import type { Tab } from 'src/types/types';
-import { debug, error } from 'src/utils/logging';
+import { error } from 'src/utils/logging';
 import type { RenderResult } from './SvelteApplicationMixin.svelte';
 import { CustomContentRendererV2 } from 'src/sheets/CustomContentRendererV2';
 import { tick } from 'svelte';
-import { applySheetAttributesToWindow } from 'src/utils/applications.svelte';
+import {
+  applySheetAttributesToWindow,
+  applyThemeToApplication,
+} from 'src/utils/applications.svelte';
 import { isNil } from 'src/utils/data';
 import { processInputChangeDelta } from 'src/utils/form';
 import type {
@@ -29,6 +32,7 @@ import {
   removeTidyHeaderButtons,
 } from 'src/features/sheet-header-controls/header-controls';
 import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
+import { settings } from 'src/settings/settings.svelte';
 
 /**
  * A mixin which fills in the extensibility and common functionality
@@ -125,6 +129,10 @@ export function TidyExtensibleDocumentSheetMixin<
       this.#persistSheetPositionPreferences.bind(this),
       1000
     );
+
+    _runFrameListenerEffect() {
+      applyThemeToApplication(settings.value, this.element, this.document);
+    }
 
     _onPosition(position: ApplicationPosition) {
       super._onPosition(position);

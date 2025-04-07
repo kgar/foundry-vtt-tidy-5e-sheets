@@ -19,10 +19,11 @@ import NpcSheet from './npc/NpcSheet.svelte';
 import { CONSTANTS } from 'src/constants';
 import {
   applySheetAttributesToWindow,
-  applyMutableSettingAttributesToWindow,
   applyTitleToWindow,
   blurUntabbableButtonsOnClick,
   maintainCustomContentInputFocus,
+  applySheetConfigLockAttributeToApplication,
+  applyThemeToApplication,
 } from 'src/utils/applications.svelte';
 import { debug } from 'src/utils/logging';
 import { settings } from 'src/settings/settings.svelte';
@@ -148,10 +149,17 @@ export class Tidy5eNpcSheet
     this._effectCleanup = $effect.root(() => {
       $effect(() => {
         if (first) return;
-        applyMutableSettingAttributesToWindow(
+
+        applySheetConfigLockAttributeToApplication(
           settings.value,
           this.element.get(0)
         );
+        applyThemeToApplication(
+          settings.value,
+          this.element.get(0),
+          this.actor
+        );
+
         this.render();
       });
 

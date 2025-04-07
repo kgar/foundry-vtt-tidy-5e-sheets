@@ -1,8 +1,7 @@
 ## To Do
 
 
-- [ ] Foundry 13 theming: Ensure a set of theme classes are always being applied to Tidy sheets; see scratch notes for how to progressively check higher and higher. Have this wrapped up in the effect which applies mutable fields to the window.
-- [ ] Test spell info on item summary and cards
+
 - [ ] Propagate `sheet-header` class setup to all item sheets
 - [ ] Implement sheet header contents
   - [ ] Facility
@@ -86,6 +85,7 @@
     - [ ] Description section header hidden, contents displayed, editable when unlocked, saves when locked again, saves when save button clicked and is refreshed.
 - [ ] Fix weird minimize/maximize header text behavior. reference: https://discord.com/channels/@me/1243307347682529423/1357922036454002890
 - [ ] Add background circle hover style to section row buttons
+- [ ] Test spell info on item summary and cards
 
 ### Scratch - Finding the effective theme for a sheet
 
@@ -496,3 +496,4 @@ Limited:
 - [x] Notify hightouch that class sheet is ready for final review
 - [x] Notify hightouch that subclass sheet is ready for final review
 - [x] Notify hightouch that species sheet is ready for final review
+- [x] Foundry 13 theming: Ensure a set of theme classes are always being applied to Tidy sheets; see scratch notes for how to progressively check higher and higher. Have this wrapped up in the effect which applies mutable fields to the window.

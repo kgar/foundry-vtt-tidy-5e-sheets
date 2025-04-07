@@ -6,7 +6,7 @@
     ThemeColorSetting,
     Tidy5eThemeDataV1,
   } from 'src/types/theme.types';
-  import { applyCurrentTheme } from 'src/theme/theme';
+  import { applyCurrentThemeV1 } from 'src/theme/theme';
   import { error } from 'src/utils/logging';
   import ThemeSettingSheetMenu from './ThemeSettingSheetMenu.svelte';
   import ThemeSettingColorArticle from './ThemeSettingColorArticle.svelte';
@@ -37,7 +37,7 @@
       );
     } else {
       clearTidy5eRootCssVariables();
-      applyCurrentTheme(false);
+      applyCurrentThemeV1(false);
     }
   });
 

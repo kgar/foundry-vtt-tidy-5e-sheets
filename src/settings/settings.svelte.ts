@@ -2,7 +2,7 @@ import { CONSTANTS } from '../constants';
 import { FoundryAdapter } from '../foundry/foundry-adapter';
 import { ResetSettingsDialog } from './ResetSettingsDialog';
 import type { GetFunctionReturnType } from 'src/types/types';
-import { applyTheme, getThemeOrDefault } from 'src/theme/theme';
+import { applyThemeColorsToHead, getThemeOrDefaultV1 } from 'src/theme/theme';
 import { defaultLightTheme } from 'src/theme/default-light-theme';
 import { getCoreThemes, themeVariables } from 'src/theme/theme-reference';
 import { UserSettingsFormApplication } from 'src/applications/settings/user-settings/UserSettingsFormApplication.svelte';
@@ -214,12 +214,12 @@ export function createSettings() {
             choices: () => getCoreThemes(false),
           }),
           onChange: (data: string) => {
-            const theme = getThemeOrDefault(data);
+            const theme = getThemeOrDefaultV1(data);
 
             const colorScheme = SettingsProvider.settings.colorScheme.get();
 
             if (theme && colorScheme === CONSTANTS.THEME_ID_DEFAULT) {
-              applyTheme(theme);
+              applyThemeColorsToHead(theme);
             }
           },
         },
@@ -241,8 +241,8 @@ export function createSettings() {
             choices: () => getCoreThemes(true),
           }),
           onChange: (data: string) => {
-            const theme = getThemeOrDefault(data);
-            applyTheme(theme);
+            const theme = getThemeOrDefaultV1(data);
+            applyThemeColorsToHead(theme);
           },
         },
         get() {

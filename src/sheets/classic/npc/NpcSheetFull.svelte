@@ -274,8 +274,6 @@
     flex-direction: row;
     gap: 0.25rem;
     align-items: stretch;
-    font-family: var(--t5e-title-font-family);
-    font-weight: 700;
 
     .xp {
       font-size: 1rem;
@@ -283,8 +281,12 @@
       color: var(--t5e-secondary-color);
       white-space: nowrap;
       align-self: center;
+      font-family: var(--t5e-title-font-family);
+      font-weight: 700;
     }
     .challenge-rating {
+      font-family: var(--t5e-title-font-family);
+      font-weight: 700;
       padding: 0.25rem 0.375rem;
       border-radius: 0.1875rem;
       background: var(--t5e-faint-color);
