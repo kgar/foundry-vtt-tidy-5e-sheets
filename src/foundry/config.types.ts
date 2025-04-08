@@ -4110,7 +4110,7 @@ export type CONFIG = {
       '7': string;
       '8': string;
       '9': string;
-    };
+    } & Record<string, string>;
     spellScalingModes: {
       cantrip: string;
       none: string;

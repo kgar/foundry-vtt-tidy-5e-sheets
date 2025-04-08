@@ -79,20 +79,26 @@
 {#if context.item.hasLimitedUses}
   <fieldset>
     <legend>
-      <span>
-        {localize('DND5E.Recovery')}
-      </span>
-      {#if context.editable}
-        <button
-          type="button"
-          class="inline-icon-button create-recovery-button button-borderless button-icon-only" data-tooltip="DND5E.USES.Recovery.Action.Create"
-          aria-label={localize('DND5E.USES.Recovery.Action.Create')}
-          onclick={() => context.item.sheet.addRecovery()}
-          disabled={!context.unlocked}
-        >
-          <i class="fas fa-plus"></i>
-        </button>
-      {/if}
+      <div class="legend-with-button">
+        <span>
+          {localize('DND5E.Recovery')}
+        </span>
+        {#if context.editable}
+          <button
+            type="button"
+            class="create-recovery-button"
+            data-tooltip="DND5E.USES.Recovery.Action.Create"
+            aria-label={localize('DND5E.USES.Recovery.Action.Create')}
+            onclick={() => context.item.sheet.addRecovery()}
+            disabled={!context.unlocked}
+          >
+            <i class="fas fa-plus"></i>
+            {localize('TIDY5E.AddSpecific', {
+              name: localize('DND5E.Recovery'),
+            })}
+          </button>
+        {/if}
+      </div>
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 

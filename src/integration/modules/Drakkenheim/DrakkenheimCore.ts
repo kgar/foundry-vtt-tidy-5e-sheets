@@ -7,6 +7,7 @@ export class DrakkenheimCoreModuleIntegration implements ModuleIntegrationBase {
   get moduleId(): string {
     return 'drakkenheim-core';
   }
+  
   init(api: Tidy5eSheetsApi): void {
     import('./DrakkenheimContaminationTabClassic.scss');
 

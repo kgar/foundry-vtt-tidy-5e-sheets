@@ -1,7 +1,5 @@
 ## To Do
 
-- [ ] Implement Tattoo sheet details
-- [ ] Review and finalize Tattoo sheet sidebar
 - [ ] Implement Play/Edit mode
 - [ ] Finalize Description tab behavior for "text-based" sheets
   - [ ] Class / Subclass / Background / Species
@@ -498,3 +496,5 @@ Limited:
       - [x] ...?
     - [x] Summary
 - [x] Spell Sheet: Try a few different configurations for Class List.
+- [x] Implement Tattoo sheet details
+- [x] Review and finalize Tattoo sheet sidebar

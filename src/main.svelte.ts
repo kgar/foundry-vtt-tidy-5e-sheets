@@ -159,7 +159,6 @@ Hooks.once('init', () => {
       CONSTANTS.ITEM_TYPE_FEAT,
       CONSTANTS.ITEM_TYPE_RACE,
       CONSTANTS.ITEM_TYPE_SUBCLASS,
-      CONSTANTS.ITEM_TYPE_TATTOO,
     ];
 
     documentSheetConfig.registerSheet(

@@ -42,6 +42,12 @@
           margin-bottom: 0.0625rem;
         }
       }
+
+      >.legend-with-button {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
     }
 
     >.empty {
