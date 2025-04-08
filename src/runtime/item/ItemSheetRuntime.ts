@@ -70,9 +70,7 @@ export class ItemSheetRuntime {
   }
 
   static getCustomItemTabs(context: any) {
-    return ItemSheetRuntime._customTabs.filter(
-      (s) => s.enabled === undefined || s.enabled(context)
-    );
+    return ItemSheetRuntime._customTabs;
   }
 
   static classicSheets: Record<string, ItemSheetInfo> = {
