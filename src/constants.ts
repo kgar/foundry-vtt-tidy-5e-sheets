@@ -162,6 +162,8 @@ export const CONSTANTS = {
   THEME_ID_DEFAULT: 'default',
   VIEW_MODE_DEFAULT: 'default',
   VIEW_MODE_INVERSE: 'inverse',
+  SHEET_MODE_PLAY: 1,
+  SHEET_MODE_EDIT: 2,
   SHEET_TYPE_CHARACTER: 'character',
   SHEET_TYPE_NPC: 'npc',
   SHEET_TYPE_VEHICLE: 'vehicle',

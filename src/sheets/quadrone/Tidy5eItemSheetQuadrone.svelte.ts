@@ -195,7 +195,10 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     // kgar: I am knowingly repurposing the Custom Section blacklist,
     // because for items where custom sections are irrelevant,
     // they are likely not to have a need for a Chat descriptions.
-    if (SheetSections.itemSupportsCustomSections(this.item.type) && !showOnlyUnidentified) {
+    if (
+      SheetSections.itemSupportsCustomSections(this.item.type) &&
+      !showOnlyUnidentified
+    ) {
       itemDescriptions.push({
         enriched: enriched.chat,
         content: systemObject.description.chat,
@@ -210,6 +213,8 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
 
     const editable = this.isEditable === true;
 
+    // TODO: Continue Play/Edit mode upgrade.
+    // const unlocked = this._mode === this.ctor.MODES.EDIT && editable;
     const unlocked = FoundryAdapter.isSheetUnlocked(this.item) && editable;
 
     const systemSource = !unlocked ? this.item.system : systemObject;

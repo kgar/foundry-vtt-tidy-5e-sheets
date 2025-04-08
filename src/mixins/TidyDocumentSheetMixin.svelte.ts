@@ -51,6 +51,19 @@ export function TidyExtensibleDocumentSheetMixin<
     }
 
     /**
+     * Available sheet modes.
+     * @enum {number}
+     */
+    static MODES = {
+      PLAY: 1,
+      EDIT: 2,
+    };
+
+    get ctor() {
+      return this.constructor as typeof TidyDocumentSheet;
+    }
+
+    /**
      * An array of selectors within this sheet whose scroll positions should
      * be persisted during a re-render operation.
      */
@@ -340,6 +353,20 @@ export function TidyExtensibleDocumentSheetMixin<
     }
 
     /* -------------------------------------------- */
+    /*  Sheet Mode Management                       */
+    /* -------------------------------------------- */
+
+    /**
+     * Changes the user toggling the sheet mode.
+     * @protected
+     */
+    async changeSheetMode(mode: typeof TidyDocumentSheet.MODES) {
+      this._mode = mode;
+      await this.submit();
+      this.render();
+    }
+
+    /* -------------------------------------------- */
     /*  Closing                                     */
     /* -------------------------------------------- */
 
@@ -446,6 +473,10 @@ export function TidyExtensibleDocumentSheetMixin<
       }
     }
 
+    /* -------------------------------------------- */
+    /*  Application Initialization                  */
+    /* -------------------------------------------- */
+
     _initializeApplicationOptions(options: ApplicationConfiguration) {
       const updatedOptions = super._initializeApplicationOptions(
         options
@@ -510,6 +541,10 @@ export function TidyExtensibleDocumentSheetMixin<
 
       return updatedOptions;
     }
+
+    /* -------------------------------------------- */
+    /*  Header Control Management                   */
+    /* -------------------------------------------- */
 
     _getCustomHeaderControls(document: any): { controls: any[]; actions: any } {
       const controls: ApplicationHeaderControlsEntry[] = [];
