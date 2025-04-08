@@ -395,7 +395,7 @@ input[type='checkbox'] {
   &:not(:checked):disabled::before {
     content: '\e59b';
     font-size: 0.825rem;
-    // color: var(--t5e-color-text-disabled);
+    color: var(--t5e-color-palette-grey-60);
   }
 }
 
@@ -448,9 +448,7 @@ select {
   }
 }
 
-&.dark,
 &.theme-dark,
-.dark,
 .theme-dark {
 
   select,
@@ -531,6 +529,12 @@ select {
         background-color: var(--t5e-theme-color-darker);
         box-shadow: var(--t5e-drop-shadow-field-hover);
       }
+    }
+  }
+
+  input[type='checkbox'] {
+    &:not(:checked):disabled::before {
+      color: var(--t5e-color-palette-grey-21);
     }
   }
 }
