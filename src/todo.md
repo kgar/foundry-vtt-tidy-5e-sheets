@@ -1,38 +1,16 @@
 ## To Do
 
 - [ ] Implement Play/Edit mode
+  - [ ] Update sheet lock to work like the default sheets, including the additional render options and intuitive default state
 - [ ] Finalize Description tab behavior for "text-based" sheets
   - [ ] Class / Subclass / Background / Species
     - [ ] Description tab
       - [ ] Description section header hidden, contents displayed
       - [ ] Edit mode always shows prosemirror visible in edit mode (like default sheets)
-- [ ] Implement sidebar contents - prefer context data for pill groups with pill arrays of string and object (label / value)
-  - [x] Background
-  - [x] Class
-  - [x] Consumable
-  - [x] Container
-  - [x] Equipment
-  - [X] Facility
-    - [x] Category
-    - [x] Prerequisite
-    - [x] Y Hirelings
-    - [x] Y Defenders
-    - [x] Order
-  - [x] Feat
-  - [x] Loot
-  - [x] Species
-  - [x] Spell
-    - Use the children snippet for spell-specific label-value pair info
-  - [x] Subclass
-  - [ ] Tattoo
-  - [x] Tool
-  - [x] Weapon
-  - [x] Make sure Section section visible for all sheets
 - [ ] All section configs: pass in callback for preparing sections to view, so that we're not processing this during non-option-sheet renders. It should only render on option sheet prerender.
 - [ ] Configure {TabId}: include a hook that allows people to pass in their own settings.
 - [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
 - [ ] Resolve TODO -  // TODO: Make this a callback to send through to the component for preparing sections properly
-- [ ] Update sheet lock to work like the default sheets, including the additional render options and intuitive default state
 - [ ] Item cards
   - [ ] Implement a shared portal for item cards. All attached item cards will use the one portal anchor. This is so the card can live outside the sheet's overflow hiding window content, so we don't have to worry about compromising design.
   - [ ] Have item cards be targeted via `.tidy5e-sheet.classic....` etc.
@@ -498,3 +476,25 @@ Limited:
 - [x] Spell Sheet: Try a few different configurations for Class List.
 - [x] Implement Tattoo sheet details
 - [x] Review and finalize Tattoo sheet sidebar
+- [x] Implement sidebar contents - prefer context data for pill groups with pill arrays of string and object (label / value)
+  - [x] Background
+  - [x] Class
+  - [x] Consumable
+  - [x] Container
+  - [x] Equipment
+  - [X] Facility
+    - [x] Category
+    - [x] Prerequisite
+    - [x] Y Hirelings
+    - [x] Y Defenders
+    - [x] Order
+  - [x] Feat
+  - [x] Loot
+  - [x] Species
+  - [x] Spell
+    - Use the children snippet for spell-specific label-value pair info
+  - [x] Subclass
+  - [x] Tattoo
+  - [x] Tool
+  - [x] Weapon
+  - [x] Make sure Section section visible for all sheets
