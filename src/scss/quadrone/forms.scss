@@ -35,7 +35,7 @@
       }
 
       >label.checkbox {
-        --checkbox-size: 0.875rem;
+        // --checkbox-size: 0.875rem;
         font-weight: 600;
 
         input[type='checkbox'] {
@@ -428,7 +428,11 @@
     >input[type='radio'],
     >label {
       flex: none;
-      // color: var(--color-form-label);
+    // color: var(--color-form-label);
+    }
+
+    input[type='checkbox'] {
+      --checkbox-size: 1rem;
     }
 
     &.flexcol {
