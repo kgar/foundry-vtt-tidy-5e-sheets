@@ -59,11 +59,13 @@
         if (context.unlocked) {
           openPortraitPicker(event);
         } else {
-          FoundryAdapter.renderImagePopout(context.actor.img, {
-            title: FoundryAdapter.localize('TIDY5E.PortraitTitle', {
-              subject: context.actor.name,
-            }),
-            shareable: true,
+          FoundryAdapter.renderImagePopout({
+            src: context.actor.img,
+            window: {
+              title: FoundryAdapter.localize('TIDY5E.PortraitTitle', {
+                subject: context.actor.name,
+              }),
+            },
             uuid: context.actor.uuid,
           });
         }
