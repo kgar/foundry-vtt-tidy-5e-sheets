@@ -553,8 +553,8 @@
     },
     "TIDY5E.Settings.Migrations": {
         "name": "Migrações",
-        "buttonLabel": "Migrar dados Tidy",
-        "dialogTitle": "Migrar dados Tidy",
+        "buttonLabel": "Migrar Dados Tidy",
+        "dialogTitle": "Migrar Dados Tidy",
         "hint": "Se você era um usuário do módulo Tidy5e Sheet original, opcionalmente use este menu Migrações para migrar suas configurações de Mestre e dados da ficha Tidy.",
         "migrationBeginningMessage": "Migrando dados. Por favor, não atualize a página até que esteja concluído.",
         "migrationErrorMessage": "Ocorreu um erro. Mais detalhes estão no console de desenvolvimento.",
