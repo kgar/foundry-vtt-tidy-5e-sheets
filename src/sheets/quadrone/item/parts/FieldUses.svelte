@@ -86,7 +86,7 @@
         {#if context.editable}
           <button
             type="button"
-            class="create-recovery-button"
+            class="create-recovery-button button-borderless"
             data-tooltip="DND5E.USES.Recovery.Action.Create"
             aria-label={localize('DND5E.USES.Recovery.Action.Create')}
             onclick={() => context.item.sheet.addRecovery()}
