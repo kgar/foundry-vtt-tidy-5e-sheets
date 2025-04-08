@@ -33,7 +33,7 @@ export function getThemeV2(doc?: any) {
       );
   }
 
-  if (game.release.generation >= 13) {
+  if (!theme && game.release.generation >= 13) {
     const { colorScheme } = game.settings.get('core', 'uiConfig');
     theme = colorScheme.application;
   }
