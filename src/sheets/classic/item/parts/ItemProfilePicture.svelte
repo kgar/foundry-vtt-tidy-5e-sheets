@@ -25,11 +25,13 @@
   }
 
   function showItemArt(item: Item5e) {
-    FoundryAdapter.renderImagePopout(item.img, {
-      title: FoundryAdapter.localize('TIDY5E.ItemImageTitle', {
-        subject: item.name,
-      }),
-      shareable: true,
+    FoundryAdapter.renderImagePopout({
+      src: item.img,
+      window: {
+        title: FoundryAdapter.localize('TIDY5E.ItemImageTitle', {
+          subject: item.name,
+        }),
+      },
       uuid: item.uuid,
     });
   }

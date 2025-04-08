@@ -10,11 +10,14 @@ import type {
   ApplicationRenderOptions,
 } from 'src/types/application.types';
 import type { Tab } from 'src/types/types';
-import { debug, error } from 'src/utils/logging';
+import { error } from 'src/utils/logging';
 import type { RenderResult } from './SvelteApplicationMixin.svelte';
 import { CustomContentRendererV2 } from 'src/sheets/CustomContentRendererV2';
 import { tick } from 'svelte';
-import { applySheetAttributesToWindow } from 'src/utils/applications.svelte';
+import {
+  applySheetAttributesToWindow,
+  applyThemeToApplication,
+} from 'src/utils/applications.svelte';
 import { isNil } from 'src/utils/data';
 import { processInputChangeDelta } from 'src/utils/form';
 import type {
@@ -29,6 +32,7 @@ import {
   removeTidyHeaderButtons,
 } from 'src/features/sheet-header-controls/header-controls';
 import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
+import { settings } from 'src/settings/settings.svelte';
 
 /**
  * A mixin which fills in the extensibility and common functionality
@@ -44,6 +48,19 @@ export function TidyExtensibleDocumentSheetMixin<
   class TidyDocumentSheet extends BaseApplication {
     constructor(options: TConstructorArgs) {
       super(options);
+    }
+
+    /**
+     * Available sheet modes.
+     * @enum {number}
+     */
+    static MODES = {
+      PLAY: 1,
+      EDIT: 2,
+    };
+
+    get ctor() {
+      return this.constructor as typeof TidyDocumentSheet;
     }
 
     /**
@@ -125,6 +142,10 @@ export function TidyExtensibleDocumentSheetMixin<
       this.#persistSheetPositionPreferences.bind(this),
       1000
     );
+
+    _runFrameListenerEffect() {
+      applyThemeToApplication(settings.value, this.element, this.document);
+    }
 
     _onPosition(position: ApplicationPosition) {
       super._onPosition(position);
@@ -332,6 +353,20 @@ export function TidyExtensibleDocumentSheetMixin<
     }
 
     /* -------------------------------------------- */
+    /*  Sheet Mode Management                       */
+    /* -------------------------------------------- */
+
+    /**
+     * Changes the user toggling the sheet mode.
+     * @protected
+     */
+    async changeSheetMode(mode: typeof TidyDocumentSheet.MODES) {
+      this._mode = mode;
+      await this.submit();
+      this.render();
+    }
+
+    /* -------------------------------------------- */
     /*  Closing                                     */
     /* -------------------------------------------- */
 
@@ -438,6 +473,10 @@ export function TidyExtensibleDocumentSheetMixin<
       }
     }
 
+    /* -------------------------------------------- */
+    /*  Application Initialization                  */
+    /* -------------------------------------------- */
+
     _initializeApplicationOptions(options: ApplicationConfiguration) {
       const updatedOptions = super._initializeApplicationOptions(
         options
@@ -502,6 +541,10 @@ export function TidyExtensibleDocumentSheetMixin<
 
       return updatedOptions;
     }
+
+    /* -------------------------------------------- */
+    /*  Header Control Management                   */
+    /* -------------------------------------------- */
 
     _getCustomHeaderControls(document: any): { controls: any[]; actions: any } {
       const controls: ApplicationHeaderControlsEntry[] = [];

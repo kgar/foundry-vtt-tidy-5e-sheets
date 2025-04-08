@@ -20,10 +20,11 @@ import VehicleSheet from './vehicle/VehicleSheet.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import {
   applySheetAttributesToWindow,
-  applyMutableSettingAttributesToWindow,
   applyTitleToWindow,
   blurUntabbableButtonsOnClick,
   maintainCustomContentInputFocus,
+  applyThemeToApplication,
+  applySheetConfigLockAttributeToApplication,
 } from 'src/utils/applications.svelte';
 import { mount, unmount } from 'svelte';
 import { debug } from 'src/utils/logging';
@@ -130,10 +131,17 @@ export class Tidy5eVehicleSheet
     this._effectCleanup = $effect.root(() => {
       $effect(() => {
         if (first) return;
-        applyMutableSettingAttributesToWindow(
+
+        applySheetConfigLockAttributeToApplication(
           settings.value,
           this.element.get(0)
         );
+        applyThemeToApplication(
+          settings.value,
+          this.element.get(0),
+          this.actor
+        );
+
         this.render();
       });
 

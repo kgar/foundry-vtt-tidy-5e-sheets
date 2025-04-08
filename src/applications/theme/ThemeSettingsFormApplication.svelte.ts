@@ -4,8 +4,8 @@ import {
   type CurrentSettings,
 } from 'src/settings/settings.svelte';
 import {
-  applyCurrentTheme,
-  getThemeOrDefault,
+  applyCurrentThemeV1,
+  getThemeOrDefaultV1,
   getThemeableColors,
 } from 'src/theme/theme';
 import type {
@@ -83,13 +83,13 @@ export class ThemeSettingsFormApplication extends SvelteFormApplicationBase {
       newSettings.colorPickerEnabled
     );
 
-    applyCurrentTheme();
+    applyCurrentThemeV1();
 
     await this.close();
   }
 
   useExistingThemeColors(themeId: string) {
-    const targetTheme = getThemeOrDefault(themeId);
+    const targetTheme = getThemeOrDefaultV1(themeId);
 
     const colorsToUpdate = this.themeableColors.reduce<Record<string, unknown>>(
       (prev, color) => {

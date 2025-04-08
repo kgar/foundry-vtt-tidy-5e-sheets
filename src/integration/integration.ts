@@ -10,6 +10,7 @@ import type { Tidy5eSheetsApi } from 'src/api/Tidy5eSheetsApi';
 import { DrakkenheimCoreModuleIntegration } from './modules/Drakkenheim/DrakkenheimCore';
 import { TidyCustomSectionsInDefaultItemSheetIntegration } from './system/TidyCustomSectionsInDefaultItemSheetIntegration';
 import { ColorisThirdPartyIntegration } from './third-party/Coloris.svelte';
+import { DndTashasCauldronModuleIntegration } from './modules/DndTashasCauldron/DndTashasCauldron';
 
 export function setupIntegrations(api: Tidy5eSheetsApi) {
   setupSystemIntegrations(api);
@@ -40,6 +41,7 @@ const moduleIntegrations: ModuleIntegrationBase[] = [
   new PopoutModuleIntegration(),
   new CustomCharacterSheetsModuleIntegration(),
   new DrakkenheimCoreModuleIntegration(),
+  new DndTashasCauldronModuleIntegration(),
   // Add other module integrations here
 ];
 

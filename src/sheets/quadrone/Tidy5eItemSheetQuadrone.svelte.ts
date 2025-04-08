@@ -195,7 +195,10 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     // kgar: I am knowingly repurposing the Custom Section blacklist,
     // because for items where custom sections are irrelevant,
     // they are likely not to have a need for a Chat descriptions.
-    if (SheetSections.itemSupportsCustomSections(this.item.type) && !showOnlyUnidentified) {
+    if (
+      SheetSections.itemSupportsCustomSections(this.item.type) &&
+      !showOnlyUnidentified
+    ) {
       itemDescriptions.push({
         enriched: enriched.chat,
         content: systemObject.description.chat,
@@ -210,6 +213,8 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
 
     const editable = this.isEditable === true;
 
+    // TODO: Continue Play/Edit mode upgrade.
+    // const unlocked = this._mode === this.ctor.MODES.EDIT && editable;
     const unlocked = FoundryAdapter.isSheetUnlocked(this.item) && editable;
 
     const systemSource = !unlocked ? this.item.system : systemObject;
@@ -849,7 +854,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
         return this._onDropActivity(event, data);
       case 'Advancement':
       case 'Item':
-        return this._onDropAdvancement(event, data);
+        return this._onDropItem(event, data);
     }
   }
 
@@ -935,6 +940,31 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
   }
 
   /* -------------------------------------------- */
+
+  /**
+   * Handle dropping another item onto this item.
+   * @param {DragEvent} event  The drag event.
+   * @param {object} data      The dropped data.
+   */
+  async _onDropItem(event: DragEvent, data: object) {
+    const item = await Item.implementation.fromDropData(data);
+    if (item?.type === 'spell' && this.item.system.activities) {
+      this._onDropSpell(event, item);
+    } else {
+      this._onDropAdvancement(event, data);
+    }
+  }
+
+  /**
+   * Handle creating a "Cast" activity when dropping a spell.
+   * @param {DragEvent} event  The drag event.
+   * @param {Item5e} item      The dropped item.
+   */
+  _onDropSpell(event: DragEvent, item: Item5e) {
+    this.item.createActivity(CONSTANTS.ACTIVITY_TYPE_CAST, {
+      spell: { uuid: item.uuid },
+    });
+  }
 
   /**
    * Handle the dropping of an advancement or item with advancements onto the advancements tab.

@@ -1,94 +1,16 @@
 ## To Do
 
-- [ ] Item with HP / HP Bar
-- [ ] Work on Facility Sidebar
-  - [x] Progress
-  - [x] Harvesting
-  - [x] Crafting (a sword, for example)
-  - [x] Hide Facility section on sidebar when there are no pills to show; this implies also extracting those pills into snippets. No problem!
-  - [x] Limit craft content to harvest and craft orders
-  - [ ] Apply disabled class to all facility progress / crafting pills when the facility is disabled
-  - [ ] When the facility is embedded
-    - [ ] Add conditionally available tooltip for hireling / defender list to sidebar pills
-    - [ ] Add `{Value} /` to the hireling / defender pill.
-- [ ] (hightouch) Review / refine Advancement table styles. Need handling for tags, enrichers, etc.
-- [x] (hightouch) Editor / longform style requests
-  - [x] in our editor styles, can we do something more with the blockquote element? For example, check how the default sheets do blockquotes: italicize, with a left gray border (2-4px, or so), to make it really stand out as a quote.
-  - [x] A user requested we don't use a gap in our `<hr>` elements in the Editor / rendered styles. https://discord.com/channels/1167985253072257115/1170003836556017755/1357755740391215357
-- [ ] Not sure how feasible it would be but I'm noticing when we open a sheet that Tab still swaps between tokens on the canvas. Is it possible to steal tab focus when a sheet opens and give it to the first open tab? Then you could hit Tab to switch between sheet tabs on open https://discord.com/channels/@me/1243307347682529423/1355184980623491172
-- [ ] Notify hightouch that background sheet is ready for final review
-- [ ] Notify hightouch that class sheet is ready for final review
-- [ ] Notify hightouch that subclass sheet is ready for final review
-- [ ] Notify hightouch that species sheet is ready for final review
-- [ ] Foundry 13 theming: Ensure a set of theme classes are always being applied to Tidy sheets; see scratch notes for how to progressively check higher and higher. Have this wrapped up in the effect which applies mutable fields to the window.
-- [ ] Test spell info on item summary and cards
-- [ ] Propagate `sheet-header` class setup to all item sheets
-- [ ] Implement sheet header contents
-  - [ ] Facility
-    - [ ] subtitle
-      - [ ] Type
-      - [ ] Order
-    - [ ] summary
-      - [ ] Progress (x / y)
-      - [ ] Size
-      - [ ] Cost (if not assigned)
-  - [x] Feat
-    - [x] subtitle
-      - [x] Feat Type
-      - [x] Feat Subtype
-      - [x] ~~(When active) Activation Type (Action)~~ (already in sidebar)
-      - [x] (When Active) Requirements (Paladin 2)
-      - [x] (When Passive)
-    - [x] summary 
-      - [x] (when available) Charges
-      - [x] (when relevant) Cooldown
-  - [x] Species
-  - [ ] Tattoo
-    - [ ] Subtitle
-      - [ ] ...?
-    - [x] Summary
+- [ ] Implement Play/Edit mode
+  - [ ] Update sheet lock to work like the default sheets, including the additional render options and intuitive default state
 - [ ] Finalize Description tab behavior for "text-based" sheets
   - [ ] Class / Subclass / Background / Species
     - [ ] Description tab
       - [ ] Description section header hidden, contents displayed
       - [ ] Edit mode always shows prosemirror visible in edit mode (like default sheets)
-- [x] Spell Sheet: Try a few different configurations for Class List.
-- [ ] Implement sidebar contents - prefer context data for pill groups with pill arrays of string and object (label / value)
-  - [x] Background
-  - [x] Class
-  - [x] Consumable
-  - [x] Container
-  - [x] Equipment
-  - [X] Facility
-    - [x] Category
-    - [x] Prerequisite
-    - [x] Y Hirelings
-    - [x] Y Defenders
-    - [x] Order
-  - [x] Feat
-  - [x] Loot
-  - [x] Species
-  - [x] Spell
-    - Use the children snippet for spell-specific label-value pair info
-  - [x] Subclass
-  - [ ] Tattoo
-  - [x] Tool
-  - [x] Weapon
-  - [x] Make sure Section section visible for all sheets
-- [x] Ensure Activities and Effects tabs include item counters in the title
-  - [x] This will need context-dependent tab titles, if they don't already exist
-- [x] https://discord.com/channels/@me/1243307347682529423/1336210686392668220
-- [x] Add context-dependent Tab visible / enabled predicate option to Tidy tabs, so that concealed content can entirely hide a tab, if needed
-- [x] Handle unidentified feature set
-  - [x] Portrait becomes washed over
-  - [x] Non-description tabs become disabled (preferably, hide them?)
-- [x] Wire up item-sheet-specific user sheet preferences for width and height. Look for other opportunities, also, like container toolbar.
-- [x] Replace rote individual span styles with util styles where able
 - [ ] All section configs: pass in callback for preparing sections to view, so that we're not processing this during non-option-sheet renders. It should only render on option sheet prerender.
 - [ ] Configure {TabId}: include a hook that allows people to pass in their own settings.
 - [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
 - [ ] Resolve TODO -  // TODO: Make this a callback to send through to the component for preparing sections properly
-- [ ] Update sheet lock to work like the default sheets, including the additional render options and intuitive default state
 - [ ] Item cards
   - [ ] Implement a shared portal for item cards. All attached item cards will use the one portal anchor. This is so the card can live outside the sheet's overflow hiding window content, so we don't have to worry about compromising design.
   - [ ] Have item cards be targeted via `.tidy5e-sheet.classic....` etc.
@@ -105,6 +27,7 @@
     - [ ] Description section header hidden, contents displayed, editable when unlocked, saves when locked again, saves when save button clicked and is refreshed.
 - [ ] Fix weird minimize/maximize header text behavior. reference: https://discord.com/channels/@me/1243307347682529423/1357922036454002890
 - [ ] Add background circle hover style to section row buttons
+- [ ] Test spell info on item summary and cards
 
 ### Scratch - Finding the effective theme for a sheet
 
@@ -473,6 +396,25 @@ Limited:
       - [x] Quantity
   - [x] Subclass
     - [x] ~~subtitle~~
+- [x] Facility
+    - [x] subtitle
+      - [x] Type
+      - [x] Order
+    - [x] summary
+      - [x] Progress (x / y)
+      - [x] Size
+      - [x] Cost (if not assigned)
+  - [x] Feat
+    - [x] subtitle
+      - [x] Feat Type
+      - [x] Feat Subtype
+      - [x] ~~(When active) Activation Type (Action)~~ (already in sidebar)
+      - [x] (When Active) Requirements (Paladin 2)
+      - [x] (When Passive)
+    - [x] summary 
+      - [x] (when available) Charges
+      - [x] (when relevant) Cooldown
+  - [x] Species
 - [x] Work on Subclass Header
 - [x] Work on Species Header
   - [x] No subtitle, no summary, add standard identity info scaffolding
@@ -494,3 +436,65 @@ Limited:
 - [x] Notify hightouch that consumable sheet is ready for final review
 - [x] Notify hightouch that loot sheet is ready for final review
 - [x] Notify hightouch that tool sheet is ready for final review
+- [x] Item with HP / HP Bar
+- [x] Work on Facility Sidebar
+  - [x] Progress
+  - [x] Harvesting
+  - [x] Crafting (a sword, for example)
+  - [x] Hide Facility section on sidebar when there are no pills to show; this implies also extracting those pills into snippets. No problem!
+  - [x] Limit craft content to harvest and craft orders
+  - [x] Apply disabled class to all facility progress / crafting pills when the facility is disabled
+  - [x] ~~When the facility is embedded~~ Just do it.
+    - [x] Add tooltip for hireling / defender list to sidebar pills
+    - [x] Add `{Value} /` to the hireling / defender pill.
+- [x] Tangential: Foundry 13 doesn't like how we do HTML-rich tooltips. See Attunement summary tooltip as an example.
+- [x] (hightouch) Review / refine Advancement table styles. Need handling for tags, enrichers, etc.
+- [x] (hightouch) Editor / longform style requests
+  - [x] in our editor styles, can we do something more with the blockquote element? For example, check how the default sheets do blockquotes: italicize, with a left gray border (2-4px, or so), to make it really stand out as a quote.
+  - [x] A user requested we don't use a gap in our `<hr>` elements in the Editor / rendered styles. https://discord.com/channels/1167985253072257115/1170003836556017755/1357755740391215357
+- [x] Not sure how feasible it would be but I'm noticing when we open a sheet that Tab still swaps between tokens on the canvas. Is it possible to steal tab focus when a sheet opens and give it to the first open tab? Then you could hit Tab to switch between sheet tabs on open https://discord.com/channels/@me/1243307347682529423/1355184980623491172
+- [x] Notify hightouch that background sheet is ready for final review
+- [x] Notify hightouch that class sheet is ready for final review
+- [x] Notify hightouch that subclass sheet is ready for final review
+- [x] Notify hightouch that species sheet is ready for final review
+- [x] Foundry 13 theming: Ensure a set of theme classes are always being applied to Tidy sheets; see scratch notes for how to progressively check higher and higher. Have this wrapped up in the effect which applies mutable fields to the window.
+- [x] Ensure Activities and Effects tabs include item counters in the title
+  - [x] This will need context-dependent tab titles, if they don't already exist
+- [x] https://discord.com/channels/@me/1243307347682529423/1336210686392668220
+- [x] Add context-dependent Tab visible / enabled predicate option to Tidy tabs, so that concealed content can entirely hide a tab, if needed
+- [x] Handle unidentified feature set
+  - [x] Portrait becomes washed over
+  - [x] Non-description tabs become disabled (preferably, hide them?)
+- [x] Wire up item-sheet-specific user sheet preferences for width and height. Look for other opportunities, also, like container toolbar.
+- [x] Replace rote individual span styles with util styles where able
+- [x] Propagate `sheet-header` class setup to all item sheets
+- [x] Implement sheet header contents
+  - [x] Tattoo
+    - [x] Subtitle
+      - [x] ...?
+    - [x] Summary
+- [x] Spell Sheet: Try a few different configurations for Class List.
+- [x] Implement Tattoo sheet details
+- [x] Review and finalize Tattoo sheet sidebar
+- [x] Implement sidebar contents - prefer context data for pill groups with pill arrays of string and object (label / value)
+  - [x] Background
+  - [x] Class
+  - [x] Consumable
+  - [x] Container
+  - [x] Equipment
+  - [X] Facility
+    - [x] Category
+    - [x] Prerequisite
+    - [x] Y Hirelings
+    - [x] Y Defenders
+    - [x] Order
+  - [x] Feat
+  - [x] Loot
+  - [x] Species
+  - [x] Spell
+    - Use the children snippet for spell-specific label-value pair info
+  - [x] Subclass
+  - [x] Tattoo
+  - [x] Tool
+  - [x] Weapon
+  - [x] Make sure Section section visible for all sheets

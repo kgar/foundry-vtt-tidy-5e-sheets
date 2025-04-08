@@ -24,6 +24,8 @@
   "TIDY5E.ShowItemArt": "Show Image",
   "TIDY5E.Tidy5eSettings": "Tidy 5e Sheets Settings",
 
+  "TIDY5E.AddSpecific": "Add {name}",
+
   "TIDY5E.ExhaustionLevelTooltip": "Exhaustion Level {level}",
 
   "TIDY5E.AbbrInitiative": "Ini",

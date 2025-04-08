@@ -876,8 +876,21 @@ export const FoundryAdapter = {
   async renderSheetFromUuid(uuid: string) {
     (await fromUuid(uuid))?.sheet?.render(true);
   },
-  renderImagePopout(...args: any[]) {
-    return new ImagePopout(...args).render(true);
+  renderImagePopout(args: {
+    src: string;
+    uuid: string;
+    window?: { title: string };
+  }) {
+    if (game.release.generation < 13) {
+      return new ImagePopout(args.src, {
+        title: args.window?.title,
+        uuid: args.uuid,
+      }).render(true);
+    }
+
+    return new foundry.applications.apps.ImagePopout(args).render({
+      force: true,
+    });
   },
   browseFilePicker(...args: any[]) {
     return new FilePicker(...args).browse();

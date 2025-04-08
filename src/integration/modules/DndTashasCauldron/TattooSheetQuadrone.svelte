@@ -1,16 +1,17 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import ItemNameHeaderOrchestrator from './parts/ItemNameHeaderOrchestrator.svelte';
-  import Sidebar from './parts/Sidebar.svelte';
+  import ItemNameHeaderOrchestrator from '../../../sheets/quadrone/item/parts/ItemNameHeaderOrchestrator.svelte';
+  import Sidebar from '../../../sheets/quadrone/item/parts/Sidebar.svelte';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
-  import ItemPriceSummary from './parts/header/ItemPriceSummary.svelte';
-  import ItemWeightSummary from './parts/header/ItemWeightSummary.svelte';
-  import ItemQuantitySummary from './parts/header/ItemQuantitySummary.svelte';
-  import ItemChargesSummary from './parts/header/ItemChargesSummary.svelte';
-  import ItemName from './parts/header/ItemName.svelte';
-  import ItemRechargeSummary from './parts/header/ItemRechargeSummary.svelte';
+  import ItemPriceSummary from '../../../sheets/quadrone/item/parts/header/ItemPriceSummary.svelte';
+  import ItemWeightSummary from '../../../sheets/quadrone/item/parts/header/ItemWeightSummary.svelte';
+  import ItemQuantitySummary from '../../../sheets/quadrone/item/parts/header/ItemQuantitySummary.svelte';
+  import ItemChargesSummary from '../../../sheets/quadrone/item/parts/header/ItemChargesSummary.svelte';
+  import ItemName from '../../../sheets/quadrone/item/parts/header/ItemName.svelte';
+  import ItemRechargeSummary from '../../../sheets/quadrone/item/parts/header/ItemRechargeSummary.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -18,12 +19,27 @@
 
   let itemNameEl: HTMLElement | undefined = $state();
 
-  let subtitle = $derived('TODO');
+  let localize = FoundryAdapter.localize;
+
+  let subtitle = $derived.by(() => {
+    let result: string[] = [
+      localize(CONFIG.TCOE.tattooTypes[context.source.type.value]?.label),
+    ];
+
+    if (context.system.isSpellwrought) {
+      result.push(CONFIG.DND5E.spellLevels[context.source.level]);
+    }
+
+    return result.join(', ');
+  });
 </script>
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
 
-<Sidebar sectionLabel={'DND5E.Inventory'} />
+<Sidebar
+  sectionLabel={'TYPES.Item.dnd-tashas-cauldron.tattoo'}
+  includeSidebarProperties={false}
+/>
 
 <main class="item-content">
   <div class="sheet-header">

@@ -31,16 +31,16 @@
     }
 
     const secret = new HTMLSecret({
-      parentSelector: `[data-edit]`,
+      parentSelector: `[data-field]`,
       callbacks: {
         content: (secret: HTMLElement) =>
           foundry.utils.getProperty(
-            document,
-            secret.closest<HTMLElement>('[data-edit]')!.dataset.edit,
+            document.toObject(),
+            secret.closest<HTMLElement>('[data-field]')!.dataset.field,
           ),
         update: (secret: HTMLElement, content: string) =>
           document.update({
-            [secret.closest<HTMLElement>('[data-edit]')!.dataset.edit!]:
+            [secret.closest<HTMLElement>('[data-field]')!.dataset.field!]:
               content,
           }),
       },
@@ -79,7 +79,7 @@
   <ExpandableContainer {expanded}>
     {#key itemDescription.enriched}
       <div class="editor" use:manageSecrets>
-        <div data-edit={itemDescription.field} class="user-select-text">
+        <div data-field={itemDescription.field} class="user-select-text">
           {@html itemDescription.enriched}
         </div>
       </div>

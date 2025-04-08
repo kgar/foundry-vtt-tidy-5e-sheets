@@ -38,7 +38,6 @@ import ItemSpellDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemSpell
 import ItemSubclassDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemSubclassDetailsTab.svelte';
 import ItemToolDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemToolDetailsTab.svelte';
 import ItemWeaponDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemWeaponDetailsTab.svelte';
-import ItemTattooDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemTattooDetailsQuadroneTab.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { Activities } from 'src/features/activities/activities';
 
@@ -458,14 +457,6 @@ const itemSheetTabs: Record<string, Tab> = {
     title: 'DND5E.Details',
     content: {
       component: ItemSpeciesDetailsQuadroneTab,
-      type: 'svelte',
-    },
-  },
-  quadroneTattooDetails: {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    title: 'DND5E.Details',
-    content: {
-      component: ItemTattooDetailsQuadroneTab,
       type: 'svelte',
     },
   },

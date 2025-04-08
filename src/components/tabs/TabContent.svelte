@@ -57,5 +57,6 @@
     ''} {useCoreListenersClass}"
   class:active
   data-tab-contents-for={tab.id}
+  role="tabpanel"
   bind:this={tidyTab}
 ></div>

@@ -2,13 +2,25 @@
 .meter {
   // TODO: Extract to or replace with variables
   --meter-background: var(--dnd5e-color-light-gray);
-  --bar-low-background: linear-gradient(to right, var(--t5e-color-inventory-dark) 0%, var(--t5e-color-inventory-light) 100%);
+  --bar-low-background: linear-gradient(
+    to right,
+    var(--t5e-color-inventory-dark) 0%,
+    var(--t5e-color-inventory-light) 100%
+  );
   --bar-low-border-color: var(--t5e-color-inventory-max);
 
-  --bar-medium-background: linear-gradient(to right, var(--t5e-color-palette-orange-40) 0%, var(--t5e-color-palette-orange-70) 100%);
+  --bar-medium-background: linear-gradient(
+    to right,
+    var(--t5e-color-palette-orange-40) 0%,
+    var(--t5e-color-palette-orange-70) 100%
+  );
   --bar-medium-border-color: var(--t5e-color-palette-orange-40);
 
-  --bar-high-background: linear-gradient(90deg, var(--t5e-color-palette-red-27) 20%, var(--t5e-color-palette-red-60) 100%);
+  --bar-high-background: linear-gradient(
+    90deg,
+    var(--t5e-color-palette-red-27) 20%,
+    var(--t5e-color-palette-red-60) 100%
+  );
   --bar-high-border-color: var(--t5e-color-palette-red-45);
 
   --bar-background: var(--bar-low-background);
@@ -25,16 +37,39 @@
   }
 
   &[data-bar-severity='static'] {
-    --bar-low-background: linear-gradient(to right, var(--t5e-color-palette-blue-green-30) 0%, var(--t5e-color-palette-blue-green-50) 100%);
+    --bar-low-background: linear-gradient(
+      to right,
+      var(--t5e-color-palette-blue-green-30) 0%,
+      var(--t5e-color-palette-blue-green-50) 100%
+    );
     --bar-low-border-color: var(--t5e-color-palette-blue-green-30);
   }
 
   &[data-bar-severity='disabled'] {
-    --bar-low-background: linear-gradient(to right, var(--t5e-color-palette-grey-29) 0%, var(--t5e-color-palette-grey-40) 100%);
+    --bar-low-background: linear-gradient(
+      to right,
+      var(--t5e-color-palette-grey-29) 0%,
+      var(--t5e-color-palette-grey-40) 100%
+    );
     --bar-low-border-color: var(--t5e-color-palette-grey-29);
 
     span {
       opacity: 0.75;
+    }
+  }
+
+  &[data-bar-severity='health'] {
+    --bar-low-background: linear-gradient(
+      to right,
+      var(--t5e-color-hp-dark) 0%,
+      var(--t5e-color-hp-medium) 100%
+    );
+    --bar-low-border-color: var(--t5e-color-hp-dark);
+
+    .value {
+      text-align: right;
+      display: flex;
+      align-items: center;
     }
   }
 

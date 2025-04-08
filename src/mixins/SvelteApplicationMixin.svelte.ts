@@ -1,5 +1,5 @@
 import { settings } from 'src/settings/settings.svelte';
-import { applyMutableSettingAttributesToWindow } from 'src/utils/applications.svelte';
+import { applyThemeToApplication } from 'src/utils/applications.svelte';
 import { debug, error } from 'src/utils/logging';
 import { type RenderedSheetPart } from 'src/sheets/CustomContentRendererV2';
 import type {
@@ -166,6 +166,10 @@ export function SvelteApplicationMixin<
     /* -------------------------------------------- */
     _effectCleanup?: () => void;
 
+    _runFrameListenerEffect() {
+      applyThemeToApplication(settings.value, this.element);
+    }
+
     _attachFrameListeners() {
       super._attachFrameListeners();
 
@@ -180,7 +184,7 @@ export function SvelteApplicationMixin<
           this._configureEffects();
 
           $effect(() => {
-            applyMutableSettingAttributesToWindow(settings.value, this.element);
+            this._runFrameListenerEffect();
           });
         });
 

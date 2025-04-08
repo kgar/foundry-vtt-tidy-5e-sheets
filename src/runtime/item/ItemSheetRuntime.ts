@@ -24,7 +24,6 @@ import FeatSheetQuadrone from 'src/sheets/quadrone/item/FeatSheet.svelte';
 import LootSheetQuadrone from 'src/sheets/quadrone/item/LootSheet.svelte';
 import SpellSheetQuadrone from 'src/sheets/quadrone/item/SpellSheet.svelte';
 import SubclassSheetQuadrone from 'src/sheets/quadrone/item/SubclassSheet.svelte';
-import TattooSheetQuadrone from 'src/sheets/quadrone/item/TattooSheetQuadrone.svelte';
 import ToolSheetQuadrone from 'src/sheets/quadrone/item/ToolSheet.svelte';
 import WeaponSheetQuadrone from 'src/sheets/quadrone/item/WeaponSheet.svelte';
 import SpeciesSheetQuadrone from 'src/sheets/quadrone/item/SpeciesSheet.svelte';
@@ -71,9 +70,7 @@ export class ItemSheetRuntime {
   }
 
   static getCustomItemTabs(context: any) {
-    return ItemSheetRuntime._customTabs.filter(
-      (s) => s.enabled === undefined || s.enabled(context)
-    );
+    return ItemSheetRuntime._customTabs;
   }
 
   static classicSheets: Record<string, ItemSheetInfo> = {
@@ -299,15 +296,6 @@ export class ItemSheetRuntime {
         itemSheetTabs.quadroneDescriptions,
         itemSheetTabs.quadroneSpeciesDetails,
         itemSheetTabs.quadroneAdvancement,
-      ],
-    },
-    [CONSTANTS.ITEM_TYPE_TATTOO]: {
-      Sheet: TattooSheetQuadrone,
-      defaultTabs: () => [
-        itemSheetTabs.quadroneDescriptions,
-        itemSheetTabs.quadroneTattooDetails,
-        itemSheetTabs.quadroneActivities,
-        itemSheetTabs.quadroneEffects,
       ],
     },
   };

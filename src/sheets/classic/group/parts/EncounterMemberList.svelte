@@ -152,11 +152,13 @@
                   class="inline-transparent-button"
                   disabled={!ctx.canObserve}
                   onclick={() =>
-                    FoundryAdapter.renderImagePopout(member.img, {
-                      title: FoundryAdapter.localize('TIDY5E.PortraitTitle', {
-                        subject: member.name,
-                      }),
-                      shareable: true,
+                    FoundryAdapter.renderImagePopout({
+                      src: member.img,
+                      window: {
+                        title: FoundryAdapter.localize('TIDY5E.PortraitTitle', {
+                          subject: member.name,
+                        }),
+                      },
                       uuid: member.uuid,
                     })}
                   tabindex={settings.value.useAccessibleKeyboardSupport
@@ -223,7 +225,9 @@
                             (ctx.quantity?.value ?? 1),
                         )}
                       </span>&nbsp;
-                      <abbr>{localize('DND5E.ExperiencePoints.Abbreviation')}</abbr>
+                      <abbr
+                        >{localize('DND5E.ExperiencePoints.Abbreviation')}</abbr
+                      >
                     {/if}
                   {/if}
                 </TidyTableCell>

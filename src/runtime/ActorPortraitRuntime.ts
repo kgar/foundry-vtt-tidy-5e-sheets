@@ -11,11 +11,13 @@ export class ActorPortraitRuntime {
     {
       label: 'TIDY5E.ShowPortraitArt',
       execute: (params: RegisteredPortraitMenuCommandExecuteParams) => {
-        FoundryAdapter.renderImagePopout(params.actor.img, {
-          title: FoundryAdapter.localize('TIDY5E.PortraitTitle', {
-            subject: params.actor.name,
-          }),
-          shareable: true,
+        FoundryAdapter.renderImagePopout({
+          src: params.actor.img,
+          window: {
+            title: FoundryAdapter.localize('TIDY5E.PortraitTitle', {
+              subject: params.actor.name,
+            }),
+          },
           uuid: params.actor.uuid,
         });
       },
@@ -38,11 +40,13 @@ export class ActorPortraitRuntime {
               : images[0];
         }
 
-        FoundryAdapter.renderImagePopout(imageSrc, {
-          title: FoundryAdapter.localize('TIDY5E.PortraitTitle', {
-            subject: params.actor.name,
-          }),
-          shareable: true,
+        FoundryAdapter.renderImagePopout({
+          src: imageSrc,
+          window: {
+            title: FoundryAdapter.localize('TIDY5E.PortraitTitle', {
+              subject: params.actor.name,
+            }),
+          },
           uuid: params.actor.uuid,
         });
       },

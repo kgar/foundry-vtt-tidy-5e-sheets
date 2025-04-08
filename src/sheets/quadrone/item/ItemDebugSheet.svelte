@@ -1,7 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { settings } from 'src/settings/settings.svelte';
-  import { getThemeOrDefault } from 'src/theme/theme';
+  import { getThemeOrDefaultV1 } from 'src/theme/theme';
   import type { ItemDebugSheetQuadroneContext } from '../Tidy5eItemDebugSheetQuadrone.svelte';
   import ButtonWithOptionPanel from 'src/components/buttons/ButtonWithOptionPanel.svelte';
   import ToggleButton from 'src/components/buttons/ToggleButton.svelte';
@@ -18,7 +18,7 @@
 
   let context = $derived(getSheetContext<ItemDebugSheetQuadroneContext>());
 
-  let theme = $derived(getThemeOrDefault(settings.value.colorScheme));
+  let theme = $derived(getThemeOrDefaultV1(settings.value.colorScheme));
 
   let inverse = $state(false);
 

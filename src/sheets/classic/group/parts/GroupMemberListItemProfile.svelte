@@ -22,11 +22,13 @@
     class="unbutton"
     type="button"
     onclick={() =>
-      FoundryAdapter.renderImagePopout(member.img, {
-        title: FoundryAdapter.localize('TIDY5E.PortraitTitle', {
-          subject: member.name,
-        }),
-        shareable: true,
+      FoundryAdapter.renderImagePopout({
+        src: member.img,
+        window: {
+          title: FoundryAdapter.localize('TIDY5E.PortraitTitle', {
+            subject: member.name,
+          }),
+        },
         uuid: member.uuid,
       })}
     tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}

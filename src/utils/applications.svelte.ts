@@ -3,6 +3,7 @@ import { debug } from './logging';
 import { CONSTANTS } from 'src/constants';
 import { settings, type CurrentSettings } from 'src/settings/settings.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { getThemeV2 } from 'src/theme/theme';
 
 export function applyTitleToWindow(title: string, element: HTMLElement) {
   if (!element) {
@@ -25,26 +26,10 @@ export function applyTitleToWindow(title: string, element: HTMLElement) {
   }
 }
 
-export function applyMutableSettingAttributesToWindow(
+export function applySheetConfigLockAttributeToApplication(
   currentSettings: CurrentSettings,
-  element?: HTMLElement
+  element: HTMLElement
 ) {
-  if (!element) {
-    return;
-  }
-
-  const theme = getCurrentTheme(currentSettings);
-
-  if (theme) {
-    debug(`Applying theme type ${theme.type} to window`);
-    element.setAttribute('data-tidy-theme-type', theme.type);
-    if (game.release.generation < 13) {
-      element.classList.remove('theme-light', 'theme-dark');
-      element.classList.add(`themed`);
-      element.classList.add(`theme-${theme.type}`);
-    }
-  }
-
   if (currentSettings.lockConfigureSheet && !FoundryAdapter.userIsGm()) {
     element.setAttribute('data-tidy-lock-configure-sheet', 'true');
   } else {
@@ -52,17 +37,45 @@ export function applyMutableSettingAttributesToWindow(
   }
 }
 
-export function getCurrentTheme(currentSettings: CurrentSettings) {
-  let themeId = currentSettings.colorScheme;
+export function applyThemeToApplication(
+  currentSettings: CurrentSettings,
+  element?: HTMLElement,
+  doc?: any
+) {
+  if (!element) {
+    return;
+  }
 
-  themeId =
-    themeId === CONSTANTS.THEME_ID_DEFAULT
-      ? settings.value.defaultTheme
-      : themeId;
+  const theme = getCurrentTheme(currentSettings, doc);
 
-  const themes = getThemes();
-  const theme = themes[themeId];
-  return theme;
+  if (theme) {
+    debug(`Applying theme type ${theme} to window`);
+
+    // Classic
+    element.setAttribute('data-tidy-theme-type', theme);
+
+    // Quadrone
+    element.classList.remove('theme-light', 'theme-dark');
+    element.classList.add(`themed`);
+    element.classList.add(`theme-${theme}`);
+  }
+}
+
+export function getCurrentTheme(currentSettings: CurrentSettings, doc?: any) {
+  if (game.release.generation < 13) {
+    let themeId = currentSettings.colorScheme;
+
+    themeId =
+      themeId === CONSTANTS.THEME_ID_DEFAULT
+        ? settings.value.defaultTheme
+        : themeId;
+
+    const themes = getThemes();
+    const theme = themes[themeId];
+    return theme?.type;
+  } else {
+    return getThemeV2(doc);
+  }
 }
 
 export function applySheetAttributesToWindow(
@@ -75,7 +88,6 @@ export function applySheetAttributesToWindow(
   element?.setAttribute('data-document-name', documentName);
   element?.setAttribute('data-document-type', type);
   element?.setAttribute('data-document-uuid', documentUuid);
-  applyMutableSettingAttributesToWindow(settings.value, element);
 }
 
 export async function maintainCustomContentInputFocus(

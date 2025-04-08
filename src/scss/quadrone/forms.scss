@@ -35,12 +35,18 @@
       }
 
       >label.checkbox {
-        --checkbox-size: 0.875rem;
+        // --checkbox-size: 0.875rem;
         font-weight: 600;
 
         input[type='checkbox'] {
           margin-bottom: 0.0625rem;
         }
+      }
+
+      >.legend-with-button {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
       }
     }
 
@@ -422,7 +428,11 @@
     >input[type='radio'],
     >label {
       flex: none;
-      // color: var(--color-form-label);
+    // color: var(--color-form-label);
+    }
+
+    input[type='checkbox'] {
+      --checkbox-size: 1rem;
     }
 
     &.flexcol {
