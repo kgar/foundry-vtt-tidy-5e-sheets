@@ -281,6 +281,12 @@ input.uninput:hover {
   }
 }
 
+.checkbox {
+  &:has(input:disabled:not(:checked)) {
+    color: var(--t5e-color-text-lightest);
+  }
+}
+
 .radio-label {
   display: flex;
   flex-direction: column;
@@ -385,6 +391,12 @@ input[type='checkbox'] {
     // line-height: var(--t5e-checkbox-size);
     // width: var(--t5e-checkbox-size);
   }
+
+  &:not(:checked):disabled::before {
+    content: '\e59b';
+    font-size: 0.825rem;
+    color: var(--t5e-color-palette-grey-60);
+  }
 }
 
 /* TODO: If this is still used, then fix text alignment when no label present (1px too low without) */
@@ -436,9 +448,7 @@ select {
   }
 }
 
-&.dark,
 &.theme-dark,
-.dark,
 .theme-dark {
 
   select,
@@ -519,6 +529,12 @@ select {
         background-color: var(--t5e-theme-color-darker);
         box-shadow: var(--t5e-drop-shadow-field-hover);
       }
+    }
+  }
+
+  input[type='checkbox'] {
+    &:not(:checked):disabled::before {
+      color: var(--t5e-color-palette-grey-21);
     }
   }
 }

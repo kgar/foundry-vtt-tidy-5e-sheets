@@ -243,7 +243,6 @@
     justify-content: center;
     // padding: 0 0.0625rem;
     min-height: var(--t5e-field-size-default);
-    height: 100%;
 
     &:not(.tidy-table-actions):not(.header-cell-actions):not(.primary) {
       padding: var(--t5e-size-halfx) var(--t5e-size-1x) calc(var(--t5e-size-halfx) + var(--t5e-size-1));
@@ -476,7 +475,6 @@
   .tidy-table-actions {
     padding-inline-start: var(--t5e-size-halfx);
     padding-inline-end: 0;
-    height: 100%;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -499,10 +497,10 @@
 
   .tidy-table-button {
     align-items: center;
+    align-self: center;
     color: var(--t5e-color-icon-button);
     display: flex;
     font-size: 0.8125rem;
-    height: 100%;
     justify-content: center;
     padding-left: 0.5px;
     min-height: var(--t5e-field-size-default);
@@ -597,6 +595,7 @@
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
+      align-items: stretch;
 
       --t5e-item-table-row-background: transparent;
 
