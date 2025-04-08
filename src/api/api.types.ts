@@ -60,6 +60,10 @@ export type SupportedTab = HtmlTab | HandlebarsTab | SvelteTab;
 export interface ItemTabRegistrationOptions {
   /** When set to `true`, whenever this tab is navigated to, the window height will automatically adjust to match the content height. */
   autoHeight?: boolean;
+  /**
+   * An optional sheet layout or layouts (default: 'all')
+   */
+  layout?: SheetLayout;
 }
 
 /**
@@ -429,16 +433,16 @@ export interface CustomHeaderControlsEntry {
    */
   onClickAction?: (event: PointerEvent, target: HTMLElement) => Promise<void>;
   /**
-   * Denotes whether to put the control in the header menu ('menu') 
-   * or directly on the header ('header'). 
-   * 
+   * Denotes whether to put the control in the header menu ('menu')
+   * or directly on the header ('header').
+   *
    * Default: 'menu'.
    */
   position?: SheetHeaderControlPosition;
 }
 
-/** 
- * A position for sheet header controls.  
+/**
+ * A position for sheet header controls.
  * 'menu' - the control is placed inside the header controls menu
  * 'header' - the control is placed on the header itself, outside of the menu
  */

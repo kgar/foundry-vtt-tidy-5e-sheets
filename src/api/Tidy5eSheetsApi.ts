@@ -709,7 +709,7 @@ export class Tidy5eSheetsApi {
       return;
     }
 
-    const registeredTab = TabManager.mapCustomTabToRegisteredTab(tab);
+    const registeredTab = TabManager.mapCustomTabToRegisteredTab(tab, options?.layout);
 
     if (!registeredTab) {
       warn('Unable to register tab. Tab type not supported');
