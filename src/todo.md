@@ -1,7 +1,11 @@
 ## To Do
 
 - [ ] Implement Play/Edit mode
-  - [ ] Update sheet lock to work like the default sheets, including the additional render options and intuitive default state
+  - [x] Update sheet lock to work like the default sheets, including the additional render options and intuitive default state
+  - [x] Add View context menu option where needed
+  - [x] Ensure context options that render item sheets are feeding in their appropriate modes.
+  - [ ] Resolve difference: Sidebar Tidy items open in Play Mode; Default (2) open in Edit Mode. We need to be like them.
+  - [ ] Review dnd5e system one more time
 - [ ] Finalize Description tab behavior for "text-based" sheets
   - [ ] Class / Subclass / Background / Species
     - [ ] Description tab
@@ -14,7 +18,7 @@
 - [ ] Item cards
   - [ ] Implement a shared portal for item cards. All attached item cards will use the one portal anchor. This is so the card can live outside the sheet's overflow hiding window content, so we don't have to worry about compromising design.
   - [ ] Have item cards be targeted via `.tidy5e-sheet.classic....` etc.
-  - [ ] For fun, test with PopOut!
+  - [x] ~~For fun, test with PopOut!~~
 - [ ] add a class to section headers when there are no search results `.search-no-results`
 - [ ] Effect Summary eagerly refreshes. Add suppression to HTML enrichment to only when the effect summary is shown.
 - [ ] Additional Document header option: Context Menu Options (literally show the context menu options)

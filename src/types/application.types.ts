@@ -68,6 +68,7 @@ export interface ApplicationRenderOptions {
   window?: ApplicationWindowRenderOptions;
   parts?: string[];
   isFirstRender?: boolean;
+  renderContext?: string;
 }
 
 export interface ApplicationWindowRenderOptions {

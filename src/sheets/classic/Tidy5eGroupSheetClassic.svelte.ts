@@ -45,7 +45,7 @@ import { processInputChangeDeltaFromValues } from 'src/utils/form';
 import { isNil } from 'src/utils/data';
 import { formatAsModifier } from 'src/utils/formatting';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
-import SheetHeaderEditModeToggle from 'src/sheets/classic/shared/SheetHeaderEditModeToggle.svelte';
+import SheetHeaderModeToggle from 'src/sheets/classic/shared/SheetHeaderModeToggle.svelte';
 import { Activities } from 'src/features/activities/activities';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { ImportSheetControl } from '../../features/sheet-header-controls/ImportSheetControl';
@@ -173,7 +173,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
 
   _createAdditionalComponents(content: HTMLElement) {
     const windowHeader = this.element.querySelector('.window-header');
-    const sheetLock = mount(SheetHeaderEditModeToggle, {
+    const sheetLock = mount(SheetHeaderModeToggle, {
       target: windowHeader,
       anchor: windowHeader.querySelector('.window-title'),
       context: new Map<string, any>([

@@ -1,6 +1,5 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { TidyFlags } from 'src/foundry/TidyFlags';
   import TidySwitch from 'src/components/toggles/TidySwitch.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settings } from 'src/settings/settings.svelte';
@@ -14,14 +13,26 @@
   let { ondblclick, ...rest }: Props = $props();
 
   let context =
-    $derived(getSheetContext<{ document: any; editable: boolean }>());
+    $derived(
+      getSheetContext<{
+        document: any;
+        unlocked: boolean;
+        editable: boolean;
+      }>(),
+    );
 
-  async function toggleLock() {
-    await TidyFlags.allowEdit.set(context.document, !allowEdit);
+  async function toggleMode() {
+    const newMode = context.unlocked
+      ? CONSTANTS.SHEET_MODE_PLAY
+      : CONSTANTS.SHEET_MODE_EDIT;
+
+    allowEdit = newMode === CONSTANTS.SHEET_MODE_EDIT;
+
+    await context.document.sheet.changeSheetMode(newMode);
   }
 
   const localize = FoundryAdapter.localize;
-  let allowEdit = $derived(TidyFlags.allowEdit.get(context.document));
+  let allowEdit = $derived(context.unlocked);
   let descriptionVariable = $derived(
     settings.value.useTotalSheetLock
       ? localize('TIDY5E.SheetLock.Description')
@@ -64,7 +75,7 @@
       title={allowEdit ? unlockTitle : lockTitle}
       checked={allowEdit}
       thumbIconClass="{allowEdit ? 'fas fa-unlock' : 'fas fa-lock'} fa-fw"
-      onChange={() => toggleLock()}
+      onChange={() => toggleMode()}
     ></TidySwitch>
   </div>
 {/if}
