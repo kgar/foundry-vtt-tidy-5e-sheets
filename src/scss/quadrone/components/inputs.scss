@@ -281,6 +281,12 @@ input.uninput:hover {
   }
 }
 
+.checkbox {
+  &:has(input:disabled:not(:checked)) {
+    color: var(--t5e-color-text-lightest);
+  }
+}
+
 .radio-label {
   display: flex;
   flex-direction: column;
@@ -384,6 +390,12 @@ input[type='checkbox'] {
     // height: var(--t5e-checkbox-size);
     // line-height: var(--t5e-checkbox-size);
     // width: var(--t5e-checkbox-size);
+  }
+
+  &:not(:checked):disabled::before {
+    content: '\e59b';
+    font-size: 0.825rem;
+    // color: var(--t5e-color-text-disabled);
   }
 }
 
