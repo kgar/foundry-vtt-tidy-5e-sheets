@@ -9,5 +9,7 @@ export default {
       toggleKeyCombo: 'control-alt-shift',
     },
   },
-  customElement: true
+  compilerOptions: {
+    customElement: true,
+  },
 };
