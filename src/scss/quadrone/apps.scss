@@ -307,6 +307,7 @@
   .editor.prosemirror menu {
     background: var(--t5e-component-card-lighter);
     box-sizing: border-box;
+    gap: var(--t5e-size-halfx);
     padding: 0.125rem;
 
     .pm-dropdown {
@@ -340,6 +341,7 @@
         background: none;
         border: 1px solid transparent;
         box-sizing: border-box;
+        box-shadow: none;
         padding: 0 5px;
 
         &.active i {
