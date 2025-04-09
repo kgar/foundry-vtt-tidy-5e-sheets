@@ -1,11 +1,5 @@
 ## To Do
 
-- [ ] Implement Play/Edit mode
-  - [x] Update sheet lock to work like the default sheets, including the additional render options and intuitive default state
-  - [x] Add View context menu option where needed
-  - [x] Ensure context options that render item sheets are feeding in their appropriate modes.
-  - [ ] Resolve difference: Sidebar Tidy items open in Play Mode; Default (2) open in Edit Mode. We need to be like them.
-  - [ ] Review dnd5e system one more time
 - [ ] Finalize Description tab behavior for "text-based" sheets
   - [ ] Class / Subclass / Background / Species
     - [ ] Description tab
@@ -502,3 +496,9 @@ Limited:
   - [x] Tool
   - [x] Weapon
   - [x] Make sure Section section visible for all sheets
+- [x] Implement Play/Edit mode
+  - [x] Update sheet lock to work like the default sheets, including the additional render options and intuitive default state
+  - [x] Add View context menu option where needed
+  - [x] Ensure context options that render item sheets are feeding in their appropriate modes.
+  - [x] Resolve difference: Sidebar Tidy items open in Play Mode; Default (2) open in Edit Mode. We need to be like them.
+  - [x] Review dnd5e system one more time
