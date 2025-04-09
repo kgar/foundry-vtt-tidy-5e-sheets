@@ -32,7 +32,10 @@
 </script>
 
 <fieldset>
-  <legend>{localize('TCOE.Tattoo.Details')}</legend>
+  <legend>
+    {localize('TCOE.Tattoo.Details')}
+    <tidy-gold-header-underline></tidy-gold-header-underline>
+  </legend>
 
   <div class="form-group split-group">
     {#if context.source.attunement === 0}
@@ -130,7 +133,7 @@
         document={context.item}
         field="system.proficient"
         value={context.source.proficient}
-        disabled={!context.editable}
+        disabled={!context.unlocked}
       >
         <SelectOptions
           data={context.config.weaponAndArmorProficiencyLevels}

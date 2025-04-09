@@ -190,6 +190,14 @@
     padding: 0;
     width: var(--size);
     height: var(--size);
+
+    &.button-borderless {
+      border-radius: 100%;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.12);
+      }
+    }
   }
 
   /* Borderless button */
@@ -205,7 +213,8 @@
       background: transparent;
       border-color: transparent;
       box-shadow: none;
-      text-shadow: var(--t5e-drop-shadow-field);
+      // text-shadow: var(--t5e-drop-shadow-field);
+      text-shadow: 0px 0px 6px var(--t5e-color-text-gold);
     }
   }
 
@@ -456,6 +465,16 @@
 
       &:hover {
         --button-border-hover: var(--t5e-component-field-border-hover);
+      }
+    }
+
+    &.button-icon-only:hover {
+      text-shadow: 0px 0px 6px var(--t5e-color-text-gold);
+    }
+
+    &.button-icon-only.button-borderless {
+      &:hover {
+        background: rgba(0, 0, 0, 1);
       }
     }
 
