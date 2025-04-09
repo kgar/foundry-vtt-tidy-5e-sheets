@@ -201,6 +201,88 @@
     },
     "TIDY5E.WorldSettings.TabSheetLock": {
         "tabLabel": "锁定卡",
-        "header": "锁定选项"
+        "header": "锁定选项",
+        "labelFeaturesLocks": "特性锁定",
+        "hint": "防止玩家对角色卡中那些应很少变动的部分进行修改。可选择隐藏那些你完全不想使用的元素。",
+        "hint2": "重要提示：角色卡锁定功能旨在引导玩家正确使用角色卡，并帮助防止诸如意外添加/移除豁免熟练之类的错误。角色卡锁定设置并不能对怀有恶意的玩家提供安全防护。",
+        "labelGeneralLocks": "全部锁定",
+        "labelInventoryLocks": "所持物锁定"
+    },
+    "TIDY5E.AddSpecific": "添加 {name}",
+    "TIDY5E.WorldSettings.TabMisc": {
+        "tabLabel": "GM 选项"
+    },
+    "TIDY5E.WorldSettings.TabIcons": {
+        "tabLabel": "图标"
+    },
+    "TIDY5E.WorldSettings.TabCustomSections": {
+        "CustomizedIndicatorLabel": "自定义",
+        "tabLabel": "自定义分区",
+        "ShowWhenEmptyLabel": "当为空时显示分区",
+        "LimitToSpecificSheetsLabel": "将“显示分区”限制为特定卡",
+        "LimitToSpecificTabsLabel": "将“显示分区”限制为特定选项卡",
+        "ShowWhenEmptyTooltip": "所有包含物品列表的标签页都有一组默认的分区，即使分区中没有物品，这些分区也会始终显示。即使分区为空，也始终显示此分区。"
+    },
+    "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "兼职法术书筛选器",
+    "TIDY5E.WorldSettings.Menu": {
+        "name": "世界设置",
+        "hint": "调整世界设置以自定义 Tidy 5e 工作卡体验。这些设置将保存至此 Foundry 世界，并应用于所有相关的 Tidy 5e 工作卡内容。",
+        "label": "世界设置",
+        "title": "世界设置（仅 GM）"
+    },
+    "TIDY5E.UserSettings.Menu": {
+        "hint": "自定义自己的 Tidy 5e 工作卡设定。这些设置将保存到您的浏览器中，并应用于你的工作卡。",
+        "label": "用户设置",
+        "title": "用户设置：{userName}",
+        "name": "用户设置"
+    },
+    "TIDY5E.UserSettings.TabNPCs": {
+        "header": "非玩家角色卡",
+        "tabLabel": "非玩家角色"
+    },
+    "TIDY5E.UserSettings.TabVehicles": {
+        "tabLabel": "载具",
+        "header": "载具卡"
+    },
+    "TIDY5E.UserSettings.TabActionsList": {
+        "tabLabel": "动作列表"
+    },
+    "TIDY5E.UserSettings.TabActivities": {
+        "tabLabel": "行动"
+    },
+    "TIDY5E.Settings.ItemCardsForAllItems": {
+        "name": "在所有视图中显示物品卡片",
+        "hint": "当此设置被禁用时，物品卡片仅在网格中显示。"
+    },
+    "TIDY5E.Settings.UseEffectCards": {
+        "name": "显示主动效应信息卡片",
+        "hint": "启用显示所有具有主动效应的角色和物品的主动效应信息卡片。"
+    },
+    "TIDY5E.Settings.ItemCardsAreFloating": {
+        "hint": "启用物品信息卡片在鼠标指针旁浮动显示。建议：使用此功能时启用延迟。",
+        "name": "显示浮动物品卡片"
+    },
+    "TIDY5E.Settings.ItemCardsDelay": {
+        "name": "物品卡片延迟（ms）",
+        "hint": "指定显示物品卡片的延迟时间（ms）。0 表示无延迟。默认值：300。"
+    },
+    "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
+        "name": "使用无障碍键盘支持",
+        "hint": "启用后，用户可通过 `Tab` 键在 Tidy 5e 角色卡的大多数按钮/命令间切换，并使用常规的按钮式键盘快捷键执行操作。 注意：当焦点位于 Foundry 的某个按钮上时，通过“配置控件”（Configure Controls）设置的键位绑定将不会响应。如果其他MOD利用 Foundry 的该功能在角色卡中实现控制功能（例如按住特殊键使用物品），则启用此 Tidy 5e 角色卡选项会与这些键位绑定冲突。"
+    },
+    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
+        "name": "使用默认工作卡属性键盘选项卡切换",
+        "hint": "默认的 5e 角色表通过将属性输入框周围的控件从 Tab 切换顺序中隐藏，允许用户通过键盘的 `Tab` 键直接从一个属性输入框跳转到下一个输入框。启用此选项将重现此行为。若未启用“无障碍键盘支持”，则此设置无效。"
+    },
+    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
+        "hint": "默认 5e 角色卡允许通过键盘的 `Tab` 键从当前生命值（HP）输入框直接跳转到临时生命值输入框。启用此选项将重现该行为。若未启用“使用无障碍键盘支持”，则此设置无效。",
+        "name": "使用默认卡键盘切换HP"
+    },
+    "TIDY5E.Settings.InfoCardsInspectKey": {
+        "name": "信息卡片检查键"
+    },
+    "TIDY5E.UserSettings.TabPlayers": {
+        "tabLabel": "玩家",
+        "header": "玩家角色卡"
     }
 }
