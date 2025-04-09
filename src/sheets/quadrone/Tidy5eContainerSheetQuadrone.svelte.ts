@@ -231,7 +231,7 @@ export class Tidy5eContainerSheetQuadrone
 
     const editable = this.isEditable;
 
-    const unlocked = FoundryAdapter.isSheetUnlocked(this.item) && editable;
+    const unlocked = this.sheetMode === CONSTANTS.SHEET_MODE_EDIT && editable;
 
     const currencies: CurrencyContext[] = [];
 

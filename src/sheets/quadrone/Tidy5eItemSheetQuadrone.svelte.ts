@@ -4,10 +4,7 @@ import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportShe
 import { DragAndDropMixin } from 'src/mixins/DragAndDropBaseMixin';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
-import type {
-  ApplicationConfiguration,
-  ApplicationRenderOptions,
-} from 'src/types/application.types';
+import type { ApplicationConfiguration } from 'src/types/application.types';
 import type {
   AdvancementItemContext,
   AdvancementsContext,
@@ -32,7 +29,10 @@ import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
 import { formatAsModifier } from 'src/utils/formatting';
 import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
-import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import {
+  TidyExtensibleDocumentSheetMixin,
+  type TidyDocumentSheetRenderOptions,
+} from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 import { SheetSections } from 'src/features/sections/SheetSections';
 
@@ -139,7 +139,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
   }
 
   async _prepareContext(
-    options: ApplicationRenderOptions
+    options: TidyDocumentSheetRenderOptions
   ): Promise<ItemSheetQuadroneContext> {
     const rollData = this.document.getRollData();
 
@@ -213,9 +213,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
 
     const editable = this.isEditable === true;
 
-    // TODO: Continue Play/Edit mode upgrade.
-    // const unlocked = this._mode === this.ctor.MODES.EDIT && editable;
-    const unlocked = FoundryAdapter.isSheetUnlocked(this.item) && editable;
+    const unlocked = this.sheetMode === CONSTANTS.SHEET_MODE_EDIT && editable;
 
     const systemSource = !unlocked ? this.item.system : systemObject;
 

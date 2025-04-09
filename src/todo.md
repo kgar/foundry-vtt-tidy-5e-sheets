@@ -1,12 +1,29 @@
 ## To Do
 
-- [ ] Implement Play/Edit mode
-  - [ ] Update sheet lock to work like the default sheets, including the additional render options and intuitive default state
-- [ ] Finalize Description tab behavior for "text-based" sheets
-  - [ ] Class / Subclass / Background / Species
-    - [ ] Description tab
-      - [ ] Description section header hidden, contents displayed
-      - [ ] Edit mode always shows prosemirror visible in edit mode (like default sheets)
+- [ ] Character Sheet 
+  - [ ] Start dev in Foundry V12
+  - [ ] Establish components for the tabs
+  - [ ] Set up Quadrone runtime content, including the default tabs
+  - [ ] Implement tabs
+    - [ ] Actions
+    - [ ] Attributes
+    - [ ] Inventory
+    - [ ] Features
+    - [ ] Spellbook
+    - [ ] Effects
+    - [ ] Background
+  - [ ] Implement Expandable/collapsible sidebar
+  - [ ] Implement Pins
+  - [ ] Implement Favorites
+  - [ ] Implement Responsive Tab Strip
+  - [ ] Implement Theme Settings
+    - [ ] Client Default
+    - [ ] Actor Sheet Override
+    - [ ] Item Sheet Override
+- [ ] Scaffold the NPC Sheet in Foundry V12
+- [ ] Scaffold the Group Sheet in Foundry V12
+- [ ] Scaffold the Vehicle Sheet in Foundry V12
+- [ ] add a class to section headers when there are no search results `.search-no-results`
 - [ ] All section configs: pass in callback for preparing sections to view, so that we're not processing this during non-option-sheet renders. It should only render on option sheet prerender.
 - [ ] Configure {TabId}: include a hook that allows people to pass in their own settings.
 - [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
@@ -14,20 +31,15 @@
 - [ ] Item cards
   - [ ] Implement a shared portal for item cards. All attached item cards will use the one portal anchor. This is so the card can live outside the sheet's overflow hiding window content, so we don't have to worry about compromising design.
   - [ ] Have item cards be targeted via `.tidy5e-sheet.classic....` etc.
-  - [ ] For fun, test with PopOut!
-- [ ] add a class to section headers when there are no search results `.search-no-results`
+  - [ ] Test spell info on item summary and cards
+  - [x] ~~For fun, test with PopOut!~~
 - [ ] Effect Summary eagerly refreshes. Add suppression to HTML enrichment to only when the effect summary is shown.
 - [ ] Additional Document header option: Context Menu Options (literally show the context menu options)
 - [ ] Ensure all item sheets enforce this Unidentified UI feature:
     - [ ] (Non-container sheets only) Sidebar sections all hidden except Sections section and pill switches
 - [ ] Context Menu items rework
-- [ ] (someone reported this to the Foundry devs; it ain't just me; awaiting possible fix) The "Import" menu option is being shown on a Sidebar item. 🪓
-- [ ] Class, Subclass, Background, Species, Facility sheets
-  - [ ] Description tab
-    - [ ] Description section header hidden, contents displayed, editable when unlocked, saves when locked again, saves when save button clicked and is refreshed.
 - [ ] Fix weird minimize/maximize header text behavior. reference: https://discord.com/channels/@me/1243307347682529423/1357922036454002890
 - [ ] Add background circle hover style to section row buttons
-- [ ] Test spell info on item summary and cards
 
 ### Scratch - Finding the effective theme for a sheet
 
@@ -498,3 +510,18 @@ Limited:
   - [x] Tool
   - [x] Weapon
   - [x] Make sure Section section visible for all sheets
+- [x] Implement Play/Edit mode
+  - [x] Update sheet lock to work like the default sheets, including the additional render options and intuitive default state
+  - [x] Add View context menu option where needed
+  - [x] Ensure context options that render item sheets are feeding in their appropriate modes.
+  - [x] Resolve difference: Sidebar Tidy items open in Play Mode; Default (2) open in Edit Mode. We need to be like them.
+  - [x] Review dnd5e system one more time
+- [x] Finalize Description tab behavior for "text-based" sheets
+  - [x] ~~~~Class / Subclass / Background / Species / Facility~~ any "Descriptions" tab with a single item description in the array 💪
+    - [x] Description tab
+      - [x] Description section header hidden, contents displayed
+      - [x] Edit mode always shows prosemirror visible in edit mode (like default sheets)
+- [x] (someone reported this to the Foundry devs; it ain't just me; awaiting possible fix) The "Import" menu option is being shown on a Sidebar item. 🪓
+- [x] Class, Subclass, Background, Species, Facility sheets
+  - [x] Description tab
+    - [x] Description section header hidden, contents displayed, editable when unlocked, saves when locked again, saves when save button clicked and is refreshed.

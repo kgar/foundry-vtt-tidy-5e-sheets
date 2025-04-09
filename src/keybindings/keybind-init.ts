@@ -23,8 +23,16 @@ function registerSheetLockToggleKeybinding() {
         return;
       }
 
-      const allowEdit = TidyFlags.allowEdit.get(sheetDocument);
-      await TidyFlags.allowEdit.set(sheetDocument, !allowEdit);
+      const isQuadrone = !!sheetDocument.sheet?.form?.classList.contains(
+        CONSTANTS.SHEET_LAYOUT_QUADRONE
+      );
+
+      if (isQuadrone) {
+        await sheetDocument.sheet.toggleSheetMode?.();
+      } else {
+        const allowEdit = TidyFlags.allowEdit.get(sheetDocument);
+        await TidyFlags.allowEdit.set(sheetDocument, !allowEdit);
+      }
     },
     onUp: () => {},
     precedence: CONST.KEYBINDING_PRECEDENCE.NORMAL,
@@ -33,8 +41,8 @@ function registerSheetLockToggleKeybinding() {
 
 function registerHeaderMenuToggleKeybinding() {
   game.keybindings.register(CONSTANTS.MODULE_ID, 'toggleHeaderMenu', {
-    name: "TIDY5E.Keybindings.ToggleHeaderMenu.Name",
-    hint: "TIDY5E.Keybindings.ToggleHeaderMenu.Hint",
+    name: 'TIDY5E.Keybindings.ToggleHeaderMenu.Name',
+    hint: 'TIDY5E.Keybindings.ToggleHeaderMenu.Hint',
     onDown: async () => {
       const tidyApi = Tidy5eSheetsApi._getApi();
 
@@ -48,9 +56,9 @@ function registerHeaderMenuToggleKeybinding() {
     precedence: CONST.KEYBINDING_PRECEDENCE.NORMAL,
     editable: [
       {
-        key: "KeyB",
-        modifiers: ["Alt"]
-      }
-    ]
+        key: 'KeyB',
+        modifiers: ['Alt'],
+      },
+    ],
   });
 }

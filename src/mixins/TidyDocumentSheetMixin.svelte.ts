@@ -33,6 +33,11 @@ import {
 } from 'src/features/sheet-header-controls/header-controls';
 import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
 import { settings } from 'src/settings/settings.svelte';
+import { CONSTANTS } from 'src/constants';
+
+export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
+  mode?: number;
+};
 
 /**
  * A mixin which fills in the extensibility and common functionality
@@ -50,17 +55,10 @@ export function TidyExtensibleDocumentSheetMixin<
       super(options);
     }
 
-    /**
-     * Available sheet modes.
-     * @enum {number}
-     */
-    static MODES = {
-      PLAY: 1,
-      EDIT: 2,
-    };
+    _mode = $state<number | undefined>();
 
-    get ctor() {
-      return this.constructor as typeof TidyDocumentSheet;
+    get sheetMode() {
+      return this._mode;
     }
 
     /**
@@ -153,9 +151,22 @@ export function TidyExtensibleDocumentSheetMixin<
       this.#debouncePersistSheetPositionPreferences(position);
     }
 
+    _configureRenderOptions(options: TidyDocumentSheetRenderOptions) {
+      super._configureRenderOptions(options);
+
+      // Configure Sheet Mode
+      let mode = options?.mode;
+      
+      if (mode === undefined && options.renderContext === 'createItem') {
+        mode = CONSTANTS.SHEET_MODE_EDIT;
+      }
+
+      this._mode = mode ?? this._mode ?? CONSTANTS.SHEET_MODE_PLAY;
+    }
+
     async _renderHTML(
       context: TContext,
-      options: ApplicationRenderOptions
+      options: TidyDocumentSheetRenderOptions
     ): Promise<RenderResult<TContext>> {
       const result = await super._renderHTML(context, options);
 
@@ -193,7 +204,7 @@ export function TidyExtensibleDocumentSheetMixin<
       // Ignored. Svelte/Tidy handles this.
     }
 
-    async _renderFrame(options: ApplicationRenderOptions) {
+    async _renderFrame(options: TidyDocumentSheetRenderOptions) {
       const element = await super._renderFrame(options);
 
       try {
@@ -238,7 +249,7 @@ export function TidyExtensibleDocumentSheetMixin<
       return element;
     }
 
-    _updateFrame(options: ApplicationRenderOptions) {
+    _updateFrame(options: TidyDocumentSheetRenderOptions) {
       options ??= {};
 
       // Remove header bar controls
@@ -329,7 +340,7 @@ export function TidyExtensibleDocumentSheetMixin<
     _replaceHTML(
       result: RenderResult<TContext>,
       content: HTMLElement,
-      options: ApplicationRenderOptions
+      options: TidyDocumentSheetRenderOptions
     ) {
       super._replaceHTML(result, content, options);
 
@@ -360,10 +371,23 @@ export function TidyExtensibleDocumentSheetMixin<
      * Changes the user toggling the sheet mode.
      * @protected
      */
-    async changeSheetMode(mode: typeof TidyDocumentSheet.MODES) {
+    async changeSheetMode(mode: number) {
       this._mode = mode;
       await this.submit();
       this.render();
+    }
+
+    /**
+     * Toggles the user's sheet mode relative to the current mode.
+     * @protected
+     */
+    async toggleSheetMode() {
+      const newMode =
+        this._mode === CONSTANTS.SHEET_MODE_PLAY
+          ? CONSTANTS.SHEET_MODE_EDIT
+          : CONSTANTS.SHEET_MODE_PLAY;
+
+      await this.changeSheetMode(newMode);
     }
 
     /* -------------------------------------------- */
@@ -385,7 +409,7 @@ export function TidyExtensibleDocumentSheetMixin<
     /*  Rendering Life-Cycle Methods                */
     /* -------------------------------------------- */
 
-    _onRender(context: TContext, options: ApplicationRenderOptions) {
+    _onRender(context: TContext, options: TidyDocumentSheetRenderOptions) {
       super._onRender(context, options);
 
       // Some integrations will insert HTML even beyond this point,

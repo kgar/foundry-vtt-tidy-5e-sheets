@@ -1,6 +1,6 @@
 <script lang="ts">
   import ConfigurableSource from '../../shared/ConfigurableSource.svelte';
-  import SheetHeaderEditModeToggle from 'src/sheets/classic/shared/SheetHeaderEditModeToggle.svelte';
+  import SheetHeaderEditModeToggleV2 from 'src/sheets/classic/shared/SheetHeaderModeToggleV2.svelte';
   import { getContainerSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
 
   const context = $derived(getContainerSheetQuadroneContext());
@@ -14,7 +14,7 @@
 </script>
 
 <div class="header-over-sidebar theme-dark">
-  <SheetHeaderEditModeToggle class="header-control" />
+  <SheetHeaderEditModeToggleV2 class="header-control" />
 
   <span title={context.itemType} class="header-item-type-label truncate">
     {context.itemType}

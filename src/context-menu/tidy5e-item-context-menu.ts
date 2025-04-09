@@ -117,7 +117,6 @@ export function getItemContextOptions(
     group: 'state',
   });
 
-
   /* 
   // TODO: New equip icons. Right now the sheet doesn't check for quadrone.
         ? "<i class='fas fa-hand-fist equip-icon fa-fw' style='color: var(--t5e-warning-accent-color);'></i> "
@@ -253,7 +252,7 @@ export function getItemContextOptions(
     name: 'TIDY5E.ContextMenuActionEdit',
     icon: '<i class="fas fa-pencil-alt fa-fw"></i>',
     callback: () =>
-      item.sheet.render(true, FoundryAdapter.getItemSheetMode(app)),
+      item.sheet.render(true, { mode: CONSTANTS.SHEET_MODE_EDIT }),
     condition: () => item.isOwner && !FoundryAdapter.isLockedInCompendium(item),
   });
 
@@ -261,8 +260,7 @@ export function getItemContextOptions(
     name: 'TIDY5E.ContextMenuActionView',
     icon: '<i class="fas fa-eye fa-fw"></i>',
     callback: () =>
-      item.sheet.render(true, FoundryAdapter.getItemSheetMode(app)),
-    condition: () => !item.isOwner || FoundryAdapter.isLockedInCompendium(item),
+      item.sheet.render(true, { mode: CONSTANTS.SHEET_MODE_PLAY }),
   });
 
   options.push({

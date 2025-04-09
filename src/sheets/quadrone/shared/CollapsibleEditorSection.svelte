@@ -3,6 +3,7 @@
   import { isNil } from 'src/utils/data';
   import GoldHeaderUnderline from './GoldHeaderUnderline.svelte';
   import type { ItemDescription } from 'src/types/item.types';
+  import { manageSecrets } from 'src/actions/manage-secrets.svelte';
 
   interface Props {
     expanded: boolean;
@@ -24,32 +25,6 @@
   }: Props = $props();
 
   let showIndicator = $derived(!isNil(itemDescription.enriched, ''));
-
-  function manageSecrets(node: HTMLElement) {
-    if (!document.isOwner) {
-      return;
-    }
-
-    const secret = new HTMLSecret({
-      parentSelector: `[data-field]`,
-      callbacks: {
-        content: (secret: HTMLElement) =>
-          foundry.utils.getProperty(
-            document.toObject(),
-            secret.closest<HTMLElement>('[data-field]')!.dataset.field,
-          ),
-        update: (secret: HTMLElement, content: string) =>
-          document.update({
-            [secret.closest<HTMLElement>('[data-field]')!.dataset.field!]:
-              content,
-          }),
-      },
-    });
-
-    queueMicrotask(() => {
-      secret.bind(node);
-    });
-  }
 </script>
 
 <section class="collapsible-editor">
@@ -78,7 +53,7 @@
   <!-- Body -->
   <ExpandableContainer {expanded}>
     {#key itemDescription.enriched}
-      <div class="editor" use:manageSecrets>
+      <div class="editor" use:manageSecrets={{ document }}>
         <div data-field={itemDescription.field} class="user-select-text">
           {@html itemDescription.enriched}
         </div>
