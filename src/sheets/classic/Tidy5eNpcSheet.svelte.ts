@@ -765,6 +765,7 @@ export class Tidy5eNpcSheet
         game.settings.get('dnd5e', 'loyaltyScore') &&
         game.user.isGM,
       spellcastingInfo: FoundryAdapter.getSpellcastingInfo(this.actor),
+      spellcastingInfo2: FoundryAdapter.getSpellcastingInfo2(this.actor),
       lockSensitiveFields: lockSensitiveFields,
       longRest: this._onLongRest.bind(this),
       lockExpChanges: FoundryAdapter.shouldLockExpChanges(),

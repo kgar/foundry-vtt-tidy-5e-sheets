@@ -1478,6 +1478,22 @@ export const FoundryAdapter = {
       calculations: calculateSpellAttackAndDc(actor, currentFilteredClass),
     };
   },
+  getSpellcastingInfo2(actor: Actor5e): SpellcastingInfo[] {
+    return actor.itemTypes.class
+      .sort((a: Item5e, b: Item5e) => b.system.levels - a.system.levels)
+      .filter(
+        (x: Item5e) =>
+          x.spellcasting?.progression && x.spellcasting.progression !== 'none'
+      )
+      .map((cls: Item5e) => ({
+        currentFilteredClass: cls,
+        prepared: {
+          value: cls?.system?.spellcasting?.preparation?.value ?? 0,
+          max: cls?.system?.spellcasting?.preparation?.max ?? 0,
+        },
+        calculations: calculateSpellAttackAndDc(actor, cls),
+      }));
+  },
   getSaveAbilityAbbreviation(save: any) {
     return save.ability?.size
       ? save.ability.size === 1

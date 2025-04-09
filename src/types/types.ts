@@ -371,6 +371,7 @@ export type CharacterSheetContext = {
   showContainerPanel: boolean;
   spellComponentLabels: Record<string, string>;
   spellbook: SpellbookSection[];
+  spellcastingInfo2: SpellcastingInfo[];
   spellcastingInfo: SpellcastingInfo;
   spellSlotTrackerMode:
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
@@ -478,6 +479,7 @@ export type NpcSheetContext = {
   showSpellbookTab: boolean;
   spellComponentLabels: Record<string, string>;
   spellbook: SpellbookSection[];
+  spellcastingInfo2: SpellcastingInfo[];
   spellcastingInfo: SpellcastingInfo;
   spellSlotTrackerMode:
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS

@@ -1184,6 +1184,8 @@ export class Tidy5eCharacterSheet
 
     context.spellcastingInfo = FoundryAdapter.getSpellcastingInfo(this.actor);
 
+    context.spellcastingInfo2 = FoundryAdapter.getSpellcastingInfo2(this.actor);
+
     // Section spells
     // TODO: Take over `_prepareSpellbook` and
     // - have custom sectioning built right into the process
