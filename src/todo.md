@@ -1,5 +1,6 @@
 ## To Do
 
+- [ ] Sheet Mode Toggle - change the tooltip; consult with hightouch about whether we should do Default Sheet style ("Edit" tooltip, no matter the mode), or something else.
 - [ ] Character Sheet 
   - [ ] Start dev in Foundry V12
   - [ ] Establish components for the tabs
