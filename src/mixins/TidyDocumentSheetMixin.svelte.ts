@@ -55,7 +55,7 @@ export function TidyExtensibleDocumentSheetMixin<
       super(options);
     }
 
-    _mode = $state<number>(CONSTANTS.SHEET_MODE_PLAY);
+    _mode = $state<number | undefined>();
 
     get sheetMode() {
       return this._mode;
