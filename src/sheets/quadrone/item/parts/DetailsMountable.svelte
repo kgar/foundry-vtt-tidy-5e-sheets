@@ -144,7 +144,7 @@
               id="{appId}-speed-value"
               document={context.item}
               field="system.speed.value"
-              value={context.source.system.speed.value}
+              value={context.source.speed.value}
               min="0"
               placeholder="0"
               disabled={!context.unlocked}
