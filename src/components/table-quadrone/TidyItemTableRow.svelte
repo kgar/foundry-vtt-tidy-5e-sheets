@@ -17,21 +17,19 @@
   import { isNil } from 'src/utils/data';
 
   interface Props {
-    item?: Item5e | null;
+    item: Item5e;
     contextMenu?: { type: string; uuid: string } | null;
     rowClass?: ClassValue;
     hidden?: boolean;
-    draggable?: boolean;
     children?: Snippet<[{ toggleSummary: () => void; expanded: boolean }]>;
     expanded?: boolean;
   }
 
   let {
-    item = null,
+    item,
     contextMenu = null,
     rowClass = '',
     hidden = false,
-    draggable = true,
     children,
     expanded = $bindable(false),
   }: Props = $props();
@@ -58,12 +56,6 @@
   let chatData: ItemChatData | undefined = $state();
 
   async function toggleSummary() {
-    if (!item) {
-      warn('Unable to show summary. No item was provided.');
-      expanded = false;
-      return;
-    }
-
     chatData ??= await item.getChatData({ secrets: item.isOwner });
     expanded = !expanded;
     onItemToggled?.(item.id, expanded, location);
@@ -78,10 +70,6 @@
   }
 
   function handleDragStart(event: DragEvent) {
-    if (!item) {
-      return;
-    }
-
     onMouseLeave(event);
 
     const dragData = item.toDragData();
@@ -89,10 +77,6 @@
   }
 
   function restoreItemSummaryIfExpanded() {
-    if (!item) {
-      return;
-    }
-
     const isExpandedAtThisLocation = expandedItems?.get(item.id)?.has(location);
 
     if (isExpandedAtThisLocation) {
@@ -118,7 +102,7 @@
         return;
       }
 
-      if (item && expanded) {
+      if (expanded) {
         chatData = await item.getChatData({ secrets: item.isOwner });
       }
     })();
@@ -132,12 +116,12 @@
   }}
   rowAttributes={{
     ['data-context-menu']: contextMenu?.type,
+    ['data-tidy-draggable']: '',
     ['data-tidy-table-row']: '',
     ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.ITEM_TABLE_ROW,
     ['data-tidy-item-type']: item?.type ?? 'unknown',
     ['data-info-card']: item ? 'item' : null,
     ['data-info-card-entity-uuid']: item?.uuid ?? null,
-    draggable: draggable,
   }}
   rowClass={['tidy-table-row-v2', rowClass, itemColorClasses, { expanded }]}
   ondblclick={(event) => item && FoundryAdapter.editOnMouseEvent(event, item)}

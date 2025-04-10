@@ -35,6 +35,7 @@ import {
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 import { SheetSections } from 'src/features/sections/SheetSections';
+import { DragDropConfigurations } from 'src/features/drag-and-drop/drag-and-drop';
 
 export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
   CONSTANTS.SHEET_TYPE_ITEM,
@@ -81,7 +82,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
         await ImportSheetControl.importFromCompendium(this, this.document);
       },
     },
-    dragDrop: [{ dropSelector: 'form' }],
+    dragDrop: [DragDropConfigurations.table.item, DragDropConfigurations.table.activity],
     submitOnClose: false,
   };
 
@@ -945,7 +946,14 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
    * @param {object} data      The dropped data.
    */
   async _onDropItem(event: DragEvent, data: object) {
+    const behavior = this._dropBehavior(event, data);
+
+    if (!this.actor.isOwner || behavior === 'none') {
+      return false;
+    }
+
     const item = await Item.implementation.fromDropData(data);
+
     if (item?.type === 'spell' && this.item.system.activities) {
       this._onDropSpell(event, item);
     } else {

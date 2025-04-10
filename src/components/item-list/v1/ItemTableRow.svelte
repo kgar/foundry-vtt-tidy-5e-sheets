@@ -13,7 +13,6 @@
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import type { MouseEventHandler } from 'svelte/elements';
-  import { Activities } from 'src/features/activities/activities';
 
   interface Props {
     item?: Item5e | null;
@@ -40,8 +39,6 @@
     rowAttributes,
     children,
   }: Props = $props();
-
-  let draggable = $derived(item);
 
   const emptyChatData: ItemChatData = {
     description: { value: '' },
@@ -86,13 +83,13 @@
   }
 
   function handleDragStart(event: DragEvent) {
-    if (!draggable) {
+    if (!item) {
       return;
     }
 
     onMouseLeave(event);
 
-    const dragData = getDragData?.() ?? draggable.toDragData?.();
+    const dragData = getDragData?.() ?? item.toDragData?.();
     if (dragData) {
       event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
     }
@@ -126,15 +123,6 @@
       }
     })();
   });
-
-  let activities = $derived.by(() => {
-    return item
-      ? Activities.getVisibleActivities(
-          item,
-          item.system.activities,
-        ).map<ActivityItemContext>(Activities.getActivityItemContext)
-      : [];
-  });
 </script>
 
 <div
@@ -151,8 +139,8 @@
     onmouseenter={onMouseEnter}
     onmouseleave={onMouseLeave}
     ondragstart={handleDragStart}
-    draggable={!!draggable}
     data-tidy-table-row
+    data-tidy-draggable
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_TABLE_ROW}
     data-tidy-item-type={item?.type ?? 'unknown'}
     data-favorite-id={favoriteId ?? null}

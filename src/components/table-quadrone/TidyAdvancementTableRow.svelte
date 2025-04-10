@@ -11,7 +11,6 @@
     rowClass?: string;
     hidden?: boolean;
     attributes?: Record<string, any>;
-    draggable?: boolean;
     children?: Snippet;
     afterRow?: Snippet;
     expanded?: boolean;
@@ -21,7 +20,6 @@
     advancement,
     item,
     rowClass = '',
-    draggable = true,
     hidden = false,
     attributes,
     children,
@@ -46,10 +44,9 @@
   rowContainerClass="activity"
   rowClass="tidy-table-row-v2 {rowClass} {expanded ? 'expanded' : ''}"
   rowAttributes={{
-    ['data-id']: advancement?.id,
+    ['data-tidy-draggable']: '',
     ['data-tidy-table-row']: '',
     ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.ADVANCEMENT_TABLE_ROW,
-    draggable: draggable,
   }}
   {hidden}
   ondblclick={(event) => doc && FoundryAdapter.editOnMouseEvent(event, doc)}

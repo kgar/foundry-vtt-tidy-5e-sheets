@@ -66,7 +66,6 @@ export function DragAndDropMixin(BaseApplication: any) {
           ? this._dropBehavior(event, data)
           : 'copy';
 
-      console.info('dropEffect: ' + DragDrop.dropEffect);
     }
 
     _onDrop(
@@ -94,7 +93,6 @@ export function DragAndDropMixin(BaseApplication: any) {
      */
     _dropBehavior(event: DragEvent, data: {}): DropEffectValue {
       const allowed = this._allowedDropBehaviors(event, data);
-      console.info('allowed drop behaviors: ' + Array.from(allowed).join(', '));
 
       let behavior = DragDrop.dropEffect ?? event.dataTransfer?.dropEffect;
 
@@ -120,18 +118,7 @@ export function DragAndDropMixin(BaseApplication: any) {
      * Types of allowed drop behaviors based on the origin & target of a drag event.
      */
     _allowedDropBehaviors(event: DragEvent, data: any): Set<DropEffectValue> {
-      if (!data.uuid) return new Set<DropEffectValue>(['copy']);
-      const allowed = new Set<DropEffectValue>(['copy', 'move']);
-      const s = foundry.utils.parseUuid(data.uuid);
-      const t = foundry.utils.parseUuid(this.document.uuid);
-      const sCompendium = s.collection instanceof CompendiumCollection;
-      const tCompendium = t.collection instanceof CompendiumCollection;
-
-      // If either source or target are within a compendium, but not inside the same compendium, move not allowed
-      if ((sCompendium || tCompendium) && s.collection !== t.collection)
-        allowed.delete('move');
-
-      return allowed;
+      return new Set<DropEffectValue>();
     }
 
     /* -------------------------------------------- */
@@ -140,7 +127,6 @@ export function DragAndDropMixin(BaseApplication: any) {
      * Determine the default drop behavior for the provided operation.
      */
     _defaultDropBehavior(event: DragEvent, data: object): DropEffectValue {
-      console.info('getting default drop behavior');
       return 'copy';
     }
   }

@@ -40,10 +40,10 @@
     {#each context.activities as activity (activity.id)}
       <div
         class="activity card"
+        data-tidy-draggable
         data-activity-id={activity.id}
         data-configurable={Activities.isConfigurable(activity)}
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
-        draggable="true"
         ondragstart={(ev) => handleDragStart(ev, activity.id)}
         data-info-card="activity"
         data-info-card-entity-uuid={activity.uuid}

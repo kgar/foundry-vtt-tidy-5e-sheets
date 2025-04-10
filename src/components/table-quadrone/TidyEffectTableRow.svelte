@@ -13,7 +13,6 @@
     rowClass?: string;
     hidden?: boolean;
     attributes?: Record<string, any>;
-    draggable?: boolean;
     children?: Snippet<[{ toggleSummary: () => void; expanded: boolean }]>;
     expanded?: boolean;
   }
@@ -21,7 +20,6 @@
   let {
     effectContext,
     rowClass = '',
-    draggable = true,
     hidden = false,
     attributes,
     children,
@@ -76,12 +74,12 @@
   rowClass="tidy-table-row-v2 {rowClass} {expanded ? 'expanded' : ''}"
   rowAttributes={{
     ['data-context-menu']: CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS,
+    ['data-tidy-draggable']: '',
     ['data-tidy-table-row']: '',
     ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.EFFECT_TABLE_ROW,
     ['data-info-card']: 'effect',
     ['data-info-card-entity-uuid']: effectContext.uuid,
     ['data-parent-id']: effectContext?.parentId ?? effectContext?.parent?.id,
-    draggable: draggable,
   }}
   {hidden}
   ondblclick={(event) =>

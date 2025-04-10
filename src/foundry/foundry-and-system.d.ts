@@ -75,8 +75,8 @@ declare global {
   }
 
   interface DragDropConfiguration {
-    dragSelector?: string;
-    dropSelector?: string;
+    dragSelector?: string | null;
+    dropSelector?: string | null;
     permissions?: Record<string, Function>;
     callbacks?: Record<string, Function>;
   }

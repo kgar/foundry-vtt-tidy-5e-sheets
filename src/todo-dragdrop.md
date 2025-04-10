@@ -2,8 +2,53 @@
 
 ### To Do
 
-- [ ] Establish _allowedDropBehaviors as a general resource in DragDrop.ts
-- [ ] Implement dragover to apply desired effect to the transfer
+- DragDrop mixin
+  - [x] Aggregate known drag selectors and consolidate to DragDrop.ts as statics for Actors and Items.
+  - [x] Implement dragover to apply desired effect to the transfer
+- Tidy Extensible Document Mixin
+  - [x] Establish _allowedDropBehaviors for document sheets
+  - [x] ~~Establish call to `bind` during render process; ensure it always happens on each render cycle~~ already happening ♥
+  - [ ] Implement the DragDrop static drag selectors so they're available to sheets to use when setting up drag/drop settings
+- [x] Dismantle all manual `draggable` instances in the code base
+- [ ] Ensure Tidy doc sheets are respecting dropEffect
+  - [x] Container Q
+  - [ ] Item Q
+  - [ ] Item T
+  - [x] Container T
+  - [ ] PC
+  - [ ] NPC
+  - [ ] Group
+  - [ ] Vehicle
+
+### Salient points
+
+- There is a global payload kept in DragDrop5e (overrides DragDrop from foundry)
+- To integrate with the default sheets properly, Tidy must utilize the dragdrop functionality built into applications
+  - App V2 is handled by us until only Foundry 13+
+  - App V1 is handled by Foundry/dnd5e
+- A dropEffect is determined on drag and on drag over
+- Allowed and default behaviors are specified by an application or its descendent
+- Item drop handlers respect item drop logic
+
+### Drag Selectors
+```
+(Actor)
+[data-tidy-attribute-pin][data-item-id]
+[data-tidy-attribute-pin][data-activity-id]
+
+(Actor, Item) 
+[data-tidy-table-row][data-effect-id]
+[data-tidy-table-row][data-activity-id]
+
+(Actor, Container)
+[data-tidy-table-row][data-item-id]
+[data-tidy-grid-item][data-item-id]
+
+(Item)
+[data-tidy-table-row][data-advancement]
+```
+
+
 
 ### Actor Sheets
 
