@@ -1,7 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
-import { DragAndDropMixin } from 'src/mixins/DragAndDropBaseMixin';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type {
   ApplicationConfiguration,
@@ -33,18 +32,15 @@ import { DocumentTabSectionConfigApplication } from 'src/applications/section-co
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { settings } from 'src/settings/settings.svelte';
-import { Inventory } from 'src/features/sections/Inventory';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 
 export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixin(
   CONSTANTS.SHEET_TYPE_CONTAINER,
-  DragAndDropMixin(
-    SvelteApplicationMixin<
-      ApplicationConfiguration | undefined,
-      ContainerSheetClassicContext
-    >(foundry.applications.sheets.ItemSheetV2)
-  )
+  SvelteApplicationMixin<
+    ApplicationConfiguration | undefined,
+    ContainerSheetClassicContext
+  >(foundry.applications.sheets.ItemSheetV2)
 ) {
   currentTabId: string | undefined = undefined;
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
@@ -88,8 +84,13 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
       height: 600,
     },
     actions: {},
-    dragDrop: [{ dropSelector: 'form' }],
-    submitOnClose: false,
+    dragDrop: [
+      {
+        dragSelector: '[data-tidy-draggable]',
+        dropSelector: null,
+      },
+    ],
+    submitOnClose: true,
   };
 
   _createComponent(node: HTMLElement): Record<string, any> {
@@ -450,11 +451,15 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
     data: any
   ): Promise<Item5e[] | boolean | void> {
+    const behavior = this._dropBehavior(event, data);
     const item = await Item.implementation.fromDropData(data);
-    if (!this.item.isOwner || !item) return false;
+
+    if (!this.item.isOwner || !item || behavior === 'none') {
+      return false;
+    }
 
     // If item already exists in this container, just adjust its sorting
-    if (item.system.container === this.item.id) {
+    if (behavior === 'move' && item.system.container === this.item.id) {
       return this._onSortItem(event, item);
     }
 
@@ -469,9 +474,9 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
 
     // If item already exists in same DocumentCollection, just adjust its container property
     if (
+      behavior === 'move' &&
       item.actor === this.item.actor &&
-      item.pack === this.item.pack &&
-      Inventory.getDefaultInventoryTypes().includes(item.type)
+      item.pack === this.item.pack
     ) {
       return item.update({
         folder: this.item.folder,
@@ -485,16 +490,22 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
       transformAll: (itemData: any, options: any) =>
         this._onDropSingleItem(itemData, { ...options, event }),
     });
-    if (this.item.folder)
+    if (this.item.folder) {
       toCreate.forEach((d: any) => (d.folder = this.item.folder.id));
-    return dnd5e.documents.Item5e.createDocuments(toCreate, {
+    }
+
+    const created = dnd5e.documents.Item5e.createDocuments(toCreate, {
       pack: this.item.pack,
       parent: this.item.actor,
       keepId: true,
     });
-  }
 
-  /* -------------------------------------------- */
+    if (behavior === 'move') {
+      item.delete({ deleteContents: true });
+    }
+
+    return created;
+  }
 
   /**
    * Process a single item when dropping into the container.
@@ -507,24 +518,14 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
    *                                    created or creation has been otherwise handled.
    * @protected
    */
-  async _onDropSingleItem(
-    itemData: Record<string, any>,
-    {
-      container,
-      depth,
-      event,
-    }: { container: string; depth: number; event: DragEvent }
-  ) {
-    if (itemData.type === 'spell') {
-      const createOptions: Record<string, unknown> = {};
-
+  async _onDropSingleItem(itemData: any, { container, depth, event }: any) {
+    if (itemData.type === CONSTANTS.ITEM_TYPE_SPELL) {
       if (settings.value.includeFlagsInSpellScrollCreation) {
-        createOptions.flags = itemData.flags;
+        itemData.flags = itemData.flags;
       }
 
       const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(
-        itemData,
-        createOptions
+        itemData
       );
 
       return scroll?.toObject?.() ?? false;
@@ -532,16 +533,17 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
 
     if (this.item.actor && container === this.item.id) {
       const result = await FoundryAdapter.onDropStackConsumablesForActor(
-        this.actor,
+        this.item.actor,
         itemData,
-        { container },
-        event
+        { container }
       );
       if (result) return false;
     }
 
     return itemData;
   }
+
+  /* -------------------------------------------- */
 
   /**
    * Handle a drop event for an existing contained Item to sort it relative to its siblings.

@@ -1,7 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
-import { DragAndDropMixin } from 'src/mixins/DragAndDropBaseMixin';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import type { ApplicationConfiguration } from 'src/types/application.types';
@@ -38,12 +37,10 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 
 export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
   CONSTANTS.SHEET_TYPE_ITEM,
-  DragAndDropMixin(
-    SvelteApplicationMixin<
-      ApplicationConfiguration | undefined,
-      ItemSheetQuadroneContext
-    >(foundry.applications.sheets.ItemSheetV2)
-  )
+  SvelteApplicationMixin<
+    ApplicationConfiguration | undefined,
+    ItemSheetQuadroneContext
+  >(foundry.applications.sheets.ItemSheetV2)
 ) {
   currentTabId: string | undefined = undefined;
   sectionExpansionTracker = new ExpansionTracker(
@@ -81,8 +78,13 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
         await ImportSheetControl.importFromCompendium(this, this.document);
       },
     },
-    dragDrop: [{ dropSelector: 'form' }],
-    submitOnClose: false,
+    dragDrop: [
+      {
+        dragSelector: '[data-tidy-draggable]',
+        dropSelector: null,
+      },
+    ],
+    submitOnClose: true,
   };
 
   _createComponent(node: HTMLElement): Record<string, any> {
@@ -945,7 +947,14 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
    * @param {object} data      The dropped data.
    */
   async _onDropItem(event: DragEvent, data: object) {
+    const behavior = this._dropBehavior(event, data);
+
+    if (!this.actor.isOwner || behavior === 'none') {
+      return false;
+    }
+
     const item = await Item.implementation.fromDropData(data);
+
     if (item?.type === 'spell' && this.item.system.activities) {
       this._onDropSpell(event, item);
     } else {

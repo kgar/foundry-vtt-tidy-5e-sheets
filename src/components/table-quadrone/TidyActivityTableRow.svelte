@@ -14,7 +14,6 @@
     rowClass?: string;
     hidden?: boolean;
     attributes?: Record<string, any>;
-    draggable?: boolean;
     children?: Snippet<[{ toggleSummary: () => void; expanded: boolean }]>;
     expanded?: boolean;
   }
@@ -22,7 +21,6 @@
   let {
     activity,
     rowClass = '',
-    draggable = true,
     hidden = false,
     attributes,
     children,
@@ -57,14 +55,13 @@
   rowContainerClass="activity"
   rowClass="tidy-table-row-v2 {rowClass} {expanded ? 'expanded' : ''}"
   rowAttributes={{
-    ['data-activity-id']: activity?.id,
     ['data-tidy-table-row']: '',
+    ['data-tidy-draggable']: '',
     ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.ACTIVITY_TABLE_ROW,
     ['data-configurable']: configurable,
     ['data-info-card']: 'activity',
     ['data-info-card-entity-uuid']: activity.uuid,
     ['data-context-menu']: CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES,
-    draggable: draggable,
   }}
   {hidden}
   ondblclick={(event) =>

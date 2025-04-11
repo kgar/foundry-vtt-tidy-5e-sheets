@@ -43,12 +43,10 @@ import { ItemSortRuntime } from 'src/runtime/item/ItemSortRuntime.svelte';
 export class Tidy5eContainerSheetQuadrone
   extends TidyExtensibleDocumentSheetMixin(
     CONSTANTS.SHEET_TYPE_CONTAINER,
-    DragAndDropMixin(
-      SvelteApplicationMixin<
-        ApplicationConfiguration | undefined,
-        ContainerSheetQuadroneContext
-      >(foundry.applications.sheets.ItemSheetV2)
-    )
+    SvelteApplicationMixin<
+      ApplicationConfiguration | undefined,
+      ContainerSheetQuadroneContext
+    >(foundry.applications.sheets.ItemSheetV2)
   )
   implements SheetTabCacheable
 {
@@ -99,8 +97,13 @@ export class Tidy5eContainerSheetQuadrone
       height: 580,
     },
     actions: {},
-    dragDrop: [{ dropSelector: 'form' }],
-    submitOnClose: false,
+    dragDrop: [
+      {
+        dragSelector: '[data-tidy-draggable]',
+        dropSelector: null,
+      },
+    ],
+    submitOnClose: true,
   };
 
   _createComponent(node: HTMLElement): Record<string, any> {
@@ -500,11 +503,15 @@ export class Tidy5eContainerSheetQuadrone
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
     data: any
   ): Promise<Item5e[] | boolean | void> {
+    const behavior = this._dropBehavior(event, data);
     const item = await Item.implementation.fromDropData(data);
-    if (!this.item.isOwner || !item) return false;
+
+    if (!this.item.isOwner || !item || behavior === 'none') {
+      return false;
+    }
 
     // If item already exists in this container, just adjust its sorting
-    if (item.system.container === this.item.id) {
+    if (behavior === 'move' && item.system.container === this.item.id) {
       return this._onSortItem(event, item);
     }
 
@@ -518,7 +525,11 @@ export class Tidy5eContainerSheetQuadrone
     }
 
     // If item already exists in same DocumentCollection, just adjust its container property
-    if (item.actor === this.item.actor && item.pack === this.item.pack) {
+    if (
+      behavior === 'move' &&
+      item.actor === this.item.actor &&
+      item.pack === this.item.pack
+    ) {
       return item.update({
         folder: this.item.folder,
         'system.container': this.item.id,
@@ -528,25 +539,60 @@ export class Tidy5eContainerSheetQuadrone
     // Otherwise, create a new item & contents in this context
     const toCreate = await dnd5e.documents.Item5e.createWithContents([item], {
       container: this.item,
-      transformAll: (itemData: any) => {
-        const options: Record<string, unknown> = {};
-
-        if (settings.value.includeFlagsInSpellScrollCreation) {
-          options.flags = itemData.flags;
-        }
-
-        return itemData.type === 'spell'
-          ? dnd5e.documents.Item5e.createScrollFromSpell(itemData, options)
-          : itemData;
-      },
+      transformAll: (itemData: any, options: any) =>
+        this._onDropSingleItem(itemData, { ...options, event }),
     });
-    if (this.item.folder)
+    if (this.item.folder) {
       toCreate.forEach((d: any) => (d.folder = this.item.folder.id));
-    return dnd5e.documents.Item5e.createDocuments(toCreate, {
+    }
+
+    const created = dnd5e.documents.Item5e.createDocuments(toCreate, {
       pack: this.item.pack,
       parent: this.item.actor,
       keepId: true,
     });
+
+    if (behavior === 'move') {
+      item.delete({ deleteContents: true });
+    }
+
+    return created;
+  }
+
+  /**
+   * Process a single item when dropping into the container.
+   * @param {object} itemData           The item data to create.
+   * @param {object} options
+   * @param {string} options.container  ID of the container to create the items.
+   * @param {number} options.depth      Current depth of the item being created.
+   * @param {DragEvent} options.event   The concluding DragEvent which provided the drop data.
+   * @returns {Promise<object|false>}   The item data to create after processing, or false if the item should not be
+   *                                    created or creation has been otherwise handled.
+   * @protected
+   */
+  async _onDropSingleItem(itemData: any, { container, depth, event }: any) {
+    if (itemData.type === CONSTANTS.ITEM_TYPE_SPELL) {
+      if (settings.value.includeFlagsInSpellScrollCreation) {
+        itemData.flags = itemData.flags;
+      }
+
+      const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(
+        itemData
+      );
+
+      return scroll?.toObject?.() ?? false;
+    }
+
+    if (this.item.actor && container === this.item.id) {
+      const result = await FoundryAdapter.onDropStackConsumablesForActor(
+        this.item.actor,
+        itemData,
+        { container }
+      );
+      if (result) return false;
+    }
+
+    return itemData;
   }
 
   /* -------------------------------------------- */

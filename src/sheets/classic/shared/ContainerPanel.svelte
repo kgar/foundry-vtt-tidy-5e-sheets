@@ -37,7 +37,7 @@
 <ul class="containers">
   {#each containerPanelItems as { container, ...capacity } (container.id)}
     <li
-      draggable="true"
+      data-tidy-draggable
       data-item-id={container.id}
       ondragstart={(ev) => handleDragStart(ev, container)}
       onmouseenter={(ev) => onMouseEnter(ev, container)}

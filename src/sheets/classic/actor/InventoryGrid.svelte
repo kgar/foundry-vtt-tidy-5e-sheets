@@ -113,7 +113,7 @@
           onmouseenter={(ev) => onMouseEnter(ev, item)}
           onmouseleave={(ev) => onMouseLeave(ev, item)}
           ondragstart={(ev) => handleDragStart(ev, item)}
-          draggable={true}
+          data-tidy-draggable
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
           data-item-id={item.id}
           tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
