@@ -2,7 +2,6 @@
   import { CONSTANTS } from 'src/constants';
   import TidySwitch from 'src/components/toggles/TidySwitch.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settings } from 'src/settings/settings.svelte';
   import type { MouseEventHandler } from 'svelte/elements';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   interface Props {
@@ -26,38 +25,13 @@
       ? CONSTANTS.SHEET_MODE_PLAY
       : CONSTANTS.SHEET_MODE_EDIT;
 
-    allowEdit = newMode === CONSTANTS.SHEET_MODE_EDIT;
+    unlocked = newMode === CONSTANTS.SHEET_MODE_EDIT;
 
     await context.document.sheet.changeSheetMode(newMode);
   }
 
   const localize = FoundryAdapter.localize;
-  let allowEdit = $derived(context.unlocked);
-  let descriptionVariable = $derived(
-    settings.value.useTotalSheetLock
-      ? localize('TIDY5E.SheetLock.Description')
-      : localize('TIDY5E.SheetEdit.Description'),
-  );
-  let lockHintVariable = $derived(
-    settings.value.useTotalSheetLock
-      ? 'TIDY5E.SheetLock.Unlock.Hint'
-      : 'TIDY5E.SheetEdit.Enable.Hint',
-  );
-  let unlockHintVariable = $derived(
-    settings.value.useTotalSheetLock
-      ? 'TIDY5E.SheetLock.Lock.Hint'
-      : 'TIDY5E.SheetEdit.Disable.Hint',
-  );
-  let unlockTitle = $derived(
-    localize(unlockHintVariable, {
-      description: descriptionVariable,
-    }),
-  );
-  let lockTitle = $derived(
-    localize(lockHintVariable, {
-      description: descriptionVariable,
-    }),
-  );
+  let unlocked = $derived(context.unlocked);
 </script>
 
 {#if context.editable}
@@ -72,9 +46,11 @@
     <TidySwitch
       --tidy-switch-scale="1"
       --tidy-switch-thumb-transform-duration="0.15s"
-      title={allowEdit ? unlockTitle : lockTitle}
-      checked={allowEdit}
-      thumbIconClass="{allowEdit ? 'fas fa-unlock' : 'fas fa-lock'} fa-fw"
+      title={unlocked
+        ? localize('DND5E.SheetModeEdit')
+        : localize('DND5E.SheetModePlay')}
+      checked={unlocked}
+      thumbIconClass="{unlocked ? 'fas fa-unlock' : 'fas fa-lock'} fa-fw"
       onChange={() => toggleMode()}
     ></TidySwitch>
   </div>

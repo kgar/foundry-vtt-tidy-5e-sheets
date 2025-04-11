@@ -525,3 +525,4 @@ Limited:
 - [x] Class, Subclass, Background, Species, Facility sheets
   - [x] Description tab
     - [x] Description section header hidden, contents displayed, editable when unlocked, saves when locked again, saves when save button clicked and is refreshed.
+- [x] Sheet Mode Toggle - streamline tooltip to read "Play" when locked and "Edit" when unlocked.
