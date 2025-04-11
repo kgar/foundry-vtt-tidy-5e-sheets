@@ -364,5 +364,9 @@
     "TIDY5E.Settings.UseContextMenu": {
         "name": "使用上下文菜单",
         "hint": "启用物品上的右键单击上下文菜单。"
+    },
+    "TIDY5E.Settings.ShowExpandedLimitedView": {
+        "name": "显示展开的受限视图",
+        "hint": "向权限受限的玩家显示整个工作卡（不包括日志）。"
     }
 }
