@@ -70,7 +70,7 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
     },
     actions: {},
     dragDrop: [{ dropSelector: 'form' }],
-    submitOnClose: false,
+    submitOnClose: true,
   };
 
   _createComponent(node: HTMLElement): Record<string, any> {

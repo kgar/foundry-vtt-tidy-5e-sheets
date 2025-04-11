@@ -84,7 +84,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
         dropSelector: null,
       },
     ],
-    submitOnClose: false,
+    submitOnClose: true,
   };
 
   _createComponent(node: HTMLElement): Record<string, any> {

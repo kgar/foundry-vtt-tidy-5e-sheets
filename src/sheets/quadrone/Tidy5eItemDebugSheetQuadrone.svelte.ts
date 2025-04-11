@@ -54,7 +54,7 @@ export class Tidy5eItemDebugSheetQuadrone extends SvelteApplicationMixin<
     },
     actions: {},
     dragDrop: [{ dropSelector: 'div' }],
-    submitOnClose: false,
+    submitOnClose: true,
   };
 
   _createComponent(node: HTMLElement): Record<string, any> {

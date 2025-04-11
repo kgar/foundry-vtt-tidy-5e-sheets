@@ -38,12 +38,14 @@
       border: none;
       box-shadow: none;
       background: transparent;
+      width: 1.125em;
+      height: 1.25em;
 
       i {
         font-size: 1em;
-        position: absolute;
-        top: 0;
-        right: 0.3125rem;
+        // position: absolute;
+        // top: 0;
+        // right: 0.3125rem;
         cursor: pointer;
         text-shadow: none;
       }
