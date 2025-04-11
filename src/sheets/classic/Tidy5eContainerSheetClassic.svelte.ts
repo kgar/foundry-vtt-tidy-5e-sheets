@@ -1,7 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
-import { DragAndDropMixin } from 'src/mixins/DragAndDropBaseMixin';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type {
   ApplicationConfiguration,
@@ -35,16 +34,13 @@ import { TidyHooks } from 'src/foundry/TidyHooks';
 import { settings } from 'src/settings/settings.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
-import { DragDropConfigurations } from 'src/features/drag-and-drop/drag-and-drop';
 
 export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixin(
   CONSTANTS.SHEET_TYPE_CONTAINER,
-  DragAndDropMixin(
-    SvelteApplicationMixin<
-      ApplicationConfiguration | undefined,
-      ContainerSheetClassicContext
-    >(foundry.applications.sheets.ItemSheetV2)
-  )
+  SvelteApplicationMixin<
+    ApplicationConfiguration | undefined,
+    ContainerSheetClassicContext
+  >(foundry.applications.sheets.ItemSheetV2)
 ) {
   currentTabId: string | undefined = undefined;
   searchFilters: LocationToSearchTextMap = new Map<string, string>();

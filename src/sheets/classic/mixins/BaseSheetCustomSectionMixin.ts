@@ -1,4 +1,6 @@
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TidyFlags } from 'src/foundry/TidyFlags';
+import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import type { Item5e } from 'src/types/item.types';
 import type { Actor5e } from 'src/types/types';
 import { isNil } from 'src/utils/data';
@@ -25,15 +27,21 @@ export function BaseSheetCustomSectionMixin<
     ): Promise<any> | void;
     actor: Actor5e;
     object: any;
+    _dropBehavior: (event: DragEvent, data: any) => DropEffectValue;
   }
 >(itemsFn: OwnedItemsFunction, Base: T) {
   return class extends Base {
     async _onDropItem(event: DragEvent, data: any) {
-      if (!this.actor.isOwner) return false;
+      const behavior = this._dropBehavior(event, data);
+
+      if (!this.actor.isOwner || behavior === 'none') {
+        return false;
+      }
+
       const item = await Item.implementation.fromDropData(data);
 
       // Handle moving out of container & item sorting
-      if (this.actor.uuid === item.parent?.uuid) {
+      if (behavior === 'move' && this.actor.uuid === item.parent?.uuid) {
         const removingFromContainer = !isNil(item.system.container);
         if (removingFromContainer) {
           await item.update({ 'system.container': null });
@@ -64,7 +72,11 @@ export function BaseSheetCustomSectionMixin<
       const isMovedToDefaultSection =
         !isNil(sourceSection?.trim(), '') && isNil(targetSection?.trim(), '');
 
-      const initialSortResult = await super._onSortItem(event, itemData);
+      const initialSortResult = await FoundryAdapter.onSortItemForActor(
+        this.actor,
+        event,
+        itemData
+      );
 
       if (!allowSectionTransfer) {
         return initialSortResult;

@@ -34,6 +34,7 @@ import {
 import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
 import { settings } from 'src/settings/settings.svelte';
 import { CONSTANTS } from 'src/constants';
+import { DragAndDropMixin, type DropEffectValue } from './DragAndDropBaseMixin';
 
 export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
   mode?: number;
@@ -50,7 +51,7 @@ export function TidyExtensibleDocumentSheetMixin<
     customContent: RegisteredContent<TContext>[];
   }>
 >(sheetType: string, BaseApplication: any) {
-  class TidyDocumentSheet extends BaseApplication {
+  class TidyDocumentSheet extends DragAndDropMixin(BaseApplication) {
     constructor(options: TConstructorArgs) {
       super(options);
     }
@@ -638,10 +639,10 @@ export function TidyExtensibleDocumentSheetMixin<
 
     _allowedDropBehaviors(event: DragEvent, data: any) {
       if (!data.uuid) {
-        return new Set(['copy', 'link']);
+        return new Set<DropEffectValue>(['copy', 'link']);
       }
 
-      const allowed = new Set(['copy', 'move', 'link']);
+      const allowed = new Set<DropEffectValue>(['copy', 'move', 'link']);
       const s = foundry.utils.parseUuid(data.uuid);
       const t = foundry.utils.parseUuid(this.document.uuid);
       const sCompendium = s.collection instanceof CompendiumCollection;

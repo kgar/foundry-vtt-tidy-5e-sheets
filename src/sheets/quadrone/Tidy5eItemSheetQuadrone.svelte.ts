@@ -1,7 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
-import { DragAndDropMixin } from 'src/mixins/DragAndDropBaseMixin';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import type { ApplicationConfiguration } from 'src/types/application.types';
@@ -35,16 +34,13 @@ import {
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 import { SheetSections } from 'src/features/sections/SheetSections';
-import { DragDropConfigurations } from 'src/features/drag-and-drop/drag-and-drop';
 
 export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
   CONSTANTS.SHEET_TYPE_ITEM,
-  DragAndDropMixin(
-    SvelteApplicationMixin<
-      ApplicationConfiguration | undefined,
-      ItemSheetQuadroneContext
-    >(foundry.applications.sheets.ItemSheetV2)
-  )
+  SvelteApplicationMixin<
+    ApplicationConfiguration | undefined,
+    ItemSheetQuadroneContext
+  >(foundry.applications.sheets.ItemSheetV2)
 ) {
   currentTabId: string | undefined = undefined;
   sectionExpansionTracker = new ExpansionTracker(
@@ -82,7 +78,12 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
         await ImportSheetControl.importFromCompendium(this, this.document);
       },
     },
-    dragDrop: [DragDropConfigurations.table.item, DragDropConfigurations.table.activity],
+    dragDrop: [
+      {
+        dragSelector: '[data-tidy-draggable]',
+        dropSelector: null,
+      },
+    ],
     submitOnClose: false,
   };
 

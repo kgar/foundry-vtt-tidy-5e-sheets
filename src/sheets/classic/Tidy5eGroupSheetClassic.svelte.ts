@@ -113,6 +113,11 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     dragDrop: [
       {
         dragSelector: '[data-member-drag]',
+        dropSelector: null,
+      },
+      {
+        dragSelector: '[data-tidy-draggable]',
+        dropSelector: null,
       },
     ],
     actions: {

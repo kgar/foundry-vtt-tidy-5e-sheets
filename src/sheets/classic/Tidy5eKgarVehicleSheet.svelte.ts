@@ -115,6 +115,12 @@ export class Tidy5eVehicleSheet
       width: width ?? 740,
       height: height ?? 810,
       scrollY: ['[data-tidy-track-scroll-y]', '.scroll-container'],
+      dragDrop: [
+        {
+          dragSelector: '[data-tidy-draggable]',
+          dropSelector: null,
+        },
+      ],
     });
   }
 
@@ -722,6 +728,8 @@ export class Tidy5eVehicleSheet
       }
 
       await this._renderSheet(force, options);
+      const content = this.form.closest('.window-content');
+      this._dragDrop.forEach((d: any) => d.bind(content));
     });
     this.tidyRendering = false;
     debug('Sheet render end');

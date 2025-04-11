@@ -39,17 +39,14 @@ import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { ItemSortRuntime } from 'src/runtime/item/ItemSortRuntime.svelte';
-import { DragDropConfigurations } from 'src/features/drag-and-drop/drag-and-drop';
 
 export class Tidy5eContainerSheetQuadrone
   extends TidyExtensibleDocumentSheetMixin(
     CONSTANTS.SHEET_TYPE_CONTAINER,
-    DragAndDropMixin(
-      SvelteApplicationMixin<
-        ApplicationConfiguration | undefined,
-        ContainerSheetQuadroneContext
-      >(foundry.applications.sheets.ItemSheetV2)
-    )
+    SvelteApplicationMixin<
+      ApplicationConfiguration | undefined,
+      ContainerSheetQuadroneContext
+    >(foundry.applications.sheets.ItemSheetV2)
   )
   implements SheetTabCacheable
 {

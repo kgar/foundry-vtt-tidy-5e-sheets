@@ -91,7 +91,7 @@ export function DragAndDropMixin(BaseApplication: any) {
      * The behavior for the dropped data. When called during the drop event, ensure this is called before awaiting
      * anything or the drop behavior will be lost.
      */
-    _dropBehavior(event: DragEvent, data: {}): DropEffectValue {
+    _dropBehavior(event: DragEvent, data: unknown): DropEffectValue {
       const allowed = this._allowedDropBehaviors(event, data);
 
       let behavior = DragDrop.dropEffect ?? event.dataTransfer?.dropEffect;
@@ -126,7 +126,7 @@ export function DragAndDropMixin(BaseApplication: any) {
     /**
      * Determine the default drop behavior for the provided operation.
      */
-    _defaultDropBehavior(event: DragEvent, data: object): DropEffectValue {
+    _defaultDropBehavior(event: DragEvent, data: unknown): DropEffectValue {
       return 'copy';
     }
   }

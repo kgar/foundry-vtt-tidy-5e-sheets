@@ -1,17 +1,26 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { DragAndDropMixin } from './DragAndDropBaseMixin';
+import { type DropEffectValue } from './DragAndDropBaseMixin';
 import type { Item5e } from 'src/types/item.types';
 import { firstOfSet } from 'src/utils/set';
 import { CONSTANTS } from 'src/constants';
-import type { ApplicationPosition } from 'src/types/application.types';
+import type {
+  ApplicationConfiguration,
+  ApplicationPosition,
+} from 'src/types/application.types';
 import type { Actor5e } from 'src/types/types';
 import { settings } from 'src/settings/settings.svelte';
 import TabSelectionFormApplication from 'src/applications/tab-selection/TabSelectionFormApplication.svelte';
+import { isNil } from 'src/utils/data';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 
 export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
-  class Tidy5eActorSheetBase extends DragAndDropMixin(BaseApplication) {
+  class Tidy5eActorSheetBase extends BaseApplication {
     _supportedItemTypes: Set<string> = new Set();
     _currentDragEvent: (DragEvent & { currentTarget: HTMLElement }) | undefined;
+
+    constructor(options?: Partial<ApplicationConfiguration> | undefined) {
+      super(options);
+    }
 
     static readonly ACTOR_ACTIONS_AND_CONTROLS = {
       configureToken: {
@@ -133,7 +142,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
         return false;
       }
 
-      if (effect.target === this.actor) {
+      if (effect?.target === this.actor) {
         return false;
       }
 
@@ -240,21 +249,60 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
       event: DragEvent & { currentTarget: HTMLElement },
       data: unknown
     ): Promise<object | boolean | undefined> {
-      if (!this.actor.isOwner) return false;
+      const behavior = this._dropBehavior(event, data);
+
+      if (!this.actor.isOwner || behavior === 'none') {
+        return false;
+      }
+
       const item = await Item.implementation.fromDropData(data);
 
       // Handle moving out of container & item sorting
-      if (this.actor.uuid === item.parent?.uuid) {
-        if (item.system.container !== null)
+      if (behavior === 'move' && this.actor.uuid === item.parent?.uuid) {
+        const removingFromContainer = !isNil(item.system.container);
+        if (removingFromContainer) {
           await item.update({ 'system.container': null });
-        return FoundryAdapter.onSortItemForActor(
+        }
+
+        const itemData = item.toObject();
+
+        const sourceSection = foundry.utils.getProperty(
+          itemData,
+          TidyFlags.section.prop
+        );
+
+        const targetSection = (event.target as HTMLElement | null)
+          ?.closest('[data-tidy-section-key][data-custom-section="true"]')
+          ?.getAttribute('data-tidy-section-key');
+
+        const isMovedToNewSection =
+          !isNil(targetSection?.trim(), '') && sourceSection !== targetSection;
+
+        const isMovedToDefaultSection =
+          !isNil(sourceSection?.trim(), '') && isNil(targetSection?.trim(), '');
+
+        const initialSortResult = await FoundryAdapter.onSortItemForActor(
           this.actor,
           event,
-          item.toObject()
+          itemData
         );
+
+        if (removingFromContainer) {
+          return initialSortResult;
+        }
+
+        if (isMovedToNewSection) {
+          TidyFlags.section.set(item, targetSection);
+          return;
+        } else if (isMovedToDefaultSection) {
+          TidyFlags.section.unset(item);
+          return;
+        }
+
+        return initialSortResult;
       }
 
-      return this._onDropItemCreate(item, event);
+      return this._onDropItemCreate(item, event, behavior);
     }
 
     /**
@@ -262,7 +310,8 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
      */
     async _onDropItemCreate(
       itemData: Item5e[] | Item5e,
-      event: DragEvent
+      event: DragEvent,
+      behavior?: DropEffectValue
     ): Promise<Item5e[]> {
       let items = itemData instanceof Array ? itemData : [itemData];
       const itemsWithoutAdvancement = items.filter(
@@ -293,11 +342,21 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
           this._onDropSingleItem(item.toObject(), event),
       });
 
-      return dnd5e.documents.Item5e.createDocuments(toCreate, {
+      const created = await dnd5e.documents.Item5e.createDocuments(toCreate, {
         pack: this.actor.pack,
         parent: this.actor,
         keepId: true,
       });
+
+      if (behavior === 'move') {
+        items.forEach((i) =>
+          fromUuid(i.uuid).then((d: Item5e) =>
+            d?.delete({ deleteContents: true })
+          )
+        );
+      }
+
+      return created;
     }
 
     /**
@@ -404,7 +463,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
       }
 
       // Adjust the preparation mode of a leveled spell depending on the section on which it is dropped.
-      if (itemData.type === 'spell') this._onDropSpell(itemData);
+      if (itemData.type === 'spell') this._onDropSpell(itemData, event);
 
       return itemData;
     }
@@ -430,7 +489,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
      */
     _onDropResetData(itemData: any) {
       if (!itemData.system) return;
-      ['attuned', 'equipped', 'proficient', 'prepared'].forEach(
+      ['attuned', 'equipped', 'prepared'].forEach(
         (k) => delete itemData.system[k]
       );
     }
@@ -438,10 +497,10 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
     /**
      * Adjust the preparation mode of a dropped spell depending on the drop location on the sheet.
      */
-    _onDropSpell(itemData: any) {
+    _onDropSpell(itemData: any, event: DragEvent) {
       if (!['npc', 'character'].includes(this.document.type)) return;
 
-      const dropTarget = this._currentDragEvent?.target;
+      const dropTarget = event?.target;
 
       if (!dropTarget || !(dropTarget instanceof HTMLElement)) {
         return;
@@ -474,7 +533,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
       const prep = itemData.system.preparation;
 
       // Case 1: Drop a cantrip.
-      if (itemData.system.level === 0 && preparationMode) {
+      if (itemData.system.level === 0) {
         const modes = CONFIG.DND5E.spellPreparationModes;
 
         const mode =
