@@ -21,7 +21,6 @@ import { TabManager } from 'src/runtime/tab/TabManager';
 import type { GroupableSelectOption, Tab } from 'src/types/types';
 import { getPercentage } from 'src/utils/numbers';
 import { isNil } from 'src/utils/data';
-import { DragAndDropMixin } from 'src/mixins/DragAndDropBaseMixin';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { Activities } from 'src/features/activities/activities';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
@@ -32,12 +31,10 @@ import { debug } from 'src/utils/logging';
 
 export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
   CONSTANTS.SHEET_TYPE_ITEM,
-  DragAndDropMixin(
-    SvelteApplicationMixin<
-      ApplicationConfiguration | undefined,
-      ItemSheetClassicContext
-    >(foundry.applications.sheets.ItemSheetV2)
-  )
+  SvelteApplicationMixin<
+    ApplicationConfiguration | undefined,
+    ItemSheetClassicContext
+  >(foundry.applications.sheets.ItemSheetV2)
 ) {
   currentTabId: string | undefined = undefined;
   sectionExpansionTracker = new ExpansionTracker(

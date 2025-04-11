@@ -105,10 +105,10 @@
             onmouseenter={(ev) => onMouseEnter(ev, spell)}
             onmouseleave={(ev) => onMouseLeave(ev, spell)}
             ondragstart={(ev) => handleDragStart(ev, spell)}
-            draggable={true}
             data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
             data-item-id={spell.id}
             tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
+            data-tidy-draggable
             data-tidy-grid-item
             data-info-card={spell ? 'item' : null}
             data-info-card-entity-uuid={spell?.uuid ?? null}

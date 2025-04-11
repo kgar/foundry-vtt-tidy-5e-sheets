@@ -112,7 +112,8 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     },
     dragDrop: [
       {
-        dragSelector: '[data-member-drag]',
+        dragSelector: '[data-tidy-draggable]',
+        dropSelector: null,
       },
     ],
     actions: {
@@ -907,7 +908,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
   ): void {
     const memberId = event.currentTarget
-      .closest('[data-member-drag][data-member-id]')
+      .closest('[data-tidy-draggable][data-member-id]')
       ?.getAttribute('data-member-id');
 
     if (!memberId) {
@@ -954,7 +955,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     }
 
     const dropTarget = event.target?.closest<HTMLElement>(
-      '[data-member-drag][data-member-id]'
+      '[data-tidy-draggable][data-member-id]'
     );
     const targetMemberId = dropTarget?.getAttribute('data-member-id');
 

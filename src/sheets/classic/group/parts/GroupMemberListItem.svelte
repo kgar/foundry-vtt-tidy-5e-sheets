@@ -45,7 +45,7 @@
 
 <div
   class="group-member-list-item flex-row small-gap align-items-flex-start"
-  data-member-drag
+  data-tidy-draggable
   data-member-id={member.id}
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_GROUP_MEMBER}
 >

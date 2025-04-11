@@ -68,6 +68,7 @@
 
 <div
   class="attribute-pin"
+  data-tidy-draggable
   data-item-id={ctx.document.item.id}
   data-activity-id={ctx.document.id}
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
@@ -76,7 +77,6 @@
   data-configurable="true"
   data-pin-id={ctx.id}
   onmousedown={(ev) => FoundryAdapter.editOnMiddleClick(ev, ctx.document)}
-  draggable={true}
   ondragstart={onDragStart}
 >
   <div class="attribute-document-image">

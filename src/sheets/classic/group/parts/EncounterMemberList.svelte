@@ -141,7 +141,7 @@
           {#if searchResults.show(member.uuid)}
             <TidyTableRow
               rowContainerAttributes={{
-                ['data-member-drag']: '',
+                ['data-tidy-draggable']: '',
                 ['data-context-menu']: CONSTANTS.CONTEXT_MENU_TYPE_GROUP_MEMBER,
                 ['data-member-id']: member.id,
               }}

@@ -185,7 +185,6 @@
                 type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
                 uuid: item.uuid,
               }}
-              draggable={editable}
             >
               {#snippet children({ toggleSummary })}
                 <TidyTableCell class="flex-row extra-small-gap" primary={true}>

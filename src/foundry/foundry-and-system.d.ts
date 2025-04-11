@@ -18,6 +18,7 @@ declare global {
   var Application: any;
   var AudioHelper: any;
   var ChatMessage: any;
+  var CompendiumCollection: any;
   var CONFIG: CONFIG & { Dice: any };
   var CONST: any;
   var ContextMenu: any;
@@ -74,8 +75,8 @@ declare global {
   }
 
   interface DragDropConfiguration {
-    dragSelector?: string;
-    dropSelector?: string;
+    dragSelector?: string | null;
+    dropSelector?: string | null;
     permissions?: Record<string, Function>;
     callbacks?: Record<string, Function>;
   }
@@ -107,6 +108,8 @@ declare global {
       width: number,
       height: number
     ): HTMLElement;
+    dropEffect: 'copy' | 'move' | 'link' | 'none';
+    getPayload: (event: DragEvent) => object;
   };
 }
 

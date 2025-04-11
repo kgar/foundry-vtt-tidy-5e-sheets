@@ -13,7 +13,7 @@
   import { isNil } from 'src/utils/data';
   import type { Item5e } from 'src/types/item.types';
   import { TidyHooks } from 'src/foundry/TidyHooks';
-  import { applyDropzoneClass } from 'src/events/drag-and-drop';
+  import { applyDropzoneClass } from 'src/features/drag-and-drop/drag-and-drop';
   import InlineSvg from 'src/components/utility/InlineSvg.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ContextPrimitive } from 'src/features/reactivity/reactivity.types';

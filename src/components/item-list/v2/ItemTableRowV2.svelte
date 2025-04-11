@@ -19,7 +19,6 @@
     contextMenu?: { type: string; uuid: string } | null;
     rowClass?: string;
     hidden?: boolean;
-    draggable?: boolean;
     children?: Snippet<[any]>;
   }
 
@@ -28,7 +27,6 @@
     contextMenu = null,
     rowClass = '',
     hidden = false,
-    draggable = true,
     children,
   }: Props = $props();
 
@@ -127,11 +125,11 @@
   rowAttributes={{
     ['data-context-menu']: contextMenu?.type,
     ['data-tidy-table-row']: '',
+    ['data-tidy-draggable']: '',
     ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.ITEM_TABLE_ROW,
     ['data-tidy-item-type']: item?.type ?? 'unknown',
     ['data-info-card']: item ? 'item' : null,
     ['data-info-card-entity-uuid']: item?.uuid ?? null,
-    draggable: draggable,
   }}
   rowClass="tidy-table-row-v2 {rowClass ?? ''}"
   onmousedown={(event) => item && FoundryAdapter.editOnMiddleClick(event, item)}

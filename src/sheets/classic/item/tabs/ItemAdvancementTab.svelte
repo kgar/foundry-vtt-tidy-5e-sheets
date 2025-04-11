@@ -128,9 +128,9 @@
         {@const isSvgIcon = isSvg(advancement.icon)}
         <li
           class="advancement-item item flexrow"
+          data-tidy-draggable
           data-id={advancement.id}
           ondragstart={(ev) => handleAdvancementDragStart(ev, advancement)}
-          draggable={context.editable}
         >
           <div class="item-name flexrow">
             <div class="item-image" class:svg={isSvgIcon}>
