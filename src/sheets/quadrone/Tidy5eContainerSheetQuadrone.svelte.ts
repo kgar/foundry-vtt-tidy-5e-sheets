@@ -103,7 +103,7 @@ export class Tidy5eContainerSheetQuadrone
         dropSelector: null,
       },
     ],
-    submitOnClose: false,
+    submitOnClose: true,
   };
 
   _createComponent(node: HTMLElement): Record<string, any> {

@@ -90,7 +90,7 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
         dropSelector: null,
       },
     ],
-    submitOnClose: false,
+    submitOnClose: true,
   };
 
   _createComponent(node: HTMLElement): Record<string, any> {
