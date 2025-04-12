@@ -51,6 +51,7 @@
 <TidyTableRow
   rowContainerAttributes={{
     ['data-activity-id']: activity?.id,
+    ['data-configurable']: configurable,
   }}
   rowContainerClass="activity"
   rowClass="tidy-table-row-v2 {rowClass} {expanded ? 'expanded' : ''}"
@@ -58,7 +59,6 @@
     ['data-tidy-table-row']: '',
     ['data-tidy-draggable']: '',
     ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.ACTIVITY_TABLE_ROW,
-    ['data-configurable']: configurable,
     ['data-info-card']: 'activity',
     ['data-info-card-entity-uuid']: activity.uuid,
     ['data-context-menu']: CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES,
