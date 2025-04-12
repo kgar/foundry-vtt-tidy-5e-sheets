@@ -783,9 +783,10 @@ export type ActorV2 = {
   // TODO: Put universal ActorV2 members here.
   uuid: string;
   update(toUpdate: Record<string, unknown>): Promise<ActorV2 | undefined>;
-};
+} & {};
 
-export type ActorSheetContextV2<TActor = ActorV2> = {
+// TODO: Deprecate
+export type ActorSheetClassicContextV2<TActor = ActorV2> = {
   actor: TActor;
   actorPortraitCommands: RegisteredPortraitMenuCommand[];
   editable: boolean;
@@ -801,6 +802,20 @@ export type GroupableSelectOption = {
   label: string;
   group?: string;
 };
+
+/* Quadrone Types */
+export type DocumentSheetQuadroneContext<TDocument> = {
+  document: TDocument;
+  source: any;
+  fields: any;
+  editable: boolean;
+  user: any;
+  rootId: string;
+}
+
+export type CharacterSheetQuadroneContext = {
+  // TODO: Populate with context data as needed
+} & DocumentSheetQuadroneContext<Actor5e>;
 
 /* Misc - Svelte */
 

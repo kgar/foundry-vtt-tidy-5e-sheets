@@ -165,6 +165,26 @@ export function TidyExtensibleDocumentSheetMixin<
       this._mode = mode ?? this._mode ?? CONSTANTS.SHEET_MODE_PLAY;
     }
 
+    async _prepareContext(options: Partial<TidyDocumentSheetRenderOptions>) {
+      const context = await super._prepareContext(options);
+      
+      if (game.release.generation < 13) {
+        const document = this.document;
+        return Object.assign(context, {
+          document,
+          source: document._source,
+          fields: document.schema.fields,
+          editable: this.isEditable,
+          user: game.user,
+          rootId: document.collection?.has(document.id)
+            ? this.id
+            : foundry.utils.randomID(),
+        });
+      }
+
+      return context;
+    }
+
     async _renderHTML(
       context: TContext,
       options: TidyDocumentSheetRenderOptions

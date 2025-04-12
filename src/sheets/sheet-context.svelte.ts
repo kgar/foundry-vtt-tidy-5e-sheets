@@ -9,6 +9,7 @@ import type {
 } from 'src/types/item.types';
 import type {
   CharacterSheetContext,
+  CharacterSheetQuadroneContext,
   NpcSheetContext,
   VehicleSheetContext,
 } from 'src/types/types';
@@ -22,6 +23,10 @@ export function getSheetContext<TContext = any>(): TContext {
 
 export function getCharacterSheetContext(): CharacterSheetContext {
   return getSheetContext<CharacterSheetContext>();
+}
+
+export function getCharacterSheetQuadroneContext(): CharacterSheetQuadroneContext {
+  return getSheetContext<CharacterSheetQuadroneContext>();
 }
 
 export function getNpcSheetContext(): NpcSheetContext {

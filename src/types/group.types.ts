@@ -3,7 +3,7 @@ import type { ContainerContents, Item5e } from './item.types';
 import type {
   ActivityItemContext,
   Actor5e,
-  ActorSheetContextV2,
+  ActorSheetClassicContextV2,
   ActorV2,
   ContainerPanelItemContext,
   InventorySection,
@@ -48,7 +48,7 @@ export type GroupSheetClassicContext = {
   useClassicControls: boolean;
   utilities: Utilities<GroupSheetClassicContext>;
   xp: Group5eXp | undefined;
-} & ActorSheetContextV2<Group5e>;
+} & ActorSheetClassicContextV2<Group5e>;
 
 export interface GroupItemContext {
   activities?: ActivityItemContext[];

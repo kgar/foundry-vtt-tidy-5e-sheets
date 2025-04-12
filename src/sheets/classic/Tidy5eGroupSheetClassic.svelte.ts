@@ -132,8 +132,6 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
   #inlineToggleService = new InlineToggleService();
   messageBus = $state<MessageBus>({ message: undefined });
 
-  // TODO: First render, derive options that come from user preference
-
   _createComponent(node: HTMLElement): Record<string, any> {
     const component = mount(GroupSheet, {
       target: node,

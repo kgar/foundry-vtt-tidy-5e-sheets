@@ -1,9 +1,10 @@
 ## To Do
 
 - [ ] Character Sheet 
-  - [ ] Start dev in Foundry V12
-  - [ ] Establish components for the tabs
+  - [x] Start dev in Foundry V12
+  - [x] Establish components for the tabs
   - [ ] Set up Quadrone runtime content, including the default tabs
+  - [ ] Set up new tab selection for quadrone sheets
   - [ ] Implement tabs
     - [ ] Actions
     - [ ] Attributes
@@ -12,6 +13,7 @@
     - [ ] Spellbook
     - [ ] Effects
     - [ ] Background
+    - [ ] Journal
   - [ ] Implement Expandable/collapsible sidebar
   - [ ] Implement Pins
   - [ ] Implement Favorites
@@ -20,6 +22,7 @@
     - [ ] Client Default
     - [ ] Actor Sheet Override
     - [ ] Item Sheet Override
+  - [ ] Implement Limited View, which branches just within the top-level sheet component.
 - [ ] Scaffold the NPC Sheet in Foundry V12
 - [ ] Scaffold the Group Sheet in Foundry V12
 - [ ] Scaffold the Vehicle Sheet in Foundry V12
@@ -40,6 +43,8 @@
 - [ ] Context Menu items rework
 - [ ] Fix weird minimize/maximize header text behavior. reference: https://discord.com/channels/@me/1243307347682529423/1357922036454002890
 - [ ] Add background circle hover style to section row buttons
+- [ ] Always track and ensure that `currentTabId` is correct on the sheet. Use a getter/setter, and under the hood, use a stateful object. Make "change tab" function available and have it trigger rerenders.
+
 
 ### Scratch - Finding the effective theme for a sheet
 

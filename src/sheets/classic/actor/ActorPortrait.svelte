@@ -4,7 +4,7 @@
   import { type Actor5e } from 'src/types/types';
   import type {
     ActorSheetContextV1,
-    ActorSheetContextV2,
+    ActorSheetClassicContextV2,
   } from 'src/types/types';
   import { isNil } from 'src/utils/data';
   import { debug, error } from 'src/utils/logging';
@@ -21,7 +21,7 @@
   let { actor, useHpOverlay }: Props = $props();
 
   let context =
-    $derived(getSheetContext<ActorSheetContextV1 | ActorSheetContextV2<any>>());
+    $derived(getSheetContext<ActorSheetContextV1 | ActorSheetClassicContextV2<any>>());
 
   const localize = FoundryAdapter.localize;
 

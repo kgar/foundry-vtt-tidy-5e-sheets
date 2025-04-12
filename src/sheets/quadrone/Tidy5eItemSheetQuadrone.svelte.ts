@@ -281,7 +281,6 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       isEmbedded: this.document.isEmbedded,
       item: this.document,
       itemDescriptions,
-      itemOverrides: new Set<string>(this._getItemOverrides()),
       healthPercentage: getPercentage(
         this.item?.system?.hp?.value,
         this.item?.system?.hp?.max
@@ -724,41 +723,6 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
         ];
     }
     return null;
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Retrieve the list of fields that are currently modified by Active Effects on the Item.
-   * @returns {string[]}
-   * @protected
-   */
-  _getItemOverrides() {
-    const overrides = Object.keys(
-      foundry.utils.flattenObject(this.item.overrides ?? {})
-    );
-    this.item.system.getItemOverrides?.(overrides);
-    if ('properties' in this.item.system) {
-      dnd5e.documents.ActiveEffect5e.addOverriddenChoices(
-        this.item,
-        'system.properties',
-        'system.properties',
-        overrides
-      );
-    }
-    if (
-      'damage' in this.item.system &&
-      foundry.utils.getProperty(this.item.overrides, 'system.damage.parts')
-    ) {
-      overrides.push('damage-control');
-      Array.fromRange(this.item.system.damage.parts.length).forEach((index) =>
-        overrides.push(
-          `system.damage.parts.${index}.0`,
-          `system.damage.parts.${index}.1`
-        )
-      );
-    }
-    return overrides;
   }
 
   /* -------------------------------------------- */

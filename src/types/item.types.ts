@@ -237,7 +237,6 @@ export type ItemSheetQuadroneContext = {
     data: UsesRecoveryData;
     formulaOptions: { label: string; value: string }[] | null;
   }[];
-  itemOverrides: Set<string>;
   tabs: Tab[];
 };
 
@@ -353,7 +352,6 @@ export type ContainerSheetQuadroneContext = {
   items: Item5e[];
   itemContext: Record<string, ContainerItemContext>;
   itemDescriptions: ItemDescription[];
-  itemOverrides: Set<string>;
   itemType: string;
   isContainer: true;
   isIdentifiable: boolean;
