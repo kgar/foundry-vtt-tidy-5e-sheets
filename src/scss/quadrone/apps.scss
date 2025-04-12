@@ -304,68 +304,78 @@
   }
 
   /* Prose Mirror Editor Customizations */
-  .editor.prosemirror menu {
-    background: var(--t5e-component-card-lighter);
-    box-sizing: border-box;
-    gap: var(--t5e-size-halfx);
-    padding: 0.125rem;
-
-    .pm-dropdown {
-      justify-content: space-between;
-
-      &.format {
-        min-width: 96px;
-      }
+  .editor.prosemirror {
+    textarea {
+      background: none;
+      border: none;
+      box-shadow: none;
+      padding: var(--t5e-size-2x) 0;
+      outline: none;
     }
 
-    // box-shadow: var(--t5e-drop-shadow-field);
+    menu {
+      background: var(--t5e-component-card-lighter);
+      box-sizing: border-box;
+      gap: var(--t5e-size-halfx);
+      padding: 0.125rem;
 
-    li {
       .pm-dropdown {
-        i {
-          margin-left: 0.25rem;
-        }
+        justify-content: space-between;
 
-        >span {
-          align-self: center;
-          width: auto;
+        &.format {
+          min-width: 84px;
         }
       }
 
-      button {
-        min-width: var(--t5e-field-size-small);
-        width: unset;
-        min-height: var(--t5e-field-size-small);
-        height: var(--t5e-field-size-small);
-        margin: 0;
-        background: none;
-        border: 1px solid transparent;
-        box-sizing: border-box;
-        box-shadow: none;
-        padding: 0 5px;
+      // box-shadow: var(--t5e-drop-shadow-field);
 
-        &.active i {
-          color: var(--t5e-color-icon-button);
-        }
-
-        &:active,
-        &:focus {
-          background-color: var(--t5e-component-field-background-active);
-
+      li {
+        .pm-dropdown {
           i {
-            color: var(--t5e-color-icon-button);
+            margin-left: 0.25rem;
+          }
+
+          >span {
+            align-self: center;
+            width: auto;
           }
         }
 
-        &:hover {
-          background-color: var(--t5e-component-field-background-hover);
-          border: 1px solid var(--t5e-component-field-border);
-        }
-      }
-
-      &.active {
         button {
-          background-color: var(--t5e-component-field-background-active);
+          min-width: var(--t5e-field-size-small);
+          width: unset;
+          min-height: var(--t5e-field-size-small);
+          height: var(--t5e-field-size-small);
+          margin: 0;
+          background: none;
+          border: 1px solid transparent;
+          box-sizing: border-box;
+          box-shadow: none;
+          padding: 0 5px;
+
+          &.active i {
+            color: var(--t5e-color-icon-button);
+          }
+
+          &:active,
+          &:focus {
+            background-color: var(--t5e-component-field-background-active);
+
+            i {
+              color: var(--t5e-color-icon-button);
+            }
+          }
+
+          &:hover {
+            background-color: var(--t5e-component-field-background-hover);
+            border: 1px solid var(--t5e-component-field-border);
+          }
+        }
+
+        &.active {
+          button {
+            background-color: var(--t5e-component-field-background-active);
+          }
         }
       }
     }
@@ -560,11 +570,6 @@
         }
       }
     }
-  }
-
-  .statblock p {
-    margin: 0;
-    display: inline;
   }
 
   sup,

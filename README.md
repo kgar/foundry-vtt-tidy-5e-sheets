@@ -15,7 +15,7 @@ Completely rewritten from the ground up, based on the [Tidy5e Sheet](https://git
 - [Tidy 5e Sheets API](https://kgar.github.io/foundry-vtt-tidy-5e-sheets/)
 
 > [!CAUTION]
-> ⚙️ ***A Quadrone has gone rogue!*** 🤖  
+> ⚙️ ***Quadrones have gone rogue!*** 🤖  
 > The [UI Overhaul Open Beta](<#tidy-5e-sheets-ui-overhaul-beta>) has begun!
 
 ---
@@ -66,17 +66,17 @@ Manual installation instructions:
 The new Tidy 5e Sheets graphical overhaul, codenamed Quadrone, has begun, and we are gradually releasing new sheets into the beta.
 
 Item Sheets Progress:  
-⬜ Background  
-⬜ Class  
+✅ Background  
+✅ Class  
 ✅ Consumable  
 ✅ Container  
 ✅ Equipment  
 ⬜ Facility  
 ⬜ Feat  
 ✅ Loot  
-⬜ Race  
+✅ Species  
 ✅ Spell  
-⬜ Subclass  
+✅ Subclass  
 ⬜ Tattoo  
 ✅ Tool  
 ✅ Weapon  
@@ -100,6 +100,8 @@ _**Behold**_:
 ![Tool and Consumable Sheets](readme-assets/quadrone-tool-and-consumable-sheets.png)
 
 ![Weapon Sheets](readme-assets/quadrone-weapon-sheets.png)
+
+![Class, Subclass, Background, and Species Sheets](readme-assets/quadrone-class-subclass-background-species-sheets.png)
 
 To make these sheets your own, select "Tidy 5e Container Sheet" / "Tidy 5e Item Sheet" on the Sheet Config dialog:
 

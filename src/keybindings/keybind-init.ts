@@ -23,7 +23,10 @@ function registerSheetLockToggleKeybinding() {
         return;
       }
 
-      const isQuadrone = !!sheetDocument.sheet?.form?.classList.contains(
+      const applicationElement =
+        sheetDocument.sheet?.form ?? sheetDocument.sheet?.element;
+
+      const isQuadrone = !!applicationElement?.classList.contains(
         CONSTANTS.SHEET_LAYOUT_QUADRONE
       );
 
