@@ -243,6 +243,7 @@
 
   .item-image-container {
     --img-size: calc(var(--t5e-size-7x) - var(--t5e-size-halfx));
+    --filigree-border-color: var(--t5e-item-color);
     position: relative;
     text-align: center;
     width: 100%;
@@ -278,7 +279,6 @@
       --t5e-item-color: var(--t5e-color-gold);
     }
 
-    --filigree-border-color: var(--t5e-item-color);
   }
 
   .item-rarity-container {
@@ -313,7 +313,7 @@
     font: var(--t5e-font-title-small);
     text-align: center;
   }
-  
+
   .image-subtitle {
     font: var(--t5e-font-title-small);
     text-align: center;
