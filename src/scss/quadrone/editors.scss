@@ -259,6 +259,18 @@
     }
   }
 
+  .editor {
+    figure {
+      margin: var(--t5e-size-2x) 0;
+    }
+
+    figcaption {
+      display: flex;
+      flex-direction: column;
+      gap: var(--t5e-size-2x);
+    }
+  }
+
   .editor-rendered-content {
     flex: 0 0 100%;
     margin-top: var(--t5e-size-2x);
