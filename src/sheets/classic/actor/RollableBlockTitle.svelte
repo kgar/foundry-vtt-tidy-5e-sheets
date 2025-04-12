@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { skipSvelte_onclick } from 'src/actions/svelte-skip-event.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
   import type { MouseEventHandler } from 'svelte/elements';
@@ -27,9 +28,9 @@
   class:rollable={context.editable}
   class="transparent-button"
   {title}
-  onclick={(ev) => onRoll?.(ev)}
   disabled={!context.editable}
   tabindex={!hideFromTabOrder ? 0 : -1}
+  use:skipSvelte_onclick={{ handler: onRoll }}
   {...attributes}
 >
   <h4 class="block-title">
