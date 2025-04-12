@@ -502,11 +502,14 @@
     display: flex;
     font-size: 0.8125rem;
     justify-content: center;
-    padding-left: 0.5px;
     min-height: var(--t5e-field-size-default);
     position: relative;
     transition: all var(--t5e-transition-default);
     width: var(--t5e-table-button-width);
+
+    &:has(i) {
+      padding-left: 0.5px;
+    }
 
     &.button-toggle {
       &.toggled {

@@ -119,6 +119,7 @@
         border: none;
 
         th {
+          line-height: 1.25;
           padding: var(--t5e-size-halfx) var(--t5e-size-2x);
         }
       }
@@ -142,6 +143,41 @@
 
         >*:last-child {
           margin-bottom: 0;
+        }
+      }
+
+      &.roll-table-rollable {
+        th:first-child {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        button.fas {
+          font-family: "Font Awesome 6 Pro";
+          padding: 0 0 1px;
+          min-height: var(--t5e-table-button-width);
+          width: var(--t5e-table-button-width);
+          display: flex;
+          align-items: center;
+          border-radius: 100%;
+          margin-left: -0.25rem;
+
+
+          &::before {
+            font-weight: 900;
+            color: var(--t5e-color-icon-oninverse-default);
+          }
+
+          &:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+
+          }
+        }
+
+        tr:not(.drawn)>td:first-child {
+          padding-left: var(--t5e-size-2x);
+          text-align: center;
         }
       }
 
@@ -220,6 +256,18 @@
           var(--t5e-color-palette-gold-62) 30%,
           var(--t5e-color-palette-gold-62) 70%,
           transparent 95%);
+    }
+  }
+
+  .editor {
+    figure {
+      margin: var(--t5e-size-2x) 0;
+    }
+
+    figcaption {
+      display: flex;
+      flex-direction: column;
+      gap: var(--t5e-size-2x);
     }
   }
 
