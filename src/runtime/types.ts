@@ -65,6 +65,7 @@ export type RegisteredItemSummaryCommandEnabledParams = {
   item: Item5e;
 };
 export type RegisteredItemSummaryCommandExecuteParams = {
+  event: PointerEvent | MouseEvent;
   item: Item5e;
 };
 

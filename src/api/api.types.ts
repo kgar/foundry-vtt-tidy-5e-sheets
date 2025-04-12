@@ -151,6 +151,10 @@ export interface ItemSummaryCommandEnabledParams {
 /** @category Configuration */
 export interface ItemSummaryCommandExecuteParams {
   /**
+   * The inciting event
+   */
+  event: PointerEvent | MouseEvent;
+  /**
    * The item for which the command was executed.
    */
   item: any;
