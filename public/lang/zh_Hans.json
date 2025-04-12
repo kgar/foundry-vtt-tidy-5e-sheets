@@ -364,5 +364,29 @@
     "TIDY5E.Settings.UseContextMenu": {
         "name": "使用上下文菜单",
         "hint": "启用物品上的右键单击上下文菜单。"
+    },
+    "TIDY5E.Settings.ShowExpandedLimitedView": {
+        "name": "显示展开的受限视图",
+        "hint": "向权限受限的玩家显示整个工作卡（不包括日志）。"
+    },
+    "TIDY5E.Settings.UseCircularPortraitStyle": {
+        "hint": "显示角色的圆形立绘/图标。",
+        "name": "使用圆形立绘",
+        "all": "所有角色",
+        "pc": "玩家角色",
+        "npc": "NPC/载具",
+        "none": "无"
+    },
+    "TIDY5E.Settings.UseTotalSheetLock": {
+        "name": "锁定敏感字段",
+        "hint": "当工作卡被锁定时，很少更改的字段（名称、熟练切换按钮）会被锁定，并且隐藏配置按钮。"
+    },
+    "TIDY5E.Settings.LimitEffectsManagementToGM": {
+        "name": "仅限GM管理激活效果",
+        "hint": "仅限GM编辑或切换激活效果。"
+    },
+    "TIDY5E.Settings.UseInspiration": {
+        "name": "使用激励追踪器",
+        "hint": "在角色简介中显示激励追踪器。"
     }
 }
