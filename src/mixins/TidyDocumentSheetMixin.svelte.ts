@@ -417,7 +417,7 @@ export function TidyExtensibleDocumentSheetMixin<
 
     async close(options: ApplicationClosingOptions = {}) {
       // Trigger saving of the form if configured and allowed
-      const submit = this.options.submitOnClose && this.document.isOwner;
+      const submit = this.options.submitOnClose && this.document.isOwner && this.isEditable;
 
       if (submit) {
         await this.submit({ preventClose: true, preventRender: true });

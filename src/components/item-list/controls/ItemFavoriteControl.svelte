@@ -5,21 +5,21 @@
 
   interface Props {
     item: Item5e;
+    favorited: boolean;
   }
 
-  let { item }: Props = $props();
+  let { item, favorited }: Props = $props();
 
-  let active = $derived(FoundryAdapter.isItemFavorited(item));
   let title = $derived(
     FoundryAdapter.localize(
-      active ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
+      favorited ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
     ),
   );
 </script>
 
 <ItemControl
   iconCssClass="fas fa-bookmark"
-  {active}
+  active={favorited}
   {title}
   onclick={() => FoundryAdapter.toggleFavoriteItem(item)}
 />

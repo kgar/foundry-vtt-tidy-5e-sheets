@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
+  import { getContext, type ComponentProps } from 'svelte';
   import Traits from '../../actor/traits/Traits.svelte';
   import VehicleAttributes from '../parts/VehicleAttributes.svelte';
   import type {
@@ -30,15 +30,12 @@
   import type { Item5e } from 'src/types/item.types';
   import ClassicControls from 'src/sheets/classic/shared/ClassicControls.svelte';
   import { ItemUtils } from 'src/utils/ItemUtils';
-  import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
+  import { isItemInActionList } from 'src/features/actions/actions.svelte';
 
   let context = $derived(getVehicleSheetContext());
-
-  let inlineToggleService = getContext<InlineToggleService>(
-    CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
-  );
 
   const localize = FoundryAdapter.localize;
 
@@ -70,34 +67,40 @@
       result.push(
         {
           component: ItemCrewedControl,
-          props: ({ item, ctx }) => ({
-            item,
-            ctx,
-          }),
+          props: ({ item, ctx }) =>
+            ({
+              item,
+              ctx,
+            }) satisfies ComponentProps<typeof ItemCrewedControl>,
         },
         {
           component: ItemEditControl,
-          props: ({ item }) => ({
-            item,
-          }),
+          props: ({ item }) =>
+            ({
+              item,
+            }) satisfies ComponentProps<typeof ItemEditControl>,
         },
       );
 
       if (context.unlocked) {
         result.push({
           component: ItemDeleteControl,
-          props: ({ item }) => ({
-            item,
-          }),
+          props: ({ item }) =>
+            ({
+              item,
+            }) satisfies ComponentProps<typeof ItemDeleteControl>,
         });
       }
 
       if (context.useActionsFeature) {
         result.push({
           component: ActionFilterOverrideControl,
-          props: ({ item }) => ({
-            item,
-          }),
+          props: ({ item }) =>
+            ({
+              item,
+              flagValue: TidyFlags.actionFilterOverride.get(item),
+              active: isItemInActionList(item),
+            }) satisfies ComponentProps<typeof ActionFilterOverrideControl>,
         });
       }
 

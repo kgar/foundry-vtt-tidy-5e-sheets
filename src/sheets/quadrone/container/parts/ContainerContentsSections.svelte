@@ -22,7 +22,6 @@
   import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButton.svelte';
   import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
   import TidyItemTableRow from 'src/components/table-quadrone/TidyItemTableRow.svelte';
-  import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import { ItemColumnRuntime } from 'src/runtime/item/ItemColumnRuntime.svelte';
   import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
@@ -188,11 +187,7 @@
                 class={['tidy-table-button', 'tidy-table-row-use-button']}
                 onclick={(ev) => FoundryAdapter.actorTryUseItem(item, ev)}
               >
-                {#if item.img?.endsWith('.svg')}
-                  <Dnd5eIcon class="item-image" src={item.img} />
-                {:else}
-                  <img class="item-image" alt="" src={item.img} />
-                {/if}
+                <img class="item-image" alt="" src={item.img} />
                 <span class="roll-prompt">
                   <i class="fa fa-dice-d20"></i>
                 </span>

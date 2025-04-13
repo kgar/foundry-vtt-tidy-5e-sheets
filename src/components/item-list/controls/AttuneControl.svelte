@@ -2,15 +2,16 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ItemControl from './ItemControl.svelte';
   import type { Item5e } from 'src/types/item.types';
+  import type { ClassValue } from 'svelte/elements';
 
   interface Props {
+    attuned: boolean;
     item: Item5e;
-    ctx: any;
+    title?: string;
+    class: ClassValue;
   }
 
-  let { item, ctx }: Props = $props();
-
-  let isAttuned = $derived(item.system.attuned);
+  let { item, class: cssClass, title, attuned }: Props = $props();
 
   function toggleAttuned() {
     const actor = item.actor;
@@ -37,8 +38,8 @@
 </script>
 
 <ItemControl
-  title={ctx?.attunement?.title}
-  iconCssClass="fas fa-sun {ctx?.attunement?.cls}"
-  active={isAttuned}
+  {title}
+  iconCssClass={['fas fa-sun', cssClass]}
+  active={attuned}
   onclick={toggleAttuned}
 />

@@ -1,13 +1,15 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ItemControl from './ItemControl.svelte';
+  import type { Item5e } from 'src/types/item.types';
 
   interface Props {
-    ctx: any;
-    item: any;
+    item: Item5e;
+    title: string;
+    equipped: boolean;
   }
 
-  let { ctx, item }: Props = $props();
+  let { item, title, equipped }: Props = $props();
 
   function toggleEquipped() {
     const value = FoundryAdapter.getProperty(item, 'system.equipped');
@@ -19,8 +21,8 @@
 </script>
 
 <ItemControl
-  title={ctx?.toggleTitle}
+  {title}
   iconCssClass="fas fa-user-alt"
-  active={item.system.equipped}
+  active={equipped}
   onclick={toggleEquipped}
 />

@@ -134,11 +134,7 @@
         >
           <div class="item-name flexrow">
             <div class="item-image" class:svg={isSvgIcon}>
-              {#if isSvgIcon}
-                <InlineSvg svgUrl={advancement.icon} />
-              {:else}
-                <img src={advancement.icon} alt="" />
-              {/if}
+              <img src={advancement.icon} alt="" />
             </div>
             <span class="title truncate" title={advancement.title}
               >{@html advancement.title}</span

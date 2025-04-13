@@ -8,7 +8,7 @@ import type { ItemSummaryCommand } from '../../api.types';
  * The item summary makes multiple appearances in Tidy 5e Sheets.
  * Particularly, it shows up when expanding an item table row or when
  * flying out an item info card.
- * 
+ *
  * @category Configuration
  */
 export class ItemSummaryApi {
@@ -58,7 +58,7 @@ export class ItemSummaryApi {
    *         params.item.system?.damage?.versatile,
    *       iconClass: 'fa-solid fa-hands-praying',
    *       execute: (params) => {
-   *         console.log('Do something versatile', params.item);
+   *         console.log('Do something versatile', params.item, params.event);
    *       },
    *     },
    *   ]);

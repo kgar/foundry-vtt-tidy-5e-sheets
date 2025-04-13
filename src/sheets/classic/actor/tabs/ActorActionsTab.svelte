@@ -21,7 +21,10 @@
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
   import FilterMenu from 'src/components/filter/FilterButton.svelte';
-  import { Actions } from 'src/features/actions/actions.svelte';
+  import {
+    Actions,
+    isItemInActionList,
+  } from 'src/features/actions/actions.svelte';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
@@ -306,7 +309,13 @@
                 </ItemTableCell>
                 {#if context.editable && context.useClassicControls}
                   <ItemTableCell baseWidth="1.5rem">
-                    <ActionFilterOverrideControl item={actionItem.item} />
+                    <ActionFilterOverrideControl
+                      item={actionItem.item}
+                      flagValue={TidyFlags.actionFilterOverride.get(
+                        actionItem.item,
+                      )}
+                      active={isItemInActionList(actionItem.item)}
+                    />
                   </ItemTableCell>
                 {/if}
               {/snippet}

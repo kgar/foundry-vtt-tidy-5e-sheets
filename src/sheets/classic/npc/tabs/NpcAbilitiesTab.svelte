@@ -1,7 +1,7 @@
 <script lang="ts">
   import SkillsList from 'src/sheets/classic/actor/SkillsList.svelte';
   import Traits from '../../actor/traits/Traits.svelte';
-  import { getContext } from 'svelte';
+  import { getContext, type ComponentProps } from 'svelte';
   import type {
     ItemLayoutMode,
     RenderableClassicControl,
@@ -38,7 +38,6 @@
   import FilterMenu from 'src/components/filter/FilterButton.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
-  import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ClassicControls from 'src/sheets/classic/shared/ClassicControls.svelte';
   import type { Item5e } from 'src/types/item.types';
@@ -59,6 +58,7 @@
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
   import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { isItemInActionList } from 'src/features/actions/actions.svelte';
 
   let context = $derived(getNpcSheetContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
@@ -130,14 +130,16 @@
       let result: RenderableClassicControl<{ item: Item5e }>[] = [
         {
           component: ItemEditControl,
-          props: ({ item }) => ({ item }),
+          props: ({ item }) =>
+            ({ item }) satisfies ComponentProps<typeof ItemEditControl>,
         },
       ];
 
       if (context.unlocked) {
         result.push({
           component: ItemDeleteControl,
-          props: ({ item }) => ({ item }),
+          props: ({ item }) =>
+            ({ item }) satisfies ComponentProps<typeof ItemDeleteControl>,
           visible: ({ item }) => item.canDelete,
         });
       }
@@ -145,7 +147,12 @@
       if (context.useActionsFeature) {
         result.push({
           component: ActionFilterOverrideControl,
-          props: ({ item }) => ({ item }),
+          props: ({ item }) =>
+            ({
+              item,
+              flagValue: TidyFlags.actionFilterOverride.get(item),
+              active: isItemInActionList(item),
+            }) satisfies ComponentProps<typeof ActionFilterOverrideControl>,
         });
       }
 

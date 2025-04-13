@@ -847,5 +847,6 @@
     "TIDY5E.Tidy5eCharacterSheetQuadrone": "Ficha de Personagem Tidy 5e",
     "TIDY5E.Tidy5eNpcSheetQuadrone": "Ficha de PNJ Tidy 5e",
     "TIDY5E.Tidy5eItemSheetQuadrone": "Ficha de Item Tidy 5e",
-    "TIDY5E.ItemSheet.PactLevelCastLabel": "Conjurado em {ordinal}"
+    "TIDY5E.ItemSheet.PactLevelCastLabel": "Conjurado em {ordinal}",
+    "TIDY5E.AddSpecific": "Adicionar {name}"
 }

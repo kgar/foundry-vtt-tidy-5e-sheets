@@ -388,5 +388,21 @@
     "TIDY5E.Settings.UseInspiration": {
         "name": "使用激励追踪器",
         "hint": "在角色简介中显示激励追踪器。"
+    },
+    "TIDY5E.Settings.UseVehicleMotion": {
+        "name": "使用载具运动追踪器",
+        "hint": "在载具简介中显示运动追踪器。"
+    },
+    "TIDY5E.Settings.UseExhaustion": {
+        "name": "使用力竭追踪器",
+        "hint": "显示角色、非玩家角色和载具的力竭追踪器。"
+    },
+    "TIDY5E.Settings.ShowNPCRestInChat": {
+        "name": "在聊天中显示NPC的休息状态",
+        "hint": "当非玩家角色休息时，会显示一张聊天卡片。"
+    },
+    "TIDY5E.Settings.ShowNPCActorLinkMarker": {
+        "name": "标记已关联/未关联的NPC",
+        "hint": "为已关联/未关联的非玩家角色表单添加彩色边框和图标。"
     }
 }
