@@ -21,7 +21,7 @@
   import SpellPrepareControl from '../spellbook/SpellPrepareControl.svelte';
   import InlineFavoriteIcon from '../item-list/InlineFavoriteIcon.svelte';
   import ItemFavoriteControl from '../item-list/controls/ItemFavoriteControl.svelte';
-  import { getContext } from 'svelte';
+  import { getContext, type ComponentProps } from 'svelte';
   import ActionFilterOverrideControl from '../item-list/controls/ActionFilterOverrideControl.svelte';
   import { SpellSchool } from 'src/features/spell-school/SpellSchool';
   import { declareLocation } from 'src/types/location-awareness.types';
@@ -36,6 +36,8 @@
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
+  import { isItemInActionList } from 'src/features/actions/actions.svelte';
 
   let context =
     $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
@@ -84,10 +86,12 @@
       let result: RenderableClassicControl<{ item: Item5e; ctx: any }>[] = [
         {
           component: SpellPrepareControl,
-          props: ({ item, ctx }) => ({
-            spell: item,
-            ctx,
-          }),
+          props: ({ item, ctx }) =>
+            ({
+              item: item,
+              prepared: item.system.preparation.prepared,
+              title: ctx?.toggleTitle,
+            }) satisfies ComponentProps<typeof SpellPrepareControl>,
           visible: ({ item }) => FoundryAdapter.canPrepareSpell(item),
         },
       ];
@@ -95,34 +99,41 @@
       if (allowFavorites) {
         result.push({
           component: ItemFavoriteControl,
-          props: ({ item }) => ({
-            item,
-          }),
+          props: ({ item }) =>
+            ({
+              item,
+              favorited: FoundryAdapter.isItemFavorited(item),
+            }) satisfies ComponentProps<typeof ItemFavoriteControl>,
         });
       }
 
       result.push({
         component: ItemEditControl,
-        props: ({ item }) => ({
-          item,
-        }),
+        props: ({ item }) =>
+          ({
+            item,
+          }) satisfies ComponentProps<typeof ItemEditControl>,
       });
 
       if (context.unlocked) {
         result.push({
           component: DeleteOrOpenActivity,
-          props: ({ item }) => ({
-            item,
-          }),
+          props: ({ item }) =>
+            ({
+              item,
+            }) satisfies ComponentProps<typeof DeleteOrOpenActivity>,
         });
       }
 
       if (context.useActionsFeature) {
         result.push({
           component: ActionFilterOverrideControl,
-          props: ({ item }) => ({
-            item,
-          }),
+          props: ({ item }) =>
+            ({
+              item,
+              flagValue: TidyFlags.actionFilterOverride.get(item),
+              active: isItemInActionList(item),
+            }) satisfies ComponentProps<typeof ActionFilterOverrideControl>,
         });
       }
 

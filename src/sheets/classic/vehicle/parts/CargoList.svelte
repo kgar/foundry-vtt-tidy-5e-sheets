@@ -4,7 +4,7 @@
     RenderableClassicControl,
     VehicleCargoSection,
   } from 'src/types/types';
-  import { getContext } from 'svelte';
+  import { getContext, type ComponentProps } from 'svelte';
   import ItemTable from 'src/components/item-list/v1/ItemTable.svelte';
   import ItemTableColumn from 'src/components/item-list/v1/ItemTableColumn.svelte';
   import ItemTableRow from 'src/components/item-list/v1/ItemTableRow.svelte';
@@ -24,6 +24,8 @@
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import InlineContainerView from 'src/sheets/classic/container/InlineContainerView.svelte';
   import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
+  import { isItemInActionList } from 'src/features/actions/actions.svelte';
 
   interface Props {
     section: VehicleCargoSection;
@@ -52,27 +54,32 @@
       let result: RenderableClassicControl<{ item: Item5e }>[] = [
         {
           component: ItemEditControl,
-          props: ({ item }) => ({
-            item,
-          }),
+          props: ({ item }) =>
+            ({
+              item,
+            }) satisfies ComponentProps<typeof ItemEditControl>,
         },
       ];
 
       if (context.unlocked) {
         result.push({
           component: ItemDeleteControl,
-          props: ({ item }) => ({
-            item,
-          }),
+          props: ({ item }) =>
+            ({
+              item,
+            }) satisfies ComponentProps<typeof ItemDeleteControl>,
         });
       }
 
       if (context.useActionsFeature) {
         result.push({
           component: ActionFilterOverrideControl,
-          props: ({ item }) => ({
-            item,
-          }),
+          props: ({ item }) =>
+            ({
+              item,
+              flagValue: TidyFlags.actionFilterOverride.get(item),
+              active: isItemInActionList(item),
+            }) satisfies ComponentProps<typeof ActionFilterOverrideControl>,
         });
       }
 
