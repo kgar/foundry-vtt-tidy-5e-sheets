@@ -17,7 +17,7 @@
   import AttuneControl from '../../../components/item-list/controls/AttuneControl.svelte';
   import InlineFavoriteIcon from '../../../components/item-list/InlineFavoriteIcon.svelte';
   import ItemFavoriteControl from '../../../components/item-list/controls/ItemFavoriteControl.svelte';
-  import { getContext, type Snippet } from 'svelte';
+  import { getContext, type ComponentProps, type Snippet } from 'svelte';
   import type {
     CharacterSheetContext,
     InventorySection,
@@ -34,6 +34,8 @@
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
+  import { isItemInActionList } from 'src/features/actions/actions.svelte';
 
   interface Props {
     primaryColumnName?: string;
@@ -94,10 +96,13 @@
       if (allowAttuneControl) {
         result.push({
           component: AttuneControl,
-          props: ({ item, ctx }) => ({
-            item,
-            ctx,
-          }),
+          props: ({ item, ctx }) =>
+            ({
+              item,
+              title: ctx?.attunement?.title,
+              class: ctx?.attunement?.cls,
+              attuned: item.system.attuned,
+            }) satisfies ComponentProps<typeof AttuneControl>,
           visible: ({ item, ctx }) =>
             ctx?.attunement && !FoundryAdapter.concealDetails(item),
         });
@@ -106,10 +111,12 @@
       if (allowEquipControl) {
         result.push({
           component: EquipControl,
-          props: ({ item, ctx }) => ({
-            item,
-            ctx,
-          }),
+          props: ({ item, ctx }) =>
+            ({
+              item,
+              title: ctx?.toggleTitle,
+              equipped: item.system.equipped,
+            }) satisfies ComponentProps<typeof EquipControl>,
           visible: ({ ctx }) => ctx?.canToggle === true,
         });
       }
@@ -117,34 +124,41 @@
       if ('favorites' in context.actor.system) {
         result.push({
           component: ItemFavoriteControl,
-          props: ({ item }) => ({
-            item,
-          }),
+          props: ({ item }) =>
+            ({
+              item,
+              favorited: FoundryAdapter.isItemFavorited(item),
+            }) satisfies ComponentProps<typeof ItemFavoriteControl>,
         });
       }
 
       result.push({
         component: ItemEditControl,
-        props: ({ item }) => ({
-          item,
-        }),
+        props: ({ item }) =>
+          ({
+            item,
+          }) satisfies ComponentProps<typeof ItemEditControl>,
       });
 
       if (context.unlocked) {
         result.push({
           component: ItemDeleteControl,
-          props: ({ item }) => ({
-            item,
-          }),
+          props: ({ item }) =>
+            ({
+              item,
+            }) satisfies ComponentProps<typeof ItemDeleteControl>,
         });
       }
 
       if (context.useActionsFeature) {
         result.push({
           component: ActionFilterOverrideControl,
-          props: ({ item }) => ({
-            item,
-          }),
+          props: ({ item }) =>
+            ({
+              item,
+              flagValue: TidyFlags.actionFilterOverride.get(item),
+              active: isItemInActionList(item),
+            }) satisfies ComponentProps<typeof ActionFilterOverrideControl>,
         });
       }
 

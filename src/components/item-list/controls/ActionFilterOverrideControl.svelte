@@ -7,12 +7,15 @@
 
   interface Props {
     item: Item5e;
+    flagValue: boolean | undefined;
+    active: boolean;
   }
 
-  let { item }: Props = $props();
+  let { item, flagValue, active }: Props = $props();
+
+  const localize = FoundryAdapter.localize;
 
   let title: string = $derived.by(() => {
-    const flagValue = TidyFlags.actionFilterOverride.get(item);
     const titleKey =
       flagValue === true
         ? 'TIDY5E.Actions.OverriddenSetOverrideFalse'
@@ -24,9 +27,6 @@
 
     return localize(titleKey);
   });
-
-  const localize = FoundryAdapter.localize;
-  let active = $derived(isItemInActionList(item));
 </script>
 
 <ItemControl

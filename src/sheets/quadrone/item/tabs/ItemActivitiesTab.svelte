@@ -16,7 +16,6 @@
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyActivityTableRow from 'src/components/table-quadrone/TidyActivityTableRow.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
-  import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
 
   let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
 
@@ -81,11 +80,7 @@
             class={['tidy-table-button', 'tidy-table-row-use-button']}
             onclick={(ev) => activity.doc.use({ ev })}
           >
-            {#if activity.img.svg}
-              <Dnd5eIcon class="item-image" src={activity.img.src} />
-            {:else}
-              <img class="item-image" alt="" src={activity.img.src} />
-            {/if}
+            <img class="item-image" alt="" src={activity.img.src} />
             <span class="roll-prompt">
               <i class="fa fa-dice-d20"></i>
             </span>

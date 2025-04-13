@@ -2,9 +2,10 @@
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settings } from 'src/settings/settings.svelte';
+    import type { ClassValue } from 'svelte/elements';
 
   interface Props {
-    iconCssClass?: string | undefined;
+    iconCssClass?: ClassValue;
     iconSrc?: string | undefined;
     title?: string | undefined;
     active?: boolean;
@@ -32,8 +33,7 @@
 
 <button
   type="button"
-  class="item-list-button {rest.class ?? ''}"
-  class:inactive={!active}
+  class={['item-list-button', rest.class, { inactive: !active }]}
   {onclick}
   title={title !== undefined ? localize(title) : ''}
   tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}

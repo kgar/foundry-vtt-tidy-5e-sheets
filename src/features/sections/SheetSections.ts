@@ -153,7 +153,7 @@ export class SheetSections {
         let key = curr.prop ?? '';
 
         // Handle "Additional Spells" section
-        if (curr.order === 'item') {
+        if (curr.dataset.level === 'item') {
           key = 'dnd5e-cast-activity-additional-spells';
           curr.canCreate = false;
         }

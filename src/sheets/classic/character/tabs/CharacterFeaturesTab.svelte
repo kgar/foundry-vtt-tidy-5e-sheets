@@ -18,7 +18,7 @@
   import ItemUses from '../../../../components/item-list/ItemUses.svelte';
   import InlineFavoriteIcon from '../../../../components/item-list/InlineFavoriteIcon.svelte';
   import ItemFavoriteControl from '../../../../components/item-list/controls/ItemFavoriteControl.svelte';
-  import { getContext } from 'svelte';
+  import { getContext, type ComponentProps } from 'svelte';
   import Notice from '../../../../components/notice/Notice.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
@@ -37,20 +37,16 @@
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { ItemUtils } from 'src/utils/ItemUtils';
-  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import {
     createSearchResultsState,
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { isItemInActionList } from 'src/features/actions/actions.svelte';
 
   let context = $derived(getCharacterSheetContext());
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
-
-  let inlineToggleService = getContext<InlineToggleService>(
-    CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
-  );
 
   const localize = FoundryAdapter.localize;
 
@@ -66,25 +62,36 @@
       let result: RenderableClassicControl<{ item: Item5e }>[] = [
         {
           component: ItemFavoriteControl,
-          props: ({ item }) => ({ item }),
+          props: ({ item }) =>
+            ({
+              item,
+              favorited: FoundryAdapter.isItemFavorited(item),
+            }) satisfies ComponentProps<typeof ItemFavoriteControl>,
         },
         {
           component: ItemEditControl,
-          props: ({ item }) => ({ item }),
+          props: ({ item }) =>
+            ({ item }) satisfies ComponentProps<typeof ItemEditControl>,
         },
       ];
 
       if (context.unlocked) {
         result.push({
           component: ItemDeleteControl,
-          props: ({ item }) => ({ item }),
+          props: ({ item }) =>
+            ({ item }) satisfies ComponentProps<typeof ItemDeleteControl>,
         });
       }
 
       if (context.useActionsFeature) {
         result.push({
           component: ActionFilterOverrideControl,
-          props: ({ item }) => ({ item }),
+          props: ({ item }) =>
+            ({
+              item,
+              flagValue: TidyFlags.actionFilterOverride.get(item),
+              active: isItemInActionList(item),
+            }) satisfies ComponentProps<typeof ActionFilterOverrideControl>,
         });
       }
 
