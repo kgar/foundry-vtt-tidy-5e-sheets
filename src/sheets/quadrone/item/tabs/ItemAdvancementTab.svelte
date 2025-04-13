@@ -17,7 +17,6 @@
   import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButton.svelte';
   import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
   import TidyAdvancementTableRow from 'src/components/table-quadrone/TidyAdvancementTableRow.svelte';
-  import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { isNil } from 'src/utils/data';
   import { CONSTANTS } from 'src/constants';
 
@@ -185,15 +184,11 @@
           {#snippet children()}
             {@const isSvg = advancement.icon?.endsWith('.svg')}
             <span class="tidy-table-button tidy-table-row-use-button disabled">
-              {#if isSvg}
-                <Dnd5eIcon src={advancement.icon} class="item-image" />
-              {:else}
-                <img
-                  class="item-image"
-                  src={advancement.icon}
-                  alt={advancement.title ?? ''}
-                />
-              {/if}
+              <img
+                class="item-image"
+                src={advancement.icon}
+                alt={advancement.title ?? ''}
+              />
             </span>
             <TidyTableCell primary={true}>
               <div class="item-name">
