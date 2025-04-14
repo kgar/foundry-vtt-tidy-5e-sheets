@@ -1,9 +1,11 @@
 ## To Do
 
+- [ ] IMPORTANT: All Foundry documents being passed to svelte components are no longer consistently reactive. Spell images work, for example, but Inventory images do not. Rather than try to fight this, use the surefire fix.
+  - Solution: wrap in a pojo. Bare minimum: `{ value: item }`
 - [ ] Character Sheet 
   - [x] Start dev in Foundry V12
   - [x] Establish components for the tabs
-  - [ ] Set up Quadrone runtime content, including the default tabs
+  - [x] Set up Quadrone runtime content, including the default tabs
   - [ ] Set up new tab selection for quadrone sheets
   - [ ] Implement tabs
     - [ ] Actions
