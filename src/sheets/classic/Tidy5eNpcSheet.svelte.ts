@@ -30,7 +30,6 @@ import { settings } from 'src/settings/settings.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { mount, unmount } from 'svelte';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
-import NpcSheetRuntime from 'src/runtime/NpcSheetRuntime.svelte';
 import {
   actorUsesActionFeature,
   getActorActionSections,
@@ -62,6 +61,7 @@ import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
 import { splitSemicolons } from 'src/utils/array';
+import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime';
 
 export class Tidy5eNpcSheet
   extends BaseSheetCustomSectionMixin(
@@ -372,7 +372,7 @@ export class Tidy5eNpcSheet
                 document: context.actor,
                 sections: sections,
                 tabId: CONSTANTS.TAB_NPC_ABILITIES,
-                tabTitle: NpcSheetRuntime.getTabTitle(
+                tabTitle: NpcSheetClassicRuntime.getTabTitle(
                   CONSTANTS.TAB_NPC_ABILITIES
                 ),
               }).render(true);
@@ -490,7 +490,7 @@ export class Tidy5eNpcSheet
                 document: context.actor,
                 sections: sections,
                 tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
-                tabTitle: NpcSheetRuntime.getTabTitle(
+                tabTitle: NpcSheetClassicRuntime.getTabTitle(
                   CONSTANTS.TAB_ACTOR_SPELLBOOK
                 ),
               }).render(true);
@@ -559,7 +559,7 @@ export class Tidy5eNpcSheet
                 document: context.actor,
                 sections: sections,
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
-                tabTitle: NpcSheetRuntime.getTabTitle(
+                tabTitle: NpcSheetClassicRuntime.getTabTitle(
                   CONSTANTS.TAB_ACTOR_ACTIONS
                 ),
               }).render(true);
@@ -668,7 +668,7 @@ export class Tidy5eNpcSheet
                 document: context.actor,
                 sections: sections,
                 tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
-                tabTitle: NpcSheetRuntime.getTabTitle(
+                tabTitle: NpcSheetClassicRuntime.getTabTitle(
                   CONSTANTS.TAB_ACTOR_INVENTORY
                 ),
               }).render(true);
@@ -729,7 +729,7 @@ export class Tidy5eNpcSheet
       customActorTraits: CustomActorTraitsRuntime.getEnabledTraits(
         defaultDocumentContext
       ),
-      customContent: await NpcSheetRuntime.getContent(defaultDocumentContext),
+      customContent: await NpcSheetClassicRuntime.getContent(defaultDocumentContext),
       defaultSkills: new Set<string>(
         FoundryAdapter.getSystemSetting(CONSTANTS.SYSTEM_SETTING_DEFAULT_SKILLS)
       ),
@@ -905,7 +905,7 @@ export class Tidy5eNpcSheet
         );
     }
 
-    let tabs = await NpcSheetRuntime.getTabs(context);
+    let tabs = await NpcSheetClassicRuntime.getTabs(context);
 
     const selectedTabs = TidyFlags.selectedTabs.get(context.actor);
 

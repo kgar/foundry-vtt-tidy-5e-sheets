@@ -8,9 +8,9 @@
   import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime';
   import { error } from 'src/utils/logging';
   import type { RegisteredTab } from 'src/runtime/types';
-  import NpcSheetRuntime from 'src/runtime/NpcSheetRuntime.svelte';
-  import GroupSheetRuntime from 'src/runtime/GroupSheetRuntime.svelte';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
+  import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime';
+  import GroupSheetClassicRuntime from 'src/runtime/actor/GroupSheetClassicRuntime';
 
   const context = getContext<WorldSettingsContext>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -44,9 +44,9 @@
   let classicCharacterTabs =
     CharacterSheetClassicRuntime.getAllRegisteredTabs();
 
-  let classicNpcTabs = NpcSheetRuntime.getAllRegisteredTabs('classic');
+  let classicNpcTabs = NpcSheetClassicRuntime.getAllRegisteredTabs();
 
-  let classicGroupTabs = GroupSheetRuntime.getAllRegisteredTabs('classic');
+  let classicGroupTabs = GroupSheetClassicRuntime.getAllRegisteredTabs();
 
   let sheetTypes: SheetFilterOption[] = [
     {

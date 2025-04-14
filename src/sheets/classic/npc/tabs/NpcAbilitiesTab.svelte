@@ -44,7 +44,6 @@
   import LevelUpDropdown from 'src/sheets/classic/actor/LevelUpDropdown.svelte';
   import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
   import ItemControl from 'src/components/item-list/controls/ItemControl.svelte';
-  import NpcSheetRuntime from 'src/runtime/NpcSheetRuntime.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
@@ -59,6 +58,7 @@
   } from 'src/features/search/search.svelte';
   import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
   import { isItemInActionList } from 'src/features/actions/actions.svelte';
+  import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime';
 
   let context = $derived(getNpcSheetContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
@@ -413,7 +413,7 @@
                   document: context.actor,
                   sections: context.spellbook,
                   tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
-                  tabTitle: NpcSheetRuntime.getTabTitle(
+                  tabTitle: NpcSheetClassicRuntime.getTabTitle(
                     CONSTANTS.TAB_ACTOR_SPELLBOOK,
                   ),
                 }).render(true)}

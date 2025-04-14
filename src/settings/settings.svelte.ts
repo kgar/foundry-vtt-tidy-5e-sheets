@@ -9,15 +9,15 @@ import { UserSettingsFormApplication } from 'src/applications/settings/user-sett
 import { WorldSettingsFormApplication } from 'src/applications/settings/world-settings/WorldSettingsFormApplication.svelte';
 import { ThemeSettingsFormApplication } from 'src/applications/theme/ThemeSettingsFormApplication.svelte';
 import type { ExhaustionConfig } from '../features/exhaustion/exhaustion.types';
-import NpcSheetRuntime from 'src/runtime/NpcSheetRuntime.svelte';
 import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime';
-import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { BulkMigrationsApplication } from 'src/migrations/BulkMigrationsApplication';
 import { AboutApplication } from 'src/applications/settings/about/AboutApplication';
 import { ApplyTidySheetPreferencesApplication } from 'src/applications/sheet-preferences/ApplyTidySheetPreferencesApplication.svelte';
 import { getDefaultExhaustionConfig } from 'src/features/exhaustion/exhaustion';
 import type { GlobalCustomSectionsetting } from './settings.types';
+import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime';
+import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -619,7 +619,7 @@ export function createSettings() {
           type: String,
           choices: () =>
             TabManager.getTabsAsConfigOptions(
-              NpcSheetRuntime.getAllRegisteredTabs('classic')
+              NpcSheetClassicRuntime.getAllRegisteredTabs()
             ),
           default: CONSTANTS.TAB_NPC_ABILITIES,
         },
@@ -745,7 +745,7 @@ export function createSettings() {
           type: String,
           choices: () =>
             TabManager.getTabsAsConfigOptions(
-              VehicleSheetRuntime.getAllRegisteredTabs('classic')
+              VehicleSheetClassicRuntime.getAllRegisteredTabs()
             ),
           default: CONSTANTS.TAB_VEHICLE_ATTRIBUTES,
         },

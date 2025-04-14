@@ -6,13 +6,15 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { error } from 'src/utils/logging';
 import type { RegisteredTab } from 'src/runtime/types';
 import { CONSTANTS } from 'src/constants';
-import { settings, SettingsProvider } from 'src/settings/settings.svelte';
-import NpcSheetRuntime from 'src/runtime/NpcSheetRuntime.svelte';
+import { settings } from 'src/settings/settings.svelte';
 import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime';
-import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import GroupSheetRuntime from 'src/runtime/GroupSheetRuntime.svelte';
+import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime';
+import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime';
+import GroupSheetClassicRuntime, {
+  defaultGroupClassicTabs,
+} from 'src/runtime/actor/GroupSheetClassicRuntime';
 
 export type TabSelectionItem = {
   id: string;
@@ -39,11 +41,11 @@ export default class ClassicTabSelectionFormApplication extends SvelteFormApplic
     if (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) {
       return CharacterSheetClassicRuntime.getAllRegisteredTabs();
     } else if (actor.type === CONSTANTS.SHEET_TYPE_NPC) {
-      return NpcSheetRuntime.getAllRegisteredTabs('classic');
+      return NpcSheetClassicRuntime.getAllRegisteredTabs();
     } else if (actor.type === CONSTANTS.SHEET_TYPE_VEHICLE) {
-      return VehicleSheetRuntime.getAllRegisteredTabs('classic');
+      return VehicleSheetClassicRuntime.getAllRegisteredTabs();
     } else if (actor.type === CONSTANTS.SHEET_TYPE_GROUP) {
-      return GroupSheetRuntime.getAllRegisteredTabs('classic');
+      return GroupSheetClassicRuntime.getAllRegisteredTabs();
     }
 
     error(
@@ -63,7 +65,8 @@ export default class ClassicTabSelectionFormApplication extends SvelteFormApplic
     } else if (actor.type === CONSTANTS.SHEET_TYPE_VEHICLE) {
       return settings.value.defaultVehicleSheetTabs;
     } else if (actor.type === CONSTANTS.SHEET_TYPE_GROUP) {
-      return GroupSheetRuntime.getDefaultTabs();
+      // TODO: Make this configurable.
+      return defaultGroupClassicTabs.map((x) => x.id);
     }
 
     error(

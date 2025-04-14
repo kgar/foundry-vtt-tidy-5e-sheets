@@ -4,8 +4,6 @@ import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import type { CustomTabBase } from './tab/CustomTabBase';
 import { warn } from 'src/utils/logging';
 import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime';
-import NpcSheetRuntime from 'src/runtime/NpcSheetRuntime.svelte';
-import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import type { TabId } from './tab/CustomTabBase';
 import { SvelteTab } from './tab/SvelteTab';
@@ -23,10 +21,15 @@ import { HandlebarsContent } from './content/HandlebarsContent';
 import { CONSTANTS } from 'src/constants';
 import { CustomContentManager } from 'src/runtime/content/CustomContentManager';
 import { ConfigApi } from './config/ConfigApi';
-import GroupSheetRuntime from 'src/runtime/GroupSheetRuntime.svelte';
 import { HeaderControlsRuntime } from 'src/runtime/header-controls/HeaderControlsRuntime';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import CharacterSheetQuadroneRuntime from 'src/runtime/actor/CharacterSheetQuadroneRuntime';
+import GroupSheetClassicRuntime from 'src/runtime/actor/GroupSheetClassicRuntime';
+import GroupSheetQuadroneRuntime from 'src/runtime/actor/GroupSheetQuadroneRuntime';
+import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime';
+import NpcSheetQuadroneRuntime from 'src/runtime/actor/NpcSheetQuadroneRuntime';
+import VehicleSheetQuadroneRuntime from 'src/runtime/actor/VehicleSheetQuadroneRuntime';
+import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -382,7 +385,19 @@ export class Tidy5eSheetsApi {
     }
 
     for (let registeredTab of registeredTabs) {
-      GroupSheetRuntime.registerTab(registeredTab, options);
+      if (
+        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_CLASSIC ||
+        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_ALL
+      ) {
+        GroupSheetClassicRuntime.registerTab(registeredTab, options);
+      }
+
+      if (
+        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
+        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_ALL
+      ) {
+        GroupSheetQuadroneRuntime.registerTab(registeredTab, options);
+      }
     }
   }
 
@@ -437,8 +452,9 @@ export class Tidy5eSheetsApi {
         registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
       ) {
         CharacterSheetClassicRuntime.registerContent(registeredContent);
-        // NpcSheetClassicRuntime.registerContent(registeredContent);
-        // VehicleSheetClassicRuntime.registerContent(registeredContent);
+        NpcSheetClassicRuntime.registerContent(registeredContent);
+        VehicleSheetClassicRuntime.registerContent(registeredContent);
+        GroupSheetClassicRuntime.registerContent(registeredContent);
       }
 
       if (
@@ -446,8 +462,9 @@ export class Tidy5eSheetsApi {
         registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
       ) {
         CharacterSheetQuadroneRuntime.registerContent(registeredContent);
-        // NpcSheetQuadroneRuntime.registerContent(registeredContent);
-        // VehicleSheetQuadroneRuntime.registerContent(registeredContent);
+        NpcSheetQuadroneRuntime.registerContent(registeredContent);
+        VehicleSheetQuadroneRuntime.registerContent(registeredContent);
+        GroupSheetQuadroneRuntime.registerContent(registeredContent);
       }
     }
   }
@@ -560,7 +577,19 @@ export class Tidy5eSheetsApi {
     }
 
     for (let registeredContent of registeredContents) {
-      GroupSheetRuntime.registerContent(registeredContent);
+      if (
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_CLASSIC ||
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
+      ) {
+        GroupSheetClassicRuntime.registerContent(registeredContent);
+      }
+
+      if (
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
+      ) {
+        GroupSheetQuadroneRuntime.registerContent(registeredContent);
+      }
     }
   }
 
@@ -660,7 +689,19 @@ export class Tidy5eSheetsApi {
     }
 
     for (let registeredContent of registeredContents) {
-      NpcSheetRuntime.registerContent(registeredContent);
+      if (
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_CLASSIC ||
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
+      ) {
+        NpcSheetClassicRuntime.registerContent(registeredContent);
+      }
+
+      if (
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
+      ) {
+        NpcSheetQuadroneRuntime.registerContent(registeredContent);
+      }
     }
   }
 
@@ -710,7 +751,19 @@ export class Tidy5eSheetsApi {
     }
 
     for (let registeredContent of registeredContents) {
-      VehicleSheetRuntime.registerContent(registeredContent);
+      if (
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_CLASSIC ||
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
+      ) {
+        VehicleSheetClassicRuntime.registerContent(registeredContent);
+      }
+
+      if (
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
+      ) {
+        VehicleSheetQuadroneRuntime.registerContent(registeredContent);
+      }
     }
   }
 
@@ -832,7 +885,19 @@ export class Tidy5eSheetsApi {
     }
 
     for (let registeredTab of registeredTabs) {
-      NpcSheetRuntime.registerTab(registeredTab);
+      if (
+        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_CLASSIC ||
+        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_ALL
+      ) {
+        NpcSheetClassicRuntime.registerTab(registeredTab, options);
+      }
+
+      if (
+        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
+        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_ALL
+      ) {
+        NpcSheetQuadroneRuntime.registerTab(registeredTab, options);
+      }
     }
   }
 
@@ -885,7 +950,19 @@ export class Tidy5eSheetsApi {
     }
 
     for (let registeredTab of registeredTabs) {
-      VehicleSheetRuntime.registerTab(registeredTab);
+      if (
+        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_CLASSIC ||
+        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_ALL
+      ) {
+        VehicleSheetClassicRuntime.registerTab(registeredTab, options);
+      }
+
+      if (
+        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
+        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_ALL
+      ) {
+        VehicleSheetQuadroneRuntime.registerTab(registeredTab, options);
+      }
     }
   }
 

@@ -817,6 +817,18 @@ export type CharacterSheetQuadroneContext = {
   // TODO: Populate with context data as needed
 } & DocumentSheetQuadroneContext<Actor5e>;
 
+export type NpcSheetQuadroneContext = {
+  // TODO: Populate with context data as needed
+} & DocumentSheetQuadroneContext<Actor5e>;
+
+export type GroupSheetQuadroneContext = {
+  // TODO: Populate with context data as needed
+} & DocumentSheetQuadroneContext<Actor5e>;
+
+export type VehicleSheetQuadroneContext = {
+  // TODO: Populate with context data as needed
+} & DocumentSheetQuadroneContext<Actor5e>;
+
 /* Misc - Svelte */
 
 export type SvelteInputEvent = (

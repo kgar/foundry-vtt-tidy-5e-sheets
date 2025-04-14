@@ -37,7 +37,6 @@ import { Container } from 'src/features/containers/Container';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
-import GroupSheetRuntime from 'src/runtime/GroupSheetRuntime.svelte';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { debug, warn } from 'src/utils/logging';
@@ -53,6 +52,7 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
 import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import GroupSheetClassicRuntime, { defaultGroupClassicTabs } from 'src/runtime/actor/GroupSheetClassicRuntime';
 
 type MemberStats = {
   currentHP: number;
@@ -401,7 +401,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
                 document: context.actor,
                 sections: sections,
                 tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
-                tabTitle: GroupSheetRuntime.getTabTitle(
+                tabTitle: GroupSheetClassicRuntime.getTabTitle(
                   CONSTANTS.TAB_ACTOR_INVENTORY
                 ),
               }).render(true);
@@ -455,8 +455,8 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       containerPanelItems: await Inventory.getContainerPanelItems(
         uncontainedItems
       ),
+      customContent: [],
       currentHP: stats.currentHP,
-      customContent: GroupSheetRuntime.content,
       descriptionFullEnrichedHtml: descriptionFullEnrichedHtml,
       disableExperience:
         FoundryAdapter.getSystemSetting(
@@ -506,9 +506,11 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       xp: xp,
     };
 
+    context.customContent = await GroupSheetClassicRuntime.getContent(context),
+
     await this._prepareItems(context);
 
-    let tabs = await GroupSheetRuntime.getTabs(context);
+    let tabs = await GroupSheetClassicRuntime.getTabs(context);
 
     const selectedTabs = TidyFlags.selectedTabs.get(context.actor);
 
@@ -519,7 +521,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
           (a, b) => selectedTabs.indexOf(a.id) - selectedTabs.indexOf(b.id)
         );
     } else {
-      const defaultTabs: string[] = GroupSheetRuntime.getDefaultTabs();
+      const defaultTabs: string[] = defaultGroupClassicTabs.map((x) => x.id);
       tabs = tabs
         .filter((t) => defaultTabs?.includes(t.id))
         .sort((a, b) => defaultTabs.indexOf(a.id) - defaultTabs.indexOf(b.id));

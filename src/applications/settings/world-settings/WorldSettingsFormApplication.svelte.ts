@@ -14,12 +14,12 @@ import type {
 } from './WorldSettings.types';
 import type { RegisteredTab } from 'src/runtime/types';
 import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime';
-import NpcSheetRuntime from 'src/runtime/NpcSheetRuntime.svelte';
-import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { debug, error } from 'src/utils/logging';
 import { CONSTANTS } from 'src/constants';
+import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime';
+import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime';
 
 export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
   unchangedSettings?: CurrentSettings;
@@ -100,11 +100,11 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
         currentSettings.defaultCharacterSheetTabs
       ),
       defaultNpcTabs: this.mapTabSelectionFields(
-        NpcSheetRuntime.getAllRegisteredTabs('classic'),
+        NpcSheetClassicRuntime.getAllRegisteredTabs(),
         currentSettings.defaultNpcSheetTabs
       ),
       defaultVehicleTabs: this.mapTabSelectionFields(
-        VehicleSheetRuntime.getAllRegisteredTabs('classic'),
+        VehicleSheetClassicRuntime.getAllRegisteredTabs(),
         currentSettings.defaultVehicleSheetTabs
       ),
       exhaustionConfig: {
@@ -293,13 +293,13 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
         break;
       case CONSTANTS.SHEET_TYPE_NPC:
         this.context.defaultNpcTabs = this.mapTabSelectionFields(
-          NpcSheetRuntime.getAllRegisteredTabs('classic'),
+          NpcSheetClassicRuntime.getAllRegisteredTabs(),
           [...SettingsProvider.settings.defaultNpcSheetTabs.options.default]
         );
         break;
       case CONSTANTS.SHEET_TYPE_VEHICLE:
         this.context.defaultVehicleTabs = this.mapTabSelectionFields(
-          VehicleSheetRuntime.getAllRegisteredTabs('classic'),
+          VehicleSheetClassicRuntime.getAllRegisteredTabs(),
           [...SettingsProvider.settings.defaultVehicleSheetTabs.options.default]
         );
         break;
