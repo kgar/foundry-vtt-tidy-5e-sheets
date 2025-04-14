@@ -7,14 +7,14 @@ import { error } from 'src/utils/logging';
 import type { RegisteredTab } from 'src/runtime/types';
 import { CONSTANTS } from 'src/constants';
 import { settings } from 'src/settings/settings.svelte';
-import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime';
+import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime.svelte';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime';
-import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime';
+import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
+import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
 import GroupSheetClassicRuntime, {
   defaultGroupClassicTabs,
-} from 'src/runtime/actor/GroupSheetClassicRuntime';
+} from 'src/runtime/actor/GroupSheetClassicRuntime.svelte';
 
 export type TabSelectionItem = {
   id: string;

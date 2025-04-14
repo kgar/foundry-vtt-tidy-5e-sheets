@@ -9,15 +9,15 @@ import { UserSettingsFormApplication } from 'src/applications/settings/user-sett
 import { WorldSettingsFormApplication } from 'src/applications/settings/world-settings/WorldSettingsFormApplication.svelte';
 import { ThemeSettingsFormApplication } from 'src/applications/theme/ThemeSettingsFormApplication.svelte';
 import type { ExhaustionConfig } from '../features/exhaustion/exhaustion.types';
-import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime';
+import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime.svelte';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { BulkMigrationsApplication } from 'src/migrations/BulkMigrationsApplication';
 import { AboutApplication } from 'src/applications/settings/about/AboutApplication';
 import { ApplyTidySheetPreferencesApplication } from 'src/applications/sheet-preferences/ApplyTidySheetPreferencesApplication.svelte';
 import { getDefaultExhaustionConfig } from 'src/features/exhaustion/exhaustion';
 import type { GlobalCustomSectionsetting } from './settings.types';
-import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime';
-import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime';
+import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
+import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;

@@ -5,12 +5,12 @@
   import type { WorldSettingsContext } from '../WorldSettings.types';
   import { CONSTANTS } from 'src/constants';
   import type { GlobalCustomSectionsetting as GlobalCustomSectionSetting } from 'src/settings/settings.types';
-  import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime';
+  import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime.svelte';
   import { error } from 'src/utils/logging';
   import type { RegisteredTab } from 'src/runtime/types';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
-  import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime';
-  import GroupSheetClassicRuntime from 'src/runtime/actor/GroupSheetClassicRuntime';
+  import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
+  import GroupSheetClassicRuntime from 'src/runtime/actor/GroupSheetClassicRuntime.svelte';
 
   const context = getContext<WorldSettingsContext>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,

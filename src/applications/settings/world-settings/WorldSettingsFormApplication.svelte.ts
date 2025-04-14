@@ -13,13 +13,13 @@ import type {
   WorldSettingsFunctions,
 } from './WorldSettings.types';
 import type { RegisteredTab } from 'src/runtime/types';
-import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime';
+import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { debug, error } from 'src/utils/logging';
 import { CONSTANTS } from 'src/constants';
-import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime';
-import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime';
+import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
+import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
 
 export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
   unchangedSettings?: CurrentSettings;

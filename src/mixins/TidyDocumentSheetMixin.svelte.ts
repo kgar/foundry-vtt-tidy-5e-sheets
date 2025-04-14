@@ -9,7 +9,7 @@ import type {
   ApplicationPosition,
   ApplicationRenderOptions,
 } from 'src/types/application.types';
-import type { Tab } from 'src/types/types';
+import type { CustomContent, Tab } from 'src/types/types';
 import { error } from 'src/utils/logging';
 import type { RenderResult } from './SvelteApplicationMixin.svelte';
 import { CustomContentRendererV2 } from 'src/sheets/CustomContentRendererV2';
@@ -48,7 +48,7 @@ export function TidyExtensibleDocumentSheetMixin<
   TConstructorArgs extends Partial<ApplicationConfiguration> | undefined,
   TContext extends Partial<{
     tabs: Tab[];
-    customContent: RegisteredContent<TContext>[];
+    customContent: CustomContent[];
   }>
 >(sheetType: string, BaseApplication: any) {
   class TidyDocumentSheet extends DragAndDropMixin(BaseApplication) {
@@ -167,7 +167,7 @@ export function TidyExtensibleDocumentSheetMixin<
 
     async _prepareContext(options: Partial<TidyDocumentSheetRenderOptions>) {
       const context = await super._prepareContext(options);
-      
+
       if (game.release.generation < 13) {
         const document = this.document;
         return Object.assign(context, {
@@ -417,7 +417,8 @@ export function TidyExtensibleDocumentSheetMixin<
 
     async close(options: ApplicationClosingOptions = {}) {
       // Trigger saving of the form if configured and allowed
-      const submit = this.options.submitOnClose && this.document.isOwner && this.isEditable;
+      const submit =
+        this.options.submitOnClose && this.document.isOwner && this.isEditable;
 
       if (submit) {
         await this.submit({ preventClose: true, preventRender: true });

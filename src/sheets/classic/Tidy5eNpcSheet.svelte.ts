@@ -61,7 +61,7 @@ import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
 import { splitSemicolons } from 'src/utils/array';
-import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime';
+import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
 
 export class Tidy5eNpcSheet
   extends BaseSheetCustomSectionMixin(

@@ -55,7 +55,7 @@ import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivi
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
-import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime';
+import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle

@@ -3,7 +3,7 @@ import { HtmlTab } from './tab/HtmlTab';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import type { CustomTabBase } from './tab/CustomTabBase';
 import { warn } from 'src/utils/logging';
-import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime';
+import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime.svelte';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import type { TabId } from './tab/CustomTabBase';
 import { SvelteTab } from './tab/SvelteTab';
@@ -23,13 +23,13 @@ import { CustomContentManager } from 'src/runtime/content/CustomContentManager';
 import { ConfigApi } from './config/ConfigApi';
 import { HeaderControlsRuntime } from 'src/runtime/header-controls/HeaderControlsRuntime';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import CharacterSheetQuadroneRuntime from 'src/runtime/actor/CharacterSheetQuadroneRuntime';
-import GroupSheetClassicRuntime from 'src/runtime/actor/GroupSheetClassicRuntime';
-import GroupSheetQuadroneRuntime from 'src/runtime/actor/GroupSheetQuadroneRuntime';
-import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime';
-import NpcSheetQuadroneRuntime from 'src/runtime/actor/NpcSheetQuadroneRuntime';
-import VehicleSheetQuadroneRuntime from 'src/runtime/actor/VehicleSheetQuadroneRuntime';
-import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime';
+import CharacterSheetQuadroneRuntime from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
+import GroupSheetClassicRuntime from 'src/runtime/actor/GroupSheetClassicRuntime.svelte';
+import GroupSheetQuadroneRuntime from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
+import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
+import NpcSheetQuadroneRuntime from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
+import VehicleSheetQuadroneRuntime from 'src/runtime/actor/VehicleSheetQuadroneRuntime.svelte';
+import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.

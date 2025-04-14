@@ -58,7 +58,7 @@
   } from 'src/features/search/search.svelte';
   import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
   import { isItemInActionList } from 'src/features/actions/actions.svelte';
-  import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime';
+  import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
 
   let context = $derived(getNpcSheetContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);

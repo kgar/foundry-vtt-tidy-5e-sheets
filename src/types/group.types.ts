@@ -6,6 +6,7 @@ import type {
   ActorSheetClassicContextV2,
   ActorV2,
   ContainerPanelItemContext,
+  CustomContent,
   InventorySection,
   ItemSaveContext,
   Tab,
@@ -13,14 +14,13 @@ import type {
   Utilities,
 } from './types';
 import type { DocumentFilters } from 'src/runtime/item/item.types';
-import type { RegisteredContent } from 'src/runtime/types';
 
 export type GroupSheetClassicContext = {
   config: any; // TODO: If possible, convert the full CONFIG (no modules on) to a typescript type.
   currentHP: number;
   canObserveAll: boolean;
   containerPanelItems: ContainerPanelItemContext[];
-  customContent: RegisteredContent<GroupSheetClassicContext>[];
+  customContent: CustomContent[];
   descriptionFullEnrichedHtml: string;
   disableExperience: boolean;
   document: Group5e;

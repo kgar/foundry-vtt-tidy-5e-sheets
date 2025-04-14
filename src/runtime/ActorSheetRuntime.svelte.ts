@@ -8,10 +8,10 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export class ActorSheetRuntime<TSheetContext> {
   private _content = $state<RegisteredContent<TSheetContext>[]>([]);
-  private _tabs: RegisteredTab<TSheetContext>[];
+  private _tabs = $state<RegisteredTab<TSheetContext>[]>([]);
 
   constructor(defaultTabs: RegisteredTab<TSheetContext>[]) {
-    this._tabs = $state([...defaultTabs]);
+    this._tabs = [...defaultTabs];
   }
 
   async getContent(context: TSheetContext): Promise<CustomContent[]> {

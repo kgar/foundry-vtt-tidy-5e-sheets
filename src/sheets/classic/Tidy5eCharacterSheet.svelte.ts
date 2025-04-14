@@ -39,7 +39,7 @@ import {
 } from 'src/utils/applications.svelte';
 import { mount, unmount } from 'svelte';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
-import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime';
+import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime.svelte';
 import {
   actorUsesActionFeature,
   getActorActionSections,
@@ -144,6 +144,7 @@ export class Tidy5eCharacterSheet
         'actor',
         CONSTANTS.SHEET_TYPE_CHARACTER,
         'app-v1',
+        CONSTANTS.SHEET_LAYOUT_CLASSIC,
       ],
       width: 740,
       height: 810,

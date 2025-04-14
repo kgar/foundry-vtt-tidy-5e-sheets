@@ -52,7 +52,7 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
 import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
-import GroupSheetClassicRuntime, { defaultGroupClassicTabs } from 'src/runtime/actor/GroupSheetClassicRuntime';
+import GroupSheetClassicRuntime, { defaultGroupClassicTabs } from 'src/runtime/actor/GroupSheetClassicRuntime.svelte';
 
 type MemberStats = {
   currentHP: number;
