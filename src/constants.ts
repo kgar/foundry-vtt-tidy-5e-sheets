@@ -111,6 +111,7 @@ export const CONSTANTS = {
   TAB_OPTION_CLASS: 'tab-option',
   TAB_ACTOR_ACTIONS: 'actions',
   TAB_ACTOR_INVENTORY: 'inventory',
+  TAB_ACTOR_SPECIAL_TRAITS: 'special-traits',
   TAB_ACTOR_SPELLBOOK: 'spellbook',
   TAB_CHARACTER_ATTRIBUTES: 'attributes',
   TAB_CHARACTER_BASTION: 'bastion',

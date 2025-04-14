@@ -151,7 +151,9 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetBaseMixin(
       const baseContext = await super._prepareContext(options) as DocumentSheetQuadroneContext<Actor5e>;
 
       const context: CharacterSheetQuadroneContext = {
-        ...baseContext
+        ...baseContext,
+        actor: this.actor,
+        token: this.token,
       }
 
       return context;

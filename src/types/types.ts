@@ -17,6 +17,7 @@ import type { Activity5e } from 'src/foundry/dnd5e.types';
 import type { AttributePinFlag } from 'src/foundry/TidyFlags.types';
 
 export type Actor5e = any;
+export type TokenDocument = any;
 
 export type SvelteTabContent = {
   type: 'svelte';
@@ -811,23 +812,28 @@ export type DocumentSheetQuadroneContext<TDocument> = {
   editable: boolean;
   user: any;
   rootId: string;
-}
+};
+
+export type ActorSheetQuadroneContext = {
+  actor: Actor5e;
+  token: TokenDocument | null;
+} & DocumentSheetQuadroneContext<Actor5e>;
 
 export type CharacterSheetQuadroneContext = {
   // TODO: Populate with context data as needed
-} & DocumentSheetQuadroneContext<Actor5e>;
+} & ActorSheetQuadroneContext;
 
 export type NpcSheetQuadroneContext = {
   // TODO: Populate with context data as needed
-} & DocumentSheetQuadroneContext<Actor5e>;
+} & ActorSheetQuadroneContext;
 
 export type GroupSheetQuadroneContext = {
   // TODO: Populate with context data as needed
-} & DocumentSheetQuadroneContext<Actor5e>;
+} & ActorSheetQuadroneContext;
 
 export type VehicleSheetQuadroneContext = {
   // TODO: Populate with context data as needed
-} & DocumentSheetQuadroneContext<Actor5e>;
+} & ActorSheetQuadroneContext;
 
 /* Misc - Svelte */
 
