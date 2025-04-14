@@ -13,7 +13,7 @@ import type {
   WorldSettingsFunctions,
 } from './WorldSettings.types';
 import type { RegisteredTab } from 'src/runtime/types';
-import CharacterSheetRuntime from 'src/runtime/CharacterSheetRuntime.svelte';
+import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime';
 import NpcSheetRuntime from 'src/runtime/NpcSheetRuntime.svelte';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -96,7 +96,7 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
         globalCustomSections: currentSettings.globalCustomSections,
       },
       defaultCharacterTabs: this.mapTabSelectionFields(
-        CharacterSheetRuntime.getAllRegisteredTabs('classic'),
+        CharacterSheetClassicRuntime.getAllRegisteredTabs(),
         currentSettings.defaultCharacterSheetTabs
       ),
       defaultNpcTabs: this.mapTabSelectionFields(
@@ -284,7 +284,7 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
     switch (actorType) {
       case CONSTANTS.SHEET_TYPE_CHARACTER:
         this.context.defaultCharacterTabs = this.mapTabSelectionFields(
-          CharacterSheetRuntime.getAllRegisteredTabs('classic'),
+          CharacterSheetClassicRuntime.getAllRegisteredTabs(),
           [
             ...SettingsProvider.settings.defaultCharacterSheetTabs.options
               .default,

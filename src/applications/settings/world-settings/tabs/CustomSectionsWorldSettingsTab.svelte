@@ -5,7 +5,7 @@
   import type { WorldSettingsContext } from '../WorldSettings.types';
   import { CONSTANTS } from 'src/constants';
   import type { GlobalCustomSectionsetting as GlobalCustomSectionSetting } from 'src/settings/settings.types';
-  import CharacterSheetRuntime from 'src/runtime/CharacterSheetRuntime.svelte';
+  import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime';
   import { error } from 'src/utils/logging';
   import type { RegisteredTab } from 'src/runtime/types';
   import NpcSheetRuntime from 'src/runtime/NpcSheetRuntime.svelte';
@@ -42,7 +42,7 @@
   };
 
   let classicCharacterTabs =
-    CharacterSheetRuntime.getAllRegisteredTabs('classic');
+    CharacterSheetClassicRuntime.getAllRegisteredTabs();
 
   let classicNpcTabs = NpcSheetRuntime.getAllRegisteredTabs('classic');
 

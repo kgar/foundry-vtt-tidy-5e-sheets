@@ -10,7 +10,7 @@ import { WorldSettingsFormApplication } from 'src/applications/settings/world-se
 import { ThemeSettingsFormApplication } from 'src/applications/theme/ThemeSettingsFormApplication.svelte';
 import type { ExhaustionConfig } from '../features/exhaustion/exhaustion.types';
 import NpcSheetRuntime from 'src/runtime/NpcSheetRuntime.svelte';
-import CharacterSheetRuntime from 'src/runtime/CharacterSheetRuntime.svelte';
+import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { BulkMigrationsApplication } from 'src/migrations/BulkMigrationsApplication';
@@ -276,7 +276,7 @@ export function createSettings() {
           type: String,
           choices: () =>
             TabManager.getTabsAsConfigOptions(
-              CharacterSheetRuntime.getAllRegisteredTabs('classic')
+              CharacterSheetClassicRuntime.getAllRegisteredTabs()
             ),
           default: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
         },

@@ -3,7 +3,7 @@ import { HtmlTab } from './tab/HtmlTab';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import type { CustomTabBase } from './tab/CustomTabBase';
 import { warn } from 'src/utils/logging';
-import CharacterSheetRuntime from 'src/runtime/CharacterSheetRuntime.svelte';
+import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime';
 import NpcSheetRuntime from 'src/runtime/NpcSheetRuntime.svelte';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
@@ -26,6 +26,7 @@ import { ConfigApi } from './config/ConfigApi';
 import GroupSheetRuntime from 'src/runtime/GroupSheetRuntime.svelte';
 import { HeaderControlsRuntime } from 'src/runtime/header-controls/HeaderControlsRuntime';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import CharacterSheetQuadroneRuntime from 'src/runtime/actor/CharacterSheetQuadroneRuntime';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -290,7 +291,19 @@ export class Tidy5eSheetsApi {
     }
 
     for (let registeredTab of registeredTabs) {
-      CharacterSheetRuntime.registerTab(registeredTab, options);
+      if (
+        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_CLASSIC ||
+        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_ALL
+      ) {
+        CharacterSheetClassicRuntime.registerTab(registeredTab, options);
+      }
+
+      if (
+        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
+        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_ALL
+      ) {
+        CharacterSheetQuadroneRuntime.registerTab(registeredTab, options);
+      }
     }
   }
 
@@ -419,9 +432,23 @@ export class Tidy5eSheetsApi {
     }
 
     for (let registeredContent of registeredContents) {
-      CharacterSheetRuntime.registerContent(registeredContent);
-      NpcSheetRuntime.registerContent(registeredContent);
-      VehicleSheetRuntime.registerContent(registeredContent);
+      if (
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_CLASSIC ||
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
+      ) {
+        CharacterSheetClassicRuntime.registerContent(registeredContent);
+        // NpcSheetClassicRuntime.registerContent(registeredContent);
+        // VehicleSheetClassicRuntime.registerContent(registeredContent);
+      }
+
+      if (
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
+      ) {
+        CharacterSheetQuadroneRuntime.registerContent(registeredContent);
+        // NpcSheetQuadroneRuntime.registerContent(registeredContent);
+        // VehicleSheetQuadroneRuntime.registerContent(registeredContent);
+      }
     }
   }
 
@@ -471,7 +498,19 @@ export class Tidy5eSheetsApi {
     }
 
     for (let registeredContent of registeredContents) {
-      CharacterSheetRuntime.registerContent(registeredContent);
+      if (
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_CLASSIC ||
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
+      ) {
+        CharacterSheetClassicRuntime.registerContent(registeredContent);
+      }
+
+      if (
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
+      ) {
+        CharacterSheetQuadroneRuntime.registerContent(registeredContent);
+      }
     }
   }
 

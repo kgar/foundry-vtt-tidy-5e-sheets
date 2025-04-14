@@ -39,7 +39,7 @@ import {
 } from 'src/utils/applications.svelte';
 import { mount, unmount } from 'svelte';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
-import CharacterSheetRuntime from 'src/runtime/CharacterSheetRuntime.svelte';
+import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime';
 import {
   actorUsesActionFeature,
   getActorActionSections,
@@ -143,7 +143,6 @@ export class Tidy5eCharacterSheet
         'sheet',
         'actor',
         CONSTANTS.SHEET_TYPE_CHARACTER,
-        CONSTANTS.SHEET_LAYOUT_CLASSIC,
         'app-v1',
       ],
       width: 740,
@@ -355,9 +354,8 @@ export class Tidy5eCharacterSheet
                 // Provide a way to build the necessary config, perhaps within the application constructor. We've got all the info we need in order to perform the operation.
                 sections: sections,
                 tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
-                tabTitle: CharacterSheetRuntime.getTabTitle(
-                  CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
-                  CONSTANTS.SHEET_LAYOUT_CLASSIC
+                tabTitle: CharacterSheetClassicRuntime.getTabTitle(
+                  CONSTANTS.TAB_CHARACTER_ATTRIBUTES
                 ),
               }).render(true);
             },
@@ -465,9 +463,8 @@ export class Tidy5eCharacterSheet
                 document: context.actor,
                 sections: sections,
                 tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
-                tabTitle: CharacterSheetRuntime.getTabTitle(
-                  CONSTANTS.TAB_ACTOR_INVENTORY,
-                  CONSTANTS.SHEET_LAYOUT_CLASSIC
+                tabTitle: CharacterSheetClassicRuntime.getTabTitle(
+                  CONSTANTS.TAB_ACTOR_INVENTORY
                 ),
               }).render(true);
             },
@@ -584,9 +581,8 @@ export class Tidy5eCharacterSheet
                 document: context.actor,
                 sections: sections,
                 tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
-                tabTitle: CharacterSheetRuntime.getTabTitle(
-                  CONSTANTS.TAB_ACTOR_SPELLBOOK,
-                  CONSTANTS.SHEET_LAYOUT_CLASSIC
+                tabTitle: CharacterSheetClassicRuntime.getTabTitle(
+                  CONSTANTS.TAB_ACTOR_SPELLBOOK
                 ),
               }).render(true);
             },
@@ -654,9 +650,8 @@ export class Tidy5eCharacterSheet
                 document: context.actor,
                 sections: sections,
                 tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
-                tabTitle: CharacterSheetRuntime.getTabTitle(
-                  CONSTANTS.TAB_CHARACTER_FEATURES,
-                  CONSTANTS.SHEET_LAYOUT_CLASSIC
+                tabTitle: CharacterSheetClassicRuntime.getTabTitle(
+                  CONSTANTS.TAB_CHARACTER_FEATURES
                 ),
               }).render(true);
             },
@@ -724,9 +719,8 @@ export class Tidy5eCharacterSheet
                 document: context.actor,
                 sections: sections,
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
-                tabTitle: CharacterSheetRuntime.getTabTitle(
-                  CONSTANTS.TAB_ACTOR_ACTIONS,
-                  CONSTANTS.SHEET_LAYOUT_CLASSIC
+                tabTitle: CharacterSheetClassicRuntime.getTabTitle(
+                  CONSTANTS.TAB_ACTOR_ACTIONS
                 ),
               }).render(true);
             },
@@ -789,9 +783,8 @@ export class Tidy5eCharacterSheet
       customActorTraits: CustomActorTraitsRuntime.getEnabledTraits(
         defaultDocumentContext
       ),
-      customContent: await CharacterSheetRuntime.getContent(
-        defaultDocumentContext,
-        'classic'
+      customContent: await CharacterSheetClassicRuntime.getContent(
+        defaultDocumentContext
       ),
       document: this.document,
       editable: defaultDocumentContext.editable,
@@ -937,7 +930,7 @@ export class Tidy5eCharacterSheet
 
     await this._prepareAttributePins(context);
 
-    let tabs = await CharacterSheetRuntime.getTabs(context, 'classic');
+    let tabs = await CharacterSheetClassicRuntime.getTabs(context);
 
     const selectedTabs = TidyFlags.selectedTabs.get(context.actor);
 

@@ -8,7 +8,7 @@ import type { RegisteredTab } from 'src/runtime/types';
 import { CONSTANTS } from 'src/constants';
 import { settings, SettingsProvider } from 'src/settings/settings.svelte';
 import NpcSheetRuntime from 'src/runtime/NpcSheetRuntime.svelte';
-import CharacterSheetRuntime from 'src/runtime/CharacterSheetRuntime.svelte';
+import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -37,7 +37,7 @@ export default class ClassicTabSelectionFormApplication extends SvelteFormApplic
 
   getRegisteredTabs(actor: Actor5e): RegisteredTab<any>[] {
     if (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) {
-      return CharacterSheetRuntime.getAllRegisteredTabs('classic');
+      return CharacterSheetClassicRuntime.getAllRegisteredTabs();
     } else if (actor.type === CONSTANTS.SHEET_TYPE_NPC) {
       return NpcSheetRuntime.getAllRegisteredTabs('classic');
     } else if (actor.type === CONSTANTS.SHEET_TYPE_VEHICLE) {
