@@ -16,7 +16,7 @@
   import { applyDropzoneClass } from 'src/features/drag-and-drop/drag-and-drop';
   import InlineSvg from 'src/components/utility/InlineSvg.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
-  import type { ContextPrimitive } from 'src/features/reactivity/reactivity.types';
+  import type { Ref } from 'src/features/reactivity/reactivity.types';
 
   let context = $derived(getCharacterSheetContext());
 
@@ -28,11 +28,11 @@
     TidyHooks.tidy5eSheetsItemHoverOff(event, item);
   }
 
-  let hoveredFacilityOccupant = $state<ContextPrimitive<string>>({
+  let hoveredFacilityOccupant = $state<Ref<string>>({
     value: '',
   });
 
-  setContext<ContextPrimitive<string>>(
+  setContext<Ref<string>>(
     CONSTANTS.SVELTE_CONTEXT.HOVERED_FACILITY_OCCUPANT,
     hoveredFacilityOccupant,
   );

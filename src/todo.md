@@ -1,6 +1,7 @@
 ## To Do
 
 - [ ] IMPORTANT: All Foundry documents being passed to svelte components are no longer consistently reactive. Spell images work, for example, but Inventory images do not. Rather than try to fight this, use the surefire fix.
+- [ ] Fix: Copying an advancement from item to another when it's Tidy to Tidy doesn't seem to work. Determine what the defaults are doing and try to do likewise.
   - Solution: wrap in a pojo. Bare minimum: `{ value: item }`
 - [ ] Character Sheet 
   - [x] Start dev in Foundry V12
