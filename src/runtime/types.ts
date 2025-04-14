@@ -24,7 +24,7 @@ export type RegisteredContent<TContext> = {
   enabled?: (context: TContext) => boolean;
   getData?: (data: any) => any | Promise<any>;
   injectParams?: CustomContentInjectParams;
-  layout?: SheetLayout | SheetLayout[];
+  layout: SheetLayout;
   onContentReady?: (params: OnContentReadyParams) => void;
   onRender?: (args: OnRenderParams) => void;
   renderScheme?: RenderScheme;
@@ -32,7 +32,7 @@ export type RegisteredContent<TContext> = {
 
 export type RegisteredTab<TContext> = {
   enabled?: (context: TContext) => boolean;
-  layout?: SheetLayout | SheetLayout[];
+  layout: SheetLayout;
   title: CustomTabTitle;
   id: string;
   content: SvelteTabContent | HtmlTabContent | HandlebarsTemplateRenderer;

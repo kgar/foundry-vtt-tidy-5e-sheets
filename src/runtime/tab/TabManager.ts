@@ -57,71 +57,78 @@ export class TabManager {
     }
 
     // Add any other validation as needed.
-    
+
     return true;
   }
 
-  static mapCustomTabToRegisteredTab(
+  static mapCustomTabToRegisteredTabs(
     tab: SupportedTab,
-    layout?: SheetLayout | SheetLayout[]
-  ): RegisteredTab<any> | undefined {
-    let registeredTab: RegisteredTab<any> | undefined;
-    layout ??= CONSTANTS.SHEET_LAYOUT_ALL;
+    layoutPreference?: SheetLayout | SheetLayout[]
+  ): RegisteredTab<any>[] {
+    layoutPreference ??= [CONSTANTS.SHEET_LAYOUT_ALL];
 
-    if (tab instanceof HandlebarsTab) {
-      registeredTab = {
-        content: new HandlebarsTemplateRenderer({ path: tab.path }),
-        id: tab.tabId,
-        title: tab.title,
-        enabled: tab.enabled,
-        layout: layout,
-        onRender: tab.onRender,
-        renderScheme: tab.renderScheme,
-        tabContentsClasses: tab.tabContentsClasses,
-        getData: tab.getData,
-        activateDefaultSheetListeners: tab.activateDefaultSheetListeners,
-      };
-    } else if (tab instanceof HtmlTab) {
-      registeredTab = {
-        content: {
-          html: tab.html,
-          type: 'html',
+    if (typeof layoutPreference === 'string') {
+      layoutPreference = [layoutPreference];
+    }
+
+    let registeredTabs: RegisteredTab<any>[] = [];
+
+    for (let layout of layoutPreference) {
+      if (tab instanceof HandlebarsTab) {
+        registeredTabs.push({
+          content: new HandlebarsTemplateRenderer({ path: tab.path }),
+          id: tab.tabId,
+          title: tab.title,
+          enabled: tab.enabled,
+          layout: layout,
+          onRender: tab.onRender,
           renderScheme: tab.renderScheme,
-          cssClass: tab.tabContentsClasses.join(' '),
-        },
-        id: tab.tabId,
-        title: tab.title,
-        enabled: tab.enabled,
-        layout: layout,
-        onRender: tab.onRender,
-        renderScheme: tab.renderScheme,
-        tabContentsClasses: tab.tabContentsClasses,
-        activateDefaultSheetListeners: tab.activateDefaultSheetListeners,
-      };
-    } else if (tab instanceof SvelteTab) {
-      // An external svelte tab should be instantiated
-      if (tab.component) {
-        registeredTab = {
+          tabContentsClasses: tab.tabContentsClasses,
+          getData: tab.getData,
+          activateDefaultSheetListeners: tab.activateDefaultSheetListeners,
+        });
+      } else if (tab instanceof HtmlTab) {
+        registeredTabs.push({
           content: {
-            type: 'svelte',
-            component: tab.component,
-            cssClass: tab.tabContentsClasses?.join(' ') ?? '',
-            getProps: tab.getProps,
-            getContext: tab.getContext,
+            html: tab.html,
+            type: 'html',
+            renderScheme: tab.renderScheme,
+            cssClass: tab.tabContentsClasses.join(' '),
           },
           id: tab.tabId,
           title: tab.title,
           enabled: tab.enabled,
           layout: layout,
           onRender: tab.onRender,
-          renderScheme: 'force',
+          renderScheme: tab.renderScheme,
           tabContentsClasses: tab.tabContentsClasses,
           activateDefaultSheetListeners: tab.activateDefaultSheetListeners,
-        };
+        });
+      } else if (tab instanceof SvelteTab) {
+        // An external svelte tab should be instantiated
+        if (tab.component) {
+          registeredTabs.push({
+            content: {
+              type: 'svelte',
+              component: tab.component,
+              cssClass: tab.tabContentsClasses?.join(' ') ?? '',
+              getProps: tab.getProps,
+              getContext: tab.getContext,
+            },
+            id: tab.tabId,
+            title: tab.title,
+            enabled: tab.enabled,
+            layout: layout,
+            onRender: tab.onRender,
+            renderScheme: 'force',
+            tabContentsClasses: tab.tabContentsClasses,
+            activateDefaultSheetListeners: tab.activateDefaultSheetListeners,
+          });
+        }
       }
     }
 
-    return registeredTab;
+    return registeredTabs;
   }
 
   static getTabTitle(tab: { title: CustomTabTitle }) {

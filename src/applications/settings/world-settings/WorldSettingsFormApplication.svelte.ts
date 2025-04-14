@@ -96,15 +96,15 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
         globalCustomSections: currentSettings.globalCustomSections,
       },
       defaultCharacterTabs: this.mapTabSelectionFields(
-        CharacterSheetRuntime.getAllRegisteredTabs(),
+        CharacterSheetRuntime.getAllRegisteredTabs('classic'),
         currentSettings.defaultCharacterSheetTabs
       ),
       defaultNpcTabs: this.mapTabSelectionFields(
-        NpcSheetRuntime.getAllRegisteredTabs(),
+        NpcSheetRuntime.getAllRegisteredTabs('classic'),
         currentSettings.defaultNpcSheetTabs
       ),
       defaultVehicleTabs: this.mapTabSelectionFields(
-        VehicleSheetRuntime.getAllRegisteredTabs(),
+        VehicleSheetRuntime.getAllRegisteredTabs('classic'),
         currentSettings.defaultVehicleSheetTabs
       ),
       exhaustionConfig: {
@@ -284,7 +284,7 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
     switch (actorType) {
       case CONSTANTS.SHEET_TYPE_CHARACTER:
         this.context.defaultCharacterTabs = this.mapTabSelectionFields(
-          CharacterSheetRuntime.getAllRegisteredTabs(),
+          CharacterSheetRuntime.getAllRegisteredTabs('classic'),
           [
             ...SettingsProvider.settings.defaultCharacterSheetTabs.options
               .default,
@@ -293,13 +293,13 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
         break;
       case CONSTANTS.SHEET_TYPE_NPC:
         this.context.defaultNpcTabs = this.mapTabSelectionFields(
-          NpcSheetRuntime.getAllRegisteredTabs(),
+          NpcSheetRuntime.getAllRegisteredTabs('classic'),
           [...SettingsProvider.settings.defaultNpcSheetTabs.options.default]
         );
         break;
       case CONSTANTS.SHEET_TYPE_VEHICLE:
         this.context.defaultVehicleTabs = this.mapTabSelectionFields(
-          VehicleSheetRuntime.getAllRegisteredTabs(),
+          VehicleSheetRuntime.getAllRegisteredTabs('classic'),
           [...SettingsProvider.settings.defaultVehicleSheetTabs.options.default]
         );
         break;

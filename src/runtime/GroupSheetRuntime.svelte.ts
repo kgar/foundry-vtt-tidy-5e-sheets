@@ -1,15 +1,15 @@
 import type { CustomContent, Tab } from 'src/types/types';
-import type { RegisteredContent, RegisteredTab } from './types';
+import type { RegisteredContent, RegisteredTab, SheetLayout } from './types';
 import { CONSTANTS } from 'src/constants';
 import { debug, error, warn } from 'src/utils/logging';
 import { TabManager } from './tab/TabManager';
 import type { ActorTabRegistrationOptions } from 'src/api/api.types';
-import { CustomContentManager } from './content/CustomContentManager';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import GroupMembersTab from 'src/sheets/classic/group/tabs/GroupMembersTab.svelte';
 import GroupInventoryTab from 'src/sheets/classic/group/tabs/GroupInventoryTab.svelte';
 import GroupDescriptionTab from 'src/sheets/classic/group/tabs/GroupDescriptionTab.svelte';
 import type { GroupSheetClassicContext } from 'src/types/group.types';
+import { isNil } from 'src/utils/data';
 
 class GroupSheetRuntime {
   private _content = $state<RegisteredContent<GroupSheetClassicContext>[]>([]);
@@ -60,8 +60,16 @@ class GroupSheetRuntime {
     return await TabManager.prepareTabsForRender(context, this._tabs);
   }
 
-  getAllRegisteredTabs(): RegisteredTab<GroupSheetClassicContext>[] {
-    return [...this._tabs];
+  getAllRegisteredTabs(
+    layout: SheetLayout
+  ): RegisteredTab<GroupSheetClassicContext>[] {
+    const result = [...this._tabs];
+
+    return layout === CONSTANTS.SHEET_LAYOUT_ALL || isNil(layout)
+      ? result
+      : result.filter(
+          (x) => x.layout === layout || x.layout === CONSTANTS.SHEET_LAYOUT_ALL
+        );
   }
 
   registerContent(

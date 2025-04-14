@@ -279,17 +279,19 @@ export class Tidy5eSheetsApi {
       return;
     }
 
-    const registeredTab = TabManager.mapCustomTabToRegisteredTab(
+    const registeredTabs = TabManager.mapCustomTabToRegisteredTabs(
       tab,
       options?.layout
     );
 
-    if (!registeredTab) {
+    if (!registeredTabs) {
       warn('Unable to register tab. Tab type not supported');
       return;
     }
 
-    CharacterSheetRuntime.registerTab(registeredTab, options);
+    for (let registeredTab of registeredTabs) {
+      CharacterSheetRuntime.registerTab(registeredTab, options);
+    }
   }
 
   /**
@@ -356,17 +358,19 @@ export class Tidy5eSheetsApi {
       return;
     }
 
-    const registeredTab = TabManager.mapCustomTabToRegisteredTab(
+    const registeredTabs = TabManager.mapCustomTabToRegisteredTabs(
       tab,
       options?.layout
     );
 
-    if (!registeredTab) {
+    if (!registeredTabs) {
       warn('Unable to register tab. Tab type not supported');
       return;
     }
 
-    GroupSheetRuntime.registerTab(registeredTab, options);
+    for (let registeredTab of registeredTabs) {
+      GroupSheetRuntime.registerTab(registeredTab, options);
+    }
   }
 
   /**
@@ -404,19 +408,21 @@ export class Tidy5eSheetsApi {
     content: SupportedContent,
     options?: ContentRegistrationOptions
   ) {
-    const registeredContent = CustomContentManager.mapToRegisteredContent(
+    const registeredContents = CustomContentManager.mapToRegisteredContents(
       content,
       options?.layout
     );
 
-    if (!registeredContent) {
+    if (!registeredContents) {
       warn('Unable to register content. Content type not supported.');
       return;
     }
 
-    CharacterSheetRuntime.registerContent(registeredContent);
-    NpcSheetRuntime.registerContent(registeredContent);
-    VehicleSheetRuntime.registerContent(registeredContent);
+    for (let registeredContent of registeredContents) {
+      CharacterSheetRuntime.registerContent(registeredContent);
+      NpcSheetRuntime.registerContent(registeredContent);
+      VehicleSheetRuntime.registerContent(registeredContent);
+    }
   }
 
   /**
@@ -454,17 +460,19 @@ export class Tidy5eSheetsApi {
     content: SupportedContent,
     options?: ContentRegistrationOptions
   ) {
-    const registeredContent = CustomContentManager.mapToRegisteredContent(
+    const registeredContents = CustomContentManager.mapToRegisteredContents(
       content,
       options?.layout
     );
 
-    if (!registeredContent) {
+    if (!registeredContents) {
       warn('Unable to register content. Content type not supported.');
       return;
     }
 
-    CharacterSheetRuntime.registerContent(registeredContent);
+    for (let registeredContent of registeredContents) {
+      CharacterSheetRuntime.registerContent(registeredContent);
+    }
   }
 
   /**
@@ -502,17 +510,19 @@ export class Tidy5eSheetsApi {
     content: SupportedContent,
     options?: ContentRegistrationOptions
   ) {
-    const registeredContent = CustomContentManager.mapToRegisteredContent(
+    const registeredContents = CustomContentManager.mapToRegisteredContents(
       content,
       options?.layout
     );
 
-    if (!registeredContent) {
+    if (!registeredContents) {
       warn('Unable to register content. Content type not supported.');
       return;
     }
 
-    GroupSheetRuntime.registerContent(registeredContent);
+    for (let registeredContent of registeredContents) {
+      GroupSheetRuntime.registerContent(registeredContent);
+    }
   }
 
   /**
@@ -550,17 +560,19 @@ export class Tidy5eSheetsApi {
     content: SupportedContent,
     options?: ContentRegistrationOptions
   ) {
-    const registeredContent = CustomContentManager.mapToRegisteredContent(
+    const registeredContents = CustomContentManager.mapToRegisteredContents(
       content,
       options?.layout
     );
 
-    if (!registeredContent) {
+    if (!registeredContents) {
       warn('Unable to register content. Content type not supported.');
       return;
     }
 
-    ItemSheetRuntime.registerContent(registeredContent);
+    for (let registeredContent of registeredContents) {
+      ItemSheetRuntime.registerContent(registeredContent);
+    }
   }
 
   /**
@@ -598,17 +610,19 @@ export class Tidy5eSheetsApi {
     content: SupportedContent,
     options?: ContentRegistrationOptions
   ) {
-    const registeredContent = CustomContentManager.mapToRegisteredContent(
+    const registeredContents = CustomContentManager.mapToRegisteredContents(
       content,
       options?.layout
     );
 
-    if (!registeredContent) {
+    if (!registeredContents) {
       warn('Unable to register content. Content type not supported.');
       return;
     }
 
-    NpcSheetRuntime.registerContent(registeredContent);
+    for (let registeredContent of registeredContents) {
+      NpcSheetRuntime.registerContent(registeredContent);
+    }
   }
 
   /**
@@ -646,17 +660,19 @@ export class Tidy5eSheetsApi {
     content: SupportedContent,
     options?: ContentRegistrationOptions
   ) {
-    const registeredContent = CustomContentManager.mapToRegisteredContent(
+    const registeredContents = CustomContentManager.mapToRegisteredContents(
       content,
       options?.layout
     );
 
-    if (!registeredContent) {
+    if (!registeredContents) {
       warn('Unable to register content. Content type not supported.');
       return;
     }
 
-    VehicleSheetRuntime.registerContent(registeredContent);
+    for (let registeredContent of registeredContents) {
+      VehicleSheetRuntime.registerContent(registeredContent);
+    }
   }
 
   /**
@@ -709,18 +725,23 @@ export class Tidy5eSheetsApi {
       return;
     }
 
-    const registeredTab = TabManager.mapCustomTabToRegisteredTab(tab, options?.layout);
+    const registeredTabs = TabManager.mapCustomTabToRegisteredTabs(
+      tab,
+      options?.layout
+    );
 
-    if (!registeredTab) {
+    if (!registeredTabs) {
       warn('Unable to register tab. Tab type not supported');
       return;
     }
 
-    if (options?.autoHeight) {
-      registeredTab.autoHeight = options.autoHeight;
-    }
+    for (let registeredTab of registeredTabs) {
+      if (options?.autoHeight) {
+        registeredTab.autoHeight = options.autoHeight;
+      }
 
-    ItemSheetRuntime.registerTab(registeredTab);
+      ItemSheetRuntime.registerTab(registeredTab);
+    }
   }
 
   /**
@@ -761,17 +782,19 @@ export class Tidy5eSheetsApi {
     if (!TabManager.validateTab(tab)) {
       return;
     }
-    const registeredTab = TabManager.mapCustomTabToRegisteredTab(
+    const registeredTabs = TabManager.mapCustomTabToRegisteredTabs(
       tab,
       options?.layout
     );
 
-    if (!registeredTab) {
+    if (!registeredTabs) {
       warn('Unable to register tab. Tab type not supported');
       return;
     }
 
-    NpcSheetRuntime.registerTab(registeredTab);
+    for (let registeredTab of registeredTabs) {
+      NpcSheetRuntime.registerTab(registeredTab);
+    }
   }
 
   /**
@@ -812,17 +835,19 @@ export class Tidy5eSheetsApi {
     if (!TabManager.validateTab(tab)) {
       return;
     }
-    const registeredTab = TabManager.mapCustomTabToRegisteredTab(
+    const registeredTabs = TabManager.mapCustomTabToRegisteredTabs(
       tab,
       options?.layout
     );
 
-    if (!registeredTab) {
+    if (!registeredTabs) {
       warn('Unable to register tab. Tab type not supported');
       return;
     }
 
-    VehicleSheetRuntime.registerTab(registeredTab);
+    for (let registeredTab of registeredTabs) {
+      VehicleSheetRuntime.registerTab(registeredTab);
+    }
   }
 
   /**

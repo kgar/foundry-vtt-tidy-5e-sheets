@@ -12,14 +12,16 @@ import CharacterEffectsTab from 'src/sheets/classic/character/tabs/CharacterEffe
 import CharacterBiographyTab from 'src/sheets/classic/character/tabs/CharacterBiographyTab.svelte';
 import ActorJournalTab from 'src/sheets/classic/actor/tabs/ActorJournalTab.svelte';
 import ActorActionsTab from 'src/sheets/classic/actor/tabs/ActorActionsTab.svelte';
-import type { RegisteredContent, RegisteredTab } from './types';
+import type { RegisteredContent, RegisteredTab, SheetLayout } from './types';
 import { CONSTANTS } from 'src/constants';
 import { debug, error, warn } from 'src/utils/logging';
 import { TabManager } from './tab/TabManager';
 import type { ActorTabRegistrationOptions } from 'src/api/api.types';
 import { CustomContentManager } from './content/CustomContentManager';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { isNil } from 'src/utils/data';
 
+// TODO: Extract a reusable class that all actor sheets can leverage.
 class CharacterSheetRuntime {
   private _content = $state<RegisteredContent<CharacterSheetContext>[]>([]);
   private _tabs = $state<RegisteredTab<CharacterSheetContext>[]>([
@@ -123,29 +125,45 @@ class CharacterSheetRuntime {
       layout: 'classic',
     },
   ]);
-  tabMap = $derived(
-    this._tabs.reduce<Map<string, RegisteredTab<CharacterSheetContext>>>(
-      (map, curr) => {
-        map.set(curr.id, curr);
-        return map;
-      },
-      new Map<string, RegisteredTab<CharacterSheetContext>>()
-    )
-  );
 
-  async getContent(context: CharacterSheetContext): Promise<CustomContent[]> {
-    return await CustomContentManager.prepareContentForRender(
-      context,
-      this._content
-    );
+  async getContent(
+    context: CharacterSheetContext,
+    layout: SheetLayout
+  ): Promise<CustomContent[]> {
+    const content =
+      layout === CONSTANTS.SHEET_LAYOUT_ALL
+        ? [...this._content]
+        : this._content.filter(
+            (registered) =>
+              registered.layout === layout ||
+              registered.layout === CONSTANTS.SHEET_LAYOUT_ALL
+          );
+    return await CustomContentManager.prepareContentForRender(context, content);
   }
 
-  async getTabs(context: CharacterSheetContext): Promise<Tab[]> {
-    return await TabManager.prepareTabsForRender(context, this._tabs);
+  async getTabs(
+    context: CharacterSheetContext,
+    layout: SheetLayout
+  ): Promise<Tab[]> {
+    const tabs =
+      layout === CONSTANTS.SHEET_LAYOUT_ALL
+        ? [...this._tabs]
+        : this._tabs.filter(
+            (registered) =>
+              registered.layout === layout ||
+              registered.layout === CONSTANTS.SHEET_LAYOUT_ALL
+          );
+    return await TabManager.prepareTabsForRender(context, tabs);
   }
 
-  getAllRegisteredTabs(): RegisteredTab<CharacterSheetContext>[] {
-    return [...this._tabs];
+  getAllRegisteredTabs(
+    layout: SheetLayout
+  ): RegisteredTab<CharacterSheetContext>[] {
+    return layout === CONSTANTS.SHEET_LAYOUT_ALL || isNil(layout)
+      ? [...this._tabs]
+      : this._tabs.filter(
+          (x) => x.layout === layout || x.layout === CONSTANTS.SHEET_LAYOUT_ALL
+        );
   }
 
   registerContent(registeredContent: RegisteredContent<CharacterSheetContext>) {
@@ -156,7 +174,13 @@ class CharacterSheetRuntime {
     tab: RegisteredTab<CharacterSheetContext>,
     options?: ActorTabRegistrationOptions
   ) {
-    const tabExists = this._tabs.some((t) => t.id === tab.id);
+    const tabExists = this._tabs.some(
+      (existingTab) =>
+        existingTab.id === tab.id &&
+        (existingTab.layout === CONSTANTS.SHEET_LAYOUT_ALL ||
+          existingTab.layout == tab.layout ||
+          tab.layout === CONSTANTS.SHEET_LAYOUT_ALL)
+    );
 
     if (tabExists && !options?.overrideExisting) {
       warn(`Tab with id ${tab.id} already exists.`);
@@ -173,9 +197,13 @@ class CharacterSheetRuntime {
     this._tabs.push(tab);
   }
 
-  getTabTitle(tabId: string) {
+  getTabTitle(tabId: string, layout: SheetLayout) {
     try {
-      let tabTitle = this._tabs.find((t) => t.id === tabId)?.title;
+      let tabTitle = this._tabs.find(
+        (t) =>
+          t.id === tabId &&
+          (t.layout === layout || t.layout === CONSTANTS.SHEET_LAYOUT_ALL)
+      )?.title;
       if (typeof tabTitle === 'function') {
         tabTitle = tabTitle();
       }

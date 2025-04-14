@@ -276,7 +276,7 @@ export function createSettings() {
           type: String,
           choices: () =>
             TabManager.getTabsAsConfigOptions(
-              CharacterSheetRuntime.getAllRegisteredTabs()
+              CharacterSheetRuntime.getAllRegisteredTabs('classic')
             ),
           default: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
         },
@@ -619,7 +619,7 @@ export function createSettings() {
           type: String,
           choices: () =>
             TabManager.getTabsAsConfigOptions(
-              NpcSheetRuntime.getAllRegisteredTabs()
+              NpcSheetRuntime.getAllRegisteredTabs('classic')
             ),
           default: CONSTANTS.TAB_NPC_ABILITIES,
         },
@@ -745,7 +745,7 @@ export function createSettings() {
           type: String,
           choices: () =>
             TabManager.getTabsAsConfigOptions(
-              VehicleSheetRuntime.getAllRegisteredTabs()
+              VehicleSheetRuntime.getAllRegisteredTabs('classic')
             ),
           default: CONSTANTS.TAB_VEHICLE_ATTRIBUTES,
         },

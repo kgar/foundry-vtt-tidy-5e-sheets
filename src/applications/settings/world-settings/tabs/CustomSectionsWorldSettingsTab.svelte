@@ -41,11 +41,18 @@
     tabs: TabFilterOption[];
   };
 
+  let classicCharacterTabs =
+    CharacterSheetRuntime.getAllRegisteredTabs('classic');
+
+  let classicNpcTabs = NpcSheetRuntime.getAllRegisteredTabs('classic');
+
+  let classicGroupTabs = GroupSheetRuntime.getAllRegisteredTabs('classic');
+
   let sheetTypes: SheetFilterOption[] = [
     {
       type: CONSTANTS.SHEET_TYPE_CHARACTER,
       label: localize('TYPES.Actor.character'),
-      tabs: mapTabs(CharacterSheetRuntime.tabMap, [
+      tabs: mapTabs(classicCharacterTabs, [
         CONSTANTS.TAB_ACTOR_INVENTORY,
         CONSTANTS.TAB_ACTOR_SPELLBOOK,
         CONSTANTS.TAB_CHARACTER_FEATURES,
@@ -54,7 +61,7 @@
     {
       type: CONSTANTS.SHEET_TYPE_NPC,
       label: localize('DND5E.NPC.Label'),
-      tabs: mapTabs(NpcSheetRuntime.tabMap, [
+      tabs: mapTabs(classicNpcTabs, [
         CONSTANTS.TAB_NPC_ABILITIES,
         CONSTANTS.TAB_ACTOR_INVENTORY,
         CONSTANTS.TAB_ACTOR_SPELLBOOK,
@@ -63,17 +70,14 @@
     {
       type: CONSTANTS.SHEET_TYPE_GROUP,
       label: localize('TYPES.Actor.group'),
-      tabs: mapTabs(GroupSheetRuntime.tabMap, [CONSTANTS.TAB_ACTOR_INVENTORY]),
+      tabs: mapTabs(classicGroupTabs, [CONSTANTS.TAB_ACTOR_INVENTORY]),
     },
   ];
 
-  function mapTabs(
-    tabs: Map<string, RegisteredTab<any>>,
-    subset: string[] = [],
-  ) {
+  function mapTabs(tabs: RegisteredTab<any>[], subset: string[] = []) {
     let mappedTabs: TabFilterOption[] = [];
     try {
-      for (let [_, tab] of tabs) {
+      for (let tab of tabs) {
         if (subset.length && !subset.includes(tab.id)) {
           continue;
         }

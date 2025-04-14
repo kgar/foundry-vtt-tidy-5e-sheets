@@ -11,13 +11,14 @@ import NpcBiographyTab from 'src/sheets/classic/npc/tabs/NpcBiographyTab.svelte'
 import NpcEffectsTab from 'src/sheets/classic/npc/tabs/NpcEffectsTab.svelte';
 import ActorJournalTab from 'src/sheets/classic/actor/tabs/ActorJournalTab.svelte';
 import ActorActionsTab from 'src/sheets/classic/actor/tabs/ActorActionsTab.svelte';
-import type { RegisteredContent, RegisteredTab } from './types';
+import type { RegisteredContent, RegisteredTab, SheetLayout } from './types';
 import { debug, error, warn } from 'src/utils/logging';
 import { TabManager } from './tab/TabManager';
 import type { ActorTabRegistrationOptions } from 'src/api/api.types';
 import { CustomContentManager } from './content/CustomContentManager';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import ActorInventoryTab from 'src/sheets/classic/actor/tabs/ActorInventoryTab.svelte';
+import { isNil } from 'src/utils/data';
 
 class NpcSheetRuntime {
   private _content = $state<RegisteredContent<NpcSheetContext>[]>([]);
@@ -116,8 +117,14 @@ class NpcSheetRuntime {
     return TabManager.prepareTabsForRender(context, this._tabs);
   }
 
-  getAllRegisteredTabs(): RegisteredTab<NpcSheetContext>[] {
-    return [...this._tabs];
+  getAllRegisteredTabs(layout: SheetLayout): RegisteredTab<NpcSheetContext>[] {
+    const result = [...this._tabs];
+
+    return layout === CONSTANTS.SHEET_LAYOUT_ALL || isNil(layout)
+      ? result
+      : result.filter(
+          (x) => x.layout === layout || x.layout === CONSTANTS.SHEET_LAYOUT_ALL
+        );
   }
 
   registerContent(registeredContent: RegisteredContent<NpcSheetContext>) {

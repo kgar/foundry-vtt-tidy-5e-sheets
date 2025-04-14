@@ -24,7 +24,7 @@ export type TabSelectionContext = {
   selected: TabSelectionItem[];
 };
 
-export default class TabSelectionFormApplication extends SvelteFormApplicationBase {
+export default class ClassicTabSelectionFormApplication extends SvelteFormApplicationBase {
   actor: Actor5e;
   context = $state<TabSelectionContext>({ available: [], selected: [] });
   registeredTabs: RegisteredTab<any>[];
@@ -37,13 +37,13 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
 
   getRegisteredTabs(actor: Actor5e): RegisteredTab<any>[] {
     if (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) {
-      return CharacterSheetRuntime.getAllRegisteredTabs();
+      return CharacterSheetRuntime.getAllRegisteredTabs('classic');
     } else if (actor.type === CONSTANTS.SHEET_TYPE_NPC) {
-      return NpcSheetRuntime.getAllRegisteredTabs();
+      return NpcSheetRuntime.getAllRegisteredTabs('classic');
     } else if (actor.type === CONSTANTS.SHEET_TYPE_VEHICLE) {
-      return VehicleSheetRuntime.getAllRegisteredTabs();
+      return VehicleSheetRuntime.getAllRegisteredTabs('classic');
     } else if (actor.type === CONSTANTS.SHEET_TYPE_GROUP) {
-      return GroupSheetRuntime.getAllRegisteredTabs();
+      return GroupSheetRuntime.getAllRegisteredTabs('classic');
     }
 
     error(

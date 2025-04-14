@@ -5,12 +5,13 @@ import VehicleAttributesTab from 'src/sheets/classic/vehicle/tabs/VehicleAttribu
 import VehicleCargoAndCrewTab from 'src/sheets/classic/vehicle/tabs/VehicleCargoAndCrewTab.svelte';
 import VehicleDescriptionTab from 'src/sheets/classic/vehicle/tabs/VehicleDescriptionTab.svelte';
 import ActorActionsTab from 'src/sheets/classic/actor/tabs/ActorActionsTab.svelte';
-import type { RegisteredContent, RegisteredTab } from './types';
+import type { RegisteredContent, RegisteredTab, SheetLayout } from './types';
 import { debug, error, warn } from 'src/utils/logging';
 import { TabManager } from './tab/TabManager';
 import type { ActorTabRegistrationOptions } from 'src/api/api.types';
 import { CustomContentManager } from './content/CustomContentManager';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { isNil } from 'src/utils/data';
 
 export class VehicleSheetRuntime {
   private static _content: RegisteredContent<VehicleSheetContext>[] = [];
@@ -75,8 +76,16 @@ export class VehicleSheetRuntime {
     return TabManager.prepareTabsForRender(context, VehicleSheetRuntime._tabs);
   }
 
-  static getAllRegisteredTabs(): RegisteredTab<VehicleSheetContext>[] {
-    return [...VehicleSheetRuntime._tabs];
+  static getAllRegisteredTabs(
+    layout: SheetLayout
+  ): RegisteredTab<VehicleSheetContext>[] {
+    const result = [...this._tabs];
+
+    return layout === CONSTANTS.SHEET_LAYOUT_ALL || isNil(layout)
+      ? result
+      : result.filter(
+          (x) => x.layout === layout || x.layout === CONSTANTS.SHEET_LAYOUT_ALL
+        );
   }
 
   static registerContent(

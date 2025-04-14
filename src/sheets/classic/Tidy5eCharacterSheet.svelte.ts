@@ -356,7 +356,8 @@ export class Tidy5eCharacterSheet
                 sections: sections,
                 tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
                 tabTitle: CharacterSheetRuntime.getTabTitle(
-                  CONSTANTS.TAB_CHARACTER_ATTRIBUTES
+                  CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+                  CONSTANTS.SHEET_LAYOUT_CLASSIC
                 ),
               }).render(true);
             },
@@ -465,7 +466,8 @@ export class Tidy5eCharacterSheet
                 sections: sections,
                 tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 tabTitle: CharacterSheetRuntime.getTabTitle(
-                  CONSTANTS.TAB_ACTOR_INVENTORY
+                  CONSTANTS.TAB_ACTOR_INVENTORY,
+                  CONSTANTS.SHEET_LAYOUT_CLASSIC
                 ),
               }).render(true);
             },
@@ -583,7 +585,8 @@ export class Tidy5eCharacterSheet
                 sections: sections,
                 tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
                 tabTitle: CharacterSheetRuntime.getTabTitle(
-                  CONSTANTS.TAB_ACTOR_SPELLBOOK
+                  CONSTANTS.TAB_ACTOR_SPELLBOOK,
+                  CONSTANTS.SHEET_LAYOUT_CLASSIC
                 ),
               }).render(true);
             },
@@ -652,7 +655,8 @@ export class Tidy5eCharacterSheet
                 sections: sections,
                 tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
                 tabTitle: CharacterSheetRuntime.getTabTitle(
-                  CONSTANTS.TAB_CHARACTER_FEATURES
+                  CONSTANTS.TAB_CHARACTER_FEATURES,
+                  CONSTANTS.SHEET_LAYOUT_CLASSIC
                 ),
               }).render(true);
             },
@@ -721,7 +725,8 @@ export class Tidy5eCharacterSheet
                 sections: sections,
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
                 tabTitle: CharacterSheetRuntime.getTabTitle(
-                  CONSTANTS.TAB_ACTOR_ACTIONS
+                  CONSTANTS.TAB_ACTOR_ACTIONS,
+                  CONSTANTS.SHEET_LAYOUT_CLASSIC
                 ),
               }).render(true);
             },
@@ -785,7 +790,8 @@ export class Tidy5eCharacterSheet
         defaultDocumentContext
       ),
       customContent: await CharacterSheetRuntime.getContent(
-        defaultDocumentContext
+        defaultDocumentContext,
+        'classic'
       ),
       document: this.document,
       editable: defaultDocumentContext.editable,
@@ -931,7 +937,7 @@ export class Tidy5eCharacterSheet
 
     await this._prepareAttributePins(context);
 
-    let tabs = await CharacterSheetRuntime.getTabs(context);
+    let tabs = await CharacterSheetRuntime.getTabs(context, 'classic');
 
     const selectedTabs = TidyFlags.selectedTabs.get(context.actor);
 
