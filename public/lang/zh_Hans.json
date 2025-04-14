@@ -403,6 +403,17 @@
     },
     "TIDY5E.Settings.ShowNPCActorLinkMarker": {
         "name": "标记已关联/未关联的NPC",
-        "hint": "为已关联/未关联的非玩家角色表单添加彩色边框和图标。"
+        "hint": "为已关联/未关联的非玩家角色表单添加彩色边框和图标。",
+        "default": "无关联标记（默认）",
+        "unlinked": "高亮未关联指示物",
+        "linked": "高亮关联指示物",
+        "both": "高亮关联和未关联指示物"
+    },
+    "TIDY5E.Settings.DefaultSheetTabs": {
+        "name": "默认工作卡选项卡"
+    },
+    "TIDY5E.Settings.InitialSheetTab": {
+        "name": "初始卡选项卡",
+        "hint": "首次打开工作卡时显示指定的选项卡。"
     }
 }
