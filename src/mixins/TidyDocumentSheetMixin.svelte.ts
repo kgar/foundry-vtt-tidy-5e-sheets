@@ -528,23 +528,20 @@ export function TidyExtensibleDocumentSheetMixin<
         options
       ) as ApplicationConfiguration;
 
+      const effectiveControls = [...(updatedOptions.window?.controls ?? [])];
+      const effectiveActions = { ...(updatedOptions.actions ?? {}) };
+
       try {
         if (
           game.release.generation < 13 &&
-          !updatedOptions.window.controls?.some(
-            (x) => x.action === 'importFromCompendium'
-          )
+          !effectiveControls?.some((x) => x.action === 'importFromCompendium')
         ) {
-          updatedOptions.window.controls?.unshift(
-            ImportSheetControl.getSheetControl()
-          );
-          updatedOptions.actions[ImportSheetControl.actionName] =
-            async function (this: any) {
-              await ImportSheetControl.importFromCompendium(
-                this,
-                this.document
-              );
-            };
+          effectiveControls?.unshift(ImportSheetControl.getSheetControl());
+          effectiveActions[ImportSheetControl.actionName] = async function (
+            this: any
+          ) {
+            await ImportSheetControl.importFromCompendium(this, this.document);
+          };
         }
 
         const { width, height } = SheetPreferencesService.getByType(sheetType);
@@ -570,11 +567,11 @@ export function TidyExtensibleDocumentSheetMixin<
           Assigning a new set of actions and controls will avoid any surprise mutations.
         */
         updatedOptions.actions = {
-          ...updatedOptions.actions,
+          ...effectiveActions,
           ...customControls.actions,
         };
         updatedOptions.window.controls = [
-          ...(updatedOptions.window.controls ?? []),
+          ...effectiveControls,
           ...customControls.controls,
         ];
       } catch (e) {
