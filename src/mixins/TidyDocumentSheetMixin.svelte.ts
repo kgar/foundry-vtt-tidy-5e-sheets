@@ -537,6 +537,12 @@ export function TidyExtensibleDocumentSheetMixin<
           !effectiveControls?.some((x) => x.action === 'importFromCompendium')
         ) {
           effectiveControls?.unshift(ImportSheetControl.getSheetControl());
+        }
+
+        if (
+          game.release.generation < 13 &&
+          !effectiveActions['importFromCompendium']
+        ) {
           effectiveActions[ImportSheetControl.actionName] = async function (
             this: any
           ) {
