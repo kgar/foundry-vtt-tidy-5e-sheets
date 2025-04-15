@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getContext } from 'svelte';
   import SelectionListbox from '../../components/listbox/SelectionListbox.svelte';
-  import type { TabSelectionContext } from './TabSelectionFormApplication.svelte';
+  import type { TabSelectionContext } from './ClassicTabSelectionFormApplication.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
 

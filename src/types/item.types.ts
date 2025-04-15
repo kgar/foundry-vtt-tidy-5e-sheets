@@ -237,7 +237,6 @@ export type ItemSheetQuadroneContext = {
     data: UsesRecoveryData;
     formulaOptions: { label: string; value: string }[] | null;
   }[];
-  itemOverrides: Set<string>;
   tabs: Tab[];
 };
 
@@ -335,10 +334,12 @@ export type CurrencyContext = {
 
 export type ContainerSheetQuadroneContext = {
   capacity: ContainerCapacityContext;
-  config: typeof CONFIG.DND5E;
   concealDetails: boolean;
+  config: typeof CONFIG.DND5E;
   containerContents: ContainerContents;
+  contentsSort: SortParametersQuadrone;
   currencies: CurrencyContext[];
+  customContent: CustomContent[];
   document: Item5e;
   editable: boolean;
   enriched: {
@@ -348,27 +349,24 @@ export type ContainerSheetQuadroneContext = {
   };
   filterData: DocumentFilters;
   filterPins: Record<string, Set<string>>;
-  item: Item5e;
   identifiedName: string;
-  items: Item5e[];
-  itemContext: Record<string, ContainerItemContext>;
-  itemDescriptions: ItemDescription[];
-  itemOverrides: Set<string>;
-  itemType: string;
   isContainer: true;
   isIdentifiable: boolean;
   isIdentified: boolean;
   isPhysical: boolean;
+  item: Item5e;
+  itemContext: Record<string, ContainerItemContext>;
+  itemDescriptions: ItemDescription[];
+  items: Item5e[];
+  itemType: string;
   labels: Record<string, any>;
   lockItemQuantity: boolean;
   lockMoneyChanges: boolean;
   modernRules: boolean;
   name: ItemNameContext;
-  customContent: CustomContent[];
   owner: boolean;
   properties: PropertyContext;
   rollData: Record<string, any>;
-  contentsSort: SortParametersQuadrone;
   source: any;
   system: any;
   tabs: Tab[];
@@ -434,5 +432,9 @@ export type AdvancementItemContext = {
   classes: string;
 };
 
-export type MovementInfo = { label: string; value: number | string; unit: string };
+export type MovementInfo = {
+  label: string;
+  value: number | string;
+  unit: string;
+};
 export type SenseInfo = { label: string; value: number | string; unit: string };

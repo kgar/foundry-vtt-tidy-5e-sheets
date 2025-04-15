@@ -9,7 +9,7 @@ import type {
   ApplicationPosition,
   ApplicationRenderOptions,
 } from 'src/types/application.types';
-import type { Tab } from 'src/types/types';
+import type { CustomContent, Tab } from 'src/types/types';
 import { error } from 'src/utils/logging';
 import type { RenderResult } from './SvelteApplicationMixin.svelte';
 import { CustomContentRendererV2 } from 'src/sheets/CustomContentRendererV2';
@@ -48,7 +48,7 @@ export function TidyExtensibleDocumentSheetMixin<
   TConstructorArgs extends Partial<ApplicationConfiguration> | undefined,
   TContext extends Partial<{
     tabs: Tab[];
-    customContent: RegisteredContent<TContext>[];
+    customContent: CustomContent[];
   }>
 >(sheetType: string, BaseApplication: any) {
   class TidyDocumentSheet extends DragAndDropMixin(BaseApplication) {
@@ -163,6 +163,26 @@ export function TidyExtensibleDocumentSheetMixin<
       }
 
       this._mode = mode ?? this._mode ?? CONSTANTS.SHEET_MODE_PLAY;
+    }
+
+    async _prepareContext(options: Partial<TidyDocumentSheetRenderOptions>) {
+      const context = await super._prepareContext(options);
+
+      if (game.release.generation < 13) {
+        const document = this.document;
+        return Object.assign(context, {
+          document,
+          source: document._source,
+          fields: document.schema.fields,
+          editable: this.isEditable,
+          user: game.user,
+          rootId: document.collection?.has(document.id)
+            ? this.id
+            : foundry.utils.randomID(),
+        });
+      }
+
+      return context;
     }
 
     async _renderHTML(
@@ -397,7 +417,8 @@ export function TidyExtensibleDocumentSheetMixin<
 
     async close(options: ApplicationClosingOptions = {}) {
       // Trigger saving of the form if configured and allowed
-      const submit = this.options.submitOnClose && this.document.isOwner && this.isEditable;
+      const submit =
+        this.options.submitOnClose && this.document.isOwner && this.isEditable;
 
       if (submit) {
         await this.submit({ preventClose: true, preventRender: true });
@@ -507,23 +528,26 @@ export function TidyExtensibleDocumentSheetMixin<
         options
       ) as ApplicationConfiguration;
 
+      const effectiveControls = [...(updatedOptions.window?.controls ?? [])];
+      const effectiveActions = { ...(updatedOptions.actions ?? {}) };
+
       try {
         if (
           game.release.generation < 13 &&
-          !updatedOptions.window.controls?.some(
-            (x) => x.action === 'importFromCompendium'
-          )
+          !effectiveControls?.some((x) => x.action === 'importFromCompendium')
         ) {
-          updatedOptions.window.controls?.unshift(
-            ImportSheetControl.getSheetControl()
-          );
-          updatedOptions.actions[ImportSheetControl.actionName] =
-            async function (this: any) {
-              await ImportSheetControl.importFromCompendium(
-                this,
-                this.document
-              );
-            };
+          effectiveControls?.unshift(ImportSheetControl.getSheetControl());
+        }
+
+        if (
+          game.release.generation < 13 &&
+          !effectiveActions['importFromCompendium']
+        ) {
+          effectiveActions[ImportSheetControl.actionName] = async function (
+            this: any
+          ) {
+            await ImportSheetControl.importFromCompendium(this, this.document);
+          };
         }
 
         const { width, height } = SheetPreferencesService.getByType(sheetType);
@@ -549,11 +573,11 @@ export function TidyExtensibleDocumentSheetMixin<
           Assigning a new set of actions and controls will avoid any surprise mutations.
         */
         updatedOptions.actions = {
-          ...updatedOptions.actions,
+          ...effectiveActions,
           ...customControls.actions,
         };
         updatedOptions.window.controls = [
-          ...(updatedOptions.window.controls ?? []),
+          ...effectiveControls,
           ...customControls.controls,
         ];
       } catch (e) {

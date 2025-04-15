@@ -1,11 +1,10 @@
 import type {
-  ItemSheetContext,
   ItemSheetQuadroneContext,
 } from 'src/types/item.types';
 
 // TODO: Eliminate these specific mappers for more generalized versions, as needed.
 export function mapPropertiesToSave(
-  context: ItemSheetContext | ItemSheetQuadroneContext,
+  context: ItemSheetQuadroneContext,
   ev: Event & { currentTarget: HTMLInputElement },
   keyToSave: string
 ) {
@@ -26,7 +25,7 @@ export function mapPropertiesToSave(
 
 // TODO: Eliminate these specific mappers for more generalized versions, as needed.
 export function mapMulticlassingAbilitiesToSave(
-  context: ItemSheetContext | ItemSheetQuadroneContext,
+  context: ItemSheetQuadroneContext,
   ev: Event & { currentTarget: HTMLInputElement }
 ) {
   const selectedAbilities: Set<string> = new Set<string>(

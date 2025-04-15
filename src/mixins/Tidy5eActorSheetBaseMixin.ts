@@ -9,7 +9,7 @@ import type {
 } from 'src/types/application.types';
 import type { Actor5e } from 'src/types/types';
 import { settings } from 'src/settings/settings.svelte';
-import TabSelectionFormApplication from 'src/applications/tab-selection/TabSelectionFormApplication.svelte';
+import ClassicTabSelectionFormApplication from 'src/applications/tab-selection/ClassicTabSelectionFormApplication.svelte';
 import { isNil } from 'src/utils/data';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 
@@ -68,7 +68,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
         },
         action: {
           openTabSelection: async function (this: { actor?: Actor5e }) {
-            new TabSelectionFormApplication(this.actor).render(true);
+            new ClassicTabSelectionFormApplication(this.actor).render(true);
           },
         },
       },

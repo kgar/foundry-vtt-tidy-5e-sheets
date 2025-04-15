@@ -4,7 +4,7 @@ import type {
   ActiveEffect5e,
   Actor5e,
   ActorSheetContextV1,
-  ActorSheetContextV2,
+  ActorSheetClassicContextV2,
   CharacterSheetContext,
   NpcSheetContext,
   VehicleSheetContext,
@@ -356,7 +356,7 @@ export class TidyHooks {
 
   /**
    * The portrait picker is about to open.
-   * @param {ActorSheetContextV1 | ActorSheetContextV2} context The actor sheet data from `getData()`.
+   * @param {ActorSheetContextV1 | ActorSheetClassicContextV2} context The actor sheet data from `getData()`.
    * @param {MouseEvent & { currentTarget: EventTarget & HTMLElement }} event The triggering event.
    * @returns {boolean} `true` to allow the picker to open, `false` to prevent it.
    *
@@ -368,7 +368,7 @@ export class TidyHooks {
    * ```
    */
   static tidy5eSheetsPreOpenActorPortraitFilePicker(
-    context: ActorSheetContextV1 | ActorSheetContextV2,
+    context: ActorSheetContextV1 | ActorSheetClassicContextV2,
     event: MouseEvent & { currentTarget: EventTarget & HTMLElement }
   ): boolean {
     return Hooks.call(

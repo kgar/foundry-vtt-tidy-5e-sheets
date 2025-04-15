@@ -6,13 +6,15 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { error } from 'src/utils/logging';
 import type { RegisteredTab } from 'src/runtime/types';
 import { CONSTANTS } from 'src/constants';
-import { settings, SettingsProvider } from 'src/settings/settings.svelte';
-import NpcSheetRuntime from 'src/runtime/NpcSheetRuntime.svelte';
-import CharacterSheetRuntime from 'src/runtime/CharacterSheetRuntime.svelte';
-import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
+import { settings } from 'src/settings/settings.svelte';
+import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime.svelte';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import GroupSheetRuntime from 'src/runtime/GroupSheetRuntime.svelte';
+import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
+import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
+import GroupSheetClassicRuntime, {
+  defaultGroupClassicTabs,
+} from 'src/runtime/actor/GroupSheetClassicRuntime.svelte';
 
 export type TabSelectionItem = {
   id: string;
@@ -24,7 +26,7 @@ export type TabSelectionContext = {
   selected: TabSelectionItem[];
 };
 
-export default class TabSelectionFormApplication extends SvelteFormApplicationBase {
+export default class ClassicTabSelectionFormApplication extends SvelteFormApplicationBase {
   actor: Actor5e;
   context = $state<TabSelectionContext>({ available: [], selected: [] });
   registeredTabs: RegisteredTab<any>[];
@@ -37,13 +39,13 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
 
   getRegisteredTabs(actor: Actor5e): RegisteredTab<any>[] {
     if (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) {
-      return CharacterSheetRuntime.getAllRegisteredTabs();
+      return CharacterSheetClassicRuntime.getAllRegisteredTabs();
     } else if (actor.type === CONSTANTS.SHEET_TYPE_NPC) {
-      return NpcSheetRuntime.getAllRegisteredTabs();
+      return NpcSheetClassicRuntime.getAllRegisteredTabs();
     } else if (actor.type === CONSTANTS.SHEET_TYPE_VEHICLE) {
-      return VehicleSheetRuntime.getAllRegisteredTabs();
+      return VehicleSheetClassicRuntime.getAllRegisteredTabs();
     } else if (actor.type === CONSTANTS.SHEET_TYPE_GROUP) {
-      return GroupSheetRuntime.getAllRegisteredTabs();
+      return GroupSheetClassicRuntime.getAllRegisteredTabs();
     }
 
     error(
@@ -63,7 +65,8 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
     } else if (actor.type === CONSTANTS.SHEET_TYPE_VEHICLE) {
       return settings.value.defaultVehicleSheetTabs;
     } else if (actor.type === CONSTANTS.SHEET_TYPE_GROUP) {
-      return GroupSheetRuntime.getDefaultTabs();
+      // TODO: Make this configurable.
+      return defaultGroupClassicTabs.map((x) => x.id);
     }
 
     error(

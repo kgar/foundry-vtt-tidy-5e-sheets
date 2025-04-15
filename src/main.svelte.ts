@@ -26,6 +26,7 @@ import { initReadyHooks } from './features/ready-hooks';
 import '@melloware/coloris/dist/coloris.css';
 import { debug } from './utils/logging';
 import { Tidy5eItemSheetQuadrone } from './sheets/quadrone/Tidy5eItemSheetQuadrone.svelte';
+import { Tidy5eCharacterSheetQuadrone } from './sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
 
 Hooks.once('init', () => {
   const documentSheetConfig =
@@ -145,7 +146,18 @@ Hooks.once('init', () => {
     }
   );
 
+  /* FOR THOSE WITH TRUE SIGHT */
   if (settings.value.truesight) {
+    documentSheetConfig.registerSheet(
+      Actor,
+      CONSTANTS.DND5E_SYSTEM_ID,
+      Tidy5eCharacterSheetQuadrone,
+      {
+        types: [CONSTANTS.SHEET_TYPE_CHARACTER],
+        label: 'TIDY5E.Tidy5eCharacterSheetQuadrone',
+      }
+    );
+
     documentSheetConfig.registerSheet(
       Item,
       CONSTANTS.DND5E_SYSTEM_ID,

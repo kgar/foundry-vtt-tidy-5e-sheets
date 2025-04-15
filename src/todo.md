@@ -1,9 +1,18 @@
 ## To Do
 
+- [ ] Implement classic group sheet default tabs setting
+- [ ] Explore what it takes to implement item sheet tab settings per item type.
+- [ ] Implement quadrone default tab settings (no UI)
+  - [ ] Character
+  - [ ] NPC
+  - [ ] Vehicle
+  - [ ] Group
+  - [ ] Container
 - [ ] Character Sheet 
-  - [ ] Start dev in Foundry V12
-  - [ ] Establish components for the tabs
-  - [ ] Set up Quadrone runtime content, including the default tabs
+  - [x] Start dev in Foundry V12
+  - [x] Establish components for the tabs
+  - [x] Set up Quadrone runtime content, including the default tabs
+  - [ ] Set up new tab selection for quadrone sheets
   - [ ] Implement tabs
     - [ ] Actions
     - [ ] Attributes
@@ -12,6 +21,7 @@
     - [ ] Spellbook
     - [ ] Effects
     - [ ] Background
+    - [ ] Journal
   - [ ] Implement Expandable/collapsible sidebar
   - [ ] Implement Pins
   - [ ] Implement Favorites
@@ -20,6 +30,7 @@
     - [ ] Client Default
     - [ ] Actor Sheet Override
     - [ ] Item Sheet Override
+  - [ ] Implement Limited View, which branches just within the top-level sheet component.
 - [ ] Scaffold the NPC Sheet in Foundry V12
 - [ ] Scaffold the Group Sheet in Foundry V12
 - [ ] Scaffold the Vehicle Sheet in Foundry V12
@@ -40,6 +51,10 @@
 - [ ] Context Menu items rework
 - [ ] Fix weird minimize/maximize header text behavior. reference: https://discord.com/channels/@me/1243307347682529423/1357922036454002890
 - [ ] Add background circle hover style to section row buttons
+- [ ] Always track and ensure that `currentTabId` is correct on the sheet. Use a getter/setter, and under the hood, use a stateful object. Make "change tab" function available and have it trigger rerenders.
+- [ ] Implement quadrone default tab settings (no UI)
+  - [ ] Item
+    - [ ] This has to explode out into unique tabs per item type.
 
 ### Scratch - Finding the effective theme for a sheet
 
@@ -525,3 +540,5 @@ Limited:
 - [x] Class, Subclass, Background, Species, Facility sheets
   - [x] Description tab
     - [x] Description section header hidden, contents displayed, editable when unlocked, saves when locked again, saves when save button clicked and is refreshed.
+- [x] Sheet Mode Toggle - streamline tooltip to read "Play" when locked and "Edit" when unlocked.
+- [x] Fix: Copying an advancement from item to another when it's Tidy to Tidy doesn't seem to work. Determine what the defaults are doing and try to do likewise.

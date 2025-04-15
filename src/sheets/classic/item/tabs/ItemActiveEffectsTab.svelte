@@ -38,10 +38,7 @@
 </script>
 
 <ContentConcealer conceal={context.concealDetails}>
-  <ol
-    class="items-list effects-list"
-    ondrop={(ev) => context.item.sheet._onDrop(ev)}
-  >
+  <ol class="items-list effects-list">
     {#each effects as [_, section]}
       {@const effectEntries = section.effects.map((effect: any) => ({
         effect,

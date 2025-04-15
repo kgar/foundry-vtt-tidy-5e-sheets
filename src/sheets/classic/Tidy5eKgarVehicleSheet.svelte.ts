@@ -29,7 +29,6 @@ import {
 import { mount, unmount } from 'svelte';
 import { debug } from 'src/utils/logging';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
-import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import {
   actorUsesActionFeature,
   getActorActionSections,
@@ -56,6 +55,7 @@ import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivi
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
+import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -306,7 +306,7 @@ export class Tidy5eVehicleSheet
                 document: context.actor,
                 sections: sections,
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
-                tabTitle: VehicleSheetRuntime.getTabTitle(
+                tabTitle: VehicleSheetClassicRuntime.getTabTitle(
                   CONSTANTS.TAB_ACTOR_ACTIONS
                 ),
               }).render(true);
@@ -328,7 +328,7 @@ export class Tidy5eVehicleSheet
       customActorTraits: CustomActorTraitsRuntime.getEnabledTraits(
         defaultDocumentContext
       ),
-      customContent: await VehicleSheetRuntime.getContent(
+      customContent: await VehicleSheetClassicRuntime.getContent(
         defaultDocumentContext
       ),
       document: this.document,
@@ -369,7 +369,7 @@ export class Tidy5eVehicleSheet
       }
     }
 
-    let tabs = await VehicleSheetRuntime.getTabs(context);
+    let tabs = await VehicleSheetClassicRuntime.getTabs(context);
 
     const selectedTabs = TidyFlags.selectedTabs.get(context.actor);
 

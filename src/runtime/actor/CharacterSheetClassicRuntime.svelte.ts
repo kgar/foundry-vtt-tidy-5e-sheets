@@ -1,8 +1,5 @@
-import type {
-  CharacterSheetContext,
-  CustomContent,
-  Tab,
-} from 'src/types/types';
+import type { CharacterSheetContext } from 'src/types/types';
+import { ActorSheetRuntime } from '../ActorSheetRuntime.svelte';
 import CharacterAttributesTab from 'src/sheets/classic/character/tabs/CharacterAttributesTab.svelte';
 import CharacterBastionTab from 'src/sheets/classic/character/tabs/CharacterBastionTab.svelte';
 import ActorInventoryTab from 'src/sheets/classic/actor/tabs/ActorInventoryTab.svelte';
@@ -12,17 +9,12 @@ import CharacterEffectsTab from 'src/sheets/classic/character/tabs/CharacterEffe
 import CharacterBiographyTab from 'src/sheets/classic/character/tabs/CharacterBiographyTab.svelte';
 import ActorJournalTab from 'src/sheets/classic/actor/tabs/ActorJournalTab.svelte';
 import ActorActionsTab from 'src/sheets/classic/actor/tabs/ActorActionsTab.svelte';
-import type { RegisteredContent, RegisteredTab } from './types';
 import { CONSTANTS } from 'src/constants';
-import { debug, error, warn } from 'src/utils/logging';
-import { TabManager } from './tab/TabManager';
-import type { ActorTabRegistrationOptions } from 'src/api/api.types';
-import { CustomContentManager } from './content/CustomContentManager';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import type { RegisteredTab } from '../types';
 
-class CharacterSheetRuntime {
-  private _content = $state<RegisteredContent<CharacterSheetContext>[]>([]);
-  private _tabs = $state<RegisteredTab<CharacterSheetContext>[]>([
+const defaultClassicCharacterTabs: RegisteredTab<CharacterSheetContext>[] =
+  [
     {
       title: 'TIDY5E.Actions.TabName',
       content: {
@@ -122,71 +114,11 @@ class CharacterSheetRuntime {
       },
       layout: 'classic',
     },
-  ]);
-  tabMap = $derived(
-    this._tabs.reduce<Map<string, RegisteredTab<CharacterSheetContext>>>(
-      (map, curr) => {
-        map.set(curr.id, curr);
-        return map;
-      },
-      new Map<string, RegisteredTab<CharacterSheetContext>>()
-    )
-  );
+  ];
 
-  async getContent(context: CharacterSheetContext): Promise<CustomContent[]> {
-    return await CustomContentManager.prepareContentForRender(
-      context,
-      this._content
-    );
-  }
 
-  async getTabs(context: CharacterSheetContext): Promise<Tab[]> {
-    return await TabManager.prepareTabsForRender(context, this._tabs);
-  }
-
-  getAllRegisteredTabs(): RegisteredTab<CharacterSheetContext>[] {
-    return [...this._tabs];
-  }
-
-  registerContent(registeredContent: RegisteredContent<CharacterSheetContext>) {
-    this._content.push(registeredContent);
-  }
-
-  registerTab(
-    tab: RegisteredTab<CharacterSheetContext>,
-    options?: ActorTabRegistrationOptions
-  ) {
-    const tabExists = this._tabs.some((t) => t.id === tab.id);
-
-    if (tabExists && !options?.overrideExisting) {
-      warn(`Tab with id ${tab.id} already exists.`);
-      return;
-    }
-
-    if (tabExists && options?.overrideExisting) {
-      const index = this._tabs.findIndex((t) => t.id === tab.id);
-      if (index >= 0) {
-        this._tabs.splice(index, 1);
-      }
-    }
-
-    this._tabs.push(tab);
-  }
-
-  getTabTitle(tabId: string) {
-    try {
-      let tabTitle = this._tabs.find((t) => t.id === tabId)?.title;
-      if (typeof tabTitle === 'function') {
-        tabTitle = tabTitle();
-      }
-      return tabTitle ? FoundryAdapter.localize(tabTitle) : tabId;
-    } catch (e) {
-      error('An error occurred while searching for a tab title.', false, e);
-      debug('Tab title error troubleshooting information', { tabId });
-    }
-  }
-}
-
-const singleton = new CharacterSheetRuntime();
+const singleton = new ActorSheetRuntime<CharacterSheetContext>(
+  defaultClassicCharacterTabs
+);
 
 export default singleton;

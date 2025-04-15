@@ -39,7 +39,7 @@ import {
 } from 'src/utils/applications.svelte';
 import { mount, unmount } from 'svelte';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
-import CharacterSheetRuntime from 'src/runtime/CharacterSheetRuntime.svelte';
+import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime.svelte';
 import {
   actorUsesActionFeature,
   getActorActionSections,
@@ -143,8 +143,8 @@ export class Tidy5eCharacterSheet
         'sheet',
         'actor',
         CONSTANTS.SHEET_TYPE_CHARACTER,
-        CONSTANTS.SHEET_LAYOUT_CLASSIC,
         'app-v1',
+        CONSTANTS.SHEET_LAYOUT_CLASSIC,
       ],
       width: 740,
       height: 810,
@@ -355,7 +355,7 @@ export class Tidy5eCharacterSheet
                 // Provide a way to build the necessary config, perhaps within the application constructor. We've got all the info we need in order to perform the operation.
                 sections: sections,
                 tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
-                tabTitle: CharacterSheetRuntime.getTabTitle(
+                tabTitle: CharacterSheetClassicRuntime.getTabTitle(
                   CONSTANTS.TAB_CHARACTER_ATTRIBUTES
                 ),
               }).render(true);
@@ -464,7 +464,7 @@ export class Tidy5eCharacterSheet
                 document: context.actor,
                 sections: sections,
                 tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
-                tabTitle: CharacterSheetRuntime.getTabTitle(
+                tabTitle: CharacterSheetClassicRuntime.getTabTitle(
                   CONSTANTS.TAB_ACTOR_INVENTORY
                 ),
               }).render(true);
@@ -582,7 +582,7 @@ export class Tidy5eCharacterSheet
                 document: context.actor,
                 sections: sections,
                 tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
-                tabTitle: CharacterSheetRuntime.getTabTitle(
+                tabTitle: CharacterSheetClassicRuntime.getTabTitle(
                   CONSTANTS.TAB_ACTOR_SPELLBOOK
                 ),
               }).render(true);
@@ -651,7 +651,7 @@ export class Tidy5eCharacterSheet
                 document: context.actor,
                 sections: sections,
                 tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
-                tabTitle: CharacterSheetRuntime.getTabTitle(
+                tabTitle: CharacterSheetClassicRuntime.getTabTitle(
                   CONSTANTS.TAB_CHARACTER_FEATURES
                 ),
               }).render(true);
@@ -720,7 +720,7 @@ export class Tidy5eCharacterSheet
                 document: context.actor,
                 sections: sections,
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
-                tabTitle: CharacterSheetRuntime.getTabTitle(
+                tabTitle: CharacterSheetClassicRuntime.getTabTitle(
                   CONSTANTS.TAB_ACTOR_ACTIONS
                 ),
               }).render(true);
@@ -784,7 +784,7 @@ export class Tidy5eCharacterSheet
       customActorTraits: CustomActorTraitsRuntime.getEnabledTraits(
         defaultDocumentContext
       ),
-      customContent: await CharacterSheetRuntime.getContent(
+      customContent: await CharacterSheetClassicRuntime.getContent(
         defaultDocumentContext
       ),
       document: this.document,
@@ -931,7 +931,7 @@ export class Tidy5eCharacterSheet
 
     await this._prepareAttributePins(context);
 
-    let tabs = await CharacterSheetRuntime.getTabs(context);
+    let tabs = await CharacterSheetClassicRuntime.getTabs(context);
 
     const selectedTabs = TidyFlags.selectedTabs.get(context.actor);
 

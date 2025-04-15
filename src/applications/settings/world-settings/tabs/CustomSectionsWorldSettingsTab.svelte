@@ -5,12 +5,12 @@
   import type { WorldSettingsContext } from '../WorldSettings.types';
   import { CONSTANTS } from 'src/constants';
   import type { GlobalCustomSectionsetting as GlobalCustomSectionSetting } from 'src/settings/settings.types';
-  import CharacterSheetRuntime from 'src/runtime/CharacterSheetRuntime.svelte';
+  import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime.svelte';
   import { error } from 'src/utils/logging';
   import type { RegisteredTab } from 'src/runtime/types';
-  import NpcSheetRuntime from 'src/runtime/NpcSheetRuntime.svelte';
-  import GroupSheetRuntime from 'src/runtime/GroupSheetRuntime.svelte';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
+  import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
+  import GroupSheetClassicRuntime from 'src/runtime/actor/GroupSheetClassicRuntime.svelte';
 
   const context = getContext<WorldSettingsContext>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -41,11 +41,18 @@
     tabs: TabFilterOption[];
   };
 
+  let classicCharacterTabs =
+    CharacterSheetClassicRuntime.getAllRegisteredTabs();
+
+  let classicNpcTabs = NpcSheetClassicRuntime.getAllRegisteredTabs();
+
+  let classicGroupTabs = GroupSheetClassicRuntime.getAllRegisteredTabs();
+
   let sheetTypes: SheetFilterOption[] = [
     {
       type: CONSTANTS.SHEET_TYPE_CHARACTER,
       label: localize('TYPES.Actor.character'),
-      tabs: mapTabs(CharacterSheetRuntime.tabMap, [
+      tabs: mapTabs(classicCharacterTabs, [
         CONSTANTS.TAB_ACTOR_INVENTORY,
         CONSTANTS.TAB_ACTOR_SPELLBOOK,
         CONSTANTS.TAB_CHARACTER_FEATURES,
@@ -54,7 +61,7 @@
     {
       type: CONSTANTS.SHEET_TYPE_NPC,
       label: localize('DND5E.NPC.Label'),
-      tabs: mapTabs(NpcSheetRuntime.tabMap, [
+      tabs: mapTabs(classicNpcTabs, [
         CONSTANTS.TAB_NPC_ABILITIES,
         CONSTANTS.TAB_ACTOR_INVENTORY,
         CONSTANTS.TAB_ACTOR_SPELLBOOK,
@@ -63,17 +70,14 @@
     {
       type: CONSTANTS.SHEET_TYPE_GROUP,
       label: localize('TYPES.Actor.group'),
-      tabs: mapTabs(GroupSheetRuntime.tabMap, [CONSTANTS.TAB_ACTOR_INVENTORY]),
+      tabs: mapTabs(classicGroupTabs, [CONSTANTS.TAB_ACTOR_INVENTORY]),
     },
   ];
 
-  function mapTabs(
-    tabs: Map<string, RegisteredTab<any>>,
-    subset: string[] = [],
-  ) {
+  function mapTabs(tabs: RegisteredTab<any>[], subset: string[] = []) {
     let mappedTabs: TabFilterOption[] = [];
     try {
-      for (let [_, tab] of tabs) {
+      for (let tab of tabs) {
         if (subset.length && !subset.includes(tab.id)) {
           continue;
         }

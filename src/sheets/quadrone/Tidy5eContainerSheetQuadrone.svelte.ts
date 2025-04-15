@@ -283,7 +283,6 @@ export class Tidy5eContainerSheetQuadrone
       item: this.item,
       itemContext: await Container.getContainerItemContext(this.item),
       itemDescriptions: itemDescriptions,
-      itemOverrides: new Set<string>(this._getItemOverrides()),
       items: Array.from(await this.item.system.contents),
       // @ts-expect-error
       itemType: game.i18n.localize(CONFIG.Item.typeLabels[this.item.type]),
@@ -363,37 +362,6 @@ export class Tidy5eContainerSheetQuadrone
     TidyHooks.tidy5eSheetsPreConfigureSections(this, this.element, context);
 
     return context;
-  }
-
-  /**
-   * Retrieve the list of fields that are currently modified by Active Effects on the Item.
-   */
-  _getItemOverrides(): string[] {
-    const overrides = Object.keys(
-      foundry.utils.flattenObject(this.item.overrides ?? {})
-    );
-    this.item.system.getItemOverrides?.(overrides);
-    if ('properties' in this.item.system) {
-      dnd5e.documents.ActiveEffect5e.addOverriddenChoices(
-        this.item,
-        'system.properties',
-        'system.properties',
-        overrides
-      );
-    }
-    if (
-      'damage' in this.item.system &&
-      foundry.utils.getProperty(this.item.overrides, 'system.damage.parts')
-    ) {
-      overrides.push('damage-control');
-      Array.fromRange(this.item.system.damage.parts.length).forEach((index) =>
-        overrides.push(
-          `system.damage.parts.${index}.0`,
-          `system.damage.parts.${index}.1`
-        )
-      );
-    }
-    return overrides;
   }
 
   /* -------------------------------------------- */

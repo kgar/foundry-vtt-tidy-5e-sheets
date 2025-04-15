@@ -15,7 +15,7 @@ import type {
   OnRenderTabParams,
   SvelteTabContent,
   ActorSheetContextV1,
-  ActorSheetContextV2,
+  ActorSheetClassicContextV2,
 } from 'src/types/types';
 
 export type RegisteredContent<TContext> = {
@@ -24,7 +24,7 @@ export type RegisteredContent<TContext> = {
   enabled?: (context: TContext) => boolean;
   getData?: (data: any) => any | Promise<any>;
   injectParams?: CustomContentInjectParams;
-  layout?: SheetLayout | SheetLayout[];
+  layout: SheetLayout;
   onContentReady?: (params: OnContentReadyParams) => void;
   onRender?: (args: OnRenderParams) => void;
   renderScheme?: RenderScheme;
@@ -32,7 +32,7 @@ export type RegisteredContent<TContext> = {
 
 export type RegisteredTab<TContext> = {
   enabled?: (context: TContext) => boolean;
-  layout?: SheetLayout | SheetLayout[];
+  layout: SheetLayout;
   title: CustomTabTitle;
   id: string;
   content: SvelteTabContent | HtmlTabContent | HandlebarsTemplateRenderer;
@@ -82,7 +82,7 @@ export type RegisteredPortraitMenuCommandEnabledParams = {
 };
 export type RegisteredPortraitMenuCommandExecuteParams = {
   actor: Actor5e;
-  context: ActorSheetContextV1 | ActorSheetContextV2;
+  context: ActorSheetContextV1 | ActorSheetClassicContextV2;
 };
 
 export type RegisteredActorItemSectionFooterCommand = {

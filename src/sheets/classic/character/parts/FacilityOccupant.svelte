@@ -5,7 +5,7 @@
   import { EventHelper } from 'src/utils/events';
   import { getContext } from 'svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
-  import type { ContextPrimitive } from 'src/features/reactivity/reactivity.types';
+  import type { Ref } from 'src/features/reactivity/reactivity.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   interface Props {
@@ -72,7 +72,7 @@
     }
   }
 
-  let hoveredFacilityOccupant = getContext<ContextPrimitive<string>>(
+  let hoveredFacilityOccupant = getContext<Ref<string>>(
     CONSTANTS.SVELTE_CONTEXT.HOVERED_FACILITY_OCCUPANT,
   );
 

@@ -17,6 +17,7 @@ import type { Activity5e } from 'src/foundry/dnd5e.types';
 import type { AttributePinFlag } from 'src/foundry/TidyFlags.types';
 
 export type Actor5e = any;
+export type TokenDocument = any;
 
 export type SvelteTabContent = {
   type: 'svelte';
@@ -783,9 +784,10 @@ export type ActorV2 = {
   // TODO: Put universal ActorV2 members here.
   uuid: string;
   update(toUpdate: Record<string, unknown>): Promise<ActorV2 | undefined>;
-};
+} & {};
 
-export type ActorSheetContextV2<TActor = ActorV2> = {
+// TODO: Deprecate
+export type ActorSheetClassicContextV2<TActor = ActorV2> = {
   actor: TActor;
   actorPortraitCommands: RegisteredPortraitMenuCommand[];
   editable: boolean;
@@ -801,6 +803,37 @@ export type GroupableSelectOption = {
   label: string;
   group?: string;
 };
+
+/* Quadrone Types */
+export type DocumentSheetQuadroneContext<TDocument> = {
+  document: TDocument;
+  source: any;
+  fields: any;
+  editable: boolean;
+  user: any;
+  rootId: string;
+};
+
+export type ActorSheetQuadroneContext = {
+  actor: Actor5e;
+  token: TokenDocument | null;
+} & DocumentSheetQuadroneContext<Actor5e>;
+
+export type CharacterSheetQuadroneContext = {
+  // TODO: Populate with context data as needed
+} & ActorSheetQuadroneContext;
+
+export type NpcSheetQuadroneContext = {
+  // TODO: Populate with context data as needed
+} & ActorSheetQuadroneContext;
+
+export type GroupSheetQuadroneContext = {
+  // TODO: Populate with context data as needed
+} & ActorSheetQuadroneContext;
+
+export type VehicleSheetQuadroneContext = {
+  // TODO: Populate with context data as needed
+} & ActorSheetQuadroneContext;
 
 /* Misc - Svelte */
 

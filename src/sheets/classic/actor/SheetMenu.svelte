@@ -4,7 +4,7 @@
   import ButtonMenuDivider from 'src/components/button-menu/ButtonMenuDivider.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ThemeSelectorButtonMenuCommand from '../shared/ThemeSelectorButtonMenuCommand.svelte';
-  import TabSelectionFormApplication from 'src/applications/tab-selection/TabSelectionFormApplication.svelte';
+  import ClassicTabSelectionFormApplication from 'src/applications/tab-selection/ClassicTabSelectionFormApplication.svelte';
   import type { ActorSheetContextV1 } from 'src/types/types';
   import { ApplicationsManager } from 'src/applications/ApplicationsManager';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
@@ -44,7 +44,7 @@
   {#if context.owner}
     <ButtonMenuCommand
       onMenuClick={() =>
-        new TabSelectionFormApplication(context.actor).render(true)}
+        new ClassicTabSelectionFormApplication(context.actor).render(true)}
       iconClass="fas fa-file-invoice"
       disabled={!context.editable}
     >

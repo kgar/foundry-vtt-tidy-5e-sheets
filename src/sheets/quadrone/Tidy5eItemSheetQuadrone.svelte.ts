@@ -281,7 +281,6 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       isEmbedded: this.document.isEmbedded,
       item: this.document,
       itemDescriptions,
-      itemOverrides: new Set<string>(this._getItemOverrides()),
       healthPercentage: getPercentage(
         this.item?.system?.hp?.value,
         this.item?.system?.hp?.max
@@ -728,41 +727,6 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
 
   /* -------------------------------------------- */
 
-  /**
-   * Retrieve the list of fields that are currently modified by Active Effects on the Item.
-   * @returns {string[]}
-   * @protected
-   */
-  _getItemOverrides() {
-    const overrides = Object.keys(
-      foundry.utils.flattenObject(this.item.overrides ?? {})
-    );
-    this.item.system.getItemOverrides?.(overrides);
-    if ('properties' in this.item.system) {
-      dnd5e.documents.ActiveEffect5e.addOverriddenChoices(
-        this.item,
-        'system.properties',
-        'system.properties',
-        overrides
-      );
-    }
-    if (
-      'damage' in this.item.system &&
-      foundry.utils.getProperty(this.item.overrides, 'system.damage.parts')
-    ) {
-      overrides.push('damage-control');
-      Array.fromRange(this.item.system.damage.parts.length).forEach((index) =>
-        overrides.push(
-          `system.damage.parts.${index}.0`,
-          `system.damage.parts.${index}.1`
-        )
-      );
-    }
-    return overrides;
-  }
-
-  /* -------------------------------------------- */
-
   _getItemSubtitle(): string | undefined {
     switch (this.item.type) {
       case CONSTANTS.ITEM_TYPE_WEAPON:
@@ -853,6 +817,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       case 'Activity':
         return this._onDropActivity(event, data);
       case 'Advancement':
+        return this._onDropAdvancement(event, data);
       case 'Item':
         return this._onDropItem(event, data);
     }
@@ -947,12 +912,6 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
    * @param {object} data      The dropped data.
    */
   async _onDropItem(event: DragEvent, data: object) {
-    const behavior = this._dropBehavior(event, data);
-
-    if (!this.actor.isOwner || behavior === 'none') {
-      return false;
-    }
-
     const item = await Item.implementation.fromDropData(data);
 
     if (item?.type === 'spell' && this.item.system.activities) {

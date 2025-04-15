@@ -23,17 +23,10 @@ export type RenderedSheetPart = {
 
 export class CustomContentRendererV2 {
   async renderCustomContent(
-    registeredContent: RegisteredContent<any>[],
+    customContents: CustomContent[],
     context: unknown,
     options: ApplicationRenderOptions
   ): Promise<RenderedSheetPart[]> {
-    let customContents: CustomContent[] =
-      await this.#prepareContentForRendering(
-        context,
-        registeredContent,
-        options
-      );
-
     let parts: RenderedSheetPart[] = [];
     for (let content of customContents) {
       try {

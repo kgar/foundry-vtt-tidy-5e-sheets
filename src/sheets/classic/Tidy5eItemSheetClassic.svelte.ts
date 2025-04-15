@@ -69,7 +69,12 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
       height: 600,
     },
     actions: {},
-    dragDrop: [{ dropSelector: 'form' }],
+    dragDrop: [
+      {
+        dragSelector: '[data-tidy-draggable]',
+        dropSelector: null,
+      },
+    ],
     submitOnClose: true,
   };
 
@@ -759,6 +764,7 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
       case 'Activity':
         return this._onDropActivity(event, data);
       case 'Advancement':
+        return this._onDropAdvancement(event, data);
       case 'Item':
         return this._onDropItem(event, data);
     }

@@ -4,6 +4,7 @@ import { HandlebarsTemplateRenderer } from 'src/runtime/HandlebarsTemplateRender
 import { error } from 'src/utils/logging';
 import { HandlebarsContent } from 'src/api/content/HandlebarsContent';
 import type { SupportedContent } from 'src/api/api.types';
+import { CONSTANTS } from 'src/constants';
 
 export class CustomContentManager {
   static async prepareContentForRender(
@@ -29,33 +30,45 @@ export class CustomContentManager {
     return customContent;
   }
 
-  static mapToRegisteredContent(
+  static mapToRegisteredContents(
     content: SupportedContent,
-    layout?: SheetLayout | SheetLayout[]
-  ) {
-    let mappedContent: HtmlRuntimeContent | HandlebarsTemplateRenderer =
-      content instanceof HandlebarsContent
-        ? new HandlebarsTemplateRenderer({
-            path: content.path,
-          })
-        : ({
-            html: content.html,
-            renderScheme: content.renderScheme,
-            type: 'html',
-          } satisfies HtmlRuntimeContent);
+    layoutPreference?: SheetLayout | SheetLayout[]
+  ): RegisteredContent<any>[] {
+    layoutPreference ??= [CONSTANTS.SHEET_LAYOUT_ALL];
 
-    return {
-      content: mappedContent,
-      activateDefaultSheetListeners: content.activateDefaultSheetListeners,
-      enabled: content.enabled,
-      injectParams: content.injectParams,
-      layout: layout ?? 'all',
-      renderScheme: content.renderScheme,
-      getData:
-        content instanceof HandlebarsContent ? content.getData : undefined,
-      onContentReady: content.onContentReady,
-      onRender: content.onRender,
-    } satisfies RegisteredContent<any>;
+    if (typeof layoutPreference === 'string') {
+      layoutPreference = [layoutPreference];
+    }
+
+    let registeredContent: RegisteredContent<any>[] = [];
+
+    for (let layout of layoutPreference) {
+      let mappedContent: HtmlRuntimeContent | HandlebarsTemplateRenderer =
+        content instanceof HandlebarsContent
+          ? new HandlebarsTemplateRenderer({
+              path: content.path,
+            })
+          : ({
+              html: content.html,
+              renderScheme: content.renderScheme,
+              type: 'html',
+            } satisfies HtmlRuntimeContent);
+
+      registeredContent.push({
+        content: mappedContent,
+        activateDefaultSheetListeners: content.activateDefaultSheetListeners,
+        enabled: content.enabled,
+        injectParams: content.injectParams,
+        layout: layout,
+        renderScheme: content.renderScheme,
+        getData:
+          content instanceof HandlebarsContent ? content.getData : undefined,
+        onContentReady: content.onContentReady,
+        onRender: content.onRender,
+      } satisfies RegisteredContent<any>);
+    }
+
+    return registeredContent;
   }
 }
 

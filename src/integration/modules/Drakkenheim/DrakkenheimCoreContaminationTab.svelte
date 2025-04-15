@@ -3,12 +3,12 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     ActorSheetContextV1,
-    ActorSheetContextV2,
+    ActorSheetClassicContextV2,
   } from 'src/types/types';
   import { DRAKKENHEIM_CORE_CONSTANTS } from './DrakkenheimCoreConstants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  const context = $derived(getSheetContext<ActorSheetContextV1 | ActorSheetContextV2>());
+  const context = $derived(getSheetContext<ActorSheetContextV1 | ActorSheetClassicContextV2>());
 
   let contanimationLevel = $derived(
     FoundryAdapter.getProperty<number | undefined>(
