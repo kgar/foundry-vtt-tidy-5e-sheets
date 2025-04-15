@@ -34,10 +34,7 @@
   }
 </script>
 
-<ol
-  class="items-list flex-1"
-  ondrop={(ev) => context.owner && context.item.sheet._onDrop(ev)}
->
+<ol class="items-list flex-1">
   {#if context.editable}
     <li
       class="items-header main-controls advancement flex-row justify-content-space-between"
