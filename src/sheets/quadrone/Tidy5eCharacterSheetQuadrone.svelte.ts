@@ -3,7 +3,10 @@ import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportShe
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import { Tidy5eActorSheetBaseMixin } from 'src/mixins/Tidy5eActorSheetBaseMixin';
 import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
-import type { ApplicationConfiguration, ApplicationRenderOptions } from 'src/types/application.types';
+import type {
+  ApplicationConfiguration,
+  ApplicationRenderOptions,
+} from 'src/types/application.types';
 import type { GroupSheetClassicContext } from 'src/types/group.types';
 import CharacterSheet from './actor/CharacterSheet.svelte';
 import { mount } from 'svelte';
@@ -22,6 +25,9 @@ import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svel
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
+import CharacterSheetQuadroneRuntime, {
+  TempDefaultCharacterQuadroneTabs,
+} from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetBaseMixin(
   TidyExtensibleDocumentSheetMixin(
@@ -131,11 +137,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetBaseMixin(
 
     const html = globalThis.$(this.element);
 
-    initTidy5eContextMenu(
-      this,
-      html,
-      CONSTANTS.SHEET_LAYOUT_QUADRONE
-    );
+    initTidy5eContextMenu(this, html, CONSTANTS.SHEET_LAYOUT_QUADRONE);
 
     return component;
   }
@@ -145,19 +147,28 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetBaseMixin(
     return [];
   }
 
-   async _prepareContext(
-      options: ApplicationRenderOptions
-    ): Promise<CharacterSheetQuadroneContext> {
-      const baseContext = await super._prepareContext(options) as DocumentSheetQuadroneContext<Actor5e>;
+  async _prepareContext(
+    options: ApplicationRenderOptions
+  ): Promise<CharacterSheetQuadroneContext> {
+    const baseContext = (await super._prepareContext(
+      options
+    )) as DocumentSheetQuadroneContext<Actor5e>;
 
-      const context: CharacterSheetQuadroneContext = {
-        ...baseContext,
-        actor: this.actor,
-        token: this.token,
-      }
+    const context: CharacterSheetQuadroneContext = {
+      ...baseContext,
+      actor: this.actor,
+      customContent: [],
+      tabs: [],
+      token: this.token,
+    };
 
-      return context;
-    }
+    const defaultTabs: string[] = TempDefaultCharacterQuadroneTabs;
+    let tabs = (await CharacterSheetQuadroneRuntime.getTabs(context))
+      .filter((t) => defaultTabs?.includes(t.id))
+      .sort((a, b) => defaultTabs.indexOf(a.id) - defaultTabs.indexOf(b.id));
 
-    
+    context.tabs = tabs;
+
+    return context;
+  }
 }

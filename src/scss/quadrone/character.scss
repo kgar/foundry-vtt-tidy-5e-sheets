@@ -1,0 +1,104 @@
+.tidy5e-sheet.application:where(.quadrone.character) {
+  --sidebar-expanded-width: 12.5rem; // I just picked a value for now while prototyping.
+
+  .window-content {
+    display: flex;
+    flex-direction: column;
+
+    .sheet-header {
+      // All of the sheet header stuff goes in here
+      // kgar: I'm thinking CSS Grid with Grid Areas; these areas will have Sheet Part attributes to help mods to target the area where they want to add something
+
+      display: grid;
+      grid-template-areas:
+        'vitals   profile             sheetHeaderButtons  levelBadgeContainer'
+        'vitals   abilitiesContainer  abilitiesContainer  abilitiesContainer'
+        'tabsRow  tabsRow             tabsRow             tabsRow';
+      grid-template-columns: auto 1fr auto auto;
+
+      .character-vitals {
+        grid-area: vitals;
+      }
+
+      .character-profile {
+        grid-area: profile;
+
+        .character-name {
+        }
+
+        .character-summary {
+        }
+      }
+
+      .sheet-header-buttons {
+        grid-area: sheetHeaderButtons;
+      }
+
+      .level-badge-container {
+        grid-area: levelBadgeContainer;
+
+        .level-badge {
+        }
+
+        .inspiration-tracker {
+        }
+      }
+
+      .abilities-container {
+        grid-area: abilitiesContainer;
+      }
+
+      .tabs-row {
+        grid-area: tabsRow;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        > .sidebar-toggle {
+          position: absolute;
+          left: 0;
+          padding: 0;
+          column-gap: var(--t5e-size-1);
+
+          > i {
+            color: var(--t5e-color-icon-diminished);
+          }
+
+          &:hover > i {
+            color: var(--t5e-color-icon-default);
+          }
+        }
+
+        > .tidy-tabs {
+        }
+      }
+    }
+
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      overflow-x: hidden;
+      overflow-y: auto;
+
+      > .sidebar {
+        flex-basis: var(--sidebar-expanded-width);
+        transition: margin var(--t5e-transition-default);
+        margin-inline-end: 0;
+        margin-inline-start: calc(var(--sidebar-expanded-width) * -1);
+        overflow-x: clip;
+        &.expanded {
+          margin-inline-start: 0;
+          margin-inline-end: var(--t5e-size-6x);
+          max-width: var(--sidebar-expanded-width);
+        }
+      }
+
+      > .tidy-tab {
+        flex: 1;
+        container-type: inline-size;
+      }
+    }
+  }
+}

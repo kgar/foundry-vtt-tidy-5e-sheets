@@ -816,6 +816,8 @@ export type DocumentSheetQuadroneContext<TDocument> = {
 
 export type ActorSheetQuadroneContext = {
   actor: Actor5e;
+  customContent: CustomContent[];
+  tabs: Tab[];
   token: TokenDocument | null;
 } & DocumentSheetQuadroneContext<Actor5e>;
 

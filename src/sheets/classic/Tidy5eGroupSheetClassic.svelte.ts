@@ -52,7 +52,7 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
 import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
-import GroupSheetClassicRuntime, { defaultGroupClassicTabs } from 'src/runtime/actor/GroupSheetClassicRuntime.svelte';
+import GroupSheetClassicRuntime from 'src/runtime/actor/GroupSheetClassicRuntime.svelte';
 
 type MemberStats = {
   currentHP: number;
@@ -506,9 +506,10 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       xp: xp,
     };
 
-    context.customContent = await GroupSheetClassicRuntime.getContent(context),
-
-    await this._prepareItems(context);
+    (context.customContent = await GroupSheetClassicRuntime.getContent(
+      context
+    )),
+      await this._prepareItems(context);
 
     let tabs = await GroupSheetClassicRuntime.getTabs(context);
 
@@ -521,7 +522,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
           (a, b) => selectedTabs.indexOf(a.id) - selectedTabs.indexOf(b.id)
         );
     } else {
-      const defaultTabs: string[] = defaultGroupClassicTabs.map((x) => x.id);
+      const defaultTabs: string[] = settings.value.defaultGroupSheetTabs;
       tabs = tabs
         .filter((t) => defaultTabs?.includes(t.id))
         .sort((a, b) => defaultTabs.indexOf(a.id) - defaultTabs.indexOf(b.id));
