@@ -12,9 +12,7 @@ import { TabManager } from 'src/runtime/tab/TabManager';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
 import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
-import GroupSheetClassicRuntime, {
-  defaultGroupClassicTabs,
-} from 'src/runtime/actor/GroupSheetClassicRuntime.svelte';
+import GroupSheetClassicRuntime from 'src/runtime/actor/GroupSheetClassicRuntime.svelte';
 
 export type TabSelectionItem = {
   id: string;
@@ -65,8 +63,7 @@ export default class ClassicTabSelectionFormApplication extends SvelteFormApplic
     } else if (actor.type === CONSTANTS.SHEET_TYPE_VEHICLE) {
       return settings.value.defaultVehicleSheetTabs;
     } else if (actor.type === CONSTANTS.SHEET_TYPE_GROUP) {
-      // TODO: Make this configurable.
-      return defaultGroupClassicTabs.map((x) => x.id);
+      return settings.value.defaultGroupSheetTabs;
     }
 
     error(
