@@ -531,7 +531,7 @@
           </span>
         </a>
         <a
-          class="pill interactive wrapped no-row-gap"
+          class="pill interactive wrapped no-row-gap centered"
           class:disabled={!context.editable}
           title={localize(
             'TIDY5E.Section.SectionSelectorChooseActionSectionTooltip',
@@ -543,10 +543,10 @@
               { document: context.item },
             ).render(true)}
         >
-          <span class="centered text-normal">
+          <span class="text-normal">
             {localize('TIDY5E.Actions.TabName')}
           </span>
-          <span class="hyphens-auto centered">
+          <span class="hyphens-auto">
             {actionSection}
           </span>
         </a>
@@ -556,11 +556,11 @@
 </aside>
 
 {#snippet savePill()}
-  <li class="pill">
-    <span class="centered">
+  <li class="pill centered">
+    <span>
       {localize('DND5E.AbbreviationDC')}
     </span>
-    <span class="centered hyphen-auto">
+    <span class="hyphen-auto">
       {saveContext?.dc.value}
       {#if !saveContext?.multipleAbilities && saveContext?.ability}
         <span class="text-normal">
@@ -572,8 +572,8 @@
 {/snippet}
 
 {#snippet toHitPill()}
-  <li class="pill">
-    {context.labels.toHit}
+  <li class="pill centered">
+    <span>{context.labels.toHit}</span>
     <span class="text-normal">
       {localize('DND5E.ToHit')}
     </span>
@@ -582,7 +582,7 @@
 
 {#snippet damagePills()}
   {#each context.labels.damages ?? [] as damage}
-    <li class="pill">
+    <li class="pill centered">
       {damage.label}
     </li>
   {/each}

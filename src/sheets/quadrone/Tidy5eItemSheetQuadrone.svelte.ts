@@ -817,6 +817,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       case 'Activity':
         return this._onDropActivity(event, data);
       case 'Advancement':
+        return this._onDropAdvancement(event, data);
       case 'Item':
         return this._onDropItem(event, data);
     }
@@ -911,12 +912,6 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
    * @param {object} data      The dropped data.
    */
   async _onDropItem(event: DragEvent, data: object) {
-    const behavior = this._dropBehavior(event, data);
-
-    if (!this.actor.isOwner || behavior === 'none') {
-      return false;
-    }
-
     const item = await Item.implementation.fromDropData(data);
 
     if (item?.type === 'spell' && this.item.system.activities) {
