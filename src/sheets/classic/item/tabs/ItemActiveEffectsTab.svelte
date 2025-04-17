@@ -32,6 +32,11 @@
       return;
     }
 
+    if (event.target !== event.currentTarget) {
+      // Allow for draggables within this containing element to be handled elsewhere.
+      return;
+    }
+
     const dragData = effect.toDragData();
     event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
   }
@@ -81,7 +86,7 @@
           {#each effectEntries as { effect }}
             <li
               class="item effect flexrow"
-              data-tidy-draggable
+              data-tidy-always-draggable
               data-effect-id={effect.id}
               onmousedown={(event) => handleMiddleClickToEdit(event, effect)}
               ondragstart={(ev) => handleDragStart(ev, effect)}

@@ -43,6 +43,11 @@
   }
 
   function handleDragStart(event: DragEvent) {
+    if (event.target !== event.currentTarget) {
+      // Allow for draggables within this containing element to be handled elsewhere.
+      return;
+    }
+
     const dragData = effectDocument.toDragData?.();
     if (dragData) {
       event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
@@ -83,6 +88,7 @@
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS}
   data-effect-id={effectDocument?.id}
   data-parent-id={activeEffect?.parentId ?? activeEffect?.parent?.id}
+  data-tidy-always-draggable
   onmousedown={(event) =>
     FoundryAdapter.editOnMiddleClick(event, effectDocument)}
   ondragstart={handleDragStart}

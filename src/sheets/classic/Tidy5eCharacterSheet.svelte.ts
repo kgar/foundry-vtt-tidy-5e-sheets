@@ -151,6 +151,10 @@ export class Tidy5eCharacterSheet
       scrollY: ['[data-tidy-track-scroll-y]', '.scroll-container'],
       dragDrop: [
         {
+          dragSelector: `[data-tidy-always-draggable]`,
+          dropSelector: null,
+        },
+        {
           dragSelector: '[data-tidy-draggable]',
           dropSelector: null,
         },
@@ -1582,6 +1586,14 @@ export class Tidy5eCharacterSheet
 
   onLongRest(event: Event) {
     return this._onLongRest(event);
+  }
+
+  /** @inheritDoc */
+  _canDragStart(selector: string) {
+    return (
+      ['[data-tidy-always-draggable]'].includes(selector) ||
+      super._canDragStart(selector)
+    );
   }
 
   async _onDropSingleItem(itemData: any, event: DragEvent) {

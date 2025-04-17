@@ -55,6 +55,8 @@
 - [ ] Implement quadrone default tab settings (no UI)
   - [ ] Item
     - [ ] This has to explode out into unique tabs per item type.
+- [ ] Editor style needs CSS help: https://discord.com/channels/1167985253072257115/1169792539545587733/1362188451910258869
+- [ ] Make inline activities draggable / droppable within the scope of an item table row / summary
 
 ### Scratch - Finding the effective theme for a sheet
 

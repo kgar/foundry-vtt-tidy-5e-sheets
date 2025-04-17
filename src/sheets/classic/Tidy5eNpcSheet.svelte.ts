@@ -135,6 +135,10 @@ export class Tidy5eNpcSheet
       scrollY: ['[data-tidy-track-scroll-y]', '.scroll-container'],
       dragDrop: [
         {
+          dragSelector: `[data-tidy-always-draggable]`,
+          dropSelector: null,
+        },
+        {
           dragSelector: '[data-tidy-draggable]',
           dropSelector: null,
         },
@@ -729,7 +733,9 @@ export class Tidy5eNpcSheet
       customActorTraits: CustomActorTraitsRuntime.getEnabledTraits(
         defaultDocumentContext
       ),
-      customContent: await NpcSheetClassicRuntime.getContent(defaultDocumentContext),
+      customContent: await NpcSheetClassicRuntime.getContent(
+        defaultDocumentContext
+      ),
       defaultSkills: new Set<string>(
         FoundryAdapter.getSystemSetting(CONSTANTS.SYSTEM_SETTING_DEFAULT_SKILLS)
       ),
@@ -1162,6 +1168,13 @@ export class Tidy5eNpcSheet
     return this._onToggleAbilityProficiency(event);
   }
 
+  _canDragStart(selector: string) {
+    return (
+      selector === `[data-tidy-always-draggable]` ||
+      super._canDragStart(selector)
+    );
+  }
+  
   async _onDropSingleItem(itemData: any, event: DragEvent) {
     // Create a Consumable spell scroll on the Inventory tab
     if (

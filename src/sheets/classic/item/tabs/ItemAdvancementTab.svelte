@@ -1,5 +1,4 @@
 <script lang="ts">
-  import InlineSvg from 'src/components/utility/InlineSvg.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settings } from 'src/settings/settings.svelte';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
@@ -25,6 +24,11 @@
 
   function handleAdvancementDragStart(event: DragEvent, advancement: any) {
     if (!advancement) {
+      return;
+    }
+
+    if (event.target !== event.currentTarget) {
+      // Allow for draggables within this containing element to be handled elsewhere.
       return;
     }
 
@@ -125,7 +129,7 @@
         {@const isSvgIcon = isSvg(advancement.icon)}
         <li
           class="advancement-item item flexrow"
-          data-tidy-draggable
+          data-tidy-always-draggable
           data-id={advancement.id}
           ondragstart={(ev) => handleAdvancementDragStart(ev, advancement)}
         >

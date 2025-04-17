@@ -99,6 +99,10 @@ export class Tidy5eContainerSheetQuadrone
     actions: {},
     dragDrop: [
       {
+        dragSelector: `[data-tidy-always-draggable]`,
+        dropSelector: null,
+      },
+      {
         dragSelector: '[data-tidy-draggable]',
         dropSelector: null,
       },
@@ -386,7 +390,7 @@ export class Tidy5eContainerSheetQuadrone
   /* -------------------------------------------- */
   /*  Drag and Drop                               */
   /* -------------------------------------------- */
-
+  
   /** @inheritDoc */
   async _onDrop(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
