@@ -144,7 +144,7 @@
               id="{appId}-speed-value"
               document={context.item}
               field="system.speed.value"
-              value={context.source.speed.value}
+              value={context.source.speed?.value}
               min="0"
               placeholder="0"
               disabled={!context.unlocked}
@@ -157,7 +157,7 @@
         id="{appId}-speed-conditions"
         document={context.item}
         field="system.speed.conditions"
-        value={context.source.speed.conditions}
+        value={context.source.speed?.conditions}
         placeholder={localize(
           'DND5E.VEHICLE.MOUNTABLE.FIELDS.speed.conditions.label',
         )}
