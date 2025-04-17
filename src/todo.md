@@ -1,5 +1,6 @@
 ## To Do
 
+- [ ] Rework meters to emulate dnd5e2 structure
 - [ ] Character Sheet 
   - [x] Start dev in Foundry V12
   - [x] Establish components for the tabs
@@ -79,6 +80,7 @@
     - [ ] This has to explode out into unique tabs per item type.
 - [ ] Editor style needs CSS help: https://discord.com/channels/1167985253072257115/1169792539545587733/1362188451910258869
 - [ ] Make inline activities draggable / droppable within the scope of an item table row / summary
+- [ ] hightouch - please review meter CSS / class setup to see if it is to your liking
 
 ### Scratch - Finding the effective theme for a sheet
 
