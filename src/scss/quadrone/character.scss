@@ -16,7 +16,7 @@
         'tabsRow  tabsRow             tabsRow             tabsRow';
       grid-template-columns: auto 1fr auto auto;
 
-      .character-vitals {
+      .character-vitals-container {
         grid-area: vitals;
       }
 
@@ -30,11 +30,11 @@
         }
       }
 
-      .sheet-header-buttons {
+      .sheet-header-actions {
         grid-area: sheetHeaderButtons;
       }
 
-      .level-badge-container {
+      .level-block {
         grid-area: levelBadgeContainer;
 
         .level-badge {
