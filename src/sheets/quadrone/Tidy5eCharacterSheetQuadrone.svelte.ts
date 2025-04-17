@@ -158,6 +158,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetBaseMixin(
       ...baseContext,
       actor: this.actor,
       customContent: [],
+      system: this.actor.system,
       tabs: [],
       token: this.token,
     };
