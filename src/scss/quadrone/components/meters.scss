@@ -26,6 +26,7 @@
 
   .label {
     inline-size: 100%;
+    block-size: 100%;
     display: flex;
     align-items: center;
     gap: 0.25rem;
@@ -129,5 +130,18 @@
       var(--t5e-color-hp-medium) 100%
     );
     --bar-border-color: var(--t5e-color-hp-dark);
+  }
+
+  .label {
+    cursor: pointer;
+  }
+
+  input {
+    position: relative;
+    text-align: center;
+
+    &[hidden] {
+      display: none;
+    }
   }
 }

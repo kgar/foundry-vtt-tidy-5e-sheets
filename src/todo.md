@@ -1,13 +1,12 @@
 ## To Do
 
-- [ ] Rework meters to emulate dnd5e2 structure
 - [ ] Character Sheet 
   - [x] Start dev in Foundry V12
   - [x] Establish components for the tabs
   - [x] Set up Quadrone runtime content, including the default tabs
   - [ ] Structure the sheet - 
     - [ ] Header
-      - [ ] Profile
+      - [ ] Image and vitals
       - [ ] Name / Summary row / buttons / Badge
       - [ ] AC / Abilities / Init
       - [ ] Sidebar Toggle / Tab strip
@@ -569,3 +568,4 @@ Limited:
 - [x] Sheet Mode Toggle - streamline tooltip to read "Play" when locked and "Edit" when unlocked.
 - [x] Fix: Copying an advancement from item to another when it's Tidy to Tidy doesn't seem to work. Determine what the defaults are doing and try to do likewise.
 - [x] Implement classic group sheet default tabs setting
+- [x] Rework meters to emulate dnd5e2 structure

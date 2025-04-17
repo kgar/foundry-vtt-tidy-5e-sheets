@@ -1,4 +1,5 @@
 <script lang="ts">
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -6,11 +7,17 @@
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
+  let appId = $derived(context.actor.uuid.slugify());
+
   let localize = FoundryAdapter.localize;
 
   let selectedTabId: string = $state('');
 
   let sidebarExpanded = $state(false);
+
+  let hpValueInputFocused = $state(false);
+
+  let hpValueInput = $state<TextInputQuadrone>();
 
   let hpValue = $derived(context.system.attributes?.hp?.value ?? 0);
   let hpMax = $derived(context.system.attributes?.hp?.max ?? 0);
@@ -27,7 +34,32 @@
         class="meter progress hit-points"
         style="--bar-percentage: {hpPct.toFixed(0)}%"
       >
-        <label for=""></label>
+        <div
+          class="label pointer"
+          hidden={hpValueInputFocused}
+          onclick={async (ev) => {
+            hpValueInputFocused = true;
+            hpValueInput?.selectText();
+          }}
+        >
+          <div class="value">{hpValue}</div>
+          <div class="separator">/</div>
+          <div class="max">{hpMax}</div>
+        </div>
+        <TextInputQuadrone
+          bind:this={hpValueInput}
+          id="{appId}-system-attributes-hp"
+          document={context.actor}
+          field="system.attributes.hp.value"
+          class="uninput"
+          value={hpValue}
+          selectOnFocus={true}
+          enableDeltaChanges={true}
+          onfocus={() => (hpValueInputFocused = true)}
+          onblur={() => (hpValueInputFocused = false)}
+          blurAfterChange={true}
+          hidden={!hpValueInputFocused}
+        />
       </div>
       Row: Hit Dice Bar, Exhaustion Tracker, Death Saves Toggle, Config button (?)<br
       />
