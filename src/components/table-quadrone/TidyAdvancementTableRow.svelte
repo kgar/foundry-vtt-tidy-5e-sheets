@@ -30,6 +30,11 @@
   let doc = $derived(item.advancement?.byId[advancement.id]);
 
   function handleDragStart(event: DragEvent) {
+    if (event.target !== event.currentTarget) {
+      // Allow for draggables within this containing element to be handled elsewhere.
+      return;
+    }
+
     const dragData = doc?.toDragData?.();
     if (dragData) {
       event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
@@ -44,7 +49,7 @@
   rowContainerClass="activity"
   rowClass="tidy-table-row-v2 {rowClass} {expanded ? 'expanded' : ''}"
   rowAttributes={{
-    ['data-tidy-draggable']: '',
+    ['data-tidy-always-draggable']: '',
     ['data-tidy-table-row']: '',
     ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.ADVANCEMENT_TABLE_ROW,
   }}

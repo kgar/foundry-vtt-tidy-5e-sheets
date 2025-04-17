@@ -52,7 +52,9 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
 import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
-import GroupSheetClassicRuntime, { defaultGroupClassicTabs } from 'src/runtime/actor/GroupSheetClassicRuntime.svelte';
+import GroupSheetClassicRuntime, {
+  defaultGroupClassicTabs,
+} from 'src/runtime/actor/GroupSheetClassicRuntime.svelte';
 
 type MemberStats = {
   currentHP: number;
@@ -111,6 +113,10 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       height: 700,
     },
     dragDrop: [
+      {
+        dragSelector: `[data-tidy-always-draggable]`,
+        dropSelector: null,
+      },
       {
         dragSelector: '[data-tidy-draggable]',
         dropSelector: null,
@@ -506,9 +512,10 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       xp: xp,
     };
 
-    context.customContent = await GroupSheetClassicRuntime.getContent(context),
-
-    await this._prepareItems(context);
+    (context.customContent = await GroupSheetClassicRuntime.getContent(
+      context
+    )),
+      await this._prepareItems(context);
 
     let tabs = await GroupSheetClassicRuntime.getTabs(context);
 
@@ -900,13 +907,18 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     return await super.close(options);
   }
 
-  // ---------------------------------------------
-  // Drag and Drop
-  // ---------------------------------------------
-
+  /* -------------------------------------------- */
+  /*  Drag and Drop                               */
+  /* -------------------------------------------- */
+  
   _onDragStart(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
   ): void {
+    if (event.target !== event.currentTarget) {
+      // Allow for draggables within this containing element to be handled elsewhere.
+      return;
+    }
+
     const memberId = event.currentTarget
       .closest('[data-tidy-draggable][data-member-id]')
       ?.getAttribute('data-member-id');

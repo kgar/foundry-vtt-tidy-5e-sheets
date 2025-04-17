@@ -83,6 +83,10 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
         dragSelector: '[data-tidy-draggable]',
         dropSelector: null,
       },
+      {
+        dragSelector: `[data-tidy-always-draggable]`,
+        dropSelector: null,
+      },
     ],
     submitOnClose: true,
   };
@@ -757,15 +761,6 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
   /* -------------------------------------------- */
 
   /** @inheritDoc */
-  _canDragStart(selector: string) {
-    if (['.advancement-item', '[data-effect-id]'].includes(selector))
-      return true;
-    return this.isEditable;
-  }
-
-  /* -------------------------------------------- */
-
-  /** @inheritDoc */
   _canDragDrop(selector: string) {
     return this.isEditable;
   }
@@ -776,21 +771,25 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
   _onDragStart(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
   ) {
-    const li = event.currentTarget;
-    if (event.target.classList.contains('content-link')) return;
+    if (event.target !== event.currentTarget) {
+      // Allow for draggables within this containing element to be handled elsewhere.
+      return;
+    }
+
+    const dragged = event.currentTarget;
 
     // Create drag data
     let dragData;
 
     // Active Effect
-    if (li.dataset.effectId) {
-      const effect = this.item.effects.get(li.dataset.effectId);
+    if (dragged.dataset.effectId) {
+      const effect = this.item.effects.get(dragged.dataset.effectId);
       dragData = effect.toDragData();
     } else if (
-      li.classList.contains('advancement-item') &&
-      !isNil(li.dataset.id)
+      dragged.classList.contains('advancement-item') &&
+      !isNil(dragged.dataset.id)
     ) {
-      dragData = this.item.advancement.byId[li.dataset.id]?.toDragData();
+      dragData = this.item.advancement.byId[dragged.dataset.id]?.toDragData();
     }
 
     if (!dragData) return;
@@ -870,13 +869,13 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
    */
   _onDropActivity(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    { data }: any
+    { data, uuid }: any
   ) {
     const { _id: id, type } = data;
-    const source = this.item.system.activities.get(id);
 
     // Reordering
-    if (source) {
+    if (this.item.id === foundry.utils.parseUuid(uuid)?.documentId) {
+      const source = this.item.system.activities.get(id);
       const targetId = event.target.closest<HTMLElement>(
         '.activity[data-activity-id]'
       )?.dataset.activityId;

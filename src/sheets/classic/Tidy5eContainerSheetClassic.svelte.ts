@@ -86,6 +86,10 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
     actions: {},
     dragDrop: [
       {
+        dragSelector: `[data-tidy-always-draggable]`,
+        dropSelector: null,
+      },
+      {
         dragSelector: '[data-tidy-draggable]',
         dropSelector: null,
       },

@@ -3,7 +3,10 @@ import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportShe
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import { Tidy5eActorSheetBaseMixin } from 'src/mixins/Tidy5eActorSheetBaseMixin';
 import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
-import type { ApplicationConfiguration, ApplicationRenderOptions } from 'src/types/application.types';
+import type {
+  ApplicationConfiguration,
+  ApplicationRenderOptions,
+} from 'src/types/application.types';
 import type { GroupSheetClassicContext } from 'src/types/group.types';
 import CharacterSheet from './actor/CharacterSheet.svelte';
 import { mount } from 'svelte';
@@ -84,6 +87,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetBaseMixin(
     },
     dragDrop: [
       {
+        dragSelector: `[data-tidy-always-draggable]`,
+        dropSelector: null,
+      },
+      {
         dragSelector: '[data-tidy-draggable]',
         dropSelector: null,
       },
@@ -131,11 +138,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetBaseMixin(
 
     const html = globalThis.$(this.element);
 
-    initTidy5eContextMenu(
-      this,
-      html,
-      CONSTANTS.SHEET_LAYOUT_QUADRONE
-    );
+    initTidy5eContextMenu(this, html, CONSTANTS.SHEET_LAYOUT_QUADRONE);
 
     return component;
   }
@@ -145,19 +148,19 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetBaseMixin(
     return [];
   }
 
-   async _prepareContext(
-      options: ApplicationRenderOptions
-    ): Promise<CharacterSheetQuadroneContext> {
-      const baseContext = await super._prepareContext(options) as DocumentSheetQuadroneContext<Actor5e>;
+  async _prepareContext(
+    options: ApplicationRenderOptions
+  ): Promise<CharacterSheetQuadroneContext> {
+    const baseContext = (await super._prepareContext(
+      options
+    )) as DocumentSheetQuadroneContext<Actor5e>;
 
-      const context: CharacterSheetQuadroneContext = {
-        ...baseContext,
-        actor: this.actor,
-        token: this.token,
-      }
+    const context: CharacterSheetQuadroneContext = {
+      ...baseContext,
+      actor: this.actor,
+      token: this.token,
+    };
 
-      return context;
-    }
-
-    
+    return context;
+  }
 }

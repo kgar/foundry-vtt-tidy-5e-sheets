@@ -12,10 +12,15 @@
 
   const localize = FoundryAdapter.localize;
 
-  function handleDragStart(ev: DragEvent, activityId: string) {
+  function handleDragStart(event: DragEvent, activityId: string) {
+    if (event.target !== event.currentTarget) {
+      // Allow for draggables within this containing element to be handled elsewhere.
+      return;
+    }
+
     const activity = context.item.system.activities?.get(activityId);
 
-    ev.dataTransfer?.setData(
+    event.dataTransfer?.setData(
       'text/plain',
       JSON.stringify(activity.toDragData()),
     );
@@ -40,7 +45,7 @@
     {#each context.activities as activity (activity.id)}
       <div
         class="activity card"
-        data-tidy-draggable
+        data-tidy-always-draggable
         data-activity-id={activity.id}
         data-configurable={Activities.isConfigurable(activity)}
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}

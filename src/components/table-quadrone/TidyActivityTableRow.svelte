@@ -39,6 +39,11 @@
   }
 
   function handleDragStart(event: DragEvent) {
+    if (event.target !== event.currentTarget) {
+      // Allow for draggables within this containing element to be handled elsewhere.
+      return;
+    }
+    
     const dragData = activity.doc.toDragData?.();
     if (dragData) {
       event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
@@ -57,7 +62,7 @@
   rowClass="tidy-table-row-v2 {rowClass} {expanded ? 'expanded' : ''}"
   rowAttributes={{
     ['data-tidy-table-row']: '',
-    ['data-tidy-draggable']: '',
+    ['data-tidy-always-draggable']: '',
     ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.ACTIVITY_TABLE_ROW,
     ['data-info-card']: 'activity',
     ['data-info-card-entity-uuid']: activity.uuid,
