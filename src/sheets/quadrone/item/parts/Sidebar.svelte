@@ -288,7 +288,7 @@
       <li>
         <span
           class={[
-            'pill meter progress theme-dark',
+            'pill meter progress hit-points theme-dark',
             { empty: effectiveHpValue === 0 },
           ]}
           role="meter"
@@ -298,7 +298,6 @@
           aria-valuetext={effectiveHpValue.toString()}
           aria-valuemax={effectiveHpMax}
           style="--bar-percentage: {pct.toFixed(0)}%;"
-          data-bar-severity="health"
         >
           <span class="label">
             <TextInputQuadrone

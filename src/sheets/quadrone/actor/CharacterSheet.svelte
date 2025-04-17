@@ -25,7 +25,6 @@
     <div class="character-vitals">
       <div
         class="meter progress hit-points"
-        data-bar-severity="health"
         style="--bar-percentage: {hpPct.toFixed(0)}%"
       >
         <label for=""></label>
