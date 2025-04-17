@@ -90,6 +90,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetBaseMixin(
     },
     dragDrop: [
       {
+        dragSelector: `[data-tidy-always-draggable]`,
+        dropSelector: null,
+      },
+      {
         dragSelector: '[data-tidy-draggable]',
         dropSelector: null,
       },

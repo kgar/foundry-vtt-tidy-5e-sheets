@@ -537,6 +537,10 @@
     position: relative;
     transition: all var(--t5e-transition-default);
 
+    img {
+      border: 0;
+    }
+
     i {
       grid-column: 1;
       font-size: 1.125rem;

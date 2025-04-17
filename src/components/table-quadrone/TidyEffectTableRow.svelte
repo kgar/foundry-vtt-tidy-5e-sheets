@@ -38,6 +38,11 @@
   }
 
   function handleDragStart(event: DragEvent) {
+    if (event.target !== event.currentTarget) {
+      // Allow for draggables within this containing element to be handled elsewhere.
+      return;
+    }
+
     const dragData = effectContext.effect.toDragData?.();
     if (dragData) {
       event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
@@ -74,7 +79,7 @@
   rowClass="tidy-table-row-v2 {rowClass} {expanded ? 'expanded' : ''}"
   rowAttributes={{
     ['data-context-menu']: CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS,
-    ['data-tidy-draggable']: '',
+    ['data-tidy-always-draggable']: '',
     ['data-tidy-table-row']: '',
     ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.EFFECT_TABLE_ROW,
     ['data-info-card']: 'effect',

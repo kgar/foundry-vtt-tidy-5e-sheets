@@ -117,6 +117,10 @@ export class Tidy5eVehicleSheet
       scrollY: ['[data-tidy-track-scroll-y]', '.scroll-container'],
       dragDrop: [
         {
+          dragSelector: `[data-tidy-always-draggable]`,
+          dropSelector: null,
+        },
+        {
           dragSelector: '[data-tidy-draggable]',
           dropSelector: null,
         },
@@ -830,6 +834,14 @@ export class Tidy5eVehicleSheet
       debug('Saved scroll positions', this._scrollPositions);
       return save;
     }
+  }
+
+  /** @inheritDoc */
+  _canDragStart(selector: string) {
+    return (
+      ['[data-tidy-always-draggable]'].includes(selector) ||
+      super._canDragStart(selector)
+    );
   }
 
   async _onDropSingleItem(itemData: any, event: DragEvent) {

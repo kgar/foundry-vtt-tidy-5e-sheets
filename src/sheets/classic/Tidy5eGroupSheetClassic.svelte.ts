@@ -112,6 +112,10 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     },
     dragDrop: [
       {
+        dragSelector: `[data-tidy-always-draggable]`,
+        dropSelector: null,
+      },
+      {
         dragSelector: '[data-tidy-draggable]',
         dropSelector: null,
       },
@@ -901,13 +905,18 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     return await super.close(options);
   }
 
-  // ---------------------------------------------
-  // Drag and Drop
-  // ---------------------------------------------
-
+  /* -------------------------------------------- */
+  /*  Drag and Drop                               */
+  /* -------------------------------------------- */
+  
   _onDragStart(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
   ): void {
+    if (event.target !== event.currentTarget) {
+      // Allow for draggables within this containing element to be handled elsewhere.
+      return;
+    }
+
     const memberId = event.currentTarget
       .closest('[data-tidy-draggable][data-member-id]')
       ?.getAttribute('data-member-id');

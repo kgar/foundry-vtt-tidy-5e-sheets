@@ -1,3 +1,4 @@
+import { CONSTANTS } from 'src/constants';
 import { firstOfSet } from 'src/utils/set';
 
 export type DropEffectValue = 'copy' | 'move' | 'link' | 'none';
@@ -42,7 +43,9 @@ export function DragAndDropMixin(BaseApplication: any) {
 
     /** @inheritdoc */
     _canDragStart(selector: string) {
-      return this.isEditable;
+      return (
+        ['[data-tidy-always-draggable]'].includes(selector) || this.isEditable
+      );
     }
 
     /* -------------------------------------------- */
@@ -65,7 +68,6 @@ export function DragAndDropMixin(BaseApplication: any) {
         foundry.utils.getType(data) === 'Object'
           ? this._dropBehavior(event, data)
           : 'copy';
-
     }
 
     _onDrop(
