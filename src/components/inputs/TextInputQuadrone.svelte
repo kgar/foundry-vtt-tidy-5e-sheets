@@ -1,5 +1,6 @@
 <script lang="ts">
   import { processInputChangeDelta } from 'src/utils/form';
+  import { tick } from 'svelte';
   import type { HTMLInputAttributes } from 'svelte/elements';
 
   type OnSaveChangeFn = (
@@ -29,6 +30,7 @@
      * do not use the `[name]` attribute.
      */
     stopChangePropagation?: boolean;
+    blurAfterChange?: boolean;
   } & HTMLInputAttributes;
 
   let {
@@ -41,6 +43,7 @@
     onSaveChange = () => true,
     additionalDataToSave = {},
     stopChangePropagation = false,
+    blurAfterChange = false,
     ...rest
   }: Props = $props();
 
@@ -71,16 +74,26 @@
       [field]: valueToSave,
     });
 
-    setTimeout(() => {
-      if (selectOnFocus && theInput === window.document.activeElement) {
-        theInput.select();
-      }
-    });
+    if (blurAfterChange) {
+      theInput.blur();
+    } else {
+      setTimeout(() => {
+        if (selectOnFocus && theInput === window.document.activeElement) {
+          theInput.select();
+        }
+      });
+    }
   }
 
   let value = $derived(
     rest.disabled ? (disabledValue ?? rest.value) : rest.value,
   );
+
+  export async function selectText() {
+    await tick();
+    theInput?.focus();
+    theInput?.select();
+  }
 </script>
 
 <input

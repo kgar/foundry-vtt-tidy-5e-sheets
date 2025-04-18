@@ -25,6 +25,9 @@ import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svel
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
+import CharacterSheetQuadroneRuntime, {
+  TempDefaultCharacterQuadroneTabs,
+} from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetBaseMixin(
   TidyExtensibleDocumentSheetMixin(
@@ -158,8 +161,18 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetBaseMixin(
     const context: CharacterSheetQuadroneContext = {
       ...baseContext,
       actor: this.actor,
+      customContent: [],
+      system: this.actor.system,
+      tabs: [],
       token: this.token,
     };
+
+    const defaultTabs: string[] = TempDefaultCharacterQuadroneTabs;
+    let tabs = (await CharacterSheetQuadroneRuntime.getTabs(context))
+      .filter((t) => defaultTabs?.includes(t.id))
+      .sort((a, b) => defaultTabs.indexOf(a.id) - defaultTabs.indexOf(b.id));
+
+    context.tabs = tabs;
 
     return context;
   }

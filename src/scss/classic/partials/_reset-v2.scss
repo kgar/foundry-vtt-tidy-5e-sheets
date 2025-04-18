@@ -4,6 +4,11 @@
   button {
     --button-hover-background-color: var(--t5e-faint-color);
   }
+  
+  :where(button) {
+    height: unset;
+    min-height: unset;
+  }
 
   input[type='checkbox'] {
     margin: 0;
