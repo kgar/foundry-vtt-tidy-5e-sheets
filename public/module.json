@@ -116,7 +116,7 @@
         "compatibility": {
           "minimum": "4.3.0",
           "verified": "4.3.0",
-          "maximum": "4.3.x"
+          "maximum": "5.0.x"
         }
       }
     ],
