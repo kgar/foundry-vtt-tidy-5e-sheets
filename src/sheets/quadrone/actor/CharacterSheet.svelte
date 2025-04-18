@@ -4,6 +4,7 @@
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
+  import CharacterSubtitle from './character-parts/CharacterSubtitle.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -66,13 +67,52 @@
       Row: (If toggled on) Death Saves Tracker<br />
     </div>
   </div>
-  <div class="character-profile">
-    <div class="character-name">Character name here</div>
-    <div class="character-summary">
-      Main movement, size, species, classes (level, main stat, DC)
-    </div>
+  {#if context.unlocked}
+    <TextInputQuadrone
+      field="name"
+      document={context.actor}
+      value={context.actor.name}
+      class="character-name"
+    />
+  {:else}
+    <div class="character-name">{context.actor.name}</div>
+  {/if}
+  <CharacterSubtitle />
+  <div class="sheet-header-actions">
+    <button
+      type="button"
+      class="special-traits gold-button"
+      data-tooltip="DND5E.SpecialTraits"
+      aria-label={localize('DND5E.SpecialTraits')}
+      onclick={() =>
+        new dnd5e.applications.actor.ActorSheetFlags(context.actor).render(
+          true,
+        )}
+      disabled={!context.editable}
+    >
+      <i class="fas fa-star"></i>
+    </button>
+    <button
+      type="button"
+      class="short-rest gold-button"
+      data-tooltip="DND5E.REST.Short.Label"
+      aria-label={localize('DND5E.REST.Short.Label')}
+      onclick={(event) => context.actor.sheet.onShortRest(event)}
+      disabled={!context.editable}
+    >
+      <i class="fas fa-utensils"></i>
+    </button>
+    <button
+      type="button"
+      class="long-rest gold-button"
+      data-tooltip="DND5E.REST.Long.Label"
+      aria-label={localize('DND5E.REST.Long.Label')}
+      onclick={(event) => context.actor.sheet.onLongRest(event)}
+      disabled={!context.editable}
+    >
+      <i class="fas fa-campground"></i>
+    </button>
   </div>
-  <div class="sheet-header-actions">Sheet header buttons</div>
   <div class="level-block"></div>
   <div class="abilities-container">AC, Abilities, Init, Concentration</div>
   <div class="tabs-row">
