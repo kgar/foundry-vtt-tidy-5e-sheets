@@ -57,6 +57,14 @@ interface CreatureTypeConfig {
   detectAlignment?: boolean;
 }
 
+type Skill = {
+  label: string;
+  ability: string;
+  fullKey: string;
+  reference: string;
+  icon: string;
+};
+
 export type CONFIG = {
   debug: {
     applications: boolean;
@@ -2555,133 +2563,25 @@ export type CONFIG = {
       concentration: string;
     };
     skills: {
-      acr: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      ani: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      arc: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      ath: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      dec: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      his: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      ins: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      itm: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      inv: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      med: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      nat: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      prc: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      prf: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      per: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      rel: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      slt: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      ste: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      sur: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-    };
+      acr: Skill;
+      ani: Skill;
+      arc: Skill;
+      ath: Skill;
+      dec: Skill;
+      his: Skill;
+      ins: Skill;
+      itm: Skill;
+      inv: Skill;
+      med: Skill;
+      nat: Skill;
+      prc: Skill;
+      prf: Skill;
+      per: Skill;
+      rel: Skill;
+      slt: Skill;
+      ste: Skill;
+      sur: Skill;
+    } & Record<string, Skill>;
     alignments: {
       lg: string;
       ng: string;
@@ -3496,7 +3396,7 @@ export type CONFIG = {
           epicBoon: string;
         } & Record<string, string>;
       };
-    } & Record<string, { label: string, subtypes?: Record<string, string> }>;
+    } & Record<string, { label: string; subtypes?: Record<string, string> }>;
     itemProperties: {
       ada: {
         label: string;
@@ -3588,7 +3488,10 @@ export type CONFIG = {
       weightlessContents: {
         label: string;
       };
-    };
+    } & Record<
+      string,
+      { abbreviation?: string; label: string; isPhysical?: boolean }
+    >;
     validProperties: {
       consumable: Set<string>;
       container: Set<string>;
@@ -3722,7 +3625,16 @@ export type CONFIG = {
         reference: string;
         color: string;
       };
-    };
+    } & Record<
+      string,
+      {
+        label: string;
+        icon: string;
+        reference: string;
+        isPhysical?: boolean;
+        color: string;
+      }
+    >;
     aggregateDamageDisplay: boolean;
     healingTypes: {
       healing: {
@@ -4623,7 +4535,18 @@ export type CONFIG = {
         icon: string;
         configKey: string;
       };
-    };
+    } & Record<
+      string,
+      {
+        labels: {
+          title: string;
+          localization: string;
+        };
+        actorKeyPath?: string;
+        icon: string;
+        configKey: string;
+      }
+    >;
     traitModes: {
       default: {
         label: string;

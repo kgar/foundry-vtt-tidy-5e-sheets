@@ -320,7 +320,7 @@ export const FoundryAdapter = {
         CONFIG.DND5E.itemProperties[
           curr as keyof typeof CONFIG.DND5E.itemProperties
         ];
-      if ('abbreviation' in config) {
+      if (config.abbreviation) {
         prev[config.abbreviation] = config.label;
       }
       return prev;

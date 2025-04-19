@@ -565,11 +565,12 @@ type ActorSave = {
   sign: string;
 };
 
-type ActorSaves = {
+export type ActorSaves = {
   concentration?: ActorSave;
 };
 
 export type ActorSheetContextV1 = {
+  abilities: any;
   actions: ActionSection[];
   activateEditors: (
     node: HTMLElement,
@@ -579,6 +580,7 @@ export type ActorSheetContextV1 = {
   actorPortraitCommands: RegisteredPortraitMenuCommand[];
   allowEffectsManagement: boolean;
   appId: string;
+  config: typeof CONFIG.DND5E;
   customActorTraits: RenderableCustomActorTrait[];
   customContent: CustomContent[];
   /**
@@ -586,6 +588,8 @@ export type ActorSheetContextV1 = {
    * When this boolean is `false`, then the sheet is effectively hard locked.
    */
   editable: boolean;
+  effects: unknown;
+  elements: unknown;
   filterData: DocumentFilters;
   filterPins: Record<string, Set<string>>;
   /** The actor has special save-based roll buttons to be situationally rendered to the sheet. */
@@ -596,11 +600,14 @@ export type ActorSheetContextV1 = {
    * Note: This calculation ignores temp HP / temp HP Max, because the stock 5e sheets count 0 hp (ignoring all temp values) as incapacitated. Tidy 5e sheets carries this principle forward with health percentage calculation.
    */
   healthPercentage: number;
+  hp: unknown;
   isCharacter: boolean;
   isNPC: boolean;
   isVehicle: boolean;
+  limited: boolean;
   /** All items without a container. */
   items: Item5e[];
+  labels: Record<string, any>;
   lockExpChanges: boolean;
   lockHpMaxChanges: boolean;
   /**
@@ -611,14 +618,23 @@ export type ActorSheetContextV1 = {
   lockMoneyChanges: boolean;
   lockSensitiveFields: boolean;
   modernRules: boolean;
-  originalContext: unknown;
+  movement: unknown;
+  options: unknown;
+  overrides: unknown;
   /**
    * The current user owns the actor.
    */
   owner: boolean;
   saves: ActorSaves;
+  rollData: unknown;
+  senses: unknown;
+  skills: any;
+  source: any;
   showLimitedSheet: boolean;
+  system: any;
   tabs: Tab[];
+  tools: any;
+  traits: any;
   /**
    * Tells whether the sheet is unlocked via the Sheet Lock feature. When the sheet lock feature is disabled and the sheet is generally editable, this is always `true`.
    */
@@ -628,7 +644,7 @@ export type ActorSheetContextV1 = {
   useRoundedPortraitStyle: boolean;
   viewableWarnings: DocumentPreparationWarning[];
   warnings: DocumentPreparationWarning[];
-} & Record<string, any>;
+};
 
 export type DocumentPreparationWarning = Partial<{
   message: string;

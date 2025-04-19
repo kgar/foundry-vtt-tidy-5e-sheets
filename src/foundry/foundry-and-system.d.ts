@@ -14,6 +14,7 @@ declare global {
   var canvas: any;
   var ActiveEffect: any;
   var Actor: any;
+  var ActorSheet: any;
   var Actors: any;
   var Application: any;
   var AudioHelper: any;
