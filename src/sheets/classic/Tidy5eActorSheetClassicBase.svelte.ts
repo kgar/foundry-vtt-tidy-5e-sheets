@@ -437,27 +437,67 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
    * @returns {object[]}        Spellbook sections in the proper order.
    * @protected
    */
-  _prepareSpellbook(context, spells) {
+  _prepareSpellbook(context: ActorSheetContextV1, spells: Item5e) {
     const owner = this.actor.isOwner;
     const levels = context.actor.system.spells;
-    const spellbook = {};
+    const spellbook: Record<
+      string,
+      {
+        order: number;
+        label: string;
+        usesSlots: boolean;
+        canCreate: boolean;
+        canPrepare: boolean;
+        spells: Item5e[];
+        uses: number | string;
+        slots: number | string;
+        override: number;
+        dataset: {
+          type: string;
+          level: number;
+          preparationMode: string;
+        };
+        prop: string | null;
+        editable: boolean;
+      }
+    > = {};
 
     // Define section and label mappings
-    const sections = Object.entries(CONFIG.DND5E.spellPreparationModes).reduce(
-      (acc, [k, { order }]) => {
-        if (Number.isNumeric(order)) acc[k] = Number(order);
-        return acc;
-      },
-      {}
-    );
-    const useLabels = { '-30': '-', '-20': '-', '-10': '-', 0: '&infin;' };
+    const sections = Object.entries(CONFIG.DND5E.spellPreparationModes).reduce<
+      Record<string, any>
+    >((acc, [k, spell]) => {
+      if ('order' in spell && Number.isNumeric(spell.order)) {
+        acc[k] = Number(spell.order);
+      }
+      return acc;
+    }, {});
+    const useLabels: Record<string, string | number> = {
+      '-30': '-',
+      '-20': '-',
+      '-10': '-',
+      0: '&infin;',
+    };
+
+    type SpellSectionPrepArgs = {
+      prepMode?: string;
+      value?: number;
+      max?: number;
+      override?: number;
+      config?: (typeof CONFIG.DND5E.spellPreparationModes)[0];
+    };
 
     // Format a spellbook entry for a certain indexed level
     const registerSection = (
-      sl,
-      i,
-      label,
-      { prepMode = 'prepared', value, max, override, config } = {}
+      sl: string | null,
+      i: number,
+      label: string,
+      {
+        prepMode = 'prepared',
+        value,
+        max,
+        override,
+        config,
+      }: SpellSectionPrepArgs = {}
     ) => {
       const aeOverride = foundry.utils.hasProperty(
         this.actor.overrides,
@@ -469,7 +509,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
         usesSlots: i > 0,
         canCreate: owner,
         canPrepare:
-          (context.actor.type === 'character' && i >= 1) || config?.prepares,
+          (context.actor.type === 'character' && i >= 1) || !!config?.prepares,
         spells: [],
         uses: useLabels[i] || value || 0,
         slots: useLabels[i] || max || 0,
@@ -505,13 +545,23 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
 
     // Create spellbook sections for all alternative spell preparation modes that have spell slots.
     for (const [k, v] of Object.entries(CONFIG.DND5E.spellPreparationModes)) {
-      if (!(k in levels) || !v.upcast || !levels[k].max) continue;
+      let upcast = 'upcast' in v && v.upcast;
+      
+      if (!(k in levels) || !upcast || !levels[k].max) {
+        continue;
+      }
 
-      if (!spellbook['0'] && v.cantrips)
+      let cantrips = 'cantrips' in v && v.cantrips;
+      if (!spellbook['0'] && cantrips) {
         registerSection('spell0', 0, CONFIG.DND5E.spellLevels[0]);
+      }
+      
       const l = levels[k];
+      
       const level = game.i18n.localize(`DND5E.SpellLevel${l.level}`);
+      
       const label = `${v.label} — ${level}`;
+      
       registerSection(k, sections[k], label, {
         prepMode: k,
         value: l.value,
@@ -522,7 +572,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
     }
 
     // Iterate over every spell item, adding spells to the spellbook by section
-    spells.forEach((spell) => {
+    spells.forEach((spell: Item5e) => {
       const mode = spell.system.preparation.mode || 'prepared';
       let s = spell.system.level || 0;
       const sl = `spell${s}`;
