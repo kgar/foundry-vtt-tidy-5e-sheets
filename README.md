@@ -71,13 +71,13 @@ Item Sheets Progress:
 ✅ Consumable  
 ✅ Container  
 ✅ Equipment  
-⬜ Facility  
-⬜ Feat  
+✅ Facility  
+✅ Feat  
 ✅ Loot  
 ✅ Species  
 ✅ Spell  
 ✅ Subclass  
-⬜ Tattoo  
+✅ Tattoo  
 ✅ Tool  
 ✅ Weapon  
 
@@ -102,6 +102,8 @@ _**Behold**_:
 ![Weapon Sheets](readme-assets/quadrone-weapon-sheets.png)
 
 ![Class, Subclass, Background, and Species Sheets](readme-assets/quadrone-class-subclass-background-species-sheets.png)
+
+![Facility, Feature, and Tattoo Sheets](readme-assets/quadrone-facility-feat-tattoo-sheets.png)
 
 To make these sheets your own, select "Tidy 5e Container Sheet" / "Tidy 5e Item Sheet" on the Sheet Config dialog:
 
