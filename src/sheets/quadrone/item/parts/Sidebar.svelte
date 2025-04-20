@@ -137,7 +137,7 @@
       result.push(savePill);
     }
 
-    if (context.labels.damages.length) {
+    if (!isNil(context.labels.damages[0]?.label, '')) {
       result.push(damagePills);
     }
 
@@ -582,8 +582,10 @@
 
 {#snippet damagePills()}
   {#each context.labels.damages ?? [] as damage}
-    <li class="pill centered">
-      {damage.label}
-    </li>
+    {#if !isNil(damage.label, '')}
+      <li class="pill centered">
+        {damage.label}
+      </li>
+    {/if}
   {/each}
 {/snippet}

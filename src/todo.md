@@ -58,6 +58,16 @@
 - [ ] Editor style needs CSS help: https://discord.com/channels/1167985253072257115/1169792539545587733/1362188451910258869
 - [ ] Make inline activities draggable / droppable within the scope of an item table row / summary
 
+### Deferred tasks from last item batch review
+
+OK I think I found one thing on features. Recharge recovery only shows if it's the first recovery option
+https://discord.com/channels/@me/1243307347682529423/1362996587584028683
+> This one is hard to reason about. The standard UI doesn't provide recharge info for non-first recharge recoveries. I'd like to think this over some more.
+
+OK then tattoos the one thing I see is that some of the tattoos like the Absorbing tattoos have Reaction-based abilities. But the sidebar is looking for a defined value
+https://discord.com/channels/@me/1243307347682529423/1363003038482038836
+> The issue was that there's a Damages label that is empty with the absorbing tattoo. It is possibly just a weird setup. The fix I did for now was to filter out damage labels that are null/undefined/empty.
+
 ### Scratch - Finding the effective theme for a sheet
 
 ```js

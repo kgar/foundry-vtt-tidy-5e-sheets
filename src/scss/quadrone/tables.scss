@@ -150,6 +150,9 @@
     --t5e-item-row-color: transparent;
     position: relative;
 
+    .item-image {
+      background: var(--t5e-color-gold);
+    }
 
     &.equipped {
       --t5e-item-row-color: var(--t5e-color-gold);
@@ -691,6 +694,11 @@
 
   &:where(.theme-dark) {
     .tidy-table-row {
+
+      .item-image {
+        background-color: var(--t5e-color-palette-gold-56);
+      }
+
       &.equipped {
         background: linear-gradient(to right,
             rgba(159, 146, 117, .25) 0%,
