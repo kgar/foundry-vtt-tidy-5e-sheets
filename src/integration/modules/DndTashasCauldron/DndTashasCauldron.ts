@@ -48,42 +48,40 @@ export class DndTashasCauldronModuleIntegration
   }
 
   init(api: Tidy5eSheetsApi): void {
-    if (settings.value.truesight) {
-      const documentSheetConfig =
-        game.release.generation < 13
-          ? DocumentSheetConfig
-          : foundry.applications.apps.DocumentSheetConfig;
+    const documentSheetConfig =
+      game.release.generation < 13
+        ? DocumentSheetConfig
+        : foundry.applications.apps.DocumentSheetConfig;
 
-      // Register the sheet
-      documentSheetConfig.registerSheet(
-        Item,
-        CONSTANTS.DND5E_SYSTEM_ID,
-        Tidy5eItemSheetQuadrone,
+    // Register the sheet
+    documentSheetConfig.registerSheet(
+      Item,
+      CONSTANTS.DND5E_SYSTEM_ID,
+      Tidy5eItemSheetQuadrone,
+      {
+        types: [DndTashasCauldronModuleIntegration.ITEM_TYPE_TATTOO],
+        label: 'TIDY5E.Tidy5eItemSheetQuadrone',
+      }
+    );
+
+    // Establish tattoo sheet tabs
+    ItemSheetRuntime.quadroneSheets[
+      DndTashasCauldronModuleIntegration.ITEM_TYPE_TATTOO
+    ] = {
+      Sheet: TattooSheetQuadrone,
+      defaultTabs: () => [
+        itemSheetTabs.quadroneDescriptions,
         {
-          types: [DndTashasCauldronModuleIntegration.ITEM_TYPE_TATTOO],
-          label: 'TIDY5E.Tidy5eItemSheetQuadrone',
-        }
-      );
-
-      // Establish tattoo sheet tabs
-      ItemSheetRuntime.quadroneSheets[
-        DndTashasCauldronModuleIntegration.ITEM_TYPE_TATTOO
-      ] = {
-        Sheet: TattooSheetQuadrone,
-        defaultTabs: () => [
-          itemSheetTabs.quadroneDescriptions,
-          {
-            id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-            title: 'DND5E.Details',
-            content: {
-              component: ItemTattooDetailsQuadroneTab,
-              type: 'svelte',
-            },
+          id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+          title: 'DND5E.Details',
+          content: {
+            component: ItemTattooDetailsQuadroneTab,
+            type: 'svelte',
           },
-          itemSheetTabs.quadroneActivities,
-          itemSheetTabs.quadroneEffects,
-        ],
-      };
-    }
+        },
+        itemSheetTabs.quadroneActivities,
+        itemSheetTabs.quadroneEffects,
+      ],
+    };
   }
 }
