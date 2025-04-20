@@ -118,6 +118,8 @@ Hooks.once('init', () => {
     CONSTANTS.ITEM_TYPE_CLASS,
     CONSTANTS.ITEM_TYPE_CONSUMABLE,
     CONSTANTS.ITEM_TYPE_EQUIPMENT,
+    CONSTANTS.ITEM_TYPE_FACILITY,
+    CONSTANTS.ITEM_TYPE_FEAT,
     CONSTANTS.ITEM_TYPE_LOOT,
     CONSTANTS.ITEM_TYPE_RACE,
     CONSTANTS.ITEM_TYPE_SPELL,
@@ -165,21 +167,6 @@ Hooks.once('init', () => {
       {
         types: supportedItemTypes,
         label: 'Tidy 5e Debug Item Sheet (Visual Overhaul)',
-      }
-    );
-
-    const preBetaQuadroneItemTypes = [
-      CONSTANTS.ITEM_TYPE_FACILITY,
-      CONSTANTS.ITEM_TYPE_FEAT,
-    ];
-
-    documentSheetConfig.registerSheet(
-      Item,
-      CONSTANTS.DND5E_SYSTEM_ID,
-      Tidy5eItemSheetQuadrone,
-      {
-        types: preBetaQuadroneItemTypes,
-        label: 'TIDY5E.Tidy5eItemSheetQuadrone',
       }
     );
   }
