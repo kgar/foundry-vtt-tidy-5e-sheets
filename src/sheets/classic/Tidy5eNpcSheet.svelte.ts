@@ -743,7 +743,6 @@ export class Tidy5eNpcSheet
       useClassicControls: settings.value.useClassicControlsForNpc,
       effects: enhancedEffectSections,
       editable: defaultDocumentContext.editable,
-      encumbrance: this.actor.system.attributes.encumbrance,
       filterData: this.itemFilterService.getDocumentItemFilterData(),
       filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
@@ -841,6 +840,7 @@ export class Tidy5eNpcSheet
           relativeTo: this.actor,
         }
       ),
+      treasure: [],
       unlocked: unlocked,
       useActionsFeature: actorUsesActionFeature(this.actor),
       useRoundedPortraitStyle: [

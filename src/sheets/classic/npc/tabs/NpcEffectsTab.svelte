@@ -2,6 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import {
     type ActorSheetContextV1,
+    type NpcSheetContext,
     type RenderableClassicControl,
   } from 'src/types/types';
   import ItemTable from '../../../../components/item-list/v1/ItemTable.svelte';
@@ -12,7 +13,6 @@
   import ItemImage from '../../../../components/item-list/ItemImage.svelte';
   import ItemTableCell from '../../../../components/item-list/v1/ItemTableCell.svelte';
   import ItemControl from '../../../../components/item-list/controls/ItemControl.svelte';
-  import { CONSTANTS } from 'src/constants';
   import Notice from 'src/components/notice/Notice.svelte';
   import { declareLocation } from 'src/types/location-awareness.types';
   import ActorConditions from '../../actor/ActorConditions.svelte';
@@ -21,7 +21,7 @@
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import EffectTableRow from 'src/components/item-list/v1/EffectTableRow.svelte';
 
-  let context = $derived(getSheetContext<ActorSheetContextV1>());
+  let context = $derived(getSheetContext<NpcSheetContext>());
 
   const localize = FoundryAdapter.localize;
 

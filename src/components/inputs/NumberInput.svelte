@@ -93,7 +93,9 @@
     ActiveEffectsHelper.isActiveEffectAppliedToField(document, field),
   );
   let isEnchanted = $derived(
-    context.itemOverrides instanceof Set && context.itemOverrides.has(field),
+    'itemOverrides' in context &&
+      context.itemOverrides instanceof Set &&
+      context.itemOverrides.has(field),
   );
   let overrideTooltip = $derived(
     isEnchanted

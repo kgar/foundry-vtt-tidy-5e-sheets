@@ -4,6 +4,7 @@ import {
   getActorActionSections,
 } from 'src/features/actions/actions.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { settings } from 'src/settings/settings.svelte';
@@ -17,11 +18,24 @@ import type {
 import { splitSemicolons } from 'src/utils/array';
 import { isNil } from 'src/utils/data';
 import { debug, error } from 'src/utils/logging';
+import { firstOfSet } from 'src/utils/set';
 
 let ActorSheetAppV1 = foundry.appv1?.sheets?.ActorSheet ?? ActorSheet;
 
 export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
-  async getData(options: any) {
+  constructor(...args: any[]) {
+    super(...args);
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * A set of item types that should be prevented from being dropped on this type of actor sheet.
+   * @type {Set<string>}
+   */
+  static unsupportedItemTypes = new Set();
+
+  async getData(options: any): Promise<ActorSheetContextV1> {
     // The Actor's data
     const source = this.actor.toObject();
 
@@ -59,6 +73,9 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
     const unlocked = FoundryAdapter.isSheetUnlocked(this.actor) && editable;
 
     const warnings = foundry.utils.deepClone(this.actor._preparationWarnings);
+
+    const rollData = this.actor.getRollData();
+
     let context: ActorSheetContextV1 = {
       abilities: foundry.utils.deepClone(this.actor.system.abilities),
       actions: await getActorActionSections(this.actor),
@@ -69,14 +86,27 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
       allowEffectsManagement: true,
       appId: this.appId,
+      biographyHTML: await TextEditor.enrichHTML(
+        this.actor.system.details.biography.value,
+        {
+          secrets: this.actor.isOwner,
+          rollData: rollData,
+          relativeTo: this.actor,
+        }
+      ),
       config: CONFIG.DND5E,
       customActorTraits: [],
       customContent: [],
+      disableExperience:
+        FoundryAdapter.getSystemSetting(
+          CONSTANTS.SYSTEM_SETTING_LEVELING_MODE
+        ) === CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
       editable: editable,
       effects: dnd5e.applications.components.EffectsElement.prepareCategories(
         this.actor.allApplicableEffects()
       ),
       elements: this.options.elements,
+      encumbrance: this.actor.system.attributes?.encumbrance,
       filterData: { ...this.actor.system.attributes.hp },
       filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
       hasSpecialSaves: hasSpecialSaves,
@@ -108,7 +138,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
       },
       owner: this.actor.isOwner,
       saves: saves,
-      rollData: this.actor.getRollData(),
+      rollData: rollData,
       senses: this._getSenses(this.actor.system),
       skills: foundry.utils.deepClone(this.actor.system.skills ?? {}),
       source: source.system,
@@ -159,6 +189,8 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
         entry.baseAbility = baseAbility(prop, key);
       }
     });
+
+    return context;
   }
 
   /**
@@ -294,7 +326,8 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
    * @protected
    */
   _prepareTraits(systemData: any) {
-    const traits = {};
+    // TODO: strongly type this
+    const traits: Record<string, any> = {};
     for (const [trait, traitConfig] of Object.entries(CONFIG.DND5E.traits)) {
       if (trait === 'dm') continue;
       const key =
@@ -426,7 +459,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
    * Each subclass overrides this method to implement type-specific logic.
    * @protected
    */
-  _prepareItems() {}
+  _prepareItems(context: ActorSheetContextV1) {}
 
   /* -------------------------------------------- */
 
@@ -484,6 +517,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
       max?: number;
       override?: number;
       config?: (typeof CONFIG.DND5E.spellPreparationModes)[0];
+      levels?: any;
     };
 
     // Format a spellbook entry for a certain indexed level
@@ -546,7 +580,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
     // Create spellbook sections for all alternative spell preparation modes that have spell slots.
     for (const [k, v] of Object.entries(CONFIG.DND5E.spellPreparationModes)) {
       let upcast = 'upcast' in v && v.upcast;
-      
+
       if (!(k in levels) || !upcast || !levels[k].max) {
         continue;
       }
@@ -555,13 +589,13 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
       if (!spellbook['0'] && cantrips) {
         registerSection('spell0', 0, CONFIG.DND5E.spellLevels[0]);
       }
-      
+
       const l = levels[k];
-      
+
       const level = game.i18n.localize(`DND5E.SpellLevel${l.level}`);
-      
+
       const label = `${v.label} — ${level}`;
-      
+
       registerSection(k, sections[k], label, {
         prepMode: k,
         value: l.value,
@@ -610,6 +644,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
       // Sections for higher-level spells which the caster "should not" have, but spell items exist for
       else if (!spellbook[s]) {
         registerSection(sl, s, CONFIG.DND5E.spellLevels[s], {
+          // TODO: Investigate this. It seems unused.
           levels: levels[sl],
         });
       }
@@ -630,8 +665,8 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
    * @returns {string}      HTML string for the chosen icon.
    * @private
    */
-  _getProficiencyIcon(level) {
-    const icons = {
+  _getProficiencyIcon(level: number) {
+    const icons: Record<number, string> = {
       0: '<i class="far fa-circle"></i>',
       0.5: '<i class="fas fa-adjust"></i>',
       1: '<i class="fas fa-check"></i>',
@@ -645,7 +680,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
   /* -------------------------------------------- */
 
   /** @inheritDoc */
-  activateListeners(html) {
+  activateListeners(html: any) {
     // Property attributions
     this.form
       .querySelectorAll('[data-attribution], .attributable')
@@ -658,7 +693,9 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
     if (this.isEditable) {
       // Input focus and update
       const inputs = html.find('input');
-      inputs.focus((ev) => ev.currentTarget.select());
+      inputs.focus((ev: FocusEvent & { currentTarget: HTMLInputElement }) =>
+        ev.currentTarget.select()
+      );
       inputs
         .addBack()
         .find('[type="text"][data-dtype="Number"]')
@@ -672,14 +709,14 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
       // Toggle Skill Proficiency
       html
         .find('.skill-proficiency')
-        .on('click contextmenu', (event) =>
+        .on('click contextmenu', (event: MouseEvent) =>
           this._onCycleProficiency(event, 'skill')
         );
 
       // Toggle Tool Proficiency
       html
         .find('.tool-proficiency')
-        .on('click contextmenu', (event) =>
+        .on('click contextmenu', (event: MouseEvent) =>
           this._onCycleProficiency(event, 'tool')
         );
 
@@ -725,7 +762,9 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
   _disableOverriddenFields(html: any) {}
 
   /** @inheritDoc */
-  _onDragStart(event) {
+  _onDragStart(
+    event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement }
+  ) {
     const li = event.currentTarget;
     if (event.target.classList.contains('content-link')) return;
 
@@ -734,7 +773,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
         .get(li.dataset.parentId)
         ?.effects.get(li.dataset.effectId);
       if (effect)
-        event.dataTransfer.setData(
+        event.dataTransfer?.setData(
           'text/plain',
           JSON.stringify(effect.toDragData())
         );
@@ -747,7 +786,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
   /* -------------------------------------------- */
 
   /** @override */
-  async _onDropActor(event, data) {
+  async _onDropActor(event: DragEvent, data: any) {
     const canPolymorph =
       game.user.isGM ||
       (this.actor.isOwner && game.settings.get('dnd5e', 'allowPolymorphing'));
@@ -759,9 +798,9 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
     if (!sourceActor) return;
 
     // Define a function to record polymorph settings for future use
-    const rememberOptions = (html) => {
-      const options = {};
-      html.find('input').each((i, el) => {
+    const rememberOptions = (html: any) => {
+      const options: Record<string, boolean> = {};
+      html.find('input').each((i: number, el: HTMLInputElement) => {
         options[el.name] = el.checked;
       });
       const settings = foundry.utils.mergeObject(
@@ -787,13 +826,13 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
           accept: {
             icon: '<i class="fas fa-check"></i>',
             label: game.i18n.localize('DND5E.PolymorphAcceptSettings'),
-            callback: (html) =>
+            callback: (html: any) =>
               this.actor.transformInto(sourceActor, rememberOptions(html)),
           },
           wildshape: {
             icon: CONFIG.DND5E.transformationPresets.wildshape.icon,
             label: CONFIG.DND5E.transformationPresets.wildshape.label,
-            callback: (html) =>
+            callback: (html: any) =>
               this.actor.transformInto(
                 sourceActor,
                 foundry.utils.mergeObject(
@@ -805,7 +844,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
           polymorph: {
             icon: CONFIG.DND5E.transformationPresets.polymorph.icon,
             label: CONFIG.DND5E.transformationPresets.polymorph.label,
-            callback: (html) =>
+            callback: (html: any) =>
               this.actor.transformInto(
                 sourceActor,
                 foundry.utils.mergeObject(
@@ -817,7 +856,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
           self: {
             icon: CONFIG.DND5E.transformationPresets.polymorphSelf.icon,
             label: CONFIG.DND5E.transformationPresets.polymorphSelf.label,
-            callback: (html) =>
+            callback: (html: any) =>
               this.actor.transformInto(
                 sourceActor,
                 foundry.utils.mergeObject(
@@ -843,7 +882,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
   /* -------------------------------------------- */
 
   /** @inheritDoc */
-  async _onDropActiveEffect(event, data) {
+  async _onDropActiveEffect(event: DragEvent, data: any) {
     const effect = await ActiveEffect.implementation.fromDropData(data);
     if (effect?.target === this.actor) return false;
     return super._onDropActiveEffect(event, data);
@@ -852,7 +891,10 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
   /* -------------------------------------------- */
 
   /** @override */
-  async _onDropItem(event, data) {
+  async _onDropItem(
+    event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement },
+    data: any
+  ) {
     const behavior = this._dropBehavior(event, data);
     if (!this.actor.isOwner || behavior === 'none') return false;
     const item = await Item.implementation.fromDropData(data);
@@ -870,12 +912,15 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
   /* -------------------------------------------- */
 
   /** @override */
-  async _onDropFolder(event, data) {
+  async _onDropFolder(
+    event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement },
+    data: any
+  ) {
     if (!this.actor.isOwner) return [];
     const folder = await Folder.implementation.fromDropData(data);
     if (folder.type !== 'Item') return [];
     const droppedItemData = await Promise.all(
-      folder.contents.map(async (item) => {
+      folder.contents.map(async (item: Item5e) => {
         if (!(item instanceof Item)) item = await fromUuid(item.uuid);
         return item;
       })
@@ -893,7 +938,11 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
    * @returns {Promise<Item5e[]>}
    * @protected
    */
-  async _onDropItemCreate(itemData, event, behavior) {
+  async _onDropItemCreate(
+    itemData: Item5e[] | Item5e,
+    event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement },
+    behavior?: DropEffectValue
+  ) {
     let items = itemData instanceof Array ? itemData : [itemData];
     const itemsWithoutAdvancement = items.filter(
       (i) => !i.system.advancement?.length
@@ -917,20 +966,22 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
     items = items.filter((i) => !containers.has(i.system.container));
 
     // Create the owned items & contents as normal
-    const toCreate = await Item5e.createWithContents(items, {
-      transformFirst: (item) => {
+    const toCreate = await dnd5e.documents.Item5e.createWithContents(items, {
+      transformFirst: (item: any) => {
         if (item instanceof foundry.abstract.Document) item = item.toObject();
         return this._onDropSingleItem(item, event);
       },
     });
-    const created = await Item5e.createDocuments(toCreate, {
+    const created = await dnd5e.documents.Item5e.createDocuments(toCreate, {
       pack: this.actor.pack,
       parent: this.actor,
       keepId: true,
     });
     if (behavior === 'move')
       items.forEach((i) =>
-        fromUuid(i.uuid).then((d) => d?.delete({ deleteContents: true }))
+        fromUuid(i.uuid).then((d: Item5e | undefined) =>
+          d?.delete({ deleteContents: true })
+        )
       );
     return created;
   }
@@ -945,9 +996,12 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
    *                                     created or creation has been otherwise handled.
    * @protected
    */
-  async _onDropSingleItem(itemData, event) {
+  async _onDropSingleItem(
+    itemData: any,
+    event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement }
+  ) {
     // Check to make sure items of this type are allowed on this actor
-    if (this.constructor.unsupportedItemTypes.has(itemData.type)) {
+    if (this.unsupportedItemTypes.has(itemData.type)) {
       ui.notifications.warn(
         game.i18n.format('DND5E.ActorWarningInvalidItem', {
           itemType: game.i18n.localize(CONFIG.Item.typeLabels[itemData.type]),
@@ -964,7 +1018,9 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
       itemData.type === 'spell' &&
       (this._tabs[0].active === 'inventory' || this.actor.type === 'vehicle')
     ) {
-      const scroll = await Item5e.createScrollFromSpell(itemData);
+      const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(
+        itemData
+      );
       return scroll?.toObject?.() ?? false;
     }
 
@@ -996,7 +1052,11 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
         return false;
       }
 
-      const manager = AdvancementManager.forNewItem(this.actor, itemData);
+      const manager =
+        dnd5e.applications.advancement.AdvancementManager.forNewItem(
+          this.actor,
+          itemData
+        );
       if (manager.steps.length) {
         manager.render(true);
         return false;
@@ -1016,7 +1076,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
    * @param {object} itemData    The item data requested for creation. **Will be mutated.**
    * @param {DragEvent} event    The concluding DragEvent which provided the drop data.
    */
-  _onDropResetData(itemData, event) {
+  _onDropResetData(itemData: any, event: DragEvent) {
     if (!itemData.system) return;
     ['attuned', 'equipped', 'prepared'].forEach(
       (k) => delete itemData.system[k]
@@ -1030,32 +1090,35 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
    * @param {object} itemData    The item data requested for creation. **Will be mutated.**
    * @param {DragEvent} event    The concluding DragEvent which provided the drop data.
    */
-  _onDropSpell(itemData, event) {
+  _onDropSpell(itemData: any, event: DragEvent & { target: HTMLElement }) {
     if (!['npc', 'character'].includes(this.document.type)) return;
 
     // Determine the section it is dropped on, if any.
-    let header = event.target.closest('.items-header'); // Dropped directly on the header.
+    let header = event.target.closest<HTMLElement>('.items-header'); // Dropped directly on the header.
     if (!header) {
-      const list = event.target.closest('.item-list'); // Dropped inside an existing list.
-      header = list?.previousElementSibling;
+      const list = event.target.closest<HTMLElement>('.item-list'); // Dropped inside an existing list.
+      header = list?.previousElementSibling as HTMLElement;
     }
     const { level, preparationMode } =
-      header?.closest('[data-level]')?.dataset ?? {};
+      header?.closest<HTMLElement>('[data-level]')?.dataset ?? {};
 
     // Determine the actor's spell slot progressions, if any.
     const spellcastKeys = Object.keys(CONFIG.DND5E.spellcastingTypes);
-    const progs = Object.values(this.document.classes).reduce((acc, cls) => {
-      const type = cls.spellcasting?.type;
-      if (spellcastKeys.includes(type)) acc.add(type);
-      return acc;
-    }, new Set());
+    const progs = Object.values(this.document.classes).reduce(
+      (acc: Set<string>, cls: Item5e) => {
+        const type = cls.spellcasting?.type;
+        if (spellcastKeys.includes(type)) acc.add(type);
+        return acc;
+      },
+      new Set<string>()
+    );
 
     const prep = itemData.system.preparation;
 
     // Case 1: Drop a cantrip.
     if (itemData.system.level === 0) {
       const modes = CONFIG.DND5E.spellPreparationModes;
-      if (modes[preparationMode]?.cantrips) {
+      if (modes[preparationMode ?? '']?.cantrips) {
         prep.mode = 'prepared';
       } else if (!preparationMode) {
         const isCaster =
@@ -1074,7 +1137,9 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
           ? 'prepared'
           : 'innate';
       } else {
-        const m = progs.has('leveled') ? 'prepared' : progs.first() ?? 'innate';
+        const m = progs.has('leveled')
+          ? 'prepared'
+          : firstOfSet(progs) ?? 'innate';
         prep.mode = progs.has(prep.mode) ? prep.mode : m;
       }
     }
@@ -1088,7 +1153,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
    * @param {HTMLElement} element  The tooltipped element.
    * @protected
    */
-  _applyAttributionTooltips(element) {
+  _applyAttributionTooltips(element: HTMLElement) {
     if ('tooltip' in element.dataset) return;
     element.dataset.tooltip = `
       <section class="loading" data-uuid="${this.actor.uuid}"><i class="fas fa-spinner fa-spin-pulse"></i></section>
@@ -1102,10 +1167,13 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
    * @returns {Promise<Actor5e>|void}  Updated actor instance.
    * @private
    */
-  _onToggleAbilityProficiency(event) {
+  _onToggleAbilityProficiency(
+    event: MouseEvent & { target: HTMLElement; currentTarget: HTMLElement }
+  ) {
     if (event.currentTarget.classList.contains('disabled')) return;
     event.preventDefault();
-    const field = event.currentTarget.previousElementSibling;
+    const field = event.currentTarget
+      .previousElementSibling as HTMLInputElement;
     return this.actor.update({ [field.name]: 1 - parseInt(field.value) });
   }
 
@@ -1116,13 +1184,13 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
    * @param {Event} event  The click event on the warning.
    * @protected
    */
-  async _onWarningLink(event) {
+  async _onWarningLink(event: Event & { target: HTMLElement }) {
     event.preventDefault();
     const a = event.target;
     if (!a || !a.dataset.target) return;
     switch (a.dataset.target) {
       case 'armor':
-        new ArmorClassConfig({ document: this.actor }).render({ force: true });
+        FoundryAdapter.renderArmorConfig(this.actor);
         return;
       default:
         const item = await fromUuid(a.dataset.target);
@@ -1149,7 +1217,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
   /* -------------------------------------------- */
 
   /** @inheritDoc */
-  async _updateObject(event, formData) {
+  async _updateObject(event: Event, formData: any) {
     // Unset any flags which are "false"
     for (const [k, v] of Object.entries(formData)) {
       if (k.startsWith('flags.dnd5e.') && !v) {

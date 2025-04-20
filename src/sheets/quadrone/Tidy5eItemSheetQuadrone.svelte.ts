@@ -315,7 +315,6 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       user: game.user,
 
       // Item Type, Status, and Details
-      // @ts-expect-error
       itemType: game.i18n.localize(CONFIG.Item.typeLabels[this.item.type]),
       itemStatus: this._getItemStatus(),
       baseItems: {},

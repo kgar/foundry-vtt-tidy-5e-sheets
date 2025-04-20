@@ -111,7 +111,7 @@ export type CONFIG = {
       npc: string;
       vehicle: string;
       group: string;
-    };
+    } & Record<string, string>;
     typeIcons: {};
     trackableAttributes: {
       character: {
@@ -524,7 +524,7 @@ export type CONFIG = {
       feat: string;
       container: string;
       backpack: string;
-    };
+    } & Record<string, string>;
     typeIcons: {};
     sheetClasses: {
       base: {
@@ -3050,7 +3050,17 @@ export type CONFIG = {
         token: number;
         capacityMultiplier: number;
       };
-    };
+    } & Record<
+      string,
+      {
+        label: string;
+        abbreviation: string;
+        hitDie: number;
+        token?: number;
+        capacityMultiplier?: number;
+        dynamicTokenScale?: number;
+      }
+    >;
     tokenHPColors: {
       damage: number;
       healing: number;
@@ -3184,7 +3194,7 @@ export type CONFIG = {
       land: string;
       space: string;
       water: string;
-    };
+    } & Record<string, string>;
     armorProficiencies: {
       lgt: string;
       med: string;

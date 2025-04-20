@@ -594,7 +594,6 @@ export class Tidy5eVehicleSheet
     // Update the rendering context data
     context.features = Object.values(features);
     context.cargo = Object.values(cargo);
-    context.encumbrance = context.system.attributes.encumbrance;
   }
 
   _prepareItem(item: Item5e, context: VehicleSheetContext): VehicleItemContext {

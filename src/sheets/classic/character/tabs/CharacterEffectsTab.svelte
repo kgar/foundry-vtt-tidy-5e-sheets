@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import {
-    type ActorSheetContextV1,
+    type CharacterSheetContext,
     type RenderableClassicControl,
   } from 'src/types/types';
   import ItemTable from '../../../../components/item-list/v1/ItemTable.svelte';
@@ -18,11 +18,10 @@
   import ActorEffectToggleControl from 'src/components/item-list/controls/ActorEffectToggleControl.svelte';
   import EffectFavoriteControl from 'src/components/item-list/controls/EffectFavoriteControl.svelte';
   import InlineFavoriteIcon from 'src/components/item-list/InlineFavoriteIcon.svelte';
-  import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import EffectTableRow from 'src/components/item-list/v1/EffectTableRow.svelte';
 
-  let context = $derived(getSheetContext<ActorSheetContextV1>());
+  let context = $derived(getSheetContext<CharacterSheetContext>());
 
   const localize = FoundryAdapter.localize;
 

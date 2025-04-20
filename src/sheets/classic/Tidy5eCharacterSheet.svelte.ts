@@ -77,12 +77,10 @@ import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.
 import { AttributePins } from 'src/features/attribute-pins/AttributePins';
 import type { AttributePinFlag } from 'src/foundry/TidyFlags.types';
 import { ItemContext } from 'src/features/item/ItemContext';
+import { Tidy5eActorSheetClassicBase } from './Tidy5eActorSheetClassicBase.svelte';
 
 export class Tidy5eCharacterSheet
-  extends BaseSheetCustomSectionMixin(
-    (object) => object.items,
-    dnd5e.applications.actor.ActorSheet5eCharacter
-  )
+  extends Tidy5eActorSheetClassicBase
   implements
     SheetTabCacheable,
     SheetExpandedItemsCacheable,
@@ -266,7 +264,7 @@ export class Tidy5eCharacterSheet
     initTidy5eContextMenu(this, html, CONSTANTS.SHEET_LAYOUT_CLASSIC);
   }
 
-  async getData(options = {}) {
+  async getData(options = {}): Promise<CharacterSheetContext> {
     this._concentration = this.actor.concentration;
 
     const defaultDocumentContext = await super.getData(this.options);
@@ -765,6 +763,17 @@ export class Tidy5eCharacterSheet
         }
       ),
       appId: this.appId,
+      attributePins: [],
+      bastion: {
+        description: await TextEditor.enrichHTML(
+          this.actor.system.bastion.description,
+          {
+            secrets: this.actor.isOwner,
+            rollData: defaultDocumentContext.rollData,
+            relativeTo: this.actor,
+          }
+        ),
+      },
       biographyEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.biography.value,
         {
@@ -788,12 +797,18 @@ export class Tidy5eCharacterSheet
       customActorTraits: CustomActorTraitsRuntime.getEnabledTraits(
         defaultDocumentContext
       ),
-      customContent: await CharacterSheetClassicRuntime.getContent(
-        defaultDocumentContext
-      ),
-      document: this.document,
+      customContent: [],
+      defenders: [],
+
       editable: defaultDocumentContext.editable,
       effects: enhancedEffectSections,
+      epicBoonsEarned: undefined,
+      facilities: {
+        basic: { chosen: [], available: [], value: 0, max: 0 },
+        special: { chosen: [], available: [], value: 0, max: 0 },
+      },
+      favorites: [],
+      features: [],
       filterData: this.itemFilterService.getDocumentItemFilterData(),
       filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
@@ -805,6 +820,7 @@ export class Tidy5eCharacterSheet
         }
       ),
       healthPercentage: this.actor.system.attributes.hp.pct.toNearest(0.1),
+      hirelings: [],
       idealEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.ideal,
         {
@@ -813,6 +829,9 @@ export class Tidy5eCharacterSheet
           relativeTo: this.actor,
         }
       ),
+      inventory: [],
+      itemContext: {},
+      languages: [],
       lockExpChanges: FoundryAdapter.shouldLockExpChanges(),
       lockHpMaxChanges: FoundryAdapter.shouldLockHpMaxChanges(),
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
@@ -862,7 +881,6 @@ export class Tidy5eCharacterSheet
           relativeTo: this.actor,
         }
       ),
-      originalContext: defaultDocumentContext,
       owner: this.actor.isOwner,
       showContainerPanel:
         TidyFlags.showContainerPanel.get(this.actor) === true &&
@@ -870,6 +888,8 @@ export class Tidy5eCharacterSheet
           (i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER
         ),
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
+      spellbook: [],
+      spellcastingInfo: FoundryAdapter.getSpellcastingInfo(this.actor),
       spellComponentLabels: FoundryAdapter.getSpellComponentLabels(),
       spellSlotTrackerMode:
         characterPreferences.spellSlotTrackerMode ??
@@ -897,6 +917,10 @@ export class Tidy5eCharacterSheet
         ) ?? [],
     };
 
+    context.customContent = await CharacterSheetClassicRuntime.getContent(
+      context
+    );
+
     if (context.system.details.xp.boonsEarned !== undefined) {
       const pluralRules = new Intl.PluralRules(game.i18n.lang);
 
@@ -919,17 +943,6 @@ export class Tidy5eCharacterSheet
         panelItem.container
       );
     }
-
-    context.bastion = {
-      description: await TextEditor.enrichHTML(
-        this.actor.system.bastion.description,
-        {
-          secrets: this.actor.isOwner,
-          rollData: context.rollData,
-          relativeTo: this.actor,
-        }
-      ),
-    };
 
     await this._prepareFacilities(context);
 
@@ -1049,7 +1062,7 @@ export class Tidy5eCharacterSheet
     return context;
   }
 
-  protected _prepareItems(context: CharacterSheetContext) {
+  _prepareItems(context: CharacterSheetContext) {
     // Categorize items as inventory, spellbook, features, and classes
     const inventory: ActorInventoryTypes =
       Inventory.getDefaultInventorySections();
@@ -1191,8 +1204,6 @@ export class Tidy5eCharacterSheet
         }
       );
     }
-
-    context.spellcastingInfo = FoundryAdapter.getSpellcastingInfo(this.actor);
 
     // Section spells
     // TODO: Take over `_prepareSpellbook` and
@@ -1576,7 +1587,9 @@ export class Tidy5eCharacterSheet
     }
   }
 
-  onToggleAbilityProficiency(event: Event) {
+  onToggleAbilityProficiency(
+    event: MouseEvent & { target: HTMLElement; currentTarget: HTMLElement }
+  ) {
     return this._onToggleAbilityProficiency(event);
   }
 
@@ -1596,7 +1609,10 @@ export class Tidy5eCharacterSheet
     );
   }
 
-  async _onDropSingleItem(itemData: any, event: DragEvent) {
+  async _onDropSingleItem(
+    itemData: any,
+    event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement }
+  ) {
     // Create a Consumable spell scroll on the Inventory tab
     if (
       itemData.type === CONSTANTS.ITEM_TYPE_SPELL &&

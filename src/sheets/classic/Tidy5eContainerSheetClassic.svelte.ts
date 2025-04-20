@@ -276,7 +276,6 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
       itemDescriptions: itemDescriptions,
       itemOverrides: new Set<string>(this._getItemOverrides()),
       items: Array.from(await this.item.system.contents),
-      // @ts-expect-error
       itemType: game.i18n.localize(CONFIG.Item.typeLabels[this.item.type]),
       labels: this.document.labels,
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),

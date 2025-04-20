@@ -363,7 +363,6 @@ export type CharacterSheetContext = {
   inventory: InventorySection[];
   itemContext: Record<string, CharacterItemContext>;
   languages: LanguageTraitContext[];
-  maxPreparedSpellsTotal: number;
   notes1EnrichedHtml: string;
   notes2EnrichedHtml: string;
   notes3EnrichedHtml: string;
@@ -458,7 +457,6 @@ export type NpcSheetContext = {
   conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
   defaultSkills: Set<string>;
-  encumbrance: any;
   features: NpcAbilitySection[];
   flawEnrichedHtml: string;
   hasLegendaries: boolean;
@@ -468,6 +466,7 @@ export type NpcSheetContext = {
   inventory: InventorySection[];
   itemContext: Record<string, NpcItemContext>;
   languages: LanguageTraitContext[];
+  longRest: (event: Event) => Promise<unknown>;
   notes1EnrichedHtml: string;
   notes2EnrichedHtml: string;
   notes3EnrichedHtml: string;
@@ -481,10 +480,10 @@ export type NpcSheetContext = {
   spellbook: SpellbookSection[];
   spellcastingInfo: SpellcastingInfo;
   spellSlotTrackerMode:
-    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
-    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
+  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
+  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
   traitEnrichedHtml: string;
-  treasure?: { label: string }[];
+  treasure: { label: string }[];
   utilities: Utilities<NpcSheetContext>;
 } & ActorSheetContextV1;
 
@@ -501,11 +500,8 @@ export type VehicleItemContext = {
   toggleTitle?: string;
 };
 
-export type VehicleEncumbrance = { max: number; value: number; pct: number };
-
 export type VehicleSheetContext = {
   cargo: VehicleCargoSection[];
-  encumbrance: VehicleEncumbrance;
   features: VehicleFeatureSection[];
   itemContext: Record<string, VehicleItemContext>;
   utilities: Utilities<VehicleSheetContext>;
@@ -569,6 +565,17 @@ export type ActorSaves = {
   concentration?: ActorSave;
 };
 
+export type EncumbranceContext = {
+  value: number;
+  max: number;
+  pct: number;
+  encumbered?: boolean;
+  stops?: {
+    encumbered: number;
+    heavilyEncumbered: number;
+  };
+};
+
 export type ActorSheetContextV1 = {
   abilities: any;
   actions: ActionSection[];
@@ -580,16 +587,19 @@ export type ActorSheetContextV1 = {
   actorPortraitCommands: RegisteredPortraitMenuCommand[];
   allowEffectsManagement: boolean;
   appId: string;
+  biographyHTML: string;
   config: typeof CONFIG.DND5E;
   customActorTraits: RenderableCustomActorTrait[];
   customContent: CustomContent[];
+  disableExperience: boolean;
   /**
    * Whether or not the sheet can be edited, regardless of lock/sensitive field settings.
    * When this boolean is `false`, then the sheet is effectively hard locked.
    */
   editable: boolean;
-  effects: unknown;
+  effects: Record<string, EffectCategory<ActiveEffect5e>>;
   elements: unknown;
+  encumbrance?: EncumbranceContext;
   filterData: DocumentFilters;
   filterPins: Record<string, Set<string>>;
   /** The actor has special save-based roll buttons to be situationally rendered to the sheet. */
@@ -600,7 +610,12 @@ export type ActorSheetContextV1 = {
    * Note: This calculation ignores temp HP / temp HP Max, because the stock 5e sheets count 0 hp (ignoring all temp values) as incapacitated. Tidy 5e sheets carries this principle forward with health percentage calculation.
    */
   healthPercentage: number;
-  hp: unknown;
+  hp: {
+    value: number;
+    max: number;
+    temp?: number;
+    tempmax?: number;
+  };
   isCharacter: boolean;
   isNPC: boolean;
   isVehicle: boolean;
@@ -618,7 +633,11 @@ export type ActorSheetContextV1 = {
   lockMoneyChanges: boolean;
   lockSensitiveFields: boolean;
   modernRules: boolean;
-  movement: unknown;
+  movement: {
+    primary: string;
+    special?: string;
+    secondary?: string;
+  };
   options: unknown;
   overrides: unknown;
   /**

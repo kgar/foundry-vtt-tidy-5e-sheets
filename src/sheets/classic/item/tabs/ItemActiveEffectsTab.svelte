@@ -5,10 +5,9 @@
   import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemSheetContext } from 'src/types/item.types';
-  import type { CharacterSheetContext } from 'src/types/types';
 
   let context =
-    $derived(getSheetContext<ItemSheetContext | CharacterSheetContext>());
+    $derived(getSheetContext<ItemSheetContext>());
 
   let effects = $derived(
     Object.entries(context.effects) as Iterable<[string, any]>,
@@ -42,7 +41,9 @@
   }
 </script>
 
-<ContentConcealer conceal={context.concealDetails}>
+<ContentConcealer
+  conceal={'concealDetails' in context && context.concealDetails}
+>
   <ol class="items-list effects-list">
     {#each effects as [_, section]}
       {@const effectEntries = section.effects.map((effect: any) => ({
