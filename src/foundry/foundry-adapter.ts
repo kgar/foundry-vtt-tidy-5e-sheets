@@ -213,7 +213,10 @@ export const FoundryAdapter = {
   editOnMouseEvent(
     event: MouseEvent,
     entityWithSheet: {
-      sheet: { render: (force: boolean) => void; isEditable: boolean };
+      sheet: {
+        render: (force: boolean, options?: any) => void;
+        isEditable: boolean;
+      };
     }
   ) {
     if (!entityWithSheet.sheet.isEditable) {
@@ -223,7 +226,7 @@ export const FoundryAdapter = {
     event.preventDefault();
     event.stopImmediatePropagation();
 
-    entityWithSheet.sheet.render(true);
+    entityWithSheet.sheet.render(true, { mode: CONSTANTS.SHEET_MODE_EDIT });
   },
   createItem({ type, ...data }: Record<string, any>, actor: Actor5e) {
     // Check to make sure the newly created class doesn't take player over level cap
