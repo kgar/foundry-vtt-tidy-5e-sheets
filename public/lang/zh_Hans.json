@@ -410,7 +410,9 @@
         "both": "高亮关联和未关联指示物"
     },
     "TIDY5E.Settings.DefaultSheetTabs": {
-        "name": "默认工作卡选项卡"
+        "name": "默认工作卡选项卡",
+        "hint": "确定默认情况下哪些选项卡会显示以及显示的顺序。当尚未为某个角色选择选项卡时生效。",
+        "AvailableHeader": "可用选项卡"
     },
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "初始卡选项卡",

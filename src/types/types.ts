@@ -842,15 +842,19 @@ export type GroupableSelectOption = {
 /* Quadrone Types */
 export type DocumentSheetQuadroneContext<TDocument> = {
   document: TDocument;
-  source: any;
-  fields: any;
   editable: boolean;
-  user: any;
+  fields: any;
   rootId: string;
+  source: any;
+  unlocked: boolean;
+  user: any;
 };
 
 export type ActorSheetQuadroneContext = {
   actor: Actor5e;
+  customContent: CustomContent[];
+  system: Actor5e['system'];
+  tabs: Tab[];
   token: TokenDocument | null;
 } & DocumentSheetQuadroneContext<Actor5e>;
 
