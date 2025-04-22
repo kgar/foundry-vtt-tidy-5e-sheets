@@ -153,6 +153,10 @@
     }
   }
 
+  &.scrollable-window-content .window-content {
+    overflow-y: auto;
+  }
+
   .window-content {
     padding-block-start: 0;
 
