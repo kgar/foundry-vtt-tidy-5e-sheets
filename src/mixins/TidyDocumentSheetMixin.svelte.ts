@@ -182,7 +182,11 @@ export function TidyExtensibleDocumentSheetMixin<
         });
       }
 
-      return context;
+      return {
+        ...context,
+        unlocked:
+          this.sheetMode === CONSTANTS.SHEET_MODE_EDIT && this.isEditable,
+      };
     }
 
     async _renderHTML(

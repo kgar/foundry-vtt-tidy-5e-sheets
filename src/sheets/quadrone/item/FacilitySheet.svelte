@@ -136,7 +136,7 @@
           <li>
             <span
               class={[
-                'pill meter progress theme-dark',
+                'pill meter progress facility theme-dark',
                 {
                   empty: effectiveOrderValue === 0,
                   disabled: facilityIsDisabled,
@@ -149,7 +149,6 @@
               aria-valuetext={effectiveOrderValue.toString()}
               aria-valuemax={effectiveOrderMax}
               style="--bar-percentage: {pct.toFixed(0)}%;"
-              data-bar-severity={facilityIsDisabled ? 'disabled' : 'static'}
             >
               <span class="label">
                 <span class="value font-weight-label"

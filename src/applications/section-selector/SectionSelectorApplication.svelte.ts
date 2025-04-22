@@ -48,6 +48,7 @@ export class SectionSelectorApplication extends SvelteApplicationMixin<
       'quadrone',
       'tidy-section-selector-application',
       'app-v2',
+      'scrollable-window-content'
     ],
     tag: 'div',
     window: {

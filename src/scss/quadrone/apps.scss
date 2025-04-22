@@ -153,6 +153,11 @@
     }
   }
 
+  // TODO: for hightouch - should we make all window-content areas scrollable by default?
+  &.scrollable-window-content .window-content {
+    overflow-y: auto;
+  }
+
   .window-content {
     padding-block-start: 0;
 

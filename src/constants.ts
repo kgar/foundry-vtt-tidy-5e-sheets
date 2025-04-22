@@ -117,6 +117,7 @@ export const CONSTANTS = {
   TAB_CHARACTER_BASTION: 'bastion',
   TAB_CHARACTER_BIOGRAPHY: 'biography',
   TAB_CHARACTER_EFFECTS: 'effects',
+  TAB_CHARACTER_FAVORITES: 'favorites',
   TAB_CHARACTER_FEATURES: 'features',
   TAB_CHARACTER_JOURNAL: 'journal',
   TAB_CONTAINER_CONTENTS: 'contents',

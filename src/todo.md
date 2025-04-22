@@ -1,18 +1,32 @@
 ## To Do
 
-- [ ] Implement classic group sheet default tabs setting
-- [ ] Explore what it takes to implement item sheet tab settings per item type.
-- [ ] Implement quadrone default tab settings (no UI)
-  - [ ] Character
-  - [ ] NPC
-  - [ ] Vehicle
-  - [ ] Group
-  - [ ] Container
 - [ ] Character Sheet 
   - [x] Start dev in Foundry V12
   - [x] Establish components for the tabs
   - [x] Set up Quadrone runtime content, including the default tabs
-  - [ ] Set up new tab selection for quadrone sheets
+  - [ ] Structure the sheet - 
+    - [ ] Header
+      - [ ] Image and vitals
+      - [ ] Name / Summary row / buttons / Badge
+      - [ ] AC / Abilities / Init
+      - [ ] Sidebar Toggle / Tab strip
+    - [ ] Tab Content area
+      - [ ] Sidebar
+        - [ ] Button tabs
+        - [ ] Skills area (when Skills tab selected)
+        - [ ] Traits area (when Traits tab selected)
+        - [ ] Pinned area (when Pinned tab selected)
+      - [ ] Main Tab Strip Active Content Area
+        - [ ] Sheet tab contents
+        - [ ] Character tab contents
+        - [ ] Inventory tab contents
+        - [ ] Features tab contents
+        - [ ] Spellbook tab contents
+        - [ ] Effects tab contents
+        - [ ] Action tab contents
+        - [ ] Bastion tab contents
+        - [ ] Biography tab contents
+        - [ ] Journal tab contents
   - [ ] Implement tabs
     - [ ] Actions
     - [ ] Attributes
@@ -31,6 +45,14 @@
     - [ ] Actor Sheet Override
     - [ ] Item Sheet Override
   - [ ] Implement Limited View, which branches just within the top-level sheet component.
+- [ ] Explore what it takes to implement item sheet tab settings per item type.
+- [ ] Implement quadrone default tab settings (no UI)
+  - [ ] Character
+  - [ ] NPC
+  - [ ] Vehicle
+  - [ ] Group
+  - [ ] Container
+- [ ] Set up new tab selection for quadrone sheets
 - [ ] Scaffold the NPC Sheet in Foundry V12
 - [ ] Scaffold the Group Sheet in Foundry V12
 - [ ] Scaffold the Vehicle Sheet in Foundry V12
@@ -57,6 +79,7 @@
     - [ ] This has to explode out into unique tabs per item type.
 - [ ] Editor style needs CSS help: https://discord.com/channels/1167985253072257115/1169792539545587733/1362188451910258869
 - [ ] Make inline activities draggable / droppable within the scope of an item table row / summary
+- [ ] hightouch - please review meter CSS / class setup to see if it is to your liking
 
 ### Deferred tasks from last item batch review
 
@@ -554,3 +577,5 @@ Limited:
     - [x] Description section header hidden, contents displayed, editable when unlocked, saves when locked again, saves when save button clicked and is refreshed.
 - [x] Sheet Mode Toggle - streamline tooltip to read "Play" when locked and "Edit" when unlocked.
 - [x] Fix: Copying an advancement from item to another when it's Tidy to Tidy doesn't seem to work. Determine what the defaults are doing and try to do likewise.
+- [x] Implement classic group sheet default tabs setting
+- [x] Rework meters to emulate dnd5e2 structure

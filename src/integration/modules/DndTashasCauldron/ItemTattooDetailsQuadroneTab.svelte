@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
@@ -9,6 +8,7 @@
   import { DndTashasCauldronModuleIntegration } from './DndTashasCauldron';
   import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
   import FieldUses from 'src/sheets/quadrone/item/parts/FieldUses.svelte';
+  import QuantityWeightPriceFormGroups from 'src/sheets/quadrone/item/parts/QuantityWeightPriceFormGroups.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -30,6 +30,10 @@
     `&Reference[spellwrought]{${game.i18n.localize('TCOE.Tattoo.Type')}}`,
   );
 </script>
+
+<fieldset>
+  <QuantityWeightPriceFormGroups />
+</fieldset>
 
 <fieldset>
   <legend>

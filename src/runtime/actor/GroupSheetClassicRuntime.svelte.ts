@@ -7,7 +7,7 @@ import GroupInventoryTab from 'src/sheets/classic/group/tabs/GroupInventoryTab.s
 import GroupDescriptionTab from 'src/sheets/classic/group/tabs/GroupDescriptionTab.svelte';
 
 
-export const defaultGroupClassicTabs: RegisteredTab<GroupSheetClassicContext>[] = [
+const defaultGroupClassicTabs: RegisteredTab<GroupSheetClassicContext>[] = [
   {
     id: CONSTANTS.TAB_GROUP_MEMBERS,
     title: 'DND5E.Group.Member.other',

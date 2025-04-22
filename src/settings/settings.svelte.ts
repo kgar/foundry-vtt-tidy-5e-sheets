@@ -835,6 +835,26 @@ export function createSettings() {
         },
       },
 
+      defaultGroupSheetTabs: {
+        options: {
+          name: 'TIDY5E.Settings.DefaultSheetTabs.name',
+          hint: 'TIDY5E.Settings.DefaultSheetTabs.hint',
+          scope: 'world',
+          config: false,
+          type: Array,
+          default: [
+            CONSTANTS.TAB_GROUP_MEMBERS,
+            CONSTANTS.TAB_ACTOR_INVENTORY,
+            CONSTANTS.TAB_GROUP_DESCRIPTION,
+          ],
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<string[]>(
+            'defaultGroupSheetTabs'
+          );
+        },
+      },
+
       // Expanded Sheet
       showExpandedLimitedView: {
         options: {

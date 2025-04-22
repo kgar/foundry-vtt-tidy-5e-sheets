@@ -43,6 +43,7 @@
 
   let isDefault = $derived(isNil(context.data?.currentSection?.trim(), ''));
 </script>
+
 <h2>{localize('TIDY5E.Section.LabelPl')}</h2>
 <fieldset>
   <legend>
@@ -92,7 +93,10 @@
       placeholder={localize('TIDY5E.Section.SectionSelectorNewSectionName')}
       class="flex2"
     />
-    <button type="button" class="button flex1" onclick={() => onOptionSelected(freeText)}
+    <button
+      type="button"
+      class="button flex1"
+      onclick={() => onOptionSelected(freeText)}
       >{localize('TIDY5E.Section.SectionSelectorSaveNewSection')}</button
     >
   </div>

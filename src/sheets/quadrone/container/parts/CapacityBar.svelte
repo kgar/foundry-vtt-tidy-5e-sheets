@@ -32,7 +32,11 @@
 </script>
 
 <div
-  class={['meter progress theme-dark', { empty: (capacity.value ?? 0) === 0 }]}
+  class={[
+    'meter progress capacity theme-dark',
+    { empty: (capacity.value ?? 0) === 0 },
+    barSeverity,
+  ]}
   role="meter"
   aria-label={localize('DND5E.CONTAINER.FIELDS.capacity.label')}
   aria-valuemin="0"
@@ -40,7 +44,6 @@
   aria-valuetext={(capacity.value ?? 0).toString()}
   aria-valuemax={capacity.max}
   style="--bar-percentage: {percentage}%;"
-  data-bar-severity={barSeverity}
 >
   {#if showTracker}
     {@render tracker()}
