@@ -62,12 +62,10 @@ import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.
 import { ItemContext } from 'src/features/item/ItemContext';
 import { splitSemicolons } from 'src/utils/array';
 import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
+import { Tidy5eActorSheetClassicBase } from './Tidy5eActorSheetClassicBase.svelte';
 
 export class Tidy5eNpcSheet
-  extends BaseSheetCustomSectionMixin(
-    (object) => object.items,
-    dnd5e.applications.actor.ActorSheet5eNPC
-  )
+  extends Tidy5eActorSheetClassicBase
   implements
     SheetTabCacheable,
     SheetExpandedItemsCacheable,
@@ -272,14 +270,6 @@ export class Tidy5eNpcSheet
 
     const inventorySortMode =
       npcPreferences.tabs?.[CONSTANTS.TAB_ACTOR_INVENTORY]?.sort ?? 'm';
-
-    const unlocked =
-      FoundryAdapter.isSheetUnlocked(this.actor) &&
-      defaultDocumentContext.editable;
-
-    const lockSensitiveFields =
-      (!unlocked && settings.value.useTotalSheetLock) ||
-      !defaultDocumentContext.editable;
 
     let utilities: Utilities<NpcSheetContext> = {
       [CONSTANTS.TAB_NPC_ABILITIES]: {
@@ -691,13 +681,6 @@ export class Tidy5eNpcSheet
       );
 
     const context: NpcSheetContext = {
-      ...defaultDocumentContext,
-      actions: await getActorActionSections(this.actor),
-      activateEditors: (node, options) =>
-        FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
-      actorPortraitCommands:
-        ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
-      allowEffectsManagement: true,
       appearanceEnrichedHtml: await FoundryAdapter.enrichHtml(
         TidyFlags.appearance.get(this.actor) ?? '',
         {
@@ -706,7 +689,6 @@ export class Tidy5eNpcSheet
           relativeTo: this.actor,
         }
       ),
-      appId: this.appId,
       biographyEnrichedHtml: await FoundryAdapter.enrichHtml(
         FoundryAdapter.getProperty<string>(
           this.actor,
@@ -730,21 +712,10 @@ export class Tidy5eNpcSheet
       containerPanelItems: await Inventory.getContainerPanelItems(
         defaultDocumentContext.items
       ),
-      customActorTraits: CustomActorTraitsRuntime.getEnabledTraits(
-        defaultDocumentContext
-      ),
-      customContent: await NpcSheetClassicRuntime.getContent(
-        defaultDocumentContext
-      ),
       defaultSkills: new Set<string>(
         FoundryAdapter.getSystemSetting(CONSTANTS.SYSTEM_SETTING_DEFAULT_SKILLS)
       ),
-      document: this.document,
-      useClassicControls: settings.value.useClassicControlsForNpc,
-      effects: enhancedEffectSections,
-      editable: defaultDocumentContext.editable,
-      filterData: this.itemFilterService.getDocumentItemFilterData(),
-      filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
+      features: [],
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.flaw,
         {
@@ -754,10 +725,8 @@ export class Tidy5eNpcSheet
         }
       ),
       habitat: [],
-      hideEmptySpellbook:
-        lockSensitiveFields && defaultDocumentContext.spellbook.length === 0,
-      healthPercentage: this.actor.system.attributes.hp.pct.toNearest(0.1),
-      showSpellbookTab: settings.value.showSpellbookTabNpc,
+      hasLegendaries: false,
+      hideEmptySpellbook: false,
       idealEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.ideal,
         {
@@ -766,24 +735,9 @@ export class Tidy5eNpcSheet
           relativeTo: this.actor,
         }
       ),
-      showContainerPanel:
-        TidyFlags.showContainerPanel.get(this.actor) === true &&
-        Array.from(defaultDocumentContext.items).some(
-          (i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER
-        ),
-      showLoyalty:
-        this.actor.system.traits.important &&
-        game.settings.get('dnd5e', 'loyaltyScore') &&
-        game.user.isGM,
-      spellcastingInfo: FoundryAdapter.getSpellcastingInfo(this.actor),
-      lockSensitiveFields: lockSensitiveFields,
+      inventory: [],
+      languages: [],
       longRest: this._onLongRest.bind(this),
-      lockExpChanges: FoundryAdapter.shouldLockExpChanges(),
-      lockHpMaxChanges: FoundryAdapter.shouldLockHpMaxChanges(),
-      lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
-      lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
-      lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
-      modernRules: FoundryAdapter.checkIfModernRules(this.actor),
       notes1EnrichedHtml: await FoundryAdapter.enrichHtml(
         TidyFlags.notes1.members.value.get(this.actor) ?? '',
         {
@@ -824,14 +778,23 @@ export class Tidy5eNpcSheet
           relativeTo: this.actor,
         }
       ),
-      owner: this.actor.isOwner,
+      showContainerPanel:
+        TidyFlags.showContainerPanel.get(this.actor) === true &&
+        Array.from(defaultDocumentContext.items).some(
+          (i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER
+        ),
+      showLoyalty:
+        this.actor.system.traits.important &&
+        game.settings.get('dnd5e', 'loyaltyScore') &&
+        game.user.isGM,
+      showSpellbookTab: settings.value.showSpellbookTabNpc,
+      spellcastingInfo: FoundryAdapter.getSpellcastingInfo(this.actor),
       shortRest: this._onShortRest.bind(this),
-      showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
+      spellbook: [],
       spellComponentLabels: FoundryAdapter.getSpellComponentLabels(),
       spellSlotTrackerMode:
         npcPreferences.spellSlotTrackerMode ??
         CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS,
-      tabs: [],
       traitEnrichedHtml: await FoundryAdapter.enrichHtml(
         TidyFlags.trait.get(this.actor) ?? '',
         {
@@ -841,18 +804,26 @@ export class Tidy5eNpcSheet
         }
       ),
       treasure: [],
-      unlocked: unlocked,
       useActionsFeature: actorUsesActionFeature(this.actor),
-      useRoundedPortraitStyle: [
-        CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
-        CONSTANTS.CIRCULAR_PORTRAIT_OPTION_NPCVEHICLE as string,
-      ].includes(settings.value.useCircularPortraitStyle),
       utilities: utilities,
-      viewableWarnings:
-        defaultDocumentContext.warnings?.filter(
-          (w: any) => !isNil(w.message?.trim(), '')
-        ) ?? [],
+      ...defaultDocumentContext,
     };
+
+    context.customActorTraits = CustomActorTraitsRuntime.getEnabledTraits(
+      defaultDocumentContext
+    );
+
+    context.customContent = await NpcSheetClassicRuntime.getContent(context);
+
+    context.effects = enhancedEffectSections;
+
+    // TODO: push this onto the svelte component(s) where it is needed
+    context.hideEmptySpellbook =
+      context.lockSensitiveFields && context.spellbook.length === 0;
+
+    context.useClassicControls = settings.value.useClassicControlsForNpc;
+
+    context.labels.type = this.actor.system.details.type.label;
 
     // Legendary Panel
     context.hasLegendaries =
@@ -941,7 +912,8 @@ export class Tidy5eNpcSheet
     return context;
   }
 
-  protected _prepareItems(context: NpcSheetContext) {
+  _prepareItems(context: NpcSheetContext) {
+    this._prepareItemsLegacy(context);
     // Categorize Items as Features and Spells
     const features: Record<string, NpcAbilitySection> = {
       [CONSTANTS.NPC_ABILITY_SECTION_WEAPONS]: {
@@ -1145,6 +1117,109 @@ export class Tidy5eNpcSheet
     context.inventory = Object.values(inventory);
   }
 
+  /** @override */
+  _prepareItemsLegacy(context) {
+    // Categorize Items as Features and Spells
+    const features = {
+      weapons: {
+        label: game.i18n.localize('DND5E.AttackPl'),
+        items: [],
+        hasActions: true,
+        dataset: { type: 'weapon', 'weapon-type': 'natural' },
+      },
+      actions: {
+        label: game.i18n.localize('DND5E.ActionPl'),
+        items: [],
+        hasActions: true,
+        dataset: { type: 'feat', 'activation.type': 'action' },
+      },
+      passive: {
+        label: game.i18n.localize('DND5E.Features'),
+        items: [],
+        dataset: { type: 'feat' },
+      },
+      equipment: {
+        label: game.i18n.localize('DND5E.Inventory'),
+        items: [],
+        dataset: { type: 'loot' },
+      },
+    };
+
+    // Start by classifying items into groups for rendering
+    const maxLevelDelta =
+      CONFIG.DND5E.maxLevel - (this.actor.system.details.level ?? 0);
+    const [spells, other] = context.items.reduce(
+      (arr, item) => {
+        const { quantity } = item.system;
+        const ctx = (context.itemContext[item.id] ??= {});
+        ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
+        // ctx.isExpanded = this._expanded.has(item.id);
+        ctx.hasRecharge = item.hasRecharge;
+        ctx.hasUses = item.hasLimitedUses;
+        ctx.hasTarget = !!item.labels.target;
+        ctx.canToggle = false;
+        ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
+        // Item grouping
+        const isPassive =
+          item.system.properties?.has('trait') ||
+          CONFIG.DND5E.activityActivationTypes[
+            item.system.activities?.contents[0]?.activation.type
+          ]?.passive;
+        ctx.group = isPassive
+          ? 'passive'
+          : item.system.activities?.contents[0]?.activation.type || 'passive';
+        ctx.ungroup = 'feat';
+        if (item.type === 'weapon') ctx.ungroup = 'weapon';
+        if (ctx.group === 'passive') ctx.ungroup = 'passive';
+        // Individual item preparation
+        this._prepareItem(item, ctx);
+        if (item.type === 'class')
+          ctx.availableLevels = Array.fromRange(CONFIG.DND5E.maxLevel, 1).map(
+            (level) => {
+              const delta = level - item.system.levels;
+              let label = `${level}`;
+              if (delta)
+                label = `${label} (${formatNumber(delta, {
+                  signDisplay: 'always',
+                })})`;
+              return { value: delta, label, disabled: delta > maxLevelDelta };
+            }
+          );
+        if (item.type === 'spell') arr[0].push(item);
+        else arr[1].push(item);
+        return arr;
+      },
+      [[], []]
+    );
+
+    // Organize Spellbook
+    const spellbook = this._prepareSpellbook(context, spells);
+
+    // Organize Features
+    for (let item of other) {
+      if (item.type === 'weapon') features.weapons.items.push(item);
+      else if (
+        ['background', 'class', 'feat', 'race', 'subclass'].includes(item.type)
+      ) {
+        if (item.system.activities?.size) features.actions.items.push(item);
+        else features.passive.items.push(item);
+      } else features.equipment.items.push(item);
+    }
+
+    // Assign and return
+    context.inventoryFilters = true;
+    context.features = Object.values(features);
+    context.spellbook = spellbook;
+  }
+
+  /**
+   * A helper method to establish the displayed preparation state for an item.
+   * @param {Item5e} item     Item being prepared for display.
+   * @param {object} context  Context data for display.
+   * @protected
+   */
+  _prepareItem(item, context) {}
+
   private async setExpandedItemData() {
     this.expandedItemData.clear();
     for (const id of this.expandedItems.keys()) {
@@ -1164,7 +1239,9 @@ export class Tidy5eNpcSheet
     return traits;
   }
 
-  onToggleAbilityProficiency(event: Event) {
+  onToggleAbilityProficiency(
+    event: MouseEvent & { target: HTMLElement; currentTarget: HTMLElement }
+  ) {
     return this._onToggleAbilityProficiency(event);
   }
 
@@ -1174,8 +1251,11 @@ export class Tidy5eNpcSheet
       super._canDragStart(selector)
     );
   }
-  
-  async _onDropSingleItem(itemData: any, event: DragEvent) {
+
+  async _onDropSingleItem(
+    itemData: any,
+    event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement }
+  ) {
     // Create a Consumable spell scroll on the Inventory tab
     if (
       itemData.type === CONSTANTS.ITEM_TYPE_SPELL &&
