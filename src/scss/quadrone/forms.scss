@@ -481,15 +481,13 @@
   }
 
   .checkbox-grid {
-    --num-cols: 4;
-
-    &.checkbox-grid-3 {
-      --num-cols: 3;
-    }
-
+    --min-column-width: 7.8125rem;
     >.form-fields {
       display: grid;
-      grid-template-columns: repeat(var(--num-cols), minmax(0, 1fr));
+      grid-template-columns: repeat(
+        auto-fill,
+        minmax(var(--min-column-width), 1fr)
+      );
       row-gap: 0;
       column-gap: 0.625rem;
 

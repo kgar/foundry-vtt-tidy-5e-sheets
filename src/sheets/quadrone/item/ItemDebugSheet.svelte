@@ -955,7 +955,7 @@
           </select>
         </div>
       </div>
-      <div class="form-group stacked checkbox-grid checkbox-grid-3">
+      <div class="form-group stacked checkbox-grid">
         <label>Spell Components</label>
         <div class="form-fields">
           <label class="checkbox">
