@@ -425,7 +425,11 @@ export function TidyExtensibleDocumentSheetMixin<
         this.options.submitOnClose && this.document.isOwner && this.isEditable;
 
       if (submit) {
-        await this.submit({ preventClose: true, preventRender: true });
+        try {
+          await this.submit({ preventClose: true, preventRender: true });
+        } catch (e) {
+          error('An error occurred while submitting changes', false, e);
+        }
       }
 
       await super.close(options);
