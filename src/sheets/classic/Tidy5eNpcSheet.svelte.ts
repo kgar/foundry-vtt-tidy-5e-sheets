@@ -913,7 +913,6 @@ export class Tidy5eNpcSheet
   }
 
   _prepareItems(context: NpcSheetContext) {
-    this._prepareItemsLegacy(context);
     // Categorize Items as Features and Spells
     const features: Record<string, NpcAbilitySection> = {
       [CONSTANTS.NPC_ABILITY_SECTION_WEAPONS]: {
@@ -1116,109 +1115,6 @@ export class Tidy5eNpcSheet
     context.spellbook = spellbook;
     context.inventory = Object.values(inventory);
   }
-
-  /** @override */
-  _prepareItemsLegacy(context) {
-    // Categorize Items as Features and Spells
-    const features = {
-      weapons: {
-        label: game.i18n.localize('DND5E.AttackPl'),
-        items: [],
-        hasActions: true,
-        dataset: { type: 'weapon', 'weapon-type': 'natural' },
-      },
-      actions: {
-        label: game.i18n.localize('DND5E.ActionPl'),
-        items: [],
-        hasActions: true,
-        dataset: { type: 'feat', 'activation.type': 'action' },
-      },
-      passive: {
-        label: game.i18n.localize('DND5E.Features'),
-        items: [],
-        dataset: { type: 'feat' },
-      },
-      equipment: {
-        label: game.i18n.localize('DND5E.Inventory'),
-        items: [],
-        dataset: { type: 'loot' },
-      },
-    };
-
-    // Start by classifying items into groups for rendering
-    const maxLevelDelta =
-      CONFIG.DND5E.maxLevel - (this.actor.system.details.level ?? 0);
-    const [spells, other] = context.items.reduce(
-      (arr, item) => {
-        const { quantity } = item.system;
-        const ctx = (context.itemContext[item.id] ??= {});
-        ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
-        // ctx.isExpanded = this._expanded.has(item.id);
-        ctx.hasRecharge = item.hasRecharge;
-        ctx.hasUses = item.hasLimitedUses;
-        ctx.hasTarget = !!item.labels.target;
-        ctx.canToggle = false;
-        ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
-        // Item grouping
-        const isPassive =
-          item.system.properties?.has('trait') ||
-          CONFIG.DND5E.activityActivationTypes[
-            item.system.activities?.contents[0]?.activation.type
-          ]?.passive;
-        ctx.group = isPassive
-          ? 'passive'
-          : item.system.activities?.contents[0]?.activation.type || 'passive';
-        ctx.ungroup = 'feat';
-        if (item.type === 'weapon') ctx.ungroup = 'weapon';
-        if (ctx.group === 'passive') ctx.ungroup = 'passive';
-        // Individual item preparation
-        this._prepareItem(item, ctx);
-        if (item.type === 'class')
-          ctx.availableLevels = Array.fromRange(CONFIG.DND5E.maxLevel, 1).map(
-            (level) => {
-              const delta = level - item.system.levels;
-              let label = `${level}`;
-              if (delta)
-                label = `${label} (${formatNumber(delta, {
-                  signDisplay: 'always',
-                })})`;
-              return { value: delta, label, disabled: delta > maxLevelDelta };
-            }
-          );
-        if (item.type === 'spell') arr[0].push(item);
-        else arr[1].push(item);
-        return arr;
-      },
-      [[], []]
-    );
-
-    // Organize Spellbook
-    const spellbook = this._prepareSpellbook(context, spells);
-
-    // Organize Features
-    for (let item of other) {
-      if (item.type === 'weapon') features.weapons.items.push(item);
-      else if (
-        ['background', 'class', 'feat', 'race', 'subclass'].includes(item.type)
-      ) {
-        if (item.system.activities?.size) features.actions.items.push(item);
-        else features.passive.items.push(item);
-      } else features.equipment.items.push(item);
-    }
-
-    // Assign and return
-    context.inventoryFilters = true;
-    context.features = Object.values(features);
-    context.spellbook = spellbook;
-  }
-
-  /**
-   * A helper method to establish the displayed preparation state for an item.
-   * @param {Item5e} item     Item being prepared for display.
-   * @param {object} context  Context data for display.
-   * @protected
-   */
-  _prepareItem(item, context) {}
 
   private async setExpandedItemData() {
     this.expandedItemData.clear();

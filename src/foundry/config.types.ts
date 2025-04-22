@@ -2975,7 +2975,10 @@ export type CONFIG = {
       special: {
         label: string;
       };
-    };
+    } & Record<
+      string,
+      { label: string; group?: string; scalar?: boolean; passive?: boolean }
+    >;
     abilityConsumptionTypes: {
       ammo: string;
       attribute: string;

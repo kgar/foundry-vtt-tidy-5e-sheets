@@ -29,20 +29,14 @@ import {
 import { mount, unmount } from 'svelte';
 import { debug } from 'src/utils/logging';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
-import {
-  actorUsesActionFeature,
-  getActorActionSections,
-} from 'src/features/actions/actions.svelte';
-import { isNil } from 'src/utils/data';
+import { actorUsesActionFeature } from 'src/features/actions/actions.svelte';
 import { CustomContentRenderer } from '../CustomContentRenderer';
 import { getBaseActorSheet5e } from 'src/utils/class-inheritance';
-import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { AsyncMutex } from 'src/utils/mutex';
-import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet.svelte';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
@@ -56,9 +50,11 @@ import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
 import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
+import { Tidy5eActorSheetClassicBase } from './Tidy5eActorSheetClassicBase.svelte';
+import { Inventory } from 'src/features/sections/Inventory';
 
 export class Tidy5eVehicleSheet
-  extends dnd5e.applications.actor.ActorSheet5eVehicle
+  extends Tidy5eActorSheetClassicBase
   implements
     SheetTabCacheable,
     SheetExpandedItemsCacheable,
@@ -321,50 +317,21 @@ export class Tidy5eVehicleSheet
     };
 
     const context: VehicleSheetContext = {
-      ...defaultDocumentContext,
-      actions: await getActorActionSections(this.actor),
-      activateEditors: (node, options) =>
-        FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
-      actorPortraitCommands:
-        ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
-      allowEffectsManagement: true,
-      appId: this.appId,
-      customActorTraits: CustomActorTraitsRuntime.getEnabledTraits(
-        defaultDocumentContext
-      ),
-      customContent: await VehicleSheetClassicRuntime.getContent(
-        defaultDocumentContext
-      ),
-      document: this.document,
-      filterData: this.itemFilterService.getDocumentItemFilterData(),
-      filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
-      useClassicControls: settings.value.useClassicControlsForVehicle,
-      editable: defaultDocumentContext.editable,
-      healthPercentage: this.actor.system.attributes.hp.pct.toNearest(0.1),
-      lockExpChanges: FoundryAdapter.shouldLockExpChanges(),
-      lockHpMaxChanges: FoundryAdapter.shouldLockHpMaxChanges(),
-      lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
-      lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
-      lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
-      lockSensitiveFields:
-        (!unlocked && settings.value.useTotalSheetLock) ||
-        !defaultDocumentContext.editable,
-      modernRules: FoundryAdapter.checkIfModernRules(this.actor),
-      owner: this.actor.isOwner,
-      showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
-      tabs: [],
-      unlocked: unlocked,
+      cargo: [],
+      features: [],
       useActionsFeature: actorUsesActionFeature(this.actor),
-      useRoundedPortraitStyle: [
-        CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
-        CONSTANTS.CIRCULAR_PORTRAIT_OPTION_NPCVEHICLE as string,
-      ].includes(settings.value.useCircularPortraitStyle),
       utilities: utilities,
-      viewableWarnings:
-        defaultDocumentContext.warnings?.filter(
-          (w: any) => !isNil(w.message?.trim(), '')
-        ) ?? [],
+      ...defaultDocumentContext,
     };
+
+    context.useClassicControls = settings.value.useClassicControlsForVehicle;
+
+    context.customActorTraits =
+      CustomActorTraitsRuntime.getEnabledTraits(context);
+
+    context.customContent = await VehicleSheetClassicRuntime.getContent(
+      context
+    );
 
     for (const item of context.items) {
       const ctx = context.itemContext[item.id];
@@ -397,7 +364,7 @@ export class Tidy5eVehicleSheet
     return context;
   }
 
-  protected _prepareItems(context: VehicleSheetContext) {
+  _prepareItems(context: VehicleSheetContext) {
     // TODO: Replace with Tidy Column Selection implementation
     const cargoColumns: SimpleEditableColumn[] = [
       {
@@ -631,7 +598,7 @@ export class Tidy5eVehicleSheet
     );
 
     // Handle crew actions
-    if (item.type === 'feat' && item.system.activation.type === 'crew') {
+    if (item.type === 'feat' && item.system.activation?.type === 'crew') {
       if (item.system.cover === 1) {
         context.cover = game.i18n.localize('DND5E.CoverTotal');
       } else if (item.system.cover === 0.5) {
@@ -843,15 +810,11 @@ export class Tidy5eVehicleSheet
     );
   }
 
-  async _onDropSingleItem(itemData: any, event: DragEvent) {
-    const cargoTypes = [
-      'weapon',
-      'equipment',
-      'consumable',
-      'tool',
-      'loot',
-      'container',
-    ];
+  async _onDropSingleItem(
+    itemData: any,
+    event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement }
+  ) {
+    const cargoTypes = Inventory.getInventoryTypes();
     const isCargo =
       cargoTypes.includes(itemData.type) &&
       this.currentTabId === CONSTANTS.TAB_VEHICLE_CARGO_AND_CREW;
@@ -873,15 +836,7 @@ export class Tidy5eVehicleSheet
       return scroll.toObject();
     }
 
-    if (itemData.type === 'consumable') {
-      return super._onDropSingleItem(itemData, event);
-    }
-
-    // Skip the default vehicle sheet handler, as we are handling all use cases.
-    const baseActor5eClass = getBaseActorSheet5e(this);
-    if (baseActor5eClass) {
-      return baseActor5eClass._onDropSingleItem.call(this, itemData, event);
-    }
+    return super._onDropSingleItem.call(this, itemData, event);
   }
 
   close(options: unknown = {}) {
