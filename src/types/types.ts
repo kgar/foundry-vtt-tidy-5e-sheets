@@ -603,6 +603,7 @@ export type ActorSheetContextV1 = {
   encumbrance?: EncumbranceContext;
   filterData: DocumentFilters;
   filterPins: Record<string, Set<string>>;
+  flags: unknown[]; // TODO: Type it
   /** The actor has special save-based roll buttons to be situationally rendered to the sheet. */
   hasSpecialSaves?: boolean;
   /**

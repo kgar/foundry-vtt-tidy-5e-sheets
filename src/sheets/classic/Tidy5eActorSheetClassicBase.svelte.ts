@@ -110,6 +110,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
       encumbrance: this.actor.system.attributes?.encumbrance,
       filterData: { ...this.actor.system.attributes.hp },
       filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
+      flags: [],
       hasSpecialSaves: hasSpecialSaves,
       healthPercentage: this.actor.system.attributes.hp.pct.toNearest(0.1),
       hp: hp,
@@ -194,6 +195,9 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
 
     // Prepare owned items
     this._prepareItems(context);
+
+    // Prepare Special Traits
+    this._prepareSpecialTraitsContext(context);
 
     return context;
   }
@@ -465,6 +469,66 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
    * @protected
    */
   _prepareItems(context: ActorSheetContextV1) {}
+
+  /* -------------------------------------------- */
+
+  /**
+   * Prepare rendering context for the special traits tab.
+   */
+  async _prepareSpecialTraitsContext(context: ActorSheetContextV1) {
+    const sections = [];
+    const source = context.editable ? this.document._source : this.document;
+    const flags = (context.flags = {
+      classes: Object.values(this.document.classes)
+        .map((cls) => ({ value: cls.id, label: cls.name }))
+        .sort((lhs, rhs) => lhs.label.localeCompare(rhs.label, game.i18n.lang)),
+      data: source.flags?.dnd5e ?? {},
+      disabled: !context.unlocked,
+    });
+
+    // Character Flags - don't be fooled by the config prop name. It's for PCs and NPCs.
+    for (const [key, config] of Object.entries(CONFIG.DND5E.characterFlags)) {
+      const flag = {
+        ...config,
+        name: `flags.dnd5e.${key}`,
+        value: foundry.utils.getProperty(flags.data, key),
+      };
+      const fieldOptions = { label: config.name, hint: config.hint };
+      if (config.type === Boolean) {
+        flag.field = new foundry.data.fields.BooleanField(fieldOptions);
+        flag.input = dnd5e.applications.fields.createCheckboxInput;
+      } else if (config.type === Number)
+        flag.field = new foundry.data.fields.NumberField(fieldOptions);
+      else flag.field = new foundry.data.fields.StringField(fieldOptions);
+
+      sections[config.section] ??= [];
+      sections[config.section].push(flag);
+    }
+
+    // Global Bonuses
+    const globals = [];
+    const addBonus = (field) => {
+      if (field instanceof foundry.data.fields.SchemaField)
+        Object.values(field.fields).forEach((f) => addBonus(f));
+      else
+        globals.push({
+          field,
+          name: field.fieldPath,
+          value: foundry.utils.getProperty(source, field.fieldPath),
+        });
+    };
+    addBonus(this.document.system.schema.fields.bonuses);
+    if (globals.length)
+      sections[game.i18n.localize('DND5E.BONUSES.FIELDS.bonuses.label')] =
+        globals;
+
+    flags.sections = Object.entries(sections).map(([label, fields]) => ({
+      label,
+      fields,
+    }));
+
+    return context;
+  }
 
   /* -------------------------------------------- */
 

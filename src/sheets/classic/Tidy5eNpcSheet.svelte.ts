@@ -14,6 +14,7 @@ import type {
   NpcAbilitySection,
   ActorInventoryTypes,
   NpcHabitat,
+  ActorSheetContextV1,
 } from 'src/types/types';
 import NpcSheet from './npc/NpcSheet.svelte';
 import { CONSTANTS } from 'src/constants';
@@ -1133,6 +1134,25 @@ export class Tidy5eNpcSheet
     const traits = super._prepareTraits(systemData);
     FoundryAdapter.prepareLanguageTrait(this.actor, traits);
     return traits;
+  }
+
+  /** @inheritDoc */
+  async _prepareSpecialTraitsContext(context: ActorSheetContextV1) {
+    context = await super._prepareSpecialTraitsContext(context);
+    
+    context.flags.sections.unshift({
+      label: game.i18n.localize('DND5E.NPC.Label'),
+      fields: [
+        {
+          field: this.document.system.schema.fields.traits.fields.important,
+          input: dnd5e.applications.fields.createCheckboxInput,
+          name: 'system.traits.important',
+          value: context.source.traits.important,
+        },
+      ],
+    });
+
+    return context;
   }
 
   onToggleAbilityProficiency(
