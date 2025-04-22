@@ -101,6 +101,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
         FoundryAdapter.getSystemSetting(
           CONSTANTS.SYSTEM_SETTING_LEVELING_MODE
         ) === CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
+      document: this.document,
       editable: editable,
       effects: dnd5e.applications.components.EffectsElement.prepareCategories(
         this.actor.allApplicableEffects()
@@ -116,6 +117,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
       isNPC: this.actor.type === 'npc',
       isVehicle: this.actor.type === 'vehicle',
       limited: this.actor.limited,
+      itemContext: {},
       items: Array.from(this.actor.items)
         .filter((i: Item5e) => !this.actor.items.has(i.system.container))
         .toSorted((a: Item5e, b: Item5e) => (a.sort || 0) - (b.sort || 0)),
@@ -149,7 +151,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
       traits: this._prepareTraits(this.actor.system),
       unlocked: unlocked,
       useActionsFeature: actorUsesActionFeature(this.actor),
-      useClassicControls: settings.value.useClassicControlsForCharacter,
+      useClassicControls: true,
       useRoundedPortraitStyle: [
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_CHARACTER as string,
@@ -189,6 +191,9 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
         entry.baseAbility = baseAbility(prop, key);
       }
     });
+
+    // Prepare owned items
+    this._prepareItems(context);
 
     return context;
   }

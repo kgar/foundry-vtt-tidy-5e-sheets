@@ -78,7 +78,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
 
-    this._supportedItemTypes = new Set(Inventory.getDefaultInventoryTypes());
+    this._supportedItemTypes = new Set(Inventory.getInventoryTypes());
     this._supportedItemTypes.add(CONSTANTS.ITEM_TYPE_SPELL);
     this.#itemFilterService = new ItemFilterService({}, this.actor);
   }
@@ -419,7 +419,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       (i: Item5e) => !this.actor.items.has(i.system.container)
     );
 
-    const inventoryTypesArray = Inventory.getDefaultInventoryTypes();
+    const inventoryTypesArray = Inventory.getInventoryTypes();
     const inventoryTypes = new Set(inventoryTypesArray);
     const inventory: ActorInventoryTypes =
       Inventory.getDefaultInventorySections();

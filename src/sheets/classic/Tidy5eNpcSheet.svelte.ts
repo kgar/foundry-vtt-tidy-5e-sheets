@@ -1063,7 +1063,7 @@ export class Tidy5eNpcSheet
 
     features.classes.items = classes;
 
-    const inventoryTypesArray = Inventory.getDefaultInventoryTypes();
+    const inventoryTypesArray = Inventory.getInventoryTypes();
     const inventoryTypes = new Set(inventoryTypesArray);
     const inventory: ActorInventoryTypes =
       Inventory.getDefaultInventorySections();

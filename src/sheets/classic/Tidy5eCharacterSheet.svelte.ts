@@ -288,10 +288,6 @@ export class Tidy5eCharacterSheet
     const actionListSortMode =
       characterPreferences.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS]?.sort ?? 'm';
 
-    const unlocked =
-      FoundryAdapter.isSheetUnlocked(this.actor) &&
-      defaultDocumentContext.editable;
-
     // TODO: Make a builder for this
     // TODO: Extract to runtime?
     let utilities: Utilities<CharacterSheetContext> = {
@@ -741,16 +737,7 @@ export class Tidy5eCharacterSheet
       );
 
     const context: CharacterSheetContext = {
-      ...defaultDocumentContext,
-      activateEditors: (node, options) =>
-        FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
-      actions: await getActorActionSections(this.actor),
       actorClassesToImages: getActorClassesToImages(this.actor),
-      actorPortraitCommands:
-        ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
-      allowEffectsManagement: FoundryAdapter.allowCharacterEffectsManagement(
-        this.actor
-      ),
       allowMaxHpOverride:
         settings.value.allowHpMaxOverride &&
         (!settings.value.lockHpMaxChanges || FoundryAdapter.userIsGm()),
@@ -762,7 +749,6 @@ export class Tidy5eCharacterSheet
           relativeTo: this.actor,
         }
       ),
-      appId: this.appId,
       attributePins: [],
       bastion: {
         description: await TextEditor.enrichHTML(
@@ -794,14 +780,7 @@ export class Tidy5eCharacterSheet
       containerPanelItems: await Inventory.getContainerPanelItems(
         defaultDocumentContext.items
       ),
-      customActorTraits: CustomActorTraitsRuntime.getEnabledTraits(
-        defaultDocumentContext
-      ),
-      customContent: [],
       defenders: [],
-
-      editable: defaultDocumentContext.editable,
-      effects: enhancedEffectSections,
       epicBoonsEarned: undefined,
       facilities: {
         basic: { chosen: [], available: [], value: 0, max: 0 },
@@ -809,8 +788,6 @@ export class Tidy5eCharacterSheet
       },
       favorites: [],
       features: [],
-      filterData: this.itemFilterService.getDocumentItemFilterData(),
-      filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.flaw,
         {
@@ -819,7 +796,6 @@ export class Tidy5eCharacterSheet
           relativeTo: this.actor,
         }
       ),
-      healthPercentage: this.actor.system.attributes.hp.pct.toNearest(0.1),
       hirelings: [],
       idealEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.ideal,
@@ -830,17 +806,7 @@ export class Tidy5eCharacterSheet
         }
       ),
       inventory: [],
-      itemContext: {},
       languages: [],
-      lockExpChanges: FoundryAdapter.shouldLockExpChanges(),
-      lockHpMaxChanges: FoundryAdapter.shouldLockHpMaxChanges(),
-      lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
-      lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
-      lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
-      lockSensitiveFields:
-        (!unlocked && settings.value.useTotalSheetLock) ||
-        !defaultDocumentContext.editable,
-      modernRules: FoundryAdapter.checkIfModernRules(this.actor),
       notes1EnrichedHtml: await FoundryAdapter.enrichHtml(
         TidyFlags.notes1.members.value.get(this.actor) ?? '',
         {
@@ -881,20 +847,17 @@ export class Tidy5eCharacterSheet
           relativeTo: this.actor,
         }
       ),
-      owner: this.actor.isOwner,
       showContainerPanel:
         TidyFlags.showContainerPanel.get(this.actor) === true &&
         Array.from(defaultDocumentContext.items).some(
           (i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER
         ),
-      showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
       spellbook: [],
       spellcastingInfo: FoundryAdapter.getSpellcastingInfo(this.actor),
       spellComponentLabels: FoundryAdapter.getSpellComponentLabels(),
       spellSlotTrackerMode:
         characterPreferences.spellSlotTrackerMode ??
         CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS,
-      tabs: [],
       traitEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.trait,
         {
@@ -903,19 +866,20 @@ export class Tidy5eCharacterSheet
           relativeTo: this.actor,
         }
       ),
-      unlocked: unlocked,
       useActionsFeature: actorUsesActionFeature(this.actor),
-      useClassicControls: settings.value.useClassicControlsForCharacter,
-      useRoundedPortraitStyle: [
-        CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
-        CONSTANTS.CIRCULAR_PORTRAIT_OPTION_CHARACTER as string,
-      ].includes(settings.value.useCircularPortraitStyle),
       utilities: utilities,
-      viewableWarnings:
-        defaultDocumentContext.warnings?.filter(
-          (w: any) => !isNil(w.message?.trim(), '')
-        ) ?? [],
+      ...defaultDocumentContext,
     };
+
+    context.allowEffectsManagement =
+      FoundryAdapter.allowCharacterEffectsManagement(this.actor);
+
+    context.customActorTraits =
+      CustomActorTraitsRuntime.getEnabledTraits(context);
+
+    context.effects = enhancedEffectSections;
+
+    context.useClassicControls = settings.value.useClassicControlsForCharacter;
 
     context.customContent = await CharacterSheetClassicRuntime.getContent(
       context
@@ -1172,7 +1136,7 @@ export class Tidy5eCharacterSheet
       }
     );
 
-    const inventoryTypes = Inventory.getDefaultInventoryTypes();
+    const inventoryTypes = Inventory.getInventoryTypes();
     // Organize items
     // Section the items by type
     for (let item of items) {
@@ -1341,13 +1305,11 @@ export class Tidy5eCharacterSheet
   _prepareItemsLegacy(context) {
     // Categorize items as inventory, spellbook, features, and classes
     const inventory: Record<string, any> = {};
-    const inventoryTypes = Object.entries(CONFIG.Item.dataModels)
-      .filter(([, model]: [any, any]) => model.metadata?.inventoryItem)
-      .sort(
-        ([, lhs], [, rhs]) =>
-          lhs.metadata.inventoryOrder - rhs.metadata.inventoryOrder
-      );
-    for (const [type] of inventoryTypes) {
+    const inventoryTypes = Inventory.getInventoryDataModelEntries().map(
+      ([type]) => type
+    );
+
+    for (const type of inventoryTypes) {
       inventory[type] = {
         label: `${CONFIG.Item.typeLabels[type]}Pl`,
         items: [],
@@ -1376,9 +1338,6 @@ export class Tidy5eCharacterSheet
                   cls: 'not-attuned',
                   title: CONFIG.DND5E.attunementTypes[item.system.attunement],
                 };
-
-          // Prepare data needed to display expanded sections
-          ctx.isExpanded = this._expanded.has(item.id);
 
           // Item usage
           ctx.hasRecharge = item.hasRecharge;
@@ -1547,30 +1506,33 @@ export class Tidy5eCharacterSheet
     context.features = Object.values(features);
   }
 
-    /**
+  /**
    * A helper method to establish the displayed preparation state for an item.
    * @param {Item5e} item     Item being prepared for display.
    * @param {object} context  Context data for display.
    * @protected
    */
-    _prepareItemLegacy(item, context) {
-      if ( item.type === "spell" ) {
-        const prep = item.system.preparation || {};
-        const isAlways = prep.mode === "always";
-        const isPrepared = !!prep.prepared;
-        context.toggleClass = isPrepared ? "active" : "";
-        if ( isAlways ) context.toggleClass = "fixed";
-        if ( isAlways ) context.toggleTitle = CONFIG.DND5E.spellPreparationModes.always.label;
-        else if ( isPrepared ) context.toggleTitle = CONFIG.DND5E.spellPreparationModes.prepared.label;
-        else context.toggleTitle = game.i18n.localize("DND5E.SpellUnprepared");
-      }
-      else {
-        const isActive = !!item.system.equipped;
-        context.toggleClass = isActive ? "active" : "";
-        context.toggleTitle = game.i18n.localize(isActive ? "DND5E.Equipped" : "DND5E.Unequipped");
-        context.canToggle = "equipped" in item.system;
-      }
+  _prepareItemLegacy(item, context) {
+    if (item.type === 'spell') {
+      const prep = item.system.preparation || {};
+      const isAlways = prep.mode === 'always';
+      const isPrepared = !!prep.prepared;
+      context.toggleClass = isPrepared ? 'active' : '';
+      if (isAlways) context.toggleClass = 'fixed';
+      if (isAlways)
+        context.toggleTitle = CONFIG.DND5E.spellPreparationModes.always.label;
+      else if (isPrepared)
+        context.toggleTitle = CONFIG.DND5E.spellPreparationModes.prepared.label;
+      else context.toggleTitle = game.i18n.localize('DND5E.SpellUnprepared');
+    } else {
+      const isActive = !!item.system.equipped;
+      context.toggleClass = isActive ? 'active' : '';
+      context.toggleTitle = game.i18n.localize(
+        isActive ? 'DND5E.Equipped' : 'DND5E.Unequipped'
+      );
+      context.canToggle = 'equipped' in item.system;
     }
+  }
 
   /**
    * Prepare bastion facility data for display.

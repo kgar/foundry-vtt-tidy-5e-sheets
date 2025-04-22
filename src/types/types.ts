@@ -592,6 +592,7 @@ export type ActorSheetContextV1 = {
   customActorTraits: RenderableCustomActorTrait[];
   customContent: CustomContent[];
   disableExperience: boolean;
+  document: any;
   /**
    * Whether or not the sheet can be edited, regardless of lock/sensitive field settings.
    * When this boolean is `false`, then the sheet is effectively hard locked.
@@ -620,6 +621,7 @@ export type ActorSheetContextV1 = {
   isNPC: boolean;
   isVehicle: boolean;
   limited: boolean;
+  itemContext: Record<string, any>; // TODO: Consider adding itemContext generic
   /** All items without a container. */
   items: Item5e[];
   labels: Record<string, any>;

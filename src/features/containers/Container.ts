@@ -80,7 +80,7 @@ export class Container {
     Item.implementation.createDialog(createData, {
       parent: actor,
       pack: container.pack,
-      types: Inventory.getDefaultInventoryTypes(),
+      types: Inventory.getInventoryTypes(),
       keepId: true,
     });
   }

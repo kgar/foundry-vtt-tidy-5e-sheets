@@ -9,14 +9,19 @@ import type {
 import { error } from 'src/utils/logging';
 
 export class Inventory {
-  static getDefaultInventoryTypes(): string[] {
-    return Object.entries(CONFIG.Item.dataModels)
-      .filter(([, model]: [string, any]) => model.metadata?.inventoryItem)
-      .sort(
-        ([, lhs]: [string, any], [, rhs]: [string, any]) =>
-          lhs.metadata.inventoryOrder - rhs.metadata.inventoryOrder
+  static getInventoryDataModelEntries(): [string, any][] {
+    return Object.entries<any>(CONFIG.Item.dataModels)
+      .filter(
+        ([type, model]) => 'inventorySection' in model && type !== 'backpack'
       )
-      .map((entry) => entry[0]);
+      .toSorted(
+        ([, lhs], [, rhs]) =>
+          lhs.inventorySection.order - rhs.inventorySection.order
+      );
+  }
+
+  static getInventoryTypes(): string[] {
+    return this.getInventoryDataModelEntries().map((entry) => entry[0]);
   }
 
   static isInventoryType(item: Item5e) {
@@ -26,7 +31,7 @@ export class Inventory {
   static getDefaultInventorySections(
     options: Partial<InventorySection> = {}
   ): Record<string, InventorySection> {
-    const inventoryTypes = Inventory.getDefaultInventoryTypes();
+    const inventoryTypes = Inventory.getInventoryTypes();
 
     const inventory: Record<string, InventorySection> = {};
 
@@ -127,7 +132,7 @@ export class Inventory {
 
     const inventory = Inventory.getDefaultInventorySections();
 
-    const inventoryTypes = Inventory.getDefaultInventoryTypes();
+    const inventoryTypes = Inventory.getInventoryTypes();
 
     for (let item of containerItems) {
       Inventory.applyInventoryItemToSection(
