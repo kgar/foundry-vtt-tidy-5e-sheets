@@ -234,7 +234,6 @@
       > :last-child {
         margin-bottom: 0;
       }
-
     }
 
     blockquote {
@@ -256,6 +255,136 @@
           var(--t5e-color-palette-gold-62) 30%,
           var(--t5e-color-palette-gold-62) 70%,
           transparent 95%);
+    }
+
+    .fvtt {
+      &:is(.advice, .narrative, .quest) {
+        background-color: var(--t5e-component-card-lighter);
+      }
+
+      &:is(.quest, .advice) {
+        --img-size: 64px;
+        position: relative;
+        border: 2px solid var(--t5e-color-gold);
+        box-shadow: var(--t5e-drop-shadow-pill);
+        margin: var(--t5e-size-4x) var(--t5e-size-4x) var(--t5e-size-4x) calc(var(--img-size) / 2);
+        padding: var(--t5e-size-3x) var(--t5e-size-3x) var(--t5e-size-3x) calc(var(--img-size) / 2 + var(--t5e-size-3x));
+
+        :first-child {
+          margin-top: 0;
+        }
+
+        :last-child {
+          margin-bottom: 0;
+        }
+
+        >figure {
+          position: absolute;
+          width: var(--img-size);
+          height: var(--img-size);
+          margin: 0;
+          left: calc(var(--img-size) / -2);
+          top: calc(50% - var(--img-size) / 2);
+
+          img.round {
+            background: var(--t5e-component-card-lighter);
+            border: 4px solid var(--t5e-color-gold);
+            border-radius: 100%;
+            box-shadow: var(--t5e-drop-shadow-card);
+          }
+        }
+      }
+
+      &.narrative {
+        position: relative;
+        margin: var(--t5e-size-4x) var(--t5e-size-3x);
+        padding: var(--t5e-size-4x) var(--t5e-size-5x);
+        border-left: 1px solid var(--t5e-color-gold);
+        border-right: 1px solid var(--t5e-color-gold);
+        text-align: justify;
+        --dot-size: 8px;
+        box-shadow: var(--t5e-drop-shadow-pill);
+
+
+        &::before,
+        &::after {
+          top: calc(var(--dot-size) / -2);
+        }
+
+        &::before,
+        >p:last-of-type::before {
+          left: calc(var(--dot-size) / -2);
+        }
+
+        &::after,
+        >p:last-of-type::after {
+          right: calc(var(--dot-size) / -2);
+        }
+
+        >p:last-of-type::before,
+        >p:last-of-type::after {
+          bottom: calc(var(--dot-size) / -2);
+        }
+
+
+        &::before,
+        >p:last-of-type::before {
+          content: "";
+          position: absolute;
+          width: var(--dot-size);
+          height: var(--dot-size);
+          border-radius: 100%;
+          background: var(--t5e-color-gold);
+        }
+
+        &::after,
+        >p:last-of-type::after {
+          content: "";
+          position: absolute;
+          width: var(--dot-size);
+          height: var(--dot-size);
+          border-radius: 100%;
+          background: var(--t5e-color-gold);
+        }
+      }
+    }
+
+    aside.notable {
+      margin: var(--t5e-size-5x) var(--t5e-size-3x);
+      padding: var(--t5e-size-4x) var(--t5e-size-5x);
+      filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.16));
+      box-shadow: var(--t5e-drop-shadow-pill);
+      border-top: 2px solid var(--t5e-color-gold);
+      border-bottom: 2px solid var(--t5e-color-gold);
+      border-left: 1px solid var(--t5e-color-text-gold-light);
+      border-right: 1px solid var(--t5e-color-text-gold-light);
+      background: var(--t5e-component-card-darker);
+
+      &::before,
+      &::after {
+        content: "";
+        background-image: url(/images/notable-right-corner.svg), url(/images/notable-left-corner.svg);
+        background-position: 0, 100%;
+        background-size: contain;
+        background-repeat: no-repeat;
+        filter: grayscale(1) brightness(0.15);
+        opacity: 0.5;
+        height: 11px;
+        position: absolute;
+        left: 0;
+        z-index: -1;
+      }
+
+      &::before {
+        top: -13px;
+        right: 0;
+      }
+
+      &::after {
+        bottom: -13px;
+        right: 0;
+        transform: scaleY(-1);
+      }
     }
   }
 
@@ -585,6 +714,12 @@
         color: var(--t5e-color-text-lightest);
         font-weight: var(--font-weight-label);
         font-style: italic;
+      }
+
+      aside.notable {
+        background: var(--t5e-component-card-lighter);
+        border-color: var(--t5e-component-card-darker);
+
       }
 
 
