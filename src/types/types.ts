@@ -194,6 +194,25 @@ export type SimpleEditableColumn = {
   editable?: string;
 };
 
+export type SpellbookSectionLegacy = {
+  order: number;
+  label: string;
+  usesSlots: boolean;
+  canCreate: boolean;
+  canPrepare: boolean;
+  spells: Item5e[];
+  uses: number | string;
+  slots: number | string;
+  override: number;
+  dataset: {
+    type: string;
+    level: number;
+    preparationMode: string;
+  };
+  prop: string;
+  editable: boolean;
+};
+
 export type SpellbookSection = {
   order?: number | string;
   usesSlots: boolean;
@@ -458,6 +477,7 @@ export type NpcSheetContext = {
   containerPanelItems: ContainerPanelItemContext[];
   defaultSkills: Set<string>;
   features: NpcAbilitySection[];
+  flags: SpecialTraits;
   flawEnrichedHtml: string;
   hasLegendaries: boolean;
   habitat: { label: string }[];
@@ -480,8 +500,8 @@ export type NpcSheetContext = {
   spellbook: SpellbookSection[];
   spellcastingInfo: SpellcastingInfo;
   spellSlotTrackerMode:
-  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
-  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
+    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
+    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
   traitEnrichedHtml: string;
   treasure: { label: string }[];
   utilities: Utilities<NpcSheetContext>;
@@ -576,6 +596,33 @@ export type EncumbranceContext = {
   };
 };
 
+export type SpecialTraitSectionField = {
+  field: any; // A data field subclass from Foundry or dnd5e
+  hint?: string;
+  input?: any; // A function that receives field and config; e.g., createCheckboxInput(field, config)
+  name: string;
+  section?: string; // Seems superfluous
+  type?: any; // Boolean(), String(), Number(), etc.
+  placeholder?: any; // A placeholder of the specified type; e.g., 30
+  value?: any;
+};
+
+export type SpecialTraitClass = {
+  label: string;
+  value: string;
+};
+
+export type SpecialTraitSection = {
+  label: string;
+  fields: SpecialTraitSectionField[];
+};
+
+export type SpecialTraits = {
+  classes: SpecialTraitClass[];
+  data: Record<string, any>;
+  sections: SpecialTraitSection[];
+};
+
 export type ActorSheetContextV1 = {
   abilities: any;
   actions: ActionSection[];
@@ -603,7 +650,7 @@ export type ActorSheetContextV1 = {
   encumbrance?: EncumbranceContext;
   filterData: DocumentFilters;
   filterPins: Record<string, Set<string>>;
-  flags: unknown[]; // TODO: Type it
+  flags: SpecialTraits; // TODO: Type it
   /** The actor has special save-based roll buttons to be situationally rendered to the sheet. */
   hasSpecialSaves?: boolean;
   /**

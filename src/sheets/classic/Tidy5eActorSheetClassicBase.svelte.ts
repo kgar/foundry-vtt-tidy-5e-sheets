@@ -14,6 +14,9 @@ import type {
   ActorSheetContextV1,
   DamageModificationContextEntry,
   DamageModificationData,
+  SpecialTraitSection,
+  SpecialTraitSectionField,
+  SpellbookSectionLegacy,
 } from 'src/types/types';
 import { splitSemicolons } from 'src/utils/array';
 import { isNil } from 'src/utils/data';
@@ -110,7 +113,11 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
       encumbrance: this.actor.system.attributes?.encumbrance,
       filterData: { ...this.actor.system.attributes.hp },
       filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
-      flags: [],
+      flags: {
+        classes: [],
+        data: {},
+        sections: [],
+      },
       hasSpecialSaves: hasSpecialSaves,
       healthPercentage: this.actor.system.attributes.hp.pct.toNearest(0.1),
       hp: hp,
@@ -476,38 +483,50 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
    * Prepare rendering context for the special traits tab.
    */
   async _prepareSpecialTraitsContext(context: ActorSheetContextV1) {
-    const sections = [];
+    const sections: Record<string, SpecialTraitSectionField[]> = {};
     const source = context.editable ? this.document._source : this.document;
-    const flags = (context.flags = {
-      classes: Object.values(this.document.classes)
-        .map((cls) => ({ value: cls.id, label: cls.name }))
-        .sort((lhs, rhs) => lhs.label.localeCompare(rhs.label, game.i18n.lang)),
-      data: source.flags?.dnd5e ?? {},
-      disabled: !context.unlocked,
-    });
+
+    context.flags.classes = Object.values(this.document.classes)
+      .map((cls: Item5e) => ({ value: cls.id, label: cls.name }))
+      .toSorted((lhs, rhs) =>
+        lhs.label.localeCompare(rhs.label, game.i18n.lang)
+      );
+
+    context.flags.data = source.flags?.dnd5e ?? {};
 
     // Character Flags - don't be fooled by the config prop name. It's for PCs and NPCs.
     for (const [key, config] of Object.entries(CONFIG.DND5E.characterFlags)) {
-      const flag = {
+      const flag: SpecialTraitSectionField = {
+        field: '',
         ...config,
         name: `flags.dnd5e.${key}`,
-        value: foundry.utils.getProperty(flags.data, key),
+        value: foundry.utils.getProperty(context.flags.data, key),
       };
       const fieldOptions = { label: config.name, hint: config.hint };
-      if (config.type === Boolean) {
+
+      let type: any = undefined;
+      if ('type' in config) {
+        type = config.type;
+      }
+
+      if ('type' in config && config.type === Boolean) {
         flag.field = new foundry.data.fields.BooleanField(fieldOptions);
         flag.input = dnd5e.applications.fields.createCheckboxInput;
-      } else if (config.type === Number)
+      } else if ('type' in config && config.type === Number)
         flag.field = new foundry.data.fields.NumberField(fieldOptions);
-      else flag.field = new foundry.data.fields.StringField(fieldOptions);
+      else {
+        flag.field = new foundry.data.fields.StringField(fieldOptions);
+      }
+
+      const fred = new foundry.data.fields.StringField(fieldOptions);
 
       sections[config.section] ??= [];
       sections[config.section].push(flag);
     }
 
     // Global Bonuses
-    const globals = [];
-    const addBonus = (field) => {
+    const globals: SpecialTraitSectionField[] = [];
+    const addBonus = (field: any) => {
       if (field instanceof foundry.data.fields.SchemaField)
         Object.values(field.fields).forEach((f) => addBonus(f));
       else
@@ -522,10 +541,12 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
       sections[game.i18n.localize('DND5E.BONUSES.FIELDS.bonuses.label')] =
         globals;
 
-    flags.sections = Object.entries(sections).map(([label, fields]) => ({
-      label,
-      fields,
-    }));
+    context.flags.sections = Object.entries(sections).map(
+      ([label, fields]) => ({
+        label,
+        fields,
+      })
+    );
 
     return context;
   }
@@ -542,27 +563,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
   _prepareSpellbook(context: ActorSheetContextV1, spells: Item5e) {
     const owner = this.actor.isOwner;
     const levels = context.actor.system.spells;
-    const spellbook: Record<
-      string,
-      {
-        order: number;
-        label: string;
-        usesSlots: boolean;
-        canCreate: boolean;
-        canPrepare: boolean;
-        spells: Item5e[];
-        uses: number | string;
-        slots: number | string;
-        override: number;
-        dataset: {
-          type: string;
-          level: number;
-          preparationMode: string;
-        };
-        prop: string | null;
-        editable: boolean;
-      }
-    > = {};
+    const spellbook: Record<string, SpellbookSectionLegacy> = {};
 
     // Define section and label mappings
     const sections = Object.entries(CONFIG.DND5E.spellPreparationModes).reduce<
@@ -591,7 +592,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
 
     // Format a spellbook entry for a certain indexed level
     const registerSection = (
-      sl: string | null,
+      sl: string,
       i: number,
       label: string,
       {
@@ -686,7 +687,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
         if (!spell.system.linkedActivity?.displayInSpellbook) return;
         if (!spellbook[s]) {
           registerSection(
-            null,
+            'dnd5e-cast-activity-additional-spells',
             s,
             game.i18n.localize('DND5E.CAST.SECTIONS.Spellbook')
           );

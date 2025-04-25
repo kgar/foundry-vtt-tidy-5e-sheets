@@ -7,6 +7,52 @@
  * globals.
  */
 
+import {
+  AlphaField,
+  AngleField,
+  AnyField,
+  ArrayField,
+  BooleanField,
+  ColorField,
+  DataField,
+  DocumentAuthorField,
+  DocumentFlagsField,
+  DocumentIdField,
+  DocumentOwnershipField,
+  DocumentStatsField,
+  DocumentTypeField,
+  DocumentUUIDField,
+  EmbeddedCollectionDeltaField,
+  EmbeddedCollectionField,
+  EmbeddedDataField,
+  EmbeddedDocumentField,
+  FilePathField,
+  ForeignDocumentField,
+  HTMLField,
+  HueField,
+  IntegerSortField,
+  JavaScriptField,
+  JSONField,
+  NumberField,
+  ObjectField,
+  SchemaField,
+  SetField,
+  StringField,
+  TypeDataField,
+  TypedObjectField,
+  TypedSchemaField,
+} from 'foundry.data.fields';
+
+import {
+  AdvancementDataField,
+  AdvancementField,
+  AdvantageModeField,
+  FormulaField,
+  IdentifierField,
+  LocalDocumentField,
+  MappingField,
+} from 'dnd5e.data.fields';
+
 import type { CONFIG } from './config.types';
 
 declare global {
@@ -26,13 +72,63 @@ declare global {
   var DefaultSheetsConfig: any;
   var debounce: any;
   var Dialog: any;
-  var dnd5e: any;
+  var dnd5e: {
+    data: {
+      fields: {
+        AdvancementDataField: typeof AdvancementDataField;
+        AdvancementField: typeof AdvancementField;
+        AdvantageModeField: typeof AdvantageModeField;
+        FormulaField: typeof FormulaField;
+        IdentifierField: typeof IdentifierField;
+        LocalDocumentField: typeof LocalDocumentField;
+        MappingField: typeof MappingField;
+      };
+    };
+  } & any;
   var DocumentSheet: any;
   var DocumentSheetConfig: any; // game.release.generation < 13 // remove when Foundry 13+ only
   var FilePicker: any;
   var Folder: any;
   var FormApplication: any;
-  var foundry: any;
+  var foundry: {
+    data: {
+      fields: {
+        AlphaField: typeof AlphaField;
+        AngleField: typeof AngleField;
+        AnyField: typeof AnyField;
+        ArrayField: typeof ArrayField;
+        BooleanField: typeof BooleanField;
+        ColorField: typeof ColorField;
+        DataField: typeof DataField;
+        DocumentAuthorField: typeof DocumentAuthorField;
+        DocumentFlagsField: typeof DocumentFlagsField;
+        DocumentIdField: typeof DocumentIdField;
+        DocumentOwnershipField: typeof DocumentOwnershipField;
+        DocumentStatsField: typeof DocumentStatsField;
+        DocumentTypeField: typeof DocumentTypeField;
+        DocumentUUIDField: typeof DocumentUUIDField;
+        EmbeddedCollectionDeltaField: typeof EmbeddedCollectionDeltaField;
+        EmbeddedCollectionField: typeof EmbeddedCollectionField;
+        EmbeddedDataField: typeof EmbeddedDataField;
+        EmbeddedDocumentField: typeof EmbeddedDocumentField;
+        FilePathField: typeof FilePathField;
+        ForeignDocumentField: typeof ForeignDocumentField;
+        HTMLField: typeof HTMLField;
+        HueField: typeof HueField;
+        IntegerSortField: typeof IntegerSortField;
+        JSONField: typeof JSONField;
+        JavaScriptField: typeof JavaScriptField;
+        NumberField: typeof NumberField;
+        ObjectField: typeof ObjectField;
+        SchemaField: typeof SchemaField;
+        SetField: typeof SetField;
+        StringField: typeof StringField;
+        TypeDataField: typeof TypeDataField;
+        TypedObjectField: typeof TypedObjectField;
+        TypedSchemaField: typeof TypedSchemaField;
+      };
+    };
+  } & Record<string, any>;
   var fromUuid: any;
   var fromUuidSync: any;
   var game: any;
