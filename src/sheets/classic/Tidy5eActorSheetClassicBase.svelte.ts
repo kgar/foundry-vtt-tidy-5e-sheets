@@ -511,7 +511,6 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
 
       if ('type' in config && config.type === Boolean) {
         flag.field = new foundry.data.fields.BooleanField(fieldOptions);
-        flag.input = dnd5e.applications.fields.createCheckboxInput;
       } else if ('type' in config && config.type === Number)
         flag.field = new foundry.data.fields.NumberField(fieldOptions);
       else {

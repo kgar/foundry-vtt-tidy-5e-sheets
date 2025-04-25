@@ -30,7 +30,7 @@ declare module 'foundry.data.fields' {
   interface FormGroupConfig {
     label: string;
     units?: string;
-    input: HTMLElement | HTMLCollection;
+    input?: HTMLElement | HTMLCollection;
     hint?: string;
     rootId?: string;
     classes?: string[];
