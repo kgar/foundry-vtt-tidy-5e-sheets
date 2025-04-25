@@ -4664,7 +4664,17 @@ export type CONFIG = {
         section: string;
         placeholder: number;
       };
-    };
+    } & Record<
+      string,
+      {
+        name: string;
+        hint: string;
+        section: string;
+        placeholder?: number;
+        abilities?: Array<string>;
+        type?: any;
+      }
+    >;
     allowedActorFlags: Array<string>;
     groupTypes: {
       party: string;
