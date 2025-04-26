@@ -34,7 +34,7 @@
   }
 </script>
 
-<div class="scroll-container" onchange={() => context.actor.sheet.submit()}>
+<div class="special-traits-container scroll-container">
   <fieldset>
     <legend>{localize('TYPES.Item.class')}</legend>
     <div class="form-group">
@@ -47,14 +47,21 @@
         value={context.system.details.originalClass}
         disabled={!context.unlocked}
       >
-        <SelectOptions data={context.flags.classes} labelProp="label" valueProp="value" />
+        <SelectOptions
+          data={context.flags.classes}
+          labelProp="label"
+          valueProp="value"
+        />
       </Select>
     </div>
   </fieldset>
 
   {#key context}
     {#each flags.sections as section}
-      <fieldset disabled={!context.unlocked}>
+      <fieldset
+        disabled={!context.unlocked}
+        onchange={() => context.actor.sheet.submit()}
+      >
         <legend>{section.label}</legend>
         {#each section.fields as field}
           <!-- TODO: Make a svelte component that can process DataField subclasses and churn out Tidy inputs and Tidy-style form group class structures. -->

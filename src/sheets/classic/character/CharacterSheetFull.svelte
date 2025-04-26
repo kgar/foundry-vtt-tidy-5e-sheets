@@ -126,18 +126,6 @@
           {localize('DND5E.AbbreviationLevel')}
           {context.system.details.level}
         </h2>
-        <a
-          class="sheet-header-button"
-          class:disabled={!context.editable}
-          onclick={() =>
-            context.editable &&
-            new dnd5e.applications.actor.ActorSheetFlags(context.actor).render(
-              true,
-            )}
-          title={localize('DND5E.SpecialTraits')}
-        >
-          <i class="fa-solid fa-star fa-fw"></i>
-        </a>
         <SheetMenu defaultSettingsTab={CONSTANTS.TAB_USER_SETTINGS_PLAYERS} />
       </div>
     </div>
