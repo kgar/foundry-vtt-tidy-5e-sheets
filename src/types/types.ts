@@ -55,6 +55,7 @@ export type Tab = {
   activateDefaultSheetListeners?: boolean;
   autoHeight?: boolean;
   condition?: (document: any) => boolean;
+  iconClass?: string;
 };
 
 export type CustomContent = {

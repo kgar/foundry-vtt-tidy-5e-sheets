@@ -31,6 +31,7 @@ import { warn } from 'src/utils/logging';
 /** @category Tabs */
 export class HtmlTab extends CustomTabBase {
   title: CustomTabTitle = '';
+  iconClass?: string | undefined;
   tabId: TabId = '';
   html: string = '';
   renderScheme: RenderScheme = 'handlebars';

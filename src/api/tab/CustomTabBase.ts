@@ -39,6 +39,11 @@ export abstract class CustomTabBase {
    */
   abstract title: CustomTabTitle;
 
+  /**
+   * A FontAwesome icon class string. If provided, an icon will be included with the tab.
+   */
+  abstract iconClass?: string;
+
   /** {@inheritDoc TabId} */
   abstract tabId: TabId;
 

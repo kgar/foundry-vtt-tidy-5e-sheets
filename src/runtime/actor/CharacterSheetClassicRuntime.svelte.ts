@@ -117,12 +117,13 @@ const defaultClassicCharacterTabs: RegisteredTab<CharacterSheetContext>[] =
     },
     {
       id: CONSTANTS.TAB_ACTOR_SPECIAL_TRAITS,
-      title: '⭐ Test',
+      title: 'DND5E.SpecialTraits',
       content: {
         component: SpecialTraitsTab,
         type: 'svelte',
       },
       layout: 'classic',
+      iconClass: 'fa-solid fa-star'
     },
   ];
 

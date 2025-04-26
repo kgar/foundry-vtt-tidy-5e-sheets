@@ -34,6 +34,7 @@ import { warn } from 'src/utils/logging';
 /** @category Tabs */
 export class HandlebarsTab extends CustomTabBase {
   title: CustomTabTitle = '';
+  iconClass?: string | undefined;
   tabId: TabId = '';
   /**
    * The path to the handlebars template. Use a leading slash to look in the UserData directory.

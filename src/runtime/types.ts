@@ -34,6 +34,7 @@ export type RegisteredTab<TContext> = {
   enabled?: (context: TContext) => boolean;
   layout: SheetLayout;
   title: CustomTabTitle;
+  iconClass?: string;
   id: string;
   content: SvelteTabContent | HtmlTabContent | HandlebarsTemplateRenderer;
   onRender?: (args: OnRenderTabParams) => void;
