@@ -1145,7 +1145,6 @@ export class Tidy5eNpcSheet
       fields: [
         {
           field: this.document.system.schema.fields.traits.fields.important,
-          input: dnd5e.applications.fields.createCheckboxInput,
           name: 'system.traits.important',
           value: context.source.traits.important,
         },
