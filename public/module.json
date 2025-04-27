@@ -106,16 +106,16 @@
     }
   ],
   "compatibility": {
-    "minimum": "12",
-    "verified": "12"
+    "minimum": "13",
+    "verified": "13"
   },
   "relationships": {
     "systems": [
       {
         "id": "dnd5e",
         "compatibility": {
-          "minimum": "4.3.0",
-          "verified": "4.3.0",
+          "minimum": "5.0.0",
+          "verified": "5.0.0",
           "maximum": "5.0.x"
         }
       }
