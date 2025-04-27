@@ -813,7 +813,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       case 'ActiveEffect':
         return this._onDropActiveEffect(event, data);
       case 'Activity':
-        return this._onDropActivity(event, data);
+        return await this._onDropActivity(event, data);
       case 'Advancement':
         return this._onDropAdvancement(event, data);
       case 'Item':
@@ -866,14 +866,16 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
    * @param {object} transfer.data  The Activity data.
    * @protected
    */
-  _onDropActivity(
+  async _onDropActivity(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
     { data, uuid }: any
   ) {
     const { _id: id, type } = data;
 
+    const droppedActivityDocument = await fromUuid(uuid);
+
     // Reordering
-    if (this.item.id === foundry.utils.parseUuid(uuid)?.documentId) {
+    if (this.item.uuid === droppedActivityDocument.item?.uuid) {
       const source = this.item.system.activities.get(id);
       const targetId = event.target.closest<HTMLElement>(
         '.activity[data-activity-id]'

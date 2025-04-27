@@ -698,8 +698,10 @@ export class Tidy5eVehicleSheet
       }
 
       await this._renderSheet(force, options);
-      const content = this.form.closest('.window-content');
-      this._dragDrop.forEach((d: any) => d.bind(content));
+      const content = this.form?.closest('.window-content');
+      if (content) {
+        this._dragDrop.forEach((d: any) => d.bind(content));
+      }
     });
     this.tidyRendering = false;
     debug('Sheet render end');
