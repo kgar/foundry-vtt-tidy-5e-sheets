@@ -439,8 +439,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
       const attrConcentration = context.actor.system.attributes.concentration;
       if (
         context.actor.statuses.has(CONFIG.specialStatusEffects.CONCENTRATING) ||
-        (FoundryAdapter.isSheetUnlocked(context.actor) &&
-          attrConcentration)
+        (FoundryAdapter.isSheetUnlocked(context.actor) && attrConcentration)
       ) {
         (context.saves ??= {}).concentration = {
           isConcentration: true,
@@ -862,6 +861,83 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
 
   _disableOverriddenFields(html: any) {}
 
+  /* -------------------------------------------- */
+  /*  Drag and Drop                               */
+  /* -------------------------------------------- */
+
+  _allowedDropBehaviors(event: DragEvent, data: any) {
+    if (!data.uuid) {
+      return new Set<DropEffectValue>(['copy', 'link']);
+    }
+
+    const allowed = new Set<DropEffectValue>(['copy', 'move', 'link']);
+    const s = foundry.utils.parseUuid(data.uuid);
+    const t = foundry.utils.parseUuid(this.document.uuid);
+    const sCompendium = s.collection instanceof CompendiumCollection;
+    const tCompendium = t.collection instanceof CompendiumCollection;
+
+    // If either source or target are within a compendium, but not inside the same compendium, move not allowed
+    if ((sCompendium || tCompendium) && s.collection !== t.collection) {
+      allowed.delete('move');
+    }
+
+    return allowed;
+  }
+
+  _defaultDropBehavior(event: DragEvent, data: any) {
+    if (!data.uuid) {
+      return 'copy';
+    }
+
+    const d = foundry.utils.parseUuid(data.uuid);
+    const t = foundry.utils.parseUuid(this.document.uuid);
+    const base = d.embedded?.length ? 'document' : 'primary';
+
+    return d.collection === t.collection &&
+      d[`${base}Id`] === t[`${base}Id`] &&
+      d[`${base}Type`] === t[`${base}Type`]
+      ? 'move'
+      : 'copy';
+  }
+
+  _onDragOver(event: DragEvent & { currentTarget: HTMLElement }) {
+    const data = DragDrop.getPayload(event);
+
+    if (event.dataTransfer == null) {
+      return;
+    }
+
+    DragDrop.dropEffect = event.dataTransfer.dropEffect =
+      foundry.utils.getType(data) === 'Object'
+        ? this._dropBehavior(event, data)
+        : 'copy';
+  }
+
+  /**
+   * The behavior for the dropped data. When called during the drop event, ensure this is called before awaiting
+   * anything or the drop behavior will be lost.
+   */
+  _dropBehavior(event: DragEvent, data: unknown): DropEffectValue {
+    const allowed = this._allowedDropBehaviors(event, data);
+
+    let behavior = DragDrop.dropEffect ?? event.dataTransfer?.dropEffect;
+
+    if (event.type === 'dragover') {
+      if (dnd5e.utils.areKeysPressed(event, 'dragMove')) behavior = 'move';
+      else if (dnd5e.utils.areKeysPressed(event, 'dragCopy')) {
+        behavior = 'copy';
+      } else {
+        behavior = this._defaultDropBehavior(event, data);
+      }
+    }
+
+    if (behavior !== 'none' && !allowed.has(behavior)) {
+      return firstOfSet(allowed) ?? 'none';
+    }
+
+    return behavior || 'copy';
+  }
+
   /** @inheritDoc */
   _onDragStart(
     event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement }
@@ -1101,8 +1177,11 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
     itemData: any,
     event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement }
   ) {
+    // @ts-expect-error
+    const unsupportedItemTypes = this.constructor.unsupportedItemTypes;
+    
     // Check to make sure items of this type are allowed on this actor
-    if (this.unsupportedItemTypes.has(itemData.type)) {
+    if (unsupportedItemTypes.has(itemData.type)) {
       ui.notifications.warn(
         game.i18n.format('DND5E.ActorWarningInvalidItem', {
           itemType: game.i18n.localize(CONFIG.Item.typeLabels[itemData.type]),
@@ -1129,7 +1208,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
     this._onDropResetData(itemData, event);
 
     // Stack identical consumables
-    const stacked = this._onDropStackConsumables(itemData);
+    const stacked = FoundryAdapter.onDropStackConsumablesForActor(this.actor, itemData);
     if (stacked) return false;
 
     // Bypass normal creation flow for any items with advancement

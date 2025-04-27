@@ -90,6 +90,14 @@ export class Tidy5eVehicleSheet
     this.currentTabId = settings.value.initialVehicleSheetTab;
   }
 
+  /** @override */
+  static unsupportedItemTypes = new Set([
+    'background',
+    'class',
+    'race',
+    'subclass',
+  ]);
+
   get template() {
     return FoundryAdapter.getTemplate('empty-form-template.hbs');
   }
