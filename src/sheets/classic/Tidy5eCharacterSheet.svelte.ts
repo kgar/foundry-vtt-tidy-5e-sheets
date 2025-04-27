@@ -1,6 +1,6 @@
 import { FoundryAdapter } from '../../foundry/foundry-adapter';
 import CharacterSheet from './character/CharacterSheet.svelte';
-import { debug, warn } from 'src/utils/logging';
+import { debug } from 'src/utils/logging';
 import { settings } from 'src/settings/settings.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { CONSTANTS } from 'src/constants';
@@ -42,22 +42,17 @@ import type { Item5e, ItemChatData } from 'src/types/item.types';
 import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime.svelte';
 import {
   actorUsesActionFeature,
-  getActorActionSections,
 } from 'src/features/actions/actions.svelte';
 import { isNil } from 'src/utils/data';
 import { CustomContentRenderer } from '../CustomContentRenderer';
-import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { AsyncMutex } from 'src/utils/mutex';
-import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
-import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet.svelte';
 import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSections';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
-import { BaseSheetCustomSectionMixin } from './mixins/BaseSheetCustomSectionMixin';
 import { Inventory } from 'src/features/sections/Inventory';
 import type {
   CharacterFavorite,
@@ -69,7 +64,6 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import { Container } from 'src/features/containers/Container';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
-import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import { Activities } from 'src/features/activities/activities';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
@@ -268,8 +262,6 @@ export class Tidy5eCharacterSheet
     this._concentration = this.actor.concentration;
 
     const defaultDocumentContext = await super.getData(this.options);
-
-    Tidy5eBaseActorSheet.applyCommonContext(defaultDocumentContext);
 
     const characterPreferences = SheetPreferencesService.getByType(
       this.actor.type

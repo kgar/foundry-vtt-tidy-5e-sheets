@@ -37,7 +37,6 @@ import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggl
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { AsyncMutex } from 'src/utils/mutex';
-import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet.svelte';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -230,12 +229,6 @@ export class Tidy5eVehicleSheet
 
   async getData(options = {}) {
     const defaultDocumentContext = await super.getData(this.options);
-
-    Tidy5eBaseActorSheet.applyCommonContext(defaultDocumentContext);
-
-    const unlocked =
-      FoundryAdapter.isSheetUnlocked(this.actor) &&
-      defaultDocumentContext.editable;
 
     const vehiclePreferences = SheetPreferencesService.getByType(
       this.actor.type

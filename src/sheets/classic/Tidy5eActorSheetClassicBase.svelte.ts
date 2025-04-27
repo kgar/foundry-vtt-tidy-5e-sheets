@@ -206,6 +206,15 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
     // Prepare Special Traits
     this._prepareSpecialTraitsContext(context);
 
+    // Concentration
+    this._applyConcentration(context);
+
+    // Damage Modification
+    this._applyDamageModifications(context);
+
+    // Special Saves (like Concentration save)
+    context.hasSpecialSaves = Object.keys(context.saves ?? {}).length > 0;
+
     return context;
   }
 
@@ -421,9 +430,32 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
     return traits;
   }
 
-  static applyDamageModifications(context: ActorSheetContextV1) {
+  _applyConcentration(context: ActorSheetContextV1) {
+    if (
+      [CONSTANTS.SHEET_TYPE_CHARACTER, CONSTANTS.SHEET_TYPE_NPC].includes(
+        context.actor.type
+      )
+    ) {
+      const attrConcentration = context.actor.system.attributes.concentration;
+      if (
+        context.actor.statuses.has(CONFIG.specialStatusEffects.CONCENTRATING) ||
+        (FoundryAdapter.isSheetUnlocked(context.actor) &&
+          attrConcentration)
+      ) {
+        (context.saves ??= {}).concentration = {
+          isConcentration: true,
+          label: game.i18n.localize('DND5E.Concentration'),
+          abbr: game.i18n.localize('DND5E.Concentration'),
+          mod: Math.abs(attrConcentration.save),
+          sign:
+            context.actor.system.attributes.concentration.save < 0 ? '-' : '+',
+        };
+      }
+    }
+  }
+
+  _applyDamageModifications(context: ActorSheetContextV1) {
     try {
-      // Damage modifications
       const dm: DamageModificationData | undefined =
         context.actor.system.traits?.dm;
       if (dm) {

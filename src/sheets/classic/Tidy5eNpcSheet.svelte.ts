@@ -33,22 +33,16 @@ import { mount, unmount } from 'svelte';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
 import {
   actorUsesActionFeature,
-  getActorActionSections,
 } from 'src/features/actions/actions.svelte';
-import { isNil } from 'src/utils/data';
 import { CustomContentRenderer } from '../CustomContentRenderer';
-import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { AsyncMutex } from 'src/utils/mutex';
-import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
-import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
-import { BaseSheetCustomSectionMixin } from './mixins/BaseSheetCustomSectionMixin';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { Inventory } from 'src/features/sections/Inventory';
@@ -256,7 +250,6 @@ export class Tidy5eNpcSheet
 
     const defaultDocumentContext = await super.getData(this.options);
 
-    Tidy5eBaseActorSheet.applyCommonContext(defaultDocumentContext);
 
     const npcPreferences = SheetPreferencesService.getByType(this.actor.type);
 
