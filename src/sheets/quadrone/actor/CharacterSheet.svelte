@@ -29,42 +29,90 @@
 
 <header class="sheet-header">
   <div class="character-vitals-container">
-    <img class="character-image" src={context.actor.img} />
+    <img class="character-image transparent" src={context.actor.img} />
     <div class="character-vitals">
-      <div
-        class="meter progress hit-points"
-        style="--bar-percentage: {hpPct.toFixed(0)}%"
-      >
+      <div class="hp-row">
         <div
-          class="label pointer"
-          hidden={hpValueInputFocused}
-          onclick={async (ev) => {
-            hpValueInputFocused = true;
-            hpValueInput?.selectText();
-          }}
+          class="meter progress hit-points"
+          style="--bar-percentage: {hpPct.toFixed(0)}%"
         >
-          <div class="value">{hpValue}</div>
-          <div class="separator">/</div>
-          <div class="max">{hpMax}</div>
+          <div
+            class="label pointer"
+            hidden={hpValueInputFocused}
+            onclick={async (ev) => {
+              hpValueInputFocused = true;
+              hpValueInput?.selectText();
+            }}
+          >
+            <div class="value">{hpValue}</div>
+            <div class="separator">/</div>
+            <div class="max">{hpMax}</div>
+          </div>
+          <TextInputQuadrone
+            bind:this={hpValueInput}
+            id="{appId}-system-attributes-hp"
+            document={context.actor}
+            field="system.attributes.hp.value"
+            class="uninput"
+            value={hpValue}
+            selectOnFocus={true}
+            enableDeltaChanges={true}
+            onfocus={() => (hpValueInputFocused = true)}
+            onblur={() => (hpValueInputFocused = false)}
+            blurAfterChange={true}
+            hidden={!hpValueInputFocused}
+          />
+          <button type="button" 
+            class="button button-borderless button-icon-only temp-hp"
+            >
+            <i class="fas fa-hand-holding-heart"></i>
+          </button>
         </div>
-        <TextInputQuadrone
-          bind:this={hpValueInput}
-          id="{appId}-system-attributes-hp"
-          document={context.actor}
-          field="system.attributes.hp.value"
-          class="uninput"
-          value={hpValue}
-          selectOnFocus={true}
-          enableDeltaChanges={true}
-          onfocus={() => (hpValueInputFocused = true)}
-          onblur={() => (hpValueInputFocused = false)}
-          blurAfterChange={true}
-          hidden={!hpValueInputFocused}
-        />
       </div>
-      Row: Hit Dice Bar, Exhaustion Tracker, Death Saves Toggle, Config button (?)<br
-      />
-      Row: (If toggled on) Death Saves Tracker<br />
+      <div class="hd-row">
+        <div class="meter progress hit-die"
+          style="--bar-percentage: 100%">
+          <div class="label pointer"
+            hidden={hpValueInputFocused}
+            onclick={async (ev) => {
+              hpValueInputFocused = true;
+              hpValueInput?.selectText();
+            }}>
+              <div class="value">{hpValue}</div>
+              <div class="separator">/</div>
+              <div class="max">{hpMax}</div>
+            </div>
+            <TextInputQuadrone
+              bind:this={hpValueInput}
+              id="{appId}-system-attributes-hp"
+              document={context.actor}
+              field="system.attributes.hp.value"
+              class="uninput"
+              value={hpValue}
+              selectOnFocus={true}
+              enableDeltaChanges={true}
+              onfocus={() => (hpValueInputFocused = true)}
+              onblur={() => (hpValueInputFocused = false)}
+              blurAfterChange={true}
+              hidden={!hpValueInputFocused}
+          />
+        </div>
+        <div class="exhaustion">
+          <button type="button" class="button button-borderless button-icon-only">
+            <i class="fas fa-heart-pulse"></i>
+          </button>
+        </div>
+        <div class="death-saves">
+          <button type="button" class="button button-borderless button-icon-only">
+            <i class="fas fa-skull"></i>
+          </button>
+        </div>
+        <div class="configure-hp">
+          <button type="button" class="button button-borderless button-icon-only">
+            <i class="fas fa-gear"></i>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
   {#if context.unlocked}
@@ -75,13 +123,13 @@
       class="character-name"
     />
   {:else}
-    <div class="character-name">{context.actor.name}</div>
+    <h1 class="character-name">{context.actor.name}</h1>
   {/if}
   <CharacterSubtitle />
   <div class="sheet-header-actions">
     <button
       type="button"
-      class="special-traits gold-button"
+      class="button button-tertiary button-icon-only special-traits gold-button"
       data-tooltip="DND5E.SpecialTraits"
       aria-label={localize('DND5E.SpecialTraits')}
       onclick={() =>
@@ -90,11 +138,12 @@
         )}
       disabled={!context.editable}
     >
-      <i class="fas fa-star"></i>
+      <!-- TODO: Swap to sheet settings shortcut, also in dropdown -->
+      <i class="fas fa-gear"></i>
     </button>
     <button
       type="button"
-      class="short-rest gold-button"
+      class="button button-tertiary button-icon-only short-rest gold-button"
       data-tooltip="DND5E.REST.Short.Label"
       aria-label={localize('DND5E.REST.Short.Label')}
       onclick={(event) => context.actor.sheet.onShortRest(event)}
@@ -104,7 +153,7 @@
     </button>
     <button
       type="button"
-      class="long-rest gold-button"
+      class="button button-tertiary button-icon-only long-rest gold-button"
       data-tooltip="DND5E.REST.Long.Label"
       aria-label={localize('DND5E.REST.Long.Label')}
       onclick={(event) => context.actor.sheet.onLongRest(event)}
@@ -114,7 +163,104 @@
     </button>
   </div>
   <div class="level-block"></div>
-  <div class="abilities-container">AC, Abilities, Init, Concentration</div>
+  <div class="abilities-container">
+    <div class="ac-container">
+      <div class="shield">
+        <span>14</span>
+      </div>
+    </div>
+    <div class="ability strength">
+      <div class="bonus">
+        <span class="label">STR</span>
+        <span class="modifier">+</span>
+        <span class="value">2</span>
+      </div>
+      <div class="ability-score">
+        <span>14</span>
+      </div>
+      <div class="ability-save">
+        <span class="modifier">+</span>
+        <span class="value">4</span>
+      </div>
+    </div>
+    <div class="ability dexterity">
+      <div class="bonus">
+        <span class="label">DEX</span>
+        <span class="modifier">+</span>
+        <span class="value">2</span>
+      </div>
+      <div class="ability-score">
+        <span>14</span>
+      </div>
+      <div class="ability-save">
+        <span class="modifier">+</span>
+        <span class="value">4</span>
+      </div>
+    </div>
+    <div class="ability constitution">
+      <div class="bonus">
+        <span class="label">CON</span>
+        <span class="modifier">+</span>
+        <span class="value">2</span>
+      </div>
+      <div class="ability-score">
+        <span>14</span>
+      </div>
+      <div class="ability-save">
+        <span class="modifier">+</span>
+        <span class="value">4</span>
+      </div>
+    </div>
+    <div class="ability intelligence">
+      <div class="bonus">
+        <span class="label">INT</span>
+        <span class="modifier">+</span>
+        <span class="value">2</span>
+      </div>
+      <div class="ability-score">
+        <span>14</span>
+      </div>
+      <div class="ability-save">
+        <span class="modifier">+</span>
+        <span class="value">4</span>
+      </div>
+    </div>
+    <div class="ability wisdom">
+      <div class="bonus">
+        <span class="label">WIS</span>
+        <span class="modifier">+</span>
+        <span class="value">2</span>
+      </div>
+      <div class="ability-score">
+        <span>14</span>
+      </div>
+      <div class="ability-save">
+        <span class="modifier">+</span>
+        <span class="value">4</span>
+      </div>
+    </div>
+    <div class="ability charisma">
+      <div class="bonus">
+        <span class="label">CHA</span>
+        <span class="modifier">+</span>
+        <span class="value">2</span>
+      </div>
+      <div class="ability-score">
+        <span>14</span>
+      </div>
+      <div class="ability-save">
+        <span class="modifier">+</span>
+        <span class="value">4</span>
+      </div>
+    </div>
+    <div class="initiative">
+      <div class="score">
+        <span class="label">INIT</span>
+        <span class="modifier">+</span>
+        <span class="value">2</span>
+      </div>
+    </div>
+  </div>
   <div class="tabs-row">
     <a
       class="sidebar-toggle button button-borderless"
