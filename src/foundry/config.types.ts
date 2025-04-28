@@ -5538,6 +5538,7 @@ export type CONFIG = {
       liter: VolumeUnitConfig;
     } & Record<string, VolumeUnitConfig>;
   };
+  ux: any;
 };
 
 type ActivityType = {

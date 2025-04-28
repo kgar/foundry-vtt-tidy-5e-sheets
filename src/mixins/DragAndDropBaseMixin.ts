@@ -36,7 +36,7 @@ export function DragAndDropMixin(BaseApplication: any) {
               dragover: this._onDragOver.bind(this),
               drop: this._onDrop.bind(this),
             };
-            return new DragDrop(d);
+            return new CONFIG.ux.DragDrop(d);
           })
         : [];
     }
@@ -58,16 +58,18 @@ export function DragAndDropMixin(BaseApplication: any) {
     _onDragStart(event: DragEvent & { currentTarget: HTMLElement }) {}
 
     _onDragOver(event: DragEvent & { currentTarget: HTMLElement }) {
-      const data = DragDrop.getPayload(event);
+      const data =
+        foundry.applications.ux.DragDrop.implementation.getPayload(event);
 
       if (event.dataTransfer == null) {
         return;
       }
 
-      DragDrop.dropEffect = event.dataTransfer.dropEffect =
-        foundry.utils.getType(data) === 'Object'
-          ? this._dropBehavior(event, data)
-          : 'copy';
+      foundry.applications.ux.DragDrop.implementation.dropEffect =
+        event.dataTransfer.dropEffect =
+          foundry.utils.getType(data) === 'Object'
+            ? this._dropBehavior(event, data)
+            : 'copy';
     }
 
     _onDrop(
@@ -96,7 +98,9 @@ export function DragAndDropMixin(BaseApplication: any) {
     _dropBehavior(event: DragEvent, data: unknown): DropEffectValue {
       const allowed = this._allowedDropBehaviors(event, data);
 
-      let behavior = DragDrop.dropEffect ?? event.dataTransfer?.dropEffect;
+      let behavior =
+        foundry.applications.ux.DragDrop.implementation.dropEffect ??
+        event.dataTransfer?.dropEffect;
 
       if (event.type === 'dragover') {
         if (dnd5e.utils.areKeysPressed(event, 'dragMove')) behavior = 'move';

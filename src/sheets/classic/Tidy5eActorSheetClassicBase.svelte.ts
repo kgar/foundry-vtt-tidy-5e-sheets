@@ -870,8 +870,12 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
     const allowed = new Set<DropEffectValue>(['copy', 'move', 'link']);
     const s = foundry.utils.parseUuid(data.uuid);
     const t = foundry.utils.parseUuid(this.document.uuid);
-    const sCompendium = s.collection instanceof CompendiumCollection;
-    const tCompendium = t.collection instanceof CompendiumCollection;
+    const sCompendium =
+      s.collection instanceof
+      foundry.documents.collections.CompendiumCollection;
+    const tCompendium =
+      t.collection instanceof
+      foundry.documents.collections.CompendiumCollection;
 
     // If either source or target are within a compendium, but not inside the same compendium, move not allowed
     if ((sCompendium || tCompendium) && s.collection !== t.collection) {
@@ -898,16 +902,18 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
   }
 
   _onDragOver(event: DragEvent & { currentTarget: HTMLElement }) {
-    const data = DragDrop.getPayload(event);
+    const data =
+      foundry.applications.ux.DragDrop.implementation.getPayload(event);
 
     if (event.dataTransfer == null) {
       return;
     }
 
-    DragDrop.dropEffect = event.dataTransfer.dropEffect =
-      foundry.utils.getType(data) === 'Object'
-        ? this._dropBehavior(event, data)
-        : 'copy';
+    foundry.applications.ux.DragDrop.implementation.dropEffect =
+      event.dataTransfer.dropEffect =
+        foundry.utils.getType(data) === 'Object'
+          ? this._dropBehavior(event, data)
+          : 'copy';
   }
 
   /**
@@ -917,7 +923,9 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
   _dropBehavior(event: DragEvent, data: unknown): DropEffectValue {
     const allowed = this._allowedDropBehaviors(event, data);
 
-    let behavior = DragDrop.dropEffect ?? event.dataTransfer?.dropEffect;
+    let behavior =
+      foundry.applications.ux.DragDrop.implementation.dropEffect ??
+      event.dataTransfer?.dropEffect;
 
     if (event.type === 'dragover') {
       if (dnd5e.utils.areKeysPressed(event, 'dragMove')) behavior = 'move';

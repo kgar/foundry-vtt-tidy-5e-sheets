@@ -65,7 +65,6 @@ declare global {
   var Application: any;
   var AudioHelper: any;
   var ChatMessage: any;
-  var CompendiumCollection: any;
   var CONFIG: CONFIG & { Dice: any };
   var CONST: any;
   var ContextMenu: any;
@@ -89,6 +88,20 @@ declare global {
   var Folder: any;
   var FormApplication: any;
   var foundry: {
+    applications: {
+      api: any;
+      apps: any;
+      elements: any;
+      handlebars: any;
+      sheets: any;
+      ui: any;
+      ux: {
+        DragDrop: {
+          new (config: DragDropConfiguration): DragDrop;
+          implementation: DragDrop;
+        };
+      } & Record<string, any>;
+    };
     data: {
       fields: {
         AlphaField: typeof AlphaField;
@@ -188,20 +201,14 @@ declare global {
     bind(html: HTMLElement): this;
     callback(event: DragEvent, action: string): void;
     can(action: string, selector: string): boolean;
-  }
-
-  var DragDrop: typeof DragDrop;
-
-  declare const DragDrop: {
-    new (config: DragDropConfiguration): DragDrop;
+    dropEffect: 'copy' | 'move' | 'link' | 'none';
+    getPayload: (event: DragEvent) => object;
     createDragImage(
       img: HTMLImageElement,
       width: number,
       height: number
     ): HTMLElement;
-    dropEffect: 'copy' | 'move' | 'link' | 'none';
-    getPayload: (event: DragEvent) => object;
-  };
+  }
 }
 
 declare global {
