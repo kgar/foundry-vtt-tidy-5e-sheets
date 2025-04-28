@@ -59,7 +59,8 @@
   {#snippet header()}
     <TidyTableHeaderRow class="theme-dark">
       <TidyTableHeaderCell primary={true} class="header-label-cell">
-        {localize('DND5E.ACTIVITY.Title.other')}
+        <h3>{localize('DND5E.ACTIVITY.Title.other')}</h3>
+        <span class="table-header-count">{context.activities.length}</span>
       </TidyTableHeaderCell>
       <TidyTableHeaderCell {...columnSpecs.actions} class="header-cell-actions">
         <a
