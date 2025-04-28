@@ -1,13 +1,53 @@
 .tidy5e-sheet.application:where(.quadrone.character) {
   --sidebar-expanded-width: 12.5rem; // I just picked a value for now while prototyping.
+  // --header-image: url(../../modules/tidy5e-sheet/images/background-character.webp);
+
+  background-color: rgba(116, 27, 43, 1); // TODO: Fix scoping so this can use T5e variables.
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  &::before {
+    background: url(../../modules/tidy5e-sheet/images/banner-character.webp) top center / auto no-repeat;
+    filter: grayscale(100%);
+    mix-blend-mode: overlay;
+    background-size: contain;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+  }
+
+  &::after {
+    background: linear-gradient(to bottom, rgba(159, 146, 117, 0.25), rgba(127, 110, 69, 0.5));
+    mix-blend-mode: overlay;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    max-height: 200px; // TODO: Delete and use a wrapper around the header bar and sheet header.
+  }
+
 
   .window-content {
     display: flex;
     flex-direction: column;
+    padding: 0;
 
     .sheet-header {
       // All of the sheet header stuff goes in here
       // kgar: I'm thinking CSS Grid with Grid Areas; these areas will have Sheet Part attributes to help mods to target the area where they want to add something
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.65));
 
       // TODO: Vitals should be outside of grid. Everything to the right of it needs to scale on its own.
       display: grid;
@@ -16,19 +56,132 @@
         'vitals   subtitle       subtitle            levelBadgeContainer'
         'vitals   abilities      abilities           abilities'
         'tabsRow  tabsRow        tabsRow             tabsRow';
-      grid-template-columns: auto 1fr auto auto;
+      grid-template-columns: minmax(160px, 208px) 1fr auto auto;
       grid-template-rows: min-content min-content min-content min-content;
+      align-content: flex-start;
+      padding: 0 var(--t5e-size-2x);
+
 
       .character-vitals-container {
         grid-area: vitals;
+        margin-left: var(--t5e-size-2x);
+        margin-bottom: auto;
+        position: relative;
+
+
+        .character-image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border: none;
+
+          &.round {
+            border: 2px solid var(--t5e-color-gold);
+            border-radius: 100%;
+            overflow: hidden;
+
+            &::before {
+              content: '';
+              position: absolute;
+              top: 8px;
+              left: 8px;
+              right: 8px;
+              bottom: 8px;
+              border-radius: 100%;
+              border: 2px solid var(--t5e-color-gold);
+            }
+          }
+
+          &.square {
+            &::before {
+              content: '';
+              position: absolute;
+              top: 8px;
+              left: 8px;
+              right: 8px;
+              bottom: 8px;
+              border: 2px solid var(--t5e-color-gold);
+            }
+          }
+
+          &.transparent {
+            &::before {
+              content: '';
+              position: absolute;
+              top: 8px;
+              left: 8px;
+              right: 8px;
+              bottom: 8px;
+              border: 3px solid var(--t5e-color-gold);
+            }
+          }
+        }
+
+        .character-vitals {
+          margin-top: -1.5rem;
+          border-radius: 2px;
+          border: 2px solid var(--t5e-color-gold);
+          background-color: var(--t5e-component-card-dark-darker);
+          position: absolute;
+          width: 100%;
+          bottom: -32px;
+
+          .hd-row {
+            height: var(--t5e-size-6x);
+            display: flex;
+            flex: 1;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+          }
+
+          .meter {
+            border: none;
+            border-radius: 0;
+            border-right: 3px solid var(--bar-border-color);
+          }
+
+          .hit-points {
+            height: var(--t5e-field-size-default);
+
+            .label {
+              font-size: 1.125rem;
+            }
+          }
+
+          .temp-hp {
+            position: relative;
+            color: var(--t5e-color-icon-light);
+
+            i {
+              font-size: var(--font-size-14);
+              margin-bottom: 1px;
+            }
+          }
+        }
+
       }
 
       .character-name {
         grid-area: characterName;
+        margin: 0 0 0 var(--t5e-size-6x);
+        text-shadow: var(--t5e-drop-shadow-card-dark);
       }
-      
+
       .character-subtitle {
         grid-area: subtitle;
+        margin-left: var(--t5e-size-6x);
+
+        >*:not(:last-child)::after {
+          content: '';
+          display: inline-flex;
+          width: 3px;
+          height: 3px;
+          border-radius: 100%;
+          background-color: var(--t5e-color-gold);
+          opacity: 0.5;
+          margin: 0 4px 3px 6px;
+        }
       }
 
       .sheet-header-actions {
@@ -38,15 +191,135 @@
       .level-block {
         grid-area: levelBadgeContainer;
 
-        .level-badge {
-        }
+        .level-badge {}
 
-        .inspiration-tracker {
-        }
+        .inspiration-tracker {}
       }
 
       .abilities-container {
+        display: flex;
+        flex-direction: row;
         grid-area: abilities;
+        position: relative;
+        min-height: 106px;
+        gap: 8px;
+        padding: var(--t5e-size-2x) 0;
+        margin-left: var(--t5e-size-6x);
+        align-items: flex-start;
+
+        .ac-container {
+          width: 62px;
+          text-align: center;
+
+          .shield {
+            background: url(../../modules/tidy5e-sheet/images/badge-ability-dark.webp) top center / auto no-repeat;
+            background-size: contain;
+            height: 72px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: var(--t5e-color-text-light);
+            font-weight: bold;
+            font-size: 1.25rem;
+          }
+        }
+
+        .ability {
+          width: 64px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+
+          .bonus {
+            height: 72px;
+            width: 100%;
+            background: url(../../modules/tidy5e-sheet/images/badge-ability-dark.webp) top center / auto no-repeat;
+            background-size: contain;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-top: var(--t5e-size-1x);
+
+            .label {
+              font-family: var(--font-family-title);
+              color: var(--t5e-color-text-lighter);
+              font-size: var(--font-size-12);
+              line-height: 1;
+              text-transform: uppercase;
+              margin-bottom: var(--t5e-size-halfx);
+            }
+
+            .modifier,
+            .value {
+              display: inline-block;
+              font: var(--t5e-font-data-xlarge);
+              letter-spacing: var(--t5e-font-letter-spacing-xlarge);
+              color: var(--t5e-color-text-light);
+              font-weight: bold;
+              font-size: 1.25rem;
+              line-height: 1;
+            }
+          }
+
+          .ability-score {
+            margin-top: var(--t5e-size-1x);
+            background: url(../../modules/tidy5e-sheet/images/badge-score-dark.webp) top center / auto no-repeat;
+            width: 1.75rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            span {
+              color: var(--t5e-color-text-light);
+              font-weight: bold;
+              font-size: var(--font-size-14);
+            }
+          }
+
+          .ability-save {
+            margin-top: var(--t5e-size-1x);
+
+            .modifier,
+            .value {
+              display: inline-block;
+              color: var(--t5e-color-text-lighter);
+              font-size: var(--font-size-14);
+            }
+          }
+        }
+
+        .initiative {
+          width: 64px;
+          margin-left: var(--t5e-size-2x);
+
+          .score {
+            background-color: var(--t5e-component-card-dark);
+            border: 1px solid var(--t5e-color-gold);
+            border-radius: 4px;
+            padding: var(--t5e-size-1x);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .label {
+              font-family: var(--font-family-title);
+              color: var(--t5e-color-text-lighter);
+              font-size: var(--font-size-12);
+              line-height: 1;
+              text-transform: uppercase;
+            }
+
+            .modifier,
+            .value {
+              display: inline-block;
+              color: var(--t5e-color-text-light);
+              font-weight: bold;
+              font-size: 1.25rem;
+            }
+          }
+        }
       }
 
       .tabs-row {
@@ -56,23 +329,22 @@
         align-items: center;
         justify-content: center;
 
-        > .sidebar-toggle {
+        >.sidebar-toggle {
           position: absolute;
           left: 0;
           padding: 0;
           column-gap: var(--t5e-size-1);
 
-          > i {
+          >i {
             color: var(--t5e-color-icon-diminished);
           }
 
-          &:hover > i {
+          &:hover>i {
             color: var(--t5e-color-icon-default);
           }
         }
 
-        > .tidy-tabs {
-        }
+        >.tidy-tabs {}
       }
     }
 
@@ -83,12 +355,13 @@
       overflow-x: hidden;
       overflow-y: auto;
 
-      > .sidebar {
+      >.sidebar {
         flex-basis: var(--sidebar-expanded-width);
         transition: margin var(--t5e-transition-default);
         margin-inline-end: 0;
         margin-inline-start: calc(var(--sidebar-expanded-width) * -1);
         overflow-x: clip;
+
         &.expanded {
           margin-inline-start: 0;
           margin-inline-end: var(--t5e-size-6x);
@@ -96,10 +369,25 @@
         }
       }
 
-      > .tidy-tab {
+      >.tidy-tab {
         flex: 1;
         container-type: inline-size;
       }
+    }
+  }
+
+  .main-content {
+    background-color: var(--t5e-component-card-default);
+  }
+
+  &.theme-dark,
+  .theme-dark {
+    background: rgba(116, 27, 43, 1); // TODO: Fix scoping so this can use T5e variables.
+
+    .main-content {
+      background: url(../../modules/tidy5e-sheet/images/denim065.png) top center / auto repeat,
+        var(--t5e-component-card-dark-darker);
+      background-size: auto;
     }
   }
 }
