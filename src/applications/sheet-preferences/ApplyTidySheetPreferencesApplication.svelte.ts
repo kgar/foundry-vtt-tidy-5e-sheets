@@ -54,10 +54,7 @@ export class ApplyTidySheetPreferencesApplication extends SvelteFormApplicationB
 
   getTidySheetPreferenceOptions(): SheetPreferenceOption[] {
     const sheetClassOptions = [];
-    const documentSheetConfig =
-      game.release.generation < 13
-        ? DocumentSheetConfig
-        : foundry.applications.apps.DocumentSheetConfig;
+    const documentSheetConfig = foundry.applications.apps.DocumentSheetConfig;
 
     const setting = game.settings.get('core', 'sheetClasses');
 

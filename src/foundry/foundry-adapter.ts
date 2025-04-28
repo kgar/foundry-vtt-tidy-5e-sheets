@@ -896,7 +896,7 @@ export const FoundryAdapter = {
     });
   },
   browseFilePicker(...args: any[]) {
-    return new FilePicker(...args).browse();
+    return new foundry.applications.apps.FilePicker(...args).browse();
   },
   renderArmorConfig(document: any) {
     return new dnd5e.applications.actor.ArmorClassConfig({ document }).render(

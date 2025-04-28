@@ -39,7 +39,7 @@
     }
     const rect = event.currentTarget.getBoundingClientRect();
     const current = actor.img;
-    const fp = new FilePicker({
+    const fp = new foundry.applications.apps.FilePicker({
       type: 'image',
       current,
       callback: (path: string) => {
