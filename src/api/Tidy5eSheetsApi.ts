@@ -999,7 +999,7 @@ export class Tidy5eSheetsApi {
    *         icon: 'fas fa-broom',
    *         label: 'Debug Button',
    *         visible() {
-   *           return !this.document[game.release.generation < 13 ? 'compendium' : 'collection']?.locked;
+   *           return !this.document.collection?.locked;
    *         },
    *         async onClickAction(event) {
    *           ui.notifications.info(
@@ -1039,7 +1039,7 @@ export class Tidy5eSheetsApi {
    *         icon: 'fas fa-broom',
    *         label: 'Debug Button',
    *         visible() {
-   *           return !this.document[game.release.generation < 13 ? 'compendium' : 'collection']?.locked;
+   *           return !this.document.collection?.locked;
    *         },
    *         async onClickAction(event) {
    *           ui.notifications.info(
@@ -1080,7 +1080,7 @@ export class Tidy5eSheetsApi {
    *         icon: 'fas fa-broom',
    *         label: 'Debug Button',
    *         visible() {
-   *           return !this.document[game.release.generation < 13 ? 'compendium' : 'collection']?.locked;
+   *           return !this.document.collection?.locked;
    *         },
    *         async onClickAction(event) {
    *           ui.notifications.info(
@@ -1177,7 +1177,7 @@ export class Tidy5eSheetsApi {
    *         icon: 'fas fa-broom',
    *         label: 'Debug Button',
    *         visible() {
-   *           return !this.document[game.release.generation < 13 ? 'compendium' : 'collection']?.locked;
+   *           return !this.document.collection?.locked;
    *         },
    *         async onClickAction(event) {
    *           ui.notifications.info(
@@ -1218,7 +1218,7 @@ export class Tidy5eSheetsApi {
    *         icon: 'fas fa-broom',
    *         label: 'Debug Button',
    *         visible() {
-   *           return !this.document[game.release.generation < 13 ? 'compendium' : 'collection']?.locked;
+   *           return !this.document.collection?.locked;
    *         },
    *         async onClickAction(event) {
    *           ui.notifications.info(

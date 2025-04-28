@@ -841,10 +841,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
     }
 
     // Owner Only Listeners, for non-compendium actors.
-    if (
-      this.actor.isOwner &&
-      !this.actor[game.release.generation < 13 ? 'compendium' : 'inCompendium']
-    ) {
+    if (this.actor.isOwner && !this.actorinCompendium) {
       // Ability Checks
       html.find('.ability-name').click(this._onRollAbilityTest.bind(this));
 
@@ -1179,7 +1176,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
   ) {
     // @ts-expect-error
     const unsupportedItemTypes = this.constructor.unsupportedItemTypes;
-    
+
     // Check to make sure items of this type are allowed on this actor
     if (unsupportedItemTypes.has(itemData.type)) {
       ui.notifications.warn(
@@ -1208,7 +1205,10 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
     this._onDropResetData(itemData, event);
 
     // Stack identical consumables
-    const stacked = FoundryAdapter.onDropStackConsumablesForActor(this.actor, itemData);
+    const stacked = FoundryAdapter.onDropStackConsumablesForActor(
+      this.actor,
+      itemData
+    );
     if (stacked) return false;
 
     // Bypass normal creation flow for any items with advancement

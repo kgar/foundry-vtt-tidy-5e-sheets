@@ -74,7 +74,7 @@
       return;
     }
 
-    const secret = new HTMLSecret({
+    const secret = new foundry.applications.ux.HTMLSecret({
       parentSelector: `prose-mirror`,
       callbacks: {
         content: (_secret: HTMLElement) => content,

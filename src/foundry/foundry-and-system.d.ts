@@ -132,7 +132,6 @@ declare global {
   var game: any;
   var getDocumentClass: (className: string) => any;
   var Hooks: any;
-  var HTMLSecret: any;
   var ImagePopout: any;
   var Item: any;
   var Items: any;

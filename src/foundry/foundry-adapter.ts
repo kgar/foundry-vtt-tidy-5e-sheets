@@ -1514,9 +1514,7 @@ export const FoundryAdapter = {
     }
   },
   isLockedInCompendium(doc: any) {
-    return game.release.generation < 13
-      ? doc.compendium?.locked
-      : game.packs.get(doc.pack)?.locked;
+    return game.packs.get(doc.pack)?.locked;
   },
 
   getMovementInfo(movement: any): Record<string, MovementInfo> {
