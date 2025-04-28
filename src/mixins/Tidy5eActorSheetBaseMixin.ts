@@ -23,21 +23,6 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
     }
 
     static readonly ACTOR_ACTIONS_AND_CONTROLS = {
-      configureToken: {
-        control: {
-          action: 'configureToken',
-          icon: 'fa-solid fa-user-circle',
-          label:
-            'This Actions Title Changes Based on an Actor-specific piece of data',
-          ownership: 'OWNER',
-          visible(this: any) {
-            return game.release.generation < 13 || !!this.token;
-          },
-        },
-        action: {
-          configureToken: Tidy5eActorSheetBase.#onConfigureToken,
-        },
-      },
       showPortraitArtwork: {
         control: {
           action: 'showPortraitArtwork',
@@ -84,20 +69,6 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
      */
     _getHeaderControls() {
       const controls = super._getHeaderControls();
-
-      const configureTokenControl = controls.find(
-        (c: any) =>
-          c.action ===
-          Tidy5eActorSheetBase.ACTOR_ACTIONS_AND_CONTROLS.configureToken.control
-            .action
-      );
-
-      if (configureTokenControl && this.actor.isToken) {
-        configureTokenControl.label = 'Token';
-        configureTokenControl.icon = 'far fa-user-circle';
-      } else if (configureTokenControl) {
-        configureTokenControl.label = 'TOKEN.TitlePrototype';
-      }
 
       return controls;
     }

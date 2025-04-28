@@ -268,14 +268,7 @@
     &.item-label {
       justify-content: stretch;
       border-right: none;
-      // game.release.generation < 13
-      // align-items: stretch;
       align-items: center;
-
-      >* {
-        // game.release.generation < 13
-        // align-content: center;
-      }
     }
 
     &.primary {

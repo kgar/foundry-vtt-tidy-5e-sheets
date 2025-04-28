@@ -168,20 +168,6 @@ export function TidyExtensibleDocumentSheetMixin<
     async _prepareContext(options: Partial<TidyDocumentSheetRenderOptions>) {
       const context = await super._prepareContext(options);
 
-      if (game.release.generation < 13) {
-        const document = this.document;
-        return Object.assign(context, {
-          document,
-          source: document._source,
-          fields: document.schema.fields,
-          editable: this.isEditable,
-          user: game.user,
-          rootId: document.collection?.has(document.id)
-            ? this.id
-            : foundry.utils.randomID(),
-        });
-      }
-
       return {
         ...context,
         unlocked:
@@ -540,24 +526,6 @@ export function TidyExtensibleDocumentSheetMixin<
       const effectiveActions = { ...(updatedOptions.actions ?? {}) };
 
       try {
-        if (
-          game.release.generation < 13 &&
-          !effectiveControls?.some((x) => x.action === 'importFromCompendium')
-        ) {
-          effectiveControls?.unshift(ImportSheetControl.getSheetControl());
-        }
-
-        if (
-          game.release.generation < 13 &&
-          !effectiveActions['importFromCompendium']
-        ) {
-          effectiveActions[ImportSheetControl.actionName] = async function (
-            this: any
-          ) {
-            await ImportSheetControl.importFromCompendium(this, this.document);
-          };
-        }
-
         const { width, height } = SheetPreferencesService.getByType(sheetType);
 
         const position = (updatedOptions.position ??= {});

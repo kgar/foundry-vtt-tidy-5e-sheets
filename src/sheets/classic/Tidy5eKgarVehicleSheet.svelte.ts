@@ -232,7 +232,7 @@ export class Tidy5eVehicleSheet
 
     this.additionalComponents.push(infoCard);
 
-    initTidy5eContextMenu(this, html, CONSTANTS.SHEET_LAYOUT_CLASSIC);
+    initTidy5eContextMenu(this, node, CONSTANTS.SHEET_LAYOUT_CLASSIC);
   }
 
   async getData(options = {}) {

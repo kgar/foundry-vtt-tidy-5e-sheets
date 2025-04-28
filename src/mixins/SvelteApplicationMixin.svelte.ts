@@ -134,19 +134,13 @@ export function SvelteApplicationMixin<
       this._effectCleanup?.();
 
       await super.close(options);
-
-      if (game.release.generation < 13) {
-        this._tearDown(options);
-      }
     }
 
     _tearDown(options: ApplicationClosingOptions = {}) {
       this.#components.forEach((c) => unmount(c));
       this.#components = [];
 
-      if (game.release.generation >= 13) {
-        super._tearDown(options);
-      }
+      super._tearDown(options);
     }
 
     async render(options = {}, _options = {}) {
@@ -174,10 +168,6 @@ export function SvelteApplicationMixin<
       super._attachFrameListeners();
 
       try {
-        // ⚠ Removed, in hope that we'll not have to deal with this any longer, psst game.release.generation < 13 remove this commented stuff after sufficient testing and when Foundry 13 and beyond
-        // Support Foundry's hotkeys feature by blurring tabindex -1 clicked elements
-        // blurUntabbableButtonsOnClick(this.element);
-
         // Manage application effects
         this._effectCleanup?.();
         this._effectCleanup = $effect.root(() => {

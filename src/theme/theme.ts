@@ -26,19 +26,19 @@ export function getThemeV1() {
 
 export function getThemeV2(doc?: any) {
   let theme: string | undefined = undefined;
-  if (game.release.generation >= 13 && doc) {
+  if (doc) {
     theme =
       foundry.applications.apps.DocumentSheetConfig.getSheetThemeForDocument(
         doc
       );
   }
 
-  if (!theme && game.release.generation >= 13) {
+  if (!theme) {
     const { colorScheme } = game.settings.get('core', 'uiConfig');
     theme = colorScheme.application;
   }
 
-  if (!theme && game.release.generation >= 13) {
+  if (!theme) {
     if (matchMedia('(prefers-color-scheme: dark)').matches) {
       theme = 'dark';
     } else if (matchMedia('(prefers-color-scheme: light)').matches) {

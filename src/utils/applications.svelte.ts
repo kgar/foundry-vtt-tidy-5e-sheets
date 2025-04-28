@@ -46,7 +46,7 @@ export function applyThemeToApplication(
     return;
   }
 
-  const theme = getCurrentTheme(currentSettings, doc);
+  const theme = getThemeV2(doc);
 
   if (theme) {
     debug(`Applying theme type ${theme} to window`);
@@ -58,23 +58,6 @@ export function applyThemeToApplication(
     element.classList.remove('theme-light', 'theme-dark');
     element.classList.add(`themed`);
     element.classList.add(`theme-${theme}`);
-  }
-}
-
-export function getCurrentTheme(currentSettings: CurrentSettings, doc?: any) {
-  if (game.release.generation < 13) {
-    let themeId = currentSettings.colorScheme;
-
-    themeId =
-      themeId === CONSTANTS.THEME_ID_DEFAULT
-        ? settings.value.defaultTheme
-        : themeId;
-
-    const themes = getThemes();
-    const theme = themes[themeId];
-    return theme?.type;
-  } else {
-    return getThemeV2(doc);
   }
 }
 

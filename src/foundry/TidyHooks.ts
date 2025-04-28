@@ -203,7 +203,7 @@ export class TidyHooks {
    * @param contextOptions    The menu items for this group member.
    *
    * @returns {boolean}       `true` to allow the menu to show, `false` to prevent the default menu from showing.
-   * 
+   *
    * @example
    * ```js
    * Hooks.on('tidy5e-sheet.getGroupMemberContextOptions', (group, member, contextOptions) => {
@@ -375,27 +375,6 @@ export class TidyHooks {
       'tidy5e-sheet.preOpenActorPortraitFilePicker',
       context,
       event
-    );
-  }
-
-  /**
-   * The floating context menu's positioning is being determined.
-   * @param {ContextMenuPositionInfo} positionInfo Context menu positioning info, used for determining where to put the context menu.
-   * @returns {boolean} `true` to allow the menu to show, `false` to prevent the default menu from showing.
-   *
-   * @example
-   * ```js
-   * Hooks.on('tidy5e-sheet.prepareFloatingContextMenuPosition', (positionInfo) => {
-   *   return true;
-   * });
-   * ```
-   */
-  static tidy5eSheetsPrepareFloatingContextMenuPosition(
-    positionInfo: ContextMenuPositionInfo
-  ): boolean {
-    return Hooks.call(
-      'tidy5e-sheet.prepareFloatingContextMenuPosition',
-      positionInfo
     );
   }
 

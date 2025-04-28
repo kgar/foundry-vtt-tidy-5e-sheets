@@ -77,7 +77,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetBaseMixin(
       positioned: true,
       resizable: true,
       controls: [
-        this.ACTOR_ACTIONS_AND_CONTROLS.configureToken.control,
         this.ACTOR_ACTIONS_AND_CONTROLS.showPortraitArtwork.control,
         this.ACTOR_ACTIONS_AND_CONTROLS.showTokenArtwork.control,
         this.ACTOR_ACTIONS_AND_CONTROLS.openTabSelection.control,
@@ -102,7 +101,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetBaseMixin(
       [ImportSheetControl.actionName]: async function (this: any) {
         await ImportSheetControl.importFromCompendium(this, this.document);
       },
-      ...this.ACTOR_ACTIONS_AND_CONTROLS.configureToken.action,
       ...this.ACTOR_ACTIONS_AND_CONTROLS.showPortraitArtwork.action,
       ...this.ACTOR_ACTIONS_AND_CONTROLS.showTokenArtwork.action,
       ...this.ACTOR_ACTIONS_AND_CONTROLS.openTabSelection.action,
@@ -139,9 +137,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetBaseMixin(
       ]),
     });
 
-    const html = globalThis.$(this.element);
-
-    initTidy5eContextMenu(this, html, CONSTANTS.SHEET_LAYOUT_QUADRONE);
+    initTidy5eContextMenu(this, this.element, CONSTANTS.SHEET_LAYOUT_QUADRONE);
 
     return component;
   }

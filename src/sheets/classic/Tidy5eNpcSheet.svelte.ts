@@ -31,9 +31,7 @@ import { settings } from 'src/settings/settings.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { mount, unmount } from 'svelte';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
-import {
-  actorUsesActionFeature,
-} from 'src/features/actions/actions.svelte';
+import { actorUsesActionFeature } from 'src/features/actions/actions.svelte';
 import { CustomContentRenderer } from '../CustomContentRenderer';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
@@ -242,14 +240,13 @@ export class Tidy5eNpcSheet
 
     this.additionalComponents.push(infoCard);
 
-    initTidy5eContextMenu(this, html, CONSTANTS.SHEET_LAYOUT_CLASSIC);
+    initTidy5eContextMenu(this, node, CONSTANTS.SHEET_LAYOUT_CLASSIC);
   }
 
   async getData(options = {}) {
     this._concentration = this.actor.concentration;
 
     const defaultDocumentContext = await super.getData(this.options);
-
 
     const npcPreferences = SheetPreferencesService.getByType(this.actor.type);
 
@@ -1132,7 +1129,7 @@ export class Tidy5eNpcSheet
   /** @inheritDoc */
   async _prepareSpecialTraitsContext(context: ActorSheetContextV1) {
     context = await super._prepareSpecialTraitsContext(context);
-    
+
     context.flags.sections.unshift({
       label: game.i18n.localize('DND5E.NPC.Label'),
       fields: [

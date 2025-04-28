@@ -141,9 +141,7 @@ export class Tidy5eContainerSheetQuadrone
       context: context,
     });
 
-    const html = globalThis.$(this.element);
-
-    initTidy5eContextMenu(this, html, CONSTANTS.SHEET_LAYOUT_QUADRONE);
+    initTidy5eContextMenu(this, this.element, CONSTANTS.SHEET_LAYOUT_QUADRONE);
 
     return component;
   }
@@ -389,7 +387,7 @@ export class Tidy5eContainerSheetQuadrone
   /* -------------------------------------------- */
   /*  Drag and Drop                               */
   /* -------------------------------------------- */
-  
+
   /** @inheritDoc */
   async _onDrop(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }

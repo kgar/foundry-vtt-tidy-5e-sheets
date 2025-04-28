@@ -885,13 +885,6 @@ export const FoundryAdapter = {
     uuid: string;
     window?: { title: string };
   }) {
-    if (game.release.generation < 13) {
-      return new ImagePopout(args.src, {
-        title: args.window?.title,
-        uuid: args.uuid,
-      }).render(true);
-    }
-
     return new foundry.applications.apps.ImagePopout(args).render({
       force: true,
     });
@@ -1240,9 +1233,6 @@ export const FoundryAdapter = {
         item.isOwner)
     );
   },
-  getJqueryWrappedElement(el: HTMLElement) {
-    return globalThis.$(el);
-  },
   openSpellSlotsConfig(document: any) {
     new dnd5e.applications.actor.SpellSlotsConfig({ document }).render(true);
   },
@@ -1376,10 +1366,13 @@ export const FoundryAdapter = {
     }
 
     // Perform the sort
-    const sortUpdates = foundry.utils.SortingHelpers.performIntegerSort(source, {
-      target,
-      siblings,
-    });
+    const sortUpdates = foundry.utils.SortingHelpers.performIntegerSort(
+      source,
+      {
+        target,
+        siblings,
+      }
+    );
     const updateData = sortUpdates.map((u: any) => {
       const update = u.update;
       update._id = u.target._id;

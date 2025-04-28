@@ -104,8 +104,6 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
           context: context,
         });
 
-    const html = globalThis.$(this.element);
-
     new FloatingContextMenu(this.element, '.advancement-item', [], {
       onOpen: (target) =>
         dnd5e.documents.advancement.Advancement.onContextMenu(
@@ -116,7 +114,7 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
       layout: CONSTANTS.SHEET_LAYOUT_CLASSIC,
     });
 
-    initTidy5eContextMenu(this, html, CONSTANTS.SHEET_LAYOUT_CLASSIC);
+    initTidy5eContextMenu(this, this.element, CONSTANTS.SHEET_LAYOUT_CLASSIC);
 
     return component;
   }
@@ -843,10 +841,13 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
       const siblings = this.item.system.activities.filter(
         (a: any) => a._id !== id
       );
-      const sortUpdates = foundry.utils.SortingHelpers.performIntegerSort(source, {
-        target,
-        siblings,
-      });
+      const sortUpdates = foundry.utils.SortingHelpers.performIntegerSort(
+        source,
+        {
+          target,
+          siblings,
+        }
+      );
       const updateData = Object.fromEntries(
         sortUpdates.map(({ target, update }: { target: any; update: any }) => {
           return [target._id, { sort: update.sort }];
