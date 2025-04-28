@@ -1012,8 +1012,9 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
       return;
     switch (action) {
       case 'add':
-        return game.dnd5e.applications.advancement.AdvancementSelection.createDialog(
-          this.item
+        return dnd5e.documents.advancement.Advancement.createDialog(
+          {},
+          { parent: this.item }
         );
       case 'edit':
         return new advancement.constructor.metadata.apps.config(

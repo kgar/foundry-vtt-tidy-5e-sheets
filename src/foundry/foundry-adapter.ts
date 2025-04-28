@@ -849,8 +849,9 @@ export const FoundryAdapter = {
     return foundry.applications.ux.TextEditor.enrichHTML(value, options);
   },
   createAdvancementSelectionDialog(item: any) {
-    return game.dnd5e.applications.advancement.AdvancementSelection.createDialog(
-      item
+    return dnd5e.documents.advancement.Advancement.createDialog(
+      {},
+      { parent: item }
     );
   },
   deleteAdvancement(advancementItemId: string, item: Item5e) {
