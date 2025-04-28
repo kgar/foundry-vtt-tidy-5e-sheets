@@ -614,9 +614,20 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
             ...CONFIG.DND5E.armorIds,
             ...CONFIG.DND5E.shieldIds,
           }
+        : this.item.type === CONSTANTS.ITEM_TYPE_TOOL
+        ? Object.entries(CONFIG.DND5E.tools).reduce<Record<string, string>>(
+            (acc, [key, tool]) => {
+              acc[key] = tool.id;
+              return acc;
+            },
+            {}
+          )
         : // @ts-expect-error
           CONFIG.DND5E[`${this.item.type}Ids`];
-    if (baseIds === undefined) return {};
+
+    if (baseIds === undefined) {
+      return {};
+    }
 
     const baseType = context?.source.type.value ?? this.item.system.type.value;
 
