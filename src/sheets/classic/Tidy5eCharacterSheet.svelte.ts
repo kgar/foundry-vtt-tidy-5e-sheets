@@ -40,9 +40,7 @@ import {
 import { mount, unmount } from 'svelte';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
 import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime.svelte';
-import {
-  actorUsesActionFeature,
-} from 'src/features/actions/actions.svelte';
+import { actorUsesActionFeature } from 'src/features/actions/actions.svelte';
 import { isNil } from 'src/utils/data';
 import { CustomContentRenderer } from '../CustomContentRenderer';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
@@ -1836,6 +1834,10 @@ export class Tidy5eCharacterSheet
     } catch (e) {
       console.error(e);
       return;
+    }
+
+    if (data.type === CONSTANTS.DOCUMENT_NAME_ACTOR) {
+      return super._onDrop(event);
     }
 
     const doc = await fromUuid(data.uuid);

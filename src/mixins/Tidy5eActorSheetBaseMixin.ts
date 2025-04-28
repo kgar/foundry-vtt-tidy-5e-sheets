@@ -120,100 +120,36 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
       return ActiveEffect.create(effect.toObject(), { parent: this.actor });
     }
 
-    async _onDropActor(
-      _currentDragEvent: DragEvent & { currentTarget: HTMLElement },
-      data: any
-    ): Promise<object | boolean | undefined> {
+    /** @override */
+    async _onDropActor(event: DragEvent, actor: Actor5e) {
       const canPolymorph =
         game.user.isGM ||
         (this.actor.isOwner && game.settings.get('dnd5e', 'allowPolymorphing'));
-      if (!canPolymorph) return false;
+      if (!canPolymorph || this.tabGroups.primary === 'bastion') return;
 
-      // Get the target actor
-      const cls = getDocumentClass('Actor');
-      const sourceActor = await cls.fromDropData(data);
-      if (!sourceActor) return;
-
-      // Define a function to record polymorph settings for future use
-      const rememberOptions = (html: any) => {
-        const options: Record<string, any> = {};
-        html.find('input').each((i: number, el: HTMLInputElement) => {
-          options[el.name] = el.checked;
-        });
-        const settings = foundry.utils.mergeObject(
-          game.settings.get('dnd5e', 'polymorphSettings') ?? {},
-          options
+      // Configure the transformation
+      const settings =
+        await dnd5e.applications.actor.TransformDialog.promptSettings(
+          this.actor,
+          actor,
+          {
+            transform: {
+              settings: game.settings.get('dnd5e', 'transformationSettings'),
+            },
+          }
         );
-        game.settings.set('dnd5e', 'polymorphSettings', settings);
-        return settings;
-      };
 
-      // Create and render the Dialog
-      return new Dialog(
-        {
-          title: game.i18n.localize('DND5E.PolymorphPromptTitle'),
-          content: {
-            options: game.settings.get('dnd5e', 'polymorphSettings'),
-            settings: CONFIG.DND5E.polymorphSettings,
-            effectSettings: CONFIG.DND5E.polymorphEffectSettings,
-            isToken: this.actor.isToken,
-          },
-          default: 'accept',
-          buttons: {
-            accept: {
-              icon: '<i class="fas fa-check"></i>',
-              label: game.i18n.localize('DND5E.PolymorphAcceptSettings'),
-              callback: (html: any) =>
-                this.actor.transformInto(sourceActor, rememberOptions(html)),
-            },
-            wildshape: {
-              icon: CONFIG.DND5E.transformationPresets.wildshape.icon,
-              label: CONFIG.DND5E.transformationPresets.wildshape.label,
-              callback: (html: any) =>
-                this.actor.transformInto(
-                  sourceActor,
-                  foundry.utils.mergeObject(
-                    CONFIG.DND5E.transformationPresets.wildshape.options,
-                    { transformTokens: rememberOptions(html).transformTokens }
-                  )
-                ),
-            },
-            polymorph: {
-              icon: CONFIG.DND5E.transformationPresets.polymorph.icon,
-              label: CONFIG.DND5E.transformationPresets.polymorph.label,
-              callback: (html: any) =>
-                this.actor.transformInto(
-                  sourceActor,
-                  foundry.utils.mergeObject(
-                    CONFIG.DND5E.transformationPresets.polymorph.options,
-                    { transformTokens: rememberOptions(html).transformTokens }
-                  )
-                ),
-            },
-            self: {
-              icon: CONFIG.DND5E.transformationPresets.polymorphSelf.icon,
-              label: CONFIG.DND5E.transformationPresets.polymorphSelf.label,
-              callback: (html: any) =>
-                this.actor.transformInto(
-                  sourceActor,
-                  foundry.utils.mergeObject(
-                    CONFIG.DND5E.transformationPresets.polymorphSelf.options,
-                    { transformTokens: rememberOptions(html).transformTokens }
-                  )
-                ),
-            },
-            cancel: {
-              icon: '<i class="fas fa-times"></i>',
-              label: game.i18n.localize('Cancel'),
-            },
-          },
-        },
-        {
-          classes: ['dialog', 'dnd5e', 'polymorph'],
-          width: 900,
-          template: 'systems/dnd5e/templates/apps/polymorph-prompt.hbs',
-        }
-      ).render(true);
+      if (!settings) {
+        return;
+      }
+
+      await game.settings.set(
+        'dnd5e',
+        'transformationSettings',
+        settings.toObject()
+      );
+
+      return this.actor.transformInto(actor, settings);
     }
 
     async _onDropItem(
