@@ -843,7 +843,7 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
       const siblings = this.item.system.activities.filter(
         (a: any) => a._id !== id
       );
-      const sortUpdates = SortingHelpers.performIntegerSort(source, {
+      const sortUpdates = foundry.utils.SortingHelpers.performIntegerSort(source, {
         target,
         siblings,
       });

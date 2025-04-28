@@ -1376,7 +1376,7 @@ export const FoundryAdapter = {
     }
 
     // Perform the sort
-    const sortUpdates = SortingHelpers.performIntegerSort(source, {
+    const sortUpdates = foundry.utils.SortingHelpers.performIntegerSort(source, {
       target,
       siblings,
     });

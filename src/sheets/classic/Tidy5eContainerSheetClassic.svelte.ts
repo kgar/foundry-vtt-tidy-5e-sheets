@@ -574,7 +574,7 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
     }
 
     // Perform the sort
-    const sortUpdates = SortingHelpers.performIntegerSort(item, {
+    const sortUpdates = foundry.utils.SortingHelpers.performIntegerSort(item, {
       target,
       siblings,
     });

@@ -152,7 +152,6 @@ declare global {
   var ProseMirror: any;
   var renderTemplate: any;
   var Roll: any;
-  var SortingHelpers: any;
   var ui: any;
 
   interface ArrayConstructor {
