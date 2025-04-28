@@ -56,7 +56,7 @@
     });
     node.addEventListener('keydown', (event) => {
       if (
-        game.keyboard.isModifierActive(KeyboardManager.MODIFIER_KEYS.CONTROL) &&
+        game.keyboard.isModifierActive(foundry.helpers.interaction.KeyboardManager.MODIFIER_KEYS.CONTROL) &&
         event.key === 's'
       ) {
         handleSave();

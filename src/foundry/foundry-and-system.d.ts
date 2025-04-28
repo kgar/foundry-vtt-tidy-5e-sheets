@@ -131,13 +131,11 @@ declare global {
   var fromUuidSync: any;
   var game: any;
   var getDocumentClass: (className: string) => any;
-  var HandlebarsHelpers: any;
   var Hooks: any;
   var HTMLSecret: any;
   var ImagePopout: any;
   var Item: any;
   var Items: any;
-  var KeyboardManager: any;
   var ModuleManagement: any;
   var ProseMirror: any;
   var renderTemplate: any;

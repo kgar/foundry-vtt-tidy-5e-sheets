@@ -125,7 +125,7 @@ export const FoundryAdapter = {
     targetDataField: string,
     editable: boolean
   ) {
-    return HandlebarsHelpers.editor(content, {
+    return foundry.applications.handlebars.editor(content, {
       hash: {
         target: targetDataField,
         button: true,
