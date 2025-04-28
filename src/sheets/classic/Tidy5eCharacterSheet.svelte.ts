@@ -1865,6 +1865,10 @@ export class Tidy5eCharacterSheet
       return;
     }
 
+    if (data.type === CONSTANTS.DOCUMENT_NAME_ACTOR) {
+      return super._onDrop(event);
+    }
+
     const doc = await fromUuid(data.uuid);
     let relativeUuid = AttributePins.getRelativeUUID(doc);
 
