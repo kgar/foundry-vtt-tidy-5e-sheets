@@ -157,15 +157,15 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     };
 
     const enriched = {
-      description: await TextEditor.enrichHTML(
+      description: await foundry.applications.ux.TextEditor.enrichHTML(
         this.document.system.description.value,
         enrichmentOptions
       ),
-      unidentified: await TextEditor.enrichHTML(
+      unidentified: await foundry.applications.ux.TextEditor.enrichHTML(
         this.document.system.unidentified?.description,
         enrichmentOptions
       ),
-      chat: await TextEditor.enrichHTML(
+      chat: await foundry.applications.ux.TextEditor.enrichHTML(
         this.document.system.description.chat,
         enrichmentOptions
       ),
@@ -803,7 +803,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
   async _onDrop(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
   ) {
-    const data = TextEditor.getDragEventData(event);
+    const data = foundry.applications.ux.TextEditor.getDragEventData(event);
     const item = this.item;
 
     const allowed = TidyHooks.dnd5eDropItemSheetData(item, this, data);

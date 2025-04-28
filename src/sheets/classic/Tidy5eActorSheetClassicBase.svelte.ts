@@ -89,7 +89,7 @@ export class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
       allowEffectsManagement: true,
       appId: this.appId,
-      biographyHTML: await TextEditor.enrichHTML(
+      biographyHTML: await foundry.applications.ux.TextEditor.enrichHTML(
         this.actor.system.details.biography.value,
         {
           secrets: this.actor.isOwner,

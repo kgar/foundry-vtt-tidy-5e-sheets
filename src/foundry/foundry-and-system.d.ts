@@ -145,7 +145,6 @@ declare global {
   var renderTemplate: any;
   var Roll: any;
   var SortingHelpers: any;
-  var TextEditor: any;
   var ui: any;
 
   interface ArrayConstructor {

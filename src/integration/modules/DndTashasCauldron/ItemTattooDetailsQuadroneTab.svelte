@@ -22,11 +22,11 @@
     return { value, label: CONFIG.DND5E.spellLevels[value] };
   });
 
-  let attuneHtmlPromise = TextEditor.enrichHTML(
+  let attuneHtmlPromise = foundry.applications.ux.TextEditor.enrichHTML(
     `&Reference[tattoo]{${game.i18n.localize('DND5E.Attunement')}}`,
   );
 
-  let spellwroughtHtmlPromise = TextEditor.enrichHTML(
+  let spellwroughtHtmlPromise = foundry.applications.ux.TextEditor.enrichHTML(
     `&Reference[spellwrought]{${game.i18n.localize('TCOE.Tattoo.Type')}}`,
   );
 </script>

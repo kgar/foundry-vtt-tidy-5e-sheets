@@ -743,7 +743,7 @@ export class Tidy5eCharacterSheet
       ),
       attributePins: [],
       bastion: {
-        description: await TextEditor.enrichHTML(
+        description: await foundry.applications.ux.TextEditor.enrichHTML(
           this.actor.system.bastion.description,
           {
             secrets: this.actor.isOwner,

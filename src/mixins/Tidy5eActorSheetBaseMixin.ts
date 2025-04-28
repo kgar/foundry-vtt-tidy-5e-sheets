@@ -110,7 +110,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
       event: DragEvent & { currentTarget: HTMLElement }
     ): Promise<any> {
       this._currentDragEvent = event;
-      const data = TextEditor.getDragEventData(event);
+      const data = foundry.applications.ux.TextEditor.getDragEventData(event);
       const actor = this.actor;
       // TODO: Extract hook call
       const allowed = Hooks.call('dropActorSheetData', actor, this, data);

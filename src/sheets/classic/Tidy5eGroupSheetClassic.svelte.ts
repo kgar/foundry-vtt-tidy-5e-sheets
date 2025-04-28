@@ -209,7 +209,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       xp = this.actor.system.details.xp;
     }
 
-    const descriptionFullEnrichedHtml = await TextEditor.enrichHTML(
+    const descriptionFullEnrichedHtml = await foundry.applications.ux.TextEditor.enrichHTML(
       this.actor.system.description.full,
       {
         secrets: this.actor.isOwner,

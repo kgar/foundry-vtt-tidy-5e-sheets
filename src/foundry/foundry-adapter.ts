@@ -846,7 +846,7 @@ export const FoundryAdapter = {
     return average;
   },
   enrichHtml(value: string, options?: any): Promise<string> {
-    return TextEditor.enrichHTML(value, options);
+    return foundry.applications.ux.TextEditor.enrichHTML(value, options);
   },
   createAdvancementSelectionDialog(item: any) {
     return game.dnd5e.applications.advancement.AdvancementSelection.createDialog(
