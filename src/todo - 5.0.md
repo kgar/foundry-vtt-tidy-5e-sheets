@@ -1,6 +1,6 @@
 ## To Fix
 
-- World Settings buttons are wonky in App V2; height issues, flex issues
+- World Settings / User Settings buttons are wonky in App V2; height issues, flex issues
 - World Settings Custom Sections Add button doesn't re-sync the UI
 - (hightouch) the radio buttons on Foundry 13 are wonky / see container sort longpress menu
 
