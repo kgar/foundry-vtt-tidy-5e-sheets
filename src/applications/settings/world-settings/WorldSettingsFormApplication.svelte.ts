@@ -23,7 +23,7 @@ import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRun
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 
-export class Fred extends SvelteApplicationMixin<
+export class WorldSettingsFormApplication extends SvelteApplicationMixin<
   Partial<ApplicationConfiguration> | undefined,
   WorldSettingsContext
 >(foundry.applications.api.ApplicationV2) {
@@ -33,39 +33,27 @@ export class Fred extends SvelteApplicationMixin<
     classes: [
       CONSTANTS.MODULE_ID,
       'settings',
-      'app-v1',
-      CONSTANTS.SHEET_LAYOUT_CLASSIC
+      'app-v2',
+      'application-shell',
+      CONSTANTS.SHEET_LAYOUT_CLASSIC,
     ],
-    
-  }
-}
-
-export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
-  unchangedSettings?: CurrentSettings;
-  context = $state<WorldSettingsContext>();
-
-  static get defaultOptions() {
-    return {
-      ...super.defaultOptions,
-      height: 750,
+    tag: 'div',
+    window: {
+      frame: true,
+      positioned: true,
+      resizable: true,
+      controls: [],
       title: 'TIDY5E.WorldSettings.Menu.title',
+    },
+    position: {
       width: 750,
-      classes: [
-        ...super.defaultOptions.classes,
-        'settings',
-        'app-v1',
-        CONSTANTS.SHEET_LAYOUT_CLASSIC,
-      ],
-      id: 'tidy-5e-sheets-world-settings',
-      popOut: true,
-    };
-  }
+      height: 750,
+    },
+    actions: {},
+    submitOnClose: false,
+  };
 
-  get template() {
-    return FoundryAdapter.getTemplate('empty-form-template.hbs');
-  }
-
-  getData(): WorldSettingsContext {
+  async _prepareContext() {
     const currentSettings = getCurrentSettings();
 
     return {
@@ -137,15 +125,11 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
     };
   }
 
-  createComponent(node: HTMLElement): Record<string, any> {
-    this.context = this.getData();
-
-    debug('World Settings context data', this.context);
-
+  _createComponent(node: HTMLElement): Record<string, any> {
     return mount(WorldSettings, {
       target: node,
       context: new Map<any, any>([
-        ['context', this.context],
+        ['context', this._context.data],
         [
           'functions',
           {
@@ -235,39 +219,39 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
   }
 
   async applyChangedSettings() {
-    if (!this.context || !this.validate(this.context)) {
+    if (!this._context.data || !this.validate(this._context.data)) {
       return false;
     }
 
-    if (this.context.exhaustionConfig.type === 'specific') {
-      this.context.exhaustionConfig.hints =
-        this.context.exhaustionConfig.hints.slice(
+    if (this._context.data.exhaustionConfig.type === 'specific') {
+      this._context.data.exhaustionConfig.hints =
+        this._context.data.exhaustionConfig.hints.slice(
           0,
-          this.context.exhaustionConfig.levels + 1
+          this._context.data.exhaustionConfig.levels + 1
         );
     }
 
-    if (this.context.vehicleExhaustionConfig.type === 'specific') {
-      this.context.vehicleExhaustionConfig.hints =
-        this.context.vehicleExhaustionConfig.hints.slice(
+    if (this._context.data.vehicleExhaustionConfig.type === 'specific') {
+      this._context.data.vehicleExhaustionConfig.hints =
+        this._context.data.vehicleExhaustionConfig.hints.slice(
           0,
-          this.context.vehicleExhaustionConfig.levels + 1
+          this._context.data.vehicleExhaustionConfig.levels + 1
         );
     }
 
     const newSettings: Partial<CurrentSettings> = {
-      ...this.context.settings,
-      defaultCharacterSheetTabs: this.context.defaultCharacterTabs.selected.map(
+      ...this._context.data.settings,
+      defaultCharacterSheetTabs: this._context.data.defaultCharacterTabs.selected.map(
         (t) => t.id
       ),
-      defaultNpcSheetTabs: this.context.defaultNpcTabs.selected.map(
+      defaultNpcSheetTabs: this._context.data.defaultNpcTabs.selected.map(
         (t) => t.id
       ),
-      defaultVehicleSheetTabs: this.context.defaultVehicleTabs.selected.map(
+      defaultVehicleSheetTabs: this._context.data.defaultVehicleTabs.selected.map(
         (t) => t.id
       ),
-      exhaustionConfig: this.context.exhaustionConfig,
-      vehicleExhaustionConfig: this.context.vehicleExhaustionConfig,
+      exhaustionConfig: this._context.data.exhaustionConfig,
+      vehicleExhaustionConfig: this._context.data.vehicleExhaustionConfig,
     };
 
     const currentSettings = getCurrentSettings();
@@ -296,13 +280,13 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
   }
 
   resetDefaultTabs(actorType: string) {
-    if (!this.context) {
+    if (!this._context.data) {
       return;
     }
 
     switch (actorType) {
       case CONSTANTS.SHEET_TYPE_CHARACTER:
-        this.context.defaultCharacterTabs = this.mapTabSelectionFields(
+        this._context.data.defaultCharacterTabs = this.mapTabSelectionFields(
           CharacterSheetClassicRuntime.getAllRegisteredTabs(),
           [
             ...SettingsProvider.settings.defaultCharacterSheetTabs.options
@@ -311,13 +295,13 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
         );
         break;
       case CONSTANTS.SHEET_TYPE_NPC:
-        this.context.defaultNpcTabs = this.mapTabSelectionFields(
+        this._context.data.defaultNpcTabs = this.mapTabSelectionFields(
           NpcSheetClassicRuntime.getAllRegisteredTabs(),
           [...SettingsProvider.settings.defaultNpcSheetTabs.options.default]
         );
         break;
       case CONSTANTS.SHEET_TYPE_VEHICLE:
-        this.context.defaultVehicleTabs = this.mapTabSelectionFields(
+        this._context.data.defaultVehicleTabs = this.mapTabSelectionFields(
           VehicleSheetClassicRuntime.getAllRegisteredTabs(),
           [...SettingsProvider.settings.defaultVehicleSheetTabs.options.default]
         );
