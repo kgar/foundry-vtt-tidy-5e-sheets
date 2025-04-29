@@ -1,6 +1,5 @@
 ## To Fix
 
-- Quadrone - currency conversion button is broken
 - All pinned and advanced filters are gone.
 - p.hint is imperceptible in dark mode app v1
 - vehicle sheet / stock prose mirror editor: edit button is nonresponsive
