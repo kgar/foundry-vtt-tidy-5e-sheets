@@ -20,6 +20,7 @@ export class UserSettingsFormApplication extends SvelteApplicationMixin<
   UserSettingsContext
 >(foundry.applications.api.ApplicationV2) {
   initialTabId: string;
+  context = $state<UserSettingsContext>();
 
   constructor(initialTabId: string, args?: Partial<ApplicationConfiguration>) {
     super(args);
@@ -101,10 +102,13 @@ export class UserSettingsFormApplication extends SvelteApplicationMixin<
   }
 
   _createComponent(node: HTMLElement): Record<string, any> {
+    // Temporary fix due to strange reactivity issues with coarse reactivity provider
+    this.context = this._context.data;
+    
     return mount(UserSettings, {
       target: node,
       context: new Map<any, any>([
-        ['context', this._context.data],
+        ['context', this.context],
         [
           'functions',
           {

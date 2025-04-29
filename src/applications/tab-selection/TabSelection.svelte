@@ -49,7 +49,7 @@
     >
     <span>{localize('TIDY5E.TabSelection.Explanation')}</span>
   </p>
-  <div class="flex-row small-gap">
+  <div class="button-bar flex-row small-gap">
     <button
       type="button"
       class="use-default-btn"
@@ -84,6 +84,13 @@
     i {
       font-size: 1.5rem;
       color: var(--t5e-secondary-color);
+    }
+  }
+
+  .button-bar {
+    button {
+      flex: 1;
+      min-height: 2rem;
     }
   }
 </style>

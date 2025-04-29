@@ -188,6 +188,8 @@
 
       button {
         margin: 0;
+        flex: 1;
+        min-height: 2rem;
       }
     }
   }

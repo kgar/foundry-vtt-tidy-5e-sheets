@@ -28,6 +28,7 @@ export class WorldSettingsFormApplication extends SvelteApplicationMixin<
   WorldSettingsContext
 >(foundry.applications.api.ApplicationV2) {
   unchangedSettings?: CurrentSettings;
+  context = $state<WorldSettingsContext>();
 
   static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
     classes: [
@@ -126,10 +127,13 @@ export class WorldSettingsFormApplication extends SvelteApplicationMixin<
   }
 
   _createComponent(node: HTMLElement): Record<string, any> {
+    // This is a temporary fix for reactivity issues surrounding the coarse reactivity provider.
+    this.context = this._context.data;
+
     return mount(WorldSettings, {
       target: node,
       context: new Map<any, any>([
-        ['context', this._context.data],
+        ['context', this.context],
         [
           'functions',
           {
@@ -219,39 +223,39 @@ export class WorldSettingsFormApplication extends SvelteApplicationMixin<
   }
 
   async applyChangedSettings() {
-    if (!this._context.data || !this.validate(this._context.data)) {
+    if (!this.context || !this.validate(this.context)) {
       return false;
     }
 
-    if (this._context.data.exhaustionConfig.type === 'specific') {
-      this._context.data.exhaustionConfig.hints =
-        this._context.data.exhaustionConfig.hints.slice(
+    if (this.context.exhaustionConfig.type === 'specific') {
+      this.context.exhaustionConfig.hints =
+        this.context.exhaustionConfig.hints.slice(
           0,
-          this._context.data.exhaustionConfig.levels + 1
+          this.context.exhaustionConfig.levels + 1
         );
     }
 
-    if (this._context.data.vehicleExhaustionConfig.type === 'specific') {
-      this._context.data.vehicleExhaustionConfig.hints =
-        this._context.data.vehicleExhaustionConfig.hints.slice(
+    if (this.context.vehicleExhaustionConfig.type === 'specific') {
+      this.context.vehicleExhaustionConfig.hints =
+        this.context.vehicleExhaustionConfig.hints.slice(
           0,
-          this._context.data.vehicleExhaustionConfig.levels + 1
+          this.context.vehicleExhaustionConfig.levels + 1
         );
     }
 
     const newSettings: Partial<CurrentSettings> = {
-      ...this._context.data.settings,
-      defaultCharacterSheetTabs: this._context.data.defaultCharacterTabs.selected.map(
+      ...this.context.settings,
+      defaultCharacterSheetTabs: this.context.defaultCharacterTabs.selected.map(
         (t) => t.id
       ),
-      defaultNpcSheetTabs: this._context.data.defaultNpcTabs.selected.map(
+      defaultNpcSheetTabs: this.context.defaultNpcTabs.selected.map(
         (t) => t.id
       ),
-      defaultVehicleSheetTabs: this._context.data.defaultVehicleTabs.selected.map(
+      defaultVehicleSheetTabs: this.context.defaultVehicleTabs.selected.map(
         (t) => t.id
       ),
-      exhaustionConfig: this._context.data.exhaustionConfig,
-      vehicleExhaustionConfig: this._context.data.vehicleExhaustionConfig,
+      exhaustionConfig: this.context.exhaustionConfig,
+      vehicleExhaustionConfig: this.context.vehicleExhaustionConfig,
     };
 
     const currentSettings = getCurrentSettings();
@@ -280,13 +284,13 @@ export class WorldSettingsFormApplication extends SvelteApplicationMixin<
   }
 
   resetDefaultTabs(actorType: string) {
-    if (!this._context.data) {
+    if (!this.context) {
       return;
     }
 
     switch (actorType) {
       case CONSTANTS.SHEET_TYPE_CHARACTER:
-        this._context.data.defaultCharacterTabs = this.mapTabSelectionFields(
+        this.context.defaultCharacterTabs = this.mapTabSelectionFields(
           CharacterSheetClassicRuntime.getAllRegisteredTabs(),
           [
             ...SettingsProvider.settings.defaultCharacterSheetTabs.options
@@ -295,13 +299,13 @@ export class WorldSettingsFormApplication extends SvelteApplicationMixin<
         );
         break;
       case CONSTANTS.SHEET_TYPE_NPC:
-        this._context.data.defaultNpcTabs = this.mapTabSelectionFields(
+        this.context.defaultNpcTabs = this.mapTabSelectionFields(
           NpcSheetClassicRuntime.getAllRegisteredTabs(),
           [...SettingsProvider.settings.defaultNpcSheetTabs.options.default]
         );
         break;
       case CONSTANTS.SHEET_TYPE_VEHICLE:
-        this._context.data.defaultVehicleTabs = this.mapTabSelectionFields(
+        this.context.defaultVehicleTabs = this.mapTabSelectionFields(
           VehicleSheetClassicRuntime.getAllRegisteredTabs(),
           [...SettingsProvider.settings.defaultVehicleSheetTabs.options.default]
         );
