@@ -1,6 +1,6 @@
 /// <reference path="./foundry.data.fields.types.d.ts" />
 
-declare module 'dnd5e.data.fields' {
+declare module 'dnd5e.dataModels.fields' {
   type MappingFieldInitialValueBuilder = (
     key: string,
     initial: any,

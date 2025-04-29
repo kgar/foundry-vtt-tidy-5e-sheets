@@ -527,28 +527,19 @@ export abstract class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
 
     // Character Flags - don't be fooled by the config prop name. It's for PCs and NPCs.
     for (const [key, config] of Object.entries(CONFIG.DND5E.characterFlags)) {
+      const fieldOptions = { label: config.name, hint: config.hint };
+
       const flag: SpecialTraitSectionField = {
-        field: '',
+        field:
+          'type' in config && config.type === Boolean
+            ? new foundry.data.fields.BooleanField(fieldOptions)
+            : 'type' in config && config.type === Number
+            ? new foundry.data.fields.NumberField(fieldOptions)
+            : new foundry.data.fields.StringField(fieldOptions),
         ...config,
         name: `flags.dnd5e.${key}`,
         value: foundry.utils.getProperty(context.flags.data, key),
       };
-      const fieldOptions = { label: config.name, hint: config.hint };
-
-      let type: any = undefined;
-      if ('type' in config) {
-        type = config.type;
-      }
-
-      if ('type' in config && config.type === Boolean) {
-        flag.field = new foundry.data.fields.BooleanField(fieldOptions);
-      } else if ('type' in config && config.type === Number)
-        flag.field = new foundry.data.fields.NumberField(fieldOptions);
-      else {
-        flag.field = new foundry.data.fields.StringField(fieldOptions);
-      }
-
-      const fred = new foundry.data.fields.StringField(fieldOptions);
 
       sections[config.section] ??= [];
       sections[config.section].push(flag);
@@ -571,10 +562,13 @@ export abstract class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
         });
       }
     };
+
     addBonus(this.document.system.schema.fields.bonuses);
-    if (globals.length)
+
+    if (globals.length) {
       sections[game.i18n.localize('DND5E.BONUSES.FIELDS.bonuses.label')] =
         globals;
+    }
 
     context.flags.sections = Object.entries(sections).map(
       ([label, fields]) => ({

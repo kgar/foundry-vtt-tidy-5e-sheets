@@ -15,6 +15,7 @@ import type { CONSTANTS } from 'src/constants';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import type { AttributePinFlag } from 'src/foundry/TidyFlags.types';
+import type { DataField } from 'foundry.data.fields';
 
 export type Actor5e = any;
 export type TokenDocument = any;
@@ -598,7 +599,7 @@ export type EncumbranceContext = {
 };
 
 export type SpecialTraitSectionField = {
-  field: any; // A data field subclass from Foundry or dnd5e
+  field: DataField; // A data field subclass from Foundry or dnd5e
   hint?: string;
   input?: any; // A function that receives field and config; e.g., createCheckboxInput(field, config)
   name: string;

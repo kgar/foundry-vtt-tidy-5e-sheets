@@ -326,6 +326,8 @@ declare module 'foundry.data.fields' {
     applyChange(value: any, model: DataModel, change: EffectChangeData): any;
   }
 
+  interface DataField extends DataFieldOptions {}
+
   type ElementType = DataField;
 
   // Foundry
@@ -345,18 +347,30 @@ declare module 'foundry.data.fields' {
     migrateSource(sourceData: object, fieldData: any): void;
   }
   declare class BooleanField extends DataField {}
-  declare class NumberField extends DataField {}
+  declare class NumberField extends DataField {
+    constructor(
+      options: NumberFieldOptions = {},
+      context: DataFieldContext = {}
+    );
+    options: NumberFieldOptions;
+  }
+
+  interface NumberField extends NumberFieldOptions {}
+
   declare class StringField extends DataField {
     constructor(
       options: StringFieldOptions = {},
       context: DataFieldContext = {}
     );
 
+    options: StringFieldOptions;
     blank: boolean;
     trim: boolean;
-    choices: string[] | object | Function;
     textSearch: boolean;
   }
+
+  interface StringField extends StringFieldOptions {}
+
   declare class ObjectField extends DataField {}
   declare class TypedObjectField extends ObjectField {
     element: DataField;
@@ -368,8 +382,12 @@ declare module 'foundry.data.fields' {
       context: DataFieldContext = {}
     ): ArrayField;
 
+    options: ArrayFieldOptions;
     element: ElementType;
   }
+
+  interface ArrayField extends ArrayFieldOptions {}
+
   declare class SetField extends ArrayField {}
   declare class EmbeddedDataField extends SchemaField {
     constructor(
@@ -414,7 +432,11 @@ declare module 'foundry.data.fields' {
       options: FilePathFieldOptions = {},
       context: DataFieldContext = {}
     ): FilePathField;
+    options: FilePathFieldOptions;
   }
+
+  interface FilePathField extends FilePathFieldOptions {}
+
   declare class AngleField extends NumberField {}
   declare class AlphaField extends NumberField {}
   declare class HueField extends NumberField {}
@@ -436,6 +458,9 @@ declare module 'foundry.data.fields' {
       context: DataFieldContext = {}
     ): DocumentTypeField;
   }
+
+  interface DocumentTypeField extends StringFieldOptions {}
+
   declare class TypeDataField extends ObjectField {
     constructor(
       document: typeof FoundryDocument,
@@ -464,5 +489,8 @@ declare module 'foundry.data.fields' {
       options: JavaScriptFieldOptions = {},
       context: DataFieldContext = {}
     ): JavaScriptField;
+    options: JavaScriptFieldOptions;
   }
+
+  interface JavaScriptField extends JavaScriptFieldOptions {}
 }

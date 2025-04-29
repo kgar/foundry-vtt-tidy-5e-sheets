@@ -51,7 +51,7 @@ import {
   IdentifierField,
   LocalDocumentField,
   MappingField,
-} from 'dnd5e.data.fields';
+} from 'dnd5e.dataModels.fields';
 
 import type { CONFIG } from './config.types';
 
@@ -72,7 +72,7 @@ declare global {
   var debounce: any;
   var Dialog: any;
   var dnd5e: {
-    data: {
+    dataModels: {
       fields: {
         AdvancementDataField: typeof AdvancementDataField;
         AdvancementField: typeof AdvancementField;
@@ -83,7 +83,7 @@ declare global {
         MappingField: typeof MappingField;
       };
     };
-  } & any;
+  } & Record<string, any>;
   var DocumentSheet: any;
   var Folder: any;
   var FormApplication: any;
