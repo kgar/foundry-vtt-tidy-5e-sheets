@@ -1,5 +1,9 @@
 import type { CustomHeaderControlsEntry } from 'src/api/api.types';
 
+/** For use with Tidy applications that apply updates to a document but are not necessarily full-fledged sheets. */
+export type DocumentSheetApplicationConfiguration =
+  Partial<ApplicationConfiguration> & { document: any };
+
 export type DocumentSheetConfiguration = {
   document: any;
   viewPermission: number;
