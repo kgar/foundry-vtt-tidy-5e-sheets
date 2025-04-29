@@ -77,6 +77,7 @@
       padding-right: 0.25rem;
       border: 0.0625rem solid var(--t5e-light-color);
       font-size: 0.75rem;
+      min-height: 1.5rem;
 
       &:focus,
       &:hover {
