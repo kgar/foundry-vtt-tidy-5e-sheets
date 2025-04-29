@@ -56,6 +56,7 @@ import { ItemContext } from 'src/features/item/ItemContext';
 import { splitSemicolons } from 'src/utils/array';
 import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
 import { Tidy5eActorSheetClassicBase } from './Tidy5eActorSheetClassicBase.svelte';
+import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 
 export class Tidy5eNpcSheet
   extends Tidy5eActorSheetClassicBase
@@ -799,6 +800,9 @@ export class Tidy5eNpcSheet
       utilities: utilities,
       ...defaultDocumentContext,
     };
+
+    context.filterData = this.itemFilterService.getDocumentItemFilterData();
+    context.filterPins = ItemFilterRuntime.defaultFilterPins[this.actor.type];
 
     context.customActorTraits = CustomActorTraitsRuntime.getEnabledTraits(
       defaultDocumentContext

@@ -51,6 +51,7 @@ import { ItemContext } from 'src/features/item/ItemContext';
 import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
 import { Tidy5eActorSheetClassicBase } from './Tidy5eActorSheetClassicBase.svelte';
 import { Inventory } from 'src/features/sections/Inventory';
+import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 
 export class Tidy5eVehicleSheet
   extends Tidy5eActorSheetClassicBase
@@ -324,6 +325,9 @@ export class Tidy5eVehicleSheet
       utilities: utilities,
       ...defaultDocumentContext,
     };
+
+    context.filterData = this.itemFilterService.getDocumentItemFilterData();
+    context.filterPins = ItemFilterRuntime.defaultFilterPins[this.actor.type];
 
     context.useClassicControls = settings.value.useClassicControlsForVehicle;
 

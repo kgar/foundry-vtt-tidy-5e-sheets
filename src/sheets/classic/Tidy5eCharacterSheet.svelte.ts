@@ -70,6 +70,7 @@ import { AttributePins } from 'src/features/attribute-pins/AttributePins';
 import type { AttributePinFlag } from 'src/foundry/TidyFlags.types';
 import { ItemContext } from 'src/features/item/ItemContext';
 import { Tidy5eActorSheetClassicBase } from './Tidy5eActorSheetClassicBase.svelte';
+import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 
 export class Tidy5eCharacterSheet
   extends Tidy5eActorSheetClassicBase
@@ -860,6 +861,9 @@ export class Tidy5eCharacterSheet
       utilities: utilities,
       ...defaultDocumentContext,
     };
+
+    context.filterData = this.itemFilterService.getDocumentItemFilterData();
+    context.filterPins = ItemFilterRuntime.defaultFilterPins[this.actor.type];
 
     context.allowEffectsManagement =
       FoundryAdapter.allowCharacterEffectsManagement(this.actor);
