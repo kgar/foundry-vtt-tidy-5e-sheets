@@ -156,10 +156,45 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
       const canPolymorph =
         game.user.isGM ||
         (this.actor.isOwner && game.settings.get('dnd5e', 'allowPolymorphing'));
-      if (!canPolymorph) return false;
 
-      // Get the target actor
+      if (!canPolymorph) {
+        return false;
+      }
+
+      if (!dnd5e.applications?.actor?.TransformDialog) {
+        return await this.doLegacyTransformation(data);
+      }
+
+      const droppedActor = await fromUuid(data.uuid);
+
+      // Configure the transformation
+      const settings =
+        await dnd5e.applications.actor.TransformDialog.promptSettings(
+          this.actor,
+          droppedActor,
+          {
+            transform: {
+              settings: game.settings.get('dnd5e', 'transformationSettings'),
+            },
+          }
+        );
+
+      if (!settings) {
+        return;
+      }
+
+      await game.settings.set(
+        'dnd5e',
+        'transformationSettings',
+        settings.toObject()
+      );
+
+      return this.actor.transformInto(droppedActor, settings);
+    }
+
+    async doLegacyTransformation(data: any) {
       const cls = getDocumentClass('Actor');
+
       const sourceActor = await cls.fromDropData(data);
       if (!sourceActor) return;
 
