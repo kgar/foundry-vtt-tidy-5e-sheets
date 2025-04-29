@@ -170,7 +170,7 @@
   {#if context.properties.object.mgc}
     <div class="form-group split-group">
       <label for="{appId}-attunement"
-        >{localize('DND5E.Item.Property.Magical')}</label
+        >{localize('DND5E.ITEM.Property.Magical')}</label
       >
       <div class="form-fields">
         {#if !context.item.isMountable}
