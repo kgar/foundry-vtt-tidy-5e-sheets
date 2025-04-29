@@ -21,7 +21,7 @@ export class UserSettingsFormApplication extends SvelteApplicationMixin<
 >(foundry.applications.api.ApplicationV2) {
   initialTabId: string;
 
-  constructor(initialTabId: string, args: Partial<ApplicationConfiguration>) {
+  constructor(initialTabId: string, args?: Partial<ApplicationConfiguration>) {
     super(args);
     this.initialTabId = initialTabId ?? CONSTANTS.TAB_USER_SETTINGS_PLAYERS;
   }

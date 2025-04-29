@@ -31,7 +31,7 @@ export function SvelteApplicationMixin<
   TContext extends any = {}
 >(BaseApplication: any) {
   class SvelteApplication extends BaseApplication {
-    constructor(args: TConstructorArgs) {
+    constructor(args?: TConstructorArgs) {
       super(args);
     }
 
