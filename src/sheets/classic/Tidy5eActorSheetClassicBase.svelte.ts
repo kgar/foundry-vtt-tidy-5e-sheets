@@ -35,9 +35,8 @@ export abstract class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
 
   /**
    * A set of item types that should be prevented from being dropped on this type of actor sheet.
-   * @type {Set<string>}
    */
-  static unsupportedItemTypes = new Set();
+  static unsupportedItemTypes: Set<string> = new Set();
 
   async getData(options: any): Promise<ActorSheetContextV1> {
     // The Actor's data
@@ -558,14 +557,19 @@ export abstract class Tidy5eActorSheetClassicBase extends ActorSheetAppV1 {
     // Global Bonuses
     const globals: SpecialTraitSectionField[] = [];
     const addBonus = (field: any) => {
-      if (field instanceof foundry.data.fields.SchemaField)
+      if (field === undefined) {
+        return;
+      }
+
+      if (field instanceof foundry.data.fields.SchemaField) {
         Object.values(field.fields).forEach((f) => addBonus(f));
-      else
+      } else {
         globals.push({
           field,
           name: field.fieldPath,
           value: foundry.utils.getProperty(source, field.fieldPath),
         });
+      }
     };
     addBonus(this.document.system.schema.fields.bonuses);
     if (globals.length)
