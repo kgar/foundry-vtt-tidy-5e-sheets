@@ -20,6 +20,25 @@ import { debug, error } from 'src/utils/logging';
 import { CONSTANTS } from 'src/constants';
 import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
 import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
+import type { ApplicationConfiguration } from 'src/types/application.types';
+import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+
+export class Fred extends SvelteApplicationMixin<
+  Partial<ApplicationConfiguration> | undefined,
+  WorldSettingsContext
+>(foundry.applications.api.ApplicationV2) {
+  unchangedSettings?: CurrentSettings;
+
+  static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
+    classes: [
+      CONSTANTS.MODULE_ID,
+      'settings',
+      'app-v1',
+      CONSTANTS.SHEET_LAYOUT_CLASSIC
+    ],
+    
+  }
+}
 
 export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
   unchangedSettings?: CurrentSettings;
