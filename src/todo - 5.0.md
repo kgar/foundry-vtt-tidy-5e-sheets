@@ -1,7 +1,6 @@
 ## To Fix
 
 - [ ] Convert to App V2
-  - [ ] Max Prepared Spells Config
   - [ ] Migrations
   - [ ] etc.
 - [ ] Convert Character sheet to App V2
