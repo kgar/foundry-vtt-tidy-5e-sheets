@@ -1,7 +1,6 @@
 ## To Fix
 
 - [ ] Convert to App V2
-  - [ ] Configure Section
   - [ ] Set Tidy as Default Sheet
   - [ ] Max Prepared Spells Config
   - [ ] Migrations

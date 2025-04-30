@@ -21,6 +21,7 @@
   import OccupantSummaryTooltip from 'src/tooltips/OccupantSummaryTooltip.svelte';
   import { Tooltip } from 'src/tooltips/Tooltip';
   import { settings } from 'src/settings/settings.svelte';
+  import { getThemeV2 } from 'src/theme/theme';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -102,7 +103,11 @@
 
     await tick();
 
-    Tooltip.show(currentTarget, occupantSummaryTooltip.getMarkup());
+    Tooltip.show(
+      currentTarget,
+      occupantSummaryTooltip.getMarkup(),
+      getThemeV2(context.item),
+    );
   }
 </script>
 

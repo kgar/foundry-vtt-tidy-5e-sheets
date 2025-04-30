@@ -1,5 +1,6 @@
 <script lang="ts">
   import { getGroupSheetClassicContext } from 'src/sheets/sheet-context.svelte';
+  import { getThemeV2 } from 'src/theme/theme';
   import GroupSkillTooltip from 'src/tooltips/GroupSkillTooltip.svelte';
   import { Tooltip } from 'src/tooltips/Tooltip';
   import type { GroupSkill } from 'src/types/group.types';
@@ -30,7 +31,11 @@
 
     await tick();
 
-    Tooltip.show(target, groupSkillTooltip.getMarkup());
+    Tooltip.show(
+      target,
+      groupSkillTooltip.getMarkup(),
+      getThemeV2(context.actor),
+    );
   }
 </script>
 

@@ -1,34 +1,58 @@
 import { mount } from 'svelte';
-import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
 import DocumentTabSectionConfig from './DocumentTabSectionConfig.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { Actor5e, TidySectionBase } from 'src/types/types';
+import type { TidySectionBase } from 'src/types/types';
 import type { DocumentTabSectionConfigItem } from './section-config.types';
-import type { Item5e } from 'src/types/item.types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { SectionConfig } from 'src/features/sections/sections.types';
+import type {
+  ApplicationConfiguration,
+  DocumentSheetApplicationConfiguration,
+} from 'src/types/application.types';
+import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { CONSTANTS } from 'src/constants';
 
 type SectionConfigConstructorArgs = {
-  document: Actor5e | Item5e;
   sections: TidySectionBase[];
   tabId: string;
   tabTitle: string;
 };
 
-export class DocumentTabSectionConfigApplication extends SvelteFormApplicationBase {
-  document: Actor5e | Item5e;
+export class DocumentTabSectionConfigApplication extends SvelteApplicationMixin<
+  DocumentSheetApplicationConfiguration | undefined,
+  {}
+>(foundry.applications.api.DocumentSheetV2) {
   sections = $state<DocumentTabSectionConfigItem[]>()!;
   tabId: string;
   tabTitle: string;
 
-  constructor({
-    document,
-    sections,
-    tabId,
-    tabTitle,
-  }: SectionConfigConstructorArgs) {
-    super();
-    this.document = document;
+  static DEFAULT_OPTIONS = {
+    classes: [
+      CONSTANTS.MODULE_ID,
+      'application-shell',
+      'tidy-5e-sheets-section-configuration',
+      'app-v2',
+      CONSTANTS.SHEET_LAYOUT_CLASSIC,
+    ],
+    sheetConfig: false,
+    window: {
+      frame: true,
+      positioned: true,
+      resizable: true,
+      controls: [],
+    },
+    position: {
+      height: 650,
+      width: 500,
+    },
+    actions: {},
+  };
+
+  constructor(
+    { sections, tabId, tabTitle }: SectionConfigConstructorArgs,
+    config: DocumentSheetApplicationConfiguration
+  ) {
+    super(config);
     this.sections = sections.map((section) => ({
       key: section.key,
       label: FoundryAdapter.localize(section.label),
@@ -38,22 +62,13 @@ export class DocumentTabSectionConfigApplication extends SvelteFormApplicationBa
     this.tabTitle = tabTitle;
   }
 
-  static get defaultOptions() {
-    return FoundryAdapter.mergeObject(super.defaultOptions, {
-      width: 650,
-      height: 500,
-      id: 'tidy-5e-sheets-section-configuration',
-      popOut: true,
-    });
-  }
-
   get title() {
     return FoundryAdapter.localize('TIDY5E.Section.ConfigDialog.title', {
       tabTitle: this.tabTitle,
     });
   }
 
-  createComponent(node: HTMLElement): Record<string, any> {
+  _createComponent(node: HTMLElement): Record<string, any> {
     return mount(DocumentTabSectionConfig, {
       target: node,
       props: {

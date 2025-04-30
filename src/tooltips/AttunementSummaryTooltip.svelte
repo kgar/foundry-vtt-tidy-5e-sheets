@@ -22,7 +22,7 @@
   <hr />
   <ul>
     {#each attunedItems as item}
-      <li class="flex-row extra-small-gap align-items-center">
+      <li class="image-and-name">
         <img class="item-image" src={item.img} />
         <div class="item-name truncate">{item.name}</div>
       </li>

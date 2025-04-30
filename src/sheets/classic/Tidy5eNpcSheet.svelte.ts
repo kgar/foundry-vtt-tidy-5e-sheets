@@ -355,12 +355,14 @@ export class Tidy5eNpcSheet
             iconClass: 'fas fa-cog',
             execute: ({ context, sections }) => {
               new DocumentTabSectionConfigApplication({
-                document: context.actor,
                 sections: sections,
                 tabId: CONSTANTS.TAB_NPC_ABILITIES,
                 tabTitle: NpcSheetClassicRuntime.getTabTitle(
                   CONSTANTS.TAB_NPC_ABILITIES
                 ),
+              },
+              {
+                document: context.actor,
               }).render(true);
             },
           },
@@ -473,12 +475,14 @@ export class Tidy5eNpcSheet
             iconClass: 'fas fa-cog',
             execute: ({ context, sections }) => {
               new DocumentTabSectionConfigApplication({
-                document: context.actor,
                 sections: sections,
                 tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
                 tabTitle: NpcSheetClassicRuntime.getTabTitle(
                   CONSTANTS.TAB_ACTOR_SPELLBOOK
                 ),
+              },
+              {
+                document: context.actor,
               }).render(true);
             },
           },
@@ -542,12 +546,14 @@ export class Tidy5eNpcSheet
             iconClass: 'fas fa-cog',
             execute: ({ context, sections }) => {
               new DocumentTabSectionConfigApplication({
-                document: context.actor,
                 sections: sections,
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
                 tabTitle: NpcSheetClassicRuntime.getTabTitle(
                   CONSTANTS.TAB_ACTOR_ACTIONS
                 ),
+              },
+              {
+                document: context.actor,
               }).render(true);
             },
           },
@@ -651,12 +657,14 @@ export class Tidy5eNpcSheet
             iconClass: 'fas fa-cog',
             execute: ({ context, sections }) => {
               new DocumentTabSectionConfigApplication({
-                document: context.actor,
                 sections: sections,
                 tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 tabTitle: NpcSheetClassicRuntime.getTabTitle(
                   CONSTANTS.TAB_ACTOR_INVENTORY
                 ),
+              },
+              {
+                document: context.actor,
               }).render(true);
             },
           },

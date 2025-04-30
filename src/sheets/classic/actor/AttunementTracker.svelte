@@ -2,6 +2,7 @@
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getThemeV2 } from 'src/theme/theme';
   import AttunementSummaryTooltip from 'src/tooltips/AttunementSummaryTooltip.svelte';
   import { Tooltip } from 'src/tooltips/Tooltip';
   import type { Item5e } from 'src/types/item.types';
@@ -13,7 +14,8 @@
 
   let { ...rest }: Props = $props();
 
-  let context = $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
+  let context =
+    $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
   const localize = FoundryAdapter.localize;
 
   let attunedItems = $derived(
@@ -33,7 +35,11 @@
       return;
     }
 
-    Tooltip.show(event?.currentTarget, attunementSummaryTooltip.getMarkup());
+    Tooltip.show(
+      event?.currentTarget,
+      attunementSummaryTooltip.getMarkup(),
+      getThemeV2(context.actor),
+    );
   }
 </script>
 

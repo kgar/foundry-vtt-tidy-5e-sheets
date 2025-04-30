@@ -70,7 +70,7 @@
   <div class="flex-row small-gap">
     <button
       type="button"
-      class="use-default-btn"
+      class="use-default-btn flex-1"
       data-testid="section-config-use-default"
       onclick={(ev) => useDefault()}
     >
@@ -81,14 +81,14 @@
       type="button"
       data-testid="section-config-save-changes"
       onclick={(ev) => onSaveChanges(sections)}
-      class="save-changes-btn"
+      class="save-changes-btn flex-1"
     >
       <i class="fas fa-save"></i>
       {localize('TIDY5E.SaveChanges')}
     </button>
     <button
       type="button"
-      class="apply-changes-btn"
+      class="apply-changes-btn flex-1"
       data-testid="section-config-apply-changes"
       onclick={() => onApply(sections)}
     >

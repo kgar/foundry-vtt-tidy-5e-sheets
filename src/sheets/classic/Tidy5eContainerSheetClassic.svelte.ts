@@ -237,7 +237,6 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
             iconClass: 'fas fa-cog',
             execute: ({ context, sections }) => {
               new DocumentTabSectionConfigApplication({
-                document: context.item,
                 // Provide a way to build the necessary config, perhaps within the application constructor. We've got all the info we need in order to perform the operation.
                 sections: sections,
                 tabId: CONSTANTS.TAB_CONTAINER_CONTENTS,
@@ -245,6 +244,9 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
                   CONSTANTS.TAB_CONTAINER_CONTENTS,
                   {}
                 ),
+              },
+              {
+                document: context.item,
               }).render(true);
             },
           },

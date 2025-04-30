@@ -305,12 +305,14 @@ export class Tidy5eVehicleSheet
             iconClass: 'fas fa-cog',
             execute: ({ context, sections }) => {
               new DocumentTabSectionConfigApplication({
-                document: context.actor,
                 sections: sections,
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
                 tabTitle: VehicleSheetClassicRuntime.getTabTitle(
                   CONSTANTS.TAB_ACTOR_ACTIONS
                 ),
+              },
+              {
+                document: context.actor,
               }).render(true);
             },
           },

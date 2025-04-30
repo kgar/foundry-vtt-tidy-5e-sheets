@@ -397,12 +397,14 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
             iconClass: 'fas fa-cog',
             execute: ({ context, sections }) => {
               new DocumentTabSectionConfigApplication({
-                document: context.actor,
                 sections: sections,
                 tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                 tabTitle: GroupSheetClassicRuntime.getTabTitle(
                   CONSTANTS.TAB_ACTOR_INVENTORY
                 ),
+              },
+              {
+                document: context.actor,
               }).render(true);
             },
           },

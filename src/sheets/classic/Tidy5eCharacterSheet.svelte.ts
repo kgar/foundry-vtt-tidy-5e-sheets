@@ -339,15 +339,19 @@ export class Tidy5eCharacterSheet
             ),
             iconClass: 'fas fa-cog',
             execute: ({ context, sections }) => {
-              new DocumentTabSectionConfigApplication({
-                document: context.actor,
-                // Provide a way to build the necessary config, perhaps within the application constructor. We've got all the info we need in order to perform the operation.
-                sections: sections,
-                tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
-                tabTitle: CharacterSheetClassicRuntime.getTabTitle(
-                  CONSTANTS.TAB_CHARACTER_ATTRIBUTES
-                ),
-              }).render(true);
+              new DocumentTabSectionConfigApplication(
+                {
+                  // Provide a way to build the necessary config, perhaps within the application constructor. We've got all the info we need in order to perform the operation.
+                  sections: sections,
+                  tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+                  tabTitle: CharacterSheetClassicRuntime.getTabTitle(
+                    CONSTANTS.TAB_CHARACTER_ATTRIBUTES
+                  ),
+                },
+                {
+                  document: context.actor,
+                }
+              ).render(true);
             },
           },
         ],
@@ -449,14 +453,18 @@ export class Tidy5eCharacterSheet
             ),
             iconClass: 'fas fa-cog',
             execute: ({ context, sections }) => {
-              new DocumentTabSectionConfigApplication({
-                document: context.actor,
-                sections: sections,
-                tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
-                tabTitle: CharacterSheetClassicRuntime.getTabTitle(
-                  CONSTANTS.TAB_ACTOR_INVENTORY
-                ),
-              }).render(true);
+              new DocumentTabSectionConfigApplication(
+                {
+                  sections: sections,
+                  tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
+                  tabTitle: CharacterSheetClassicRuntime.getTabTitle(
+                    CONSTANTS.TAB_ACTOR_INVENTORY
+                  ),
+                },
+                {
+                  document: context.actor,
+                }
+              ).render(true);
             },
           },
         ],
@@ -567,14 +575,18 @@ export class Tidy5eCharacterSheet
             ),
             iconClass: 'fas fa-cog',
             execute: ({ context, sections }) => {
-              new DocumentTabSectionConfigApplication({
-                document: context.actor,
-                sections: sections,
-                tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
-                tabTitle: CharacterSheetClassicRuntime.getTabTitle(
-                  CONSTANTS.TAB_ACTOR_SPELLBOOK
-                ),
-              }).render(true);
+              new DocumentTabSectionConfigApplication(
+                {
+                  sections: sections,
+                  tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
+                  tabTitle: CharacterSheetClassicRuntime.getTabTitle(
+                    CONSTANTS.TAB_ACTOR_SPELLBOOK
+                  ),
+                },
+                {
+                  document: context.actor,
+                }
+              ).render(true);
             },
           },
         ],
@@ -636,14 +648,18 @@ export class Tidy5eCharacterSheet
             ),
             iconClass: 'fas fa-cog',
             execute: ({ context, sections }) => {
-              new DocumentTabSectionConfigApplication({
-                document: context.actor,
-                sections: sections,
-                tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
-                tabTitle: CharacterSheetClassicRuntime.getTabTitle(
-                  CONSTANTS.TAB_CHARACTER_FEATURES
-                ),
-              }).render(true);
+              new DocumentTabSectionConfigApplication(
+                {
+                  sections: sections,
+                  tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
+                  tabTitle: CharacterSheetClassicRuntime.getTabTitle(
+                    CONSTANTS.TAB_CHARACTER_FEATURES
+                  ),
+                },
+                {
+                  document: context.actor,
+                }
+              ).render(true);
             },
           },
         ],
@@ -705,14 +721,18 @@ export class Tidy5eCharacterSheet
             ),
             iconClass: 'fas fa-cog',
             execute: ({ context, sections }) => {
-              new DocumentTabSectionConfigApplication({
-                document: context.actor,
-                sections: sections,
-                tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
-                tabTitle: CharacterSheetClassicRuntime.getTabTitle(
-                  CONSTANTS.TAB_ACTOR_ACTIONS
-                ),
-              }).render(true);
+              new DocumentTabSectionConfigApplication(
+                {
+                  sections: sections,
+                  tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
+                  tabTitle: CharacterSheetClassicRuntime.getTabTitle(
+                    CONSTANTS.TAB_ACTOR_ACTIONS
+                  ),
+                },
+                {
+                  document: context.actor,
+                }
+              ).render(true);
             },
           },
         ],
