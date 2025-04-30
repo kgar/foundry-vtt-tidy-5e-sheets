@@ -67,7 +67,6 @@ declare global {
   var ChatMessage: any;
   var CONFIG: CONFIG & { Dice: any };
   var CONST: any;
-  var ContextMenu: any;
   var DefaultSheetsConfig: any;
   var debounce: any;
   var Dialog: any;
