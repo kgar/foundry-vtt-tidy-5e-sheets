@@ -31,6 +31,7 @@ export default class ClassicTabSelectionFormApplication extends SvelteApplicatio
 >(foundry.applications.api.ApplicationV2) {
   actor: Actor5e;
   registeredTabs: RegisteredTab<any>[];
+  context = $state<TabSelectionContext>({ available: [], selected: [] });
 
   static DEFAULT_OPTIONS = {
     classes: [
@@ -107,11 +108,16 @@ export default class ClassicTabSelectionFormApplication extends SvelteApplicatio
   }
 
   _createComponent(node: HTMLElement): Record<string, any> {
+    if (this._context.data) {
+      this.context = this._context.data;
+    }
+
     return mount(TabSelection, {
       target: node,
       context: new Map<any, any>([
-        ['context', this._context.data],
+        ['context', this.context],
         ['appId', this.appId],
+        ['save', this.save.bind(this)],
         ['apply', this.apply.bind(this)],
         ['useDefault', this.useDefault.bind(this)],
         ['validate', this.validate.bind(this)],
