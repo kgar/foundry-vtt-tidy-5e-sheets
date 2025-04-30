@@ -1,5 +1,5 @@
 import { mount } from 'svelte';
-import Info from './About.svelte';
+import About from './About.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
@@ -28,7 +28,7 @@ export class AboutApplication extends SvelteApplicationMixin<
   }
 
   _createComponent(node: HTMLElement): Record<string, any> {
-    return mount(Info, {
+    return mount(About, {
       target: node,
     });
   }
