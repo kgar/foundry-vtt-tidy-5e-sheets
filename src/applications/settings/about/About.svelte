@@ -71,7 +71,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: var(--t5e-header-background);
     margin-top: -0.5rem;
     margin-left: -0.5rem;
     margin-right: -0.5rem;

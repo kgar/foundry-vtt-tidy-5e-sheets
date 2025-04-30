@@ -1,4 +1,3 @@
-import SvelteFormApplicationBase from 'src/applications/SvelteFormApplicationBase';
 import { mount } from 'svelte';
 import WorldSettings from './WorldSettings.svelte';
 import {
@@ -38,6 +37,7 @@ export class WorldSettingsFormApplication extends SvelteApplicationMixin<
       'application-shell',
       CONSTANTS.SHEET_LAYOUT_CLASSIC,
     ],
+    id: 'tidy5e-sheet-world-settings',
     tag: 'div',
     window: {
       frame: true,

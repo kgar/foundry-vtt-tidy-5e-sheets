@@ -36,6 +36,7 @@ export class UserSettingsFormApplication extends SvelteApplicationMixin<
       CONSTANTS.SHEET_LAYOUT_CLASSIC,
     ],
     tag: 'div',
+    id: 'tidy5e-sheet-user-settings',
     window: {
       frame: true,
       positioned: true,
