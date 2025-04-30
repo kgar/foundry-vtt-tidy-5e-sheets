@@ -56,7 +56,7 @@
     });
     node.addEventListener('keydown', (event) => {
       if (
-        game.keyboard.isModifierActive(KeyboardManager.MODIFIER_KEYS.CONTROL) &&
+        game.keyboard.isModifierActive(foundry.helpers.interaction.KeyboardManager.MODIFIER_KEYS.CONTROL) &&
         event.key === 's'
       ) {
         handleSave();
@@ -74,7 +74,7 @@
       return;
     }
 
-    const secret = new HTMLSecret({
+    const secret = new foundry.applications.ux.HTMLSecret({
       parentSelector: `prose-mirror`,
       callbacks: {
         content: (_secret: HTMLElement) => content,

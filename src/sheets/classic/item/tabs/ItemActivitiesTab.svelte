@@ -94,6 +94,7 @@
 <style lang="scss">
   .add-activity-button {
     background: var(--t5e-faintest-color);
+    height: 1.5rem;
   }
 
   .card {

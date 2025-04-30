@@ -168,20 +168,6 @@ export function TidyExtensibleDocumentSheetMixin<
     async _prepareContext(options: Partial<TidyDocumentSheetRenderOptions>) {
       const context = await super._prepareContext(options);
 
-      if (game.release.generation < 13) {
-        const document = this.document;
-        return Object.assign(context, {
-          document,
-          source: document._source,
-          fields: document.schema.fields,
-          editable: this.isEditable,
-          user: game.user,
-          rootId: document.collection?.has(document.id)
-            ? this.id
-            : foundry.utils.randomID(),
-        });
-      }
-
       return {
         ...context,
         unlocked:
@@ -540,24 +526,6 @@ export function TidyExtensibleDocumentSheetMixin<
       const effectiveActions = { ...(updatedOptions.actions ?? {}) };
 
       try {
-        if (
-          game.release.generation < 13 &&
-          !effectiveControls?.some((x) => x.action === 'importFromCompendium')
-        ) {
-          effectiveControls?.unshift(ImportSheetControl.getSheetControl());
-        }
-
-        if (
-          game.release.generation < 13 &&
-          !effectiveActions['importFromCompendium']
-        ) {
-          effectiveActions[ImportSheetControl.actionName] = async function (
-            this: any
-          ) {
-            await ImportSheetControl.importFromCompendium(this, this.document);
-          };
-        }
-
         const { width, height } = SheetPreferencesService.getByType(sheetType);
 
         const position = (updatedOptions.position ??= {});
@@ -677,8 +645,12 @@ export function TidyExtensibleDocumentSheetMixin<
       const allowed = new Set<DropEffectValue>(['copy', 'move', 'link']);
       const s = foundry.utils.parseUuid(data.uuid);
       const t = foundry.utils.parseUuid(this.document.uuid);
-      const sCompendium = s.collection instanceof CompendiumCollection;
-      const tCompendium = t.collection instanceof CompendiumCollection;
+      const sCompendium =
+        s.collection instanceof
+        foundry.documents.collections.CompendiumCollection;
+      const tCompendium =
+        t.collection instanceof
+        foundry.documents.collections.CompendiumCollection;
 
       // If either source or target are within a compendium, but not inside the same compendium, move not allowed
       if ((sCompendium || tCompendium) && s.collection !== t.collection) {

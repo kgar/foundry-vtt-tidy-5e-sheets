@@ -8,6 +8,7 @@ import CharacterFeaturesTab from 'src/sheets/classic/character/tabs/CharacterFea
 import CharacterEffectsTab from 'src/sheets/classic/character/tabs/CharacterEffectsTab.svelte';
 import CharacterBiographyTab from 'src/sheets/classic/character/tabs/CharacterBiographyTab.svelte';
 import ActorJournalTab from 'src/sheets/classic/actor/tabs/ActorJournalTab.svelte';
+import SpecialTraitsTab from 'src/sheets/classic/actor/tabs/SpecialTraitsTab.svelte';
 import ActorActionsTab from 'src/sheets/classic/actor/tabs/ActorActionsTab.svelte';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -113,6 +114,16 @@ const defaultClassicCharacterTabs: RegisteredTab<CharacterSheetContext>[] =
         return context.actor.system.details.level >= threshold && enabled;
       },
       layout: 'classic',
+    },
+    {
+      id: CONSTANTS.TAB_ACTOR_SPECIAL_TRAITS,
+      title: 'DND5E.SpecialTraits',
+      content: {
+        component: SpecialTraitsTab,
+        type: 'svelte',
+      },
+      layout: 'classic',
+      iconClass: 'fa-solid fa-star'
     },
   ];
 

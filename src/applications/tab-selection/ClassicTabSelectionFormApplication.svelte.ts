@@ -1,5 +1,4 @@
 import { mount } from 'svelte';
-import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
 import TabSelection from './TabSelection.svelte';
 import type { Actor5e } from 'src/types/types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -13,6 +12,8 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
 import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
 import GroupSheetClassicRuntime from 'src/runtime/actor/GroupSheetClassicRuntime.svelte';
+import type { ApplicationConfiguration } from 'src/types/application.types';
+import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 
 export type TabSelectionItem = {
   id: string;
@@ -24,15 +25,46 @@ export type TabSelectionContext = {
   selected: TabSelectionItem[];
 };
 
-export default class ClassicTabSelectionFormApplication extends SvelteFormApplicationBase {
+export default class ClassicTabSelectionFormApplication extends SvelteApplicationMixin<
+  Partial<ApplicationConfiguration> | undefined,
+  TabSelectionContext
+>(foundry.applications.api.ApplicationV2) {
   actor: Actor5e;
-  context = $state<TabSelectionContext>({ available: [], selected: [] });
   registeredTabs: RegisteredTab<any>[];
+  context = $state<TabSelectionContext>({ available: [], selected: [] });
 
-  constructor(actor: Actor5e, ...args: any[]) {
-    super(...args);
+  static DEFAULT_OPTIONS = {
+    classes: [
+      CONSTANTS.MODULE_ID,
+      'application-shell',
+      'tab-selection',
+      'app-v2',
+      CONSTANTS.SHEET_LAYOUT_CLASSIC,
+    ],
+    tag: 'div',
+    window: {
+      frame: true,
+      positioned: true,
+      resizable: true,
+      controls: [],
+    },
+    position: {
+      height: 550,
+      width: 750,
+    },
+    actions: {},
+  };
+
+  constructor(actor: Actor5e, args?: ApplicationConfiguration) {
+    super(args);
     this.actor = actor;
     this.registeredTabs = this.getRegisteredTabs(actor);
+  }
+
+  get title() {
+    return FoundryAdapter.localize('TIDY5E.TabSelection.Title', {
+      documentName: this.actor.name,
+    });
   }
 
   getRegisteredTabs(actor: Actor5e): RegisteredTab<any>[] {
@@ -75,12 +107,17 @@ export default class ClassicTabSelectionFormApplication extends SvelteFormApplic
     return [];
   }
 
-  createComponent(node: HTMLElement): Record<string, any> {
+  _createComponent(node: HTMLElement): Record<string, any> {
+    if (this._context.data) {
+      this.context = this._context.data;
+    }
+
     return mount(TabSelection, {
       target: node,
       context: new Map<any, any>([
         ['context', this.context],
         ['appId', this.appId],
+        ['save', this.save.bind(this)],
         ['apply', this.apply.bind(this)],
         ['useDefault', this.useDefault.bind(this)],
         ['validate', this.validate.bind(this)],
@@ -88,28 +125,7 @@ export default class ClassicTabSelectionFormApplication extends SvelteFormApplic
     });
   }
 
-  static get defaultOptions() {
-    return {
-      ...super.defaultOptions,
-      height: 550,
-      width: 750,
-      classes: [
-        ...super.defaultOptions.classes,
-        'tab-selection',
-        'app-v1',
-        CONSTANTS.SHEET_LAYOUT_CLASSIC,
-      ],
-      resizable: false,
-    };
-  }
-
-  get title() {
-    return FoundryAdapter.localize('TIDY5E.TabSelection.Title', {
-      documentName: this.actor.name,
-    });
-  }
-
-  getData() {
+  async _prepareContext() {
     const selectedTabIds =
       TidyFlags.selectedTabs.get(this.actor) ??
       this.getDefaultTabIds(this.actor);
@@ -142,8 +158,8 @@ export default class ClassicTabSelectionFormApplication extends SvelteFormApplic
     this.close();
   }
 
-  validate() {
-    if (this.context.selected.length === 0) {
+  validate(context: TabSelectionContext) {
+    if (context.selected.length === 0) {
       error(
         FoundryAdapter.localize(
           'TIDY5E.TabSelection.AtLeastOneRequiredErrorMessage'
@@ -156,23 +172,15 @@ export default class ClassicTabSelectionFormApplication extends SvelteFormApplic
     return true;
   }
 
-  async save() {
-    await this.apply();
+  async save(context: TabSelectionContext) {
+    await this.apply(context);
     await this.close();
   }
 
-  async _updateObject(): Promise<void> {
-    await this.save();
-  }
-
-  refreshContext() {
-    this.context = this.getData();
-  }
-
-  async apply() {
+  async apply(context: TabSelectionContext) {
     await TidyFlags.selectedTabs.set(
       this.actor,
-      this.context.selected.map((t) => t.id)
+      context.selected.map((t) => t.id)
     );
   }
 }

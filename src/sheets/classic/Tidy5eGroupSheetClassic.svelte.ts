@@ -78,7 +78,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
 
-    this._supportedItemTypes = new Set(Inventory.getDefaultInventoryTypes());
+    this._supportedItemTypes = new Set(Inventory.getInventoryTypes());
     this._supportedItemTypes.add(CONSTANTS.ITEM_TYPE_SPELL);
     this.#itemFilterService = new ItemFilterService({}, this.actor);
   }
@@ -100,7 +100,6 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       positioned: true,
       resizable: true,
       controls: [
-        this.ACTOR_ACTIONS_AND_CONTROLS.configureToken.control,
         this.ACTOR_ACTIONS_AND_CONTROLS.showPortraitArtwork.control,
         this.ACTOR_ACTIONS_AND_CONTROLS.showTokenArtwork.control,
         this.ACTOR_ACTIONS_AND_CONTROLS.openTabSelection.control,
@@ -124,7 +123,6 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       [ImportSheetControl.actionName]: async function (this: any) {
         await ImportSheetControl.importFromCompendium(this, this.document);
       },
-      ...this.ACTOR_ACTIONS_AND_CONTROLS.configureToken.action,
       ...this.ACTOR_ACTIONS_AND_CONTROLS.showPortraitArtwork.action,
       ...this.ACTOR_ACTIONS_AND_CONTROLS.showTokenArtwork.action,
       ...this.ACTOR_ACTIONS_AND_CONTROLS.openTabSelection.action,
@@ -165,11 +163,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       ]),
     });
 
-    initTidy5eContextMenu(
-      this,
-      globalThis.$(this.element),
-      CONSTANTS.SHEET_LAYOUT_CLASSIC
-    );
+    initTidy5eContextMenu(this, this.element, CONSTANTS.SHEET_LAYOUT_CLASSIC);
 
     return component;
   }
@@ -209,14 +203,15 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       xp = this.actor.system.details.xp;
     }
 
-    const descriptionFullEnrichedHtml = await TextEditor.enrichHTML(
-      this.actor.system.description.full,
-      {
-        secrets: this.actor.isOwner,
-        rollData: this.actor.getRollData(),
-        relativeTo: this.actor,
-      }
-    );
+    const descriptionFullEnrichedHtml =
+      await foundry.applications.ux.TextEditor.enrichHTML(
+        this.actor.system.description.full,
+        {
+          secrets: this.actor.isOwner,
+          rollData: this.actor.getRollData(),
+          relativeTo: this.actor,
+        }
+      );
 
     const {
       sections: memberSections,
@@ -419,7 +414,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       (i: Item5e) => !this.actor.items.has(i.system.container)
     );
 
-    const inventoryTypesArray = Inventory.getDefaultInventoryTypes();
+    const inventoryTypesArray = Inventory.getInventoryTypes();
     const inventoryTypes = new Set(inventoryTypesArray);
     const inventory: ActorInventoryTypes =
       Inventory.getDefaultInventorySections();
@@ -908,7 +903,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
   /* -------------------------------------------- */
   /*  Drag and Drop                               */
   /* -------------------------------------------- */
-  
+
   _onDragStart(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
   ): void {

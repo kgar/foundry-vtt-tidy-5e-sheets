@@ -7,6 +7,52 @@
  * globals.
  */
 
+import {
+  AlphaField,
+  AngleField,
+  AnyField,
+  ArrayField,
+  BooleanField,
+  ColorField,
+  DataField,
+  DocumentAuthorField,
+  DocumentFlagsField,
+  DocumentIdField,
+  DocumentOwnershipField,
+  DocumentStatsField,
+  DocumentTypeField,
+  DocumentUUIDField,
+  EmbeddedCollectionDeltaField,
+  EmbeddedCollectionField,
+  EmbeddedDataField,
+  EmbeddedDocumentField,
+  FilePathField,
+  ForeignDocumentField,
+  HTMLField,
+  HueField,
+  IntegerSortField,
+  JavaScriptField,
+  JSONField,
+  NumberField,
+  ObjectField,
+  SchemaField,
+  SetField,
+  StringField,
+  TypeDataField,
+  TypedObjectField,
+  TypedSchemaField,
+} from 'foundry.data.fields';
+
+import {
+  AdvancementDataField,
+  AdvancementField,
+  AdvantageModeField,
+  FormulaField,
+  IdentifierField,
+  LocalDocumentField,
+  MappingField,
+} from 'dnd5e.dataModels.fields';
+
 import type { CONFIG } from './config.types';
 
 declare global {
@@ -14,41 +60,98 @@ declare global {
   var canvas: any;
   var ActiveEffect: any;
   var Actor: any;
+  var ActorSheet: any;
   var Actors: any;
   var Application: any;
   var AudioHelper: any;
   var ChatMessage: any;
-  var CompendiumCollection: any;
   var CONFIG: CONFIG & { Dice: any };
   var CONST: any;
   var ContextMenu: any;
   var DefaultSheetsConfig: any;
   var debounce: any;
   var Dialog: any;
-  var dnd5e: any;
+  var dnd5e: {
+    dataModels: {
+      fields: {
+        AdvancementDataField: typeof AdvancementDataField;
+        AdvancementField: typeof AdvancementField;
+        AdvantageModeField: typeof AdvantageModeField;
+        FormulaField: typeof FormulaField;
+        IdentifierField: typeof IdentifierField;
+        LocalDocumentField: typeof LocalDocumentField;
+        MappingField: typeof MappingField;
+      };
+    };
+  } & Record<string, any>;
   var DocumentSheet: any;
-  var DocumentSheetConfig: any; // game.release.generation < 13 // remove when Foundry 13+ only
-  var FilePicker: any;
   var Folder: any;
   var FormApplication: any;
-  var foundry: any;
+  var foundry: {
+    applications: {
+      api: any;
+      apps: any;
+      elements: any;
+      handlebars: any;
+      sheets: any;
+      ui: any;
+      ux: {
+        DragDrop: {
+          new (config: DragDropConfiguration): DragDrop;
+          implementation: DragDrop;
+        };
+      } & Record<string, any>;
+    };
+    data: {
+      fields: {
+        AlphaField: typeof AlphaField;
+        AngleField: typeof AngleField;
+        AnyField: typeof AnyField;
+        ArrayField: typeof ArrayField;
+        BooleanField: typeof BooleanField;
+        ColorField: typeof ColorField;
+        DataField: typeof DataField;
+        DocumentAuthorField: typeof DocumentAuthorField;
+        DocumentFlagsField: typeof DocumentFlagsField;
+        DocumentIdField: typeof DocumentIdField;
+        DocumentOwnershipField: typeof DocumentOwnershipField;
+        DocumentStatsField: typeof DocumentStatsField;
+        DocumentTypeField: typeof DocumentTypeField;
+        DocumentUUIDField: typeof DocumentUUIDField;
+        EmbeddedCollectionDeltaField: typeof EmbeddedCollectionDeltaField;
+        EmbeddedCollectionField: typeof EmbeddedCollectionField;
+        EmbeddedDataField: typeof EmbeddedDataField;
+        EmbeddedDocumentField: typeof EmbeddedDocumentField;
+        FilePathField: typeof FilePathField;
+        ForeignDocumentField: typeof ForeignDocumentField;
+        HTMLField: typeof HTMLField;
+        HueField: typeof HueField;
+        IntegerSortField: typeof IntegerSortField;
+        JSONField: typeof JSONField;
+        JavaScriptField: typeof JavaScriptField;
+        NumberField: typeof NumberField;
+        ObjectField: typeof ObjectField;
+        SchemaField: typeof SchemaField;
+        SetField: typeof SetField;
+        StringField: typeof StringField;
+        TypeDataField: typeof TypeDataField;
+        TypedObjectField: typeof TypedObjectField;
+        TypedSchemaField: typeof TypedSchemaField;
+      };
+    };
+  } & Record<string, any>;
   var fromUuid: any;
   var fromUuidSync: any;
   var game: any;
   var getDocumentClass: (className: string) => any;
-  var HandlebarsHelpers: any;
   var Hooks: any;
-  var HTMLSecret: any;
   var ImagePopout: any;
   var Item: any;
   var Items: any;
-  var KeyboardManager: any;
   var ModuleManagement: any;
   var ProseMirror: any;
   var renderTemplate: any;
   var Roll: any;
-  var SortingHelpers: any;
-  var TextEditor: any;
   var ui: any;
 
   interface ArrayConstructor {
@@ -97,20 +200,14 @@ declare global {
     bind(html: HTMLElement): this;
     callback(event: DragEvent, action: string): void;
     can(action: string, selector: string): boolean;
-  }
-
-  var DragDrop: typeof DragDrop;
-
-  declare const DragDrop: {
-    new (config: DragDropConfiguration): DragDrop;
+    dropEffect: 'copy' | 'move' | 'link' | 'none';
+    getPayload: (event: DragEvent) => object;
     createDragImage(
       img: HTMLImageElement,
       width: number,
       height: number
     ): HTMLElement;
-    dropEffect: 'copy' | 'move' | 'link' | 'none';
-    getPayload: (event: DragEvent) => object;
-  };
+  }
 }
 
 declare global {

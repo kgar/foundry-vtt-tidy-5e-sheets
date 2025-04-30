@@ -125,7 +125,7 @@ export const FoundryAdapter = {
     targetDataField: string,
     editable: boolean
   ) {
-    return HandlebarsHelpers.editor(content, {
+    return foundry.applications.handlebars.editor(content, {
       hash: {
         target: targetDataField,
         button: true,
@@ -323,7 +323,7 @@ export const FoundryAdapter = {
         CONFIG.DND5E.itemProperties[
           curr as keyof typeof CONFIG.DND5E.itemProperties
         ];
-      if ('abbreviation' in config) {
+      if (config.abbreviation) {
         prev[config.abbreviation] = config.label;
       }
       return prev;
@@ -846,11 +846,12 @@ export const FoundryAdapter = {
     return average;
   },
   enrichHtml(value: string, options?: any): Promise<string> {
-    return TextEditor.enrichHTML(value, options);
+    return foundry.applications.ux.TextEditor.enrichHTML(value, options);
   },
   createAdvancementSelectionDialog(item: any) {
-    return game.dnd5e.applications.advancement.AdvancementSelection.createDialog(
-      item
+    return dnd5e.documents.advancement.Advancement.createDialog(
+      {},
+      { parent: item }
     );
   },
   deleteAdvancement(advancementItemId: string, item: Item5e) {
@@ -884,19 +885,12 @@ export const FoundryAdapter = {
     uuid: string;
     window?: { title: string };
   }) {
-    if (game.release.generation < 13) {
-      return new ImagePopout(args.src, {
-        title: args.window?.title,
-        uuid: args.uuid,
-      }).render(true);
-    }
-
     return new foundry.applications.apps.ImagePopout(args).render({
       force: true,
     });
   },
   browseFilePicker(...args: any[]) {
-    return new FilePicker(...args).browse();
+    return new foundry.applications.apps.FilePicker(...args).browse();
   },
   renderArmorConfig(document: any) {
     return new dnd5e.applications.actor.ArmorClassConfig({ document }).render(
@@ -1239,9 +1233,6 @@ export const FoundryAdapter = {
         item.isOwner)
     );
   },
-  getJqueryWrappedElement(el: HTMLElement) {
-    return globalThis.$(el);
-  },
   openSpellSlotsConfig(document: any) {
     new dnd5e.applications.actor.SpellSlotsConfig({ document }).render(true);
   },
@@ -1302,7 +1293,7 @@ export const FoundryAdapter = {
   onDropStackConsumablesForActor(
     actor: Actor5e,
     itemData: any,
-    { container = null }: { container: any | null },
+    { container = null }: { container?: any | null } = {},
     event?: DragEvent
   ): Promise<Item5e> | null {
     // TODO: Move this to the base actor sheet in app V2 when all actors go App V2.
@@ -1375,10 +1366,13 @@ export const FoundryAdapter = {
     }
 
     // Perform the sort
-    const sortUpdates = SortingHelpers.performIntegerSort(source, {
-      target,
-      siblings,
-    });
+    const sortUpdates = foundry.utils.SortingHelpers.performIntegerSort(
+      source,
+      {
+        target,
+        siblings,
+      }
+    );
     const updateData = sortUpdates.map((u: any) => {
       const update = u.update;
       update._id = u.target._id;
@@ -1514,9 +1508,7 @@ export const FoundryAdapter = {
     }
   },
   isLockedInCompendium(doc: any) {
-    return game.release.generation < 13
-      ? doc.compendium?.locked
-      : game.packs.get(doc.pack)?.locked;
+    return game.packs.get(doc.pack)?.locked;
   },
 
   getMovementInfo(movement: any): Record<string, MovementInfo> {

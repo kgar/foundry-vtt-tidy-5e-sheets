@@ -16,7 +16,7 @@
     [
       context.labels.activation,
       context.item.system.properties.has(CONSTANTS.SPELL_PROPERTY_RITUAL)
-        ? FoundryAdapter.localize('DND5E.Item.Property.Ritual')
+        ? FoundryAdapter.localize('DND5E.ITEM.Property.Ritual')
         : undefined,
     ]
       .filter((x) => x)

@@ -461,8 +461,8 @@
 </section>
 <TabFooter mode="vertical" cssClass="abilities-footer">
   <Currency document={context.actor} />
-  {#if settings.value.useNpcEncumbranceBar}
-    <EncumbranceBar />
+  {#if settings.value.useNpcEncumbranceBar && context.encumbrance}
+    <EncumbranceBar encumbrance={context.encumbrance} />
   {/if}
 </TabFooter>
 

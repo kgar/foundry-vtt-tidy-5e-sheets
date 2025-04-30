@@ -16,7 +16,8 @@ import { mount } from 'svelte';
 import ThemeSettingsSheet from './ThemeSettingsSheet.svelte';
 import { downloadTextFile } from 'src/utils/file';
 import { CONSTANTS } from 'src/constants';
-import SvelteFormApplicationBase from 'src/applications/SvelteFormApplicationBase';
+import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import type { ApplicationConfiguration } from 'src/types/application.types';
 
 export type ThemeSettingsSheetFunctions = {
   save(settings: CurrentSettings): Promise<unknown>;
@@ -24,23 +25,35 @@ export type ThemeSettingsSheetFunctions = {
   exportTheme(settings: CurrentSettings): void;
 };
 
-export class ThemeSettingsFormApplication extends SvelteFormApplicationBase {
+export class ThemeSettingsFormApplication extends SvelteApplicationMixin<
+  Partial<ApplicationConfiguration> | undefined,
+  {}
+>(foundry.applications.api.ApplicationV2) {
   themeableColors: ThemeColorSetting[] = getThemeableColors();
   settings = $state(getCurrentSettings());
 
-  static get defaultOptions() {
-    return {
-      ...super.defaultOptions,
+  static DEFAULT_OPTIONS = {
+    classes: [
+      CONSTANTS.MODULE_ID,
+      'app-v2',
+      'application-shell',
+      CONSTANTS.SHEET_LAYOUT_CLASSIC,
+    ],
+    tag: 'div',
+    window: {
+      frame: true,
+      positioned: true,
+      resizable: true,
+      controls: [],
+      title: '',
+    },
+    position: {
       height: 750,
       width: 400,
-      submitOnClose: false,
-      minimizable: true,
-      id: 'tidy-5e-sheets-theme-settings',
-      popOut: true,
-      resizable: true,
-      closeOnSubmit: false,
-    };
-  }
+    },
+    actions: {},
+    submitOnClose: false,
+  };
 
   get title() {
     return FoundryAdapter.localize('TIDY5E.ThemeSettings.Sheet.title', {
@@ -48,7 +61,7 @@ export class ThemeSettingsFormApplication extends SvelteFormApplicationBase {
     });
   }
 
-  createComponent(node: HTMLElement): Record<string, any> {
+  _createComponent(node: HTMLElement): Record<string, any> {
     return mount(ThemeSettingsSheet, {
       target: node,
       props: {
@@ -57,7 +70,7 @@ export class ThemeSettingsFormApplication extends SvelteFormApplicationBase {
       },
       context: new Map<any, any>([
         [
-          'functions',
+          CONSTANTS.SVELTE_CONTEXT.FUNCTIONS,
           {
             save: this.saveChangedSettings.bind(this),
             useExistingThemeColors: this.useExistingThemeColors.bind(this),
@@ -120,9 +133,5 @@ export class ThemeSettingsFormApplication extends SvelteFormApplicationBase {
       'theme' + CONSTANTS.THEME_EXTENSION_WITH_DOT,
       JSON.stringify(exportData, null, ' ')
     );
-  }
-
-  async _updateObject() {
-    await this.saveChangedSettings(this.settings);
   }
 }

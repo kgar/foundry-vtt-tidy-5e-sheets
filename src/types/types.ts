@@ -15,6 +15,7 @@ import type { CONSTANTS } from 'src/constants';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import type { AttributePinFlag } from 'src/foundry/TidyFlags.types';
+import type { DataField } from 'foundry.data.fields';
 
 export type Actor5e = any;
 export type TokenDocument = any;
@@ -55,6 +56,7 @@ export type Tab = {
   activateDefaultSheetListeners?: boolean;
   autoHeight?: boolean;
   condition?: (document: any) => boolean;
+  iconClass?: string;
 };
 
 export type CustomContent = {
@@ -192,6 +194,25 @@ export type SimpleEditableColumn = {
   property: string;
   maxProperty?: string;
   editable?: string;
+};
+
+export type SpellbookSectionLegacy = {
+  order: number;
+  label: string;
+  usesSlots: boolean;
+  canCreate: boolean;
+  canPrepare: boolean;
+  spells: Item5e[];
+  uses: number | string;
+  slots: number | string;
+  override: number;
+  dataset: {
+    type: string;
+    level: number;
+    preparationMode: string;
+  };
+  prop: string;
+  editable: boolean;
 };
 
 export type SpellbookSection = {
@@ -363,7 +384,6 @@ export type CharacterSheetContext = {
   inventory: InventorySection[];
   itemContext: Record<string, CharacterItemContext>;
   languages: LanguageTraitContext[];
-  maxPreparedSpellsTotal: number;
   notes1EnrichedHtml: string;
   notes2EnrichedHtml: string;
   notes3EnrichedHtml: string;
@@ -458,8 +478,8 @@ export type NpcSheetContext = {
   conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
   defaultSkills: Set<string>;
-  encumbrance: any;
   features: NpcAbilitySection[];
+  flags: SpecialTraits;
   flawEnrichedHtml: string;
   hasLegendaries: boolean;
   habitat: { label: string }[];
@@ -468,6 +488,7 @@ export type NpcSheetContext = {
   inventory: InventorySection[];
   itemContext: Record<string, NpcItemContext>;
   languages: LanguageTraitContext[];
+  longRest: (event: Event) => Promise<unknown>;
   notes1EnrichedHtml: string;
   notes2EnrichedHtml: string;
   notes3EnrichedHtml: string;
@@ -484,7 +505,7 @@ export type NpcSheetContext = {
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
   traitEnrichedHtml: string;
-  treasure?: { label: string }[];
+  treasure: { label: string }[];
   utilities: Utilities<NpcSheetContext>;
 } & ActorSheetContextV1;
 
@@ -501,11 +522,8 @@ export type VehicleItemContext = {
   toggleTitle?: string;
 };
 
-export type VehicleEncumbrance = { max: number; value: number; pct: number };
-
 export type VehicleSheetContext = {
   cargo: VehicleCargoSection[];
-  encumbrance: VehicleEncumbrance;
   features: VehicleFeatureSection[];
   itemContext: Record<string, VehicleItemContext>;
   utilities: Utilities<VehicleSheetContext>;
@@ -565,11 +583,50 @@ type ActorSave = {
   sign: string;
 };
 
-type ActorSaves = {
+export type ActorSaves = {
   concentration?: ActorSave;
 };
 
+export type EncumbranceContext = {
+  value: number;
+  max: number;
+  pct: number;
+  encumbered?: boolean;
+  stops?: {
+    encumbered: number;
+    heavilyEncumbered: number;
+  };
+};
+
+export type SpecialTraitSectionField = {
+  field: DataField; // A data field subclass from Foundry or dnd5e
+  hint?: string;
+  input?: any; // A function that receives field and config; e.g., createCheckboxInput(field, config)
+  name: string;
+  section?: string; // Seems superfluous
+  type?: any; // Boolean(), String(), Number(), etc.
+  placeholder?: any; // A placeholder of the specified type; e.g., 30
+  value?: any;
+};
+
+export type SpecialTraitClass = {
+  label: string;
+  value: string;
+};
+
+export type SpecialTraitSection = {
+  label: string;
+  fields: SpecialTraitSectionField[];
+};
+
+export type SpecialTraits = {
+  classes: SpecialTraitClass[];
+  data: Record<string, any>;
+  sections: SpecialTraitSection[];
+};
+
 export type ActorSheetContextV1 = {
+  abilities: any;
   actions: ActionSection[];
   activateEditors: (
     node: HTMLElement,
@@ -579,15 +636,23 @@ export type ActorSheetContextV1 = {
   actorPortraitCommands: RegisteredPortraitMenuCommand[];
   allowEffectsManagement: boolean;
   appId: string;
+  biographyHTML: string;
+  config: typeof CONFIG.DND5E;
   customActorTraits: RenderableCustomActorTrait[];
   customContent: CustomContent[];
+  disableExperience: boolean;
+  document: any;
   /**
    * Whether or not the sheet can be edited, regardless of lock/sensitive field settings.
    * When this boolean is `false`, then the sheet is effectively hard locked.
    */
   editable: boolean;
+  effects: Record<string, EffectCategory<ActiveEffect5e>>;
+  elements: unknown;
+  encumbrance?: EncumbranceContext;
   filterData: DocumentFilters;
   filterPins: Record<string, Set<string>>;
+  flags: SpecialTraits; // TODO: Type it
   /** The actor has special save-based roll buttons to be situationally rendered to the sheet. */
   hasSpecialSaves?: boolean;
   /**
@@ -596,11 +661,20 @@ export type ActorSheetContextV1 = {
    * Note: This calculation ignores temp HP / temp HP Max, because the stock 5e sheets count 0 hp (ignoring all temp values) as incapacitated. Tidy 5e sheets carries this principle forward with health percentage calculation.
    */
   healthPercentage: number;
+  hp: {
+    value: number;
+    max: number;
+    temp?: number;
+    tempmax?: number;
+  };
   isCharacter: boolean;
   isNPC: boolean;
   isVehicle: boolean;
+  limited: boolean;
+  itemContext: Record<string, any>; // TODO: Consider adding itemContext generic
   /** All items without a container. */
   items: Item5e[];
+  labels: Record<string, any>;
   lockExpChanges: boolean;
   lockHpMaxChanges: boolean;
   /**
@@ -611,14 +685,27 @@ export type ActorSheetContextV1 = {
   lockMoneyChanges: boolean;
   lockSensitiveFields: boolean;
   modernRules: boolean;
-  originalContext: unknown;
+  movement: {
+    primary: string;
+    special?: string;
+    secondary?: string;
+  };
+  options: unknown;
+  overrides: unknown;
   /**
    * The current user owns the actor.
    */
   owner: boolean;
   saves: ActorSaves;
+  rollData: unknown;
+  senses: unknown;
+  skills: any;
+  source: any;
   showLimitedSheet: boolean;
+  system: any;
   tabs: Tab[];
+  tools: any;
+  traits: any;
   /**
    * Tells whether the sheet is unlocked via the Sheet Lock feature. When the sheet lock feature is disabled and the sheet is generally editable, this is always `true`.
    */
@@ -628,7 +715,7 @@ export type ActorSheetContextV1 = {
   useRoundedPortraitStyle: boolean;
   viewableWarnings: DocumentPreparationWarning[];
   warnings: DocumentPreparationWarning[];
-} & Record<string, any>;
+};
 
 export type DocumentPreparationWarning = Partial<{
   message: string;

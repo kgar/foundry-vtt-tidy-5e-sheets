@@ -93,15 +93,15 @@ export class Tidy5eItemDebugSheetQuadrone extends SvelteApplicationMixin<
     };
 
     const enriched = {
-      description: await TextEditor.enrichHTML(
+      description: await foundry.applications.ux.TextEditor.enrichHTML(
         this.document.system.description.value,
         enrichmentOptions
       ),
-      unidentified: await TextEditor.enrichHTML(
+      unidentified: await foundry.applications.ux.TextEditor.enrichHTML(
         this.document.system.unidentified?.description,
         enrichmentOptions
       ),
-      chat: await TextEditor.enrichHTML(
+      chat: await foundry.applications.ux.TextEditor.enrichHTML(
         this.document.system.description.chat,
         enrichmentOptions
       ),

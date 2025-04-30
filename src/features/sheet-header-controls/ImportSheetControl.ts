@@ -10,15 +10,11 @@ export class ImportSheetControl {
       label: 'Import',
       visible(this: any) {
         const document = this.document;
-        const inCompendium =
-          game.release.generation < 13
-            ? document.compendium
-            : document.inCompendium;
 
         return (
           document.constructor.name !== 'Folder' &&
           !document.isEmbedded &&
-          inCompendium &&
+          document.inCompendium &&
           document.constructor.canUserCreate(game.user)
         );
       },

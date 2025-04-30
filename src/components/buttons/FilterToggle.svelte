@@ -56,6 +56,7 @@
 </script>
 
 <button
+  type="button"
   class="button button-toggle button-secondary {filterStateClass} {cssClass ?? ''}"
   class:disabled
   onclick={onLeftClick}

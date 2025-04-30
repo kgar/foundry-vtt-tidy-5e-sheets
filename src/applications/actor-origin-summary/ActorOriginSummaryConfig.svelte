@@ -1,82 +1,101 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
   import type { ActorOriginSummaryContext } from './ActorOriginSummaryConfigFormApplication.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { CONSTANTS } from 'src/constants';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
+  import type { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 
-  let context = getContext<ActorOriginSummaryContext>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
-  let appId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.APP_ID);
+  interface Props {
+    sheet: any;
+    context: CoarseReactivityProvider<ActorOriginSummaryContext | undefined>;
+  }
+
+  let { sheet, context: _context }: Props = $props();
+
+  let context = $derived(_context.data);
+
+  let appId = $derived(sheet.document.id);
 
   const localize = FoundryAdapter.localize;
 </script>
 
-<section class="flex-column">
-  {#if context.isCharacter}
-    <div class="form-field">
-      <label for="background-edit-{appId}">{localize('DND5E.Background')}</label
-      >
-      {#if context.canEditBackground}
-        <input
-          id="background-edit-{appId}"
-          type="text"
-          placeholder={localize('DND5E.Background')}
-          bind:value={context.background}
-        />
-      {:else}
-        <span>{context.background}</span>
-      {/if}
-    </div>
-    <div class="form-field">
-      <label for="pc-alignment-edit-{appId}"
-        >{localize('DND5E.Alignment')}</label
-      >
-      <input
-        id="alignment-edit-{appId}"
-        type="text"
-        placeholder={localize('DND5E.Alignment')}
-        bind:value={context.alignment}
-      />
-    </div>
-  {:else if context.isNpc}
-    <div class="environment form-field">
-      <label for="environment-edit-{appId}"
-        >{localize('TIDY5E.Environment')}</label
-      >
-      <input
-        id="environment-edit-{appId}"
-        type="text"
-        placeholder={localize('TIDY5E.Environment')}
-        bind:value={context.environment}
-      />
-    </div>
-    <div class="form-field">
-      <label for="alignment-edit-{appId}">{localize('DND5E.Alignment')}</label>
-      <input
-        id="alignment-edit-{appId}"
-        type="text"
-        placeholder={localize('DND5E.Alignment')}
-        bind:value={context.alignment}
-      />
-    </div>
-  {:else if context.isVehicle}
-    <div class="form-field">
-      <label for="dimensions-edit-{appId}">{localize('DND5E.Dimensions')}</label
-      >
-      <textarea
-        id="dimensions-edit-{appId}"
-        rows="4"
-        cols="50"
-        name="dimensions"
-        placeholder={localize('DND5E.Dimensions')}
-        bind:value={context.dimensions}
-      ></textarea>
-    </div>
-  {/if}
-
-  <button type="submit">
-    <i class="far fa-save"></i>
-    {localize('Save')}
-  </button>
-</section>
+{#if context}
+  <section class="flex-column">
+    {#if context.isCharacter}
+      <div class="form-group">
+        <label for="background-edit-{appId}"
+          >{localize('DND5E.Background')}</label
+        >
+        <div class="form-fields">
+          {#if context.canEditBackground}
+            <TextInputQuadrone
+              id="background-edit-{appId}"
+              document={sheet.document}
+              field="system.details.background"
+              placeholder={localize('DND5E.Background')}
+              value={context.background}
+            />
+          {:else}
+            <span>{context.background}</span>
+          {/if}
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="pc-alignment-edit-{appId}"
+          >{localize('DND5E.Alignment')}</label
+        >
+        <div class="form-fields">
+          <TextInputQuadrone
+            id="alignment-edit-{appId}"
+            document={sheet.document}
+            field="system.details.alignment"
+            placeholder={localize('DND5E.Alignment')}
+            value={context.alignment}
+          />
+        </div>
+      </div>
+    {:else if context.isNpc}
+      <div class="environment form-group">
+        <label for="environment-edit-{appId}"
+          >{localize('TIDY5E.Environment')}</label
+        >
+        <div class="form-fields">
+          <TextInputQuadrone
+            id="environment-edit-{appId}"
+            document={sheet.document}
+            field="system.details.environment"
+            placeholder={localize('TIDY5E.Environment')}
+            value={context.environment}
+          />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="alignment-edit-{appId}">{localize('DND5E.Alignment')}</label
+        >
+        <div class="form-fields">
+          <TextInputQuadrone
+            id="alignment-edit-{appId}"
+            document={sheet.document}
+            field="system.details.alignment"
+            placeholder={localize('DND5E.Alignment')}
+            value={context.alignment}
+          />
+        </div>
+      </div>
+    {:else if context.isVehicle}
+      <div class="form-group">
+        <label for="dimensions-edit-{appId}"
+          >{localize('DND5E.Dimensions')}</label
+        >
+        <div class="form-fields">
+          <TextInputQuadrone
+            id="dimensions-edit-{appId}"
+            document={sheet.document}
+            field="system.traits.dimensions"
+            placeholder={localize('DND5E.Dimensions')}
+            value={context.dimensions}
+          />
+        </div>
+      </div>
+    {/if}
+  </section>
+{/if}

@@ -43,7 +43,7 @@
       return;
     }
 
-    const secret = new HTMLSecret({
+    const secret = new foundry.applications.ux.HTMLSecret({
       parentSelector: `[data-field]`,
       callbacks: {
         content: (secret: HTMLElement) =>

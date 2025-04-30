@@ -1,28 +1,31 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import type { ActorSheetContextV1 } from 'src/types/types';
+  import type { EncumbranceContext } from 'src/types/types';
 
-  let context = $derived(getSheetContext<ActorSheetContextV1>());
+  interface Props {
+    encumbrance: EncumbranceContext;
+  }
+
+  let { encumbrance }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <div
   class="encumbrance"
-  class:encumbered={context.encumbrance.encumbered}
+  class:encumbered={encumbrance.encumbered}
   title={localize('TIDY5E.Encumbrance')}
   style="
-    --encumbrance-low: {context.encumbrance.stops?.encumbered ??
+    --encumbrance-low: {encumbrance.stops?.encumbered ??
     (1 / 3) * 100}%; 
-    --encumbrance-high: {context.encumbrance.stops?.heavilyEncumbered ??
+    --encumbrance-high: {encumbrance.stops?.heavilyEncumbered ??
     (2 / 3) * 100}%
   "
 >
-  <span class="encumbrance-bar" style="width:{context.encumbrance.pct}%"
+  <span class="encumbrance-bar" style="width:{encumbrance.pct}%"
   ></span>
   <span class="encumbrance-label"
-    >{context.encumbrance.value} / {context.encumbrance.max}</span
+    >{encumbrance.value} / {encumbrance.max}</span
   >
   <i class="encumbrance-breakpoint encumbrance-low arrow-up"></i>
   <i class="encumbrance-breakpoint encumbrance-low arrow-down"></i>

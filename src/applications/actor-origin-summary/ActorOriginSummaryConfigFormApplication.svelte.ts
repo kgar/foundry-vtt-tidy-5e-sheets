@@ -1,10 +1,14 @@
 import { mount } from 'svelte';
 import ActorOriginSummaryConfig from './ActorOriginSummaryConfig.svelte';
-import type { Actor5e } from 'src/types/types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { CONSTANTS } from 'src/constants';
 import { error } from 'src/utils/logging';
-import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
+import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import type {
+  ApplicationClosingOptions,
+  ApplicationConfiguration,
+  ApplicationRenderOptions,
+} from 'src/types/application.types';
 
 export type ActorOriginSummaryContext = {
   isCharacter: boolean;
@@ -18,62 +22,32 @@ export type ActorOriginSummaryContext = {
   dimensions: string;
 };
 
-export default class ActorOriginSummaryConfigFormApplication extends SvelteFormApplicationBase {
-  context = $state<ActorOriginSummaryContext>();
-  actor: Actor5e;
-  actorHook: number | undefined;
-
-  constructor(actor: Actor5e, ...args: any[]) {
-    super(...args);
-    this.actor = actor;
-  }
-
-  createComponent(node: HTMLElement): Record<string, any> {
-    this.context = this.getData();
-
-    return mount(ActorOriginSummaryConfig, {
-      target: node,
-      context: new Map<any, any>([
-        ['appId', this.appId],
-        ['context', this.context],
-      ]),
-    });
-  }
-
-  activateListeners(html: any): void {
-    this.refreshContextOnActorChanges();
-    super.activateListeners(html);
-  }
-
-  refreshContextOnActorChanges() {
-    if (this.actorHook !== undefined) {
-      return;
-    }
-
-    this.actorHook = Hooks.on('updateActor', (actor: Actor5e) => {
-      if (actor.id === this.actor.id) {
-        this.refreshContext();
-      }
-    });
-  }
-
-  getData() {
-    return {
-      race:
-        this.actor.system.details.race?.name ?? this.actor.system.details.race,
-      background:
-        this.actor.system.details.background?.name ??
-        this.actor.system.details.background,
-      environment: this.actor.system.details.environment,
-      alignment: this.actor.system.details.alignment,
-      dimensions: this.actor.system.traits.dimensions,
-
-      isCharacter: this.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER,
-      canEditBackground: !this.actor.system.details.background?.name,
-      isNpc: this.actor.type === CONSTANTS.SHEET_TYPE_NPC,
-      isVehicle: this.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE,
-    } satisfies ActorOriginSummaryContext;
-  }
+export default class ActorOriginSummaryConfigFormApplication extends SvelteApplicationMixin<
+  Partial<ApplicationConfiguration> | undefined,
+  ActorOriginSummaryContext
+>(foundry.applications.api.DocumentSheetV2) {
+  static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
+    classes: [
+      CONSTANTS.MODULE_ID,
+      'application',
+      'sheet',
+      'quadrone',
+      'tidy-origin-summary-application',
+      'app-v2',
+      'scrollable-window-content',
+    ],
+    window: {
+      frame: true,
+      positioned: true,
+      resizable: false,
+      controls: [],
+    },
+    position: {
+      width: 380,
+    },
+    actions: {},
+    submitOnClose: true,
+  };
 
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
@@ -84,20 +58,56 @@ export default class ActorOriginSummaryConfigFormApplication extends SvelteFormA
     });
   }
 
-  get title() {
-    return FoundryAdapter.localize('TIDY5E.OriginSummaryConfig', {
-      actorName: this.actor.name,
+  _createComponent(node: HTMLElement): Record<string, any> {
+    return mount(ActorOriginSummaryConfig, {
+      target: node,
+      props: {
+        sheet: this,
+        context: this._context,
+      },
     });
   }
 
-  refreshContext() {
-    this.context = this.getData();
+  get title() {
+    return FoundryAdapter.localize('TIDY5E.OriginSummaryConfig', {
+      actorName: this.document.name,
+    });
   }
 
-  close(options?: unknown) {
-    Hooks.off('updateActor', this.actorHook);
-    this.actorHook = undefined;
-    super.close(options);
+  async _renderHTML(
+    context: ActorOriginSummaryContext,
+    options: ApplicationRenderOptions
+  ) {
+    game.user.apps[this.id] = this;
+    this.document.apps[this.id] = this;
+
+    return await super._renderHTML(context, options);
+  }
+
+  async close(options: ApplicationClosingOptions = {}) {
+    delete game.user.apps[this.id];
+    delete this.document.apps[this.id];
+
+    return await super.close(options);
+  }
+
+  async _prepareContext() {
+    return {
+      race:
+        this.document.system.details.race?.name ??
+        this.document.system.details.race,
+      background:
+        this.document.system.details.background?.name ??
+        this.document.system.details.background,
+      environment: this.document.system.details.environment,
+      alignment: this.document.system.details.alignment,
+      dimensions: this.document.system.traits.dimensions,
+
+      isCharacter: this.document.type === CONSTANTS.SHEET_TYPE_CHARACTER,
+      canEditBackground: !this.document.system.details.background?.name,
+      isNpc: this.document.type === CONSTANTS.SHEET_TYPE_NPC,
+      isVehicle: this.document.type === CONSTANTS.SHEET_TYPE_VEHICLE,
+    } satisfies ActorOriginSummaryContext;
   }
 
   async save() {
@@ -105,7 +115,7 @@ export default class ActorOriginSummaryConfigFormApplication extends SvelteFormA
       error('Unable to save data due to an error.', true);
       console.error(
         'Unable to save Actor Origin Summary Config because the context is unexpectedly null.',
-        this.actor,
+        this.document,
         this.context
       );
       return;
@@ -118,21 +128,17 @@ export default class ActorOriginSummaryConfigFormApplication extends SvelteFormA
       if (this.context.canEditBackground) {
         update['system.details.background'] = this.context.background;
       }
-      await this.actor.update(update);
+      await this.document.update(update);
     } else if (this.context.isNpc) {
-      await this.actor.update({
+      await this.document.update({
         'system.details.environment': this.context.environment,
         'system.details.alignment': this.context.alignment,
       });
     } else if (this.context.isVehicle) {
-      await this.actor.update({
+      await this.document.update({
         'system.traits.dimensions': this.context.dimensions,
       });
     }
     this.close();
-  }
-
-  async _updateObject(): Promise<void> {
-    await this.save();
   }
 }

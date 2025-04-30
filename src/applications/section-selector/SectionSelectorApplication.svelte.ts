@@ -4,6 +4,7 @@ import type {
   ApplicationClosingOptions,
   ApplicationConfiguration,
   ApplicationRenderOptions,
+  DocumentSheetApplicationConfiguration,
 } from 'src/types/application.types';
 import { mount } from 'svelte';
 import SectionSelector from './SectionSelector.svelte';
@@ -18,9 +19,6 @@ export type SectionSelectorContext = {
   // TODO: Eliminate the need for this. It's not relevant for this application.
   tabs: Tab[];
 };
-
-export type DocumentSheetApplicationConfiguration =
-  Partial<ApplicationConfiguration> & { document: any };
 
 export class SectionSelectorApplication extends SvelteApplicationMixin<
   Partial<ApplicationConfiguration> | undefined,

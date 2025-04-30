@@ -25,6 +25,10 @@
     width: auto;
     line-height: 1;
 
+    i {
+      color: var(--t5e-secondary-color);
+    }
+
     &:hover {
       background: transparent;
       outline: none;
@@ -41,6 +45,10 @@
     &:hover {
       background: var(--t5e-tab-background);
       color: var(--t5e-primary-accent-color);
+
+      i {
+        color: var(--t5e-primary-accent-color);
+      }
     }
 
     &.active {
@@ -51,7 +59,19 @@
 
       &:hover {
         color: inherit;
+
+        i {
+          color: var(--t5e-secondary-color);
+        }
       }
+    }
+  }
+
+  [data-tab-id='special-traits'] {
+    text-align: center;
+
+    .tab-title {
+      display: none;
     }
   }
 

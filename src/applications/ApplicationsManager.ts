@@ -10,10 +10,10 @@ export class ApplicationsManager {
    * Opens the Theme Settings window as a singleton.
    * @returns the form application for theme settings.
    */
-  static openThemeSettings(): ThemeSettingsFormApplication {
+  static async openThemeSettings(): Promise<ThemeSettingsFormApplication> {
     ApplicationsManager._themeSettings ??= new ThemeSettingsFormApplication();
-    const rendered = ApplicationsManager._themeSettings.render(true);
-    setTimeout(() => ApplicationsManager._themeSettings.bringToTop(), 150);
+    const rendered = await ApplicationsManager._themeSettings.render(true);
+    setTimeout(() => ApplicationsManager._themeSettings.bringToFront(), 150);
     return rendered;
   }
 
@@ -22,7 +22,9 @@ export class ApplicationsManager {
    * @param initialTab the initial tab to show
    * @returns the form application for sheet settings
    */
-  static openUserSettings(initialTab?: string): UserSettingsFormApplication {
+  static async openUserSettings(
+    initialTab?: string
+  ): Promise<UserSettingsFormApplication> {
     ApplicationsManager._userSettings ??= new UserSettingsFormApplication(
       CONSTANTS.TAB_USER_SETTINGS_PLAYERS
     );
@@ -31,8 +33,8 @@ export class ApplicationsManager {
       ApplicationsManager._userSettings.initialTabId = initialTab;
     }
 
-    const rendered = ApplicationsManager._userSettings.render(true);
-    setTimeout(() => ApplicationsManager._userSettings.bringToTop(), 150);
+    const rendered = await ApplicationsManager._userSettings.render(true);
+    setTimeout(() => ApplicationsManager._userSettings.bringToFront(), 150);
     return rendered;
   }
 }

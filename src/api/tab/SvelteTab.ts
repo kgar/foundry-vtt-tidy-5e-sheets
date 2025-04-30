@@ -39,6 +39,7 @@ export class SvelteTab extends CustomTabBase {
    */
   component?: Component = undefined;
   title: CustomTabTitle = '';
+  iconClass?: string | undefined;
   tabId: string = '';
   /**
    * For svelte-based tabs, the render scheme is set to 'force' and generally ignored.

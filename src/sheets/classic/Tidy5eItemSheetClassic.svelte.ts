@@ -104,8 +104,6 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
           context: context,
         });
 
-    const html = globalThis.$(this.element);
-
     new FloatingContextMenu(this.element, '.advancement-item', [], {
       onOpen: (target) =>
         dnd5e.documents.advancement.Advancement.onContextMenu(
@@ -116,7 +114,7 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
       layout: CONSTANTS.SHEET_LAYOUT_CLASSIC,
     });
 
-    initTidy5eContextMenu(this, html, CONSTANTS.SHEET_LAYOUT_CLASSIC);
+    initTidy5eContextMenu(this, this.element, CONSTANTS.SHEET_LAYOUT_CLASSIC);
 
     return component;
   }
@@ -145,15 +143,15 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
     };
 
     const enriched = {
-      description: await TextEditor.enrichHTML(
+      description: await foundry.applications.ux.TextEditor.enrichHTML(
         this.document.system.description.value,
         enrichmentOptions
       ),
-      unidentified: await TextEditor.enrichHTML(
+      unidentified: await foundry.applications.ux.TextEditor.enrichHTML(
         this.document.system.unidentified?.description,
         enrichmentOptions
       ),
-      chat: await TextEditor.enrichHTML(
+      chat: await foundry.applications.ux.TextEditor.enrichHTML(
         this.document.system.description.chat,
         enrichmentOptions
       ),
@@ -270,7 +268,6 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
       user: game.user,
 
       // Item Type, Status, and Details
-      // @ts-expect-error
       itemType: game.i18n.localize(CONFIG.Item.typeLabels[this.item.type]),
       itemStatus: this._getItemStatus(),
       baseItems: {},
@@ -615,9 +612,20 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
             ...CONFIG.DND5E.armorIds,
             ...CONFIG.DND5E.shieldIds,
           }
+        : this.item.type === CONSTANTS.ITEM_TYPE_TOOL
+        ? Object.entries(CONFIG.DND5E.tools).reduce<Record<string, string>>(
+            (acc, [key, tool]) => {
+              acc[key] = tool.id;
+              return acc;
+            },
+            {}
+          )
         : // @ts-expect-error
           CONFIG.DND5E[`${this.item.type}Ids`];
-    if (baseIds === undefined) return {};
+
+    if (baseIds === undefined) {
+      return {};
+    }
 
     const baseType = context?.source.type.value ?? this.item.system.type.value;
 
@@ -751,7 +759,7 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
   async _onDrop(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
   ) {
-    const data = TextEditor.getDragEventData(event);
+    const data = foundry.applications.ux.TextEditor.getDragEventData(event);
     const item = this.item;
 
     const allowed = TidyHooks.dnd5eDropItemSheetData(item, this, data);
@@ -833,10 +841,13 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
       const siblings = this.item.system.activities.filter(
         (a: any) => a._id !== id
       );
-      const sortUpdates = SortingHelpers.performIntegerSort(source, {
-        target,
-        siblings,
-      });
+      const sortUpdates = foundry.utils.SortingHelpers.performIntegerSort(
+        source,
+        {
+          target,
+          siblings,
+        }
+      );
       const updateData = Object.fromEntries(
         sortUpdates.map(({ target, update }: { target: any; update: any }) => {
           return [target._id, { sort: update.sort }];
@@ -1013,8 +1024,9 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
       return;
     switch (action) {
       case 'add':
-        return game.dnd5e.applications.advancement.AdvancementSelection.createDialog(
-          this.item
+        return dnd5e.documents.advancement.Advancement.createDialog(
+          {},
+          { parent: this.item }
         );
       case 'edit':
         return new advancement.constructor.metadata.apps.config(

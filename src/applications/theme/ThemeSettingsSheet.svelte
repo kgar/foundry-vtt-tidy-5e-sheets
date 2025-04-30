@@ -18,6 +18,7 @@
   } from 'src/theme/theme';
   import { getSingleFileFromDropEvent, readFileAsText } from 'src/utils/file';
   import { CONSTANTS } from 'src/constants';
+  import type { ThemeSettingsSheetFunctions } from './ThemeSettingsFormApplication.svelte';
 
   interface Props {
     themeableColors: ThemeColorSetting[];
@@ -42,6 +43,10 @@
   });
 
   let appId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.APP_ID);
+
+  let functions = getContext<ThemeSettingsSheetFunctions>(
+    CONSTANTS.SVELTE_CONTEXT.FUNCTIONS,
+  );
 
   const localize = FoundryAdapter.localize;
 
@@ -135,7 +140,11 @@
     </div>
   </div>
   <div class="button-bar">
-    <button type="submit" class="save-changes-btn">
+    <button
+      type="button"
+      class="save-changes-btn"
+      onclick={() => functions.save(settings)}
+    >
       <i class="fas fa-save"></i>
       {localize('TIDY5E.SaveChanges')}
     </button>
@@ -179,6 +188,8 @@
 
       button {
         margin: 0;
+        flex: 1;
+        min-height: 2rem;
       }
     }
   }

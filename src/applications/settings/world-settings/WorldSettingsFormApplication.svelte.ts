@@ -20,33 +20,41 @@ import { debug, error } from 'src/utils/logging';
 import { CONSTANTS } from 'src/constants';
 import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
 import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
+import type { ApplicationConfiguration } from 'src/types/application.types';
+import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 
-export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
+export class WorldSettingsFormApplication extends SvelteApplicationMixin<
+  Partial<ApplicationConfiguration> | undefined,
+  WorldSettingsContext
+>(foundry.applications.api.ApplicationV2) {
   unchangedSettings?: CurrentSettings;
   context = $state<WorldSettingsContext>();
 
-  static get defaultOptions() {
-    return {
-      ...super.defaultOptions,
-      height: 750,
+  static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
+    classes: [
+      CONSTANTS.MODULE_ID,
+      'settings',
+      'app-v2',
+      'application-shell',
+      CONSTANTS.SHEET_LAYOUT_CLASSIC,
+    ],
+    tag: 'div',
+    window: {
+      frame: true,
+      positioned: true,
+      resizable: true,
+      controls: [],
       title: 'TIDY5E.WorldSettings.Menu.title',
+    },
+    position: {
       width: 750,
-      classes: [
-        ...super.defaultOptions.classes,
-        'settings',
-        'app-v1',
-        CONSTANTS.SHEET_LAYOUT_CLASSIC,
-      ],
-      id: 'tidy-5e-sheets-world-settings',
-      popOut: true,
-    };
-  }
+      height: 750,
+    },
+    actions: {},
+    submitOnClose: false,
+  };
 
-  get template() {
-    return FoundryAdapter.getTemplate('empty-form-template.hbs');
-  }
-
-  getData(): WorldSettingsContext {
+  async _prepareContext() {
     const currentSettings = getCurrentSettings();
 
     return {
@@ -118,10 +126,9 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
     };
   }
 
-  createComponent(node: HTMLElement): Record<string, any> {
-    this.context = this.getData();
-
-    debug('World Settings context data', this.context);
+  _createComponent(node: HTMLElement): Record<string, any> {
+    // This is a temporary fix for reactivity issues surrounding the coarse reactivity provider.
+    this.context = this._context.data;
 
     return mount(WorldSettings, {
       target: node,

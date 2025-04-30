@@ -57,6 +57,14 @@ interface CreatureTypeConfig {
   detectAlignment?: boolean;
 }
 
+type Skill = {
+  label: string;
+  ability: string;
+  fullKey: string;
+  reference: string;
+  icon: string;
+};
+
 export type CONFIG = {
   debug: {
     applications: boolean;
@@ -103,7 +111,7 @@ export type CONFIG = {
       npc: string;
       vehicle: string;
       group: string;
-    };
+    } & Record<string, string>;
     typeIcons: {};
     trackableAttributes: {
       character: {
@@ -516,7 +524,7 @@ export type CONFIG = {
       feat: string;
       container: string;
       backpack: string;
-    };
+    } & Record<string, string>;
     typeIcons: {};
     sheetClasses: {
       base: {
@@ -2555,133 +2563,25 @@ export type CONFIG = {
       concentration: string;
     };
     skills: {
-      acr: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      ani: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      arc: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      ath: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      dec: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      his: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      ins: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      itm: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      inv: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      med: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      nat: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      prc: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      prf: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      per: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      rel: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      slt: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      ste: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-      sur: {
-        label: string;
-        ability: string;
-        fullKey: string;
-        reference: string;
-        icon: string;
-      };
-    };
+      acr: Skill;
+      ani: Skill;
+      arc: Skill;
+      ath: Skill;
+      dec: Skill;
+      his: Skill;
+      ins: Skill;
+      itm: Skill;
+      inv: Skill;
+      med: Skill;
+      nat: Skill;
+      prc: Skill;
+      prf: Skill;
+      per: Skill;
+      rel: Skill;
+      slt: Skill;
+      ste: Skill;
+      sur: Skill;
+    } & Record<string, Skill>;
     alignments: {
       lg: string;
       ng: string;
@@ -2912,43 +2812,43 @@ export type CONFIG = {
       music: string;
       vehicle: string;
     };
-    toolIds: {
-      alchemist: string;
-      bagpipes: string;
-      brewer: string;
-      calligrapher: string;
-      card: string;
-      carpenter: string;
-      cartographer: string;
-      chess: string;
-      cobbler: string;
-      cook: string;
-      dice: string;
-      disg: string;
-      drum: string;
-      dulcimer: string;
-      flute: string;
-      forg: string;
-      glassblower: string;
-      herb: string;
-      horn: string;
-      jeweler: string;
-      leatherworker: string;
-      lute: string;
-      lyre: string;
-      mason: string;
-      navg: string;
-      painter: string;
-      panflute: string;
-      pois: string;
-      potter: string;
-      shawm: string;
-      smith: string;
-      thief: string;
-      tinker: string;
-      viol: string;
-      weaver: string;
-      woodcarver: string;
+    tools: {
+      alchemist: { ability: string; id: string };
+      bagpipes: { ability: string; id: string };
+      brewer: { ability: string; id: string };
+      calligrapher: { ability: string; id: string };
+      card: { ability: string; id: string };
+      carpenter: { ability: string; id: string };
+      cartographer: { ability: string; id: string };
+      chess: { ability: string; id: string };
+      cobbler: { ability: string; id: string };
+      cook: { ability: string; id: string };
+      dice: { ability: string; id: string };
+      disg: { ability: string; id: string };
+      drum: { ability: string; id: string };
+      dulcimer: { ability: string; id: string };
+      flute: { ability: string; id: string };
+      forg: { ability: string; id: string };
+      glassblower: { ability: string; id: string };
+      herb: { ability: string; id: string };
+      horn: { ability: string; id: string };
+      jeweler: { ability: string; id: string };
+      leatherworker: { ability: string; id: string };
+      lute: { ability: string; id: string };
+      lyre: { ability: string; id: string };
+      mason: { ability: string; id: string };
+      navg: { ability: string; id: string };
+      painter: { ability: string; id: string };
+      panflute: { ability: string; id: string };
+      pois: { ability: string; id: string };
+      potter: { ability: string; id: string };
+      shawm: { ability: string; id: string };
+      smith: { ability: string; id: string };
+      thief: { ability: string; id: string };
+      tinker: { ability: string; id: string };
+      viol: { ability: string; id: string };
+      weaver: { ability: string; id: string };
+      woodcarver: { ability: string; id: string };
     };
     scalarTimePeriods: {
       turn: string;
@@ -3075,7 +2975,10 @@ export type CONFIG = {
       special: {
         label: string;
       };
-    };
+    } & Record<
+      string,
+      { label: string; group?: string; scalar?: boolean; passive?: boolean }
+    >;
     abilityConsumptionTypes: {
       ammo: string;
       attribute: string;
@@ -3150,7 +3053,17 @@ export type CONFIG = {
         token: number;
         capacityMultiplier: number;
       };
-    };
+    } & Record<
+      string,
+      {
+        label: string;
+        abbreviation: string;
+        hitDie: number;
+        token?: number;
+        capacityMultiplier?: number;
+        dynamicTokenScale?: number;
+      }
+    >;
     tokenHPColors: {
       damage: number;
       healing: number;
@@ -3284,7 +3197,7 @@ export type CONFIG = {
       land: string;
       space: string;
       water: string;
-    };
+    } & Record<string, string>;
     armorProficiencies: {
       lgt: string;
       med: string;
@@ -3496,7 +3409,7 @@ export type CONFIG = {
           epicBoon: string;
         } & Record<string, string>;
       };
-    } & Record<string, { label: string, subtypes?: Record<string, string> }>;
+    } & Record<string, { label: string; subtypes?: Record<string, string> }>;
     itemProperties: {
       ada: {
         label: string;
@@ -3588,7 +3501,10 @@ export type CONFIG = {
       weightlessContents: {
         label: string;
       };
-    };
+    } & Record<
+      string,
+      { abbreviation?: string; label: string; isPhysical?: boolean }
+    >;
     validProperties: {
       consumable: Set<string>;
       container: Set<string>;
@@ -3722,7 +3638,16 @@ export type CONFIG = {
         reference: string;
         color: string;
       };
-    };
+    } & Record<
+      string,
+      {
+        label: string;
+        icon: string;
+        reference: string;
+        isPhysical?: boolean;
+        color: string;
+      }
+    >;
     aggregateDamageDisplay: boolean;
     healingTypes: {
       healing: {
@@ -4623,7 +4548,18 @@ export type CONFIG = {
         icon: string;
         configKey: string;
       };
-    };
+    } & Record<
+      string,
+      {
+        labels: {
+          title: string;
+          localization: string;
+        };
+        actorKeyPath?: string;
+        icon: string;
+        configKey: string;
+      }
+    >;
     traitModes: {
       default: {
         label: string;
@@ -4728,7 +4664,17 @@ export type CONFIG = {
         section: string;
         placeholder: number;
       };
-    };
+    } & Record<
+      string,
+      {
+        name: string;
+        hint: string;
+        section: string;
+        placeholder?: number;
+        abilities?: Array<string>;
+        type?: any;
+      }
+    >;
     allowedActorFlags: Array<string>;
     groupTypes: {
       party: string;
@@ -5592,6 +5538,7 @@ export type CONFIG = {
       liter: VolumeUnitConfig;
     } & Record<string, VolumeUnitConfig>;
   };
+  ux: any;
 };
 
 type ActivityType = {

@@ -7,41 +7,49 @@ import {
 } from 'src/settings/settings.svelte';
 import { debug } from 'src/utils/logging';
 import { CONSTANTS } from 'src/constants';
-import SvelteFormApplicationBase from 'src/applications/SvelteFormApplicationBase';
 import UserSettings from './UserSettings.svelte';
 import type {
   UserSettingsContext,
   UserSettingsFunctions,
 } from './UserSettings.types';
+import type { ApplicationConfiguration } from 'src/types/application.types';
+import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 
-export class UserSettingsFormApplication extends SvelteFormApplicationBase {
+export class UserSettingsFormApplication extends SvelteApplicationMixin<
+  Partial<ApplicationConfiguration> | undefined,
+  UserSettingsContext
+>(foundry.applications.api.ApplicationV2) {
   initialTabId: string;
   context = $state<UserSettingsContext>();
 
-  constructor(initialTabId: string, ...args: any[]) {
-    super(...args);
+  constructor(initialTabId: string, args?: Partial<ApplicationConfiguration>) {
+    super(args);
     this.initialTabId = initialTabId ?? CONSTANTS.TAB_USER_SETTINGS_PLAYERS;
   }
 
-  static get defaultOptions() {
-    return {
-      ...super.defaultOptions,
+  static DEFAULT_OPTIONS = {
+    classes: [
+      CONSTANTS.MODULE_ID,
+      'settings',
+      'app-v2',
+      'application-shell',
+      CONSTANTS.SHEET_LAYOUT_CLASSIC,
+    ],
+    tag: 'div',
+    window: {
+      frame: true,
+      positioned: true,
+      resizable: true,
+      controls: [],
+      title: '',
+    },
+    position: {
       height: 750,
       width: 750,
-      classes: [
-        ...super.defaultOptions.classes,
-        'settings',
-        'app-v1',
-        CONSTANTS.SHEET_LAYOUT_CLASSIC,
-      ],
-      id: 'tidy-5e-sheets-user-settings',
-      popOut: true,
-    };
-  }
-
-  get template() {
-    return FoundryAdapter.getTemplate('empty-form-template.hbs');
-  }
+    },
+    actions: {},
+    submitOnClose: false,
+  };
 
   get title() {
     return FoundryAdapter.localize('TIDY5E.UserSettings.Menu.title', {
@@ -49,7 +57,7 @@ export class UserSettingsFormApplication extends SvelteFormApplicationBase {
     });
   }
 
-  getData(): UserSettingsContext {
+  async _prepareContext() {
     const currentSettings = getCurrentSettings();
 
     return {
@@ -93,13 +101,10 @@ export class UserSettingsFormApplication extends SvelteFormApplicationBase {
     };
   }
 
-  createComponent(node: HTMLElement): Record<string, any> {
-    const data = this.getData();
-
-    debug('Sheet Settings context data', data);
-
-    this.context = data;
-
+  _createComponent(node: HTMLElement): Record<string, any> {
+    // Temporary fix due to strange reactivity issues with coarse reactivity provider
+    this.context = this._context.data;
+    
     return mount(UserSettings, {
       target: node,
       context: new Map<any, any>([

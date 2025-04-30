@@ -57,9 +57,9 @@
             class:disabled={!context.editable}
             onclick={() =>
               context.owner &&
-              new dnd5e.applications.CurrencyManager(context.document).render(
-                true,
-              )}
+              new dnd5e.applications.CurrencyManager({
+                document: context.document,
+              }).render(true)}
             title={localize('DND5E.CurrencyManager.Title')}
           >
             <i class="fas fa-database"></i>

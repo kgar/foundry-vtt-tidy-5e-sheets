@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ActorSheetContextV1 } from 'src/types/types';
+  import type { ActorSheetContextV1, NpcSheetContext } from 'src/types/types';
   import TraitSection from './TraitSection.svelte';
   import TraitSectionTools from './TraitSectionTools.svelte';
   import { error } from 'src/utils/logging';
@@ -9,7 +9,9 @@
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import { isNil } from 'src/utils/data';
 
-  let context = $derived(getSheetContext<ActorSheetContextV1>());
+  let context =
+    $derived(getSheetContext<ActorSheetContextV1 | NpcSheetContext>());
+
   interface Props {
     useSenses?: boolean;
     enableSpecialTraitsConfiguration?: boolean;
@@ -23,6 +25,10 @@
   }
 
   const localize = FoundryAdapter.localize;
+
+  const treasure = $derived(
+    'treasure' in context ? context.treasure : undefined,
+  );
 </script>
 
 <div class="traits">
@@ -271,7 +277,7 @@
     </TraitSection>
   {/if}
 
-  {#if context.isNPC}
+  {#if context.isNPC && 'habitat' in context}
     <TraitSection
       title={localize('DND5E.Habitat.Configuration.Label')}
       iconCssClass="fa-solid fa-mountain-sun"
@@ -291,7 +297,9 @@
         {/each}
       </ul>
     </TraitSection>
+  {/if}
 
+  {#if context.isNPC && 'treasure' in context}
     <TraitSection
       title={localize('DND5E.Treasure.Configuration.Label')}
       iconCssClass="fa-solid fa-gem"
@@ -300,7 +308,7 @@
         new dnd5e.applications.actor.TreasureConfig({
           document: context.actor,
         }).render({ force: true })}
-      show={context.unlocked || !!context.treasure}
+      show={context.unlocked || !!context.treasure.length}
       useConfigureButton={context.editable}
     >
       <ul class="trait-list">

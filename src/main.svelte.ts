@@ -29,10 +29,7 @@ import { Tidy5eItemSheetQuadrone } from './sheets/quadrone/Tidy5eItemSheetQuadro
 import { Tidy5eCharacterSheetQuadrone } from './sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
 
 Hooks.once('init', () => {
-  const documentSheetConfig =
-    game.release.generation < 13
-      ? DocumentSheetConfig
-      : foundry.applications.apps.DocumentSheetConfig;
+  const documentSheetConfig = foundry.applications.apps.DocumentSheetConfig;
 
   documentSheetConfig.registerSheet(
     Actor,

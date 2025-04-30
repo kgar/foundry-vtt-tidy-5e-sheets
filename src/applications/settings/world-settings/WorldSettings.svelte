@@ -188,12 +188,23 @@
     .button-bar {
       grid-area: buttons;
     }
+
+    :global(button) {
+      width: 100%;
+      min-height: 2rem;
+    }
   }
 
   .button-bar {
     flex: 0;
     display: flex;
     padding-right: 0.5rem;
+    gap: 0.25rem;
+
+    button {
+      flex: 1;
+      min-height: 2rem;
+    }
   }
 
   .remaining-vertical-space {

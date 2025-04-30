@@ -45,7 +45,6 @@
 
   function getActivityUsageLabel(activity: Activity5e) {
     return (
-      // @ts-expect-error
       CONFIG.DND5E.activityActivationTypes[activity.activation?.type]?.label ??
       activity.activation?.type ??
       ''

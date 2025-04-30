@@ -6,6 +6,7 @@ import NpcBiographyTab from 'src/sheets/classic/npc/tabs/NpcBiographyTab.svelte'
 import NpcEffectsTab from 'src/sheets/classic/npc/tabs/NpcEffectsTab.svelte';
 import ActorJournalTab from 'src/sheets/classic/actor/tabs/ActorJournalTab.svelte';
 import ActorActionsTab from 'src/sheets/classic/actor/tabs/ActorActionsTab.svelte';
+import SpecialTraitsTab from 'src/sheets/classic/actor/tabs/SpecialTraitsTab.svelte';
 import { CONSTANTS } from 'src/constants';
 import type { RegisteredTab } from '../types';
 import type { NpcSheetContext } from 'src/types/types';
@@ -82,6 +83,16 @@ const defaultNpcClassicTabs: RegisteredTab<NpcSheetContext>[] = [
     },
     enabled: (context) => context.owner,
     layout: 'classic',
+  },
+  {
+    id: CONSTANTS.TAB_ACTOR_SPECIAL_TRAITS,
+    title: 'DND5E.SpecialTraits',
+    content: {
+      component: SpecialTraitsTab,
+      type: 'svelte',
+    },
+    layout: 'classic',
+    iconClass: 'fa-solid fa-star',
   },
 ];
 

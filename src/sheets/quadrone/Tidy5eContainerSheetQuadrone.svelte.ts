@@ -141,9 +141,7 @@ export class Tidy5eContainerSheetQuadrone
       context: context,
     });
 
-    const html = globalThis.$(this.element);
-
-    initTidy5eContextMenu(this, html, CONSTANTS.SHEET_LAYOUT_QUADRONE);
+    initTidy5eContextMenu(this, this.element, CONSTANTS.SHEET_LAYOUT_QUADRONE);
 
     return component;
   }
@@ -174,15 +172,15 @@ export class Tidy5eContainerSheetQuadrone
     };
 
     const enriched = {
-      description: await TextEditor.enrichHTML(
+      description: await foundry.applications.ux.TextEditor.enrichHTML(
         this.item.system.description.value,
         enrichmentOptions
       ),
-      unidentified: await TextEditor.enrichHTML(
+      unidentified: await foundry.applications.ux.TextEditor.enrichHTML(
         this.item.system.unidentified?.description,
         enrichmentOptions
       ),
-      chat: await TextEditor.enrichHTML(
+      chat: await foundry.applications.ux.TextEditor.enrichHTML(
         this.item.system.description.chat,
         enrichmentOptions
       ),
@@ -288,7 +286,6 @@ export class Tidy5eContainerSheetQuadrone
       itemContext: await Container.getContainerItemContext(this.item),
       itemDescriptions: itemDescriptions,
       items: Array.from(await this.item.system.contents),
-      // @ts-expect-error
       itemType: game.i18n.localize(CONFIG.Item.typeLabels[this.item.type]),
       labels: this.document.labels,
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
@@ -390,12 +387,12 @@ export class Tidy5eContainerSheetQuadrone
   /* -------------------------------------------- */
   /*  Drag and Drop                               */
   /* -------------------------------------------- */
-  
+
   /** @inheritDoc */
   async _onDrop(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
   ): Promise<unknown> {
-    const data = TextEditor.getDragEventData(event);
+    const data = foundry.applications.ux.TextEditor.getDragEventData(event);
     if (!['Item', 'Folder'].includes(data.type)) {
       return super._onDrop(event);
     }
@@ -595,7 +592,7 @@ export class Tidy5eContainerSheetQuadrone
     }
 
     // Perform the sort
-    const sortUpdates = SortingHelpers.performIntegerSort(item, {
+    const sortUpdates = foundry.utils.SortingHelpers.performIntegerSort(item, {
       target,
       siblings,
     });

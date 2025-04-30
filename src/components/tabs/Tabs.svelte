@@ -141,8 +141,13 @@
           onclick={() => selectTab(tab)}
           onkeydown={(ev) => onKeyDown(ev, i)}
           {tabindex}
+          title={tabTitle}
         >
-          {@html localize(tabTitle)}
+          {#if tab.iconClass}
+            <i class={['tab-icon', tab.iconClass]}></i>
+          {/if}
+          
+          <span class="tab-title">{@html localize(tabTitle)}</span>
         </a>
       </svelte:boundary>
     {/each}

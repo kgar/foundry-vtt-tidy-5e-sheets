@@ -48,10 +48,7 @@ export class DndTashasCauldronModuleIntegration
   }
 
   init(api: Tidy5eSheetsApi): void {
-    const documentSheetConfig =
-      game.release.generation < 13
-        ? DocumentSheetConfig
-        : foundry.applications.apps.DocumentSheetConfig;
+    const documentSheetConfig = foundry.applications.apps.DocumentSheetConfig;
 
     // Register the sheet
     documentSheetConfig.registerSheet(

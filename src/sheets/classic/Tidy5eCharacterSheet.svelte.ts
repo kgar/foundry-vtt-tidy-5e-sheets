@@ -1,6 +1,6 @@
 import { FoundryAdapter } from '../../foundry/foundry-adapter';
 import CharacterSheet from './character/CharacterSheet.svelte';
-import { debug, warn } from 'src/utils/logging';
+import { debug } from 'src/utils/logging';
 import { settings } from 'src/settings/settings.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { CONSTANTS } from 'src/constants';
@@ -40,24 +40,17 @@ import {
 import { mount, unmount } from 'svelte';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
 import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime.svelte';
-import {
-  actorUsesActionFeature,
-  getActorActionSections,
-} from 'src/features/actions/actions.svelte';
+import { actorUsesActionFeature } from 'src/features/actions/actions.svelte';
 import { isNil } from 'src/utils/data';
 import { CustomContentRenderer } from '../CustomContentRenderer';
-import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { AsyncMutex } from 'src/utils/mutex';
-import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
-import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet.svelte';
 import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSections';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
-import { BaseSheetCustomSectionMixin } from './mixins/BaseSheetCustomSectionMixin';
 import { Inventory } from 'src/features/sections/Inventory';
 import type {
   CharacterFavorite,
@@ -69,7 +62,6 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import { Container } from 'src/features/containers/Container';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
-import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import { Activities } from 'src/features/activities/activities';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
@@ -77,12 +69,11 @@ import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.
 import { AttributePins } from 'src/features/attribute-pins/AttributePins';
 import type { AttributePinFlag } from 'src/foundry/TidyFlags.types';
 import { ItemContext } from 'src/features/item/ItemContext';
+import { Tidy5eActorSheetClassicBase } from './Tidy5eActorSheetClassicBase.svelte';
+import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 
 export class Tidy5eCharacterSheet
-  extends BaseSheetCustomSectionMixin(
-    (object) => object.items,
-    dnd5e.applications.actor.ActorSheet5eCharacter
-  )
+  extends Tidy5eActorSheetClassicBase
   implements
     SheetTabCacheable,
     SheetExpandedItemsCacheable,
@@ -263,15 +254,13 @@ export class Tidy5eCharacterSheet
 
     this.additionalComponents.push(infoCard);
 
-    initTidy5eContextMenu(this, html, CONSTANTS.SHEET_LAYOUT_CLASSIC);
+    initTidy5eContextMenu(this, node, CONSTANTS.SHEET_LAYOUT_CLASSIC);
   }
 
-  async getData(options = {}) {
+  async getData(options = {}): Promise<CharacterSheetContext> {
     this._concentration = this.actor.concentration;
 
     const defaultDocumentContext = await super.getData(this.options);
-
-    Tidy5eBaseActorSheet.applyCommonContext(defaultDocumentContext);
 
     const characterPreferences = SheetPreferencesService.getByType(
       this.actor.type
@@ -289,10 +278,6 @@ export class Tidy5eCharacterSheet
       'm';
     const actionListSortMode =
       characterPreferences.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS]?.sort ?? 'm';
-
-    const unlocked =
-      FoundryAdapter.isSheetUnlocked(this.actor) &&
-      defaultDocumentContext.editable;
 
     // TODO: Make a builder for this
     // TODO: Extract to runtime?
@@ -743,16 +728,7 @@ export class Tidy5eCharacterSheet
       );
 
     const context: CharacterSheetContext = {
-      ...defaultDocumentContext,
-      activateEditors: (node, options) =>
-        FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
-      actions: await getActorActionSections(this.actor),
       actorClassesToImages: getActorClassesToImages(this.actor),
-      actorPortraitCommands:
-        ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
-      allowEffectsManagement: FoundryAdapter.allowCharacterEffectsManagement(
-        this.actor
-      ),
       allowMaxHpOverride:
         settings.value.allowHpMaxOverride &&
         (!settings.value.lockHpMaxChanges || FoundryAdapter.userIsGm()),
@@ -764,7 +740,17 @@ export class Tidy5eCharacterSheet
           relativeTo: this.actor,
         }
       ),
-      appId: this.appId,
+      attributePins: [],
+      bastion: {
+        description: await foundry.applications.ux.TextEditor.enrichHTML(
+          this.actor.system.bastion.description,
+          {
+            secrets: this.actor.isOwner,
+            rollData: defaultDocumentContext.rollData,
+            relativeTo: this.actor,
+          }
+        ),
+      },
       biographyEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.biography.value,
         {
@@ -785,17 +771,14 @@ export class Tidy5eCharacterSheet
       containerPanelItems: await Inventory.getContainerPanelItems(
         defaultDocumentContext.items
       ),
-      customActorTraits: CustomActorTraitsRuntime.getEnabledTraits(
-        defaultDocumentContext
-      ),
-      customContent: await CharacterSheetClassicRuntime.getContent(
-        defaultDocumentContext
-      ),
-      document: this.document,
-      editable: defaultDocumentContext.editable,
-      effects: enhancedEffectSections,
-      filterData: this.itemFilterService.getDocumentItemFilterData(),
-      filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
+      defenders: [],
+      epicBoonsEarned: undefined,
+      facilities: {
+        basic: { chosen: [], available: [], value: 0, max: 0 },
+        special: { chosen: [], available: [], value: 0, max: 0 },
+      },
+      favorites: [],
+      features: [],
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.flaw,
         {
@@ -804,7 +787,7 @@ export class Tidy5eCharacterSheet
           relativeTo: this.actor,
         }
       ),
-      healthPercentage: this.actor.system.attributes.hp.pct.toNearest(0.1),
+      hirelings: [],
       idealEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.ideal,
         {
@@ -813,15 +796,8 @@ export class Tidy5eCharacterSheet
           relativeTo: this.actor,
         }
       ),
-      lockExpChanges: FoundryAdapter.shouldLockExpChanges(),
-      lockHpMaxChanges: FoundryAdapter.shouldLockHpMaxChanges(),
-      lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
-      lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
-      lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
-      lockSensitiveFields:
-        (!unlocked && settings.value.useTotalSheetLock) ||
-        !defaultDocumentContext.editable,
-      modernRules: FoundryAdapter.checkIfModernRules(this.actor),
+      inventory: [],
+      languages: [],
       notes1EnrichedHtml: await FoundryAdapter.enrichHtml(
         TidyFlags.notes1.members.value.get(this.actor) ?? '',
         {
@@ -862,19 +838,17 @@ export class Tidy5eCharacterSheet
           relativeTo: this.actor,
         }
       ),
-      originalContext: defaultDocumentContext,
-      owner: this.actor.isOwner,
       showContainerPanel:
         TidyFlags.showContainerPanel.get(this.actor) === true &&
         Array.from(defaultDocumentContext.items).some(
           (i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER
         ),
-      showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
+      spellbook: [],
+      spellcastingInfo: FoundryAdapter.getSpellcastingInfo(this.actor),
       spellComponentLabels: FoundryAdapter.getSpellComponentLabels(),
       spellSlotTrackerMode:
         characterPreferences.spellSlotTrackerMode ??
         CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS,
-      tabs: [],
       traitEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.trait,
         {
@@ -883,19 +857,27 @@ export class Tidy5eCharacterSheet
           relativeTo: this.actor,
         }
       ),
-      unlocked: unlocked,
       useActionsFeature: actorUsesActionFeature(this.actor),
-      useClassicControls: settings.value.useClassicControlsForCharacter,
-      useRoundedPortraitStyle: [
-        CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
-        CONSTANTS.CIRCULAR_PORTRAIT_OPTION_CHARACTER as string,
-      ].includes(settings.value.useCircularPortraitStyle),
       utilities: utilities,
-      viewableWarnings:
-        defaultDocumentContext.warnings?.filter(
-          (w: any) => !isNil(w.message?.trim(), '')
-        ) ?? [],
+      ...defaultDocumentContext,
     };
+
+    context.filterData = this.itemFilterService.getDocumentItemFilterData();
+    context.filterPins = ItemFilterRuntime.defaultFilterPins[this.actor.type];
+
+    context.allowEffectsManagement =
+      FoundryAdapter.allowCharacterEffectsManagement(this.actor);
+
+    context.customActorTraits =
+      CustomActorTraitsRuntime.getEnabledTraits(context);
+
+    context.effects = enhancedEffectSections;
+
+    context.useClassicControls = settings.value.useClassicControlsForCharacter;
+
+    context.customContent = await CharacterSheetClassicRuntime.getContent(
+      context
+    );
 
     if (context.system.details.xp.boonsEarned !== undefined) {
       const pluralRules = new Intl.PluralRules(game.i18n.lang);
@@ -919,17 +901,6 @@ export class Tidy5eCharacterSheet
         panelItem.container
       );
     }
-
-    context.bastion = {
-      description: await TextEditor.enrichHTML(
-        this.actor.system.bastion.description,
-        {
-          secrets: this.actor.isOwner,
-          rollData: context.rollData,
-          relativeTo: this.actor,
-        }
-      ),
-    };
 
     await this._prepareFacilities(context);
 
@@ -1049,7 +1020,7 @@ export class Tidy5eCharacterSheet
     return context;
   }
 
-  protected _prepareItems(context: CharacterSheetContext) {
+  _prepareItems(context: CharacterSheetContext) {
     // Categorize items as inventory, spellbook, features, and classes
     const inventory: ActorInventoryTypes =
       Inventory.getDefaultInventorySections();
@@ -1158,7 +1129,7 @@ export class Tidy5eCharacterSheet
       }
     );
 
-    const inventoryTypes = Inventory.getDefaultInventoryTypes();
+    const inventoryTypes = Inventory.getInventoryTypes();
     // Organize items
     // Section the items by type
     for (let item of items) {
@@ -1191,8 +1162,6 @@ export class Tidy5eCharacterSheet
         }
       );
     }
-
-    context.spellcastingInfo = FoundryAdapter.getSpellcastingInfo(this.actor);
 
     // Section spells
     // TODO: Take over `_prepareSpellbook` and
@@ -1576,7 +1545,9 @@ export class Tidy5eCharacterSheet
     }
   }
 
-  onToggleAbilityProficiency(event: Event) {
+  onToggleAbilityProficiency(
+    event: MouseEvent & { target: HTMLElement; currentTarget: HTMLElement }
+  ) {
     return this._onToggleAbilityProficiency(event);
   }
 
@@ -1596,7 +1567,10 @@ export class Tidy5eCharacterSheet
     );
   }
 
-  async _onDropSingleItem(itemData: any, event: DragEvent) {
+  async _onDropSingleItem(
+    itemData: any,
+    event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement }
+  ) {
     // Create a Consumable spell scroll on the Inventory tab
     if (
       itemData.type === CONSTANTS.ITEM_TYPE_SPELL &&
@@ -1986,7 +1960,7 @@ export class Tidy5eCharacterSheet
         return f.id !== srcId;
       });
 
-    const updates = SortingHelpers.performIntegerSort(source, {
+    const updates = foundry.utils.SortingHelpers.performIntegerSort(source, {
       target,
       siblings,
     });
@@ -2058,7 +2032,7 @@ export class Tidy5eCharacterSheet
         return f.id !== srcId;
       }
     );
-    const updates = SortingHelpers.performIntegerSort(source, {
+    const updates = foundry.utils.SortingHelpers.performIntegerSort(source, {
       target,
       siblings,
     });

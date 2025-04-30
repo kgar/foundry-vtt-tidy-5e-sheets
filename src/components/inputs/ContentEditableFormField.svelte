@@ -50,9 +50,10 @@
   });
 
   async function update() {
-    draftValue = new DOMParser().parseFromString(draftValue, 'text/html').body
-      .textContent ?? '';
-      
+    draftValue =
+      new DOMParser().parseFromString(draftValue, 'text/html').body
+        .textContent ?? '';
+
     if (draftValue.length > dataMaxLength) {
       draftValue = draftValue.substring(0, dataMaxLength)?.replaceAll('\n', '');
     }
@@ -107,7 +108,9 @@
     ActiveEffectsHelper.isActiveEffectAppliedToField(document, field),
   );
   let isEnchanted = $derived(
-    context.itemOverrides instanceof Set && context.itemOverrides.has(field),
+    'itemOverrides' in context &&
+      context.itemOverrides instanceof Set &&
+      context.itemOverrides.has(field),
   );
   let overrideTooltip = $derived(
     isEnchanted

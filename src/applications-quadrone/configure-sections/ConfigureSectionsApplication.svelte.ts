@@ -59,8 +59,7 @@ export class ConfigureSectionsApplication extends SvelteApplicationMixin(
     }));
     this.optionsGroups = [...(optionsGroups ?? [])];
     this.tabId = tabId;
-    this.theme =
-      game.release.generation < 13 ? getThemeV1() : getThemeV2(rest.document);
+    this.theme = getThemeV2(rest.document);
     this.formTitle = formTitle;
   }
 

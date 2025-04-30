@@ -4,16 +4,22 @@
   import type { TabSelectionContext } from './ClassicTabSelectionFormApplication.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
+  import type ClassicTabSelectionFormApplication from './ClassicTabSelectionFormApplication.svelte';
 
   let context = getContext<TabSelectionContext>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
-  const apply = getContext<() => Promise<void>>(CONSTANTS.SVELTE_CONTEXT.APPLY);
-  const validate = getContext<() => boolean>(CONSTANTS.SVELTE_CONTEXT.VALIDATE);
-  const useDefault = getContext<() => Promise<void>>(
-    CONSTANTS.SVELTE_CONTEXT.USE_DEFAULT,
+  const apply = getContext<ClassicTabSelectionFormApplication['apply']>(
+    CONSTANTS.SVELTE_CONTEXT.APPLY,
   );
+  const save = getContext<ClassicTabSelectionFormApplication['save']>('save');
+  const validate = getContext<ClassicTabSelectionFormApplication['validate']>(
+    CONSTANTS.SVELTE_CONTEXT.VALIDATE,
+  );
+  const useDefault = getContext<
+    ClassicTabSelectionFormApplication['useDefault']
+  >(CONSTANTS.SVELTE_CONTEXT.USE_DEFAULT);
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -43,7 +49,7 @@
     >
     <span>{localize('TIDY5E.TabSelection.Explanation')}</span>
   </p>
-  <div class="flex-row small-gap">
+  <div class="button-bar flex-row small-gap">
     <button
       type="button"
       class="use-default-btn"
@@ -53,9 +59,9 @@
       {localize('TIDY5E.UseDefault')}
     </button>
     <button
-      type="submit"
+      type="button"
       class="save-changes-btn"
-      onclick={(ev) => validate() || ev.preventDefault()}
+      onclick={(ev) => validate(context) && save(context)}
     >
       <i class="fas fa-save"></i>
       {localize('TIDY5E.SaveChanges')}
@@ -63,7 +69,7 @@
     <button
       type="button"
       class="apply-changes-btn"
-      onclick={() => validate() && apply()}
+      onclick={() => validate(context) && apply(context)}
     >
       <i class="fas fa-check"></i>
       {localize('TIDY5E.ApplyChanges')}
@@ -78,6 +84,13 @@
     i {
       font-size: 1.5rem;
       color: var(--t5e-secondary-color);
+    }
+  }
+
+  .button-bar {
+    button {
+      flex: 1;
+      min-height: 2rem;
     }
   }
 </style>

@@ -85,7 +85,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
   magical: {
     name: 'magical',
     predicate: (item) => !!item.system?.properties?.has('mgc'),
-    text: 'DND5E.Item.Property.Magical',
+    text: 'DND5E.ITEM.Property.Magical',
   },
   ritual: {
     name: 'ritual',

@@ -15,6 +15,7 @@ import type {
   NpcAbilitySection,
   NpcSheetContext,
   SpellbookSection,
+  SpellbookSectionLegacy,
   TidySectionBase,
 } from 'src/types/types';
 import { isNil } from 'src/utils/data';
@@ -127,6 +128,7 @@ export class SheetSections {
     return [...defaultSections, ...sortedCustomSections];
   }
 
+  // TODO: Fold into legacy?
   static prepareTidySpellbook(
     context: CharacterSheetContext | NpcSheetContext,
     tabId: string,
@@ -140,10 +142,12 @@ export class SheetSections {
     const spellbook: SpellbookSection[] = app
       ._prepareSpellbook(context, spells)
       .map(
-        (s: SpellbookSection) =>
+        (s: SpellbookSectionLegacy) =>
           ({
             ...s,
-            key: s.key ?? s.prop,
+            uses: Number.isNumeric(s.uses) ? +s.uses : undefined,
+            slots: Number.isNumeric(s.slots) ? +s.slots : undefined,
+            key: s.prop,
             show: true,
           } satisfies SpellbookSection)
       );
