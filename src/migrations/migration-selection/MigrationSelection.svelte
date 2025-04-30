@@ -142,7 +142,7 @@
         total: totalSelected,
       })}
     </p>
-    <button onclick={() => onMigrateClicked()}
+    <button class="confirm" onclick={() => onMigrateClicked()}
       >{localize('TIDY5E.ButtonConfirm.Text')}</button
     >
   </footer>
@@ -179,5 +179,10 @@
     margin: 0;
     padding: 0;
     line-height: 0.75rem;
+  }
+
+  button.confirm {
+    --button-size: 1.5rem;
+    width: 100%;
   }
 </style>

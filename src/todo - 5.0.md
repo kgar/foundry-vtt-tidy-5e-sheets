@@ -1,7 +1,5 @@
 ## To Fix
 
-- [ ] Convert to App V2
-  - [ ] MigrationSelectionApplication
 - [ ] Convert Character sheet to App V2
 - [ ] Convert NPC sheet to App V2
 - [ ] Convert Vehicle sheet to App V2
