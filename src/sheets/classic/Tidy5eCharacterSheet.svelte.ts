@@ -1021,7 +1021,6 @@ export class Tidy5eCharacterSheet
   }
 
   _prepareItems(context: CharacterSheetContext) {
-    // this._prepareItemsLegacy(context);
     // Categorize items as inventory, spellbook, features, and classes
     const inventory: ActorInventoryTypes =
       Inventory.getDefaultInventorySections();
