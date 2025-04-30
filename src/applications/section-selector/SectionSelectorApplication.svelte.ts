@@ -49,6 +49,7 @@ export class SectionSelectorApplication extends SvelteApplicationMixin<
       'scrollable-window-content'
     ],
     tag: 'div',
+    sheetConfig: false,
     window: {
       frame: true,
       positioned: true,

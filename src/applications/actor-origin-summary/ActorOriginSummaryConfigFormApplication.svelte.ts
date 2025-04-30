@@ -49,15 +49,6 @@ export default class ActorOriginSummaryConfigFormApplication extends SvelteAppli
     submitOnClose: true,
   };
 
-  static get defaultOptions() {
-    return FoundryAdapter.mergeObject(super.defaultOptions, {
-      width: 380,
-      height: 'auto',
-      sheetConfig: false,
-      resizable: false,
-    });
-  }
-
   _createComponent(node: HTMLElement): Record<string, any> {
     return mount(ActorOriginSummaryConfig, {
       target: node,

@@ -1,11 +1,15 @@
 import { mount } from 'svelte';
 import AssignSpellsToSourceClasses from './SpellSourceClassAssignments.svelte';
-import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
 import type { Actor5e } from 'src/types/types';
 import type { Item5e } from 'src/types/item.types';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
+import type {
+  ApplicationConfiguration,
+  DocumentSheetApplicationConfiguration,
+} from 'src/types/application.types';
+import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 
 export type SpellSourceClassAssignment = {
   /**
@@ -23,34 +27,54 @@ export type SpellSourceClassAssignmentsContext = {
   assignments: SpellSourceClassAssignment[];
 };
 
-export default class SpellSourceClassAssignmentsFormApplication extends SvelteFormApplicationBase {
+export default class SpellSourceClassAssignmentsFormApplication extends SvelteApplicationMixin<
+  DocumentSheetApplicationConfiguration,
+  SpellSourceClassAssignmentsContext
+>(foundry.applications.api.DocumentSheetV2) {
   context = new CoarseReactivityProvider<
     SpellSourceClassAssignmentsContext | undefined
   >(undefined);
-  actor: Actor5e;
   updateHook: number | undefined;
 
-  constructor(actor: Actor5e, ...args: any[]) {
-    super(...args);
-    this.actor = actor;
-  }
+  static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
+    classes: [
+      CONSTANTS.MODULE_ID,
+      'application',
+      'application-shell',
+      'sheet',
+      'classic',
+      'tidy-spell-source-class-assignments-application',
+      'app-v2',
+      'scrollable-window-content',
+    ],
+    sheetConfig: false,
+    window: {
+      frame: true,
+      positioned: true,
+      resizable: true,
+      controls: [],
+    },
+    position: {
+      width: 700,
+      height: 500,
+    },
+    actions: {},
+  };
 
-  createComponent(node: HTMLElement): Record<string, any> {
-    this.context.data = this.getData();
-
+  _createComponent(node: HTMLElement): Record<string, any> {
     return mount(AssignSpellsToSourceClasses, {
       target: node,
       context: new Map<any, any>([
         ['appId', this.appId],
-        ['context', this.context],
+        ['context', this._context],
       ]),
     });
   }
 
-  getData(): SpellSourceClassAssignmentsContext {
+  async _prepareContext(): Promise<SpellSourceClassAssignmentsContext> {
     return {
-      actor: this.actor,
-      assignments: this.actor.items
+      actor: this.document,
+      assignments: this.document.items
         .filter((item: Item5e) => item.type === CONSTANTS.ITEM_TYPE_SPELL)
         .map((item: Item5e) => ({
           item,
@@ -59,30 +83,7 @@ export default class SpellSourceClassAssignmentsFormApplication extends SvelteFo
     };
   }
 
-  activateListeners(html: any): void {
-    if (this.updateHook !== undefined) {
-      Hooks.off('updateItem', this.updateHook);
-    }
-    this.trackActorChanges();
-    super.activateListeners(html);
-  }
-
-  private trackActorChanges() {
-    this.updateHook = Hooks.on('updateItem', (item: Item5e) => {
-      if (item.actor?.id !== this.actor.id) {
-        return;
-      }
-
-      this.context.data = this.getData();
-    });
-  }
-
   get title() {
     return FoundryAdapter.localize('TIDY5E.Utilities.AssignSpellsToClasses');
-  }
-
-  close(options: unknown = {}) {
-    Hooks.off('updateItem', this.updateHook);
-    return super.close(options);
   }
 }
