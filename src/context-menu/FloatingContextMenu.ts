@@ -32,7 +32,7 @@ type ContextMenuOptionsV13 = {
  * A specialized subclass of ContextMenu that places the menu in a fixed position.
  * @extends {ContextMenu}
  */
-export default class FloatingContextMenu extends foundry.applications.ui
+export default class FloatingContextMenu extends foundry.applications.ux
   .ContextMenu {
   #layout: string;
 
