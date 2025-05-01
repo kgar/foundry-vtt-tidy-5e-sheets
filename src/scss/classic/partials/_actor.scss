@@ -774,7 +774,7 @@ select:hover {
   }
 }
 
-&[data-tidy-theme-type='dark'] {
+&.theme-dark {
   .tidy-tab.bastion .facility:not(.empty) {
     background: linear-gradient(
         145deg,

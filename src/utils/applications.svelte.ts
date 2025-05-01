@@ -51,9 +51,6 @@ export function applyThemeToApplication(
   if (theme) {
     debug(`Applying theme type ${theme} to window`);
 
-    // Classic
-    element.setAttribute('data-tidy-theme-type', theme);
-
     // Quadrone
     element.classList.remove('theme-light', 'theme-dark');
     element.classList.add(`themed`);

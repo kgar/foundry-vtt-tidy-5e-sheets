@@ -451,19 +451,19 @@
     border-bottom: 0.0625rem solid var(--t5e-separator-color);
   }
 
-  &:where([data-tidy-theme-type='light']) section.secret {
+  &:where(.theme-light) section.secret {
     background: rgba(53, 0, 121, 0.05);
   }
 
-  &:where([data-tidy-theme-type='light']) section.secret.revealed {
+  &:where(.theme-light) section.secret.revealed {
     background: rgba(0, 53, 0, 0.05);
   }
 
-  &:where([data-tidy-theme-type='dark']) section.secret {
+  &:where(.theme-dark) section.secret {
     background: rgba(73, 29, 37, 0.35);
   }
 
-  &:where([data-tidy-theme-type='dark']) section.secret.revealed {
+  &:where(.theme-dark) section.secret.revealed {
     background: hsla(120, 100%, 10%, 0.15);
   }
 
