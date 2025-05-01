@@ -7,8 +7,6 @@
   import FacilityOccupant from 'src/sheets/classic/character/parts/FacilityOccupant.svelte';
   import FacilityRosterOccupant from 'src/sheets/classic/character/parts/FacilityRosterOccupant.svelte';
   import FacilityOrderProgressTracker from '../parts/FacilityOrderProgressTracker.svelte';
-  import SheetEditor from 'src/components/editor/SheetEditor.svelte';
-  import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
   import { EventHelper } from 'src/utils/events';
   import { isNil } from 'src/utils/data';
   import type { Item5e } from 'src/types/item.types';
@@ -17,6 +15,8 @@
   import InlineSvg from 'src/components/utility/InlineSvg.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { Ref } from 'src/features/reactivity/reactivity.types';
+  import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
+  import { manageSecrets } from 'src/actions/manage-secrets.svelte';
 
   let context = $derived(getCharacterSheetContext());
 
@@ -452,16 +452,26 @@
 
   <!-- Description -->
 
-  <RerenderAfterFormSubmission
-    andOnValueChange={context.bastion.description ?? ''}
-  >
-    <section class="description" use:context.activateEditors>
-      <h3><i class="fa-solid fa-books"></i> Description</h3>
-      <SheetEditor
-        content={context.bastion.description}
-        target="system.bastion.description"
-        editable={context.editable}
-      />
-    </section>
-  </RerenderAfterFormSubmission>
+  <section class="description">
+    <h3><i class="fa-solid fa-books"></i> Description</h3>
+
+    {#key context.bastion.description}
+      {#if context.unlocked}
+        <SheetEditorV2
+          documentUuid={context.document.uuid}
+          content={context.actor.system.bastion.description}
+          editorOptions={{ toggled: false }}
+          manageSecrets={true}
+          field="system.bastion.description"
+          enriched={context.bastion.description}
+        ></SheetEditorV2>
+      {:else}
+        <div class="editor" use:manageSecrets={{ document: context.document }}>
+          <div data-field="system.bastion.description" class="user-select-text">
+            {@html context.bastion.description}
+          </div>
+        </div>
+      {/if}
+    {/key}
+  </section>
 </div>

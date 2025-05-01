@@ -40,6 +40,7 @@ export class ThemeSettingsFormApplication extends SvelteApplicationMixin<
       CONSTANTS.SHEET_LAYOUT_CLASSIC,
     ],
     tag: 'div',
+    id: 'tidy5e-sheet-theme-settings',
     window: {
       frame: true,
       positioned: true,

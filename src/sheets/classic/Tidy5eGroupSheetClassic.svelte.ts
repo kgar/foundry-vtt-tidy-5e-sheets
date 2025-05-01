@@ -182,7 +182,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     });
 
     const infoCard = mount(AttachedInfoCard, {
-      target: content,
+      target: this.element,
       props: {
         sheet: this,
       },
@@ -396,16 +396,18 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
             ),
             iconClass: 'fas fa-cog',
             execute: ({ context, sections }) => {
-              new DocumentTabSectionConfigApplication({
-                sections: sections,
-                tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
-                tabTitle: GroupSheetClassicRuntime.getTabTitle(
-                  CONSTANTS.TAB_ACTOR_INVENTORY
-                ),
-              },
-              {
-                document: context.actor,
-              }).render(true);
+              new DocumentTabSectionConfigApplication(
+                {
+                  sections: sections,
+                  tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
+                  tabTitle: GroupSheetClassicRuntime.getTabTitle(
+                    CONSTANTS.TAB_ACTOR_INVENTORY
+                  ),
+                },
+                {
+                  document: context.actor,
+                }
+              ).render(true);
             },
           },
         ],
@@ -507,10 +509,9 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       xp: xp,
     };
 
-    (context.customContent = await GroupSheetClassicRuntime.getContent(
-      context
-    )),
-      await this._prepareItems(context);
+    context.customContent = await GroupSheetClassicRuntime.getContent(context);
+
+    await this._prepareItems(context);
 
     let tabs = await GroupSheetClassicRuntime.getTabs(context);
 
@@ -827,7 +828,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
 
   async _prepareItems(context: GroupSheetClassicContext) {
     for (const item of context.items) {
-      if (Inventory.isInventoryType(item)) {
+      if (Inventory.isItemInventoryType(item)) {
         context.itemContext[item.id] ??= await this._prepareItem(item, context);
       }
     }

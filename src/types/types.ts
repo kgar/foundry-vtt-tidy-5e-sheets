@@ -628,10 +628,6 @@ export type SpecialTraits = {
 export type ActorSheetContextV1 = {
   abilities: any;
   actions: ActionSection[];
-  activateEditors: (
-    node: HTMLElement,
-    options?: { bindSecrets?: boolean }
-  ) => void;
   actor: Actor5e;
   actorPortraitCommands: RegisteredPortraitMenuCommand[];
   allowEffectsManagement: boolean;
@@ -877,10 +873,12 @@ export type ActorV2 = {
 export type ActorSheetClassicContextV2<TActor = ActorV2> = {
   actor: TActor;
   actorPortraitCommands: RegisteredPortraitMenuCommand[];
+  customContent: CustomContent[];
   editable: boolean;
   healthPercentage: number;
   modernRules: boolean;
   lockSensitiveFields: boolean;
+  tabs: Tab[];
   unlocked: boolean;
   useRoundedPortraitStyle: boolean;
 };

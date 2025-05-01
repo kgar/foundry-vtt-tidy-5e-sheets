@@ -133,7 +133,7 @@
           return;
         }
 
-        if (Inventory.isInventoryType(entity)) {
+        if (Inventory.isItemInventoryType(entity)) {
           card = {
             ...componentWithProps(InventoryItemCard, { item: entity }),
             title: entity.name,

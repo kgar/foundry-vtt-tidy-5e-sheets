@@ -366,7 +366,7 @@
   }
 
   small {
-    color: var(--t5e-tertiary-color);
+    color: var(--t5e-secondary-color);
   }
 
   .dc-ability-text {

@@ -1,11 +1,10 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import SheetEditor from 'src/components/editor/SheetEditor.svelte';
-  import RerenderAfterFormSubmission from '../../../../components/utility/RerenderAfterFormSubmission.svelte';
   import TextInput from '../../../../components/inputs/TextInput.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { manageSecrets } from 'src/actions/manage-secrets.svelte';
 
   let context = $derived(getCharacterSheetContext());
 
@@ -53,176 +52,181 @@
     class:hidden={editing}
     class:limited={context.showLimitedSheet}
   >
-    <RerenderAfterFormSubmission
-      andOnValueChange={TidyFlags.notes1.members.value.get(context.actor) ?? ''}
-    >
-      <article use:context.activateEditors>
-        <div class="section-titles flex-row">
-          <TextInput
-            document={context.actor}
-            field={TidyFlags.notes1.members.name.prop}
-            value={TidyFlags.notes1.members.name.get(context.actor) ?? ''}
-            placeholder={localize('TIDY5E.JournalPersonsOfInterest')}
-            selectOnFocus={true}
-            stopChangePropagation={true}
-            disabled={!context.editable}
-          />
-          <a
-            class="icon-button"
-            onclick={(ev) =>
-              context.editable &&
-              edit(
-                TidyFlags.notes1.members.value.get(context.actor) ?? '',
-                context.notes1EnrichedHtml,
-                TidyFlags.notes1.members.value.prop,
-              )}
-          >
-            <i class="fa-solid fa-feather"></i>
-          </a>
-        </div>
-        <SheetEditor
-          content={context.notes1EnrichedHtml}
-          target={TidyFlags.notes1.members.value.prop}
-          editable={context.editable}
+    <article>
+      <div class="section-titles flex-row">
+        <TextInput
+          document={context.actor}
+          field={TidyFlags.notes1.members.name.prop}
+          value={TidyFlags.notes1.members.name.get(context.actor) ?? ''}
+          placeholder={localize('TIDY5E.JournalPersonsOfInterest')}
+          selectOnFocus={true}
+          stopChangePropagation={true}
+          disabled={!context.editable}
         />
-      </article>
-    </RerenderAfterFormSubmission>
-    <RerenderAfterFormSubmission
-      andOnValueChange={TidyFlags.notes2.members.value.get(context.actor) ?? ''}
-    >
-      <article use:context.activateEditors>
-        <div class="section-titles flex-row">
-          <TextInput
-            document={context.actor}
-            field={TidyFlags.notes2.members.name.prop}
-            value={TidyFlags.notes2.members.name.get(context.actor) ?? ''}
-            placeholder={localize('TIDY5E.JournalLocationsOfInterest')}
-            selectOnFocus={true}
-            stopChangePropagation={true}
-            disabled={!context.editable}
-          />
-          <a
-            class="icon-button"
-            onclick={(ev) =>
-              context.editable &&
-              edit(
-                TidyFlags.notes2.members.value.get(context.actor) ?? '',
-                context.notes2EnrichedHtml,
-                TidyFlags.notes2.members.value.prop,
-              )}
+        <a
+          class="icon-button"
+          onclick={(ev) =>
+            context.editable &&
+            edit(
+              TidyFlags.notes1.members.value.get(context.actor) ?? '',
+              context.notes1EnrichedHtml,
+              TidyFlags.notes1.members.value.prop,
+            )}
+        >
+          <i class="fa-solid fa-feather"></i>
+        </a>
+      </div>
+      {#key context.notes1EnrichedHtml}
+        <div class="editor" use:manageSecrets={{ document: context.document }}>
+          <div
+            data-field={TidyFlags.notes1.members.value.prop}
+            class="user-select-text"
           >
-            <i class="fa-solid fa-feather"></i>
-          </a>
+            {@html context.notes1EnrichedHtml}
+          </div>
         </div>
-        <SheetEditor
-          content={context.notes2EnrichedHtml}
-          target={TidyFlags.notes2.members.value.prop}
-          editable={context.editable}
+      {/key}
+    </article>
+    <article>
+      <div class="section-titles flex-row">
+        <TextInput
+          document={context.actor}
+          field={TidyFlags.notes2.members.name.prop}
+          value={TidyFlags.notes2.members.name.get(context.actor) ?? ''}
+          placeholder={localize('TIDY5E.JournalLocationsOfInterest')}
+          selectOnFocus={true}
+          stopChangePropagation={true}
+          disabled={!context.editable}
         />
-      </article>
-    </RerenderAfterFormSubmission>
-    <RerenderAfterFormSubmission
-      andOnValueChange={TidyFlags.notes3.members.value.get(context.actor) ?? ''}
-    >
-      <article use:context.activateEditors>
-        <div class="section-titles flex-row">
-          <TextInput
-            document={context.actor}
-            field={TidyFlags.notes3.members.name.prop}
-            value={TidyFlags.notes3.members.name.get(context.actor) ?? ''}
-            placeholder={localize('TIDY5E.JournalQuests')}
-            selectOnFocus={true}
-            stopChangePropagation={true}
-            disabled={!context.editable}
-          />
-          <a
-            class="icon-button"
-            onclick={(ev) =>
-              context.editable &&
-              edit(
-                TidyFlags.notes3.members.value.get(context.actor) ?? '',
-                context.notes3EnrichedHtml,
-                TidyFlags.notes3.members.value.prop,
-              )}
+        <a
+          class="icon-button"
+          onclick={(ev) =>
+            context.editable &&
+            edit(
+              TidyFlags.notes2.members.value.get(context.actor) ?? '',
+              context.notes2EnrichedHtml,
+              TidyFlags.notes2.members.value.prop,
+            )}
+        >
+          <i class="fa-solid fa-feather"></i>
+        </a>
+      </div>
+      {#key context.notes2EnrichedHtml}
+        <div class="editor" use:manageSecrets={{ document: context.document }}>
+          <div
+            data-field={TidyFlags.notes2.members.value.prop}
+            class="user-select-text"
           >
-            <i class="fa-solid fa-feather"></i>
-          </a>
+            {@html context.notes2EnrichedHtml}
+          </div>
         </div>
-        <SheetEditor
-          content={context.notes3EnrichedHtml}
-          target={TidyFlags.notes3.members.value.prop}
-          editable={context.editable}
+      {/key}
+    </article>
+    <article>
+      <div class="section-titles flex-row">
+        <TextInput
+          document={context.actor}
+          field={TidyFlags.notes3.members.name.prop}
+          value={TidyFlags.notes3.members.name.get(context.actor) ?? ''}
+          placeholder={localize('TIDY5E.JournalQuests')}
+          selectOnFocus={true}
+          stopChangePropagation={true}
+          disabled={!context.editable}
         />
-      </article>
-    </RerenderAfterFormSubmission>
-    <RerenderAfterFormSubmission
-      andOnValueChange={TidyFlags.notes4.members.value.get(context.actor) ?? ''}
-    >
-      <article use:context.activateEditors>
-        <div class="section-titles flex-row">
-          <TextInput
-            document={context.actor}
-            field={TidyFlags.notes4.members.name.prop}
-            value={TidyFlags.notes4.members.name.get(context.actor) ?? ''}
-            placeholder={localize('TIDY5E.JournalMisc')}
-            selectOnFocus={true}
-            stopChangePropagation={true}
-            disabled={!context.editable}
-          />
-          <a
-            class="icon-button"
-            onclick={(ev) =>
-              context.editable &&
-              edit(
-                TidyFlags.notes4.members.value.get(context.actor) ?? '',
-                context.notes4EnrichedHtml,
-                TidyFlags.notes4.members.value.prop,
-              )}
+        <a
+          class="icon-button"
+          onclick={(ev) =>
+            context.editable &&
+            edit(
+              TidyFlags.notes3.members.value.get(context.actor) ?? '',
+              context.notes3EnrichedHtml,
+              TidyFlags.notes3.members.value.prop,
+            )}
+        >
+          <i class="fa-solid fa-feather"></i>
+        </a>
+      </div>
+      {#key context.notes3EnrichedHtml}
+        <div class="editor" use:manageSecrets={{ document: context.document }}>
+          <div
+            data-field={TidyFlags.notes3.members.value.prop}
+            class="user-select-text"
           >
-            <i class="fa-solid fa-feather"></i>
-          </a>
+            {@html context.notes3EnrichedHtml}
+          </div>
         </div>
-        <SheetEditor
-          content={context.notes4EnrichedHtml}
-          target={TidyFlags.notes4.members.value.prop}
-          editable={context.editable}
+      {/key}
+    </article>
+    <article>
+      <div class="section-titles flex-row">
+        <TextInput
+          document={context.actor}
+          field={TidyFlags.notes4.members.name.prop}
+          value={TidyFlags.notes4.members.name.get(context.actor) ?? ''}
+          placeholder={localize('TIDY5E.JournalMisc')}
+          selectOnFocus={true}
+          stopChangePropagation={true}
+          disabled={!context.editable}
         />
-      </article>
-    </RerenderAfterFormSubmission>
+        <a
+          class="icon-button"
+          onclick={(ev) =>
+            context.editable &&
+            edit(
+              TidyFlags.notes4.members.value.get(context.actor) ?? '',
+              context.notes4EnrichedHtml,
+              TidyFlags.notes4.members.value.prop,
+            )}
+        >
+          <i class="fa-solid fa-feather"></i>
+        </a>
+      </div>
+      {#key context.notes4EnrichedHtml}
+        <div class="editor" use:manageSecrets={{ document: context.document }}>
+          <div
+            data-field={TidyFlags.notes4.members.value.prop}
+            class="user-select-text"
+          >
+            {@html context.notes4EnrichedHtml}
+          </div>
+        </div>
+      {/key}
+    </article>
   </div>
   <div
     class="right-notes note-entries hide-editor-edit"
     class:hidden={editing}
     class:limited={context.showLimitedSheet}
   >
-    <RerenderAfterFormSubmission
-      andOnValueChange={TidyFlags.notes.members.value.get(context.actor) ?? ''}
-    >
-      <article class="journal-notes" use:context.activateEditors>
-        <div class="section-titles flex-row justify-content-space-between">
-          <span>
-            {localize('TIDY5E.JournalEntries')}
-          </span>
-          <a
-            class="icon-button"
-            onclick={(ev) =>
-              context.editable &&
-              edit(
-                TidyFlags.notes.members.value.get(context.actor) ?? '',
-                context.notesEnrichedHtml,
-                TidyFlags.notes.members.value.prop,
-              )}
+    <article class="journal-notes">
+      <div class="section-titles flex-row justify-content-space-between">
+        <span>
+          {localize('TIDY5E.JournalEntries')}
+        </span>
+        <a
+          class="icon-button"
+          onclick={(ev) =>
+            context.editable &&
+            edit(
+              TidyFlags.notes.members.value.get(context.actor) ?? '',
+              context.notesEnrichedHtml,
+              TidyFlags.notes.members.value.prop,
+            )}
+        >
+          <i class="fa-solid fa-feather"></i>
+        </a>
+      </div>
+      {#key context.notesEnrichedHtml}
+        <div class="editor" use:manageSecrets={{ document: context.document }}>
+          <div
+            data-field={TidyFlags.notes.members.value.prop}
+            class="user-select-text"
           >
-            <i class="fa-solid fa-feather"></i>
-          </a>
+            {@html context.notesEnrichedHtml}
+          </div>
         </div>
-        <SheetEditor
-          content={context.notesEnrichedHtml}
-          target={TidyFlags.notes.members.value.prop}
-          editable={context.editable}
-        />
-      </article>
-    </RerenderAfterFormSubmission>
+      {/key}
+    </article>
   </div>
 </div>
 

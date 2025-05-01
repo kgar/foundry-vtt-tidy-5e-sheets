@@ -56,6 +56,7 @@
       justify-content: center;
       align-items: center;
       height: 100%;
+      width: 100%;
       font-family: var(--t5e-title-font-family);
       font-size: 1.25rem;
       font-weight: 700;

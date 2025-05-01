@@ -1,5 +1,4 @@
 <script lang="ts">
-  import SheetEditModeToggle from 'src/sheets/classic/actor/SheetEditModeToggle.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import { CONSTANTS } from 'src/constants';
@@ -12,7 +11,6 @@
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import ActorMovement from '../actor/ActorMovement.svelte';
   import ActorHeaderStats from '../actor/ActorHeaderStats.svelte';
-  import SheetMenu from '../actor/SheetMenu.svelte';
   import { settings } from 'src/settings/settings.svelte';
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import InlineSource from '../shared/InlineSource.svelte';
@@ -133,7 +131,6 @@
             <span class="challenge-rating-label">{formattedCr}</span>
           {/if}
         </div>
-        <SheetMenu defaultSettingsTab={CONSTANTS.TAB_USER_SETTINGS_NPCS} />
       </div>
     </div>
     <HorizontalLineSeparator
@@ -231,18 +228,7 @@
     />
   </div>
 </header>
-<Tabs tabs={context.tabs} bind:selectedTabId sheet={context.actor.sheet}>
-  {#snippet tabEnd()}
-    {#if context.editable}
-      <SheetEditModeToggle
-        hint={settings.value.permanentlyUnlockNpcSheetForGm &&
-        FoundryAdapter.userIsGm()
-          ? localize('TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM.title')
-          : null}
-      />
-    {/if}
-  {/snippet}
-</Tabs>
+<Tabs tabs={context.tabs} bind:selectedTabId sheet={context.actor.sheet} />
 <section class="tidy-sheet-body">
   <TabContents tabs={context.tabs} {selectedTabId} />
 </section>

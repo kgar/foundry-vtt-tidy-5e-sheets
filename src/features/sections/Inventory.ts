@@ -24,8 +24,12 @@ export class Inventory {
     return this.getInventoryDataModelEntries().map((entry) => entry[0]);
   }
 
-  static isInventoryType(item: Item5e) {
-    return !!CONFIG.Item.dataModels[item.type]?.metadata?.inventoryItem;
+  static isItemInventoryType(item: Item5e) {
+    return this.isInventoryType(CONFIG.Item.dataModels[item.type], item.type);
+  }
+
+  static isInventoryType(model: any, type: string) {
+    return !!model && 'inventorySection' in model && type !== 'backpack';
   }
 
   static getDefaultInventorySections(

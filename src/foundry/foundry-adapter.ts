@@ -1260,29 +1260,6 @@ export const FoundryAdapter = {
       app._concentration?.effects.has(effect)
     );
   },
-  activateEditors(node: HTMLElement, sheet: any, bindSecrets: boolean = true) {
-    try {
-      const nodes = node.matches(
-        CONSTANTS.TEXT_EDITOR_ACTIVATION_ELEMENT_SELECTOR
-      )
-        ? [node]
-        : Array.from(
-            node.querySelectorAll<HTMLElement>(
-              CONSTANTS.TEXT_EDITOR_ACTIVATION_ELEMENT_SELECTOR
-            )
-          );
-
-      for (let editorDiv of nodes) {
-        sheet._activateEditor(editorDiv);
-      }
-      if (bindSecrets) {
-        sheet._secrets.forEach((s: any) => s.bind(node));
-      }
-    } catch (e) {
-      error('An error occurred while activating text editors', false, e);
-      debug('Text editor error trobuleshooting info', { node, sheet });
-    }
-  },
   async renderFromUuid(uuid: string, force: boolean = true) {
     const doc = await fromUuid(uuid);
     return doc?.sheet?.render(force);

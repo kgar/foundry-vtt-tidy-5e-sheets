@@ -47,6 +47,7 @@ export default class ActorOriginSummaryConfigFormApplication extends SvelteAppli
     },
     actions: {},
     submitOnClose: true,
+    sheetConfig: false,
   };
 
   _createComponent(node: HTMLElement): Record<string, any> {

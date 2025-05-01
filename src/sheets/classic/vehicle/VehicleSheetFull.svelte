@@ -2,7 +2,6 @@
   import type { DropdownListOption } from 'src/types/types';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import { CONSTANTS } from 'src/constants';
-  import SheetEditModeToggle from 'src/sheets/classic/actor/SheetEditModeToggle.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import VehicleProfile from './parts/VehicleProfile.svelte';
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
@@ -14,7 +13,6 @@
   import AcShieldVehicle from '../actor/AcShieldVehicle.svelte';
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
   import AttributeBlock from '../actor/AttributeBlock.svelte';
-  import SheetMenu from '../actor/SheetMenu.svelte';
   import { settings } from 'src/settings/settings.svelte';
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import InlineSource from '../shared/InlineSource.svelte';
@@ -77,7 +75,6 @@
       >
         <ActorName />
       </div>
-      <SheetMenu defaultSettingsTab={CONSTANTS.TAB_USER_SETTINGS_VEHICLES} />
     </div>
     <HorizontalLineSeparator
       borderColor="light"
@@ -179,20 +176,7 @@
     </section>
   </div>
 </header>
-<Tabs tabs={context.tabs} bind:selectedTabId sheet={context.actor.sheet}>
-  {#snippet tabEnd()}
-    {#if context.editable}
-      <SheetEditModeToggle
-        hint={settings.value.permanentlyUnlockVehicleSheetForGm &&
-        FoundryAdapter.userIsGm()
-          ? localize(
-              'TIDY5E.Settings.value.PermanentlyUnlockVehicleSheetForGM.title',
-            )
-          : null}
-      />
-    {/if}
-  {/snippet}
-</Tabs>
+<Tabs tabs={context.tabs} bind:selectedTabId sheet={context.actor.sheet} />
 <section class="tidy-sheet-body">
   <TabContents tabs={context.tabs} {selectedTabId} />
 </section>

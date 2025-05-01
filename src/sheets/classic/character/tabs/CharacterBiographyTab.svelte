@@ -1,10 +1,9 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import SheetEditor from 'src/components/editor/SheetEditor.svelte';
   import ContentEditableFormField from '../../../../components/inputs/ContentEditableFormField.svelte';
-  import RerenderAfterFormSubmission from '../../../../components/utility/RerenderAfterFormSubmission.svelte';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { manageSecrets } from 'src/actions/manage-secrets.svelte';
 
   let context = $derived(getCharacterSheetContext());
 
@@ -153,64 +152,72 @@
       class="right-notes note-entries hide-editor-edit"
       class:limited={context.showLimitedSheet}
     >
-      <RerenderAfterFormSubmission
-        andOnValueChange={context.system.details.appearance}
-      >
-        <article class="appearance-notes" use:context.activateEditors>
-          <div
-            class="section-titles biopage flex-row justify-content-space-between"
+      <article class="appearance-notes">
+        <div
+          class="section-titles biopage flex-row justify-content-space-between"
+        >
+          <span>
+            {localize('DND5E.Appearance')}
+          </span>
+          <a
+            class="icon-button"
+            onclick={(ev) =>
+              context.editable &&
+              edit(
+                context.system.details.appearance,
+                context.appearanceEnrichedHtml,
+                'system.details.appearance',
+              )}
           >
-            <span>
-              {localize('DND5E.Appearance')}
-            </span>
-            <a
-              class="icon-button"
-              onclick={(ev) =>
-                context.editable &&
-                edit(
-                  context.system.details.appearance,
-                  context.appearanceEnrichedHtml,
-                  'system.details.appearance',
-                )}
+            <i class="fa-solid fa-feather"></i>
+          </a>
+        </div>
+        {#key context.appearanceEnrichedHtml}
+          <div
+            class="editor"
+            use:manageSecrets={{ document: context.document }}
+          >
+            <div
+              data-field="system.details.appearance"
+              class="user-select-text"
             >
-              <i class="fa-solid fa-feather"></i>
-            </a>
+              {@html context.appearanceEnrichedHtml}
+            </div>
           </div>
-          <SheetEditor
-            content={context.appearanceEnrichedHtml}
-            target="system.details.appearance"
-            editable={context.editable}
-          />
-        </article>
-      </RerenderAfterFormSubmission>
-      <RerenderAfterFormSubmission
-        andOnValueChange={context.system.details.biography.value}
-      >
-        <article class="biography-notes" use:context.activateEditors>
-          <div class="section-titles flex-row justify-content-space-between">
-            <span>
-              {localize('DND5E.Background')}/{localize('DND5E.Biography')}
-            </span>
-            <a
-              class="icon-button"
-              onclick={(ev) =>
-                context.editable &&
-                edit(
-                  context.system.details.biography.value,
-                  context.biographyEnrichedHtml,
-                  'system.details.biography.value',
-                )}
+        {/key}
+      </article>
+      <article class="biography-notes">
+        <div class="section-titles flex-row justify-content-space-between">
+          <span>
+            {localize('DND5E.Background')}/{localize('DND5E.Biography')}
+          </span>
+          <a
+            class="icon-button"
+            onclick={(ev) =>
+              context.editable &&
+              edit(
+                context.system.details.biography.value,
+                context.biographyEnrichedHtml,
+                'system.details.biography.value',
+              )}
+          >
+            <i class="fa-solid fa-feather"></i>
+          </a>
+        </div>
+        {#key context.biographyEnrichedHtml}
+          <div
+            class="editor"
+            use:manageSecrets={{ document: context.document }}
+          >
+            <div
+              data-field="system.details.biography.value"
+              class="user-select-text"
             >
-              <i class="fa-solid fa-feather"></i>
-            </a>
+              {@html context.biographyEnrichedHtml}
+            </div>
           </div>
-          <SheetEditor
-            content={context.biographyEnrichedHtml}
-            target="system.details.biography.value"
-            editable={context.editable}
-          />
-        </article>
-      </RerenderAfterFormSubmission>
+        {/key}
+      </article>
     </div>
   </div>
 </div>
@@ -218,25 +225,27 @@
 {#snippet biopage(
   label: string,
   value: string,
-  content: string,
+  enrichedHTML: string,
   target: string,
 )}
-  <RerenderAfterFormSubmission andOnValueChange={value ?? ''}>
-    <article use:context.activateEditors>
-      <div
-        class="section-titles biopage flex-row justify-content-space-between"
+  <article>
+    <div class="section-titles biopage flex-row justify-content-space-between">
+      <span>{localize(label)}</span>
+      <a
+        class="icon-button"
+        onclick={(ev) => context.editable && edit(value, enrichedHTML, target)}
       >
-        <span>{localize(label)}</span>
-        <a
-          class="icon-button"
-          onclick={(ev) => context.editable && edit(value, content, target)}
-        >
-          <i class="fa-solid fa-feather"></i>
-        </a>
+        <i class="fa-solid fa-feather"></i>
+      </a>
+    </div>
+    {#key enrichedHTML}
+      <div class="editor" use:manageSecrets={{ document: context.document }}>
+        <div data-field={target} class="user-select-text">
+          {@html enrichedHTML}
+        </div>
       </div>
-      <SheetEditor {content} {target} editable={context.editable} />
-    </article>
-  </RerenderAfterFormSubmission>
+    {/key}
+  </article>
 {/snippet}
 
 <style lang="scss">

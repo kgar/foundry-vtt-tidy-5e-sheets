@@ -148,6 +148,7 @@ declare global {
   var ProseMirror: any;
   var renderTemplate: any;
   var Roll: any;
+  var TokenDocument: any;
   var ui: any;
 
   interface ArrayConstructor {

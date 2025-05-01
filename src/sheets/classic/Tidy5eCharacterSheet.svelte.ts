@@ -29,25 +29,15 @@ import {
   type TypedActivityFavoriteSection,
   type AttributePinContext,
 } from 'src/types/types';
-import {
-  applySheetAttributesToWindow,
-  applyTitleToWindow,
-  blurUntabbableButtonsOnClick,
-  maintainCustomContentInputFocus,
-  applySheetConfigLockAttributeToApplication,
-  applyThemeToApplication,
-} from 'src/utils/applications.svelte';
-import { mount, unmount } from 'svelte';
+import { mount } from 'svelte';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
 import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime.svelte';
 import { actorUsesActionFeature } from 'src/features/actions/actions.svelte';
 import { isNil } from 'src/utils/data';
-import { CustomContentRenderer } from '../CustomContentRenderer';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-import { AsyncMutex } from 'src/utils/mutex';
 import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSections';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
@@ -63,26 +53,23 @@ import { Container } from 'src/features/containers/Container';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 import { Activities } from 'src/features/activities/activities';
-import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
-import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { AttributePins } from 'src/features/attribute-pins/AttributePins';
 import type { AttributePinFlag } from 'src/foundry/TidyFlags.types';
 import { ItemContext } from 'src/features/item/ItemContext';
-import { Tidy5eActorSheetClassicBase } from './Tidy5eActorSheetClassicBase.svelte';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
+import { Tidy5eActorSheetClassicV2Base } from './Tidy5eActorSheetClassicV2Base.svelte';
+import type { ApplicationConfiguration } from 'src/types/application.types';
 
 export class Tidy5eCharacterSheet
-  extends Tidy5eActorSheetClassicBase
+  extends Tidy5eActorSheetClassicV2Base<CharacterSheetContext>(
+    CONSTANTS.SHEET_TYPE_CHARACTER
+  )
   implements
     SheetTabCacheable,
     SheetExpandedItemsCacheable,
     SearchFilterCacheable
 {
-  context = new CoarseReactivityProvider<CharacterSheetContext | undefined>(
-    undefined
-  );
-
   stats = $state<SheetStats>({
     lastSubmissionTime: null,
   });
@@ -123,79 +110,19 @@ export class Tidy5eCharacterSheet
     this.currentTabId = settings.value.initialCharacterSheetTab;
   }
 
-  get template() {
-    return FoundryAdapter.getTemplate('empty-form-template.hbs');
-  }
-
-  static get defaultOptions() {
-    return FoundryAdapter.mergeObject(super.defaultOptions, {
-      classes: [
-        CONSTANTS.MODULE_ID,
-        'sheet',
-        'actor',
-        CONSTANTS.SHEET_TYPE_CHARACTER,
-        'app-v1',
-        CONSTANTS.SHEET_LAYOUT_CLASSIC,
-      ],
+  static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
+    position: {
       width: 740,
       height: 810,
-      scrollY: ['[data-tidy-track-scroll-y]', '.scroll-container'],
-      dragDrop: [
-        {
-          dragSelector: `[data-tidy-always-draggable]`,
-          dropSelector: null,
-        },
-        {
-          dragSelector: '[data-tidy-draggable]',
-          dropSelector: null,
-        },
-      ],
-    });
-  }
+    },
+  };
 
-  component: Record<string, any> | undefined;
-  additionalComponents: Record<string, any>[] = [];
-  _effectCleanup?: () => void;
-  activateListeners(html: { get: (index: 0) => HTMLElement }) {
-    // Document Apps Reactivity
-    game.user.apps[this.id] = this;
-
-    let first = true;
-
-    this._effectCleanup = $effect.root(() => {
-      $effect(() => {
-        if (first) return;
-
-        applySheetConfigLockAttributeToApplication(
-          settings.value,
-          this.element.get(0)
-        );
-        applyThemeToApplication(
-          settings.value,
-          this.element.get(0),
-          this.actor
-        );
-        this.render();
-      });
-
-      $effect(() => {
-        debug('Message bus message received', {
-          app: this,
-          actor: this.actor,
-          message: this.messageBus,
-        });
-      });
-    });
-
-    first = false;
-
-    const node = html.get(0);
-
-    this.component = mount(CharacterSheet, {
+  _createComponent(node: HTMLElement): Record<string, any> {
+    const component = mount(CharacterSheet, {
       target: node,
       context: new Map<any, any>([
         [CONSTANTS.SVELTE_CONTEXT.APP_ID, this.appId],
-        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this.context],
+        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
         [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
         [CONSTANTS.SVELTE_CONTEXT.STATS, this.stats],
         [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
@@ -245,22 +172,15 @@ export class Tidy5eCharacterSheet
       ]),
     });
 
-    const infoCard = mount(AttachedInfoCard, {
-      target: node,
-      props: {
-        sheet: this,
-      },
-    });
-
-    this.additionalComponents.push(infoCard);
-
     initTidy5eContextMenu(this, node, CONSTANTS.SHEET_LAYOUT_CLASSIC);
+
+    return component;
   }
 
-  async getData(options = {}): Promise<CharacterSheetContext> {
+  async _prepareContext(options = {}): Promise<CharacterSheetContext> {
     this._concentration = this.actor.concentration;
 
-    const defaultDocumentContext = await super.getData(this.options);
+    const defaultDocumentContext = await super._prepareContext(options);
 
     const characterPreferences = SheetPreferencesService.getByType(
       this.actor.type
@@ -945,11 +865,7 @@ export class Tidy5eCharacterSheet
 
     context.tabs = tabs;
 
-    TidyHooks.tidy5eSheetsPreConfigureSections(
-      this,
-      this.element.get(0),
-      context
-    );
+    TidyHooks.tidy5eSheetsPreConfigureSections(this, this.element, context);
 
     // Apply Section Configs
     // ------------------------------------------------------------
@@ -1034,6 +950,12 @@ export class Tidy5eCharacterSheet
     if (activitiesSection.activities.length) {
       context.favorites.push(activitiesSection);
     }
+
+    await this.setExpandedItemData();
+    SheetSections.accountForExternalSections(
+      ['actions', 'favorites', 'inventory', 'spellbook', 'features'],
+      context
+    );
 
     debug('Character Sheet context data', context);
 
@@ -1565,26 +1487,12 @@ export class Tidy5eCharacterSheet
     }
   }
 
-  onToggleAbilityProficiency(
-    event: MouseEvent & { target: HTMLElement; currentTarget: HTMLElement }
-  ) {
-    return this._onToggleAbilityProficiency(event);
-  }
-
   onShortRest(event: Event) {
     return this._onShortRest(event);
   }
 
   onLongRest(event: Event) {
     return this._onLongRest(event);
-  }
-
-  /** @inheritDoc */
-  _canDragStart(selector: string) {
-    return (
-      ['[data-tidy-always-draggable]'].includes(selector) ||
-      super._canDragStart(selector)
-    );
   }
 
   async _onDropSingleItem(
@@ -1613,175 +1521,6 @@ export class Tidy5eCharacterSheet
     return super._onDropSingleItem(itemData, event);
   }
 
-  close(options: unknown = {}) {
-    this._effectCleanup?.();
-    this._destroySvelteComponent();
-    delete game.user.apps[this.id];
-    return super.close(options);
-  }
-
-  submit(): Promise<Tidy5eCharacterSheet> {
-    return super.submit();
-  }
-
-  async _onSubmit(...args: any[]) {
-    await super._onSubmit(...args);
-    this.stats.lastSubmissionTime = new Date();
-  }
-
-  async _renderOuter() {
-    const html = await super._renderOuter();
-    if (!game.user.isGM && this.actor.limited) return html;
-    const header = html[0].querySelector('.window-header');
-
-    // Preparation warnings.
-    const warnings = document.createElement('a');
-    warnings.classList.add('preparation-warnings');
-    warnings.dataset.tooltip = 'Warnings';
-    warnings.setAttribute('aria-label', game.i18n.localize('Warnings'));
-    warnings.innerHTML = '<i class="fas fa-triangle-exclamation"></i>';
-    warnings.addEventListener('click', this._onOpenWarnings.bind(this));
-    header
-      .querySelector('.window-title')
-      .insertAdjacentElement('afterend', warnings);
-
-    return html;
-  }
-
-  /**
-   * Handle opening the warnings dialog.
-   * @param {PointerEvent} event  The triggering event.
-   * @protected
-   */
-  _onOpenWarnings(event: MouseEvent) {
-    event.stopImmediatePropagation();
-    // @ts-expect-error
-    const { top, left, height } = event.currentTarget!.getBoundingClientRect();
-    const { clientWidth } = document.documentElement;
-    const dialog = this.form.querySelector('dialog.warnings');
-    Object.assign(dialog.style, {
-      top: `${top + height}px`,
-      left: `${Math.min(left - 16, clientWidth - 300)}px`,
-    });
-    dialog.showModal();
-  }
-
-  /**
-   * A boolean which gates double-rendering and prevents a second
-   * colliding render from triggering an infamous
-   * "One of original or other are not Objects!" error.
-   */
-  private tidyRendering = false;
-
-  render(...args: unknown[]) {
-    debug('Sheet render begin');
-    this.tidyRendering = true;
-    super.render(...args);
-
-    const [warnings] = this.element.find(
-      '.window-header .preparation-warnings'
-    );
-    warnings?.toggleAttribute(
-      'hidden',
-      !this.actor._preparationWarnings?.length
-    );
-  }
-
-  private _renderMutex = new AsyncMutex();
-  async _render(force?: boolean, options = {}) {
-    await this._renderMutex.lock(async () => {
-      const doubleRenderDetected =
-        this.options.token && this.tidyRendering === false;
-
-      if (doubleRenderDetected) {
-        return;
-      }
-
-      await this._renderSheet(force, options);
-      const content = this.form?.closest('.window-content');
-      if (content) {
-        this._dragDrop.forEach((d: any) => d.bind(content));
-      }
-    });
-    this.tidyRendering = false;
-    debug('Sheet render end');
-  }
-
-  private async _renderSheet(force?: boolean, options = {}) {
-    await this.setExpandedItemData();
-    const data = await this.getData();
-    SheetSections.accountForExternalSections(
-      ['actions', 'favorites', 'inventory', 'spellbook', 'features'],
-      data
-    );
-    this.context.data = data;
-
-    if (force) {
-      const { width, height } =
-        SheetPreferencesService.getByType(this.actor.type) ?? {};
-      this.position = {
-        ...this.position,
-        width: width ?? this.position.width,
-        height: height ?? this.position.height,
-      };
-
-      this._saveScrollPositions(this.element);
-      this._destroySvelteComponent();
-      await super._render(force, options);
-      applySheetAttributesToWindow(
-        this.actor.documentName,
-        this.actor.uuid,
-        this.actor.type,
-        this.element.get(0)
-      );
-      await this.renderCustomContent({ data, isFullRender: true });
-      TidyHooks.tidy5eSheetsRenderActorSheet(
-        this,
-        this.element.get(0),
-        data,
-        true
-      );
-      CustomContentRenderer.wireCompatibilityEventListeners(
-        this.element,
-        super.activateListeners,
-        this
-      );
-      blurUntabbableButtonsOnClick(this.element.get(0));
-      return;
-    }
-
-    await maintainCustomContentInputFocus(this, async () => {
-      applyTitleToWindow(this.title, this.element.get(0));
-      await this.renderCustomContent({ data, isFullRender: false });
-      TidyHooks.tidy5eSheetsRenderActorSheet(
-        this,
-        this.element.get(0),
-        data,
-        false
-      );
-      CustomContentRenderer.wireCompatibilityEventListeners(
-        this.element,
-        super.activateListeners,
-        this
-      );
-    });
-  }
-
-  private async renderCustomContent(args: {
-    data: CharacterSheetContext;
-    isFullRender: boolean;
-  }) {
-    await CustomContentRenderer.render({
-      app: this,
-      customContent: args.data.customContent,
-      data: args.data,
-      element: this.element,
-      isFullRender: args.isFullRender,
-      superActivateListeners: super.activateListeners,
-      tabs: args.data.tabs,
-    });
-  }
-
   deleteOccupant(facilityId: string, prop: string, index: number) {
     const facility = this.actor.items.get(facilityId);
 
@@ -1796,51 +1535,13 @@ export class Tidy5eCharacterSheet
     return facility.update({ [`${prop}.value`]: value });
   }
 
-  _getHeaderButtons() {
-    const buttons = super._getHeaderButtons();
-    return FoundryAdapter.removeConfigureSettingsButtonWhenLockedForNonGm(
-      buttons
-    );
-  }
-
-  _destroySvelteComponent() {
-    if (this.component) {
-      unmount(this.component);
-    }
-    this.component = undefined;
-
-    this.additionalComponents.forEach((c) => unmount(c));
-    this.additionalComponents = [];
-  }
-
-  _saveScrollPositions(html: any) {
-    if (html.length && this.component) {
-      const save = super._saveScrollPositions(html);
-      debug('Saved scroll positions', this._scrollPositions);
-      return save;
-    }
-  }
-
   _disableFields(...args: any[]) {
     debug('Ignoring call to disable fields. Delegating to Tidy Sheets...');
   }
 
-  _onResize(event: any) {
-    super._onResize(event);
-    const { width, height } = this.position;
-    SheetPreferencesService.setDocumentTypePreference(
-      this.actor.type,
-      'width',
-      width
-    );
-    SheetPreferencesService.setDocumentTypePreference(
-      this.actor.type,
-      'height',
-      height
-    );
-  }
-
-  async _onDrop(event: DragEvent & { target: HTMLElement }) {
+  async _onDrop(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
+  ) {
     if (!event.target.closest('[data-tidy-favorites], [data-pin-id]')) {
       return super._onDrop(event);
     }

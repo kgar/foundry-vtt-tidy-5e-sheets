@@ -425,8 +425,8 @@ export function TidyExtensibleDocumentSheetMixin<
     /*  Rendering Life-Cycle Methods                */
     /* -------------------------------------------- */
 
-    _onRender(context: TContext, options: TidyDocumentSheetRenderOptions) {
-      super._onRender(context, options);
+    async _onRender(context: TContext, options: TidyDocumentSheetRenderOptions) {
+      await super._onRender(context, options);
 
       // Some integrations will insert HTML even beyond this point,
       // so breaking off the current task gives another chance to restore state.
