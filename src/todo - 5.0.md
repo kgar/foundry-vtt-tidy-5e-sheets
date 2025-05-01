@@ -1,7 +1,6 @@
 ## To Fix
 
-- [ ] Implement Play/Edit mode for actor base
-- [ ] Implement Play/Edit mode for group
+
 - [ ] Test all actor editors / ensure mode toggles trigger submissions
 - [ ] Refine Character App V2 conversion
   - [ ] Condition text is missing on Effects tab
@@ -17,7 +16,8 @@
 - [ ] accountForExternalSections is not being used quite right. It needs to happen after any callers have updated context with their own data. How do we account for this?
 - [ ] Purge App V1 SCSS
 - [ ] // TODO: Make the character sheet handle bastion tab check. This is violating separation of concerns.
-
+- [ ] Eliminate permanentlyUnlockCharacterSheetForGm, etc.
+- [ ] Make Journal panels scroll at the editor level and not the panel+title level.
 
 ## Etc.
 - (hightouch) the radio buttons on Foundry 13 are wonky / see container sort longpress menu

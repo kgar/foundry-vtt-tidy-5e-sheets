@@ -9,6 +9,7 @@ import GroupSheet from './group/GroupSheet.svelte';
 import type {
   Actor5e,
   ActorInventoryTypes,
+  DocumentSheetV2Context,
   MessageBus,
   Utilities,
 } from 'src/types/types';
@@ -44,15 +45,18 @@ import { processInputChangeDeltaFromValues } from 'src/utils/form';
 import { isNil } from 'src/utils/data';
 import { formatAsModifier } from 'src/utils/formatting';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
-import SheetHeaderModeToggle from 'src/sheets/classic/shared/SheetHeaderModeToggle.svelte';
 import { Activities } from 'src/features/activities/activities';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { ImportSheetControl } from '../../features/sheet-header-controls/ImportSheetControl';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
-import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import {
+  TidyExtensibleDocumentSheetMixin,
+  type TidyDocumentSheetRenderOptions,
+} from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import GroupSheetClassicRuntime from 'src/runtime/actor/GroupSheetClassicRuntime.svelte';
+import SheetHeaderModeToggleV2 from './shared/SheetHeaderModeToggleV2.svelte';
 
 type MemberStats = {
   currentHP: number;
@@ -170,7 +174,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
 
   _createAdditionalComponents(content: HTMLElement) {
     const windowHeader = this.element.querySelector('.window-header');
-    const sheetLock = mount(SheetHeaderModeToggle, {
+    const sheetLock = mount(SheetHeaderModeToggleV2, {
       target: windowHeader,
       anchor: windowHeader.querySelector('.window-title'),
       context: new Map<string, any>([
@@ -192,8 +196,12 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
   }
 
   async _prepareContext(
-    options: ApplicationRenderOptions
+    options: TidyDocumentSheetRenderOptions
   ): Promise<GroupSheetClassicContext> {
+    const documentSheetContext = (await super._prepareContext(
+      options
+    )) as DocumentSheetV2Context;
+
     let xp: Group5eXp | undefined = undefined;
     if (
       FoundryAdapter.getSystemSetting(
@@ -222,9 +230,6 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     } = this.#prepareMembers();
 
     const source = this.actor.toObject();
-
-    const unlocked =
-      FoundryAdapter.isSheetUnlocked(this.actor) && this.isEditable;
 
     const editable = this.isEditable;
 
@@ -465,8 +470,6 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
         FoundryAdapter.getSystemSetting(
           CONSTANTS.SYSTEM_SETTING_LEVELING_MODE
         ) === CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
-      document: this.actor,
-      editable: editable,
       effects: dnd5e.applications.components.EffectsElement.prepareCategories(
         this.actor.allApplicableEffects()
       ),
@@ -481,7 +484,8 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       items: Array.from(this.actor.items),
       limited: this.actor.limited,
       lockSensitiveFields:
-        (!unlocked && settings.value.useTotalSheetLock) || !editable,
+        (!documentSheetContext.unlocked && settings.value.useTotalSheetLock) ||
+        !editable,
       maxHP: stats.maxHP,
       memberContext: memberContext,
       memberSections: memberSections,
@@ -496,17 +500,16 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       showGroupMemberTabInfoPanel: TidyFlags.showGroupMemberTabInfoPanel.get(
         this.actor
       ),
-      source: source,
       summary: summary,
       system: this.actor.system,
       tabs: [],
-      unlocked: unlocked,
       useClassicControls: true, // TODO: Establish setting for this; and group section in settings
       useRoundedPortraitStyle: [
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
       ].includes(settings.value.useCircularPortraitStyle),
       utilities: utilities,
       xp: xp,
+      ...documentSheetContext,
     };
 
     context.customContent = await GroupSheetClassicRuntime.getContent(context);

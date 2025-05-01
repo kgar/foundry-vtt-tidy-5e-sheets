@@ -100,28 +100,6 @@ export class TidyFlags {
   };
 
   /**
-   * Determines whether an actor's sheet should be editable per the sheet lock feature (default `true`).
-   * @param actor the actor
-   * @returns whether the sheet should be editable per the sheet lock feature
-   */
-  static allowEdit = {
-    key: 'allow-edit',
-    prop: TidyFlags.getFlagPropertyPath('allow-edit'),
-    /** Denotes whether the sheet is in edit mode. */
-    get(document: any): boolean {
-      return TidyFlags.tryGetFlag<boolean>(document, 'allow-edit') ?? true;
-    },
-    /** Sets whether the sheet is in edit mode. */
-    set(document: any, value: boolean) {
-      return TidyFlags.setFlag(document, TidyFlags.allowEdit.key, value);
-    },
-    /** Removes the actor's edit mode setting. */
-    unset(document: any) {
-      return TidyFlags.unsetFlag(document, TidyFlags.allowEdit.key);
-    },
-  };
-
-  /**
    * The appearance of an actor.
    * For this module, it is only an informational biographical field.
    */

@@ -39,8 +39,8 @@ import { isNil } from 'src/utils/data';
 import { debug, error } from 'src/utils/logging';
 import { firstOfSet } from 'src/utils/set';
 import { mount } from 'svelte';
-import SheetHeaderModeToggle from 'src/sheets/classic/shared/SheetHeaderModeToggle.svelte';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
+import SheetHeaderModeToggleV2 from './shared/SheetHeaderModeToggleV2.svelte';
 
 // TODO: Simplify mixins to mostly a class hierarchy
 export function Tidy5eActorSheetClassicV2Base<
@@ -171,6 +171,8 @@ export function Tidy5eActorSheetClassicV2Base<
     }
 
     async _prepareContext(options: any): Promise<ActorSheetContextV1> {
+      const documentSheetContext = await super._prepareContext(options);
+
       // The Actor's data
       const source = this.actor.toObject();
 
@@ -184,7 +186,7 @@ export function Tidy5eActorSheetClassicV2Base<
         const attrConcentration = this.actor.system.attributes.concentration;
         if (
           this.actor.statuses.has(CONFIG.specialStatusEffects.CONCENTRATING) ||
-          (FoundryAdapter.isSheetUnlocked(this.actor) && attrConcentration)
+          (documentSheetContext.unlocked && attrConcentration)
         ) {
           saves.concentration = {
             isConcentration: true,
@@ -205,8 +207,6 @@ export function Tidy5eActorSheetClassicV2Base<
       if (hp.tempmax === 0) delete hp.tempmax;
 
       const editable = this.isEditable;
-
-      const unlocked = FoundryAdapter.isSheetUnlocked(this.actor) && editable;
 
       const warnings = foundry.utils.deepClone(this.actor._preparationWarnings);
 
@@ -235,8 +235,6 @@ export function Tidy5eActorSheetClassicV2Base<
           FoundryAdapter.getSystemSetting(
             CONSTANTS.SYSTEM_SETTING_LEVELING_MODE
           ) === CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
-        document: this.document,
-        editable: editable,
         effects: dnd5e.applications.components.EffectsElement.prepareCategories(
           this.actor.allApplicableEffects()
         ),
@@ -267,7 +265,9 @@ export function Tidy5eActorSheetClassicV2Base<
         lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
         lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
         lockSensitiveFields:
-          (!unlocked && settings.value.useTotalSheetLock) || !editable,
+          (!documentSheetContext.unlocked &&
+            settings.value.useTotalSheetLock) ||
+          !editable,
         modernRules: FoundryAdapter.checkIfModernRules(this.actor),
         movement: this._getMovementSpeed(this.actor.system),
         options: this.options,
@@ -282,13 +282,11 @@ export function Tidy5eActorSheetClassicV2Base<
         rollData: rollData,
         senses: this._getSenses(this.actor.system),
         skills: foundry.utils.deepClone(this.actor.system.skills ?? {}),
-        source: source.system,
         showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
         system: this.actor.system,
         tabs: [],
         tools: foundry.utils.deepClone(this.actor.system.tools ?? {}),
         traits: this._prepareTraits(this.actor.system),
-        unlocked: unlocked,
         useActionsFeature: actorUsesActionFeature(this.actor),
         useClassicControls: true,
         useRoundedPortraitStyle: [
@@ -298,6 +296,7 @@ export function Tidy5eActorSheetClassicV2Base<
         viewableWarnings:
           warnings?.filter((w: any) => !isNil(w.message?.trim(), '')) ?? [],
         warnings: warnings,
+        ...documentSheetContext,
       };
 
       // Ability Scores
@@ -567,7 +566,7 @@ export function Tidy5eActorSheetClassicV2Base<
           context.actor.statuses.has(
             CONFIG.specialStatusEffects.CONCENTRATING
           ) ||
-          (FoundryAdapter.isSheetUnlocked(context.actor) && attrConcentration)
+          (context.unlocked && attrConcentration)
         ) {
           (context.saves ??= {}).concentration = {
             isConcentration: true,
@@ -917,7 +916,7 @@ export function Tidy5eActorSheetClassicV2Base<
 
     _createAdditionalComponents(content: HTMLElement) {
       const windowHeader = this.element.querySelector('.window-header');
-      const sheetLock = mount(SheetHeaderModeToggle, {
+      const sheetLock = mount(SheetHeaderModeToggleV2, {
         target: windowHeader,
         anchor: windowHeader.querySelector('.window-title'),
         context: new Map<string, any>([

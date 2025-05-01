@@ -19,23 +19,11 @@ function registerSheetLockToggleKeybinding() {
 
       const sheetDocument = ui.activeWindow.document;
 
-      if (!sheetDocument) {
+      if (!sheetDocument || !sheetDocument.sheet?.isEditable) {
         return;
       }
 
-      const applicationElement =
-        sheetDocument.sheet?.form ?? sheetDocument.sheet?.element;
-
-      const isQuadrone = !!applicationElement?.classList.contains(
-        CONSTANTS.SHEET_LAYOUT_QUADRONE
-      );
-
-      if (isQuadrone) {
-        await sheetDocument.sheet.toggleSheetMode?.();
-      } else {
-        const allowEdit = TidyFlags.allowEdit.get(sheetDocument);
-        await TidyFlags.allowEdit.set(sheetDocument, !allowEdit);
-      }
+      await sheetDocument.sheet.toggleSheetMode?.();
     },
     onUp: () => {},
     precedence: CONST.KEYBINDING_PRECEDENCE.NORMAL,

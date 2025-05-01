@@ -713,21 +713,8 @@ export const FoundryAdapter = {
   },
   isInGmEditMode(document: any): boolean {
     return (
-      FoundryAdapter.isSheetUnlocked(document) && FoundryAdapter.userIsGm()
-    );
-  },
-  isSheetUnlocked(document: any): boolean {
-    return (
-      (document.isOwner && TidyFlags.allowEdit.get(document)) ||
-      (FoundryAdapter.userIsGm() &&
-        settings.value.permanentlyUnlockCharacterSheetForGm &&
-        document.type === CONSTANTS.SHEET_TYPE_CHARACTER) ||
-      (FoundryAdapter.userIsGm() &&
-        settings.value.permanentlyUnlockNpcSheetForGm &&
-        document.type === CONSTANTS.SHEET_TYPE_NPC) ||
-      (FoundryAdapter.userIsGm() &&
-        settings.value.permanentlyUnlockVehicleSheetForGm &&
-        document.type === CONSTANTS.SHEET_TYPE_VEHICLE)
+      document?.sheet?.sheetMode === CONSTANTS.SHEET_MODE_EDIT &&
+      FoundryAdapter.userIsGm()
     );
   },
   allowCharacterEffectsManagement(actor: any) {
