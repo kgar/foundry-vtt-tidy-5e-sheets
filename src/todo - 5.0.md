@@ -1,8 +1,14 @@
 ## To Fix
 
+- [ ] Theme V2 upgrade, phase 1
+  - [ ] Apply all themes' color sets globally in the current fashion.
+  - [ ] Whenever theme colors change, refresh all theme styles.
+  - [ ] Global theme selector should update global theme variables.
+  - [ ] Sheet theme selector should update that sheet's variables.
+  - [ ] Figure out how to do live preview of sheet/global changes.
+  - [ ] Ensure all sheets can toggle light/dark mode without issue.
 - [ ] Test all actor editors / ensure mode toggles trigger submissions
 - [ ] Refine Character App V2 conversion
-  - [ ] Theme V2 needs to be applied, and the CSS selectors need to be updated to target theme-light and theme-dark
   - [ ] Need to steal just the layout parts of `.standard-form`
 - [ ] (all 3 sheets) Pull sheet preferences during initialize application options
 - [ ] biographyHTML is redundant
@@ -18,3 +24,8 @@
 
 ## Etc.
 - (hightouch) the radio buttons on Foundry 13 are wonky / see container sort longpress menu
+
+## Stretch
+
+- [ ] Provide light/dark tabs on theme config dialog
+- [ ] Create the Quadrone version and delineate the two
