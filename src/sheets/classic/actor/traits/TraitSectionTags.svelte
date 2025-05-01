@@ -12,7 +12,7 @@
 
 <ul class="trait-list">
   {#each tags as [key, value]}
-    <li class="trait-tag {key} {tagCssClass}">
+    <li class={['trait-tag', key, tagCssClass]}>
       {#if children}{@render children({ key, value })}{:else}{value}{/if}
     </li>
   {/each}

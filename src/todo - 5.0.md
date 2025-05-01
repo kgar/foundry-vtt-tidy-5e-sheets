@@ -1,11 +1,8 @@
 ## To Fix
 
-
 - [ ] Test all actor editors / ensure mode toggles trigger submissions
 - [ ] Refine Character App V2 conversion
-  - [ ] Condition text is missing on Effects tab
   - [ ] Theme V2 needs to be applied, and the CSS selectors need to be updated to target theme-light and theme-dark
-  - [ ] Convert all sheet editors to V2 / ensure secrets management/etc. is being handled
   - [ ] Need to steal just the layout parts of `.standard-form`
 - [ ] (all 3 sheets) Pull sheet preferences during initialize application options
 - [ ] biographyHTML is redundant

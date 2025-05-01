@@ -78,7 +78,9 @@
         labelCssClass="action-stations-label"
         disabled={!context.editable || context.lockSensitiveFields}
       >
-        <span>{localize('DND5E.VehicleActionStations')}</span>
+        <span class="action-stations-label"
+          >{localize('DND5E.VehicleActionStations')}</span
+        >
       </Checkbox>
     </div>
   </div>
@@ -202,5 +204,8 @@
         text-align: center;
       }
     }
+  }
+  span.action-stations {
+    white-space: nowrap;
   }
 </style>

@@ -707,9 +707,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
         const conditionImmunities: string[] = [];
         for (let entry of member.system.traits.ci.value) {
           conditionImmunities.push(
-            CONFIG.DND5E.conditionTypes[
-              entry as keyof typeof CONFIG.DND5E.conditionTypes
-            ]?.label ?? entry
+            CONFIG.DND5E.conditionTypes[entry]?.name ?? entry
           );
         }
 

@@ -123,7 +123,7 @@
 
 {#if children}
   <label
-    class={labelCssClass}
+    class={[labelCssClass, 'checkbox']}
     {title}
     style={greenCheckboxStyle}
     data-tooltip={activeEffectApplied ? overrideTooltip : tooltip}

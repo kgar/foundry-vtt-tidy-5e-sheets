@@ -1,3 +1,4 @@
+import type { ConditionType } from 'src/foundry/config.types';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 import type {
   ActiveEffect5e,
@@ -17,20 +18,20 @@ export class ConditionsAndEffects {
     effects: Record<string, EffectCategory<ActiveEffectContext>>;
   }> {
     const conditionIds = new Set();
-    const conditions = Object.entries<any>(CONFIG.DND5E.conditionTypes).reduce<
-      Dnd5eActorCondition[]
-    >((arr, [k, c]) => {
+    const conditions = Object.entries<ConditionType>(
+      CONFIG.DND5E.conditionTypes
+    ).reduce<Dnd5eActorCondition[]>((arr, [k, c]) => {
       if (c.pseudo) return arr; // Filter out pseudo-conditions.
-      const { label: name, icon, reference } = c;
+      const { name, img, reference } = c;
       const id = dnd5e.utils.staticID(`dnd5e${k}`);
       conditionIds.add(id);
       const existing = actor.effects.get(id);
-      const { disabled, img } = existing ?? {};
+      const { disabled, img: existingImg } = existing ?? {};
       arr.push({
         name,
         reference,
         id: k,
-        icon: img ?? icon,
+        icon: existingImg ?? img,
         disabled: existing ? disabled : true,
       });
       return arr;

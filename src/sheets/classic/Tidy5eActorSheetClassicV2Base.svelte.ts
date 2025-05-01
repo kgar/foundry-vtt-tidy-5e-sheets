@@ -481,12 +481,22 @@ export function Tidy5eActorSheetClassicV2Base<
         const data = foundry.utils.deepClone(
           foundry.utils.getProperty(systemData, key)
         );
-        if (!data) continue;
+
+        if (!data) {
+          continue;
+        }
+
         foundry.utils.setProperty(traits, key, data);
+
         let values = data.value;
-        if (!values) values = [];
-        else if (values instanceof Set) values = Array.from(values);
-        else if (!Array.isArray(values)) values = [values];
+
+        if (!values) {
+          values = [];
+        } else if (values instanceof Set) {
+          values = Array.from(values);
+        } else if (!Array.isArray(values)) {
+          values = [values];
+        }
 
         // Split physical damage types from others if bypasses is set
         const physical: string[] = [];

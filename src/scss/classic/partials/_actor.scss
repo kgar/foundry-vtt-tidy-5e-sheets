@@ -314,6 +314,10 @@ select {
   }
 }
 
+:where(label) > input[type='checkbox'] {
+  width: unset;
+}
+
 select {
   border-color: var(--t5e-light-color);
   background: var(--t5e-faint-color);

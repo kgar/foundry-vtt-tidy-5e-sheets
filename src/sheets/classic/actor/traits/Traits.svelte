@@ -25,10 +25,6 @@
   }
 
   const localize = FoundryAdapter.localize;
-
-  const treasure = $derived(
-    'treasure' in context ? context.treasure : undefined,
-  );
 </script>
 
 <div class="traits">
@@ -185,7 +181,7 @@
       show={context.unlocked || !!conditionImmunities.length}
       useConfigureButton={context.editable}
     >
-      <TraitSectionTags tags={conditionImmunities} />
+      <TraitSectionTags tagCssClass="capitalize" tags={conditionImmunities} />
     </TraitSection>
   {/if}
 
