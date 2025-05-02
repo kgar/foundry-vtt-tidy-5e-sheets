@@ -10,12 +10,7 @@ export class AboutApplication extends SvelteApplicationMixin<
   {}
 >(foundry.applications.api.ApplicationV2) {
   static DEFAULT_OPTIONS = {
-    classes: [
-      CONSTANTS.MODULE_ID,
-      'app-v2',
-      'application',
-      CONSTANTS.SHEET_LAYOUT_QUADRONE,
-    ],
+    classes: [CONSTANTS.MODULE_ID, CONSTANTS.SHEET_LAYOUT_QUADRONE],
     id: 'tidy-5e-sheets-about-window',
     position: {
       width: 450,

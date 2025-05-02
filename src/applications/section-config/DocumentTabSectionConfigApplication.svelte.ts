@@ -31,7 +31,6 @@ export class DocumentTabSectionConfigApplication extends SvelteApplicationMixin<
       CONSTANTS.MODULE_ID,
       'application-shell',
       'tidy-5e-sheets-section-configuration',
-      'app-v2',
       CONSTANTS.SHEET_LAYOUT_CLASSIC,
     ],
     sheetConfig: false,

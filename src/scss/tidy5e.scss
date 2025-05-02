@@ -4,10 +4,10 @@
 @import 'util';
 @import 'floating-context-menu';
 
-/* Classic App V2 */
-@import 'classic/classic-app-v2.scss';
+/* Classic */
+@import 'classic/classic.scss';
 
-/* Quadrone App V2 */
+/* Quadrone */
 @import 'quadrone/reset.scss';
 @import 'quadrone/typography.scss';
 @import 'quadrone/apps.scss';
@@ -24,7 +24,7 @@
 @import 'quadrone/editors.scss';
 @import 'quadrone/dialogs.scss';
 
-/* Quadrone App V2 High Contrast */
+/* Quadrone High Contrast */
 
 /* dnd5e integration */
 @import 'shared/dnd5e2-ports.scss';

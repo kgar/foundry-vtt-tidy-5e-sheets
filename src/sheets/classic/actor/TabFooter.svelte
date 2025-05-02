@@ -4,14 +4,13 @@
   interface Props {
     cssClass?: string | null;
     mode: 'vertical' | 'horizontal';
-    appV2?: boolean;
     children?: Snippet;
   }
 
-  let { cssClass = null, mode, appV2 = false, children }: Props = $props();
+  let { cssClass = null, mode, children }: Props = $props();
 </script>
 
-<footer class="tab-footer {cssClass} {mode}" class:app-v2={appV2}>
+<footer class="tab-footer {cssClass} {mode}">
   {@render children?.()}
 </footer>
 
@@ -24,10 +23,6 @@
     border-top: 0.0625rem solid var(--t5e-light-color);
     display: flex;
     gap: 0.25rem;
-
-    &.app-v2 {
-      margin-bottom: 0;
-    }
 
     &.vertical {
       flex-direction: column;

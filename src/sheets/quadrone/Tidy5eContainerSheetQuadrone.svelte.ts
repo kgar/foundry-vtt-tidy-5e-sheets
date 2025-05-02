@@ -82,7 +82,6 @@ export class Tidy5eContainerSheetQuadrone
       'sheet',
       'item',
       CONSTANTS.ITEM_TYPE_CONTAINER,
-      'app-v2',
       'quadrone',
     ],
     tag: 'form',

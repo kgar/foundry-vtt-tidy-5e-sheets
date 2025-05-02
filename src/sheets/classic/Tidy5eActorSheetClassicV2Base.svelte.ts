@@ -70,8 +70,6 @@ export function Tidy5eActorSheetClassicV2Base<
         'sheet',
         'actor',
         sheetType,
-        'app-v2',
-        'application',
         CONSTANTS.SHEET_LAYOUT_CLASSIC,
       ],
       window: {

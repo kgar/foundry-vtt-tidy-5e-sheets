@@ -23,8 +23,6 @@ export class BulkMigrationsApplication
   static DEFAULT_OPTIONS = {
     classes: [
       CONSTANTS.MODULE_ID,
-      'application',
-      'app-v2',
       'application-shell',
       CONSTANTS.SHEET_LAYOUT_CLASSIC,
     ],

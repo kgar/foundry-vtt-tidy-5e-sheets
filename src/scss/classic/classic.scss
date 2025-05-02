@@ -194,7 +194,7 @@
   }
 }
 
-.tidy5e-sheet.application:where(.app-v2.classic) {
+.tidy5e-sheet.application:where(.classic) {
   --t5e-parchment-background: url(../../modules/tidy5e-sheet/images/parchment-texture-top.webp)
       no-repeat top center / 150% auto,
     #f1ebe8 url(../../modules/tidy5e-sheet/images/parchment-texture-bottom.webp)

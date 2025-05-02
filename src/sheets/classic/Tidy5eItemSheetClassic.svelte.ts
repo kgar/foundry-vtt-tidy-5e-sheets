@@ -53,7 +53,6 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
       CONSTANTS.MODULE_ID,
       'sheet',
       CONSTANTS.SHEET_TYPE_ITEM,
-      'app-v2',
       CONSTANTS.SHEET_LAYOUT_CLASSIC,
       'tidy-form',
     ],

@@ -31,7 +31,6 @@ export class UserSettingsFormApplication extends SvelteApplicationMixin<
     classes: [
       CONSTANTS.MODULE_ID,
       'settings',
-      'app-v2',
       'application-shell',
       CONSTANTS.SHEET_LAYOUT_CLASSIC,
     ],
@@ -105,7 +104,7 @@ export class UserSettingsFormApplication extends SvelteApplicationMixin<
   _createComponent(node: HTMLElement): Record<string, any> {
     // Temporary fix due to strange reactivity issues with coarse reactivity provider
     this.context = this._context.data;
-    
+
     return mount(UserSettings, {
       target: node,
       context: new Map<any, any>([

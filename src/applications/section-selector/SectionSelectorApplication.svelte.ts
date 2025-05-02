@@ -41,12 +41,10 @@ export class SectionSelectorApplication extends SvelteApplicationMixin<
   static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
     classes: [
       CONSTANTS.MODULE_ID,
-      'application',
       'sheet',
       'quadrone',
       'tidy-section-selector-application',
-      'app-v2',
-      'scrollable-window-content'
+      'scrollable-window-content',
     ],
     tag: 'div',
     sheetConfig: false,

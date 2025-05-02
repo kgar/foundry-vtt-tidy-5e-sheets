@@ -42,7 +42,6 @@ export class Tidy5eItemDebugSheetQuadrone extends TidyExtensibleDocumentSheetMix
       'sheet',
       'item',
       CONSTANTS.ITEM_TYPE_CONTAINER,
-      'app-v2',
       'quadrone',
     ],
     tag: 'form',

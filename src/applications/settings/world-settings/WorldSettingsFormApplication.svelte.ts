@@ -33,7 +33,6 @@ export class WorldSettingsFormApplication extends SvelteApplicationMixin<
     classes: [
       CONSTANTS.MODULE_ID,
       'settings',
-      'app-v2',
       'application-shell',
       CONSTANTS.SHEET_LAYOUT_CLASSIC,
     ],

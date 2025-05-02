@@ -29,11 +29,9 @@ export default class ActorOriginSummaryConfigFormApplication extends SvelteAppli
   static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
     classes: [
       CONSTANTS.MODULE_ID,
-      'application',
       'sheet',
       'quadrone',
       'tidy-origin-summary-application',
-      'app-v2',
       'scrollable-window-content',
     ],
     window: {

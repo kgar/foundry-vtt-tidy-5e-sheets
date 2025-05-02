@@ -59,7 +59,6 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       CONSTANTS.MODULE_ID,
       'sheet',
       CONSTANTS.SHEET_TYPE_ITEM,
-      'app-v2',
       'quadrone',
     ],
     tag: 'form',

@@ -95,7 +95,6 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       'sheet',
       'actor',
       CONSTANTS.SHEET_TYPE_GROUP,
-      'app-v2',
       CONSTANTS.SHEET_LAYOUT_CLASSIC,
     ],
     tag: 'form',

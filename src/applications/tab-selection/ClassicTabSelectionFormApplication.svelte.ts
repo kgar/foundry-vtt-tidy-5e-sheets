@@ -38,7 +38,6 @@ export default class ClassicTabSelectionFormApplication extends SvelteApplicatio
       CONSTANTS.MODULE_ID,
       'application-shell',
       'tab-selection',
-      'app-v2',
       CONSTANTS.SHEET_LAYOUT_CLASSIC,
     ],
     tag: 'div',

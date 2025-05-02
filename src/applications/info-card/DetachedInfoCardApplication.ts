@@ -26,7 +26,6 @@ export class DetachedInfoCardApplication extends SvelteApplicationMixin(
       CONSTANTS.MODULE_ID,
       'application-shell',
       'tidy-info-card-application',
-      'app-v2',
       CONSTANTS.SHEET_LAYOUT_CLASSIC,
     ],
     tag: 'div',

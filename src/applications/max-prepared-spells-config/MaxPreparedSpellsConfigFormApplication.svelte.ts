@@ -23,8 +23,6 @@ export class MaxPreparedSpellsConfigFormApplication extends SvelteApplicationMix
     classes: [
       CONSTANTS.MODULE_ID,
       'application-shell',
-      'app-v2',
-      'application',
       CONSTANTS.SHEET_LAYOUT_CLASSIC,
     ],
     sheetConfig: false,

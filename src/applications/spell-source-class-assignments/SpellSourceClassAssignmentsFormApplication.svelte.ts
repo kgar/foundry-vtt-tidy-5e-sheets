@@ -39,12 +39,10 @@ export default class SpellSourceClassAssignmentsFormApplication extends SvelteAp
   static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
     classes: [
       CONSTANTS.MODULE_ID,
-      'application',
       'application-shell',
       'sheet',
-      'classic',
+      CONSTANTS.SHEET_LAYOUT_CLASSIC,
       'tidy-spell-source-class-assignments-application',
-      'app-v2',
       'scrollable-window-content',
     ],
     sheetConfig: false,
