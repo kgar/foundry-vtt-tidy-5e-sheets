@@ -94,8 +94,6 @@ export class ThemeSettingsFormApplication extends SvelteApplicationMixin<
       newSettings.colorPickerEnabled
     );
 
-    applyCurrentThemeClassic();
-
     await this.close();
   }
 

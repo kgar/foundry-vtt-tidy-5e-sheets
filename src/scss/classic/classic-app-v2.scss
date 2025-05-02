@@ -1,9 +1,9 @@
-:where(.tidy5e-sheet.app-v2.classic) {
+:where(.tidy5e-sheet.classic) {
   @import './partials/reset-v2';
 
   // Light Mode Variables
-  --t5e-title-font-family: 'Modesto Condensed, Palatino Linotype, serif';
-  --t5e-body-font-family: 'Signika, sans-serif';
+  --t5e-title-font-family: 'Modesto Condensed', 'Palatino Linotype', serif;
+  --t5e-body-font-family: 'Signika', sans-serif;
   --t5e-primary-font-color: rgba(0, 0, 0, 0.9);
   --t5e-background: #f1ebe8;
   --t5e-faintest-color: rgba(0, 0, 0, 0.05);

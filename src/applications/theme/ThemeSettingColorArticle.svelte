@@ -3,18 +3,16 @@
   import type { ThemeColorSetting } from 'src/types/theme.types';
   import { getContext, onMount } from 'svelte';
   import type { CurrentSettings } from 'src/settings/settings.svelte';
-  import {
-    settingValueToHexaString,
-    trySetRootCssVariable,
-  } from 'src/theme/theme';
+  import { settingValueToHexaString } from 'src/theme/theme';
   import { CONSTANTS } from 'src/constants';
 
   interface Props {
     settings: CurrentSettings;
     colorToConfigure: ThemeColorSetting;
+    colorSelected: () => void;
   }
 
-  let { colorToConfigure, settings }: Props = $props();
+  let { colorToConfigure, settings, colorSelected }: Props = $props();
 
   let appId = getContext(CONSTANTS.SVELTE_CONTEXT.APP_ID);
 
@@ -35,14 +33,11 @@
     if (!parsedColor) {
       return;
     }
-    trySetRootCssVariable(
-      colorToConfigure.cssVariable,
-      value,
-      settings.colorPickerEnabled,
-    );
 
     //@ts-expect-error
     settings[colorToConfigure.key] = value;
+
+    colorSelected?.();
   }
 
   let article: HTMLElement;

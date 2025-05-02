@@ -116,7 +116,7 @@
       </div>
       <span>&#8226;</span>
       {#key context.lockSensitiveFields}
-        <DelimitedTruncatedContent cssClass="flex-1">
+        <DelimitedTruncatedContent cssClass="flex-1 align-items-center">
           <ContentEditableFormField
             element="span"
             document={context.actor}
@@ -200,9 +200,13 @@
       justify-content: space-between;
       align-items: center;
       gap: 0.25rem;
-      font-size: 0.75rem;
       line-height: 1rem;
       padding: 0.1875rem 0 0.125rem 0;
+      font-size: 0.75rem;
+
+      :global(button) {
+        font-size: 0.75rem;
+      }
     }
   }
 

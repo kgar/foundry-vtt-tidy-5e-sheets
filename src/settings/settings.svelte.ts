@@ -15,6 +15,7 @@ import { getDefaultExhaustionConfig } from 'src/features/exhaustion/exhaustion';
 import type { GlobalCustomSectionsetting } from './settings.types';
 import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
 import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
+import { applyCurrentThemeClassic } from 'src/theme/theme';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -1901,6 +1902,8 @@ export function initSettings() {
   }
 
   _settings = getCurrentSettings();
+
+  applyCurrentThemeClassic();
 
   Hooks.on('closeSettingsConfig', () => {
     _settings = getCurrentSettings();
