@@ -68,12 +68,6 @@ export class WorldSettingsFormApplication extends SvelteApplicationMixin<
         showExpandedLimitedView: currentSettings.showExpandedLimitedView,
         itemCardsFixKey: currentSettings.itemCardsFixKey,
         useCircularPortraitStyle: currentSettings.useCircularPortraitStyle,
-        permanentlyUnlockCharacterSheetForGm:
-          currentSettings.permanentlyUnlockCharacterSheetForGm,
-        permanentlyUnlockNpcSheetForGm:
-          currentSettings.permanentlyUnlockNpcSheetForGm,
-        permanentlyUnlockVehicleSheetForGm:
-          currentSettings.permanentlyUnlockVehicleSheetForGm,
         limitEffectsManagementToGm: currentSettings.limitEffectsManagementToGm,
         useCharacterInspiration: currentSettings.useCharacterInspiration,
         useVehicleMotion: currentSettings.useVehicleMotion,

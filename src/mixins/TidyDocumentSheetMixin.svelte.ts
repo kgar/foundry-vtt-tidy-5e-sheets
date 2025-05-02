@@ -77,12 +77,6 @@ export function TidyExtensibleDocumentSheetMixin<
 
     #customHTMLTags: string[] = ['PROSE-MIRROR'];
 
-    /**
-     * Determines whether to use a sheet lock svelte component in the header.
-     * This requires the application to mount another svelte component.
-     */
-    static USE_HEADER_SHEET_LOCK: boolean = false;
-
     #customContentRenderer: CustomContentRendererV2 =
       new CustomContentRendererV2();
 

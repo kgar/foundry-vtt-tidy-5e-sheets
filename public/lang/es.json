@@ -400,21 +400,6 @@
         "name": "Habilitar la depuración",
         "hint": "Imprime mensajes de depuración en la consola."
     },
-    "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
-        "name": "Hoja de personaje: Siempre desbloqueado para el DM",
-        "hint": "Trate la hoja de personaje como si siempre estuviera desbloqueada, independientemente de la configuración de bloqueo. El DM siempre puede editar el personaje, pero también puede alternar entre bloqueo y desbloqueo para un jugador que también posee el personaje.",
-        "title": "Esta hoja siempre está desbloqueada para el DM, independientemente de la configuración de bloqueo."
-    },
-    "TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM": {
-        "name": "Hoja de PNJ: Siempre desbloqueado para el DM",
-        "hint": "Trata la hoja de PNJ como si siempre estuviera desbloqueada, independientemente de la configuración de bloqueo. El DM siempre puede editar el PNJ, pero también puede alternar entre bloqueo y desbloqueo para un jugador que también es propietario del PNJ.",
-        "title": "Esta hoja siempre está desbloqueada para el DM, independientemente de la configuración de bloqueo."
-    },
-    "TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM": {
-        "name": "Ficha del vehículo: Siempre desbloqueado para el DM",
-        "hint": "Trata la ficha del vehículo como si estuviera siempre desbloqueada, independientemente de la configuración de bloqueo. El DM siempre puede editar el vehículo, pero también puede alternar entre bloquear y desbloquear para un jugador que también sea propietario del vehículo.",
-        "title": "Esta hoja siempre está desbloqueada para el DM, independientemente de la configuración de bloqueo."
-    },
     "TIDY5E.ThemeSettings": {
         "SheetMenu": {
             "name": "Configuración del tema Tidy",

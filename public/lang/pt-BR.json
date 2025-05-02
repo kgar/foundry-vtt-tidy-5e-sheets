@@ -660,21 +660,6 @@
         "name": "Ativar Depuração",
         "hint": "Imprime mensagens de depuração no console."
     },
-    "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
-        "name": "Ficha de Personagem: Sempre Desbloqueado para Mestre",
-        "hint": "Trate a ficha do personagem como se ela estivesse sempre desbloqueada, independente da configuração de bloqueio. O Mestre sempre pode editar o personagem, mas também pode alternar o bloqueio/desbloqueio para um jogador que também possua o personagem.",
-        "title": "Essa ficha está sempre desbloqueada para o Mestre, independente da configuração de bloqueio."
-    },
-    "TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM": {
-        "name": "Ficha de PNJ: Sempre Desbloqueada para o Mestre",
-        "hint": "Trate a ficha do PNJ como se ela estivesse sempre desbloqueada, independente da configuração de bloqueio. O Mestre sempre pode editar o PNJ, mas também pode alternar o bloqueio/desbloqueio para um jogador que também possua o PNJ.",
-        "title": "Esta ficha está sempre desbloqueada para o Mestre, independente da configuração de bloqueio."
-    },
-    "TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM": {
-        "name": "Ficha do Veículo: Sempre Desbloqueado para o Mestre",
-        "hint": "Trate a ficha do veículo como se ele estivesse sempre desbloqueado, independente da configuração de bloqueio. O Mestre sempre pode editar o veículo, mas também pode alternar o bloqueio/desbloqueio para um jogador que também seja proprietário do veículo.",
-        "title": "Esta ficha está sempre desbloqueada para o Mestre, independente da configuração de bloqueio."
-    },
     "TIDY5E.ThemeSettings": {
         "SheetMenu": {
             "name": "Configurações de Temas",

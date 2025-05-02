@@ -864,22 +864,6 @@ export function createSettings() {
         },
       },
 
-      permanentlyUnlockCharacterSheetForGm: {
-        options: {
-          name: 'TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM.name',
-          hint: 'TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM.hint',
-          scope: 'world',
-          config: false,
-          default: false,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>(
-            'permanentlyUnlockCharacterSheetForGm'
-          );
-        },
-      },
-
       limitEffectsManagementToGm: {
         options: {
           name: 'TIDY5E.Settings.LimitEffectsManagementToGM.name',
@@ -1069,38 +1053,6 @@ export function createSettings() {
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
             'showActiveEffectsMarker'
-          );
-        },
-      },
-
-      permanentlyUnlockNpcSheetForGm: {
-        options: {
-          name: 'TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM.name',
-          hint: 'TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM.hint',
-          scope: 'world',
-          config: false,
-          default: false,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>(
-            'permanentlyUnlockNpcSheetForGm'
-          );
-        },
-      },
-
-      permanentlyUnlockVehicleSheetForGm: {
-        options: {
-          name: 'TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM.name',
-          hint: 'TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM.hint',
-          scope: 'world',
-          config: false,
-          default: false,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>(
-            'permanentlyUnlockVehicleSheetForGm'
           );
         },
       },

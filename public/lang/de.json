@@ -388,21 +388,6 @@
         "name": "Debugging aktivieren",
         "hint": "Zeigt Debugging Nachrichten in der Konsole an."
     },
-    "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
-        "name": "",
-        "hint": "",
-        "title": ""
-    },
-    "TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM": {
-        "name": "",
-        "hint": "",
-        "title": ""
-    },
-    "TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM": {
-        "name": "",
-        "hint": "",
-        "title": ""
-    },
     "TIDY5E.ThemeSettings": {
         "SheetMenu": {
             "name": "",
