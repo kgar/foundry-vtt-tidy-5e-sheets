@@ -839,5 +839,6 @@
     "TIDY5E.Tidy5eVehicleSheetQuadrone": "Karta Pojazdu Tidy 5e",
     "TIDY5E.Tidy5eGroupSheetQuadrone": "Karta Grupy Tidy 5e",
     "TIDY5E.Tidy5eCharacterSheetQuadrone": "Karta postaci Tidy 5e",
-    "TIDY5E.ItemSheet.PactLevelCastLabel": "Rzut na {ordinal}"
+    "TIDY5E.ItemSheet.PactLevelCastLabel": "Rzut na {ordinal}",
+    "TIDY5E.AddSpecific": "Dodaj {name}"
 }
