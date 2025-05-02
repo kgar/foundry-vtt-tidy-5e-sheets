@@ -16,7 +16,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="special-traits-container scroll-container">
+<div class="special-traits-container scroll-container tidy-form">
   <fieldset>
     <legend>{localize('TYPES.Item.class')}</legend>
     <div class="form-group">

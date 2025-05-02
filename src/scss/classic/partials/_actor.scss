@@ -270,7 +270,6 @@ ul {
 input {
   display: block;
   padding: 0;
-  width: 100%;
   border: 0.0625rem solid transparent;
   border-radius: 0.1875rem;
   background: none;
@@ -280,6 +279,10 @@ input {
     // This counteracts an effect where hover causes disabled input values to jitter.
     border-width: 0.0625rem;
   }
+}
+
+input:not([type='checkbox']) {
+  width: 100%;
 }
 
 input[type='checkbox'],
