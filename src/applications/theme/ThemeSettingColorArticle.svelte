@@ -50,6 +50,8 @@
     });
   });
 
+  let colorInput: HTMLInputElement | undefined;
+
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -67,6 +69,7 @@
     ></label>
 
     <input
+      bind:this={colorInput}
       type="text"
       id="{colorToConfigure.key}-{appId}"
       value={settings[colorToConfigure.key]}
@@ -74,13 +77,28 @@
       onchange={(ev) =>
         onColorSelected(colorToConfigure, ev.currentTarget.value)}
     />
+    <button
+      type="button"
+      title={FoundryAdapter.localize('TIDY5E.ContextMenuActionDelete')}
+      class="clear-color"
+      onclick={() => {
+        if (!colorInput) {
+          return;
+        }
+        colorInput.value = '';
+        colorInput.dispatchEvent(new Event('change', { bubbles: true }));
+      }}
+    >
+      <i class="fa-solid fa-eraser"></i>
+    </button>
     {#if eyeDropperEnabled}
       <button
         type="button"
         class="eye-dropper"
         onclick={() => activateEyeDropper(colorToConfigure)}
-        ><i class="fas fa-eye-dropper"></i></button
       >
+        <i class="fa-solid fa-eye-dropper"></i>
+      </button>
     {/if}
   </div>
 </article>
@@ -105,7 +123,8 @@
         flex: 1;
       }
 
-      .eye-dropper {
+      .eye-dropper,
+      .clear-color {
         flex: 0;
         line-height: 1.25;
         padding: 0.25rem 0.375rem;

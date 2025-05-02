@@ -3,10 +3,7 @@ import {
   getCurrentSettings,
   type CurrentSettings,
 } from 'src/settings/settings.svelte';
-import {
-  applyCurrentThemeClassic,
-  getThemeableColors,
-} from 'src/theme/theme';
+import { getThemeableColors } from 'src/theme/theme';
 import type {
   ThemeColorSetting,
   Tidy5eThemeDataV1,
@@ -33,7 +30,6 @@ export class ThemeSettingsFormApplication extends SvelteApplicationMixin<
   static DEFAULT_OPTIONS = {
     classes: [
       CONSTANTS.MODULE_ID,
-      'app-v2',
       'application-shell',
       CONSTANTS.SHEET_LAYOUT_CLASSIC,
     ],

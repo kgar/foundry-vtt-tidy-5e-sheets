@@ -101,6 +101,13 @@
     }
   }
 
+  function clearAllColors() {
+    for (let color of themeableColors) {
+      // @ts-expect-error
+      settings[color.key] = '';
+    }
+  }
+
   onDestroy(() => {
     applyCurrentThemeClassic();
   });
@@ -134,6 +141,12 @@
     <p class="explanation drop-hint">
       {localize('TIDY5E.ThemeSettings.Sheet.importDropHint')}
     </p>
+
+    <div class="flex-row">
+      <button type="button" class="flex-1" onclick={() => clearAllColors()}>
+        {FoundryAdapter.localize('TIDY5E.ItemFilters.ClearAll')}
+      </button>
+    </div>
 
     <div class="color-pickers">
       {#each themeableColors as colorToConfigure}
