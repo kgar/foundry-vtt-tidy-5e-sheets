@@ -1,7 +1,5 @@
-import { getThemes } from 'src/theme/theme-reference';
 import { debug } from './logging';
-import { CONSTANTS } from 'src/constants';
-import { settings, type CurrentSettings } from 'src/settings/settings.svelte';
+import { type CurrentSettings } from 'src/settings/settings.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { getThemeV2 } from 'src/theme/theme';
 

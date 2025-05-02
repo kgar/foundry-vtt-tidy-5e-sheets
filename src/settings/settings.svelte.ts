@@ -2,9 +2,6 @@ import { CONSTANTS } from '../constants';
 import { FoundryAdapter } from '../foundry/foundry-adapter';
 import { ResetSettingsDialog } from './ResetSettingsDialog';
 import type { GetFunctionReturnType } from 'src/types/types';
-import { applyThemeColorsToHead, getThemeOrDefaultV1 } from 'src/theme/theme';
-import { defaultLightTheme } from 'src/theme/default-light-theme';
-import { getCoreThemes, themeVariables } from 'src/theme/theme-reference';
 import { UserSettingsFormApplication } from 'src/applications/settings/user-settings/UserSettingsFormApplication.svelte';
 import { WorldSettingsFormApplication } from 'src/applications/settings/world-settings/WorldSettingsFormApplication.svelte';
 import { ThemeSettingsFormApplication } from 'src/applications/theme/ThemeSettingsFormApplication.svelte';
@@ -98,7 +95,7 @@ export type Tidy5eSetting = {
   /**
    * Denotes which CSS Variable is represented by the target setting. Used for color picking.
    */
-  representsCssVariable?: keyof typeof themeVariables;
+  representsCssVariable?: string;
 };
 
 /**
@@ -199,54 +196,6 @@ export function createSettings() {
           return FoundryAdapter.getTidySetting<number>(
             'migrationsConfirmationTally'
           );
-        },
-      },
-      defaultTheme: {
-        options: {
-          name: 'TIDY5E.Settings.DefaultTheme.name',
-          hint: 'TIDY5E.Settings.DefaultTheme.hint',
-          scope: 'world',
-          config: true,
-          type: new foundry.data.fields.StringField({
-            required: true,
-            blank: false,
-            initial: CONSTANTS.THEME_ID_DEFAULT_LIGHT,
-            choices: () => getCoreThemes(false),
-          }),
-          onChange: (data: string) => {
-            const theme = getThemeOrDefaultV1(data);
-
-            const colorScheme = SettingsProvider.settings.colorScheme.get();
-
-            if (theme && colorScheme === CONSTANTS.THEME_ID_DEFAULT) {
-              applyThemeColorsToHead(theme);
-            }
-          },
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<string>('defaultTheme');
-        },
-      },
-      // Color Theme
-      colorScheme: {
-        options: {
-          name: 'TIDY5E.Settings.SheetTheme.name',
-          hint: 'TIDY5E.Settings.SheetTheme.hint',
-          scope: 'client',
-          config: true,
-          type: new foundry.data.fields.StringField({
-            required: true,
-            blank: false,
-            initial: CONSTANTS.THEME_ID_DEFAULT,
-            choices: () => getCoreThemes(true),
-          }),
-          onChange: (data: string) => {
-            const theme = getThemeOrDefaultV1(data);
-            applyThemeColorsToHead(theme);
-          },
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<string>('colorScheme');
         },
       },
 
@@ -1454,7 +1403,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerPrimaryAccent.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5e-primary-accent-color'],
+          default: undefined,
           config: false,
         },
         get() {
@@ -1469,7 +1418,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerHpBar.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5e-hp-bar-color'],
+          default: undefined,
           config: false,
         },
         get() {
@@ -1482,7 +1431,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerEquipped.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5e-equipped-background'],
+          default: undefined,
           config: false,
         },
         get() {
@@ -1495,10 +1444,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerEquippedOutline.name',
           scope: 'client',
           type: String,
-          default:
-            defaultLightTheme.variables[
-              '--t5e-equipped-item-grid-tile-outline-color'
-            ],
+          default: undefined,
           config: false,
         },
         get() {
@@ -1513,10 +1459,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerEquippedAccent.name',
           scope: 'client',
           type: String,
-          default:
-            defaultLightTheme.variables[
-              '--t5e-equipped-item-grid-tile-accent-color'
-            ],
+          default: undefined,
           config: false,
         },
         get() {
@@ -1532,7 +1475,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerPrepared.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5e-prepared-background'],
+          default: undefined,
           config: false,
         },
         get() {
@@ -1545,10 +1488,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerPreparedOutline.name',
           scope: 'client',
           type: String,
-          default:
-            defaultLightTheme.variables[
-              '--t5e-prepared-item-grid-tile-outline-color'
-            ],
+          default: undefined,
           config: false,
         },
         get() {
@@ -1563,10 +1503,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerPreparedAccent.name',
           scope: 'client',
           type: String,
-          default:
-            defaultLightTheme.variables[
-              '--t5e-prepared-item-grid-tile-accent-color'
-            ],
+          default: undefined,
           config: false,
         },
         get() {
@@ -1582,7 +1519,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerPact.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5e-pact-background'],
+          default: undefined,
           config: false,
         },
         get() {
@@ -1595,7 +1532,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerPactOutline.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5e-pact-outline-color'],
+          default: undefined,
           config: false,
         },
         get() {
@@ -1610,7 +1547,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerPactAccent.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5e-pact-accent-color'],
+          default: undefined,
           config: false,
         },
         get() {
@@ -1624,7 +1561,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerAtWill.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5e-atwill-background'],
+          default: undefined,
           config: false,
         },
         get() {
@@ -1637,7 +1574,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerAtWillOutline.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5e-atwill-outline-color'],
+          default: undefined,
           config: false,
         },
         get() {
@@ -1652,7 +1589,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerAtWillAccent.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5e-atwill-accent-color'],
+          default: undefined,
           config: false,
         },
         get() {
@@ -1668,7 +1605,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerRitualOnly.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5e-ritual-only-background'],
+          default: undefined,
           config: false,
         },
         get() {
@@ -1681,8 +1618,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerRitualOnlyOutline.name',
           scope: 'client',
           type: String,
-          default:
-            defaultLightTheme.variables['--t5e-ritual-only-outline-color'],
+          default: undefined,
           config: false,
         },
         get() {
@@ -1697,8 +1633,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerRitualOnlyAccent.name',
           scope: 'client',
           type: String,
-          default:
-            defaultLightTheme.variables['--t5e-ritual-only-accent-color'],
+          default: undefined,
           config: false,
         },
         get() {
@@ -1714,7 +1649,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerInnate.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5e-innate-background'],
+          default: undefined,
           config: false,
         },
         get() {
@@ -1727,7 +1662,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerInnateOutline.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5e-innate-outline'],
+          default: undefined,
           config: false,
         },
         get() {
@@ -1742,7 +1677,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerInnateAccent.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5e-innate-accent'],
+          default: undefined,
           config: false,
         },
         get() {
@@ -1758,8 +1693,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerAlwaysPrepared.name',
           scope: 'client',
           type: String,
-          default:
-            defaultLightTheme.variables['--t5e-alwaysprepared-background'],
+          default: undefined,
           config: false,
         },
         get() {
@@ -1774,8 +1708,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerAlwaysPreparedOutline.name',
           scope: 'client',
           type: String,
-          default:
-            defaultLightTheme.variables['--t5e-alwaysprepared-outline-color'],
+          default: undefined,
           config: false,
         },
         get() {
@@ -1790,8 +1723,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerAlwaysPreparedAccent.name',
           scope: 'client',
           type: String,
-          default:
-            defaultLightTheme.variables['--t5e-alwaysprepared-accent-color'],
+          default: undefined,
           config: false,
         },
         get() {
@@ -1806,7 +1738,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerScrollbarThumb.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5e-scrollbar-thumb-color'],
+          default: undefined,
           config: false,
         },
         get() {
@@ -1821,7 +1753,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerScrollbarTrack.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5e-scrollbar-track-color'],
+          default: undefined,
           config: false,
         },
         get() {
@@ -1836,7 +1768,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerMagicAccent.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5e-magic-accent-color'],
+          default: undefined,
           config: false,
         },
         get() {
@@ -1967,11 +1899,6 @@ export function initSettings() {
     };
     FoundryAdapter.registerTidySetting(setting[0], options);
   }
-
-  // Apply current color scheme
-  SettingsProvider.settings.colorScheme.options.onChange(
-    SettingsProvider.settings.colorScheme.get()
-  );
 
   _settings = getCurrentSettings();
 

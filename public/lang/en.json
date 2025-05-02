@@ -326,17 +326,6 @@
     "name": "Info Card Inspect Key",
     "hint": "Press this keyboard character (for example, the \"t\" key) while viewing an info card to pop it out."
   },
-  "TIDY5E.Settings.DefaultTheme": {
-    "name": "Default Color Theme",
-    "hint": "The default theme for all users who do not have a specific theme selected."
-  },
-  "TIDY5E.Settings.SheetTheme": {
-    "name": "Color Theme",
-    "hint": "The theme for your sheets.",
-    "default": "Default",
-    "light": "Light",
-    "dark": "Dark"
-  },
   "TIDY5E.Settings.UseClassicControls": {
     "name": "Use Classic List Controls",
     "hint": "Shows controls in the list view."

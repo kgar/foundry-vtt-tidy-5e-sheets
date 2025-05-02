@@ -1,7 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { settings } from 'src/settings/settings.svelte';
-  import { getThemeOrDefaultV1 } from 'src/theme/theme';
   import type { ItemDebugSheetQuadroneContext } from '../Tidy5eItemDebugSheetQuadrone.svelte';
   import ButtonWithOptionPanel from 'src/components/buttons/ButtonWithOptionPanel.svelte';
   import ToggleButton from 'src/components/buttons/ToggleButton.svelte';
@@ -18,8 +17,6 @@
 
   let context = $derived(getSheetContext<ItemDebugSheetQuadroneContext>());
 
-  let theme = $derived(getThemeOrDefaultV1(settings.value.colorScheme));
-
   let inverse = $state(false);
 
   let selectedTabId: string = $state('hallo-tab');
@@ -31,56 +28,7 @@
 
 <aside class="sidebar theme-dark">
   <div class="sidebar-contents">
-    <h4>Theme</h4>
-    <div style="display: flex; flex-direction: column; gap: var(--t5e-size-1x)">
-      <label for="light-mode-toggle">
-        <input
-          id="light-mode-toggle"
-          type="radio"
-          name="theme-selector"
-          value={CONSTANTS.THEME_ID_DEFAULT_LIGHT}
-          checked={theme.id === CONSTANTS.THEME_ID_DEFAULT_LIGHT}
-          onclick={(ev) => selectTheme(CONSTANTS.THEME_ID_DEFAULT_LIGHT)}
-        />
-        {game.i18n.localize('TIDY5E.Settings.SheetTheme.light')}
-      </label>
-      <label for="dark-mode-toggle">
-        <input
-          id="dark-mode-toggle"
-          type="radio"
-          name="theme-selector"
-          value={CONSTANTS.THEME_ID_DEFAULT_DARK}
-          checked={theme.id === CONSTANTS.THEME_ID_DEFAULT_DARK}
-          onclick={(ev) => selectTheme(CONSTANTS.THEME_ID_DEFAULT_DARK)}
-        />
-        {game.i18n.localize('TIDY5E.Settings.SheetTheme.dark')}
-      </label>
-    </div>
-    <h4>Inversion</h4>
-    <div style="display: flex; flex-direction: column; gap: var(--t5e-size-1x)">
-      <label for="default-mode-toggle">
-        <input
-          id="default-mode-toggle"
-          type="radio"
-          name="inversion-mode-selector"
-          value={CONSTANTS.VIEW_MODE_DEFAULT}
-          checked={!inverse}
-          onclick={() => (inverse = false)}
-        />
-        Default
-      </label>
-      <label for="inverse-mode-toggle">
-        <input
-          id="inverse-mode-toggle"
-          type="radio"
-          name="inversion-mode-selector"
-          value={CONSTANTS.VIEW_MODE_INVERSE}
-          checked={inverse}
-          onclick={() => (inverse = true)}
-        />
-        Inverse
-      </label>
-    </div>
+    To Do: Put useful controls over here for testing sheet things.
   </div>
 </aside>
 <div class="item-content">

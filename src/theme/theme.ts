@@ -1,28 +1,14 @@
 import type {
   ThemeColorSetting,
-  Tidy5eTheme as Tidy5eTheme,
   Tidy5eThemeDataV1,
 } from 'src/types/theme.types';
-import { themeVariables } from './theme-reference';
 import { debug } from 'src/utils/logging';
 import { SettingsProvider } from 'src/settings/settings.svelte';
-import { defaultDarkTheme } from './default-dark-theme';
-import { defaultLightTheme } from './default-light-theme';
 import { Colord } from 'colord';
 import { CONSTANTS } from 'src/constants';
 import type { Item5e } from 'src/types/item.types';
 import { coalesce } from 'src/utils/formatting';
-
-export function getThemeV1() {
-  let theme: string | undefined = undefined;
-
-  if (!theme) {
-    const currentTheme = SettingsProvider.settings.colorScheme.get();
-    theme = getThemeOrDefaultV1(currentTheme).id;
-  }
-
-  return coalesce(theme, CONSTANTS.THEME_ID_DEFAULT_LIGHT);
-}
+import { isNil } from 'src/utils/data';
 
 export function getThemeV2(doc?: any) {
   let theme: string | undefined = undefined;
@@ -50,7 +36,7 @@ export function getThemeV2(doc?: any) {
 }
 
 export function applyThemeColorsToHead(
-  theme: Tidy5eTheme,
+  variables: Record<string, string>,
   colorPickerEnabledOverride: boolean | null = null
 ) {
   try {
@@ -68,16 +54,16 @@ export function applyThemeColorsToHead(
       colorPickerEnabledOverride === true;
 
     if (overrideBaseTheme) {
-      theme = overrideColorPickerSettings(theme);
+      variables = getColorPickerColors();
     }
 
     document.head.insertAdjacentHTML(
       'beforeend',
       `
     <style id="${styleTagId}">
-      :root {
-        ${Object.entries(theme.variables)
-          .filter(([variable]) => variable in themeVariables)
+      .tidy5e-sheet.classic {
+        ${Object.entries(variables)
+          .filter(([_, value]) => !isNil(value?.trim(), ''))
           .map(([variable, value]) => `${variable}: ${value};`)
           .join('\n')}
       }
@@ -86,39 +72,28 @@ export function applyThemeColorsToHead(
     );
   } catch (e) {
     console.error(e);
-    debug(
-      'Unable to apply Tidy 5e style tag; falling back to root style properties.'
-    );
-    Object.keys(themeVariables).forEach((variable) => {
-      document.documentElement.style.setProperty(
-        variable,
-        theme.variables[variable] ?? null
-      );
-    });
+    debug('Unable to apply Tidy 5e style tag.');
   }
 }
 
-function overrideColorPickerSettings(theme: Tidy5eTheme) {
-  const overriddenTheme = structuredClone(theme);
+function getColorPickerColors() {
+  const variables: Record<string, string> = {};
 
   const themeableColors = getThemeableColors();
   for (let color of themeableColors) {
-    overriddenTheme.variables[color.cssVariable] = SettingsProvider.settings[
-      color.key
-    ]
+    variables[color.cssVariable] = SettingsProvider.settings[color.key]
       .get()
       ?.toString();
   }
 
-  return overriddenTheme;
+  return variables;
 }
 
-export function applyCurrentThemeV1(
+export function applyCurrentThemeClassic(
   colorPickerEnabledOverride: boolean | null = null
 ) {
-  const currentTheme = SettingsProvider.settings.colorScheme.get();
-  const theme = getThemeOrDefaultV1(currentTheme);
-  applyThemeColorsToHead(theme, colorPickerEnabledOverride);
+  const variables = getColorPickerColors();
+  applyThemeColorsToHead(variables, colorPickerEnabledOverride);
 }
 
 export function getThemeableColors(): ThemeColorSetting[] {
@@ -131,21 +106,6 @@ export function getThemeableColors(): ThemeColorSetting[] {
       cssVariable:
         'representsCssVariable' in value ? value.representsCssVariable : '',
     }));
-}
-
-export function getThemeOrDefaultV1(themeId: string): Tidy5eTheme {
-  if (themeId === CONSTANTS.THEME_ID_DEFAULT) {
-    const defaultThemeId = SettingsProvider.settings.defaultTheme.get();
-    themeId = defaultThemeId;
-  }
-
-  const themes: Record<string, Tidy5eTheme> = {
-    light: defaultLightTheme,
-    dark: defaultDarkTheme,
-    // TODO: Aggregate all other available themes
-  };
-
-  return themes[themeId] ?? defaultLightTheme;
 }
 
 type ProcessedColor = {
@@ -165,7 +125,7 @@ export function trySetRootCssVariable(
 }
 
 export function clearTidy5eRootCssVariables() {
-  Object.keys(themeVariables).forEach((key) =>
+  Object.keys(getThemeableColors()).forEach((key) =>
     document.documentElement.style.removeProperty(key)
   );
 }

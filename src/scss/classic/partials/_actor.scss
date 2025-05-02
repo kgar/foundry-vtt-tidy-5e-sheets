@@ -164,16 +164,6 @@
     border-bottom: 0.0625rem solid var(--t5e-faint-color);
   }
 
-  .tox-toolbar-overlord,
-  .tox-toolbar__primary {
-    background: var(--t5e-tinymce-toolbar-background);
-    background-color: var(--t5e-tinymce-toolbar-background);
-  }
-
-  .tox .tox-overlord button {
-    color: var(--t5e-tinyme-toolbar-button-color);
-  }
-
   .editor-content {
     margin: 0;
     padding: 0 0.75rem 0 0;
@@ -190,11 +180,6 @@
   border: none;
   flex: 1;
   min-height: 6.25rem;
-}
-
-.tox-sidebar-wrap {
-  padding: 0.5rem;
-  background: var(--t5e-tinymce-sidebar-background);
 }
 
 h1,
