@@ -1,4 +1,9 @@
-&.tidy-form, .tidy-form {
+&.tidy-form,
+.tidy-form {
+  --color-form-label: var(--t5e-primary-font-color);
+  --color-form-label-hover: var(--t5e-primary-font-color);
+  --color-form-hint: var(--t5e-secondary-color);
+
   fieldset {
     .form-group {
       padding-block: 0.25rem;

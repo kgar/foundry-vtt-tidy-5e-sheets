@@ -15,8 +15,6 @@
   <LimitedHeader rounded={context.useRoundedPortraitStyle} />
   <section class="tidy-sheet-body">
     <div class="note-entries">
-      andOnValueChange={context.system.details.biography.value}
-      >
       <article class="appearance-notes">
         <div class="section-titles biopage">
           {localize('DND5E.Appearance')}

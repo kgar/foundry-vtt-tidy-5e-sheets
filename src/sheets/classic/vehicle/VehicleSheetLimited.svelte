@@ -13,7 +13,7 @@
 <div class="limited-vehicle">
   <LimitedHeader rounded={context.useRoundedPortraitStyle} />
   <section class="tidy-sheet-body">
-    <div class="note-entries">
+    <div class="note-entries flex-1">
       <article class="biography-notes">
         <div class="section-titles">
           {localize('DND5E.Description')}

@@ -1077,7 +1077,7 @@ export class Tidy5eNpcSheet
         {
           field: this.document.system.schema.fields.traits.fields.important,
           name: 'system.traits.important',
-          value: context.source.traits.important,
+          value: context.source.system.traits.important,
         },
       ],
     });

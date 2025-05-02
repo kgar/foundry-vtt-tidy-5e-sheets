@@ -46,6 +46,7 @@
       <legend>{section.label}</legend>
       {#each section.fields as field}
         <FormGroup
+          rootId={context.rootId}
           document={context.actor}
           field={field.field}
           value={field.value}

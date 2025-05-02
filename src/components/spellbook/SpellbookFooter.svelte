@@ -223,7 +223,8 @@
     font-size: 1rem;
   }
 
-  h3 {
+  h3.spell-dc.spell-mod,
+  h3.spell-dc.spell-mod :global(button) {
     font-size: 1.25rem;
     font-family: var(--t5e-title-font-family);
   }

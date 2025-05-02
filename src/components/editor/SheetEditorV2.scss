@@ -136,3 +136,14 @@ prose-mirror.prosemirror {
     }
   }
 }
+
+.biography-notes,
+.appearance-notes,
+.notes-container,
+.journal-notes,
+.left-notes,
+.right-notes {
+  .editor {
+    overflow: auto;
+  }
+}

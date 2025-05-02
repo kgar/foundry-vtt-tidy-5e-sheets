@@ -1,6 +1,5 @@
 ## To Fix
 
-- [ ] Test all actor editors / ensure mode toggles trigger submissions
 - [ ] verify: (all 3 sheets) Pull sheet preferences during initialize application options
 - [ ] accountForExternalSections is not being used quite right. It needs to happen after any callers have updated context with their own data. How do we account for this?
 - [ ] // TODO: Make the character sheet handle bastion tab check. This is violating separation of concerns.

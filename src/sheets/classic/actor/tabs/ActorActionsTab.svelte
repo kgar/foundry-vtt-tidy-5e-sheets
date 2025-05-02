@@ -234,7 +234,7 @@
                         {/if}
                       {/if}
                       {#if ItemUtils.hasSpecificActivationType(actionItem.item, CONSTANTS.ACTIVATION_COST_LEGENDARY)}
-                        {actionItem.item.system.activation.cost}
+                        {actionItem.item.system.activation?.value}
                       {/if}
                     </div>
                   {/if}
