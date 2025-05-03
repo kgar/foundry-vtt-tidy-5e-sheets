@@ -1487,14 +1487,6 @@ export class Tidy5eCharacterSheet
     }
   }
 
-  onShortRest(event: Event) {
-    return this._onShortRest(event);
-  }
-
-  onLongRest(event: Event) {
-    return this._onLongRest(event);
-  }
-
   async _onDropSingleItem(
     itemData: any,
     event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement }

@@ -17,7 +17,7 @@
       type="button"
       class="rest icon-button"
       title={localize('TIDY5E.ShortRest')}
-      onclick={(event) => context.actor.sheet.onShortRest(event)}
+      onclick={() => context.actor.shortRest()}
       disabled={!context.editable}
       tabindex={!settings.value.useDefaultSheetHpTabbing &&
       settings.value.useAccessibleKeyboardSupport
@@ -30,7 +30,7 @@
       type="button"
       class="rest icon-button"
       title={localize('TIDY5E.LongRest')}
-      onclick={(event) => context.actor.sheet.onLongRest(event)}
+      onclick={() => context.actor.longRest()}
       disabled={!context.editable}
       tabindex={!settings.value.useDefaultSheetHpTabbing &&
       settings.value.useAccessibleKeyboardSupport
