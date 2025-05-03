@@ -122,17 +122,6 @@
         "name": "Verzögerung zum Anzeigen der Gegenstandinfokarten (in ms)",
         "hint": "Die Infokarte wird erst nach dieser Zeit in Millisekunden angezeigt (0 = sofort, 300 ist Standard)."
     },
-    "TIDY5E.Settings.DefaultTheme": {
-        "name": "Standardfarbschema",
-        "hint": "Das Standardfarbschema für alle Benutzer, welche kein eigenes, spezifisches Schema eingestellt haben."
-    },
-    "TIDY5E.Settings.SheetTheme": {
-        "name": "Tidy5e Farbschema",
-        "hint": "Das Farbschema für eigene Spielbögen.",
-        "default": "Standard",
-        "light": "Hell",
-        "dark": "Dunkel"
-    },
     "TIDY5E.Settings.UseClassicControls": {
         "name": "Klassische Listensteuerungen verwenden",
         "hint": "Zeigt die Steuerelemente in der Listenansicht an."

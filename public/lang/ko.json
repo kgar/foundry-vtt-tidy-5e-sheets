@@ -254,17 +254,6 @@
         "name": "기본 시트 HP 키보드 탭 사용",
         "hint": "기본 5e 시트는 현재 HP 입력에서 현재 임시 HP 입력으로 키보드 탭 이동을 허용합니다. 이 설정을 활성화하면 해당 동작이 복제됩니다. \"접근 가능한 키보드 지원 사용\"이 꺼져 있으면 이 설정은 무시됩니다."
     },
-    "TIDY5E.Settings.DefaultTheme": {
-        "name": "기본 색 테마",
-        "hint": "특정 테마를 선택하지 않은 모든 사용자를 위한 기본 테마입니다."
-    },
-    "TIDY5E.Settings.SheetTheme": {
-        "name": "Tidy5e 색상 테마.",
-        "hint": "Tidy5e의 기본 라이트/다크 색상 테마를 사용합니다.",
-        "default": "기본",
-        "light": "라이트모드",
-        "dark": "다크모드"
-    },
     "TIDY5E.Settings.UseClassicControls": {
         "name": "클래식 목록 제어 사용",
         "hint": "목록 보기에 제어를 표시합니다."

@@ -122,17 +122,6 @@
         "name": "",
         "hint": ""
     },
-    "TIDY5E.Settings.DefaultTheme": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.SheetTheme": {
-        "name": "Tidy5e 色彩主題。",
-        "hint": "使用 Tidy5e 的默認的明亮或暗黑的色彩主題。",
-        "default": "",
-        "light": "",
-        "dark": ""
-    },
     "TIDY5E.Settings.UseClassicControls": {
         "name": "列表視圖下使用舊版物品操作按鈕。",
         "hint": "始終顯示物品操作按鈕並禁用右鍵菜單。僅適用於 PC 物品和法術的列表視圖。"

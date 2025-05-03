@@ -248,17 +248,6 @@
         "name": "Usar Tab Entre PVs da Ficha Padrão",
         "hint": "A ficha padrão permite o uso do tab do PV Atual para PV Temporário. A ativação dessa opção replica esse comportamento. Essa configuração será ignorada se a opção \"Usar Suporte a Teclado Acessível\" estiver desativada."
     },
-    "TIDY5E.Settings.DefaultTheme": {
-        "name": "Tema de Cor Padrão",
-        "hint": "O tema padrão para todos os usuários que não têm um tema específico selecionado."
-    },
-    "TIDY5E.Settings.SheetTheme": {
-        "name": "Tema de Cor",
-        "hint": "O tema de suas fichas.",
-        "default": "Padrão",
-        "light": "Claro",
-        "dark": "Escuro"
-    },
     "TIDY5E.Settings.UseClassicControls": {
         "name": "Usar Lista Clássica de Controles",
         "hint": "Mostra os controles na exibição de lista."

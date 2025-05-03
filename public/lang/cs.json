@@ -122,17 +122,6 @@
         "name": "Opozdi zobrazení karet položek (v ms)",
         "hint": "Zpozdí zobrazení karet položek o zadané milisekundy (ms). 0 znamená bez zpoždění. Výchozí hodnota: 300."
     },
-    "TIDY5E.Settings.DefaultTheme": {
-        "name": "Základní motiv barev",
-        "hint": "Výchozí motiv pro všechny uživatele, kteří nemají vybraný konkrétní motiv."
-    },
-    "TIDY5E.Settings.SheetTheme": {
-        "name": "Motiv barev",
-        "hint": "Motiv tvých deníků.",
-        "default": "Základní",
-        "light": "Světlý",
-        "dark": "Tmavý"
-    },
     "TIDY5E.Settings.UseClassicControls": {
         "name": "Použít klasické ovládací prvky seznamu",
         "hint": "Zobrazí ovládací prvky v náhledu seznamu."
