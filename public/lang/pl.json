@@ -308,11 +308,6 @@
         "MigrateCompendia.Title": "Przeprowadź migrację kompendium",
         "chatNotification": "Nowa migracja dla Tidy 5e Sheets jest dostępna. Zobacz Ustawienia dla Tidy 5e Sheets, żeby zobaczyć dostępne migracje."
     },
-    "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
-        "name": "Karta postaci: Zawsze odblokowane dla MG",
-        "hint": "Karta postaci powinna być traktowana tak, jakby zawsze była odblokowana, niezależnie od ustawienia blokady. MG może zawsze edytować postać, ale może również przełączyć blokadę/odblokowanie dla gracza, który jest właścicielem postaci.",
-        "title": "Ta karta jest zawsze odblokowana dla MG, niezależnie od ustawienia blokady."
-    },
     "TIDY5E.ThemeSettings": {
         "Sheet": {
             "import": "Importuj",
@@ -364,16 +359,6 @@
     "TIDY5E.Settings.Debug": {
         "hint": "Wyświetla komunikaty debugowania w konsoli.",
         "name": "Włącz debugowanie"
-    },
-    "TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM": {
-        "name": "Karta NPC: Zawsze odblokowane dla MG",
-        "hint": "Traktuj tą kartę NPC tak, jakby była zawsze odblokowana, niezależnie od ustawienia blokady. MG może zawsze edytować tego NPC, ale może również przełączyć blokadę/odblokowanie dla gracza, który jest właścicielem NPC.",
-        "title": "Ta karta jest zawsze odblokowana dla MG, niezależnie od ustawienia blokady."
-    },
-    "TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM": {
-        "title": "Ta karta jest zawsze odblokowana dla MG, niezależnie od ustawienia blokady.",
-        "hint": "Karta pojazdu powinna być traktowana tak, jakby zawsze była odblokowana, niezależnie od ustawienia blokady. MG może zawsze edytować ten pojazd, ale może również przełączyć blokadę/odblokowanie dla gracza, który jest właścicielem pojazdu.",
-        "name": "Karta pojazdu: Zawsze odblokowana dla MG"
     },
     "TIDY5E.Settings.ColorPickerInnate": {
         "name": "Wrodzone"

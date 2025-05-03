@@ -59,7 +59,6 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       CONSTANTS.MODULE_ID,
       'sheet',
       CONSTANTS.SHEET_TYPE_ITEM,
-      'app-v2',
       'quadrone',
     ],
     tag: 'form',
@@ -145,6 +144,8 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
   async _prepareContext(
     options: TidyDocumentSheetRenderOptions
   ): Promise<ItemSheetQuadroneContext> {
+    const documentSheetContext = await super._prepareContext(options);
+
     const rollData = this.document.getRollData();
 
     // Enrich HTML description
@@ -215,11 +216,11 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       itemDescriptions = itemDescriptions.slice(0, 1);
     }
 
-    const editable = this.isEditable === true;
+    const systemSource = !documentSheetContext.unlocked
+      ? this.item.system
+      : systemObject;
 
-    const unlocked = this.sheetMode === CONSTANTS.SHEET_MODE_EDIT && editable;
-
-    const systemSource = !unlocked ? this.item.system : systemObject;
+    documentSheetContext.source = systemSource;
 
     const target = this.item.type === 'spell' ? this.item.system.target : null;
 
@@ -262,7 +263,6 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       data: this.document.toObject(false),
       defaultAbility: '',
       dimensions: target?.template?.dimensions,
-      document: this.document,
       durationUnits: [
         ...Object.entries(CONFIG.DND5E.specialTimePeriods).map(
           ([value, label]) => ({ value, label })
@@ -278,7 +278,6 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
           }
         ),
       ],
-      editable: editable,
       enriched,
       isEmbedded: this.document.isEmbedded,
       item: this.document,
@@ -303,14 +302,11 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
         target?.affects?.type &&
         CONFIG.DND5E.individualTargetTypes[target.affects.type]?.scalar !==
           false,
-      source: systemSource,
       subtitle: this._getItemSubtitle(),
       system: this.document.system,
       tabs: [],
       title: this.title,
       rollData: rollData,
-      unlocked,
-      user: game.user,
 
       // Item Type, Status, and Details
       itemType: game.i18n.localize(CONFIG.Item.typeLabels[this.item.type]),
@@ -327,7 +323,10 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
         this.document.isArmor && this.document.system.type.value !== 'shield',
 
       // Advancement
-      advancement: this._getItemAdvancement(this.document, unlocked),
+      advancement: this._getItemAdvancement(
+        this.document,
+        documentSheetContext.unlocked
+      ),
 
       effects: enhancedEffectsCategories,
 
@@ -401,6 +400,8 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
 
       damageTypes: [],
       denominationOptions: [],
+
+      ...documentSheetContext,
     };
 
     // Physical items

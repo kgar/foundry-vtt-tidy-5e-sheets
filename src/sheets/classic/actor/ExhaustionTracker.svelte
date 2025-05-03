@@ -172,6 +172,7 @@
           display: flex;
 
           .exhaustion-level-option {
+            width: 100%;
             border-radius: 0;
 
             &:is(:global(:hover, :focus-visible)) {

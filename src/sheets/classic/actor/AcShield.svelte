@@ -22,17 +22,10 @@
   let { ac = '0', cssClass = '', onfocus }: Props = $props();
 
   let context = $derived(getSheetContext<ActorSheetContextV1>());
-
-  let acShieldButton: HTMLElement;
-
-  onMount(() => {
-    context.actor.sheet._applyAttributionTooltips(acShieldButton);
-  });
 </script>
 
 <AcShieldBase {cssClass}>
   <button
-    bind:this={acShieldButton}
     type="button"
     onclick={() => FoundryAdapter.renderArmorConfig(context.actor)}
     {onfocus}

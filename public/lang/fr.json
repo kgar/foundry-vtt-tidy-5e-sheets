@@ -388,21 +388,6 @@
         "name": "Activer le débogage",
         "hint": "Affiche les messages de débogage sur la console."
     },
-    "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
-        "name": "Feuille de personnage : Toujours déverrouillée pour le MJ",
-        "hint": "Traitez la feuille de personnage comme si elle était toujours déverrouillée, quel que soit le paramètre de verrouillage. Le MJ peut toujours modifier le personnage, mais il peut également activer le verrouillage/déverrouillage pour un joueur qui possède également le personnage.",
-        "title": "Cette feuille est toujours déverrouillée pour le GM, quel que soit le paramètre de verrouillage."
-    },
-    "TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM": {
-        "name": "Fiche PNJ : Toujours déverrouillée pour le MJ",
-        "hint": "Traitez la fiche du PNJ comme si elle était toujours déverrouillée, quel que soit le paramètre de verrouillage. Le MJ peut toujours éditer le PNJ, mais il peut également activer le verrouillage/déverrouillage pour un joueur qui possède également le PNJ.",
-        "title": "Cette feuille est toujours déverrouillée pour le GM, quel que soit le paramètre de verrouillage."
-    },
-    "TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM": {
-        "name": "Fiche de véhicule : Toujours déverrouillée pour le MJ",
-        "hint": "Traiter la fiche du véhicule comme si elle était toujours déverrouillée, quel que soit le paramètre de verrouillage. Le MJ peut toujours modifier le véhicule, mais il peut également activer le verrouillage/déverrouillage pour un joueur qui possède également le véhicule.",
-        "title": "Cette feuille est toujours déverrouillée pour le GM, quel que soit le paramètre de verrouillage."
-    },
     "TIDY5E.ThemeSettings": {
         "SheetMenu": {
             "name": "Paramètres Tidy du thème",

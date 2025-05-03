@@ -82,7 +82,6 @@ export class Tidy5eContainerSheetQuadrone
       'sheet',
       'item',
       CONSTANTS.ITEM_TYPE_CONTAINER,
-      'app-v2',
       'quadrone',
     ],
     tag: 'form',
@@ -163,6 +162,8 @@ export class Tidy5eContainerSheetQuadrone
   async _prepareContext(
     options: ApplicationRenderOptions
   ): Promise<ContainerSheetQuadroneContext> {
+    const documentSheetContext = await super._prepareContext(options);
+
     const rollData = this.item.getRollData();
 
     const enrichmentOptions = {
@@ -191,14 +192,14 @@ export class Tidy5eContainerSheetQuadrone
     const showOnlyUnidentified =
       unidentified && !FoundryAdapter.isInGmEditMode(this.item);
 
-    const systemSource = this.document.toObject().system;
+    documentSheetContext.source = this.document.toObject().system;
 
     let itemDescriptions: ItemDescription[] = [];
 
     if (!showOnlyUnidentified) {
       itemDescriptions.push({
         enriched: enriched.description,
-        content: systemSource.description.value,
+        content: documentSheetContext.source.description.value,
         field: 'system.description.value',
         label: FoundryAdapter.localize('DND5E.Description'),
       });
@@ -207,7 +208,7 @@ export class Tidy5eContainerSheetQuadrone
     if (isIdentifiable) {
       itemDescriptions.push({
         enriched: enriched.unidentified,
-        content: systemSource.unidentified.description,
+        content: documentSheetContext.source.unidentified.description,
         field: 'system.unidentified.description',
         label: FoundryAdapter.localize('DND5E.DescriptionUnidentified'),
       });
@@ -216,7 +217,7 @@ export class Tidy5eContainerSheetQuadrone
     if (!showOnlyUnidentified) {
       itemDescriptions.push({
         enriched: enriched.chat,
-        content: systemSource.description.chat,
+        content: documentSheetContext.source.description.chat,
         field: 'system.description.chat',
         label: FoundryAdapter.localize('DND5E.DescriptionChat'),
       });
@@ -233,10 +234,6 @@ export class Tidy5eContainerSheetQuadrone
     const contentsSortMethod =
       containerPreferences.tabs?.[CONSTANTS.TAB_CONTAINER_CONTENTS]?.sort ??
       'm';
-
-    const editable = this.isEditable;
-
-    const unlocked = this.sheetMode === CONSTANTS.SHEET_MODE_EDIT && editable;
 
     const currencies: CurrencyContext[] = [];
 
@@ -272,8 +269,6 @@ export class Tidy5eContainerSheetQuadrone
       },
       customContent: [],
       currencies,
-      document: this.document,
-      editable: editable,
       enriched: enriched,
       filterData: this.itemFilterService.getDocumentItemFilterData(),
       filterPins: ItemFilterRuntime.defaultFilterPinsQuadrone[this.item.type],
@@ -303,11 +298,10 @@ export class Tidy5eContainerSheetQuadrone
         options: [],
       },
       rollData: rollData,
-      source: systemSource,
       system: this.document.system,
       tabs: [],
-      unlocked: unlocked,
       userPreferences: UserPreferencesService.get(),
+      ...documentSheetContext,
     };
 
     // Properties

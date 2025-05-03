@@ -73,7 +73,10 @@
         new MaxPreparedSpellsConfigFormApplication(
           context.item.name,
           context.item,
-        ).render(true);
+          {
+            document: context.item,
+          },
+        ).render({ force: true });
       }}><i class="fa-solid fa-search fa-fw"></i></a
     >
   </div>

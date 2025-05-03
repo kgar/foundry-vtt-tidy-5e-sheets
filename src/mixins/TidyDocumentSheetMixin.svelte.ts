@@ -9,7 +9,11 @@ import type {
   ApplicationPosition,
   ApplicationRenderOptions,
 } from 'src/types/application.types';
-import type { CustomContent, Tab } from 'src/types/types';
+import type {
+  CustomContent,
+  DocumentSheetV2Context,
+  Tab,
+} from 'src/types/types';
 import { error } from 'src/utils/logging';
 import type { RenderResult } from './SvelteApplicationMixin.svelte';
 import { CustomContentRendererV2 } from 'src/sheets/CustomContentRendererV2';
@@ -72,12 +76,6 @@ export function TidyExtensibleDocumentSheetMixin<
     ];
 
     #customHTMLTags: string[] = ['PROSE-MIRROR'];
-
-    /**
-     * Determines whether to use a sheet lock svelte component in the header.
-     * This requires the application to mount another svelte component.
-     */
-    static USE_HEADER_SHEET_LOCK: boolean = false;
 
     #customContentRenderer: CustomContentRendererV2 =
       new CustomContentRendererV2();
@@ -165,14 +163,16 @@ export function TidyExtensibleDocumentSheetMixin<
       this._mode = mode ?? this._mode ?? CONSTANTS.SHEET_MODE_PLAY;
     }
 
-    async _prepareContext(options: Partial<TidyDocumentSheetRenderOptions>) {
+    async _prepareContext(
+      options: Partial<TidyDocumentSheetRenderOptions>
+    ): Promise<DocumentSheetV2Context> {
       const context = await super._prepareContext(options);
 
       return {
         ...context,
         unlocked:
           this.sheetMode === CONSTANTS.SHEET_MODE_EDIT && this.isEditable,
-      };
+      } as DocumentSheetV2Context;
     }
 
     async _renderHTML(
@@ -425,8 +425,11 @@ export function TidyExtensibleDocumentSheetMixin<
     /*  Rendering Life-Cycle Methods                */
     /* -------------------------------------------- */
 
-    _onRender(context: TContext, options: TidyDocumentSheetRenderOptions) {
-      super._onRender(context, options);
+    async _onRender(
+      context: TContext,
+      options: TidyDocumentSheetRenderOptions
+    ) {
+      await super._onRender(context, options);
 
       // Some integrations will insert HTML even beyond this point,
       // so breaking off the current task gives another chance to restore state.

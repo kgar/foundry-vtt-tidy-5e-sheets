@@ -13,27 +13,6 @@
 </script>
 
 <div class="settings-form">
-  <CheckboxSetting
-    bind:value={context.settings.permanentlyUnlockCharacterSheetForGm}
-    name={'TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM.name'}
-    hint={'TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM.hint'}
-    id="permanentlyUnlockCharacterSheetForGm"
-  />
-
-  <CheckboxSetting
-    bind:value={context.settings.permanentlyUnlockNpcSheetForGm}
-    name={'TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM.name'}
-    hint={'TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM.hint'}
-    id="permanentlyUnlockNpcSheetForGm"
-  />
-
-  <CheckboxSetting
-    bind:value={context.settings.permanentlyUnlockVehicleSheetForGm}
-    name={'TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM.name'}
-    hint={'TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM.hint'}
-    id="permanentlyUnlockVehicleSheetForGm"
-  />
-
   <h2>{localize('TIDY5E.WorldSettings.TabSheetLock.header')}</h2>
   <p class="tab-notes">{localize('TIDY5E.WorldSettings.TabSheetLock.hint')}</p>
   <p class="tab-notes">{localize('TIDY5E.WorldSettings.TabSheetLock.hint2')}</p>

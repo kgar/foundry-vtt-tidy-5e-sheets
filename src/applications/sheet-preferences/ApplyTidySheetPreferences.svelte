@@ -95,7 +95,7 @@
         total: totalSelected,
       })}
     </p>
-    <button type="button" onclick={() => onConfirm()}
+    <button class="confirm" type="button" onclick={() => onConfirm()}
       >{localize('TIDY5E.ButtonConfirm.Text')}</button
     >
   </footer>
@@ -133,5 +133,11 @@
   label {
     flex: 1;
     padding: 0.25rem 0;
+  }
+
+  button.confirm {
+    --button-size: 1.5rem;
+    width: 100%;
+  
   }
 </style>

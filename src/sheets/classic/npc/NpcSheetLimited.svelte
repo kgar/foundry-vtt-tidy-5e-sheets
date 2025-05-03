@@ -1,10 +1,10 @@
 <script lang="ts">
-  import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import SheetEditor from '../../../components/editor/SheetEditor.svelte';
   import LimitedHeader from '../actor/LimitedHeader.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
+  import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
+  import { manageSecrets } from 'src/actions/manage-secrets.svelte';
 
   let context = $derived(getNpcSheetContext());
 
@@ -15,30 +15,64 @@
   <LimitedHeader rounded={context.useRoundedPortraitStyle} />
   <section class="tidy-sheet-body">
     <div class="note-entries">
-      <RerenderAfterFormSubmission
-        andOnValueChange={context.system.details.biography.value}
-      >
-        <article class="appearance-notes" use:context.activateEditors>
-          <div class="section-titles biopage">
-            {localize('DND5E.Appearance')}
-          </div>
-          <SheetEditor
-            content={TidyFlags.appearance.get(context.actor) ?? ''}
-            target={TidyFlags.appearance.prop}
-            editable={context.editable}
-          />
-        </article>
-        <article class="biography-notes" use:context.activateEditors>
-          <div class="section-titles">
-            {localize('DND5E.Background')}/{localize('DND5E.Biography')}
-          </div>
-          <SheetEditor
-            content={context.biographyHTML}
-            target="system.details.biography.value"
-            editable={context.editable}
-          />
-        </article>
-      </RerenderAfterFormSubmission>
+      <article class="appearance-notes">
+        <div class="section-titles biopage">
+          {localize('DND5E.Appearance')}
+        </div>
+        {#key context.appearanceEnrichedHtml}
+          {#if context.unlocked}
+            <SheetEditorV2
+              documentUuid={context.document.uuid}
+              content={TidyFlags.appearance.get(context.actor) ?? ''}
+              editorOptions={{ toggled: false }}
+              manageSecrets={true}
+              field={TidyFlags.appearance.prop}
+              enriched={context.appearanceEnrichedHtml}
+            ></SheetEditorV2>
+          {:else}
+            <div
+              class="editor"
+              use:manageSecrets={{ document: context.document }}
+            >
+              <div
+                data-field="system.details.biography.value"
+                class="user-select-text"
+              >
+                {@html context.appearanceEnrichedHtml}
+              </div>
+            </div>
+          {/if}
+        {/key}
+      </article>
+      <article class="biography-notes">
+        <div class="section-titles">
+          {localize('DND5E.Background')}/{localize('DND5E.Biography')}
+        </div>
+        {#key context.biographyHTML}
+          {#if context.unlocked}
+            <SheetEditorV2
+              documentUuid={context.document.uuid}
+              content={context.system.biography.value}
+              editorOptions={{ toggled: false }}
+              manageSecrets={true}
+              field="system.details.biography.value"
+              enriched={context.biographyHTML}
+            ></SheetEditorV2>
+          {:else}
+            <div
+              class="editor"
+              use:manageSecrets={{ document: context.document }}
+            >
+              <div
+                data-field="system.details.biography.value"
+                class="user-select-text"
+              >
+                {@html context.biographyHTML}
+              </div>
+            </div>
+          {/if}
+        {/key}
+      </article>
     </div>
   </section>
 </div>

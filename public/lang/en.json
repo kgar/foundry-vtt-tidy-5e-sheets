@@ -326,17 +326,6 @@
     "name": "Info Card Inspect Key",
     "hint": "Press this keyboard character (for example, the \"t\" key) while viewing an info card to pop it out."
   },
-  "TIDY5E.Settings.DefaultTheme": {
-    "name": "Default Color Theme",
-    "hint": "The default theme for all users who do not have a specific theme selected."
-  },
-  "TIDY5E.Settings.SheetTheme": {
-    "name": "Color Theme",
-    "hint": "The theme for your sheets.",
-    "default": "Default",
-    "light": "Light",
-    "dark": "Dark"
-  },
   "TIDY5E.Settings.UseClassicControls": {
     "name": "Use Classic List Controls",
     "hint": "Shows controls in the list view."
@@ -714,21 +703,6 @@
   "TIDY5E.Settings.Debug": {
     "name": "Enable Debugging",
     "hint": "Prints debug messages to the console."
-  },
-  "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
-    "name": "Character Sheet: Always Unlocked for GM",
-    "hint": "Treat the character sheet as though it were always unlocked, regardless of the lock setting. The GM can always edit the character, but they can also toggle lock/unlock for a player who also owns the character.",
-    "title": "This sheet is always unlocked for the GM, regardless of the lock setting."
-  },
-  "TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM": {
-    "name": "NPC Sheet: Always Unlocked for GM",
-    "hint": "Treat the NPC sheet as though it were always unlocked, regardless of the lock setting. The GM can always edit the NPC, but they can also toggle lock/unlock for a player who also owns the NPC.",
-    "title": "This sheet is always unlocked for the GM, regardless of the lock setting."
-  },
-  "TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM": {
-    "name": "Vehicle Sheet: Always Unlocked for GM",
-    "hint": "Treat the vehicle sheet as though it were always unlocked, regardless of the lock setting. The GM can always edit the vehicle, but they can also toggle lock/unlock for a player who also owns the vehicle.",
-    "title": "This sheet is always unlocked for the GM, regardless of the lock setting."
   },
   "TIDY5E.ThemeSettings": {
     "SheetMenu": {

@@ -238,7 +238,6 @@
   <h3>{localize('TIDY5E.Settings.Migrations.OptionsHeader')}</h3>
   <div class="options grid-auto-columns">
     <label
-      class="green-checkbox"
       data-tooltip={localize(
         'TIDY5E.Settings.Migrations.CcssToTidy.overwriteTooltip',
       )}
@@ -247,7 +246,6 @@
       {localize('TIDY5E.Settings.Migrations.CcssToTidy.overwrite')}
     </label>
     <label
-      class="green-checkbox"
       data-tooltip={localize(
         'TIDY5E.Settings.Migrations.CcssToTidy.deleteFlagsTooltip',
       )}
@@ -260,12 +258,17 @@
 
   <footer class="flex-row extra-small-gap">
     <button
+      class="flex-1"
       type="button"
       onclick={(ev) => migrateCompendia()}
       disabled={migrating}
       >{localize('TIDY5E.Settings.Migrations.MigrateCompendia.Title')}</button
     >
-    <button type="button" onclick={(ev) => migrate()} disabled={migrating}
+    <button
+      class="flex-1"
+      type="button"
+      onclick={(ev) => migrate()}
+      disabled={migrating}
       >{localize('TIDY5E.Settings.Migrations.ButtonMigration.Text')}</button
     >
   </footer>
@@ -291,5 +294,11 @@
     background: var(--t5e-faintest-color);
     margin: -0.5rem -0.5rem 1rem -0.5rem;
     padding: 0.5rem 1rem;
+  }
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
   }
 </style>

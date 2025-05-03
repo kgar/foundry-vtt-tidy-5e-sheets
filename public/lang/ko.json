@@ -665,21 +665,6 @@
         "name": "디버깅 활성",
         "hint": "콘솔로 디버그 메시지 출력"
     },
-    "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
-        "name": "캐릭터 시트: GM에게는 항상 잠금 해제",
-        "hint": "캐릭터 시트는 잠금 설정에 관계없이 항상 잠금 해제된 것처럼 취급합니다. GM은 항상 캐릭터를 편집할 수 있지만, 캐릭터를 소유한 플레이어를 위해 잠금/잠금해제로 전환할 수도 있습니다.",
-        "title": "이 시트는 잠금 설정에 관계없이 GM에게 항상 잠금 해제됩니다."
-    },
-    "TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM": {
-        "name": "NPC 시트: GM에게는 항상 잠금 해제",
-        "hint": "NPC 시트는 잠금 설정에 관계없이 항상 잠금 해제된 것처럼 취급합니다. GM은 항상 캐릭터를 편집할 수 있지만, 캐릭터를 소유한 플레이어를 위해 잠금/잠금해제로 전환할 수도 있습니다.",
-        "title": "이 시트는 잠금 설정에 관계없이 GM에게 항상 잠금 해제됩니다."
-    },
-    "TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM": {
-        "name": "탑승물 시트: GM에게는 항상 잠금 해제",
-        "hint": "탑승물 캐릭터 시트는 잠금 설정에 관계없이 항상 잠금 해제된 것처럼 취급합니다. GM은 항상 캐릭터를 편집할 수 있지만, 캐릭터를 소유한 플레이어를 위해 잠금/잠금해제로 전환할 수도 있습니다.",
-        "title": "이 시트는 잠금 설정에 관계없이 GM에게 항상 잠금 해제됩니다."
-    },
     "TIDY5E.ThemeSettings": {
         "SheetMenu": {
             "name": "Tidy 테마 설정",

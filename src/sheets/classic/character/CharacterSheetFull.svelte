@@ -6,7 +6,6 @@
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import SpecialSaves from '../actor/SpecialSaves.svelte';
   import { CONSTANTS } from 'src/constants';
-  import SheetEditModeToggle from 'src/sheets/classic/actor/SheetEditModeToggle.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
@@ -14,7 +13,6 @@
   import ActorHeaderStats from '../actor/ActorHeaderStats.svelte';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import SheetMenu from '../actor/SheetMenu.svelte';
   import { settings } from 'src/settings/settings.svelte';
   import InlineCreatureType from '../shared/InlineCreatureType.svelte';
   import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication.svelte';
@@ -126,7 +124,6 @@
           {localize('DND5E.AbbreviationLevel')}
           {context.system.details.level}
         </h2>
-        <SheetMenu defaultSettingsTab={CONSTANTS.TAB_USER_SETTINGS_PLAYERS} />
       </div>
     </div>
 
@@ -240,20 +237,7 @@
   </div>
 </header>
 
-<Tabs tabs={context.tabs} bind:selectedTabId sheet={context.actor.sheet}>
-  {#snippet tabEnd()}
-    {#if context.editable}
-      <SheetEditModeToggle
-        hint={settings.value.permanentlyUnlockCharacterSheetForGm &&
-        FoundryAdapter.userIsGm()
-          ? localize(
-              'TIDY5E.Settings.value.PermanentlyUnlockCharacterSheetForGM.title',
-            )
-          : null}
-      />
-    {/if}
-  {/snippet}
-</Tabs>
+<Tabs tabs={context.tabs} bind:selectedTabId sheet={context.actor.sheet} />
 
 <section class="tidy-sheet-body">
   <TabContents tabs={context.tabs} {selectedTabId} />
@@ -271,6 +255,7 @@
       width: calc(10.5ch + 0.3rem);
       text-align: right;
       padding: 0 0.25rem;
+      min-width: 1.25rem;
     }
 
     :global(.max-xp) {
@@ -278,6 +263,7 @@
       width: calc(10.5ch + 0.3rem);
       text-align: left;
       padding: 0 0.25rem;
+      min-width: 1.25rem;
     }
 
     .xp-tracker {

@@ -2,7 +2,6 @@ import type { Tidy5eSheetsApi } from 'src/api';
 import { ThirdPartyIntegrationBase } from '../integration-classes';
 import Coloris from '@melloware/coloris';
 import { settings } from 'src/settings/settings.svelte';
-import { getThemeOrDefaultV1 } from 'src/theme/theme';
 
 export class ColorisThirdPartyIntegration extends ThirdPartyIntegrationBase {
   name: string = 'Coloris';
@@ -34,10 +33,9 @@ export class ColorisThirdPartyIntegration extends ThirdPartyIntegrationBase {
     });
 
     $effect.root(() => {
-      const theme = getThemeOrDefaultV1(settings.value.colorScheme);
       // The documentation supports this usage, even if TypeScript does not.
       //@ts-expect-error
-      Coloris({ themeMode: theme.type });
+      Coloris({});
     });
   }
 }

@@ -117,14 +117,13 @@
             (showUnassignedOnly && !sourceClassIsUnassigned)}
           <TidyTableRow hidden={hideRow}>
             <TidyTableCell primary={true} class="p-1 semibold">
-              <button
-                type="button"
-                class="inline-transparent-button highlight-on-hover"
+              <a
+                class="flex-1 highlight-on-hover"
                 onclick={async () =>
                   FoundryAdapter.renderSheetFromUuid(assignment.item.uuid)}
               >
                 {assignment.item.name}
-              </button>
+                </a>
             </TidyTableCell>
             {#each classColumns as classColumn}
               {@const selected =

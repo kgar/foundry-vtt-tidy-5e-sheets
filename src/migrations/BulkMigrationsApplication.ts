@@ -1,7 +1,9 @@
 import { mount } from 'svelte';
-import SvelteFormApplicationBase from 'src/applications/SvelteFormApplicationBase';
 import BulkMigrations from './BulkMigrations.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import type { ApplicationConfiguration } from 'src/types/application.types';
+import { CONSTANTS } from 'src/constants';
 
 export type ConfirmMigrationFunction = (onYes: () => void) => void;
 
@@ -10,28 +12,40 @@ interface ConfirmsMigrations {
 }
 
 export class BulkMigrationsApplication
-  extends SvelteFormApplicationBase
+  extends SvelteApplicationMixin<
+    Partial<ApplicationConfiguration> | undefined,
+    {}
+  >(foundry.applications.api.ApplicationV2)
   implements ConfirmsMigrations
 {
   _selectedTabId?: string;
 
-  constructor(selectedTabId?: string) {
-    super();
+  static DEFAULT_OPTIONS = {
+    classes: [
+      CONSTANTS.MODULE_ID,
+      'application-shell',
+      CONSTANTS.SHEET_LAYOUT_CLASSIC,
+    ],
+    id: 'tidy-5e-sheets-bulk-migrations',
+    window: {
+      title: 'TIDY5E.Settings.Migrations.dialogTitle',
+    },
+    position: {
+      width: 650,
+      height: 500,
+    },
+  };
+
+  constructor(
+    selectedTabId?: string,
+    args?: Partial<ApplicationConfiguration>
+  ) {
+    super(args);
 
     this._selectedTabId = selectedTabId;
   }
 
-  static get defaultOptions() {
-    return FoundryAdapter.mergeObject(super.defaultOptions, {
-      title: FoundryAdapter.localize('TIDY5E.Settings.Migrations.dialogTitle'),
-      width: 650,
-      height: 500,
-      id: 'tidy-5e-sheets-bulk-migrations',
-      popOut: true,
-    });
-  }
-
-  createComponent(node: HTMLElement): Record<string, any> {
+  _createComponent(node: HTMLElement): Record<string, any> {
     return mount(BulkMigrations, {
       target: node,
       context: new Map<any, any>([['confirm', this.confirm]]),

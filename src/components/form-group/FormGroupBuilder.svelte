@@ -19,11 +19,12 @@
   let props: Props = $props();
 
   let label = $derived<string>(props.label ?? '');
-  let labelFor = $derived<string | undefined>(undefined);
+  let labelFor = $derived(
+    props.inputs.length === 1 ? props.inputs[0].props.id : undefined,
+  );
 </script>
 
 <div
-  id={props.rootId}
   class={[
     'form-group',
     {

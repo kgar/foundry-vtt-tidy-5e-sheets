@@ -1,25 +1,16 @@
 ## To Fix
 
+- [ ] verify: (all 3 sheets) Pull sheet preferences during initialize application options
+- [ ] accountForExternalSections is not being used quite right. It needs to happen after any callers have updated context with their own data. How do we account for this?
+- [ ] // TODO: Make the character sheet handle bastion tab check. This is violating separation of concerns.
+- [ ] // TODO: In AppV2, consider a mixin for common data preparation between Actors, like in dnd5e.
+
+
+## Refactors
+
 - [ ] Inline the custom Tidy modifications for spellbook preparation; ensure modules can still add spells / sections and have Tidy perform a post-operation to backfill spell section keys / Tidy props.
+- [ ] Make Warning header control its own additional component that is placed on the header. It should show/hide itself and manage everything it needs to manage.
+  - Consider even wiring directly into header controls setup.
+
+## Etc.
 - (hightouch) the radio buttons on Foundry 13 are wonky / see container sort longpress menu
-- [ ] Convert to App V2
-  - [ ] Assign Spells to Classes
-  - [ ] Configure Section
-  - [ ] Set Tidy as Default Sheet
-  - [ ] Max Prepared Spells Config
-  - [ ] Migrations
-  - [ ] etc.
-- [ ] Convert Character sheet to App V2
-- [ ] Convert NPC sheet to App V2
-- [ ] Convert Vehicle sheet to App V2
-
-## App V1 to upgrade to V2
-
-Assign Spells to Classes
-Configure Section
-Set Tidy as Default Sheet
-Etc.
-
----
-
-Possibly convert the actor sheets to app V2 since any base-class-dependent functionality will be broken anyway

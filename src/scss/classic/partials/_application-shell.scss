@@ -1,4 +1,25 @@
 &.application-shell {
+  --button-size: 1.5rem;
+
+  @import './buttons';
+
+  /* Icon-only button */
+  .button-icon-only {
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    width: var(--button-size);
+    height: var(--button-size);
+
+    &.button-borderless {
+      border-radius: 100%;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.12);
+      }
+    }
+  }
+
   :where(.window-content) {
     padding: 0;
 

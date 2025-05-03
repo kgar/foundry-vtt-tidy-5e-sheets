@@ -12,9 +12,6 @@ export type WorldSettingsContext = {
     showExpandedLimitedView: CurrentSettings['showExpandedLimitedView'];
     itemCardsFixKey: CurrentSettings['itemCardsFixKey'];
     useCircularPortraitStyle: CurrentSettings['useCircularPortraitStyle'];
-    permanentlyUnlockCharacterSheetForGm: CurrentSettings['permanentlyUnlockCharacterSheetForGm'];
-    permanentlyUnlockNpcSheetForGm: CurrentSettings['permanentlyUnlockNpcSheetForGm'];
-    permanentlyUnlockVehicleSheetForGm: CurrentSettings['permanentlyUnlockVehicleSheetForGm'];
     limitEffectsManagementToGm: CurrentSettings['limitEffectsManagementToGm'];
     useCharacterInspiration: CurrentSettings['useCharacterInspiration'];
     useVehicleMotion: CurrentSettings['useVehicleMotion'];

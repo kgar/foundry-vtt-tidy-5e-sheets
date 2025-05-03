@@ -69,7 +69,6 @@ declare global {
   var CONST: any;
   var DefaultSheetsConfig: any;
   var debounce: any;
-  var Dialog: any;
   var dnd5e: {
     dataModels: {
       fields: {
@@ -83,9 +82,7 @@ declare global {
       };
     };
   } & Record<string, any>;
-  var DocumentSheet: any;
   var Folder: any;
-  var FormApplication: any;
   var foundry: {
     applications: {
       api: any;
@@ -151,6 +148,7 @@ declare global {
   var ProseMirror: any;
   var renderTemplate: any;
   var Roll: any;
+  var TokenDocument: any;
   var ui: any;
 
   interface ArrayConstructor {

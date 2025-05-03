@@ -1,4 +1,3 @@
-import SvelteFormApplicationBase from 'src/applications/SvelteFormApplicationBase';
 import { mount } from 'svelte';
 import WorldSettings from './WorldSettings.svelte';
 import {
@@ -34,10 +33,10 @@ export class WorldSettingsFormApplication extends SvelteApplicationMixin<
     classes: [
       CONSTANTS.MODULE_ID,
       'settings',
-      'app-v2',
       'application-shell',
       CONSTANTS.SHEET_LAYOUT_CLASSIC,
     ],
+    id: 'tidy5e-sheet-world-settings',
     tag: 'div',
     window: {
       frame: true,
@@ -68,12 +67,6 @@ export class WorldSettingsFormApplication extends SvelteApplicationMixin<
         showExpandedLimitedView: currentSettings.showExpandedLimitedView,
         itemCardsFixKey: currentSettings.itemCardsFixKey,
         useCircularPortraitStyle: currentSettings.useCircularPortraitStyle,
-        permanentlyUnlockCharacterSheetForGm:
-          currentSettings.permanentlyUnlockCharacterSheetForGm,
-        permanentlyUnlockNpcSheetForGm:
-          currentSettings.permanentlyUnlockNpcSheetForGm,
-        permanentlyUnlockVehicleSheetForGm:
-          currentSettings.permanentlyUnlockVehicleSheetForGm,
         limitEffectsManagementToGm: currentSettings.limitEffectsManagementToGm,
         useCharacterInspiration: currentSettings.useCharacterInspiration,
         useVehicleMotion: currentSettings.useVehicleMotion,

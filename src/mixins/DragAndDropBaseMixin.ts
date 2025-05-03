@@ -86,9 +86,9 @@ export function DragAndDropMixin(BaseApplication: any) {
       return this.#dragDrop;
     }
 
-    _onRender(...args: any[]) {
+    async _onRender(...args: any[]) {
       this.#dragDrop.forEach((d: DragDrop) => d.bind(this.element));
-      super._onRender(...args);
+      await super._onRender(...args);
     }
 
     /**

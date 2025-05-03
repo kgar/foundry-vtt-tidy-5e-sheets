@@ -1,13 +1,19 @@
 <script lang="ts">
   import { getContext } from 'svelte';
-  import type { MaxPreparedSpellsConfigContext } from './MaxPreparedSpellsConfigFormApplication.svelte';
+  import {
+    MaxPreparedSpellsConfigFormApplication,
+    type MaxPreparedSpellsConfigContext,
+  } from './MaxPreparedSpellsConfigFormApplication.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
+  import type { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 
   const appId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.APP_ID);
-  const context = getContext<MaxPreparedSpellsConfigContext>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
-  );
+  const context = getContext<
+    CoarseReactivityProvider<MaxPreparedSpellsConfigContext>
+  >(CONSTANTS.SVELTE_CONTEXT.CONTEXT).data;
+  const save =
+    getContext<MaxPreparedSpellsConfigFormApplication['_save']>('save');
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -45,7 +51,7 @@
       >
     </p>
   </div>
-  <button type="submit">
+  <button type="button" onclick={() => save()}>
     <i class="far fa-save"></i>
     {localize('Save')}
   </button>

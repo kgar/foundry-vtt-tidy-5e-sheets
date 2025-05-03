@@ -3,11 +3,7 @@ import {
   getCurrentSettings,
   type CurrentSettings,
 } from 'src/settings/settings.svelte';
-import {
-  applyCurrentThemeV1,
-  getThemeOrDefaultV1,
-  getThemeableColors,
-} from 'src/theme/theme';
+import { getThemeableColors } from 'src/theme/theme';
 import type {
   ThemeColorSetting,
   Tidy5eThemeDataV1,
@@ -21,7 +17,6 @@ import type { ApplicationConfiguration } from 'src/types/application.types';
 
 export type ThemeSettingsSheetFunctions = {
   save(settings: CurrentSettings): Promise<unknown>;
-  useExistingThemeColors(themeId: string): void;
   exportTheme(settings: CurrentSettings): void;
 };
 
@@ -35,11 +30,11 @@ export class ThemeSettingsFormApplication extends SvelteApplicationMixin<
   static DEFAULT_OPTIONS = {
     classes: [
       CONSTANTS.MODULE_ID,
-      'app-v2',
       'application-shell',
       CONSTANTS.SHEET_LAYOUT_CLASSIC,
     ],
     tag: 'div',
+    id: 'tidy5e-sheet-theme-settings',
     window: {
       frame: true,
       positioned: true,
@@ -73,7 +68,6 @@ export class ThemeSettingsFormApplication extends SvelteApplicationMixin<
           CONSTANTS.SVELTE_CONTEXT.FUNCTIONS,
           {
             save: this.saveChangedSettings.bind(this),
-            useExistingThemeColors: this.useExistingThemeColors.bind(this),
             exportTheme: this.exportTheme.bind(this),
           } satisfies ThemeSettingsSheetFunctions,
         ],
@@ -96,23 +90,7 @@ export class ThemeSettingsFormApplication extends SvelteApplicationMixin<
       newSettings.colorPickerEnabled
     );
 
-    applyCurrentThemeV1();
-
     await this.close();
-  }
-
-  useExistingThemeColors(themeId: string) {
-    const targetTheme = getThemeOrDefaultV1(themeId);
-
-    const colorsToUpdate = this.themeableColors.reduce<Record<string, unknown>>(
-      (prev, color) => {
-        prev[color.key] = targetTheme.variables[color.cssVariable];
-        return prev;
-      },
-      {}
-    );
-
-    Object.assign(this.settings, colorsToUpdate);
   }
 
   exportTheme(settings: CurrentSettings) {

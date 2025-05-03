@@ -29,11 +29,9 @@ export default class ActorOriginSummaryConfigFormApplication extends SvelteAppli
   static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
     classes: [
       CONSTANTS.MODULE_ID,
-      'application',
       'sheet',
       'quadrone',
       'tidy-origin-summary-application',
-      'app-v2',
       'scrollable-window-content',
     ],
     window: {
@@ -47,16 +45,8 @@ export default class ActorOriginSummaryConfigFormApplication extends SvelteAppli
     },
     actions: {},
     submitOnClose: true,
+    sheetConfig: false,
   };
-
-  static get defaultOptions() {
-    return FoundryAdapter.mergeObject(super.defaultOptions, {
-      width: 380,
-      height: 'auto',
-      sheetConfig: false,
-      resizable: false,
-    });
-  }
 
   _createComponent(node: HTMLElement): Record<string, any> {
     return mount(ActorOriginSummaryConfig, {

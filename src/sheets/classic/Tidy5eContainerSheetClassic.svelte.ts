@@ -68,7 +68,6 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
       'sheet',
       'item',
       CONSTANTS.ITEM_TYPE_CONTAINER,
-      'app-v2',
       CONSTANTS.SHEET_LAYOUT_CLASSIC,
       'tidy-form',
     ],
@@ -135,6 +134,8 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
   async _prepareContext(
     options: ApplicationRenderOptions
   ): Promise<ContainerSheetClassicContext> {
+    const documentSheetContext = await super._prepareContext(options);
+
     const rollData = this.item.getRollData();
 
     const enrichmentOptions = {
@@ -236,21 +237,27 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
             ),
             iconClass: 'fas fa-cog',
             execute: ({ context, sections }) => {
-              new DocumentTabSectionConfigApplication({
-                document: context.item,
-                // Provide a way to build the necessary config, perhaps within the application constructor. We've got all the info we need in order to perform the operation.
-                sections: sections,
-                tabId: CONSTANTS.TAB_CONTAINER_CONTENTS,
-                tabTitle: ItemSheetRuntime.getTabTitle(
-                  CONSTANTS.TAB_CONTAINER_CONTENTS,
-                  {}
-                ),
-              }).render(true);
+              new DocumentTabSectionConfigApplication(
+                {
+                  // Provide a way to build the necessary config, perhaps within the application constructor. We've got all the info we need in order to perform the operation.
+                  sections: sections,
+                  tabId: CONSTANTS.TAB_CONTAINER_CONTENTS,
+                  tabTitle: ItemSheetRuntime.getTabTitle(
+                    CONSTANTS.TAB_CONTAINER_CONTENTS,
+                    {}
+                  ),
+                },
+                {
+                  document: context.item,
+                }
+              ).render(true);
             },
           },
         ],
       },
     };
+
+    documentSheetContext.source = systemSource;
 
     const context: ContainerSheetClassicContext = {
       capacity: await this.item.system.computeCapacity(),
@@ -259,8 +266,6 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
       config: CONFIG.DND5E,
       containerContents: await Container.getContainerContents(this.item),
       customContent: [],
-      document: this.document,
-      editable: this.isEditable,
       enriched: enriched,
       filterData: this.itemFilterService.getDocumentItemFilterData(),
       filterPins: ItemFilterRuntime.defaultFilterPins[this.item.type],
@@ -286,10 +291,10 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
         options: [],
       },
       rollData: rollData,
-      source: systemSource,
       system: this.document.system,
       tabs: [],
       utilities: utilities,
+      ...documentSheetContext,
     };
 
     // Properties

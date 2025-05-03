@@ -2,7 +2,6 @@
   import type { DropdownListOption } from 'src/types/types';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import { CONSTANTS } from 'src/constants';
-  import SheetEditModeToggle from 'src/sheets/classic/actor/SheetEditModeToggle.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import VehicleProfile from './parts/VehicleProfile.svelte';
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
@@ -14,7 +13,6 @@
   import AcShieldVehicle from '../actor/AcShieldVehicle.svelte';
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
   import AttributeBlock from '../actor/AttributeBlock.svelte';
-  import SheetMenu from '../actor/SheetMenu.svelte';
   import { settings } from 'src/settings/settings.svelte';
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import InlineSource from '../shared/InlineSource.svelte';
@@ -77,7 +75,6 @@
       >
         <ActorName />
       </div>
-      <SheetMenu defaultSettingsTab={CONSTANTS.TAB_USER_SETTINGS_VEHICLES} />
     </div>
     <HorizontalLineSeparator
       borderColor="light"
@@ -119,7 +116,7 @@
       </div>
       <span>&#8226;</span>
       {#key context.lockSensitiveFields}
-        <DelimitedTruncatedContent cssClass="flex-1">
+        <DelimitedTruncatedContent cssClass="flex-1 align-items-center">
           <ContentEditableFormField
             element="span"
             document={context.actor}
@@ -179,20 +176,7 @@
     </section>
   </div>
 </header>
-<Tabs tabs={context.tabs} bind:selectedTabId sheet={context.actor.sheet}>
-  {#snippet tabEnd()}
-    {#if context.editable}
-      <SheetEditModeToggle
-        hint={settings.value.permanentlyUnlockVehicleSheetForGm &&
-        FoundryAdapter.userIsGm()
-          ? localize(
-              'TIDY5E.Settings.value.PermanentlyUnlockVehicleSheetForGM.title',
-            )
-          : null}
-      />
-    {/if}
-  {/snippet}
-</Tabs>
+<Tabs tabs={context.tabs} bind:selectedTabId sheet={context.actor.sheet} />
 <section class="tidy-sheet-body">
   <TabContents tabs={context.tabs} {selectedTabId} />
 </section>
@@ -216,9 +200,13 @@
       justify-content: space-between;
       align-items: center;
       gap: 0.25rem;
-      font-size: 0.75rem;
       line-height: 1rem;
       padding: 0.1875rem 0 0.125rem 0;
+      font-size: 0.75rem;
+
+      :global(button) {
+        font-size: 0.75rem;
+      }
     }
   }
 

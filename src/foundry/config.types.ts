@@ -65,6 +65,21 @@ type Skill = {
   icon: string;
 };
 
+export type ConditionType = {
+  name: string;
+  img: string;
+  reference?: string;
+  statuses?: Array<string>;
+  riders?: Array<string>;
+  pseudo?: boolean;
+  special?: string;
+  levels?: number;
+  reduction?: {
+    rolls: number;
+    speed: number;
+  };
+};
+
 export type CONFIG = {
   debug: {
     applications: boolean;
@@ -4216,40 +4231,52 @@ export type CONFIG = {
     consumableResources: Array<string>;
     conditionTypes: {
       bleeding: {
-        label: string;
-        icon: string;
+        name: string;
+        img: string;
         pseudo: boolean;
       };
       blinded: {
-        label: string;
-        icon: string;
+        name: string;
+        img: string;
         reference: string;
         special: string;
       };
+      burning: {
+        name: string;
+        img: string;
+        reference: string;
+        pseudo: boolean;
+      };
       charmed: {
-        label: string;
-        icon: string;
+        name: string;
+        img: string;
         reference: string;
       };
       cursed: {
-        label: string;
-        icon: string;
+        name: string;
+        img: string;
         pseudo: boolean;
       };
       deafened: {
-        label: string;
-        icon: string;
+        name: string;
+        img: string;
         reference: string;
       };
+      dehydration: {
+        name: string;
+        img: string;
+        reference: string;
+        pseudo: boolean;
+      };
       diseased: {
-        label: string;
-        icon: string;
+        name: string;
+        img: string;
         pseudo: boolean;
         reference: string;
       };
       exhaustion: {
-        label: string;
-        icon: string;
+        name: string;
+        img: string;
         reference: string;
         levels: number;
         reduction: {
@@ -4257,82 +4284,100 @@ export type CONFIG = {
           speed: number;
         };
       };
+      falling: {
+        name: string;
+        img: string;
+        reference: string;
+        pseudo: boolean;
+      };
       frightened: {
-        label: string;
-        icon: string;
+        name: string;
+        img: string;
         reference: string;
       };
       grappled: {
-        label: string;
-        icon: string;
+        name: string;
+        img: string;
         reference: string;
       };
       incapacitated: {
-        label: string;
-        icon: string;
+        name: string;
+        img: string;
         reference: string;
       };
       invisible: {
-        label: string;
-        icon: string;
+        name: string;
+        img: string;
         reference: string;
       };
+      malnutrition: {
+        name: string;
+        img: string;
+        reference: string;
+        pseudo: boolean;
+      };
       paralyzed: {
-        label: string;
-        icon: string;
+        name: string;
+        img: string;
         reference: string;
         statuses: Array<string>;
       };
       petrified: {
-        label: string;
-        icon: string;
+        name: string;
+        img: string;
         reference: string;
         statuses: Array<string>;
       };
       poisoned: {
-        label: string;
-        icon: string;
+        name: string;
+        img: string;
         reference: string;
       };
       prone: {
-        label: string;
-        icon: string;
+        name: string;
+        img: string;
         reference: string;
       };
       restrained: {
-        label: string;
-        icon: string;
+        name: string;
+        img: string;
         reference: string;
       };
       silenced: {
-        label: string;
-        icon: string;
+        name: string;
+        img: string;
         pseudo: boolean;
       };
       stunned: {
-        label: string;
-        icon: string;
+        name: string;
+        img: string;
         reference: string;
         statuses: Array<string>;
       };
+      suffocation: {
+        name: string;
+        img: string;
+        reference: string;
+        pseudo: boolean;
+      };
       surprised: {
-        label: string;
-        icon: string;
+        name: string;
+        img: string;
         pseudo: boolean;
       };
       transformed: {
-        label: string;
-        icon: string;
+        name: string;
+        img: string;
         pseudo: boolean;
       };
       unconscious: {
-        label: string;
-        icon: string;
+        name: string;
+        img: string;
         reference: string;
         statuses: Array<string>;
         riders: Array<string>;
       };
-    };
+    } & Record<string, ConditionType>;
     conditionEffects: {
       noMovement: {};
       halfMovement: {};
@@ -4468,6 +4513,7 @@ export type CONFIG = {
         labels: {
           title: string;
           localization: string;
+          all: string;
         };
         icon: string;
       };
@@ -4538,6 +4584,13 @@ export type CONFIG = {
           localization: string;
         };
         icon: string;
+        configKey: string;
+      };
+      dm: {
+        labels: {
+          title: string;
+          localization: string;
+        };
         configKey: string;
       };
       ci: {

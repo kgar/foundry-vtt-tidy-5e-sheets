@@ -642,21 +642,6 @@
         "name": "Sort Favorites Alphabetically",
         "hint": "Sorts favorites alphabetically."
     },
-    "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
-        "name": "Character Sheet: Always Unlocked for GM",
-        "hint": "Treat the character sheet as though it were always unlocked, regardless of the lock setting. The GM can always edit the character, but they can also toggle lock/unlock for a player who also owns the character.",
-        "title": "This sheet is always unlocked for the GM, regardless of the lock setting."
-    },
-    "TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM": {
-        "name": "NPC Sheet: Always Unlocked for GM",
-        "hint": "Treat the NPC sheet as though it were always unlocked, regardless of the lock setting. The GM can always edit the NPC, but they can also toggle lock/unlock for a player who also owns the NPC.",
-        "title": "This sheet is always unlocked for the GM, regardless of the lock setting."
-    },
-    "TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM": {
-        "name": "Vehicle Sheet: Always Unlocked for GM",
-        "hint": "Treat the vehicle sheet as though it were always unlocked, regardless of the lock setting. The GM can always edit the vehicle, but they can also toggle lock/unlock for a player who also owns the vehicle.",
-        "title": "This sheet is always unlocked for the GM, regardless of the lock setting."
-    },
     "TIDY5E.ThemeSettings": {
         "SheetMenu": {
             "name": "Tidy Theme Settings",

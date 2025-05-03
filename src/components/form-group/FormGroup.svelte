@@ -17,6 +17,7 @@
   import Select from '../inputs/Select.svelte';
   import SelectQuadrone from '../inputs/SelectQuadrone.svelte';
   import SelectOptions from '../inputs/SelectOptions.svelte';
+  import { isNil } from 'src/utils/data';
 
   type PartialBuilderProps = Partial<ComponentProps<typeof FormGroupBuilder>>;
 
@@ -36,12 +37,26 @@
     value,
     name,
     editable = true,
+    rootId,
     ...rest
   }: Props = $props();
 
+  function getFieldId(field: DataField, index?: number) {
+    const identifier = name ?? field.fieldPath;
+    const id = [
+      rootId,
+      identifier ?? '',
+      index !== undefined ? index : '',
+    ].filterJoin('-');
+
+    return id;
+  }
+
   // TODO: Send off to a static function to get the input(s) and optional rootId
-  // TODO: When "choices" included, then use a select
+
   let inputs = $derived.by(() => {
+    const id = !isNil(rootId) ? getFieldId(field) : undefined;
+
     if (field instanceof foundry.data.fields.StringField) {
       // Handle choices - select
       let input =
@@ -49,7 +64,7 @@
           ? componentWithProps(Select, {
               document: document,
               field: name ?? field.fieldPath,
-              id: 'todo: implement',
+              id: id,
               value,
               children: () => StringChoices(field),
               disabled: !editable,
@@ -58,7 +73,7 @@
             ? componentWithProps(TextInput, {
                 document: document,
                 field: name ?? field.fieldPath,
-                id: 'todo: implement',
+                id: id,
                 selectOnFocus: true,
                 value,
                 disabled: !editable,
@@ -67,7 +82,7 @@
               ? componentWithProps(SelectQuadrone, {
                   document: document,
                   field: name ?? field.fieldPath,
-                  id: 'todo: implement',
+                  id: id,
                   value,
                   children: () => StringChoices(field),
                   disabled: !editable,
@@ -76,7 +91,7 @@
                 ? componentWithProps(TextInputQuadrone, {
                     document: document,
                     field: name ?? field.fieldPath,
-                    id: 'todo: implement',
+                    id: id,
                     selectOnFocus: true,
                     value,
                     disabled: !editable,
@@ -93,7 +108,7 @@
           ? componentWithProps(Select, {
               document: document,
               field: name ?? field.fieldPath,
-              id: 'todo: implement',
+              id: id,
               value,
               children: () => NumberChoices(field),
               disabled: !editable,
@@ -102,7 +117,7 @@
             ? componentWithProps(NumberInput, {
                 document: document,
                 field: name ?? field.fieldPath,
-                id: 'todo: implement',
+                id: id,
                 selectOnFocus: true,
                 value,
                 disabled: !editable,
@@ -111,7 +126,7 @@
               ? componentWithProps(SelectQuadrone, {
                   document: document,
                   field: name ?? field.fieldPath,
-                  id: 'todo: implement',
+                  id: id,
                   value,
                   children: () => NumberChoices(field),
                   disabled: !editable,
@@ -120,7 +135,7 @@
                 ? componentWithProps(NumberInputQuadrone, {
                     document: document,
                     field: name ?? field.fieldPath,
-                    id: 'todo: implement',
+                    id: id,
                     selectOnFocus: true,
                     value,
                     disabled: !editable,
@@ -136,14 +151,14 @@
           ? componentWithProps(Checkbox, {
               document: document,
               field: name ?? field.fieldPath,
-              id: 'todo: implement',
+              id: id,
               checked: !!value,
               disabled: !editable,
             })
           : componentWithProps(CheckboxQuadrone, {
               document: document,
               field: name ?? field.fieldPath,
-              id: 'todo: implement',
+              id: id,
               checked: !!value,
               disabled: !editable,
             });
@@ -155,7 +170,7 @@
           ? componentWithProps(Select, {
               document: document,
               field: name ?? field.fieldPath,
-              id: 'todo: implement',
+              id: id,
               value,
               children: () => StringChoices(field),
               disabled: !editable,
@@ -164,7 +179,7 @@
             ? componentWithProps(TextInput, {
                 document: document,
                 field: name ?? field.fieldPath,
-                id: 'todo: implement',
+                id: id,
                 selectOnFocus: false,
                 value,
                 disabled: !editable,
@@ -173,7 +188,7 @@
               ? componentWithProps(SelectQuadrone, {
                   document: document,
                   field: name ?? field.fieldPath,
-                  id: 'todo: implement',
+                  id: id,
                   value,
                   children: () => StringChoices(field),
                   disabled: !editable,
@@ -182,7 +197,7 @@
                 ? componentWithProps(TextInputQuadrone, {
                     document: document,
                     field: name ?? field.fieldPath,
-                    id: 'todo: implement',
+                    id: id,
                     selectOnFocus: false,
                     value,
                     disabled: !editable,

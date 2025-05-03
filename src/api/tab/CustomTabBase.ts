@@ -60,7 +60,7 @@ export abstract class CustomTabBase {
   abstract enabled?: (context: any) => boolean;
 
   /**
-   * Optional function which is called each time a change detection cycle occurs on the sheet. This is any time a FormApplication would normally call `render()`.
+   * Optional function which is called each time a change detection cycle occurs on the sheet. This is any time a Foundry Application would normally call `render()`.
    */
   abstract onRender?: (params: OnRenderTabParams) => void;
 

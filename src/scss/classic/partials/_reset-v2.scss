@@ -6,8 +6,7 @@
   }
   
   :where(button) {
-    height: unset;
-    min-height: unset;
+    --button-size: unset;
   }
 
   input[type='checkbox'] {

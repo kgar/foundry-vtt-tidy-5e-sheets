@@ -10,13 +10,13 @@
   import ItemTableRow from '../../../../components/item-list/v1/ItemTableRow.svelte';
   import ItemUseButton from '../../../../components/item-list/ItemUseButton.svelte';
   import { getContext, tick } from 'svelte';
-  import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import FacilityOrderProgressMeter from './FacilityOrderProgressMeter.svelte';
   import { Tooltip } from 'src/tooltips/Tooltip';
   import OccupantSummaryTooltip from 'src/tooltips/OccupantSummaryTooltip.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getThemeV2 } from 'src/theme/theme';
 
   interface Props {
     section: FacilitySection;
@@ -70,6 +70,7 @@
     Tooltip.show(
       (event?.target as HTMLElement | null) ?? event.currentTarget,
       occupantSummaryTooltip.getMarkup(),
+      getThemeV2(context.actor),
     );
   }
 </script>

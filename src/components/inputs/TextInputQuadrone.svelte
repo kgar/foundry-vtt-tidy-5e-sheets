@@ -25,7 +25,7 @@
     /**
      * Stop propagation on input change event.
      * Useful for cases when outside listeners like
-     * the FormApplication are clearing an input
+     * the Foundry Application are clearing an input
      * during a change event, since these inputs
      * do not use the `[name]` attribute.
      */

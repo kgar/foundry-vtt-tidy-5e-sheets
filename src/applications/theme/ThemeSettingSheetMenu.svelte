@@ -5,8 +5,6 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
   import type { CurrentSettings } from 'src/settings/settings.svelte';
-  import ThemeSelectorButtonMenuCommand from 'src/sheets/classic/shared/ThemeSelectorButtonMenuCommand.svelte';
-  import ButtonMenuDivider from 'src/components/button-menu/ButtonMenuDivider.svelte';
   import type { ThemeSettingsSheetFunctions } from './ThemeSettingsFormApplication.svelte';
 
   interface Props {
@@ -51,8 +49,6 @@
   openerPadding="0.125rem 0.5rem"
   buttonText={localize('TIDY5E.ThemeSettings.Sheet.menuLabel')}
 >
-  <ThemeSelectorButtonMenuCommand />
-  <ButtonMenuDivider />
   <ButtonMenuCommand
     onMenuClick={() => fileImportInput.click()}
     iconClass="fas fa-file-import"
@@ -64,20 +60,6 @@
     iconClass="fas fa-file-export"
   >
     {localize('TIDY5E.ThemeSettings.Sheet.export')}
-  </ButtonMenuCommand>
-  <ButtonMenuCommand
-    onMenuClick={() =>
-      functions.useExistingThemeColors(CONSTANTS.THEME_ID_DEFAULT_LIGHT)}
-    iconClass="fas fa-sun"
-  >
-    {localize('TIDY5E.ThemeSettings.Sheet.useDefaultLightColors')}
-  </ButtonMenuCommand>
-  <ButtonMenuCommand
-    onMenuClick={() =>
-      functions.useExistingThemeColors(CONSTANTS.THEME_ID_DEFAULT_DARK)}
-    iconClass="fas fa-moon"
-  >
-    {localize('TIDY5E.ThemeSettings.Sheet.useDefaultDarkColors')}
   </ButtonMenuCommand>
 </ButtonMenu>
 <input

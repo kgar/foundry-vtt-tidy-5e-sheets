@@ -20,7 +20,7 @@
   <hr />
   <ul>
     {#each members as member}
-      <li class="flex-row extra-small-gap align-items-center">
+      <li class="image-and-name">
         <div
           class="item-image"
           style="background-image: url('{member.img}')"

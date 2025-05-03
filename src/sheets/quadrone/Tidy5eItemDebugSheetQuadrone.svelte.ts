@@ -7,13 +7,14 @@ import type {
 import { mount } from 'svelte';
 import ItemDebugSheet from './item/ItemDebugSheet.svelte';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
-import type { Tab } from 'src/types/types';
+import type { DocumentSheetV2Context, Tab } from 'src/types/types';
 import type {
   Item5e,
   ItemDescription,
   ItemNameContext,
 } from 'src/types/item.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 
 export type ItemDebugSheetQuadroneContext = {
   document: any;
@@ -24,12 +25,15 @@ export type ItemDebugSheetQuadroneContext = {
   system: any;
   tabs: Tab[];
   unlocked: boolean;
-};
+} & DocumentSheetV2Context;
 
-export class Tidy5eItemDebugSheetQuadrone extends SvelteApplicationMixin<
-  ApplicationConfiguration | undefined,
-  ItemDebugSheetQuadroneContext
->(foundry.applications.sheets.ItemSheetV2) {
+export class Tidy5eItemDebugSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
+  CONSTANTS.SHEET_TYPE_ITEM,
+  SvelteApplicationMixin<
+    ApplicationConfiguration | undefined,
+    ItemDebugSheetQuadroneContext
+  >(foundry.applications.sheets.ItemSheetV2)
+) {
   static DEFAULT_OPTIONS: Partial<
     ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
   > = {
@@ -38,7 +42,6 @@ export class Tidy5eItemDebugSheetQuadrone extends SvelteApplicationMixin<
       'sheet',
       'item',
       CONSTANTS.ITEM_TYPE_CONTAINER,
-      'app-v2',
       'quadrone',
     ],
     tag: 'form',
@@ -83,6 +86,8 @@ export class Tidy5eItemDebugSheetQuadrone extends SvelteApplicationMixin<
   async _prepareContext(
     options: ApplicationRenderOptions
   ): Promise<ItemDebugSheetQuadroneContext> {
+    const documentSheetContext = await super._prepareContext(options);
+
     const rollData = this.document.getRollData();
 
     // Enrich HTML description
@@ -135,8 +140,6 @@ export class Tidy5eItemDebugSheetQuadrone extends SvelteApplicationMixin<
     });
 
     return {
-      document: this.document,
-      editable: this.isEditable,
       item: this.document,
       itemDescriptions,
       name: {
@@ -165,7 +168,7 @@ export class Tidy5eItemDebugSheetQuadrone extends SvelteApplicationMixin<
           title: 'Welcome',
         },
       ],
-      unlocked: FoundryAdapter.isSheetUnlocked(this.document),
+      ...documentSheetContext,
     };
   }
 }

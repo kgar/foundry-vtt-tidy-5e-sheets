@@ -53,7 +53,6 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
       CONSTANTS.MODULE_ID,
       'sheet',
       CONSTANTS.SHEET_TYPE_ITEM,
-      'app-v2',
       CONSTANTS.SHEET_LAYOUT_CLASSIC,
       'tidy-form',
     ],
@@ -133,6 +132,8 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
   async _prepareContext(
     options: ApplicationRenderOptions
   ): Promise<ItemSheetClassicContext> {
+    const documentSheetContext = await super._prepareContext(options);
+
     const rollData = this.document.getRollData();
 
     // Enrich HTML description
@@ -194,6 +195,8 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
 
     const target = this.item.type === 'spell' ? this.item.system.target : null;
 
+    documentSheetContext.source = systemSource;
+
     const context: ItemSheetContext = {
       activities: (this.document.system.activities ?? [])
         .filter((a: any) => {
@@ -223,7 +226,6 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
       data: this.document.toObject(false),
       defaultAbility: '',
       dimensions: target?.template?.dimensions,
-      document: this.document,
       durationUnits: [
         ...Object.entries(CONFIG.DND5E.specialTimePeriods).map(
           ([value, label]) => ({ value, label })
@@ -239,7 +241,6 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
           }
         ),
       ],
-      editable: editable,
       enriched,
       isEmbedded: this.document.isEmbedded,
       item: this.document,
@@ -260,12 +261,10 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
         target?.affects?.type &&
         CONFIG.DND5E.individualTargetTypes[target.affects.type]?.scalar !==
           false,
-      source: systemSource,
       system: this.document.system,
       tabs: [],
       title: this.title,
       rollData: rollData,
-      user: game.user,
 
       // Item Type, Status, and Details
       itemType: game.i18n.localize(CONFIG.Item.typeLabels[this.item.type]),
@@ -361,6 +360,7 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
 
       damageTypes: [],
       denominationOptions: [],
+      ...documentSheetContext,
     };
 
     await this.item.system.getSheetData?.(context);

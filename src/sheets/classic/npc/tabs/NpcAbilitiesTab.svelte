@@ -409,14 +409,18 @@
               iconCssClass="fas fa-cog"
               title="TIDY5E.Utilities.ConfigureSections"
               onclick={() =>
-                new DocumentTabSectionConfigApplication({
-                  document: context.actor,
-                  sections: context.spellbook,
-                  tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
-                  tabTitle: NpcSheetClassicRuntime.getTabTitle(
-                    CONSTANTS.TAB_ACTOR_SPELLBOOK,
-                  ),
-                }).render(true)}
+                new DocumentTabSectionConfigApplication(
+                  {
+                    sections: context.spellbook,
+                    tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
+                    tabTitle: NpcSheetClassicRuntime.getTabTitle(
+                      CONSTANTS.TAB_ACTOR_SPELLBOOK,
+                    ),
+                  },
+                  {
+                    document: context.actor,
+                  },
+                ).render(true)}
             />
           </span>
         </h2>

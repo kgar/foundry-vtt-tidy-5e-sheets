@@ -15,7 +15,7 @@ import type { CONSTANTS } from 'src/constants';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import type { AttributePinFlag } from 'src/foundry/TidyFlags.types';
-import type { DataField } from 'foundry.data.fields';
+import type { DataField, SchemaField } from 'foundry.data.fields';
 
 export type Actor5e = any;
 export type TokenDocument = any;
@@ -625,13 +625,26 @@ export type SpecialTraits = {
   sections: SpecialTraitSection[];
 };
 
+export type DocumentSheetV2Context = {
+  document: any;
+  /**
+   * Whether or not the sheet can be edited, regardless of lock/sensitive field settings.
+   * When this boolean is `false`, then the sheet is effectively hard locked.
+   */
+  editable: boolean;
+  fields: Record<string, SchemaField>;
+  rootId: string;
+  source: Record<string, any>;
+  /**
+   * Tells whether the sheet is unlocked via the Sheet Mode feature.
+   */
+  unlocked: boolean;
+  user: any;
+};
+
 export type ActorSheetContextV1 = {
   abilities: any;
   actions: ActionSection[];
-  activateEditors: (
-    node: HTMLElement,
-    options?: { bindSecrets?: boolean }
-  ) => void;
   actor: Actor5e;
   actorPortraitCommands: RegisteredPortraitMenuCommand[];
   allowEffectsManagement: boolean;
@@ -641,12 +654,6 @@ export type ActorSheetContextV1 = {
   customActorTraits: RenderableCustomActorTrait[];
   customContent: CustomContent[];
   disableExperience: boolean;
-  document: any;
-  /**
-   * Whether or not the sheet can be edited, regardless of lock/sensitive field settings.
-   * When this boolean is `false`, then the sheet is effectively hard locked.
-   */
-  editable: boolean;
   effects: Record<string, EffectCategory<ActiveEffect5e>>;
   elements: unknown;
   encumbrance?: EncumbranceContext;
@@ -700,22 +707,17 @@ export type ActorSheetContextV1 = {
   rollData: unknown;
   senses: unknown;
   skills: any;
-  source: any;
   showLimitedSheet: boolean;
   system: any;
   tabs: Tab[];
   tools: any;
   traits: any;
-  /**
-   * Tells whether the sheet is unlocked via the Sheet Lock feature. When the sheet lock feature is disabled and the sheet is generally editable, this is always `true`.
-   */
-  unlocked: boolean;
   useActionsFeature?: boolean;
   useClassicControls: boolean;
   useRoundedPortraitStyle: boolean;
   viewableWarnings: DocumentPreparationWarning[];
   warnings: DocumentPreparationWarning[];
-};
+} & DocumentSheetV2Context;
 
 export type DocumentPreparationWarning = Partial<{
   message: string;
@@ -877,10 +879,12 @@ export type ActorV2 = {
 export type ActorSheetClassicContextV2<TActor = ActorV2> = {
   actor: TActor;
   actorPortraitCommands: RegisteredPortraitMenuCommand[];
+  customContent: CustomContent[];
   editable: boolean;
   healthPercentage: number;
   modernRules: boolean;
   lockSensitiveFields: boolean;
+  tabs: Tab[];
   unlocked: boolean;
   useRoundedPortraitStyle: boolean;
 };

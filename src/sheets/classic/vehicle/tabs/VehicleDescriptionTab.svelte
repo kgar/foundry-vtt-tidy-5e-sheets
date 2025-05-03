@@ -1,7 +1,5 @@
 <script lang="ts">
   import { manageSecrets } from 'src/actions/manage-secrets.svelte';
-  import SheetEditor from '../../../../components/editor/SheetEditor.svelte';
-  import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
   import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
 

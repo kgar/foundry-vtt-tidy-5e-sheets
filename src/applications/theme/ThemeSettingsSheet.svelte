@@ -6,14 +6,15 @@
     ThemeColorSetting,
     Tidy5eThemeDataV1,
   } from 'src/types/theme.types';
-  import { applyCurrentThemeV1 } from 'src/theme/theme';
+  import {
+    applyCurrentThemeClassic,
+    applyThemeColorsToHead,
+  } from 'src/theme/theme';
   import { error } from 'src/utils/logging';
   import ThemeSettingSheetMenu from './ThemeSettingSheetMenu.svelte';
   import ThemeSettingColorArticle from './ThemeSettingColorArticle.svelte';
   import {
-    clearTidy5eRootCssVariables,
     extractSettingsUpdateDeltaFromTheme,
-    trySetRootCssVariable,
     validateImportFile,
   } from 'src/theme/theme';
   import { getSingleFileFromDropEvent, readFileAsText } from 'src/utils/file';
@@ -28,18 +29,7 @@
   let { themeableColors, settings }: Props = $props();
 
   $effect(() => {
-    if (settings.colorPickerEnabled) {
-      themeableColors.forEach((color) =>
-        trySetRootCssVariable(
-          color.cssVariable,
-          settings[color.key]?.toString(),
-          settings.colorPickerEnabled,
-        ),
-      );
-    } else {
-      clearTidy5eRootCssVariables();
-      applyCurrentThemeV1(false);
-    }
+    refreshLiveTheming();
   });
 
   let appId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.APP_ID);
@@ -50,12 +40,24 @@
 
   const localize = FoundryAdapter.localize;
 
+  let variables = $derived(
+    themeableColors.reduce<Record<string, string>>((acc, curr) => {
+      acc[curr.cssVariable] = settings[curr.key] as string;
+      return acc;
+    }, {}),
+  );
+
+  function refreshLiveTheming() {
+    if (settings.colorPickerEnabled) {
+      applyThemeColorsToHead(variables);
+    } else {
+      applyCurrentThemeClassic(false);
+    }
+  }
+
   async function processImportFile(file: File) {
     try {
       let result = await readFileAsText(file);
-
-      // Provides backward compatibility with the alpha themes.
-      result = result.replaceAll(`"--t5ek-`, `"--t5e-`);
 
       const theme = JSON.parse(result) as Tidy5eThemeDataV1;
 
@@ -99,8 +101,15 @@
     }
   }
 
+  function clearAllColors() {
+    for (let color of themeableColors) {
+      // @ts-expect-error
+      settings[color.key] = '';
+    }
+  }
+
   onDestroy(() => {
-    clearTidy5eRootCssVariables();
+    applyCurrentThemeClassic();
   });
 </script>
 
@@ -133,9 +142,19 @@
       {localize('TIDY5E.ThemeSettings.Sheet.importDropHint')}
     </p>
 
+    <div class="flex-row">
+      <button type="button" class="flex-1" onclick={() => clearAllColors()}>
+        {FoundryAdapter.localize('TIDY5E.ItemFilters.ClearAll')}
+      </button>
+    </div>
+
     <div class="color-pickers">
       {#each themeableColors as colorToConfigure}
-        <ThemeSettingColorArticle {settings} {colorToConfigure} />
+        <ThemeSettingColorArticle
+          {settings}
+          {colorToConfigure}
+          colorSelected={() => refreshLiveTheming()}
+        />
       {/each}
     </div>
   </div>

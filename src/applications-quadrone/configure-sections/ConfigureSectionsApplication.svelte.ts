@@ -5,7 +5,7 @@ import { mount } from 'svelte';
 import ConfigureSections from './ConfigureSections.svelte';
 import type { TidySectionBase } from 'src/types/types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { getThemeV1, getThemeV2 } from 'src/theme/theme';
+import { getThemeV2 } from 'src/theme/theme';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { SectionConfig } from 'src/features/sections/sections.types';
 
@@ -66,7 +66,7 @@ export class ConfigureSectionsApplication extends SvelteApplicationMixin(
   static DEFAULT_OPTIONS: Partial<
     ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
   > = {
-    classes: [CONSTANTS.MODULE_ID, 'app-v2', 'quadrone', 'tab-configuration'],
+    classes: [CONSTANTS.MODULE_ID, 'quadrone', 'tab-configuration'],
     tag: 'div',
     sheetConfig: false,
     window: {

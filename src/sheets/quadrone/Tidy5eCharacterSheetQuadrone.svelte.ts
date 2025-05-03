@@ -68,7 +68,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetBaseMixin(
       'sheet',
       'actor',
       CONSTANTS.SHEET_TYPE_CHARACTER,
-      'app-v2',
       CONSTANTS.SHEET_LAYOUT_QUADRONE,
     ],
     tag: 'form',

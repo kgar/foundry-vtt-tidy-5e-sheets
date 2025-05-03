@@ -511,21 +511,9 @@
         }
       }
 
-      // TODO: Tag these inputs with text-align-right layout class instead of locking that style into their property path.
-      // input[name='data.activation.cost'],
-      // input[name='data.target.value'],
-      // input[name='data.range.value'],
-      // input[name='data.duration.value'],
-      // input[name='data.uses.value'],
       &.damage-parts input {
         text-align: right;
       }
-
-      // TODO: Give this input a class rather than relying on the prop path in a name attr.
-      // input[name="data.save.dc"] {
-      //   text-align: center;
-      //   flex: 0 0 1.875rem;
-      // }
 
       // TODO: After completing Item Sheets, reevaluate this style. Is it actually doing anything?
       input[type='text']:hover,

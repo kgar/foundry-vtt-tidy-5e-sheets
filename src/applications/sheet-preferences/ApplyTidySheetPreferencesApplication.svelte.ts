@@ -1,14 +1,16 @@
 import { mount } from 'svelte';
-import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
 import ApplyTidySheetPreferences from './ApplyTidySheetPreferences.svelte';
 import { Tidy5eCharacterSheet } from 'src/sheets/classic/Tidy5eCharacterSheet.svelte';
 import { Tidy5eNpcSheet } from 'src/sheets/classic/Tidy5eNpcSheet.svelte';
 import { Tidy5eVehicleSheet } from 'src/sheets/classic/Tidy5eKgarVehicleSheet.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { debug, error } from 'src/utils/logging';
-import { Tidy5eItemSheetClassic } from 'src/sheets/classic/Tidy5eItemSheetClassic.svelte';
 import { Tidy5eGroupSheetClassic } from 'src/sheets/classic/Tidy5eGroupSheetClassic.svelte';
-import { Tidy5eContainerSheetClassic } from 'src/sheets/classic/Tidy5eContainerSheetClassic.svelte';
+import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import type { ApplicationConfiguration } from 'src/types/application.types';
+import { Tidy5eItemSheetQuadrone } from 'src/sheets/quadrone/Tidy5eItemSheetQuadrone.svelte';
+import { Tidy5eContainerSheetQuadrone } from 'src/sheets/quadrone/Tidy5eContainerSheetQuadrone.svelte';
+import { CONSTANTS } from 'src/constants';
 
 export type SheetPreferenceOption = {
   label: string;
@@ -23,26 +25,42 @@ const supportedSheetClasses: string[] = [
   Tidy5eCharacterSheet.name,
   Tidy5eNpcSheet.name,
   Tidy5eVehicleSheet.name,
-  Tidy5eItemSheetClassic.name,
-  Tidy5eContainerSheetClassic.name,
+  Tidy5eItemSheetQuadrone.name,
+  Tidy5eContainerSheetQuadrone.name,
   Tidy5eGroupSheetClassic.name,
 ];
 
-export class ApplyTidySheetPreferencesApplication extends SvelteFormApplicationBase {
+export class ApplyTidySheetPreferencesApplication extends SvelteApplicationMixin<
+  Partial<ApplicationConfiguration> | undefined,
+  {}
+>(foundry.applications.api.ApplicationV2) {
   sheetOptions = $state<SheetPreferenceOption[]>([]);
 
-  static get defaultOptions() {
-    return FoundryAdapter.mergeObject(super.defaultOptions, {
+  static DEFAULT_OPTIONS = {
+    classes: [
+      CONSTANTS.MODULE_ID,
+      'tidy5e-sheet-preferences',
+      'application-shell',
+      CONSTANTS.SHEET_LAYOUT_CLASSIC,
+    ],
+    id: 'tidy5e-sheet-preferences',
+    tag: 'div',
+    window: {
+      frame: true,
+      positioned: true,
+      resizable: true,
+      controls: [],
+      title: 'TIDY5E.Settings.SheetPreferences.name',
+    },
+    position: {
       width: 650,
       height: 500,
-      id: 'tidy-5e-sheet-preferences',
-      popOut: true,
-      title: FoundryAdapter.localize('TIDY5E.Settings.SheetPreferences.name'),
-    });
-  }
+    },
+  };
 
-  createComponent(node: HTMLElement): Record<string, any> {
+  _createComponent(node: HTMLElement): Record<string, any> {
     this.sheetOptions = this.getTidySheetPreferenceOptions();
+
     return mount(ApplyTidySheetPreferences, {
       target: node,
       props: {
@@ -58,11 +76,16 @@ export class ApplyTidySheetPreferencesApplication extends SvelteFormApplicationB
 
     const setting = game.settings.get('core', 'sheetClasses');
 
-    for (const { documentName, hasTypeData } of Object.values<any>(
+    for (const { name, documentName, hasTypeData } of Object.values<any>(
       foundry.documents
     )) {
       // documentName -> e.g., "Actor", "Item", ...
       if (!hasTypeData) {
+        continue;
+      }
+
+      if (name.startsWith('Base')) {
+        debug('Skipping Base document named ' + name);
         continue;
       }
 
@@ -112,7 +135,7 @@ export class ApplyTidySheetPreferencesApplication extends SvelteFormApplicationB
   private async _onConfirm(): Promise<void> {
     try {
       // We intend to adjust the existing settings.
-      let sheetSettings = this.getSheetClassesSetting();
+      let sheetSettings = this._getSheetClassesSetting();
 
       // Evaluate each option.
       this.sheetOptions.forEach((o) => {
@@ -184,7 +207,7 @@ export class ApplyTidySheetPreferencesApplication extends SvelteFormApplicationB
     }
   }
 
-  private getSheetClassesSetting() {
+  private _getSheetClassesSetting() {
     return game.settings.get('core', 'sheetClasses');
   }
 }

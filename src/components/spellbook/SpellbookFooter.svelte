@@ -10,7 +10,8 @@
   import { rollRawSpellAttack } from 'src/utils/formula';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  let context = $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
+  let context =
+    $derived(getSheetContext<CharacterSheetContext | NpcSheetContext>());
   interface Props {
     cssClass?: string | null;
     includeAttackMod?: boolean;
@@ -141,7 +142,10 @@
         new MaxPreparedSpellsConfigFormApplication(
           context.spellcastingInfo.currentFilteredClass.name,
           context.spellcastingInfo.currentFilteredClass,
-        ).render(true)}
+          {
+            document: context.actor,
+          },
+        ).render({ force: true })}
       title={localize('TIDY5E.MaxPreparedSpellsConfig.ButtonTooltip')}
       disabled={!context.editable || context.lockSensitiveFields}
       tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
@@ -219,7 +223,8 @@
     font-size: 1rem;
   }
 
-  h3 {
+  h3.spell-dc.spell-mod,
+  h3.spell-dc.spell-mod :global(button) {
     font-size: 1.25rem;
     font-family: var(--t5e-title-font-family);
   }

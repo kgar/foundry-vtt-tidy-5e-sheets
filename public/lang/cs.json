@@ -388,21 +388,6 @@
         "name": "Povolení ladění",
         "hint": "Vypíše zprávy z ladění do konzole."
     },
-    "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
-        "name": "Deník postavy: Pro PJ vždy odemčen",
-        "hint": "S deníkem postavy se zachází, jako by byl vždy odemčen, bez ohledu na nastavení zámku. PJ může postavu vždy upravovat, ale může také přepínat zamykání/odemykání pro hráče, který postavu vlastní.",
-        "title": "Tento deník je pro PJ vždy odemčen, bez ohledu na nastavení zámku."
-    },
-    "TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM": {
-        "name": "Deník NP: Pro PJ vždy odemčen",
-        "hint": "S deníkem NP se zachází, jako by byl vždy odemčen, bez ohledu na nastavení zámku. PJ může NP vždy upravovat, ale může také přepínat zamykání/odemykání pro hráče, který NP vlastní.",
-        "title": "Tento deník je pro GM vždy odemčen, bez ohledu na nastavení zámku."
-    },
-    "TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM": {
-        "name": "Deník dopravního prostředku: Pro PJ vždy odemčen",
-        "hint": "Bez ohledu na nastavení zámku se deník dopravního prostředku chová, jako by byl vždy odemčen. PJ může dopravní prostředek vždy upravovat, ale může také přepínat zamykání/odemykání pro hráče, který dopravení prostředek také vlastní.",
-        "title": "Tento deník je pro PJ vždy odemčen, bez ohledu na nastavení zámku."
-    },
     "TIDY5E.ThemeSettings": {
         "SheetMenu": {
             "name": "Nastavení motivu Tidy",

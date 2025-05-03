@@ -713,21 +713,8 @@ export const FoundryAdapter = {
   },
   isInGmEditMode(document: any): boolean {
     return (
-      FoundryAdapter.isSheetUnlocked(document) && FoundryAdapter.userIsGm()
-    );
-  },
-  isSheetUnlocked(document: any): boolean {
-    return (
-      (document.isOwner && TidyFlags.allowEdit.get(document)) ||
-      (FoundryAdapter.userIsGm() &&
-        settings.value.permanentlyUnlockCharacterSheetForGm &&
-        document.type === CONSTANTS.SHEET_TYPE_CHARACTER) ||
-      (FoundryAdapter.userIsGm() &&
-        settings.value.permanentlyUnlockNpcSheetForGm &&
-        document.type === CONSTANTS.SHEET_TYPE_NPC) ||
-      (FoundryAdapter.userIsGm() &&
-        settings.value.permanentlyUnlockVehicleSheetForGm &&
-        document.type === CONSTANTS.SHEET_TYPE_VEHICLE)
+      document?.sheet?.sheetMode === CONSTANTS.SHEET_MODE_EDIT &&
+      FoundryAdapter.userIsGm()
     );
   },
   allowCharacterEffectsManagement(actor: any) {
@@ -1259,29 +1246,6 @@ export const FoundryAdapter = {
       app.document instanceof dnd5e.documents.Actor5e &&
       app._concentration?.effects.has(effect)
     );
-  },
-  activateEditors(node: HTMLElement, sheet: any, bindSecrets: boolean = true) {
-    try {
-      const nodes = node.matches(
-        CONSTANTS.TEXT_EDITOR_ACTIVATION_ELEMENT_SELECTOR
-      )
-        ? [node]
-        : Array.from(
-            node.querySelectorAll<HTMLElement>(
-              CONSTANTS.TEXT_EDITOR_ACTIVATION_ELEMENT_SELECTOR
-            )
-          );
-
-      for (let editorDiv of nodes) {
-        sheet._activateEditor(editorDiv);
-      }
-      if (bindSecrets) {
-        sheet._secrets.forEach((s: any) => s.bind(node));
-      }
-    } catch (e) {
-      error('An error occurred while activating text editors', false, e);
-      debug('Text editor error trobuleshooting info', { node, sheet });
-    }
   },
   async renderFromUuid(uuid: string, force: boolean = true) {
     const doc = await fromUuid(uuid);

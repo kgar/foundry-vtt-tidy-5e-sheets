@@ -5,6 +5,7 @@ import type {
   AttunementContext,
   ContainerCapacityContext,
   CustomContent,
+  DocumentSheetV2Context,
   EffectCategory,
   GroupableSelectOption,
   InventorySection,
@@ -130,7 +131,7 @@ export type ItemSheetContext = {
   }[];
   itemOverrides: Set<string>;
   tabs: Tab[];
-};
+} & DocumentSheetV2Context;
 
 export type ItemNameContext = {
   value: string;
@@ -238,7 +239,7 @@ export type ItemSheetQuadroneContext = {
     formulaOptions: { label: string; value: string }[] | null;
   }[];
   tabs: Tab[];
-};
+} & DocumentSheetV2Context;
 
 /**
  * Data for a recovery profile for an activity's uses.
@@ -324,7 +325,7 @@ export type ContainerSheetClassicContext = {
   system: any;
   tabs: Tab[];
   utilities: Utilities<ContainerSheetClassicContext>;
-};
+} & DocumentSheetV2Context;
 
 export type CurrencyContext = {
   key: string;
@@ -372,7 +373,7 @@ export type ContainerSheetQuadroneContext = {
   tabs: Tab[];
   unlocked: boolean;
   userPreferences: UserPreferences;
-};
+} & DocumentSheetV2Context;
 
 export type ContainerSection = { items: Item5e[] } & TidySectionBase;
 

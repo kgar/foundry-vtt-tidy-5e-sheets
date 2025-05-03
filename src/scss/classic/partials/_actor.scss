@@ -10,11 +10,8 @@
   font-family: var(--t5e-body-font-family);
 
   // TODO: Remove the form style here when it's all App V2
-  &:not(&:has(form)),
-  form {
-    height: 100%;
-    overflow: hidden;
-  }
+  height: 100%;
+  overflow: hidden;
 }
 
 .header-line-margin {
@@ -167,16 +164,6 @@
     border-bottom: 0.0625rem solid var(--t5e-faint-color);
   }
 
-  .tox-toolbar-overlord,
-  .tox-toolbar__primary {
-    background: var(--t5e-tinymce-toolbar-background);
-    background-color: var(--t5e-tinymce-toolbar-background);
-  }
-
-  .tox .tox-overlord button {
-    color: var(--t5e-tinyme-toolbar-button-color);
-  }
-
   .editor-content {
     margin: 0;
     padding: 0 0.75rem 0 0;
@@ -193,11 +180,6 @@
   border: none;
   flex: 1;
   min-height: 6.25rem;
-}
-
-.tox-sidebar-wrap {
-  padding: 0.5rem;
-  background: var(--t5e-tinymce-sidebar-background);
 }
 
 h1,
@@ -288,7 +270,6 @@ ul {
 input {
   display: block;
   padding: 0;
-  width: 100%;
   border: 0.0625rem solid transparent;
   border-radius: 0.1875rem;
   background: none;
@@ -298,6 +279,10 @@ input {
     // This counteracts an effect where hover causes disabled input values to jitter.
     border-width: 0.0625rem;
   }
+}
+
+input:not([type='checkbox']) {
+  width: 100%;
 }
 
 input[type='checkbox'],
@@ -315,6 +300,10 @@ select {
   &:focus-visible {
     box-shadow: var(--t5e-focus-visible-box-shadow);
   }
+}
+
+:where(label) > input[type='checkbox'] {
+  width: unset;
 }
 
 select {
@@ -773,7 +762,7 @@ select:hover {
   }
 }
 
-&[data-tidy-theme-type='dark'] {
+&.theme-dark {
   .tidy-tab.bastion .facility:not(.empty) {
     background: linear-gradient(
         145deg,

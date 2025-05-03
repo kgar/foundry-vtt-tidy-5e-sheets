@@ -83,7 +83,9 @@
               )}
           />
           <span
-            >{localize('TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast')}</span
+            >{localize(
+              'TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast',
+            )}</span
           >
         </label>
       </div>
@@ -99,9 +101,9 @@
   >
     <ButtonMenuCommand
       onMenuClick={() => {
-        new SpellSourceClassAssignmentsFormApplication(context.actor).render(
-          true,
-        );
+        new SpellSourceClassAssignmentsFormApplication({
+          document: context.actor,
+        }).render({ force: true });
       }}
       iconClass="fas fa-list-check"
       disabled={!context.editable}

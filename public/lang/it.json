@@ -388,21 +388,6 @@
         "name": "Abilita Debug",
         "hint": "Stampa i messaggi di debug sulla console."
     },
-    "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
-        "name": "Scheda del personaggio: sempre sbloccato per il DM",
-        "hint": "Tratta la scheda del personaggio come se fosse sempre sbloccata, indipendentemente dall'impostazione del blocco. Il DM può sempre modificare il personaggio, ma può anche attivare/disattivare il blocco/sblocco per un giocatore che possiede anche il personaggio.",
-        "title": "Questa scheda è sempre sbloccata per il DM, indipendentemente dall'impostazione del blocco."
-    },
-    "TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM": {
-        "name": "Scheda PNG: sempre sbloccata per il DM",
-        "hint": "Tratta la scheda PNG come se fosse sempre sbloccata, indipendentemente dall'impostazione del blocco. Il DM può sempre modificare il PNG, ma può anche attivare/disattivare il blocco/sblocco per un giocatore che possiede anche il PNG.",
-        "title": "Questa scheda è sempre sbloccata per il DM, indipendentemente dall'impostazione del blocco."
-    },
-    "TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM": {
-        "name": "Scheda veicolo: sempre sbloccata per DM",
-        "hint": "Tratta la scheda del veicolo come se fosse sempre sbloccata, indipendentemente dall'impostazione della serratura. Il DM può sempre modificare il veicolo, ma può anche attivare/disattivare il blocco/sblocco per un giocatore che possiede anche il veicolo.",
-        "title": "Questa scheda è sempre sbloccata per il DM, indipendentemente dall'impostazione del blocco."
-    },
     "TIDY5E.ThemeSettings": {
         "SheetMenu": {
             "name": "Impostazioni del tema Tidy",

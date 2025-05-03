@@ -1,59 +1,64 @@
 import { mount } from 'svelte';
-import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
 import MaxPreparedSpellsConfig from './MaxPreparedSpellsConfig.svelte';
-import type { Actor5e, MaxPreparedSpellFormula } from 'src/types/types';
+import type { MaxPreparedSpellFormula } from 'src/types/types';
 import type { Item5e } from 'src/types/item.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { getMaxPreparedSpellsSampleFormulas } from 'src/utils/formula';
+import type { DocumentSheetApplicationConfiguration } from 'src/types/application.types';
+import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { CONSTANTS } from 'src/constants';
 
 export type MaxPreparedSpellsConfigContext = {
   maxPreparedSpells: string;
   formulas: MaxPreparedSpellFormula[];
 };
 
-export class MaxPreparedSpellsConfigFormApplication extends SvelteFormApplicationBase {
-  context = $state<MaxPreparedSpellsConfigContext>();
-  actor: Actor5e;
+export class MaxPreparedSpellsConfigFormApplication extends SvelteApplicationMixin<
+  DocumentSheetApplicationConfiguration,
+  MaxPreparedSpellsConfigContext
+>(foundry.applications.api.DocumentSheetV2) {
   classToUpdate: Item5e;
 
-  constructor(documentName: string, classToUpdate: Item5e, ...args: any[]) {
-    super(...args);
+  static DEFAULT_OPTIONS = {
+    classes: [
+      CONSTANTS.MODULE_ID,
+      'application-shell',
+      CONSTANTS.SHEET_LAYOUT_CLASSIC,
+    ],
+    sheetConfig: false,
+    position: {
+      width: 500,
+      height: 'auto',
+    },
+  };
+
+  constructor(
+    documentName: string,
+    classToUpdate: Item5e,
+    config: DocumentSheetApplicationConfiguration
+  ) {
+    super(config);
     this.documentName = documentName;
     this.classToUpdate = classToUpdate;
-
-    this.context = {
-      maxPreparedSpells: '',
-      formulas: getMaxPreparedSpellsSampleFormulas(),
-    };
   }
 
-  createComponent(node: HTMLElement): Record<string, any> {
-    this.context = this.getData();
-
+  _createComponent(node: HTMLElement): Record<string, any> {
     return mount(MaxPreparedSpellsConfig, {
       target: node,
       context: new Map<any, any>([
-        ['context', this.context],
+        ['context', this._context],
         ['appId', this.appId],
+        ['save', this._save.bind(this)],
       ]),
     });
   }
 
-  getData(): MaxPreparedSpellsConfigContext {
+  async _prepareContext(): Promise<MaxPreparedSpellsConfigContext> {
     return {
       maxPreparedSpells:
         this.classToUpdate?.system?.spellcasting?.preparation?.formula ?? '',
       formulas: getMaxPreparedSpellsSampleFormulas(),
     };
-  }
-
-  static get defaultOptions() {
-    return FoundryAdapter.mergeObject(super.defaultOptions, {
-      width: 500,
-      height: 'auto',
-      sheetConfig: false,
-      resizable: false,
-    });
   }
 
   get title() {
@@ -62,10 +67,10 @@ export class MaxPreparedSpellsConfigFormApplication extends SvelteFormApplicatio
     });
   }
 
-  async _updateObject(): Promise<void> {
+  async _save(): Promise<void> {
     await this.classToUpdate.update({
       'system.spellcasting.preparation.formula':
-        this.context?.maxPreparedSpells ?? '',
+        this._context.data?.maxPreparedSpells ?? '',
     });
     this.close();
   }

@@ -1,28 +1,16 @@
 import type {
   ThemeColorSetting,
-  Tidy5eTheme as Tidy5eTheme,
   Tidy5eThemeDataV1,
 } from 'src/types/theme.types';
-import { themeVariables } from './theme-reference';
 import { debug } from 'src/utils/logging';
-import { SettingsProvider } from 'src/settings/settings.svelte';
-import { defaultDarkTheme } from './default-dark-theme';
-import { defaultLightTheme } from './default-light-theme';
+import { settings, SettingsProvider } from 'src/settings/settings.svelte';
 import { Colord } from 'colord';
 import { CONSTANTS } from 'src/constants';
 import type { Item5e } from 'src/types/item.types';
 import { coalesce } from 'src/utils/formatting';
+import { isNil } from 'src/utils/data';
 
-export function getThemeV1() {
-  let theme: string | undefined = undefined;
-
-  if (!theme) {
-    const currentTheme = SettingsProvider.settings.colorScheme.get();
-    theme = getThemeOrDefaultV1(currentTheme).id;
-  }
-
-  return coalesce(theme, CONSTANTS.THEME_ID_DEFAULT_LIGHT);
-}
+const tidyStyleTagId = 'tidy5e-sheet-theme';
 
 export function getThemeV2(doc?: any) {
   let theme: string | undefined = undefined;
@@ -49,35 +37,17 @@ export function getThemeV2(doc?: any) {
   return coalesce(theme, CONSTANTS.THEME_ID_DEFAULT_LIGHT);
 }
 
-export function applyThemeColorsToHead(
-  theme: Tidy5eTheme,
-  colorPickerEnabledOverride: boolean | null = null
-) {
+export function applyThemeColorsToHead(variables: Record<string, string>) {
   try {
-    const styleTagId = 'tidy5e-sheet-theme';
-    let existingThemeStyle = document.getElementById(styleTagId);
-
-    if (existingThemeStyle) {
-      existingThemeStyle.remove();
-    }
-
-    // Temporary measure for applying color overrides. Larger theme overhaul coming later.
-    const overrideBaseTheme =
-      (colorPickerEnabledOverride === null &&
-        SettingsProvider.settings.colorPickerEnabled.get()) ||
-      colorPickerEnabledOverride === true;
-
-    if (overrideBaseTheme) {
-      theme = overrideColorPickerSettings(theme);
-    }
+    removeExistingTidyThemeStyleTag();
 
     document.head.insertAdjacentHTML(
       'beforeend',
       `
-    <style id="${styleTagId}">
-      :root {
-        ${Object.entries(theme.variables)
-          .filter(([variable]) => variable in themeVariables)
+    <style id="${tidyStyleTagId}">
+      .tidy5e-sheet.classic {
+        ${Object.entries(variables)
+          .filter(([_, value]) => !isNil(value?.trim(), ''))
           .map(([variable, value]) => `${variable}: ${value};`)
           .join('\n')}
       }
@@ -86,39 +56,39 @@ export function applyThemeColorsToHead(
     );
   } catch (e) {
     console.error(e);
-    debug(
-      'Unable to apply Tidy 5e style tag; falling back to root style properties.'
-    );
-    Object.keys(themeVariables).forEach((variable) => {
-      document.documentElement.style.setProperty(
-        variable,
-        theme.variables[variable] ?? null
-      );
-    });
+    debug('Unable to apply Tidy 5e style tag.');
   }
 }
 
-function overrideColorPickerSettings(theme: Tidy5eTheme) {
-  const overriddenTheme = structuredClone(theme);
+function removeExistingTidyThemeStyleTag() {
+  let existingThemeStyle = document.getElementById(tidyStyleTagId);
+
+  if (existingThemeStyle) {
+    existingThemeStyle.remove();
+  }
+}
+
+export function getColorPickerColors() {
+  const variables: Record<string, string> = {};
 
   const themeableColors = getThemeableColors();
   for (let color of themeableColors) {
-    overriddenTheme.variables[color.cssVariable] = SettingsProvider.settings[
-      color.key
-    ]
+    variables[color.cssVariable] = SettingsProvider.settings[color.key]
       .get()
       ?.toString();
   }
 
-  return overriddenTheme;
+  return variables;
 }
 
-export function applyCurrentThemeV1(
-  colorPickerEnabledOverride: boolean | null = null
-) {
-  const currentTheme = SettingsProvider.settings.colorScheme.get();
-  const theme = getThemeOrDefaultV1(currentTheme);
-  applyThemeColorsToHead(theme, colorPickerEnabledOverride);
+export function applyCurrentThemeClassic(colorPickerEnabledOverride?: boolean) {
+  let enabled = colorPickerEnabledOverride ?? settings.value.colorPickerEnabled;
+  if (enabled) {
+    const variables = getColorPickerColors();
+    applyThemeColorsToHead(variables);
+  } else {
+    removeExistingTidyThemeStyleTag();
+  }
 }
 
 export function getThemeableColors(): ThemeColorSetting[] {
@@ -133,42 +103,11 @@ export function getThemeableColors(): ThemeColorSetting[] {
     }));
 }
 
-export function getThemeOrDefaultV1(themeId: string): Tidy5eTheme {
-  if (themeId === CONSTANTS.THEME_ID_DEFAULT) {
-    const defaultThemeId = SettingsProvider.settings.defaultTheme.get();
-    themeId = defaultThemeId;
-  }
-
-  const themes: Record<string, Tidy5eTheme> = {
-    light: defaultLightTheme,
-    dark: defaultDarkTheme,
-    // TODO: Aggregate all other available themes
-  };
-
-  return themes[themeId] ?? defaultLightTheme;
-}
-
 type ProcessedColor = {
   original: string;
   hexa?: string;
   parsed: boolean;
 };
-
-export function trySetRootCssVariable(
-  cssVariable: string,
-  value: string,
-  colorPickerEnabled: boolean
-) {
-  if (colorPickerEnabled) {
-    document.documentElement.style.setProperty(cssVariable, value);
-  }
-}
-
-export function clearTidy5eRootCssVariables() {
-  Object.keys(themeVariables).forEach((key) =>
-    document.documentElement.style.removeProperty(key)
-  );
-}
 
 export function colorToHexaString(color: Colord | undefined): string {
   if (color?.isValid()) {
