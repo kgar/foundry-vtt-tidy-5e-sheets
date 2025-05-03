@@ -21,7 +21,10 @@
       type="button"
       class="rest short-rest inline-icon-button"
       title={localize('TIDY5E.ShortRest')}
-      onclick={(ev) => context.shortRest(ev)}
+      onclick={() =>
+        context.actor.shortRest({
+          chat: settings.value.showNpcRestInChat,
+        })}
       disabled={!context.editable}
       tabindex={!settings.value.useDefaultSheetHpTabbing &&
       settings.value.useAccessibleKeyboardSupport
@@ -34,7 +37,10 @@
       type="button"
       class="rest long-rest inline-icon-button"
       title={localize('TIDY5E.LongRest')}
-      onclick={(ev) => context.longRest(ev)}
+      onclick={() =>
+        context.actor.longRest({
+          chat: settings.value.showNpcRestInChat,
+        })}
       disabled={!context.editable}
       tabindex={!settings.value.useDefaultSheetHpTabbing &&
       settings.value.useAccessibleKeyboardSupport

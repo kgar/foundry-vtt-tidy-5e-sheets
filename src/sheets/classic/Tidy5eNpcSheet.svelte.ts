@@ -664,7 +664,6 @@ export class Tidy5eNpcSheet
       ),
       inventory: [],
       languages: [],
-      longRest: this._onLongRest.bind(this),
       notes1EnrichedHtml: await FoundryAdapter.enrichHtml(
         TidyFlags.notes1.members.value.get(this.actor) ?? '',
         {
@@ -716,7 +715,6 @@ export class Tidy5eNpcSheet
         game.user.isGM,
       showSpellbookTab: settings.value.showSpellbookTabNpc,
       spellcastingInfo: FoundryAdapter.getSpellcastingInfo(this.actor),
-      shortRest: this._onShortRest.bind(this),
       spellbook: [],
       spellComponentLabels: FoundryAdapter.getSpellComponentLabels(),
       spellSlotTrackerMode:
@@ -1115,32 +1113,6 @@ export class Tidy5eNpcSheet
     }
 
     return super._onDropSingleItem(itemData, event);
-  }
-
-  /**
-   * Take a short rest, calling the relevant function on the Actor instance.
-   * @param {Event} event             The triggering click event.
-   * @returns {Promise<RestResult>}  Result of the rest action.
-   */
-  async _onShortRest(event: Event) {
-    event.preventDefault();
-    await this._onSubmit(event);
-    return this.actor.shortRest({
-      chat: settings.value.showNpcRestInChat,
-    });
-  }
-
-  /**
-   * Take a long rest, calling the relevant function on the Actor instance
-   * @param {Event} event   The triggering click event
-   * @private
-   */
-  async _onLongRest(event: Event) {
-    event.preventDefault();
-    await this._onSubmit(event);
-    return this.actor.longRest({
-      chat: settings.value.showNpcRestInChat,
-    });
   }
 
   _disableFields(...args: any[]) {

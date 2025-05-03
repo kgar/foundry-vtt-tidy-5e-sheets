@@ -62,53 +62,64 @@
             blurAfterChange={true}
             hidden={!hpValueInputFocused}
           />
-          <button type="button" 
+          <button
+            type="button"
             class="button button-borderless button-icon-only temp-hp"
-            >
+          >
             <i class="fas fa-hand-holding-heart"></i>
           </button>
         </div>
       </div>
       <div class="hd-row">
-        <div class="meter progress hit-die"
-          style="--bar-percentage: 100%">
-          <div class="label pointer"
+        <div class="meter progress hit-die" style="--bar-percentage: 100%">
+          <div
+            class="label pointer"
             hidden={hpValueInputFocused}
             onclick={async (ev) => {
               hpValueInputFocused = true;
               hpValueInput?.selectText();
-            }}>
-              <div class="value">{hpValue}</div>
-              <div class="separator">/</div>
-              <div class="max">{hpMax}</div>
-            </div>
-            <TextInputQuadrone
-              bind:this={hpValueInput}
-              id="{appId}-system-attributes-hp"
-              document={context.actor}
-              field="system.attributes.hp.value"
-              class="uninput"
-              value={hpValue}
-              selectOnFocus={true}
-              enableDeltaChanges={true}
-              onfocus={() => (hpValueInputFocused = true)}
-              onblur={() => (hpValueInputFocused = false)}
-              blurAfterChange={true}
-              hidden={!hpValueInputFocused}
+            }}
+          >
+            <div class="value">{hpValue}</div>
+            <div class="separator">/</div>
+            <div class="max">{hpMax}</div>
+          </div>
+          <TextInputQuadrone
+            bind:this={hpValueInput}
+            id="{appId}-system-attributes-hp"
+            document={context.actor}
+            field="system.attributes.hp.value"
+            class="uninput"
+            value={hpValue}
+            selectOnFocus={true}
+            enableDeltaChanges={true}
+            onfocus={() => (hpValueInputFocused = true)}
+            onblur={() => (hpValueInputFocused = false)}
+            blurAfterChange={true}
+            hidden={!hpValueInputFocused}
           />
         </div>
         <div class="exhaustion">
-          <button type="button" class="button button-borderless button-icon-only">
+          <button
+            type="button"
+            class="button button-borderless button-icon-only"
+          >
             <i class="fas fa-heart-pulse"></i>
           </button>
         </div>
         <div class="death-saves">
-          <button type="button" class="button button-borderless button-icon-only">
+          <button
+            type="button"
+            class="button button-borderless button-icon-only"
+          >
             <i class="fas fa-skull"></i>
           </button>
         </div>
         <div class="configure-hp">
-          <button type="button" class="button button-borderless button-icon-only">
+          <button
+            type="button"
+            class="button button-borderless button-icon-only"
+          >
             <i class="fas fa-gear"></i>
           </button>
         </div>
@@ -146,7 +157,7 @@
       class="button button-tertiary button-icon-only short-rest gold-button"
       data-tooltip="DND5E.REST.Short.Label"
       aria-label={localize('DND5E.REST.Short.Label')}
-      onclick={(event) => context.actor.sheet.onShortRest(event)}
+      onclick={() => context.actor.shortRest()}
       disabled={!context.editable}
     >
       <i class="fas fa-utensils"></i>
@@ -156,7 +167,7 @@
       class="button button-tertiary button-icon-only long-rest gold-button"
       data-tooltip="DND5E.REST.Long.Label"
       aria-label={localize('DND5E.REST.Long.Label')}
-      onclick={(event) => context.actor.sheet.onLongRest(event)}
+      onclick={() => context.actor.longRest()}
       disabled={!context.editable}
     >
       <i class="fas fa-campground"></i>

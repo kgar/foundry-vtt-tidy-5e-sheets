@@ -488,13 +488,11 @@ export type NpcSheetContext = {
   inventory: InventorySection[];
   itemContext: Record<string, NpcItemContext>;
   languages: LanguageTraitContext[];
-  longRest: (event: Event) => Promise<unknown>;
   notes1EnrichedHtml: string;
   notes2EnrichedHtml: string;
   notes3EnrichedHtml: string;
   notes4EnrichedHtml: string;
   notesEnrichedHtml: string;
-  shortRest: (event: Event) => Promise<void>;
   showContainerPanel: boolean;
   showLoyalty: boolean;
   showSpellbookTab: boolean;
