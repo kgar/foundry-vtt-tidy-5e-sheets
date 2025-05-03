@@ -122,17 +122,6 @@
         "name": "Délai avant l'affichage de la carte d'information",
         "hint": "La carte d'information s'affichera au survol d'un élément après un délai en millisecondes (0 = pas de délai, 300 par défaut)."
     },
-    "TIDY5E.Settings.DefaultTheme": {
-        "name": "Thème de couleur par défaut",
-        "hint": "Thème par défaut pour tous les utilisateurs qui n'ont pas sélectionné de thème spécifique."
-    },
-    "TIDY5E.Settings.SheetTheme": {
-        "name": "Thème Tidy5e",
-        "hint": "Utiliser le thème de couleur clair ou foncé par défaut de Tidy5e.",
-        "default": "Défaut",
-        "light": "Lumineux",
-        "dark": "Sombre"
-    },
     "TIDY5E.Settings.UseClassicControls": {
         "name": "Contrôles classiques en mode liste",
         "hint": "Toujours afficher les option de contrôle des éléments et désactive le menu du clic droit. Ne s'applique qu'à l'inventaire des objets / sorts du PJ en mode liste."

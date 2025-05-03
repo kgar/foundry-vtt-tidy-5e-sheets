@@ -122,17 +122,6 @@
         "name": "Info kártyák mutatása késleltetéssel.",
         "hint": "A kurzort a kártya fölött kell tartanod bizonyos ideig, hogy előjöjjön (0 = nincs késleltetés, 300 az alapértelmezett (milliszekundum))."
     },
-    "TIDY5E.Settings.DefaultTheme": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.SheetTheme": {
-        "name": "Tidy5e színtéma.",
-        "hint": "Alapértelmezetten világos vagy alternatívaként sötét téma érhető el a Tidy5e-hez.",
-        "default": "",
-        "light": "",
-        "dark": ""
-    },
     "TIDY5E.Settings.UseClassicControls": {
         "name": "Klasszikus vezérlőelemek lista nézetben.",
         "hint": "Mindig mutassa a tételek vezérlését és kikapcsolja a jobb klikk menüt. Csak JK tárgy/varázslat készletre vonatkozik lista nézetben."

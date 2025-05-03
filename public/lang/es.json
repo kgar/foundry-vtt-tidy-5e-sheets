@@ -134,17 +134,6 @@
         "name": "Retardo en mostrar las tarjetas de información del objeto",
         "hint": "La Tarjeta de Información se mostrará al mantener el ratón sobre un objeto durante el valor en milisegundos (0 = no hay retardo, 300 es el valor por defecto)."
     },
-    "TIDY5E.Settings.DefaultTheme": {
-        "name": "Tema de color predeterminado",
-        "hint": "El tema predeterminado para todos los usuarios que no tienen un tema específico seleccionado."
-    },
-    "TIDY5E.Settings.SheetTheme": {
-        "name": "Tema de color",
-        "hint": "Utiliza el tema por defecto de color claro u oscuro para tus hojas.",
-        "default": "Predeterminado",
-        "light": "Claro",
-        "dark": "Oscuro"
-    },
     "TIDY5E.Settings.UseClassicControls": {
         "name": "Utilizar los controles clásicos de los objetos en el diseño de lista",
         "hint": "Muestra siempre los botones de los objetos y desactiva el menú del botón derecho. Sólo se aplica para el inventario de objetos/conjuros del PJ en el listado."

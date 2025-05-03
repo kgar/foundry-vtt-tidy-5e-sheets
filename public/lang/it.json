@@ -122,17 +122,6 @@
         "name": "Ritardo scheda oggetto (ms)",
         "hint": "Ritarda la visualizzazione delle schede oggetto per i millisecondi (ms) specificati. 0 significa nessun ritardo. Predefinito: 300."
     },
-    "TIDY5E.Settings.DefaultTheme": {
-        "name": "Colore Tema Predefinito",
-        "hint": "Il tema predefinito per tutti gli utenti che non hanno selezionato un tema specifico."
-    },
-    "TIDY5E.Settings.SheetTheme": {
-        "name": "Colore Tema",
-        "hint": "Seleziona il tema di colore chiaro predefinito o quello alternativo scuro.",
-        "default": "Predefinito",
-        "light": "Chiaro",
-        "dark": "Scuro"
-    },
     "TIDY5E.Settings.UseClassicControls": {
         "name": "Utilizza i controlli classici",
         "hint": "Mostra controlli nella visualizzazione elenco."

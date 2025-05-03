@@ -231,17 +231,6 @@
         "name": "Use default sheet HP keyboard tabbing",
         "hint": "The default 5e sheet allows keyboard tabbing from the current HP input to the current temp HP input. Enabling this replicates that behaviour. This setting is ignored if \"Use Accessible Keyboard Support\" is turned off."
     },
-    "TIDY5E.Settings.DefaultTheme": {
-        "name": "Default Color Theme",
-        "hint": "The default theme for all users who do not have a specific theme selected."
-    },
-    "TIDY5E.Settings.SheetTheme": {
-        "name": "Tidy5eカラーテーマ",
-        "hint": "Tidy5eシートのカラーテーマを、ライトカラーまたはダークカラーに設定します。",
-        "default": "Default",
-        "light": "Light",
-        "dark": "Dark"
-    },
     "TIDY5E.Settings.UseClassicControls": {
         "name": "一覧表示で従来のアイテム操作を使用",
         "hint": "常にアイテム操作を表示し、右クリックメニューを無効にします。一覧表示でPCのアイテム/呪文インベントリにのみ適用されます。"

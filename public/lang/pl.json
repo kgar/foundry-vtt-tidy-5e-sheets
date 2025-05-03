@@ -442,13 +442,6 @@
         "hint": "Pokazuje kolorowy pasek wskazujący pozostałe HP. Zdrowie podane liczbowo będzie nadal widoczne.",
         "name": "Użyj paska HP"
     },
-    "TIDY5E.Settings.SheetTheme": {
-        "default": "Domyślny",
-        "light": "Jasny",
-        "dark": "Ciemny",
-        "hint": "Motyw dla twoich kart.",
-        "name": "Kolor motywu"
-    },
     "TIDY5E.Settings.ShowNPCRestInChat": {
         "hint": "Wyświetla wiadomość na czacie, gdy NPC korzysta z odpoczynku.",
         "name": "Pokaż odpoczynek NPC na czacie"
@@ -621,10 +614,6 @@
     "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
         "name": "Użyj domyślnego przejścia klawiszem Tab dla HP",
         "hint": "Domyślna karta 5e umożliwia przechodzenie za pomocą klawisza Tab z pola obecne HP do pola obecne tymczasowe HP.Włączenie tej opcji powiela to zachowanie. To ustawienie jest ignorowane, jeśli opcja „Użyj przystępnego wsparcia dla klawiatury” jest wyłączona."
-    },
-    "TIDY5E.Settings.DefaultTheme": {
-        "name": "Domyślny kolor motywu",
-        "hint": "Domyślny motyw dla wszystkich użytkowników, którzy nie mają wybranego konkretnego motywu."
     },
     "TIDY5E.Settings.InspirationAnimation": {
         "hint": "Pokazuje animację świecącego znacznika inspiracji.",

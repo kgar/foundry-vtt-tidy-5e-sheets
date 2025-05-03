@@ -286,17 +286,6 @@
         "tabLabel": "玩家",
         "header": "玩家角色卡"
     },
-    "TIDY5E.Settings.DefaultTheme": {
-        "name": "默认颜色主题",
-        "hint": "所有未选择特定主题的用户的默认主题。"
-    },
-    "TIDY5E.Settings.SheetTheme": {
-        "name": "颜色主题",
-        "hint": "你的工作卡主题。",
-        "default": "默认",
-        "light": "浅色",
-        "dark": "深色"
-    },
     "TIDY5E.Settings.UseClassicControls": {
         "name": "使用经典列表控件",
         "hint": "在列表视图中显示控件。"
