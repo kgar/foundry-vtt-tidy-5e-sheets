@@ -55,6 +55,11 @@
       align-content: flex-start;
       padding: 0 var(--t5e-size-2x);
 
+
+      .button-config {
+        color: var(--t5e-color-icon-button);
+      }
+
       .character-details {
         &-name-row {
           display: flex;
@@ -78,25 +83,33 @@
 
 
         .character-image {
+          --inset: 5px;
           width: 100%;
-          height: 100%;
-          object-fit: cover;
-          border: none;
+          position: relative;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: none;
+            display: block;
+          }
 
           &.round {
-            border: 2px solid var(--t5e-color-gold);
             border-radius: 100%;
             overflow: hidden;
+            display: relative;
 
             &::before {
               content: '';
               position: absolute;
-              top: 8px;
-              left: 8px;
-              right: 8px;
-              bottom: 8px;
+              top: var(--inset);
+              left: var(--inset);
+              right: var(--inset);
+              bottom: var(--inset);
               border-radius: 100%;
-              border: 2px solid var(--t5e-color-gold);
+              border: 1.5px solid var(--t5e-color-gold);
+              pointer-events: none;
             }
           }
 
@@ -104,23 +117,29 @@
             &::before {
               content: '';
               position: absolute;
-              top: 8px;
-              left: 8px;
-              right: 8px;
-              bottom: 8px;
+              top: var(--inset);
+              left: var(--inset);
+              right: var(--inset);
+              bottom: var(--inset);
               border: 2px solid var(--t5e-color-gold);
+              z-index: 1;
+              pointer-events: none;
             }
           }
 
           &.transparent {
+
             &::before {
+              border-radius: 100%;
               content: '';
               position: absolute;
-              top: 8px;
-              left: 8px;
-              right: 8px;
-              bottom: 8px;
-              border: 3px solid var(--t5e-color-gold);
+              top: var(--inset);
+              left: var(--inset);
+              right: var(--inset);
+              bottom: var(--inset);
+              border: 2px solid var(--t5e-color-gold);
+              z-index: -1;
+              pointer-events: none;
             }
           }
         }
@@ -134,9 +153,9 @@
           width: 100%;
 
           .meter {
+            background-color: var(--t5e-color-component-card-dark-darker);
             border: none;
             border-radius: 0;
-            border-right: 3px solid var(--bar-border-color);
           }
 
           .hit-points {
@@ -169,6 +188,16 @@
             i {
               font-size: var(--font-size-14);
               margin-bottom: 1px;
+              margin-left: 1px;
+            }
+
+            &.button-config {
+              border-radius: 0;
+              background-color: var(--t5e-color-hp-dark);
+
+              &:hover {
+                background-color: transparent;
+              }
             }
           }
 
@@ -216,18 +245,49 @@
               width: auto;
 
               button {
-                padding: 0 0.25rem 1px 0.5rem;
-                width: auto;
+                padding: 0 0 0 1px;
+                width: 1.5rem;
+
+                i {
+                  color: var(--t5e-color-palette-gold-89);
+                }
               }
 
-              &:not(.exhausted) {
+              .value {
+                display: none;
+              }
+
+              &.exhausted {
+                background-color: var(--t5e-color-palette-orange-40);
+
+                i,
+                .value {
+                  color: var(--t5e-color-icon-default);
+                  text-shadow: 0 0 8px var(--t5e-color-palette-orange-100);
+                }
+
                 button {
-                  padding: 0 0 0 1px;
-                  width: 1.5rem;
+                  padding: 0 0.25rem 1px 0.5rem;
+                  width: auto;
                 }
 
                 .value {
-                  display: none;
+                  display: initial;
+                }
+              }
+            }
+
+            .death-saves {
+              i {
+                color: var(--t5e-color-palette-gold-89);
+              }
+
+              &.dying {
+                background-color: var(--t5e-color-palette-red-45);
+
+                i {
+                  color: var(--t5e-color-icon-default);
+                  text-shadow: 0 0 8px var(--t5e-color-palette-red-100);
                 }
               }
             }
@@ -244,7 +304,6 @@
               width: var(--size);
 
               i {
-                color: var(--t5e-color-palette-gold-89);
                 font-size: var(--font-size-13);
               }
 
@@ -254,6 +313,15 @@
                 i {
                   color: var(--t5e-color-text-default);
                 }
+              }
+            }
+
+            .button-config {
+              color: var(--t5e-color-icon-button);
+              background-color: transparent;
+
+              &:hover {
+                background-color: var(--t5e-color-hp-hd-dark);
               }
             }
           }
@@ -294,7 +362,7 @@
 
             .button-config {
               position: absolute;
-              right: -3px;
+              right: 0;
             }
           }
         }
@@ -430,6 +498,12 @@
         margin-left: var(--header-padding);
         align-items: flex-start;
 
+        .button-config {
+          position: absolute;
+          bottom: -10px;
+          right: -8px;
+        }
+
         >* {
           flex-grow: 1;
         }
@@ -466,19 +540,22 @@
         }
 
         .ac-container {
-          width: 62px;
           text-align: center;
+          align-items: center;
 
           .shield {
             background: url(../../modules/tidy5e-sheet/images/badge_ac_dark.webp) top center / auto no-repeat;
             background-size: contain;
             height: 68px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
             color: var(--t5e-color-text-light);
             font-weight: bold;
             font-size: 1.25rem;
+            position: relative;
+            width: 64px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
           }
 
           .ac-value {
@@ -489,6 +566,7 @@
 
           .ability-labels {
             margin-top: 0.1875rem;
+            width: 64px;
 
             .label {
               color: var(--t5e-color-text-lightest);
@@ -507,22 +585,25 @@
 
         .ability {
           width: 64px;
+
           display: flex;
           flex-direction: column;
           align-items: center;
           text-align: center;
 
           .bonus-container {
-            height: 72px;
-            width: 100%;
             background: url(../../modules/tidy5e-sheet/images/badge_ability_dark.webp) top center / auto no-repeat;
             background-size: contain;
+            height: 72px;
+            padding-top: var(--t5e-size-halfx);
+            position: relative;
+            text-align: center;
+            width: 64px;
+
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding-top: var(--t5e-size-halfx);
-            text-align: center;
 
             .label {
               margin-bottom: -0.125rem;
@@ -531,16 +612,16 @@
             &.proficient {
               background-image: url(../../modules/tidy5e-sheet/images/badge_ability_dark_prof.webp);
             }
-
           }
 
           .ability-score {
-            margin-top: var(--t5e-size-1x);
             background: url(../../modules/tidy5e-sheet/images/badge_score_dark.webp) top center / auto no-repeat;
             background-size: contain;
-            width: 1.75rem;
             height: 2rem;
             margin-top: -0.75rem;
+            position: relative;
+            width: 1.75rem;
+
             display: flex;
             align-items: center;
             justify-content: center;
@@ -583,7 +664,7 @@
             .initiative-bonus {
               margin-right: 2px;
               margin-top: -4px;
-              margin-bottom: -2px;
+              margin-bottom: -1px;
             }
 
             .modifier,

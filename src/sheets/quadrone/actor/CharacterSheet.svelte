@@ -33,12 +33,22 @@
   let hdPct = 1;
   
   let unlocked = true; // TODO: Replace with context.unlocked
+  let portraitShape = 'transparent';
+  let exhaustionLevel = 1;
+  let deathSaves = {
+    dying: true,
+    successes: 0,
+    failures: 0,
+  };
 </script>
 
 <header class="sheet-header flexcol">
     <div class="flexrow">
       <div class="character-vitals-container">
-        <img class="character-image transparent" src={context.actor.img} />
+        <!-- TODO: Add switch for size -->
+        <div class="character-image {portraitShape}">
+          <img src={context.actor.img} alt={context.actor.name} />
+        </div>
         <div class="character-vitals">
           <div class="hp-row">
             <div
@@ -53,9 +63,9 @@
                   hpValueInput?.selectText();
                 }}
               >
-                <div class="value">{hpValue}</div>
+                <div class="value" aria-label="Current HP">{hpValue}</div>
                 <div class="separator">/</div>
-                <div class="max">{hpMax}</div>
+                <div class="max" aria-label="Max HP">{hpMax}</div>
               </div>
               <TextInputQuadrone
                 bind:this={hpValueInput}
@@ -73,12 +83,14 @@
               />
               {#if !unlocked}
               <button
+                aria-label="Temporary HP"
                 type="button"
                 class="button button-borderless button-icon-only temp-hp">
                 <i class="fas fa-hand-holding-heart"></i>
               </button>
               {:else}
               <button
+                aria-label="Configure HP"
                 type="button"
                 class="button button-borderless button-icon-only button-config temp-hp">
                 <i class="fas fa-cog"></i>
@@ -97,10 +109,10 @@
                     hdValueInput?.selectText();
                   }}
                 >
-                  <div class="value">{hdValue}</div>
+                  <div class="value" title="Current Hit Die">{hdValue}</div>
                   <div class="separator">/</div>
-                  <div class="max">{hdMax}</div>
-                  <div class="hd-label">HD</div>
+                  <div class="max" title="Max Hit Die">{hdMax}</div>
+                  <div class="hd-label" title="Hit Die">HD</div>
                 </div>
                 <TextInputQuadrone
                   bind:this={hdValueInput}
@@ -118,6 +130,7 @@
                 />
                 {#if unlocked}
                 <button
+                  aria-label="Configure Hit Die"
                   type="button"
                   class="button button-borderless button-icon-only button-config">
                   <i class="fas fa-cog"></i>
@@ -126,29 +139,23 @@
               </div>
             </div>
             <!-- TODO: Add exhaustion using .exhausted class -->
-            <div class="exhaustion exhausted">
+            <div class="exhaustion {exhaustionLevel > 0 ? 'exhausted' : ''}">
               <button
                 type="button"
                 class="button button-borderless button-icon-only"
+                aria-label="Exhaustion"
               >
                 <i class="fas fa-heart-pulse"></i>
-                <span class="value">1</span>
+                <span class="value">{exhaustionLevel}</span>
               </button>
             </div>
-            <div class="death-saves">
+            <div class="death-saves {deathSaves.dying ? 'dying' : ''}">
               <button
                 type="button"
                 class="button button-borderless button-icon-only"
+                aria-label="Death Saves"
               >
                 <i class="fas fa-skull"></i>
-              </button>
-            </div>
-            <div class="configure-hp">
-              <button
-                type="button"
-                class="button button-borderless button-icon-only"
-              >
-                <i class="fas fa-gear"></i>
               </button>
             </div>
           </div>
@@ -169,20 +176,6 @@
                 <h1 class="character-name flex1">{context.actor.name}</h1>
               {/if}
               <div class="sheet-header-actions">
-                <button
-                  type="button"
-                  class="button button-tertiary button-icon-only special-traits gold-button"
-                  data-tooltip="DND5E.SpecialTraits"
-                  aria-label={localize('DND5E.SpecialTraits')}
-                  onclick={() =>
-                    new dnd5e.applications.actor.ActorSheetFlags(context.actor).render(
-                      true,
-                    )}
-                  disabled={!context.editable}
-                >
-                  <!-- TODO: Swap to sheet settings shortcut, also in dropdown -->
-                  <i class="fas fa-gear"></i>
-                </button>
                 <button
                   type="button"
                   class="button button-tertiary button-icon-only short-rest gold-button"
@@ -206,24 +199,37 @@
               </div>
             </div>
             <div class="character-details-subtitle-row">
-            <CharacterSubtitle />
+              <CharacterSubtitle />
             </div>
           </div>
           <div class="level-container flex0 flexrow">
-            <button type="button" class="inspiration single button button-borderless button-icon-only"></button>
+            <button 
+              type="button"
+              class="inspiration single button button-borderless button-icon-only"
+              aria-label="Inspiration">
+            </button>
             <div class="level-block">
-              <span class="level bonus">5</span>
+              <span class="level bonus" title="Level">5</span>
               <div class="proficiency flexrow">
-              <span class="label">PB</span>
-              <span class="modifier">+</span>
-              <span class="value">2</span>
+                <span class="label" title="Proficiency Bonus">PB</span>
+                <span class="modifier">+</span>
+                <span class="value" title="Proficiency Bonus Modifier">2</span>
+              </div>
             </div>
           </div>
         </div>
         <div class="abilities-container">
-        <div class="ac-container">
+        <div class="ac-container flexcol">
           <div class="shield">
-            <span class="ac-value">14</span>
+            <span class="ac-value" title="Armor Class">14</span>
+            {#if unlocked}
+            <button
+              aria-label="Configure Armor Class"
+              type="button"
+              class="button button-borderless button-icon-only button-config">
+              <i class="fas fa-cog"></i>
+            </button>
+            {/if}
           </div>
           <div class="ability-labels flexcol">
             <span class="label">Score</span>
@@ -238,6 +244,14 @@
               <span class="modifier">+</span>
               <span class="value bonus">2</span>
             </div>
+            {#if unlocked}
+            <button
+              aria-label="Configure Strength"
+              type="button"
+              class="button button-borderless button-icon-only button-config">
+              <i class="fas fa-cog"></i>
+            </button>
+            {/if}
           </div>
           <div class="ability-score">
             <span>14</span>
@@ -255,6 +269,14 @@
               <span class="modifier">+</span>
               <span class="value bonus">2</span>
             </div>
+            {#if unlocked}
+            <button
+              aria-label="Configure Dexterity"
+              type="button"
+              class="button button-borderless button-icon-only button-config">
+              <i class="fas fa-cog"></i>
+            </button>
+            {/if}
           </div>
           <div class="ability-score">
             <span>14</span>
@@ -272,6 +294,14 @@
               <span class="modifier">+</span>
               <span class="value bonus">2</span>
             </div>
+            {#if unlocked}
+            <button
+              aria-label="Configure Constitution"
+              type="button"
+              class="button button-borderless button-icon-only button-config">
+              <i class="fas fa-cog"></i>
+            </button>
+            {/if}
           </div>
           <div class="ability-score">
             <span>14</span>
@@ -289,6 +319,14 @@
               <span class="modifier">+</span>
               <span class="value bonus">2</span>
             </div>
+            {#if unlocked}
+            <button
+              aria-label="Configure Intelligence"
+              type="button"
+              class="button button-borderless button-icon-only button-config">
+              <i class="fas fa-cog"></i>
+            </button>
+            {/if}
           </div>
           <div class="ability-score">
             <span>14</span>
@@ -306,6 +344,14 @@
               <span class="modifier">+</span>
               <span class="value bonus">2</span>
             </div>
+            {#if unlocked}
+            <button
+              aria-label="Configure Wisdom"
+              type="button"
+              class="button button-borderless button-icon-only button-config">
+              <i class="fas fa-cog"></i>
+            </button>
+            {/if}
           </div>
           <div class="ability-score">
             <span>14</span>
@@ -323,6 +369,14 @@
               <span class="modifier">+</span>
               <span class="value bonus">2</span>
             </div>
+            {#if unlocked}
+            <button
+              aria-label="Configure Charisma"
+              type="button"
+              class="button button-borderless button-icon-only button-config">
+              <i class="fas fa-cog"></i>
+            </button>
+            {/if}
           </div>
           <div class="ability-score">
             <span>14</span>
@@ -340,6 +394,13 @@
               <span class="modifier">+</span>
               <span class="value bonus">2</span>
             </div>
+            {#if unlocked}
+            <button
+              aria-label="Configure Sanity"
+              type="button"
+              class="button button-borderless button-icon-only button-config">
+              <i class="fas fa-cog"></i>
+            </button>
           </div>
           <div class="ability-score">
             <span>14</span>
@@ -357,6 +418,13 @@
               <span class="modifier">+</span>
               <span class="value bonus">2</span>
             </div>
+            {#if unlocked}
+            <button
+              aria-label="Configure Honor"
+              type="button"
+              class="button button-borderless button-icon-only button-config">
+              <i class="fas fa-cog"></i>
+            </button>
           </div>
           <div class="ability-score">
             <span>14</span>
