@@ -47,7 +47,6 @@
 
     .sheet-header {
       // All of the sheet header stuff goes in here
-      // kgar: I'm thinking CSS Grid with Grid Areas; these areas will have Sheet Part attributes to help mods to target the area where they want to add something
       background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.65));
 
       // TODO: Vitals should be outside of grid. Everything to the right of it needs to scale on its own.
@@ -134,15 +133,6 @@
           position: absolute;
           width: 100%;
 
-          .hd-row {
-            height: var(--t5e-size-6x);
-            display: flex;
-            flex: 1;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-          }
-
           .meter {
             border: none;
             border-radius: 0;
@@ -152,9 +142,24 @@
           .hit-points {
             height: var(--t5e-field-size-default);
 
-            .label {
-              font-size: 1.125rem;
+            input[type="text"] {
+              text-align: left;
+              font-size: var(--font-size-18);
+              padding-left: var(--t5e-size-2x);
+              background-color: var(--t5e-color-hp-dark);
+              border: 2px solid var(--t5e-color-hp-medium);
+              caret-color: #ffffff;
             }
+
+            .label {
+              font-size: var(--font-size-18);
+              transition: all var(--t5e-transition-default);
+
+              &:hover {
+                text-shadow: 0 0 5px var(--t5e-color-text-gold-emphasis);
+              }
+            }
+
           }
 
           .temp-hp {
@@ -164,6 +169,132 @@
             i {
               font-size: var(--font-size-14);
               margin-bottom: 1px;
+            }
+          }
+
+          ::selection {
+            padding: 0 var(--t5e-size-1x);
+            color: var(--t5e-color-text-default);
+            background-color: rgba(0, 0, 0, 0.5);
+          }
+
+
+
+          .character-vitals-row {
+            border-top: 2px solid var(--t5e-color-gold);
+            box-sizing: content-box;
+            padding: 0;
+            height: var(--t5e-size-6x);
+            display: flex;
+            flex: 1;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: var(--t5e-size-halfx);
+
+            .label {
+              font-size: var(--font-size-14);
+              line-height: var(--line-height-16);
+            }
+
+            >*:not(:first-child) {
+              position: relative;
+            }
+
+            >*:not(:first-child)::before {
+              content: '';
+              position: absolute;
+              left: -2px;
+              top: 50%;
+              transform: translateY(-50%);
+              height: calc(100% + 2px);
+              width: 2px;
+              background-color: var(--t5e-color-gold);
+            }
+
+            .exhaustion {
+              width: auto;
+
+              button {
+                padding: 0 0.25rem 1px 0.5rem;
+                width: auto;
+              }
+
+              &:not(.exhausted) {
+                button {
+                  padding: 0 0 0 1px;
+                  width: 1.5rem;
+                }
+
+                .value {
+                  display: none;
+                }
+              }
+            }
+
+            button {
+              border-left: none;
+              border-radius: 0;
+              box-sizing: border-box;
+              padding: 0 0 1px 1px;
+
+              --size: 1.5rem;
+              min-height: var(--size);
+              height: var(--size);
+              width: var(--size);
+
+              i {
+                color: var(--t5e-color-palette-gold-89);
+                font-size: var(--font-size-13);
+              }
+
+              &:hover {
+                background-color: black;
+
+                i {
+                  color: var(--t5e-color-text-default);
+                }
+              }
+            }
+          }
+
+          .hd-row {
+            flex: 1;
+          }
+
+          .max {
+            color: var(--t5e-color-text-lighter);
+          }
+
+          .hit-die {
+            position: relative;
+
+            .label {
+              transition: all var(--t5e-transition-default);
+
+              &:hover {
+                text-shadow: 0 0 5px var(--t5e-color-text-gold-emphasis);
+              }
+            }
+
+            .hd-label {
+              color: var(--t5e-color-text-gold);
+              font-weight: var(--t5e-font-weight-label);
+            }
+
+            input[type="text"] {
+              height: 1.5rem;
+              text-align: left;
+              font-size: var(--font-size-16);
+              padding-left: var(--t5e-size-2x);
+              background-color: var(--t5e-color-hp-hd-dark);
+              border: 2px solid var(--t5e-color-hp-hd-medium);
+              caret-color: var(--t5e-color-text-default);
+            }
+
+            .button-config {
+              position: absolute;
+              right: -3px;
             }
           }
         }

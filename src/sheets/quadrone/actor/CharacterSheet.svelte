@@ -17,14 +17,22 @@
   let sidebarExpanded = $state(false);
 
   let hpValueInputFocused = $state(false);
+  let hdValueInputFocused = $state(false);
 
   let hpValueInput = $state<TextInputQuadrone>();
+  let hdValueInput = $state<TextInputQuadrone>();
 
   let hpValue = $derived(context.system.attributes?.hp?.value ?? 0);
   let hpMax = $derived(context.system.attributes?.hp?.max ?? 0);
   let hpPct = $derived(context.system.attributes?.hp?.pct ?? 0);
   let hpTemp = $derived(context.system.attributes?.hp?.temp ?? 0);
   let hpTempMax = $derived(context.system.attributes?.hp?.tempMax ?? 0);
+  
+  let hdValue = 2;
+  let hdMax = 2;
+  let hdPct = 1;
+  
+  let unlocked = true; // TODO: Replace with context.unlocked
 </script>
 
 <header class="sheet-header flexcol">
@@ -54,7 +62,7 @@
                 id="{appId}-system-attributes-hp"
                 document={context.actor}
                 field="system.attributes.hp.value"
-                class="uninput"
+                class="hp-input"
                 value={hpValue}
                 selectOnFocus={true}
                 enableDeltaChanges={true}
@@ -63,49 +71,68 @@
                 blurAfterChange={true}
                 hidden={!hpValueInputFocused}
               />
+              {#if !unlocked}
               <button
                 type="button"
-                class="button button-borderless button-icon-only temp-hp"
-              >
+                class="button button-borderless button-icon-only temp-hp">
                 <i class="fas fa-hand-holding-heart"></i>
               </button>
+              {:else}
+              <button
+                type="button"
+                class="button button-borderless button-icon-only button-config temp-hp">
+                <i class="fas fa-cog"></i>
+              </button>
+              {/if}
             </div>
           </div>
-          <div class="hd-row">
-            <div class="meter progress hit-die" style="--bar-percentage: 100%">
-              <div
-                class="label pointer"
-                hidden={hpValueInputFocused}
-                onclick={async (ev) => {
-                  hpValueInputFocused = true;
-                  hpValueInput?.selectText();
-                }}
-              >
-                <div class="value">{hpValue}</div>
-                <div class="separator">/</div>
-                <div class="max">{hpMax}</div>
+          <div class="character-vitals-row">
+            <div class="hd-row">
+              <div class="meter progress hit-die" style="--bar-percentage: 100%">
+                <div
+                  class="label pointer"
+                  hidden={hdValueInputFocused}
+                  onclick={async (ev) => {
+                    hdValueInputFocused = true;
+                    hdValueInput?.selectText();
+                  }}
+                >
+                  <div class="value">{hdValue}</div>
+                  <div class="separator">/</div>
+                  <div class="max">{hdMax}</div>
+                  <div class="hd-label">HD</div>
+                </div>
+                <TextInputQuadrone
+                  bind:this={hdValueInput}
+                  id="{appId}-system-attributes-hd"
+                  document={context.actor}
+                  field="system.attributes.hd.value"
+                  class="hd-input"
+                  value={hdValue}
+                  selectOnFocus={true}
+                  enableDeltaChanges={true}
+                  onfocus={() => (hdValueInputFocused = true)}
+                  onblur={() => (hdValueInputFocused = false)}
+                  blurAfterChange={true}
+                  hidden={!hdValueInputFocused}
+                />
+                {#if unlocked}
+                <button
+                  type="button"
+                  class="button button-borderless button-icon-only button-config">
+                  <i class="fas fa-cog"></i>
+                </button>
+                {/if}
               </div>
-              <TextInputQuadrone
-                bind:this={hpValueInput}
-                id="{appId}-system-attributes-hp"
-                document={context.actor}
-                field="system.attributes.hp.value"
-                class="uninput"
-                value={hpValue}
-                selectOnFocus={true}
-                enableDeltaChanges={true}
-                onfocus={() => (hpValueInputFocused = true)}
-                onblur={() => (hpValueInputFocused = false)}
-                blurAfterChange={true}
-                hidden={!hpValueInputFocused}
-              />
             </div>
-            <div class="exhaustion">
+            <!-- TODO: Add exhaustion using .exhausted class -->
+            <div class="exhaustion exhausted">
               <button
                 type="button"
                 class="button button-borderless button-icon-only"
               >
                 <i class="fas fa-heart-pulse"></i>
+                <span class="value">1</span>
               </button>
             </div>
             <div class="death-saves">
