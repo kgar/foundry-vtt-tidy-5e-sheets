@@ -939,9 +939,25 @@
             font-size: var(--font-size-14);
             line-height: var(--line-height-14);
           }
+
+          .config-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 1rem;
+            height: 1rem;
+          }
+
+          .button-config {
+            display: inline-flex;
+            margin-left: var(--t5e-size-1x);
+            position: relative;
+            right: auto;
+            bottom: auto;
+          }
         }
 
-        max-width: 640px;
+        max-width: 700px;
 
         &:has(.sanity) {
           gap: 0;

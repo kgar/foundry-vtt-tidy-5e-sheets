@@ -37,7 +37,7 @@
     currentPortraitShape = availableShapes[nextIndex];
   }
   
-  function handleDeathStatusChange(event) {
+  function handleDeathStatusChange(event: CustomEvent) {
     characterIsDead = event.detail.dead;
   }
 </script>

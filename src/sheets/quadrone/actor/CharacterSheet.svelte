@@ -39,7 +39,7 @@
   let hdMax = 2;
   let hdPct = 1;
   
-  let unlocked = false; // TODO: Replace with context.unlocked
+  let unlocked = true; // TODO: Replace with context.unlocked
   let portraitShape = 'transparent';
   let exhaustionLevel = 1;
   let deathSaves = {
@@ -394,12 +394,23 @@
           </button>
           {/if}
         </div>
+        <!-- TODO: Set concentration bonus here, but then move the concentration indicator up to subtitle, below the action buttons. -->
         <div class="concentration flexcol">
           <span class="label font-label-medium color-text-gold">Concentration</span>
           <div class="flexrow concentration-bonus">
             <i class="fas fa-head-side-brain"></i>
             <span class="modifier font-label-medium color-text-lightest">+</span>
             <span class="value font-data-medium color-text-default">2</span>
+            {#if unlocked}
+            <div class="config-container">
+              <button
+                aria-label="Configure Concentration"
+                type="button"
+                class="button button-borderless button-icon-only button-config">
+                <i class="fas fa-cog"></i>
+              </button>
+            </div>
+            {/if}
           </div>
         </div>
       </div>
