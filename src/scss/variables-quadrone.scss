@@ -35,10 +35,13 @@
   --t5e-font-default-longform: 400 var(--font-size-13)/var(--t5e-lineheight-longform) var(--t5e-font-family-default);
   --t5e-font-default-small: 400 var(--font-size-11)/var(--t5e-lineheight-small) var(--t5e-font-family-default);
 
+  --t5e-font-label-xlarge: 500 var(--font-size-28) var(--t5e-font-family-default);
+  --t5e-font-label-large: 500 var(--font-size-18)/var(--t5e-lineheight-default) var(--t5e-font-family-default);
   --t5e-font-label-medium: 500 var(--font-size-13)/var(--t5e-lineheight-default) var(--t5e-font-family-default);
   --t5e-font-label-small: 500 var(--font-size-11)/var(--t5e-lineheight-small) var(--t5e-font-family-default);
 
   --t5e-font-data-xlarge: 700 var(--font-size-28) var(--t5e-font-family-default);
+  --t5e-font-data-large: 700 var(--font-size-18)/var(--t5e-lineheight-default) var(--t5e-font-family-default);
   --t5e-font-data-medium: 700 var(--font-size-13)/var(--t5e-lineheight-default) var(--t5e-font-family-default);
   --t5e-font-data-small: 700 var(--font-size-11)/var(--t5e-lineheight-small) var(--t5e-font-family-default);
 
@@ -299,6 +302,7 @@
   --t5e-color-hp-medium: var(--t5e-color-palette-green-65);
   --t5e-color-hp-light: var(--t5e-color-palette-green-68);
   --t5e-color-hp-temp: var(--t5e-color-palette-blue-70);
+  --t5e-color-hp-temp-dark: var(--t5e-color-palette-blue-57);
   --t5e-color-hp-hd-dark: var(--t5e-color-palette-red-27);
   --t5e-color-hp-hd-medium: var(--t5e-color-palette-red-45);
   --t5e-color-hp-hd-light: var(--t5e-color-palette-red-45);
