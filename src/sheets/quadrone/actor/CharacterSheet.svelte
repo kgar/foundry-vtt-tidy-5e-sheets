@@ -8,6 +8,7 @@
   import CharacterExhaustionBar from './character-parts/CharacterExhaustionBar.svelte';
   import CharacterPortrait from './character-parts/CharacterPortrait.svelte';
   import AbilityScore from './character-parts/AbilityScore.svelte';
+  import InspirationBadge from './character-parts/InspirationBadge.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -260,11 +261,7 @@
           </div>
         </div>
         <div class="level-container flex0 flexrow">
-          <button 
-            type="button"
-            class="inspiration single button button-borderless button-icon-only"
-            aria-label="Inspiration">
-          </button>
+          <InspirationBadge />
           <div class="level-block">
             <span class="level bonus font-data-xlarge" title="Level">5</span>
             <div class="proficiency flexrow">

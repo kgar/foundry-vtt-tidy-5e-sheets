@@ -209,6 +209,7 @@
         }
 
         .death-saves-overlay {
+          // TODO: Somehow move this to the component to load on-demand only? The css doesn't quite work when I try it right now.
           position: absolute;
           top: 0;
           left: 0;
@@ -642,25 +643,42 @@
         align-items: center;
         position: relative;
 
+        .inspiration-badge {
+          position: absolute;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          &.stacked {
+            left: -0.25rem;
+          }
+        }
+
         .inspiration {
           transition: all var(--t5e-transition-default);
           outline: none;
 
-          &.single {
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            background: url(../../modules/tidy5e-sheet/images/badge_inspiration_single.webp) center / auto no-repeat;
-            background-size: contain;
+          &.button {
             width: 2.5rem;
             height: 2.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
 
+            &:not(.inspired) .level {
+              color: var(--t5e-color-text-lighter);
+            }
+          }
 
-            &::before {
+          &.single {
+            background: url(../../modules/tidy5e-sheet/images/badge_inspiration_single.webp) center / contain no-repeat;
+
+
+            &.inspired::before {
+              // TODO: Fix weird hover behavior.
               box-shadow: 0 0 8px 3px var(--t5e-theme-color-highlight);
               content: '';
               display: block;
@@ -684,6 +702,40 @@
               height: 12px;
               border-width: 2px;
               box-shadow: 0 0 12px 3px var(--t5e-theme-color-highlight);
+            }
+          }
+
+          &.stacked {
+            background: url(../../modules/tidy5e-sheet/images/badge_inspiration_stacked.webp) center / contain no-repeat;
+            width: 2.75rem;
+            height: 2.75rem;
+
+            .level {
+              margin-bottom: 1px;
+            }
+
+            .level-container {
+              width: 19px;
+              height: 19px;
+              border-radius: 100%;
+              border: 1px solid transparent;
+              transition: all var(--t5e-transition-default);
+              outline: none;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              text-align: center;
+            }
+
+            &.inspired .level-container {
+              box-shadow: 0 0 8px 3px var(--t5e-theme-color-highlight);
+              content: '';
+              background-color: var(--t5e-color-palette-white);
+              border-color: var(--t5e-theme-color-highlight);
+
+              .level {
+                font-size: var(--font-size-16);
+              }
             }
           }
         }
