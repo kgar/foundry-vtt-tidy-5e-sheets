@@ -338,9 +338,17 @@
             .label {
               font-size: var(--font-size-18);
               transition: all var(--t5e-transition-default);
+              justify-content: flex-start;
 
               &:hover {
                 text-shadow: 0 0 5px var(--t5e-color-text-gold-emphasis);
+              }
+
+              &:focus,
+              &:active {
+                background-color: inherit;
+                border: none;
+                outline: none;
               }
             }
 
@@ -354,8 +362,12 @@
             }
 
             .button {
-              position: absolute;
-              right: 0;
+              &:not(.editMode) {
+                position: absolute;
+                right: 0;
+              }
+
+              flex: 0 1 auto;
 
               i {
                 font-size: var(--font-size-14);
@@ -378,12 +390,10 @@
             }
 
             .temp-hp {
-              position: absolute;
-              right: 0;
               height: 28px;
 
               display: flex;
-              flex: 0;
+              flex: 0 1 auto;
               align-items: center;
               justify-content: center;
               padding: 0 8px;
@@ -397,16 +407,12 @@
           }
 
           input[type="text"].hp-temp-input {
-            position: relative;
             background-color: var(--t5e-color-hp-temp-dark);
             border-color: var(--t5e-color-hp-temp);
-            flex: 0;
-            display: flex;
-            min-width: 3rem;
             font: var(--t5e-font-label-large);
-            align-items: center;
-            justify-content: center;
             outline: none;
+            position: relative;
+            text-align: right;
           }
 
           ::selection {
@@ -451,7 +457,7 @@
             .exhaustion {
               width: auto;
 
-              button {
+              .button {
                 padding: 0 0 0 1px;
                 width: 1.5rem;
 
@@ -473,7 +479,7 @@
                   text-shadow: 0 0 8px var(--t5e-color-palette-orange-100);
                 }
 
-                button {
+                .button {
                   padding: 0 0.25rem 1px 0.5rem;
                   width: auto;
                 }
@@ -503,7 +509,7 @@
               }
             }
 
-            button {
+            .button {
               border-left: none;
               border-radius: 0;
               box-sizing: border-box;
@@ -549,10 +555,18 @@
             position: relative;
 
             .label {
+              justify-content: flex-start;
               transition: all var(--t5e-transition-default);
 
               &:hover {
                 text-shadow: 0 0 5px var(--t5e-color-text-gold-emphasis);
+              }
+
+              &:focus,
+              &:active {
+                background-color: inherit;
+                border: none;
+                outline: none;
               }
             }
 
@@ -593,7 +607,7 @@
             background-color: var(--t5e-component-card-dark-darker);
             z-index: 1; // TODO: This is a hack
 
-            button {
+            .button {
               border-radius: 0;
 
               &.active {

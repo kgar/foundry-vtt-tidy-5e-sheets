@@ -40,15 +40,9 @@
   let hdMax = 2;
   let hdPct = 1;
   
-  let unlocked = true; // TODO: Replace with context.unlocked
+  let unlocked = false; // TODO: Replace with context.unlocked
   let portraitShape = 'transparent';
   let exhaustionLevel = 1;
-  let deathSaves = {
-    dying: true,
-    successes: 0,
-    failures: 0,
-    totalsaves: 6,
-  };
 
   let showSanity = false;
   let showHonor = false;
@@ -63,9 +57,6 @@
         imageAlt={context.actor.name}
         portraitShape={portraitShape}
         showDeathSaves={dying}
-        totalsaves={deathSaves.totalsaves}
-        successes={deathSaves.successes}
-        failures={deathSaves.failures}
       />
       <div class="character-vitals">
         <div class="hp-row flexrow">
@@ -73,7 +64,9 @@
             class="meter progress hit-points"
             style="--bar-percentage: {hpPct.toFixed(0)}%"
           >
-            <div
+          <!-- TODO: Convert to buttons -->
+            <button
+              type="button"
               class="label pointer"
               hidden={hpValueInputFocused}
               onclick={async (ev) => {
@@ -84,7 +77,7 @@
               <div class="value" aria-label="Current HP">{hpValue}</div>
               <div class="separator">/</div>
               <div class="max" aria-label="Max HP">{hpMax}</div>
-            </div>
+            </button>
             <TextInputQuadrone
               bind:this={hpValueInput}
               id="{appId}-system-attributes-hp"
@@ -103,6 +96,7 @@
 
           {#if !unlocked}
           {#if hpTemp > 0 || hpTempInputFocused}
+          <!-- TODO: Convert to buttons -->
           <div
             class="temp-hp label pointer"
             hidden={hpTempInputFocused}
@@ -145,7 +139,8 @@
         <button
           aria-label="Configure HP"
           type="button"
-          class="button button-borderless button-icon-only button-config">
+          class="button button-borderless button-icon-only button-config"
+          class:editMode={unlocked}>
           <i class="fas fa-cog"></i>
         </button>
         {/if}
@@ -156,7 +151,9 @@
           {:else}
           <div class="hd-row">
             <div class="meter progress hit-die" style="--bar-percentage: 100%">
-              <div
+              <!-- TODO: Convert to buttons -->
+              <button
+                type="button"
                 class="label pointer"
                 hidden={hdValueInputFocused}
                 onclick={async (ev) => {
@@ -168,7 +165,7 @@
                 <div class="separator">/</div>
                 <div class="max" title="Max Hit Die">{hdMax}</div>
                 <div class="hd-label" title="Hit Die">HD</div>
-              </div>
+              </button>
               <TextInputQuadrone
                 bind:this={hdValueInput}
                 id="{appId}-system-attributes-hd"
@@ -194,7 +191,8 @@
             </div>
           </div>
           <!-- TODO: Add exhaustion using .exhausted class -->
-          <div class="exhaustion {exhaustionLevel > 0 ? 'exhausted' : ''}">
+          <div class="exhaustion" 
+            class:exhausted={exhaustionLevel > 0}>
             <button
               type="button"
               class="button button-borderless button-icon-only"
@@ -205,7 +203,8 @@
               <span class="value">{exhaustionLevel}</span>
             </button>
           </div>
-          <div class="death-saves {dying ? 'dying' : ''}">
+          <div class="death-saves" 
+            class:dying={dying}>
             <button
               type="button"
               class="button button-borderless button-icon-only"
