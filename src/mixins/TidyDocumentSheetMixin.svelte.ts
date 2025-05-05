@@ -141,7 +141,7 @@ export function TidyExtensibleDocumentSheetMixin<
     );
 
     _runFrameListenerEffect() {
-      applyThemeToApplication(settings.value, this.element, this.document);
+      applyThemeToApplication(this.element, this.document);
     }
 
     _onPosition(position: ApplicationPosition) {

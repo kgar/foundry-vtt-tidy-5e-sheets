@@ -1,0 +1,13 @@
+:where(.tidy5e-sheet.actor.quadrone) {
+  .window-header {
+    .window-title {
+      visibility: hidden;
+    }
+  }
+
+  &:is(.minimized, .minimizing) {
+    .window-title {
+      visibility: visible;
+    }
+  }
+}

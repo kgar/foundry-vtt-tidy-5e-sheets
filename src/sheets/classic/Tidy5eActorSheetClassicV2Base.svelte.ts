@@ -153,7 +153,7 @@ export function Tidy5eActorSheetClassicV2Base<
           settings.value,
           this.element
         );
-        applyThemeToApplication(settings.value, this.element, this.actor);
+        applyThemeToApplication(this.element, this.actor);
         this.render();
       });
 
