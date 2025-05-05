@@ -615,6 +615,7 @@
 
       .character-subtitle {
         margin-left: var(--header-padding);
+        flex-grow: 1;
 
         >*:not(:last-child)::after {
           content: '';
@@ -624,7 +625,7 @@
           border-radius: 100%;
           background-color: var(--t5e-color-gold);
           opacity: 0.5;
-          margin: 0 4px 3px 6px;
+          margin: 0 2px 3px 6px;
         }
 
         .dc {
