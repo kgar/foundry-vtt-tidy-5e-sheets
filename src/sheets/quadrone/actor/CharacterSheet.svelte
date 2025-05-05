@@ -64,7 +64,6 @@
             class="meter progress hit-points"
             style="--bar-percentage: {hpPct.toFixed(0)}%"
           >
-          <!-- TODO: Convert to buttons -->
             <button
               type="button"
               class="label pointer"
@@ -151,7 +150,6 @@
           {:else}
           <div class="hd-row">
             <div class="meter progress hit-die" style="--bar-percentage: 100%">
-              <!-- TODO: Convert to buttons -->
               <button
                 type="button"
                 class="label pointer"
@@ -190,7 +188,6 @@
               {/if}
             </div>
           </div>
-          <!-- TODO: Add exhaustion using .exhausted class -->
           <div class="exhaustion" 
             class:exhausted={exhaustionLevel > 0}>
             <button
