@@ -116,6 +116,15 @@
   }
 
   /* Labels */
+  &-label-xlarge {
+    font: var(--t5e-font-label-xlarge);
+    letter-spacing: var(--t5e-font-letter-spacing-xlarge);
+  }
+
+  &-label-large {
+    font: var(--t5e-font-label-large);
+  }
+
   &-label-medium {
     font: var(--t5e-font-label-medium);
   }
@@ -125,6 +134,15 @@
   }
 
   /* Data (bold) */
+  &-data-xlarge {
+    font: var(--t5e-font-data-xlarge);
+    letter-spacing: var(--t5e-font-letter-spacing-xlarge);
+  }
+
+  &-data-large {
+    font: var(--t5e-font-data-large);
+  }
+
   &-data-medium {
     font: var(--t5e-font-data-medium);
   }
@@ -134,12 +152,19 @@
   }
 
   /* Titles */
-  &-title-medium {
-    font: var(--t5e-font-title-medium);
-  }
-
   &-title-large {
     font: var(--t5e-font-title-large);
+    letter-spacing: var(--t5e-font-letter-spacing-xlarge);
+  }
+
+  &-title-medium {
+    font: var(--t5e-font-title-medium);
+    letter-spacing: var(--t5e-font-letter-spacing-xlarge);
+  }
+
+  &-title-small {
+    font: var(--t5e-font-title-small);
+    letter-spacing: var(--t5e-font-letter-spacing-xlarge);
   }
 
 
