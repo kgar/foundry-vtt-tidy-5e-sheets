@@ -1,8 +1,4 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
-  
-  let successes = 0;
-  let failures = 0;
   let totalsaves = 6;
   
   // Calculate how many buttons to show in each section
@@ -18,12 +14,6 @@
   // Calculate dead status reactively based on failure checks
   $: {
     dead = failureChecks.every(check => check);
-  }
-  
-  // Optionally dispatch an event when dead status changes
-  const dispatch = createEventDispatcher();
-  $: {
-    dispatch('deathStatusChange', { dead });
   }
 </script>
 

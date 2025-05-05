@@ -7,9 +7,6 @@
     imageUrl: string;
     imageAlt: string;
     portraitShape?: string; // e.g., 'transparent', 'round', 'square'
-    totalsaves?: number;
-    successes?: number;
-    failures?: number;
     showDeathSaves?: boolean;
   };
 
@@ -18,12 +15,8 @@
     imageAlt,
     portraitShape = 'transparent',
     showDeathSaves = false,
-    totalsaves = 6, // Default based on DeathSavesOverlay
-    successes = 0,
-    failures = 0,
   }: Props = $props();
 
-  let deathSavesFocused = $state(false);
   let characterIsDead = $state(false);
 
   // Make portraitShape mutable for the debug button
@@ -61,11 +54,7 @@
 </div>
 {#if showDeathSaves}
   <DeathSavesOverlay
-    {totalsaves}
-    {successes}
-    {failures}
     bind:dead={characterIsDead}
     on:deathStatusChange={handleDeathStatusChange}
-    on:deathSavesFocused={() => deathSavesFocused = true}
   />
 {/if}
