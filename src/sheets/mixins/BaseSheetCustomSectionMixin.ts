@@ -35,12 +35,12 @@ export function BaseSheetCustomSectionMixin<
 >(itemsFn: OwnedItemsFunction, Base: T) {
   return class extends Base {
     async _onDropItem(event: DragEvent, data: any) {
-      if (!this.actor.isOwner) return false;
-      const item = await Item.implementation.fromDropData(data);
-
       if (this.item?.type === CONSTANTS.SHEET_TYPE_CONTAINER) {
         return super._onDropItem(event, data);
       }
+
+      if (!this.actor.isOwner) return false;
+      const item = await Item.implementation.fromDropData(data);
 
       // Handle moving out of container & item sorting
       if (this.actor.uuid === item.parent?.uuid) {
