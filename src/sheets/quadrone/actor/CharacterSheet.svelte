@@ -310,15 +310,22 @@
         ]}
       >
         <div class="ac-container flexcol">
-          <div class="shield">
-            <span class="ac-value color-text-default" title="Armor Class"
-              >14</span
-            >
+          <div
+            class="shield"
+            data-attribution="attributes.ac"
+            data-attribution-caption="DND5E.ArmorClass"
+            data-tooltip-direction="DOWN"
+          >
+            <span class="ac-value color-text-default" title="Armor Class">
+              {context.system.attributes.ac.value}
+            </span>
             {#if context.unlocked}
               <button
                 aria-label="Configure Armor Class"
                 type="button"
                 class="button button-borderless button-icon-only button-config"
+                onclick={(ev) =>
+                  FoundryAdapter.renderArmorConfig(context.actor)}
               >
                 <i class="fas fa-cog"></i>
               </button>

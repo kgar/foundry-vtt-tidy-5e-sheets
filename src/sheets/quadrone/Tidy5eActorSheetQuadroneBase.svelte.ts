@@ -2,7 +2,10 @@ import { CONSTANTS } from 'src/constants';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
-import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import {
+  TidyExtensibleDocumentSheetMixin,
+  type TidyDocumentSheetRenderOptions,
+} from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import type { Ability } from 'src/types/dnd5e.actor5e.types';
 import type { Item5e } from 'src/types/item.types';
@@ -515,6 +518,36 @@ export function Tidy5eActorSheetQuadroneBase<
         );
         debug('Damage Modification error troubleshooting info', { context });
       }
+    }
+
+    /* -------------------------------------------- */
+    /*  Rendering Life-Cycle Methods                */
+    /* -------------------------------------------- */
+    async _onRender(
+      context: ActorSheetQuadroneContext,
+      options: TidyDocumentSheetRenderOptions
+    ) {
+      await super._onRender(context, options);
+
+      // Apply attribution & reference tooltips
+      this.element
+        .querySelectorAll('[data-attribution],[data-reference-tooltip]')
+        .forEach((e: HTMLElement) => this._applyTooltips(e));
+    }
+
+    /**
+     * Apply a property attribution tooltip to an element.
+     * @param {HTMLElement} element  The element to get the tooltip.
+     * @protected
+     */
+    _applyTooltips(element: HTMLElement) {
+      if ('tooltip' in element.dataset) return;
+      const uuid = element.dataset.referenceTooltip ?? this.actor.uuid;
+      element.dataset.tooltip = `
+          <section class="loading" data-uuid="${uuid}"><i class="fas fa-spinner fa-spin-pulse"></i></section>
+        `;
+      if (element.dataset.attribution)
+        element.dataset.tooltipClass = 'property-attribution';
     }
   }
 
