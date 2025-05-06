@@ -848,8 +848,20 @@
           flex-grow: 1;
         }
 
-        .ability-roll-button {
+        .ability-roll-button,
+        .initiative-roll-button {
           text-transform: uppercase;
+          padding: 0;
+          margin-bottom: -0.125rem;
+          font: var(--t5e-font-label-medium);
+          color: var(--t5e-color-text-gold);
+          line-height: normal;
+          height: auto;
+          min-height: auto;
+
+          &:active {
+            border: none;
+          }
         }
 
         .bonus {
@@ -930,17 +942,6 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-
-            .ability-roll-button {
-              padding: 0;
-              margin-bottom: -0.125rem;
-              font: var(--t5e-font-label-medium);
-              color: var(--t5e-color-text-gold);
-              line-height: normal;
-              height: auto;
-              min-height: auto;
-              text-transform: uppercase;
-            }
 
             &.proficient {
               background-image: url(../../modules/tidy5e-sheet/images/badge_ability_dark_prof.webp);

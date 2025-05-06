@@ -2,6 +2,7 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ActorAbilityContextEntry } from 'src/types/types';
+  import { getModifierData } from 'src/utils/formatting';
   import { tick } from 'svelte';
 
   type Props = {
@@ -24,6 +25,9 @@
   const localize = FoundryAdapter.localize;
 
   const sourceValue = $derived(ability.source?.value ?? ability.value);
+
+  const mod = $derived(getModifierData(ability.mod));
+  const save = $derived(getModifierData(ability.save.value));
 
   const uniqueId = foundry.utils.randomID();
 
@@ -85,13 +89,13 @@
         class={[
           'modifier font-label-xlarge color-text-lightest',
           { invisible: editingScore },
-        ]}>{ability.mod >= 0 ? '+' : '-'}</span
+        ]}>{mod.sign}</span
       >
       <span
         class={[
           'value bonus font-data-xlarge color-text-default',
           { invisible: editingScore },
-        ]}>{ability.mod >= 0 ? ability.mod : ability.mod * -1}</span
+        ]}>{mod.value}</span
       >
 
       {#if unlocked}
@@ -143,12 +147,10 @@
     onclick={(ev) => onRollSave?.(ev, ability.key)}
   >
     <span class="modifier font-label-medium color-text-lightest"
-      >{ability.save.value >= 0 ? '+' : '-'}</span
+      >{save.sign}</span
     >
     <span class="value save font-data-medium color-text-default"
-      >{ability.save.value >= 0
-        ? ability.save.value
-        : ability.save.value * -1}</span
+      >{save.value}</span
     >
     <span class="icon"><i class="fas fa-shield-heart"></i></span>
   </button>

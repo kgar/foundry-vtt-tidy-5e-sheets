@@ -10,6 +10,7 @@
   import AbilityScore from './character-parts/AbilityScore.svelte';
   import InspirationBadge from './character-parts/InspirationBadge.svelte';
   import ActorSidebar from './character-parts/ActorSidebar.svelte';
+  import { getModifierData } from 'src/utils/formatting';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -44,6 +45,8 @@
 
   let portraitShape = 'transparent';
   let exhaustionLevel = $derived(context.system.attributes.exhaustion);
+
+  let ini = $derived(getModifierData(context.system.attributes.init.total));
 </script>
 
 <!-- TODO: Header bar needs to always be in dark mode -->
@@ -355,17 +358,30 @@
           />
         {/each}
         <div class="initiative-container flexcol">
-          <div class="initiative score">
+          <div class="initiative score" data-tooltip="DND5E.Initiative">
             <div class="initiative-bonus flexrow">
-              <span class="modifier color-text-lightest">+</span>
-              <span class="value color-text-default">2</span>
+              <span class="modifier color-text-lightest">
+                {ini.sign}
+              </span>
+              <span class="value color-text-default">
+                {ini.value}
+              </span>
             </div>
-            <span class="label font-label-medium color-text-gold">INIT</span>
+            <button
+              type="button"
+              class="initiative-roll-button"
+              onclick={(event) =>
+                context.actor.rollInitiativeDialog({ event: event })}
+            >
+              {localize('DND5E.InitiativeAbbr')}
+            </button>
             {#if context.unlocked}
               <button
                 aria-label="Configure Initiative"
                 type="button"
                 class="button button-borderless button-icon-only button-config"
+                onclick={() =>
+                  FoundryAdapter.renderInitiativeConfig(context.actor)}
               >
                 <i class="fas fa-cog"></i>
               </button>
