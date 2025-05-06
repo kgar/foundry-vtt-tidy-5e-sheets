@@ -16,6 +16,7 @@ import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import type { AttributePinFlag } from 'src/foundry/TidyFlags.types';
 import type { DataField, DataSchema, SchemaField } from 'foundry.data.fields';
+import type { Ability } from './dnd5e.actor5e.types';
 
 export type Actor5e = any;
 export type TokenDocument = any;
@@ -906,6 +907,7 @@ export type DocumentSheetQuadroneContext<TDocument> = {
 };
 
 export type ActorSheetQuadroneContext = {
+  abilities: ActorAbilityContextEntry[];
   actor: Actor5e;
   appId: string; // do we need this ? or is rootId sufficient?
   config: typeof CONFIG.DND5E;
@@ -933,6 +935,15 @@ export type ActorSheetQuadroneContext = {
   traits: any; // TODO: Type this
   warnings: DocumentPreparationWarning;
 } & DocumentSheetQuadroneContext<Actor5e>;
+
+export type ActorAbilityContextEntry = Ability & {
+  key: string; // For saving
+  abbr: string; // the visible abbreviation button label
+  hover: string; // not used? probably tooltip
+  icon: string; // not used? probably tooltip
+  label: string; // tooltip and aria label
+  source: { value: number }; // source.value on the input
+};
 
 export type CharacterSheetQuadroneContext = {
   // TODO: Populate with context data as needed

@@ -3,11 +3,12 @@ import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivi
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
-import { settings } from 'src/settings/settings.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
+import type { Ability } from 'src/types/dnd5e.actor5e.types';
 import type { Item5e } from 'src/types/item.types';
 import type {
   ActiveEffect5e,
+  ActorAbilityContextEntry,
   ActorSaves,
   ActorSheetQuadroneContext,
   DamageModificationContextEntry,
@@ -166,6 +167,7 @@ export function Tidy5eActorSheetQuadroneBase<
       const rollData = this.actor.getRollData();
 
       let context: ActorSheetQuadroneContext = {
+        abilities: [],
         actor: this.actor,
         appId: this.appId,
         config: CONFIG.DND5E,
@@ -198,6 +200,8 @@ export function Tidy5eActorSheetQuadroneBase<
         warnings: foundry.utils.deepClone(this.actor._preparationWarnings),
         ...documentSheetContext,
       };
+
+      context.abilities = this._prepareAbilities(context);
 
       // Prepare owned items
       this._prepareItems(context);
@@ -346,6 +350,22 @@ export function Tidy5eActorSheetQuadroneBase<
           };
         }
       }
+    }
+
+    _prepareAbilities(
+      context: ActorSheetQuadroneContext
+    ): ActorAbilityContextEntry[] {
+      return Object.entries<Ability>(context.system.abilities).map(
+        ([key, ability]) => ({
+          ...ability, // Modifier, save mod, save proficiency, score value
+          key, // For saving
+          abbr: CONFIG.DND5E.abilities[key]?.abbreviation ?? '', // the visible abbreviation button label
+          hover: CONFIG.DND5E.proficiencyLevels[ability.proficient], // not used?
+          icon: CONFIG.DND5E.abilities[key]?.icon, // not used?
+          label: CONFIG.DND5E.abilities[key]?.label, // tooltip and aria label
+          source: context.source.abilities[key], // source.value on the input
+        })
+      );
     }
 
     /**
