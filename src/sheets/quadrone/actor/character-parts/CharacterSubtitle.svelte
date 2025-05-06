@@ -1,8 +1,13 @@
 <script lang="ts">
+  interface Props {
+    showXp?: boolean;
+  }
+
+  let { showXp = false }: Props = $props();
   let size = 'Medium';
   let alignment = 'Lawful Neutral';
   let species = 'Quadrone';
-  let showXp = false; // TODO: Add this
+
 
   let speeds = $state([
     {
@@ -28,7 +33,7 @@
   
 </script>
 
-<div class="flexrow">
+<div class="character-details-subtitle-row">
   <div class="character-subtitle">
   {#each speeds as speed}
   <span class="speed">
@@ -58,7 +63,16 @@
   </div>
   {#if showXp}
   <div class="xp-container">
-    Literally have never used this.
+    <div class="xp-label">
+      <span class="label font-label-medium color-text-gold">XP</span>
+      <span class="label font-label-medium color-text-default">12,345</span>
+      <span class="separator">/</span>
+      <span class="label font-body-medium color-text-lighter">17,500</span>
+    </div>
+    <div class="xp-bar xp meter progress"
+      style="--bar-percentage: 50%;">
+      <span class="xp-bar-current" style="width: 50%"></span>
+    </div>
   </div>
   {/if}
 </div>

@@ -127,6 +127,12 @@
     --bar-border-color: var(--t5e-color-hp-hd-dark);
   }
 
+  &.xp {
+    --bar-background: linear-gradient(to right,
+        var(--t5e-color-palette-gold-62) 0%,
+        var(--t5e-color-palette-gold-75) 100%);
+  }
+
   .label {
     cursor: pointer;
   }
