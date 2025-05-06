@@ -1153,7 +1153,9 @@
       background: url(../../modules/tidy5e-sheet/images/denim065.png) top center / auto repeat,
         var(--t5e-component-card-dark-darker);
       background-size: auto;
+    }
 
+    .window-content {
       .sheet-header {
         border-bottom: 1px solid var(--t5e-color-palette-gold-45);
       }
