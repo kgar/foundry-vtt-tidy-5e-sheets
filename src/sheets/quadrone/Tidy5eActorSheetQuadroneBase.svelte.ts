@@ -34,7 +34,7 @@ export function Tidy5eActorSheetQuadroneBase<
   abstract class Tidy5eActorSheetQuadroneBase extends TidyExtensibleDocumentSheetMixin(
     sheetType,
     SvelteApplicationMixin<ApplicationConfiguration | undefined, TContext>(
-      foundry.Applications.sheets.ActorSheetV2
+      foundry.applications.sheets.ActorSheetV2
     )
   ) {
     abstract currentTabId: string;
