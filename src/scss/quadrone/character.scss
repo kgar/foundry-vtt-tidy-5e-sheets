@@ -1119,6 +1119,7 @@
       flex-direction: row;
       overflow-x: hidden;
       overflow-y: auto;
+      padding: var(--t5e-size-3x) var(--t5e-size-4x);
 
       >.sidebar {
         flex-basis: var(--sidebar-expanded-width);
