@@ -42,7 +42,6 @@
   let hdMax = 2;
   let hdPct = 1;
   
-  let unlocked = false; // TODO: Replace with context.unlocked
   let portraitShape = 'transparent';
   let exhaustionLevel = 1;
 
@@ -96,7 +95,7 @@
             />
           </div>
 
-          {#if !unlocked}
+          {#if !context.unlocked}
           {#if hpTemp > 0 || hpTempInputFocused}
           <!-- TODO: Convert to buttons -->
           <div
@@ -142,7 +141,7 @@
           aria-label="Configure HP"
           type="button"
           class="button button-borderless button-icon-only button-config"
-          class:editMode={unlocked}>
+          class:editMode={context.unlocked}>
           <i class="fas fa-cog"></i>
         </button>
         {/if}
@@ -181,7 +180,7 @@
                 blurAfterChange={true}
                 hidden={!hdValueInputFocused}
               />
-              {#if unlocked}
+              {#if context.unlocked}
               <button
                 aria-label="Configure Hit Die"
                 type="button"
@@ -273,7 +272,7 @@
       <div class="ac-container flexcol">
         <div class="shield">
           <span class="ac-value color-text-default" title="Armor Class">14</span>
-          {#if unlocked}
+          {#if context.unlocked}
           <button
             aria-label="Configure Armor Class"
             type="button"
@@ -296,7 +295,7 @@
         score={8} 
         bonus={-1} 
         save={-1} 
-        unlocked={unlocked}
+        unlocked={context.unlocked}
       />
       <AbilityScore 
         key="dexterity" 
@@ -306,7 +305,7 @@
         score={14} 
         bonus={2} 
         save={4} 
-        unlocked={unlocked}
+        unlocked={context.unlocked}
       />
       <AbilityScore 
         key="constitution" 
@@ -316,7 +315,7 @@
         score={14} 
         bonus={2} 
         save={4} 
-        unlocked={unlocked}
+        unlocked={context.unlocked}
       />
       <AbilityScore 
         key="intelligence" 
@@ -326,7 +325,7 @@
         score={14} 
         bonus={2} 
         save={4} 
-        unlocked={unlocked}
+        unlocked={context.unlocked}
       />
       <AbilityScore 
         key="wisdom" 
@@ -336,7 +335,7 @@
         score={14} 
         bonus={2} 
         save={4} 
-        unlocked={unlocked}
+        unlocked={context.unlocked}
       />
       <AbilityScore 
         key="charisma" 
@@ -346,7 +345,7 @@
         score={17} 
         bonus={3} 
         save={6} 
-        unlocked={unlocked}
+        unlocked={context.unlocked}
       />
       {#if showSanity}
       <AbilityScore 
@@ -357,7 +356,7 @@
         score={14} 
         bonus={2} 
         save={4} 
-        unlocked={unlocked}
+        unlocked={context.unlocked}
       />
       {/if}
       {#if showHonor}
@@ -369,7 +368,7 @@
         score={14} 
         bonus={2} 
         save={4} 
-        unlocked={unlocked}
+        unlocked={context.unlocked}
       />
       {/if}
       <div class="initiative-container flexcol">
@@ -379,7 +378,7 @@
             <span class="value color-text-default">2</span>
           </div>
           <span class="label font-label-medium color-text-gold">INIT</span>
-          {#if unlocked}
+          {#if context.unlocked}
           <button
             aria-label="Configure Initiative"
             type="button"
@@ -395,7 +394,7 @@
             <i class="fas fa-head-side-brain color-text-gold"></i>
             <span class="modifier font-label-medium color-text-lightest">+</span>
             <span class="value font-data-medium color-text-default">2</span>
-            {#if unlocked}
+            {#if context.unlocked}
             <div class="config-container">
               <button
                 aria-label="Configure Concentration"
