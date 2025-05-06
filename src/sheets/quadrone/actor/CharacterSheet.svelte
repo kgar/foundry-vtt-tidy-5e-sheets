@@ -50,7 +50,8 @@
   let showHonor = false;
 </script>
 
-<header class="sheet-header flexcol">
+<!-- TODO: Header bar needs to always be in dark mode -->
+<header class="sheet-header flexcol theme-dark">
   <div class="flexrow">
     <div class="character-vitals-container">
       <!-- TODO: Add switch for size -->
@@ -259,7 +260,7 @@
         <div class="level-container flex0 flexrow">
           <InspirationBadge />
           <div class="level-block">
-            <span class="level bonus font-data-xlarge" title="Level">5</span>
+            <span class="level bonus font-data-xlarge color-text-default" title="Level">5</span>
             <div class="proficiency flexrow">
               <span class="label font-label-medium color-text-gold" title="Proficiency Bonus">PB</span>
               <span class="modifier font-label-medium color-text-lightest">+</span>
@@ -271,7 +272,7 @@
       <div class="abilities-container">
       <div class="ac-container flexcol">
         <div class="shield">
-          <span class="ac-value" title="Armor Class">14</span>
+          <span class="ac-value color-text-default" title="Armor Class">14</span>
           {#if unlocked}
           <button
             aria-label="Configure Armor Class"
@@ -374,8 +375,8 @@
       <div class="initiative-container flexcol">
         <div class="initiative score">
           <div class="initiative-bonus flexrow">
-            <span class="modifier">+</span>
-            <span class="value">2</span>
+            <span class="modifier color-text-lightest">+</span>
+            <span class="value color-text-default">2</span>
           </div>
           <span class="label font-label-medium color-text-gold">INIT</span>
           {#if unlocked}
@@ -391,7 +392,7 @@
         <div class="concentration flexcol">
           <span class="label font-label-medium color-text-gold">Concentration</span>
           <div class="flexrow concentration-bonus">
-            <i class="fas fa-head-side-brain"></i>
+            <i class="fas fa-head-side-brain color-text-gold"></i>
             <span class="modifier font-label-medium color-text-lightest">+</span>
             <span class="value font-data-medium color-text-default">2</span>
             {#if unlocked}
