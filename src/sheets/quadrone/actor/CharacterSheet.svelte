@@ -9,6 +9,7 @@
   import CharacterPortrait from './character-parts/CharacterPortrait.svelte';
   import AbilityScore from './character-parts/AbilityScore.svelte';
   import InspirationBadge from './character-parts/InspirationBadge.svelte';
+  import ActorSidebar from './character-parts/ActorSidebar.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -25,6 +26,7 @@
   let hdValueInputFocused = $state(false);
   let exhaustionBarFocused = $state(false);
   let dying = $state(false);
+  let showXp = $state(false);
 
   let hpValueInput = $state<TextInputQuadrone>();
   let hpTempInput = $state<TextInputQuadrone>();
@@ -229,10 +231,10 @@
             {:else}
               <h1 class="character-name flex1">{context.actor.name}</h1>
             {/if}
-            <div class="sheet-header-actions">
+            <div class="sheet-header-actions flexrow" class:show-xp={showXp}>
               <button
                 type="button"
-                class="button button-tertiary button-icon-only short-rest gold-button"
+                class="button button-icon-only short-rest button-gold"
                 data-tooltip="DND5E.REST.Short.Label"
                 aria-label={localize('DND5E.REST.Short.Label')}
                 onclick={() => context.actor.shortRest()}
@@ -242,7 +244,7 @@
               </button>
               <button
                 type="button"
-                class="button button-tertiary button-icon-only long-rest gold-button"
+                class="button button-icon-only long-rest button-gold"
                 data-tooltip="DND5E.REST.Long.Label"
                 aria-label={localize('DND5E.REST.Long.Label')}
                 onclick={() => context.actor.longRest()}
@@ -252,9 +254,7 @@
                 </button>
             </div>
           </div>
-          <div class="character-details-subtitle-row">
-            <CharacterSubtitle />
-          </div>
+          <CharacterSubtitle {showXp} />
         </div>
         <div class="level-container flex0 flexrow">
           <InspirationBadge />
@@ -436,6 +436,8 @@
   </div>
 </header>
 <div class="main-content">
+  <div class={['sidebar', { expanded: sidebarExpanded }]}>
+    <ActorSidebar />
+  </div>
   <TabContents tabs={context.tabs} {selectedTabId} />
-
 </div>
