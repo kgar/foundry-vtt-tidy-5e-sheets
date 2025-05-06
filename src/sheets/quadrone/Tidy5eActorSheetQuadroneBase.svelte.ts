@@ -194,7 +194,7 @@ export function Tidy5eActorSheetQuadroneBase<
         system: this.actor.system,
         tabs: [],
         token: this.token,
-        traits: [],
+        traits: this._prepareTraits(this.actor.system),
         warnings: foundry.utils.deepClone(this.actor._preparationWarnings),
         ...documentSheetContext,
       };
@@ -210,9 +210,6 @@ export function Tidy5eActorSheetQuadroneBase<
 
       // Damage Modification
       this._applyDamageModifications(context);
-
-      // Traits
-      this._prepareTraits(context);
 
       return context;
     }
@@ -352,22 +349,28 @@ export function Tidy5eActorSheetQuadroneBase<
     }
 
     /**
-     * Prepare actor traits for display.
-     * @param {ApplicationRenderContext} context  Context being prepared.
-     * @returns {Record<string, object[]>}
+     * Prepare the data structure for traits data like languages, resistances & vulnerabilities, and proficiencies.
+     * @param {object} systemData  System data for the Actor being prepared.
+     * @returns {object}           Prepared trait data.
      * @protected
      */
-    _prepareTraits(context: ActorSheetQuadroneContext) {
+    _prepareTraits(systemData: any) {
+      // TODO: strongly type this
       const traits: Record<string, any> = {};
-      for (const [trait, config] of Object.entries(CONFIG.DND5E.traits)) {
-        const key = config.actorKeyPath ?? `system.traits.${trait}`;
+      for (const [trait, traitConfig] of Object.entries(CONFIG.DND5E.traits)) {
+        if (trait === 'dm') continue;
+        const key =
+          // @ts-expect-error
+          traitConfig.actorKeyPath?.replace('system.', '') ?? `traits.${trait}`;
         const data = foundry.utils.deepClone(
-          foundry.utils.getProperty(this.actor, key)
+          foundry.utils.getProperty(systemData, key)
         );
 
-        if (['dm', 'languages'].includes(trait) || !data) {
+        if (!data) {
           continue;
         }
+
+        foundry.utils.setProperty(traits, key, data);
 
         let values = data.value;
 
@@ -378,111 +381,69 @@ export function Tidy5eActorSheetQuadroneBase<
         } else if (!Array.isArray(values)) {
           values = [values];
         }
-        values = values.map((key) => {
-          const value = {
-            key,
-            label: dnd5e.documents.Trait.keyLabel(key, { trait }) ?? key,
-          };
-          const icons = (value.icons = []);
-          if (data.bypasses?.size && CONFIG.DND5E.damageTypes[key]?.isPhysical)
-            icons.push(
-              ...data.bypasses.map((p) => {
-                const type = CONFIG.DND5E.itemProperties[p]?.label;
-                return {
-                  icon: p,
-                  label: game.i18n.format('DND5E.DamagePhysicalBypassesShort', {
-                    type,
-                  }),
-                };
-              })
-            );
-          return value;
-        });
-        if (data.custom)
-          splitSemicolons(data.custom).forEach((label) =>
-            values.push({ label })
-          );
-        if (values.length) traits[trait] = values;
-      }
 
-      // If petrified, display "All Damage" instead of all damage types separately
-      if (this.document.hasConditionEffect('petrification')) {
-        traits.dr = [{ label: game.i18n.localize('DND5E.DamageAll') }];
-      }
-
-      // Combine damage & condition immunities in play mode.
-      if (this.sheetMode === CONSTANTS.SHEET_MODE_PLAY && traits.ci) {
-        traits.di ??= [];
-        traits.di.push(...traits.ci);
-        delete traits.ci;
-      }
-
-      // Prepare damage modifications
-      const dm = this.actor.system.traits?.dm;
-      if (dm) {
-        const rollData = this.actor.getRollData({ deterministic: true });
-        const values = Object.entries(dm.amount)
-          .map(([k, v]) => {
-            const total = dnd5e.utils.simplifyBonus(v, rollData);
-            if (!total) return null;
-            const value = {
-              label: `${
-                CONFIG.DND5E.damageTypes[k]?.label ?? k
-              } ${dnd5e.utils.formatNumber(total, { signDisplay: 'always' })}`,
-              color: total > 0 ? 'maroon' : 'green',
-              icons: [],
-            };
-
-            if (dm.bypasses.size && CONFIG.DND5E.damageTypes[k]?.isPhysical)
-              value.icons.push(
-                ...dm.bypasses.map((p) => {
-                  const type = CONFIG.DND5E.itemProperties[p]?.label;
-                  return {
-                    icon: p,
-                    label: game.i18n.format(
-                      'DND5E.DamagePhysicalBypassesShort',
-                      { type }
-                    ),
-                  };
-                })
-              );
-            return value;
-          })
-          .filter((f) => f);
-        if (values.length) traits.dm = values;
-      }
-
-      // Prepare languages
-      const languages = this.actor.system.traits?.languages?.labels;
-      if (languages?.languages?.length)
-        traits.languages = languages.languages.map((label) => ({ label }));
-      for (const [key, { label }] of Object.entries(
-        CONFIG.DND5E.communicationTypes
-      )) {
-        const data = this.actor.system.traits?.languages?.communication?.[key];
-        if (!data?.value) continue;
-        traits.languages ??= [];
-        traits.languages.push({ label, value: data.value });
-      }
-
-      // Display weapon masteries
-      for (const key of this.actor.system.traits?.weaponProf?.mastery?.value ??
-        []) {
-        let value = traits.weapon?.find((w) => w.key === key);
-        if (!value) {
-          value = {
-            key,
-            label:
-              dnd5e.documents.Trait.keyLabel(key, { trait: 'weapon' }) ?? key,
-            icons: [],
-          };
-          traits.weapon ??= [];
-          traits.weapon.push(value);
+        // Split physical damage types from others if bypasses is set
+        const physical: string[] = [];
+        if (data.bypasses?.size) {
+          values = values.filter((t: string) => {
+            if (!CONFIG.DND5E.damageTypes[t]?.isPhysical) return true;
+            physical.push(t);
+            return false;
+          });
         }
-        value.icons.push({
-          icon: 'mastery',
-          label: game.i18n.format('DND5E.WEAPON.Mastery.Label'),
-        });
+
+        data.selected = values.reduce(
+          (obj: Record<string, string>, key: string) => {
+            obj[key] = dnd5e.documents.Trait.keyLabel(key, { trait }) ?? key;
+            return obj;
+          },
+          {} as Record<string, string>
+        );
+
+        // Display bypassed damage types
+        if (physical.length) {
+          const damageTypesFormatter = new Intl.ListFormat(game.i18n.lang, {
+            style: 'long',
+            type: 'conjunction',
+          });
+          const bypassFormatter = new Intl.ListFormat(game.i18n.lang, {
+            style: 'long',
+            type: 'disjunction',
+          });
+          data.selected.physical = game.i18n.format(
+            'DND5E.DamagePhysicalBypasses',
+            {
+              damageTypes: damageTypesFormatter.format(
+                physical.map((t) =>
+                  dnd5e.documents.Trait.keyLabel(t, { trait })
+                )
+              ),
+              bypassTypes: bypassFormatter.format(
+                data.bypasses.reduce((acc: string[], t: string) => {
+                  const v = CONFIG.DND5E.itemProperties[t];
+                  if (v && v.isPhysical) acc.push(v.label);
+                  return acc;
+                }, [])
+              ),
+            }
+          );
+        }
+
+        // Add custom entries
+        if (data.custom)
+          splitSemicolons(data.custom).forEach(
+            (c, i) => (data.selected[`custom${i + 1}`] = c)
+          );
+        data.cssClass = !foundry.utils.isEmpty(data.selected) ? '' : 'inactive';
+
+        // If petrified, display "All Damage" instead of all damage types separately
+        if (
+          trait === 'dr' &&
+          this.document.hasConditionEffect('petrification')
+        ) {
+          data.selected = { custom1: game.i18n.localize('DND5E.DamageAll') };
+          data.cssClass = '';
+        }
       }
 
       return traits;
