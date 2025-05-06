@@ -964,6 +964,11 @@
                 opacity: 1;
               }
             }
+
+            .editing-score-label {
+              position: absolute;
+              top: 100%;
+            }
           }
 
           .ability-score {

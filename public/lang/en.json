@@ -112,6 +112,7 @@
   "TIDY5E.HideNotProficientSkills": "Hide Not Proficient",
 
   "TIDY5E.Abilities": "Abilities",
+  "TIDY5E.Ability.EditScore.label": "Edit Score",
 
   "TIDY5E.Environment": "Environment",
   "TIDY5E.EnvironmentTooltip": "Environment: {environment}",

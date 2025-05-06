@@ -81,11 +81,17 @@
       {ability.abbr}
     </button>
     <div class={['flexrow']}>
-      <span class={['modifier font-label-xlarge color-text-lightest']}
-        >{ability.mod >= 0 ? '+' : '-'}</span
+      <span
+        class={[
+          'modifier font-label-xlarge color-text-lightest',
+          { invisible: editingScore },
+        ]}>{ability.mod >= 0 ? '+' : '-'}</span
       >
-      <span class="value bonus font-data-xlarge color-text-default"
-        >{ability.mod >= 0 ? ability.mod : ability.mod * -1}</span
+      <span
+        class={[
+          'value bonus font-data-xlarge color-text-default',
+          { invisible: editingScore },
+        ]}>{ability.mod >= 0 ? ability.mod : ability.mod * -1}</span
       >
 
       {#if unlocked}
@@ -109,16 +115,26 @@
       <button
         aria-label={configButtonTooltip}
         type="button"
-        class="button button-borderless button-icon-only button-config"
-        tabindex="-1"
+        class={[
+          'button button-borderless button-icon-only button-config',
+          { invisible: editingScore },
+        ]}
         data-tooltip={configButtonTooltip}
         onclick={(ev) => onConfigClicked?.(ability.key)}
       >
         <i class="fas fa-cog"></i>
       </button>
     {/if}
+    {#if unlocked && editingScore}
+      <span class="editing-score-label">
+        {localize('TIDY5E.Ability.EditScore.label')}
+      </span>
+    {/if}
   </div>
-  <label class="ability-score" for={abilityInputId}>
+  <label
+    class={['ability-score', { invisible: editingScore }]}
+    for={abilityInputId}
+  >
     <span class="font-title-small color-text-default">{ability.value}</span>
   </label>
   <button
