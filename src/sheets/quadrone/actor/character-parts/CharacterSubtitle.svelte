@@ -1,14 +1,20 @@
 <script lang="ts">
-  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
+    import { getCharacterSheetQuadroneContext } from "src/sheets/sheet-context.svelte";
+
+  interface Props {
+    showXp?: boolean;
+  }
+
+  let { showXp = false }: Props = $props();
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
   let size = $derived(
     context.config.actorSizes[context.system.traits.size]?.label,
   );
+
   let alignment = 'Lawful Neutral';
   let species = 'Quadrone';
-  let showXp = false; // TODO: Add this
 
   let speeds = $state([
     {
@@ -33,7 +39,7 @@
   ]);
 </script>
 
-<div class="flexrow">
+<div class="character-details-subtitle-row">
   <div class="character-subtitle">
     {#each speeds as speed}
       <span class="speed">
