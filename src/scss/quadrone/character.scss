@@ -860,7 +860,7 @@
           margin-right: var(--t5e-size-1x);
         }
 
-        .icon {
+        .icon i {
           font-size: var(--font-size-11);
           color: var(--t5e-color-gold);
         }
@@ -985,6 +985,9 @@
             gap: 1px;
             margin-top: var(--t5e-size-1x);
             text-shadow: var(--header-shadow);
+            padding: 0;
+            height: auto;
+            min-height: auto;
 
             .modifier,
             .value {

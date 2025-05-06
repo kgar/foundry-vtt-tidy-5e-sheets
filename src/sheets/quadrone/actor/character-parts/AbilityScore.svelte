@@ -64,8 +64,6 @@
   ) {
     editingScore = false;
   }
-
-  // onclick={(ev) => onRollSave?.(ev, ability.key)}
 </script>
 
 <div class={['ability', ability.key]}>
@@ -123,7 +121,11 @@
   <label class="ability-score" for={abilityInputId}>
     <span class="font-title-small color-text-default">{ability.value}</span>
   </label>
-  <div class="ability-save flexrow">
+  <button
+    type="button"
+    class="ability-save flexrow"
+    onclick={(ev) => onRollSave?.(ev, ability.key)}
+  >
     <span class="modifier font-label-medium color-text-lightest"
       >{ability.save.value >= 0 ? '+' : '-'}</span
     >
@@ -133,5 +135,5 @@
         : ability.save.value * -1}</span
     >
     <span class="icon"><i class="fas fa-shield-heart"></i></span>
-  </div>
+  </button>
 </div>
