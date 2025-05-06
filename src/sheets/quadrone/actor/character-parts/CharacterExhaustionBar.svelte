@@ -1,22 +1,14 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
-  
-  export let exhaustionLevel = 0;
-  let levels = 6 + 1;
-  
-  const dispatch = createEventDispatcher();
+  interface Props {
+    exhaustionLevel: number;
+    onExhaustionLevelSet?: (level: number) => void;
+    onClose?: () => void;
+  }
 
-  function isActive(level: number): boolean {
-    return level === exhaustionLevel;
-  }
-  
-  function close() {
-    dispatch('close');
-  }
-  
-  function setExhaustionLevel(level: number) {
-    dispatch('update', { level });
-  }
+  let { exhaustionLevel, onExhaustionLevelSet, onClose }: Props = $props();
+
+  // TODO: Do we want to support Tidy's variable exhaustion levels feature? I know some users use it.
+  let levels = 6 + 1;
 </script>
 
 <div class="exhaustion-bar flexrow">
@@ -24,8 +16,15 @@
     <button
       aria-label="Exhaustion level {i}"
       type="button"
-      class="button button-borderless button-icon-only button-config {isActive(i) ? 'active' : ''}"
-      on:click={() => { setExhaustionLevel(i); close(); }}>
+      class={[
+        'button button-borderless button-icon-only button-config',
+        { active: i === exhaustionLevel },
+      ]}
+      onclick={() => {
+        onExhaustionLevelSet?.(i);
+        onClose?.();
+      }}
+    >
       {i}
     </button>
   {/each}
@@ -33,7 +32,8 @@
     aria-label="Close exhaustion bar"
     type="button"
     class="button button-borderless button-icon-only button-config"
-    on:click={close}>
+    onclick={() => onClose?.()}
+  >
     <i class="fas fa-times"></i>
   </button>
 </div>
