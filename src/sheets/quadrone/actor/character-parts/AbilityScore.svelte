@@ -1,48 +1,137 @@
 <script lang="ts">
+  import { CONSTANTS } from 'src/constants';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import type { ActorAbilityContextEntry } from 'src/types/types';
+  import { tick } from 'svelte';
+
   type Props = {
-    key: string;
-    label: string;
-    shortLabel: string;
-    proficient: boolean;
-    score: number;
-    bonus: number;
-    save: number;
-    unlocked?: boolean;
+    ability: ActorAbilityContextEntry;
+    unlocked: boolean;
+    onScoreChanged?: (newValue: number) => Promise<void>;
+    onConfigClicked?: (key: string) => void;
+    onRollAbility?: (event: MouseEvent, key: string) => void;
+    onRollSave?: (event: MouseEvent, key: string) => void;
   };
   let {
-    key,
-    label,
-    shortLabel,
-    proficient,
-    score,
-    bonus,
-    save,
-    unlocked = true,
+    ability,
+    unlocked,
+    onScoreChanged,
+    onConfigClicked,
+    onRollAbility,
+    onRollSave,
   }: Props = $props();
+
+  const localize = FoundryAdapter.localize;
+
+  const sourceValue = $derived(ability.source?.value ?? ability.value);
+
+  const uniqueId = foundry.utils.randomID();
+
+  const abilityInputId = $derived(`ability-score-${ability.key}-${uniqueId}`);
+
+  let configButtonTooltip = $derived(
+    localize('DND5E.AbilityConfigure', { ability: ability.label }),
+  );
+
+  async function onScoreChange(
+    event: Event & { currentTarget: HTMLInputElement },
+  ) {
+    let value = +event.currentTarget.value;
+
+    let isValid = !isNaN(value);
+
+    if (isValid) {
+      event.currentTarget.blur();
+      await onScoreChanged?.(value);
+      return;
+    }
+
+    event.currentTarget.value = sourceValue.toString();
+  }
+
+  let editingScore = $state(false);
+
+  async function onScoreInputFocused(
+    ev: Event & { currentTarget: HTMLInputElement },
+  ) {
+    await tick();
+    ev.currentTarget.select();
+    editingScore = true;
+  }
+
+  async function onScoreInputBlurred(
+    ev: Event & { currentTarget: HTMLInputElement },
+  ) {
+    editingScore = false;
+  }
+
+  // onclick={(ev) => onRollSave?.(ev, ability.key)}
 </script>
 
-<div class="ability {key}">
-  <div class="bonus-container" class:proficient={proficient}>
-    <span class="label font-label-medium color-text-gold">{shortLabel}</span>
-    <div class="flexrow">
-      <span class="modifier font-label-xlarge color-text-lightest">{bonus >= 0 ? '+' : '-'}</span>
-      <span class="value bonus font-data-xlarge color-text-default">{bonus >= 0 ? bonus : bonus * -1}</span>
+<div class={['ability', ability.key]}>
+  <div
+    class={[
+      'bonus-container',
+      { proficient: ability.proficient === CONSTANTS.PROFICIENCY_PROFICIENT },
+    ]}
+  >
+    <button
+      type="button"
+      onclick={(ev) => onRollAbility?.(ev, ability.key)}
+      class="ability-roll-button label font-label-medium color-text-gold"
+    >
+      {ability.abbr}
+    </button>
+    <div class={['flexrow']}>
+      <span class={['modifier font-label-xlarge color-text-lightest']}
+        >{ability.mod >= 0 ? '+' : '-'}</span
+      >
+      <span class="value bonus font-data-xlarge color-text-default"
+        >{ability.mod >= 0 ? ability.mod : ability.mod * -1}</span
+      >
+
+      {#if unlocked}
+        <input
+          id={abilityInputId}
+          type="text"
+          value={sourceValue}
+          class={[
+            'ability-score-input',
+            'uninput',
+            { ['editing-score']: editingScore },
+          ]}
+          data-tooltip={ability.label}
+          onchange={onScoreChange}
+          onfocus={(ev) => onScoreInputFocused(ev)}
+          onblur={(ev) => onScoreInputBlurred(ev)}
+        />
+      {/if}
     </div>
     {#if unlocked}
-    <button
-      aria-label="Configure {label}"
-      type="button"
-      class="button button-borderless button-icon-only button-config">
-      <i class="fas fa-cog"></i>
-    </button>
+      <button
+        aria-label={configButtonTooltip}
+        type="button"
+        class="button button-borderless button-icon-only button-config"
+        tabindex="-1"
+        data-tooltip={configButtonTooltip}
+        onclick={(ev) => onConfigClicked?.(ability.key)}
+      >
+        <i class="fas fa-cog"></i>
+      </button>
     {/if}
   </div>
-  <div class="ability-score">
-    <span class="font-title-small color-text-default">{score}</span>
-  </div>
+  <label class="ability-score" for={abilityInputId}>
+    <span class="font-title-small color-text-default">{ability.value}</span>
+  </label>
   <div class="ability-save flexrow">
-    <span class="modifier font-label-medium color-text-lightest">{save >= 0 ? '+' : '-'}</span>
-    <span class="value save font-data-medium color-text-default">{save >= 0 ? save : save * -1}</span>
+    <span class="modifier font-label-medium color-text-lightest"
+      >{ability.save.value >= 0 ? '+' : '-'}</span
+    >
+    <span class="value save font-data-medium color-text-default"
+      >{ability.save.value >= 0
+        ? ability.save.value
+        : ability.save.value * -1}</span
+    >
     <span class="icon"><i class="fas fa-shield-heart"></i></span>
   </div>
 </div>

@@ -44,9 +44,6 @@
 
   let portraitShape = 'transparent';
   let exhaustionLevel = $derived(context.system.attributes.exhaustion);
-
-  let showSanity = false;
-  let showHonor = false;
 </script>
 
 <!-- TODO: Header bar needs to always be in dark mode -->
@@ -306,7 +303,12 @@
           </div>
         </div>
       </div>
-      <div class="abilities-container">
+      <div
+        class={[
+          'abilities-container',
+          { ['abilities-overflow']: context.abilities.length > 6 },
+        ]}
+      >
         <div class="ac-container flexcol">
           <div class="shield">
             <span class="ac-value color-text-default" title="Armor Class"
@@ -328,90 +330,22 @@
             <span class="label font-label-medium color-text-gold">Save</span>
           </div>
         </div>
-        <AbilityScore
-          key="strength"
-          label="Strength"
-          shortLabel="STR"
-          proficient={false}
-          score={8}
-          bonus={-1}
-          save={-1}
-          unlocked={context.unlocked}
-        />
-        <AbilityScore
-          key="dexterity"
-          label="Dexterity"
-          shortLabel="DEX"
-          proficient={false}
-          score={14}
-          bonus={2}
-          save={4}
-          unlocked={context.unlocked}
-        />
-        <AbilityScore
-          key="constitution"
-          label="Constitution"
-          shortLabel="CON"
-          proficient={true}
-          score={14}
-          bonus={2}
-          save={4}
-          unlocked={context.unlocked}
-        />
-        <AbilityScore
-          key="intelligence"
-          label="Intelligence"
-          shortLabel="INT"
-          proficient={false}
-          score={14}
-          bonus={2}
-          save={4}
-          unlocked={context.unlocked}
-        />
-        <AbilityScore
-          key="wisdom"
-          label="Wisdom"
-          shortLabel="WIS"
-          proficient={false}
-          score={14}
-          bonus={2}
-          save={4}
-          unlocked={context.unlocked}
-        />
-        <AbilityScore
-          key="charisma"
-          label="Charisma"
-          shortLabel="CHA"
-          proficient={true}
-          score={17}
-          bonus={3}
-          save={6}
-          unlocked={context.unlocked}
-        />
-        {#if showSanity}
+        {#each context.abilities as ability}
           <AbilityScore
-            key="sanity"
-            label="Sanity"
-            shortLabel="SAN"
-            proficient={false}
-            score={14}
-            bonus={2}
-            save={4}
+            {ability}
             unlocked={context.unlocked}
+            onScoreChanged={(score) =>
+              context.actor.update({
+                [`system.abilities.${ability.key}.value`]: score,
+              })}
+            onConfigClicked={(id) =>
+              FoundryAdapter.renderAbilityConfig(context.actor, id)}
+            onRollAbility={(event, key) =>
+              context.actor.rollAbilityCheck({ ability: key, event })}
+            onRollSave={(event, key) =>
+              context.actor.rollSavingThrow({ ability: key, event })}
           />
-        {/if}
-        {#if showHonor}
-          <AbilityScore
-            key="honor"
-            label="Honor"
-            shortLabel="HON"
-            proficient={false}
-            score={14}
-            bonus={2}
-            save={4}
-            unlocked={context.unlocked}
-          />
-        {/if}
+        {/each}
         <div class="initiative-container flexcol">
           <div class="initiative score">
             <div class="initiative-bonus flexrow">

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+
   interface Props {
     exhaustionLevel: number;
     onExhaustionLevelSet?: (level: number) => void;
@@ -24,6 +26,7 @@
         onExhaustionLevelSet?.(i);
         onClose?.();
       }}
+      data-tooltip={FoundryAdapter.localize('DND5E.ExhaustionLevel', { n: i })}
     >
       {i}
     </button>

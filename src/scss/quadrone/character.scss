@@ -848,7 +848,7 @@
           flex-grow: 1;
         }
 
-        .label {
+        .ability-roll-button {
           text-transform: uppercase;
         }
 
@@ -931,12 +931,38 @@
             align-items: center;
             justify-content: center;
 
-            .label {
+            .ability-roll-button {
+              padding: 0;
               margin-bottom: -0.125rem;
+              font: var(--t5e-font-label-medium);
+              color: var(--t5e-color-text-gold);
+              line-height: normal;
+              height: auto;
+              min-height: auto;
+              text-transform: uppercase;
             }
 
             &.proficient {
               background-image: url(../../modules/tidy5e-sheet/images/badge_ability_dark_prof.webp);
+            }
+
+            // 👋 hightouch - POC styles for toggling visibility on mod/value and the score input
+            &:has(.ability-score-input:focus) :where(.modifier, .value) {
+              visibility: hidden;
+            }
+
+            .ability-score-input {
+              position: absolute;
+              inset: 1.75rem 0 0 0;
+              height: calc(100% - 2.5rem);
+              text-align: center;
+              font-size: 2rem;
+              background: none;
+              opacity: 0;
+
+              &.editing-score {
+                opacity: 1;
+              }
             }
           }
 
@@ -1070,8 +1096,6 @@
             position: relative;
             right: auto;
             bottom: auto;
-
-            i: color
           }
         }
 
