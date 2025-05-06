@@ -2,25 +2,25 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   interface Props {
-    exhaustionLevel: number;
+    level: number;
+    total: number;
     onExhaustionLevelSet?: (level: number) => void;
     onClose?: () => void;
   }
 
-  let { exhaustionLevel, onExhaustionLevelSet, onClose }: Props = $props();
+  let { level, total, onExhaustionLevelSet, onClose }: Props = $props();
 
-  // TODO: Do we want to support Tidy's variable exhaustion levels feature? I know some users use it.
-  let levels = 6 + 1;
+  let effectiveTotal = $derived(total + 1);
 </script>
 
 <div class="exhaustion-bar flexrow">
-  {#each Array(levels) as _, i}
+  {#each Array(effectiveTotal) as _, i}
     <button
       aria-label="Exhaustion level {i}"
       type="button"
       class={[
         'button button-borderless button-icon-only button-config',
-        { active: i === exhaustionLevel },
+        { active: i === level },
       ]}
       onclick={() => {
         onExhaustionLevelSet?.(i);

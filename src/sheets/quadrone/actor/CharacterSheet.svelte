@@ -157,7 +157,8 @@
         <div class="character-vitals-row">
           {#if exhaustionBarFocused}
             <CharacterExhaustionBar
-              {exhaustionLevel}
+              level={exhaustionLevel}
+              total={context.config.conditionTypes.exhaustion.levels}
               onClose={() => (exhaustionBarFocused = false)}
               onExhaustionLevelSet={async (level) => {
                 await context.actor.update({
@@ -316,7 +317,7 @@
             data-attribution-caption="DND5E.ArmorClass"
             data-tooltip-direction="DOWN"
           >
-            <span class="ac-value color-text-default" title="Armor Class">
+            <span class="ac-value color-text-default">
               {context.system.attributes.ac.value}
             </span>
             {#if context.unlocked}
