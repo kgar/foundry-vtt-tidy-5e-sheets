@@ -917,8 +917,7 @@ export type ActorSheetQuadroneContext = {
   elements: unknown;
   fields: DataSchema;
   flags: SpecialTraits;
-  /** The actor has special save-based roll buttons to be situationally rendered to the sheet. */
-  hasSpecialSaves?: boolean;
+  isConcentrating: boolean;
   itemContext: Record<string, any>; // TODO: Consider adding itemContext generic
   /** All items without a container. */
   items: Item5e[];

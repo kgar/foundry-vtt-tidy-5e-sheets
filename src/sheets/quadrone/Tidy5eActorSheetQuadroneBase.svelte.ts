@@ -144,16 +144,18 @@ export function Tidy5eActorSheetQuadroneBase<
 
       // Concentration
       let saves: ActorSaves = {};
+
+      const isConcentrating =
+        this.actor.statuses?.has(CONFIG.specialStatusEffects.CONCENTRATING) ==
+        true;
+
       if (
         [CONSTANTS.SHEET_TYPE_CHARACTER, CONSTANTS.SHEET_TYPE_NPC].includes(
           this.actor.type
         )
       ) {
         const attrConcentration = this.actor.system.attributes.concentration;
-        if (
-          this.actor.statuses.has(CONFIG.specialStatusEffects.CONCENTRATING) ||
-          (documentSheetContext.unlocked && attrConcentration)
-        ) {
+        if (attrConcentration) {
           saves.concentration = {
             isConcentration: true,
             label: game.i18n.localize('DND5E.Concentration'),
@@ -164,8 +166,6 @@ export function Tidy5eActorSheetQuadroneBase<
           };
         }
       }
-
-      let hasSpecialSaves = Object.keys(saves).length > 0;
 
       const rollData = this.actor.getRollData();
 
@@ -185,7 +185,7 @@ export function Tidy5eActorSheetQuadroneBase<
           data: {},
           sections: [],
         },
-        hasSpecialSaves,
+        isConcentrating,
         itemContext: {},
         items: Array.from(this.actor.items)
           .filter((i: Item5e) => !this.actor.items.has(i.system.container))

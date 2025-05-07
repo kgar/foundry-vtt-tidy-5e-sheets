@@ -405,7 +405,14 @@
                 >
               </button>
               <div class="flexrow concentration-bonus">
-                <i class="fas fa-head-side-brain color-text-gold"></i>
+                {#if context.isConcentrating}
+                  <i
+                    class="active-concentration-icon fas fa-arrow-rotate-left fa-spin fa-spin-reverse"
+                    aria-label="Concentration"
+                  ></i>
+                {:else}
+                  <i class="fas fa-head-side-brain color-text-gold"></i>
+                {/if}
                 <span class="modifier font-label-medium color-text-lightest">
                   {save.sign}
                 </span>
