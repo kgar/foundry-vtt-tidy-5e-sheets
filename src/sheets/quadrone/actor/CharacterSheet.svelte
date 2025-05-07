@@ -388,29 +388,46 @@
             {/if}
           </div>
           <!-- TODO: Set concentration bonus here, but then move the concentration indicator up to subtitle, below the action buttons. -->
-          <div class="concentration flexcol">
-            <span class="label font-label-medium color-text-gold"
-              >Concentration</span
-            >
-            <div class="flexrow concentration-bonus">
-              <i class="fas fa-head-side-brain color-text-gold"></i>
-              <span class="modifier font-label-medium color-text-lightest"
-                >+</span
+          {#if context.saves.concentration}
+            {@const save = context.saves.concentration}
+            <div class="concentration flexcol">
+              <button
+                type="button"
+                onclick={(event) =>
+                  context.actor.rollConcentration({
+                    event,
+                    legacy: false,
+                  })}
+                class="unbutton concentration-roll-button"
               >
-              <span class="value font-data-medium color-text-default">2</span>
-              {#if context.unlocked}
-                <div class="config-container">
-                  <button
-                    aria-label="Configure Concentration"
-                    type="button"
-                    class="button button-borderless button-icon-only button-config"
-                  >
-                    <i class="fas fa-cog"></i>
-                  </button>
-                </div>
-              {/if}
+                <span class="label font-label-medium color-text-gold"
+                  >{localize(save.label)}</span
+                >
+              </button>
+              <div class="flexrow concentration-bonus">
+                <i class="fas fa-head-side-brain color-text-gold"></i>
+                <span class="modifier font-label-medium color-text-lightest">
+                  {save.sign}
+                </span>
+                <span class="value font-data-medium color-text-default">
+                  {save.mod}
+                </span>
+                {#if context.unlocked}
+                  <div class="config-container">
+                    <button
+                      aria-label="Configure Concentration"
+                      type="button"
+                      class="button button-borderless button-icon-only button-config"
+                      onclick={() =>
+                        FoundryAdapter.openConcentrationConfig(context.actor)}
+                    >
+                      <i class="fas fa-cog"></i>
+                    </button>
+                  </div>
+                {/if}
+              </div>
             </div>
-          </div>
+          {/if}
         </div>
       </div>
     </div>

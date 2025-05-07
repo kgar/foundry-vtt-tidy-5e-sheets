@@ -1058,13 +1058,19 @@
           width: 100%;
           overflow: hidden;
 
-          .label {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            width: 100%;
-            text-align: center;
-            margin-top: var(--t5e-size-2x);
-            text-transform: none;
+          .concentration-roll-button {
+            height: auto;
+            min-height: auto;
+            
+            .label {
+              color: var(--t5e-color-text-gold);
+              overflow: hidden;
+              text-overflow: ellipsis;
+              width: 100%;
+              text-align: center;
+              margin-top: var(--t5e-size-2x);
+              text-transform: none;
+            }
           }
 
           .concentration-bonus {
