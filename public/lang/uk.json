@@ -849,5 +849,6 @@
     "TIDY5E.Tidy5eVehicleSheetQuadrone": "Паспорт транспортного засобу Tidy 5e",
     "TIDY5E.Tidy5eContainerSheetQuadrone": "Контейнерний лист Tidy 5e",
     "TIDY5E.ItemSheet.PactLevelCastLabel": "Виконати в {ordinal}",
-    "TIDY5E.AddSpecific": "Додати {name}"
+    "TIDY5E.AddSpecific": "Додати {name}",
+    "TIDY5E.Ability.EditScore.label": "Редагувати партитуру"
 }
