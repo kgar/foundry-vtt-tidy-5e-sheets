@@ -47,6 +47,8 @@
   let exhaustionLevel = $derived(context.system.attributes.exhaustion);
 
   let ini = $derived(getModifierData(context.system.attributes.init.total));
+
+  let pb = $derived(getModifierData(context.system.attributes.prof ?? 0));
 </script>
 
 <!-- TODO: Header bar needs to always be in dark mode -->
@@ -289,20 +291,23 @@
           <div class="level-block">
             <span
               class="level bonus font-data-xlarge color-text-default"
-              title="Level">5</span
+              data-tooltip="DND5E.Level"
             >
-            <div class="proficiency flexrow">
-              <span
-                class="label font-label-medium color-text-gold"
-                title="Proficiency Bonus">PB</span
-              >
-              <span class="modifier font-label-medium color-text-lightest"
-                >+</span
-              >
-              <span
-                class="value font-data-medium color-text-default"
-                title="Proficiency Bonus Modifier">2</span
-              >
+              {context.system.details.level ?? 0}
+            </span>
+            <div
+              class="proficiency flexrow"
+              data-tooltip="DND5E.ProficiencyBonus"
+            >
+              <span class="label font-label-medium color-text-gold">
+                {localize('DND5E.ProficiencyBonusAbbr')}
+              </span>
+              <span class="modifier font-label-medium color-text-lightest">
+                {pb.sign}
+              </span>
+              <span class="value font-data-medium color-text-default">
+                {pb.value}
+              </span>
             </div>
           </div>
         </div>
