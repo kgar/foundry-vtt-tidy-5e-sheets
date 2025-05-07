@@ -37,6 +37,7 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { FacilityOccupants } from 'src/foundry/dnd5e.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { isNil } from 'src/utils/data';
+import type { TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_CHARACTER
@@ -200,24 +201,26 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   }
 
   _getClasses(): CharacterClassEntryContext[] {
-    return Object.values(this.actor.classes).map((cls: Item5e) => {
-      const spellcasting = cls.system.spellcasting
-        ? {
-            dc: cls.system.spellcasting.save,
-            ability: (
-              CONFIG.DND5E.abilities[cls.system.spellcasting.ability]
-                ?.abbreviation ?? cls.system.spellcasting.ability
-            )?.toLocaleUpperCase(),
-          }
-        : undefined;
+    return Object.values(this.actor.classes)
+      .map((cls: Item5e) => {
+        const spellcasting = cls.system.spellcasting
+          ? {
+              dc: cls.system.spellcasting.save,
+              ability: (
+                CONFIG.DND5E.abilities[cls.system.spellcasting.ability]
+                  ?.abbreviation ?? cls.system.spellcasting.ability
+              )?.toLocaleUpperCase(),
+            }
+          : undefined;
 
-      return {
-        name: cls.name,
-        levels: cls.system.levels,
-        isOriginalClass: cls.system.isOriginalClass,
-        spellcasting,
-      };
-    });
+        return {
+          name: cls.name,
+          levels: cls.system.levels,
+          isOriginalClass: cls.system.isOriginalClass,
+          spellcasting,
+        };
+      })
+      .toSorted((left, right) => right.levels - left.levels);
   }
 
   _getCreatureType(): CreatureTypeContext {
@@ -498,5 +501,13 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     }
 
     return pins;
+  }
+
+  async _renderFrame(options: TidyDocumentSheetRenderOptions) {
+    const element = await super._renderFrame(options);
+
+    element.querySelector('.window-header').classList.add('theme-dark');
+
+    return element;
   }
 }
