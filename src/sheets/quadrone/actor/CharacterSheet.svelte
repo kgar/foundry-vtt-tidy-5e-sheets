@@ -145,7 +145,10 @@
             {/if}
           {:else}
             <button
-              aria-label="Configure HP"
+              onclick={() =>
+                FoundryAdapter.renderHitPointsDialog(context.actor)}
+              aria-label={localize('DND5E.HitPointsConfig')}
+              data-tooltip="DND5E.HitPointsConfig"
               type="button"
               class={[
                 'button',
@@ -207,7 +210,10 @@
                 />
                 {#if context.unlocked}
                   <button
-                    aria-label="Configure Hit Die"
+                    onclick={() =>
+                      FoundryAdapter.renderHitDiceConfig(context.actor)}
+                    aria-label={localize('DND5E.HitDiceConfig')}
+                    data-tooltip="DND5E.HitDiceConfig"
                     type="button"
                     class="button button-borderless button-icon-only button-config"
                   >
