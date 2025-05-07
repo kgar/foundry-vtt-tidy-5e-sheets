@@ -181,6 +181,10 @@ export function Tidy5eActorSheetQuadroneBase<
         config: CONFIG.DND5E,
         customActorTraits: [],
         customContent: [],
+        enableXp:
+          FoundryAdapter.getSystemSetting(
+            CONSTANTS.SYSTEM_SETTING_LEVELING_MODE
+          ) !== CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
         effects: dnd5e.applications.components.EffectsElement.prepareCategories(
           this.actor.allApplicableEffects()
         ),

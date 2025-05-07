@@ -915,6 +915,7 @@ export type ActorSheetQuadroneContext = {
   customContent: CustomContent[];
   effects: Record<string, EffectCategory<ActiveEffect5e>>;
   elements: unknown;
+  enableXp: boolean;
   fields: DataSchema;
   flags: SpecialTraits;
   isConcentrating: boolean;
@@ -944,16 +945,50 @@ export type ActorAbilityContextEntry = Ability & {
   source: { value: number }; // source.value on the input
 };
 
+export type CharacterSpeedSenseContext = {
+  main: CharacterSpeedSenseEntryContext[];
+  secondary: CharacterSpeedSenseEntryContext[];
+};
+
+export type CharacterSpeedSenseEntryContext = {
+  key: string;
+  label: string;
+  value: string;
+  units: string;
+};
+
+export type CharacterClassEntryContext = {
+  name: string;
+  levels: number;
+  isOriginalClass: boolean;
+  // TODO: Consider boosting so that it can be used for spellcasting cards
+  spellcasting?: {
+    dc: number;
+    ability: string;
+  };
+};
+
+export type CreatureTypeContext = {
+  icon: string;
+  title?: string;
+  subtitle?: string;
+  reference?: string;
+}
+
 export type CharacterSheetQuadroneContext = {
   // TODO: Populate with context data as needed
   attributePins: AttributePinContext[];
   bastion: {
     description: string;
   };
+  classes: CharacterClassEntryContext[];
   conditions: Dnd5eActorCondition[];
+  creatureType: CreatureTypeContext;
   defenders: Actor5e[];
   epicBoonsEarned: string | undefined;
   facilities: CharacterFacilitiesContext;
+  senses: CharacterSpeedSenseContext;
+  speeds: CharacterSpeedSenseContext;
 } & ActorSheetQuadroneContext;
 
 export type NpcSheetQuadroneContext = {

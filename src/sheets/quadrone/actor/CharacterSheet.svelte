@@ -282,7 +282,7 @@
               </button>
             </div>
           </div>
-          <CharacterSubtitle {showXp} />
+          <CharacterSubtitle />
         </div>
         <div class="level-container flex0 flexrow">
           <InspirationBadge />

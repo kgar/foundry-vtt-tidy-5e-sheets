@@ -8,15 +8,19 @@ import { mount } from 'svelte';
 import type {
   ActorSheetQuadroneContext,
   AttributePinContext,
+  CharacterClassEntryContext,
   CharacterSheetQuadroneContext,
+  CharacterSpeedSenseContext,
+  CharacterSpeedSenseEntryContext,
   ChosenFacilityContext,
+  CreatureTypeContext,
   ExpandedItemData,
   ExpandedItemIdToLocationsMap,
   FacilityOccupantContext,
   LocationToSearchTextMap,
   MessageBus,
 } from 'src/types/types';
-import type { ItemChatData } from 'src/types/item.types';
+import type { Item5e, ItemChatData } from 'src/types/item.types';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
@@ -149,13 +153,17 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           }
         ),
       },
+      classes: this._getClasses(),
       conditions: conditions,
+      creatureType: this._getCreatureType(),
       defenders: [],
       epicBoonsEarned: undefined,
       facilities: {
         basic: { chosen: [], available: [], value: 0, max: 0 },
         special: { chosen: [], available: [], value: 0, max: 0 },
       },
+      senses: this._getSenses(),
+      speeds: this._getMovementSpeeds(),
       ...actorContext,
     };
 
@@ -189,6 +197,129 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     context.tabs = tabs;
 
     return context;
+  }
+
+  _getClasses(): CharacterClassEntryContext[] {
+    return Object.values(this.actor.classes).map((cls: Item5e) => {
+      const spellcasting = cls.system.spellcasting
+        ? {
+            dc: cls.system.spellcasting.save,
+            ability: (
+              CONFIG.DND5E.abilities[cls.system.spellcasting.ability]
+                ?.abbreviation ?? cls.system.spellcasting.ability
+            )?.toLocaleUpperCase(),
+          }
+        : undefined;
+
+      return {
+        name: cls.name,
+        levels: cls.system.levels,
+        isOriginalClass: cls.system.isOriginalClass,
+        spellcasting,
+      };
+    });
+  }
+
+  _getCreatureType(): CreatureTypeContext {
+    const { details } = this.actor.system;
+
+    return {
+      icon:
+        CONFIG.DND5E.creatureTypes[details.type.value]?.icon ??
+        'icons/svg/mystery-man.svg',
+      title:
+        details.type.value === 'custom'
+          ? details.type.custom
+          : CONFIG.DND5E.creatureTypes[details.type.value]?.label,
+      reference: CONFIG.DND5E.creatureTypes[details.type.value]?.reference,
+      subtitle: details.type.subtype,
+    };
+  }
+
+  _getSenses(): CharacterSpeedSenseContext {
+    const senseConfig = this.actor.system.attributes.senses;
+
+    const senses = Object.entries(CONFIG.DND5E.senses)
+      .reduce<CharacterSpeedSenseEntryContext[]>((acc, [key, label]) => {
+        const value = senseConfig[key];
+
+        if (!value || value === 0) {
+          return acc;
+        }
+
+        acc.push({
+          key,
+          label,
+          value,
+          units: senseConfig.units,
+        });
+
+        return acc;
+      }, [])
+      .toSorted((left, right) =>
+        left.key === 'darkvision'
+          ? -1
+          : right.key === 'darkvision'
+          ? 1
+          : +right.value - +left.value
+      );
+
+    const main: CharacterSpeedSenseEntryContext[] = [];
+
+    if (senses.at(0)?.key === 'darkvision') {
+      main.push(senses.shift()!);
+    }
+
+    return {
+      main: main,
+      secondary: senses,
+    };
+  }
+
+  _getMovementSpeeds(): CharacterSpeedSenseContext {
+    const movement = this.actor.system.attributes.movement;
+
+    const speeds = Object.entries(CONFIG.DND5E.movementTypes)
+      .reduce<CharacterSpeedSenseEntryContext[]>((acc, [key, label]) => {
+        const value = movement[key];
+
+        if (!value || value === 0) {
+          return acc;
+        }
+
+        acc.push({
+          key,
+          label,
+          value,
+          units: movement.units,
+        });
+
+        return acc;
+      }, [])
+      .toSorted((left, right) =>
+        left.key === 'walk'
+          ? -1
+          : right.key === 'walk'
+          ? 1
+          : +right.value - +left.value
+      );
+
+    if (speeds.length === 0) {
+      const defaultWalkSpeed =
+        this.document.system.details?.race?.system?.movement?.walk ?? null;
+
+      speeds.push({
+        key: 'walk',
+        label: CONFIG.DND5E.movementTypes.walk,
+        units: movement.units,
+        value: defaultWalkSpeed ?? '0',
+      });
+    }
+
+    return {
+      main: speeds.slice(0, 2),
+      secondary: speeds.slice(2),
+    };
   }
 
   /**
