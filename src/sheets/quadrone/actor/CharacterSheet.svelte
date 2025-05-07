@@ -24,24 +24,18 @@
 
   let hpValueInputFocused = $state(false);
   let hpTempInputFocused = $state(false);
-  let hdValueInputFocused = $state(false);
   let exhaustionBarFocused = $state(false);
   let dying = $state(false);
   let showXp = $state(false);
 
   let hpValueInput = $state<TextInputQuadrone>();
   let hpTempInput = $state<TextInputQuadrone>();
-  let hdValueInput = $state<TextInputQuadrone>();
 
   let hpValue = $derived(context.system.attributes?.hp?.value ?? 0);
   let hpMax = $derived(context.system.attributes?.hp?.max ?? 0);
   let hpPct = $derived(context.system.attributes?.hp?.pct ?? 0);
   let hpTemp = $derived(context.system.attributes?.hp?.temp ?? 10);
   let hpTempMax = $derived(context.system.attributes?.hp?.tempMax ?? 0);
-
-  let hdValue = 2;
-  let hdMax = 2;
-  let hdPct = 1;
 
   let portraitShape = 'transparent';
   let exhaustionLevel = $derived(context.system.attributes.exhaustion);
@@ -77,9 +71,16 @@
                 hpValueInput?.selectText();
               }}
             >
-              <div class="value" aria-label="Current HP">{hpValue}</div>
+              <div
+                class="value"
+                aria-label={localize('DND5E.HitPointsCurrent')}
+              >
+                {hpValue}
+              </div>
               <div class="separator">/</div>
-              <div class="max" aria-label="Max HP">{hpMax}</div>
+              <div class="max" aria-label={localize('DND5E.HitPointsMax')}>
+                {hpMax}
+              </div>
             </button>
             <TextInputQuadrone
               bind:this={hpValueInput}
@@ -113,7 +114,7 @@
                 >
                 <span
                   class="value font-data-large color-text-default"
-                  title="Temporary HP">{hpTemp}</span
+                  data-tooltip="DND5E.HitPointsTemp">{hpTemp}</span
                 >
               </div>
               <TextInputQuadrone
@@ -132,7 +133,8 @@
               />
             {:else}
               <button
-                aria-label="Temporary HP"
+                aria-label={localize('DND5E.HitPointsTemp')}
+                data-tooltip="DND5E.HitPointsTemp"
                 type="button"
                 class="button button-borderless button-icon-only temp-hp"
                 onclick={async (ev) => {
@@ -175,39 +177,33 @@
               }}
             />
           {:else}
+            {@const hdPct = Math.round(
+              context.system.attributes.hd.max > 0
+                ? (context.system.attributes.hd.value /
+                    context.system.attributes.hd.max) *
+                    100
+                : 0,
+            )}
             <div class="hd-row">
               <div
                 class="meter progress hit-die"
-                style="--bar-percentage: 100%"
+                style="--bar-percentage: {hdPct}%"
               >
-                <button
-                  type="button"
-                  class="label pointer"
-                  hidden={hdValueInputFocused}
-                  onclick={async (ev) => {
-                    hdValueInputFocused = true;
-                    hdValueInput?.selectText();
-                  }}
-                >
-                  <div class="value" title="Current Hit Die">{hdValue}</div>
+                <span class="label">
+                  <div
+                    class="value"
+                    data-tooltip="TIDY5E.HitDice.Current.Label"
+                  >
+                    {context.system.attributes.hd.value}
+                  </div>
                   <div class="separator">/</div>
-                  <div class="max" title="Max Hit Die">{hdMax}</div>
-                  <div class="hd-label" title="Hit Die">HD</div>
-                </button>
-                <TextInputQuadrone
-                  bind:this={hdValueInput}
-                  id="{appId}-system-attributes-hd"
-                  document={context.actor}
-                  field="system.attributes.hd.value"
-                  class="hd-input"
-                  value={hdValue}
-                  selectOnFocus={true}
-                  enableDeltaChanges={true}
-                  onfocus={() => (hdValueInputFocused = true)}
-                  onblur={() => (hdValueInputFocused = false)}
-                  blurAfterChange={true}
-                  hidden={!hdValueInputFocused}
-                />
+                  <div class="max" data-tooltip="TIDY5E.HitDice.Max.Label">
+                    {context.system.attributes.hd.max}
+                  </div>
+                  <div class="hd-label" data-tooltip="DND5E.HitDice">
+                    {localize('TIDY5E.HitDice.Abbreviation')}
+                  </div>
+                </span>
                 {#if context.unlocked}
                   <button
                     onclick={() =>
@@ -226,7 +222,8 @@
               <button
                 type="button"
                 class="button button-borderless button-icon-only"
-                aria-label="Exhaustion"
+                aria-label={localize('DND5E.Exhaustion')}
+                data-tooltip={'DND5E.Exhaustion'}
                 onclick={() => (exhaustionBarFocused = !exhaustionBarFocused)}
               >
                 <i class="fas fa-heart-pulse"></i>
@@ -237,7 +234,8 @@
               <button
                 type="button"
                 class="button button-borderless button-icon-only"
-                aria-label="Death Saves"
+                aria-label={localize('DND5E.DeathSave')}
+                data-tooltip="DND5E.DeathSave"
                 onclick={() => (dying = !dying)}
               >
                 <i class="fas fa-skull"></i>
@@ -336,7 +334,8 @@
             </span>
             {#if context.unlocked}
               <button
-                aria-label="Configure Armor Class"
+                aria-label={localize('DND5E.ArmorConfig')}
+                data-tooltip="DND5E.ArmorConfig"
                 type="button"
                 class="button button-borderless button-icon-only button-config"
                 onclick={(ev) =>
@@ -388,7 +387,8 @@
             </button>
             {#if context.unlocked}
               <button
-                aria-label="Configure Initiative"
+                aria-label={localize('DND5E.InitiativeConfig')}
+                data-tooltip="DND5E.InitiativeConfig"
                 type="button"
                 class="button button-borderless button-icon-only button-config"
                 onclick={() =>
@@ -419,7 +419,7 @@
                 {#if context.isConcentrating}
                   <i
                     class="active-concentration-icon fas fa-arrow-rotate-left fa-spin fa-spin-reverse"
-                    aria-label="Concentration"
+                    aria-label={localize('DND5E.Concentration')}
                   ></i>
                 {:else}
                   <i class="fas fa-head-side-brain color-text-gold"></i>
@@ -431,9 +431,13 @@
                   {save.mod}
                 </span>
                 {#if context.unlocked}
+                  {@const tooltip = localize('DND5E.AbilityConfigure', {
+                    ability: context.saves.concentration.label,
+                  })}
                   <div class="config-container">
                     <button
-                      aria-label="Configure Concentration"
+                      aria-label={tooltip}
+                      data-tooltip={tooltip}
                       type="button"
                       class="button button-borderless button-icon-only button-config"
                       onclick={() =>
@@ -453,7 +457,7 @@
   <div class="tabs-row">
     <a
       class="sidebar-toggle button button-borderless"
-      title={localize(
+      data-tooltip={localize(
         sidebarExpanded ? 'JOURNAL.ViewCollapse' : 'JOURNAL.ViewExpand',
       )}
       onclick={() => (sidebarExpanded = !sidebarExpanded)}
