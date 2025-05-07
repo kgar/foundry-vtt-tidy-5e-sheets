@@ -231,15 +231,28 @@
               </button>
             </div>
             <div class={['death-saves', { dying }]}>
-              <button
-                type="button"
-                class="button button-borderless button-icon-only"
-                aria-label={localize('DND5E.DeathSave')}
-                data-tooltip="DND5E.DeathSave"
-                onclick={() => (dying = !dying)}
-              >
-                <i class="fas fa-skull"></i>
-              </button>
+              {#if context.unlocked}
+                <button
+                  aria-label={localize("DND5E.DeathSaveConfigure")}
+                  data-tooltip="DND5E.DeathSaveConfigure"
+                  type="button"
+                  class="button button-borderless button-icon-only button-config"
+                  onclick={(ev) =>
+                    FoundryAdapter.renderDeathConfig(context.actor)}
+                >
+                  <i class="fas fa-cog"></i>
+                </button>
+              {:else}
+                <button
+                  type="button"
+                  class="button button-borderless button-icon-only"
+                  aria-label={localize('DND5E.DeathSave')}
+                  data-tooltip="DND5E.DeathSave"
+                  onclick={() => (dying = !dying)}
+                >
+                  <i class="fas fa-skull"></i>
+                </button>
+              {/if}
             </div>
           {/if}
         </div>

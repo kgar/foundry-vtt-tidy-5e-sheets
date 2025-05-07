@@ -253,7 +253,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         acc.push({
           key,
           label,
-          value,
+          value: Math.round(+value).toString(),
           units: senseConfig.units,
         });
 
@@ -293,7 +293,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         acc.push({
           key,
           label,
-          value,
+          value: Math.round(+value).toString(),
           units: movement.units,
         });
 
