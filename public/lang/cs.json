@@ -817,5 +817,19 @@
     "TIDY5E.SortMethod.AlphabeticalDescending": "Řadit abecedně sestupně",
     "TIDY5E.SortMenu.OptionPriority": "Priorita",
     "TIDY5E.Utilities.SpellPips": "Označení kouzel",
-    "TIDY5E.Utilities.SpellValueMax": "Hodnota kouzla/Max"
+    "TIDY5E.Utilities.SpellValueMax": "Hodnota kouzla/Max",
+    "TIDY5E.Tidy5eCharacterSheetQuadrone": "Deník postavy Tidy 5e",
+    "TIDY5E.Tidy5eNpcSheetQuadrone": "Deník NP Tidy 5e",
+    "TIDY5E.Tidy5eContainerSheetQuadrone": "Deník kontejneru Tidy 5e",
+    "TIDY5E.Visible": "Viditelné",
+    "TIDY5E.DisplayOptions.Title": "Zobrazit možnosti",
+    "TIDY5E.DisplayOptions.ShowContainerRow.Label": "Zobrazit řádku kontejneru",
+    "TIDY5E.ItemSheet.PactLevelCastLabel": "Seslat v pořadí",
+    "TIDY5E.Hidden": "Skryté",
+    "TIDY5E.AddSpecific": "Přidat {name}",
+    "TIDY5E.Options.Title": "Možnost",
+    "TIDY5E.Tidy5eVehicleSheetQuadrone": "Deník dopravního prostředku Tidy 5e",
+    "TIDY5E.ConfigureTab.Title": "Nastavit {tabName}",
+    "TIDY5E.Tidy5eItemSheetQuadrone": "Deník položky Tidy 5e",
+    "TIDY5E.Tidy5eGroupSheetQuadrone": "Deník skupiny Tidy 5e"
 }
