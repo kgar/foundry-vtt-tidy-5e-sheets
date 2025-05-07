@@ -1,45 +1,79 @@
 <script lang="ts">
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
+
+  /*
+    The Inspiration data type is boolean, so assigning a number is impossible.
+    Instead, this will have to be a flag-based, custom thing. Should Tidy do it? We certainly can, and we can provide settings for it.
+    If we support banked inspiration points, we should also consider how we might allow integration of a module like "So Inspired!" 
+    It could be as providing the Banked Inspiration Badge as an injectable component from the Tidy API.
+  */
   let levels = 1;
-  let currentLevel = 1;
+  let currentLevel = $state(1);
+
+  let localize = FoundryAdapter.localize;
+
+  let context = $derived(getCharacterSheetQuadroneContext());
+
+  let inspired = $derived(context.actor.system.attributes.inspiration);
+
+  // TODO: Determine if we can use greensock or something to make a sick animation when inspiration toggles on/off.
 </script>
 
-<div class="inspiration-badge" class:single={levels === 1} class:stacked={levels > 1}>
-{#if levels === 1}
-<button 
-  type="button"
-  class="inspiration button button-borderless button-icon-only single"
-  class:inspired={currentLevel === 1}
-  aria-label="Inspiration">
-</button>
-{:else}
-  <button
-    aria-label="Inspiration"
-    type="button"
-    class="inspiration button button-borderless button-icon-only stacked"
-    class:inspired={currentLevel > 0}>
-    <span class="level-container">
-      <span class="level font-data-medium color-text-inverse">
-        {currentLevel}
+<div
+  class="inspiration-badge"
+  class:single={levels === 1}
+  class:stacked={levels > 1}
+>
+  {#if levels === 1}
+    <button
+      type="button"
+      class={[
+        'inspiration button button-borderless button-icon-only single',
+        { inspired: inspired },
+      ]}
+      aria-label={localize('DND5E.Inspiration')}
+      data-tooltip="DND5E.Inspiration"
+      onclick={(ev) =>
+        context.actor.update({
+          ['system.attributes.inspiration']: !inspired,
+        })}
+    >
+    </button>
+  {:else}
+    <button
+      aria-label="Inspiration"
+      type="button"
+      class="inspiration button button-borderless button-icon-only stacked"
+      class:inspired={currentLevel > 0}
+    >
+      <span class="level-container">
+        <span class="level font-data-medium color-text-inverse">
+          {currentLevel}
+        </span>
       </span>
-    </span>
-  </button>
-  <div class="inspiration-controls">
-    <button type="button" 
-      class="button button-borderless button-icon-only" 
-      aria-label="Remove Inspiration"
-      disabled={currentLevel === 0}
-      on:click={() => currentLevel = Math.max(0, currentLevel - 1)}>
-      <i class="fas fa-hexagon-minus"></i>
     </button>
-    <button type="button" 
-      class="button button-borderless button-icon-only" 
-      aria-label="Add Inspiration"
-      disabled={currentLevel === levels}
-      on:click={() => currentLevel = Math.min(levels, currentLevel + 1)}>
-      <i class="fas fa-hexagon-plus"></i>
-    </button>
-  </div>
-{/if}
+    <div class="inspiration-controls">
+      <button
+        type="button"
+        class="button button-borderless button-icon-only"
+        aria-label="Remove Inspiration"
+        disabled={currentLevel === 0}
+        onclick={() => (currentLevel = Math.max(0, currentLevel - 1))}
+      >
+        <i class="fas fa-hexagon-minus"></i>
+      </button>
+      <button
+        type="button"
+        class="button button-borderless button-icon-only"
+        aria-label="Add Inspiration"
+        disabled={currentLevel === levels}
+        onclick={() => (currentLevel = Math.min(levels, currentLevel + 1))}
+      >
+        <i class="fas fa-hexagon-plus"></i>
+      </button>
+    </div>
+  {/if}
 </div>
 
 <style lang="scss">
@@ -51,7 +85,7 @@
       display: flex;
       position: absolute;
       left: 0;
-      bottom: .25rem;
+      bottom: 0.25rem;
       width: 100%;
       display: flex;
       align-items: center;
@@ -89,7 +123,8 @@
           background-color: black;
         }
 
-        &:disabled, &:disabled:hover {
+        &:disabled,
+        &:disabled:hover {
           background-color: transparent;
           i {
             color: var(--t5e-color-icon-disabled);
