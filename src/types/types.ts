@@ -15,7 +15,8 @@ import type { CONSTANTS } from 'src/constants';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import type { AttributePinFlag } from 'src/foundry/TidyFlags.types';
-import type { DataField, SchemaField } from 'foundry.data.fields';
+import type { DataField, DataSchema, SchemaField } from 'foundry.data.fields';
+import type { Ability } from './dnd5e.actor5e.types';
 
 export type Actor5e = any;
 export type TokenDocument = any;
@@ -339,6 +340,29 @@ export type AttributePinContext =
   | AttributeItemPinContext
   | AttributeActivityPinContext;
 
+export type CharacterFacilitiesContext = {
+  basic: {
+    available: AvailableBastionActionContext[];
+    chosen: ChosenFacilityContext[];
+    max: number;
+    value: number;
+  };
+  special: {
+    available: AvailableBastionActionContext[];
+    chosen: ChosenFacilityContext[];
+    max: number;
+    value: number;
+  };
+} & Record<
+  string,
+  {
+    available: AvailableBastionActionContext[];
+    chosen: ChosenFacilityContext[];
+    max: number;
+    value: number;
+  }
+>;
+
 export type CharacterSheetContext = {
   actorClassesToImages: Record<string, string>;
   allowMaxHpOverride: boolean;
@@ -354,32 +378,10 @@ export type CharacterSheetContext = {
   defenders: Actor5e[];
   effects: Record<string, EffectCategory<ActiveEffectContext>>;
   epicBoonsEarned: string | undefined;
-  facilities: {
-    basic: {
-      available: AvailableBastionActionContext[];
-      chosen: ChosenFacilityContext[];
-      max: number;
-      value: number;
-    };
-    special: {
-      available: AvailableBastionActionContext[];
-      chosen: ChosenFacilityContext[];
-      max: number;
-      value: number;
-    };
-  } & Record<
-    string,
-    {
-      available: AvailableBastionActionContext[];
-      chosen: ChosenFacilityContext[];
-      max: number;
-      value: number;
-    }
-  >;
+  facilities: CharacterFacilitiesContext;
   favorites: FavoriteSection[];
   features: CharacterFeatureSection[];
   flawEnrichedHtml: string;
-  hirelings: Actor5e[];
   idealEnrichedHtml: string;
   inventory: InventorySection[];
   itemContext: Record<string, CharacterItemContext>;
@@ -905,15 +907,53 @@ export type DocumentSheetQuadroneContext<TDocument> = {
 };
 
 export type ActorSheetQuadroneContext = {
+  abilities: ActorAbilityContextEntry[];
   actor: Actor5e;
+  appId: string; // do we need this ? or is rootId sufficient?
+  config: typeof CONFIG.DND5E;
+  customActorTraits: RenderableCustomActorTrait[];
   customContent: CustomContent[];
+  effects: Record<string, EffectCategory<ActiveEffect5e>>;
+  elements: unknown;
+  fields: DataSchema;
+  flags: SpecialTraits;
+  isConcentrating: boolean;
+  itemContext: Record<string, any>; // TODO: Consider adding itemContext generic
+  /** All items without a container. */
+  items: Item5e[];
+  labels: Record<string, any>;
+  limited: boolean;
+  modernRules: boolean;
+  owner: boolean;
+  rollData: any;
+  saves: ActorSaves;
+  source: any;
   system: Actor5e['system'];
   tabs: Tab[];
   token: TokenDocument | null;
+  traits: any; // TODO: Type this
+  warnings: DocumentPreparationWarning;
 } & DocumentSheetQuadroneContext<Actor5e>;
+
+export type ActorAbilityContextEntry = Ability & {
+  key: string; // For saving
+  abbr: string; // the visible abbreviation button label
+  hover: string; // not used? probably tooltip
+  icon: string; // not used? probably tooltip
+  label: string; // tooltip and aria label
+  source: { value: number }; // source.value on the input
+};
 
 export type CharacterSheetQuadroneContext = {
   // TODO: Populate with context data as needed
+  attributePins: AttributePinContext[];
+  bastion: {
+    description: string;
+  };
+  conditions: Dnd5eActorCondition[];
+  defenders: Actor5e[];
+  epicBoonsEarned: string | undefined;
+  facilities: CharacterFacilitiesContext;
 } & ActorSheetQuadroneContext;
 
 export type NpcSheetQuadroneContext = {

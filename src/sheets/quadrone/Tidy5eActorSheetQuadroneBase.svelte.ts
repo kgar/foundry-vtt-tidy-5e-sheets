@@ -1,10 +1,4 @@
-import ClassicTabSelectionFormApplication from 'src/applications/tab-selection/ClassicTabSelectionFormApplication.svelte';
-import { ThemeSettingsFormApplication } from 'src/applications/theme/ThemeSettingsFormApplication.svelte';
 import { CONSTANTS } from 'src/constants';
-import {
-  actorUsesActionFeature,
-  getActorActionSections,
-} from 'src/features/actions/actions.svelte';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -14,39 +8,39 @@ import {
   TidyExtensibleDocumentSheetMixin,
   type TidyDocumentSheetRenderOptions,
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
-import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
-import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { settings } from 'src/settings/settings.svelte';
-import type {
-  ApplicationConfiguration,
-  ApplicationRenderOptions,
-} from 'src/types/application.types';
+import type { ApplicationConfiguration } from 'src/types/application.types';
+import type { Ability } from 'src/types/dnd5e.actor5e.types';
 import type { Item5e } from 'src/types/item.types';
 import type {
+  ActiveEffect5e,
+  ActorAbilityContextEntry,
   ActorSaves,
-  ActorSheetContextV1,
+  ActorSheetQuadroneContext,
   DamageModificationContextEntry,
   DamageModificationData,
   SpecialTraitSectionField,
-  SpellbookSectionLegacy,
 } from 'src/types/types';
-import {
-  applySheetConfigLockAttributeToApplication,
-  applyThemeToApplication,
-} from 'src/utils/applications.svelte';
+import { applyThemeToApplication } from 'src/utils/applications.svelte';
 import { splitSemicolons } from 'src/utils/array';
 import { isNil } from 'src/utils/data';
 import { debug, error } from 'src/utils/logging';
 import { firstOfSet } from 'src/utils/set';
-import { mount } from 'svelte';
-import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
-import SheetHeaderModeToggleV2 from './shared/SheetHeaderModeToggleV2.svelte';
 
-// TODO: Simplify mixins to mostly a class hierarchy
-export function Tidy5eActorSheetClassicV2Base<
-  TContext extends ActorSheetContextV1
+/*
+  TODO: Some things to remember to implement:
+    - Theme Settings
+    - Sheet Warnings UI / inspect warning
+    - Tab Selection / etc. whatever else goes with that
+    - Limited Sheet View
+    - (decide) Allow Effects Management feature
+    
+*/
+
+export function Tidy5eActorSheetQuadroneBase<
+  TContext extends ActorSheetQuadroneContext
 >(sheetType: string) {
-  abstract class Tidy5eActorSheetClassicV2Base extends TidyExtensibleDocumentSheetMixin(
+  abstract class Tidy5eActorSheetQuadroneBase extends TidyExtensibleDocumentSheetMixin(
     sheetType,
     SvelteApplicationMixin<ApplicationConfiguration | undefined, TContext>(
       foundry.applications.sheets.ActorSheetV2
@@ -54,6 +48,14 @@ export function Tidy5eActorSheetClassicV2Base<
   ) {
     abstract currentTabId: string;
     _context = new CoarseReactivityProvider<TContext | undefined>(undefined);
+
+    /**
+     * The cached concentration information for the character.
+     */
+    _concentration: { items: Set<Item5e>; effects: Set<ActiveEffect5e> } = {
+      items: new Set<Item5e>(),
+      effects: new Set<ActiveEffect5e>(),
+    };
 
     constructor(options?: Partial<ApplicationConfiguration> | undefined) {
       super(options);
@@ -70,27 +72,18 @@ export function Tidy5eActorSheetClassicV2Base<
         'sheet',
         'actor',
         sheetType,
-        CONSTANTS.SHEET_LAYOUT_CLASSIC,
+        CONSTANTS.SHEET_LAYOUT_QUADRONE,
       ],
       window: {
         controls: [
-          {
-            action: 'openTabSelection',
-            icon: 'fas fa-file-invoice',
-            label: 'TIDY5E.TabSelection.MenuOptionText',
-          },
           {
             action: 'restoreTransformation',
             icon: 'fa-solid fa-backward',
             label: 'DND5E.TRANSFORM.Action.Restore',
             ownership: 'OWNER',
-            visible: Tidy5eActorSheetClassicV2Base.#canRestoreTransformation,
-          },
-          {
-            action: 'openThemeSettings',
-            icon: 'fas fa-palette',
-            label: 'TIDY5E.ThemeSettings.SheetMenu.buttonLabel',
-            ownership: 'OWNER',
+            visible: function (this: Tidy5eActorSheetQuadroneBase) {
+              return this.isEditable && this.actor.isPolymorphed;
+            },
           },
         ],
         resizable: true,
@@ -98,17 +91,8 @@ export function Tidy5eActorSheetClassicV2Base<
         frame: true,
       },
       actions: {
-        inspectWarning: Tidy5eActorSheetClassicV2Base.#inspectWarning,
-        openTabSelection: async function (this: Tidy5eActorSheetClassicV2Base) {
-          new ClassicTabSelectionFormApplication(this.actor).render(true);
-        },
-        openThemeSettings: async function (
-          this: Tidy5eActorSheetClassicV2Base
-        ) {
-          await new ThemeSettingsFormApplication().render({ force: true });
-        },
         restoreTransformation: async function (
-          this: Tidy5eActorSheetClassicV2Base
+          this: Tidy5eActorSheetQuadroneBase
         ) {
           this.actor.revertOriginalForm();
         },
@@ -149,43 +133,34 @@ export function Tidy5eActorSheetClassicV2Base<
       $effect(() => {
         if (first) return;
 
-        applySheetConfigLockAttributeToApplication(
-          settings.value,
-          this.element
-        );
         applyThemeToApplication(this.element, this.actor);
         this.render();
-      });
-
-      $effect(() => {
-        debug('Message bus message received', {
-          app: this,
-          actor: this.actor,
-          message: this.messageBus,
-        });
       });
 
       first = false;
     }
 
-    async _prepareContext(options: any): Promise<ActorSheetContextV1> {
+    async _prepareContext(options: any): Promise<ActorSheetQuadroneContext> {
       const documentSheetContext = await super._prepareContext(options);
 
-      // The Actor's data
-      const source = this.actor.toObject();
+      documentSheetContext.source = documentSheetContext.editable
+        ? this.actor.system._source
+        : this.actor.system;
 
       // Concentration
       let saves: ActorSaves = {};
+
+      const isConcentrating =
+        this.actor.statuses?.has(CONFIG.specialStatusEffects.CONCENTRATING) ==
+        true;
+
       if (
         [CONSTANTS.SHEET_TYPE_CHARACTER, CONSTANTS.SHEET_TYPE_NPC].includes(
           this.actor.type
         )
       ) {
         const attrConcentration = this.actor.system.attributes.concentration;
-        if (
-          this.actor.statuses.has(CONFIG.specialStatusEffects.CONCENTRATING) ||
-          (documentSheetContext.unlocked && attrConcentration)
-        ) {
+        if (attrConcentration) {
           saves.concentration = {
             isConcentration: true,
             label: game.i18n.localize('DND5E.Concentration'),
@@ -197,136 +172,44 @@ export function Tidy5eActorSheetClassicV2Base<
         }
       }
 
-      let hasSpecialSaves = Object.keys(saves).length > 0;
-
-      // Temporary HP
-      const hp = { ...this.actor.system.attributes.hp };
-      if (hp.temp === 0) delete hp.temp;
-      if (hp.tempmax === 0) delete hp.tempmax;
-
-      const editable = this.isEditable;
-
-      const warnings = foundry.utils.deepClone(this.actor._preparationWarnings);
-
       const rollData = this.actor.getRollData();
 
-      let context: ActorSheetContextV1 = {
-        abilities: foundry.utils.deepClone(this.actor.system.abilities),
-        actions: await getActorActionSections(this.actor),
+      let context: ActorSheetQuadroneContext = {
+        abilities: [],
         actor: this.actor,
-        actorPortraitCommands:
-          ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
-        allowEffectsManagement: true,
         appId: this.appId,
-        biographyHTML: await foundry.applications.ux.TextEditor.enrichHTML(
-          this.actor.system.details.biography.value,
-          {
-            secrets: this.actor.isOwner,
-            rollData: rollData,
-            relativeTo: this.actor,
-          }
-        ),
         config: CONFIG.DND5E,
         customActorTraits: [],
         customContent: [],
-        disableExperience:
-          FoundryAdapter.getSystemSetting(
-            CONSTANTS.SYSTEM_SETTING_LEVELING_MODE
-          ) === CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
         effects: dnd5e.applications.components.EffectsElement.prepareCategories(
           this.actor.allApplicableEffects()
         ),
         elements: this.options.elements,
-        encumbrance: this.actor.system.attributes?.encumbrance,
-        filterData: { ...this.actor.system.attributes.hp },
-        filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
         flags: {
           classes: [],
           data: {},
           sections: [],
         },
-        hasSpecialSaves: hasSpecialSaves,
-        healthPercentage: this.actor.system.attributes.hp.pct.toNearest(0.1),
-        hp: hp,
-        isCharacter: this.actor.type === 'character',
-        isNPC: this.actor.type === 'npc',
-        isVehicle: this.actor.type === 'vehicle',
-        limited: this.actor.limited,
+        isConcentrating,
         itemContext: {},
         items: Array.from(this.actor.items)
           .filter((i: Item5e) => !this.actor.items.has(i.system.container))
           .toSorted((a: Item5e, b: Item5e) => (a.sort || 0) - (b.sort || 0)),
         labels: this._getLabels(),
-        lockExpChanges: FoundryAdapter.shouldLockExpChanges(),
-        lockHpMaxChanges: FoundryAdapter.shouldLockHpMaxChanges(),
-        lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
-        lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
-        lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
-        lockSensitiveFields:
-          (!documentSheetContext.unlocked &&
-            settings.value.useTotalSheetLock) ||
-          !editable,
+        limited: this.actor.limited,
         modernRules: FoundryAdapter.checkIfModernRules(this.actor),
-        movement: this._getMovementSpeed(this.actor.system),
-        options: this.options,
-        overrides: {
-          attunement: foundry.utils.hasProperty(
-            this.actor.overrides,
-            'system.attributes.attunement.max'
-          ),
-        },
         owner: this.actor.isOwner,
-        saves: saves,
-        rollData: rollData,
-        senses: this._getSenses(this.actor.system),
-        skills: foundry.utils.deepClone(this.actor.system.skills ?? {}),
-        showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
+        rollData,
+        saves,
         system: this.actor.system,
         tabs: [],
-        tools: foundry.utils.deepClone(this.actor.system.tools ?? {}),
+        token: this.token,
         traits: this._prepareTraits(this.actor.system),
-        useActionsFeature: actorUsesActionFeature(this.actor),
-        useClassicControls: true,
-        useRoundedPortraitStyle: [
-          CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
-          CONSTANTS.CIRCULAR_PORTRAIT_OPTION_CHARACTER as string,
-        ].includes(settings.value.useCircularPortraitStyle),
-        viewableWarnings:
-          warnings?.filter((w: any) => !isNil(w.message?.trim(), '')) ?? [],
-        warnings: warnings,
+        warnings: foundry.utils.deepClone(this.actor._preparationWarnings),
         ...documentSheetContext,
       };
 
-      // Ability Scores
-      for (const [a, abl] of Object.entries<any>(context.abilities)) {
-        abl.icon = this._getProficiencyIcon(abl.proficient);
-        abl.hover = CONFIG.DND5E.proficiencyLevels[abl.proficient];
-        abl.label = CONFIG.DND5E.abilities[a]?.label;
-        abl.baseProf = source.system.abilities[a]?.proficient ?? 0;
-        abl.key = a;
-      }
-
-      // Skills & tools.
-      const baseAbility = (prop: string, key: string) => {
-        let src = source.system[prop]?.[key]?.ability;
-        if (src) return src;
-        if (prop === 'skills') src = CONFIG.DND5E.skills[key]?.ability;
-        return src ?? 'int';
-      };
-      (['skills', 'tools'] as const).forEach((prop) => {
-        for (const [key, entry] of Object.entries<any>(context[prop])) {
-          entry.abbreviation =
-            CONFIG.DND5E.abilities[entry.ability]?.abbreviation;
-          entry.icon = this._getProficiencyIcon(entry.value);
-          entry.hover = CONFIG.DND5E.proficiencyLevels[entry.value];
-          entry.label =
-            prop === 'skills'
-              ? CONFIG.DND5E.skills[key]?.label
-              : dnd5e.documents.Trait.keyLabel(key, { trait: 'tool' });
-          entry.baseValue = source.system[prop]?.[key]?.value ?? 0;
-          entry.baseAbility = baseAbility(prop, key);
-        }
-      });
+      context.abilities = this._prepareAbilities(context);
 
       // Prepare owned items
       this._prepareItems(context);
@@ -339,9 +222,6 @@ export function Tidy5eActorSheetClassicV2Base<
 
       // Damage Modification
       this._applyDamageModifications(context);
-
-      // Special Saves (like Concentration save)
-      context.hasSpecialSaves = Object.keys(context.saves ?? {}).length > 0;
 
       return context;
     }
@@ -372,95 +252,129 @@ export function Tidy5eActorSheetClassicV2Base<
     }
 
     /**
-     * Prepare the display of movement speed data for the Actor.
-     * @param {object} systemData               System data for the Actor being prepared.
-     * @param {boolean} [largestPrimary=false]  Show the largest movement speed as "primary", otherwise show "walk".
-     * @returns {{primary: string, special: string}}
+     * Prepare the data structure for items which appear on the actor sheet.
+     * Each subclass overrides this method to implement type-specific logic.
      * @protected
      */
-    _getMovementSpeed(systemData: any, largestPrimary = false) {
-      const movement = systemData.attributes.movement ?? {};
-
-      // Prepare an array of available movement speeds
-      let speeds = [
-        [
-          movement.burrow,
-          `${game.i18n.localize('DND5E.MovementBurrow')} ${movement.burrow}`,
-        ],
-        [
-          movement.climb,
-          `${game.i18n.localize('DND5E.MovementClimb')} ${movement.climb}`,
-        ],
-        [
-          movement.fly,
-          `${game.i18n.localize('DND5E.MovementFly')} ${movement.fly}${
-            movement.hover
-              ? ` (${game.i18n.localize('DND5E.MovementHover')})`
-              : ''
-          }`,
-        ],
-        [
-          movement.swim,
-          `${game.i18n.localize('DND5E.MovementSwim')} ${movement.swim}`,
-        ],
-      ];
-      if (largestPrimary) {
-        speeds.push([
-          movement.walk,
-          `${game.i18n.localize('DND5E.MovementWalk')} ${movement.walk}`,
-        ]);
-      }
-
-      // Filter and sort speeds on their values
-      speeds = speeds.filter((s) => s[0]).sort((a, b) => b[0] - a[0]);
-      const units = movement.units ?? dnd5e.utils.defaultUnits('length');
-
-      // Case 1: Largest as primary
-      if (largestPrimary) {
-        let primary = speeds.shift();
-        return {
-          primary: `${primary?.[1]} ${units}`,
-          special: speeds.map((s) => s[1]).join(', '),
-        };
-      }
-
-      // Case 2: Walk as primary
-      else {
-        return {
-          primary: dnd5e.utils.formatLength(movement.walk ?? 0, units),
-          special: speeds.length ? speeds.map((s) => s[1]).join(', ') : '',
-        };
-      }
-    }
+    _prepareItems(context: ActorSheetQuadroneContext) {}
 
     /* -------------------------------------------- */
 
     /**
-     * Prepare senses object for display.
-     * @param {object} systemData  System data for the Actor being prepared.
-     * @returns {object}           Senses grouped by key with localized and formatted string.
-     * @protected
+     * Prepare rendering context for the special traits tab.
      */
-    _getSenses(systemData: any) {
-      const senses = systemData.attributes.senses ?? {};
-      const tags: Record<string, string> = {};
-      const units = senses.units ?? dnd5e.utils.defaultUnits('length');
-      for (let [k, label] of Object.entries(CONFIG.DND5E.senses)) {
-        const v = senses[k] ?? 0;
-        if (v === 0) continue;
-        tags[k] = `${game.i18n.localize(label)} ${dnd5e.utils.formatLength(
-          v,
-          units
-        )}`;
-      }
-      if (senses.special)
-        splitSemicolons(senses.special).forEach(
-          (c, i) => (tags[`custom${i + 1}`] = c)
+    async _prepareSpecialTraitsContext(context: ActorSheetQuadroneContext) {
+      const sections: Record<string, SpecialTraitSectionField[]> = {};
+      const source = context.editable ? this.document._source : this.document;
+
+      context.flags.classes = Object.values(this.document.classes)
+        .map((cls: Item5e) => ({ value: cls.id, label: cls.name }))
+        .toSorted((lhs, rhs) =>
+          lhs.label.localeCompare(rhs.label, game.i18n.lang)
         );
-      return tags;
+
+      context.flags.data = source.flags?.dnd5e ?? {};
+
+      // Character Flags - don't be fooled by the config prop name. It's for PCs and NPCs.
+      for (const [key, config] of Object.entries(CONFIG.DND5E.characterFlags)) {
+        const fieldOptions = { label: config.name, hint: config.hint };
+
+        const flag: SpecialTraitSectionField = {
+          field:
+            'type' in config && config.type === Boolean
+              ? new foundry.data.fields.BooleanField(fieldOptions)
+              : 'type' in config && config.type === Number
+              ? new foundry.data.fields.NumberField(fieldOptions)
+              : new foundry.data.fields.StringField(fieldOptions),
+          ...config,
+          name: `flags.dnd5e.${key}`,
+          value: foundry.utils.getProperty(context.flags.data, key),
+        };
+
+        sections[config.section] ??= [];
+        sections[config.section].push(flag);
+      }
+
+      // Global Bonuses
+      const globals: SpecialTraitSectionField[] = [];
+      const addBonus = (field: any) => {
+        if (field === undefined) {
+          return;
+        }
+
+        if (field instanceof foundry.data.fields.SchemaField) {
+          Object.values(field.fields).forEach((f) => addBonus(f));
+        } else {
+          globals.push({
+            field,
+            name: field.fieldPath,
+            value: foundry.utils.getProperty(source, field.fieldPath),
+          });
+        }
+      };
+
+      addBonus(this.document.system.schema.fields.bonuses);
+
+      if (globals.length) {
+        sections[game.i18n.localize('DND5E.BONUSES.FIELDS.bonuses.label')] =
+          globals;
+      }
+
+      context.flags.sections = Object.entries(sections).map(
+        ([label, fields]) => ({
+          label,
+          fields,
+        })
+      );
+
+      // Cache concentration data and prepare items
+      this._concentration = this.actor.concentration;
+
+      return context;
     }
 
-    /* -------------------------------------------- */
+    _applyConcentration(context: ActorSheetQuadroneContext) {
+      if (
+        [CONSTANTS.SHEET_TYPE_CHARACTER, CONSTANTS.SHEET_TYPE_NPC].includes(
+          context.actor.type
+        )
+      ) {
+        const attrConcentration = context.actor.system.attributes.concentration;
+        if (
+          context.actor.statuses.has(
+            CONFIG.specialStatusEffects.CONCENTRATING
+          ) ||
+          (context.unlocked && attrConcentration)
+        ) {
+          (context.saves ??= {}).concentration = {
+            isConcentration: true,
+            label: game.i18n.localize('DND5E.Concentration'),
+            abbr: game.i18n.localize('DND5E.Concentration'),
+            mod: Math.abs(attrConcentration.save),
+            sign:
+              context.actor.system.attributes.concentration.save < 0
+                ? '-'
+                : '+',
+          };
+        }
+      }
+    }
+
+    _prepareAbilities(
+      context: ActorSheetQuadroneContext
+    ): ActorAbilityContextEntry[] {
+      return Object.entries<Ability>(context.system.abilities).map(
+        ([key, ability]) => ({
+          ...ability, // Modifier, save mod, save proficiency, score value
+          key, // For saving
+          abbr: CONFIG.DND5E.abilities[key]?.abbreviation ?? '', // the visible abbreviation button label
+          hover: CONFIG.DND5E.proficiencyLevels[ability.proficient], // not used?
+          icon: CONFIG.DND5E.abilities[key]?.icon, // not used?
+          label: CONFIG.DND5E.abilities[key]?.label, // tooltip and aria label
+          source: context.source.abilities[key], // source.value on the input
+        })
+      );
+    }
 
     /**
      * Prepare the data structure for traits data like languages, resistances & vulnerabilities, and proficiencies.
@@ -563,34 +477,9 @@ export function Tidy5eActorSheetClassicV2Base<
       return traits;
     }
 
-    _applyConcentration(context: ActorSheetContextV1) {
-      if (
-        [CONSTANTS.SHEET_TYPE_CHARACTER, CONSTANTS.SHEET_TYPE_NPC].includes(
-          context.actor.type
-        )
-      ) {
-        const attrConcentration = context.actor.system.attributes.concentration;
-        if (
-          context.actor.statuses.has(
-            CONFIG.specialStatusEffects.CONCENTRATING
-          ) ||
-          (context.unlocked && attrConcentration)
-        ) {
-          (context.saves ??= {}).concentration = {
-            isConcentration: true,
-            label: game.i18n.localize('DND5E.Concentration'),
-            abbr: game.i18n.localize('DND5E.Concentration'),
-            mod: Math.abs(attrConcentration.save),
-            sign:
-              context.actor.system.attributes.concentration.save < 0
-                ? '-'
-                : '+',
-          };
-        }
-      }
-    }
+    /* -------------------------------------------- */
 
-    _applyDamageModifications(context: ActorSheetContextV1) {
+    _applyDamageModifications(context: ActorSheetQuadroneContext) {
       try {
         const dm: DamageModificationData | undefined =
           context.actor.system.traits?.dm;
@@ -637,321 +526,10 @@ export function Tidy5eActorSheetClassicV2Base<
     }
 
     /* -------------------------------------------- */
-
-    /**
-     * Prepare the data structure for items which appear on the actor sheet.
-     * Each subclass overrides this method to implement type-specific logic.
-     * @protected
-     */
-    _prepareItems(context: ActorSheetContextV1) {}
-
+    /*  Rendering Life-Cycle Methods                */
     /* -------------------------------------------- */
-
-    /**
-     * Prepare rendering context for the special traits tab.
-     */
-    async _prepareSpecialTraitsContext(context: ActorSheetContextV1) {
-      const sections: Record<string, SpecialTraitSectionField[]> = {};
-      const source = context.editable ? this.document._source : this.document;
-
-      context.flags.classes = Object.values(this.document.classes)
-        .map((cls: Item5e) => ({ value: cls.id, label: cls.name }))
-        .toSorted((lhs, rhs) =>
-          lhs.label.localeCompare(rhs.label, game.i18n.lang)
-        );
-
-      context.flags.data = source.flags?.dnd5e ?? {};
-
-      // Character Flags - don't be fooled by the config prop name. It's for PCs and NPCs.
-      for (const [key, config] of Object.entries(CONFIG.DND5E.characterFlags)) {
-        const fieldOptions = { label: config.name, hint: config.hint };
-
-        const flag: SpecialTraitSectionField = {
-          field:
-            'type' in config && config.type === Boolean
-              ? new foundry.data.fields.BooleanField(fieldOptions)
-              : 'type' in config && config.type === Number
-              ? new foundry.data.fields.NumberField(fieldOptions)
-              : new foundry.data.fields.StringField(fieldOptions),
-          ...config,
-          name: `flags.dnd5e.${key}`,
-          value: foundry.utils.getProperty(context.flags.data, key),
-        };
-
-        sections[config.section] ??= [];
-        sections[config.section].push(flag);
-      }
-
-      // Global Bonuses
-      const globals: SpecialTraitSectionField[] = [];
-      const addBonus = (field: any) => {
-        if (field === undefined) {
-          return;
-        }
-
-        if (field instanceof foundry.data.fields.SchemaField) {
-          Object.values(field.fields).forEach((f) => addBonus(f));
-        } else {
-          globals.push({
-            field,
-            name: field.fieldPath,
-            value: foundry.utils.getProperty(source, field.fieldPath),
-          });
-        }
-      };
-
-      addBonus(this.document.system.schema.fields.bonuses);
-
-      if (globals.length) {
-        sections[game.i18n.localize('DND5E.BONUSES.FIELDS.bonuses.label')] =
-          globals;
-      }
-
-      context.flags.sections = Object.entries(sections).map(
-        ([label, fields]) => ({
-          label,
-          fields,
-        })
-      );
-
-      return context;
-    }
-
-    /* -------------------------------------------- */
-
-    /**
-     * Insert a spell into the spellbook object when rendering the character sheet.
-     * @param {object} context    Sheet rendering context data being prepared for render.
-     * @param {object[]} spells   Spells to be included in the spellbook.
-     * @returns {object[]}        Spellbook sections in the proper order.
-     * @protected
-     */
-    _prepareSpellbook(context: ActorSheetContextV1, spells: Item5e) {
-      const owner = this.actor.isOwner;
-      const levels = context.actor.system.spells;
-      const spellbook: Record<string, SpellbookSectionLegacy> = {};
-
-      // Define section and label mappings
-      const sections = Object.entries(
-        CONFIG.DND5E.spellPreparationModes
-      ).reduce<Record<string, any>>((acc, [k, spell]) => {
-        if ('order' in spell && Number.isNumeric(spell.order)) {
-          acc[k] = Number(spell.order);
-        }
-        return acc;
-      }, {});
-      const useLabels: Record<string, string | number> = {
-        '-30': '-',
-        '-20': '-',
-        '-10': '-',
-        0: '&infin;',
-      };
-
-      type SpellSectionPrepArgs = {
-        prepMode?: string;
-        value?: number;
-        max?: number;
-        override?: number;
-        config?: (typeof CONFIG.DND5E.spellPreparationModes)[0];
-        levels?: any;
-      };
-
-      // Format a spellbook entry for a certain indexed level
-      const registerSection = (
-        sl: string,
-        i: number,
-        label: string,
-        {
-          prepMode = 'prepared',
-          value,
-          max,
-          override,
-          config,
-        }: SpellSectionPrepArgs = {}
-      ) => {
-        const aeOverride = foundry.utils.hasProperty(
-          this.actor.overrides,
-          `system.spells.spell${i}.override`
-        );
-        spellbook[i] = {
-          order: i,
-          label: label,
-          usesSlots: i > 0,
-          canCreate: owner,
-          canPrepare:
-            (context.actor.type === 'character' && i >= 1) ||
-            !!config?.prepares,
-          spells: [],
-          uses: useLabels[i] || value || 0,
-          slots: useLabels[i] || max || 0,
-          override: override || 0,
-          dataset: {
-            type: 'spell',
-            level: prepMode in sections ? 1 : i,
-            preparationMode: prepMode,
-          },
-          prop: sl,
-          editable: context.editable && !aeOverride,
-        };
-      };
-
-      // Determine the maximum spell level which has a slot
-      const maxLevel = Array.fromRange(
-        Object.keys(CONFIG.DND5E.spellLevels).length - 1,
-        1
-      ).reduce((max, i) => {
-        const level = levels[`spell${i}`];
-        if (level && (level.max || level.override) && i > max) max = i;
-        return max;
-      }, 0);
-
-      // Level-based spellcasters have cantrips and leveled slots
-      if (maxLevel > 0) {
-        registerSection('spell0', 0, CONFIG.DND5E.spellLevels[0]);
-        for (let lvl = 1; lvl <= maxLevel; lvl++) {
-          const sl = `spell${lvl}`;
-          registerSection(sl, lvl, CONFIG.DND5E.spellLevels[lvl], levels[sl]);
-        }
-      }
-
-      // Create spellbook sections for all alternative spell preparation modes that have spell slots.
-      for (const [k, v] of Object.entries(CONFIG.DND5E.spellPreparationModes)) {
-        let upcast = 'upcast' in v && v.upcast;
-
-        if (!(k in levels) || !upcast || !levels[k].max) {
-          continue;
-        }
-
-        let cantrips = 'cantrips' in v && v.cantrips;
-        if (!spellbook['0'] && cantrips) {
-          registerSection('spell0', 0, CONFIG.DND5E.spellLevels[0]);
-        }
-
-        const l = levels[k];
-
-        const level = game.i18n.localize(`DND5E.SpellLevel${l.level}`);
-
-        const label = `${v.label} — ${level}`;
-
-        registerSection(k, sections[k], label, {
-          prepMode: k,
-          value: l.value,
-          max: l.max,
-          override: l.override,
-          config: v,
-        });
-      }
-
-      // Iterate over every spell item, adding spells to the spellbook by section
-      spells.forEach((spell: Item5e) => {
-        const mode = spell.system.preparation.mode || 'prepared';
-        let s = spell.system.level || 0;
-        const sl = `spell${s}`;
-
-        // Spells from items
-        if (spell.getFlag('dnd5e', 'cachedFor')) {
-          s = 'item';
-          if (!spell.system.linkedActivity?.displayInSpellbook) return;
-          if (!spellbook[s]) {
-            registerSection(
-              'dnd5e-cast-activity-additional-spells',
-              s,
-              game.i18n.localize('DND5E.CAST.SECTIONS.Spellbook')
-            );
-            spellbook[s].order = 1000;
-          }
-        }
-
-        // Specialized spellcasting modes (if they exist)
-        else if (mode in sections) {
-          s = sections[mode];
-          if (!spellbook[s]) {
-            const l = levels[mode] || {};
-            const config = CONFIG.DND5E.spellPreparationModes[mode];
-            registerSection(mode, s, config.label, {
-              prepMode: mode,
-              value: l.value,
-              max: l.max,
-              override: l.override,
-              config: config,
-            });
-          }
-        }
-
-        // Sections for higher-level spells which the caster "should not" have, but spell items exist for
-        else if (!spellbook[s]) {
-          registerSection(sl, s, CONFIG.DND5E.spellLevels[s], {
-            // TODO: Investigate this. It seems unused.
-            levels: levels[sl],
-          });
-        }
-
-        // Add the spell to the relevant heading
-        spellbook[s].spells.push(spell);
-      });
-
-      // Sort the spellbook by section level
-      const sorted = Object.values(spellbook);
-      sorted.sort((a, b) => a.order - b.order);
-      return sorted;
-    }
-
-    /**
-     * Get the font-awesome icon used to display a certain level of skill proficiency.
-     * @param {number} level  A proficiency mode defined in `CONFIG.DND5E.proficiencyLevels`.
-     * @returns {string}      HTML string for the chosen icon.
-     * @private
-     */
-    _getProficiencyIcon(level: number) {
-      const icons: Record<number, string> = {
-        0: '<i class="far fa-circle"></i>',
-        0.5: '<i class="fas fa-adjust"></i>',
-        1: '<i class="fas fa-check"></i>',
-        2: '<i class="fas fa-check-double"></i>',
-      };
-      return icons[level] || icons[0];
-    }
-
-    /**
-     * Perform any dynamic behavior on controls which depends on the current state of the sheet.
-     * @returns
-     */
-    _getHeaderControls() {
-      const controls = super._getHeaderControls();
-
-      return controls;
-    }
-
-    _createAdditionalComponents(content: HTMLElement) {
-      const windowHeader = this.element.querySelector('.window-header');
-      const sheetLock = mount(SheetHeaderModeToggleV2, {
-        target: windowHeader,
-        anchor: windowHeader.querySelector('.window-title'),
-        context: new Map<string, any>([
-          [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
-        ]),
-        props: {
-          class: 'header-control',
-        },
-      });
-
-      const infoCard = mount(AttachedInfoCard, {
-        target: this.element,
-        props: {
-          sheet: this,
-        },
-      });
-
-      return [sheetLock, infoCard];
-    }
-
-    /* -------------------------------------------- */
-    /*  Life-Cycle Handlers                         */
-    /* -------------------------------------------- */
-
-    /** @inheritDoc */
     async _onRender(
-      context: TContext,
+      context: ActorSheetQuadroneContext,
       options: TidyDocumentSheetRenderOptions
     ) {
       await super._onRender(context, options);
@@ -971,65 +549,15 @@ export function Tidy5eActorSheetClassicV2Base<
       if ('tooltip' in element.dataset) return;
       const uuid = element.dataset.referenceTooltip ?? this.actor.uuid;
       element.dataset.tooltip = `
-      <section class="loading" data-uuid="${uuid}"><i class="fas fa-spinner fa-spin-pulse"></i></section>
-    `;
+          <section class="loading" data-uuid="${uuid}"><i class="fas fa-spinner fa-spin-pulse"></i></section>
+        `;
       if (element.dataset.attribution)
         element.dataset.tooltipClass = 'property-attribution';
     }
 
-    async _renderFrame(options: ApplicationRenderOptions = {}) {
-      const html = await super._renderFrame(options);
-      if (!game.user.isGM && this.actor.limited) return html;
-      const header = html.querySelector('.window-header');
-
-      // Preparation warnings.
-      const warnings = document.createElement('button');
-      warnings.classList.add('preparation-warnings', 'header-control', 'icon');
-      warnings.dataset.tooltip = 'Warnings';
-      warnings.setAttribute('aria-label', game.i18n.localize('Warnings'));
-      warnings.innerHTML = '<i class="fas fa-triangle-exclamation"></i>';
-      warnings.addEventListener('click', this._onOpenWarnings.bind(this));
-      header
-        .querySelector('.window-title')
-        .insertAdjacentElement('afterend', warnings);
-
-      return html;
-    }
-
-    /**
-     * Handle opening the warnings dialog.
-     * @param {PointerEvent} event  The triggering event.
-     * @protected
-     */
-    _onOpenWarnings(event: MouseEvent) {
-      event.stopImmediatePropagation();
-      const { top, left, height } =
-        // @ts-expect-error
-        event.currentTarget!.getBoundingClientRect();
-      const { clientWidth } = document.documentElement;
-      const dialog = this.form.querySelector('dialog.warnings');
-      Object.assign(dialog.style, {
-        top: `${top + height}px`,
-        left: `${Math.min(left - 16, clientWidth - 300)}px`,
-      });
-      dialog.showModal();
-    }
-
-    async render(...args: unknown[]) {
-      await super.render(...args);
-
-      const warning = this.element.querySelector(
-        '.window-header .preparation-warnings'
-      );
-      warning?.toggleAttribute(
-        'hidden',
-        !this.actor._preparationWarnings?.length
-      );
-    }
-
     /* -------------------------------------------- */
     /*  Drag and Drop
-    /* -------------------------------------------- */
+        /* -------------------------------------------- */
 
     _allowedDropBehaviors(event: DragEvent, data: any) {
       if (!data.uuid) {
@@ -1554,51 +1082,7 @@ export function Tidy5eActorSheetClassicV2Base<
 
       return this._onDropItemCreate(droppedItemData, event);
     }
-
-    /**
-     * Control whether the restore transformation button is visible.
-     */
-    static #canRestoreTransformation(
-      this: Tidy5eActorSheetClassicV2Base
-    ): boolean {
-      return this.isEditable && this.actor.isPolymorphed;
-    }
-
-    /**
-     * Handle following a warning link.
-     * @param {Event} event         Triggering click event.
-     * @param {HTMLElement} target  Button that was clicked.
-     */
-    static async #inspectWarning(
-      this: Tidy5eActorSheetClassicV2Base,
-      event: Event,
-      target: HTMLElement
-    ) {
-      if (this._inspectWarning(event, target) === false) return;
-      switch (target.dataset.target) {
-        case 'armor':
-          new dnd5e.applications.actor.ArmorClassConfig({
-            document: this.actor,
-          }).render({
-            force: true,
-          });
-          break;
-        default:
-          const item = await fromUuid(target.dataset.target);
-          item?.sheet.render({ force: true });
-          break;
-      }
-    }
-
-    /**
-     * Handle following a warning link.
-     * @param {Event} event         Triggering click event.
-     * @param {HTMLElement} target  Button that was clicked.
-     * @returns {any}               Return `false` to prevent default behavior.
-     * @protected
-     */
-    _inspectWarning(event: Event, target: HTMLElement): any {}
   }
 
-  return Tidy5eActorSheetClassicV2Base;
+  return Tidy5eActorSheetQuadroneBase;
 }

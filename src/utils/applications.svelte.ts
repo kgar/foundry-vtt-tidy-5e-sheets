@@ -36,7 +36,6 @@ export function applySheetConfigLockAttributeToApplication(
 }
 
 export function applyThemeToApplication(
-  currentSettings: CurrentSettings,
   element?: HTMLElement,
   doc?: any
 ) {

@@ -140,7 +140,7 @@
       <button
         type="button"
         class="config-button inline-icon-button"
-        title={localize('DND5E.AbilityConfigure')}
+        title={localize('DND5E.AbilityConfigure', { ability: ability.label })}
         onclick={() => FoundryAdapter.renderAbilityConfig(context.actor, id)}
         tabindex={!settings.value.useDefaultSheetAttributeTabbing &&
         settings.value.useAccessibleKeyboardSupport

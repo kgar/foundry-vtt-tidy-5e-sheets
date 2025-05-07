@@ -79,6 +79,11 @@
   .user-select-text * {
     user-select: text;
   }
+
+  /* Visibility */
+  .invisible {
+    visibility: hidden;
+  }
 }
 
 /* Container Queries */

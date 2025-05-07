@@ -1,31 +1,33 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
-  
-  export let exhaustionLevel = 0;
-  let levels = 6 + 1;
-  
-  const dispatch = createEventDispatcher();
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
-  function isActive(level: number): boolean {
-    return level === exhaustionLevel;
+  interface Props {
+    level: number;
+    total: number;
+    onExhaustionLevelSet?: (level: number) => void;
+    onClose?: () => void;
   }
-  
-  function close() {
-    dispatch('close');
-  }
-  
-  function setExhaustionLevel(level: number) {
-    dispatch('update', { level });
-  }
+
+  let { level, total, onExhaustionLevelSet, onClose }: Props = $props();
+
+  let effectiveTotal = $derived(total + 1);
 </script>
 
 <div class="exhaustion-bar flexrow">
-  {#each Array(levels) as _, i}
+  {#each Array(effectiveTotal) as _, i}
     <button
       aria-label="Exhaustion level {i}"
       type="button"
-      class="button button-borderless button-icon-only button-config {isActive(i) ? 'active' : ''}"
-      on:click={() => { setExhaustionLevel(i); close(); }}>
+      class={[
+        'button button-borderless button-icon-only button-config',
+        { active: i === level },
+      ]}
+      onclick={() => {
+        onExhaustionLevelSet?.(i);
+        onClose?.();
+      }}
+      data-tooltip={FoundryAdapter.localize('DND5E.ExhaustionLevel', { n: i })}
+    >
       {i}
     </button>
   {/each}
@@ -33,7 +35,8 @@
     aria-label="Close exhaustion bar"
     type="button"
     class="button button-borderless button-icon-only button-config"
-    on:click={close}>
+    onclick={() => onClose?.()}
+  >
     <i class="fas fa-times"></i>
   </button>
 </div>

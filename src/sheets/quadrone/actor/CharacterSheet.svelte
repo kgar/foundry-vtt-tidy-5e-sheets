@@ -10,6 +10,7 @@
   import AbilityScore from './character-parts/AbilityScore.svelte';
   import InspirationBadge from './character-parts/InspirationBadge.svelte';
   import ActorSidebar from './character-parts/ActorSidebar.svelte';
+  import { getModifierData } from 'src/utils/formatting';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -37,17 +38,15 @@
   let hpPct = $derived(context.system.attributes?.hp?.pct ?? 0);
   let hpTemp = $derived(context.system.attributes?.hp?.temp ?? 10);
   let hpTempMax = $derived(context.system.attributes?.hp?.tempMax ?? 0);
-  
+
   let hdValue = 2;
   let hdMax = 2;
   let hdPct = 1;
-  
-  let unlocked = false; // TODO: Replace with context.unlocked
-  let portraitShape = 'transparent';
-  let exhaustionLevel = 1;
 
-  let showSanity = false;
-  let showHonor = false;
+  let portraitShape = 'transparent';
+  let exhaustionLevel = $derived(context.system.attributes.exhaustion);
+
+  let ini = $derived(getModifierData(context.system.attributes.init.total));
 </script>
 
 <!-- TODO: Header bar needs to always be in dark mode -->
@@ -58,7 +57,7 @@
       <CharacterPortrait
         imageUrl={context.actor.img}
         imageAlt={context.actor.name}
-        portraitShape={portraitShape}
+        {portraitShape}
         showDeathSaves={dying}
       />
       <div class="character-vitals">
@@ -96,124 +95,146 @@
             />
           </div>
 
-          {#if !unlocked}
-          {#if hpTemp > 0 || hpTempInputFocused}
-          <!-- TODO: Convert to buttons -->
-          <div
-            class="temp-hp label pointer"
-            hidden={hpTempInputFocused}
-            onclick={async (ev) => {
-              hpTempInputFocused = true;
-              hpTempInput?.selectText();
-            }}
-          >
-            <span class="modifier font-label-large color-text-lighter">+</span>
-            <span class="value font-data-large color-text-default" title="Temporary HP">{hpTemp}</span>
-          </div>
-          <TextInputQuadrone
-            bind:this={hpTempInput}
-            id="{appId}-system-attributes-hp-temp"
-            document={context.actor}
-            field="system.attributes.hp.temp"
-            class="hp-temp-input"
-            value={hpTemp}
-            selectOnFocus={true}
-            enableDeltaChanges={true}
-            onfocus={() => (hpTempInputFocused = true)}
-            onblur={() => (hpTempInputFocused = false)}
-            blurAfterChange={true}
-            hidden={!hpTempInputFocused}
-          />
+          {#if !context.unlocked}
+            {#if hpTemp > 0 || hpTempInputFocused}
+              <!-- TODO: Convert to buttons -->
+              <div
+                class="temp-hp label pointer"
+                hidden={hpTempInputFocused}
+                onclick={async (ev) => {
+                  hpTempInputFocused = true;
+                  hpTempInput?.selectText();
+                }}
+              >
+                <span class="modifier font-label-large color-text-lighter"
+                  >+</span
+                >
+                <span
+                  class="value font-data-large color-text-default"
+                  title="Temporary HP">{hpTemp}</span
+                >
+              </div>
+              <TextInputQuadrone
+                bind:this={hpTempInput}
+                id="{appId}-system-attributes-hp-temp"
+                document={context.actor}
+                field="system.attributes.hp.temp"
+                class="hp-temp-input"
+                value={hpTemp}
+                selectOnFocus={true}
+                enableDeltaChanges={true}
+                onfocus={() => (hpTempInputFocused = true)}
+                onblur={() => (hpTempInputFocused = false)}
+                blurAfterChange={true}
+                hidden={!hpTempInputFocused}
+              />
+            {:else}
+              <button
+                aria-label="Temporary HP"
+                type="button"
+                class="button button-borderless button-icon-only temp-hp"
+                onclick={async (ev) => {
+                  hpTempInputFocused = true;
+                  hpTempInput?.selectText();
+                }}
+              >
+                <i class="fas fa-hand-holding-heart"></i>
+              </button>
+            {/if}
           {:else}
             <button
-              aria-label="Temporary HP"
+              aria-label="Configure HP"
               type="button"
-              class="button button-borderless button-icon-only temp-hp"
-              onclick={async (ev) => {
-                hpTempInputFocused = true;
-                hpTempInput?.selectText();
-              }}
-              >
-              <i class="fas fa-hand-holding-heart"></i>
+              class={[
+                'button',
+                'button-borderless',
+                'button-icon-only',
+                'button-config',
+                { editMode: context.unlocked },
+              ]}
+            >
+              <i class="fas fa-cog"></i>
             </button>
           {/if}
-        {:else}
-        <button
-          aria-label="Configure HP"
-          type="button"
-          class="button button-borderless button-icon-only button-config"
-          class:editMode={unlocked}>
-          <i class="fas fa-cog"></i>
-        </button>
-        {/if}
         </div>
         <div class="character-vitals-row">
           {#if exhaustionBarFocused}
-            <CharacterExhaustionBar {exhaustionLevel} on:close={() => exhaustionBarFocused = false} />
+            <CharacterExhaustionBar
+              level={exhaustionLevel}
+              total={context.config.conditionTypes.exhaustion.levels}
+              onClose={() => (exhaustionBarFocused = false)}
+              onExhaustionLevelSet={async (level) => {
+                await context.actor.update({
+                  'system.attributes.exhaustion': level,
+                });
+              }}
+            />
           {:else}
-          <div class="hd-row">
-            <div class="meter progress hit-die" style="--bar-percentage: 100%">
-              <button
-                type="button"
-                class="label pointer"
-                hidden={hdValueInputFocused}
-                onclick={async (ev) => {
-                  hdValueInputFocused = true;
-                  hdValueInput?.selectText();
-                }}
+            <div class="hd-row">
+              <div
+                class="meter progress hit-die"
+                style="--bar-percentage: 100%"
               >
-                <div class="value" title="Current Hit Die">{hdValue}</div>
-                <div class="separator">/</div>
-                <div class="max" title="Max Hit Die">{hdMax}</div>
-                <div class="hd-label" title="Hit Die">HD</div>
-              </button>
-              <TextInputQuadrone
-                bind:this={hdValueInput}
-                id="{appId}-system-attributes-hd"
-                document={context.actor}
-                field="system.attributes.hd.value"
-                class="hd-input"
-                value={hdValue}
-                selectOnFocus={true}
-                enableDeltaChanges={true}
-                onfocus={() => (hdValueInputFocused = true)}
-                onblur={() => (hdValueInputFocused = false)}
-                blurAfterChange={true}
-                hidden={!hdValueInputFocused}
-              />
-              {#if unlocked}
-              <button
-                aria-label="Configure Hit Die"
-                type="button"
-                class="button button-borderless button-icon-only button-config">
-                <i class="fas fa-cog"></i>
-              </button>
-              {/if}
+                <button
+                  type="button"
+                  class="label pointer"
+                  hidden={hdValueInputFocused}
+                  onclick={async (ev) => {
+                    hdValueInputFocused = true;
+                    hdValueInput?.selectText();
+                  }}
+                >
+                  <div class="value" title="Current Hit Die">{hdValue}</div>
+                  <div class="separator">/</div>
+                  <div class="max" title="Max Hit Die">{hdMax}</div>
+                  <div class="hd-label" title="Hit Die">HD</div>
+                </button>
+                <TextInputQuadrone
+                  bind:this={hdValueInput}
+                  id="{appId}-system-attributes-hd"
+                  document={context.actor}
+                  field="system.attributes.hd.value"
+                  class="hd-input"
+                  value={hdValue}
+                  selectOnFocus={true}
+                  enableDeltaChanges={true}
+                  onfocus={() => (hdValueInputFocused = true)}
+                  onblur={() => (hdValueInputFocused = false)}
+                  blurAfterChange={true}
+                  hidden={!hdValueInputFocused}
+                />
+                {#if context.unlocked}
+                  <button
+                    aria-label="Configure Hit Die"
+                    type="button"
+                    class="button button-borderless button-icon-only button-config"
+                  >
+                    <i class="fas fa-cog"></i>
+                  </button>
+                {/if}
+              </div>
             </div>
-          </div>
-          <div class="exhaustion" 
-            class:exhausted={exhaustionLevel > 0}>
-            <button
-              type="button"
-              class="button button-borderless button-icon-only"
-              aria-label="Exhaustion"
-              onclick={() => (exhaustionBarFocused = !exhaustionBarFocused)}
-            >
-              <i class="fas fa-heart-pulse"></i>
-              <span class="value">{exhaustionLevel}</span>
-            </button>
-          </div>
-          <div class="death-saves" 
-            class:dying={dying}>
-            <button
-              type="button"
-              class="button button-borderless button-icon-only"
-              aria-label="Death Saves"
-              onclick={() => (dying = !dying)}
-            >
-              <i class="fas fa-skull"></i>
-            </button>
-          </div>
+            <div class={['exhaustion', { exhausted: exhaustionLevel > 0 }]}>
+              <button
+                type="button"
+                class="button button-borderless button-icon-only"
+                aria-label="Exhaustion"
+                onclick={() => (exhaustionBarFocused = !exhaustionBarFocused)}
+              >
+                <i class="fas fa-heart-pulse"></i>
+                <span class="value">{exhaustionLevel}</span>
+              </button>
+            </div>
+            <div class={['death-saves', { dying }]}>
+              <button
+                type="button"
+                class="button button-borderless button-icon-only"
+                aria-label="Death Saves"
+                onclick={() => (dying = !dying)}
+              >
+                <i class="fas fa-skull"></i>
+              </button>
+            </div>
           {/if}
         </div>
       </div>
@@ -228,11 +249,17 @@
                 document={context.actor}
                 value={context.actor.name}
                 class="character-name flex1"
-                />
+              />
             {:else}
               <h1 class="character-name flex1">{context.actor.name}</h1>
             {/if}
-            <div class="sheet-header-actions flexrow" class:show-xp={showXp}>
+            <div
+              class={[
+                'sheet-header-actions',
+                'flexrow',
+                { ['show-xp']: showXp },
+              ]}
+            >
               <button
                 type="button"
                 class="button button-icon-only short-rest button-gold"
@@ -252,7 +279,7 @@
                 disabled={!context.editable}
               >
                 <i class="fas fa-campground"></i>
-                </button>
+              </button>
             </div>
           </div>
           <CharacterSubtitle {showXp} />
@@ -260,155 +287,156 @@
         <div class="level-container flex0 flexrow">
           <InspirationBadge />
           <div class="level-block">
-            <span class="level bonus font-data-xlarge color-text-default" title="Level">5</span>
+            <span
+              class="level bonus font-data-xlarge color-text-default"
+              title="Level">5</span
+            >
             <div class="proficiency flexrow">
-              <span class="label font-label-medium color-text-gold" title="Proficiency Bonus">PB</span>
-              <span class="modifier font-label-medium color-text-lightest">+</span>
-              <span class="value font-data-medium color-text-default" title="Proficiency Bonus Modifier">2</span>
+              <span
+                class="label font-label-medium color-text-gold"
+                title="Proficiency Bonus">PB</span
+              >
+              <span class="modifier font-label-medium color-text-lightest"
+                >+</span
+              >
+              <span
+                class="value font-data-medium color-text-default"
+                title="Proficiency Bonus Modifier">2</span
+              >
             </div>
           </div>
         </div>
       </div>
-      <div class="abilities-container">
-      <div class="ac-container flexcol">
-        <div class="shield">
-          <span class="ac-value color-text-default" title="Armor Class">14</span>
-          {#if unlocked}
-          <button
-            aria-label="Configure Armor Class"
-            type="button"
-            class="button button-borderless button-icon-only button-config">
-            <i class="fas fa-cog"></i>
-          </button>
-          {/if}
-        </div>
-        <div class="ability-labels flexcol">
-          <span class="label font-label-medium color-text-gold">Score</span>
-          <span class="divider"></span>
-          <span class="label font-label-medium color-text-gold">Save</span>
-        </div>
-      </div>
-      <AbilityScore 
-        key="strength" 
-        label="Strength"
-        shortLabel="STR" 
-        proficient={false}
-        score={8} 
-        bonus={-1} 
-        save={-1} 
-        unlocked={unlocked}
-      />
-      <AbilityScore 
-        key="dexterity" 
-        label="Dexterity"
-        shortLabel="DEX" 
-        proficient={false}
-        score={14} 
-        bonus={2} 
-        save={4} 
-        unlocked={unlocked}
-      />
-      <AbilityScore 
-        key="constitution" 
-        label="Constitution"
-        shortLabel="CON" 
-        proficient={true}
-        score={14} 
-        bonus={2} 
-        save={4} 
-        unlocked={unlocked}
-      />
-      <AbilityScore 
-        key="intelligence" 
-        label="Intelligence"
-        shortLabel="INT" 
-        proficient={false}
-        score={14} 
-        bonus={2} 
-        save={4} 
-        unlocked={unlocked}
-      />
-      <AbilityScore 
-        key="wisdom" 
-        label="Wisdom"
-        shortLabel="WIS" 
-        proficient={false}
-        score={14} 
-        bonus={2} 
-        save={4} 
-        unlocked={unlocked}
-      />
-      <AbilityScore 
-        key="charisma" 
-        label="Charisma"
-        shortLabel="CHA" 
-        proficient={true}
-        score={17} 
-        bonus={3} 
-        save={6} 
-        unlocked={unlocked}
-      />
-      {#if showSanity}
-      <AbilityScore 
-        key="sanity" 
-        label="Sanity"
-        shortLabel="SAN" 
-        proficient={false}
-        score={14} 
-        bonus={2} 
-        save={4} 
-        unlocked={unlocked}
-      />
-      {/if}
-      {#if showHonor}
-      <AbilityScore 
-        key="honor" 
-        label="Honor"
-        shortLabel="HON" 
-        proficient={false}
-        score={14} 
-        bonus={2} 
-        save={4} 
-        unlocked={unlocked}
-      />
-      {/if}
-      <div class="initiative-container flexcol">
-        <div class="initiative score">
-          <div class="initiative-bonus flexrow">
-            <span class="modifier color-text-lightest">+</span>
-            <span class="value color-text-default">2</span>
-          </div>
-          <span class="label font-label-medium color-text-gold">INIT</span>
-          {#if unlocked}
-          <button
-            aria-label="Configure Initiative"
-            type="button"
-            class="button button-borderless button-icon-only button-config">
-            <i class="fas fa-cog"></i>
-          </button>
-          {/if}
-        </div>
-        <!-- TODO: Set concentration bonus here, but then move the concentration indicator up to subtitle, below the action buttons. -->
-        <div class="concentration flexcol">
-          <span class="label font-label-medium color-text-gold">Concentration</span>
-          <div class="flexrow concentration-bonus">
-            <i class="fas fa-head-side-brain color-text-gold"></i>
-            <span class="modifier font-label-medium color-text-lightest">+</span>
-            <span class="value font-data-medium color-text-default">2</span>
-            {#if unlocked}
-            <div class="config-container">
+      <div
+        class={[
+          'abilities-container',
+          { ['abilities-overflow']: context.abilities.length > 6 },
+        ]}
+      >
+        <div class="ac-container flexcol">
+          <div
+            class="shield"
+            data-attribution="attributes.ac"
+            data-attribution-caption="DND5E.ArmorClass"
+            data-tooltip-direction="DOWN"
+          >
+            <span class="ac-value color-text-default">
+              {context.system.attributes.ac.value}
+            </span>
+            {#if context.unlocked}
               <button
-                aria-label="Configure Concentration"
+                aria-label="Configure Armor Class"
                 type="button"
-                class="button button-borderless button-icon-only button-config">
+                class="button button-borderless button-icon-only button-config"
+                onclick={(ev) =>
+                  FoundryAdapter.renderArmorConfig(context.actor)}
+              >
                 <i class="fas fa-cog"></i>
               </button>
-            </div>
             {/if}
           </div>
+          <div class="ability-labels flexcol">
+            <span class="label font-label-medium color-text-gold">Score</span>
+            <span class="divider"></span>
+            <span class="label font-label-medium color-text-gold">Save</span>
+          </div>
+        </div>
+        {#each context.abilities as ability}
+          <AbilityScore
+            {ability}
+            unlocked={context.unlocked}
+            onScoreChanged={(score) =>
+              context.actor.update({
+                [`system.abilities.${ability.key}.value`]: score,
+              })}
+            onConfigClicked={(id) =>
+              FoundryAdapter.renderAbilityConfig(context.actor, id)}
+            onRollAbility={(event, key) =>
+              context.actor.rollAbilityCheck({ ability: key, event })}
+            onRollSave={(event, key) =>
+              context.actor.rollSavingThrow({ ability: key, event })}
+          />
+        {/each}
+        <div class="initiative-container flexcol">
+          <div class="initiative score" data-tooltip="DND5E.Initiative">
+            <div class="initiative-bonus flexrow">
+              <span class="modifier color-text-lightest">
+                {ini.sign}
+              </span>
+              <span class="value color-text-default">
+                {ini.value}
+              </span>
+            </div>
+            <button
+              type="button"
+              class="initiative-roll-button"
+              onclick={(event) =>
+                context.actor.rollInitiativeDialog({ event: event })}
+            >
+              {localize('DND5E.InitiativeAbbr')}
+            </button>
+            {#if context.unlocked}
+              <button
+                aria-label="Configure Initiative"
+                type="button"
+                class="button button-borderless button-icon-only button-config"
+                onclick={() =>
+                  FoundryAdapter.renderInitiativeConfig(context.actor)}
+              >
+                <i class="fas fa-cog"></i>
+              </button>
+            {/if}
+          </div>
+          <!-- TODO: Set concentration bonus here, but then move the concentration indicator up to subtitle, below the action buttons. -->
+          {#if context.saves.concentration}
+            {@const save = context.saves.concentration}
+            <div class="concentration flexcol">
+              <button
+                type="button"
+                onclick={(event) =>
+                  context.actor.rollConcentration({
+                    event,
+                    legacy: false,
+                  })}
+                class="unbutton concentration-roll-button"
+              >
+                <span class="label font-label-medium color-text-gold"
+                  >{localize(save.label)}</span
+                >
+              </button>
+              <div class="flexrow concentration-bonus">
+                {#if context.isConcentrating}
+                  <i
+                    class="active-concentration-icon fas fa-arrow-rotate-left fa-spin fa-spin-reverse"
+                    aria-label="Concentration"
+                  ></i>
+                {:else}
+                  <i class="fas fa-head-side-brain color-text-gold"></i>
+                {/if}
+                <span class="modifier font-label-medium color-text-lightest">
+                  {save.sign}
+                </span>
+                <span class="value font-data-medium color-text-default">
+                  {save.mod}
+                </span>
+                {#if context.unlocked}
+                  <div class="config-container">
+                    <button
+                      aria-label="Configure Concentration"
+                      type="button"
+                      class="button button-borderless button-icon-only button-config"
+                      onclick={() =>
+                        FoundryAdapter.openConcentrationConfig(context.actor)}
+                    >
+                      <i class="fas fa-cog"></i>
+                    </button>
+                  </div>
+                {/if}
+              </div>
+            </div>
+          {/if}
         </div>
       </div>
-    </div>
     </div>
   </div>
   <div class="tabs-row">

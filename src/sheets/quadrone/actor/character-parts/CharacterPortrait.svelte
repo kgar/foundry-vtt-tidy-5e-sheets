@@ -1,7 +1,6 @@
 <script lang="ts">
   import DeathSavesOverlay from './DeathSavesOverlay.svelte'; // Assuming relative path
   import { settings } from 'src/settings/settings.svelte';
-  
 
   type Props = {
     imageUrl: string;
@@ -17,6 +16,7 @@
     showDeathSaves = false,
   }: Props = $props();
 
+  // 👋 hightouch - this information will eventually be derived from the `context` object and will automatically update whenever the conditions are right.
   let characterIsDead = $state(false);
 
   // Make portraitShape mutable for the debug button
@@ -29,14 +29,14 @@
     const nextIndex = (currentIndex + 1) % availableShapes.length;
     currentPortraitShape = availableShapes[nextIndex];
   }
-  
-  function handleDeathStatusChange(event: CustomEvent) {
-    characterIsDead = event.detail.dead;
-  }
 </script>
 
 <!-- TODO: Add switch for size if needed -->
-<div class="character-image {currentPortraitShape}" class:dead={characterIsDead} style="position: relative;">
+<div
+  class="character-image {currentPortraitShape}"
+  class:dead={characterIsDead}
+  style="position: relative;"
+>
   {#if settings.value.truesight}
     <button
       type="button"
@@ -49,12 +49,9 @@
   {/if}
   <img src={imageUrl} alt={imageAlt} class:dead={characterIsDead} />
   {#if characterIsDead}
-  <div class="dead-overlay"></div>
+    <div class="dead-overlay"></div>
   {/if}
 </div>
 {#if showDeathSaves}
-  <DeathSavesOverlay
-    bind:dead={characterIsDead}
-    on:deathStatusChange={handleDeathStatusChange}
-  />
+  <DeathSavesOverlay />
 {/if}

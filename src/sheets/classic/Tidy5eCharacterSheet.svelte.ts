@@ -727,7 +727,6 @@ export class Tidy5eCharacterSheet
           relativeTo: this.actor,
         }
       ),
-      hirelings: [],
       idealEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.ideal,
         {

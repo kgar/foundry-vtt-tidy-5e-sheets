@@ -161,7 +161,7 @@ export function SvelteApplicationMixin<
     _effectCleanup?: () => void;
 
     _runFrameListenerEffect() {
-      applyThemeToApplication(settings.value, this.element);
+      applyThemeToApplication(this.element);
     }
 
     _attachFrameListeners() {
