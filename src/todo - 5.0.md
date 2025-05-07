@@ -1,6 +1,5 @@
 ## To Fix
 
-- [ ] verify: (all 3 sheets) Pull sheet preferences during initialize application options
 - [ ] If possible, forward the parent sheet's theme to all dialogs/applications they open
 - [ ] accountForExternalSections is not being used quite right. It needs to happen after any callers have updated context with their own data. How do we account for this?
 - [ ] // TODO: Make the character sheet handle bastion tab check. This is violating separation of concerns.
