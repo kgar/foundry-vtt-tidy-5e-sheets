@@ -5,11 +5,6 @@
   - [x] Establish components for the tabs
   - [x] Set up Quadrone runtime content, including the default tabs
   - [ ] Structure the sheet - 
-    - [ ] Header
-      - [ ] Image and vitals
-      - [ ] Name / Summary row / buttons / Badge
-      - [ ] AC / Abilities / Init
-      - [ ] Sidebar Toggle / Tab strip
     - [ ] Tab Content area
       - [ ] Sidebar
         - [ ] Button tabs
@@ -41,10 +36,14 @@
   - [ ] Implement Favorites
   - [ ] Implement Responsive Tab Strip
   - [ ] Implement Theme Settings
-    - [ ] Client Default
+    - [ ] User Default (we have User Scope now!)
     - [ ] Actor Sheet Override
     - [ ] Item Sheet Override
   - [ ] Implement Limited View, which branches just within the top-level sheet component.
+  - [ ] Misc Features
+    - [ ] Set as Inspiration Source (see below)
+    - [ ] <!-- TODO: Determine if we keep context menu here; some modules rely on it, like Tokenizer. -->
+    - [ ] // TODO: Use the same hooks and sheet parts that supports the Hidden Death Saves module.
 - [ ] Explore what it takes to implement item sheet tab settings per item type.
 - [ ] Implement quadrone default tab settings (no UI)
   - [ ] Character
@@ -80,6 +79,15 @@
 - [ ] Editor style needs CSS help: https://discord.com/channels/1167985253072257115/1169792539545587733/1362188451910258869
 - [ ] Make inline activities draggable / droppable within the scope of an item table row / summary
 - [ ] hightouch - please review meter CSS / class setup to see if it is to your liking
+
+### Feature - Set as Inspiration Source
+
+**Inspired by items**. New Context Menu option "Set as Inspiration Source" available on character sheet for any item with limited uses. When selected, the actor is flagged with the item uuid. When preparing the inspo tracker, if there's a valid, owned item in the flag setting which has limited uses, then switch from the boolean inspiration tracker to the banked inspiration tracker. This is a glorified pin.
+
+**Tidy API Ready**. Provide API support for someone to specify their own banked inspiration. They must provide callbacks for value, max, and onChange. When an API inspiration bank is registered, it overrides all other options. onChange should make it easy to understand whether the value increased or decreased.
+
+**Hooked up**. Whenever we increment or decrement banked inspiration, fire off a hook "tidy5e-sheet.inspirationChanged" with sheet, actor, and new value. If we're working with a registered inspiration item, then decrementing triggers item use.
+
 
 ### Deferred tasks from last item batch review
 
@@ -579,3 +587,10 @@ Limited:
 - [x] Fix: Copying an advancement from item to another when it's Tidy to Tidy doesn't seem to work. Determine what the defaults are doing and try to do likewise.
 - [x] Implement classic group sheet default tabs setting
 - [x] Rework meters to emulate dnd5e2 structure
+- [x] Character Sheet
+  - [x] Structure the sheet - 
+    - [x] Header
+      - [x] Image and vitals
+      - [x] Name / Summary row / buttons / Badge
+      - [x] AC / Abilities / Init
+      - [x] Sidebar Toggle / Tab strip

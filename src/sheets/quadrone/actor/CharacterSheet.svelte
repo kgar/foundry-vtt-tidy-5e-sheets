@@ -24,29 +24,23 @@
 
   let hpValueInputFocused = $state(false);
   let hpTempInputFocused = $state(false);
-  let hdValueInputFocused = $state(false);
   let exhaustionBarFocused = $state(false);
-  let dying = $state(false);
-  let showXp = $state(false);
 
   let hpValueInput = $state<TextInputQuadrone>();
   let hpTempInput = $state<TextInputQuadrone>();
-  let hdValueInput = $state<TextInputQuadrone>();
 
   let hpValue = $derived(context.system.attributes?.hp?.value ?? 0);
   let hpMax = $derived(context.system.attributes?.hp?.max ?? 0);
   let hpPct = $derived(context.system.attributes?.hp?.pct ?? 0);
-  let hpTemp = $derived(context.system.attributes?.hp?.temp ?? 10);
+  let hpTemp = $derived(context.system.attributes?.hp?.temp ?? 0);
   let hpTempMax = $derived(context.system.attributes?.hp?.tempMax ?? 0);
-
-  let hdValue = 2;
-  let hdMax = 2;
-  let hdPct = 1;
 
   let portraitShape = 'transparent';
   let exhaustionLevel = $derived(context.system.attributes.exhaustion);
 
   let ini = $derived(getModifierData(context.system.attributes.init.total));
+
+  let pb = $derived(getModifierData(context.system.attributes.prof ?? 0));
 </script>
 
 <!-- TODO: Header bar needs to always be in dark mode -->
@@ -58,7 +52,6 @@
         imageUrl={context.actor.img}
         imageAlt={context.actor.name}
         {portraitShape}
-        showDeathSaves={dying}
       />
       <div class="character-vitals">
         <div class="hp-row flexrow">
@@ -75,9 +68,16 @@
                 hpValueInput?.selectText();
               }}
             >
-              <div class="value" aria-label="Current HP">{hpValue}</div>
+              <div
+                class="value"
+                aria-label={localize('DND5E.HitPointsCurrent')}
+              >
+                {hpValue}
+              </div>
               <div class="separator">/</div>
-              <div class="max" aria-label="Max HP">{hpMax}</div>
+              <div class="max" aria-label={localize('DND5E.HitPointsMax')}>
+                {hpMax}
+              </div>
             </button>
             <TextInputQuadrone
               bind:this={hpValueInput}
@@ -111,7 +111,7 @@
                 >
                 <span
                   class="value font-data-large color-text-default"
-                  title="Temporary HP">{hpTemp}</span
+                  data-tooltip="DND5E.HitPointsTemp">{hpTemp}</span
                 >
               </div>
               <TextInputQuadrone
@@ -130,7 +130,8 @@
               />
             {:else}
               <button
-                aria-label="Temporary HP"
+                aria-label={localize('DND5E.HitPointsTemp')}
+                data-tooltip="DND5E.HitPointsTemp"
                 type="button"
                 class="button button-borderless button-icon-only temp-hp"
                 onclick={async (ev) => {
@@ -143,7 +144,10 @@
             {/if}
           {:else}
             <button
-              aria-label="Configure HP"
+              onclick={() =>
+                FoundryAdapter.renderHitPointsDialog(context.actor)}
+              aria-label={localize('DND5E.HitPointsConfig')}
+              data-tooltip="DND5E.HitPointsConfig"
               type="button"
               class={[
                 'button',
@@ -170,42 +174,39 @@
               }}
             />
           {:else}
+            {@const hdPct = Math.round(
+              context.system.attributes.hd.max > 0
+                ? (context.system.attributes.hd.value /
+                    context.system.attributes.hd.max) *
+                    100
+                : 0,
+            )}
             <div class="hd-row">
               <div
                 class="meter progress hit-die"
-                style="--bar-percentage: 100%"
+                style="--bar-percentage: {hdPct}%"
               >
-                <button
-                  type="button"
-                  class="label pointer"
-                  hidden={hdValueInputFocused}
-                  onclick={async (ev) => {
-                    hdValueInputFocused = true;
-                    hdValueInput?.selectText();
-                  }}
-                >
-                  <div class="value" title="Current Hit Die">{hdValue}</div>
+                <span class="label">
+                  <div
+                    class="value"
+                    data-tooltip="TIDY5E.HitDice.Current.Label"
+                  >
+                    {context.system.attributes.hd.value}
+                  </div>
                   <div class="separator">/</div>
-                  <div class="max" title="Max Hit Die">{hdMax}</div>
-                  <div class="hd-label" title="Hit Die">HD</div>
-                </button>
-                <TextInputQuadrone
-                  bind:this={hdValueInput}
-                  id="{appId}-system-attributes-hd"
-                  document={context.actor}
-                  field="system.attributes.hd.value"
-                  class="hd-input"
-                  value={hdValue}
-                  selectOnFocus={true}
-                  enableDeltaChanges={true}
-                  onfocus={() => (hdValueInputFocused = true)}
-                  onblur={() => (hdValueInputFocused = false)}
-                  blurAfterChange={true}
-                  hidden={!hdValueInputFocused}
-                />
+                  <div class="max" data-tooltip="TIDY5E.HitDice.Max.Label">
+                    {context.system.attributes.hd.max}
+                  </div>
+                  <div class="hd-label" data-tooltip="DND5E.HitDice">
+                    {localize('TIDY5E.HitDice.Abbreviation')}
+                  </div>
+                </span>
                 {#if context.unlocked}
                   <button
-                    aria-label="Configure Hit Die"
+                    onclick={() =>
+                      FoundryAdapter.renderHitDiceConfig(context.actor)}
+                    aria-label={localize('DND5E.HitDiceConfig')}
+                    data-tooltip="DND5E.HitDiceConfig"
                     type="button"
                     class="button button-borderless button-icon-only button-config"
                   >
@@ -218,22 +219,37 @@
               <button
                 type="button"
                 class="button button-borderless button-icon-only"
-                aria-label="Exhaustion"
+                aria-label={localize('DND5E.Exhaustion')}
+                data-tooltip={'DND5E.Exhaustion'}
                 onclick={() => (exhaustionBarFocused = !exhaustionBarFocused)}
               >
                 <i class="fas fa-heart-pulse"></i>
                 <span class="value">{exhaustionLevel}</span>
               </button>
             </div>
-            <div class={['death-saves', { dying }]}>
-              <button
-                type="button"
-                class="button button-borderless button-icon-only"
-                aria-label="Death Saves"
-                onclick={() => (dying = !dying)}
-              >
-                <i class="fas fa-skull"></i>
-              </button>
+            <div class={['death-saves', { dying: context.showDeathSaves }]}>
+              {#if context.unlocked}
+                <button
+                  aria-label={localize('DND5E.DeathSaveConfigure')}
+                  data-tooltip="DND5E.DeathSaveConfigure"
+                  type="button"
+                  class="button button-borderless button-icon-only button-config"
+                  onclick={(ev) =>
+                    FoundryAdapter.renderDeathConfig(context.actor)}
+                >
+                  <i class="fas fa-cog"></i>
+                </button>
+              {:else}
+                <button
+                  type="button"
+                  class="button button-borderless button-icon-only"
+                  aria-label={localize('DND5E.DeathSave')}
+                  data-tooltip="DND5E.DeathSave"
+                  onclick={() => context.actor.sheet.toggleDeathSaves()}
+                >
+                  <i class="fas fa-skull"></i>
+                </button>
+              {/if}
             </div>
           {/if}
         </div>
@@ -257,7 +273,7 @@
               class={[
                 'sheet-header-actions',
                 'flexrow',
-                { ['show-xp']: showXp },
+                { ['show-xp']: context.enableXp },
               ]}
             >
               <button
@@ -282,27 +298,30 @@
               </button>
             </div>
           </div>
-          <CharacterSubtitle {showXp} />
+          <CharacterSubtitle />
         </div>
         <div class="level-container flex0 flexrow">
           <InspirationBadge />
           <div class="level-block">
             <span
               class="level bonus font-data-xlarge color-text-default"
-              title="Level">5</span
+              data-tooltip="DND5E.Level"
             >
-            <div class="proficiency flexrow">
-              <span
-                class="label font-label-medium color-text-gold"
-                title="Proficiency Bonus">PB</span
-              >
-              <span class="modifier font-label-medium color-text-lightest"
-                >+</span
-              >
-              <span
-                class="value font-data-medium color-text-default"
-                title="Proficiency Bonus Modifier">2</span
-              >
+              {context.system.details.level ?? 0}
+            </span>
+            <div
+              class="proficiency flexrow"
+              data-tooltip="DND5E.ProficiencyBonus"
+            >
+              <span class="label font-label-medium color-text-gold">
+                {localize('DND5E.ProficiencyBonusAbbr')}
+              </span>
+              <span class="modifier font-label-medium color-text-lightest">
+                {pb.sign}
+              </span>
+              <span class="value font-data-medium color-text-default">
+                {pb.value}
+              </span>
             </div>
           </div>
         </div>
@@ -325,7 +344,8 @@
             </span>
             {#if context.unlocked}
               <button
-                aria-label="Configure Armor Class"
+                aria-label={localize('DND5E.ArmorConfig')}
+                data-tooltip="DND5E.ArmorConfig"
                 type="button"
                 class="button button-borderless button-icon-only button-config"
                 onclick={(ev) =>
@@ -377,7 +397,8 @@
             </button>
             {#if context.unlocked}
               <button
-                aria-label="Configure Initiative"
+                aria-label={localize('DND5E.InitiativeConfig')}
+                data-tooltip="DND5E.InitiativeConfig"
                 type="button"
                 class="button button-borderless button-icon-only button-config"
                 onclick={() =>
@@ -408,7 +429,7 @@
                 {#if context.isConcentrating}
                   <i
                     class="active-concentration-icon fas fa-arrow-rotate-left fa-spin fa-spin-reverse"
-                    aria-label="Concentration"
+                    aria-label={localize('DND5E.Concentration')}
                   ></i>
                 {:else}
                   <i class="fas fa-head-side-brain color-text-gold"></i>
@@ -420,9 +441,13 @@
                   {save.mod}
                 </span>
                 {#if context.unlocked}
+                  {@const tooltip = localize('DND5E.AbilityConfigure', {
+                    ability: context.saves.concentration.label,
+                  })}
                   <div class="config-container">
                     <button
-                      aria-label="Configure Concentration"
+                      aria-label={tooltip}
+                      data-tooltip={tooltip}
                       type="button"
                       class="button button-borderless button-icon-only button-config"
                       onclick={() =>
@@ -442,7 +467,7 @@
   <div class="tabs-row">
     <a
       class="sidebar-toggle button button-borderless"
-      title={localize(
+      data-tooltip={localize(
         sidebarExpanded ? 'JOURNAL.ViewCollapse' : 'JOURNAL.ViewExpand',
       )}
       onclick={() => (sidebarExpanded = !sidebarExpanded)}

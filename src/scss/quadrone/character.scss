@@ -221,7 +221,7 @@
           right: 0;
           bottom: var(--t5e-size-8x);
 
-          label.button {
+          :where(.successes, .failures) button {
             cursor: pointer;
             border-radius: 100%;
             border: 2px solid var(--t5e-color-gold);
@@ -235,13 +235,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-
-            input[type="checkbox"] {
-              position: absolute;
-              opacity: 0;
-              width: 0;
-              height: 0;
-            }
 
             i {
               font-size: var(--font-size-12);
@@ -265,6 +258,29 @@
             top: 50%;
             transform: translateY(-50%);
             gap: 0.25rem;
+            flex-direction: column-reverse;
+          }
+
+          .death-save-roll-button {
+            --size: 3.5rem;
+            position: absolute;
+            
+            display: flex;
+            align-items: center;
+            justify-self: center;
+            text-align: center;
+            top: 50%;
+            left: 50%;
+            transform: translateY(-50%) translateX(-50%);
+            border-radius: 100%;
+            border: 2px solid var(--t5e-color-gold);
+            background-color: var(--t5e-component-card-dark-darker);
+
+            i {
+              position: relative;
+              font-size: 3rem;
+              color: var(--t5e-color-gold);
+            }
           }
 
           .successes {
