@@ -42,6 +42,7 @@
   - [ ] Implement Limited View, which branches just within the top-level sheet component.
   - [ ] Misc Features
     - [ ] Set as Inspiration Source (see below)
+    - [ ] <!-- TODO: Determine if we keep context menu here; some modules rely on it, like Tokenizer. -->
 - [ ] Explore what it takes to implement item sheet tab settings per item type.
 - [ ] Implement quadrone default tab settings (no UI)
   - [ ] Character
