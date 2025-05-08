@@ -850,5 +850,8 @@
     "TIDY5E.Tidy5eContainerSheetQuadrone": "Контейнерний лист Tidy 5e",
     "TIDY5E.ItemSheet.PactLevelCastLabel": "Виконати в {ordinal}",
     "TIDY5E.AddSpecific": "Додати {name}",
-    "TIDY5E.Ability.EditScore.label": "Редагувати партитуру"
+    "TIDY5E.Ability.EditScore.label": "Редагувати партитуру",
+    "TIDY5E.HitDice.Max.Label": "Кубики максимального влучання",
+    "TIDY5E.HitDice.Abbreviation": "HD",
+    "TIDY5E.HitDice.Current.Label": "Поточні кубики хітів"
 }
