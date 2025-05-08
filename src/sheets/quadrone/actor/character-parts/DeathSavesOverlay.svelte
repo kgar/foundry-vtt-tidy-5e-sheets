@@ -28,8 +28,6 @@
   }
 </script>
 
-<!-- TODO: Need Death Save config button on unlocked -->
-
 <div class="death-saves-overlay">
   <div class="failures flexcol">
     {#each Array(halfSaves) as _, i}
