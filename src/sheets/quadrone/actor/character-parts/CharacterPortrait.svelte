@@ -2,6 +2,8 @@
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import DeathSavesOverlay from './DeathSavesOverlay.svelte'; // Assuming relative path
   import { settings } from 'src/settings/settings.svelte';
+  import { TidyHooks } from 'src/foundry/TidyHooks';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   type Props = {
     imageUrl: string;
@@ -11,7 +13,6 @@
 
   let { imageUrl, imageAlt, portraitShape = 'transparent' }: Props = $props();
 
-  // TODO: Use the same hooks and sheet parts that supports the Hidden Death Saves module.
   let context = $derived(getCharacterSheetQuadroneContext());
 
   let characterIsDead = $derived(
@@ -31,11 +32,51 @@
     const nextIndex = (currentIndex + 1) % availableShapes.length;
     currentPortraitShape = availableShapes[nextIndex];
   }
+
+  function handlePortraitClick(
+    event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
+  ) {
+    if (context.unlocked) {
+      openPortraitPicker(event);
+      return;
+    }
+
+    FoundryAdapter.renderImagePopout({
+      src: context.actor.img,
+      window: {
+        title: FoundryAdapter.localize('TIDY5E.PortraitTitle', {
+          subject: context.actor.name,
+        }),
+      },
+      uuid: context.actor.uuid,
+    });
+  }
+
+  function openPortraitPicker(
+    event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
+  ) {
+    if (!TidyHooks.tidy5eSheetsPreOpenActorPortraitFilePicker(context, event)) {
+      return;
+    }
+    const rect = event.currentTarget.getBoundingClientRect();
+    const current = context.actor.img;
+    const fp = new foundry.applications.apps.FilePicker({
+      type: 'image',
+      current,
+      callback: (path: string) => {
+        context.actor.update({ img: path });
+      },
+      top: rect.top + 40,
+      left: rect.left + 10,
+    });
+    return fp.browse();
+  }
 </script>
 
+<!-- TODO: Determine if we keep context menu here; some modules rely on it, like Tokenizer. -->
 <!-- TODO: Add switch for size if needed -->
 <div
-  class="character-image {currentPortraitShape}"
+  class={['character-image', currentPortraitShape]}
   class:dead={characterIsDead}
   style="position: relative;"
 >
@@ -49,7 +90,12 @@
       Shape
     </button>
   {/if}
-  <img src={imageUrl} alt={imageAlt} class:dead={characterIsDead} />
+  <img
+    src={imageUrl}
+    alt={imageAlt}
+    class={['pointer', { dead: characterIsDead }]}
+    onclick={(ev) => handlePortraitClick(ev)}
+  />
   {#if characterIsDead}
     <div class="dead-overlay"></div>
   {/if}

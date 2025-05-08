@@ -2,6 +2,8 @@
   import { settings } from 'src/settings/settings.svelte';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
 
+  // TODO: Use the same hooks and sheet parts that supports the Hidden Death Saves module.
+
   let totalsaves = 6;
 
   let context = $derived(getCharacterSheetQuadroneContext());

@@ -1,5 +1,4 @@
 import type { Tidy5eSheetsApi } from 'src/api';
-import type { ContextMenuPositionInfo } from 'src/context-menu/context-menu.types';
 import type {
   ActiveEffect5e,
   Actor5e,
@@ -8,13 +7,13 @@ import type {
   CharacterSheetContext,
   NpcSheetContext,
   VehicleSheetContext,
+  ActorSheetQuadroneContext,
 } from 'src/types/types';
 import type { ContextMenuEntry } from './foundry.types';
 import type {
   ContainerSheetClassicContext,
   ContainerSheetQuadroneContext,
   Item5e,
-  ItemSheetContext,
 } from 'src/types/item.types';
 import type { Group5e } from 'src/types/group.types';
 import type { Activity5e } from './dnd5e.types';
@@ -368,7 +367,10 @@ export class TidyHooks {
    * ```
    */
   static tidy5eSheetsPreOpenActorPortraitFilePicker(
-    context: ActorSheetContextV1 | ActorSheetClassicContextV2,
+    context:
+      | ActorSheetContextV1
+      | ActorSheetClassicContextV2
+      | ActorSheetQuadroneContext,
     event: MouseEvent & { currentTarget: EventTarget & HTMLElement }
   ): boolean {
     return Hooks.call(
