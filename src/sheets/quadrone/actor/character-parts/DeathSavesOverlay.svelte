@@ -36,6 +36,7 @@
       {@const filled = failures >= i + 1}
       {@const path = 'system.attributes.death.failure'}
       <button
+        type="button"
         class={[
           'button button-borderless button-icon-only',
           { checked: filled },
@@ -74,6 +75,7 @@
       {@const filled = successes >= i + 1}
       {@const path = 'system.attributes.death.success'}
       <button
+        type="button"
         class={[
           'button button-borderless button-icon-only',
           { checked: filled },
