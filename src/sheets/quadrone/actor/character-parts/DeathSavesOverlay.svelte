@@ -7,6 +7,25 @@
   let context = $derived(getCharacterSheetQuadroneContext());
 
   let halfSaves = $derived(Math.floor(totalsaves / 2));
+
+  let successes = $derived(context.system.attributes.death.success);
+  let failures = $derived(context.system.attributes.death.failure);
+
+  async function incrementDeathSave(path: string, value: number) {
+    const adjustment = Math.min(value + 1, 3);
+    return await setDeathSave(path, adjustment);
+  }
+
+  async function decrementDeathSave(path: string, value: number) {
+    const adjustment = Math.max(value - 1, 0);
+    return await setDeathSave(path, adjustment);
+  }
+
+  async function setDeathSave(path: string, value: number) {
+    return await context.actor.update({
+      [path]: value,
+    });
+  }
 </script>
 
 <!-- TODO: Need Death Save config button on unlocked -->
@@ -14,14 +33,20 @@
 <div class="death-saves-overlay">
   <div class="failures flexcol">
     {#each Array(halfSaves) as _, i}
-      <!-- Make these into actual buttons; onclick increments when unchecked and decrements when checked -->
-      <label
-        class="button button-borderless button-icon-only"
-        class:checked={failureChecks[i]}
+      {@const filled = failures >= i + 1}
+      {@const path = 'system.attributes.death.failure'}
+      <button
+        class={[
+          'button button-borderless button-icon-only',
+          { checked: filled },
+        ]}
+        onclick={() =>
+          filled
+            ? decrementDeathSave(path, failures)
+            : incrementDeathSave(path, failures)}
       >
-        <input type="checkbox" bind:checked={failureChecks[i]} />
         <i class="fas fa-skull"></i>
-      </label>
+      </button>
     {/each}
   </div>
   <button
@@ -46,13 +71,20 @@
   </button>
   <div class="successes flexcol">
     {#each Array(halfSaves) as _, i}
-      <label
-        class="button button-borderless button-icon-only"
-        class:checked={successChecks[i]}
+      {@const filled = successes >= i + 1}
+      {@const path = 'system.attributes.death.success'}
+      <button
+        class={[
+          'button button-borderless button-icon-only',
+          { checked: filled },
+        ]}
+        onclick={(ev) =>
+          filled
+            ? decrementDeathSave(path, successes)
+            : incrementDeathSave(path, successes)}
       >
-        <input type="checkbox" bind:checked={successChecks[i]} />
         <i class="fas fa-heart"></i>
-      </label>
+      </button>
     {/each}
   </div>
 </div>
