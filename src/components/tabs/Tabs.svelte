@@ -4,11 +4,13 @@
   import type { Tab, OnTabSelectedFn } from 'src/types/types';
   import { error } from 'src/utils/logging';
   import { getContext, onMount, type Snippet } from 'svelte';
+  import type { ClassValue } from 'svelte/elements';
 
   interface Props {
     tabs: Tab[];
     selectedTabId?: string | undefined;
-    cssClass?: string;
+    cssClass?: ClassValue;
+    tabCssClass?: ClassValue;
     orientation?: 'horizontal' | 'vertical';
     onTabSelected?: (selectedTab: Tab) => void;
     tabEnd?: Snippet;
@@ -19,7 +21,8 @@
   let {
     tabs,
     selectedTabId = $bindable(undefined),
-    cssClass = '',
+    cssClass,
+    tabCssClass,
     orientation = 'horizontal',
     onTabSelected,
     tabEnd,
@@ -113,8 +116,7 @@
 
 <div
   role="tablist"
-  class="tidy-tabs {cssClass}"
-  class:vertical={orientation === 'vertical'}
+  class={['tidy-tabs', cssClass, { vertical: orientation === 'vertical' }]}
   bind:this={nav}
 >
   {#if tabs.length > 1}
@@ -131,10 +133,15 @@
         {@const tabIsSelected = tab.id === selectedTabId}
         {@const tabindex = tabIsSelected ? 0 : -1}
         <a
-          class={CONSTANTS.TAB_OPTION_CLASS}
-          class:active={tabIsSelected}
-          class:first-tab={i === 0}
-          class:no-border-on-last-tab={!tabEnd && i === tabs.length - 1}
+          class={[
+            CONSTANTS.TAB_OPTION_CLASS,
+            {
+              active: tabIsSelected,
+              ['first-tab']: i === 0,
+              ['no-border-on-last-tab']: !tabEnd && i === tabs.length - 1,
+            },
+            tabCssClass,
+          ]}
           data-tab-id={tab.id}
           role="tab"
           aria-selected={tabIsSelected}
@@ -146,7 +153,7 @@
           {#if tab.iconClass}
             <i class={['tab-icon', tab.iconClass]}></i>
           {/if}
-          
+
           <span class="tab-title">{@html localize(tabTitle)}</span>
         </a>
       </svelte:boundary>

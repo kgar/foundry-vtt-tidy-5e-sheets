@@ -4,13 +4,15 @@
   - [x] Start dev in Foundry V12
   - [x] Establish components for the tabs
   - [x] Set up Quadrone runtime content, including the default tabs
+  - [ ] Implement SkillsCard
+  - [ ] Implement ToolsCard
   - [ ] Structure the sheet - 
     - [ ] Tab Content area
-      - [ ] Sidebar
-        - [ ] Button tabs
-        - [ ] Skills area (when Skills tab selected)
-        - [ ] Traits area (when Traits tab selected)
-        - [ ] Pinned area (when Pinned tab selected)
+      - [x] Sidebar
+        - [x] Button tabs
+        - [x] Skills area (when Skills tab selected)
+        - [x] Traits area (when Traits tab selected)
+        - [x] Pinned area (when Pinned tab selected)
       - [ ] Main Tab Strip Active Content Area
         - [ ] Sheet tab contents
         - [ ] Character tab contents
