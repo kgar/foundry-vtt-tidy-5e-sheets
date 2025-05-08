@@ -267,6 +267,28 @@
             gap: 0.25rem;
           }
 
+          .death-save-roll-button {
+            --size: 3.5rem;
+            position: absolute;
+            
+            display: flex;
+            align-items: center;
+            justify-self: center;
+            text-align: center;
+            top: 50%;
+            left: 50%;
+            transform: translateY(-50%) translateX(-50%);
+            border-radius: 100%;
+            border: 2px solid var(--t5e-color-gold);
+            background-color: var(--t5e-component-card-dark-darker);
+
+            i {
+              position: relative;
+              font-size: 3rem;
+              color: var(--t5e-color-gold);
+            }
+          }
+
           .successes {
             right: 0;
 

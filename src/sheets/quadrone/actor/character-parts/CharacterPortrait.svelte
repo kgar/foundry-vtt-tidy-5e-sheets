@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import DeathSavesOverlay from './DeathSavesOverlay.svelte'; // Assuming relative path
   import { settings } from 'src/settings/settings.svelte';
 
@@ -6,18 +7,19 @@
     imageUrl: string;
     imageAlt: string;
     portraitShape?: string; // e.g., 'transparent', 'round', 'square'
-    showDeathSaves?: boolean;
   };
 
-  let {
-    imageUrl,
-    imageAlt,
-    portraitShape = 'transparent',
-    showDeathSaves = false,
-  }: Props = $props();
+  let { imageUrl, imageAlt, portraitShape = 'transparent' }: Props = $props();
 
-  // 👋 hightouch - this information will eventually be derived from the `context` object and will automatically update whenever the conditions are right.
-  let characterIsDead = $state(false);
+  // TODO: Use the same hooks and sheet parts that supports the Hidden Death Saves module.
+  let context = $derived(getCharacterSheetQuadroneContext());
+
+  let characterIsDead = $derived(
+    context.system.attributes?.hp?.value === 0 &&
+      context.system.attributes?.hp?.max > 0 &&
+      context.system.attributes.death.failure >= 3 &&
+      context.system.attributes.death.success < 3,
+  );
 
   // Make portraitShape mutable for the debug button
   let currentPortraitShape = $state(portraitShape);
@@ -52,6 +54,6 @@
     <div class="dead-overlay"></div>
   {/if}
 </div>
-{#if showDeathSaves}
+{#if context.showDeathSaves}
   <DeathSavesOverlay />
 {/if}

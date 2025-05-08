@@ -984,6 +984,7 @@ export type CharacterSheetQuadroneContext = {
   classes: CharacterClassEntryContext[];
   conditions: Dnd5eActorCondition[];
   creatureType: CreatureTypeContext;
+  showDeathSaves: boolean;
   defenders: Actor5e[];
   epicBoonsEarned: string | undefined;
   facilities: CharacterFacilitiesContext;

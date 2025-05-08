@@ -123,6 +123,8 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     return [headerStart];
   }
 
+  _showDeathSaves: boolean = false;
+
   async _prepareContext(
     options: ApplicationRenderOptions
   ): Promise<CharacterSheetQuadroneContext> {
@@ -164,6 +166,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         special: { chosen: [], available: [], value: 0, max: 0 },
       },
       senses: this._getSenses(),
+      showDeathSaves: this._showDeathSaves,
       speeds: this._getMovementSpeeds(),
       ...actorContext,
     };
@@ -503,11 +506,41 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     return pins;
   }
 
+  /* -------------------------------------------- */
+  /*  Life-Cycle Handlers                         */
+  /* -------------------------------------------- */
+
   async _renderFrame(options: TidyDocumentSheetRenderOptions) {
     const element = await super._renderFrame(options);
 
     element.querySelector('.window-header').classList.add('theme-dark');
 
     return element;
+  }
+
+  async _preRender(
+    context: CharacterSheetQuadroneContext,
+    options: TidyDocumentSheetRenderOptions
+  ) {
+    await super._preRender(context, options);
+
+    // Show death tray at 0 HP
+    const renderContext = options.renderContext ?? options.action;
+    const renderData = options.renderData ?? options.data;
+    const isUpdate =
+      renderContext === 'update' || renderContext === 'updateActor';
+    const hp = foundry.utils.getProperty(
+      renderData ?? {},
+      'system.attributes.hp.value'
+    );
+    
+    if (isUpdate && hp === 0) {
+      this._showDeathSaves = context.showDeathSaves = true;
+    }
+  }
+
+  toggleDeathSaves(force?: boolean) {
+    this._showDeathSaves = force ?? !this._showDeathSaves;
+    this.render();
   }
 }

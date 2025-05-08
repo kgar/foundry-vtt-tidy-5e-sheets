@@ -25,8 +25,6 @@
   let hpValueInputFocused = $state(false);
   let hpTempInputFocused = $state(false);
   let exhaustionBarFocused = $state(false);
-  let dying = $state(false);
-  let showXp = $state(false);
 
   let hpValueInput = $state<TextInputQuadrone>();
   let hpTempInput = $state<TextInputQuadrone>();
@@ -34,7 +32,7 @@
   let hpValue = $derived(context.system.attributes?.hp?.value ?? 0);
   let hpMax = $derived(context.system.attributes?.hp?.max ?? 0);
   let hpPct = $derived(context.system.attributes?.hp?.pct ?? 0);
-  let hpTemp = $derived(context.system.attributes?.hp?.temp ?? 10);
+  let hpTemp = $derived(context.system.attributes?.hp?.temp ?? 0);
   let hpTempMax = $derived(context.system.attributes?.hp?.tempMax ?? 0);
 
   let portraitShape = 'transparent';
@@ -54,7 +52,6 @@
         imageUrl={context.actor.img}
         imageAlt={context.actor.name}
         {portraitShape}
-        showDeathSaves={dying}
       />
       <div class="character-vitals">
         <div class="hp-row flexrow">
@@ -230,10 +227,10 @@
                 <span class="value">{exhaustionLevel}</span>
               </button>
             </div>
-            <div class={['death-saves', { dying }]}>
+            <div class={['death-saves', { dying: context.showDeathSaves }]}>
               {#if context.unlocked}
                 <button
-                  aria-label={localize("DND5E.DeathSaveConfigure")}
+                  aria-label={localize('DND5E.DeathSaveConfigure')}
                   data-tooltip="DND5E.DeathSaveConfigure"
                   type="button"
                   class="button button-borderless button-icon-only button-config"
@@ -248,7 +245,7 @@
                   class="button button-borderless button-icon-only"
                   aria-label={localize('DND5E.DeathSave')}
                   data-tooltip="DND5E.DeathSave"
-                  onclick={() => (dying = !dying)}
+                  onclick={() => context.actor.sheet.toggleDeathSaves()}
                 >
                   <i class="fas fa-skull"></i>
                 </button>
@@ -276,7 +273,7 @@
               class={[
                 'sheet-header-actions',
                 'flexrow',
-                { ['show-xp']: showXp },
+                { ['show-xp']: context.enableXp },
               ]}
             >
               <button
