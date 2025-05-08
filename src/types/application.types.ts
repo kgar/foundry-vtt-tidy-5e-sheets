@@ -73,6 +73,9 @@ export interface ApplicationRenderOptions {
   parts?: string[];
   isFirstRender?: boolean;
   renderContext?: string;
+  renderData?: object;
+  action?: string;
+  data?: object;
 }
 
 export interface ApplicationWindowRenderOptions {

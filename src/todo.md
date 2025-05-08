@@ -43,6 +43,7 @@
   - [ ] Misc Features
     - [ ] Set as Inspiration Source (see below)
     - [ ] <!-- TODO: Determine if we keep context menu here; some modules rely on it, like Tokenizer. -->
+    - [ ] // TODO: Use the same hooks and sheet parts that supports the Hidden Death Saves module.
 - [ ] Explore what it takes to implement item sheet tab settings per item type.
 - [ ] Implement quadrone default tab settings (no UI)
   - [ ] Character
