@@ -130,7 +130,7 @@
       </button>
     {/if}
     {#if unlocked && editingScore}
-      <span class="editing-score-label">
+      <span class="editing-score-label font-label-medium color-text-default">
         {localize('TIDY5E.Ability.EditScore.label')}
       </span>
     {/if}
@@ -143,7 +143,7 @@
   </label>
   <button
     type="button"
-    class="ability-save flexrow"
+    class={['ability-save flexrow', { invisible: editingScore }]}
     onclick={(ev) => onRollSave?.(ev, ability.key)}
   >
     <span class="modifier font-label-medium color-text-lightest"

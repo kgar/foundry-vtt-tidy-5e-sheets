@@ -70,7 +70,7 @@
         <span class="color-text-gold">{species}</span>
       </span>
     {/if}
-    <span class="alignment">
+    <span class="alignment hide-10">
       <span class="color-text-gold">{alignment}</span>
     </span>
     {#each context.classes as entry}

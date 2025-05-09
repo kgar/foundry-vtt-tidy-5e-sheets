@@ -264,7 +264,7 @@
                 field="name"
                 document={context.actor}
                 value={context.actor.name}
-                class="character-name flex1"
+                class="character-name flex1 h2"
               />
             {:else}
               <h1 class="character-name flex1">{context.actor.name}</h1>
@@ -379,14 +379,6 @@
         {/each}
         <div class="initiative-container flexcol">
           <div class="initiative score" data-tooltip="DND5E.Initiative">
-            <div class="initiative-bonus flexrow">
-              <span class="modifier color-text-lightest">
-                {ini.sign}
-              </span>
-              <span class="value color-text-default">
-                {ini.value}
-              </span>
-            </div>
             <button
               type="button"
               class="initiative-roll-button"
@@ -407,24 +399,19 @@
                 <i class="fas fa-cog"></i>
               </button>
             {/if}
+            <div class="initiative-bonus flexrow">
+              <span class="modifier color-text-lightest">
+                {ini.sign}
+              </span>
+              <span class="value color-text-default">
+                {ini.value}
+              </span>
+            </div>
           </div>
           <!-- TODO: Set concentration bonus here, but then move the concentration indicator up to subtitle, below the action buttons. -->
           {#if context.saves.concentration}
             {@const save = context.saves.concentration}
             <div class="concentration flexcol">
-              <button
-                type="button"
-                onclick={(event) =>
-                  context.actor.rollConcentration({
-                    event,
-                    legacy: false,
-                  })}
-                class="unbutton concentration-roll-button"
-              >
-                <span class="label font-label-medium color-text-gold"
-                  >{localize(save.label)}</span
-                >
-              </button>
               <div class="flexrow concentration-bonus">
                 {#if context.isConcentrating}
                   <i
@@ -458,6 +445,19 @@
                   </div>
                 {/if}
               </div>
+              <button
+                type="button"
+                onclick={(event) =>
+                  context.actor.rollConcentration({
+                    event,
+                    legacy: false,
+                  })}
+                class="unbutton concentration-roll-button"
+              >
+                <span class="label font-label-medium color-text-gold"
+                  >{localize(save.label)}</span
+                >
+              </button>
             </div>
           {/if}
         </div>
