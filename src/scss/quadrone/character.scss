@@ -1365,12 +1365,4 @@
       }
     }
   }
-
-  @container (width < 800px) {
-    .window-content .sheet-header {
-      .abilities-container .ability .bonus-container {
-        background: none;
-      }
-    }
-  }
 }
